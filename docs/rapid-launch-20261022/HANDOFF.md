@@ -2217,3 +2217,20 @@ C routed only exact createProductionCapacityLaunch(context.capacityLaunch,c) sou
 ## 2026-11-06T21:28:10.259911+08:00 — r21容量采集脚本交付模式定向修复
 
 D1以准确冻结collector及原executableMatches复现缺执行位TypeError；D2固定归档清单为0644，原T45物化按原mode写入，无特例提升路径。确认交付不一致，actual Linux单叶stat未导出，尚不认定唯一运行首因。C仅登记原D2修改collector执行模式至0755、内容1c34a9c8保持；若打包器强制模式，先指出准确文件再登记。D1关闭原离线复现，其他源码冻结，QB只验此次模式/消费者增量；之后原D2一次固定构建，T45接续准确新候选，不重放r21已提交步骤或旧请求。原临时授权记录不延长，已有同类隔离授权及原任务持续；无新增用户决策请求。当前Git b8d06683完整SHA远端已回读，REAL导入/业务链/部署仍未通过。
+
+
+## 2026-11-06 — r22单叶执行位源码固定，原QB增量验收中
+
+固定source `80c84f5f83c7406213129ce158d92add47003931`，构建root `f162184aafcdcbdb8adc9784588a009b761381f4`，tree `68971813cde3beed4b244a36b6c0cd128b63c547`。相对r21仅collector100644→100755，内容及全部其他源码不变。D2原guard红绿与tar物化小样通过，回执9321db38；D1诊断81ba5198已固定。原QB只验此增量，r21原三叶有效证据直接复用；尚未构建新全包或启动新PG，REAL/生产未执行。
+
+
+## 2026-11-06 — r22原QB模式增量通过，统一构建中
+
+原QB固定回执`6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e`已核，PASS_EXACT_MODE_AND_SCOPED_PACK_CONSUMER；仅source单执行位及原ordinary包消费接缝，保留全部容量守卫，原三叶QA9c101e24复用。source80c84f5f/rootf162184a已推GitHub并远端回读。原D2一次固定完整构建在途；原T45仅本地r22准确资源准备，不启动/传输/PG直到构建pins。Linux实际容量及普通业务未验，r21正常合成已提交不重放。
+
+
+## 2026-11-06 — r22固定整合包已完成，原T45接续
+
+原D2回执`ec3753054458cf81942d55e4cecbf70f224c023486858651c27e62bbf5762e7f`已核。rootf162184a build0/12.331秒、pack0/9.282秒，453生产文件及7298ordinary成员字节/哈希/模式通过，实际collector0755。完整包464d6ca3/83702682字节，按原r21实际完整包ffbe复用81226925字节prefix580eb9e1与2475757字节tail22187d73，未重压或全量重传。主控采用完整成员证据，仅核回执/必要元数据/tail。
+
+原T45本地ops单叶校验dbb9328f通过正反例，只lstat精确collector并拒绝非0755，无临时chmod；r22仍需准确新前置/新窗口。已交T45一次有界只读核原r21终态、已提交25/27及unknown不重放、actualbase身份、新目标缺席、镜像和资源。构建及模式通过不等于实际Linux容量、普通业务、REAL或部署通过；后续按原C13→物化→新C11/C9由唯一T45执行。

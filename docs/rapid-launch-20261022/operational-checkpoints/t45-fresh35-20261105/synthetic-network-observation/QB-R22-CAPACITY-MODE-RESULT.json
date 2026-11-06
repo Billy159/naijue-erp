@@ -1,0 +1,61 @@
+{
+  "task": "R22-CAPACITY-MODE-80C84F5F",
+  "atUtc": "2026-11-06T13:34:07.630585+00:00",
+  "conclusion": "PASS_EXACT_MODE_AND_SCOPED_PACK_CONSUMER",
+  "version": {
+    "integration": "80c84f5f83c7406213129ce158d92add47003931",
+    "root": "f162184aafcdcbdb8adc9784588a009b761381f4",
+    "tree": "68971813cde3beed4b244a36b6c0cd128b63c547",
+    "parentRoot": "148b5716864681b77498ff58ea82bc18c853199b"
+  },
+  "checks": {
+    "conclusion": "PASS_EXACT_MODE_AND_SCOPED_PACK_CONSUMER",
+    "file": "candidate0448/scripts/ops/capacity-live-statfs.mjs",
+    "bytes": 13339,
+    "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+    "oldMode": "100644",
+    "newMode": "100755",
+    "worktreeMode": "0755",
+    "otherAppSourceChanges": 0,
+    "originalShebangAndProfileArgAndDirectSpawnProtocolUnchanged": true,
+    "originalExecutableGuardSourceUnchanged": true,
+    "existingSingleCollectorTarSampleSha256": "f65767c120cc776c7bde4eccec820e7358b1430545bae658d344ce04491482ca",
+    "existingSampleMemberMode": "0755",
+    "actualMaterializerAllows644755AndPassesTarModeToNewFile": true,
+    "originalNewFileConsumerPreserves0755OnHarmlessOwnFile": true,
+    "noCollectorExecutedOrSourceCopied": true,
+    "authorEvidenceHashes": {
+      "D1": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
+      "D2": "9321db385365f1fed78cacd022f51059ba66090f3aa64449fc782742fb74f8c3"
+    },
+    "applicationTree": "68971813cde3beed4b244a36b6c0cd128b63c547",
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "fullBuildOrFullArchiveValidationRepeated": false,
+    "actualLinuxStatOrCapacityExecuted": false
+  },
+  "reused": {
+    "priorQBThreeLeafResultSha256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
+    "authorOriginalGuard": "D2 before0644 rejected/after0755 accepted reused, no repeat or child spawn",
+    "ordinaryPack": "Existing single collector sample only; original7298member evidence not rerun",
+    "productionPack0444": "Separate production package is not ordinary fixed-source delivery; unchanged"
+  },
+  "sourceBlockers": [],
+  "actualR21": "C/D1 reports REAL_CAPACITY TypeError, actual Linux collector stat/first predicate/sole cause not exported. Preserve stopped/UNKNOWN and prior committed import evidence.",
+  "boundaries": {
+    "sourceModified": false,
+    "collectorInvoked": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "fullBuildRun": false,
+    "actualNewCapacityOrOrdinaryPassed": false,
+    "oldScopeOrWholeSuiteRetested": false,
+    "oldTargetOrKeyReplayed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return fixed mode-only source verdict toC. OriginalD2 fixed build/ordinary inventory and originalT45 valid successor Linux capacity/ordinary validation remain separate; no ad hoc old deployment chmod or old-key replay."
+}

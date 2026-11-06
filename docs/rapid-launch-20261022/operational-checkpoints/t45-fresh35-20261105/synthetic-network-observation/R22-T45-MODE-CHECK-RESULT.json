@@ -1,0 +1,27 @@
+{
+  "status": "R22_EXACT_OPS_LEAF_MODE_CHECK_LOCAL_POSITIVE_NEGATIVE_PASS_STILL_UNBOUND",
+  "sha256": "7ff67367232a78a4bcc038148bbe78e8b66efeabd7f4faa45ef1c40dc4a2ed69",
+  "beforeSHA256": "10215215fb59a0d569596d58f5c6ec67d4ee22d5d3e729c9a9fdf217e86da1be",
+  "inverseOutsideMaterializeFunctionExact": true,
+  "unboundOriginalGuardRefused": true,
+  "cases": [
+    {
+      "actualLocalMode": "0o755",
+      "result": "PASS_EXACT_MODE_RECEIPT",
+      "guardCode": null,
+      "testFixtureModeUnchanged": true
+    },
+    {
+      "actualLocalMode": "0o644",
+      "result": "REFUSED_EXACT_GUARD",
+      "guardCode": "CURRENT_COLLECTOR_EXECUTABLE_MODE_DIFFERS",
+      "testFixtureModeUnchanged": true
+    }
+  ],
+  "scope": "Real local temporary leaf lstat through original materialize result seam; other original remote/material/closure collaborators mocked only in test. No server or Linux deployed mode assertion.",
+  "serverActions": 0,
+  "PGConnections": 0,
+  "productionSourceWrites": 0,
+  "chmodAddedToOps": false,
+  "newBindingsIssued": false
+}

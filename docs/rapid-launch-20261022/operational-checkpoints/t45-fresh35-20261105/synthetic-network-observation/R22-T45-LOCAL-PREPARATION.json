@@ -1,0 +1,135 @@
+{
+  "status": "R22_INDEPENDENT_LOCAL_OPS_NAMES_AND_ORIGINAL_R21_BASIS_PREPARED_UNBOUND_NO_SERVER",
+  "recordedAtUTC": "2026-11-06T13:35:25.249234+00:00",
+  "candidateRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
+  "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+  "sourceTree": "68971813cde3beed4b244a36b6c0cd128b63c547",
+  "sourceSetSHA256": "PENDING_D2",
+  "QBResultSHA256": "PENDING_EXACT_MODE_INCREMENT",
+  "D2ResultSHA256": "NO_NEW_BUILD_DELIVERED",
+  "newNames": {
+    "container": "t45-fresh35-deb13-20261106-r22",
+    "root": "phaseb-application-r22",
+    "artifact": "f35-f16218-ordinary-local-20261106-01",
+    "tail": "f35-f16218-tail-20261106-01"
+  },
+  "files": {
+    "artifact-receiver.original.py": {
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "fresh35-container-successor.UNBOUND.py": {
+      "bytes": 36672,
+      "sha256": "10215215fb59a0d569596d58f5c6ec67d4ee22d5d3e729c9a9fdf217e86da1be"
+    },
+    "ordinary-proof-evidence.PARENT.py": {
+      "bytes": 10262,
+      "sha256": "0af42b59dd9601c6f03de864a07583fb4d28724be227b74e52ca8484e81c5c3e"
+    },
+    "assemble_original_receiver.UNBOUND.py": {
+      "bytes": 9318,
+      "sha256": "da516c6d7450b2f35d32e89d31fa051311c99293f40652bb67771aa6d77bcdd0"
+    }
+  },
+  "baseHistoricalActualReady": {
+    "archiveBytes": 83701245,
+    "archiveSha256": "ffbe0e9c8b6ba860fa3ec4a5225fee64923783d276c36b7abbb3d9cc845d149d",
+    "artifactKey": "f35-148b57-ordinary-local-20261106-01",
+    "authoritySha256": "317e258b52e6c3df0eb9a79ca55d6c9eb29860d4ee61a87f31cb91e8d8728c18",
+    "fileIdentity": [
+      66304,
+      393721,
+      83701245,
+      1793969619825383731,
+      1793969620935386411
+    ],
+    "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+    "status": "READY"
+  },
+  "r21Basis": {
+    "safeResultSHA256": "cb94c0718018014db94b32ada451337c23188663061682f63ded183b670367d3",
+    "jobId": "t45-f35-148b57-install-20261106-01",
+    "jobStatus": "FAILED",
+    "exitCode": 2,
+    "normalSyntheticImport": {
+      "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+      "importState": "COMMITTED",
+      "replayState": "ALREADY_COMMITTED",
+      "readbackState": "VERIFIED",
+      "retainedHeaders": 25,
+      "retainedSettlements": 27,
+      "connectionCleanup": "CLOSED"
+    },
+    "ordinaryFailure": {
+      "automaticRetry": false,
+      "childDiagnosticUnavailable": false,
+      "childFailure": {
+        "actualInteger": null,
+        "errno": null,
+        "errorType": "TypeError",
+        "expectedInteger": null,
+        "format": "FRESH35_ORDINARY_FAILURE_V1",
+        "guardCode": null,
+        "phase": "REAL_CAPACITY",
+        "source": "runFresh35OrdinaryIntegration:catch",
+        "sqlstate": null
+      },
+      "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+      "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+      "phase": "REAL_PG_AND_MIDDLEWARE",
+      "state": "FAILED_OR_OUTCOME_UNKNOWN"
+    },
+    "containerStopped": true,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      }
+    },
+    "runtimePrivateOriginalReceiptSHA256": "UNKNOWN_NOT_READ_NO_PUBLIC_EXPORT_HASH_SUBSTITUTION"
+  },
+  "collectorExpectedAfterCModeOnlyChange": {
+    "path": "scripts/ops/capacity-live-statfs.mjs",
+    "mode": "0755",
+    "contentSHA256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+    "bytes": 13339,
+    "archiveAndLinuxMode": "PENDING_NEW_ARTIFACT_AND_FUTURE_READBACK"
+  },
+  "existingModeCapability": {
+    "write": "new_file fchmod(fd,archiveMode)",
+    "archiveGuard": "Accepts either0644/0755 generally",
+    "materializedReadback": "Existing verify_materialized_application checks closure content and protected ownership/path, no positive collector0755 readback"
+  },
+  "minimalAdditionalCheckProposal": {
+    "leaf": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r22-ops-preparation-01/fresh35-container-successor.UNBOUND.py",
+    "function": "materialize_application(plan)",
+    "position": "Immediately after existing verify_materialized_application(plan)",
+    "change": "lstat exact trusted ROOT/deploy/scripts/ops/capacity-live-statfs.mjs; require stat.S_IMODE==0755; add collectorMode to existing materialization receipt. No chmod, rehash, scan, new function/channel or guard weakening.",
+    "applied": false
+  },
+  "localRegistrySamePrefixKeys": [],
+  "pending": [
+    "QB exact mode increment",
+    "D2 complete artifact/sourceSet/manifest/prefix/tail pins",
+    "C original bounded preflight binding",
+    "C decision on precise existing material receipt mode check",
+    "New C13/C11/C9 windows only; old r21 windows never reused"
+  ],
+  "serverActions": 0,
+  "PGConnections": 0,
+  "buildsOrSignaturesOrWindowsCreated": false,
+  "sourceLeavesChanged": false,
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "REALOrFormalChanged": false,
+  "actualModelEffortFast": "UNVERIFIED"
+}

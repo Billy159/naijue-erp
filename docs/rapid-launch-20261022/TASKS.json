@@ -28508,12 +28508,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R21_CAPACITY_COLLECTOR_EXECUTABLE_MODE_DELIVERY_DEFECT_D2_MINIMUM_FIX",
+      "critical": "R22_BUILD_AND_MODE_PASS_T45_EXACT_READONLY_PREFLIGHT",
       "independentPreparation": {
-        "D1": "Finish existing original guard offline RED evidence; source frozen, no duplicate fix.",
-        "QB": "Exact3leaf diagnostic seam independently PASS, author checks reused; no repeated QA.",
-        "D2": "Exact collector mode-only fix 0644 to0755, bytes1c34a9c8 unchanged; no build before fixed source and scoped QB.",
-        "T45": "r21 stopped with cleanup complete, preserve exact evidence, no new server/PG/source writes or old-key replay.",
+        "D1": "Exact source diagnosis closed81ba5198; source frozen.",
+        "QB": "Mode-only source scopedPASS6c5d9ca9, no repeated review.",
+        "D2": "Fixed f162184a build12.331s/pack9.282s and7298 membersPASS; no runtime.",
+        "T45": "Exact r22 ops binding plus bounded readonly stage preflight; no PG/start/transfer yet.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32281,6 +32281,44 @@
         "containerStopped": true,
         "thisR21NormalCommitMustNotReplay": true,
         "diagnosticActualEffective": true
+      },
+      "r22Preparation": {
+        "state": "R22_BUILD_AND_MODE_PASS_T45_EXACT_READONLY_PREFLIGHT",
+        "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+        "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
+        "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
+        "T45LocalPreparationSHA256": "64483d51711f5afdab24a53fd14154e26bd54d5302dffce9b851773b73f239b8",
+        "approvedOpsDelta": {
+          "writer": "original T45",
+          "file": "outputs/T45/revisions/20261106-fresh35-r22-ops-preparation-01/fresh35-container-successor.UNBOUND.py",
+          "change": "After original material verification, lstat exact collector path and reject unless mode0755; output collectorMode. No chmod, extra scan, guard weakening or new control layer."
+        },
+        "serverExecuted": false,
+        "oldCommittedStepsMayReplay": false,
+        "D2ReceiptSHA256": "ec3753054458cf81942d55e4cecbf70f224c023486858651c27e62bbf5762e7f",
+        "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+        "full": {
+          "bytes": 83702682,
+          "sha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21"
+        },
+        "manifest": {
+          "bytes": 1084429,
+          "sha256": "05878d5c79e3385b8b63c304c80dd5affd0926754aa4a02cd75e81568eeabf35"
+        },
+        "runtime": {
+          "bytes": 2219,
+          "sha256": "1bec42e1d87a4c8b130e0639df73d43acb4f56deaa2b91556e9cf9e4f3d35036"
+        },
+        "prefix": {
+          "bytes": 81226925,
+          "sha256": "580eb9e149c57c36f53fe3f87aaae61798beeb7d363792b5a0e662ed7094f9a0"
+        },
+        "tail": {
+          "bytes": 2475757,
+          "sha256": "22187d73d4a8cb964618d410f9701f3c74ab6d485124caab242f4b704a4d2862"
+        },
+        "opsModeCheckReceiptSHA256": "dbb9328f70587eec962f8b614949bdd95efb346a22224a0b32385a9256335da8",
+        "collectorActualArchiveMode": "0755"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32689,12 +32727,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T21:28:10.259911+08:00",
-      "phase": "R21_CAPACITY_COLLECTOR_EXECUTABLE_MODE_DELIVERY_DEFECT_D2_MINIMUM_FIX",
+      "at": "2026-11-06T21:40:49.553391+08:00",
+      "phase": "R22_BUILD_AND_MODE_PASS_T45_EXACT_READONLY_PREFLIGHT",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original D2 exact collector executable-mode delivery fix",
-      "nextOwner": "Original QB scoped guard/package acceptance then original D2 fixed build",
+      "currentOwner": "Original T45 r22 exact local binding and bounded readonly staging preflight",
+      "nextOwner": "C bind original C13 staging after exact fresh preflight",
       "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -32704,12 +32742,12 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "D1 closes exact original guard repro; D2 owns mode-only collector correction, no weakening guards or application business edits.",
+      "next": "T45 binds fixed r22 ops and obtains bounded readonly old r21 terminal/base/new target absence/resource facts; C issues exact new C13 only after facts, original T45 transfers/materializes then fresh C11/C9.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
-      "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
-      "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
-      "tree": "64f4365f1880398f9d5bb8800eedb2941477e9e2",
-      "sourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+      "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+      "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
+      "tree": "68971813cde3beed4b244a36b6c0cd128b63c547",
+      "sourceQA": "PASS_EXACT_MODE_AND_SCOPED_PACK_CONSUMER",
       "buildPassed": true,
       "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
@@ -32730,13 +32768,10 @@
       },
       "githubSourceAndRootReadback": true,
       "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
-      "QBReceiptSHA256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
-      "D2ReceiptSHA256": "2fe30edaeb253fc77bfa35b3d4eee80e5fa4d2ebec552f594125ab9b5c08fc57",
+      "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
+      "D2ReceiptSHA256": "ec3753054458cf81942d55e4cecbf70f224c023486858651c27e62bbf5762e7f",
       "currentCandidateActualRuntime": {
-        "root": "148b5716864681b77498ff58ea82bc18c853199b",
-        "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
-        "state": "R21_INSTALL_AND_SYNTHETIC_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_NO_REPLAY",
-        "receiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
+        "state": "NOT_EXECUTED",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false
