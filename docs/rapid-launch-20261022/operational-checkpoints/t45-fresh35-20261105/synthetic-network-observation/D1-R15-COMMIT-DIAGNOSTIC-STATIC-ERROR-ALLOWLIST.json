@@ -1,0 +1,288 @@
+{
+  "format": "D1_R15_NORMAL_IMPORT_STATIC_ERROR_ALLOWLIST_V1",
+  "boundExistingSource": {
+    "root": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+    "sourceSet": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+    "bodyPinsMatchR15Final152": true,
+    "sourcePacketPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R15-COMMIT-REQUIRED-SOURCE-01/NORMAL-SQL-SOURCES.json",
+    "sourcePacketSha256": "f21bc158958e2ac48b04fb1df9c6d2c889b4ebc50a1f8ee080607687964c9c6c"
+  },
+  "rules": [
+    {
+      "kind": "source_raise_code",
+      "code": "STANDARD_PUBLICATION_INCOMPLETE",
+      "primaryMessageRegex": "^STANDARD_PUBLICATION_INCOMPLETE$",
+      "origins": [
+        {
+          "routine": "standard_whole_package_command_v2",
+          "bodySha256": "00ee7dd0ba4c52f089db555a1853df7b9bd587ab16952b46501f99617ef985ac",
+          "line": 858,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "STANDARD_MIGRATION_CLOSURE_INCOMPLETE",
+      "primaryMessageRegex": "^STANDARD_MIGRATION_CLOSURE_INCOMPLETE$",
+      "origins": [
+        {
+          "routine": "standard_whole_package_command_v2",
+          "bodySha256": "00ee7dd0ba4c52f089db555a1853df7b9bd587ab16952b46501f99617ef985ac",
+          "line": 904,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "STANDARD_MIGRATION_EXPLICIT_ENDPOINT_COVERAGE_REQUIRED",
+      "primaryMessageRegex": "^STANDARD_MIGRATION_EXPLICIT_ENDPOINT_COVERAGE_REQUIRED$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 43,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "HISTORICAL_SETTLEMENT_MIGRATION_ORIGIN_REQUIRED",
+      "primaryMessageRegex": "^HISTORICAL_SETTLEMENT_MIGRATION_ORIGIN_REQUIRED$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 64,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS",
+      "primaryMessageRegex": "^HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 75,
+          "declaredSQLSTATE": "23514"
+        },
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 83,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "HISTORICAL_LINE_AMOUNT_KNOWN_TOTALS_DIFFER",
+      "primaryMessageRegex": "^HISTORICAL_LINE_AMOUNT_KNOWN_TOTALS_DIFFER$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 98,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "WHOLE_PACKAGE_INCOMPLETE",
+      "primaryMessageRegex": "^WHOLE_PACKAGE_INCOMPLETE$",
+      "origins": [
+        {
+          "routine": "standard_whole_package_closed_v2",
+          "bodySha256": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f",
+          "line": 56,
+          "declaredSQLSTATE": "23514"
+        },
+        {
+          "routine": "standard_whole_package_closed_v2",
+          "bodySha256": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f",
+          "line": 72,
+          "declaredSQLSTATE": "23514"
+        },
+        {
+          "routine": "standard_whole_package_closed_v2",
+          "bodySha256": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f",
+          "line": 74,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "source_raise_code",
+      "code": "WHOLE_RECEIPT_CHAIN_INVALID",
+      "primaryMessageRegex": "^WHOLE_RECEIPT_CHAIN_INVALID$",
+      "origins": [
+        {
+          "routine": "standard_whole_package_closed_v2",
+          "bodySha256": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f",
+          "line": 41,
+          "declaredSQLSTATE": "23514"
+        }
+      ]
+    },
+    {
+      "kind": "existing_check_constraint",
+      "code": "receipt_result_by_kind",
+      "relation": "operation_receipt",
+      "definitionSha256": "5fdd40b5fbb91274b469d196ed344a2c3141f2f7bed390cd2fc8cc469354c7be",
+      "modelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "primaryMessageRegex": "^new\\ row\\ for\\ relation\\ \"operation_receipt\"\\ violates\\ check\\ constraint\\ \"receipt_result_by_kind\"$",
+      "declaredNativeSQLSTATE": "23514"
+    },
+    {
+      "kind": "existing_check_constraint",
+      "code": "migration_result_metadata",
+      "relation": "operation_receipt",
+      "definitionSha256": "8d209d57b992d01acfbfe9568d0345e3a1f8b957652455833d0565c7b1066472",
+      "modelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "primaryMessageRegex": "^new\\ row\\ for\\ relation\\ \"operation_receipt\"\\ violates\\ check\\ constraint\\ \"migration_result_metadata\"$",
+      "declaredNativeSQLSTATE": "23514"
+    },
+    {
+      "kind": "existing_check_constraint",
+      "code": "audit_version_by_action",
+      "relation": "audit_change",
+      "definitionSha256": "6d32550e09124bede875ba29d02bc6125fb7e45e7e55cf79b5e7afde87fe1d8e",
+      "modelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "primaryMessageRegex": "^new\\ row\\ for\\ relation\\ \"audit_change\"\\ violates\\ check\\ constraint\\ \"audit_version_by_action\"$",
+      "declaredNativeSQLSTATE": "23514"
+    },
+    {
+      "kind": "existing_check_constraint",
+      "code": "import_batch_check",
+      "relation": "import_batch",
+      "definitionSha256": "05a869e9e01577b3b3f7efe25a29cbee6fa0cab4ef68cbe7797c6a2049f82dfa",
+      "modelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "primaryMessageRegex": "^new\\ row\\ for\\ relation\\ \"import_batch\"\\ violates\\ check\\ constraint\\ \"import_batch_check\"$",
+      "declaredNativeSQLSTATE": "23514"
+    },
+    {
+      "kind": "noncode_source_literal_fingerprint",
+      "code": "LITERAL_A1B6BD4FE74CE6BC",
+      "isEmittedSqlCode": false,
+      "literalSha256": "a1b6bd4fe74ce6bc6ed13adf8362ffd3cdbd12702bd67c736b30d18a4754ee37",
+      "privatePrimaryMessageRegex": "^migration\\ requires\\ exact\\ typed\\ ordinary\\ snapshot,\\ source/baseline\\ coverage,\\ actor,\\ version\\ and\\ audit$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 30
+        }
+      ],
+      "declaredSQLSTATE": "23514",
+      "doNotExportLiteral": true
+    },
+    {
+      "kind": "noncode_source_literal_fingerprint",
+      "code": "LITERAL_314EA159EDDCCD23",
+      "isEmittedSqlCode": false,
+      "literalSha256": "314ea159eddccd23595a0219f9d121dffd414a209e611e030f65304a6d72ac8c",
+      "privatePrimaryMessageRegex": "^migration\\ creates\\ no\\ inventory\\ effects$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 32
+        }
+      ],
+      "declaredSQLSTATE": "23514",
+      "doNotExportLiteral": true
+    },
+    {
+      "kind": "noncode_source_literal_fingerprint",
+      "code": "LITERAL_A8DBADA22BA3B224",
+      "isEmittedSqlCode": false,
+      "literalSha256": "a8dbada22ba3b224563b024c28bbfc56bf4be40f2938cafdefc241e7acaea5a2",
+      "privatePrimaryMessageRegex": "^migration\\ requires\\ complete\\ stable\\ detail/settlement\\ source\\ mappings$",
+      "origins": [
+        {
+          "routine": "assert_document_migration",
+          "bodySha256": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+          "line": 149
+        }
+      ],
+      "declaredSQLSTATE": "23514",
+      "doNotExportLiteral": true
+    },
+    {
+      "kind": "noncode_source_literal_fingerprint",
+      "code": "LITERAL_61C491DC113FDD7D",
+      "isEmittedSqlCode": false,
+      "literalSha256": "61c491dc113fdd7ddac0c73c682e5960407881f873515b0578a52b8d93e5f67a",
+      "privatePrimaryMessageRegex": "^ordinary\\ approved\\ state\\ requires\\ settlement\\ net\\ equal\\ to\\ net\\ due$",
+      "origins": [
+        {
+          "routine": "validate_sales_settlement",
+          "bodySha256": "580340f008dcf9652fb18e041dde2b63ae2aa72abde3c5e8a772cb13cfb0990f",
+          "line": 360
+        }
+      ],
+      "declaredSQLSTATE": "23514",
+      "doNotExportLiteral": true
+    },
+    {
+      "kind": "native_postgres_constant",
+      "code": "ERRCODE_QUERY_CANCELED",
+      "isRaisedSqlLiteralCode": false,
+      "declaredSQLSTATE": "57014",
+      "privatePrimaryMessageRegex": "^canceling\\ statement\\ due\\ to\\ statement\\ timeout$",
+      "literalSha256": "de91f95a2899f946a7ac7503c63fc84350f2687b11bc8561b2f5ba3faaa0abd4",
+      "source": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/tcop/postgres.c#L3192",
+      "sqlstateSource": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/utils/errcodes.txt",
+      "doNotExportLiteral": true
+    },
+    {
+      "kind": "native_postgres_constant",
+      "code": "ERRCODE_LOCK_NOT_AVAILABLE",
+      "isRaisedSqlLiteralCode": false,
+      "declaredSQLSTATE": "55P03",
+      "privatePrimaryMessageRegex": "^canceling\\ statement\\ due\\ to\\ lock\\ timeout$",
+      "literalSha256": "11047b46f2c9886e760ae3d65663b19f34905615a8f0198ec26cf5363deeb5da",
+      "source": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/tcop/postgres.c#L3185",
+      "sqlstateSource": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/utils/errcodes.txt",
+      "doNotExportLiteral": true
+    }
+  ],
+  "ruleCount": 18,
+  "observedSqlstateAllowlist": [
+    "23514",
+    "42501",
+    "57014",
+    "55P03",
+    "40001",
+    "40P01",
+    "08006"
+  ],
+  "matching": {
+    "input": "ONLY parsed primary ERROR/FATAL message in original retained PostgreSQL log; strip only known severity/optional explicitSQLSTATE prefix internally",
+    "exclude": [
+      "DETAIL",
+      "CONTEXT",
+      "STATEMENT",
+      "HINT",
+      "SQL query or parameters",
+      "raw stack/env/credentials/business JSON",
+      "matching a token merely inside logged SQL"
+    ],
+    "sourceFingerprints": "LITERAL_* and ERRCODE_* are fixed source-rule labels, not an observed SQL message/code. No actual database code may be inferred from labels.",
+    "export": "only fixed rule code label, explicitly observed SQLSTATE or null, and count; no raw literal/message/path/PID/nonce/row",
+    "declaredVsObserved": "declaredSQLSTATE is source metadata, never fill observed SQLSTATE from it when code was not present in the log",
+    "positiveWindow": "lower bound original snapshot-after-rollback.json mtime, upper bound original commit-child-failure.json mtime; prefer existing receipt-bounded range C/T45 can verify. Full job UTC07:22:11..07:24:12 is only outer bound, cannot by itself distinguish known negative errors.",
+    "failureToBound": "If timestamps/files/byte limits/prefix/positive-phase attribution unavailable, report UNKNOWN or incomplete; a zero count cannot prove absence of errors",
+    "scope": "C/T45 bind exact stopped CID39ff910e and original private fixed files. D1 does not run server commands or read private logs. No start/replay/database/log settings."
+  },
+  "workerLogLimitation": "The old entry/coordinator handles its failure and emits only the safe15-key receipt. It does not emit the underlying normal result or raw SQL error to worker stderr. A worker-log copy of the same null diagnostic cannot reconstruct what was discarded. PostgreSQL may retain backend errors; pure JS/driver-only failure may have no corresponding PG primary error.",
+  "coverage": "Deliberately partial fixed normal-publication/closed/deferred-validator candidates only, not an exhaustive runtime error allowlist or cause claim. Negative cohort PASS is not replayed.",
+  "productionSourceWrites": 0,
+  "pgOrServerActions": 0
+}

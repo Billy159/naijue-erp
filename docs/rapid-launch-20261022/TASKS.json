@@ -28509,10 +28509,10 @@
     "currentParallelQueue": {
       "critical": "NORMAL_COMMIT_BRANDED_DIAGNOSTIC_FIX_AND_STOPPED_TARGET_FINITE_EVIDENCE_PREPARATION",
       "independentPreparation": {
-        "D1": "Registered exact entry/test diagnostic fix and source-bound finite log allowlist. Original source repro preserved.",
-        "QB": "Fiveleaf verdict adopted; no repeat.",
+        "D1": "Two-leaf source frozen; await stopped-log facts, no source writes.",
+        "QB": "Exact 7a27839d two-leaf diagnostic increment assigned; no PG or old full rerun.",
         "D2": "One af9078 build/7298members/tail PASS adopted; no repeat.",
-        "T45": "Bounded stopped-r15 log extraction prepared only; await allowlist and exact C binding before one actual readonly job.",
+        "T45": "One exact stopped-r15 bounded readonly extraction authorized with frozen18-rule allowlist; no PG start or replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31031,7 +31031,7 @@
         "synthetic25PositivePassed": false,
         "commitDiagnosticFix": {
           "registeredAt": "2026-11-06T15:40:36+08:00",
-          "state": "D1_TWO_LEAF_REGISTERED_SOURCE_REPRO_THEN_MINIMUM_BRANDED_DIAGNOSTIC_FIX",
+          "state": "SOURCE_FROZEN_7A27839D_ORIGINAL_QB_SCOPED_REVIEW_T45_BOUNDED_STOPPED_LOG_IN_PARALLEL",
           "writer": "D1",
           "files": [
             {
@@ -31046,7 +31046,25 @@
           "scope": "Attach original branded result and existing finite code/diagnostic slots. COMMITTED remains sole success; original guard message, 15 JSON keys and 3 stage enums remain. No raw error, SQL, secrets, Python or ACL changes.",
           "actualR15CommitOutcome": "UNKNOWN_NOT_EXPORTED",
           "avoidNewPGForDiagnosisOnly": true,
-          "parallelT45": "Prepare one bounded stopped-r15 private-log extractor; wait for precise source-bound allowlist before actual read. No PG start or replay."
+          "parallelT45": "Prepare one bounded stopped-r15 private-log extractor; wait for precise source-bound allowlist before actual read. No PG start or replay.",
+          "sourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
+          "D1ReceiptSHA256": "dace8dea5d8a7d57d3b51c9d14678135ef1d5f4e9616286f65ed61085bbb2f93",
+          "PINS_SHA256": "71c61b602cf235bfd11ef8343f8e6a1997a8e592f1048492a6da9bf4d8354999",
+          "D1LocalSourceSetSHA256": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+          "sourcePinsChanged": 1,
+          "sourcePinsUnchanged": 213,
+          "authorChecks": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "mode": "SCRIPTED_COORDINATOR_GUARD_SERIALIZER_NOT_PG"
+          },
+          "allowlistSHA256": "92e57ec291f2b52329243498b006248e2602a7cf7f00932181af25952f38e7fa",
+          "allowlistRules": 18,
+          "T45PreparationSHA256": "ccf88dbf2434c357120bbd3f79bd3196280f26688ac038039caaf0a37a5aa2be",
+          "T45ReadonlyKey": "t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01",
+          "actualReadonlyResult": "PENDING",
+          "QB": "ORIGINAL_QB_EXACT_TWO_LEAF_ONLY"
         }
       }
     },
@@ -31456,7 +31474,7 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T15:40:36+08:00",
+      "at": "2026-11-06T15:59:14+08:00",
       "phase": "NORMAL_COMMIT_BRANDED_DIAGNOSTIC_FIX_AND_STOPPED_TARGET_FINITE_EVIDENCE_PREPARATION",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",

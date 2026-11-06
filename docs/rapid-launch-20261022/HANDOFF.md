@@ -1967,3 +1967,7 @@ C核原3stage收据和材料化887f9162退出0/364.219s，完整包bc9537、sour
 ## 2026-11-06T15:40:36+08:00 - R15 positive commit diagnostic seam and finite evidence
 
 R15 installed the native schema and published its record. Three actual negative cases and rollback snapshot checks passed; the subsequent positive commit child failed and its outcome remains UNKNOWN_NOT_EXPORTED. Original D1 is the sole writer of fresh35-isolated-entry-v1.mjs and its direct test, adding only original branded diagnostics while preserving COMMITTED-only acceptance. Original T45 has prepared one bounded stopped-target log extraction, pending source-bound finite allowlist and exact scope. No new PG, replay, production or REAL action is authorized by this diagnostic registration. Existing source/QA/build and negative-case evidence are reused.
+
+## 2026-11-06T15:59:14+08:00 - R15 diagnostic source fixed; original QB and finite evidence route
+
+Source 7a27839d2e0bea7f729fcf5f9ac6518a763a38ba contains exactly two D1-owned leaves. Author two targeted checks passed, no PG claim. D1 receipt dace8dea5d8a7d57d3b51c9d14678135ef1d5f4e9616286f65ed61085bbb2f93 and actual pins adopted. Original QB reviews only this diagnostic increment. Original T45 is assigned one stopped-r15 readonly log extraction using fixed allowlist 92e57ec291f2b52329243498b006248e2602a7cf7f00932181af25952f38e7fa, max2MiB and10s; no PG start/replay. Positive outcome remains UNKNOWN. Build root af9078 remains the last actual runtime; no diagnostic-only rebuild.

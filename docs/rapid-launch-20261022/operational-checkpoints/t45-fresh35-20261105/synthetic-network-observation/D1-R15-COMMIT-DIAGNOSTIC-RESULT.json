@@ -1,0 +1,207 @@
+{
+  "format": "D1_R15_NORMAL_COMMIT_DIAGNOSTIC_SOURCE_RESULT_V1",
+  "status": "EXACT_TWO_LEAF_DIAGNOSTIC_FIX_COMPLETE_AWAIT_ORIGINAL_STOPPED_LOG_FACTS_NO_SEPARATE_BUILD_OR_PG",
+  "checkedAtUTC": "2026-11-06T07:54:19.572515+00:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "owner": "C-registered soleD1 entry/directtest, no SQL/Python/frontend/shared-contract/permission changes",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "beforeSha256": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff",
+      "afterSha256": "15ed4a039484c41812f19a6ad6efb8362dad507e12f78d7d735a38f8fe8a4418",
+      "bytes": 21861
+    },
+    {
+      "path": "tests/fresh35-isolated-entry.test.mjs",
+      "beforeSha256": "c39887f1dec1d8eba016b8d55db976e5a6df3d0f0c83713c9b604362b859f99c",
+      "afterSha256": "3baa2754358d3a1257ed7686ea983a623a74d08b148065043881ec3b14c556cc",
+      "bytes": 34642
+    }
+  ],
+  "sourceSet": {
+    "before": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+    "D1LocalAfter": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+    "sourcePinCount": 214,
+    "changed": 1,
+    "unchanged": 213,
+    "finalCRoot": "NOT_CLAIMED"
+  },
+  "sourceDefect": {
+    "scope": "normal-result diagnostics only, not an identified SQL cause",
+    "original": "normal COMMITTED requirement throws without retaining the original result WeakMap key, collapsingROLLED_BACK/UNKNOWN/ALREADY_COMMITTED into the same guard code and null diagnostics",
+    "readOnlyProof": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R15-COMMIT-DIAGNOSTIC-SOURCE-01/RESULT.json",
+      "sha256": "bb868d7d42e6da8167b0f2c1f2b3e63ef502b5ab3309e1041906b8fdc8d2cc1a",
+      "reproSha256": "09e5f93fe2675f8a69e1c38e8e63de7c8c9168e16cb7e832e4e97793993e8ed1"
+    },
+    "actualNormalFailureCause": "UNKNOWN"
+  },
+  "fix": {
+    "exactProductionLineCount": 1,
+    "COMMITTEDOnly": true,
+    "originalRejectMessage": "FRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED",
+    "privateAttachment": "exact genuine validationResult object, preserving original WeakMap identity",
+    "existingValidationCodeSlot": "trusted existing public result.code for ROLLED_BACK or UNKNOWN; fixed UNEXPECTED_ALREADY_COMMITTED marker for rejected existing committed result",
+    "existingSlots": "original15 receipt keys and3 validationStage values unchanged; normal validationStage staysnull, private original stage/SQLSTATE/internal code recovered only from branded metadata",
+    "doNotEmit": [
+      "summary",
+      "native error message",
+      "SQL/parameters",
+      "stack/private paths",
+      "credentials/business values"
+    ],
+    "noRetryOrAdditionalQuery": true,
+    "originalCommitUnknownRuleUnchanged": true,
+    "businessDTOOrPermissionChange": false,
+    "pythonConsumer": "unchanged original regex/publiccode and7 diagnostic phase enums already cover these values; no additional keys/stage enum or Python changes"
+  },
+  "tests": {
+    "red": {
+      "path": "TEST-red.log",
+      "failed": 1,
+      "reason": "original guard did not attach genuine validationResult"
+    },
+    "green": {
+      "path": "TEST-green.log",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "new normal guard/coordinator/serializer exact-source regression plus directly affected finite JSON receipt assertion"
+    },
+    "regressionCases": [
+      "COMMITTED proceeds",
+      "ROLLED_BACK retains original publiccode/23514/STEP brand",
+      "UNKNOWN after lost COMMITACK retains COMMIT phase, discards once and sends no ROLLBACK retry",
+      "ALREADY_COMMITTED remains rejected by fixed marker with no summary export",
+      "all15 keys remain, normalstage null, no private message/summary/detail emitted"
+    ],
+    "modelsOnly": "scripted query/kernel at actual coordinator/guard/serializer seam, not PG or native driver revalidation",
+    "oldEvidenceReused": [
+      "r15 actual three negatives and equal rollback snapshot",
+      "original nativeReady proof",
+      "r14 strict receipt CHECK/5 leaves",
+      "original entry sequential connections"
+    ],
+    "noBroadSuite": true
+  },
+  "fixtureReview": {
+    "source": "tests/fixtures/unified-import/whole-package-synthetic.ts158 repeatable steps yields structuredClone(storedStep)",
+    "badApproval": "original initialize deep-cloned before altering approval digest",
+    "missingAndFinal": "negative mutation affects only returned cloned iteration rows/request",
+    "commitChild": "rebuilds a fresh fixture and original stage binding must match before reaching the COMMITTED requirement",
+    "conclusion": "no source evidence of persistent negative mutation polluting normal program; this is not proof of normal runtime state"
+  },
+  "staticStoppedLogAllowlist": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R15-COMMIT-REQUIRED-SOURCE-01/STATIC-ERROR-ALLOWLIST.json",
+    "sha256": "92e57ec291f2b52329243498b006248e2602a7cf7f00932181af25952f38e7fa",
+    "bytes": 12858,
+    "rules": 18,
+    "scopedBodies": 6,
+    "rulesKinds": {
+      "source_raise_code": 8,
+      "native_postgres_constant": 2,
+      "existing_check_constraint": 4,
+      "noncode_source_literal_fingerprint": 4
+    },
+    "stoppedR15SourceBinding": {
+      "root": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+      "sourceSet": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+      "bodyPinsMatchR15Final152": true,
+      "sourcePacketPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R15-COMMIT-REQUIRED-SOURCE-01/NORMAL-SQL-SOURCES.json",
+      "sourcePacketSha256": "f21bc158958e2ac48b04fb1df9c6d2c889b4ebc50a1f8ee080607687964c9c6c"
+    },
+    "mtimeBounds": [
+      "snapshot-after-rollback.json original mtime",
+      "commit-child-failure.json original mtime"
+    ],
+    "labels": "non-code source fingerprints and native constant labels explicitly not emitted SQL codes",
+    "noRawExport": "primary ERROR/FATAL only; only fixed labels, actually logged SQLSTATE ornull and count; do not infer observed SQLSTATE from declared source metadata",
+    "limitedCoverage": "if missing/truncated/unbounded/log does not contain a distinguishing fact, UNKNOWN; worker old15-slot receipt alone cannot reconstruct discarded result",
+    "deliveredTo": "C and original T45; C alone binds/dispatches the one existing stopped-log read",
+    "D1ServerOrLogActions": 0
+  },
+  "actualR15": {
+    "sourceRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+    "sourceSet": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+    "safeResultSha256": "d31aab16dfc4e71ca623589c1e8e975905f69a1bac6b2809580f5ca3b1aa1138",
+    "receiptSha256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
+    "threeNegativesAndRollbackSnapshot": "REAL_PG_PASS_REUSED",
+    "schemaRecord": "COMMITTED_PUBLISHED",
+    "normalCommitChild": "EXIT1_OUTCOME_UNKNOWN_NO_REPLAY",
+    "normalValidationCode": "FRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED",
+    "normalActualStateAndCode": "UNKNOWN_NOT_EXPORTED",
+    "noCommitOrRollbackInference": true,
+    "cid": "39ff910e6ac6941d20dfcf7b4f7a5be46b80c2150f75794b42631e79ea99425b",
+    "stopped": true,
+    "cleanupSixTrue": true
+  },
+  "sourceChecks": {
+    "onlyProductionEdit": "exact1 original normal COMMITTED guard line",
+    "sourcePinChanges": [
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "before": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff",
+        "after": "15ed4a039484c41812f19a6ad6efb8362dad507e12f78d7d735a38f8fe8a4418"
+      }
+    ],
+    "sourcePinCount": 214,
+    "unchangedPins": 213,
+    "r14FiveLeavesUnchanged": true,
+    "sourceCopiesReadbackEqual": true,
+    "patchCheckTool": "/usr/bin/patch -C -p1 -i",
+    "forwardExitCode": 0,
+    "reverseExitCode": 0,
+    "bothCheckOnlyCopiesRehashedUnchanged": true,
+    "noTrailingWhitespace": true,
+    "gitOperations": 0
+  },
+  "notDone": [
+    "normal SQL root cause confirmation",
+    "private stopped log read byD1",
+    "diagnostic-only QB/build/newPG",
+    "old key replay/production action/Git"
+  ],
+  "nextOwner": "C/T45 first obtain the single bounded stopped-log facts; keep2 leaves read-only. If a real SQL issue is proven, combine its authorized minimal repair with this diagnostic delta for one later QB/build. No diagnostic-only new PG.",
+  "artifacts": {
+    "BEFORE-PINS.json": {
+      "sha256": "0035377be68a3df782d70ef7c38d03486393265ac3b01af02c98915487335059",
+      "bytes": 353
+    },
+    "PINS.json": {
+      "sha256": "71c61b602cf235bfd11ef8343f8e6a1997a8e592f1048492a6da9bf4d8354999",
+      "bytes": 539
+    },
+    "SOURCE.patch": {
+      "sha256": "1de6b667ec0e6a9db8530707b194fe16c44838f9e64493262bc4c0b6067b7126",
+      "bytes": 5523
+    },
+    "SOURCE.reverse.patch": {
+      "sha256": "1c6392b0fc226c542e5698e2fa25843b2616c15487111fa81092d875254ceeae",
+      "bytes": 5523
+    },
+    "SOURCE-CHECKS.json": {
+      "sha256": "605baf6d3dc89fc0eaa9f928be30922004a6b21be77fa0a5ba5126682c5ab2ca",
+      "bytes": 678
+    },
+    "LOCAL-SOURCE-DESCRIPTION.json": {
+      "sha256": "c91652ad85ad9992d18b9743af6cf4cb4f3b20baffcc9953ab44959195902cdf",
+      "bytes": 350853
+    },
+    "TEST-red.log": {
+      "sha256": "c77051e822f96eb16b97cdc26720c30de4c57edfc4a6a51d9ec6a7070ca19620",
+      "bytes": 1274
+    },
+    "TEST-green.log": {
+      "sha256": "2e1db7ac938374ffeae058df642ff0eb3295f4856146a8c10cd13e9609c84e60",
+      "bytes": 402
+    },
+    "STATIC-ERROR-ALLOWLIST.json": {
+      "sha256": "92e57ec291f2b52329243498b006248e2602a7cf7f00932181af25952f38e7fa",
+      "bytes": 12858
+    },
+    "NORMAL-SQL-SOURCES.json": {
+      "sha256": "f21bc158958e2ac48b04fb1df9c6d2c889b4ebc50a1f8ee080607687964c9c6c",
+      "bytes": 227337
+    }
+  }
+}
