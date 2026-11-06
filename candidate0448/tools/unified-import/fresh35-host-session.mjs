@@ -252,7 +252,9 @@ async function admitOrdinaryPool(pool,connection,synthetic){
   // Invalidations only: no source hashing/catalog scans on business requests.
   // Watch the finite existing source/reference pin set, not the workspace tree.
   const watched=new Set([FRESH35_COMBINED_RECORD_PATH,...pins.map(p=>resolve(moduleRoot,p.path)),paths.modelPath,paths.functionsPath,paths.baselineDirectory,resolve(t.ordinary.referenceDirectory,'INDEX.json')].filter(x=>typeof x==='string'));
-  for(const path of [...watched])watched.add(dirname(path));
+  // The synthetic record's root0711 authority parent is not listable. Keep
+  // the readable record inode watch and exact generation checks below.
+  for(const path of [...watched])if(!synthetic||path!==FRESH35_COMBINED_RECORD_PATH)watched.add(dirname(path));
   watched.add(moduleRoot);
   // The isolated workspace is root0711: watch the readable fixed inode only,
   // never its non-listable parent. Existing change/rename/error revokes the lease.

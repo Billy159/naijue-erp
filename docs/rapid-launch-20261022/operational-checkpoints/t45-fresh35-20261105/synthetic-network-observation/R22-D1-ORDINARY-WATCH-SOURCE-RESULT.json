@@ -1,0 +1,235 @@
+{
+  "format": "D1_R22_SYNTHETIC_RECORD_PARENT_WATCH_FIX_V1",
+  "status": "EXACT_TWO_LEAF_SOURCE_FIX_FROZEN_OFFLINE_WATCH_REVOCATION_PASS_NOT_NATIVE_LINUX_PG_VERIFIED",
+  "recordedAt": "2026-11-06T22:29:05.944353+08:00",
+  "sourceRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "actualModelEffortFast": "UNVERIFIED",
+  "authority": "C registered originalD1 unique2leaves after read-only exact host-body RED; explicitly retain record/bootstrap inode watchers, generation checks, all other parents and production path without ACL changes.",
+  "files": [
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "beforeSHA256": "63a4fba90214b982ba9799d39dfe0c041b6373df6f91decd141000535da4c33d",
+      "beforeBytes": 33028,
+      "afterSHA256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a",
+      "afterBytes": 33227
+    },
+    {
+      "path": "tests/fresh35-ordinary-production-v2.test.mjs",
+      "beforeSHA256": "2a06a5faffc5d8b9d30b36b72901b81f444f9350a3ab83acc7c75648d91222e8",
+      "beforeBytes": 19357,
+      "afterSHA256": "6e41fec1662dc2dc43bda6300e82153a34a8ece20a9217c093f8fb33b1841521",
+      "afterBytes": 23203
+    }
+  ],
+  "localSourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "CIntegrationRootOrCommit": "NOT_CREATED_BY_D1_C_OWNS_INTEGRATION",
+  "actualR22Preserved": {
+    "safeResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r22-pg20-execution-01/RESULT.json",
+    "safeResultSHA256": "c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d",
+    "rawReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
+    "sourceRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
+    "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+    "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+    "ordinaryFailure": {
+      "automaticRetry": false,
+      "childDiagnosticUnavailable": false,
+      "childFailure": {
+        "actualInteger": null,
+        "errno": "EACCES",
+        "errorType": "Error",
+        "expectedInteger": null,
+        "format": "FRESH35_ORDINARY_FAILURE_V1",
+        "guardCode": null,
+        "phase": "REAL_SYNTHETIC_ADMISSION",
+        "source": "runFresh35OrdinaryIntegration:catch",
+        "sqlstate": null
+      },
+      "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+      "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+      "phase": "REAL_PG_AND_MIDDLEWARE",
+      "state": "FAILED_OR_OUTCOME_UNKNOWN"
+    },
+    "normalSyntheticImport": {
+      "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+      "importState": "COMMITTED",
+      "replayState": "ALREADY_COMMITTED",
+      "readbackState": "VERIFIED",
+      "retainedHeaders": 25,
+      "retainedSettlements": 27,
+      "connectionCleanup": "CLOSED"
+    },
+    "containerStopped": true,
+    "cleanupSixTrue": true,
+    "actualFirstThrowPath": "UNKNOWN_NOT_EXPORTED; catch label does not identify original filesystem operation"
+  },
+  "sourceDiagnosis": {
+    "callChain": [
+      "REAL_SYNTHETIC_ADMISSION",
+      "createSyntheticRuntime35ApplicationApi",
+      "createPostgresSyntheticRuntime35ApplicationApi",
+      "admitFresh35SyntheticOrdinaryPoolV1/admitOrdinaryPool",
+      "finite watched parent expansion -> fs.watch(record parent)"
+    ],
+    "originalBoundary": {
+      "recordPath": "/etc/naijue-erp/fresh35-combined-installation-v1.json",
+      "recordParentControlledOwner": 0,
+      "recordParentControlledMode": "0711",
+      "ordinaryUIDAndGID": 61035,
+      "supplementaryGroups": [],
+      "fileContractMode": "0644",
+      "parentReadPermissionForOrdinary": false,
+      "parentTraversePermissionForOrdinary": true
+    },
+    "metadataEvidence": {
+      "originalT45ReadOnlyMetadata": "Existing frozen ops source and existing successful materialization/mount receipts reused; not a new target stat",
+      "wrapperPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-f16218-install-20261106-01/bundle/fresh35-container-successor.py",
+      "wrapperSHA256": "8eb2e9d8823ec3dc13236e640ded2b866bb1277e481e5248603eb4191dd9da22",
+      "authorityCreation": "materialize mkdir/chmod authority0711; original dispatcher/root creates it",
+      "authorityMount": "common/owned ROOT/authority -> /etc/naijue-erp",
+      "stateRootDistinct": "ROOT/state0755 is a different mount; do not substitute it for authority0711",
+      "runtimeDirectoryStat": "NOT_EXPORTED"
+    },
+    "nativePermissionReference": {
+      "url": "https://man7.org/linux/man-pages/man2/inotify_add_watch.2.html",
+      "fact": "inotify_add_watch requires read permission; EACCES if read access is not permitted"
+    },
+    "bootstrapSameClassCheck": {
+      "parentContract": "root0/0711 WORK; distinct from state0755",
+      "existingRealWatchOrdering": "bootstrap file is added only after finite dirname expansion",
+      "bootstrapParentWatchedBeforeFix": false,
+      "runtimeBootstrapCodeChanged": false,
+      "newTestExplicitlyChecksBothFixedFilesAndExcludesBothPrivateParents": true
+    }
+  },
+  "implemented": {
+    "hostChange": "Only synthetic fixed-record entry is excluded from adding its dirname. The record itself remains in the original finite watch set. Added two-line explanatory comment.",
+    "exactCondition": "if(!synthetic||path!==FRESH35_COMBINED_RECORD_PATH)",
+    "preserved": {
+      "hostInverseExact": true,
+      "onlySyntheticFixedRecordParentExcluded": true,
+      "productionPathUnchanged": true,
+      "allOtherSourceReferenceWatchersUnchanged": true,
+      "recordInodeWatchAndCallbacksUnchanged": true,
+      "generationBytesIdentityStartupLeaseChecksUnchanged": true,
+      "noEACCESCatchOrSilentDowngradeAdded": true,
+      "bootstrapFileAddedAfterParentExpansion": true,
+      "bootstrapParentWasNeverAdded": true,
+      "ACLOrDirectoryModeChanged": false,
+      "actualLinuxInotifyOrPG": "NOT_RUN",
+      "permissionModel": "finite Linux read permission projection; native local inode change events and actual host implementation body",
+      "originalDirectTestBodiesUnchanged": true
+    },
+    "closure": {
+      "afterSourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+      "restoredBeforeSourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+      "changedSourcePins": 1,
+      "currentSourcePins": 214,
+      "allOtherPinsAndDescriptorFieldsExact": true
+    }
+  },
+  "authorVerification": {
+    "preImplementationRepro": "Exact frozen source-f162184aafcd body/current-before direct model + finite root0711/UID61035 Linux read-permission projection: original EACCES before scriptedpool acquisition; memory-only corrected body admits model and closes all resources",
+    "reproHistoricalInputs": "REPRO.mjs was executed before edits, and asserts original before directtest hash. Before inputs are preserved; do not run it against updated working test file. No native Linux/PG capability was issued.",
+    "directRegressionBeforeFix": {
+      "tests": 3,
+      "pass": 1,
+      "fail": 2,
+      "skipped": 0,
+      "cause": "new synthetic finite permission tests failed EACCES; production negative already rejected the unlistable parent as required"
+    },
+    "directRegressionAfterFix": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0,
+      "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=non-listable authority tests/fresh35-ordinary-production-v2.test.mjs",
+      "cases": [
+        "native local fixed-record inode overwrite/rename/unlink/replacement and injected watcher error revoke allwatchers; current/lease/re-admission rejected without further queries",
+        "before-validation/after-watch/release generation swaps/deletion and releaseerror reject startup and cleanup watchers/leases",
+        "production privateparent watch still raises EACCES before any scriptedpool connection"
+      ]
+    },
+    "modelScope": "Actual host implementation body; original fixed-record/catalog/source IO model with one Linux read-permission projection. Inode change events use local native fs.watch; not native Linux syscall validation.",
+    "patchDryCheck": {
+      "forwardExitCode": 0,
+      "reverseExitCode": 0,
+      "sourceAndBeforeCopiesReadBackExact": true
+    }
+  },
+  "boundaries": {
+    "onlyRegistered2SourceLeavesWritten": true,
+    "SQLOrBusinessRulesPermissionsContractsChanged": false,
+    "ACLDirectoryModeOrOwnerChanged": false,
+    "T45LauncherOrOrdinary9KeyDiagnosticChanged": false,
+    "collectorModeQARepeated": false,
+    "newPollingFallbackOrErrorCatch": false,
+    "PGQueries": 0,
+    "serverOrLogJob": false,
+    "privateContextOrSecretsOrRealDataRead": false,
+    "newInstallOrOldKeyReplay": false,
+    "buildOrFullSuite": false,
+    "GitOperations": false,
+    "REALOrProduction": false
+  },
+  "limitations": [
+    "ActualLinux unique original throw is not proven by the closed errno or offline model",
+    "Corrected ordinary/API business chain not tested on new PostgreSQL target",
+    "Originalr22 normalCOMMITTED25/27/replay/readback/rollback and stopped cleanup evidence remain valid, cannot replay oldcommitted/unknown keys",
+    "C must integrate and bind accurate successor before originalQB/D2/T45 continuation"
+  ],
+  "artifacts": {
+    "BEFORE-PINS.json": {
+      "sha256": "cb986d20c7b73fd0f0fc677484b1e59a37043dfd2098fe1eff9ba38de7ceaa26",
+      "bytes": 345
+    },
+    "PINS.json": {
+      "sha256": "a730695c89ee9d13cac47df0f07d227f612b3cfb04c7bc9f67ebd82286d099b2",
+      "bytes": 593
+    },
+    "SOURCE.patch": {
+      "sha256": "2fb9989d7e212e6c07d9bcde55bc2869ec3991bfe558ca936bab21861337735f",
+      "bytes": 9523
+    },
+    "SOURCE.reverse.patch": {
+      "sha256": "1168c50926f2be39997aeb1e06390d570748a64fb7844f861e19f54b706ec627",
+      "bytes": 9523
+    },
+    "PATCH-CHECKS.json": {
+      "sha256": "2ffb8e3423e1a413d0e2b450b5e2724f5c49b6459709db4550383cd57eba537d",
+      "bytes": 401
+    },
+    "SOURCE-CHECKS.json": {
+      "sha256": "c77b80ce27e577f0e397efbdec4714bb6d02b8c2587be86110352c0c97a13486",
+      "bytes": 672
+    },
+    "CLOSURE-CHECKS.json": {
+      "sha256": "733a5b526d2756585767809ca231d8504f737719e4d792045db35795db86c3af",
+      "bytes": 302
+    },
+    "LOCAL-SOURCE-DESCRIPTION.json": {
+      "sha256": "61c557146b2adab5e21a4f6d5483aef31d268c07e2bf4d5d44cbfc119c08c55f",
+      "bytes": 351144
+    },
+    "TEST-red.log": {
+      "sha256": "3dc9a0dfb8f9b6a3f1bde54e647e44292b78f80b96521b5215ace94b5aef775f",
+      "bytes": 108263
+    },
+    "TEST-green.log": {
+      "sha256": "9b901271a6a0a928db71986398f383594035f7913640ffc0013eaa33f91232d4",
+      "bytes": 699
+    },
+    "REPRO.mjs": {
+      "sha256": "c6ba42f807fe9a6541e6abe1968a33049aa19aec7187cce332c8401ff28c5b3c",
+      "bytes": 4193
+    },
+    "REPRO-RESULT.json": {
+      "sha256": "a38bbc6360c8bcd0c58eec30f7fc92a0fcc957398641be452b1252102a30805a",
+      "bytes": 1193
+    },
+    "REPRO-stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "next": "D1 source2leaves frozen. C integrates exactpins; originalQB only affected filewatch/record integrity checks, originalD2 one build, originalT45 accurately-bound successor. No ACL widening or original request replay."
+}

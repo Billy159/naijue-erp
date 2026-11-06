@@ -28509,9 +28509,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R22_ADMISSION_WATCH_RED_REPRODUCED_D1_TWO_LEAF_MINIMUM_FIX_WIP",
+      "critical": "R22_D1_EXACT_TWO_LEAF_WATCH_REPAIR_DELIVERED_NOT_YET_QB",
       "independentPreparation": {
-        "D1": "Original body RED EACCES reproduced in scoped permission projection; exact synthetic record-parent watch repair/direct revoke tests in progress, two-leaf WIP preserved.",
+        "D1": "Two exact leaves frozen; author3/3 scopedPASS10be0f30, no Linux/PG claim.",
         "QB": "r22 mode-only PASS adopted; no new QA absent new source.",
         "D2": "r22 fixed build/source complete; no duplicate build.",
         "T45": "r22 terminal stopped/6cleanup; no new server/PG/replay, only existing local metadata if D1 needs.",
@@ -32448,7 +32448,7 @@
           "normalCommitMustNotReplay": true
         },
         "sourceDiagnosisContinuation": {
-          "state": "RED_REPRODUCED_TWO_LEAF_WIP_NOT_ACCEPTED",
+          "state": "D1_SOURCE_AND_SCOPED_MODEL_PASS_NOT_LINUX_PG",
           "owner": "original D1",
           "files": [
             "tools/unified-import/fresh35-host-session.mjs",
@@ -32466,7 +32466,10 @@
             "Independent QB increment",
             "New fixed build",
             "Actual Linux ordinary run after fix"
-          ]
+          ],
+          "authorReceiptSHA256": "10be0f307de093341cce6fc3371c19febf28d328ee124c2d0530cd63c20aecd6",
+          "tests": "3/3 passed no skip, record inode revoke and startup generations preserved; existing suite not repeated",
+          "sourceSetAfter": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f"
         }
       }
     },
@@ -32876,12 +32879,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:26:53.545450+08:00",
-      "phase": "R22_ADMISSION_WATCH_RED_REPRODUCED_D1_TWO_LEAF_MINIMUM_FIX_WIP",
+      "at": "2026-11-06T22:30:12.862804+08:00",
+      "phase": "R22_D1_EXACT_TWO_LEAF_WATCH_REPAIR_DELIVERED_NOT_YET_QB",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original D1 sole writer host-session and exact existing direct tests",
-      "nextOwner": "Original QB affected source increment after fixed D1 delivery",
+      "currentOwner": "C fixed source checkpoint then original QB",
+      "nextOwner": "Original QB two-leaf affected increment",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
