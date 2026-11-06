@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T12:41:00+08:00",
+    "at": "2026-11-06T13:00:51+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28507,24 +28507,34 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 original r11 staged preparation then actual resources; C new PG20/C9 only after readiness.",
+      "critical": "D1 finishes combined5leaf source package; C single freeze; QB narrow review and D2 one full build in parallel; T45 exact fresh r13 small whole flow, no r12 replay.",
       "independentPreparation": {
-        "D1": "Only original rollback/import approval exact producer/consumer seam diagnosis, no PG/oldcatalog.",
-        "T45": "Original Python producer and bounded stopped receipts only; no r10 reinstallation/restart or job replay.",
-        "D2": "ac19 deliverable preserved, no further builds until precise reviewed delta.",
-        "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "Original snapshot source accepted; await exact new approval delta, no broad recheck.",
-        "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
+        "D1": "Current original alias+native-ready5leaves; next only concrete actual whole-flow failure.",
+        "QB": "Next same fixed5leaf candidate; reuse existing CASE/catalog/diagnostic evidence.",
+        "D2": "Next same fixed candidate build/pack/exact tail from actual retained b8e35 receiver; no build before freeze.",
+        "T45": "Current no PG job; retain stopped r12 scene. Next accurate r13 pins/resources/window only after fixed QA/build.",
+        "D3": "Fixed REALr3 and independent readback criteria ready, waiting actual target; no rescan/cleaning.",
+        "QF": "Existing core browser prerequisites ready, waiting same-version normal new35 host; no fullsite Demo gate."
       },
       "noFiller": true
     },
     "actualExecution": {
       "newClusterCreated": true,
-      "newDatabaseInstalled": false,
+      "newDatabaseInstalled": true,
       "realDataImported": false,
       "artifactTransferred": true,
       "productionChanged": false,
-      "newClusterScope": "Only original synthetic r1/r2/r3; all stopped with preserved failure scenes, not a production database."
+      "newClusterScope": "Isolated synthetic r12 only: schema COMMITTED, installation record durably published, postinstall snapshot present; stopped after negative INITIALIZE42702/transaction UNKNOWN. Production/newREAL database not installed or imported.",
+      "supersededSnapshotBeforeR12": {
+        "newClusterCreated": true,
+        "newDatabaseInstalled": false,
+        "realDataImported": false,
+        "artifactTransferred": true,
+        "productionChanged": false,
+        "newClusterScope": "Only original synthetic r1/r2/r3; all stopped with preserved failure scenes, not a production database."
+      },
+      "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
+      "productionDatabaseInstalled": false
     },
     "privateReadyRows": {
       "owner": "D3",
@@ -28861,7 +28871,7 @@
       "occurrencesRegistered": 503457,
       "registryAndTargetRead": false,
       "error": "SQLite storage write full while neededIdentityKeys; actual OS cause unknown. Runtime free space fell to400MiB; post-cleanup3.9GiB cannot prove failure-time free space. No low per-db code quota found.",
-      "next": "Await sufficient space for existing one bounded fixed055 full-source run; current a10 stream preflight resource/readiness may independently proceed only if verified adequate",
+      "next": "Reuse fixed r3 package and successful EOF/preflight. Original D3 waits actual admitted target for independent PG amount/inventory/reference readback; do not repeat source run or wait for previously resolved disk condition.",
       "files": [
         "tools/unified-import/source-occurrence-storage.mjs",
         "tests/source-occurrence-storage.test.mjs"
@@ -28886,12 +28896,12 @@
       "budgetIsMeasuredPeak": false,
       "capacityDecision": "Human retained3 old exports; new available space observed11,311,050,752B. Original D3 reactivated to confirm exact temp volume and then one bounded fixed055 run; stream preflight only after scratch cleanup.",
       "latestWorkspaceAvailableBytes": 11311050752,
-      "currentBoundedRunState": "RUNNING_ACTUAL_FIXED055_SOURCE_RECONCILIATION",
+      "currentBoundedRunState": "COMPLETED_SOURCE_EOF_AND_PREFLIGHT_EXIT0",
       "actualRunRelativePath": "v0448-final-merge-D3-51/r3/source-reconciliation-05579a94/run-01",
       "actualTempVolumeFreeBytesAtStart": 11306754048,
       "actualSourceEOFThisRun": true,
       "actualOccurrencesThisRun": 503457,
-      "currentStageReported": "Five documents tables EOF: sales_header28894, transfer_header14835, sales_line83399, transfer_line273948, sales_settlement26360. Last inventory_baseline and explicit-zero processing; no final pass yet.",
+      "currentStageReported": "All26tables EOF verified;503457 declared occurrences,460188 registry,608916 targets; source0/preflight0/issues0. Not a PG import or independent target readback.",
       "reportedScratchBytesApprox": 1730000000,
       "reportedVolumeFreeBytesApprox": 9580000000,
       "reportedScratchBytes": 2821895688,
@@ -28910,7 +28920,12 @@
       "importEligible": false,
       "sourceTruthHandoffSHA256": "05eab0d410a06988997c7b5041bdda1b76a58a11b7bc2ec0abe9106a3621c22d",
       "remaining": "PG independent amount/inventory/reference readback and same-candidate business; scope marker source_truth_verified=false is retained, not by itself a failure/new all-source resampling prerequisite. Prior source census/classification and aggregate reviews reused.",
-      "targetedSevenColorAndFourStock": "CLOSED_BY_EXACT_SOURCE/FK_COLOR_7OF7_AND_PRIOR_A/BELT112_RULES; current mapping defects0; no package changes or full reruns"
+      "targetedSevenColorAndFourStock": "CLOSED_BY_EXACT_SOURCE/FK_COLOR_7OF7_AND_PRIOR_A/BELT112_RULES; current mapping defects0; no package changes or full reruns",
+      "supersededProgressSnapshot": {
+        "next": "Await sufficient space for existing one bounded fixed055 full-source run; current a10 stream preflight resource/readiness may independently proceed only if verified adequate",
+        "currentBoundedRunState": "RUNNING_ACTUAL_FIXED055_SOURCE_RECONCILIATION",
+        "currentStageReported": "Five documents tables EOF: sales_header28894, transfer_header14835, sales_line83399, transfer_line273948, sales_settlement26360. Last inventory_baseline and explicit-zero processing; no final pass yet."
+      }
     },
     "settlement25AcceptedImplementation": {
       "commit": "a10d8daa06988abe63de28108473098adf19fff7",
@@ -28999,9 +29014,10 @@
       "approvalRequiredBy": "/Users/billy/Desktop/Workspace/agents.md:63",
       "humanDecision": "保留，我另行释放空间",
       "humanSource": "call_06cfa0afedd741fc8cb642a9e97cf8ac item0",
-      "next": "User releases space separately; original D3 retains fixed code and inputs, resumes bounded run only after actual sufficient capacity. No substitute deletion list or repeated unchanged polling.",
+      "next": "Human retained exact3oldexports; no deletion. Previous source-run disk blocker superseded by completed full EOF/preflight; do not redispatch source scan.",
       "humanReply": "保留，我另行释放空间",
-      "deleted": false
+      "deleted": false,
+      "previousNextPreserved": "User releases space separately; original D3 retains fixed code and inputs, resumes bounded run only after actual sufficient capacity. No substitute deletion list or repeated unchanged polling."
     },
     "native35SyntheticOrdinaryContinuation": {
       "state": "FIXED_FULL_BUILD_ARCHIVE_READY_ORIGINAL_BINARY_STAGING_NOT_PG",
@@ -29534,7 +29550,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay.",
+      "next": "Original D1 combined5leaf alias/native-ready source delivery, then C freezes once; original QB narrow review and D2 one build in parallel; original T45 fresh r13 only after accurate bindings. r12 never replayed.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30588,7 +30604,7 @@
         "ordinaryBusinessPassed": false,
         "synthetic25Passed": false,
         "ambiguityFix": {
-          "state": "EXACT_MINIMUM_SOURCE_REPAIR_AUTHORIZED_ORIGINAL_D1_IN_PROGRESS",
+          "state": "ALIAS_3LEAVES_FROZEN_EXTRA_NATIVE_READY_2LEAVES_AUTHORIZED_IN_PROGRESS",
           "owner": "D1",
           "files": [
             "candidate0448/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
@@ -30603,9 +30619,20 @@
             "observed": "Original D1 compaction01a1af29 followed by unrelated13staff-hall lookup, current exact42702 task not delivered",
             "action": "C read actualturn once and redirected sameD1 to precompaction4alias/nativeReady断点; no newwriter/task or overrideWIP",
             "status": "Original D1 acknowledged old-task drift corrected; now original4alias repair active, no source delivery yet"
-          }
+          },
+          "sourceReceiptSHA256": "8571e59ebfcc8013279679e9793c881168e4472794faecb2c3642ac43f26cb97",
+          "nativeReadyReproSHA256": "f13a21e829a8fb51dbe96298569dfaad23bafba1a632e97ffe2a6f1ccdc253cc",
+          "sourceChecks": "3/3direct;PG17.7 syntax and4alias-normalized SQL AST/inverse proofs; not PG17.11 execution",
+          "nativeReadyEvidence": "Actual installed pg8.23.1 native event handlers: delayed ReadyForQuery after ErrorResponse reproduces UNKNOWN/local rollback refusal on sameClient; no network/PG SQL kernel. Actual r12 cause still unknown.",
+          "extraConsumerFiles": [
+            "candidate0448/tools/unified-import/whole-host-session.mjs",
+            "candidate0448/tests/fresh35-host-session.test.mjs"
+          ],
+          "extraConsumerScope": "Only unique poisoned sameClient ROLLBACK waits once for nativeReady within min(original5s cleanup,existingFresh35deadline), rechecks original state T/E/ready/driver identity/queues. Disconnect/error/end/expiry/invalidACK => UNKNOWN+close. No newClient/retry/COMMIT/authority changes.",
+          "next": "Fiveleaf fixed handoff; one QB narrow review/one D2 build; no alias-only intermediate build."
         }
-      }
+      },
+      "supersededNextPreserved": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay."
     },
     "productionReleaseCompatibilityContinuation": {
       "state": "SOURCE_QB_F01_CLOSED_ORIGINAL_CALLER_PINS_REGISTERED_NOT_ACTUAL_DEPLOYMENT",
@@ -31011,6 +31038,32 @@
       "privateCredentialPreparation": "Original lockedNode24.21/authentication codec oncehash, originalverify pass/dummy rejected; password+encodedhash0400 inV only, no values exported/Git; no regen after binding",
       "actualServerAccountCreated": false,
       "actualLoginVerified": false
+    },
+    "currentExecution": {
+      "at": "2026-11-06T13:00:51+08:00",
+      "phase": "REPAIR_INITIALIZE_ALIAS_AND_SAME_CONNECTION_ROLLBACK_READINESS",
+      "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
+      "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
+      "currentOwner": "D1",
+      "nextOwner": "C freeze;QB narrow review +D2 one build;T45 fresh r13",
+      "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
+      "scope": "ISOLATED_SYNTHETIC_ONLY",
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": false,
+      "negativeRollbackConfirmed": false,
+      "ordinaryBusinessPassed": false,
+      "realImported": false,
+      "productionDeployed": false,
+      "next": "Finish combined5leaf source fix, freeze once, review/build parallel, then actual minimal whole flow. Existing full REAL source preparation and backup are reused.",
+      "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal."
+    },
+    "delayReviewAdoption": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
+      "cutoff": "2026-11-06T12:15:00+08:00",
+      "adopted": "Section6 small complete actual PG flow before ordinary/browser/REAL readback/deploy; parallel prerequisites already ready. Section5.7 stale current state corrected with historical snapshot preserved.",
+      "superseded": "Report r12pending cutoff superseded by actual42702/UNKNOWN/stopped receipt, not additional execution authority.",
+      "noNewQueue": true
     }
   }
 }

@@ -1879,3 +1879,9 @@ OriginalD1 source-only investigation found command globalb import_batch%ROWTYPE 
 
 ### 2026-11-06T12:44+08:00 | Original D1 continuation corrected
 LiveD1 turn01a1af24 remainedactive; actualread_thread showed compaction01a1af29 then unrelated13staff/halllookup instead of assigned42702repair. C redirected sameowner to precompaction4localalias anchors and whole-host-session nativeReady/ROLLBACK breakpoint, preservingWIP/no duplicateassignment. Exact3leafrepair not yet delivered; do not mark sourcefixed or asknewPG/build. Main currentb8e35 committed/stopped failure and sourceQA remain correctly separated.
+
+
+### 2026-11-06T13:00:51+08:00 | 当前唯一断点：五叶合批修复，不重做已完成准备
+原D1三叶别名修复已冻结（回执8571e59e），4个局部SQL别名与全局记录分开；3项定向检查、语法及反向/AST证据有效，尚非真实PG语义通过。原pg8.23.1驱动事件反例f13a21e8证明ErrorResponse后ReadyForQuery迟到可使原连接本地拒绝ROLLBACK；它不证明r12实际唯一根因。已将原whole-host-session及其原测试两叶交同一D1最小修复，合成同一五叶候选，再一次QB窄验和D2构建并行，T45只在新准确候选就绪后执行r13，不重放r12。
+实际r12仍为schema/安装记录已提交、负向初始化42702且事务结果UNKNOWN、容器已停止；普通业务、REAL导入和正式部署未通过。全批EOF/preflight退出0、608916目标、私域包上传、本次正式备份直接复用；新备份独立恢复未验。
+采用迟延审查第6节顺序及状态收敛建议，现TASKS.currentExecution为唯一当前阶段；旧RUNNING/空间等待和旧“未安装”快照保留并标替代，区分隔离安装与正式未安装。临时全部决策授权已于今天12:00到期，同类隔离既有授权和原实施目标继续，不自行延长。
