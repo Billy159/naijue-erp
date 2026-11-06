@@ -1,0 +1,85 @@
+{
+  "task": "R18-ORDINARY-FIXTURE-0AD22579",
+  "atUtc": "2026-11-06T10:56:11.528559+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "0ad22579cf95c72835a7a74bd4900767d61017a2",
+    "root": "a1b7b65766544a81af4dc1d37c49551f209971f4",
+    "tree": "8e39844ed49a89013d01d852ccca29e7b4831c32",
+    "parentRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
+    "candidateSourceSet": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+        "beforeSHA256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702",
+        "beforeBytes": 27211,
+        "afterSHA256": "4f7b4a7e2279302fc7114feb506dff301f0234b1fd8e05717b943a1fb13b9f7f",
+        "afterBytes": 27317
+      },
+      {
+        "path": "tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs",
+        "beforeSHA256": "545a0cee1f4d910e8ad6c53ca9b6a5decc40f3aa0c2918c4dcac296785bd3e92",
+        "beforeBytes": 14134,
+        "afterSHA256": "15b5c3616ea36a9e6998ba09aca60458a8a7f6f948eb401f1cdb303f0f84dcd0",
+        "afterBytes": 16706
+      }
+    ],
+    "oneAssignmentOnlyInverseWholeFactoryExact": true,
+    "retention25BranchOnly": true,
+    "defaultAndBaseBytesUnchanged": true,
+    "realLauncherGuardsUnchanged": true,
+    "tree": "8e39844ed49a89013d01d852ccca29e7b4831c32"
+  },
+  "independentBuilderSeam": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "nativeFactoryManifestMatchesFrozenNewEvidence": true,
+    "originalBuildOrdinaryScenarioAcceptedNewTopology": true,
+    "staffSaleUsesOwnHallWarehouse": true,
+    "transferAndForbiddenUseExplicitSecondHallWarehouse": true,
+    "skuPriceAndModeledInventoryCopiedExact": true,
+    "oldTwoWarehousesInOneHallStillRefused": true,
+    "runtimeSceneProjectionModeledNotObserved": true,
+    "modelVersionOneExplicitNotSourceInference": true,
+    "actualPG17_11OrOrdinaryExecuted": false,
+    "serverCalls": 0,
+    "credentialsOrGeneratedScenarioSecretsPersisted": false
+  },
+  "closure": {
+    "candidateSourceSet": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+    "descriptorHashRecomputed": true,
+    "reverseOnePinReproducesParent": true,
+    "other213AndCaptured180Retained": true,
+    "authoritativeD2BuildNotClaimed": true
+  },
+  "authorEvidenceAdopted": {
+    "D1ResultSha256": "573a3f10fc7f9e9a8f4d6b9cbf8dfa6553d3f2a61aae5ca11a8fc153cac2ddb8",
+    "targetedTestsPassed": 2,
+    "T45ReadOnlySha256": "aadf48d608f0924266e3da4eb645f9504d12812c904ca1c5d3d3ae1367322ea0",
+    "scope": "Default two goldens/base factory/stable ids/SKU/stock/amount/source evidence unchanged; exact previous native manifest matched actualr18 binding and old builder red; not rerun."
+  },
+  "scope": "Only retention25 warehouse:02 hall_id assigned explicitly created secondHall. Original native factory new manifest84b17767 matched. Offline projection of those fields into original builder accepted own-hall sale, second-hall transfer/forbidden scenario, exact SKU/price and modeled inventory copy. Reversing relation reproduces original strict guard refusal. No actual scene observation or real relationship change.",
+  "actualR18Preserved": "C/T45 original PG17.11 schema/normalCOMMITTED/ALREADY_COMMITTED/readbackVERIFIED/3negative/scene passed; ordinary scenario guard stopped execution,0REAL/production. Original committed keys not replayed.",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "launcherOrGuardModified": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "actualCorrectedFixture17_11Executed": false,
+    "ordinaryApiOrBusinessPassed": false,
+    "runtimeSceneRowsObserved": false,
+    "runtimeVersion1InTest": "EXPLICIT_OFFLINE_MODEL_ONLY",
+    "scenarioGeneratedSecretsPersisted": false,
+    "realRelationsOrSourceMappingsChanged": false,
+    "buildServiceOrFullSuiteRepeated": false,
+    "oldCommittedKeyReplayed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return exact fixture sourcePASS toC. OriginalD2 fixed build/originalT45 accurately-bound successor ordinary/API checks remain, no original committed-key replay."
+}
