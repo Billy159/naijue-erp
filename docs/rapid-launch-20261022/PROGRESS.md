@@ -1438,3 +1438,7 @@ D1离线已证唯一captured显式默认ACL被dump省略（64/63），C按用户
 
 ### 2026-11-06 08:04 C r7 接续
 实际r6仍FAIL/ROLLED_BACK/停稳。已固定修复integration267dc0fd/root73bd81/source04c1，D2新构建/production453/ordinary7298读回通过f2eedc，QB仅ACL2叶c177 PASS并复用其余既有证据；实PG尚未验。T45只读84a152核新r7无重复、旧19bREADY/私包身份、r6终态及资源。C签准确13键tail2de991/full1d5b006原30min准备，PG另待真实materialize后新20min。原40s/900s不改，不重旧r6或重复清洗。
+
+
+### 2026-11-06T08:15 C 决策与备份接续
+原receiver已实际完成r7整包READY（assembly d2cc2ba5），materialize原键在途；没有提前启动PG。正式备份由T45沿Nov1实际逻辑流程，C依用户至12点委托批准准确收窄预算：总4GiB（含partial/打包中间物），启动free至少12GiB，运行保留8GiB，原900s/子时限不改；先核新鲜正式身份/资源，超限只停本批子进程、保留旧备份。当前尚未dump或验证新备份恢复，不冒已完成；与r7重资源串行，PG20优先。GitHub integration663c6fc1/root73bd81已独立回读核实。
