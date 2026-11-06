@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T13:26:02+08:00",
+    "at": "2026-11-06T13:29:31+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28507,7 +28507,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "SOURCE_QB_AND_BUILD_ACCEPTED_T45_R13_EXACT_PREFLIGHT",
+      "critical": "D1 exact current r13 null-diagnostic/source-runner diagnosis; no r14/newbuild or blindPG retry.",
       "independentPreparation": {
         "D1": "Five leaves delivered and frozen; readonly until concrete feedback.",
         "QB": "Fiveleaf source/native model PASS56a71a97 adopted; actualPG still not run.",
@@ -28524,7 +28524,7 @@
       "realDataImported": false,
       "artifactTransferred": true,
       "productionChanged": false,
-      "newClusterScope": "Isolated synthetic r12 only: schema COMMITTED, installation record durably published, postinstall snapshot present; stopped after negative INITIALIZE42702/transaction UNKNOWN. Production/newREAL database not installed or imported.",
+      "newClusterScope": "Isolated synthetic r13 schema/record COMMITTED/PUBLISHED; postinstall snapshot present; rollback child outcome unknown and all diagnostic fields null; cleaned/stopped. No production/REAL import.",
       "supersededSnapshotBeforeR12": {
         "newClusterCreated": true,
         "newDatabaseInstalled": false,
@@ -28533,7 +28533,7 @@
         "productionChanged": false,
         "newClusterScope": "Only original synthetic r1/r2/r3; all stopped with preserved failure scenes, not a production database."
       },
-      "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
+      "latestActualReceiptSHA256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
       "productionDatabaseInstalled": false
     },
     "privateReadyRows": {
@@ -30637,7 +30637,7 @@
       },
       "supersededNextPreserved": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay.",
       "r13Preparation": {
-        "state": "ACTUAL_TARGET_STARTED_ACCURATE_ORIGINAL_C9_BOUND_INSTALL_REQUESTED",
+        "state": "INSTALL_RECORD_PUBLISHED_SNAPSHOT_PRESENT_ROLLBACK_CHILD_FAILED_VALIDATION_DIAGNOSTIC_NULL_CLEAN_STOPPED",
         "integration": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
         "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
         "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
@@ -30713,7 +30713,46 @@
         "programSHA256": "0c4a17d55212fde7c6a4dc5347a236b09985fcb095fab6a9bfa5b218816347d8",
         "targetSHA256": "d8266bc7ceacedfa8ff1a08f8a13ebf9ef8215827d9f502ebb275cbec7284e43",
         "installAuthoritySHA256": "1835dd6eed208ef617afa3de9d0e6dbc3b68fa1e3b5c6abf6c4324f96a05b5f9",
-        "wholeChainPassed": false
+        "wholeChainPassed": false,
+        "actualInstallReceiptSHA256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
+        "actualInstallExitCode": 2,
+        "actualInstallSeconds": 46.92655943566933,
+        "safeResultSHA256": "bd8d96254e18326987144967d54c5de1047405028ce789a1b885c1f22ab94e90",
+        "nativeSchemaInstallCommitted": true,
+        "recordPublished": true,
+        "postInstallSnapshotPresent": true,
+        "negativeCase": {
+          "automaticRetry": false,
+          "exitCode": 1,
+          "stage": "rollback",
+          "state": "OUTCOME_UNKNOWN_NO_REPLAY",
+          "validationCode": null,
+          "validationInternalCode": null,
+          "validationSQLSTATE": null,
+          "validationStage": null,
+          "validationStep": null
+        },
+        "negativeTransactionRollbackConfirmed": false,
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "containerStopped": true,
+        "ordinaryBusinessPassed": false,
+        "synthetic25Passed": false,
+        "next": "Original D1 bounded source/runner null-diagnostic path diagnosis; no r13 replay/new candidate blind retry; T45 original ops/log producer readonly until exact gap."
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31122,13 +31161,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T13:26:02+08:00",
-      "phase": "ACTUAL_TARGET_STARTED_ACCURATE_ORIGINAL_C9_BOUND_INSTALL_REQUESTED",
+      "at": "2026-11-06T13:29:31+08:00",
+      "phase": "INSTALL_RECORD_PUBLISHED_SNAPSHOT_PRESENT_ROLLBACK_CHILD_FAILED_VALIDATION_DIAGNOSTIC_NULL_CLEAN_STOPPED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 original one actual install/negative/synthetic/ordinary/readback/probe/cleanup",
-      "nextOwner": "D1 only if precise new actual failure;D3/QF after admitted real target/normal host",
-      "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
+      "currentOwner": "D1 original bounded null-diagnostic/rollback-runner source diagnosis",
+      "nextOwner": "T45 only exact bounded stopped evidence if actually needed;C exact repair scope",
+      "latestActualReceiptSHA256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -31137,7 +31176,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Await original actual install staged result; preserve original first error, committed status, UNKNOWN and cleanup accurately. No changed assertions/replay.",
+      "next": "Original D1 bounded source/runner null-diagnostic path diagnosis; no r13 replay/new candidate blind retry; T45 original ops/log producer readonly until exact gap.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
       "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",

@@ -1906,3 +1906,8 @@ C逐叶核父版本和交付SHA，准确5叶且无额外受控改动，提交193
 
 ### 2026-11-06T13:26:02+08:00 | r13实际新目标已启动，原C9绑定同窗
 原starte5641850退出0/35.696s；真实CID3d131e28、SID7704924895025283119、OID16393、PG170011、birth05:23:46.483047UTC。C核原收据并以原9键1835dd6e绑定actualprogram0c4a17d5/targetd8266bc7/source d411/QB56a71，同20分钟期限1793943768412，不延窗。原T45现接一次真实安装→负向拒绝/回滚→synthetic25→普通业务/新连接读回→清理。启动成功不是初始化或业务通过；REAL/正式仍未执行。
+
+
+### 2026-11-06T13:29:31+08:00 | r13真实新失败：回滚子进程诊断全null，已停止
+实际install2412f609退出2/46.927s，schema+record已提交并发布、安装后adminsnapshot存在；回滚验证子进程退出1/OUTCOME_UNKNOWN_NO_REPLAY，validationStage/code/SQLSTATE/step/internalCode全null。本次未观测到旧42702，不能据null断言alias修复语义通过或确认回滚；普通业务/synthetic25/独立读回未过。C核safe bd8d9625及原实际收据；cleanup6true/errors[]/initializer与descendantsreaped/CID3d131e28停止。
+原D1仅沿原runner/consumer及已导出本地证据定位全null路径，先区分执行前throw、业务正确拒绝但runner失败或真实未知；叶扩大前C登记，运维仍T45唯一owner。不先构建r14、不重启r13、不放宽断言，不套旧原因、不重做真实清洗/上传/备份。无REAL或正式操作。
