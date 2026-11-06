@@ -184,8 +184,8 @@ def write_new(path, data, mode=0o400, owner=None):
         with os.fdopen(fd, 'wb', closefd=False) as file:
             file.write(data)
             file.flush()
-            if owner is not None:os.fchown(fd,*owner)
             os.fchmod(fd,mode)
+            if owner is not None:os.fchown(fd,*owner)
             os.fsync(fd)
     finally:
         os.close(fd)
