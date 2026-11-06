@@ -1,0 +1,103 @@
+{
+  "format": "D1_R23_ORDINARY_FAILURE_DIAGNOSTIC_SOURCE_V1",
+  "at": "2026-11-06T23:31:17.118822+08:00",
+  "status": "SOURCE_READY_LOCAL_OFFLINE_ONLY_AWAIT_C_QB_AND_T45_CONSUMER",
+  "owner": "D1 exact one source leaf; C checkpoint transfers previously idle D2 leaf once to D1; original T45 owns Python consumer and its test",
+  "sourceRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "changes": [
+    {
+      "path": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "before": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R23-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/before/tests/integration/live-ledger-balance-pairs.integration.test.ts",
+        "sha256": "e8f77c349c06caab57e6eed89a2afac277ab1fb93c0ff58955dfebf2b624ae6c",
+        "bytes": 76369
+      },
+      "after": {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/integration/live-ledger-balance-pairs.integration.test.ts",
+        "sha256": "3c4e8403c1b00b13835d3d0a996d7a2ba0698b65adc5d80bc7e35f48c3c28153",
+        "bytes": 78748
+      },
+      "frozenSourceCopy": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R23-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/source/tests/integration/live-ledger-balance-pairs.integration.test.ts",
+        "sha256": "3c4e8403c1b00b13835d3d0a996d7a2ba0698b65adc5d80bc7e35f48c3c28153",
+        "bytes": 78748
+      }
+    }
+  ],
+  "implementation": [
+    "Add only fixed REAL_CAPACITY_PREFLIGHT immediately before the original await capacity.preflight; API construction retains REAL_SYNTHETIC_ADMISSION",
+    "Add only existing guard SQLSTATE55000/P0001 to finite native Error own-data code selection; exact nine-key descriptor and WeakMap brand unchanged",
+    "Extend same existing targeted diagnostic test with two real PostgresQueryError code cases and actual runner two-await source seam using local rejecting dependencies"
+  ],
+  "preserved": [
+    "All business statements/assertions/SQL and guards unchanged; no factory/host/ACL/frontend/shared-contract changes",
+    "Existing secret/getter/unknown-code/non-native/unbranded/clone/finite-integer negative checks unchanged and pass",
+    "Original failure propagation and first cleanup failure precedence unchanged"
+  ],
+  "checks": {
+    "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=\"fresh35 ordinary failure descriptor\" tests/integration/live-ledger-balance-pairs.integration.test.ts",
+    "redInitial": {
+      "exitCode": 1,
+      "note": "Two code REDs valid; phase case initially failed in test harness source-space extraction, corrected before claiming phase RED",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R23-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/RED.tap",
+        "sha256": "48507c1410b1792db727bb35a535cb01fe0094920f088d02a7a98df1426654ac",
+        "bytes": 4842
+      }
+    },
+    "redCorrected": {
+      "exitCode": 1,
+      "pass": 2,
+      "fail": 4,
+      "skipped": 0,
+      "note": "Three new subtests fail at intended assertions (null !=55000/null !=P0001/old phase !=new phase); parent also fails, hence four failures",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R23-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/RED-CORRECTED.tap",
+        "sha256": "fe2d7c25fa5da04bff699fdf9c4dd3bd26a584a67f4f6f8b69eafa2d4f6eaddf",
+        "bytes": 4779
+      }
+    },
+    "green": {
+      "exitCode": 0,
+      "tests": 6,
+      "pass": 6,
+      "fail": 0,
+      "skipped": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R23-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/GREEN.tap",
+        "sha256": "b06144ca9cff630538c35a46599b32e3074ec09bc9f6332dfac6e6d9bc1369c6",
+        "bytes": 1144
+      }
+    },
+    "exactSourceRestoration": true,
+    "frozenSourceReadbackExact": true,
+    "typeVerification": "Actual TS module executed through existing Node24.21 transform; no full typecheck/build/suite",
+    "patchDryRun": {
+      "forwardExitCode": 0,
+      "reverseExitCode": 0
+    }
+  },
+  "actualR23": {
+    "rawReceiptSha256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+    "rootCause": "NOT_DETERMINED",
+    "oldResultUnchanged": true,
+    "normalAndUnknownKeysReplayed": false
+  },
+  "notExecuted": [
+    "Real PostgreSQL/Linux/ordinary/API validation",
+    "Server or database start",
+    "Full backend suite/typecheck/build",
+    "Deployment/real import or release",
+    "T45 Python consumer tests"
+  ],
+  "consumerRequirements": {
+    "phaseAddition": "REAL_CAPACITY_PREFLIGHT",
+    "sqlstateAdditions": [
+      "55000",
+      "P0001"
+    ],
+    "owner": "Original T45; do not change nine-key schema or failure semantics"
+  },
+  "sourceSetSha256": "C_TO_REBIND_FROM_FINAL_COMBINED_CANDIDATE",
+  "Fast": "UNVERIFIED"
+}

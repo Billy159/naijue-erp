@@ -627,6 +627,17 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
         self.assertIsNone(result);self.assertIsNotNone(error);self.assertEqual(written['ordinary-failure.json']['childFailure'],diagnostic)
         self.assertFalse(written['ordinary-failure.json']['automaticRetry']);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped'])
         self.assertEqual(events.count('spawn'),1);self.assertEqual(events.count('communicate'),1);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
+    def test_capacity_preflight_and_database_guard_sqlstates_survive_parent_channel(self):
+        for phase,sqlstate in [('REAL_CAPACITY_PREFLIGHT',None),('REAL_SYNTHETIC_ADMISSION','55000'),('REAL_SYNTHETIC_ADMISSION','P0001'),('REAL_CAPACITY_PREFLIGHT','55000'),('REAL_CAPACITY_PREFLIGHT','P0001')]:
+            with self.subTest(phase=phase,sqlstate=sqlstate):
+                diagnostic={'format':'FRESH35_ORDINARY_FAILURE_V1','phase':phase,'source':'runFresh35OrdinaryIntegration:catch','errorType':'Error','guardCode':None,'sqlstate':sqlstate,'errno':None,'expectedInteger':None,'actualInteger':None}
+                returned={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':diagnostic,'entryFailure':None}
+                result,error,events,written,_=self.drive(failure='result',returned=returned,stderr=b'SECRET_SENTINEL select private')
+                failure=written['ordinary-failure.json']
+                self.assertIsNone(result);self.assertIsNotNone(error);self.assertEqual(failure.get('childFailure'),diagnostic)
+                self.assertFalse(failure['childDiagnosticUnavailable']);self.assertFalse(failure['automaticRetry'])
+                self.assertEqual(events.count('spawn'),1);self.assertEqual(events.count('communicate'),1)
+                self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
     def test_entry_failure_stays_distinct_from_unbranded_integration_error(self):
         entry={'format':'FRESH35_ORDINARY_ENTRY_FAILURE_V1','phase':'CREDENTIAL_TAG_READ','source':'ordinary_runner_arguments:catch','errorType':'Error','guardCode':None,'errno':'EACCES'}
         value={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':None,'entryFailure':entry}

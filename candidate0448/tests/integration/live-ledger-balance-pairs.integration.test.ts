@@ -400,9 +400,9 @@ export interface Fresh35OrdinaryFailure {
  readonly guardCode:string|null;readonly sqlstate:string|null;readonly errno:string|null;
  readonly expectedInteger:number|null;readonly actualInteger:number|null;
 }
-const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL',...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
+const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL',...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
 const fresh35OrdinaryGuardCodes=['ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED'] as const;
-const fresh35OrdinarySqlstates=['42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','28P01','3D000','53300','57P01','08006'] as const;
+const fresh35OrdinarySqlstates=['42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','28P01','3D000','53300','57P01','08006','55000','P0001'] as const;
 const fresh35OrdinaryErrnos=['EACCES','EPERM','ENOENT','ELOOP','ENOTDIR','ECONNREFUSED','ECONNRESET','ETIMEDOUT','EPIPE','EHOSTUNREACH','ENETUNREACH','EADDRINUSE'] as const;
 const fresh35OrdinaryExpectedIntegers=[0,1,2,3,4,5,6,14,23,200,403,404,500,61035];
 const fresh35OrdinaryFailures=new WeakMap<object,Readonly<Fresh35OrdinaryFailure>>();
@@ -442,7 +442,7 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
   const s=checkFresh35OrdinaryScenario(JSON.parse(bytes.toString('utf8')) as Fresh35OrdinaryScenario),fault=observedDriver(true);
   const allKeys=[...Object.values(s.keys.salesPositive),...Object.values(s.keys.salesMixed),...Object.values(s.keys.transfer),s.forbidden.requestKey],known={sales:[] as string[],transfers:[] as string[]};let deniedAccountId:string|undefined;
   phase='REAL_CAPACITY';capacity=await createProductionCapacityLaunch(context.capacityLaunch,c);
-  phase='REAL_SYNTHETIC_ADMISSION';api=await createSyntheticRuntime35ApplicationApi(c,fault.driver,context.staffCredentialRequestTag,capacity,t);await capacity.preflight();assert.equal(api.app.server.listening,false);
+  phase='REAL_SYNTHETIC_ADMISSION';api=await createSyntheticRuntime35ApplicationApi(c,fault.driver,context.staffCredentialRequestTag,capacity,t);phase='REAL_CAPACITY_PREFLIGHT';await capacity.preflight();assert.equal(api.app.server.listening,false);
   const observe=async():Promise<Snapshot>=>{
    const client=new Client(fault.config());client.on('error',()=>{});let begun=false;
    try{
@@ -573,7 +573,7 @@ test('fresh35 ordinary failure descriptor keeps the real early rejection failed 
  assert.deepEqual(Object.keys(d).sort(),['actualInteger','errno','errorType','expectedInteger','format','guardCode','phase','source','sqlstate']);
  assert.equal(describeFresh35OrdinaryFailure(Error('unbranded')),null);assert.equal(describeFresh35OrdinaryFailure({...d}),null);assert.equal(describeFresh35OrdinaryFailure(null),null);assert(Object.isFrozen(d));
 });
-test('fresh35 ordinary failure descriptor retains only finite native SQLSTATE errno guard and assertion integer fields',()=>{
+test('fresh35 ordinary failure descriptor retains only finite native SQLSTATE errno guard and assertion integer fields',async t=>{
  const wrap=(e:unknown)=>describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(e,'salesPositive:SAVE','runFresh35OrdinaryIntegration:catch'))!;
  const pg=Object.assign(Error('MODEL_PRIVATE_SQL'),{code:'42501',detail:'MODEL_PRIVATE_DETAIL',query:'MODEL_PRIVATE_QUERY'});assert.equal(wrap(pg).sqlstate,'42501');assert.equal(wrap(pg).guardCode,null);
  const socket=Object.assign(Error('MODEL_PRIVATE_SOCKET'),{code:'ECONNREFUSED',errno:-111,address:'MODEL_PRIVATE_ADDRESS'});assert.equal(wrap(socket).errno,'ECONNREFUSED');
@@ -581,6 +581,27 @@ test('fresh35 ordinary failure descriptor retains only finite native SQLSTATE er
  const a=wrap(assertion);assert.equal(a.errorType,'AssertionError');assert.equal(a.guardCode,'ERR_ASSERTION');assert.equal(a.expectedInteger,200);assert.equal(a.actualInteger,500);
  assert.equal(wrap(Object.assign(TypeError('MODEL_PRIVATE'),{code:'ERR_INVALID_ARG_TYPE'})).guardCode,'ERR_INVALID_ARG_TYPE');
  for(const phase of fresh35OrdinaryFailurePhases)assert.equal(describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(Error('MODEL_PRIVATE'),phase,'runFresh35OrdinaryIntegration:cleanup'))!.phase,phase);
+ const {PostgresQueryError}=await import('../../adapters/postgres/src/bounded-pool.ts');
+ for(const code of ['55000','P0001'])await t.test('fresh35 ordinary failure descriptor retains original guard SQLSTATE '+code,()=>{
+  const e=new PostgresQueryError(Object.assign(Error('MODEL_PRIVATE_SQL'),{code,detail:'MODEL_PRIVATE_DETAIL'})),d=wrap(e);
+  assert.equal(e.code,code);assert.equal(d.sqlstate,code);assert.equal(d.errorType,'Error');assert.equal(d.guardCode,null);assert.equal(d.errno,null);
+  assert.equal(JSON.stringify(d).includes('MODEL_PRIVATE'),false);
+ });
+ await t.test('fresh35 ordinary failure descriptor distinguishes actual API and capacity preflight await boundaries without PG',async()=>{
+  // Execute the original runner's exact two-await seam with local rejecting dependencies.
+  // Later business work and private input reads are outside this offline model.
+  const body=runFresh35OrdinaryIntegration.toString(),start=body.search(/phase\s*=\s*'REAL_SYNTHETIC_ADMISSION'\s*;/),tail=body.slice(start),end=start+tail.search(/const\s+observe\s*=/);
+  assert(start>=0&&end>start);
+  const AsyncFunction=Object.getPrototypeOf(async()=>{}).constructor;
+  const boundary=new AsyncFunction('createSyntheticRuntime35ApplicationApi','capacity','assert',"let phase,api;const c={},fault={},context={},t={};try{"+body.slice(start,end)+"}catch(error){return {error,phase};}throw Error('MODEL_EXPECTED_REJECTION');") as (factory:()=>Promise<unknown>,capacity:{preflight():Promise<void>},assertion:typeof assert)=>Promise<{error:unknown;phase:string}>;
+  for(const at of ['REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT']){
+   const e=Error('MODEL_PRIVATE_FAILURE'),calls:string[]=[];
+   const observed=await boundary(async()=>{calls.push('api');if(at==='REAL_SYNTHETIC_ADMISSION')throw e;return {app:{server:{listening:false}}};},{async preflight(){calls.push('preflight');throw e;}},assert);
+   const d=describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(observed.error,observed.phase,'runFresh35OrdinaryIntegration:catch'))!;
+   assert.equal(observed.error,e);assert.equal(d.phase,at);assert.equal(d.errorType,'Error');assert.deepEqual(calls,at==='REAL_SYNTHETIC_ADMISSION'?['api']:['api','preflight']);
+   assert.equal(JSON.stringify(d).includes('MODEL_PRIVATE'),false);
+  }
+ });
 });
 test('fresh35 ordinary failure descriptor excludes messages stacks getters arbitrary codes nested values and unbounded assertion data',()=>{
  const secret='MODEL_PRIVATE_PASSWORD_COOKIE_TOKEN_SQL_AMOUNT',wrap=(e:unknown,phase='PRIVATE_INPUT')=>describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(e,phase,'runFresh35OrdinaryIntegration:catch'))!;

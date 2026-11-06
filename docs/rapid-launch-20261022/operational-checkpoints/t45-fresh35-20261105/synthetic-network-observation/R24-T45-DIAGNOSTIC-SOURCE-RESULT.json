@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SCOPED_OFFLINE_PARENT_DIAGNOSTIC_ONLY",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSha256": "3eef7c05f503a74c12a3a9dc9f62641b0a88b8b8846add10e1b19929f3657654",
+      "afterSha256": "af972bab2c8d603f439d5b7ef5267b4c13b1f8cd19060a66a5dcdb5a786408d9",
+      "beforeBytes": 102421,
+      "afterBytes": 102463
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "beforeSha256": "b7eb4a8578f3913b7f2000d09e715e3a69a07add6c16a2b73da1746fa70e1e32",
+      "afterSha256": "e5512c53e983e916d423aec4b1a99c3b045578b982b657254a251c149a68b1ee",
+      "beforeBytes": 90592,
+      "afterBytes": 92030
+    }
+  ],
+  "scope": [
+    "Accept REAL_CAPACITY_PREFLIGHT fixed diagnostic phase",
+    "Retain 55000 and P0001 SQLSTATE in original closed diagnostic channel"
+  ],
+  "red": {
+    "command": "python3 tests/test_fresh35_isolated_launcher.py OrdinaryBusinessFlowTests.test_capacity_preflight_and_database_guard_sqlstates_survive_parent_channel -v",
+    "exitCode": 1,
+    "tests": 1,
+    "failedSubcases": 5
+  },
+  "green": {
+    "command": "python3 tests/test_fresh35_isolated_launcher.py OrdinaryBusinessFlowTests -v",
+    "exitCode": 0,
+    "testsPassed": 11,
+    "elapsedSeconds": 0.254,
+    "environment": "Local offline model; generated Node entry executes existing two error cases; no PG"
+  },
+  "unchanged": [
+    "Nine-key integration diagnostic schema",
+    "Entry-failure schema",
+    "Errno and other code validation",
+    "Private text/extra fields rejection",
+    "Unknown result no replay",
+    "Child cleanup path",
+    "Source/build pins pending C integration"
+  ],
+  "actualModelEffortFast": "UNVERIFIED",
+  "PGConnections": 0,
+  "serverJobsSubmittedForThisSourcePatch": 0,
+  "builds": 0,
+  "formalChanges": 0,
+  "businessRootCause": "UNKNOWN",
+  "businessAcceptance": false
+}
