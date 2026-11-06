@@ -189,7 +189,8 @@
         "external": "./native35-source/tools/unified-import/fresh35-host-session.mjs",
         "importers": [
           "apps/api/src/postgres-read-api.ts",
-          "adapters/postgres/src/runtime27-command-issuer.ts"
+          "adapters/postgres/src/runtime27-command-issuer.ts",
+          "apps/api/src/capacity-runtime-probe.ts"
         ]
       },
       {
