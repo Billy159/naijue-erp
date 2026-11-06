@@ -1,0 +1,42 @@
+{
+  "status": "TEMPLATES_ONLY_NOT_AUTHORITIES_NOT_FOR_DISPATCH",
+  "entries": {
+    "tail": {
+      "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+      "decision": null,
+      "taskId": "T45",
+      "grantId": "5cc58239751e4e2a",
+      "artifactKey": "f35-10fc5e-tail-20261107-01",
+      "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+      "archiveSha256": "e273d9a0252a3ce6930fbdf0b5fa48d8181a16d739fe747a5305105a06286f81",
+      "archiveBytes": 2479523,
+      "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-10fc5e-tail-20261107-01",
+      "startsAt": null,
+      "expiresAt": null,
+      "decisionReference": null,
+      "kind": "ORDINARY_SOURCE_AND_TOOLS"
+    },
+    "full": {
+      "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+      "decision": null,
+      "taskId": "T45",
+      "grantId": "5cc58239751e4e2a",
+      "artifactKey": "f35-10fc5e-ordinary-local-20261107-01",
+      "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+      "archiveSha256": "7b10bb912af07d26ef5f6f9339ba789b5e4f8f22191245b998c8741494a7c9be",
+      "archiveBytes": 83707334,
+      "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-10fc5e-ordinary-local-20261107-01",
+      "startsAt": null,
+      "expiresAt": null,
+      "decisionReference": null,
+      "kind": "ORDINARY_SOURCE_AND_TOOLS"
+    }
+  },
+  "issuerFieldsRemainNull": [
+    "decision",
+    "startsAt",
+    "expiresAt",
+    "decisionReference"
+  ],
+  "existingReferenceLimit": 512
+}
