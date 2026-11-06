@@ -1745,3 +1745,7 @@ Materialbb436ab4 completed0/372.244307s; resource3e80a51c actual MemAvailable143
 ## 2026-11-06T18:30:20+08:00 - R18 actualPG17.11 target bound and C9 dispatched
 
 Start292ca13d completed0/36.599459s; CID56c458ae/SID7705003217343156271/OID16393/PG170011/birth10:27:41.790192UTC/program98aea4fc/targete26a115a. C9 7ae1375cf0711eb7d6311fd795302b391a79147b5c7ea742a0d8b3ca6d24a27d binds original deadline1793961939745; unique t45-f35-e7bcc8-install-20261106-01 proceeds once. Correctedwire/ordinary/readback remains pending; noREAL/production/oldr17committedkey replay.
+
+## 2026-11-06T18:38:27+08:00 - R18 actual17.11 scene wire crossed; ordinary scenario guard stops
+
+Actual installc81382bc failed2/149.998962s overall. Schema/record,3negative rollback,snapshots and normal COMMITTED/ALREADY_COMMITTED/VERIFIED with25headers27settlements passed. Actual PRIVATE_SCENARIO failure proves corrected observe_scene returned under original guards (source-order inference, not separate exported wire assertion). New blocker FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED; business child/API/readback/probe not reached, no SQLSTATE/actual staff-hall-warehouse values exported. CID56c458ae stopped,6cleanuptrue/errors empty/child reaped. C checked rawbinding and adopted safef4a4b9d9. Original T45 source-only guard/input alignment diagnosis; no new PG/log/query or guessed mappings. r17/r18 committed original keys preserved, no REAL/production.

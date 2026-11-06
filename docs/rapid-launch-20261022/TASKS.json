@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R18_SOURCE_QA_BUILD_PASS_PREFLIGHT_PENDING",
+      "critical": "R18_SCENE_WIRE_PASSED_ORDINARY_SCENARIO_GUARD_STOP",
       "independentPreparation": {
         "D1": "Read-only multiline JSON reproduction supplied, no launcher writes or further review.",
         "QB": "fbbce17b exact two-leaf PASS adopted; no repeat.",
         "D2": "d1dc84f4 exact e7bcc81e build/pack/member/tail PASS adopted; no repeat.",
-        "T45": "Original T45 local exact successor and single readonly stage-preflight; C13 exact policy binds only ordinary staging. Actual material/resources before C11/C9. Corrected17.11 wire/ordinary chain pending, no r17 committed replay.",
+        "T45": "Original T45 source-only build_ordinary_scenario guard/input mismatch diagnosis. No new PG/log/query, no guessing source mappings, no original committed import replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31428,13 +31428,15 @@
             "passed": 6,
             "failed": 0,
             "scope": "Affected existing model tests only; corrected actualPG17.11 ordinary chain pending."
-          }
+          },
+          "actualPG17_11SuccessorReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
+          "actualPG17_11Scope": "Source-order inference from actual PRIVATE_SCENARIO receipt proves observe_scene returned with original guards; ordinary business still unverified."
         },
         "finalPG17_11Scope": "SCOPED_INSTALL_FINALGUARD_SUMMARIZE_NORMAL_COMMIT_AND_READBACK_ONLY; ordinary business/probe remain false or unverified.",
         "wholeChainPassed": false
       },
       "r18Preparation": {
-        "state": "ACTUAL_PG170011_STARTED_C9_BOUND_INSTALL_PENDING",
+        "state": "STOPPED_SCOPED17_11_SCENE_PASSED_ORDINARY_SCENARIO_GUARD",
         "integration": "4d750fffe517836f1abd8191655702011e16ae80",
         "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
         "tree": "c06367a78f4485ee95c0e28ba35894fc7cfe61b0",
@@ -31446,7 +31448,7 @@
         "production": false,
         "priorR17ScopedProofAdopted": true,
         "r17CommittedOriginalMustNotReplay": true,
-        "next": "Original T45 local exact successor and single readonly stage-preflight; C13 exact policy binds only ordinary staging. Actual material/resources before C11/C9. Corrected17.11 wire/ordinary chain pending, no r17 committed replay.",
+        "next": "Original T45 source-only build_ordinary_scenario guard/input mismatch diagnosis. No new PG/log/query, no guessing source mappings, no original committed import replay.",
         "QBReceiptSHA256": "fbbce17bfc2f77e531f4e3e1b7f1e41f5ea1a2669a0761a80de3e5d74a96e684",
         "QBState": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
         "D2ReceiptSHA256": "d1dc84f4a222c3f1e9c8589577b42f35fecfa7deff1e26f67da0c3ad0188c418",
@@ -31486,10 +31488,10 @@
         "fullAuthoritySHA256": "655c17726a157d708cb7bb3dac7e92b5495498eb26624b7c2a9a6a8c1e71c4b8",
         "stagingStartsAt": 1793959994170,
         "stagingExpiresAt": 1793961794170,
-        "nativeSchemaInstalled": false,
-        "nativeImportVerified": false,
+        "nativeSchemaInstalled": true,
+        "nativeImportVerified": true,
         "ordinaryBusinessVerified": false,
-        "finalPG17_11Verified": false,
+        "finalPG17_11Verified": true,
         "stageResultSHA256": "1efdf55de82fa25ade94ece34bc53fdfd1df9b7d84a8d11f5684b0028694d155",
         "actualAssemblerReceiptSHA256": "3b0e7fb297f7a7f165b68f386a2574432eea3eae56736dba7bde74129f61ce09",
         "actualOrdinaryReady": {
@@ -31543,7 +31545,44 @@
           "createsRoles": false,
           "bootstrapNetworkObservationSha256": "2d52fe465c47d7af4c863b23a286ceec13d83defebf18bcb87de8cf8d87cdac7"
         },
-        "C9SHA256": "7ae1375cf0711eb7d6311fd795302b391a79147b5c7ea742a0d8b3ca6d24a27d"
+        "C9SHA256": "7ae1375cf0711eb7d6311fd795302b391a79147b5c7ea742a0d8b3ca6d24a27d",
+        "actualInstallReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
+        "safeResultSHA256": "f4a4b9d9057ab39d1277a166bfdf5146f6ab39d5a637026077c739c8ccb26163",
+        "installationRecordPublished": true,
+        "negativeRollbackVerified": true,
+        "independentSnapshotsVerified": true,
+        "correctedSceneWireStage": {
+          "derivedOutcome": "PASSED_SCOPED_ACTUAL_PG17_11",
+          "evidence": "Pinned launcher main1050 observe_scene returns before1051 run_ordinary_business; current ordinary-failure phasePRIVATE_SCENARIO proves entry into latter. All original observe_scene row/reference/balance/target guards precede its return.",
+          "claimType": "SOURCE_ORDER_INFERENCE_FROM_ACTUAL_RECEIPT",
+          "notWholeBusinessAcceptance": true
+        },
+        "wholeChainPassed": false,
+        "ordinaryFailure": {
+          "state": "FAILED_OR_OUTCOME_UNKNOWN",
+          "phase": "PRIVATE_SCENARIO",
+          "code": "FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED",
+          "automaticRetry": false,
+          "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY"
+        },
+        "containerStopped": true,
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "normalCommittedImportMustNotReplay": true
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31952,22 +31991,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T18:30:20+08:00",
-      "phase": "R18_ACTUAL_PG170011_C9_BOUND_INSTALL_DISPATCHED",
+      "at": "2026-11-06T18:38:27+08:00",
+      "phase": "R18_SCENE_WIRE_PASSED_ORDINARY_SCENARIO_GUARD_STOP",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 unique install and synthetic ordinary chain",
-      "nextOwner": "C adopt actual result and route precise blocker only",
-      "latestActualReceiptSHA256": "3eb95d5cf86a796fd9611b4f92b9510e1601755e6868d43788c706c327c1c532",
+      "currentOwner": "Original T45 source-only ordinary scenario input/guard diagnosis",
+      "nextOwner": "C route only exact source leaves to original owner",
+      "latestActualReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Actual corrected JSONwire and ordinary business/readback/probe under same deadline; no originalr17key replay.",
+      "next": "Original T45 source-only build_ordinary_scenario guard/input mismatch diagnosis. No new PG/log/query, no guessing source mappings, no original committed import replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4d750fffe517836f1abd8191655702011e16ae80",
       "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
@@ -31978,13 +32017,13 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
-        "sourceCommit": "79a5928d32eec9ca408086849d60d3329d8c47f9",
-        "state": "STOPPED_ACTUAL17_11_SCHEMA_IMPORT_READBACK_PASS_POSTCOMMIT_JSON_CONSUMER_FAILED",
-        "receiptSHA256": "3eb95d5cf86a796fd9611b4f92b9510e1601755e6868d43788c706c327c1c532"
+        "root": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
+        "sourceCommit": "4d750fffe517836f1abd8191655702011e16ae80",
+        "state": "STOPPED_SCOPED17_11_SCENE_PASSED_ORDINARY_SCENARIO_GUARD",
+        "receiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5"
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "source": "79a5928d32eec9ca408086849d60d3329d8c47f9",
         "buildRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",

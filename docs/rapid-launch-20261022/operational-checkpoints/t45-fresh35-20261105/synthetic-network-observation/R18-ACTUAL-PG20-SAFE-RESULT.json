@@ -1,0 +1,128 @@
+{
+  "status": "SCOPED_PG17_11_SCENE_JSON_FIX_PASS_ORDINARY_SCENARIO_GUARD_STOP",
+  "recordedAtUTC": "2026-11-06T10:36:25.688980+00:00",
+  "candidateRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
+  "sourceSetSHA256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+  "QBResultSHA256": "fbbce17bfc2f77e531f4e3e1b7f1e41f5ea1a2669a0761a80de3e5d74a96e684",
+  "D2ResultSHA256": "d1dc84f4a222c3f1e9c8589577b42f35fecfa7deff1e26f67da0c3ad0188c418",
+  "C9SHA256": "7ae1375cf0711eb7d6311fd795302b391a79147b5c7ea742a0d8b3ca6d24a27d",
+  "actualModelEffortFast": "UNVERIFIED",
+  "job": {
+    "jobId": "t45-f35-e7bcc8-install-20261106-01",
+    "status": "FAILED",
+    "exitCode": 2,
+    "elapsedSeconds": 149.99896163493395,
+    "atUTC": "2026-11-06T10:31:16.028219+00:00",
+    "finishedAtUTC": "2026-11-06T10:33:46.073659+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-e7bcc8-install-20261106-01/transport/release-receipts/t45-f35-e7bcc8-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5"
+  },
+  "cid": "56c458aebe8331c90afb44bd4cc52a9a289abfd353a8930b4ef090cf593089f9",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-06 10:27:41.790192+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7705003217343156271"
+  },
+  "actualPostgreSQL170011Verified": true,
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "sourceSetSha256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c"
+  },
+  "negativeChecks": {
+    "badApprovalCode": "HISTORICAL_SETTLEMENT_APPROVAL_HASH",
+    "badApprovalRollback": true,
+    "finalFailureCode": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT",
+    "finalFailureStage": "FINAL_PUBLISH",
+    "missingSettlementCode": "STANDARD_PUBLICATION_INCOMPLETE",
+    "missingSettlementRollback": true,
+    "originalBatchAbsent": true,
+    "reachedFinalPublish": true,
+    "state": "ROLLED_BACK"
+  },
+  "rollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "stage": "rollback",
+    "connectionCleanup": "CLOSED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true
+  },
+  "normalImport": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "stage": "commit",
+    "connectionCleanup": "CLOSED",
+    "syntheticImportVerified": true,
+    "businessVerified": false,
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "settlementRetentionVerified": true,
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "ordinaryUid": 61035
+  },
+  "snapshots": {
+    "postInstallEqualsPostRollback": true,
+    "postCommitDiffersFromPostInstall": true,
+    "threeConnectionCleanup": [
+      "CLOSED",
+      "CLOSED",
+      "CLOSED"
+    ]
+  },
+  "hostVerified": true,
+  "syntheticImportVerified": true,
+  "independentSnapshotsVerified": true,
+  "correctedSceneWireStage": {
+    "derivedOutcome": "PASSED_SCOPED_ACTUAL_PG17_11",
+    "evidence": "Pinned launcher main1050 observe_scene returns before1051 run_ordinary_business; current ordinary-failure phasePRIVATE_SCENARIO proves entry into latter. All original observe_scene row/reference/balance/target guards precede its return.",
+    "claimType": "SOURCE_ORDER_INFERENCE_FROM_ACTUAL_RECEIPT",
+    "notWholeBusinessAcceptance": true
+  },
+  "ordinaryBusinessVerified": false,
+  "ordinaryFailure": {
+    "state": "FAILED_OR_OUTCOME_UNKNOWN",
+    "phase": "PRIVATE_SCENARIO",
+    "code": "FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED",
+    "automaticRetry": false,
+    "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY"
+  },
+  "ordinarySQLSTATE": null,
+  "ordinarySQLSTATEEvidence": "NOT_EXPORTED; do not infer a database error from this guard",
+  "ordinaryChildCleanup": {
+    "childReaped": true,
+    "businessOutcomeInferredFromCleanup": false
+  },
+  "ordinaryBusinessAPIsReadbackProbe": "NOT_REACHED",
+  "exactStaffHallWarehouseValues": "NOT_EXPORTED_UNKNOWN_DO_NOT_GUESS_OR_REBIND",
+  "containerStopped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "launcherExitCode": 1,
+  "wholeChainPassed": false,
+  "normalCommittedImportMustNotReplay": true,
+  "oldResultsUnchanged": true,
+  "transactionBackendPidNonceNotCopied": true,
+  "rawBusinessOrLogBodiesCopied": false,
+  "formalOrREALActions": false,
+  "postCleanupHostResourceMetrics": "NOT_MEASURED",
+  "next": "Original C routes bounded source-only ordinary scenario guard/input alignment. No new server logs/PG/replay, no unapproved fixture or business mapping changes."
+}
