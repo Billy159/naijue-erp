@@ -1844,3 +1844,10 @@ Uniqueinstall FAILED2/144.833s,12:13:44..12:16:08UTC, rawd217532e/51509B, safe62
 Ordinary advanced beyond PRIVATE_SCENARIO into REAL_PG_AND_MIDDLEWARE, then FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN. Exact underlying exception/errno/SQLSTATE and ordinary result absent; do not infer solecause, business success, or commit outcome. ActualCIDf15977e9 stopped,6cleanuptrue/errors[], ordinarychild/initializer/descendantsreaped. NoAPI/readback/probePASS. NoREAL/production.
 
 OriginalT45 only precise retained-evidence readonly diagnosis now; no restart/newPG/install/write or unknown-request retry. Thisr20 normalcommit and oldr17-r19commits must not replay. Source859d85b1/root07e250d5 remains fixed.
+
+
+## 2026-11-06 — retained diagnosis proves error information loss, business cause unknown
+
+Original boundedreadonly COMPLETED0/.067s, safe400effb7@12:20:57UTC, diagnosis46237eae. Exact stopped r20 mount/job boundedlogs contain no allowed exception/SQLSTATE/errno/guard; ordinary-result absent and private inputs removed by cleanup. Ordinary request outcomesUNKNOWN, no replay; normal synthetic COMMITTED remains separate. Parent REAL_PG_AND_MIDDLEWARE alone does not prove any particular child PG assertion reached. No restart/PG connection or source/permission write in diagnosis.
+
+Source confirms integration catch discards originalerror, evalcatch discards innerphase, parentdrops stdout/stderr and retains coarsephase. C assigned exact three-leaf diagnostic fix: D1 sole integrationtest ca76da57, T45 sole launcher5a01a45b and Python tests eb5ec619. D1 minimal closed safe descriptor first, T45 consumes in original eval/parent; no raw messages/stack/params/secrets/business rows, no assertions/ACL/guards relaxed, no new control layer. Combinedfixedsource then one scopedQB and oneD2build; no currentPG/server execution.

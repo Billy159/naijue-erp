@@ -1,0 +1,101 @@
+{
+  "status": "R20_BUSINESS_CAUSE_UNKNOWN_SAFE_ERROR_RETENTION_GAP_CONFIRMED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T12:22:25.694606+00:00",
+  "jobId": "t45-f35-07e250-ordinary-retained-readonly-20261106-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 0.06728125782683492,
+  "retainedEvidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-07e250-ordinary-retained-readonly-20261106-01/transport/release-receipts/t45-f35-07e250-ordinary-retained-readonly-20261106-01/ordinary-retained-metadata.json",
+  "retainedEvidenceSHA256": "400effb7cdaae2d23d1aaf76877607bf7382a2e0a509638ad59afd3ac1d3cb3e",
+  "scope": "Exact stopped r20 container/state and exact original install job; bounded existing log tail classification only; no PG connection",
+  "parentInstallRawSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
+  "parentSafeResultSHA256": "62d7b09bbb60dd989d1be33edfeab9a8389443989805179edd9ef1e6c7fa5a34",
+  "frozenSourceRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
+  "sourcePins": {
+    "scripts/release/unified-install/launch-fresh35-isolated-v1.py": "5a01a45bf215ed9aa9eeb211aec96f497e08f68241f4d837173f79b3c50b8ac0",
+    "tests/integration/live-ledger-balance-pairs.integration.test.ts": "ca76da57896c8a8d47a313db481b628698d2176bc2bdcec43215910dec99b3b6"
+  },
+  "confirmedSourceInformationLoss": [
+    {
+      "file": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "line": 355,
+      "fact": "Fixed eval child catch drops caught error/inner phase and emits only failed state plus automaticRetry=false; does not preserve SQLSTATE/errno/guard/stack."
+    },
+    {
+      "file": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "line": 437,
+      "fact": "Parent communicate captures stdout/stderr in memory; no retained ordinary child output; parent records only coarse REAL_PG_AND_MIDDLEWARE phase on failure."
+    },
+    {
+      "file": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "line": 485,
+      "fact": "Integration catch drops original error and builds generic error with its inner phase; outer eval catch then drops even that phase."
+    }
+  ],
+  "actualRetainedEvidence": {
+    "PGConnections": 0,
+    "checkedAtUTC": "2026-11-06T12:20:57.126904+00:00",
+    "exactInstallJobLogClassifications": [
+      {
+        "errnoExplicit": [],
+        "exceptionTypes": [],
+        "guardNames": [],
+        "rawTextExported": false,
+        "safeErrorClasses": {
+          "authenticationFailure": false,
+          "connectionRefused": false,
+          "permissionDenied": false,
+          "undefinedObject": false
+        },
+        "sqlstateExplicit": []
+      }
+    ],
+    "exactStoppedContainerAndStateMountVerified": true,
+    "jobId": "t45-f35-07e250-ordinary-retained-readonly-20261106-01",
+    "oldKeyReplayed": false,
+    "postgresPrivateLog": {
+      "errnoExplicit": [],
+      "exceptionTypes": [],
+      "guardNames": [],
+      "rawTextExported": false,
+      "safeErrorClasses": {
+        "authenticationFailure": false,
+        "connectionRefused": false,
+        "permissionDenied": false,
+        "undefinedObject": false
+      },
+      "sqlstateExplicit": []
+    },
+    "privateCleanupPresenceOnly": {
+      "credentialKeyRemoved": true,
+      "scenarioRemoved": true,
+      "secretContentsNotRead": "[REDACTED]"
+    },
+    "rawLogsExported": false,
+    "requestReceiptStatus": "UNKNOWN_DB_STOPPED_NO_EXISTING_EXPORTED_ORDINARY_RECEIPTS",
+    "retainedEvidencePresence": {
+      "host-result.json": true,
+      "installation-result.json": true,
+      "ordinary-child-cleanup.json": true,
+      "ordinary-failure.json": true,
+      "ordinary-result.json": false,
+      "rollback-host-result.json": true
+    },
+    "sourceTargetConfigPermissionServiceWrites": 0,
+    "status": "RETAINED_READONLY_FINITE_EXTRACTION_COMPLETE_NOT_BUSINESS_PASS",
+    "underlyingError": "NOT_RETAINED_UNLESS_ALLOWLIST_LOG_MATCH"
+  },
+  "businessFailureRootCause": "UNKNOWN_NOT_RETAINED_IN_CHECKED_OUTPUTS",
+  "childInnerPhase": "NOT_RETAINED; parent phase alone does not prove a particular child PG assertion was reached",
+  "sqlstate": "NOT_RETAINED_IN_CHECKED_OUTPUTS",
+  "errno": "NOT_RETAINED_IN_CHECKED_OUTPUTS",
+  "ordinaryRequestCommitStatuses": "UNKNOWN; may have committed; DB stopped, logins revoked, no exported original ordinary request receipt. Must not replay.",
+  "normalSyntheticImportStatus": "COMMITTED/ALREADY_COMMITTED/VERIFIED from original install evidence, distinct from unknown ordinary requests",
+  "nextMinimalStep": "Registered source owner must design minimal closed safe failure descriptor through integration/eval/parent without messages, args, business rows or secrets. Preserve known completed checks; do not diagnose by replay or restarting stopped target. No source changes performed here.",
+  "limits": [
+    "Finite log extraction found no allowlisted SQLSTATE/errno/type/guard; absence is not proof of no underlying database error",
+    "No target restart or new PG, no original request querying or writer execution",
+    "No actualmodel/effort/Fast verification"
+  ],
+  "REALOrFormalChanged": false
+}
