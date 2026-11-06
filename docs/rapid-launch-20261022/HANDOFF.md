@@ -2063,3 +2063,7 @@ Actual installc81382bc failed2/149.998962s overall. Schema/record,3negative roll
 T45 native factory no-PG manifest matches actual fixtureBinding d5d6b7af. Fresh35 successor adds hall02 but inherits warehouse01+warehouse02 bothhall01; staffhall01 causes real ordinarybuilder unique-warehouse guard RED. C assigns only original D1 Fresh35 fixture9c5b979a plus existingdirecttest: bindwarehouse02 to newsecondHall, preserve basefactory/identities/inventory/amount/SQL/ACL/guards. Not a production mapping decision; actualscene row bytes not exported. Necessary targeted checks then QB increment/Cfreeze/D2build. No server/PG/committed-key replay by this source assignment.
 
 Ownership scope clarification: only settlement-retention25 variant warehouse:02 -> its existing hall:02; default/base bytes and golden manifests remain exact. Original D1 notified before implementation; no launcher guard relaxation.
+
+## 2026-11-06T18:53:17+08:00 - Retention fixture relation repaired and frozen; narrow QA/build parallel
+
+Source0ad22579cf95c72835a7a74bd4900767d61017a2/roota1b7b65766544a81af4dc1d37c49551f209971f4/tree8e39844e. D1receipt573a3f10: only settlement-retention25 warehouse02 to its explicit secondHall, original default/base/golden/IDs/inventory/amount/source and T45guard unchanged;2targeted checks passed. C verified exact2file pins, froze source and assigned originalQB consumer increment/originalD2 onebuild in parallel. Actualordinary on correctedfixture remains unverified. r17/r18actualCOMMITTED/readback retained, no oldkey replay or REAL/production.

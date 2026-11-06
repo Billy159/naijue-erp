@@ -1,0 +1,164 @@
+{
+  "format": "D1_R18_RETENTION25_ORDINARY_FIXTURE_REPAIR_V1",
+  "status": "EXACT_TWO_LEAF_SOURCE_FIX_FROZEN_NATIVE_ORDINARY_NOT_VERIFIED",
+  "recordedAt": "2026-11-06T18:50:46.482958+08:00",
+  "actualModelEffort": "UNVERIFIED",
+  "sourceRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "authority": "C canonical r18Preparation.ordinaryFixtureRepair exact2leaves; narrowed to settlement-retention25 only; original D1 sole writer",
+  "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+  "candidateIntegrationRoot": "C_OWNS_NOT_CREATED_BY_D1",
+  "files": [
+    {
+      "path": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "beforeSHA256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702",
+      "beforeBytes": 27211,
+      "afterSHA256": "4f7b4a7e2279302fc7114feb506dff301f0234b1fd8e05717b943a1fb13b9f7f",
+      "afterBytes": 27317
+    },
+    {
+      "path": "tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs",
+      "beforeSHA256": "545a0cee1f4d910e8ad6c53ca9b6a5decc40f3aa0c2918c4dcac296785bd3e92",
+      "beforeBytes": 14134,
+      "afterSHA256": "15b5c3616ea36a9e6998ba09aca60458a8a7f6f948eb401f1cdb303f0f84dcd0",
+      "afterBytes": 16706
+    }
+  ],
+  "implemented": "Only inside settlement-retention25 branch, exact source_key warehouse:02 hall_id binds explicit secondHall id. No base/default factory or ordinary guard change. Existing repin propagates new warehouse artifact/manifest.",
+  "actualR18Preserved": {
+    "sourceSetSHA256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+    "candidateRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
+    "safeResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r18-pg20-execution-01/RESULT.json",
+    "safeResultSHA256": "f4a4b9d9057ab39d1277a166bfdf5146f6ab39d5a637026077c739c8ccb26163",
+    "receiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
+    "normalImport": "COMMITTED/ALREADY_COMMITTED/VERIFIED",
+    "ordinaryFailure": "PRIVATE_SCENARIO/FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED",
+    "oldFixtureManifestSHA256": "d5d6b7af25a3bd09473ef8cc6c29b4c42731ade590ece92fa1fe956384ac475e",
+    "containerStopped": true,
+    "cleanupSixTrue": true,
+    "notReplayed": true
+  },
+  "reusedT45ReadOnlyProof": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r18-ordinary-scenario-readonly-diagnosis-01/RESULT.json",
+    "sha256": "aadf48d608f0924266e3da4eb645f9504d12812c904ca1c5d3d3ae1367322ea0",
+    "frozenActualNodeFixtureManifestMatchesR18": true,
+    "exactFrozenBuilderGuardRed": true,
+    "notRerunByD1": true,
+    "runtimeActualSceneRows": "NOT_EXPORTED"
+  },
+  "authorVerification": {
+    "newTestBeforeFix": "RED second warehouse still bound first hall",
+    "afterFix": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0,
+      "scope": "new exact topology plus preservation of stable identities/stock/SKU/barcode/source evidence; existing default golden/retention25approval/value validation"
+    },
+    "sourceChecks": {
+      "factoryOnlyOneRetention25Assignment": true,
+      "factoryInverseExact": true,
+      "originalBaseFactoryFunctionAndDefaultBranchBytesExact": true,
+      "existingDirectTestBytesPreservedAsPrefix": true,
+      "actualR18SourceSetSHA256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+      "reconstructedBeforeSourceSetSHA256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+      "afterSourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+      "changedSourcePins": 1,
+      "sourcePinCount": 214,
+      "allOtherSourcePinsAndDescriptorFieldsExact": true,
+      "afterFacts": {
+        "sourceSetSha256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+        "manifestSha256": "84b177671dd6723c9ab8dc24abf62f995ad22d014fec7111b9eec17bedefe2ba",
+        "warehouseSourceKeys": [
+          "warehouse:01",
+          "warehouse:02"
+        ],
+        "hallCounts": [
+          {
+            "sourceKey": "hall:01",
+            "warehouseCount": 1
+          },
+          {
+            "sourceKey": "hall:02",
+            "warehouseCount": 1
+          }
+        ],
+        "retainedHeaders": 25,
+        "retainedSettlements": 27,
+        "defaultManifestSha256": "bb9c3e49580b6ef103b6978a5b5d1f8515b459da73bf406d98adb68607f7a41d",
+        "observedDefaultManifestSha256": "a25d1adf046dc3d0f54f98b4954cbe15c4c48118466bf661762f826703af7e3c"
+      },
+      "T45LauncherAndTestAndBasePackageExact": true
+    },
+    "patchForwardAndReverseDryCheckExitCodes": [
+      0,
+      0
+    ],
+    "allSourceAndSnapshotPinsReread": true
+  },
+  "boundaries": {
+    "sourceOnly": true,
+    "onlyRegistered2SourceLeavesChanged": true,
+    "noOtherCWDSourceEditsByD1": true,
+    "defaultManifestGoldensUnchanged": true,
+    "businessMappingOrPermissionChanged": false,
+    "guardChanged": false,
+    "SQLChanged": false,
+    "T45LauncherChanged": false,
+    "newTablesColumnsConstraintsOrContracts": false,
+    "PGQueries": 0,
+    "newServerOrLogJob": false,
+    "build": false,
+    "GitOperations": false,
+    "REALOrProduction": false,
+    "oldCommittedKeyOrTargetReplayed": false
+  },
+  "limitations": [
+    "Corrected fixture has not run on actual PostgreSQL17.11",
+    "Ordinary/API business chain remains NOT_VERIFIED",
+    "r17/r18 committed evidence is preserved and must not replay",
+    "No claim of real source data import completion or production readiness"
+  ],
+  "artifacts": {
+    "PINS.json": {
+      "sha256": "5acebecc77409e08b4a60af31106587f7bfd8e5155afd50a559596b2e809db49",
+      "bytes": 629
+    },
+    "BEFORE-PINS.json": {
+      "sha256": "a6682c12681b6cb8e0ec47380cce41f40ef2dd8948318c4ba6a43234a2664968",
+      "bytes": 381
+    },
+    "SOURCE.patch": {
+      "sha256": "f7019a2ea2386f6a81e0cccadf8f916f6b639edd5bcf47ab9816f4edb5de810f",
+      "bytes": 3849
+    },
+    "SOURCE.reverse.patch": {
+      "sha256": "2aac56f04812bbd9224ad3d1ee44efd7164771357db646bb3cad16b79e28ed0a",
+      "bytes": 3849
+    },
+    "PATCH-CHECKS.json": {
+      "sha256": "a4d7d5b59ab13eab5e17459058db43b069b33b9439233bd90a6123da99056621",
+      "bytes": 473
+    },
+    "SOURCE-CHECKS.json": {
+      "sha256": "82cec5a48f6ad0ddd68766a037d6235691552f8a51a4b7b17b69a844e965aabc",
+      "bytes": 1374
+    },
+    "AFTER-FACTS.json": {
+      "sha256": "07b8e7411448bba8e6b60dfa96a89b9eaa18e368f62e33d6067c1a4da08edc91",
+      "bytes": 663
+    },
+    "LOCAL-SOURCE-DESCRIPTION.json": {
+      "sha256": "e5d71385dfe24fb2f5a163f1e875f79bde8968f9ba556f495e58984e010e41d5",
+      "bytes": 351144
+    },
+    "TEST-red.log": {
+      "sha256": "32461779dd78ec02ad46a3de338ab6912b9ee5088430ee3d244eaa8cf83a3846",
+      "bytes": 1316
+    },
+    "TEST-green.log": {
+      "sha256": "ebdd016290258f490ea40862d90c5e7d8638b5c51e534722baa9a39741827aab",
+      "bytes": 402
+    }
+  },
+  "next": "D1 freezes source2leaves. C integrates fixed pins, originalQB only affected fixture delta, originalD2 one build, originalT45 accurately-bound successor; no original committed key replay."
+}
