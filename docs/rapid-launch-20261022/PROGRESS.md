@@ -1874,3 +1874,10 @@ OriginalT45 localexactops + one necessaryboundedreadonlypreflight now; noPG/tran
 T45 preparationb68692a5/local87869f19; one remote1606db82 COMPLETED0/.268s at1793969275852 verifies actualr20base791d/identity393713, exactREADY/ownership, stoppedr20/6cleanup/errors[], oldnormalCOMMITTED and ordinaryUNKNOWN preserved, newr21root/CID/artifacts/requestprefixabsent. Privateoriginalreceipt2fe1fa55 is separately read from protected exactjob; no exportedrawhash reuse. Actualresource4CPU/load0/14.34GBmem/6.19GBdisk. NoPG/transfer yet in preflight.
 
 C original13keys taild3f4bfcc/full317e258b new30min1793969407549..1793971207549 consumes standing same-kind bounded isolation approval, not expirednoondelegation. OriginalT45 now stages exacttail23a2dc3c, locally reconstructsfullffbe0e9c from retainedr20base and prepares one materialization; originalreceiver40s/900smaterial/guard/ACL retained. Wrappere653af73/probe0af42b59/unboundassemblerb6a26f2d. NoPG/install/REALprod, no committedorunknownkey replay. Collect actualterminal/freshresources beforeC11.
+
+
+## 2026-11-06 — r21 originalreceiver fullREADY; unique materialization in progress
+
+Originaltail/finalpolicy COMPLETED0, tail23a2dc3c/2474322 firstattemptREADY. Originalassembler COMPLETED0/3.376s, exactfullffbe0e9c/83701245 READY/sourceb780/C13full317e; actualidentity[66304,393721,83701245,1793969619825383731,1793969620935386411]. Stagef64f4164 adopted; boundassembler52877467/plan a79e965d, wrappere653/probe0af unchanged.
+
+Unique t45-f35-148b57-local-materialize-20261106-01 submitted once with original900s cap, only source/tools materialization. Await originalterminal and onefreshresource before exactC11. NoPG/REALprod or oldnormal/unknownordinary key replay.
