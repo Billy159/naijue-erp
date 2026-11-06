@@ -1,0 +1,24 @@
+{
+  "status": "PASS_SCOPED_RESTORE_ONLY_CATALOG_ACL_ORDER_SOURCE",
+  "parentSha256": "ba455bb0e07f14c0fa598931834b0f7b682d78fcc6237225e5fadba940b5913f",
+  "sourceSha256": "36862013f0e0b426c7d4a906e4ef26c7ce166018648829424caba60e11f282b5",
+  "bytes": 40740,
+  "patchSha256": "dcf80e1b8eb84ccf7d190a5e30b80c33fd8b516db2bfe7e547d0771810fee31a",
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": {
+    "actualAdoptedRestoreParentMatchesBefore": true,
+    "restoreAndFormalPatchBytesIdentical": true,
+    "remapEqualsReviewedFormalFunction": true,
+    "outsideRemapBytesIdentical": true,
+    "restorationCatalogBuildersRetained": true
+  },
+  "reusedReceiptSha256": "93c32470c7653c10af315a4f203a6b734a782108a3101938370beba33c1d4b11",
+  "tests": "Formal sorting counterexamples and author4/r26 reused; none rerun",
+  "formalBranch": "EXCLUDED; restoration source is separate from formal3847/3b82",
+  "actualRestorePGOrApp": "NOT_TESTED",
+  "newRestoreRootSourceSetBuildPack": "NOT_CREATED_BY_REVIEW",
+  "server": "NOT_ACCESSED",
+  "deployment": "NOT_RUN",
+  "modelRuntime": "UNVERIFIED"
+}

@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-07T07:36:41.126787+08:00",
+  "state": "RESTORE_ONLY_SOURCE_ROOT_NOT_FORMAL_NOT_BUILD_OR_PG_PASS",
+  "branch": "codex/erp-0448z-restore-catalog-root-20261107",
+  "commit": "f5a1a2f91882978c6cdd14eeca9bd9897e5ac86f",
+  "tree": "67b509d29ee317c7f2799a6fa4ce74eb6c35b85a",
+  "parent": "a80177ce68d907ccf1519e7e6c658c04ea7490b5",
+  "onlyChangedPath": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+  "parentFileSha256": "ba455bb0e07f14c0fa598931834b0f7b682d78fcc6237225e5fadba940b5913f",
+  "fileSha256": "36862013f0e0b426c7d4a906e4ef26c7ce166018648829424caba60e11f282b5",
+  "QBResultSha256": "378af34b2029f9be4ec2aafd9c4756e8394b0667daf0fb160fcf6c22809e3ba3",
+  "formal3b82Unchanged": true,
+  "mainWIPOverwritten": false,
+  "actualBuild": "NOT_RUN",
+  "actualPG": "NOT_RUN",
+  "remoteVerified": false
+}

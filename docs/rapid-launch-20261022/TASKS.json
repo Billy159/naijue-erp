@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T07:30:49.489067+08:00",
+  "updatedAt": "2026-11-07T07:42:46.266515+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33307,7 +33307,7 @@
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
-      "nextOwner": "Original QB affected deltas; original D2 restore-only build; C accurate authority/records",
+      "nextOwner": "Original QB affected T45 r3 ops/private transport deltas; C exact decisions and records",
       "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -33435,7 +33435,17 @@
         "portObservation": "single sample tcp06TIME_WAIT4; all other states0; does not prove later absence",
         "receiptSHA256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717"
       },
-      "productionSchemaInstalled": false
+      "productionSchemaInstalled": false,
+      "currentFormalCandidate": {
+        "branch": "codex/erp-0448z-formal-catalog-root-20261107",
+        "commit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+        "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+        "build": "PASS",
+        "actualPGInstallation": "NOT_TESTED",
+        "REALImport": "NOT_EXECUTED",
+        "deployment": "NOT_EXECUTED",
+        "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS"
+      }
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -33814,7 +33824,7 @@
       },
       "integrationCheckpoint": {
         "branch": "codex/erp-0448z-integration-20261105",
-        "remoteVerifiedSHA": "4ae67b01560fe5e65f1e00440f044b718f8e4558",
+        "remoteVerifiedSHA": "dae6e7120ad324d3cc5628eeef6e32a98b99e8dd",
         "buildRootRemoteVerifiedSHA": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
         "uncommittedOwner": "Only C current operational records; caches/logs preserved"
       },
@@ -34137,7 +34147,7 @@
       },
       "formalCatalogSourceSuccessor": {
         "at": "2026-11-07T07:22:34.511026+08:00",
-        "state": "FIXED_FORMAL_SOURCE_ROOT_ONE_LEAF_NOT_BUILD_OR_PG_PASS",
+        "state": "FORMAL_BUILD_PACK_RESOURCE_CLOSURE_PASS_NOT_INSTALLED_OR_DEPLOYED",
         "branch": "codex/erp-0448z-formal-catalog-root-20261107",
         "commit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
         "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
@@ -34174,6 +34184,27 @@
         },
         "buildSeconds": 12.044220375,
         "packSeconds": 9.944686125
+      },
+      "restoreCatalogOrderSuccessor": {
+        "state": "RESTORE_ONLY_NOT_FORMAL_BUILD_PACK_RESOURCE_PASS_NOT_ACTUAL_RESTORE",
+        "branch": "codex/erp-0448z-restore-catalog-root-20261107",
+        "root": "f5a1a2f91882978c6cdd14eeca9bd9897e5ac86f",
+        "tree": "67b509d29ee317c7f2799a6fa4ce74eb6c35b85a",
+        "parent": "a80177ce68d907ccf1519e7e6c658c04ea7490b5",
+        "sourceSetSha256": "b3002c4346ee87d32cae27264322a31c4dcefa414f73c4bd887f906d58176713",
+        "sourceCounts": {
+          "current": 215,
+          "captured": 180
+        },
+        "QBSourceReceipt": "378af34b2029f9be4ec2aafd9c4756e8394b0667daf0fb160fcf6c22809e3ba3",
+        "actualBuildReceipt": "4d842b6fdd9878c15fadd7389e385a3191814d1d5b1dee719c987556f4c4c449",
+        "buildSeconds": 11.886,
+        "packSeconds": 9.44,
+        "smallArchiveSha256": "0f8e6310421aedfa3f60ec53a3bb1a4b6344aa28288eebf946daa92f1b4e3a7a",
+        "fullArchiveSha256": "4de87acf8ff2230b952344b051456488ecd9e6136f5b256518a444d2279137dd",
+        "formal3b82Unchanged": true,
+        "actualPGOrRestore": "NOT_TESTED",
+        "remoteRootVerified": true
       }
     }
   }
