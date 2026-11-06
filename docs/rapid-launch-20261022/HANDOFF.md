@@ -2212,3 +2212,8 @@ Originalinstall FAILED2/145.347s,13:13:54..13:16:19UTC; raw28ab9d13/51898B, safe
 New diagnostic actually effective: childDiagnosticUnavailable=false; genuine D1 childFailure phaseREAL_CAPACITY/typeTypeError/source runFresh35OrdinaryIntegration:catch, guard/SQLSTATE/errno/integersnull. Non-entryFailure proves D1 function entered, source is catch boundary not originalthrowline. Later REAL_SYNTHETIC_ADMISSION/API/save/approve/readback/probe not passed. CIDc3030d17 stopped,6cleanuptrue/errors[], child/initializer/descendantsreaped. NoREAL/production.
 
 C routed only exact createProductionCapacityLaunch(context.capacityLaunch,c) source/signature/parameter/protocol diagnosis and boundedpureoffline reproduction to originalD1. Existing source leaves frozen pending precise finding, T45 no further server/write/restart/install. All priornormalCOMMITTED and unknownordinary keys not replayed.
+
+
+## 2026-11-06T21:28:10.259911+08:00 — r21容量采集脚本交付模式定向修复
+
+D1以准确冻结collector及原executableMatches复现缺执行位TypeError；D2固定归档清单为0644，原T45物化按原mode写入，无特例提升路径。确认交付不一致，actual Linux单叶stat未导出，尚不认定唯一运行首因。C仅登记原D2修改collector执行模式至0755、内容1c34a9c8保持；若打包器强制模式，先指出准确文件再登记。D1关闭原离线复现，其他源码冻结，QB只验此次模式/消费者增量；之后原D2一次固定构建，T45接续准确新候选，不重放r21已提交步骤或旧请求。原临时授权记录不延长，已有同类隔离授权及原任务持续；无新增用户决策请求。当前Git b8d06683完整SHA远端已回读，REAL导入/业务链/部署仍未通过。

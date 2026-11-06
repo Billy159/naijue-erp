@@ -28236,7 +28236,8 @@
         "adapters/postgres/src/catalogue-settings-read-reader.ts and direct tests (frozen9 accepted)",
         "scripts/release/build-production.mjs native35 exact closure only",
         "scripts/release/manifest.mjs exact native35 member validation only",
-        "tests/integration/live-ledger-balance-pairs.integration.test.ts exact finite fresh35 branch only; D2 unique owner after interface handoff; original V8 route unchanged"
+        "tests/integration/live-ledger-balance-pairs.integration.test.ts exact finite fresh35 branch only; D2 unique owner after interface handoff; original V8 route unchanged",
+        "scripts/ops/capacity-live-statfs.mjs execution mode only 0644 to 0755, content unchanged; exact packager metadata seam only if demonstrated necessary, propose file before editing"
       ]
     },
     "preservedWIP": "Original cleaning repo four files untouched",
@@ -28507,11 +28508,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R21_ACTUAL_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_D1_DIAGNOSIS",
+      "critical": "R21_CAPACITY_COLLECTOR_EXECUTABLE_MODE_DELIVERY_DEFECT_D2_MINIMUM_FIX",
       "independentPreparation": {
-        "D1": "Read-only exact REAL_CAPACITY createProductionCapacityLaunch call/source/protocol diagnosis, necessary pureoffline repro only.",
+        "D1": "Finish existing original guard offline RED evidence; source frozen, no duplicate fix.",
         "QB": "Exact3leaf diagnostic seam independently PASS, author checks reused; no repeated QA.",
-        "D2": "One fixed148b5716 build13.538s/pack10.247s/fullmembersPASS; no runtime.",
+        "D2": "Exact collector mode-only fix 0644 to0755, bytes1c34a9c8 unchanged; no build before fixed source and scoped QB.",
         "T45": "r21 stopped with cleanup complete, preserve exact evidence, no new server/PG/source writes or old-key replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
@@ -32688,12 +32689,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T21:20:28+08:00",
-      "phase": "R21_ACTUAL_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_D1_DIAGNOSIS",
+      "at": "2026-11-06T21:28:10.259911+08:00",
+      "phase": "R21_CAPACITY_COLLECTOR_EXECUTABLE_MODE_DELIVERY_DEFECT_D2_MINIMUM_FIX",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original D1 precise REAL_CAPACITY seam diagnosis",
-      "nextOwner": "C binds C11 after actual materialization and fresh resource result",
+      "currentOwner": "Original D2 exact collector executable-mode delivery fix",
+      "nextOwner": "Original QB scoped guard/package acceptance then original D2 fixed build",
       "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -32703,7 +32704,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original D1 exact read-only source/call protocol diagnosis and bounded offline TypeError reproduction; no new server/install/replay until precise fix.",
+      "next": "D1 closes exact original guard repro; D2 owns mode-only collector correction, no weakening guards or application business edits.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
       "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
@@ -32732,11 +32733,16 @@
       "QBReceiptSHA256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
       "D2ReceiptSHA256": "2fe30edaeb253fc77bfa35b3d4eee80e5fa4d2ebec552f594125ab9b5c08fc57",
       "currentCandidateActualRuntime": {
-        "state": "NOT_EXECUTED",
+        "root": "148b5716864681b77498ff58ea82bc18c853199b",
+        "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
+        "state": "R21_INSTALL_AND_SYNTHETIC_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_NO_REPLAY",
+        "receiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false
-      }
+      },
+      "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
+      "githubReadbackCommit": "b8d06683ef08a8566a412e06d5a8c0e3ef52cbff"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",

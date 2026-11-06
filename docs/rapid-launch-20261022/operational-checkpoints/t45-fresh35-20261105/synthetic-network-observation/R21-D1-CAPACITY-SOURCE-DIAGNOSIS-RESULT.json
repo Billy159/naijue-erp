@@ -1,0 +1,196 @@
+{
+  "format": "D1_R21_CAPACITY_EXECUTABLE_SOURCE_DIAGNOSIS_V1",
+  "status": "READONLY_EXACT_ARTIFACT_EXECUTION_MODE_DEFECT_REPRODUCED_ACTUAL_FIRST_PREDICATE_NOT_EXPORTED",
+  "recordedAt": "2026-11-06T21:27:44.309636+08:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "actualR21": {
+    "safeResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r21-pg20-execution-01/RESULT.json",
+    "safeResultSHA256": "cb94c0718018014db94b32ada451337c23188663061682f63ded183b670367d3",
+    "rawReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
+    "root": "148b5716864681b77498ff58ea82bc18c853199b",
+    "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
+    "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+    "ordinaryFailure": {
+      "automaticRetry": false,
+      "childDiagnosticUnavailable": false,
+      "childFailure": {
+        "actualInteger": null,
+        "errno": null,
+        "errorType": "TypeError",
+        "expectedInteger": null,
+        "format": "FRESH35_ORDINARY_FAILURE_V1",
+        "guardCode": null,
+        "phase": "REAL_CAPACITY",
+        "source": "runFresh35OrdinaryIntegration:catch",
+        "sqlstate": null
+      },
+      "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+      "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+      "phase": "REAL_PG_AND_MIDDLEWARE",
+      "state": "FAILED_OR_OUTCOME_UNKNOWN"
+    },
+    "normalSyntheticImport": {
+      "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+      "importState": "COMMITTED",
+      "replayState": "ALREADY_COMMITTED",
+      "readbackState": "VERIFIED",
+      "retainedHeaders": 25,
+      "retainedSettlements": 27,
+      "connectionCleanup": "CLOSED"
+    },
+    "containerStopped": true,
+    "oldKeyOrRequestsNotReplayed": true
+  },
+  "interfaceAnalysis": {
+    "caller": "runFresh35OrdinaryIntegration: phase REAL_CAPACITY; capacity=await createProductionCapacityLaunch(context.capacityLaunch,c)",
+    "signature": "createProductionCapacityLaunch(input:unknown,runtime:{postgres:{target:{host,port,database,user}},build:{sourceCommit},productMedia?}):Promise<PreparedOwnedPoolCapacityAdmission>",
+    "match": true,
+    "nextUsage": "capacity passed to actual API factory then capacity.preflight() at REAL_SYNTHETIC_ADMISSION; no destructuring or iterable mismatch at present caller",
+    "jsonParser": "Same parseProductionCapacityLaunch already ran at PRIVATE_INPUT; producer returns matching closed protocol and numeric strings; no schema/parameter/return contract change identified",
+    "unknownIdentityChecks": "Actual process/time/target/config values not read; those guards also can fail. No actual private context or secrets read."
+  },
+  "sourceDefect": {
+    "producer": "launch-fresh35-isolated-v1.py prepare_ordinary_capacity: producer.executable points to DEPLOY/scripts/ops/capacity-live-statfs.mjs",
+    "consumer": "production-capacity-launch.ts executableMatches requires executable bit before hash/open/spawn",
+    "collector": {
+      "path": "scripts/ops/capacity-live-statfs.mjs",
+      "bytes": 13339,
+      "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-148b57168646/scripts/ops/capacity-live-statfs.mjs",
+      "origin": "fixed-source",
+      "mode": 420
+    },
+    "frozenRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-148b57168646",
+    "inventoryPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-148b5716/ordinary/DEPLOYMENT-INVENTORY.json",
+    "inventorySHA256": "27634de99bf0625e8c12f3fe0bf596d23ce2fb846a832f7fcd401d26af306f8e",
+    "materializationReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-148b57-local-materialize-20261106-01/transport/release-receipts/t45-f35-148b57-local-materialize-20261106-01/fresh35-materialize-app-result.json",
+    "materializationReceiptSHA256": "8c60ba70755404fd311965c08c85a3945a9a4e9b68ae09cbe1c35f028a929bf8",
+    "materializationStatus": "CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW",
+    "wrapper": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-148b57-local-materialize-20261106-01/bundle/fresh35-container-successor.py",
+    "wrapperSHA256": "e653af73ed08bb6c651c4bbd130ed9202cd7fa661ca4c3ea4d503c4d1a515b31",
+    "modeDataflow": [
+      "archive_files line123 preserves m.mode (only0644/0755 allowed)",
+      "materialize line147 new_file(p,data,modes[n])",
+      "new_file line86 os.fchmod(fd,mode)",
+      "No collector execute-bit promotion; deployment tree bound read-only per originalT45 existing metadata"
+    ],
+    "priorFullArchiveVerification": "OriginalD2/T45 verified7298members including bytes/hash/modes reused, not rerun by D1",
+    "authorRepro": {
+      "result": "RED_ORIGINAL_EXECUTABLE_GATE_REPRODUCED",
+      "exceptionType": "TypeError",
+      "sourceFunction": "executableMatches",
+      "expression": "(before.mode & 0o111) === 0",
+      "sourceHash": "11d85885d2ca9cf679e02e213de066a43fb91cfada74f7a6b083f8c5168afb59",
+      "collectorHash": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+      "localFrozenCollectorMode": "644",
+      "predicates": {
+        "canonical": true,
+        "regularFile": true,
+        "notSymlink": true,
+        "boundedSize": true,
+        "noGroupOrWorldWrite": true,
+        "hasExecuteBit": false,
+        "ownerAllowed": true,
+        "parentDirectory": true,
+        "parentNotSymlink": true,
+        "parentNoGroupOrWorldWrite": true
+      },
+      "childProcesses": 0,
+      "PGQueries": 0,
+      "serverAction": false,
+      "sourceChanged": false,
+      "scope": "Recorded output of the one observed author REPRO.mjs run against exact frozen source. Not a Linux target replay or proof of its file stat/first failed predicate."
+    }
+  },
+  "conclusion": {
+    "confirmed": "An exact frozen/package leaf is0644 while unchanged consumer requires an executable. Original guard reproduces TypeError with this mode; source/package writer preserves0644, with no observed promotion path.",
+    "inference": "Successful original materialization plus this exact mode-preserving dataflow supports the candidate as the r21 capacity failure.",
+    "actualLinuxLeafStat": "NOT_EXPORTED_UNKNOWN",
+    "actualFirstFailedPredicateOrSoleCause": "NOT_PROVEN; no original private context, Linux stat or exception origin was exported.",
+    "businessContractOrCapacityImplementationDefect": "NO_NEW_EVIDENCE"
+  },
+  "proposedMinimalRepair": {
+    "leaf": "scripts/ops/capacity-live-statfs.mjs",
+    "contentBeforeAndAfterSHA256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+    "metadataOnly": "Make exactly this already-reviewed collector executable in fixed source/package (0755), carrying that mode through the existing D2 archive/inventory and originalT45 materializer. Do not chmod deployed tree or immutable old bundle ad hoc.",
+    "owner": "C to register originalD2 packaging/source-mode owner; D1 has no new source write grant and remains frozen. If the builder normalizes all source modes, originalD2 should name the exact packaging leaf before any change.",
+    "preserve": [
+      "exact collector bytes/review/hash/shebang and original producer protocol/path",
+      "all capacity process/target/time/hash/mode guards",
+      "original budgets/observations/private profile",
+      "no fake known facts or permissive provider",
+      "ordinary/business SQL/permissions/diagnostic interface",
+      "all oldCOMMITTED/UNKNOWN keys not replayed"
+    ],
+    "validationScope": "One affected package mode assertion plus original safe executable metadata guard; later actual isolated verification only via C/originalT45 accurate successor, not old target."
+  },
+  "sourcePinsReadOnly": [
+    {
+      "path": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "sha256": "e8f77c349c06caab57e6eed89a2afac277ab1fb93c0ff58955dfebf2b624ae6c",
+      "bytes": 76369,
+      "mode": "0o644"
+    },
+    {
+      "path": "apps/api/src/production-capacity-launch.ts",
+      "sha256": "11d85885d2ca9cf679e02e213de066a43fb91cfada74f7a6b083f8c5168afb59",
+      "bytes": 13697,
+      "mode": "0o644"
+    },
+    {
+      "path": "apps/api/src/capacity-runtime-probe.ts",
+      "sha256": "13306c668542cf685281c4d20641cfa68680f8dc42f652c7e27db10df0b7f66f",
+      "bytes": 11679,
+      "mode": "0o644"
+    },
+    {
+      "path": "apps/api/src/capacity-admission.ts",
+      "sha256": "c0eb48b972fbe6e49b35455c6c83929eab7981aa7807d00a6da90e8430155514",
+      "bytes": 15238,
+      "mode": "0o644"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.ts",
+      "sha256": "98596a0c5a3c88a5775cea6b354668dad0f9c223683d23f5c830eb4d154e3788",
+      "bytes": 35812,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "sha256": "3eef7c05f503a74c12a3a9dc9f62641b0a88b8b8846add10e1b19929f3657654",
+      "bytes": 102421,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/ops/capacity-live-statfs.mjs",
+      "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+      "bytes": 13339,
+      "mode": "0o644"
+    }
+  ],
+  "boundaries": {
+    "sourceChanged": false,
+    "filesystemModeChanged": false,
+    "privateContextOrSecretsRead": false,
+    "realDataRead": false,
+    "PGQueries": 0,
+    "serverOrInstallAction": false,
+    "newLogJob": false,
+    "buildOrFullSuite": false,
+    "oldKeyReplay": false,
+    "GitOperations": false,
+    "capacityGuardWeakened": false,
+    "REALOrProduction": false
+  },
+  "artifacts": {
+    "REPRO.mjs": {
+      "sha256": "be09d6a5eb884531d6fcf7353b2ec8b16087a39a33d2494e7802b11d114e9234",
+      "bytes": 2818
+    },
+    "REPRO-RESULT.json": {
+      "sha256": "c8a1f26321d7dbcba0ce7dfc0a50617f7fdd515547df10e96e3e96c3dd9a3559",
+      "bytes": 958
+    }
+  },
+  "next": "C routes exact artifact-mode repair to original owner. D1 stops read-only diagnosis unless new precise evidence or source task arrives. Reuse valid normal-import/rollback/readback results."
+}

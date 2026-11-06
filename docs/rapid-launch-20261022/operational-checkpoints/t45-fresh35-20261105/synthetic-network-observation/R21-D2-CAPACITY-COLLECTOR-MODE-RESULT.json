@@ -1,0 +1,77 @@
+{
+  "status": "MODE_ONLY_SOURCE_FIX_AND_LOCAL_GUARD_SAMPLE_PASS_NOT_LINUX_RUNTIME",
+  "fixedBaseRoot": "148b5716864681b77498ff58ea82bc18c853199b",
+  "file": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/ops/capacity-live-statfs.mjs",
+  "bytes": 13339,
+  "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+  "beforeMode": "0644",
+  "afterMode": "0755",
+  "contentEqualFixedGitBlob": true,
+  "gitDiffSummary": "mode change 100644 => 100755 candidate0448/scripts/ops/capacity-live-statfs.mjs",
+  "gitNumstat": "0\t0\tcandidate0448/scripts/ops/capacity-live-statfs.mjs",
+  "sourceContentChanges": false,
+  "otherSourceFilesModified": [
+    "candidate0448/scripts/ops/capacity-live-statfs.mjs"
+  ],
+  "guard": {
+    "source": "apps/api/src/production-capacity-launch.ts:91-101",
+    "method": "in-memory esbuild of original source with only extra export of private executableMatches; original function logic unchanged; invoked directly without producer creation/spawn",
+    "before": {
+      "status": "ORIGINAL_GUARD_REJECTED_0644",
+      "source": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/apps/api/src/production-capacity-launch.ts",
+      "sourceSha256": "11d85885d2ca9cf679e02e213de066a43fb91cfada74f7a6b083f8c5168afb59",
+      "target": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/ops/capacity-live-statfs.mjs",
+      "hash": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+      "childSpawned": false,
+      "pg": false
+    },
+    "after": {
+      "status": "ORIGINAL_GUARD_ACCEPTED_0755",
+      "source": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/apps/api/src/production-capacity-launch.ts",
+      "sourceSha256": "11d85885d2ca9cf679e02e213de066a43fb91cfada74f7a6b083f8c5168afb59",
+      "target": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/ops/capacity-live-statfs.mjs",
+      "hash": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+      "childSpawned": false,
+      "pg": false
+    }
+  },
+  "ordinaryPackaging": {
+    "sourceModeConsumption": "existing ordinary inventory row uses source.stat().st_mode & 0777; raw Git export preserves100755; no hardcoded0644 for fixed-source collector",
+    "sample": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/R21-CAPACITY-COLLECTOR-MODE-01/collector-only-mode-sample.tar.gz",
+      "bytes": 4347,
+      "sha256": "f65767c120cc776c7bde4eccec820e7358b1430545bae658d344ce04491482ca"
+    },
+    "sampleMember": "deploy/scripts/ops/capacity-live-statfs.mjs",
+    "sampleTarMode": "0755",
+    "readbackContentMatches": true,
+    "materialized": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/R21-CAPACITY-COLLECTOR-MODE-01/materialized-collector.mjs",
+      "bytes": 13339,
+      "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338"
+    },
+    "materializedMode": "0755",
+    "fchmodFromTarModePass": true
+  },
+  "productionPackagingBoundary": {
+    "file": "scripts/release/pack.mjs:34",
+    "mode": "0444",
+    "meaning": "production package intentionally writes all members0444; capacity collector ordinary delivery uses fixed source inventory and does not consume this production tar member; no modification requested or made"
+  },
+  "fullBuildExecuted": false,
+  "gitStagedOrCommitted": false,
+  "pgServerRealTransferDeploy": false,
+  "preservation": "All prior builds/failure scenes retained; no cleanup; only one source chmod",
+  "notVerified": [
+    "actual Linux target leafstat/ownership",
+    "actual server capacity execution",
+    "full newly committed source build/ordinary tar",
+    "QB source acceptance",
+    "runtime ordinary business"
+  ],
+  "nextStep": "C commits exact mode-only source root; QB incremental review; then one authorized full integration build.",
+  "settings": {
+    "actualModel": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  }
+}
