@@ -1,0 +1,19 @@
+{
+  "status": "STOP_OR_UNKNOWN_PARTIAL_PRESERVED_NO_REPLAY",
+  "jobKey": "t45-prod35-r2-material-copy-20261107-01",
+  "sourceSha256": "1581ec36c8a35a69178b05a39963de0e4faa4a09f2a4db71434c365d8c018f11",
+  "postgresStarted": false,
+  "newImageBuilt": false,
+  "archiveUploaded": false,
+  "businessDatabaseWrites": false,
+  "automaticRetry": false,
+  "freeBeforeBytes": 10239647744,
+  "childReaped": false,
+  "samples": 1895,
+  "maxSampleGapSeconds": 0.20022627105936408,
+  "minimumAvailableBytes": 8968245248,
+  "stopFloorBytes": 4294967296,
+  "preparationOnly": true,
+  "safeCode": "MATERIALIZATION_CHILD_CLEANUP_UNKNOWN",
+  "elapsedSeconds": 378.87001675227657
+}

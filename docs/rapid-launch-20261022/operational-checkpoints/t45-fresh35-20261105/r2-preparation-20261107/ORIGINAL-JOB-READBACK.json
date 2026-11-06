@@ -1,0 +1,73 @@
+{
+  "PGExecuted": false,
+  "automaticRetry": false,
+  "cgroupMemberCount": null,
+  "currentNoOwnedProcessObserved": true,
+  "exactOriginalScriptProcessCount": 0,
+  "freeBytes": 8967929856,
+  "metadata": {
+    "application": {
+      "bytes": 236711959,
+      "files": 7294
+    },
+    "real": {
+      "bytes": 1008361447,
+      "files": 31
+    }
+  },
+  "opaqueInput": {
+    "bytes": 188,
+    "contentRead": false,
+    "mode": "0400",
+    "ownerUid": 0
+  },
+  "originalFailureRelabeled": false,
+  "originalJob": "t45-prod35-r2-material-copy-20261107-01",
+  "originalJobStatus": "FAILED",
+  "originalParentChildReaped": false,
+  "originalReceiptSha256": "f31ff122962e5375b5abdf19bce1cb944a1ce33baf4e7e6b6682df734fa9b78d",
+  "pastParentWaitReapProven": false,
+  "r2ContainerAbsent": true,
+  "r2TargetAbsent": {
+    "authority/fresh35-production-provision-v2.json": true,
+    "production-container-receipt.json": true,
+    "production-start-intent.json": true,
+    "state/production-fresh35-20261107-r2": true
+  },
+  "readOnly": true,
+  "rootChildReceipt": {
+    "PGExecuted": false,
+    "applicationBytes": 236711959,
+    "applicationFiles": 7294,
+    "approvalCreated": false,
+    "archiveUploaded": false,
+    "automaticRetry": false,
+    "hardLinksCreated": false,
+    "imageBuilt": false,
+    "jobKey": "t45-prod35-r2-material-copy-20261107-01",
+    "opaqueInput": {
+      "bytes": 188,
+      "mode": "0400",
+      "ownerUid": 0,
+      "sameBytesMachineReadback": true,
+      "valueOrDigestExported": false
+    },
+    "originalFailuresPreserved": true,
+    "realBytes": 1008361447,
+    "realFiles": 31,
+    "sourceChanged": false,
+    "sourceUnchanged": true,
+    "status": "EXACT_R2_MATERIALS_COPIED_NO_PG"
+  },
+  "status": "ORIGINAL_COPY_POST_TERMINAL_READONLY_FACTS",
+  "unit": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ControlPID": "0",
+    "ExecMainCode": "0",
+    "ExecMainStatus": "0",
+    "MainPID": "0",
+    "Result": "success",
+    "SubState": "dead"
+  }
+}

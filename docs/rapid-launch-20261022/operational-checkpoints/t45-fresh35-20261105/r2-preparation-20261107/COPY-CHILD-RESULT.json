@@ -1,0 +1,24 @@
+{
+  "status": "EXACT_R2_MATERIALS_COPIED_NO_PG",
+  "jobKey": "t45-prod35-r2-material-copy-20261107-01",
+  "PGExecuted": false,
+  "approvalCreated": false,
+  "archiveUploaded": false,
+  "imageBuilt": false,
+  "automaticRetry": false,
+  "sourceChanged": false,
+  "hardLinksCreated": false,
+  "applicationFiles": 7294,
+  "applicationBytes": 236711959,
+  "realFiles": 31,
+  "realBytes": 1008361447,
+  "opaqueInput": {
+    "bytes": 188,
+    "mode": "0400",
+    "ownerUid": 0,
+    "sameBytesMachineReadback": true,
+    "valueOrDigestExported": false
+  },
+  "sourceUnchanged": true,
+  "originalFailuresPreserved": true
+}

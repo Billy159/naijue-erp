@@ -1,0 +1,38 @@
+{
+  "status": "MATERIALS_PRESENT_CURRENT_NO_OWNED_PROCESS_OBSERVED_ORIGINAL_COPY_JOB_FAILED",
+  "atUTC": "2026-11-06T22:56:50.071047+00:00",
+  "originalJob": "t45-prod35-r2-material-copy-20261107-01",
+  "originalTerminalStatus": "FAILED",
+  "originalJobReceiptSha256": "f31ff122962e5375b5abdf19bce1cb944a1ce33baf4e7e6b6682df734fa9b78d",
+  "guardReceiptSha256": "166db4c8357229765ed9888feb5e8f98344d82c8c06bff62be95b452f43d695f",
+  "childReceiptSha256": "f380d8765aa73ef5b0dd07b5845ff9e60334a882f77db86dd1375728951bcafb",
+  "originalParentChildReaped": false,
+  "postTerminalReadonlyJob": "t45-prod35-r2-material-readonly-20261107-01",
+  "readonlyJobReceiptSha256": "02b58322437bce726c202c1ac896d0ef299678b72a34db37f1b047f0a7720880",
+  "readonlyTypedReceiptSha256": "2a97f3555a37a4319d5b82fa9f0c9e2f6c738d20699805d84df6e6aa574b7acb",
+  "currentUnit": "inactive/dead, MainPID=0, ControlPID=0, ControlGroup empty",
+  "currentExactOriginalScriptProcesses": 0,
+  "pastParentWaitReapProven": false,
+  "application": {
+    "files": 7294,
+    "bytes": 236711959
+  },
+  "REAL": {
+    "files": 31,
+    "bytes": 1008361447
+  },
+  "opaqueInput": {
+    "bytes": 188,
+    "uid": 0,
+    "mode": "0400",
+    "sameBytesMachineReadbackFromChild": true,
+    "metadataOnlyInReadonly": true
+  },
+  "freeBytesAtReadonly": 8967929856,
+  "PGWorkspaceAndContainerAndC14Absent": true,
+  "newC14Issued": false,
+  "newInstallWindowStarted": false,
+  "originalFailurePreserved": true,
+  "businessAcceptanceClaimed": false,
+  "actualModelEffort": "UNVERIFIED"
+}

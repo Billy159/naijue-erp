@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SCOPED_R2_PREPARATION_AND_0600_DELIVERY_SOURCE",
+  "readySha256": "bd12f1e66611a6326fb57dd32cce53afe8e39d57b66aea624191f5fd5b9c6588",
+  "mainOpsSha256": "1581ec36c8a35a69178b05a39963de0e4faa4a09f2a4db71434c365d8c018f11",
+  "companionSha256": "03186d7dfa85d195e16594dd1f1aca050ff18d4471239df45d8e7e01e2bffad7",
+  "controllerSha256": "fe64f34f099950f518e3b52df7186e77699bca507da78e6aa431768052ef5c2a",
+  "copyChildSha256": "31f6a6acde5e5216b0eb2cdba5518fb18b86845922c57d21161ec2a06bf3d007",
+  "copyParentSha256": "1a1e07f47851b70c1b8009c675aaf948489f434a8d1dd349100e933a9a325d39",
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": "CHECKS.json; fixed-source hashes, AST scope, actual C9 consumer negative input checks and tiny-file copy models",
+  "reuse": "Original 19/8/Linux/REAL/materialization capabilities retained, not rerun. Author5 adopted local/mocked UID only.",
+  "actualR1Shutdown": "Not independently reverified; sealed cleanup/terminal receipts required by copy caller, original T45 evidence prerequisite",
+  "actualR2Copy": "NOT_RUN",
+  "actualC6C9Delivery": "NOT_RUN",
+  "actualC14OrPG": "NOT_STARTED_BY_REVIEW",
+  "actual188BRead": false,
+  "server": "NOT_ACCESSED",
+  "formalBusinessAcceptance": false,
+  "modelRuntime": "UNVERIFIED"
+}

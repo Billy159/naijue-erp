@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T06:56:26.290342+08:00",
+  "updatedAt": "2026-11-07T07:03:29.896008+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T06:56:26.290342+08:00",
-      "phase": "R2_COPY_CHILD_DONE_PARENT_CLEANUP_FOLLOWUP_FORMAL_CALLER_SOURCE_ADOPTED",
+      "at": "2026-11-07T07:03:29.896008+08:00",
+      "phase": "ACTUAL_R2_PROVISION_DONE_INSTALL_ENTRY_HANDOFF",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 exact original-copy cleanup and current resources -> C new C14. Source-only four leaves fixed; no formal deployment inferred.",
+      "next": "T45 exact0600 C6 delivery -> actual program -> C9 -> install; no REAL or switch yet",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33814,9 +33814,9 @@
       },
       "integrationCheckpoint": {
         "branch": "codex/erp-0448z-integration-20261105",
-        "remoteVerifiedSHA": "d946c50b271f4b7013a06df318c66bedc1513a6b",
+        "remoteVerifiedSHA": "fdd990f79cd66142fec07414543aa6acbf2dbf27",
         "buildRootRemoteVerifiedSHA": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
-        "uncommittedOwner": "C committing exact reviewed four leaves and records; integration-logs/npm-cache retained"
+        "uncommittedOwner": "Only C current operational records; caches/logs preserved"
       },
       "materialization": {
         "uniqueJob": "t45-prod35-10fc5e-materialize-20261107-01",
@@ -34005,7 +34005,7 @@
         "carrierShellRetained": true
       },
       "controlledSuccessor": {
-        "state": "R2_COPY_CHILD_SUCCESS_PARENT_CLEANUP_UNKNOWN_FOLLOWUP_IN_PROGRESS",
+        "state": "MATERIALS_ADOPTED_POST_TERMINAL_READONLY_ACTUAL_R2_PROVISION_DONE_C6_ISSUED",
         "sourceApplication": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
         "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
         "scope": "New exact root/name/alias/workspace/database/roles with original ops and retained artifacts; preserve r1. Correct C6/C9 server permissions to actual600 consumer. No new business source/pool/daemon, no replay or old-window extension; C signs fresh target only after material readiness.",
@@ -34015,10 +34015,37 @@
         "reportedTerminal": "FAILED2_378.954S_MATERIALIZATION_CHILD_CLEANUP_UNKNOWN",
         "reportedChildReceiptSHA256": "f380d8765aa73ef5b0dd07b5845ff9e60334a882f77db86dd1375728951bcafb",
         "reportedParentReceiptSHA256": "166db4c8357229765ed9888feb5e8f98344d82c8c06bff62be95b452f43d695f",
-        "receiptAdoption": "T45 message only pending exact cleanup receipt reading",
-        "PGStarted": false,
-        "C14Issued": false,
-        "next": "Original key/unit/cgroup exact readonly cleanup proof and current resources; no copy replay. Fresh C14 only after readiness."
+        "receiptAdoption": "C actual readback adopted current material and no-owned-copy-process facts; original copy FAILED preserved",
+        "PGStarted": true,
+        "C14Issued": true,
+        "next": "T45 exact0600 C6 delivery -> actual program -> C9 -> install; no REAL or switch yet",
+        "actualReadinessSHA256": "59b33e6161b5ddf03e9dd0e8a2917d8d1ec0d5e7854ba8bea1ffd6191d2d814a",
+        "actualReadbackSHA256": "2a97f3555a37a4319d5b82fa9f0c9e2f6c738d20699805d84df6e6aa574b7acb",
+        "pastParentWaitReapProven": false,
+        "currentNoOwnedCopyProcessObserved": true,
+        "freeBytesAtReadonly": 8967929856,
+        "C14": {
+          "sha256": "f0842d0ddf0f98be03180e13eeeb591873fe91df9ee6246048731ad31f3a43b1",
+          "startsAt": 1794005901389,
+          "expiresAt": 1794007101389
+        },
+        "C6": {
+          "sha256": "07badabd688006a5727e0f43680ac1a02a417ba81388134200789f6171de5b1d",
+          "bytes": 1641,
+          "serverRequiredMode": "0600"
+        },
+        "actualProvision": {
+          "jobKey": "t45-prod35-r2-provision-20261107-01",
+          "jobReceiptSHA256": "ec559877e1f8358599f8cd233ae40e541f5e058c045f7b666f6118a6a3998957",
+          "factsSHA256": "fb60082900e5d55892cfedf6239684ea5439b66ccf103d47ead191709f403b80",
+          "CID": "c6c9e888431dc6e35a13d48bed31e4f9477afab5aded3fcbd6e33a242b89ab47",
+          "SID": "7705197122612510756",
+          "OID": 16393,
+          "postmasterStart": "2026-11-06 23:00:10.057708+00",
+          "installStarted": false,
+          "freeBefore": 8967593984,
+          "freeAfter": 8924745728
+        }
       },
       "formalCallerAdoption": {
         "at": "2026-11-07T06:56:26.290342+08:00",
