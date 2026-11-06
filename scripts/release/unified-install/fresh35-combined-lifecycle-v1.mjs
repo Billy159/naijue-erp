@@ -37,6 +37,7 @@ export async function compileFresh35CombinedProgram({source,target,catalog}){
   {name:'direct-35-schema',sql:schema.schemaSql+'\nGRANT EXECUTE ON FUNCTION naijue_erp.is_native_party_import_insert(text,jsonb) TO PUBLIC;\n'},
   {name:'migration-lineage',sql:schema.lineageSql},
   {name:'controller-lineage-column-read',sql:'GRANT SELECT (version, description) ON TABLE naijue_erp.schema_migration TO '+t.proposal.controller+';'},
+  {name:'runtime-account-column-write',sql:'GRANT INSERT (id, staff_id, login_name, password_hash, login_enabled, auth_version, version, created_at, updated_at) ON TABLE naijue_erp.user_account TO erp_unified27_runtime_2393dbc6db9581c2;\nGRANT UPDATE (login_name, login_enabled, auth_version, version, updated_at, password_hash) ON TABLE naijue_erp.user_account TO erp_unified27_runtime_2393dbc6db9581c2;'},
   ...schema.patchBodies,
   {name:'complete-successor-catalog',sql:sql.guardSql},
   {name:'same-physical-target',sql:fresh35CombinedTargetGuard(target,{requireEmpty:false})},

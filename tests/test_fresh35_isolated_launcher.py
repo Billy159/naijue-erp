@@ -96,35 +96,35 @@ class Tests(unittest.TestCase):
         self.assertNotIn('shutil.rmtree',source)
 
 class CleanupPortObservationTests(unittest.TestCase):
-    def observe(self,rows=None,read_error=None,netns_error=None):
+    def observe(self,rows=None,read_error=None,netns_error=None,netns_identity=(4,99),read_error_table='tcp'):
         rows=rows or {};observation={};reads=[]
         def read(path,*args,**kwargs):
             reads.append(str(path))
-            if read_error:raise read_error
+            if read_error and str(path)=='/proc/net/'+read_error_table:raise read_error
             return 'header\n'+rows.get(str(path),'')
         def netstat(path,*args,**kwargs):
             self.assertEqual(str(path),'/proc/self/ns/net')
             if netns_error:raise netns_error
-            return SimpleNamespace(st_dev=4,st_ino=99)
+            return SimpleNamespace(st_dev=netns_identity[0],st_ino=netns_identity[1])
         with patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',netstat):
             try:value=m.port_absent(18651,observation);error=None
             except Exception as e:value=None;error=e
         return value,observation,error,reads
     def test_matching_listen_and_nonlisten_both_refuse_with_distinct_counts(self):
-        for state in ['0A','06','01','FF']:
+        for state in [f'{value:02X}' for value in range(1,14)]+['FF']:
             with self.subTest(state=state):
                 value,o,error,reads=self.observe({'/proc/net/tcp':f'0: 0100007F:48DB SECRET_ADDRESS:ABCD {state} PRIVATE_ROW\n'})
                 self.assertFalse(value);self.assertIsNone(error);self.assertTrue(o['complete'])
-                self.assertEqual(o['matchingStates']['tcp'][state if state!='FF' else 'UNKNOWN'],1)
-                self.assertEqual(o['matchingRows'],1);self.assertFalse(o['portAbsent'])
+                self.assertEqual(o['matchingStates']['tcp'][state if state not in ('0D','FF') else 'UNKNOWN'],1)
+                self.assertEqual(o['matchingRows'],1);self.assertFalse(o['portAbsent']);self.assertEqual(o['noActiveTcpRows'],state=='06')
                 self.assertNotIn('SECRET',json.dumps(o));self.assertNotIn('PRIVATE',json.dumps(o))
                 self.assertEqual(reads,['/proc/net/tcp','/proc/net/tcp6'])
     def test_ipv6_match_and_unrelated_port_kept_separate(self):
         value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DC hidden:0000 0A hidden\n','/proc/net/tcp6':'0: ABCD:48DB hidden:0000 06 hidden\n'})
-        self.assertFalse(value);self.assertIsNone(error);self.assertEqual(o['matchingStates']['tcp6']['06'],1);self.assertEqual(o['matchingRows'],1)
+        self.assertFalse(value);self.assertIsNone(error);self.assertEqual(o['matchingStates']['tcp6']['06'],1);self.assertEqual(o['matchingRows'],1);self.assertTrue(o['noActiveTcpRows'])
     def test_absence_has_complete_timing_and_namespace_metadata(self):
         value,o,error,_=self.observe();self.assertTrue(value);self.assertIsNone(error)
-        self.assertEqual(o['namespace'],{'device':4,'inode':99});self.assertEqual(o['matchingRows'],0)
+        self.assertEqual(o['namespace'],{'device':4,'inode':99});self.assertEqual(o['matchingRows'],0);self.assertTrue(o['noActiveTcpRows'])
         self.assertEqual(o['stage'],'AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP')
         self.assertTrue(o['startedAtUTC'].endswith('+00:00'));self.assertTrue(o['finishedAtUTC'].endswith('+00:00'))
     def test_read_failures_remain_unknown_and_never_export_error_text(self):
@@ -133,22 +133,50 @@ class CleanupPortObservationTests(unittest.TestCase):
                 value,o,caught,_=self.observe(read_error=error)
                 self.assertIsNone(value);self.assertIsNotNone(caught);self.assertFalse(o['complete']);self.assertIsNone(o['portAbsent'])
                 self.assertEqual(o['readError'],code);self.assertEqual(o['reading'],'tcp');self.assertNotIn('SECRET',json.dumps(o))
-    def test_cleanup_preserves_observation_and_original_all_conditions_rule(self):
-        for matched in [True,False]:
-            with self.subTest(matched=matched):
-                class Child:
-                    done=False
-                    def poll(self):return 0 if self.done else None
-                    def send_signal(self,signal):self.done=True
-                    def wait(self,timeout):return 0
-                p=authority()['proposal'];port=p['port']
-                def read(path,*args,**kwargs):
-                    return 'header\n'+(f'0: 0100007F:{port:04X} SECRET:0000 06 SECRET\n' if matched and str(path)=='/proc/net/tcp' else '')
-                with patch.object(m,'owned_listener',return_value=True),patch.object(m,'same_process',return_value=True),patch.object(m,'psql',return_value=''),patch.object(m,'clear_credentials',return_value=True),patch.object(m.Path,'exists',return_value=False),patch.object(m.Path,'is_symlink',return_value=False),patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',return_value=SimpleNamespace(st_dev=4,st_ino=99)),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=b'Database system identifier: 999\nDatabase cluster state: shut down\n')):
-                    result=m.cleanup_owned_server(authority(),Child(),{'pid':999},'999',m.time.monotonic()+20)
-                self.assertEqual(result['portAbsent'],not matched);self.assertEqual(result['cleanupComplete'],not matched)
+    def cleanup_model(self,state='06',failure=None):
+        class Child:
+            done=False
+            def poll(self):return 0 if self.done else None
+            def send_signal(self,signal):self.done=failure!='ownedPidAbsent'
+            def wait(self,timeout):return 0
+        port=authority()['proposal']['port']
+        def read(path,*args,**kwargs):
+            return 'header\n'+(f'0: 0100007F:{port:04X} SECRET:0000 {state} SECRET\n' if state and str(path)=='/proc/net/tcp' else '')
+        def revoke(*args,**kwargs):
+            if failure=='loginsRevoked':raise PermissionError('SECRET')
+            return ''
+        control=b'Database system identifier: 999\nDatabase cluster state: shut down\n' if failure!='cleanShutdown' else b'Database system identifier: 998\nDatabase cluster state: shut down\n'
+        with patch.object(m,'owned_listener',return_value=True),patch.object(m,'same_process',return_value=True),patch.object(m,'psql',side_effect=revoke),patch.object(m,'clear_credentials',return_value=failure!='credentialsRemoved'),patch.object(m.Path,'exists',return_value=False),patch.object(m.Path,'is_symlink',return_value=False),patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',return_value=SimpleNamespace(st_dev=4,st_ino=99)),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=control)):
+            return m.cleanup_owned_server(authority(),Child(),{'pid':999},'999',m.time.monotonic()+20)
+    def test_cleanup_quiescence_accepts_pure06_without_claiming_port_absence(self):
+        for state in [None,'06','0A','01','0D','FF']:
+            with self.subTest(state=state):
+                result=self.cleanup_model(state);allowed=state in (None,'06')
+                self.assertEqual(result['portAbsent'],state is None);self.assertEqual(result['cleanupComplete'],allowed);self.assertEqual(result['noActiveTcpRows'],allowed)
+                self.assertEqual(result['tcpCleanupRule'],'FRESH35_NO_ACTIVE_TCP_ROWS_V1')
                 self.assertTrue(all(result[k] for k in ['cleanShutdown','credentialsRemoved','ownedPidAbsent','loginsRevoked']))
-                self.assertEqual(result['errors'],[]);self.assertEqual(result['portObservation']['matchingRows'],int(matched));self.assertNotIn('SECRET',json.dumps(result))
+                self.assertEqual(result['errors'],[]);self.assertEqual(result['portObservation']['matchingRows'],int(state is not None));self.assertNotIn('SECRET',json.dumps(result))
+    def test_quiescence_never_overrides_other_cleanup_or_initialization_failure(self):
+        for failure in ['loginsRevoked','credentialsRemoved','ownedPidAbsent','cleanShutdown']:
+            with self.subTest(failure=failure):
+                result=self.cleanup_model(failure=failure);self.assertTrue(result['noActiveTcpRows']);self.assertFalse(result[failure]);self.assertFalse(result['cleanupComplete']);self.assertNotIn('SECRET',json.dumps(result))
+        for change in [{'initializerReaped':False},{'descendantsReaped':False},{'errors':['MODEL_ERROR']}]:
+            initialization={'initialized':True,'initializerReaped':True,'descendantsReaped':True,'errors':[],**change}
+            result=m.include_initialization_cleanup(self.cleanup_model(),initialization);self.assertFalse(result['cleanupComplete']);self.assertFalse(result['portAbsent'])
+    def test_mixed_active_unknown_and_malformed_rows_or_incomplete_read_refused(self):
+        for state in ['01','0A','0D','FF']:
+            value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DB hidden:0000 06 hidden\n','/proc/net/tcp6':f'0: ABCD:48DB hidden:0000 {state} hidden\n'})
+            self.assertFalse(value);self.assertIsNone(error);self.assertFalse(o['noActiveTcpRows'])
+        for rows in [{' /unused':'ignored','/proc/net/tcp':'broken row\n'},{'/proc/net/tcp':'0: 0100007F:48DB hidden:0000 ZZ hidden\n'}]:
+            value,o,error,_=self.observe(rows);self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows'])
+        value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DB hidden:0000 06 hidden\n'},read_error=PermissionError('SECRET'),read_error_table='tcp6')
+        self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows']);self.assertEqual(o['reading'],'tcp6');self.assertNotIn('SECRET',json.dumps(o))
+    def test_unknown_namespace_refused_and_startup_stays_strict_without_observation(self):
+        for identity in [(None,99),(True,99),(4,0),(4,-1)]:
+            _,o,error,_=self.observe(netns_identity=identity);self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows'])
+        for table in ['tcp','tcp6']:
+            def read(path,*args,**kwargs):return 'header\n'+('0: 0100007F:48DB hidden:0000 06 hidden\n' if str(path)=='/proc/net/'+table else '')
+            with patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',side_effect=AssertionError('START_MUST_NOT_SAMPLE_NAMESPACE')):self.assertFalse(m.port_absent(18651))
     def test_namespace_failure_never_claims_known_port_absence(self):
         value,o,error,reads=self.observe(netns_error=PermissionError('SECRET'))
         self.assertIsNone(value);self.assertIsNotNone(error);self.assertEqual(o['readError'],'DENIED');self.assertEqual(o['reading'],'netns');self.assertFalse(o['complete']);self.assertEqual(reads,[]);self.assertNotIn('SECRET',json.dumps(o))
@@ -696,6 +724,19 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
                 self.assertFalse(failure['childDiagnosticUnavailable']);self.assertFalse(failure['automaticRetry'])
                 self.assertEqual(events.count('spawn'),1);self.assertEqual(events.count('communicate'),1)
                 self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
+    def test_exact_admin_setup_subphases_survive_parent_without_expanding_schema(self):
+        steps=('STAFF_DETAIL','ABSENT_RECEIPT','CREATE','RESET_PASSWORD','ACCOUNT_DETAIL','RECEIPT_READBACK','REPLAY','ACCOUNT_READBACK','STAFF_LINK','LOGIN','SESSION')
+        for step in steps:
+            with self.subTest(step=step):
+                diagnostic={'format':'FRESH35_ORDINARY_FAILURE_V1','phase':'REAL_ADMIN_ACCOUNT_SETUP:'+step,'source':'runFresh35OrdinaryIntegration:catch','errorType':'AssertionError','guardCode':'ERR_ASSERTION','sqlstate':None,'errno':None,'expectedInteger':200,'actualInteger':500}
+                value={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':diagnostic,'entryFailure':None}
+                _,error,events,written,_=self.drive(failure='result',returned=value,stderr=b'SECRET_SENTINEL')
+                failure=written['ordinary-failure.json'];self.assertIsNotNone(error);self.assertEqual(failure.get('childFailure'),diagnostic);self.assertFalse(failure['childDiagnosticUnavailable']);self.assertFalse(failure['automaticRetry']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
+                self.assertEqual(events.count('spawn'),1);self.assertEqual(events.count('communicate'),1)
+        for phase in ['REAL_ADMIN_ACCOUNT_SETUP:STAFF_DETAILS','REAL_ADMIN_ACCOUNT_SETUP:SECRET_SENTINEL','REAL_ADMIN_ACCOUNT_SETUP:SESSION:LOGIN']:
+            value['diagnostic']={**diagnostic,'phase':phase}
+            _,error,_,written,_=self.drive(failure='result',returned=value)
+            self.assertIsNotNone(error);self.assertTrue(written['ordinary-failure.json']['childDiagnosticUnavailable']);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
     def test_entry_failure_stays_distinct_from_unbranded_integration_error(self):
         entry={'format':'FRESH35_ORDINARY_ENTRY_FAILURE_V1','phase':'CREDENTIAL_TAG_READ','source':'ordinary_runner_arguments:catch','errorType':'Error','guardCode':None,'errno':'EACCES'}
         value={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':None,'entryFailure':entry}
@@ -897,7 +938,7 @@ class BootstrapObserverLauncherTests(unittest.TestCase):
             calls.append({'role':role,'database':database,'sql':sql})
             if denied:raise RuntimeError('OFFLINE_REVOKE_DENIED')
             return ''
-        with patch.object(m,'read_private',return_value=json.dumps(target).encode()) as protected,patch.object(m,'owned_listener',return_value=True),patch.object(m,'same_process',return_value=True),patch.object(m,'psql',side_effect=execute),patch.object(m,'clear_credentials',return_value=True),patch.object(m,'port_absent',return_value=True),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=b'Database system identifier: 999\nDatabase cluster state: shut down\n')):
+        with patch.object(m,'read_private',return_value=json.dumps(target).encode()) as protected,patch.object(m,'owned_listener',return_value=True),patch.object(m,'same_process',return_value=True),patch.object(m,'psql',side_effect=execute),patch.object(m,'clear_credentials',return_value=True),patch.object(m,'port_absent',side_effect=lambda port,observation:observation.update(noActiveTcpRows=True) or True),patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=b'Database system identifier: 999\nDatabase cluster state: shut down\n')):
             result=m.cleanup_owned_server(a,child,{'pid':999},'999',m.time.monotonic()+30)
         return a,result,calls,signals,protected
     def test_cleanup_target_binding_uses_target_database_and_exact_helper_revoke(self):

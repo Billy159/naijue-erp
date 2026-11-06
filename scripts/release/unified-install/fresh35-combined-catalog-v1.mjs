@@ -193,10 +193,21 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
   need(row&&row.acl===null,'EXACT_CONTROLLER_LINEAGE_ACL_PREDECESSOR_REQUIRED');
   row.acl=[t.proposal.controller+'=r/'+t.proposal.owner];
  }
+ // Existing ACCOUNT service writes only these columns through the original
+ // prepared-audit/credential/deferred-receipt guards. No table or LOGIN grant.
+ const accountColumnWrites=freeze({relation:'user_account',grantee:'erp_unified27_runtime_2393dbc6db9581c2',
+  insertColumns:['id','staff_id','login_name','password_hash','login_enabled','auth_version','version','created_at','updated_at'],
+  updateColumns:['login_name','login_enabled','auth_version','version','updated_at','password_hash']});
+ for(const column of accountColumnWrites.insertColumns){
+  const row=mapped.columnAcls.find(r=>r.relation==='user_account'&&r.column===column);
+  const before=column==='id'?[accountColumnWrites.grantee+'=w/'+t.proposal.owner]:null;
+  need(row&&isDeepStrictEqual(row.acl,before),'EXACT_ACCOUNT_COLUMN_ACL_PREDECESSOR_REQUIRED');
+  row.acl=[accountColumnWrites.grantee+'=a'+(column==='id'||accountColumnWrites.updateColumns.includes(column)?'w':'')+'/'+t.proposal.owner];
+ }
 
  const lineage=Array.isArray(data.lineage)?data.lineage:data.lineage.rows;need(Array.isArray(lineage)&&lineage.length===27,'EXACT27_LINEAGE_REQUIRED');
  const sql=guardSql(mapped,lineage,target),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',...(bootstrapNetworkObservationSha256?{bootstrapNetworkObservationSha256}:{}),sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
-  rawRowtypeComparison:'ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES',dependencyValidation:'PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION',captureMissingEvidencePreserved:original.missingEvidence,independentSafetyReviewComplete:false,sqlParsedByPostgres:false,engineVerified:false,hostEnabled:false});
+  accountColumnWrites,rawRowtypeComparison:'ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES',dependencyValidation:'PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION',captureMissingEvidencePreserved:original.missingEvidence,independentSafetyReviewComplete:false,sqlParsedByPostgres:false,engineVerified:false,hostEnabled:false});
  const token=Object.freeze({profile:'FRESH35_COMBINED_CATALOG_SPEC_V1'});
  catalogs.set(token,{source,target,model:mapped,lineage,sql,observation,modelPath,functionsPath,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
  await assertFresh35CombinedCatalogCurrent(token);return token;

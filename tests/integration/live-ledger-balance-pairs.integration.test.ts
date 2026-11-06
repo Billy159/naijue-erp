@@ -372,22 +372,24 @@ export function assertFresh35PostingChain(before:unknown,effects:readonly Row[],
  while(pending.length){const i=pending.findIndex(l=>int(l.quantity_before)===quantity);assert.ok(i>=0,'Exact per-entry before/after chain');const [row]=pending.splice(i,1);quantity+=int(row!.quantity_delta);assert.equal(int(row!.quantity_after),quantity);}
  assert.equal(int(after),quantity);
 }
+const fresh35AccountSetupSteps=['STAFF_DETAIL','ABSENT_RECEIPT','CREATE','RESET_PASSWORD','ACCOUNT_DETAIL','RECEIPT_READBACK','REPLAY','ACCOUNT_READBACK','STAFF_LINK','LOGIN','SESSION'] as const;
+type Fresh35AccountSetupStep=typeof fresh35AccountSetupSteps[number];
 /** Real original account API on the already admitted app and authenticated ADMIN session. */
-export async function prepareFresh35Salesperson(api:Pick<PostgresApplicationApi,'app'>,headers:Record<string,string>,input:Fresh35OrdinaryScenario['forbidden']):Promise<{accountId:string;loginName:string;operationId:string;version:number;action:'CREATE'|'RESET_PASSWORD'}>{
- const detail=async(path:string,id:string)=>{const response:LightMyRequestResponse=await api.app.inject({method:'POST',url:path+'/detail/query',headers,payload:{id}});assert.equal(response.statusCode,200);return response.json<Record<string,unknown>>();};
- const staff=await detail('/staff',input.staffId);assert.ok(staff&&staff.kind==='STAFF'&&staff.id===input.staffId&&staff.role==='SALESPERSON'&&staff.employmentStatus==='在职');
+export async function prepareFresh35Salesperson(api:Pick<PostgresApplicationApi,'app'>,headers:Record<string,string>,input:Fresh35OrdinaryScenario['forbidden'],onStep?:(step:Fresh35AccountSetupStep)=>void):Promise<{accountId:string;loginName:string;operationId:string;version:number;action:'CREATE'|'RESET_PASSWORD'}>{
+ const detail=async(path:string,id:string,step:Fresh35AccountSetupStep)=>{onStep?.(step);const response:LightMyRequestResponse=await api.app.inject({method:'POST',url:path+'/detail/query',headers,payload:{id}});assert.equal(response.statusCode,200);return response.json<Record<string,unknown>>();};
+ const staff=await detail('/staff',input.staffId,'STAFF_DETAIL');assert.ok(staff&&staff.kind==='STAFF'&&staff.id===input.staffId&&staff.role==='SALESPERSON'&&staff.employmentStatus==='在职');
  const existing=staff.account as {id:string;loginName:string;loginEnabled:boolean;version:number}|null;
  if(existing)assert.ok(existing.loginEnabled===true,'Existing disabled account requires explicit original maintenance handling, never implicit restore');
  const action=existing?'RESET_PASSWORD' as const:'CREATE' as const;
  const command=existing?{action,requestKey:input.setupRequestKey,id:existing.id,expectedVersion:existing.version,password:input.password}:{action,requestKey:input.setupRequestKey,values:{staffId:input.staffId,loginName:input.loginName,loginEnabled:true,password:input.password}};
- const absent:LightMyRequestResponse=await api.app.inject({method:'GET',url:'/accounts/receipts/'+encodeURIComponent(input.setupRequestKey),headers});assert.equal(absent.statusCode,404,'Fresh setup key must be unused');
- const saved:LightMyRequestResponse=await api.app.inject({method:'POST',url:'/accounts/commands',headers,payload:command});assert.equal(saved.statusCode,200);
+ onStep?.('ABSENT_RECEIPT');const absent:LightMyRequestResponse=await api.app.inject({method:'GET',url:'/accounts/receipts/'+encodeURIComponent(input.setupRequestKey),headers});assert.equal(absent.statusCode,404,'Fresh setup key must be unused');
+ onStep?.(action);const saved:LightMyRequestResponse=await api.app.inject({method:'POST',url:'/accounts/commands',headers,payload:command});assert.equal(saved.statusCode,200);
  const result=saved.json<{kind:string;targetId:string;operationId:string;version:number}>();assert.ok(result.kind==='ACCOUNT'&&typeof result.targetId==='string'&&typeof result.operationId==='string');
  if(existing)assert.equal(result.targetId,existing.id);assert.equal(result.version,existing?existing.version+1:1);
- const account=await detail('/accounts',result.targetId),actualStaff=account.staff as {id:string;role:string;employmentStatus:string};assert.ok(account.kind==='ACCOUNT'&&account.id===result.targetId&&actualStaff.id===input.staffId&&actualStaff.role==='SALESPERSON'&&actualStaff.employmentStatus==='在职'&&account.loginEnabled===true&&account.version===result.version);assert.equal(account.loginName,existing?existing.loginName:input.loginName);
- const receipt:LightMyRequestResponse=await api.app.inject({method:'GET',url:'/accounts/receipts/'+encodeURIComponent(input.setupRequestKey),headers});assert.equal(receipt.statusCode,200);const recovery=receipt.json<{status:string;action:string;result:unknown}>();assert.equal(recovery.status,'COMMITTED');assert.equal(recovery.action,action);assert.deepEqual(recovery.result,result);
- const replay:LightMyRequestResponse=await api.app.inject({method:'POST',url:'/accounts/commands',headers,payload:command});assert.equal(replay.statusCode,200);assert.deepEqual(replay.json(),result);assert.deepEqual(await detail('/accounts',result.targetId),account);
- const linked=await detail('/staff',input.staffId);assert.equal((linked.account as {id:string}).id,result.targetId);
+ const account=await detail('/accounts',result.targetId,'ACCOUNT_DETAIL'),actualStaff=account.staff as {id:string;role:string;employmentStatus:string};assert.ok(account.kind==='ACCOUNT'&&account.id===result.targetId&&actualStaff.id===input.staffId&&actualStaff.role==='SALESPERSON'&&actualStaff.employmentStatus==='在职'&&account.loginEnabled===true&&account.version===result.version);assert.equal(account.loginName,existing?existing.loginName:input.loginName);
+ onStep?.('RECEIPT_READBACK');const receipt:LightMyRequestResponse=await api.app.inject({method:'GET',url:'/accounts/receipts/'+encodeURIComponent(input.setupRequestKey),headers});assert.equal(receipt.statusCode,200);const recovery=receipt.json<{status:string;action:string;result:unknown}>();assert.equal(recovery.status,'COMMITTED');assert.equal(recovery.action,action);assert.deepEqual(recovery.result,result);
+ onStep?.('REPLAY');const replay:LightMyRequestResponse=await api.app.inject({method:'POST',url:'/accounts/commands',headers,payload:command});assert.equal(replay.statusCode,200);assert.deepEqual(replay.json(),result);assert.deepEqual(await detail('/accounts',result.targetId,'ACCOUNT_READBACK'),account);
+ const linked=await detail('/staff',input.staffId,'STAFF_LINK');assert.equal((linked.account as {id:string}).id,result.targetId);
  return {accountId:result.targetId,loginName:String(account.loginName),operationId:result.operationId,version:result.version,action};
 }
 export function assertFresh35StandardPublication(rows:readonly Row[],publication:Fresh35OrdinaryContext['publication'],accountId:string):void {
@@ -400,7 +402,7 @@ export interface Fresh35OrdinaryFailure {
  readonly guardCode:string|null;readonly sqlstate:string|null;readonly errno:string|null;
  readonly expectedInteger:number|null;readonly actualInteger:number|null;
 }
-const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL',...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
+const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP',...fresh35AccountSetupSteps.map(step=>'REAL_ADMIN_ACCOUNT_SETUP:'+step),'AUTHENTICATED_SCOPE_DENIAL',...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
 const fresh35OrdinaryGuardCodes=['ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED'] as const;
 const fresh35OrdinarySqlstates=['42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','28P01','3D000','53300','57P01','08006','55000','P0001'] as const;
 const fresh35OrdinaryErrnos=['EACCES','EPERM','ENOENT','ELOOP','ENOTDIR','ECONNREFUSED','ECONNRESET','ETIMEDOUT','EPIPE','EHOSTUNREACH','ENETUNREACH','EADDRINUSE'] as const;
@@ -472,8 +474,8 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
    }finally{try{if(begun)await client.query('ROLLBACK');}finally{await client.end();}}
   };
   let initial=await observe();assert.equal(initial.receipts.length,0);for(const b of s.initialInventory){const actual=initial.balances.find(x=>key(x.warehouse_id,x.sku_id)===key(b.warehouseId,b.skuId));assert.ok(actual);assert.equal(actual.quantity,b.quantity);assert.equal(actual.version,b.version);}
-  const login=async(credentials:Fresh35OrdinaryScenario['login'])=>{const r=await api!.app.inject({method:'POST',url:'/auth/login',headers:{origin:c.publicOrigin,'content-type':'application/json'},payload:{loginName:credentials.loginName,password:credentials.password}});assert.equal(r.statusCode,200);const cookie=r.headers['set-cookie'];assert.ok(typeof cookie==='string'&&cookie.startsWith('__Host-naijue_session='));const headers={origin:c.publicOrigin,cookie:cookie.split(';')[0]!,'content-type':'application/json'};const session:LightMyRequestResponse=await api!.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json<{principal:{accountId:string;role:string}}>().principal;assert.equal(principal.accountId,credentials.accountId);assert.equal(principal.role,credentials.accountId===deniedAccountId?'SALESPERSON':'ADMIN');return headers;};
-  const headers=await login(s.login);phase='REAL_ADMIN_ACCOUNT_SETUP';const setup=await prepareFresh35Salesperson(api,headers,s.forbidden);deniedAccountId=setup.accountId;const deniedHeaders=await login({accountId:setup.accountId,loginName:setup.loginName,password:s.forbidden.password});
+  const login=async(credentials:Fresh35OrdinaryScenario['login'])=>{const r=await api!.app.inject({method:'POST',url:'/auth/login',headers:{origin:c.publicOrigin,'content-type':'application/json'},payload:{loginName:credentials.loginName,password:credentials.password}});assert.equal(r.statusCode,200);const cookie=r.headers['set-cookie'];assert.ok(typeof cookie==='string'&&cookie.startsWith('__Host-naijue_session='));const headers={origin:c.publicOrigin,cookie:cookie.split(';')[0]!,'content-type':'application/json'};if(credentials.accountId===deniedAccountId)phase='REAL_ADMIN_ACCOUNT_SETUP:SESSION';const session:LightMyRequestResponse=await api!.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json<{principal:{accountId:string;role:string}}>().principal;assert.equal(principal.accountId,credentials.accountId);assert.equal(principal.role,credentials.accountId===deniedAccountId?'SALESPERSON':'ADMIN');return headers;};
+  const headers=await login(s.login);phase='REAL_ADMIN_ACCOUNT_SETUP';const setup=await prepareFresh35Salesperson(api,headers,s.forbidden,step=>{phase='REAL_ADMIN_ACCOUNT_SETUP:'+step;});deniedAccountId=setup.accountId;phase='REAL_ADMIN_ACCOUNT_SETUP:LOGIN';const deniedHeaders=await login({accountId:setup.accountId,loginName:setup.loginName,password:s.forbidden.password});
   const post=(family:Family,body:object,h=headers)=>api!.app.inject({method:'POST',url:`/${family}/commands`,headers:h,payload:body});
   const result=(r:LightMyRequestResponse):Result=>{assert.equal(r.statusCode,200);return r.json<Result>();};
   const idOf=(f:Family,r:Result)=>{const id=f==='sales'?r.salesId:r.transferId;assert.ok(typeof id==='string');return id;};
@@ -552,6 +554,22 @@ test('fresh35 real-account setup uses returned CREATE identity or actual existin
   const command=requests[2]!.payload as Record<string,unknown>;assert.equal(command.action,action);if(exists){assert.equal(command.id,prior!.id);assert.equal(command.expectedVersion,3);}else{assert.ok(!('id'in command));assert.equal((command.values as {staffId:string}).staffId,input.staffId);}assert.deepEqual(requests[2]!.payload,requests[5]!.payload);
  }
 });
+test('fresh35 account setup failure phase identifies the exact request without retaining response content',async()=>{
+ for(const action of ['CREATE','RESET_PASSWORD'])for(let failed=0;failed<8;failed++){
+  const input={staffId:'model-staff',loginName:'model-login',password:'MODEL_PRIVATE_PASSWORD',setupRequestKey:'model-setup',requestKey:'model-deny',sales:{} as NativeSalesSaveProposal};
+  const prior=action==='CREATE'?null:{id:'model-account',loginName:'model-login',loginEnabled:true,version:1};
+  const staff={kind:'STAFF',id:input.staffId,role:'SALESPERSON',employmentStatus:'在职',account:prior},result={kind:'ACCOUNT',targetId:'model-account',operationId:'model-operation',version:prior?2:1};
+  const account={kind:'ACCOUNT',id:result.targetId,loginName:'model-login',loginEnabled:true,version:result.version,staff:{id:input.staffId,role:'SALESPERSON',employmentStatus:'在职'}};
+  const responses=[staff,{},result,account,{status:'COMMITTED',action,result},result,account,{...staff,account:{id:result.targetId}}];
+  const steps=['STAFF_DETAIL','ABSENT_RECEIPT',action,'ACCOUNT_DETAIL','RECEIPT_READBACK','REPLAY','ACCOUNT_READBACK','STAFF_LINK'];let index=0,phase='REAL_ADMIN_ACCOUNT_SETUP';
+  const api={app:{async inject(){const i=index++;return{statusCode:i===failed?500:i===1?404:200,json:()=>responses[i]};}}};
+  const error=await prepareFresh35Salesperson(api as never,{},input,step=>{phase='REAL_ADMIN_ACCOUNT_SETUP:'+step;}).then(()=>assert.fail('original failed response must reject'),e=>e);
+  const diagnostic=describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(error,phase,'runFresh35OrdinaryIntegration:catch'))!;
+  assert.equal(index,failed+1);assert.equal(diagnostic.phase,'REAL_ADMIN_ACCOUNT_SETUP:'+steps[failed]);assert.equal(diagnostic.errorType,'AssertionError');assert.equal(diagnostic.guardCode,'ERR_ASSERTION');assert.equal(diagnostic.actualInteger,500);
+  assert.equal(JSON.stringify(diagnostic).includes(input.password),false);assert.deepEqual(Object.keys(diagnostic).sort(),['actualInteger','errno','errorType','expectedInteger','format','guardCode','phase','source','sqlstate']);
+ }
+});
+
 test('fresh35 account setup cannot replace real staff authorization with a guessed account',async()=>{
  const api={app:{async inject(){return{statusCode:403,json:()=>({error:{code:'FORBIDDEN'}})};}}};
  await assert.rejects(prepareFresh35Salesperson(api as never,{}, {staffId:'actual-staff',loginName:'model',password:'model-only',setupRequestKey:'setup',requestKey:'deny',sales:{} as NativeSalesSaveProposal}));
