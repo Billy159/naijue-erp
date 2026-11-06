@@ -10413,7 +10413,7 @@
   },
   "r26CleanupQuiescence20261107": {
     "owner": "T45 original thread01a100d0-cad5-71c1-8042-dc594311d3be",
-    "state": "P2_FIX_DELIVERED_FROZEN_PENDING_QB_AFFECTED_ONLY",
+    "state": "SOURCE_FROZEN_QB_P2_CLOSED",
     "activatedAt": "2026-11-06T17:50:01.109365+00:00",
     "files": {
       "candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py": "187b6e1a8d956db9dd161582c62300038df867d2b30a2c895037858b9da9b4e6",
@@ -10432,11 +10432,12 @@
     "finalLauncherSHA256": "81ff199b977380f92886808567f3fdbe50d76b334094fd7c6ba6b14fa1e95e34",
     "finalTestsSHA256": "dbc0d996cd7492ea325fc662596af5ff1fdfc19878b29831d601ab46a8086be7",
     "finding": "QB actual function finite IO accepts empty proc files and local endpoint extra colon; fix only observation branch and direct affected tests, strict startup unchanged. D1five leaves frozen.",
-    "P2FixResultSHA256": "a04fa693a99e7831f3b6be81eb9f03d284435cb8c8d10ad1625f39195a49f622"
+    "P2FixResultSHA256": "a04fa693a99e7831f3b6be81eb9f03d284435cb8c8d10ad1625f39195a49f622",
+    "independentReceiptSHA256": "6fec6fe7e0ac1b7585d925ea0eeed7ac40eddeebae1a78101b8e5a48ca4b3ecb"
   },
   "r26AccountWriterACLAndSetupDiagnostic20261107": {
     "owner": "Original D1 01a16161-e65d-7742-8471-4b3c786ed314",
-    "state": "DELIVERED_FROZEN_PENDING_COMBINED_QB",
+    "state": "SOURCE_FROZEN_QB_SCOPE_PASS_ADOPTED",
     "at": "2026-11-06T17:54:58.278699+00:00",
     "beforeSHA256": {
       "candidate0448/scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc",
@@ -10454,7 +10455,8 @@
       "candidate0448/tests/fresh35-combined-catalog.test.mjs": "9f2f51577be59fbee079b940ff6ca1cc2ab1a11434abb020ed1d21afb55facf8",
       "candidate0448/tests/account-maintenance-postgres-protocol.test.ts": "08d0d7e4c0e0c8bfa5250afc159bb6e481e4d816f187b506b6fd0718685b9d6e",
       "candidate0448/tests/integration/live-ledger-balance-pairs.integration.test.ts": "b6e3ca72cdf86968f5868ba2223451d2248f3ce3eada7ed8ead915c6497470c0"
-    }
+    },
+    "independentReceiptSHA256": "23b2a74d81acbd53f15408314eab482e14f5810409904863b3378885e32320a4"
   },
   "r26ExactOpsPreparation20261107": {
     "owner": "Original T45",

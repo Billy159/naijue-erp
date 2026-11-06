@@ -1,0 +1,146 @@
+{
+  "format": "QB_R26_P2_SUCCESSOR_NARROW_RECHECK_V1",
+  "recordedAt": "2026-11-07T02:18:57.035299+08:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL_R26_SUCCESSOR",
+  "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
+  "candidateTree": "2198007810b63a2741981e9f546c3997c6f15c54",
+  "comparisonSource": "d63f6986e97876872e01ee026408958a55ef4c64",
+  "openFindings": [],
+  "closedFindings": [
+    {
+      "id": "QB-R26-P2-01",
+      "closedOnlyInSource": "e422d07390c5a58c44b54452983638a2de5655b7",
+      "evidence": "Two original malformed/incomplete cases rejected plus malformed endpoint under correct headers rejected; original d63 result remains NEED_FIX"
+    }
+  ],
+  "currentSevenLeafPins": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 39607,
+      "sha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "bytes": 22566,
+      "sha256": "d4dc1ba9dff4e4fa72517b5a9355841c9b33a97fc5390c15d42638aa92e768be"
+    },
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 105749,
+      "sha256": "81ff199b977380f92886808567f3fdbe50d76b334094fd7c6ba6b14fa1e95e34"
+    },
+    {
+      "path": "tests/account-maintenance-postgres-protocol.test.ts",
+      "bytes": 11408,
+      "sha256": "08d0d7e4c0e0c8bfa5250afc159bb6e481e4d816f187b506b6fd0718685b9d6e"
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "bytes": 36415,
+      "sha256": "9f2f51577be59fbee079b940ff6ca1cc2ab1a11434abb020ed1d21afb55facf8"
+    },
+    {
+      "path": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "bytes": 81638,
+      "sha256": "b6e3ca72cdf86968f5868ba2223451d2248f3ce3eada7ed8ead915c6497470c0"
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "bytes": 104189,
+      "sha256": "dbc0d996cd7492ea325fc662596af5ff1fdfc19878b29831d601ab46a8086be7"
+    }
+  ],
+  "changedLeafPins": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 105749,
+      "sha256": "81ff199b977380f92886808567f3fdbe50d76b334094fd7c6ba6b14fa1e95e34"
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "bytes": 104189,
+      "sha256": "dbc0d996cd7492ea325fc662596af5ff1fdfc19878b29831d601ab46a8086be7"
+    }
+  ],
+  "sourcePreservation": {
+    "onlyTwoLeavesChanged": true,
+    "D1FiveLeavesExactReused": true,
+    "oneArgumentStrictStartupBranchASTExact": true,
+    "allLauncherOutsidePortFunctionASTExact": true,
+    "cleanupConjunctionNamespacePermissionsWindowsAndDiagnosticsUnchanged": true,
+    "phase9KeysAnd11SuffixUnchanged": true,
+    "sourceReadbackStable": true
+  },
+  "independentRecheck": {
+    "format": "QB_R26_P2_EXACT_RECHECK_V1",
+    "status": "PASS_P2_CLOSED_IN_E422D073",
+    "cases": [
+      {
+        "case": "original-empty-tables",
+        "result": "PASS_REJECTED",
+        "complete": false,
+        "noActiveTcpRows": null,
+        "portAbsent": null,
+        "readError": "INVALID_DATA"
+      },
+      {
+        "case": "original-malformed-endpoint-placeholder-header",
+        "result": "PASS_REJECTED",
+        "complete": false,
+        "noActiveTcpRows": null,
+        "portAbsent": null,
+        "readError": "INVALID_DATA"
+      },
+      {
+        "case": "malformed-endpoint-with-correct-contract-headers",
+        "result": "PASS_REJECTED",
+        "complete": false,
+        "noActiveTcpRows": null,
+        "portAbsent": null,
+        "readError": "INVALID_DATA"
+      }
+    ],
+    "authorTestBodiesExecuted": 0,
+    "PGConnections": 0,
+    "serverJobs": 0,
+    "scope": "Actual fixed function with three finite Path IO cases only; real native kernel and full cleanup not executed."
+  },
+  "authorEvidence": {
+    "resultSHA256": "a04fa693a99e7831f3b6be81eb9f03d284435cb8c8d10ad1625f39195a49f622",
+    "affectedGreenChecksAdopted": 7,
+    "authorChecksRerun": 0,
+    "earlierD1AndT45ChecksReused": "19 plus16+3, not rerun"
+  },
+  "reusedQBResultSHA256": "23b2a74d81acbd53f15408314eab482e14f5810409904863b3378885e32320a4",
+  "boundaries": {
+    "PGConnections": 0,
+    "serverJobs": 0,
+    "builds": 0,
+    "sourceWrites": 0,
+    "wholeSuite": false,
+    "authorTestBodiesRun": 0,
+    "oldKeyReplay": false,
+    "actualUniqueR25Account500": "UNKNOWN",
+    "actualPGGrantAndTriggerValidated": false,
+    "actualLinuxTCPOrNamespaceValidated": false,
+    "ordinaryBusinessPassed": false,
+    "old18acBuild": "RETAINED_NOT_FINAL_NOT_FOR_EXECUTION",
+    "actualSuccessorBuild": "NOT_RUN_BY_QB_REQUIRES_EXACT_NEW_ROOT",
+    "actualModelEffortFast": "UNVERIFIED"
+  },
+  "next": "C may aggregate the passed reused ACL/phase/lifecycle scope with this closed P2 successor. Freeze exact new root and route original actual build/authorized isolated runtime as applicable; no execution or business PASS issued here.",
+  "artifacts": {
+    "SOURCE-CHECKS.json": {
+      "bytes": 1030,
+      "sha256": "226e8d2efd46b2344732f8010187e45ef57bbd4730e5fad31c85b9a32a8fea54"
+    },
+    "COUNTEREXAMPLE-RECHECKS.json": {
+      "bytes": 957,
+      "sha256": "18e16f61a0994e69ec9f396857f25f5983d4aaddd7fa358af9b24562a6e2c73b"
+    },
+    "counterexample-recheck.py": {
+      "bytes": 2133,
+      "sha256": "64f171fba60b5b4ce4b17f9b3cf9c4587afa4c9e6cf972561fabb001486e95f8"
+    }
+  }
+}
