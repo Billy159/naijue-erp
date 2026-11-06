@@ -30486,7 +30486,7 @@
         }
       },
       "r12Preparation": {
-        "state": "FIXED_BUILD_READY_EXACT_STAGE_PREFLIGHT_AUTHORIZED",
+        "state": "ACTUAL_PREFLIGHT_PASSED_EXACT_C13_STAGING_AUTHORITY_DELIVERED",
         "integration": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
         "buildRoot": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
         "tree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5",
@@ -30520,7 +30520,13 @@
         "authority": "Standing user same-kind bounded isolated operations approval; not extension of expired temporary delegation",
         "actualPG": false,
         "REAL": false,
-        "production": false
+        "production": false,
+        "stagePreflightReceiptSHA256": "4a7c6f4905533e8b2db21f522661b3b917ffc5fc54cc70252475240e3e841af4",
+        "tailAuthoritySHA256": "127c2b21993a1b1461690fb9668e4ed019fbf4fb1bb70c85096cfba41e26ffd1",
+        "fullAuthoritySHA256": "b1bfe841f21d1ec0cf23ac9d8dca156f89bb9c1cf3eae15a5eb4035b750b4ece",
+        "stagingStartsAt": 1793938777629,
+        "stagingExpiresAt": 1793940577629,
+        "next": "T45 original receiver/CAS/accurateprefix+tail and materialize, actual resources then separate original PG20/C9; no oldtarget replay"
       }
     },
     "productionReleaseCompatibilityContinuation": {

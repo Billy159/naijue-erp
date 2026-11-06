@@ -1,0 +1,116 @@
+{
+  "status": "READONLY_R12_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "job": {
+    "jobId": "t45-f35-b8e35d-stage-preflight-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-c6e10f467c51",
+    "atUTC": "2026-11-06T04:17:51.743919+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.2181235058233142,
+    "exports": [
+      "stage-preflight.json"
+    ],
+    "finishedAtUTC": "2026-11-06T04:17:51.998498+00:00"
+  },
+  "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-b8e35d-stage-preflight-20261106-01/transport/release-receipts/t45-f35-b8e35d-stage-preflight-20261106-01/stage-preflight.json",
+  "receiptSha256": "4a7c6f4905533e8b2db21f522661b3b917ffc5fc54cc70252475240e3e841af4",
+  "safeResult": {
+    "status": "READONLY_R12_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+    "checkedAtEpochMillis": 1793938671963,
+    "gateSha256": "a9a19d0ccb530b83f985fb708672670da6009ce0365cd15974076d3e77fd66e7",
+    "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-b8e35d-stage-preflight-20261106-01/staging-policy-before.json",
+    "baseIdentity": [
+      66304,
+      393641,
+      83687082,
+      1793936136346321860,
+      1793936137568319167
+    ],
+    "baseArchiveSha256": "28176d3b7dbb999e262cad532ad75573747ae601a205e8e55957dd2bebef4f97",
+    "baseHashNotRereadUntilOriginalAssembler": true,
+    "privateFullIdentityUnchanged": true,
+    "privateFullIdentity": [
+      66304,
+      393585,
+      93508914,
+      1793915257822987699,
+      1793915258790984345
+    ],
+    "r12RootAbsent": true,
+    "r12ContainerAbsent": true,
+    "r12ArtifactDirectoriesFound": [],
+    "samePrefixOtherSubmissions": [],
+    "priorExactJobs": [
+      {
+        "jobId": "t45-f35-5effb6-start-20261106-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      {
+        "jobId": "t45-f35-5effb6-install-20261106-01",
+        "status": "FAILED",
+        "exitCode": 2
+      }
+    ],
+    "r11OriginalNativeResult": {
+      "recordPublished": true,
+      "state": "RECORD_DURABLY_PUBLISHED",
+      "installState": "COMMITTED_UNPUBLISHED",
+      "postInstallFailureCode": "FRESH35_ISOLATED_CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN",
+      "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0"
+    },
+    "r11PublishedRecordRetainedMetadata": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o644",
+      "bytes": 1516,
+      "contentsNotExported": true,
+      "hashNotRepeated": true
+    },
+    "r11Stopped": {
+      "id": "f24ed091e0b1393d0e66ac6e99d2ec9479f86eb6ee12f97f29c0773df8ae51c3",
+      "running": false,
+      "pid": 0,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "r11Cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "r11CleanupErrors": [],
+    "fixedEnvironment": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.1123046875,
+        0.12939453125,
+        0.18701171875
+      ],
+      "diskFreeBytes": 10733883392,
+      "MemAvailable": 14327050240
+    },
+    "sourceOrTargetWrites": 0,
+    "PGConnections": 0,
+    "networkOrServiceChanges": 0,
+    "dataExtraction": false
+  },
+  "D2ResultSha256": "8584b19facac3d03d451da2c6a9d4d9a28cf34f301d9c53f1767a456b0e12e3e",
+  "QBAdoptedResultSha256": "4f1bcef14eaebf8554a026ad8e33cf6277f1b1c8c18a4666e84723e78b353383",
+  "noC13Yet": true,
+  "PGStarted": false,
+  "productionActions": 0
+}
