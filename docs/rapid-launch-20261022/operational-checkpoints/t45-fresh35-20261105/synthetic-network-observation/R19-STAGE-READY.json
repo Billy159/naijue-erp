@@ -1,0 +1,13 @@
+{
+  "status": "R19_EXACT_C13_BOUND_NO_PG",
+  "wrapperSHA256": "5bd407144594ff509c011556c1f23033ad1f85408bc0831c0ded8e6c07fde258",
+  "probeSHA256": "cbc6448716e5d5156cd4b9a02feb42b1d97ed0078c3e1e26910eb3cb88be0e0b",
+  "assemblerSHA256": "e04007adbf43d43c73d528d4490773385e209109c0e0f6309d7591bd9a4333e3",
+  "planSHA256": "a2b850e6ba45d8cf01514e2affcff4dfb03dbe276141d745832d6be80b154e6a",
+  "C13TailSHA256": "8456a16bddb4467e8af19ff80cdb006e5dab9f3ceaaa9be1e18fa85783646524",
+  "C13FullSHA256": "0d6d198e062eb271273b4c76e28b35a1975c72a5dc3d2e05232b15d4964d727d",
+  "C13ExpiresAt": 1793965148449,
+  "PGStarted": false,
+  "C11": null,
+  "C9": null
+}

@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45_C13_EXACT_STAGING_MATERIALIZATION_DISPATCHED",
+      "critical": "ACTUAL_FULL_READY_ORIGINAL_MATERIALIZE_RUNNING",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Fixture/builder and exact release pin increment PASS; no repeated technical QA.",
         "D2": "Build13.604s/pack10.750s exit0, full453/30/7298membersPASS; no actual PG.",
-        "T45": "C13 exact two original13-key scopes dispatched; stage/material only, no PG authority yet.",
+        "T45": "Actual full assembled/READY; unique materialization submitted, noPG.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31614,7 +31614,7 @@
         }
       },
       "r19Preparation": {
-        "state": "T45_C13_EXACT_STAGING_MATERIALIZATION_DISPATCHED",
+        "state": "ACTUAL_FULL_READY_ORIGINAL_MATERIALIZE_RUNNING",
         "integration": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
         "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
         "tree": "d1d0640c1bab9b2622624e2f05db0ec2720ef8ea",
@@ -31625,7 +31625,7 @@
         "REAL": false,
         "production": false,
         "ordinaryBusinessVerified": false,
-        "next": "T45 actual original stage/material and fresh resource receipt; then exact C11, actual PG17.11/program/target and C9. No old committed-key replay.",
+        "next": "Original T45 collect same materialization handle terminal receipt and fresh resources. C11 only afterward; no deadline extension or original operation replay.",
         "previousFixedCandidate": {
           "state": "FIXED_SOURCE_QB_BUILD_PENDING",
           "integration": "0ad22579cf95c72835a7a74bd4900767d61017a2",
@@ -31701,6 +31701,21 @@
             "startsAt": 1793963348449,
             "expiresAt": 1793965148449
           }
+        },
+        "stageReadySHA256": "23c7aa58c9c2d238a744c54217f08eb8e9b796ea7efbf7e08ac1c79908b49df9",
+        "actualAssemblyReceiptSHA256": "1f3030e6b10363a892acd101dd58681d836bc20cd3b947c0f8c07654021c466c",
+        "actualFullFileIdentity": [
+          66304,
+          393705,
+          83698188,
+          1793963515498311176,
+          1793963516720318950
+        ],
+        "materialization": {
+          "jobId": "t45-f35-101f4f-local-materialize-20261106-01",
+          "state": "SUBMITTED_ORIGINAL_SINGLE_900S_HANDLE",
+          "C13Deadline": 1793965148449,
+          "actualPGStarted": false
         }
       }
     },
@@ -32110,11 +32125,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:04:55+08:00",
-      "phase": "T45_C13_EXACT_STAGING_MATERIALIZATION_DISPATCHED",
+      "at": "2026-11-06T19:13:34+08:00",
+      "phase": "ACTUAL_FULL_READY_ORIGINAL_MATERIALIZE_RUNNING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact C13 stage/material",
+      "currentOwner": "T45 same materialization handle",
       "nextOwner": "C after actual material/resource facts",
       "latestActualReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32125,7 +32140,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 actual original stage/material and fresh resource receipt; then exact C11, actual PG17.11/program/target and C9. No old committed-key replay.",
+      "next": "Original T45 collect same materialization handle terminal receipt and fresh resources. C11 only afterward; no deadline extension or original operation replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
       "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
