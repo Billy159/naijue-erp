@@ -1679,3 +1679,7 @@ Original D2 build0/11.231s and pack0/8.702s passed,453production files/30directo
 ## 2026-11-06T16:44:16+08:00 - R16 materialized; bounded new isolated PG start
 
 Original materialization bf96b0b5 completed0/362.762783s; actual resource preflight dca402c4 passed (MemAvailable14340349952B/freeDisk8321622016B). Exact C11 4124c08a binds only new r16 synthetic target and window1793954584607..1793955784607. Original limits and guardian remain. Actual start/physical/program are pending, followed by separate C9 in the same window. No REAL or production; r15 unknown outcome preserved.
+
+## 2026-11-06T16:50:38+08:00 - Actual R16 target bound and installation dispatched
+
+Start6e5cd6fd completed0/34.692665s. New CID2589410a, SID7704976648451141680/OID16393/PG170011/birth08:44:35.92776UTC bind programc69b8e1b and targete5e3a5cc. Exact C9 3db1f19e retains original deadline1793955784607. T45 unique install key t45-f35-cc9d64-install-20261106-01 dispatched through original flow. Actual schema/import/business results are pending for this new target; previous r15 three-negative PASS and normal UNKNOWN remain in their original version record. No REAL or production action.

@@ -1,0 +1,41 @@
+{
+  "job": {
+    "jobId": "t45-f35-cc9d64-start-20261106-01",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 34.692664930131286,
+    "atUTC": "2026-11-06T08:44:19.373856+00:00",
+    "finishedAtUTC": "2026-11-06T08:44:54.108134+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-cc9d64-start-20261106-01/transport/release-receipts/t45-f35-cc9d64-start-20261106-01/fresh35-start-target-result.json",
+    "sha256": "6e5cd6fd5b6de90f5aa305bcf05a4db38288af2d3a8196c2fb944136c579d519"
+  },
+  "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+  "cid": "2589410a487fe7b7888a09226553c7872a98bf96d8df09fdca0b1d641cd32f24",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-06 08:44:35.92776+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7704976648451141680"
+  },
+  "startsAt": 1793954584607,
+  "expiresAt": 1793955784607,
+  "program": {
+    "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+    "sourceSetSha256": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+    "programSha256": "c69b8e1b0f095c2ead5f1b19f41224b4a728d71320e24c5bbb1000ac8c467f05",
+    "targetSha256": "e5e3a5ccbc3217442e635d1a647427547bf81f1859644c12591080a992db47ac",
+    "catalogSha256": "a235cbe48fa7391e62b65a8ef0c4a0c80a34555a7b890168fded45f08f834aa2",
+    "applicationTransactions": 1,
+    "createsCluster": false,
+    "createsCredentials": false,
+    "createsRoles": false,
+    "bootstrapNetworkObservationSha256": "713bdc71605b3d7778a2ac534586661fd832527438c7235865913f3f49be69ac"
+  },
+  "C11SHA256": "4124c08a2ac0ad23f35eb184b031e20e89f189a685816972aef9f25358fce0ba",
+  "installSubmitted": false,
+  "wholeChainPassed": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "formalOrREALChanged": false
+}

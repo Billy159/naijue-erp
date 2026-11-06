@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "c69b8e1b0f095c2ead5f1b19f41224b4a728d71320e24c5bbb1000ac8c467f05",
+  "sourceSetSha256": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+  "targetSha256": "e5e3a5ccbc3217442e635d1a647427547bf81f1859644c12591080a992db47ac",
+  "startsAt": 1793954584607,
+  "expiresAt": 1793955784607,
+  "independentSafetyReviewSha256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
+  "authorizationReference": "C binds actualr16 under standing human same-kind bounded isolation authorization, not expired noon delegation. Exactrootcc9d6472/source292ad121/manifesta5d57/QBfc9c1f65/actualstart6e5cd6fd CID2589410a SID7704976648451141680 OID16393 PG170011 birth08:44:35.92776UTC. SamePG20 deadline1793955784607. Oneinstall/negative rollback/synthetic25/ordinary/readback/probe/ownedcleanup; noREAL/production/oldtarget/replay/extension."
+}
