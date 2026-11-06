@@ -1,0 +1,66 @@
+{
+  "status": "READONLY_JOB_COMPLETED_LOCATION_UNKNOWN_NO_SCOPE_EXPANSION",
+  "job": {
+    "jobId": "t45-f35-5effb6-syntax-location-readonly-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-66c9c258ecd5",
+    "atUTC": "2026-11-06T03:58:33.423042+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.21819342114031315,
+    "exports": [
+      "syntax-location.json"
+    ],
+    "finishedAtUTC": "2026-11-06T03:58:33.686761+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5effb6-syntax-location-readonly-20261106-01/transport/release-receipts/t45-f35-5effb6-syntax-location-readonly-20261106-01/syntax-location.json",
+    "sha256": "329fcc6380e4bdb13c070cbccbb611a543e81955c7f1a9893a0e107cb5d56ab0"
+  },
+  "safeResult": {
+    "status": "UNKNOWN_NOT_RECORDED",
+    "checkedAtUTC": "2026-11-06T03:58:33.652290+00:00",
+    "originalKeyTerminalReadback": {
+      "t45-f35-5effb6-start-20261106-01": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "finishedAtUTC": "2026-11-06T03:45:06.322261+00:00"
+      },
+      "t45-f35-5effb6-install-20261106-01": {
+        "status": "FAILED",
+        "exitCode": 2,
+        "finishedAtUTC": "2026-11-06T03:52:06.720639+00:00"
+      }
+    },
+    "targetStoppedVerified": true,
+    "originalRootAndPhysicalIdentityVerified": true,
+    "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+    "SQLSTATE": "42601",
+    "SQLSTATEEvidence": "Existing original rollback-child-failure diagnostic, no fresh PG query",
+    "validationStep": "INITIALIZE",
+    "boundedLogSample": {
+      "fileBytes": 140138,
+      "sampleOffset": 9066,
+      "sampleBytes": 131072,
+      "sampleSha256": "917b8c3ac74cd26d107f01c8ee322506675961854bd627e7034a16b6debbf02d"
+    },
+    "failureWindowUTC": {
+      "starts": "2026-11-06T03:51:20+00:00",
+      "ends": "2026-11-06T03:52:07+00:00"
+    },
+    "locations": [],
+    "matchCount": 0,
+    "rawMessageSQLParametersBusinessValuesExported": false,
+    "backendPIDNonceExported": false,
+    "PGConnections": 0,
+    "mutations": 0,
+    "scopeExpandedIfUnknown": false
+  },
+  "noRetryOrReplay": true,
+  "sourceChanged": false,
+  "serverOrPGStarted": false
+}

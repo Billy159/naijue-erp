@@ -28136,13 +28136,21 @@
     "sourceStatus": "FIXED_INCREMENT_REVIEWED_NOT_PG_NOT_RELEASE",
     "externalDotInFlight": "UNKNOWN; do not infer stopped",
     "goalToolStatus": {
-      "actualStatus": "blocked",
-      "verifiedAt": "2026-11-06T11:49:28+08:00",
+      "actualStatus": "active",
+      "verifiedAt": "2026-11-06T11:58:22+08:00",
+      "updatedAtEpochSeconds": 1793937486,
       "tool": "get_goal",
-      "updatedAtEpochSeconds": 1793933392,
+      "source": "User set goal status active; verified current tool",
       "controllerWorkStatus": "inProgress",
-      "controllerExplicitBlockedCall": false,
-      "platformDiagnostic": "Separate diagnostic chat reports HTTP400 model request interruption at10:49:52; not a PG business conclusion. No goal database modification or job replay. Available update_goal does not resume."
+      "previousPlatformInterruption": {
+        "actualStatus": "blocked",
+        "verifiedAt": "2026-11-06T11:49:28+08:00",
+        "tool": "get_goal",
+        "updatedAtEpochSeconds": 1793933392,
+        "controllerWorkStatus": "inProgress",
+        "controllerExplicitBlockedCall": false,
+        "platformDiagnostic": "Separate diagnostic chat reports HTTP400 model request interruption at10:49:52; not a PG business conclusion. No goal database modification or job replay. Available update_goal does not resume."
+      }
     },
     "model": "gpt-6.1-sol",
     "efforts": [
@@ -30445,7 +30453,21 @@
         },
         "containerStopped": true,
         "ordinaryBusinessPassed": false,
-        "synthetic25Passed": false
+        "synthetic25Passed": false,
+        "syntaxFix": {
+          "state": "EXACT_SOURCE_FIX_AUTHORIZED_NOT_YET_DELIVERED",
+          "authority": "C11:59:59 decision within human noon delegation; implementation remains original authorized task",
+          "owner": "D1",
+          "files": [
+            "candidate0448/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+            "candidate0448/scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+            "candidate0448/tests/fresh35-historical-settlement-difference-candidate.test.mjs"
+          ],
+          "scope": "Only final successor adds parentheses around CASE in original IF; derived pin changes, sealed originals and predicate semantics unchanged",
+          "evidence": "D1 PG17 parser reproduces EOF before and pass after in minimal and final body; actual42601 location remains unobserved",
+          "readonlyLocationReceiptSHA256": "329fcc6380e4bdb13c070cbccbb611a543e81955c7f1a9893a0e107cb5d56ab0",
+          "actualPGPassed": false
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
