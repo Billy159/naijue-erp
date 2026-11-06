@@ -1,0 +1,99 @@
+{
+  "status": "READONLY_R22_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "checkedAtEpochMillis": 1793972514955,
+  "gateSha256": "317e258b52e6c3df0eb9a79ca55d6c9eb29860d4ee61a87f31cb91e8d8728c18",
+  "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-f16218-stage-preflight-20261106-01/staging-policy-before.json",
+  "baseIdentity": [
+    66304,
+    393721,
+    83701245,
+    1793969619825383731,
+    1793969620935386411
+  ],
+  "baseArchiveSha256": "ffbe0e9c8b6ba860fa3ec4a5225fee64923783d276c36b7abbb3d9cc845d149d",
+  "baseHashNotRereadUntilOriginalAssembler": true,
+  "privateFullIdentityUnchanged": true,
+  "privateFullIdentity": [
+    66304,
+    393585,
+    93508914,
+    1793915257822987699,
+    1793915258790984345
+  ],
+  "r22RootAbsent": true,
+  "r22ContainerAbsent": true,
+  "r22ArtifactDirectoriesFound": [],
+  "samePrefixOtherSubmissions": [],
+  "priorExactJobs": [
+    {
+      "jobId": "t45-f35-148b57-start-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    {
+      "jobId": "t45-f35-148b57-install-20261106-01",
+      "status": "FAILED",
+      "exitCode": 2
+    }
+  ],
+  "r21PrivateOriginalReceiptMetadata": {
+    "sha256": "91aaeaf81cccc5f6b9bf2b9c2c6340bdb510b84a8ed1383cb1abccdb79a14886",
+    "uid": 0,
+    "gid": 0,
+    "mode": "0o600",
+    "bytes": 34580,
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-148b57-install-20261106-01/results/fresh35-deliver-install-result.json",
+    "readSource": "EXACT_ORIGINAL_ROOT_JOB_RESULT_NOT_PUBLIC_EXPORT"
+  },
+  "r21OrdinaryOriginalRequests": "UNKNOWN_NO_REPLAY_DB_NOT_QUERIED",
+  "r21OriginalNativeResult": {
+    "recordPublished": true,
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "postInstallFailureCode": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37"
+  },
+  "r21PublishedRecordRetainedMetadata": {
+    "exists": true,
+    "uid": 0,
+    "mode": "0o644",
+    "bytes": 1516,
+    "contentsNotExported": true,
+    "hashNotRepeated": true
+  },
+  "r21Stopped": {
+    "cid": "c3030d1785ede662fc762154e1624d12fe45e06814375182bb94e7441ab4e728",
+    "stopped": true,
+    "processAbsent": true,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+  },
+  "r21Cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "r21CleanupErrors": [],
+  "fixedEnvironment": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "arch": "amd64"
+  },
+  "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.0185546875,
+      0.0546875,
+      0.1572265625
+    ],
+    "diskFreeBytes": 5684346880,
+    "MemAvailable": 14317735936
+  },
+  "sourceOrTargetWrites": 0,
+  "PGConnections": 0,
+  "networkOrServiceChanges": 0,
+  "dataExtraction": false
+}

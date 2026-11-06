@@ -28508,12 +28508,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R22_BUILD_AND_MODE_PASS_T45_EXACT_READONLY_PREFLIGHT",
+      "critical": "R22_STAGE_AUTHORIZED_EXACT_TAIL_ASSEMBLY_AND_MATERIALIZATION",
       "independentPreparation": {
         "D1": "Exact source diagnosis closed81ba5198; source frozen.",
         "QB": "Mode-only source scopedPASS6c5d9ca9, no repeated review.",
         "D2": "Fixed f162184a build12.331s/pack9.282s and7298 membersPASS; no runtime.",
-        "T45": "Exact r22 ops binding plus bounded readonly stage preflight; no PG/start/transfer yet.",
+        "T45": "Original exact tail stage→baseprefix+tail assembly→r22 materialization; C13 bound30min, no PG/start until fresh C11.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32283,7 +32283,7 @@
         "diagnosticActualEffective": true
       },
       "r22Preparation": {
-        "state": "R22_BUILD_AND_MODE_PASS_T45_EXACT_READONLY_PREFLIGHT",
+        "state": "R22_STAGE_AUTHORIZED_EXACT_TAIL_ASSEMBLY_AND_MATERIALIZATION",
         "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
         "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
         "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
@@ -32318,7 +32318,17 @@
           "sha256": "22187d73d4a8cb964618d410f9701f3c74ab6d485124caab242f4b704a4d2862"
         },
         "opsModeCheckReceiptSHA256": "dbb9328f70587eec962f8b614949bdd95efb346a22224a0b32385a9256335da8",
-        "collectorActualArchiveMode": "0755"
+        "collectorActualArchiveMode": "0755",
+        "preparationResultSHA256": "0ae3a74ec53ddee9ab2531c1c56f2a02b40cb71e8443ce9882af92cee0489e5c",
+        "preflightResultSHA256": "602feb33e1f1e638e6313c57fe5af558dc40ad6a85da514aabab130ab6a80a66",
+        "staging": {
+          "tailC13SHA256": "900c3a14341bd0ad5ab97dc0bbcd1716e04074fd34acf44aee60d5f66cf2ad22",
+          "fullC13SHA256": "7fc2a50ca0f0a807e28243da281965afb280b003db214e5a2053e5ff5c3cb557",
+          "startsAt": 1793972612460,
+          "expiresAt": 1793974412460,
+          "authority": "Existing human standing same-kind bounded isolated staging; no temporary noon delegation extension.",
+          "scope": "Exact ordinary r22 source/tools transfer, original assembler and materialization only; no PG/start/REAL/prod."
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32727,12 +32737,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T21:40:49.553391+08:00",
-      "phase": "R22_BUILD_AND_MODE_PASS_T45_EXACT_READONLY_PREFLIGHT",
+      "at": "2026-11-06T21:44:41.136304+08:00",
+      "phase": "R22_STAGE_AUTHORIZED_EXACT_TAIL_ASSEMBLY_AND_MATERIALIZATION",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 r22 exact local binding and bounded readonly staging preflight",
-      "nextOwner": "C bind original C13 staging after exact fresh preflight",
+      "currentOwner": "Original T45 exact tail stage/assembly/materialization",
+      "nextOwner": "C fresh C11 after actual collector0755 and resource result",
       "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
