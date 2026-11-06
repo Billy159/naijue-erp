@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "ACTUAL_R15_STARTED_C9_BOUND_INSTALL_AND_BUSINESS_RUNNING",
+      "critical": "THREE_NATIVE_NEGATIVES_PASS_NORMAL_COMMIT_REQUIRED_FAILED_CLEAN_STOPPED",
       "independentPreparation": {
-        "D1": "Fixed5leaf frozen/readonly; brief RESULT closing, no new checks.",
+        "D1": "OriginalD1 exact normalcommit return/consumer/fixture diagnosis; no r15 replay, no blind newbuild/PG.",
         "QB": "Fiveleaf verdict adopted; no repeat.",
         "D2": "One af9078 build/7298members/tail PASS adopted; no repeat.",
-        "T45": "OriginalT45 CAS/tail/assembler/materialize then one resource preflight; C exact newPG20 only after actual facts.",
+        "T45": "r15 cleanstopped/keys terminal; no newjob/PG/replay pending concrete source gap.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -30927,7 +30927,7 @@
         }
       },
       "r15Preparation": {
-        "state": "ACTUAL_R15_STARTED_C9_BOUND_INSTALL_AND_BUSINESS_RUNNING",
+        "state": "THREE_NATIVE_NEGATIVES_PASS_NORMAL_COMMIT_REQUIRED_FAILED_CLEAN_STOPPED",
         "integration": "14bf71eba77876df321dba0ce946385e4ba51381",
         "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
         "tree": "409ac01e2ddc90952ff52f37a31cc7bd832e0040",
@@ -30940,7 +30940,7 @@
         "actualPG": true,
         "REAL": false,
         "production": false,
-        "next": "OriginalT45 one install/nativeCHECK/negative rollback/synthetic25/ordinary/readback/probe/ownedcleanup; noREAL/production/replay/extension.",
+        "next": "OriginalD1 exact normalcommit return/consumer/fixture diagnosis; no r15 replay, no blind newbuild/PG.",
         "D1ReceiptSHA256": "1fde5215612140b0af3d7900b98aba7f58b5f78448880745ebd0f279642055bb",
         "QBReceiptSHA256": "c46191f13712f25a6c99369f4d4da4db5db748fbca5265397597d5cc1815d0c4",
         "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62",
@@ -30989,7 +30989,46 @@
         "programSHA256": "3e32f6d1535cbac485524b12ddbca366e35c41037d848df338dfcec7e76d6a65",
         "targetSHA256": "39db9439c4d6e3288b254dc0eb99473ca2e0833fda03eeaa4deea5187b42a354",
         "installAuthoritySHA256": "435865a2056d426d19be6f69c436d6f322a9b1baddfaffe78b71a7e0ecdab375",
-        "wholeChainPassed": false
+        "wholeChainPassed": false,
+        "actualInstallReceiptSHA256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
+        "actualInstallExitCode": 2,
+        "actualInstallSeconds": 120.53742888802662,
+        "safeResultSHA256": "d31aab16dfc4e71ca623589c1e8e975905f69a1bac6b2809580f5ca3b1aa1138",
+        "nativeSchemaInstallCommitted": true,
+        "recordPublished": true,
+        "postInstallSnapshotPresent": true,
+        "negativeCohortRollbackVerified": true,
+        "negativeCases": {
+          "badApproval": "HISTORICAL_SETTLEMENT_APPROVAL_HASH_ROLLBACK_TRUE",
+          "missingSettlement": "STANDARD_PUBLICATION_INCOMPLETE_ROLLBACK_TRUE",
+          "finalPublish": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT_ROLLED_BACK",
+          "originalBatchAbsent": true,
+          "connectionCleanup": "CLOSED",
+          "snapshotEqualsPostInstall": true
+        },
+        "positiveCommit": {
+          "validationCode": "FRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED",
+          "state": "OUTCOME_UNKNOWN_NO_REPLAY",
+          "exitCode": 1,
+          "validationSQLSTATE": null,
+          "validationStage": null,
+          "validationStep": null,
+          "validationInternalCode": null,
+          "actualOutcome": "UNKNOWN_NOT_EXPORTED"
+        },
+        "containerStopped": true,
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true,
+          "errors": []
+        },
+        "postCleanupResources": "NOT_REMEASURED",
+        "ordinaryBusinessPassed": false,
+        "synthetic25PositivePassed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31398,22 +31437,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T15:21:21+08:00",
-      "phase": "ACTUAL_R15_STARTED_C9_BOUND_INSTALL_AND_BUSINESS_RUNNING",
+      "at": "2026-11-06T15:30:21+08:00",
+      "phase": "THREE_NATIVE_NEGATIVES_PASS_NORMAL_COMMIT_REQUIRED_FAILED_CLEAN_STOPPED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 actual r15 install/business/ownedcleanup",
-      "nextOwner": "C adopt actual terminal, originalQB/D1 affected findings only",
-      "latestActualReceiptSHA256": "eaab1fb39a1f26637e9960168eeb312c4dbf6768d922f0ca5e4a860dc6b14c15",
+      "currentOwner": "D1 original normalcommit required actualreturn seam",
+      "nextOwner": "C register exact minimal source delta; originalQB/D2/T45 affected scope only",
+      "latestActualReceiptSHA256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
       "installationRecordPublished": true,
       "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 one install/nativeCHECK/negative rollback/synthetic25/ordinary/readback/probe/ownedcleanup; noREAL/production/replay/extension.",
+      "next": "OriginalD1 exact normalcommit return/consumer/fixture diagnosis; no r15 replay, no blind newbuild/PG.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "14bf71eba77876df321dba0ce946385e4ba51381",
       "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",

@@ -1,0 +1,1130 @@
+{
+  "status": "INSTALL_RECORD_PUBLISHED_THREE_NEGATIVES_AND_ROLLBACK_SNAPSHOT_PASS_COMMIT_REQUIRED_FAILED_CLEAN_STOPPED",
+  "checkedAtUTC": "2026-11-06T07:26:14.347033+00:00",
+  "sourceRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+  "sourceSet": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+  "actualModelEffortFast": "UNVERIFIED",
+  "C9ActualSha256": "435865a2056d426d19be6f69c436d6f322a9b1baddfaffe78b71a7e0ecdab375",
+  "job": {
+    "jobId": "t45-f35-af9078-install-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-66529a131f29",
+    "atUTC": "2026-11-06T07:22:11.777220+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 120.53742888802662,
+    "exports": [
+      "fresh35-deliver-install-result.json"
+    ],
+    "finishedAtUTC": "2026-11-06T07:24:12.360247+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-af9078-install-20261106-01/transport/release-receipts/t45-f35-af9078-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce"
+  },
+  "safeResult": {
+    "cid": "39ff910e6ac6941d20dfcf7b4f7a5be46b80c2150f75794b42631e79ea99425b",
+    "containerStopped": true,
+    "delivery": {
+      "approvalCreated": false,
+      "cid": "39ff910e6ac6941d20dfcf7b4f7a5be46b80c2150f75794b42631e79ea99425b",
+      "sha256": "435865a2056d426d19be6f69c436d6f322a9b1baddfaffe78b71a7e0ecdab375",
+      "status": "EXTERNAL_INSTALL_BYTES_COPIED_ONCE"
+    },
+    "evidence": {
+      "bootstrap-network-observation.json": {
+        "adminActor": "fresh35_admin_20261105_r1",
+        "databaseOid": "16393",
+        "expiresAt": 1793950489732,
+        "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+        "host": "127.0.0.1",
+        "listenAddresses": "127.0.0.1",
+        "port": 18651,
+        "postmasterStart": "2026-11-06 07:16:47.620568+00",
+        "serverVersionNum": "170011",
+        "sourceSetSha256": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+        "startsAt": 1793949289732,
+        "systemIdentifier": "7704954027659821103",
+        "unixSocketDirectories": ""
+      },
+      "cleanup.json": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "commit-child-failure.json": {
+        "automaticRetry": false,
+        "exitCode": 1,
+        "stage": "commit",
+        "state": "OUTCOME_UNKNOWN_NO_REPLAY",
+        "validationCode": "FRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED",
+        "validationInternalCode": null,
+        "validationSQLSTATE": null,
+        "validationStage": null,
+        "validationStep": null
+      },
+      "failure.json": {
+        "automaticRetry": false,
+        "code": "FRESH35_ISOLATED_CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN",
+        "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+      },
+      "installation-result.json": {
+        "businessVerified": false,
+        "catalogSha256": "2be27652f0e0517a7c0867112ca41e664a11139f253a1800684f0b6242091b10",
+        "hostEnabled": false,
+        "installState": "COMMITTED_UNPUBLISHED",
+        "programSha256": "3e32f6d1535cbac485524b12ddbca366e35c41037d848df338dfcec7e76d6a65",
+        "recordPublished": true,
+        "sourceSetSha256": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+        "state": "RECORD_DURABLY_PUBLISHED",
+        "targetSha256": "39db9439c4d6e3288b254dc0eb99473ca2e0833fda03eeaa4deea5187b42a354",
+        "transactionReceipt": {
+          "actor": "fresh35_owner_20261105_r1",
+          "database": "synthetic_fresh35_20261105_r1",
+          "transactionId": "765"
+        }
+      },
+      "rollback-host-result.json": {
+        "businessVerified": false,
+        "connectionCleanup": "CLOSED",
+        "failedAttempt": {
+          "badApprovalCode": "HISTORICAL_SETTLEMENT_APPROVAL_HASH",
+          "badApprovalRollback": true,
+          "finalFailureCode": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT",
+          "finalFailureStage": "FINAL_PUBLISH",
+          "missingSettlementCode": "STANDARD_PUBLICATION_INCOMPLETE",
+          "missingSettlementRollback": true,
+          "originalBatchAbsent": true,
+          "reachedFinalPublish": true,
+          "state": "ROLLED_BACK"
+        },
+        "fixtureBinding": {
+          "format": "FRESH35_SYNTHETIC_RETENTION25_STAGE_BINDING_V1",
+          "initializerSha256": "7ec18af7fd848be9ef9c3bdd71365a9332cf0d6ea4e1b0c2addcae59b7c187d3",
+          "installProgramSha256": "3e32f6d1535cbac485524b12ddbca366e35c41037d848df338dfcec7e76d6a65",
+          "manifestSha256": "d5d6b7af25a3bd09473ef8cc6c29b4c42731ade590ece92fa1fe956384ac475e",
+          "planSha256": "433ca1ce1eeed9862fada9ff0490ffcecc30368f35b127d7e2731a2c7fafbbd9",
+          "sourceSetSha256": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+          "stepsSha256": "9ae054bf480ab7da614d47fd94d8797ceb8f035c4c965ebfc80300b5b8d85d65",
+          "targetSha256": "39db9439c4d6e3288b254dc0eb99473ca2e0833fda03eeaa4deea5187b42a354"
+        },
+        "fixtureBindingSha256": "f7c2a55c6b142ebb50e3243a9392d9747dfe21090626aa3d56d209d5fc72fd2b",
+        "originalBatchAbsent": true,
+        "rollbackVerified": true,
+        "stage": "rollback",
+        "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+        "syntheticImportVerified": false
+      },
+      "runtime-dependencies.json": {
+        "arch": "x64",
+        "fastify": "5.12.5",
+        "libvips": "8.18.7",
+        "pg": "8.23.1",
+        "platform": "linux",
+        "sharp": "0.35.5"
+      },
+      "snapshot-after-install.json": {
+        "connectionCleanup": "CLOSED",
+        "context": {
+          "actor": "fresh35_admin_20261105_r1",
+          "address": "127.0.0.1",
+          "bypassRls": true,
+          "dataDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1/data",
+          "database": "synthetic_fresh35_20261105_r1",
+          "databaseOid": "16393",
+          "isolation": "repeatable read",
+          "kind": "context",
+          "port": 18651,
+          "postmasterStart": "2026-11-06 07:16:47.620568+00",
+          "readOnly": "on",
+          "sequences": [
+            "customer_code_sequence",
+            "runtime_sales_document_number_seq",
+            "runtime_transfer_document_number_seq",
+            "supplier_code_sequence"
+          ],
+          "serverVersionNum": "170011",
+          "sessionActor": "fresh35_admin_20261105_r1",
+          "superuser": true,
+          "systemIdentifier": "7704954027659821103",
+          "tables": [
+            {
+              "kind": "r",
+              "name": "audit_change",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "auth_session",
+              "rlsActive": false,
+              "rlsEnabled": false,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "barcode_scheme",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "color",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "customer",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "fit",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "hall",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "import_batch",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "import_record",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "inventory_balance",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "inventory_ledger",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "operation_receipt",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "payment_account",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "payment_account_hall",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "payment_method",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "product",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "product_category",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "product_image",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "runtime_document_number_allocation",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sales_header",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sales_line",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sales_settlement",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "schema_migration",
+              "rlsActive": false,
+              "rlsEnabled": false,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "season",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "size",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "size_group",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "size_group_member",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sku",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sku_barcode",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "staff",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "supplier",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "transfer_header",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "transfer_line",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "user_account",
+              "rlsActive": false,
+              "rlsEnabled": false,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "warehouse",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            }
+          ]
+        },
+        "snapshot": {
+          "sequences": {
+            "customer_code_sequence": {
+              "called": false,
+              "value": "1"
+            },
+            "runtime_sales_document_number_seq": {
+              "called": false,
+              "value": "1"
+            },
+            "runtime_transfer_document_number_seq": {
+              "called": false,
+              "value": "1"
+            },
+            "supplier_code_sequence": {
+              "called": false,
+              "value": "1"
+            }
+          },
+          "tables": {
+            "audit_change": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "auth_session": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "barcode_scheme": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "color": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "customer": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "fit": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "hall": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "import_batch": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "import_record": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "inventory_balance": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "inventory_ledger": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "operation_receipt": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "payment_account": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "payment_account_hall": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "payment_method": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "product": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "product_category": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "product_image": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "runtime_document_number_allocation": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sales_header": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sales_line": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sales_settlement": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "schema_migration": {
+              "count": "27",
+              "sha256": "c1beb37a6641dcf3d9ba536322d2bd4cdba6e7ef360b43f00b142e538ab6e793"
+            },
+            "season": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "size": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "size_group": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "size_group_member": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sku": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sku_barcode": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "staff": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "supplier": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "transfer_header": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "transfer_line": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "user_account": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "warehouse": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        "sqlstate": null,
+        "transaction": "ROLLED_BACK"
+      },
+      "snapshot-after-rollback.json": {
+        "connectionCleanup": "CLOSED",
+        "context": {
+          "actor": "fresh35_admin_20261105_r1",
+          "address": "127.0.0.1",
+          "bypassRls": true,
+          "dataDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1/data",
+          "database": "synthetic_fresh35_20261105_r1",
+          "databaseOid": "16393",
+          "isolation": "repeatable read",
+          "kind": "context",
+          "port": 18651,
+          "postmasterStart": "2026-11-06 07:16:47.620568+00",
+          "readOnly": "on",
+          "sequences": [
+            "customer_code_sequence",
+            "runtime_sales_document_number_seq",
+            "runtime_transfer_document_number_seq",
+            "supplier_code_sequence"
+          ],
+          "serverVersionNum": "170011",
+          "sessionActor": "fresh35_admin_20261105_r1",
+          "superuser": true,
+          "systemIdentifier": "7704954027659821103",
+          "tables": [
+            {
+              "kind": "r",
+              "name": "audit_change",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "auth_session",
+              "rlsActive": false,
+              "rlsEnabled": false,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "barcode_scheme",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "color",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "customer",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "fit",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "hall",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "import_batch",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "import_record",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "inventory_balance",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "inventory_ledger",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "operation_receipt",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "payment_account",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "payment_account_hall",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "payment_method",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "product",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "product_category",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "product_image",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "runtime_document_number_allocation",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sales_header",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sales_line",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sales_settlement",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "schema_migration",
+              "rlsActive": false,
+              "rlsEnabled": false,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "season",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "size",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "size_group",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "size_group_member",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sku",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "sku_barcode",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "staff",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "supplier",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "transfer_header",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "transfer_line",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "user_account",
+              "rlsActive": false,
+              "rlsEnabled": false,
+              "rlsForced": false,
+              "selectAllowed": true
+            },
+            {
+              "kind": "r",
+              "name": "warehouse",
+              "rlsActive": false,
+              "rlsEnabled": true,
+              "rlsForced": false,
+              "selectAllowed": true
+            }
+          ]
+        },
+        "snapshot": {
+          "sequences": {
+            "customer_code_sequence": {
+              "called": false,
+              "value": "1"
+            },
+            "runtime_sales_document_number_seq": {
+              "called": false,
+              "value": "1"
+            },
+            "runtime_transfer_document_number_seq": {
+              "called": false,
+              "value": "1"
+            },
+            "supplier_code_sequence": {
+              "called": false,
+              "value": "1"
+            }
+          },
+          "tables": {
+            "audit_change": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "auth_session": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "barcode_scheme": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "color": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "customer": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "fit": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "hall": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "import_batch": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "import_record": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "inventory_balance": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "inventory_ledger": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "operation_receipt": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "payment_account": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "payment_account_hall": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "payment_method": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "product": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "product_category": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "product_image": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "runtime_document_number_allocation": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sales_header": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sales_line": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sales_settlement": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "schema_migration": {
+              "count": "27",
+              "sha256": "c1beb37a6641dcf3d9ba536322d2bd4cdba6e7ef360b43f00b142e538ab6e793"
+            },
+            "season": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "size": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "size_group": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "size_group_member": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sku": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "sku_barcode": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "staff": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "supplier": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "transfer_header": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "transfer_line": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "user_account": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "warehouse": {
+              "count": "0",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        "sqlstate": null,
+        "transaction": "ROLLED_BACK"
+      }
+    },
+    "evidenceSha256": {
+      "bootstrap-network-observation.json": "1ea7165b68d71fb655e3c334d60f6910c0cbc1fd75ea67e2abdfeccafe0684c8"
+    },
+    "forcedStopIsNotCleanShutdownProof": true,
+    "launcherExitCode": 1,
+    "ordinaryProofEvidence": {},
+    "sourceResult": {
+      "businessVerified": false,
+      "cleanup": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "hostEnabled": false,
+      "hostVerified": false,
+      "independentSnapshotsVerified": false,
+      "ordinaryBusinessVerified": false,
+      "productionVerified": false,
+      "recordPublished": true,
+      "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+      "syntheticImportVerified": false
+    },
+    "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+  },
+  "transactionBackendPidNonceNotCopied": true,
+  "schemaAndRecordCommittedNotRolledBack": true,
+  "negativeCohortRollbackVerified": true,
+  "rollbackSnapshotEqualsPostInstallSnapshot": true,
+  "positiveImportCommitOutcome": "UNKNOWN_NOT_EXPORTED",
+  "wholeChainPassed": false,
+  "postCleanupHostMemoryDiskMetrics": "NOT_REMEASURED_NO_EXTRA_JOB",
+  "noReplay": true,
+  "productionActions": 0
+}

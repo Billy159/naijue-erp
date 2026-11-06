@@ -1957,3 +1957,9 @@ C核原3stage收据和材料化887f9162退出0/364.219s，完整包bc9537、sour
 
 ### 2026-11-06T15:21:21+08:00 | r15实际新目标启动，C9绑定同窗
 原startde89b5a2退出0/33.339s，actualCID39ff910e/SID7704954027659821103/OID16393/PG170011/birth07:16:47.620568UTC。C核原收据及safe d6ed5ebe，原9键435865a2绑定actualprogram3e32f6d1/target39db9439/source761a/QBc46191，沿同PG20期限1793950489732不延。原T45一次安装/精确CHECK核验/负例回滚/合成25/普通业务读回/probe/清理；失败原键处理，不改目录hash或断言放行。实际启动未代表安装或业务通过，无REAL/生产。
+
+
+### 2026-11-06T15:30:21+08:00 | r15三项真PG负例通过，正常提交证据缺失
+原install7cb680c3退出2/120.537s，schema+record提交发布。实际三负例已通过：错误批准HISTORICAL_SETTLEMENT_APPROVAL_HASH回滚；缺结算STANDARD_PUBLICATION_INCOMPLETE回滚；FINAL_PUBLISH原源冲突ROLLED_BACK，originalBatchAbsent/CLOSED均确认，postrollback快照等于postinstall。此范围有效证据可复用，不倒改r14。
+随后正常commit child退出1，有限codeFRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED、其他诊断null；真实返回未导出，提交结果UNKNOWN，不能称已提交或已回滚。synthetic25正向、ordinary/独立读回/probe仍未过。C核safe d31aab16和原raw。cleanup6true/errors[]/CID39ff910e停止，清理后资源未另测。
+原D1已接准确normalcommit return/entryconsumer/fixture只读定位，先报最小叶，原3负例及strictreceipt不重验；不重放r15或盲建新候选，不猜底层SQL，不输出秘密。无REAL/正式操作。
