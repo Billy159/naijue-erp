@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "ACTUAL_FULL_READY_ORIGINAL_MATERIALIZE_RUNNING",
+      "critical": "ACTUAL_PG170011_STARTED_C9_INSTALL_DISPATCHED",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Fixture/builder and exact release pin increment PASS; no repeated technical QA.",
         "D2": "Build13.604s/pack10.750s exit0, full453/30/7298membersPASS; no actual PG.",
-        "T45": "Actual full assembled/READY; unique materialization submitted, noPG.",
+        "T45": "Actual170011 started; exact originalC9 install chain dispatched once.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31614,18 +31614,18 @@
         }
       },
       "r19Preparation": {
-        "state": "ACTUAL_FULL_READY_ORIGINAL_MATERIALIZE_RUNNING",
+        "state": "ACTUAL_PG170011_STARTED_C9_INSTALL_DISPATCHED",
         "integration": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
         "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
         "tree": "d1d0640c1bab9b2622624e2f05db0ec2720ef8ea",
         "parentBuildRoot": "a1b7b65766544a81af4dc1d37c49551f209971f4",
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "authorLocalSourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "ordinaryBusinessVerified": false,
-        "next": "Original T45 collect same materialization handle terminal receipt and fresh resources. C11 only afterward; no deadline extension or original operation replay.",
+        "next": "Original T45 same fixed candidate install/negative/normal/replay/readback/ordinary/API/ownedcleanup; actual results pending. No old committed request replay.",
         "previousFixedCandidate": {
           "state": "FIXED_SOURCE_QB_BUILD_PENDING",
           "integration": "0ad22579cf95c72835a7a74bd4900767d61017a2",
@@ -31713,9 +31713,69 @@
         ],
         "materialization": {
           "jobId": "t45-f35-101f4f-local-materialize-20261106-01",
-          "state": "SUBMITTED_ORIGINAL_SINGLE_900S_HANDLE",
+          "state": "COMPLETED",
           "C13Deadline": 1793965148449,
-          "actualPGStarted": false
+          "actualPGStarted": false,
+          "exitCode": 0,
+          "elapsedSeconds": 371.584999
+        },
+        "materializedReadySHA256": "845562ee2f6af7267a32e6b5ad1e0e6a66259257328f67fde1a80845bfca1ac1",
+        "materializeResultSHA256": "5d6edbb0f3448d7f5b8d316c31a5eea09f4fc7104107d8bdde685d242ca536ba",
+        "postResourceSHA256": "54ea9cee72d169cf84e7a98941df018f40f0e736b92bf6b85cadca35d9fe4e25",
+        "C11": {
+          "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/fresh35-provision-101f4f-pg20-01.json",
+          "sha256": "e24e4347a7aeb737e4c683b659c75c90ff7022842a7253eb37437968916a9ed1",
+          "startsAt": 1793964076150,
+          "expiresAt": 1793965276150,
+          "scope": "ISOLATED_SYNTHETIC_ONLY"
+        },
+        "actualStart": {
+          "job": {
+            "jobId": "t45-f35-101f4f-start-20261106-01",
+            "status": "COMPLETED",
+            "exitCode": 0,
+            "elapsedSeconds": 37.853357991203666,
+            "atUTC": "2026-11-06T11:22:29.938072+00:00",
+            "finishedAtUTC": "2026-11-06T11:23:07.823320+00:00"
+          },
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-101f4f-start-20261106-01/transport/release-receipts/t45-f35-101f4f-start-20261106-01/fresh35-start-target-result.json",
+            "sha256": "aaecf1833b2dde15d9a68d9e50d70d679dfca6d09cb5c4b8ed34ceebd0ec3a24"
+          },
+          "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+          "cid": "d3e1f51904d3d11257a490b6ace4b54524690fc95bcb6063f3f33830923613ae",
+          "physical": {
+            "databaseOid": "16393",
+            "postmasterStart": "2026-11-06 11:22:46.854923+00",
+            "serverVersionNum": "170011",
+            "systemIdentifier": "7705017410312949807"
+          },
+          "startsAt": 1793964076150,
+          "expiresAt": 1793965276150,
+          "program": {
+            "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+            "sourceSetSha256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+            "programSha256": "65a520a5f75a7770737639bc03549948fbc3c337fad48f4ad70a23f11355387b",
+            "targetSha256": "fadfb375bb0314cc85bda689e1de35484c5cf3f0ed93de489b088941d2ee4f75",
+            "catalogSha256": "593dd796084ca009a1bfa2bf8fd9c8e56c28e6414900a6f915d6985a9c4c01da",
+            "applicationTransactions": 1,
+            "createsCluster": false,
+            "createsCredentials": false,
+            "createsRoles": false,
+            "bootstrapNetworkObservationSha256": "fad5cea2369ebc213afabff26301fac2882d63fbb517c0e6037025f0afa44b97"
+          },
+          "C11SHA256": "e24e4347a7aeb737e4c683b659c75c90ff7022842a7253eb37437968916a9ed1",
+          "installSubmitted": false,
+          "wholeChainPassed": false,
+          "actualModelEffortFast": "UNVERIFIED",
+          "actualPostgreSQL170011Verified": true,
+          "formalOrREALChanged": false
+        },
+        "C9": {
+          "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/fresh35-install-101f4f-pg20-01.json",
+          "sha256": "4a3e6d504a2834b230e6c19de230a6666f74f806a07ecdf0e524ca1949a2965f",
+          "startsAt": 1793964076150,
+          "expiresAt": 1793965276150
         }
       }
     },
@@ -32125,8 +32185,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:13:34+08:00",
-      "phase": "ACTUAL_FULL_READY_ORIGINAL_MATERIALIZE_RUNNING",
+      "at": "2026-11-06T19:25:31+08:00",
+      "phase": "ACTUAL_PG170011_STARTED_C9_INSTALL_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
       "currentOwner": "T45 same materialization handle",
@@ -32140,7 +32200,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 collect same materialization handle terminal receipt and fresh resources. C11 only afterward; no deadline extension or original operation replay.",
+      "next": "Original T45 same fixed candidate install/negative/normal/replay/readback/ordinary/API/ownedcleanup; actual results pending. No old committed request replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
       "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
