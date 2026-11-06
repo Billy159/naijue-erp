@@ -1776,3 +1776,7 @@ D2实际build0/10.838s、pack0/8.830s，production453及ordinary7298成员bytes/
 
 ### 2026-11-06 两条必要验收收口
 原QB6c737bd7对固定5e/root9c两叶用封存CREATE TABLE独立提取，33表达式准确仅恢复首LF、318列及其他类别不变、7拒绝和唯一pin逆算通过；仅source/离线模型，未验实PG。原QB e8d71107的backup43b微项已采用，T45本次唯一备份key已实际RUNNING（unit9f0cde3101dd），不是unknown，不重提交；终态未到，不写备份完成。r8真实预检、材料化与PG等待已知备份释放资源，源码/制品/独立QA均就绪，不再等用户或重复技术验收。
+
+
+### 2026-11-06T09:13:20+08:00 | 当前备份完成，r8实际材料化在途
+本次唯一正式备份t45-prod-current-backup-20261106-01实际COMPLETED0/229.403s（原回执47d45612/汇总bb87b791），七文件2,045,181,980B已封存，离线TOC936项通过，app/web/db前后同CID/PID/启动时刻且未重启切换；新备份独立恢复未验，旧恢复证据不替代本批。无真实业务写入或DDL/权限变更。r8真实预检a69d6460已核旧r7停稳/新目标不存在/保留包身份及容量。C原13键两叶fc57bd8f/391c3b13绑定新9c/d496；原tail/full receiver实际READY（assemble b72be05a/4.579s），原materialize一次新key在途。C本机预检曾误把r7Stopped结构对象当布尔断言，已按真实running=false/PID0及六cleanup复核，原现场和签叶未变，无服务器差异。待原key终态/当前资源后才开新PG20，不重旧作业或重复技术验收。

@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-9c2748-ordinary-local-20261106-01",
+  "sourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+  "archiveSha256": "73dcdc585b03b7ec262e9dcfc3962b6ed1536aa0dec7f44a93ec049392beb146",
+  "archiveBytes": 83685827,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-9c2748-ordinary-local-20261106-01",
+  "startsAt": 1793927162049,
+  "expiresAt": 1793928962049,
+  "decisionReference": "C direct human delegation through2026-11-06 noon. Exact9c2748/source d496 r8prepare only; actualpreflight a69d6460, D2 4ff68200, QB6c737bd7 adopted. Retained73base635de84 prefix81221531/3c2cf3a1 plus tailfb6b15be to newfull73dcdc58/83685827 by originalreceiver. Original40s/900s/30min; backupCOMPLETED0; noPG/REAL/unpackdata/production/oldtargets. NewPG20 needs actualmaterialization/resources and independentCscope.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

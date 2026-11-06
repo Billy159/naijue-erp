@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-05T17:43:31.816796+00:00",
+  "updatedAt": "2026-11-06T09:13:20+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-05T16:33:34.148046+00:00",
+    "at": "2026-11-06T09:13:20+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,13 +28491,13 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 actualnewr6 stagepreflight/currentgate/baseidentity then C exacttail/full scope; originalonce materialization→actualresource→freshPG20 exactprogram/target→install/ordinarybusiness/readback/cleanup. SourceQB3f351 andD2build3f5a valid adopted.",
+      "critical": "Collect originalmaterialize key only then actualresource; sourceQA already adopted. ActualPG and ordinarybusiness not yet verified.",
       "independentPreparation": {
-        "D1": "Production JS entry+source loader/strict V1 refusal, fixed source handoff and necessary scoped checks.",
-        "T45": "Production Python consumer source only in independent new files, creation authority then actualfacts/entry/install; finite serviceLease separates installation. r5 actual run priority.",
-        "D2": "Completed3de75 build/pack/tail readback adopted; wait next frozen source, do not rebuild same.",
+        "D1": "Fixed5e/root9c generated-LF scope frozen; wait exactactualPG error only, no repeat checks.",
+        "T45": "r8 actualmaterialize running; originalcurrentbackup actualcompleted; next actualresource/newPG20.",
+        "D2": "Fixed9c artifacts and actualtail delivered; no rebuild. Productionrelease source ready.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "Observer8 and private transport source PASS adopted; next only productionconsumer increment when fixed.",
+        "QB": "GeneratedLF6c737 and backupF02 e8d711 valid adopted; next actualincrement only.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING",
+      "state": "R8_ORIGINAL_KEY_MATERIALIZATION_RUNNING_ACTUAL_PG_PENDING",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "T45 original tail transfer and fixed one-off source; QB only new ops delta; full original receiver READY then r3 materialization and fresh PG window. Do not rebuild877a or replay old jobs.",
+      "next": "Original T45 r8 materialization terminal and fresh exact resource readback, then C new20min provision and exact target C9. No duplicate materialization or old r7 replay.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30068,7 +30068,7 @@
         }
       },
       "r8Preparation": {
-        "state": "FIXED_BUILD_AND_QB_INCREMENT_PASS_WAITING_KNOWN_BACKUP_TERMINAL_THEN_STAGE_PREFLIGHT",
+        "state": "ACTUAL_FULL_RECEIVER_READY_ORIGINAL_MATERIALIZATION_RUNNING",
         "integration": "5e28855e1455a639514524f868528c20f1782c76",
         "buildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
         "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
@@ -30099,10 +30099,29 @@
         "root": "phaseb-application-r8",
         "container": "t45-fresh35-deb13-20261106-r8",
         "actualPG": false,
-        "next": "T45 exact stagepreflight then original C13 leaves; heavy materialize/PG serialized after exactfreshbackup terminal. ActualPG requires adopted scopedQB/newPG20/C9 binding.",
+        "next": "Collect originalmaterialize key only then actualresource; sourceQA already adopted. ActualPG and ordinarybusiness not yet verified.",
         "qbSHA256": "6c737bd7cf1105d36088a6f87bd196aee9c69f0db4b66d6e57b96750e609fef7",
-        "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL;33rawsource/318unchanged/7negatives;actualPGnotverified"
-      }
+        "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL;33rawsource/318unchanged/7negatives;actualPGnotverified",
+        "stagePreflightSHA256": "a69d646090ce72f5c666eabf7e2459c714bbcb778bb2714d9225e28bfaa6d93a",
+        "tailAuthoritySHA256": "fc57bd8f6f27e9f09335c65cbc9625fce97d22430080eb08c7ddbb4d3e7acd61",
+        "fullAuthoritySHA256": "391c3b13b3add8d314eeb224bd19aab47567af22ad3f203d1a3d66ee226c8cbc",
+        "stagingStartsAt": 1793927162049,
+        "stagingExpiresAt": 1793928962049,
+        "actualAssemblySHA256": "b72be05abb1cfe6c870f8a63ed6495ae67d3edf257ddb09c0b7ac8859b15efac",
+        "actualAssemblyExitCode": 0,
+        "actualAssemblySeconds": 4.579459795,
+        "actualFullIdentity": [
+          66304,
+          393617,
+          83685827,
+          1793927426880641465,
+          1793927428027607889
+        ],
+        "materializationJob": "t45-f35-9c2748-local-materialize-20261106-01",
+        "materializationDeadlineMs": 1793928173216,
+        "preflightVerifierCorrection": "r7Stopped is actual structured container metadata; corrected C boolean expectation, verified running=false/PID0 and six cleanup checks. No input or server discrepancy."
+      },
+      "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING"
     },
     "productionReleaseCompatibilityContinuation": {
       "state": "SOURCE_QB_F01_CLOSED_ORIGINAL_CALLER_PINS_REGISTERED_NOT_ACTUAL_DEPLOYMENT",
@@ -30410,9 +30429,9 @@
       }
     },
     "formalBackupContinuation": {
-      "at": "2026-11-06T08:15:15+08:00",
+      "at": "2026-11-06T09:13:20+08:00",
       "owner": "T45",
-      "state": "ACTUAL_ORIGINAL_KEY_RUNNING_NO_TERMINAL_YET",
+      "state": "ACTUAL_BACKUP_COMPLETED_OFFLINE_TOC_PASS_NEW_RESTORE_UNVERIFIED",
       "authority": "Direct human delegation through2026-11-06T12:00+08; C decision, not individual human approval",
       "target": {
         "database": "erp_prod",
@@ -30435,7 +30454,7 @@
       },
       "capIncludes": "All this-run final, partial, archive and temporary outputs; post-child size/free checks; stop only owned backup children on limit",
       "beforeExecution": "Fresh exact identity, actual ordinary metadata/private auth and resources; r7 high-load tasks serial; do not interrupt PG20",
-      "actualBackupComplete": false,
+      "actualBackupComplete": true,
       "independentRestoreOfThisBackup": "NOT_VERIFIED",
       "oldBackupAndRestoreEvidence": "Preserved, not evidence this new backup restored",
       "sourceReadySHA256": "a520d2db1882d6064a36a76851ea5cc5b4a02eca99fca8aef1c8bd64bfa99a07",
@@ -30466,7 +30485,7 @@
         "sourceReadySHA256": "a2a287a69dd93ad19687db38717f665cdb2438a01ae79e26a835831003b83279",
         "sourceSHA256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
         "scope": "Onlylstatbeforeexists; FileNotFoundError trueabsence; no budget/domain/window change; one tinyRED/GREEN test",
-        "actualBackupExecuted": false
+        "actualBackupExecuted": true
       },
       "dispatcherMetadata": {
         "receiptSHA256": "b440b2f5fb040ae23d6d8eea6f686071d079b987e5a45ce1924bbc41bcc8ed20",
@@ -30478,10 +30497,20 @@
       "fixedSourceSHA256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
       "newJob": "t45-prod-current-backup-20261106-01",
       "restoreOfThisNewBackup": "NOT_VERIFIED",
-      "next": "T45 unique new submission/actualidentity-capacity guards then collect originalkey only; no new approval; r8PG heavywork waits terminal",
+      "next": "Retain exact current backup; old Nov1 independent restore remains dated evidence only. No automatic restoration or production rollback claimed.",
       "unit": "naijue-erp-op-5cc58239-9f0cde3101dd",
       "automaticRetry": false,
-      "knownInFlight": true
+      "knownInFlight": false,
+      "actualReceiptSHA256": "47d4561209600e8f916c0e72a0f59c5cc7720aac5205a74c7d18cbadd587d580",
+      "actualSummarySHA256": "bb87b7913b1ec537c22ab2dff4b986d2a513b66dbd975e29b80dc28890645a5b",
+      "sevenPrimaryArtifactsBytes": 2045181980,
+      "actualStartedAtUTC": "2026-11-06T00:58:32.989315+00:00",
+      "actualFinishedAtUTC": "2026-11-06T01:02:22.209759+00:00",
+      "elapsedSeconds": 229.40314852213487,
+      "allSevenCommandsExitZero": true,
+      "servicesIdentityUnchanged": true,
+      "oldBackupModified": false,
+      "PGWindowOverlapped": false
     }
   }
 }

@@ -1,0 +1,211 @@
+{
+  "status": "PASS_NEW_BACKUP_AND_OFFLINE_TOC_ONLY_NOT_INDEPENDENT_RESTORE",
+  "recordedAtUTC": "2026-11-06T01:03:35.606491+00:00",
+  "job": {
+    "jobId": "t45-prod-current-backup-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-9f0cde3101dd",
+    "atUTC": "2026-11-06T00:58:32.903609+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 229.40314852213487,
+    "exports": [
+      "backup-current-result.json",
+      "backup-progress.json"
+    ],
+    "finishedAtUTC": "2026-11-06T01:02:22.371449+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod-current-backup-20261106-01/transport/release-receipts/t45-prod-current-backup-20261106-01/backup-current-result.json",
+    "sha256": "47d4561209600e8f916c0e72a0f59c5cc7720aac5205a74c7d18cbadd587d580"
+  },
+  "sourceSha256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
+  "scopedReviewSha256": "e8d711074ada9b6a3febbe1d8afcf4f5bd96450b71addac09eb3a0d7a36d22e8",
+  "safeResult": {
+    "jobId": "t45-prod-current-backup-20261106-01",
+    "status": "PASS_NEW_SINGLE_DATABASE_AND_OPAQUE_FILES_BACKUP_OFFLINE_TOC_ONLY",
+    "startedAtUTC": "2026-11-06T00:58:32.989315+00:00",
+    "backupPath": "/srv/naijue-erp/prod/backups/before-native35-20261106-01",
+    "businessWrites": false,
+    "productionRestart": false,
+    "schemaPermissionChanges": false,
+    "restoreExecuted": false,
+    "credentialsExported": false,
+    "automaticRetry": false,
+    "files": {
+      "erp_prod.dump": {
+        "kind": "PG17_CUSTOM_LOGICAL_DUMP",
+        "bytes": 1091073829,
+        "sha256": "227af3499ca6cd245201513c92c9e58978c4e9aa46900d6aada4cfa9eb3a1582"
+      },
+      "dump-toc.private.txt": {
+        "kind": "PRIVATE_OFFLINE_TOC_NOT_EXPORTED",
+        "bytes": 93431,
+        "sha256": "fcb306f33be8350fa7ee28af3dabc1e5e6bb3d31786561cf85bc25015ec0f1bf"
+      },
+      "media.protected.tar": {
+        "kind": "OPAQUE_PRIVATE_ARCHIVE",
+        "bytes": 83947520,
+        "sha256": "e51b3b2b836288c51cf9df97910c36dc853d5249cff2ea4e0783bb71d95cd0d9"
+      },
+      "configuration.protected.tar": {
+        "kind": "OPAQUE_PRIVATE_ARCHIVE",
+        "bytes": 552960,
+        "sha256": "69ad3a13d9daf37f5fcbbe72e6219bc3d5b346d10ec3afac17118c5ac76ecba8"
+      },
+      "actual-app.protected.tar": {
+        "kind": "ACTUAL_RUNNING_FILES_OPAQUE_ARCHIVE",
+        "bytes": 36208640,
+        "sha256": "6671ddb657709f90a54980fdc9418959ecffbe6675dca6399712172d3282a530"
+      },
+      "actual-web.protected.tar": {
+        "kind": "ACTUAL_RUNNING_FILES_OPAQUE_ARCHIVE",
+        "bytes": 96847872,
+        "sha256": "a6d5f6198470d51dc7f9ebfd6ee2da68c3d7d4ab512038c6550d753bc602cb36"
+      },
+      "runtime-images.protected.tar": {
+        "kind": "EXISTING_RUNTIME_IMAGES_OPAQUE_ARCHIVE",
+        "bytes": 736457728,
+        "sha256": "9e910f0487cbe88ef563d12758659e569a180f4a7cbe82d61a28aa13639dbddc"
+      }
+    },
+    "target": {
+      "database": "erp_prod",
+      "oid": "24577",
+      "cluster": "7691989034661916697",
+      "postmaster": "2026-10-04 08:16:07.895273+00",
+      "role": "t15_prod_bootstrap"
+    },
+    "servicesBefore": {
+      "naijue-prod-app-1": {
+        "id": "c3c2769ee01a85691f6251e56c43ae66413470738126bdfdecde1f89c83c5881",
+        "image": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+        "pid": 1918737,
+        "status": "running",
+        "startedAt": "2026-10-19T00:37:33.773668947Z",
+        "restarts": 0
+      },
+      "naijue-prod-web-1": {
+        "id": "096f23670c3f1e26c3537581b8451d5bafed18b8e4c296b32735ea4d94630257",
+        "image": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+        "pid": 1280599,
+        "status": "running",
+        "startedAt": "2026-10-17T23:14:04.03396614Z",
+        "restarts": 0
+      },
+      "naijue-prod-db-1": {
+        "id": "3d428c7fc107996d315fc1e32d32e805ef7f6b284c08a5bfdef97b3ec1ec8baf",
+        "image": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+        "pid": 1780,
+        "status": "running",
+        "startedAt": "2026-10-04T08:15:55.884806205Z",
+        "restarts": 0
+      }
+    },
+    "tools": "pg_dump (PostgreSQL) 17.11 (Debian 17.11-1.pgdg12+2)",
+    "backupCreated": true,
+    "phase": "original_runtime_images",
+    "commands": [
+      {
+        "artifact": "erp_prod.dump",
+        "exitCode": 0,
+        "elapsedSeconds": 190.217
+      },
+      {
+        "artifact": "dump-toc.private.txt",
+        "exitCode": 0,
+        "elapsedSeconds": 0.088
+      },
+      {
+        "artifact": "media.protected.tar",
+        "exitCode": 0,
+        "elapsedSeconds": 7.167
+      },
+      {
+        "artifact": "configuration.protected.tar",
+        "exitCode": 0,
+        "elapsedSeconds": 0.564
+      },
+      {
+        "artifact": "actual-app.protected.tar",
+        "exitCode": 0,
+        "elapsedSeconds": 0.237
+      },
+      {
+        "artifact": "actual-web.protected.tar",
+        "exitCode": 0,
+        "elapsedSeconds": 0.614
+      },
+      {
+        "artifact": "runtime-images.protected.tar",
+        "exitCode": 0,
+        "elapsedSeconds": 15.588
+      }
+    ],
+    "offlineToc": {
+      "exitCode": 0,
+      "bytes": 93431,
+      "entries": 936,
+      "databaseConnected": false
+    },
+    "archiveMembers": {
+      "media.protected.tar": 827,
+      "configuration.protected.tar": 84,
+      "actual-app.protected.tar": 3924,
+      "actual-web.protected.tar": 3485
+    },
+    "servicesAfter": {
+      "naijue-prod-app-1": {
+        "id": "c3c2769ee01a85691f6251e56c43ae66413470738126bdfdecde1f89c83c5881",
+        "image": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+        "pid": 1918737,
+        "status": "running",
+        "startedAt": "2026-10-19T00:37:33.773668947Z",
+        "restarts": 0
+      },
+      "naijue-prod-web-1": {
+        "id": "096f23670c3f1e26c3537581b8451d5bafed18b8e4c296b32735ea4d94630257",
+        "image": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+        "pid": 1280599,
+        "status": "running",
+        "startedAt": "2026-10-17T23:14:04.03396614Z",
+        "restarts": 0
+      },
+      "naijue-prod-db-1": {
+        "id": "3d428c7fc107996d315fc1e32d32e805ef7f6b284c08a5bfdef97b3ec1ec8baf",
+        "image": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+        "pid": 1780,
+        "status": "running",
+        "startedAt": "2026-10-04T08:15:55.884806205Z",
+        "restarts": 0
+      }
+    },
+    "totalBudget": {
+      "maximumBytes": 4294967296,
+      "freeFloorBytes": 8589934592,
+      "initialRequiredFreeBytes": 12884901888,
+      "controlReceiptReserveBytes": 262144,
+      "dispatcherFutureOutputReserveBytes": 131072,
+      "allDestAndEntireJobTreeAndExactControlResultCounted": true,
+      "noTemporaryDatabaseCopyCreated": true
+    },
+    "offlineRestoreExecuted": false,
+    "independentRestoreProven": false,
+    "mediaConfigurationMetadataStable": true,
+    "freeBytesAfter": 12696006656,
+    "restoreLimit": "Logical dump and offline TOC validation only; roles/auth reconciliation and independent restore not executed. No production rollback or C12 acceptance proven.",
+    "finishedAtUTC": "2026-11-06T01:02:22.209759+00:00",
+    "elapsedSeconds": 229.22
+  },
+  "sevenPrimaryArtifactsBytes": 2045181980,
+  "oldBackupModified": false,
+  "PGWindowOverlapped": false,
+  "newIndependentRestoreProven": false,
+  "productionBusinessAccepted": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

@@ -1,0 +1,137 @@
+{
+  "status": "READONLY_R8_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "checkedAtEpochMillis": 1793927064321,
+  "gateSha256": "1d5b006aae5bf8644f43b54753aaa3c38bed2800db5b7a2d50454354ef755a1b",
+  "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-9c2748-stage-preflight-20261106-01/staging-policy-before.json",
+  "baseIdentity": [
+    66304,
+    393609,
+    83685827,
+    1793923725360609746,
+    1793923726491603688
+  ],
+  "baseArchiveSha256": "635de84c6f1105ebcfd21d034c2f2e69bf8e70e7857cdaac03b432a71b4b57c7",
+  "baseHashNotRereadUntilOriginalAssembler": true,
+  "privateFullIdentityUnchanged": true,
+  "privateFullIdentity": [
+    66304,
+    393585,
+    93508914,
+    1793915257822987699,
+    1793915258790984345
+  ],
+  "r8RootAbsent": true,
+  "r8ContainerAbsent": true,
+  "r8ArtifactDirectoriesFound": [],
+  "samePrefixOtherSubmissions": [],
+  "knownBackupOriginalKey": {
+    "jobId": "t45-prod-current-backup-20261106-01",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "finishedAtUTC": "2026-11-06T01:02:22.371449+00:00"
+  },
+  "newBackupSevenPrimaryFilesReadback": [
+    {
+      "name": "actual-app.protected.tar",
+      "bytes": 36208640,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    },
+    {
+      "name": "actual-web.protected.tar",
+      "bytes": 96847872,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    },
+    {
+      "name": "configuration.protected.tar",
+      "bytes": 552960,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    },
+    {
+      "name": "dump-toc.private.txt",
+      "bytes": 93431,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    },
+    {
+      "name": "erp_prod.dump",
+      "bytes": 1091073829,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    },
+    {
+      "name": "media.protected.tar",
+      "bytes": 83947520,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    },
+    {
+      "name": "runtime-images.protected.tar",
+      "bytes": 736457728,
+      "mode": "0400",
+      "uid": 0,
+      "hashNotRepeated": true
+    }
+  ],
+  "newBackupPrivateManifestRetained": true,
+  "priorExactJobs": [
+    {
+      "jobId": "t45-f35-73bd81-start-20261106-02",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    {
+      "jobId": "t45-f35-73bd81-install-20261106-01",
+      "status": "FAILED",
+      "exitCode": 2
+    },
+    {
+      "jobId": "t45-f35-73bd81-failure-tag-readonly-20261106-02",
+      "status": "COMPLETED",
+      "exitCode": 0
+    }
+  ],
+  "r7Stopped": {
+    "id": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c",
+    "running": false,
+    "pid": 0,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+  },
+  "r7Cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "r7CleanupErrors": [],
+  "fixedEnvironment": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "arch": "amd64"
+  },
+  "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.44873046875,
+      0.9169921875,
+      0.53564453125
+    ],
+    "diskFreeBytes": 12695875584,
+    "MemAvailable": 14291443712
+  },
+  "sourceOrTargetWrites": 0,
+  "PGConnections": 0,
+  "networkOrServiceChanges": 0,
+  "dataExtraction": false
+}
