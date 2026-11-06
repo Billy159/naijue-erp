@@ -1,0 +1,104 @@
+{
+  "task": "R19-PRIVATE-WRITER-859D85B1",
+  "atUtc": "2026-11-06T11:43:35.845974+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "859d85b16245b2312bdcebb18d5acdda369a2501",
+    "root": "07e250d53fec34d8b5199043075263268ff1e32f",
+    "tree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
+    "parentRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+        "beforeSHA256": "73c409cfe452329f8887fbdfe2bddccbedda9f26c06183de7017d1d28e72d2b0",
+        "beforeBytes": 97626,
+        "afterSHA256": "5a01a45bf215ed9aa9eeb211aec96f497e08f68241f4d837173f79b3c50b8ac0",
+        "afterBytes": 97626,
+        "beforePreserved": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r19-private-writer-order-sourcefix-01/launcher.before.py"
+      },
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+        "beforeSHA256": "91876c065e1595d9407318f61047adfd8208b5577bedfd8fcc1195977e7dbbaf",
+        "beforeBytes": 81106,
+        "afterSHA256": "eb5ec619fe18e547dec2031b1438a5fd05b874676d3d12985b55a014f9bb6db6",
+        "afterBytes": 82642,
+        "beforePreserved": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r19-private-writer-order-sourcefix-01/tests.before.py"
+      }
+    ],
+    "onlyChmodBeforeChownSwapInverseWholeLauncherExact": true,
+    "modesOwnerOpenFlagsFsyncCloseCapsAclGuardsOtherwiseExact": true,
+    "tree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
+    "author13AffectedMethodsAdopted": true
+  },
+  "independentOrderAndCloseSeam": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "cases": [
+      {
+        "case": "handoff success",
+        "result": "PASS",
+        "eventOrder": [
+          "open-file",
+          "chmod",
+          "chown",
+          "fsync",
+          "close",
+          "open-directory",
+          "fsync",
+          "close"
+        ],
+        "finalMode": "0600",
+        "owner": "modeled61035:61035",
+        "fileDescriptorClosed": true,
+        "failurePropagatesUnmasked": false
+      },
+      {
+        "case": "handoff failure",
+        "result": "PASS",
+        "eventOrder": [
+          "open-file",
+          "chmod",
+          "chown",
+          "close"
+        ],
+        "finalMode": "0600",
+        "owner": "unchanged modeled creator",
+        "fileDescriptorClosed": true,
+        "failurePropagatesUnmasked": true
+      }
+    ],
+    "realLocalFileBytesAndModes": true,
+    "ownershipAndCapabilitiesModeled": true,
+    "actualLinuxCapabilitiesValidated": false,
+    "serverCalls": 0,
+    "PGConnections": 0
+  },
+  "authorEvidenceAdopted": {
+    "resultSha256": "55eddd506e6d6216ca9622dd553561b988c421cfc03f8c65ffebd641af970266",
+    "resultBytes": 3914,
+    "newModelRedGreen": true,
+    "affectedTestsPassed": 13,
+    "affectedRerunByQB": false,
+    "scope": "Original private scenario real local file writer model, directory0700/two files0600/owner61035 effects; modeled CHOWN/DAC_OVERRIDE withoutFOWNER, not nativeLinux execution."
+  },
+  "scope": "Only order changes from fchown then fchmod to fchmod then optional fchown. Complete inverse restores entire parent launcher. Mode/owner/EXCL/NOFOLLOW/write/flush/fsync/file+directory close/caps/ACL/fixture/query/guards unchanged. Independent local own-file cases verify chmod before modeled transfer,0600 and modeled61035 identity at filefsync, exact success close chain; failing handoff propagates first exception and closes filefd without later fsync/parent open.",
+  "actualR19Preserved": "C/T45 reports original PG170011 schema/normalCOMMITTED/replay/readback25+27/3negative/snapshot passed, ordinaryPRIVATE_SCENARIO PermissionError, STOPPED with6cleanup. Historical failing syscall/path/errno and sole cause not exported.",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "actualLinuxCapabilitiesFilesystemValidated": false,
+    "actualCorrected17_11OrdinaryApiPassed": false,
+    "REALOrProductionWrites": 0,
+    "oldCommittedKeyReplayed": false,
+    "fullSuiteOrBuildOrServiceRepeated": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return two-leaf source verdict toC; originalD2 single fixed build and originalT45 controlled Linux/new isolated17.11 ordinary/API chain remain with valid successor binding. No old r19 committed replay."
+}

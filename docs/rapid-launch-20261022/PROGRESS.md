@@ -1803,3 +1803,12 @@ Ordinary failed at PRIVATE_SCENARIO with PermissionError; path/errno/syscall not
 T45 source diagnosis424a7691 found write_new fchown before fchmod under configured CHOWN/DAC_OVERRIDE without FOWNER; existing mock no-op had hidden ownership change. Sourceeffect model reproduces refusal, but actualr19 historical syscall/path remains unknown. T45 minimal repair only swaps requested mode before owner transfer, preserves final0600/owner61035/directory0700/caps/ACL/guards/fsync/close/EXCL/NOFOLLOW. New regression RED1error then GREEN;13 directly affected checks passed, no Linuxkernel/PG repair PASS claimed. Author receipt55eddd50.
 
 Source859d85b16245b2312bdcebb18d5acdda369a2501; fixedroot07e250d53fec34d8b5199043075263268ff1e32f; tree54738afbbbe35836ebd75bb37ff08afca26a3481. Original QB only two-leaf increment; original D2 one build/pack with actualr19 fullf3ac802c/83698188 as nextbase. T45 two source leaves frozen, no server request until exact successor bindings. r19 actual normalCOMMITTED and cleanup evidence retained, not repeated. No REAL import or formal deployment.
+
+
+## 2026-11-06 — writer repair independent increment and fixed07e250d5 build passed
+
+Original QB3532dbe5 source/offline-model PASS: exact two-leaf delta, unchanged remaining production bytes, real local file mode plus modeled owner order and failure-close seams; author13checks reused. Corrected Linux/runtime remains unverified.
+
+Original D2 build12.797s/pack10.325s exit0;453productionfiles/30directories/7298ordinary fullmemberPASS. Root07e250d5/source859d85b1/tree54738afb; actualsourceSetce32b430214/180 onlylauncherpin changed,213unchanged, releasecontractc58a63ac preserved. Full791d74f7/83698036B from actualr19f3ac802c base; prefix81226923/d37e4aa5+tail2471113/0ea554b0 exactstream reconstruction. C checked metadata/tail and adopted existingfullmember evidence.
+
+Original T45 continuing exact local and necessary remote readonly r20 preflight under standing bounded-isolation authority, no source rewrite or extra control layer. Source/root remotely verified. r19 COMMITTED not replayed; no REAL import/deployment.
