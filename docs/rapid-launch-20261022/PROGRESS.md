@@ -2006,3 +2006,12 @@ MATERIALIZED-READY f834daea及原回执3684de48/23291992已核：物化退出0/3
 ## 2026-11-06 — r23实际隔离PG启动通过，原C9准确业务验证在途
 
 start0/37.948秒，raw12f14866/safefd9e8571已核，CIDe40db110/SID7705074955509960751/OID16393/PG170011/birth15:06:05.369061UTC，program60f7289c/target6f7f40ef/sourceb0f8。C已签原9键C9 73b8dbca，与本轮C11同截止1793978686744，不扩窗；T45只执行本轮安装、正常与失败合成事务、ordinary受影响业务、原probe及ownedcleanup。当前仅实际启动通过，安装及普通业务尚未出终态，REAL/prod未动，不重放旧normal或unknown请求。
+
+
+## 2026-11-06 — r23实库终态失败已保全，按新错误和清理边界接续
+
+唯一install退出2/154.457秒，原raw3e6f43b2/safe5216850d已核。同版本安装record发布、normal25头27结算COMMITTED/ALREADY_COMMITTED/新连接VERIFIED、负例回滚及3个CLOSED快照有效。ordinary仍在REAL_SYNTHETIC_ADMISSION，但本次Error无errno/guardCode/sqlstate，不能推仍为旧EACCES，API/保存审核/读回/probe未通过。原D1只读精确接缝和必要离线反例定位，未经登记不写源码；纠正其短暂偏向无关13人清单的上下文漂移，不做人员匹配。
+
+containerStopped=true、child/initializer/descendants回收；原cleanupComplete=false、portAbsent=false保留，其余4项true/errors[]。原T45获准同一ownedcleanup范围内仅一次有界停止后准确CID/namespace/port只读，不重启PG、不影响其他服务、不修改旧失败。所有旧及本轮normalCOMMITTED/unknown原键禁重放，REAL/prod未动。
+
+并行采用D1生产接缝源码事实：producer62e41a7b实际authority0711 RW bind /etc/naijue-erp，production_common沿用；production consumer保留parent watch要求。该静态不匹配交原T45只提最小producer修正叶/身份/权限范围，尚未改源码或实际权限，也不是已实测生产故障。

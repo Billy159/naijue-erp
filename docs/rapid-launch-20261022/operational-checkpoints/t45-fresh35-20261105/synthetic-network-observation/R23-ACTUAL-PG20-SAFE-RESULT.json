@@ -1,0 +1,115 @@
+{
+  "status": "R23_INSTALL_AND_NORMAL_IMPORT_PASS_ORDINARY_ADMISSION_ERROR_CONTAINER_STOPPED_PORT_ABSENCE_UNCONFIRMED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T15:16:26.874023+00:00",
+  "jobId": "t45-f35-1e6ba0-install-20261106-01",
+  "jobStatus": "FAILED",
+  "exitCode": 2,
+  "elapsedSeconds": 154.4569500591606,
+  "atUTC": "2026-11-06T15:10:20.442062+00:00",
+  "finishedAtUTC": "2026-11-06T15:12:54.921843+00:00",
+  "rawReceiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-install-20261106-01/transport/release-receipts/t45-f35-1e6ba0-install-20261106-01/fresh35-deliver-install-result.json",
+  "rawReceiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+  "sourceRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+  "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+  "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "collectorActualMaterializedMode": "0o755",
+  "cid": "e40db110ff95f772829a70ff71b65874b295db7969fcd68e3b9228013503e907",
+  "programSHA256": "60f7289c1ec305293bba8717b876111e28b6dae4933c9d8e38f4e0b92a67d130",
+  "targetSHA256": "6f7f40efe7deb99e3ac736766ab19dea85b2b5349ab930764850e9988fe5b438",
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "catalogSha256": "2c680da07926e5e7b6dec32def78e02ade8f1cd8b0283d43ff86172c69974c75",
+    "hostEnabled": false,
+    "businessVerified": false
+  },
+  "normalSyntheticImport": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "connectionCleanup": "CLOSED"
+  },
+  "rollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true,
+    "connectionCleanup": "CLOSED"
+  },
+  "snapshots": {
+    "postInstallEqualsPostRollback": true,
+    "postCommitDiffers": true,
+    "connectionsAndSQLSTATE": {
+      "snapshot-after-install.json": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null
+      },
+      "snapshot-after-rollback.json": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null
+      },
+      "snapshot-after-commit.json": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null
+      }
+    }
+  },
+  "ordinaryFailure": {
+    "automaticRetry": false,
+    "childDiagnosticUnavailable": false,
+    "childFailure": {
+      "actualInteger": null,
+      "errno": null,
+      "errorType": "Error",
+      "expectedInteger": null,
+      "format": "FRESH35_ORDINARY_FAILURE_V1",
+      "guardCode": null,
+      "phase": "REAL_SYNTHETIC_ADMISSION",
+      "source": "runFresh35OrdinaryIntegration:catch",
+      "sqlstate": null
+    },
+    "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+    "phase": "REAL_PG_AND_MIDDLEWARE",
+    "state": "FAILED_OR_OUTCOME_UNKNOWN"
+  },
+  "overallFailure": {
+    "automaticRetry": false,
+    "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+  },
+  "ordinaryChildReaped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": false,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    }
+  },
+  "containerStopped": true,
+  "ordinaryProofEvidence": {},
+  "stageInterpretation": "REAL_SYNTHETIC_ADMISSION covers createSyntheticRuntime35ApplicationApi and capacity.preflight; exported Error has no code,errno or SQLSTATE. No original throw path is known.",
+  "businessCause": "UNKNOWN_BEYOND_CLOSED_ADMISSION_ERROR",
+  "cleanupInterpretation": "Original cleanupComplete=false and portAbsent=false remain unchanged although containerStopped=true; no final six-cleanup PASS claimed and no port/liveness inference from forced stop.",
+  "limits": [
+    "Prior EACCES is not present in current descriptor; no sole root-cause attribution",
+    "No ordinary business/API save/approve/readback/probe PASS claimed",
+    "No new postcleanup resource or namespace/port read performed"
+  ],
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "thisNormalCommitMustNotReplay": true,
+  "REALOrFormalChanged": false,
+  "actualModelEffortFast": "UNVERIFIED"
+}

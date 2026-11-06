@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T23:10:27.931120+08:00",
+  "updatedAt": "2026-11-06T23:19:22.557990+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28509,12 +28509,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Source frozen4adb9fa2; next actual affected failure only",
-      "QB": "r23 scoped PASS adopted378854ec; no duplicate review",
-      "D2": "One fixed1e6ba071 build complete59032d7c; no duplicate build",
-      "T45": "r23 exact stage/assembly/materialize in progress; fresh C11/C9 afterwards",
-      "D3": "REAL independent readback ready; waits exact target/install/import",
-      "QF": "Core browser prerequisites ready; waits actual normal host/login"
+      "D1": "Exact current generic admission Error source/model diagnosis, no unrelated staff work or source writes yet",
+      "T45": "One bounded poststop exact-owned namespace/port readonly; production producer minimal source plan afterwards",
+      "QB": "r23 prior scoped PASS retained; wait actual established new delta",
+      "D2": "Fixed source/build intact, no rebuild until new reviewed source",
+      "D3": "REAL package and independent readback ready, waits runtime target",
+      "QF": "Core browser prerequisites ready, waits actual host/login"
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -32469,7 +32469,7 @@
         }
       },
       "r23Preparation": {
-        "state": "R23_NEW_PG_START_PASS_C9_ACTUAL_INSTALL_AND_ORDINARY_VALIDATION_IN_PROGRESS",
+        "state": "R23_INSTALL_NORMAL_ROLLBACK_PASS_GENERIC_ADMISSION_ERROR_STOPPED_PORT_CLEANUP_UNCONFIRMED",
         "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
         "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
         "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
@@ -32576,6 +32576,66 @@
           "startsAt": 1793977486744,
           "expiresAt": 1793978686744,
           "scope": "Same exact C11 physical target/program, no window extension/old-key replay/REAL/production"
+        },
+        "actualInstall": {
+          "jobId": "t45-f35-1e6ba0-install-20261106-01",
+          "exitCode": 2,
+          "elapsedSeconds": 154.4569500591606,
+          "rawSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+          "safeSHA256": "5216850da9a573602bad2eda74dab7c048bb4a16889d746e9435ef2bab048ef3",
+          "normalImport": {
+            "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+            "importState": "COMMITTED",
+            "replayState": "ALREADY_COMMITTED",
+            "readbackState": "VERIFIED",
+            "retainedHeaders": 25,
+            "retainedSettlements": 27,
+            "connectionCleanup": "CLOSED"
+          },
+          "rollback": {
+            "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+            "rollbackVerified": true,
+            "originalBatchAbsent": true,
+            "connectionCleanup": "CLOSED"
+          },
+          "ordinaryFailure": {
+            "automaticRetry": false,
+            "childDiagnosticUnavailable": false,
+            "childFailure": {
+              "actualInteger": null,
+              "errno": null,
+              "errorType": "Error",
+              "expectedInteger": null,
+              "format": "FRESH35_ORDINARY_FAILURE_V1",
+              "guardCode": null,
+              "phase": "REAL_SYNTHETIC_ADMISSION",
+              "source": "runFresh35OrdinaryIntegration:catch",
+              "sqlstate": null
+            },
+            "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+            "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+            "phase": "REAL_PG_AND_MIDDLEWARE",
+            "state": "FAILED_OR_OUTCOME_UNKNOWN"
+          },
+          "cleanup": {
+            "cleanShutdown": true,
+            "cleanupComplete": false,
+            "credentialsRemoved": true,
+            "loginsRevoked": true,
+            "ownedPidAbsent": true,
+            "portAbsent": false,
+            "errors": [],
+            "initialization": {
+              "descendantsReaped": true,
+              "errors": [],
+              "initialized": true,
+              "initializerReaped": true,
+              "stopReason": "INITIALIZER_EXITED"
+            }
+          },
+          "containerStopped": true,
+          "postStopPortAbsenceNotYetVerified": true,
+          "oldKeysMayReplay": false
         }
       }
     },
@@ -32882,6 +32942,18 @@
         "newPGCreated": false,
         "sqlIdentityVerified": false,
         "publicHTTPVerified": false
+      },
+      "recordParentWatchFinding": {
+        "finding": "PRODUCTION_RECORD_PARENT_DIRECTORY_NOT_READABLE_FOR_NATIVE_WATCH",
+        "sourceStatus": "D1_READONLY_EXACT_SOURCE_MISMATCH_NOT_ACTUAL_PRODUCTION_TEST",
+        "consumer": "candidate0448/tools/unified-import/fresh35-host-session.mjs:224,254,257,262 production requires fixed record parent native watch",
+        "producerSHA256": "62e41a7bb7711af97685dba62907c259c2b535304dd1b1bbe1a10e4153aa61bd",
+        "producer": "materialize L150; materialize_remaining L173,196 authority0711; common L262 binds to /etc/naijue-erp; production_common L430 and owned_production L444 retain it",
+        "launcherSHA256": "f2adbe41b24faeaf38b89cf4a633ba6f6a6f462b9bee06e34231ded4a5c2ab73",
+        "launcherNote": "L3350711 is PG workspace, not ETC; not proof of parent watch access",
+        "owner": "Original T45 producer only; exact source-only minimal fix proposal pending C writer registration",
+        "changesApplied": false,
+        "productionChanged": false
       }
     },
     "formalBackupContinuation": {
@@ -32985,22 +33057,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T23:10:27.931120+08:00",
-      "phase": "R23_NEW_PG_START_PASS_C9_ACTUAL_INSTALL_AND_ORDINARY_VALIDATION_IN_PROGRESS",
+      "at": "2026-11-06T23:19:22.557990+08:00",
+      "phase": "R23_INSTALL_NORMAL_ROLLBACK_PASS_GENERIC_ADMISSION_ERROR_STOPPED_PORT_CLEANUP_UNCONFIRMED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact r23 install/ordinary/readback/cleanup",
-      "nextOwner": "C bind fresh C11 after actual material/resource; T45 actual target then C9",
-      "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
+      "currentOwner": "Original D1 exact generic admission error diagnosis; original T45 poststop readonly facts",
+      "nextOwner": "Original development owner for established exact cause, then QB affected increment",
+      "latestActualReceiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect same original job terminal, adopt precise stages only; no replay on unknown.",
+      "next": "No job replay. Diagnose current Error without errno; keep original cleanup false and gather exact stopped owned namespace/port facts once.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
@@ -33011,17 +33083,18 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "f162184aafcdcbdb8adc9784588a009b761381f4",
-        "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
-        "state": "R22_INSTALL_AND_NORMAL_IMPORT_PASS_CAPACITY_CONSTRUCTION_ADVANCED_ADMISSION_EACCES_STOPPED_NO_REPLAY",
-        "receiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
-        "safeSHA256": "c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d",
+        "root": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+        "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+        "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+        "state": "R23_INSTALL_NORMAL_ROLLBACK_PASS_GENERIC_ADMISSION_ERROR_STOPPED_PORT_CLEANUP_UNCONFIRMED",
+        "receiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+        "safeSHA256": "5216850da9a573602bad2eda74dab7c048bb4a16889d746e9435ef2bab048ef3",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
@@ -33033,7 +33106,7 @@
       "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
       "D2ReceiptSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
       "currentCandidateActualRuntime": {
-        "state": "START_PASSED_INSTALL_NOT_TERMINAL",
+        "state": "R23_INSTALL_NORMAL_ROLLBACK_PASS_GENERIC_ADMISSION_ERROR_STOPPED_PORT_CLEANUP_UNCONFIRMED",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false
