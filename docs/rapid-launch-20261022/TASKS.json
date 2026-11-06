@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T09:52:30+08:00",
+  "updatedAt": "2026-11-06T10:14:55+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T09:52:30+08:00",
+    "at": "2026-11-06T10:14:55+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,13 +28491,13 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "Collect original materialize key only then exact resource readback/newPG20. D2 independently checks existing production real account/runtime input seam, no source writes/new system.",
+      "critical": "T45 sole original Python producer owner verifies PG17.11 address formatting and fixes only snapshot address producer if proven; scope guard unchanged. Preserve committed r9/record stopped, no install replay or blind newPG.",
       "independentPreparation": {
-        "D1": "R8 deparser context fix source frozen/QA adopted, no further source work until actualfailure.",
-        "T45": "r9 purepin prepared; accurate stagepreflight requested, not newPG yet.",
-        "D2": "Fixed24e build readonly; check original REAL initialization/account/auth/runtime input seams and exact existing invocation, no secrets/source/ops.",
+        "D1": "No source writes; existing staff EDIT+account facts confirmed, no extra route. Await actual new T45 leaf/source closure if needed.",
+        "T45": "Only snapshot producer source+original narrow test if PG17.11 source proves representation mismatch; preserve committed r9. Private admin original-codec material separately local.",
+        "D2": "No rebuild until precise frozen source increment; fixed24e and input appendix immutable.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "d90c8b2f new157B context source/scopedmodel PASS; prior effective checks adopted; actualPG pending.",
+        "QB": "No new whole review; next only exact snapshot producer increment after fixed source.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R9_ACTUAL_ORIGINAL_MATERIALIZATION_RUNNING",
+      "state": "R9_NATIVE_SCHEMA_COMMITTED_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_FAIL",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "Collect original materialize key only then exact resource readback/newPG20. D2 independently checks existing production real account/runtime input seam, no source writes/new system.",
+      "next": "T45 sole original Python producer owner verifies PG17.11 address formatting and fixes only snapshot address producer if proven; scope guard unchanged. Preserve committed r9/record stopped, no install replay or blind newPG.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30180,7 +30180,7 @@
       },
       "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING",
       "r9Preparation": {
-        "state": "ACTUAL_FULL_RECEIVER_READY_ORIGINAL_MATERIALIZATION_RUNNING",
+        "state": "SCHEMA_COMMITTED_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_FAILED_CLEAN_STOP",
         "integration": "d41929d3eaebe13199275cb71c1b0d1118e01911",
         "buildRoot": "24e34727f9d4df94cf2939e49d77638bbad36784",
         "tree": "89e5c55b23f8890a731edd9da1aa70908a8fc2f7",
@@ -30211,8 +30211,8 @@
         "root": "phaseb-application-r9",
         "container": "t45-fresh35-deb13-20261106-r9",
         "githubSourceAndRootActualReadback": true,
-        "actualPG": false,
-        "next": "Collect original materialize key only then exact resource readback/newPG20. D2 independently checks existing production real account/runtime input seam, no source writes/new system.",
+        "actualPG": true,
+        "next": "T45 sole original Python producer owner verifies PG17.11 address formatting and fixes only snapshot address producer if proven; scope guard unchanged. Preserve committed r9/record stopped, no install replay or blind newPG.",
         "stagePreflightSHA256": "94889f4e049ca0e5b69796e93f6b6ed863e44ca1d3fb088cea4fa5fef2000275",
         "tailAuthoritySHA256": "fd5b6a5e2ae790f8fadd4788f57d3572c61b47636e0b38714b789a5f152b180b",
         "fullAuthoritySHA256": "5aead88f4fb9a702a83c32b566b8f54cb3062cf12aaacd6cd1304862eee3a324",
@@ -30230,7 +30230,56 @@
           1793929722093398175
         ],
         "materializationJob": "t45-f35-24e347-local-materialize-20261106-01",
-        "materializationDeadlineMs": 1793930430699
+        "materializationDeadlineMs": 1793930430699,
+        "actualPreparationSHA256": "f30c19a860fd0d8c640f75a0c57cb9b8534aaf02f6068e006e13856cfe9e2692",
+        "materializationSHA256": "c5939f51afb87b27e3c2cc2fc0ca5ed5c8d58d0f9289f7dfc5764eb599e1a9a8",
+        "materializationExitCode": 0,
+        "materializationSeconds": 368.024095763,
+        "resourceSHA256": "cb14785e2d460f09bcbad16c2d09c227095bfdb0bbfae03795342c634f6c38a3",
+        "provisionSHA256": "32fe5f44e13e4a86e598cea83c68a60adfd913e151de8f7abe9cb39be01130be",
+        "provisionStartsAt": 1793930392766,
+        "provisionExpiresAt": 1793931592766,
+        "startJob": "t45-f35-24e347-start-20261106-01",
+        "startExitCode": 0,
+        "startSeconds": 34.645684209,
+        "actualStartSHA256": "820b7bf7b88824413ba77078aa900b72d1a3f8acb2b7da11eadaf1ed922ebb47",
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 02:01:55.599008+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704872879845953584"
+        },
+        "containerId": "846d897a93afdcd09278c95dc34f79ed6a2d99f1cf8ef7aaae95246e5b0575f2",
+        "programSHA256": "0c6b08b84c931e2da50e647d0b7101635828c5b54a88ca8f5f9f05ebf6b241bf",
+        "targetSHA256": "2664f565f63a370ea01e3d1001fe5364c90d9d7adc525b04c8392d3da6163744",
+        "installAuthoritySHA256": "5e91980b60909eacc9359db6a56d8018f44fd5347d4f329d628b16840da6a238",
+        "installJob": "t45-f35-24e347-install-20261106-01",
+        "actualInstallPassed": false,
+        "synthetic25Passed": false,
+        "ordinaryBusinessPassed": false,
+        "REAL": false,
+        "production": false,
+        "actualSummarySHA256": "ef2e73f2d6ea7483509eca804395933c952e6aee2e5cddbb71de965b5e9fcbf5",
+        "actualInstallReceiptSHA256": "6cf9ec3e181cc4d00080bb938b18c9984e7f52d8960b6c243ff47789d9b112da",
+        "actualJobExitCode": 2,
+        "actualJobSeconds": 25.829356053844094,
+        "nativeSchemaInstallCommitted": true,
+        "installationRecordDurablyPublished": true,
+        "recordPublished": true,
+        "wholeChainPassed": false,
+        "postInstallFailure": {
+          "code": "FRESH35_ISOLATED_SNAPSHOT_PHYSICAL_TARGET_DIFFERS",
+          "SQLSTATE": null,
+          "specificFieldMismatch": "NOT_OBSERVED",
+          "sourceSeam": "Original launcher snapshot_sql address inet_server_addr()::text vs strict裸127.0.0.1; T45 primarysource proof and minimal producer fix authorized conditionally, no guard relaxation."
+        },
+        "rollbackClaimed": false,
+        "cleanup": {
+          "sixOriginalChecks": true,
+          "errors": [],
+          "containerStopped": true,
+          "initializerAndDescendantsReaped": true
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30621,6 +30670,18 @@
       "servicesIdentityUnchanged": true,
       "oldBackupModified": false,
       "PGWindowOverlapped": false
+    },
+    "normalProductionAccountInput": {
+      "at": "2026-11-06T10:09:02+08:00",
+      "state": "EXISTING_STAFF_EDIT_ACCOUNT_SEAM_CONFIRMED_NO_SOURCE_CHANGE_PRIVATE_BOOTSTRAP_PREPARING",
+      "inputAppendixSHA256": "44ecda507cd1b3184cd4b305a33ea7d11072a2a803184f2696ce932b4018c875",
+      "fixedBuildResultUnchanged": "9dd8047f1b5cfb4fab9b822c4b0aa29488c71546ecc2e01216a5623d06366b0a",
+      "normalEntry": "POST /api/staff/commands EDIT+account uses imported stable staff id/current version and original UoW/hash/permission; leaving staff cannot login",
+      "initialPreliminaryFindingCorrected": "Synthetic-only independent /accounts route is not required; D2 found existing normal staff consumer, D1 verified once, C withdrew extra route task before any source write/test",
+      "bootstrapAdmin": "Independent new technical ADMIN via existing NEW_EMPTY admin four-field input and private scrypt, never source staff/history identity bridge",
+      "privateAdminMetadataSHA256": "fdadbc3062ff6e7bf4c7c8741e796a40b7a44968538cdd08614e6ba138fdf23f",
+      "privateMaterialsInGit": false,
+      "T45Next": "Check exact new IDs against REAL sourceSTAFF then original password codec private one-time materials before REAL init binding. No password exposed, no extra interface."
     }
   }
 }

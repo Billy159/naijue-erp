@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "69228b4255f2c85c1ae3cfc0b2b10bb4dfdcb58c130f8c65590e1ca06a198106",
+  "sourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793930392766,
+  "expiresAt": 1793931592766,
+  "independentSafetyReviewSha256": "d90c8b2ff08d96f71873bfa0ebf1b130994691683354e20d0d325e166fdba398",
+  "authorizationReference": "C direct human delegation through2026-11-06 noon. Exactr9 root phaseb-application-r9/container t45-fresh35-deb13-20261106-r9; root24e347/source57c105/manifest69228. Actualmaterialize c5939f51/resourcecb14785e, QBd90c8b2f. Original20min/2CPU3GiB/PID256/guardian/2DO preserved. Originalsynthetic25/ordinarybusiness/readback/probe/ownedcleanup only. NoREAL/production/oldtarget/replay/windowextension; C9 separately binds actualprogram/target."
+}

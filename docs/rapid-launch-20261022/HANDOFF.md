@@ -1796,3 +1796,12 @@ D1固定原catalog/test两叶，只在原external谓词前恢复quote_all_identi
 
 ### 2026-11-06T09:52:30+08:00 | r9制品已真实到位，原材料化在途
 原stagepreflight94889f4e核新目标无遗留/重复、旧r8停稳、9c与私包身份未变及资源。C两原13键fd5b6a5e/5aead88f共同30min1793929457794..1793931257794，426字符，外部字节由T45只消费。tail原receiverREADY后，assembly601961a7实际COMPLETED0/9.345s，完整3e7fbbdb/83,684,342B经原UID1000receiverREADY；materialize唯一原key已提交，deadline1793930430699，不重放或延时，不先开PG。D2并行核正式REAL初始化/员工正常登录/原runtime工具准确输入接缝，复用已有准备、不读取输出秘密、不新增平台或源码；避免真实目标就绪后才发现账号接线缺口。
+
+
+### 2026-11-06T10:09:02+08:00 | r9真实目标接续与正常账号输入核准
+原材料化c5939f51/368.024s及资源cb14785e实际通过，C原11键32fe5f44新PG20；原start820b7bf7实际0/34.646s，新SID7704872879845953584/OID16393/CID846d897a。C原9键5e91980b只绑定实际program0c6b08b8/target2664f565/source57c105/同20min1793930392766..1793931592766，404字符，原install一次已提交，终态尚未到不称PASS。
+D2短附录44ecda50及原D1一次静态核准正常员工EDIT+account已有入口、原权限/UoW/hash有效；最初把独立/accounts synthetic-only当总缺口已纠正，C及时撤回不增接口，0源码WIP/新测。绑定RESULT9dd前后原字节不改。C按至12点委托固定独立新技术初始化ADMIN四字段私域元数据（不当历史员工桥、无密码入Git），T45沿原codec私有生成认证并核不碰REAL STAFF，正常真实员工仍用原稳定staffID维护开户，不为离职启用。
+
+
+### 2026-11-06T10:14:55+08:00 | r9安装已提交，后置快照失败，严禁误记回滚
+原install6cf9ec3e实际作业FAILED2/25.829s，但安全汇总ef2e73f2明确native schema已提交、安装record已持久发布；内层installState=COMMITTED_UNPUBLISHED保留、外层RECORD_DURABLY_PUBLISHED/recordPublished=true为真实后继状态。后置failure=FRESH35_ISOLATED_SNAPSHOT_PHYSICAL_TARGET_DIFFERS，无SQLSTATE；synthetic25/普通业务/host/独立snapshot仍未通过，整链FAIL。cleanup六true/errors[]/CID846d897a已停；不得称ROLLED_BACK或重装旧r9。仅安全元回执入Git，原事务PID/nonce留原私有收据。原T45唯一Pythonowner在PG17.11原源证明地址::text与裸host表示是否不一致，C条件批准仅snapshot_sql.address用host(inet_server_addr())，全部物理guard不减，未观察实际首差异，不能猜成唯一因。

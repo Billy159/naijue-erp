@@ -1,0 +1,139 @@
+{
+  "status": "NATIVE_COMMITTED_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_IDENTITY_FAILED_CLEANUP_CONFIRMED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T02:08:32.077702+00:00",
+  "sourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+  "job": {
+    "jobId": "t45-f35-24e347-install-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-3d9f259fe4e2",
+    "atUTC": "2026-11-06T02:06:17.415548+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 25.829356053844094,
+    "exports": [
+      "fresh35-deliver-install-result.json"
+    ],
+    "finishedAtUTC": "2026-11-06T02:06:43.268616+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-24e347-install-20261106-01/transport/release-receipts/t45-f35-24e347-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "6cf9ec3e181cc4d00080bb938b18c9984e7f52d8960b6c243ff47789d9b112da"
+  },
+  "safeResult": {
+    "cid": "846d897a93afdcd09278c95dc34f79ed6a2d99f1cf8ef7aaae95246e5b0575f2",
+    "containerStopped": true,
+    "delivery": {
+      "approvalCreated": false,
+      "cid": "846d897a93afdcd09278c95dc34f79ed6a2d99f1cf8ef7aaae95246e5b0575f2",
+      "sha256": "5e91980b60909eacc9359db6a56d8018f44fd5347d4f329d628b16840da6a238",
+      "status": "EXTERNAL_INSTALL_BYTES_COPIED_ONCE"
+    },
+    "evidence": {
+      "bootstrap-network-observation.json": {
+        "adminActor": "fresh35_admin_20261105_r1",
+        "databaseOid": "16393",
+        "expiresAt": 1793931592766,
+        "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+        "host": "127.0.0.1",
+        "listenAddresses": "127.0.0.1",
+        "port": 18651,
+        "postmasterStart": "2026-11-06 02:01:55.599008+00",
+        "serverVersionNum": "170011",
+        "sourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+        "startsAt": 1793930392766,
+        "systemIdentifier": "7704872879845953584",
+        "unixSocketDirectories": ""
+      },
+      "cleanup.json": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "failure.json": {
+        "automaticRetry": false,
+        "code": "FRESH35_ISOLATED_SNAPSHOT_PHYSICAL_TARGET_DIFFERS",
+        "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+      },
+      "installation-result.json": {
+        "businessVerified": false,
+        "catalogSha256": "707ab7f0c41ecc27104db26b6fbb92dc1c87cfff4ddf7c7babfc5948eeb61a7a",
+        "hostEnabled": false,
+        "installState": "COMMITTED_UNPUBLISHED",
+        "programSha256": "0c6b08b84c931e2da50e647d0b7101635828c5b54a88ca8f5f9f05ebf6b241bf",
+        "recordPublished": true,
+        "sourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+        "state": "RECORD_DURABLY_PUBLISHED",
+        "targetSha256": "2664f565f63a370ea01e3d1001fe5364c90d9d7adc525b04c8392d3da6163744",
+        "transactionReceipt": {
+          "actor": "fresh35_owner_20261105_r1",
+          "database": "synthetic_fresh35_20261105_r1"
+        }
+      },
+      "runtime-dependencies.json": {
+        "arch": "x64",
+        "fastify": "5.12.5",
+        "libvips": "8.18.7",
+        "pg": "8.23.1",
+        "platform": "linux",
+        "sharp": "0.35.5"
+      }
+    },
+    "evidenceSha256": {
+      "bootstrap-network-observation.json": "36ce90cc0f099a2dd57fe816a0753124458ded483e1c0f223ee6e0c0fd325a5d"
+    },
+    "forcedStopIsNotCleanShutdownProof": true,
+    "launcherExitCode": 1,
+    "ordinaryProofEvidence": {},
+    "sourceResult": {
+      "businessVerified": false,
+      "cleanup": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "hostEnabled": false,
+      "hostVerified": false,
+      "independentSnapshotsVerified": false,
+      "ordinaryBusinessVerified": false,
+      "productionVerified": false,
+      "recordPublished": true,
+      "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+      "syntheticImportVerified": false
+    },
+    "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+  },
+  "transactionBackendPidNonceNotCopied": true,
+  "schemaAndRecordCommittedNotRolledBack": true,
+  "wholeChainPassed": false,
+  "productionOrREALExecuted": false,
+  "replay": false,
+  "specificMismatchCause": "NOT_PROVEN",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}
