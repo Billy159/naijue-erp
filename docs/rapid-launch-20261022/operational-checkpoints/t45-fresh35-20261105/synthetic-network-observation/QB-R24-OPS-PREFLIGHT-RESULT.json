@@ -1,0 +1,100 @@
+{
+  "format": "QB_R24_OPS_PREFLIGHT_EXACT_LEAF_REVIEW_V1",
+  "recordedAt": "2026-11-06T23:51:37.229079+08:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_GUARDS",
+  "findings": [],
+  "sourceLeaf": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r24-ops-preparation-01/stage_preflight.py",
+  "sourceSHA256": "0f532f7f39fd2f5279df0250a2566992afe2db0c17cfd70e16f8f878a238d34d",
+  "sourceBytes": 12161,
+  "comparisonSHA256": "6082180acf022c6d9c330eed0f76297bf8820e63b46e4b1be958b4bbe2175b11",
+  "appBindingReused": {
+    "root": "9315643006a574986abacf5bba631e7c34cf23f1",
+    "source": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+    "tree": "29d3fc11e0da9b9cc8c0905082c846a80f51c222",
+    "D2ResultSHA256": "619445a4e8197ad99c4cfba5579e1f38254da6bd568b4dfb4525339d9907ebd2",
+    "sourceSetSHA256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+    "QBResultSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
+    "action": "REUSED_NOT_RETESTED_OR_REBUILT"
+  },
+  "adoptedAuthorEvidence": {
+    "LOCAL_READY_SHA256": "61cf4d4d5c5e72983a19a0456c714427b50caa6b94767b69cb92ea0da29ffbf3",
+    "testSHA256": "769f5e1a357aa2cbe9641a555ecc36c4f2ebb34f460afb414fe7d6a3f02af169",
+    "reportedTestsPassed": 3,
+    "testsRerun": false
+  },
+  "independentComplement": {
+    "format": "QB_R24_OPS_SELECTED_AST_COMPLEMENT_V1",
+    "status": "PASS",
+    "sourcePins": {
+      "stage_preflight.py": "0f532f7f39fd2f5279df0250a2566992afe2db0c17cfd70e16f8f878a238d34d",
+      "stage_preflight.before-r23.py": "6082180acf022c6d9c330eed0f76297bf8820e63b46e4b1be958b4bbe2175b11",
+      "test_stage_preflight.py": "769f5e1a357aa2cbe9641a555ecc36c4f2ebb34f460afb414fe7d6a3f02af169",
+      "LOCAL-READY.json": "61cf4d4d5c5e72983a19a0456c714427b50caa6b94767b69cb92ea0da29ffbf3"
+    },
+    "negativeSelectedAssertCases": 10,
+    "cases": [
+      "new root exists/symlink rejected",
+      "new root exists/symlink rejected",
+      "occupied exact new artifact prefix rejected",
+      "new container name occupied rejected",
+      "private original sourceSetSha256 mismatch rejected",
+      "private original programSha256 mismatch rejected",
+      "private original targetSha256 mismatch rejected",
+      "prefix UNKNOWN_NO_REPLAY rejected",
+      "prefix RUNNING rejected",
+      "cleanup bytes mismatch rejected"
+    ],
+    "privateReceiptExactIdentityPositive": true,
+    "readAndDockerHelpersUnchanged": true,
+    "privateSourceAndResourceGuardsUnchanged": true,
+    "originalReceiverBytesUnchanged": true,
+    "wrapperCommonOwnershipStartAndObservationASTUnchanged": true,
+    "oldCleanupAndPortStillNotPassed": true,
+    "publicHashNeverSubstitutedForPrivateOriginal": true,
+    "serverActions": 0,
+    "PGConnections": 0,
+    "builds": 0,
+    "authorTestsExecuted": 0,
+    "fullStageScriptExecuted": false,
+    "scope": "Only selected assertions compiled from pinned stage AST with finite local variables. Actual root-owned original receipt/hash and live namespace absence not read or verified."
+  },
+  "interpretation": {
+    "predecessorCleanupPass": false,
+    "predecessorPortAbsence": "NOT_DIRECTLY_VERIFIED",
+    "allowedBranch": "EXACT_STOPPED_FAILED_R23_AND_INDEPENDENT_NEW_NAMESPACE_ONLY",
+    "predecessorCleanupSHA256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+    "predecessorPrivateOriginalReceiptSHA256": "UNKNOWN_UNREAD_BY_QB; exact script reads protected original once, checks fields and exports hash in authorized read-only run",
+    "priorPublicResultHashIsNotPrivateOriginalHash": true,
+    "newTargetPortCleanupBusinessRequirementsWaived": false,
+    "requestGuardPrefix": "t45-f35-931564*.json; exact predecessor start/install jobs checked separately",
+    "historicalPoststopHashUse": "literal provenance marker only, not freshly verified by QB"
+  },
+  "boundaries": {
+    "serverActions": 0,
+    "PGConnections": 0,
+    "builds": 0,
+    "sourceWrites": 0,
+    "fullStageExecuted": false,
+    "authorTestsRerun": false,
+    "wholeSuiteOrClosure": false,
+    "privateOriginalRead": false,
+    "oldPGRestarted": false,
+    "oldCommittedOrUnknownKeysReplayed": false,
+    "actualModelEffortFast": "UNVERIFIED"
+  },
+  "next": "C may adopt the source-only guard verdict. Original T45 bounded read-only preflight must still verify protected original bytes/hash/fields and current stopped target/new namespace; no runtime PASS or transport/PG authorization is issued by this report.",
+  "artifacts": {
+    "SOURCE-CHECKS.json": {
+      "sha256": "063dc2737f1c093747afb03adaa7e9458972e09d55483a97bbf8e0b199789945",
+      "bytes": 1498
+    },
+    "INDEPENDENT-CHECKS.json": {
+      "sha256": "dc1c4fd1e0ec869a42d3475c2f4f5f56938fa4b600dc1e1dfca85a129a2d6e1d",
+      "bytes": 1653
+    },
+    "independent-check.py": {
+      "sha256": "6cf5a15761a26cca0990d902e09e9137d5f88c6f0c0d926fd6d91cc1c65742c8",
+      "bytes": 5718
+    }
+  }
+}

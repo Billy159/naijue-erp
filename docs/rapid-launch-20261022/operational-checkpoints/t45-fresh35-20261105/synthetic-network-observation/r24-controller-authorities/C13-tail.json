@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-931564-tail-20261106-01",
+  "sourceSetSha256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+  "archiveSha256": "7794ccccb6e9bf04ffaa48052775950783385b222868770c95c5dffe4a9a6d27",
+  "archiveBytes": 2475787,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-931564-tail-20261106-01",
+  "startsAt": 1793980767949,
+  "expiresAt": 1793982567949,
+  "decisionReference": "C original user standing approval: same-kind bounded isolated operations proceed without repeated approval. Exact r24 root93156430/sourcecfad04f8; QB app941b153f + ops4f852db4; readonly4dff7c5e verifies fresh target absence and base393737. Only ordinary tail staging and verified reconstruction; no PG, REAL import or production. Preserve r23 cleanup false and all old keys.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

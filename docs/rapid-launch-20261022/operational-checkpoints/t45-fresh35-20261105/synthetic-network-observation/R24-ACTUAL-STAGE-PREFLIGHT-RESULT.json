@@ -1,0 +1,66 @@
+{
+  "status": "R24_EXACT_BUILD_AND_BOUNDED_READONLY_PREFLIGHT_COMPLETE_NO_TRANSPORT_AUTHORITY",
+  "checkedAtAsiaShanghai": "2026-11-06T23:53:56.082000+08:00",
+  "jobId": "t45-f35-931564-stage-preflight-20261106-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 0.267860593739897,
+  "stageSourceSha256": "0f532f7f39fd2f5279df0250a2566992afe2db0c17cfd70e16f8f878a238d34d",
+  "QBSourceGuardResultSHA256": "4f852db4c2a91dda6efde8283c8042262d7d195afebcca30a405a43650c2d77d",
+  "localReadySHA256": "61cf4d4d5c5e72983a19a0456c714427b50caa6b94767b69cb92ea0da29ffbf3",
+  "receipts": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-931564-stage-preflight-20261106-01/transport/release-receipts/t45-f35-931564-stage-preflight-20261106-01/job.json",
+      "sha256": "72f679f26cf375600e2ff07e7d98413194cb6a29110950a4c4fd9c520223edac"
+    },
+    "stage-preflight.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-931564-stage-preflight-20261106-01/transport/release-receipts/t45-f35-931564-stage-preflight-20261106-01/stage-preflight.json",
+      "sha256": "4dff7c5e2534e0b3b3b8d336b8150270ac6fea644f04c1568e32c133919f7a07"
+    }
+  },
+  "priorPrivateReceiptSHA256": "6be3c2a85602750d2e63ce674355c7d893dde4e5aef9114de6ef00f98f50ff79",
+  "priorPublicExportSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+  "r23Cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": false,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false
+  },
+  "predecessorPortAbsence": "NOT_DIRECTLY_VERIFIED",
+  "priorCleanupPass": false,
+  "samePrefixOtherSubmissions": [],
+  "newTargetAbsent": true,
+  "baseIdentity": [
+    66304,
+    393737,
+    83703105,
+    1793976908152234000,
+    1793976909527221572
+  ],
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.078125,
+      0.0615234375,
+      0.09033203125
+    ],
+    "diskFreeBytes": 4666597376,
+    "MemAvailable": 14337802240
+  },
+  "receiptLabelNote": "Original approved script retains READONLY_R23_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION status literal. Exact job/prefix/new absence fields are r24; raw receipt preserved unchanged.",
+  "C13Templates": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r24-ops-preparation-01/C13-TEMPLATES.UNISSUED.json",
+    "sha256": "0fa9e49e12cfee4d287580dc9f04829e4557159cb94520e9cfce17cb2646379f",
+    "keysPerEntry": 13,
+    "issuerFieldsAllNull": true,
+    "authority": false
+  },
+  "stageMaterialPGWindowActions": 0,
+  "PGConnections": 0,
+  "oldKeyReplay": false,
+  "formalChanges": 0,
+  "nextStep": "C evaluates current facts and independently issues new C13; no client approval or old window reuse",
+  "actualModelEffortFast": "UNVERIFIED"
+}
