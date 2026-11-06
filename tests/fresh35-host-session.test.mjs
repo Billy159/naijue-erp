@@ -14,6 +14,56 @@ import {withReviewedWholeSession,sameActiveWholeHostSession} from '../tools/unif
 import {withVerifiedFresh35AdmissionV1,assertWholeSalesAdmissionV1} from '../scripts/release/unified-install/whole-sales-admission-v1.mjs';
 const root=resolve(fileURLToPath(new URL('../',import.meta.url)));
 const proof={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:'7703999999999999999',database_oid:'16384',database_name:'synthetic_fresh35_20261105_r9',catalog_sha256:'a'.repeat(64)};
+// Actual pinned pg Client handlers, with transport frames only: no socket,
+// database, catalog admission or SQL-kernel execution is asserted here.
+async function nativeErrorCleanup(mode){
+ const {Client}=await import('pg'),{executeWholePackage,describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
+ const c=new Client({pipeline:false}),connection=c.connection,sent=[],rejections=[],frames=[];let closed=0,timer;
+ c.on('error',()=>{});c._attachListeners(connection);c._connecting=true;connection.emit('readyForQuery',{status:'I'});
+ const listenerCounts=()=>['readyForQuery','end','error'].map(name=>connection.listenerCount(name)),initialListeners=listenerCounts();
+ const end=c.end.bind(c);c.end=(...args)=>{closed++;return end(...args)};
+ connection.query=sql=>{sent.push(sql);queueMicrotask(()=>{
+  if(sql.startsWith('SELECT ')){
+   connection.emit('errorMessage',Object.assign(Error('synthetic ambiguous reference'),{code:'42702'}));
+   assert.equal(c.readyForQuery,false);assert.equal(c.getTransactionStatus(),'T');
+   const ready=()=>{
+    if(mode==='end')connection.emit('end');
+    else if(mode==='error')connection.emit('error',Error('synthetic transport loss'));
+    else{if(mode==='driver-replaced'){const query=c.query;c.query=(...args)=>query.apply(c,args)}const status=mode==='idle'?'I':mode==='invalid-status'?'?':'E';connection.emit('readyForQuery',{status});frames.push(status)}
+   };
+   if(mode==='same-batch')ready();else if(mode!=='missing-ready')timer=setTimeout(ready,5);
+  }else{const command=sql.startsWith('BEGIN')?'BEGIN':mode==='bad-ack'&&sql==='ROLLBACK'&&sent.filter(s=>s==='ROLLBACK').length===2?'COMMIT':sql;connection.emit('commandComplete',{text:command});connection.emit('readyForQuery',{status:command==='BEGIN'?'T':'I'})}
+ })};
+ const meta={batchId:'11111111-1111-4111-8111-111111111111',documentBatchId:'22222222-2222-4222-8222-222222222222',packageSha256:'a'.repeat(64),planSha256:'b'.repeat(64),namespace:'synthetic',cutoffAt:'2026-11-02T04:00:00Z'};
+ const initialize={protocol:'STANDARD_IMPORT_SQL_V1',operation_id:'00000000-0000-4000-8000-000000000001',request_key:'native-ready-proof',batch_id:meta.batchId,plan_sha256:meta.planSha256,package_manifest_sha256:meta.packageSha256,namespace:meta.namespace,cutoff_at:meta.cutoffAt,payload:{admin:{},document_batch_id:meta.documentBatchId}};
+ try{
+  const output=await withReviewedWholeSession(c,{},proof,proof,async controlled=>{
+   const observer={async query(sql,values){try{return await controlled.query(sql,values)}catch(error){rejections.push({sql,message:error.code?null:error.message,ready:c.readyForQuery});throw error}},discard:()=>controlled.discard()};
+   const kernel={async lockAndInspect(){return{state:'ABSENT'}},async initialize(client){await client.query('SELECT naijue_erp.standard_whole_package_finish_v2($1::uuid)::text AS result_json')},async applyStep(){throw Error('UNEXPECTED_STEP')},async summarize(){throw Error('UNEXPECTED_SUMMARIZE')}};
+   const result=await executeWholePackage(observer,meta,initialize,(async function*(){})(),kernel);
+   assert.deepEqual(describeWholePackageFailure(result),{stage:'INITIALIZE',sqlState:'42702',staticCode:null});
+   if(result.state==='ROLLED_BACK')await assert.rejects(controlled.query('ROLLBACK'),/CONNECTION_UNAVAILABLE/);
+   return result;
+  },()=>proof,'FRESH35_RETIRED152_V1',{fresh35ExpiresAt:Date.now()+(mode==='missing-ready'?30:1000)});
+  assert.equal(closed,1);assert.equal(sent.includes('COMMIT'),false);assert.deepEqual(listenerCounts(),initialListeners);
+  return{...output,sent,rejections,frames};
+ }finally{clearTimeout(timer);connection.stream.destroy()}
+}
+test('native ErrorResponse cleanup waits for delayed ReadyForQuery on the same wire and sends one acknowledged rollback',async()=>{
+ for(const mode of ['same-batch','delayed']){
+  const result=await nativeErrorCleanup(mode);
+  assert.deepEqual(result.result,{state:'ROLLED_BACK',code:'IMPORT_FAILED'});assert.equal(result.cleanup,'CLOSED');
+  assert.equal(result.sent.filter(sql=>sql==='ROLLBACK').length,2,'one catalog rollback and exactly one application rollback');
+  assert.deepEqual(result.frames,['E']);assert.equal(result.rejections.some(r=>r.message==='WHOLE_WIRE_STATE_INVALID'),false);
+ }
+});
+test('native ErrorResponse cleanup retains unknown on lost wire, deadline, wrong state or missing rollback ACK',async()=>{
+ for(const mode of ['error','end','missing-ready','idle','invalid-status','driver-replaced','bad-ack']){
+  const result=await nativeErrorCleanup(mode);
+  assert.deepEqual(result.result,{state:'UNKNOWN',code:'TRANSACTION_OUTCOME_UNKNOWN'},mode);assert.equal(result.cleanup,'CLOSED');
+  assert.equal(result.sent.filter(sql=>sql==='ROLLBACK').length,mode==='bad-ack'?2:1,'no cleanup SQL before a valid ReadyForQuery and no retry after a bad ACK');
+ }
+});
 function client(){let status='I',closed=0;const calls=[];return {calls,get closed(){return closed},on(){},readyForQuery:true,_queryable:true,_ending:false,pipeline:false,_activeQuery:null,_queryQueue:[],_sentQueryQueue:[],getTransactionStatus(){return status},async query(sql){calls.push(sql);if(sql.startsWith('BEGIN')){status='T';return {command:'BEGIN'}}if(sql==='ROLLBACK'||sql==='COMMIT'){status='I';return {command:sql}}return {command:'SELECT'}},async end(){closed++}}}
 let cached,legacyNetworkModel;after(async()=>{await legacyNetworkModel?.close()});async function binding(){return cached??=(async()=>{
  const m=legacyNetworkModel=await createFresh35BootstrapNetworkModel({proposalDate:'20261105'}),target=m.target,paths=await resolveFresh35ReferenceInputPaths(resolve(root,'../reference-inputs'));

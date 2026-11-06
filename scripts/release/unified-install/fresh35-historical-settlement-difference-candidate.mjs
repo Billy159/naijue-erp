@@ -9,7 +9,7 @@ const hash=x=>createHash('sha256').update(x).digest('hex');
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_SETTLEMENT_DIFFERENCE_'+code)};
 const modulePath='scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs';
 const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
-export const FRESH35_SETTLEMENT_DIFFERENCE_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_settlement_difference_successor.sql',sha256:'1508620dc618b3560181694aea2591638ce885b337f86ee5d6e51f8659918565'});
+export const FRESH35_SETTLEMENT_DIFFERENCE_SQL_PIN=Object.freeze({path:'adapters/postgres/patches/0035_historical_settlement_difference_successor.sql',sha256:'57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee'});
 export async function loadFresh35HistoricalSettlementDifferenceCandidate(root){
  need(hash(await readFile(resolve(root,modulePath)))===loadedModuleSha256,'RUNNING_MODULE_SOURCE_DIFFERS');
  const amount=await loadFresh35HistoricalAmountCandidate(root),settlement=await loadFresh35HistoricalSettlementCandidate(root);
