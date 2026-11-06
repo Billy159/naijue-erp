@@ -96,12 +96,14 @@ class Tests(unittest.TestCase):
         self.assertNotIn('shutil.rmtree',source)
 
 class CleanupPortObservationTests(unittest.TestCase):
-    def observe(self,rows=None,read_error=None,netns_error=None,netns_identity=(4,99),read_error_table='tcp'):
+    HEADERS={'tcp':'sl local_address rem_address st tx_queue rx_queue tr tm->when retrnsmt uid timeout inode','tcp6':'sl local_address remote_address st tx_queue rx_queue tr tm->when retrnsmt uid timeout inode'}
+    def observe(self,rows=None,read_error=None,netns_error=None,netns_identity=(4,99),read_error_table='tcp',table_texts=None):
         rows=rows or {};observation={};reads=[]
         def read(path,*args,**kwargs):
             reads.append(str(path))
             if read_error and str(path)=='/proc/net/'+read_error_table:raise read_error
-            return 'header\n'+rows.get(str(path),'')
+            if table_texts is not None and str(path) in table_texts:return table_texts[str(path)]
+            return self.HEADERS[Path(path).name]+'\n'+rows.get(str(path),'')
         def netstat(path,*args,**kwargs):
             self.assertEqual(str(path),'/proc/self/ns/net')
             if netns_error:raise netns_error
@@ -120,7 +122,7 @@ class CleanupPortObservationTests(unittest.TestCase):
                 self.assertNotIn('SECRET',json.dumps(o));self.assertNotIn('PRIVATE',json.dumps(o))
                 self.assertEqual(reads,['/proc/net/tcp','/proc/net/tcp6'])
     def test_ipv6_match_and_unrelated_port_kept_separate(self):
-        value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DC hidden:0000 0A hidden\n','/proc/net/tcp6':'0: ABCD:48DB hidden:0000 06 hidden\n'})
+        value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DC hidden:0000 0A hidden\n','/proc/net/tcp6':'0: 00000000000000000000000001000000:48DB hidden:0000 06 hidden\n'})
         self.assertFalse(value);self.assertIsNone(error);self.assertEqual(o['matchingStates']['tcp6']['06'],1);self.assertEqual(o['matchingRows'],1);self.assertTrue(o['noActiveTcpRows'])
     def test_absence_has_complete_timing_and_namespace_metadata(self):
         value,o,error,_=self.observe();self.assertTrue(value);self.assertIsNone(error)
@@ -133,6 +135,18 @@ class CleanupPortObservationTests(unittest.TestCase):
                 value,o,caught,_=self.observe(read_error=error)
                 self.assertIsNone(value);self.assertIsNotNone(caught);self.assertFalse(o['complete']);self.assertIsNone(o['portAbsent'])
                 self.assertEqual(o['readError'],code);self.assertEqual(o['reading'],'tcp');self.assertNotIn('SECRET',json.dumps(o))
+    def test_empty_missing_or_invalid_proc_headers_refused(self):
+        cases=[('tcp',''),('tcp6',''),('tcp','\n'),('tcp','header\n'),('tcp6',self.HEADERS['tcp']+'\n'),('tcp','sl local_address rem_address st\n')]
+        for table,text in cases:
+            with self.subTest(table=table,text=text):
+                value,o,error,_=self.observe(table_texts={'/proc/net/'+table:text})
+                self.assertIsNone(value);self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows']);self.assertEqual(o['readError'],'INVALID_DATA')
+    def test_complete_local_endpoint_width_and_single_separator_required(self):
+        endpoints=[('tcp','0100007F:48DB:EXTRA'),('tcp','100007F:48DB'),('tcp','GG00007F:48DB'),('tcp','0100007F:048DB'),('tcp6','ABCD:48DB'),('tcp6','00000000000000000000000001000000:48DB:EXTRA')]
+        for table,endpoint in endpoints:
+            with self.subTest(table=table,endpoint=endpoint):
+                value,o,error,_=self.observe({'/proc/net/'+table:f'0: {endpoint} SECRET:0000 06 SECRET\n'})
+                self.assertIsNone(value);self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows']);self.assertEqual(o['readError'],'INVALID_DATA');self.assertNotIn('SECRET',json.dumps(o))
     def cleanup_model(self,state='06',failure=None):
         class Child:
             done=False
@@ -141,7 +155,7 @@ class CleanupPortObservationTests(unittest.TestCase):
             def wait(self,timeout):return 0
         port=authority()['proposal']['port']
         def read(path,*args,**kwargs):
-            return 'header\n'+(f'0: 0100007F:{port:04X} SECRET:0000 {state} SECRET\n' if state and str(path)=='/proc/net/tcp' else '')
+            return self.HEADERS[Path(path).name]+'\n'+(f'0: 0100007F:{port:04X} SECRET:0000 {state} SECRET\n' if state and str(path)=='/proc/net/tcp' else '')
         def revoke(*args,**kwargs):
             if failure=='loginsRevoked':raise PermissionError('SECRET')
             return ''
@@ -165,7 +179,7 @@ class CleanupPortObservationTests(unittest.TestCase):
             result=m.include_initialization_cleanup(self.cleanup_model(),initialization);self.assertFalse(result['cleanupComplete']);self.assertFalse(result['portAbsent'])
     def test_mixed_active_unknown_and_malformed_rows_or_incomplete_read_refused(self):
         for state in ['01','0A','0D','FF']:
-            value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DB hidden:0000 06 hidden\n','/proc/net/tcp6':f'0: ABCD:48DB hidden:0000 {state} hidden\n'})
+            value,o,error,_=self.observe({'/proc/net/tcp':'0: 0100007F:48DB hidden:0000 06 hidden\n','/proc/net/tcp6':f'0: 00000000000000000000000001000000:48DB hidden:0000 {state} hidden\n'})
             self.assertFalse(value);self.assertIsNone(error);self.assertFalse(o['noActiveTcpRows'])
         for rows in [{' /unused':'ignored','/proc/net/tcp':'broken row\n'},{'/proc/net/tcp':'0: 0100007F:48DB hidden:0000 ZZ hidden\n'}]:
             value,o,error,_=self.observe(rows);self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows'])
@@ -175,7 +189,7 @@ class CleanupPortObservationTests(unittest.TestCase):
         for identity in [(None,99),(True,99),(4,0),(4,-1)]:
             _,o,error,_=self.observe(netns_identity=identity);self.assertIsNotNone(error);self.assertFalse(o['complete']);self.assertIsNone(o['noActiveTcpRows'])
         for table in ['tcp','tcp6']:
-            def read(path,*args,**kwargs):return 'header\n'+('0: 0100007F:48DB hidden:0000 06 hidden\n' if str(path)=='/proc/net/'+table else '')
+            def read(path,*args,**kwargs):return self.HEADERS[Path(path).name]+'\n'+('0: 0100007F:48DB hidden:0000 06 hidden\n' if str(path)=='/proc/net/'+table else '')
             with patch.object(m.Path,'read_text',read),patch.object(m.Path,'stat',side_effect=AssertionError('START_MUST_NOT_SAMPLE_NAMESPACE')):self.assertFalse(m.port_absent(18651))
     def test_namespace_failure_never_claims_known_port_absence(self):
         value,o,error,reads=self.observe(netns_error=PermissionError('SECRET'))

@@ -1,0 +1,58 @@
+{
+  "status": "PASS_SOURCE_ONLY_QB_TWO_COUNTEREXAMPLES_FIXED_PENDING_REVIEW",
+  "recordedAtUTC": "2026-11-06T18:15:46.577293+00:00",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSha256": "9d5be807308018601ff855d740196a40c3e9566ee7b82240050d494d65ed47c7",
+      "afterSha256": "81ff199b977380f92886808567f3fdbe50d76b334094fd7c6ba6b14fa1e95e34",
+      "beforeBytes": 105225,
+      "afterBytes": 105749
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "beforeSha256": "bfaff2041320821e47e277dc3e5c40db3bf822a8361456a8fe54672aa461d49b",
+      "afterSha256": "dbc0d996cd7492ea325fc662596af5ff1fdfc19878b29831d601ab46a8086be7",
+      "beforeBytes": 102440,
+      "afterBytes": 104189
+    }
+  ],
+  "changedFunction": "port_absent observation branch only",
+  "oneArgumentBranchAndAllOtherFunctionsASTUnchanged": true,
+  "fix": [
+    "Require all12 Linux tcp/tcp6 header prefix fields including rem_address versus remote_address; empty/missing/placeholder/incomplete header rejected",
+    "Fullmatch consumed local endpoint as8 or32hex address, one colon, exactly4hex port; no split suffix loss",
+    "ValueError classified by existing INVALID_DATA; complete staysfalse and noActive remainsunknown rather than true; outer cleanup false"
+  ],
+  "notExpanded": [
+    "Remote endpoint/timers/inode row fields are not parsed",
+    "No full TCP parser/extra sampling/restart/window or authority mechanism",
+    "No phase/9key diagnostic/schema rule changes"
+  ],
+  "red": {
+    "tests": 2,
+    "failedSubcases": 12,
+    "exitCode": 1,
+    "scope": "Empty/invalid tables and malformed complete local endpoint accepted by old observation"
+  },
+  "green": {
+    "tests": 7,
+    "exitCode": 0,
+    "seconds": 0.008,
+    "scope": "Two new counterexample groups plus5 affected real-header/endpoint empty/state/IPv6/cleanup/mixed-read cases",
+    "command": "python3 tests/test_fresh35_isolated_launcher.py CleanupPortObservationTests.test_empty_missing_or_invalid_proc_headers_refused CleanupPortObservationTests.test_complete_local_endpoint_width_and_single_separator_required CleanupPortObservationTests.test_absence_has_complete_timing_and_namespace_metadata CleanupPortObservationTests.test_matching_listen_and_nonlisten_both_refuse_with_distinct_counts CleanupPortObservationTests.test_ipv6_match_and_unrelated_port_kept_separate CleanupPortObservationTests.test_cleanup_quiescence_accepts_pure06_without_claiming_port_absence CleanupPortObservationTests.test_mixed_active_unknown_and_malformed_rows_or_incomplete_read_refused -v"
+  },
+  "reusedChecks": "Original cleanup16 +phase3 not rerun; unchanged functions and phase tuple retained",
+  "primaryHeaderSources": [
+    "https://raw.githubusercontent.com/torvalds/linux/master/net/ipv4/tcp_ipv4.c",
+    "https://raw.githubusercontent.com/torvalds/linux/master/net/ipv6/tcp_ipv6.c"
+  ],
+  "patchSHA256": "f06f0675802ca6002b6c115332365e9dd70cbc9b5dd267309c1f6066ea17b9d6",
+  "D2_18acBuild": "Retained NOT_FINAL/NOT_FOR_EXECUTION; no artifacts or loader adopted here",
+  "serverJobs": 0,
+  "PGConnections": 0,
+  "builds": 0,
+  "oldReceiptsChanged": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "delivery": "Current two source leaves stop writing after this exact delivery; C/QB review affected delta only. Other local ops remain unbound."
+}

@@ -1,0 +1,11 @@
+{
+  "status": "RETAINED_BUILD_ONLY_NOT_FINAL_R26_NOT_FOR_EXECUTION",
+  "boundResultSha256": "f5aa4c3f854dd660d595ac8abd3dd64b8114dbcef3a28c6cda5458630585e417",
+  "reason": "C reports QB two cleanup-observation negative cases: empty table header and extra-colon local endpoint. T45 fixes only two Python leaves; wait for new fixed root.",
+  "buildAndPackAlreadyFinishedBeforeNotice": true,
+  "inFlightReadbackAndTailCompletedWithoutRebuild": true,
+  "technicalArtifactResultsPreserved": true,
+  "finalR26OrQaPass": false,
+  "transferServerPgExecuted": false,
+  "nextStep": "Wait for C new fixed root; no retry/rework/delete of retained18ac artifacts."
+}

@@ -2124,3 +2124,6 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07 r26源码合批就绪：D1五叶68e10deb，最低账号9列INSERT/6列UPDATE配套原事务/catalog，有限原账号19项与依赖闭包类型通过；T45两叶c324d192，清理16项+诊断3项通过。实际7叶冻结，同11个setup子phase一致，无新表列/函数/角色/LOGIN/owner权限或业务守卫变化。C交原QB一次独立增量；尚未构建/实库验证。r25精确private metadata41e61ce6一次取得，保留ab491e7d原结果/aabd24d5清理及同CID已停事实，不重开旧目标。
+
+
+2026-11-07 r26独立QB23b2a74d：账号ACL/原writer、11诊断phase及原生命周期/启动范围通过；仅清理空表头/多余冒号端点P2开放。原T45已定向修两叶a04fa693，7受影响项通过、原其他证据复用，交QB只复验P2。18ac实际build/pack通过f5aa4c3f但明确NOT_FINAL/NOT_FOR_EXECUTION，保留原件不套给修后版本。最新应用仍未实库业务通过/未REAL/未部署。
