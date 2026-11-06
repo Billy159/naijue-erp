@@ -11,7 +11,7 @@ import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-pat
 import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,describeFresh35CombinedSource,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
 import {FRESH35_COMBINED_INTERFACE_ROLES,FRESH35_COMBINED_TARGET_MODULE_SHA256,bindFresh35RestoredTarget,assertFresh35RestoredTarget,describeFresh35CombinedTarget,fresh35CombinedBootstrapObserverSql,fresh35CombinedObserverGuard} from './fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent,fresh35CombinedRestorationCatalogSql,validateFresh35CombinedRestorationCatalogObservation} from './fresh35-combined-catalog-v1.mjs';
-import {assertInstallClientProtocolState} from './physical-adapter.mjs';
+import {assertFresh35CombinedClientProtocolState as assertInstallClientProtocolState} from './fresh35-combined-lifecycle-v1.mjs';
 import {closePhysical} from '../../../tools/unified-import/whole-host-session.mjs';
 
 const etc=process.platform==='darwin'?'/private/etc':'/etc';

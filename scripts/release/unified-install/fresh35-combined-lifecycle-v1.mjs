@@ -75,6 +75,13 @@ function protocol(client,idle=false){
  const value=k=>{const d=Object.getOwnPropertyDescriptor(client,k);need(d&&Object.hasOwn(d,'value'),'NATIVE_PROTOCOL_DATA_REQUIRED');return d.value};
  need(value('pipeline')===false&&value('readyForQuery')===true&&!value('_activeQuery')&&Array.isArray(value('_queryQueue'))&&value('_queryQueue').length===0&&Array.isArray(value('_sentQueryQueue'))&&value('_sentQueryQueue').length===0&&value('_queryable')===true&&value('_ending')===false&&value('_ended')===false&&(!idle||value('_txStatus')==='I'),'EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED');
 }
+/** Pure runtime predicate only; never issues client or completion authority.
+ * Restore callers keep the original strict null/undefined active-query check. */
+export function assertFresh35CombinedClientProtocolState(client,{idle=false}={}){
+ protocol(client,idle);
+ const active=Object.getOwnPropertyDescriptor(client,'_activeQuery').value;
+ need(active===null||active===undefined,'EXCLUSIVE_IDLE_NATIVE_CLIENT_REQUIRED');
+}
 /** Wait only for the same native connection's real ReadyForQuery after a
  * server ErrorResponse. Never changes driver state or submits/replays SQL. */
 async function waitNativeRollbackReady(client,deadline){
