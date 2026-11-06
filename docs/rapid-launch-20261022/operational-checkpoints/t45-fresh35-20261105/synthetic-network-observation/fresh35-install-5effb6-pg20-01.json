@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "32fdbf5921ba577057949ebaa63e473959d9411f6444f142fd29ca9f375c6f87",
+  "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+  "targetSha256": "9b1479468abec38a886997f330ed89d080f0668398402d31153855c73ac3c74f",
+  "startsAt": 1793936635549,
+  "expiresAt": 1793937835549,
+  "independentSafetyReviewSha256": "2f42c3cfd04a6763c63c381a3c4a99045de01a408764129d675ea478d88e6739",
+  "authorizationReference": "C direct human delegation before2026-11-06 noon and standing same-kind isolation. Exact r11 start951a7af2/CIDf24ed091/SID7704899388565479471/OID16393/birth03:44:47.946872UTC; root5eff/source1dd/program32fdbf59/target9b147946. Same PG20 deadline1793937835549. Original install/negative cases/synthetic25/ordinary business/readback/probe/owned cleanup only. No REAL/production/old target/replay/window extension; strict catalog/permissions/rollback retained."
+}

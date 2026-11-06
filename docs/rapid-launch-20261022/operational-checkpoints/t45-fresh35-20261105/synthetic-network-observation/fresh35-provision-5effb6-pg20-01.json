@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "d4426ee6aa697561ceab0523ba649a9febcb1979a5e4cab03c8eb6ecf02901af",
+  "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793936635549,
+  "expiresAt": 1793937835549,
+  "independentSafetyReviewSha256": "2f42c3cfd04a6763c63c381a3c4a99045de01a408764129d675ea478d88e6739",
+  "authorizationReference": "C issues this exact20min scope under direct human delegation before2026-11-06 noon and standing same-kind isolated authorization. Exactr11 root5eff/source1dd/manifestd442/CIDname t45-fresh35-deb13-20261106-r11. Actualmaterialize035f1585/resource3feb9ab0/QB2f42. Original2CPU3GiB/PID256/guardian/2DO; install/synthetic25/ordinary/readback/probe/ownedcleanup, diagnostic negative assertion unchanged. NoREAL/production/oldtarget/replay/windowextension; actualprogram C9 separate."
+}
