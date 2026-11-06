@@ -30068,7 +30068,7 @@
         }
       },
       "r8Preparation": {
-        "state": "FIXED_BUILD_AND_RESOURCES_READBACK_PASS_QB_INCREMENT_IN_PROGRESS_PENDING_T45_STAGE_PREFLIGHT",
+        "state": "FIXED_BUILD_AND_QB_INCREMENT_PASS_WAITING_KNOWN_BACKUP_TERMINAL_THEN_STAGE_PREFLIGHT",
         "integration": "5e28855e1455a639514524f868528c20f1782c76",
         "buildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
         "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
@@ -30099,7 +30099,9 @@
         "root": "phaseb-application-r8",
         "container": "t45-fresh35-deb13-20261106-r8",
         "actualPG": false,
-        "next": "T45 exact stagepreflight then original C13 leaves; heavy materialize/PG serialized after exactfreshbackup terminal. ActualPG requires adopted scopedQB/newPG20/C9 binding."
+        "next": "T45 exact stagepreflight then original C13 leaves; heavy materialize/PG serialized after exactfreshbackup terminal. ActualPG requires adopted scopedQB/newPG20/C9 binding.",
+        "qbSHA256": "6c737bd7cf1105d36088a6f87bd196aee9c69f0db4b66d6e57b96750e609fef7",
+        "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL;33rawsource/318unchanged/7negatives;actualPGnotverified"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30410,7 +30412,7 @@
     "formalBackupContinuation": {
       "at": "2026-11-06T08:15:15+08:00",
       "owner": "T45",
-      "state": "QB_F02_PASS_T45_SUBMITTING_ONE_EXACT_FRESH_BACKUP_NOT_COMPLETED",
+      "state": "ACTUAL_ORIGINAL_KEY_RUNNING_NO_TERMINAL_YET",
       "authority": "Direct human delegation through2026-11-06T12:00+08; C decision, not individual human approval",
       "target": {
         "database": "erp_prod",
@@ -30476,7 +30478,10 @@
       "fixedSourceSHA256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
       "newJob": "t45-prod-current-backup-20261106-01",
       "restoreOfThisNewBackup": "NOT_VERIFIED",
-      "next": "T45 unique new submission/actualidentity-capacity guards then collect originalkey only; no new approval; r8PG heavywork waits terminal"
+      "next": "T45 unique new submission/actualidentity-capacity guards then collect originalkey only; no new approval; r8PG heavywork waits terminal",
+      "unit": "naijue-erp-op-5cc58239-9f0cde3101dd",
+      "automaticRetry": false,
+      "knownInFlight": true
     }
   }
 }

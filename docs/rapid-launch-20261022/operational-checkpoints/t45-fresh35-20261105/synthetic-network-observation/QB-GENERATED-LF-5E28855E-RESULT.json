@@ -1,0 +1,104 @@
+{
+  "task": "C-0448-R7-GENERATED-EXPRESSION-LF",
+  "atUtc": "2026-11-06T01:00:33.057576+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "5e28855e1455a639514524f868528c20f1782c76",
+    "appRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
+    "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
+    "sourceSet": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "bytes": 37076,
+        "sha256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4"
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "bytes": 26951,
+        "sha256": "33ad8fe37a498e46c02f38b5a013c483e6733678ca3503de0cd35902678c250e"
+      }
+    ]
+  },
+  "independent": {
+    "checks.json": {
+      "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+      "sourceSha256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4",
+      "rawPinnedTables": 35,
+      "rawGeneratedExpressions": 33,
+      "restoredExactlyOneLF": 33,
+      "otherColumnsUnchanged": 318,
+      "completeModelOutside33ExpressionValuesUnchanged": true,
+      "independentRawByteExtraction": true,
+      "cases": [
+        {
+          "name": "missing LF",
+          "result": "REFUSED_AS_REQUIRED"
+        },
+        {
+          "name": "extra LF",
+          "result": "REFUSED_AS_REQUIRED"
+        },
+        {
+          "name": "changed expression token",
+          "result": "REFUSED_AS_REQUIRED"
+        },
+        {
+          "name": "wrong identity",
+          "result": "REFUSED_AS_REQUIRED"
+        },
+        {
+          "name": "wrong ordinal",
+          "result": "REFUSED_AS_REQUIRED"
+        },
+        {
+          "name": "wrong cohort",
+          "result": "REFUSED_AS_REQUIRED"
+        },
+        {
+          "name": "duplicate exact source",
+          "result": "REFUSED_AS_REQUIRED"
+        }
+      ],
+      "PGExecuted": false,
+      "serverCalls": 0
+    },
+    "static-checks.json": {
+      "wholeSourceReverseComparisonExact": true,
+      "nativeProjectionsGuardObservationAndOtherFunctionsUnchanged": true,
+      "changeOnlyHelperCallAndTableSectionAvailability": true
+    },
+    "closure-checks.json": {
+      "sourceSetHashRecomputed": true,
+      "reverseOnlyCatalogPinReproducesPriorSourceSet": true,
+      "currentCount": 214,
+      "capturedCount": 180,
+      "other213SourcePinsUnchanged": true
+    }
+  },
+  "authorEvidenceAdopted": {
+    "resultSha256": "242f9a24363fed3840c55309e66468fd3a81a5532e41888d6e6496615c858304",
+    "selectedTests": 3,
+    "expandedFullModelTest": 1,
+    "originalNegatives": 5,
+    "nativePGVerified": false,
+    "oldAclRoutineAndBackendSuitesNotRerun": true
+  },
+  "preserved": "Sealed originals/parser, native pg_get_expr projection, strict IS DISTINCT FROM guard, other318 columns and other model categories, DDL/ACL/permissions/transaction2DO/lifecycle unchanged; existing approved hall nullable/routine successors reused. No whitespace normalization.",
+  "r7ActualEvidence": "Author supplied ROLLED_BACK_AND_STOPPED with 55000/COLUMNS_DIFFER; actual first differing column/field and sole cause NOT_OBSERVED. Independent offline first column is not actual PG failure attribution.",
+  "boundaries": {
+    "sourceModified": false,
+    "WipReviewed": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "backupExecuted": false,
+    "r7RestartedOrReplayed": false,
+    "actualInstallPassed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "C coordinates original T45 for one wholly new r8 actual PG target under existing gates; old r7 stays stopped. This source-only PASS is not installation PASS."
+}

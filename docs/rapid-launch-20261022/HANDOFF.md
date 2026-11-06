@@ -1772,3 +1772,7 @@ D1实际最终回执242f9a24、两叶catalog55859817/test33ad8fe3及source描述
 ### 2026-11-06 固定9c候选与新备份执行接续
 D2实际build0/10.838s、pack0/8.830s，production453及ordinary7298成员bytes/hash/mode读回通过4ff68200；C亲核小闭包与实际2,464,296B尾段，服务器真实73base635de+81,221,531prefix拼新73dcdc完整包（同83,685,827B但SHA不同），不凭size替代身份。integration5e28855e/root9c2748dd远端已准确回读；原QB只验列派生两叶，PG未通过。下一T45原r8预检/外叶/材料化和新20min执行，不重旧r7。
 备份F02同源43b24e99/原QB e8d71107只复悬空根link拒绝、真不存在/普通control计数后PASS，df085/85bf其余有效范围采用。T45按C既定准确新backupkey开始提交，实际终态尚未取得；不需要再次审批，实际guard持续核当时身份/容量，旧备份保留。r8重材料化/PG与本次备份串行，当前不可称备份完成或新恢复通过。
+
+
+### 2026-11-06 两条必要验收收口
+原QB6c737bd7对固定5e/root9c两叶用封存CREATE TABLE独立提取，33表达式准确仅恢复首LF、318列及其他类别不变、7拒绝和唯一pin逆算通过；仅source/离线模型，未验实PG。原QB e8d71107的backup43b微项已采用，T45本次唯一备份key已实际RUNNING（unit9f0cde3101dd），不是unknown，不重提交；终态未到，不写备份完成。r8真实预检、材料化与PG等待已知备份释放资源，源码/制品/独立QA均就绪，不再等用户或重复技术验收。
