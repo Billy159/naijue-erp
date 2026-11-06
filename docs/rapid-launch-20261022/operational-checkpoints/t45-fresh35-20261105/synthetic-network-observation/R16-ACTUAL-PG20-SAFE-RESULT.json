@@ -1,0 +1,92 @@
+{
+  "status": "FAILED_R16_NORMAL_IMPORT_SUMMARIZE_42601_PRESERVED_NO_REPLAY",
+  "checkedAtUTC": "2026-11-06T08:55:58.126832+00:00",
+  "sourceRoot": "cc9d647202113aa52bddc2e990aeab878277ad89",
+  "sourceSet": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+  "actualModelEffortFast": "UNVERIFIED",
+  "C9ActualSha256": "3db1f19ec4d1e8dd6c83df3f749a1c850dd0af93dbfd9f9d03ec3a72c69e04be",
+  "job": {
+    "jobId": "t45-f35-cc9d64-install-20261106-01",
+    "status": "FAILED",
+    "exitCode": 2,
+    "elapsedSeconds": 122.13593664299697,
+    "atUTC": "2026-11-06T08:51:00.950557+00:00",
+    "finishedAtUTC": "2026-11-06T08:53:03.104104+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-cc9d64-install-20261106-01/transport/release-receipts/t45-f35-cc9d64-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "e27e5bdf5844c90ce95d6c1008e5df3783d3e218671469113b9dba10675f97d2"
+  },
+  "cid": "2589410a487fe7b7888a09226553c7872a98bf96d8df09fdca0b1d641cd32f24",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-06 08:44:35.92776+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7704976648451141680"
+  },
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "sourceSetSha256": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb"
+  },
+  "negativeChecks": {
+    "badApprovalCode": "HISTORICAL_SETTLEMENT_APPROVAL_HASH",
+    "badApprovalRollback": true,
+    "finalFailureCode": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT",
+    "finalFailureStage": "FINAL_PUBLISH",
+    "missingSettlementCode": "STANDARD_PUBLICATION_INCOMPLETE",
+    "missingSettlementRollback": true,
+    "originalBatchAbsent": true,
+    "reachedFinalPublish": true,
+    "state": "ROLLED_BACK"
+  },
+  "rollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "stage": "rollback",
+    "connectionCleanup": "CLOSED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true
+  },
+  "rollbackSnapshotEqualsPostInstallSnapshot": true,
+  "normalImportFailure": {
+    "state": "OUTCOME_UNKNOWN_NO_REPLAY",
+    "stage": "commit",
+    "exitCode": 1,
+    "validationCode": "IMPORT_FAILED",
+    "validationStage": null,
+    "validationSQLSTATE": "42601",
+    "validationStep": "SUMMARIZE",
+    "validationInternalCode": null
+  },
+  "normalImportCommitOutcome": "UNKNOWN_NO_REPLAY",
+  "exactStatementPositionAndRootCause": "NOT_EXPORTED_UNKNOWN",
+  "syntheticImportVerified": false,
+  "independentSnapshotsVerified": false,
+  "ordinaryBusinessVerified": false,
+  "ordinaryProbe": "NOT_REACHED",
+  "containerStopped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "wholeChainPassed": false,
+  "schemaAndRecordCommittedNotRolledBack": true,
+  "transactionBackendPidNonceNotCopied": true,
+  "noReplay": true,
+  "formalOrREALActions": false,
+  "postCleanupHostMemoryDiskMetrics": "NOT_MEASURED_THIS_STEP",
+  "nextOwner": "Original C routes source-only SUMMARIZE/42601 to original D1. No new T45 server submission until exact fixed successor and corresponding review/binding; all old artifacts and unknown outcomes preserved."
+}

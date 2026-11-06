@@ -1991,3 +1991,7 @@ Original materialization bf96b0b5 completed0/362.762783s; actual resource prefli
 ## 2026-11-06T16:50:38+08:00 - Actual R16 target bound and installation dispatched
 
 Start6e5cd6fd completed0/34.692665s. New CID2589410a, SID7704976648451141680/OID16393/PG170011/birth08:44:35.92776UTC bind programc69b8e1b and targete5e3a5cc. Exact C9 3db1f19e retains original deadline1793955784607. T45 unique install key t45-f35-cc9d64-install-20261106-01 dispatched through original flow. Actual schema/import/business results are pending for this new target; previous r15 three-negative PASS and normal UNKNOWN remain in their original version record. No REAL or production action.
+
+## 2026-11-06T16:57:08+08:00 - R16 actual normal failure localized to SUMMARIZE/42601
+
+Original install e27e5bdf5844c90ce95d6c1008e5df3783d3e218671469113b9dba10675f97d2 failed2/122.135937s. Native schema/record committed and three negative/rollback-host/snapshot checks passed. Normal failure now correctly exports IMPORT_FAILED, SUMMARIZE and SQLSTATE42601 through the fixed branded diagnostic seam. Exact SQL/position and normal commit outcome remain UNKNOWN_NO_REPLAY. CID2589410a stopped, six cleanup checks true/errors empty, initializer and descendants reaped; post-cleanup host resources not remeasured. Original D1 is locating the exact current SQL with offline parsing before proposing minimum owned leaves. No REAL/production or old-key replay; no further diagnostic log expansion.
