@@ -1,0 +1,181 @@
+--- a/candidate0448/scripts/release/deploy-candidate.py
++++ b/candidate0448/scripts/release/deploy-candidate.py
+@@ -684,6 +684,155 @@
+     return runtime35_record(p)['target']['proposal']['database'] if exact35_selected(p) else DATABASE
+ 
+ 
++def validate_exact35_media_archive_source(p, backup, restored):
++    media_source = backup.get('mediaArchiveSource', {})
++    need(media_source.get('path') == p['runtime35']['media']['hostRoot'] and
++         media_source.get('mapping') == p['runtime35']['media'] and media_source.get('archiveMember') == 'source-0' and
++         backup.get('archiveSources', [None])[0] == media_source['path'] and
++         restored.get('mediaArchiveSource') == media_source and
++         restored.get('opaqueFilesRestore', {}).get('sourceMedia') == media_source,
++         'EXACT35_ACTUAL_MEDIA_ARCHIVE_SOURCE_REQUIRED')
++    media_stat = canonical(media_source['path'], kind='directory', root=ROOT).stat()
++    need(media_source.get('identity') == {'device': media_stat.st_dev, 'inode': media_stat.st_ino,
++         'uid': media_stat.st_uid, 'gid': media_stat.st_gid, 'mode': stat.S_IMODE(media_stat.st_mode)},
++         'EXACT35_MEDIA_ARCHIVE_SOURCE_IDENTITY_CHANGED')
++
++
++def validate_exact35_control_system_restoration(record, restored):
++    need(restored.get('controlSystemAclRestored') is True and
++         restored.get('controlSystemAclNewConnectionReadback') is True and
++         restored.get('builtinAclMapping') == {'function': 'pg_catalog.pg_control_system()',
++             'sourceAdmin': record['target']['proposal']['admin'],
++             'restoreAdmin': restored.get('restoreTarget', {}).get('role'),
++             'scope': 'ONLY_BUILTIN_OWNER_GRANTOR_OID10'} and
++         isinstance(restored.get('restoreTarget', {}).get('role'), str),
++         'EXACT35_ORIGINAL_CONTROL_SYSTEM_ACL_NOT_RESTORED')
++
++
++def validate_exact35_logical_recovery(p, coverage, record):
++    """Consume actual new35 capture AND independent restore; never publish evidence here."""
++    backup_ref, restore_ref = coverage.get('logicalBackupReceipt'), coverage.get('logicalRestoreReceipt')
++    backup, restored = reference(backup_ref), reference(restore_ref)
++    target = record['target']
++    common = {'sourceCommit': p['sourceCommit'], 'buildId': p['buildId'], 'target': target,
++              'buildRoot': p['sourceCommit'], 'integrationSourceCommit': 'e422d07390c5a58c44b54452983638a2de5655b7',
++              'roleAclProjection': 'INCLUDES_ATTACL_AND_CONTROL_SYSTEM_V1',
++              'catalogSha256': record['catalogSha256'],
++              'installationRecordSha256': p['runtime35']['references']['installationRecord']['sha256'],
++              'sourceSetSha256': record['binding']['sourceSetSha256'],
++              'media': p['runtime35']['media'],
++              'appArchiveSha256': p['archive']['sha256']}
++    need(backup.get('format') == restored.get('format') == 'NEW35_LOGICAL_BACKUP_RESTORE_V1' and
++         backup.get('mode') == 'backup' and backup.get('state') == 'BACKUP_CAPTURED_OFFLINE_TOC_ONLY' and
++         restored.get('mode') == 'restore' and
++         restored.get('state') == 'DB_RESTORED_APP_NOT_VERIFIED' and
++         all(backup.get(k) == v and restored.get(k) == v for k, v in common.items()),
++         'EXACT35_ACTUAL_LOGICAL_BACKUP_AND_RESTORE_REQUIRED')
++    need(backup.get('runtimeIdentity') == p['runtimeConfiguration']['identity'] and
++         restored.get('sourceRuntimeIdentity') == p['runtimeConfiguration']['identity'],
++         'EXACT35_SOURCE_RUNTIME_CONFIGURATION_CHANGED')
++    required = {'database', 'rolesAuthAcl', 'app', 'media', 'configuration', 'installationAndSource', 'originalImport'}
++    files = backup.get('artifacts', {})
++    names = {'database.dump', 'roles-auth-acl.protected.sql', 'application.protected.pack',
++             'app-media-config.protected.tar', 'source-catalog.private.json', 'representative-source.private.json'}
++    need(set(backup.get('completeClosure', [])) == set(restored.get('completeClosure', [])) == required and
++         names <= set(files) and all(isinstance(files[n], dict) and files[n].get('bytes', 0) > 0 and
++         HASH.fullmatch(files[n].get('sha256', '')) for n in names) and
++         files['application.protected.pack']['sha256'] == p['archive']['sha256'] and
++         restored.get('backupArtifacts') == files and restored.get('backupReceiptSha256') == backup_ref['sha256'] and
++         restored.get('originalImport') == backup.get('originalImport') and restored.get('rolesAclCompared') is True and
++         restored.get('ordinaryDatabaseRepresentativeRead') == 'PASS' and
++         restored.get('currentAppLoginRepresentativeRead') == 'NOT_TESTED' and
++         restored.get('opaqueFilesRestore', {}).get('extracted') is True and
++         restored['opaqueFilesRestore'].get('archiveSha256') == files['app-media-config.protected.tar']['sha256'] and
++         restored.get('sourceInstallationRecordReusableForRestore') is False and
++         restored.get('restoredInstallationRecordCreated') is False,
++         'EXACT35_LOGICAL_RESTORE_CLOSURE_REQUIRED')
++    validate_exact35_media_archive_source(p, backup, restored)
++    validate_exact35_control_system_restoration(record, restored)
++    physical = restored.get('restoreTarget', {})
++    need(restored.get('sourceTarget') == target and physical.get('database') == target['proposal']['database'] and
++         isinstance(physical.get('systemIdentifier'), str) and physical['systemIdentifier'].isdigit() and
++         physical['systemIdentifier'] != target['physical']['systemIdentifier'] and
++         physical.get('databaseOid', '').isdigit() and physical.get('postmasterStart') and
++         physical.get('serverVersionNum') == target['physical']['serverVersionNum'],
++         'EXACT35_INDEPENDENT_RESTORE_PHYSICAL_BINDING_REQUIRED')
++    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
++    fresh_time(restored.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
++    need(dt.datetime.fromisoformat(restored['finishedAtUtc']) >= dt.datetime.fromisoformat(backup['finishedAtUtc']),
++         'EXACT35_RESTORE_PRECEDES_BACKUP')
++    app = reference(coverage.get('applicationRestoreReceipt'))
++    need(app.get('format') == 'NEW35_CURRENT_APP_RESTORE_VERIFY_V1' and
++         app.get('state') == 'CURRENT_APPLICATION_LOGIN_SESSION_AND_REPRESENTATIVE_QUERY_PASSED' and
++         app.get('databaseRestoreReceiptSha256') == restore_ref['sha256'] and
++         app.get('backupReceiptSha256') == backup_ref['sha256'] and app.get('restoreTarget') == physical and
++         app.get('sourceSetSha256') == record['binding']['sourceSetSha256'] and
++         app.get('buildId') == p['buildId'] and app.get('sourceCommit') == p['sourceCommit'] and
++         app.get('appArchiveSha256') == p['archive']['sha256'] and
++         app.get('currentAppLoginRepresentativeRead') == 'PASS' and
++         app.get('checks') == {'login': True, 'session': True, 'representativeQuery': True} and
++         HASH.fullmatch(app.get('restoredInstallationRecordSha256', '')) and
++         app['restoredInstallationRecordSha256'] != common['installationRecordSha256'] and
++         isinstance(app.get('restoredRuntimeIdentity'), dict) and app['restoredRuntimeIdentity'] and
++         app['restoredRuntimeIdentity'] != p['runtimeConfiguration']['identity'],
++         'EXACT35_CURRENT_APP_RECOVERY_NOT_VERIFIED')
++    fresh_time(app.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
++
++
++def validate_current_backup(p, backup):
++    """Original physical branch remains intact. Exact35 alone may name a separate logical recovery proof."""
++    if exact35_selected(p) and backup.get('status') == 'PASS_NEW_SINGLE_DATABASE_AND_OPAQUE_FILES_BACKUP_OFFLINE_TOC_ONLY':
++        recovery = reference(p.get('legacyLogicalRecovery'))
++        files = backup.get('files', {})
++        needed = {'erp_prod.dump', 'media.protected.tar', 'configuration.protected.tar',
++                  'actual-app.protected.tar', 'actual-web.protected.tar', 'runtime-images.protected.tar'}
++        auth_ref = recovery.get('rolesAuthAcl')
++        auth = reference(auth_ref)
++        restored = reference(recovery.get('restoreReceipt'))
++        target = backup.get('target', {})
++        need(needed <= set(files) and all(files[n].get('bytes', 0) > 0 and HASH.fullmatch(files[n].get('sha256', '')) for n in needed) and
++             target.get('database') == 'erp_prod' and target.get('cluster') and target.get('oid') and target.get('postmaster') and
++             backup.get('mediaConfigurationMetadataStable') is True and
++             backup.get('servicesBefore') == backup.get('servicesAfter'), 'EXACT35_LEGACY_LOGICAL_CLOSURE_REQUIRED')
++        need(auth.get('format') == 'LEGACY_LOGICAL_ROLES_AUTH_ACL_CAPTURE_V1' and auth.get('target') == target and
++             auth.get('backupReceiptSha256') == p['backupReceipt']['sha256'] and
++             auth.get('databaseDumpSha256') == files['erp_prod.dump']['sha256'] and
++             auth.get('rolesAuthAclArtifact', {}).get('bytes', 0) > 0 and
++             HASH.fullmatch(auth.get('rolesAuthAclArtifact', {}).get('sha256', '')),
++             'EXACT35_LEGACY_SAME_DUMP_ROLES_AUTH_REQUIRED')
++        need(restored.get('state') == 'LEGACY_LOGICAL_SAME_DUMP_INDEPENDENT_RESTORE_PASSED' and
++             restored.get('sourceTarget') == target and restored.get('backupReceiptSha256') == p['backupReceipt']['sha256'] and
++             restored.get('databaseDumpSha256') == files['erp_prod.dump']['sha256'] and
++             restored.get('rolesAuthAclReceiptSha256') == auth_ref['sha256'] and
++             restored.get('backupFiles') == files and restored.get('rolesAclCompared') is True and
++             restored.get('ordinaryDatabaseRepresentativeRead') == 'PASS' and
++             restored.get('currentAppLoginRepresentativeRead') == 'NOT_TESTED' and
++             auth.get('roleAclProjection') == restored.get('roleAclProjection') == 'INCLUDES_PG_ATTRIBUTE_ATTACL_V1' and
++             restored.get('columnAclsCompared') is True and restored.get('opaqueFilesRestored') is True and
++             restored.get('restoreTarget', {}).get('systemIdentifier') not in (None, target['cluster']) and
++             isinstance(restored['restoreTarget'].get('systemIdentifier'), str) and
++             restored['restoreTarget']['systemIdentifier'].isdigit() and
++             str(restored['restoreTarget'].get('databaseOid', '')).isdigit() and
++             restored['restoreTarget'].get('postmasterStart') and
++             restored['restoreTarget'].get('database') == target['database'],
++             'EXACT35_LEGACY_SAME_DUMP_ACTUAL_RESTORE_REQUIRED')
++        for name, before in p['beforeCAS']['services'].items():
++            actual = backup.get('servicesBefore', {}).get(name, {})
++            need(all(actual.get(a) == before.get(b) for a, b in [('id', 'id'), ('image', 'imageId'),
++                 ('startedAt', 'startedAt'), ('restarts', 'restartCount')]), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
++        fresh_time(backup.get('finishedAtUTC'), p['backupMaxAgeSeconds'])
++        fresh_time(restored.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
++        need(dt.datetime.fromisoformat(restored['finishedAtUtc']) >= dt.datetime.fromisoformat(backup['finishedAtUTC']),
++             'EXACT35_LEGACY_RESTORE_PRECEDES_BACKUP')
++        return
++    need(backup.get('status') == 'PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED' and backup.get('physicalVerifiedOnce') is True and
++         backup.get('mediaAndConfigurationShapesStable') is True and backup.get('databaseFiles', 0) > 0 and backup.get('walRanges'), 'COMPLETE_CURRENT_BACKUP_REQUIRED')
++    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
++    for name, before in p['beforeCAS']['services'].items():
++        b = backup.get('services', {}).get(name, {})
++        need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
++
++
+ def validate_runtime35(p, manifest, runtime, capacity_pending=False):
+     native, refs = p['runtime35'], p['runtime35']['references']
+     record = runtime35_record(p)
+@@ -735,6 +884,8 @@
+          coverage.get('runtimeIdentity') == p['runtimeConfiguration']['identity'] and coverage.get('media') == native['media'] and
+          coverage.get('r1Protected') is True and coverage.get('isolatedRestore', {}).get('currentAppLoginRepresentativeRead') == 'PASS',
+          'EXACT35_CURRENT_CONFIG_MEDIA_RESTORE_COVERAGE_REQUIRED')
++    if production:
++        validate_exact35_logical_recovery(p, coverage, record)
+     media = canonical(native['media']['hostRoot'], kind='directory', root=ROOT)
+     need(media.stat().st_uid == int(p['limits']['app']['user'].split(':')[0]), 'EXACT35_PRIVATE_MEDIA_APP_OWNER_REQUIRED')
+     if 'inventorySpool' in native:
+@@ -1087,12 +1238,7 @@
+          pack.get('archive', {}).get('sha256') == p['archive']['sha256'] and pack.get('manifestSha256') == p['manifest']['sha256'] and
+          pack.get('members') == len(entries), 'EXACT_PACK_ACCEPTANCE_REQUIRED')
+     backup = reference(p['backupReceipt'])
+-    need(backup.get('status') == 'PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED' and backup.get('physicalVerifiedOnce') is True and
+-         backup.get('mediaAndConfigurationShapesStable') is True and backup.get('databaseFiles', 0) > 0 and backup.get('walRanges'), 'COMPLETE_CURRENT_BACKUP_REQUIRED')
+-    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+-    for name, before in p['beforeCAS']['services'].items():
+-        b = backup.get('services', {}).get(name, {})
+-        need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
++    validate_current_backup(p, backup)
+     db = reference(p['newDatabaseReceipt'])
+     if not exact35_selected(p) and not exact26_full(p):
+         need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and

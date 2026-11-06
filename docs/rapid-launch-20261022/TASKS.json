@@ -33772,14 +33772,23 @@
           "producerSHA256": "f4f15327e5bdcdbd11139660929bc1ce8ea43889690d522a45544cf0a68ed539",
           "helperSHA256": "b2a02d80cb57e455edd803b469cf712593efd25d178ac55b53c841dbed338b03",
           "localChecks": "5PASS_0SKIP_ORIGINAL17_REUSED_NOT_PG",
-          "QA": "QUEUED_ORIGINAL_QB_ONLY_FOUR_FAILURES",
+          "QA": "PASS_SCOPED_FOUR_FIX_SOURCE",
           "actualBackupRestoreApp": "NOT_TESTED",
-          "mainHelperWIPUnchanged": "9e914565c2e40ddef8f9198f6512f1a355d5aef156d473df1a1aaa11c24ef08d"
+          "mainHelperWIPUnchanged": "9e914565c2e40ddef8f9198f6512f1a355d5aef156d473df1a1aaa11c24ef08d",
+          "QBResultSHA256": "2f09aa4f14871e96f2b77b6c07e5d6584a8f2318a6f1039baa2a06ed55266b74"
         },
         "additionalExactSourceDecisions": [
           "Capture actual original pg_catalog.pg_control_system ACL; restore only original existing EXEC with explicit restore-bootstrap owner mapping, no new runtime authority",
           "Exact35 legacy logical rollback proof requires actual same-dump DB/ordinary DB read/roles-column ACL/opaque closure restore; old APP HTTP explicitly NOT_TESTED rather than a new prerequisite; new35 current-app HTTP evidence still required"
-        ]
+        ],
+        "sourceFix02": {
+          "HANDOFFSHA256": "515447f7c22eab01f994ed34d907e4ea8dc536b1c7d6dfa9a10fa6bc65fb1b6d",
+          "producerSHA256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
+          "helperSHA256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+          "QBResultSHA256": "1ffc76441ad79a25e3575dc2345490bd10ac9a3830e92db4c392d06daa6d0f90",
+          "QA": "PASS_SCOPED_TWO_SOURCE_DELTAS",
+          "actualBackupRestoreApp": "NOT_TESTED"
+        }
       },
       "minimalRealMonitor": {
         "sourceSHA256": "aa564fe15f65a21b47c374f35c2814d3163c0ac0c086501a2c88b9c760e7ca7b",
@@ -33813,11 +33822,34 @@
         "sourceSHA256": "9ccd8c2afd30561b97475cf565ad6b9736ad9f26ed181824d7c911acfe8c9a73",
         "planSHA256": "40cd012aaa649d67e4bc0242c995bc8b4bf8beaeb1619441052f5560b5660a54",
         "QBResultSHA256": "6558af84bc6151e997055764d003dc1d1f7dbf1ede616ae443bfe7cd72e47d8c",
-        "state": "C_CONDITIONALLY_AUTHORIZED_AFTER_FIXED_QB_PASS_PENDING_ACTUAL_RECEIPT",
+        "state": "PASS_ACTUAL_CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW",
         "prepDeadlineEpochMillis": 1793999594200,
         "startsInstallWindow": false,
         "startsPG": false,
-        "realImported": false
+        "realImported": false,
+        "unit": "naijue-erp-op-5cc58239-a0ce724591c3",
+        "actualResult": "COMPLETED_EXIT_0",
+        "receiptHashes": {
+          "materialization-floor-result.json": "30e74f9c7c8e9c9d593c6c890df70bbb48c371725107112b56997d8c90844496",
+          "fresh35-materialize-app-result.json": "824208be01c22876813b36252a17fb496dc7cfa240cc9f99d7c8f02e87d89943",
+          "job.json": "3b7938df7232733dd20e32ac5ab84c3713ff4d8a087860d4bcd863c886bb659e"
+        },
+        "freeAfterBytes": 11303362560,
+        "maxSampleGapSeconds": 0.200765225,
+        "sampleCount": 1764,
+        "childReaped": true,
+        "newDatabaseStarted": false,
+        "finishedAtBeijing": "2026-11-07T05:02:12.675553+08:00"
+      },
+      "postWindowOriginalKeyRecovery": {
+        "sourceFactOwner": "D1",
+        "sourceBasis": "Original runtime SELECT import_batch/operation_receipt/audit_change; standard_business_ready RLS hides rows until two PUBLISH batches are committed",
+        "decision": "Use existing ordinary V2 admission and single pool, RR READ ONLY exact batches/original keys and hashes; return positive COMMITTED only; zero rows or not-ready stay UNKNOWN, never ABSENT or permission expansion",
+        "opsOwner": "T45 original ops only; native unchanged",
+        "state": "SOURCE_ADAPTATION_IN_PROGRESS",
+        "writerWindowExtended": false,
+        "runtimeInitializerGranted": false,
+        "newDBPermission": false
       }
     }
   }

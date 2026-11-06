@@ -1,0 +1,47 @@
+{
+  "status": "SOURCE_ONLY_CONTROL_SYSTEM_ACL_AND_LEGACY_SCOPE_SUCCESSOR",
+  "at": "2026-11-06T20:59:41.608510+00:00",
+  "files": {
+    "new35-backup-restore.py": {
+      "sha256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
+      "bytes": 44754
+    },
+    "deploy-candidate.py": {
+      "sha256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+      "bytes": 210085
+    },
+    "test_control_acl_and_legacy_scope.py": {
+      "sha256": "2c70672d2528f8d0a05f55b293debc31d072d1bcd298b87e37c2b41045c2a8bd",
+      "bytes": 6900
+    }
+  },
+  "parent": {
+    "producer": "f4f15327e5bdcdbd11139660929bc1ce8ea43889690d522a45544cf0a68ed539",
+    "consumer": "b2a02d80cb57e455edd803b469cf712593efd25d178ac55b53c841dbed338b03",
+    "QB": "Scoped PASS adopted by C; parent not modified"
+  },
+  "checks": {
+    "newTests": 4,
+    "passed": 4,
+    "skips": 0,
+    "syntax": "three Python AST parsed",
+    "prior17And5": "Reused; not rerun",
+    "realPG": "NOT_TESTED",
+    "actualACLGrant": "NOT_EXECUTED",
+    "actualApplication": "NOT_TESTED"
+  },
+  "sourceAcl": "catalog_sql captures exactly pg_catalog.pg_control_system() actual internal definition/owner/ownerOID/ACL from source during backup, alongside columnAcls; validates exactly source admin ownership plus original owner/controller/runtime nongrantable EXEC, rejects PUBLIC/extra roles/grant options. This capture is mandatory; static GRANT source text is not evidence.",
+  "restoreAcl": "On a new isolated already-restored target, require the same fixed builtin identity/definition, existing OID10 restore bootstrap owner and no unknown ACL; grant exactly source owner/controller/runtime EXEC, no accounts/lifetime/PUBLIC/options. A separate original psql process/connection queries actual ACL after GRANT, strict comparison with source owner/grantor/admin-own-entry mapped ONLY to existing restore bootstrap. Full roles/schema/column ACL compare uses precisely that one builtin delta.",
+  "mapping": {
+    "function": "pg_catalog.pg_control_system()",
+    "scope": "ONLY_BUILTIN_OWNER_GRANTOR_OID10",
+    "sourceAdmin": "actual source record proposal.admin",
+    "restoreAdmin": "actual independent restore connection user/OID10"
+  },
+  "evidence": "roleAclProjection=INCLUDES_ATTACL_AND_CONTROL_SYSTEM_V1 on backup/restore. Restore may set controlSystemAclRestored/controlSystemAclNewConnectionReadback only after actual new-connection comparison; source metadata/file pins preserved, no actual reports generated here. Consumer requires the flags and exact same map.",
+  "legacyScope": "Only exact35 legacyLogicalRecovery stops requiring old APP HTTP login/session/query. Requires oldAPP NOT_TESTED, ordinaryDatabaseRepresentativeRead PASS, exact same dump/old target/roles+auth+column ACL proof/private files and images restoration/three old service CAS/freshness. New35 actual app login/session/query and physical/non35 checks unchanged; zero-new-business rollback conditions untouched.",
+  "currentNext": {
+    "current": "FIX01 scoped PASS; FIX02 source prepared with 4 local-only tests; producer/helper remain independent copies. W9e914, frozen10fc and original reports/old backups untouched.",
+    "next": "Original QB only these two increments, then combine final correct helper with RESTORE-RECORD-SOURCE-02 native snapshot. 02 actual completion/record/ordinary consumer in progress; no real PG/app claim."
+  }
+}

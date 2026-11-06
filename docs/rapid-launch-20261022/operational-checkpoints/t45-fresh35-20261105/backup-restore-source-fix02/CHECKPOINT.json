@@ -1,0 +1,15 @@
+{
+  "status": "SOURCE_ONLY_ACCEPTED_SCOPED_NOT_INTEGRATED_IN_CURRENT_APP_OR_MAIN_HELPER",
+  "baselineHelperSha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+  "candidateHelperSha256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+  "fullHelperDelta": "deploy-candidate.NOT-APPLIED.patch",
+  "preservedMainWIPSha256": "9e914565c2e40ddef8f9198f6512f1a355d5aef156d473df1a1aaa11c24ef08d",
+  "actualBackupRestoreApp": "NOT_TESTED",
+  "testHarness": "Original exact local sibling report paths; this source checkpoint alone is not a standalone replay claim",
+  "sourceHashes": {
+    "new35-backup-restore.py": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
+    "deploy-candidate.py": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+    "test_control_acl_and_legacy_scope.py": "2c70672d2528f8d0a05f55b293debc31d072d1bcd298b87e37c2b41045c2a8bd",
+    "HANDOFF.json": "515447f7c22eab01f994ed34d907e4ea8dc536b1c7d6dfa9a10fa6bc65fb1b6d"
+  }
+}
