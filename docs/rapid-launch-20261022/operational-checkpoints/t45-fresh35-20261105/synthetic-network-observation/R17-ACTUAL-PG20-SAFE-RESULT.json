@@ -1,0 +1,116 @@
+{
+  "status": "SCOPED_PG17_11_INSTALL_AND_NORMAL_IMPORT_PASS_POSTCOMMIT_JSON_CONSUMER_FAILED",
+  "recordedAtUTC": "2026-11-06T09:47:33.939897+00:00",
+  "candidateRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
+  "sourceSetSHA256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+  "QBResultSHA256": "181295ac7590384adb00d3a25aba3c37c1226f6014533d2092957bcdf681002a",
+  "D2ResultSHA256": "0f555011fc624648024566cc8fa854f8b553accdaded38ce5e2609c391a08cae",
+  "C9SHA256": "8610560c87fb01b91098c078e4085f5a10f4fb9031490b26e1dd8630c2d5658d",
+  "actualModelEffortFast": "UNVERIFIED",
+  "job": {
+    "jobId": "t45-f35-2af49c-install-20261106-01",
+    "status": "FAILED",
+    "exitCode": 2,
+    "elapsedSeconds": 142.78037972794846,
+    "atUTC": "2026-11-06T09:43:31.049126+00:00",
+    "finishedAtUTC": "2026-11-06T09:45:53.862538+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-2af49c-install-20261106-01/transport/release-receipts/t45-f35-2af49c-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "3eb95d5cf86a796fd9611b4f92b9510e1601755e6868d43788c706c327c1c532"
+  },
+  "cid": "47143df7e246058c38bc1e5060db7e59a46fee9b5f902c2bed35ff2a2987f01d",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-06 09:39:18.836206+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7704990745636929583"
+  },
+  "actualPostgreSQL170011Verified": true,
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "sourceSetSha256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d"
+  },
+  "negativeChecks": {
+    "badApprovalCode": "HISTORICAL_SETTLEMENT_APPROVAL_HASH",
+    "badApprovalRollback": true,
+    "finalFailureCode": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT",
+    "finalFailureStage": "FINAL_PUBLISH",
+    "missingSettlementCode": "STANDARD_PUBLICATION_INCOMPLETE",
+    "missingSettlementRollback": true,
+    "originalBatchAbsent": true,
+    "reachedFinalPublish": true,
+    "state": "ROLLED_BACK"
+  },
+  "rollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "stage": "rollback",
+    "connectionCleanup": "CLOSED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true
+  },
+  "normalImport": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "stage": "commit",
+    "connectionCleanup": "CLOSED",
+    "syntheticImportVerified": true,
+    "businessVerified": false,
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "settlementRetentionVerified": true,
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "ordinaryUid": 61035
+  },
+  "snapshots": {
+    "postInstallEqualsPostRollback": true,
+    "postCommitDiffersFromPostInstall": true,
+    "threeConnectionCleanup": [
+      "CLOSED",
+      "CLOSED",
+      "CLOSED"
+    ]
+  },
+  "hostVerified": true,
+  "syntheticImportVerified": true,
+  "independentSnapshotsVerified": true,
+  "ordinaryBusinessVerified": false,
+  "postCommitConsumerFailure": {
+    "code": "JSONDecodeError",
+    "automaticRetry": false,
+    "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+  },
+  "exactFailedJSONFileOrSourceLine": "NOT_EXPORTED_UNKNOWN",
+  "ordinaryResultFailureCleanupReceiptsExported": false,
+  "ordinaryProbe": "NOT_REACHED_OR_NOT_EXPORTED",
+  "containerStopped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "launcherExitCode": 1,
+  "wholeChainPassed": false,
+  "normalCommittedImportMustNotReplay": true,
+  "r16AndEarlierUnknownsUnchanged": true,
+  "schemaAndRecordCommittedNotRolledBack": true,
+  "transactionBackendPidNonceNotCopied": true,
+  "rawBusinessOrLogBodiesCopied": false,
+  "formalOrREALActions": false,
+  "postCleanupHostResourceMetrics": "NOT_MEASURED",
+  "next": "Original C/D1 bounded source diagnosis of post-normal-commit JSON consumer. Preserve all committed records and stopped target; no new server jobs/PG/write without accurate successor scope."
+}
