@@ -1480,3 +1480,7 @@ D2实际build0/10.838s、pack0/8.830s，production453及ordinary7298成员bytes/
 
 ### 2026-11-06T09:30:54+08:00 | r8实际失败精确收口
 唯一install ce24a90b实际FAILED2/17.962s，STEP/complete-successor-catalog/P0001/原事务ROLLED_BACK；cleanup六项全true、initializer及descendants回收、errors[]、CID3989c089已停。没有record或synthetic25/ordinary业务通过，汇总fb9c4ba3已核。T45同一次有界停止log回执19989cf3实际命中FRESH35_COMBINED_EXTERNAL_DEPENDENCY/ERROR/DO line107/1match，0PG/变更；具体外部对象与原因尚未证明。原D1沿准确谓词定向诊断，不能凭标签加白名单/放宽guard或再盲开PG；原LF/318列及其他已过证据复用。旧正式服务和REAL未动，当前备份47d有效但新恢复未验。
+
+
+### 2026-11-06T09:42:49+08:00 | r9上下文修复与同版制品就绪
+D1固定原catalog/test两叶，只在原external谓词前恢复quote_all_identifiers=off（157B含注释），原允许集合/OID/完整谓词/权限/DDL/2DO不变；单项实红→绿证据a4d1e432。C按人类至12点委托明确裁定，原QB d90c8b2f窄验通过（逆157B逐字节等5e、真正外部/混淆名/错OID仍拒、source唯一pin逆算），不重33LF/318列。integration d41929d3/root24e34727/tree89e5c55b/source57c105ec已推并独立回读。D2 9dd8047f实际build0/11.107s、pack0/8.765s，453production/7298ordinary读回；C核小闭包和实际tail86694786/2,462,811B。服务器9c/73dcdc base+81,221,531prefix拼新3e7fbbdb/83,684,342B，manifest69228/descriptor59c84。T45已purepin准备r9，一次真实stagepreflight就绪后C签原13键两叶，不先开PG。r8具体首依赖对象/唯一原因未观察，源修复及构建不能冒实PG安装通过；备份47d旧服务保留。

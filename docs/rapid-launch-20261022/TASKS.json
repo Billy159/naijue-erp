@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T09:30:54+08:00",
+  "updatedAt": "2026-11-06T09:42:49+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T09:30:54+08:00",
+    "at": "2026-11-06T09:42:49+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,13 +28491,13 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "Original D1 exact external-dependency predicate/source diagnosis. T45 stopped scene preserved; no blind rerun/newPG until evidence-backed minimal fix. Existing sourceQA and backup valid at their levels.",
+      "critical": "T45 accurate gate391c/base9c identity/new rootabsence/currentresources once; C original13key leaves then original materialization; no newPG before real ready/resource.",
       "independentPreparation": {
-        "D1": "R8 exact EXTERNAL_DEPENDENCY failure diagnosis along original owner; no repeat LF/318column review.",
-        "T45": "Actual r8 rolledback/stopped, static tag collected once. Preserve oldscenes; next evidence-backed source increment only.",
-        "D2": "Fixed9c artifacts and actualtail delivered; no rebuild. Productionrelease source ready.",
+        "D1": "R8 deparser context fix source frozen/QA adopted, no further source work until actualfailure.",
+        "T45": "r9 purepin prepared; accurate stagepreflight requested, not newPG yet.",
+        "D2": "Fixed24e build+pack+tail complete/readback, no samebuild rerun.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "GeneratedLF6c737 and backupF02 e8d711 valid adopted; next actualincrement only.",
+        "QB": "d90c8b2f new157B context source/scopedmodel PASS; prior effective checks adopted; actualPG pending.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R8_ACTUAL_EXTERNAL_DEPENDENCY_FAIL_ROOTCAUSE_DIAGNOSIS",
+      "state": "R9_FIXED_BUILD_AND_SCOPED_QB_READY_STAGE_PREFLIGHT_PENDING",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "Original D1 exact external-dependency predicate/source diagnosis. T45 stopped scene preserved; no blind rerun/newPG until evidence-backed minimal fix. Existing sourceQA and backup valid at their levels.",
+      "next": "T45 accurate gate391c/base9c identity/new rootabsence/currentresources once; C original13key leaves then original materialization; no newPG before real ready/resource.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30168,9 +30168,52 @@
         },
         "safeStaticTagReceiptSHA256": "19989cf34b13927ed643b155bae747749f46ed900171809fd70fab5d265e0f7a",
         "safeStaticTagSummarySHA256": "fd2ac6ed1c020d0e2f7cea3b19767292f2c0f9f0e496cf926a3dc3fdd33598cc",
-        "recordPublished": false
+        "recordPublished": false,
+        "sourceFix": {
+          "authority": "C exact technical decision under direct human delegation before2026-11-06T12:00+08",
+          "scope": "Only restore quote_all_identifiers=off immediately before unchanged dependency predicate; no allowlist/OID/permissions/model/DDL/2DO widening",
+          "authorReceiptSHA256": "a4d1e4325f710d4f5a16c60fcc06592f9872c4706ffde6943485e81fb95e989e",
+          "integration": "d41929d3eaebe13199275cb71c1b0d1118e01911",
+          "QBReceiptSHA256": "d90c8b2ff08d96f71873bfa0ebf1b130994691683354e20d0d325e166fdba398",
+          "state": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL_NOT_PG"
+        }
       },
-      "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING"
+      "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING",
+      "r9Preparation": {
+        "state": "FIXED_SOURCE_BUILD_SCOPED_QB_PASS_STAGE_PREFLIGHT_PENDING",
+        "integration": "d41929d3eaebe13199275cb71c1b0d1118e01911",
+        "buildRoot": "24e34727f9d4df94cf2939e49d77638bbad36784",
+        "tree": "89e5c55b23f8890a731edd9da1aa70908a8fc2f7",
+        "sourceSetSHA256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+        "buildId": "erp-24e34727f9d4-full-20261106",
+        "buildReceiptSHA256": "9dd8047f1b5cfb4fab9b822c4b0aa29488c71546ecc2e01216a5623d06366b0a",
+        "buildExitCode": 0,
+        "buildSeconds": 11.107,
+        "packExitCode": 0,
+        "packSeconds": 8.765,
+        "archiveSHA256": "3e7fbbdb05c19c4ad4e580dce0ba4766cdb87987f57c984f0ad11a1698b4907e",
+        "archiveBytes": 83684342,
+        "manifestSHA256": "69228b4255f2c85c1ae3cfc0b2b10bb4dfdcb58c130f8c65590e1ca06a198106",
+        "manifestBytes": 1084429,
+        "sourceDescriptorSHA256": "59c84aabb7cc4d4660ee8d2cd95d910a6eb48a508d2f1bd44d9b5cf1332b4ecf",
+        "ordinaryRegularFiles": 7298,
+        "productionRegularFiles": 453,
+        "productionArchiveSHA256": "dbdcd6605cb11388460ecfc687595119dd96484386e74a5b072349692e3d119a",
+        "productionArchiveBytes": 3347319,
+        "baseArchiveSHA256": "73dcdc585b03b7ec262e9dcfc3962b6ed1536aa0dec7f44a93ec049392beb146",
+        "baseArchiveBytes": 83685827,
+        "prefixBytes": 81221531,
+        "prefixSHA256": "3c2cf3a1ceda70783db4aedee4874b8f3ff3adce71e2182c6410a791f7698dc9",
+        "tailBytes": 2462811,
+        "tailSHA256": "8669478632b0a6da9447310e7e1d1e7b12557090b0565cb5289848822384e3d4",
+        "tailReceiptSHA256": "2a6b83d35f35a92ea9a73861a5be1c1fe1eaee1bc23626c823a4d06a63f8bf5b",
+        "QBReceiptSHA256": "d90c8b2ff08d96f71873bfa0ebf1b130994691683354e20d0d325e166fdba398",
+        "root": "phaseb-application-r9",
+        "container": "t45-fresh35-deb13-20261106-r9",
+        "githubSourceAndRootActualReadback": true,
+        "actualPG": false,
+        "next": "T45 accurate gate391c/base9c identity/new rootabsence/currentresources once; C original13key leaves then original materialization; no newPG before real ready/resource."
+      }
     },
     "productionReleaseCompatibilityContinuation": {
       "state": "SOURCE_QB_F01_CLOSED_ORIGINAL_CALLER_PINS_REGISTERED_NOT_ACTUAL_DEPLOYMENT",

@@ -1,0 +1,71 @@
+{
+  "task": "C-0448-R8-EXTERNAL-DEPENDENCY-CONTEXT",
+  "atUtc": "2026-11-06T01:39:18.559176+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "integration": "d41929d3eaebe13199275cb71c1b0d1118e01911",
+  "buildRoot": "24e34727f9d4df94cf2939e49d77638bbad36784",
+  "tree": "89e5c55b23f8890a731edd9da1aa70908a8fc2f7",
+  "sourceSet": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+  "pins": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 37233,
+      "sha256": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab"
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "bytes": 29368,
+      "sha256": "d531b49eae8e418c22b63da1c0728a8b05c9458b85bcf35943ee10bcf2cb22ab"
+    }
+  ],
+  "reverse157BEqualsPrior5eCatalog": true,
+  "checks": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "originalGuardGenerator": "EXECUTED_WITH_OBSERVER_STUB_NO_PG",
+    "resetImmediatelyBeforePredicate": true,
+    "originalPredicateExact": true,
+    "oldLastContext": "on",
+    "newLastContext": "off",
+    "allowedSchemas": 3,
+    "foreignAndQuoteLikeNamesRefused": 5,
+    "allowedNamespaceOids": 3,
+    "foreignOidWithNullOrAllowedSchemaRefused": 2,
+    "sourceSetHashRecomputed": true,
+    "onlyCatalogPinReversedToPriorSourceSet": true,
+    "other213PinsUnchanged": true
+  },
+  "primarySourcesVerified": [
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/catalog/objectaddress.c#L4124-L4130",
+      "fact": "pg_identify_object schema output calls quote_identifier"
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/ruleutils.c#L11972-L12043",
+      "fact": "quote_all_identifiers disables safe unquoted output; required quotes escaped"
+    }
+  ],
+  "authorSingleRedGreenAdopted": {
+    "resultSha256": "a4d1e4325f710d4f5a16c60fcc06592f9872c4706ffde6943485e81fb95e989e",
+    "redFailed": 1,
+    "greenPassed": 1,
+    "rerun": false
+  },
+  "priorAccepted33LF318ColumnsAclAndOtherScopes": "REUSED_NOT_RETESTED",
+  "preserved": "Complete original predicate/owned cohort/text and namespace-OID allowsets, all model/DDL/permissions/2DO/lifecycle bytes remain unchanged outside157B reset/comment.",
+  "boundaries": {
+    "sourceModified": false,
+    "WIPReviewed": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "r8ReplayedOrRestarted": false,
+    "actualFirstDependencyObserved": false,
+    "soleCauseProven": false,
+    "actualInstallPassed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return to C; wait for meaningful actual increment. Source-only PASS does not establish actual PG/install PASS."
+}
