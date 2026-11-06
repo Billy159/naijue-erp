@@ -31489,7 +31489,31 @@
         "nativeSchemaInstalled": false,
         "nativeImportVerified": false,
         "ordinaryBusinessVerified": false,
-        "finalPG17_11Verified": false
+        "finalPG17_11Verified": false,
+        "stageResultSHA256": "1efdf55de82fa25ade94ece34bc53fdfd1df9b7d84a8d11f5684b0028694d155",
+        "actualAssemblerReceiptSHA256": "3b0e7fb297f7a7f165b68f386a2574432eea3eae56736dba7bde74129f61ce09",
+        "actualOrdinaryReady": {
+          "archiveBytes": 83696049,
+          "archiveSha256": "0aefefe711d96d93303a1032d4ab43f27e0de3d48a563b24454cf0e01ed41503",
+          "artifactKey": "f35-e7bcc8-ordinary-local-20261106-01",
+          "authoritySha256": "655c17726a157d708cb7bb3dac7e92b5495498eb26624b7c2a9a6a8c1e71c4b8",
+          "fileIdentity": [
+            66304,
+            393697,
+            83696049,
+            1793960192422906011,
+            1793960193462889592
+          ],
+          "sourceSetSha256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+          "status": "READY"
+        },
+        "materialization": {
+          "key": "t45-f35-e7bcc8-local-materialize-20261106-01",
+          "state": "RUNNING_ORIGINAL_NO_RESUBMISSION",
+          "timeoutSeconds": 900,
+          "PGStarted": false,
+          "postResourcePreflight": "PENDING"
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31898,8 +31922,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T18:13:14+08:00",
-      "phase": "R18_SOURCE_QA_BUILD_PASS_STAGING_DISPATCHED",
+      "at": "2026-11-06T18:18:12+08:00",
+      "phase": "R18_FULL_READY_MATERIALIZATION_RUNNING_PG_PENDING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
       "currentOwner": "Original T45 exact ordinary staging/materialization",
@@ -31913,7 +31937,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 stage/materialize once under exact C13; actual resource proof precedes C11/C9. Corrected actual17.11 ordinary chain still pending; original r17 committed key not replayed.",
+      "next": "Wait original materialization terminal and actual resources before new C11. No duplicate operation or guessed READY.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4d750fffe517836f1abd8191655702011e16ae80",
       "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",

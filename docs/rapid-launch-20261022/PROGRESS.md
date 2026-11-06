@@ -1733,3 +1733,7 @@ QBfbbce17b exact2leaf source/model PASS adopted. D2d1dc84f4 build0/12.476s,pack0
 ## 2026-11-06T18:13:14+08:00 - R18 actual readonly preflight and exact C13 staging bound
 
 Actual preflight728bce57 completed0/0.267491s; retained r17 stopped/cleanup/committed evidence and exactbase READY5efac917/83697343B/identity393689, newr18 absent. LOCAL10d3201e and original inverse code proof adopted. C13 tail209d470f2351884d929bf2451336d3b6524e06ee78a02c27ab0315a8ed4ae227/full655c17726a157d708cb7bb3dac7e92b5495498eb26624b7c2a9a6a8c1e71c4b8 binds only source9cef557d ordinary stage/materialization in 1793959994170..1793961794170. Separate actual material/resource C11 and actualPG170011/program/target C9 remain pending. No client-created approvals, PG/REAL/production or r17 committed-key replay.
+
+## 2026-11-06T18:18:12+08:00 - R18 exact ordinary full artifact ready; original materialization running
+
+Assembler3b0e7fb2 completed0/4.027418s and original receiver FULLREADY verified source9cef557d/full0aefefe7/83696049B/C13655c1772/identity393697. C verified three raw terminal receipt hashes and adopted stage1efdf55de82fa25ade94ece34bc53fdfd1df9b7d84a8d11f5684b0028694d155. Original materialization t45-f35-e7bcc8-local-materialize-20261106-01 submitted once under900s; actual terminal/post-resource proof pending before C11/C9. NoPG/REAL/production and originalr17committed unchanged.
