@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T07:25:22.247050+08:00",
+  "updatedAt": "2026-11-07T07:30:49.489067+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T07:25:22.247050+08:00",
-      "phase": "CATALOG_ORDER_SOURCE_ADOPTED_NEW_FORMAL_BUILD_IN_PROGRESS",
+      "at": "2026-11-07T07:30:49.489067+08:00",
+      "phase": "NEW_FORMAL_3B82_BUILD_PACK_PASS_R3_OPS_PREPARATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalD2 genuine3b82 sourceSet/manifest/build/pack; T45 exact readonlyRAW ops delta, originalQB only that increment. Then new exacttarget installation; failedr2 never replayed.",
+      "next": "OriginalT45 exact newsourceSet ops/read-only retained RAW bind/private six-file delivery; originalQB targeted delta. No new C14 before actual materials/resources ready.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -34149,14 +34149,31 @@
         "QBResultSha256": "93c32470c7653c10af315a4f203a6b734a782108a3101938370beba33c1d4b11",
         "mainWIPOverwritten": false,
         "restoreOnlyMixed": false,
-        "actualBuild": "IN_PROGRESS_NOT_PASS",
+        "actualBuild": "BUILD_PACK_RESOURCE_CLOSURE_PASS_NOT_PG_OR_DEPLOYMENT",
         "actualPG": "NOT_RUN",
         "remoteVerified": true,
         "mainAdoptionReceiptSha256": "188b27f7555aac4ea7791fc2d3d8cdd8ae7b3e0fc4afcae605a1ed172e45f5fb",
-        "currentOwner": "Original D2 actual newformal build and pack; originalT45 accurate readonly package bind source",
-        "sourceSetSha256": null,
+        "currentOwner": "OriginalT45 new fixed readonly RAW binding ops/private six-input preparation; originalQB affected ops delta only",
+        "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "actualPGInstall": "NOT_TESTED",
-        "optionalRestoreLeaf": "EXCLUDED"
+        "optionalRestoreLeaf": "EXCLUDED",
+        "actualBuildReceiptSha256": "5814cdcbbd546c1c598378163252ad2745b2b6b5f45f5324ebcb4ba3c3313883",
+        "sourceCounts": {
+          "current": 214,
+          "captured": 180
+        },
+        "ordinaryManifestSHA256": "e7b612814be23afe4fbc1b2b1ecaf680b5933cbed777bf26caeee31381d0ff62",
+        "ordinaryArchive": {
+          "sha256": "99c7245e0222b300b6bd6c4b3e84990c3dbd183dd3008e5500a84211ec2fe4b4",
+          "bytes": 83705857,
+          "members": 7298
+        },
+        "smallAPPArchive": {
+          "sha256": "02d2d22838a773d0b87dbb69e8f0eb691c716b247dc2f7f4c568d35f7849c5cc",
+          "bytes": 3356997
+        },
+        "buildSeconds": 12.044220375,
+        "packSeconds": 9.944686125
       }
     }
   }
