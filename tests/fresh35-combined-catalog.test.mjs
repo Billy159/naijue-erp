@@ -15,6 +15,41 @@ const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),grap
 const {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation}=graph.catalogAPI;
 const {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall}=graph.lifecycleAPI;
 const bundle=async()=>({source,catalog:graph.catalog,program:graph.program});
+test('generated column expectations preserve exact pinned pg_dump expression bytes (offline projection, not PG)',async()=>{
+ const dump=await readFile(base+'/01-schema-REVIEW-ONLY.sql','utf8'),before=JSON.parse(await readFile(modelPath,'utf8'));
+ const sql=fresh35CombinedCatalogSql(graph.catalog,source,target),model=JSON.parse(sql.guardSql.split('$combined_model$')[1]);
+ const expressions=new Map();
+ for(const table of parseFresh35DumpSections(dump).filter(s=>s.type==='TABLE'))for(const match of table.text.matchAll(/^    "([a-z_]+)" (?:"uuid"|integer) GENERATED ALWAYS AS \(([\s\S]*?)\) STORED/gm))expressions.set(table.name+'.'+match[1],match[2]);
+ assert.equal(expressions.size,33);assert.equal(model.columns.length,351);
+ for(const column of model.columns){
+  const prior=before.columns.find(c=>c.table===column.table&&c.name===column.name),raw=expressions.get(column.table+'.'+column.name);
+  if(raw!==undefined){
+   assert.equal(raw,'\n'+prior.generatedExpression,'the pinned PG17 dump preserves the single native CASE prefix LF');
+   assert.equal(column.generatedExpression,raw,column.table+'.'+column.name);
+   assert.deepEqual({...column,generatedExpression:prior.generatedExpression},prior,'all other generated-column metadata remains exact');
+  }else if(column.table==='sales_header'&&column.name==='hall_id')assert.deepEqual(column,{...prior,notNull:false,metadata:{...prior.metadata,attnotnull:false}});
+  else assert.deepEqual(column,prior,'the other318 columns retain their existing expectations');
+ }
+});
+test('generated expression restoration rejects source whitespace, token, identity and cohort differences',async()=>{
+ const text=await readFile(root+'scripts/release/unified-install/fresh35-combined-catalog-v1.mjs','utf8'),start=text.indexOf('function restoreGeneratedExpressionPrefixes('),end=text.indexOf('\nexport async function buildFresh35CombinedCatalog',start);
+ assert(start>=0&&end>start);
+ const need=(ok,code)=>{if(!ok)throw Error(code)},restore=new Function('need',text.slice(start,end)+'return restoreGeneratedExpressionPrefixes;')(need);
+ const original=JSON.parse(await readFile(modelPath,'utf8')),declarations=JSON.parse(await readFile(base+'/expected-declared-metadata.json','utf8')),sections=parseFresh35DumpSections(await readFile(base+'/01-schema-REVIEW-ONLY.sql','utf8'));
+ const first=declarations.columns.find(c=>c.generated==='s');
+ const restored=structuredClone(original);restore(restored,declarations,sections);
+ assert.deepEqual(restored,{...original,columns:original.columns.map(c=>c.generated==='s'?{...c,generatedExpression:'\n'+c.generatedExpression}:c)},'the entire model changes only the33 generated-expression prefixes; other categories and column fields remain exact');
+ for(const [label,mutate] of [
+  ['missing LF',(_m,_d,s)=>{const table=s.find(t=>t.type==='TABLE'&&t.name===first.table);table.text=table.text.replace('GENERATED ALWAYS AS (\nCASE','GENERATED ALWAYS AS (CASE')}],
+  ['extra LF',(_m,_d,s)=>{const table=s.find(t=>t.type==='TABLE'&&t.name===first.table);table.text=table.text.replace('GENERATED ALWAYS AS (\nCASE','GENERATED ALWAYS AS (\n\nCASE')}],
+  ['changed token',(_m,_d,s)=>{const table=s.find(t=>t.type==='TABLE'&&t.name===first.table);table.text=table.text.replace("= 'SALES'::", "= 'OTHER'::")}],
+  ['wrong identity',(m)=>{m.columns.find(c=>c.table===first.table&&c.name===first.name).name='other_column'}],
+  ['wrong cohort',(_m,d)=>{d.columns=d.columns.filter(c=>c!==d.columns.find(c=>c.generated==='s'))}]
+ ]){
+  const model=structuredClone(original),declared=structuredClone(declarations),dump=structuredClone(sections);mutate(model,declared,dump);
+  assert.throws(()=>restore(model,declared,dump),/GENERATED_EXPRESSION_(SOURCE|IDENTITY|COHORT)_DIFFERS/,label);
+ }
+});
 test('direct schema materializes captured default routine ACL without changing effective privileges (offline SQL projection, not PG)',async()=>{
  const signature='naijue_erp.is_native_party_import_insert(text,jsonb)',t=describeFresh35CombinedTarget(target);
  const schema=renderFresh35CombinedSchema(source,t.proposal),sql=fresh35CombinedCatalogSql(graph.catalog,source,target),model=JSON.parse(sql.guardSql.split('$combined_model$')[1]);
@@ -50,7 +85,7 @@ test('full successor model changes the adopted seven routine bodies and sales ha
  const model=JSON.parse(sql.guardSql.split('$combined_model$')[1]),before=JSON.parse(await readFile(modelPath,'utf8'));
  assert.equal(d.changes.length,14);assert.equal(new Set(d.changes.map(r=>r.signature)).size,7);assert.equal(d.changes.at(-1).patch,'historical-settlement-difference');assert.equal(d.changes.findLast(c=>c.signature.includes('.validate_sales_settlement(')).after,'580340f008dcf9652fb18e041dde2b63ae2aa72abde3c5e8a772cb13cfb0990f');assert.equal(model.routines.length,152);
  assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,7);
- const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old)}
+ const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old.generated==='s'?{...old,generatedExpression:'\n'+old.generatedExpression}:old)}
  for(const key of ['constraints','indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
  assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.relation==='schema_migration'&&['version','description'].includes(row.column)?['fresh35_controller_20261105_r9=r/fresh35_owner_20261105_r9']:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'only approved two-column controller read differs; all other ACLs stay exact');
  assert.ok(model.routines.every(r=>/^[a-f0-9]{64}$/.test(r.bodySha256)));assert.equal(d.independentSafetyReviewComplete,false);assert.equal(d.sqlParsedByPostgres,false);assert.equal(d.engineVerified,false);
