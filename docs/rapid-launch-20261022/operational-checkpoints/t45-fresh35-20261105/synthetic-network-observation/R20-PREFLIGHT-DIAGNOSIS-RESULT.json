@@ -1,0 +1,100 @@
+{
+  "status": "ORIGINAL_PREFLIGHT_BAD_PRIVATE_RECEIPT_PIN_IDENTIFIED_METADATA_VERIFIED_REMAINDER_NOT_RUN",
+  "checkedAtUTC": "2026-11-06T11:51:54.634788+00:00",
+  "jobId": "t45-f35-07e250-preflight-failure-readonly-20261106-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 1.6721812137402594,
+  "safeEvidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-07e250-preflight-failure-readonly-20261106-01/transport/release-receipts/t45-f35-07e250-preflight-failure-readonly-20261106-01/preflight-failure-metadata.json",
+  "safeEvidenceSHA256": "9850975a200552eb9684dc94339820cd4f8cd2d12754ea03c3f2da54031edf47",
+  "failureSourceLine": 36,
+  "failureType": "AssertionError",
+  "sourceMistake": "Used exported public receipt digest where exact server-private original result digest was required. No environment failure inferred.",
+  "publicExportSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
+  "actualOriginalPrivateSHA256": "ac4ef67f940331706e4c0dc2b264c3e6032f9fd50e181a261f40708b59ab99cd",
+  "fixedUnexecutedSourceSHA256": "d5061271ab9f8790384aab4edcbf90cc3cbd614461865c4cca7a8f97f83f2e5a",
+  "fixOnlyOneLiteral": true,
+  "fixedScriptNotExecuted": true,
+  "metadataChecks": {
+    "currentPolicyExact": true,
+    "newTargetAbsence": {
+      "containerAbsent": true,
+      "noR20Artifact": true,
+      "rootAbsent": true
+    },
+    "originalPolicyBackupReachedAndExact": true,
+    "originalPrivateLogs": {
+      "boundedDirectFileClassifications": [
+        {
+          "exceptionTypes": [
+            "AssertionError"
+          ],
+          "rawExported": false,
+          "sourceLines": [
+            36
+          ]
+        }
+      ]
+    },
+    "originalSubmission": {
+      "bundleExact": true,
+      "exportsEmpty": true,
+      "terminalFailed1": true
+    },
+    "originalUnitJournal": {
+      "exceptionTypes": [],
+      "rawExported": false,
+      "sourceLines": []
+    },
+    "r19Cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "errorsEmpty": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "r19OriginalResultBinding": {
+      "actualOriginalResultSHA256": "ac4ef67f940331706e4c0dc2b264c3e6032f9fd50e181a261f40708b59ab99cd",
+      "committedUnpublished": true,
+      "durablePublished": true,
+      "expectedFailureType": true,
+      "hostCommittedReplayReadbackClosed": true,
+      "matchesExpectedRawReceipt": false,
+      "ordinaryNotVerified": true,
+      "published": true
+    },
+    "r19Stopped": {
+      "exactCID": true,
+      "exactImage": true,
+      "processAbsent": true,
+      "stopped": true
+    },
+    "resources": {
+      "cpuCount": 4,
+      "diskFreeBytes": 6710444032,
+      "loadAverage": [
+        0.33837890625,
+        0.1904296875,
+        0.25
+      ],
+      "memAvailableBytes": 14314426368
+    },
+    "retainedBase": {
+      "archiveBytesNotRead": true,
+      "identityExact": true,
+      "ownerModeExact": true,
+      "readyBindingExact": true
+    }
+  },
+  "remainingNotExecuted": [
+    "Remaining original snapshot/rollback/source verification predicates after line36",
+    "Published record exact metadata check",
+    "Same-new-root request terminal/unknown audit"
+  ],
+  "C13NotIssued": true,
+  "stageMaterializePGInstallActions": 0,
+  "oldCommittedKeysReplayed": false,
+  "REALOrFormalChanged": false
+}

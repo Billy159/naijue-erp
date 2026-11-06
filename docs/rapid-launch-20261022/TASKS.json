@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "SOURCE_BUILD_PASS_REMOTE_READONLY_PREFLIGHT_FAILED_EXACT_DIAGNOSIS_ACTIVE",
+      "critical": "R20_SOURCE_BUILD_AND_BOUNDED_PREFLIGHT_ADOPTED_STAGE_READY_MATERIALIZING",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Exact two-leaf order/failure-close increment PASS, no repeated author13.",
         "D2": "One fullbuild/pack/member/tailPASS; noactualPG.",
-        "T45": "Bounded readonly original failed-preflight diagnostic only; noPG/REALprod.",
+        "T45": "Unique original r20 materialize-app running; collect terminal and fresh resources. No PG until exact C11; no REAL or production.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31907,7 +31907,7 @@
         }
       },
       "r20Preparation": {
-        "state": "SOURCE_BUILD_PASS_REMOTE_READONLY_PREFLIGHT_FAILED_EXACT_DIAGNOSIS_ACTIVE",
+        "state": "R20_SOURCE_BUILD_AND_BOUNDED_PREFLIGHT_ADOPTED_STAGE_READY_MATERIALIZING",
         "integration": "859d85b16245b2312bdcebb18d5acdda369a2501",
         "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
         "tree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
@@ -31929,7 +31929,7 @@
             1793963516720318950
           ]
         },
-        "next": "Original T45 one exact failed-job readonly exception-type/source-line and necessary boolean metadata diagnosis; no preflight replay/stage/PG/permission change.",
+        "next": "Collect unique r20 materialization terminal and fresh resource receipt; bind original new20min C11 then actual physical/program C9. No old committed keys replay.",
         "QBReceiptSHA256": "3532dbe5b65c79c77902ecd2fbb7b532bc93f6dea5284431eded7660b946039e",
         "D2ReceiptSHA256": "7aa9216ed363ccaba18b7b78a7f003c24bd2eb6c25cac323f9d69ee2d0a85dae",
         "archiveSHA256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
@@ -31973,7 +31973,25 @@
         "preflightFailureSHA256": "3dda5c3b130f926aa046bea1923d306e9c528f3a0594b4fe8a251146a9d1db54",
         "preflightJob": "t45-f35-07e250-stage-preflight-20261106-01",
         "preflightExitCode": 1,
-        "preflightFailureTypeLine": "NOT_EXPORTED"
+        "preflightFailureTypeLine": "AssertionError line36: exported receipt hash incorrectly used for server-private receipt",
+        "combinedPreparationSHA256": "eeed165b694636747ac93cb3547c18ee330b96d7a63c475ab3a386559ccd3acb",
+        "preflightFailurePreserved": true,
+        "stageReceiptSHA256": "075b1c1b85f0771ec8aee1143c5cdeefe6849fc92468bd04ebc0e3b46466edcd",
+        "materializationJob": "t45-f35-07e250-local-materialize-20261106-01",
+        "materializationStatus": "SUBMITTED",
+        "stagingAuthorization": {
+          "tailSHA256": "4c6304e89e22eb3a9d1bea07f6139844e29b4c0255464d155b41251235e34e08",
+          "fullSHA256": "675c1b61b8a3985822b796b94bf17687330f53adb6af1f39ea467de1bf1ee71f",
+          "startsAt": 1793966149873,
+          "expiresAt": 1793967949873
+        },
+        "actualArtifactIdentity": [
+          66304,
+          393713,
+          83698036,
+          1793966382856656403,
+          1793966384023683928
+        ]
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32382,12 +32400,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:50:22+08:00",
-      "phase": "SOURCE_BUILD_PASS_REMOTE_READONLY_PREFLIGHT_FAILED_EXACT_DIAGNOSIS_ACTIVE",
+      "at": "2026-11-06T20:02:14+08:00",
+      "phase": "R20_SOURCE_BUILD_AND_BOUNDED_PREFLIGHT_ADOPTED_STAGE_READY_MATERIALIZING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original QB exact increment and original D2 one build",
-      "nextOwner": "T45 after accurate successor pins",
+      "currentOwner": "Original T45 sole server executor",
+      "nextOwner": "C binds C11 after actual materialization and fresh resource result",
       "latestActualReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -32397,7 +32415,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 one exact failed-job readonly exception-type/source-line and necessary boolean metadata diagnosis; no preflight replay/stage/PG/permission change.",
+      "next": "Collect unique r20 materialization terminal and fresh resource receipt; bind original new20min C11 then actual physical/program C9. No old committed keys replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
       "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
