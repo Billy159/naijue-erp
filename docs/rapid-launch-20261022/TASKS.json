@@ -28510,9 +28510,9 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Frozen, exact source already independently accepted",
-      "QB": "5leaf843048ff + exact1importer1dc67c60 PASS; await only concrete ops binding",
-      "D2": "One new56fb33ed actual build after precise importer fix; failed399d preserved and not retried",
-      "T45": "Original02 exact metadata recovered fc1028ac; final build/loader/pins stillUNBOUND, no new PG",
+      "QB": "Await only precise bound ops changed bytes, original source5leaf+importer PASS adopted",
+      "D2": "Build56fb33ed +package/tail delivered1c7f54f9; frozen, no repeat or new build",
+      "T45": "Exact new actual pins and recovered predecessor bind in local successor; issuernull, no PG/server yet",
       "D3": "REAL package and independent readback ready, waits exact target",
       "QF": "Core browser prerequisites ready, waits actual normal host/login"
     },
@@ -32784,7 +32784,7 @@
         }
       },
       "r25Preparation": {
-        "state": "R25_EXACT_IMPORTER_QB_PASS_NEW56FB_ACTUAL_BUILD_IN_PROGRESS",
+        "state": "R25_56FB_BUILD_PASS_T45_EXACT_OPS_BINDING_IN_PROGRESS",
         "D1Scope": "apps/api/src/capacity-runtime-probe.ts, apps/api/src/postgres-read-api.ts, tests/capacity-runtime-probe.test.ts",
         "technicalFinding": "Current NOINHERIT LOGIN lacks schema USAGE for regclass; runtime role lacks DB CONNECT for pg_database_size, so split reads under existing privileges within same transaction required. Source model proves candidate defect, not unique actual r24 rootcause.",
         "T45ReceiptSHA256": "148043779e584a5004135571f32b3acc6f86d3b8d9beea8ac7cf9f27bc44549f",
@@ -32801,9 +32801,9 @@
         "tree": "941efee043b3be20f761eeefc9b3c2fe90bc3d3b",
         "D1ReceiptSHA256": "d8a9ba1f4e923cacd1d95a40bcfde9a4bf50d9d591987aa20a0f4068e93d1219",
         "D1AuthorTests": "16/16 finite and exact3-root dependency noEmit0diagnostics; no PG",
-        "sourceSetSHA256": "UNBOUND",
+        "sourceSetSHA256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
         "QB": "Original scoped5-leaf review in progress; existing evidence reused",
-        "T45": "Local-only next ops successor preparation, no server jobs",
+        "T45": "Bind only known exact fields to r25 new namespace/prefix56fb33; no server/PG yet",
         "QBReceiptSHA256": "843048ff3c30766cd69cd732212c07368ac4d83192e69e7a65918259a950193d",
         "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
         "opsTemplateQA": "PASS_SOURCE_GUARD_REFUSES_UNKNOWN_NOT_SERVER_READY",
@@ -32840,7 +32840,34 @@
           "portVerified": false,
           "cleanupComplete": false,
           "priorFailuresRetained": true
-        }
+        },
+        "buildReceiptSHA256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6",
+        "buildExitCode": 0,
+        "buildSeconds": 12.331211792,
+        "packExitCode": 0,
+        "packSeconds": 9.288125125,
+        "archiveSHA256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+        "archiveBytes": 83704196,
+        "manifestSHA256": "149f2432c3f1c87307ca299958e5a3a8b8521a82f05f43ea34c3ad9401ee9a3e",
+        "descriptorSHA256": "8f46b783e5b3f4ba269ab1809a95167c146ca9471e62077cc4192677bc506946",
+        "runtimeSHA256": "14cd4836797ee154e4a61d5bf43f40de68727b5ff7a887e74600c2123b69d05e",
+        "inventorySHA256": "6273cfb55a1538a5caeb7fa4b32f07074834d3e8f24dd0d64b234abd08dab4ff",
+        "tailSHA256": "bfc280ffab3dad4abc97067f51fd34350a61413a328a4c0d53dc3425a2a5dc73",
+        "tailBytes": 2909271,
+        "prefixBytes": 80794925,
+        "prefixSHA256": "0a7284ae2a6e966c21622bc65603de5469eaa84e70a8ce5823efb82f6a54420f",
+        "baseArchiveSHA256": "89b67c5a432c994dbad9f1a53a4b94401fd6c74b7b0b0b865fb3148e25d7fe3e",
+        "baseIdentity": [
+          66304,
+          393745,
+          83702712,
+          1793980952518308965,
+          1793980953844308219
+        ],
+        "members": 7298,
+        "productionFiles": 453,
+        "productionDirectories": 30,
+        "collectorMode": "0755"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -33275,12 +33302,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T01:01:31.171903+08:00",
-      "phase": "R25_EXACT_IMPORTER_QB_PASS_NEW56FB_ACTUAL_BUILD_IN_PROGRESS",
+      "at": "2026-11-07T01:06:25.927529+08:00",
+      "phase": "R25_56FB_BUILD_PASS_T45_EXACT_OPS_BINDING_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original D2 new fixed56fb build; original T45 pending only actual pins",
-      "nextOwner": "C bind actual loader/artifacts + original QB only concrete ops pins",
+      "currentOwner": "Original T45 local exact actual artifact and predecessor bindings",
+      "nextOwner": "Original QB concrete ops binding bytes only, then C bounded readonly gate",
       "latestActualReceiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -33290,13 +33317,13 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Bind only final successful build outputs; failed399d and old keys preserved; no new PG yet.",
+      "next": "Exact new root56fb artifacts + predecessor actual metadata, guard body unchanged, issuer null; no PG/window yet.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
       "buildRoot": "56fb33edf7d2a7953df9cd013592b63c0e53bab3",
       "tree": "941efee043b3be20f761eeefc9b3c2fe90bc3d3b",
       "sourceQA": "PASS_FIVE_LEAVES_843048FF_PLUS_EXACT_IMPORTER_1DC67C60",
-      "buildPassed": false,
+      "buildPassed": true,
       "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
@@ -33322,11 +33349,11 @@
         "actualSafeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4"
       },
       "githubSourceAndRootReadback": false,
-      "sourceSetSHA256": "UNBOUND_UNTIL_ACTUAL_BUILD_LOADER",
+      "sourceSetSHA256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
       "QBReceiptSHA256": "843048ff3c30766cd69cd732212c07368ac4d83192e69e7a65918259a950193d",
-      "D2ReceiptSHA256": null,
+      "D2ReceiptSHA256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6",
       "currentCandidateActualRuntime": {
-        "state": "NOT_BUILT_OR_EXECUTED",
+        "state": "BUILD_AND_PACK_PASS_NO_NEW_R25_PG",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false

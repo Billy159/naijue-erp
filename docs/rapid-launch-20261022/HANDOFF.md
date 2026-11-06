@@ -2408,3 +2408,12 @@ T45必要metadata01 FAILED2/无exports（904ebb2d）；脚本误用600检查400�
 fixed399d实际build exit1/2.480秒，44377f9b，NATIVE35_EXACT_BOUNDARY_REQUIRED；未打包/tail，独立loader7cf8810e不当完整候选。公共owner C仅在release-contract.native35首个importers追加已验capacity-runtime-probe.ts，其他JSON/插件守卫不变；原QB1dc67c60窄验通过，父拒/现准确准入/3个未授权negative仍拒，原五叶843048ff直接复用。新source753574cc/root56fb33edf7d2a7953df9cd013592b63c0e53bab3/tree941efee0冻结，原D2按新版本做一次必要构建；旧失败目录保留。
 
 T45metadata02实际exit0但出口名称含private导致未取typed事实，33c1721b保留，不把父exit0当PASS。获准仅恢复原02已生成脱敏摘要，唯一recover作业COMPLETED0/.117秒，fc1028ac/typed00b484d3；未重采样。准确private原result65ed0d54/34590B/0600，cleanupfc07/305B/0400，观察时点00:53:21.521401+08；同CID停止/PID0等原事实准确回收，仍非当前新取样，端口未直接核验/清理false不改。等新完整build真实pins后才绑定后继；没有新PG/REAL/生产。
+
+
+## 2026-11-07T01:06:25.927529+08:00 — r25最新统一构建与打包通过，实际制品已固定
+
+root56fb33ed/source753574cc/tree941efee0，D2回执1c7f54f9/17585字节，build0/12.331秒、pack0/9.288秒。actual loader7cf8810e为本轮新生成，214/180仅launcher pin变、其他213同；453生产文件+30目录、7298ordinary全成员bytes/hash/modes证据采用，collector实际0755及8零字节成员保留。C只核五个实际artifact和tail byte/hash，不重验整闭包或作者/QB测试。
+
+FULL58ccbfd5/83704196；manifest149f2432、descriptor8f46b783、runtime14cd4836、inventory6273cfb5。原r24基底89b67c5a保持，实测最长prefix80794925/0a7284ae、tail2909271/bfc280ff，落盘tail+baseprefix流核精确还原新FULL，无重压。原失败399d不覆盖。
+
+T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d54/cleanupfc07准确绑定；新prefix56fb33，原guardbody不变、C13/C11 issuer仍null。原QB只补具体绑定字节，不再全套源审。r25没有新PG/普通业务通过、REAL导入或正式部署，旧r24实际失败边界保持。
