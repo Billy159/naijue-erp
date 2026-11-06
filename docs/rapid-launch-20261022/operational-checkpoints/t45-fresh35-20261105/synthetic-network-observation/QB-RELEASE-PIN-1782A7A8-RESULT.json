@@ -1,0 +1,52 @@
+{
+  "task": "R18-ORDINARY-FIXTURE-CONTRACT-PIN-SUPPLEMENT",
+  "atUtc": "2026-11-06T11:01:12.885194+00:00",
+  "conclusion": "PASS_EXACT_CONTRACT_PIN_SYNC_ENFORCEMENT_UNCHANGED",
+  "version": {
+    "integration": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
+    "root": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
+    "tree": "d1d0640c1bab9b2622624e2f05db0ec2720ef8ea",
+    "parentRoot": "a1b7b65766544a81af4dc1d37c49551f209971f4"
+  },
+  "parentQBResultSha256": "bb9143fb1672561ec5e34b526285a2661a3f5cef61d163c4b2cae4b25c0fff8b",
+  "contract": {
+    "path": "config/release-contract.json",
+    "bytes": 7438,
+    "beforeSha256": "e0759cab44451af3e20c94a2b87ff6142be3a222f4bdca78721ee56d38120a72",
+    "afterSha256": "c58a63ac63a23436effcf92505f5f4157d6c971145b63e7d159d12a89f8dde7a",
+    "onlyPreviouslyAcceptedFixturePinChanged": true,
+    "wholeFileReverseExact": true,
+    "registeredFixtureHashMatches": "4f7b4a7e2279302fc7114feb506dff301f0234b1fd8e05717b943a1fb13b9f7f"
+  },
+  "enforcementSourceUnchanged": [
+    {
+      "path": "scripts/release/manifest.mjs",
+      "sha256": "63a2fd941acc2640f2bcb21f84fc51164ba403d2bb4d536ef643a6f0496f9100",
+      "sameBytesAsParent": true,
+      "enforcementExecutedByQB": false
+    },
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "sha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+      "sameBytesAsParent": true,
+      "enforcementExecutedByQB": false
+    }
+  ],
+  "priorD2BuildFailure": "C reported327237aa NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED; historical failure retained, no buildPASS inferred",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "fixtureOrSuiteRetested": false,
+    "PGOrServerCalls": 0,
+    "buildRepeatedByQB": false,
+    "actual17_11OrdinaryApiPassed": false,
+    "REALOrProductionWrites": 0,
+    "oldCommittedKeyReplayed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return exact one-leaf supplement toC; originalD2 build result remains separate. Reuse parent fixtureQA, runtime17.11 ordinary/API pending."
+}
