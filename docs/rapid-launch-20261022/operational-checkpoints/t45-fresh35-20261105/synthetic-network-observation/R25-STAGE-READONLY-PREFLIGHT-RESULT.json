@@ -1,0 +1,68 @@
+{
+  "status": "R25_FROZEN_STAGE_READONLY_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "checkedAtAsiaShanghai": "2026-11-07T01:14:59.201000+08:00",
+  "jobId": "t45-f35-56fb33-stage-preflight-20261107-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 0.21775621641427279,
+  "frozenSourceSHA256": "a2a04cb41f71aa6622aae9609204a313a1d199243fdd0a2439f6d06d08414267",
+  "QBFinalSHA256": "cd4b69cd38ec7b9956fa3b6b99ec7482ea4888eeaccde4605eb99a1b8c4b4f5a",
+  "frozenSevenFilesUnchanged": true,
+  "receipts": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-stage-preflight-20261107-01/transport/release-receipts/t45-f35-56fb33-stage-preflight-20261107-01/job.json",
+      "sha256": "fb452e3027b868554dc715d481bd4875c521b5b2d2412d692b6971e4f7211840"
+    },
+    "stage-preflight.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-stage-preflight-20261107-01/transport/release-receipts/t45-f35-56fb33-stage-preflight-20261107-01/stage-preflight.json",
+      "sha256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7"
+    }
+  },
+  "newTargetAbsent": true,
+  "samePrefixOtherSubmissions": [],
+  "priorPrivateResultSHA256": "65ed0d5447ee5461578faad74c839e3ddd5d5e4a41fc204f178ba16d7a7d671f",
+  "priorCleanupSHA256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+  "priorCleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": false,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false
+  },
+  "priorPortAbsence": "NOT_DIRECTLY_VERIFIED",
+  "priorCleanupPass": false,
+  "baseIdentity": [
+    66304,
+    393745,
+    83702712,
+    1793980952518308965,
+    1793980953844308219
+  ],
+  "currentResources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.0048828125,
+      0.0263671875,
+      0.033203125
+    ],
+    "diskFreeBytes": 4157743104,
+    "MemAvailable": 14364573696
+  },
+  "C13Templates": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/C13-TEMPLATES.BUILD-BOUND.UNISSUED.json",
+    "sha256": "0426ced4842bc42ad2d11204b1cbc99dea0b1ee41f21df2925e976d04c621c1e",
+    "keysEach": 13,
+    "issuerFieldsNull": true,
+    "authorities": false
+  },
+  "PGConnections": 0,
+  "newContainers": 0,
+  "transport": 0,
+  "newWindows": 0,
+  "REALOrFormalChanges": false,
+  "oldKeyReplay": false,
+  "C13C11C9": "UNISSUED",
+  "nextStep": "C evaluates these current facts and issues new C13 independently; frozen source remains untouched",
+  "actualModelEffortFast": "UNVERIFIED"
+}

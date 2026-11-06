@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-56fb33-tail-20261107-01",
+  "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+  "archiveSha256": "bfc280ffab3dad4abc97067f51fd34350a61413a328a4c0d53dc3425a2a5dc73",
+  "archiveBytes": 2909271,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-56fb33-tail-20261107-01",
+  "startsAt": 1793985706483,
+  "expiresAt": 1793987506483,
+  "decisionReference": "C existing ERP goal; user 2026-11-07 delegates decisions until12:00+08; standing same-kind bounded isolation approval. R25 root56fb33 source753574cc; QB cd4b69cd; actual preflight aa026f80 at01:14+08. Exact ordinary artifact only; receiver40s unchanged; no PG, REAL or formal authority.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

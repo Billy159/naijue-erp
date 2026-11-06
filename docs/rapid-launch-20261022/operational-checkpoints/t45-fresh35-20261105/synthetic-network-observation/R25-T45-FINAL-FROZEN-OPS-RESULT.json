@@ -1,0 +1,117 @@
+{
+  "status": "FINAL_FROZEN_OPS_DELIVERY_PENDING_QB_NO_EXECUTION",
+  "recordedAtUTC": "2026-11-06T17:09:15.894333+00:00",
+  "freezeInstruction": "No further writes to these ops sources. Future C-authority delivery uses new files only.",
+  "currentFiles": {
+    "stage_preflight.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/stage_preflight.py",
+      "bytes": 12276,
+      "sha256": "a2a04cb41f71aa6622aae9609204a313a1d199243fdd0a2439f6d06d08414267"
+    },
+    "fresh35-container-successor.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/fresh35-container-successor.py",
+      "bytes": 37139,
+      "sha256": "c4fadb31f8b7baae1007bf97b46dd7047283a110a8c190e5955862ad567be702"
+    },
+    "ordinary-proof-evidence.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/ordinary-proof-evidence.py",
+      "bytes": 10262,
+      "sha256": "37e1c612b7016eecd14cceebaea59428ca17b7ef242c4e10784525453574af2f"
+    },
+    "assemble_original_receiver.BUILD-BOUND-C13-UNBOUND.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/assemble_original_receiver.BUILD-BOUND-C13-UNBOUND.py",
+      "bytes": 9515,
+      "sha256": "9afe5830d9fd2a343f35401c636636efd939d70cda85cf87a6e91c0ad5c71b68"
+    },
+    "artifact-receiver.original.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/artifact-receiver.original.py",
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "C11-TEMPLATE.BUILD-BOUND.UNISSUED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/C11-TEMPLATE.BUILD-BOUND.UNISSUED.json",
+      "bytes": 1053,
+      "sha256": "42965216f56b849c1a3790ac7c4221f32259fd3ab10925526cac15f87776ac67"
+    },
+    "C13-TEMPLATES.BUILD-BOUND.UNISSUED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/C13-TEMPLATES.BUILD-BOUND.UNISSUED.json",
+      "bytes": 1611,
+      "sha256": "0426ced4842bc42ad2d11204b1cbc99dea0b1ee41f21df2925e976d04c621c1e"
+    }
+  },
+  "fixedCandidate": {
+    "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
+    "candidateRoot": "56fb33edf7d2a7953df9cd013592b63c0e53bab3",
+    "sourceTree": "941efee043b3be20f761eeefc9b3c2fe90bc3d3b",
+    "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+    "D2Result": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/RESULT.json",
+      "sha256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6"
+    },
+    "newNames": {
+      "root": "phaseb-application-r25",
+      "container": "t45-fresh35-deb13-20261107-r25",
+      "jobPrefix": "t45-f35-56fb33-",
+      "artifact": "f35-56fb33-ordinary-local-20261107-01",
+      "tail": "f35-56fb33-tail-20261107-01"
+    }
+  },
+  "artifacts": {
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83704196,
+      "sha256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed"
+    },
+    "manifest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/ordinary/DEPLOYMENT-MANIFEST.json",
+      "bytes": 1084429,
+      "sha256": "149f2432c3f1c87307ca299958e5a3a8b8521a82f05f43ea34c3ad9401ee9a3e"
+    },
+    "descriptor": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/SOURCE-DESCRIPTOR.json",
+      "bytes": 351144,
+      "sha256": "8f46b783e5b3f4ba269ab1809a95167c146ca9471e62077cc4192677bc506946"
+    },
+    "runtime": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/ordinary/fresh35-ordinary-runtime-v1.json",
+      "bytes": 2219,
+      "sha256": "14cd4836797ee154e4a61d5bf43f40de68727b5ff7a887e74600c2123b69d05e"
+    },
+    "prefix": {
+      "bytes": 80794925,
+      "sha256": "0a7284ae2a6e966c21622bc65603de5469eaa84e70a8ce5823efb82f6a54420f",
+      "byteCompared": true,
+      "longestCommonPrefix": true
+    },
+    "tail": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-80794925.bin",
+      "bytes": 2909271,
+      "sha256": "bfc280ffab3dad4abc97067f51fd34350a61413a328a4c0d53dc3425a2a5dc73"
+    }
+  },
+  "metadataRecovery": {
+    "resultSha256": "fc1028acd6628c030b1f04d43a2b10acd6ef95dc4d0fca0f87586fa3a3e95193",
+    "typedSha256": "00b484d32b29257a461c0a31637b461b4ac6e450384f713c3bdb78ea90f36a16",
+    "originalPrivateResultSha256": "65ed0d5447ee5461578faad74c839e3ddd5d5e4a41fc204f178ba16d7a7d671f",
+    "originalCleanupSha256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+    "observedAtUTC": "2026-11-06T16:53:21.521401+00:00",
+    "newSampling": false
+  },
+  "runtimeExactPrivateResultAssertionRestored": true,
+  "privateResultSHA256": "65ed0d5447ee5461578faad74c839e3ddd5d5e4a41fc204f178ba16d7a7d671f",
+  "cleanupSHA256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+  "preservation": {
+    "superseded8a314Copy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/stage_preflight.SUPERSEDED-8a314.py",
+    "superseded8a314SHA256": "8a314876ca08550caa29d2920e3ff57a03affd50ba108264024d8995cb25bff6",
+    "oldExactBindingRecord": "Preserved unchanged; superseded by this frozen pointer",
+    "originalA2a04LocalBuildBound": "Preserved and reused unchanged",
+    "oldReceiptsChanged": false
+  },
+  "issuerFieldsRemainNull": true,
+  "C11ReviewStillUnbound": true,
+  "serverJobs": 0,
+  "PGConnections": 0,
+  "testsRerun": false,
+  "builds": 0,
+  "actualModelEffortFast": "UNVERIFIED"
+}

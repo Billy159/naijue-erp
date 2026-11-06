@@ -10399,5 +10399,16 @@
     "scope": "Add only exact apps/api/src/capacity-runtime-probe.ts importer to existing native35 host-session boundary already QA843048ff verified; preserve plugin enforcement, entry/external and all other boundaries. No DB/ACL/business contract changes.",
     "state": "DELIVERED_FROZEN_PENDING_ORIGINAL_QB_ONE_FIELD_REVIEW",
     "actualBuildFailureSHA256": "44377f9b6566e03c7523e41f3bc0894a1f973d0776b85631f914274d9c50af8f"
+  },
+  "r25ExactOpsBindings20261107": {
+    "owner": "Original T45 01a100d0-cad5-71c1-8042-dc594311d3be",
+    "state": "FINAL_FROZEN_PENDING_ORIGINAL_QB_EXACT_BINDING_BYTES_ONLY",
+    "finalPointerSHA256": "768284a2404c5da5a86704e10ef0508a2fc513720aae8e65e736c113fe9bcbfa",
+    "sourceRoot": "naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01",
+    "stageSHA256": "a2a04cb41f71aa6622aae9609204a313a1d199243fdd0a2439f6d06d08414267",
+    "scope": "Existing exact fixed r25 wrapper/probe/assembler/stage constants and issuer-null templates, no candidate/source guard/namespace expansion; additional exact original private-hash equality explicitly authorized by C",
+    "freezeRule": "No edits to frozen7 inputs during QA; authorities only new output files after C adoption",
+    "priorInconsistency": "Earlier a2a reported then superseded8a314 during QB read, QA stopped; C clarified restorea2a exact binding; old records preserved not retroactively PASS",
+    "serverActionsByThisBinding": 0
   }
 }

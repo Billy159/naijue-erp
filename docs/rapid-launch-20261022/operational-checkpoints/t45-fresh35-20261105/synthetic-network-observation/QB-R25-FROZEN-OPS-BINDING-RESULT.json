@@ -1,0 +1,161 @@
+{
+  "format": "QB_R25_ACTUAL_BUILD_BINDINGS_EXACT_INCREMENT_V1",
+  "recordedAt": "2026-11-07T01:12:50.712810+08:00",
+  "conclusion": "PASS_EXACT_FROZEN_BUILD_METADATA_BINDINGS_NOT_EXECUTION",
+  "openFindings": [],
+  "closedFindings": [
+    {
+      "id": "QB-R25-BINDING-01",
+      "status": "CLOSED_BY_FINAL_FROZEN_RESTORE",
+      "initialObservedStageSHA256": "8a314876ca08550caa29d2920e3ff57a03affd50ba108264024d8995cb25bff6",
+      "initialObservedStageBytes": 12136,
+      "initialIssue": "On-disk source did not match a2a delivery declaration and omitted exact private hash assertion; QB reported to C immediately and did not pass it.",
+      "resolution": "Original owner restored final a2a/12276 and stopped ops writes; frozen pointer768284a2 supersedes old delivery; old8a copy verified preserved.",
+      "resolvedStageSHA256": "a2a04cb41f71aa6622aae9609204a313a1d199243fdd0a2439f6d06d08414267",
+      "noRetroactivePass": true
+    }
+  ],
+  "finalFrozenSHA256": "768284a2404c5da5a86704e10ef0508a2fc513720aae8e65e736c113fe9bcbfa",
+  "localBuildBoundSHA256": "30fe401cd798b962e001197e51437c4deae59d04e3015267f7953df9a6dc085f",
+  "fixedCandidate": {
+    "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
+    "candidateRoot": "56fb33edf7d2a7953df9cd013592b63c0e53bab3",
+    "sourceTree": "941efee043b3be20f761eeefc9b3c2fe90bc3d3b",
+    "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+    "D2Result": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/RESULT.json",
+      "sha256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6"
+    },
+    "newNames": {
+      "root": "phaseb-application-r25",
+      "container": "t45-fresh35-deb13-20261107-r25",
+      "jobPrefix": "t45-f35-56fb33-",
+      "artifact": "f35-56fb33-ordinary-local-20261107-01",
+      "tail": "f35-56fb33-tail-20261107-01"
+    }
+  },
+  "frozenCurrentFiles": {
+    "stage_preflight.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/stage_preflight.py",
+      "bytes": 12276,
+      "sha256": "a2a04cb41f71aa6622aae9609204a313a1d199243fdd0a2439f6d06d08414267"
+    },
+    "fresh35-container-successor.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/fresh35-container-successor.py",
+      "bytes": 37139,
+      "sha256": "c4fadb31f8b7baae1007bf97b46dd7047283a110a8c190e5955862ad567be702"
+    },
+    "ordinary-proof-evidence.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/ordinary-proof-evidence.py",
+      "bytes": 10262,
+      "sha256": "37e1c612b7016eecd14cceebaea59428ca17b7ef242c4e10784525453574af2f"
+    },
+    "assemble_original_receiver.BUILD-BOUND-C13-UNBOUND.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/assemble_original_receiver.BUILD-BOUND-C13-UNBOUND.py",
+      "bytes": 9515,
+      "sha256": "9afe5830d9fd2a343f35401c636636efd939d70cda85cf87a6e91c0ad5c71b68"
+    },
+    "artifact-receiver.original.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/artifact-receiver.original.py",
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "C11-TEMPLATE.BUILD-BOUND.UNISSUED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/C11-TEMPLATE.BUILD-BOUND.UNISSUED.json",
+      "bytes": 1053,
+      "sha256": "42965216f56b849c1a3790ac7c4221f32259fd3ab10925526cac15f87776ac67"
+    },
+    "C13-TEMPLATES.BUILD-BOUND.UNISSUED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/C13-TEMPLATES.BUILD-BOUND.UNISSUED.json",
+      "bytes": 1611,
+      "sha256": "0426ced4842bc42ad2d11204b1cbc99dea0b1ee41f21df2925e976d04c621c1e"
+    }
+  },
+  "independentHashGuardChecks": {
+    "format": "QB_R25_FINAL_FROZEN_BINDINGS_V1",
+    "status": "PASS_EXACT_BINDINGS_AND_PRIVATE_HASH_GUARD_NOT_EXECUTION",
+    "finalFrozenSHA256": "768284a2404c5da5a86704e10ef0508a2fc513720aae8e65e736c113fe9bcbfa",
+    "stageSHA256": "a2a04cb41f71aa6622aae9609204a313a1d199243fdd0a2439f6d06d08414267",
+    "stageBytes": 12276,
+    "allFrozenCurrentFileHashesMatch": true,
+    "privateHashAssertImmediatelyAfterOriginalHashAndBeforeJSONParse": true,
+    "negativeHashComparisonsRejected": 3,
+    "actualAlteredBytesHashRejected": true,
+    "matchingMetadataHashAccepted": true,
+    "stageInverseExactExceptPrefixCleanupHashAndPrivateExactHashAssert": true,
+    "priorMismatch": "Original8a314 seen and rejected; superseded source copy preserved, restored a2a accepted only after final frozen pointer",
+    "C13Entries13KeysAndIssuerNull": true,
+    "C11BuildBoundReviewAndIssuerNull": true,
+    "sourceReadbackStable": true,
+    "serverJobs": 0,
+    "PGConnections": 0,
+    "builds": 0,
+    "fullStageScriptExecuted": false,
+    "authorTestsRerun": 0,
+    "scope": "Selected actual hash assignment and assert only, finite variables; historical metadata and existing D2 binding checks reused. No live original receipt or server read."
+  },
+  "metadata": {
+    "recoverySafeSHA256": "fc1028acd6628c030b1f04d43a2b10acd6ef95dc4d0fca0f87586fa3a3e95193",
+    "recoveryTypedSHA256": "00b484d32b29257a461c0a31637b461b4ac6e450384f713c3bdb78ea90f36a16",
+    "originalPrivateReceiptSHA256": "65ed0d5447ee5461578faad74c839e3ddd5d5e4a41fc204f178ba16d7a7d671f",
+    "originalCleanupSHA256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+    "observedAtUTC": "2026-11-06T16:53:21.521401+00:00",
+    "observedAtAsiaShanghai": "2026-11-07T00:53:21.521401+08:00",
+    "historicalNotCurrent": true,
+    "privateOriginalReadByQB": false,
+    "oldCleanupComplete": false,
+    "oldPortAbsent": false,
+    "oldPortAbsence": "NOT_DIRECTLY_VERIFIED"
+  },
+  "buildEvidence": {
+    "D2ResultSHA256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6",
+    "actualExistingD2Build": "exit0; adopted fixed D2 build/pack/tail evidence",
+    "ordinaryArchiveSHA256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+    "ordinaryArchiveBytes": 83704196,
+    "smallManifestDescriptorRuntimeAndTailActualHashesChecked": true,
+    "fullArchiveExtractionAndPrefixReconstruction": "REUSED_NOT_RERUN",
+    "wrapperProbeAssemblerInverseExactExceptDeclaredBindingConstants": true,
+    "C13EntriesKeys": 13,
+    "issuerFieldsNull": true,
+    "C11ReviewNull": true
+  },
+  "reusedQBResults": [
+    "843048ff3c30766cd69cd732212c07368ac4d83192e69e7a65918259a950193d",
+    "1dc67c609d7f68ed54ce2105886af49909887a4b5c4ba3ba64e4a4ea57528dda",
+    "4f852db4c2a91dda6efde8283c8042262d7d195afebcca30a405a43650c2d77d"
+  ],
+  "boundaries": {
+    "serverJobs": 0,
+    "PGConnections": 0,
+    "builds": 0,
+    "sourceWrites": 0,
+    "fullStageExecuted": false,
+    "originalTestsRerun": false,
+    "wholeSuiteOrClosure": false,
+    "oldKeyReplay": false,
+    "currentServerFacts": "NOT_REFRESHED",
+    "serverReady": false,
+    "C13C11C9": "UNISSUED_NO_EXECUTABLE_OPERATIONS_PLAN",
+    "businessOrPortAcceptance": false,
+    "actualModelEffortFast": "UNVERIFIED"
+  },
+  "next": "C may adopt this exact frozen binding verdict, fill its own authorities/review references and hand only an accurately bound controlled successor to original T45. Fresh read-only stage still verifies current facts and original bytes; no live execution is authorized or claimed by QB.",
+  "artifacts": {
+    "OTHER-BINDINGS-CHECKS.json": {
+      "bytes": 1369,
+      "sha256": "f1f4767c5a3428462155d56954e1bcdcc8bfca3b1fb880a3bf5400ab8f329cc7"
+    },
+    "FROZEN-BINDING-CHECKS.json": {
+      "bytes": 1196,
+      "sha256": "4fbec97e19b82245e95940ccc19881a2b8cec88430f078cf08b0f243585e34bb"
+    },
+    "OBSERVED-MISMATCH.json": {
+      "bytes": 667,
+      "sha256": "15cb0ca712388d7ce99ae278086abc4346539b1160bcbaaa8d5d6bd5f5d4f787"
+    },
+    "frozen-binding-check.py": {
+      "bytes": 5240,
+      "sha256": "7cfc4a8b410a1f5291f258106f57aeaeff07255629397ee148afe8a1557350e9"
+    }
+  }
+}

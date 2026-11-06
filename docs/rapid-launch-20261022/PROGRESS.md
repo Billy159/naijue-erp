@@ -2109,3 +2109,6 @@ root56fb33ed/source753574cc/tree941efee0，D2回执1c7f54f9/17585字节，build0
 FULL58ccbfd5/83704196；manifest149f2432、descriptor8f46b783、runtime14cd4836、inventory6273cfb5。原r24基底89b67c5a保持，实测最长prefix80794925/0a7284ae、tail2909271/bfc280ff，落盘tail+baseprefix流核精确还原新FULL，无重压。原失败399d不覆盖。
 
 T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d54/cleanupfc07准确绑定；新prefix56fb33，原guardbody不变、C13/C11 issuer仍null。原QB只补具体绑定字节，不再全套源审。r25没有新PG/普通业务通过、REAL导入或正式部署，旧r24实际失败边界保持。
+
+
+2026-11-07 r25：原QB最终ops绑定cd4b69cd通过，实际只读预检aa026f80通过；C按当前用户至今日12:00授权及既有同类隔离范围签发准确56fb尾包/整包C13。T45继续原传输、组装及材料准备，尚未启动r25 PG；不表示普通业务、REAL或正式通过。原r24四真两假清理及普通启动失败保留。
