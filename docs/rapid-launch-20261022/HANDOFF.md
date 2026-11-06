@@ -2104,3 +2104,10 @@ C bound original9keyC9 SHA4a3e6d50 within same deadline; original T45 uniqueinst
 Original job t45-f35-101f4f-install-20261106-01 FAILED2/153.326s,11:26:04..11:28:37UTC; raw4aca8e89/51435B, safe5ecbea57. ActualPG170011 schema/record committed;3negative rollback and independent snapshots passed. Normal host COMMITTED, original-key replay ALREADY_COMMITTED, newconnection readback VERIFIED;25headers/27settlements retained, connections CLOSED. Do not replay this committed import.
 
 Ordinary failed at PRIVATE_SCENARIO with PermissionError; path/errno/syscall not exported, SQLSTATE not exported. No ordinary/API/probe result. Exact CIDd3e1f519 stopped,6cleanup true/errors[] and children reaped; cleanup does not prove business outcome. Original T45 only local source diagnosis now; no new server/SQL/permission/cap changes or guessed chmod. No REAL or production action.
+
+
+## 2026-11-06 — original writer order defect repaired and frozen; scoped QA/build parallel
+
+T45 source diagnosis424a7691 found write_new fchown before fchmod under configured CHOWN/DAC_OVERRIDE without FOWNER; existing mock no-op had hidden ownership change. Sourceeffect model reproduces refusal, but actualr19 historical syscall/path remains unknown. T45 minimal repair only swaps requested mode before owner transfer, preserves final0600/owner61035/directory0700/caps/ACL/guards/fsync/close/EXCL/NOFOLLOW. New regression RED1error then GREEN;13 directly affected checks passed, no Linuxkernel/PG repair PASS claimed. Author receipt55eddd50.
+
+Source859d85b16245b2312bdcebb18d5acdda369a2501; fixedroot07e250d53fec34d8b5199043075263268ff1e32f; tree54738afbbbe35836ebd75bb37ff08afca26a3481. Original QB only two-leaf increment; original D2 one build/pack with actualr19 fullf3ac802c/83698188 as nextbase. T45 two source leaves frozen, no server request until exact successor bindings. r19 actual normalCOMMITTED and cleanup evidence retained, not repeated. No REAL import or formal deployment.

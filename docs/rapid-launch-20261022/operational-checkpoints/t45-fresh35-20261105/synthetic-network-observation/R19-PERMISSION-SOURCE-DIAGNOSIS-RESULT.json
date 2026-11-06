@@ -1,0 +1,108 @@
+{
+  "status": "SOURCE_PERMISSION_LIFECYCLE_DEFECT_MODELED_READONLY_ACTUAL_SYSCALL_UNKNOWN",
+  "recordedAtUTC": "2026-11-06T11:37:00.726504+00:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "actualR19SafeSHA256": "5ecbea57e2fe18ffa8c4408f45a19b7549b26ea246d72efd97e0e36b0755f4d1",
+  "actualRawReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
+  "actualFailure": {
+    "phase": "PRIVATE_SCENARIO",
+    "code": "PermissionError",
+    "pathErrnoSyscall": "NOT_EXPORTED",
+    "normalImport": "COMMITTED",
+    "stopped": true,
+    "cleanupSixTrue": true
+  },
+  "sourceFacts": {
+    "launcher": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-101f4fa098af/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+    "launcherSHA256": "73c409cfe452329f8887fbdfe2bddccbedda9f26c06183de7017d1d28e72d2b0",
+    "phaseLines": "426-429: build scenario -> write scenario -> prepare directories; PRIVATE_CONFIGURATION marker only afterward",
+    "directoryLifecycle": "line267 mkdir0700;268 chown61035:61035, unchanged",
+    "fileLifecycle": "write_new181-196: exclusive/no-follow create; write+flush;187 fchown61035;188 fchmod0600;fsync;parent fsync",
+    "ownerCallSites": [
+      270,
+      272
+    ],
+    "fixedFileCategories": [
+      "ordinary-private/fresh35-ordinary-scenario.json",
+      "ordinary-private/staff-credential-request-key.bin"
+    ],
+    "runtimeCaller": "wrapper docker exec --user0:0; launcher has no parent setuid/seteuid/setreuid/setresuid calls",
+    "wrapperSHA256": "5bd407144594ff509c011556c1f23033ad1f85408bc0831c0ded8e6c07fde258",
+    "configuredCaps": [
+      "CHOWN",
+      "DAC_OVERRIDE",
+      "SETUID",
+      "SETGID",
+      "KILL",
+      "SYS_PTRACE"
+    ],
+    "FOWNERConfigured": false,
+    "scope": "CHOWN models transfer allowed; existing DAC_OVERRIDE models root traversal after directory chown. FOWNER absent means root is not the new file owner for subsequent fchmod. Actual dead-process effective capability trace was not exported."
+  },
+  "model": {
+    "original": {
+      "outcome": "RED_PERMISSION_ERROR",
+      "syscall": "fchmod",
+      "errno": 1,
+      "virtualCallerUid": 0,
+      "virtualFileOwnerUid": 61035,
+      "events": [
+        "chown-directory:61035",
+        "open:fresh35-ordinary-scenario.json",
+        "fchown:61035",
+        "fchmod:0o600"
+      ]
+    },
+    "memoryOnlyReorder": {
+      "outcome": "GREEN_TWO_PRIVATE_FILES_0600",
+      "files": 2,
+      "directoryMode": "0o700",
+      "virtualFileOwnerUid": 61035,
+      "events": [
+        "chown-directory:61035",
+        "open:fresh35-ordinary-scenario.json",
+        "fchmod:0o600",
+        "fchown:61035",
+        "open:ordinary-private",
+        "open:staff-credential-request-key.bin",
+        "fchmod:0o600",
+        "fchown:61035",
+        "open:ordinary-private"
+      ]
+    },
+    "capsAdded": false,
+    "frozenSourceChanged": false,
+    "serverActions": 0,
+    "PGQueries": 0,
+    "limitation": "Deterministic ownership/capability policy model using real frozen writer and existing scenario fixture; not Linux kernel execution or actual r19 traceback/syscall evidence."
+  },
+  "evidence": {
+    "command": "python3 -B REPRO.py",
+    "exitCode": 0,
+    "REPRO.pySHA256": "c8bc66e9ce2553270bf48add122a7ac00e95494332c2e34dd1cca51eee6218b4",
+    "REPRO-RESULT.jsonSHA256": "4a242952c998d1a2c06b0e5c53dd01a9e9a5bceb698bf5ee00425053a0031bcd",
+    "existingScenarioModel": "OrdinaryScenarioPreparationTests.scenario reused; only filesystem identity/capability effects modeled",
+    "existingCoverageGap": "Existing test mocks fchown as no-op, so file ownership never changes for its real fchmod; it cannot catch this order-dependent permission failure."
+  },
+  "proposedMinimum": {
+    "files": [
+      "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "tests/test_fresh35_isolated_launcher.py"
+    ],
+    "change": "In existing write_new, set existing requested0600 mode before ownership transfer; keep flush/fsync/O_EXCL/O_NOFOLLOW, directory0700, final61035 ownership and cleanup. Modes have no setuid/setgid bits. No capability or filesystem permission expansion. Extend only existing scenario writer test with this ownership/cap model.",
+    "sourceWriteAuthorizedByThisResult": false
+  },
+  "remoteFactsIfStillRequired": [
+    "Only exact stopped CID d3e1f519 Docker Config.User/HostConfig.CapAdd/CapDrop/SecurityOpt and State metadata; no PG/exec/restart. This can confirm configuration, not actual historical fchmod syscall.",
+    "ordinary-private files were removed by successful cleanup; do not request their contents or expect historical inode evidence. Exact actual traceback/errno was not retained/exported; remain unknown."
+  ],
+  "boundaries": {
+    "frozenSourceChanged": false,
+    "serverJobs": 0,
+    "PGQueries": 0,
+    "permissionOrCapsChanged": false,
+    "buildOrDeploy": false,
+    "r19CommittedReplayed": false,
+    "REALOrProduction": false
+  }
+}

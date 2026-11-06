@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_ONLY_PRIVATE_WRITER_ORDER_FIXED_SCOPED_MODEL_PASS_NOT_LINUX_VALIDATED",
+  "recordedAtUTC": "2026-11-06T11:39:52.994588+00:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "owner": "Original T45, exactly two registered leaves; uncommitted, C freezes commit",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSHA256": "73c409cfe452329f8887fbdfe2bddccbedda9f26c06183de7017d1d28e72d2b0",
+      "beforeBytes": 97626,
+      "afterSHA256": "5a01a45bf215ed9aa9eeb211aec96f497e08f68241f4d837173f79b3c50b8ac0",
+      "afterBytes": 97626,
+      "beforePreserved": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r19-private-writer-order-sourcefix-01/launcher.before.py"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "beforeSHA256": "91876c065e1595d9407318f61047adfd8208b5577bedfd8fcc1195977e7dbbaf",
+      "beforeBytes": 81106,
+      "afterSHA256": "eb5ec619fe18e547dec2031b1438a5fd05b874676d3d12985b55a014f9bb6db6",
+      "afterBytes": 82642,
+      "beforePreserved": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r19-private-writer-order-sourcefix-01/tests.before.py"
+    }
+  ],
+  "change": "Only write_new order: fchmod(mode) before optional fchown(owner). All other production bytes restored exactly by inverse swap. No mode/owner/cap/ACL/guard/fsync/close/EXCL/NOFOLLOW change.",
+  "inverseAllOtherProductionBytesExact": true,
+  "parentDiagnosticSHA256": "424a7691ea2b7d07e5c8e3b5376b9ebbc6b1c5f0a8503846114a069ab0a91a20",
+  "r19ActualSafeSHA256": "5ecbea57e2fe18ffa8c4408f45a19b7549b26ea246d72efd97e0e36b0755f4d1",
+  "r19RawReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
+  "tests": {
+    "red": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py OrdinaryScenarioPreparationTests.test_private_scenario_creation_with_original_capabilities -v",
+      "exitCode": 1,
+      "cause": "MODELED_CAP_FOWNER_ABSENT after modeled ownership transfer"
+    },
+    "green": {
+      "sameCommand": true,
+      "exitCode": 0
+    },
+    "affected": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py OrdinaryScenarioPreparationTests OrdinaryBusinessFlowTests -v",
+      "exitCode": 0,
+      "tests": 13,
+      "reportedSeconds": 0.015
+    },
+    "gitDiffCheckExitCode": 0
+  },
+  "testModel": "Real frozen/written private scenario writer and real local private file writes; modeled CHOWN/DAC_OVERRIDE without FOWNER. Final two files0600/ordinary directory0700 and both owner transfers verified. Not native Linux capability execution.",
+  "patch": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r19-private-writer-order-sourcefix-01/two-owned-leaves.patch",
+    "sha256": "8c7a10bb315100fd8c474705180d07859376edb697f0a88e1d69df3c3165bd4b"
+  },
+  "boundaries": {
+    "serverJobs": 0,
+    "PGQueries": 0,
+    "buildDeploy": false,
+    "permissionOrCapsExpanded": false,
+    "SQLACLBusinessFixtureChanged": false,
+    "r19CommittedReplayed": false,
+    "REALOrFormalChanged": false,
+    "gitCommitPerformed": false
+  },
+  "notVerified": [
+    "Actual r19 historical failing syscall/path/errno remains unexported; source lifecycle model is not sole runtime attribution",
+    "Corrected Linux capabilities/filesystem flow",
+    "Actual PG17.11 ordinary/API/readback/probe/whole chain"
+  ],
+  "next": "C exact freeze then original QB two-leaf delta. D2 single full candidate and T45 original controlled Linux chain under separately bound successor."
+}
