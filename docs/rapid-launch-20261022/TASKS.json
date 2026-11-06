@@ -30598,7 +30598,12 @@
           "candidate": "Original command declares b import_batch%ROWTYPE while4SQL JSON aliases also b; first INITIALIZE bridge select precedes badSHA guard",
           "scope": "Rename only4SQLlocal aliases; preserve globalrecord, schema, variable_conflict=error, predicate and all permissions. Require exactanchor/ASTnormalization/inverse proof. Actualbackend firstcolumn/line unknown.",
           "rollbackUnknown": "Separate original connection/rollback receipt investigation only; no assumption rollback success or permission/guard relaxation",
-          "authority": "Original user implementation goal and exact original source owner bug repair; not expired noon delegation"
+          "authority": "Original user implementation goal and exact original source owner bug repair; not expired noon delegation",
+          "continuationCorrection": {
+            "observed": "Original D1 compaction01a1af29 followed by unrelated13staff-hall lookup, current exact42702 task not delivered",
+            "action": "C read actualturn once and redirected sameD1 to precompaction4alias/nativeReady断点; no newwriter/task or overrideWIP",
+            "status": "Original D1 acknowledged old-task drift corrected; now original4alias repair active, no source delivery yet"
+          }
         }
       }
     },

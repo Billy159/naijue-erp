@@ -1567,3 +1567,7 @@ Actualinstall6f5f0677 FAILED2/47.981s; schema COMMITTED/record durably PUBLISHED
 
 ### 2026-11-06T12:41+08:00 | Exact42702 repair route, no blind retry
 OriginalD1 source-only investigation found command globalb import_batch%ROWTYPE colliding with4local SQL JSON aliasesb, including firstINITIALIZE bridge SELECT beforebadSHA guard; actualbackend exact firstcolumn/position not recorded. C authorized original3leaf finalsuccessor/candidatepin/directtest repair: only4localaliases renamed, globalrecord/variable_conflict=error/predicates/permissions unchanged; exactanchor, inverse and alias-normalizedAST proof required. OriginalD1 currentturn01a1af24-7b5f-7a92-bec5-a76633114296 active; no duplicate writer. Rollbackunknown remains separate originalconnection/receipt investigation, no guessing or guard bypass. T45 no newPG/oldr12replay. GitHubintegration22e5a013e12d045b3beccd329bab98b20cd89e06/rootb8e35df4e8d60eb278f6af5ac08f6fe87a7a898c independently readback.
+
+
+### 2026-11-06T12:44+08:00 | Original D1 continuation corrected
+LiveD1 turn01a1af24 remainedactive; actualread_thread showed compaction01a1af29 then unrelated13staff/halllookup instead of assigned42702repair. C redirected sameowner to precompaction4localalias anchors and whole-host-session nativeReady/ROLLBACK breakpoint, preservingWIP/no duplicateassignment. Exact3leafrepair not yet delivered; do not mark sourcefixed or asknewPG/build. Main currentb8e35 committed/stopped failure and sourceQA remain correctly separated.
