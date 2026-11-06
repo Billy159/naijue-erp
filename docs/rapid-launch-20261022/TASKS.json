@@ -30486,7 +30486,7 @@
         }
       },
       "r12Preparation": {
-        "state": "ACTUAL_PREFLIGHT_PASSED_EXACT_C13_STAGING_AUTHORITY_DELIVERED",
+        "state": "ACTUAL_START_PASSED_C9_DELIVERED_INSTALL_VALIDATION_IN_PROGRESS",
         "integration": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
         "buildRoot": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
         "tree": "5fc3954272588c6c0bbb9c381790c3e47b76bbf5",
@@ -30518,7 +30518,7 @@
         "smallBindingAndActualTailVerifiedByC": true,
         "T45Scope": "One original bounded readonly stagepreflight only; no transfer/PG until accurate actual facts and separate original leaves",
         "authority": "Standing user same-kind bounded isolated operations approval; not extension of expired temporary delegation",
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "stagePreflightReceiptSHA256": "4a7c6f4905533e8b2db21f522661b3b917ffc5fc54cc70252475240e3e841af4",
@@ -30526,7 +30526,29 @@
         "fullAuthoritySHA256": "b1bfe841f21d1ec0cf23ac9d8dca156f89bb9c1cf3eae15a5eb4035b750b4ece",
         "stagingStartsAt": 1793938777629,
         "stagingExpiresAt": 1793940577629,
-        "next": "T45 original receiver/CAS/accurateprefix+tail and materialize, actual resources then separate original PG20/C9; no oldtarget replay"
+        "next": "T45 start once then C binds actual program/physical target via original C9 before single install; preserve oldr11",
+        "actualStageSHA256": "ba95c0b0d625fdf2c74d41127474a4228f2b644ae3665f99dc06fa50ba277c8f",
+        "materializationSHA256": "4616ebdd1f206016befbe76300dabef81ff57315fa53725546a8318017213bab",
+        "materializationExitCode": 0,
+        "materializationSeconds": 371.743015321,
+        "resourceSHA256": "56300ee65dd3fcac23bd711ac67e4647ed85823c9f51b2657ffb2ae6953dbae0",
+        "provisionSHA256": "b7fea521999531a05c661a6b193cf96664d37f8d1a829d9abcd261912eb88045",
+        "provisionStartsAt": 1793939417582,
+        "provisionExpiresAt": 1793940617582,
+        "startReceiptSHA256": "16cd0b600e3d30c17a2b7245608356c41bec0100e21bb1bef4e82cc638ce482c",
+        "startExitCode": 0,
+        "startSeconds": 35.09564877394587,
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 04:31:36.153926+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704911450310836271"
+        },
+        "containerId": "f0ffc8b481d8444560234942f9158ee330d44bd7f716cb18094774931420b71d",
+        "programSHA256": "d07c8775163ab411c11eeac0c65e480321284c63fdf905e9c893da38bee65a61",
+        "targetSHA256": "be5bf6f9162c36781793ee6bda1206af08cd0efc8b1e088d52c9d48815dbd414",
+        "installAuthoritySHA256": "e10f815199bec84336b08bccfb663dc917657dd4b6c789a66bd828ff46acc313",
+        "wholeChainPassed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
