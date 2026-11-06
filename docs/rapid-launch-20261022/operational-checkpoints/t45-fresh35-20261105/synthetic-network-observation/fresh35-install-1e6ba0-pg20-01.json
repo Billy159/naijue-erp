@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "60f7289c1ec305293bba8717b876111e28b6dae4933c9d8e38f4e0b92a67d130",
+  "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "targetSha256": "6f7f40efe7deb99e3ac736766ab19dea85b2b5349ab930764850e9988fe5b438",
+  "startsAt": 1793977486744,
+  "expiresAt": 1793978686744,
+  "independentSafetyReviewSha256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
+  "authorizationReference": "C consumes human standing same-kind bounded isolation approval. r23 root1e6ba071/source4adb9fa2/QB378854ec, actual start12f14866/safefd9e8571 CIDe40db110 SID7705074955509960751 OID16393; program60f7289c/target6f7f40ef/sourceb0f8. Same C11 deadline, no extension. One native35 install/negative/normal/ordinary/readback/probe/ownedcleanup. Preserve all old committed and unknown keys without replay. No REAL/production or widened ACL."
+}

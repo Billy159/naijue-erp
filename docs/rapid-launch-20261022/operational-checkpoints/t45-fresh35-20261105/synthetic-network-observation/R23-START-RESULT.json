@@ -1,0 +1,32 @@
+{
+  "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+  "recordedAtUTC": "2026-11-06T15:07:32.991118+00:00",
+  "jobId": "t45-f35-1e6ba0-start-20261106-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 37.948169799055904,
+  "cid": "e40db110ff95f772829a70ff71b65874b295db7969fcd68e3b9228013503e907",
+  "startsAt": 1793977486744,
+  "expiresAt": 1793978686744,
+  "physical": {
+    "systemIdentifier": "7705074955509960751",
+    "databaseOid": "16393",
+    "serverVersionNum": "170011",
+    "postmasterStart": "2026-11-06 15:06:05.369061+00"
+  },
+  "program": {
+    "programSha256": "60f7289c1ec305293bba8717b876111e28b6dae4933c9d8e38f4e0b92a67d130",
+    "targetSha256": "6f7f40efe7deb99e3ac736766ab19dea85b2b5349ab930764850e9988fe5b438",
+    "catalogSha256": "18ada820f5f5025bc693625abd709375a529df5c368d29ed2ea6ce04c7945a26",
+    "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+    "hostEnabled": false,
+    "bootstrapNetworkObservationSha256": "5373ff2b8bd3d95160fd6444bc1b4c07c05a1c2c30ae3e6fc7790a8f02a3330f"
+  },
+  "rawReceiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-start-20261106-01/transport/release-receipts/t45-f35-1e6ba0-start-20261106-01/fresh35-start-target-result.json",
+  "rawReceiptSHA256": "12f14866b1260f78a4ebaeb110dba2f94bb229dfab7ee64b1f69b530d022e753",
+  "C11SHA256": "661b8ced24728a8bca75a88f0653bcf27ae5e58a7245af7b836aff8152782643",
+  "collectorActualMaterializedMode": "0o755",
+  "installSubmitted": false,
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "REALOrFormalChanged": false
+}

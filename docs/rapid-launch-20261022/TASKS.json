@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T23:07:16.731867+08:00",
+  "updatedAt": "2026-11-06T23:10:27.931120+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -32469,7 +32469,7 @@
         }
       },
       "r23Preparation": {
-        "state": "R23_MATERIAL_AND_RESOURCE_PASS_C11_NEW_ISOLATED_START_IN_PROGRESS",
+        "state": "R23_NEW_PG_START_PASS_C9_ACTUAL_INSTALL_AND_ORDINARY_VALIDATION_IN_PROGRESS",
         "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
         "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
         "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
@@ -32487,7 +32487,7 @@
             1793973039953934261
           ]
         },
-        "newServerOrPGExecuted": "Exact ordinary artifact stage/assembly executed; PG not started",
+        "newServerOrPGExecuted": true,
         "oldKeysMayReplay": false,
         "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
         "buildResultSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
@@ -32559,7 +32559,23 @@
           "expiresAt": 1793978686744,
           "container": "t45-fresh35-deb13-20261106-r23",
           "source": "Standing same-kind bounded isolation human approval; not expired noon delegation",
-          "C9Issued": false
+          "C9Issued": true
+        },
+        "startReceiptSHA256": "12f14866b1260f78a4ebaeb110dba2f94bb229dfab7ee64b1f69b530d022e753",
+        "safeStartReceiptSHA256": "fd9e8571964e7d73420e93e6bfe1fbb4e3e3012424a4858b1c82494b4eba2369",
+        "actualCID": "e40db110ff95f772829a70ff71b65874b295db7969fcd68e3b9228013503e907",
+        "actualSID": "7705074955509960751",
+        "actualOID": "16393",
+        "actualPG": "170011",
+        "actualBirth": "2026-11-06 15:06:05.369061+00",
+        "programSHA256": "60f7289c1ec305293bba8717b876111e28b6dae4933c9d8e38f4e0b92a67d130",
+        "targetSHA256": "6f7f40efe7deb99e3ac736766ab19dea85b2b5349ab930764850e9988fe5b438",
+        "C9": {
+          "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/fresh35-install-1e6ba0-pg20-01.json",
+          "sha256": "73b8dbcac8b14150d780abbea1a3fef3db44d537f9a374c121b8a8b6761df3f2",
+          "startsAt": 1793977486744,
+          "expiresAt": 1793978686744,
+          "scope": "Same exact C11 physical target/program, no window extension/old-key replay/REAL/production"
         }
       }
     },
@@ -32969,11 +32985,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T23:07:16.731867+08:00",
-      "phase": "R23_MATERIAL_AND_RESOURCE_PASS_C11_NEW_ISOLATED_START_IN_PROGRESS",
+      "at": "2026-11-06T23:10:27.931120+08:00",
+      "phase": "R23_NEW_PG_START_PASS_C9_ACTUAL_INSTALL_AND_ORDINARY_VALIDATION_IN_PROGRESS",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 new r23 exact isolated start",
+      "currentOwner": "Original T45 exact r23 install/ordinary/readback/cleanup",
       "nextOwner": "C bind fresh C11 after actual material/resource; T45 actual target then C9",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32984,7 +33000,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Read actual target/program then C bind original C9; no install before exact C9.",
+      "next": "Collect same original job terminal, adopt precise stages only; no replay on unknown.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
@@ -33017,7 +33033,7 @@
       "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
       "D2ReceiptSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
       "currentCandidateActualRuntime": {
-        "state": "NOT_EXECUTED",
+        "state": "START_PASSED_INSTALL_NOT_TERMINAL",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false

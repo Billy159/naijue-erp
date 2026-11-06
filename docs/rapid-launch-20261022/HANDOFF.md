@@ -2309,3 +2309,8 @@ STAGE-RESULT 9d449070已核，原receiver确认full46d2426c/83703105字节和sou
 ## 2026-11-06 — r23实际物化与资源核准，唯一新PG启动中
 
 MATERIALIZED-READY f834daea及原回执3684de48/23291992已核：物化退出0/368.988秒，actualcollector0755，当前4CPU/14.378GB内存/4.741GB磁盘、新CID及四项启动事实缺席。C按长期同类隔离授权签原11键C11 661b8ced（starts1793977486744，expires1793978686744，20分钟不扩窗）；原T45仅先启动唯一新容器t45-fresh35-deb13-20261106-r23并回实际身份和程序，C9尚未签，后续安装/普通账号/真实批次均未验。不重放旧normalCOMMITTED或unknown请求。
+
+
+## 2026-11-06 — r23实际隔离PG启动通过，原C9准确业务验证在途
+
+start0/37.948秒，raw12f14866/safefd9e8571已核，CIDe40db110/SID7705074955509960751/OID16393/PG170011/birth15:06:05.369061UTC，program60f7289c/target6f7f40ef/sourceb0f8。C已签原9键C9 73b8dbca，与本轮C11同截止1793978686744，不扩窗；T45只执行本轮安装、正常与失败合成事务、ordinary受影响业务、原probe及ownedcleanup。当前仅实际启动通过，安装及普通业务尚未出终态，REAL/prod未动，不重放旧normal或unknown请求。
