@@ -1,0 +1,146 @@
+{
+  "status": "R23_MATERIALIZED_EXACT_BUILD_COLLECTOR0755_AND_POSTRESOURCE_READY_NO_PG",
+  "recordedAtUTC": "2026-11-06T15:03:50.525126+00:00",
+  "sourceRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+  "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "ready": {
+    "status": "R23_EXACT_C13_BOUND_NO_PG",
+    "wrapperSHA256": "5529716cf7c90d6a07b645e5c79bfe487191577ce8b4164bd9e1e6e0be90a0c3",
+    "probeSHA256": "86be079e0ba43fe96169f0780b51f42ef36452d856a9c62bc7064a6e5d7c8ca1",
+    "assemblerSHA256": "11c965c3c642026164aa65a98e7247138d3d7103874107f192928473446a32c5",
+    "planSHA256": "a41c2e0b3aa18100f9c3f5f271ffc6cdef1c1e68f54ce348b50022662b0ee263",
+    "C13TailSHA256": "540716a8412047b954749d64f431a989162044f0f756121879ebc9c42e2a6aa4",
+    "C13FullSHA256": "abb05e93cc6912758d98aa0a6cce117c22da2ec987297295826401261c6edea3",
+    "C13ExpiresAt": 1793978426715,
+    "referenceLengths": {
+      "tail": 391,
+      "full": 391
+    },
+    "PGStarted": false,
+    "C11": null,
+    "C9": null
+  },
+  "FULLREADY": {
+    "archiveBytes": 83703105,
+    "archiveSha256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+    "artifactKey": "f35-1e6ba0-ordinary-local-20261106-01",
+    "authoritySha256": "abb05e93cc6912758d98aa0a6cce117c22da2ec987297295826401261c6edea3",
+    "fileIdentity": [
+      66304,
+      393737,
+      83703105,
+      1793976908152234000,
+      1793976909527221572
+    ],
+    "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+    "status": "READY"
+  },
+  "receipts": {
+    "t45-f35-1e6ba0-local-materialize-20261106-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 368.98772253096104,
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-local-materialize-20261106-01/transport/release-receipts/t45-f35-1e6ba0-local-materialize-20261106-01/fresh35-materialize-app-result.json",
+      "sha256": "3684de489149488a23eaaaa865789188d00c343897511c2e85529883592b2ed1"
+    },
+    "t45-f35-1e6ba0-local-start-preflight-20261106-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.11740777408704162,
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-local-start-preflight-20261106-01/transport/release-receipts/t45-f35-1e6ba0-local-start-preflight-20261106-01/materialize-preflight.json",
+      "sha256": "2329199210e1b71f6cba408dc35395ea14b5379cb6080e78da4de58acba04df3"
+    }
+  },
+  "postresourceFacts": {
+    "jobId": "t45-f35-1e6ba0-local-start-preflight-20261106-01",
+    "checkedAtUTC": "2026-11-06T15:02:52.536933+00:00",
+    "mutations": 0,
+    "targetParent": {
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "applicationRoot": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.9365234375,
+        1.2958984375,
+        0.7275390625
+      ],
+      "memoryBytes": {
+        "MemTotal": 16731348992,
+        "MemAvailable": 14378229760,
+        "SwapTotal": 4294963200,
+        "SwapFree": 4168454144
+      },
+      "disk": {
+        "freeBytes": 4741779456,
+        "totalBytes": 489861931008,
+        "device": 66304
+      }
+    },
+    "image": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "materializeOriginalKey": {
+      "jobId": "t45-f35-1e6ba0-local-materialize-20261106-01",
+      "requestPresent": true,
+      "resultPresent": true,
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "CASOriginalKey": {
+      "jobId": "t45-f35-1e6ba0-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "matchingContainerIDs": [],
+    "currentApplication": {
+      "archiveSHA256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+      "deploymentManifestSha256": "39dc1a09ec0442e9d76425a94352e2e8783356f3a43d66d4a550035de90c8bad",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-1e6ba0-application-20261106-01",
+      "sourceSet": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f"
+    },
+    "startArtifactsPresent": {
+      "start-intent.json": false,
+      "container-receipt.json": false,
+      "authority/fresh35-isolated-provision-v1.json": false,
+      "authority/fresh35-combined-execution-v1.json": false
+    },
+    "status": "READONLY_FACTS_COLLECTED"
+  },
+  "materializeFacts": {
+    "application": {
+      "archiveSHA256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+      "deploymentManifestSha256": "39dc1a09ec0442e9d76425a94352e2e8783356f3a43d66d4a550035de90c8bad",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-1e6ba0-application-20261106-01",
+      "sourceSet": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f"
+    },
+    "collectorMode": "0o755",
+    "environmentReceiptUnchanged": true,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "imageBuilt": false,
+    "postgresStarted": false,
+    "status": "CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW"
+  },
+  "collectorActualLinuxLstatMode": "0o755",
+  "collectorModeChangedAdHoc": false,
+  "C11TemplateSHA256": "6d6ba374f02eb1d6809cbefead65022526fd7aa55b81755d5876587707f325ad",
+  "PGStarted": false,
+  "C11": null,
+  "C9": null,
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "REALOrFormalChanged": false
+}

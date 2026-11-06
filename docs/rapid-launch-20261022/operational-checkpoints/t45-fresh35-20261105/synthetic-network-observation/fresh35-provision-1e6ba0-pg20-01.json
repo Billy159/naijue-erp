@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "39dc1a09ec0442e9d76425a94352e2e8783356f3a43d66d4a550035de90c8bad",
+  "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793977486744,
+  "expiresAt": 1793978686744,
+  "independentSafetyReviewSha256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
+  "authorizationReference": "C consumes human standing same-kind bounded isolation approval. r23 root1e6ba071/source4adb9fa2/manifest39dc1a09/QB378854ec. Actual material3684de48/resource23291992/readyf834daea, Linux collector0755. Exact t45-fresh35-deb13-20261106-r23; original2CPU3GiB/PID256/guardian/2DO. One install/negative/normal/ordinary/readback/probe/ownedcleanup. No REAL/production/old committed-or-unknown key replay or window extension. Actual program C9 follows."
+}

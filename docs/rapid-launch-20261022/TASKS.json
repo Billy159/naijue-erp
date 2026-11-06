@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T22:59:22.147239+08:00",
+  "updatedAt": "2026-11-06T23:07:16.731867+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -32469,7 +32469,7 @@
         }
       },
       "r23Preparation": {
-        "state": "R23_SERVER_FULL_READY_MATERIALIZATION_RUNNING",
+        "state": "R23_MATERIAL_AND_RESOURCE_PASS_C11_NEW_ISOLATED_START_IN_PROGRESS",
         "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
         "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
         "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
@@ -32542,10 +32542,24 @@
         ],
         "materialization": {
           "jobId": "t45-f35-1e6ba0-local-materialize-20261106-01",
-          "state": "RUNNING_NOT_TERMINAL",
-          "boundSeconds": 900,
-          "C11Issued": false,
-          "PGStarted": false
+          "status": "COMPLETED",
+          "exitCode": 0,
+          "elapsedSeconds": 368.98772253096104,
+          "receiptSHA256": "3684de489149488a23eaaaa865789188d00c343897511c2e85529883592b2ed1",
+          "actualCollectorMode": "0o755",
+          "freshResourceReceiptSHA256": "2329199210e1b71f6cba408dc35395ea14b5379cb6080e78da4de58acba04df3",
+          "diskFreeBytes": 4741779456,
+          "memoryAvailableBytes": 14378229760
+        },
+        "materializedReadySHA256": "f834daea67abc98b82d63ded3077d2d1f1165e74768cf9fcb38596af91f8d7c4",
+        "C11": {
+          "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/fresh35-provision-1e6ba0-pg20-01.json",
+          "sha256": "661b8ced24728a8bca75a88f0653bcf27ae5e58a7245af7b836aff8152782643",
+          "startsAt": 1793977486744,
+          "expiresAt": 1793978686744,
+          "container": "t45-fresh35-deb13-20261106-r23",
+          "source": "Standing same-kind bounded isolation human approval; not expired noon delegation",
+          "C9Issued": false
         }
       }
     },
@@ -32955,11 +32969,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:59:22.147239+08:00",
-      "phase": "R23_SERVER_FULL_READY_MATERIALIZATION_RUNNING",
+      "at": "2026-11-06T23:07:16.731867+08:00",
+      "phase": "R23_MATERIAL_AND_RESOURCE_PASS_C11_NEW_ISOLATED_START_IN_PROGRESS",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 t45-f35-1e6ba0-local-materialize-20261106-01",
+      "currentOwner": "Original T45 new r23 exact isolated start",
       "nextOwner": "C bind fresh C11 after actual material/resource; T45 actual target then C9",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32970,7 +32984,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Transfer exact tail, assemble original full, materialize r23 and read collector0755/resources. No PG before C11; retain all old committed/unknown keys.",
+      "next": "Read actual target/program then C bind original C9; no install before exact C9.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",

@@ -1996,3 +1996,8 @@ sourceSet仅host一pin/214变为b0f8cb29；当前为源码和本机有限模型�
 ## 2026-11-06 — r23完整候选已在服务器READY，唯一物化等待终态
 
 STAGE-RESULT 9d449070已核，原receiver确认full46d2426c/83703105字节和sourceb0f8/C13abb05e93，实际identity393737；旧base和失败现场未改。唯一物化作业t45-f35-1e6ba0-local-materialize-20261106-01仍在原900秒内，按原键等待，不重复发送或启动PG。实际物化、collector0755及freshresource齐备后C签原11键C11；actualprogram/target取得后再签C9。当前新候选ordinary/REAL/正式发布仍未通过。GitHub已读回e0ffed427fd9f1ec8c4d4e4e83bcaeaabba0d407及固定root1e6ba071。
+
+
+## 2026-11-06 — r23实际物化与资源核准，唯一新PG启动中
+
+MATERIALIZED-READY f834daea及原回执3684de48/23291992已核：物化退出0/368.988秒，actualcollector0755，当前4CPU/14.378GB内存/4.741GB磁盘、新CID及四项启动事实缺席。C按长期同类隔离授权签原11键C11 661b8ced（starts1793977486744，expires1793978686744，20分钟不扩窗）；原T45仅先启动唯一新容器t45-fresh35-deb13-20261106-r23并回实际身份和程序，C9尚未签，后续安装/普通账号/真实批次均未验。不重放旧normalCOMMITTED或unknown请求。
