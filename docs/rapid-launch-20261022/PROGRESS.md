@@ -1721,3 +1721,7 @@ Install3eb95d5c failed2/142.780380s overall. Fixed actualPG170011/source6e13 com
 ## 2026-11-06T17:53:46+08:00 - Post-commit JSON consumer minimum two-leaf ownership registered
 
 D1 reproduced real observe_scene/strict_json JSONDecodeError with a legal multiline composite json_agg wire stub. Exact original r17 failing source line is unexported, so this is a concrete consumer defect, not a guessed sole server root. Original T45 exclusively owns launcher6f4006f2 and existingdirecttestf2071eb6: normalize only3outer scene SELECTs via jsonb::text, keep original aggregate/query/4row order/strict parsing/guards and add affected existing multiline regression. No other sourcewriter, new parser, permission, server action, original committed-key replay or production. QB later checks only this increment.
+
+## 2026-11-06T18:04:06+08:00 - Two-leaf JSON wire repair frozen; minimal QA/build parallel
+
+Source4d750fffe517836f1abd8191655702011e16ae80 binds launcher73c409cf/97626B and directtest91876c06/81106B. Original T458b5c5279 author6affected checks passed, inverse launcher exactly restores parent after removing7cast bytes; no original parser/guards/query or business change. New roote7bcc81e803e3e93853bf67820290ea2a29bc423/treec06367a78f4485ee95c0e28ba35894fc7cfe61b0 follows actualr17 root2af49cd2. Original QB checks only this increment; original D2 builds once. Corrected actual17.11 ordinary chain remains pending. Existingr17 schema/import/normalCOMMIT/readback proof retained in its own version record; no oldkey replay/REAL/production.

@@ -1,0 +1,91 @@
+{
+  "format": "T45_R17_POSTCOMMIT_SCENE_JSON_SOURCE_FIX_V1",
+  "status": "SOURCE_FIXED_SCOPED_OFFLINE_PASS_NOT_ACTUAL_PG",
+  "recordedAtUTC": "2026-11-06T10:02:01.040679+00:00",
+  "writer": "Original T45",
+  "actualModelEffortFast": "UNVERIFIED",
+  "ownership": "C registered canonical TASKS integration0448Continuation.syntheticNetworkObservationContinuation.r17Preparation.postCommitJSONConsumerFix; exactly2leaves",
+  "parentRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
+  "parentSourceSetSHA256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSHA256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+      "beforeBytes": 97619,
+      "afterSHA256": "73c409cfe452329f8887fbdfe2bddccbedda9f26c06183de7017d1d28e72d2b0",
+      "afterBytes": 97626,
+      "preservedBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/launch-fresh35-isolated-v1.before.py"
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "beforeSHA256": "f2071eb6ef1bbceaaf665d41f81d5b8fc1102f7dc82e7c060a119cf71b6c9358",
+      "beforeBytes": 79351,
+      "afterSHA256": "91876c065e1595d9407318f61047adfd8208b5577bedfd8fcc1195977e7dbbaf",
+      "afterBytes": 81106,
+      "preservedBefore": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/test_fresh35_isolated_launcher.before.py"
+    }
+  ],
+  "change": "Only scene_readback_sql outer JSON text cast normalized through jsonb::text; one7-byte literal addition generates3 SELECT casts. Inner json_agg/query/4row ordering/strict_json/allguards unchanged. One regression added in existing SceneReadbackTests.",
+  "sourceFacts": {
+    "fixedParentLauncherSHA256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+    "postCommitFlagsLine": 1049,
+    "sceneCallLine": 1050,
+    "sceneParseLine": 615,
+    "strictJsonLoadsLine": 66,
+    "ordinaryCallLine": 1051,
+    "producerLoopCastLine": 608,
+    "producerInput": "Successful fixed readonly scene psql stdout held only in caller memory; no captured runtime stdout/body or actual traceback line available.",
+    "runtimeAttribution": "High-confidence narrowing to observe_scene physical-line JSON decode from flag ordering and absent ordinary failure/cleanup receipts; actual offending row/byte position and sole runtime cause remain unexported.",
+    "otherMetadata": "ordinary function would persist failure+cleanup if entered; credential cleanup does not remove these fixed result files; wrapper includes both if present."
+  },
+  "reusedEvidence": {
+    "D1Result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R17-POSTCOMMIT-JSON-SOURCE-01/RESULT.json",
+    "D1ResultSHA256": "1a8ae0b622c3913443c4a05852fb61bfb1b8001bab342a964bb471b0f0f53b41",
+    "D1FullReproRepeated": false,
+    "r17NormalImport": "COMMITTED/ALREADY_COMMITTED/VERIFIED actualPG170011 evidence preserved, no replay"
+  },
+  "checks": {
+    "red": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py SceneReadbackTests.test_composite_scene_wire_preserves_values_and_strict_rows -v",
+      "exitCode": 1,
+      "expectedFailure": "0 != 3 outer normalized casts on original source",
+      "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/RED.txt"
+    },
+    "green": {
+      "sameRegressionCommand": true,
+      "exitCode": 0,
+      "tests": 1,
+      "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/GREEN.txt"
+    },
+    "affected": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py SceneReadbackTests OrdinaryScenarioConstructionTests -v",
+      "exitCode": 0,
+      "tests": 6,
+      "reportedSeconds": 0.007,
+      "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/AFFECTED-DIRECT-TESTS.txt"
+    },
+    "inverseLauncherBytesExactlyParent": true,
+    "only7ProductionBytesAdded": true,
+    "gitDiffCheckExitCode": 0
+  },
+  "patch": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/two-owned-leaves.patch",
+    "sha256": "50c0558c9e2aa67747f21ff21477e0f2e461b370b5155a36abec4e7b38d8db9f"
+  },
+  "boundaries": {
+    "newServerJob": false,
+    "PGQueriesOrStart": false,
+    "buildOrDeploy": false,
+    "sourceOutsideRegisteredLeavesChanged": false,
+    "guardsOrAuthorityChanged": false,
+    "r17CommittedImportReplayed": false,
+    "REALOrFormalChanged": false,
+    "oldEvidenceModified": false
+  },
+  "notVerified": [
+    "Corrected wire producer/ordinary consumer on actual PostgreSQL17.11",
+    "ordinary business/readback/probe",
+    "whole chain or production acceptance"
+  ],
+  "next": "C freezes exact two-leaf increment and original QB narrowly reviews it. Any build/newPG operation remains separately bound by original flow. Worktree changes are uncommitted; C owns commit."
+}
