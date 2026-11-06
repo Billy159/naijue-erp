@@ -1,0 +1,102 @@
+{
+  "format": "D1_R17_POSTCOMMIT_JSON_SOURCE_DIAGNOSIS_V1",
+  "status": "REPRODUCED_SOURCE_FRAMING_DEFECT_AWAITING_C_OWNER_ROUTE",
+  "actualR17": {
+    "safeResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r17-pg20-execution-01/RESULT.json",
+    "safeResultSHA256": "7818e4d232da7376e4a5d48408c68ffeb17f5a360149f0eb6c1a00f2f14283db",
+    "receiptSHA256": "3eb95d5cf86a796fd9611b4f92b9510e1601755e6868d43788c706c327c1c532",
+    "sourceSetSHA256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+    "candidateRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
+    "normalImport": {
+      "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+      "stage": "commit",
+      "connectionCleanup": "CLOSED",
+      "syntheticImportVerified": true,
+      "businessVerified": false,
+      "importState": "COMMITTED",
+      "replayState": "ALREADY_COMMITTED",
+      "readbackState": "VERIFIED",
+      "settlementRetentionVerified": true,
+      "retainedHeaders": 25,
+      "retainedSettlements": 27,
+      "ordinaryUid": 61035
+    },
+    "snapshots": {
+      "postInstallEqualsPostRollback": true,
+      "postCommitDiffersFromPostInstall": true,
+      "threeConnectionCleanup": [
+        "CLOSED",
+        "CLOSED",
+        "CLOSED"
+      ]
+    },
+    "ordinaryBusinessVerified": false,
+    "postCommitConsumerFailure": {
+      "code": "JSONDecodeError",
+      "automaticRetry": false,
+      "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+    },
+    "containerStopped": true,
+    "cleanupSixTrue": true
+  },
+  "sourceDefect": {
+    "producer": "scene_readback_sql outer json_build_object wrapping json_agg(q) composite records",
+    "consumer": "observe_scene raw.splitlines then strict_json per physical line",
+    "fixedOrdinaryShape": {
+      "publicationRecords": 1,
+      "references": 11,
+      "balances": 2
+    },
+    "nativeSource": {
+      "url": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/utils/adt/json.c#L780",
+      "lines": "780-785",
+      "fact": "json_agg transfn adds LF before later composite/array values; JSON text output preserves this internal whitespace."
+    },
+    "repro": {
+      "oldNativeCompositeWireActualConsumer": "RED_JSONDecodeError",
+      "proposedCanonicalWireSameActualConsumer": "GREEN_COMPLETE_SCENE",
+      "rowCount": 4,
+      "references": 11,
+      "balances": 2,
+      "JSONValuesPreserved": true,
+      "outerProducerCastCount": 3,
+      "allOtherProducerSQLBytesExact": true,
+      "sameRRQueryCount": 1,
+      "sourceChanged": false,
+      "PGQueries": 0,
+      "serverAction": false,
+      "limitation": "Offline native-format model; exact actual r17 failing JSON file/line and sole cause not exported."
+    },
+    "proposedEdit": "Only scene producer outer json_build_object(... )::text -> ::jsonb::text, inside current3-query loop; preserve same SQL rows, params, counts, readonly RR, parser strictness and result shape.",
+    "actualFailedFileLineOrSoleCause": "UNKNOWN_NOT_EXPORTED; source-only native-format reproduction is not actual log attribution."
+  },
+  "proposedExactLeaves": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "sha256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+      "bytes": 97619
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "sha256": "f2071eb6ef1bbceaaf665d41f81d5b8fc1102f7dc82e7c060a119cf71b6c9358",
+      "bytes": 79351
+    }
+  ],
+  "owner": "Python was original T45 leaf; no D1 mutation before C explicit route/registration. Existing direct SceneReadbackTests can host regression without new source leaf.",
+  "preserve": [
+    "r17 COMMITTED, ALREADY_COMMITTED and VERIFIED readback evidence",
+    "r16 and earlier UNKNOWN records unchanged",
+    "r16 finalguard4leaves frozen",
+    "strict_json duplicate/nonfinite rejection and exact4row/11ref/2balance/current actor/physical target guards",
+    "no repeated original import or request key"
+  ],
+  "boundaries": {
+    "sourceChanged": false,
+    "newServerOrLogJob": false,
+    "PGQueries": 0,
+    "build": false,
+    "writerReplay": false,
+    "productionOrREAL": false
+  },
+  "next": "C route exact2 leaves to original T45 or explicitly register D1 as sole writer; reuse prior DB import evidence, no r17 committed replay."
+}
