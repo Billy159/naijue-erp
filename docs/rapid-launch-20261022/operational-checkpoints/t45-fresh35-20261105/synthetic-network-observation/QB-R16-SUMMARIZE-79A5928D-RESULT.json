@@ -1,0 +1,132 @@
+{
+  "task": "R16-SUMMARIZE-79A5928D",
+  "atUtc": "2026-11-06T09:19:18.984801+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "79a5928d32eec9ca408086849d60d3329d8c47f9",
+    "root": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
+    "sourceSet": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "beforeSHA256": "260a9d5869b878ed0ad9f9fdbb1004c5c8e4cc8a510a4ea1cda01230d5335fb6",
+        "beforeBytes": 69696,
+        "afterSHA256": "14ac66a52831ced28f3d6d9df2e9d463ee4fc4dc8bc42bde300c84e023dbe3e6",
+        "afterBytes": 70865
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "beforeSHA256": "69754737f21e19643df03fc9f238a1fc98ff1cc8cbe16793bf5d106bc45ee1d0",
+        "beforeBytes": 6909,
+        "afterSHA256": "b35c5864303d36d22df6fb632066653b3769b24a9c05fa6305e7269d78ccf74f",
+        "afterBytes": 7346
+      },
+      {
+        "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+        "beforeSHA256": "f71b398492f67d012fa1d95c23ea691726877f27a3d520f39dc6d6aef1f6f79f",
+        "beforeBytes": 12062,
+        "afterSHA256": "07efc3866ab1433b0954579dd9522a39c8e8a0cbb7606138d47676141108b867",
+        "afterBytes": 14439
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "beforeSHA256": "d7b4d59c81b5fd1c1a82698777d895369f8bbbc136e2ffb3bef3585555b1d710",
+        "beforeBytes": 31748,
+        "afterSHA256": "19bf3474cc717600feee7d82c86f04ea8ecf74ac5c47ad637b5bef5355353a68",
+        "afterBytes": 33309
+      }
+    ],
+    "appendOnlyOneFifthExistingTriggerRoutineSpec": true,
+    "priorFourRetentionSpecsExact": true,
+    "onlyThreeCaseGroupingPairsInNewSpec": true,
+    "sqlInverseRemovingFifthSpecRestoresEntireParent": true,
+    "receiptConstraintAndOtherSQLBytesExact": true,
+    "catalogImplementationAndDiagnosticTwoLeavesUnchanged": {
+      "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs": "33e622ee6d3e0a10795b7c9c02bec04b67e257936f4b701855687ec18bb99156",
+      "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs": "15ed4a039484c41812f19a6ad6efb8362dad507e12f78d7d735a38f8fe8a4418",
+      "tests/fresh35-isolated-entry.test.mjs": "3baa2754358d3a1257ed7686ea983a623a74d08b148065043881ec3b14c556cc"
+    },
+    "applicationTree": "de562198a815e1d6efb14cbf535dea977c78bd0e",
+    "rootTree": "de562198a815e1d6efb14cbf535dea977c78bd0e",
+    "requestedSemanticEngine": "PostgreSQL17.11",
+    "actualNew17_11Execution": false
+  },
+  "independentAffectedCatalogSeam": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "sourceSet": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+    "current214Captured180": true,
+    "currentPinsChanged": 2,
+    "other212CurrentPinsAndCapturedUnchanged": true,
+    "onlyOneOf152RoutinePinsChanged": true,
+    "other151BodyPinsExact": true,
+    "priorReceiptConstraintExact": true,
+    "threeGroupingPairsInverseWholeBodyExact": true,
+    "addedBodyBytes": 6,
+    "finalBodySha256": "7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c",
+    "catalogDefinitionSha256": "c36db89410835e327466748cd28e24ecea63dda2ba0bc0b0ac0ec82114e7e1ca",
+    "catalogOwnerAclSignatureMetadataExact": true,
+    "existingDeferredTriggerMetadataExact": true,
+    "realCompiledProgramConsumesFifthSpecAndMatchingCatalog": true,
+    "onlyOSNetworkFixtureNotAdmission": true,
+    "requiredSemanticEngine": "PostgreSQL17.11",
+    "actualPostFix17_11Executed": false
+  },
+  "authorEvidenceAdopted": {
+    "resultSha256": "f24421f9136d235e9f1ed7c120f5cb42a4e45237b1cfca5a4956e6fae9e0cef5",
+    "targetedMethods": 4,
+    "passed": 4,
+    "skipped": 0,
+    "proofHashesVerified": {
+      "REPRO-RESULT.json": {
+        "sha256": "be66ab86b04187fe3b84bf836bb0ca08a72a87633786fdcbe3f45e2b4f77a64e",
+        "bytes": 1657
+      },
+      "SOURCE-CHECKS.json": {
+        "sha256": "dbf9e794d819356bd64c5de455344c990ab2d07d7827c6b580d073a98d6df30f",
+        "bytes": 1829
+      },
+      "CLOSURE-CHECKS.json": {
+        "sha256": "468e15ab0619e7366678283aa05eac48b2259bd019e19c1357265675918db5b3",
+        "bytes": 1541
+      }
+    },
+    "parserEvidence": "pglast7.21/PG17.7 auxiliary beforeRED/partial7fail/all3groupedpass/fullIF AST/inverse; not PostgreSQL17.11 PASS",
+    "rerunOldSuitesOrParser": false
+  },
+  "scope": "Exactly3 CASE operand grouping pairs/six bytes in existing final-record trigger routine, appended as exact fifth successor. Four prior specs and entire other SQL/receipt block inverse exact. Current original loader/compiler derives matching body/definition hashes, one of152 routine pins changed, owner/ACL/signature/deferred trigger preserved.",
+  "actualR16Preserved": "C supplied original e27e5bdf: normal SUMMARIZE42601/IMPORT_FAILED/internalnull, exact backend statement/sole cause UNKNOWN, outcomeUNKNOWN_NO_REPLAY and STOPPED. Prior3negative proofs retained.",
+  "engineContract": {
+    "required": "PostgreSQL17.11",
+    "priorOriginalTarget170011": "C_REPORTED_EXISTING_EVIDENCE_NOT_A_CURRENT_FIX_RUN",
+    "currentFixedSourceActual17_11": "NOT_RUN_BY_QB",
+    "native17_11Passed": false,
+    "ordinarySynthetic25Passed": false,
+    "realFullImportComplete": false,
+    "parser17_7CountsAs17_11": false
+  },
+  "sourceBlockers": [],
+  "remainingRequiredVerification": [
+    "Original T45 new validly-bound isolatedPG17.11 installation of this fixed root",
+    "Actual deferred final-record trigger, SUMMARIZE and import business-chain checks on17.11",
+    "Keep actual first-position/sole-cause UNKNOWN unless observed"
+  ],
+  "boundaries": {
+    "sourceModified": false,
+    "newSourceCopyOrFrameworkCreated": false,
+    "npmOrRuntimeVersionChanged": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "productionWrites": 0,
+    "oldTargetOrKeyReplay": false,
+    "buildOrServiceByQB": false,
+    "oldSQLNativeWholeSuiteRepeated": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return exact scoped sourcePASS toC; originalD2 fixed build may proceed and originalT45 uses existing valid authorization for a new isolated17.11 target. This report creates no environment/production authority and does not retroactively pass r16."
+}

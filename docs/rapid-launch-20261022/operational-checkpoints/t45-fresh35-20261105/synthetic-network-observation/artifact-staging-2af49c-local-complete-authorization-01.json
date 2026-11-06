@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-2af49c-ordinary-local-20261106-01",
+  "sourceSetSha256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+  "archiveSha256": "5efac9175d91debfc4bf6c0c1b75d4053394d6bcbafe145b0fcc66c7afe45c0c",
+  "archiveBytes": 83697343,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-2af49c-ordinary-local-20261106-01",
+  "startsAt": 1793956894523,
+  "expiresAt": 1793958694523,
+  "decisionReference": "C binds r17 under standing human same-kind bounded isolation authorization. Exactroot2af49cd2/source6e13ca2e/QB181295ac/D20f555011/preflight812b8ffd. Actualcc9d6472 READYcf2e58a1 prefix80445453/d6727cb2+tail70d05be4/3251890 ->full5efac917/83697343. Original40s receiver/900s materialization. Preserve r16SUMMARIZE42601/UNKNOWN/stopped and REALfc831. NoPG/REAL/production/replay; separate PG20 after material/resources, actualPG17.11 required.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
