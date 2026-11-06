@@ -2351,3 +2351,8 @@ D1单叶3c4e8403、T45 launcheraf972bab及原测试e5512c53已核before/after与
 原D2回执619445a4已核；build0/11.954秒、pack0/9.511秒，453生产文件+30目录及7298ordinary成员采用完整证明，collector0755保留。actualsourceSetf2b1f4de（214/180，launcher1pin/其他213不变），full89b67c5a/83702712、manifest8a2107fb、descriptorb2822c22、runtimea7d2b94b和tail2475787/7794cccc已核；相对r23最长prefix81226925/580eb9e1流式重构证明采用，不重压/不新留全副本。未执行新PG/真实导入或部署。
 
 T45本地准备3aab9369准确指出：原stage前置all6cleanuptrue与r23原两false冲突。C仅登记新r24 stage_preflight.py旧目标隔离前置单叶及必要同目录模型：保留原FAILED/两false，要求原其余4true/errors[]及精确旧CID当前停止/PID0/networknone/nohostbinding/sourceimage，新r24目标缺席/无原键在途/baseidentity一致。该分支只证明旧目标停稳与新namespace独立，绝不改判旧cleanup/端口已核，也不豁免新目标自己的portUnused/cleanup和业务检查。其他false或身份/状态不符仍拒绝。缺私有原件事实UNBOUND，不套publichash；作者定向验证后原QB单叶增量。当前仅本地实现授权，无server/PG/传输/签窗。
+
+
+## 2026-11-06 — r24隔离前置单叶源码交付，原QB独立增量核对
+
+T45已实际交付stage_preflight0f532f7f/12161字节，before6082180a保全，有限AST模型3项通过。旧r23原件和两false、准确CID/source/image/operation、当前停止/PID0/networknone/nohostbinding与独立新目标缺席条件分开核，输出明确旧port未直接验证和cleanupPassfalse，旧业务/安装/新目标守卫未改。LOCAL-READY61cf4d4d绑定actualD2制品，不用expected；原private原件hash仍UNKNOWN_UNREAD，未来获准同一次必要原件读取核fields后才计算，不冒public3e6f。C已核交付hash，单叶原QB增量在途，作者3项不重跑。源/测试/before已存便携检查点；无新server/PG/传输/窗口。

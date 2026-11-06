@@ -1,0 +1,72 @@
+{
+  "status": "LOCAL_ACTUAL_BUILD_BOUND_EXACT_FAILED_R23_BRANCH_MODEL_PASS_PENDING_QB_NO_SERVER",
+  "recordedAtUTC": "2026-11-06T15:45:13.625809+00:00",
+  "D2ResultSHA256": "619445a4e8197ad99c4cfba5579e1f38254da6bd568b4dfb4525339d9907ebd2",
+  "sourceSetSha256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+  "checks": {
+    "finiteOfflineTests": 3,
+    "testCommand": "python3 outputs/T45/revisions/20261106-fresh35-r24-ops-preparation-01/test_stage_preflight.py -v",
+    "testExitCode": 0,
+    "testSeconds": 0.004,
+    "pythonAST": "PASS",
+    "wholeClosureRepeated": false
+  },
+  "priorPublicResultSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+  "priorPrivateOriginalReceiptSHA256": "UNKNOWN_UNREAD; script computes from protected original receipt and verifies exact original fields; public hash never substituted",
+  "priorCleanupSha256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+  "priorPortAbsence": "NOT_DIRECTLY_VERIFIED",
+  "priorCleanupPass": false,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "transport": 0,
+  "C13C11C9": "UNISSUED",
+  "newPhysicalTarget": "UNBOUND",
+  "actualModelEffortFast": "UNVERIFIED",
+  "unchanged": "Original application fixed root/tree; original installation/ordinary/cleanup/business guards; old evidence. Source changes only new stage_preflight predecessor branch plus exact binding constants.",
+  "files": {
+    "ordinary-proof-evidence.py": {
+      "bytes": 10262,
+      "sha256": "0badf8ea031a3c3da2a204eae98c57a3531cc69089ec6f6c294a163d64a0676c"
+    },
+    "artifact-receiver.original.py": {
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "fresh35-container-successor.UNBOUND.py": {
+      "bytes": 36887,
+      "sha256": "cd0e43296203fde9182988eebd6150836aef42373d93eb8d97aced14c56be2cc"
+    },
+    "stage_preflight.py": {
+      "bytes": 12161,
+      "sha256": "0f532f7f39fd2f5279df0250a2566992afe2db0c17cfd70e16f8f878a238d34d"
+    },
+    "assemble_original_receiver.BUILD-BOUND-C13-UNBOUND.py": {
+      "bytes": 9515,
+      "sha256": "1b72bfc8b87970d748d071889a87fa6fa552aa9bd9d3e67d98cf3473c061c4c1"
+    },
+    "fresh35-container-successor.py": {
+      "bytes": 37139,
+      "sha256": "271cff06e77114ff5f0f576104be5061d30e207e94f54631765431c2b574b05b"
+    },
+    "ordinary-proof-evidence.UNBOUND.py": {
+      "bytes": 10138,
+      "sha256": "c04ab16c595ebc120eed6f12f2142f87c7391cc8ff84d4d97305997e12c005b5"
+    },
+    "stage-preflight-only.patch": {
+      "bytes": 16969,
+      "sha256": "816aa20439113c8619abd22f1db5773cce71482b5f191440cb22ebe1ceaebb31"
+    },
+    "stage_preflight.before-r23.py": {
+      "bytes": 10371,
+      "sha256": "6082180acf022c6d9c330eed0f76297bf8820e63b46e4b1be958b4bbe2175b11"
+    },
+    "test_stage_preflight.py": {
+      "bytes": 2482,
+      "sha256": "769f5e1a357aa2cbe9641a555ecc36c4f2ebb34f460afb414fe7d6a3f02af169"
+    },
+    "assemble_original_receiver.UNBOUND.py": {
+      "bytes": 9318,
+      "sha256": "c81646388faddc9a8022ac3cd192e014106d9c57a09de9127eb13a01267006b9"
+    }
+  }
+}
