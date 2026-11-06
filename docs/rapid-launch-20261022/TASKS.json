@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T13:08:27+08:00",
+    "at": "2026-11-06T13:13:12+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -30637,7 +30637,7 @@
       },
       "supersededNextPreserved": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay.",
       "r13Preparation": {
-        "state": "SOURCE_QB_AND_BUILD_ACCEPTED_T45_R13_EXACT_PREFLIGHT",
+        "state": "ACTUAL_PREFLIGHT_PASS_EXACT_ORIGINAL_C13_STAGING_AUTHORIZED",
         "integration": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
         "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
         "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
@@ -30676,7 +30676,14 @@
           "sha256": "5b35de460e9e2b08b2e64d9bdc99c79cab8938657971f24d4f194e3779ec59bb"
         },
         "smallBindingsAndActualTailVerifiedByC": true,
-        "T45Scope": "Original r13 local exact pins and one bounded readonly stagepreflight only, no PG or transfer before original accurate leaves"
+        "T45Scope": "Original CAS tail/full, receiver/assembler and materialization; then one actualresource/startpreflight. PG not authorized under C13.",
+        "stagePreflightReceiptSHA256": "0a0fe0593825366ab9167a77565dc07c36d73635609d397dae5c79b7a48fa787",
+        "stagePreflightSafeSHA256": "8f2df853b021d8fb8c005f2fc7f36b40859d3c00ef12199ad1c4abdf039d2a89",
+        "tailAuthoritySHA256": "eb6c24f74645e1d38b72bb0f7ee68a65b8c982d73ee4848d8a05c78763190708",
+        "fullAuthoritySHA256": "08b144a275a8a4ea76c145ef1c403abe563efabefab9077ab6161a41d2bee053",
+        "stagingStartsAt": 1793941945755,
+        "stagingExpiresAt": 1793943745755,
+        "authority": "Standing direct human same-kind bounded isolated operations approval; not expired noon temporary delegation"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31085,12 +31092,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T13:08:27+08:00",
-      "phase": "SOURCE_QB_AND_BUILD_ACCEPTED_T45_R13_EXACT_PREFLIGHT",
+      "at": "2026-11-06T13:13:12+08:00",
+      "phase": "ACTUAL_PREFLIGHT_PASS_EXACT_ORIGINAL_C13_STAGING_AUTHORIZED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 original sole server executor",
-      "nextOwner": "C original accurate authority bindings after actual preflight",
+      "currentOwner": "T45 original CAS/transfer/assembler/materialize",
+      "nextOwner": "C original11keyPG20 after actual preparation/resources",
       "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31100,7 +31107,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original bounded r13 readonly stage preflight, then exact C13 transfer/preparation, actual resources and separate original20min install/business window. No r12 replay.",
+      "next": "Same30min staging window; wait actual materialization and resources before distinct20min PG window. No oldjob replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
       "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
