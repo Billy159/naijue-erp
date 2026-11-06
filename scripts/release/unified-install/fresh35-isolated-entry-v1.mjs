@@ -1,6 +1,7 @@
 import {isNodeScryptPasswordHash,NODE_SCRYPT_DUMMY_HASH} from '../../../packages/authentication/src/passwords.ts';
 import {requestHash} from '../../../packages/application/src/request-hash.ts';
 import {historicalSettlementRetentionWire} from '../../../packages/application/src/unified-historical-settlement-retention.ts';
+import {executeWholePackage,describeWholePackageFailure} from '../../../tools/unified-import/whole-package-client.ts';
 /** Root-deployed bridge for one disposable validation instance. It uses the
  * unchanged genuine combined authorization/install path. It never publishes a
  * record from JSON, grants privileges or issues authorization. Host inspection
@@ -62,7 +63,6 @@ export async function main(){
   const {assertWholeSalesAdmissionV1}=await import('./whole-sales-admission-v1.mjs');
   const {HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256}=await import('../../../packages/application/src/unified-import-contract.ts');
   const {buildSyntheticFresh35WholePackageFixture}=await import('../../../tests/fixtures/unified-import/whole-package-synthetic.ts');
-  const {executeWholePackage}=await import('../../../tools/unified-import/whole-package-client.ts');
   const {inspectWholePackage}=await import('../../../tools/unified-import/whole-package-inspect.ts');
   const {createWholePackageSqlKernel}=await import('../../../tools/unified-import/whole-package-sql-kernel.ts');
   const {reconcileWholePackage}=await import('../../../tools/unified-import/whole-package-reconcile.mjs');
@@ -93,17 +93,17 @@ export async function main(){
     const badApproval=structuredClone(fixture.program.initialize);
     badApproval.payload.historical_settlement_retention_approval.sha256='0'.repeat(64);
     const badApprovalResult=await executeWholePackage(client,fixture.identity,badApproval,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
-    if(!(badApprovalResult.state==='ROLLED_BACK'&&badApprovalResult.code==='HISTORICAL_SETTLEMENT_APPROVAL_HASH'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'),{validationStage:'BAD_APPROVAL',validationCode:badApprovalResult.code});
+    if(!(badApprovalResult.state==='ROLLED_BACK'&&badApprovalResult.code==='HISTORICAL_SETTLEMENT_APPROVAL_HASH'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'),{validationStage:'BAD_APPROVAL',validationCode:badApprovalResult.code,validationResult:badApprovalResult});
     need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');
     let removedSettlement=0;
     const missingSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='documentChunk'&&step.request.payload.mode==='CHUNK')step.request.payload.rows=step.request.payload.rows.filter(row=>{if(removedSettlement===0&&row.entity_type==='SALES_SETTLEMENT'&&row.fields.sales_id===fixture.retainedSalesIds[0]){removedSettlement++;return false;}return true;});yield step;}}};
     const missingResult=await executeWholePackage(client,fixture.identity,fixture.program.initialize,missingSteps,createWholePackageSqlKernel(encodedScrypt));
-    if(!(removedSettlement===1&&missingResult.state==='ROLLED_BACK'&&['HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_PUBLICATION_INCOMPLETE'].includes(missingResult.code)))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED'),{validationStage:'MISSING_SETTLEMENT',validationCode:missingResult.code});
+    if(!(removedSettlement===1&&missingResult.state==='ROLLED_BACK'&&['HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_PUBLICATION_INCOMPLETE'].includes(missingResult.code)))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED'),{validationStage:'MISSING_SETTLEMENT',validationCode:missingResult.code,validationResult:missingResult});
     need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED');
     let reachedFinalPublish=false;
     const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(encodedScrypt));
-    if(!(reachedFinalPublish&&result.state==='ROLLED_BACK'&&result.code==='STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED'),{validationStage:'FINAL_PUBLISH',validationCode:result.code});
+    if(!(reachedFinalPublish&&result.state==='ROLLED_BACK'&&result.code==='STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED'),{validationStage:'FINAL_PUBLISH',validationCode:result.code,validationResult:result});
     need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
     return {state:result.state,reachedFinalPublish,finalFailureStage:'FINAL_PUBLISH',finalFailureCode:result.code,badApprovalRollback:true,badApprovalCode:badApprovalResult.code,missingSettlementRollback:true,missingSettlementCode:missingResult.code,originalBatchAbsent:true};
    },options);
@@ -154,5 +154,5 @@ export async function main(){
  }
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- try{await main()}catch(error){process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:['NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'].includes(error?.installState)?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',...describeFresh35CombinedInstallFailure(error),validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,automaticRetry:false})+'\n');process.exitCode=1;}
+ try{await main()}catch(error){const failure=describeWholePackageFailure(error?.validationResult);process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:['NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'].includes(error?.installState)?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',...describeFresh35CombinedInstallFailure(error),validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,validationSQLSTATE:failure?.sqlState??null,validationStep:failure?.stage??null,validationInternalCode:failure?.staticCode??null,automaticRetry:false})+'\n');process.exitCode=1;}
 }

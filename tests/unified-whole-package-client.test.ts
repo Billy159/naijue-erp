@@ -4,6 +4,33 @@ import type {StandardImportRequest,StandardImportStep} from '../packages/applica
 const meta={batchId:'11111111-1111-4111-8111-111111111111',documentBatchId:'22222222-2222-4222-8222-222222222222',packageSha256:'a'.repeat(64),planSha256:'b'.repeat(64),namespace:'synthetic',cutoffAt:'2026-11-02T04:00:00Z'};
 const req=(n:number,batch:string,payload:Record<string,unknown>):StandardImportRequest=>({protocol:'STANDARD_IMPORT_SQL_V1',operation_id:`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,request_key:`key-${n}`,batch_id:batch,plan_sha256:meta.planSha256,package_manifest_sha256:meta.packageSha256,namespace:meta.namespace,cutoff_at:meta.cutoffAt,payload});
 const init=req(1,meta.batchId,{admin:{},document_batch_id:meta.documentBatchId});
+test('private failure diagnostic retains safe SQLSTATE and exact original phase without changing public result',async()=>{
+ const {describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
+ for(const phase of ['LOCK_AND_INSPECT','INITIALIZE'] as const){
+  const f=setup(),error=Object.assign(Error('private SQL and business values'),{code:'42501',detail:'private parameters'}),kernel={...f.kernel};
+  if(phase==='LOCK_AND_INSPECT')kernel.lockAndInspect=async()=>{throw error};else kernel.initialize=async()=>{throw error};
+  const result=await executeWholePackage(f.client,meta,init,f.steps(),kernel);
+  assert.deepEqual(result,{state:'ROLLED_BACK',code:'IMPORT_FAILED'});
+  assert.deepEqual(describeWholePackageFailure(result),{stage:phase,sqlState:'42501',staticCode:null});
+  assert.equal(describeWholePackageFailure({...result}),null);assert.equal(describeWholePackageFailure(undefined),null);
+  assert.doesNotMatch(JSON.stringify(describeWholePackageFailure(result)),/private|parameters|detail|message/i);
+  assert.equal(f.calls.at(-1),'ROLLBACK');assert.equal(f.applied,0);
+ }
+});
+test('private failure diagnostic keeps first cause when rollback itself fails',async()=>{
+ const {describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
+ const f=setup(),query=f.client.query,first=Object.assign(Error('first private'),{code:'42501'});f.client.query=async sql=>{if(sql==='ROLLBACK'){first.code='08006';throw Object.assign(Error('rollback private'),{code:'08006'})}return query(sql)};
+ const result=await executeWholePackage(f.client,meta,init,f.steps(),{...f.kernel,async initialize(){throw first}});
+ assert.deepEqual(result,{state:'UNKNOWN',code:'TRANSACTION_OUTCOME_UNKNOWN'});assert.equal(f.discarded,1);
+ const diagnostic=describeWholePackageFailure(result);assert.deepEqual(diagnostic,{stage:'INITIALIZE',sqlState:'42501',staticCode:null});assert(Object.isFrozen(diagnostic));
+});
+test('private failure diagnostic rejects non-SQLSTATE and non-enumerated internal codes',async()=>{
+ const {describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
+ for(const [message,code,expected] of [['private message','42501 PRIVATE',null],['NOT_A_LISTED_STATIC_CODE',42501,null],['KERNEL_REPLY_INVALID',undefined,'KERNEL_REPLY_INVALID']] as const){
+  const f=setup(),result=await executeWholePackage(f.client,meta,init,f.steps(),{...f.kernel,async initialize(){throw Object.assign(Error(message),{code})}});
+  assert.deepEqual(describeWholePackageFailure(result),{stage:'INITIALIZE',sqlState:null,staticCode:expected});
+ }
+});
 function setup(options:{failAt?:number;publishFail?:boolean;committed?:boolean;commitUnknown?:boolean}={}){const calls:string[]=[];let applied=0,published=0,discarded=0;const client={async query(sql:string){calls.push(sql);if(sql==='COMMIT'&&options.commitUnknown)throw Error('lost ack');return{command:sql==='SET CONSTRAINTS ALL IMMEDIATE'?'SET':sql.split(' ')[0]!};},async discard(){discarded++}};const kernel={async lockAndInspect(c:typeof client){assert.equal(c,client);return options.committed?{state:'COMMITTED' as const,packageSha256:meta.packageSha256,planSha256:meta.planSha256,summary:{rows:2}}:{state:'ABSENT' as const}},async initialize(c:typeof client){assert.equal(c,client)},async applyStep(c:typeof client,step:StandardImportStep){assert.equal(c,client);applied++;if(options.failAt===applied)throw Error('chunk failed');if(step.method==='publish'){published++;if(options.publishFail&&step.request.payload.phase==='DOCUMENTS')throw Error('publish failed')}},async summarize(c:typeof client){assert.equal(c,client);return {rows:2}}};async function* steps():AsyncGenerator<StandardImportStep>{yield{method:'masterChunk',request:req(2,meta.batchId,{rows:[{}]})};yield{method:'publish',request:req(3,meta.batchId,{phase:'BASELINE'})};yield{method:'documentChunk',request:req(4,meta.documentBatchId,{mode:'STAGE',rows:[]})};yield{method:'documentChunk',request:req(5,meta.documentBatchId,{mode:'CHUNK',rows:[{}]})};yield{method:'publish',request:req(6,meta.documentBatchId,{phase:'DOCUMENTS'})};}return{client,kernel,steps,calls,get applied(){return applied},get published(){return published},get discarded(){return discarded}}}
 test('success streams original requests then both in-transaction publications and one commit',async()=>{const f=setup();const r=await executeWholePackage(f.client,meta,init,f.steps(),f.kernel);assert.equal(r.state,'COMMITTED');assert.equal(f.applied,5);assert.equal(f.published,2);assert.deepEqual(f.calls,['BEGIN ISOLATION LEVEL READ COMMITTED','SET CONSTRAINTS ALL IMMEDIATE','COMMIT'])});
 test('mid-chunk and final publication failure rollback whole transaction',async()=>{for(const options of [{failAt:2},{publishFail:true}]){const f=setup(options),r=await executeWholePackage(f.client,meta,init,f.steps(),f.kernel);assert.equal(r.state,'ROLLED_BACK');assert.equal(f.calls.at(-1),'ROLLBACK');assert.ok(!f.calls.includes('COMMIT'))}});

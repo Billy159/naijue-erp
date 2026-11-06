@@ -633,7 +633,7 @@ class LinuxRuntimeLoadTests(unittest.TestCase):
 
 class InstallChildDiagnosticTests(unittest.TestCase):
     def payload(self):
-        return {'state':'INSTALL_FAILED_OR_OUTCOME_UNKNOWN','code':'FRESH35_ISOLATED_ENTRY_FAILED','installState':'ROLLBACK_UNCONFIRMED','validationStage':None,'validationCode':None,'automaticRetry':False,'stage':'STEP','step':'physical-empty-target','originalSQLSTATE':'42601','originalInternalCode':None,'rollbackSQLSTATE':None,'rollbackInternalCode':'FRESH35_COMBINED_PROTOCOL_NOT_READY'}
+        return {'state':'INSTALL_FAILED_OR_OUTCOME_UNKNOWN','code':'FRESH35_ISOLATED_ENTRY_FAILED','installState':'ROLLBACK_UNCONFIRMED','validationStage':None,'validationCode':None,'automaticRetry':False,'stage':'STEP','step':'physical-empty-target','originalSQLSTATE':'42601','originalInternalCode':None,'rollbackSQLSTATE':None,'rollbackInternalCode':'FRESH35_COMBINED_PROTOCOL_NOT_READY','validationSQLSTATE':None,'validationStep':None,'validationInternalCode':None}
     def capture(self,raw):
         saved={}
         with patch.object(m,'json_new',side_effect=lambda p,v:saved.update({p.name:v})):
@@ -654,6 +654,31 @@ class InstallChildDiagnosticTests(unittest.TestCase):
             with self.subTest(bytes=len(raw)):self.assertTrue(self.capture(raw)['diagnosticUnavailable'])
     def test_source_failure_capture_precedes_original_failure_and_no_retry(self):
         source=PATH.read_text();start=source.index("r=subprocess.run(argv+['--execute']");end=source.index("result=strict_json(r.stdout)",start);part=source[start:end];self.assertLess(part.index('persist_install_child_failure(root,r,descriptor)'),part.index("need(r.returncode==0,'INSTALL_FAILED_OR_OUTCOME_UNKNOWN')"));self.assertEqual(part.count('subprocess.run'),1)
+
+    def test_stage_validation_diagnostics_are_finite_and_exclude_private_text(self):
+        def capture(value,raw=None):
+            saved={}
+            with patch.object(m,'json_new',side_effect=lambda p,v:saved.update({p.name:v})):
+                m.persist_stage_child_failure(Path('/fixed'),SimpleNamespace(returncode=1,stderr=json.dumps(value).encode() if raw is None else raw,stdout=b'SECRET_SENTINEL'),'rollback')
+            self.assertEqual(set(saved),{'rollback-child-failure.json'});return saved['rollback-child-failure.json']
+        value={'validationStage':'BAD_APPROVAL','validationCode':'IMPORT_FAILED','validationSQLSTATE':'42501','validationStep':'LOCK_AND_INSPECT','validationInternalCode':'ROLE_ACK_INVALID','message':'SECRET_SENTINEL','detail':'SELECT PRIVATE_SENTINEL','parameters':['SECRET_SENTINEL']}
+        result=capture(value)
+        self.assertEqual(result,{'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':'rollback','exitCode':1,'automaticRetry':False,'validationStage':'BAD_APPROVAL','validationCode':'IMPORT_FAILED','validationSQLSTATE':'42501','validationStep':'LOCK_AND_INSPECT','validationInternalCode':'ROLE_ACK_INVALID'})
+        for key,values in [('validationSQLSTATE',[None,'P0001']),('validationStep',[None,'BEGIN','LOCK_AND_INSPECT','INITIALIZE','STEP','SUMMARIZE','CONSTRAINTS','COMMIT']),('validationInternalCode',[None,'BEGIN_ACK_INVALID','BATCH_ID_CONFLICT','BATCH_STATE_INVALID','STEP_INVALID','STEP_ORDER_INVALID','REQUEST_BINDING_INVALID','CHUNK_BOUND_INVALID','STEP_LIMIT_EXCEEDED','PUBLISH_INCOMPLETE','CONSTRAINTS_ACK_INVALID','COMMIT_ACK_INVALID','KERNEL_STATE_INVALID','KERNEL_REPLY_INVALID','ROLE_ACK_INVALID','EXPLICIT_ZERO_APPROVAL_BINDING_INVALID','PRIVATE_VALUE_IN_PUBLIC_REQUEST','PUBLIC_REQUEST_STRUCTURE_BOUND','SQL_REQUEST_INVALID','HISTORICAL_SETTLEMENT_APPROVAL_HASH'])]:
+            for item in values:
+                with self.subTest(key=key,item=item):self.assertEqual(capture({**value,key:item})[key],item)
+        for key,values in [('validationSQLSTATE',['bad','42 01',42501,False,{},'SECRET_SENTINEL']),('validationStep',['UNKNOWN','SELECT PRIVATE_SENTINEL',False,{},[]]),('validationInternalCode',['PASSWORD_SECRET','FRESH35_COMBINED_FAKE','RAW_SQL',False,{},[]])]:
+            for item in values:
+                with self.subTest(key=key,item=item):
+                    invalid={**value,key:item};safe=capture(invalid);self.assertIsNone(safe[key]);self.assertNotIn('SECRET_SENTINEL',json.dumps(safe));self.assertNotIn('PRIVATE_SENTINEL',json.dumps(safe))
+                    self.assertTrue(self.capture(json.dumps({**self.payload(),key:item}).encode())['diagnosticUnavailable'])
+        for raw in [b'{"validationSQLSTATE":"42501","validationSQLSTATE":"P0001"}',b'bad SECRET_SENTINEL',b'[]',b'\xff',b'x'*16385]:
+            with self.subTest(raw=raw[:24]):self.assertEqual(capture({},raw),{'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':'rollback','exitCode':1,'automaticRetry':False})
+    def test_install_diagnostic_accepts_nullable_or_exact_stage_fields(self):
+        value={**self.payload(),'validationSQLSTATE':'P0001','validationStep':'INITIALIZE','validationInternalCode':'HISTORICAL_SETTLEMENT_APPROVAL_HASH'}
+        result=self.capture(json.dumps(value).encode());self.assertFalse(result['diagnosticUnavailable']);self.assertEqual({k:result[k] for k in value},value)
+        for missing in ['validationSQLSTATE','validationStep','validationInternalCode']:
+            invalid={k:v for k,v in value.items() if k!=missing};self.assertTrue(self.capture(json.dumps(invalid).encode())['diagnosticUnavailable'])
 
 class BootstrapNetworkObservationTests(unittest.TestCase):
     def fixture(self,root):

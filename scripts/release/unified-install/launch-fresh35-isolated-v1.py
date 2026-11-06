@@ -65,13 +65,37 @@ def strict_json(raw):
         return out
     return json.loads(raw, object_pairs_hook=pairs, parse_constant=lambda _: need(False, 'NONFINITE_JSON'))
 
+# Closed coordinator diagnostics only; no native message, SQL or private input.
+VALIDATION_STEPS = ('BEGIN','LOCK_AND_INSPECT','INITIALIZE','STEP','SUMMARIZE','CONSTRAINTS','COMMIT')
+VALIDATION_INTERNAL_CODES = ('BEGIN_ACK_INVALID','BATCH_ID_CONFLICT','BATCH_STATE_INVALID','STEP_INVALID','STEP_ORDER_INVALID','REQUEST_BINDING_INVALID','CHUNK_BOUND_INVALID','STEP_LIMIT_EXCEEDED','PUBLISH_INCOMPLETE','CONSTRAINTS_ACK_INVALID','COMMIT_ACK_INVALID','KERNEL_STATE_INVALID','KERNEL_REPLY_INVALID','ROLE_ACK_INVALID','EXPLICIT_ZERO_APPROVAL_BINDING_INVALID','PRIVATE_VALUE_IN_PUBLIC_REQUEST','PUBLIC_REQUEST_STRUCTURE_BOUND','SQL_REQUEST_INVALID','HISTORICAL_SETTLEMENT_APPROVAL_HASH')
+
+def validation_diagnostic_fields(value):
+    sqlstate=value.get('validationSQLSTATE');step=value.get('validationStep');code=value.get('validationInternalCode')
+    return {'validationSQLSTATE':sqlstate if type(sqlstate) is str and re.fullmatch('[A-Z0-9]{5}',sqlstate) else None,
+            'validationStep':step if type(step) is str and step in VALIDATION_STEPS else None,
+            'validationInternalCode':code if type(code) is str and code in VALIDATION_INTERNAL_CODES else None}
+
+def persist_stage_child_failure(root, result, stage):
+    diagnostic={'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'exitCode':result.returncode,'automaticRetry':False}
+    raw=result.stderr
+    if type(raw) is bytes and 0<len(raw)<=16384:
+        try:
+            reported=strict_json(raw)
+            if type(reported) is dict:
+                code=reported.get('validationCode')
+                diagnostic['validationStage']=reported.get('validationStage') if reported.get('validationStage') in [None,'BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'] else None
+                diagnostic['validationCode']=code if type(code) is str and re.fullmatch('[A-Z][A-Z0-9_]{0,80}',code) else None
+                diagnostic.update(validation_diagnostic_fields(reported))
+        except (ValueError,RuntimeError,UnicodeError,TypeError):pass
+    json_new(root/(stage+'-child-failure.json'),diagnostic)
+
 def persist_install_child_failure(root, result, descriptor):
     diagnostic={'state':'OUTCOME_UNKNOWN_NO_REPLAY','exitCode':result.returncode,'automaticRetry':False,'diagnosticUnavailable':True}
     raw=result.stderr
     if type(raw) is bytes and 0<len(raw)<=16384:
         try:
             v=strict_json(raw.decode('utf-8'))
-            keys={'state','installState','code','validationStage','validationCode','automaticRetry','stage','step','originalSQLSTATE','originalInternalCode','rollbackSQLSTATE','rollbackInternalCode'}
+            keys={'state','installState','code','validationStage','validationCode','automaticRetry','stage','step','originalSQLSTATE','originalInternalCode','rollbackSQLSTATE','rollbackInternalCode','validationSQLSTATE','validationStep','validationInternalCode'}
             need(type(v) is dict and set(v)==keys,'INSTALL_DIAGNOSTIC_FIELDS')
             need(v['state']=='INSTALL_FAILED_OR_OUTCOME_UNKNOWN' and v['code']=='FRESH35_ISOLATED_ENTRY_FAILED' and v['automaticRetry'] is False,'INSTALL_DIAGNOSTIC_STATE')
             need(v['installState'] in [None,'NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'],'INSTALL_DIAGNOSTIC_INSTALL_STATE')
@@ -83,6 +107,7 @@ def persist_install_child_failure(root, result, descriptor):
                 if value is None:continue
                 pattern='[A-Z0-9]{5}' if key.endswith('SQLSTATE') else '[A-Z][A-Z0-9_]{0,80}' if key=='validationCode' else '(?:FRESH35_COMBINED_[A-Z0-9_]{1,63}|CLIENT_CLOSE_TIMEOUT)'
                 need(type(value) is str and re.fullmatch(pattern,value),'INSTALL_DIAGNOSTIC_CODE')
+            need({key:v[key] for key in ['validationSQLSTATE','validationStep','validationInternalCode']}==validation_diagnostic_fields(v),'INSTALL_DIAGNOSTIC_VALIDATION_FIELDS')
             diagnostic.update(v);diagnostic['diagnosticUnavailable']=False
         except (ValueError,RuntimeError,UnicodeError,TypeError):pass
     json_new(root/'installation-child-failure.json',diagnostic)
@@ -1017,16 +1042,7 @@ def main():
                 json_new(root/(stage+'-child-failure.json'),{'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'timedOut':True,'automaticRetry':False})
                 raise
             if r.returncode!=0:
-                diagnostic={'state':'OUTCOME_UNKNOWN_NO_REPLAY','stage':stage,'exitCode':r.returncode,'automaticRetry':False}
-                if len(r.stderr)<=16384:
-                    try:
-                        reported=strict_json(r.stderr)
-                        if type(reported) is dict:
-                            code=reported.get('validationCode')
-                            diagnostic['validationStage']=reported.get('validationStage') if reported.get('validationStage') in ['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'] else None
-                            diagnostic['validationCode']=code if type(code) is str and re.fullmatch('[A-Z][A-Z0-9_]{0,80}',code) else None
-                    except (ValueError,RuntimeError):pass
-                json_new(root/(stage+'-child-failure.json'),diagnostic)
+                persist_stage_child_failure(root,r,stage)
             need(r.returncode==0,'CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN')
             return strict_json(r.stdout)
         host_result=verify_synthetic_stages(a,target,descriptor,root,stage_child,lambda:observe_snapshot(a,target,host_window()))
