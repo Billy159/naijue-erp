@@ -1,0 +1,48 @@
+{
+  "status": "EXACT_STOPPED_R7_STATIC_TAG_MATCH",
+  "checkedAtUTC": "2026-11-06T00:41:33.018752+00:00",
+  "originalKeyTerminalReadback": {
+    "t45-f35-73bd81-start-20261106-02": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-06T00:33:55.536347+00:00"
+    },
+    "t45-f35-73bd81-install-20261106-01": {
+      "status": "FAILED",
+      "exitCode": 2,
+      "finishedAtUTC": "2026-11-06T00:35:58.841342+00:00"
+    }
+  },
+  "targetStoppedVerified": true,
+  "cid": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "actualGuardSourceSha256": "a0bbffa392210fb456059f320f618599e2428fc1d638b6a1b2c126e03196caa8",
+  "actualObserverSourceSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b",
+  "boundedLogSample": {
+    "fileBytes": 1441,
+    "sampleOffset": 0,
+    "sampleBytes": 1441,
+    "sampleSha256": "cf4807921ecc4482800bb39ac0cb92f14ecb2dd257fc667d3210fd0a4ec3de7b"
+  },
+  "failureWindowUTC": {
+    "starts": "2026-11-06T00:35:40.109509+00:00",
+    "ends": "2026-11-06T00:35:58.841342+00:00"
+  },
+  "matches": [
+    {
+      "tag": "FRESH35_COMBINED_COLUMNS_DIFFER",
+      "severity": "ERROR",
+      "inlineRaiseLine": 78,
+      "contextType": "INLINE_CODE_BLOCK_RAISE"
+    }
+  ],
+  "matchCount": 1,
+  "SQLSTATE": "55000",
+  "SQLSTATEEvidence": "Original install receipt 05de2918; not claimed separately recorded in log",
+  "rawLogExported": false,
+  "backendPIDExported": false,
+  "SQLOrContextBodyExported": false,
+  "PGConnections": 0,
+  "mutations": 0,
+  "scopeExpandedIfUnknown": false
+}

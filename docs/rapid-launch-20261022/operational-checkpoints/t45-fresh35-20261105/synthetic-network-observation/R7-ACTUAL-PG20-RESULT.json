@@ -1,0 +1,348 @@
+{
+  "status": "FAILED_ROLLED_BACK_CLEANUP_CONFIRMED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T00:34:50.869617+00:00",
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "provisionAuthoritySha256": "0bdcdfb08acdd7a7f08182a2d6523f03f8c113834083d42628d836af581ee7be",
+  "sameVersionPureDataValidator": "PASS",
+  "referenceCharacters": 476,
+  "other10FieldsUnchanged": true,
+  "receipts": [
+    {
+      "job": {
+        "jobId": "t45-f35-73bd81-start-absence-readonly-20261106-02",
+        "taskId": "T45",
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "COMPLETED",
+        "unit": "naijue-erp-op-5cc58239-de324479fa3c",
+        "atUTC": "2026-11-06T00:32:35.897253+00:00",
+        "grantId": "5cc58239751e4e2a",
+        "privateLogsExported": false,
+        "businessAcceptanceClaimed": false,
+        "exitCode": 0,
+        "elapsedSeconds": 0.1170498812571168,
+        "exports": [
+          "materialize-preflight.json"
+        ],
+        "finishedAtUTC": "2026-11-06T00:32:36.016338+00:00"
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-start-absence-readonly-20261106-02/transport/release-receipts/t45-f35-73bd81-start-absence-readonly-20261106-02/materialize-preflight.json",
+      "sha256": "e55a18e3caf2f9c84b9c5d44c4c6d56d6153154bcb343de067d3aae23b7a0a93",
+      "safeResult": {
+        "jobId": "t45-f35-73bd81-start-absence-readonly-20261106-02",
+        "checkedAtUTC": "2026-11-06T00:32:35.932967+00:00",
+        "mutations": 0,
+        "targetParent": {
+          "uid": 0,
+          "mode": "0o700",
+          "symlink": false
+        },
+        "applicationRoot": {
+          "exists": true,
+          "uid": 0,
+          "mode": "0o700",
+          "symlink": false
+        },
+        "resources": {
+          "cpuCount": 4,
+          "loadAverage": [
+            0.0615234375,
+            0.0693359375,
+            0.2421875
+          ],
+          "memoryBytes": {
+            "MemTotal": 16731348992,
+            "MemAvailable": 14341177344,
+            "SwapTotal": 4294963200,
+            "SwapFree": 4203982848
+          },
+          "disk": {
+            "freeBytes": 14793211904,
+            "totalBytes": 489861931008,
+            "device": 66304
+          }
+        },
+        "image": {
+          "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+          "os": "linux",
+          "arch": "amd64"
+        },
+        "materializeOriginalKey": {
+          "jobId": "t45-f35-73bd81-local-materialize-20261106-01",
+          "requestPresent": true,
+          "resultPresent": true,
+          "status": "COMPLETED",
+          "exitCode": 0
+        },
+        "CASOriginalKey": {
+          "jobId": "t45-f35-73bd81-final-staging-policy-20261106-01",
+          "status": "COMPLETED",
+          "exitCode": 0
+        },
+        "matchingContainerIDs": [],
+        "currentApplication": {
+          "archiveSHA256": "635de84c6f1105ebcfd21d034c2f2e69bf8e70e7857cdaac03b432a71b4b57c7",
+          "deploymentManifestSha256": "61f3539c8d3928e19f622a9e70c3a806119495413effd15031e5044d9471edf4",
+          "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+          "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+          "operationId": "t45-f35-73bd81-application-20261106-01",
+          "sourceSet": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452"
+        },
+        "startArtifactsPresent": {
+          "start-intent.json": false,
+          "container-receipt.json": false,
+          "authority/fresh35-isolated-provision-v1.json": false,
+          "authority/fresh35-combined-execution-v1.json": false
+        },
+        "failedStartOriginalKey": {
+          "jobId": "t45-f35-73bd81-start-20261106-01",
+          "status": "FAILED",
+          "exitCode": 2,
+          "finishedAtUTC": "2026-11-06T00:22:23.129542+00:00"
+        },
+        "status": "READONLY_ABSENCE_AND_FAILED_ORIGINAL_KEY_CONFIRMED"
+      }
+    },
+    {
+      "job": {
+        "jobId": "t45-f35-73bd81-start-20261106-02",
+        "taskId": "T45",
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "COMPLETED",
+        "unit": "naijue-erp-op-5cc58239-c597395f7dbf",
+        "atUTC": "2026-11-06T00:33:20.295726+00:00",
+        "grantId": "5cc58239751e4e2a",
+        "privateLogsExported": false,
+        "businessAcceptanceClaimed": false,
+        "exitCode": 0,
+        "elapsedSeconds": 35.198079883120954,
+        "exports": [
+          "fresh35-start-target-result.json"
+        ],
+        "finishedAtUTC": "2026-11-06T00:33:55.536347+00:00"
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-start-20261106-02/transport/release-receipts/t45-f35-73bd81-start-20261106-02/fresh35-start-target-result.json",
+      "sha256": "d5fe133c902b142afaafb05ed6056c382b0b4fa7ac9a3f12bc10e023a9c39510",
+      "safeResult": {
+        "cid": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c",
+        "expiresAt": 1793925586123,
+        "program": {
+          "applicationTransactions": 1,
+          "bootstrapNetworkObservationSha256": "8926c38ead307d0b9535c7faf26acfc6cec2ed953e78db5c4cd7303c0ea4b0eb",
+          "catalogSha256": "ee26c7c6c791357badccac6b4e8ac6efcde330f0da1a6d46d022eed00bb8bef1",
+          "createsCluster": false,
+          "createsCredentials": false,
+          "createsRoles": false,
+          "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+          "hostEnabled": false,
+          "observationSqlSha256": "4a7e75aded88857c334fbe3633166c16637f796b669314733a1f8ff59ee39b46",
+          "oldTablesRemoved": false,
+          "programSha256": "cf5f7adaadca4df91961ddc6a9fb39103eeb04df6aa0cb85aa8e802b861f321d",
+          "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+          "statements": [
+            {
+              "name": "physical-empty-target",
+              "sha256": "b401d573091c0de4cab6d1531072d2e0748709b4acd5ba15f95c4e3b2b2ed2b1"
+            },
+            {
+              "name": "direct-35-schema",
+              "sha256": "539c0a859820cfb6fa47868da31bb1f7daec0bb67ac829d6b66bc63682916940"
+            },
+            {
+              "name": "migration-lineage",
+              "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9"
+            },
+            {
+              "name": "controller-lineage-column-read",
+              "sha256": "b82f699e12d00079406a2e7a65513b1a7cbb25704381fc2ef1ec2b49b5d0872e"
+            },
+            {
+              "name": "historical-sales-hall",
+              "sha256": "5826d7dd3487e2a2baed50373d156a2cf2e67c9dc1f903945f8a88646e522591"
+            },
+            {
+              "name": "historical-line-amount",
+              "sha256": "2b10411c31255e380dba914ba35a1b6238397d50671baf3419a76af458060dde"
+            },
+            {
+              "name": "historical-missing-settlement-types",
+              "sha256": "161e4160c13e4d617a818d35ef16572bcd1d7699cb13ebcf739cd26d897f92b9"
+            },
+            {
+              "name": "historical-settlement-difference",
+              "sha256": "ff257e8c51d1cc08279f2b0db96540149451042458c1e6a414bdfa6bf56c7d6e"
+            },
+            {
+              "name": "complete-successor-catalog",
+              "sha256": "72d87f36db863d44a60474213c34f28e24a53cc6497f0fb7f3deb5d86fd2ad06"
+            },
+            {
+              "name": "same-physical-target",
+              "sha256": "e48cbe00fda96977c533e37e288a0008f805f4a04a2045d8b561e7ccc02fe876"
+            }
+          ],
+          "targetSha256": "8e91df3323fd99a5246867cb850cfd239a528db65874831fcac8564d4ccd2cdc"
+        },
+        "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+        "target": {
+          "expiresAt": 1793925586123,
+          "physical": {
+            "databaseOid": "16393",
+            "postmasterStart": "2026-11-06 00:33:37.032607+00",
+            "serverVersionNum": "170011",
+            "systemIdentifier": "7704850122590154799"
+          },
+          "proposal": {
+            "admin": "fresh35_admin_20261105_r1",
+            "controller": "fresh35_controller_20261105_r1",
+            "database": "synthetic_fresh35_20261105_r1",
+            "host": "127.0.0.1",
+            "owner": "fresh35_owner_20261105_r1",
+            "port": 18651,
+            "runtime": "fresh35_runtime_20261105_r1",
+            "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+          },
+          "startsAt": 1793924386123
+        }
+      }
+    },
+    {
+      "job": {
+        "jobId": "t45-f35-73bd81-install-20261106-01",
+        "taskId": "T45",
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "FAILED",
+        "unit": "naijue-erp-op-5cc58239-63ccef946bae",
+        "atUTC": "2026-11-06T00:35:40.109509+00:00",
+        "grantId": "5cc58239751e4e2a",
+        "privateLogsExported": false,
+        "businessAcceptanceClaimed": false,
+        "exitCode": 2,
+        "elapsedSeconds": 18.708930714055896,
+        "exports": [
+          "fresh35-deliver-install-result.json"
+        ],
+        "finishedAtUTC": "2026-11-06T00:35:58.841342+00:00"
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-install-20261106-01/transport/release-receipts/t45-f35-73bd81-install-20261106-01/fresh35-deliver-install-result.json",
+      "sha256": "05de2918b1e8ce1da015b696df25acd113bbe2b68729a63ed229814048a53d66",
+      "safeResult": {
+        "cid": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c",
+        "containerStopped": true,
+        "delivery": {
+          "approvalCreated": false,
+          "cid": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c",
+          "sha256": "78ccdf07a47d2f237ac8d80744edf8dfcbb53df4fda81336e1ae44f00c94c5c1",
+          "status": "EXTERNAL_INSTALL_BYTES_COPIED_ONCE"
+        },
+        "evidence": {
+          "bootstrap-network-observation.json": {
+            "adminActor": "fresh35_admin_20261105_r1",
+            "databaseOid": "16393",
+            "expiresAt": 1793925586123,
+            "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+            "host": "127.0.0.1",
+            "listenAddresses": "127.0.0.1",
+            "port": 18651,
+            "postmasterStart": "2026-11-06 00:33:37.032607+00",
+            "serverVersionNum": "170011",
+            "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+            "startsAt": 1793924386123,
+            "systemIdentifier": "7704850122590154799",
+            "unixSocketDirectories": ""
+          },
+          "cleanup.json": {
+            "cleanShutdown": true,
+            "cleanupComplete": true,
+            "credentialsRemoved": true,
+            "errors": [],
+            "initialization": {
+              "descendantsReaped": true,
+              "errors": [],
+              "initialized": true,
+              "initializerReaped": true,
+              "stopReason": "INITIALIZER_EXITED"
+            },
+            "loginsRevoked": true,
+            "ownedPidAbsent": true,
+            "portAbsent": true
+          },
+          "failure.json": {
+            "automaticRetry": false,
+            "code": "FRESH35_ISOLATED_INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+            "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+          },
+          "installation-child-failure.json": {
+            "automaticRetry": false,
+            "code": "FRESH35_ISOLATED_ENTRY_FAILED",
+            "diagnosticUnavailable": false,
+            "exitCode": 1,
+            "installState": "ROLLED_BACK",
+            "originalInternalCode": null,
+            "originalSQLSTATE": "55000",
+            "rollbackInternalCode": null,
+            "rollbackSQLSTATE": null,
+            "stage": "STEP",
+            "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+            "step": "complete-successor-catalog",
+            "validationCode": null,
+            "validationStage": null
+          },
+          "runtime-dependencies.json": {
+            "arch": "x64",
+            "fastify": "5.12.5",
+            "libvips": "8.18.7",
+            "pg": "8.23.1",
+            "platform": "linux",
+            "sharp": "0.35.5"
+          }
+        },
+        "evidenceSha256": {
+          "bootstrap-network-observation.json": "8926c38ead307d0b9535c7faf26acfc6cec2ed953e78db5c4cd7303c0ea4b0eb"
+        },
+        "forcedStopIsNotCleanShutdownProof": true,
+        "launcherExitCode": 1,
+        "ordinaryProofEvidence": {},
+        "sourceResult": {
+          "businessVerified": false,
+          "cleanup": {
+            "cleanShutdown": true,
+            "cleanupComplete": true,
+            "credentialsRemoved": true,
+            "errors": [],
+            "initialization": {
+              "descendantsReaped": true,
+              "errors": [],
+              "initialized": true,
+              "initializerReaped": true,
+              "stopReason": "INITIALIZER_EXITED"
+            },
+            "loginsRevoked": true,
+            "ownedPidAbsent": true,
+            "portAbsent": true
+          },
+          "hostEnabled": false,
+          "hostVerified": false,
+          "independentSnapshotsVerified": false,
+          "ordinaryBusinessVerified": false,
+          "productionVerified": false,
+          "recordPublished": null,
+          "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+          "syntheticImportVerified": false
+        },
+        "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+      }
+    }
+  ],
+  "productionChanged": false,
+  "backupExecuted": false,
+  "buildRepeated": false,
+  "oldKeyReplayed": false,
+  "finishedAtUTC": "2026-11-06T00:36:43.118026+00:00",
+  "installAuthoritySha256": "78ccdf07a47d2f237ac8d80744edf8dfcbb53df4fda81336e1ae44f00c94c5c1",
+  "installSubmittedOnce": true,
+  "noSyntheticBusinessPass": true,
+  "rootCause": "UNKNOWN_SQLSTATE_55000_NOT_A_ROOT_CAUSE",
+  "r7TargetStopped": true
+}

@@ -1450,3 +1450,17 @@ D1离线已证唯一captured显式默认ACL被dump省略（64/63），C按用户
 
 ### 2026-11-06 r7 实库结果收口
 start02实际0/35.198s（d5fe133c）取得新SID7704850122590154799/OID16393/CID833ae9c2。C亲核原9键78cc正确绑定actualprogramcf5f/target8e91/同窗且341字符，交原install一次；真实安装05de2918失败2/18.709s，在complete-successor-catalog报55000，原事务ROLLED_BACK。cleanup六项true/errors[]/容器已停，未发布record、synthetic25/ordinary/probe未执行通过，不算业务验证。T45仅一次有界停机日志静态标签，D1只查准确谓词并定向修，不能凭55000猜因或重旧key。备份更小容量保护a520作者7项必要边界通过，原QB只核新增diff；PG已收口，备份实际身份/资源前置可继续，不与已停止PG相互等待。
+
+
+### 2026-11-06 r7 列定义根因及并行备份
+停止r7一次安全标签07ec1a63实命中COLUMNS_DIFFER；D1封存源码及PG17.11原源有限对照证明33个GENERATED CASE派生表达式仅首LF丢失，其他318列/4default/32policy不扩。C按至12点直接委托批准仅当前compiler从同一原schema严格恢复这33个原始LF字节，sealed模型/DDL/权限/PG严格比较不变，非LF差异仍拒绝；D1实施中，未称真实PG已通过或唯一失败列已知。备份准确前置1434已过，原QB85bf仅F01漏计job根日志待原T45修，其他有效检查采用；实际备份与新恢复未验。
+
+
+### 2026-11-06 生成列修复固定候选
+D1实际最终回执242f9a24、两叶catalog55859817/test33ad8fe3及source描述02384559已亲核，固定integration5e28855e/root9c2748dd/treefea8d398/source d496e5d2；214current/180captured中只1源码pin改变，原213不变。仅33精确GENERATED表达式恢复source真实首LF；封存model/DDL/严格guard/其余318列不改。原QB只验该增量，原D2按同固定root完整构建封包，未称真实PG已过。D1最初本机报告编码错误已纠正，最终文件实际存在才采用。
+备份F01原漏计已在df085窄验闭合；仅悬空根link微项由T45先lstat修43b24e99，原QB只复此case，不重7组/身份。dispatcher现用hash9c7c及rootlog元事实已得，静态matcher UNKNOWN不当PASS；实际backup仍未执行。
+
+
+### 2026-11-06 固定9c候选与新备份执行接续
+D2实际build0/10.838s、pack0/8.830s，production453及ordinary7298成员bytes/hash/mode读回通过4ff68200；C亲核小闭包与实际2,464,296B尾段，服务器真实73base635de+81,221,531prefix拼新73dcdc完整包（同83,685,827B但SHA不同），不凭size替代身份。integration5e28855e/root9c2748dd远端已准确回读；原QB只验列派生两叶，PG未通过。下一T45原r8预检/外叶/材料化和新20min执行，不重旧r7。
+备份F02同源43b24e99/原QB e8d71107只复悬空根link拒绝、真不存在/普通control计数后PASS，df085/85bf其余有效范围采用。T45按C既定准确新backupkey开始提交，实际终态尚未取得；不需要再次审批，实际guard持续核当时身份/容量，旧备份保留。r8重材料化/PG与本次备份串行，当前不可称备份完成或新恢复通过。

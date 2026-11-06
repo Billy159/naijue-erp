@@ -1,0 +1,128 @@
+{
+  "taskId": "R7-55000-D1-01",
+  "status": "SOURCE_FIXED_DIRECT_REGRESSION_PASS_NOT_NATIVE_PG_VERIFIED",
+  "authorization": "C expressly approved exact33 LF-only current successor model repair under human decision delegation before 2026-11-06 12:00 Asia/Shanghai. Sealed originals and strict native guard unchanged.",
+  "actualFailure": {
+    "installReceiptSHA256": "05de2918b1e8ce1da015b696df25acd113bbe2b68729a63ed229814048a53d66",
+    "staticTagReceiptSHA256": "07ec1a63f61810cb2c4f54f273393caa7b101a6bbba0540f67552170b8b25393",
+    "tag": "FRESH35_COMBINED_COLUMNS_DIFFER",
+    "inlineRaiseLine": 78,
+    "matches": 1,
+    "SQLSTATE": "55000 from original install receipt, not independently logged",
+    "state": "ROLLED_BACK_AND_STOPPED",
+    "notObserved": "Actual first differing column/field or sole mismatch cause not observed"
+  },
+  "sourceProof": {
+    "totalColumns": 351,
+    "generatedColumns": 33,
+    "exactLostLeadingLF": 33,
+    "byTable": {
+      "audit_change": 16,
+      "transfer_line": 1,
+      "operation_receipt": 16
+    },
+    "unaffectedColumns": 318,
+    "defaultExpressionColumns": 4,
+    "policiesStartingWithCASE": 0,
+    "originalBug": "sealed metadata plain(sql,tokens) starts at first token and drops native leading CASE LF; derived generatedExpression loses1 original byte",
+    "primarySources": [
+      {
+        "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/ruleutils.c",
+        "facts": "GET_PRETTY_FLAGS(false) retains PRETTYFLAG_INDENT; pg_get_expr_ext uses it; CaseExpr calls appendContextKeyword which prepends LF"
+      },
+      {
+        "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/bin/pg_dump/pg_dump.c",
+        "facts": "pg_get_expr(adbin,adrelid) returned bytes are inserted directly into GENERATED ALWAYS AS (%s) STORED"
+      }
+    ]
+  },
+  "change": "Current catalog compiler restores only1 leading LF after exact cohort/member/schema/table/name/ordinal/generated/source-type/old-expression and unique pinned raw source fragment match. No trim or whitespace normalization.",
+  "fixedSource": {
+    "sourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+    "previousSourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+    "currentSourcePins": 214,
+    "capturedSourcePins": 180,
+    "delta": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "sha256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4",
+        "beforeSha256": "a0bbffa392210fb456059f320f618599e2428fc1d638b6a1b2c126e03196caa8"
+      }
+    ],
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "bytes": 37076,
+        "sha256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R7-55000-D1-01/fresh35-combined-catalog-v1.mjs"
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "bytes": 26951,
+        "sha256": "33ad8fe37a498e46c02f38b5a013c483e6733678ca3503de0cd35902678c250e",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R7-55000-D1-01/fresh35-combined-catalog.test.mjs"
+      }
+    ]
+  },
+  "sourceClosure": "214current/180captured; only catalog pin changed from source04c1; other213 pins unchanged",
+  "checks": [
+    {
+      "name": "new pinned raw dump expression regression before fix",
+      "exitCode": 1,
+      "failed": 1,
+      "actual": "CASE prefix lacks native LF",
+      "at": "audit_change.object_sales_id in offline test, not actual r7 log"
+    },
+    {
+      "name": "two new selected regressions plus affected existing model test",
+      "exitCode": 0,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 3198.872291
+    },
+    {
+      "name": "final expanded restoration test only after complete model-preservation assertion added",
+      "exitCode": 0,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 3261.904042,
+      "negativeCases": [
+        "missing LF",
+        "extra LF",
+        "changed token",
+        "wrong column identity",
+        "wrong cohort"
+      ],
+      "positiveCase": "entire model equals predecessor with only33 generatedExpression prefixes restored"
+    },
+    {
+      "name": "final node syntax for both leaves and scoped git diff --check",
+      "exitCode": 0
+    },
+    {
+      "name": "native projections/strict guard/observation SQL source span equals baseline; target/lifecycle unchanged",
+      "result": "EXACT"
+    }
+  ],
+  "preserved": [
+    "sealed model/reference/schema/metadata parser files",
+    "native pg_get_expr and exact IS DISTINCT FROM comparison",
+    "other column fields and model categories",
+    "existing hall nullable successor",
+    "all routine bodies/ACLs/roles/effective permissions",
+    "target/lifecycle/original10steps/transaction/2DO",
+    "r7 stopped state and original receipts"
+  ],
+  "notExecuted": [
+    "PG/SQL connection/execution",
+    "r7 restart/replay",
+    "real source import/production",
+    "server/ops/browser",
+    "old ACL/full backend suite",
+    "build/commit/index/controller root records"
+  ],
+  "nextOwner": "C coordinates QB only this catalog-derived expression delta, then T45 once on a wholly new target. Source proof is not actual r7 first/only cause or whole installation PASS.",
+  "reportWritingNote": "Initial local report-writer failed source encoding before execution; corrected ASCII report writer then read back all result artifacts. Product source and tests unaffected."
+}

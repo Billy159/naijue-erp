@@ -28382,7 +28382,10 @@
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
       "latestIntegrationCheckpoint": "a7d28729de59f7164d64ca28b025c4a09715bc2a",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-06T08:27:35+08:00"
+      "latestIntegrationRemoteVerifiedAt": "2026-11-06T08:27:35+08:00",
+      "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
+      "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
+      "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -30036,7 +30039,67 @@
         "ordinaryBusinessPassed": false,
         "REAL": false,
         "production": false,
-        "next": "Original D1 exact55000 predicate diagnosis; T45 one bounded stopped-log static tag only; no start replay. Fresh formal backup proceeds independently after this PG settled."
+        "next": "Original D1 exact55000 predicate diagnosis; T45 one bounded stopped-log static tag only; no start replay. Fresh formal backup proceeds independently after this PG settled.",
+        "actualSummarySHA256": "edc4fc355709f68c4219c0c02356e4540aa5995da4b34cfbf87bed5d964d79f9",
+        "safeStaticTagReceiptSHA256": "07ec1a63f61810cb2c4f54f273393caa7b101a6bbba0540f67552170b8b25393",
+        "safeStaticTag": "FRESH35_COMBINED_COLUMNS_DIFFER",
+        "rootCauseStatus": "Source-proven33generated CASE expected-expressions lose exactly leadingLF in prior token-span projection; actualfirst/onlycolumn not observed",
+        "D1Decision": {
+          "authority": "C under direct human delegation through2026-11-06T12:00+08",
+          "state": "FIXED_SOURCE_AND_AUTHOR_CHECKS_PASS_QB_AND_NEXT_BUILD_IN_PROGRESS_NOT_PG",
+          "scope": "Only33generated expressions, unique sealed TABLE/typeSql source mapping and exact leadingLF+oldbytes proof required. Preserve sealed model/DDL/PGguard/other318columns/defaults/policies/2DO/transactions; any other discrepancy refuses.",
+          "owner": "D1",
+          "checks": "Independent source33 positives, allother318unchanged, missing/doubleLF/token change refusal; no repeatedACL/fullQA",
+          "integration": "5e28855e1455a639514524f868528c20f1782c76",
+          "buildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
+          "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
+          "sourceSetSHA256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+          "receiptSHA256": "242f9a24363fed3840c55309e66468fd3a81a5532e41888d6e6496615c858304",
+          "catalogSHA256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4",
+          "testSHA256": "33ad8fe37a498e46c02f38b5a013c483e6733678ca3503de0cd35902678c250e",
+          "sourceDescriptionSHA256": "02384559010f3a20118aeeaa3064d0538a0c3ac17aa288bd3724b04fb1c7a529",
+          "sourcePinCounts": {
+            "current": 214,
+            "captured": 180,
+            "changed": 1,
+            "unchanged": 213
+          },
+          "authorReportNote": "Initial local report-writing encoding error corrected; finalRESULT actually read byC; no product changes in that correction"
+        }
+      },
+      "r8Preparation": {
+        "state": "FIXED_BUILD_AND_RESOURCES_READBACK_PASS_QB_INCREMENT_IN_PROGRESS_PENDING_T45_STAGE_PREFLIGHT",
+        "integration": "5e28855e1455a639514524f868528c20f1782c76",
+        "buildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
+        "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
+        "sourceSetSHA256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+        "buildId": "erp-9c2748dd128a-full-20261106",
+        "buildReceiptSHA256": "4ff68200de4c7cb2735e0fe59a03b6a47f687e18f1fa133403a8a73a0eee82b6",
+        "buildExitCode": 0,
+        "buildSeconds": 10.838,
+        "packExitCode": 0,
+        "packSeconds": 8.83,
+        "archiveSHA256": "73dcdc585b03b7ec262e9dcfc3962b6ed1536aa0dec7f44a93ec049392beb146",
+        "archiveBytes": 83685827,
+        "manifestSHA256": "3e46c83fb089e50a132c8279f6cc25bb100b13c3a6e52bfa32ac0694e0e6c553",
+        "manifestBytes": 1084429,
+        "sourceDescriptorSHA256": "02384559010f3a20118aeeaa3064d0538a0c3ac17aa288bd3724b04fb1c7a529",
+        "ordinaryRegularFiles": 7298,
+        "productionRegularFiles": 453,
+        "productionArchiveSHA256": "69d4c4f25b4a14214c5363982d0dafcb9c49d04a7b14284b0c1e3bdd685d6ef4",
+        "productionArchiveBytes": 3349700,
+        "baseArchiveSHA256": "635de84c6f1105ebcfd21d034c2f2e69bf8e70e7857cdaac03b432a71b4b57c7",
+        "baseArchiveBytes": 83685827,
+        "sameSizeDifferentHashWarning": true,
+        "prefixBytes": 81221531,
+        "prefixSHA256": "3c2cf3a1ceda70783db4aedee4874b8f3ff3adce71e2182c6410a791f7698dc9",
+        "tailBytes": 2464296,
+        "tailSHA256": "fb6b15be042abda7daaf2377ee26fa71465075ab80ef3944b15aae30c0d50e4b",
+        "tailReceiptSHA256": "679043cc605276659919e5ba5e38bb27e01f7d6cb6457521b44c8d1b257643bd",
+        "root": "phaseb-application-r8",
+        "container": "t45-fresh35-deb13-20261106-r8",
+        "actualPG": false,
+        "next": "T45 exact stagepreflight then original C13 leaves; heavy materialize/PG serialized after exactfreshbackup terminal. ActualPG requires adopted scopedQB/newPG20/C9 binding."
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30347,7 +30410,7 @@
     "formalBackupContinuation": {
       "at": "2026-11-06T08:15:15+08:00",
       "owner": "T45",
-      "state": "SOURCE_READY_INCREMENTAL_QB_REVIEW_IN_PROGRESS_ACTUAL_PREFLIGHT_PENDING",
+      "state": "QB_F02_PASS_T45_SUBMITTING_ONE_EXACT_FRESH_BACKUP_NOT_COMPLETED",
       "authority": "Direct human delegation through2026-11-06T12:00+08; C decision, not individual human approval",
       "target": {
         "database": "erp_prod",
@@ -30376,7 +30439,44 @@
       "sourceReadySHA256": "a520d2db1882d6064a36a76851ea5cc5b4a02eca99fca8aef1c8bd64bfa99a07",
       "sourceSHA256": "3dc826533fe1361042ca9cfe2b80435c1bd69b7594b1bb8717f04371e85d0e0c",
       "authorTinyChecks": 7,
-      "QB": "01a161d2-73f1-7381-ab03-65a1c3b52aa2"
+      "QB": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+      "preflight": {
+        "state": "PASS_EXACT_CURRENT_TARGET_AUTH_RESOURCE_PREPARATION_ONLY",
+        "receiptSHA256": "1434e52bead22a6e7d4114c58224a157d22c892149753ca1be4898bc4520d914",
+        "at": "2026-11-06T08:39:52.610391+08:00",
+        "databaseBytes": 9368139443,
+        "diskFreeBytes": 14741770240,
+        "ordinaryAndExistingLocalSocket": "Readonly/ROLLBACK/00000/closed; no credentials exported",
+        "newRootExists": false
+      },
+      "QBInitial": {
+        "conclusion": "NEED_FIX_ONLY_BACKUP_BUDGET_F01",
+        "receiptSHA256": "85bfdf456df74bf5dc3ebc372ec597f81e50ad8805ca979d7dc35f2378a6b9b1",
+        "finding": "DEST+job/results omits actualdispatcher job-root phase.private.log; safe microcounteractual96 vs counted64 under80cap",
+        "state": "T45 uniqueowner fixes exact ownjob counting/no duplicate/results/controlreceipt/reserve; remainder valid adopted",
+        "actualDispatcherLayout": "Pending bounded current hash/path verification"
+      },
+      "F01Review": {
+        "receiptSHA256": "df08542ad00bea88a2956b7517fd68f37b9c057dc4d6a5f249761f3a99cf8835",
+        "result": "Originaloutputcountfixpassed; one danglingroot symlink refusal remains; all other valid evidence adopted"
+      },
+      "F02": {
+        "sourceReadySHA256": "a2a287a69dd93ad19687db38717f665cdb2438a01ae79e26a835831003b83279",
+        "sourceSHA256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
+        "scope": "Onlylstatbeforeexists; FileNotFoundError trueabsence; no budget/domain/window change; one tinyRED/GREEN test",
+        "actualBackupExecuted": false
+      },
+      "dispatcherMetadata": {
+        "receiptSHA256": "b440b2f5fb040ae23d6d8eea6f686071d079b987e5a45ce1924bbc41bcc8ed20",
+        "actualSourceSHA256": "9c7c5eabe4697fc1768e370f4e972dc6ca6a0f8306ed0c5c04729e798c66e15d",
+        "jobRootPhaseLogObserved": true,
+        "staticRedirectMatcher": "UNKNOWN_LAYOUT; notPASSED; wholejobdomain covers actualrootfile"
+      },
+      "QBFinalSHA256": "e8d711074ada9b6a3febbe1d8afcf4f5bd96450b71addac09eb3a0d7a36d22e8",
+      "fixedSourceSHA256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
+      "newJob": "t45-prod-current-backup-20261106-01",
+      "restoreOfThisNewBackup": "NOT_VERIFIED",
+      "next": "T45 unique new submission/actualidentity-capacity guards then collect originalkey only; no new approval; r8PG heavywork waits terminal"
     }
   }
 }

@@ -1,0 +1,72 @@
+{
+  "task": "C-0448-BACKUP-BUDGET-F01-F02",
+  "atUtc": "2026-11-06T00:57:37.328655+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "sourceSha256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788",
+  "readySha256": "a2a287a69dd93ad19687db38717f665cdb2438a01ae79e26a835831003b83279",
+  "pins": [
+    {
+      "name": "backup-exact-current.py",
+      "bytes": 14168,
+      "sha256": "43b24e99b35fa09dbceebaabe3534950adffbf6b4355ec3dd2fd82fa099a4788"
+    },
+    {
+      "name": "test_backup_budget.py",
+      "bytes": 5532,
+      "sha256": "83302a2f5aafb8837f7fff3e3608831ebae171dd66e6304e2cc6ecd95460d201"
+    },
+    {
+      "name": "backup-f02-successor.patch",
+      "bytes": 1667,
+      "sha256": "26b4b23ff00d8b5e3abd970f25f6f384920d91703053d516a7ab9ce3f21ddb8b"
+    }
+  ],
+  "finding": {
+    "id": "BACKUP-BUDGET-F01",
+    "status": "CLOSED_FOR_EXACT_43B24E99",
+    "priorNeedFixRetained": true
+  },
+  "independentChecks": {
+    "conclusion": "PASS_EXACT_ROOT_BOUNDARY_SUCCESSOR",
+    "sourceOnlyChangedUsedBytesAbsenceHandling": true,
+    "wholeFileReverseComparisonExact": true,
+    "cases": [
+      {
+        "case": "genuine-control-absence",
+        "result": "PASS",
+        "measuredBytes": 8
+      },
+      {
+        "case": "dangling-control-root",
+        "result": "PASS",
+        "refusal": "BACKUP_OUTPUT_SYMLINK_REFUSED"
+      },
+      {
+        "case": "regular-control-positive",
+        "result": "PASS",
+        "measuredBytes": 10
+      }
+    ],
+    "scope": "Original fixed used_bytes on tiny own files/one symlink only; no root metadata bypass required, no server/PG/backup/restore/source copy"
+  },
+  "reused": {
+    "f01ResultSha256": "df08542ad00bea88a2956b7517fd68f37b9c057dc4d6a5f249761f3a99cf8835",
+    "scope": "Whole job counter domain, once-only nested results, exact control receipt, reserves/floor, dispatcher source pin; prior identity/scope/timeouts and author seven unchanged; no rerun"
+  },
+  "dispatcherLayout": "FAILED_UNKNOWN_LAYOUT_MATCHER_NO_MATCH_NOT_LIVE_ROUTING_PASS",
+  "boundaries": {
+    "sourceModified": false,
+    "privateSourceCopied": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "actualBackupExecuted": false,
+    "restoreExecuted": false,
+    "credentialsOrBusinessDataOutput": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "T45 may bind this exact source plus a new bundle/key and perform one new backup under C existing explicit authorization and scheduling/gates. QB has not executed or accepted an actual backup/restore."
+}

@@ -1,0 +1,133 @@
+{
+  "task": "C-0448-PRODUCTION-BACKUP-BOUNDED-SOURCE-INCREMENT",
+  "atUtc": "2026-11-06T00:44:31.234282+00:00",
+  "conclusion": "NEED_FIX",
+  "pins": {
+    "readySha256": "a520d2db1882d6064a36a76851ea5cc5b4a02eca99fca8aef1c8bd64bfa99a07",
+    "privateInputs": {
+      "source": {
+        "name": "backup-exact-current.py",
+        "bytes": 13424,
+        "sha256": "3dc826533fe1361042ca9cfe2b80435c1bd69b7594b1bb8717f04371e85d0e0c"
+      },
+      "test": {
+        "name": "test_backup_budget.py",
+        "bytes": 3999,
+        "sha256": "17eff15dfe83ad33b1ab1c4d62e09288488c60ca06240d13a6479d75a3d10037"
+      },
+      "diff": {
+        "name": "backup-bounded-successor.patch",
+        "bytes": 17428,
+        "sha256": "720a06ee61221b5b225151ba1886d228fd82969449983006d719eef3c34069f1"
+      }
+    },
+    "sourceCopiedToReportOrGit": false
+  },
+  "findings": [
+    {
+      "id": "BACKUP-BUDGET-F01",
+      "priority": "P2",
+      "status": "OPEN_FOR_EXACT_3DC82653",
+      "file": "backup-exact-current.py",
+      "lines": [
+        22,
+        30
+      ],
+      "title": "Include job-root stdout/stderr in the same aggregate backup cap",
+      "problem": "used_bytes scans backup destination and job/results only. Retained dispatcher source writes combined phase stdout/stderr at the job root, outside results. Declared job-output footprint can therefore exceed total cap while budget accepts.",
+      "evidence": {
+        "finding": "BACKUP-BUDGET-F01",
+        "result": "REPRODUCED_DEFECT",
+        "modelTotalCapBytes": 80,
+        "originalCounterReportedBytes": 64,
+        "actualDeclaredBackupPlusJobOutputBytes": 96,
+        "jobRootCombinedStdoutStderrBytesExcluded": 32,
+        "originalBudgetAccepted": true,
+        "controlReserveBytes": 16,
+        "referenceDispatcherBehavior": "retained local dispatcher redirects stdout and stderr to job-root phase.private.log outside results",
+        "liveDispatcherVerified": false,
+        "boundaries": "Tiny own files, original used_bytes/budget, modeled disk space; no server/PG/real backup/data/source copy"
+      },
+      "referenceDispatcherSha256": "9c7c5eabe4697fc1768e370f4e972dc6ca6a0f8306ed0c5c04729e798c66e15d",
+      "liveDispatcherLayoutVerified": false,
+      "minimumCorrection": "Original T45 confirms exact current runner output layout without expanding backup scope, then counts its task-owned stdout/stderr/control outputs in the same cap with deduplication and necessary bounded reserve. Do not lower disk floor, create a backup framework or delete old artifacts.",
+      "limits": "Tiny own-file reproduction only; no actual production byte overrun, backup or restore is demonstrated."
+    }
+  ],
+  "authorEvidenceAdopted": {
+    "tinyOwnChildGroupsReported": 7,
+    "rerun": false,
+    "sourceReadySha256": "a520d2db1882d6064a36a76851ea5cc5b4a02eca99fca8aef1c8bd64bfa99a07"
+  },
+  "independentChecks": [
+    {
+      "id": "PRIVATE_SOURCE_TEST_PATCH_HASHES_MATCH",
+      "result": "PASS",
+      "sourceCopied": false
+    },
+    {
+      "id": "ORIGINAL_CONFIG_AND_DATABASE_MISMATCH_GATES_BEFORE_DEST_AND_DUMP",
+      "result": "PASS",
+      "safeCases": [
+        {
+          "case": "wrong-config-source-hash",
+          "result": "PASS",
+          "refusal": "APP_DATABASE_CONFIG_SOURCE_CHANGED",
+          "serviceIdentityReads": 3,
+          "backupDirectoryCreated": false,
+          "dumpCalls": 0
+        },
+        {
+          "case": "wrong-database-oid",
+          "result": "PASS",
+          "refusal": "EXACT_DATABASE_IDENTITY_CHANGED",
+          "serviceIdentityReads": 3,
+          "backupDirectoryCreated": false,
+          "dumpCalls": 0
+        }
+      ]
+    },
+    {
+      "id": "ORIGINAL_AGGREGATE_COUNTER_JOB_LOG_COUNTEREXAMPLE",
+      "result": "REPRODUCED_DEFECT",
+      "safeByteEvidence": {
+        "finding": "BACKUP-BUDGET-F01",
+        "result": "REPRODUCED_DEFECT",
+        "modelTotalCapBytes": 80,
+        "originalCounterReportedBytes": 64,
+        "actualDeclaredBackupPlusJobOutputBytes": 96,
+        "jobRootCombinedStdoutStderrBytesExcluded": 32,
+        "originalBudgetAccepted": true,
+        "controlReserveBytes": 16,
+        "referenceDispatcherBehavior": "retained local dispatcher redirects stdout and stderr to job-root phase.private.log outside results",
+        "liveDispatcherVerified": false,
+        "boundaries": "Tiny own files, original used_bytes/budget, modeled disk space; no server/PG/real backup/data/source copy"
+      }
+    }
+  ],
+  "reusableSourceScope": {
+    "targetGuard": "Exact three existing service identities, image/birth/restart, config source hash and fixed database physical/local noninteractive socket identity precede destination creation and data dump. New mismatch gates exercised offline; current live identities not established.",
+    "readOnlyScope": "Original single-database read-only dump/custom format/noninteractive authentication, offline TOC without restore destination and original opaque app/web/media/config/image paths remain; no input/credential data emitted to report.",
+    "caps": "Declared4GiB aggregate; dump2GiB, images1GiB, each app/web/media256MiB, config/TOC16MiB; initial12GiB, floor8GiB,128KiB bounded control reserve within cap; stream checks before writes and drains fast-child pipes. F01 is incomplete aggregate path coverage.",
+    "childAndTime": "Original whole900s and child timeouts retained; original bounded own child-group stop, private partials preserved; no old service/container/backup mutations. BusyBox timeout form is adopted from prior verified parameter contract.",
+    "reportPrivacy": "Only safe hashes, synthetic byte sizes and conclusions retained. Private source not copied into report/Git; no real business rows, credential or connection string included."
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "boundaries": {
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "DockerActions": 0,
+    "actualBackupExecuted": false,
+    "newRestoreExecuted": false,
+    "realBackupOrBusinessInputsRead": false,
+    "sourceModified": false,
+    "privateSourceCopiedToGitOrReport": false,
+    "rootDiskCommandFacts": "MODELED_ONLY",
+    "liveCurrentDispatcherSourceVerified": false
+  },
+  "next": "Original T45 fixes only aggregate output coverage in exact private successor, retaining all accepted checks/bounds; C schedules after active PG window settles. Recheck only F01 plus affected control reserve/floor seam; no full7 rerun or real backup/restore by QB."
+}
