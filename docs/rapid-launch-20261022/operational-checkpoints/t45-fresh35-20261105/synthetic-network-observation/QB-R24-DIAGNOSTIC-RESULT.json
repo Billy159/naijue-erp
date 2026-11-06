@@ -1,0 +1,119 @@
+{
+  "format": "QB_R24_CLOSED_DIAGNOSTIC_EXACT_DELTA_REVIEW_V1",
+  "recordedAt": "2026-11-06T23:37:37.584343+08:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_DIAGNOSTIC",
+  "findings": [],
+  "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+  "rootCommit": "9315643006a574986abacf5bba631e7c34cf23f1",
+  "candidateTree": "29d3fc11e0da9b9cc8c0905082c846a80f51c222",
+  "comparisonSource": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 102463,
+      "sha256": "af972bab2c8d603f439d5b7ef5267b4c13b1f8cd19060a66a5dcdb5a786408d9"
+    },
+    {
+      "path": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "bytes": 78748,
+      "sha256": "3c4e8403c1b00b13835d3d0a996d7a2ba0698b65adc5d80bc7e35f48c3c28153"
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "bytes": 92030,
+      "sha256": "e5512c53e983e916d423aec4b1a99c3b045578b982b657254a251c149a68b1ee"
+    }
+  ],
+  "independentSourceChecks": {
+    "threeCandidateLeavesOnly": true,
+    "TSRuntimeInverseExactExceptOnePhaseAndTwoSqlstates": true,
+    "launcherInverseExactExceptSameEnums": true,
+    "SQLBusinessAssertionsHostACLAndCleanupUnchanged": true,
+    "PythonExistingTestBodiesUnchanged": true,
+    "sourceReadbackExactAfterChecks": true
+  },
+  "adoptedEvidence": {
+    "authorResults": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R23-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/RESULT.json",
+        "sha256": "d84d654846b532798937724aa868fa6f66b57a21f5dbf5c5f30341e7ae631ac8",
+        "status": "SOURCE_READY_LOCAL_OFFLINE_ONLY_AWAIT_C_QB_AND_T45_CONSUMER"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r24-ordinary-diagnostic-phase-sqlstate-01/RESULT.json",
+        "sha256": "692192619d7533b73fcc9a58e623bdfe30ee6dd747d8df6a744879035ae42520",
+        "status": "PASS_SCOPED_OFFLINE_PARENT_DIAGNOSTIC_ONLY"
+      }
+    ],
+    "D1CorrectedRedAndGreenLogsVerified": true,
+    "D1GreenTests": 6,
+    "D1Skipped": 0,
+    "T45ReportedRedFailedSubcases": 5,
+    "T45ReportedGreenTests": 11,
+    "authorTestsRerun": false
+  },
+  "independentComplement": {
+    "format": "QB_R24_PARENT_COMPLEMENT_V1",
+    "status": "PASS",
+    "newPhaseAndSqlstateSetsEqual": true,
+    "actualGeneratedCatchToActualParentModel": "PASS",
+    "newOwnDataCodesRetained": 2,
+    "sensitiveGetterReads": 0,
+    "negativeNewCodeBoundaries": 6,
+    "parentUnknownSqlstateRejected": true,
+    "perModelSpawns": 1,
+    "perModelCommunicates": 1,
+    "models": 2,
+    "automaticRetry": false,
+    "cleanupReaped": true,
+    "PGQueries": 0,
+    "authorTestsRerun": 0,
+    "scope": "Original generated catch plus actual finite diagnostic functions and original parent driver helper; two explicit failure models only, no original unittest method executed."
+  },
+  "reusedR23": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/R23-ORDINARY-WATCH-4ADB9FA2-20261106/RESULT.json",
+    "sha256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
+    "action": "REUSED_NOT_RETESTED"
+  },
+  "boundaries": {
+    "PGQueries": 0,
+    "serverJobs": 0,
+    "builds": 0,
+    "sourceWrites": 0,
+    "wholeSuites": 0,
+    "oldKeysReplayed": false,
+    "actualModelEffortFast": "UNVERIFIED",
+    "actualR23RootCause": "UNKNOWN",
+    "actualR23RawReceiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+    "businessAcceptance": false,
+    "SQLGuardDefectOrFixClaimed": false,
+    "nativeLinuxOrPGOrOrdinaryAPIValidated": false
+  },
+  "next": "C may adopt this exact diagnostic-only verdict and bind the combined source/build successor; do not replay old committed/unknown keys. No build or server dispatch by QB.",
+  "artifacts": {
+    "SOURCE-CHECKS.json": {
+      "sha256": "09e0245b7f88d80f661a1ee8dce6e74099670a1a8557086a5b6021ed96947a31",
+      "bytes": 1905
+    },
+    "INDEPENDENT-CHECKS.json": {
+      "sha256": "d877803f78793941afcf3eebc5d087bc6bcb75c8f6305acfdc6bf243fa00e177",
+      "bytes": 643
+    },
+    "NODE-CHECKS.json": {
+      "sha256": "eef66b3b726ba9d13218023351c3b7cd3f7f6abbee701144d36cc54406e2ff45",
+      "bytes": 2481
+    },
+    "generated-catch.json": {
+      "sha256": "e5771c6504587c6c353b2645008906f5396c5cdeaa6cf2e6b920ca4b4d58edfd",
+      "bytes": 1477
+    },
+    "node-complement.mjs": {
+      "sha256": "eec08a566ad5070b4700fb8b7a26101cc6bb0fceb048883154a7a3d9e2d135d2",
+      "bytes": 3623
+    },
+    "independent-check.py": {
+      "sha256": "ec42437cd7e444539633ea0d01f38ba115d5f40eb4f578df6bd4148bff34d819",
+      "bytes": 3236
+    }
+  }
+}

@@ -2029,3 +2029,10 @@ D1单叶3c4e8403、T45 launcheraf972bab及原测试e5512c53已核before/after与
 重要更正：撤回前述“确定正式APP目录producer mismatch”。T45核APP只mount record单文件+11reference RO，0711 authority整目录实际属于PG carrier namespace，同路径不代表同namespace。D1已明确撤回原结论。APP实际parent metadata仍未验证；不实施0750、不新增APP user字段、不扩整目录mount暴露secret，留正常正式路径核实。
 
 停止后一次只读d26bc629退出0/0.067秒，准确CID停止/PID0/networknone/nohostbinding，SandboxKey空，未进netns；原portAbsentfalse及cleanupCompletefalse仍保持，不能倒改旧失败。无新PG/重启/kill/权限或业务写。
+
+
+## 2026-11-06 — r24原QB独立增量通过，统一构建接续
+
+原QB941b153f已核并采用，PASS_SOURCE_AND_SCOPED_OFFLINE_DIAGNOSTIC/findings空。作者6+11项采用不重跑；独立补新phase/code经原生成catch到parent保真、6种代码伪造/变形过滤、秘密getter读取0、brand副本拒绝、父端两失败模型一次spawn/communicate/automaticRetryfalse及cleanup回收。无PG/server/source写/fullsuite，不代表r23实际业务根因已修好。
+
+原D2开始固定root93156430一个完整build/pack及相对r23实测prefix/tail，actualsourceSet与制品pin等待真实输出。原T45仅必要r24本地准备，不开server/window/PG，尤其不得把r23原cleanupComplete/portAbsentfalse改PASS；如原stage硬要求六项true，准确列冲突及最小后继建议，不自行跳过guard或重开旧PG。本批新候选仍未构建或实测，所有旧normalCOMMITTED及unknown键保持不重放。GitHub已核7d8d33bc及固定root93156430。
