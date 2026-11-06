@@ -1,0 +1,256 @@
+{
+  "status": "FIXED_0ADC4F_BUILD_PACK_ORDINARY_TAIL_PASS_NOT_PG_OR_RELEASE",
+  "sourceCommit": "0adc4f5a70b0571259a386473139a0cec4fac781",
+  "sourceTree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+  "integrationCommit": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
+  "parents": [
+    "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
+    "1930d6bd6a98df634fd018d93f9630d9de5a75c0"
+  ],
+  "integrationCandidateTreeMatched": true,
+  "buildId": "erp-0adc4f5a70b0-full-20261106",
+  "export": {
+    "sourceCommit": "0adc4f5a70b0571259a386473139a0cec4fac781",
+    "sourceTree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+    "trackedFiles": 5921,
+    "trackedBytes": 61686426,
+    "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-0adc4f5a70b0",
+    "method": "raw git blobs/commit proof; no WIP/export-ignore",
+    "dependencies": "APFS cloneb8e35; no install/download/ci"
+  },
+  "buildExecution": {
+    "exitCode": 0,
+    "elapsedSeconds": 11.014822291999998
+  },
+  "packExecution": {
+    "exitCode": 0,
+    "elapsedSeconds": 8.545742791999999
+  },
+  "packReceipt": {
+    "format": "naijue-release-pack-receipt-v1",
+    "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+    "buildId": "erp-0adc4f5a70b0-full-20261106",
+    "sourceCommit": "0adc4f5a70b0571259a386473139a0cec4fac781",
+    "archive": {
+      "file": "release.tar.gz",
+      "bytes": 3353050,
+      "sha256": "6ef01c3fdd07d03c1f12182433aa94bfc4afc722e8e120039bb65c47a648b161"
+    },
+    "manifestSha256": "be18e817d4c10bdc8d850e2f88eab82eab639aa519d5554190697ca8ad05556a",
+    "members": 453,
+    "archiveExtractions": 1,
+    "businessOrProductionValidation": false,
+    "deploymentExecuted": false
+  },
+  "sourceSet": {
+    "sourceSetSha256": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+    "currentPins": 214,
+    "capturedPins": 180,
+    "deltaFromB8e35": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "sha256": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee"
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "sha256": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb"
+      },
+      {
+        "path": "tools/unified-import/whole-host-session.mjs",
+        "sha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b"
+      }
+    ],
+    "other211Unchanged": true,
+    "backendInputs": 247,
+    "runnerInputs": 244,
+    "webFiles": 195
+  },
+  "ordinary": {
+    "status": "ALL_MEMBERS_BYTES_HASH_MODES_PASS_NOT_PG",
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83689617,
+      "sha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95"
+    },
+    "regularMembers": 7298,
+    "deployMembers": 7294,
+    "metadataMembers": 4,
+    "manifest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/DEPLOYMENT-MANIFEST.json",
+      "bytes": 1084429,
+      "sha256": "276ab2bc342b53f1860bb75dc782f72d5a240a63f315c1910953fe5400480039"
+    },
+    "descriptor": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/SOURCE-DESCRIPTOR.json",
+      "bytes": 327489,
+      "sha256": "c1fa6e10a8368b289cd2a8475d584ae46968ee6410a9bda95c758565903672fc"
+    },
+    "runtime": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/fresh35-ordinary-runtime-v1.json",
+      "bytes": 2219,
+      "sha256": "8c7231bd1af8f7fa76b67e639628c96b637924d1cac327dbf4bfe810b31f30aa"
+    },
+    "inventory": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/DEPLOYMENT-INVENTORY.json",
+      "bytes": 2712588,
+      "sha256": "04c8e69f0553563f3cadd6826b6629ac9f02960169354fff472782c0b2f7ad76"
+    },
+    "syntheticPasswordNull": true,
+    "onlyBuildFieldsFilled": true,
+    "zeroByteMembers": [
+      "deploy/runtime/npm/node_modules/node-gyp/gyp/pylib/gyp/generator/__init__.py",
+      "deploy/runtime/npm/node_modules/node-gyp/gyp/pylib/packaging/py.typed",
+      "deploy/runtime/npm/node_modules/smart-buffer/docs/ROADMAP.md",
+      "deploy/node_modules/@fastify/ajv-compiler/test/.gitkeep",
+      "deploy/node_modules/fast-json-stringify/test/fixtures/.keep",
+      "deploy/node_modules/fastify/test/logger/tap-parallel-not-ok",
+      "deploy/node_modules/pino/.nojekyll",
+      "deploy/web/chunks/chunk-DA7LQDMN.js"
+    ],
+    "immutable6668Plus2MetadataVerified": true
+  },
+  "tail": {
+    "status": "EXACT_PREFIX_TAIL_STREAM_PROVED",
+    "base": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-b8e35df4/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83688806,
+      "sha256": "97952e46730a14ff923fb4dcd83dfe2fc89b26b6ce818f67a7e04165b3043b1c"
+    },
+    "prefix": {
+      "bytes": 80445454,
+      "sha256": "32a9d25b1666b7078bd6a2d14c997402d4bf41b651fd5043db09cc709f457326",
+      "byteCompared": true
+    },
+    "tail": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-80445454.bin",
+      "bytes": 3244163,
+      "sha256": "5b35de460e9e2b08b2e64d9bdc99c79cab8938657971f24d4f194e3779ec59bb"
+    },
+    "target": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83689617,
+      "sha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95"
+    },
+    "streamReconstruction": {
+      "bytes": 83689617,
+      "sha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95",
+      "persistedTailReread": true
+    },
+    "recompression": false,
+    "fullReconstructedCopy": false,
+    "transportExecuted": false,
+    "serverExecuted": false
+  },
+  "productionModes": {
+    "status": "PRODUCTION_NAMES_BYTES_MODES_PASS",
+    "regularFiles": 453,
+    "directories": 30,
+    "fileMode": "0444",
+    "archiveMode": "0600",
+    "contentHashReadback": "original pack once extraction; no additional extraction"
+  },
+  "artifacts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/SOURCE-EXPORT.json",
+      "bytes": 584,
+      "sha256": "2603c8180eb200f8d36e541658318fb6d38215b20f338bf5ce566b3ca3da3cd5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/SOURCE-DESCRIPTOR.json",
+      "bytes": 327489,
+      "sha256": "c1fa6e10a8368b289cd2a8475d584ae46968ee6410a9bda95c758565903672fc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/SOURCE-CLOSURE.json",
+      "bytes": 27525,
+      "sha256": "64272cc4b72ecf98996b9765916163d11c9bb195907601b532cec612cbbed0c2"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/RUNNER-IMPORT-GRAPH.json",
+      "bytes": 262381,
+      "sha256": "68ca7c2caeae8a4a04b662759a19b7a26504de1c96865dc936b7f6a7f88e7bab"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/manifests/source-manifest.json",
+      "bytes": 324341,
+      "sha256": "4b898760b0b7681333df769d52966bd1987d606277ec861d99cc32f6dfdfdda5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/manifests/build-manifest.json",
+      "bytes": 534277,
+      "sha256": "7685a43ea69348269efe1653b69895ac73efbf635998f5a3cf5208e42cd614dc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/packed/release.tar.gz",
+      "bytes": 3353050,
+      "sha256": "6ef01c3fdd07d03c1f12182433aa94bfc4afc722e8e120039bb65c47a648b161"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/packed/release-manifest.json",
+      "bytes": 505390,
+      "sha256": "be18e817d4c10bdc8d850e2f88eab82eab639aa519d5554190697ca8ad05556a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/packed/pack-receipt.json",
+      "bytes": 569,
+      "sha256": "5f36c1afc424e876637d52d33053ba619d45b3cf4452816056be212fd6be68d4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/DEPLOYMENT-MANIFEST.json",
+      "bytes": 1084429,
+      "sha256": "276ab2bc342b53f1860bb75dc782f72d5a240a63f315c1910953fe5400480039"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/DEPLOYMENT-INVENTORY.json",
+      "bytes": 2712588,
+      "sha256": "04c8e69f0553563f3cadd6826b6629ac9f02960169354fff472782c0b2f7ad76"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/fresh35-ordinary-runtime-v1.json",
+      "bytes": 2219,
+      "sha256": "8c7231bd1af8f7fa76b67e639628c96b637924d1cac327dbf4bfe810b31f30aa"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/RESULT.json",
+      "bytes": 2935,
+      "sha256": "70d205741241196b8e9218ee2b45fef7465358d5979ddd24517e980d430f6f72"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ordinary/recovery-tail-next-01/RESULT.json",
+      "bytes": 1811,
+      "sha256": "bdf482bbb5c220fda5b13ea7671a9f562e8a5a19ef4e833917c8b5148a78052d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-0adc4f5a/ARCHIVE-MODES-READBACK.json",
+      "bytes": 227,
+      "sha256": "61bfd6fef8016d6273bfa299e30ded52124029bb7d0b2b0921dc551ee69b9d3d"
+    }
+  ],
+  "boundaries": {
+    "developmentSourceChanged": false,
+    "rootConfigChanged": false,
+    "secretOrRealRead": false,
+    "pgExecuted": false,
+    "serverExecuted": false,
+    "transferExecuted": false,
+    "deployed": false,
+    "installCiDownload": false,
+    "oldPackageQaRepeated": false,
+    "wholeSiteTestRun": false
+  },
+  "preservation": "All old sources/packages/records/stopped scenes preserved; no replay.",
+  "notVerified": [
+    "independent QB result not consumed by D2",
+    "live PG",
+    "namespace runtime",
+    "browser",
+    "40s transport",
+    "server deployment",
+    "business acceptance"
+  ],
+  "settings": {
+    "actualModel": "UNVERIFIED",
+    "requestedModel": "gpt-6.1-sol/medium per C dispatch",
+    "Fast": "UNVERIFIED"
+  }
+}

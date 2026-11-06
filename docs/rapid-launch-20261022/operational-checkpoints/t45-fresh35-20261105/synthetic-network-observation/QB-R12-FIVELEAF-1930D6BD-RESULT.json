@@ -1,0 +1,147 @@
+{
+  "task": "C-0448-R12-FIVELEAF-1930D6BD",
+  "atUtc": "2026-11-06T05:06:53.577124+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_NATIVE_DRIVER_MODEL",
+  "version": {
+    "integration": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
+    "root": "0adc4f5a70b0571259a386473139a0cec4fac781",
+    "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+    "parentRoot": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
+    "sourceSet": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "beforeSha256": "1508620dc618b3560181694aea2591638ce885b337f86ee5d6e51f8659918565",
+        "afterSha256": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee",
+        "bytes": 44336
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "beforeSha256": "b04646442382baff967bf43d5957eba49ac1f4e5595dde2632966f4d8b85dad2",
+        "afterSha256": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb",
+        "bytes": 5016
+      },
+      {
+        "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+        "beforeSha256": "1de0135f48d4885279eb0a58493a1e2dc404ddbcc9a6a133701757928e7310b1",
+        "afterSha256": "ae885cf200107fde02c3991cf28856ed334e2c6593f843c4be3c6ee17ba6969b",
+        "bytes": 9738
+      },
+      {
+        "path": "tools/unified-import/whole-host-session.mjs",
+        "beforeSha256": "fdae12f6b7a6962bf9b9b8764fa3075f7bd7d85391e9d6cb1cbfe2c85ea3cb7b",
+        "afterSha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b",
+        "bytes": 22321
+      },
+      {
+        "path": "tests/fresh35-host-session.test.mjs",
+        "beforeSha256": "cb01758ca86bb28e7c35da2387f10cbe4d49ffe91d01703552efa2bca951b290",
+        "afterSha256": "fdd38b637f3f99d83cc82898b9ef53a194a414170285d315263c19e647d04594",
+        "bytes": 37802
+      }
+    ],
+    "aliasScopes": 4,
+    "renamedIdentifierOccurrences": 14,
+    "localAliasLinesAndContextOnly": true,
+    "otherThreeSpecsUnchanged": true,
+    "completeSQLJsonInverseExact": true,
+    "candidateSinglePinInverseExact": true,
+    "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+    "rootTree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+    "nativeWaitAndCaptureOnlyReverseWholeModuleExact": true,
+    "existingReadyIdentityQueryStatusQueuePipelineAuthorityAckAndIdleGuardsRetained": true,
+    "waitBoundExact": "min(existing5000ms,originalFresh35expiry)",
+    "cleanupAttemptConsumedBeforeWait": true
+  },
+  "independentNativeGaps": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_NATIVE_DRIVER_MODEL",
+    "pgVersion": "8.23.1",
+    "cases": [
+      {
+        "case": "busy-overlap",
+        "result": "PASS",
+        "publicResult": {
+          "state": "ROLLED_BACK",
+          "code": "IMPORT_FAILED"
+        },
+        "overlapError": "WHOLE_CONNECTION_UNAVAILABLE",
+        "applicationRollbackCount": 1,
+        "originalAuthorityCallbackRetained": true,
+        "first42702Preserved": true,
+        "oneClose": true,
+        "addedWireListenersRemoved": true
+      },
+      {
+        "case": "status-function-replaced",
+        "result": "PASS",
+        "publicResult": {
+          "state": "UNKNOWN",
+          "code": "TRANSACTION_OUTCOME_UNKNOWN"
+        },
+        "overlapError": null,
+        "applicationRollbackCount": 0,
+        "originalAuthorityCallbackRetained": true,
+        "first42702Preserved": true,
+        "oneClose": true,
+        "addedWireListenersRemoved": true
+      }
+    ],
+    "networkConnections": 0,
+    "PGInstances": 0,
+    "SQLKernelExecution": false,
+    "admissionClaimed": false
+  },
+  "aliasAndClosure": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "sourceSet": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+    "current214Captured180": true,
+    "changedCurrentPins": [
+      "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+      "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "tools/unified-import/whole-host-session.mjs"
+    ],
+    "other211PinsAndCapturedUnchanged": true,
+    "originalCurrentLoaderUsed": true,
+    "finalBodySha256": "00ee7dd0ba4c52f089db555a1853df7b9bd587ab16952b46501f99617ef985ac",
+    "inverseOnlyFourAliasesRestoresPriorBody": true,
+    "globalImportBatchRecordBPreserved": true,
+    "variableConflictNotRelaxed": true,
+    "permissionsUnchanged": true,
+    "PGExecuted": false
+  },
+  "authorEvidenceAdopted": {
+    "D1ResultSha256": "3aa1ffe7e674436e5a3dc7807973e9628c6541a8f74aaea857e01fe53c9521f6",
+    "fivePinsSha256": "0ebf7d2b5a77a680fbca7765783b3c3c6b95ac48fd24eec1677bf7f2d206fc23",
+    "aliasResultSha256": "8571e59ebfcc8013279679e9793c881168e4472794faecb2c3642ac43f26cb97",
+    "originalNativeCounterexampleSha256": "f13a21e829a8fb51dbe96298569dfaad23bafba1a632e97ffe2a6f1ccdc253cc",
+    "alphaParserResultSha256": "f8a23a1374ae76988cc672a3c8d450bc48ac611b8dbf9ae952982a705f0d05c8",
+    "aliasMethodsPassed": 3,
+    "parser": "PG17.7 syntax and4 SQL alpha-AST models only; not actual17.11 binding",
+    "nativeModels": "Adopt author same-batch/delayed ready, end/error/expiry/no-ready/idle/invalid/query identity/badACK and existing deadline/authority/busy evidence. No whole suite rerun."
+  },
+  "preserved": "Global import_batch record b, original SQL predicates/permissions/variable_conflict, original native allowlist/authority/ACK/idle and remaining source exactly preserved by reverse comparisons. No driver-state writes, query retry or second connection.",
+  "r12ActualState": "C reported schema+record COMMITTED/PUBLISHED; BAD_APPROVAL INITIALIZE42702, negative transaction UNKNOWN/unconfirmed, target stopped. NOT_ROLLBACK_PASS.",
+  "r12FirstColumnLine": "UNKNOWN",
+  "r12RollbackFrameOrder": "UNKNOWN",
+  "boundaries": {
+    "sourceModified": false,
+    "WIPReviewed": false,
+    "serverCalls": 0,
+    "PGInstancesStarted": 0,
+    "networkConnections": 0,
+    "oldTargetOrKeyReplayed": false,
+    "actualNativePG17_11Verified": false,
+    "businessOrREALPassed": false,
+    "fullSuiteRerun": false,
+    "buildOrDeploymentByQB": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "sourceBlockers": [],
+  "next": "Return five-leaf source verdict to C. D2 owns fixed build, T45 owns any separately authorized new actual target. Retain actual r12 UNKNOWN and stopped facts; do not reuse old key/window."
+}
