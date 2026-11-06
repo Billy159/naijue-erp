@@ -2118,3 +2118,6 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07 r25真实终态：install唯一键FAILED2/156.069秒；安装记录已发布，合成25头27结算提交/防重/新连接读回、失败回滚及独立快照通过。普通链越过capacity preflight，在REAL_ADMIN_ACCOUNT_SETUP期望200实际500，具体请求/根因UNKNOWN；原D1定向定位，不重放旧键。safe941f4bb7/rawaa6ac4e3保留。新有限TCP观察同次停止前仅4条06TIME_WAIT、其余状态0；原六项cleanup仍四真两假，未改PASS，容器和child已停。原T45只读评估清理语义接缝，不新增服务器操作；REAL和正式仍未执行。
+
+
+2026-11-07 当前用户将今日12:00前决策权授C，不要求用户常规审批/操作。C采用T45只读报告1fd129ce的清理合同后继B：保留严格portAbsent及启动前unused-port不变，仅清理增加完整无活跃TCP证明，纯06TIME_WAIT须与其他生命周期全真合取；所有活跃/未知/读失败仍拒，旧false不追改。原T45仅两Python叶获准，原QB后续窄验。D1账号500仍精确定位：有限模型证明原账号CREATE/RESET与35冻结ACL有接缝，实际唯一失败请求仍UNKNOWN；不改真实库权限，不把模型当实测。
