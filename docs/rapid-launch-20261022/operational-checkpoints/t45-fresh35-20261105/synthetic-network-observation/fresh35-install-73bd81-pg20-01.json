@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "cf5f7adaadca4df91961ddc6a9fb39103eeb04df6aa0cb85aa8e802b861f321d",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "targetSha256": "8e91df3323fd99a5246867cb850cfd239a528db65874831fcac8564d4ccd2cdc",
+  "startsAt": 1793924386123,
+  "expiresAt": 1793925586123,
+  "independentSafetyReviewSha256": "c1774aae37e1bb7e5ce0bbfe2217b84b6faa17cc3d60ce27700e583592d2c380",
+  "authorizationReference": "C direct human delegation to2026-11-06 noon. r7/start02 d5fe133c actualCID833ae9c2/SID7704850122590154799/OID16393/birth00:33:37.032607UTC. Exact73bd81/source04c1/programcf5f/target8e91, same originalPG20 deadline. Synthetic25, ordinary business/readback, proof probe and exactcleanup only; noREAL/production/oldtarget/retry/windowextension."
+}

@@ -1446,3 +1446,7 @@ D1离线已证唯一captured显式默认ACL被dump省略（64/63），C按用户
 
 ### 2026-11-06 r7 准确输入修正
 材料化a995ae72/资源16bbd5ce真实通过；原start01在创建前被closed-input守卫拒绝43aa7614，C签发说明604字符超过原512上限。保留失败原键和9c8原叶，C仅将说明缩为476字符的新叶0bdcdfb0；同原20min1793924386123..1793925586123不延长。T45先有界读回新r7无CID/authority/intent，才条件提交明确修订的新start02，原guard不放宽；实际PG尚未确认。后续C签叶须先按原closedshape/长度/时窗检查，不以哈希正确替代格式验证。
+
+
+### 2026-11-06 r7 实库结果收口
+start02实际0/35.198s（d5fe133c）取得新SID7704850122590154799/OID16393/CID833ae9c2。C亲核原9键78cc正确绑定actualprogramcf5f/target8e91/同窗且341字符，交原install一次；真实安装05de2918失败2/18.709s，在complete-successor-catalog报55000，原事务ROLLED_BACK。cleanup六项true/errors[]/容器已停，未发布record、synthetic25/ordinary/probe未执行通过，不算业务验证。T45仅一次有界停机日志静态标签，D1只查准确谓词并定向修，不能凭55000猜因或重旧key。备份更小容量保护a520作者7项必要边界通过，原QB只核新增diff；PG已收口，备份实际身份/资源前置可继续，不与已停止PG相互等待。

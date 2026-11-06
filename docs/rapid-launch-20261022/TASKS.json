@@ -29965,7 +29965,7 @@
         }
       },
       "r7Preparation": {
-        "state": "MATERIALIZED_START01_REFUSED_BEFORE_CREATE_C_CORRECTED_REFERENCE_PENDING_CONDITIONAL_START02",
+        "state": "ACTUAL_INSTALL_FAILED_55000_ROLLED_BACK_CLEAN_STOP_PRESERVED",
         "integration": "267dc0fd1deabae8fd63af0f12b2512f2321c882",
         "buildRoot": "73bd81a00b41d88612d9522efa7e633166a23645",
         "tree": "98697d1c4925b6786443af1db41cfa0768f8b5d8",
@@ -29989,7 +29989,7 @@
         "stagingExpiresAt": 1793925236762,
         "newRoot": "phaseb-application-r7",
         "newContainer": "t45-fresh35-deb13-20261106-r7",
-        "actualPG": false,
+        "actualPG": true,
         "assemblyReceiptSHA256": "d2cc2ba58c68cb502364cb4b6b3a6bf9a75f1e3ae70cd67a245143aa4401cb1e",
         "assemblyJob": "t45-f35-73bd81-local-assemble-20261106-01",
         "materializationJob": "t45-f35-73bd81-local-materialize-20261106-01",
@@ -30004,7 +30004,39 @@
         "firstStartError": "ORIGINAL_PROVISION_CLOSED_INPUT_REQUIRED: C reference604chars exceeded512; before create by exact function order; absent artifacts actual readback pending",
         "correctedProvisionSHA256": "0bdcdfb08acdd7a7f08182a2d6523f03f8c113834083d42628d836af581ee7be",
         "correctedReferenceCharacters": 476,
-        "correctedScope": "Only reference shortened; exact same20min window. Original failedkey/leaf preserved. New unique02 start conditional on actual absent container and all start artifacts; no replay or guard change."
+        "correctedScope": "Only reference shortened; exact same20min window. Original failedkey/leaf preserved. New unique02 start conditional on actual absent container and all start artifacts; no replay or guard change.",
+        "actualInstallPassed": false,
+        "start02ReceiptSHA256": "d5fe133c902b142afaafb05ed6056c382b0b4fa7ac9a3f12bc10e023a9c39510",
+        "installAuthoritySHA256": "78ccdf07a47d2f237ac8d80744edf8dfcbb53df4fda81336e1ae44f00c94c5c1",
+        "actualInstallReceiptSHA256": "05de2918b1e8ce1da015b696df25acd113bbe2b68729a63ed229814048a53d66",
+        "install": {
+          "job": "t45-f35-73bd81-install-20261106-01",
+          "status": "FAILED",
+          "exitCode": 2,
+          "elapsedSeconds": 18.708930714,
+          "stage": "STEP",
+          "step": "complete-successor-catalog",
+          "originalSQLSTATE": "55000",
+          "installState": "ROLLED_BACK",
+          "rootCause": "NOT_YET_PROVEN_BY_SQLSTATE; single bounded stopped-log static-tag collection authorized"
+        },
+        "physical": {
+          "systemIdentifier": "7704850122590154799",
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 00:33:37.032607+00",
+          "cid": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c"
+        },
+        "cleanup": {
+          "sixOriginalChecks": true,
+          "errors": [],
+          "containerStopped": true
+        },
+        "recordPublished": false,
+        "synthetic25Passed": false,
+        "ordinaryBusinessPassed": false,
+        "REAL": false,
+        "production": false,
+        "next": "Original D1 exact55000 predicate diagnosis; T45 one bounded stopped-log static tag only; no start replay. Fresh formal backup proceeds independently after this PG settled."
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30315,7 +30347,7 @@
     "formalBackupContinuation": {
       "at": "2026-11-06T08:15:15+08:00",
       "owner": "T45",
-      "state": "C_APPROVED_EXACT_SMALLER_RESOURCE_SCOPE_PENDING_ACTUAL_PREFLIGHT",
+      "state": "SOURCE_READY_INCREMENTAL_QB_REVIEW_IN_PROGRESS_ACTUAL_PREFLIGHT_PENDING",
       "authority": "Direct human delegation through2026-11-06T12:00+08; C decision, not individual human approval",
       "target": {
         "database": "erp_prod",
@@ -30340,7 +30372,11 @@
       "beforeExecution": "Fresh exact identity, actual ordinary metadata/private auth and resources; r7 high-load tasks serial; do not interrupt PG20",
       "actualBackupComplete": false,
       "independentRestoreOfThisBackup": "NOT_VERIFIED",
-      "oldBackupAndRestoreEvidence": "Preserved, not evidence this new backup restored"
+      "oldBackupAndRestoreEvidence": "Preserved, not evidence this new backup restored",
+      "sourceReadySHA256": "a520d2db1882d6064a36a76851ea5cc5b4a02eca99fca8aef1c8bd64bfa99a07",
+      "sourceSHA256": "3dc826533fe1361042ca9cfe2b80435c1bd69b7594b1bb8717f04371e85d0e0c",
+      "authorTinyChecks": 7,
+      "QB": "01a161d2-73f1-7381-ab03-65a1c3b52aa2"
     }
   }
 }

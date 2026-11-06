@@ -1,0 +1,82 @@
+{
+  "cid": "833ae9c26e406c4a6bbdeebc8a290e37d40744483f226a6f00e87afcc997c69c",
+  "expiresAt": 1793925586123,
+  "program": {
+    "applicationTransactions": 1,
+    "bootstrapNetworkObservationSha256": "8926c38ead307d0b9535c7faf26acfc6cec2ed953e78db5c4cd7303c0ea4b0eb",
+    "catalogSha256": "ee26c7c6c791357badccac6b4e8ac6efcde330f0da1a6d46d022eed00bb8bef1",
+    "createsCluster": false,
+    "createsCredentials": false,
+    "createsRoles": false,
+    "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+    "hostEnabled": false,
+    "observationSqlSha256": "4a7e75aded88857c334fbe3633166c16637f796b669314733a1f8ff59ee39b46",
+    "oldTablesRemoved": false,
+    "programSha256": "cf5f7adaadca4df91961ddc6a9fb39103eeb04df6aa0cb85aa8e802b861f321d",
+    "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+    "statements": [
+      {
+        "name": "physical-empty-target",
+        "sha256": "b401d573091c0de4cab6d1531072d2e0748709b4acd5ba15f95c4e3b2b2ed2b1"
+      },
+      {
+        "name": "direct-35-schema",
+        "sha256": "539c0a859820cfb6fa47868da31bb1f7daec0bb67ac829d6b66bc63682916940"
+      },
+      {
+        "name": "migration-lineage",
+        "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9"
+      },
+      {
+        "name": "controller-lineage-column-read",
+        "sha256": "b82f699e12d00079406a2e7a65513b1a7cbb25704381fc2ef1ec2b49b5d0872e"
+      },
+      {
+        "name": "historical-sales-hall",
+        "sha256": "5826d7dd3487e2a2baed50373d156a2cf2e67c9dc1f903945f8a88646e522591"
+      },
+      {
+        "name": "historical-line-amount",
+        "sha256": "2b10411c31255e380dba914ba35a1b6238397d50671baf3419a76af458060dde"
+      },
+      {
+        "name": "historical-missing-settlement-types",
+        "sha256": "161e4160c13e4d617a818d35ef16572bcd1d7699cb13ebcf739cd26d897f92b9"
+      },
+      {
+        "name": "historical-settlement-difference",
+        "sha256": "ff257e8c51d1cc08279f2b0db96540149451042458c1e6a414bdfa6bf56c7d6e"
+      },
+      {
+        "name": "complete-successor-catalog",
+        "sha256": "72d87f36db863d44a60474213c34f28e24a53cc6497f0fb7f3deb5d86fd2ad06"
+      },
+      {
+        "name": "same-physical-target",
+        "sha256": "e48cbe00fda96977c533e37e288a0008f805f4a04a2045d8b561e7ccc02fe876"
+      }
+    ],
+    "targetSha256": "8e91df3323fd99a5246867cb850cfd239a528db65874831fcac8564d4ccd2cdc"
+  },
+  "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+  "target": {
+    "expiresAt": 1793925586123,
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-06 00:33:37.032607+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7704850122590154799"
+    },
+    "proposal": {
+      "admin": "fresh35_admin_20261105_r1",
+      "controller": "fresh35_controller_20261105_r1",
+      "database": "synthetic_fresh35_20261105_r1",
+      "host": "127.0.0.1",
+      "owner": "fresh35_owner_20261105_r1",
+      "port": 18651,
+      "runtime": "fresh35_runtime_20261105_r1",
+      "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+    },
+    "startsAt": 1793924386123
+  }
+}
