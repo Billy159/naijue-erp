@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T07:03:29.896008+08:00",
+  "updatedAt": "2026-11-07T07:19:12.142667+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T07:03:29.896008+08:00",
-      "phase": "ACTUAL_R2_PROVISION_DONE_INSTALL_ENTRY_HANDOFF",
+      "at": "2026-11-07T07:19:12.142667+08:00",
+      "phase": "ACTUAL_R2_INSTALL_ROLLED_BACK_CLEANLY_STOPPED_CATALOG_GENERATION_DEFECT_REPAIR",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 exact0600 C6 delivery -> actual program -> C9 -> install; no REAL or switch yet",
+      "next": "Original D1 exact formal10fc catalog-only remap ACL ordering repair -> originalQB delta -> originalD2 genuine fixedroot/build; T45 prepare bounded exact material reuse without extra1GB copy. No r2 replay.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33814,7 +33814,7 @@
       },
       "integrationCheckpoint": {
         "branch": "codex/erp-0448z-integration-20261105",
-        "remoteVerifiedSHA": "fdd990f79cd66142fec07414543aa6acbf2dbf27",
+        "remoteVerifiedSHA": "bb0ecad0a72082452a494ac58f583515f02f1198",
         "buildRootRemoteVerifiedSHA": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
         "uncommittedOwner": "Only C current operational records; caches/logs preserved"
       },
@@ -34005,7 +34005,7 @@
         "carrierShellRetained": true
       },
       "controlledSuccessor": {
-        "state": "MATERIALS_ADOPTED_POST_TERMINAL_READONLY_ACTUAL_R2_PROVISION_DONE_C6_ISSUED",
+        "state": "ACTUAL_R2_INSTALL_ROLLED_BACK_CLEANLY_STOPPED_CATALOG_GENERATION_DEFECT_REPAIR",
         "sourceApplication": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
         "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
         "scope": "New exact root/name/alias/workspace/database/roles with original ops and retained artifacts; preserve r1. Correct C6/C9 server permissions to actual600 consumer. No new business source/pool/daemon, no replay or old-window extension; C signs fresh target only after material readiness.",
@@ -34018,7 +34018,7 @@
         "receiptAdoption": "C actual readback adopted current material and no-owned-copy-process facts; original copy FAILED preserved",
         "PGStarted": true,
         "C14Issued": true,
-        "next": "T45 exact0600 C6 delivery -> actual program -> C9 -> install; no REAL or switch yet",
+        "next": "Original D1 exact formal10fc catalog-only remap ACL ordering repair -> originalQB delta -> originalD2 genuine fixedroot/build; T45 prepare bounded exact material reuse without extra1GB copy. No r2 replay.",
         "actualReadinessSHA256": "59b33e6161b5ddf03e9dd0e8a2917d8d1ec0d5e7854ba8bea1ffd6191d2d814a",
         "actualReadbackSHA256": "2a97f3555a37a4319d5b82fa9f0c9e2f6c738d20699805d84df6e6aa574b7acb",
         "pastParentWaitReapProven": false,
@@ -34027,7 +34027,8 @@
         "C14": {
           "sha256": "f0842d0ddf0f98be03180e13eeeb591873fe91df9ee6246048731ad31f3a43b1",
           "startsAt": 1794005901389,
-          "expiresAt": 1794007101389
+          "expiresAt": 1794007101389,
+          "state": "FAILED_INSTALL_WINDOW_NOT_EXTENDED"
         },
         "C6": {
           "sha256": "07badabd688006a5727e0f43680ac1a02a417ba81388134200789f6171de5b1d",
@@ -34045,6 +34046,59 @@
           "installStarted": false,
           "freeBefore": 8967593984,
           "freeAfter": 8924745728
+        },
+        "C9": {
+          "sha256": "5dc6244643c7a1f5e6c6edb797a53812d019cc05746d80cac6e0cde52307a11a",
+          "bytes": 827,
+          "deliveryReceipt": "60a4df1b8819f585b8955d2511761cb4c9ee7aefc1bf1a38baa224527b94fd15",
+          "actualConsumer0600Passed": true
+        },
+        "actualInstall": {
+          "status": "NATIVE_INSTALL_FAILED_ROLLED_BACK_TARGET_CLEANLY_STOPPED_NO_REAL",
+          "atUTC": "2026-11-06T23:12:14.328925+00:00",
+          "originalInstallAuthorizationDeliveryJob": "t45-prod35-r2-install-20261107-01",
+          "authorizationDelivery": "COMPLETED0 root0600 actual consumer readback matched; not installation PASS",
+          "authorizationDeliveryReceiptSha256": "60a4df1b8819f585b8955d2511761cb4c9ee7aefc1bf1a38baa224527b94fd15",
+          "originalNativePhase": "EXECUTE",
+          "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+          "programSha256": "e250f69af5c9a0ce945288f47da2da4599d2619205c3b4cd66822a2cc2ec8041",
+          "targetSha256": "6f4cf96e6791ae445c94ff5806e4d66e206033494bf56e724e864fcce8dbb006",
+          "database": "erp_native35_20261107_r2",
+          "systemIdentifier": "7705197122612510756",
+          "databaseOid": "16393",
+          "nativeExitCode": 1,
+          "installState": "ROLLED_BACK",
+          "stage": "STEP",
+          "step": "complete-successor-catalog",
+          "originalSQLSTATE": "P0001",
+          "originalInternalCode": null,
+          "rollbackSQLSTATE": null,
+          "code": "FRESH35_PRODUCTION_ENTRY_FAILED",
+          "rootCause": "UNKNOWN; safe diagnostic identifies phase/step/code, not the failing catalog condition or RAISE message",
+          "readbackJob": "t45-prod35-r2-install-readonly-20261107-01",
+          "readbackJobReceiptSha256": "849af85ba516a537738d66fd5e3af5621f35728f054b6e3c9784e66fbff58287",
+          "readbackTypedReceiptSha256": "fee6df3382ff74b4280f13ba053bc3fcbe2416929a31075af90872af37416673",
+          "cleanupComplete": true,
+          "cleanShutdown": true,
+          "ownedPgAndControllerAbsent": true,
+          "portAbsent": true,
+          "dataPreserved": true,
+          "installationRecordPresent": false,
+          "serviceRetainedPresent": false,
+          "launcherExitCode": 2,
+          "REALSubmitted": false,
+          "controllerReferenceJobSubmitted": false,
+          "sourceBackupOrCutover": false,
+          "originalExpiry": 1794007101389,
+          "automaticRetry": false,
+          "businessAcceptanceClaimed": false,
+          "actualModelEffort": "UNVERIFIED"
+        },
+        "savedDiagnostic": {
+          "job": "t45-prod35-r2-saved-diagnostic-20261107-01",
+          "receipt": "7f50bd54be898e382bec6ed007e5a6abe82ac39215d19623aa2abfa6e8469abb",
+          "actualStaticRaise": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+          "context": "PLpgSQL inline_code_block line43 at RAISE; generated block, not source line43"
         }
       },
       "formalCallerAdoption": {

@@ -1,0 +1,43 @@
+{
+  "PGExecuted": false,
+  "files": [
+    {
+      "bytes": 0,
+      "mode": "0o600",
+      "name": "launcher.private.log",
+      "present": true,
+      "rawLogExported": false,
+      "readScope": "first512KiB and if needed last512KiB",
+      "safeMatches": []
+    },
+    {
+      "bytes": 1818,
+      "mode": "0o600",
+      "name": "server-private.log",
+      "present": true,
+      "rawLogExported": false,
+      "readScope": "first512KiB and if needed last512KiB",
+      "safeMatches": [
+        {
+          "context": {
+            "function": "inline_code_block",
+            "line": 43,
+            "operation": "RAISE"
+          },
+          "guardCode": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS"
+        }
+      ]
+    }
+  ],
+  "guardFound": true,
+  "noReplay": true,
+  "originalKey": "t45-prod35-r2-install-20261107-01",
+  "originalSQLSTATE": "P0001",
+  "originalStep": "complete-successor-catalog",
+  "rawLogOrExceptionExported": false,
+  "readOnly": true,
+  "sourceGuardModule": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+  "sourceGuardModuleSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+  "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+  "status": "SAVED_ORIGINAL_LOG_WHITELIST_EXTRACTION_ONLY"
+}

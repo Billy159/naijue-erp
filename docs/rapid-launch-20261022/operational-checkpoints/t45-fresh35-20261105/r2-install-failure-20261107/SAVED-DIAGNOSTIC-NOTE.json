@@ -1,0 +1,18 @@
+{
+  "status": "SAVED_ORIGINAL_RAISE_GUARD_IDENTIFIED_ONLY",
+  "job": "t45-prod35-r2-saved-diagnostic-20261107-01",
+  "jobReceiptSha256": "019b62d67424dcba73ecd9360ce439f1b792a725c98af7b749c2d50ec7946964",
+  "typedReceiptSha256": "7f50bd54be898e382bec6ed007e5a6abe82ac39215d19623aa2abfa6e8469abb",
+  "originalInstallKey": "t45-prod35-r2-install-20261107-01",
+  "guardCode": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+  "SQLSTATE": "P0001",
+  "step": "complete-successor-catalog",
+  "context": {
+    "function": "inline_code_block",
+    "DOBlockLine": 43,
+    "operation": "RAISE"
+  },
+  "scope": "Original saved1818B server log, literal whitelist from pinned catalog module; no raw log/statement/detail/hint/env/credential/business output",
+  "specificRoutineOrAttribute": "UNKNOWN; guard combines routine source and ACL, not proof of ACL-order hypothesis",
+  "PGStartedOrReplayed": false
+}
