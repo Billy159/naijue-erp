@@ -20,6 +20,17 @@ import {publishFresh35CombinedRecord} from './fresh35-combined-record-v1.mjs';
 const root='/opt/naijue-erp/fresh35-combined-v1';
 const authority='/etc/naijue-erp/fresh35-isolated-provision-v1.json';
 const need=(ok,code)=>{if(!ok)throw Error('FRESH35_ISOLATED_'+code)};
+const entryFailureCodes=new Set([
+ 'PRIVATE_OWNER_CONNECTION_INPUT','PRIVATE_INPUT_REQUIRED','TRUSTED_ROOT_RUNTIME_REQUIRED','FIXED_ENTRY_REQUIRED','CLEAN_ENV_REQUIRED','EXTERNAL_PROVISION_AUTHORITY_REQUIRED','FIXED_WORKSPACE_REQUIRED','SYNTHETIC_V1_TARGET_REQUIRED','TARGET_PROVISION_BINDING_DIFFERS','SOURCE_SET_DIFFERS','EXACT_CONTROLLER_CREDENTIAL_REQUIRED','EXACT_OWNER_CREDENTIAL_REQUIRED','ORDINARY_HOST_UID_REQUIRED','SYNTHETIC_APPLICATION_CREDENTIAL_REQUIRED',
+ 'SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED','SYNTHETIC_RETENTION_STAGE_BINDING_CHANGED','SYNTHETIC_RETENTION_FIXTURE_REQUIRED','SYNTHETIC_RETENTION_INITIALIZE_BINDING_REQUIRED','SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED','SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED','SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED','SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED','SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED','SYNTHETIC_FAILED_BATCH_ABSENCE_REQUIRED','SYNTHETIC_IMPORT_COMMIT_REQUIRED','SYNTHETIC_ORIGINAL_KEY_REPLAY_REQUIRED','SYNTHETIC_NEW_CONNECTION_READBACK_REQUIRED','SYNTHETIC_RETENTION_READBACK_REQUIRED','SYNTHETIC_FIXTURE_CLEANUP_FAILED',
+].map(code=>'FRESH35_ISOLATED_'+code));
+/** Existing private failure receipt only; native text is never serialized. */
+export function isolatedEntryFailure(error){
+ const failure=describeWholePackageFailure(error?.validationResult),message=error!==null&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'message')?.value:undefined;
+ const entryCode=entryFailureCodes.has(message)?message:null;
+ const entryStage=entryCode==='FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED'?'BAD_APPROVAL':entryCode==='FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED'?'MISSING_SETTLEMENT':entryCode==='FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED'?'FINAL_PUBLISH':null;
+ return {state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:['NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'].includes(error?.installState)?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',...describeFresh35CombinedInstallFailure(error),validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:entryStage,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:entryCode,validationSQLSTATE:failure?.sqlState??null,validationStep:failure?.stage??null,validationInternalCode:failure?.staticCode??null,automaticRetry:false};
+}
 export function isolatedClientOptions(target,password){
  need(target?.proposal?.host==='127.0.0.1'&&typeof password==='string'&&/^[a-f0-9]{64}$/.test(password),'PRIVATE_OWNER_CONNECTION_INPUT');
  const p=target.proposal;return {host:p.host,port:p.port,database:p.database,user:p.owner,password,ssl:false,application_name:'fresh35-isolated-v1',connectionTimeoutMillis:5000,query_timeout:45000,options:'-c search_path=pg_catalog -c TimeZone=UTC -c lock_timeout=5000 -c statement_timeout=40000'};
@@ -70,13 +81,21 @@ export async function main(){
   const standardTarget={protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:input.physical.systemIdentifier,database_oid:input.physical.databaseOid,database_name:input.proposal.database,catalog_sha256:context.record.catalogSha256};
   const stage=process.argv[2]==='--verify-host-rollback'?'rollback':process.argv[2]==='--verify-host-commit'?'commit':'all';
   const options={referenceDirectory:root+'/reference-inputs',sourceProfileSha256:HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256};
-  let fixture,fixtureBinding,fixtureBindingSha256;
+  let fixture,fixtureBinding,fixtureBindingSha256,primaryError,hasPrimaryError=false,fixtureDisposed=false;
+  const retainPrimary=error=>{if(!hasPrimaryError){primaryError=error;hasPrimaryError=true}return primaryError};
+  const reviewedHost=work=>openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
+   try{assertWholeSalesAdmissionV1(admission,standardTarget,client);return await work(client,admission)}catch(error){retainPrimary(error);throw error}
+  },options);
+  const inspectAbsent=async code=>{
+   const readback=await reviewedHost(client=>inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt)));
+   need(readback.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');need(readback.result.state==='ABSENT',code);
+  };
+  const disposeFixture=async()=>{if(fixtureDisposed||!fixture)return;fixtureDisposed=true;try{await fixture.dispose()}catch{need(false,'SYNTHETIC_FIXTURE_CLEANUP_FAILED')}};
   try{
    // This one small, explicit synthetic fixture is separate from the real
    // cleaning package. Its planned warehouse binding is checked by SQL in the
    // same transaction; it is not an observation of a real imported warehouse.
-   const failed=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
-    assertWholeSalesAdmissionV1(admission,standardTarget,client);
+   let failed=await reviewedHost(async(client,admission)=>{
     fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,encodedScrypt,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null,variant:'settlement-retention25'});
     const f=fixture.fixtureBinding;
     need(f&&Object.keys(f).sort().join(',')==='initializerSha256,manifestSha256,planSha256,stepsSha256'&&Object.values(f).every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))&&f.manifestSha256===fixture.program.initialize.package_manifest_sha256&&f.planSha256===fixture.program.initialize.plan_sha256&&f.initializerSha256===requestHash({initialize:fixture.program.initialize,encodedScrypt}),'SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED');
@@ -94,46 +113,55 @@ export async function main(){
     badApproval.payload.historical_settlement_retention_approval.sha256='0'.repeat(64);
     const badApprovalResult=await executeWholePackage(client,fixture.identity,badApproval,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
     if(!(badApprovalResult.state==='ROLLED_BACK'&&badApprovalResult.code==='HISTORICAL_SETTLEMENT_APPROVAL_HASH'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'),{validationStage:'BAD_APPROVAL',validationCode:badApprovalResult.code,validationResult:badApprovalResult});
-    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');
+    return badApprovalResult;
+   });
+   need(failed.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+   if(stage!=='commit'){
+    await inspectAbsent('SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED');
     let removedSettlement=0;
     const missingSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='documentChunk'&&step.request.payload.mode==='CHUNK')step.request.payload.rows=step.request.payload.rows.filter(row=>{if(removedSettlement===0&&row.entity_type==='SALES_SETTLEMENT'&&row.fields.sales_id===fixture.retainedSalesIds[0]){removedSettlement++;return false;}return true;});yield step;}}};
-    const missingResult=await executeWholePackage(client,fixture.identity,fixture.program.initialize,missingSteps,createWholePackageSqlKernel(encodedScrypt));
-    if(!(removedSettlement===1&&missingResult.state==='ROLLED_BACK'&&['HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_PUBLICATION_INCOMPLETE'].includes(missingResult.code)))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED'),{validationStage:'MISSING_SETTLEMENT',validationCode:missingResult.code,validationResult:missingResult});
-    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED');
+    const missing=await reviewedHost(async client=>{
+     const missingResult=await executeWholePackage(client,fixture.identity,fixture.program.initialize,missingSteps,createWholePackageSqlKernel(encodedScrypt));
+     if(!(removedSettlement===1&&missingResult.state==='ROLLED_BACK'&&['HISTORICAL_SETTLEMENT_MIGRATION_SOURCE_DIFFERS','HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED','STANDARD_PUBLICATION_INCOMPLETE'].includes(missingResult.code)))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_MISSING_SETTLEMENT_ROLLBACK_REQUIRED'),{validationStage:'MISSING_SETTLEMENT',validationCode:missingResult.code,validationResult:missingResult});
+     return missingResult;
+    });
+    need(missing.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+    await inspectAbsent('SYNTHETIC_MISSING_SETTLEMENT_ABSENCE_REQUIRED');
     let reachedFinalPublish=false;
     const badSteps={async *[Symbol.asyncIterator](){for await(const step of fixture.program.steps){if(step.method==='publish'&&step.request.payload.phase==='DOCUMENTS'){reachedFinalPublish=true;step.request.payload.expected_sequence=Number(step.request.payload.expected_sequence)+1;}yield step;}}};
-    const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(encodedScrypt));
-    if(!(reachedFinalPublish&&result.state==='ROLLED_BACK'&&result.code==='STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED'),{validationStage:'FINAL_PUBLISH',validationCode:result.code,validationResult:result});
-    need((await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt))).state==='ABSENT','SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
-    return {state:result.state,reachedFinalPublish,finalFailureStage:'FINAL_PUBLISH',finalFailureCode:result.code,badApprovalRollback:true,badApprovalCode:badApprovalResult.code,missingSettlementRollback:true,missingSettlementCode:missingResult.code,originalBatchAbsent:true};
-   },options);
-   need(failed.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+    const final=await reviewedHost(async client=>{
+     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,badSteps,createWholePackageSqlKernel(encodedScrypt));
+     if(!(reachedFinalPublish&&result.state==='ROLLED_BACK'&&result.code==='STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT'))throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_FINAL_FAILURE_ROLLBACK_REQUIRED'),{validationStage:'FINAL_PUBLISH',validationCode:result.code,validationResult:result});
+     return result;
+    });
+    need(final.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
+    await inspectAbsent('SYNTHETIC_FINAL_FAILURE_ABSENCE_REQUIRED');
+    failed={...final,result:{state:final.result.state,reachedFinalPublish,finalFailureStage:'FINAL_PUBLISH',finalFailureCode:final.result.code,badApprovalRollback:true,badApprovalCode:failed.result.code,missingSettlementRollback:true,missingSettlementCode:missing.result.code,originalBatchAbsent:true}};
+   }
    if(stage==='rollback'){
-    await fixture.dispose();
+    await disposeFixture();
     process.stdout.write(JSON.stringify({state:'FRESH35_SYNTHETIC_ROLLBACK_VERIFIED',stage,fixtureBinding,fixtureBindingSha256,rollbackVerified:true,originalBatchAbsent:true,failedAttempt:failed.result,connectionCleanup:failed.cleanup,syntheticImportVerified:false,businessVerified:false})+'\n');return;
    }
-   const imported=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
-    assertWholeSalesAdmissionV1(admission,standardTarget,client);
+   const imported=await reviewedHost(async client=>{
     const before=await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt));
     need(before.state==='ABSENT','SYNTHETIC_FAILED_BATCH_ABSENCE_REQUIRED');
     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
     need(result.state==='COMMITTED','SYNTHETIC_IMPORT_COMMIT_REQUIRED');
     return {state:result.state};
-   },options);
+   });
    need(imported.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
-   const verification=await openReviewedFresh35Host(config,root,standardTarget,async(client,admission)=>{
-    assertWholeSalesAdmissionV1(admission,standardTarget,client);
+   const verification=await reviewedHost(async client=>{
     const replay=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
     need(replay.state==='ALREADY_COMMITTED','SYNTHETIC_ORIGINAL_KEY_REPLAY_REQUIRED');
     const readback=await reconcileWholePackage(client,fixture.program.initialize,encodedScrypt,fixture.expectedCounts,fixture.totals);
     need(readback.state==='VERIFIED','SYNTHETIC_NEW_CONNECTION_READBACK_REQUIRED');
     return {state:'FRESH35_CONTROLLER_HOST_VERIFIED',importState:imported.result.state,replayState:replay.state,readbackState:readback.state,syntheticImportVerified:true,settlementRetentionVerified:true,retainedHeaders:25,retainedSettlements:27,businessVerified:false};
-   },options);
-   await fixture.dispose();
+   });
    need(verification.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
    need(verification.result.settlementRetentionVerified===true&&verification.result.retainedHeaders===25&&verification.result.retainedSettlements===27,'SYNTHETIC_RETENTION_READBACK_REQUIRED');
+   await disposeFixture();
    process.stdout.write(JSON.stringify({state:'FRESH35_CONTROLLER_HOST_VERIFIED',hostVerification:verification.host_verification,ordinaryUid:process.getuid(),syntheticImportVerified:true,stage,fixtureBinding,fixtureBindingSha256,settlementRetentionVerified:verification.result.settlementRetentionVerified,retainedHeaders:verification.result.retainedHeaders,retainedSettlements:verification.result.retainedSettlements,failedAttempt:stage==='commit'?null:failed.result,importState:verification.result.importState,replayState:verification.result.replayState,readbackState:verification.result.readbackState,connectionCleanup:'CLOSED',businessVerified:false})+'\n');return;
-  }finally{await fixture?.dispose()}
+  }catch(error){throw retainPrimary(error)}finally{try{await disposeFixture()}catch(error){if(!hasPrimaryError)throw error}}
  }
  const authorization=await loadFresh35CombinedAuthorization(program);
  const raw=await privateText(join(workspace,'credentials',a.proposal.owner+'.pgpass'));
@@ -154,5 +182,5 @@ export async function main(){
  }
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- try{await main()}catch(error){const failure=describeWholePackageFailure(error?.validationResult);process.stderr.write(JSON.stringify({state:'INSTALL_FAILED_OR_OUTCOME_UNKNOWN',installState:['NOT_STARTED','IN_TRANSACTION','ROLLED_BACK','ROLLBACK_UNCONFIRMED','COMMIT_OUTCOME_UNKNOWN','COMMITTED_UNPUBLISHED','FAILED_NO_INSTALLED_RESULT'].includes(error?.installState)?error.installState:null,code:'FRESH35_ISOLATED_ENTRY_FAILED',...describeFresh35CombinedInstallFailure(error),validationStage:['BAD_APPROVAL','MISSING_SETTLEMENT','FINAL_PUBLISH'].includes(error?.validationStage)?error.validationStage:null,validationCode:typeof error?.validationCode==='string'&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.validationCode)?error.validationCode:null,validationSQLSTATE:failure?.sqlState??null,validationStep:failure?.stage??null,validationInternalCode:failure?.staticCode??null,automaticRetry:false})+'\n');process.exitCode=1;}
+ try{await main()}catch(error){process.stderr.write(JSON.stringify(isolatedEntryFailure(error))+'\n');process.exitCode=1;}
 }
