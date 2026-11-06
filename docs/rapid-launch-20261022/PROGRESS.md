@@ -2198,3 +2198,8 @@ Restore-only a80177ce68d907ccf1519e7e6c658c04ea7490b5 actual newsource98af2d19 b
 
 
 2026-11-07T06:35:33.333955+08:00 C: r1 fresh target actual provision completed0/40.269s b3cbdbdb, SID7705188595285856292/OID16393. Valid actual C6 1757f11e copied with wrong server0400 instead of original protected()0600; WAIT_ENTRY failed before program/C9/install/REAL. Original-key readonly0ad11122/88bf48d0 confirms clean shutdown/cleanup/data preserved/owned PID and port absent; running carrier shell retained. Not a proven product-source defect. No chmod/restart/replay or expiry extension. C directed originalT45 exact unique r2 successor/material reuse, corrected actual consumer modes, preservation of r1 and oldprod; fresh C14 only after readiness. Main D1 four-leaf final helper/embedded-contract/caller source candidate under scoped QB review; root contract and shared WIP unchanged.
+
+
+2026-11-07T06:56:26.290342+08:00 C: Original T45 adopted exactly reviewed formal caller four leaves (helper ee9292eb, boot5ec51b88, rollback16a24464, generatordd2b692e), preserved all before-WIP bytes and patch; actual receipt50d4e395, scoped originalQB735e5065. Pinned Node24.21.0 generator --check exit0; root contract4d30 unchanged. This is SOURCE_ONLY, no formal approval/build/server/DB/deployment. Frozen application10fc/af75 unchanged; restoration-onlya801 remains separate.
+
+r2 unique material-copy child reports app7294/REAL31/188B complete, but original parent FAILED2 with MATERIALIZATION_CHILD_CLEANUP_UNKNOWN (166db4c8). Original T45 collecting exact unit/cgroup/child cleanup; no replay, no PG/new C14. These are not import/production PASS. User delegated decisions to C through2026-11-07T12:00+08; no routine human input required.

@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T06:35:33.333955+08:00",
+  "updatedAt": "2026-11-07T06:56:26.290342+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T06:35:33.333955+08:00",
-      "phase": "R1_ENTRY_DELIVERY_MODE_FAILED_CLEAN_STOP_R2_PREPARATION",
+      "at": "2026-11-07T06:56:26.290342+08:00",
+      "phase": "R2_COPY_CHILD_DONE_PARENT_CLEANUP_FOLLOWUP_FORMAL_CALLER_SOURCE_ADOPTED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 unique fresh r2 material/target bindings, correct server auth-file mode; C exact new window after readiness. Original D1/QB final caller four-leaf candidate in parallel.",
+      "next": "T45 exact original-copy cleanup and current resources -> C new C14. Source-only four leaves fixed; no formal deployment inferred.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33814,9 +33814,9 @@
       },
       "integrationCheckpoint": {
         "branch": "codex/erp-0448z-integration-20261105",
-        "remoteVerifiedSHA": "a66ac56cd8df4be5731887db1b206293a234db37",
+        "remoteVerifiedSHA": "d946c50b271f4b7013a06df318c66bedc1513a6b",
         "buildRootRemoteVerifiedSHA": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
-        "uncommittedOwner": "D1 deploy-candidate.py WIP; integration-logs and npm-cache retained"
+        "uncommittedOwner": "C committing exact reviewed four leaves and records; integration-logs/npm-cache retained"
       },
       "materialization": {
         "uniqueJob": "t45-prod35-10fc5e-materialize-20261107-01",
@@ -34005,10 +34005,54 @@
         "carrierShellRetained": true
       },
       "controlledSuccessor": {
-        "state": "ORIGINAL_T45_PREPARING_UNIQUE_R2_BINDINGS_NOT_STARTED",
+        "state": "R2_COPY_CHILD_SUCCESS_PARENT_CLEANUP_UNKNOWN_FOLLOWUP_IN_PROGRESS",
         "sourceApplication": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
         "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
-        "scope": "New exact root/name/alias/workspace/database/roles with original ops and retained artifacts; preserve r1. Correct C6/C9 server permissions to actual600 consumer. No new business source/pool/daemon, no replay or old-window extension; C signs fresh target only after material readiness."
+        "scope": "New exact root/name/alias/workspace/database/roles with original ops and retained artifacts; preserve r1. Correct C6/C9 server permissions to actual600 consumer. No new business source/pool/daemon, no replay or old-window extension; C signs fresh target only after material readiness.",
+        "readySHA256": "bd12f1e66611a6326fb57dd32cce53afe8e39d57b66aea624191f5fd5b9c6588",
+        "QBResultSHA256": "5d7bb315afaaf03bebf7509c1f58299dadef0dc3c608d63219e138ee3e56464d",
+        "jobKey": "t45-prod35-r2-material-copy-20261107-01",
+        "reportedTerminal": "FAILED2_378.954S_MATERIALIZATION_CHILD_CLEANUP_UNKNOWN",
+        "reportedChildReceiptSHA256": "f380d8765aa73ef5b0dd07b5845ff9e60334a882f77db86dd1375728951bcafb",
+        "reportedParentReceiptSHA256": "166db4c8357229765ed9888feb5e8f98344d82c8c06bff62be95b452f43d695f",
+        "receiptAdoption": "T45 message only pending exact cleanup receipt reading",
+        "PGStarted": false,
+        "C14Issued": false,
+        "next": "Original key/unit/cgroup exact readonly cleanup proof and current resources; no copy replay. Fresh C14 only after readiness."
+      },
+      "formalCallerAdoption": {
+        "at": "2026-11-07T06:56:26.290342+08:00",
+        "state": "SOURCE_ONLY_ADOPTED_AND_PINNED_NODE_GENERATOR_CHECK_PASS",
+        "owner": "Original T45 source writer, C integration",
+        "sourceQA": "735e5065ce67481ace8aa67d58a4c21952d9ca2483b5d25afbb1da85f62f6387",
+        "actualAdoption": "50d4e395dd3f5a59d4ce6e9c4e3ee80341bebfdab0887f5e16a6953ae33d7a24",
+        "fourLeaves": {
+          "scripts/release/deploy-candidate.py": {
+            "sha256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+            "bytes": 210126
+          },
+          "scripts/release/boot-entry.py": {
+            "sha256": "5ec51b8833eb7119fc35f2147d6a07d0324a74a8332579182f2ff6c70f981d6a",
+            "bytes": 49869
+          },
+          "scripts/release/rollback-candidate.py": {
+            "sha256": "16a2446435c07c1c25dbd70c260ef93b946d8ca98e137138134c63e8fb7e7b0b",
+            "bytes": 7665
+          },
+          "scripts/release/generate-release-contract.mjs": {
+            "sha256": "dd2b692e767b8f75358c1c8d91477214569a326c2a5ede5119e7f4085e1bb12c",
+            "bytes": 11221
+          }
+        },
+        "preservedBefore": "outputs/T45/revisions/20261107-formal-caller-adoption-01/BEFORE.json + BEFORE-WIP.patch + before/",
+        "pinnedNodeGeneratorCheck": {
+          "node": "24.21.0",
+          "exitCode": 0
+        },
+        "rootContractUnchangedSHA256": "4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456",
+        "actualDeploymentApproval": "NOT_ISSUED_BY_SOURCE_ADOPTION",
+        "actualBackupRestore": "NOT_TESTED",
+        "formal10fcSourceUnchanged": true
       }
     }
   }

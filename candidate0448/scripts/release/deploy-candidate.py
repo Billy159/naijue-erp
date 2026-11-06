@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json","productionProfile":"source-confirmed-native-exact35-production-v2","productionNetworkMode":"OWNED_POSTGRES_SHARED_NAMESPACE_V1"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702"}],"boundaries":[{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}]}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":7438,"sha256":"e0759cab44451af3e20c94a2b87ff6142be3a222f4bdca78721ee56d38120a72"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"},{"source":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql","member":"patches/0026-history-draft-transfer-line-set-successor.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"history-draft-line-set-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576},{"path":"/api/sales/prepare-create","bytes":131072},{"path":"/api/sales/prepare-existing","bytes":131072},{"path":"/api/sales/commands","bytes":524288},{"path":"/api/transfers/prepare-create","bytes":131072},{"path":"/api/transfers/prepare-existing","bytes":131072},{"path":"/api/transfers/commands","bytes":524288}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}},"exact35":{"profile":"source-confirmed-native-exact35-v1","migrationCount":27,"installationRecord":"/etc/naijue-erp/fresh35-combined-installation-v1.json","productionProfile":"source-confirmed-native-exact35-production-v2","productionNetworkMode":"OWNED_POSTGRES_SHARED_NAMESPACE_V1"},"native35":{"root":"backend/native35-source","entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","fixturePins":[{"path":"tests/fixtures/unified-import/synthetic-package.ts","sha256":"b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82"},{"path":"tests/fixtures/unified-import/whole-package-synthetic.ts","sha256":"4f7b4a7e2279302fc7114feb506dff301f0234b1fd8e05717b943a1fb13b9f7f"}],"boundaries":[{"entry":"tools/unified-import/fresh35-host-session.mjs","external":"./native35-source/tools/unified-import/fresh35-host-session.mjs","importers":["apps/api/src/postgres-read-api.ts","adapters/postgres/src/runtime27-command-issuer.ts","apps/api/src/capacity-runtime-probe.ts"]},{"entry":"scripts/release/unified-install/whole-sales-admission-v1.mjs","external":"./native35-source/scripts/release/unified-install/whole-sales-admission-v1.mjs","importers":["packages/application/src/unified-import-execution.ts","packages/application/src/unified-import-whole-package-profile.ts"]}]}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":7490,"sha256":"4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -684,6 +684,155 @@ def runtime_database(p):
     return runtime35_record(p)['target']['proposal']['database'] if exact35_selected(p) else DATABASE
 
 
+def validate_exact35_media_archive_source(p, backup, restored):
+    media_source = backup.get('mediaArchiveSource', {})
+    need(media_source.get('path') == p['runtime35']['media']['hostRoot'] and
+         media_source.get('mapping') == p['runtime35']['media'] and media_source.get('archiveMember') == 'source-0' and
+         backup.get('archiveSources', [None])[0] == media_source['path'] and
+         restored.get('mediaArchiveSource') == media_source and
+         restored.get('opaqueFilesRestore', {}).get('sourceMedia') == media_source,
+         'EXACT35_ACTUAL_MEDIA_ARCHIVE_SOURCE_REQUIRED')
+    media_stat = canonical(media_source['path'], kind='directory', root=ROOT).stat()
+    need(media_source.get('identity') == {'device': media_stat.st_dev, 'inode': media_stat.st_ino,
+         'uid': media_stat.st_uid, 'gid': media_stat.st_gid, 'mode': stat.S_IMODE(media_stat.st_mode)},
+         'EXACT35_MEDIA_ARCHIVE_SOURCE_IDENTITY_CHANGED')
+
+
+def validate_exact35_control_system_restoration(record, restored):
+    need(restored.get('controlSystemAclRestored') is True and
+         restored.get('controlSystemAclNewConnectionReadback') is True and
+         restored.get('builtinAclMapping') == {'function': 'pg_catalog.pg_control_system()',
+             'sourceAdmin': record['target']['proposal']['admin'],
+             'restoreAdmin': restored.get('restoreTarget', {}).get('role'),
+             'scope': 'ONLY_BUILTIN_OWNER_GRANTOR_OID10'} and
+         isinstance(restored.get('restoreTarget', {}).get('role'), str),
+         'EXACT35_ORIGINAL_CONTROL_SYSTEM_ACL_NOT_RESTORED')
+
+
+def validate_exact35_logical_recovery(p, coverage, record):
+    """Consume actual new35 capture AND independent restore; never publish evidence here."""
+    backup_ref, restore_ref = coverage.get('logicalBackupReceipt'), coverage.get('logicalRestoreReceipt')
+    backup, restored = reference(backup_ref), reference(restore_ref)
+    target = record['target']
+    common = {'sourceCommit': p['sourceCommit'], 'buildId': p['buildId'], 'target': target,
+              'buildRoot': p['sourceCommit'], 'integrationSourceCommit': 'e422d07390c5a58c44b54452983638a2de5655b7',
+              'roleAclProjection': 'INCLUDES_ATTACL_AND_CONTROL_SYSTEM_V1',
+              'catalogSha256': record['catalogSha256'],
+              'installationRecordSha256': p['runtime35']['references']['installationRecord']['sha256'],
+              'sourceSetSha256': record['binding']['sourceSetSha256'],
+              'media': p['runtime35']['media'],
+              'appArchiveSha256': p['archive']['sha256']}
+    need(backup.get('format') == restored.get('format') == 'NEW35_LOGICAL_BACKUP_RESTORE_V1' and
+         backup.get('mode') == 'backup' and backup.get('state') == 'BACKUP_CAPTURED_OFFLINE_TOC_ONLY' and
+         restored.get('mode') == 'restore' and
+         restored.get('state') == 'DB_RESTORED_APP_NOT_VERIFIED' and
+         all(backup.get(k) == v and restored.get(k) == v for k, v in common.items()),
+         'EXACT35_ACTUAL_LOGICAL_BACKUP_AND_RESTORE_REQUIRED')
+    need(backup.get('runtimeIdentity') == p['runtimeConfiguration']['identity'] and
+         restored.get('sourceRuntimeIdentity') == p['runtimeConfiguration']['identity'],
+         'EXACT35_SOURCE_RUNTIME_CONFIGURATION_CHANGED')
+    required = {'database', 'rolesAuthAcl', 'app', 'media', 'configuration', 'installationAndSource', 'originalImport'}
+    files = backup.get('artifacts', {})
+    names = {'database.dump', 'roles-auth-acl.protected.sql', 'application.protected.pack',
+             'app-media-config.protected.tar', 'source-catalog.private.json', 'representative-source.private.json'}
+    need(set(backup.get('completeClosure', [])) == set(restored.get('completeClosure', [])) == required and
+         names <= set(files) and all(isinstance(files[n], dict) and files[n].get('bytes', 0) > 0 and
+         HASH.fullmatch(files[n].get('sha256', '')) for n in names) and
+         files['application.protected.pack']['sha256'] == p['archive']['sha256'] and
+         restored.get('backupArtifacts') == files and restored.get('backupReceiptSha256') == backup_ref['sha256'] and
+         restored.get('originalImport') == backup.get('originalImport') and restored.get('rolesAclCompared') is True and
+         restored.get('ordinaryDatabaseRepresentativeRead') == 'PASS' and
+         restored.get('currentAppLoginRepresentativeRead') == 'NOT_TESTED' and
+         restored.get('opaqueFilesRestore', {}).get('extracted') is True and
+         restored['opaqueFilesRestore'].get('archiveSha256') == files['app-media-config.protected.tar']['sha256'] and
+         restored.get('sourceInstallationRecordReusableForRestore') is False and
+         restored.get('restoredInstallationRecordCreated') is False,
+         'EXACT35_LOGICAL_RESTORE_CLOSURE_REQUIRED')
+    validate_exact35_media_archive_source(p, backup, restored)
+    validate_exact35_control_system_restoration(record, restored)
+    physical = restored.get('restoreTarget', {})
+    need(restored.get('sourceTarget') == target and physical.get('database') == target['proposal']['database'] and
+         isinstance(physical.get('systemIdentifier'), str) and physical['systemIdentifier'].isdigit() and
+         physical['systemIdentifier'] != target['physical']['systemIdentifier'] and
+         physical.get('databaseOid', '').isdigit() and physical.get('postmasterStart') and
+         physical.get('serverVersionNum') == target['physical']['serverVersionNum'],
+         'EXACT35_INDEPENDENT_RESTORE_PHYSICAL_BINDING_REQUIRED')
+    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+    fresh_time(restored.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+    need(dt.datetime.fromisoformat(restored['finishedAtUtc']) >= dt.datetime.fromisoformat(backup['finishedAtUtc']),
+         'EXACT35_RESTORE_PRECEDES_BACKUP')
+    app = reference(coverage.get('applicationRestoreReceipt'))
+    need(app.get('format') == 'NEW35_CURRENT_APP_RESTORE_VERIFY_V1' and
+         app.get('state') == 'CURRENT_APPLICATION_LOGIN_SESSION_AND_REPRESENTATIVE_QUERY_PASSED' and
+         app.get('databaseRestoreReceiptSha256') == restore_ref['sha256'] and
+         app.get('backupReceiptSha256') == backup_ref['sha256'] and app.get('restoreTarget') == physical and
+         app.get('sourceSetSha256') == record['binding']['sourceSetSha256'] and
+         app.get('buildId') == p['buildId'] and app.get('sourceCommit') == p['sourceCommit'] and
+         app.get('appArchiveSha256') == p['archive']['sha256'] and
+         app.get('currentAppLoginRepresentativeRead') == 'PASS' and
+         app.get('checks') == {'login': True, 'session': True, 'representativeQuery': True} and
+         HASH.fullmatch(app.get('restoredInstallationRecordSha256', '')) and
+         app['restoredInstallationRecordSha256'] != common['installationRecordSha256'] and
+         isinstance(app.get('restoredRuntimeIdentity'), dict) and app['restoredRuntimeIdentity'] and
+         app['restoredRuntimeIdentity'] != p['runtimeConfiguration']['identity'],
+         'EXACT35_CURRENT_APP_RECOVERY_NOT_VERIFIED')
+    fresh_time(app.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+
+
+def validate_current_backup(p, backup):
+    """Original physical branch remains intact. Exact35 alone may name a separate logical recovery proof."""
+    if exact35_selected(p) and backup.get('status') == 'PASS_NEW_SINGLE_DATABASE_AND_OPAQUE_FILES_BACKUP_OFFLINE_TOC_ONLY':
+        recovery = reference(p.get('legacyLogicalRecovery'))
+        files = backup.get('files', {})
+        needed = {'erp_prod.dump', 'media.protected.tar', 'configuration.protected.tar',
+                  'actual-app.protected.tar', 'actual-web.protected.tar', 'runtime-images.protected.tar'}
+        auth_ref = recovery.get('rolesAuthAcl')
+        auth = reference(auth_ref)
+        restored = reference(recovery.get('restoreReceipt'))
+        target = backup.get('target', {})
+        need(needed <= set(files) and all(files[n].get('bytes', 0) > 0 and HASH.fullmatch(files[n].get('sha256', '')) for n in needed) and
+             target.get('database') == 'erp_prod' and target.get('cluster') and target.get('oid') and target.get('postmaster') and
+             backup.get('mediaConfigurationMetadataStable') is True and
+             backup.get('servicesBefore') == backup.get('servicesAfter'), 'EXACT35_LEGACY_LOGICAL_CLOSURE_REQUIRED')
+        need(auth.get('format') == 'LEGACY_LOGICAL_ROLES_AUTH_ACL_CAPTURE_V1' and auth.get('target') == target and
+             auth.get('backupReceiptSha256') == p['backupReceipt']['sha256'] and
+             auth.get('databaseDumpSha256') == files['erp_prod.dump']['sha256'] and
+             auth.get('rolesAuthAclArtifact', {}).get('bytes', 0) > 0 and
+             HASH.fullmatch(auth.get('rolesAuthAclArtifact', {}).get('sha256', '')),
+             'EXACT35_LEGACY_SAME_DUMP_ROLES_AUTH_REQUIRED')
+        need(restored.get('state') == 'LEGACY_LOGICAL_SAME_DUMP_INDEPENDENT_RESTORE_PASSED' and
+             restored.get('sourceTarget') == target and restored.get('backupReceiptSha256') == p['backupReceipt']['sha256'] and
+             restored.get('databaseDumpSha256') == files['erp_prod.dump']['sha256'] and
+             restored.get('rolesAuthAclReceiptSha256') == auth_ref['sha256'] and
+             restored.get('backupFiles') == files and restored.get('rolesAclCompared') is True and
+             restored.get('ordinaryDatabaseRepresentativeRead') == 'PASS' and
+             restored.get('currentAppLoginRepresentativeRead') == 'NOT_TESTED' and
+             auth.get('roleAclProjection') == restored.get('roleAclProjection') == 'INCLUDES_PG_ATTRIBUTE_ATTACL_V1' and
+             restored.get('columnAclsCompared') is True and restored.get('opaqueFilesRestored') is True and
+             restored.get('restoreTarget', {}).get('systemIdentifier') not in (None, target['cluster']) and
+             isinstance(restored['restoreTarget'].get('systemIdentifier'), str) and
+             restored['restoreTarget']['systemIdentifier'].isdigit() and
+             str(restored['restoreTarget'].get('databaseOid', '')).isdigit() and
+             restored['restoreTarget'].get('postmasterStart') and
+             restored['restoreTarget'].get('database') == target['database'],
+             'EXACT35_LEGACY_SAME_DUMP_ACTUAL_RESTORE_REQUIRED')
+        for name, before in p['beforeCAS']['services'].items():
+            actual = backup.get('servicesBefore', {}).get(name, {})
+            need(all(actual.get(a) == before.get(b) for a, b in [('id', 'id'), ('image', 'imageId'),
+                 ('startedAt', 'startedAt'), ('restarts', 'restartCount')]), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
+        fresh_time(backup.get('finishedAtUTC'), p['backupMaxAgeSeconds'])
+        fresh_time(restored.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+        need(dt.datetime.fromisoformat(restored['finishedAtUtc']) >= dt.datetime.fromisoformat(backup['finishedAtUTC']),
+             'EXACT35_LEGACY_RESTORE_PRECEDES_BACKUP')
+        return
+    need(backup.get('status') == 'PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED' and backup.get('physicalVerifiedOnce') is True and
+         backup.get('mediaAndConfigurationShapesStable') is True and backup.get('databaseFiles', 0) > 0 and backup.get('walRanges'), 'COMPLETE_CURRENT_BACKUP_REQUIRED')
+    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+    for name, before in p['beforeCAS']['services'].items():
+        b = backup.get('services', {}).get(name, {})
+        need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
+
+
 def validate_runtime35(p, manifest, runtime, capacity_pending=False):
     native, refs = p['runtime35'], p['runtime35']['references']
     record = runtime35_record(p)
@@ -735,6 +884,8 @@ def validate_runtime35(p, manifest, runtime, capacity_pending=False):
          coverage.get('runtimeIdentity') == p['runtimeConfiguration']['identity'] and coverage.get('media') == native['media'] and
          coverage.get('r1Protected') is True and coverage.get('isolatedRestore', {}).get('currentAppLoginRepresentativeRead') == 'PASS',
          'EXACT35_CURRENT_CONFIG_MEDIA_RESTORE_COVERAGE_REQUIRED')
+    if production:
+        validate_exact35_logical_recovery(p, coverage, record)
     media = canonical(native['media']['hostRoot'], kind='directory', root=ROOT)
     need(media.stat().st_uid == int(p['limits']['app']['user'].split(':')[0]), 'EXACT35_PRIVATE_MEDIA_APP_OWNER_REQUIRED')
     if 'inventorySpool' in native:
@@ -1087,12 +1238,7 @@ def validate_references(p, capacity_pending=False):
          pack.get('archive', {}).get('sha256') == p['archive']['sha256'] and pack.get('manifestSha256') == p['manifest']['sha256'] and
          pack.get('members') == len(entries), 'EXACT_PACK_ACCEPTANCE_REQUIRED')
     backup = reference(p['backupReceipt'])
-    need(backup.get('status') == 'PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED' and backup.get('physicalVerifiedOnce') is True and
-         backup.get('mediaAndConfigurationShapesStable') is True and backup.get('databaseFiles', 0) > 0 and backup.get('walRanges'), 'COMPLETE_CURRENT_BACKUP_REQUIRED')
-    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
-    for name, before in p['beforeCAS']['services'].items():
-        b = backup.get('services', {}).get(name, {})
-        need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
+    validate_current_backup(p, backup)
     db = reference(p['newDatabaseReceipt'])
     if not exact35_selected(p) and not exact26_full(p):
         need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and

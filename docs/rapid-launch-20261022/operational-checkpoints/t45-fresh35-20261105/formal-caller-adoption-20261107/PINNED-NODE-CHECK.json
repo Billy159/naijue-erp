@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-07T06:56:26.290342+08:00",
+  "status": "SOURCE_ONLY_ADOPTED_AND_PINNED_NODE_GENERATOR_CHECK_PASS",
+  "command": [
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
+    "scripts/release/generate-release-contract.mjs",
+    "--check"
+  ],
+  "cwd": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceQA": "735e5065ce67481ace8aa67d58a4c21952d9ca2483b5d25afbb1da85f62f6387",
+  "adoptionReceipt": "50d4e395dd3f5a59d4ce6e9c4e3ee80341bebfdab0887f5e16a6953ae33d7a24",
+  "rootContractChanged": false,
+  "frozen10fcChanged": false,
+  "newBuildPGOrDeploymentRun": false
+}

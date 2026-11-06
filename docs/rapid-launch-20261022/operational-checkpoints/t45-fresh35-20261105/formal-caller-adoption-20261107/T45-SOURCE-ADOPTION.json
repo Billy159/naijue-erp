@@ -1,0 +1,38 @@
+{
+  "status": "EXACT_REVIEWED_FOUR_LEAVES_ADOPTED_SOURCE_ONLY",
+  "atUTC": "2026-11-06T22:48:14.605081+00:00",
+  "worktree": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "before": "BEFORE.json + BEFORE-WIP.patch + before/ full original bytes",
+  "leaves": {
+    "scripts/release/deploy-candidate.py": {
+      "sha256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+      "bytes": 210126
+    },
+    "scripts/release/boot-entry.py": {
+      "sha256": "5ec51b8833eb7119fc35f2147d6a07d0324a74a8332579182f2ff6c70f981d6a",
+      "bytes": 49869
+    },
+    "scripts/release/rollback-candidate.py": {
+      "sha256": "16a2446435c07c1c25dbd70c260ef93b946d8ca98e137138134c63e8fb7e7b0b",
+      "bytes": 7665
+    },
+    "scripts/release/generate-release-contract.mjs": {
+      "sha256": "dd2b692e767b8f75358c1c8d91477214569a326c2a5ede5119e7f4085e1bb12c",
+      "bytes": 11221
+    }
+  },
+  "sourceReview": "QB735e5065ce67481ace8aa67d58a4c21952d9ca2483b5d25afbb1da85f62f6387 adopted by C",
+  "generatorCheck": {
+    "command": "node scripts/release/generate-release-contract.mjs --check",
+    "exitCode": 0,
+    "runtime": "v25.8.2",
+    "note": "System local runtime, not claimed target Node24 runtime validation; no writes by --check."
+  },
+  "pythonSyntax": "3 leaves parse PASS; no pyc",
+  "rootContractSha256": "4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456",
+  "rootContractChanged": false,
+  "gitCommittedByT45": false,
+  "serverOrFrozen10fcChanged": false,
+  "buildPGOrDeploymentExecuted": false,
+  "businessAcceptanceClaimed": false
+}
