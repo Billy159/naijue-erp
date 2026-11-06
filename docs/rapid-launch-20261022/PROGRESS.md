@@ -1709,3 +1709,7 @@ Actual assembler cac1f8fb completed0/4.680170s and original receiver verified fu
 ## 2026-11-06T17:37:44+08:00 - R17 materialized and actual resources verified; C11 binds new20min
 
 Original materialization341474d0 completed0/488.310250s. Post-preflight3b50c8e2 found no target/start/provision/execution artifacts; actual MemAvailable14352547840B/freeDisk7811305472B and exact application/image/source pins verified. C11 34159ef51d743f808f6f516179d4874c85a4ef0be3a90f9fb13ace1a8f40b12a binds only newr17 synthetic target for 1793957864914..1793959064914, original2CPU3GiB/PID256/guardian/2DO. ActualPG170011/physical/program must be reported before same-window C9. No REAL/production/old-key replay or prior-window reuse.
+
+## 2026-11-06T17:42:30+08:00 - Actual R17 PostgreSQL17.11 target bound; exact C9 ready
+
+Start2ed1c080 completed0/36.496466s; actualCID47143df7/SID7704990745636929583/OID16393/PG170011/birth09:39:18.836206UTC. Programd62a0aa9/targeta8e38b7d/source6e13ca2e bind C9 8610560c87fb01b91098c078e4085f5a10f4fb9031490b26e1dd8630c2d5658d in the unchanged C11 window ending1793959064914. This is actual version/start proof only. Original unique t45-f35-2af49c-install-20261106-01 proceeds once; finalguard, summary,commit,ordinary/readback remain pending. No REAL/production/oldkey replay or false17.7 validation claim.

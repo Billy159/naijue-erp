@@ -31276,7 +31276,7 @@
         }
       },
       "r17Preparation": {
-        "state": "MATERIALIZED_RESOURCE_VERIFIED_C11_BOUND_ACTUAL17_11_START_PENDING",
+        "state": "ACTUAL_PG170011_STARTED_C9_BOUND_INSTALL_PENDING",
         "integration": "79a5928d32eec9ca408086849d60d3329d8c47f9",
         "buildRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
         "tree": "de562198a815e1d6efb14cbf535dea977c78bd0e",
@@ -31293,7 +31293,7 @@
             1793953925376689924
           ]
         },
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "finalSyntaxEngine": "PostgreSQL17.11 actual target required",
@@ -31360,7 +31360,29 @@
         "actualResourceReceiptSHA256": "3b50c8e2e67cfe35508ecaf9953aaf1647fe19d70463baaa0e7111c2822812d4",
         "C11SHA256": "34159ef51d743f808f6f516179d4874c85a4ef0be3a90f9fb13ace1a8f40b12a",
         "C11StartsAt": 1793957864914,
-        "C11ExpiresAt": 1793959064914
+        "C11ExpiresAt": 1793959064914,
+        "actualStartReceiptSHA256": "2ed1c0803e68b12dd11aed52d84ec50e04a6a79c090a2c7ce11a96aa2f30a24d",
+        "actualStartSafeSHA256": "901ccfc08e9c6592fed0c74b622ed824ca2e723abf532bcf3940f7009a3ea440",
+        "cid": "47143df7e246058c38bc1e5060db7e59a46fee9b5f902c2bed35ff2a2987f01d",
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 09:39:18.836206+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704990745636929583"
+        },
+        "program": {
+          "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+          "sourceSetSha256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+          "programSha256": "d62a0aa9922f4921234c28c4b10d02ca5db37a2e48bccf89597acd6e1d9a5559",
+          "targetSha256": "a8e38b7d8cf6d6d6a953db92f87a10294aacaa38d8a73867867a2934334f63cd",
+          "catalogSha256": "b813bb7ff10934924056f88fdb3ee2a86cb4c51ad17ef03db58ab50ced876209",
+          "applicationTransactions": 1,
+          "createsCluster": false,
+          "createsCredentials": false,
+          "createsRoles": false,
+          "bootstrapNetworkObservationSha256": "937162b720768f25c23ec41c9d2428260d5ab38f65e084d07ba9ea4676f8b891"
+        },
+        "C9SHA256": "8610560c87fb01b91098c078e4085f5a10f4fb9031490b26e1dd8630c2d5658d"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31769,12 +31791,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T17:37:44+08:00",
-      "phase": "R17_MATERIALIZED_C11_BOUND_ACTUAL_TARGET_START_PENDING",
+      "at": "2026-11-06T17:42:30+08:00",
+      "phase": "R17_ACTUAL_PG170011_C9_BOUND_INSTALL_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 bounded synthetic target start",
-      "nextOwner": "C actual170011/program/target verification then same-window C9",
+      "currentOwner": "Original T45 unique r17 install and synthetic consumer chain",
+      "nextOwner": "C adopt actual scoped result; route only new blockers to original owner",
       "latestActualReceiptSHA256": "e27e5bdf5844c90ce95d6c1008e5df3783d3e218671469113b9dba10675f97d2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -31784,7 +31806,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Start exact newr17 under C11; report actualPG170011, physical/program/target before C9; original limits remain.",
+      "next": "Original install/negative/normal/finalguard/SUMMARIZE/commit/ordinary/readback/probe; no oldkey replay or deadline extension.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "79a5928d32eec9ca408086849d60d3329d8c47f9",
       "buildRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
