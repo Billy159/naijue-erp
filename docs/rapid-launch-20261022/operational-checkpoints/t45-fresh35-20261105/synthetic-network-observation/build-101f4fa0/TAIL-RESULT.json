@@ -1,0 +1,32 @@
+{
+  "status": "EXACT_PREFIX_TAIL_STREAM_PROVED",
+  "base": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-e7bcc81e/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83696049,
+    "sha256": "0aefefe711d96d93303a1032d4ab43f27e0de3d48a563b24454cf0e01ed41503"
+  },
+  "prefix": {
+    "bytes": 80908239,
+    "sha256": "ae51f9ae05eda2109de6768ac1891fe2cccfe75f91af1421151e7217569d23bd",
+    "byteCompared": true
+  },
+  "tail": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-101f4fa0/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-80908239.bin",
+    "bytes": 2789949,
+    "sha256": "1f95b27252693d5d37d047f4a5942dfd500acb251e1712e4660dbc8f1cff3609"
+  },
+  "target": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-101f4fa0/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83698188,
+    "sha256": "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79"
+  },
+  "streamReconstruction": {
+    "bytes": 83698188,
+    "sha256": "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79",
+    "persistedTailReread": true
+  },
+  "recompression": false,
+  "fullReconstructedCopy": false,
+  "transportExecuted": false,
+  "serverExecuted": false
+}
