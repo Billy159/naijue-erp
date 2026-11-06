@@ -334,7 +334,7 @@ def ordinary_child_process(proc):
     need(identity['exe']==str(NODE) and fields[0] not in ['Z','X'] and fields[1]==str(os.getpid()) and fields[19]==identity['starttime'] and re.fullmatch('[a-f0-9-]{36}',boot),'ORDINARY_NODE_CHILD_IDENTITY_DIFFERS')
     return {'pid':proc.pid,'linuxStartTicks':identity['starttime'],'linuxBootId':boot}
 
-ORDINARY_FAILURE_PHASES = ('PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL')+tuple(name+':'+step for name in ('salesPositive','salesMixed','transfer') for step in ('PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'))
+ORDINARY_FAILURE_PHASES = ('PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL')+tuple('REAL_ADMIN_ACCOUNT_SETUP:'+step for step in ('STAFF_DETAIL','ABSENT_RECEIPT','CREATE','RESET_PASSWORD','ACCOUNT_DETAIL','RECEIPT_READBACK','REPLAY','ACCOUNT_READBACK','STAFF_LINK','LOGIN','SESSION'))+tuple(name+':'+step for name in ('salesPositive','salesMixed','transfer') for step in ('PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'))
 ORDINARY_ENTRY_PHASES = ('UID_CHECK','PRIVATE_CONTEXT','PRIVATE_PATHS','CAPACITY_BINDING','CREDENTIAL_TAG_IMPORT','CREDENTIAL_TAG_READ','INTEGRATION_IMPORT','INTEGRATION_CALL')
 ORDINARY_ERROR_TYPES = ('Error','AssertionError','TypeError','RangeError','SyntaxError')
 ORDINARY_GUARD_CODES = ('ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED')
@@ -537,20 +537,24 @@ def port_absent(port, observation=None):
         'stage':'AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP',
         'startedAtUTC':datetime.now(timezone.utc).isoformat(),'finishedAtUTC':None,
         'namespace':None,'reading':'netns','readError':None,'complete':False,
-        'matchingRows':0,'matchingStates':{table:{state:0 for state in states} for table in ('tcp','tcp6')},'portAbsent':None})
+        'matchingRows':0,'matchingStates':{table:{state:0 for state in states} for table in ('tcp','tcp6')},'portAbsent':None,'noActiveTcpRows':None})
     try:
         namespace=Path('/proc/self/ns/net').stat()
+        if not all(type(value) is int and value>0 for value in (namespace.st_dev,namespace.st_ino)):raise ValueError('NETNS_IDENTITY_UNKNOWN')
         observation['namespace']={'device':namespace.st_dev,'inode':namespace.st_ino}
         for table in ('tcp','tcp6'):
             observation['reading']=table
             for line in Path('/proc/net/'+table).read_text().splitlines()[1:]:
                 fields=line.split()
+                if len(fields)<4 or re.fullmatch('[A-Fa-f0-9]{2}',fields[3]) is None:raise ValueError('TCP_ROW_INVALID')
                 if int(fields[1].split(':')[1],16)==port:
                     state=fields[3].upper()
                     observation['matchingStates'][table][state if state in states else 'UNKNOWN']+=1
                     observation['matchingRows']+=1
         absent=observation['matchingRows']==0
-        observation.update(complete=True,portAbsent=absent,reading=None)
+        # Cleanup-only quiescence: not a claim that the port can be rebound.
+        no_active=all(count==0 for counts in observation['matchingStates'].values() for state,count in counts.items() if state!='06')
+        observation.update(complete=True,portAbsent=absent,noActiveTcpRows=no_active,reading=None)
         return absent
     except Exception as error:
         observation['readError']=('DENIED' if isinstance(error,PermissionError) else
@@ -772,7 +776,7 @@ def cleanup_owned_server(a, proc, identity, system_id, deadline):
     A failed revoke/unclean stop is retained as failure, not hidden by file removal.
     """
     p=a['proposal'];root=Path(p['workspaceDirectory']);errors=[]
-    result={'loginsRevoked':False,'credentialsRemoved':False,'ownedPidAbsent':False,'portAbsent':False,'cleanShutdown':False}
+    result={'loginsRevoked':False,'credentialsRemoved':False,'ownedPidAbsent':False,'portAbsent':False,'cleanShutdown':False,'noActiveTcpRows':False,'tcpCleanupRule':'FRESH35_NO_ACTIVE_TCP_ROWS_V1'}
     try:
         if proc and proc.poll() is None and identity and owned_listener(identity,p['port']) and system_id and time.monotonic()<deadline-5:
             names=[p[k] for k in ['owner','controller','runtime','admin']]
@@ -806,13 +810,14 @@ def cleanup_owned_server(a, proc, identity, system_id, deadline):
             result['ownedPidAbsent']=proc is None or proc.poll() is not None
             result['portObservation']={}
             result['portAbsent']=port_absent(p['port'],result['portObservation'])
+            result['noActiveTcpRows']=result['portObservation'].get('noActiveTcpRows') is True
             if proc and result['ownedPidAbsent'] and not (root/'data/postmaster.pid').exists():
                 r=subprocess.run([str(BIN/'pg_controldata'),'-D',str(root/'data')],capture_output=True,env=clean_env(root),timeout=5)
                 control=r.stdout.decode(errors='replace')
                 match=re.search(r'^Database system identifier:\s*(\d+)$',control,re.M)
                 result['cleanShutdown']=r.returncode==0 and bool(match) and match[1]==system_id and bool(re.search(r'^Database cluster state:\s*shut down$',control,re.M))
         except Exception as e:errors.append({'phase':'observe','type':type(e).__name__})
-    result['errors']=errors;result['cleanupComplete']=all(result[k] for k in ['loginsRevoked','credentialsRemoved','ownedPidAbsent','portAbsent','cleanShutdown']) and not errors
+    result['errors']=errors;result['cleanupComplete']=all(result[k] for k in ['loginsRevoked','credentialsRemoved','ownedPidAbsent','noActiveTcpRows','cleanShutdown']) and not errors
     return result
 
 def initialization_args(p):

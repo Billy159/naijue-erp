@@ -109,7 +109,7 @@ test('direct schema materializes captured default routine ACL without changing e
  const projectedRawAcl=grant?[...defaults]:oldRawAcl;
  assert.deepEqual(projectedRawAcl,routine.acl,'the raw ACL now matches the captured model without normalizing the guard');
  assert.deepEqual(oldRawAcl??defaults,projectedRawAcl??defaults,'effective owner/PUBLIC EXECUTE and grant options do not change');
- assert.deepEqual(statements.map(s=>s.name),compiled.statements.map(s=>s.name));assert.equal(statements.length,10);
+ assert.deepEqual(statements.map(s=>s.name),compiled.statements.map(s=>s.name));assert.equal(statements.length,11);
  assert.equal(statements.filter(s=>s.name!=='direct-35-schema').map(s=>s.sql).join('\n').match(/is_native_party_import_insert\(text,jsonb\) TO PUBLIC/g)?.length??0,0);
 });
 test('current source closure separately records old180 and the later application/installer changes',async()=>{
@@ -134,7 +134,7 @@ test('full successor model changes the adopted eight routine bodies and sales ha
  const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old.generated==='s'?{...old,generatedExpression:'\n'+old.generatedExpression}:old)}
  for(const key of ['indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
  assert.deepEqual(model.constraints.map(row=>row.relation==='operation_receipt'&&row.name==='receipt_result_by_kind'?{...row,definition:before.constraints.find(c=>c.relation===row.relation&&c.name===row.name).definition}:row),before.constraints,'only the separately pinned capture receipt CHECK definition differs');
- assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.relation==='schema_migration'&&['version','description'].includes(row.column)?['fresh35_controller_20261105_r9=r/fresh35_owner_20261105_r9']:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'only approved two-column controller read differs; all other ACLs stay exact');
+ assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.relation==='schema_migration'&&['version','description'].includes(row.column)?['fresh35_controller_20261105_r9=r/fresh35_owner_20261105_r9']:row.relation==='user_account'?['erp_unified27_runtime_2393dbc6db9581c2='+(['staff_id','created_at'].includes(row.column)?'a':'aw')+'/fresh35_owner_20261105_r9']:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'only approved controller read and exact account writer column ACLs differ');
  assert.ok(model.routines.every(r=>/^[a-f0-9]{64}$/.test(r.bodySha256)));assert.equal(d.independentSafetyReviewComplete,false);assert.equal(d.sqlParsedByPostgres,false);assert.equal(d.engineVerified,false);
 });
 test('new catalog guards every category plus raw type templates and real dependency boundaries',async()=>{
@@ -144,7 +144,7 @@ test('new catalog guards every category plus raw type templates and real depende
  assert.doesNotMatch(guardSql,/FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED/);assert.match(await readFile(root+'scripts/release/unified-install/fresh35-catalog-v2-guard-review.mjs','utf8'),/RAISE EXCEPTION 'FRESH35_V2_GUARD_REVIEW_NOT_AUTHORIZED'/);
 });
 test('program is one atomic application transaction and contains no provisioning or legacy tables',async()=>{
- const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','controller-lineage-column-read','historical-sales-hall','historical-line-amount','historical-missing-settlement-types','historical-settlement-difference','complete-successor-catalog','same-physical-target']);
+ const {program}=await bundle(),d=describeFresh35CombinedProgram(program);assert.equal(d.applicationTransactions,1);assert.deepEqual(d.statements.map(s=>s.name),['physical-empty-target','direct-35-schema','migration-lineage','controller-lineage-column-read','runtime-account-column-write','historical-sales-hall','historical-line-amount','historical-missing-settlement-types','historical-settlement-difference','complete-successor-catalog','same-physical-target']);
  for(const flag of ['createsCluster','createsRoles','createsCredentials','oldTablesRemoved','hostEnabled'])assert.equal(d[flag],false);
 });
 test('valid authorization data cannot issue a trusted execution token',async()=>{
@@ -250,4 +250,26 @@ test('unchanged runtime/ordinary consumers accept two native pg command results 
   assert.equal(await nativeResults(sql.guardSql,consumer,['DO','DO']),true);
   await assert.rejects(()=>nativeResults(sql.guardSql,consumer,['DO','SELECT']),/ERR_ASSERTION|Expected values/,'two results with the wrong command tag still fail');
  }
+});
+
+test('fresh35 account writer changes exactly nine column ACLs without a table grant or other metadata change',async()=>{
+ const before=JSON.parse(await readFile(modelPath,'utf8')),model=JSON.parse(fresh35CombinedCatalogSql(graph.catalog,source,target).guardSql.split('$combined_model$')[1]);
+ const role='erp_unified27_runtime_2393dbc6db9581c2',owner='fresh35_owner_20261105_r9';
+ const rows=model.columnAcls.filter(r=>r.relation==='user_account');
+ assert.deepEqual(rows.map(r=>r.column),['id','staff_id','login_name','password_hash','login_enabled','auth_version','version','created_at','updated_at']);
+ assert.deepEqual(rows.map(r=>r.acl),rows.map(r=>[role+'='+(['staff_id','created_at'].includes(r.column)?'a':'aw')+'/'+owner]));
+ const mapped=JSON.parse(JSON.stringify(before.relations.find(r=>r.relation==='user_account')).replaceAll('fresh35_owner_20261105_r1',owner));
+ assert.deepEqual(model.relations.find(r=>r.relation==='user_account'),mapped,'table privileges remain exact captured SELECT');
+ assert.equal(model.routines.length,152);assert.equal(model.tables.length,35);assert.deepEqual(model.triggers,before.triggers);
+ assert.deepEqual(describeFresh35CombinedCatalog(graph.catalog).accountColumnWrites,{relation:'user_account',grantee:role,insertColumns:rows.map(r=>r.column),updateColumns:['login_name','login_enabled','auth_version','version','updated_at','password_hash']});
+});
+test('fresh35 account writer grants only exact INSERT and UPDATE columns before the complete atomic catalog guard',async()=>{
+ const text=await readFile(root+'scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs','utf8'),start=text.indexOf(' const statements=['),end=text.indexOf(' const descriptor=',start),t=describeFresh35CombinedTarget(target);
+ const schema=renderFresh35CombinedSchema(source,t.proposal),sql=fresh35CombinedCatalogSql(graph.catalog,source,target);
+ const statements=new Function('schema','target','t','sql','fresh35CombinedTargetGuard',text.slice(start,end)+'return statements;')(schema,target,t,sql,networkModel.api.fresh35CombinedTargetGuard);
+ const write=statements.find(s=>s.name==='runtime-account-column-write');assert(write);
+ assert.equal(write.sql,'GRANT INSERT (id, staff_id, login_name, password_hash, login_enabled, auth_version, version, created_at, updated_at) ON TABLE naijue_erp.user_account TO erp_unified27_runtime_2393dbc6db9581c2;\nGRANT UPDATE (login_name, login_enabled, auth_version, version, updated_at, password_hash) ON TABLE naijue_erp.user_account TO erp_unified27_runtime_2393dbc6db9581c2;');
+ assert.doesNotMatch(write.sql,/\b(?:DELETE|TRUNCATE|REFERENCES|TRIGGER|PUBLIC|OWNER|CREATE|ALTER|WITH GRANT OPTION)\b/);
+ assert(statements.indexOf(write)<statements.findIndex(s=>s.name==='complete-successor-catalog'));
+ assert.equal(describeFresh35CombinedProgram(graph.program).statements.find(s=>s.name===write.name).sha256,combinedSha256(write.sql));
 });

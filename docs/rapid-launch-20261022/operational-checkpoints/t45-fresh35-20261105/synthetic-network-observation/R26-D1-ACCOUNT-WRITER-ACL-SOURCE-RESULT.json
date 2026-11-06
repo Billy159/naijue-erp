@@ -1,0 +1,268 @@
+{
+  "format": "D1_R26_ACCOUNT_WRITER_COLUMN_ACL_AND_SETUP_PHASE_SOURCE_V1",
+  "at": "2026-11-07T02:04:46.289954+08:00",
+  "status": "SOURCE_READY_SCOPED_OFFLINE_AND_TYPECHECK_ONLY_AWAIT_C_QB_AND_REAL_PG",
+  "authorization": "C WRITE-OWNERSHIP.r26AccountWriterACLAndSetupDiagnostic20261107; source-level exact minimum column-permission successor and five leaves explicitly approved by C under user delegation; T45 alone owns Python two leaves",
+  "sourceRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "beforeSha256": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc",
+      "beforeBytes": 22158,
+      "afterSha256": "d4dc1ba9dff4e4fa72517b5a9355841c9b33a97fc5390c15d42638aa92e768be",
+      "afterBytes": 22566
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "beforeSha256": "33e622ee6d3e0a10795b7c9c02bec04b67e257936f4b701855687ec18bb99156",
+      "beforeBytes": 38614,
+      "afterSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf",
+      "afterBytes": 39607
+    },
+    {
+      "path": "tests/fresh35-combined-catalog.test.mjs",
+      "beforeSha256": "19bf3474cc717600feee7d82c86f04ea8ecf74ac5c47ad637b5bef5355353a68",
+      "beforeBytes": 33309,
+      "afterSha256": "9f2f51577be59fbee079b940ff6ca1cc2ab1a11434abb020ed1d21afb55facf8",
+      "afterBytes": 36415
+    },
+    {
+      "path": "tests/account-maintenance-postgres-protocol.test.ts",
+      "beforeSha256": "ff0b6f1cd8a39ce276cd56f2501aee950efd29f4e19da4e961a18155ee8460ed",
+      "beforeBytes": 6190,
+      "afterSha256": "08d0d7e4c0e0c8bfa5250afc159bb6e481e4d816f187b506b6fd0718685b9d6e",
+      "afterBytes": 11408
+    },
+    {
+      "path": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "beforeSha256": "3c4e8403c1b00b13835d3d0a996d7a2ba0698b65adc5d80bc7e35f48c3c28153",
+      "beforeBytes": 78748,
+      "afterSha256": "b6e3ca72cdf86968f5868ba2223451d2248f3ce3eada7ed8ead915c6497470c0",
+      "afterBytes": 81638
+    }
+  ],
+  "actualR25": {
+    "fixedSource": "753574cc",
+    "root": "56fb33",
+    "sourceSet": "7cf",
+    "resultSha256": "941f4bb7f758f4489c8362718ce13dd9cecebf151ca5948d5524630316d474fe",
+    "rawSha256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717",
+    "phase": "REAL_ADMIN_ACCOUNT_SETUP",
+    "errorType": "AssertionError",
+    "guardCode": "ERR_ASSERTION",
+    "expectedInteger": 200,
+    "actualInteger": 500,
+    "sqlstate": null,
+    "actualSpecificRequest": "NOT_RETAINED",
+    "uniqueActualRootCause": "UNKNOWN_NOT_PROVEN_BY_OFFLINE_MODEL",
+    "previousCapacityPreflightCrossed": true,
+    "ordinaryBusinessVerified": false,
+    "oldOriginalKeysReplayed": false
+  },
+  "sourceFinding": {
+    "existingControlledWriter": "Original AccountMaintenanceService→PostgresAccountMaintenanceUnitOfWork→PostgresMaintenanceCommandUnitOfWork; existing prepared audit/credential/deferred receipt/current ADMIN/last-admin/key/version guards unchanged",
+    "capturedACL": "Existing runtime interface has user_account table SELECT and UPDATE(id) only; direct CREATE/RESET DML needs exact missing columns",
+    "offlineFourCases": "Real original HTTP plugin/service/store/shared-UoW plus finite captured ACL projection and real synthetic scrypt: CREATE/RESET captured ACL reject42501→500/INTERNAL_ERROR→ROLLBACK/release1; minimum-permission-only model controls200/COMMIT. No real PG triggers/engine or production ACL changed. Initial null-column ACL fixture assertion corrected before valid results."
+  },
+  "exactACL": {
+    "grantee": "erp_unified27_runtime_2393dbc6db9581c2",
+    "relation": "naijue_erp.user_account",
+    "insertColumns": [
+      "id",
+      "staff_id",
+      "login_name",
+      "password_hash",
+      "login_enabled",
+      "auth_version",
+      "version",
+      "created_at",
+      "updated_at"
+    ],
+    "updateColumns": [
+      "login_name",
+      "login_enabled",
+      "auth_version",
+      "version",
+      "updated_at",
+      "password_hash"
+    ],
+    "preservedColumnUpdate": [
+      "id"
+    ],
+    "columnDeltas": {
+      "id": "w→aw",
+      "staff_id": "null→a",
+      "created_at": "null→a",
+      "login_name": "null→aw",
+      "password_hash": "null→aw",
+      "login_enabled": "null→aw",
+      "auth_version": "null→aw",
+      "version": "null→aw",
+      "updated_at": "null→aw"
+    },
+    "scope": "Two explicit GRANT statements in existing one application installation transaction, before unchanged complete metadata guard; table ACL remains SELECT; exact column ACL model and program hash bind successor",
+    "newObjects": 0,
+    "routineBodyChanges": 0,
+    "newFunctions": 0,
+    "newRoles": 0,
+    "newColumns": 0,
+    "changedTriggersOrChecks": 0,
+    "noExtraPermissions": [
+      "No whole-table INSERT/UPDATE grant",
+      "No DELETE/TRUNCATE/REFERENCES/TRIGGER/GRANT OPTION",
+      "No LOGIN/controller/owner or membership privilege expansion",
+      "No new runtime SQL writer bypass or trusted-client permission flag"
+    ]
+  },
+  "setupDiagnostic": {
+    "addedPhases": [
+      "REAL_ADMIN_ACCOUNT_SETUP:STAFF_DETAIL",
+      "REAL_ADMIN_ACCOUNT_SETUP:ABSENT_RECEIPT",
+      "REAL_ADMIN_ACCOUNT_SETUP:CREATE",
+      "REAL_ADMIN_ACCOUNT_SETUP:RESET_PASSWORD",
+      "REAL_ADMIN_ACCOUNT_SETUP:ACCOUNT_DETAIL",
+      "REAL_ADMIN_ACCOUNT_SETUP:RECEIPT_READBACK",
+      "REAL_ADMIN_ACCOUNT_SETUP:REPLAY",
+      "REAL_ADMIN_ACCOUNT_SETUP:ACCOUNT_READBACK",
+      "REAL_ADMIN_ACCOUNT_SETUP:STAFF_LINK",
+      "REAL_ADMIN_ACCOUNT_SETUP:LOGIN",
+      "REAL_ADMIN_ACCOUNT_SETUP:SESSION"
+    ],
+    "basePhasePreserved": true,
+    "nineKeySchemaUnchanged": true,
+    "originalAssertionCodeAndIntegerPairPreserved": true,
+    "source": "Fixed trusted helper steps before each original request; separate existing denied-login/session requests",
+    "rawResponseMessageStackCausePasswordOutput": false,
+    "knownHTTPInternalErrorNoExtraRecorder": "No new HTTP/body logger or additional diagnostic schema",
+    "embeddedSubcases": 16
+  },
+  "checks": {
+    "redACL": {
+      "exitCode": 1,
+      "tests": 3,
+      "fail": 3,
+      "pass": 0,
+      "skipped": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/RED-ACL.tap",
+        "sha256": "bf8c748e7a2904ec8e8d05e356fa9d0cf0a81181608fc9d30e70e6baed0f2a75",
+        "bytes": 5292
+      }
+    },
+    "redPhase": {
+      "exitCode": 1,
+      "tests": 1,
+      "fail": 1,
+      "pass": 0,
+      "skipped": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/RED-PHASE.tap",
+        "sha256": "d3c97566af835d51ebc0600d4f48b1aeefecd3cdcd6b958863cc3b4d683730fb",
+        "bytes": 1387
+      }
+    },
+    "green": [
+      {
+        "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=\"fresh35.*account|fresh35 ordinary failure descriptor\" tests/integration/live-ledger-balance-pairs.integration.test.ts tests/account-maintenance-postgres-protocol.test.ts",
+        "exitCode": 0,
+        "tests": 10,
+        "pass": 10,
+        "fail": 0,
+        "skipped": 0,
+        "log": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/GREEN-ACCOUNT-PHASE.tap",
+          "sha256": "9bd4e168208454d032990c90b8dc74a4bda9ed04bd3cdf3b4d3313ed9dc5ab96",
+          "bytes": 1794
+        }
+      },
+      {
+        "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=\"fresh35 account writer|program is one atomic|new catalog restores|public|capture receipt\" tests/fresh35-combined-catalog.test.mjs",
+        "exitCode": 0,
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "skipped": 0,
+        "log": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/GREEN-CATALOG.tap",
+          "sha256": "01e797137b67f253172be61ad8fb39f08aa3df80a9d0fa78554ca37329f7f59a",
+          "bytes": 769
+        }
+      },
+      {
+        "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=\"direct schema materializes|full successor model\" tests/fresh35-combined-catalog.test.mjs",
+        "exitCode": 0,
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0,
+        "log": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/GREEN-AFFECTED-CATALOG.tap",
+          "sha256": "c4cb9088251ae768210d815b77cbd12cd9985a1034cc82eb32830b60e9e40c8e",
+          "bytes": 544
+        }
+      },
+      {
+        "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=\"account PG protocol\" tests/account-maintenance-postgres-protocol.test.ts",
+        "exitCode": 0,
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "skipped": 0,
+        "log": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/GREEN-PROTOCOL-CONTROLS.tap",
+          "sha256": "6e9999f904d329cddbe2ba0ab3afedbda6e8199a8af87a28fd7c9d69c8b79002",
+          "bytes": 669
+        }
+      }
+    ],
+    "totalGreenTests": 19,
+    "totalGreenPass": 19,
+    "totalGreenFail": 0,
+    "totalGreenSkipped": 0,
+    "typecheck": {
+      "exitCode": 0,
+      "diagnostics": 0,
+      "scope": "Exact two changed TS roots and actual dependency closure with unchanged tsconfig options/noEmit; .mjs actual modules run in scoped tests",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/TYPECHECK.log",
+        "sha256": "93d335f8012863516f68c776f1a0ff80fd2c489461dd5cd5f18fdefd11fe08ad",
+        "bytes": 187
+      }
+    },
+    "sourcePreservation": {
+      "originalBusinessAssertionsASTByteIdentical": 102,
+      "runnerInjectCallsASTByteIdentical": 8,
+      "setupHelperInjectCallsASTByteIdentical": 5,
+      "capacityR25ThreeLeavesExact": true,
+      "combinedSourceLoaderExact": true,
+      "accountServiceStoreAndHttpOriginal": true,
+      "originalCapturesUnchanged": true
+    },
+    "forwardPatchDryRunExitCode": 0,
+    "reversePatchDryRunExitCode": 0,
+    "frozenCopiesReadBackExact": true
+  },
+  "notExecuted": [
+    "Actual PG SQL parsing/new exact column GRANTs/trigger and deferred guard validation",
+    "Actual next target and original r25 specific500 request/root cause observation",
+    "Real HTTP/account business acceptance or production/real data import",
+    "Build/package/deployment/server/database/installation/dependency actions",
+    "Full suite or previous capacity/normal committed/unknown keys replay"
+  ],
+  "rollback": {
+    "reversePatch": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/SOURCE.reverse.patch",
+      "sha256": "12b515efe79f6d05a85235ab1c433b9dc1b343102607ce4a731fac93578b2959",
+      "bytes": 36303
+    },
+    "forwardPatch": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R26-ACCOUNT-WRITER-ACL-SOURCE-01/SOURCE.patch",
+      "sha256": "9afde28f495877e1c803511c0e27a4e7f562ce664baca5d71555319fdc6c6448",
+      "bytes": 36303
+    },
+    "scope": "Restore only five source leaves to before hashes. No existing database was changed; any future schema ACL rollback belongs to separately reviewed exact new target."
+  },
+  "handoff": "C combines original T45 two Python leaves and binds final sourceSet/program, then original QB scoped review; later T45-only new target actual verification under C window",
+  "writerState": "FROZEN",
+  "Fast": "UNVERIFIED"
+}

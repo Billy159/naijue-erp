@@ -1,0 +1,81 @@
+{
+  "status": "FINAL_FROZEN_SOURCE_ONLY_CLEANUP_CONTRACT_AND_EXACT_ADMIN_PHASES_PASS",
+  "recordedAtUTC": "2026-11-06T17:58:44.011988+00:00",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSha256": "187b6e1a8d956db9dd161582c62300038df867d2b30a2c895037858b9da9b4e6",
+      "phaseBeforeSha256": "e8432b939cac01998970518a57438fdcd4ab2f4875e809f83b93909a04744c82",
+      "finalSha256": "9d5be807308018601ff855d740196a40c3e9566ee7b82240050d494d65ed47c7",
+      "beforeBytes": 104321,
+      "finalBytes": 105225
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "beforeSha256": "34c29ec3875eca03fdd74b33722b8d72f263b07a5b5f42b06c0d22d817bfc41e",
+      "phaseBeforeSha256": "93624fbe6d967db8cc924ace18a9f00023edbebe3e3140a5479266e685bad1ee",
+      "finalSha256": "bfaff2041320821e47e277dc3e5c40db3bf822a8361456a8fe54672aa461d49b",
+      "beforeBytes": 97201,
+      "finalBytes": 102440
+    }
+  ],
+  "retainedCleanupCheckpoint": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r26-cleanup-quiescence-source-01/RESULT.json",
+    "sha256": "6cef90ffa497d2618baba3e265cc9c37dba5ad73cc6c14bb38ce4e42efd85143",
+    "testsPassed": 16,
+    "testsRerun": false,
+    "ruleVersion": "FRESH35_NO_ACTIVE_TCP_ROWS_V1"
+  },
+  "phaseSync": {
+    "source": "Exact11 step list received directly from original D1 under C registration",
+    "newValues": [
+      "REAL_ADMIN_ACCOUNT_SETUP:STAFF_DETAIL",
+      "REAL_ADMIN_ACCOUNT_SETUP:ABSENT_RECEIPT",
+      "REAL_ADMIN_ACCOUNT_SETUP:CREATE",
+      "REAL_ADMIN_ACCOUNT_SETUP:RESET_PASSWORD",
+      "REAL_ADMIN_ACCOUNT_SETUP:ACCOUNT_DETAIL",
+      "REAL_ADMIN_ACCOUNT_SETUP:RECEIPT_READBACK",
+      "REAL_ADMIN_ACCOUNT_SETUP:REPLAY",
+      "REAL_ADMIN_ACCOUNT_SETUP:ACCOUNT_READBACK",
+      "REAL_ADMIN_ACCOUNT_SETUP:STAFF_LINK",
+      "REAL_ADMIN_ACCOUNT_SETUP:LOGIN",
+      "REAL_ADMIN_ACCOUNT_SETUP:SESSION"
+    ],
+    "existingValuesRetained": true,
+    "decoderFunctionsASTUnchangedFromCleanupCheckpoint": true,
+    "schemaKeys": 9,
+    "sqlstateGuardCodeErrnoAndSecretFiltersChanged": false,
+    "red": {
+      "tests": 1,
+      "failedSubcases": 11,
+      "exitCode": 1
+    },
+    "green": {
+      "tests": 3,
+      "seconds": 0.046,
+      "exitCode": 0,
+      "scope": "New11 phases and unknown suffix negatives, original branded basephase, old invalid/secret/schema cases",
+      "command": "python3 tests/test_fresh35_isolated_launcher.py OrdinaryBusinessFlowTests.test_exact_admin_setup_subphases_survive_parent_without_expanding_schema OrdinaryBusinessFlowTests.test_closed_child_failure_survives_parent_and_cleanup_without_private_text OrdinaryBusinessFlowTests.test_invalid_child_diagnostics_never_cross_parent_failure_channel -v"
+    }
+  },
+  "forwardReverseFinalPatchExactBytes": true,
+  "patches": {
+    "cleanup-and-admin-phases.patch": "db71196873419940c6cb8990b674147b7a374b037956452b244b861a01438e62",
+    "admin-phases-only.patch": "276b868568ac2850bd4b561f53972a4c93346daa97007522a80aa1eae430e9e6",
+    "cleanup-quiescence-only.patch": "d3fa5bd61dcd900f65202dad199e8c1fec1467849a0075e54f6de4cf2a39fd55"
+  },
+  "consumerBoundary": "No files outside these2 leaves changed. Existing wrapper consumes cleanupComplete; strict production and one-argument startup path unchanged. Old exact receipt consumers remain tied to old records; no old receipt rewrite.",
+  "notVerified": [
+    "Actual Linux cleanup/no-active-TCP contract",
+    "New PG/catalog/ACL integration",
+    "Admin500 fix or precise failing subphase",
+    "Ordinary business chain",
+    "Build/package/deployment"
+  ],
+  "serverJobs": 0,
+  "PGConnections": 0,
+  "builds": 0,
+  "oldKeysReplayed": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "freeze": "Current two leaves and final-source copies stop writing after this delivery until explicit new C instruction; C integrates with D1 and original QB checks only delta."
+}

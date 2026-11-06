@@ -1,0 +1,130 @@
+{
+  "status": "R25_EXACT_PREDECESSOR_METADATA_AND_CURRENT_STOPPED_IDENTITY_READ_BACK",
+  "jobId": "t45-f35-56fb33-predecessor-metadata-20261107-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 0.06773605104535818,
+  "checkedAtAsiaShanghai": "2026-11-07T02:02:32.705177+08:00",
+  "receipts": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-predecessor-metadata-20261107-01/transport/release-receipts/t45-f35-56fb33-predecessor-metadata-20261107-01/job.json",
+      "sha256": "8730ba365a2a388eb57a7e170770637a54b360f937060c1dd6919fd0f65c90b0"
+    },
+    "predecessor-metadata.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-predecessor-metadata-20261107-01/transport/release-receipts/t45-f35-56fb33-predecessor-metadata-20261107-01/predecessor-metadata.json",
+      "sha256": "c5ce8a35242b3f26df617eaeeddfab8673ba28de31af8084ad205b6ec615b10a"
+    }
+  },
+  "scriptSha256": "1d952b2284eae877160b04939899a98fc435a37671e0d1d6aff45de348d058eb",
+  "originalPrivateResult": {
+    "bytes": 35965,
+    "gid": 0,
+    "mode": "0o600",
+    "nlink": 1,
+    "sha256": "ab491e7d7325442de09533751ad402ebeed5dc595e99deefd5fb8b8b8a8a9621",
+    "stableRegularNoSymlink": true,
+    "uid": 0
+  },
+  "originalPrivateCleanup": {
+    "bytes": 983,
+    "gid": 0,
+    "mode": "0o400",
+    "nlink": 1,
+    "sha256": "aabd24d5db1c9c6a600aee639e73b10f7d2bc181cf4d4163d1b591ddfbd436da",
+    "stableRegularNoSymlink": true,
+    "uid": 0
+  },
+  "currentStoppedContainer": {
+    "exactIdentityVerified": true,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "initPidZero": true,
+    "network": "none",
+    "noHostBindings": true,
+    "operation": "t45-f35-56fb33-application-20261107-01",
+    "source": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+    "stopped": true
+  },
+  "exactSourceProgramTargetVerified": true,
+  "cleanupShapeVerified": true,
+  "initializationShapeVerified": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": false,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false
+  },
+  "ordinaryFailure": {
+    "actualInteger": 500,
+    "errno": null,
+    "errorType": "AssertionError",
+    "expectedInteger": 200,
+    "format": "FRESH35_ORDINARY_FAILURE_V1",
+    "guardCode": "ERR_ASSERTION",
+    "phase": "REAL_ADMIN_ACCOUNT_SETUP",
+    "source": "runFresh35OrdinaryIntegration:catch",
+    "sqlstate": null
+  },
+  "originalPortObservation": {
+    "complete": true,
+    "finishedAtUTC": "2026-11-06T17:42:31.439802+00:00",
+    "format": "FRESH35_CLEANUP_PORT_OBSERVATION_V1",
+    "matchingRows": 4,
+    "matchingStates": {
+      "tcp": {
+        "01": 0,
+        "02": 0,
+        "03": 0,
+        "04": 0,
+        "05": 0,
+        "06": 4,
+        "07": 0,
+        "08": 0,
+        "09": 0,
+        "0A": 0,
+        "0B": 0,
+        "0C": 0,
+        "UNKNOWN": 0
+      },
+      "tcp6": {
+        "01": 0,
+        "02": 0,
+        "03": 0,
+        "04": 0,
+        "05": 0,
+        "06": 0,
+        "07": 0,
+        "08": 0,
+        "09": 0,
+        "0A": 0,
+        "0B": 0,
+        "0C": 0,
+        "UNKNOWN": 0
+      }
+    },
+    "namespace": {
+      "device": 4,
+      "inode": 4026533833
+    },
+    "portAbsent": false,
+    "readError": null,
+    "reading": null,
+    "stage": "AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP",
+    "startedAtUTC": "2026-11-06T17:42:31.438309+00:00"
+  },
+  "portSamplingNote": "Counts are retained original2026-11-07 01:42:31+08 observation; no current port sampling performed",
+  "portAbsence": "NOT_DIRECTLY_VERIFIED",
+  "identityNote": "Original file before/open-fstat/read/fstat/linked-lstat full dev/ino/size/mode/uid/gid/nlink/mtime/ctime equality verified; raw identity tuple not exported",
+  "r26TwoFrozenSourceLeavesUnchanged": true,
+  "PGConnections": 0,
+  "newPortSampling": false,
+  "namespaceEntered": false,
+  "oldFilesChanged": false,
+  "permissionsOrServicesChanged": false,
+  "oldKeysReplayed": false,
+  "newSourceSetOrTarget": "UNKNOWN_NOT_GUESSED_OR_CREATED",
+  "newWindows": 0,
+  "actualModelEffortFast": "UNVERIFIED",
+  "nextStep": "C may reuse exact predecessor metadata when final r26 build/QA ready. No further independent work or server jobs."
+}
