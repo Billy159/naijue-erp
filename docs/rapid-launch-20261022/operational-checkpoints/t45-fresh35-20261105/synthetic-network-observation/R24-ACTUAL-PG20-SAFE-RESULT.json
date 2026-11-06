@@ -1,0 +1,95 @@
+{
+  "status": "FAILED_ORDINARY_CAPACITY_PREFLIGHT_AND_CLEANUP_INCOMPLETE_PRESERVED_NO_REPLAY",
+  "jobId": "t45-f35-931564-install-20261106-01",
+  "jobStatus": "FAILED",
+  "exitCode": 2,
+  "elapsedSeconds": 152.79936312884092,
+  "finishedAtAsiaShanghai": "2026-11-07T00:18:43.984892+08:00",
+  "sourceSetSha256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+  "programSha256": "a0fafd1df4ddfbe7bcadf98804299e783e48bb119648ce1665f86c9ae865bba3",
+  "targetSha256": "8e38cfccb2781bb296a5f5526d8a1c176b43ecb3b3ffed68835d04a5852407af",
+  "C9Sha256": "d29ded88a7f0082a761b73d271dc10d5383f48dbaae3bbbe776c9115c336f751",
+  "receipts": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-931564-install-20261106-01/transport/release-receipts/t45-f35-931564-install-20261106-01/job.json",
+      "sha256": "4c7b744b091588d9ac4e9765c680a4ea61994b73be3b2d97a3a38ed09882dfe4"
+    },
+    "fresh35-deliver-install-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-931564-install-20261106-01/transport/release-receipts/t45-f35-931564-install-20261106-01/fresh35-deliver-install-result.json",
+      "sha256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d"
+    }
+  },
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "businessVerified": false,
+    "hostEnabled": false
+  },
+  "syntheticNormal": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "connectionCleanup": "CLOSED"
+  },
+  "syntheticRollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true,
+    "connectionCleanup": "CLOSED"
+  },
+  "independentSnapshots": {
+    "installMatchesRollback": true,
+    "commitDiffersFromInstall": true,
+    "allConnectionsClosed": true
+  },
+  "ordinaryFailure": {
+    "automaticRetry": false,
+    "childDiagnosticUnavailable": false,
+    "childFailure": {
+      "actualInteger": null,
+      "errno": null,
+      "errorType": "Error",
+      "expectedInteger": null,
+      "format": "FRESH35_ORDINARY_FAILURE_V1",
+      "guardCode": null,
+      "phase": "REAL_CAPACITY_PREFLIGHT",
+      "source": "runFresh35OrdinaryIntegration:catch",
+      "sqlstate": null
+    },
+    "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+    "phase": "REAL_PG_AND_MIDDLEWARE",
+    "state": "FAILED_OR_OUTCOME_UNKNOWN"
+  },
+  "containerStopped": true,
+  "ordinaryChildReaped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": false,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false
+  },
+  "ordinaryBusinessVerified": false,
+  "businessVerified": false,
+  "productionVerified": false,
+  "formalChanges": false,
+  "oldKeyReplay": false,
+  "unknownOriginalOrdinaryKeys": "PRESERVE_NO_REPLAY",
+  "rootCause": "UNKNOWN; precise retained phase REAL_CAPACITY_PREFLIGHT; sqlstate/errno/guardCode all null, no raw message/stack exported",
+  "poststopPortAbsence": "NOT_ADDITIONALLY_VERIFIED_NO_SUCCESSOR_JOB_AUTHORIZED",
+  "actualModelEffortFast": "UNVERIFIED"
+}

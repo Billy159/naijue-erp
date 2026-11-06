@@ -2373,3 +2373,10 @@ C依据原用户同类隔离免重复审批授权，独立签发新30分钟C13�
 ## 2026-11-07T00:15:58.250613+08:00 — r24实际目标启动，按同一窗口执行安装与普通业务链
 
 新启动原键COMPLETED/0/36.545秒，回执6fd5f125/raw8b9444ac；实际SID7705092136371941423、OID16393、PG170011，出生2026-11-06 16:12:45.525035UTC，新CID e2a6e41a。C9 d29ded88准确绑定program a0fafd1d、target8e38cfcc及sourceSetf2b1，截止仍1793982690956不延长。原T45接续唯一install键；普通链及清理尚未出结果。无REAL导入或正式部署，不套用旧候选PASS。
+
+
+## 2026-11-07T00:22:32.278871+08:00 — r24实际失败收尾：精确卡在容量预检，普通业务未通过
+
+唯一install t45-f35-931564-install-20261106-01 FAILED/2/152.799秒，安全回执81b79340/raw315c169f。本版安装记录耐久发布，合成25头27收退款COMMITTED/ALREADY_COMMITTED/新连接VERIFIED，负例回滚及独立快照连接关闭通过。普通账号链卡在REAL_CAPACITY_PREFLIGHT（原await capacity.preflight），Error且SQLSTATE/errno/guardCode仍null，具体根因未知；不能由此声称SQL/权限/性能故障，也不反推r23。
+
+新容器停止，普通子进程、initializer及descendants回收，四项cleanup true；portAbsent=false/cleanupComplete=false原样保留。没有新停止后探测、REAL/正式操作或旧键重放。原D1只读定位精确preflight调用链并用有限现有例子核原因，原T45只读定位既有cleanup测量时序/namespace；先不给新build/窗口/PG或源码writer，不再机械重跑。GitHub5adf73d1已读远端确认，WIP按阶段保存，未验不标PASS。

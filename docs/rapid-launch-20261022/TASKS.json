@@ -28509,10 +28509,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Diagnostic leaf delivered frozen; original source judgment resumes only exact actual failure",
-      "QB": "r24 app941b153f and ops4f852db4 scoped PASS adopted; waits actual result",
-      "D2": "One fixed93156430 build/pack/tail delivered and frozen, C adopted619445a4",
-      "T45": "r24 new physical target started36.545s; C9 signed same original deadline; unique install and actual ordinary chain in progress",
+      "D1": "Readonly exact capacity.preflight call chain and finite known cause reproduction; no source writer activated",
+      "QB": "App941b/ops4f852 accepted; no repeat pending exact new fix",
+      "D2": "Build931564 delivered frozen; no new build dispatched",
+      "T45": "Actual r24 failed/stopped; readonly existing cleanup source/receipt timing and namespace diagnosis, no new server action",
       "D3": "REAL package and independent readback ready, waits exact target",
       "QF": "Core browser prerequisites ready, waits actual normal host/login"
     },
@@ -32665,7 +32665,7 @@
         }
       },
       "r24Preparation": {
-        "state": "R24_ACTUAL_TARGET_STARTED_C9_ISSUED_INSTALL_ORDINARY_CHAIN_IN_PROGRESS",
+        "state": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
         "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
         "buildRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
         "tree": "29d3fc11e0da9b9cc8c0905082c846a80f51c222",
@@ -32676,7 +32676,7 @@
           "scripts/release/unified-install/launch-fresh35-isolated-v1.py": "af972bab2c8d603f439d5b7ef5267b4c13b1f8cd19060a66a5dcdb5a786408d9",
           "tests/test_fresh35_isolated_launcher.py": "e5512c53e983e916d423aec4b1a99c3b045578b982b657254a251c149a68b1ee"
         },
-        "actualRootCause": "UNKNOWN; diagnostic repair only, no retroactive r23code inference",
+        "actualRootCause": "UNKNOWN; exact capacity.preflight phase, Error with all allowed numeric/codes null; no old inference",
         "newBuildOrServerOrPGExecuted": "Build/stage/material and new isolated PG startup completed; install authorized and in progress",
         "oldKeysMayReplay": false,
         "QBReceiptSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
@@ -32742,6 +32742,45 @@
           "sha256": "d29ded88a7f0082a761b73d271dc10d5383f48dbaae3bbbe776c9115c336f751",
           "expiresAt": 1793982690956,
           "scope": "same original C11 new r24 synthetic target only"
+        },
+        "actualSafeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4",
+        "actualReceiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
+        "ordinaryFailurePhase": "REAL_CAPACITY_PREFLIGHT",
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": false,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": false
+        },
+        "normal": {
+          "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+          "importState": "COMMITTED",
+          "replayState": "ALREADY_COMMITTED",
+          "readbackState": "VERIFIED",
+          "retainedHeaders": 25,
+          "retainedSettlements": 27,
+          "connectionCleanup": "CLOSED"
+        },
+        "rollback": {
+          "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+          "rollbackVerified": true,
+          "originalBatchAbsent": true,
+          "connectionCleanup": "CLOSED"
+        },
+        "independentSnapshots": {
+          "installMatchesRollback": true,
+          "commitDiffersFromInstall": true,
+          "allConnectionsClosed": true
         }
       }
     },
@@ -33177,22 +33216,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T00:15:58.250613+08:00",
-      "phase": "R24_ACTUAL_TARGET_STARTED_C9_ISSUED_INSTALL_ORDINARY_CHAIN_IN_PROGRESS",
+      "at": "2026-11-07T00:22:32.278871+08:00",
+      "phase": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 unique r24 install key",
-      "nextOwner": "C and original source owner only affected actual failure or adopted pass",
-      "latestActualReceiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
+      "currentOwner": "Original D1 exact preflight source diagnosis; original T45 cleanup source diagnosis, both readonly",
+      "nextOwner": "C fixes exact proven cause via original file owner; scoped QB increment only",
+      "latestActualReceiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect original r24 result and cleanup, distinguish schema/synthetic/ordinary; no old request replay.",
+      "next": "No new build/window/PG until specific source cause or missing bounded fact identified. No old key replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
       "buildRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
@@ -33203,18 +33242,18 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-        "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
-        "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
-        "state": "R23_INSTALL_NORMAL_ROLLBACK_PASS_GENERIC_ADMISSION_ERROR_STOPPED_PORT_CLEANUP_UNCONFIRMED",
-        "receiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
-        "safeSHA256": "5216850da9a573602bad2eda74dab7c048bb4a16889d746e9435ef2bab048ef3",
+        "root": "9315643006a574986abacf5bba631e7c34cf23f1",
+        "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+        "sourceSetSHA256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+        "state": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
+        "receiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
+        "safeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
@@ -33226,13 +33265,16 @@
       "QBReceiptSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
       "D2ReceiptSHA256": "619445a4e8197ad99c4cfba5579e1f38254da6bd568b4dfb4525339d9907ebd2",
       "currentCandidateActualRuntime": {
-        "state": "ACTUAL_NEW_PG_STARTED_INSTALL_IN_PROGRESS",
+        "state": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
         "ordinaryBusinessPassed": false,
         "realImported": false,
-        "productionDeployed": false
+        "productionDeployed": false,
+        "containerStopped": true,
+        "cleanupComplete": false,
+        "portAbsent": false
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "4e692a9d3b336d5bfa0c989e7d38065153b15628"
+      "githubReadbackCommit": "5adf73d1abd48672028b86a9b7fd0128df520566"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
