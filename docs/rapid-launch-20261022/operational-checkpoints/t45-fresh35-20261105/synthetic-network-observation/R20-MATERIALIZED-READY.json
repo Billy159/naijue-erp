@@ -1,0 +1,138 @@
+{
+  "status": "R20_MATERIALIZED_AND_POSTRESOURCE_READY_NO_PG",
+  "recordedAtUTC": "2026-11-06T12:08:01.129053+00:00",
+  "sourceSetSHA256": "ce32b43064f9583ec2cdf8ee1d9f1e16b15825044e835d10615b7c8ac6fa11b6",
+  "sourceRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
+  "ready": {
+    "status": "R20_EXACT_C13_BOUND_NO_PG",
+    "wrapperSHA256": "a08497057974fc89671092efe61e468ed70bd57494b362aa909b6db784fd9f6c",
+    "probeSHA256": "d16c63f3204a0b56aa082827d4cd8c5b7f41f860a04208b07f94257dac134466",
+    "assemblerSHA256": "5754aa646e8bd86085880b771eb1bba37ba08271632b74b69b2179434ca8b672",
+    "planSHA256": "c772226b8b1e005507bb9b545f79bb1f7d63fe6461c87df9e94245cbf83bb0f3",
+    "C13TailSHA256": "4c6304e89e22eb3a9d1bea07f6139844e29b4c0255464d155b41251235e34e08",
+    "C13FullSHA256": "675c1b61b8a3985822b796b94bf17687330f53adb6af1f39ea467de1bf1ee71f",
+    "C13ExpiresAt": 1793967949873,
+    "PGStarted": false,
+    "C11": null,
+    "C9": null
+  },
+  "FULLREADY": {
+    "archiveBytes": 83698036,
+    "archiveSha256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
+    "artifactKey": "f35-07e250-ordinary-local-20261106-01",
+    "authoritySha256": "675c1b61b8a3985822b796b94bf17687330f53adb6af1f39ea467de1bf1ee71f",
+    "fileIdentity": [
+      66304,
+      393713,
+      83698036,
+      1793966382856656403,
+      1793966384023683928
+    ],
+    "sourceSetSha256": "ce32b43064f9583ec2cdf8ee1d9f1e16b15825044e835d10615b7c8ac6fa11b6",
+    "status": "READY"
+  },
+  "receipts": {
+    "t45-f35-07e250-local-materialize-20261106-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 369.0878110071644,
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-07e250-local-materialize-20261106-01/transport/release-receipts/t45-f35-07e250-local-materialize-20261106-01/fresh35-materialize-app-result.json",
+      "sha256": "cc9c0be69060565275cf0fbead23aaf8d3046ed01933e861b431cacd1ad74660"
+    },
+    "t45-f35-07e250-local-start-preflight-20261106-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.869473610073328,
+      "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-07e250-local-start-preflight-20261106-01/transport/release-receipts/t45-f35-07e250-local-start-preflight-20261106-01/materialize-preflight.json",
+      "sha256": "10d56afaccd07d5af2924c36b5a61777a2cef6d6c10dd942e50470926f635ba0"
+    }
+  },
+  "postresourceFacts": {
+    "jobId": "t45-f35-07e250-local-start-preflight-20261106-01",
+    "checkedAtUTC": "2026-11-06T12:07:28.794392+00:00",
+    "mutations": 0,
+    "targetParent": {
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "applicationRoot": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.8525390625,
+        1.2197265625,
+        0.7412109375
+      ],
+      "memoryBytes": {
+        "MemTotal": 16731348992,
+        "MemAvailable": 14342332416,
+        "SwapTotal": 4294963200,
+        "SwapFree": 4193456128
+      },
+      "disk": {
+        "freeBytes": 6268555264,
+        "totalBytes": 489861931008,
+        "device": 66304
+      }
+    },
+    "image": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "materializeOriginalKey": {
+      "jobId": "t45-f35-07e250-local-materialize-20261106-01",
+      "requestPresent": true,
+      "resultPresent": true,
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "CASOriginalKey": {
+      "jobId": "t45-f35-07e250-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "matchingContainerIDs": [],
+    "currentApplication": {
+      "archiveSHA256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
+      "deploymentManifestSha256": "43585d7578cdfd1c52067b2c95b677d0e3faa57c2fa62d7f884cfd5f9f5a0669",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-07e250-application-20261106-01",
+      "sourceSet": "ce32b43064f9583ec2cdf8ee1d9f1e16b15825044e835d10615b7c8ac6fa11b6"
+    },
+    "startArtifactsPresent": {
+      "start-intent.json": false,
+      "container-receipt.json": false,
+      "authority/fresh35-isolated-provision-v1.json": false,
+      "authority/fresh35-combined-execution-v1.json": false
+    },
+    "status": "READONLY_FACTS_COLLECTED"
+  },
+  "materializeFacts": {
+    "application": {
+      "archiveSHA256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
+      "deploymentManifestSha256": "43585d7578cdfd1c52067b2c95b677d0e3faa57c2fa62d7f884cfd5f9f5a0669",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-07e250-application-20261106-01",
+      "sourceSet": "ce32b43064f9583ec2cdf8ee1d9f1e16b15825044e835d10615b7c8ac6fa11b6"
+    },
+    "environmentReceiptUnchanged": true,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "imageBuilt": false,
+    "postgresStarted": false,
+    "status": "CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW"
+  },
+  "PGStarted": false,
+  "C11": null,
+  "C9": null,
+  "oldCommittedKeysReplayed": false,
+  "REALOrFormalChanged": false
+}

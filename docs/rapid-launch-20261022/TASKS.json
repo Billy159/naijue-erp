@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R20_SOURCE_BUILD_AND_BOUNDED_PREFLIGHT_ADOPTED_STAGE_READY_MATERIALIZING",
+      "critical": "R20_ACTUAL_PG170011_STARTED_EXACT_C9_INSTALL_DISPATCHED",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Exact two-leaf order/failure-close increment PASS, no repeated author13.",
         "D2": "One fullbuild/pack/member/tailPASS; noactualPG.",
-        "T45": "Unique original r20 materialize-app running; collect terminal and fresh resources. No PG until exact C11; no REAL or production.",
+        "T45": "Exact C9 same original20min; unique r20 install/ordinary runtime and cleanup dispatched; no REAL/production.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31907,14 +31907,14 @@
         }
       },
       "r20Preparation": {
-        "state": "R20_SOURCE_BUILD_AND_BOUNDED_PREFLIGHT_ADOPTED_STAGE_READY_MATERIALIZING",
+        "state": "R20_ACTUAL_PG170011_STARTED_EXACT_C9_INSTALL_DISPATCHED",
         "integration": "859d85b16245b2312bdcebb18d5acdda369a2501",
         "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
         "tree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
         "parentBuildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
         "sourceSetSHA256": "ce32b43064f9583ec2cdf8ee1d9f1e16b15825044e835d10615b7c8ac6fa11b6",
         "authorReceiptSHA256": "55eddd506e6d6216ca9622dd553561b988c421cfc03f8c65ffebd641af970266",
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "ordinaryBusinessVerified": false,
@@ -31929,7 +31929,7 @@
             1793963516720318950
           ]
         },
-        "next": "Collect unique r20 materialization terminal and fresh resource receipt; bind original new20min C11 then actual physical/program C9. No old committed keys replay.",
+        "next": "Collect unique r20 install actual schema/record/negative/normal/replay/readback/ordinary API and owned cleanup; no repeated old commits.",
         "QBReceiptSHA256": "3532dbe5b65c79c77902ecd2fbb7b532bc93f6dea5284431eded7660b946039e",
         "D2ReceiptSHA256": "7aa9216ed363ccaba18b7b78a7f003c24bd2eb6c25cac323f9d69ee2d0a85dae",
         "archiveSHA256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
@@ -31978,7 +31978,7 @@
         "preflightFailurePreserved": true,
         "stageReceiptSHA256": "075b1c1b85f0771ec8aee1143c5cdeefe6849fc92468bd04ebc0e3b46466edcd",
         "materializationJob": "t45-f35-07e250-local-materialize-20261106-01",
-        "materializationStatus": "SUBMITTED",
+        "materializationStatus": "COMPLETED",
         "stagingAuthorization": {
           "tailSHA256": "4c6304e89e22eb3a9d1bea07f6139844e29b4c0255464d155b41251235e34e08",
           "fullSHA256": "675c1b61b8a3985822b796b94bf17687330f53adb6af1f39ea467de1bf1ee71f",
@@ -31991,7 +31991,33 @@
           83698036,
           1793966382856656403,
           1793966384023683928
-        ]
+        ],
+        "materializationExitCode": 0,
+        "materializationSeconds": 369.0878110071644,
+        "materializedReadySHA256": "3afa66146cebefb4ea05345ff117b21ac92d6397e5164090867fd7838133f976",
+        "materializeReceiptSHA256": "cc9c0be69060565275cf0fbead23aaf8d3046ed01933e861b431cacd1ad74660",
+        "resourceReceiptSHA256": "10d56afaccd07d5af2924c36b5a61777a2cef6d6c10dd942e50470926f635ba0",
+        "C11": {
+          "sha256": "c8e60528cf4a3a7a7e7250d8774efcc3fe796abc9d10d4e0bbbbec5593cfefc4",
+          "startsAt": 1793966923503,
+          "expiresAt": 1793968123503
+        },
+        "C9": {
+          "sha256": "380a7e196c6ddd1127b85811373321de972bce697cdc23b0cee1f5e923b34c89",
+          "startsAt": 1793966923503,
+          "expiresAt": 1793968123503
+        },
+        "startReceiptSHA256": "bf81305438abba9ba8d29b8c822c058f35cab4b10c27c17b0a4976c8b7391a17",
+        "safeStartSHA256": "d16d0cd9f091754fff905ab53cb7b3ecab28629c80c6e7d5cd8977ef32b3abab",
+        "physical": {
+          "cid": "f15977e9e9a3b74a519bbc540240c220a1f53afe62eff1058a2de801c25960e0",
+          "systemIdentifier": "7705029757595115567",
+          "databaseOid": "16393",
+          "serverVersionNum": "170011",
+          "postmasterStart": "2026-11-06 12:10:42.942775+00"
+        },
+        "programSHA256": "f152756760a48ea65a0eda5f0541fd29ba7481c1845ac227123c3ab93fce5003",
+        "targetSHA256": "ae365fa3dcf4b7ec09bc4c142eb3b42d4b45d30a0cf8e75feb7ffb550d147343"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32400,11 +32426,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T20:02:14+08:00",
-      "phase": "R20_SOURCE_BUILD_AND_BOUNDED_PREFLIGHT_ADOPTED_STAGE_READY_MATERIALIZING",
+      "at": "2026-11-06T20:13:37+08:00",
+      "phase": "R20_ACTUAL_PG170011_STARTED_EXACT_C9_INSTALL_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 sole server executor",
+      "currentOwner": "Original T45 actual r20 install and ordinary runtime chain",
       "nextOwner": "C binds C11 after actual materialization and fresh resource result",
       "latestActualReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32415,7 +32441,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect unique r20 materialization terminal and fresh resource receipt; bind original new20min C11 then actual physical/program C9. No old committed keys replay.",
+      "next": "Collect unique r20 install actual schema/record/negative/normal/replay/readback/ordinary API and owned cleanup; no repeated old commits.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
       "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
