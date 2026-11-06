@@ -1,0 +1,26 @@
+[
+  {
+    "path": "scripts/release/deploy-candidate.py",
+    "parentSha256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+    "sha256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+    "bytes": 210126
+  },
+  {
+    "path": "scripts/release/boot-entry.py",
+    "parentSha256": "0b2df14b92ae591e959c115e8920b4c00338f1cdf56b8a8bb6d7f9ef25cf28bb",
+    "sha256": "5ec51b8833eb7119fc35f2147d6a07d0324a74a8332579182f2ff6c70f981d6a",
+    "bytes": 49869
+  },
+  {
+    "path": "scripts/release/rollback-candidate.py",
+    "parentSha256": "6e87f6ba93719f1d219a24741e810385a4525654f75ea4c553b198785bd0af5e",
+    "sha256": "16a2446435c07c1c25dbd70c260ef93b946d8ca98e137138134c63e8fb7e7b0b",
+    "bytes": 7665
+  },
+  {
+    "path": "scripts/release/generate-release-contract.mjs",
+    "parentSha256": "9a11628e2bd048fe50f7555504536014fd437d66984f2eb2328275f8b842b02e",
+    "sha256": "dd2b692e767b8f75358c1c8d91477214569a326c2a5ede5119e7f4085e1bb12c",
+    "bytes": 11221
+  }
+]

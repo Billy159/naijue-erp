@@ -1,0 +1,111 @@
+{
+  "task": "NEW35-BACKUP-RESTORE-FIX-02/FORMAL-CALLER-SOURCE-01",
+  "state": "SOURCE_CANDIDATE_ONLY_PENDING_ORIGINAL_QB_INCREMENTAL_REVIEW_AND_C_T45_ADOPTION",
+  "atUtc": "2026-11-06T22:32:59.112775+00:00",
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "authority": "C exact three-leaf instruction plus explicit necessary fourth generator-leaf approval; existing user C-decision/role-report delegation.",
+  "parents": [
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "origin": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/NEW35-BACKUP-RESTORE-FIX-02/deploy-candidate.py",
+      "sha256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+      "bytes": 210085
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "origin": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/boot-entry.py",
+      "sha256": "0b2df14b92ae591e959c115e8920b4c00338f1cdf56b8a8bb6d7f9ef25cf28bb",
+      "bytes": 49869
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "origin": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/rollback-candidate.py",
+      "sha256": "6e87f6ba93719f1d219a24741e810385a4525654f75ea4c553b198785bd0af5e",
+      "bytes": 7665
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "origin": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/generate-release-contract.mjs",
+      "sha256": "9a11628e2bd048fe50f7555504536014fd437d66984f2eb2328275f8b842b02e",
+      "bytes": 11180
+    }
+  ],
+  "leaves": [
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "parentSha256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa",
+      "sha256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+      "bytes": 210126
+    },
+    {
+      "path": "scripts/release/boot-entry.py",
+      "parentSha256": "0b2df14b92ae591e959c115e8920b4c00338f1cdf56b8a8bb6d7f9ef25cf28bb",
+      "sha256": "5ec51b8833eb7119fc35f2147d6a07d0324a74a8332579182f2ff6c70f981d6a",
+      "bytes": 49869
+    },
+    {
+      "path": "scripts/release/rollback-candidate.py",
+      "parentSha256": "6e87f6ba93719f1d219a24741e810385a4525654f75ea4c553b198785bd0af5e",
+      "sha256": "16a2446435c07c1c25dbd70c260ef93b946d8ca98e137138134c63e8fb7e7b0b",
+      "bytes": 7665
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "parentSha256": "9a11628e2bd048fe50f7555504536014fd437d66984f2eb2328275f8b842b02e",
+      "sha256": "dd2b692e767b8f75358c1c8d91477214569a326c2a5ede5119e7f4085e1bb12c",
+      "bytes": 11221
+    }
+  ],
+  "readOnlyContract": {
+    "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/config/release-contract.json",
+    "sha256": "4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456",
+    "modified": false
+  },
+  "method": "Original contractBlock generator function and original single generated block replacement; generator exact expectations updated only for existing probe importer and existing 4f7b fixture pin. Full generator/requireReviewedCapacityHelper tail is byte-identical. No dynamic allowlist or relaxed exact check.",
+  "businessPreservation": "Deployment helper is based on adopted FIX02 3e6c, not WIP9e914 or restore-onlyd45. Removing only RELEASE_CONTRACT and RELEASE_CONTRACT_SOURCE assignments makes parent/successor helper AST exactly equal; boot/rollback AST equal after removing capacity SHA constant. Other approval pins and all function bodies unchanged.",
+  "registrationProposal": {
+    "helperSha256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+    "bootAndRollbackCapacitySha256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+    "meaning": "Exact candidate source registration, unsigned/unadopted until original QB increment review and C/T45 acceptance; local matching constants are not release approval.",
+    "futurePlanReferences": "Original T45 must bind deploymentTool path+sha and corresponding original owner/stage/review references to the adopted exact successor, never re-label old receipts or reuse old owner-plan/stage proof. Frozen10fc/af75 and existing formal caller registration remain untouched here.",
+    "scope": "Adopted FIX02 V2 source-target logical backup acceptance only. Restored record remains served by private restoration consumer d45; no restoration runtime or C14 target modifications.",
+    "uniqueWriters": "Original T45 sole main deploy/boot/rollback writer after C coordination; C owns root config/contract. Generator candidate is part of C-approved four-leaf source package and its actual main adoption is coordinated by C with original T45. D1 only authors this independent partial snapshot."
+  },
+  "checks": {
+    "classification": "NECESSARY_LOCAL_SOURCE_INCREMENT_ONLY_NOT_RELEASE_APPROVAL",
+    "checks": {
+      "helperBusinessAstExactlyPreserved": true,
+      "boot-entry.pyOnlyCapacityConstantChanged": true,
+      "rollback-candidate.pyOnlyCapacityConstantChanged": true,
+      "embeddedContractEqualsActualReadOnlyRoot": true,
+      "embeddedSourceEqualsActualRoot": true,
+      "originalRollbackLoadsExactSiblingCandidateOnly": true,
+      "originalRollbackSameSourceContract": true
+    },
+    "nodeGenerationChecks": {
+      "originalFullGeneratorAndApprovalTailUnchanged": true,
+      "fixedExpectationsRejectOldFacts": true,
+      "unknownAndParentHelperRefused": true
+    },
+    "originalFIX02BusinessTests": "C_ADOPTED_SCOPED_PASS_REUSED_NOT_RERUN",
+    "newBuildPGServerOrFullRegression": false
+  },
+  "additionalGenerationChecks": {
+    "originalFullGeneratorAndApprovalTailUnchanged": true,
+    "fixedExpectationsRejectOldFacts": true,
+    "unknownAndParentHelperRefused": true
+  },
+  "preservation": {
+    "mainSourceModified": false,
+    "rootContractModified": false,
+    "approvalRecordsModified": false,
+    "frozen10fcModified": false,
+    "serverPGTouched": false,
+    "newBuild": false,
+    "oldBusinessSuitesRerun": false
+  },
+  "next": "Original QB only embedded-contract/generator fixed-expectation/direct-caller delta; reuse existing FIX02 business PASS. C fixes adopted four-leaf version, original T45 coordinates actual main registration and plan references along existing process. No new build/test platform or requirement to stop C14.",
+  "patch": "source.patch"
+}

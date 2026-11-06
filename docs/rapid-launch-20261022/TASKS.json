@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T06:24:28.650860+08:00",
+  "updatedAt": "2026-11-07T06:35:33.333955+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T06:22:19.048888+08:00",
-      "phase": "REAL_FILES_AND_PRIVATE_INPUTS_READY_C14_PROVISION_ISSUED",
+      "at": "2026-11-07T06:35:33.333955+08:00",
+      "phase": "R1_ENTRY_DELIVERY_MODE_FAILED_CLEAN_STOP_R2_PREPARATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 actual fresh target -> C actual C6/C9 same20min -> inspect original plan -> C exact REAL authorization -> import/readback/backup",
+      "next": "Original T45 unique fresh r2 material/target bindings, correct server auth-file mode; C exact new window after readiness. Original D1/QB final caller four-leaf candidate in parallel.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33434,7 +33434,8 @@
         "cleanupComplete": false,
         "portObservation": "single sample tcp06TIME_WAIT4; all other states0; does not prove later absence",
         "receiptSHA256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717"
-      }
+      },
+      "productionSchemaInstalled": false
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -33955,19 +33956,59 @@
         "PGExecuted": false
       },
       "provisionDecision": {
-        "state": "C14_ISSUED_ACTUAL_PROVISION_PENDING",
+        "state": "ACTUAL_PROVISION_COMPLETED_ENTRY_DELIVERY_FAILED_CLEANLY_STOPPED",
         "sha256": "1c16aca74b18bb857f7bd42f376249fde18048eb8a2aa4f58c2749011a385eb7",
         "startsAt": 1794003649381,
         "expiresAt": 1794004849381,
         "database": "erp_native35_20261107_r1",
         "scope": "Exact unused new35 target/roles only; no old database change/import/public switch; C6/C9/REAL7 require actual target and program",
-        "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c"
+        "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+        "provisionJob": "t45-prod35-provision-20261107-01",
+        "provisionJobResultSHA256": "901cace000e079199f14481d96cfaee9b9634e6c95062f3f2e0cb19b460ed606",
+        "creationFactsSHA256": "b3cbdbdbd7f510a2f64696fcb7c1a47ab44b2274200dbe54aeabf4d1a3e254b3",
+        "actualCID": "1177ca32e5c562ac7acdc1867310a422eab5a189a0ba1790270159c38770bb57",
+        "systemIdentifier": "7705188595285856292",
+        "databaseOid": "16393",
+        "postmasterStart": "2026-11-06 22:27:04.969613+00",
+        "installationStarted": false,
+        "realImported": false
       },
       "provisionMonitoringScopeDecision": {
         "authority": "C current user delegation until2026-11-07 noon",
         "sourceChanged": false,
         "C14Unchanged": true,
         "decision": "Withdraw C extra requirement for a new continuous provision/install-wait sampler. Use original reviewed provision/controller/guardian, exact resource/identity/deadline/owned cleanup; immediate actual free check >=8207515646 before and record after facts. Do not claim continuous monitoring on this phase. Existing mandatory runtime capacity checks remain. REAL stream still requires actual five-volume binding and independent <=250ms /4GiB monitor; no waiver."
+      },
+      "entryDeliveryFailure": {
+        "entryJob": "t45-prod35-entry-20261107-01",
+        "jobSHA256": "b675c6feb7029ca0da973a1a005b3955c0cd2366ae046bbf98db1fc85e43521f",
+        "typedSHA256": "c8c0916a0640b0bc11914098fa7d5d78ecb18a7ffd38648812974a547e1fb111",
+        "C6SHA256": "1757f11e1478751b444f40a8382d00d2db1a2fbc1b58655ff41dcf0fd2d52edf",
+        "C6Bytes": 1709,
+        "actualServerMode": "0400",
+        "requiredServerMode": "0600",
+        "phase": "WAIT_ENTRY",
+        "cause": "T45 delivery mode differs from actual protected() consumer; valid C6 bytes/target, not demonstrated product source defect",
+        "programExists": false,
+        "C9Exists": false,
+        "installationRecordExists": false,
+        "readbackTypedSHA256": "0ad111225455120188e7da13e681a99bf8956607843a5d0fe3c35d4b7b4639ec",
+        "readbackJobSHA256": "88bf48d0de70581415b5e48bf6af43a35d9eafc98ba2ba71a38cc1d6b3980ef3",
+        "safeResultSHA256": "403271d6a40bf819dd4a250e688f12ed739262dc588a02ede7640081f35c5a44",
+        "cleanupComplete": true,
+        "cleanShutdown": true,
+        "dataPreserved": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true,
+        "replayAllowed": false,
+        "controllerOrPGRestarted": false,
+        "carrierShellRetained": true
+      },
+      "controlledSuccessor": {
+        "state": "ORIGINAL_T45_PREPARING_UNIQUE_R2_BINDINGS_NOT_STARTED",
+        "sourceApplication": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+        "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+        "scope": "New exact root/name/alias/workspace/database/roles with original ops and retained artifacts; preserve r1. Correct C6/C9 server permissions to actual600 consumer. No new business source/pool/daemon, no replay or old-window extension; C signs fresh target only after material readiness."
       }
     }
   }

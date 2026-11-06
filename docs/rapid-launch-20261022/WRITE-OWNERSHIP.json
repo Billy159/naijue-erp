@@ -10523,5 +10523,21 @@
     "buildConsequence": "Genuine restore-only sourceSet/loader/build successor required; never inject into10fc and label old app verified",
     "rootSharedFiles": "C sole writer; D1 supplies exact minimal seam patch requests",
     "reviewer": "Original QB after fixed package, affected delta only"
+  },
+  "production35FormalCallerSource20261107": {
+    "writer": "T45",
+    "handoffFrom": "D1 independent leaf package; main writer explicitly returned",
+    "files": [
+      "candidate0448/scripts/release/deploy-candidate.py",
+      "candidate0448/scripts/release/boot-entry.py",
+      "candidate0448/scripts/release/rollback-candidate.py",
+      "candidate0448/scripts/release/generate-release-contract.mjs"
+    ],
+    "rootContractOwner": "C; readonly existing4d30 content, no change",
+    "adoptedReviewSHA256": "735e5065ce67481ace8aa67d58a4c21952d9ca2483b5d25afbb1da85f62f6387",
+    "finalHelperSHA256": "ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b",
+    "scope": "Preserve main9e914 WIP exact bytes before original T45 source adoption; necessary original generator checks and accurate caller registration, no approvals rewritten; frozen10fc/af75/servers unchanged by local source adoption",
+    "state": "SOURCE_QB_SCOPED_PASS_LOCAL_ADOPTION_NOT_YET_DONE",
+    "model": "gpt-6.1-sol/high"
   }
 }
