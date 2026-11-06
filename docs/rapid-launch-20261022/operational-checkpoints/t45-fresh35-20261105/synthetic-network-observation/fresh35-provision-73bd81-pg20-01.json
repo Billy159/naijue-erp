@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "61f3539c8d3928e19f622a9e70c3a806119495413effd15031e5044d9471edf4",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793924386123,
+  "expiresAt": 1793925586123,
+  "independentSafetyReviewSha256": "c1774aae37e1bb7e5ce0bbfe2217b84b6faa17cc3d60ce27700e583592d2c380",
+  "authorizationReference": "C under direct human delegation until2026-11-06T12:00+08. Exact73bd81/source04c1 phaseb-application-r7/container t45-fresh35-deb13-20261106-r7 only. Actualmaterialization a995ae72/resource16bbd5ce/summarye26ff506; wrappera8888e64/probebd988; image6de44 receipt e475. Original20min/cleanup/2CPU3GiB/PID256/networknone/noports. Single function ACL representation fixed; guard and original2DO/native contract intact. Synthetic25/ordinary business/proof probe only after actual program-target bound by separate C9. NoREAL/production/oldtargets/replay/windowextension. Backup serial after this target settles."
+}

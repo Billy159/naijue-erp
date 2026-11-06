@@ -28381,8 +28381,8 @@
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
-      "latestIntegrationCheckpoint": "663c6fc1549eca3b3699ae4f3aa8737673667701",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-06T08:15:15+08:00"
+      "latestIntegrationCheckpoint": "a7d28729de59f7164d64ca28b025c4a09715bc2a",
+      "latestIntegrationRemoteVerifiedAt": "2026-11-06T08:27:35+08:00"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -29965,7 +29965,7 @@
         }
       },
       "r7Preparation": {
-        "state": "ACTUAL_FULL_RECEIVER_READY_MATERIALIZATION_IN_PROGRESS",
+        "state": "MATERIALIZED_START01_REFUSED_BEFORE_CREATE_C_CORRECTED_REFERENCE_PENDING_CONDITIONAL_START02",
         "integration": "267dc0fd1deabae8fd63af0f12b2512f2321c882",
         "buildRoot": "73bd81a00b41d88612d9522efa7e633166a23645",
         "tree": "98697d1c4925b6786443af1db41cfa0768f8b5d8",
@@ -29993,7 +29993,18 @@
         "assemblyReceiptSHA256": "d2cc2ba58c68cb502364cb4b6b3a6bf9a75f1e3ae70cd67a245143aa4401cb1e",
         "assemblyJob": "t45-f35-73bd81-local-assemble-20261106-01",
         "materializationJob": "t45-f35-73bd81-local-materialize-20261106-01",
-        "materializationDeadlineMs": 1793924578653
+        "materializationDeadlineMs": 1793924578653,
+        "actualPreparationSHA256": "e26ff506f9a4364ecedf36a75cbb25924ab57295a8687094d5d05875fdd7eba8",
+        "materializationSHA256": "a995ae720c898ea945831a82b9b8e2010fba1e23183a6f3bd35aa239c4da6bad",
+        "resourceSHA256": "16bbd5ce444b4d52f3b0005d6d6150d267aadcd5d47a2a541279a558fdfff3e8",
+        "provisionStartsAt": 1793924386123,
+        "provisionExpiresAt": 1793925586123,
+        "firstProvisionSHA256": "9c8e947c42a049c1c192236959dcc8ce2e56fdd15ed3112a3b8e013cf75bcde4",
+        "firstStartReceiptSHA256": "43aa7614cdf290288fcdc90d0947cd88970502f45dc7105c671d44bd47fecfc0",
+        "firstStartError": "ORIGINAL_PROVISION_CLOSED_INPUT_REQUIRED: C reference604chars exceeded512; before create by exact function order; absent artifacts actual readback pending",
+        "correctedProvisionSHA256": "0bdcdfb08acdd7a7f08182a2d6523f03f8c113834083d42628d836af581ee7be",
+        "correctedReferenceCharacters": 476,
+        "correctedScope": "Only reference shortened; exact same20min window. Original failedkey/leaf preserved. New unique02 start conditional on actual absent container and all start artifacts; no replay or guard change."
       }
     },
     "productionReleaseCompatibilityContinuation": {

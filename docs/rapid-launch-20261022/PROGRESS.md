@@ -1442,3 +1442,7 @@ D1离线已证唯一captured显式默认ACL被dump省略（64/63），C按用户
 
 ### 2026-11-06T08:15 C 决策与备份接续
 原receiver已实际完成r7整包READY（assembly d2cc2ba5），materialize原键在途；没有提前启动PG。正式备份由T45沿Nov1实际逻辑流程，C依用户至12点委托批准准确收窄预算：总4GiB（含partial/打包中间物），启动free至少12GiB，运行保留8GiB，原900s/子时限不改；先核新鲜正式身份/资源，超限只停本批子进程、保留旧备份。当前尚未dump或验证新备份恢复，不冒已完成；与r7重资源串行，PG20优先。GitHub integration663c6fc1/root73bd81已独立回读核实。
+
+
+### 2026-11-06 r7 准确输入修正
+材料化a995ae72/资源16bbd5ce真实通过；原start01在创建前被closed-input守卫拒绝43aa7614，C签发说明604字符超过原512上限。保留失败原键和9c8原叶，C仅将说明缩为476字符的新叶0bdcdfb0；同原20min1793924386123..1793925586123不延长。T45先有界读回新r7无CID/authority/intent，才条件提交明确修订的新start02，原guard不放宽；实际PG尚未确认。后续C签叶须先按原closedshape/长度/时窗检查，不以哈希正确替代格式验证。

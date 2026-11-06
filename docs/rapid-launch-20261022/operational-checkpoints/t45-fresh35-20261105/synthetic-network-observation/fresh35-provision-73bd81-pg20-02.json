@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "61f3539c8d3928e19f622a9e70c3a806119495413effd15031e5044d9471edf4",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793924386123,
+  "expiresAt": 1793925586123,
+  "independentSafetyReviewSha256": "c1774aae37e1bb7e5ce0bbfe2217b84b6faa17cc3d60ce27700e583592d2c380",
+  "authorizationReference": "C direct human delegation to2026-11-06 noon. r7 only: root phaseb-application-r7/container t45-fresh35-deb13-20261106-r7; 73bd81/source04c1/manifest61f353. Actual prep e26ff506/a995ae72/16bbd5ce, QBc177. Original20min/same starts and expiry, budgets/guardian/2DO intact. Corrected only overlong reference; priorstart43aa refused before create. New key after exact absent-artifact readback. NoREAL/production/oldtarget/replay/windowextension; C9 separately binds actual target."
+}

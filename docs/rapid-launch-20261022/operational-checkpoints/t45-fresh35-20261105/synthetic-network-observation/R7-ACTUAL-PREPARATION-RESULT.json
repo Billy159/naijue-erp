@@ -1,0 +1,132 @@
+{
+  "status": "R7_ORIGINAL_RECEIVER_FULL_READY_AND_MATERIALIZED_NO_PG_STARTED",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "sourceRoot": "73bd81a00b41d88612d9522efa7e633166a23645",
+  "archiveSha256": "635de84c6f1105ebcfd21d034c2f2e69bf8e70e7857cdaac03b432a71b4b57c7",
+  "archiveBytes": 83685827,
+  "jobs": [
+    {
+      "jobId": "t45-f35-73bd81-tail-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.21791537711396813,
+      "jobSha256": "4fd7ce93a8e1c562d8c441835f80ec7764a0657ab0975f620c4c6f9fea8737ef",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-tail-staging-policy-20261106-01/transport/release-receipts/t45-f35-73bd81-tail-staging-policy-20261106-01/ordinary-policy-readback.json",
+      "receiptSha256": "647f6cbf261efbcb60ebc9d06589cdd09cb4fb9d211310fe4a87d6503f8f4046"
+    },
+    {
+      "jobId": "t45-f35-73bd81-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.2677344619296491,
+      "jobSha256": "eb9c7566982791a719878e70255686b60b184ca7a2fe3c1860e4a4e3325ea91c",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-final-staging-policy-20261106-01/transport/release-receipts/t45-f35-73bd81-final-staging-policy-20261106-01/ordinary-policy-readback.json",
+      "receiptSha256": "a8a2e8604f01a5128c819025d8b4c7e6903ac6d9da9038b8677a0f14c840591d"
+    },
+    {
+      "jobId": "t45-f35-73bd81-local-assemble-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 3.7771028419956565,
+      "jobSha256": "d91034763acbcb8d9639132537448996622aceb60f61c50f5c04be2a00709843",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-local-assemble-20261106-01/transport/release-receipts/t45-f35-73bd81-local-assemble-20261106-01/local-assembly-original-receiver.json",
+      "receiptSha256": "d2cc2ba58c68cb502364cb4b6b3a6bf9a75f1e3ae70cd67a245143aa4401cb1e"
+    },
+    {
+      "jobId": "t45-f35-73bd81-local-materialize-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 365.87764287367463,
+      "jobSha256": "cb876887a3de9d64377a7d565c88658be5dda7c8de4db3a7a3845eaca9f74fea",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-local-materialize-20261106-01/transport/release-receipts/t45-f35-73bd81-local-materialize-20261106-01/fresh35-materialize-app-result.json",
+      "receiptSha256": "a995ae720c898ea945831a82b9b8e2010fba1e23183a6f3bd35aa239c4da6bad"
+    },
+    {
+      "jobId": "t45-f35-73bd81-local-start-preflight-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.11811713920906186,
+      "jobSha256": "434605a6274303df13c66874504765c4430d945e5ca56d03ff7ef1109dd1632a",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-73bd81-local-start-preflight-20261106-01/transport/release-receipts/t45-f35-73bd81-local-start-preflight-20261106-01/materialize-preflight.json",
+      "receiptSha256": "16bbd5ce444b4d52f3b0005d6d6150d267aadcd5d47a2a541279a558fdfff3e8"
+    }
+  ],
+  "resourcePreflight": {
+    "jobId": "t45-f35-73bd81-local-start-preflight-20261106-01",
+    "checkedAtUTC": "2026-11-06T00:17:56.070640+00:00",
+    "mutations": 0,
+    "targetParent": {
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "applicationRoot": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.25,
+        0.9560546875,
+        0.6337890625
+      ],
+      "memoryBytes": {
+        "MemTotal": 16731348992,
+        "MemAvailable": 14331686912,
+        "SwapTotal": 4294963200,
+        "SwapFree": 4203982848
+      },
+      "disk": {
+        "freeBytes": 14793601024,
+        "totalBytes": 489861931008,
+        "device": 66304
+      }
+    },
+    "image": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "materializeOriginalKey": {
+      "jobId": "t45-f35-73bd81-local-materialize-20261106-01",
+      "requestPresent": true,
+      "resultPresent": true,
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "CASOriginalKey": {
+      "jobId": "t45-f35-73bd81-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "matchingContainerIDs": [],
+    "currentApplication": {
+      "archiveSHA256": "635de84c6f1105ebcfd21d034c2f2e69bf8e70e7857cdaac03b432a71b4b57c7",
+      "deploymentManifestSha256": "61f3539c8d3928e19f622a9e70c3a806119495413effd15031e5044d9471edf4",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-73bd81-application-20261106-01",
+      "sourceSet": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452"
+    },
+    "startArtifactsPresent": {
+      "start-intent.json": false,
+      "container-receipt.json": false,
+      "authority/fresh35-isolated-provision-v1.json": false,
+      "authority/fresh35-combined-execution-v1.json": false
+    },
+    "status": "READONLY_FACTS_COLLECTED"
+  },
+  "CAdoptedQBFromMessage": "c1774aae37e1bb7e5ce0bbfe2217b84b6faa17cc3d60ce27700e583592d2c380",
+  "actualPGValidationPerformed": false,
+  "baseWasServer19bNotUntransferred6c": true,
+  "fullArchiveNetworkReupload": false,
+  "imageBuilt": false,
+  "REALDataExtracted": false,
+  "productionChanged": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "next": "C independently issues exact PG20 only after actual preparation and adopted QB; backup heavy workload scheduled serially after active PG20 settlement."
+}
