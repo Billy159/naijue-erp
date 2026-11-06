@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R21_SAFE_DIAGNOSTIC_QB_BUILD_PASS_EXACT_T45_PREFLIGHT_ACTIVE",
+      "critical": "R21_EXACT_PREFLIGHT_PASS_C13_STAGE_MATERIAL_DISPATCHED",
       "independentPreparation": {
         "D1": "One integration-test leaf delivered/frozen, author3pureofflinePASS; no new work fabricated.",
         "QB": "Exact3leaf diagnostic seam independently PASS, author checks reused; no repeated QA.",
         "D2": "One fixed148b5716 build13.538s/pack10.247s/fullmembersPASS; no runtime.",
-        "T45": "One exact local ops preparation + bounded readonly actual prior-state preflight active; no PG/transfer yet.",
+        "T45": "Exact original C13 stage/material dispatched; collect unique handle, no PG until fresh C11. No old committed or unknown key replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32104,7 +32104,7 @@
         }
       },
       "r21Preparation": {
-        "state": "R21_SAFE_DIAGNOSTIC_QB_BUILD_PASS_EXACT_T45_PREFLIGHT_ACTIVE",
+        "state": "R21_EXACT_PREFLIGHT_PASS_C13_STAGE_MATERIAL_DISPATCHED",
         "integration": "7698d68d578bf42727b67da85848db154b560dda",
         "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
         "tree": "64f4365f1880398f9d5bb8800eedb2941477e9e2",
@@ -32127,7 +32127,7 @@
             1793966384023683928
           ]
         },
-        "next": "Original T45 exact local ops and one bounded readonly preflight; C13 only after actual exact facts; no PG/transfer yet.",
+        "next": "Collect exact original tail/full READY and unique materialize terminal plus fresh resource; C11 follows actual facts, no PG yet.",
         "QBReceiptSHA256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
         "D2ReceiptSHA256": "2fe30edaeb253fc77bfa35b3d4eee80e5fa4d2ebec552f594125ab9b5c08fc57",
         "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
@@ -32142,6 +32142,24 @@
           "tailBytes": 2474322,
           "tailSHA256": "23a2dc3ce9ee0d20766ab4b07d40eda9fce83722446f7806d987e81882d132cb",
           "streamReconstructionVerified": true
+        },
+        "localReadySHA256": "87869f1977b0d8fd17f7c4212b0842a72dc5cbba2f392a8a830b644e4893cbe6",
+        "preparationSHA256": "b68692a5c815a3eebe9f96f0ca8dab9de310e70b89c32dd81128d7cddf78c6a9",
+        "preflightReceiptSHA256": "1606db829e6449dfd19687c2172520271bde126d21ec7cfa8be8fa6736948ee6",
+        "preflightJob": "t45-f35-148b57-stage-preflight-20261106-01",
+        "preflightStatus": "COMPLETED",
+        "preflightExitCode": 0,
+        "ops": {
+          "wrapperSHA256": "e653af73ed08bb6c651c4bbd130ed9202cd7fa661ca4c3ea4d503c4d1a515b31",
+          "probeSHA256": "0af42b59dd9601c6f03de864a07583fb4d28724be227b74e52ca8484e81c5c3e",
+          "unboundAssemblerSHA256": "b6a26f2d19b71761a1ce0fccafece214a416bcefd90bb5a9209860e89bf67ec8"
+        },
+        "C13": {
+          "tailSHA256": "d3f4bfcc784b5493726e2e150d2de59a5b51a0b7731dfe727ecac086f5487d83",
+          "fullSHA256": "317e258b52e6c3df0eb9a79ca55d6c9eb29860d4ee61a87f31cb91e8d8728c18",
+          "startsAt": 1793969407549,
+          "expiresAt": 1793971207549,
+          "authority": "Standing human same-kind bounded isolation approval; not expired noon delegation"
         }
       }
     },
@@ -32551,11 +32569,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T20:45:35+08:00",
-      "phase": "R21_SAFE_DIAGNOSTIC_QB_BUILD_PASS_EXACT_T45_PREFLIGHT_ACTIVE",
+      "at": "2026-11-06T20:52:04+08:00",
+      "phase": "R21_EXACT_PREFLIGHT_PASS_C13_STAGE_MATERIAL_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact successor preparation",
+      "currentOwner": "Original T45 source/tools stage and materialization",
       "nextOwner": "C binds C11 after actual materialization and fresh resource result",
       "latestActualReceiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32566,7 +32584,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 exact local ops and one bounded readonly preflight; C13 only after actual exact facts; no PG/transfer yet.",
+      "next": "Collect exact original tail/full READY and unique materialize terminal plus fresh resource; C11 follows actual facts, no PG yet.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
       "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
@@ -32590,7 +32608,7 @@
         "D2ReceiptSHA256": "8ac3424ec7c971d8f6f6dbd926766102cec3e91690eb3c1321088039d470baf4",
         "githubSourceAndRootReadback": true
       },
-      "githubSourceAndRootReadback": false,
+      "githubSourceAndRootReadback": true,
       "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
       "QBReceiptSHA256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
       "D2ReceiptSHA256": "2fe30edaeb253fc77bfa35b3d4eee80e5fa4d2ebec552f594125ab9b5c08fc57",

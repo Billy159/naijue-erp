@@ -1867,3 +1867,10 @@ OriginalQB9c101e24 PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL: actual genuine D1 early
 OriginalD2 RESULT2fe30eda: build13.538s/pack10.247s exit0,453productionfiles/30dirs/7298ordinarymembersPASS. ActualsourceSetb7805bc4 214/180, launcher1pin changed/213retained; integrationtest is in actualrunnergraph/sourceclosure. Fullffbe0e9c/83701245B; manifesteda9da81/descriptor730857d1/runtimeefec92f6. Actualr20base791d74f7; prefix81226923/d37e4aa5+tail2474322/23a2dc3c stream exact. C verified metadata/tail, adopted fullmemberQA.
 
 OriginalT45 localexactops + one necessaryboundedreadonlypreflight now; noPG/transfer yet. Distinguish public exportedraw hashes from server-private receipts; do not repeat previous pin mistake or drop identityguards. Thiscandidate actualinstall/ordinary/REAL/prod remainsNOTEXECUTED; priorr20actualresults stay versionbound.
+
+
+## 2026-11-06 — r21 exact readonly preflight passed; original C13 staging dispatched
+
+T45 preparationb68692a5/local87869f19; one remote1606db82 COMPLETED0/.268s at1793969275852 verifies actualr20base791d/identity393713, exactREADY/ownership, stoppedr20/6cleanup/errors[], oldnormalCOMMITTED and ordinaryUNKNOWN preserved, newr21root/CID/artifacts/requestprefixabsent. Privateoriginalreceipt2fe1fa55 is separately read from protected exactjob; no exportedrawhash reuse. Actualresource4CPU/load0/14.34GBmem/6.19GBdisk. NoPG/transfer yet in preflight.
+
+C original13keys taild3f4bfcc/full317e258b new30min1793969407549..1793971207549 consumes standing same-kind bounded isolation approval, not expirednoondelegation. OriginalT45 now stages exacttail23a2dc3c, locally reconstructsfullffbe0e9c from retainedr20base and prepares one materialization; originalreceiver40s/900smaterial/guard/ACL retained. Wrappere653af73/probe0af42b59/unboundassemblerb6a26f2d. NoPG/install/REALprod, no committedorunknownkey replay. Collect actualterminal/freshresources beforeC11.
