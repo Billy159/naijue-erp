@@ -2,16 +2,17 @@
  * Fixed-record/source/catalog I/O are explicitly synthetic stubs in a private
  * data-URL module; these tests cannot issue a capability in the real module. */
 import test from 'node:test';import assert from 'node:assert/strict';
-import {readFile,writeFile,mkdir,mkdtemp,rm,rename} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';
+import {readFile,writeFile,mkdir,mkdtemp,rm,rename,unlink} from 'node:fs/promises';import {once} from 'node:events';import {tmpdir} from 'node:os';import {join} from 'node:path';
 import * as real from '../tools/unified-import/fresh35-host-session.mjs';
 const original=await readFile(new URL('../tools/unified-import/fresh35-host-session.mjs',import.meta.url),'utf8');
 const role='erp_unified27_runtime_2393dbc6db9581c2';
-async function model({synthetic=false}={}){
+async function model({synthetic=false,recordParentPrivate=false}={}){
  const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,synthetic?'reference-inputs':'references');
  const paths={baselineDirectory:join(reference,'baseline'),modelPath:join(reference,'model.json'),functionsPath:join(reference,'functions.json')};
  const networkWorkspace=join(root,'network-workspace'),networkPath=join(networkWorkspace,'bootstrap-network-observation.json');
  if(synthetic){await mkdir(networkWorkspace,{mode:0o711});await writeFile(networkPath,'SYNTHETIC MODEL NETWORK OBSERVATION',{mode:0o444})}
- const recordPath=join(root,'record.json'),hostPath='tools/unified-import/fresh35-host-session.mjs',recordModulePath='scripts/release/unified-install/fresh35-combined-record-v1.mjs';
+ const recordDirectory=recordParentPrivate?join(root,'authority'):root;if(recordParentPrivate)await mkdir(recordDirectory,{mode:0o711});
+ const recordPath=join(recordDirectory,'record.json'),hostPath='tools/unified-import/fresh35-host-session.mjs',recordModulePath='scripts/release/unified-install/fresh35-combined-record-v1.mjs';
  for(const path of [join(root,hostPath),join(root,recordModulePath),paths.modelPath,paths.functionsPath,join(reference,'INDEX.json'),join(paths.baselineDirectory,'source.json')]){await mkdir(join(path,'..'),{recursive:true});await writeFile(path,'SYNTHETIC MODEL ONLY');}
  const t={purpose:'PRODUCTION_NEW_EMPTY_EXACT35',proposal:{database:'synthetic_model',runtime:'model_login'},physical:{systemIdentifier:'123',databaseOid:'42',serverVersionNum:'170011'},ordinary:{connectHost:'postgres',connectPort:5432,serverAddress:'172.20.0.4',serverPort:5432,runtimeLoginValidUntil:null,referenceDirectory:reference}};
  const now=Date.now(),expiry=now+300000;
@@ -23,8 +24,9 @@ async function model({synthetic=false}={}){
  const hash=x=>createHash('sha256').update(x).digest('hex'),need=(ok,code)=>{if(!ok)throw Error('FRESH35_HOST_'+code)},ack=(r,tag)=>need(r?.command===tag,'ACK_INVALID');
  let clock=${now};const Date={now:()=>clock,parse:globalThis.Date.parse};export function expire(){clock=${expiry+1}};export function setTime(value){clock=value};function bindFresh35CombinedTarget(){return {}};
  const snapshots=new WeakMap(),watchers=new Set(),watchedPaths=[];let swap;
- export function setSwap(value){swap=value}export function activeWatchers(){return watchers.size}export function modelWatchedPaths(){return [...watchedPaths]}
- function watch(path,callback){watchedPaths.push(path);const w=nativeWatch(path,callback);watchers.add(w);const close=w.close.bind(w);w.close=()=>{watchers.delete(w);return close()};return w}
+ export function setSwap(value){swap=value}export function activeWatchers(){return watchers.size}export function firstWatcher(){return watchers.values().next().value}export function modelWatchedPaths(){return [...watchedPaths]}
+ // Finite Linux permission projection only: actualroot0711/ordinary61035 lacks directory read. Other watches remain native.
+ function watch(path,callback){watchedPaths.push(path);if(${recordParentPrivate}&&path===dirname(FRESH35_COMBINED_RECORD_PATH))throw Object.assign(Error('MODEL_PRIVATE_RECORD_PARENT_READ_DENIED'),{code:'EACCES'});const w=nativeWatch(path,callback);watchers.add(w);const close=w.close.bind(w);w.close=()=>{watchers.delete(w);return close()};return w}
  const identity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
  function changeRecord(stage){if(swap!==stage)return;if(stage.endsWith('delete'))unlinkSync(FRESH35_COMBINED_RECORD_PATH);else if(stage.endsWith('replace')){writeFileSync(FRESH35_COMBINED_RECORD_PATH+'.new','CHANGED GENERATION');renameSync(FRESH35_COMBINED_RECORD_PATH+'.new',FRESH35_COMBINED_RECORD_PATH)}else writeFileSync(FRESH35_COMBINED_RECORD_PATH,'CHANGED SAME INODE')}
  export function modelRelease(){changeRecord('release-replace');if(swap==='release-error')throw Error('MODEL_RELEASE_ERROR')}
@@ -125,4 +127,43 @@ test('synthetic ordinary watches fixed readable network proof inode without watc
   await writeFile(m.networkPath+'.new','SYNTHETIC REPLACEMENT',{mode:0o444});await rename(m.networkPath+'.new',m.networkPath);await new Promise(r=>setTimeout(r,35));
   await assert.rejects(()=>m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/ACTIVE_SAME_POOL/);assert.equal(m.api.activeWatchers(),0);
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+
+test('synthetic non-listable authority keeps readable record inode watching and revokes on overwrite rename unlink replacement and watcher error',async()=>{
+ for(const change of ['overwrite','rename','unlink','replace','watch-error']){
+  const m=await model({synthetic:true,recordParentPrivate:true});let cap;
+  try{
+   cap=await m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection);
+   const paths=m.api.modelWatchedPaths();assert.equal(paths[0],m.recordPath);assert(paths.includes(m.recordPath));assert(!paths.includes(join(m.root,'authority')));assert(paths.includes(m.networkPath));assert(!paths.includes(m.networkWorkspace),'bootstrap root0711 parent remains unwatched');assert(paths.includes(m.hostPath));
+   const watcher=m.api.firstWatcher();assert(watcher);
+   if(change==='watch-error')watcher.emit('error',Error('MODEL_REAL_WATCHER_ERROR'));
+   else{
+    const event=once(watcher,'change',{signal:AbortSignal.timeout(2000)});
+    if(change==='overwrite')await writeFile(m.recordPath,'CHANGED SAME INODE');
+    else if(change==='rename')await rename(m.recordPath,m.recordPath+'.moved');
+    else if(change==='unlink')await unlink(m.recordPath);
+    else{await writeFile(m.recordPath+'.replacement','CHANGED RECORD GENERATION');await rename(m.recordPath+'.replacement',m.recordPath);}
+    await event;
+   }
+   assert.equal(m.api.activeWatchers(),0,change+' closes all watchers at invalidation');
+   assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);
+   const count=m.calls.length,clients=m.clients.length;
+   await assert.rejects(()=>m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/ACTIVE_SAME_POOL/);
+   await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.clients[0]),/ACTIVE_SAME_POOL/);
+   await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/EXCLUSIVE_STARTUP/);
+   assert.equal(m.calls.length,count);assert.equal(m.clients.length,clients,'revoked pool does not reacquire or silently admit');
+  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose();}
+ }
+});
+test('synthetic non-listable authority retains exact startup record generation checks and closes failure resources',async()=>{
+ for(const stage of ['validate-replace','validate-delete','after-watch-replace','release-replace','release-error']){
+  const m=await model({synthetic:true,recordParentPrivate:true});
+  try{m.api.setSwap(stage);await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/PROTECTED_RECORD_|ENOENT|ORDINARY_|MODEL_RELEASE_ERROR/);assert.equal(m.api.activeWatchers(),0);assert(m.clients.every(c=>c.released));await assert.rejects(()=>m.api.admitFresh35SyntheticOrdinaryPoolV1(m.pool,m.connection),/EXCLUSIVE_STARTUP/);}
+  finally{await m.dispose();}
+ }
+});
+test('production non-listable authority still fails its directory watch without widening the synthetic exception',async()=>{
+ const m=await model({recordParentPrivate:true});
+ try{await assert.rejects(()=>m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection),e=>e.code==='EACCES');assert(m.api.modelWatchedPaths().includes(join(m.root,'authority')));assert.equal(m.clients.length,0);assert.equal(m.api.activeWatchers(),0);}
+ finally{await m.dispose();}
 });
