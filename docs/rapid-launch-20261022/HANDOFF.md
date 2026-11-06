@@ -2459,3 +2459,6 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07 r26实际限定证据原QB8c63092e独立通过、无新增发现，C采用；三组销货/混合/调拨固定runner入口无skip，其完成出口覆盖prepare/SAVE/审核/弃审/重开再审核/403/回滚/原键恢复/库存流水读回。该覆盖由本次完成+固定入口证明，不伪称每请求独立日志，账号CREATE/RESET只实际走其中一支；native同池撤销和正式/REAL/浏览器/性能仍未测。后续不重跑这些同版范围。
+
+
+2026-11-07正式10fc准备只读33bb785c实际COMPLETED0/9.194秒；03:18:53旧正式APP/WEB/PG仍健康且原身份未变，普通账号两条元数据SELECT为RO/RR、00000、rollbackACK/closed。Nov6七项备份size/owner/mode匹配，未重复GB哈希；不等于该新备份独立恢复已验。新正式ROOT/PG/API均未用，REAL和admin只核准确metadata未解包/读秘密。当前free3141341184B，仅app+解包下界1245073406B，PG/WAL/index/journal/临时与回退余量尚不完整，不宣称容量足够。原D1只读核预算，原T45仅有界核两个旧STARTING实际状态及可重建旧应用材料候选，不清理/不PG/不生产写。用户拒删的本地3目录、全部真实资料/PG/备份/失败证据保护。

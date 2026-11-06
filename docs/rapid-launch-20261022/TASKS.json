@@ -33302,11 +33302,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:13:03.462864+00:00",
-      "phase": "R26_ACTUAL_ISOLATED_PG_AND_ORDINARY_PASS_FORMAL_PREPARATION",
+      "at": "2026-11-06T19:25:31.828036+00:00",
+      "phase": "PRODUCTION_REAL_READONLY_PREREQUISITES_SPACE_BUDGET_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 original production binding/read-only prerequisites; QB actual evidence limited review",
+      "currentOwner": "T45 bounded readonly old-key status and reclaimable material candidates; D1 readonly REAL storage budget",
       "nextOwner": "Original QB ops increment then C/T45 actual isolation",
       "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Fixed production carrier+REAL r3 bindings; fresh current target/network/resources/backup metadata; no production writes before accurate C decisions",
+      "next": "Resolve exact capacity/old-key facts without production writes, then C precise formal decisions; do not lower guard or delete protected data",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33611,6 +33611,24 @@
         "concurrent capacity or performance acceptance",
         "immediate same-port rebinding: strict portAbsent remains false"
       ]
+    },
+    "production10fc5ePreparation": {
+      "actualResultSHA256": "33bb785c68e81f4174b71cdef4aca054ed3f69a834b96ab117e2b064e22c556e",
+      "checkedAt": "2026-11-07T03:18:53.327983+08:00",
+      "oldServicesHealthyAndIdentityUnchanged": true,
+      "oldDatabaseReadonlyIdentityPassed": true,
+      "backupMetadataMatched": true,
+      "backupIndependentRestore": "NOT_VERIFIED_FOR_NOV6_BACKUP",
+      "freeBytes": 3141341184,
+      "knownAppAndUnpackedPackageLowerBoundBytes": 1245073406,
+      "PGWALIndexJournalPeakAndRollbackBudget": "NOT_YET_COMPLETE",
+      "oldStartingKeys": [
+        "c03-real-r1-stock29-party-readonly-20261025-219",
+        "t45-stock-selection-dependencies-readonly-20261102-01"
+      ],
+      "oldStartingKeysActualActivity": "UNKNOWN_NO_REPLAY",
+      "productionChanges": false,
+      "next": "Original T45 bounded readonly evidence; original D1 capacity model; no unapproved cleanup or production writes"
     }
   }
 }
