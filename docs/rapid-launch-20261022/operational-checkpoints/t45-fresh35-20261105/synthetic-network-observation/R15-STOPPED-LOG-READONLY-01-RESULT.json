@@ -1,0 +1,64 @@
+{
+  "format": "T45_STOPPED_R15_ALLOWLIST_READONLY_RESULT_V1",
+  "recordedAtUTC": "2026-11-06T08:07:06.154545+00:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "job": {
+    "jobId": "t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01",
+    "status": "FAILED",
+    "exitCode": 2,
+    "elapsedSeconds": 0.11750107677653432
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01/transport/release-receipts/t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01/allowlisted-log-result.json",
+    "sha256": "aff1985d0a509414f3729d225bdd22cdaa831baaecd7edea0cc982f74af724f2"
+  },
+  "observed": {
+    "PGQueries": 0,
+    "PGStarted": false,
+    "checkedAtUTC": "2026-11-06T07:59:13.502386+00:00",
+    "elapsedSeconds": 0.033903,
+    "errorStage": "TARGET_METADATA",
+    "errorType": "AssertionError",
+    "found": false,
+    "matches": [],
+    "normalFound": false,
+    "scopeExpanded": false,
+    "status": "STOP_READONLY_GUARD_OR_TIME_LIMIT"
+  },
+  "interpretation": {
+    "result": "UNKNOWN_GUARD_STOP_BEFORE_LOG_READS",
+    "markerMetadataRead": false,
+    "logContentsRead": false,
+    "matchesEvaluated": false,
+    "exactFailedPredicate": "UNKNOWN_WITHIN_TARGET_METADATA",
+    "zeroMatchesIsNotAbsenceOfDatabaseErrors": true
+  },
+  "localOnlyDiagnosis": {
+    "collector": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01/bundle/extract_allowlisted_errors.py",
+    "collectorSha256": "d55871109bc9531037a2f5ff83f25393b9663c64ddf86164928a5eab03a57f08",
+    "guardLines": [
+      74,
+      75,
+      77,
+      78,
+      79
+    ],
+    "exportSha256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
+    "exportMatchesWrapperSerialization": false,
+    "sameValueWrapperSerializationSha256": "9f3cd360ba599ed8166d70f700b076d33327157a3d46e41c6b9ef90557b83cde",
+    "conclusion": "Collector compares private original raw bytes against exported receipt byte hash. Frozen producer writes sorted compact single-line JSON; existing exported bytes differ from that format. This is a concrete collector assumption defect, but neither private original bytes nor exact failing predicate has been observed in this result. Do not replace expected hash with reconstructed hash without provenance verification.",
+    "managerCollectWritesExportBytesUnchanged": true
+  },
+  "boundaries": {
+    "newServerActionThisContinuation": false,
+    "PGStarted": false,
+    "PGQueries": 0,
+    "writerReplay": false,
+    "logScopeExpanded": false,
+    "applicationSourceChanged": false,
+    "permissionsChanged": false,
+    "formalChanged": false,
+    "oldJobMustNotReplay": true
+  },
+  "remaining": "Need precise failed guard evidence and verified private-vs-export receipt provenance before any new bounded extraction. No SQLSTATE or normal-commit root cause established."
+}

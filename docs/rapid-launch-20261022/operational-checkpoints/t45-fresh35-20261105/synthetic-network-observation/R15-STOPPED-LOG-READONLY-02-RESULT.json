@@ -1,0 +1,93 @@
+{
+  "format": "T45_STOPPED_R15_ALLOWLIST_READONLY_RESULT_V2",
+  "recordedAtUTC": "2026-11-06T08:16:13.236835+00:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "job": {
+    "jobId": "t45-f35-af9078-stopped-log-allowlist-readonly-20261106-02",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 0.11732054175809026,
+    "finishedAtUTC": "2026-11-06T08:14:39.455421+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-af9078-stopped-log-allowlist-readonly-20261106-02/transport/release-receipts/t45-f35-af9078-stopped-log-allowlist-readonly-20261106-02/allowlisted-log-result.json",
+    "sha256": "ed7969556b64f66a6c73bc359fb6d5372169dc180c39516e63f2e8314ee87d2c"
+  },
+  "jobReceiptSha256": "d0cbdcede9b98dc4f228111ff0a61ef6df7c7b9d8f7653c431e8ae5916bea9e3",
+  "observed": {
+    "PGQueries": 0,
+    "PGStarted": false,
+    "allowlistSha256": "92e57ec291f2b52329243498b006248e2602a7cf7f00932181af25952f38e7fa",
+    "backendPidNonceExported": false,
+    "businessPermissionOrLogWrites": 0,
+    "checkedAtUTC": "2026-11-06T08:14:39.398257+00:00",
+    "cleanupReceiptVerified": true,
+    "elapsedSeconds": 0.02197,
+    "found": true,
+    "matches": [
+      {
+        "count": 1,
+        "fileKind": "POSTGRES",
+        "label": "STANDARD_PUBLICATION_INCOMPLETE",
+        "observedSQLSTATE": null,
+        "phase": "BEFORE_NORMAL_MARKER"
+      }
+    ],
+    "normalFound": false,
+    "observedStateNeverInferredFromSource": true,
+    "originalJobTerminalReadback": [
+      {
+        "exitCode": 0,
+        "status": "COMPLETED"
+      },
+      {
+        "exitCode": 2,
+        "status": "FAILED"
+      }
+    ],
+    "positiveMarkerMetadataBoundVerified": true,
+    "primaryErrorFatalLines": 4,
+    "primaryWithoutTimestamp": 0,
+    "rawMessageSQLParametersIdentitySecretsExported": "[REDACTED]",
+    "ruleCount": 18,
+    "scopeExpanded": false,
+    "sourceOrderProofSha256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+    "sourcePacketSha256": "f21bc158958e2ac48b04fb1df9c6d2c889b4ebc50a1f8ee080607687964c9c6c",
+    "status": "UNKNOWN_MATCHES_NOT_IN_NORMAL_WINDOW",
+    "tailBytes": {
+      "POSTGRES": 5647,
+      "WORKER": 69
+    },
+    "tailWasTruncated": false,
+    "targetBindingAndStoppedVerified": true,
+    "totalTailBytes": 5716,
+    "zeroCountProvesAbsence": false
+  },
+  "interpretation": {
+    "toolExecution": "COMPLETED",
+    "normalImportOutcome": "UNKNOWN_NO_NORMAL_WINDOW_ALLOWLIST_MATCH",
+    "normalImportSQLSTATE": null,
+    "matchedLabelBelongsBeforeNormalMarker": true,
+    "originalFailedCollectorGuard": "Old line79 has proven wrong private-byte expected digest. New exact raw private hash succeeded. Exact first failing predicate in old run was not exported.",
+    "privateReceiptExactRawExpectedSHA256": "9f3cd360ba599ed8166d70f700b076d33327157a3d46e41c6b9ef90557b83cde",
+    "noAbsenceOfErrorsClaim": true,
+    "noProductionAcceptanceClaim": true
+  },
+  "inputs": {
+    "sourceSetSHA256": "761a573190abbc8f4287f16d30c458feeafcb8b755acb1d2f0e223d146ee55f9",
+    "candidateRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+    "collectorSha256": "fd3c98509c98edbbdc6af5eac8ce208ebe32726d4d24f6a987b6d5accc4f0fde",
+    "proofPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r15-stopped-log-allowlist-readonly-02-preparation/PREPARED-R2.json",
+    "proofSHA256": "7721aafa7f0126b35df5475df62d104f9d7faced74fadd33480368e330d72887"
+  },
+  "boundaries": {
+    "oldJobReplayed": false,
+    "PGStarted": false,
+    "PGQueries": 0,
+    "applicationSourceModified": false,
+    "databaseOrPermissionWrites": false,
+    "formalChanged": false,
+    "rawLogExported": false
+  },
+  "next": "Original C/D1 continue already-fixed diagnostic consumer delta; source-review PASS is separate. Any new build/PG requires exact frozen successor binding; do not replay r15 unknown import or infer positive failure from prior negative case."
+}

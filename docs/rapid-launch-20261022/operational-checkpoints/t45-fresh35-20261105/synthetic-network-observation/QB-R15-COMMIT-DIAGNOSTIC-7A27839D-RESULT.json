@@ -1,0 +1,91 @@
+{
+  "task": "R15-COMMIT-DIAGNOSTIC-7A27839D",
+  "atUtc": "2026-11-06T08:03:31.119020+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
+    "parentIntegration": "14bf71eba77876df321dba0ce946385e4ba51381",
+    "applicationTree": "c3f9da827a8c0772ed0f9a78d94eb3fb98d1bd09",
+    "candidateSourceSet": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "beforeSha256": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff",
+        "afterSha256": "15ed4a039484c41812f19a6ad6efb8362dad507e12f78d7d735a38f8fe8a4418",
+        "bytes": 21861
+      },
+      {
+        "path": "tests/fresh35-isolated-entry.test.mjs",
+        "beforeSha256": "c39887f1dec1d8eba016b8d55db976e5a6df3d0f0c83713c9b604362b859f99c",
+        "afterSha256": "3baa2754358d3a1257ed7686ea983a623a74d08b148065043881ec3b14c556cc",
+        "bytes": 34642
+      }
+    ],
+    "oneProductionGuardLineOnlyReverseWholeEntryExact": true,
+    "oldR14FiveLeavesBytesUnchanged": true,
+    "noNewQueriesRetryRollbackKeyOrConnectionLogic": true,
+    "originalFailureSerializerAnd15Keys3StagesUnchanged": true,
+    "applicationTree": "c3f9da827a8c0772ed0f9a78d94eb3fb98d1bd09"
+  },
+  "independentFailureBoundary": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "case": "original normal COMMIT failure retains brand through host and fixture cleanup failures",
+    "exactOriginalStageAndCoordinatorExecuted": true,
+    "genuineResultIdentityRetained": true,
+    "first40001PreservedAfterDiscardMutation": true,
+    "receipt15KeysNormalStageNull": true,
+    "validationCode": "TRANSACTION_OUTCOME_UNKNOWN",
+    "validationSQLSTATE": "40001",
+    "validationStep": "COMMIT",
+    "hostOpens": 2,
+    "executeAttempts": 1,
+    "discardCount": 1,
+    "fixtureDisposeCount": 1,
+    "rollbackQueries": 0,
+    "keyRetry": 0,
+    "verificationHostOpened": false,
+    "successStdout": false,
+    "noRawSQLMessageOrSecret": true,
+    "PGExecuted": false,
+    "hostsAndSQLKernelModeled": true
+  },
+  "candidateClosure": {
+    "candidateSourceSet": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+    "candidateDescriptorHashRecomputed": true,
+    "changedCurrentPins": 1,
+    "other213AndCaptured180Unchanged": true,
+    "allPatchDescriptorsUnchanged": true,
+    "authoritativeBuildOrD2ClosureClaimed": false
+  },
+  "authorEvidenceAdopted": {
+    "resultSha256": "dace8dea5d8a7d57d3b51c9d14678135ef1d5f4e9616286f65ed61085bbb2f93",
+    "pinsSha256": "71c61b602cf235bfd11ef8343f8e6a1997a8e592f1048492a6da9bf4d8354999",
+    "affectedMethods": 2,
+    "scope": "COMMITTED passes; ROLLED_BACK/UNKNOWN retain brand; ALREADY_COMMITTED remains failure with fixed marker and no summary export. Adopt existing real3negative/native/R14/sequential evidence without replay.",
+    "rerun": false
+  },
+  "preserved": "Exactly one production guard line changed; reversing it restores entire parent entry. Existing serializer15keys/3stages, normalstageNULL, original unknown-commit rule and all query/rollback/key/connection/cleanup logic unchanged. R14fiveleaf bytes unchanged.",
+  "actualR15": "Reported schema+record COMMITTED/PUBLISHED and three negative/rollback-snapshot proofs reused. Positive commit child failed, original normal transaction state/code not exported and remains UNKNOWN. Current source diagnostic PASS is not actual commit or business PASS.",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "newSourceCopyCreated": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "PythonTestsRun": false,
+    "nativeOrFullSuiteRepeated": false,
+    "buildOrServiceStarted": false,
+    "stoppedLogsReadByQB": false,
+    "actualPositiveRootCauseProven": false,
+    "actualCommitOrBusinessPassed": false,
+    "oldTargetOrKeyReplayed": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return fixed diagnostic-only source verdict to C; await originalT45 single bounded stopped-log facts or a meaningful actual gap. No diagnostic-only PG run/retry is inferred."
+}

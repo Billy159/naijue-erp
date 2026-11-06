@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "NORMAL_COMMIT_BRANDED_DIAGNOSTIC_FIX_AND_STOPPED_TARGET_FINITE_EVIDENCE_PREPARATION",
+      "critical": "R16_FIXED_DIAGNOSTIC_CANDIDATE_BUILD_AFTER_BOUNDED_LOG_EVIDENCE",
       "independentPreparation": {
-        "D1": "Two-leaf source frozen; await stopped-log facts, no source writes.",
-        "QB": "Exact 7a27839d two-leaf diagnostic increment assigned; no PG or old full rerun.",
-        "D2": "One af9078 build/7298members/tail PASS adopted; no repeat.",
-        "T45": "One exact stopped-r15 bounded readonly extraction authorized with frozen18-rule allowlist; no PG start or replay.",
+        "D1": "Two-leaf fixed and QB adopted; no further source writes until actual diagnosis.",
+        "QB": "Two-leaf 7a27839d PASS adopted; no actual PG claim or repeated check.",
+        "D2": "One cc9d6472 fixed full build and tail from actual af9078 artifact.",
+        "T45": "Readonly02 complete, normal UNKNOWN. Prepare r16 exact original pipeline; no PG until C bindings.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31063,9 +31063,57 @@
           "allowlistRules": 18,
           "T45PreparationSHA256": "ccf88dbf2434c357120bbd3f79bd3196280f26688ac038039caaf0a37a5aa2be",
           "T45ReadonlyKey": "t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01",
-          "actualReadonlyResult": "PENDING",
-          "QB": "ORIGINAL_QB_EXACT_TWO_LEAF_ONLY"
+          "actualReadonlyResult": {
+            "key": "t45-f35-af9078-stopped-log-allowlist-readonly-20261106-01",
+            "state": "FAILED_METADATA_GUARD_BEFORE_LOG_READ",
+            "receiptSHA256": "aff1985d0a509414f3729d225bdd22cdaa831baaecd7edea0cc982f74af724f2",
+            "T45ResultSHA256": "c75860d0f9ac707a753883efea2fc107b1d2e7dff4173da3ffe3e1206d1cdd78",
+            "exitCode": 2,
+            "seconds": 0.117501,
+            "PGStarted": false,
+            "PGQueries": 0,
+            "logsRead": 0
+          },
+          "QB": "ORIGINAL_QB_EXACT_TWO_LEAF_ONLY",
+          "QBState": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+          "QBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
+          "readonlySuccessorScope": "One revised exact bounded key02 only after frozen-writer serialization proof. All CID/physical/stopped/cleanup/file guards retained; per-guard finite labels; same two markers and two logs,2MiB/10s. No old-key replay, PG or production.",
+          "readonly02": {
+            "key": "t45-f35-af9078-stopped-log-allowlist-readonly-20261106-02",
+            "jobReceiptSHA256": "d0cbdcede9b98dc4f228111ff0a61ef6df7c7b9d8f7653c431e8ae5916bea9e3",
+            "receiptSHA256": "ed7969556b64f66a6c73bc359fb6d5372169dc180c39516e63f2e8314ee87d2c",
+            "T45ResultSHA256": "ba1c10e2ef763bc6cdc49bca210a8db40985f2e959709d321d54c77a12de5f9f",
+            "exitCode": 0,
+            "seconds": 0.1173205,
+            "status": "UNKNOWN_MATCHES_NOT_IN_NORMAL_WINDOW",
+            "normalFound": false,
+            "tailBytes": 5716,
+            "truncated": false,
+            "PGQueries": 0,
+            "PGStarted": false,
+            "onlyMatch": "STANDARD_PUBLICATION_INCOMPLETE_BEFORE_NORMAL_MARKER",
+            "observedSQLSTATE": null
+          },
+          "noFurtherLogExpansion": true
         }
+      },
+      "r16Preparation": {
+        "state": "FIXED_DIAGNOSTIC_CANDIDATE_ORIGINAL_D2_BUILD_AND_T45_LOCAL_PREPARATION",
+        "integration": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
+        "buildRoot": "cc9d647202113aa52bddc2e990aeab878277ad89",
+        "tree": "c3f9da827a8c0772ed0f9a78d94eb3fb98d1bd09",
+        "sourceSetSHA256": "292ad12180527555cec78bd707a3646d79502f83855586205dd53f74dd99fffb",
+        "QBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
+        "baseActualReady": {
+          "root": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
+          "archiveSHA256": "bc9537fd54e91247ade52a62b2d75a443a80b4659bdc9678dbf87af70f117dc5",
+          "bytes": 83696036
+        },
+        "actualPG": false,
+        "REAL": false,
+        "production": false,
+        "reason": "Stopped-r15 finite evidence exhausted without normal error match. Consume independently verified branded diagnostic fix through original new-target isolated path; never replay r15 unknown key.",
+        "next": "Original D2 one full build/member closure and prefix-tail. Original T45 prepare only; exact C13/C11/C9 remain before actual stages."
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31474,12 +31522,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T15:59:14+08:00",
-      "phase": "NORMAL_COMMIT_BRANDED_DIAGNOSTIC_FIX_AND_STOPPED_TARGET_FINITE_EVIDENCE_PREPARATION",
+      "at": "2026-11-06T16:20:30+08:00",
+      "phase": "R16_FIXED_DIAGNOSTIC_CANDIDATE_BUILD_AFTER_BOUNDED_LOG_EVIDENCE",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "D1 exact entry/test; T45 finite evidence preparation only",
-      "nextOwner": "C bind one bounded actual read after source-bound allowlist; freeze meaningful fix before one QB/build",
+      "currentOwner": "D2 one fixed build; T45 original stage preparation",
+      "nextOwner": "C bind actual artifacts and finite isolated authorization; T45 sole execution",
       "latestActualReceiptSHA256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31489,7 +31537,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Preserve r15 UNKNOWN; do not replay old key/target. Reuse actual three negative PASS.",
+      "next": "Original D2 one full build/member closure and prefix-tail. Original T45 prepare only; exact C13/C11/C9 remain before actual stages.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "14bf71eba77876df321dba0ce946385e4ba51381",
       "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",
@@ -31499,7 +31547,10 @@
       "buildPassed": true,
       "githubSourceAndRootReadback": true,
       "QBReceiptSHA256": "c46191f13712f25a6c99369f4d4da4db5db748fbca5265397597d5cc1815d0c4",
-      "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62"
+      "D2ReceiptSHA256": "ff43c259b42c19f90c672512b4b21523138d50b840cafb44de2eda6c2b323f62",
+      "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
+      "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+      "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
