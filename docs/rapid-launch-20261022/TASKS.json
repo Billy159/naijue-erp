@@ -31434,14 +31434,14 @@
         "wholeChainPassed": false
       },
       "r18Preparation": {
-        "state": "MATERIALIZED_RESOURCES_VERIFIED_C11_BOUND_START_PENDING",
+        "state": "ACTUAL_PG170011_STARTED_C9_BOUND_INSTALL_PENDING",
         "integration": "4d750fffe517836f1abd8191655702011e16ae80",
         "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
         "tree": "c06367a78f4485ee95c0e28ba35894fc7cfe61b0",
         "parentBuildRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
         "exactSourceLeaves": 2,
         "sourceSetSHA256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "priorR17ScopedProofAdopted": true,
@@ -31521,7 +31521,29 @@
         "actualResourceReceiptSHA256": "3e80a51cf4c4ac9f07c5f830a6043405a12b3dabeb9fc61768944fe89d45a5d0",
         "C11SHA256": "484104d02125bfd73ed5a9fba3524cdf3c658eeb5efb5bf87cd1f136a0817076",
         "C11StartsAt": 1793960739745,
-        "C11ExpiresAt": 1793961939745
+        "C11ExpiresAt": 1793961939745,
+        "actualStartReceiptSHA256": "292ca13d87f98dbc8331822d9d399134aa55cfd0b2b39c34665a4ac6b1bf5275",
+        "actualStartSafeSHA256": "4ad31e9f0453fd8cfd6b2edd80b2e6b4e46a84762d2a76066a1693f908b9b384",
+        "cid": "56c458aebe8331c90afb44bd4cc52a9a289abfd353a8930b4ef090cf593089f9",
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 10:27:41.790192+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705003217343156271"
+        },
+        "program": {
+          "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+          "sourceSetSha256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+          "programSha256": "98aea4fc97d19e56d73d648722d409fcf1eda50a5ddab2e080d6f88f0fb68765",
+          "targetSha256": "e26a115a4694cc21b1eb908b1197112a6a58696c03721129d790c380777e7df5",
+          "catalogSha256": "0774c323a0c1e1d1d39b6d37e087d083bbb1313f72a0e5501a2b9a815e8c371b",
+          "applicationTransactions": 1,
+          "createsCluster": false,
+          "createsCredentials": false,
+          "createsRoles": false,
+          "bootstrapNetworkObservationSha256": "2d52fe465c47d7af4c863b23a286ceec13d83defebf18bcb87de8cf8d87cdac7"
+        },
+        "C9SHA256": "7ae1375cf0711eb7d6311fd795302b391a79147b5c7ea742a0d8b3ca6d24a27d"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31930,12 +31952,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T18:25:39+08:00",
-      "phase": "R18_MATERIALIZED_C11_BOUND_ACTUAL_START_PENDING",
+      "at": "2026-11-06T18:30:20+08:00",
+      "phase": "R18_ACTUAL_PG170011_C9_BOUND_INSTALL_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 bounded synthetic target start",
-      "nextOwner": "C actual170011/program/target then same-window C9",
+      "currentOwner": "Original T45 unique install and synthetic ordinary chain",
+      "nextOwner": "C adopt actual result and route precise blocker only",
       "latestActualReceiptSHA256": "3eb95d5cf86a796fd9611b4f92b9510e1601755e6868d43788c706c327c1c532",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -31945,7 +31967,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Wait original materialization terminal and actual resources before new C11. No duplicate operation or guessed READY.",
+      "next": "Actual corrected JSONwire and ordinary business/readback/probe under same deadline; no originalr17key replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4d750fffe517836f1abd8191655702011e16ae80",
       "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",

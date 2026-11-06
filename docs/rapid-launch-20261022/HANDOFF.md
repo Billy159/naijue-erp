@@ -2049,3 +2049,7 @@ Assembler3b0e7fb2 completed0/4.027418s and original receiver FULLREADY verified 
 ## 2026-11-06T18:25:39+08:00 - R18 materialization and actual resources verified; C11 bound
 
 Materialbb436ab4 completed0/372.244307s; resource3e80a51c actual MemAvailable14329937920B/freeDisk7302422528B, exact root and no target/start artifacts. C11 484104d02125bfd73ed5a9fba3524cdf3c658eeb5efb5bf87cd1f136a0817076 binds newr18 only 1793960739745..1793961939745, original budgets/guardian/2DO. ActualPG170011/program/target precedes C9. NoREAL/production/oldkey replay; priorr17committed proof preserved.
+
+## 2026-11-06T18:30:20+08:00 - R18 actualPG17.11 target bound and C9 dispatched
+
+Start292ca13d completed0/36.599459s; CID56c458ae/SID7705003217343156271/OID16393/PG170011/birth10:27:41.790192UTC/program98aea4fc/targete26a115a. C9 7ae1375cf0711eb7d6311fd795302b391a79147b5c7ea742a0d8b3ca6d24a27d binds original deadline1793961939745; unique t45-f35-e7bcc8-install-20261106-01 proceeds once. Correctedwire/ordinary/readback remains pending; noREAL/production/oldr17committedkey replay.

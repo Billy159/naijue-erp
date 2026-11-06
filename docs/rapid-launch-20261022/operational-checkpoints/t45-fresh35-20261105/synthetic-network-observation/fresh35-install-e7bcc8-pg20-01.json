@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "98aea4fc97d19e56d73d648722d409fcf1eda50a5ddab2e080d6f88f0fb68765",
+  "sourceSetSha256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
+  "targetSha256": "e26a115a4694cc21b1eb908b1197112a6a58696c03721129d790c380777e7df5",
+  "startsAt": 1793960739745,
+  "expiresAt": 1793961939745,
+  "independentSafetyReviewSha256": "fbbce17bfc2f77e531f4e3e1b7f1e41f5ea1a2669a0761a80de3e5d74a96e684",
+  "authorizationReference": "C binds actualr18 under standing human same-kind bounded isolation approval, not expired noon grant. Exactroot e7bcc81e/source9cef557d/manifest2292d0af/QBfbbce17b/start292ca13d CID56c458ae SID7705003217343156271 OID16393 PG170011 birth10:27:41.790192UTC. SamePG20 deadline1793961939745. Oneinstall/negative/normal/JSONwire/ordinary/readback/probe/ownedcleanup; noREAL/production/oldr17key replay/windowextension."
+}
