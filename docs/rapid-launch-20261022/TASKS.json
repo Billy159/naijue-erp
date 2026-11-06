@@ -29949,7 +29949,7 @@
         "exactFailureTag": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
         "tagReceiptSHA256": "9f9858fa85d7821cdad93d9c81aa5b74e6d7cb3fbb9b702bcfb3ed44ee3b4d1b",
         "D1ApprovedFix": {
-          "state": "SOURCE_FIXED_AUTHOR_DIRECT_RED_GREEN_PASS_PENDING_QB_AND_NEW_PG",
+          "state": "QB_SOURCE_AND_OFFLINE_MODELS_PASS_PENDING_NEW_PG",
           "predicate": "ROUTINE_SOURCE_OR_ACL_DIFFERS",
           "staticModelVsDDL": "64 explicitACL vs63 dump sections; one proven representation mismatch",
           "signatureSHA256": "a76a3b92fdec1d9ffb0a145b9c27dc7f671b65db7425519fbccc1b241529ab70",
@@ -29961,6 +29961,33 @@
           "leafSHA256": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc",
           "effectiveRightsExpanded": false
         }
+      },
+      "r7Preparation": {
+        "state": "FIXED_BUILD_AND_QB_INCREMENT_PASS_C_STAGING_AUTHORIZED",
+        "integration": "267dc0fd1deabae8fd63af0f12b2512f2321c882",
+        "buildRoot": "73bd81a00b41d88612d9522efa7e633166a23645",
+        "tree": "98697d1c4925b6786443af1db41cfa0768f8b5d8",
+        "sourceSetSHA256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+        "qbSHA256": "c1774aae37e1bb7e5ce0bbfe2217b84b6faa17cc3d60ce27700e583592d2c380",
+        "buildReceiptSHA256": "f2eedc54e940e340641ba2c5f3c6a4ca26c1b7494de300130867772915606932",
+        "stagePreflightSHA256": "84a1527705e38c3896b48c6e340d59f5b68611701ba8215ce47288723c23965c",
+        "manifestSHA256": "61f3539c8d3928e19f622a9e70c3a806119495413effd15031e5044d9471edf4",
+        "archiveSHA256": "635de84c6f1105ebcfd21d034c2f2e69bf8e70e7857cdaac03b432a71b4b57c7",
+        "archiveBytes": 83685827,
+        "manifestBytes": 1084429,
+        "regularFiles": 7298,
+        "baseArchiveSHA256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3",
+        "prefixBytes": 80885307,
+        "prefixSHA256": "c2ac0bbf930e3dbc741488c213d479c28d158faeeaf0caab979b1dbaa24be418",
+        "tailBytes": 2800520,
+        "tailSHA256": "43c350e55f5e4273a30c4f610e4d993866ca9e20a25fd771f22742710dc3fb7a",
+        "tailAuthoritySHA256": "2de99172acc142a8a593aef2bc29c6c80bdfe45f16f233d940a020551af4e335",
+        "fullAuthoritySHA256": "1d5b006aae5bf8644f43b54753aaa3c38bed2800db5b7a2d50454354ef755a1b",
+        "stagingStartsAt": 1793923436762,
+        "stagingExpiresAt": 1793925236762,
+        "newRoot": "phaseb-application-r7",
+        "newContainer": "t45-fresh35-deb13-20261106-r7",
+        "actualPG": false
       }
     },
     "productionReleaseCompatibilityContinuation": {

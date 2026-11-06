@@ -1,0 +1,113 @@
+{
+  "task": "C-0448-R6-SINGLE-DEFAULT-ACL-MATERIALIZATION-TWO-LEAF",
+  "atUtc": "2026-11-06T00:03:39.981748+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODELS",
+  "findings": [],
+  "pins": {
+    "sourceCommit": "267dc0fd1deabae8fd63af0f12b2512f2321c882",
+    "parent": "d07513bc8aa2c8b30d8a4e5a245d1149dc1dbd58",
+    "authorResultSha256": "a1400d4e55e515bdbe63e43ce53d6e1899598c3e67515298d1560fd5ca18e5f4",
+    "files": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+        "bytes": 22158,
+        "sha256": "c5a4349dae4a4525960d15ac2eadb028563424f03a434fa61681bb9429718fcc"
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "bytes": 23112,
+        "sha256": "f05abdb31a8eb9834f4446822de53d96035c3bd2674b3a1ebd4132a8f9c4faa3"
+      }
+    ],
+    "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+    "currentPinsReported": 214,
+    "capturedPinsReported": 180
+  },
+  "authorEvidenceAdopted": {
+    "resultSha256": "a1400d4e55e515bdbe63e43ce53d6e1899598c3e67515298d1560fd5ca18e5f4",
+    "targetedActualCompilerProjectionReported": {
+      "before": "FAIL",
+      "after": "PASS1_NO_SKIP"
+    },
+    "capturedExplicitAcl64DumpAcl63": "Adopted frozen source proof, no152-routine rescan",
+    "rerun": false
+  },
+  "independentChecks": [
+    {
+      "id": "TWO_EXACT_SOURCE_TEST_PINS_AND_PRECISE_SINGLE_STATEMENT_DIFF",
+      "result": "PASS"
+    },
+    {
+      "id": "ORIGINAL_COMPILER_BOTH_TARGET_PROFILES_SINGLE_TYPED_GRANT_AND_DIGEST",
+      "result": "PASS",
+      "steps": 10,
+      "changedStepOnly": "direct-35-schema",
+      "schemaAndCatalogProviders": "PREVALIDATED_MODELS; original compiler function body executed",
+      "otherNineStepSql": "UNCHANGED",
+      "noNewGrantOptionOrRoutineBodyOwnerChange": true
+    },
+    {
+      "id": "NEW_GRANT_FAILURE_STAYS_IN_ORIGINAL_ATOMIC_ROLLBACK_PATH",
+      "result": "PASS",
+      "rollbackCalls": 1,
+      "commitCalls": 0,
+      "grantAttempts": 1,
+      "installState": "ROLLED_BACK",
+      "stage": "STEP",
+      "step": "direct-35-schema",
+      "scope": "Original drive with SQL outcome model; not native PG/driver/SQL parsing"
+    },
+    {
+      "id": "ADOPTED_GENUINE_SOURCE_DESCRIPTOR_ONLY_ONE_OF_214_PINS_CHANGED",
+      "result": "PASS",
+      "current": 214,
+      "captured": 180,
+      "unchanged": 213,
+      "changed": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "wholeLoaderOrRoutineRescan": false
+    }
+  ],
+  "permissionReview": {
+    "fixedTarget": "naijue_erp.is_native_party_import_insert(text,jsonb)",
+    "addedSql": "GRANT EXECUTE ON FUNCTION naijue_erp.is_native_party_import_insert(text,jsonb) TO PUBLIC;",
+    "scope": "One exact schema-qualified function and argument signature; no ALL FUNCTIONS/schema grant, role, owner/body modification or WITH GRANT OPTION",
+    "effectiveRights": "Within the approved empty/defaultAcls=[] model, PUBLIC and owner already have default EXECUTE. First explicit grant instantiates default ACL; expected raw explicit owner/PUBLIC representation is recovered, while effective privilege set remains the captured default.",
+    "primaryVerification": "PG17 docs explicitly state default PUBLIC EXECUTE and first GRANT instantiates defaults. REL_17_11 ExecGrant_common substitutes acldefault for NULL then stores merged ACL; pg_dump buildACLCommands emits only differences against base ACL.",
+    "unchangedGuards": "Catalog/model/raw ACL comparison, sealed captures, target guards, original10logical steps and existing2DO/native consumer contract unchanged. No normalization or weakened guard."
+  },
+  "references": {
+    "privileges17": "https://www.postgresql.org/docs/17/ddl-priv.html",
+    "grantImplementation1711": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/backend/catalog/aclchk.c",
+    "dumpDiff1711": "https://raw.githubusercontent.com/postgres/postgres/REL_17_11/src/bin/pg_dump/dumputils.c"
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "r6ActualBoundary": {
+    "suppliedTag": "FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS",
+    "reportedState": "ROLLED_BACK_AND_STOPPED",
+    "actualFirstOrOnlySignatureOrdinal": "NOT_OBSERVED",
+    "interpretation": "Source mismatch is consistent with the tag, not retrospective proof that this was the first/only actual mismatch. Existing receipts not rewritten."
+  },
+  "boundaries": {
+    "sourceModified": false,
+    "PGConnections": 0,
+    "PGStarted": false,
+    "SQLParsedOrExecutedByPG": false,
+    "actualAclMaterializationReadback": false,
+    "serverCalls": 0,
+    "realInputsRead": false,
+    "buildPerformed": false,
+    "schemaCatalogTargetProviders": "PREVALIDATED_MODELS for independent original compiler execution",
+    "transactionFailure": "Original drive with modeled SQL outcome, not native PG"
+  },
+  "notRepeated": [
+    "152 routine enumeration",
+    "whole214 source loader",
+    "previous twoDO/native consumer review",
+    "prior source/REAL/import/full suites"
+  ],
+  "remaining": "C freezes new04c1c20c source package and matching program/authorities; T45 alone uses wholly new target for actual PG/ACL/catalog/readback. Do not replay stopped r6 or infer production/install acceptance."
+}

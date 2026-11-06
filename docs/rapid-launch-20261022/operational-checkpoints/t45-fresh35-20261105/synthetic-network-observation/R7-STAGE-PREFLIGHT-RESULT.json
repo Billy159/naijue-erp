@@ -1,0 +1,79 @@
+{
+  "status": "READONLY_R7_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "checkedAtEpochMillis": 1793923283643,
+  "gateSha256": "3bde7166622bb3395a8d3cc568837b8a4d1aef2942ad698efd466a4019c09264",
+  "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-73bd81-stage-preflight-20261106-01/staging-policy-before.json",
+  "baseIdentity": [
+    66304,
+    393601,
+    83681662,
+    1793920424583204664,
+    1793920425911213245
+  ],
+  "baseArchiveSha256": "f08cf2e73cae0ef469cdac86c103c03df990a5aba9e66b54bc0f8496242d07d3",
+  "baseHashNotRereadUntilOriginalAssembler": true,
+  "privateFullIdentityUnchanged": true,
+  "privateFullIdentity": [
+    66304,
+    393585,
+    93508914,
+    1793915257822987699,
+    1793915258790984345
+  ],
+  "r7RootAbsent": true,
+  "r7ContainerAbsent": true,
+  "r7ArtifactDirectoriesFound": [],
+  "samePrefixOtherSubmissions": [],
+  "priorExactJobs": [
+    {
+      "jobId": "t45-f35-19b223-start-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    {
+      "jobId": "t45-f35-19b223-install-20261106-01",
+      "status": "FAILED",
+      "exitCode": 2
+    },
+    {
+      "jobId": "t45-f35-19b223-failure-tag-readonly-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    }
+  ],
+  "r6Stopped": {
+    "id": "2788c02b95d4d5f096715fa8b4441c3b60782fe173526f4020bd6f47c397e97b",
+    "running": false,
+    "pid": 0,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+  },
+  "r6Cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "r6CleanupErrors": [],
+  "fixedEnvironment": {
+    "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "os": "linux",
+    "arch": "amd64"
+  },
+  "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+  "resources": {
+    "cpuCount": 4,
+    "loadAverage": [
+      0.11767578125,
+      0.06787109375,
+      0.09033203125
+    ],
+    "diskFreeBytes": 15221727232,
+    "MemAvailable": 14342139904
+  },
+  "sourceOrTargetWrites": 0,
+  "PGConnections": 0,
+  "networkOrServiceChanges": 0,
+  "dataExtraction": false
+}

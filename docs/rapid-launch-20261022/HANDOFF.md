@@ -1742,3 +1742,7 @@ T45两叶READY f4e5d2e，Python f2adbe41/34240B及test4077edb2/19295B准确读�
 
 ### 2026-11-06 07:54 C 技术裁定
 D1离线已证唯一captured显式默认ACL被dump省略（64/63），C按用户至12点委托批准仅原direct35 schema末尾物化一个已有默认PUBLIC EXECUTE，guard/model/有效权限/2DO/事务不减；实际r6第一对象未记录，下一新目标PG仍须验证。T45正式front与拟名只读事实36ce已收：front ac1cb39d/19 endpoints，新拟名无冲突，旧正式app/web/db身份未变且Docker健康；未创建PG/网络，未读秘密或业务。原备份/恢复历史证据只查元信息保留，不称新恢复已验。D1修复在途，不重传/重洗/重放失败。
+
+
+### 2026-11-06 08:04 C r7 接续
+实际r6仍FAIL/ROLLED_BACK/停稳。已固定修复integration267dc0fd/root73bd81/source04c1，D2新构建/production453/ordinary7298读回通过f2eedc，QB仅ACL2叶c177 PASS并复用其余既有证据；实PG尚未验。T45只读84a152核新r7无重复、旧19bREADY/私包身份、r6终态及资源。C签准确13键tail2de991/full1d5b006原30min准备，PG另待真实materialize后新20min。原40s/900s不改，不重旧r6或重复清洗。

@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-73bd81-tail-20261106-01",
+  "sourceSetSha256": "04c1c20c634dd63933c095d1148ca6c07c4be9c0fabf27b26f761381a9756452",
+  "archiveSha256": "43c350e55f5e4273a30c4f610e4d993866ca9e20a25fd771f22742710dc3fb7a",
+  "archiveBytes": 2800520,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-73bd81-tail-20261106-01",
+  "startsAt": 1793923436762,
+  "expiresAt": 1793925236762,
+  "decisionReference": "C under direct human delegation through2026-11-06 noon. Exact73bd81/source04c1 r7 prepare only; preflight84a152 and D2f2eedc actual readback. Retained19b f08cf prefix80885307 + tail43c350 to full635de84/83685827 via original receiver, original40s/900s/30min cap. NoPG/REAL/unpackdata/production/oldtargets. QB twoleaf review in progress: materialization only, PG requires adopted QB and separate exactscope.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
