@@ -21,7 +21,11 @@ function body(text){const all=[...text.matchAll(/\bAS\s+(\$(?:[A-Za-z_][A-Za-z0-
 function replacement(text,before,after){need(text.split(before).length===2,'UNIQUE_FUNCTION_BODY_REQUIRED');return text.replace(before,()=>after)}
 function remap(value,roles){
  if(Array.isArray(value))return value.map(x=>remap(x,roles));
- if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,remap(v,roles)]));
+ if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>{
+  const mapped=remap(v,roles);
+  // Role renaming changes ACL text order; match the unchanged SQL COLLATE C.
+  return [k,k==='acl'&&Array.isArray(mapped)?mapped.sort((a,b)=>a<b?-1:a>b?1:0):mapped];
+ }));
  if(typeof value!=='string')return value;
  if(Object.hasOwn(roles,value))return roles[value];
  const acl=value.match(/^([^=]*)=([^/]*)\/(.+)$/);if(acl)return (roles[acl[1]]??acl[1])+'='+acl[2]+'/'+(roles[acl[3]]??acl[3]);
