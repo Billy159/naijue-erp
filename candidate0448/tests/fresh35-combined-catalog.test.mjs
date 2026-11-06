@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
+import {isDeepStrictEqual} from 'node:util';
 import {loadFresh35CombinedSource,describeFresh35CombinedSource,renderFresh35CombinedSchema,resolveFresh35ReferenceInputPaths,combinedSha256} from '../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
 import {parseFresh35DumpSections} from '../scripts/release/unified-install/fresh35-retirement-schema.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -15,6 +16,19 @@ const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),grap
 const {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation}=graph.catalogAPI;
 const {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall}=graph.lifecycleAPI;
 const bundle=async()=>({source,catalog:graph.catalog,program:graph.program});
+test('capture receipt model accepts only the exact approved CHECK successor and preserves every other constraint',async()=>{
+ const original=JSON.parse(await readFile(modelPath,'utf8')),model=JSON.parse(fresh35CombinedCatalogSql(graph.catalog,source,target).guardSql.split('$combined_model$')[1]);
+ const changes=describeFresh35CombinedSource(source).patches.flatMap(p=>p.manifest.constraintChanges??[]);assert.equal(changes.length,1);
+ const change=changes[0],index=original.constraints.findIndex(r=>r.relation===change.relation&&r.name===change.name);assert(index>=0);assert.deepEqual(original.constraints[index],change.before);
+ assert.deepEqual(model.constraints,original.constraints.map((row,i)=>i===index?change.after:row));
+ const text=await readFile(root+'scripts/release/unified-install/fresh35-combined-catalog-v1.mjs','utf8'),start=text.indexOf('function applyCaptureReceiptConstraint('),end=text.indexOf('\nfunction restoreGeneratedExpressionPrefixes(',start);assert(start>=0&&end>start);
+ const need=(ok,code)=>{if(!ok)throw Error(code)},apply=new Function('need','hash','isDeepStrictEqual',text.slice(start,end)+'return applyCaptureReceiptConstraint;')(need,combinedSha256,isDeepStrictEqual);
+ for(const mutate of [
+  list=>list.push(structuredClone(list[0])),list=>{list.length=0},list=>{list[0].name='other'},list=>{list[0].before.definition+=' '},list=>{list[0].after.definition+=' '},list=>{list[0].after.validated=false},list=>{list[0].after.columns.reverse()}
+ ]){const copy=structuredClone(changes);mutate(copy);assert.throws(()=>apply(structuredClone(original),copy),/CAPTURE_RECEIPT_CONSTRAINT/);}
+ const wrong=structuredClone(original);wrong.constraints[index].deferrable=true;assert.throws(()=>apply(wrong,changes),/CAPTURE_RECEIPT_CONSTRAINT/);
+ const exact=structuredClone(original);apply(exact,changes);assert.deepEqual(exact.constraints,model.constraints);assert.deepEqual({...exact,constraints:original.constraints},original,'the private model helper changes only this one constraint definition');
+});
 test('external dependency guard restores identifier context and keeps exact namespace boundary (offline PG17 semantics, not PG)',async()=>{
  const {guardSql}=fresh35CombinedCatalogSql(graph.catalog,source,target),tag="THEN RAISE EXCEPTION 'FRESH35_COMBINED_EXTERNAL_DEPENDENCY'",end=guardSql.indexOf(tag),start=guardSql.lastIndexOf(' IF EXISTS(WITH objects AS (',end);
  assert(start>=0&&end>start);
@@ -110,7 +124,8 @@ test('full successor model changes the adopted seven routine bodies and sales ha
  assert.equal(d.changes.length,14);assert.equal(new Set(d.changes.map(r=>r.signature)).size,7);assert.equal(d.changes.at(-1).patch,'historical-settlement-difference');assert.equal(d.changes.findLast(c=>c.signature.includes('.validate_sales_settlement(')).after,'580340f008dcf9652fb18e041dde2b63ae2aa72abde3c5e8a772cb13cfb0990f');assert.equal(model.routines.length,152);
  assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,7);
  const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old.generated==='s'?{...old,generatedExpression:'\n'+old.generatedExpression}:old)}
- for(const key of ['constraints','indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
+ for(const key of ['indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
+ assert.deepEqual(model.constraints.map(row=>row.relation==='operation_receipt'&&row.name==='receipt_result_by_kind'?{...row,definition:before.constraints.find(c=>c.relation===row.relation&&c.name===row.name).definition}:row),before.constraints,'only the separately pinned capture receipt CHECK definition differs');
  assert.deepEqual(model.columnAcls,before.columnAcls.map(row=>({...row,acl:row.relation==='schema_migration'&&['version','description'].includes(row.column)?['fresh35_controller_20261105_r9=r/fresh35_owner_20261105_r9']:row.acl?.map(acl=>acl.replace('/fresh35_owner_20261105_r1','/fresh35_owner_20261105_r9'))??null})),'only approved two-column controller read differs; all other ACLs stay exact');
  assert.ok(model.routines.every(r=>/^[a-f0-9]{64}$/.test(r.bodySha256)));assert.equal(d.independentSafetyReviewComplete,false);assert.equal(d.sqlParsedByPostgres,false);assert.equal(d.engineVerified,false);
 });
