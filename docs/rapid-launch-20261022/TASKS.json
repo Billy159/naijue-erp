@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T09:42:49+08:00",
+  "updatedAt": "2026-11-06T09:52:30+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T09:42:49+08:00",
+    "at": "2026-11-06T09:52:30+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,11 +28491,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 accurate gate391c/base9c identity/new rootabsence/currentresources once; C original13key leaves then original materialization; no newPG before real ready/resource.",
+      "critical": "Collect original materialize key only then exact resource readback/newPG20. D2 independently checks existing production real account/runtime input seam, no source writes/new system.",
       "independentPreparation": {
         "D1": "R8 deparser context fix source frozen/QA adopted, no further source work until actualfailure.",
         "T45": "r9 purepin prepared; accurate stagepreflight requested, not newPG yet.",
-        "D2": "Fixed24e build+pack+tail complete/readback, no samebuild rerun.",
+        "D2": "Fixed24e build readonly; check original REAL initialization/account/auth/runtime input seams and exact existing invocation, no secrets/source/ops.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
         "QB": "d90c8b2f new157B context source/scopedmodel PASS; prior effective checks adopted; actualPG pending.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R9_FIXED_BUILD_AND_SCOPED_QB_READY_STAGE_PREFLIGHT_PENDING",
+      "state": "R9_ACTUAL_ORIGINAL_MATERIALIZATION_RUNNING",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "T45 accurate gate391c/base9c identity/new rootabsence/currentresources once; C original13key leaves then original materialization; no newPG before real ready/resource.",
+      "next": "Collect original materialize key only then exact resource readback/newPG20. D2 independently checks existing production real account/runtime input seam, no source writes/new system.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30180,7 +30180,7 @@
       },
       "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING",
       "r9Preparation": {
-        "state": "FIXED_SOURCE_BUILD_SCOPED_QB_PASS_STAGE_PREFLIGHT_PENDING",
+        "state": "ACTUAL_FULL_RECEIVER_READY_ORIGINAL_MATERIALIZATION_RUNNING",
         "integration": "d41929d3eaebe13199275cb71c1b0d1118e01911",
         "buildRoot": "24e34727f9d4df94cf2939e49d77638bbad36784",
         "tree": "89e5c55b23f8890a731edd9da1aa70908a8fc2f7",
@@ -30212,7 +30212,25 @@
         "container": "t45-fresh35-deb13-20261106-r9",
         "githubSourceAndRootActualReadback": true,
         "actualPG": false,
-        "next": "T45 accurate gate391c/base9c identity/new rootabsence/currentresources once; C original13key leaves then original materialization; no newPG before real ready/resource."
+        "next": "Collect original materialize key only then exact resource readback/newPG20. D2 independently checks existing production real account/runtime input seam, no source writes/new system.",
+        "stagePreflightSHA256": "94889f4e049ca0e5b69796e93f6b6ed863e44ca1d3fb088cea4fa5fef2000275",
+        "tailAuthoritySHA256": "fd5b6a5e2ae790f8fadd4788f57d3572c61b47636e0b38714b789a5f152b180b",
+        "fullAuthoritySHA256": "5aead88f4fb9a702a83c32b566b8f54cb3062cf12aaacd6cd1304862eee3a324",
+        "stagingStartsAt": 1793929457794,
+        "stagingExpiresAt": 1793931257794,
+        "assemblyJob": "t45-f35-24e347-local-assemble-20261106-01",
+        "actualAssemblySHA256": "601961a7ef5886f1eddbcf2f1b746cc90ffa7cabbefab64bb4ae43d46c5c2b94",
+        "actualAssemblyExitCode": 0,
+        "actualAssemblySeconds": 9.344789443,
+        "actualFullIdentity": [
+          66304,
+          393625,
+          83684342,
+          1793929720411388133,
+          1793929722093398175
+        ],
+        "materializationJob": "t45-f35-24e347-local-materialize-20261106-01",
+        "materializationDeadlineMs": 1793930430699
       }
     },
     "productionReleaseCompatibilityContinuation": {
