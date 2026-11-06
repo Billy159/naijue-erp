@@ -31601,7 +31601,8 @@
           "evidence": "T45 native factory manifest matched actual host fixtureBinding d5d6b7af25a3bd09473ef8cc6c29b4c42731ade590ece92fa1fe956384ac475e; two warehouses remain hall01 after Fresh35 successor adds hall02. Existing model plus real builder reproduces original STAFF_WAREHOUSE_REQUIRED. Actual scene row bytes not exported, no production mapping claim.",
           "scope": "Only Fresh35 settlement-retention25 variant: bind exact warehouse:02.hall_id to its explicitly created hall:02. Preserve default variant/base factory bytes and existing default golden manifests, warehouse01/staff hall01/default customer+outbound warehouse/history capture, stable identities, inventory/amount/barcodes, SQL/ACL/uniqueness guards. Existing direct regression only for accurate one-hall-one-warehouse relation in this fixed synthetic variant. No business mapping decisions.",
           "serverOrPGAuthorized": false,
-          "next": "Author necessary targeted RED/GREEN; original QB only affected fixture/consumer increment; original D2 fixed build after C freeze."
+          "next": "Author necessary targeted RED/GREEN; original QB only affected fixture/consumer increment; original D2 fixed build after C freeze.",
+          "T45ReadOnlyResultSHA256": "aadf48d608f0924266e3da4eb645f9504d12812c904ca1c5d3d3ae1367322ea0"
         }
       }
     },

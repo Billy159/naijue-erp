@@ -1,0 +1,175 @@
+{
+  "format": "T45_R18_ORDINARY_SCENARIO_SOURCE_DIAGNOSIS_V1",
+  "status": "EXACT_FIXTURE_MANIFEST_BOUND_SOURCE_RELATION_DEFECT_REPRODUCED_READONLY",
+  "recordedAtUTC": "2026-11-06T10:47:31.885386+00:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "actualR18": {
+    "safeResultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r18-pg20-execution-01/RESULT.json",
+    "safeResultSHA256": "f4a4b9d9057ab39d1277a166bfdf5146f6ab39d5a637026077c739c8ccb26163",
+    "rawReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
+    "phase": "PRIVATE_SCENARIO",
+    "guardCode": "FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED",
+    "actualFixtureManifestSHA256": "d5d6b7af25a3bd09473ef8cc6c29b4c42731ade590ece92fa1fe956384ac475e",
+    "normalImport": "COMMITTED/ALREADY_COMMITTED/VERIFIED",
+    "containerStopped": true,
+    "cleanupSixTrue": true,
+    "childReaped": true
+  },
+  "fixedInput": {
+    "nodeVersion": "24.21.0",
+    "fixtureManifestSha256": "d5d6b7af25a3bd09473ef8cc6c29b4c42731ade590ece92fa1fe956384ac475e",
+    "matchesActualR18FixtureManifest": true,
+    "halls": [
+      "hall:01",
+      "hall:02"
+    ],
+    "staffRole": "SALESPERSON",
+    "staffHallSourceKey": "hall:01",
+    "warehouses": [
+      {
+        "sourceKey": "warehouse:01",
+        "hallSourceKey": "hall:01"
+      },
+      {
+        "sourceKey": "warehouse:02",
+        "hallSourceKey": "hall:01"
+      }
+    ],
+    "warehousesInStaffHall": 2,
+    "PGQueries": 0,
+    "serverActions": 0,
+    "sourceChanged": false
+  },
+  "sourceChain": [
+    {
+      "file": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "lines": "275-286",
+      "fact": "Builder staff role/employment/enabled/unique hall guards precede line284 exactly-one warehouse in staff hall; line285 separately requires a warehouse in the other valid hall."
+    },
+    {
+      "file": "packages/application/src/unified-import-contract.ts",
+      "lines": "95-105",
+      "fact": "Warehouse hall_id is non-null UUID reference to hall."
+    },
+    {
+      "file": "tests/fixtures/unified-import/synthetic-package.ts",
+      "lines": "14-23,29-32",
+      "fact": "Required reference defaults to first hall identity; warehouse02 clones warehouse01 including hall_id; staff01 explicitly first hall."
+    },
+    {
+      "file": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "lines": "69-76",
+      "fact": "Fresh35 factory adds hall02 but leaves both warehouse links unchanged; entry invokes exactly targetCapturedAt=null, variant=settlement-retention25."
+    },
+    {
+      "file": "tests/test_fresh35_isolated_launcher.py",
+      "lines": "555-562",
+      "fact": "Existing OrdinaryScenarioConstructionTests scene model explicitly sets warehouse02 to second hall, so its valid scenario differs from committed source fixture."
+    }
+  ],
+  "reproduction": {
+    "nodeCommand": "existing node-v24.21.0-darwin-arm64/bin/node --no-warnings FIXTURE-RELATION-PROBE.mjs",
+    "nodeExitCode": 0,
+    "fixtureManifestExactlyMatchesCommittedBinding": true,
+    "pythonCommand": "python3 -B REPRO.py",
+    "pythonExitCode": 1,
+    "exactRED": {
+      "result": "RED_ACTUAL_BUILDER_GUARD_REPRODUCED",
+      "code": "FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED",
+      "fixtureManifestMatchesActualR18": true,
+      "warehousesInStaffHall": 2,
+      "onlyRelationsOverlaidOnExistingSceneModel": true,
+      "sourceChanged": false,
+      "PGQueries": 0,
+      "serverActions": 0
+    },
+    "PGOrServerAccess": false,
+    "newTestPlatform": false,
+    "modelLimit": "Relation topology from actual frozen fixture overlaid on existing valid scene model, executing real frozen builder. Actual scene row bytes/cardinality were not exported; source mismatch and exact guard reproduction are proven, not a new database read."
+  },
+  "proposedExactWriteLeaves": [
+    {
+      "relativePath": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "fixedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-e7bcc81e803e/tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "bytes": 27211,
+      "sha256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702",
+      "role": "D1 Fresh35-specific fixture factory proposed write"
+    },
+    {
+      "relativePath": "tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs",
+      "fixedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-e7bcc81e803e/tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs",
+      "bytes": 14134,
+      "sha256": "545a0cee1f4d910e8ad6c53ca9b6a5decc40f3aa0c2918c4dcac296785bd3e92",
+      "role": "D1 existing direct fixture test proposed write"
+    }
+  ],
+  "preserveReadOnlyReferences": [
+    {
+      "relativePath": "tests/fixtures/unified-import/synthetic-package.ts",
+      "fixedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-e7bcc81e803e/tests/fixtures/unified-import/synthetic-package.ts",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/fixtures/unified-import/synthetic-package.ts",
+      "bytes": 10922,
+      "sha256": "b751a49537d0144e109673e3a8ffd5f205e5e40880afadbac00634fbaa4a8b82",
+      "role": "Base factory reference only, preserve"
+    },
+    {
+      "relativePath": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "fixedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-e7bcc81e803e/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "bytes": 97626,
+      "sha256": "73c409cfe452329f8887fbdfe2bddccbedda9f26c06183de7017d1d28e72d2b0",
+      "role": "T45 guard read-only preserve"
+    },
+    {
+      "relativePath": "tests/test_fresh35_isolated_launcher.py",
+      "fixedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-e7bcc81e803e/tests/test_fresh35_isolated_launcher.py",
+      "workingPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "bytes": 81106,
+      "sha256": "91876c065e1595d9407318f61047adfd8208b5577bedfd8fcc1195977e7dbbaf",
+      "role": "Existing model read-only reference"
+    }
+  ],
+  "minimalNextFix": {
+    "owner": "Original D1 via C explicit route; T45 does not write fixture leaves",
+    "scope": "Only settlement-retention25 Fresh35 variant: assign precise warehouse:02 hall_id to explicit added hall:02; preserve warehouse01/staff/defaults on hall01, default-variant golden manifest bytes, base factory, capture/evidence, quantities and money. Recompute through existing factory repin flow. No guard change or first-row fallback.",
+    "existingTest": "Add variant-specific one-warehouse-per-hall topology assertion in existing whole-package-fresh35-synthetic.test.mjs; retain current default two golden hashes and existing retention/identity/evidence guards."
+  },
+  "runtimeUnknowns": [
+    "Actual returned scene row values were not captured or exported",
+    "Corrected fixture/ordinary scenario and business flow not yet run on actual PostgreSQL17.11"
+  ],
+  "boundaries": {
+    "sourceChanged": false,
+    "newServerOrLogJob": false,
+    "PGQueries": 0,
+    "newPG": false,
+    "normalImportReplayed": false,
+    "businessMappingOrPermissionChanged": false,
+    "buildOrDeploy": false,
+    "REALOrProduction": false
+  },
+  "artifacts": [
+    {
+      "name": "FIXTURE-RELATION-PROBE.mjs",
+      "bytes": 1428,
+      "sha256": "86fbe02a230db45131db25fbf9289f53ca87df2261e6515f0aa0bdb68f0836eb"
+    },
+    {
+      "name": "FIXTURE-RELATIONS.json",
+      "bytes": 448,
+      "sha256": "1a58ddd2747b9feb6b4b75c287d2f46d9725daa47beba5491471ed66befca8c8"
+    },
+    {
+      "name": "REPRO.py",
+      "bytes": 1738,
+      "sha256": "ea5ff89b01b87965134984c2cd95bec64106c54d83044e15379c731ec160a925"
+    },
+    {
+      "name": "RED-RESULT.json",
+      "bytes": 292,
+      "sha256": "3fe68103f97fba7bbab06843eb4fc144605213ffeca730db26676aa117084bf1"
+    }
+  ]
+}
