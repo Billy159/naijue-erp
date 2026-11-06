@@ -1,6 +1,27 @@
 import {requestHash} from '../packages/application/src/request-hash.ts';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
 import {isolatedClientOptions,isolatedEntryFailure} from '../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs';
+test('normal COMMITTED-only guard retains original branded result diagnostics and rejects unknown or already committed without retry (no PG)',async()=>{
+ const {executeWholePackage,describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
+ const source=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8');
+ const line=source.split('\n').find(l=>l.includes('SYNTHETIC_IMPORT_COMMIT_REQUIRED')&&l.includes('result.state'));assert(line);
+ const guard=new Function('result','need',line),need=new Function(source.split('\n').find(l=>l.startsWith('const need='))+';return need')();
+ const meta={batchId:'11111111-1111-4111-8111-111111111111',documentBatchId:'22222222-2222-4222-8222-222222222222',packageSha256:'a'.repeat(64),planSha256:'b'.repeat(64),namespace:'synthetic',cutoffAt:'2026-11-02T04:00:00Z'};
+ const request=(n,batch,payload)=>({protocol:'STANDARD_IMPORT_SQL_V1',operation_id:'00000000-0000-4000-8000-'+String(n).padStart(12,'0'),request_key:'diagnostic-'+n,batch_id:batch,plan_sha256:meta.planSha256,package_manifest_sha256:meta.packageSha256,namespace:meta.namespace,cutoff_at:meta.cutoffAt,payload});
+ for(const mode of ['COMMITTED','ROLLED_BACK','UNKNOWN','ALREADY_COMMITTED']){
+  const calls=[];let discarded=0;const client={async query(sql){calls.push(sql);if(mode==='UNKNOWN'&&sql==='COMMIT')throw Error('PRIVATE transport detail');return{command:sql==='SET CONSTRAINTS ALL IMMEDIATE'?'SET':sql.startsWith('BEGIN')?'BEGIN':sql}},async discard(){discarded++}};
+  const kernel={async lockAndInspect(){return mode==='ALREADY_COMMITTED'?{state:'COMMITTED',packageSha256:meta.packageSha256,planSha256:meta.planSha256,summary:{PRIVATE:'not exported'}}:{state:'ABSENT'}},async initialize(){},async applyStep(){if(mode==='ROLLED_BACK')throw Object.assign(Error('HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED'),{code:'23514',detail:'PRIVATE SQL values'})},async summarize(){return{PRIVATE:'not exported'}}};
+  async function* steps(){yield{method:'publish',request:request(2,meta.batchId,{phase:'BASELINE'})};yield{method:'documentChunk',request:request(3,meta.documentBatchId,{mode:'STAGE',rows:[]})};yield{method:'publish',request:request(4,meta.documentBatchId,{phase:'DOCUMENTS'})}}
+  const result=await executeWholePackage(client,meta,request(1,meta.batchId,{document_batch_id:meta.documentBatchId}),steps(),kernel);assert.equal(result.state,mode);
+  if(mode==='COMMITTED'){assert.doesNotThrow(()=>guard(result,need));continue;}
+  let error;try{guard(result,need)}catch(e){error=e}assert(error);assert.equal(error.message,'FRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED');assert.equal(error.validationResult,result,'retain the genuine WeakMap key, never a reconstructed DTO');
+  const receipt=isolatedEntryFailure(error),diagnostic=describeWholePackageFailure(result);assert.equal(Object.keys(receipt).length,15);assert.equal(receipt.validationStage,null);
+  assert.equal(receipt.validationCode,mode==='ALREADY_COMMITTED'?'UNEXPECTED_ALREADY_COMMITTED':result.code);assert.equal(receipt.validationSQLSTATE,diagnostic?.sqlState??null);assert.equal(receipt.validationStep,diagnostic?.stage??null);assert.equal(receipt.validationInternalCode,diagnostic?.staticCode??null);
+  assert.doesNotMatch(JSON.stringify(receipt),/PRIVATE|summary|detail|SQL values|stack/);
+  if(mode==='UNKNOWN'){assert.equal(discarded,1);assert.equal(calls.includes('ROLLBACK'),false);assert.equal(receipt.validationStep,'COMMIT');}
+  if(mode==='ROLLED_BACK'){assert.equal(calls.at(-1),'ROLLBACK');assert.equal(receipt.validationSQLSTATE,'23514');assert.equal(receipt.validationStep,'STEP');}
+ }
+});
 test('rollback CLI uses sequential native wires for every expected SQL error and independent absence readback (no PG)',async()=>{
  const {Client}=await import('pg'),{withReviewedWholeSession}=await import('../tools/unified-import/whole-host-session.mjs');
  const {executeWholePackage}=await import('../tools/unified-import/whole-package-client.ts'),{inspectWholePackage}=await import('../tools/unified-import/whole-package-inspect.ts');

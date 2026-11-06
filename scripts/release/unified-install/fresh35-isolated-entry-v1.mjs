@@ -146,7 +146,7 @@ export async function main(){
     const before=await inspectWholePackage(client,fixture.identity,fixture.program.initialize,createWholePackageSqlKernel(encodedScrypt));
     need(before.state==='ABSENT','SYNTHETIC_FAILED_BATCH_ABSENCE_REQUIRED');
     const result=await executeWholePackage(client,fixture.identity,fixture.program.initialize,fixture.program.steps,createWholePackageSqlKernel(encodedScrypt));
-    need(result.state==='COMMITTED','SYNTHETIC_IMPORT_COMMIT_REQUIRED');
+    if(result.state!=='COMMITTED')throw Object.assign(Error('FRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED'),{validationResult:result,validationCode:result.state==='ALREADY_COMMITTED'?'UNEXPECTED_ALREADY_COMMITTED':result.code});
     return {state:result.state};
    });
    need(imported.cleanup==='CLOSED','CONTROLLER_HOST_CLEANUP_UNCONFIRMED');
