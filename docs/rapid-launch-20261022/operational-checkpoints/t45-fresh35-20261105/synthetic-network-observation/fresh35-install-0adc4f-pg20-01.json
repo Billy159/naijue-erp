@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "0c4a17d55212fde7c6a4dc5347a236b09985fcb095fab6a9bfa5b218816347d8",
+  "sourceSetSha256": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+  "targetSha256": "d8266bc7ceacedfa8ff1a08f8a13ebf9ef8215827d9f502ebb275cbec7284e43",
+  "startsAt": 1793942568412,
+  "expiresAt": 1793943768412,
+  "independentSafetyReviewSha256": "56a71a97386ad7f748f55d1957d4fd33099f972e422689a334b3f8dd088bda44",
+  "authorizationReference": "C binds standing human same-kind bounded isolated authority, not expired noon delegation. Exactr13 starte5641850/CID3d131e28/SID7704924895025283119/OID16393/birth05:23:46.483047UTC; root0adc/source d411/program0c4a/targetd826. SamePG20 deadline1793943768412. Originalinstall/negative/synthetic25/ordinarybusiness/readback/probe/ownedcleanup. NoREAL/production/oldtarget/replay/windowextension; all identity/permission/rollback guards retained."
+}

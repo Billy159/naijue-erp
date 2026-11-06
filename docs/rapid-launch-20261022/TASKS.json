@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T13:23:29+08:00",
+    "at": "2026-11-06T13:26:02+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -30637,7 +30637,7 @@
       },
       "supersededNextPreserved": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay.",
       "r13Preparation": {
-        "state": "ACTUAL_MATERIALIZATION_AND_RESOURCES_PASS_ORIGINAL_NEW_PG20_AUTHORIZED",
+        "state": "ACTUAL_TARGET_STARTED_ACCURATE_ORIGINAL_C9_BOUND_INSTALL_REQUESTED",
         "integration": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
         "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
         "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
@@ -30654,7 +30654,7 @@
         "QB": "Original QB fiveleaf only; author direct/native model evidence reused",
         "D2": "Original one full build/exact byte prefix and tail from actual b8 base",
         "T45": "No new environment submitted until fixed QA/build and exact fresh scope",
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
         "QBReceiptSHA256": "56a71a97386ad7f748f55d1957d4fd33099f972e422689a334b3f8dd088bda44",
@@ -30699,7 +30699,21 @@
         "provisionSHA256": "bbe0ef5208d68906f44d63a28a4a77a9d95c44ed99a4b5c52077a946d97666f3",
         "provisionStartsAt": 1793942568412,
         "provisionExpiresAt": 1793943768412,
-        "materializationMeasuredSecondsUpdatedWithoutLimitChange": true
+        "materializationMeasuredSecondsUpdatedWithoutLimitChange": true,
+        "startReceiptSHA256": "e5641850a4cb982826f30a8f7d872a48ff32476818433eaee2625541828b6bcf",
+        "startExitCode": 0,
+        "startSeconds": 35.69622546387836,
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 05:23:46.483047+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704924895025283119"
+        },
+        "containerId": "3d131e2821fec03d3918a7a83b8d6824a809162c93ec84006b7f20b5d2337ab2",
+        "programSHA256": "0c4a17d55212fde7c6a4dc5347a236b09985fcb095fab6a9bfa5b218816347d8",
+        "targetSHA256": "d8266bc7ceacedfa8ff1a08f8a13ebf9ef8215827d9f502ebb275cbec7284e43",
+        "installAuthoritySHA256": "1835dd6eed208ef617afa3de9d0e6dbc3b68fa1e3b5c6abf6c4324f96a05b5f9",
+        "wholeChainPassed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31108,12 +31122,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T13:23:29+08:00",
-      "phase": "ACTUAL_MATERIALIZATION_AND_RESOURCES_PASS_ORIGINAL_NEW_PG20_AUTHORIZED",
+      "at": "2026-11-06T13:26:02+08:00",
+      "phase": "ACTUAL_TARGET_STARTED_ACCURATE_ORIGINAL_C9_BOUND_INSTALL_REQUESTED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 original fresh r13 isolated container start",
-      "nextOwner": "C accurate original C9 after actual physical/program identity",
+      "currentOwner": "T45 original one actual install/negative/synthetic/ordinary/readback/probe/cleanup",
+      "nextOwner": "D1 only if precise new actual failure;D3/QF after admitted real target/normal host",
       "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31123,7 +31137,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Use new20min unchanged2CPU3GiB/PID256/2DO scope. Actual physical target required before original C9/install/negative/synthetic/ordinary/readback. No REAL/production/replay.",
+      "next": "Await original actual install staged result; preserve original first error, committed status, UNKNOWN and cleanup accurately. No changed assertions/replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
       "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
