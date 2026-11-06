@@ -1,0 +1,108 @@
+{
+  "status": "SOURCE_ONLY_CLOSED_ORDINARY_FAILURE_CHANNEL_FIXED_SCOPED_OFFLINE_PASS_NOT_LINUX_PG_VERIFIED",
+  "recordedAtUTC": "2026-11-06T12:36:30.809955+00:00",
+  "owner": "Original T45 exactly two registered leaves; no Git commit; C freezes three leaves with original D1",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSHA256": "5a01a45bf215ed9aa9eeb211aec96f497e08f68241f4d837173f79b3c50b8ac0",
+      "beforeBytes": 97626,
+      "afterSHA256": "3eef7c05f503a74c12a3a9dc9f62641b0a88b8b8846add10e1b19929f3657654",
+      "afterBytes": 102421
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "beforeSHA256": "eb5ec619fe18e547dec2031b1438a5fd05b874676d3d12985b55a014f9bb6db6",
+      "beforeBytes": 82642,
+      "afterSHA256": "b7eb4a8578f3913b7f2000d09e715e3a69a07add6c16a2b73da1746fa70e1e32",
+      "afterBytes": 90592
+    }
+  ],
+  "D1ReadOnlyInterface": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R20-ORDINARY-FAILURE-DIAGNOSTIC-SOURCE-01/INTERFACE.json",
+    "sha256": "bfa38bcddc7ad47f63fccba282cee348765ce2bcd8d736c49ada338361506196",
+    "integrationSourceSHA256": "e8f77c349c06caab57e6eed89a2afac277ab1fb93c0ff58955dfebf2b624ae6c",
+    "finiteListsMatch": true,
+    "D1HelperTestsAdoptedNotRepeated": true
+  },
+  "scope": {
+    "production": "Only finite diagnostic constants/decoder, original fixed eval catch/entry phases, original parent failure record; successful exact wire and4096 bound unchanged",
+    "inverseOutsideExactProductionSeamsRestoresParentBytes": true,
+    "testsChangedClasses": [
+      "OrdinaryBusinessFlowTests"
+    ],
+    "otherTestClassesUnchanged": true,
+    "entryPhases": [
+      "UID_CHECK",
+      "PRIVATE_CONTEXT",
+      "PRIVATE_PATHS",
+      "CAPACITY_BINDING",
+      "CREDENTIAL_TAG_IMPORT",
+      "CREDENTIAL_TAG_READ",
+      "INTEGRATION_IMPORT",
+      "INTEGRATION_CALL"
+    ],
+    "failureWireKeys": [
+      "state",
+      "automaticRetry",
+      "diagnostic",
+      "entryFailure"
+    ],
+    "brandedD1Diagnostic": "Only D1 private WeakMap reader; null remains null; entry failure distinct format/source",
+    "unknown": "childDiagnosticUnavailable=true; no raw data retained or inferred outcome",
+    "preserved": [
+      "success strict equality",
+      "4096 stdout ceiling",
+      "duplicate/nonfinite JSON refusal",
+      "original retry prohibition",
+      "guardian and owned-child cleanup",
+      "caps/permissions/SQL/business assertions/fixtures"
+    ]
+  },
+  "validation": {
+    "red": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py OrdinaryBusinessFlowTests.test_closed_child_failure_survives_parent_and_cleanup_without_private_text -v",
+      "exitCode": 1,
+      "failure": "KeyError childFailure"
+    },
+    "greenSameRegressionExitCode": 0,
+    "affected": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py OrdinaryScenarioPreparationTests OrdinaryBusinessFlowTests -v",
+      "exitCode": 0,
+      "tests": 18,
+      "reportedSeconds": 0.271
+    },
+    "finalSmallReaderScopeAdjustment": {
+      "command": "python3 -B tests/test_fresh35_isolated_launcher.py OrdinaryBusinessFlowTests.test_generated_entry_catch_keeps_pre_reader_phase_without_private_text -v",
+      "exitCode": 0,
+      "tests": 1,
+      "actualGeneratedNodeCases": [
+        "UID_CHECK/Error",
+        "PRIVATE_CONTEXT/SyntaxError"
+      ],
+      "note": "Original generated eval executed locally; no D1 module/business/PG invoked. Catch-accessible reader and unavailable reader both use closed entry channel."
+    },
+    "gitDiffCheckExitCode": 0,
+    "negativeCases": "Malformed/duplicate/nonfinite/empty/over4096, extra fields, unknown phase/type/source/code, unbranded, invalid/bool/fractional/out-of-range integer pairs, forged success fields; no sentinel/stdout/stderr exposure; cleanup and no replay retained"
+  },
+  "patchSHA256": "83592eedebba8540b0a9e185c4ac5f112a6b9bd079b2c1c1807918e46932ea43",
+  "parentR20SafeResultSHA256": "62d7b09bbb60dd989d1be33edfeab9a8389443989805179edd9ef1e6c7fa5a34",
+  "parentDiagnosisSHA256": "46237eaee83d2600a1b42dfc0522ed599b410481f6938c7ce11dc1e02e6d0773",
+  "boundaries": {
+    "D1FileWritten": false,
+    "serverRequests": 0,
+    "PGConnections": 0,
+    "buildDeploy": false,
+    "permissionsOrCapsChanged": false,
+    "oldKeysReplayed": false,
+    "REALOrFormalChanged": false,
+    "gitCommitPerformed": false
+  },
+  "notVerified": [
+    "Corrected actual Linux/PG ordinary chain and underlying r20 business failure cause",
+    "Any particular r20 ordinary request commit status",
+    "Browser/page restoration or production acceptance"
+  ],
+  "next": "C exact three-leaf freeze, original QB one incremental source review and D2 one necessary build. No server action authorized by this source-only delivery.",
+  "actualModelEffortFast": "UNVERIFIED"
+}

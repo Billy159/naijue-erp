@@ -334,25 +334,58 @@ def ordinary_child_process(proc):
     need(identity['exe']==str(NODE) and fields[0] not in ['Z','X'] and fields[1]==str(os.getpid()) and fields[19]==identity['starttime'] and re.fullmatch('[a-f0-9-]{36}',boot),'ORDINARY_NODE_CHILD_IDENTITY_DIFFERS')
     return {'pid':proc.pid,'linuxStartTicks':identity['starttime'],'linuxBootId':boot}
 
+ORDINARY_FAILURE_PHASES = ('PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL')+tuple(name+':'+step for name in ('salesPositive','salesMixed','transfer') for step in ('PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'))
+ORDINARY_ENTRY_PHASES = ('UID_CHECK','PRIVATE_CONTEXT','PRIVATE_PATHS','CAPACITY_BINDING','CREDENTIAL_TAG_IMPORT','CREDENTIAL_TAG_READ','INTEGRATION_IMPORT','INTEGRATION_CALL')
+ORDINARY_ERROR_TYPES = ('Error','AssertionError','TypeError','RangeError','SyntaxError')
+ORDINARY_GUARD_CODES = ('ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED')
+ORDINARY_SQLSTATES = ('42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','28P01','3D000','53300','57P01','08006')
+ORDINARY_ERRNOS = ('EACCES','EPERM','ENOENT','ELOOP','ENOTDIR','ECONNREFUSED','ECONNRESET','ETIMEDOUT','EPIPE','EHOSTUNREACH','ENETUNREACH','EADDRINUSE')
+ORDINARY_EXPECTED_INTEGERS = (0,1,2,3,4,5,6,14,23,200,403,404,500,61035)
+
+def ordinary_failure_diagnostic(value):
+    # Decode only the fixed child's closed error wire; never retain its text.
+    nullable=lambda v,allowed:v is None or (type(v) is str and v in allowed)
+    if type(value) is not dict or set(value)!={'state','automaticRetry','diagnostic','entryFailure'}:return None
+    if value['state']!='FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN' or value['automaticRetry'] is not False:return None
+    d=value['diagnostic'];entry=value['entryFailure']
+    if d is not None:
+        if entry is not None or type(d) is not dict or set(d)!={'format','phase','source','errorType','guardCode','sqlstate','errno','expectedInteger','actualInteger'}:return None
+        if d['format']!='FRESH35_ORDINARY_FAILURE_V1' or d['source'] not in ('runFresh35OrdinaryIntegration:catch','runFresh35OrdinaryIntegration:cleanup'):return None
+        if not all(nullable(d[k],allowed) for k,allowed in [('phase',ORDINARY_FAILURE_PHASES),('errorType',ORDINARY_ERROR_TYPES),('guardCode',ORDINARY_GUARD_CODES),('sqlstate',ORDINARY_SQLSTATES),('errno',ORDINARY_ERRNOS)]):return None
+        expected=d['expectedInteger'];actual=d['actualInteger']
+        if not (expected is None and actual is None) and not (d['errorType']=='AssertionError' and type(expected) is int and expected in ORDINARY_EXPECTED_INTEGERS and type(actual) is int and 0<=actual<=65535):return None
+        return {'childFailure':dict(d)}
+    if entry is not None:
+        if type(entry) is not dict or set(entry)!={'format','phase','source','errorType','guardCode','errno'}:return None
+        if entry['format']!='FRESH35_ORDINARY_ENTRY_FAILURE_V1' or entry['source']!='ordinary_runner_arguments:catch' or not (type(entry['phase']) is str and entry['phase'] in ORDINARY_ENTRY_PHASES):return None
+        if not all(nullable(entry[k],allowed) for k,allowed in [('errorType',ORDINARY_ERROR_TYPES),('guardCode',ORDINARY_GUARD_CODES),('errno',ORDINARY_ERRNOS)]):return None
+        return {'entryFailure':dict(entry)}
+    return None
+
 def ordinary_runner_arguments(a, root):
     # Fixed dormant call seam. No CLI runner/path/callback and no alternate
     # capacity admission. A complete original private context must be supplied
     # on stdin after the real child and reviewed collector/profile are bound.
     runner=(DEPLOY/'tests/integration/live-ledger-balance-pairs.integration.test.ts').as_uri()
-    script=("import {readFileSync} from 'node:fs';"
-            "try{if(process.getuid?.()!=="+str(a['postgresUid'])+"||process.geteuid?.()!=="+str(a['postgresUid'])+"||process.getgid?.()!=="+str(a['postgresGid'])+")throw Error('ORDINARY_OS_UID_REQUIRED');"
-            "const c=JSON.parse(readFileSync(0,'utf8'));"
+    script=("import {readFileSync} from 'node:fs';import {isNativeError} from 'node:util/types';import {AssertionError} from 'node:assert';"
+            "let readFailure=null,phase='UID_CHECK';try{if(process.getuid?.()!=="+str(a['postgresUid'])+"||process.geteuid?.()!=="+str(a['postgresUid'])+"||process.getgid?.()!=="+str(a['postgresGid'])+")throw Error('ORDINARY_OS_UID_REQUIRED');"
+            "phase='PRIVATE_CONTEXT';const c=JSON.parse(readFileSync(0,'utf8'));"
             "if(!c||Object.keys(c).sort().join(',')!=='capacityLaunch,configuration,privateScenarioFile,publication,staffCredentialRequestTag'||c.staffCredentialRequestTag!==null||c.configuration?.staffMaintenance!==true)throw Error('PRIVATE_CONTEXT_UNAVAILABLE');"
-            "if(c.privateScenarioFile!=="+json.dumps(str(root/'ordinary-private'/ORDINARY_SCENARIO_NAME))+")throw Error('FIXED_PRIVATE_SCENARIO_REQUIRED');"
+            "phase='PRIVATE_PATHS';if(c.privateScenarioFile!=="+json.dumps(str(root/'ordinary-private'/ORDINARY_SCENARIO_NAME))+")throw Error('FIXED_PRIVATE_SCENARIO_REQUIRED');"
             "if(c.configuration.staffCredentialRequestKeyFile!=="+json.dumps(str(root/'ordinary-private'/ORDINARY_CREDENTIAL_KEY_NAME))+")throw Error('FIXED_CREDENTIAL_REQUEST_KEY_REQUIRED');"
-            "const stat=readFileSync('/proc/self/stat','utf8'),ticks=stat.slice(stat.lastIndexOf(')')+2).split(/\\s+/)[19],boot=readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim(),p=c.capacityLaunch?.process;"
+            "phase='CAPACITY_BINDING';const stat=readFileSync('/proc/self/stat','utf8'),ticks=stat.slice(stat.lastIndexOf(')')+2).split(/\\s+/)[19],boot=readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim(),p=c.capacityLaunch?.process;"
             "if(!p||p.pid!==process.pid||p.linuxStartTicks!==ticks||p.linuxBootId!==boot||c.capacityLaunch?.window?.binding?.processInstanceId!==`${boot}:${process.pid}:${ticks}`)throw Error('REAL_CHILD_CAPACITY_BINDING_REQUIRED');"
-            "const {readProductionStaffCredentialRequestTag}=await import('"+(DEPLOY/'apps/api/src/production-main.ts').as_uri()+"');"
-            "const tag=await readProductionStaffCredentialRequestTag(c.configuration);if(typeof tag!=='function')throw Error('REAL_CREDENTIAL_REQUEST_TAG_REQUIRED');"
-            "const {runFresh35OrdinaryIntegration}=await import('"+runner+"');"
-            "await runFresh35OrdinaryIntegration({...c,staffCredentialRequestTag:tag});"
+            "phase='CREDENTIAL_TAG_IMPORT';const {readProductionStaffCredentialRequestTag}=await import('"+(DEPLOY/'apps/api/src/production-main.ts').as_uri()+"');"
+            "phase='CREDENTIAL_TAG_READ';const tag=await readProductionStaffCredentialRequestTag(c.configuration);if(typeof tag!=='function')throw Error('REAL_CREDENTIAL_REQUEST_TAG_REQUIRED');"
+            "phase='INTEGRATION_IMPORT';const {runFresh35OrdinaryIntegration,describeFresh35OrdinaryFailure}=await import('"+runner+"');readFailure=describeFresh35OrdinaryFailure;"
+            "phase='INTEGRATION_CALL';await runFresh35OrdinaryIntegration({...c,staffCredentialRequestTag:tag});"
             "process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_RUNNER_COMPLETED',connectionCleanup:'CLOSED',browserVerified:false,networkVerified:false,productionVerified:false})+'\\n');"
-            "}catch{process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN',automaticRetry:false})+'\\n');process.exitCode=1;}")
+            "}catch(error){const diagnostic=typeof readFailure==='function'?readFailure(error):null,native=isNativeError(error);"
+            "const own=k=>{try{const d=Object.getOwnPropertyDescriptor(error,k);return d&&'value'in d?d.value:undefined;}catch{return undefined;}};"
+            "const code=native?own('code'):undefined,pick=(allowed,v)=>typeof v==='string'&&allowed.includes(v)?v:null;"
+            "const errorType=!native?null:error instanceof AssertionError?'AssertionError':error instanceof TypeError?'TypeError':error instanceof RangeError?'RangeError':error instanceof SyntaxError?'SyntaxError':'Error';"
+            "const entryFailure=diagnostic===null?{format:'FRESH35_ORDINARY_ENTRY_FAILURE_V1',phase,source:'ordinary_runner_arguments:catch',errorType,guardCode:pick("+json.dumps(ORDINARY_GUARD_CODES)+",code),errno:pick("+json.dumps(ORDINARY_ERRNOS)+",code)??(native?pick("+json.dumps(ORDINARY_ERRNOS)+",own('errno')):null)}:null;"
+            "process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN',automaticRetry:false,diagnostic,entryFailure})+'\\n');process.exitCode=1;}")
     return [str(NODE),'--no-global-search-paths','--input-type=module','--eval',script]
 
 def ordinary_runner_launch(a,root):
@@ -418,7 +451,7 @@ def prepare_ordinary_capacity(a,target,descriptor,root,child,facts,scene,configu
     return {'schemaVersion':1,'profile':'OWNER_REVIEWED_CAPACITY_EXEC_V1','target':t,'window':{'approved':True,'token':token,'inventoryObservedAt':observed,'startsAt':starts,'expiresAt':expires,'binding':binding},'process':process,'budgets':{'session':{'maxAdmissions':64,'maxInFlight':1,'worstCaseBytes':dict(worst)},'upload':{'maxAdmissions':1,'maxInFlight':1,'worstCaseBytes':dict(worst)}},'minimumFreeBytes':{k:'67108864' for k in volumes},'safetyBytes':{k:'8388608' for k in volumes},'probeTtlMillis':30000,'probeTimeoutMillis':20000,'maxProbeWaiters':1,'retryAfterSeconds':1,'producer':{'executable':str(DEPLOY/'scripts/ops/capacity-live-statfs.mjs'),'sha256':CAPACITY_COLLECTOR_SHA,'args':['--profile='+hashlib.sha256(data).hexdigest()],'timeoutMillis':15000,'maxOutputBytes':65536,'reviewSha256':CAPACITY_REVIEW_SHA,'volumes':{k:{n:v[n] for n in ['path','physicalVolume','namespace']} for k,v in volumes.items()}}}
 
 def run_ordinary_business(a,target,descriptor,root,scene,configuration,application_password,watch,deadline):
-    child=None;identity=None;phase='PRIVATE_SCENARIO';result=None;reaped=False
+    child=None;identity=None;phase='PRIVATE_SCENARIO';result=None;reaped=False;child_failure=None
     def remaining():
         need(watch.poll() is None and time.monotonic()<deadline-90,'ORDINARY_ORIGINAL_WINDOW_OR_GUARDIAN_LOST')
         return deadline-time.monotonic()-90
@@ -437,10 +470,13 @@ def run_ordinary_business(a,target,descriptor,root,scene,configuration,applicati
         stdout,stderr=child.communicate(input=wire,timeout=remaining());wire=None;context=None;configuration=None
         need(len(stdout)<=4096,'ORDINARY_PUBLIC_RESULT_BOUND')
         returned=strict_json(stdout)
+        if child.returncode!=0:child_failure=ordinary_failure_diagnostic(returned)
         need(child.returncode==0 and returned=={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False},'ORDINARY_FAILED_OR_OUTCOME_UNKNOWN')
         result={**returned,'sourceSetSha256':descriptor['sourceSetSha256'],'programSha256':descriptor['programSha256'],'targetSha256':descriptor['targetSha256'],'sourceCommit':capacity['window']['binding']['candidateFingerprint'],'capacityProfileSha256':capacity['producer']['args'][0].removeprefix('--profile='),'capacityReviewSha256':CAPACITY_REVIEW_SHA,'childProcess':process,'syntheticOnly':True}
     except Exception as error:
-        json_new(root/'ordinary-failure.json',{'state':'FAILED_OR_OUTCOME_UNKNOWN','phase':phase,'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY'})
+        failure={'state':'FAILED_OR_OUTCOME_UNKNOWN','phase':phase,'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY','childDiagnosticUnavailable':child_failure is None}
+        if child_failure is not None:failure.update(child_failure)
+        json_new(root/'ordinary-failure.json',failure)
         raise
     finally:
         if child is not None:

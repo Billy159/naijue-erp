@@ -1,0 +1,281 @@
+{
+  "format": "D1_R20_ORDINARY_FAILURE_DIAGNOSTIC_SOURCE_DELIVERY_V1",
+  "status": "SINGLE_TS_LEAF_FROZEN_CLOSED_INTERFACE_OFFLINE_PASS_NATIVE_NOT_RUN",
+  "recordedAt": "2026-11-06T20:35:01.892477+08:00",
+  "sourceRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "actualModelEffortFast": "UNVERIFIED",
+  "authority": "Original C explicitly assigned exact singleTS leaf as unique D1 writer for r20 ordinary diagnostic delta, adopted closed9key WeakMap interface. Original T45 alone owns launcher/pytests. Original user continuous role/report authorization relayed by C.",
+  "files": [
+    {
+      "path": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "beforeSHA256": "ca76da57896c8a8d47a313db481b628698d2176bc2bdcec43215910dec99b3b6",
+      "beforeBytes": 68300,
+      "afterSHA256": "e8f77c349c06caab57e6eed89a2afac277ab1fb93c0ff58955dfebf2b624ae6c",
+      "afterBytes": 76369
+    }
+  ],
+  "sourceSetAndIntegrationRoot": "NOT_FROZEN_BY_D1; C merges this TS leaf with concurrent originalT45 two leaves and binds full closure once.",
+  "actualR20Preserved": {
+    "readonlyResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r20-ordinary-retained-readonly-01/RESULT.json",
+    "readonlyResultSHA256": "46237eaee83d2600a1b42dfc0522ed599b410481f6938c7ce11dc1e02e6d0773",
+    "originalRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
+    "parentInstallRawSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
+    "normalImport": "COMMITTED/ALREADY_COMMITTED/VERIFIED with25headers/27settlements; original rollback/readback evidence reused",
+    "ordinaryRootCause": "UNKNOWN_NOT_RETAINED",
+    "ordinaryRequestReceiptStatus": "UNKNOWN_MAY_HAVE_COMMITTED_NO_REPLAY",
+    "exactPastInnerPhase": "NOT_RETAINED",
+    "oldTargetOrKeyReplay": false
+  },
+  "implemented": {
+    "export": "describeFresh35OrdinaryFailure(error)",
+    "retention": "Original acceptance catch and cleanup attach only a frozen closed descriptor to the final existinggeneric Error through private WeakMap. Original raw error is never attached as cause or retained. Reader returns null for arbitrary objects/errors/clones.",
+    "interface": {
+      "export": "describeFresh35OrdinaryFailure",
+      "call": "describeFresh35OrdinaryFailure(error)",
+      "return": "Readonly<Fresh35OrdinaryFailure>|null",
+      "onlyGenuineCatchOrCleanupError": true,
+      "keys": [
+        "format",
+        "phase",
+        "source",
+        "errorType",
+        "guardCode",
+        "sqlstate",
+        "errno",
+        "expectedInteger",
+        "actualInteger"
+      ],
+      "format": "FRESH35_ORDINARY_FAILURE_V1",
+      "nullableFields": [
+        "phase",
+        "errorType",
+        "guardCode",
+        "sqlstate",
+        "errno",
+        "expectedInteger",
+        "actualInteger"
+      ],
+      "source": [
+        "runFresh35OrdinaryIntegration:catch",
+        "runFresh35OrdinaryIntegration:cleanup"
+      ],
+      "phase": [
+        "PRIVATE_INPUT",
+        "REAL_CAPACITY",
+        "REAL_SYNTHETIC_ADMISSION",
+        "REAL_ADMIN_ACCOUNT_SETUP",
+        "AUTHENTICATED_SCOPE_DENIAL",
+        "salesPositive:PREPARE",
+        "salesPositive:SAVE",
+        "salesPositive:APPROVE",
+        "salesPositive:UNAPPROVE",
+        "salesPositive:REOPEN",
+        "salesPositive:REAL_ROLLBACK",
+        "salesPositive:LOST_COMMIT_ACK",
+        "salesPositive:DETAIL",
+        "salesMixed:PREPARE",
+        "salesMixed:SAVE",
+        "salesMixed:APPROVE",
+        "salesMixed:UNAPPROVE",
+        "salesMixed:REOPEN",
+        "salesMixed:REAL_ROLLBACK",
+        "salesMixed:LOST_COMMIT_ACK",
+        "salesMixed:DETAIL",
+        "transfer:PREPARE",
+        "transfer:SAVE",
+        "transfer:APPROVE",
+        "transfer:UNAPPROVE",
+        "transfer:REOPEN",
+        "transfer:REAL_ROLLBACK",
+        "transfer:LOST_COMMIT_ACK",
+        "transfer:DETAIL"
+      ],
+      "errorType": [
+        "AssertionError",
+        "TypeError",
+        "RangeError",
+        "SyntaxError",
+        "Error"
+      ],
+      "guardCode": [
+        "ERR_ASSERTION",
+        "ERR_INVALID_ARG_TYPE",
+        "ERR_INVALID_ARG_VALUE",
+        "ERR_OUT_OF_RANGE",
+        "ERR_MODULE_NOT_FOUND",
+        "ERR_UNKNOWN_FILE_EXTENSION",
+        "ERR_ACCESS_DENIED"
+      ],
+      "sqlstate": [
+        "42601",
+        "42702",
+        "42501",
+        "42P01",
+        "42703",
+        "42883",
+        "23502",
+        "23503",
+        "23505",
+        "23514",
+        "22012",
+        "22P02",
+        "40001",
+        "40P01",
+        "57014",
+        "55P03",
+        "28P01",
+        "3D000",
+        "53300",
+        "57P01",
+        "08006"
+      ],
+      "errno": [
+        "EACCES",
+        "EPERM",
+        "ENOENT",
+        "ELOOP",
+        "ENOTDIR",
+        "ECONNREFUSED",
+        "ECONNRESET",
+        "ETIMEDOUT",
+        "EPIPE",
+        "EHOSTUNREACH",
+        "ENETUNREACH",
+        "EADDRINUSE"
+      ],
+      "integerPair": {
+        "actualNativeAssertionError": true,
+        "operator": "strictEqual",
+        "expectedInteger": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          14,
+          23,
+          200,
+          403,
+          404,
+          500,
+          61035
+        ],
+        "actualInteger": {
+          "minimum": 0,
+          "maximum": 65535,
+          "safeInteger": true
+        },
+        "invalidEither": "both null"
+      },
+      "noReadOrOutput": [
+        "message",
+        "stack",
+        "cause",
+        "params",
+        "query",
+        "native detail",
+        "business records",
+        "business amount strings or BigInt"
+      ],
+      "classification": "isNativeError plus own data properties and exact finite membership; getter fields and plain error-shaped objects ignored; no regex classifications",
+      "unknown": "null, never inferred from expected source",
+      "failureAndReplaySemantics": "still throw; no new business success/retry/replay; cleanup preserves first error"
+    },
+    "captureSourceSemantics": "source names the fixed capture boundary (function catch or cleanup), not an inferred original throw line, native SQL location or service root cause.",
+    "existingSemantics": {
+      "originalBusinessFunctionExactExceptCatchCleanupRetention": true,
+      "originalBusinessAssertionsUnchanged": 102,
+      "originalDirectTestsPreserved": true,
+      "cleanupNullishFirstFailurePreserved": true,
+      "originalFinalIfFailureThrowPreserved": true,
+      "originalRunLiveLedgerFunctionUnchanged": true,
+      "sameRunAndCleanupOrder": true,
+      "noQuerySQLOrBusinessRuleChange": true,
+      "nativeDatabaseOrServerCheck": "NOT_RUN"
+    }
+  },
+  "authorChecks": {
+    "beforeRegression": "RED reader absent and no consumable original catch descriptor",
+    "after": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0,
+      "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=fresh35 ordinary failure descriptor tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "scope": [
+        "actual original invalid-input function still rejects before any PG with branded PRIVATE_INPUT/TypeError/catch descriptor",
+        "native finite SQLSTATE/errno/Nodecode/class plus bounded strictEqual integer pair and all29original phases",
+        "unbranded objects/clones, arbitrary five-character codes, unknown user codes, getters, message/stack/cause/query/params/nested business values, string/BigInt/nonfinite/out-of-bound assertion values excluded"
+      ]
+    },
+    "patchDryRun": {
+      "forwardExitCode": 0,
+      "reverseExitCode": 0
+    },
+    "sourceAndBeforeCopiesReadBackExact": true,
+    "typeVerification": "Selected actualTS module executed through existing Node24.21 transform; no full typecheck/build or backend suite run."
+  },
+  "boundaries": {
+    "onlyRegisteredSingleTSLeafWritten": true,
+    "T45LauncherOrPytestsChangedByD1": false,
+    "newDiagnosticPlatformOrTask": false,
+    "businessAssertionCountUnchanged": 102,
+    "SQLBusinessPermissionContractsChanged": false,
+    "failureCleanupOrNoReplayMeaningChanged": false,
+    "messagesStacksQueriesOrSecretsExported": false,
+    "PGQueries": 0,
+    "serverOrInstallAction": false,
+    "oldTargetOrKeyReplay": false,
+    "fullSuiteOrBuild": false,
+    "GitCommitOrOperations": false,
+    "REALOrProduction": false
+  },
+  "limitations": [
+    "Descriptor is future failure retention only; cannot recover past discarded r20 diagnostics",
+    "Actual ordinary business/request outcomes remain unknown and cannot replay",
+    "Original T45 eval/parent wiring and native downstream behavior are not tested by D1",
+    "Unknown/unlisted fields stay null; error codes are not inferred from source",
+    "C must freeze the complete merged3leaf successor before any later QA/build/isolated execution"
+  ],
+  "artifacts": {
+    "BEFORE-PINS.json": {
+      "sha256": "18de7c5c77be9bd6dc92bc83f3c03baf2b15ec5523a592ead572647fbfead7d8",
+      "bytes": 192
+    },
+    "PINS.json": {
+      "sha256": "fac953613d0e63ec2e5da6d2dc6abc3688a70307f5c27e0388c98fa329cba059",
+      "bytes": 316
+    },
+    "SOURCE.patch": {
+      "sha256": "fb9f1056cfe17db40b52b093391281074a2882d4c7b453382cb639c8c3ce1aa6",
+      "bytes": 11412
+    },
+    "SOURCE.reverse.patch": {
+      "sha256": "8e1f0769b8bfa0f8f4d7ac3a8a5349eeee1348a8aa4f6f782adf691fe095dc98",
+      "bytes": 11412
+    },
+    "PATCH-CHECKS.json": {
+      "sha256": "268e5df5d03555832426fbc40a660effa58a3e411d0cf34387fbaad69e9e3892",
+      "bytes": 311
+    },
+    "SOURCE-CHECKS.json": {
+      "sha256": "4386c3f6c014ba4683b74ce07e06bf99b76d01b0b60735c03c2354ac66c0f30f",
+      "bytes": 422
+    },
+    "INTERFACE.json": {
+      "sha256": "bfa38bcddc7ad47f63fccba282cee348765ce2bcd8d736c49ada338361506196",
+      "bytes": 3222
+    },
+    "TEST-red.log": {
+      "sha256": "9f901cfa607a5fb74d00d4260ceb2183c19ac7900e9e47afb33791257211701b",
+      "bytes": 3746
+    },
+    "TEST-green.log": {
+      "sha256": "7e56b539f1755791f4b981b419c05101bcdcad368ba95f34fac50da85d60d591",
+      "bytes": 710
+    }
+  },
+  "next": "D1 source frozen and interface delivered to C/originalT45. OriginalT45 wires own2leaves; C integrates then originalQB one affected3leaf review, originalD2 one build, originalT45 accurately-bound successor without oldkey replay."
+}

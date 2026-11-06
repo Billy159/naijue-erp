@@ -1,4 +1,4 @@
-"""Offline only: no credentials, subprocess execution, network, root writes or PG."""
+"""Offline only: no credentials, network, root writes or PG. Entry tests use local Node."""
 import importlib.util
 from pathlib import Path
 import unittest
@@ -592,7 +592,7 @@ class OrdinaryScenarioConstructionTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):m.build_ordinary_scenario(scene,'MODEL_ADMIN_PASSWORD')
 
 class OrdinaryBusinessFlowTests(unittest.TestCase):
-    def drive(self,*,failure=None,owned=True,watch_alive=True):
+    def drive(self,*,failure=None,owned=True,watch_alive=True,returned=None,raw_stdout=None,stderr=b''):
         events=[];written={};context={};a=authority();root=Path('/model');process={'pid':123,'linuxStartTicks':'456','linuxBootId':'00000000-0000-4000-8000-000000000001'}
         class Child:
             pid=123;returncode=None
@@ -601,7 +601,8 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
                 events.append('communicate');context.update(json.loads(input))
                 if failure=='timeout':raise m.subprocess.TimeoutExpired(['node'],timeout)
                 self.returncode=1 if failure=='result' else 0
-                return json.dumps({'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}).encode(),b''
+                value=returned if returned is not None else {'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}
+                return raw_stdout if raw_stdout is not None else json.dumps(value).encode(),stderr
             def send_signal(self,signal):events.append('terminate');self.returncode=-signal
             def kill(self):events.append('kill');self.returncode=-9
             def wait(self,timeout=None):events.append('wait');return self.returncode
@@ -619,6 +620,54 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
         self.assertEqual(result['sourceSetSha256'],'a'*64);self.assertEqual(result['sourceCommit'],'f'*40);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('MODEL_PRIVATE_NO_EXPORT',json.dumps(result)+json.dumps(written))
     def test_unknown_result_not_replayed_and_receipt_kept_as_unknown(self):
         result,error,events,written,_=self.drive(failure='result');self.assertIsNone(result);self.assertIsNotNone(error);self.assertEqual(events.count('communicate'),1);self.assertEqual(written['ordinary-failure.json']['state'],'FAILED_OR_OUTCOME_UNKNOWN');self.assertFalse(written['ordinary-failure.json']['automaticRetry'])
+    def test_closed_child_failure_survives_parent_and_cleanup_without_private_text(self):
+        diagnostic={'format':'FRESH35_ORDINARY_FAILURE_V1','phase':'REAL_SYNTHETIC_ADMISSION','source':'runFresh35OrdinaryIntegration:catch','errorType':'AssertionError','guardCode':'ERR_ASSERTION','sqlstate':None,'errno':None,'expectedInteger':200,'actualInteger':503}
+        returned={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':diagnostic,'entryFailure':None}
+        result,error,events,written,_=self.drive(failure='result',returned=returned,stderr=b'SECRET_SENTINEL select private')
+        self.assertIsNone(result);self.assertIsNotNone(error);self.assertEqual(written['ordinary-failure.json']['childFailure'],diagnostic)
+        self.assertFalse(written['ordinary-failure.json']['automaticRetry']);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped'])
+        self.assertEqual(events.count('spawn'),1);self.assertEqual(events.count('communicate'),1);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
+    def test_entry_failure_stays_distinct_from_unbranded_integration_error(self):
+        entry={'format':'FRESH35_ORDINARY_ENTRY_FAILURE_V1','phase':'CREDENTIAL_TAG_READ','source':'ordinary_runner_arguments:catch','errorType':'Error','guardCode':None,'errno':'EACCES'}
+        value={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':None,'entryFailure':entry}
+        _,error,events,written,_=self.drive(failure='result',returned=value)
+        self.assertIsNotNone(error);self.assertEqual(written['ordinary-failure.json']['entryFailure'],entry);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertFalse(written['ordinary-failure.json']['childDiagnosticUnavailable']);self.assertEqual(events.count('communicate'),1)
+        _,_,_,written,_=self.drive(failure='result',returned={**value,'entryFailure':None})
+        self.assertTrue(written['ordinary-failure.json']['childDiagnosticUnavailable']);self.assertNotIn('childFailure',written['ordinary-failure.json'])
+    def test_invalid_child_diagnostics_never_cross_parent_failure_channel(self):
+        diagnostic={'format':'FRESH35_ORDINARY_FAILURE_V1','phase':'salesPositive:SAVE','source':'runFresh35OrdinaryIntegration:catch','errorType':'Error','guardCode':None,'sqlstate':'42501','errno':'EPERM','expectedInteger':None,'actualInteger':None}
+        value={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':diagnostic,'entryFailure':None}
+        _,_,_,written,_=self.drive(failure='result',returned=value);self.assertEqual(written['ordinary-failure.json']['childFailure'],diagnostic)
+        bad=[{**value,'message':'SECRET_SENTINEL'},{**value,'automaticRetry':True},{**value,'automaticRetry':0},{**value,'entryFailure':{}},*[{**value,'diagnostic':{**diagnostic,**change}} for change in [{'message':'SECRET_SENTINEL'},{'phase':'SECRET_SENTINEL'},{'source':'arbitrary:source'},{'errorType':'CustomError'},{'guardCode':'PRIVATE_GUARD'},{'sqlstate':'ZZZZZ'},{'errno':'PRIVATE_ERRNO'},{'expectedInteger':False,'actualInteger':200},{'expectedInteger':200,'actualInteger':503},{'errorType':'AssertionError','expectedInteger':201,'actualInteger':503},{'errorType':'AssertionError','expectedInteger':200,'actualInteger':65536},{'errorType':'AssertionError','expectedInteger':200,'actualInteger':None},{'errorType':'AssertionError','expectedInteger':200,'actualInteger':True},{'errorType':'AssertionError','expectedInteger':200,'actualInteger':503.0}]]]
+        entry={'format':'FRESH35_ORDINARY_ENTRY_FAILURE_V1','phase':'INTEGRATION_IMPORT','source':'ordinary_runner_arguments:catch','errorType':'Error','guardCode':'ERR_MODULE_NOT_FOUND','errno':None}
+        bad.extend({**value,'diagnostic':None,'entryFailure':{**entry,**change}} for change in [{'phase':'SECRET_SENTINEL'},{'source':'arbitrary:source'},{'message':'SECRET_SENTINEL'},{'guardCode':'PRIVATE_GUARD'},{'errno':'PRIVATE_ERRNO'},{'errorType':'CustomError'}])
+        for invalid in bad:
+            with self.subTest(invalid=invalid):
+                result,error,events,written,_=self.drive(failure='result',returned=invalid,stderr=b'SECRET_SENTINEL')
+                self.assertIsNone(result);self.assertIsNotNone(error);self.assertTrue(written['ordinary-failure.json']['childDiagnosticUnavailable']);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertNotIn('entryFailure',written['ordinary-failure.json']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written));self.assertEqual(events.count('spawn'),1)
+    def test_existing_stdout_bound_strict_json_and_success_wire_stay_strict(self):
+        entry={'format':'FRESH35_ORDINARY_ENTRY_FAILURE_V1','phase':'INTEGRATION_IMPORT','source':'ordinary_runner_arguments:catch','errorType':'Error','guardCode':'ERR_MODULE_NOT_FOUND','errno':None}
+        value={'state':'FRESH35_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN','automaticRetry':False,'diagnostic':None,'entryFailure':entry}
+        raw=json.dumps(value).encode();exact=raw+b' '*(4096-len(raw))
+        _,_,_,written,_=self.drive(failure='result',raw_stdout=exact);self.assertEqual(written['ordinary-failure.json']['entryFailure'],entry)
+        for raw in [exact+b' ',b'{"state":1,"state":2}',b'\xff',b'not JSON SECRET_SENTINEL',b'[]',b'{"n":NaN}',b'']:
+            with self.subTest(bytes=len(raw)):
+                result,error,events,written,_=self.drive(failure='result',raw_stdout=raw)
+                self.assertIsNone(result);self.assertIsNotNone(error);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertNotIn('entryFailure',written['ordinary-failure.json']);self.assertEqual(events.count('communicate'),1);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
+        success={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}
+        for returned in [{**success,'diagnostic':None},value]:
+            result,error,_,written,_=self.drive(returned=returned);self.assertIsNone(result);self.assertIsNotNone(error);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertNotIn('entryFailure',written['ordinary-failure.json'])
+    def test_generated_entry_catch_keeps_pre_reader_phase_without_private_text(self):
+        import os
+        from shutil import which
+        node=which('node');self.assertIsNotNone(node,'The existing project Node runtime is required for the generated entry test')
+        for stage,bad_uid,body,error_type in [('UID_CHECK',True,b'', 'Error'),('PRIVATE_CONTEXT',False,b'SECRET_SENTINEL not JSON','SyntaxError')]:
+            with self.subTest(stage=stage):
+                a=authority();a['postgresUid']=os.getuid()+int(bad_uid);a['postgresGid']=os.getgid()
+                script=m.ordinary_runner_arguments(a,Path('/model'))[-1]
+                result=m.subprocess.run([node,'--no-global-search-paths','--input-type=module','--eval',script],input=body,capture_output=True,timeout=5)
+                self.assertEqual(result.returncode,1);self.assertTrue(result.stderr==b'','Generated entry stderr withheld');self.assertLessEqual(len(result.stdout),4096);self.assertFalse(b'SECRET_SENTINEL' in result.stdout,'Private sentinel crossed entry response')
+                value=m.strict_json(result.stdout);self.assertIsNone(value['diagnostic']);self.assertEqual(value['entryFailure'],{'format':'FRESH35_ORDINARY_ENTRY_FAILURE_V1','phase':stage,'source':'ordinary_runner_arguments:catch','errorType':error_type,'guardCode':None,'errno':None});self.assertEqual(m.ordinary_failure_diagnostic(value),{'entryFailure':value['entryFailure']})
     def test_timeout_only_owned_child_stopped_and_reaped(self):
         result,error,events,written,_=self.drive(failure='timeout');self.assertIsNone(result);self.assertIsInstance(error,m.subprocess.TimeoutExpired);self.assertEqual(events.count('spawn'),1);self.assertIn('terminate',events);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped'])
     def test_unowned_live_child_not_signalled_or_reported_clean(self):

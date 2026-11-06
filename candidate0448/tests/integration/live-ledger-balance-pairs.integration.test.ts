@@ -6,6 +6,8 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {AssertionError} from 'node:assert';
+import {isNativeError} from 'node:util/types';
 import {lstat, readFile, realpath, open} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {isAbsolute, resolve, dirname} from 'node:path';
@@ -391,6 +393,37 @@ export async function prepareFresh35Salesperson(api:Pick<PostgresApplicationApi,
 export function assertFresh35StandardPublication(rows:readonly Row[],publication:Fresh35OrdinaryContext['publication'],accountId:string):void {
  assert.ok(rows.length===1&&rows[0]!.documentBatchId===publication.batchId&&rows[0]!.sourceHash===publication.sourceHash&&rows[0]!.historyPayloadHash===publication.historyPayloadHash&&rows[0]!.accountId===accountId&&rows[0]!.loginEnabled===true&&rows[0]!.adminRole==='ADMIN'&&rows[0]!.adminEmployment==='在职');
 }
+export interface Fresh35OrdinaryFailure {
+ readonly format:'FRESH35_ORDINARY_FAILURE_V1';readonly phase:string|null;
+ readonly source:'runFresh35OrdinaryIntegration:catch'|'runFresh35OrdinaryIntegration:cleanup';
+ readonly errorType:'AssertionError'|'TypeError'|'RangeError'|'SyntaxError'|'Error'|null;
+ readonly guardCode:string|null;readonly sqlstate:string|null;readonly errno:string|null;
+ readonly expectedInteger:number|null;readonly actualInteger:number|null;
+}
+const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL',...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
+const fresh35OrdinaryGuardCodes=['ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED'] as const;
+const fresh35OrdinarySqlstates=['42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','28P01','3D000','53300','57P01','08006'] as const;
+const fresh35OrdinaryErrnos=['EACCES','EPERM','ENOENT','ELOOP','ENOTDIR','ECONNREFUSED','ECONNRESET','ETIMEDOUT','EPIPE','EHOSTUNREACH','ENETUNREACH','EADDRINUSE'] as const;
+const fresh35OrdinaryExpectedIntegers=[0,1,2,3,4,5,6,14,23,200,403,404,500,61035];
+const fresh35OrdinaryFailures=new WeakMap<object,Readonly<Fresh35OrdinaryFailure>>();
+/** Only the original acceptance catch/cleanup can attach this closed record.
+ * No native message, stack, cause, query, parameters or business values retained. */
+export function describeFresh35OrdinaryFailure(error:unknown):Readonly<Fresh35OrdinaryFailure>|null {
+ return error!==null&&typeof error==='object'?fresh35OrdinaryFailures.get(error)??null:null;
+}
+function retainFresh35OrdinaryFailure(error:unknown,phase:string,source:Fresh35OrdinaryFailure['source']):Error {
+ const own=(name:string):unknown=>{try{const d=Object.getOwnPropertyDescriptor(error,name);return d&&'value'in d?d.value:undefined;}catch{return undefined;}};
+ const pick=(values:readonly string[],value:unknown):string|null=>typeof value==='string'&&values.includes(value)?value:null;
+ const native=isNativeError(error),code=native?own('code'):undefined;
+ const errorType:Fresh35OrdinaryFailure['errorType']=!native?null:error instanceof AssertionError?'AssertionError':error instanceof TypeError?'TypeError':error instanceof RangeError?'RangeError':error instanceof SyntaxError?'SyntaxError':'Error';
+ const expected=native&&error instanceof AssertionError?own('expected'):undefined,actual=native&&error instanceof AssertionError?own('actual'):undefined;
+ const integers=native&&error instanceof AssertionError&&own('operator')==='strictEqual'&&typeof expected==='number'&&fresh35OrdinaryExpectedIntegers.includes(expected)&&typeof actual==='number'&&Number.isSafeInteger(actual)&&actual>=0&&actual<=65535;
+ const safePhase=fresh35OrdinaryFailurePhases.includes(phase)?phase:null;
+ const descriptor:Readonly<Fresh35OrdinaryFailure>=Object.freeze({format:'FRESH35_ORDINARY_FAILURE_V1',phase:safePhase,source,errorType,guardCode:pick(fresh35OrdinaryGuardCodes,code),sqlstate:pick(fresh35OrdinarySqlstates,code),errno:pick(fresh35OrdinaryErrnos,code)??(native?pick(fresh35OrdinaryErrnos,own('errno')):null),expectedInteger:integers?expected as number:null,actualInteger:integers?actual as number:null});
+ const failure=Error(source==='runFresh35OrdinaryIntegration:cleanup'?'Fresh35 ordinary cleanup unconfirmed':`Fresh35 ordinary acceptance failed at ${safePhase??'UNKNOWN'}; remaining checks NOT_EXECUTED; no private diagnostics exported`);
+ fresh35OrdinaryFailures.set(failure,descriptor);return failure;
+}
+
 export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryContext):Promise<void>{
  let api:PostgresApplicationApi|undefined,capacity:Awaited<ReturnType<typeof createProductionCapacityLaunch>>|undefined,phase='PRIVATE_INPUT',failure:Error|undefined;
  try{
@@ -482,8 +515,8 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
    phase=name+':LOST_COMMIT_ACK';const unknown=command('UNAPPROVE',keys.unknownCommit,reapproved.version);fault.arm(family,'unknown');assert.equal((await post(family,unknown)).statusCode,500);fault.assertConsumed();const receipt:LightMyRequestResponse=await api.app.inject({method:'GET',url:`/${family}/receipts/${encodeURIComponent(keys.unknownCommit)}`,headers});assert.equal(receipt.statusCode,200);const recovered=receipt.json<{status:string;result:Result}>();assert.equal(recovered.status,'COMMITTED');assert.equal(recovered.result.version,6);state=await observe();posting(before,state,recovered.result,keys.unknownCommit,'UNAPPROVE',active);assert.deepEqual(result(await post(family,unknown)),recovered.result);assert.deepEqual(await observe(),state);
    phase=name+':DETAIL';const detail:LightMyRequestResponse=await api.app.inject({method:'POST',url:`/${family}/detail/query`,headers,payload:family==='sales'?{salesId:idOf(family,saved)}:{transferId:idOf(family,saved)}});assert.equal(detail.statusCode,200);const read=detail.json<{document:{header:{id:string;status:string;version:number};lines:Row[]};stockBasis:string}>();assert.equal(read.document.header.id,idOf(family,saved));assert.equal(read.document.header.status,'DRAFT');assert.equal(read.document.header.version,recovered.result.version);assert.equal(read.stockBasis,'RUNTIME_LEDGER');assert.equal(read.document.lines.length,proposal.lines.length);
   }
- }catch{failure=Error(`Fresh35 ordinary acceptance failed at ${phase}; remaining checks NOT_EXECUTED; no private diagnostics exported`);}
- finally{try{if(api)await api.close();else capacity?.close();}catch{failure??=Error('Fresh35 ordinary cleanup unconfirmed');}}
+ }catch(error){failure=retainFresh35OrdinaryFailure(error,phase,'runFresh35OrdinaryIntegration:catch');}
+ finally{try{if(api)await api.close();else capacity?.close();}catch(error){failure??=retainFresh35OrdinaryFailure(error,phase,'runFresh35OrdinaryIntegration:cleanup');}}
  if(failure)throw failure;
 }
 
@@ -531,6 +564,34 @@ test('fresh35 STANDARD publication keeps actual NULL history hash and exact admi
  assert.throws(()=>assertFresh35StandardPublication([{...row,historyPayloadHash:'invented-old-v8-hash'}],p,'actual-admin'));
  assert.throws(()=>assertFresh35StandardPublication([row,row],p,'actual-admin'));
  assert.throws(()=>assertFresh35StandardPublication([row],p,'different-admin'));
+});
+
+test('fresh35 ordinary failure descriptor keeps the real early rejection failed and exports only a branded closed record without PG',async()=>{
+ const original=await runFresh35OrdinaryIntegration(null as never).then(()=>assert.fail('invalid original input must never pass'),error=>error);
+ assert.equal(typeof describeFresh35OrdinaryFailure,'function','the original catch must retain a consumable closed failure');
+ const d=describeFresh35OrdinaryFailure(original);assert(d);assert.equal(d.format,'FRESH35_ORDINARY_FAILURE_V1');assert.equal(d.phase,'PRIVATE_INPUT');assert.equal(d.source,'runFresh35OrdinaryIntegration:catch');assert.equal(d.errorType,'TypeError');
+ assert.deepEqual(Object.keys(d).sort(),['actualInteger','errno','errorType','expectedInteger','format','guardCode','phase','source','sqlstate']);
+ assert.equal(describeFresh35OrdinaryFailure(Error('unbranded')),null);assert.equal(describeFresh35OrdinaryFailure({...d}),null);assert.equal(describeFresh35OrdinaryFailure(null),null);assert(Object.isFrozen(d));
+});
+test('fresh35 ordinary failure descriptor retains only finite native SQLSTATE errno guard and assertion integer fields',()=>{
+ const wrap=(e:unknown)=>describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(e,'salesPositive:SAVE','runFresh35OrdinaryIntegration:catch'))!;
+ const pg=Object.assign(Error('MODEL_PRIVATE_SQL'),{code:'42501',detail:'MODEL_PRIVATE_DETAIL',query:'MODEL_PRIVATE_QUERY'});assert.equal(wrap(pg).sqlstate,'42501');assert.equal(wrap(pg).guardCode,null);
+ const socket=Object.assign(Error('MODEL_PRIVATE_SOCKET'),{code:'ECONNREFUSED',errno:-111,address:'MODEL_PRIVATE_ADDRESS'});assert.equal(wrap(socket).errno,'ECONNREFUSED');
+ let assertion:unknown;try{assert.equal(500,200);}catch(e){assertion=e;}
+ const a=wrap(assertion);assert.equal(a.errorType,'AssertionError');assert.equal(a.guardCode,'ERR_ASSERTION');assert.equal(a.expectedInteger,200);assert.equal(a.actualInteger,500);
+ assert.equal(wrap(Object.assign(TypeError('MODEL_PRIVATE'),{code:'ERR_INVALID_ARG_TYPE'})).guardCode,'ERR_INVALID_ARG_TYPE');
+ for(const phase of fresh35OrdinaryFailurePhases)assert.equal(describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(Error('MODEL_PRIVATE'),phase,'runFresh35OrdinaryIntegration:cleanup'))!.phase,phase);
+});
+test('fresh35 ordinary failure descriptor excludes messages stacks getters arbitrary codes nested values and unbounded assertion data',()=>{
+ const secret='MODEL_PRIVATE_PASSWORD_COOKIE_TOKEN_SQL_AMOUNT',wrap=(e:unknown,phase='PRIVATE_INPUT')=>describeFresh35OrdinaryFailure(retainFresh35OrdinaryFailure(e,phase,'runFresh35OrdinaryIntegration:catch'))!;
+ const e=Object.assign(Error(secret),{name:secret,code:'UNKNOWN_'+secret,sqlstate:'23514',params:[secret],cause:{password:secret},actual:{amount:secret},expected:secret});
+ let reads=0;Object.defineProperty(e,'errno',{get(){reads++;return secret;}});const d=wrap(e,secret);assert.equal(reads,0);assert.equal(d.phase,null);assert.equal(d.errorType,'Error');for(const k of ['guardCode','sqlstate','errno','expectedInteger','actualInteger'] as const)assert.equal(d[k],null);
+ for(const code of ['ABCDE','P9999','ERR_USER_INPUT','ESECRET']){const unknown=wrap(Object.assign(Error(secret),{code}));assert.equal(unknown.guardCode,null);assert.equal(unknown.sqlstate,null);assert.equal(unknown.errno,null);}
+ assert.equal(JSON.stringify(d).includes(secret),false);assert.equal(JSON.stringify(wrap({code:'42501',name:'TypeError',message:secret})).includes(secret),false);assert.equal(wrap({code:'42501'}).sqlstate,null);
+ for(const value of ['1.00',1n,{password:secret},Number.NaN,Number.POSITIVE_INFINITY,65536,-1]){
+  const a=new AssertionError({actual:value,expected:200,operator:'strictEqual',message:secret});const bounded=wrap(a);assert.equal(bounded.expectedInteger,null);assert.equal(bounded.actualInteger,null);assert.equal(JSON.stringify(bounded).includes(secret),false);
+ }
+ const getterError=Error(secret);for(const property of ['code','message','stack'])Object.defineProperty(getterError,property,{get(){reads++;throw Error(secret);}});wrap(getterError);assert.equal(reads,0);
 });
 
 }
