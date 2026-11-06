@@ -33651,7 +33651,7 @@
       "oldDatabaseReadonlyIdentityPassed": true,
       "backupMetadataMatched": true,
       "backupIndependentRestore": "NOT_VERIFIED_FOR_NOV6_BACKUP",
-      "freeBytes": 4172288000,
+      "freeBytes": 11567300608,
       "knownAppAndUnpackedPackageLowerBoundBytes": 1245073406,
       "PGWALIndexJournalPeakAndRollbackBudget": "NOT_YET_COMPLETE",
       "oldStartingKeys": [
@@ -33660,7 +33660,7 @@
       ],
       "oldStartingKeysActualActivity": "NO_LIVE_ORIGINAL_UNIT_PROCESS_OBSERVED_AT_20261107_033358_OPERATION_OUTCOME_UNKNOWN_NO_REPLAY",
       "productionChanges": false,
-      "next": "T45 fixed42 verify before retirement; minimal independent REAL disk stop wiring; QB scoped review; no REAL release yet",
+      "next": "Original T45 minimal REAL child/independent space stop successor; QB affected delta only, then C exact new target and original stream execution",
       "spaceEvidence": {
         "D1ReportSHA256": "d887fc928fcd6fcd6c0a9502b17b82e1aa21fa6d8e8f1e3f1fb7bc1bd3b5067b",
         "exactPackageIndexBytes": 2667474944,
@@ -33686,13 +33686,22 @@
       },
       "nextExactRetirement": {
         "inventoryReceiptSHA256": "b70cc8959ff9bb9c8ec070923f15d1406e0613635089fe902ad9859f2e808399",
-        "status": "C_DECIDED_EXACT42_VERIFY_BEFORE_DELETE_PENDING",
+        "status": "COMPLETED_0_EXACT42_ABSENT_AND_PROTECTED_UNCHANGED",
         "exactPathsSource": "Inventory rows.path22 plus duplicateOrdinaryReconstructions.path20 only",
         "allocatedBytes": 7395831808,
         "predictedFreeOnlyBytes": 11568001024,
         "maxSeconds": 900,
         "skipIf": "Unique, occupied, unknown, recovery incomplete, timeout",
-        "protected": "All PG/data/state/authority/metadata/private receipts/full archives/READY/REAL/backups/r26/others/denied local3"
+        "protected": "All PG/data/state/authority/metadata/private receipts/full archives/READY/REAL/backups/r26/others/denied local3",
+        "jobId": "t45-retire-r1-r22-authorized-42-20261107-01",
+        "actualReceiptSHA256": "df472f7b955a5174841934b72f0da505c86322ead7d2156f7f13f50aab559ae6",
+        "actualFreeBefore": 4171530240,
+        "actualFreeAfter": 11567300608,
+        "actualWholeDiskFreeDeltaBytes": 7395770368,
+        "deletedItems": 42,
+        "skippedItems": 0,
+        "elapsedSeconds": 301.236546,
+        "finishedAt": "2026-11-07T03:59:37.479728+08:00"
       },
       "staticProductionDecision": {
         "fileSHA256": "b00fc66ae964103d7192b6af60464707e54d65d5115b7b4da6d68e084568233c",
@@ -33706,6 +33715,17 @@
         "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
         "installWindowMaxMillis": 1200000,
         "actualPhysicalIdentity": "NOT_CREATED_OR_BOUND"
+      },
+      "boundedAdmissionDecision": {
+        "knownLowerBoundBytes": 3912548350,
+        "minimumAvailableFloorBytes": 4294967296,
+        "minimumStartupAvailableBytes": 8207515646,
+        "lastMeasuredAvailableBytes": 11567300608,
+        "surplusAboveKnownStartupBytes": 3359784962,
+        "sampleIntervalMaxSeconds": 0.25,
+        "actualPGWALTempPeak": "UNKNOWN",
+        "status": "KNOWN_STARTUP_LOWER_BOUND_SATISFIED_NOT_COMPLETE_IMPORT_OR_CAPACITY_GUARANTEE",
+        "onFailure": "Stop/reap only owned stream, original controller STOP owned new PG; preserve original keys/data/index/graph; outcome UNKNOWN until original-key readback"
       }
     }
   }

@@ -10463,5 +10463,22 @@
     "state": "LOCAL_PREPARATION_ONLY_UNBOUND_UNTIL_FINAL_BUILD",
     "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r26-ops-preparation-01",
     "scope": "Original exact stage/wrapper/probe/assembler/receiver/templates, accurate r25 private ab491e7d/cleanup aabd24d5 predecessor9key schema; no new server actions/currentsourceSet guess"
+  },
+  "productionRealSpaceStop20261107": {
+    "activatedAt": "2026-11-07T03:56:50.760702+08:00",
+    "owner": "T45",
+    "model": "gpt-6.1-sol",
+    "thinking": "high",
+    "scope": "Original production carrier REAL stream child lifecycle and its focused local tests under T45 original revision directory; reuse statvfs/owned PG guardian; no frozen r26 app edits",
+    "baselineCarrierSHA256": "3f1dbe79c692a36ea7d509644a0bfe1e3e3c5cc1fd0905b385c612042f5650d7",
+    "applicationRootUnchanged": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+    "budgetDecision": {
+      "minimumAvailableBytes": 4294967296,
+      "maximumSampleIntervalSeconds": 0.25,
+      "source": "C technical decision under direct human delegation before2026-11-07T12:00+08; not measured peak or guaranteed completion"
+    },
+    "reviewer": "Original QB affected delta only before execution",
+    "protected": "Old services, all database data, original archives/receipts, other tasks; no new pool/platform/schema",
+    "unknownOutcome": "Stop/reap owned stream and original STOP new PG only; preserve original keys/data/index/graph; never infer rollback or auto replay"
   }
 }
