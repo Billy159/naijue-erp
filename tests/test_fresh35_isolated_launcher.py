@@ -239,6 +239,24 @@ class SnapshotAndStageTests(unittest.TestCase):
         return result,events,writes
     def test_full_visibility_includes_forced_rls(self):
         r=self.snapshot();self.assertEqual(len(r['snapshot']['tables']),35);self.assertEqual(r['transaction'],'ROLLED_BACK');self.assertEqual(r['connectionCleanup'],'CLOSED');self.assertIsNone(r['sqlstate'])
+    def test_snapshot_sql_produces_bare_address_and_identity_guards_stay_exact(self):
+        # PostgreSQL 17.11 inet::text includes the netmask; host(inet) omits it.
+        # Exercise the actual SQL producer and the existing offline fixture only.
+        sql=m.snapshot_sql()
+        self.assertTrue("'address',host(inet_server_addr()),'port'" in sql,
+                        'SNAPSHOT_SQL_ADDRESS_PRODUCER_MUST_RETURN_CANONICAL_HOST')
+        self.assertFalse('inet_server_addr()::text' in sql,
+                         'SNAPSHOT_SQL_ADDRESS_MUST_NOT_INCLUDE_NETWORK_MASK')
+        cases=[('address','127.0.0.1/32'),('address','127.0.0.10'),
+               ('address',None),('database','another_database'),
+               ('port',self.a['proposal']['port']+1),
+               ('dataDirectory','/offline-other/data'),('databaseOid','12346'),
+               ('systemIdentifier','778'),('serverVersionNum','170010'),
+               ('postmasterStart','2026-11-05 00:00:01+00')]
+        for key,value in cases:
+            rows=copy.deepcopy(self.rows);rows[0][key]=value
+            with self.subTest(field=key),self.assertRaisesRegex(RuntimeError,'SNAPSHOT_PHYSICAL_TARGET_DIFFERS'):
+                m.validate_snapshot(self.raw(rows),self.a,self.target)
     def test_wrong_actor_target_readonly_isolation_and_filtered_results_refused(self):
         cases=[('actor','owner'),('sessionActor','other'),('database','production'),('databaseOid','888'),('systemIdentifier','888'),('postmasterStart','later'),('readOnly','off'),('isolation','read committed')]
         for key,value in cases:
