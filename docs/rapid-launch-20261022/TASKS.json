@@ -28507,7 +28507,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "ACTUAL_MATERIALIZATION_PASS_FRESH_PG20_PROVISION_BOUND",
+      "critical": "ACTUAL_NEW_R14_STARTED_C9_BOUND_INSTALL_AND_BUSINESS_RUNNING",
       "independentPreparation": {
         "D1": "Twoleaf fix frozen; readonly until concrete new finding.",
         "QB": "New twoleaf scoped verdict adopted; no repeated review.",
@@ -30777,7 +30777,7 @@
         }
       },
       "r14Preparation": {
-        "state": "ACTUAL_MATERIALIZATION_PASS_FRESH_PG20_PROVISION_BOUND",
+        "state": "ACTUAL_NEW_R14_STARTED_C9_BOUND_INSTALL_AND_BUSINESS_RUNNING",
         "integration": "d534b76ef82681288f270128723a1c6b0bc68867",
         "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
         "tree": "91d9793a362e9f33e295248c322eff2b72052eda",
@@ -30791,10 +30791,10 @@
           "sha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95",
           "bytes": 83689617
         },
-        "actualPG": false,
+        "actualPG": true,
         "REAL": false,
         "production": false,
-        "next": "OriginalT45 one fresh actualstart then C exact original9key in samePG20; noREAL/production/replay.",
+        "next": "OriginalT45 one actual install/negative rollback/synthetic25/ordinary/readback/probe/ownedcleanup in samePG20; noREAL/production/replay/extension.",
         "QBReceiptSHA256": "dd4945a6a76f013dbfec34cd00aef108d07b41c6c41e1a036f7cf7cf97228609",
         "D2ReceiptSHA256": "cac2ed2ec7f308dd3c790cdf9f186df8492ed9117393ec504986b67511d484b7",
         "buildSeconds": 11.28,
@@ -30831,7 +30831,21 @@
         "safePreparationSHA256": "98f2272bd7077f7196e32073f6d87ebfa73d6e70d73aecdcbf54205d8ffffe35",
         "provisionSHA256": "e16d05aa7040fac6424cf8f96fa7d8b60a74b8a309e26dc493077896e8d24084",
         "provisionStartsAt": 1793945319803,
-        "provisionExpiresAt": 1793946519803
+        "provisionExpiresAt": 1793946519803,
+        "startReceiptSHA256": "7b151f63af75172c7f08fb413146720b4178aa7439e69a36765803fc1581c894",
+        "startExitCode": 0,
+        "startSeconds": 35.894247549586,
+        "containerId": "1320805403ad688709c050973642e74d568c1a8f9f2452d645e475c9affa805b",
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 06:10:26.287612+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704936919147335727"
+        },
+        "programSHA256": "499ffc08af953fd64bd126f01e72b0961182b0d316caf680af239e66946db26d",
+        "targetSHA256": "2a2ff4daa13433beea7c7175589f0a925fda11e9327e7bccd4bead3fc0704e54",
+        "installAuthoritySHA256": "8f6829c88e608316185dbe423c23c4162fc1d65487ddd160d7490ee8d6bde54c",
+        "wholeChainPassed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31240,12 +31254,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T14:09:25+08:00",
-      "phase": "ACTUAL_MATERIALIZATION_PASS_FRESH_PG20_PROVISION_BOUND",
+      "at": "2026-11-06T14:12:46+08:00",
+      "phase": "ACTUAL_NEW_R14_STARTED_C9_BOUND_INSTALL_AND_BUSINESS_RUNNING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 actual fresh r14 start",
-      "nextOwner": "C actualprogram/target original9key then originalT45 one install/business/cleanup",
+      "currentOwner": "T45 actual r14 install/business/ownedcleanup",
+      "nextOwner": "C adopt actual receipt then originalQB/D1 affected findings only",
       "latestActualReceiptSHA256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31255,7 +31269,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 one fresh actualstart then C exact original9key in samePG20; noREAL/production/replay.",
+      "next": "OriginalT45 one actual install/negative rollback/synthetic25/ordinary/readback/probe/ownedcleanup in samePG20; noREAL/production/replay/extension.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "d534b76ef82681288f270128723a1c6b0bc68867",
       "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",

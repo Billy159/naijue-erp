@@ -1,0 +1,109 @@
+{
+  "job": {
+    "jobId": "t45-f35-d60dee-start-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-0746ee08dc29",
+    "atUTC": "2026-11-06T06:10:08.884300+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 35.894247549586,
+    "exports": [
+      "fresh35-start-target-result.json"
+    ],
+    "finishedAtUTC": "2026-11-06T06:10:44.829043+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-d60dee-start-20261106-01/transport/release-receipts/t45-f35-d60dee-start-20261106-01/fresh35-start-target-result.json",
+    "sha256": "7b151f63af75172c7f08fb413146720b4178aa7439e69a36765803fc1581c894"
+  },
+  "result": {
+    "cid": "1320805403ad688709c050973642e74d568c1a8f9f2452d645e475c9affa805b",
+    "expiresAt": 1793946519803,
+    "program": {
+      "applicationTransactions": 1,
+      "bootstrapNetworkObservationSha256": "18d516d22e989d62ecf29cafa96db6ad32bee9388214e7fc5ac028b4063e3d50",
+      "catalogSha256": "6c0832cbd1ac5e55d3a693f079e31ee17bd2c7de641bb3173568baa62e721260",
+      "createsCluster": false,
+      "createsCredentials": false,
+      "createsRoles": false,
+      "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+      "hostEnabled": false,
+      "observationSqlSha256": "570ba3f53aecfe59e4829678011b0edaf0edb1e01ab11563101dd69dd717917a",
+      "oldTablesRemoved": false,
+      "programSha256": "499ffc08af953fd64bd126f01e72b0961182b0d316caf680af239e66946db26d",
+      "sourceSetSha256": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
+      "statements": [
+        {
+          "name": "physical-empty-target",
+          "sha256": "f535caefb99c2b76fa013c6abd47f19265081cdf24af9cc5125102f742230705"
+        },
+        {
+          "name": "direct-35-schema",
+          "sha256": "539c0a859820cfb6fa47868da31bb1f7daec0bb67ac829d6b66bc63682916940"
+        },
+        {
+          "name": "migration-lineage",
+          "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9"
+        },
+        {
+          "name": "controller-lineage-column-read",
+          "sha256": "b82f699e12d00079406a2e7a65513b1a7cbb25704381fc2ef1ec2b49b5d0872e"
+        },
+        {
+          "name": "historical-sales-hall",
+          "sha256": "5826d7dd3487e2a2baed50373d156a2cf2e67c9dc1f903945f8a88646e522591"
+        },
+        {
+          "name": "historical-line-amount",
+          "sha256": "2b10411c31255e380dba914ba35a1b6238397d50671baf3419a76af458060dde"
+        },
+        {
+          "name": "historical-missing-settlement-types",
+          "sha256": "161e4160c13e4d617a818d35ef16572bcd1d7699cb13ebcf739cd26d897f92b9"
+        },
+        {
+          "name": "historical-settlement-difference",
+          "sha256": "695f3a3ab4bbf7fd5c55df6e1bdc42a83d4f6f22d12d0ee295b898b6531e1596"
+        },
+        {
+          "name": "complete-successor-catalog",
+          "sha256": "36a09585fe0c93bdddc34d10d012db2f6519943c7b0726ab6aa699a2ca5b058a"
+        },
+        {
+          "name": "same-physical-target",
+          "sha256": "9acdce16c232b680192ee7d40044c862587e4e9df95a20cde6cbf3cf86bc0d2c"
+        }
+      ],
+      "targetSha256": "2a2ff4daa13433beea7c7175589f0a925fda11e9327e7bccd4bead3fc0704e54"
+    },
+    "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+    "target": {
+      "expiresAt": 1793946519803,
+      "physical": {
+        "databaseOid": "16393",
+        "postmasterStart": "2026-11-06 06:10:26.287612+00",
+        "serverVersionNum": "170011",
+        "systemIdentifier": "7704936919147335727"
+      },
+      "proposal": {
+        "admin": "fresh35_admin_20261105_r1",
+        "controller": "fresh35_controller_20261105_r1",
+        "database": "synthetic_fresh35_20261105_r1",
+        "host": "127.0.0.1",
+        "owner": "fresh35_owner_20261105_r1",
+        "port": 18651,
+        "runtime": "fresh35_runtime_20261105_r1",
+        "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+      },
+      "startsAt": 1793945319803
+    }
+  },
+  "wholeChainPassed": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "installNotSubmitted": true,
+  "C11ActualSha256": "e16d05aa7040fac6424cf8f96fa7d8b60a74b8a309e26dc493077896e8d24084"
+}
