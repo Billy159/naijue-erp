@@ -180,7 +180,7 @@
       },
       {
         "path": "tests/fixtures/unified-import/whole-package-synthetic.ts",
-        "sha256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702"
+        "sha256": "4f7b4a7e2279302fc7114feb506dff301f0234b1fd8e05717b943a1fb13b9f7f"
       }
     ],
     "boundaries": [
