@@ -1,0 +1,32 @@
+[
+  {
+    "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+    "beforeSha256": "1508620dc618b3560181694aea2591638ce885b337f86ee5d6e51f8659918565",
+    "afterSha256": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee",
+    "bytes": 44336
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+    "beforeSha256": "b04646442382baff967bf43d5957eba49ac1f4e5595dde2632966f4d8b85dad2",
+    "afterSha256": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb",
+    "bytes": 5016
+  },
+  {
+    "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+    "beforeSha256": "1de0135f48d4885279eb0a58493a1e2dc404ddbcc9a6a133701757928e7310b1",
+    "afterSha256": "ae885cf200107fde02c3991cf28856ed334e2c6593f843c4be3c6ee17ba6969b",
+    "bytes": 9738
+  },
+  {
+    "path": "tools/unified-import/whole-host-session.mjs",
+    "beforeSha256": "fdae12f6b7a6962bf9b9b8764fa3075f7bd7d85391e9d6cb1cbfe2c85ea3cb7b",
+    "afterSha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b",
+    "bytes": 22321
+  },
+  {
+    "path": "tests/fresh35-host-session.test.mjs",
+    "beforeSha256": "cb01758ca86bb28e7c35da2387f10cbe4d49ffe91d01703552efa2bca951b290",
+    "afterSha256": "fdd38b637f3f99d83cc82898b9ef53a194a414170285d315263c19e647d04594",
+    "bytes": 37802
+  }
+]

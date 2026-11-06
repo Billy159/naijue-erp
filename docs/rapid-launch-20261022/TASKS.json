@@ -28126,14 +28126,14 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T13:00:51+08:00",
+    "at": "2026-11-06T13:03:26+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
     "branch": "codex/erp-0448z-integration-20261105",
     "worktree": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102",
     "applicationRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
-    "sourceStatus": "FIXED_INCREMENT_REVIEWED_NOT_PG_NOT_RELEASE",
+    "sourceStatus": "FIXED_FIVELEAF_DELIVERED_PENDING_QB_AND_ONE_BUILD_NOT_PG",
     "externalDotInFlight": "UNKNOWN; do not infer stopped",
     "goalToolStatus": {
       "actualStatus": "active",
@@ -28507,9 +28507,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "D1 finishes combined5leaf source package; C single freeze; QB narrow review and D2 one full build in parallel; T45 exact fresh r13 small whole flow, no r12 replay.",
+      "critical": "FIXED_FIVELEAF_QB_NARROW_REVIEW_AND_D2_BUILD_IN_PARALLEL",
       "independentPreparation": {
-        "D1": "Current original alias+native-ready5leaves; next only concrete actual whole-flow failure.",
+        "D1": "Five leaves delivered and frozen; readonly until concrete feedback.",
         "QB": "Next same fixed5leaf candidate; reuse existing CASE/catalog/diagnostic evidence.",
         "D2": "Next same fixed candidate build/pack/exact tail from actual retained b8e35 receiver; no build before freeze.",
         "T45": "Current no PG job; retain stopped r12 scene. Next accurate r13 pins/resources/window only after fixed QA/build.",
@@ -30604,7 +30604,7 @@
         "ordinaryBusinessPassed": false,
         "synthetic25Passed": false,
         "ambiguityFix": {
-          "state": "ALIAS_3LEAVES_FROZEN_EXTRA_NATIVE_READY_2LEAVES_AUTHORIZED_IN_PROGRESS",
+          "state": "EXACT_FIVELEAVES_COMMITTED_PENDING_QB_AND_BUILD",
           "owner": "D1",
           "files": [
             "candidate0448/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
@@ -30629,10 +30629,35 @@
             "candidate0448/tests/fresh35-host-session.test.mjs"
           ],
           "extraConsumerScope": "Only unique poisoned sameClient ROLLBACK waits once for nativeReady within min(original5s cleanup,existingFresh35deadline), rechecks original state T/E/ready/driver identity/queues. Disconnect/error/end/expiry/invalidACK => UNKNOWN+close. No newClient/retry/COMMIT/authority changes.",
-          "next": "Fiveleaf fixed handoff; one QB narrow review/one D2 build; no alias-only intermediate build."
+          "next": "Fiveleaf fixed handoff; one QB narrow review/one D2 build; no alias-only intermediate build.",
+          "combinedReceiptSHA256": "3aa1ffe7e674436e5a3dc7807973e9628c6541a8f74aaea857e01fe53c9521f6",
+          "integration": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
+          "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781"
         }
       },
-      "supersededNextPreserved": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay."
+      "supersededNextPreserved": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay.",
+      "r13Preparation": {
+        "state": "FIXED_FIVELEAF_QB_NARROW_REVIEW_AND_D2_BUILD_IN_PARALLEL",
+        "integration": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
+        "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
+        "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+        "sourceSetSHA256": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+        "D1ReceiptSHA256": "3aa1ffe7e674436e5a3dc7807973e9628c6541a8f74aaea857e01fe53c9521f6",
+        "pinChanges": 3,
+        "pinsUnchanged": 211,
+        "pinCount": 214,
+        "baseActualReady": {
+          "root": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
+          "sha256": "97952e46730a14ff923fb4dcd83dfe2fc89b26b6ce818f67a7e04165b3043b1c",
+          "bytes": 83688806
+        },
+        "QB": "Original QB fiveleaf only; author direct/native model evidence reused",
+        "D2": "Original one full build/exact byte prefix and tail from actual b8 base",
+        "T45": "No new environment submitted until fixed QA/build and exact fresh scope",
+        "actualPG": false,
+        "REAL": false,
+        "production": false
+      }
     },
     "productionReleaseCompatibilityContinuation": {
       "state": "SOURCE_QB_F01_CLOSED_ORIGINAL_CALLER_PINS_REGISTERED_NOT_ACTUAL_DEPLOYMENT",
@@ -31040,12 +31065,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T13:00:51+08:00",
-      "phase": "REPAIR_INITIALIZE_ALIAS_AND_SAME_CONNECTION_ROLLBACK_READINESS",
+      "at": "2026-11-06T13:03:26+08:00",
+      "phase": "FIXED_FIVELEAF_QB_NARROW_REVIEW_AND_D2_BUILD_IN_PARALLEL",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "D1",
-      "nextOwner": "C freeze;QB narrow review +D2 one build;T45 fresh r13",
+      "currentOwner": "QB narrow source review;D2 one fixed full build",
+      "nextOwner": "T45 exact r13 preparation after QA/build;C exact external binding",
       "latestActualReceiptSHA256": "6f5f0677e0557105c8e1a88db23f33c13f2d92c625ae35e9af273366a8682215",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31055,8 +31080,12 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Finish combined5leaf source fix, freeze once, review/build parallel, then actual minimal whole flow. Existing full REAL source preparation and backup are reused.",
-      "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal."
+      "next": "Adopt QB scoped result and D2 exact archive/tail, then T45 unique r13 actual minimal whole flow, no r12 replay.",
+      "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
+      "sourceCommit": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
+      "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
+      "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
+      "sourceSetSHA256": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
