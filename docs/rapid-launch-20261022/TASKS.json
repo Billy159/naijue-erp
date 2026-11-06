@@ -28512,7 +28512,7 @@
       "D1": "Diagnostic leaf delivered frozen; original source judgment resumes only exact actual failure",
       "QB": "r24 app941b153f and ops4f852db4 scoped PASS adopted; waits actual result",
       "D2": "One fixed93156430 build/pack/tail delivered and frozen, C adopted619445a4",
-      "T45": "C13 issued; exact stage/materialization only; next return plan,C11 unissued and fresh resources",
+      "T45": "r24 new physical target started36.545s; C9 signed same original deadline; unique install and actual ordinary chain in progress",
       "D3": "REAL package and independent readback ready, waits exact target",
       "QF": "Core browser prerequisites ready, waits actual normal host/login"
     },
@@ -32665,7 +32665,7 @@
         }
       },
       "r24Preparation": {
-        "state": "R24_STAGE_READONLY_PASS_C13_ISSUED_ORIGINAL_T45_MATERIALIZING",
+        "state": "R24_ACTUAL_TARGET_STARTED_C9_ISSUED_INSTALL_ORDINARY_CHAIN_IN_PROGRESS",
         "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
         "buildRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
         "tree": "29d3fc11e0da9b9cc8c0905082c846a80f51c222",
@@ -32677,7 +32677,7 @@
           "tests/test_fresh35_isolated_launcher.py": "e5512c53e983e916d423aec4b1a99c3b045578b982b657254a251c149a68b1ee"
         },
         "actualRootCause": "UNKNOWN; diagnostic repair only, no retroactive r23code inference",
-        "newBuildOrServerOrPGExecuted": "Build/pack and one actual server readonly preflight complete; no r24 PG yet",
+        "newBuildOrServerOrPGExecuted": "Build/stage/material and new isolated PG startup completed; install authorized and in progress",
         "oldKeysMayReplay": false,
         "QBReceiptSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
         "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_DIAGNOSTIC",
@@ -32716,6 +32716,32 @@
           "startsAt": 1793980767949,
           "expiresAt": 1793982567949,
           "scope": "ordinary artifact tail staging and verified reconstruction only; no PG or REAL/production"
+        },
+        "materialReceiptSHA256": "ffe187c1f00997b9da83dd6a96e339ee77a32234bf783554474e96503c850c2a",
+        "stageResultSHA256": "b36967cdf86d3a901419bf8f3b4af707be931a191d8235136336658942a25c8a",
+        "startPreflightSHA256": "4fd7c7d2e9933477232f9c926146f1aa38af2435bf86ab4b5f6a9fa659fac207",
+        "materialElapsedSeconds": 371.1442326582037,
+        "operationsPlanSHA256": "1649409b27c5b388c88e5aae22318344ba7ca23cdbc98760dc1ab14a1b1fa989",
+        "C11": {
+          "sha256": "e03448c4594866a619f86754e4734b32952497fdc53391060c501ae291c36c11",
+          "startsAt": 1793981490956,
+          "expiresAt": 1793982690956,
+          "scope": "new exact r24 isolated target only; C9 still unissued"
+        },
+        "startResultSHA256": "6fd5f1259ecd93146deee61d472e319faeef759d02dae2c481e21b0ffcb211f4",
+        "physical": {
+          "cid": "e2a6e41a62c9af6c883ba699fa07c04de9f158b5e6ad6491d34ef63948fa65d6",
+          "systemIdentifier": "7705092136371941423",
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 16:12:45.525035+00",
+          "serverVersionNum": "170011",
+          "programSha256": "a0fafd1df4ddfbe7bcadf98804299e783e48bb119648ce1665f86c9ae865bba3",
+          "targetSha256": "8e38cfccb2781bb296a5f5526d8a1c176b43ecb3b3ffed68835d04a5852407af"
+        },
+        "C9": {
+          "sha256": "d29ded88a7f0082a761b73d271dc10d5383f48dbaae3bbbe776c9115c336f751",
+          "expiresAt": 1793982690956,
+          "scope": "same original C11 new r24 synthetic target only"
         }
       }
     },
@@ -33151,12 +33177,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T00:01:04.405576+08:00",
-      "phase": "R24_STAGE_READONLY_PASS_C13_ISSUED_ORIGINAL_T45_MATERIALIZING",
+      "at": "2026-11-07T00:15:58.250613+08:00",
+      "phase": "R24_ACTUAL_TARGET_STARTED_C9_ISSUED_INSTALL_ORDINARY_CHAIN_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exact stage and materialization",
-      "nextOwner": "C issues C11 only after actual materialization and fresh resource facts",
+      "currentOwner": "Original T45 unique r24 install key",
+      "nextOwner": "C and original source owner only affected actual failure or adopted pass",
       "latestActualReceiptSHA256": "3e6f43b24248aa290250372eefe95700f733e340c8b137c1e5040b110fe85d5b",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -33166,7 +33192,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Stage fixed tail and reconstruct verified full; materialize fixed root; do not start PG before new C11.",
+      "next": "Collect original r24 result and cleanup, distinguish schema/synthetic/ordinary; no old request replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
       "buildRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
@@ -33200,7 +33226,7 @@
       "QBReceiptSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
       "D2ReceiptSHA256": "619445a4e8197ad99c4cfba5579e1f38254da6bd568b4dfb4525339d9907ebd2",
       "currentCandidateActualRuntime": {
-        "state": "BUILD_PASS_NOT_PG_EXECUTED",
+        "state": "ACTUAL_NEW_PG_STARTED_INSTALL_IN_PROGRESS",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false

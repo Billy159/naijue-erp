@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "a0fafd1df4ddfbe7bcadf98804299e783e48bb119648ce1665f86c9ae865bba3",
+  "sourceSetSha256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+  "targetSha256": "8e38cfccb2781bb296a5f5526d8a1c176b43ecb3b3ffed68835d04a5852407af",
+  "startsAt": 1793981490956,
+  "expiresAt": 1793982690956,
+  "independentSafetyReviewSha256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
+  "authorizationReference": "C original human standing same-kind isolated approval; C11 e03448c4 same deadline1793982690956, no extension. QB app941b153f +ops4f852db4, materialffe187c1; actual start8b9444ac binds new CIDe2a6e41a/SID7705092136371941423/OID16393/birth16:12:45.525035UTC. Only new r24 synthetic install/rollback/commit/replay/readback and ordinary business; original guards and cleanup. No REAL, production or r23 keys."
+}

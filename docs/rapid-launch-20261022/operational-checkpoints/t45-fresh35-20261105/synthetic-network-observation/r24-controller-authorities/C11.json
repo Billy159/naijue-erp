@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "8a2107fb21b1fe304b4ba2796545ab8a26980b0b7f9b97b54288d9f8d2889574",
+  "sourceSetSha256": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793981490956,
+  "expiresAt": 1793982690956,
+  "independentSafetyReviewSha256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
+  "authorizationReference": "C original human standing same-kind isolated approval; exact r24 new container/root operation931564, fixed sourcecfad/root931564/sourceSetf2b1. QB941b app +4f852 ops, D2619445; materialffe187c1/resources4fd7c7d2 verified. Only original2CPU3GiB/PID256, UID:GID61035, guardian/2DO; synthetic install/rollback/commit/replay/readback and ordinary chain after separate C9. No REAL, production or old keys; no extension."
+}
