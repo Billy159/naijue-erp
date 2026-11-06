@@ -1,0 +1,151 @@
+{
+  "status": "R20_SINGLE_LOCAL_PREFLIGHT_PASS_NO_SERVER_ACTION",
+  "recordedAtUTC": "2026-11-06T11:46:47.570150+00:00",
+  "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
+  "candidateRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
+  "sourceTree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
+  "sourceSetSHA256": "ce32b43064f9583ec2cdf8ee1d9f1e16b15825044e835d10615b7c8ac6fa11b6",
+  "D2ResultSHA256": "7aa9216ed363ccaba18b7b78a7f003c24bd2eb6c25cac323f9d69ee2d0a85dae",
+  "QBResultSHA256": "3532dbe5b65c79c77902ecd2fbb7b532bc93f6dea5284431eded7660b946039e",
+  "sourceOnlyAuthorResultSHA256": "55eddd506e6d6216ca9622dd553561b988c421cfc03f8c65ffebd641af970266",
+  "files": {
+    "ordinary-proof-evidence.py": {
+      "parentSHA256": "cbc6448716e5d5156cd4b9a02feb42b1d97ed0078c3e1e26910eb3cb88be0e0b",
+      "sha256": "d16c63f3204a0b56aa082827d4cd8c5b7f41f860a04208b07f94257dac134466",
+      "bytes": 10262,
+      "literalChangeCounts": {
+        "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f": 2
+      },
+      "inverseAllOtherBytesExact": true
+    },
+    "fresh35-container-successor.py": {
+      "parentSHA256": "5bd407144594ff509c011556c1f23033ad1f85408bc0831c0ded8e6c07fde258",
+      "sha256": "a08497057974fc89671092efe61e468ed70bd57494b362aa909b6db784fd9f6c",
+      "bytes": 36924,
+      "literalChangeCounts": {
+        "r19": 2,
+        "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f": 1,
+        "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79": 1,
+        "83698188": 1,
+        "65f062a96c48bf463d572d4ae599c80aa40a20c95f358980a8c866e21bb88424": 1,
+        "101f4f": 1,
+        "cbc6448716e5d5156cd4b9a02feb42b1d97ed0078c3e1e26910eb3cb88be0e0b": 1
+      },
+      "inverseAllOtherBytesExact": true
+    },
+    "assemble_original_receiver.UNBOUND.py": {
+      "parentSHA256": "a633befad96d96ac5f8ba667b7e6577dd439a1f5ca81af25e4a2a8b05601ccac",
+      "sha256": "2b610de84a4d9a49c3f3428156fa6aca6b28faf67e9c4689d84cf64e1c6f92ee",
+      "bytes": 9515,
+      "literalChangeCounts": {
+        "101f4f": 4,
+        "e7bcc8": 1,
+        "83696049": 1,
+        "0aefefe711d96d93303a1032d4ab43f27e0de3d48a563b24454cf0e01ed41503": 1,
+        "655c17726a157d708cb7bb3dac7e92b5495498eb26624b7c2a9a6a8c1e71c4b8": 1,
+        "[66304, 393697, 83696049, 1793960192422906011, 1793960193462889592]": 1,
+        "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c": 1,
+        "80908239": 1,
+        "2789949": 1,
+        "1f95b27252693d5d37d047f4a5942dfd500acb251e1712e4660dbc8f1cff3609": 1,
+        "83698188": 1,
+        "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79": 1,
+        "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f": 1
+      },
+      "inverseAllOtherBytesExact": true
+    },
+    "stage_preflight.py": {
+      "parentSHA256": "bd38452e8f842bdce862560d61a8695b1e1d8e774cfaa61c9ff404f66911e5b6",
+      "sha256": "7854ae9bcd9a6e08017eb1bfeb8361e3ae5202f7b1f28c757d57209f3cad9964",
+      "bytes": 8358,
+      "literalChangeCounts": {
+        "101f4f": 3,
+        "655c17726a157d708cb7bb3dac7e92b5495498eb26624b7c2a9a6a8c1e71c4b8": 2,
+        "e7bcc8": 5,
+        "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c": 1,
+        "83696049": 1,
+        "0aefefe711d96d93303a1032d4ab43f27e0de3d48a563b24454cf0e01ed41503": 1,
+        "[66304,393697,83696049,1793960192422906011,1793960193462889592]": 1,
+        "56c458aebe8331c90afb44bd4cc52a9a289abfd353a8930b4ef090cf593089f9": 2,
+        "r19": 5,
+        "r18": 11,
+        "12b8ddb2cee66dc9c368b992a989b612f5d6b5ef0b085ef4a86aedbcb8aa1df3": 1,
+        "FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED": 1,
+        "R19": 1
+      },
+      "inverseAllOtherBytesExact": true
+    }
+  },
+  "archive": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-07e250d5/ordinary/ordinary-transfer.tar.gz",
+    "bytes": 83698036,
+    "sha256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f"
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-07e250d5/ordinary/DEPLOYMENT-MANIFEST.json",
+    "bytes": 1084429,
+    "sha256": "43585d7578cdfd1c52067b2c95b677d0e3faa57c2fa62d7f884cfd5f9f5a0669"
+  },
+  "tail": {
+    "status": "EXACT_PREFIX_TAIL_STREAM_PROVED",
+    "base": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-101f4fa0/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83698188,
+      "sha256": "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79"
+    },
+    "prefix": {
+      "bytes": 81226923,
+      "sha256": "d37e4aa52358f6b1f0b56eab8be4616f7608e79df25b65c17c623d3fd5042b86",
+      "byteCompared": true
+    },
+    "tail": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-07e250d5/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-81226923.bin",
+      "bytes": 2471113,
+      "sha256": "0ea554b0d2e2a9eb59367676695b1396471fcb586a727a2ff303dac4a7be5930"
+    },
+    "target": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-07e250d5/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83698036,
+      "sha256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f"
+    },
+    "streamReconstruction": {
+      "bytes": 83698036,
+      "sha256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
+      "persistedTailReread": true
+    },
+    "recompression": false,
+    "fullReconstructedCopy": false,
+    "transportExecuted": false,
+    "serverExecuted": false
+  },
+  "baseHistoricalActualReady": {
+    "artifactKey": "f35-101f4f-ordinary-local-20261106-01",
+    "archiveSHA256": "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79",
+    "archiveBytes": 83698188,
+    "fileIdentity": [
+      66304,
+      393705,
+      83698188,
+      1793963515498311176,
+      1793963516720318950
+    ],
+    "authoritySHA256": "0d6d198e062eb271273b4c76e28b35a1975c72a5dc3d2e05232b15d4964d727d",
+    "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f"
+  },
+  "baseNotReverifiedRemotelyThisTurn": true,
+  "localRegistrySamePrefixJobs": [],
+  "pending": [
+    "original C preflight binding",
+    "original C13 staging leaves",
+    "actual server preflight",
+    "original C11 actual physical target",
+    "original C9 install"
+  ],
+  "serverActions": 0,
+  "PGQueries": 0,
+  "oldCommittedKeysReplayed": false,
+  "REALOrFormalChanged": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "remotePreflightJobId": "t45-f35-07e250-stage-preflight-20261106-01",
+  "remotePreflightAuthorizationReference": "C original same-kind bounded readonly metadata/resources existing-owner continuation, received 2026-11-06; no C13 stage/C11/C9 before exact external binding"
+}

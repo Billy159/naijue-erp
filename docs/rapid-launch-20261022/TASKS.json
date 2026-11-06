@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "SOURCE_QA_BUILD_PACK_PASS_T45_EXACT_PREFLIGHT_ACTIVE",
+      "critical": "SOURCE_BUILD_PASS_REMOTE_READONLY_PREFLIGHT_FAILED_EXACT_DIAGNOSIS_ACTIVE",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Exact two-leaf order/failure-close increment PASS, no repeated author13.",
         "D2": "One fullbuild/pack/member/tailPASS; noactualPG.",
-        "T45": "Exact r20 original local/readonly preflight authorized, no stage/PG yet.",
+        "T45": "Bounded readonly original failed-preflight diagnostic only; noPG/REALprod.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31907,7 +31907,7 @@
         }
       },
       "r20Preparation": {
-        "state": "SOURCE_QA_BUILD_PACK_PASS_T45_EXACT_PREFLIGHT_ACTIVE",
+        "state": "SOURCE_BUILD_PASS_REMOTE_READONLY_PREFLIGHT_FAILED_EXACT_DIAGNOSIS_ACTIVE",
         "integration": "859d85b16245b2312bdcebb18d5acdda369a2501",
         "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",
         "tree": "54738afbbbe35836ebd75bb37ff08afca26a3481",
@@ -31929,7 +31929,7 @@
             1793963516720318950
           ]
         },
-        "next": "T45 original r20 local and necessary remote readonly preflight; accurate original C13 then material/resource/C11/actualtarget/C9. No original r19 committed key replay.",
+        "next": "Original T45 one exact failed-job readonly exception-type/source-line and necessary boolean metadata diagnosis; no preflight replay/stage/PG/permission change.",
         "QBReceiptSHA256": "3532dbe5b65c79c77902ecd2fbb7b532bc93f6dea5284431eded7660b946039e",
         "D2ReceiptSHA256": "7aa9216ed363ccaba18b7b78a7f003c24bd2eb6c25cac323f9d69ee2d0a85dae",
         "archiveSHA256": "791d74f7eb0c60ab30bc226908ef2ecddeb15400edb306bba7f6c4e612a7477f",
@@ -31968,7 +31968,12 @@
           "fullReconstructedCopy": false,
           "transportExecuted": false,
           "serverExecuted": false
-        }
+        },
+        "localReadySHA256": "70f810af9c0ac9f6ce99872ee5726aa06d415a2782cb0322bfe22572ad625b8e",
+        "preflightFailureSHA256": "3dda5c3b130f926aa046bea1923d306e9c528f3a0594b4fe8a251146a9d1db54",
+        "preflightJob": "t45-f35-07e250-stage-preflight-20261106-01",
+        "preflightExitCode": 1,
+        "preflightFailureTypeLine": "NOT_EXPORTED"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32377,8 +32382,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:46:55+08:00",
-      "phase": "SOURCE_QA_BUILD_PACK_PASS_T45_EXACT_PREFLIGHT_ACTIVE",
+      "at": "2026-11-06T19:50:22+08:00",
+      "phase": "SOURCE_BUILD_PASS_REMOTE_READONLY_PREFLIGHT_FAILED_EXACT_DIAGNOSIS_ACTIVE",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
       "currentOwner": "Original QB exact increment and original D2 one build",
@@ -32392,7 +32397,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 original r20 local and necessary remote readonly preflight; accurate original C13 then material/resource/C11/actualtarget/C9. No original r19 committed key replay.",
+      "next": "Original T45 one exact failed-job readonly exception-type/source-line and necessary boolean metadata diagnosis; no preflight replay/stage/PG/permission change.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
       "buildRoot": "07e250d53fec34d8b5199043075263268ff1e32f",

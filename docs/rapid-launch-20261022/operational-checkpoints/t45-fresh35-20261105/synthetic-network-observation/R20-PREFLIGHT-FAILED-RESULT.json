@@ -1,0 +1,22 @@
+{
+  "status": "STOP_R20_REMOTE_PREFLIGHT_FAILED_ORIGINAL_KEY_TERMINAL_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T11:49:07.604232+00:00",
+  "jobId": "t45-f35-07e250-stage-preflight-20261106-01",
+  "jobStatus": "FAILED",
+  "exitCode": 1,
+  "elapsedSeconds": 0.6695473711006343,
+  "atUTC": "2026-11-06T11:47:51.755704+00:00",
+  "finishedAtUTC": "2026-11-06T11:47:52.459313+00:00",
+  "jobReceiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-07e250-stage-preflight-20261106-01/transport/release-receipts/t45-f35-07e250-stage-preflight-20261106-01/job.json",
+  "jobReceiptSHA256": "33443b3530a6d177d6f152050c85c9ec2bd10fb9a7ddd6bdf0ba9a2f98d5bbd4",
+  "exports": [],
+  "privateLogsExported": false,
+  "actualFailureStage": "UNKNOWN_NOT_EXPORTED",
+  "localPreflightSHA256": "70f810af9c0ac9f6ce99872ee5726aa06d415a2782cb0322bfe22572ad625b8e",
+  "serverPreflightAttempts": 1,
+  "submittedOperationTerminal": true,
+  "stageMaterializePGInstallActions": 0,
+  "r19CommittedReplayed": false,
+  "REALOrFormalChanged": false,
+  "next": "No replay. Need exact original-key bounded read-only failure type/source line or existing exported result; no actual base/resources/stopped conclusion from missing report."
+}
