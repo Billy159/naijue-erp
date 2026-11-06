@@ -1,0 +1,103 @@
+{
+  "format": "QB_R26_ACTUAL_EXECUTION_EVIDENCE_SCOPED_ACCEPTANCE_V1",
+  "recordedAt": "2026-11-07T03:14:06.865085+08:00",
+  "conclusion": "PASS_SCOPED_ACTUAL_R26_PG_SYNTHETIC_ORDINARY_AND_CLEANUP",
+  "findings": [],
+  "checks": {
+    "format": "QB_R26_ACTUAL_RECEIPTS_CHECK_V1",
+    "status": "PASS_SCOPED_ACTUAL_R26_PG_SYNTHETIC_ORDINARY_AND_CLEANUP",
+    "rawEvidenceSHA256": {
+      "job.json": "0fbc7541801c96020668e55cd5b4e6e320f6f6a99875b80ed77b4b6d8faa1cb4",
+      "fresh35-deliver-install-result.json": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094"
+    },
+    "T45SummarySHA256": "f8e7dd37e642052b0b22ad2f8b0811f9ee757540fbe20b43bab24d30b65a86c7",
+    "fixedRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+    "source": "e422d07390c5a58c44b54452983638a2de5655b7",
+    "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "programSha256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+    "targetSha256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365",
+    "physicalSID": "7705135436364169263",
+    "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+    "job": {
+      "id": "t45-f35-10fc5e-install-20261107-01",
+      "exitCode": 0,
+      "elapsedSeconds": 170.03518376220018,
+      "startedAtUTC": "2026-11-06T19:05:04.137768+00:00",
+      "finishedAtUTC": "2026-11-06T19:07:54.227345+00:00"
+    },
+    "authoritiesExactAndOriginalBundleMatched": true,
+    "installationPublished": true,
+    "syntheticCommitReplayReadback25Headers27Settlements": true,
+    "rollbackOriginalBatchAbsent": true,
+    "threeSnapshotsClosed": true,
+    "installEqualsRollback": true,
+    "commitDiffers": true,
+    "ordinaryCompletedAtExactNonSkippingEntry": true,
+    "ordinaryCoverageEvidence": "Completed fixed reviewed runner, whose assertions throw on failure and three scenario loop is unconditional; no per-request result transcript is exported. Account setup actual CREATE-or-RESET branch only, not both branches claimed.",
+    "proofReadWatchEpochCatalogChangePassed": true,
+    "nativeSamePoolRevocation": "NOT_TESTED",
+    "cleanupComplete": true,
+    "noActiveTcpRows": true,
+    "strictPortAbsent": false,
+    "matchingTimeWaitRows": 5,
+    "cleanupObservedUTC": "2026-11-06T19:07:44.355706+00:00",
+    "containerStopped": true,
+    "ordinaryChildrenReaped": true,
+    "remaining": [
+      "REAL/formal import and production release",
+      "browser and external-network business path",
+      "native same-pool revocation",
+      "capacity/concurrency/performance",
+      "immediate port rebinding"
+    ],
+    "reviewActions": {
+      "PGConnections": 0,
+      "serverJobs": 0,
+      "builds": 0,
+      "testRuns": 0,
+      "sourceWrites": 0,
+      "oldJobReplay": false
+    }
+  },
+  "reusedEvidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/R26-ACCOUNT-CLEANUP-D63F6986-20261107/fix-e422d073/RESULT.json",
+      "sha256": "6fec6fe7e0ac1b7585d925ea0eeed7ac40eddeebae1a78101b8e5a48ca4b3ecb",
+      "action": "VALID_SCOPE_REUSED_NOT_RETESTED"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/R26-ACCOUNT-CLEANUP-D63F6986-20261107/RESULT.json",
+      "sha256": "23b2a74d81acbd53f15408314eab482e14f5810409904863b3378885e32320a4",
+      "action": "VALID_SCOPE_REUSED_NOT_RETESTED"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/R26-ACCOUNT-CLEANUP-D63F6986-20261107/ops-10fc5e/RESULT.json",
+      "sha256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
+      "action": "VALID_SCOPE_REUSED_NOT_RETESTED"
+    }
+  ],
+  "interpretation": {
+    "actualPG": "PostgreSQL17.11 isolated target, synthetic data and original ordinary API runner",
+    "ordinaryEvidenceLimit": "Exact frozen completed entry plus its non-skipping assertions, not separately exported per-request transcripts; CREATE-or-RESET actual selected branch only",
+    "independentSnapshots": "Original privileged readonly connections, separate from ordinary application authorization proof",
+    "nativeSamePoolRevocation": "NOT_TESTED_RETAINED",
+    "strictPortAbsent": false,
+    "cleanupComplete": true,
+    "immediateRebind": "NOT_VERIFIED",
+    "performance": "NOT_ACCEPTED_FROM_TOTAL_JOB_TIME",
+    "formalBusinessOrProductionRelease": "NOT_VERIFIED",
+    "oldR25Failure": "PRESERVED_NOT_RECLASSIFIED; unique old500 root cause remains unknown"
+  },
+  "next": "C may adopt this exact isolated actual-PG/ordinary/cleanup result for its bounded next decision. REAL import, formal release/browser and remaining explicit gaps require their own authorized evidence; no extra run or old-key replay performed by QB.",
+  "actualModelEffortFast": "UNVERIFIED",
+  "artifacts": {
+    "CHECKS.json": {
+      "bytes": 2472,
+      "sha256": "7f32fbdfc01c70ec34e5200784fce2185bd02e9c65605586608e3e6dfb1cb7b8"
+    },
+    "verify-receipts.py": {
+      "bytes": 8535,
+      "sha256": "d126f0a6fed8a65cd1a571c638131242c3ab0a8b546607c86e48535388e19121"
+    }
+  }
+}

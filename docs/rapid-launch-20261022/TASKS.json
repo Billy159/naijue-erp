@@ -33500,7 +33500,13 @@
         "newFindings": 0,
         "actualRuntimeVerified": false
       },
-      "ordinaryScopeOnly": true
+      "ordinaryScopeOnly": true,
+      "actualIndependentQA": {
+        "conclusion": "PASS_SCOPED_ACTUAL_R26_PG_SYNTHETIC_ORDINARY_AND_CLEANUP",
+        "resultSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29",
+        "newFindings": 0,
+        "scope": "Fixed completed original runner path, not per-request independent logs; not both account CREATE/RESET branches; no REAL/formal/browser/performance pass"
+      }
     },
     "latestActualRuntime": {
       "at": "2026-11-06T19:07:54.227345+00:00",
