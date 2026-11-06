@@ -2093,3 +2093,10 @@ T45两Python叶有限端口观察交付14804377/13例PASS，原任意匹配TCP�
 QB843048ff/8185字节固定sourcef6d73/root399d8594/tree4fa366，findings空；采用原16+13例及独立两容量故障/端口读中断反例，不重验完整后台。运维UNBOUND模板仅guard源码通过，实际pins未知仍拒绝；后续仅核具体绑定字节。原D2已接唯一实际构建，真实loader sourceSet和新制品未出。远端2251802b及root399d8594已读取确认。
 
 T45必要metadata01 FAILED2/无exports（904ebb2d）；脚本误用600检查400清理文件、输出字面反斜杠n，实际先失败点未知，不能当已读到private事实。C授权准确校正脚本30b39cae先有限本地格式/权限反例，再全新02键一次max60s同范围只读；不重放旧键、不补权限、不PG、不读秘密原文。r25新PG仍未执行，r24普通链未过的结论保留。
+
+
+## 2026-11-07T01:01:31.171903+08:00 — 构建精确边界补齐并窄验通过，失败不重放
+
+fixed399d实际build exit1/2.480秒，44377f9b，NATIVE35_EXACT_BOUNDARY_REQUIRED；未打包/tail，独立loader7cf8810e不当完整候选。公共owner C仅在release-contract.native35首个importers追加已验capacity-runtime-probe.ts，其他JSON/插件守卫不变；原QB1dc67c60窄验通过，父拒/现准确准入/3个未授权negative仍拒，原五叶843048ff直接复用。新source753574cc/root56fb33edf7d2a7953df9cd013592b63c0e53bab3/tree941efee0冻结，原D2按新版本做一次必要构建；旧失败目录保留。
+
+T45metadata02实际exit0但出口名称含private导致未取typed事实，33c1721b保留，不把父exit0当PASS。获准仅恢复原02已生成脱敏摘要，唯一recover作业COMPLETED0/.117秒，fc1028ac/typed00b484d3；未重采样。准确private原result65ed0d54/34590B/0600，cleanupfc07/305B/0400，观察时点00:53:21.521401+08；同CID停止/PID0等原事实准确回收，仍非当前新取样，端口未直接核验/清理false不改。等新完整build真实pins后才绑定后继；没有新PG/REAL/生产。

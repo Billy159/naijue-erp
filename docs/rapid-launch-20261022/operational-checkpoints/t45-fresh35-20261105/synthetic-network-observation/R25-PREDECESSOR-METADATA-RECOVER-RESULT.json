@@ -1,0 +1,99 @@
+{
+  "status": "EXACT_ORIGINAL_R24_METADATA_RECOVERED_NO_RESAMPLING_NO_STAGE_EXECUTION",
+  "jobId": "t45-f35-399d85-r24-proof-recover-20261107-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 0.1174702849239111,
+  "observedAtAsiaShanghai": "2026-11-07T00:53:21.521401+08:00",
+  "recoveredAtAsiaShanghai": "2026-11-07T00:57:57.374016+08:00",
+  "receipts": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-399d85-r24-proof-recover-20261107-01/transport/release-receipts/t45-f35-399d85-r24-proof-recover-20261107-01/job.json",
+      "sha256": "0ffd1171bdbe43b42c7b4076ffa8ac5c972f1313e3d25dcdd4bdf2fb0df3b57e"
+    },
+    "predecessor-metadata.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-399d85-r24-proof-recover-20261107-01/transport/release-receipts/t45-f35-399d85-r24-proof-recover-20261107-01/predecessor-metadata.json",
+      "sha256": "00b484d32b29257a461c0a31637b461b4ac6e450384f713c3bdb78ea90f36a16"
+    }
+  },
+  "sourceScriptSHA256": "2f174df349de087c744dc10fb1a9b3e20408b7c1d156ea862504c15c88a2363c",
+  "localOutputChecks": {
+    "tests": 2,
+    "exitCode": 0,
+    "elapsedSeconds": 0.003,
+    "scope": "Original typed filename rule; exact output expression valid JSON/real newline; extra fields, secret text and wrong binding rejected"
+  },
+  "recoveredProof": {
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": false,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": false
+    },
+    "cleanupMetadata": {
+      "bytes": 305,
+      "gid": 0,
+      "mode": "0o400",
+      "nlink": 1,
+      "sha256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c",
+      "stableRegularNoSymlink": true,
+      "uid": 0
+    },
+    "containerAtOriginalObservation": {
+      "exactIdentityVerified": true,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "initPidZero": true,
+      "network": "none",
+      "noHostBindings": true,
+      "operation": "t45-f35-931564-application-20261106-01",
+      "source": "f2b1f4de26e596f4f454c4c17d223141f255661a5b481dbd5e908b64d1a5baeb",
+      "stopped": true
+    },
+    "diagnostic": {
+      "actualInteger": null,
+      "errno": null,
+      "errorType": "Error",
+      "expectedInteger": null,
+      "format": "FRESH35_ORDINARY_FAILURE_V1",
+      "guardCode": null,
+      "phase": "REAL_CAPACITY_PREFLIGHT",
+      "source": "runFresh35OrdinaryIntegration:catch",
+      "sqlstate": null
+    },
+    "exactSourceProgramTargetVerified": true,
+    "observedAtUTC": "2026-11-06T16:53:21.521401+00:00",
+    "originalJobId": "t45-f35-399d85-r24-private-metadata-20261107-02",
+    "originalSourceSha256": "b53547c2a70e9a5f9e80f3c6d30b2cea118be0d37e01022ce0ea643183cfa7ac",
+    "portAbsence": "NOT_DIRECTLY_VERIFIED",
+    "resultMetadata": {
+      "bytes": 34590,
+      "gid": 0,
+      "mode": "0o600",
+      "nlink": 1,
+      "sha256": "65ed0d5447ee5461578faad74c839e3ddd5d5e4a41fc204f178ba16d7a7d671f",
+      "stableRegularNoSymlink": true,
+      "uid": 0
+    },
+    "strictCleanupAndInitializationShapeVerified": true
+  },
+  "originalSummarySHA256": "f1bcbbaf67cb75ac02972697e687d3c51b3df28e2c322bb9d5c726417a758184",
+  "initialFailurePreserved": {
+    "metadata01ResultSHA256": "904ebb2d1838f1ff068d17d1663a9ce8a40ebbf09e9042e3b73d8398e27c4993",
+    "actualFirstFailurePhase": "UNKNOWN; no retroactive lstat invented",
+    "scriptCorrections": [
+      "cleanup400/result600",
+      "actual newline"
+    ],
+    "metadata02ExportMissingRecordSHA256": "33c1721bbd89aabeedb39e58a1fabdb53bff1ee064a747a20d166dd1beb8fc1e",
+    "recovery": "Exact prior summary read, closed schema and original source hash checked, fresh safe projection output; original files never renamed/deleted/modified"
+  },
+  "PGConnections": 0,
+  "r24FilesOrContainerResampled": false,
+  "oldKeysReplayed": false,
+  "managerOrPermissionsChanged": false,
+  "sourceOrBuildPinsBoundByThisRecovery": false,
+  "r25CompleteBuild": "UNBOUND; D2 old399d failed, await final exact successor and actual build",
+  "actualModelEffortFast": "UNVERIFIED"
+}

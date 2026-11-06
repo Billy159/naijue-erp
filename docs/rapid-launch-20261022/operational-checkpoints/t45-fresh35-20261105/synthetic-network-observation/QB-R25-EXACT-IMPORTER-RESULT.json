@@ -1,0 +1,63 @@
+{
+  "format": "QB_R25_RELEASE_IMPORTER_SINGLE_FIELD_REVIEW_V1",
+  "recordedAt": "2026-11-07T00:59:25.877134+08:00",
+  "conclusion": "PASS_EXACT_SINGLE_IMPORTER_AND_ORIGINAL_PLUGIN_GUARD",
+  "findings": [],
+  "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
+  "candidateTree": "941efee043b3be20f761eeefc9b3c2fe90bc3d3b",
+  "comparisonSource": "f6d73b388e0184e16609d62d3f7b9512ae85c8e6",
+  "file": {
+    "path": "config/release-contract.json",
+    "bytes": 7490,
+    "sha256": "4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456"
+  },
+  "delta": "Only native35.boundaries[0].importers appends apps/api/src/capacity-runtime-probe.ts",
+  "allOtherParsedContractFieldsExact": true,
+  "guardAndManifestSourceBytesUnchanged": true,
+  "independentCheck": {
+    "format": "QB_R25_SINGLE_IMPORTER_ORIGINAL_PLUGIN_V1",
+    "status": "PASS",
+    "actualNewConsumerAccepted": true,
+    "parentBoundaryRejectsSameConsumer": true,
+    "unregisteredImporterRejected": true,
+    "otherRegisteredBoundaryNotBorrowed": true,
+    "unknownEntryRejected": true,
+    "negativeCases": 3,
+    "pluginExecuted": "Original onResolve registration/callback only; no esbuild/build invocation",
+    "scope": "Actual config/manifest and consumer source, original plugin body extracted in memory; no build/source writes/PG/server"
+  },
+  "reusedFiveLeafQBResultSHA256": "843048ff3c30766cd69cd732212c07368ac4d83192e69e7a65918259a950193d",
+  "priorBuild": {
+    "root": "399d85945f2fe3afcc5985668b8aa6cb6fc98c48",
+    "status": "FAILED",
+    "resultSHA256": "44377f9b6566e03c7523e41f3bc0894a1f973d0776b85631f914274d9c50af8f",
+    "code": "NATIVE35_EXACT_BOUNDARY_REQUIRED",
+    "evidence": "C delivered fixed prior build failure; not rerun or independently re-reviewed in this increment"
+  },
+  "boundaries": {
+    "actualSuccessorBuild": "NOT_RUN_NOT_PASSED",
+    "PGQueries": 0,
+    "serverJobs": 0,
+    "builds": 0,
+    "sourceWrites": 0,
+    "authorTestsRerun": 0,
+    "oldKeyReplay": false,
+    "wholeSuiteOrClosure": false,
+    "actualModelEffortFast": "UNVERIFIED"
+  },
+  "next": "C freezes new exact root and original D2 runs actual build; this narrow verdict is not build/package/launch approval.",
+  "artifacts": {
+    "SOURCE-CHECKS.json": {
+      "bytes": 502,
+      "sha256": "2b8f4ef05f96b2bf2875b8424deba31251624bd306256f127ff44ba5c8c94033"
+    },
+    "INDEPENDENT-CHECKS.json": {
+      "bytes": 533,
+      "sha256": "1322bca8e4c46b025d2183ff8a796b17cbbc1fd8a3bab2134a2b89cc4c4e6fe1"
+    },
+    "independent-boundary.mjs": {
+      "bytes": 2647,
+      "sha256": "591ec9e5fe1c696a0c08f8f5261143192447d209366d13ccee3ce7e8ed3a8630"
+    }
+  }
+}
