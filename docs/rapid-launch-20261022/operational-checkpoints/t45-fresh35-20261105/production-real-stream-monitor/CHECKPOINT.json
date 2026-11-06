@@ -1,0 +1,45 @@
+{
+  "purpose": "Pure source checkpoint, no private input/authority/real data. R1 b6d4 NEED_FIX retained; R2 aa564 plus controller35f91 source-only QB ebd854 PASS. Linux and REAL unverified. App root10fc unchanged.",
+  "files": {
+    "20261107-production35-real-stream-monitor-01/fresh35-production-carrier.py": {
+      "bytes": 74504,
+      "sha256": "b6d4f0c39e2211e7269c96027d249f47d54ce9fffaaf433ee2dd21c5c07302ae"
+    },
+    "20261107-production35-real-stream-monitor-01/test_real_stream_monitor.py": {
+      "bytes": 11019,
+      "sha256": "ed83f5ea422fb30a9ef9e6d2c6296435be375cdfaaaed7a2e5b2aad2104ae4b4"
+    },
+    "20261107-production35-real-stream-monitor-01/READY.json": {
+      "bytes": 3893,
+      "sha256": "61e145bb27f6d94eba1b7c90861a394dd2c7df31025c93d138ca358e68156e6b"
+    },
+    "20261107-production35-real-stream-monitor-01/prepare_controller_reference.py": {
+      "bytes": 5436,
+      "sha256": "35f91e1435f04fa29f0d3ba8f89e7194a812a0be065fee040b72921b5ed6516a"
+    },
+    "20261107-production35-real-stream-monitor-01/test_controller_reference.py": {
+      "bytes": 1568,
+      "sha256": "9bd8fc3c724568ed131c7fd221ecfd0340de84ee218c9d671b9c7a40cec5cda0"
+    },
+    "20261107-production35-real-stream-monitor-01/CONTROLLER-REFERENCE-READY.json": {
+      "bytes": 1717,
+      "sha256": "6f02adf1b8c21b04ff5ae5c61b07e7187e828f8a2b4c9935363a34b3544c43b5"
+    },
+    "20261107-production35-real-stream-monitor-01/EXECUTION-DESCRIPTION.UNBOUND.json": {
+      "bytes": 1636,
+      "sha256": "2301202b50cfe03e9b7cff1f0a91e5ff0d4c88fcd57e6f3318e91eb3ce14ee31"
+    },
+    "20261107-production35-real-stream-monitor-02/fresh35-production-carrier.py": {
+      "bytes": 76010,
+      "sha256": "aa564fe15f65a21b47c374f35c2814d3163c0ac0c086501a2c88b9c760e7ca7b"
+    },
+    "20261107-production35-real-stream-monitor-02/test_startup_deadline.py": {
+      "bytes": 6990,
+      "sha256": "b6bbc90f02329c076c63e10e9e1e84fa4b1f2ed042ba865372b94cd14592b859"
+    },
+    "20261107-production35-real-stream-monitor-02/READY.json": {
+      "bytes": 2894,
+      "sha256": "8e4a1617a459fbfc907e2e6defc55860ca8130ea116278ae4c02649fa042243f"
+    }
+  }
+}

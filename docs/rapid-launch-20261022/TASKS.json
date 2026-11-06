@@ -33726,6 +33726,50 @@
         "actualPGWALTempPeak": "UNKNOWN",
         "status": "KNOWN_STARTUP_LOWER_BOUND_SATISFIED_NOT_COMPLETE_IMPORT_OR_CAPACITY_GUARANTEE",
         "onFailure": "Stop/reap only owned stream, original controller STOP owned new PG; preserve original keys/data/index/graph; outcome UNKNOWN until original-key readback"
+      },
+      "backupRuntimeGap": {
+        "status": "SOURCE_PREPARATION_IN_PROGRESS_REAL_NOT_TESTED",
+        "owner": "D1 source; T45 sole execution",
+        "facts": [
+          "Temporary admin/owner/controller VALID UNTIL install expiry, secret files removed at expiry; ordinary runtime lease separate",
+          "Old Nov6 producer only old erp_prod logical dump, TOC not independent restore",
+          "Current exact35 coverage incorrectly shares old top-level physical backup reference; add separate new35 real logical backup/restore reference while retaining original gate/CAS"
+        ],
+        "authorizedSourceFile": "candidate0448/scripts/release/deploy-candidate.py",
+        "baselineSHA256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+        "oldPhysicalReceiptAvailability": "NOT_VERIFIED_FROM_EXISTING_MATERIAL",
+        "notAuthorizedBySourceWork": [
+          "No fabricated coverage or PASS",
+          "No server/PG operation by D1",
+          "No runtime full-table/owner permission grant",
+          "No install temporary-role extension"
+        ],
+        "sourceFirstPackage": {
+          "HANDOFFSHA256": "d5ea567dcb7a5ffd438bb9d9615514fbf0a43b79aa43de08e43609f8f0ee3fe2",
+          "producerSHA256": "f233ce29c5ce2c43ccb948495f0881889d37d9ea89f91e4e9cf97a93a3326c19",
+          "helperSHA256": "9e914565c2e40ddef8f9198f6512f1a355d5aef156d473df1a1aaa11c24ef08d",
+          "localChecks": "17PASS_0SKIP_NOT_REAL",
+          "oldHelperPinSuite": "9PASS_1FAIL_OLD_PIN_NOT_CHANGED",
+          "QA": "QUEUED_ORIGINAL_QB_AFTER_MONITOR",
+          "actualBackupRestoreApp": "NOT_TESTED"
+        },
+        "restoreRecordSuccessor": {
+          "owner": "D1",
+          "state": "SOURCE_IN_PROGRESS_INDEPENDENT_LEAF_COPIES_ONLY",
+          "reason": "Actual restored target differs; fixed10fc onlyV1/V2 cannot consume fake source record",
+          "authority": "C delegated source/proof/needed original bootstrap observer contract successor; actual DB execution not granted by this work",
+          "appBuild": "Separate genuine restore-only successor required, no old package injection"
+        }
+      },
+      "minimalRealMonitor": {
+        "sourceSHA256": "aa564fe15f65a21b47c374f35c2814d3163c0ac0c086501a2c88b9c760e7ca7b",
+        "bytes": 76010,
+        "readySHA256": "8e4a1617a459fbfc907e2e6defc55860ca8130ea116278ae4c02649fa042243f",
+        "QBResultSHA256": "ebd854f3ea04d7d97e55dbb9b067afa2d43bfb68254aadf06050cbef39852b18",
+        "status": "PASS_SCOPED_SOURCE_NOT_LINUX_OR_REAL",
+        "controllerSourceSHA256": "35f91e1435f04fa29f0d3ba8f89e7194a812a0be065fee040b72921b5ed6516a",
+        "originalB6D4": "NEED_FIX_TIMING_BOUNDARIES_PRESERVED",
+        "next": "T45 authorized bounded actual Linux synthetic guard job90s noPG; materialize plan then exact new production provision"
       }
     }
   }

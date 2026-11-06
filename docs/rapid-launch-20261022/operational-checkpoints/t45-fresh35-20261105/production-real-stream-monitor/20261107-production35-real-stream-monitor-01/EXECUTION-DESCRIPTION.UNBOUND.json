@@ -1,0 +1,56 @@
+{
+  "format": "FRESH35_PRODUCTION_REAL_STREAM_OPS_V1",
+  "requestKey": null,
+  "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+  "manifestSha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+  "targetSha256": null,
+  "programSha256": null,
+  "installationRecordSha256": null,
+  "startsAt": null,
+  "expiresAt": null,
+  "prepareOnly": null,
+  "volumes": {
+    "data": {
+      "path": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r1/data",
+      "device": null,
+      "directoryInode": null,
+      "namespace": null,
+      "mount": null,
+      "physicalVolume": null
+    },
+    "wal": {
+      "path": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r1/data/pg_wal",
+      "device": null,
+      "directoryInode": null,
+      "namespace": null,
+      "mount": null,
+      "physicalVolume": null
+    },
+    "reportIndex": {
+      "path": "/var/lib/naijue-erp/fresh35-production/real-r3/reports",
+      "device": null,
+      "directoryInode": null,
+      "namespace": null,
+      "mount": null,
+      "physicalVolume": null
+    },
+    "tmp": {
+      "path": "/var/lib/naijue-erp/fresh35-production/real-r3/tmp",
+      "device": null,
+      "directoryInode": null,
+      "namespace": null,
+      "mount": null,
+      "physicalVolume": null
+    },
+    "sqliteScratch": {
+      "path": "/var/lib/naijue-erp/fresh35-production/real-r3/sqlite-scratch",
+      "device": null,
+      "directoryInode": null,
+      "namespace": null,
+      "mount": null,
+      "physicalVolume": null
+    }
+  },
+  "registrationSha256": null,
+  "approvals": {}
+}

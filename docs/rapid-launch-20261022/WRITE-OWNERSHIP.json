@@ -10480,5 +10480,48 @@
     "reviewer": "Original QB affected delta only before execution",
     "protected": "Old services, all database data, original archives/receipts, other tasks; no new pool/platform/schema",
     "unknownOutcome": "Stop/reap owned stream and original STOP new PG only; preserve original keys/data/index/graph; never infer rollback or auto replay"
+  },
+  "production35BackupRestore20261107": {
+    "activatedAt": "2026-11-07T04:11:26.198496+08:00",
+    "owner": "D1",
+    "model": "gpt-6.1-sol",
+    "thinking": "high",
+    "files": [
+      "candidate0448/scripts/release/deploy-candidate.py"
+    ],
+    "baselineSHA256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+    "additionalScope": "Minimal independent new35 backup/restore ops successor and focused local tests in original D1 revision directory; T45 sole server executor",
+    "reason": "Old backup producer fixed erp_prod; exact35 backupCoverage currently references same old physical receipt. Need separate honest new35 logical backup/restored result reference, never fake physicalVerifiedOnce",
+    "preserved": "Old backup physical requirement/CAS, non-exact35 paths, old approval records, fixed r26 app package and all data",
+    "reviewer": "Original QB affected delta; real backup/restore remains NOT_TESTED until T45 exact execution",
+    "exact35LegacyLogicalSuccessorDecision": {
+      "authority": "C under human direct decision delegation until2026-11-07T12:00+08",
+      "scope": "Exact35 only may consume honest old-target logical rollback backup plus independently restored same dump; preserve old physical and non-exact35 branches",
+      "required": "Exact old target and APP/WEB/PG CAS, fresh dump/rolesACL/media/config/app closure and actual isolated restore; new35 post-import backup separately referenced",
+      "forbidden": "TOC alone, Nov1 restore of another backup, fabricated physicalVerifiedOnce, changed approval history, old snapshot overwrite of new business"
+    }
+  },
+  "production35RestoreRecord20261107": {
+    "at": "2026-11-07T04:38:04.140238+08:00",
+    "owner": "D1",
+    "model": "gpt-6.1-sol",
+    "thinking": "high",
+    "workMode": "Only exact baseline leaf copies/patches in original D1 RESTORE-RECORD-SOURCE-02; main W native files and first9e914 helper remain frozen",
+    "candidatePaths": [
+      "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "scripts/release/unified-install/publish-installation-record.mjs",
+      "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "tools/unified-import/fresh35-host-session.mjs",
+      "scripts/release/unified-install/fresh35-restoration-v1.mjs",
+      "scripts/release/deploy-candidate.py"
+    ],
+    "scope": "Minimal RESTORED_FROM_VERIFIED_INSTALLATION closed proof branch; retain V1/V2. Actual new restore SID/OID/birth/catalog/rolesACL/source record/dump/one restoration authorization; no fabricated original COMMIT",
+    "observerDecision": "Only actual authorized independent restored target may reconstruct original pg_catalog bootstrap observer via original bootstrap SQL bound to actual restore bootstrap OID10/new target; source admin remains provenance. Same owner/controller EXEC; no ordinary privilege/business table or column added",
+    "preserved": "All152functions/35tables/70types/ordinary single pool/capacity/identity checks; no generic new control platform",
+    "actualExecution": "NOT_AUTHORIZED_BY_SOURCE_PACKAGE; T45 later exact target/window/source binding",
+    "buildConsequence": "Genuine restore-only sourceSet/loader/build successor required; never inject into10fc and label old app verified",
+    "rootSharedFiles": "C sole writer; D1 supplies exact minimal seam patch requests",
+    "reviewer": "Original QB after fixed package, affected delta only"
   }
 }

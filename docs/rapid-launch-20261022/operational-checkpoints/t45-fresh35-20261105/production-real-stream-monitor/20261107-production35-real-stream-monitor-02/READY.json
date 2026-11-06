@@ -1,0 +1,42 @@
+{
+  "status": "READY_FOR_ORIGINAL_QB_STARTUP_AND_DEADLINE_RECHECK_ONLY",
+  "checkedAt": "2026-11-06T20:31:31.482065+00:00",
+  "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-02/fresh35-production-carrier.py",
+  "sourceSha256": "aa564fe15f65a21b47c374f35c2814d3163c0ac0c086501a2c88b9c760e7ca7b",
+  "sourceBytes": 76010,
+  "parentSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-01/fresh35-production-carrier.py",
+  "parentSourceSha256": "b6d4f0c39e2211e7269c96027d249f47d54ce9fffaaf433ee2dd21c5c07302ae",
+  "parentState": "NEED_FIX_NOT_EXECUTED",
+  "originalProductionParentSha256": "3f1dbe79c692a36ea7d509644a0bfe1e3e3c5cc1fd0905b385c612042f5650d7",
+  "changedFunctions": [
+    "real_watch",
+    "real_inside_run"
+  ],
+  "noNewFunctions": true,
+  "testPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-02/test_startup_deadline.py",
+  "testSha256": "b6bbc90f02329c076c63e10e9e1e84fa4b1f2ed042ba865372b94cd14592b859",
+  "tests": {
+    "scope": "Only startup gap and deadline acceptance, including affected Popen/identity/record/reap boundaries. Finite models of actual changed functions; no real Node/PG/server.",
+    "count": 8,
+    "passed": 8,
+    "elapsedSeconds": 0.014,
+    "initialHarnessFailure": "Python3.9 static nested-context limit; fixed fixture using ExitStack; no product execution occurred.",
+    "original19": "Reuse original unaffected evidence; not rerun. Linux actual sampling remains NOT_RUN."
+  },
+  "findings": [
+    {
+      "evidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/REAL-STREAM-MONITOR-B6D4F0C3-20261107/STARTUP-GAP-REPRO.json",
+      "fix": "Carry last pre-spawn sample into first watch sample, include Popen and identity latency, no reset. Move fsync process-record I/O until Node is reaped. Late startup is refused even if child already exited."
+    },
+    {
+      "evidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/REAL-STREAM-MONITOR-B6D4F0C3-20261107/DEADLINE-REPRO.json",
+      "fix": "Check original wall and monotonic deadline after sample, after child reap, and before accepting safe CLI/result. Preserve COMMITTED ACK while out-of-window result becomes unknown."
+    }
+  ],
+  "serverActions": 0,
+  "postgresActions": 0,
+  "authorityIssues": 0,
+  "businessWrites": 0,
+  "newBuilds": 0,
+  "remaining": "Original QB accurate successor recheck then C continuation. No actual Linux/REAL/production acceptance yet."
+}

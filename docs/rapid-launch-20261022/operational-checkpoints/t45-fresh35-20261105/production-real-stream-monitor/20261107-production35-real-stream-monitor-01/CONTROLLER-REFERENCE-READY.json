@@ -1,0 +1,26 @@
+{
+  "status": "READY_FOR_ORIGINAL_QB_CONTROLLER_FORMAT_INCREMENT_ONLY",
+  "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-01/prepare_controller_reference.py",
+  "sourceSha256": "35f91e1435f04fa29f0d3ba8f89e7194a812a0be065fee040b72921b5ed6516a",
+  "sourceBytes": 5436,
+  "parentOpsSha256": "3f1dbe79c692a36ea7d509644a0bfe1e3e3c5cc1fd0905b385c612042f5650d7",
+  "monitorSourceUnchangedSha256": "b6d4f0c39e2211e7269c96027d249f47d54ce9fffaaf433ee2dd21c5c07302ae",
+  "testPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-01/test_controller_reference.py",
+  "testSha256": "9bd8fc3c724568ed131c7fd221ecfd0340de84ee218c9d671b9c7a40cec5cda0",
+  "localTestCount": 3,
+  "passed": 3,
+  "realCredentialsRead": false,
+  "serverExecuted": false,
+  "postgresExecuted": false,
+  "credentialCreated": false,
+  "scope": "Only C-authorized existing machine controller .pgpass format wiring to original CLI private JSON; target/role/window remain fixed and no account/privilege/SQL changes.",
+  "nativeSourceReferences": [
+    "whole-host-session.mjs:107-112 requires password string in closed private config; no passfile config field.",
+    "launch-fresh35-production-v2.py:346-349 creates each machine role pgpass but only owner-connection JSON."
+  ],
+  "remaining": [
+    "QB exact increment review",
+    "New target plus original externally issued authorities and valid first <=20min window",
+    "Original controlled input-preparation bundle with exact reviewed 3f1d companion and C-bound plan. No job submitted."
+  ]
+}
