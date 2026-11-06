@@ -67,3 +67,22 @@ test('retention25 variant runs real streaming preflight and immutable keyed requ
   }finally{await rm(dir,{recursive:true,force:true})}
  }
 });
+
+test('retention25 ordinary fixture binds warehouse02 to hall02 only and preserves default and all other master and stock facts',async()=>{
+ const {createSyntheticFresh35WholePackageInput}=await import('./whole-package-synthetic.ts');
+ const ordinary=createSyntheticFresh35WholePackageInput(null,'settlement-retention25'),unchanged=createSyntheticFresh35WholePackageInput(null);
+ const find=(p,table,key)=>p.pkg.records[table].find(r=>r.source_key===key),hall=find(ordinary,'hall','hall:01'),secondHall=find(ordinary,'hall','hall:02');
+ const first=find(ordinary,'warehouse','warehouse:01'),second=find(ordinary,'warehouse','warehouse:02');
+ assert(hall&&secondHall&&first&&second);assert.notEqual(hall.fields.id,secondHall.fields.id);
+ assert.equal(first.fields.hall_id,hall.fields.id);assert.equal(second.fields.hall_id,secondHall.fields.id,'the explicitly selected second synthetic warehouse belongs to the second synthetic hall');
+ for(const h of [hall,secondHall])assert.equal(ordinary.pkg.records.warehouse.filter(w=>w.fields.hall_id===h.fields.id).length,1,'the real ordinary guard requires exactly one fixture warehouse per selected hall');
+ assert.deepEqual(first,find(unchanged,'warehouse','warehouse:01'));
+ const originalSecond=find(unchanged,'warehouse','warehouse:02');assert.equal(originalSecond.fields.hall_id,hall.fields.id,'default keeps its original two warehouses in hall01');
+ assert.deepEqual(second,{...originalSecond,fields:{...originalSecond.fields,hall_id:secondHall.fields.id}},'only the one explicitly named warehouse hall value changes');
+ assert.deepEqual(ordinary.syntheticWarehouseRows,unchanged.syntheticWarehouseRows.map(w=>w.id===second.fields.id?{...w,hallId:secondHall.fields.id}:w));
+ for(const table of ['hall','staff','customer','product','sku','sku_barcode','inventory_baseline','transfer_header','transfer_line'])assert.deepEqual(ordinary.pkg.records[table],unchanged.pkg.records[table],table+' original identities, relations, quantities and amounts remain exact');
+ assert(ordinary.pkg.records.staff.every(s=>s.fields.hall_id===hall.fields.id&&s.fields.role==='SALESPERSON'));
+ assert.equal(hall.fields.default_customer_id,find(unchanged,'hall','hall:01').fields.default_customer_id);assert.equal(hall.fields.default_sales_warehouse_id,first.fields.id);
+ assert.deepEqual(ordinary.syntheticSourceFiles,unchanged.syntheticSourceFiles,'historical capture, bridge and resolution source bytes remain original');
+ assert.deepEqual(ordinary.historicalSalesHallApproval.records[0],unchanged.historicalSalesHallApproval.records[0]);
+});
