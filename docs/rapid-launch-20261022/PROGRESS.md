@@ -1472,3 +1472,7 @@ D2实际build0/10.838s、pack0/8.830s，production453及ordinary7298成员bytes/
 
 ### 2026-11-06T09:13:20+08:00 | 当前备份完成，r8实际材料化在途
 本次唯一正式备份t45-prod-current-backup-20261106-01实际COMPLETED0/229.403s（原回执47d45612/汇总bb87b791），七文件2,045,181,980B已封存，离线TOC936项通过，app/web/db前后同CID/PID/启动时刻且未重启切换；新备份独立恢复未验，旧恢复证据不替代本批。无真实业务写入或DDL/权限变更。r8真实预检a69d6460已核旧r7停稳/新目标不存在/保留包身份及容量。C原13键两叶fc57bd8f/391c3b13绑定新9c/d496；原tail/full receiver实际READY（assemble b72be05a/4.579s），原materialize一次新key在途。C本机预检曾误把r7Stopped结构对象当布尔断言，已按真实running=false/PID0及六cleanup复核，原现场和签叶未变，无服务器差异。待原key终态/当前资源后才开新PG20，不重旧作业或重复技术验收。
+
+
+### 2026-11-06T09:26:28+08:00 | r8已取得真实新目标并提交安装
+实际材料化b6e01c94/372.391s及随后资源fcae604a通过，汇总bddf8b46已核。C原11键2427e9c2新20min1793928018149..1793929218149、460字符，T45一次start真实COMPLETED0/35.046s（5014f9f3），新SID7704862480009437231/OID16393/CID3989c089。C原9键41e87a15精确绑定program744d6cff/target68541099/source d496/原时窗/QB6c737，410字符；唯一install键已提交，终态未到，不能称安装或业务通过。旧r7现场、正式服务、REAL档未动，不延窗或重旧key。下一只收真实安装/原synthetic25/普通账号/读回/probe/cleanup结果并据此接续。

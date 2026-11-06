@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T09:13:20+08:00",
+  "updatedAt": "2026-11-06T09:26:28+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T09:13:20+08:00",
+    "at": "2026-11-06T09:26:28+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,7 +28491,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "Collect originalmaterialize key only then actualresource; sourceQA already adopted. ActualPG and ordinarybusiness not yet verified.",
+      "critical": "Collect original install key terminal; adopt actual install/synthetic/ordinary/probe/cleanup separately. No replay or new work on unchanged source.",
       "independentPreparation": {
         "D1": "Fixed5e/root9c generated-LF scope frozen; wait exactactualPG error only, no repeat checks.",
         "T45": "r8 actualmaterialize running; originalcurrentbackup actualcompleted; next actualresource/newPG20.",
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R8_ORIGINAL_KEY_MATERIALIZATION_RUNNING_ACTUAL_PG_PENDING",
+      "state": "R8_ACTUAL_NEW_PG_STARTED_INSTALL_SUBMITTED_NOT_YET_PASSED",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "Original T45 r8 materialization terminal and fresh exact resource readback, then C new20min provision and exact target C9. No duplicate materialization or old r7 replay.",
+      "next": "Collect original install key terminal; adopt actual install/synthetic/ordinary/probe/cleanup separately. No replay or new work on unchanged source.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30068,7 +30068,7 @@
         }
       },
       "r8Preparation": {
-        "state": "ACTUAL_FULL_RECEIVER_READY_ORIGINAL_MATERIALIZATION_RUNNING",
+        "state": "ACTUAL_START_COMPLETED_INSTALL_ORIGINAL_KEY_SUBMITTED",
         "integration": "5e28855e1455a639514524f868528c20f1782c76",
         "buildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
         "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
@@ -30098,8 +30098,8 @@
         "tailReceiptSHA256": "679043cc605276659919e5ba5e38bb27e01f7d6cb6457521b44c8d1b257643bd",
         "root": "phaseb-application-r8",
         "container": "t45-fresh35-deb13-20261106-r8",
-        "actualPG": false,
-        "next": "Collect originalmaterialize key only then actualresource; sourceQA already adopted. ActualPG and ordinarybusiness not yet verified.",
+        "actualPG": true,
+        "next": "Collect original install key terminal; adopt actual install/synthetic/ordinary/probe/cleanup separately. No replay or new work on unchanged source.",
         "qbSHA256": "6c737bd7cf1105d36088a6f87bd196aee9c69f0db4b66d6e57b96750e609fef7",
         "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL;33rawsource/318unchanged/7negatives;actualPGnotverified",
         "stagePreflightSHA256": "a69d646090ce72f5c666eabf7e2459c714bbcb778bb2714d9225e28bfaa6d93a",
@@ -30119,7 +30119,35 @@
         ],
         "materializationJob": "t45-f35-9c2748-local-materialize-20261106-01",
         "materializationDeadlineMs": 1793928173216,
-        "preflightVerifierCorrection": "r7Stopped is actual structured container metadata; corrected C boolean expectation, verified running=false/PID0 and six cleanup checks. No input or server discrepancy."
+        "preflightVerifierCorrection": "r7Stopped is actual structured container metadata; corrected C boolean expectation, verified running=false/PID0 and six cleanup checks. No input or server discrepancy.",
+        "actualPreparationSHA256": "bddf8b4616216951e006f359e576fdc07f0cb37e1555955ee889e962c3166b2d",
+        "materializationSHA256": "b6e01c9496e9927935a5fb84210f0b4f706569829ae0e9ca29f82bb914ae186e",
+        "materializationExitCode": 0,
+        "materializationSeconds": 372.391251615,
+        "resourceSHA256": "fcae604a64e931b69854ebc530ad518c1d40b8212f472a123ffd1f07b4de1390",
+        "provisionSHA256": "2427e9c2312b748a7b3a7076517a440e950e6ed193c331f5816e5b556d94ca5d",
+        "provisionStartsAt": 1793928018149,
+        "provisionExpiresAt": 1793929218149,
+        "startJob": "t45-f35-9c2748-start-20261106-01",
+        "startExitCode": 0,
+        "startSeconds": 35.045676555,
+        "actualStartSHA256": "5014f9f33e12e027d635967cbfbc8a6620de25ca51f5b4895fda4daf687bef6d",
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 01:21:34.265214+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704862480009437231"
+        },
+        "containerId": "3989c089c1ab65463a3436de1401692fc9962258a14ddcbb54058385886f1718",
+        "programSHA256": "744d6cff78668c1ed44982393d30345cd0dfdc2c54c229c29a517727782fe9c8",
+        "targetSHA256": "68541099aec5a21aad862e90d5795a2b8e6df655ec1de38eb1f1f54ef7feae3f",
+        "installAuthoritySHA256": "41e87a156a9a38d21e0cd64c45c9bef73f0359c2d62c7adca0068e52141abc8f",
+        "installJob": "t45-f35-9c2748-install-20261106-01",
+        "actualInstallPassed": false,
+        "synthetic25Passed": false,
+        "ordinaryBusinessPassed": false,
+        "REAL": false,
+        "production": false
       },
       "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING"
     },
