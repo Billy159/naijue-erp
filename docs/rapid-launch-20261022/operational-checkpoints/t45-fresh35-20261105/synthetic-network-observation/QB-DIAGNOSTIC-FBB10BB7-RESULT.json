@@ -1,0 +1,142 @@
+{
+  "task": "C-0448-R10-FINITE-DIAGNOSTIC",
+  "atUtc": "2026-11-06T03:25:23.798029+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "fbb10bb7041b2ccaf3a87bafbc2bf994a0d60290",
+    "root": "5effb61d9cae2236a0c1a565b3347f98928513e2",
+    "tree": "6cf6d0f25f2ac95c2a9c52b2fdd7130d9744769a",
+    "parent": "12784ad9e6135e2b253887c4a55bbd74e564e91b",
+    "candidateSourceSet": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "bytes": 19121,
+        "sha256": "f445ed0e8755ebb2cf7b98ece9eddcf1c61d63e207afc02d6b495e5205ec6399"
+      },
+      {
+        "path": "tools/unified-import/whole-package-client.ts",
+        "bytes": 9021,
+        "sha256": "ad7f7a64732b164ee3a0394c8f66e42e54c69b87438895de568e336031788fd8"
+      },
+      {
+        "path": "tests/unified-whole-package-client.test.ts",
+        "bytes": 10643,
+        "sha256": "84abad0dead05fdb92a8efa837fbaee6bfce0b0b66c9e64cd3753a50dbd39473"
+      },
+      {
+        "path": "tests/fresh35-isolated-entry.test.mjs",
+        "bytes": 21200,
+        "sha256": "1df70d8e1a1842c5cebd06820a74d961a26186bdbc84bffee7822df6216e8ad0"
+      },
+      {
+        "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+        "bytes": 97619,
+        "sha256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9"
+      },
+      {
+        "path": "tests/test_fresh35_isolated_launcher.py",
+        "bytes": 79351,
+        "sha256": "f2071eb6ef1bbceaaf665d41f81d5b8fc1102f7dc82e7c060a119cf71b6c9358"
+      }
+    ],
+    "clientPublicControlFlowReverseExact": true,
+    "pythonChangedExistingFunctions": [
+      "persist_install_child_failure",
+      "main"
+    ],
+    "pythonOtherFunctionsASTUnchanged": true,
+    "stageEnumsExactAcrossJSAndPython": [
+      "BEGIN",
+      "LOCK_AND_INSPECT",
+      "INITIALIZE",
+      "STEP",
+      "SUMMARIZE",
+      "CONSTRAINTS",
+      "COMMIT"
+    ],
+    "internalCodeEnumsExactAcrossJSAndPython": [
+      "BEGIN_ACK_INVALID",
+      "BATCH_ID_CONFLICT",
+      "BATCH_STATE_INVALID",
+      "STEP_INVALID",
+      "STEP_ORDER_INVALID",
+      "REQUEST_BINDING_INVALID",
+      "CHUNK_BOUND_INVALID",
+      "STEP_LIMIT_EXCEEDED",
+      "PUBLISH_INCOMPLETE",
+      "CONSTRAINTS_ACK_INVALID",
+      "COMMIT_ACK_INVALID",
+      "KERNEL_STATE_INVALID",
+      "KERNEL_REPLY_INVALID",
+      "ROLE_ACK_INVALID",
+      "EXPLICIT_ZERO_APPROVAL_BINDING_INVALID",
+      "PRIVATE_VALUE_IN_PUBLIC_REQUEST",
+      "PUBLIC_REQUEST_STRUCTURE_BOUND",
+      "SQL_REQUEST_INVALID",
+      "HISTORICAL_SETTLEMENT_APPROVAL_HASH"
+    ],
+    "tree": "6cf6d0f25f2ac95c2a9c52b2fdd7130d9744769a",
+    "buildRootTree": "6cf6d0f25f2ac95c2a9c52b2fdd7130d9744769a",
+    "mainASTAfterSerializationSubstitutionExact": true,
+    "originalThreeNegativeAssertionLinesOtherwiseExact": 3
+  },
+  "independentCrossChecks": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "cases": [
+      {
+        "case": "rollback failure",
+        "originalJSCoordinatorThroughEntryAndPythonStageAndInstall": "PASS",
+        "nullableFieldsPreserved": true,
+        "privateTextAbsent": true,
+        "automaticRetry": false
+      },
+      {
+        "case": "rollback acknowledged",
+        "originalJSCoordinatorThroughEntryAndPythonStageAndInstall": "PASS",
+        "nullableFieldsPreserved": true,
+        "privateTextAbsent": true,
+        "automaticRetry": false
+      }
+    ],
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "realFilesystemPersisterMocked": true
+  },
+  "candidateClosure": {
+    "candidateSourceSetRecomputed": true,
+    "reverseThreePinsReproducesParent": true,
+    "deltaRebuiltUsingOriginalCapturedComparison": true,
+    "other211AndCaptured180Retained": true,
+    "authoritativeD2Closure": "NOT_VERIFIED_BY_QB"
+  },
+  "authorEvidenceAdopted": {
+    "D1ResultSha256": "7b8670e9cd972eaf6eb1cbaa659d3b14c6c81e882f71275c2f16fb46ea89b8b2",
+    "D1Methods": 5,
+    "T45ReadySha256": "01bf94223915929505f829ac4bc4066407e4fb610c6aea192d657b339fa34af4",
+    "T45Methods": 4,
+    "repeated": false
+  },
+  "diagnosticScope": "Exactly3 nullable fields,7 stage and19 internal-code enums; original result WeakMap branding. First diagnostic frozen before rollback/discard. No original error text/SQL/parameters in two cross-interface models. Existing validationCode contract unchanged.",
+  "r10ActualState": "C reported schema COMMITTED and independent admin snapshot passed; BAD_APPROVAL negative IMPORT_FAILED, root cause UNKNOWN, target stopped. Diagnostic capability only, no business fix/nativePG PASS.",
+  "preserved": "Both public results and query control equal parent. Original3 negative assertion lines only attach private result. Python main AST exact after serialization substitution, other original functions unchanged except install diagnostic allowlist. Old kernel/catalog/SQL/ACL guards unchanged.",
+  "harnessNotes": "Reverse closure initially retained an extra delta row when a restored pin equaled captured baseline; rebuilt delta using original captured comparison, exact parent digest reproduced. Report writer initial encoding failure produced no result, corrected using ASCII body. No product defect inferred.",
+  "boundaries": {
+    "sourceModified": false,
+    "WIPReviewed": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "r10Replayed": false,
+    "newBusinessFixProven": false,
+    "actualPGPassed": false,
+    "oldSnapshotCatalogBackendFullSuiteRepeated": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return exact source QA to C. D2 owns authoritative closure and T45 actual successor. Wait for meaningful increment."
+}

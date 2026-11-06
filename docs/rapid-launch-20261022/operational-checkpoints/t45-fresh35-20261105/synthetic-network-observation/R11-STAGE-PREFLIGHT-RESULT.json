@@ -1,0 +1,100 @@
+{
+  "status": "READONLY_R11_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+  "jobId": "t45-f35-5effb6-stage-preflight-20261106-01",
+  "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-5effb6-stage-preflight-20261106-01/transport/release-receipts/t45-f35-5effb6-stage-preflight-20261106-01/stage-preflight.json",
+  "receiptSha256": "f8e36dd2211b49f2e1f55e8bd2469b47f80d94eec9d2fe20a55b2cdb6866000e",
+  "safeResult": {
+    "status": "READONLY_R11_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+    "checkedAtEpochMillis": 1793935772822,
+    "gateSha256": "cb43900807857804bdd118841f1d667d77467a19abf5c4e8c90aa9f28948ecb9",
+    "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-5effb6-stage-preflight-20261106-01/staging-policy-before.json",
+    "baseIdentity": [
+      66304,
+      393633,
+      83684667,
+      1793933232703048472,
+      1793933234069024093
+    ],
+    "baseArchiveSha256": "40cd65d9af46182bd77e97f97de8e3ad131fe17f8a755a91b041acb1851a1afa",
+    "baseHashNotRereadUntilOriginalAssembler": true,
+    "privateFullIdentityUnchanged": true,
+    "privateFullIdentity": [
+      66304,
+      393585,
+      93508914,
+      1793915257822987699,
+      1793915258790984345
+    ],
+    "r11RootAbsent": true,
+    "r11ContainerAbsent": true,
+    "r11ArtifactDirectoriesFound": [],
+    "samePrefixOtherSubmissions": [],
+    "priorExactJobs": [
+      {
+        "jobId": "t45-f35-ac19b2-start-20261106-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      {
+        "jobId": "t45-f35-ac19b2-install-20261106-01",
+        "status": "FAILED",
+        "exitCode": 2
+      }
+    ],
+    "r10OriginalNativeResult": {
+      "recordPublished": true,
+      "state": "RECORD_DURABLY_PUBLISHED",
+      "installState": "COMMITTED_UNPUBLISHED",
+      "postInstallFailureCode": "FRESH35_ISOLATED_CONTROLLER_HOST_FAILED_OR_OUTCOME_UNKNOWN",
+      "sourceSetSha256": "d518aeff0ac48c57305bd742516cda58d54e0de4364e460fd32a2c4026e90ad1"
+    },
+    "r10PublishedRecordRetainedMetadata": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o644",
+      "bytes": 1516,
+      "contentsNotExported": true,
+      "hashNotRepeated": true
+    },
+    "r10Stopped": {
+      "id": "d58afbb2c639411aaa08b21c92373324db5631c5849111686226d1a72bccfe99",
+      "running": false,
+      "pid": 0,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "r10Cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "r10CleanupErrors": [],
+    "fixedEnvironment": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.37548828125,
+        0.1103515625,
+        0.15625
+      ],
+      "diskFreeBytes": 11223592960,
+      "MemAvailable": 14338465792
+    },
+    "sourceOrTargetWrites": 0,
+    "PGConnections": 0,
+    "networkOrServiceChanges": 0,
+    "dataExtraction": false
+  },
+  "D2ResultSha256": "aea90128f7520724c614a0153d3b2dfe393ad98568f874d137eeca7953c7d40f",
+  "QBResultSha256": "2f42c3cfd04a6763c63c381a3c4a99045de01a408764129d675ea478d88e6739",
+  "noC13Yet": true,
+  "noPG": true,
+  "noProduction": true
+}

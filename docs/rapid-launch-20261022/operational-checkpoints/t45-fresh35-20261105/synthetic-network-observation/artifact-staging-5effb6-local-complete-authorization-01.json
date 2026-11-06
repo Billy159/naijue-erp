@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-5effb6-ordinary-local-20261106-01",
+  "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+  "archiveSha256": "28176d3b7dbb999e262cad532ad75573747ae601a205e8e55957dd2bebef4f97",
+  "archiveBytes": 83687082,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-5effb6-ordinary-local-20261106-01",
+  "startsAt": 1793935934356,
+  "expiresAt": 1793937734356,
+  "decisionReference": "C direct human delegation through2026-11-06 noon. Exact5effb6/source1dd r11diagnostic prepare only; preflightf8e36dd2,D2aea90128,QB2f42c3cf adopted. Actualac19 base40cd prefix81221531/3c2cf3a1 plus taild1a0df5b to full28176d3b/83687082 via originalreceiver. Original40s/900s/30min; r10committedrecord/adminsnapshot/stopped retained. NoPG/REAL/production/oldtarget/replay. PG20 requires actualmaterialize/resources and separateC binding.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

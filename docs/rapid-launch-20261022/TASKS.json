@@ -28491,7 +28491,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "D1 original import consumer and T45 Python producer narrow BAD_APPROVAL diagnosis, precise red before repair. No old install replay; preserve committed target.",
+      "critical": "T45 original r11 staged preparation then actual resources; C new PG20/C9 only after readiness.",
       "independentPreparation": {
         "D1": "Only original rollback/import approval exact producer/consumer seam diagnosis, no PG/oldcatalog.",
         "T45": "Original Python producer and bounded stopped receipts only; no r10 reinstallation/restart or job replay.",
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R10_COMMITTED_RECORD_AND_SNAPSHOT_PASS_NEXT_ROLLBACK_BAD_APPROVAL_FAILED_STOPPED",
+      "state": "R11_FINITE_DIAGNOSTIC_FIXED_BUILD_AND_QB_PENDING_ROOT_CAUSE_UNKNOWN",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "D1 original import consumer and T45 Python producer narrow BAD_APPROVAL diagnosis, precise red before repair. No old install replay; preserve committed target.",
+      "next": "QB narrow finite diagnostic increment; D2 fixed5eff build/tail from actualac19 READY; T45 purepins then exact preflight. No r10 replay.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30343,6 +30343,37 @@
         "cleanupComplete": true,
         "containerStopped": true,
         "wholeChainPassed": false
+      },
+      "r11Preparation": {
+        "state": "QB_BUILD_ADOPTED_EXACT_STAGING_AUTHORIZED",
+        "integration": "fbb10bb7041b2ccaf3a87bafbc2bf994a0d60290",
+        "root": "5effb61d9cae2236a0c1a565b3347f98928513e2",
+        "tree": "6cf6d0f25f2ac95c2a9c52b2fdd7130d9744769a",
+        "localExpectedSourceSetSHA256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+        "D1ReceiptSHA256": "7b8670e9cd972eaf6eb1cbaa659d3b14c6c81e882f71275c2f16fb46ea89b8b2",
+        "T45ReceiptSHA256": "01bf94223915929505f829ac4bc4066407e4fb610c6aea192d657b339fa34af4",
+        "authorScopedChecks": {
+          "D1": 5,
+          "T45": 4
+        },
+        "actualPG": false,
+        "rootCause": "UNKNOWN",
+        "baseArchiveSHA256": "40cd65d9af46182bd77e97f97de8e3ad131fe17f8a755a91b041acb1851a1afa",
+        "baseArchiveBytes": 83684667,
+        "QBReceiptSHA256": "2f42c3cfd04a6763c63c381a3c4a99045de01a408764129d675ea478d88e6739",
+        "D2ReceiptSHA256": "aea90128f7520724c614a0153d3b2dfe393ad98568f874d137eeca7953c7d40f",
+        "sourceSetSHA256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+        "archiveSHA256": "28176d3b7dbb999e262cad532ad75573747ae601a205e8e55957dd2bebef4f97",
+        "archiveBytes": 83687082,
+        "manifestSHA256": "d4426ee6aa697561ceab0523ba649a9febcb1979a5e4cab03c8eb6ecf02901af",
+        "tailSHA256": "d1a0df5b3b9abc83e477fce57d9448710f5430cdacb4fd939580e1eef8c42278",
+        "tailBytes": 2465551,
+        "stagePreflightSHA256": "f8e36dd2211b49f2e1f55e8bd2469b47f80d94eec9d2fe20a55b2cdb6866000e",
+        "tailAuthoritySHA256": "0f6fdfa62d66af0df32ded43d82b480f26bb68e6fff14977c661e22553930966",
+        "fullAuthoritySHA256": "a9a19d0ccb530b83f985fb708672670da6009ce0365cd15974076d3e77fd66e7",
+        "startsAt": 1793935934356,
+        "expiresAt": 1793937734356,
+        "githubReadback": true
       }
     },
     "productionReleaseCompatibilityContinuation": {
