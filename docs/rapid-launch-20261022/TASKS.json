@@ -28507,9 +28507,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R16_NORMAL_SUMMARIZE_42601_CLEAN_STOPPED_D1_SOURCE_DIAGNOSIS",
+      "critical": "R16_REPRODUCIBLE_DEFERRED_GUARD_SYNTAX_THREE_LEAF_FIX_REGISTERED",
       "independentPreparation": {
-        "D1": "Original D1 source-only exact SUMMARIZE SQL/parser reproduction and minimum leaf proposal. No further T45 log expansion or new PG until concrete source repair.",
+        "D1": "Exact three registered leaves: deferred final-accounting guard three CASE parentheses and fifth predecessor pin. No other source/PG writes.",
         "QB": "Diagnostic two-leaf source PASS now actual runtime diagnosis works; no repeat.",
         "D2": "Fixed cc9d6472 build PASS adopted; no repeat.",
         "T45": "r16 actual terminal/clean stopped, all keys preserved. No new job pending concrete repair.",
@@ -31226,7 +31226,34 @@
         },
         "syntheticImportVerified": false,
         "ordinaryBusinessPassed": false,
-        "postCleanupResources": "NOT_MEASURED_THIS_STEP"
+        "postCleanupResources": "NOT_MEASURED_THIS_STEP",
+        "summarizeSyntaxFix": {
+          "state": "D1_REGISTERED_EXACT_THREE_LEAF_SYNTAX_FIX",
+          "writer": "D1",
+          "sourceFunction": "validate_import_accounting_final_record_commit()",
+          "beforeBodySHA256": "5bd65ec325d3158d9f56e4366eb0222464bc109b40aa13efe0c09c3a67f2ad92",
+          "proposedAfterBodySHA256": "7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c",
+          "causeEvidence": "Existing PG17.7 pglast exact PLpgSQL body fails; parentheses at all three IS DISTINCT FROM CASE expressions pass, whole IF SELECT AST equivalent. Actual r16 exact statement remains unexported; source defect is reproducible, actual sole cause unconfirmed.",
+          "files": [
+            {
+              "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+              "beforeSHA256": "260a9d5869b878ed0ad9f9fdbb1004c5c8e4cc8a510a4ea1cda01230d5335fb6",
+              "bytes": 69696
+            },
+            {
+              "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+              "beforeSHA256": "69754737f21e19643df03fc9f238a1fc98ff1cc8cbe16793bf5d106bc45ee1d0",
+              "bytes": 6909
+            },
+            {
+              "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+              "beforeSHA256": "f71b398492f67d012fa1d95c23ea691726877f27a3d520f39dc6d6aef1f6f79f",
+              "bytes": 12062
+            }
+          ],
+          "scope": "Add exact fifth routine replacement from actual existing predecessor; only three CASE parentheses, same predicate AST/RAISE/privileges. Preserve sealed0027/dump, previous4routines, receipt constraint and diagnostic two-leaf fixes. No table/column/ACL/business rule changes. Combined catalog may use existing generic merger; any additional leaf needs exact seam handoff.",
+          "next": "Author targeted exact RED/GREEN, AST and whole candidate closure; original QB only affected syntax/catalog increment, original D2 one build and T45 new exact isolated candidate."
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31635,12 +31662,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T16:57:08+08:00",
-      "phase": "R16_NORMAL_SUMMARIZE_42601_CLEAN_STOPPED_D1_SOURCE_DIAGNOSIS",
+      "at": "2026-11-06T17:02:58+08:00",
+      "phase": "R16_REPRODUCIBLE_DEFERRED_GUARD_SYNTAX_THREE_LEAF_FIX_REGISTERED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original D1 source-only SUMMARIZE actual query and parser diagnosis",
-      "nextOwner": "C register exact smallest leaf fix then original QB/D2/T45 affected scope",
+      "currentOwner": "Original D1 exact three leaves",
+      "nextOwner": "Original QB syntax/catalog increment after fixed author receipt",
       "latestActualReceiptSHA256": "e27e5bdf5844c90ce95d6c1008e5df3783d3e218671469113b9dba10675f97d2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
