@@ -31276,7 +31276,7 @@
         }
       },
       "r17Preparation": {
-        "state": "SOURCE_QB_AND_BUILD_PASS_EXACT_C13_STAGING_DISPATCHED_PG17_11_PENDING",
+        "state": "MATERIALIZED_RESOURCE_VERIFIED_C11_BOUND_ACTUAL17_11_START_PENDING",
         "integration": "79a5928d32eec9ca408086849d60d3329d8c47f9",
         "buildRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",
         "tree": "de562198a815e1d6efb14cbf535dea977c78bd0e",
@@ -31348,11 +31348,19 @@
         },
         "materialization": {
           "key": "t45-f35-2af49c-local-materialize-20261106-01",
-          "state": "RUNNING_ORIGINAL_JOB_NO_RESUBMISSION",
+          "state": "COMPLETED",
           "timeoutSeconds": 900,
           "newPGStarted": false,
-          "actualResourcePreflight": "NOT_YET_EXECUTED"
-        }
+          "actualResourcePreflight": "READONLY_FACTS_COLLECTED",
+          "exitCode": 0,
+          "elapsedSeconds": 488.3102496061474
+        },
+        "materializedReadySHA256": "7835a798475032eb946f39cea293ae9abf727e9f02a08dabace6bbd028170954",
+        "materializeReceiptSHA256": "341474d0082cb36168f454c9ec5cdebb9e26f0b29b9b0361057335f9c2b97533",
+        "actualResourceReceiptSHA256": "3b50c8e2e67cfe35508ecaf9953aaf1647fe19d70463baaa0e7111c2822812d4",
+        "C11SHA256": "34159ef51d743f808f6f516179d4874c85a4ef0be3a90f9fb13ace1a8f40b12a",
+        "C11StartsAt": 1793957864914,
+        "C11ExpiresAt": 1793959064914
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31761,12 +31769,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T17:34:02+08:00",
-      "phase": "R17_FULL_READY_MATERIALIZATION_RUNNING_PG_PENDING",
+      "at": "2026-11-06T17:37:44+08:00",
+      "phase": "R17_MATERIALIZED_C11_BOUND_ACTUAL_TARGET_START_PENDING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact ordinary staging/materialization only",
-      "nextOwner": "C actual material/resource C11; actual PG17.11/program/target C9",
+      "currentOwner": "Original T45 bounded synthetic target start",
+      "nextOwner": "C actual170011/program/target verification then same-window C9",
       "latestActualReceiptSHA256": "e27e5bdf5844c90ce95d6c1008e5df3783d3e218671469113b9dba10675f97d2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -31776,7 +31784,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Wait original materialization terminal receipt, then actual resource preflight before binding C11. No duplicate operation or guessed READY.",
+      "next": "Start exact newr17 under C11; report actualPG170011, physical/program/target before C9; original limits remain.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "79a5928d32eec9ca408086849d60d3329d8c47f9",
       "buildRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0",

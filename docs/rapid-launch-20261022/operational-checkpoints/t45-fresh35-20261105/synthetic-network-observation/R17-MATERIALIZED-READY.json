@@ -1,0 +1,102 @@
+{
+  "status": "R17_MATERIALIZED_AND_POST_PREFLIGHT_COMPLETE_NO_PG",
+  "QBResultSHA256": "181295ac7590384adb00d3a25aba3c37c1226f6014533d2092957bcdf681002a",
+  "D2ResultSHA256": "0f555011fc624648024566cc8fa854f8b553accdaded38ce5e2609c391a08cae",
+  "wrapperSHA256": "0740c029d29f7452f2b379cfa70159b8c06d9865133c66a9fbcf14ef643eea27",
+  "probeSHA256": "eb072ef0846e17752a0b6fa220a3a9b430bfc2ab4ffcf74887a2d861e6d6a465",
+  "assemblerSHA256": "829e437df67ed57ee6df7fcc268991b50d7fe11d7825a62f3e9b4bf0c1b580b2",
+  "planSHA256": "be4aebeacc80df0bb55324969d0d148182bc7c8bebfceda60b9761ee2ab99b8f",
+  "C13TailSHA256": "0276a05a930b57c444dd8744b20615e709d5cce11fe16bd85672cbbae75d6dae",
+  "C13FullSHA256": "d50d90211a2ea6415f2baf422c0a1372f536a11860c21d645a08cb4a47dfcd2b",
+  "C13ExpiresAt": 1793958694523,
+  "PGStarted": false,
+  "C11": null,
+  "C9": null,
+  "actualPGRequired": 170011,
+  "materializeResultSHA256": "341474d0082cb36168f454c9ec5cdebb9e26f0b29b9b0361057335f9c2b97533",
+  "actualPostPreflightSHA256": "3b50c8e2e67cfe35508ecaf9953aaf1647fe19d70463baaa0e7111c2822812d4",
+  "actualPostPreflight": {
+    "jobId": "t45-f35-2af49c-local-start-preflight-20261106-01",
+    "checkedAtUTC": "2026-11-06T09:34:54.501062+00:00",
+    "mutations": 0,
+    "targetParent": {
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "applicationRoot": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.6357421875,
+        1.34423828125,
+        0.9384765625
+      ],
+      "memoryBytes": {
+        "MemTotal": 16731348992,
+        "MemAvailable": 14352547840,
+        "SwapTotal": 4294963200,
+        "SwapFree": 4203982848
+      },
+      "disk": {
+        "freeBytes": 7811305472,
+        "totalBytes": 489861931008,
+        "device": 66304
+      }
+    },
+    "image": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "materializeOriginalKey": {
+      "jobId": "t45-f35-2af49c-local-materialize-20261106-01",
+      "requestPresent": true,
+      "resultPresent": true,
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "CASOriginalKey": {
+      "jobId": "t45-f35-2af49c-final-staging-policy-20261106-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "matchingContainerIDs": [],
+    "currentApplication": {
+      "archiveSHA256": "5efac9175d91debfc4bf6c0c1b75d4053394d6bcbafe145b0fcc66c7afe45c0c",
+      "deploymentManifestSha256": "8c4f3fd651b99d947826db86e3fd18e6f0867058eb2edffe15688108bba0915c",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-2af49c-application-20261106-01",
+      "sourceSet": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d"
+    },
+    "startArtifactsPresent": {
+      "start-intent.json": false,
+      "container-receipt.json": false,
+      "authority/fresh35-isolated-provision-v1.json": false,
+      "authority/fresh35-combined-execution-v1.json": false
+    },
+    "status": "READONLY_FACTS_COLLECTED"
+  },
+  "exactFullReady": {
+    "archiveBytes": 83697343,
+    "archiveSha256": "5efac9175d91debfc4bf6c0c1b75d4053394d6bcbafe145b0fcc66c7afe45c0c",
+    "artifactKey": "f35-2af49c-ordinary-local-20261106-01",
+    "authoritySha256": "d50d90211a2ea6415f2baf422c0a1372f536a11860c21d645a08cb4a47dfcd2b",
+    "fileIdentity": [
+      66304,
+      393689,
+      83697343,
+      1793957078964247013,
+      1793957080475232965
+    ],
+    "sourceSetSha256": "6e13ca2e9d51ec38731575593a086bad3fb35ade43bd056bd9f8dc0b1e66922d",
+    "status": "READY"
+  },
+  "previousPreparationReadySHA256": "36fccf829eb41e0b06950d35fa676f2978863d5c24ff6b2f55f2bd7a5fd70bef"
+}

@@ -1705,3 +1705,7 @@ QB181295ac passed only four-leaf source/catalog increment. D20f555011 build0/13.
 ## 2026-11-06T17:34:02+08:00 - R17 ordinary artifact ready; original materialization in flight
 
 Actual assembler cac1f8fb completed0/4.680170s and original receiver verified full5efac917/83697343B, source6e13ca2e/C13d50d9021. C checked the three terminal raw receipt hashes and adopted STAGE c0fec407. Original materialization t45-f35-2af49c-local-materialize-20261106-01 is still RUNNING under its original900s limit; no resubmission or PG start. Actual post-material resource preflight remains pending, then C11/C9. No new source test, REAL action or production change. The latest human delegation says today12:00; current time is after that deadline, so it is not silently renewed. Existing standing same-kind bounded isolation authorization remains the execution basis.
+
+## 2026-11-06T17:37:44+08:00 - R17 materialized and actual resources verified; C11 binds new20min
+
+Original materialization341474d0 completed0/488.310250s. Post-preflight3b50c8e2 found no target/start/provision/execution artifacts; actual MemAvailable14352547840B/freeDisk7811305472B and exact application/image/source pins verified. C11 34159ef51d743f808f6f516179d4874c85a4ef0be3a90f9fb13ace1a8f40b12a binds only newr17 synthetic target for 1793957864914..1793959064914, original2CPU3GiB/PID256/guardian/2DO. ActualPG170011/physical/program must be reported before same-window C9. No REAL/production/old-key replay or prior-window reuse.
