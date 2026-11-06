@@ -1,0 +1,110 @@
+{
+  "status": "PG17_11_NORMAL_IMPORT_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOP",
+  "recordedAtUTC": "2026-11-06T11:31:14.908958+00:00",
+  "candidateRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
+  "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+  "D2ResultSHA256": "8ac3424ec7c971d8f6f6dbd926766102cec3e91690eb3c1321088039d470baf4",
+  "QBContractIncrementSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
+  "C9SHA256": "4a3e6d504a2834b230e6c19de230a6666f74f806a07ecdf0e524ca1949a2965f",
+  "actualModelEffortFast": "UNVERIFIED",
+  "job": {
+    "jobId": "t45-f35-101f4f-install-20261106-01",
+    "status": "FAILED",
+    "exitCode": 2,
+    "elapsedSeconds": 153.32599224802107,
+    "atUTC": "2026-11-06T11:26:04.463048+00:00",
+    "finishedAtUTC": "2026-11-06T11:28:37.830119+00:00"
+  },
+  "receipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-101f4f-install-20261106-01/transport/release-receipts/t45-f35-101f4f-install-20261106-01/fresh35-deliver-install-result.json",
+    "sha256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760"
+  },
+  "cid": "d3e1f51904d3d11257a490b6ace4b54524690fc95bcb6063f3f33830923613ae",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-06 11:22:46.854923+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7705017410312949807"
+  },
+  "actualPostgreSQL170011Verified": true,
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "sourceSetSha256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f"
+  },
+  "negativeChecks": {
+    "badApprovalCode": "HISTORICAL_SETTLEMENT_APPROVAL_HASH",
+    "badApprovalRollback": true,
+    "finalFailureCode": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT",
+    "finalFailureStage": "FINAL_PUBLISH",
+    "missingSettlementCode": "STANDARD_PUBLICATION_INCOMPLETE",
+    "missingSettlementRollback": true,
+    "originalBatchAbsent": true,
+    "reachedFinalPublish": true,
+    "state": "ROLLED_BACK"
+  },
+  "normalImport": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "stage": "commit",
+    "connectionCleanup": "CLOSED",
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "settlementRetentionVerified": true,
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "ordinaryUid": 61035
+  },
+  "snapshots": {
+    "postInstallEqualsPostRollback": true,
+    "postCommitDiffersFromPostInstall": true,
+    "connectionCleanup": [
+      "CLOSED",
+      "CLOSED",
+      "CLOSED"
+    ]
+  },
+  "hostVerified": true,
+  "syntheticImportVerified": true,
+  "independentSnapshotsVerified": true,
+  "ordinaryBusinessVerified": false,
+  "ordinaryFailure": {
+    "state": "FAILED_OR_OUTCOME_UNKNOWN",
+    "phase": "PRIVATE_SCENARIO",
+    "code": "PermissionError",
+    "automaticRetry": false,
+    "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY"
+  },
+  "ordinaryPermissionErrorDetails": "path/errno/syscall not exported; do not infer or broaden permissions",
+  "ordinarySQLSTATE": "NOT_EXPORTED",
+  "ordinaryChildCleanup": {
+    "childReaped": true,
+    "businessOutcomeInferredFromCleanup": false
+  },
+  "ordinaryBusinessAPIsReadbackProbe": "NOT_REACHED",
+  "containerStopped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "wholeChainPassed": false,
+  "normalCommittedImportMustNotReplay": true,
+  "rawBusinessBodiesPidNonceCopied": false,
+  "newSourcePermissionServerChangesAfterFailure": false,
+  "REALOrFormalActions": false,
+  "postCleanupHostResources": "NOT_MEASURED",
+  "next": "Original C routes precise PRIVATE_SCENARIO PermissionError source/metadata diagnosis; no replay/new query/permissions/caps change without exact scope."
+}

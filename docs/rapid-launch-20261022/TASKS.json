@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "ACTUAL_PG170011_STARTED_C9_INSTALL_DISPATCHED",
+      "critical": "ACTUAL_NORMAL_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOPPED",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Fixture/builder and exact release pin increment PASS; no repeated technical QA.",
         "D2": "Build13.604s/pack10.750s exit0, full453/30/7298membersPASS; no actual PG.",
-        "T45": "Actual170011 started; exact originalC9 install chain dispatched once.",
+        "T45": "Source-only filesystem/uid diagnosis; new actual PG run stopped/cleanup complete; no other server job.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31614,7 +31614,7 @@
         }
       },
       "r19Preparation": {
-        "state": "ACTUAL_PG170011_STARTED_C9_INSTALL_DISPATCHED",
+        "state": "ACTUAL_NORMAL_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOPPED",
         "integration": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
         "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
         "tree": "d1d0640c1bab9b2622624e2f05db0ec2720ef8ea",
@@ -31625,7 +31625,7 @@
         "REAL": false,
         "production": false,
         "ordinaryBusinessVerified": false,
-        "next": "Original T45 same fixed candidate install/negative/normal/replay/readback/ordinary/API/ownedcleanup; actual results pending. No old committed request replay.",
+        "next": "Original T45 local source-only diagnosis of PRIVATE_SCENARIO filesystem/uid order. No server metadata job or permission/cap change yet; r19 COMMITTED not replayed.",
         "previousFixedCandidate": {
           "state": "FIXED_SOURCE_QB_BUILD_PENDING",
           "integration": "0ad22579cf95c72835a7a74bd4900767d61017a2",
@@ -31776,7 +31776,119 @@
           "sha256": "4a3e6d504a2834b230e6c19de230a6666f74f806a07ecdf0e524ca1949a2965f",
           "startsAt": 1793964076150,
           "expiresAt": 1793965276150
-        }
+        },
+        "actualResult": {
+          "status": "PG17_11_NORMAL_IMPORT_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOP",
+          "recordedAtUTC": "2026-11-06T11:31:14.908958+00:00",
+          "candidateRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
+          "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+          "D2ResultSHA256": "8ac3424ec7c971d8f6f6dbd926766102cec3e91690eb3c1321088039d470baf4",
+          "QBContractIncrementSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
+          "C9SHA256": "4a3e6d504a2834b230e6c19de230a6666f74f806a07ecdf0e524ca1949a2965f",
+          "actualModelEffortFast": "UNVERIFIED",
+          "job": {
+            "jobId": "t45-f35-101f4f-install-20261106-01",
+            "status": "FAILED",
+            "exitCode": 2,
+            "elapsedSeconds": 153.32599224802107,
+            "atUTC": "2026-11-06T11:26:04.463048+00:00",
+            "finishedAtUTC": "2026-11-06T11:28:37.830119+00:00"
+          },
+          "receipt": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-101f4f-install-20261106-01/transport/release-receipts/t45-f35-101f4f-install-20261106-01/fresh35-deliver-install-result.json",
+            "sha256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760"
+          },
+          "cid": "d3e1f51904d3d11257a490b6ace4b54524690fc95bcb6063f3f33830923613ae",
+          "physical": {
+            "databaseOid": "16393",
+            "postmasterStart": "2026-11-06 11:22:46.854923+00",
+            "serverVersionNum": "170011",
+            "systemIdentifier": "7705017410312949807"
+          },
+          "actualPostgreSQL170011Verified": true,
+          "installation": {
+            "state": "RECORD_DURABLY_PUBLISHED",
+            "installState": "COMMITTED_UNPUBLISHED",
+            "recordPublished": true,
+            "sourceSetSha256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f"
+          },
+          "negativeChecks": {
+            "badApprovalCode": "HISTORICAL_SETTLEMENT_APPROVAL_HASH",
+            "badApprovalRollback": true,
+            "finalFailureCode": "STANDARD_BATCH_CAS_OR_SOURCE_CONFLICT",
+            "finalFailureStage": "FINAL_PUBLISH",
+            "missingSettlementCode": "STANDARD_PUBLICATION_INCOMPLETE",
+            "missingSettlementRollback": true,
+            "originalBatchAbsent": true,
+            "reachedFinalPublish": true,
+            "state": "ROLLED_BACK"
+          },
+          "normalImport": {
+            "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+            "stage": "commit",
+            "connectionCleanup": "CLOSED",
+            "importState": "COMMITTED",
+            "replayState": "ALREADY_COMMITTED",
+            "readbackState": "VERIFIED",
+            "settlementRetentionVerified": true,
+            "retainedHeaders": 25,
+            "retainedSettlements": 27,
+            "ordinaryUid": 61035
+          },
+          "snapshots": {
+            "postInstallEqualsPostRollback": true,
+            "postCommitDiffersFromPostInstall": true,
+            "connectionCleanup": [
+              "CLOSED",
+              "CLOSED",
+              "CLOSED"
+            ]
+          },
+          "hostVerified": true,
+          "syntheticImportVerified": true,
+          "independentSnapshotsVerified": true,
+          "ordinaryBusinessVerified": false,
+          "ordinaryFailure": {
+            "state": "FAILED_OR_OUTCOME_UNKNOWN",
+            "phase": "PRIVATE_SCENARIO",
+            "code": "PermissionError",
+            "automaticRetry": false,
+            "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY"
+          },
+          "ordinaryPermissionErrorDetails": "path/errno/syscall not exported; do not infer or broaden permissions",
+          "ordinarySQLSTATE": "NOT_EXPORTED",
+          "ordinaryChildCleanup": {
+            "childReaped": true,
+            "businessOutcomeInferredFromCleanup": false
+          },
+          "ordinaryBusinessAPIsReadbackProbe": "NOT_REACHED",
+          "containerStopped": true,
+          "cleanup": {
+            "cleanShutdown": true,
+            "cleanupComplete": true,
+            "credentialsRemoved": true,
+            "errors": [],
+            "initialization": {
+              "descendantsReaped": true,
+              "errors": [],
+              "initialized": true,
+              "initializerReaped": true,
+              "stopReason": "INITIALIZER_EXITED"
+            },
+            "loginsRevoked": true,
+            "ownedPidAbsent": true,
+            "portAbsent": true
+          },
+          "wholeChainPassed": false,
+          "normalCommittedImportMustNotReplay": true,
+          "rawBusinessBodiesPidNonceCopied": false,
+          "newSourcePermissionServerChangesAfterFailure": false,
+          "REALOrFormalActions": false,
+          "postCleanupHostResources": "NOT_MEASURED",
+          "next": "Original C routes precise PRIVATE_SCENARIO PermissionError source/metadata diagnosis; no replay/new query/permissions/caps change without exact scope."
+        },
+        "actualResultSHA256": "5ecbea57e2fe18ffa8c4408f45a19b7549b26ea246d72efd97e0e36b0755f4d1",
+        "actualRawReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760"
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32185,22 +32297,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:25:31+08:00",
-      "phase": "ACTUAL_PG170011_STARTED_C9_INSTALL_DISPATCHED",
+      "at": "2026-11-06T19:33:03+08:00",
+      "phase": "ACTUAL_NORMAL_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOPPED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "T45 same materialization handle",
+      "currentOwner": "Original T45 launcher/ops source-only precise diagnosis",
       "nextOwner": "C after actual material/resource facts",
-      "latestActualReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
+      "latestActualReceiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
       "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 same fixed candidate install/negative/normal/replay/readback/ordinary/API/ownedcleanup; actual results pending. No old committed request replay.",
+      "next": "Original T45 local source-only diagnosis of PRIVATE_SCENARIO filesystem/uid order. No server metadata job or permission/cap change yet; r19 COMMITTED not replayed.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
       "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
@@ -32211,13 +32323,13 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
-        "sourceCommit": "4d750fffe517836f1abd8191655702011e16ae80",
-        "state": "STOPPED_SCOPED17_11_SCENE_PASSED_ORDINARY_SCENARIO_GUARD",
-        "receiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5"
+        "root": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
+        "sourceCommit": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
+        "state": "ACTUAL_NORMAL_COMMITTED_ORDINARY_PRIVATE_SCENARIO_PERMISSION_STOPPED",
+        "receiptSHA256": "4aca8e897488017389d91b55d7d5fd1eaa953a7e17c2cf1ec593be0f02db8760"
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c",
         "QBReceiptSHA256": "fbbce17bfc2f77e531f4e3e1b7f1e41f5ea1a2669a0761a80de3e5d74a96e684",

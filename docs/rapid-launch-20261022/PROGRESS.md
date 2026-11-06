@@ -1789,3 +1789,10 @@ Unique original job t45-f35-101f4f-local-materialize-20261106-01 submitted once 
 Original materialization COMPLETED0/371.585s, original postresource54ea9cee at11:19:38UTC;6.79GB disk/14.34GB available memory, no existing target. Original C11 binds new20min1793964076150..1793965276150 without extension. Actualstart aaecf183 COMPLETED0/37.853s:PG170011/SID7705017410312949807/OID16393/birth11:22:46.854923UTC/CIDd3e1f519. SafeSTART adeb200a; exactprogram65a520a5/targetfadfb375/source79c358cc.
 
 C bound original9keyC9 SHA4a3e6d50 within same deadline; original T45 uniqueinstall t45-f35-101f4f-install-20261106-01 dispatched. Await actual schema/record/import negative/normal/replay/newconnection/ordinaryAPI/cleanup. Actual startup is not install or ordinary business PASS. Oldr17/r18 committed keys not replayed; no REAL or production action.
+
+
+## 2026-11-06 — r19 actual normal import committed; ordinary filesystem permission failure preserved
+
+Original job t45-f35-101f4f-install-20261106-01 FAILED2/153.326s,11:26:04..11:28:37UTC; raw4aca8e89/51435B, safe5ecbea57. ActualPG170011 schema/record committed;3negative rollback and independent snapshots passed. Normal host COMMITTED, original-key replay ALREADY_COMMITTED, newconnection readback VERIFIED;25headers/27settlements retained, connections CLOSED. Do not replay this committed import.
+
+Ordinary failed at PRIVATE_SCENARIO with PermissionError; path/errno/syscall not exported, SQLSTATE not exported. No ordinary/API/probe result. Exact CIDd3e1f519 stopped,6cleanup true/errors[] and children reaped; cleanup does not prove business outcome. Original T45 only local source diagnosis now; no new server/SQL/permission/cap changes or guessed chmod. No REAL or production action.
