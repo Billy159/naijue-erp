@@ -28508,12 +28508,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R22_ACTUAL_NEW_PG_STARTED_C9_INSTALL_AND_ORDINARY_VALIDATION",
+      "critical": "R22_CAPACITY_ADVANCED_ADMISSION_EACCES_STOPPED_D1_PRECISE_DIAGNOSIS",
       "independentPreparation": {
-        "D1": "Exact source diagnosis closed81ba5198; source frozen.",
-        "QB": "Mode-only source scopedPASS6c5d9ca9, no repeated review.",
-        "D2": "Fixed f162184a build12.331s/pack9.282s and7298 membersPASS; no runtime.",
-        "T45": "Actual r22PG start completed; exact C9 issued, original actual install/ordinary run next.",
+        "D1": "Exact readonly admission EACCES seam diagnosis; source frozen until precise minimum proposal.",
+        "QB": "r22 mode-only PASS adopted; no new QA absent new source.",
+        "D2": "r22 fixed build/source complete; no duplicate build.",
+        "T45": "r22 terminal stopped/6cleanup; no new server/PG/replay, only existing local metadata if D1 needs.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32283,7 +32283,7 @@
         "diagnosticActualEffective": true
       },
       "r22Preparation": {
-        "state": "R22_ACTUAL_NEW_PG_STARTED_C9_INSTALL_AND_ORDINARY_VALIDATION",
+        "state": "R22_CAPACITY_ADVANCED_ADMISSION_EACCES_STOPPED_D1_PRECISE_DIAGNOSIS",
         "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
         "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
         "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
@@ -32389,6 +32389,62 @@
           "startsAt": 1793973593002,
           "expiresAt": 1793974793002,
           "scope": "Exact new r22 synthetic target only, original install/negative/normal/ordinary/readback/probe/ownedcleanup. No REAL/prod or old-key replay."
+        },
+        "actualResult": {
+          "safeSHA256": "c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d",
+          "rawSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
+          "jobId": "t45-f35-f16218-install-20261106-01",
+          "exitCode": 2,
+          "elapsedSeconds": 150.1525998241268,
+          "normalSyntheticImport": {
+            "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+            "importState": "COMMITTED",
+            "replayState": "ALREADY_COMMITTED",
+            "readbackState": "VERIFIED",
+            "retainedHeaders": 25,
+            "retainedSettlements": 27,
+            "connectionCleanup": "CLOSED"
+          },
+          "ordinaryFailure": {
+            "automaticRetry": false,
+            "childDiagnosticUnavailable": false,
+            "childFailure": {
+              "actualInteger": null,
+              "errno": "EACCES",
+              "errorType": "Error",
+              "expectedInteger": null,
+              "format": "FRESH35_ORDINARY_FAILURE_V1",
+              "guardCode": null,
+              "phase": "REAL_SYNTHETIC_ADMISSION",
+              "source": "runFresh35OrdinaryIntegration:catch",
+              "sqlstate": null
+            },
+            "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+            "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+            "phase": "REAL_PG_AND_MIDDLEWARE",
+            "state": "FAILED_OR_OUTCOME_UNKNOWN"
+          },
+          "containerStopped": true,
+          "cleanup": {
+            "cleanShutdown": true,
+            "cleanupComplete": true,
+            "credentialsRemoved": true,
+            "loginsRevoked": true,
+            "ownedPidAbsent": true,
+            "portAbsent": true,
+            "errors": [],
+            "initialization": {
+              "descendantsReaped": true,
+              "errors": [],
+              "initialized": true,
+              "initializerReaped": true,
+              "stopReason": "INITIALIZER_EXITED"
+            }
+          },
+          "oldCommittedOrUnknownKeysReplayed": false,
+          "capacityConstructionAdvanced": true,
+          "capacityPreflightPassed": false,
+          "normalCommitMustNotReplay": true
         }
       }
     },
@@ -32798,22 +32854,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:05:16.370648+08:00",
-      "phase": "R22_ACTUAL_NEW_PG_STARTED_C9_INSTALL_AND_ORDINARY_VALIDATION",
+      "at": "2026-11-06T22:12:47.440186+08:00",
+      "phase": "R22_CAPACITY_ADVANCED_ADMISSION_EACCES_STOPPED_D1_PRECISE_DIAGNOSIS",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 r22 exact actual install/import/ordinary/cleanup",
-      "nextOwner": "C adopt actual result, dispatch precise failure or next REAL prerequisite",
-      "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
+      "currentOwner": "Original D1 exact REAL_SYNTHETIC_ADMISSION EACCES source diagnosis",
+      "nextOwner": "C exact file ownership/minimum fix after evidence",
+      "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 binds fixed r22 ops and obtains bounded readonly old r21 terminal/base/new target absence/resource facts; C issues exact new C13 only after facts, original T45 transfers/materializes then fresh C11/C9.",
+      "next": "D1 exact frozen createSyntheticRuntime35ApplicationApi/capacity.preflight seam readonly diagnosis and necessary pureoffline repro; no new server/install/oldkey replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
       "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
@@ -32824,13 +32880,17 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "148b5716864681b77498ff58ea82bc18c853199b",
-        "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
-        "state": "R21_INSTALL_AND_SYNTHETIC_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_NO_REPLAY",
-        "receiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa"
+        "root": "f162184aafcdcbdb8adc9784588a009b761381f4",
+        "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+        "state": "R22_INSTALL_AND_NORMAL_IMPORT_PASS_CAPACITY_CONSTRUCTION_ADVANCED_ADMISSION_EACCES_STOPPED_NO_REPLAY",
+        "receiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
+        "safeSHA256": "c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d",
+        "ordinaryBusinessPassed": false,
+        "realImported": false,
+        "productionDeployed": false
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
@@ -32842,7 +32902,11 @@
       "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
       "D2ReceiptSHA256": "ec3753054458cf81942d55e4cecbf70f224c023486858651c27e62bbf5762e7f",
       "currentCandidateActualRuntime": {
-        "state": "NOT_EXECUTED",
+        "root": "f162184aafcdcbdb8adc9784588a009b761381f4",
+        "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+        "state": "R22_INSTALL_AND_NORMAL_IMPORT_PASS_CAPACITY_CONSTRUCTION_ADVANCED_ADMISSION_EACCES_STOPPED_NO_REPLAY",
+        "receiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
+        "safeSHA256": "c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d",
         "ordinaryBusinessPassed": false,
         "realImported": false,
         "productionDeployed": false

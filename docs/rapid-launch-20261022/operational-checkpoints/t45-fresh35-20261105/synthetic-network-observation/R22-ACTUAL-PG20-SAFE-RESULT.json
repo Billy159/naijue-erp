@@ -1,0 +1,116 @@
+{
+  "status": "R22_INSTALL_AND_NORMAL_IMPORT_PASS_CAPACITY_CONSTRUCTION_ADVANCED_ADMISSION_EACCES_STOPPED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T14:10:58.054449+00:00",
+  "jobId": "t45-f35-f16218-install-20261106-01",
+  "jobStatus": "FAILED",
+  "exitCode": 2,
+  "elapsedSeconds": 150.1525998241268,
+  "atUTC": "2026-11-06T14:06:24.345153+00:00",
+  "finishedAtUTC": "2026-11-06T14:08:54.568685+00:00",
+  "rawReceiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-f16218-install-20261106-01/transport/release-receipts/t45-f35-f16218-install-20261106-01/fresh35-deliver-install-result.json",
+  "rawReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
+  "sourceRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
+  "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
+  "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+  "collectorActualMaterializedMode": "0o755",
+  "cid": "99d3e16fd399507fcca4a67f4e82d02d81398d1040e59a6cd7f8f8dc73c14013",
+  "programSHA256": "cfb8d4a9dea525a829d55dd0a48be09e9e899a6c0f43ed171fcaa2e95f319595",
+  "targetSHA256": "38a1793997a11906312a3854c88c355420e96b09a3c98b64e491545b7cd189ff",
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "catalogSha256": "77a2ad099f2279394374656d7d79c35ca1e304df09d2074e5b70ca669ae1d40b",
+    "hostEnabled": false,
+    "businessVerified": false
+  },
+  "normalSyntheticImport": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "connectionCleanup": "CLOSED"
+  },
+  "rollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true,
+    "connectionCleanup": "CLOSED"
+  },
+  "snapshots": {
+    "postInstallEqualsPostRollback": true,
+    "postCommitDiffers": true,
+    "connectionsAndSQLSTATE": {
+      "snapshot-after-install.json": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null
+      },
+      "snapshot-after-rollback.json": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null
+      },
+      "snapshot-after-commit.json": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null
+      }
+    }
+  },
+  "ordinaryFailure": {
+    "automaticRetry": false,
+    "childDiagnosticUnavailable": false,
+    "childFailure": {
+      "actualInteger": null,
+      "errno": "EACCES",
+      "errorType": "Error",
+      "expectedInteger": null,
+      "format": "FRESH35_ORDINARY_FAILURE_V1",
+      "guardCode": null,
+      "phase": "REAL_SYNTHETIC_ADMISSION",
+      "source": "runFresh35OrdinaryIntegration:catch",
+      "sqlstate": null
+    },
+    "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+    "phase": "REAL_PG_AND_MIDDLEWARE",
+    "state": "FAILED_OR_OUTCOME_UNKNOWN"
+  },
+  "overallFailure": {
+    "automaticRetry": false,
+    "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+    "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+  },
+  "ordinaryChildReaped": true,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "loginsRevoked": true,
+    "ownedPidAbsent": true,
+    "portAbsent": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    }
+  },
+  "containerStopped": true,
+  "ordinaryProofEvidence": {},
+  "stageInterpretation": "D1 original function reached REAL_SYNTHETIC_ADMISSION after awaited createProductionCapacityLaunch; actual permission-denied source path/syscall not exported. This phase covers createSyntheticRuntime35ApplicationApi then capacity.preflight, not a verified success of either.",
+  "businessCause": "UNKNOWN_BEYOND_ACTUAL_ADMISSION_ERROR_EACCES",
+  "limits": [
+    "source field identifies catch boundary, not original throw line",
+    "guardCode/sqlstate/expectedInteger/actualInteger are null; no raw native message/path/stack exported",
+    "No business/API save/approve/readback/probe PASS claimed",
+    "No new postcleanup host resource read performed"
+  ],
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "thisNormalCommitMustNotReplay": true,
+  "C13InitialLocalRefusalPreserved": true,
+  "REALOrFormalChanged": false,
+  "actualModelEffortFast": "UNVERIFIED"
+}

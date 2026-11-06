@@ -1951,3 +1951,10 @@ T45实际只读preflight602feb33退出0/0.319秒，确认r21 stopped及六项清
 ## 2026-11-06 — r22新隔离PG已启动，准确C9实际验证接续
 
 唯一start退出0/37.303秒，raw365f566f/safe5a4ed1b7已核；CID99d3e16f、SID7705058234245836847、OID16393、PG170011、birth14:01:12.551676UTC，programcfb8d4a9/target38a17939/sourceb780。C签原9键C9 `539823ca20d23dbe55ff974e9467536f9eda3dc22f0f2ac27e6bfb6b604dca39`，与本轮C11同截止1793974793002，不扩窗。原T45接实际install/负例/正常25头27结算/ordinary102assert及读回probe/ownedcleanup。当前仅启动通过，后续阶段未验；不得把r21提交算到此版本，不重放旧target/unknown键，无REAL/prod。
+
+
+## 2026-11-06 — r22实测容量构建已越过，下一合成接入EACCES定向定位
+
+唯一install退出2/150.153秒，raw `55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2`/safe `c0cd06b08cc0633f9b1995afbff5b32a707df4e6b8efc9b78191272e9bddf79d`已核。普通函数已越过REAL_CAPACITY，后继REAL_SYNTHETIC_ADMISSION抛Error/errno EACCES，其他guardCode/sqlstate/integer空。此阶段含createSyntheticRuntime35ApplicationApi及capacity.preflight，catch不是原throw行，具体路径/syscall尚未知；不能扩权限或把整链算PASS。
+
+同版本35表安装完成记录已发布；正常合成COMMITTED/ALREADY_COMMITTED/新连接VERIFIED25头27结算，负例回滚及三个CLOSED快照通过。容器停止、ordinary/initializer/descendants回收、6cleanuptrue/errors[]，新normalcommit必须保留不重放。无REAL/prod。原D1只读精确接入/容量预检接缝，必要offline最小复现；原T45留终态，不新server/PG，不重复诊断，仅已有非敏感metadata必要时支持。上轮容量权限交付缺陷本轮actual已修，当前为证据改变后的下一失败，不是同一无进展阻塞。
