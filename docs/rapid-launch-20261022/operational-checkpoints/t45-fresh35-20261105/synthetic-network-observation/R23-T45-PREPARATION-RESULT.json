@@ -1,0 +1,231 @@
+{
+  "status": "R23_EXACT_QB_BUILD_AND_REAL_READONLY_PREFLIGHT_PASS_NO_C13_OR_STAGE",
+  "recordedAtUTC": "2026-11-06T14:46:09.204354+00:00",
+  "localReadyBeforeRemoteSHA256": "7755f83aa8b3d8e9f7f66805434894ee38a2d7860d9bc1647a77050c43a900df",
+  "localReady": {
+    "status": "R23_EXACT_QB_BUILD_ADOPTED_ONCE_READONLY_PREFLIGHT_PREPARED",
+    "recordedAtUTC": "2026-11-06T14:44:05.410989+00:00",
+    "candidateRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
+    "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
+    "sourceTree": "7b2edb79378e1576ff6333d247fbf1a314975a50",
+    "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+    "D2ResultSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
+    "QBResultSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
+    "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "CExactAdoptionAndServerBinding": "C adopted exact QB/build and authorized one finite readonly preflight only",
+    "files": {
+      "fresh35-container-successor.py": {
+        "bytes": 37139,
+        "sha256": "5529716cf7c90d6a07b645e5c79bfe487191577ce8b4164bd9e1e6e0be90a0c3"
+      },
+      "ordinary-proof-evidence.py": {
+        "bytes": 10262,
+        "sha256": "86be079e0ba43fe96169f0780b51f42ef36452d856a9c62bc7064a6e5d7c8ca1"
+      },
+      "assemble_original_receiver.BUILD-BOUND-C13-UNBOUND.py": {
+        "bytes": 9515,
+        "sha256": "50578bec0e15ca8a279e38144207cfc32d6a19f377fc8fd2cef56fe038940e7b"
+      },
+      "stage_preflight.py": {
+        "parentSHA256": "9405c8b6f7ebe8918d6dbc88af2469f491547e61505eb372a3475d00f6db4fa6",
+        "sha256": "6082180acf022c6d9c330eed0f76297bf8820e63b46e4b1be958b4bbe2175b11",
+        "bytes": 10371,
+        "changes": "Only exact prior actual bindings and closed REAL_SYNTHETIC_ADMISSION/Error/EACCES; original private receipt actual-hash/identity guards preserved."
+      }
+    },
+    "collectorExact0755CheckRetained": true,
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-1e6ba071/ordinary/ordinary-transfer.tar.gz",
+      "bytes": 83703105,
+      "sha256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746"
+    },
+    "manifest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-1e6ba071/ordinary/DEPLOYMENT-MANIFEST.json",
+      "bytes": 1084429,
+      "sha256": "39dc1a09ec0442e9d76425a94352e2e8783356f3a43d66d4a550035de90c8bad"
+    },
+    "descriptor": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-1e6ba071/SOURCE-DESCRIPTOR.json",
+      "bytes": 351144,
+      "sha256": "61c557146b2adab5e21a4f6d5483aef31d268c07e2bf4d5d44cbfc119c08c55f"
+    },
+    "runtime": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-1e6ba071/ordinary/fresh35-ordinary-runtime-v1.json",
+      "bytes": 2219,
+      "sha256": "c63a1265bbb9c462607b665acea1f3db3abe5c3797a78e6b6264f188f085e470"
+    },
+    "tail": {
+      "status": "EXACT_PREFIX_TAIL_STREAM_PROVED",
+      "base": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-f162184a/ordinary/ordinary-transfer.tar.gz",
+        "bytes": 83702682,
+        "sha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21"
+      },
+      "prefix": {
+        "bytes": 81226925,
+        "sha256": "580eb9e149c57c36f53fe3f87aaae61798beeb7d363792b5a0e662ed7094f9a0",
+        "byteCompared": true
+      },
+      "tail": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-1e6ba071/ordinary/recovery-tail-next-01/ordinary-transfer.tail-offset-81226925.bin",
+        "bytes": 2476180,
+        "sha256": "d0a64a41b5f8f175fb54c7e0e98432bb44e0f1edb62a9184787cf44e8f0cb481"
+      },
+      "target": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-1e6ba071/ordinary/ordinary-transfer.tar.gz",
+        "bytes": 83703105,
+        "sha256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746"
+      },
+      "streamReconstruction": {
+        "bytes": 83703105,
+        "sha256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+        "persistedTailReread": true
+      },
+      "recompression": false,
+      "fullReconstructedCopy": false,
+      "transportExecuted": false,
+      "serverExecuted": false
+    },
+    "baseHistoricalActualReady": {
+      "archiveBytes": 83702682,
+      "archiveSha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21",
+      "artifactKey": "f35-f16218-ordinary-local-20261106-01",
+      "authoritySha256": "86904f155ff79ceb78fdc8c350276110aaf6a745a2e7e8dfb300526e2ba76db7",
+      "fileIdentity": [
+        66304,
+        393729,
+        83702682,
+        1793973038836939048,
+        1793973039953934261
+      ],
+      "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
+      "status": "READY"
+    },
+    "C13AuthorityFields": "None; no signed/external authority present",
+    "pending": [
+      "C exact QB/build adoption and one bounded readonly preflight",
+      "New C13 stage window",
+      "Original materialize+collector0755+resource",
+      "New C11 actual target/program and C9"
+    ],
+    "serverActions": 0,
+    "PGConnections": 0,
+    "oldCommittedOrUnknownKeysReplayed": false,
+    "REALOrFormalChanged": false,
+    "actualModelEffortFast": "UNVERIFIED"
+  },
+  "remotePreflight": {
+    "jobId": "t45-f35-1e6ba0-stage-preflight-20261106-01",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 0.2675912259146571,
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-stage-preflight-20261106-01/transport/release-receipts/t45-f35-1e6ba0-stage-preflight-20261106-01/stage-preflight.json",
+    "sha256": "4612e24e237267fa697489cb2892a285318880868c465f1e0aee4a2b893457a7",
+    "facts": {
+      "status": "READONLY_R23_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+      "checkedAtEpochMillis": 1793976330324,
+      "gateSha256": "86904f155ff79ceb78fdc8c350276110aaf6a745a2e7e8dfb300526e2ba76db7",
+      "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-1e6ba0-stage-preflight-20261106-01/staging-policy-before.json",
+      "baseIdentity": [
+        66304,
+        393729,
+        83702682,
+        1793973038836939048,
+        1793973039953934261
+      ],
+      "baseArchiveSha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21",
+      "baseHashNotRereadUntilOriginalAssembler": true,
+      "privateFullIdentityUnchanged": true,
+      "privateFullIdentity": [
+        66304,
+        393585,
+        93508914,
+        1793915257822987699,
+        1793915258790984345
+      ],
+      "r23RootAbsent": true,
+      "r23ContainerAbsent": true,
+      "r23ArtifactDirectoriesFound": [],
+      "samePrefixOtherSubmissions": [],
+      "priorExactJobs": [
+        {
+          "jobId": "t45-f35-f16218-start-20261106-01",
+          "status": "COMPLETED",
+          "exitCode": 0
+        },
+        {
+          "jobId": "t45-f35-f16218-install-20261106-01",
+          "status": "FAILED",
+          "exitCode": 2
+        }
+      ],
+      "r22PrivateOriginalReceiptMetadata": {
+        "sha256": "654d6a8f73a52518b80e8d77592b4a2b44ffa1baa76c5cc7f6f1154e649beba2",
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o600",
+        "bytes": 34591,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-f16218-install-20261106-01/results/fresh35-deliver-install-result.json",
+        "readSource": "EXACT_ORIGINAL_ROOT_JOB_RESULT_NOT_PUBLIC_EXPORT"
+      },
+      "r22OrdinaryOriginalRequests": "UNKNOWN_NO_REPLAY_DB_NOT_QUERIED",
+      "r22OriginalNativeResult": {
+        "recordPublished": true,
+        "state": "RECORD_DURABLY_PUBLISHED",
+        "installState": "COMMITTED_UNPUBLISHED",
+        "postInstallFailureCode": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+        "sourceSetSha256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37"
+      },
+      "r22PublishedRecordRetainedMetadata": {
+        "exists": true,
+        "uid": 0,
+        "mode": "0o644",
+        "bytes": 1516,
+        "contentsNotExported": true,
+        "hashNotRepeated": true
+      },
+      "r22Stopped": {
+        "cid": "99d3e16fd399507fcca4a67f4e82d02d81398d1040e59a6cd7f8f8dc73c14013",
+        "stopped": true,
+        "processAbsent": true,
+        "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+      },
+      "r22Cleanup": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "credentialsRemoved": true,
+        "loginsRevoked": true,
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "r22CleanupErrors": [],
+      "fixedEnvironment": {
+        "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "os": "linux",
+        "arch": "amd64"
+      },
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "resources": {
+        "cpuCount": 4,
+        "loadAverage": [
+          0.0048828125,
+          0.02294921875,
+          0.07080078125
+        ],
+        "diskFreeBytes": 5175234560,
+        "MemAvailable": 14365118464
+      },
+      "sourceOrTargetWrites": 0,
+      "PGConnections": 0,
+      "networkOrServiceChanges": 0,
+      "dataExtraction": false
+    }
+  },
+  "C13TemplatesSHA256": "36df5b06ecb414a58f1156756b561ffe6298e9cb9d52371261ebd6f23889c70a",
+  "C13TemplatesAreAuthorities": false,
+  "C13C11C9IssuedByT45": false,
+  "stageMaterializePGInstallActions": 0,
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "REALOrFormalChanged": false,
+  "actualModelEffortFast": "UNVERIFIED"
+}

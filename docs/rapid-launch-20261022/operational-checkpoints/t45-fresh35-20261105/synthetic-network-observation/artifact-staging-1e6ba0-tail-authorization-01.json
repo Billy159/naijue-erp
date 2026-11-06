@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-1e6ba0-tail-20261106-01",
+  "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "archiveSha256": "d0a64a41b5f8f175fb54c7e0e98432bb44e0f1edb62a9184787cf44e8f0cb481",
+  "archiveBytes": 2476180,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-1e6ba0-tail-20261106-01",
+  "startsAt": 1793976626715,
+  "expiresAt": 1793978426715,
+  "decisionReference": "C consumes human standing same-kind bounded isolation approval. r23 root1e6ba071 source4adb9fa2; QB378854ec/D259032d7c/preflight4612e24e. Exact source/tools taild0a64a41 and full46d2426c only, original40s receiver/900s material. Keep r22 bytes and committed/unknown keys; no replay, PG, REAL or production. Fresh C11/C9 remain separate. No expired noon delegation or client-created approval.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
