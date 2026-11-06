@@ -1,0 +1,89 @@
+{
+  "task": "R17-POSTCOMMIT-JSON-4D750FFF",
+  "atUtc": "2026-11-06T10:07:57.015742+00:00",
+  "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+  "version": {
+    "integration": "4d750fffe517836f1abd8191655702011e16ae80",
+    "root": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
+    "tree": "c06367a78f4485ee95c0e28ba35894fc7cfe61b0",
+    "parentRoot": "2af49cd257cfe22ce2e9c35b059f5d08087bfdf0"
+  },
+  "staticChecks": {
+    "pins": [
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+        "beforeSHA256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+        "beforeBytes": 97619,
+        "afterSHA256": "73c409cfe452329f8887fbdfe2bddccbedda9f26c06183de7017d1d28e72d2b0",
+        "afterBytes": 97626,
+        "preservedBefore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/launch-fresh35-isolated-v1.before.py"
+      },
+      {
+        "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+        "beforeSHA256": "f2071eb6ef1bbceaaf665d41f81d5b8fc1102f7dc82e7c060a119cf71b6c9358",
+        "beforeBytes": 79351,
+        "afterSHA256": "91876c065e1595d9407318f61047adfd8208b5577bedfd8fcc1195977e7dbbaf",
+        "afterBytes": 81106,
+        "preservedBefore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r17-postcommit-json-sourcefix-01/test_fresh35_isolated_launcher.before.py"
+      }
+    ],
+    "authorResultSha256": "8b5c5279db0447654342ae7eb035e37b1d5975ecdfc2c98f87c00830646999c0",
+    "wholeFile7ByteInverseExact": true,
+    "onlySceneReadbackSqlASTChanged": true,
+    "consumerStrictJsonPhysicalRoleTargetKeysGuardsASTExact": true,
+    "tree": "c06367a78f4485ee95c0e28ba35894fc7cfe61b0"
+  },
+  "independentConsumerBoundary": {
+    "conclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
+    "actualOriginalProducerAndConsumer": true,
+    "generatedThreeCastsAndAllOtherSqlBytesExactParent": true,
+    "sameReadOnlyRRSingleQueryAndPhysicalContext": true,
+    "canonicalObjectKeyOrderModelAccepted": true,
+    "complete4Rows11References2BalancesPreserved": true,
+    "publicationJsonNullUnicodeAndSignedQuantityStringsPreserved": true,
+    "negativeCases": [
+      {
+        "case": "extra physical row",
+        "refused": "SCENE_ROW_COHORT"
+      },
+      {
+        "case": "wrong balance pair",
+        "refused": "SCENE_BALANCE_COHORT"
+      }
+    ],
+    "actualJsonbCastOrPG17_11Executed": false,
+    "serverCalls": 0
+  },
+  "authorEvidenceAdopted": {
+    "T45ResultSha256": "8b5c5279db0447654342ae7eb035e37b1d5975ecdfc2c98f87c00830646999c0",
+    "D1ReadOnlyCounterexampleSha256": "1a8ae0b622c3913443c4a05852fb61bfb1b8001bab342a964bb471b0f0f53b41",
+    "affectedMethods": 6,
+    "originalRedGreenAndStrictDuplicateNonfiniteEvidence": "ADOPTED_NOT_RERUN",
+    "priorR17DatabaseOrSourceWholeSuiteRepeated": false
+  },
+  "primarySourcesIndependentlyChecked": [
+    "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/json.c#L780-L787",
+    "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/jsonb.c#L446-L450",
+    "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/jsonb.c#L580-L587"
+  ],
+  "scope": "One7-byte source literal adds jsonb normalization to3 outer JSON outputs. Generated newSQL with3casts reversed equals exact oldSQL, inner queries/identity/roles/RR/keys/strict parser and guards unchanged. Canonical wire modeled with reordered JSON object keys preserves full4rows/11references/2balances/null/Unicode/signed quantity strings. Extra physical row and foreign balance pair refused.",
+  "priorActualR17": "Adopt C/T45 original3eb95d5c PG170011 schema plus normalIMPORT COMMITTED/ALREADY_COMMITTED/readbackVERIFIED,3negative/cleanupPASS. Postcommit JSONDecodeError stopped ordinary flow; ordinary/business remains unverified.",
+  "actualFailingRowByteOrSoleCause": "UNKNOWN_NOT_EXPORTED",
+  "sourceBlockers": [],
+  "boundaries": {
+    "sourceModified": false,
+    "newSourceCopyOrBuildServiceCreated": false,
+    "serverCalls": 0,
+    "PGConnections": 0,
+    "actualFixedJsonbWire17_11Executed": false,
+    "ordinaryOrWholeBusinessPassed": false,
+    "committedOriginalKeyOrTargetReplayed": false,
+    "oldNativeWholeSuiteRepeated": false
+  },
+  "model": {
+    "requested": "gpt-6.1-sol/high",
+    "actualRuntime": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  },
+  "next": "Return exact sourcePASS toC. Original T45 validates corrected wire/ordinary consumer on separately bound actual17.11 successor using prior committed import evidence appropriately; do not replay original committed key or infer business PASS."
+}

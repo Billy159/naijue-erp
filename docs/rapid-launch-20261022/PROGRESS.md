@@ -1725,3 +1725,7 @@ D1 reproduced real observe_scene/strict_json JSONDecodeError with a legal multil
 ## 2026-11-06T18:04:06+08:00 - Two-leaf JSON wire repair frozen; minimal QA/build parallel
 
 Source4d750fffe517836f1abd8191655702011e16ae80 binds launcher73c409cf/97626B and directtest91876c06/81106B. Original T458b5c5279 author6affected checks passed, inverse launcher exactly restores parent after removing7cast bytes; no original parser/guards/query or business change. New roote7bcc81e803e3e93853bf67820290ea2a29bc423/treec06367a78f4485ee95c0e28ba35894fc7cfe61b0 follows actualr17 root2af49cd2. Original QB checks only this increment; original D2 builds once. Corrected actual17.11 ordinary chain remains pending. Existingr17 schema/import/normalCOMMIT/readback proof retained in its own version record; no oldkey replay/REAL/production.
+
+## 2026-11-06T18:10:45+08:00 - R18 narrow QA and fixed build passed
+
+QBfbbce17b exact2leaf source/model PASS adopted. D2d1dc84f4 build0/12.476s,pack0/9.574s,453production/30directories/7298ordinary full closure passed. C checked3metadata pins and actual2469124B tail. Roote7bcc81e/treec06367a7/source9cef557d/full0aefefe7/83696049B binds only1changed launcher pin;213same. Actualr17base5efac917 plus newly measured81226925Bprefix3192ceb1/tailcf503f6b matches target; no oldoffset reuse. Original T45 prepares local successor and one readonly preflight, then C13. Actual corrected17.11wire/ordinary/business remains pending. r17committed import proof retained; no oldkey replay/REAL/production.
