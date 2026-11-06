@@ -1,0 +1,183 @@
+{
+  "format": "D1_R25_FRESH35_CAPACITY_ROLE_SOURCE_V1",
+  "at": "2026-11-07T00:41:34.497582+08:00",
+  "status": "SOURCE_READY_OFFLINE_AND_TYPECHECK_ONLY_AWAIT_C_QB_AND_REAL_PG",
+  "authorization": "C WRITE-OWNERSHIP.r25Fresh35CapacityRoleSeam20261107; exact three leaves; Fresh35-only fixed statistics split explicitly confirmed; T45 Python two leaves remain separate owner",
+  "sourceRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+  "leaves": [
+    {
+      "path": "apps/api/src/capacity-runtime-probe.ts",
+      "beforeSha256": "13306c668542cf685281c4d20641cfa68680f8dc42f652c7e27db10df0b7f66f",
+      "beforeBytes": 11679,
+      "afterSha256": "0233ba7f6315a52d5910f92c80e4c8fd5b60bdf3a529d515ef634015dc9fced7",
+      "afterBytes": 15466
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "beforeSha256": "b10fe7390ee127cccba7be50c98e7b5bcf344e00a8f0163023e47ea83379043f",
+      "beforeBytes": 98988,
+      "afterSha256": "03a058fa8e92aeee037d123974a3abd52a6ca66f708c55fa26d95fba392ac2f5",
+      "afterBytes": 99090
+    },
+    {
+      "path": "tests/capacity-runtime-probe.test.ts",
+      "beforeSha256": "cd82d3b52f79f9260f441d0bd64ae7495b5fc2701cd3ac7e3caa46bba8cbc13d",
+      "beforeBytes": 13245,
+      "afterSha256": "26cd175dacf91265c4ed52938bdaa1c604369223e1e18d65c22764e385cf5685",
+      "afterBytes": 22160
+    }
+  ],
+  "r24": {
+    "fixedSourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+    "fixedRootCommit": "9315643006a574986abacf5bba631e7c34cf23f1",
+    "resultSha256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4",
+    "rawSha256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
+    "retainedActualPhase": "REAL_CAPACITY_PREFLIGHT",
+    "actualUnderlyingThrow": "NOT_RETAINED_NOT_DETERMINED",
+    "actualRootCause": "SOURCE_CANDIDATE_ONLY_NOT_ACTUAL_PG_PROVEN",
+    "oldCommittedAndUnknownKeysReplayed": false
+  },
+  "sourceFinding": {
+    "LOGIN": "Original runtime LOGIN is NOINHERIT, member of exact runtime interface with INHERIT FALSE/SET TRUE; LOGIN has database CONNECT but no naijue_erp schema USAGE",
+    "interface": "Existing runtime interface has schema USAGE/auth_session permissions but no database CONNECT",
+    "before": "Raw owned-pool LOGIN identity is checked, then original combined regclass/table-size/database-size SELECT cannot satisfy both roles; original observe catch returns UNKNOWN and preflight generic Error",
+    "after": "Real Fresh35 admission capability is passed to the original one-pool binder only after admission/physical-target validation. Same raw LOGIN and physical identity are checked in original RR readonly transaction. Read database_bytes under LOGIN; SET LOCAL ROLE only exact existing interface after original genuine-cap same-pool validation; verify runtime role/session/physical identity/read-only/isolation, read original auth_session relation/index/total. Existing four-value/decimal/conservation checks remain. ROLLBACK ACK, restored LOGIN/session/physical identity, current genuine cap and release must all succeed before returning KNOWN. Any failure remains UNKNOWN; no budget is charged by preflight.",
+    "initialFiveCaseLimit": "Initial five offline cases modeled schema USAGE only and did not enforce pg_database_size database CONNECT. They were a limited source candidate, not complete proof. Final exact-role model enforces both checks; a whole-query SET ROLE is not the delivered fix."
+  },
+  "changes": [
+    "capacity-runtime-probe.ts: extend existing internal PoolBinder with optional genuine Fresh35OrdinaryAdmissionV2; keep the original two-argument legacy path; no JSON/DTO/role input",
+    "postgres-read-api.ts: two edits only; unchanged original bind timing for non-Fresh35, Fresh35 bind after actual admission with the same owned pool/target/admission35",
+    "tests/capacity-runtime-probe.test.ts: reuse existing actual-host-body offline model and its genuine module-private WeakMap capability, plus finite schema/CONNECT ACL projection; cannot issue production module capability"
+  ],
+  "preserved": [
+    "Existing full STORAGE_SQL literal and canonical scripts/ops/capacity-inventory.mjs untouched for R1/legacy",
+    "Original options/budgets/thresholds/window/fresh volume facts/single probe/single pool/unknown refusal unchanged",
+    "No role/GRANT/ACL/schema/database functions/business rules/frontend/shared DTO or SQL objects changed",
+    "No OID name-lookup bypass, owner/controller elevation, default facts or source authority inferred from a caller boolean",
+    "12 original top-level test/loop statements byte-identical; shared fixture setup only permits new model inputs with original defaults preserved"
+  ],
+  "checks": {
+    "redInitial": {
+      "exitCode": 1,
+      "pass": 10,
+      "fail": 2,
+      "skipped": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/RED.tap",
+        "sha256": "149c043b50ce95ac7e5ccd9d467478cc13c6035323c70189fc98d7f135a60c63",
+        "bytes": 19077
+      }
+    },
+    "redExpanded": {
+      "exitCode": 1,
+      "failedTestNames": [
+        "✖ fresh35 capacity reads LOGIN database bytes and branded runtime relation bytes on one readonly lease then restores role",
+        "✖ fresh35 capacity accepts only the original admission brand and matching LOGIN physical target",
+        "✖ fresh35 capacity rejects a genuine capability bound to a different original pool before borrowing",
+        "✖ fresh35 capacity set-denied remains refused with no admitted or refunded write budget",
+        "✖ fresh35 capacity set-ack remains refused with no admitted or refunded write budget",
+        "✖ fresh35 capacity role-identity remains refused with no admitted or refunded write budget",
+        "✖ fresh35 capacity restore-identity remains refused with no admitted or refunded write budget",
+        "✖ fresh35 capacity release remains refused with no admitted or refunded write budget",
+        "✖ fresh35 capacity expired-cap remains refused with no admitted or refunded write budget"
+      ],
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/RED-COMPLETE.txt",
+        "sha256": "42c91ed53f6a9ce7dc41af266ff604dac967d5ceea4f0d0a04727937e5f782a4",
+        "bytes": 22099
+      },
+      "note": "Tightened negative cases assert exact reached seam; no baseline failure is counted as a passing role-boundary test"
+    },
+    "greenInitialAttempt": {
+      "exitCode": 1,
+      "note": "Offline model omitted real PG ROLLBACK command acknowledgement; corrected test model to supply real command tag. No guard removal.",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/GREEN-FIRST.tap",
+        "sha256": "255251f4a757e27aceb0cc3c9874fe223f5203675adf1e1722c334d637b57716",
+        "bytes": 4796
+      }
+    },
+    "greenFinal": {
+      "exitCode": 0,
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "skipped": 0,
+      "command": "node-v24.21.0 --experimental-transform-types --test --test-name-pattern=\"fresh35 capacity|A02 CLI preflight reads|A02 runtime probe uses only\" tests/capacity-runtime-probe.test.ts",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/GREEN-FINAL.tap",
+        "sha256": "ef1460096655b527fb735bf028c0f34f9ddefeba0b51557338b4e979ae53b390",
+        "bytes": 2152
+      }
+    },
+    "typecheckInitial": {
+      "exitCode": 1,
+      "diagnostics": 1,
+      "note": "Target .mjs constant had no declaration; removed that import and retained the existing exact runtime role literal inside the real-cap-only branch. No ts-ignore, declaration expansion or fake brand.",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/TYPECHECK.log",
+        "sha256": "62da35fd6030a64f5529a1410164b595cd9b50793d5419d3850e21d12664c730",
+        "bytes": 877
+      }
+    },
+    "typecheckFinal": {
+      "exitCode": 0,
+      "diagnostics": 0,
+      "scope": "TypeScript createProgram exact three registered roots and actual dependency closure using unchanged project tsconfig options with noEmit=true",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/TYPECHECK-FINAL.log",
+        "sha256": "7991bd2a4f9fa934bfedfec8e0f2aefb38c43a6c11fb228caac1f4342b4c058b",
+        "bytes": 183
+      }
+    },
+    "forwardPatchDryRunExitCode": 0,
+    "reversePatchDryRunExitCode": 0,
+    "sourceCopiesReadBackExact": true,
+    "factoryOriginalRestoredByReversingOnlyTwoEdits": true
+  },
+  "coverage": [
+    "Branded same pool LOGIN CONNECT→SET runtime USAGE→same RR readonly role/session/physical verification→rollback restores LOGIN→release; preflight zero admissions/charges",
+    "Fake/plain/cloned cap, different LOGIN/physical target, different pool before borrowing",
+    "SET denied/wrong ACK, wrong post-SET role, relation read failure",
+    "Wrong LOGIN identity, UNKNOWN facts before borrowing",
+    "ROLLBACK/release/restored-role failures, cap expired before probe and during rollback",
+    "Legacy exact original storage aggregate and same-owned-pool/capacity low-water readonly behavior"
+  ],
+  "notExecuted": [
+    "Actual Linux/PostgreSQL/collector or deployment environment",
+    "Actual original R24 throw observation or new PG run",
+    "API factory actual PG integration/HTTP business proof",
+    "Full suite/build/package/deployment or dependency install",
+    "Real import, publication, previous normal/unknown key replay"
+  ],
+  "rollback": {
+    "patch": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/SOURCE.reverse.patch",
+      "sha256": "4cf42fb929e086f8caca21a2d8c67279fdbd1ff1d5887071a97baab5ae31d2b4",
+      "bytes": 23694
+    },
+    "forward": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R25-CAPACITY-ROLE-SOURCE-01/SOURCE.patch",
+      "sha256": "1551afcf3af2c9f95809092cd1f1df993ea3152731ac408f1bd894d99dfd37f0",
+      "bytes": 23694
+    },
+    "scope": "Restore exactly these three source leaves to before pins; no database object/ACL rollback needed because none was executed"
+  },
+  "primaryReferences": [
+    {
+      "url": "https://raw.githubusercontent.com/postgres/postgres/REL_17_STABLE/src/backend/utils/adt/regproc.c",
+      "lines": "849: regclass name lookup uses RangeVarGetRelid"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/postgres/postgres/REL_17_STABLE/src/backend/catalog/namespace.c",
+      "lines": "502 and3218: explicit namespace lookup checks ACL_USAGE"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/postgres/postgres/REL_17_STABLE/src/backend/utils/adt/dbsize.c",
+      "lines": "118–127: database size checks current-user CONNECT or pg_read_all_stats"
+    }
+  ],
+  "combinedSourceSetSha256": "C_TO_REBIND_WITH_T45_TWO_LEAVES",
+  "writerState": "FROZEN_AFTER_DELIVERY",
+  "Fast": "UNVERIFIED"
+}

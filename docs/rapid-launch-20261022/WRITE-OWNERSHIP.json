@@ -10386,6 +10386,8 @@
     "tests": "Author finite positive and reject paths; original QB affected increment; no PG or full suite before integrated candidate",
     "excludes": "T45 Python leaves, root config/locks/contracts/SQL/permissions/production, new DTO or second pool",
     "sqlBoundary": "No database objects/DDL/functions/ACL/business contracts or ops aggregate changes; exact fixed private storage-read split inside these 3 source leaves allowed by C",
-    "priorModelLimitation": "Initial schema-USAGE-only5-case model omitted pg_database_size CONNECT; author must add role-specific CONNECT tests and preserve old limited evidence"
+    "priorModelLimitation": "Initial schema-USAGE-only5-case model omitted pg_database_size CONNECT; author must add role-specific CONNECT tests and preserve old limited evidence",
+    "state": "DELIVERED_FROZEN_PENDING_COMBINED_ORIGINAL_QB",
+    "receiptSHA256": "d8a9ba1f4e923cacd1d95a40bcfde9a4bf50d9d591987aa20a0f4068e93d1219"
   }
 }
