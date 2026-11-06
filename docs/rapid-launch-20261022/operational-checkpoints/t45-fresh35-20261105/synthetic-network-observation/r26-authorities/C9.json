@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+  "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+  "targetSha256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365",
+  "startsAt": 1793991556029,
+  "expiresAt": 1793992756029,
+  "independentSafetyReviewSha256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
+  "authorizationReference": "C direct user delegation until2026-11-07T12:00+08; fixed10fc5e/r26 actualSTART9a6eac11/C11 1c0a55b3; exact new SID7705135436364169263 and target82a73019/program3da708a5; original synthetic/ordinary validation only; same C11 deadline, no REAL/formal/oldkey replay"
+}

@@ -1,0 +1,129 @@
+{
+  "status": "ACTUAL_R26_TARGET_STARTED_WAITING_EXTERNAL_C9_NO_INSTALL",
+  "jobId": "t45-f35-10fc5e-start-20261107-01",
+  "jobStatus": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 37.448744730092585,
+  "startedAtUTC": "2026-11-06T19:00:29.910087+00:00",
+  "finishedAtUTC": "2026-11-06T19:01:07.378738+00:00",
+  "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-06 19:00:47.538028+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7705135436364169263"
+  },
+  "actualTarget": {
+    "expiresAt": 1793992756029,
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-06 19:00:47.538028+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7705135436364169263"
+    },
+    "proposal": {
+      "admin": "fresh35_admin_20261105_r1",
+      "controller": "fresh35_controller_20261105_r1",
+      "database": "synthetic_fresh35_20261105_r1",
+      "host": "127.0.0.1",
+      "owner": "fresh35_owner_20261105_r1",
+      "port": 18651,
+      "runtime": "fresh35_runtime_20261105_r1",
+      "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+    },
+    "startsAt": 1793991556029
+  },
+  "program": {
+    "applicationTransactions": 1,
+    "bootstrapNetworkObservationSha256": "2674858944891ddc5a81c740db089c410196e72c6458dd7fe8655649ada024ca",
+    "catalogSha256": "e31d1add868b8adc11a611cda54af7b7b9f5acd1fc329316e0ffe43a58eea10b",
+    "createsCluster": false,
+    "createsCredentials": false,
+    "createsRoles": false,
+    "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+    "hostEnabled": false,
+    "observationSqlSha256": "dc55105b010e5b47c42809afbbed7cb423caa81f8f7d6905d2a04cc83512e443",
+    "oldTablesRemoved": false,
+    "programSha256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+    "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "statements": [
+      {
+        "name": "physical-empty-target",
+        "sha256": "ed21a4da66b5f8ec806742f897c42f1762c84ea3f99417cdaeb16367e54b4a45"
+      },
+      {
+        "name": "direct-35-schema",
+        "sha256": "539c0a859820cfb6fa47868da31bb1f7daec0bb67ac829d6b66bc63682916940"
+      },
+      {
+        "name": "migration-lineage",
+        "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9"
+      },
+      {
+        "name": "controller-lineage-column-read",
+        "sha256": "b82f699e12d00079406a2e7a65513b1a7cbb25704381fc2ef1ec2b49b5d0872e"
+      },
+      {
+        "name": "runtime-account-column-write",
+        "sha256": "ac7dc60a96b951e7c29770eaf0f814594f8af28ecd2ae7f6f96b3116cbc9c862"
+      },
+      {
+        "name": "historical-sales-hall",
+        "sha256": "5826d7dd3487e2a2baed50373d156a2cf2e67c9dc1f903945f8a88646e522591"
+      },
+      {
+        "name": "historical-line-amount",
+        "sha256": "2b10411c31255e380dba914ba35a1b6238397d50671baf3419a76af458060dde"
+      },
+      {
+        "name": "historical-missing-settlement-types",
+        "sha256": "161e4160c13e4d617a818d35ef16572bcd1d7699cb13ebcf739cd26d897f92b9"
+      },
+      {
+        "name": "historical-settlement-difference",
+        "sha256": "fa4ea0cde2a74a9d49c58ab280d0ef810b6f64b6583c5fac96959e284885ca31"
+      },
+      {
+        "name": "complete-successor-catalog",
+        "sha256": "571d6fd70701f0de0d801e46f78c31aa8da249fa090012d8ed3eb64871f80b4f"
+      },
+      {
+        "name": "same-physical-target",
+        "sha256": "cf6a208d7b06a4e01c0fb4b40211bab17124b6206f0a23dcc9e4b1b6863da54b"
+      }
+    ],
+    "targetSha256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365"
+  },
+  "expiresAt": 1793992756029,
+  "evidence": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-10fc5e-start-20261107-01/transport/release-receipts/t45-f35-10fc5e-start-20261107-01/job.json",
+      "bytes": 509,
+      "sha256": "d39174ba15aaeffd1910769e38028286be7975fe58f29e4dbf788481d311a916"
+    },
+    "fresh35-start-target-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-10fc5e-start-20261107-01/transport/release-receipts/t45-f35-10fc5e-start-20261107-01/fresh35-start-target-result.json",
+      "bytes": 3297,
+      "sha256": "3f6bc6608a81b15f0b94b50826ecfdf52daf92a7a49650fa02395a411902413b"
+    }
+  },
+  "C11": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r26-ops-preparation-01/c13-execution-01/C11.json",
+    "sha256": "1c0a55b33087982a27c49921c7ec39f67a6ebcf934e8175bbaf1918256d7916b"
+  },
+  "C9Template": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r26-ops-preparation-01/c13-execution-01/C9-TEMPLATE.UNISSUED.json",
+    "bytes": 478,
+    "sha256": "8895b3b9f653c20a9ff01cf2339c607bf85b7d0781f22bf3615b92054f93113e",
+    "keys": 9,
+    "decisionAndReviewReferenceNull": true,
+    "window": "Bound to original C11, no extension"
+  },
+  "operationsPlanSHA256": "880f96e969bcfcc0bf146986d6ba5cac10d19d512fbf5ac2173cc8e10038b915",
+  "frozen7PointerSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
+  "oldKeysReplayed": false,
+  "formalOrRealChanged": false,
+  "installationDelivered": false,
+  "nextStep": "C independently signs original9key C9 at exactly the same C11 deadline; only then deliver-install via original new key. If authority absent, original guardian/window remains and must collect bounded cleanup without replay.",
+  "actualModelEffortFast": "UNVERIFIED"
+}

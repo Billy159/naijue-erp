@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:00:14.641946+00:00",
-      "phase": "R26_MATERIALIZED_C11_NEW_ISOLATED_START_AUTHORIZED",
+      "at": "2026-11-06T19:04:52.727626+00:00",
+      "phase": "R26_ACTUAL_TARGET_STARTED_C9_INSTALL_AND_ORDINARY_AUTHORIZED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "T45 original sole server executor",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 start exact new r26 target once; actual identity/program/target then C9 same deadline",
+      "next": "T45 unique new install actual result and cleanup; original key unknown recovery only",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33373,7 +33373,15 @@
       "C11ExpiresAt": 1793987722139,
       "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784",
       "actualCID": "768519a2c193012362db9ebeb5dded1f57f997eab5c6f55a1fb64ed08cbb2692",
-      "actualTarget": "c1d54014cee9faf8ce2651b67cc6d8ffa68254fb444491d0d7ede1fe1b789685",
+      "actualTarget": {
+        "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+        "systemIdentifier": "7705135436364169263",
+        "databaseOid": 16393,
+        "postmasterStart": "2026-11-06 19:00:47.538028+00",
+        "serverVersionNum": 170011,
+        "programSHA256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+        "targetSHA256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365"
+      },
       "actualProgram": "5f5fc9bbaaee53cdf659f0d6d9134b1ea94f94f289a9b264049e615a549d4441",
       "opsFrozenSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
       "actualStageReceiptSHA256": "1e649b7ea7207900bf5acd7c10397b0582ad32267b6edcf640244c086df33637",
@@ -33390,7 +33398,9 @@
         "startsAt": 1793991556029,
         "expiresAt": 1793992756029,
         "scope": "Exact new isolated synthetic target only; no REAL/formal"
-      }
+      },
+      "startReceiptSHA256": "9a6eac1124a2e94090e5c5603b6e2c69cf51ea437891e63667c1cf5f7b60b5f9",
+      "C9SHA256": "9a51e13c88326c3d89e4d9644799881406f94e8cd794c50367468b23d2ce6d34"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
