@@ -28508,12 +28508,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R22_STAGE_AUTHORIZED_EXACT_TAIL_ASSEMBLY_AND_MATERIALIZATION",
+      "critical": "R22_ACTUAL_FULL_READY_UNIQUE_MATERIALIZATION_RUNNING",
       "independentPreparation": {
         "D1": "Exact source diagnosis closed81ba5198; source frozen.",
         "QB": "Mode-only source scopedPASS6c5d9ca9, no repeated review.",
         "D2": "Fixed f162184a build12.331s/pack9.282s and7298 membersPASS; no runtime.",
-        "T45": "Original exact tail stage→baseprefix+tail assembly→r22 materialization; C13 bound30min, no PG/start until fresh C11.",
+        "T45": "Full464d READY on server; same unique material job currently running, no PG/start before material/resource/C11.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32283,7 +32283,7 @@
         "diagnosticActualEffective": true
       },
       "r22Preparation": {
-        "state": "R22_STAGE_AUTHORIZED_EXACT_TAIL_ASSEMBLY_AND_MATERIALIZATION",
+        "state": "R22_ACTUAL_FULL_READY_UNIQUE_MATERIALIZATION_RUNNING",
         "sourceCommit": "80c84f5f83c7406213129ce158d92add47003931",
         "buildRoot": "f162184aafcdcbdb8adc9784588a009b761381f4",
         "QBReceiptSHA256": "6c5d9ca9a03720fe52c72b8c05f9fc4ea81523f907e7cc1022a197faef7e203e",
@@ -32337,6 +32337,25 @@
             "onlyFieldChanged": "decisionReference",
             "deadlineUnchanged": true
           }
+        },
+        "stageResultSHA256": "ba26e06891995512d0bc294064445b319e4f73b930c18224b7fcd4566853ba93",
+        "actualFullReady": {
+          "bytes": 83702682,
+          "sha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21",
+          "fileIdentity": [
+            66304,
+            393729,
+            83702682,
+            1793973038836939048,
+            1793973039953934261
+          ],
+          "authoritySHA256": "86904f155ff79ceb78fdc8c350276110aaf6a745a2e7e8dfb300526e2ba76db7"
+        },
+        "materialization": {
+          "jobId": "t45-f35-f16218-local-materialize-20261106-01",
+          "state": "RUNNING_CONFIRMED_BY_ORIGINAL_EXECUTOR",
+          "timeoutSeconds": 900,
+          "pgStarted": false
         }
       }
     },
@@ -32746,12 +32765,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T21:44:41.136304+08:00",
-      "phase": "R22_STAGE_AUTHORIZED_EXACT_TAIL_ASSEMBLY_AND_MATERIALIZATION",
+      "at": "2026-11-06T21:54:55.589577+08:00",
+      "phase": "R22_ACTUAL_FULL_READY_UNIQUE_MATERIALIZATION_RUNNING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact tail stage/assembly/materialization",
-      "nextOwner": "C fresh C11 after actual collector0755 and resource result",
+      "currentOwner": "Original T45 live t45-f35-f16218-local-materialize-20261106-01",
+      "nextOwner": "C fresh C11 after actual material/0755/current resource result",
       "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
