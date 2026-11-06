@@ -28491,13 +28491,13 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 original r10 CAS/tail/full receiver/materialize; C freshPG20 only after actual readiness/resources; r9 committed record preserved no replay.",
+      "critical": "D1 original import consumer and T45 Python producer narrow BAD_APPROVAL diagnosis, precise red before repair. No old install replay; preserve committed target.",
       "independentPreparation": {
-        "D1": "Readonly/no WIP/no repeated account route or old source review.",
-        "T45": "Only once original r10 exact staged preparation; freshPG20 after actualmaterialize/resource.",
-        "D2": "ac19 full build/pack/7298 members/tail delivered; no new independent source work; wait actual input.",
+        "D1": "Only original rollback/import approval exact producer/consumer seam diagnosis, no PG/oldcatalog.",
+        "T45": "Original Python producer and bounded stopped receipts only; no r10 reinstallation/restart or job replay.",
+        "D2": "ac19 deliverable preserved, no further builds until precise reviewed delta.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "12784 exact snapshot two-leaf source/offline PASS adopted; wait actual increment.",
+        "QB": "Original snapshot source accepted; await exact new approval delta, no broad recheck.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R10_QB_AND_BUILD_ADOPTED_EXACT_STAGING_AUTHORIZED",
+      "state": "R10_COMMITTED_RECORD_AND_SNAPSHOT_PASS_NEXT_ROLLBACK_BAD_APPROVAL_FAILED_STOPPED",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "T45 original r10 CAS/tail/full receiver/materialize; C freshPG20 only after actual readiness/resources; r9 committed record preserved no replay.",
+      "next": "D1 original import consumer and T45 Python producer narrow BAD_APPROVAL diagnosis, precise red before repair. No old install replay; preserve committed target.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30291,7 +30291,7 @@
         }
       },
       "r10Preparation": {
-        "state": "ACTUAL_MATERIALIZATION_PASS_NEW_PG20_START_AUTHORIZED",
+        "state": "TERMINAL_POSTCOMMIT_CHILD_APPROVAL_FAILED_STOPPED_NO_REPLAY",
         "integration": "12784ad9e6135e2b253887c4a55bbd74e564e91b",
         "buildRoot": "ac19b2719332ed6755affb849bfcd65bd70249d9",
         "tree": "42774b2242d252766cb5fb549dff19db17a8134f",
@@ -30323,7 +30323,26 @@
           "startsAt": 1793933754662,
           "expiresAt": 1793934954662,
           "actualProgramAndTargetPending": true
-        }
+        },
+        "startReceiptSHA256": "a385a50b53c8bcd7a6f13003a5ee45236466889f158f267c33622c8e2d57499d",
+        "programSHA256": "c754f7a9861bba128a33b64988e507c0c3c5d727bba359e901e674563bc2e00e",
+        "targetSHA256": "f24d4b37d35fb8e577637a8d7d2f4a0db4b9a5c5144e989ff8c8aa4b56dc79db",
+        "installAuthoritySHA256": "5b1d60d9e690d81a757f8f2dbd009ca8b039b9db5c9dd060d14a586c62470b3c",
+        "installReceiptSHA256": "547ae7b5843de593dba03abc14103bdcd0cbb644c30a476e7fbcd488dcb391dd",
+        "safeResultSHA256": "50a0c5d63c689ff4e4f5113bb0b11774bd21605a0c9156bb609bf74cc4d9a936",
+        "elapsedSeconds": 50.887869062,
+        "recordPublished": true,
+        "postInstallSnapshotPassed": true,
+        "rollbackChild": {
+          "stage": "rollback",
+          "validationStage": "BAD_APPROVAL",
+          "validationCode": "IMPORT_FAILED",
+          "exitCode": 1,
+          "state": "OUTCOME_UNKNOWN_NO_REPLAY"
+        },
+        "cleanupComplete": true,
+        "containerStopped": true,
+        "wholeChainPassed": false
       }
     },
     "productionReleaseCompatibilityContinuation": {

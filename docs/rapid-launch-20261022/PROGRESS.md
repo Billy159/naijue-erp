@@ -1510,3 +1510,7 @@ QB4ac1d121仅12784快照地址producer两叶窄验PASS，原guard/其余AST不�
 
 ### 2026-11-06T10:55:54+08:00 | r10真实材料化通过并签新PG窗口
 原tail/fullCAS与receiver实得READY，完整40cd65d9/83,684,667B，安全stage326cd845；旧24e底包/r9已提交record保留。原未提交plan剩余482s不足492.392s时，按C明确接续仅一次window02计划de784432，原900s且未超C13期限；不是延长门时窗或重跑作业。唯一materialize917c062c实际0/371.744s，当前资源4a76dad2核新ROOT0700、无CID/authority遗留、free11,279,904,768B/available14,330,445,824B。C原11键34b6ec8b绑定ac19/d518/608a/QB4ac新20min1793933754662..1793934954662，T45原start接续；实际program/target未得前不签C9，不称PG/业务通过。GitHub7e4d8d3baa08a7690d57df91dbc127bebe9325b3与rootac19b2719332ed6755affb849bfcd65bd70249d9已远端读回一致。
+
+
+### 2026-11-06T11:04+08:00 | r10安装和独立快照已过，导入回滚子步骤批准接缝失败
+原starta385a50b真实0/35.545s取得SID7704887143308144687/OID16393/CIDd58afbb2。C原9键5b1d60d9精准programc754/targetf24d/source d518/同20min，原install547ae7b5真实FAILED2/50.888s。安装schema已COMMITTED、record已RECORD_DURABLY_PUBLISHED，后置snapshot现真实成功（35表/独立RR/连接CLOSED），原裸host修复实效已获本轮证据。随后rollback-child报BAD_APPROVAL/IMPORT_FAILED/exit1/OUTCOME_UNKNOWN_NO_REPLAY，普通业务、synthetic25、后续读回及probe仍未通过；不能称schema回滚或整链通过。cleanup六true/errors[]/initializer及descendants回收/CID停止。安全汇总50a0c5d6和原receipt均核hash；原D1只核当前import批准consumer，T45独占Pythonproducer与必要停止日志安全字段，先定位具体不符再最小修复，不新控制平台/不绕guard/不重旧target或catalog。
