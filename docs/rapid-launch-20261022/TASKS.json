@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "THREE_NATIVE_NEGATIVES_PASS_NORMAL_COMMIT_REQUIRED_FAILED_CLEAN_STOPPED",
+      "critical": "NORMAL_COMMIT_BRANDED_DIAGNOSTIC_FIX_AND_STOPPED_TARGET_FINITE_EVIDENCE_PREPARATION",
       "independentPreparation": {
-        "D1": "OriginalD1 exact normalcommit return/consumer/fixture diagnosis; no r15 replay, no blind newbuild/PG.",
+        "D1": "Registered exact entry/test diagnostic fix and source-bound finite log allowlist. Original source repro preserved.",
         "QB": "Fiveleaf verdict adopted; no repeat.",
         "D2": "One af9078 build/7298members/tail PASS adopted; no repeat.",
-        "T45": "r15 cleanstopped/keys terminal; no newjob/PG/replay pending concrete source gap.",
+        "T45": "Bounded stopped-r15 log extraction prepared only; await allowlist and exact C binding before one actual readonly job.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31028,7 +31028,26 @@
         },
         "postCleanupResources": "NOT_REMEASURED",
         "ordinaryBusinessPassed": false,
-        "synthetic25PositivePassed": false
+        "synthetic25PositivePassed": false,
+        "commitDiagnosticFix": {
+          "registeredAt": "2026-11-06T15:40:36+08:00",
+          "state": "D1_TWO_LEAF_REGISTERED_SOURCE_REPRO_THEN_MINIMUM_BRANDED_DIAGNOSTIC_FIX",
+          "writer": "D1",
+          "files": [
+            {
+              "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+              "beforeSHA256": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff"
+            },
+            {
+              "path": "tests/fresh35-isolated-entry.test.mjs",
+              "beforeSHA256": "c39887f1dec1d8eba016b8d55db976e5a6df3d0f0c83713c9b604362b859f99c"
+            }
+          ],
+          "scope": "Attach original branded result and existing finite code/diagnostic slots. COMMITTED remains sole success; original guard message, 15 JSON keys and 3 stage enums remain. No raw error, SQL, secrets, Python or ACL changes.",
+          "actualR15CommitOutcome": "UNKNOWN_NOT_EXPORTED",
+          "avoidNewPGForDiagnosisOnly": true,
+          "parallelT45": "Prepare one bounded stopped-r15 private-log extractor; wait for precise source-bound allowlist before actual read. No PG start or replay."
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31437,12 +31456,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T15:30:21+08:00",
-      "phase": "THREE_NATIVE_NEGATIVES_PASS_NORMAL_COMMIT_REQUIRED_FAILED_CLEAN_STOPPED",
+      "at": "2026-11-06T15:40:36+08:00",
+      "phase": "NORMAL_COMMIT_BRANDED_DIAGNOSTIC_FIX_AND_STOPPED_TARGET_FINITE_EVIDENCE_PREPARATION",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "D1 original normalcommit required actualreturn seam",
-      "nextOwner": "C register exact minimal source delta; originalQB/D2/T45 affected scope only",
+      "currentOwner": "D1 exact entry/test; T45 finite evidence preparation only",
+      "nextOwner": "C bind one bounded actual read after source-bound allowlist; freeze meaningful fix before one QB/build",
       "latestActualReceiptSHA256": "7cb680c311d29111bd3168683796489f488880fc371d8e94459ef0ebbf2b29ce",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31452,7 +31471,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalD1 exact normalcommit return/consumer/fixture diagnosis; no r15 replay, no blind newbuild/PG.",
+      "next": "Preserve r15 UNKNOWN; do not replay old key/target. Reuse actual three negative PASS.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "14bf71eba77876df321dba0ce946385e4ba51381",
       "buildRoot": "af9078ea822921cf5d68ccdbe1fbcf32ce2ba491",

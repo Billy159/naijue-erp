@@ -1655,3 +1655,7 @@ C核原3stage收据和材料化887f9162退出0/364.219s，完整包bc9537、sour
 原install7cb680c3退出2/120.537s，schema+record提交发布。实际三负例已通过：错误批准HISTORICAL_SETTLEMENT_APPROVAL_HASH回滚；缺结算STANDARD_PUBLICATION_INCOMPLETE回滚；FINAL_PUBLISH原源冲突ROLLED_BACK，originalBatchAbsent/CLOSED均确认，postrollback快照等于postinstall。此范围有效证据可复用，不倒改r14。
 随后正常commit child退出1，有限codeFRESH35_ISOLATED_SYNTHETIC_IMPORT_COMMIT_REQUIRED、其他诊断null；真实返回未导出，提交结果UNKNOWN，不能称已提交或已回滚。synthetic25正向、ordinary/独立读回/probe仍未过。C核safe d31aab16和原raw。cleanup6true/errors[]/CID39ff910e停止，清理后资源未另测。
 原D1已接准确normalcommit return/entryconsumer/fixture只读定位，先报最小叶，原3负例及strictreceipt不重验；不重放r15或盲建新候选，不猜底层SQL，不输出秘密。无REAL/正式操作。
+
+## 2026-11-06T15:40:36+08:00 - R15 positive commit diagnostic seam and finite evidence
+
+R15 installed the native schema and published its record. Three actual negative cases and rollback snapshot checks passed; the subsequent positive commit child failed and its outcome remains UNKNOWN_NOT_EXPORTED. Original D1 is the sole writer of fresh35-isolated-entry-v1.mjs and its direct test, adding only original branded diagnostics while preserving COMMITTED-only acceptance. Original T45 has prepared one bounded stopped-target log extraction, pending source-bound finite allowlist and exact scope. No new PG, replay, production or REAL action is authorized by this diagnostic registration. Existing source/QA/build and negative-case evidence are reused.
