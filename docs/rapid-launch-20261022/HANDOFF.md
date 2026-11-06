@@ -2462,3 +2462,10 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07正式10fc准备只读33bb785c实际COMPLETED0/9.194秒；03:18:53旧正式APP/WEB/PG仍健康且原身份未变，普通账号两条元数据SELECT为RO/RR、00000、rollbackACK/closed。Nov6七项备份size/owner/mode匹配，未重复GB哈希；不等于该新备份独立恢复已验。新正式ROOT/PG/API均未用，REAL和admin只核准确metadata未解包/读秘密。当前free3141341184B，仅app+解包下界1245073406B，PG/WAL/index/journal/临时与回退余量尚不完整，不宣称容量足够。原D1只读核预算，原T45仅有界核两个旧STARTING实际状态及可重建旧应用材料候选，不清理/不PG/不生产写。用户拒删的本地3目录、全部真实资料/PG/备份/失败证据保护。
+
+
+2026-11-07 03:52 capacity continuation: D1 d887fc92 proves exact REAL SQLite2667474944B and app+package+index lower bound3912548350B; PG/WAL/temp/rollback peak UNKNOWN. Original stream lacks independent disk stop connection. T45 exact6 COMPLETED0/35.796s,49d4b37f: content/modes/occupancy/recovery verified,6 absent and protected originals unchanged; actual free delta1031606272B separate from allocated1031614464B, free4172288000B remains insufficient. Two old STARTING units inactive/PID0/cgroup empty, original operation outcomes remain UNKNOWN/no replay.
+
+C under direct user delegation until2026-11-07 noon decided exact42 from inventory b70cc895:22 rows.path deploy +20 duplicate reconstruction paths only, max900s; first verify content/modes/extra/special/occupancy/recovery, skip unique/in-use/unknown/incomplete. All data/PG/state/authority/metadata/private failures/full recovery archives/READY/REAL/backups/r26 and denied local3 retained. Pending actual result; predicted free11568001024B is not measured. T45 next prepares original ops child lifecycle independent disk stop, original QB delta only; no new platform/pool/schema or frozen app edits. Stop keeps original keys/data/index/graph; ACK unknown never auto replay.
+
+Corrected stale current TASKS fields referring to r25/WIP: r26 actual isolated ordinary/synthetic/independent observations PASS and QB8c63092e adopted; historical r25 preserved separately. Formal/REAL/browser/performance unverified. App fixed10fc5efd/e422d073 unchanged.
