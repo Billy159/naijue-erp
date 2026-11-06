@@ -1851,3 +1851,10 @@ OriginalT45 only precise retained-evidence readonly diagnosis now; no restart/ne
 Original boundedreadonly COMPLETED0/.067s, safe400effb7@12:20:57UTC, diagnosis46237eae. Exact stopped r20 mount/job boundedlogs contain no allowed exception/SQLSTATE/errno/guard; ordinary-result absent and private inputs removed by cleanup. Ordinary request outcomesUNKNOWN, no replay; normal synthetic COMMITTED remains separate. Parent REAL_PG_AND_MIDDLEWARE alone does not prove any particular child PG assertion reached. No restart/PG connection or source/permission write in diagnosis.
 
 Source confirms integration catch discards originalerror, evalcatch discards innerphase, parentdrops stdout/stderr and retains coarsephase. C assigned exact three-leaf diagnostic fix: D1 sole integrationtest ca76da57, T45 sole launcher5a01a45b and Python tests eb5ec619. D1 minimal closed safe descriptor first, T45 consumes in original eval/parent; no raw messages/stack/params/secrets/business rows, no assertions/ACL/guards relaxed, no new control layer. Combinedfixedsource then one scopedQB and oneD2build; no currentPG/server execution.
+
+
+## 2026-11-06 — exact diagnostic3leaf source frozen, scopedQA and one build parallel
+
+D1 author576b11bb delivers singleTSe8f77c34: brandedWeakMap/frozen9keyreader,29fixedphases and precise finite identifiers; pureoffline3PASS, existing102assertions/SQL/business body preserved except originalcatch/cleanup errorretention. T45author3720aee6 delivers launcher3eef7c05/Pythontestsb7eb4a85: fixed4keyfailurewire, independent8bootstrapphases, boundedclosedparentdecode; original4096/strictsuccess/noReplay/cleanup retained. Author18affectedchecks and2actualNodeevalPASS adopted, noPG/build/runtimeclaim.
+
+C source7698d68d578bf42727b67da85848db154b560dda; exactbuildroot148b5716864681b77498ff58ea82bc18c853199b; tree64f4365f1880398f9d5bb8800eedb2941477e9e2. OriginalQB only3leaf increment, originalD2 one completebuild/pack/member/tail using actualr20full791d74f7/83698036/identity393713. No newserver execution. r20cause and ordinaryrequest outcomesremainUNKNOWN; normalCOMMITTED retained, no replay. NoREAL/production.
