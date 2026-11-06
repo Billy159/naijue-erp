@@ -1,0 +1,287 @@
+{
+  "status": "PASS_SCOPED_R26_REAL_PG_SYNTHETIC_ORDINARY_AND_CLEANUP_NOT_FORMAL_OR_BROWSER_ACCEPTANCE",
+  "recordedAtUTC": "2026-11-06T19:11:23.693973+00:00",
+  "job": {
+    "jobId": "t45-f35-10fc5e-install-20261107-01",
+    "taskId": "T45",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 170.03518376220018,
+    "atUTC": "2026-11-06T19:05:04.137768+00:00",
+    "finishedAtUTC": "2026-11-06T19:07:54.227345+00:00"
+  },
+  "binding": {
+    "candidateRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+    "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
+    "tree": "2198007810b63a2741981e9f546c3997c6f15c54",
+    "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "programSHA256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+    "targetSHA256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365",
+    "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+    "actualPhysical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-06 19:00:47.538028+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7705135436364169263"
+    },
+    "startProgramCatalogSHA256": "e31d1add868b8adc11a611cda54af7b7b9f5acd1fc329316e0ffe43a58eea10b",
+    "installationResultCatalogSHA256": "b3ce9c66551f438d432ab49e3cf9a931ab55ec3a9a7e2101815abdee39d3d996",
+    "bootstrapNetworkObservationSHA256": "2674858944891ddc5a81c740db089c410196e72c6458dd7fe8655649ada024ca",
+    "operationsPlanSHA256": "880f96e969bcfcc0bf146986d6ba5cac10d19d512fbf5ac2173cc8e10038b915",
+    "frozen7PointerSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
+    "frozen7Unchanged": true
+  },
+  "externalAuthorities": {
+    "C11.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r26-ops-preparation-01/c13-execution-01/C11.json",
+      "bytes": 1221,
+      "sha256": "1c0a55b33087982a27c49921c7ec39f67a6ebcf934e8175bbaf1918256d7916b"
+    },
+    "C9.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r26-ops-preparation-01/c13-execution-01/C9.json",
+      "bytes": 842,
+      "sha256": "9a51e13c88326c3d89e4d9644799881406f94e8cd794c50367468b23d2ce6d34"
+    }
+  },
+  "overallReceiptStatus": "PASS_SCOPED_SYNTHETIC_AND_CLEANUP",
+  "sourceResultFlags": {
+    "state": "ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED",
+    "recordPublished": true,
+    "hostVerified": true,
+    "syntheticImportVerified": true,
+    "independentSnapshotsVerified": true,
+    "ordinaryBusinessVerified": true,
+    "businessVerified": false,
+    "productionVerified": false,
+    "hostEnabled": false
+  },
+  "installation": {
+    "state": "RECORD_DURABLY_PUBLISHED",
+    "installState": "COMMITTED_UNPUBLISHED",
+    "recordPublished": true,
+    "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "programSha256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+    "targetSha256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365",
+    "catalogSha256": "b3ce9c66551f438d432ab49e3cf9a931ab55ec3a9a7e2101815abdee39d3d996",
+    "businessVerified": false,
+    "hostEnabled": false
+  },
+  "syntheticHost": {
+    "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+    "importState": "COMMITTED",
+    "replayState": "ALREADY_COMMITTED",
+    "readbackState": "VERIFIED",
+    "ordinaryUid": 61035,
+    "retainedHeaders": 25,
+    "retainedSettlements": 27,
+    "settlementRetentionVerified": true,
+    "connectionCleanup": "CLOSED",
+    "syntheticImportVerified": true,
+    "businessVerified": false
+  },
+  "rollback": {
+    "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+    "rollbackVerified": true,
+    "originalBatchAbsent": true,
+    "connectionCleanup": "CLOSED",
+    "businessVerified": false
+  },
+  "independentSnapshots": {
+    "installEqualsRollback": true,
+    "commitDiffersFromInstall": true,
+    "receipts": {
+      "install": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null,
+        "context": {
+          "actor": "fresh35_admin_20261105_r1",
+          "sessionActor": "fresh35_admin_20261105_r1",
+          "superuser": true,
+          "bypassRls": true,
+          "isolation": "repeatable read",
+          "readOnly": "on",
+          "kind": "context",
+          "databaseOid": "16393",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705135436364169263",
+          "postmasterStart": "2026-11-06 19:00:47.538028+00"
+        }
+      },
+      "rollback": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null,
+        "context": {
+          "actor": "fresh35_admin_20261105_r1",
+          "sessionActor": "fresh35_admin_20261105_r1",
+          "superuser": true,
+          "bypassRls": true,
+          "isolation": "repeatable read",
+          "readOnly": "on",
+          "kind": "context",
+          "databaseOid": "16393",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705135436364169263",
+          "postmasterStart": "2026-11-06 19:00:47.538028+00"
+        }
+      },
+      "commit": {
+        "connectionCleanup": "CLOSED",
+        "sqlstate": null,
+        "context": {
+          "actor": "fresh35_admin_20261105_r1",
+          "sessionActor": "fresh35_admin_20261105_r1",
+          "superuser": true,
+          "bypassRls": true,
+          "isolation": "repeatable read",
+          "readOnly": "on",
+          "kind": "context",
+          "databaseOid": "16393",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705135436364169263",
+          "postmasterStart": "2026-11-06 19:00:47.538028+00"
+        }
+      }
+    }
+  },
+  "ordinary": {
+    "browserVerified": false,
+    "capacityProfileSha256": "07ae1e1f68d31c8ab47e501de67df82bec6f7ad9bb7e1968430358a6934485e1",
+    "capacityReviewSha256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
+    "connectionCleanup": "CLOSED",
+    "networkVerified": false,
+    "productionVerified": false,
+    "programSha256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+    "sourceCommit": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+    "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "state": "FRESH35_ORDINARY_RUNNER_COMPLETED",
+    "syntheticOnly": true,
+    "targetSha256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365"
+  },
+  "ordinaryChildReaped": true,
+  "ordinaryProof": {
+    "state": "PASS_ACTUAL_ORDINARY_PROOF_EVIDENCE",
+    "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+    "metadataTouchCount": 1,
+    "mtimeDeltaNs": 1,
+    "childReaped": true,
+    "sqlExecuted": false,
+    "errorCode": null,
+    "nativeSamePoolRevocation": "NOT_TESTED",
+    "final": {
+      "state": "PASS_ACTUAL_ORDINARY_READ_WATCH_EPOCH_AND_CATALOG_CHANGE",
+      "currentCode": "FRESH35_COMBINED_BOOTSTRAP_NETWORK_FILE_CHANGED",
+      "event": "change",
+      "watcherClosed": true,
+      "nativeSamePoolRevocation": "NOT_TESTED",
+      "sqlExecuted": false
+    }
+  },
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "credentialsRemoved": true,
+    "errors": [],
+    "initialization": {
+      "descendantsReaped": true,
+      "errors": [],
+      "initialized": true,
+      "initializerReaped": true,
+      "stopReason": "INITIALIZER_EXITED"
+    },
+    "loginsRevoked": true,
+    "noActiveTcpRows": true,
+    "ownedPidAbsent": true,
+    "portAbsent": false,
+    "portObservation": {
+      "complete": true,
+      "finishedAtUTC": "2026-11-06T19:07:44.355706+00:00",
+      "format": "FRESH35_CLEANUP_PORT_OBSERVATION_V1",
+      "matchingRows": 5,
+      "matchingStates": {
+        "tcp": {
+          "01": 0,
+          "02": 0,
+          "03": 0,
+          "04": 0,
+          "05": 0,
+          "06": 5,
+          "07": 0,
+          "08": 0,
+          "09": 0,
+          "0A": 0,
+          "0B": 0,
+          "0C": 0,
+          "UNKNOWN": 0
+        },
+        "tcp6": {
+          "01": 0,
+          "02": 0,
+          "03": 0,
+          "04": 0,
+          "05": 0,
+          "06": 0,
+          "07": 0,
+          "08": 0,
+          "09": 0,
+          "0A": 0,
+          "0B": 0,
+          "0C": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026533833
+      },
+      "noActiveTcpRows": true,
+      "portAbsent": false,
+      "readError": null,
+      "reading": null,
+      "stage": "AFTER_OWNED_PG_WAIT_AND_CREDENTIAL_CLEANUP_BEFORE_CONTAINER_STOP",
+      "startedAtUTC": "2026-11-06T19:07:44.353379+00:00"
+    },
+    "tcpCleanupRule": "FRESH35_NO_ACTIVE_TCP_ROWS_V1"
+  },
+  "containerStopped": true,
+  "launcherExitCode": 0,
+  "evidence": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-10fc5e-install-20261107-01/transport/release-receipts/t45-f35-10fc5e-install-20261107-01/job.json",
+      "bytes": 514,
+      "sha256": "0fbc7541801c96020668e55cd5b4e6e320f6f6a99875b80ed77b4b6d8faa1cb4"
+    },
+    "fresh35-deliver-install-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-10fc5e-install-20261107-01/transport/release-receipts/t45-f35-10fc5e-install-20261107-01/fresh35-deliver-install-result.json",
+      "bytes": 59376,
+      "sha256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094"
+    }
+  },
+  "retainedPredecessor": {
+    "r25CleanupPass": false,
+    "r25PortAbsence": "NOT_DIRECTLY_VERIFIED",
+    "oldResultsNotRewritten": true,
+    "oldKeysNotReplayed": true
+  },
+  "boundaries": {
+    "syntheticOnly": true,
+    "formalOrRealWrites": false,
+    "formalReleased": false,
+    "noSourceOrContractChanges": true,
+    "noNewBuild": true,
+    "noExtraSQLOrPortProbe": true,
+    "noTestsOrPassedCasesRerunOutsideOriginalNewCandidateRun": true,
+    "credentialsOrBusinessBodiesExportedInThisSummary": false,
+    "submittedUnknownJobsPending": false,
+    "note": "All keys in this r26 sequence have collected terminal receipts. This is not a global queue audit; original named once-only in-harness recovery is ALREADY_COMMITTED and is not a transport replay."
+  },
+  "notVerified": [
+    "browser and user-facing pages",
+    "external network business path",
+    "formal/REAL import or release and production business acceptance",
+    "nativeSamePoolRevocation",
+    "concurrent capacity or performance acceptance",
+    "immediate same-port rebinding: strict portAbsent remains false"
+  ],
+  "nextStep": "Original C uses this exact scoped result for next bounded decision. No formal release, old replay, source changes or new server work inferred from this result.",
+  "actualModelEffortFast": "UNVERIFIED"
+}

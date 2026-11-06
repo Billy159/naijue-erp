@@ -2453,3 +2453,6 @@ T45接唯一local ops实际绑定，把真实最终pins与恢复的private65ed0d
 
 
 2026-11-07 03:02 r26实际新目标start COMPLETED0/37.449秒，safe9a6eac11/raw3f6bc660，CID2cf947a0、SID7705135436364169263/OID16393/PG170011/出生03:00:47.538028+08。C签C9 9a51e13c准确program3da708a5/target82a73019/sourceaf75，仍截止1793992756029，不延长。原T45立即按唯一新install键做原安装、合成及普通业务链并清理；实际结果待回，未REAL/正式，旧键不重放。
+
+
+2026-11-07 03:12 r26真实隔离验证通过：唯一install COMPLETED0/170.035秒，rawf92dee2a/safef8e7dd37。安装耐久记录、合成25头27结算提交/防重/新连接核回、失败回滚、3个独立观察快照以及普通账号原runner实际通过；独立快照为已批准admin观察角色，不冒称runtime。原SQLSTATE仍null不伪造00000。原proof通过但nativeSamePoolRevocation未测。候选已停止，所有owned子进程回收/凭据移除/登录撤销/PGshutdown通过；新noActiveTcpRows=true/cleanupComplete=true，严格portAbsent=false保留（5条纯TIME_WAIT），旧失败不追改。尚无真实整包导入、浏览器、正式网络/性能或部署通过。原T45已接下一正式制品绑定与必要只读前置，原QB仅核实际证据范围，不重跑测试，不等用户。

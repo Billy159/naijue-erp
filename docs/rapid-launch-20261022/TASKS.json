@@ -33302,22 +33302,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T19:04:52.727626+00:00",
-      "phase": "R26_ACTUAL_TARGET_STARTED_C9_INSTALL_AND_ORDINARY_AUTHORIZED",
+      "at": "2026-11-06T19:13:03.462864+00:00",
+      "phase": "R26_ACTUAL_ISOLATED_PG_AND_ORDINARY_PASS_FORMAL_PREPARATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 original sole server executor",
+      "currentOwner": "T45 original production binding/read-only prerequisites; QB actual evidence limited review",
       "nextOwner": "Original QB ops increment then C/T45 actual isolation",
-      "latestActualReceiptSHA256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717",
+      "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
-      "ordinaryBusinessPassed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
+      "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 unique new install actual result and cleanup; original key unknown recovery only",
+      "next": "Fixed production carrier+REAL r3 bindings; fresh current target/network/resources/backup metadata; no production writes before accurate C decisions",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33400,7 +33400,9 @@
         "scope": "Exact new isolated synthetic target only; no REAL/formal"
       },
       "startReceiptSHA256": "9a6eac1124a2e94090e5c5603b6e2c69cf51ea437891e63667c1cf5f7b60b5f9",
-      "C9SHA256": "9a51e13c88326c3d89e4d9644799881406f94e8cd794c50367468b23d2ce6d34"
+      "C9SHA256": "9a51e13c88326c3d89e4d9644799881406f94e8cd794c50367468b23d2ce6d34",
+      "syntheticSnapshotsPassed": true,
+      "latestActualSummarySHA256": "f8e7dd37e642052b0b22ad2f8b0811f9ee757540fbe20b43bab24d30b65a86c7"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -33463,7 +33465,7 @@
       "finalSource": "e422d07390c5a58c44b54452983638a2de5655b7",
       "finalRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
       "finalTree": "2198007810b63a2741981e9f546c3997c6f15c54",
-      "newRuntimeVerified": false,
+      "newRuntimeVerified": true,
       "finalBuild": {
         "status": "FIXED_10FC5E_BUILD_PACK_ORDINARY_TAIL_PASS_NOT_PG_OR_RELEASE",
         "resultSHA256": "f803657bb71f9e7eb55d1d5d6f7d71d02bd004ff9bbd0d04a2d3d36b65fa0436",
@@ -33497,7 +33499,112 @@
         "frozenSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
         "newFindings": 0,
         "actualRuntimeVerified": false
-      }
+      },
+      "ordinaryScopeOnly": true
+    },
+    "latestActualRuntime": {
+      "at": "2026-11-06T19:07:54.227345+00:00",
+      "status": "PASS_SCOPED_R26_REAL_PG_SYNTHETIC_ORDINARY_AND_CLEANUP_NOT_FORMAL_OR_BROWSER_ACCEPTANCE",
+      "job": {
+        "jobId": "t45-f35-10fc5e-install-20261107-01",
+        "taskId": "T45",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 170.03518376220018,
+        "atUTC": "2026-11-06T19:05:04.137768+00:00",
+        "finishedAtUTC": "2026-11-06T19:07:54.227345+00:00"
+      },
+      "binding": {
+        "candidateRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+        "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
+        "tree": "2198007810b63a2741981e9f546c3997c6f15c54",
+        "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+        "programSHA256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+        "targetSHA256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365",
+        "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+        "actualPhysical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 19:00:47.538028+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705135436364169263"
+        },
+        "startProgramCatalogSHA256": "e31d1add868b8adc11a611cda54af7b7b9f5acd1fc329316e0ffe43a58eea10b",
+        "installationResultCatalogSHA256": "b3ce9c66551f438d432ab49e3cf9a931ab55ec3a9a7e2101815abdee39d3d996",
+        "bootstrapNetworkObservationSHA256": "2674858944891ddc5a81c740db089c410196e72c6458dd7fe8655649ada024ca",
+        "operationsPlanSHA256": "880f96e969bcfcc0bf146986d6ba5cac10d19d512fbf5ac2173cc8e10038b915",
+        "frozen7PointerSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
+        "frozen7Unchanged": true
+      },
+      "receiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
+      "summarySHA256": "f8e7dd37e642052b0b22ad2f8b0811f9ee757540fbe20b43bab24d30b65a86c7",
+      "ordinaryPassed": true,
+      "syntheticPassed": true,
+      "cleanupComplete": true,
+      "noActiveTcpRows": true,
+      "strictPortAbsent": false,
+      "containerStopped": true,
+      "realImported": false,
+      "formalReleased": false,
+      "notVerified": [
+        "browser and user-facing pages",
+        "external network business path",
+        "formal/REAL import or release and production business acceptance",
+        "nativeSamePoolRevocation",
+        "concurrent capacity or performance acceptance",
+        "immediate same-port rebinding: strict portAbsent remains false"
+      ]
+    },
+    "currentCandidateActualRuntime": {
+      "at": "2026-11-06T19:07:54.227345+00:00",
+      "status": "PASS_SCOPED_R26_REAL_PG_SYNTHETIC_ORDINARY_AND_CLEANUP_NOT_FORMAL_OR_BROWSER_ACCEPTANCE",
+      "job": {
+        "jobId": "t45-f35-10fc5e-install-20261107-01",
+        "taskId": "T45",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 170.03518376220018,
+        "atUTC": "2026-11-06T19:05:04.137768+00:00",
+        "finishedAtUTC": "2026-11-06T19:07:54.227345+00:00"
+      },
+      "binding": {
+        "candidateRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+        "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
+        "tree": "2198007810b63a2741981e9f546c3997c6f15c54",
+        "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+        "programSHA256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+        "targetSHA256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365",
+        "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+        "actualPhysical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 19:00:47.538028+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705135436364169263"
+        },
+        "startProgramCatalogSHA256": "e31d1add868b8adc11a611cda54af7b7b9f5acd1fc329316e0ffe43a58eea10b",
+        "installationResultCatalogSHA256": "b3ce9c66551f438d432ab49e3cf9a931ab55ec3a9a7e2101815abdee39d3d996",
+        "bootstrapNetworkObservationSHA256": "2674858944891ddc5a81c740db089c410196e72c6458dd7fe8655649ada024ca",
+        "operationsPlanSHA256": "880f96e969bcfcc0bf146986d6ba5cac10d19d512fbf5ac2173cc8e10038b915",
+        "frozen7PointerSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
+        "frozen7Unchanged": true
+      },
+      "receiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
+      "summarySHA256": "f8e7dd37e642052b0b22ad2f8b0811f9ee757540fbe20b43bab24d30b65a86c7",
+      "ordinaryPassed": true,
+      "syntheticPassed": true,
+      "cleanupComplete": true,
+      "noActiveTcpRows": true,
+      "strictPortAbsent": false,
+      "containerStopped": true,
+      "realImported": false,
+      "formalReleased": false,
+      "notVerified": [
+        "browser and user-facing pages",
+        "external network business path",
+        "formal/REAL import or release and production business acceptance",
+        "nativeSamePoolRevocation",
+        "concurrent capacity or performance acceptance",
+        "immediate same-port rebinding: strict portAbsent remains false"
+      ]
     }
   }
 }
