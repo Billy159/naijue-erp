@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T10:28:13+08:00",
+  "updatedAt": "2026-11-06T22:52:49.683226+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T13:47:46+08:00",
+    "at": "2026-11-06T22:52:49.683226+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28509,16 +28509,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R23_WATCH_QB_PASS_D2_ONE_FIXED_BUILD_RUNNING",
-      "independentPreparation": {
-        "D1": "Two exact leaves frozen; author3/3 scopedPASS10be0f30, no Linux/PG claim.",
-        "QB": "Exact r23 twoleaf PASS378854ec, 2independent edge checks; author3 reused.",
-        "D2": "One fixed1e6ba071 build in progress, verify actual sourceSet/members and prepare prefix+tail from r22 actual full.",
-        "T45": "Local r23 names/base ready17781c49, build pins remain unbound; no newserver/PG.",
-        "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
-        "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
-      },
-      "noFiller": true
+      "D1": "Source frozen4adb9fa2; next actual affected failure only",
+      "QB": "r23 scoped PASS adopted378854ec; no duplicate review",
+      "D2": "One fixed1e6ba071 build complete59032d7c; no duplicate build",
+      "T45": "r23 exact stage/assembly/materialize in progress; fresh C11/C9 afterwards",
+      "D3": "REAL independent readback ready; waits exact target/install/import",
+      "QF": "Core browser prerequisites ready; waits actual normal host/login"
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -32473,12 +32469,12 @@
         }
       },
       "r23Preparation": {
-        "state": "R23_WATCH_QB_PASS_D2_ONE_FIXED_BUILD_RUNNING",
+        "state": "R23_QB_BUILD_PASS_READONLY_PREFLIGHT_COMPLETE_C13_STAGE_AND_MATERIALIZE_IN_PROGRESS",
         "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
         "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
         "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
         "expectedSourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
-        "sourceSetActualBuildNotYetVerified": true,
+        "sourceSetActualBuildNotYetVerified": false,
         "T45LocalPreparationSHA256": "17781c4904b5b00ff77151b4f303fa7394c65a68ea5e9c6429f0d8448be9cbf9",
         "oldActualFullBase": {
           "sha256": "464d6ca3c0f2d3f86f34dc27267fe4203c66d04e50c0767ce33ecac34510ac21",
@@ -32492,7 +32488,50 @@
           ]
         },
         "newServerOrPGExecuted": false,
-        "oldKeysMayReplay": false
+        "oldKeysMayReplay": false,
+        "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+        "buildResultSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
+        "archiveSHA256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+        "archiveBytes": 83703105,
+        "manifestSHA256": "39dc1a09ec0442e9d76425a94352e2e8783356f3a43d66d4a550035de90c8bad",
+        "descriptorSHA256": "61c557146b2adab5e21a4f6d5483aef31d268c07e2bf4d5d44cbfc119c08c55f",
+        "runtimeSHA256": "c63a1265bbb9c462607b665acea1f3db3abe5c3797a78e6b6264f188f085e470",
+        "T45BoundPreparationSHA256": "1747f646d903f0c267bf4e70cf7870e17e929a99fc3df1a554103e347c7ace2e",
+        "readonlyPreflightSHA256": "4612e24e237267fa697489cb2892a285318880868c465f1e0aee4a2b893457a7",
+        "readonlyPreflightPassed": true,
+        "stageAuthority": {
+          "tail": {
+            "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+            "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+            "taskId": "T45",
+            "grantId": "5cc58239751e4e2a",
+            "artifactKey": "f35-1e6ba0-tail-20261106-01",
+            "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+            "archiveSha256": "d0a64a41b5f8f175fb54c7e0e98432bb44e0f1edb62a9184787cf44e8f0cb481",
+            "archiveBytes": 2476180,
+            "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-1e6ba0-tail-20261106-01",
+            "startsAt": 1793976626715,
+            "expiresAt": 1793978426715,
+            "decisionReference": "C consumes human standing same-kind bounded isolation approval. r23 root1e6ba071 source4adb9fa2; QB378854ec/D259032d7c/preflight4612e24e. Exact source/tools taild0a64a41 and full46d2426c only, original40s receiver/900s material. Keep r22 bytes and committed/unknown keys; no replay, PG, REAL or production. Fresh C11/C9 remain separate. No expired noon delegation or client-created approval.",
+            "kind": "ORDINARY_SOURCE_AND_TOOLS"
+          },
+          "full": {
+            "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+            "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+            "taskId": "T45",
+            "grantId": "5cc58239751e4e2a",
+            "artifactKey": "f35-1e6ba0-ordinary-local-20261106-01",
+            "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+            "archiveSha256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+            "archiveBytes": 83703105,
+            "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-1e6ba0-ordinary-local-20261106-01",
+            "startsAt": 1793976626715,
+            "expiresAt": 1793978426715,
+            "decisionReference": "C consumes human standing same-kind bounded isolation approval. r23 root1e6ba071 source4adb9fa2; QB378854ec/D259032d7c/preflight4612e24e. Exact source/tools taild0a64a41 and full46d2426c only, original40s receiver/900s material. Keep r22 bytes and committed/unknown keys; no replay, PG, REAL or production. Fresh C11/C9 remain separate. No expired noon delegation or client-created approval.",
+            "kind": "ORDINARY_SOURCE_AND_TOOLS"
+          },
+          "scope": "Exact ordinary source/tools; fresh30min consumes standing human same-kind isolation authorization. Not PG, REAL or production."
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32901,12 +32940,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:39:31.473132+08:00",
-      "phase": "R23_WATCH_QB_PASS_D2_ONE_FIXED_BUILD_RUNNING",
+      "at": "2026-11-06T22:52:49.683226+08:00",
+      "phase": "R23_QB_BUILD_PASS_READONLY_PREFLIGHT_COMPLETE_C13_STAGE_AND_MATERIALIZE_IN_PROGRESS",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original D2 one fixed1e6ba071 full build",
-      "nextOwner": "Original T45 exact newr23 artifact binding and bounded readonly preflight",
+      "currentOwner": "Original T45 exact r23 stage/assembly/materialization",
+      "nextOwner": "C bind fresh C11 after actual material/resource; T45 actual target then C9",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -32916,13 +32955,13 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "D1 complete exact model RED; if established implement registered two-leaf synthetic fixed record parent watch repair, preserving record watch/revoke and all guards. No chmod/ACL/prod path change.",
+      "next": "Transfer exact tail, assemble original full, materialize r23 and read collector0755/resources. No PG before C11; retain all old committed/unknown keys.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "tree": "7b2edb79378e1576ff6333d247fbf1a314975a50",
       "sourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
-      "buildPassed": false,
+      "buildPassed": true,
       "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
@@ -32947,7 +32986,7 @@
       "githubSourceAndRootReadback": true,
       "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
       "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
-      "D2ReceiptSHA256": null,
+      "D2ReceiptSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
       "currentCandidateActualRuntime": {
         "state": "NOT_EXECUTED",
         "ordinaryBusinessPassed": false,
@@ -32955,7 +32994,7 @@
         "productionDeployed": false
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "b8d06683ef08a8566a412e06d5a8c0e3ef52cbff"
+      "githubReadbackCommit": "6899bbfadabd696952e0866038614298bd33fca8"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",

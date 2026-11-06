@@ -2292,3 +2292,10 @@ sourceSet仅host一pin/214变为b0f8cb29；当前为源码和本机有限模型�
 原QB `378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817`已核并采用。作者3项RED/GREEN复用，独立补2项：暂停回调时同内容原子替换仍因inode代次拒绝并关全部watch；最后bootstrap watch构造EACCES后先前watch清零、未取连接、再准入拒绝。无新源码发现，不重跑作者三项/全suite/PG。真实Linux新候选ordinary仍未验。
 
 原D2固定root1e6ba071一次build在途，actualsourceSet待构建，不把expectedb0f8当实测。原T45必要本地r23准备17781c49已核，旧actualfull464d/83702682/393729为后续基底，新制品及窗口保持UNBOUND。原r22实际失败与normalcommit保留，不重放。
+
+
+## 2026-11-06 — r23统一构建及只读前置通过，原T45接精确传输物化
+
+固定source4adb9fa2/root1e6ba071的原D2完整build/pack退出0，回执59032d7c，actualsourceSetb0f8cb29、7298成员完整性/模式采用有效证明，collector0755保留。full46d2426c/83703105字节，manifest39dc1a09、descriptor61c55714、runtimec63a1265，原base464d+prefix81226925+tail2476180/d0a64a41已独立流式核准。未重复构建或技术验收。
+
+原T45只读前置4612e24e退出0，r22实际stopped/6cleanup及COMMITTED25/27保留，unknown原键不重放；新r23ROOT/CID/artifact缺席、旧base identity393729和原image精确，当前资源4CPU/14.365GB内存/5.175GB磁盘。C核准备1747f646后消耗现有长期同类隔离授权，签原13键新30分钟C13：tail540716a8/fullabb05e93，starts1793976626715/expires1793978426715，ref391字符，未引用已过的今天12:00临时授权。T45沿原40秒receiver及900秒物化执行；PG要等freshresource后C11及actualprogram C9，不由客户端自批。不动REAL/prod；新候选业务仍未验。
