@@ -1621,3 +1621,8 @@ C核材料化86ac8939退出0/372.094s及一次资源70d6d14d；准确full2de0/so
 
 ### 2026-11-06T14:12:46+08:00 | r14实际新目标启动，原C9绑定同窗
 实际start7b151f63退出0/35.894s，CID13208054/SID7704936919147335727/OID16393/PG170011/birth06:10:26.287612UTC。C核原收据及safe0c876d53，原9键8f6829c8绑定actualprogram499ffc08/target2a2ff4da/sourcebd781/QBdd4945，沿同20分钟deadline1793946519803不延。T45接一次安装、负向拒绝与回滚、synthetic25、普通账号业务/新连接读回、probe和本候选清理；失败按原键读结果，不盲重放。实际启动尚非安装/业务通过，无REAL或正式操作。
+
+
+### 2026-11-06T14:17:50+08:00 | r14真实首错：MISSING_SETTLEMENT STEP23514，已清理停止
+实际install eaab1fb3退出2/61.262s，schema和安装记录提交发布、adminsnapshot存在；rollback-child现在返回MISSING_SETTLEMENT/STEP/23514/IMPORT_FAILED/internalnull，不再是r13全null。具体触发约束尚未知，整组负例回滚、synthetic25、普通业务及独立读回仍未通过，不能把约束拒绝自动当PASS。C核原收据及safe8c4f9c48。cleanup6true/errors[]/initializer+descendantsreaped/CID13208054停止；清理后资源未另测，不补造证据。
+原D1已接准确fixture/STEP SQL/errorconsumer定向定位，先报最小叶及是否新业务合同；不重验已过entry/5叶，不改断言制造通过，不重启r14或盲建r15，不新增取证作业。无REAL/正式动作，原实际提交与未知边界保留。
