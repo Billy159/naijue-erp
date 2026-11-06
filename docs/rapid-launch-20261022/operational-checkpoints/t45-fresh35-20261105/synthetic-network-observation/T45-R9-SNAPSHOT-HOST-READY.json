@@ -1,0 +1,47 @@
+{
+  "status": "SOURCE_ONLY_SNAPSHOT_ADDRESS_PRODUCER_FIX_READY_FOR_C_AND_QB",
+  "recordedAtUTC": "2026-11-06T02:23:46.774830+00:00",
+  "sourceGitHeadAtRead": "806ede7efec28382eba9a3650e726bc7eaa5c764",
+  "allowedWriter": "Original T45 exact2leaves by C explicit current human delegation",
+  "changes": "Only snapshot_sql address producer inet_server_addr()::text to host(inet_server_addr()); validator/roles/RR/35tables/sequences/namespace/identity comparisons untouched",
+  "files": [
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "relativePath": "candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "sha256": "dc916c6b4019c59a5dfee71fb8d4a2911fb77ac3ba9fd552c7f0c1b4f5dc6706",
+      "bytes": 96070
+    },
+    {
+      "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "relativePath": "candidate0448/tests/test_fresh35_isolated_launcher.py",
+      "sha256": "bbbbe0b15c0925f7e3d5841df8390f7acb621e883ab6bd275fc95675c28ad1fe",
+      "bytes": 75681
+    }
+  ],
+  "proof": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r9-snapshot-host-source-fix-01/UPSTREAM-PROOF.json",
+  "checks": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r9-snapshot-host-source-fix-01/CHECKS.json",
+  "patch": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-r9-snapshot-host-source-fix-01/changes.patch",
+    "sha256": "d981f7a3e1ce627b7c0840867f54415c859d27260cb14019626ce2988a654824"
+  },
+  "sourceSetTransition": {
+    "method": "Original binding fields/order and JSON.stringify; old digest reproduced first",
+    "previousSourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+    "nextSourceSetSha256": "d518aeff0ac48c57305bd742516cda58d54e0de4364e460fd32a2c4026e90ad1",
+    "changedCurrentPins": 1,
+    "changedPath": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+    "previousLeafSha256": "8ada342e9b511d9b44dcb641ba81085ae689ff1505cf83c1b51fe9430fa5da1f",
+    "nextLeafSha256": "dc916c6b4019c59a5dfee71fb8d4a2911fb77ac3ba9fd552c7f0c1b4f5dc6706",
+    "other213PinsAndCaptured180Reused": true,
+    "authoritativeNewD2ClosureNotBuilt": true
+  },
+  "actualR9State": "Schema committed, record durably published, postinstall snapshot failed, target stopped. No replay or rollback claim.",
+  "actualR9SnapshotFirstFieldDifferenceObserved": false,
+  "newLivePGPassed": false,
+  "serverCalls": 0,
+  "PGConnections": 0,
+  "environmentChanges": 0,
+  "credentialsOrPrivateAdminInputsIncluded": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

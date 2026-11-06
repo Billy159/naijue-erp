@@ -508,7 +508,7 @@ SELECT json_build_object('kind','context','actor',current_user,'sessionActor',se
  'database',current_database(),'databaseOid',(SELECT oid::text FROM pg_database WHERE datname=current_database()),
  'systemIdentifier',(SELECT system_identifier::text FROM pg_control_system()),
  'postmasterStart',pg_postmaster_start_time()::text,'serverVersionNum',current_setting('server_version_num'),
- 'address',inet_server_addr()::text,'port',inet_server_port(),'dataDirectory',current_setting('data_directory'),
+ 'address',host(inet_server_addr()),'port',inet_server_port(),'dataDirectory',current_setting('data_directory'),
  'readOnly',current_setting('transaction_read_only'),'isolation',current_setting('transaction_isolation'),
  'superuser',(SELECT rolsuper FROM pg_roles WHERE rolname=current_user),
  'bypassRls',(SELECT rolbypassrls FROM pg_roles WHERE rolname=current_user),
