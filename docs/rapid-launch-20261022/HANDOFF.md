@@ -2380,3 +2380,10 @@ C依据原用户同类隔离免重复审批授权，独立签发新30分钟C13�
 唯一install t45-f35-931564-install-20261106-01 FAILED/2/152.799秒，安全回执81b79340/raw315c169f。本版安装记录耐久发布，合成25头27收退款COMMITTED/ALREADY_COMMITTED/新连接VERIFIED，负例回滚及独立快照连接关闭通过。普通账号链卡在REAL_CAPACITY_PREFLIGHT（原await capacity.preflight），Error且SQLSTATE/errno/guardCode仍null，具体根因未知；不能由此声称SQL/权限/性能故障，也不反推r23。
 
 新容器停止，普通子进程、initializer及descendants回收，四项cleanup true；portAbsent=false/cleanupComplete=false原样保留。没有新停止后探测、REAL/正式操作或旧键重放。原D1只读定位精确preflight调用链并用有限现有例子核原因，原T45只读定位既有cleanup测量时序/namespace；先不给新build/窗口/PG或源码writer，不再机械重跑。GitHub5adf73d1已读远端确认，WIP按阶段保存，未验不标PASS。
+
+
+## 2026-11-07T00:31:35.567998+08:00 — 原owner收窄r25最小修复，不扩大数据库权限
+
+D1有限模型证实当前NOINHERIT LOGIN下schemaUSAGE缺失会拒绝regclass定位；进一步核PG17数据库容量函数需要CONNECT，而接口角色未获CONNECT，最初5例未覆盖这一限制，原有限证据保留并明确局限。C激活仅3TS叶：真实Fresh35 cap+原ownedPool绑定，LOGIN先读database_bytes，原接口角色只读relation/index/total，同RR readonly事务及ROLLBACK恢复，旧legacy分支不变；原权限/预算/窗口/新鲜事实/未知拒绝不改。该源码缺陷尚不能称r24唯一实测根因。
+
+T45两Python叶有限端口观察交付14804377/13例PASS，原任意匹配TCP行仍失败、不重采样、不延时或权限变化；源187b6e1a/测试34c29ec3冻结。与D1修复合批后原QB增量验收，不单独启动PG取日志。真实数据和生产未动。

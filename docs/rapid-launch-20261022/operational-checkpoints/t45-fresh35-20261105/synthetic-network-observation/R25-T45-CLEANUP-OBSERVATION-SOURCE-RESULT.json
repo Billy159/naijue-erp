@@ -1,0 +1,73 @@
+{
+  "status": "PASS_SCOPED_OFFLINE_CLEANUP_OBSERVATION_ONLY_NOT_LINUX_PG_OR_BUSINESS",
+  "recordedAtUTC": "2026-11-06T16:28:51.076159+00:00",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSha256": "af972bab2c8d603f439d5b7ef5267b4c13b1f8cd19060a66a5dcdb5a786408d9",
+      "afterSha256": "187b6e1a8d956db9dd161582c62300038df867d2b30a2c895037858b9da9b4e6",
+      "beforeBytes": 102463,
+      "afterBytes": 104321
+    },
+    {
+      "path": "tests/test_fresh35_isolated_launcher.py",
+      "beforeSha256": "e5512c53e983e916d423aec4b1a99c3b045578b982b657254a251c149a68b1ee",
+      "afterSha256": "34c29ec3875eca03fdd74b33722b8d72f263b07a5b5f42b06c0d22d817bfc41e",
+      "beforeBytes": 92030,
+      "afterBytes": 97201
+    }
+  ],
+  "changedFunctions": [
+    "port_absent",
+    "cleanup_owned_server"
+  ],
+  "sameCleanupBooleanFormula": true,
+  "startPortCallsKeepOriginalOneArgumentBranch": true,
+  "singleCleanupSampleNoResampling": true,
+  "newObservationFields": [
+    "format",
+    "stage",
+    "startedAtUTC",
+    "finishedAtUTC",
+    "namespace(device,inode)",
+    "reading(netns,tcp,tcp6,null)",
+    "readError(DENIED,NOT_FOUND,INVALID_DATA,READ_FAILED,null)",
+    "complete",
+    "matchingRows",
+    "matchingStates(tcp,tcp6;01..0C,UNKNOWN)",
+    "portAbsent(true,false,null)"
+  ],
+  "semantics": "Any matching local-port TCP row remains failure regardless of state/address/owner. Observation reads both tables once; read or namespace failure is unknown, raises into existing observe-error path, never reported absent. Other startup port checks retain original implementation.",
+  "red": {
+    "tests": 5,
+    "exitCode": 1,
+    "failures": 6,
+    "errors": 4,
+    "cause": "Previous one-argument interface supplied no cleanup observation"
+  },
+  "green": {
+    "tests": 13,
+    "exitCode": 0,
+    "elapsedSeconds": 0.007,
+    "scope": "6 new observation/cleanup tests +7 original revoke/ownership/cleanup tests",
+    "command": "python3 tests/test_fresh35_isolated_launcher.py CleanupPortObservationTests Tests.test_failed_revoke_still_stops_and_clears Tests.test_replaced_pid_never_signalled Tests.test_signal_failure_still_clears BootstrapObserverLauncherTests.test_cleanup_target_binding_uses_target_database_and_exact_helper_revoke BootstrapObserverLauncherTests.test_cleanup_without_binding_keeps_postgres_global_role_path BootstrapObserverLauncherTests.test_target_revoke_failure_never_falls_back_or_reports_cleanup_success BootstrapObserverLauncherTests.test_wrong_binding_never_executes_sql_but_still_stops -v"
+  },
+  "testSelectionCorrection": "One intermediate command used nonexistent LauncherTests class for three old selectors; corrected to existing Tests. Six new tests passed there; no product failure hidden.",
+  "pythonAST": "PASS",
+  "patchSHA256": "596b5556c4eafe50b464769c0b4852820440b19e617fe4c406dd02a012b4e54f",
+  "notVerified": [
+    "Actual Linux TCP/netns observation",
+    "PG shutdown/port release",
+    "Capacity preflight cause or fix",
+    "Business chain",
+    "Build/package/deployment"
+  ],
+  "serverJobs": 0,
+  "PGConnections": 0,
+  "builds": 0,
+  "guardOrPermissionChanges": false,
+  "oldReceiptsRewritten": false,
+  "commitsOrPushes": 0,
+  "actualModelEffortFast": "UNVERIFIED",
+  "nextStep": "C combines with original D1 capacity fix, freezes exact source and routes scoped QB; no standalone build or PG"
+}

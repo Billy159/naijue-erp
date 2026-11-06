@@ -28509,10 +28509,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Readonly exact capacity.preflight call chain and finite known cause reproduction; no source writer activated",
-      "QB": "App941b/ops4f852 accepted; no repeat pending exact new fix",
-      "D2": "Build931564 delivered frozen; no new build dispatched",
-      "T45": "Actual r24 failed/stopped; readonly existing cleanup source/receipt timing and namespace diagnosis, no new server action",
+      "D1": "C activated3 exact leaf writer; LOGIN/role storage split, CONNECT and USAGE finite counterexamples; no DB ACL changes",
+      "QB": "Wait fixed combined r25 source, no repeat prior QA",
+      "D2": "No new build; wait exact combined delivery and original QB",
+      "T45": "Cleanup observation2 leaves delivered14804377 and frozen; no new server jobs",
       "D3": "REAL package and independent readback ready, waits exact target",
       "QF": "Core browser prerequisites ready, waits actual normal host/login"
     },
@@ -32782,6 +32782,20 @@
           "commitDiffersFromInstall": true,
           "allConnectionsClosed": true
         }
+      },
+      "r25Preparation": {
+        "state": "SOURCE_IN_PROGRESS_NOT_QA_OR_BUILT",
+        "D1Scope": "apps/api/src/capacity-runtime-probe.ts, apps/api/src/postgres-read-api.ts, tests/capacity-runtime-probe.test.ts",
+        "technicalFinding": "Current NOINHERIT LOGIN lacks schema USAGE for regclass; runtime role lacks DB CONNECT for pg_database_size, so split reads under existing privileges within same transaction required. Source model proves candidate defect, not unique actual r24 rootcause.",
+        "T45ReceiptSHA256": "148043779e584a5004135571f32b3acc6f86d3b8d9beea8ac7cf9f27bc44549f",
+        "T45AuthorTests": "13 finite PASS, no Linux/PG proof",
+        "T45Source": {
+          "scripts/release/unified-install/launch-fresh35-isolated-v1.py": "187b6e1a8d956db9dd161582c62300038df867d2b30a2c895037858b9da9b4e6",
+          "tests/test_fresh35_isolated_launcher.py": "34c29ec3875eca03fdd74b33722b8d72f263b07a5b5f42b06c0d22d817bfc41e"
+        },
+        "newDBPermissions": false,
+        "newPG": false,
+        "oldKeysReplay": false
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -33216,12 +33230,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T00:22:32.278871+08:00",
-      "phase": "R24_INSTALL_SYNTHETIC_PASS_ORDINARY_CAPACITY_PREFLIGHT_FAILED_STOPPED",
+      "at": "2026-11-07T00:31:35.567998+08:00",
+      "phase": "R25_CAPACITY_ROLE_SEAM_FIX_IN_PROGRESS_CLEANUP_OBSERVATION_DELIVERED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original D1 exact preflight source diagnosis; original T45 cleanup source diagnosis, both readonly",
-      "nextOwner": "C fixes exact proven cause via original file owner; scoped QB increment only",
+      "currentOwner": "Original D1 exact3 TypeScript leaves; original T45 two Python leaves delivered frozen",
+      "nextOwner": "C freeze combined source then original QB scoped increment",
       "latestActualReceiptSHA256": "315c169f279c321db1b7a4b2f35df3b3dde26df31211963564c944faf705533d",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -33231,7 +33245,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "No new build/window/PG until specific source cause or missing bounded fact identified. No old key replay.",
+      "next": "Same existing owned pool/readonly transaction: LOGIN database_bytes, genuine Fresh35 cap-bound runtime-role table storage, preserve legacy branch and all capacity guards; no new PG/build until delivery +QA.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
       "buildRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
