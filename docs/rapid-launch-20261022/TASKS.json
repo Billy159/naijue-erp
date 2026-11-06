@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T23:19:22.557990+08:00",
+  "updatedAt": "2026-11-06T23:30:30.039535+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28225,7 +28225,8 @@
         "corresponding declarations and affected existing direct tests only",
         "scripts/release/unified-install/fresh35-retirement-identity.mjs production-profile identity mapping seam only",
         "scripts/release/unified-install/fresh35-combined-source-v1.mjs production-profile pass-through only",
-        "tools/unified-import/fresh35-host-session.mjs synthetic-only fixed installation record parent watch seam; tests/fresh35-ordinary-production-v2.test.mjs exact direct regressions, conditional on original RED reproduction; preserve production/record inode watch/revocation/bytes-generation guards and directory ACL"
+        "tools/unified-import/fresh35-host-session.mjs synthetic-only fixed installation record parent watch seam; tests/fresh35-ordinary-production-v2.test.mjs exact direct regressions, conditional on original RED reproduction; preserve production/record inode watch/revocation/bytes-generation guards and directory ACL",
+        "tests/integration/live-ledger-balance-pairs.integration.test.ts exact finite fresh35 diagnostic only: REAL_CAPACITY_PREFLIGHT and existing guard SQLSTATE55000/P0001 whitelist, same-leaf direct tests; explicit C transfer from D2 for r23 successor, all other D2 API files readonly"
       ],
       "D2": [
         "apps/api/src/production-main.ts",
@@ -28237,7 +28238,6 @@
         "adapters/postgres/src/catalogue-settings-read-reader.ts and direct tests (frozen9 accepted)",
         "scripts/release/build-production.mjs native35 exact closure only",
         "scripts/release/manifest.mjs exact native35 member validation only",
-        "tests/integration/live-ledger-balance-pairs.integration.test.ts exact finite fresh35 branch only; D2 unique owner after interface handoff; original V8 route unchanged",
         "scripts/ops/capacity-live-statfs.mjs execution mode only 0644 to 0755, content unchanged; exact packager metadata seam only if demonstrated necessary, propose file before editing"
       ]
     },
@@ -28509,8 +28509,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Exact current generic admission Error source/model diagnosis, no unrelated staff work or source writes yet",
-      "T45": "One bounded poststop exact-owned namespace/port readonly; production producer minimal source plan afterwards",
+      "D1": "Unique one-leaf finite diagnostic evidence repair; actual generic root cause remains unknown",
+      "T45": "Poststop readonly collected; corresponding two-leaf diagnostic consumer repair plus exact production authority plan proposal",
       "QB": "r23 prior scoped PASS retained; wait actual established new delta",
       "D2": "Fixed source/build intact, no rebuild until new reviewed source",
       "D3": "REAL package and independent readback ready, waits runtime target",
@@ -32636,6 +32636,18 @@
           "containerStopped": true,
           "postStopPortAbsenceNotYetVerified": true,
           "oldKeysMayReplay": false
+        },
+        "diagnosticSuccessor": {
+          "state": "EXACT_THREE_LEAF_SOURCE_REPAIR_IN_PROGRESS_NOT_ROOT_CAUSE_FIX",
+          "D1": [
+            "tests/integration/live-ledger-balance-pairs.integration.test.ts"
+          ],
+          "T45": [
+            "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+            "tests/test_fresh35_isolated_launcher.py"
+          ],
+          "scope": "Add only REAL_CAPACITY_PREFLIGHT and SQLSTATE55000/P0001 to existing closed nine-key diagnostic; no messages/stacks/cause/private input or widened guard",
+          "next": "Scoped author checks and original QB incremental only; fixed source before any new build/environment"
         }
       }
     },
@@ -32698,6 +32710,18 @@
         ],
         "reason": "D2 completed readonly preparation and no source writes; C delegates exact V2 deploy compatibility, preserve current synthetic root excluding WIP",
         "authority": "C under latest direct human ERP decision delegation until noon"
+      },
+      {
+        "at": "2026-11-06T23:30:30.039535+08:00",
+        "from": "D2",
+        "to": "D1",
+        "files": [
+          "tests/integration/live-ledger-balance-pairs.integration.test.ts"
+        ],
+        "scope": "Exact finite diagnostic evidence loss only; no SQL/ACL/host/ordinary business semantics; D2 notified readonly",
+        "otherOwner": "Original T45 corresponding isolated launcher and Python direct test remain sole writer",
+        "precondition": "r23 actual Error has no code; author actual PostgresQueryError55000/P0001 loss and phase ambiguity RED established",
+        "environmentExecuted": false
       }
     ],
     "privateStandardPackageTransport": {

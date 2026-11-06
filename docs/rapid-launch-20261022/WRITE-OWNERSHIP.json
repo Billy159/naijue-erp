@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-11-02T18:30:08.771212+00:00",
+  "updatedAt": "2026-11-06T23:30:30.039535+08:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -10321,5 +10321,20 @@
     "latestOfflineSource": "1189b2fe92fd3c003d3325ffb7d077b543be5277",
     "localOriginalSourceWipPreserved": true,
     "D1": "Staff source-code followup delivered/idle; historical validity unresolved"
+  },
+  "r23DiagnosticSuccessor20261106": {
+    "authority": "C explicit handoff under existing human owner coordination and technical implementation authorization",
+    "D1SoleWriter": [
+      "tests/integration/live-ledger-balance-pairs.integration.test.ts"
+    ],
+    "D2Readonly": [
+      "tests/integration/live-ledger-balance-pairs.integration.test.ts"
+    ],
+    "T45SoleWriter": [
+      "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "tests/test_fresh35_isolated_launcher.py"
+    ],
+    "scope": "Finite diagnostic phase and two original guard SQLSTATE values only; no new business/schema/ACL, no server/PG or old-key replay",
+    "productionAuthorityProducer": "Original T45 proposal only, exact leaf registration pending"
   }
 }

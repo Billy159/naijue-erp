@@ -1,0 +1,80 @@
+{
+  "status": "READONLY_POSTSTOP_FACTS_COLLECTED_ORIGINAL_R23_FAILED_UNCHANGED",
+  "checkedAtUTC": "2026-11-06T15:24:56.543447+00:00",
+  "checkedAtAsiaShanghai": "2026-11-06T23:24:56.543447+08:00",
+  "actualModelEffortFast": "UNVERIFIED",
+  "jobId": "t45-f35-1e6ba0-poststop-owned-readonly-20261106-01",
+  "jobStatus": "COMPLETED",
+  "jobExitCode": 0,
+  "elapsedSeconds": 0.06724348291754723,
+  "sourceSetSha256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
+  "evidence": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-poststop-owned-readonly-20261106-01/transport/release-receipts/t45-f35-1e6ba0-poststop-owned-readonly-20261106-01/job.json",
+      "sha256": "6d858e969789a4d4b3cebaf273d769be27c63d3bb43820b42927fb5f5a6f163d"
+    },
+    "poststop-owned-facts.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-1e6ba0-poststop-owned-readonly-20261106-01/transport/release-receipts/t45-f35-1e6ba0-poststop-owned-readonly-20261106-01/poststop-owned-facts.json",
+      "sha256": "5e0dab354a418394e69a72b352e132b02e1a21dbcfcf3fcce2e1c4e0a5f69ca2"
+    }
+  },
+  "facts": {
+    "PGConnections": 0,
+    "checkedAtUTC": "2026-11-06T15:24:56.543447+00:00",
+    "cleanupSequenceFromFrozenSource": {
+      "launcher": "portAbsent checks own namespace /proc/net/tcp+tcp6 any local-port row, no state filter, before cleanup.json/result.json",
+      "originalBooleanNotReclassified": true,
+      "wrapper": "reads original result then docker stop only original owned CID and final inspect; stopped flag is later than original portAbsent"
+    },
+    "jobId": "t45-f35-1e6ba0-poststop-owned-readonly-20261106-01",
+    "networkConnections": 0,
+    "oldKeysReplayed": false,
+    "originalCleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": false,
+      "credentialsRemoved": true,
+      "errors": [],
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": false,
+      "sha256": "fc07a968b74031c21940e07cfb5a1677e6b30447629dbb021d4c1144ed17e26c"
+    },
+    "originalCleanupRewritten": false,
+    "originalNetworkNamespaceHandle": {
+      "existsNow": "UNKNOWN_NO_RETAINED_HANDLE",
+      "namespaceEntered": false,
+      "retainedPath": false
+    },
+    "originalOwnedProcessIdentity": {
+      "containerPidOnlyNotUsedAsHostPid": true,
+      "executableMatchesOriginal": true,
+      "hostProcOrOtherPidsNotScanned": true,
+      "retained": true
+    },
+    "originalPostmasterPidFilePresent": false,
+    "otherPortsOrServicesInspected": false,
+    "poststopContainer": {
+      "containerInitPidZero": true,
+      "exactOriginalIdentityVerified": true,
+      "finishedAtUTC": "2026-11-06T15:12:52.864891899Z",
+      "networkMode": "none",
+      "noHostPortBindings": true,
+      "privatePidNamespaceMode": true,
+      "stopped": true
+    },
+    "poststopOriginalPortAbsence": "NOT_DIRECTLY_VERIFIED_ORIGINAL_NETWORK_NAMESPACE_NOT_ENTERED_OR_RESTARTED",
+    "restartOrKillActions": 0,
+    "retainedPortRowsAtCleanup": "NOT_RETAINED; original boolean alone cannot distinguish LISTEN or other TCP state",
+    "sourceTargetPermissionWrites": 0,
+    "status": "POSTSTOP_EXACT_OWNED_CONTAINER_STOPPED_PIDZERO_NO_HOST_BINDINGS_ORIGINAL_PORT_ABSENCE_STILL_UNVERIFIED"
+  },
+  "ordinaryBusinessVerified": false,
+  "originalR23ResultUnchanged": true,
+  "originalR23Result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r23-pg20-execution-01/RESULT.json",
+  "productionVerified": false,
+  "formalChanges": 0,
+  "remaining": [
+    "Generic REAL_SYNTHETIC_ADMISSION Error still requires D1 exact source diagnosis; SQLSTATE/errno/guardCode not retained as non-null",
+    "Original portAbsent=false and cleanupComplete=false retained; no namespace handle or original TCP rows retained, port absence remains unverified"
+  ]
+}

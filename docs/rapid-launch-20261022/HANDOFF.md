@@ -2323,3 +2323,8 @@ start0/37.948秒，raw12f14866/safefd9e8571已核，CIDe40db110/SID7705074955509
 containerStopped=true、child/initializer/descendants回收；原cleanupComplete=false、portAbsent=false保留，其余4项true/errors[]。原T45获准同一ownedcleanup范围内仅一次有界停止后准确CID/namespace/port只读，不重启PG、不影响其他服务、不修改旧失败。所有旧及本轮normalCOMMITTED/unknown原键禁重放，REAL/prod未动。
 
 并行采用D1生产接缝源码事实：producer62e41a7b实际authority0711 RW bind /etc/naijue-erp，production_common沿用；production consumer保留parent watch要求。该静态不匹配交原T45只提最小producer修正叶/身份/权限范围，尚未改源码或实际权限，也不是已实测生产故障。
+
+
+## 2026-11-06 — r23诊断丢失已复现，三叶有限修正分工
+
+D1用原PostgresQueryError及原retainer证明已有SQL55000/P0001被当前白名单抹为null；实际host拒绝与capacity UNKNOWN也会落同一phase。因此本轮generic Error尚不能定位，不先改业务或放宽guard。C将integration TS有限诊断单叶从D2一次交D1（D2已通知只读），T45继续原isolated launcher/Python测试两叶，仅增REAL_CAPACITY_PREFLIGHT和原guard两SQLSTATE，保留9键闭格式及秘密负例。源码作者必要定向检查后原QB仅增量；尚未开新构建/窗口。生产目录0750准确APP GID方案仅提案，不猜QA/PG GID。
