@@ -1,0 +1,150 @@
+{
+  "taskId": "R11-INITIALIZE-SYNTAX-SOURCE-01",
+  "status": "SOURCE_SYNTAX_FIXED_SCOPED_CHECKS_PASS_NOT_NATIVE_PG_VERIFIED",
+  "parent": "fbb10bb7041b2ccaf3a87bafbc2bf994a0d60290",
+  "authorization": "C approved unique CASE parenthesis correction at11:59:59 under original human technical delegation, then explicitly registered these2source+1test leaves. Approved bounded source repair continues; no new environment window or production authorization.",
+  "actualEvidence": {
+    "T45ResultSHA256": "c8cc9e86f8acda6f6014a440793cdaf79a9d24a36c39aa216932a9811e911332",
+    "receiptSHA256": "b65ce266faac86d25966e04eae8e5418efd0e981a61ef10fde49ce8a768c21e9",
+    "state": "SCHEMA_COMMITTED_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_PASSED_NEGATIVE_INITIALIZE_42601_STOPPED",
+    "validationStage": "BAD_APPROVAL",
+    "validationStep": "INITIALIZE",
+    "validationSQLSTATE": "42601",
+    "validationCode": "IMPORT_FAILED",
+    "stoppedLocationReceiptSHA256": "329fcc6380e4bdb13c070cbccbb611a543e81955c7f1a9893a0e107cb5d56ab0",
+    "locationStatus": "UNKNOWN_NOT_RECORDED; no expanded scan; not proof of no PG error",
+    "schemaNotRolledBack": true
+  },
+  "sourceFinding": {
+    "routine": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)",
+    "predicate": "hall_approval format_version IS DISTINCT FROM CASE ... END in a PLpgSQL IF condition",
+    "sourceBodyLine": 138,
+    "nativeR11FirstPositionObserved": false,
+    "cause": "Unparenthesized CASE contains THEN at parenthesis depth0, so PLpgSQL IF expr_until_then stops inside CASE and SQL expression parse fails at end of input.",
+    "primarySource": "https://github.com/postgres/postgres/blob/REL_17_11/src/pl/plpgsql/src/pl_gram.y",
+    "primaryRule": "expr_until_then calls read_sql_expression(K_THEN); read_sql_construct stops on delimiter at parenlevel0 and counts parentheses, not CASE nesting.",
+    "baselineComparison": "Pinned BASE body parses. HALL first successor and subsequent exact bodies fail. Final body with only this pair of parentheses parses.",
+    "scopeLimit": "Source-proven syntax defect consistent with actualINITIALIZE42601; actual first/only backend syntax position not observed."
+  },
+  "change": "Append exactly1 CASE grouping replacement to existing last/current settlement-difference command spec and update only its successor hash; update only corresponding SQL pin. Preserve earlier hall/amount originals and all predicates/permissions.",
+  "bodyBeforeSHA256": "2c5e902fa97ce4961aa0932ac49a1f7fab786ae2fc32e430ef90692fce11c531",
+  "bodyAfterSHA256": "df1d6f79037bb7c5bb1276ce1730b4273d0af5b3036ede6089cac7208248b52f",
+  "bodyAddedBytes": 2,
+  "fixedSource": {
+    "scope": "D1_LOCAL_SOURCE_NOT_FINAL_C_INTEGRATION_ROOT",
+    "sourceSetSha256": "f91172b2cc6637bbdb5ddec6c5677af7925b219826e03a0c800910d6524e9286",
+    "previousSourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+    "currentSourcePins": 214,
+    "capturedSourcePins": 180,
+    "delta": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "sha256": "1508620dc618b3560181694aea2591638ce885b337f86ee5d6e51f8659918565",
+        "beforeSha256": "00831ce3dbf02af4ffb675c3e4593de3aa423b66ec17f6ff954702a4f343c9bc"
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "sha256": "b04646442382baff967bf43d5957eba49ac1f4e5595dde2632966f4d8b85dad2",
+        "beforeSha256": "b4c4781be517966d673e7efd2690ddf7d7fb17185659930e7c22ebcfd68ff4aa"
+      }
+    ],
+    "pins": [
+      {
+        "path": "adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+        "sha256": "1508620dc618b3560181694aea2591638ce885b337f86ee5d6e51f8659918565",
+        "bytes": 25346,
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R11-INITIALIZE-SYNTAX-SOURCE-01/0035_historical_settlement_difference_successor.sql"
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+        "sha256": "b04646442382baff967bf43d5957eba49ac1f4e5595dde2632966f4d8b85dad2",
+        "bytes": 5016,
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R11-INITIALIZE-SYNTAX-SOURCE-01/fresh35-historical-settlement-difference-candidate.mjs"
+      },
+      {
+        "path": "tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+        "sha256": "1de0135f48d4885279eb0a58493a1e2dc404ddbcc9a6a133701757928e7310b1",
+        "bytes": 7591,
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R11-INITIALIZE-SYNTAX-SOURCE-01/fresh35-historical-settlement-difference-candidate.test.mjs"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "new source regression before implementation",
+      "exitCode": 1,
+      "failed": 1,
+      "reason": "current successor lacks exact CASE grouping replacement"
+    },
+    {
+      "name": "new CASE inverse/duplicate-anchor regression plus affected existing successor composition/pin check",
+      "exitCode": 0,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1388.64325
+    },
+    {
+      "name": "pglast7.21 standalone grammar checks only",
+      "result": {
+        "parser": "v7.21",
+        "postgresGrammar": [
+          17,
+          7
+        ],
+        "results": {
+          "COMMAND-BEFORE.sql": {
+            "parsed": false,
+            "error": "syntax error at end of input"
+          },
+          "COMMAND-AFTER.sql": {
+            "parsed": true,
+            "error": null
+          },
+          "unparenthesized": {
+            "parsed": false
+          },
+          "parenthesized": {
+            "parsed": true
+          }
+        },
+        "onlyTwoParenthesesAdded": true,
+        "reverseExactlyRestoresOriginal": true,
+        "sqlPredicateASTEqualIgnoringSourcePositions": true,
+        "nativePGExecuted": false,
+        "nativePG17_11Validated": false
+      },
+      "notRuntime": "PostgreSQL17.7 grammar, not a running PG17.11 instance"
+    },
+    {
+      "name": "source JSON inverse restores original SQL byte-for-byte and candidate pin inverse restores original module",
+      "result": "EXACT"
+    },
+    {
+      "name": "twoMJS node syntax and scoped parent diff --check",
+      "exitCode": 0
+    },
+    {
+      "name": "original sealed reference/source closure loaded once readonly through existing loader",
+      "result": "214current/180captured; only2pins differ from prior1dd2,212unchanged; no manual catalog expectation edit"
+    }
+  ],
+  "preserved": [
+    "sealed hall/amount/reference originals",
+    "catalog module/test and automatic definition/body/final-pin derivation",
+    "existing SQL guards/preconditions/postconditions",
+    "all permissions/roles/source identities/transactions",
+    "old3consumer diagnostic fields/negative assertions and Python",
+    "frontend/shared contracts",
+    "r10/r11 stopped states and committed installation records"
+  ],
+  "tooling": "pglast7.21 installed only in this original D1 report child parser directory; no project/global Python dependency changes or PG process; temporary tool files retained outside release source.",
+  "notExecuted": [
+    "PG/SQL/old key replay or restart",
+    "server/production/real data",
+    "whole152 parse sweep or broad QA",
+    "old catalog/LF/ACL/consumer/Python tests",
+    "build/commit/index/controller root edits"
+  ],
+  "nextOwner": "C integrates and sends original QB only these3leaves and parser/inverse proof. Final C/D2 fixed-source root pending. Native17.11 and whole-chain acceptance remain unverified, require separately valid new target authorization; do not reuse old key/window."
+}

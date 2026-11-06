@@ -7,6 +7,17 @@ import {loadFresh35HistoricalSettlementDifferenceCandidate} from '../scripts/rel
 import {applyRetirementSourceReplacement} from '../scripts/release/unified-install/fresh35-retirement-source.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),hash=x=>createHash('sha256').update(x).digest('hex');
 let pending;const load=()=>pending??=loadFresh35HistoricalSettlementDifferenceCandidate(root);
+test('current successor groups the hall approval CASE inside the PLpgSQL IF without changing its predicate or other body bytes',async()=>{
+ const c=await load(),spec=c.specs.find(s=>s.signature.includes('.standard_whole_package_command_v2(')),body=c.changedBodies.find(s=>s.signature===spec.signature).body;
+ const fix=spec.replacements.find(r=>r.before.startsWith("OR hall_approval->>'format_version' IS DISTINCT FROM CASE WHEN"));assert(fix,'the final current successor must include the exact syntax correction');
+ assert.equal(fix.after,fix.before.replace('FROM CASE','FROM (CASE')+')');
+ assert.equal(body.split(fix.after).length,2);assert.equal(body.includes(fix.before),false);
+ assert.equal(hash(body.replace(fix.after,fix.before)),'2c5e902fa97ce4961aa0932ac49a1f7fab786ae2fc32e430ef90692fce11c531','reversing only this pair restores the exact original final body');
+ assert.equal(hash(body),spec.successor_sha256);assert.equal(c.manifest.permissionsChanged,false);assert.deepEqual(c.manifest.columnChanges,[]);
+ const prior=c.predecessorBodies.find(s=>s.signature===spec.signature).body;
+ const output=applyRetirementSourceReplacement(prior,spec);assert.equal(output,body);
+ assert.throws(()=>applyRetirementSourceReplacement(prior,{...spec,replacements:[...spec.replacements,fix]}),/ANCHOR|REPLACEMENT/,'a duplicate syntax correction must not be silently applied');
+});
 test('approved difference successor composes exactly after210 and modifies only the four existing routines',async()=>{
  const c=await load();assert.equal(c.specs.length,4);assert.equal(c.manifest.successorRoutinePins.length,152);
  assert.deepEqual(c.specs.map(s=>s.signature.slice('naijue_erp.'.length,s.signature.indexOf('('))),['standard_whole_package_command_v2','assert_document_migration','validate_sales_settlement','standard_whole_package_verify_v2']);
