@@ -2328,3 +2328,12 @@ containerStopped=true、child/initializer/descendants回收；原cleanupComplete
 ## 2026-11-06 — r23诊断丢失已复现，三叶有限修正分工
 
 D1用原PostgresQueryError及原retainer证明已有SQL55000/P0001被当前白名单抹为null；实际host拒绝与capacity UNKNOWN也会落同一phase。因此本轮generic Error尚不能定位，不先改业务或放宽guard。C将integration TS有限诊断单叶从D2一次交D1（D2已通知只读），T45继续原isolated launcher/Python测试两叶，仅增REAL_CAPACITY_PREFLIGHT和原guard两SQLSTATE，保留9键闭格式及秘密负例。源码作者必要定向检查后原QB仅增量；尚未开新构建/窗口。生产目录0750准确APP GID方案仅提案，不猜QA/PG GID。
+
+
+## 2026-11-06 — r24三叶有限诊断交付固定，原QB增量验收
+
+D1单叶3c4e8403、T45 launcheraf972bab及原测试e5512c53已核before/after与当前源码对应。只增独立REAL_CAPACITY_PREFLIGHT与原守卫SQL55000/P0001诊断保留，原9键、WeakMap品牌、秘密负例、业务102断言、SQL/ACL和guard不改。D1纠正模型提取后RED/GREEN6/6skip0，T45 RED5子例/GREEN11tests有效；未重复跑全suite/PG。固定SOURCEcfad04f87e0dabf67897ca9f07d3043d1a8172dc/root9315643006a574986abacf5bba631e7c34cf23f1/tree29d3fc11e0da9b9cc8c0905082c846a80f51c222。原QB仅准确三叶增量，作者及运维都冻结；新root未构建/未实测，r23实际范围单独保留，不能称根因已修复。
+
+重要更正：撤回前述“确定正式APP目录producer mismatch”。T45核APP只mount record单文件+11reference RO，0711 authority整目录实际属于PG carrier namespace，同路径不代表同namespace。D1已明确撤回原结论。APP实际parent metadata仍未验证；不实施0750、不新增APP user字段、不扩整目录mount暴露secret，留正常正式路径核实。
+
+停止后一次只读d26bc629退出0/0.067秒，准确CID停止/PID0/networknone/nohostbinding，SandboxKey空，未进netns；原portAbsentfalse及cleanupCompletefalse仍保持，不能倒改旧失败。无新PG/重启/kill/权限或业务写。

@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-11-06T23:30:30.039535+08:00",
+  "updatedAt": "2026-11-06T23:35:12.953424+08:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -10335,6 +10335,7 @@
       "tests/test_fresh35_isolated_launcher.py"
     ],
     "scope": "Finite diagnostic phase and two original guard SQLSTATE values only; no new business/schema/ACL, no server/PG or old-key replay",
-    "productionAuthorityProducer": "Original T45 proposal only, exact leaf registration pending"
+    "productionAuthorityProducer": "NO REPAIR: confirmed APP mismatch withdrawn after namespace correction; normal APP metadata pending",
+    "state": "DELIVERED_THREE_LEAVES_FROZEN_PENDING_QB"
   }
 }
