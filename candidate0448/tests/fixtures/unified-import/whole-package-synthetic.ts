@@ -100,6 +100,7 @@ export function createSyntheticFresh35WholePackageInput(targetCapturedAt:string|
  if(variant==='settlement-retention25'){
   // Artificial facts only. Do not accept an input path, real proof or caller rows.
   if(pkg.manifest.package_kind!=='SYNTHETIC')throw Error('SYNTHETIC_FRESH35_INPUT_REQUIRED');
+  pkg.records.warehouse!.find(row=>row.source_key==='warehouse:02')!.fields.hall_id=secondHall.fields.id;
   for(let i=0;i<25;i++){
    const returned=i>=22,zeroDue=i===21,source_key='SYNTHETIC-FRESH35-RETENTION-'+(i+1),id=registryTargetId(namespace,'SALES_HEADER',source_key),source_refs=[{...header.source_refs[0]!,row:300+i}];
    const h={...structuredClone(header),source_key,source_refs,fields:{...structuredClone(header.fields),id,number:source_key,business_type:returned?'RETURN':'SALE',gross_amount:zeroDue?'0.00':returned?'-16.00':'16.00',order_discount:'0.00',net_due:zeroDue?'0.00':returned?'-16.00':'16.00'}};delete h.zero_amount_archive;
