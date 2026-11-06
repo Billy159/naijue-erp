@@ -1,0 +1,70 @@
+{
+  "status": "LOCAL_NAMES_PREPARED_BUILD_UNBOUND_STAGE_GUARD_CONFLICT_NO_SERVER",
+  "recordedAtUTC": "2026-11-06T15:40:40.380717+00:00",
+  "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
+  "candidateRoot": "9315643006a574986abacf5bba631e7c34cf23f1",
+  "sourceTree": "29d3fc11e0da9b9cc8c0905082c846a80f51c222",
+  "QBResultSHA256": "941b153f92eb4622c10299d586d63a4cd7e72b7ba2918cb0867d85b0416717c6",
+  "D2ResultSHA256": null,
+  "sourceSetSHA256": null,
+  "newNames": {
+    "container": "t45-fresh35-deb13-20261106-r24",
+    "root": "phaseb-application-r24",
+    "jobPrefix": "t45-f35-931564-",
+    "artifact": "f35-931564-ordinary-local-20261106-01",
+    "tail": "f35-931564-tail-20261106-01"
+  },
+  "baseHistoricalActualReady": {
+    "archiveSha256": "46d2426c670df573273c20ee3007846e9b863e976622d706130d75afb9b86746",
+    "archiveBytes": 83703105,
+    "authoritySha256": "abb05e93cc6912758d98aa0a6cce117c22da2ec987297295826401261c6edea3",
+    "fileIdentity": [
+      66304,
+      393737,
+      83703105,
+      1793976908152234000,
+      1793976909527221572
+    ]
+  },
+  "stagePreconditionConflict": {
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r23-ops-preparation-01/stage_preflight.py",
+    "condition": "assert all(cleanup[k] is True for k in clean_keys) and cleanup[errors]==[]",
+    "r23CleanupComplete": false,
+    "r23PortAbsent": false,
+    "poststopResultSHA256": "d26bc6297c99b2a97c9109175fc7fb1e7937e6e3825eac2ba696e550d40c233a",
+    "portAbsence": "NOT_DIRECTLY_VERIFIED",
+    "resolution": "NOT_IMPLEMENTED_PENDING_C_EXACT_GUARD_SCOPE_REGISTRATION"
+  },
+  "binding": "No expected build/sourceSet/artifact pins used. C13/C11/C9 not issued. No executable bound plan or server preflight prepared.",
+  "isolation": "New ROOT private STATE mount and new container PID/network namespace; DB name/port are existing per-container constants, physical target unbound. Old target untouched.",
+  "checks": {
+    "pythonAST": "PASS",
+    "wrapperFunctionsUnchanged": true,
+    "receiverBytesUnchanged": true,
+    "collector0755GuardUnchanged": true,
+    "newBuildClosureRerun": false
+  },
+  "serverActions": 0,
+  "PGConnections": 0,
+  "builds": 0,
+  "oldKeyReplay": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "files": {
+    "artifact-receiver.original.py": {
+      "bytes": 6230,
+      "sha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653"
+    },
+    "fresh35-container-successor.UNBOUND.py": {
+      "bytes": 36887,
+      "sha256": "cd0e43296203fde9182988eebd6150836aef42373d93eb8d97aced14c56be2cc"
+    },
+    "ordinary-proof-evidence.UNBOUND.py": {
+      "bytes": 10138,
+      "sha256": "c04ab16c595ebc120eed6f12f2142f87c7391cc8ff84d4d97305997e12c005b5"
+    },
+    "assemble_original_receiver.UNBOUND.py": {
+      "bytes": 9318,
+      "sha256": "c81646388faddc9a8022ac3cd192e014106d9c57a09de9127eb13a01267006b9"
+    }
+  }
+}

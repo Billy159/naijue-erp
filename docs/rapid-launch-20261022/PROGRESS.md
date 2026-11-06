@@ -2036,3 +2036,10 @@ D1单叶3c4e8403、T45 launcheraf972bab及原测试e5512c53已核before/after与
 原QB941b153f已核并采用，PASS_SOURCE_AND_SCOPED_OFFLINE_DIAGNOSTIC/findings空。作者6+11项采用不重跑；独立补新phase/code经原生成catch到parent保真、6种代码伪造/变形过滤、秘密getter读取0、brand副本拒绝、父端两失败模型一次spawn/communicate/automaticRetryfalse及cleanup回收。无PG/server/source写/fullsuite，不代表r23实际业务根因已修好。
 
 原D2开始固定root93156430一个完整build/pack及相对r23实测prefix/tail，actualsourceSet与制品pin等待真实输出。原T45仅必要r24本地准备，不开server/window/PG，尤其不得把r23原cleanupComplete/portAbsentfalse改PASS；如原stage硬要求六项true，准确列冲突及最小后继建议，不自行跳过guard或重开旧PG。本批新候选仍未构建或实测，所有旧normalCOMMITTED及unknown键保持不重放。GitHub已核7d8d33bc及固定root93156430。
+
+
+## 2026-11-06 — r24统一构建完成，旧清理前置按事实定向接续
+
+原D2回执619445a4已核；build0/11.954秒、pack0/9.511秒，453生产文件+30目录及7298ordinary成员采用完整证明，collector0755保留。actualsourceSetf2b1f4de（214/180，launcher1pin/其他213不变），full89b67c5a/83702712、manifest8a2107fb、descriptorb2822c22、runtimea7d2b94b和tail2475787/7794cccc已核；相对r23最长prefix81226925/580eb9e1流式重构证明采用，不重压/不新留全副本。未执行新PG/真实导入或部署。
+
+T45本地准备3aab9369准确指出：原stage前置all6cleanuptrue与r23原两false冲突。C仅登记新r24 stage_preflight.py旧目标隔离前置单叶及必要同目录模型：保留原FAILED/两false，要求原其余4true/errors[]及精确旧CID当前停止/PID0/networknone/nohostbinding/sourceimage，新r24目标缺席/无原键在途/baseidentity一致。该分支只证明旧目标停稳与新namespace独立，绝不改判旧cleanup/端口已核，也不豁免新目标自己的portUnused/cleanup和业务检查。其他false或身份/状态不符仍拒绝。缺私有原件事实UNBOUND，不套publichash；作者定向验证后原QB单叶增量。当前仅本地实现授权，无server/PG/传输/签窗。
