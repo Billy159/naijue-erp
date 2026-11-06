@@ -118,11 +118,19 @@ test('current source closure separately records old180 and the later application
  for(const p of d.currentSourceDelta)if(p.predecessorSha256!==null)assert.notEqual(p.predecessorSha256,p.currentSha256);
  const schema=renderFresh35CombinedSchema(source,describeFresh35CombinedTarget(target).proposal);assert.match(schema.schemaSql,/fresh35_owner_20261105_r9/);assert.doesNotMatch(schema.schemaSql,/fresh35_owner_20261105_r1/);assert.equal((schema.schemaSql.match(/^CREATE TABLE /gm)||[]).length,35);assert.doesNotMatch(schema.schemaSql,/CREATE TABLE "naijue_erp"\."history_sales_header"/);assert.equal(schema.patchBodies.length,4);
 });
-test('full successor model changes the adopted seven routine bodies and sales hall nullability',async()=>{
+test('full successor model changes the adopted eight routine bodies and sales hall nullability',async()=>{
  const {source,catalog}=await bundle(),d=describeFresh35CombinedCatalog(catalog),sql=fresh35CombinedCatalogSql(catalog,source,target);
  const model=JSON.parse(sql.guardSql.split('$combined_model$')[1]),before=JSON.parse(await readFile(modelPath,'utf8'));
- assert.equal(d.changes.length,14);assert.equal(new Set(d.changes.map(r=>r.signature)).size,7);assert.equal(d.changes.at(-1).patch,'historical-settlement-difference');assert.equal(d.changes.findLast(c=>c.signature.includes('.validate_sales_settlement(')).after,'580340f008dcf9652fb18e041dde2b63ae2aa72abde3c5e8a772cb13cfb0990f');assert.equal(model.routines.length,152);
- assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,7);
+ assert.equal(d.changes.length,15);assert.equal(new Set(d.changes.map(r=>r.signature)).size,8);assert.equal(d.changes.at(-1).patch,'historical-settlement-difference');assert.equal(d.changes.findLast(c=>c.signature.includes('.validate_sales_settlement(')).after,'580340f008dcf9652fb18e041dde2b63ae2aa72abde3c5e8a772cb13cfb0990f');assert.equal(model.routines.length,152);
+ assert.equal(model.routines.filter(r=>r.definitionSha256!==before.routines.find(b=>b.signature===r.signature).definitionSha256).length,8);
+ const finalSignature='naijue_erp.validate_import_accounting_final_record_commit()',finalChange=d.changes.find(c=>c.signature===finalSignature);
+ assert.deepEqual(finalChange,{patch:'historical-settlement-difference',signature:finalSignature,before:'5bd65ec325d3158d9f56e4366eb0222464bc109b40aa13efe0c09c3a67f2ad92',after:'7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c'});
+ const finalRoutine=model.routines.find(r=>r.signature===finalSignature),oldFinalRoutine=before.routines.find(r=>r.signature===finalSignature),{bodySha256,...finalMetadata}=finalRoutine;
+ assert.equal(bodySha256,finalChange.after);assert.notEqual(finalRoutine.definitionSha256,oldFinalRoutine.definitionSha256);
+ const mappedOldFinal=JSON.parse(JSON.stringify(oldFinalRoutine).replaceAll('fresh35_owner_20261105_r1','fresh35_owner_20261105_r9').replaceAll('fresh35_controller_20261105_r1','fresh35_controller_20261105_r9'));
+ assert.deepEqual({...finalMetadata,definitionSha256:oldFinalRoutine.definitionSha256},mappedOldFinal,'only this routine body/definition changes; owner, ACL, signature and other captured metadata retain the approved identity mapping');
+ const finalTrigger=before.triggers.find(t=>t.definition.includes('validate_import_accounting_final_record_commit()'));assert(finalTrigger);assert.match(finalTrigger.definition,/DEFERRABLE INITIALLY DEFERRED/);
+ assert.deepEqual(model.triggers.find(t=>t.definition.includes('validate_import_accounting_final_record_commit()')),finalTrigger,'the existing deferred trigger identity and binding remain exact');
  const columns=model.columns.map(c=>({...c}));for(const c of columns){const old=before.columns.find(o=>o.table===c.table&&o.name===c.name);if(c.table==='sales_header'&&c.name==='hall_id'){assert.equal(old.notNull,true);assert.equal(c.notNull,false);assert.equal(c.metadata.attnotnull,false)}else assert.deepEqual(c,old.generated==='s'?{...old,generatedExpression:'\n'+old.generatedExpression}:old)}
  for(const key of ['indexes','triggers','policies'])assert.deepEqual(model[key],before[key],key);
  assert.deepEqual(model.constraints.map(row=>row.relation==='operation_receipt'&&row.name==='receipt_result_by_kind'?{...row,definition:before.constraints.find(c=>c.relation===row.relation&&c.name===row.name).definition}:row),before.constraints,'only the separately pinned capture receipt CHECK definition differs');
