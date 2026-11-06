@@ -1,0 +1,144 @@
+{
+  "t45-f35-0adc4f-tail-staging-policy-20261106-01": {
+    "job": {
+      "jobId": "t45-f35-0adc4f-tail-staging-policy-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-5c4a3eb301e8",
+      "atUTC": "2026-11-06T05:14:20.753399+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 0.26765195978805423,
+      "exports": [
+        "ordinary-policy-readback.json"
+      ],
+      "finishedAtUTC": "2026-11-06T05:14:21.038605+00:00"
+    },
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-0adc4f-tail-staging-policy-20261106-01/transport/release-receipts/t45-f35-0adc4f-tail-staging-policy-20261106-01/ordinary-policy-readback.json",
+    "receiptSha256": "e7735d8e78df32dd38a8a1aa40a59f1711870ff4bb5a40f3a91a2f0af4fbb154",
+    "receipt": {
+      "status": "EXTERNAL_ORDINARY_POLICY_INSTALLED_OLD_BYTES_PRESERVED",
+      "before": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o444",
+        "sha256": "b1bfe841f21d1ec0cf23ac9d8dca156f89bb9c1cf3eae15a5eb4035b750b4ece",
+        "backupPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-0adc4f-tail-staging-policy-20261106-01/staging-policy-before.json"
+      },
+      "after": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o444",
+        "nlink": 1,
+        "sha256": "eb6c24f74645e1d38b72bb0f7ee68a65b8c982d73ee4848d8a05c78763190708"
+      },
+      "approvalCreated": false,
+      "oldSourceArtifactOrReadyChanged": false,
+      "restore": "Use retained exact old bytes and metadata via original root controlled channel only after no live ordinary staging consumption; preserve new policy evidence."
+    }
+  },
+  "t45-f35-0adc4f-final-staging-policy-20261106-01": {
+    "job": {
+      "jobId": "t45-f35-0adc4f-final-staging-policy-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-e132b3dc12cb",
+      "atUTC": "2026-11-06T05:14:22.917946+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 0.2676878469064832,
+      "exports": [
+        "ordinary-policy-readback.json"
+      ],
+      "finishedAtUTC": "2026-11-06T05:14:23.205148+00:00"
+    },
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-0adc4f-final-staging-policy-20261106-01/transport/release-receipts/t45-f35-0adc4f-final-staging-policy-20261106-01/ordinary-policy-readback.json",
+    "receiptSha256": "c98fd6f2c5de56eab80673d6e36277efd6ea1db02dfbf0e086728b5b4d71f644",
+    "receipt": {
+      "status": "EXTERNAL_ORDINARY_POLICY_INSTALLED_OLD_BYTES_PRESERVED",
+      "before": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o444",
+        "sha256": "eb6c24f74645e1d38b72bb0f7ee68a65b8c982d73ee4848d8a05c78763190708",
+        "backupPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-0adc4f-final-staging-policy-20261106-01/staging-policy-before.json"
+      },
+      "after": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0o444",
+        "nlink": 1,
+        "sha256": "08b144a275a8a4ea76c145ef1c403abe563efabefab9077ab6161a41d2bee053"
+      },
+      "approvalCreated": false,
+      "oldSourceArtifactOrReadyChanged": false,
+      "restore": "Use retained exact old bytes and metadata via original root controlled channel only after no live ordinary staging consumption; preserve new policy evidence."
+    }
+  },
+  "t45-f35-0adc4f-local-assemble-20261106-01": {
+    "job": {
+      "jobId": "t45-f35-0adc4f-local-assemble-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-78b0b05d2c15",
+      "atUTC": "2026-11-06T05:14:24.202122+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 4.178931300994009,
+      "exports": [
+        "local-assembly-original-receiver.json"
+      ],
+      "finishedAtUTC": "2026-11-06T05:14:28.420259+00:00"
+    },
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-0adc4f-local-assemble-20261106-01/transport/release-receipts/t45-f35-0adc4f-local-assemble-20261106-01/local-assembly-original-receiver.json",
+    "receiptSha256": "256b21434eaa21a121b722e9719484ec07d46d36a0f232c09d3cdd7231e3dc1d",
+    "receipt": {
+      "assembledBytes": 83689617,
+      "assembledSha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95",
+      "baseIdentity": [
+        66304,
+        393649,
+        83688806,
+        1793938916650385661,
+        1793938917924393755
+      ],
+      "baseSha256": "97952e46730a14ff923fb4dcd83dfe2fc89b26b6ce818f67a7e04165b3043b1c",
+      "oldBaseAndPartialChanged": false,
+      "originalReceiver": {
+        "receipt": {
+          "archiveBytes": 83689617,
+          "archiveSha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95",
+          "artifactKey": "f35-0adc4f-ordinary-local-20261106-01",
+          "authoritySha256": "08b144a275a8a4ea76c145ef1c403abe563efabefab9077ab6161a41d2bee053",
+          "fileIdentity": [
+            66304,
+            393657,
+            83689617,
+            1793942066879527648,
+            1793942068214526621
+          ],
+          "sourceSetSha256": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+          "status": "READY"
+        },
+        "status": "READY"
+      },
+      "originalReceiverSha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653",
+      "pgStarted": false,
+      "prefixBytes": 80445454,
+      "receiverUid": 1000,
+      "rootAuthorityCreated": false,
+      "status": "ORIGINAL_RECEIVER_READY_FROM_EXACT_LOCAL_BYTES",
+      "tailBytes": 3244163,
+      "tailSha256": "5b35de460e9e2b08b2e64d9bdc99c79cab8938657971f24d4f194e3779ec59bb"
+    }
+  }
+}
