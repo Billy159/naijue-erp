@@ -1,0 +1,14 @@
+[
+  {
+    "path": "scripts/release/unified-install/fresh35-restoration-v1.mjs",
+    "parentSha256": "3b2e85bf09bc535da00092cbc8f2d6df32e8fe81d63cf3dde1132013230fcc14",
+    "sha256": "355e1afd00acddd72d8ab10d000d238a089c015c6e37202b572a36cd68dacf85",
+    "bytes": 36125
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+    "parentSha256": "d4dc1ba9dff4e4fa72517b5a9355841c9b33a97fc5390c15d42638aa92e768be",
+    "sha256": "d5eb56e3d18bffca18ffa9d1df75b6b5244bf8f4efa9849e1ac0be2cc798165d",
+    "bytes": 22992
+  }
+]

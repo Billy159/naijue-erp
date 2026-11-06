@@ -1,0 +1,36 @@
+{
+  "status": "PASS_SCOPED_RESTORATION_BUILD_DEPENDENCY_SOURCE",
+  "metadata": {
+    "HANDOFF.json": "bb5de111241672e3d86caf1baae856bb8932b30ab84eddf95db3c78cbff61b3d",
+    "LEAVES.json": "7c2dfac226e3eefe069553fc8746f5f004a8bae30f30d04eb8d9995dcf66e000",
+    "source.patch": "59169f75c64b4259f4516cba189c2c22d46656d9b436b55d93105d2aa6c2a11a"
+  },
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-restoration-v1.mjs",
+      "parentSha256": "3b2e85bf09bc535da00092cbc8f2d6df32e8fe81d63cf3dde1132013230fcc14",
+      "sha256": "355e1afd00acddd72d8ab10d000d238a089c015c6e37202b572a36cd68dacf85",
+      "bytes": 36125
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "parentSha256": "d4dc1ba9dff4e4fa72517b5a9355841c9b33a97fc5390c15d42638aa92e768be",
+      "sha256": "d5eb56e3d18bffca18ffa9d1df75b6b5244bf8f4efa9849e1ac0be2cc798165d",
+      "bytes": 22992
+    }
+  ],
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": "CHECKS.json; old/new actual predicates finite Node24 edge cases",
+  "adoptedAuthor3": "unchanged policy graph old324 reproduces refusal, successor215 and predicate equality/no completion; not rerun",
+  "reusedScope": "Original02 14 + FIX02/17/5 and real-files03 PASS not rerun",
+  "actualFailedBuild": "990c3659898afe00a0d00d21d02f3341cc5c17076a24742567dbd5bb5087eb96 verified BUILD_FAILED_NATIVE_CLOSURE_PROHIBITED_SOURCE_NO_PACK, not relabeled PASS",
+  "genuineSuccessorSourceSet": "NOT_DERIVED",
+  "actualSuccessorBuildPackRelocation": "NOT_TESTED",
+  "nativeLinuxCompletion": "NOT_TESTED",
+  "PGAndApplication": "NOT_TESTED",
+  "server": "NOT_ACCESSED",
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}
