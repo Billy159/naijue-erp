@@ -2280,3 +2280,8 @@ T45实际只读preflight602feb33退出0/0.319秒，确认r21 stopped及六项清
 作者回执10be0f30已核，host f09c93e1/33227字节、原directtest6e41fec1/23203字节；仅synthetic固定record不添加其不可列读parent，其他parents/production逐字不变，record inode及generation/bytes/lease/revoke保留。原行为和新增用例RED有证；修后3/3无skip，覆盖inode覆写/rename/unlink/replacement/error撤销、5类启动代次/释放失败拒绝，production非listable仍拒绝。bootstrap原已正确不扩大runtime修改。
 
 sourceSet仅host一pin/214变为b0f8cb29；当前为源码和本机有限模型通过，不是Linux/PG业务通过。D1已冻结无继续写，C固定后交原QB两叶增量，原r22modeQA及其他有效范围直接复用。无ACL/SQL/业务合同/collector/诊断协议改变，无server/PG/REAL或旧键重放。
+
+
+## 2026-11-06 — r23最小watch源码已固定，原QB两叶增量验收
+
+固定source4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81/root1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf/tree7b2edb79378e1576ff6333d247fbf1a314975a50。实际源码仅host及原directtest两叶，collector0755等原有效实现保留。原QB只验撤销/启动代次/资源清理等受影响接缝，作者3项定向结论复用；不全suite/PG。T45并行只做必要r23本地准确资源/终态绑定准备，新buildpins保持UNBOUND，无server/PG/传输或新窗口。r23未构建未实测，r22实际安装/合成及新失败完整保留，不混算本版。
