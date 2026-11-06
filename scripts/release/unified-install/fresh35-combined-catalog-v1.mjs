@@ -5,7 +5,7 @@ import {readFile,realpath} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
 import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
-import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverCheck,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation} from './fresh35-combined-target-v1.mjs';
+import {describeFresh35CombinedTarget,fresh35RestoredTargetGuard,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverCheck,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation} from './fresh35-combined-target-v1.mjs';
 import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 const catalogs=new WeakMap(),need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_CATALOG_'+code)};
@@ -225,10 +225,10 @@ export function validateFresh35CombinedRuntimeCatalogObservation(raw,catalog,sou
 export function validateFresh35CombinedCatalogObservation(raw,catalog,source,target){
  return validateCatalogObservation(raw,catalog,source,target,false);
 }
-function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=false){
+function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=false,restoration=false){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),s=describeFresh35CombinedSource(source),t=describeFresh35CombinedTarget(target);
  need(typeof raw==='string'&&Buffer.byteLength(raw)<=16*1024*1024,'BOUNDED_RAW_OBSERVATION_REQUIRED');const packet=parseStrictJson(raw),i=packet.identity;
- need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner)&&i.host===(ordinary===true?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary===true?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
+ need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(restoration?t.proposal.admin:ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner)&&i.host===(ordinary===true?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary===true?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
  const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership','bootstrapObserver'];
  need(packet.catalog&&Object.keys(packet.catalog).sort().join(',')===expectedKeys.sort().join(',')&&expectedKeys.every(k=>Array.isArray(packet.catalog[k])),'FULL_RAW_CATALOG_REQUIRED');
  need(packet.catalog.types.length===70&&packet.catalog.routines.length===152&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');
@@ -243,7 +243,7 @@ function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=f
  * no function grant is assumed on the interface role. This builder grants nothing. */
 export function fresh35CombinedOrdinaryCatalogSql(catalog,source,target,physical){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),t=describeFresh35CombinedTarget(target);
- need(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&physical?.systemIdentifier===t.physical.systemIdentifier&&physical.databaseOid===t.physical.databaseOid,'ORDINARY_PHYSICAL_BINDING_REQUIRED');
+ need(['PRODUCTION_NEW_EMPTY_EXACT35','RESTORED_FROM_VERIFIED_INSTALLATION'].includes(t.purpose)&&physical?.systemIdentifier===t.physical.systemIdentifier&&physical.databaseOid===t.physical.databaseOid,'ORDINARY_PHYSICAL_BINDING_REQUIRED');
  const role='erp_unified27_runtime_2393dbc6db9581c2';
  const identity=`DO $ordinary35_identity$ BEGIN IF (current_database()=${q(t.proposal.database)} AND session_user=${q(t.proposal.runtime)} AND current_user=${q(role)} AND current_setting('row_security')='on' AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery() AND current_setting('transaction_isolation')='repeatable read' AND current_setting('transaction_read_only')='on' AND host(inet_server_addr())=${q(t.ordinary.serverAddress)} AND inet_server_port()=${t.ordinary.serverPort}) IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_ORDINARY_IDENTITY_DIFFERS'; END IF; END $ordinary35_identity$;`;
  return Object.freeze({guardSql:identity+'\n'+guardSql(c.model,c.lineage,target,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true,systemIdentifierExpression:q(physical.systemIdentifier)})});
@@ -260,3 +260,12 @@ export function fresh35CombinedSyntheticOrdinaryCatalogSql(catalog,source,target
 export function validateFresh35CombinedSyntheticOrdinaryCatalogObservation(raw,catalog,source,target){
  const t=describeFresh35CombinedTarget(target);need(t.format==='FRESH35_COMBINED_TARGET_BINDING_V1'&&!t.purpose,'SYNTHETIC_V1_TARGET_REQUIRED');return validateCatalogObservation(raw,catalog,source,target,true,'synthetic');
 }
+
+/** Same full model/ACL/152 routines/35 tables/70 types on the already restored
+ * target. This is metadata observation, never schema installation. */
+export function fresh35CombinedRestorationCatalogSql(catalog,source,target){
+ fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),t=describeFresh35CombinedTarget(target);
+ need(t.purpose==='RESTORED_FROM_VERIFIED_INSTALLATION','RESTORED_PURPOSE_REQUIRED');
+ return Object.freeze({guardSql:fresh35RestoredTargetGuard(target)+'\n'+guardSql(c.model,c.lineage,target,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
+}
+export function validateFresh35CombinedRestorationCatalogObservation(raw,catalog,source,target){return validateCatalogObservation(raw,catalog,source,target,true,false,true)}
