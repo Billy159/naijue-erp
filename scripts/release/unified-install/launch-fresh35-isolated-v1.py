@@ -544,10 +544,15 @@ def port_absent(port, observation=None):
         observation['namespace']={'device':namespace.st_dev,'inode':namespace.st_ino}
         for table in ('tcp','tcp6'):
             observation['reading']=table
-            for line in Path('/proc/net/'+table).read_text().splitlines()[1:]:
+            lines=Path('/proc/net/'+table).read_text().splitlines()
+            header=('sl','local_address','rem_address' if table=='tcp' else 'remote_address','st','tx_queue','rx_queue','tr','tm->when','retrnsmt','uid','timeout','inode')
+            if not lines or tuple(lines[0].split()[:len(header)])!=header:raise ValueError('TCP_TABLE_HEADER_INVALID')
+            for line in lines[1:]:
                 fields=line.split()
                 if len(fields)<4 or re.fullmatch('[A-Fa-f0-9]{2}',fields[3]) is None:raise ValueError('TCP_ROW_INVALID')
-                if int(fields[1].split(':')[1],16)==port:
+                local=re.fullmatch(r'[A-Fa-f0-9]{8}:([A-Fa-f0-9]{4})' if table=='tcp' else r'[A-Fa-f0-9]{32}:([A-Fa-f0-9]{4})',fields[1])
+                if local is None:raise ValueError('TCP_LOCAL_ENDPOINT_INVALID')
+                if int(local.group(1),16)==port:
                     state=fields[3].upper()
                     observation['matchingStates'][table][state if state in states else 'UNKNOWN']+=1
                     observation['matchingRows']+=1
