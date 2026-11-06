@@ -411,6 +411,25 @@ class OrdinaryScenarioPreparationTests(unittest.TestCase):
             self.assertEqual((root/'ordinary-private').stat().st_mode&0o777,0o700)
             self.assertEqual(json.loads(path.read_bytes()),self.scenario())
             with self.assertRaises(FileExistsError):m.write_ordinary_scenario(authority(),root,self.scenario(),watch)
+    def test_private_scenario_creation_with_original_capabilities(self):
+        # Model CHOWN and DAC_OVERRIDE without FOWNER. Keep real private file
+        # writes; unlike a no-op fchown, ownership transfer affects fchmod.
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname);a=authority();owners={};transfers=[]
+            actual_open=m.os.open;actual_chmod=m.os.fchmod
+            def opened(path,flags,*args,**kwargs):
+                fd=actual_open(path,flags,*args,**kwargs);owners[fd]=0;return fd
+            def chown(fd,uid,gid):
+                owners[fd]=uid;transfers.append((uid,gid))
+            def chmod(fd,mode):
+                if owners[fd]!=0:raise PermissionError('MODELED_CAP_FOWNER_ABSENT')
+                actual_chmod(fd,mode)
+            with patch.object(m.os,'open',side_effect=opened),patch.object(m.os,'chown'),patch.object(m.os,'fchown',side_effect=chown),patch.object(m.os,'fchmod',side_effect=chmod),patch('secrets.token_bytes',return_value=b'M'*32):
+                path=m.write_ordinary_scenario(a,root,self.scenario(),SimpleNamespace(poll=lambda:None))
+            self.assertEqual(path,root/'ordinary-private'/m.ORDINARY_SCENARIO_NAME)
+            self.assertEqual(transfers,[(a['postgresUid'],a['postgresGid'])]*2)
+            self.assertEqual((root/'ordinary-private').stat().st_mode&0o777,0o700)
+            self.assertEqual({f.name:f.stat().st_mode&0o777 for f in path.parent.iterdir()},{m.ORDINARY_SCENARIO_NAME:0o600,m.ORDINARY_CREDENTIAL_KEY_NAME:0o600})
     def test_unknown_scenario_guardian_and_oversize_do_not_write(self):
         for change in [lambda s:None,lambda s:{**s,'syntheticOnly':False},lambda s:{**s,'extra':True},lambda s:{**s,'login':{}},lambda s:{**s,'initialInventory':['x'*262144]}]:
             with patch.object(m,'write_new') as write,self.assertRaises(RuntimeError):m.write_ordinary_scenario(authority(),Path('/model'),change(self.scenario()),SimpleNamespace(poll=lambda:None))
