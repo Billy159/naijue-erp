@@ -1,0 +1,246 @@
+{
+  "status": "FAILED_NATIVE_ROLLED_BACK_CLEANUP_AND_CONTAINER_STOP_CONFIRMED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T01:26:10.988872+00:00",
+  "actualSourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+  "start": {
+    "status": "ACTUAL_R8_TARGET_DESCRIBED_WAITING_EXTERNAL_C9",
+    "recordedAtUTC": "2026-11-06T01:23:05.887342+00:00",
+    "job": {
+      "jobId": "t45-f35-9c2748-start-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-25bd1a4d8e61",
+      "atUTC": "2026-11-06T01:21:17.499900+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 35.04567655501887,
+      "exports": [
+        "fresh35-start-target-result.json"
+      ],
+      "finishedAtUTC": "2026-11-06T01:21:52.574939+00:00"
+    },
+    "receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-9c2748-start-20261106-01/transport/release-receipts/t45-f35-9c2748-start-20261106-01/fresh35-start-target-result.json",
+      "sha256": "5014f9f33e12e027d635967cbfbc8a6620de25ca51f5b4895fda4daf687bef6d"
+    },
+    "safeResult": {
+      "cid": "3989c089c1ab65463a3436de1401692fc9962258a14ddcbb54058385886f1718",
+      "expiresAt": 1793929218149,
+      "program": {
+        "applicationTransactions": 1,
+        "bootstrapNetworkObservationSha256": "e11186b3897f80c5549cea4ba93d265195895efc7cccb4e06537a7dca78914f3",
+        "catalogSha256": "02350148fa9be9ea31c4953fe48e26fd937d1209033f526abc7568a0e36b9f4a",
+        "createsCluster": false,
+        "createsCredentials": false,
+        "createsRoles": false,
+        "format": "FRESH35_COMBINED_ATOMIC_PROGRAM_V1",
+        "hostEnabled": false,
+        "observationSqlSha256": "70a4948915a9f46a82ab391f3b03ed69db100469af7a6780df0feedc8ceb35dc",
+        "oldTablesRemoved": false,
+        "programSha256": "744d6cff78668c1ed44982393d30345cd0dfdc2c54c229c29a517727782fe9c8",
+        "sourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+        "statements": [
+          {
+            "name": "physical-empty-target",
+            "sha256": "05e9ec2edaa395487d781bd38190677164ace6d24922608fb80c02ed25d646e5"
+          },
+          {
+            "name": "direct-35-schema",
+            "sha256": "539c0a859820cfb6fa47868da31bb1f7daec0bb67ac829d6b66bc63682916940"
+          },
+          {
+            "name": "migration-lineage",
+            "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9"
+          },
+          {
+            "name": "controller-lineage-column-read",
+            "sha256": "b82f699e12d00079406a2e7a65513b1a7cbb25704381fc2ef1ec2b49b5d0872e"
+          },
+          {
+            "name": "historical-sales-hall",
+            "sha256": "5826d7dd3487e2a2baed50373d156a2cf2e67c9dc1f903945f8a88646e522591"
+          },
+          {
+            "name": "historical-line-amount",
+            "sha256": "2b10411c31255e380dba914ba35a1b6238397d50671baf3419a76af458060dde"
+          },
+          {
+            "name": "historical-missing-settlement-types",
+            "sha256": "161e4160c13e4d617a818d35ef16572bcd1d7699cb13ebcf739cd26d897f92b9"
+          },
+          {
+            "name": "historical-settlement-difference",
+            "sha256": "ff257e8c51d1cc08279f2b0db96540149451042458c1e6a414bdfa6bf56c7d6e"
+          },
+          {
+            "name": "complete-successor-catalog",
+            "sha256": "17093cf77a81f4f03442f2a8fe3bed8a1b642def2b384522b16e5ebdf37c466c"
+          },
+          {
+            "name": "same-physical-target",
+            "sha256": "234410d933fd92b20780a3b4a53fc55ad294b5ce4c0e73a8087698d89ee99461"
+          }
+        ],
+        "targetSha256": "68541099aec5a21aad862e90d5795a2b8e6df655ec1de38eb1f1f54ef7feae3f"
+      },
+      "status": "WAITING_EXTERNAL_INSTALL_AUTHORITY",
+      "target": {
+        "expiresAt": 1793929218149,
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-06 01:21:34.265214+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7704862480009437231"
+        },
+        "proposal": {
+          "admin": "fresh35_admin_20261105_r1",
+          "controller": "fresh35_controller_20261105_r1",
+          "database": "synthetic_fresh35_20261105_r1",
+          "host": "127.0.0.1",
+          "owner": "fresh35_owner_20261105_r1",
+          "port": 18651,
+          "runtime": "fresh35_runtime_20261105_r1",
+          "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+        },
+        "startsAt": 1793928018149
+      }
+    },
+    "installSubmitted": false,
+    "actualModelEffort": "UNVERIFIED"
+  },
+  "install": {
+    "job": {
+      "jobId": "t45-f35-9c2748-install-20261106-01",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "FAILED",
+      "unit": "naijue-erp-op-5cc58239-3ec424c60ec7",
+      "atUTC": "2026-11-06T01:24:25.798973+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 2,
+      "elapsedSeconds": 17.962092267815024,
+      "exports": [
+        "fresh35-deliver-install-result.json"
+      ],
+      "finishedAtUTC": "2026-11-06T01:24:43.803999+00:00"
+    },
+    "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-9c2748-install-20261106-01/transport/release-receipts/t45-f35-9c2748-install-20261106-01/fresh35-deliver-install-result.json",
+    "receiptSha256": "ce24a90b36d32e03a79049fad12f272738d2eec3bfbc451acca032c8d0898d70",
+    "safeResult": {
+      "cid": "3989c089c1ab65463a3436de1401692fc9962258a14ddcbb54058385886f1718",
+      "containerStopped": true,
+      "delivery": {
+        "approvalCreated": false,
+        "cid": "3989c089c1ab65463a3436de1401692fc9962258a14ddcbb54058385886f1718",
+        "sha256": "41e87a156a9a38d21e0cd64c45c9bef73f0359c2d62c7adca0068e52141abc8f",
+        "status": "EXTERNAL_INSTALL_BYTES_COPIED_ONCE"
+      },
+      "evidence": {
+        "bootstrap-network-observation.json": {
+          "adminActor": "fresh35_admin_20261105_r1",
+          "databaseOid": "16393",
+          "expiresAt": 1793929218149,
+          "format": "FRESH35_SYNTHETIC_BOOTSTRAP_NETWORK_OBSERVATION_V1",
+          "host": "127.0.0.1",
+          "listenAddresses": "127.0.0.1",
+          "port": 18651,
+          "postmasterStart": "2026-11-06 01:21:34.265214+00",
+          "serverVersionNum": "170011",
+          "sourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+          "startsAt": 1793928018149,
+          "systemIdentifier": "7704862480009437231",
+          "unixSocketDirectories": ""
+        },
+        "cleanup.json": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "failure.json": {
+          "automaticRetry": false,
+          "code": "FRESH35_ISOLATED_INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+          "commitOutcome": "CONSULT_APPLICATION_JOURNAL_NOT_INFERRED"
+        },
+        "installation-child-failure.json": {
+          "automaticRetry": false,
+          "code": "FRESH35_ISOLATED_ENTRY_FAILED",
+          "diagnosticUnavailable": false,
+          "exitCode": 1,
+          "installState": "ROLLED_BACK",
+          "originalInternalCode": null,
+          "originalSQLSTATE": "P0001",
+          "rollbackInternalCode": null,
+          "rollbackSQLSTATE": null,
+          "stage": "STEP",
+          "state": "INSTALL_FAILED_OR_OUTCOME_UNKNOWN",
+          "step": "complete-successor-catalog",
+          "validationCode": null,
+          "validationStage": null
+        },
+        "runtime-dependencies.json": {
+          "arch": "x64",
+          "fastify": "5.12.5",
+          "libvips": "8.18.7",
+          "pg": "8.23.1",
+          "platform": "linux",
+          "sharp": "0.35.5"
+        }
+      },
+      "evidenceSha256": {
+        "bootstrap-network-observation.json": "e11186b3897f80c5549cea4ba93d265195895efc7cccb4e06537a7dca78914f3"
+      },
+      "forcedStopIsNotCleanShutdownProof": true,
+      "launcherExitCode": 1,
+      "ordinaryProofEvidence": {},
+      "sourceResult": {
+        "businessVerified": false,
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          },
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "hostEnabled": false,
+        "hostVerified": false,
+        "independentSnapshotsVerified": false,
+        "ordinaryBusinessVerified": false,
+        "productionVerified": false,
+        "recordPublished": null,
+        "state": "FAILED_OR_CLEANUP_UNCONFIRMED",
+        "syntheticImportVerified": false
+      },
+      "status": "FAILED_OR_UNKNOWN_PRESERVED_NO_REPLAY"
+    }
+  },
+  "cause": "P0001_NOT_A_ROOT_CAUSE_STATIC_TAG_PENDING",
+  "productionCarrierOrREALExecuted": false,
+  "sourceOrBuildOrBackupRepeated": false,
+  "actualModelEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

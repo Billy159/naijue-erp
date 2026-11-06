@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T09:26:28+08:00",
+  "updatedAt": "2026-11-06T09:30:54+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T09:26:28+08:00",
+    "at": "2026-11-06T09:30:54+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,10 +28491,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "Collect original install key terminal; adopt actual install/synthetic/ordinary/probe/cleanup separately. No replay or new work on unchanged source.",
+      "critical": "Original D1 exact external-dependency predicate/source diagnosis. T45 stopped scene preserved; no blind rerun/newPG until evidence-backed minimal fix. Existing sourceQA and backup valid at their levels.",
       "independentPreparation": {
-        "D1": "Fixed5e/root9c generated-LF scope frozen; wait exactactualPG error only, no repeat checks.",
-        "T45": "r8 actualmaterialize running; originalcurrentbackup actualcompleted; next actualresource/newPG20.",
+        "D1": "R8 exact EXTERNAL_DEPENDENCY failure diagnosis along original owner; no repeat LF/318column review.",
+        "T45": "Actual r8 rolledback/stopped, static tag collected once. Preserve oldscenes; next evidence-backed source increment only.",
         "D2": "Fixed9c artifacts and actualtail delivered; no rebuild. Productionrelease source ready.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
         "QB": "GeneratedLF6c737 and backupF02 e8d711 valid adopted; next actualincrement only.",
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R8_ACTUAL_NEW_PG_STARTED_INSTALL_SUBMITTED_NOT_YET_PASSED",
+      "state": "R8_ACTUAL_EXTERNAL_DEPENDENCY_FAIL_ROOTCAUSE_DIAGNOSIS",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "Collect original install key terminal; adopt actual install/synthetic/ordinary/probe/cleanup separately. No replay or new work on unchanged source.",
+      "next": "Original D1 exact external-dependency predicate/source diagnosis. T45 stopped scene preserved; no blind rerun/newPG until evidence-backed minimal fix. Existing sourceQA and backup valid at their levels.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30068,7 +30068,7 @@
         }
       },
       "r8Preparation": {
-        "state": "ACTUAL_START_COMPLETED_INSTALL_ORIGINAL_KEY_SUBMITTED",
+        "state": "ACTUAL_INSTALL_FAILED_EXTERNAL_DEPENDENCY_ROLLED_BACK_CLEAN_STOP",
         "integration": "5e28855e1455a639514524f868528c20f1782c76",
         "buildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
         "tree": "fea8d398cd64d16b09d55b488f3bcefee8127cc3",
@@ -30099,7 +30099,7 @@
         "root": "phaseb-application-r8",
         "container": "t45-fresh35-deb13-20261106-r8",
         "actualPG": true,
-        "next": "Collect original install key terminal; adopt actual install/synthetic/ordinary/probe/cleanup separately. No replay or new work on unchanged source.",
+        "next": "Original D1 exact external-dependency predicate/source diagnosis. T45 stopped scene preserved; no blind rerun/newPG until evidence-backed minimal fix. Existing sourceQA and backup valid at their levels.",
         "qbSHA256": "6c737bd7cf1105d36088a6f87bd196aee9c69f0db4b66d6e57b96750e609fef7",
         "QBConclusion": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL;33rawsource/318unchanged/7negatives;actualPGnotverified",
         "stagePreflightSHA256": "a69d646090ce72f5c666eabf7e2459c714bbcb778bb2714d9225e28bfaa6d93a",
@@ -30147,7 +30147,28 @@
         "synthetic25Passed": false,
         "ordinaryBusinessPassed": false,
         "REAL": false,
-        "production": false
+        "production": false,
+        "actualSummarySHA256": "fb9c4ba3eeb87939cc1833442ef09816311eeaa84db8fc92cc3863f077317acd",
+        "actualInstallReceiptSHA256": "ce24a90b36d32e03a79049fad12f272738d2eec3bfbc451acca032c8d0898d70",
+        "actualInstallExitCode": 2,
+        "actualInstallSeconds": 17.962092267815024,
+        "install": {
+          "state": "ROLLED_BACK",
+          "stage": "STEP",
+          "step": "complete-successor-catalog",
+          "originalSQLSTATE": "P0001",
+          "actualStaticTag": "FRESH35_COMBINED_EXTERNAL_DEPENDENCY",
+          "specificDependency": "NOT_YET_PROVEN"
+        },
+        "cleanup": {
+          "sixOriginalChecks": true,
+          "errors": [],
+          "containerStopped": true,
+          "initializerAndDescendantsReaped": true
+        },
+        "safeStaticTagReceiptSHA256": "19989cf34b13927ed643b155bae747749f46ed900171809fd70fab5d265e0f7a",
+        "safeStaticTagSummarySHA256": "fd2ac6ed1c020d0e2f7cea3b19767292f2c0f9f0e496cf926a3dc3fdd33598cc",
+        "recordPublished": false
       },
       "previousTopStatePreserved": "R3_ACTUAL_INSTALL_FAILED_55000_STEP_PHYSICAL_EMPTY_TARGET_CLEANUP_CONFIRMED_ROOTCAUSE_PENDING"
     },

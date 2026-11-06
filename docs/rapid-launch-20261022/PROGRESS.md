@@ -1476,3 +1476,7 @@ D2实际build0/10.838s、pack0/8.830s，production453及ordinary7298成员bytes/
 
 ### 2026-11-06T09:26:28+08:00 | r8已取得真实新目标并提交安装
 实际材料化b6e01c94/372.391s及随后资源fcae604a通过，汇总bddf8b46已核。C原11键2427e9c2新20min1793928018149..1793929218149、460字符，T45一次start真实COMPLETED0/35.046s（5014f9f3），新SID7704862480009437231/OID16393/CID3989c089。C原9键41e87a15精确绑定program744d6cff/target68541099/source d496/原时窗/QB6c737，410字符；唯一install键已提交，终态未到，不能称安装或业务通过。旧r7现场、正式服务、REAL档未动，不延窗或重旧key。下一只收真实安装/原synthetic25/普通账号/读回/probe/cleanup结果并据此接续。
+
+
+### 2026-11-06T09:30:54+08:00 | r8实际失败精确收口
+唯一install ce24a90b实际FAILED2/17.962s，STEP/complete-successor-catalog/P0001/原事务ROLLED_BACK；cleanup六项全true、initializer及descendants回收、errors[]、CID3989c089已停。没有record或synthetic25/ordinary业务通过，汇总fb9c4ba3已核。T45同一次有界停止log回执19989cf3实际命中FRESH35_COMBINED_EXTERNAL_DEPENDENCY/ERROR/DO line107/1match，0PG/变更；具体外部对象与原因尚未证明。原D1沿准确谓词定向诊断，不能凭标签加白名单/放宽guard或再盲开PG；原LF/318列及其他已过证据复用。旧正式服务和REAL未动，当前备份47d有效但新恢复未验。

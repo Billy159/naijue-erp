@@ -1,0 +1,75 @@
+{
+  "status": "ACTUAL_R8_STOPPED_LOG_STATIC_TAG_ONLY",
+  "recordedAtUTC": "2026-11-06T01:27:24.757299+00:00",
+  "job": {
+    "jobId": "t45-f35-9c2748-failure-tag-readonly-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-ea81a9674515",
+    "atUTC": "2026-11-06T01:26:51.473057+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.06738817878067493,
+    "exports": [
+      "failure-static-tag.json"
+    ],
+    "finishedAtUTC": "2026-11-06T01:26:51.567973+00:00"
+  },
+  "receiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-9c2748-failure-tag-readonly-20261106-01/transport/release-receipts/t45-f35-9c2748-failure-tag-readonly-20261106-01/failure-static-tag.json",
+  "receiptSha256": "19989cf34b13927ed643b155bae747749f46ed900171809fd70fab5d265e0f7a",
+  "safeResult": {
+    "status": "EXACT_STOPPED_R8_STATIC_TAG_MATCH",
+    "checkedAtUTC": "2026-11-06T01:26:51.557139+00:00",
+    "originalKeyTerminalReadback": {
+      "t45-f35-9c2748-start-20261106-01": {
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "finishedAtUTC": "2026-11-06T01:21:52.574939+00:00"
+      },
+      "t45-f35-9c2748-install-20261106-01": {
+        "status": "FAILED",
+        "exitCode": 2,
+        "finishedAtUTC": "2026-11-06T01:24:43.803999+00:00"
+      }
+    },
+    "targetStoppedVerified": true,
+    "cid": "3989c089c1ab65463a3436de1401692fc9962258a14ddcbb54058385886f1718",
+    "sourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+    "actualGuardSourceSha256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4",
+    "actualObserverSourceSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b",
+    "boundedLogSample": {
+      "fileBytes": 1447,
+      "sampleOffset": 0,
+      "sampleBytes": 1447,
+      "sampleSha256": "414ddddf584c371bfee44ac9ef3ece596948d6427c7d486a1052cc598d0b89b4"
+    },
+    "failureWindowUTC": {
+      "starts": "2026-11-06T01:24:25.798973+00:00",
+      "ends": "2026-11-06T01:24:43.803999+00:00"
+    },
+    "matches": [
+      {
+        "tag": "FRESH35_COMBINED_EXTERNAL_DEPENDENCY",
+        "severity": "ERROR",
+        "inlineRaiseLine": 107,
+        "contextType": "INLINE_CODE_BLOCK_RAISE"
+      }
+    ],
+    "matchCount": 1,
+    "SQLSTATE": "P0001",
+    "SQLSTATEEvidence": "Original install receipt ce24a90b; not claimed separately recorded in log",
+    "rawLogExported": false,
+    "backendPIDExported": false,
+    "SQLOrContextBodyExported": false,
+    "PGConnections": 0,
+    "mutations": 0,
+    "scopeExpandedIfUnknown": false
+  },
+  "specificObjectOrUnderlyingCause": "NOT_PROVEN",
+  "PGConnections": 0,
+  "mutations": 0,
+  "actualModelEffort": "UNVERIFIED"
+}
