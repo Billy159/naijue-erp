@@ -1626,3 +1626,8 @@ C核材料化86ac8939退出0/372.094s及一次资源70d6d14d；准确full2de0/so
 ### 2026-11-06T14:17:50+08:00 | r14真实首错：MISSING_SETTLEMENT STEP23514，已清理停止
 实际install eaab1fb3退出2/61.262s，schema和安装记录提交发布、adminsnapshot存在；rollback-child现在返回MISSING_SETTLEMENT/STEP/23514/IMPORT_FAILED/internalnull，不再是r13全null。具体触发约束尚未知，整组负例回滚、synthetic25、普通业务及独立读回仍未通过，不能把约束拒绝自动当PASS。C核原收据及safe8c4f9c48。cleanup6true/errors[]/initializer+descendantsreaped/CID13208054停止；清理后资源未另测，不补造证据。
 原D1已接准确fixture/STEP SQL/errorconsumer定向定位，先报最小叶及是否新业务合同；不重验已过entry/5叶，不改断言制造通过，不重启r14或盲建r15，不新增取证作业。无REAL/正式动作，原实际提交与未知边界保留。
+
+
+### 2026-11-06T14:27:54+08:00 | 已批C回执摘要与CHECK互斥，原D1五叶唯一owner
+D1静态定位：command在DOCUMENTS回执写historicalHallTargetCapturesSha256，既有读回依赖，但receipt_result_by_kind仍只允许原13键；非空捕获第14键必被CHECK拒绝。它是确定源码缺口，尚非r14实际首约束/ordinal证明。C核原修订单C第49/51/57/61行及人类call_66e02fc批准：原回执增加map摘要及新连接核摘要已明确批准，不新增业务决策。
+登记原D1唯一5叶：最后settlement-difference successor、原candidate、combined-catalog及两原directtests。只对原准确STANDARD_IMPORT_SQL_V1/IMPORT_CHUNK/DOCUMENTS增加严格64小写hex摘要接缝，原13键/其他分支/未知附加键/权限不放宽，冻结basecatalog不改；必要定向检查后再窄验/一次构建，不加PG或取证。其他已验源码/真实数据保持。

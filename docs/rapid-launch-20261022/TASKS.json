@@ -28507,7 +28507,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "INSTALL_RECORD_PUBLISHED_MISSING_SETTLEMENT_STEP23514_CLEAN_STOPPED",
+      "critical": "R14_DETERMINISTIC_APPROVED_RECEIPT_CHECK_OMISSION_FIX",
       "independentPreparation": {
         "D1": "Exact MISSING_SETTLEMENT STEP23514 source/fixture/consumer; report minimal leaves before changes.",
         "QB": "New twoleaf scoped verdict adopted; no repeated review.",
@@ -30877,7 +30877,43 @@
         },
         "postCleanupHostResources": "NOT_REMEASURED",
         "ordinaryBusinessPassed": false,
-        "synthetic25Passed": false
+        "synthetic25Passed": false,
+        "receiptConstraintFix": {
+          "state": "APPROVED_EXISTING_CONTRACT_OMISSION_IMPLEMENTATION_BY_ORIGINAL_D1",
+          "at": "2026-11-06T14:27:54+08:00",
+          "authority": "Human call_66e02fc29e8e45e6bef014891af81ec0 item0; K/0448Z-HALL-AND-ISOLATED-SOURCE-DELTA.md C.4 line49 receipt map digest + C.6 line51 independent same-operation readback; C verified actual approval and exact text. Not new user business decision.",
+          "writer": "D1",
+          "files": [
+            {
+              "path": "candidate0448/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+              "beforeSHA256": "57f25d9fec9385640ca63e672ffb7f6f94fd3a95f8c40fea25200dda6df669ee",
+              "writer": "D1"
+            },
+            {
+              "path": "candidate0448/scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+              "beforeSHA256": "92f5912953860774f63871c083c75c2b5e9d4e0d71558bfe0bebffe94eea88cb",
+              "writer": "D1"
+            },
+            {
+              "path": "candidate0448/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+              "beforeSHA256": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab",
+              "writer": "D1"
+            },
+            {
+              "path": "candidate0448/tests/fresh35-historical-settlement-difference-candidate.test.mjs",
+              "beforeSHA256": "ae885cf200107fde02c3991cf28856ed334e2c6593f843c4be3c6ee17ba6969b",
+              "writer": "D1"
+            },
+            {
+              "path": "candidate0448/tests/fresh35-combined-catalog.test.mjs",
+              "beforeSHA256": "d531b49eae8e418c22b63da1c0728a8b05c9458b85bcf35943ee10bcf2cb22ab",
+              "writer": "D1"
+            }
+          ],
+          "scope": "Only original STANDARD_IMPORT_SQL_V1/IMPORT_CHUNK/DOCUMENTS receipt existing approved capture digest; strict64lowerhex, original13 mandatory keys, other branches and unknown extras remain rejected. Sync exact successor/candidate/catalog only, no base frozen catalog edits/tables/permissions.",
+          "actualR14ConstraintAndOrdinal": "UNKNOWN; static deterministic mutually exclusive CHECK is not claimed actual first error.",
+          "environmentExecuted": false
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31286,12 +31322,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T14:17:50+08:00",
-      "phase": "INSTALL_RECORD_PUBLISHED_MISSING_SETTLEMENT_STEP23514_CLEAN_STOPPED",
+      "at": "2026-11-06T14:27:54+08:00",
+      "phase": "R14_DETERMINISTIC_APPROVED_RECEIPT_CHECK_OMISSION_FIX",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "D1 original exact MISSING_SETTLEMENT STEP23514 diagnosis",
-      "nextOwner": "C register exact leaf delta; original QB/D2/T45 only after concrete fix",
+      "currentOwner": "D1 sole fiveleaf receipt strict CHECK successor/candidate/catalog/tests",
+      "nextOwner": "C exact fixed pins then originalQB narrow review and D2 one build",
       "latestActualReceiptSHA256": "eaab1fb39a1f26637e9960168eeb312c4dbf6768d922f0ca5e4a860dc6b14c15",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31301,7 +31337,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalD1 exact MISSING_SETTLEMENT STEP23514 source/fixture/consumer seam; no r14 replay or blind r15 build/PG.",
+      "next": "Implement already approved C receipt digest strict constraint consumer; no raw proof deletion or negative expectation changes.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "d534b76ef82681288f270128723a1c6b0bc68867",
       "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
