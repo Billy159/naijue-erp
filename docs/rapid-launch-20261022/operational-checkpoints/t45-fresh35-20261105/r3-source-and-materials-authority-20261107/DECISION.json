@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-07T07:56:26.938699+08:00",
+  "authoritySource": "Direct human current controller Chat delegates decisions until 2026-11-07T12:00+08",
+  "sourceReviewSha256": "e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508",
+  "readySha256": "acc73c105978c56ed25b55f3a650f60653303ac91a80397830c6722fcf5582fd",
+  "decision": "EXACT_SCOPED_SOURCE_ADOPTION_AND_ARTIFACT_DELIVERY_ONLY",
+  "sourceClientBefore": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+  "sourceClientAfter": "94b119f8d05a4517e6369d4809595ad67cda0584507951f391a112d2a049c3d0",
+  "writer": "Original T45 only, preserve before bytes and compare exact parent before adoption",
+  "artifacts": [
+    {
+      "name": "C13-base-delta.json",
+      "sha256": "a7fcbaa13a17de5c4d12d2140d509964d0dbddfaa2a1bad855e9701894f9ef4b",
+      "bytes": 926,
+      "artifactKey": "f35-3b82c4-base-delta-20261107-01"
+    },
+    {
+      "name": "C13-six-private.json",
+      "sha256": "80304c61a3fc5eff10037abfba483ff82c1eb926ae2462a3f49728e4696acec0",
+      "bytes": 991,
+      "artifactKey": "t45-real-six-approvals-20261107-01"
+    }
+  ],
+  "startsAt": 1794009386937,
+  "expiresAt": 1794011186937,
+  "boundedPreparationDecision": "Original T45 may bind finite material-only job to these exact authorities after QB checks only the real configuration bytes and final parent pin. Max900s; no repeated1GB copy or old job replay.",
+  "notAuthorizedByThisFile": [
+    "new PG target",
+    "C14",
+    "installation",
+    "REAL import",
+    "production switch",
+    "deleting old materials"
+  ]
+}

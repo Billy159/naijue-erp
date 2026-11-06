@@ -1,0 +1,108 @@
+{
+  "status": "SOURCE_READY_SCOPED_R3_RAW_BASE_DELTA_SIX_PRIVATE_REVIEW_ONLY",
+  "files": {
+    "r3/C14-R3-TEMPLATE.UNISSUED.json": {
+      "sha256": "354dadc62151d9a921a71c5160449af3fcf0ce44814479ce0e2b3ec031782e38",
+      "bytes": 1305
+    },
+    "r3/controller-plan.UNBOUND.json": {
+      "sha256": "295c22fcbaa3d52c7b5d64d82cd312574529d21ccdfd47d86cbb0997c548729e",
+      "bytes": 689
+    },
+    "r3/fresh35-production-carrier.py": {
+      "sha256": "07eb922730d12cee530f33c67d4cac7f587043b7d38cdfb03b03b62be8816b48",
+      "bytes": 96370
+    },
+    "r3/fresh35-production-carrier.BUILD-BOUND.py": {
+      "sha256": "07afb1d86174f6ecb93a3df51833ae22946a90dd787229e454a3cded89153d6f",
+      "bytes": 53566
+    },
+    "r3/test_scoped_preparation.py": {
+      "sha256": "1efd56c813309500f5c660c8b3b701bffc5f363beebe7f807aa6ae208228c064",
+      "bytes": 11100
+    },
+    "r3/prepare_r3_materials_once.py": {
+      "sha256": "c789950a4267e226c44ed0f81c7a57635dfae4b5163dc8f2e7eae89711c5b34f",
+      "bytes": 12594
+    },
+    "r3/CHECKS.json": {
+      "sha256": "b8ad8945067a35ad1401f472075b83e9b8ba1825f24f4f9631b462e673f1b562",
+      "bytes": 1094
+    },
+    "r3/prepare_controller_reference.py": {
+      "sha256": "afb1a36a949491773865485f1a1e8579f602119dd754992cff63acdb6bfe330f",
+      "bytes": 5436
+    },
+    "r3/fresh35-production-carrier.py.diff": {
+      "sha256": "ed4bffaf386c2597827b34eba59b4d8249bd471dbc2f6f665b3e90e69c538308",
+      "bytes": 10701
+    },
+    "r3/direct_child_cleanup.py": {
+      "sha256": "6b570bf36511cf14c1210a6d64b69c43dc772fdc527a1c134b8d07699cf03682",
+      "bytes": 906
+    },
+    "r3/prepare_with_space_floor.py": {
+      "sha256": "395b85385b742c92d3a4375bd734d61c4fc7fdd2cf5b0ab6d29a275a82489b5e",
+      "bytes": 6880
+    },
+    "r3/fresh35-production-carrier.BUILD-BOUND.py.diff": {
+      "sha256": "3a4de6ecd9bfeeebe0869d911815a77709ab1b3b52758f71420c5899af0091fc",
+      "bytes": 8093
+    },
+    "r3/BINDINGS-STATUS.json": {
+      "sha256": "e8038b6a0223b5aa301ddee36e1c8ae09fbf2955fd2f4451f7486164a8f67c19",
+      "bytes": 806
+    },
+    "r3/C13-BASE-DELTA-TEMPLATE.UNISSUED.json": {
+      "sha256": "4ad328a814e02fd93e81509d84fa4ae111487c945b2df3015dfe1d9b8eebf5eb",
+      "bytes": 625
+    },
+    "r3/production-plan.UNBOUND.json": {
+      "sha256": "3b63e301cb0caadb9179650fd6f395a2dbe944a75579bf89135adbc38a447ff1",
+      "bytes": 689
+    },
+    "r3/PROPOSAL.json": {
+      "sha256": "3e8a92e15d60c1f130f7d2dfbea5842151bf6681985afd316dd1367055c91156",
+      "bytes": 2392
+    },
+    "r3/file-preparation-plan.UNBOUND.json": {
+      "sha256": "b4edcb4bceb8707948d8a15326638b15d42a97c8978b5cdea0ddefb673c592b0",
+      "bytes": 246
+    },
+    "six/CLIENT.diff": {
+      "sha256": "e69d521621e148c9113cada1e9d62da14ec28735a8fba7e3eeea4d61bf35ec8c",
+      "bytes": 11612
+    },
+    "six/SOURCE.json": {
+      "sha256": "a26ab7815a8491e0ec8e585f51263197fa93d4b44e45c690d16f5a788605b066",
+      "bytes": 902
+    },
+    "six/C13-SIX-INPUTS-TEMPLATE.UNISSUED.json": {
+      "sha256": "eb1fce7e61b6f1d006bea199288798b55a5fe51816dac870e587d603057a6edf",
+      "bytes": 674
+    },
+    "six/ssh-control.BEFORE.py": {
+      "sha256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+      "bytes": 64867
+    },
+    "six/exact_six_inputs.py": {
+      "sha256": "00d14f760534cc9abc2548df89ffb5931c85b7070204922bb237c7b69b895af6",
+      "bytes": 2972
+    },
+    "six/ssh-control.py": {
+      "sha256": "94b119f8d05a4517e6369d4809595ad67cda0584507951f391a112d2a049c3d0",
+      "bytes": 66721
+    },
+    "six/six-input-manifest.json": {
+      "sha256": "8677ea73ecb65737d487099d38240c607f91a40b01b0f3ec14debe6efbf84f65",
+      "bytes": 1580
+    }
+  },
+  "checks": "CHECKS.json author10+5 finite cases, no actualserver/RAW188/PG",
+  "entry": "prepare_with_space_floor.py / prepare_r3_materials_once.py; original controlledrootmanager678 unchanged",
+  "transportCandidate": "six/ssh-control.py94b candidate not adopted; only new exact six private type in two validators, old40s unchanged",
+  "actualAPPInputs": "3b82/8694/e7b/d579/99c/02d2, canonicalfull archive distinct from delta2a68;51changed/new+4metadata+2backup+manifest58",
+  "privateBusinessInputs": "Only original six in privateV archive939fe/6813015B+manifest74ad; not mixedintoAPP, no RAW1GB or188B transmitted",
+  "sourceVersions": "No restore-only f5a/a801/6eb included",
+  "nextOwner": "OriginalQB scopedsource delta, thenC exactC13 externaldecisions and plan hashes; no newPGwindow yet"
+}

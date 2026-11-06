@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T07:42:46.266515+08:00",
+  "updatedAt": "2026-11-07T07:58:11.787827+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33303,7 +33303,7 @@
     },
     "currentExecution": {
       "at": "2026-11-07T07:30:49.489067+08:00",
-      "phase": "NEW_FORMAL_3B82_BUILD_PACK_PASS_R3_OPS_PREPARATION",
+      "phase": "R3_SOURCE_QB_PASS_EXACT_MATERIALS_AUTHORIZED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 exact newsourceSet ops/read-only retained RAW bind/private six-file delivery; originalQB targeted delta. No new C14 before actual materials/resources ready.",
+      "next": "Original T45 exact two artifact delivery and QB config-bound preparation; no PG until actual material readiness",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -34205,6 +34205,22 @@
         "formal3b82Unchanged": true,
         "actualPGOrRestore": "NOT_TESTED",
         "remoteRootVerified": true
+      },
+      "r3ReadonlyRawPreparation": {
+        "at": "2026-11-07T07:58:11.787827+08:00",
+        "status": "SCOPED_SOURCE_PASS_MATERIALS_AUTHORIZED_NOT_EXECUTED",
+        "READY_SHA256": "acc73c105978c56ed25b55f3a650f60653303ac91a80397830c6722fcf5582fd",
+        "QB_SHA256": "e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508",
+        "C13BaseDeltaSHA256": "a7fcbaa13a17de5c4d12d2140d509964d0dbddfaa2a1bad855e9701894f9ef4b",
+        "C13SixSHA256": "80304c61a3fc5eff10037abfba483ff82c1eb926ae2462a3f49728e4696acec0",
+        "startsAt": 1794009386937,
+        "expiresAt": 1794011186937,
+        "scope": "Exact closed readonly RAW source; genuine3b82 APP base+delta; original six private proofs; max900s material preparation after exact config review; original40s transport retained",
+        "currentWriter": "Original T45",
+        "next": "Original QB bound plans/final parent hash only; actual materials once; C14 only after real readiness",
+        "serverExecution": "NOT_YET_RECEIVED",
+        "newPGOrREAL": "NOT_AUTHORIZED_BY_THIS_C13",
+        "originalFailures": "RETAINED_NO_REPLAY"
       }
     }
   }

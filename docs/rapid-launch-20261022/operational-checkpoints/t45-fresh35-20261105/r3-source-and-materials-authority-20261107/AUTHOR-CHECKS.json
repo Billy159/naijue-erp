@@ -1,0 +1,24 @@
+{
+  "status": "PASS_15_NECESSARY_LOCAL_FIXTURE_CASES",
+  "commands": [
+    {
+      "cases": 10,
+      "result": "PASS",
+      "scope": "RAW closed readonly mount, metadata change, unchanged trust/monitor AST, exact direct-child ownership/exit/unknown cleanup cases, private local/embedded receiver positive/negative and preserved old full/fragment metadata, all other client functions AST unchanged"
+    },
+    {
+      "cases": 5,
+      "result": "PASS",
+      "scope": "four tiny synthetic six-input decoder cases plus original six CLI basenames"
+    }
+  ],
+  "notActual": [
+    "Linux mount",
+    "real RAW bytes or188B",
+    "SSH/PG/server changes",
+    "C13 issuance"
+  ],
+  "RAWFixture": "31 sparse metadata files; no1GB allocation/copy, synthetic manifest hash and root ancestry mocked",
+  "cleanupCounterexample": "Lost process identity after known direct Popen exit; kernel-owned wait exit reaped with no signals; unknown child never claimed reaped; live original direct child uses existing TERM path only",
+  "sourceBuild": "D2 actual5814 adopted; original19/8/Linux/REAL not rerun"
+}

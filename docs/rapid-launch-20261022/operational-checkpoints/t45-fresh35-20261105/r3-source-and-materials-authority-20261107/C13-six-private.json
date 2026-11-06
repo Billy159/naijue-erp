@@ -1,0 +1,15 @@
+{
+  "format": "T45_PRIVATE_STANDARD_IMPORT_APPROVALS_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_APPROVALS_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "t45-real-six-approvals-20261107-01",
+  "manifestSha256": "74ad906cc0743e793620c7c9ac0de036d505531acf082e8bb623476e99dd1878",
+  "archiveSha256": "939fe3861abe2331933b6d77bb7fcc1b3437f05e3496574e0c9553c7afdab94c",
+  "archiveBytes": 6813015,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/private-standard-import-approvals/t45-real-six-approvals-20261107-01",
+  "startsAt": 1794009386937,
+  "expiresAt": 1794011186937,
+  "decisionReference": "C controller under human delegation in this Chat through 2026-11-07T12:00+08; QB e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508. Exact two artifacts only; original 40s transfer unchanged; no PG/install/REAL/deployment authority.",
+  "kind": "PRIVATE_STANDARD_IMPORT_APPROVALS"
+}

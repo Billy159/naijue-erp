@@ -1,0 +1,31 @@
+{
+  "status": "PASS_SCOPED_SOURCE_ONLY",
+  "scope": "R3 base+delta APP material preparation, fixed readonly original r2 RAW reference, exact-six private artifact candidate and direct owned-child preparation cleanup. Unbound configuration excluded from execution approval.",
+  "readySha256": "acc73c105978c56ed25b55f3a650f60653303ac91a80397830c6722fcf5582fd",
+  "sourcePins": {
+    "mainOps": "07eb922730d12cee530f33c67d4cac7f587043b7d38cdfb03b03b62be8816b48",
+    "companion": "07afb1d86174f6ecb93a3df51833ae22946a90dd787229e454a3cded89153d6f",
+    "materialChild": "c789950a4267e226c44ed0f81c7a57635dfae4b5163dc8f2e7eae89711c5b34f",
+    "parent": "395b85385b742c92d3a4375bd734d61c4fc7fdd2cf5b0ab6d29a275a82489b5e",
+    "privateClient": "94b119f8d05a4517e6369d4809595ad67cda0584507951f391a112d2a049c3d0",
+    "decoder": "00d14f760534cc9abc2548df89ffb5931c85b7070204922bb237c7b69b895af6",
+    "cleanup": "6b570bf36511cf14c1210a6d64b69c43dc772fdc527a1c134b8d07699cf03682"
+  },
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": "CHECKS.json, actual diff/AST and finite metadata/child cases only",
+  "reuse": "Author15 finite cases adopted; old19/8/Linux/REAL/app source not rerun. Formal build5814 supplied/adopted by C/D2, no build done here.",
+  "pendingRequiredBindingReview": [
+    "Actual separately issued C13 base+delta and six private authority hashes",
+    "Finite real preparation deadline + corresponding production/controller/file-plan exact bytes",
+    "Replace parent UNBOUND literal with actual reviewed plan hash; bind final parent pin"
+  ],
+  "actualRawReadonlyMount": "NOT_TESTED",
+  "actualMaterialsOrTransport": "NOT_EXECUTED",
+  "actualPrivatePayload6813015Or188BRead": false,
+  "actualC13C14IssuedByReview": false,
+  "actualPGOrBusiness": "NOT_TESTED",
+  "server": "NOT_ACCESSED",
+  "sourceClientAdoptedByReview": false,
+  "modelRuntime": "UNVERIFIED"
+}

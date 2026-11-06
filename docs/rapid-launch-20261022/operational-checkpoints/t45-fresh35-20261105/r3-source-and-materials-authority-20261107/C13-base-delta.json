@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-3b82c4-base-delta-20261107-01",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "archiveSha256": "2a68e9d4028c611d359f53c0c43dc6e95554fe6225eeb2cbbc6a71795a885c5e",
+  "archiveBytes": 4064380,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-3b82c4-base-delta-20261107-01",
+  "startsAt": 1794009386937,
+  "expiresAt": 1794011186937,
+  "decisionReference": "C controller under human delegation in this Chat through 2026-11-07T12:00+08; QB e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508. Exact two artifacts only; original 40s transfer unchanged; no PG/install/REAL/deployment authority.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
