@@ -31434,7 +31434,7 @@
         "wholeChainPassed": false
       },
       "r18Preparation": {
-        "state": "SOURCE_QB_BUILD_PASS_EXACT_C13_STAGING_DISPATCHED_PG_PENDING",
+        "state": "MATERIALIZED_RESOURCES_VERIFIED_C11_BOUND_START_PENDING",
         "integration": "4d750fffe517836f1abd8191655702011e16ae80",
         "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
         "tree": "c06367a78f4485ee95c0e28ba35894fc7cfe61b0",
@@ -31509,11 +31509,19 @@
         },
         "materialization": {
           "key": "t45-f35-e7bcc8-local-materialize-20261106-01",
-          "state": "RUNNING_ORIGINAL_NO_RESUBMISSION",
+          "state": "COMPLETED",
           "timeoutSeconds": 900,
           "PGStarted": false,
-          "postResourcePreflight": "PENDING"
-        }
+          "postResourcePreflight": "ACTUAL_VERIFIED",
+          "exitCode": 0,
+          "seconds": 372.244307
+        },
+        "materializedReadySHA256": "ad7e00a802ac71be0f5152b6b688f669039994cf438113c1dec1c13f681a0c9e",
+        "materializeReceiptSHA256": "bb436ab42eb363abb74d49ac4cdc78f91b7304866c09b504b05f01665f3fed38",
+        "actualResourceReceiptSHA256": "3e80a51cf4c4ac9f07c5f830a6043405a12b3dabeb9fc61768944fe89d45a5d0",
+        "C11SHA256": "484104d02125bfd73ed5a9fba3524cdf3c658eeb5efb5bf87cd1f136a0817076",
+        "C11StartsAt": 1793960739745,
+        "C11ExpiresAt": 1793961939745
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31922,12 +31930,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T18:18:12+08:00",
-      "phase": "R18_FULL_READY_MATERIALIZATION_RUNNING_PG_PENDING",
+      "at": "2026-11-06T18:25:39+08:00",
+      "phase": "R18_MATERIALIZED_C11_BOUND_ACTUAL_START_PENDING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact ordinary staging/materialization",
-      "nextOwner": "C actual material/resources C11 and actual170011/program/target C9",
+      "currentOwner": "Original T45 bounded synthetic target start",
+      "nextOwner": "C actual170011/program/target then same-window C9",
       "latestActualReceiptSHA256": "3eb95d5cf86a796fd9611b4f92b9510e1601755e6868d43788c706c327c1c532",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,

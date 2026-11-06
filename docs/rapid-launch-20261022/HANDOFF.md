@@ -2045,3 +2045,7 @@ Actual preflight728bce57 completed0/0.267491s; retained r17 stopped/cleanup/comm
 ## 2026-11-06T18:18:12+08:00 - R18 exact ordinary full artifact ready; original materialization running
 
 Assembler3b0e7fb2 completed0/4.027418s and original receiver FULLREADY verified source9cef557d/full0aefefe7/83696049B/C13655c1772/identity393697. C verified three raw terminal receipt hashes and adopted stage1efdf55de82fa25ade94ece34bc53fdfd1df9b7d84a8d11f5684b0028694d155. Original materialization t45-f35-e7bcc8-local-materialize-20261106-01 submitted once under900s; actual terminal/post-resource proof pending before C11/C9. NoPG/REAL/production and originalr17committed unchanged.
+
+## 2026-11-06T18:25:39+08:00 - R18 materialization and actual resources verified; C11 bound
+
+Materialbb436ab4 completed0/372.244307s; resource3e80a51c actual MemAvailable14329937920B/freeDisk7302422528B, exact root and no target/start artifacts. C11 484104d02125bfd73ed5a9fba3524cdf3c658eeb5efb5bf87cd1f136a0817076 binds newr18 only 1793960739745..1793961939745, original budgets/guardian/2DO. ActualPG170011/program/target precedes C9. NoREAL/production/oldkey replay; priorr17committed proof preserved.
