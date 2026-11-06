@@ -127,6 +127,20 @@ function observationSql(source,{runtime=false,systemIdentifierExpression='(SELEC
  'bootstrapObserver',${fresh35CombinedObserverObservationSql}),
  'lineage',(SELECT jsonb_agg(jsonb_build_object('version',version,'description',description) ORDER BY version) FROM naijue_erp.schema_migration))::text AS catalog_json;`}
 
+// The sealed token projection lost the leading LF emitted by PG17's CASE
+// deparser. Restore only that byte, proven against each exact pinned dump column.
+function restoreGeneratedExpressionPrefixes(model,declarations,sections){
+ const generated=declarations.columns.filter(c=>c.generated==='s');
+ need(generated.length===33&&model.columns.filter(c=>c.generated==='s').length===33,'GENERATED_EXPRESSION_COHORT_DIFFERS');
+ for(const declared of generated){
+  const matches=model.columns.filter(c=>c.schema===declared.schema&&c.table===declared.table&&c.name===declared.name&&c.ordinal===declared.ordinal);
+  const tables=sections.filter(s=>s.type==='TABLE'&&s.schema===declared.schema&&s.name===declared.table),column=matches[0];
+  need(matches.length===1&&tables.length===1&&column.generated==='s'&&typeof column.generatedExpression==='string'&&column.generatedExpression.startsWith('CASE\n')&&column.generatedExpression===declared.generatedExpression,'GENERATED_EXPRESSION_IDENTITY_DIFFERS');
+  const exact='    "'+declared.name+'" '+declared.typeSql+' GENERATED ALWAYS AS (\n'+column.generatedExpression+') STORED';
+  need(tables[0].text.split(exact).length===2,'GENERATED_EXPRESSION_SOURCE_DIFFERS');
+  column.generatedExpression='\n'+column.generatedExpression;
+ }
+}
 export async function buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}){
  const s=describeFresh35CombinedSource(source),data=fresh35CombinedSourceData(source),t=describeFresh35CombinedTarget(target);
  need(hash(await readFile(resolve(data.root,ownPath)))===ownHash,'RUNNING_MODULE_DIFFERS');
@@ -134,7 +148,7 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
  const original=await pinned(modelPath,MODEL_SHA),functions=await pinned(functionsPath,FUNCTIONS_SHA);
  need(original.mappedSchemaSha256===hash(data.schema)&&original.routines.length===152&&functions.length===178,'BASE_MODEL_AND_CAPTURE_BINDING_REQUIRED');
  for(const key of ['routines','constraints','indexes','triggers','relations','columnAcls','schema','tableNames','owner'])need(isDeepStrictEqual(original[key],data.core[key]),'BASE_MODEL_CORE_DIFFERS:'+key);
- const sections=parseFresh35DumpSections(data.schema).filter(s=>s.type==='FUNCTION'),byName=new Map(sections.map(s=>[s.name.slice(0,s.name.indexOf('(')),s]));
+ const sections=parseFresh35DumpSections(data.schema),byName=new Map(sections.filter(s=>s.type==='FUNCTION').map(s=>[s.name.slice(0,s.name.indexOf('(')),s]));
  need(byName.size===152,'UNIQUE152_FUNCTION_NAMES_REQUIRED');
  const definitions=new Map(),bodies=new Map();
  for(const row of original.routines){
@@ -143,6 +157,7 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
   need(hash(definition)===row.definitionSha256,'BASE_DEFINITION_BINDING_DIFFERS:'+row.signature);definitions.set(normal(row.signature),definition);bodies.set(normal(row.signature),baseBody);
  }
  const model=structuredClone(original),changes=[];
+ restoreGeneratedExpressionPrefixes(model,data.declarations,sections);
  for(const patch of data.patches){
   need(patch.manifest.tableCount===35&&patch.manifest.routineCount===152&&patch.manifest.newTables===0&&patch.manifest.newColumns===0&&patch.manifest.newRoutines===0&&patch.manifest.permissionsChanged===false,'BOUNDED_SUCCESSOR_REQUIRED');
   for(const change of patch.manifest.routineChanges){
