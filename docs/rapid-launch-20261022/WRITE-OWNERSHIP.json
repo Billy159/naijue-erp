@@ -10389,5 +10389,15 @@
     "priorModelLimitation": "Initial schema-USAGE-only5-case model omitted pg_database_size CONNECT; author must add role-specific CONNECT tests and preserve old limited evidence",
     "state": "DELIVERED_FROZEN_PENDING_COMBINED_ORIGINAL_QB",
     "receiptSHA256": "d8a9ba1f4e923cacd1d95a40bcfde9a4bf50d9d591987aa20a0f4068e93d1219"
+  },
+  "r25Native35BuildBoundary20261107": {
+    "owner": "C sole public build contract writer",
+    "at": "2026-11-07T00:56:58.542936+08:00",
+    "file": "candidate0448/config/release-contract.json",
+    "beforeSHA256": "c58a63ac63a23436effcf92505f5f4157d6c971145b63e7d159d12a89f8dde7a",
+    "afterSHA256": "4d30d3f2b32116d83c302b6eef81015b4733d624d9abf09c3fd52d5082445456",
+    "scope": "Add only exact apps/api/src/capacity-runtime-probe.ts importer to existing native35 host-session boundary already QA843048ff verified; preserve plugin enforcement, entry/external and all other boundaries. No DB/ACL/business contract changes.",
+    "state": "DELIVERED_FROZEN_PENDING_ORIGINAL_QB_ONE_FIELD_REVIEW",
+    "actualBuildFailureSHA256": "44377f9b6566e03c7523e41f3bc0894a1f973d0776b85631f914274d9c50af8f"
   }
 }
