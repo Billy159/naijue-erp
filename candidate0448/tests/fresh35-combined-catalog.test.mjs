@@ -15,6 +15,30 @@ const source=await loadFresh35CombinedSource(root,{baselineDirectory:base}),grap
 const {buildFresh35CombinedCatalog,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,fresh35CombinedRuntimeCatalogSql,validateFresh35CombinedRuntimeCatalogObservation}=graph.catalogAPI;
 const {compileFresh35CombinedProgram,describeFresh35CombinedProgram,validateFresh35CombinedAuthorization,runFresh35CombinedInstall}=graph.lifecycleAPI;
 const bundle=async()=>({source,catalog:graph.catalog,program:graph.program});
+test('external dependency guard restores identifier context and keeps exact namespace boundary (offline PG17 semantics, not PG)',async()=>{
+ const {guardSql}=fresh35CombinedCatalogSql(graph.catalog,source,target),tag="THEN RAISE EXCEPTION 'FRESH35_COMBINED_EXTERNAL_DEPENDENCY'",end=guardSql.indexOf(tag),start=guardSql.lastIndexOf(' IF EXISTS(WITH objects AS (',end);
+ assert(start>=0&&end>start);
+ const prefix=guardSql.slice(0,start),settings=[...prefix.matchAll(/set_config\('quote_all_identifiers','(on|off)',true\)/g)],quoted=settings.at(-1)?.[1]==='on';
+ const predicate=guardSql.slice(start,end).split(' ref WHERE ')[1];
+ const match=predicate.match(/^\(ref\.schema IS NOT NULL AND ref\.schema NOT IN\(([^)]+)\)\) OR \(d\.refclassid='pg_catalog\.pg_namespace'::regclass AND d\.refobjid NOT IN\(([^)]+)\)\)\) $/);
+ assert(match,'the original schema and namespace-OID predicate remains intact');
+ const names=[...match[1].matchAll(/'([^']+)'/g)].map(m=>m[1]),namespaceNames=[...match[2].matchAll(/'([^']+)'::regnamespace/g)].map(m=>m[1]);
+ assert.deepEqual(names,['pg_catalog','naijue_erp','pg_toast']);assert.deepEqual(namespaceNames,names);
+ // PG17 pg_identify_object applies quote_identifier to its schema field.
+ // This finite model follows that native source rule; it does not execute PG.
+ const identifySchema=name=>name===null?null:quoted||!/^[_a-z][_a-z0-9]*$/.test(name)?'"'+name.replaceAll('"','""')+'"':name;
+ const namespaceOids=new Map(names.map((name,i)=>[name,i+1]));
+ const rejects=(name,namespaceOid=null)=>{
+  const schema=identifySchema(name);
+  return schema!==null&&!names.includes(schema)||namespaceOid!==null&&!namespaceNames.some(n=>namespaceOids.get(n)===namespaceOid);
+ };
+ for(const name of names)assert.equal(rejects(name),false,'native self/builtin dependency: '+name);
+ for(const name of ['public','outside_schema','PG_CATALOG','"pg_catalog"','pg_catalog_other'])assert.equal(rejects(name),true,'external or quote-like names remain denied: '+name);
+ for(const oid of namespaceOids.values())assert.equal(rejects(null,oid),false);
+ assert.equal(rejects(null,999),true,'schema-less namespace objects still require exact allowed OID');
+ assert.equal(rejects('naijue_erp',999),true,'an allowed schema spelling never bypasses the namespace-OID boundary');
+ const rowtypes=prefix.lastIndexOf("'FRESH35_COMBINED_ROWTYPES_DIFFER'");assert(rowtypes>0&&settings.at(-1).index>rowtypes);
+});
 test('generated column expectations preserve exact pinned pg_dump expression bytes (offline projection, not PG)',async()=>{
  const dump=await readFile(base+'/01-schema-REVIEW-ONLY.sql','utf8'),before=JSON.parse(await readFile(modelPath,'utf8'));
  const sql=fresh35CombinedCatalogSql(graph.catalog,source,target),model=JSON.parse(sql.guardSql.split('$combined_model$')[1]);

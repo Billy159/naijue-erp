@@ -1,0 +1,119 @@
+{
+  "taskId": "R8-EXTERNAL-DEPENDENCY-SOURCE-01",
+  "status": "SOURCE_FIXED_DIRECT_REGRESSION_PASS_NOT_NATIVE_PG_VERIFIED",
+  "parent": "5e28855e1455a639514524f868528c20f1782c76",
+  "authorization": "C expressly approved only the quote_all_identifiers off reset immediately before original external dependency predicate under human delegation before 2026-11-06 12:00 Asia/Shanghai.",
+  "actualFailure": {
+    "installReceiptSHA256": "ce24a90b36d32e03a79049fad12f272738d2eec3bfbc451acca032c8d0898d70",
+    "staticTagReceiptSHA256": "19989cf34b13927ed643b155bae747749f46ed900171809fd70fab5d265e0f7a",
+    "tag": "FRESH35_COMBINED_EXTERNAL_DEPENDENCY",
+    "inlineRaiseLine": 107,
+    "matchCount": 1,
+    "SQLSTATE": "P0001 from original install receipt, not independently logged",
+    "state": "ROLLED_BACK_AND_STOPPED",
+    "notObserved": "Actual first dependency object and sole mismatch cause are unknown"
+  },
+  "sourceProof": {
+    "cause": "Last rowtypes category leaves quote_all_identifiers on. pg_identify_object.schema uses quote_identifier, so allowed native schema spellings become quoted and differ from original bare schema set. The old reset was after dependency checking.",
+    "nativeSelfDependency": "PG17 GenerateTypeDependencies records ordinary table rowtype -> own relation INTERNAL dependency. Both objects are within original owned cohort.",
+    "primarySources": [
+      {
+        "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/catalog/objectaddress.c",
+        "symbol": "pg_identify_object",
+        "fact": "schema field applies quote_identifier(get_namespace_name(schema_oid))"
+      },
+      {
+        "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/ruleutils.c",
+        "symbol": "quote_identifier",
+        "fact": "quote_all_identifiers forces quoting, even safe lowercase identifiers"
+      },
+      {
+        "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/catalog/pg_type.c",
+        "symbol": "GenerateTypeDependencies",
+        "fact": "ordinary relation rowtype records INTERNAL dependency on relation"
+      }
+    ]
+  },
+  "change": "Only PERFORM pg_catalog.set_config('quote_all_identifiers','off',true) and an explanatory comment immediately before unchanged external dependency predicate.",
+  "fixedSource": {
+    "sourceSetSha256": "57c105ecd47171976602e85825af3b7ed8abd8f6c5de1cf5f755848b7c80c7e2",
+    "previousSourceSetSha256": "d496e5d20489cff49918675e04afb809cc20514331f60c366c3e8f3e6df0ae77",
+    "currentSourcePins": 214,
+    "capturedSourcePins": 180,
+    "delta": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "sha256": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab",
+        "beforeSha256": "55859817fd64736ade7a52d3646f7ea47f04319cf26427fedf0fe83b60c501a4"
+      }
+    ],
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "bytes": 37233,
+        "sha256": "6c83e4c9b6a98af245993ee7c769cbe32fa5f5165b007f5279a8f21f1799f8ab",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R8-EXTERNAL-DEPENDENCY-SOURCE-01/fresh35-combined-catalog-v1.mjs"
+      },
+      {
+        "path": "tests/fresh35-combined-catalog.test.mjs",
+        "bytes": 29368,
+        "sha256": "d531b49eae8e418c22b63da1c0728a8b05c9458b85bcf35943ee10bcf2cb22ab",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R8-EXTERNAL-DEPENDENCY-SOURCE-01/fresh35-combined-catalog.test.mjs"
+      }
+    ]
+  },
+  "sourceClosure": "214current/180captured; only catalog current pin changed from d496; other213 pins unchanged",
+  "checks": [
+    {
+      "name": "new actual guard order and original predicate regression under finite PG17 identifier semantics (offline, not PG)",
+      "before": {
+        "exitCode": 1,
+        "failed": 1,
+        "reason": "native self/builtin dependency pg_catalog is wrongly rejected"
+      },
+      "after": {
+        "exitCode": 0,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 3353.903
+      },
+      "accepted": "same3 original native schema names and3 exact native namespace-OID entries",
+      "denied": [
+        "public",
+        "outside_schema",
+        "PG_CATALOG",
+        "literal quoted pg_catalog schema name",
+        "pg_catalog_other",
+        "schema-less foreign namespace OID",
+        "allowed spelling plus foreign namespace OID"
+      ],
+      "guardAssertions": "exact original textual+OID predicate; original allowed sets; off context after rowtypes and before dependency check"
+    },
+    {
+      "name": "catalog with exact157B context reset/comment removed equals parent5e byte-for-byte",
+      "result": "EXACT"
+    },
+    {
+      "name": "two-leaf node syntax and scoped parent5e git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "preserved": [
+    "original complete dependency query and namespace-OID predicate",
+    "same3 allowed schemas, no new whitelist",
+    "all model expectations and sealed originals",
+    "33LF/318-column/ACL accepted source fixes without retesting",
+    "target/lifecycle/roles/permissions",
+    "original transaction10steps/2DO/native results",
+    "r8 stopped state and previous evidence"
+  ],
+  "notExecuted": [
+    "PG/SQL or server/ops",
+    "old r8 replay or restart",
+    "real source import/production",
+    "old33LF/318column/ACL/QB checks",
+    "full backend suite/build/commit/index/controller root edits"
+  ],
+  "nextOwner": "C integrates and sends original QB only this delta, D2 batch build, T45 wholly new target native verification. No actual r8 first-object/only-cause or whole-install PASS claim."
+}
