@@ -1931,3 +1931,8 @@ D1以准确冻结collector及原executableMatches复现缺执行位TypeError；D
 ## 2026-11-06 — r22准确stage已放行，尚未启动PG
 
 T45实际只读preflight602feb33退出0/0.319秒，确认r21 stopped及六项清理、原提交/未知键保留、新r22根/容器/制品无占用；4CPU、14.318GB可用内存、5.684GB磁盘。主控核原13键模板并消费既有同类有界隔离授权，签本轮C13 tail900c3a14/full7fc2a50c，starts1793972612460/expires1793974412460。仅允许原40秒接收、准确prefix+tail还原及原900秒物化，精确collector0755读回；新C11/C9尚未签，禁止沿旧窗口启动。真实资料及正式系统未动；当前Git接续ec561622e9502e2292e683790b2ca5f8fd2d2921远端已核。
+
+
+## 2026-11-06 — C13说明长度本地拒绝已定向修正
+
+原tail策略作业完成0，后续artifact客户端在读取包和网络通道前拒绝ARTIFACT_EXTERNAL_DECISION_REQUIRED：主控decisionReference535字符超过现有512上限，非服务器/PG/业务失败。原拒绝ac335691及01文件保留。C签02后继仅缩该说明至396字符，tail07515db2/full86904f15，其余12键与原截止1793974412460保持；不延时、不改guard、不伪造授权。T45按新精确输入和唯一CAS策略接续，旧policy作业不重放。此前未上传/还原/物化/PG。

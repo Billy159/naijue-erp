@@ -32322,12 +32322,21 @@
         "preparationResultSHA256": "0ae3a74ec53ddee9ab2531c1c56f2a02b40cb71e8443ce9882af92cee0489e5c",
         "preflightResultSHA256": "602feb33e1f1e638e6313c57fe5af558dc40ad6a85da514aabab130ab6a80a66",
         "staging": {
-          "tailC13SHA256": "900c3a14341bd0ad5ab97dc0bbcd1716e04074fd34acf44aee60d5f66cf2ad22",
-          "fullC13SHA256": "7fc2a50ca0f0a807e28243da281965afb280b003db214e5a2053e5ff5c3cb557",
+          "tailC13SHA256": "07515db297bbdde10fe345abfd0bbd5f7dbb102d5c6fe8c7328f8a004f56e907",
+          "fullC13SHA256": "86904f155ff79ceb78fdc8c350276110aaf6a745a2e7e8dfb300526e2ba76db7",
           "startsAt": 1793972612460,
           "expiresAt": 1793974412460,
           "authority": "Existing human standing same-kind bounded isolated staging; no temporary noon delegation extension.",
-          "scope": "Exact ordinary r22 source/tools transfer, original assembler and materialization only; no PG/start/REAL/prod."
+          "scope": "Exact ordinary r22 source/tools transfer, original assembler and materialization only; no PG/start/REAL/prod.",
+          "referenceLengthCorrection": {
+            "previousTailSHA256": "900c3a14341bd0ad5ab97dc0bbcd1716e04074fd34acf44aee60d5f66cf2ad22",
+            "previousFullSHA256": "7fc2a50ca0f0a807e28243da281965afb280b003db214e5a2053e5ff5c3cb557",
+            "refusalResultSHA256": "ac335691cce899423e9ae82b3802312f9b40136a6e9040c29786c733ccde56b7",
+            "cause": "C issuer decisionReference535 exceeded existing512 bound; local refusal before archive/channel, no upload/PG",
+            "newReferenceChars": 396,
+            "onlyFieldChanged": "decisionReference",
+            "deadlineUnchanged": true
+          }
         }
       }
     },

@@ -1,0 +1,62 @@
+{
+  "status": "STOP_BEFORE_TRANSPORT_EXTERNAL_DECISION_REQUIRED_NO_REPLAY",
+  "recordedAtUTC": "2026-11-06T13:46:16.960997+00:00",
+  "artifactKey": "f35-f16218-tail-20261106-01",
+  "clientExitCode": 1,
+  "clientSafeErrorCode": "ARTIFACT_EXTERNAL_DECISION_REQUIRED",
+  "externalFiles": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r22-ops-preparation-01/artifact-staging-f16218-tail-authorization-01.json",
+      "sha256": "900c3a14341bd0ad5ab97dc0bbcd1716e04074fd34acf44aee60d5f66cf2ad22",
+      "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+      "startsAt": 1793972612460,
+      "expiresAt": 1793974412460,
+      "decisionReferenceNonempty": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261106-fresh35-r22-ops-preparation-01/artifact-staging-f16218-local-complete-authorization-01.json",
+      "sha256": "7fc2a50ca0f0a807e28243da281965afb280b003db214e5a2053e5ff5c3cb557",
+      "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+      "startsAt": 1793972612460,
+      "expiresAt": 1793974412460,
+      "decisionReferenceNonempty": true
+    }
+  ],
+  "tailPolicyJob": "t45-f35-f16218-tail-staging-policy-20261106-01",
+  "tailPolicyJobStatus": "COMPLETED",
+  "tailPolicyJobExitCode": 0,
+  "tailPolicyBeforeBytesPreserved": true,
+  "uploadAttemptMarkerPreserved": true,
+  "assemblyMaterializePGInstallActions": 0,
+  "oldCommittedOrUnknownKeysReplayed": false,
+  "REALOrFormalChanged": false,
+  "next": "Original C issuer correct decisionReference length under original512 cap; do not change decision or local guards. Preserve first refusal and no same-input retry.",
+  "exactGuardPredicates": [
+    {
+      "file": "artifact-staging-f16218-tail-authorization-01.json",
+      "startsAtType": "int",
+      "expiresAtType": "int",
+      "startsBeforeExpires": true,
+      "decisionReferenceType": "str",
+      "decisionReferenceCharacters": 535,
+      "maximumAllowed": 512,
+      "decisionExact": true
+    },
+    {
+      "file": "artifact-staging-f16218-local-complete-authorization-01.json",
+      "startsAtType": "int",
+      "expiresAtType": "int",
+      "startsBeforeExpires": true,
+      "decisionReferenceType": "str",
+      "decisionReferenceCharacters": 535,
+      "maximumAllowed": 512,
+      "decisionExact": true
+    }
+  ],
+  "sourceEvidence": {
+    "clientFunction": "artifact_stage -> artifact_input -> artifact_authority",
+    "guardLine": 519,
+    "refusalBefore": "archive opening and artifact_channel remote upload",
+    "networkUploadAttempted": false
+  }
+}
