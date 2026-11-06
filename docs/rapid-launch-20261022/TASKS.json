@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "SOURCE_QA_BUILD_PACK_PASS_T45_LOCAL_BINDING_ACTIVE",
+      "critical": "T45_C13_EXACT_STAGING_MATERIALIZATION_DISPATCHED",
       "independentPreparation": {
         "D1": "Two fixture leaves frozen; no further writes.",
         "QB": "Fixture/builder and exact release pin increment PASS; no repeated technical QA.",
         "D2": "Build13.604s/pack10.750s exit0, full453/30/7298membersPASS; no actual PG.",
-        "T45": "Original active local exact r19 binding/preflight, not server executed.",
+        "T45": "C13 exact two original13-key scopes dispatched; stage/material only, no PG authority yet.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31614,7 +31614,7 @@
         }
       },
       "r19Preparation": {
-        "state": "SOURCE_QA_BUILD_PACK_PASS_T45_LOCAL_BINDING_ACTIVE",
+        "state": "T45_C13_EXACT_STAGING_MATERIALIZATION_DISPATCHED",
         "integration": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
         "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",
         "tree": "d1d0640c1bab9b2622624e2f05db0ec2720ef8ea",
@@ -31625,7 +31625,7 @@
         "REAL": false,
         "production": false,
         "ordinaryBusinessVerified": false,
-        "next": "Original T45 one local r19 successor/preflight, then exact C13 stage/materialize and new bounded original C11/C9 isolated flow. No old committed keys replayed.",
+        "next": "T45 actual original stage/material and fresh resource receipt; then exact C11, actual PG17.11/program/target and C9. No old committed-key replay.",
         "previousFixedCandidate": {
           "state": "FIXED_SOURCE_QB_BUILD_PENDING",
           "integration": "0ad22579cf95c72835a7a74bd4900767d61017a2",
@@ -31685,7 +31685,23 @@
           "serverExecuted": false
         },
         "buildExitCode": 0,
-        "packExitCode": 0
+        "packExitCode": 0,
+        "preflightSHA256": "eff5f23028797f5c4441d11d1f57fc4688f78982bd8c30fac8af5929fdcd5077",
+        "localReadySHA256": "a4adb11b02d19aae796d046c70f4c215cfab8268d8a348d0dba3eb865a786d24",
+        "stageAuthority": {
+          "tail": {
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/artifact-staging-101f4f-tail-authorization-01.json",
+            "sha256": "8456a16bddb4467e8af19ff80cdb006e5dab9f3ceaaa9be1e18fa85783646524",
+            "startsAt": 1793963348449,
+            "expiresAt": 1793965148449
+          },
+          "local-complete": {
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/synthetic-network-observation/artifact-staging-101f4f-local-complete-authorization-01.json",
+            "sha256": "0d6d198e062eb271273b4c76e28b35a1975c72a5dc3d2e05232b15d4964d727d",
+            "startsAt": 1793963348449,
+            "expiresAt": 1793965148449
+          }
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32095,11 +32111,11 @@
     },
     "currentExecution": {
       "at": "2026-11-06T19:04:55+08:00",
-      "phase": "SOURCE_QA_BUILD_PACK_PASS_T45_LOCAL_BINDING_ACTIVE",
+      "phase": "T45_C13_EXACT_STAGING_MATERIALIZATION_DISPATCHED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original QB exact fixture delta and original D2 one build",
-      "nextOwner": "Original T45 after accurate fixed pins and scope",
+      "currentOwner": "Original T45 exact C13 stage/material",
+      "nextOwner": "C after actual material/resource facts",
       "latestActualReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": false,
@@ -32109,7 +32125,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 one local r19 successor/preflight, then exact C13 stage/materialize and new bounded original C11/C9 isolated flow. No old committed keys replayed.",
+      "next": "T45 actual original stage/material and fresh resource receipt; then exact C11, actual PG17.11/program/target and C9. No old committed-key replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "1782a7a8ecdd2a13cbe2506f7cab8a9aa012fce1",
       "buildRoot": "101f4fa098af74b5f7a6cb299bffbd0733c46fb2",

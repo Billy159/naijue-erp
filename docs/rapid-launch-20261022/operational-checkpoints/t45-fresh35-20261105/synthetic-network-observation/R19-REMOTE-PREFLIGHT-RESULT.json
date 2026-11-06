@@ -1,0 +1,110 @@
+{
+  "job": {
+    "jobId": "t45-f35-101f4f-stage-preflight-20261106-01",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-d42846748384",
+    "atUTC": "2026-11-06T11:07:41.309142+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.26796319196000695,
+    "exports": [
+      "stage-preflight.json"
+    ],
+    "finishedAtUTC": "2026-11-06T11:07:41.599974+00:00"
+  },
+  "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-101f4f-stage-preflight-20261106-01/transport/release-receipts/t45-f35-101f4f-stage-preflight-20261106-01/stage-preflight.json",
+  "receiptSHA256": "cea4e1ebba14be8cb7587ccafabefeefce3ccc432f9299221fd239d2f9a570aa",
+  "observed": {
+    "status": "READONLY_R19_STAGE_PREFLIGHT_COMPLETE_NOT_TRANSPORT_OR_PG_AUTHORIZATION",
+    "checkedAtEpochMillis": 1793963261555,
+    "gateSha256": "655c17726a157d708cb7bb3dac7e92b5495498eb26624b7c2a9a6a8c1e71c4b8",
+    "oldBytesRetained": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-f35-101f4f-stage-preflight-20261106-01/staging-policy-before.json",
+    "baseIdentity": [
+      66304,
+      393697,
+      83696049,
+      1793960192422906011,
+      1793960193462889592
+    ],
+    "baseArchiveSha256": "0aefefe711d96d93303a1032d4ab43f27e0de3d48a563b24454cf0e01ed41503",
+    "baseHashNotRereadUntilOriginalAssembler": true,
+    "privateFullIdentityUnchanged": true,
+    "privateFullIdentity": [
+      66304,
+      393585,
+      93508914,
+      1793915257822987699,
+      1793915258790984345
+    ],
+    "r19RootAbsent": true,
+    "r19ContainerAbsent": true,
+    "r19ArtifactDirectoriesFound": [],
+    "samePrefixOtherSubmissions": [],
+    "priorExactJobs": [
+      {
+        "jobId": "t45-f35-e7bcc8-start-20261106-01",
+        "status": "COMPLETED",
+        "exitCode": 0
+      },
+      {
+        "jobId": "t45-f35-e7bcc8-install-20261106-01",
+        "status": "FAILED",
+        "exitCode": 2
+      }
+    ],
+    "r18OriginalNativeResult": {
+      "recordPublished": true,
+      "state": "RECORD_DURABLY_PUBLISHED",
+      "installState": "COMMITTED_UNPUBLISHED",
+      "postInstallFailureCode": "FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED",
+      "sourceSetSha256": "9cef557da69d2cf61b20b73990a84a1f8961d6ebf70aa94c539a7758227b6c1c"
+    },
+    "r18PublishedRecordRetainedMetadata": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o644",
+      "bytes": 1516,
+      "contentsNotExported": true,
+      "hashNotRepeated": true
+    },
+    "r18Stopped": {
+      "cid": "56c458aebe8331c90afb44bd4cc52a9a289abfd353a8930b4ef090cf593089f9",
+      "stopped": true,
+      "processAbsent": true,
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+    },
+    "r18Cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "credentialsRemoved": true,
+      "loginsRevoked": true,
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "r18CleanupErrors": [],
+    "fixedEnvironment": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.22216796875,
+        0.15283203125,
+        0.1533203125
+      ],
+      "diskFreeBytes": 7227498496,
+      "MemAvailable": 14311231488
+    },
+    "sourceOrTargetWrites": 0,
+    "PGConnections": 0,
+    "networkOrServiceChanges": 0,
+    "dataExtraction": false
+  }
+}

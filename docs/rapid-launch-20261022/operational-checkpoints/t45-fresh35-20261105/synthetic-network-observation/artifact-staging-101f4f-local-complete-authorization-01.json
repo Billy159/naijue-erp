@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-101f4f-ordinary-local-20261106-01",
+  "sourceSetSha256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
+  "archiveSha256": "f3ac802cb8bc1165007b83c8983284277be2d7cdafa82816a4a024801acabb79",
+  "archiveBytes": 83698188,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-101f4f-ordinary-local-20261106-01",
+  "startsAt": 1793963348449,
+  "expiresAt": 1793965148449,
+  "decisionReference": "C consumes standing human same-kind bounded isolation approval, not expired noon grant. Exactr19 root101f4fa0/source79c358cc/QB6bed4131+bb9143fb/D28ac3424e/preflighteff5f230. Actualr18base0aefefe7+prefix80908239/ae51f9ae+tail1f95b272. Ordinary source/tools stage/material only; original40s receiver/900s materialization. NoPG/REAL/production/oldkey replay. Separate actual material/resource C11 then physical/program C9. No client-created approval.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}
