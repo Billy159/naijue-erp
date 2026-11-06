@@ -1,0 +1,54 @@
+{
+  "status": "PASS_SCOPED_OFFLINE_DIAGNOSTIC_PASSTHROUGH_ONLY",
+  "checkedAtUTC": "2026-11-06T03:14:19.247631+00:00",
+  "files": {
+    "scripts/release/unified-install/launch-fresh35-isolated-v1.py": {
+      "sha256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+      "bytes": 97619
+    },
+    "tests/test_fresh35_isolated_launcher.py": {
+      "sha256": "f2071eb6ef1bbceaaf665d41f81d5b8fc1102f7dc82e7c060a119cf71b6c9358",
+      "bytes": 79351
+    }
+  },
+  "changedExistingSourceFunctions": [
+    "persist_install_child_failure",
+    "main"
+  ],
+  "addedSourceFunctions": [
+    "persist_stage_child_failure",
+    "validation_diagnostic_fields"
+  ],
+  "mainBusinessAndFailureGuardASTUnchangedAfterSerializationSubstitution": true,
+  "allOtherSourceFunctionASTUnchanged": true,
+  "changedExistingTestMethods": [
+    "InstallChildDiagnosticTests.payload"
+  ],
+  "newTestMethods": [
+    "InstallChildDiagnosticTests.test_install_diagnostic_accepts_nullable_or_exact_stage_fields",
+    "InstallChildDiagnosticTests.test_stage_validation_diagnostics_are_finite_and_exclude_private_text"
+  ],
+  "tests": {
+    "command": "python3 -m unittest tests.test_fresh35_isolated_launcher.InstallChildDiagnosticTests.test_closed_diagnostic_preserves_separate_errors_without_raw tests.test_fresh35_isolated_launcher.InstallChildDiagnosticTests.test_invalid_or_sensitive_payload_is_not_persisted tests.test_fresh35_isolated_launcher.InstallChildDiagnosticTests.test_stage_validation_diagnostics_are_finite_and_exclude_private_text tests.test_fresh35_isolated_launcher.InstallChildDiagnosticTests.test_install_diagnostic_accepts_nullable_or_exact_stage_fields",
+    "methods": 4,
+    "elapsedSeconds": 0.01,
+    "result": "OK",
+    "fullOldSuiteRepeated": false,
+    "PG": false
+  },
+  "validationFields": {
+    "validationSQLSTATE": "null or /^[A-Z0-9]{5}$/",
+    "validationStep": "null or 7 exact coordinator enums",
+    "validationInternalCode": "null or 19 exact source enums"
+  },
+  "gitDiffCheck": "PASS",
+  "pythonCompile": "PASS",
+  "patchSha256": "34d0aaf65b296921da15f0dab1180c4444bd0327087ba9cf0c481c6ef8c5dc1d",
+  "sourceSetSha256": "PENDING_C_FIXED_INTEGRATION_AND_D2_AUTHORITATIVE_CLOSURE",
+  "actualModelEffortFast": "UNVERIFIED",
+  "newBuilds": 0,
+  "serverOperations": 0,
+  "PGConnections": 0,
+  "businessAcceptance": false,
+  "sourceOwnershipReturnedToC": true
+}

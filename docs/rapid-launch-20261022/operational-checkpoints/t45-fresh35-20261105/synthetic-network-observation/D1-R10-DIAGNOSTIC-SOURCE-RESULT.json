@@ -1,0 +1,169 @@
+{
+  "taskId": "R10-CONTROLLER-DIAGNOSTIC-SOURCE-01",
+  "status": "SCOPED_SOURCE_DIAGNOSTIC_READY_ROOT_CAUSE_UNKNOWN",
+  "parent": "12784ad9e6135e2b253887c4a55bbd74e564e91b",
+  "authorization": "C expressly approved only original catch private finite diagnostic and entry3nullable fields, under direct human decision delegation before2026-11-06 12:00 Asia/Shanghai.",
+  "actualEvidence": {
+    "T45ResultSHA256": "50a0c5d63c689ff4e4f5113bb0b11774bd21605a0c9156bb609bf74cc4d9a936",
+    "installReceiptSHA256": "547ae7b5843de593dba03abc14103bdcd0cbb644c30a476e7fbcd488dcb391dd",
+    "state": "SCHEMA_COMMITTED_RECORD_DURABLY_PUBLISHED_POSTINSTALL_SNAPSHOT_COMPLETED_ROLLBACK_NEGATIVE_FAILED_STOPPED",
+    "validationStage": "BAD_APPROVAL",
+    "validationCode": "IMPORT_FAILED",
+    "stoppedLogReceiptSHA256": "c35c6d744f989f7faeeeb3a8cadc47883abd509f358861b3138365202d6dd0a4",
+    "stoppedLogLimit": "T45 only last131072B; no matching enum. Not proof of no PG ERROR. No expanded scan.",
+    "schemaNotRolledBack": true
+  },
+  "finding": "BAD_APPROVAL names an intentionally corrupted synthetic SHA negative. Valid fixture wire SHA/UTF8 binding passed before this stage. Original coordinator only preserves an uppercase message and otherwise returns IMPORT_FAILED. No proven approval producer/consumer identity mismatch or C9 defect.",
+  "sourceChange": "Only coordinator catch captures original finite diagnostic before rollback/discard awaits, associates it to original result through WeakMap; entry3negative failure assertions retain original rules and carry result privately to original failure JSON. Kernel/SQL/approval guards unchanged.",
+  "fixedD1Source": {
+    "scope": "LOCAL_SOURCE_AFTER_T45_FROZEN_PRODUCER_NOT_FINAL_C_INTEGRATION_ROOT",
+    "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+    "currentSourcePins": 214,
+    "capturedSourcePins": 180,
+    "pins": [
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "bytes": 19121,
+        "sha256": "f445ed0e8755ebb2cf7b98ece9eddcf1c61d63e207afc02d6b495e5205ec6399",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R10-CONTROLLER-DIAGNOSTIC-SOURCE-01/fresh35-isolated-entry-v1.mjs"
+      },
+      {
+        "path": "tools/unified-import/whole-package-client.ts",
+        "bytes": 9021,
+        "sha256": "ad7f7a64732b164ee3a0394c8f66e42e54c69b87438895de568e336031788fd8",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R10-CONTROLLER-DIAGNOSTIC-SOURCE-01/whole-package-client.ts"
+      },
+      {
+        "path": "tests/unified-whole-package-client.test.ts",
+        "bytes": 10643,
+        "sha256": "84abad0dead05fdb92a8efa837fbaee6bfce0b0b66c9e64cd3753a50dbd39473",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R10-CONTROLLER-DIAGNOSTIC-SOURCE-01/unified-whole-package-client.test.ts"
+      },
+      {
+        "path": "tests/fresh35-isolated-entry.test.mjs",
+        "bytes": 21200,
+        "sha256": "1df70d8e1a1842c5cebd06820a74d961a26186bdbc84bffee7822df6216e8ad0",
+        "copy": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R10-CONTROLLER-DIAGNOSTIC-SOURCE-01/fresh35-isolated-entry.test.mjs"
+      }
+    ],
+    "descriptorPin": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R10-CONTROLLER-DIAGNOSTIC-SOURCE-01/LOCAL-SOURCE-DESCRIPTION.json",
+      "sha256": "1e6752ab5222ced07b62432905ae2aab1164f8a811e7d4d547d273487262d1de"
+    }
+  },
+  "diagnosticContract": {
+    "publicWholePackageResult": "Original shape/state/code/JSON unchanged",
+    "entryFailureJSON": "Always adds exactly3nullable fields; old failure keys retained",
+    "validationSQLSTATE": "null or5uppercase alphanumeric characters from original own data code property",
+    "validationStep": {
+      "nullable": true,
+      "enum": [
+        "BEGIN",
+        "LOCK_AND_INSPECT",
+        "INITIALIZE",
+        "STEP",
+        "SUMMARIZE",
+        "CONSTRAINTS",
+        "COMMIT"
+      ]
+    },
+    "validationInternalCode": {
+      "nullable": true,
+      "enum": [
+        "BEGIN_ACK_INVALID",
+        "BATCH_ID_CONFLICT",
+        "BATCH_STATE_INVALID",
+        "STEP_INVALID",
+        "STEP_ORDER_INVALID",
+        "REQUEST_BINDING_INVALID",
+        "CHUNK_BOUND_INVALID",
+        "STEP_LIMIT_EXCEEDED",
+        "PUBLISH_INCOMPLETE",
+        "CONSTRAINTS_ACK_INVALID",
+        "COMMIT_ACK_INVALID",
+        "KERNEL_STATE_INVALID",
+        "KERNEL_REPLY_INVALID",
+        "ROLE_ACK_INVALID",
+        "EXPLICIT_ZERO_APPROVAL_BINDING_INVALID",
+        "PRIVATE_VALUE_IN_PUBLIC_REQUEST",
+        "PUBLIC_REQUEST_STRUCTURE_BOUND",
+        "SQL_REQUEST_INVALID",
+        "HISTORICAL_SETTLEMENT_APPROVAL_HASH"
+      ]
+    },
+    "privateData": "No message/details/SQL/parameters/PID/nonce/body or arbitrary error fields",
+    "unbrandedResult": "No diagnostic; all3entry fields null",
+    "firstCause": "Snapshot before rollback; rollback/discard failures cannot replace first code/stage"
+  },
+  "T45Producer": {
+    "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+    "sha256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+    "testPath": "tests/test_fresh35_isolated_launcher.py",
+    "testSHA256": "f2071eb6ef1bbceaaf665d41f81d5b8fc1102f7dc82e7c060a119cf71b6c9358",
+    "owner": "T45",
+    "readySHA256": "01bf94223915929505f829ac4bc4066407e4fb610c6aea192d657b339fa34af4",
+    "sourceTests": "T45 reported4 methods PASS, not repeated by D1"
+  },
+  "localSourceClosure": {
+    "sourceSetSha256": "1dd2e7e9b0819bd61c7b8089e13f3bb99978b741de9ce1cf8d585fa2d6d7d2f0",
+    "currentPins": 214,
+    "capturedPins": 180,
+    "changedFromParent": [
+      "candidate0448/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "candidate0448/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "candidate0448/tools/unified-import/whole-package-client.ts"
+    ],
+    "unchangedCurrentPins": 211,
+    "scope": "LOCAL only after T45 producer freeze; final C integrated root/D2 authoritative closure pending"
+  },
+  "checks": [
+    {
+      "name": "new original-diagnostic regression before implementation",
+      "exitCode": 1,
+      "reason": "describeWholePackageFailure unavailable and original result loses SQLSTATE"
+    },
+    {
+      "name": "3new coordinator tests,1new actual entry catch serialization test,1affected original CLI-stage test",
+      "exitCode": 0,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 139.241833,
+      "covers": [
+        "original42501 retained at inspect/initialize stages",
+        "original result deep-equal and clone rejected",
+        "rollback08006 and modified original error cannot overwrite first42501",
+        "SQLSTATE format and19static-code enum filters",
+        "no private text exported",
+        "entry genuine diagnostic only and3nullable keys",
+        "original3negative assertions and no-replay stage logic preserved"
+      ]
+    },
+    {
+      "name": "four source/test node syntax and scoped git diff --check",
+      "exitCode": 0
+    },
+    {
+      "name": "targeted transitive TypeScript check using project strict flags, rooted at tests/unified-whole-package-client.test.ts",
+      "exitCode": 0
+    }
+  ],
+  "preserved": [
+    "kernel af75e5f0 unchanged",
+    "C9/install authorization and schema/catalog/ACL/roles",
+    "all expected negative failure assertions",
+    "public import result semantics",
+    "original transaction/control/rollback/quarantine behavior",
+    "original keys and no replay",
+    "frontend/shared application contracts",
+    "r10 stopped state"
+  ],
+  "notExecuted": [
+    "PG/server/production/real data",
+    "old r10 restart/replay",
+    "catalog/ACL/full backend checks",
+    "Python tests by D1",
+    "build/commit/index/controller root edits"
+  ],
+  "nextOwner": "C integrates current D1+T45 increments, original QB narrow review, D2 fixed build, T45 new target once. Root cause remains UNKNOWN; diagnostics are not business fix or native PG PASS."
+}

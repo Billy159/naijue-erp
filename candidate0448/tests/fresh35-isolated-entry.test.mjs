@@ -1,6 +1,22 @@
 import {requestHash} from '../packages/application/src/request-hash.ts';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
 import {isolatedClientOptions} from '../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs';
+test('entry failure JSON exports only private branded finite diagnostic and keeps the bad approval assertion closed (no PG)',async()=>{
+ const {executeWholePackage,describeWholePackageFailure}=await import('../tools/unified-import/whole-package-client.ts');
+ const source=await readFile(new URL('../scripts/release/unified-install/fresh35-isolated-entry-v1.mjs',import.meta.url),'utf8');
+ const batch='11111111-1111-4111-8111-111111111111',documents='22222222-2222-4222-8222-222222222222',identity={batchId:batch,documentBatchId:documents,packageSha256:'a'.repeat(64),planSha256:'b'.repeat(64),namespace:'synthetic',cutoffAt:'2026-11-02T04:00:00Z'};
+ const initialize={protocol:'STANDARD_IMPORT_SQL_V1',operation_id:'33333333-3333-4333-8333-333333333333',request_key:'synthetic',batch_id:batch,package_manifest_sha256:identity.packageSha256,plan_sha256:identity.planSha256,namespace:identity.namespace,cutoff_at:identity.cutoffAt,payload:{document_batch_id:documents}};
+ const client={async query(sql){return{command:sql.startsWith('BEGIN')?'BEGIN':sql}},async discard(){}},kernel={async lockAndInspect(){throw Object.assign(Error('PRIVATE SQL parameter business value'),{code:'42501',detail:'PRIVATE_DETAIL'})},async initialize(){},async applyStep(){},async summarize(){}};
+ const result=await executeWholePackage(client,identity,initialize,(async function*(){})(),kernel);assert.deepEqual(result,{state:'ROLLED_BACK',code:'IMPORT_FAILED'});
+ const assertion=new Function('badApprovalResult',source.split('\n').find(line=>line.includes("'FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ROLLBACK_REQUIRED'")));
+ let rejected;try{assertion(result)}catch(error){rejected=error}assert(rejected);assert.equal(rejected.validationStage,'BAD_APPROVAL');
+ const marker='try{await main()}catch(error){',start=source.indexOf(marker)+marker.length,end=source.indexOf('process.exitCode=1;',start)+'process.exitCode=1;'.length;assert(start>=marker.length&&end>start);
+ const serialize=new Function('error','process','describeFresh35CombinedInstallFailure','describeWholePackageFailure',source.slice(start,end));
+ const emit=error=>{const lines=[],process={stderr:{write:line=>lines.push(line)}};serialize(error,process,()=>({stage:'UNKNOWN',step:null,originalSQLSTATE:null,originalInternalCode:null,rollbackSQLSTATE:null,rollbackInternalCode:null}),describeWholePackageFailure);assert.equal(process.exitCode,1);assert.equal(lines.length,1);return JSON.parse(lines[0])};
+ const actual=emit(rejected);assert.equal(actual.validationCode,'IMPORT_FAILED');assert.equal(actual.validationSQLSTATE,'42501');assert.equal(actual.validationStep,'LOCK_AND_INSPECT');assert.equal(actual.validationInternalCode,null);assert.doesNotMatch(JSON.stringify(actual),/PRIVATE|parameter|business|detail|validationResult/);
+ const forged=emit(Object.assign(Error('PRIVATE'),{validationResult:{...result},validationSQLSTATE:'42501',validationStep:'OTHER',validationInternalCode:'NOT_ALLOWED'}));
+ for(const key of ['validationSQLSTATE','validationStep','validationInternalCode'])assert.equal(forged[key],null,'unbranded supplied fields cannot become diagnostics');
+});
 test('isolated native client has an explicit owner TCP target and no inherited PG configuration',()=>{
  const proposal={host:'127.0.0.1',port:57639,database:'synthetic_fresh35_20261105_r91',owner:'fresh35_owner_20261105_r91'};
  const options=isolatedClientOptions({proposal},'0'.repeat(64));assert.equal(options.host,'127.0.0.1');assert.equal(options.ssl,false);assert.equal(options.user,proposal.owner);assert.equal(options.connectionTimeoutMillis,5000);

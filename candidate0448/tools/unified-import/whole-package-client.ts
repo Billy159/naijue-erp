@@ -16,6 +16,11 @@ export interface WholePackageKernel<C extends WholePackageClient> {
  summarize(client:C,identity:WholePackageIdentity):Promise<unknown>;
 }
 export type WholePackageResult={readonly state:'COMMITTED'|'ALREADY_COMMITTED';readonly summary:unknown}|{readonly state:'ROLLED_BACK'|'UNKNOWN';readonly code:string};
+interface WholePackageFailure {readonly stage:'BEGIN'|'LOCK_AND_INSPECT'|'INITIALIZE'|'STEP'|'SUMMARIZE'|'CONSTRAINTS'|'COMMIT';readonly sqlState:string|null;readonly staticCode:string|null}
+const failureDiagnostics=new WeakMap<object,Readonly<WholePackageFailure>>();
+const staticFailureCodes=new Set(['BEGIN_ACK_INVALID','BATCH_ID_CONFLICT','BATCH_STATE_INVALID','STEP_INVALID','STEP_ORDER_INVALID','REQUEST_BINDING_INVALID','CHUNK_BOUND_INVALID','STEP_LIMIT_EXCEEDED','PUBLISH_INCOMPLETE','CONSTRAINTS_ACK_INVALID','COMMIT_ACK_INVALID','KERNEL_STATE_INVALID','KERNEL_REPLY_INVALID','ROLE_ACK_INVALID','EXPLICIT_ZERO_APPROVAL_BINDING_INVALID','PRIVATE_VALUE_IN_PUBLIC_REQUEST','PUBLIC_REQUEST_STRUCTURE_BOUND','SQL_REQUEST_INVALID','HISTORICAL_SETTLEMENT_APPROVAL_HASH']);
+/** Private diagnostic only: the original public result/JSON stays unchanged. */
+export function describeWholePackageFailure(result:unknown):Readonly<WholePackageFailure>|null{return result!==null&&typeof result==='object'?failureDiagnostics.get(result)??null:null;}
 const UUID=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 const activeClients=new WeakSet<object>(),quarantinedClients=new WeakSet<object>();
 /** Holds at most the current bounded request. Caller owns preflight and source
@@ -26,18 +31,18 @@ export async function executeWholePackage<C extends WholePackageClient>(client:C
  const bind=(r:StandardImportRequest,batch:string)=>{validateStandardImportRequest(r);if(r.batch_id!==batch||r.package_manifest_sha256!==identity.packageSha256||r.plan_sha256!==identity.planSha256||r.namespace!==identity.namespace||r.cutoff_at!==identity.cutoffAt)throw Error('REQUEST_BINDING_INVALID');};
  bind(initialize,identity.batchId);if(initialize.payload.document_batch_id!==identity.documentBatchId)throw TypeError('INITIALIZE_DOCUMENT_BATCH_INVALID');
  if(activeClients.has(client)||quarantinedClients.has(client))throw Error('CLIENT_UNAVAILABLE');
- activeClients.add(client);let began=false,commitAttempted=false,controlUncertain=false;
+ activeClients.add(client);let began=false,commitAttempted=false,controlUncertain=false,stage:WholePackageFailure['stage']='BEGIN';
  try{
   const start=await client.query('BEGIN ISOLATION LEVEL READ COMMITTED');if(start?.command!=='BEGIN')throw Error('BEGIN_ACK_INVALID');began=true;
-  const existing=await kernel.lockAndInspect(client,identity,initialize);
+  stage='LOCK_AND_INSPECT';const existing=await kernel.lockAndInspect(client,identity,initialize);
   if(existing.state==='COMMITTED'){
    if(existing.packageSha256!==identity.packageSha256||existing.planSha256!==identity.planSha256)throw Error('BATCH_ID_CONFLICT');
-   commitAttempted=true;const ack=await client.query('COMMIT');if(ack?.command!=='COMMIT')throw Error('COMMIT_ACK_INVALID');return {state:'ALREADY_COMMITTED',summary:existing.summary};
+   stage='COMMIT';commitAttempted=true;const ack=await client.query('COMMIT');if(ack?.command!=='COMMIT')throw Error('COMMIT_ACK_INVALID');return {state:'ALREADY_COMMITTED',summary:existing.summary};
   }
   if(existing.state!=='ABSENT')throw Error('BATCH_STATE_INVALID');
-  await kernel.initialize(client,identity,initialize);
+  stage='INITIALIZE';await kernel.initialize(client,identity,initialize);
   let phase=0,ordinal=1,baselinePublished=false,documentStaged=false,documentPublished=false;
-  for await(const incoming of steps){
+  stage='STEP';for await(const incoming of steps){
    const step=structuredClone(incoming);
    if(!step||!step.request||typeof step.method!=='string')throw Error('STEP_INVALID');
    const payload=step.request.payload;let rank:number,batch:string;
@@ -54,11 +59,14 @@ export async function executeWholePackage<C extends WholePackageClient>(client:C
    await kernel.applyStep(client,step,ordinal++);
   }
   if(!baselinePublished||!documentStaged||!documentPublished)throw Error('PUBLISH_INCOMPLETE');
-  const summary=await kernel.summarize(client,identity);
-  const constraintAck=await client.query('SET CONSTRAINTS ALL IMMEDIATE');if(constraintAck?.command!=='SET'){controlUncertain=true;throw Error('CONSTRAINTS_ACK_INVALID');}
-  commitAttempted=true;const ack=await client.query('COMMIT');if(ack?.command!=='COMMIT')throw Error('COMMIT_ACK_INVALID');return {state:'COMMITTED',summary};
+  stage='SUMMARIZE';const summary=await kernel.summarize(client,identity);
+  stage='CONSTRAINTS';const constraintAck=await client.query('SET CONSTRAINTS ALL IMMEDIATE');if(constraintAck?.command!=='SET'){controlUncertain=true;throw Error('CONSTRAINTS_ACK_INVALID');}
+  stage='COMMIT';commitAttempted=true;const ack=await client.query('COMMIT');if(ack?.command!=='COMMIT')throw Error('COMMIT_ACK_INVALID');return {state:'COMMITTED',summary};
  }catch(error){
-  if(began&&!commitAttempted&&!controlUncertain){try{const ack=await client.query('ROLLBACK');if(ack?.command==='ROLLBACK')return {state:'ROLLED_BACK',code:error instanceof Error&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.message)?error.message:'IMPORT_FAILED'};}catch{/* no acknowledgement: outcome unknown */}}
-  quarantinedClients.add(client);try{await client.discard();}catch{/* remains unusable */}return {state:'UNKNOWN',code:'TRANSACTION_OUTCOME_UNKNOWN'};
+  const code=error!==null&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'code')?.value:undefined;
+  const diagnostic=Object.freeze({stage,sqlState:typeof code==='string'&&/^[A-Z0-9]{5}$/.test(code)?code:null,staticCode:error instanceof Error&&staticFailureCodes.has(error.message)?error.message:null});
+  const failed=(result:WholePackageResult):WholePackageResult=>{failureDiagnostics.set(result,diagnostic);return result;};
+  if(began&&!commitAttempted&&!controlUncertain){try{const ack=await client.query('ROLLBACK');if(ack?.command==='ROLLBACK')return failed({state:'ROLLED_BACK',code:error instanceof Error&&/^[A-Z][A-Z0-9_]{0,80}$/.test(error.message)?error.message:'IMPORT_FAILED'});}catch{/* no acknowledgement: outcome unknown */}}
+  quarantinedClients.add(client);try{await client.discard();}catch{/* remains unusable */}return failed({state:'UNKNOWN',code:'TRANSACTION_OUTCOME_UNKNOWN'});
  }finally{activeClients.delete(client);}
 }
