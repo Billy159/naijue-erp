@@ -1,0 +1,78 @@
+{
+  "status": "PASS_SCOPED_RESTORE_RECORD_SOURCE_02",
+  "handoffSha256": "e4da57edb5bde997c35d1dd6a2add6e1baabb1fe545b7e30016e6be1ea324fcb",
+  "leavesSha256": "6494dded79dbc07cc55c43bf995d325c8a817eb8d8e3ba994ad3973841a16059",
+  "patchSha256": "e70af1f5a1d6996ffb784fb2c41a059038f56b068bd446cd013d91a44f58fb77",
+  "inputs": [
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "sha256": "d45de9f446d2aa480e67aa41ac65b129dc1457f6dd25e3a54df384abccead869",
+      "bytes": 217302,
+      "changed": true
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "ba455bb0e07f14c0fa598931834b0f7b682d78fcc6237225e5fadba940b5913f",
+      "bytes": 40556,
+      "changed": true
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "sha256": "2741c50f96d41d88aab2e6e7cb22e77e8259653bd26e4b94518c7cd09859f3dd",
+      "bytes": 9581,
+      "changed": true
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "420b4a530a8c7c31150686ab3e5b17b44a68ce79e084be8e61f683d3597ef4e3",
+      "bytes": 38588,
+      "changed": true
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-restoration-v1.mjs",
+      "sha256": "3b2e85bf09bc535da00092cbc8f2d6df32e8fe81d63cf3dde1132013230fcc14",
+      "bytes": 36068,
+      "changed": true
+    },
+    {
+      "path": "scripts/release/unified-install/publish-installation-record.mjs",
+      "sha256": "3f63fbc4bf2785453d79d6a11f0915cce6cc59dd0f6ccaeda0d181fad4ae6b53",
+      "bytes": 960,
+      "changed": false
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "83bd67fcdee869725ba70d56f586b3b8e6387b9cf13a09d79c8d23aafa82e092",
+      "bytes": 34198,
+      "changed": true
+    }
+  ],
+  "standardsFindings": [],
+  "specFindings": [],
+  "validation": {
+    "leafAndBaselineHashes": "7 leaves and 6 baseline refs exact",
+    "review": "fixed patch, actual new restoration factory, target/record/catalog/host/isolated-helper consumers",
+    "authorNode10Python4Syntax6": "logs adopted, no skip, local synthetic only; not rerun",
+    "FIX02and17and5": "unchanged adopted scope reused; not rerun"
+  },
+  "passedScope": [
+    "Separate original installation provenance and genuine distinct current restoration source closure; source record and transaction receipt immutable",
+    "Zero-argument protected root/native factory and WeakMap completion; actual target/import/role+column+builtin/full-catalog observations and ACK/close before completion",
+    "Existing observer only absent-create, exact identity/owner/ACL check; no CREATE OR REPLACE or arbitrary object adoption",
+    "Create-only protected publisher and consumed authorization; partial/unknown never replay permission",
+    "Ordinary same-pool reconstruction recompiles actual current source/program, verifies record and full catalog/role ACL generation",
+    "Python protected descriptor/mount consumer supports restored shape only for isolated runner; public validate_runtime35 refuses restored record"
+  ],
+  "unverified": [
+    "genuine integrated relocated source closure/sourceSet/build/pack",
+    "Linux root native positive completion and durable protected record publication",
+    "PostgreSQL actual restore/observer/ACL/RLS ordinary admission",
+    "HTTP login/session/representative query and restored media/config use"
+  ],
+  "server": "NOT_ACCESSED",
+  "postgres": "NOT_TESTED",
+  "actualAuthorityOrRecordIssued": false,
+  "sourceOrMainWorkspaceModified": false,
+  "formalBusinessAcceptance": false,
+  "modelRuntime": "UNVERIFIED"
+}

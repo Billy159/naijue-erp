@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-07T06:05:51.743789+08:00",
+  "state": "SOURCE_SCOPED_PASS_ACTUAL_BUILD_FAILED_ORIGINAL_D1_REPAIR",
+  "buildBranch": "codex/erp-0448z-restore-build-root-20261107",
+  "buildRoot": "6eb0889847489d59a3676733a99d166f40a2d30f",
+  "tree": "deb5e0e37dd57239f16efb53042f192e27b5e1bf",
+  "parent": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+  "handoffSHA256": "e4da57edb5bde997c35d1dd6a2add6e1baabb1fe545b7e30016e6be1ea324fcb",
+  "QBResultSHA256": "1503f3d6ca9da48e17e974a13f6d9e26d7c8a56b515f87f3fe30752c00048145",
+  "githubReadbackVerified": true,
+  "owner": "Original D2 build, original D1 source, original QB delta only",
+  "unverified": [
+    "genuine integrated relocated source closure/sourceSet/build/pack",
+    "Linux root native positive completion and durable protected record publication",
+    "PostgreSQL actual restore/observer/ACL/RLS ordinary admission",
+    "HTTP login/session/representative query and restored media/config use"
+  ],
+  "formalCandidateChanged": false,
+  "originalIntegrationWIPPreserved": true,
+  "mainHelperWIP": "candidate0448/scripts/release/deploy-candidate.py remains original D1 uncommitted source",
+  "authority": "User delegated C decisions until 2026-11-07T12:00:00+08:00; no individual human approval fabricated",
+  "buildResultSHA256": "990c3659898afe00a0d00d21d02f3341cc5c17076a24742567dbd5bb5087eb96",
+  "actualBuildExitCode": 1,
+  "packCompleted": false
+}

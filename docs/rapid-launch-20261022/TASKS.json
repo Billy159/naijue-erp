@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T18:21:21.457186+00:00",
+  "updatedAt": "2026-11-07T06:07:50.253007+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,12 +33302,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T04:50:55.700498+08:00",
-      "phase": "ACTUAL_LINUX_GUARD_PASS_PRODUCTION_MATERIALS_PREPARATION_BACKUP_PROOF_FIX",
+      "at": "2026-11-07T06:05:51.743789+08:00",
+      "phase": "MATERIALIZED_REAL_FILES_TARGETED_REPAIR_RESTORE_ONLY_BUILD",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 sole execution; D1 backup/restore proof source",
-      "nextOwner": "QB minimal wrapper and four backup failures; C accurate production target inputs",
+      "currentOwner": "Original T45 sole server execution",
+      "nextOwner": "Original QB affected deltas; original D2 restore-only build; C accurate authority/records",
       "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Materialize exact fixed10fc from retained READY after wrapper delta, no new PG until actual target authorizations; D1 genuine restored-record source continues",
+      "next": "Complete original pure-file preparation and fixed private stdin delivery before exact new35 window; independent restore-only build in parallel; actual REAL and backup/restore still pending",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33660,7 +33660,7 @@
       ],
       "oldStartingKeysActualActivity": "NO_LIVE_ORIGINAL_UNIT_PROCESS_OBSERVED_AT_20261107_033358_OPERATION_OUTCOME_UNKNOWN_NO_REPLAY",
       "productionChanges": false,
-      "next": "Original T45 minimal REAL child/independent space stop successor; QB affected delta only, then C exact new target and original stream execution",
+      "next": "Complete original pure-file preparation and fixed private stdin delivery before exact new35 window; independent restore-only build in parallel; actual REAL and backup/restore still pending",
       "spaceEvidence": {
         "D1ReportSHA256": "d887fc928fcd6fcd6c0a9502b17b82e1aa21fa6d8e8f1e3f1fb7bc1bd3b5067b",
         "exactPackageIndexBytes": 2667474944,
@@ -33855,6 +33855,63 @@
         "priorSource": "1fd2bac0 NEED_FIX signal-to-finally; preserved",
         "actualModeExecuted": false,
         "actualAdmission": "PENDING_EXACT_TARGET_AND_INPUTS"
+      },
+      "restorationSource02": {
+        "state": "SOURCE_SCOPED_PASS_ACTUAL_BUILD_FAILED_ORIGINAL_D1_REPAIR",
+        "buildBranch": "codex/erp-0448z-restore-build-root-20261107",
+        "buildRoot": "6eb0889847489d59a3676733a99d166f40a2d30f",
+        "tree": "deb5e0e37dd57239f16efb53042f192e27b5e1bf",
+        "parent": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+        "handoffSHA256": "e4da57edb5bde997c35d1dd6a2add6e1baabb1fe545b7e30016e6be1ea324fcb",
+        "QBResultSHA256": "1503f3d6ca9da48e17e974a13f6d9e26d7c8a56b515f87f3fe30752c00048145",
+        "githubReadbackVerified": true,
+        "owner": "Original D2 build, original D1 source, original QB delta only",
+        "unverified": [
+          "genuine integrated relocated source closure/sourceSet/build/pack",
+          "Linux root native positive completion and durable protected record publication",
+          "PostgreSQL actual restore/observer/ACL/RLS ordinary admission",
+          "HTTP login/session/representative query and restored media/config use"
+        ],
+        "formalCandidateChanged": false,
+        "buildResultSHA256": "990c3659898afe00a0d00d21d02f3341cc5c17076a24742567dbd5bb5087eb96",
+        "actualBuildExitCode": 1,
+        "actualBuildSeconds": 5.857,
+        "failure": "NATIVE35_PROHIBITED_SOURCE:config/release-contract.json",
+        "dependency": "fresh35-restoration -> physical-adapter -> commit-proof -> build-production -> manifest -> config/release-contract.json",
+        "sourceRepairOwner": "Original D1; original QB delta then D2 necessary failed build only",
+        "packCompleted": false
+      },
+      "realFilePreparation": {
+        "state": "FAILED_PARTIAL_PRESERVED_TARGETED_SUCCESSOR_PREPARING",
+        "job": "t45-prod35-real-files-20261107-01",
+        "exitCode": 2,
+        "elapsedSeconds": 6.234683116,
+        "resultSHA256": "309f3b3470d877ad78799215dc8274b1c7898740a303c38b7dd874f0e79cca53",
+        "jobSHA256": "9d8a966162c1d942c8b3553e4ecea58c30dff9a105284123f9806d24e6bf4b11",
+        "safeCode": "FILE_SPACE_SAMPLE_LATE",
+        "metadataSHA256": "eb66c95d8ef163f5d9842cfdb5217bc80894ca72be1f98df0f9986688c8dcabd",
+        "existingFiles": 2,
+        "existingBytes": 278769097,
+        "pgExecuted": false,
+        "credentialsRead": false,
+        "indexCreated": false,
+        "next": "Original T45 independent parent monitor; verify exact two existing files against immutable archive and only prepare remaining29. Preserve inodes and old job; no deletion/overwrite/replay."
+      },
+      "smallAppArtifactStaging": {
+        "state": "C_EXACT_SCOPE_ISSUED_NOT_YET_RECEIVED",
+        "key": "app35-10fc5e-pack-20261107-01",
+        "archiveSHA256": "2568d1c47abfaeafc3a2f4f2286be9154a63f6031508fdd80a0b86f17b3b1a62",
+        "archiveBytes": 3358044,
+        "existingReceiptSHA256": "2fab57f3fc2ccad039a2557e6f542c28174afee07281db500231bbc37a8e7aeb",
+        "C13SHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+        "expiresAt": 1794004408662,
+        "serverOwner": "T45",
+        "scope": "exact ordinary artifacts only; no secrets/PG/import/switch",
+        "supersededLocalAuthority": {
+          "sha256": "7067a5d2f7aa8be49100db780ab59fd0e961ca546cfe1be2da74cc407aad7b52",
+          "result": "LOCAL_VALIDATOR_REJECTED_REFERENCE_LENGTH_749_MAX512_NO_REMOTE_ATTEMPT"
+        },
+        "referenceCharacters": 349
       }
     }
   }

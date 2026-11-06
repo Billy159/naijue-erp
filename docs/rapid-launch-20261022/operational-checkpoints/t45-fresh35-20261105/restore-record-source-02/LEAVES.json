@@ -1,0 +1,58 @@
+[
+  {
+    "path": "scripts/release/deploy-candidate.py",
+    "bytes": 217302,
+    "sha256": "d45de9f446d2aa480e67aa41ac65b129dc1457f6dd25e3a54df384abccead869",
+    "changed": true,
+    "baseline": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/RESTORE-RECORD-SOURCE-02/before-control-acl-fix-successor/scripts/release/deploy-candidate.py",
+    "baselineSha256": "3e6c5546a2987667a725de72c8addcb82e9ed0adef4bc3039d8597b944aff1aa"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "bytes": 40556,
+    "sha256": "ba455bb0e07f14c0fa598931834b0f7b682d78fcc6237225e5fadba940b5913f",
+    "changed": true,
+    "baseline": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/RESTORE-RECORD-SOURCE-02/before/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "baselineSha256": "0fa9f8cceafc60a0790a07b4566e3c344b57c3c9c82b9fcff2bc7a3c63b9c9bf"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+    "bytes": 9581,
+    "sha256": "2741c50f96d41d88aab2e6e7cb22e77e8259653bd26e4b94518c7cd09859f3dd",
+    "changed": true,
+    "baseline": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/RESTORE-RECORD-SOURCE-02/before/scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+    "baselineSha256": "afcd0af1beafecd35a6eb6d8dd6a7689a7733d857ca80819023d38c84d20e7b6"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+    "bytes": 38588,
+    "sha256": "420b4a530a8c7c31150686ab3e5b17b44a68ce79e084be8e61f683d3597ef4e3",
+    "changed": true,
+    "baseline": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/RESTORE-RECORD-SOURCE-02/before/scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+    "baselineSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b"
+  },
+  {
+    "path": "scripts/release/unified-install/fresh35-restoration-v1.mjs",
+    "bytes": 36068,
+    "sha256": "3b2e85bf09bc535da00092cbc8f2d6df32e8fe81d63cf3dde1132013230fcc14",
+    "changed": true,
+    "baseline": null,
+    "baselineSha256": null
+  },
+  {
+    "path": "scripts/release/unified-install/publish-installation-record.mjs",
+    "bytes": 960,
+    "sha256": "3f63fbc4bf2785453d79d6a11f0915cce6cc59dd0f6ccaeda0d181fad4ae6b53",
+    "changed": false,
+    "baseline": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/RESTORE-RECORD-SOURCE-02/before/scripts/release/unified-install/publish-installation-record.mjs",
+    "baselineSha256": "3f63fbc4bf2785453d79d6a11f0915cce6cc59dd0f6ccaeda0d181fad4ae6b53"
+  },
+  {
+    "path": "tools/unified-import/fresh35-host-session.mjs",
+    "bytes": 34198,
+    "sha256": "83bd67fcdee869725ba70d56f586b3b8e6387b9cf13a09d79c8d23aafa82e092",
+    "changed": true,
+    "baseline": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/RESTORE-RECORD-SOURCE-02/before/tools/unified-import/fresh35-host-session.mjs",
+    "baselineSha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+  }
+]
