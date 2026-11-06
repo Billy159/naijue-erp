@@ -33302,12 +33302,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T03:53:41.500048+08:00",
-      "phase": "PRODUCTION_REAL_CAPACITY_RECLAMATION_AND_MINIMAL_STOP_WIRING",
+      "at": "2026-11-07T04:50:55.700498+08:00",
+      "phase": "ACTUAL_LINUX_GUARD_PASS_PRODUCTION_MATERIALS_PREPARATION_BACKUP_PROOF_FIX",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exact recoverable runtime retirement and minimal REAL ops stop wiring",
-      "nextOwner": "Original QB new ops delta; C exact capacity and production bindings",
+      "currentOwner": "T45 sole execution; D1 backup/restore proof source",
+      "nextOwner": "QB minimal wrapper and four backup failures; C accurate production target inputs",
       "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Finish fixed recoverable42 items, measure actual free, review minimal independent space monitor, then exact new target installation and original REAL import; no expired windows",
+      "next": "Materialize exact fixed10fc from retained READY after wrapper delta, no new PG until actual target authorizations; D1 genuine restored-record source continues",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33750,8 +33750,15 @@
           "helperSHA256": "9e914565c2e40ddef8f9198f6512f1a355d5aef156d473df1a1aaa11c24ef08d",
           "localChecks": "17PASS_0SKIP_NOT_REAL",
           "oldHelperPinSuite": "9PASS_1FAIL_OLD_PIN_NOT_CHANGED",
-          "QA": "QUEUED_ORIGINAL_QB_AFTER_MONITOR",
-          "actualBackupRestoreApp": "NOT_TESTED"
+          "QA": "NEED_FIX_FOUR_PROOF_CLOSURE_DEFECTS",
+          "actualBackupRestoreApp": "NOT_TESTED",
+          "QBResultSHA256": "2f7c2706a7d2fd22235dc3f28eb0ad2e3d88434c149a67e672288e4f0600d8f6",
+          "openFindings": [
+            "Host/container parent mount mapping",
+            "Actual build10fc versus integratione422 identity",
+            "Column attacl absent from independent projection",
+            "Actual media archive directory not bound to approved mapping"
+          ]
         },
         "restoreRecordSuccessor": {
           "owner": "D1",
@@ -33759,17 +33766,58 @@
           "reason": "Actual restored target differs; fixed10fc onlyV1/V2 cannot consume fake source record",
           "authority": "C delegated source/proof/needed original bootstrap observer contract successor; actual DB execution not granted by this work",
           "appBuild": "Separate genuine restore-only successor required, no old package injection"
-        }
+        },
+        "sourceFixSuccessor": {
+          "HANDOFFSHA256": "7c0e35759658e99f69bd17639ab2140140a52a3ae7449648f3f9e9c1869cc7d6",
+          "producerSHA256": "f4f15327e5bdcdbd11139660929bc1ce8ea43889690d522a45544cf0a68ed539",
+          "helperSHA256": "b2a02d80cb57e455edd803b469cf712593efd25d178ac55b53c841dbed338b03",
+          "localChecks": "5PASS_0SKIP_ORIGINAL17_REUSED_NOT_PG",
+          "QA": "QUEUED_ORIGINAL_QB_ONLY_FOUR_FAILURES",
+          "actualBackupRestoreApp": "NOT_TESTED",
+          "mainHelperWIPUnchanged": "9e914565c2e40ddef8f9198f6512f1a355d5aef156d473df1a1aaa11c24ef08d"
+        },
+        "additionalExactSourceDecisions": [
+          "Capture actual original pg_catalog.pg_control_system ACL; restore only original existing EXEC with explicit restore-bootstrap owner mapping, no new runtime authority",
+          "Exact35 legacy logical rollback proof requires actual same-dump DB/ordinary DB read/roles-column ACL/opaque closure restore; old APP HTTP explicitly NOT_TESTED rather than a new prerequisite; new35 current-app HTTP evidence still required"
+        ]
       },
       "minimalRealMonitor": {
         "sourceSHA256": "aa564fe15f65a21b47c374f35c2814d3163c0ac0c086501a2c88b9c760e7ca7b",
         "bytes": 76010,
         "readySHA256": "8e4a1617a459fbfc907e2e6defc55860ca8130ea116278ae4c02649fa042243f",
         "QBResultSHA256": "ebd854f3ea04d7d97e55dbb9b067afa2d43bfb68254aadf06050cbef39852b18",
-        "status": "PASS_SCOPED_SOURCE_NOT_LINUX_OR_REAL",
+        "status": "PASS_SCOPED_SOURCE_AND_ACTUAL_LINUX_SYNTHETIC_NOT_REAL",
         "controllerSourceSHA256": "35f91e1435f04fa29f0d3ba8f89e7194a812a0be065fee040b72921b5ed6516a",
         "originalB6D4": "NEED_FIX_TIMING_BOUNDARIES_PRESERVED",
-        "next": "T45 authorized bounded actual Linux synthetic guard job90s noPG; materialize plan then exact new production provision"
+        "next": "Original QB limited new materialize wrapper; T45 exact new ROOT materialization then genuine new production provision binding",
+        "actualLinux": {
+          "status": "PASS_SCOPED_ACTUAL_LINUX_SYNTHETIC_MONITOR_ONLY",
+          "jobKey": "t45-real-monitor-linux-aa564-20261107-01",
+          "receiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-real-monitor-linux-aa564-20261107-01/transport/release-receipts/t45-real-monitor-linux-aa564-20261107-01/linux-monitor-result.json",
+          "receiptSha256": "aa750e1e65fea09fa19d95747d13d5610cb859cc9bd2e45fe709f5941974ffe9",
+          "actualMaxSampleGapSeconds": 0.20280450861901045,
+          "allSyntheticChildrenReaped": true,
+          "nativeProductionBindingsVerified": false,
+          "realExecuted": false,
+          "freeAfterBytes": 11566620672
+        }
+      },
+      "integrationCheckpoint": {
+        "branch": "codex/erp-0448z-integration-20261105",
+        "remoteVerifiedSHA": "a66ac56cd8df4be5731887db1b206293a234db37",
+        "buildRootRemoteVerifiedSHA": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
+        "uncommittedOwner": "D1 deploy-candidate.py WIP; integration-logs and npm-cache retained"
+      },
+      "materialization": {
+        "uniqueJob": "t45-prod35-10fc5e-materialize-20261107-01",
+        "sourceSHA256": "9ccd8c2afd30561b97475cf565ad6b9736ad9f26ed181824d7c911acfe8c9a73",
+        "planSHA256": "40cd012aaa649d67e4bc0242c995bc8b4bf8beaeb1619441052f5560b5660a54",
+        "QBResultSHA256": "6558af84bc6151e997055764d003dc1d1f7dbf1ede616ae443bfe7cd72e47d8c",
+        "state": "C_CONDITIONALLY_AUTHORIZED_AFTER_FIXED_QB_PASS_PENDING_ACTUAL_RECEIPT",
+        "prepDeadlineEpochMillis": 1793999594200,
+        "startsInstallWindow": false,
+        "startsPG": false,
+        "realImported": false
       }
     }
   }

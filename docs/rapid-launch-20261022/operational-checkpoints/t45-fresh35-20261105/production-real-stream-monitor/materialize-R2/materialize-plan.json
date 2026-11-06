@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "authorizationReference": "C delegated preparation decision 2026-11-07 before noon: exact reviewed aa564 ops, reuse existing 7b10 READY/fdabb staging receipt and fixed image, unique new production ROOT/op; materialize-app only <=900s, free >=4GiB. Exact local plan pending C adoption. No new image/upload/PG/SQL/C14/C6/C9/REAL or business switch.",
+  "operationId": "t45-prod35-10fc5e-20261107-01",
+  "opsSourceSha256": "aa564fe15f65a21b47c374f35c2814d3163c0ac0c086501a2c88b9c760e7ca7b",
+  "stagingAuthoritySha256": "fdabb6aa525f4c67c1b808347740bb7e65a251afd0e466159c7e37ce43769715",
+  "imagePreparationExpiresAt": 1793999594200
+}

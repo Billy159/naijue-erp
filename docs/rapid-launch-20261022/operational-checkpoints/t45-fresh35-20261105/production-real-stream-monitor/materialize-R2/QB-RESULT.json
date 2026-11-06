@@ -1,0 +1,31 @@
+{
+  "status": "PASS_SCOPED_MATERIALIZE_WRAPPER_SOURCE",
+  "sourceSha256": "9ccd8c2afd30561b97475cf565ad6b9736ad9f26ed181824d7c911acfe8c9a73",
+  "readySha256": "05210c2c6b57221faa39d3daea46b970bbca0ed417e6617b31d604315c51e05a",
+  "planSha256": "40cd012aaa649d67e4bc0242c995bc8b4bf8beaeb1619441052f5560b5660a54",
+  "standardsFindings": [],
+  "specFindings": [],
+  "closedFinding": "adadb identity=None live direct child was not signalled or reaped; successor uses waitid WNOWAIT and bounded TERM3/KILL3/wait only for this direct Popen child",
+  "checks": {
+    "oldTryBodyAstIdentical": true,
+    "priorFourTimeAndCompletionCases": "reused CHECKS.json; limited scope, not whole adadb PASS",
+    "authorFiveCleanupCases": "adopted, not rerun",
+    "independentFiniteCases": [
+      {
+        "case": "TERM_and_KILL_timeout",
+        "expected": "False_cleanup_unknown",
+        "pass": true
+      },
+      {
+        "case": "ECHILD_refuses_signal",
+        "pass": true
+      }
+    ],
+    "signalHandler": "SIGTERM/SIGINT/SIGHUP raise into main try/finally"
+  },
+  "actualMaterialization": "NOT_TESTED",
+  "server": "NOT_ACCESSED",
+  "postgres": "NOT_STARTED",
+  "modelRuntime": "UNVERIFIED",
+  "scope": "Wrapper source and finite models only; original aa564 monitor and materialize leaf not re-reviewed; no new job dispatched"
+}

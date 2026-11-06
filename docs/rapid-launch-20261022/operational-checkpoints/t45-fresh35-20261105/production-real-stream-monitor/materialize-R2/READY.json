@@ -1,0 +1,23 @@
+{
+  "status": "READY_MATERIALIZER_DIRECT_CHILD_CLEANUP_SUCCESSOR_ONLY",
+  "sourcePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-materialize-02/materialize_with_space_floor.py",
+  "sourceSha256": "9ccd8c2afd30561b97475cf565ad6b9736ad9f26ed181824d7c911acfe8c9a73",
+  "parentSha256": "adadb52cc27d168a8c55f7347033be6c02b6830c3ea0f072e71b1759032fc0b5",
+  "planSha256": "40cd012aaa649d67e4bc0242c995bc8b4bf8beaeb1619441052f5560b5660a54",
+  "identityFailureRepro": {
+    "originalRealStopChildReturn": false,
+    "originalSignalCalls": 0,
+    "childStillRunning": true,
+    "scope": "Actual original aa564 function with finite Popen model, no server/process launch"
+  },
+  "fix": "Only the wrapper direct unreaped Popen child: use original checked stop if identity exists; if identity lookup failed, kernel waitid WNOWAIT proves it is this process direct child, then bounded TERM3/KILL3/wait. ECHILD refuses signal. Original native init cleanup860-870 already uses direct unreaped child ownership. SIGTERM/INT/HUP routes main through finally.",
+  "localCleanupTests": {
+    "passed": 5,
+    "total": 5,
+    "scope": "Finite direct-child cases only, no server/PG/real credentials."
+  },
+  "originalMaterializeLeaf": "aa564 unchanged",
+  "serverSubmitted": false,
+  "newPG": false,
+  "newIssue": false
+}
