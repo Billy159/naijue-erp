@@ -1749,3 +1749,9 @@ Start292ca13d completed0/36.599459s; CID56c458ae/SID7705003217343156271/OID16393
 ## 2026-11-06T18:38:27+08:00 - R18 actual17.11 scene wire crossed; ordinary scenario guard stops
 
 Actual installc81382bc failed2/149.998962s overall. Schema/record,3negative rollback,snapshots and normal COMMITTED/ALREADY_COMMITTED/VERIFIED with25headers27settlements passed. Actual PRIVATE_SCENARIO failure proves corrected observe_scene returned under original guards (source-order inference, not separate exported wire assertion). New blocker FRESH35_ISOLATED_ORDINARY_STAFF_WAREHOUSE_REQUIRED; business child/API/readback/probe not reached, no SQLSTATE/actual staff-hall-warehouse values exported. CID56c458ae stopped,6cleanuptrue/errors empty/child reaped. C checked rawbinding and adopted safef4a4b9d9. Original T45 source-only guard/input alignment diagnosis; no new PG/log/query or guessed mappings. r17/r18 committed original keys preserved, no REAL/production.
+
+## 2026-11-06T18:46:06+08:00 - Exact synthetic fixture relationship defect reproduced; D1 registered
+
+T45 native factory no-PG manifest matches actual fixtureBinding d5d6b7af. Fresh35 successor adds hall02 but inherits warehouse01+warehouse02 bothhall01; staffhall01 causes real ordinarybuilder unique-warehouse guard RED. C assigns only original D1 Fresh35 fixture9c5b979a plus existingdirecttest: bindwarehouse02 to newsecondHall, preserve basefactory/identities/inventory/amount/SQL/ACL/guards. Not a production mapping decision; actualscene row bytes not exported. Necessary targeted checks then QB increment/Cfreeze/D2build. No server/PG/committed-key replay by this source assignment.
+
+Ownership scope clarification: only settlement-retention25 variant warehouse:02 -> its existing hall:02; default/base bytes and golden manifests remain exact. Original D1 notified before implementation; no launcher guard relaxation.

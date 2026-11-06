@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R18_SCENE_WIRE_PASSED_ORDINARY_SCENARIO_GUARD_STOP",
+      "critical": "R18_ORDINARY_GUARD_REPRODUCED_D1_FIXTURE_REPAIR_REGISTERED",
       "independentPreparation": {
-        "D1": "Read-only multiline JSON reproduction supplied, no launcher writes or further review.",
+        "D1": "Two owned Fresh35 fixture/directtest leaves registered for exact hall relation fix.",
         "QB": "fbbce17b exact two-leaf PASS adopted; no repeat.",
         "D2": "d1dc84f4 exact e7bcc81e build/pack/member/tail PASS adopted; no repeat.",
-        "T45": "Original T45 source-only build_ordinary_scenario guard/input mismatch diagnosis. No new PG/log/query, no guessing source mappings, no original committed import replay.",
+        "T45": "Source-only diagnosis handoff; no new server job or launcher writes.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -31582,7 +31582,27 @@
           "ownedPidAbsent": true,
           "portAbsent": true
         },
-        "normalCommittedImportMustNotReplay": true
+        "normalCommittedImportMustNotReplay": true,
+        "ordinaryFixtureRepair": {
+          "state": "D1_TWO_OWNED_FIXTURE_LEAVES_REGISTERED",
+          "writer": "Original D1",
+          "files": [
+            {
+              "path": "tests/fixtures/unified-import/whole-package-synthetic.ts",
+              "beforeSHA256": "9c5b979a9c90a4b70242c646aa6850a0133844e6e8f82dee8b7664a31d5fd702",
+              "beforeBytes": 27211
+            },
+            {
+              "path": "tests/fixtures/unified-import/whole-package-fresh35-synthetic.test.mjs",
+              "beforeSHA256": "545a0cee1f4d910e8ad6c53ca9b6a5decc40f3aa0c2918c4dcac296785bd3e92",
+              "beforeBytes": 14134
+            }
+          ],
+          "evidence": "T45 native factory manifest matched actual host fixtureBinding d5d6b7af25a3bd09473ef8cc6c29b4c42731ade590ece92fa1fe956384ac475e; two warehouses remain hall01 after Fresh35 successor adds hall02. Existing model plus real builder reproduces original STAFF_WAREHOUSE_REQUIRED. Actual scene row bytes not exported, no production mapping claim.",
+          "scope": "Only Fresh35 settlement-retention25 variant: bind exact warehouse:02.hall_id to its explicitly created hall:02. Preserve default variant/base factory bytes and existing default golden manifests, warehouse01/staff hall01/default customer+outbound warehouse/history capture, stable identities, inventory/amount/barcodes, SQL/ACL/uniqueness guards. Existing direct regression only for accurate one-hall-one-warehouse relation in this fixed synthetic variant. No business mapping decisions.",
+          "serverOrPGAuthorized": false,
+          "next": "Author necessary targeted RED/GREEN; original QB only affected fixture/consumer increment; original D2 fixed build after C freeze."
+        }
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31991,12 +32011,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T18:38:27+08:00",
-      "phase": "R18_SCENE_WIRE_PASSED_ORDINARY_SCENARIO_GUARD_STOP",
+      "at": "2026-11-06T18:46:06+08:00",
+      "phase": "R18_ORDINARY_GUARD_REPRODUCED_D1_FIXTURE_REPAIR_REGISTERED",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 source-only ordinary scenario input/guard diagnosis",
-      "nextOwner": "C route only exact source leaves to original owner",
+      "currentOwner": "Original D1 Fresh35 fixture and existing direct test only",
+      "nextOwner": "Original QB affected fixture/consumer increment after fixed commit",
       "latestActualReceiptSHA256": "c81382bc6762f5a351f1ec67b2364c25b99d6a8333bbdbf3f732e3d109f971a5",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -32006,7 +32026,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 source-only build_ordinary_scenario guard/input mismatch diagnosis. No new PG/log/query, no guessing source mappings, no original committed import replay.",
+      "next": "Repair precise synthetic hall/warehouse relation; production rules untouched. No committed-key replay or new server execution.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "4d750fffe517836f1abd8191655702011e16ae80",
       "buildRoot": "e7bcc81e803e3e93853bf67820290ea2a29bc423",
