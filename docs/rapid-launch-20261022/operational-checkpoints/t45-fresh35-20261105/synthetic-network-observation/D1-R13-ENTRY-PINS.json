@@ -1,0 +1,14 @@
+[
+  {
+    "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+    "beforeSha256": "f445ed0e8755ebb2cf7b98ece9eddcf1c61d63e207afc02d6b495e5205ec6399",
+    "afterSha256": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff",
+    "bytes": 21700
+  },
+  {
+    "path": "tests/fresh35-isolated-entry.test.mjs",
+    "beforeSha256": "1df70d8e1a1842c5cebd06820a74d961a26186bdbc84bffee7822df6216e8ad0",
+    "afterSha256": "c39887f1dec1d8eba016b8d55db976e5a6df3d0f0c83713c9b604362b859f99c",
+    "bytes": 30962
+  }
+]

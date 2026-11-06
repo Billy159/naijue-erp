@@ -28126,14 +28126,14 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T13:29:31+08:00",
+    "at": "2026-11-06T13:47:46+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
     "branch": "codex/erp-0448z-integration-20261105",
     "worktree": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102",
     "applicationRoot": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
-    "sourceStatus": "FIXED_FIVELEAF_DELIVERED_PENDING_QB_AND_ONE_BUILD_NOT_PG",
+    "sourceStatus": "FIXED_TWOLEAF_SOURCE_PENDING_QB_AND_ONE_BUILD_NOT_PG",
     "externalDotInFlight": "UNKNOWN; do not infer stopped",
     "goalToolStatus": {
       "actualStatus": "active",
@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "D1 exact current r13 null-diagnostic/source-runner diagnosis; no r14/newbuild or blindPG retry.",
+      "critical": "FIXED_TWOLEAF_QB_NARROW_REVIEW_AND_D2_BUILD_IN_PARALLEL",
       "independentPreparation": {
-        "D1": "Five leaves delivered and frozen; readonly until concrete feedback.",
-        "QB": "Fiveleaf source/native model PASS56a71a97 adopted; actualPG still not run.",
-        "D2": "Fixed0adc fullbuild11.015s/pack8.546s and7298readbackPASSecbda0bf; no duplicate build.",
-        "T45": "Original r13 accurate local pins/read-only stage preflight; await actual facts before external C13.",
+        "D1": "Exact entry/test2leaves frozen and handed back;readonly until concrete feedback.",
+        "QB": "Only new entry/test2leaves; old5leaf evidence adopted.",
+        "D2": "One d60dee full build/tail from actual0adc base; no source edits.",
+        "T45": "r13 terminal failed/stopped; no newPG until precise reviewed successor.",
         "D3": "Fixed REALr3 and independent readback criteria ready, waiting actual target; no rescan/cleaning.",
         "QF": "Existing core browser prerequisites ready, waiting same-version normal new35 host; no fullsite Demo gate."
       },
@@ -30752,7 +30752,47 @@
         "containerStopped": true,
         "ordinaryBusinessPassed": false,
         "synthetic25Passed": false,
-        "next": "Original D1 bounded source/runner null-diagnostic path diagnosis; no r13 replay/new candidate blind retry; T45 original ops/log producer readonly until exact gap."
+        "next": "Original D1 bounded source/runner null-diagnostic path diagnosis; no r13 replay/new candidate blind retry; T45 original ops/log producer readonly until exact gap.",
+        "entryLifecycleFix": {
+          "state": "FIXED_TWOLEAF_COMMITTED_PENDING_QB_AND_ONE_BUILD",
+          "receiptSHA256": "b0bb880030cf1bf9a5937592db28ed7599080950af88182fce99ea6de20b3311",
+          "reproSHA256": "2a157241578419b08b10010f9308c932144f5b7701c1ed8ed893a1ca5f332941",
+          "files": [
+            "candidate0448/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+            "candidate0448/tests/fresh35-isolated-entry.test.mjs"
+          ],
+          "provenSourcePath": "Modeled correct BAD_APPROVAL ROLLED_BACK; same poisoned client inspect BEGIN locally refused; inspect returns UNKNOWN; entry need throws no diagnostic =>5null. Other preexecute/finally paths indistinguishable from actualreceipt.",
+          "actualR13Attribution": "UNKNOWN; no negative rollback or alias semantic PASS inferred",
+          "fixScope": "Dispose confirmed old connection, then sequential original reviewed fresh connections for each expected SQLerror negative and independent ABSENT readback. Same target/record/source/permissions/deadline/keys/ACK; unknown stops. Preserve poison/no newpool; finite private static diagnostic/firsterror only in original slots.",
+          "noLogOrPGJobAdded": true,
+          "owner": "D1",
+          "otherOwnerFiles": "T45 Python unchanged; exact consumer conflict requires C coordination.",
+          "fixedReceiptSHA256": "26d80844ea3f1794236cf03fb1c5f135ea24fca68fe60b56ffca2d9a36cae7b8",
+          "integration": "d534b76ef82681288f270128723a1c6b0bc68867",
+          "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+          "checks": "4distinct targeted tests PASS; actual pinned native pg driver/entry/host/coordinator/inspect model;31static entry codes preserved by unchanged Python3functions/2enums. Not PG.",
+          "originalFiveLeavesAndInstallerUnchanged": true
+        }
+      },
+      "r14Preparation": {
+        "state": "FIXED_TWOLEAF_QB_NARROW_REVIEW_AND_D2_BUILD_IN_PARALLEL",
+        "integration": "d534b76ef82681288f270128723a1c6b0bc68867",
+        "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+        "tree": "91d9793a362e9f33e295248c322eff2b72052eda",
+        "sourceSetSHA256": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
+        "D1ReceiptSHA256": "26d80844ea3f1794236cf03fb1c5f135ea24fca68fe60b56ffca2d9a36cae7b8",
+        "pinChanges": 1,
+        "pinsUnchanged": 213,
+        "pinCount": 214,
+        "baseActualReady": {
+          "root": "0adc4f5a70b0571259a386473139a0cec4fac781",
+          "sha256": "85a336a9178608763ae579ee4c60cee6dd0d6e0bf49d5aaefb06c33d3e010b95",
+          "bytes": 83689617
+        },
+        "actualPG": false,
+        "REAL": false,
+        "production": false,
+        "next": "Adopt original QB scoped evidence and original D2 exact build/tail, then original T45 fresh accurate r14; no r13 replay."
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -31161,12 +31201,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T13:29:31+08:00",
-      "phase": "INSTALL_RECORD_PUBLISHED_SNAPSHOT_PRESENT_ROLLBACK_CHILD_FAILED_VALIDATION_DIAGNOSTIC_NULL_CLEAN_STOPPED",
+      "at": "2026-11-06T13:47:46+08:00",
+      "phase": "FIXED_TWOLEAF_QB_NARROW_REVIEW_AND_D2_BUILD_IN_PARALLEL",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "D1 original bounded null-diagnostic/rollback-runner source diagnosis",
-      "nextOwner": "T45 only exact bounded stopped evidence if actually needed;C exact repair scope",
+      "currentOwner": "QB original twoleaf narrow review;D2 original onebuild",
+      "nextOwner": "T45 accurate fresh r14 after fixed QA/build",
       "latestActualReceiptSHA256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -31176,12 +31216,12 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original D1 bounded source/runner null-diagnostic path diagnosis; no r13 replay/new candidate blind retry; T45 original ops/log producer readonly until exact gap.",
+      "next": "Adopt original QB scoped evidence and original D2 exact build/tail, then original T45 fresh accurate r14; no r13 replay.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
-      "sourceCommit": "1930d6bd6a98df634fd018d93f9630d9de5a75c0",
-      "buildRoot": "0adc4f5a70b0571259a386473139a0cec4fac781",
-      "tree": "aa9ae8c17273d6622de3d85c7d88ab9adcdda4e0",
-      "sourceSetSHA256": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+      "sourceCommit": "d534b76ef82681288f270128723a1c6b0bc68867",
+      "buildRoot": "d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2",
+      "tree": "91d9793a362e9f33e295248c322eff2b72052eda",
+      "sourceSetSHA256": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
       "sourceQA": "PASS_SOURCE_AND_SCOPED_NATIVE_DRIVER_MODEL",
       "buildPassed": true,
       "githubSourceAndRootReadback": true

@@ -1,0 +1,213 @@
+{
+  "format": "D1_R13_ENTRY_CONNECTION_SOURCE_RESULT_V1",
+  "status": "TWO_LEAF_SOURCE_FIX_AND_TARGETED_NATIVE_DRIVER_MODEL_COMPLETE_NOT_PG",
+  "checkedAtUTC": "2026-11-06T05:45:09.589031+00:00",
+  "checkout": {
+    "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448",
+    "branch": "codex/erp-0448z-integration-20261105",
+    "observedParentHEAD": "feb229828f63677c1ccfe6e023baf2b67a56519d",
+    "D1GitWrites": 0,
+    "finalControllerRoot": "NOT_CLAIMED"
+  },
+  "registeredOwner": "C-approved D1 exactly entry and corresponding directtest; T45 files unchanged",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "beforeSha256": "f445ed0e8755ebb2cf7b98ece9eddcf1c61d63e207afc02d6b495e5205ec6399",
+      "afterSha256": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff",
+      "bytes": 21700
+    },
+    {
+      "path": "tests/fresh35-isolated-entry.test.mjs",
+      "beforeSha256": "1df70d8e1a1842c5cebd06820a74d961a26186bdbc84bffee7822df6216e8ad0",
+      "afterSha256": "c39887f1dec1d8eba016b8d55db976e5a6df3d0f0c83713c9b604362b859f99c",
+      "bytes": 30962
+    }
+  ],
+  "sourceSet": {
+    "before": "d4115755cff50f9042240c17c1ccaac0d61282182f26823d884660f608422dc8",
+    "D1LocalAfter": "bd7813a5fe926c0aca45ffeed799bc31c0103110ffb9ffd2cc3e3c20f5d356ec",
+    "currentPinCount": 214,
+    "changedPins": 1,
+    "unchangedPins": 213,
+    "finalCBindingClaimed": false
+  },
+  "rootCause": {
+    "sourceProven": "entry reuses a poisoned error-transaction wire for independent absence inspection; inspector swallows local refusal and returns UNKNOWN; entry assertion throws without branded failure metadata",
+    "proofPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/R13-NULL-DIAGNOSTIC-SOURCE-01/RESULT.json",
+    "proofSha256": "b0bb880030cf1bf9a5937592db28ed7599080950af88182fce99ea6de20b3311",
+    "proofModelPrefixClarification": "earlier injected need omitted the real FRESH35_ISOLATED_ prefix; five-null call-path proof is unchanged. New regression executes the exact source need function and real prefix.",
+    "actualR13Attribution": "UNKNOWN; three distinguishable source failures emitted the same five-null shape"
+  },
+  "implementation": {
+    "sequentialConnections": {
+      "rollbackStage": 6,
+      "allStage": 8,
+      "commitStage": 3,
+      "maxSimultaneous": 1,
+      "perStage": "three negative attempts, each followed by its independently opened reviewed ABSENT readback",
+      "beforeEachNext": "await previous original host close and require cleanup CLOSED",
+      "binding": "same config/root/physical target/install record/sourceSet/profile/options, each original admission assertion",
+      "sourceFixture": "single immutable program and original keys/manifest/plan/initializer/steps binding, disposed once only at final/failure cleanup"
+    },
+    "stopRules": [
+      "wrong negative code or non-ROLLED_BACK result throws before next host",
+      "UNKNOWN and unknown COMMIT stop, never promoted to ROLLED_BACK",
+      "unconfirmed raw close stops",
+      "ABSENT must be independently read; UNKNOWN is failure",
+      "success stdout requires fixture cleanup and retention/close checks"
+    ],
+    "firstFailure": "callback/outer primary error retained by a local variable, preserving original branded coordinator result even if host or fixture cleanup later fails",
+    "fixtureCleanup": "dispose once; no retry or masking. If sole failure, emit fixed FRESH35_ISOLATED_SYNTHETIC_FIXTURE_CLEANUP_FAILED and no success stdout",
+    "diagnostic": "exported isolatedEntryFailure is the actual CLI serializer; exact own message data matching31 static entry code literals only, using existing validationCode and3 existing stage values. Raw messages/accessors/stack/path/SQL/credentials are not copied. Unknown external errors may remain null.",
+    "unchanged": [
+      "original poisoned wire/quarantine and ACK behavior",
+      "original install execution branch",
+      "prior five-leaf r12 source fixes",
+      "permissions/PG/source data/front end/shared business contracts",
+      "Python consumer and its enums/keys"
+    ]
+  },
+  "tests": {
+    "uniqueAffectedTestsVerified": 4,
+    "skipped": 0,
+    "originalNativeRed": "TEST-red.log:1/1 fails at exact FRESH35_ISOLATED_SYNTHETIC_BAD_APPROVAL_ABSENCE_REQUIRED with same poisoned connection",
+    "nativeFirstGreen": "TEST-native-green.log:1/1",
+    "firstAffectedRun": "TEST-affected-01.log: native regression, finite diagnostic and output bridge3pass; only old open-count3 assertion failed on actual8",
+    "countOnlyRepair": "TEST-stage-green.log: existing stage test1/1 passes with rollback6/all8/commit3 counts",
+    "nativeFirstFailureExtension": "TEST-native-primary-green.log:1/1; original23514/INITIALIZE branded diagnostic survives missing ReadyForQuery+fixture failure and wrongcode+native close failure",
+    "lastAffectedCloseOrder": "TEST-stage-close-order-green.log:1/1; final close/readback checks precede fixture disposal",
+    "nativeModelLimits": [
+      "actual pinned pg8.23.1 Client ErrorResponse/ReadyForQuery handling and original entry/host/coordinator/inspect",
+      "no TCP, no PostgreSQL server, no SQL-kernel semantics or real catalog/admission",
+      "modeled SQLSTATE23514 is not an observed r13 SQLSTATE"
+    ],
+    "nativeCovered": [
+      "three expected denials and acknowledged ROLLED_BACK results",
+      "three independent ABSENT checks on different sequential clients",
+      "one close invocation per modeled client before next opens",
+      "unknown result stops at first host",
+      "wrong approval code stops",
+      "first error survives fixture or native end failure",
+      "absence UNKNOWN with cleanup failure retains absence code",
+      "sole fixture cleanup failure forbids success stdout"
+    ],
+    "fixtureAndOutputModel": "existing exact-source CLI stage test covers wrong final-publish codes, missing settlement outcomes, immutable keys/stage-binding, no COMMIT after uncertainty, close failures and readback failure",
+    "diagnosticModel": "branded SQLSTATE retained; unbranded result copies/getters/private unknown messages do not gain diagnostics; all new static cases remain nullable without inferred SQLSTATE"
+  },
+  "pythonConsumer": {
+    "format": "D1_R13_EXISTING_PYTHON_CONSUMER_OFFLINE_RESULT_V1",
+    "sourcePath": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+    "sourceSha256": "6f4006f234e6b0720c6f77cf502e20e132aac767528463ca24faefb3d50bdec9",
+    "sourceChanged": false,
+    "functions": "original AST of strict_json/validation_diagnostic_fields/persist_stage_child_failure and original2enum constants",
+    "staticEntryCodesTested": 31,
+    "maxCodeLength": 64,
+    "originalEntryOutputKeys": 15,
+    "newKeys": 0,
+    "newValidationStageValues": 0,
+    "allFiveSlotsPreserved": true,
+    "unknownAndNoRetryPreserved": true,
+    "fileSystemConsumerWrites": 0,
+    "networkConnections": 0,
+    "pg": false
+  },
+  "sourceChecks": {
+    "patchAndReverse": [
+      {
+        "directory": "before",
+        "patch": "SOURCE.patch",
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "directory": "source",
+        "patch": "SOURCE.reverse.patch",
+        "exitCode": 0,
+        "output": ""
+      }
+    ],
+    "r12FiveLeavesUnchanged": true,
+    "installerBranchUnchanged": true,
+    "sourcePinChanges": [
+      {
+        "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+        "before": "f445ed0e8755ebb2cf7b98ece9eddcf1c61d63e207afc02d6b495e5205ec6399",
+        "after": "4176ecb6036a66072aeafd054e43253a3b0c4b84db94ae2c21af4e377ad258ff"
+      }
+    ],
+    "currentSourcePinCount": 214
+  },
+  "actualR13": {
+    "safeResultSha256": "bd8d96254e18326987144967d54c5de1047405028ce789a1b885c1f22ab94e90",
+    "nativeReceiptSha256": "2412f60905ca7627ffa28565099eee6572f3260a60ec665b94b502395fb79253",
+    "schemaAndRecord": "COMMITTED_PUBLISHED",
+    "adminSnapshot": "PRESENT",
+    "negativeRollback": "UNCONFIRMED",
+    "firstValidationCodeAndSQLSTATE": "UNKNOWN_ALL5NULL",
+    "stopped": true,
+    "oldKeyReplay": 0
+  },
+  "notRun": [
+    "new PG or stopped target/key replay",
+    "private PG log extraction",
+    "real import or production actions",
+    "full backend regression or build",
+    "independent QB review"
+  ],
+  "nextOwner": "C fixes exact root, original QB reviews this2-leaf delta, original D2 builds once; any new PG remains original T45/C scope",
+  "artifacts": {
+    "PINS.json": {
+      "sha256": "78b950f5d7dd3223956704ff20729c6df9e3236c740d1f7434531a2d07ed95f3",
+      "bytes": 539
+    },
+    "SOURCE.patch": {
+      "sha256": "3e6832bc10336cd39db655c5707207b1b8e6d370ac9fea652996241277548040",
+      "bytes": 35000
+    },
+    "SOURCE.reverse.patch": {
+      "sha256": "800484d5cb937304b8f91558bfeb2e56faff1cffffd96e05e094aeaf414058be",
+      "bytes": 35000
+    },
+    "SOURCE-CHECKS.json": {
+      "sha256": "3753f9c71e15873da0015fa66ce890b6c892f481992610b0f96ba91f45444965",
+      "bytes": 652
+    },
+    "LOCAL-SOURCE-DESCRIPTION.json": {
+      "sha256": "f5663f05123c41e05654945a313ec27d952763e0ce9da7f77013aa56e9208357",
+      "bytes": 327489
+    },
+    "ENTRY-DIAGNOSTIC-RECEIPTS.json": {
+      "sha256": "f7fa0b77e8f5cfc030120c0ef7364e45e14a85cfb534f74a2faeaba4446b5483",
+      "bytes": 16482
+    },
+    "PYTHON-CONSUMER-RESULT.json": {
+      "sha256": "04a77751d4470862c145457dfb2dfa03493ea080dfba2f5594d7ead909d42fea",
+      "bytes": 675
+    },
+    "TEST-red.log": {
+      "sha256": "52f5f0d37e19ea4b876a081d578ffb49599264d52e9a2d59dafb9feda15cc2a8",
+      "bytes": 3947
+    },
+    "TEST-native-green.log": {
+      "sha256": "d13eea2341008c0abc5715ed348b835f8e70e460362d6de476da26deee416db7",
+      "bytes": 246
+    },
+    "TEST-affected-01.log": {
+      "sha256": "aa80f7273ef0002471595dedbad5328f5c7d674a8cb1555588736cc5e08956a1",
+      "bytes": 1374
+    },
+    "TEST-stage-green.log": {
+      "sha256": "10464d4e2d291e52dd0c162dd51525c3856199a34a501081cd3abfea60b97789",
+      "bytes": 243
+    },
+    "TEST-native-primary-green.log": {
+      "sha256": "762c2c05c152416a01308755e787931ad9bf075c8aee02d10a69dac650796bca",
+      "bytes": 246
+    },
+    "TEST-stage-close-order-green.log": {
+      "sha256": "a37e61e67def403cd1cc7b9098c625444039df58e0c7e15c1b4cd9187c87edec",
+      "bytes": 243
+    }
+  }
+}

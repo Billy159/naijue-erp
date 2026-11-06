@@ -1911,3 +1911,8 @@ C逐叶核父版本和交付SHA，准确5叶且无额外受控改动，提交193
 ### 2026-11-06T13:29:31+08:00 | r13真实新失败：回滚子进程诊断全null，已停止
 实际install2412f609退出2/46.927s，schema+record已提交并发布、安装后adminsnapshot存在；回滚验证子进程退出1/OUTCOME_UNKNOWN_NO_REPLAY，validationStage/code/SQLSTATE/step/internalCode全null。本次未观测到旧42702，不能据null断言alias修复语义通过或确认回滚；普通业务/synthetic25/独立读回未过。C核safe bd8d9625及原实际收据；cleanup6true/errors[]/initializer与descendantsreaped/CID3d131e28停止。
 原D1仅沿原runner/consumer及已导出本地证据定位全null路径，先区分执行前throw、业务正确拒绝但runner失败或真实未知；叶扩大前C登记，运维仍T45唯一owner。不先构建r14、不重启r13、不放宽断言，不套旧原因、不重做真实清洗/上传/备份。无REAL或正式操作。
+
+
+### 2026-11-06T13:47:46+08:00 | 原entry两叶修复固定，继续原窄验/构建并行
+D1回执26d80844已冻结并交还：仅entry4176ecb6和directtestc39887f1。原预期错误负例及独立ABSENT读回逐次reviewed新连接，旧host先关闭确认CLOSED，最多同时1；UNKNOWN/错code/未确认关闭立即停，fixture只最终清理一次，首错不被清理覆盖。31个准确静态entry错误沿原validationCode槽输出，原Python3函数/2enum已证消费31/31；无新增字段/阶段或T45源码改动。4项定向检查通过，仍非真实PG。
+C逐叶核父/新hash及准确两叶，固定integration d534b76ef82681288f270128723a1c6b0bc68867/root d60dee25bc1fc4ce932bea0f52d7f940a34ad7f2/tree91d9793a；sourceSetbd7813a5，生产pin1变/213不变。原QB只窄验此两叶、原D2一次构建并测相对实际READY0adc包的tail。原r13全null首因和负例回滚仍UNKNOWN，不反填模拟23514或成功；不复验原5叶、不重放旧目标/窗口。
