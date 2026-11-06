@@ -484,6 +484,25 @@ class SceneReadbackTests(unittest.TestCase):
         sql=args[3];self.assertTrue(sql.startswith('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;'));self.assertTrue(sql.endswith('ROLLBACK;\n'))
         self.assertEqual(sql.count("coalesce(json_agg(q),'[]'::json)"),3);self.assertNotIn('$1',sql);self.assertNotIn('$2',sql)
         self.assertIn('synthetic.unified.v1',sql);self.assertIn('FROM scene_published',sql);self.assertNotIn('password_hash',sql);self.assertNotIn('COALESCE(b.quantity',sql)
+    def test_composite_scene_wire_preserves_values_and_strict_rows(self):
+        model,rows=self.model();binding={'manifestSha256':'d'*64,'planSha256':'e'*64}
+        # PG17.11 composite json_agg separates later records with LF. This is
+        # an offline wire model, not a database execution or business result.
+        fragments=[json.dumps(rows[0])]
+        for row in rows[1:]:
+            fragments.append('{"kind":'+json.dumps(row['kind'])+',"rows":['+', \n '.join(json.dumps(value) for value in row['rows'])+']}')
+        self.assertEqual([m.strict_json(part) for part in fragments],rows)
+        with patch.object(m,'psql',return_value='\n'.join(fragments)+'\n'):
+            with self.assertRaises(json.JSONDecodeError):m.observe_scene(model.a,model.target,binding,12)
+        sql=m.scene_readback_sql(binding)
+        self.assertEqual(sql.count('::jsonb::text FROM (\n'),3)
+        normalized='\n'.join(json.dumps(row,separators=(',',':')) for row in rows)+'\n'
+        with patch.object(m,'psql',return_value=normalized):scene=m.observe_scene(model.a,model.target,binding,12)
+        self.assertEqual(scene['publication'],rows[1]['rows'][0]);self.assertEqual(scene['balances'],rows[3]['rows'])
+        self.assertEqual(sum(len(values) for values in scene['references'].values()),11)
+        self.assertIsNone(scene['publication']['historyPayloadHash'])
+        for raw,code in [(normalized.replace('"kind":"context"','"kind":"context","kind":"context"',1),'DUPLICATE_JSON_KEY'),(normalized.replace('"kind":"context"','"bad":NaN,"kind":"context"',1),'NONFINITE_JSON')]:
+            with self.subTest(code=code),patch.object(m,'psql',return_value=raw),self.assertRaisesRegex(RuntimeError,code):m.observe_scene(model.a,model.target,binding,12)
     def test_missing_duplicate_wrong_batch_or_filtered_role_refused(self):
         for change in [lambda r:r[1]['rows'].clear(),lambda r:r[1]['rows'].append(r[1]['rows'][0]),lambda r:r[1]['rows'][0].update(sourceHash='a'*64),lambda r:r[2]['rows'].pop(),lambda r:r[3]['rows'][0].update(present=False,quantity=None,version=None),lambda r:r[0].update(actor='owner'),lambda r:r[0]['tables'][0].update(rlsActive=True)]:
             model,rows=self.model();change(rows)
