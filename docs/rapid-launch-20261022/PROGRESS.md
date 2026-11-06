@@ -1895,3 +1895,12 @@ Original11key C11fabe5b35 new20min1793970450786..1793971650786 binds originalr21
 Originalstart cf3b56bd COMPLETED0/37.555s, safe835e0589; actualCIDc3030d17/SID7705044956020457519/OID16393/birth13:09:40.547704UTC/PG170011, programbc1f95c4/target1e40bee8/sourceb780. C original9keyC9 SHA744e7cf7 binds sameC11deadline1793971650786 without extension, QB9c101e24 adopted.
 
 OriginalT45 soleexecutor one install/ordinaryCLI/capacity/readyz/API/cleanup chain dispatched; if failed exactnewcloseddiagnostic retained, no rawprivate text. Currentinstall/ordinary/REAL/prod not yet passed; oldcommitted and unknownrequests never replay.
+
+
+## 2026-11-06 — r21 actual diagnosis effective: ordinary REAL_CAPACITY TypeError, stopped
+
+Originalinstall FAILED2/145.347s,13:13:54..13:16:19UTC; raw28ab9d13/51898B, safecb94c071. ActualPG170011/schema/record published; normalCOMMITTED/ALREADY_COMMITTED/VERIFIED25headers27settlements/CLOSED, rollbackverified/originalbatchabsent/CLOSED, postinstall=postrollback/postcommitdifferent and3snapshotsCLOSED. Versionboundscopedresults adopted, not wholechainPASS.
+
+New diagnostic actually effective: childDiagnosticUnavailable=false; genuine D1 childFailure phaseREAL_CAPACITY/typeTypeError/source runFresh35OrdinaryIntegration:catch, guard/SQLSTATE/errno/integersnull. Non-entryFailure proves D1 function entered, source is catch boundary not originalthrowline. Later REAL_SYNTHETIC_ADMISSION/API/save/approve/readback/probe not passed. CIDc3030d17 stopped,6cleanuptrue/errors[], child/initializer/descendantsreaped. NoREAL/production.
+
+C routed only exact createProductionCapacityLaunch(context.capacityLaunch,c) source/signature/parameter/protocol diagnosis and boundedpureoffline reproduction to originalD1. Existing source leaves frozen pending precise finding, T45 no further server/write/restart/install. All priornormalCOMMITTED and unknownordinary keys not replayed.

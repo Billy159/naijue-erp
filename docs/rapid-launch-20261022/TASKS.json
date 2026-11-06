@@ -28507,12 +28507,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "R21_ACTUAL_PG170011_START_PASS_EXACT_C9_INSTALL_DISPATCHED",
+      "critical": "R21_ACTUAL_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_D1_DIAGNOSIS",
       "independentPreparation": {
-        "D1": "One integration-test leaf delivered/frozen, author3pureofflinePASS; no new work fabricated.",
+        "D1": "Read-only exact REAL_CAPACITY createProductionCapacityLaunch call/source/protocol diagnosis, necessary pureoffline repro only.",
         "QB": "Exact3leaf diagnostic seam independently PASS, author checks reused; no repeated QA.",
         "D2": "One fixed148b5716 build13.538s/pack10.247s/fullmembersPASS; no runtime.",
-        "T45": "Unique original r21 install/ordinary chain dispatched; sameC11/C9deadline, no REAL/production/old-key replay.",
+        "T45": "r21 stopped with cleanup complete, preserve exact evidence, no new server/PG/source writes or old-key replay.",
         "D3": "Fixed REALr3 and independent readback ready; waiting actual target, no new cleaning.",
         "QF": "Core browser prerequisites ready; waiting same-version normal new35 host."
       },
@@ -32104,7 +32104,7 @@
         }
       },
       "r21Preparation": {
-        "state": "R21_ACTUAL_PG170011_START_PASS_EXACT_C9_INSTALL_DISPATCHED",
+        "state": "R21_ACTUAL_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_D1_DIAGNOSIS",
         "integration": "7698d68d578bf42727b67da85848db154b560dda",
         "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
         "tree": "64f4365f1880398f9d5bb8800eedb2941477e9e2",
@@ -32127,7 +32127,7 @@
             1793966384023683928
           ]
         },
-        "next": "Collect original r21 install/ordinary result and ownedcleanup; exact closed failure metadata if failed, no replay of any prior committed or unknown request.",
+        "next": "Original D1 exact read-only source/call protocol diagnosis and bounded offline TypeError reproduction; no new server/install/replay until precise fix.",
         "QBReceiptSHA256": "9c101e24fc3c4f0f05429d4859b935dc4b4c70f60d411bc50678be75bb5d4fae",
         "D2ReceiptSHA256": "2fe30edaeb253fc77bfa35b3d4eee80e5fa4d2ebec552f594125ab9b5c08fc57",
         "sourceSetSHA256": "b7805bc482143227d8539de5c5ddf8927f0d8ce14923bf80f71856175476ec37",
@@ -32198,7 +32198,88 @@
           "postmasterStart": "2026-11-06 13:09:40.547704+00"
         },
         "programSHA256": "bc1f95c46816ac81e2d22278116ecf680c6bac0bfa4aa61cc04e548944db49dc",
-        "targetSHA256": "1e40bee803812ac9716b1ac70a30cdc5ec9b8aabfe0c161b410d591ba70e6b58"
+        "targetSHA256": "1e40bee803812ac9716b1ac70a30cdc5ec9b8aabfe0c161b410d591ba70e6b58",
+        "safeActualReceiptSHA256": "cb94c0718018014db94b32ada451337c23188663061682f63ded183b670367d3",
+        "actualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
+        "installation": {
+          "state": "RECORD_DURABLY_PUBLISHED",
+          "installState": "COMMITTED_UNPUBLISHED",
+          "recordPublished": true,
+          "catalogSha256": "86007e0ef32ecfb2e4ad541255217a6b683245b2281447222b3534d313030c34",
+          "hostEnabled": false,
+          "businessVerified": false
+        },
+        "normalSyntheticImport": {
+          "state": "FRESH35_CONTROLLER_HOST_VERIFIED",
+          "importState": "COMMITTED",
+          "replayState": "ALREADY_COMMITTED",
+          "readbackState": "VERIFIED",
+          "retainedHeaders": 25,
+          "retainedSettlements": 27,
+          "connectionCleanup": "CLOSED"
+        },
+        "rollback": {
+          "state": "FRESH35_SYNTHETIC_ROLLBACK_VERIFIED",
+          "rollbackVerified": true,
+          "originalBatchAbsent": true,
+          "connectionCleanup": "CLOSED"
+        },
+        "snapshots": {
+          "postInstallEqualsPostRollback": true,
+          "postCommitDiffers": true,
+          "connectionsAndSQLSTATE": {
+            "snapshot-after-install.json": {
+              "connectionCleanup": "CLOSED",
+              "sqlstate": null
+            },
+            "snapshot-after-rollback.json": {
+              "connectionCleanup": "CLOSED",
+              "sqlstate": null
+            },
+            "snapshot-after-commit.json": {
+              "connectionCleanup": "CLOSED",
+              "sqlstate": null
+            }
+          }
+        },
+        "ordinaryFailure": {
+          "automaticRetry": false,
+          "childDiagnosticUnavailable": false,
+          "childFailure": {
+            "actualInteger": null,
+            "errno": null,
+            "errorType": "TypeError",
+            "expectedInteger": null,
+            "format": "FRESH35_ORDINARY_FAILURE_V1",
+            "guardCode": null,
+            "phase": "REAL_CAPACITY",
+            "source": "runFresh35OrdinaryIntegration:catch",
+            "sqlstate": null
+          },
+          "code": "FRESH35_ISOLATED_ORDINARY_FAILED_OR_OUTCOME_UNKNOWN",
+          "commitOutcome": "CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY",
+          "phase": "REAL_PG_AND_MIDDLEWARE",
+          "state": "FAILED_OR_OUTCOME_UNKNOWN"
+        },
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "credentialsRemoved": true,
+          "loginsRevoked": true,
+          "ownedPidAbsent": true,
+          "portAbsent": true,
+          "errors": [],
+          "initialization": {
+            "descendantsReaped": true,
+            "errors": [],
+            "initialized": true,
+            "initializerReaped": true,
+            "stopReason": "INITIALIZER_EXITED"
+          }
+        },
+        "containerStopped": true,
+        "thisR21NormalCommitMustNotReplay": true,
+        "diagnosticActualEffective": true
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -32607,22 +32688,22 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T21:14:05+08:00",
-      "phase": "R21_ACTUAL_PG170011_START_PASS_EXACT_C9_INSTALL_DISPATCHED",
+      "at": "2026-11-06T21:20:28+08:00",
+      "phase": "R21_ACTUAL_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_D1_DIAGNOSIS",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 actual r21 install and ordinary runtime",
+      "currentOwner": "Original D1 precise REAL_CAPACITY seam diagnosis",
       "nextOwner": "C binds C11 after actual materialization and fresh resource result",
-      "latestActualReceiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47",
+      "latestActualReceiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
-      "schemaInstalled": false,
-      "installationRecordPublished": false,
-      "initializationPassed": false,
-      "negativeRollbackConfirmed": false,
+      "schemaInstalled": true,
+      "installationRecordPublished": true,
+      "initializationPassed": true,
+      "negativeRollbackConfirmed": true,
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect original r21 install/ordinary result and ownedcleanup; exact closed failure metadata if failed, no replay of any prior committed or unknown request.",
+      "next": "Original D1 exact read-only source/call protocol diagnosis and bounded offline TypeError reproduction; no new server/install/replay until precise fix.",
       "authority": "Temporary blanket delegation expired2026-11-06T12:00+08; original goal and standing same-kind bounded isolation approval continue. No invented renewal.",
       "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
       "buildRoot": "148b5716864681b77498ff58ea82bc18c853199b",
@@ -32633,13 +32714,13 @@
       "diagnosticSourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL",
       "diagnosticSourceQBReceiptSHA256": "fc9c1f6573c923a6daa7fc8dfdf970c4e1dce15d5a9b42334719a773b5e3012e",
       "latestActualRuntime": {
-        "root": "07e250d53fec34d8b5199043075263268ff1e32f",
-        "sourceCommit": "859d85b16245b2312bdcebb18d5acdda369a2501",
-        "state": "R20_REAL_SYNTHETIC_INSTALL_IMPORT_PASS_ORDINARY_REAL_PG_MIDDLEWARE_FAILED_STOPPED_NO_REPLAY",
-        "receiptSHA256": "d217532ef00fcf9902512bf03f9cd47948ecf8ec903f126a377b3b98e87faa47"
+        "root": "148b5716864681b77498ff58ea82bc18c853199b",
+        "sourceCommit": "7698d68d578bf42727b67da85848db154b560dda",
+        "state": "R21_INSTALL_AND_SYNTHETIC_IMPORT_PASS_ORDINARY_REAL_CAPACITY_TYPEERROR_STOPPED_NO_REPLAY",
+        "receiptSHA256": "28ab9d138b62377ce1a8eb9ec2494dea2a0ff0773b87305be05758f58b3658fa"
       },
-      "syntheticImportPassed": false,
-      "independentSnapshotsPassed": false,
+      "syntheticImportPassed": true,
+      "independentSnapshotsPassed": true,
       "previousCandidateEvidence": {
         "sourceSetSHA256": "79c358cc0b297304db683a61dc08da7a93189cfc2ee05a2339f3d804c60b023f",
         "QBReceiptSHA256": "6bed41316097db897096bb5e3e249602291ecdcd4c0b9351088688b0c07c188d",
