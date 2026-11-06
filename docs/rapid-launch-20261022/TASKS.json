@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T10:14:55+08:00",
+  "updatedAt": "2026-11-06T10:28:13+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-06T10:14:55+08:00",
+    "at": "2026-11-06T10:28:13+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28491,13 +28491,13 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "critical": "T45 sole original Python producer owner verifies PG17.11 address formatting and fixes only snapshot address producer if proven; scope guard unchanged. Preserve committed r9/record stopped, no install replay or blind newPG.",
+      "critical": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay.",
       "independentPreparation": {
-        "D1": "No source writes; existing staff EDIT+account facts confirmed, no extra route. Await actual new T45 leaf/source closure if needed.",
-        "T45": "Only snapshot producer source+original narrow test if PG17.11 source proves representation mismatch; preserve committed r9. Private admin original-codec material separately local.",
-        "D2": "No rebuild until precise frozen source increment; fixed24e and input appendix immutable.",
+        "D1": "Readonly/no WIP/no repeated account route or old source review.",
+        "T45": "r10 purepin preparation only pending precise artifact hashes; r9 committed schema/record stopped preserved; privateADMIN original codec material now ready.",
+        "D2": "Buildac19 source closure/readback/tail from retained24e exactbase; no source writes.",
         "D3": "Fixed REALr3 full archive actually private READY; independent PG readback prep waits actualtarget, no source rescan.",
-        "QB": "No new whole review; next only exact snapshot producer increment after fixed source.",
+        "QB": "Only fixed12784ad9 launcher address producer and guard unchanged narrowincrement, not old whole catalog.",
         "QF": "Delivered exactnormalhost prerequisites; preserve report; actualbrowser core pendingnew35host, no repeatedDemo or fixtureQA."
       },
       "noFiller": true
@@ -29425,7 +29425,7 @@
       "noHumanComputerHandoff": true
     },
     "syntheticNetworkObservationContinuation": {
-      "state": "R9_NATIVE_SCHEMA_COMMITTED_RECORD_PUBLISHED_POSTINSTALL_SNAPSHOT_FAIL",
+      "state": "R10_FIXED_SOURCE_BUILD_QB_PENDING",
       "owners": {
         "D1": "target/catalog/lifecycle and necessary direct tests",
         "T45": "existing launcher bootstrap and direct tests"
@@ -29517,7 +29517,7 @@
         "businessAcceptance": false,
         "oldScenePreserved": true
       },
-      "next": "T45 sole original Python producer owner verifies PG17.11 address formatting and fixes only snapshot address producer if proven; scope guard unchanged. Preserve committed r9/record stopped, no install replay or blind newPG.",
+      "next": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay.",
       "producerNoneReturnFix": {
         "launcherSHA256": "156f19d8fc8cb1ac9c77215f1095c93af78b8b2768298a75962f85aee3968d36",
         "testsSHA256": "5c11d72263274854cdb549200ceb72e16d85f1e3e77bd9e791b4efc50ce54172",
@@ -30279,7 +30279,30 @@
           "errors": [],
           "containerStopped": true,
           "initializerAndDescendantsReaped": true
+        },
+        "snapshotProducerSourceFix": {
+          "authority": "C exact conditional decision under human noon delegation; PG17.11 primarysource proved inet::text includes mask, host omits it",
+          "sourceReadySHA256": "d631cf76c968f21e35bdb7e92e60c8843e44a11727f167f3a840e559bfc6c545",
+          "scope": "Only snapshot_sql address producer host(inet_server_addr()); validate_snapshot and all other functions/guards unchanged",
+          "sourceSHA256": "dc916c6b4019c59a5dfee71fb8d4a2911fb77ac3ba9fd552c7f0c1b4f5dc6706",
+          "testSHA256": "bbbbe0b15c0925f7e3d5841df8390f7acb621e883ab6bd275fc95675c28ad1fe",
+          "checks": "Only1newmethod RED→GREEN,10wrongidentities still rejected; source inverse and other AST unchanged; noPG",
+          "actualFirstMismatchObserved": false
         }
+      },
+      "r10Preparation": {
+        "state": "FIXED_SOURCE_D2_BUILD_AND_QB_NARROW_INCREMENT_IN_PROGRESS",
+        "integration": "12784ad9e6135e2b253887c4a55bbd74e564e91b",
+        "buildRoot": "ac19b2719332ed6755affb849bfcd65bd70249d9",
+        "tree": "42774b2242d252766cb5fb549dff19db17a8134f",
+        "sourceSetCandidateSHA256": "d518aeff0ac48c57305bd742516cda58d54e0de4364e460fd32a2c4026e90ad1",
+        "sourceSetAuthoritativeBuildVerified": false,
+        "baseArchiveSHA256": "3e7fbbdb05c19c4ad4e580dce0ba4766cdb87987f57c984f0ad11a1698b4907e",
+        "baseArchiveBytes": 83684342,
+        "root": "phaseb-application-r10",
+        "container": "t45-fresh35-deb13-20261106-r10",
+        "actualPG": false,
+        "next": "Original QB only snapshot producer delta; D2 original full build/pack/readback/tail; T45 purepin then stagepreflight on accurate artifacts, no oldr9 replay."
       }
     },
     "productionReleaseCompatibilityContinuation": {
@@ -30673,7 +30696,7 @@
     },
     "normalProductionAccountInput": {
       "at": "2026-11-06T10:09:02+08:00",
-      "state": "EXISTING_STAFF_EDIT_ACCOUNT_SEAM_CONFIRMED_NO_SOURCE_CHANGE_PRIVATE_BOOTSTRAP_PREPARING",
+      "state": "PRIVATE_BOOTSTRAP_MATERIAL_READY_NO_SERVER_ACCOUNT_CREATED",
       "inputAppendixSHA256": "44ecda507cd1b3184cd4b305a33ea7d11072a2a803184f2696ce932b4018c875",
       "fixedBuildResultUnchanged": "9dd8047f1b5cfb4fab9b822c4b0aa29488c71546ecc2e01216a5623d06366b0a",
       "normalEntry": "POST /api/staff/commands EDIT+account uses imported stable staff id/current version and original UoW/hash/permission; leaving staff cannot login",
@@ -30681,7 +30704,11 @@
       "bootstrapAdmin": "Independent new technical ADMIN via existing NEW_EMPTY admin four-field input and private scrypt, never source staff/history identity bridge",
       "privateAdminMetadataSHA256": "fdadbc3062ff6e7bf4c7c8741e796a40b7a44968538cdd08614e6ba138fdf23f",
       "privateMaterialsInGit": false,
-      "T45Next": "Check exact new IDs against REAL sourceSTAFF then original password codec private one-time materials before REAL init binding. No password exposed, no extra interface."
+      "T45Next": "Check exact new IDs against REAL sourceSTAFF then original password codec private one-time materials before REAL init binding. No password exposed, no extra interface.",
+      "privateAdminCollisionCheck": "Actual r3 pinnedSTAFF103/payment_account80 two members only, requested new IDs absent; no user_account source member, runtime initializer uniqueness guard still required",
+      "privateCredentialPreparation": "Original lockedNode24.21/authentication codec oncehash, originalverify pass/dummy rejected; password+encodedhash0400 inV only, no values exported/Git; no regen after binding",
+      "actualServerAccountCreated": false,
+      "actualLoginVerified": false
     }
   }
 }

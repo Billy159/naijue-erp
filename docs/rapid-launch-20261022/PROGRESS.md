@@ -1497,3 +1497,8 @@ D2短附录44ecda50及原D1一次静态核准正常员工EDIT+account已有入�
 
 ### 2026-11-06T10:14:55+08:00 | r9安装已提交，后置快照失败，严禁误记回滚
 原install6cf9ec3e实际作业FAILED2/25.829s，但安全汇总ef2e73f2明确native schema已提交、安装record已持久发布；内层installState=COMMITTED_UNPUBLISHED保留、外层RECORD_DURABLY_PUBLISHED/recordPublished=true为真实后继状态。后置failure=FRESH35_ISOLATED_SNAPSHOT_PHYSICAL_TARGET_DIFFERS，无SQLSTATE；synthetic25/普通业务/host/独立snapshot仍未通过，整链FAIL。cleanup六true/errors[]/CID846d897a已停；不得称ROLLED_BACK或重装旧r9。仅安全元回执入Git，原事务PID/nonce留原私有收据。原T45唯一Pythonowner在PG17.11原源证明地址::text与裸host表示是否不一致，C条件批准仅snapshot_sql.address用host(inet_server_addr())，全部物理guard不减，未观察实际首差异，不能猜成唯一因。
+
+
+### 2026-11-06T10:28:13+08:00 | 快照producer修复固定，r10原两线并行
+T45用官方PG17.11 network.c1108–1150/pg_proc.dat证明text(inet)含mask而host返回纯地址，C已准确条件批准，仅原snapshot_sql一行生产值改host(inet_server_addr())；原validate_snapshot及其他函数/全部身份guard不减。READYd631cf76，Pythondc916c6b/testbbbbe0b1，单项RED→GREEN含10错身份拒绝、逆替换及其余AST不变，0PG。固定integration12784ad9/rootac19b271/tree42774b22；原QB窄验及D2同版构建/权威source闭包/从服务器实际24e3e7f底包提tail并行。r9已提交schema/record停机保留，不称回滚、不重放；实际首快照差异及整链业务仍未验。
+独立初始化ADMIN私有材料已沿锁定Node24.21原codec生成一次并0400保留，原r3钉住STAFF103/资金账户80两个成员做UUID不碰撞核对，不把资金账户当登录，不扫全量registry。真实初始化与正常login还未执行；密码/hash只私域不Git/不Dot，既有employee稳定身份及离职禁登保持。至12点用户无需操作或决策。
