@@ -1,0 +1,22 @@
+{
+  "format": "FRESH35_ISOLATED_PROVISION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_INSTALL_RECORD_AND_SYNTHETIC_IMPORT",
+  "deploymentManifestSha256": "149f2432c3f1c87307ca299958e5a3a8b8521a82f05f43ea34c3ad9401ee9a3e",
+  "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+  "proposal": {
+    "database": "synthetic_fresh35_20261105_r1",
+    "admin": "fresh35_admin_20261105_r1",
+    "owner": "fresh35_owner_20261105_r1",
+    "controller": "fresh35_controller_20261105_r1",
+    "runtime": "fresh35_runtime_20261105_r1",
+    "host": "127.0.0.1",
+    "port": 18651,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-isolated/cloud-pg-fresh35-20261105-r1"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1793986522139,
+  "expiresAt": 1793987722139,
+  "independentSafetyReviewSha256": "cd4b69cd38ec7b9956fa3b6b99ec7482ea4888eeaccde4605eb99a1b8c4b4f5a",
+  "authorizationReference": "C current user delegates through2026-11-07T12:00+08; standing same-kind isolation approval. Exactr25 root56fb33/source753574cc/sourceSet7cf. QB843048ff app+1dc67c60 importer+cd4b69cd ops; materiald1a1c0e1/currentfacts3d06d7f8 at01:33. Only new isolated r25 target:2CPU/3GiB/PID256 UID:GID61035 guardian/2DO; install, synthetic rollback/commit/replay/readback and ordinary chain after separate C9. No REAL/formal/old keys; no extension."
+}

@@ -1,0 +1,325 @@
+{
+  "status": "R25_STAGE_MATERIALIZED_CURRENT_HASHES_RESOURCES_AND_TARGET_ABSENCE_VERIFIED_NO_PG_WINDOW",
+  "checkedAtAsiaShanghai": "2026-11-07T01:33:20.824094+08:00",
+  "frozenSevenFilesUnchanged": true,
+  "fixedSource": {
+    "sourceCommit": "753574ccb4178a740f31e5c82441e5c4462a9535",
+    "candidateRoot": "56fb33edf7d2a7953df9cd013592b63c0e53bab3",
+    "sourceTree": "941efee043b3be20f761eeefc9b3c2fe90bc3d3b",
+    "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+    "D2Result": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-56fb33ed/RESULT.json",
+      "sha256": "1c7f54f9354faa5c61ddae43e4366eb15b1ed91fa3acaa3f3cd89bdd120707e6"
+    },
+    "newNames": {
+      "root": "phaseb-application-r25",
+      "container": "t45-fresh35-deb13-20261107-r25",
+      "jobPrefix": "t45-f35-56fb33-",
+      "artifact": "f35-56fb33-ordinary-local-20261107-01",
+      "tail": "f35-56fb33-tail-20261107-01"
+    }
+  },
+  "plan": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/operations-plan.json",
+    "sha256": "bfa8364c117aa04a4e8ff96887813814968376e4fa7817fd044c1e9521dbf6c3",
+    "content": {
+      "authorizationReference": "C r25 standing isolated authorization; before2026-11-07noon delegated decision. QBcd4b69cd/FINAL768284a2/currentfactsaa026f80. C13 stage/material only; no PG/REAL/formal or old-key replay.",
+      "enabled": true,
+      "imagePreparationExpiresAt": 1793987506483,
+      "operationId": "t45-f35-56fb33-application-20261107-01",
+      "opsSourceSha256": "c4fadb31f8b7baae1007bf97b46dd7047283a110a8c190e5955862ad567be702",
+      "stagingAuthoritySha256": "6d14e96224e275704999ea372f3f4e84208cb9c5535f5a5ff48e5bbeb327ff99"
+    }
+  },
+  "newDerivedFiles": {
+    "STAGE-RESULT.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/STAGE-RESULT.json",
+      "bytes": 1334,
+      "sha256": "f6782201c3b386925b111f4df7454efe71bbfb2d4ed854e18404bee6c06a0f4e"
+    },
+    "C13-full.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/C13-full.json",
+      "bytes": 975,
+      "sha256": "6d14e96224e275704999ea372f3f4e84208cb9c5535f5a5ff48e5bbeb327ff99"
+    },
+    "operations-plan.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/operations-plan.json",
+      "bytes": 518,
+      "sha256": "bfa8364c117aa04a4e8ff96887813814968376e4fa7817fd044c1e9521dbf6c3"
+    },
+    "install_ordinary_policy_tail.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/install_ordinary_policy_tail.py",
+      "bytes": 2505,
+      "sha256": "8a4d155f23e45857a81c620f9ffef8ab555d5da47f6bf1e6957c6e6da72d32f3"
+    },
+    "TAIL-RESULT.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/TAIL-RESULT.json",
+      "bytes": 474,
+      "sha256": "a6dd58b51999c7fb0cda6980cce4a10fea95c59acf915e8c8138ace769f9d481"
+    },
+    "C13-tail.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/C13-tail.json",
+      "bytes": 954,
+      "sha256": "cedf2c7568631e3cb06efaa2dfb15129393306ac95f1d96683390caa8c11b3f5"
+    },
+    "C11-TEMPLATE.UNISSUED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/C11-TEMPLATE.UNISSUED.json",
+      "bytes": 1115,
+      "sha256": "00287885f7f673f2fc3c07515f064c9a2d00f29c3978b027248e133fe9ebd47b"
+    },
+    "install_ordinary_policy_final.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/install_ordinary_policy_final.py",
+      "bytes": 2526,
+      "sha256": "a0911fc6aa387e81d80157427accdaa6eb9ea6c423d55811b2cefe4fb7c74a10"
+    },
+    "assemble_original_receiver.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/assemble_original_receiver.py",
+      "bytes": 9639,
+      "sha256": "182a63dec3f148a38e70f8e425c2a015c7b418f17e4272277b978f641ea61e69"
+    },
+    "preflight.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/preflight.py",
+      "bytes": 4220,
+      "sha256": "c401266ed5871978a70059181e985ba7cc098b4694948c61021e54f2f57b5bc5"
+    }
+  },
+  "assembly": {
+    "assembledBytes": 83704196,
+    "assembledSha256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+    "baseIdentity": [
+      66304,
+      393745,
+      83702712,
+      1793980952518308965,
+      1793980953844308219
+    ],
+    "baseSha256": "89b67c5a432c994dbad9f1a53a4b94401fd6c74b7b0b0b865fb3148e25d7fe3e",
+    "oldBaseAndPartialChanged": false,
+    "originalReceiver": {
+      "receipt": {
+        "archiveBytes": 83704196,
+        "archiveSha256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+        "artifactKey": "f35-56fb33-ordinary-local-20261107-01",
+        "authoritySha256": "6d14e96224e275704999ea372f3f4e84208cb9c5535f5a5ff48e5bbeb327ff99",
+        "fileIdentity": [
+          66304,
+          393753,
+          83704196,
+          1793985946584329397,
+          1793985947789325945
+        ],
+        "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+        "status": "READY"
+      },
+      "status": "READY"
+    },
+    "originalReceiverSha256": "ad0afee18d4edaebe743915a5336134e3a37ac67f014596b371276b83e070653",
+    "pgStarted": false,
+    "prefixBytes": 80794925,
+    "receiverUid": 1000,
+    "rootAuthorityCreated": false,
+    "status": "ORIGINAL_RECEIVER_READY_FROM_EXACT_LOCAL_BYTES",
+    "tailBytes": 2909271,
+    "tailSha256": "bfc280ffab3dad4abc97067f51fd34350a61413a328a4c0d53dc3425a2a5dc73"
+  },
+  "materialization": {
+    "application": {
+      "archiveSHA256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+      "deploymentManifestSha256": "149f2432c3f1c87307ca299958e5a3a8b8521a82f05f43ea34c3ad9401ee9a3e",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-56fb33-application-20261107-01",
+      "sourceSet": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67"
+    },
+    "collectorMode": "0o755",
+    "environmentReceiptUnchanged": true,
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "imageBuilt": false,
+    "postgresStarted": false,
+    "status": "CURRENT_APPLICATION_MATERIALIZED_NO_DB_WINDOW"
+  },
+  "currentReadback": {
+    "jobId": "t45-f35-56fb33-local-start-preflight-20261107-01",
+    "checkedAtUTC": "2026-11-06T17:33:20.824094+00:00",
+    "mutations": 0,
+    "targetParent": {
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "applicationRoot": {
+      "exists": true,
+      "uid": 0,
+      "mode": "0o700",
+      "symlink": false
+    },
+    "resources": {
+      "cpuCount": 4,
+      "loadAverage": [
+        0.830078125,
+        1.26904296875,
+        0.6845703125
+      ],
+      "memoryBytes": {
+        "MemTotal": 16731348992,
+        "MemAvailable": 14384140288,
+        "SwapTotal": 4294963200,
+        "SwapFree": 4161343488
+      },
+      "disk": {
+        "freeBytes": 3723808768,
+        "totalBytes": 489861931008,
+        "device": 66304
+      }
+    },
+    "image": {
+      "id": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "os": "linux",
+      "arch": "amd64"
+    },
+    "materializeOriginalKey": {
+      "jobId": "t45-f35-56fb33-local-materialize-20261107-01",
+      "requestPresent": true,
+      "resultPresent": true,
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "CASOriginalKey": {
+      "jobId": "t45-f35-56fb33-full-staging-policy-20261107-01",
+      "status": "COMPLETED",
+      "exitCode": 0
+    },
+    "matchingContainerIDs": [],
+    "currentApplication": {
+      "archiveSHA256": "58ccbfd5ba053d3105e1e2093074fb1bf1ca50027201e7b770ad57a42b9594ed",
+      "deploymentManifestSha256": "149f2432c3f1c87307ca299958e5a3a8b8521a82f05f43ea34c3ad9401ee9a3e",
+      "environmentImage": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "environmentReceiptSha256": "e475f85c3501dbf9f9a18ddcc5be94384f82582712cd5a939f3326628237a47f",
+      "operationId": "t45-f35-56fb33-application-20261107-01",
+      "sourceSet": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67"
+    },
+    "materializedFixedFileHashes": {
+      "metadata/deployment-manifest.json": {
+        "sha256": "149f2432c3f1c87307ca299958e5a3a8b8521a82f05f43ea34c3ad9401ee9a3e",
+        "bytes": 1084429,
+        "contentsNotExported": true
+      },
+      "deploy/runtime/fresh35-ordinary-runtime-v1.json": {
+        "sha256": "14cd4836797ee154e4a61d5bf43f40de68727b5ff7a887e74600c2123b69d05e",
+        "bytes": 2219,
+        "contentsNotExported": true
+      },
+      "deploy/scripts/release/unified-install/launch-fresh35-isolated-v1.py": {
+        "sha256": "187b6e1a8d956db9dd161582c62300038df867d2b30a2c895037858b9da9b4e6",
+        "bytes": 104321,
+        "contentsNotExported": true
+      }
+    },
+    "startArtifactsPresent": {
+      "start-intent.json": false,
+      "container-receipt.json": false,
+      "authority/fresh35-isolated-provision-v1.json": false,
+      "authority/fresh35-combined-execution-v1.json": false
+    },
+    "status": "READONLY_FACTS_COLLECTED"
+  },
+  "jobs": {
+    "t45-f35-56fb33-tail-staging-policy-20261107-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.26789138093590736,
+      "exports": {
+        "ordinary-policy-readback.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-tail-staging-policy-20261107-01/transport/release-receipts/t45-f35-56fb33-tail-staging-policy-20261107-01/ordinary-policy-readback.json",
+          "sha256": "e19df75bdda8a3f62a85fa81c1c9d2412218911d60a51d09f84f0993db334e62"
+        },
+        "job.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-tail-staging-policy-20261107-01/transport/release-receipts/t45-f35-56fb33-tail-staging-policy-20261107-01/job.json",
+          "sha256": "c8c4aa70b6a5e3f7bd02d6749fe39e130ffce31a401385bf4925b414a335e311"
+        }
+      }
+    },
+    "t45-f35-56fb33-full-staging-policy-20261107-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.21751366602256894,
+      "exports": {
+        "ordinary-policy-readback.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-full-staging-policy-20261107-01/transport/release-receipts/t45-f35-56fb33-full-staging-policy-20261107-01/ordinary-policy-readback.json",
+          "sha256": "0d3c9e9a0063b909d0bdaed67daeaf81ec91e325884373ba7b5c4e90fbaf3e58"
+        },
+        "job.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-full-staging-policy-20261107-01/transport/release-receipts/t45-f35-56fb33-full-staging-policy-20261107-01/job.json",
+          "sha256": "c14a21edc96595eacef04a4a204000bc6b77229101314dbcb964ec79f6325d47"
+        }
+      }
+    },
+    "t45-f35-56fb33-local-assemble-20261107-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 3.276517110876739,
+      "exports": {
+        "local-assembly-original-receiver.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-local-assemble-20261107-01/transport/release-receipts/t45-f35-56fb33-local-assemble-20261107-01/local-assembly-original-receiver.json",
+          "sha256": "f6782201c3b386925b111f4df7454efe71bbfb2d4ed854e18404bee6c06a0f4e"
+        },
+        "job.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-local-assemble-20261107-01/transport/release-receipts/t45-f35-56fb33-local-assemble-20261107-01/job.json",
+          "sha256": "1196b42c995ad6f6b986d3c80d771b905b76107189449e9406ff95ff37b337c5"
+        }
+      }
+    },
+    "t45-f35-56fb33-local-materialize-20261107-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 371.3941664220765,
+      "exports": {
+        "fresh35-materialize-app-result.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-local-materialize-20261107-01/transport/release-receipts/t45-f35-56fb33-local-materialize-20261107-01/fresh35-materialize-app-result.json",
+          "sha256": "d1a1c0e19083c8914758e068e016e7297ec974b07fd2031c06367cb113dbcf2a"
+        },
+        "job.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-local-materialize-20261107-01/transport/release-receipts/t45-f35-56fb33-local-materialize-20261107-01/job.json",
+          "sha256": "37e75e137cf5e178b5af5fb72e1a42fc876aca67fff2b9a75529bd954baf299c"
+        }
+      }
+    },
+    "t45-f35-56fb33-local-start-preflight-20261107-01": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 0.16760142613202333,
+      "exports": {
+        "materialize-preflight.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-local-start-preflight-20261107-01/transport/release-receipts/t45-f35-56fb33-local-start-preflight-20261107-01/materialize-preflight.json",
+          "sha256": "3d06d7f8f1583d72b1b1c626b69d143e09abf8bc38df2c71f1c969b96b151924"
+        },
+        "job.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-f35-56fb33-local-start-preflight-20261107-01/transport/release-receipts/t45-f35-56fb33-local-start-preflight-20261107-01/job.json",
+          "sha256": "8c16495ffe561e599e5a04be757e0ef5d7b6caa7fce21a35eb095606f3064e50"
+        }
+      }
+    }
+  },
+  "C11Template": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-fresh35-r25-ops-preparation-01/c13-execution-01/C11-TEMPLATE.UNISSUED.json",
+    "sha256": "00287885f7f673f2fc3c07515f064c9a2d00f29c3978b027248e133fe9ebd47b",
+    "keys": 11,
+    "issuerFieldsNull": true,
+    "authority": false
+  },
+  "C13Window": {
+    "startsAt": 1793985706483,
+    "expiresAt": 1793987506483,
+    "extension": false
+  },
+  "PGStarted": false,
+  "newPhysicalTarget": "UNBOUND_NOT_CREATED",
+  "oldR24PortVerified": false,
+  "oldR24CleanupPass": false,
+  "oldResultsChanged": false,
+  "REALOrFormalChanges": false,
+  "oldKeyReplay": false,
+  "businessAcceptance": false,
+  "actualModelEffortFast": "UNVERIFIED",
+  "nextStep": "C issues new C11 independently from current material/resource facts. No PG creation before C11; no synthetic install before C9."
+}

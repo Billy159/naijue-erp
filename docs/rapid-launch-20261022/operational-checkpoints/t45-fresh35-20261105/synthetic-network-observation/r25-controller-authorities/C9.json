@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_SYNTHETIC_INSTALL_ONLY",
+  "programSha256": "5f5fc9bbaaee53cdf659f0d6d9134b1ea94f94f289a9b264049e615a549d4441",
+  "sourceSetSha256": "7cf8810ed0f45684f70f267bf838f8ab2d6d49ba6e56e0b0f1af8293e9191e67",
+  "targetSha256": "c1d54014cee9faf8ce2651b67cc6d8ffa68254fb444491d0d7ede1fe1b789685",
+  "startsAt": 1793986522139,
+  "expiresAt": 1793987722139,
+  "independentSafetyReviewSha256": "cd4b69cd38ec7b9956fa3b6b99ec7482ea4888eeaccde4605eb99a1b8c4b4f5a",
+  "authorizationReference": "C user delegates decisions through2026-11-07T12:00+08 and standing bounded isolated approval. Exact r25 CID768519a2 targetc1d54014/program5f5fc9bb/source7cf; start483ff693 verified. QB843048ff+1dc67c60+cd4b69cd. Original C11 same deadline, guardian2DO, only synthetic install/commit/replay/readback/rollback and ordinary chain. Unknown original keys only, no replay/extension, no REAL/formal."
+}
