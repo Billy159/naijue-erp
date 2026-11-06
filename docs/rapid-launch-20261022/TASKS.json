@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-06T22:52:49.683226+08:00",
+  "updatedAt": "2026-11-06T22:59:22.147239+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -32469,7 +32469,7 @@
         }
       },
       "r23Preparation": {
-        "state": "R23_QB_BUILD_PASS_READONLY_PREFLIGHT_COMPLETE_C13_STAGE_AND_MATERIALIZE_IN_PROGRESS",
+        "state": "R23_SERVER_FULL_READY_MATERIALIZATION_RUNNING",
         "sourceCommit": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
         "buildRoot": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
         "QBReceiptSHA256": "378854ec7aac153fe3daf1f907b69f208b353390c68c5da67c6e478f0240e817",
@@ -32487,7 +32487,7 @@
             1793973039953934261
           ]
         },
-        "newServerOrPGExecuted": false,
+        "newServerOrPGExecuted": "Exact ordinary artifact stage/assembly executed; PG not started",
         "oldKeysMayReplay": false,
         "sourceSetSHA256": "b0f8cb299ccdab04b522abd5b944bb4c6f1d3ce2ba9f11f7bac25a2dc163d29f",
         "buildResultSHA256": "59032d7c7363a19b25ad713ba7bd8f851d685fc5febeaa7638a803c4877868e9",
@@ -32531,6 +32531,21 @@
             "kind": "ORDINARY_SOURCE_AND_TOOLS"
           },
           "scope": "Exact ordinary source/tools; fresh30min consumes standing human same-kind isolation authorization. Not PG, REAL or production."
+        },
+        "stageResultSHA256": "9d449070a477f65e4b58d3c219bd714b8af784f55f253a6b383264f20197648e",
+        "serverArtifactIdentity": [
+          66304,
+          393737,
+          83703105,
+          1793976908152234000,
+          1793976909527221572
+        ],
+        "materialization": {
+          "jobId": "t45-f35-1e6ba0-local-materialize-20261106-01",
+          "state": "RUNNING_NOT_TERMINAL",
+          "boundSeconds": 900,
+          "C11Issued": false,
+          "PGStarted": false
         }
       }
     },
@@ -32940,11 +32955,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-06T22:52:49.683226+08:00",
-      "phase": "R23_QB_BUILD_PASS_READONLY_PREFLIGHT_COMPLETE_C13_STAGE_AND_MATERIALIZE_IN_PROGRESS",
+      "at": "2026-11-06T22:59:22.147239+08:00",
+      "phase": "R23_SERVER_FULL_READY_MATERIALIZATION_RUNNING",
       "sourceCommitBeforeRepair": "3c3d67b33b74ca6b324f732c69605c2007b1d0a0",
       "fixedBuildRootBeforeRepair": "b8e35df4e8d60eb278f6af5ac08f6fe87a7a898c",
-      "currentOwner": "Original T45 exact r23 stage/assembly/materialization",
+      "currentOwner": "Original T45 t45-f35-1e6ba0-local-materialize-20261106-01",
       "nextOwner": "C bind fresh C11 after actual material/resource; T45 actual target then C9",
       "latestActualReceiptSHA256": "55120c033b8cfd05c06262f10fb1ad7f0b06023ed89f89c6f3de0adee2f2c1f2",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
@@ -32994,7 +33009,7 @@
         "productionDeployed": false
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "6899bbfadabd696952e0866038614298bd33fca8"
+      "githubReadbackCommit": "e0ffed427fd9f1ec8c4d4e4e83bcaeaabba0d407"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",

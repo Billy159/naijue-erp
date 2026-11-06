@@ -2299,3 +2299,8 @@ sourceSet仅host一pin/214变为b0f8cb29；当前为源码和本机有限模型�
 固定source4adb9fa2/root1e6ba071的原D2完整build/pack退出0，回执59032d7c，actualsourceSetb0f8cb29、7298成员完整性/模式采用有效证明，collector0755保留。full46d2426c/83703105字节，manifest39dc1a09、descriptor61c55714、runtimec63a1265，原base464d+prefix81226925+tail2476180/d0a64a41已独立流式核准。未重复构建或技术验收。
 
 原T45只读前置4612e24e退出0，r22实际stopped/6cleanup及COMMITTED25/27保留，unknown原键不重放；新r23ROOT/CID/artifact缺席、旧base identity393729和原image精确，当前资源4CPU/14.365GB内存/5.175GB磁盘。C核准备1747f646后消耗现有长期同类隔离授权，签原13键新30分钟C13：tail540716a8/fullabb05e93，starts1793976626715/expires1793978426715，ref391字符，未引用已过的今天12:00临时授权。T45沿原40秒receiver及900秒物化执行；PG要等freshresource后C11及actualprogram C9，不由客户端自批。不动REAL/prod；新候选业务仍未验。
+
+
+## 2026-11-06 — r23完整候选已在服务器READY，唯一物化等待终态
+
+STAGE-RESULT 9d449070已核，原receiver确认full46d2426c/83703105字节和sourceb0f8/C13abb05e93，实际identity393737；旧base和失败现场未改。唯一物化作业t45-f35-1e6ba0-local-materialize-20261106-01仍在原900秒内，按原键等待，不重复发送或启动PG。实际物化、collector0755及freshresource齐备后C签原11键C11；actualprogram/target取得后再签C9。当前新候选ordinary/REAL/正式发布仍未通过。GitHub已读回e0ffed427fd9f1ec8c4d4e4e83bcaeaabba0d407及固定root1e6ba071。
