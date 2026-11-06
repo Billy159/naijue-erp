@@ -1,0 +1,31 @@
+{
+  "status": "PASS_SCOPED_INSPECT_READONLY_STATUS_SOURCE",
+  "sourceSha256": "f3151c5c58c9c3831ef5e8951a6972a09c1a7c71993f628ea1a5eed6600e01c1",
+  "readySha256": "f527cace29cf3042c2477de233d2f1e3af9b34c0236978197d00d76883778985",
+  "closedFinding": "R3-STATUS-SIGNAL-01",
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": {
+    "entireModuleASTIdenticalAfterRemovingTwoNewStatements": true,
+    "author3SignalsDuringCommunicate": "adopted not rerun",
+    "independentMetadataInterrupt": {
+      "events": [
+        "spawn",
+        "identity"
+      ],
+      "code": "READONLY_PARENT_INTERRUPTED",
+      "childReaped": true,
+      "cleanupIdentity": null,
+      "stdinClosed": true,
+      "credentialPacketNotSent": true,
+      "configRemoved": true
+    },
+    "harnessCorrection": "Initial attempt lacked re dependency; failed attempt not counted. Added re and this one case passed."
+  },
+  "reuse": "All R3 unaffected valid scope plus original19/8/Linux/materialize; not rerun",
+  "actualSignalLinuxOrNode": "NOT_TESTED",
+  "actualPGOrOrdinaryRLS": "NOT_TESTED",
+  "server": "NOT_ACCESSED",
+  "formalBusinessAcceptance": false,
+  "modelRuntime": "UNVERIFIED"
+}

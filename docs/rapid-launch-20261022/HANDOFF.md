@@ -2486,3 +2486,6 @@ D1 first backup package d5ea/f233/9e914 is NOT source accepted: original QB foun
 
 
 2026-11-07T05:06:27.309653+08:00 C: original QB adopted FIX01 four closure fixes (2f09aa4f) and FIX02 original builtin ACL plus legacy-only scope (1ffc7644); actual backup/restore/app remain NOT_TESTED. Sole materialization job is queued/running with original key, not repeated. Before new writer window, original T45 is exposing existing inspect-only and a narrow ordinary-runtime positive committed-receipt check; RLS-hidden zero rows remain UNKNOWN, no new schema/permission or writer expiry extension. Original D1 restored-record work remains independent leaf WIP.
+
+
+2026-11-07T05:29:34.502018+08:00 C: actual materialization COMPLETED0/352.736s adopted from exact three receipts30e74f9c/824208be/3b7938df; source10fc/af75 fixed, minimum free11,303,362,560B and .200766s maximum gap, no new PG/REAL/switch. Original QB R4 f3151c5c source PASS175213fc closes STATUS signal cleanup; only one finite harness re-dependency correction rerun, prior failure retained, no actual RLS/PG claim. T45 preparing original REAL private inputs and exact plans before any20min window. D1 genuine restored-record/current-source versus originalaf75 proof remains independent WIP; actual backup/restore/app still untested.

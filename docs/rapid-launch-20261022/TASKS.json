@@ -33846,10 +33846,15 @@
         "sourceBasis": "Original runtime SELECT import_batch/operation_receipt/audit_change; standard_business_ready RLS hides rows until two PUBLISH batches are committed",
         "decision": "Use existing ordinary V2 admission and single pool, RR READ ONLY exact batches/original keys and hashes; return positive COMMITTED only; zero rows or not-ready stay UNKNOWN, never ABSENT or permission expansion",
         "opsOwner": "T45 original ops only; native unchanged",
-        "state": "SOURCE_ADAPTATION_IN_PROGRESS",
+        "state": "PASS_SCOPED_SOURCE_NOT_ACTUAL_RLS_OR_PG",
         "writerWindowExtended": false,
         "runtimeInitializerGranted": false,
-        "newDBPermission": false
+        "newDBPermission": false,
+        "sourceSHA256": "f3151c5c58c9c3831ef5e8951a6972a09c1a7c71993f628ea1a5eed6600e01c1",
+        "QBResultSHA256": "175213fcf9bb45f477a9a71d648754e990803b8df40d4c639fdfef13fe7a468b",
+        "priorSource": "1fd2bac0 NEED_FIX signal-to-finally; preserved",
+        "actualModeExecuted": false,
+        "actualAdmission": "PENDING_EXACT_TARGET_AND_INPUTS"
       }
     }
   }

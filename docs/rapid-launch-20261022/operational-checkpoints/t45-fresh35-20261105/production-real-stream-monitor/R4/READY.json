@@ -1,0 +1,24 @@
+{
+  "status": "READY_FOR_ORIGINAL_QB_READONLY_PARENT_SIGNAL_RECHECK_ONLY",
+  "sourcePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-04/fresh35-production-carrier.py",
+  "sourceSha256": "f3151c5c58c9c3831ef5e8951a6972a09c1a7c71993f628ea1a5eed6600e01c1",
+  "sourceBytes": 91167,
+  "parentSourceSha256": "1fd2bac039f5f16680c87aeeb432b2fb066df3767e9deffba6792357a85bcac2",
+  "parentQBReceiptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/INSPECT-READONLY-1FD2BAC0-20261107/RESULT.json",
+  "parentQBReceiptSha256": "d1f59cbc29d194195ba92b166cd8f615e2d92db1296d7e74298a61c05cfd85e3",
+  "changedFunctions": [
+    "real_readonly_status_inside"
+  ],
+  "scope": "Only TERM/INT/HUP handler raises READONLY_PARENT_INTERRUPTED before Node Popen so existing except/finally closes stdin and exact own child cleanup. Does not stop PG or change SQL/role/window.",
+  "tests": {
+    "count": 3,
+    "passed": 3,
+    "elapsedSeconds": 0.004,
+    "scope": "Actual reader function + finite signal/process/filesystem dependencies; all three handlers installed before spawn, signal during communicate invokes original own cleanup, result UNKNOWN and childReaped. No real Node/PG/server.",
+    "originalR3TenAnd19And8AndActualLinuxAndMaterialization": "Reuse original effective evidence; not rerun."
+  },
+  "serverExecuted": false,
+  "databaseExecuted": false,
+  "credentialsRead": false,
+  "authorityIssued": false
+}

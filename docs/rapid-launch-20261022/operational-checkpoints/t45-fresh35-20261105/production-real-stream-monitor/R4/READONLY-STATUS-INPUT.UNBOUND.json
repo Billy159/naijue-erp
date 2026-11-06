@@ -1,0 +1,15 @@
+{
+  "format": "FRESH35_PRODUCTION_REAL_STATUS_OPS_V1",
+  "mode": "READONLY_STATUS",
+  "requestKey": null,
+  "sourceSetSha256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+  "manifestSha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+  "targetSha256": null,
+  "programSha256": null,
+  "installationRecordSha256": null,
+  "startsAt": null,
+  "expiresAt": null,
+  "originalWriterJobKey": null,
+  "originalWriterReceiptSha256": null,
+  "originalImportAuthoritySha256": null
+}

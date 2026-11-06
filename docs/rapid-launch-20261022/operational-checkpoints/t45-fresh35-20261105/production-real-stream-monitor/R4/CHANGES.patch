@@ -1,0 +1,11 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-03/fresh35-production-carrier.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-real-stream-monitor-04/fresh35-production-carrier.py
+@@ -631,6 +631,8 @@
+  config=factory.core.hydrate_ordinary_configuration(a,config)
+  operation=trusted(REAL_ROOT/'reports')/description['requestKey'];operation.mkdir(mode=0o700);new_json(operation/'ops-intent.json',description)
+  child=None;identity=None;reaped=False;out={'state':'UNKNOWN','connectionCleanup':'UNKNOWN','readOnlyRollbackAck':False};code=None
++ def interrupted(*_):raise ValueError('READONLY_PARENT_INTERRUPTED')
++ for sig in [signal.SIGTERM,signal.SIGINT,signal.SIGHUP]:signal.signal(sig,interrupted)
+  try:
+   child=subprocess.Popen([DEPLOY+'/runtime/node/bin/node','--no-global-search-paths','--input-type=module','--eval',READONLY_STATUS_JS],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=factory.core.clean_env(work),cwd=DEPLOY,start_new_session=True)
+   identity=factory.core.process_identity(child.pid);need(identity['exe']==DEPLOY+'/runtime/node/bin/node' and real_process_matches(identity),'READONLY_CHILD_IDENTITY_DIFFERS')
