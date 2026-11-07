@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T19:27:46.714800+08:00",
+    "at": "2026-11-07T19:43:41.918190+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28513,7 +28513,7 @@
       "D1": "Read-only time/recovery and same-invocation mutability review closed, no source edits. Await exact original-seam lifecycle and actual capacity. No duplicate tests/source scans.",
       "QB": "Scoped source and fixture/pin evidence adopted; next actual history/R4 result pending, no repeat review.",
       "D2": "Fixed9f history and af395 tool packages ready, waiting resource/actual execution; no new rebuild.",
-      "T45": "Original T45 executes only fixed9f HISTORY_ANCHOR_ONLY tool transport/materialize; scope independently fits observed5.51GB. R4 and exact old backup restore unchanged blocked. No concurrent heavy job.",
+      "T45": "Original9f PG started, C9 delivered for exact HISTORY_ANCHOR_ONLY ordinary-role run. Await original result/cleanup, then authorized38 old files retirement; no parallel heavy operation.",
       "D3": "Original D3: independent source expectations frozen, target readback follows actual verified original commit.",
       "QF": "Original normal-entry/core-business prerequisite still missing. No speculative new browser task."
     },
@@ -35455,11 +35455,11 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "SUCCESSOR9F_FULL_READY_POLICY_RESTORED_MATERIALIZE_JOB_LIVE",
+      "state": "SUCCESSOR9F_ACTUAL_PG_STARTED_EXACT_INSTALL_AUTHORITY_DELIVERED_BUSINESS_PENDING",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "Wait original live materialize job to terminal/actual new resource result. Then C binds20min C11 and actual identity C9; no duplicate submit on observation timeout.",
+      "next": "Original T45 actual9f install/history terminal and original cleanup. No business PASS from start. Then exact authorized38 file retirement, same server serialized.",
       "at": "2026-11-07T19:22:18.321235+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
@@ -35552,7 +35552,21 @@
       "materializePreflightSHA256": "3d6cfe43d540a7795bc75acc7b4f03bbde1b531cebf4b860cb7c760378629017",
       "newMaterializeJobId": "t45-f35-9f4022ca-local-materialize-20261107-01",
       "newMaterializeSubmittedOnce": true,
-      "newMaterializeActualComplete": false
+      "newMaterializeActualComplete": true,
+      "newMaterializeElapsedSeconds": 381.459,
+      "newMaterializeResultSHA256": "043c10c0a222aca5584a63aaf3fc38f4d814a4d104ac468f26e446678d75df21",
+      "newMaterializeFinalSHA256": "4ef94a1de892deeac00bcb02b8e2a587e662c4886aaf4424f87e5aab081e2ab1",
+      "newC11SHA256": "289f4cb3a9c97a42b8a884b464693a17a22ba09d862412ff5d793cc67af5c9e3",
+      "newC9SHA256": "32a39d41296e809a69ab5ef8b06ecce95767de40a7bee40a4c00f31889498bae",
+      "newIsolatedStartsAt": 1794051305936,
+      "newIsolatedExpiresAt": 1794052505936,
+      "newActualStartResultSHA256": "52ba5ba8af63547f2fb7bc904b66c58549d45bae2543f86aa66177426bd6668a",
+      "newActualStartJobSHA256": "fe03809a26062b0c418153954f575ecebe23f67c5cf8019e85f4899247ffe851",
+      "newActualCID": "d63a669a69240e591bfec8d83539fd1279d0789872ec622723a6874c90dc302b",
+      "newActualSystemIdentifier": "7705392219265806383",
+      "newActualPostmasterStartUTC": "2026-11-07 11:37:13.094408+00",
+      "newActualProgramSHA256": "fcc94d409061badf229657764b92e1fa92526a03a9730e8d766ae7ae5bc75853",
+      "newActualTargetSHA256": "d051c9b57eef2b81fe70b9411fe460fad883c58f67eb0dcc4bc102a32aac58f9"
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
@@ -35677,16 +35691,23 @@
       "r4StartFloorBytes": 8207515646,
       "r4ShortfallBytes": 2694242302,
       "next": "Actual additional server capacity or an expressly identified further eligible retired application source is required. No new same-state scans, R4 restart, independent restore or capacity guard relaxation.",
-      "latestResourceReceiptSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e"
+      "latestResourceReceiptSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e",
+      "latestRequirementAdjustment": {
+        "authorityHumanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
+        "oldRestoreFloorStillHistoricalFact": true,
+        "oldSystemRollbackRoute": "Human waived keeping server old-system assets; do not automatically treat old47 backup restoration31GB shortage as first-launch prerequisite. Exact old-backup restore still not proven.",
+        "newSystemBackupRecoveryStillRequired": true,
+        "newSystemScope": "R4/current new35 actual committed data, import receipt and new business continuity need applicable backup/recovery before final switch; cannot call old backup or discarded rollback a new-system restore PASS."
+      }
     },
     "serverRetiredApplicationCleanup20261107": {
       "at": "2026-11-07T19:11:11.563641+08:00",
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
       "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
-      "state": "BOUNDED_CLEANUP_COMPLETE_TWO_DELETED_OTHERS_RETAINED_CAPACITY_STILL_BLOCKED",
+      "state": "NEW_HUMAN_OLD_SERVER_RETIREMENT_SCOPE_VERIFIED_NEXT_FIXED_LIST_AFTER_LIVE_HISTORY_MATERIALIZE",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "Cleanup scope exhausted without touching protected objects. Need additional actual available server space:2694242302B to original R4 floor,30993948672B to exact independent restore floor; small history run/reserve separate. No more unchanged inventory; resume original T45 only after a real resource change and exact current execution binding.",
+      "next": "T45 finishes original9f live materialize first; then fixes next retirement list from existing inventory under new direct human scope, releases R4 space without repeat per-directory human questions.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35723,6 +35744,27 @@
         "rapid_unmounted_installed_payload": "Retained small source archive/cache exists, but complete original Linux dependency reconstruction not established; kept.",
         "other_QA_app_leaves": "No exact complete reconstruction binding; kept.",
         "live_applications": "14 real Node entrypoints on namespace port3000 and3 nginx on8080; not sleep-only; kept."
+      },
+      "latestHumanOverride": {
+        "sourceChat": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+        "humanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
+        "verbatim": "旧的服务器上所有旧的东西可以都不要了 你和主控说",
+        "directlyReadByC": true,
+        "meaning": "Server old-system retirement authorized; old rollback use or lack of reconstructability alone no longer blocks clearly retired application assets. Fix exact path/CID/image list and current consumers before execution.",
+        "stillProtected": "Current R4,9f/af/currentAPP576 materials, true import source and necessary identity mappings, current receipts, current credentials and shared connection/proxy services. Local workspace and frozenDemo excluded.",
+        "dataBoundary": "Prioritize old applications/builds and dedicated old containers/images. Before any actual database/unique backup removal, prove relation to current retained real sources and current dependencies; unknown blocks only that item. No indiscriminate prune."
+      },
+      "nextFixedBatch": {
+        "sourceListSHA256": "f539d81c6720fb07900b825973ac9491bbde780604ffdd565f3293a6f99d172f",
+        "controllerScopeSHA256": "74af8be2798c38963d9b38e6c2946ad2ea0be7af832e67a58c20b2324a937a57",
+        "groups": [
+          "archives26",
+          "rapidPayloads12"
+        ],
+        "items": 38,
+        "estimatedAllocatedBytes": 3329675264,
+        "actualDeleted": false,
+        "sequence": "Only after9f terminal and cleanup. Original CAS, nofollow, FD/mount/current-consumer recheck, changed/current-dependent skip. Preserve all JSON/READY/logs/parents and current materials; no Docker/DB/backup operation."
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
