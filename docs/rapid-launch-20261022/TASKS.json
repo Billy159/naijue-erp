@@ -35699,7 +35699,9 @@
         "newSystemBackupRecoveryStillRequired": true,
         "newSystemScope": "R4/current new35 actual committed data, import receipt and new business continuity need applicable backup/recovery before final switch; cannot call old backup or discarded rollback a new-system restore PASS."
       },
-      "r4MarginBytes": 124690434
+      "r4MarginBytes": 124690434,
+      "latestPostToolFreeBytes": 8324141056,
+      "latestPostToolR4MarginBytes": 116625410
     },
     "serverRetiredApplicationCleanup20261107": {
       "at": "2026-11-07T19:59:37.707927+08:00",
@@ -35822,18 +35824,40 @@
       "remoteExactReadback": true,
       "repairFile": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
       "authorModelPass": 13,
-      "QB": "Dispatched original QB for one-leaf increment only; actual PostgreSQL successor not executed."
+      "QB": "PASS_SINGLE_FILE_SOURCE_AND_OFFLINE_MODELS",
+      "qbResultSHA256": "e3f3756d193507656ff16c7904d4cb9148d1693cb3cfdb9f3633414a1ebafde5",
+      "qbIndependentNewModelPass": 1,
+      "qbMismatchRejections": 6,
+      "next": "Original D2 fixed minimum successor; estimated materialization343MB exceeds current116625410B margin. T45 exact additional stopped rebuildable application-only list needed before successor PG. No historical ordinary-role PASS."
     },
     "r4Af395ebaToolStaging20261107": {
-      "at": "2026-11-07T19:59:37.707927+08:00",
-      "state": "C_EXACT_30MIN_STAGING_AUTHORITY_ISSUED_T45_EXECUTION_PENDING",
+      "at": "2026-11-07T20:07:30.356253+08:00",
+      "state": "ACTUAL_LINUX_LOADER_PASS_ORIGINAL_POLICY_RESTORED",
       "materialSHA256": "488fc3aa62955af3c1ffe053ac4bd1fcbfd9a2400fae283b38256f27627c4311",
       "authoritySHA256": "21c8d006d407c679c63f547db2ed5147b90c1f1ac87df4f8a8a795f9d2b5ecc8",
       "startsAt": 1794052725289,
       "expiresAt": 1794054525289,
       "scope": "Existing original transport; archive0231d8f1/1139863B, Linux import only, current floor retained; restorecd2e532b bytes+metadata on every terminal. No PG/preflight/REAL/app.",
       "proofCallbackIntegrated": false,
-      "next": "Actual READY then C materialize binding, Linux loader and original policy restore receipt. D1 Node seam/T45 Python carrier preparation parallel without server mutation."
+      "next": "T45 original carrier finite callback/pass_fds integration from D1 HANDOFF9fa69570, then QB limited increment and actual Linux/UID61035 proof. No Node source or new platform needed; accurate BOOT07/admin/deadline still pending.",
+      "readyReceiptSHA256": "e72785a3894a884736f9d6fe22873a1988ad655c853cc9013dc33f80dd1f0af2",
+      "readyRawSHA256": "451792cedc11cc597d534527b3c0d076b0aa310f4dad5178595b4bf33636f559",
+      "materializationReceiptSHA256": "cc75771003a672fedf14342dadb860f065e1b08f15983da2679e1233ea58c6f3",
+      "restoreReceiptSHA256": "7d8026c3aa509818cad0a82ef6f65dc42203419f3459114a252926b254515538",
+      "materializationExitCode": 0,
+      "materializationDurationSeconds": 26.943,
+      "originalPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+      "originalPolicyRoot0444Restored": true,
+      "linuxNode": "v24.21.0",
+      "currentPins": 216,
+      "capturedPins": 180,
+      "cliModuleImported": true,
+      "readbackModuleImported": true,
+      "lastFreeBytes": 8324141056,
+      "PGConnections": 0,
+      "BOOT07": false,
+      "REAL": false,
+      "appDeployed": false
     }
   }
 }
