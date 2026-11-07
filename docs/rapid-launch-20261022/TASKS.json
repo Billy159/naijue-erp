@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T12:09:20.380721+08:00",
+  "updatedAt": "2026-11-07T13:06:30.743880+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,13 +33302,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T12:47:39.635440+08:00",
-      "phase": "PREPARE04_NEW_SINGLE_KEY_QUEUED_AFTER_FINITE_CONSUMER_SOURCE_FIX",
+      "at": "2026-11-07T13:06:30.743880+08:00",
+      "phase": "R4_PREPARE04_FAILED_PREFLIGHT_CLEAN_STOPPED_SAFE_CAUSE_NOT_RETAINED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
-      "nextOwner": "Original QB scope-only review; C accurate new execution binding",
-      "latestActualReceiptSHA256": "7794b73b25082e18fd7da18227b26c79f19dded802d888a92379f3d46abb95dc",
+      "currentOwner": "OriginalD1 minimum safe preflight diagnosis; originalT45 only server operator",
+      "nextOwner": "OriginalQB incremental source review then C exact offline scope",
+      "latestActualReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 collect original04 only; retain source/synthetic boundary, noEXE until actual17binding and C scope. Old03failure+restore retained.",
+      "next": "Obtain exact offline preflight cause with minimal safe error seam and single-file verification, noPG or full608k replay; retain 17binding/EXE false and existing source/PG/runtime acceptance boundaries.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33442,7 +33442,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED",
+        "REALImport": "NOT_EXECUTED_PREPARE04_FAILED_OFFLINE_PREFLIGHT",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33456,7 +33456,7 @@
         "productionDeployed": false
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
-      "lastCleanStopReceiptSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
+      "lastCleanStopReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
       "importToolCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
       "importToolSourceSetSHA256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3"
     },
@@ -34344,7 +34344,7 @@
         "startsAt": 1794012279661,
         "expiresAt": 1794013479661,
         "currentOwner": "Original T45 sole executor",
-        "state": "ACTUALLY_INSTALLED_RETAINED_R4_PG_CLEAN_STOPPED_AFTER_PREPARE_FAILURE",
+        "state": "R4_PREPARE04_FAILED_PREFLIGHT_CLEAN_STOPPED_NO_REAL_IMPORT",
         "REALExecuted": false,
         "publicSwitch": false,
         "actualResultSHA256": "7ca7aa75a040b2c8bd179eb454558bd6c3254215166d494fbb097e60d558003b",
@@ -34709,7 +34709,7 @@
           "actualErrorLocalizationSHA256": "f2fa861f9120fffff8e3611dc0617077dfa4e953c1eec3710f36aaaf7db4f60a",
           "rootCause": "Actual docker/Popen Node inherited UID0; direct record loader rejects ORDINARY_RUNTIME_REQUIRED; CLI redacts all loader errors to PROTECTED_RECORD_REQUIRED. Path guard actualPASS, no WeakMap defect proven."
         },
-        "currentPGRunning": true,
+        "currentPGRunning": false,
         "currentContainerRunning": true,
         "sameDataRestartPreparation": {
           "at": "2026-11-07T10:54:47.110242+08:00",
@@ -34888,7 +34888,7 @@
           "actualRootOrPGVerified": false
         },
         "currentRealPrepare04": {
-          "state": "T45_REPORTED_QUEUED_SINGLE_NEW_KEY_PENDING_ACTUAL",
+          "state": "PREPARE04_FAILED_OFFLINE_PREFLIGHT_TARGET_CLEANLY_STOPPED_NOT_READY_FOR_IMPORT",
           "key": "t45-r4-real-prepare-20261107-04",
           "CDescriptionSHA256": "2683c2363e354647a6ca392852a51372625309d7c57a68d850fa3062ceb5765e",
           "mode": "PREPARE",
@@ -34896,7 +34896,73 @@
           "expiresAt": 1794027720000,
           "sourceQA": "8532c9f5f36b96b2c189e51c2ee8611edcd90ba74af8cc974c3ec721659bee70",
           "actualBinding17": false,
-          "EXE": false
+          "EXE": false,
+          "actualReceiptSHA256": "e1c836404c9b3fd95879cce0c7e47062dbd537e821f5162f4969a7c78a82564c",
+          "actualFinalMetadataSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+          "T45ResultSHA256": "0b697a624bf66c1ce07469e56e04e5645b174b01f3bca0328fe32011499abf24",
+          "elapsedSeconds": 552.2781694210134,
+          "NodeExitCode": 1,
+          "sourceInferredStage": "OFFLINE_PREFLIGHT_BEFORE_PLANNER_OR_HOST_NOT_PG_AUDIT",
+          "underlyingCause": "UNKNOWN_NOT_PERSISTED_BY_ORIGINAL_CATCH",
+          "existingIssue": {
+            "stage": "streamPreflight existing issues report",
+            "code": "PREFLIGHT_IO_OR_FORMAT_FAILURE",
+            "technicalFile": "tables/season.jsonl",
+            "row": null,
+            "field": "$",
+            "issuesBytes": 94,
+            "issuesSha256": "d9b5a813542786ef9ce45928199407ad3d3f8e5e70e3b2a5eeefc2def8920cdc",
+            "summaryExists": false,
+            "firstUnderlyingException": "UNKNOWN_NOT_RETAINED_BY_ORIGINAL_SAFE_CATCH",
+            "SQLState": "NOT_CAPTURED",
+            "indexRetainedBytes": 122880,
+            "stderrBytes": 0,
+            "stderrRead": false
+          },
+          "cleanup": {
+            "cleanShutdown": true,
+            "cleanupComplete": true,
+            "dataPreserved": true,
+            "databasePrivilegesChanged": false,
+            "directChildReaped": true,
+            "errors": [],
+            "ownedPidAbsent": true,
+            "portAbsent": true
+          },
+          "inputMetadataRestored": true,
+          "restoredRows": 45,
+          "twoPrivateProjectionsAbsent": true,
+          "PGRunning": false,
+          "guardianRunning": false,
+          "oldScopeExpired": true,
+          "replay": false
+        },
+        "postPrepare04Cleanup": {
+          "atEpochMs": 1794027520209,
+          "actualReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+          "metadataRowsRestored": 45,
+          "privateProjectionsAbsent": true,
+          "hbaUnchanged": true,
+          "PGStopped": true,
+          "guardianStopped": true,
+          "oldMaintenanceReference": "RETAINED_ROOT0600_CONTENT_NOT_READ",
+          "rollbackNotInferred": true
+        },
+        "preflightDiagnosticSuccessor": {
+          "at": "2026-11-07T13:06:30.743880+08:00",
+          "owner": "Original D1 source; original T45 server execution; original QB incremental review",
+          "state": "D1_MINIMUM_SAFE_ERROR_SEAM_AND_OFFLINE_SINGLE_FILE_DIAGNOSTIC_IN_PROGRESS",
+          "sourceBaseCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
+          "sourceBaseSet": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
+          "preserve": [
+            "ordinary application8694",
+            "original R4 data and install record",
+            "all failed keys/reports/indices",
+            "current WIP"
+          ],
+          "noPGStartForDiagnosis": true,
+          "noOriginal04Replay": true,
+          "newServerScopeNotYetIssued": true
         }
       }
     },

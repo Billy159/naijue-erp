@@ -1,0 +1,99 @@
+{
+  "status": "PREPARE04_FAILED_OFFLINE_PREFLIGHT_TARGET_CLEANLY_STOPPED_NOT_READY_FOR_IMPORT",
+  "checkedAtEpochMs": 1794027520209,
+  "jobKey": "t45-r4-real-prepare-20261107-04",
+  "jobStatus": "FAILED",
+  "jobExitCode": 2,
+  "jobElapsedSeconds": 552.2781694210134,
+  "jobEvidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-real-prepare-20261107-04/transport/release-receipts/t45-r4-real-prepare-20261107-04/job.json",
+  "resultEvidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-real-prepare-20261107-04/transport/release-receipts/t45-r4-real-prepare-20261107-04/fresh35-production-real-result.json",
+  "resultSha256": "e1c836404c9b3fd95879cce0c7e47062dbd537e821f5162f4969a7c78a82564c",
+  "source": {
+    "callerSha256": "c9716efdb52ac74c3e8ad710d27e0258a3f1a53f2f94688b51a4ce3f97398095",
+    "currentToolSourceSetSha256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
+    "ordinaryApplicationSourceSetUnchanged": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d"
+  },
+  "cli": {
+    "code": "IMPORT_FAILED",
+    "connectionCleanup": "UNKNOWN",
+    "state": "NOT_STARTED",
+    "verification": "NOT_RUN"
+  },
+  "existingFailureEvidence": {
+    "stage": "streamPreflight existing issues report",
+    "code": "PREFLIGHT_IO_OR_FORMAT_FAILURE",
+    "technicalFile": "tables/season.jsonl",
+    "row": null,
+    "field": "$",
+    "issuesBytes": 94,
+    "issuesSha256": "d9b5a813542786ef9ce45928199407ad3d3f8e5e70e3b2a5eeefc2def8920cdc",
+    "summaryExists": false,
+    "firstUnderlyingException": "UNKNOWN_NOT_RETAINED_BY_ORIGINAL_SAFE_CATCH",
+    "SQLState": "NOT_CAPTURED",
+    "indexRetainedBytes": 122880,
+    "stderrBytes": 0,
+    "stderrRead": false
+  },
+  "guard": {
+    "childReaped": true,
+    "exitCode": 1,
+    "guard": "STOPPED_OUTCOME_UNKNOWN",
+    "maxSampleGapSeconds": 0.2303936998359859,
+    "minimumAvailableBytes": {
+      "data": 5844725760,
+      "reportIndex": 5844725760,
+      "sqliteScratch": 5844725760,
+      "tmp": 5844725760,
+      "wal": 5844725760
+    },
+    "originalControllerCleanup": {
+      "callerState": "RETAINED_RESTART_STOPPED_OR_OUTCOME_UNKNOWN",
+      "cleanupComplete": true,
+      "controllerStopped": true,
+      "transactionRollbackProven": false
+    },
+    "samples": 2715,
+    "transactionRollbackProven": false
+  },
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "dataPreserved": true,
+    "databasePrivilegesChanged": false,
+    "directChildReaped": true,
+    "errors": [],
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "pgProcessStillMatches": false,
+  "guardianStillMatches": false,
+  "postmasterPidFileAbsent": true,
+  "inputMetadataRestored": true,
+  "restoredRows": 45,
+  "pointer": {
+    "format": "REAL_ACCESS_METADATA_REFERENCE_V1",
+    "ledgerSha256": "e507a3d780a3ca68fcd592a0750524cca990e9185cbdba743f67f3d44f30ddb0",
+    "phase": "restored",
+    "previousPointerSha256": "2e2a3c16e6b7d9c26610cdbf93a3734ea94aad08f2fce1664127df1d25545999",
+    "requestKey": "t45-r4-real-prepare-20261107-04"
+  },
+  "twoPrivateProjectionsAbsent": true,
+  "originalHba": {
+    "bytes": 416,
+    "gid": 61035,
+    "inode": 14555531,
+    "mode": "0o600",
+    "sha256": "720b3b068cd855a0b0aabe4e20e64bbb4dc3e03643e961e70bfa54b772497a00",
+    "uid": 61035
+  },
+  "oldMaintenanceReferenceRetirement": "PENDING_ROOT0600_REFERENCE_REMAINS_CONTENT_NOT_READ",
+  "roleExpiry": "2026-11-07T05:03:00Z",
+  "readOnlyEvidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-prepare04-final-metadata-20261107-01/transport/release-receipts/t45-r4-prepare04-final-metadata-20261107-01/prepare04-final-metadata.json",
+  "readOnlyEvidenceSha256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+  "PREPARE17BindingProduced": false,
+  "EXECUTESubmitted": false,
+  "formalSwitch": false,
+  "replay": false,
+  "allOriginalIndicesAndReportsPreserved": true,
+  "next": "D1 source diagnosis of this exact existing report; new frozen successor and new finite C scope before another operation"
+}
