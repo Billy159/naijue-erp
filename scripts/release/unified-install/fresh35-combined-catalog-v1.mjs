@@ -219,9 +219,9 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
 export function describeFresh35CombinedCatalog(catalog){need(catalogs.has(catalog),'GENUINE_CATALOG_REQUIRED');return catalogs.get(catalog).descriptor}
 export function fresh35CombinedCatalogSql(catalog,source,target){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.source===source&&c.target===target,'SAME_SOURCE_AND_TARGET_REQUIRED');return Object.freeze({guardSql:c.sql,observationSql:c.observation})}
 export async function assertFresh35CombinedCatalogCurrent(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);await assertFresh35CombinedSourcesCurrent(c.source);await assertFresh35SyntheticBootstrapNetworkCurrent(c.target,describeFresh35CombinedSource(c.source).sourceSetSha256);await pinned(c.modelPath,MODEL_SHA);await pinned(c.functionsPath,FUNCTIONS_SHA);return true}
-export function fresh35CombinedRuntimeCatalogSql(catalog,source,target){
+export function fresh35CombinedRuntimeCatalogSql(catalog,source,target,operation){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog);
- return Object.freeze({guardSql:fresh35CombinedRuntimeTargetGuard(target)+'\n'+guardSql(c.model,c.lineage,target,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
+ return Object.freeze({guardSql:fresh35CombinedRuntimeTargetGuard(target,operation)+'\n'+guardSql(c.model,c.lineage,target,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
 }
 export function validateFresh35CombinedRuntimeCatalogObservation(raw,catalog,source,target){
  return validateCatalogObservation(raw,catalog,source,target,true);

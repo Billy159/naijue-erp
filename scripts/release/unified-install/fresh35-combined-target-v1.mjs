@@ -1,3 +1,4 @@
+import {installedRealWindowData} from './fresh35-installed-real-window-v1.mjs';
 /** New-target contract for the additive 35-table combined installer.
  * No credentials, roles, processes, connections or grants are created here. */
 import {resolve,join} from 'node:path';
@@ -83,8 +84,8 @@ export function fresh35CombinedTargetGuard(target,{requireEmpty}={requireEmpty:f
 }
 /** Import inspection runs as the controller on its own read-only snapshot.
  * Installation still uses the original owner-only, writable guard. */
-export function fresh35CombinedRuntimeTargetGuard(target){
- return targetGuard(target,{requireEmpty:false,runtime:true});
+export function fresh35CombinedRuntimeTargetGuard(target,operation){
+ return targetGuard(target,{requireEmpty:false,runtime:true,operation});
 }
 export const FRESH35_COMBINED_OBSERVER_NAME='fresh35_exclusive_backends';
 // Only these native, database-less PG17.11 processes may coexist with the
@@ -184,10 +185,11 @@ export function validateFresh35CombinedObserverObservation(rows,target){
  const expected={proname:FRESH35_COMBINED_OBSERVER_NAME,pronamespace:'11',proowner:'10',prokind:'f',pronargs:0,pronargdefaults:0,proargtypes:[],prorettype:'16',proretset:false,prosecdef:true,proleakproof:false,proisstrict:false,provolatile:'v',proparallel:'u',procost:100,prorows:0,prosupport:'-',proallargtypes:null,proargmodes:null,proargnames:null,proargdefaults:null,protrftypes:null,probin:null,prosqlbody:null,proconfig:['search_path=pg_catalog, pg_temp'],prosrc:observerBody(target)};
  need(row.owner===p.admin&&row.language==='plpgsql'&&f&&Object.entries(expected).every(([k,v])=>JSON.stringify(f[k])===JSON.stringify(v))&&Array.isArray(f.proacl)&&JSON.stringify([...f.proacl].sort())===JSON.stringify(observerAcl(target))&&typeof row.definition==='string'&&row.definition.length>0&&Array.isArray(row.dependencies)&&Array.isArray(row.sharedDependencies),'OBSERVER_RAW_SOURCE_OR_ACL_DIFFERS');
 }
-function targetGuard(target,{requireEmpty,runtime}){
- const binding=describeFresh35CombinedTarget(target),{proposal:p,physical:b,startsAt,expiresAt}=binding,q=quote,production=binding.purpose==='PRODUCTION_NEW_EMPTY_EXACT35';
+function targetGuard(target,{requireEmpty,runtime,operation}){
+ const binding=describeFresh35CombinedTarget(target),window=operation?installedRealWindowData(operation,binding).value:binding,{proposal:p,physical:b}=binding,{startsAt,expiresAt}=window,q=quote,production=binding.purpose==='PRODUCTION_NEW_EMPTY_EXACT35';
+ need(!operation||(runtime&&production&&!requireEmpty),'REAL_WINDOW_RUNTIME_ONLY');
  const network=production?null:bootstrapNetworks.get(target);need(production||network,'BOOTSTRAP_NETWORK_REQUIRED');if(network)checkBootstrapNetwork(target,network,network.value.sourceSetSha256);
- const interfaces=Object.values(FRESH35_COMBINED_INTERFACE_ROLES),logins=production?[p.owner,p.controller]:[p.owner,p.controller,p.runtime],roles=[p.admin,p.owner,p.controller,p.runtime,...interfaces];
+ const interfaces=Object.values(FRESH35_COMBINED_INTERFACE_ROLES),logins=operation?[p.controller]:production?[p.owner,p.controller]:[p.owner,p.controller,p.runtime],roles=[p.admin,p.owner,p.controller,p.runtime,...interfaces];
  const members=[[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.initializer],[p.controller,FRESH35_COMBINED_INTERFACE_ROLES.importer],[p.runtime,FRESH35_COMBINED_INTERFACE_ROLES.runtime]];
  const empty=requireEmpty?`
  IF EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast'))
@@ -216,7 +218,7 @@ function targetGuard(target,{requireEmpty,runtime}){
   ['WINDOW_START',`extract(epoch FROM pg_catalog.clock_timestamp())*1000>=${startsAt}`],
   ['WINDOW_END',`extract(epoch FROM pg_catalog.clock_timestamp())*1000<${expiresAt}`],
   ['DATABASE_OWNER',`(SELECT pg_catalog.pg_get_userbyid(datdba) FROM pg_catalog.pg_database WHERE datname=current_database())=${q(p.owner)}`],
-  ['EXCLUSIVE_BACKENDS',`pg_catalog.${FRESH35_COMBINED_OBSERVER_NAME}()`],
+  ['EXCLUSIVE_BACKENDS',operation?`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity a WHERE a.pid IS DISTINCT FROM pg_catalog.pg_backend_pid() AND NOT (${observerAllowedBackend}))`:`pg_catalog.${FRESH35_COMBINED_OBSERVER_NAME}()`],
   ['DATABASE_SET',`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_database WHERE datname NOT IN('postgres','template0','template1',${q(p.database)}))`],
   ['NAMESPACE_SET',"NOT EXISTS(SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast','naijue_erp'))"],
   ['ROLE_SET',`NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE left(rolname,3)<>'pg_' AND rolname NOT IN(${roles.map(q).join(',')}))`],
@@ -231,6 +233,7 @@ DECLARE
  physical_index integer;
 BEGIN
  ${fresh35CombinedObserverCheck(target)}
+ ${operation?'PERFORM pg_catalog.pg_stat_clear_snapshot();':''}
  physical_checks := ARRAY[${physicalPredicates.map(([,expression])=>'('+expression+')').join(',\n ')}];
  IF (true = ALL(physical_checks)) IS DISTINCT FROM true THEN
   FOR physical_index IN 1..array_length(physical_checks,1) LOOP
@@ -250,10 +253,11 @@ BEGIN
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_opclass WHERE opcnamespace='public'::regnamespace)
  OR EXISTS(SELECT 1 FROM pg_catalog.pg_opfamily WHERE opfnamespace='public'::regnamespace)
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_PUBLIC_SCHEMA_BOUNDARY_DIFFERS' USING ERRCODE='42501'; END IF;
- IF (SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname IN(${logins.map(q).join(',')}) AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND rolvaliduntil>pg_catalog.clock_timestamp() AND extract(epoch FROM rolvaliduntil)*1000<=${expiresAt})<>${logins.length}
+ IF (SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname IN(${logins.map(q).join(',')}) AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND rolvaliduntil>pg_catalog.clock_timestamp() AND ${operation?'rolvaliduntil='+q(window.controllerLoginValidUntil)+'::timestamptz':'extract(epoch FROM rolvaliduntil)*1000<='+expiresAt})<>${logins.length}
+ ${operation?`OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=${q(p.owner)} AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND extract(epoch FROM rolvaliduntil)*1000<=${binding.expiresAt})`:''}
  ${production?`OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=${q(p.runtime)} AND rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2 AND ${binding.ordinary.runtimeLoginValidUntil===null?"(rolvaliduntil IS NULL OR rolvaliduntil='infinity'::timestamptz)":'rolvaliduntil='+q(binding.ordinary.runtimeLoginValidUntil)+'::timestamptz AND rolvaliduntil>clock_timestamp()'})`:''}
  OR (SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname IN(${interfaces.map(q).join(',')}) AND NOT rolcanlogin AND NOT rolsuper AND NOT rolinherit AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=0)<>3
- OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=${q(p.admin)} AND rolcanlogin AND rolsuper AND rolvaliduntil>pg_catalog.clock_timestamp() AND extract(epoch FROM rolvaliduntil)*1000<=${expiresAt})
+ OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=${q(p.admin)} AND rolcanlogin AND rolsuper AND rolvaliduntil>pg_catalog.clock_timestamp() AND ${operation?'rolvaliduntil='+q(window.adminLoginValidUntil)+'::timestamptz':'extract(epoch FROM rolvaliduntil)*1000<='+expiresAt})
  THEN RAISE EXCEPTION 'FRESH35_COMBINED_ROLE_ATTRIBUTES_DIFFER' USING ERRCODE='42501'; END IF;
  IF (SELECT coalesce(jsonb_agg(jsonb_build_array(m.rolname,r.rolname,a.admin_option,a.inherit_option,a.set_option) ORDER BY m.rolname COLLATE "C",r.rolname COLLATE "C"),'[]'::jsonb) FROM pg_catalog.pg_auth_members a JOIN pg_catalog.pg_roles m ON m.oid=a.member JOIN pg_catalog.pg_roles r ON r.oid=a.roleid WHERE left(m.rolname,3)<>'pg_' OR left(r.rolname,3)<>'pg_')
  IS DISTINCT FROM ${q(JSON.stringify(members.map(([member,role])=>[member,role,false,false,true]).sort((a,b)=>a[0].localeCompare(b[0],'en')||a[1].localeCompare(b[1],'en'))))}::jsonb

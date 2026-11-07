@@ -1,3 +1,4 @@
+import {installedRealWindowData} from '../../scripts/release/unified-install/fresh35-installed-real-window-v1.mjs';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {types} from 'node:util';
@@ -100,6 +101,7 @@ async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
  const pins=describeFresh35CombinedSource(c.source).currentSourcePins;
  if(!loadedPhysicalHostSha256||!pins.some(p=>p.path==='tools/unified-import/whole-host-session.mjs'&&p.sha256===loadedPhysicalHostSha256)||!pins.some(p=>p.path==='scripts/release/unified-install/whole-sales-admission-v1.mjs'&&p.sha256===WHOLE_SALES_ADMISSION_MODULE_SHA256))throw Error('FRESH35_HOST_LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
+ const window=c.operation?installedRealWindowData(c.operation,t).value:t;
  const reviewed={system_identifier:t.physical.systemIdentifier,database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:c.record.catalogSha256};
  validateStandardImportTarget(target);target=structuredClone(target);
  if(Object.keys(reviewed).some(k=>target[k]!==reviewed[k]))throw Error('FRESH35_HOST_TARGET_BINDING_MISMATCH');
@@ -107,7 +109,7 @@ async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},
  if(!config||!['database,host,password,port,user','database,host,password,port,statement_timeout_ms,user'].includes(Object.keys(config).sort().join(','))||config.host!==t.proposal.host||config.port!==t.proposal.port||config.database!==t.proposal.database||config.user!==t.proposal.controller||typeof config.password!=='string'||!config.password||(config.statement_timeout_ms!==undefined&&(!Number.isSafeInteger(config.statement_timeout_ms)||config.statement_timeout_ms<1000||config.statement_timeout_ms>3600000)))throw Error('WHOLE_CONNECTION_CONFIG_INVALID');
  if(Object.keys(process.env).some(k=>k==='DATABASE_URL'||/^PG[A-Z_]+$/.test(k)))throw Error('AMBIENT_DATABASE_CONFIGURATION_PROHIBITED');
  const {Client}=await import('pg');
- const timeout=Math.min(config.statement_timeout_ms??900000,t.expiresAt-Date.now());
+ const timeout=Math.min(config.statement_timeout_ms??900000,window.expiresAt-Date.now());
  if(timeout<=0)throw Error('FRESH35_HOST_WINDOW_EXPIRED');
  const client=new Client({host:config.host,port:config.port,database:config.database,user:config.user,password:()=>config.password,ssl:false,application_name:'unified-fresh35-package',connectionTimeoutMillis:Math.min(5000,timeout),statement_timeout:timeout,query_timeout:timeout+5000,lock_timeout:Math.min(5000,timeout),options:'-c search_path=pg_catalog'});
  let connectFailed=false;client.on('error',()=>{connectFailed=true});
@@ -126,7 +128,7 @@ async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},
    hostVerification=Object.freeze({...hostVerification,production_import_authorization_sha256:queryGuard.authorizationSha256,production_import_binding:binding});
    return work(controlled,admission,binding);
   });
- },async gate=>{gateClient=gate;return verifyFresh35InstalledV1(gate,context,options.sourceProfileSha256)},'FRESH35_RETIRED152_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:t.expiresAt,...(productionPrepare?{async authorizedQuery(sql,values){
+ },async gate=>{gateClient=gate;return verifyFresh35InstalledV1(gate,context,options.sourceProfileSha256)},'FRESH35_RETIRED152_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:window.expiresAt,...(productionPrepare?{async authorizedQuery(sql,values){
    if(sql==='ROLLBACK'){if(queryGuard)await queryGuard.check(sql,values);return;}
    if(!queryGuard)throw Error('FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
    await queryGuard.check(sql,values);

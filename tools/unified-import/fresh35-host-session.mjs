@@ -1,3 +1,4 @@
+import {loadInstalledRealWindow,installedRealWindowData,assertInstalledRealWindowCurrent,assertInstalledRealBinding} from '../../scripts/release/unified-install/fresh35-installed-real-window-v1.mjs';
 /** Fixed Fresh35 host. A record, a parsed catalog, or a supplied client alone
  * cannot mint execution authority. Only the owned physical session can do so. */
 import {readFile,open,lstat} from 'node:fs/promises';
@@ -15,7 +16,7 @@ import {fileURLToPath} from 'node:url';
 import {describeFresh35CatalogSpec} from '../../scripts/release/unified-install/fresh35-catalog-contract.mjs';
 import {loadFresh35CombinedRecordEnvelope,validateFresh35CombinedRecord,describeFresh35ProtectedRecordSnapshot,assertFresh35ProtectedRecordSnapshotCurrent,FRESH35_COMBINED_RECORD_PATH,FRESH35_COMBINED_RECORD_MODULE_SHA256} from '../../scripts/release/unified-install/fresh35-combined-record-v1.mjs';
 import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,describeFresh35CombinedSource,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from '../../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
-import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,reconstructFresh35InstalledProductionTargetV2} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
+import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,reconstructFresh35InstalledProductionTargetV2,FRESH35_COMBINED_TARGET_MODULE_SHA256} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram} from '../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
 import {parseStrictJson,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
@@ -40,7 +41,7 @@ export async function loadFresh35HostContext(sourceRoot,referenceDirectory){
  const target=bindFresh35CombinedTarget({proposal,physical,startsAt,expiresAt});
  const source=await loadFresh35CombinedSource(sourceRoot,{baselineDirectory:paths.baselineDirectory});
  const pins=describeFresh35CombinedSource(source).currentSourcePins;
- for(const [path,sha256] of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===sha256),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
+ for(const [path,sha256] of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256],['scripts/release/unified-install/fresh35-combined-target-v1.mjs',FRESH35_COMBINED_TARGET_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===sha256),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
  const catalog=await buildFresh35CombinedCatalog(source,target,paths);
  const program=await compileFresh35CombinedProgram({source,target,catalog});
  const record=validateFresh35CombinedRecord(envelope,program);
@@ -52,9 +53,11 @@ export function fresh35HostContext(token){need(contexts.has(token),'GENUINE_FIXE
 export async function assertFresh35HostCurrent(token){
  const c=fresh35HostContext(token),t=describeFresh35CombinedTarget(c.target);
  if(c.productionImport)await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);
- need(Date.now()>=t.startsAt&&Date.now()<t.expiresAt,'WINDOW_EXPIRED');
+ const window=c.operation?installedRealWindowData(c.operation,t).value:t;
+ need(Date.now()>=window.startsAt&&Date.now()<window.expiresAt,'WINDOW_EXPIRED');
+ if(c.operation)await assertInstalledRealWindowCurrent(c.operation);
  await assertFresh35CombinedSourcesCurrent(c.source);await assertFresh35CombinedCatalogCurrent(c.catalog);
- const current=validateFresh35CombinedRecord(await loadFresh35CombinedRecordEnvelope(),c.program);
+ const current=(c.recordValidator??validateFresh35CombinedRecord)(await loadFresh35CombinedRecordEnvelope(),c.program);
  need(hash(JSON.stringify(current))===c.recordSha256,'FIXED_RECORD_CHANGED');
  return c;
 }
@@ -66,7 +69,7 @@ export async function verifyFresh35InstalledV1(client,context,sourceProfile=HIST
  const c=await assertFresh35HostCurrent(context);
  const module=await import('../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
  need(typeof module.fresh35CombinedRuntimeCatalogSql==='function'&&typeof module.validateFresh35CombinedRuntimeCatalogObservation==='function','RUNTIME_CATALOG_NOT_WIRED');
- const sql=module.fresh35CombinedRuntimeCatalogSql(c.catalog,c.source,c.target);
+ const sql=module.fresh35CombinedRuntimeCatalogSql(c.catalog,c.source,c.target,c.operation);
  const guards=await client.query(sql.guardSql);
  need(Array.isArray(guards)&&guards.length===2,'CATALOG_GUARD_ACK_INVALID');
  for(const result of guards)ack(result,'DO');
@@ -75,7 +78,7 @@ export async function verifyFresh35InstalledV1(client,context,sourceProfile=HIST
  const actual=module.validateFresh35CombinedRuntimeCatalogObservation(result.rows[0].catalog_json,c.catalog,c.source,c.target);
  await assertFresh35HostCurrent(context);
  const t=describeFresh35CombinedTarget(c.target);
- const verified=Object.freeze({profile:'FRESH35_COMBINED_INSTALLED_INSTANCE_MATCH',system_identifier:t.physical.systemIdentifier,database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:c.record.catalogSha256,source_profile_sha256:sourceProfile,live_catalog_sha256:actual.catalogSha256,expires_at:t.expiresAt,starts_at:t.startsAt});
+ const verified=Object.freeze({profile:'FRESH35_COMBINED_INSTALLED_INSTANCE_MATCH',system_identifier:t.physical.systemIdentifier,database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:c.record.catalogSha256,source_profile_sha256:sourceProfile,live_catalog_sha256:actual.catalogSha256,expires_at:(c.operation?installedRealWindowData(c.operation,t).value:t).expiresAt,starts_at:(c.operation?installedRealWindowData(c.operation,t).value:t).startsAt});
  verifications.set(verified,client);return verified;
 }
 export function consumeFresh35VerificationV1(verified,client){
@@ -102,19 +105,20 @@ export async function loadFresh35ProductionImportContext(sourceRoot,referenceDir
  need(envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2','PRODUCTION_V2_RECORD_REQUIRED');
  const target=await reconstructFresh35InstalledProductionTargetV2(envelope),t=describeFresh35CombinedTarget(target);
  need(referenceDirectory===t.ordinary.referenceDirectory,'PRODUCTION_REFERENCE_DIRECTORY_DIFFERS');
- // The first REAL import retains the original installation birth and window.
- // Historical production reconstruction alone cannot open a new write window.
- need(Date.now()>=t.startsAt&&Date.now()<t.expiresAt,'WINDOW_EXPIRED');
+ // Historical installation is retained; only an independently protected exact
+ // operation authority may open this REAL preparation/verification window.
  await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(referenceDirectory);
  const paths=await resolveFresh35ReferenceInputPaths(referenceDirectory),source=await loadFresh35CombinedSource(sourceRoot,{baselineDirectory:paths.baselineDirectory});
  const pins=describeFresh35CombinedSource(source).currentSourcePins;
  for(const pin of pins)await assertTrustedRootPath(resolve(sourceRoot,pin.path));
  for(const [path,digest]of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===digest),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
- const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=await compileFresh35CombinedProgram({source,target,catalog});
- const record=validateFresh35CombinedRecord(envelope,program),snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
+ const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),operation=await loadInstalledRealWindow(envelope,snapshot.sha256,source,referenceDirectory,moduleRoot),proof=installedRealWindowData(operation,t);
+ const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=proof.program,record=proof.record;
+ const {describeFresh35CombinedCatalog}=await import('../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
+ need(describeFresh35CombinedCatalog(catalog).modelSha256===proof.modelSha256,'INSTALLED_BUSINESS_MODEL_DIFFERS');
  await assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);
  const token=Object.freeze({profile:'FRESH35_PRODUCTION_IMPORT_CONTEXT_V1'});
- contexts.set(token,Object.freeze({productionImport:true,envelope,source,target,catalog,program,record,recordSha256:hash(JSON.stringify(record)),recordFileSha256:snapshot.sha256}));
+ contexts.set(token,Object.freeze({productionImport:true,operation,recordValidator:proof.validateRecord,envelope,source,target,catalog,program,record,recordSha256:hash(JSON.stringify(record)),recordFileSha256:snapshot.sha256}));
  await assertFresh35HostCurrent(token);return token;
 }
 export async function describeFresh35ProductionImportBinding(context,prepared){
@@ -127,7 +131,7 @@ export async function describeFresh35ProductionImportBinding(context,prepared){
  const stepsSha256=await streamTypedHash(typedHashArray(checked));need(count>0,'REAL_STEPS_REQUIRED');
  await assertFresh35HostCurrent(context);
  const binding=Object.freeze({format:'FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1',installationRecordSha256:c.recordFileSha256,installProgramSha256:c.record.programSha256,sourceSetSha256:c.record.binding.sourceSetSha256,targetSha256:c.record.binding.targetSha256,catalogSha256:c.record.catalogSha256,manifestSha256:id.packageSha256,planSha256:id.planSha256,initializerSha256:requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt}),stepsSha256,stepCount:count,sourceNamespace:id.namespace,cutoffAt:id.cutoffAt,baselineBatchId:id.batchId,documentBatchId:id.documentBatchId,initializerOperationId:init.operation_id,initializerRequestKey:init.request_key});
- productionImportBindings.set(binding,{context,prepared});return binding;
+ assertInstalledRealBinding(c.operation,binding);productionImportBindings.set(binding,{context,prepared});return binding;
 }
 export async function loadFresh35ProductionImportAuthorization(context,binding){
  const c=fresh35HostContext(context);need(c.productionImport===true&&productionImportBindings.get(binding)?.context===context,'GENUINE_PRODUCTION_IMPORT_BINDING_REQUIRED');await assertFresh35HostCurrent(context);
@@ -138,9 +142,10 @@ export async function loadFresh35ProductionImportAuthorization(context,binding){
   const bytes=await file.readFile(),after=await file.stat({bigint:true}),pathStat=await lstat(FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH,{bigint:true});
   need(BigInt(bytes.length)===before.size&&importFileIdentity(before)===importFileIdentity(after)&&importFileIdentity(before)===importFileIdentity(pathStat),'PRODUCTION_BATCH_AUTHORIZATION_CHANGED');
   const value=parseStrictJson(bytes.toString('utf8')),t=describeFresh35CombinedTarget(c.target);
-  need(exactImportKeys(value,['format','decision','binding','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference'])&&value.format==='FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V1'&&value.decision==='AUTHORIZE_EXACT_REAL_BATCH_IMPORT_AND_READBACK','PRODUCTION_BATCH_AUTHORIZATION_FORMAT_REQUIRED');
+  need(exactImportKeys(value,['format','decision','binding','operationParametersSha256','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference'])&&value.format==='FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V2'&&value.decision==='AUTHORIZE_EXACT_REAL_BATCH_IMPORT_AND_READBACK','PRODUCTION_BATCH_AUTHORIZATION_FORMAT_REQUIRED');
+  need(value.operationParametersSha256===installedRealWindowData(c.operation,t).parametersSha256&&value.authorizationReference===installedRealWindowData(c.operation,t).value.authorizationReference,'PRODUCTION_OPERATION_PARAMETERS_DIFFERS');
   need(exactImportKeys(value.binding,Object.keys(binding))&&requestHash(value.binding)===requestHash(binding),'PRODUCTION_BATCH_AUTHORIZATION_BINDING_DIFFERS');
-  need(Number.isSafeInteger(value.startsAt)&&Number.isSafeInteger(value.expiresAt)&&value.startsAt>=t.startsAt&&value.expiresAt<=t.expiresAt&&value.startsAt<value.expiresAt&&Date.now()>=value.startsAt&&Date.now()<value.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
+  need(Number.isSafeInteger(value.startsAt)&&Number.isSafeInteger(value.expiresAt)&&value.startsAt>=installedRealWindowData(c.operation,t).value.startsAt&&value.expiresAt<=installedRealWindowData(c.operation,t).value.expiresAt&&value.startsAt<value.expiresAt&&Date.now()>=value.startsAt&&Date.now()<value.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
   need(typeof value.independentSafetyReviewSha256==='string'&&/^[a-f0-9]{64}$/.test(value.independentSafetyReviewSha256)&&typeof value.authorizationReference==='string'&&value.authorizationReference.trim().length>0&&value.authorizationReference.length<=512,'PRODUCTION_BATCH_AUTHORIZATION_REFERENCE_REQUIRED');
   const token=Object.freeze({profile:'FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V1'});
   productionImportAuthorities.set(token,{context,bindingOriginal:binding,binding:Object.freeze(structuredClone(binding)),startsAt:value.startsAt,expiresAt:value.expiresAt,identity:importFileIdentity(before),sha256:hash(bytes)});return token;
@@ -148,6 +153,7 @@ export async function loadFresh35ProductionImportAuthorization(context,binding){
 }
 async function currentProductionImportAuthority(context,authorization){
  const a=productionImportAuthorities.get(authorization),c=fresh35HostContext(context);
+ if(c.operation)await assertInstalledRealWindowCurrent(c.operation);
  need(c.productionImport===true&&a?.context===context,'GENUINE_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
  need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
  await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);
