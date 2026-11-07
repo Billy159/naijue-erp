@@ -1,0 +1,101 @@
+{
+  "task": "T45_R4_INDEPENDENT_REAL_OPS_02",
+  "status": "PASS_SCOPED_INDEPENDENT_REAL_OPS_SOURCE",
+  "readySha256": "52e959052667258f2773b28d16f5280f7f4665debb1b2db69028ce6108b685e2",
+  "sourcePins": {
+    "fresh35-production-carrier.py": "490aa3848462c3f7a6d3feb8876a0a77bc84cbf8c08709b19ba3bcf11520e871",
+    "prepare_independent_real_inputs.py": "06eebf141a73ffb38b1900f88936e81f6d1f3e22bdc5bf07d0c1b1feac5a329b"
+  },
+  "planSha256": "5236cc2007b749b1b91d8157b7182405c8ce45edcfdc18cb4b6aef7e2adba3ec",
+  "sourceBytes": {
+    "fresh35-production-carrier.py": 100601,
+    "prepare_independent_real_inputs.py": 11737
+  },
+  "findingClosure": {
+    "REAL-READONLY-V2-01": "CLOSED_IN_EXACT490AA384_SOURCE",
+    "parent609c": "Confirmed source counterexamples preserved, not execution-approved"
+  },
+  "scope": [
+    "Current import tool544 independent root with original8694 installed provenance",
+    "Exact protected operation parameters/service projection/target and finite existing-controller expiry preparation",
+    "Required READONLY_STATUS V1+V2 consumer with original terminal writer proof"
+  ],
+  "checks": {
+    "sourcePins": {
+      "fresh35-production-carrier.py": "490aa3848462c3f7a6d3feb8876a0a77bc84cbf8c08709b19ba3bcf11520e871",
+      "prepare_independent_real_inputs.py": "06eebf141a73ffb38b1900f88936e81f6d1f3e22bdc5bf07d0c1b1feac5a329b"
+    },
+    "readySha256": "52e959052667258f2773b28d16f5280f7f4665debb1b2db69028ce6108b685e2",
+    "planSha256": "5236cc2007b749b1b91d8157b7182405c8ce45edcfdc18cb4b6aef7e2adba3ec",
+    "exactReadonlyValidationPrefixCases": [
+      {
+        "case": "V2-without-illegal-description-field-expired-original-authority",
+        "result": "ACCEPTED_READONLY_EXPIRED_ORIGINAL_WINDOW"
+      },
+      {
+        "case": "V1-original-compatibility",
+        "result": "ACCEPTED_READONLY_EXPIRED_ORIGINAL_WINDOW"
+      },
+      {
+        "case": "changed-writer-param-proof",
+        "result": "REFUSED",
+        "code": "READONLY_ORIGINAL_PARAMETERS_PROOF_DIFFERS"
+      },
+      {
+        "case": "wrong-current-source-proof",
+        "result": "REFUSED",
+        "code": "READONLY_ORIGINAL_PARAMETERS_PROOF_DIFFERS"
+      },
+      {
+        "case": "changed-original-parameter-bytes",
+        "result": "REFUSED",
+        "code": "READONLY_ORIGINAL_PARAMETERS_CHANGED"
+      },
+      {
+        "case": "different-install-provenance",
+        "result": "REFUSED",
+        "code": "READONLY_ORIGINAL_PARAMETERS_TARGET_DIFFERS"
+      },
+      {
+        "case": "different-C-reference",
+        "result": "REFUSED",
+        "code": "READONLY_ORIGINAL_PARAMETERS_TARGET_DIFFERS"
+      },
+      {
+        "case": "unexpected-authority-key",
+        "result": "REFUSED",
+        "code": "ORIGINAL_IMPORT_BINDING_REQUIRED"
+      }
+    ],
+    "fixedResultPinFromOriginalAuthority": true,
+    "syntaxMainHelperEmbedded": true,
+    "actualPGDockerCredentials": "NOT_USED"
+  },
+  "additionalChecks": {
+    "watchVolumeAndStopFunctions": "IDENTICAL_AST_TO_ORIGINAL79C1",
+    "readonlySqlEightParamsPoolRoleRollbackCleanup": "READONLY_STATUS_JS_BYTE_IDENTICAL",
+    "helperBodyUnchangedFrom01": "ONLY_OPS_PLAN_PIN_CONSTANTS_UPDATED",
+    "helperPins": "MATCH_EXACT_OPS_AND_PLAN",
+    "authorLocal13Cases": "ADOPTED_NOT_RERUN",
+    "authorLocalChecksSha256": "b6195fcfe9ecbe303968a0772059c7ec278876fe4165f55282eeaed1bbf35ac7"
+  },
+  "sourceObservations": [
+    "New CLI/cwd fixed operationRoot; runtime/reference original fixed paths",
+    "Original record/source/program target binding retained; current source separately544",
+    "PREPARE parameters require installed5+manifest, no full17 circular dependency; subsequent D1 full17/V2 exact authority reused",
+    "Input helper protected existing credentials machine-only, no value/hash output; exact old controller/admin expiry CAS IS DISTINCT FROM; only controller VALID UNTIL mutation; role attrs/membership observed same",
+    "O_EXCL intent and commit acknowledgement, unknown outcome no replay",
+    "V2 readonly binds exact original authority hash, terminal/reaped writer proof, original parameter hash and old install/current source/manifest/C reference; no fresh writer window required",
+    "Original watcher .25sec/4GiB and child/controller cleanup reused unchanged"
+  ],
+  "notTested": [
+    "Actual input projection writes and controller expiry transaction",
+    "Actual PREPARE/INSPECT/EXECUTE/17-binding/readback",
+    "Actual readonly PG/ordinary pool/HTTP and physical Linux behavior",
+    "Actual application/runtime compatibility or production deployment"
+  ],
+  "actualToolAndAdminReadonlyReceipts": "Reported by T45; not independently rerun by QB",
+  "operationsByQB": "Local source reads and finite synthetic AST validation only; QB evidence files, no PG/server/secret/business payload",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T02:28:11.404885+00:00"
+}

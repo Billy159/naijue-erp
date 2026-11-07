@@ -1,0 +1,8 @@
+{
+  "format": "T45_EXACT_R4_INDEPENDENT_REAL_INPUTS_V1",
+  "requestKey": "t45-r4-independent-real-inputs-20261107-01",
+  "parametersSha256": "d9c1d9324405bad77127b57a95a770519c538a0398b1ddd6f254b289a80e9171",
+  "startsAt": 1794018625000,
+  "expiresAt": 1794019825000,
+  "authorizationReference": "C delegated decision under human authority through 2026-11-07T12:00:00+08:00; retained installed R4 only, fixed d750/544b tool and original8694 installation, QB 082b0effd926c12db721100f133a808c95714737fd021e65536300c0c4c8427d; finite independent REAL preparation, existing controller expiry only; exact17 batch write authorization follows actual PREPARE, no old production or record changes."
+}

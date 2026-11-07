@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T10:04:40.285513+08:00",
+  "updatedAt": "2026-11-07T10:32:01.873571+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -34405,7 +34405,7 @@
         "nativeCatalogCheck": "COMMITTED_AND_CATALOG_CHECKED",
         "formalBusinessVerified": false,
         "independentREALWindowGap": {
-          "status": "FORMAL_SOURCE_READY_OPS_BINDING_IN_PREPARATION",
+          "status": "SCOPED_OPS_QB_PASS_EXACT_INPUTS_AND_PREPARE_AUTHORIZED_PENDING_ACTUAL",
           "owners": {
             "formalSource": "Original D1",
             "opsAndServer": "Original T45",
@@ -34612,6 +34612,24 @@
             "state": "C_SIGNED_EXACT_ORDINARY_TOOL_STAGING_NOT_TRANSFER_SUCCESS",
             "serverOwner": "Original T45",
             "noBusinessOrAPPDeployment": true
+          },
+          "serverMaterialization": {
+            "state": "ACTUAL_LINUX_CLOSURE_MATERIALIZED",
+            "jobKey": "t45-r4-d750-tool-materialize-20261107-03",
+            "resultSHA256": "5f36b83c967952df644682b4a64a18437962e6a2a4b0ee5a3dbfe45e5df6ba2f",
+            "jobSHA256": "5d3573e1bb0773add2afaff8e928f085e4360b0f3427dfcb51b7793e55fbfd70",
+            "freeAfterBytes": 8426487808,
+            "logicalBytes": 5040053,
+            "regularFiles": 357,
+            "node": "24.21.0",
+            "currentPins": 215,
+            "capturedPins": 180,
+            "currentSourceSet": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+            "oldRootChanged": false,
+            "previousFailuresPreserved": [
+              "01 metadata-inclusive count mistaken for operation count",
+              "02 unnecessary old-log read permission flag; both before directory creation per owner"
+            ]
           }
         },
         "maintenanceRecovery": {
@@ -34644,8 +34662,30 @@
           "hbaRestored": true,
           "hbaElapsedSeconds": 0.5399143351241946,
           "originalRoleAttributesAndMembershipsRetained": true,
-          "newCredentialSCRAMAuthentication": "NOT_SEPARATELY_TESTED",
-          "maintenanceCloseRequired": true
+          "newCredentialSCRAMAuthentication": "ACTUAL_NEW_ADMIN_SCRAM_READONLY_IDENTITY_LOGIN_SUCCEEDED",
+          "maintenanceCloseRequired": true,
+          "newCredentialLoginActualSHA256": "155c032b3e25f7a9de331af7ca7dcf5d4cee5b90b8337616829cebebc93887c0"
+        },
+        "independentRealWindow": {
+          "at": "2026-11-07T10:32:01.873571+08:00",
+          "state": "C_BOUND_INPUTS_AND_PREPARE_NOT_EXECUTE",
+          "sourceQB_SHA256": "082b0effd926c12db721100f133a808c95714737fd021e65536300c0c4c8427d",
+          "opsSHA256": "490aa3848462c3f7a6d3feb8876a0a77bc84cbf8c08709b19ba3bcf11520e871",
+          "inputHelperSHA256": "06eebf141a73ffb38b1900f88936e81f6d1f3e22bdc5bf07d0c1b1feac5a329b",
+          "productionPlanSHA256": "5236cc2007b749b1b91d8157b7182405c8ce45edcfdc18cb4b6aef7e2adba3ec",
+          "parametersSHA256": "d9c1d9324405bad77127b57a95a770519c538a0398b1ddd6f254b289a80e9171",
+          "inputPlanSHA256": "27d6f7bdf0d987b22fbca688f3e3604cbcc0288316e7db9f50a52a5569cf91c8",
+          "prepareDescriptionSHA256": "2eb48cffa3df8cd95cee706039b09608959c73fa71b19a5d65dde997afa87db6",
+          "startsAt": 1794018625000,
+          "inputAndPrepareExpiresAt": 1794019825000,
+          "operationExpiresAt": 1794021600000,
+          "controllerLoginValidUntil": "2026-11-07T03:20:00.000Z",
+          "adminLoginValidUntil": "2026-11-07T03:29:02Z",
+          "controllerRenewed": false,
+          "PREPAREActual": false,
+          "EXECUTEAuthorized": false,
+          "REALImported": false,
+          "next": "OriginalT45 actual input helper and PREPARE; C V2 batch authorization only after exact actual17 binding."
         }
       }
     },
@@ -34657,6 +34697,16 @@
       "actualEntry": "production-main.js --exact35 private-runtime-json",
       "state": "INPUTS_UNBOUND_NOT_APP_OR_PG_ACCEPTANCE",
       "next": "Use actual normal APP PID/mount/capacity five dirs and private APP-UID credential key; do not start import-only d750 as API."
+    },
+    "new35BackupR4ProducerSuccessor": {
+      "owner": "Original D1 sole producer writer; Original T45 server only",
+      "state": "SOURCE_MINIMUM_FIX_AUTHORIZED_IN_PROGRESS_NO_SERVER",
+      "parentSHA256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
+      "confirmedSourceGaps": [
+        "Producer fixed10fc/af75 rejects actualR4 3b82/8694",
+        "Backup deadline incorrectly reuses expired installation window"
+      ],
+      "scope": "Exact current baseline and independent finite backup window only; preserve originalrecord/grants. Existing dump/restore/data/APP evidence remain not tested; oldprod Nov6 restore not verified."
     }
   }
 }

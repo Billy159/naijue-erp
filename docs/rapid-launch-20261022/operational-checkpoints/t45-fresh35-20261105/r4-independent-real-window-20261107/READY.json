@@ -1,0 +1,20 @@
+{
+  "task": "T45_R4_INDEPENDENT_REAL_OPS_NECESSARY_DELTA",
+  "status": "SOURCE_PREPARED_V2_READONLY_SUCCESSOR_NOT_EXECUTED",
+  "parentOpsSha256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+  "operationSourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "formalSourceCommit": "d750ae8c90d54718f16731492bbc707061d82124",
+  "formalQBResultSha256": "930c718d305b2f7b36cb8f9fedc1cba7ed21b546e924e64e5be80b92fa741e46",
+  "sources": {
+    "fresh35-production-carrier.py": "490aa3848462c3f7a6d3feb8876a0a77bc84cbf8c08709b19ba3bcf11520e871",
+    "prepare_independent_real_inputs.py": "06eebf141a73ffb38b1900f88936e81f6d1f3e22bdc5bf07d0c1b1feac5a329b"
+  },
+  "planSha256": "5236cc2007b749b1b91d8157b7182405c8ce45edcfdc18cb4b6aef7e2adba3ec",
+  "actualToolMaterializationResultSha256": "5f36b83c967952df644682b4a64a18437962e6a2a4b0ee5a3dbfe45e5df6ba2f",
+  "actualMaintenanceReadonlyResultSha256": "155c032b3e25f7a9de331af7ca7dcf5d4cee5b90b8337616829cebebc93887c0",
+  "requiredNext": "QB exact ops delta; C exact parameters/input-plan before sole controller expiry CAS; C exact PREPARE description; V2 batch authority only after actual 17-binding",
+  "REALExecuted": false,
+  "controllerRenewed": false,
+  "formalAPPChanged": false,
+  "supersedesOpsSha256": "609c8843b84ec51a27217da128aefe7506165d3645041ea4fd9f1bcb21554fa8"
+}
