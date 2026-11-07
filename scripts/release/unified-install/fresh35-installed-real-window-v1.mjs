@@ -8,6 +8,7 @@ import {pathToFileURL} from 'node:url';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
 import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
 import {combinedSha256 as hash,describeFresh35CombinedSource} from './fresh35-combined-source-v1.mjs';
+import {FRESH35_RETAINED_BACKENDS_PATH,FRESH35_RETAINED_BACKENDS_MODULE_SHA256,loadRetainedBackendProof} from './fresh35-retained-backends-v1.mjs';
 const tokens=new WeakMap(),need=(ok,code)=>{if(!ok)throw Error('FRESH35_REAL_WINDOW_'+code)};
 const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x)}return x};
 const hex=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x);
@@ -51,18 +52,19 @@ async function protectedFile(path,max=65536){
  await assertTrustedRootPath(path);const f=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
  try{const a=await f.stat({bigint:true});need(a.isFile()&&a.uid===0n&&a.nlink===1n&&(a.mode&0o022n)===0n&&a.size>0n&&a.size<=BigInt(max),'PROTECTED_AUTHORITY_REQUIRED');const bytes=await f.readFile(),b=await f.stat({bigint:true}),c=await lstat(path,{bigint:true});need(BigInt(bytes.length)===a.size&&identity(a)===identity(b)&&identity(a)===identity(c),'AUTHORITY_CHANGED');return{bytes,identity:identity(a),value:parseStrictJson(bytes.toString('utf8'))}}finally{await f.close()}
 }
-export async function loadInstalledRealWindow(envelope,recordSha,source,referenceDirectory,currentRoot){
+export async function loadInstalledRealWindow(envelope,recordSha,source,referenceDirectory,currentRoot,requestKey){
  const loaded=await protectedFile(FRESH35_INSTALLED_REAL_WINDOW_PATH),a=loaded.value,s=describeFresh35CombinedSource(source);
  need(s.currentSourcePins.some(p=>p.path===ownPath&&p.sha256===ownHash),'LOADED_WINDOW_SOURCE_DIFFERS');
+ need(s.currentSourcePins.some(p=>p.path===FRESH35_RETAINED_BACKENDS_PATH&&p.sha256===FRESH35_RETAINED_BACKENDS_MODULE_SHA256),'LOADED_BACKENDS_SOURCE_DIFFERS');
  const service=await protectedFile(a?.serviceReceipt?.path);need(hash(service.bytes)===a.serviceReceipt.sha256,'SERVICE_RECEIPT_CHANGED');
  validateInstalledRealWindow(a,envelope,recordSha,s.sourceSetSha256,service.value);
- let restart;
- if(Object.hasOwn(a,'restartReceipt')){
-  need(exact(a.restartReceipt,['path','sha256'])&&a.restartReceipt.path===etc+'/naijue-erp/fresh35-retained-restart-v1.json'&&hex(a.restartReceipt.sha256),'EXACT_RESTART_REFERENCE_REQUIRED');
-  restart=await protectedFile(a.restartReceipt.path);need(hash(restart.bytes)===a.restartReceipt.sha256,'RESTART_RECEIPT_CHANGED');
-  validateRetainedRestartReceipt(restart.value,envelope,recordSha);
-  need(restart.value.serviceLeaseExpiresAt===service.value.serviceLease.expiresAt&&restart.value.authorizationReference===a.authorizationReference&&restart.value.checkedAt>=a.startsAt&&restart.value.checkedAt<a.expiresAt,'RESTART_WINDOW_OR_SERVICE_DIFFERS');
- }
+ need(exact(a.restartReceipt,['path','sha256'])&&a.restartReceipt.path===etc+'/naijue-erp/fresh35-retained-restart-v1.json'&&hex(a.restartReceipt.sha256),'EXACT_RESTART_REFERENCE_REQUIRED');
+ const restart=await protectedFile(a.restartReceipt.path);need(hash(restart.bytes)===a.restartReceipt.sha256,'RESTART_RECEIPT_CHANGED');
+ validateRetainedRestartReceipt(restart.value,envelope,recordSha);
+ need(restart.value.serviceLeaseExpiresAt===service.value.serviceLease.expiresAt&&restart.value.authorizationReference===a.authorizationReference&&restart.value.checkedAt>=a.startsAt&&restart.value.checkedAt<a.expiresAt,'RESTART_WINDOW_OR_SERVICE_DIFFERS');
+ const backends=await loadRetainedBackendProof({requestKey,currentSourceSetSha256:s.sourceSetSha256,
+  operationParametersSha256:hash(loaded.bytes),installationRecordSha256:recordSha,restartReceiptSha256:a.restartReceipt.sha256,
+  startsAt:restart.value.checkedAt,expiresAt:a.expiresAt});
  need(a.installedSourceRoot!==currentRoot,'INDEPENDENT_INSTALLED_SOURCE_REQUIRED');await assertTrustedRootTree(a.installedSourceRoot);
  const oldModule=async name=>import(pathToFileURL(resolve(a.installedSourceRoot,'scripts/release/unified-install/'+name)).href);
  const sm=await oldModule('fresh35-combined-source-v1.mjs'),tm=await oldModule('fresh35-combined-target-v1.mjs'),cm=await oldModule('fresh35-combined-catalog-v1.mjs'),lm=await oldModule('fresh35-combined-lifecycle-v1.mjs'),rm=await oldModule('fresh35-combined-record-v1.mjs');
@@ -70,8 +72,8 @@ export async function loadInstalledRealWindow(envelope,recordSha,source,referenc
  const paths=await sm.resolveFresh35ReferenceInputPaths(referenceDirectory),oldSource=await sm.loadFresh35CombinedSource(a.installedSourceRoot,paths),target=await tm.reconstructFresh35InstalledProductionTargetV2(historicalEnvelope),catalog=await cm.buildFresh35CombinedCatalog(oldSource,target,paths),program=await lm.compileFresh35CombinedProgram({source:oldSource,target,catalog});
  const record=rm.validateFresh35CombinedRecord(historicalEnvelope,program);need(sm.describeFresh35CombinedSource(oldSource).sourceSetSha256===a.installation.sourceSetSha256,'ACTUAL_INSTALLED_SOURCE_DIFFERS');
  const token=Object.freeze({profile:'FRESH35_INSTALLED_REAL_WINDOW_V1'});
- const current=async()=>{if(restart){need(identity(await lstat(a.restartReceipt.path,{bigint:true}))===restart.identity,'RESTART_RECEIPT_CHANGED');validateRetainedRestartReceipt(restart.value,envelope,recordSha);}need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'OPERATION_WINDOW_EXPIRED');need(identity(await lstat(FRESH35_INSTALLED_REAL_WINDOW_PATH,{bigint:true}))===loaded.identity&&identity(await lstat(a.serviceReceipt.path,{bigint:true}))===service.identity,'AUTHORITY_CHANGED');await sm.assertFresh35CombinedSourcesCurrent(oldSource);await cm.assertFresh35CombinedCatalogCurrent(catalog);await rm.assertFresh35ProtectedRecordSnapshotCurrent(historicalEnvelope);};
- tokens.set(token,Object.freeze({value:freeze(structuredClone(a)),program,record,validateRecord:rm.validateFresh35CombinedRecord,modelSha256:cm.describeFresh35CombinedCatalog(catalog).modelSha256,parametersSha256:hash(loaded.bytes),currentPostmasterStart:restart?restart.value.newPhysical.postmasterStart:envelope.target.physical.postmasterStart,current}));await current();return token;
+ const current=async()=>{need(identity(await lstat(a.restartReceipt.path,{bigint:true}))===restart.identity,'RESTART_RECEIPT_CHANGED');validateRetainedRestartReceipt(restart.value,envelope,recordSha);need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'OPERATION_WINDOW_EXPIRED');need(identity(await lstat(FRESH35_INSTALLED_REAL_WINDOW_PATH,{bigint:true}))===loaded.identity&&identity(await lstat(a.serviceReceipt.path,{bigint:true}))===service.identity,'AUTHORITY_CHANGED');await sm.assertFresh35CombinedSourcesCurrent(oldSource);await cm.assertFresh35CombinedCatalogCurrent(catalog);await rm.assertFresh35ProtectedRecordSnapshotCurrent(historicalEnvelope);await backends.current();};
+ tokens.set(token,Object.freeze({value:freeze(structuredClone(a)),program,record,validateRecord:rm.validateFresh35CombinedRecord,modelSha256:cm.describeFresh35CombinedCatalog(catalog).modelSha256,parametersSha256:hash(loaded.bytes),currentPostmasterStart:restart.value.newPhysical.postmasterStart,retainedBackends:backends.backends,current}));await current();return token;
 }
 export function installedRealWindowData(token,target){const s=tokens.get(token);need(s,'GENUINE_WINDOW_REQUIRED');if(target)need(hash(JSON.stringify(target))===s.value.installation.targetSha256,'EXACT_INSTALLED_TARGET_REQUIRED');return s;}
 export async function assertInstalledRealWindowCurrent(token){await installedRealWindowData(token).current()}

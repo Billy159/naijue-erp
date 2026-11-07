@@ -88,16 +88,16 @@ export async function openReviewedWholeSalesHost(config,sourceRoot,target,work,o
  * verifier. This factory accepts neither clients, catalog callbacks nor records. */
 export async function openReviewedFresh35PhysicalHost(config,sourceRoot,target,work,options={}){return openFresh35PhysicalHost(config,sourceRoot,target,work,options)}
 export async function openReviewedFresh35ProductionPhysicalHost(config,sourceRoot,target,prepare,work,options={}){
- if(typeof prepare!=='function'||typeof work!=='function'||!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256','prepareOnly'].includes(k))||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_OPTIONS_INVALID');
+ if(typeof prepare!=='function'||typeof work!=='function'||!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256','prepareOnly','requestKey'].includes(k))||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_OPTIONS_INVALID');
  return openFresh35PhysicalHost(config,sourceRoot,target,work,options,prepare);
 }
 async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},productionPrepare){
  const host=await import('./fresh35-host-session.mjs');const {loadFresh35HostContext,loadFresh35ProductionImportContext,fresh35HostContext,verifyFresh35InstalledV1,assertFresh35HostCurrent}=host;
  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
- if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256',...(productionPrepare?['prepareOnly']:[])].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
+ if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256',...(productionPrepare?['prepareOnly','requestKey']:[])].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
  if(options.explicitZeroApproval)explicitZeroApprovalDescriptor(options.explicitZeroApproval);
- const context=await (productionPrepare?loadFresh35ProductionImportContext:loadFresh35HostContext)(sourceRoot,options.referenceDirectory),c=fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target);
+ const context=await (productionPrepare?loadFresh35ProductionImportContext(sourceRoot,options.referenceDirectory,options.requestKey):loadFresh35HostContext(sourceRoot,options.referenceDirectory)),c=fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target);
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
  const pins=describeFresh35CombinedSource(c.source).currentSourcePins;
  if(!loadedPhysicalHostSha256||!pins.some(p=>p.path==='tools/unified-import/whole-host-session.mjs'&&p.sha256===loadedPhysicalHostSha256)||!pins.some(p=>p.path==='scripts/release/unified-install/whole-sales-admission-v1.mjs'&&p.sha256===WHOLE_SALES_ADMISSION_MODULE_SHA256))throw Error('FRESH35_HOST_LOADED_IMPLEMENTATION_SOURCE_DIFFERS');

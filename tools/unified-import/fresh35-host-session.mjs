@@ -99,7 +99,7 @@ export const FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH=(process.platform==='d
 const productionImportAuthorities=new WeakMap(),productionImportBindings=new WeakMap();
 const importFileIdentity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
 const exactImportKeys=(x,keys)=>x&&Object.getPrototypeOf(x)===Object.prototype&&Reflect.ownKeys(x).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(x,k);return d?.enumerable&&Object.hasOwn(d,'value')});
-export async function loadFresh35ProductionImportContext(sourceRoot,referenceDirectory){
+export async function loadFresh35ProductionImportContext(sourceRoot,referenceDirectory,requestKey){
  need(typeof sourceRoot==='string'&&resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');
  const envelope=await loadFresh35CombinedRecordEnvelope();
  need(envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2','PRODUCTION_V2_RECORD_REQUIRED');
@@ -112,7 +112,7 @@ export async function loadFresh35ProductionImportContext(sourceRoot,referenceDir
  const pins=describeFresh35CombinedSource(source).currentSourcePins;
  for(const pin of pins)await assertTrustedRootPath(resolve(sourceRoot,pin.path));
  for(const [path,digest]of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===digest),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
- const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),operation=await loadInstalledRealWindow(envelope,snapshot.sha256,source,referenceDirectory,moduleRoot),proof=installedRealWindowData(operation,t);
+ const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),operation=await loadInstalledRealWindow(envelope,snapshot.sha256,source,referenceDirectory,moduleRoot,requestKey),proof=installedRealWindowData(operation,t);
  const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=proof.program,record=proof.record;
  const {describeFresh35CombinedCatalog}=await import('../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
  need(describeFresh35CombinedCatalog(catalog).modelSha256===proof.modelSha256,'INSTALLED_BUSINESS_MODEL_DIFFERS');
