@@ -35189,7 +35189,7 @@
     },
     "new35BackupR4ProducerSuccessor": {
       "owner": "Original D1 sole producer writer; Original T45 server only",
-      "state": "SCOPED_QB_SOURCE_PASS_REAL_EXECUTION_INPUTS_NOT_READY",
+      "state": "LATEST_STOP_PIN_SCOPED_QB_PASS_ACTUAL_CAPTURE_AND_RESTORE_PENDING",
       "parentSHA256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
       "confirmedSourceGaps": [
         "Producer fixed10fc/af75 rejects actualR4 3b82/8694",
@@ -35207,6 +35207,39 @@
         "QA": "fd8e2f1420f3c351ab526aabe2f8cf51b879a6db86bd388d560bdbb23cc14c70",
         "state": "SCOPED_SOURCE_PASS_NOT_ACTUAL_BACKUP_RESTORE",
         "scope": "Originalrecord unchanged; realcurrent sourcePhysical bound newreceipt; independentrestore uses capture-time sourceproof not current sourcePGlease; stilldifferentSID"
+      },
+      "latestStopSuccessor": {
+        "at": "2026-11-07T15:19:03.411215+08:00",
+        "source": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/NEW35-BACKUP-RESTORE-FIX-02/R4-BASELINE-WINDOW-FIX-03/R4-LATEST-STOP-PIN-FIX-05/new35-backup-restore.py",
+          "line": 206,
+          "sha256": "7d5d7481b6a3e2805351c976da9316e17d1ff5611b72d463db9d5b24c0a09049",
+          "bytes": 54454
+        },
+        "parentSHA256": "5da4aded177358d5a1426268a1ee6646b3f3e5f7b65c72f336af17cdd3125112",
+        "newStopReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+        "QBResultSHA256": "40a36fb2c550f7355294a9f4b97de500334ecb4d2bc0f56e8f15b7a7143d7ed2",
+        "QBTests": {
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0,
+          "command": "python3 -B test_latest_stop.py -v",
+          "actualTargetStarted": false
+        },
+        "reproduction": "Executed exact parent validator with reused local fixture. Existing b241 accepted. BOOT06 predecessor 31b7 alone changed and received EXACT_RESTART_PROVENANCE_REQUIRED.",
+        "actualBackup": false,
+        "actualRestore": false,
+        "executionInputs": "Current R4 protected BOOT06 receipt and runtime facts, real committed and verified source batch, fence drained, current space and finite role/window facts, separately fixed backup and restore execution inputs. Preserve old R1/10fc draft as historical; do not reuse it as the current R4 plan."
+      },
+      "oldProductionBackupApplicability": {
+        "receiptSHA256": "47d4561209600e8f916c0e72a0f59c5cc7720aac5205a74c7d18cbadd587d580",
+        "oldProductionBackupExitCode": 0,
+        "primaryArtifacts": 7,
+        "primaryBytes": 2045181980,
+        "offlineTocEntries": 936,
+        "independentRestoreOfExactNov06Bytes": false,
+        "earlierNov01IsolatedRestoreSHA256": "69a93b068f5354f48fd28c9c03a5f95b4893367efae694d8aa615ed1439a544f",
+        "scope": "Original production rollback evidence only. Prior independently restored old snapshot used a different capture; neither constitutes a restore of Nov06 bytes or post-import R4 data."
       }
     },
     "controllerNewScopeDecisionBasis20261107": {
