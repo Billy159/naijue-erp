@@ -33303,12 +33303,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T00:26:28.111865+08:00",
-      "phase": "R4_STARTUP_SPACE_UNBLOCKED_NEXT_BOOT_SOURCE_BINDING",
+      "at": "2026-11-08T00:45:08.982836+08:00",
+      "phase": "R4_BOOT10_FRESH_WINDOW_ISSUED_ACTUAL_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 complete successor BOOT fixed source and non-time inputs",
-      "nextOwner": "C sole QB scoped dispatch then just-in-time finite BOOT authorization",
+      "currentOwner": "Original T45 one retained R4 BOOT10",
+      "nextOwner": "C actual restart receipt then operation parameter binding",
       "latestActualReceiptSHA256": "61532844385553deeaf2b82f61debb886230b47f18971064f84b0e0f31b8fdbf",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Space now actually passes original startup floor; preserve archive/06/receipts. Bind next BOOT single client-driver-custody-carrier source chain and exact prior09/f5/971 evidence, reuse prior source QA, scope-review only changed seams, sign fresh5min startup/90min guardian when ready. No real import or formal launch passed.",
+      "next": "Collect original BOOT10 key, no replay. If actual successful bind observed epoch/processes/restart receipt and C operation parameters, then newPREPARE08 original20min. Fresh space and originalCAS/HBA/cleanup guards required; no actual import or launch yet.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36560,6 +36560,24 @@
         "SQLiteOpened": false,
         "newBOOT": false
       }
+    },
+    "r4Boot10Successor20261108": {
+      "at": "2026-11-08T00:45:08.982836+08:00",
+      "state": "FRESH_C_WINDOW_ISSUED_ACTUAL_PENDING",
+      "readySHA256": "4e2837e13aea5eebccd62ca39bdc12b2574e93cbe4f1e8c15b04332922b1dba0",
+      "sourcePinsVerified": 18,
+      "QBReceiptSHA256": "ad470cec733f709727023afb9d6afc08ec222e3f76ccdf4d3e2442ccbfc97ca7",
+      "controllerDecisionSHA256": "fd15dad23d6851d37be611aee72cffb1b45dcb5424e0ef02f326c7a85f5ca847",
+      "jobKey": "t45-r4-retained-restart-20261108-10",
+      "startsAt": 1794069868117,
+      "expiresAt": 1794070168117,
+      "guardianExpiresAt": 1794075268117,
+      "roleLoginValidUntil": "2026-11-07T18:13:58.117Z",
+      "carrierSHA256": "03e1b5ad41cac461140b7034e2ee4937c801d295c5c23017bec8734add179570",
+      "oldRawNodeReceiptSHA256": "9d02b1318f8903243c43aca5c92cec56dbd6de620d0d64f58a7af981378fa445",
+      "oldNodeTechnicalMetadataSHA256": "a0a9b1bfb0873f8cb6fc678a4dc98dbb0cc07ef14cd3251e66fbeaba0ef3cec2",
+      "realBootPassed": false,
+      "realImportPassed": false
     }
   }
 }
