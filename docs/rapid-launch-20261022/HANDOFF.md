@@ -2831,3 +2831,11 @@ D1 commit73480c928a5950670ca3127b0eca3dc5719b3e55（parent49d）仅identity_keys
 - 实际释放2,667,483,136B，剩余10,023,579,648B，超过既有启动floor1,816,064,002B；不据此宣称PG/WAL/temp/恢复或业务性能通过。
 - C核734传输READY28d93全部25pin后签C13 af87e116cb632c67aa2b6ca1f20aafd12257a9b6aeb9f67017f30ef7b5ab7023，窗口1794081309337–1794083109337，原T45正在唯一小包上传/Linuxload/原cd2e策略恢复；实际结果待回。734源码与合成QA不代表真实Linux或完整预检已过。
 - 当前唯一下一步：实际Linux及恢复回执→新BOOT12/真实epoch与参数→新的固定20分钟PREPARE。真实整包导入、独立对账、历史普通账号业务、备份恢复及正式切换均未完成；不因睡眠委托放宽这些事实条件。
+
+- C13格式修正：主控原af87引用737字符超过既有512守卫，T45在任何servercall前拒绝，现场保留；主控准确后继e52ef88d4fc41a734e24fff141ed9a556cf529c245363a75bc7b0dc8d8e47daa/1141B仅缩短reference为439字符，其他pins及原30分钟窗口不变。未改守卫、不延窗、不重建包。
+
+
+### 734实际Linux加载及原策略恢复通过；BOOT12已派执行
+- 原T45 materialize实际COMPLETED0/29.299117399s，88a3d6166040943fef788aff701c9a61e70630115c5da1a9770191e6c682dd6f/1364B；Node24.21.0、216/180源pin、CLI与readback模块真实加载，361files/5,126,839B，原49d和安装源/APP未变。实际free10,015,522,816B。
+- pairedrestore c22b3de826e4d8886ca4e7ed787ca5b88d78b596d7329b5d271b093ca8003610/843B及job278123确认原cd2e/root0444/nlink1恢复，未续期。0PG/导入/业务写。源码或模块加载不代表完整Linux预检、性能和业务通过。
+- C采用46pin已备妥BOOT12骨架，签69d670d4cdfa16f429aa7101a710a954d0e8eb405e6e63b0afc0a17e4a089f16/1458B：boot1794081837333–1794082137333，guardian1794087237333，新两角色until21:33:27.333Z，精确CAS旧20:00:22.654Z，HBA限30s原样恢复，原servicelease不延。原T45执行一次，实际结果待回；后续参数和PREPARE仅绑定真实epoch，不编造时间。

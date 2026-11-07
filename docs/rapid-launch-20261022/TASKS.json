@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T03:56:14.576008+08:00",
-      "phase": "R4_EXACT10_INDEX_RETIRED_734_LINUX_LOAD_IN_PROGRESS",
+      "at": "2026-11-08T04:06:05.559641+08:00",
+      "phase": "R4_734_ACTUAL_LINUX_AND_POLICY_RESTORE_PASS_BOOT12_ISSUED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exact734 transfer/Linux load",
-      "nextOwner": "C freshBOOT12 after actual Linux and policy restoration",
-      "latestActualReceiptSHA256": "eb5671c513970e9ba24716366459ebd81b09dbea3a1996f6e14d0c168ad87967",
+      "currentOwner": "Original T45 BOOT12 actual execution",
+      "nextOwner": "C exact actual12params then PREPARE11",
+      "latestActualReceiptSHA256": "88a3d6166040943fef788aff701c9a61e70630115c5da1a9770191e6c682dd6f",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "C13af87 fixed30min issued only for734 tiny tool and actualLinux imports plus exactcd2e restoration. Do notBOOT until actualreceipt; installeda7d retained, no realimport/binding/deployment yet. New20minPREPARE only after fresh12epoch/roles/params.",
+      "next": "Actual734 loader88a3 and original-policyrestorec22b passed. BOOT12 decision69d6 exact5min issued; wait actualepoch/restart/role/HBA/space, then bind4publisher constants and new exact params, fixed20minPREPARE. NoREALimport/binding/business/deploy yet.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33458,8 +33458,8 @@
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
       "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
-      "importToolCommit": "49d13ebd87e6ec6805120c2913fcaf62b8a0aa09",
-      "importToolSourceSetSHA256": "2501e7edb1808a3c7c7d8debb2661bb038fdc18ee880ccf71bd195e8e2ade1ff",
+      "importToolCommit": "73480c928a5950670ca3127b0eca3dc5719b3e55",
+      "importToolSourceSetSHA256": "43a60fa899b70bbe4e1f1f9d536fef5714ce5f2723ae2a10d29bdb45e0f9e3c1",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
         "requestKey": "t45-r4-retained-restart-20261108-11",
@@ -37147,15 +37147,42 @@
       "T45NonTimeReadySHA256": "28d93c1b7351d8fabdd7c66f495bbaa5cca176c0750ea83dcc6b23d9dc243caf",
       "T45NonTimeReadyBytes": 12467,
       "C13": {
-        "sha256": "af87e116cb632c67aa2b6ca1f20aafd12257a9b6aeb9f67017f30ef7b5ab7023",
-        "bytes": 1439,
+        "sha256": "e52ef88d4fc41a734e24fff141ed9a556cf529c245363a75bc7b0dc8d8e47daa",
+        "bytes": 1141,
         "startsAt": 1794081309337,
         "expiresAt": 1794083109337,
         "scope": "SOLE_T45_EXACT_SMALL_TOOL_TRANSFER_LINUX_LOAD_AND_ORIGINAL_POLICY_RESTORE",
         "READY25PinsVerified": true,
-        "actualResult": "PENDING"
+        "actualResult": "PENDING",
+        "originalLocalRefusal": {
+          "sha256": "af87e116cb632c67aa2b6ca1f20aafd12257a9b6aeb9f67017f30ef7b5ab7023",
+          "reason": "C decisionReference737 exceeds existing512 character guard; refused before any server request. Original kept, no policy or upload affected."
+        },
+        "referenceCharacters": 439,
+        "windowNotExtended": true
       },
-      "minimumStartupFreeBytes": 8207515646
+      "minimumStartupFreeBytes": 8207515646,
+      "actual": {
+        "materializationSHA256": "88a3d6166040943fef788aff701c9a61e70630115c5da1a9770191e6c682dd6f",
+        "materializationJobSHA256": "7ad0935a63c96667a21902e0506f051adb6821c950820735775c54648d804a41",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 29.299117399,
+        "sourceSetSHA256": "43a60fa899b70bbe4e1f1f9d536fef5714ce5f2723ae2a10d29bdb45e0f9e3c1",
+        "node": "v24.21.0",
+        "currentPins": 216,
+        "capturedPins": 180,
+        "regularFiles": 361,
+        "logicalBytes": 5126839,
+        "CLIImported": true,
+        "readbackImported": true,
+        "freeAfter": 10015522816,
+        "restoreSHA256": "c22b3de826e4d8886ca4e7ed787ca5b88d78b596d7329b5d271b093ca8003610",
+        "originalPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+        "originalRoot0444Restored": true,
+        "PGOrREALMode": false,
+        "fullPerformanceVerified": false
+      }
     },
     "r4PrepareIndexLifecycle73420261108": {
       "state": "ORIGINAL_D1_FIXED_SOURCE_READONLY_CONSUMER_CONCLUSION_ADOPTED_NOT_EXECUTION_AUTHORITY",
@@ -37174,6 +37201,18 @@
       ],
       "failed10SeparateAuthority": "Current failed10 is only independent actual FAILED2+94af byte-archive precise retirement, not called successful PREPARE",
       "space": "No capacity PASS from estimated old2.667GB. Archive/create peak, actual new index, PG/WAL/temp/restore and floor remain measured constraints."
+    },
+    "r4Boot12Successor20261108": {
+      "READY": "9340963d9bb45c8e8558efcf076b90109867c6c4663991342b8010d6d5ae9e02",
+      "verifiedPins": 46,
+      "decisionSHA256": "69d670d4cdfa16f429aa7101a710a954d0e8eb405e6e63b0afc0a17e4a089f16",
+      "startsAt": 1794081837333,
+      "expiresAt": 1794082137333,
+      "guardianExpiresAt": 1794087237333,
+      "newRoleUntil": "2026-11-07T21:33:27.333Z",
+      "oldRoleCAS": "2026-11-07T20:00:22.654Z",
+      "serviceLeaseUnchanged": 1825560000000,
+      "actual": "PENDING_T45_ORIGINAL_KEY_ONCE"
     }
   }
 }
