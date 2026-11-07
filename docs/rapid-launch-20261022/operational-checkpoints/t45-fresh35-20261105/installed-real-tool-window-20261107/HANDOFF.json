@@ -1,0 +1,160 @@
+{
+  "task": "INSTALLED-REAL-WINDOW-SOURCE-01",
+  "state": "INDEPENDENT_IMPORT_TOOL_SOURCE_READY_FOR_ORIGINAL_QB_INCREMENTAL_REVIEW",
+  "atUtc": "2026-11-07T01:12:28.879427+00:00",
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "379e3d8a81fedab803adb5a2a3b4c995f9d10ba3ca6d2c0acba30882163be0d2",
+      "bytes": 39811,
+      "parentSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "05dc38fe7f004a2c11917c14bee00c00e2ed9f6bd5cf25086da243ce60e7c2b7",
+      "bytes": 32456,
+      "parentSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-installed-real-window-v1.mjs",
+      "sha256": "96a3491c7cee85dccad7dc9e5fdd49ad4afbb4394d07f6326fdbbc857dcb9aff",
+      "bytes": 9391,
+      "parentSha256": null
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "28a256fe3c38901477b6649086f9b90136cf1d408db044fa6d9b5240cf5a2127",
+      "bytes": 34625,
+      "parentSha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "sha256": "064cbde03f3a83ee463cee047946ab5074f9a416f0bd56bac6c2b9038165fc36",
+      "bytes": 22521,
+      "parentSha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b"
+    }
+  ],
+  "scope": "4 existing native MJS leaves + 1 new small runtime module, independent partial snapshot only; no main writes. Original R4 record/source/observer are immutable. No launcher change required: current retained installation guardian/cleanup remains original; T45 alone owns private ops successor and role recovery. No TS leaf changes.",
+  "originalInstalledTarget": {
+    "formalRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+    "sourceSet": "8694 prefix per C actual R4; full actual value must come from record, never invented",
+    "recordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+    "systemIdentifier": "7705224458832691236",
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-07 00:46:12.566314+00",
+    "PG": "170011",
+    "port": 18654
+  },
+  "twoRoots": {
+    "installedSourceRoot": "Existing protected complete R4 8694 native source tree, retained read-only at its actual canonical path. Original modules/loader/record/catalog/compiler reconstruct the original install program and validate original protected record; old source/current assertions remain. The old 20-minute installation window is historical provenance only, not altered or reused as new authority.",
+    "currentImportRoot": "Genuine new fixed operation-tool source root only. New source pins include loaded host/target/record/window module, current source hash differs from original. Current full catalog model SHA must equal verified installed model SHA. Actual new root/sourceSet/build still must be produced by original C/D2.",
+    "ordinaryAppRoot": "Normal APP remains original R4 8694 native source and original ordinary pool. admitFresh35OrdinaryPoolV2 bytes are unchanged; if someone starts normal API from new operation root, its current-program-vs-old-record sourceSet check deterministically refuses. This package is not universal new API compatibility or deployment of a new APP."
+  },
+  "prepareThenExecute": {
+    "PREPARE": "Reads only fixed protected operation parameters and retained-service metadata; verifies exact original record/physical target/installed source+program+catalog, separate current source and REAL manifest. No plan/init/steps digest or full binding is required beforehand. Original prepareOnly receives planner admission, no write client, and emits actual full17 binding.",
+    "EXECUTE": "Original production-import authority path consumes full binding equal to actual prepared object plus operationParametersSha256 and same authorizationReference. Original source/SQL request/query guards enforce original init/step keys and exact streaming program. No fake precomputed plan/init/steps, no new authority platform or replay route.",
+    "window": "Single finite parameter window at most90min; <= explicit C authorizationExpiresAt, actual retained service deadline, runtime expiry and actual admin validity. Controller role expiry must equal parameter end. Existing monotonic original session deadline and tightenDeadline only shorten. Changed/expired parameters refuse; ongoing window is never extended."
+  },
+  "parameters": {
+    "path": "/etc/naijue-erp/fresh35-installed-real-window-v1.json",
+    "macPath": "/private/etc/naijue-erp/fresh35-installed-real-window-v1.json",
+    "format": "FRESH35_INSTALLED_REAL_OPERATION_PARAMETERS_V1",
+    "meaning": "Read-only provenance/window inputs to same C decision; no decision field or second write approval/review signature. Actual EXECUTE still requires original batch authority consumer.",
+    "keys": [
+      "format",
+      "installedSourceRoot",
+      "currentSourceSetSha256",
+      "installation",
+      "manifestSha256",
+      "startsAt",
+      "expiresAt",
+      "authorizationExpiresAt",
+      "serviceReceipt",
+      "controllerLoginValidUntil",
+      "adminLoginValidUntil",
+      "authorizationReference"
+    ],
+    "installationKeys": [
+      "installationRecordSha256",
+      "installProgramSha256",
+      "sourceSetSha256",
+      "targetSha256",
+      "catalogSha256"
+    ],
+    "serviceReceipt": {
+      "path": "/etc/naijue-erp/fresh35-retained-service-v1.json",
+      "sha256": "Actual retained original receipt bytes; not a made-up placeholder hash"
+    },
+    "serviceProjection": "Original T45 root ops copies only existing actual workspace/service-retained.json metadata bytes to fixed protected root-owned readable0444 reference. Original private0600 receipt and ancestor modes unchanged; no secret is projected. Actual protected file/identity/digest checked by new consumer.",
+    "lifetimeValues": "Must come from actual new maintenance/controller receipts, not old a308 unexecuted permit. controllerLoginValidUntil parses exactly to expiresAt; adminLoginValidUntil equals actual existing admin expiry verified by SQL guard and covers operation."
+  },
+  "batchAuthority": {
+    "path": "/etc/naijue-erp/fresh35-production-import-v1.json",
+    "format": "FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V2",
+    "decision": "AUTHORIZE_EXACT_REAL_BATCH_IMPORT_AND_READBACK",
+    "keys": [
+      "format",
+      "decision",
+      "binding",
+      "operationParametersSha256",
+      "startsAt",
+      "expiresAt",
+      "independentSafetyReviewSha256",
+      "authorizationReference"
+    ],
+    "binding": "Original FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1 17 fields, produced honestly after PREPARE and matched to prepared native program. installation portion remains original R4 record/source/program.",
+    "changes": "Only bounded format successor and exact parameter hash in existing consumer; no second final write authorization file."
+  },
+  "SQLAndPrivileges": {
+    "observer": "Original pg_catalog.fresh35_exclusive_backends source/signature/attributes/ACL are fully verified unchanged. New operation path does not call its expired old-window body; uses exact original allowed-backend expression inline plus pg_stat_clear_snapshot on same original read-only physical client. Original install/synthetic branch still uses observer and original window.",
+    "controller": "Existing original controller only, same inherited/non-super/2connections and exact membership guards, with new finite expiry exactly bound. Existing owner must retain original bounded expiry and attributes; owner need not be usable for REAL. Existing admin must retain original super login plus actual exact maintenance expiry. No new roles/grants/business SQL/ordinary runtime rights.",
+    "catalog": "Same full model/source/ACL guard and raw observation. Current model hash equals installed verified model hash before context. Physical SID/OID/start/version/endpoint/exclusive backend/role/database/public-schema checks retained. Actual controller visibility of inline backend metadata still requires controlled PG validation.",
+    "client": "Original one pg.Client/session/gate/allowlist/cleanup flow retained. No pool/client created by new metadata module. ROLLBACK and close remain available after expiry."
+  },
+  "opsBoundary": {
+    "T45Only": "Private carrier real_inside/production_real must consume new parameters instead of oldC14 deadline, bind actual new source/record references, preserve existing 4GiB floor/.2 sampling<=.25/monotonic cutoff/volume mapping/original-key handling. D1 edits no ops revision.",
+    "maintenanceActual": "Original old-window a308 admin maintenance was NOT executed, role expiry remained original and temporary secrets were cleared. Later C authorized precise <=30s localhost oneDB/admin HBA recovery, restore HBA immediately then admin-only password+90min; this package makes no claim it executed or succeeded. Dependent REAL connection cannot run without actual successful recovery and separately authorized controller expiry.",
+    "noRestart": "No R5/reinstallation/oldC14 extension/record or observer rewrite; original retained R4 and installed API root remain."
+  },
+  "verification": {
+    "syntaxMjsFiles": 5,
+    "localTests": 5,
+    "passed": 5,
+    "skips": 0,
+    "test": "installed-real-window.test.mjs",
+    "scope": "Pure parameter/binding/window/forgery checks and unchanged wire/ordinary source comparison only",
+    "cases": [
+      "Old installation expiration does not expire a separately exact finite parameter window; no plan/init/steps required at load/PREPARE",
+      "Changed record/source/target/lease/role/manifest/shape and expired/future/overlong operation rejects",
+      "Parsed JSON cannot mint window authority or enter operation target guard",
+      "Original wire allowlist and ordinary admission byte-identical",
+      "C-authorized duration may exceed20min up to90min bounded by decision/actualrole/service/runtime"
+    ],
+    "typecheck": "No TypeScript leaves changed; existing tsc target excludes these MJS; actual MJS syntax checks passed. No full tsc/regression rerun.",
+    "genuineOperationProtectedFilePositive": "NOT_TESTED",
+    "actualPostExpiryControllerCatalogGuard": "NOT_TESTED",
+    "realPrepareExecutePgHttp": "NOT_TESTED",
+    "mainFourParentsUnchanged": true
+  },
+  "staticGraph": {
+    "scope": "STATIC_OVERLAY_GRAPH_ONLY_NOT_GENUINE_SUCCESSOR_SOURCESET_OR_BUILD",
+    "paths": 215,
+    "allPathsAcceptedByActualUnchangedNativePolicy": true,
+    "newRuntimeLeafReached": true,
+    "installedSourceDynamicImports": "Only protected explicit original root at runtime; not injected into new current source graph",
+    "newBuild": false
+  },
+  "notTested": [
+    "Protected operation-parameter/retained-service files positive consumption as ordinary controller",
+    "Genuine old-root proof reconstruction in two-root deployed layout and genuine new operation build",
+    "Actual post-expiry renewed controller physical/catalog/inline exclusivity SQL",
+    "REAL PREPARE/EXECUTE and business import readback/warehouse conservation",
+    "New-root HTTP API or normal app deployment (not this package purpose)"
+  ],
+  "next": "C gives original QB only these five source leaves and affected ordinary-consumer boundary. Preserve prior install/model/business PASS; no r26 rerun. After exact source adoption original D2 fixes genuine import-only root/sourceSet/build. Original T45 completes precise maintenance only after narrow review/new exact authority; prepares original retained receipt reference and new parameters, then actual read-only PREPARE, then C signs original batch-authority V2 with real binding. Controlled REAL execution/cleanup/receipt remains original T45. No main commit or server/PG actions performed by D1.",
+  "patch": "source.patch"
+}

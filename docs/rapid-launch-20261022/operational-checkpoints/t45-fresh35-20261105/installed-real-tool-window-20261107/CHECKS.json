@@ -1,0 +1,20 @@
+{
+  "syntaxMjsFiles": 5,
+  "localTests": 5,
+  "passed": 5,
+  "skips": 0,
+  "test": "installed-real-window.test.mjs",
+  "scope": "Pure parameter/binding/window/forgery checks and unchanged wire/ordinary source comparison only",
+  "cases": [
+    "Old installation expiration does not expire a separately exact finite parameter window; no plan/init/steps required at load/PREPARE",
+    "Changed record/source/target/lease/role/manifest/shape and expired/future/overlong operation rejects",
+    "Parsed JSON cannot mint window authority or enter operation target guard",
+    "Original wire allowlist and ordinary admission byte-identical",
+    "C-authorized duration may exceed20min up to90min bounded by decision/actualrole/service/runtime"
+  ],
+  "typecheck": "No TypeScript leaves changed; existing tsc target excludes these MJS; actual MJS syntax checks passed. No full tsc/regression rerun.",
+  "genuineOperationProtectedFilePositive": "NOT_TESTED",
+  "actualPostExpiryControllerCatalogGuard": "NOT_TESTED",
+  "realPrepareExecutePgHttp": "NOT_TESTED",
+  "mainFourParentsUnchanged": true
+}

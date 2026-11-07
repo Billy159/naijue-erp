@@ -1,0 +1,169 @@
+{
+  "sourceFiles": 215,
+  "sourceBytes": 4136656,
+  "externalSpecifiers": [
+    "pg",
+    "pg/package.json"
+  ],
+  "packages": [
+    {
+      "name": "pg",
+      "version": "8.23.1",
+      "bytes": 102632,
+      "files": 20,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg",
+      "dependencies": [
+        "pg-connection-string",
+        "pg-pool",
+        "pg-protocol",
+        "pg-types",
+        "pgpass"
+      ],
+      "optionalDependencies": {
+        "pg-cloudflare": "^1.4.1"
+      }
+    },
+    {
+      "name": "pg-connection-string",
+      "version": "2.14.1",
+      "bytes": 16148,
+      "files": 6,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg-connection-string",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "pg-pool",
+      "version": "3.14.0",
+      "bytes": 29835,
+      "files": 5,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg-pool",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "pg-protocol",
+      "version": "1.16.1",
+      "bytes": 202040,
+      "files": 42,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg-protocol",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "pg-types",
+      "version": "2.2.0",
+      "bytes": 35296,
+      "files": 13,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg-types",
+      "dependencies": [
+        "pg-int8",
+        "postgres-array",
+        "postgres-bytea",
+        "postgres-date",
+        "postgres-interval"
+      ],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "pgpass",
+      "version": "1.0.5",
+      "bytes": 10323,
+      "files": 4,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pgpass",
+      "dependencies": [
+        "split2"
+      ],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "pg-int8",
+      "version": "1.0.1",
+      "bytes": 3186,
+      "files": 4,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg-int8",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "postgres-array",
+      "version": "2.0.0",
+      "bytes": 4903,
+      "files": 5,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/postgres-array",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "postgres-bytea",
+      "version": "1.0.1",
+      "bytes": 3095,
+      "files": 4,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/postgres-bytea",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "postgres-date",
+      "version": "1.0.7",
+      "bytes": 5915,
+      "files": 4,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/postgres-date",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "postgres-interval",
+      "version": "1.2.0",
+      "bytes": 6727,
+      "files": 5,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/postgres-interval",
+      "dependencies": [
+        "xtend"
+      ],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "split2",
+      "version": "4.2.0",
+      "bytes": 17419,
+      "files": 6,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/split2",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "xtend",
+      "version": "4.0.2",
+      "bytes": 6465,
+      "files": 7,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/xtend",
+      "dependencies": [],
+      "optionalDependencies": {}
+    },
+    {
+      "name": "pg-cloudflare",
+      "version": "1.4.1",
+      "bytes": 25701,
+      "files": 13,
+      "localPath": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/candidate0448/node_modules/pg-cloudflare",
+      "dependencies": [],
+      "reason": "Existing pg optional package retained in conservative runtime inventory; not a new dependency/install"
+    }
+  ],
+  "purePgDependencyBytes": 443984,
+  "linuxPackageReadback": "NOT_TESTED_LOCAL_LOCKED_JS_PACKAGE_MEASUREMENT_ONLY",
+  "originalNodeBinaryReference": "Reuse pinned /opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node; no new Node copy",
+  "referenceInputs": "Reuse original protected referenceDirectory; no new9file copy",
+  "newSourcePlacement": "New root separate from original installed root; a sibling root requires original Linux locked pg transitive package subtree in newRoot/node_modules. No copying full APP/sharp/Web/PG/Node; no new symlink/virtual mount fallback.",
+  "initialMeasurementError": "package.json export restriction for pg-connection-string; resolved entrypoint and walked to matching existing package metadata instead. No runtime/source changes.",
+  "pgIncludingExistingOptionalBytes": 469685,
+  "totalMeasuredSourceAndPgBytes": 4606341,
+  "tarHeaderBudgetBytes": 1410048,
+  "transferAndExpandedConservativeBytes": 12032778,
+  "sourceInventory": "OPERATION-CLI-SOURCE-CLOSURE.json",
+  "nativeSourceSetMethod": "On the fixed complete operation source root use original loadFresh35CombinedSource(root,{baselineDirectory:actual original referenceDirectory/fresh35-install-review-plan-20261105-r2}); descriptor.currentSourcePins/currentSourceDelta and sourceSetSha256 are derived from actual new 215 source files. Do not rename old8694 or inject only5 leaves into old root. Original package.json and package-lock.json are included unchanged; no dependency install/download.",
+  "installedSourceAndNode": "Original installed8694 root and Node/runtime remain read-only. Use existing pinned original Node binary to invoke newRoot/tools/unified-import/cli.mjs; referenceDirectory remains original9 protected inputs. The full source inventory already contains the CLI and its transitive imports. All non-node external specifiers are pg and pg/package.json.",
+  "layout": "T45 chooses a distinct canonical root-owned readable directory on the existing writable state mount; no mutation beneath read-only original installed root and no extra virtual mount or symlink. Place full215 source files at their relative paths, and original Linux pg plus13 transitive/existing optional packages under this newRoot/node_modules. Original CLI/currentSourceRoot must resolve to newRoot; installedSourceRoot points separately to original8694.",
+  "spaceInterpretation": "4,606,341B is local source+locked pure-JS pg package raw size, not a claim of actual Linux archive size. 12,032,778B is conservative local source+all measured module files with per-file tar/padding budget and simultaneous transfer+expanded copy. Original server free8,436,330,496B minus startupfloor8,207,515,646B leaves228,814,850B; estimate leaves216,782,072B before any unrelated writes. D2 must report actual archive/extracted bytes, T45 must remeasure actual physical volume and enforce original floor; do not lower floor."
+}

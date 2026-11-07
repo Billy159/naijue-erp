@@ -1,0 +1,41 @@
+{
+  "branch": "codex/erp-0448z-installed-real-tool-20261107",
+  "commit": "d750ae8c90d54718f16731492bbc707061d82124",
+  "tree": "36fe046946307f1d779bdfdaab0a8e7abe4c1ca8",
+  "parent": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "status": "WIP_SOURCE_FIXED_PENDING_SCOPED_QB_AND_REAL_PG",
+  "changedFiles": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "379e3d8a81fedab803adb5a2a3b4c995f9d10ba3ca6d2c0acba30882163be0d2",
+      "bytes": 39811,
+      "parentSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "05dc38fe7f004a2c11917c14bee00c00e2ed9f6bd5cf25086da243ce60e7c2b7",
+      "bytes": 32456,
+      "parentSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-installed-real-window-v1.mjs",
+      "sha256": "96a3491c7cee85dccad7dc9e5fdd49ad4afbb4394d07f6326fdbbc857dcb9aff",
+      "bytes": 9391,
+      "parentSha256": null
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "28a256fe3c38901477b6649086f9b90136cf1d408db044fa6d9b5240cf5a2127",
+      "bytes": 34625,
+      "parentSha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "sha256": "064cbde03f3a83ee463cee047946ab5074f9a416f0bd56bac6c2b9038165fc36",
+      "bytes": 22521,
+      "parentSha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b"
+    }
+  ],
+  "workingDirectoryModified": false,
+  "normalApplicationRootUnchanged": true
+}

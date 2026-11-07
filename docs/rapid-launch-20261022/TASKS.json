@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T09:00:03.344466+08:00",
+  "updatedAt": "2026-11-07T09:18:41.642318+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,26 +33302,26 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T09:00:03.344466+08:00",
+      "at": "2026-11-07T09:12:46.766934+08:00",
       "phase": "R4_NATIVE_INSTALL_DURABLE_SEPARATE_REAL_WINDOW_SOURCE_REPAIR",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
       "nextOwner": "Original QB scope-only review; C accurate new execution binding",
       "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
-      "scope": "ISOLATED_SYNTHETIC_ONLY",
+      "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
-      "initializationPassed": true,
-      "negativeRollbackConfirmed": true,
-      "ordinaryBusinessPassed": true,
+      "initializationPassed": false,
+      "negativeRollbackConfirmed": false,
+      "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
       "next": "Repair independent REAL session on retained installed R4 without renewing installation C14, faking record or repeating installation; then original T45 prepare/inspect/execute and independent readback.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
-      "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
-      "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
-      "tree": "2198007810b63a2741981e9f546c3997c6f15c54",
+      "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+      "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+      "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
       "sourceQA": "PASS_SOURCE_AND_SCOPED_OFFLINE_MODEL_R26_SUCCESSOR",
       "buildPassed": true,
       "latestAuthorSourceCommit": "7a27839d2e0bea7f729fcf5f9ac6518a763a38ba",
@@ -33346,8 +33346,8 @@
         "productionDeployed": false,
         "actualIndependentQBReceiptSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29"
       },
-      "syntheticImportPassed": true,
-      "independentSnapshotsPassed": true,
+      "syntheticImportPassed": false,
+      "independentSnapshotsPassed": false,
       "previousCandidateEvidence": {
         "root": "9315643006a574986abacf5bba631e7c34cf23f1",
         "sourceCommit": "cfad04f87e0dabf67897ca9f07d3043d1a8172dc",
@@ -33357,7 +33357,7 @@
         "actualSafeSHA256": "81b79340fa4d962a34e0faae884a8fb43e695c617abf0bf70935059b836f01f4"
       },
       "githubSourceAndRootReadback": true,
-      "sourceSetSHA256": "af75afcf7f933000e22fb326d05038391e9008a61fb6e4915ebc13f8da46d01c",
+      "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
       "QBReceiptSHA256": "6fec6fe7e0ac1b7585d925ea0eeed7ac40eddeebae1a78101b8e5a48ca4b3ecb",
       "D2ReceiptSHA256": "f803657bb71f9e7eb55d1d5d6f7d71d02bd004ff9bbd0d04a2d3d36b65fa0436",
       "currentCandidateActualRuntime": {
@@ -33454,7 +33454,8 @@
         "realImported": false,
         "ordinaryRealBusinessPassed": false,
         "productionDeployed": false
-      }
+      },
+      "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -34412,7 +34413,182 @@
           },
           "scope": "Existing original install window and record unchanged; separate accurately authorized bounded REAL session must reuse existing installed target. No new R5 or repeated install.",
           "cause": "Formal host, ops guard and temporary-role credentials still bound to first 20-minute installation window.",
-          "userDecisionNeededBeforeNoon": false
+          "userDecisionNeededBeforeNoon": false,
+          "recoverySourceStatus": "T45 preparing exact retained empty R4-only max30s localhost/admin maintenance and original HBA restoration, pending narrow QB; not executed."
+        },
+        "postExpiryActual": {
+          "receiptSHA256": "38d7d882cba0f61238dcbad16cabf07ba4e8c0e843af99e493b3f1895ea11df0",
+          "checkedAt": "2026-11-07T09:12:46.766934+08:00",
+          "state": "RETAINED_INSTALLED_PG_ORIGINAL_TEMPORARY_CREDENTIALS_REMOVED",
+          "roleFacts": {
+            "actor": "erp35_runtime_20261107_r4",
+            "adminValidUntil": "2026-11-07 01:04:39+00",
+            "controllerValidUntil": "2026-11-07 01:04:39+00",
+            "database": "erp_native35_20261107_r4",
+            "observedAt": "2026-11-07 01:06:47.377802+00",
+            "runtimeCreateDb": false,
+            "runtimeCreateRole": false,
+            "runtimeSuperuser": false,
+            "runtimeValidUntil": "2027-11-07 04:00:00+00"
+          },
+          "volumes": {
+            "data": {
+              "device": 66304,
+              "directoryInode": 14555503,
+              "mount": {
+                "deviceNumber": "259:0",
+                "fsType": "ext4",
+                "mountId": "2780",
+                "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+                "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+                "mountSource": "/dev/md0p1"
+              },
+              "namespace": {
+                "device": 4,
+                "inode": 4026534013
+              },
+              "path": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4/data",
+              "physicalVolume": "259:0"
+            },
+            "reportIndex": {
+              "device": 66304,
+              "directoryInode": 14555468,
+              "mount": {
+                "deviceNumber": "259:0",
+                "fsType": "ext4",
+                "mountId": "2780",
+                "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+                "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+                "mountSource": "/dev/md0p1"
+              },
+              "namespace": {
+                "device": 4,
+                "inode": 4026534013
+              },
+              "path": "/var/lib/naijue-erp/fresh35-production/real-r3/reports",
+              "physicalVolume": "259:0"
+            },
+            "sqliteScratch": {
+              "device": 66304,
+              "directoryInode": 14555470,
+              "mount": {
+                "deviceNumber": "259:0",
+                "fsType": "ext4",
+                "mountId": "2780",
+                "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+                "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+                "mountSource": "/dev/md0p1"
+              },
+              "namespace": {
+                "device": 4,
+                "inode": 4026534013
+              },
+              "path": "/var/lib/naijue-erp/fresh35-production/real-r3/sqlite-scratch",
+              "physicalVolume": "259:0"
+            },
+            "tmp": {
+              "device": 66304,
+              "directoryInode": 14555469,
+              "mount": {
+                "deviceNumber": "259:0",
+                "fsType": "ext4",
+                "mountId": "2780",
+                "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+                "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+                "mountSource": "/dev/md0p1"
+              },
+              "namespace": {
+                "device": 4,
+                "inode": 4026534013
+              },
+              "path": "/var/lib/naijue-erp/fresh35-production/real-r3/tmp",
+              "physicalVolume": "259:0"
+            },
+            "wal": {
+              "device": 66304,
+              "directoryInode": 14555504,
+              "mount": {
+                "deviceNumber": "259:0",
+                "fsType": "ext4",
+                "mountId": "2780",
+                "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+                "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+                "mountSource": "/dev/md0p1"
+              },
+              "namespace": {
+                "device": 4,
+                "inode": 4026534013
+              },
+              "path": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4/data/pg_wal",
+              "physicalVolume": "259:0"
+            }
+          },
+          "availableBytes": {
+            "data": 8436330496,
+            "reportIndex": 8436330496,
+            "sqliteScratch": 8436330496,
+            "tmp": 8436330496,
+            "wal": 8436330496
+          },
+          "configurationOrRoleChanged": false,
+          "REALExecuted": false
+        },
+        "a308Maintenance": {
+          "state": "EXPIRED_PREPARATION_NOT_SUBMITTED_NOT_EXECUTED",
+          "roleChanged": false,
+          "secretPreserved": false,
+          "oldScopeNotReplayed": true
+        },
+        "installedRealToolSource": {
+          "branch": "codex/erp-0448z-installed-real-tool-20261107",
+          "commit": "d750ae8c90d54718f16731492bbc707061d82124",
+          "tree": "36fe046946307f1d779bdfdaab0a8e7abe4c1ca8",
+          "parent": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+          "status": "WIP_SOURCE_FIXED_PENDING_SCOPED_QB_AND_REAL_PG",
+          "changedFiles": [
+            {
+              "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+              "sha256": "379e3d8a81fedab803adb5a2a3b4c995f9d10ba3ca6d2c0acba30882163be0d2",
+              "bytes": 39811,
+              "parentSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c"
+            },
+            {
+              "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+              "sha256": "05dc38fe7f004a2c11917c14bee00c00e2ed9f6bd5cf25086da243ce60e7c2b7",
+              "bytes": 32456,
+              "parentSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b"
+            },
+            {
+              "path": "scripts/release/unified-install/fresh35-installed-real-window-v1.mjs",
+              "sha256": "96a3491c7cee85dccad7dc9e5fdd49ad4afbb4394d07f6326fdbbc857dcb9aff",
+              "bytes": 9391,
+              "parentSha256": null
+            },
+            {
+              "path": "tools/unified-import/fresh35-host-session.mjs",
+              "sha256": "28a256fe3c38901477b6649086f9b90136cf1d408db044fa6d9b5240cf5a2127",
+              "bytes": 34625,
+              "parentSha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+            },
+            {
+              "path": "tools/unified-import/whole-host-session.mjs",
+              "sha256": "064cbde03f3a83ee463cee047946ab5074f9a416f0bd56bac6c2b9038165fc36",
+              "bytes": 22521,
+              "parentSha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b"
+            }
+          ],
+          "workingDirectoryModified": false,
+          "normalApplicationRootUnchanged": true,
+          "remoteReadback": true,
+          "sourceQA": "PENDING_ORIGINAL_QB",
+          "packagingOwner": "Original D2",
+          "currentSourceSet": "NOT_YET_GENERATED",
+          "normalApplicationRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+          "normalApplicationSourceSet": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+          "sourceTests": "5 focused checks and MJS syntax only; no PG or genuine protected positive dual-root acceptance",
+          "requiredSourceRawBytes": 4136656,
+          "requiredPgDependencyRawBytes": 469685,
+          "runtimeAndReferenceReuse": "Original fixed Node and nine reference files read-only; no Web/PG/runtime copy"
         }
       }
     }
