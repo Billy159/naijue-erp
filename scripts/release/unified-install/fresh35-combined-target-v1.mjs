@@ -207,7 +207,7 @@ function targetGuard(target,{requireEmpty,runtime,operation}){
   ['DATABASE_OID',`(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(b.databaseOid)}`],
   ['SYSTEM_IDENTIFIER',`(SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(b.systemIdentifier)}`],
   ['SERVER_VERSION',`pg_catalog.current_setting('server_version_num')=${q(b.serverVersionNum)}`],
-  ['POSTMASTER_BIRTH',`pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(b.postmasterStart.replace(/\+00$/,''))}`],
+  ['POSTMASTER_BIRTH',`pg_catalog.pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q((operation?installedRealWindowData(operation,binding).currentPostmasterStart:b.postmasterStart).replace(/\+00$/,''))}`],
   ['SERVER_ADDRESS',`pg_catalog.host(pg_catalog.inet_server_addr())=${q(p.host)}`],
   ['SERVER_PORT',`pg_catalog.inet_server_port()=${p.port}`],
   ...(production?[]:[['LISTEN_ADDRESSES',"pg_catalog.current_setting('listen_addresses')='127.0.0.1'"],['BOOTSTRAP_SOCKET',`${q(network.value.unixSocketDirectories)}='' /* root bootstrap network ${network.sha256} */`]]),

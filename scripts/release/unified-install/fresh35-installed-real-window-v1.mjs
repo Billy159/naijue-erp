@@ -19,7 +19,7 @@ const ownPath='scripts/release/unified-install/fresh35-installed-real-window-v1.
 export const FRESH35_REAL_BINDING_KEYS=Object.freeze(['format','installationRecordSha256','installProgramSha256','sourceSetSha256','targetSha256','catalogSha256','manifestSha256','planSha256','initializerSha256','stepsSha256','stepCount','sourceNamespace','cutoffAt','baselineBatchId','documentBatchId','initializerOperationId','initializerRequestKey']);
 /** Pure metadata consistency, never a capability or proof of actual execution. */
 export function validateInstalledRealWindow(value,record,recordSha,currentSourceSetSha,service,now=Date.now()){
- need(exact(value,['format','installedSourceRoot','currentSourceSetSha256','installation','manifestSha256','startsAt','expiresAt','authorizationExpiresAt','serviceReceipt','controllerLoginValidUntil','adminLoginValidUntil','authorizationReference'])&&value.format==='FRESH35_INSTALLED_REAL_OPERATION_PARAMETERS_V1','EXACT_AUTHORITY_REQUIRED');
+ need(exact(value,['format','installedSourceRoot','currentSourceSetSha256','installation','manifestSha256','startsAt','expiresAt','authorizationExpiresAt','serviceReceipt','controllerLoginValidUntil','adminLoginValidUntil','authorizationReference',...(Object.hasOwn(value??{},'restartReceipt')?['restartReceipt']:[])])&&value.format==='FRESH35_INSTALLED_REAL_OPERATION_PARAMETERS_V1','EXACT_AUTHORITY_REQUIRED');
  need(record?.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&record.state==='COMMITTED_AND_CATALOG_CHECKED','VERIFIED_V2_INSTALL_REQUIRED');
  need(record.binding?.targetSha256===hash(JSON.stringify(record.target)),'ACTUAL_RECORD_TARGET_DIFFERS');
  const b=value.installation;need(exact(b,['installationRecordSha256','installProgramSha256','sourceSetSha256','targetSha256','catalogSha256']),'EXACT_INSTALLATION_BINDING_REQUIRED');
@@ -33,6 +33,20 @@ export function validateInstalledRealWindow(value,record,recordSha,currentSource
  need(typeof value.authorizationReference==='string'&&value.authorizationReference.trim().length>0&&value.authorizationReference.length<=512,'AUTHORIZATION_REFERENCE_REQUIRED');
  need(exact(value.serviceReceipt,['path','sha256'])&&value.serviceReceipt.path===etc+'/naijue-erp/fresh35-retained-service-v1.json'&&hex(value.serviceReceipt.sha256),'EXACT_SERVICE_RECEIPT_REQUIRED');return true;
 }
+/** Protected root observation only; native runtime still verifies the exact new
+ * epoch on its original owned physical client. This never rewrites a record. */
+export function validateRetainedRestartReceipt(receipt,record,recordSha,now=Date.now()){
+ const old=record.target.physical,p=record.target.proposal;
+ need(exact(receipt,['format','state','installationRecordSha256','targetSha256','sourceSetSha256','oldPhysical','newPhysical','dataDirectory','dataDirectoryBefore','dataDirectoryAfter','previousStopReceiptSha256','restartAuthorizationSha256','authorizationReference','checkedAt','serviceLeaseExpiresAt'])&&receipt.format==='FRESH35_RETAINED_RESTART_OBSERVATION_V1'&&receipt.state==='SAME_DATA_RESTART_OBSERVED_NOT_BUSINESS_VERIFIED','EXACT_RESTART_OBSERVATION_REQUIRED');
+ need(receipt.installationRecordSha256===recordSha&&receipt.targetSha256===record.binding.targetSha256&&receipt.sourceSetSha256===record.binding.sourceSetSha256&&isDeepStrictEqual(receipt.oldPhysical,old),'RESTART_INSTALLATION_DIFFERS');
+ const n=receipt.newPhysical;
+ need(exact(n,['systemIdentifier','databaseOid','serverVersionNum','postmasterStart'])&&['systemIdentifier','databaseOid','serverVersionNum'].every(k=>n[k]===old[k])&&typeof n.postmasterStart==='string'&&/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00$/.test(n.postmasterStart),'SAME_INSTANCE_NEW_EPOCH_REQUIRED');
+ const epoch=x=>Date.parse(x.replace(' ','T').replace(/\+00$/,'Z')),birth=epoch(n.postmasterStart);
+ need(Number.isFinite(birth)&&birth>epoch(old.postmasterStart)&&Number.isSafeInteger(receipt.checkedAt)&&birth<=receipt.checkedAt&&receipt.checkedAt<=now&&Number.isSafeInteger(receipt.serviceLeaseExpiresAt)&&now<receipt.serviceLeaseExpiresAt,'NEW_EPOCH_OR_LEASE_REQUIRED');
+ need(receipt.dataDirectory===resolve(p.workspaceDirectory,'data')&&exact(receipt.dataDirectoryBefore,['device','inode','uid','gid','mode'])&&Object.values(receipt.dataDirectoryBefore).every(Number.isSafeInteger)&&receipt.dataDirectoryBefore.device>0&&receipt.dataDirectoryBefore.inode>0&&receipt.dataDirectoryBefore.uid===61035&&receipt.dataDirectoryBefore.gid===61035&&receipt.dataDirectoryBefore.mode===0o700&&isDeepStrictEqual(receipt.dataDirectoryBefore,receipt.dataDirectoryAfter),'ORIGINAL_PGDATA_IDENTITY_REQUIRED');
+ need(recordSha==='a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f'&&receipt.previousStopReceiptSha256==='b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91'&&hex(receipt.restartAuthorizationSha256)&&typeof receipt.authorizationReference==='string'&&receipt.authorizationReference.trim().length>0&&receipt.authorizationReference.length<=512,'EXACT_RESTART_PROVENANCE_REQUIRED');
+ return n.postmasterStart;
+}
 async function protectedFile(path,max=65536){
  await assertTrustedRootPath(path);const f=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
  try{const a=await f.stat({bigint:true});need(a.isFile()&&a.uid===0n&&a.nlink===1n&&(a.mode&0o022n)===0n&&a.size>0n&&a.size<=BigInt(max),'PROTECTED_AUTHORITY_REQUIRED');const bytes=await f.readFile(),b=await f.stat({bigint:true}),c=await lstat(path,{bigint:true});need(BigInt(bytes.length)===a.size&&identity(a)===identity(b)&&identity(a)===identity(c),'AUTHORITY_CHANGED');return{bytes,identity:identity(a),value:parseStrictJson(bytes.toString('utf8'))}}finally{await f.close()}
@@ -42,6 +56,13 @@ export async function loadInstalledRealWindow(envelope,recordSha,source,referenc
  need(s.currentSourcePins.some(p=>p.path===ownPath&&p.sha256===ownHash),'LOADED_WINDOW_SOURCE_DIFFERS');
  const service=await protectedFile(a?.serviceReceipt?.path);need(hash(service.bytes)===a.serviceReceipt.sha256,'SERVICE_RECEIPT_CHANGED');
  validateInstalledRealWindow(a,envelope,recordSha,s.sourceSetSha256,service.value);
+ let restart;
+ if(Object.hasOwn(a,'restartReceipt')){
+  need(exact(a.restartReceipt,['path','sha256'])&&a.restartReceipt.path===etc+'/naijue-erp/fresh35-retained-restart-v1.json'&&hex(a.restartReceipt.sha256),'EXACT_RESTART_REFERENCE_REQUIRED');
+  restart=await protectedFile(a.restartReceipt.path);need(hash(restart.bytes)===a.restartReceipt.sha256,'RESTART_RECEIPT_CHANGED');
+  validateRetainedRestartReceipt(restart.value,envelope,recordSha);
+  need(restart.value.serviceLeaseExpiresAt===service.value.serviceLease.expiresAt&&restart.value.authorizationReference===a.authorizationReference&&restart.value.checkedAt>=a.startsAt&&restart.value.checkedAt<a.expiresAt,'RESTART_WINDOW_OR_SERVICE_DIFFERS');
+ }
  need(a.installedSourceRoot!==currentRoot,'INDEPENDENT_INSTALLED_SOURCE_REQUIRED');await assertTrustedRootTree(a.installedSourceRoot);
  const oldModule=async name=>import(pathToFileURL(resolve(a.installedSourceRoot,'scripts/release/unified-install/'+name)).href);
  const sm=await oldModule('fresh35-combined-source-v1.mjs'),tm=await oldModule('fresh35-combined-target-v1.mjs'),cm=await oldModule('fresh35-combined-catalog-v1.mjs'),lm=await oldModule('fresh35-combined-lifecycle-v1.mjs'),rm=await oldModule('fresh35-combined-record-v1.mjs');
@@ -49,8 +70,8 @@ export async function loadInstalledRealWindow(envelope,recordSha,source,referenc
  const paths=await sm.resolveFresh35ReferenceInputPaths(referenceDirectory),oldSource=await sm.loadFresh35CombinedSource(a.installedSourceRoot,paths),target=await tm.reconstructFresh35InstalledProductionTargetV2(historicalEnvelope),catalog=await cm.buildFresh35CombinedCatalog(oldSource,target,paths),program=await lm.compileFresh35CombinedProgram({source:oldSource,target,catalog});
  const record=rm.validateFresh35CombinedRecord(historicalEnvelope,program);need(sm.describeFresh35CombinedSource(oldSource).sourceSetSha256===a.installation.sourceSetSha256,'ACTUAL_INSTALLED_SOURCE_DIFFERS');
  const token=Object.freeze({profile:'FRESH35_INSTALLED_REAL_WINDOW_V1'});
- const current=async()=>{need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'OPERATION_WINDOW_EXPIRED');need(identity(await lstat(FRESH35_INSTALLED_REAL_WINDOW_PATH,{bigint:true}))===loaded.identity&&identity(await lstat(a.serviceReceipt.path,{bigint:true}))===service.identity,'AUTHORITY_CHANGED');await sm.assertFresh35CombinedSourcesCurrent(oldSource);await cm.assertFresh35CombinedCatalogCurrent(catalog);await rm.assertFresh35ProtectedRecordSnapshotCurrent(historicalEnvelope);};
- tokens.set(token,Object.freeze({value:freeze(structuredClone(a)),program,record,validateRecord:rm.validateFresh35CombinedRecord,modelSha256:cm.describeFresh35CombinedCatalog(catalog).modelSha256,parametersSha256:hash(loaded.bytes),current}));await current();return token;
+ const current=async()=>{if(restart){need(identity(await lstat(a.restartReceipt.path,{bigint:true}))===restart.identity,'RESTART_RECEIPT_CHANGED');validateRetainedRestartReceipt(restart.value,envelope,recordSha);}need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'OPERATION_WINDOW_EXPIRED');need(identity(await lstat(FRESH35_INSTALLED_REAL_WINDOW_PATH,{bigint:true}))===loaded.identity&&identity(await lstat(a.serviceReceipt.path,{bigint:true}))===service.identity,'AUTHORITY_CHANGED');await sm.assertFresh35CombinedSourcesCurrent(oldSource);await cm.assertFresh35CombinedCatalogCurrent(catalog);await rm.assertFresh35ProtectedRecordSnapshotCurrent(historicalEnvelope);};
+ tokens.set(token,Object.freeze({value:freeze(structuredClone(a)),program,record,validateRecord:rm.validateFresh35CombinedRecord,modelSha256:cm.describeFresh35CombinedCatalog(catalog).modelSha256,parametersSha256:hash(loaded.bytes),currentPostmasterStart:restart?restart.value.newPhysical.postmasterStart:envelope.target.physical.postmasterStart,current}));await current();return token;
 }
 export function installedRealWindowData(token,target){const s=tokens.get(token);need(s,'GENUINE_WINDOW_REQUIRED');if(target)need(hash(JSON.stringify(target))===s.value.installation.targetSha256,'EXACT_INSTALLED_TARGET_REQUIRED');return s;}
 export async function assertInstalledRealWindowCurrent(token){await installedRealWindowData(token).current()}
