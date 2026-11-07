@@ -1,0 +1,47 @@
+{
+  "status": "PASS_SCOPED_R3_CONFIG_BINDINGS_ONLY",
+  "inputs": {
+    "C13-base-delta.json": {
+      "sha256": "a7fcbaa13a17de5c4d12d2140d509964d0dbddfaa2a1bad855e9701894f9ef4b",
+      "bytes": 926
+    },
+    "C13-six-private.json": {
+      "sha256": "80304c61a3fc5eff10037abfba483ff82c1eb926ae2462a3f49728e4696acec0",
+      "bytes": 991
+    },
+    "production-plan.json": {
+      "sha256": "369245e89e1f41811fa8e42c82d37dc9ad22c7707398761d911986c4039075bb",
+      "bytes": 760
+    },
+    "controller-plan.json": {
+      "sha256": "c5d0dff846b4d216496e43fbf0a5885f6ec72eebfc14fac2cd240c837badab72",
+      "bytes": 760
+    },
+    "file-preparation-plan.json": {
+      "sha256": "16d4bf969d92cc49e4c4146525b71448921513feb761d54661a586f1209c7715",
+      "bytes": 317
+    },
+    "prepare_with_space_floor.py": {
+      "sha256": "0ce0c9cf262cdabb522acf1bfe690a14399b922bb914ad7e6c446c6a116dd2c9",
+      "bytes": 6894
+    }
+  },
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": {
+    "C13FramesOnlyFillReviewedDecisionAndWindowFields": true,
+    "C13WindowMilliseconds": 1800000,
+    "productionControllerOnlyBindBaseC13AndDeadline": true,
+    "filePlanOnlyBindsSixC13AndDeadline": true,
+    "parentOnlySentinelToExactFilePlanSHA": true,
+    "oldUnboundSourcePreserved": true,
+    "otherReviewedSourcePinsUnchanged": true
+  },
+  "reusedReceiptSha256": "e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508",
+  "tests": "None rerun; metadata and byte binding only",
+  "currentWallWindowValidity": "NOT_CLAIMED; original execution checks apply",
+  "rootArtifactAuthorizationFile": "EXTERNAL_GATE_UNVERIFIED; not installed/changed by review, configuration PASS does not bypass it",
+  "C14PGOrRealImport": "NOT_AUTHORIZED_BY_THIS_RESULT",
+  "serverTransportMaterialsOr188B": "NOT_ACCESSED_OR_EXECUTED",
+  "modelRuntime": "UNVERIFIED"
+}

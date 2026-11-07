@@ -34220,7 +34220,31 @@
         "next": "Original QB bound plans/final parent hash only; actual materials once; C14 only after real readiness",
         "serverExecution": "NOT_YET_RECEIVED",
         "newPGOrREAL": "NOT_AUTHORIZED_BY_THIS_C13",
-        "originalFailures": "RETAINED_NO_REPLAY"
+        "originalFailures": "RETAINED_NO_REPLAY",
+        "configurationReview": {
+          "sha256": "dcc273eba775ca268c16e2e234096d04b40d211245109bbbebf478683376b1b9",
+          "scope": "Actual two C13/three plans/final parent0ce0c9cf bytes only; logical source scope reused e573",
+          "status": "PASS_SCOPED_R3_CONFIG_BINDINGS_ONLY",
+          "actualServer": "NOT_CLAIMED"
+        },
+        "exactAuthorityRotationDecision": {
+          "at": "2026-11-07T08:04:27.142898+08:00",
+          "reason": "Existing external root authorization record still references historical cd2e532b; previous instruction no-rootpolicy-change means keep validators/ACL unchanged, not forbid installing actual C-issued authorization bytes",
+          "owner": "Original T45",
+          "route": "Original reviewed install_stage_policy.py CAS only",
+          "sequence": [
+            "preserve historical cd2e532b bytes and metadata",
+            "exact CAS to C13-base a7fcbaa1",
+            "original exact artifact status/stage/terminal",
+            "exact CAS to C13-six80304c61",
+            "original exact private artifact status/stage/terminal",
+            "restore preserved historical cd2e532b by exact CAS"
+          ],
+          "oldWindowExtended": false,
+          "validatorsOrPrivilegesChanged": false,
+          "noNewApprovalRoundRequired": true,
+          "runtimeResult": "PENDING_T45"
+        }
       }
     }
   }

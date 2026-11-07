@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-07T08:06:09.430677+08:00",
+  "writer": "Original T45 per direct owner receipt in controller Chat",
+  "path": "candidate0448/scripts/release/ssh-control.py",
+  "before": {
+    "sha256": "7af303845a467e076664e5c3038367331bcefc57bfbed89b02d238e2a63c4085",
+    "bytes": 64867,
+    "preservedAt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-exact-six-private-artifact-01/ssh-control.BEFORE.py"
+  },
+  "after": {
+    "sha256": "94b119f8d05a4517e6369d4809595ad67cda0584507951f391a112d2a049c3d0",
+    "bytes": 66721,
+    "mode": "0o644"
+  },
+  "controllerReadback": "After bytes exactly match original QB accepted candidate; no technical source retest",
+  "QBSourceReceiptSHA256": "e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508",
+  "runtimeOrTransferPass": false
+}
