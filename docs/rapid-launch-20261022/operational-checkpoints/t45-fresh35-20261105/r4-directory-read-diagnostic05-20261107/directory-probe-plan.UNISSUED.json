@@ -1,0 +1,700 @@
+{
+  "status": "FIXED_DIRECTORY_READ_DIAGNOSTIC_ONLY",
+  "changes": [
+    {
+      "after": {
+        "gid": 61035,
+        "mode": "0o750",
+        "uid": 0
+      },
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14308365,
+        "mode": "0o700",
+        "nlink": 3,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package",
+        "uid": 0
+      },
+      "contentChanged": false,
+      "restore": "Exact original uid/gid/mode after exact Node child reaped, same dev/inode; preserve recovery ledger on unknown"
+    },
+    {
+      "after": {
+        "gid": 61035,
+        "mode": "0o750",
+        "uid": 0
+      },
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14308374,
+        "mode": "0o700",
+        "nlink": 2,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables",
+        "uid": 0
+      },
+      "contentChanged": false,
+      "restore": "Exact original uid/gid/mode after exact Node child reaped, same dev/inode; preserve recovery ledger on unknown"
+    },
+    {
+      "after": {
+        "gid": 61035,
+        "mode": "0o710",
+        "uid": 0
+      },
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14555466,
+        "mode": "0o700",
+        "nlink": 9,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3",
+        "uid": 0
+      },
+      "contentChanged": false,
+      "restore": "Exact original uid/gid/mode after exact Node child reaped, same dev/inode; preserve recovery ledger on unknown"
+    }
+  ],
+  "observations": [
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14308365,
+        "mode": "0o700",
+        "nlink": 3,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 1312,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308370,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/decisions.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 30529723,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308372,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/exceptions.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 17778,
+        "contentRead": true,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308375,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/manifest.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 2923,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308371,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/reconciliation.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 278751319,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308373,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/registry.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14308374,
+        "mode": "0o700",
+        "nlink": 2,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 3375,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308391,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/barcode_scheme.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 50579,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308401,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/color.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 86076,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308378,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/customer.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 1608,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308385,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/fit.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 16543,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308382,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/hall.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 262632096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308376,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/inventory_baseline.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 47314,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308397,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/payment_account.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 566362,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308394,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/payment_account_hall.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 3155,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308383,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/payment_method.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 2564518,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308400,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/product.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 18394,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308393,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/product_category.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 0,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308381,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/product_image.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 72524562,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308396,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/sales_header.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 88316209,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308392,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/sales_line.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 26023203,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308384,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/sales_settlement.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 0,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308389,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/season.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 61392,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308390,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/size.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 1311,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308398,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/size_group.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 21325,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308380,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/size_group_member.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 9760327,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308379,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/sku.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 6100504,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308377,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/sku_barcode.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 46651,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308387,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/staff.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 78406,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308395,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/supplier.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 12777580,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308399,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/transfer_header.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 217338877,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308386,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/transfer_line.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 18025,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14308388,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package/tables/warehouse.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 1752,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 61035,
+        "inode": 14557962,
+        "mode": "0o640",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/authority/fresh35-installed-real-window-v1.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14555466,
+        "mode": "0o700",
+        "nlink": 9,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14555471,
+        "mode": "0o700",
+        "nlink": 2,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 2256,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14555473,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals/current-effective-alignment.UNTRUSTED.DRAFT.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 53166933,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14555472,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals/historical-hall-approval.UNTRUSTED.DRAFT.private.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 8408,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14555477,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals/historical-line-amount-evidence.candidate.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 66246,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14555476,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals/historical-settlement-retention.UNTRUSTED.DRAFT.private.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 649,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14555475,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals/staff-null-hall-approval.candidate.private.json",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 50109175,
+        "contentRead": false,
+        "device": 66304,
+        "directory": false,
+        "gid": 0,
+        "inode": 14555474,
+        "mode": "0o400",
+        "nlink": 1,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/approvals/zero-approval-candidate.private.jsonl",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14555468,
+        "mode": "0o700",
+        "nlink": 3,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/reports",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14555470,
+        "mode": "0o700",
+        "nlink": 2,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/sqlite-scratch",
+        "uid": 0
+      }
+    },
+    {
+      "before": {
+        "bytes": 4096,
+        "contentRead": false,
+        "device": 66304,
+        "directory": true,
+        "gid": 0,
+        "inode": 14555469,
+        "mode": "0o700",
+        "nlink": 2,
+        "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/tmp",
+        "uid": 0
+      }
+    }
+  ]
+}

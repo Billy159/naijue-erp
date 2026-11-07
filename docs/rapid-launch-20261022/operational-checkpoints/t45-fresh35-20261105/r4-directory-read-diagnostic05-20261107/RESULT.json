@@ -1,0 +1,56 @@
+{
+  "state": "LOCAL_DIRECTORY_ACCESS_DELTA_PASS_NOT_EXECUTED",
+  "atUTC": "2026-11-07T05:17:05.139082+00:00",
+  "sources": {
+    "fresh35-production-carrier.py": {
+      "sha256": "a1dfea26374bf9ce8321694e0ff93fdf95dcdffb7323e2e2f234692ea37e155a",
+      "bytes": 117622
+    },
+    "nonroot_input_access.py": {
+      "sha256": "29a2144ec56ba56b6ec1451381de63e07b0bc5fec4a968bbd8c76985c8fde610",
+      "bytes": 17131
+    },
+    "real_access_consumer.py": {
+      "sha256": "680a360bcda7c9db1f80e7757a3160ec57a43dd14abb25fc9a0ad72a52843dd2",
+      "bytes": 14163
+    },
+    "production-plan.json": {
+      "sha256": "5792007da5cf4fa35470c2a70612eab531748b79781ea3cabe058db85438456f",
+      "bytes": 785
+    },
+    "nonroot-access-plan.UNISSUED.json": {
+      "sha256": "9834efc5e429e7d3d2303cf5adbe3986798e0d9e7f56a9ac072b5075cf2e665d",
+      "bytes": 34685
+    },
+    "directory-probe-plan.UNISSUED.json": {
+      "sha256": "308b34854fd4910f813b8420190e576b5ed7a772daf679112e6f026edbbe5f32",
+      "bytes": 20877
+    }
+  },
+  "scope": [
+    "Full access: only RAW package root and tables active0710→0750. Other dirs0710/files0440/parameters0640 unchanged.",
+    "Narrow probe: exactly3 fixed directory changes; exactly45 fixed observations, no smallProjections or secrets. Third REAL ancestor only0700→0710 for traversal.",
+    "Root before pointer and immutable predecessor/reference receipts retained. Two probe callbacks have exact uid/gid/supplementary-group/check/reaped fields. Every mutation has actual metadata acknowledgement.",
+    "Unknown child/unacknowledged metadata retains ledger, never restores or retries. Proven reaped completion restores3 original objects and publishes45 true-ctime observations; original frozen binding never written.",
+    "Helper accepts observations only in exact narrow status/keys/45 pinned paths/3changes/fixedmode shape. No generic changes/observations authorization.",
+    "To read existing restored history, main permits exact adopted b176 helper bytes only when pointer.phase==restored; active requires current new pinned helper. This preserves prior restored evidence across the helper source update."
+  ],
+  "checks": {
+    "passed": 6,
+    "skipped": 0,
+    "failures": 0,
+    "rootOwnershipChownChildErrno": "explicit local doubles, NOT actual Linux EACCES evidence",
+    "actualLocalFilesystemModeCtimeAndRestore": true,
+    "parentSourcesUnchanged": true
+  },
+  "probeAPI": "nonroot_input_access.probe_directory_read_access(plan,ledger,consumer,description_raw,access_raw,read,probe_callback)",
+  "diagnosticSourceResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/STREAM-PREFLIGHT-SAFE-DIAGNOSTIC-01/RESULT.json",
+  "noServerNoSqlNoPg": true,
+  "notTested": [
+    "actual opendir0710 EACCES→0750 success under Linux61035",
+    "T45 temporary child wrapper integration",
+    "real package/PG/17binding/EXE/APP/business deployment"
+  ],
+  "next": "C originalQB only increment review, then new finite root T45 scope for directory-only reproduction. No execution from this unissued plan.",
+  "actualModelFast": "UNVERIFIED"
+}

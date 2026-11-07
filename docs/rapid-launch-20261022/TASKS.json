@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T13:06:30.743880+08:00",
+  "updatedAt": "2026-11-07T13:19:32.889306+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28403,7 +28403,8 @@
       "latestIntegrationRemoteVerifiedAt": "2026-11-07T12:09:20.380721+08:00",
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
-      "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00"
+      "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
+      "lastControllerCheckpoint": "04580e37eba490e88d91e396a86545d7c2fe39c0"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -33302,8 +33303,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T13:06:30.743880+08:00",
-      "phase": "R4_PREPARE04_FAILED_PREFLIGHT_CLEAN_STOPPED_SAFE_CAUSE_NOT_RETAINED",
+      "at": "2026-11-07T13:19:32.889306+08:00",
+      "phase": "DIRECTORY_READ_PERMISSION_AND_SAFE_DIAGNOSTIC_SOURCE_FIXED_QB_INCREMENT_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "OriginalD1 minimum safe preflight diagnosis; originalT45 only server operator",
@@ -33317,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Obtain exact offline preflight cause with minimal safe error seam and single-file verification, noPG or full608k replay; retain 17binding/EXE false and existing source/PG/runtime acceptance boundaries.",
+      "next": "OriginalT45 fix bounded child cleanup and integrate originalD1 narrow access; QB only affected delta; C exact new offline scope then sameUID opendir refusal/success/restore. NoPG or original04 replay.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -34949,9 +34950,9 @@
           "rollbackNotInferred": true
         },
         "preflightDiagnosticSuccessor": {
-          "at": "2026-11-07T13:06:30.743880+08:00",
+          "at": "2026-11-07T13:19:32.889306+08:00",
           "owner": "Original D1 source; original T45 server execution; original QB incremental review",
-          "state": "D1_MINIMUM_SAFE_ERROR_SEAM_AND_OFFLINE_SINGLE_FILE_DIAGNOSTIC_IN_PROGRESS",
+          "state": "D1_FIXED_DIRECTORY_ACCESS_AND_DIAGNOSTIC_SOURCE_PENDING_QB_T45_TIMEOUT_FIX",
           "sourceBaseCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
           "sourceBaseSet": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
           "preserve": [
@@ -34962,7 +34963,28 @@
           ],
           "noPGStartForDiagnosis": true,
           "noOriginal04Replay": true,
-          "newServerScopeNotYetIssued": true
+          "newServerScopeNotYetIssued": true,
+          "accessSourceResultSHA256": "0ed976b6bf58c4825c0f07ffb7a79476efbfa7e9dfc7e7292aedbf747f879e39",
+          "diagnosticSourceResultSHA256": "ee8a374296104c3ba251546f1f7109a8fd303e5448d9dbb59b43939347ae1f13",
+          "fixedAccessMain": "a1dfea26374bf9ce8321694e0ff93fdf95dcdffb7323e2e2f234692ea37e155a",
+          "fixedAccess": "29a2144ec56ba56b6ec1451381de63e07b0bc5fec4a968bbd8c76985c8fde610",
+          "fixedHelper": "680a360bcda7c9db1f80e7757a3160ec57a43dd14abb25fc9a0ad72a52843dd2",
+          "technicalConflict": "Original0710 package/tables lacked group directory-read required by opendir after table scan; original04 first errno not retained",
+          "scope": "Only package/tables active0750; narrow exact3 changes with original REALancestor0710; 45 fixed observations; no projections, payload, SQL, PG",
+          "sourceChecks": {
+            "diagnosticTests": 4,
+            "accessFilesystemModels": 6,
+            "actualLinux": false
+          },
+          "QBInitialProbe": {
+            "resultSHA256": "310d34e7a710805e06ad80c44b7c77a86d400b5894621a37795f65de9dfe0a5c",
+            "state": "NEED_FIX",
+            "finding": "QB-DIR01-TIMEOUT-01 repeated finally3sec cleanup exceeded shared8sec phase budget",
+            "owner": "OriginalT45",
+            "next": "Use one absolute cleanup deadline and recheck only affected branch"
+          },
+          "toolPackagingOwner": "OriginalD2 b895 independent twoleaf successor pending sourceQA",
+          "serverScopeIssued": false
         }
       }
     },

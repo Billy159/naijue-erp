@@ -1,0 +1,43 @@
+{
+  "status": "NEED_FIX",
+  "scope": "TWO_FIXED_OFFLINE_DIRECTORY_PROBE_LEAVES_ONLY",
+  "atUTC": "2026-11-07T05:17:22.580267+00:00",
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-season-directory-offline-diagnostic-preparation-01",
+  "sources": {
+    "directory_open_close.mjs": {
+      "sha256": "4f62342a5bde0ccd823a6be60adb6ea34e604c21339b3dcf1282e5b1904c127e",
+      "bytes": 1936
+    },
+    "run_probe_inside.py": {
+      "sha256": "2932ca9ba3c47fdc1d925f245530a4759bbfb70c19d52f4500243f90c9a44895",
+      "bytes": 6220
+    }
+  },
+  "findings": [
+    {
+      "id": "QB-DIR01-TIMEOUT-01",
+      "priority": "P2",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-season-directory-offline-diagnostic-preparation-01/run_probe_inside.py",
+      "start": 83,
+      "end": 108,
+      "issue": "Duplicate 3-second reap waits permit 11s instead of declared 5+3s",
+      "reproducedWithActualMain": true,
+      "actualProcessesOrServer": false
+    }
+  ],
+  "checks": {
+    "sha256": "9584f84afe7c092b1f1128ce87775b8bfc403fe26343901696879486729ccb14",
+    "bytes": 989
+  },
+  "report": {
+    "sha256": "b9594b3c8da60464f4cf7fdbe0f0554db0928badecf466cdd9752542a1d62adf",
+    "bytes": 3078
+  },
+  "pending": [
+    "D1 narrow access/helper and metadata/ctime restoration chain",
+    "T45 outer exact C scope/pins and total time budgets"
+  ],
+  "actualModel": "UNVERIFIED",
+  "actualEffort": "UNVERIFIED",
+  "fast": "UNVERIFIED"
+}

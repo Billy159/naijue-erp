@@ -1,0 +1,43 @@
+{
+  "state": "LOCAL_DIAGNOSTIC_DELTA_PASS_NOT_DEPLOYED",
+  "parentCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
+  "parentSourceSet": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
+  "parents": {
+    "tools/unified-import/stream-preflight.mjs": {
+      "sha256": "67a1637096f2350501d4fc695692420294b136fea913a0962f3202991d9cd768",
+      "bytes": 28683
+    },
+    "tools/unified-import/stream-import-cli.mjs": {
+      "sha256": "6605c956342b05cad0d74907e54a2ca30b0fcd7a9cbe9a55d133cb073ef68c75",
+      "bytes": 23112
+    }
+  },
+  "sources": {
+    "tools/unified-import/stream-preflight.mjs": {
+      "sha256": "9d3cd7f17e532097d740f42fefe0b3f441ce04a0740ed6c2c513ccff286a4990",
+      "bytes": 32482
+    },
+    "tools/unified-import/stream-import-cli.mjs": {
+      "sha256": "6f20151b6c963d2a616213a1c6bd8e52aff5b4e03576808eca0dece5b4be9ec0",
+      "bytes": 23246
+    }
+  },
+  "checks": {
+    "testsPassed": 4,
+    "failures": 0,
+    "skipped": 0,
+    "nodeSyntaxChecks": 2,
+    "actualLocalMissingManifestErrno": true,
+    "actualLocalMalformedJsonRefused": true,
+    "realPGOrRawPackage": false
+  },
+  "scope": "Existing preflight issues plus same CLI failure result carry closed phase/operation/technicalFile/row/errorClass/errno. Original codes/throws/rejection unchanged. No message/stack/SQL/business/credential or arbitrary path diagnostics. No permanent probe export/CLI.",
+  "knownEvidence": "Season0B/0440 and directories0710 do not prove actual04 first cause. Original scanDirectory requires directory-read after table loop; old location could remain season/null. Actual root cause errno was not persisted.",
+  "notTested": [
+    "Linux uid61035 directory errno",
+    "real04 replay",
+    "whole-package preparation",
+    "PG/APP/deployment"
+  ],
+  "actualModelFast": "UNVERIFIED"
+}
