@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 newPREPARE07 exactdb392/20min; collect real phase/terminal/resource andcleanup, noold06replay. Only successfulexactpreflight permits nextEXECUTE scope. Reconcile/history/recovery/formalcutover still pending.",
+      "next": "T45soleexecutor following actualPREPARE07 originalkey; wait terminal/phase/resource+cleanup. No duplicatepreflight, no newEXECUTE untilexactsuccessfulpreflight; C receivesandcontinues. Other readyhistory/reconcile/backup/browser packages retained, avoid extraheavyserverwindow.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36363,7 +36363,7 @@
     },
     "r4RealPrepare07Actual20261107": {
       "owner": "OriginalT45 sole server/C exact inputs",
-      "state": "NEW_C20MIN_PREPARE07_ISSUED_ACTUAL_PENDING",
+      "state": "ACTUAL_RUNNING_TERMINAL_PENDING",
       "job": "t45-r4-real-prepare-20261107-07",
       "READY": "2ae719e90b0d24eb871a2d057c4411a3d7e4fbbee1f5d4374d87657424d2496b",
       "CAction": "db3923274013cb67b9a8e87c46b2c35e8ff14ee928904d6ce7f8535cd8a2b919",
@@ -36377,7 +36377,12 @@
       "sourceLeafHashesVerified": 6,
       "old05and06Retained": true,
       "diagnostics": "New actual technical phase progress, no retrospective inference for06",
-      "actualImportVerified": false
+      "actualImportVerified": false,
+      "rootStartedUTC": "2026-11-07T15:09:54.792254+00:00",
+      "actualUnit": "naijue-erp-op-5cc58239-379100d0a481",
+      "lastCollectedReceiptSHA256": "a118de908ef2152c7c8d86dfa100f173939dc19ea25d39780045dc487a13614f",
+      "phaseProgress": "AWAITING_BOUNDED_T45_READBACK_NOT_INFERRED",
+      "terminal": null
     }
   }
 }
