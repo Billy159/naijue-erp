@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 minimumsampler sourcefix+existingreaderunit actualstatus/firsterror; keep250ms/4GiB/20min and failedpartial07/06. No newBOOT undercurrentfree belowstartfloor, no newwriter/import/public. Cdispatch QB onlynewaffectedfixedsource.",
+      "next": "OriginalT45 exactstopped07 phase proof and minimumsampler scheduling fix retaining250ms/floors/20min; fixedREADY toC thenoriginalQB. Reader01unitnotfound,notlivewaiting. Startupspace short1,102,639,102B mustresolve viaexactauthorizedprotectedcleanup beforeanynextBOOT; preservefailed07/06 now. No business/import/cutoverPASS.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36425,6 +36425,17 @@
         "exitCode": 2,
         "seconds": 0.06706636771559715,
         "cause": "Reused08 observer missed carrier/plan pin update; hashassert line7 beforeDocker/PG. Oldkey preserved, no replay;02 correctedonlypins/path afterlocalbytecheck."
+      },
+      "originalReader01": {
+        "job": "t45-r4-prepare07-progress-readonly-20261107-01",
+        "managerCollect": "STARTING_NO_EXIT_EXPORT",
+        "actualUnitStatus": "NOT_FOUND_INACTIVE_DEAD_PID0",
+        "unitObservationSHA256": "934ab22003919f874dad7800ed7093c2ef6d4ae9d36742a126446e71fcca41a3",
+        "unitObservationEpochMs": 1794065779315,
+        "result": "UNKNOWN_NOT_LIVE_PROVEN",
+        "defaultsNotSuccessEvidence": true,
+        "managerStatusEndpoint": "GRANT_READY_ONLY_NOT_JOB_STATUS",
+        "next": "Inspect originalprivate retainedresult ifexists recoveroriginalkey; otherwiseone bounded stopped07technicalprogress reader viaoriginalauthorizedmanager. No rerun01/noSQLiteopen."
       }
     }
   }
