@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T22:05:30.318884+08:00",
+    "at": "2026-11-07T22:28:25.130462+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28512,8 +28512,8 @@
     "currentParallelQueue": {
       "D1": "Exact optionalphase delivered/fixeddbe523f2 andQB adopted; existing business/history ready work only, no duplicate phase implementation.",
       "QB": "Optionalphase limited3 checks/byteequal/index/summary PASSfaeede91 adopted, no repeat.",
-      "D2": "OriginalD2 dbe523f2 optionalphase exact tool minimumclosure; reuseaf dependencies/valid checks, noWeb/fullsuite/PG.856history ready retained.",
-      "T45": "R4 original startfloor met; preserve06 unique interrupted evidence. OriginalT45 only existing new35 backup/restore capacity evidence assessment, no new restore or old47 threshold substitution.",
+      "D2": "dbe523f2 smalltool closure actualLinux adopted;856history ready retained, no repeat packaging or broad test.",
+      "T45": "Actualdbe toolLinuxload1cef726d/policyrestoreeff1e916 PASS; originalT45 now minimalBOOT08 previous06-cleanup schema/CAS increment, necessarytests thenQB; no newbootwindow until fixedsource andjust-in-time C.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -36152,7 +36152,7 @@
       },
       "sourceProgressCandidate": {
         "owner": "OriginalD1",
-        "state": "FIXED_SOURCE_QB_LIMITED_PASS_D2_MINIMUM_CLOSURE_DISPATCHED",
+        "state": "ACTUAL_LINUX_TOOL_CLOSURE_PASS_POLICY_RESTORED_BOOT08_DELTA_PENDING",
         "parent": "af395ebacd726a80d391bbed0181f556aafbc96f",
         "handoffSHA256": "17f5ff7429f263ff6f28c7b0f6e78d77b370001be58059f367dbc5e6ac319fc6",
         "patchSHA256": "4db5f169bb0ca20e1a5941c0a2c52bcc415a7ae9beca75ba2591510c932cbaa0",
@@ -36167,7 +36167,80 @@
         "QBReceiptSHA256": "faeede9120fa3549511b726aa6a0cdba604e7256e6eb213432b69873689b2abf",
         "remoteReadback": true,
         "currentWipTouched": false,
-        "runtimeBoundary": "Awaitedwrite+sync withoutownIOtimeout, ERRORdiagnosticbeforeoriginalrollback; actualLinux overhead/deadlinefit UNKNOWN. No PG or real-source PASS."
+        "runtimeBoundary": "Awaitedwrite+sync withoutownIOtimeout, ERRORdiagnosticbeforeoriginalrollback; actualLinux overhead/deadlinefit UNKNOWN. No PG or real-source PASS.",
+        "D2": {
+          "resultSHA256": "c667f0066183f3f8107c2ec8d6ff55e42d9c8797a743baace3ac218457ff4786",
+          "archiveSHA256": "fe977a9518c43bd06a36b680d032f843bf38f0972902a43c9734ab769cd72646",
+          "archiveBytes": 1144968,
+          "resourceManifestSHA256": "4f711058a9e56c69f063b3946c9655a18b16f38338e75d3dafd3a6bdb430853d",
+          "sourceDescriptorSHA256": "413bb3e92fd1ccce1fb72f9742bb94f6c0a51d4cf001ece858cf5beb27e53809",
+          "layoutSHA256": "55bb48f75b500779cd0b39008a47a69606705130b8dd04c8c8f9bd733afc1120",
+          "sourceSetSHA256": "6c2672c241b256f22f67dc927c79e493c48a717945d3c21cd75895a719d53baa",
+          "pins": 216,
+          "captured": 180,
+          "changedPins": 1,
+          "archiveMembers": 361,
+          "checks": "Originalloader/CLIgraph/help exit0,216source+3extraGit leaves and138Linuxdependencyfiles plus361archivebytes/hash/mode readback. No model rerun/Webbuild/PG/server.",
+          "linuxActual": "NOT_EXECUTED",
+          "estimatedArchiveAnd4KiBFilesBytes": 7121032,
+          "estimateNotActualCapacity": true
+        },
+        "T45Staging": {
+          "readySHA256": "bd31a7325b6cdcbe686f064cb4cfcc87353e63d228d87bf6179766a4dca35b6a",
+          "C13SHA256": "6f7eac312ffe7d0e97e48d6295620e8e9b1aa2f60cd9c51dccbe7143434a4ce6",
+          "startsAt": 1794060822660,
+          "expiresAt": 1794062622660,
+          "scope": "Tool-only original staging/policy CAS/archiveREADY/LinuxNode loaderimports/restore; noPG/BOOT/REAL/app. Originalaf/APP576/install3b82/source8694 retained.",
+          "changedHelpers": {
+            "install": "428c3012c6d1b638ef4839b628af3db6bc3ba0ecf67765e534a4e93e8e6e3e9b",
+            "materialize": "1008d54eb6b34e8ca249ba7ffb80fb8c1cb0704d0efd264d62df0827940ad2b2",
+            "restore": "bf7fecd0e29c1fb2f1a8c6074c2776ab080e23598bf32353da8623cc72338a0a"
+          },
+          "actual": {
+            "status": "COMPLETED_AND_ORIGINAL_POLICY_RESTORED",
+            "initialFailure": "C13 reference513>512 caused local ARTIFACT_EXTERNAL_DECISION_REQUIRED exit1 before remote upload; guards unchanged.",
+            "initialPolicyRestoreSHA256": "41f45a84beacb65ab1d352b18ea0f7f28a50108ec5cd90450b3b7923162378f8",
+            "correctedC13SHA256": "7dc55c7e3fb28e8e98b6ab429d917f3ce900ff7d3d62337a3b3d87aa6fbf6e8a",
+            "referenceChars": 388,
+            "sameWindowAndAllOtherFields": true,
+            "newInstallRestoreKeys": "02; no completed01 replay",
+            "uploadCount": 1,
+            "actualReadyExportSHA256": "0d2fa564577fbab02fb55dc1f4c07d77cbe876771b38476a034d5564c4bbf061",
+            "actualReadyRawSHA256": "83ca5ab3c34138ff5aaca0ac639cd1415caced63fa23ea6fef19bd715e57d596",
+            "materializeJob": "t45-r4-dbe523f2-tool-materialize-20261107-01",
+            "materializeExitCode": 0,
+            "materializeSeconds": 25.036002,
+            "materializeReceiptSHA256": "1cef726d81db3b2d7e85b331dd034ea2a39b32055db7ff746bbc3bae6aa8dfaa",
+            "LinuxNode": "v24.21.0",
+            "currentPins": 216,
+            "capturedPins": 180,
+            "sourceSetSHA256": "6c2672c241b256f22f67dc927c79e493c48a717945d3c21cd75895a719d53baa",
+            "cliAndReadbackImports": true,
+            "regularFiles": 361,
+            "logicalBytes": 5116111,
+            "freeBefore": 9300901888,
+            "freeAfter": 9294716928,
+            "sameDiskDeltaIncludesConcurrentActivity": 6184960,
+            "policyRestoreJob": "t45-dbe523f2-tool-authority-restore-20261107-02",
+            "policyRestoreExitCode": 0,
+            "policyRestoreSeconds": 0.318096,
+            "policyRestoreSHA256": "eff1e9169573c23a4e1724b15d28d7fd8ae09ad472da137e52377c946727f620",
+            "restoredPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+            "policyMetadata": "rootroot0444/nlink1, expiredvalue notrenewed",
+            "PGStarted": false,
+            "REALModeExecuted": false,
+            "oldAppOrSourceChanged": false
+          }
+        },
+        "BOOT08LocalInputs": {
+          "inputSHA256": "bf91c4fa0d46a4ecc3b07d452e855010f42b001a6ba3bbd109e0c8d45d319e5b",
+          "state": "MINIMUM06_CLEANUP_SCHEMA_CONSUMER_INCREMENT_ORIGINAL_T45_WRITER",
+          "previousStop": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+          "previousRestart": "ddb9cf1a168a3b3ecbc25347d5bcc6aa6d9e7b8e30e4d4c6441c7c3cd424000d",
+          "previousParameters": "3799e7b2a14fc385cfb4e1faf81030478409c3f0162bde32d4b414e9191547c2",
+          "previousRoleExpiryCAS": "2026-11-07 14:18:51.599+00",
+          "newWindowsEpochPids": "NOT_ISSUED_NOT_OBSERVED"
+        }
       }
     }
   }
