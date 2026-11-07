@@ -1,0 +1,21 @@
+{
+  "classification": "INSTALLED_REAL_IMPORT_TOOL_ONLY_NOT_APP_OR_RESTORE",
+  "sourceCommit": "d750ae8c90d54718f16731492bbc707061d82124",
+  "tree": "36fe046946307f1d779bdfdaab0a8e7abe4c1ca8",
+  "parentFormal": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "sourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "operationDirectory": "operation",
+  "entry": "operation/tools/unified-import/cli.mjs",
+  "reusedNode": "/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node",
+  "requiredNodeVersion": "24.21.0",
+  "nodeCopied": false,
+  "referenceDirectory": "Use actual original protected installed referenceDirectory selected by T45; nine indexed original inputs and INDEX hash must match REUSED-REFERENCE-PINS.json",
+  "referenceInputsCopied": false,
+  "nodeModules": "operation/node_modules contains original Linux14 locked pure-JS pg package subtrees only",
+  "placement": "T45 chooses distinct canonical root-owned/readable existing state-mount directory; no symlink/new mount and no writes to installed8694 root",
+  "installedSourceRoot": "Existing actual installed8694 complete source root remains separately read-only; original ordinaryAPP/record stays there",
+  "notApplicationDeployment": true,
+  "realParametersFile": "/etc/naijue-erp/fresh35-installed-real-window-v1.json",
+  "realBatchAuthority": "/etc/naijue-erp/fresh35-production-import-v1.json",
+  "secretsOrDataIncluded": false
+}

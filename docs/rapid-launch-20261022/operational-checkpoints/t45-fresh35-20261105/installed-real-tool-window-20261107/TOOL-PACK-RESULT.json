@@ -1,0 +1,165 @@
+{
+  "task": "D2-INSTALLED-REAL-WINDOW-D750AE8C-TOOL-PACK",
+  "classification": "INSTALLED_REAL_IMPORT_TOOL_ONLY_NOT_APP",
+  "status": "GENUINE_SOURCESET_CLI_HELP_IMPORT_GRAPH_ARCHIVE_READBACK_PASS_NOT_PG",
+  "sourceCommit": "d750ae8c90d54718f16731492bbc707061d82124",
+  "sourceTree": "36fe046946307f1d779bdfdaab0a8e7abe4c1ca8",
+  "parentFormalRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "sourceSet": {
+    "sha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+    "current": 215,
+    "captured": 180,
+    "originalLoaderRunAgainstNewComplete215FileRoot": true,
+    "referenceIndexedInputs": 9,
+    "originalReferencesReusedOnly": true
+  },
+  "operationRoot": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/operation-root",
+  "archive": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/installed-real-tool-d750ae8c.tar.gz",
+    "bytes": 1127888,
+    "sha256": "0e267cc314b1d481715d2a796b0ec9780711dd5a4e07994138b6c162f28f1562"
+  },
+  "resourceManifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/RESOURCE-MANIFEST.json",
+    "bytes": 76808,
+    "sha256": "e76131f6e5cd293958d9db12b78db109770f1f555d6663c1f8f1d4b3f6ddc14f"
+  },
+  "descriptor": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/SOURCE-DESCRIPTOR.json",
+    "bytes": 351548,
+    "sha256": "30bc0c65df6d92b7e18f9b7e3789d988b9d063c80594d6bfaf7cfc5051983f38"
+  },
+  "layout": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/LAYOUT.json",
+    "bytes": 1433,
+    "sha256": "6bee6d2e081ddcc3937adbe871e177f21ae77c6642abbce2ab724ca53961195d"
+  },
+  "spaceAccounting": {
+    "operationSourceFiles": 215,
+    "sourceBytes": 4136656,
+    "lockedLinuxPgPackages": 14,
+    "dependencyFiles": 138,
+    "dependencyBytes": 469685,
+    "operationFiles": 353,
+    "operationLogicalBytes": 4606341,
+    "archiveMembersIncludingMetadata": 357,
+    "archiveExpandedFileBytes": 5040053,
+    "archiveBytes": 1127888,
+    "directoryCountIfMaterialized": 52,
+    "assumed4KiBAllocatedFilesAndDirs": 6103040,
+    "archivePlusAssumed4KiBAllocation": 7230928,
+    "serverSnapshotFreeBytes": 8436330496,
+    "unchangedStartupFloorBytes": 8207515646,
+    "snapshotMargin": 228814850,
+    "marginAfterAssumedAllocationAndArchive": 221583922,
+    "actualServerPhysicalAllocationTested": false,
+    "metadataAndFilesystemOverheadNotExactLinuxClaim": true
+  },
+  "checks": {
+    "fixedGitFilesAndD1InventoryHashesMatched": 215,
+    "fiveLeavesMatched": true,
+    "lockedLinuxDependencyMembersReadbackMatched": 138,
+    "packages": 14,
+    "externalImports": [
+      "pg",
+      "pg/package.json"
+    ],
+    "allDirectTransitivePackageMetadataPresent": true,
+    "actualCliHelp": {
+      "exitCode": 0,
+      "elapsedSeconds": 0.1114054169999994
+    },
+    "actualLoaderAndGraph": {
+      "exitCode": 0,
+      "elapsedSeconds": 3.4723829999999998
+    },
+    "tarAllMembersBytesHashModesMatched": 357,
+    "tarExpandedReadbackBytes": 5040053,
+    "symlinks": 0,
+    "newNodeOrWebOrAppOrSharpOrPgServerCopied": false
+  },
+  "artifacts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/SOURCE-DESCRIPTOR.json",
+      "bytes": 351548,
+      "sha256": "30bc0c65df6d92b7e18f9b7e3789d988b9d063c80594d6bfaf7cfc5051983f38"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/RESOURCE-MANIFEST.json",
+      "bytes": 76808,
+      "sha256": "e76131f6e5cd293958d9db12b78db109770f1f555d6663c1f8f1d4b3f6ddc14f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/LAYOUT.json",
+      "bytes": 1433,
+      "sha256": "6bee6d2e081ddcc3937adbe871e177f21ae77c6642abbce2ab724ca53961195d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/REUSED-REFERENCE-PINS.json",
+      "bytes": 3923,
+      "sha256": "2b63bea7e703e49185307ba5bc14a1f83bfb911de130cb66be1335fd9e528566"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/SPACE-ACCOUNTING.json",
+      "bytes": 726,
+      "sha256": "2726cd0bcfd9f3ee7edac9340dcf852cc5dc6174eb036787f7f2264edd146fb6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/CLI-IMPORT-GRAPH.json",
+      "bytes": 148992,
+      "sha256": "c80bc4dcf8400ab34089f905b41a4b7b06ce3873b6bf4703d81e59ea220f0b87"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/loader-command.json",
+      "bytes": 2882,
+      "sha256": "6bc1e80e5138a981927c543ec16e10b2b8716b3a1d3cadd93a1a9a22b05adac9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/loader-execution.json",
+      "bytes": 60,
+      "sha256": "f23adee728a1458bc3d61669e9f06d46369588843a6d04cdbe4b80170835c1ed"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/help-command.json",
+      "bytes": 807,
+      "sha256": "96aba9971561ef42e53b768473f1182a13b5b14149e3114833715d575f803f76"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/help-execution.json",
+      "bytes": 60,
+      "sha256": "b8eed90d6ef37e7c3ff782561c4c32b70f4d96780dc9992c27cfb58497694c1f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/help.stdout.log",
+      "bytes": 4748,
+      "sha256": "c512b9442fceb9f0bdca6f9cd2ff51c05f14c8aee1e56e2fee534bb1398d2c46"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/final-d750ae8c-operation/help.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "preservation": "All old sources/packages/WIP/backups and original formal8694 read-only source/APP kept unchanged.",
+  "boundaries": {
+    "sourceOrLockModified": false,
+    "newInstallOrRuntime": false,
+    "realDataOrSecretsIncluded": false,
+    "serverOrPgOrHttpOrTransferExecuted": false,
+    "fullAppBuildOrOldPackageQaRepeated": false
+  },
+  "notVerified": [
+    "parallel QB five-leaf verdict not consumed",
+    "actualLinuxnewRoot owner/placement/physical space/statfs",
+    "real protected parameters/window/retained service receipts",
+    "PG17.11PREPARE/EXECUTE/readback",
+    "ordinaryHTTP",
+    "production acceptance"
+  ],
+  "nextStep": "C/T45 verify exact pins and effective QA, choose separate canonical state-mountoperationRoot, reuse originalNode/reference inputs and originalinstalledSourceRoot; live capacity floor unchanged.",
+  "settings": {
+    "actualModel": "UNVERIFIED",
+    "requestedModel": "gpt-6.1-sol/medium",
+    "Fast": "UNVERIFIED"
+  }
+}

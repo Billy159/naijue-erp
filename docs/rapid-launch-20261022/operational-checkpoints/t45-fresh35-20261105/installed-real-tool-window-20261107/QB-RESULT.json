@@ -1,0 +1,82 @@
+{
+  "task": "INSTALLED-REAL-WINDOW-SOURCE-01",
+  "status": "PASS_SCOPED_INSTALLED_REAL_WINDOW_SOURCE",
+  "at": "2026-11-07T01:21:20.639382+00:00",
+  "scope": "Exact five MJS leaves plus affected original8694 ordinary consumer; no development-source edits",
+  "handoffSha256": "988277c680254270407e99331e9b5f15d88d093d8afb55d6713f33e909aa8e9e",
+  "leaves": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "379e3d8a81fedab803adb5a2a3b4c995f9d10ba3ca6d2c0acba30882163be0d2",
+      "bytes": 39811,
+      "parentSha256": "3847364e935754e7d0e55a6adb5daf7cc77ac332aaf441ba835648e25c94c44c"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "05dc38fe7f004a2c11917c14bee00c00e2ed9f6bd5cf25086da243ce60e7c2b7",
+      "bytes": 32456,
+      "parentSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-installed-real-window-v1.mjs",
+      "sha256": "96a3491c7cee85dccad7dc9e5fdd49ad4afbb4394d07f6326fdbbc857dcb9aff",
+      "bytes": 9391,
+      "parentSha256": null
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "28a256fe3c38901477b6649086f9b90136cf1d408db044fa6d9b5240cf5a2127",
+      "bytes": 34625,
+      "parentSha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "sha256": "064cbde03f3a83ee463cee047946ab5074f9a416f0bd56bac6c2b9038165fc36",
+      "bytes": 22521,
+      "parentSha256": "215e02cf7e3be6a1220033ebeb64b66dee4024b9f694ccefd59ab4cd7b82068b"
+    }
+  ],
+  "sourceFindings": [],
+  "checks": {
+    "leafAndParentHashes": "PASS",
+    "ordinaryAdmissionIdentical": "PASS",
+    "wireAllowlistIdentical": "PASS",
+    "rollbackBeforeExpiryCheck": "PASS",
+    "additionalFiniteCases": {
+      "cases": [
+        "half-open-start-and-expiry",
+        "caller-full-binding-injection-refused",
+        "target-mutation-original-hash-refused"
+      ],
+      "passed": 3
+    },
+    "nodeExitCode": 0,
+    "originalAuthorFiveTests": "ADOPTED_NOT_RERUN",
+    "actualDualRootPgHttp": "NOT_TESTED"
+  },
+  "ordinaryConsumer": {
+    "result": "NO_ADMIN_CONTROLLER_EXPIRY_CAP_IN_ORDINARY_ADMISSION",
+    "basis": [
+      "ordinaryIdentitySql checks runtime role only",
+      "fresh35CombinedOrdinaryCatalogSql uses identity+guardSql(requireEmpty:false), not runtimeTargetGuard",
+      "guardSql checks observer metadata/source/ACL without executing old observer",
+      "raw role rows are collected but validateCatalogObservation does not compare admin/controller validuntil"
+    ],
+    "expiryRestorationForOrdinaryCompatibility": "NOT_REQUIRED_BY_REVIEWED_SOURCE",
+    "preserve": [
+      "original runtime lifetime/attributes/membership",
+      "original installed source root8694 and protected record",
+      "original observer definition/ACL",
+      "maintenance explicit finite deadline and cleanup"
+    ]
+  },
+  "notTested": [
+    "genuine protected positive dual-root reconstruction",
+    "new sourceSet artifact closure/build",
+    "actual Linux PG renewed-controller metadata visibility and inline exclusivity",
+    "actual PREPARE/EXECUTE and ordinary runtime pool startup/lease/HTTP"
+  ],
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModelEffortFast": "UNVERIFIED",
+  "operationsPerformed": "Local read-only source audit and three pure finite validator cases; QB evidence only. No PG/server/credentials/business payload access."
+}
