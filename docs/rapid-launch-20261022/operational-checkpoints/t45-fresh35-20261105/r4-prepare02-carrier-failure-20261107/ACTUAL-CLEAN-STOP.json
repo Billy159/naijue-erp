@@ -1,0 +1,250 @@
+{
+  "container": {
+    "capDrop": [
+      "ALL"
+    ],
+    "caps": [
+      "CAP_CHOWN",
+      "CAP_DAC_OVERRIDE",
+      "CAP_KILL",
+      "CAP_SETGID",
+      "CAP_SETUID",
+      "CAP_SYS_PTRACE"
+    ],
+    "cpu": 2000000000,
+    "devices": [],
+    "exitCode": 0,
+    "id": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "ipcMode": "private",
+    "labels": {
+      "t45.operation": "t45-prod35-3b82-20261107-r4",
+      "t45.production-service-expires-at": "1825560000000",
+      "t45.source": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d"
+    },
+    "memory": 3221225472,
+    "mounts": [
+      {
+        "Destination": "/etc/naijue-erp",
+        "Mode": "",
+        "Propagation": "rprivate",
+        "RW": true,
+        "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/authority",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/opt/naijue-erp/fresh35-combined-v1",
+        "Mode": "",
+        "Propagation": "rprivate",
+        "RW": false,
+        "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/deploy",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/run/naijue-rewrite/capacity/owner-profile.json",
+        "Mode": "",
+        "Propagation": "rprivate",
+        "RW": false,
+        "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/capacity/owner-profile.json",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/usr/local/bin/node",
+        "Mode": "",
+        "Propagation": "rprivate",
+        "RW": false,
+        "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/deploy/runtime/node/bin/node",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/var/lib/naijue-erp/fresh35-production",
+        "Mode": "",
+        "Propagation": "rprivate",
+        "RW": true,
+        "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/var/lib/naijue-erp/fresh35-production/real-r3/package",
+        "Mode": "",
+        "Propagation": "rprivate",
+        "RW": false,
+        "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package",
+        "Type": "bind"
+      }
+    ],
+    "name": "/t45-fresh35-production-20261107-r4",
+    "network": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+    "networks": {
+      "naijue-prod-front": {
+        "Aliases": [
+          "naijue-rewrite-exact35-20261107-r4-app"
+        ],
+        "DNSNames": [
+          "t45-fresh35-production-20261107-r4",
+          "naijue-rewrite-exact35-20261107-r4-app",
+          "5d8eb16163d2"
+        ],
+        "DriverOpts": null,
+        "EndpointID": "6cea35853fda1cafe535ec98e1eb1988363cb9780fa4ad24ecddf07ce58d76fc",
+        "Gateway": "",
+        "GlobalIPv6Address": "",
+        "GlobalIPv6PrefixLen": 0,
+        "GwPriority": 0,
+        "IPAMConfig": null,
+        "IPAddress": "172.19.0.23",
+        "IPPrefixLen": 16,
+        "IPv6Gateway": "",
+        "Links": null,
+        "MacAddress": "ea:dd:5f:29:3d:ec",
+        "NetworkID": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970"
+      }
+    },
+    "pid": 3208878,
+    "pidMode": "",
+    "pids": 256,
+    "ports": {},
+    "privileged": false,
+    "readonly": true,
+    "restart": "no",
+    "running": true,
+    "security": [
+      "no-new-privileges"
+    ],
+    "shm": 67108864,
+    "startedAt": "2026-11-07T00:46:03.066896045Z",
+    "swap": 3221225472,
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=64m"
+    },
+    "user": "0:0",
+    "usernsMode": ""
+  },
+  "metadataOnly": true,
+  "noSQL": true,
+  "noSignalsOrRestart": true,
+  "retainedOriginalState": {
+    "caller-result.json": {
+      "automaticRetry": false,
+      "businessVerified": false,
+      "cleanup": {
+        "cleanShutdown": true,
+        "cleanupComplete": true,
+        "dataPreserved": true,
+        "databasePrivilegesChanged": false,
+        "errors": [],
+        "initialization": {
+          "descendantsReaped": true,
+          "errors": [],
+          "initialized": true,
+          "initializerReaped": true,
+          "stopReason": "INITIALIZER_EXITED"
+        },
+        "ownedPidAbsent": true,
+        "portAbsent": true
+      },
+      "durableInstallationObserved": true,
+      "hostEnabled": false,
+      "phase": "RETAIN",
+      "state": "STOPPED_OR_CLEANUP_UNKNOWN_ORIGINAL_KEY_ONLY"
+    },
+    "cleanup.json": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "dataPreserved": true,
+      "databasePrivilegesChanged": false,
+      "errors": [],
+      "initialization": {
+        "descendantsReaped": true,
+        "errors": [],
+        "initialized": true,
+        "initializerReaped": true,
+        "stopReason": "INITIALIZER_EXITED"
+      },
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "controller-process.json": {
+      "exe": "/usr/bin/python3.13",
+      "pid": 14,
+      "starttime": "291066172"
+    },
+    "controller-process.json-actualMatches": false,
+    "observedDiskAvailableBytes": 8424169472,
+    "owned-process.json": {
+      "exe": "/opt/naijue-erp/fresh35-combined-v1/runtime/pg/usr/lib/postgresql/17/bin/postgres",
+      "pid": 42,
+      "starttime": "291066982"
+    },
+    "owned-process.json-actualMatches": false,
+    "recordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "reportFiles": [
+      {
+        "bytes": 107,
+        "directory": false,
+        "path": "stream-process.json"
+      },
+      {
+        "bytes": 0,
+        "directory": false,
+        "path": "stream.stderr"
+      },
+      {
+        "bytes": 1319,
+        "directory": false,
+        "path": "ops-result.json"
+      },
+      {
+        "bytes": 745,
+        "directory": false,
+        "path": "stream.stdout"
+      },
+      {
+        "bytes": 3815,
+        "directory": false,
+        "path": "ops-intent.json"
+      }
+    ],
+    "service-retained.json": {
+      "businessVerified": false,
+      "hostEnabled": false,
+      "recordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+      "serviceLease": {
+        "expiresAt": 1825560000000,
+        "onFailure": "STOP_EXACT_TARGET_PRESERVE_DATA",
+        "onSuccess": "RETAIN_EXACT_TARGET_UNTIL_SERVICE_DEADLINE"
+      },
+      "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+      "state": "DURABLE_V2_RECORD_SERVICE_RETAINED_UNTIL_EXPLICIT_DEADLINE",
+      "target": {
+        "expiresAt": 1794013479661,
+        "ordinary": {
+          "connectHost": "127.0.0.1",
+          "connectPort": 18654,
+          "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+          "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
+          "serverAddress": "127.0.0.1",
+          "serverPort": 18654
+        },
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-07 00:46:12.566314+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705224458832691236"
+        },
+        "proposal": {
+          "admin": "erp35_admin_20261107_r4",
+          "controller": "erp35_controller_20261107_r4",
+          "database": "erp_native35_20261107_r4",
+          "host": "127.0.0.1",
+          "owner": "erp35_owner_20261107_r4",
+          "port": 18654,
+          "runtime": "erp35_runtime_20261107_r4",
+          "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4"
+        },
+        "purpose": "PRODUCTION_NEW_EMPTY_EXACT35",
+        "startsAt": 1794012279661
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "task": "T45_R4_INDEPENDENT_REAL_OPS_NECESSARY_DELTA",
+  "status": "SOURCE_PREPARED_ACTUAL_INSTALLED_CATALOG_SUCCESSOR_NOT_EXECUTED",
+  "parentOpsSha256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+  "operationSourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "formalSourceCommit": "d750ae8c90d54718f16731492bbc707061d82124",
+  "formalQBResultSha256": "930c718d305b2f7b36cb8f9fedc1cba7ed21b546e924e64e5be80b92fa741e46",
+  "sources": {
+    "fresh35-production-carrier.py": "18569bacc3f5d85a3b0ec69c4588e4c4a65fa76ee77183a6f2d57dba595fc90b",
+    "prepare_independent_real_inputs.py": "c833f5f2a131e68bbaabadfd035d0ebe1fcb56965e98e4f42e4aa6991c799197"
+  },
+  "planSha256": "6174199cf7d33bfaade9710b3c53915d8e4c20815848d0650af0e25190a031d1",
+  "actualToolMaterializationResultSha256": "5f36b83c967952df644682b4a64a18437962e6a2a4b0ee5a3dbfe45e5df6ba2f",
+  "actualMaintenanceReadonlyResultSha256": "155c032b3e25f7a9de331af7ca7dcf5d4cee5b90b8337616829cebebc93887c0",
+  "requiredNext": "QB exact ops delta; C exact parameters/input-plan before sole controller expiry CAS; C exact PREPARE description; V2 batch authority only after actual 17-binding",
+  "REALExecuted": false,
+  "controllerRenewed": false,
+  "formalAPPChanged": false,
+  "supersedesOpsSha256": "490aa3848462c3f7a6d3feb8876a0a77bc84cbf8c08709b19ba3bcf11520e871",
+  "catalogDistinction": {
+    "programCatalogSpecSha256": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+    "actualInstalledCatalogSha256": "1fa857b17ccd9485a22530bb17e93f16912aca609f8d18a0b649889a62e4c214",
+    "consumer": "Independent operation installation/catalogSha and CLI StandardImportTarget.catalog_sha256 bind actual protected record, not program spec"
+  }
+}

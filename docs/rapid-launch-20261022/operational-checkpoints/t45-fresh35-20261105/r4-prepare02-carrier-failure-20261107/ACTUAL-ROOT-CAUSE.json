@@ -1,0 +1,85 @@
+{
+  "egid": 0,
+  "euid": 0,
+  "execPath": "/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node",
+  "existingInvocation": {
+    "dockerUser": "0:0",
+    "innerProcess": "subprocess.Popen(real_cli_command(...), no uid/gid override; inherited root)",
+    "sourceSha256": "18569bacc3f5d85a3b0ec69c4588e4c4a65fa76ee77183a6f2d57dba595fc90b"
+  },
+  "gid": 0,
+  "groups": [
+    0
+  ],
+  "kernelIds": [
+    "Uid:\t0\t0\t0\t0",
+    "Gid:\t0\t0\t0\t0",
+    "Groups:\t0 "
+  ],
+  "mounts": [
+    {
+      "Destination": "/etc/naijue-erp",
+      "Mode": "",
+      "Propagation": "rprivate",
+      "RW": true,
+      "Source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/authority",
+      "Type": "bind"
+    }
+  ],
+  "noSQL": true,
+  "noWrites": true,
+  "pathGuard": {
+    "passed": true
+  },
+  "paths": [
+    {
+      "gid": 0,
+      "inode": 1465072,
+      "isDirectory": true,
+      "isSymlink": false,
+      "mode": "755",
+      "nlink": 1,
+      "path": "/",
+      "readable": true,
+      "uid": 0
+    },
+    {
+      "gid": 0,
+      "inode": 1465062,
+      "isDirectory": true,
+      "isSymlink": false,
+      "mode": "755",
+      "nlink": 1,
+      "path": "/etc",
+      "readable": true,
+      "uid": 0
+    },
+    {
+      "gid": 0,
+      "inode": 14555460,
+      "isDirectory": true,
+      "isSymlink": false,
+      "mode": "711",
+      "nlink": 2,
+      "path": "/etc/naijue-erp",
+      "readable": true,
+      "uid": 0
+    },
+    {
+      "gid": 0,
+      "inode": 14557061,
+      "isDirectory": false,
+      "isSymlink": false,
+      "mode": "644",
+      "nlink": 1,
+      "path": "/etc/naijue-erp/fresh35-combined-installation-v1.json",
+      "readable": true,
+      "uid": 0
+    }
+  ],
+  "recordGuard": {
+    "code": "FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED",
+    "passed": false
+  },
+  "uid": 0
+}

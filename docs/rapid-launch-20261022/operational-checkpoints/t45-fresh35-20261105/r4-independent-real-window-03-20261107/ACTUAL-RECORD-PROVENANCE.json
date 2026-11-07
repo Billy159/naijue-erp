@@ -1,0 +1,11 @@
+{
+  "recordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+  "format": "FRESH35_COMBINED_INSTALLATION_RECORD_V2",
+  "state": "COMMITTED_AND_CATALOG_CHECKED",
+  "programSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+  "catalogSha256": "1fa857b17ccd9485a22530bb17e93f16912aca609f8d18a0b649889a62e4c214",
+  "binding": {
+    "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+    "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
+  }
+}

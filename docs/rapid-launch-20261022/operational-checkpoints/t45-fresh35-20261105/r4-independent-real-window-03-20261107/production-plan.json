@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "authorizationReference": "C 20261107 independent installed REAL operation successor; original R4 installation source/record/C14 unchanged. Exact parameters and per-batch V2 authority required.",
+  "operationId": "t45-prod35-3b82-20261107-r4",
+  "opsSourceSha256": "18569bacc3f5d85a3b0ec69c4588e4c4a65fa76ee77183a6f2d57dba595fc90b",
+  "stagingAuthoritySha256": "a7fcbaa13a17de5c4d12d2140d509964d0dbddfaa2a1bad855e9701894f9ef4b",
+  "imagePreparationExpiresAt": 1794011186937,
+  "productionCarrier": {
+    "format": "FRESH35_PRODUCTION_CONTAINER_V2",
+    "front": {
+      "id": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "name": "naijue-prod-front"
+    },
+    "futureAppName": "naijue-rewrite-exact35-20261107-r4-app"
+  }
+}

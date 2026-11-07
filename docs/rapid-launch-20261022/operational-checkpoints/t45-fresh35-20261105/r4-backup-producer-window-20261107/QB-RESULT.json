@@ -1,0 +1,58 @@
+{
+  "task": "NEW35-BACKUP-RESTORE/R4-BASELINE-WINDOW-FIX-03",
+  "status": "PASS_SCOPED_R4_BASELINE_BACKUP_WINDOW_SOURCE",
+  "producer": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/NEW35-BACKUP-RESTORE-FIX-02/R4-BASELINE-WINDOW-FIX-03/new35-backup-restore.py",
+    "parentSha256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
+    "sha256": "839d1e3251ab1957e643a67e574b89664284718382220f12ab3b49ead3725d81",
+    "bytes": 49094
+  },
+  "handoffSha256": "e810b4212016feb60f27d6c12cd4b7a598f3b5b35be640dc72aa71135f65c119",
+  "patchSha256": "1657a08458a0399ba057a2ae07c71513352d8e48056e1dd8e0be797288c284f6",
+  "baseline": {
+    "normalRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+    "sourceSet": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+    "record": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "program": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+    "target": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+    "catalogSpec": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+    "observedCatalog": "actual record.catalogSha256, not catalogSpec90d9",
+    "buildId": "erp-3b82c46ebc0b-full-20261107",
+    "integrationSource": "e422d073 retained original integration provenance; build/source root is actual3b82, not a renamed e422 artifact"
+  },
+  "findings": [],
+  "checks": {
+    "exactHashes": "PASS",
+    "affectedAuthorCasesRun": 4,
+    "passed": 4,
+    "skips": 0,
+    "extraBoundaryCases": [
+      "exact-start-accept",
+      "exact-expiry-refuse",
+      "retention-byte-change-during-job-refuse"
+    ],
+    "originalFunctionsExceptJobLoadRemainingBackup": "AST_IDENTICAL_CHECK_PASSED",
+    "originalOldSuites": "NOT_RERUN",
+    "serverPgActualBackupRestore": "NOT_TESTED"
+  },
+  "scope": "Only exact3b82/8694 R4 baseline, private-plan backupWindow/serviceRetention and affected Job.load/remaining/backup methods; unchanged original functions reused",
+  "observations": [
+    "Original expired install timestamps remain immutable and do not authorize fresh backup",
+    "Separate current window finite <= original maximumSeconds; min(monotonic job budget, wall-clock window) with existing cleanup reserve",
+    "Actual admin current/session identity OID10 LOGIN SUPER and exact finite validuntil checked before and after backup; expiry covers window and <= actual retained service lease",
+    "Protected original retained-service hash/record/source/target/lease checked and byte hash rechecked during stream remaining()",
+    "CatalogSpec90d binding is distinct from actual record.catalogSha256; existing exact-install validator retained",
+    "No dump/restore/ACL/space/fence logic expansion, permissions/table/schema/helper/caller/APP changes"
+  ],
+  "notTested": [
+    "Actual new35 backup/dump sizes and space/time feasibility",
+    "Actual fresh C-bound private plan, actual admin authentication/lifetime and service reference inputs",
+    "Actual REAL committed verified receipts, drained writer boundary/fence",
+    "Actual distinct empty restore target/PG/ACL/data readback",
+    "Actual restore-only native record and ordinary APP login/session/query"
+  ],
+  "inFlightReal": "Unaffected separate task, no replay or blocking instruction from this source review",
+  "operations": "Local read-only source audit and four affected +three finite boundary checks; QB evidence only, no PG/server/credentials/business data",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T02:35:18.000333+00:00"
+}

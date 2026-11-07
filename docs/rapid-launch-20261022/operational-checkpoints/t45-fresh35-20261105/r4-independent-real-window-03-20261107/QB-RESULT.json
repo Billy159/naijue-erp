@@ -1,0 +1,69 @@
+{
+  "task": "T45_R4_INDEPENDENT_REAL_OPS_03_CATALOG_CONSUMERS",
+  "status": "PASS_SCOPED_ACTUAL_INSTALLED_CATALOG_CONSUMERS_SOURCE",
+  "sourcePins": {
+    "fresh35-production-carrier.py": "18569bacc3f5d85a3b0ec69c4588e4c4a65fa76ee77183a6f2d57dba595fc90b",
+    "prepare_independent_real_inputs.py": "c833f5f2a131e68bbaabadfd035d0ebe1fcb56965e98e4f42e4aa6991c799197"
+  },
+  "sourceBytes": {
+    "fresh35-production-carrier.py": 100615,
+    "prepare_independent_real_inputs.py": 11748
+  },
+  "readySha256": "5c779abf76e0bac1d65a71afc929bfa2f6c585d326912794a83b6ab421b47105",
+  "planSha256": "6174199cf7d33bfaade9710b3c53915d8e4c20815848d0650af0e25190a031d1",
+  "findingClosure": {
+    "REAL-CATALOG-PROVENANCE-01": "CLOSED_IN_EXACT03_SOURCE_ONLY",
+    "parent02Pass": "Limited in erroneous catalog provenance scope; original report and failure preserved"
+  },
+  "catalogs": {
+    "programCatalogSpecSha256": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+    "actualInstalledCatalogSha256": "1fa857b17ccd9485a22530bb17e93f16912aca609f8d18a0b649889a62e4c214",
+    "consumer": "Independent operation installation/catalogSha and CLI StandardImportTarget.catalog_sha256 bind actual protected record, not program spec"
+  },
+  "checks": {
+    "sourceHashes": "PASS",
+    "mainOnlyTwoCatalogSourceSubstitutions": "BYTE_IDENTICAL_OTHERWISE",
+    "helperOnlyOpsPlanPinsNewKeyIntentAndCatalogSource": "BYTE_IDENTICAL_OTHERWISE",
+    "threeConsumerFiniteCases": [
+      {
+        "consumer": "operation parameters",
+        "digest": "actual-record",
+        "outcome": "ACCEPTED_ACTUAL"
+      },
+      {
+        "consumer": "operation parameters",
+        "digest": "program-spec-rejected",
+        "outcome": "REFUSED_SPEC"
+      },
+      {
+        "consumer": "readonly original parameters",
+        "digest": "actual-record",
+        "outcome": "ACCEPTED_ACTUAL"
+      },
+      {
+        "consumer": "readonly original parameters",
+        "digest": "program-spec-rejected",
+        "outcome": "REFUSED_SPEC"
+      },
+      {
+        "consumer": "CLI target",
+        "outcome": "ACTUAL_RECORD_CATALOG_IN_FIVE_FIELD_TARGET"
+      }
+    ],
+    "newKeyAndIntent": "02 bound together; old01 not overwritten",
+    "syntaxMainHelperNested": "PASS",
+    "old13And8AndMonitorEtc": "REUSED_NOT_RERUN",
+    "PGActualInputsReal": "NOT_TESTED_BY_QB"
+  },
+  "authorRegressionSha256": "bd54319aa02e57a277db4b28d25dbde3a5b4bbf8626c57b14f4c4d965a1bf4cb",
+  "reportedActualEvidence": "T45 input01 FAILED2 and e5c2 no projection/role/REAL plus public scalar readback; not independently rerun by QB",
+  "notTested": [
+    "actual input02 projection/controller expiry CAS",
+    "actual PREPARE/INSPECT/EXECUTE and17 binding",
+    "actual PG original-key readonly/API/HTTP"
+  ],
+  "reused": "02 remaining scope, original13/8,monitor,maintenance03,formal five leaves not rerun",
+  "operations": "Local exact-source scalar-consumer checks only; no PG/server/secret/payload access",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T02:42:52.217605+00:00"
+}

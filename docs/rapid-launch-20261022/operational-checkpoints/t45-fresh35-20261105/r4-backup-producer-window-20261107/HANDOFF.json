@@ -1,0 +1,53 @@
+{
+  "task": "NEW35-BACKUP-RESTORE/R4-BASELINE-WINDOW-FIX-03",
+  "status": "SOURCE_ONLY_READY_FOR_ORIGINAL_QB_AFFECTED_DELTA_REVIEW",
+  "producer": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/NEW35-BACKUP-RESTORE-FIX-02/R4-BASELINE-WINDOW-FIX-03/new35-backup-restore.py",
+    "parentSha256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
+    "sha256": "839d1e3251ab1957e643a67e574b89664284718382220f12ab3b49ead3725d81",
+    "bytes": 49094
+  },
+  "baseline": {
+    "normalRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+    "sourceSet": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+    "record": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "program": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+    "target": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+    "catalogSpec": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+    "observedCatalog": "actual record.catalogSha256, not catalogSpec90d9",
+    "buildId": "erp-3b82c46ebc0b-full-20261107",
+    "integrationSource": "e422d073 retained original integration provenance; build/source root is actual3b82, not a renamed e422 artifact"
+  },
+  "newPlanFields": {
+    "backupWindow": {
+      "keys": [
+        "startsAt",
+        "expiresAt",
+        "adminLoginValidUntil",
+        "authorizationReference"
+      ],
+      "meaning": "Embedded parameters of original C-bound private plan, not a new approval service. Finite current window duration <= original maximumSeconds, end <= actual source-admin lifetime <= original retained-service lease. Must be new exact C authorization, not old install window extension."
+    },
+    "serviceRetention": "backup-only {path,sha256} for actual private original R4 service-retained.json; strict retained record/source/target/lease, unchanged bytes rehashed while streaming."
+  },
+  "actualAdmin": "Before/after backup readonly queries require original current/session admin, OID10, LOGIN+SUPER and exact finite VALID UNTIL matching plan. Existing query validates actual SID/OID/start/PG/endpoints. 03:29:02Z is historical current maintenance fact, not assumed valid at future execution. Remaining time is min(original monotonic job budget, new backup window); original installed target timestamps remain unchanged.",
+  "helpers": {
+    "sourcePlanDeployHelper": "Use C/T45 already-adopted operational ee9292eb643ceab8e95e57ab4f6ea10f56737d513b4bf58c76247b17119f702b. No re-review/changes to accepted four callers. Existing plan helper reference/digest checks retained.",
+    "restoreOnly": "f5a1a2f91882978c6cdd14eeca9bd9897e5ac86f/b3002c4346ee87d32cae27264322a31c4dcefa414f73c4bd887f906d58176713 with existing d45 restore consumer/native --execute-restored-record. Never source-backup baseline or normal APP replacement."
+  },
+  "entry": "Original python3 -I -B new35-backup-restore.py --plan <actual-private-C-plan> --mode backup|restore; --execute only original T45/root/exact job. No execution here.",
+  "checks": {
+    "tests": 4,
+    "pass": 4,
+    "skips": 0,
+    "testFile": "test_r4_window.py",
+    "coverage": "Exact R4 positive/wrong10fc or restore-only source/wrong record/program/target/catalogSpec; expired immutable install with fresh finite window and bounded remaining; expired/long/future/service/identity/role expiry negatives; all original functions/methods AST unchanged except Job.load/remaining/backup and new narrow helpers.",
+    "initialFinding": "Local Python fromisoformat did not accept PG +00 short offset; normalized explicit offset only, then all4 passed. No PG test claimed.",
+    "originalFIX02and17and5": "PASS reused, not rerun"
+  },
+  "stillRequired": "REAL COMMITTED+VERIFIED original receipts/keys, current drained writer boundary/fence; actual3b82 APP archive/private runtime identity/media closure; valid source-admin+runtime private references; fresh actual space/artifact/dump bounds; distinct empty restore carrier/SID/OID/start/bootstrap/rolesACL/dump readback; restored native record and actual APP login/session/query. All actual backup/restore/APP remain NOT_TESTED. Nov6 9.37GB legacy restore remains unverified; no blind replay.",
+  "writes": "Only independent producer successor/test/short handoff; parent ca6f unchanged, no main/helpers/contract/APP build/server/PG/ops revisions writes.",
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModel": "UNVERIFIED",
+  "Fast": "UNVERIFIED"
+}

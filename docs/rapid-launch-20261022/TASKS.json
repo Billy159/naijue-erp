@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T10:32:01.873571+08:00",
+  "updatedAt": "2026-11-07T10:54:47.110242+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33303,7 +33303,7 @@
     },
     "currentExecution": {
       "at": "2026-11-07T09:12:46.766934+08:00",
-      "phase": "R4_NATIVE_INSTALL_DURABLE_SEPARATE_REAL_WINDOW_SOURCE_REPAIR",
+      "phase": "RETAINED_R4_CLEAN_STOPPED_NONROOT_AND_SAME_DATA_EPOCH_REPAIR",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Repair independent REAL session on retained installed R4 without renewing installation C14, faking record or repeating installation; then original T45 prepare/inspect/execute and independent readback.",
+      "next": "Correct OS runtime identity and exact same-data restart epoch; actual ordinaryAPP/REAL/backup/browser/deployment remain incomplete.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -34341,7 +34341,7 @@
         "startsAt": 1794012279661,
         "expiresAt": 1794013479661,
         "currentOwner": "Original T45 sole executor",
-        "state": "NATIVE_INSTALL_RECORD_DURABLE_REAL_NOT_STARTED",
+        "state": "ACTUALLY_INSTALLED_RETAINED_R4_PG_CLEAN_STOPPED_AFTER_PREPARE_FAILURE",
         "REALExecuted": false,
         "publicSwitch": false,
         "actualResultSHA256": "7ca7aa75a040b2c8bd179eb454558bd6c3254215166d494fbb097e60d558003b",
@@ -34667,25 +34667,54 @@
           "newCredentialLoginActualSHA256": "155c032b3e25f7a9de331af7ca7dcf5d4cee5b90b8337616829cebebc93887c0"
         },
         "independentRealWindow": {
-          "at": "2026-11-07T10:32:01.873571+08:00",
-          "state": "C_BOUND_INPUTS_AND_PREPARE_NOT_EXECUTE",
-          "sourceQB_SHA256": "082b0effd926c12db721100f133a808c95714737fd021e65536300c0c4c8427d",
-          "opsSHA256": "490aa3848462c3f7a6d3feb8876a0a77bc84cbf8c08709b19ba3bcf11520e871",
-          "inputHelperSHA256": "06eebf141a73ffb38b1900f88936e81f6d1f3e22bdc5bf07d0c1b1feac5a329b",
-          "productionPlanSHA256": "5236cc2007b749b1b91d8157b7182405c8ce45edcfdc18cb4b6aef7e2adba3ec",
-          "parametersSHA256": "d9c1d9324405bad77127b57a95a770519c538a0398b1ddd6f254b289a80e9171",
-          "inputPlanSHA256": "27d6f7bdf0d987b22fbca688f3e3604cbcc0288316e7db9f50a52a5569cf91c8",
-          "prepareDescriptionSHA256": "2eb48cffa3df8cd95cee706039b09608959c73fa71b19a5d65dde997afa87db6",
-          "startsAt": 1794018625000,
-          "inputAndPrepareExpiresAt": 1794019825000,
+          "at": "2026-11-07T10:46:08.766654+08:00",
+          "state": "INPUT02_ACTUAL_READY_PREPARE02_FAILED_BEFORE_STREAM_OR_BUSINESS_SOURCE_CARRIER_RECOVERY_IN_PROGRESS",
+          "sourceQB_SHA256": "020b3ee6c108eebb688632b257585386f10d61ec3e18f04dace6bf7e4b896e24",
+          "opsSHA256": "18569bacc3f5d85a3b0ec69c4588e4c4a65fa76ee77183a6f2d57dba595fc90b",
+          "inputHelperSHA256": "c833f5f2a131e68bbaabadfd035d0ebe1fcb56965e98e4f42e4aa6991c799197",
+          "productionPlanSHA256": "6174199cf7d33bfaade9710b3c53915d8e4c20815848d0650af0e25190a031d1",
+          "parametersSHA256": "23c4674cf4d4c64196d4c79a120f5f499830075f5bd634c944ab8338948bce14",
+          "inputPlanSHA256": "9636f4f4f0934377d081cb1f1b102c107ea48a86f73cd0bcd91fdb75f4e6d853",
+          "prepareDescriptionSHA256": "a4f33673fcda0675eec41e19e2fb5bf38c77e92139e1e377bb8d0f4000b3ba4e",
+          "startsAt": 1794019431000,
+          "inputAndPrepareExpiresAt": 1794020631000,
           "operationExpiresAt": 1794021600000,
           "controllerLoginValidUntil": "2026-11-07T03:20:00.000Z",
           "adminLoginValidUntil": "2026-11-07T03:29:02Z",
-          "controllerRenewed": false,
-          "PREPAREActual": false,
+          "controllerRenewed": true,
+          "PREPAREActual": true,
           "EXECUTEAuthorized": false,
           "REALImported": false,
-          "next": "OriginalT45 actual input helper and PREPARE; C V2 batch authorization only after exact actual17 binding."
+          "next": "OriginalT45 nonroot61035 exact private access projections and same retainedR4 restart ops; originalD1 only2 leaf REAL restartReceipt consumer source; originalrecord retained, no R5/reinstall or old-key replay.",
+          "actualInputError": "FRESH35_REAL_WINDOW_INSTALLED_PROVENANCE_DIFFERS",
+          "inputStatusReadbackSHA256": "e5c2fd8d51f9a937b6af4ac87696686ec4abe9752150fecc2296699efe6cf787",
+          "previousInput01Failure": {
+            "status": "FAILED_BEFORE_INTENT_OR_ROLE_WRITE",
+            "readonlySHA256": "e5c2fd8d51f9a937b6af4ac87696686ec4abe9752150fecc2296699efe6cf787",
+            "cause": "C template and three ops consumers used program catalogSpec90d as actual protected record.catalogSha; actual is1fa857b17ccd9485a22530bb17e93f16912aca609f8d18a0b649889a62e4c214",
+            "recordScalarReadonlySHA256": "1c2bf74b905ed7890ff6bd4c5460811fcf9b568238227e5b6216eb1fbb5e9a5e",
+            "recordChanged": false,
+            "D1ValidatorChanged": false,
+            "keyReplayed": false
+          },
+          "actualInstalledCatalogSha256": "1fa857b17ccd9485a22530bb17e93f16912aca609f8d18a0b649889a62e4c214",
+          "catalogSpecSha256": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+          "actualInputsResultSHA256": "00ef6d406d5aecacef6bcf0ebec5de50f957dc12c4236df44b0e9d44b5db71fb",
+          "prepareStatus": "STOPPED_OUTCOME_UNKNOWN_NOT_STARTED_FRESH35_PROTECTED_RECORD_REQUIRED",
+          "prepareActualResultSHA256": "99c19ac69165338d637e7e8141b8e8e1cf168203a1a7f2b5bfdaa04541231786",
+          "actualPostCleanupStateSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
+          "actualErrorLocalizationSHA256": "f2fa861f9120fffff8e3611dc0617077dfa4e953c1eec3710f36aaaf7db4f60a",
+          "rootCause": "Actual docker/Popen Node inherited UID0; direct record loader rejects ORDINARY_RUNTIME_REQUIRED; CLI redacts all loader errors to PROTECTED_RECORD_REQUIRED. Path guard actualPASS, no WeakMap defect proven."
+        },
+        "currentPGRunning": false,
+        "currentContainerRunning": true,
+        "sameDataRestartPreparation": {
+          "at": "2026-11-07T10:54:47.110242+08:00",
+          "state": "C_APPROVED_NARROW_SOURCE_AND_OPS_PREPARATION_NO_RESTART_EXECUTED",
+          "serverOwner": "Original T45",
+          "formalSourceOwner": "Original D1 window+target two leaves only",
+          "sourceScope": "Exact root-protected receipt for sameSID/OID/data directory/dev/inode; originalrecord/source/catalog/roles kept; true newpostmasterStart, ordinaryAPP existing guard unchanged. No DB fields/grants/platform/R5/initdb/install.",
+          "opsScope": "Existing PGbinary/server_args/61035 UID, exact retained container+data; new accurate bootkey and fresh bounded authority only after fixedsource/QA. Existingroot source/private copies preserved, no general chmod."
         }
       }
     },
@@ -34700,13 +34729,18 @@
     },
     "new35BackupR4ProducerSuccessor": {
       "owner": "Original D1 sole producer writer; Original T45 server only",
-      "state": "SOURCE_MINIMUM_FIX_AUTHORIZED_IN_PROGRESS_NO_SERVER",
+      "state": "SCOPED_QB_SOURCE_PASS_REAL_EXECUTION_INPUTS_NOT_READY",
       "parentSHA256": "ca6f14563d372366f7ca76b57d5c58e9574a6f2a489baeae8c9b394fe49e4b81",
       "confirmedSourceGaps": [
         "Producer fixed10fc/af75 rejects actualR4 3b82/8694",
         "Backup deadline incorrectly reuses expired installation window"
       ],
-      "scope": "Exact current baseline and independent finite backup window only; preserve originalrecord/grants. Existing dump/restore/data/APP evidence remain not tested; oldprod Nov6 restore not verified."
+      "scope": "Exact current baseline and independent finite backup window only; preserve originalrecord/grants. Existing dump/restore/data/APP evidence remain not tested; oldprod Nov6 restore not verified.",
+      "sourceSHA256": "839d1e3251ab1957e643a67e574b89664284718382220f12ab3b49ead3725d81",
+      "sourceQB_SHA256": "26be7984aa5c5469068abbf236d827a1a88ceff526892829f5c97a77db76426b",
+      "handoffSHA256": "e810b4212016feb60f27d6c12cd4b7a598f3b5b35be640dc72aa71135f65c119",
+      "actualBackup": false,
+      "actualRestore": false
     }
   }
 }

@@ -1,0 +1,40 @@
+{
+  "automaticRetry": false,
+  "cli": {
+    "code": "FRESH35_PROTECTED_RECORD_REQUIRED",
+    "connectionCleanup": "UNKNOWN",
+    "state": "NOT_STARTED",
+    "verification": "NOT_RUN"
+  },
+  "currentOperationSourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "formalBusinessAcceptance": false,
+  "guard": {
+    "childReaped": true,
+    "exitCode": 1,
+    "guard": "STOPPED_OUTCOME_UNKNOWN",
+    "maxSampleGapSeconds": 0.20472797192633152,
+    "minimumAvailableBytes": {
+      "data": 8424624128,
+      "reportIndex": 8424624128,
+      "sqliteScratch": 8424624128,
+      "tmp": 8424624128,
+      "wal": 8424624128
+    },
+    "originalControllerCleanup": {
+      "callerState": "STOPPED_OR_CLEANUP_UNKNOWN_ORIGINAL_KEY_ONLY",
+      "cleanupComplete": true,
+      "controllerStopped": false,
+      "transactionRollbackProven": false
+    },
+    "samples": 3,
+    "transactionRollbackProven": false
+  },
+  "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+  "mode": "PREPARE",
+  "operationParametersSha256": "23c4674cf4d4c64196d4c79a120f5f499830075f5bd634c944ab8338948bce14",
+  "requestKey": "t45-r4-real-prepare-20261107-02",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "status": "STOPPED_OUTCOME_UNKNOWN",
+  "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+  "transactionOutcomeInferredFromCleanup": false
+}

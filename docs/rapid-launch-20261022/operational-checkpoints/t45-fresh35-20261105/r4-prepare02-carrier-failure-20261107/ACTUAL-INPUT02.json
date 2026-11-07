@@ -1,0 +1,93 @@
+{
+  "REALModeExecuted": false,
+  "after": {
+    "actor": "erp35_admin_20261107_r4",
+    "adminValidUntil": "2026-11-07 03:29:02+00",
+    "birth": "2026-11-07 00:46:12.566314+00",
+    "controller": {
+      "bypassRls": false,
+      "config": null,
+      "createDb": false,
+      "createRole": false,
+      "inherit": false,
+      "limit": 2,
+      "login": true,
+      "memberships": [
+        {
+          "admin": false,
+          "grantor": "10",
+          "inherit": false,
+          "member": "16385",
+          "roleid": "16387",
+          "set": true
+        },
+        {
+          "admin": false,
+          "grantor": "10",
+          "inherit": false,
+          "member": "16385",
+          "roleid": "16388",
+          "set": true
+        }
+      ],
+      "name": "erp35_controller_20261107_r4",
+      "oid": "16385",
+      "replication": false,
+      "super": false,
+      "until": "2026-11-07 03:20:00+00"
+    },
+    "database": "erp_native35_20261107_r4",
+    "oid": "16393",
+    "sid": "7705224458832691236"
+  },
+  "automaticRetry": false,
+  "before": {
+    "actor": "erp35_admin_20261107_r4",
+    "adminValidUntil": "2026-11-07 03:29:02+00",
+    "birth": "2026-11-07 00:46:12.566314+00",
+    "controller": {
+      "bypassRls": false,
+      "config": null,
+      "createDb": false,
+      "createRole": false,
+      "inherit": false,
+      "limit": 2,
+      "login": true,
+      "memberships": [
+        {
+          "admin": false,
+          "grantor": "10",
+          "inherit": false,
+          "member": "16385",
+          "roleid": "16387",
+          "set": true
+        },
+        {
+          "admin": false,
+          "grantor": "10",
+          "inherit": false,
+          "member": "16385",
+          "roleid": "16388",
+          "set": true
+        }
+      ],
+      "name": "erp35_controller_20261107_r4",
+      "oid": "16385",
+      "replication": false,
+      "super": false,
+      "until": "2026-11-07 01:04:39+00"
+    },
+    "database": "erp_native35_20261107_r4",
+    "oid": "16393",
+    "sid": "7705224458832691236"
+  },
+  "businessDatabaseWrites": false,
+  "currentSourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "newPasswordRoleGrant": "[REDACTED]",
+  "oldRecordWindowChanged": false,
+  "parametersSha256": "23c4674cf4d4c64196d4c79a120f5f499830075f5bd634c944ab8338948bce14",
+  "requestKey": "t45-r4-independent-real-inputs-20261107-02",
+  "serviceReceiptSha256": "7d68bbc7effccb78f3c28afc12cd7e2c3412df8fe58c833dc4cea1229172b118",
+  "status": "EXACT_R4_INDEPENDENT_REAL_INPUTS_AND_EXISTING_CONTROLLER_FINITE_EXPIRY_READY",
+  "targetFileSha256": "6d6ef57f750d0bf2653516699657b34dacaf39156ef6a5ad1fef65daad5f8173"
+}

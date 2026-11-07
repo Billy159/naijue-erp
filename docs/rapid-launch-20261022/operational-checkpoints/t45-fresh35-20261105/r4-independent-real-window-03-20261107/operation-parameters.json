@@ -1,0 +1,23 @@
+{
+  "format": "FRESH35_INSTALLED_REAL_OPERATION_PARAMETERS_V1",
+  "installedSourceRoot": "/opt/naijue-erp/fresh35-combined-v1",
+  "currentSourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "installation": {
+    "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "installProgramSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+    "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+    "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+    "catalogSha256": "1fa857b17ccd9485a22530bb17e93f16912aca609f8d18a0b649889a62e4c214"
+  },
+  "manifestSha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+  "startsAt": 1794019431000,
+  "expiresAt": 1794021600000,
+  "authorizationExpiresAt": 1794024000000,
+  "serviceReceipt": {
+    "path": "/etc/naijue-erp/fresh35-retained-service-v1.json",
+    "sha256": "7d68bbc7effccb78f3c28afc12cd7e2c3412df8fe58c833dc4cea1229172b118"
+  },
+  "controllerLoginValidUntil": "2026-11-07T03:20:00.000Z",
+  "adminLoginValidUntil": "2026-11-07T03:29:02Z",
+  "authorizationReference": "C delegated decision under human authority through 2026-11-07T12:00:00+08:00; retained installed R4 only, fixed d750/544b tool and original8694 installation, actual installed catalog1fa857 (spec90d separate), QB 020b3ee6c108eebb688632b257585386f10d61ec3e18f04dace6bf7e4b896e24; new input02 after original01 failed before side effects; finite REAL preparation, existing controller expiry only; exact17 batch write authorization follows actual PREPARE, no old production or record changes."
+}
