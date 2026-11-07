@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 publish exact C971e parameters via original constant-only publisher, actualreadback; C then binds freshPREPARE07 window after non-timeinputs ready. No08replay/newinstall/publicchange.",
+      "next": "OriginalT45 newPREPARE07 exactdb392/20min; collect real phase/terminal/resource andcleanup, noold06replay. Only successfulexactpreflight permits nextEXECUTE scope. Reconcile/history/recovery/formalcutover still pending.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36340,14 +36340,44 @@
       "roleAttributesUnchanged": true,
       "freeBytes": 9292066816,
       "COperationParameters": "971e4724ed016807d2221a49f33e98da3896cf81912ea55b20fb62dff7cb29f6",
-      "parametersActualPublished": false,
+      "parametersActualPublished": true,
       "businessVerified": false,
       "timing": {
         "CToCopySeconds": 17.748932,
         "copyToRootSeconds": 12.377266,
         "CToRootSeconds": 30.126198,
         "subphaseAttribution": "No SSH/queue cause inferred"
+      },
+      "parameterPublication": {
+        "job": "t45-r4-retained-parameters-20261107-04",
+        "receipt": "0488ba345474da8731cd58eb6df06fe7d81f1b5d45ec6e1008062ec697291459",
+        "exitCode": 0,
+        "seconds": 0.87011160235852,
+        "SHA256": "971e4724ed016807d2221a49f33e98da3896cf81912ea55b20fb62dff7cb29f6",
+        "inode": 14559429,
+        "bytes": 1782,
+        "mode": "0640",
+        "old3799Preserved": true,
+        "actualAccessPlan": "93db02786199095d1d42f0b0190736a6db2885917fecb5f15cdf228ac0ee0ab1"
       }
+    },
+    "r4RealPrepare07Actual20261107": {
+      "owner": "OriginalT45 sole server/C exact inputs",
+      "state": "NEW_C20MIN_PREPARE07_ISSUED_ACTUAL_PENDING",
+      "job": "t45-r4-real-prepare-20261107-07",
+      "READY": "2ae719e90b0d24eb871a2d057c4411a3d7e4fbbee1f5d4374d87657424d2496b",
+      "CAction": "db3923274013cb67b9a8e87c46b2c35e8ff14ee928904d6ce7f8535cd8a2b919",
+      "startsAt": 1794064171765,
+      "expiresAt": 1794065371765,
+      "sourceSet": "6c2672c241b256f22f67dc927c79e493c48a717945d3c21cd75895a719d53baa",
+      "mode": "PREPARE_ONLY_NOT_EXECUTE",
+      "originalBusinessSeconds": 1200,
+      "outerSeconds": 1500,
+      "SSHSeconds": 40,
+      "sourceLeafHashesVerified": 6,
+      "old05and06Retained": true,
+      "diagnostics": "New actual technical phase progress, no retrospective inference for06",
+      "actualImportVerified": false
     }
   }
 }
