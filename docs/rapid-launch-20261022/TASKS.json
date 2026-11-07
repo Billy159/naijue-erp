@@ -35451,12 +35451,12 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "TRANSFER_READY_ORIGINAL_POLICY_RESTORED_MATERIALIZATION_IN_FLIGHT",
+      "state": "ACTUAL_SYNTHETIC_CLUSTER_STARTED_EXACT_C9_DELIVERED_PENDING_HISTORY_TEST",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "T45 recovers original materialize job result without replay. Issue C11 only after current exact post-materialization identity/resources, then C9 after actual isolated start.",
-      "at": "2026-11-07T18:05:24.249142+08:00",
+      "next": "T45 one original C9 installation+history-only run, recover exact terminal, ordinary business proof and cleanup. QB only actual affected evidence.",
+      "at": "2026-11-07T18:17:06.731277+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
       "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
@@ -35492,7 +35492,16 @@
       "transportActualReceiptSHA256": "fe09c75b84bda90e90082122c83fe2cf3533c457ef749efe57a920ce1f011a9e",
       "transferActualReadySHA256": "16faefc1f07025510b844a5e098ed249b7906673c19ff47fbe991fad7ae12bfb",
       "originalPolicyRestored": true,
-      "materializePlanSHA256": "c92d93de58a71e0f1febab21f251c0222ff09b5f9b140806c0773453e665b187"
+      "materializePlanSHA256": "c92d93de58a71e0f1febab21f251c0222ff09b5f9b140806c0773453e665b187",
+      "materializeResultSHA256": "0fbf710c58dcb9aa056821a50d499cba2880961b5c4fb876e8878a8c4e4dcfda",
+      "materializeReadbackSHA256": "82f1c9a4a19bb17ff0136646804aaba9189dd4dc06f4628d4461d16e2774b5e3",
+      "c11SHA256": "fd45587ce576a1c2ed0595eceb16d3794d7b735827ff0ea77031dfb32f316699",
+      "actualSyntheticStartSHA256": "47cc8b969e2d43fe21fd4dd052e662df6efd62f6d6aec5c7fdf3ee6e8c011307",
+      "actualSyntheticStartJobSHA256": "cdd8fa5c98067ec89c3198b8ceb13b94e7ea50d91fcdaae40edd6db44f03db6e",
+      "c9SHA256": "72355e34b00e9805bdf13682554f47718f4763e1cb89b4566467ce6e67612247",
+      "isolatedExpiresAt": 1794047491855,
+      "actualPostgresStarted": true,
+      "actualOrdinaryHistoryPassed": false
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
@@ -35548,12 +35557,20 @@
       }
     },
     "r4IndependentRealReconciliation20261107": {
-      "at": "2026-11-07T17:28:14.165547+08:00",
+      "at": "2026-11-07T18:17:06.731277+08:00",
       "owner": "D3 source expectations; D1 original readback seam; T45 actual execution",
       "sourceExpectationsSHA256": "a9b574a64a5ac8446d6ce14346d5a0393f8ca270e74b05c131cdf3f1ab3d0e4c",
       "warehouseKeyExpectationsSHA256": "883e678ce3d1f9ce8c712493019a5ee285e3204495abb7e5f5d5537633977cf8",
-      "state": "PRIVATE_SOURCE_EXPECTATIONS_FIXED_NO_DATABASE_RECONCILIATION",
-      "existingVerifier": "Checks each warehouse/SKU and immutable proof but returns global totals only. Separate receive/refund and per-warehouse comparison pending from actual target under current permissions. No private inputs in Git."
+      "state": "EXACT_READ_ONLY_PROJECTION_SOURCE_QB_PASS_REAL_PG_PENDING",
+      "existingVerifier": "Checks each warehouse/SKU and immutable proof but returns global totals only. Separate receive/refund and per-warehouse comparison pending from actual target under current permissions. No private inputs in Git.",
+      "branch": "codex/erp-r4-independent-reconciliation-20261107",
+      "commit": "8874ce044e1d7696eb50f433187c62ffca066f8f",
+      "patchSHA256": "4341d2efc6172c168ca5b0c444549c0d73ecf551c0eda943c9f512c44356cb9e",
+      "qbResultSHA256": "d41a78a9f56bc585bcb98ecd88f0e4e718aa86b6f2307a6ceade61226605674d",
+      "authorPass": 37,
+      "qbNewPass": 4,
+      "remoteExactReadback": true,
+      "next": "After verified actual commit and original verifier, use existing Runtime27 ordinary issuer and one independent read-only snapshot. No real records in Git."
     },
     "r4PreparedAuthority13": {
       "at": "2026-11-07T17:35:28.476142+08:00",
@@ -35586,16 +35603,16 @@
       "d2ToolArchiveMembers": 358
     },
     "oldProductionRestoreLiveCapacity20261107": {
-      "at": "2026-11-07T18:05:24.249142+08:00",
+      "at": "2026-11-07T18:17:06.731277+08:00",
       "state": "ACTUAL_STORAGE_SHORTFALL_REPORTED_NO_OTHER_AUTHORIZED_VOLUME",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 5493587968,
+      "actualAvailableBytes": 5230022656,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 31013634048,
+      "oldRestoreShortfallBytes": 31277199360,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 2713927678,
+      "r4ShortfallBytes": 2977492990,
       "next": "Recheck actual volume after user/storage intervention. Preserve backups and failure evidence. Continue independent isolated history scope.",
-      "latestResourceReceiptSHA256": "fe09c75b84bda90e90082122c83fe2cf3533c457ef749efe57a920ce1f011a9e"
+      "latestResourceReceiptSHA256": "82f1c9a4a19bb17ff0136646804aaba9189dd4dc06f4628d4461d16e2774b5e3"
     }
   }
 }
