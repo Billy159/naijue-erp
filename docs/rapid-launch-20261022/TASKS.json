@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T17:08:31.509813+08:00",
-      "phase": "R4_BOOT06_REAL_PREPARE05_RUNNING_NO_WRITE",
+      "at": "2026-11-07T17:28:14.165547+08:00",
+      "phase": "R4_PREPARE05_SOURCE_PASS_REAL_GUARD_REJECTED_CLEAN_STOP",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 for PREPARE05; D1 and D2 for isolated historical acceptance inputs",
-      "nextOwner": "T45 terminal evidence; Controller exact import binding after PREPARE success",
-      "latestActualReceiptSHA256": "9a2a1d97f99586aea905f471556c52bea00a26dd380ad8a3ff252d935429dc59",
+      "currentOwner": "Original D1 scope-preserving runtime guard repair; T45 retains stopped R4 and prepares successor inputs; D2/QB isolated history acceptance",
+      "nextOwner": "D1 exact guard repair and original QB scoped review",
+      "latestActualReceiptSHA256": "44fa21e0fb92bec96c6775e81071331253c03638bd30747b9bda6a9c74e70d1f",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 runs fixed PREPARE05 once with no business writes. Use actual prepared binding to derive the existing authorized REAL job, subject to the exact live window and input checks.",
+      "next": "Adopt the verified clean stop. Preserve PREPARE05. Repair only the physical backend visibility seam and measure the authorized execution timing before a new finite R4 epoch. No EXECUTE until exact successful binding.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -35455,8 +35455,8 @@
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "Original D1 adds one scoped eligible sales fixture and reuses the existing cutoff transfer, ordinary runner and protected observations for real PG acceptance. T45 alone executes after a suitable isolated slot is fixed. QF later checks the affected ordinary entry.",
-      "at": "2026-11-07T17:08:31.509813+08:00",
+      "next": "D2 builds exact isolated test root with synced fixture pin and corrected success model. T45 executes only on the next approved isolated synthetic slot.",
+      "at": "2026-11-07T17:28:14.165547+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
       "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
@@ -35473,11 +35473,17 @@
       "actualBuildExit": 0,
       "actualPackExit": 0,
       "ordinaryArtifactSHA256": "b8069af0e2f42b990b4645b4fd34857d184db0529e43132faa04d218bbfff830",
-      "releaseArtifactSHA256": "940d5cee86dd57766ef6fbe522ab0fb29cd5e395f72768753b48cb4da1ca2235"
+      "releaseArtifactSHA256": "940d5cee86dd57766ef6fbe522ab0fb29cd5e395f72768753b48cb4da1ca2235",
+      "isolatedTestRoot": "cb8afe4dc1953d26bf8b6586897b80a4582a7340",
+      "isolatedTestRootTree": "7724172567b2430457ec810ecd1cf236a55e8a55",
+      "isolatedTestBranch": "codex/erp-history-anchor-isolated-20261107",
+      "isolatedTestRootRemoteReadback": true,
+      "fixtureRunnerResultSHA256": "684a5bc37bc8f95344e9a4ac22ca1526facafb344daa82fc7c375a9932e4f4d3",
+      "qbIsolatedModelFixSHA256": "8f7e6be9ca7e7a4ad525db476df98bc0fa57e1ae61843a6294dc90740bd2c973"
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
-      "state": "ACTUAL_SERVER_RUNNING_NO_TERMINAL_RESULT",
+      "state": "ACTUAL_FAILED_AFTER_SOURCE_PREFLIGHT_BEFORE_BINDING_R4_CLEAN_STOP",
       "toolCommit": "798482ce91a5ff990787956ed93659f609e5f0db",
       "sourceResultSHA256": "577ca71de199ce6488a4e59217ddbfa5bbafee13349bb09d0ca3717cabf12f72",
       "QBResultSHA256": "29511821f7b6be04a2bcac2a80d10c422f2f1757b9f437b8dfbe5cb6f30b4bc0",
@@ -35490,9 +35496,51 @@
       "startsAt": 1794041993528,
       "expiresAt": 1794043193528,
       "owner": "T45 only",
-      "next": "Adopt the actual fixed no-write terminal receipt, preserve any failure, and bind one later import only if exact PREPARE and live guard pass.",
+      "next": "Original D1 preserves exact exclusivity and all existing privileges; QB reviews the affected path. Original T45 binds current stop to next reviewed finite epoch. Actual 685.521 s preflight leaves 214.479 s of old 900 s cap for bind/write/verify; no complete run budget proven yet.",
       "actualServerStartedAt": "2026-11-07T17:01:22.494+08:00",
-      "lastObservedAt": "2026-11-07T17:07:00+08:00"
+      "lastObservedAt": "2026-11-07T17:07:00+08:00",
+      "terminalSHA256": "44fa21e0fb92bec96c6775e81071331253c03638bd30747b9bda6a9c74e70d1f",
+      "outerJobSHA256": "78cdce5ebdd003527c0bb4b94678e2e6e4632e52435316eafe28c2e19fc1dd37",
+      "outerExit": 2,
+      "childExit": 1,
+      "elapsedSeconds": 719.042,
+      "businessWrites": false,
+      "bindingPresent": false,
+      "writeAuthorityPresent": false,
+      "preflight": {
+        "status": "STREAM_PREFLIGHT_COMPLETE",
+        "checksPassed": true,
+        "complete": true,
+        "issues": 0,
+        "elapsedSeconds": 685.521,
+        "indexBytes": 2667474944,
+        "receiptSHA256": "c9b2591f4883d6311a81b866334f9a1756d6fd0a2e3f77724205408578a240fc"
+      },
+      "postgresFirstError": {
+        "enum": "FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_EXCLUSIVE_BACKENDS",
+        "timeUTC": "2026-11-07T09:13:18.745Z",
+        "pid": 1280,
+        "inlineRaiseLine": 69,
+        "enumReceiptSHA256": "213849dcfc7e434a4662c7b99207b76a47f23ae022dced8ae95f9a4e4549f937",
+        "contextReceiptSHA256": "ec32a189fc8028b43507ede34b5dac7359f741f14558b17cc985878dbee1aeed",
+        "sourceFinding": "Fixed generated line 69 is the live pg_stat_activity exclusivity predicate; old observer metadata raise is line 40. PG17.11 hides backend_type from unprivileged sessions observing other roles; actual extra backend presence is unverified."
+      },
+      "cleanup": {
+        "state": "ACTUAL_CLEAN_SHUTDOWN_AND_TEMP_ACCESS_RESTORED",
+        "metadataSHA256": "1afa16a877625bdb1099fa7602c7c791dfb9702f1ba8fda1c2f1eb9f1992ba76",
+        "protectedStopSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "processesGone": true,
+        "oldHbaRestored": true,
+        "realDataPreserved": true
+      }
+    },
+    "r4IndependentRealReconciliation20261107": {
+      "at": "2026-11-07T17:28:14.165547+08:00",
+      "owner": "D3 source expectations; D1 original readback seam; T45 actual execution",
+      "sourceExpectationsSHA256": "a9b574a64a5ac8446d6ce14346d5a0393f8ca270e74b05c131cdf3f1ab3d0e4c",
+      "warehouseKeyExpectationsSHA256": "883e678ce3d1f9ce8c712493019a5ee285e3204495abb7e5f5d5537633977cf8",
+      "state": "PRIVATE_SOURCE_EXPECTATIONS_FIXED_NO_DATABASE_RECONCILIATION",
+      "existingVerifier": "Checks each warehouse/SKU and immutable proof but returns global totals only. Separate receive/refund and per-warehouse comparison pending from actual target under current permissions. No private inputs in Git."
     }
   }
 }
