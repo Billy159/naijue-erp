@@ -33303,11 +33303,11 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T06:55:22.788890+00:00",
-      "phase": "R4_TOOL_STAGED_AND_LOADED_POLICY_RESTORED_BOOT06_PENDING",
+      "at": "2026-11-07T15:07:10.297019+08:00",
+      "phase": "R4_BOOT06_EXACT_SCOPE_READY_AWAITING_PRIVILEGED_EXECUTION_CONFIRMATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "C coordinates; original T45 completed STAGING03",
+      "currentOwner": "C fixed the BOOT06 scope; original T45 executes after exact approval",
       "nextOwner": "Original T45 for BOOT06 on separate scope, D1 for actual binding",
       "latestActualReceiptSHA256": "fd3a5e995bd2f13bb8e76cc27a401cf5840a37439ccb7aa7448da987a4923f43",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Separate exact BOOT06 target and execution scope before runtime/REAL binding. Preserve verified stop31b7 and completed stage evidence; no repeat transfer.",
+      "next": "Issue BOOT06 once after direct confirmation for retained PG restart and finite expiry changes. Bind actual observation with D1 before any PREPARE. Reuse completed STAGING03.",
       "authority": "Exact one 30 minute staging window completed and original policy restored. Standing user direction covers future equivalent staging only, with a fresh bounded scope each time. No BOOT06, REAL or deployment authorization is derived from this stage.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -35156,6 +35156,24 @@
               "userMessage": "01a1b4c2-745e-70c0-b410-0d59934bc555",
               "scope": "Same previously reviewed fixed-tool transfer and independent Linux load only. C pins version, destination and up to 30 minutes per invocation. T45 preserves and restores exact prior strategy on success, failure or expiry. Valid until user changes or revokes. No standing server policy, database operation, REAL import or release authority."
             }
+          },
+          "boot06ScopeDraft": {
+            "at": "2026-11-07T15:07:10.297019+08:00",
+            "sha256": "2a207a91ccdbc5b7a9fa5f3df60c6cf0a33da882aef8080e744125379d052972",
+            "bytes": 2696,
+            "status": "EXACT_SCOPE_DRAFT_NOT_AUTHORIZATION",
+            "requestKey": "t45-r4-retained-restart-20261107-06",
+            "target": "erp_native35_20261107_r4",
+            "maximumBootMinutes": 5,
+            "maximumGuardianMinutes": 60,
+            "maximumLocalHbaSeconds": 30,
+            "verifiedSourceFiles": 7,
+            "stopReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+            "stageReceiptSHA256": "fd3a5e995bd2f13bb8e76cc27a401cf5840a37439ccb7aa7448da987a4923f43",
+            "readySHA256": "1e5434ef52380335dfa6e74dcd2e703525feec118366d82accd0fc64cb674504",
+            "qbSHA256": "ba269a5f86dc7373bf4e016f381beff092b923b0bfd02b97738b33ada1f66abc",
+            "authorized": false,
+            "submitted": false
           }
         }
       }
