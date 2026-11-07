@@ -2538,3 +2538,11 @@ D1 commit73480c928a5950670ca3127b0eca3dc5719b3e55（parent49d）仅identity_keys
 - 原参数07实际COMPLETED0/.770044603s，f909cfd11481a85d928d59a0d8eea0362d54c1863e11fb3cbb5e94d39747b117/602B，C参数b1e4f601…1778B读回，inode14560751/root:61035/0640，派生access9a19040f…34667B。旧df2与安装a7d不改，无业务写。
 - 六leaf已一次预置，READYd8a719d9…3866B全部8pins闭合。C准确PREPARE11决定88a2b20f73eb60ca25563912b9291aa89d55815f8587fbd4c66ba7fd1f311ceb/4597B，只填候选两时间：1794082611578–1794083811578，固定原namespace t45-r4-real-prepare-20261107-11，实际执行时间另记Nov8。原T45仅一次提交、原key查未知、不延窗。
 - 同一734实际Linux完整预检仍待终态，原100ms/250msgap/4GiB/20min/1500outer与全部原权限、EOF、身份、金额库存守卫保留。无PREPARED结论，无REAL EXECUTE，源级优化不宣称真实性能已过。实际成功即接续原授权REAL，不再等待人类重复提醒。
+
+
+### 2026-11-08T04:44:07.287144+08:00 — PREPARE11实际到期失败，按新成本继续定位
+- 原key实际FAILED2/1139.353088845s，job23fa2ecc…/508B，root5623557c90616d3fb2f9670d05613e9c7d027c8cff5bba71469eb548618a419d/1645B；首个明确拒绝为REAL_ORIGINAL_WINDOW_EXPIRED。minfree7,444,389,888B、maxgap.116856604<.25，不能归因空间或采样失败，也不能称734性能已改善。
+- 终态reader实际COMPLETED0/.5201036s，d4648e31a2a8cf07d917b84e259d0f8820f1adfc47a37252d737b5c4effd845e/34898B：PG2192/guardian2185/Node2291均实际ABSENT；原HBA/45项access及输入metadata恢复、秘密projection无残留，a7d/4736/b1e4保留。CLI/connection仍UNKNOWN，未据cleanup推定事务回滚。
+- 真实最后phase是INDEX_FINALIZE END1086911.149648ms→INDEX_HASH BEGIN1086967.894344ms，无HASH END，无summary/binding。1098004globalrows与608916分表counter口径不同，均不是全预检PASS。transfer_line REGISTRY490609.482276ms/VALIDATION_INCLUSIVE558843.729638ms为重叠wall非CPU，实际比旧10registry更慢，不能套旧成本。新index2,567,147,520B/inode14560879保留，free7,443,914,752B低于下次启动floor。
+- 原技术observer无phase输出：实际journal证运行120s后timeout，当前unit无active；publicSTARTING保持为陈旧记录，不改成成功、不重提。该次原manager锁串行发生在RUNNING写入前，不能据此判断产品卡死。
+- 原D1接新11成本，先核实际Node/node:sqlite schema/EXPLAIN与可能已有CPU/IO事实，再选最小修复；未计时CPU/IO保持UNKNOWN。T45仅一次有界技术元数据/虚构key EXPLAIN，0业务SELECT/COUNT/大hash/PG/持久写，不新增平台或重复全审。归档候选只本地准备，待技术读取结束后绑定实metadata；无新BOOT/PREPARE/EXECUTE。
