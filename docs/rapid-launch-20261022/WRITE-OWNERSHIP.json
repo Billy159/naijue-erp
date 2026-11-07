@@ -10539,5 +10539,22 @@
     "scope": "Preserve main9e914 WIP exact bytes before original T45 source adoption; necessary original generator checks and accurate caller registration, no approvals rewritten; frozen10fc/af75/servers unchanged by local source adoption",
     "state": "SOURCE_QB_SCOPED_PASS_LOCAL_ADOPTION_NOT_YET_DONE",
     "model": "gpt-6.1-sol/high"
+  },
+  "historyAnchorExact35Local20261107": {
+    "at": "2026-11-07T16:44:07.561492+08:00",
+    "authority": "Human message 01a1b528-ccaa-7eb0-a250-4d30c8feeeee assigns historical sales/transfer repair to local controller",
+    "owner": "Original D1 01a16161-e65d-7742-8471-4b3c786ed314 sole writer of this bounded isolated successor",
+    "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+    "paths": [
+      "adapters/postgres/src/published-document-inventory-anchor-reader.ts",
+      "adapters/postgres/src/sales-unit-of-work.ts",
+      "adapters/postgres/src/transfer-unit-of-work.ts",
+      "adapters/postgres/src/sales-retained-approval-reader.ts",
+      "adapters/postgres/src/sales-query-reader.ts",
+      "apps/api/src/postgres-read-api.ts"
+    ],
+    "tests": "Only existing affected anchor/ordinary document tests or a narrowly needed regression case. Register an additional shared production file first if strictly necessary.",
+    "scope": "Exact35 historical anchor in its existing composition, read and write consumers only. Existing Dot source and WIP untouched. No other application ownership moved. C integrates the fixed successor after directed review. T45 only for real server/PG execution.",
+    "reviewer": "Original QB; ordinary sales and transfer isolated real PG, QF affected normal entry after build"
   }
 }

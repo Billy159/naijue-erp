@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T15:07:10.297019+08:00",
-      "phase": "R4_BOOT06_EXACT_SCOPE_READY_AWAITING_PRIVILEGED_EXECUTION_CONFIRMATION",
+      "at": "2026-11-07T16:47:13.895726+08:00",
+      "phase": "R4_BOOT06_ACTUAL_NEW_EPOCH_OBSERVED_PREPARE_BINDING_IN_FLIGHT",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "C fixed the BOOT06 scope; original T45 executes after exact approval",
-      "nextOwner": "Original T45 for BOOT06 on separate scope, D1 for actual binding",
-      "latestActualReceiptSHA256": "fd3a5e995bd2f13bb8e76cc27a401cf5840a37439ccb7aa7448da987a4923f43",
+      "currentOwner": "Original T45 actual restart/guardian; original D1 exact epoch binding",
+      "nextOwner": "Original D1 binding and QB affected source; original T45 PREPARE actual execution",
+      "latestActualReceiptSHA256": "6ea7ff6f0e4e658a9dd3b12f7cc1e03e852b83fd3981fd287539af2121e72df4",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,8 +33318,8 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Issue BOOT06 once after direct confirmation for retained PG restart and finite expiry changes. Bind actual observation with D1 before any PREPARE. Reuse completed STAGING03.",
-      "authority": "Exact one 30 minute staging window completed and original policy restored. Standing user direction covers future equivalent staging only, with a fresh bounded scope each time. No BOOT06, REAL or deployment authorization is derived from this stage.",
+      "next": "Bind current protected BOOT06 observation and exact program, then run original finite PREPARE no-write after verified parameters. Do not reuse BOOT05 or repeat BOOT06.",
+      "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
@@ -35419,6 +35419,43 @@
       "actualServerPGSQL": false,
       "runtimeModelQB": "Requested gpt-6.1-sol/high; actual model/effort/Fast not independently verified",
       "next": "Carry this local successor into the original final REAL carrier binding after actual BOOT06. No change to the independent BOOT06 scope or the fixed installed tool. Real execution and independent PG reconciliation remain unverified."
+    },
+    "r4Boot06AuthorizedActual20261107": {
+      "at": "2026-11-07T16:47:13.895726+08:00",
+      "state": "RETAINED_R4_ACTUAL_NEW_EPOCH_METADATA_OBSERVED_NOT_BUSINESS_VERIFIED",
+      "requestKey": "t45-r4-retained-restart-20261107-06",
+      "userMessage": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
+      "issuedDecisionSHA256": "37ce112200925aa249e588bcf4abafae910b6393c36d7cb751ba7697534d62d5",
+      "actualTransportReceiptSHA256": "6ea7ff6f0e4e658a9dd3b12f7cc1e03e852b83fd3981fd287539af2121e72df4",
+      "protectedEpochReceiptSHA256": "6ed8533049f3313de64c9a508d5cfb0047185c1e55471aaafd3b4f2c26deb33a",
+      "actualPostmasterStartUTC": "2026-11-07 08:44:06.788494+00",
+      "guardianExpiresAt": 1794044583806,
+      "roleLoginValidUntil": "2026-11-07T09:42:33Z",
+      "exitCode": 0,
+      "elapsedSeconds": 3.075,
+      "scope": "Retained R4 start and temporary auth expiry maintenance; PREPARE, real writes, business acceptance and public switch not executed. End-of-window stop and independent authentication readback separately pending.",
+      "next": "Original D1 binds new protected observation into original publisher and carrier, incorporating reviewed receipt projection 10. Original T45 verifies current guardian, window and input references before original PREPARE.",
+      "verifiedReadOnlyObservationSHA256": "22a3af493eb1889aa7d05640557607fe0ff5063598095ef42f1dc4fb2d403d4f",
+      "actualOwnedProcessesMatched": true,
+      "actualControlledStopStartsAt": 1794044553806,
+      "hbaOriginalReadback": true,
+      "bothRoleExpiryUpdatesAcknowledged": true,
+      "cleanupAfterGuardian": "PENDING"
+    },
+    "r4StandingAuthority20261107": {
+      "userMessage": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
+      "state": "ACTIVE_UNTIL_REVOKED",
+      "owner": "Controller pins exact reviewed target, version, privilege range, window and cleanup; T45 executes",
+      "transferMaximumMinutes": 30,
+      "scope": "Fixed tool upload and Linux load; same verified retained target start or restore and matching finite connection rule, existing role validity, read-only verification and cleanup. Real import and cutover retain their existing exact project authorization. New business decisions, irreversible data handling and mandatory platform approvals remain separate."
+    },
+    "r4HistoricalAnchorLocalRepair20261107": {
+      "id": "HISTORY-ANCHOR-EXACT35-01",
+      "state": "ORIGINAL_D1_DISPATCHED_SEPARATE_SOURCE_SUCCESSOR",
+      "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
+      "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+      "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
+      "next": "Preserve source progress if briefly reprioritized to current actual epoch binding; resume exact35 shared anchor, both UOWs and sales retained evidence, then isolated ordinary-role unreview/re-review and inventory readback."
     }
   }
 }
