@@ -28510,10 +28510,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Original D1: fixed retained-exclusive source, then prepare existing independent readback projections. No target writes.",
+      "D1": "Original D1: confirmed isolated historical fixture-binding mismatch, target repair only. R4 independent readback source fixed.",
       "QB": "Original QB: history candidate transport/carrier source scoped PASS; review 4199807b and T45 exact proof increment.",
       "D2": "Original D2: fixed 4199807b minimal tool closure, no APP rebuild or server execution.",
-      "T45": "Original T45: fixed history C13 transfer only and original policy restoration. R4 remains stopped pending resources and reviewed successor.",
+      "T45": "Original T45: history candidate clean stop; check minimal safe continuation and R4 existing opaque admin seam, no server write.",
       "D3": "Original D3: independent source expectations frozen, target readback follows actual verified original commit.",
       "QF": "Original QF: formal normal-entry prerequisite open, no new speculative browser run."
     },
@@ -35451,12 +35451,12 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "ACTUAL_SYNTHETIC_CLUSTER_STARTED_EXACT_C9_DELIVERED_PENDING_HISTORY_TEST",
+      "state": "ACTUAL_INSTALL_PASSED_FIXTURE_BINDING_REJECTED_ORDINARY_NOT_RUN_STOPPED",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "T45 one original C9 installation+history-only run, recover exact terminal, ordinary business proof and cleanup. QB only actual affected evidence.",
-      "at": "2026-11-07T18:17:06.731277+08:00",
+      "next": "Original D1 targets the exact synthetic binding; QB verify producer-consumer regression only. T45 checks same-install continuation without replay; do not restart under expired or consumed authorization.",
+      "at": "2026-11-07T18:22:38.134298+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
       "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
@@ -35501,7 +35501,14 @@
       "c9SHA256": "72355e34b00e9805bdf13682554f47718f4763e1cb89b4566467ce6e67612247",
       "isolatedExpiresAt": 1794047491855,
       "actualPostgresStarted": true,
-      "actualOrdinaryHistoryPassed": false
+      "actualOrdinaryHistoryPassed": false,
+      "actualHistoryResultSHA256": "3d963a0e29c3be957c2d766393d1da1b6dd569729223037c04bd25c09a66094a",
+      "actualHistoryJobSHA256": "cbd1cc7f407908e82ae2a5759c89159edb3b2021297b1ffbca860577b4ec0a9f",
+      "actualHistoryCleanupSHA256": "3e07618bddc9080b3f9c402f32be4eef70d4173e212f8d05cc6b249ea77564a6",
+      "actualInstallPassed": true,
+      "actualInstallationRecordPublished": true,
+      "firstFailure": "FRESH35_ISOLATED_SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED (rollback child, no SQLSTATE)",
+      "fixtureFailureCause": "Builder binds bare initialize for historical-anchor; exact consumer expects {initialize, encodedScrypt}. Business validation was not reached."
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
@@ -35603,16 +35610,16 @@
       "d2ToolArchiveMembers": 358
     },
     "oldProductionRestoreLiveCapacity20261107": {
-      "at": "2026-11-07T18:17:06.731277+08:00",
+      "at": "2026-11-07T18:22:38.134298+08:00",
       "state": "ACTUAL_STORAGE_SHORTFALL_REPORTED_NO_OTHER_AUTHORIZED_VOLUME",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 5230022656,
+      "actualAvailableBytes": 5173665792,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 31277199360,
+      "oldRestoreShortfallBytes": 31333556224,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 2977492990,
+      "r4ShortfallBytes": 3033849854,
       "next": "Recheck actual volume after user/storage intervention. Preserve backups and failure evidence. Continue independent isolated history scope.",
-      "latestResourceReceiptSHA256": "82f1c9a4a19bb17ff0136646804aaba9189dd4dc06f4628d4461d16e2774b5e3"
+      "latestResourceReceiptSHA256": "3e07618bddc9080b3f9c402f32be4eef70d4173e212f8d05cc6b249ea77564a6"
     }
   }
 }
