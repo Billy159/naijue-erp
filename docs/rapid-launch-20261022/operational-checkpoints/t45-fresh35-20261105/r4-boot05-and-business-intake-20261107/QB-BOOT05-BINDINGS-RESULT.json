@@ -1,0 +1,81 @@
+{
+  "task": "BOOT05_PUBLISHER_CALLER_BINDING03",
+  "status": "PASS_SCOPED_BOOT05_PUBLISHER_CALLER_BINDINGS_SOURCE",
+  "sources": {
+    "fresh35-production-carrier.py": {
+      "sha256": "5e66d6ca390675bfe6a5942c5cbdd94ee27d351127fb2129afe72dc4a3dc0d14",
+      "bytes": 107330
+    },
+    "nonroot_input_access.py": {
+      "sha256": "e9d15db75b7f9bf30440b90c57e3c1d343aeede1fecba7731d6d0152bee159ba",
+      "bytes": 12057
+    },
+    "real_access_consumer.py": {
+      "sha256": "b176281e11e25386e3d1ae24cb0063ad10ac94f0f1c84deeb519addf2a9d17f1",
+      "bytes": 6193
+    },
+    "production-plan.json": {
+      "sha256": "331d0583ce64265912aa486dee24353490af1a367857c05090d57bd4d28d2286",
+      "bytes": 785
+    },
+    "publish_restart_parameters.py": {
+      "sha256": "eedca5f29358eac09e1f4a5613bc486e4235f5eec2b0cb3d1745df0268df6a8b",
+      "bytes": 10951
+    },
+    "publish_retained_parameters_entry.DRAFT.py": {
+      "sha256": "80d08a07d8af12f1f4c055749b08ee079fcffe784bbacfe3e0df07ace8554f4e",
+      "bytes": 4493
+    }
+  },
+  "producerResultSha256": "695cb21f89938cb0a29dc37f2ce338433fed3a55814898976c795aadb469c528",
+  "findings": [],
+  "checks": {
+    "exactAllPins": "PASS",
+    "mainOnly3BootDirsAnd1EntryPath": "BYTE_IDENTICAL_AFTER_ALLOWED_SUBSTITUTIONS",
+    "accessHelper": "BYTE_IDENTICAL_TO_D84C_ADOPTED",
+    "entryFunctionAST": "UNCHANGED_ONLY_PUBLISHER_SHA_LITERAL",
+    "planMainAndEntryPublisherPins": "PASS",
+    "C05ScalarGuards": [
+      {
+        "case": "nonoriginal-bytes-declared-original-pin",
+        "accepted": false
+      },
+      {
+        "case": "nonoriginal-bytes-declared-own-pin",
+        "accepted": false
+      },
+      {
+        "case": "exact-C05-scalars-only-accept-and-wrong-start-refuse",
+        "passed": true
+      }
+    ],
+    "guardTestsUse": "Pure synthetic nonoriginal bytes only, no server-original reconstruction",
+    "actualOriginal1673BPositive": "NOT_TESTED",
+    "actualAccessPlanHash": "PENDING_REAL_PUBLICATION_NEW_INODE;8182IS_TEMPLATE_ONLY",
+    "priorPublisher8AndAccess7": "ADOPTED_NOT_RERUN",
+    "exactCParameters": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/e5c5a762-cleaning-intake-20261102/r4-independent-real-authority-20261107-03/operation-parameters.json",
+      "sha256": "839e7d4aeadb8dd2ce7d1b53b1ddc8f383eb92dcd14e90c40075708f2319dcf7",
+      "bytes": 1752,
+      "constantAndOriginalIdentityChecks": "PASS",
+      "actualServerPositive": "NOT_TESTED"
+    }
+  },
+  "CDecisionSha256": "aad7149d3d9ae92b66372b0d1de1bfed9fa712140e90769209fd9f916502598b",
+  "serverProtectedReceipt": {
+    "path": "/etc/naijue-erp/fresh35-retained-restart-v1.json",
+    "sha256": "14193ae90dabf006bad860b6d4650845ceb1489b048d832d2c02ff0f90de8df8",
+    "bytes": 1673,
+    "evidence": "actual T45 server readback, original bytes remain on server"
+  },
+  "redactedExportIsNotOriginal": true,
+  "pendingActualAccessPlan": "Must derive from actual new parameter inode readback;8182 template not actual hash",
+  "notTested": [
+    "actual server original1673B positive and publisher execution",
+    "actual new params inode and derived access-plan hash",
+    "REAL17binding/EXE/ordinaryAPP/business release"
+  ],
+  "operations": "Source/constants/hash/guard predicates and exact nonsecret C params read only; no serverRAWPG credentials or reconstructed original",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T04:26:36.925467+00:00"
+}

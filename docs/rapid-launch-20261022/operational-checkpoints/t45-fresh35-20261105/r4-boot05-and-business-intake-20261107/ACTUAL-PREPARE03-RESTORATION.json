@@ -1,0 +1,23 @@
+{
+  "SQLExecuted": false,
+  "automaticRetry": false,
+  "checkedAtEpochMs": 1794026082688,
+  "currentReference": {
+    "format": "REAL_ACCESS_METADATA_REFERENCE_V1",
+    "ledgerSha256": "e50867b5ed4d98cbd61fd5dc047af76985b9ab9cf177b23f255e20a1a248544a",
+    "phase": "restored",
+    "previousPointerSha256": "64a8fe684b6be3496d1243c25c0ff811318dbaf564c19c851f0b090b524010e4",
+    "requestKey": "t45-r4-real-prepare-20261107-03"
+  },
+  "databaseWrites": false,
+  "metadataRowsRestored": 45,
+  "nodeNeverStarted": true,
+  "nonsecretMetadataProjectionsRetained": "[REDACTED]",
+  "originalDockerCallerTerminalAndReaped": true,
+  "originalFrozenRawBindingRewritten": false,
+  "originalKey": "t45-r4-real-prepare-20261107-03",
+  "secretProjectionsAbsent": "[REDACTED]",
+  "signalsSent": false,
+  "state": "ORIGINAL03_INPUT_METADATA_RESTORED_AND_TWO_CREATED_SECRET_PROJECTIONS_ABSENT",
+  "transactionRollbackInferred": false
+}
