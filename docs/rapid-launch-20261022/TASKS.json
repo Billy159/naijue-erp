@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45soleexecutor following actualPREPARE07 originalkey; wait terminal/phase/resource+cleanup. No duplicatepreflight, no newEXECUTE untilexactsuccessfulpreflight; C receivesandcontinues. Other readyhistory/reconcile/backup/browser packages retained, avoid extraheavyserverwindow.",
+      "next": "T45collect existingreader01; supplement only missingfinalcleanup exactfinite readonly0SQL0SQLite. Then originalT45minimum sampler scheduling evidence/fix retaining250ms,4GiB,20min,sourcepins/identitychecks; Cdispatch originalQB affecteddelta. No newBOOT/PREPARE/EXECUTE now.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36363,7 +36363,7 @@
     },
     "r4RealPrepare07Actual20261107": {
       "owner": "OriginalT45 sole server/C exact inputs",
-      "state": "ACTUAL_RUNNING_TERMINAL_PENDING",
+      "state": "ACTUAL_FAILED2_SAMPLE_GAP_290MS_OVER_250MS_NOT_SPACE_FLOOR",
       "job": "t45-r4-real-prepare-20261107-07",
       "READY": "2ae719e90b0d24eb871a2d057c4411a3d7e4fbbee1f5d4374d87657424d2496b",
       "CAction": "db3923274013cb67b9a8e87c46b2c35e8ff14ee928904d6ce7f8535cd8a2b919",
@@ -36381,8 +36381,26 @@
       "rootStartedUTC": "2026-11-07T15:09:54.792254+00:00",
       "actualUnit": "naijue-erp-op-5cc58239-379100d0a481",
       "lastCollectedReceiptSHA256": "a118de908ef2152c7c8d86dfa100f173939dc19ea25d39780045dc487a13614f",
-      "phaseProgress": "AWAITING_BOUNDED_T45_READBACK_NOT_INFERRED",
-      "terminal": null
+      "phaseProgress": "Originalreader01 STARTING; no phase/NodePID inferred. Retainedpartial07/06 untouched, noSQLiteopen/recovery.",
+      "terminal": "FAILED_NO_REPLAY",
+      "jobReceipt": "765ff944365465c813cf7339d809619b529536494e94acfde5fd41459c5cf9ec",
+      "result": "47298019367282a5c62c99267ba85c0f564fd101d31cb20fdd78fefd98d0daf5",
+      "exitCode": 2,
+      "durationSeconds": 919.9646028261632,
+      "finishedUTC": "2026-11-07T15:25:14.783625+00:00",
+      "firstFailure": "REAL_SPACE_SAMPLE_LATE",
+      "maxSampleGapSeconds": 0.29017687030136585,
+      "originalMaxSampleGapSeconds": 0.25,
+      "minimumAvailableBytes": 7105851392,
+      "samples": 4500,
+      "nodeParentAndDescendantsReaped": true,
+      "inputMetadataRestored": true,
+      "immediateControllerStopped": false,
+      "immediateCleanupComplete": true,
+      "transactionRollbackProven": false,
+      "cli": "UNKNOWN_NOT_PREPARED",
+      "finalCleanup": "PENDING exactPG/guardian/port/HBA/parameters/access custody readonly; immediatecleanupComplete notfinalPGproof",
+      "sourceDiagnostic": "Currentcarrier tail sleeps to200ms cadence while checks250ms begin/finish bound; leaves nominal50ms slack. This is sourcefact not proof IO/scheduler cause of actual290ms."
     }
   }
 }
