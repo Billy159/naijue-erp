@@ -28510,12 +28510,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Read-only time/recovery and same-invocation mutability review closed, no source edits. Await exact original-seam lifecycle and actual capacity. No duplicate tests/source scans.",
-      "QB": "Scoped source and fixture/pin evidence adopted; next actual history/R4 result pending, no repeat review.",
-      "D2": "Fixed9f history and af395 tool packages ready, waiting resource/actual execution; no new rebuild.",
-      "T45": "Original9f PG started, C9 delivered for exact HISTORY_ANCHOR_ONLY ordinary-role run. Await original result/cleanup, then authorized38 old files retirement; no parallel heavy operation.",
-      "D3": "Original D3: independent source expectations frozen, target readback follows actual verified original commit.",
-      "QF": "Original normal-entry/core-business prerequisite still missing. No speculative new browser task."
+      "D1": "Current stop-pin backup producer1a9aea5d source/QB5-model PASS; no server/PG. Backup/restore actual size and committed R4 batch pending.",
+      "QB": "Carrier02 003c698a source/model PASS a2a3a576; backup1a9aea5d PASS3deaf3db. Only new actual Linux/PG results next; no duplicate whole backend.",
+      "D2": "856e5a59 minimum history successor packedb968e4b5, old App/Web bytes reused; local7298 member readback and2.48MB tail valid; no server/PG.",
+      "T45": "Exact four stopped rebuildable app directories fixed4b2483af, actual deletion pending. Carrier02 capture/pass_fds source scoped QB pass; next newBOOT07 exact scope and current facts, PREPARE business1200/outer1500 proposed, no EXECUTE budget.",
+      "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
+      "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -35244,6 +35244,21 @@
         "independentRestoreOfExactNov06Bytes": false,
         "earlierNov01IsolatedRestoreSHA256": "69a93b068f5354f48fd28c9c03a5f95b4893367efae694d8aa615ed1439a544f",
         "scope": "Original production rollback evidence only. Prior independently restored old snapshot used a different capture; neither constitutes a restore of Nov06 bytes or post-import R4 data."
+      },
+      "latestPrepare05StopSuccessor": {
+        "at": "2026-11-07T20:25:51.568620+08:00",
+        "sourceSHA256": "1a9aea5d6d4dc7fe1083b7ce0b570640142d527920b6ae70ca461575045ae3f4",
+        "parentSHA256": "7d5d7481b6a3e2805351c976da9316e17d1ff5611b72d463db9d5b24c0a09049",
+        "stopSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "handoffSHA256": "46022196f60182033aa066d2549b9808570ce70923c0f191b4ea2a69af7660da",
+        "patchSHA256": "ed27585fe87c565e5b0e0d5620ce7cd5201d47f16677500ada71aca7cd74c2cb",
+        "materialsAndSpaceSHA256": "190bd3cfce9613c1d4d8c3ad47561a19138dee82dcb5c8748fbcb933f4056a5f",
+        "qbResultSHA256": "3deaf3db8a5640cc314c4be88a93ddc5aefb1f33024e745482890dec72616455",
+        "modelsPassed": 5,
+        "scope": "One exact predecessor-stop digest only; original installation/sourceSet8694, actual epoch/captured receipt, committed verified batch, closed/drained fence, independent SID/PGDATA and capacity limits unchanged.",
+        "actualBackup": false,
+        "actualRestore": false,
+        "new35CapacityRequirement": "UNKNOWN actual postimport source size/backup outputs/restore peak/per-device free facts missing"
       }
     },
     "controllerNewScopeDecisionBasis20261107": {
@@ -35777,6 +35792,15 @@
         "SQLConnections": 0,
         "signalsSent": 0,
         "containerChanges": 0
+      },
+      "fourStoppedSuccessor": {
+        "state": "C_FIXED_FOUR_LIST_T45_ACTUAL_CLEANUP_PENDING",
+        "candidateSHA256": "6ae5375fe00ae43bfe6b6cac1fab435387acc771ca881f4b91924d5d8c9974d3",
+        "readOnlySHA256": "289930f84798d406b663a93ac5a3c696adf34b81b94fc042d0674d69db49666b",
+        "controllerFixedScopeSHA256": "4b2483afc1d1cc74b6b25c25ca49ef61e60a1e297623e3cddff087fc1065f429",
+        "estimatedAllocatedBytes": 528338944,
+        "actualFreedBytes": null,
+        "scope": "cb8 deploy,9f deploy,r48 server,r48 web only; old archives/READY/state/authority/PGDATA and original receipts retained. No active/unknown consumers, no mount overlaps. Recheck CAS and reconstruction before deletion; no DB/container/image/shared-service action."
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -35828,7 +35852,19 @@
       "qbResultSHA256": "e3f3756d193507656ff16c7904d4cb9148d1693cb3cfdb9f3633414a1ebafde5",
       "qbIndependentNewModelPass": 1,
       "qbMismatchRejections": 6,
-      "next": "Original D2 fixed minimum successor; estimated materialization343MB exceeds current116625410B margin. T45 exact additional stopped rebuildable application-only list needed before successor PG. No historical ordinary-role PASS."
+      "next": "Original D2 fixed minimum successor; estimated materialization343MB exceeds current116625410B margin. T45 exact additional stopped rebuildable application-only list needed before successor PG. No historical ordinary-role PASS.",
+      "successorPackage": {
+        "resultSHA256": "b968e4b5b76c1a49f00b10a9861030a10adaa2392a83fd51b13bdaff8d04a3f1",
+        "archiveSHA256": "9e7d7efc4352d792afea412e1da2bb05b0f62a53c36d5a451f0fe89914238a9a",
+        "archiveBytes": 83708235,
+        "tailSHA256": "14773509ea4ae5a87cdb83961ed2abc423836dd0821e232fab315ea8180446b2",
+        "tailBytes": 2484358,
+        "sourceSetUnchanged": "04e47364cad567679fc971fbba8221b08ea331c2c9dcb853cfc363e4fe5be809",
+        "newRunnerOutside214SourcePins": true,
+        "binding": "New exact Git root/runnerSHA/manifest/archive; no old9f PG PASS reuse.",
+        "separateCopyFileEstimateBytes": 343208401,
+        "actualPG": false
+      }
     },
     "r4Af395ebaToolStaging20261107": {
       "at": "2026-11-07T20:07:30.356253+08:00",
@@ -35858,6 +35894,28 @@
       "BOOT07": false,
       "REAL": false,
       "appDeployed": false
+    },
+    "r4CaptureCarrier20261107": {
+      "at": "2026-11-07T20:25:51.568620+08:00",
+      "state": "EXACT_SUCCESSOR02_QB_SCOPED_SOURCE_MODELS_PASS_NOT_EXECUTED",
+      "sourceSHA256": "003c698abe1895250dcdbeb27ac76e8542a8c066b397fe6fbb205850de30773e",
+      "parentSHA256": "c90a7804c156cc468312fb9cae702c6b8b7daaebf6308b2b619d133d6ec50647",
+      "supersededDraft": "0f52ace7cb26d02014db6255dbfd6ad935ae1fc4f45bf5f2a01571911383c167",
+      "proofModuleSHA256": "d177c52cf7bd26fd5501954128814308c44d221cef330bd6e201da13d94a795c",
+      "qbResultSHA256": "a2a3a5764370a6ec384c2c78cda28697abb81834d88917b8580855294e633ca0",
+      "scope": "Fixed original RR/RO admin callback <=8s/capture<=30s, six-key root0400 proof, original same namespace61035 clean environment + inherited FDs, all descendants reaped before close. Unknown descendants stop original controller and block childReaped/secret restore/PASS. No Node changes.",
+      "actualDispatcherSHA256": "9c7c5eabe4697fc1768e370f4e972dc6ca6a0f8306ed0c5c04729e798c66e15d",
+      "actualDispatcherReceiptSHA256": "289930f84798d406b663a93ac5a3c696adf34b81b94fc042d0674d69db49666b",
+      "originalManagerMaxSeconds": 10800,
+      "prepareBusinessSeconds": 1200,
+      "proposedPrepareOuterSeconds": 1500,
+      "EXECUTEBudget": "UNSET",
+      "notVerified": [
+        "actual Linux61035 FDs and admin validity",
+        "new actual BOOT07 epoch/guardian/parameters",
+        "successful PREPARE timing and complete EXECUTE budget"
+      ],
+      "next": "T45 exact newBOOT07 scope and Linux/PG prerequisites, C current-fact binding. Existing staging window was restored and is not new boot authority."
     }
   }
 }
