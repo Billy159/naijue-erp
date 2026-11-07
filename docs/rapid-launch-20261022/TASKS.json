@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T11:29:39.978974+08:00",
+  "updatedAt": "2026-11-07T11:58:22.398645+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28399,8 +28399,8 @@
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
-      "latestIntegrationCheckpoint": "a7d28729de59f7164d64ca28b025c4a09715bc2a",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-06T08:27:35+08:00",
+      "latestIntegrationCheckpoint": "ff4a873b1a743599b083fcaceff074ca292e4e69",
+      "latestIntegrationRemoteVerifiedAt": "2026-11-07T11:58:22.398645+08:00",
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00"
@@ -33302,13 +33302,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T11:29:39.978974+08:00",
-      "phase": "RETAINED_R4_BOOT02_FAILED_STARTUP_READINESS_CLEAN_STOPPED",
+      "at": "2026-11-07T11:58:22.398645+08:00",
+      "phase": "RETAINED_R4_BOOT04_GENERIC_PSQL_FAILURE_CLEAN_STOPPED_EXACT_READINESS_SUCCESSOR_SOURCE_PREPARATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
       "nextOwner": "Original QB scope-only review; C accurate new execution binding",
-      "latestActualReceiptSHA256": "2ccc5fca7f6c4d3904b67d352f77f310b17b4c85da70ca2d71e93f6d6da174ee",
+      "latestActualReceiptSHA256": "6911cc284dd49b148d9087f6558efd6f684b5c8e4414902bc5c7f91c5399bdd4",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 fixes precise startup-readiness consumer, QB only increment; no expiredadmin usage, no unknown retry, no realimport/publicswitch. C delegated scope not automatic new auth.",
+      "next": "OriginalT45 exact existingpg_isready startup consumer + C-approved finite metadata transition source; originalD1 publisher waits actualepoch. No expired04 livejob, no REAL/normalAPP/backuprestore/publicswitch.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33435,13 +33435,13 @@
         "portObservation": "single sample tcp06TIME_WAIT4; all other states0; does not prove later absence",
         "receiptSHA256": "aa6ac4e364c5056872d7e799a1782c65858bdbb6107c7a73543d800c4b612717"
       },
-      "productionSchemaInstalled": false,
+      "productionSchemaInstalled": true,
       "currentFormalCandidate": {
         "branch": "codex/erp-0448z-formal-catalog-root-20261107",
         "commit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
-        "actualPGInstallation": "NOT_TESTED",
+        "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
         "REALImport": "NOT_EXECUTED",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
@@ -34772,11 +34772,49 @@
             "replayed": false
           },
           "next": {
-            "owner": "OriginalT45; originalQB scopedcheck only",
-            "scope": "Finite startup metadata readiness and precise error-stage feedback; no retry of authentication/identity failures or expiredadmin",
-            "actual": "NOT_EXECUTED",
-            "authority": "No routine human questions before noon. C accurate new scope required; originaladmin11:29:02 deadline remains real and not silently renewed."
+            "owner": "OriginalT45; originalQB only changed interface",
+            "scope": "Existing exactclosed pg_isready PG17.11 f02ea2f9/100928B observed --version0, finite readiness before one fixed runtime query; do not retry generic PSQL_FAILED",
+            "newLiveAction": "NOT_AUTHORIZED_BY_EXPIRED_PRIOR04_SCOPE",
+            "roleExpiry": "Actual last verified admin03:29:02/controller03:20 unchanged and expired; next concrete execution needs valid exactscope",
+            "guardian": "No activePG/guardian left; originaldata retained"
+          },
+          "03": {
+            "CDecisionSha256": "b5b372630770db935a957d152f2d7b2c1ceb65531976fdf42ea1d068ead01999",
+            "state": "FAILED2_RUNTIME_READINESS_RUNTIMEERROR_INTERFACE_MISMATCH",
+            "sourceScopeNarrowing": "06/07 finiteValueError model did not cover actual core.need RuntimeError and FRESH35_ISOLATED prefix; corrected onlysource08",
+            "errorSha256": "421af29136867917557af496c5e22d508c2ef6a44aae108f0658ba50fbfb9da5",
+            "cleanupSha256": "ca0663849049b9fa50ab4f595551f72d445ceabcc853e6fbeeda1bd5a0264806",
+            "HbaOrRoleTransactionReached": false,
+            "replayed": false
+          },
+          "04": {
+            "CDecisionSha256": "52a9a08e69d74669b38d4b5e627585998913dbbe6c2fdf3b4e0bd9c69a9ea671",
+            "state": "FAILED2_1.571s_GENERIC_PSQL_FAILED_CORRECTLY_NOT_RETRIED_CLEAN_STOPPED",
+            "code": "FRESH35_ISOLATED_PSQL_FAILED",
+            "sqlstate": "NOT_CAPTURED",
+            "errorSha256": "29aa029c869ce84e37103f2b605c7094f353ff18d427499331072b8eaee1040f",
+            "cleanupSha256": "ca0663849049b9fa50ab4f595551f72d445ceabcc853e6fbeeda1bd5a0264806",
+            "finalReadonlySha256": "6911cc284dd49b148d9087f6558efd6f684b5c8e4414902bc5c7f91c5399bdd4",
+            "facts": "Actualready log appeared after firstconnection; shutdown/reap/portabsence/data-preservation true; HBA originalhash/inode14555531/61035:61035/0600/416B unchanged; expiryintent/result absent",
+            "HbaOrRoleTransactionReached": false,
+            "replayed": false
           }
+        },
+        "realAccessConsumerRepair": {
+          "state": "NEED_FIX_REAL_ACCESS_CONSUMERS_NO_RAW_CHANGE_EXECUTED",
+          "QB": "8124701bde1382c72146cf65ad8974294220783465ce20eb1d1c77e2772f802f",
+          "finding": "RAW0710/member0440 and approval0440 conflict with existingprivate-mode consumers; permission restore cannot restore originalctime",
+          "CChosenSourceScope": "Keep originalfrozen bytes, exactCaccessplan rootledger before/active/restore metadata and one protected observation reference CAS only; no broad guard weakening/registry/new authority",
+          "owner": "OriginalT45 main/access only"
+        },
+        "publisherHandoff": {
+          "owner": "OriginalD1 only two files; T45 stopped writing them",
+          "state": "SOURCE_READY_8_LOCAL_MODEL_CASES_NOT_PG; WAIT_ACTUAL_SUCCESSFUL_EPOCH_AND_C_BINDING",
+          "handoffSha256": "a6a2b78d54c74bc1691d64eae7a4a718325842f7235d9ab439aafaf1c7c85d62",
+          "publisherSha256": "7a9e16c16f5272f085f70ded10144d360ffc4c40688fc2c7e4937d40adda35ad",
+          "outerSha256": "7dff60b7f09baad9fadd75282d699b3fed478523f1ea238025a013eb75d8331c",
+          "currentBoot03BoundAndRejected": true,
+          "futureBindingsNotInvented": true
         }
       }
     },

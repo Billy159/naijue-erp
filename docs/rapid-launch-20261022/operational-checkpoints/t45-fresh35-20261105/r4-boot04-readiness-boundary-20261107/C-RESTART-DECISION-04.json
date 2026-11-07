@@ -1,0 +1,26 @@
+{
+  "format": "T45_EXACT_RETAINED_R4_RESTART_V1",
+  "requestKey": "t45-r4-retained-restart-20261107-04",
+  "decision": "RESTART_SAME_RETAINED_R4_DATA_AND_OBSERVE_NEW_EPOCH",
+  "startsAt": 1794023525504,
+  "expiresAt": 1794023685000,
+  "guardianExpiresAt": 1794024000000,
+  "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+  "previousStopReceiptSha256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
+  "dataDirectory": {
+    "device": 66304,
+    "inode": 14555503,
+    "uid": 61035,
+    "gid": 61035,
+    "mode": 448
+  },
+  "authorizationReference": "C retained R4 restart decision 20261107-04 under direct human delegation in controller Chat until 2026-11-07T12:00+08:00; scoped QB3398c993 actual-core interface and QBa7a36e04 serializer adopted. Explicit expiry-only localhost maintenance <=30s with original HBA restored before two finite expiry ALTERs. Prior01/02/03 terminal failures retained; no password/grant/record/business change or authorization fallback.",
+  "roleLoginValidUntil": "2026-11-07T03:55:00Z",
+  "expiredRoleMaintenance": {
+    "decision": "EXACT_LOCALHOST_ADMIN_EXISTING_ROLE_EXPIRY_ONLY",
+    "maximumHbaSeconds": 30,
+    "restorerSha256": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a",
+    "driverSha256": "abf669a1308972450d3ad7ac0a709c1c08c61b628d9ded5f2591f082a56a7a95",
+    "clientSha256": "711a78e832168c3065daee732a01f58a5208e782fc144ea99a1dd2af1a6956f6"
+  }
+}

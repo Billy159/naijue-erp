@@ -1,0 +1,7 @@
+{
+  "automaticRetry": false,
+  "code": "FRESH35_ISOLATED_PSQL_FAILED",
+  "sqlState": null,
+  "stage": "RUNTIME_READINESS",
+  "type": "RuntimeError"
+}

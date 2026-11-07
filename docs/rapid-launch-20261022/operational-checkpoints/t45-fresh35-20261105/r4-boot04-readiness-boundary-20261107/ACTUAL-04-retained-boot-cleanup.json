@@ -1,0 +1,15 @@
+{
+  "automaticRetry": false,
+  "businessVerified": false,
+  "cleanup": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "dataPreserved": true,
+    "databasePrivilegesChanged": false,
+    "directChildReaped": true,
+    "errors": [],
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "state": "RETAINED_RESTART_STOPPED_OR_OUTCOME_UNKNOWN"
+}

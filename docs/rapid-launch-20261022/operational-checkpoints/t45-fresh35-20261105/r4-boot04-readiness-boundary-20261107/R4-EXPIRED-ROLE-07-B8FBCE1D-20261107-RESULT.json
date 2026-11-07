@@ -1,0 +1,71 @@
+{
+  "task": "R4_EXPIRED_ROLE_EXPIRY_ONLY07",
+  "status": "PASS_SCOPED_EXPIRED_ROLE_EXPIRY_SOURCE",
+  "sources": {
+    "retained_boot_inside.py": {
+      "sha256": "b8fbce1d4c49d391a2eb3dd708c4c7f0b95b9df72ab294a91c9c8aa232b4f2d0",
+      "bytes": 16851
+    },
+    "start_retained_boot.py": {
+      "sha256": "a011e9353e576456926b4390ae7fbd53f267146e0aa75102929bbedb4490b488",
+      "bytes": 6408
+    },
+    "expired_role_window.py": {
+      "sha256": "a599a276f99663847c0bf3e5a903faed309dc6095e327a2e30889e6018b60221",
+      "bytes": 10134
+    },
+    "expired_role_client.mjs": {
+      "sha256": "677666f89e67e6a1740a8504c8abce62a16222cc6e80cfa371ff8cb1012bbcc7",
+      "bytes": 8610
+    },
+    "original_hba_primitives.py": {
+      "sha256": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a",
+      "bytes": 29359
+    }
+  },
+  "manifestSha256": "e982ccb9f487bcaf2a22f1ea6174295f7fdd57cac53ee478abd9c5860da24584",
+  "findings": [],
+  "scope": "Explicit exact C scope, unchanged HBA primitives, two auth leaves and caller hash interface only",
+  "checks": {
+    "exactSourceHashes": {
+      "retained_boot_inside.py": "b8fbce1d4c49d391a2eb3dd708c4c7f0b95b9df72ab294a91c9c8aa232b4f2d0",
+      "start_retained_boot.py": "a011e9353e576456926b4390ae7fbd53f267146e0aa75102929bbedb4490b488",
+      "expired_role_window.py": "a599a276f99663847c0bf3e5a903faed309dc6095e327a2e30889e6018b60221",
+      "expired_role_client.mjs": "677666f89e67e6a1740a8504c8abce62a16222cc6e80cfa371ff8cb1012bbcc7",
+      "original_hba_primitives.py": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a"
+    },
+    "unchangedRestorerBytes": "EXACT_6CCEE_PARENT",
+    "pythonSyntax": 4,
+    "node24SyntaxExit": 0,
+    "pureNodeGroups": {
+      "passed": true,
+      "groups": [
+        "two-expiry-only-null-safe-SQL",
+        "null-literal-deadline-refusal",
+        "attributes-and-membership-change-refusal",
+        "actual-target-newbirth-logging-facts"
+      ]
+    },
+    "CExplicitScopeAndSources": [
+      "exact explicit scope accepts",
+      "fallback scope refuses",
+      "modified driver bytes refuse"
+    ],
+    "readinessAndReaperAST": "IDENTICAL_TO06",
+    "originalHba12Tests": "REUSED_NOT_RERUN",
+    "actualHbaPg": "NOT_TESTED"
+  },
+  "expiryOnly": "No password, role creation, grant or business write; only two existing role VALID UNTIL statements. Real old expiry values, actual newPG birth and attributes/memberships checked.",
+  "restoreBeforeWrite": "Original HBA inode/bytes/mode and reload+SASL auth method confirmed and fork reaped before same-client BEGIN/CAS/ALTER",
+  "authorizationBoundary": "Requires exact new C decision explicitExpiredRoleScope; no automatic fallback from expired credential, no permission inferred from sourcePASS",
+  "reused": "Original12 HBA fork tests/06 readiness/reaper/formal2leaf/maintenance/monitor not rerun",
+  "notTested": [
+    "actual Linux HBA30second lifecycle/active reload/SCRAM",
+    "actual expired-admin pg.Client/role expiry transaction",
+    "actual newPG/receipt/reaper deadline",
+    "complete REAL caller access/publisher/ordinaryAPP/HTTP"
+  ],
+  "operations": "Local source hash and finite pure checks only; no serverPG credentials or payload",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T03:39:50.503647+00:00"
+}

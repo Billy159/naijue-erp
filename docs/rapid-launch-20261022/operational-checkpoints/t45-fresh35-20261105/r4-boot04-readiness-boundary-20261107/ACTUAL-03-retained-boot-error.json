@@ -1,0 +1,28 @@
+{
+  "automaticRetry": false,
+  "code": null,
+  "frames": [
+    {
+      "file": "retained-boot-entry-20261107-03.py",
+      "line": 8
+    },
+    {
+      "file": "<fixed-retained-boot>",
+      "line": 176
+    },
+    {
+      "file": "<fixed-retained-boot>",
+      "line": 63
+    },
+    {
+      "file": "launch-fresh35-isolated-v1.py",
+      "line": 588
+    },
+    {
+      "file": "launch-fresh35-isolated-v1.py",
+      "line": 53
+    }
+  ],
+  "state": "RETAINED_BOOT_FAILED_OR_UNKNOWN",
+  "type": "RuntimeError"
+}

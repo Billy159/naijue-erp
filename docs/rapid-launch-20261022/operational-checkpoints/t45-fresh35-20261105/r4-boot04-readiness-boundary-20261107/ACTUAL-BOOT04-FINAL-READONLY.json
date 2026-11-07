@@ -1,0 +1,91 @@
+{
+  "/etc/naijue-erp/fresh35-retained-restart-v1.json": {
+    "errno": 2,
+    "exists": false
+  },
+  "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/metadata/deployment-manifest.json": {
+    "errno": 2,
+    "exists": false
+  },
+  "/var/lib/naijue-erp/fresh35-production/real-r3/retained-boot-20261107-04": {
+    "bytes": 4096,
+    "exists": true,
+    "mode": "0o700",
+    "uid": 0
+  },
+  "caller-result.json": {
+    "automaticRetry": false,
+    "businessVerified": false,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "dataPreserved": true,
+      "databasePrivilegesChanged": false,
+      "directChildReaped": true,
+      "errors": [],
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "state": "RETAINED_RESTART_STOPPED_OR_OUTCOME_UNKNOWN"
+  },
+  "cleanup.json": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "dataPreserved": true,
+    "databasePrivilegesChanged": false,
+    "directChildReaped": true,
+    "errors": [],
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "controller-process.json": {
+    "exe": "/usr/bin/python3.13",
+    "pid": 812,
+    "starttime": "292193212"
+  },
+  "expired-role-expiry/hba-restoration.json": {
+    "exists": false
+  },
+  "expired-role-expiry/intent.json": {
+    "exists": false
+  },
+  "expired-role-expiry/result.json": {
+    "exists": false
+  },
+  "failure-diagnostic.json": {
+    "automaticRetry": false,
+    "code": "FRESH35_ISOLATED_PSQL_FAILED",
+    "sqlState": null,
+    "stage": "RUNTIME_READINESS",
+    "type": "RuntimeError"
+  },
+  "hbaCurrent": {
+    "bytes": 416,
+    "gid": 61035,
+    "inode": 14555531,
+    "mode": "0o600",
+    "sha256": "720b3b068cd855a0b0aabe4e20e64bbb4dc3e03643e961e70bfa54b772497a00",
+    "uid": 61035
+  },
+  "oldPostmasterPidFileExists": false,
+  "owned-process.json": {
+    "exe": "/opt/naijue-erp/fresh35-combined-v1/runtime/pg/usr/lib/postgresql/17/bin/postgres",
+    "pid": 819,
+    "starttime": "292193234"
+  },
+  "pgIsReadyBinary": {
+    "bytes": 100928,
+    "exists": true,
+    "sha256": "f02ea2f9ee0119ac00427e700ffe56368d655016c1807e689265afc6138cbf63",
+    "version": "pg_isready (PostgreSQL) 17.11 (Debian 17.11-0+deb13u1)",
+    "versionExit": 0
+  },
+  "safeServerLogFacts": {
+    "bytes": 1271,
+    "fatalOrErrorLines": [
+      "2026-11-07 03:53:55.130 UTC [824] FATAL:  the database system is starting up"
+    ],
+    "readyMessagePresent": true,
+    "shutdownCompleteMessagePresent": true
+  }
+}

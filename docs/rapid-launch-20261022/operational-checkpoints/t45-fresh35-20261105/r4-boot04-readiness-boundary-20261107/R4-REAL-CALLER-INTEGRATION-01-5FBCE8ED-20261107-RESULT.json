@@ -1,0 +1,41 @@
+{
+  "task": "R4_REAL_CALLER_INTEGRATION01",
+  "status": "NEED_FIX_REAL_ACCESS_CONSUMERS",
+  "mainSha256": "5fbce8edc478b1e02a1d4b9be0730824bc692d63a267a9c0a75f826913358a63",
+  "accessSha256": "2a3c783912bc0556fa084f4ecba56fd85b91a2c02ff03f3ac04fc8d6e193931d",
+  "readySha256": "f9a12fcf022a172277c9a35b5e7292d289fe53b39f14c22b379c1673eded254c",
+  "findings": [
+    {
+      "id": "REAL-ACCESS-CONSUMER-01",
+      "priority": "P2",
+      "issues": [
+        "access.prepare RAW0710 conflicts shared snapshot0700 in downstream production_facts",
+        "approval0440 conflicts original private-mode guard",
+        "chmod restoration cannot restore frozen binding ctimeNs"
+      ],
+      "result": "REPRODUCED_EXACT_PREDICATES_AND_LOCAL_SYNTHETIC_CHMOD"
+    }
+  ],
+  "checks": {
+    "mainSha256": "5fbce8edc478b1e02a1d4b9be0730824bc692d63a267a9c0a75f826913358a63",
+    "rootAfterMode": "0o710",
+    "originalRootPredicateAccepts": false,
+    "approvalAfterMode": "0o440",
+    "originalApprovalPredicateAccepts": false,
+    "realLocalChmodCounterexample": {
+      "sameDevInodeBytesMtime": true,
+      "restoredMode": "0400",
+      "ctimeChanged": true
+    },
+    "scope": "Exact AST predicates +metadata plan values and synthetic local file; no RAW/approval content read or permission operation",
+    "actualServerNodePg": "NOT_TESTED"
+  },
+  "actualPGOrPermissions": "NOT_EXECUTED_BY_QB",
+  "notTested": [
+    "fixed successor consumer integration",
+    "full lifecycle permission restore/actual child status",
+    "actual PG REAL ordinaryAPP HTTP"
+  ],
+  "at": "2026-11-07T03:45:21.175005+00:00",
+  "actualModelEffortFast": "UNVERIFIED"
+}

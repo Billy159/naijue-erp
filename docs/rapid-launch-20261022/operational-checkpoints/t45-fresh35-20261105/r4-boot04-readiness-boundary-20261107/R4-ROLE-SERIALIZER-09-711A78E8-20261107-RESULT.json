@@ -1,0 +1,53 @@
+{
+  "task": "R4_ROLE_SERIALIZER09",
+  "status": "PASS_SCOPED_ROLE_EXPIRY_TEXT_SERIALIZER_SOURCE",
+  "sources": {
+    "retained_boot_inside.py": {
+      "sha256": "b66188410a2422d534d7b39932c806138a112a612e91645edf4b060fb1a9e5f6",
+      "bytes": 16997
+    },
+    "start_retained_boot.py": {
+      "sha256": "4b8ba2b96557c5b905be8de5ee77dbdf2d489a265ede42588b1ff3ef3899b50c",
+      "bytes": 6531
+    },
+    "expired_role_window.py": {
+      "sha256": "abf669a1308972450d3ad7ac0a709c1c08c61b628d9ded5f2591f082a56a7a95",
+      "bytes": 10134
+    },
+    "expired_role_client.mjs": {
+      "sha256": "711a78e832168c3065daee732a01f58a5208e782fc144ea99a1dd2af1a6956f6",
+      "bytes": 8648
+    },
+    "original_hba_primitives.py": {
+      "sha256": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a",
+      "bytes": 29359
+    }
+  },
+  "manifestSha256": "128a5ba0089910c49521a41e5d80887535f9e0ff98a138e827cf088558a71d94",
+  "findings": [],
+  "checks": {
+    "sourceHashes": "PASS",
+    "clientOnlyOneExplicitTextSerializationChange": "EXACT_BYTE_COMPARISON_PASS",
+    "driverOnlyClientShaLiteral": "EXACT_BYTE_COMPARISON_PASS",
+    "bootOuterRestorer": "BYTE_IDENTICAL_TO08",
+    "passwordExcludedAndMembershipsUnchanged": true,
+    "UTCConnectionAndExactOldExpiryComparisons": "BYTE_IDENTICAL_TO08",
+    "node24SyntaxExit": 0,
+    "pythonSyntax": "PASS",
+    "actualPostgresSerialization": "NOT_TESTED",
+    "old08ActualCore8AndSafeDiagnostic4": "REUSED_NOT_RERUN"
+  },
+  "scope": "Single ROLE_SQL explicit rolvaliduntil::text override and corresponding client pin only",
+  "oldScopes": "Original08 actualcore exceptions/diagnostics, HBA/roleCAS/boot reused not rerun",
+  "actualRootCause": "Serializer had not been reached by old actual boot, not asserted to be observed rootcause",
+  "executionAuthority": "Exact new C decision must bind09 pins; sourcePASS does not submit newkey04 or permit replay",
+  "notTested": [
+    "actual PG serialization and expired role renewal",
+    "actual HBA<30s/reload/SCRAM/COMMIT",
+    "real readiness/newepoch/fullcatalog/REAL/APP"
+  ],
+  "independentCallerIntegration": "NEED_FIX original permission-consumer scope, not covered by this serializer PASS",
+  "operations": "Local exact source/pin comparisons and syntax only; no PG/server/secrets/payload",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T03:51:11.625416+00:00"
+}
