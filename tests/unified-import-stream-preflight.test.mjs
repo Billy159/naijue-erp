@@ -26,6 +26,51 @@ test('symlink data is refused without following the target',async()=>{const root
 test('credential-bearing row is blocked before disk identity insertion and not echoed',async()=>{const root=await workspace();try{const r=row(1);r.fields.password='SYNTHETIC_NOT_REAL_SENTINEL';const hash=await fixture(root,JSON.stringify(r)+'\n');await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:hash,allowSynthetic:true});const text=await readFile(join(root,'../report/issues.jsonl'),'utf8');assert(text.includes('FORBIDDEN_CREDENTIAL'));assert(!text.includes('SYNTHETIC_NOT_REAL_SENTINEL'));const bytes=await readFile(join(root,'../report/index.sqlite'));assert(!bytes.includes(Buffer.from('SYNTHETIC_NOT_REAL_SENTINEL')));}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('canonical registry aliases resolve but cannot duplicate a physical target row',async()=>{const root=await workspace();try{const a=row(1),b=row(1);b.source_key='alias:one';await fixture(root,JSON.stringify(a)+'\n'+JSON.stringify(b)+'\n');const registry=JSON.stringify({entity_type:'TRANSFER_LINE',source_namespace:'synthetic.unified.v1',canonical_source_key:'line:1',target_id:id(1),aliases:['alias:one'],identity_basis:'EXISTING_VERIFIED',source_refs:[{file_sha256:'a'.repeat(64),sheet:null,row:1}]})+'\n';await writeFile(join(root,'identity.jsonl'),registry);const m=JSON.parse(await readFile(join(root,'manifest.json'),'utf8'));m.identity_registry={relative_path:'identity.jsonl',bytes:Buffer.byteLength(registry),sha256:sha256(registry),row_count:1};const manifest=JSON.stringify(m);await writeFile(join(root,'manifest.json'),manifest);await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true});const issues=await readFile(join(root,'../report/issues.jsonl'),'utf8');assert(issues.includes('DUPLICATE_ROW_IDENTITY'));assert(!issues.trim().split('\n').map(JSON.parse).some(x=>x.file==='transfer_line.jsonl'&&x.code==='REGISTRY_TARGET_MISMATCH'));}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('full offline validation still never implies execution admission',async()=>{const root=await workspace();try{const hash=await fixture(root,null);const result=await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:hash,allowSynthetic:true});assert.equal(result.checks_passed,true);assert.equal(result.complete_package_validation,true);assert.equal(result.import_eligible,false);assert.equal(result.business_database_writes,false);}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
+
+test('32MiB scratch cache preserves the 4MiB index, complete requests and rejection boundary',async t=>{
+ const root=await workspace();
+ const {DatabaseSync}=await import('node:sqlite');
+ const {prepareStreamPlan}=await import('../tools/unified-import/stream-plan.mjs');
+ const {buildStreamProgram}=await import('../tools/unified-import/stream-program.mjs');
+ const {stableImportId}=await import('../packages/application/src/inventory-cutoff-import.ts');
+ const exec=DatabaseSync.prototype.exec,observed=[],transactions=[],preflightDbs=new WeakSet();
+ let reference=false;
+ // Change only the engine setting for the reference run, never the source data.
+ t.mock.method(DatabaseSync.prototype,'exec',function(sql,...args){
+  const setup=sql.includes('CREATE TABLE registry_rows(');
+  if(setup&&reference)sql=sql.replace(/PRAGMA cache_size=-\d+;/,'PRAGMA cache_size=-4096;');
+  const result=exec.call(this,sql,...args);
+  if(setup){preflightDbs.add(this);observed.push(this.prepare('PRAGMA cache_size').get().cache_size);}
+  if(preflightDbs.has(this)&&['BEGIN','COMMIT','ROLLBACK'].includes(sql))transactions.push(sql);
+  return result;
+ });
+ try{
+  const hash=await fixture(root,null),manifest=await readFile(join(root,'manifest.json'));
+  const admin={staff_id:stableImportId('SYNTHETIC_V2_COMPAT','staff'),account_id:stableImportId('SYNTHETIC_V2_COMPAT','account'),login_name:'synthetic-v1-compat',staff_name:'SYNTHETIC V1 compatibility ADMIN'};
+  const options={target:{protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:'123456789',database_oid:'42',database_name:'synthetic_offline_v2',catalog_sha256:'a'.repeat(64)},initialization_identity:admin,allowSynthetic:true};
+  const outputs=[];
+  for(const legacy of [true,false]){
+   reference=legacy;const report=join(root,'..',legacy?'reference':'current');
+   const summary=await streamPreflight(root,report,{expectedManifestSha256:hash,allowSynthetic:true});
+   assert.equal(summary.checks_passed,true);assert.equal(summary.import_eligible,false);
+   const bytes=await readFile(join(report,'index.sqlite'));
+   assert.equal(sha256(bytes),summary.index_sha256);assert.equal(bytes.length,summary.index_bytes);
+   if(!legacy)assert.equal(summary.limits.sqlite_cache_kib,32768);
+   const index=join(report,'index.sqlite');
+   await assert.rejects(prepareStreamPlan(index,null,manifest,options),/STREAM_PLAN_BINDING_INVALID/);
+   await assert.rejects(prepareStreamPlan(index,{...summary,checks_passed:false},manifest,options),/STREAM_PLAN_BINDING_INVALID/);
+   const plan=await prepareStreamPlan(index,summary,manifest,options);
+   try{
+    const program=await buildStreamProgram(plan,index,summary,admin,{coalesce:true}),steps=[];
+    for await(const step of program.steps)steps.push(step);
+    outputs.push({bytes,identity:program.identity,initialize:program.initialize,steps,totals:plan.totals});
+   }finally{await plan.dispose();}
+  }
+  assert.deepEqual(observed,[-4096,-32768]);
+  assert.deepEqual(transactions,['BEGIN','COMMIT','BEGIN','COMMIT']);
+  assert.deepEqual(outputs[1],outputs[0]);
+ }finally{await rm(join(root,'..'),{recursive:true,force:true});}
+});
 test('staff departure profile uses shared nullable date validation; unknown profiles fail closed',async()=>{const root=await workspace();try{await fixture(root,'');const {STAFF_DEPARTURE_SCHEMA_DECLARATIONS_SHA256}=await import('../packages/application/src/unified-import-contract.ts');const m=JSON.parse(await readFile(join(root,'manifest.json'),'utf8'));m.schema_contract={source_declarations_sha256:STAFF_DEPARTURE_SCHEMA_DECLARATIONS_SHA256};const r={source_key:'staff:one',source_refs:[],fields:{departure_date:'2026-02-30'}};const text=JSON.stringify(r)+'\n';await writeFile(join(root,'staff.jsonl'),text);Object.assign(m.files.find(p=>p.table==='staff'),{bytes:Buffer.byteLength(text),sha256:sha256(text),row_count:1});let manifest=JSON.stringify(m);await writeFile(join(root,'manifest.json'),manifest);await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true});const issues=(await readFile(join(root,'../report/issues.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);assert(issues.some(x=>x.field==='departure_date'&&x.code==='FIELD_TYPE'));assert(!issues.some(x=>x.field==='departure_date'&&x.code==='FIELD_UNKNOWN'));m.schema_contract.source_declarations_sha256='0'.repeat(64);manifest=JSON.stringify(m);await writeFile(join(root,'manifest.json'),manifest);await assert.rejects(streamPreflight(root,join(root,'..','report2'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true}),/UNKNOWN_SCHEMA_PROFILE/);}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('report directory cannot be created inside the input package',async()=>{const root=await workspace();try{const hash=await fixture(root,'');await assert.rejects(streamPreflight(root,join(root,'inside'),{expectedManifestSha256:hash,allowSynthetic:true}),/REPORT_MUST_BE_SEPARATE/);}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('symlinked report parent cannot redirect output into the package',async()=>{const root=await workspace();try{const hash=await fixture(root,'');const {symlink}=await import('node:fs/promises');await symlink(root,join(root,'..','alias'));await assert.rejects(streamPreflight(root,join(root,'..','alias','report'),{expectedManifestSha256:hash,allowSynthetic:true}),/REPORT_MUST_BE_SEPARATE/);const {readdir}=await import('node:fs/promises');assert(!(await readdir(root)).includes('report'));}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
