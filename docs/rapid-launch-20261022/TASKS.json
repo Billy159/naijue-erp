@@ -33304,12 +33304,12 @@
     },
     "currentExecution": {
       "at": "2026-11-08T05:01:30.526609+08:00",
-      "phase": "R4_39B_CONTEXT_INCREMENT_QB_PASSED_TINY_CLOSURE_READY_LINUX_STAGING_PREPARING",
+      "phase": "R4_39B_LINUX_TOOL_LOADED_POLICY_RESTORED_BOOT13_BINDING_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 original39b staging and BOOT13 non-time preparation",
-      "nextOwner": "C exact staging time scope then T45 sole executor",
-      "latestActualReceiptSHA256": "bc8747575b679c248a0e163bb369084e2afcd392d8ff3454d5679ef8dea1bf4d",
+      "currentOwner": "T45 exactBOOT13 non-time actualtool binding",
+      "nextOwner": "C exact5min/90min scope then originalT45",
+      "latestActualReceiptSHA256": "abd75c19ea8c8c4d81d60c9f886fb1a6193176964250d65bd9b92674d45b6759",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Adopt QBaaa0 source+5scopedmodels and D2 exact39b tinyclosure. Current39b notLinuxloaded, no newREAL preflight. Fresh8c6a confirms stop/HBA/access/absences withoutPG; wait accurate staging READY, bind onceC13 then load and restorepolicy. Formalroot3b/APP576 separate; REAL import/business/deploy notpassed.",
+      "next": "Actual39b tool0726 loaded216/180 Node24.21 CLI/readback; originalexpiredpolicycd2e restoredabd75. Freshstop8c6a bound. T45 finish only BOOT13 actualtool non-timeREADY; C then time-bind5min start/90min guardian. NonewPG/REALpreflight/import/business/deployyet.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33458,8 +33458,8 @@
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
       "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
-      "importToolCommit": "73480c928a5950670ca3127b0eca3dc5719b3e55",
-      "importToolSourceSetSHA256": "43a60fa899b70bbe4e1f1f9d536fef5714ce5f2723ae2a10d29bdb45e0f9e3c1",
+      "importToolCommit": "39b3967a6a72266fa86bd2118cb9e8352072af07",
+      "importToolSourceSetSHA256": "c10344c9af214a2b6ad192d6db1cf31965e0f17f523dbad80c2afd722fe5065b",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
         "requestKey": "t45-r4-retained-restart-20261108-12",
@@ -37513,13 +37513,46 @@
         "QAStatusAtPackaging": "QA_PENDING",
         "CAdoptedLaterQBValidEvidence": true
       },
-      "LinuxLoaded": false,
+      "LinuxLoaded": true,
       "realPreflight": "NOT_EXECUTED",
       "rootCause": "UNKNOWN",
-      "formalBusinessAcceptance": false
+      "formalBusinessAcceptance": false,
+      "linuxMaterialization": {
+        "requestKey": "t45-r4-39b3967a-tool-materialize-20261108-01",
+        "jobSHA256": "46fec52000c2dd38760ab2f2c808e3a65a97e7d3ed175831cfda8ad834791b58",
+        "receiptSHA256": "07260f2a9a1b5729d4807f0658021c507b4ee77f1eaa8dc06035602506472de1",
+        "bytes": 1362,
+        "exitCode": 0,
+        "seconds": 27.34230991,
+        "containerRoot": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-39b3967a-20261108-01/operation",
+        "current": 216,
+        "captured": 180,
+        "regularFiles": 361,
+        "logicalBytes": 5129445,
+        "node": "v24.21.0",
+        "cliImported": true,
+        "readbackImported": true,
+        "freeAfter": 9148387328,
+        "PGOrREALModeExecuted": false
+      },
+      "staging": {
+        "C13SHA256": "3d1ed96e72a293c5edcd2b58fa17b861cfbd6af93888b314f0cf681c36e2a98f",
+        "startsAt": 1794088362726,
+        "expiresAt": 1794089562726,
+        "decisionReferenceChars": 426,
+        "readySHA256": "43b8ed9d33d3d313eae405f6f08e4403dd54a6cb86b1a2df6275702761f8bab2",
+        "CActualCheckedAbsoluteRefs": 27,
+        "uploadCount": 1,
+        "actualRawReadySHA256": "14bca2c59064c54fd5c91fbb1d7bed6bd7d03a0afb4cce52c51f5db83b4f3d94",
+        "policyRestoreReceiptSHA256": "abd75c19ea8c8c4d81d60c9f886fb1a6193176964250d65bd9b92674d45b6759",
+        "policyRestoreExitCode": 0,
+        "policyRestoreSeconds": 0.31903701,
+        "originalExpiredPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+        "restoredRoot0444": true
+      }
     },
     "r4Boot13Preparation20261108": {
-      "status": "NON_TIME_PREPARATION_NEW_TOOL_NOT_LOADED",
+      "status": "ACTUAL_39B_LINUX_LOAD_AND_POLICY_RESTORE_ADOPTED_WAIT_NON_TIME_BOOT_READY",
       "actualStopMetadata": {
         "key": "t45-r4-boot13-predecessor-metadata-readonly-20261108-01",
         "jobSHA256": "b4243c857c12bc3656b0d3c36fe0905f0ef38b1451003cf00542ff18fb996093",
@@ -37539,7 +37572,9 @@
         "PGConnections": 0,
         "serverChanges": false
       },
-      "next": "OriginalT45 exact39b tool staging/Linux load+paired restore; stop proof bound to actual8c6a not inferred oldreceipt; C then issues time-bound BOOT13 only when ready."
+      "next": "OriginalT45 exact39b tool staging/Linux load+paired restore; stop proof bound to actual8c6a not inferred oldreceipt; C then issues time-bound BOOT13 only when ready.",
+      "stopBoundReadySHA256": "84cf3fed2ca2312647fc4b7dd534cc7291fba5207d867e6690b0314745e5c073",
+      "stopBoundAbsoluteRefsChecked": 23
     }
   }
 }

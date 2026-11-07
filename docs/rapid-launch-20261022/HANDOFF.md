@@ -2896,3 +2896,10 @@ C 核11个固定引用及原包装，准确范围f730f800eb0fddbfb7c652878eb2f48
 - D2仅1.148MB完整小包4f817c4a127f43d425cecab7af3afd22297a03f06f866cb72c97f9f04d2c3f23；sourceSet c10344c9，216/180，361成员全字节核对。打包时QA_PENDING保留原状态，C现独立采用后来QB结论，不改旧证据。未重建fullAPP，未Linux加载。
 - 原T45停止metadata补读实际COMPLETED/0/.318s：8c6a1a85c4b8d325e130190f721faf9ca29032f57bc46ede7cf26885fa8aa5cc/3,513B，实际cleanup1afe/193B且canonical bytes相同；PG/guardian/监听/PIDfile/writeauthority均absent，HBA/保护pins与45entry原样，0PG/SQL/配置改。虽cleanup hash与旧同值，本次来源为fresh BOOT12实读，不能仅借旧文件推断。
 - 下一步原T45准备准确39b材化+成对policy恢复，C到READY即绑定一次限时；新tool加载到达后才签BOOT13时窗。真实导入、核账、历史业务、备份恢复及正式发布继续未完成。
+
+
+### 2026-11-08T06:02:40.080847+08:00｜39b工具实际Linux加载完成，临时传输策略成对恢复
+
+C13 3d1ed96e/1,128B（20min、ref426）准确绑定，C核27绝对引用与5helper仅常量差异。一次普通身份上传，原始READY14bca2c5/450B。实际材化原键COMPLETED/0/27.342s，07260f2a9a1b5729d4807f0658021c507b4ee77f1eaa8dc06035602506472de1/1,362B：新39b独立目录、c103 sourceSet、216/180、361文件、Node24.21.0、CLI及readback import实际通过。可用空间9,148,387,328B。
+
+原策略恢复原键COMPLETED/0/.319s，abd75c19ea8c8c4d81d60c9f886fb1a6193176964250d65bd9b92674d45b6759/843B：cd2e完整原过期bytes/root:root0444/nlink1恢复、未续期，不冒称旧inode/mtime复现。旧734/安装3b/APP/资料/备份和回执不变；0PG/BOOT/REAL模式。停止绑定READY84cf的23绝对引用C已核。唯一下一步T45交实际工具绑定BOOT13非时间READY→C签准确启动范围；不等无关报告，不将tool加载当真实预检/导入或上线通过。
