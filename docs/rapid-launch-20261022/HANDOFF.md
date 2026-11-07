@@ -2839,3 +2839,10 @@ D1 commit73480c928a5950670ca3127b0eca3dc5719b3e55（parent49d）仅identity_keys
 - 原T45 materialize实际COMPLETED0/29.299117399s，88a3d6166040943fef788aff701c9a61e70630115c5da1a9770191e6c682dd6f/1364B；Node24.21.0、216/180源pin、CLI与readback模块真实加载，361files/5,126,839B，原49d和安装源/APP未变。实际free10,015,522,816B。
 - pairedrestore c22b3de826e4d8886ca4e7ed787ca5b88d78b596d7329b5d271b093ca8003610/843B及job278123确认原cd2e/root0444/nlink1恢复，未续期。0PG/导入/业务写。源码或模块加载不代表完整Linux预检、性能和业务通过。
 - C采用46pin已备妥BOOT12骨架，签69d670d4cdfa16f429aa7101a710a954d0e8eb405e6e63b0afc0a17e4a089f16/1458B：boot1794081837333–1794082137333，guardian1794087237333，新两角色until21:33:27.333Z，精确CAS旧20:00:22.654Z，HBA限30s原样恢复，原servicelease不延。原T45执行一次，实际结果待回；后续参数和PREPARE仅绑定真实epoch，不编造时间。
+
+
+### BOOT12与参数发布实际完成；PREPARE11已签准确20分钟
+- 原BOOT12实际COMPLETED0/3.376587093s，ecf0b784…/1034B，restart4736e021…/1691B，新epoch2026-11-07 20:04:52.793607+00，PG2192/start298018996，guardian2185/start298018963。实际observer aa074ffe…/3974B确认原HBA字节/inode恢复.827s、两角色21:33:27.333Z及attrs不变，旧df2保留，free10,014,212,096B；非业务验收。
+- 原参数07实际COMPLETED0/.770044603s，f909cfd11481a85d928d59a0d8eea0362d54c1863e11fb3cbb5e94d39747b117/602B，C参数b1e4f601…1778B读回，inode14560751/root:61035/0640，派生access9a19040f…34667B。旧df2与安装a7d不改，无业务写。
+- 六leaf已一次预置，READYd8a719d9…3866B全部8pins闭合。C准确PREPARE11决定88a2b20f73eb60ca25563912b9291aa89d55815f8587fbd4c66ba7fd1f311ceb/4597B，只填候选两时间：1794082611578–1794083811578，固定原namespace t45-r4-real-prepare-20261107-11，实际执行时间另记Nov8。原T45仅一次提交、原key查未知、不延窗。
+- 同一734实际Linux完整预检仍待终态，原100ms/250msgap/4GiB/20min/1500outer与全部原权限、EOF、身份、金额库存守卫保留。无PREPARED结论，无REAL EXECUTE，源级优化不宣称真实性能已过。实际成功即接续原授权REAL，不再等待人类重复提醒。

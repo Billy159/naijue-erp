@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T04:06:05.559641+08:00",
-      "phase": "R4_734_ACTUAL_LINUX_AND_POLICY_RESTORE_PASS_BOOT12_ISSUED",
+      "at": "2026-11-08T04:18:17.738990+08:00",
+      "phase": "R4_BOOT12_PARAMS_ACTUAL_PASS_PREPARE11_20MIN_ISSUED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 BOOT12 actual execution",
-      "nextOwner": "C exact actual12params then PREPARE11",
-      "latestActualReceiptSHA256": "88a3d6166040943fef788aff701c9a61e70630115c5da1a9770191e6c682dd6f",
+      "currentOwner": "Original T45 PREPARE11 original once key",
+      "nextOwner": "C consume actual terminal binding or first error; then scoped REAL execution",
+      "latestActualReceiptSHA256": "f909cfd11481a85d928d59a0d8eea0362d54c1863e11fb3cbb5e94d39747b117",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Actual734 loader88a3 and original-policyrestorec22b passed. BOOT12 decision69d6 exact5min issued; wait actualepoch/restart/role/HBA/space, then bind4publisher constants and new exact params, fixed20minPREPARE. NoREALimport/binding/business/deploy yet.",
+      "next": "PREPARE11 exact734/source43a actualLinux test; C20min88a2 issued only after sixleaves preplaced and real12params b1e4/access9a190. Await originalkey actual terminal; noEXECUTE yet. On success preserve complete binding+cleanup then close/archive exact oldindex per D1 lifecycle before independent next-mode fullpreflight; on failure firsterror/cost, never blindretry/extendwindow.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33462,9 +33462,9 @@
       "importToolSourceSetSHA256": "43a60fa899b70bbe4e1f1f9d536fef5714ce5f2723ae2a10d29bdb45e0f9e3c1",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
-        "requestKey": "t45-r4-retained-restart-20261108-11",
-        "sha256": "6a9320e7c24e8b677dd8e7138b847a32faaeb31bfc6d0431fbd1f116fe873c74",
-        "actualEpoch": "2026-11-07 18:31:38.903933+00",
+        "requestKey": "t45-r4-retained-restart-20261108-12",
+        "sha256": "4736e0212eee9c76e887fbd11a995a6d2d9abba4d2045332eef709e7db225267",
+        "actualEpoch": "2026-11-07 20:04:52.793607+00",
         "businessVerified": false
       }
     },
@@ -37212,7 +37212,64 @@
       "newRoleUntil": "2026-11-07T21:33:27.333Z",
       "oldRoleCAS": "2026-11-07T20:00:22.654Z",
       "serviceLeaseUnchanged": 1825560000000,
-      "actual": "PENDING_T45_ORIGINAL_KEY_ONCE"
+      "actual": {
+        "jobSHA256": "8683a53052221c3b000374488f6f9d4f08eb33d1bdb1fecd4dc15449914755d2",
+        "resultSHA256": "ecf0b78416c0b578071588c6e21c20c8f91e66fb3993b894a0b036c44de205a7",
+        "exitCode": 0,
+        "elapsedSeconds": 3.376587093,
+        "restartSHA256": "4736e0212eee9c76e887fbd11a995a6d2d9abba4d2045332eef709e7db225267",
+        "actualEpoch": "2026-11-07 20:04:52.793607+00",
+        "PG": {
+          "pid": 2192,
+          "starttime": "298018996"
+        },
+        "guardian": {
+          "pid": 2185,
+          "starttime": "298018963"
+        },
+        "observerSHA256": "aa074ffe96530325b62a666cdbc24dc7338136e54edbcac60536a66da1a04d26",
+        "HBARestoredSeconds": 0.827285011,
+        "HBAInodeAndBytesRestored": true,
+        "roleAttributesUnchanged": true,
+        "actualFreeBytes": 10014212096,
+        "businessVerified": false
+      },
+      "parameterPublication": {
+        "requestKey": "t45-r4-retained-parameters-20261108-07",
+        "CParametersSHA256": "b1e4f6010038739e406d14e495a22b8d31e35a4246a0443d2a195fd0c80ff07b",
+        "resultSHA256": "f909cfd11481a85d928d59a0d8eea0362d54c1863e11fb3cbb5e94d39747b117",
+        "exitCode": 0,
+        "elapsedSeconds": 0.7700446029,
+        "metadata": {
+          "device": 66304,
+          "inode": 14560751,
+          "bytes": 1778,
+          "uid": 0,
+          "gid": 61035,
+          "mode": "0640"
+        },
+        "derivedAccessSHA256": "9a19040f002ae5830548656ff9464becd33a8fd2fc51030bb97264e4bb25188e",
+        "oldParametersPreserved": true,
+        "DBWrites": false
+      }
+    },
+    "r4RealPrepare11_20261108": {
+      "requestKey": "t45-r4-real-prepare-20261107-11",
+      "READYsha256": "d8a719d9d9cba4cb0ff8082bcc7d3782c33925a452200f921f0b5a7fa28766e6",
+      "sixLeavesPreplaced": true,
+      "CDecisionSHA256": "88a2b20f73eb60ca25563912b9291aa89d55815f8587fbd4c66ba7fd1f311ceb",
+      "startsAt": 1794082611578,
+      "expiresAt": 1794083811578,
+      "sourceCommit": "73480c928a5950670ca3127b0eca3dc5719b3e55",
+      "sourceSetSHA256": "43a60fa899b70bbe4e1f1f9d536fef5714ce5f2723ae2a10d29bdb45e0f9e3c1",
+      "status": "C_ISSUED_T45_ONCE_SUBMISSION_PENDING_ACTUAL",
+      "capacitySamplerMs": 100,
+      "maxSampleGapMs": 250,
+      "activeFloorBytes": 4294967296,
+      "outerSeconds": 1500,
+      "preparedBinding": "NOT_YET_OBSERVED",
+      "execute": "NOT_ISSUED",
+      "performance": "ACTUAL_FULL_LINUX_VALIDATION_PENDING"
     }
   }
 }
