@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45collect existingreader01; supplement only missingfinalcleanup exactfinite readonly0SQL0SQLite. Then originalT45minimum sampler scheduling evidence/fix retaining250ms,4GiB,20min,sourcepins/identitychecks; Cdispatch originalQB affecteddelta. No newBOOT/PREPARE/EXECUTE now.",
+      "next": "OriginalT45 minimumsampler sourcefix+existingreaderunit actualstatus/firsterror; keep250ms/4GiB/20min and failedpartial07/06. No newBOOT undercurrentfree belowstartfloor, no newwriter/import/public. Cdispatch QB onlynewaffectedfixedsource.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36399,8 +36399,33 @@
       "immediateCleanupComplete": true,
       "transactionRollbackProven": false,
       "cli": "UNKNOWN_NOT_PREPARED",
-      "finalCleanup": "PENDING exactPG/guardian/port/HBA/parameters/access custody readonly; immediatecleanupComplete notfinalPGproof",
-      "sourceDiagnostic": "Currentcarrier tail sleeps to200ms cadence while checks250ms begin/finish bound; leaves nominal50ms slack. This is sourcefact not proof IO/scheduler cause of actual290ms."
+      "finalCleanup": {
+        "job": "t45-r4-prepare07-final-readonly-20261107-02",
+        "receipt": "f5f0228c28c3bf64ae984cb2ffd15ec21c1663adc6db16277d897efa0b8bb578",
+        "jobReceipt": "6cb96f9a3af224e4635b5c82abe19204b06ae7cf7c1e402125d0f0b5a16584df",
+        "exitCode": 0,
+        "seconds": 0.7184809967875481,
+        "PG1587Guardian1580": "BOTH_ABSENT",
+        "portAndPidFileAbsent": true,
+        "rawStop": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "HBAOriginalUnchanged": true,
+        "installationRestartParameters": "a7d/8eafb/971_ACTUAL_UNCHANGED",
+        "access45RestoredKey": "07",
+        "privateProjectionAndWriterAbsent": true,
+        "roleValuesRequeried": false,
+        "freeBytes": 7104876544,
+        "startFloorBytes": 8207515646,
+        "startShortfallBytes": 1102639102,
+        "noSQL": true,
+        "noSignal": true,
+        "serverChanges": false
+      },
+      "sourceDiagnostic": "Currentcarrier tail sleeps to200ms cadence while checks250ms begin/finish bound; leaves nominal50ms slack. This is sourcefact not proof IO/scheduler cause of actual290ms.",
+      "failedReadOnly01": {
+        "exitCode": 2,
+        "seconds": 0.06706636771559715,
+        "cause": "Reused08 observer missed carrier/plan pin update; hashassert line7 beforeDocker/PG. Oldkey preserved, no replay;02 correctedonlypins/path afterlocalbytecheck."
+      }
     }
   }
 }
