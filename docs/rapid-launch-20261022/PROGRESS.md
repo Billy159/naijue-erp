@@ -2321,3 +2321,6 @@ C exercised human noon delegation for a separately reviewed, bounded maintenance
 
 
 2026-11-07T14:07:39.732471+08:00 C: QB ba269a5f scoped 25 cases PASS on actual stop31b7 binding, BOOT06 protected observation and publisher07 CAS; adopted no PG. D1 21355233 tool-binding09 verified d5f20a root and 31 validator pins; QB noted four historical BOOT05 caller/cleanup references to bind with actual BOOT06 before PREPARE. T45 staging cc17b47a has deterministic expiry gaps at install replace/Node start/success receipt and incomplete final identity CAS for install/restore. Do not execute this candidate. Original T45 correcting only three staging files and QB rechecks the failed cases. Original policy restore and exact protected READY/archive binding retained. Fixed tool 798482ce unchanged. No new scope issued, server staging, BOOT06, REAL or public switch.
+
+
+2026-11-07T14:12:06.054241+08:00 C: T45 staging03 39c6e5ec and QB d291d302 independently hash checked; 16 scoped model checks pass, old CAS/expiry failures closed, exact source-only staging ready. C preserved earlier 25-case BOOT06 verdict and tool pins. Exact root policy window for retained R4 after delegated noon deadline remains unissued; no staged READY, Linux materialization, BOOT06, REAL or public switch.

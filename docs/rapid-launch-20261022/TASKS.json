@@ -33303,12 +33303,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T14:07:39.732471+08:00",
-      "phase": "R4_STOPPED_QB_BOOT_DELTA_PASS_STAGING_DEADLINE_AND_CAS_FIX_IN_FLIGHT",
+      "at": "2026-11-07T14:12:06.054241+08:00",
+      "phase": "R4_STAGING03_READY_CURRENT_EXACT_ROOT_SCOPE_UNISSUED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 tight staging expiry and identity guards; QB targeted recheck",
-      "nextOwner": "T45 exact stage and same-data BOOT06 once corrected artifact matches scope; D1 final caller/publisher after actual boot",
+      "currentOwner": "Original T45 execution after valid exact scope; C coordinates; QB staging fix adopted",
+      "nextOwner": "T45 stage then BOOT06 and D1 actual caller/publisher binding",
       "latestActualReceiptSHA256": "824c8cb3a9de5863c03a4f1306a5515623ec905bfc0b8bedd0672772e116ba8a",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33318,8 +33318,8 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Do not execute cc17b47a. Fix and independently verify affected staging checks only; use existing exact artifact channel, then BOOT06 and one actual runtime caller/publisher binding before real preflight.",
-      "authority": "Time-limited user decision delegation through 12:00+08 expired. Standing same-kind authorization and the existing release objective remain, subject to exact action scope and effective runtime gates. No new execution scope issued here.",
+      "next": "Confirm the exact current 798482ce root policy staging window; once valid, preserve old bytes, upload once, verify actual READY and materialize, then restore the policy. BOOT06 and REAL are separate steps.",
+      "authority": "Broad decision delegation through 12:00+08 expired. Standing authorization for bounded synthetic isolated operation is not used as new root-policy approval for the retained production candidate. No new external approval issued.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
@@ -35035,7 +35035,7 @@
         },
         "boot06StopBinding": {
           "at": "2026-11-07T13:51:24.968856+08:00",
-          "state": "QB_SCOPED_BOOT_AND_STOP_PASS_STAGING_EXPIRED_WINDOW_CAS_DELTA_IN_FLIGHT",
+          "state": "STAGING03_SCOPED_SOURCE_PASS_EXACT_POST_NOON_PRIVILEGED_SCOPE_UNISSUED",
           "installationRecordSHA256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
           "earlierPrepare02StopSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
           "actualLatestPrepare04StopSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
@@ -35097,6 +35097,31 @@
             "status": "DO_NOT_EXECUTE_REPAIR_IN_FLIGHT",
             "owner": "Original T45 only",
             "reason": "Final install CAS can occur after expiry; materialization can cross expiry before Node or before success output; install/restore final CAS misses same-inode ownership/mode/link drift. Exact source, stage READY byte digest and archive identity remain."
+          },
+          "staging03": {
+            "materialSHA256": "39c6e5ecddc5a275d6051f5ee6fee6746c81bc0b8c1e1cba9409864a18d2e087",
+            "materialBytes": 8216,
+            "qbSHA256": "d291d302bdff79925793e4349353479a647a7e9a4df41d38bf370337ac677904",
+            "qbBytes": 1897,
+            "qbFiniteCasesPassed": 16,
+            "priorStage02BlockedCasesClosed": true,
+            "scope": "One exact 798482ce artifact on existing R4. Up to 30 minutes for source-only staging under the existing mechanism, with old root policy bytes preserved and restored. No PG/SQL, roles, business data, new mount, public switch or application deployment.",
+            "keys": {
+              "installPolicy": "t45-798482ce-tool-authority-bytes-20261107-01",
+              "stage": "f35-798482ce-retained-real-tools-20261107-01",
+              "materialize": "t45-r4-798482ce-tool-materialize-20261107-01",
+              "restorePolicy": "t45-798482ce-tool-authority-restore-20261107-01"
+            },
+            "scriptSHA256": {
+              "install_stage_policy.py": "ad61f26bc2570487230df182df5be1ed7f172e6ccef6cb55da39f984a0531eed",
+              "materialize_tool.py": "35fa5c471b2d1f0296616094558452414dbac8a01be18e7dc791c56e3cb80db8",
+              "restore_stage_policy.py": "83b4b8dd998de91c1d72d0d4e932b021d91b812a57760696c5315fcb861ecd26",
+              "fresh35-production-carrier.py": "a1dfea26374bf9ce8321694e0ff93fdf95dcdffb7323e2e2f234692ea37e155a",
+              "production-plan.json": "5792007da5cf4fa35470c2a70612eab531748b79781ea3cabe058db85438456f"
+            },
+            "externalAuthorityIssued": false,
+            "actualReady": false,
+            "actualLinuxMaterialization": false
           }
         }
       }
