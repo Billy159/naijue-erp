@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T22:47:21.020483+08:00",
+    "at": "2026-11-08T06:19:32.108855+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T05:01:30.526609+08:00",
-      "phase": "R4_39B_LINUX_TOOL_LOADED_POLICY_RESTORED_BOOT13_BINDING_PENDING",
+      "at": "2026-11-08T06:19:32.108855+08:00",
+      "phase": "R4_BOOT13_ACTUAL_SUCCESS_PARAMETERS08_PUBLICATION_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 exactBOOT13 non-time actualtool binding",
-      "nextOwner": "C exact5min/90min scope then originalT45",
-      "latestActualReceiptSHA256": "abd75c19ea8c8c4d81d60c9f886fb1a6193176964250d65bd9b92674d45b6759",
+      "currentOwner": "T45 original parameter08 publisher",
+      "nextOwner": "C actualparameter/access then exact PREPARE12 scope",
+      "latestActualReceiptSHA256": "64a007e4fd94de296e41614151c07b780b74d0cba2f7b3243930d06730fc7eef",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Actual39b tool0726 loaded216/180 Node24.21 CLI/readback; originalexpiredpolicycd2e restoredabd75. Freshstop8c6a bound. T45 finish only BOOT13 actualtool non-timeREADY; C then time-bind5min start/90min guardian. NonewPG/REALpreflight/import/business/deployyet.",
+      "next": "T45 publish only exact C3a8c parameter08 once with originalb1e4 CAS. Then actualinode/access/newscope for separate20m REAL PREPARE12; no import yet.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33462,9 +33462,9 @@
       "importToolSourceSetSHA256": "c10344c9af214a2b6ad192d6db1cf31965e0f17f523dbad80c2afd722fe5065b",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
-        "requestKey": "t45-r4-retained-restart-20261108-12",
-        "sha256": "4736e0212eee9c76e887fbd11a995a6d2d9abba4d2045332eef709e7db225267",
-        "actualEpoch": "2026-11-07 20:04:52.793607+00",
+        "requestKey": "t45-r4-retained-restart-20261108-13",
+        "sha256": "6843ee72551309f6c2b22d69ac165b3d7f046441546395b2e04f1442e42ace8c",
+        "actualEpoch": "2026-11-07 22:07:48.306763+00",
         "businessVerified": false
       }
     },
@@ -37552,7 +37552,7 @@
       }
     },
     "r4Boot13Preparation20261108": {
-      "status": "ACTUAL_39B_LINUX_LOAD_AND_POLICY_RESTORE_ADOPTED_WAIT_NON_TIME_BOOT_READY",
+      "status": "BOOT13_ACTUAL_SUCCESS_EXACT_PARAMETERS08_ISSUED_PUBLICATION_PENDING",
       "actualStopMetadata": {
         "key": "t45-r4-boot13-predecessor-metadata-readonly-20261108-01",
         "jobSHA256": "b4243c857c12bc3656b0d3c36fe0905f0ef38b1451003cf00542ff18fb996093",
@@ -37572,9 +37572,59 @@
         "PGConnections": 0,
         "serverChanges": false
       },
-      "next": "OriginalT45 exact39b tool staging/Linux load+paired restore; stop proof bound to actual8c6a not inferred oldreceipt; C then issues time-bound BOOT13 only when ready.",
+      "next": "T45 publish only exact C3a8c parameter08 once with originalb1e4 CAS. Then actualinode/access/newscope for separate20m REAL PREPARE12; no import yet.",
       "stopBoundReadySHA256": "84cf3fed2ca2312647fc4b7dd534cc7291fba5207d867e6690b0314745e5c073",
-      "stopBoundAbsoluteRefsChecked": 23
+      "stopBoundAbsoluteRefsChecked": 23,
+      "toolBoundReadySHA256": "e5423095c51f428a9ff64d7fe50d228fb975240d3418ddc5e90145a73dd2d6db",
+      "CCheckedBoundAbsoluteRefs": 26,
+      "decision": {
+        "sha256": "86251ebbb12d1aa81b684edc4b29e83ad5d103f422c09ee3d0b240e473486a37",
+        "bytes": 1449,
+        "startsAt": 1794089167272,
+        "expiresAt": 1794089467272,
+        "guardianExpiresAt": 1794094567272,
+        "roleLoginValidUntil": "2026-11-07T23:35:37.272Z",
+        "referenceChars": 377,
+        "startupSeconds": 300,
+        "maximumHbaSeconds": 30,
+        "requestKey": "t45-r4-retained-restart-20261108-13"
+      },
+      "actualResult": {
+        "jobSHA256": "0c9dc7904cced0111a06f338ee0450a713cbb90c1164f1c16695bd74b1d224e4",
+        "rootResultSHA256": "32829da2a24aae667c3d56afb7b459f4397510f46e8ff16062c38cf7c16dbfd0",
+        "exitCode": 0,
+        "seconds": 3.025711673,
+        "actualEpoch": "2026-11-07 22:07:48.306763+00",
+        "restartSHA256": "6843ee72551309f6c2b22d69ac165b3d7f046441546395b2e04f1442e42ace8c",
+        "restartBytes": 1682,
+        "observationSHA256": "64a007e4fd94de296e41614151c07b780b74d0cba2f7b3243930d06730fc7eef",
+        "observationBytes": 3973,
+        "PGPid": 2421,
+        "PGStarttime": "298756560",
+        "guardianPid": 2414,
+        "guardianStarttime": "298756529",
+        "roleLoginValidUntil": "2026-11-07T23:35:37.272Z",
+        "HBAOriginalBytesAndInodeRestored": true,
+        "HBARestorationSeconds": 0.821381594,
+        "roleAttributesUnchanged": true,
+        "grantsChanged": false,
+        "credentialAuthentication": "NOT_SEPARATELY_TESTED",
+        "freeBytes": 9147129856,
+        "businessVerified": false
+      },
+      "parameters08": {
+        "sha256": "3a8c28dd0c2b821b9e67ee5c3a4c99cf4368fec61993842b571d8d9cb0af78b7",
+        "bytes": 1769,
+        "startsAt": 1794089167272,
+        "expiresAt": 1794094537272,
+        "authorizationExpiresAt": 1794094567272,
+        "readinessSHA256": "0721a1ae78b12dc72d93cbcc9bc0eb2648706341ccd3f800c72f28aca57e58ea",
+        "publisherSHA256": "3f61895e64ea06736cb089e17c81ce9c5a8a9e03cb4603648a7116869c607d02",
+        "fourConstantOnlyReverseBytesChecked": true,
+        "CCheckedActualReferences": 14,
+        "requestKey": "t45-r4-retained-parameters-20261108-08",
+        "publication": "PENDING_ACTUAL_RECEIPT"
+      }
     }
   }
 }

@@ -2595,3 +2595,8 @@ C 核11个固定引用及原包装，准确范围f730f800eb0fddbfb7c652878eb2f48
 C13 3d1ed96e/1,128B（20min、ref426）准确绑定，C核27绝对引用与5helper仅常量差异。一次普通身份上传，原始READY14bca2c5/450B。实际材化原键COMPLETED/0/27.342s，07260f2a9a1b5729d4807f0658021c507b4ee77f1eaa8dc06035602506472de1/1,362B：新39b独立目录、c103 sourceSet、216/180、361文件、Node24.21.0、CLI及readback import实际通过。可用空间9,148,387,328B。
 
 原策略恢复原键COMPLETED/0/.319s，abd75c19ea8c8c4d81d60c9f886fb1a6193176964250d65bd9b92674d45b6759/843B：cd2e完整原过期bytes/root:root0444/nlink1恢复、未续期，不冒称旧inode/mtime复现。旧734/安装3b/APP/资料/备份和回执不变；0PG/BOOT/REAL模式。停止绑定READY84cf的23绝对引用C已核。唯一下一步T45交实际工具绑定BOOT13非时间READY→C签准确启动范围；不等无关报告，不将tool加载当真实预检/导入或上线通过。
+
+
+## 2026-11-08T06:19:32.108855+08:00 R4 BOOT13 实际启动，参数08待发布
+
+T45 原键一次 COMPLETED0（3.0257s），实际 PG epoch为2026-11-07 22:07:48.306763+00，restart6843ee72；观察64a007e4确认 PG2421、guardian2414存活，原HBA字节及inode已在0.8214s恢复，既有两角色有效期23:35:37.272Z、属性成员未改。C核14实际引用并核publisher仅四常量绑定，签参数3a8c28dd（1769B），交原T45一次参数08发布并核新inode/access。此项不是登录或真实业务通过；尚未运行PREPARE12、导入或切换。唯一下一步：实际参数发布回执→C20分钟PREPARE12→T45原受控调用，私有numeric context仅补真实性能事实。
