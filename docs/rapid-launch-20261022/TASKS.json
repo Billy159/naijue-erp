@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T17:28:14.165547+08:00",
-      "phase": "R4_PREPARE05_SOURCE_PASS_REAL_GUARD_REJECTED_CLEAN_STOP",
+      "at": "2026-11-08T00:01:52.011802+08:00",
+      "phase": "R4_STOPPED_PREPARE07_SAMPLER_INCREMENT_VERIFIED_SPACE_ARCHIVE_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original D1 scope-preserving runtime guard repair; T45 retains stopped R4 and prepares successor inputs; D2/QB isolated history acceptance",
-      "nextOwner": "D1 exact guard repair and original QB scoped review",
-      "latestActualReceiptSHA256": "44fa21e0fb92bec96c6775e81071331253c03638bd30747b9bda6a9c74e70d1f",
+      "currentOwner": "Original T45 exact stopped07 cache metadata and lossless archive preparation",
+      "nextOwner": "C fixes exact archive scope after actual metadata; T45 sole execution",
+      "latestActualReceiptSHA256": "34a963e8f33c7455001d2abfdbf517ef4bdd6c765bfa58724ceb145bf087b478",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 fixedminimumsampler schedule and startupspace exactcandidate undernightdelegation; sourceREADY->C soleQB dispatch; preserve250ms+4GiB+20min and originaldata/receipts; noold07replay. Actualwholeimport/independentreconcile/history/new35backup/formalbrowser/cutover still incomplete.",
+      "next": "Complete exact metadata-only scope then archive both stopped07 derived files privately with full byte verification; originals stay until separate fixed retirement decision. Preserve06, business data and all receipts. No newBOOT until actual start space adequate. Whole import, reconciliation, history PG, backup/restore, formal host and cutover remain unverified.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36470,6 +36470,35 @@
       "effectiveUntilShanghai": "2026-11-08T12:00:00+08:00",
       "effectiveUntilEpochMs": 1794110400000,
       "implementation": "C makes required project decisions during interval and documents exactscope, T45 remains sole serverexecutor. No routine reapproval fromsleepinghuman. Existing data/source/protection, genuine evidence, originalkeyunknown recovery, fixedversions and necessaryQA retained. No invented sourcefacts or tests, no platform bypass. ExistingstandingR4authority not revoked."
+    },
+    "r4SamplerSchedulingMargin20261107": {
+      "at": "2026-11-08T00:01:52.011802+08:00",
+      "owner": "original T45",
+      "readySHA256": "070e8a53c0481a2fedf8b8025a5288f39949fcb91c9e8dd135dbf6483ea6475a",
+      "carrierSHA256": "17b54e2f290039c107e4e70cfbed757fd5e69f2def29d7e5be3e8df34ddbd126",
+      "planSHA256": "dcce615b363f0987be035c8502415a5946db8145ad81a6cafef1b271c78cfd8f",
+      "QBReceiptSHA256": "bc8ee13fab5f861dc4539358fc68ad8ef0968aa0c6ca95670e0ec2f9e6efb32b",
+      "sourceQA": "PASS_EXACT_ONE_LINE_SOURCE_AND_TIMING_MODELS",
+      "change": "Only nominal sampling period 200ms to 100ms; actual 250ms refusal threshold and other guards unchanged",
+      "models": 9,
+      "exact250msBoundaryPassed": true,
+      "actualMetadataProbe": {
+        "key": "t45-r4-sampler-metadata-readonly-20261107-01",
+        "receiptSHA256": "34a963e8f33c7455001d2abfdbf517ef4bdd6c765bfa58724ceb145bf087b478",
+        "exitCode": 0,
+        "samples": 20,
+        "elapsedSeconds": 2.0032136319205165,
+        "maximumSampleDurationSeconds": 0.011866162065416574,
+        "maximumFinishGapSeconds": 0.10907654138281941,
+        "minimumAvailableBytes": 7104004096,
+        "startupFloorSatisfied": false,
+        "PGConnections": 0,
+        "SQLStatements": 0,
+        "realWatchProcessLifecycleExercised": false,
+        "fullWorkloadRerun": false
+      },
+      "heavyLoadOverhead": "UNVERIFIED",
+      "Fast": "UNVERIFIED"
     }
   }
 }
