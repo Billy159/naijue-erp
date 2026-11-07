@@ -28511,9 +28511,9 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Original D1: confirmed isolated historical fixture-binding mismatch, target repair only. R4 independent readback source fixed.",
-      "QB": "Original QB: history candidate transport/carrier source scoped PASS; review 4199807b and T45 exact proof increment.",
-      "D2": "Original D2: fixed 4199807b minimal tool closure, no APP rebuild or server execution.",
-      "T45": "Original T45: history candidate clean stop; check minimal safe continuation and R4 existing opaque admin seam, no server write.",
+      "QB": "Historical fixture/release pin and R4 current stop source scoped pass. Await exact original carrier/actual results.",
+      "D2": "Prepare final af395eba R4 tiny closure after completed isolated9f pack. No server.",
+      "T45": "Prioritize authorized retired application cleanup; exact eligible list then actual deletion/free-space/protection readback. No concurrent heavy job.",
       "D3": "Original D3: independent source expectations frozen, target readback follows actual verified original commit.",
       "QF": "Original QF: formal normal-entry prerequisite open, no new speculative browser run."
     },
@@ -35185,7 +35185,11 @@
       "sourceSet": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
       "actualEntry": "production-main.js --exact35 private-runtime-json",
       "state": "INPUTS_UNBOUND_NOT_APP_OR_PG_ACCEPTANCE",
-      "next": "Use actual normal APP PID/mount/capacity five dirs and private APP-UID credential key; do not start import-only d750 as API."
+      "next": "Use actual normal APP PID/mount/capacity five dirs and private APP-UID credential key; do not start import-only d750 as API.",
+      "historyRepairApplicationCommit": "576acc3cca5420146c4eb58b92d20c4de084a592",
+      "sourceDescriptorByteEqualToInstalled3b82": true,
+      "sourceDescriptorSHA256": "4233744d1bdba6aef9d14be85049b0c9949cde5f7f20bd7b8f21e4db3f1237ea",
+      "boundary": "Exact database source descriptor unchanged; new compiled app and release manifest differ and require distinct binding. No actual launch or readiness proven."
     },
     "new35BackupR4ProducerSuccessor": {
       "owner": "Original D1 sole producer writer; Original T45 server only",
@@ -35451,12 +35455,12 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "ACTUAL_INSTALL_PASSED_FIXTURE_BINDING_REJECTED_ORDINARY_NOT_RUN_STOPPED",
+      "state": "FIXTURE_AND_RELEASE_PIN_FIXED_SUCCESSOR_PACK_READY_WAITING_SPACE",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "Original D1 targets the exact synthetic binding; QB verify producer-consumer regression only. T45 checks same-install continuation without replay; do not restart under expired or consumed authorization.",
-      "at": "2026-11-07T18:22:38.134298+08:00",
+      "next": "T45 cleanup first. Fixed new unique isolated candidate under existing finite flow, no in-place rewrite of previous immutable installation.",
+      "at": "2026-11-07T18:51:51.991590+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
       "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
@@ -35508,7 +35512,16 @@
       "actualInstallPassed": true,
       "actualInstallationRecordPublished": true,
       "firstFailure": "FRESH35_ISOLATED_SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED (rollback child, no SQLSTATE)",
-      "fixtureFailureCause": "Builder binds bare initialize for historical-anchor; exact consumer expects {initialize, encodedScrypt}. Business validation was not reached."
+      "fixtureFailureCause": "Builder binds bare initialize for historical-anchor; exact consumer expects {initialize, encodedScrypt}. Business validation was not reached.",
+      "isolatedNextCommit": "9f4022ca40b42eb92ef184d848f3beca212510f4",
+      "isolatedNextTree": "f5582447b69f0c0234724ccaf37a62098e6963aa",
+      "isolatedNextSourceSetSHA256": "04e47364cad567679fc971fbba8221b08ea331c2c9dcb853cfc363e4fe5be809",
+      "fixtureFixQBResultSHA256": "a93ff9c47dccdfa8505f72577ec0f8ae3f19eeb20732c84f122e073d2cea8740",
+      "releaseFixturePinQBResultSHA256": "cd636ea9402bdf672961b8dd9aaf33d04d387c1192b6b99deb1f24327f3cd7e8",
+      "successorD2ResultSHA256": "e9161d5d1ee6da35abd2e62423edeea390eb35e782db8c62dbc897cecbf134b0",
+      "successorArchiveSHA256": "fb4e319ce3aa4f47735ce69e6676a60e48f1c61f8b19499e07b57b5f67a05fc0",
+      "successorArchiveBytes": 83707776,
+      "successorTailBytes": 2823427
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
@@ -35587,13 +35600,13 @@
       "next": "Only rebind after a genuine new successful PREPARE and active exact operation window. No server action or import authority issued."
     },
     "r4RetainedBackendProofRepair20261107": {
-      "at": "2026-11-07T18:05:24.249142+08:00",
-      "state": "EXACT_SOURCE_OFFLINE_QB_PASS_SMALL_TOOL_BUILT_ACTUAL_LINUX_PG_PENDING",
+      "at": "2026-11-07T18:51:51.991590+08:00",
+      "state": "LATEST_CLEAN_STOP_AND_READBACK_INTEGRATED_SOURCE_QB_PASS_PACK_PENDING",
       "d1ReviewSHA256": "693c03f382293e1c822078cd10ff38aa66f5b8f8c453bd3496f08464d94e8543",
       "modelSHA256": "e57b7043d14057e05c9f92db8ad324ed0c39d678c0c4b5d785d95ea3a5793af2",
       "modelPass": 3,
       "serverOperations": false,
-      "next": "T45 exact cross-language carrier wiring and independent actual Linux/PG test. No usable R4 successor until storage, current clean stop and valid opaque admin reference are bound.",
+      "next": "D2 accurate tiny closure. T45 only after storage and exact Python/current opaque admin/BOOT07 scope and real Linux proof.",
       "commit": "4199807b180ac6add75c66a57754bf77d35bf11d",
       "tree": "255e288d78cf435c7b781c3915c2eeac14c0c470",
       "branch": "codex/erp-r4-retained-backends-20261107",
@@ -35607,7 +35620,12 @@
       "d2ClosureResultSHA256": "dbb6a4a83f51e977924356b229055a060351e90b57f95f1de72b321cc4f8734c",
       "d2ToolArchiveSHA256": "f1b57ea46ce7c980a788aaeb48172aa70fab8d976ce8349afc1f7ce753237584",
       "d2ToolArchiveBytes": 1133462,
-      "d2ToolArchiveMembers": 358
+      "d2ToolArchiveMembers": 358,
+      "latestCommit": "af395ebacd726a80d391bbed0181f556aafbc96f",
+      "latestBranch": "codex/erp-r4-independent-reconciliation-20261107",
+      "latestSourceSetSHA256": "722cf5272ed4c4930992348624ca8a481cebf6cf6b1ec248431f84d36fcf075c",
+      "latestStopPinSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+      "latestStopPinQBResultSHA256": "347c7eccf18eced3c70f66666b8efe86b09bf3310eb942854e918ffd0496c017"
     },
     "oldProductionRestoreLiveCapacity20261107": {
       "at": "2026-11-07T18:22:38.134298+08:00",
@@ -35620,6 +35638,15 @@
       "r4ShortfallBytes": 3033849854,
       "next": "Recheck actual volume after user/storage intervention. Preserve backups and failure evidence. Continue independent isolated history scope.",
       "latestResourceReceiptSHA256": "3e07618bddc9080b3f9c402f32be4eef70d4173e212f8d05cc6b249ea77564a6"
+    },
+    "serverRetiredApplicationCleanup20261107": {
+      "at": "2026-11-07T18:51:51.991590+08:00",
+      "owner": "Original T45 only; C reviews fixed deletion list",
+      "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
+      "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
+      "state": "READ_ONLY_INVENTORY_IN_PROGRESS_NO_NEW_DELETIONS",
+      "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
+      "next": "T45 returns exact eligible path list and protection/rebuildability evidence. C fixes minimum needed list, then T45 executes and measures same-device actual free space."
     }
   }
 }
