@@ -2503,3 +2503,16 @@ C13 `ce61f10b1360e0c3da1253967c9fe72b7fbac1306798ec3d6c9d3a44fc58e367`, fixed30m
 
 ### PREPARE10 真实成本与停止回执已收齐
 固定安全只读29d3b417…/35979B：PG与guardian、端口/pid/writeauthority均不存在；cleanShutdown/cleanupComplete/dataPreserved及HBA、45项输入metadata恢复已核实。26表cost末次累计覆盖608916业务行；预检进度已至1098004全局行、REPORT_FINALIZE END991818ms，尚无native prepared binding，不称全链通过。调拨明细273948次REGISTRY耗时319767ms，其他表同项合计约6228ms；这是重叠wall，不是CPU。C批准原D1对私域SQLite覆盖索引做合成对照及最小源码候选，不改PG；尾段具体耗时仍未知，原必要校验均保留。原T45仅准备本次精确派生index归档，不与D1争改源码，不启动新预检。
+
+
+### 2026-11-08 单行734修复已固定并独立验收
+D1 commit73480c928a5950670ca3127b0eca3dc5719b3e55（parent49d）仅identity_keys临时表加WITHOUT ROWID，未保留额外索引/hint；原查询、PK唯一性、来源/EOF/事务/权限保留。QB7bfc0d9a…源/定向合成通过，原无效空键在入SQL前拒绝、无该表rowid消费者；不证明Linux提速。D2固定1,147,276B小闭包928ccb92…，sourceSet43a60fa8…，216pin仅1项变化、215复用，本机loader/help0，远端SHA独立读回一致；T45实际加载未验。
+原T45 single10归档source5ee/FULL-CASb88e经QBC525有效验收，C决定ed85ff7a…仅归档保留原件，180/155秒、1GiBcap/4GiBfloor/16MiBreserve，实际结果待回；READY277681共15pin已核。保留summary/cost/progress及06/07/09档案，不授权任何源件删除。
+
+
+### PREPARE10 派生索引归档真实完成
+原T45新key一次COMPLETED/0，59.842212秒，receipt94af4c48…/2206B。唯一index已完整解码逐字节及metadata核对，源SHA603cab9b…；私有archive04122728…/337714953B、allocated337719296B/root0400/dir0700，原index全部metadata含atime/ctime不变，尚未删除。实际free7,694,393,344→7,356,665,856B，低于8,207,515,646启动底线，新734工具不绕过。精确retire后预计10,024,148,992B；两份旧05参考index后仅余4,689,158,144B，尚未计PG/WAL/temp，不能声称共存已验。D1只读核成功PREPARE的旧index是否仍被后续消费，未授权删除。734小包外部RESULT更新5c669764…/8882B采用QA，归档928c及其余pins未变；T45非时间READY28d93c…/12467B已就绪，C13未签，真实Linux未验。
+
+
+### 734 索引生命周期接缝已只读查明
+采用原D1固定源码判断880d2226…/9421B：后续EXECUTE/INSPECT只用各自mode新建的完整预检index，持久binding不含旧index路径/inode/hash。成功PREPARE旧副本仍需完整PREPARED/binding/统计/cleanup固化、无reader/sidecar、完整字节归档并对齐summary、最终占用CAS与独立C清单后才释放；不是自动清理授权，不跳新mode完整校验。当前failed10的实际94af封存走独立失败派生index清单，不将其混写成PREPARED。T45单件retirement READY4621e6、source d79053、candidate c7be已交原QB只核新增一件范围及sidecar末检，未实际删除。
