@@ -1,0 +1,115 @@
+{
+  "format": "FRESH35_PRODUCTION_REAL_STREAM_OPS_V2",
+  "requestKey": "t45-r4-real-prepare-20261107-04",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "manifestSha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+  "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+  "programSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+  "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+  "startsAt": 1794026704587,
+  "expiresAt": 1794027720000,
+  "mode": "PREPARE",
+  "volumes": {
+    "data": {
+      "device": 66304,
+      "directoryInode": 14555503,
+      "mount": {
+        "deviceNumber": "259:0",
+        "fsType": "ext4",
+        "mountId": "2780",
+        "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+        "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+        "mountSource": "/dev/md0p1"
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026534013
+      },
+      "path": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4/data",
+      "physicalVolume": "259:0"
+    },
+    "reportIndex": {
+      "device": 66304,
+      "directoryInode": 14555468,
+      "mount": {
+        "deviceNumber": "259:0",
+        "fsType": "ext4",
+        "mountId": "2780",
+        "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+        "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+        "mountSource": "/dev/md0p1"
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026534013
+      },
+      "path": "/var/lib/naijue-erp/fresh35-production/real-r3/reports",
+      "physicalVolume": "259:0"
+    },
+    "sqliteScratch": {
+      "device": 66304,
+      "directoryInode": 14555470,
+      "mount": {
+        "deviceNumber": "259:0",
+        "fsType": "ext4",
+        "mountId": "2780",
+        "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+        "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+        "mountSource": "/dev/md0p1"
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026534013
+      },
+      "path": "/var/lib/naijue-erp/fresh35-production/real-r3/sqlite-scratch",
+      "physicalVolume": "259:0"
+    },
+    "tmp": {
+      "device": 66304,
+      "directoryInode": 14555469,
+      "mount": {
+        "deviceNumber": "259:0",
+        "fsType": "ext4",
+        "mountId": "2780",
+        "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+        "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+        "mountSource": "/dev/md0p1"
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026534013
+      },
+      "path": "/var/lib/naijue-erp/fresh35-production/real-r3/tmp",
+      "physicalVolume": "259:0"
+    },
+    "wal": {
+      "device": 66304,
+      "directoryInode": 14555504,
+      "mount": {
+        "deviceNumber": "259:0",
+        "fsType": "ext4",
+        "mountId": "2780",
+        "mountPoint": "/var/lib/naijue-erp/fresh35-production",
+        "mountRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state",
+        "mountSource": "/dev/md0p1"
+      },
+      "namespace": {
+        "device": 4,
+        "inode": 4026534013
+      },
+      "path": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4/data/pg_wal",
+      "physicalVolume": "259:0"
+    }
+  },
+  "registrationSha256": null,
+  "approvals": {
+    "historical-hall-approval": "8e1b71640f2c7172a15ad0be32c8aab029d28a1ee07afc3a41a8b5467ae98d53",
+    "current-effective-alignment": "0542b2ad358ccf5deb5601155ed6b88caaa60a462bbc5241b9aa236c022a0abc",
+    "explicit-zero-approval": "bd70a372e86e2a004fa79adc1f086c195a30ec6645c1ae22cb6a0bd3d39f9701",
+    "staff-hall-approval": "4a7986231848d05ecfde91f2033dcfc5ec7ede64282ade9c6a3bf6d3d49c69c4",
+    "historical-settlement-retention-approval": "033d9bcb38e0bfe1a27691283fcca7858ea372d46323a0abaab3a000a206ddf0",
+    "historical-line-amount-evidence": "9c6ecc42717a8baf953190217d5fc8b82712233cf11b6cac7f619e8130e7a4e7"
+  },
+  "operationParametersSha256": "839e7d4aeadb8dd2ce7d1b53b1ddc8f383eb92dcd14e90c40075708f2319dcf7",
+  "accessPlanSha256": "a02b7f8cfb8630fbd1335af025e237ac75ca20e6e717a39abe77a3f54229833e"
+}

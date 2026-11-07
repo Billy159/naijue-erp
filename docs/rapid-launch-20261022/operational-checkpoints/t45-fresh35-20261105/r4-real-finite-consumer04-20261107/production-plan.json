@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "authorizationReference": "C bounded retained R4 recovery and separate REAL operation; old record/source8694 unchanged, import-only source6ed020. Exact C restart/parameters/per-batch authority required.",
+  "operationId": "t45-prod35-3b82-20261107-r4",
+  "opsSourceSha256": "c9716efdb52ac74c3e8ad710d27e0258a3f1a53f2f94688b51a4ce3f97398095",
+  "stagingAuthoritySha256": "a7fcbaa13a17de5c4d12d2140d509964d0dbddfaa2a1bad855e9701894f9ef4b",
+  "imagePreparationExpiresAt": 1794011186937,
+  "productionCarrier": {
+    "format": "FRESH35_PRODUCTION_CONTAINER_V2",
+    "front": {
+      "id": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "name": "naijue-prod-front"
+    },
+    "futureAppName": "naijue-rewrite-exact35-20261107-r4-app"
+  }
+}

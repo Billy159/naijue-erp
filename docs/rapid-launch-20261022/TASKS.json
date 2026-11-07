@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T12:36:41.772168+08:00",
-      "phase": "REAL_PREPARE03_FAILED_BEFORE_NODE_RESTORED_SOURCE_CONSUMER_SUCCESSOR",
+      "at": "2026-11-07T12:47:39.635440+08:00",
+      "phase": "PREPARE04_NEW_SINGLE_KEY_QUEUED_AFTER_FINITE_CONSUMER_SOURCE_FIX",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "D1 fix finite parameter consumer and safe pre-node diagnostics; QB only delta; T45 new action only with C exactscope, never replay03. OriginalPG/guardian last matched12:32:34, nofreshPGcheckclaimed. NoREAL/APP/publicswitch.",
+      "next": "OriginalT45 collect original04 only; retain source/synthetic boundary, noEXE until actual17binding and C scope. Old03failure+restore retained.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -34881,8 +34881,22 @@
           "owner": "OriginalD1 unique source successor; originalQB incremental only; originalT45 actualexecutor",
           "finding": "real_operation_parameters old absolute admin expiry<=1794023700000 contradicts adopted C05/839e05:03 expiry",
           "actualFirstException": "UNKNOWN",
-          "state": "D1_SOURCE_SUCCESSOR_IN_PROGRESS",
-          "scope": "Consume exact current finite C parameters/service/role relation; safe pre-Popen failure receipt and proven no-writer metadata restore; preserve unknown outcomes"
+          "state": "SOURCE_SCOPED_QB_PASS_NEW04_C_BOUND_DISPATCHED",
+          "scope": "Consume exact current finite C parameters/service/role relation; safe pre-Popen failure receipt and proven no-writer metadata restore; preserve unknown outcomes",
+          "sourceSHA256": "c9716efdb52ac74c3e8ad710d27e0258a3f1a53f2f94688b51a4ce3f97398095",
+          "QB": "8532c9f5f36b96b2c189e51c2ee8611edcd90ba74af8cc974c3ec721659bee70",
+          "actualRootOrPGVerified": false
+        },
+        "currentRealPrepare04": {
+          "state": "T45_REPORTED_QUEUED_SINGLE_NEW_KEY_PENDING_ACTUAL",
+          "key": "t45-r4-real-prepare-20261107-04",
+          "CDescriptionSHA256": "2683c2363e354647a6ca392852a51372625309d7c57a68d850fa3062ceb5765e",
+          "mode": "PREPARE",
+          "startsAt": 1794026704587,
+          "expiresAt": 1794027720000,
+          "sourceQA": "8532c9f5f36b96b2c189e51c2ee8611edcd90ba74af8cc974c3ec721659bee70",
+          "actualBinding17": false,
+          "EXE": false
         }
       }
     },

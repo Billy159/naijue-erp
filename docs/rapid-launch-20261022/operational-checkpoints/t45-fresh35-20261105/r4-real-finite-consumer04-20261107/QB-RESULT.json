@@ -1,0 +1,103 @@
+{
+  "status": "PASS_SCOPED_REAL_FINITE_WINDOW_PRECHILD_SOURCE",
+  "task": "QB_REAL_PRECHILD_FAILURE_FIX_04",
+  "atUTC": "2026-11-07T04:44:12.775583+00:00",
+  "producerDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-real-prechild-failure-fix-04",
+  "sources": {
+    "fresh35-production-carrier.py": {
+      "sha256": "c9716efdb52ac74c3e8ad710d27e0258a3f1a53f2f94688b51a4ce3f97398095",
+      "bytes": 117464
+    },
+    "production-plan.json": {
+      "sha256": "8482c0919ea72230323f3b87b0f6c528917567a1f5dc87b1368d6fa98f331b8f",
+      "bytes": 785
+    },
+    "nonroot_input_access.py": {
+      "sha256": "e9d15db75b7f9bf30440b90c57e3c1d343aeede1fecba7731d6d0152bee159ba",
+      "bytes": 12057
+    },
+    "real_access_consumer.py": {
+      "sha256": "b176281e11e25386e3d1ae24cb0063ad10ac94f0f1c84deeb519addf2a9d17f1",
+      "bytes": 6193
+    },
+    "test_prechild_failure.py": {
+      "sha256": "c7dd26f972481a5f2abe49cb7e40a98d7bfb0b69086d426a059281692873ab7d",
+      "bytes": 10535
+    }
+  },
+  "plan": {
+    "sha256": "8482c0919ea72230323f3b87b0f6c528917567a1f5dc87b1368d6fa98f331b8f",
+    "bytes": 785
+  },
+  "producerResult": {
+    "sha256": "027f9443bb131b58dc0a848c89547a0ce0d7755f3cc938d69ce0675437a27d61",
+    "bytes": 3646
+  },
+  "parentMain": "5e66d6ca390675bfe6a5942c5cbdd94ee27d351127fb2129afe72dc4a3dc0d14",
+  "changedFunctionASTs": [
+    "production_real",
+    "real_failure_details",
+    "real_inside",
+    "real_inside_run",
+    "real_operation_parameters"
+  ],
+  "checks": {
+    "exactSources": "PASS",
+    "actualAuthorTests": 7,
+    "passed": 7,
+    "skips": 0,
+    "actualCParametersSha256": "839e7d4aeadb8dd2ce7d1b53b1ddc8f383eb92dcd14e90c40075708f2319dcf7",
+    "fullActualFunctionFSInterfaceCases": [
+      {
+        "consumer": "parent",
+        "changedFields": [],
+        "outcome": "REAL_INDEPENDENT_ROLE_LIFETIMES_REQUIRED"
+      },
+      {
+        "consumer": "new",
+        "changedFields": [],
+        "outcome": "ACCEPTED_C839E_EXACT_BYTES"
+      },
+      {
+        "consumer": "new",
+        "changedFields": [
+          "controllerLoginValidUntil"
+        ],
+        "outcome": "REAL_INDEPENDENT_ROLE_LIFETIMES_REQUIRED"
+      },
+      {
+        "consumer": "new",
+        "changedFields": [
+          "adminLoginValidUntil"
+        ],
+        "outcome": "REAL_INDEPENDENT_ROLE_LIFETIMES_REQUIRED"
+      }
+    ],
+    "doubleBoundary": "Actual C839e bytes/hash unchanged; protected record/service/restart contents and known identities explicitly doubled, not original artifacts or positive server proof",
+    "safeDiagnosticAndControllerLifecycleCases": "Included actual functions/outerAST in7 tests",
+    "actualServerPG": "NOT_TESTED"
+  },
+  "checksFile": {
+    "sha256": "61afd86d1a40b5dd4dd38cc5f9c00abdb38b58e1391a9e5d3c2d80884c7d6253",
+    "bytes": 1115
+  },
+  "testLog": {
+    "sha256": "571d4d8d6ae09348e1ffb7a6c0dcbd34d7bb6154868fbc757ec34c969ed63743",
+    "bytes": 832
+  },
+  "report": {
+    "sha256": "dc8477ce252c75db61dd8a8b586689ea1039dfb7a29e08a7b65087e87ce81b6b",
+    "bytes": 3331
+  },
+  "limitations": [
+    "Protected record/service/restart interfaces and known identities explicitly doubled in C839e function cases; no original protected positive proof",
+    "Actual server/PG/Node/Docker not executed",
+    "Original PREPARE03 first exception remains UNKNOWN",
+    "No new action or retry authorized by this report"
+  ],
+  "runtime": {
+    "model": "UNVERIFIED",
+    "effort": "UNVERIFIED",
+    "fast": "UNVERIFIED"
+  }
+}

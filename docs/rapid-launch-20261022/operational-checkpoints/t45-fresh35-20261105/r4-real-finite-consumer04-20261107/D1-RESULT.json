@@ -1,0 +1,73 @@
+{
+  "state": "LOCAL_FINITE_SOURCE_PASS_NOT_EXECUTED",
+  "task": "REAL_PRECHILD_FAILURE_FIX_04",
+  "atUTC": "2026-11-07T04:38:51.503051+00:00",
+  "parentMain": "5e66d6ca390675bfe6a5942c5cbdd94ee27d351127fb2129afe72dc4a3dc0d14",
+  "sources": {
+    "fresh35-production-carrier.py": {
+      "sha256": "c9716efdb52ac74c3e8ad710d27e0258a3f1a53f2f94688b51a4ce3f97398095",
+      "bytes": 117464
+    },
+    "production-plan.json": {
+      "sha256": "8482c0919ea72230323f3b87b0f6c528917567a1f5dc87b1368d6fa98f331b8f",
+      "bytes": 785
+    },
+    "nonroot_input_access.py": {
+      "sha256": "e9d15db75b7f9bf30440b90c57e3c1d343aeede1fecba7731d6d0152bee159ba",
+      "bytes": 12057
+    },
+    "real_access_consumer.py": {
+      "sha256": "b176281e11e25386e3d1ae24cb0063ad10ac94f0f1c84deeb519addf2a9d17f1",
+      "bytes": 6193
+    },
+    "test_prechild_failure.py": {
+      "sha256": "c7dd26f972481a5f2abe49cb7e40a98d7bfb0b69086d426a059281692873ab7d",
+      "bytes": 10535
+    }
+  },
+  "functionLines": {
+    "real_operation_parameters": 851,
+    "real_failure_details": 898,
+    "real_inside": 904,
+    "real_inside_run": 954,
+    "production_real": 1066
+  },
+  "staticDefect": "Parent real_operation_parameters line860 hard-coded admin expiry <=1794023700000 (11:55 Beijing), inconsistent with actually signed C05 parameters839e expiry05:03Z. This is a proven source conflict, not proven first cause of PREPARE03.",
+  "fix": [
+    "Replace old absolute admin cap with min(C parameter authorization expiry, original retained service lease). Preserve controller expiry equality, operation/admin inequalities and all finite window/source/record/service/restart checks. No new fields or expiry authorization.",
+    "Persist closed stage/class/static-code/line diagnostics before slow original controller cleanup; no stderr/SQL/arbitrary exception text. Return explicit childNeverStarted/childReaped facts for prechild errors.",
+    "Original verified controller only; no cleanup signal before controller identity/argv validation. Existing Node cleanup and watch retained; attempted unknown Popen cannot authorize restoration.",
+    "Unknown transport persists safe root ledger failure and keeps metadata/projections for original-key recovery, never infers Node status from docker exit."
+  ],
+  "tests": {
+    "passed": 7,
+    "skipped": 0,
+    "failures": 0,
+    "usesActualFunctionsAndOuterTailAST": true,
+    "unitDoubles": [
+      "Linux/root prerequisite",
+      "factory metadata loaders",
+      "process facts/Node lifecycle outcomes",
+      "controller signal/cleanup"
+    ],
+    "actualLocalPrivateDiagnosticFiles": true,
+    "allOtherOriginalFunctionsASTUnchanged": true,
+    "accessHelperAndFrozenParentsByteUnchanged": true
+  },
+  "actualEvidence": {
+    "prepare03MetadataSha256": "a8aed4bf36332a73a3a2ce03892c78c645335c59f29d72014b1cd72b69548c7d",
+    "restorationResultSha256": "7794b73b25082e18fd7da18227b26c79f19dded802d888a92379f3d46abb95dc",
+    "prepare03FirstException": "UNKNOWN - no original safe diagnostic",
+    "prepare03NodeNeverStarted": "T45 original terminal + exact source durable report-before-Popen order + both namespace report absence",
+    "restoredMetadataAndSecretRetirement": "actual T45 original03 restoration completed; do not infer fresh PG status from this receipt"
+  },
+  "notPerformed": [
+    "server",
+    "SQL/PG/role/HBA changes",
+    "RAW or real approval permissions",
+    "failed original key replay",
+    "REAL17 binding/EXE",
+    "full suite rerun"
+  ],
+  "next": "Original QB review only this delta; C alone binds any new action04 after source adoption. No self-signed window or retry from this report."
+}
