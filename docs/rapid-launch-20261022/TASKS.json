@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T08:38:05.339575+08:00",
+  "updatedAt": "2026-11-07T08:45:57.263825+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,8 +33302,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T08:38:05.339575+08:00",
-      "phase": "R3_MOUNT_GUARD_REJECTED_ARGV_FIX_QB_PASS_R4_REUSE_PREPARATION",
+      "at": "2026-11-07T08:45:57.263825+08:00",
+      "phase": "R4_EXACT3_CONTROL_PRESERVATION_ACTUAL_PASS_NEW_C14_DISPATCHED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 sole server execution",
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 minimalr4 namespace/fixed3 control archive and scopedQB, then C exact new C14. No material copy or replay.",
+      "next": "OriginalT45 actual six-bind R4 creation; C6/C9 only after actual new target/program; REAL separate",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -34309,6 +34309,31 @@
           "scope": "Original T45 preserves stopped R3 CID unchanged. After accurate stopped/no-live/empty data-wal proof, fixed3 old control files may be CAS moved to unique failed-provision-r3-20261107-01 archive; full old bytes/stat preserved. New numericr4 target/roles/workspace/container/operation/alias; no validator relaxation or full material copy. New C14 after scoped source/config review and actual empty facts.",
           "newC14": "NOT_ISSUED"
         }
+      },
+      "r4ControlledSuccessor": {
+        "at": "2026-11-07T08:45:57.263825+08:00",
+        "sourceQB_SHA256": "498cb2d5b41dce082dd551dbe3c5da556ec9c456427fc59152570f93e90629b9",
+        "sourceREADY_SHA256": "96af0bb24b15b57d77ade3cf18d37526490d7174287479d0aab9ef393035a221",
+        "mainSHA256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+        "companionSHA256": "a19149c85c10f5273141123cd28891ef7887be7d55c13a8449b72405f5bace74",
+        "preservationActualSHA256": "5511fd65c33cf06f4d76868ea261e92f2fd42663eaeb3050d82cbfcece75d086",
+        "preservationJobSHA256": "5db73da713cce5eea1f48756e811e46e26d7f9a77b3dea2bef9a1a9a638df51c",
+        "preservationStatus": "COMPLETED_0_0.718461822s_EXACT3_CONTROLS_NO_PG",
+        "lastFreeBytes": 8519725056,
+        "minimumBeforeProvision": 8207515646,
+        "oldR3Container": "STOPPED_PRESERVED_UNCHANGED",
+        "oldR3FailedJob": "RETAINED_NOT_REPLAYED",
+        "hostMaterialRoot": "REUSE_ORIGINAL_R3",
+        "newTargetNamespace": "r4",
+        "port": 18654,
+        "newC14SHA256": "a785bb34b08da0b6d23814df9febac4438227da9aaea75768e4adeca75224434",
+        "newC14Bytes": 1759,
+        "startsAt": 1794012279661,
+        "expiresAt": 1794013479661,
+        "currentOwner": "Original T45 sole executor",
+        "state": "EXACT_R4_PROVISION_DISPATCHED_NOT_YET_RECEIVED",
+        "REALExecuted": false,
+        "publicSwitch": false
       }
     }
   }

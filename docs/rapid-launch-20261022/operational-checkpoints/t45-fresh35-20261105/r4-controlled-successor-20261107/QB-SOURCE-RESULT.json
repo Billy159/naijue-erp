@@ -1,0 +1,25 @@
+{
+  "status": "PASS_SCOPED_R4_NAMESPACE_AND_CONTROL_PRESERVATION_SOURCE",
+  "sourcePins": {
+    "fresh35-production-carrier.py": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+    "fresh35-production-carrier.BUILD-BOUND.py": "a19149c85c10f5273141123cd28891ef7887be7d55c13a8449b72405f5bace74",
+    "prepare_controller_reference.py": "53d3ef5491b54f4eb15a1e9dea130033de78b93ed93b5b124076d80dbb92b178",
+    "production-plan.json": "b8168605c99f0db21757da65c40a497f7c3f46b756c3814879c05ac1c0ab7053",
+    "controller-plan.json": "3aa558e7047e01b593b43b555f9f3f4b24bd089b3d604663fa88757895e836ad",
+    "archive_failed_r3_controls.py": "ea4b3336a16491a9d5d8fb46bc3a23a8e3edf1af08d7114b01816f0da1a39852"
+  },
+  "readySha256": "96af0bb24b15b57d77ade3cf18d37526490d7174287479d0aab9ef393035a221",
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": "CHECKS.json; source boundary, plan/proposal pins, selected fixed-three CAS move models",
+  "reuse": "Author3 binding tests adopted; e1e argv2 and oldPG/build not rerun",
+  "materialProvenance": "Original R3 prepare-started bytes remain; only exact R4 plan permitted to consume them",
+  "archiveScope": "Exactly3 named SHA-bound controls via inode+bytes CAS to unique0700 archive; local synthetic move only",
+  "liveServerConditions": "NOT_VERIFIED: original receipt hashes/oldCID stopped+PID0/noR4/noPG paths/unit/hostport/RAW/alias/space checked only in source",
+  "futureNamespacePort": "NOT_OBSERVED; source result expressly distinguishes host metadata",
+  "actualArchive": "NOT_EXECUTED",
+  "actualC14": "UNISSUED_TEMPLATE_ONLY",
+  "PGOrServer": "NOT_ACCESSED",
+  "businessSourceOrBuild": "UNCHANGED_BY_REVIEW",
+  "modelRuntime": "UNVERIFIED"
+}

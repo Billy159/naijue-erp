@@ -1,0 +1,104 @@
+{
+  "status": "EXACT_THREE_FAILED_R3_CONTROLS_PRESERVED_NO_PG",
+  "jobKey": "t45-r4-preserve-failed-controls-20261107-01",
+  "filesMoved": [
+    {
+      "relativePath": "production-start-intent.json",
+      "sha256": "126e47b3fe8f6cd40a0ad5f704da60224dc109bbd1a0f9a4b201a480d749a5be",
+      "before": {
+        "device": 66304,
+        "inode": 14314536,
+        "mode": 33152,
+        "uid": 0,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 594,
+        "mtimeNs": 1794011420819170574,
+        "ctimeNs": 1794011420819170574
+      },
+      "after": {
+        "device": 66304,
+        "inode": 14314536,
+        "mode": 33152,
+        "uid": 0,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 594,
+        "mtimeNs": 1794011420819170574,
+        "ctimeNs": 1794012176206820329
+      }
+    },
+    {
+      "relativePath": "production-container-receipt.json",
+      "sha256": "967470b1264aa71385811f79abdd4b2dd9b2be0b9f1f4d62f93a2c65fe224bc7",
+      "before": {
+        "device": 66304,
+        "inode": 14314537,
+        "mode": 33152,
+        "uid": 0,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 234,
+        "mtimeNs": 1794011424265262306,
+        "ctimeNs": 1794011424265262306
+      },
+      "after": {
+        "device": 66304,
+        "inode": 14314537,
+        "mode": 33152,
+        "uid": 0,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 234,
+        "mtimeNs": 1794011424265262306,
+        "ctimeNs": 1794012176224820482
+      }
+    },
+    {
+      "relativePath": "authority/fresh35-production-provision-v2.json",
+      "sha256": "f65138aef3cb0ac4a846bc794f99c4b5b1bf755ffee9c9d8b103c051776a88e9",
+      "before": {
+        "device": 66304,
+        "inode": 14555485,
+        "mode": 33152,
+        "uid": 0,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 1708,
+        "mtimeNs": 1794011420725168062,
+        "ctimeNs": 1794011420725168062
+      },
+      "after": {
+        "device": 66304,
+        "inode": 14555485,
+        "mode": 33152,
+        "uid": 0,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 1708,
+        "mtimeNs": 1794011420725168062,
+        "ctimeNs": 1794012176240820617
+      }
+    }
+  ],
+  "originalJobReplayed": false,
+  "containerChanged": false,
+  "PGExecuted": false,
+  "materialCopied": false,
+  "automaticRetry": false,
+  "archivePath": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/failed-provision-r3-20261107-01",
+  "originalContainerId": "aebc1ded534bbbc975f59f17e470a4bc64f48f6e94e9abb4d2ac14220982667a",
+  "originalContainerStopped": true,
+  "originalUnitNoLive": true,
+  "absentPGPaths": [
+    "state/production-fresh35-20261107-r3",
+    "state/production-fresh35-20261107-r4",
+    "state/data",
+    "state/wal",
+    "data",
+    "wal"
+  ],
+  "hostPort18654Absent": true,
+  "futureContainerNamespacePortNotYetObserved": true,
+  "currentFreeBytes": 8519725056
+}

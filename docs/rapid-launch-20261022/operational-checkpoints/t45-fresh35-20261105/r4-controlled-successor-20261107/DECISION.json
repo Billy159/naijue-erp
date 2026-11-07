@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-07T08:44:39.661578+08:00",
+  "authority": "Direct human current controller Chat delegates decisions through2026-11-07T12:00+08",
+  "scope": "Exact freshR4 provision only, reuse accurate unchanged R3 materials after fixed3 control preservation",
+  "originalR3Provision": "FAILED_PRESERVED_NO_REPLAY",
+  "originalR3Container": "STOPPED_PRESERVED_UNCHANGED",
+  "actualPreservationReceiptSHA256": "5511fd65c33cf06f4d76868ea261e92f2fd42663eaeb3050d82cbfcece75d086",
+  "actualPreservationJobSHA256": "5db73da713cce5eea1f48756e811e46e26d7f9a77b3dea2bef9a1a9a638df51c",
+  "lastActualFreeBytes": 8519725056,
+  "minimumBeforeProvisionUnchanged": 8207515646,
+  "mustRefreshBeforeStart": true,
+  "newC14SHA256": "a785bb34b08da0b6d23814df9febac4438227da9aaea75768e4adeca75224434",
+  "newC14Bytes": 1759,
+  "startsAt": 1794012279661,
+  "expiresAt": 1794013479661,
+  "hostMaterialRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3",
+  "onlyExistingMaterialReuseBridge": "ExactR4 operation consumes originalR3 receipt; source and receipt not rewritten",
+  "mainOpsSHA256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+  "planSHA256": "b8168605c99f0db21757da65c40a497f7c3f46b756c3814879c05ac1c0ab7053",
+  "notAuthorizedByThisFile": [
+    "C6/C9 before actual target/program",
+    "REAL import",
+    "production switch",
+    "old database changes",
+    "old target replay"
+  ]
+}

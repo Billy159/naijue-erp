@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "authorizationReference": "C fixed r4 successor after pre-PG mount failure; original r3 material receipt and failed files preserved. No C13 extension; new exact C14 required.",
+  "operationId": "t45-prod35-3b82-20261107-r4",
+  "opsSourceSha256": "a19149c85c10f5273141123cd28891ef7887be7d55c13a8449b72405f5bace74",
+  "stagingAuthoritySha256": "a7fcbaa13a17de5c4d12d2140d509964d0dbddfaa2a1bad855e9701894f9ef4b",
+  "imagePreparationExpiresAt": 1794011186937,
+  "productionCarrier": {
+    "format": "FRESH35_PRODUCTION_CONTAINER_V2",
+    "front": {
+      "id": "ac1cb39db1f4aa99e3a13718fcb620c3481cfe67e767f1d36942f867cad82970",
+      "name": "naijue-prod-front"
+    },
+    "futureAppName": "naijue-rewrite-exact35-20261107-r4-app"
+  }
+}

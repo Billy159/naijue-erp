@@ -1,0 +1,36 @@
+{
+  "format": "FRESH35_PRODUCTION_PROVISION_AUTHORIZATION_V2",
+  "decision": "AUTHORIZE_EXACT_NEW_EMPTY_PRODUCTION_TARGET_ONLY",
+  "deploymentManifestSha256": "e7b612814be23afe4fbc1b2b1ecaf680b5933cbed777bf26caeee31381d0ff62",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "proposal": {
+    "database": "erp_native35_20261107_r4",
+    "admin": "erp35_admin_20261107_r4",
+    "owner": "erp35_owner_20261107_r4",
+    "controller": "erp35_controller_20261107_r4",
+    "runtime": "erp35_runtime_20261107_r4",
+    "host": "127.0.0.1",
+    "port": 18654,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1794012279661,
+  "expiresAt": 1794013479661,
+  "independentSafetyReviewSha256": "498cb2d5b41dce082dd551dbe3c5da556ec9c456427fc59152570f93e90629b9",
+  "authorizationReference": "C under human delegation until2026-11-07T12:00+08. Exact newR4 only; originalQB e11f9e9c argv +498cb2d5 namespace. Actual5511fd65 exact3 R3 controls preserved, stoppedR3/noPG and free8519725056; original failures kept. Reuse R3 materials/readonlyR2 RAW. No C13/oldC14 extension, copy or replay. C6/C9/REAL/switch separately bound.",
+  "purpose": "PRODUCTION_NEW_EMPTY_EXACT35",
+  "ordinary": {
+    "connectHost": "127.0.0.1",
+    "connectPort": 18654,
+    "serverAddress": "127.0.0.1",
+    "serverPort": 18654,
+    "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
+    "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs"
+  },
+  "serviceLease": {
+    "expiresAt": 1825560000000,
+    "onSuccess": "RETAIN_EXACT_TARGET_UNTIL_SERVICE_DEADLINE",
+    "onFailure": "STOP_EXACT_TARGET_PRESERVE_DATA"
+  }
+}

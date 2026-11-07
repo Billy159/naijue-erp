@@ -1,0 +1,43 @@
+{
+  "status": "READY_FOR_R4_NAMESPACE_AND_EXACT_THREE_CONTROL_PRESERVATION_REVIEW",
+  "sourcePins": {
+    "fresh35-production-carrier.py": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+    "fresh35-production-carrier.BUILD-BOUND.py": "a19149c85c10f5273141123cd28891ef7887be7d55c13a8449b72405f5bace74",
+    "prepare_controller_reference.py": "53d3ef5491b54f4eb15a1e9dea130033de78b93ed93b5b124076d80dbb92b178",
+    "production-plan.json": "b8168605c99f0db21757da65c40a497f7c3f46b756c3814879c05ac1c0ab7053",
+    "controller-plan.json": "3aa558e7047e01b593b43b555f9f3f4b24bd089b3d604663fa88757895e836ad",
+    "archive_failed_r3_controls.py": "ea4b3336a16491a9d5d8fb46bc3a23a8e3edf1af08d7114b01816f0da1a39852"
+  },
+  "materialRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3",
+  "materialOriginalOperation": "t45-prod35-3b82-20261107-r3",
+  "newOperationId": "t45-prod35-3b82-20261107-r4",
+  "newContainerName": "t45-fresh35-production-20261107-r4",
+  "newFrontAlias": "naijue-rewrite-exact35-20261107-r4-app",
+  "newProposal": {
+    "database": "erp_native35_20261107_r4",
+    "admin": "erp35_admin_20261107_r4",
+    "owner": "erp35_owner_20261107_r4",
+    "controller": "erp35_controller_20261107_r4",
+    "runtime": "erp35_runtime_20261107_r4",
+    "host": "127.0.0.1",
+    "port": 18654,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4"
+  },
+  "changedScope": [
+    "Original material receipt remains R3; verify only permits exact new R4 operation and exact retained R3 material provenance; source/archive/manifest hashes unchanged",
+    "Main NAME R4 only; retained R3 root and r2 readonly RAW source unchanged; reviewed e1e mount order retained",
+    "Companion same fixed changes and exact reviewed argv correction; controller helper only parent SHA and literal R4 proposal/port",
+    "One fixed root controlled preservation of three exact original controls, old CID stopped/PID0, exact terminal receipts, PG work/data/wal absent, port metadata absent, full before-bytes/hash/inode CAS then move only those files into unique0700 archive; no rm/restart/rename container/material copy"
+  ],
+  "tests": {
+    "passed": 3,
+    "elapsedSeconds": 0.03,
+    "scope": "Actual receipt entry accepts R4 operation with retained R3 provenance to unchanged full-manifest stage; rejects relabelled marker/wrong operation; actual helper accepts only exact synthetic R4 machine passfile, rejects R3. No Docker/PG/server."
+  },
+  "priorArgvReviewReused": true,
+  "serverExecuted": false,
+  "businessSourceOrBuildChanged": false,
+  "C14Issued": false,
+  "archiveExecuted": false,
+  "r3bDraft": "Never submitted or executed; superseded by C numeric r4 ruling."
+}
