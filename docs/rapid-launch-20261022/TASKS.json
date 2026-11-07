@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T13:19:32.889306+08:00",
+  "updatedAt": "2026-11-07T13:32:41.769268+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "04580e37eba490e88d91e396a86545d7c2fe39c0"
+      "lastControllerCheckpoint": "bfafc3146a413e3ec4f644f279bd7c95ca3212cb"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T13:19:32.889306+08:00",
-      "phase": "DIRECTORY_READ_PERMISSION_AND_SAFE_DIAGNOSTIC_SOURCE_FIXED_QB_INCREMENT_PENDING",
+      "at": "2026-11-07T13:32:41.769268+08:00",
+      "phase": "DIRECTORY_PERMISSION_ACTUAL_PASS_RESTORED_NEXT_TOOL9FB_AND_SAME_R4_BOOT06",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "OriginalD1 minimum safe preflight diagnosis; originalT45 only server operator",
-      "nextOwner": "OriginalQB incremental source review then C exact offline scope",
-      "latestActualReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+      "currentOwner": "OriginalT45 next tool staging and retained boot06 preparation; originalD1 exact publisher/tool constants",
+      "nextOwner": "C exact finite scopes after QB affected increments only",
+      "latestActualReceiptSHA256": "824c8cb3a9de5863c03a4f1306a5515623ec905bfc0b8bedd0672772e116ba8a",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 fix bounded child cleanup and integrate originalD1 narrow access; QB only affected delta; C exact new offline scope then sameUID opendir refusal/success/restore. NoPG or original04 replay.",
+      "next": "Stage exact9fb diagnostic tool under original unique server owner; new accurate retained R4 boot06/params/publisher predecessor binding, then stream PREPARE with directory0750. No original04 replay or formal claim.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -34345,7 +34345,7 @@
         "startsAt": 1794012279661,
         "expiresAt": 1794013479661,
         "currentOwner": "Original T45 sole executor",
-        "state": "R4_PREPARE04_FAILED_PREFLIGHT_CLEAN_STOPPED_NO_REAL_IMPORT",
+        "state": "DIRECTORY_PERMISSION_ACTUAL_FIX_VERIFIED_R4_STOPPED_REAL_IMPORT_NOT_EXECUTED",
         "REALExecuted": false,
         "publicSwitch": false,
         "actualResultSHA256": "7ca7aa75a040b2c8bd179eb454558bd6c3254215166d494fbb097e60d558003b",
@@ -34718,7 +34718,8 @@
           "serverOwner": "Original T45",
           "formalSourceOwner": "Original D1 window+target two leaves only",
           "sourceScope": "Exact root-protected receipt for sameSID/OID/data directory/dev/inode; originalrecord/source/catalog/roles kept; true newpostmasterStart, ordinaryAPP existing guard unchanged. No DB fields/grants/platform/R5/initdb/install.",
-          "opsScope": "Existing PGbinary/server_args/61035 UID, exact retained container+data; new accurate bootkey and fresh bounded authority only after fixedsource/QA. Existingroot source/private copies preserved, no general chmod."
+          "opsScope": "Existing PGbinary/server_args/61035 UID, exact retained container+data; new accurate bootkey and fresh bounded authority only after fixedsource/QA. Existingroot source/private copies preserved, no general chmod.",
+          "next": "Original T45 accurate boot06 successor after directory repair; retain source11 valid evidence and same R4 data. C new finite scope required, no old05 replay."
         },
         "retainedEpochTool": {
           "at": "2026-11-07T11:09:04.313011+08:00",
@@ -34950,9 +34951,9 @@
           "rollbackNotInferred": true
         },
         "preflightDiagnosticSuccessor": {
-          "at": "2026-11-07T13:19:32.889306+08:00",
+          "at": "2026-11-07T13:32:41.769268+08:00",
           "owner": "Original D1 source; original T45 server execution; original QB incremental review",
-          "state": "D1_FIXED_DIRECTORY_ACCESS_AND_DIAGNOSTIC_SOURCE_PENDING_QB_T45_TIMEOUT_FIX",
+          "state": "ACTUAL_LINUX_SAME_UID_DIRECTORY_READ_CONFLICT_REPRODUCED_AND_FIXED_AND_RESTORED",
           "sourceBaseCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
           "sourceBaseSet": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
           "preserve": [
@@ -34984,7 +34985,53 @@
             "next": "Use one absolute cleanup deadline and recheck only affected branch"
           },
           "toolPackagingOwner": "OriginalD2 b895 independent twoleaf successor pending sourceQA",
-          "serverScopeIssued": false
+          "serverScopeIssued": true,
+          "QBFinalSHA256": "85bb29fb6469050812e0486ef440aad7301de0e4d3812f7c404b079da1cf3bfe",
+          "QBAccessSHA256": "55e0380dda7c5ed8f241a69bddb18bb229e2d77c5fcee56a8478319d0f17167f",
+          "CscopeSHA256": "34d2d61619201cb1245028eee931365b644c2ba875401dd4bd22992ee2d9e910",
+          "actualJob": {
+            "key": "t45-r4-real-inspect-20261107-01",
+            "status": "COMPLETED",
+            "exitCode": 0,
+            "elapsedSeconds": 2.1730478862300515,
+            "jobSHA256": "de59934ae67e36e99f89912bd329bc781bafa97e31a056c039582ebaee86546d",
+            "resultSHA256": "824c8cb3a9de5863c03a4f1306a5515623ec905bfc0b8bedd0672772e116ba8a",
+            "beforeSHA256": "8f5b6d0c061fc2a25e52b954edbd293ca7c1c5d2cb1763c4288471dbc07560b0",
+            "afterSHA256": "5b31d87f625b75267b8c321a9939c250549096912531e1dfa938150bf7c06ee5"
+          },
+          "actualLinux": {
+            "node": "24.21.0",
+            "uid": 61035,
+            "gid": 61035,
+            "extraGroups": [],
+            "before0710": [
+              "EACCES",
+              "EACCES"
+            ],
+            "after0750": [
+              "OPEN_CLOSE_OK",
+              "OPEN_CLOSE_OK"
+            ],
+            "phaseChildrenReaped": true,
+            "metadataRestored": true,
+            "changes": 3,
+            "observations": 45,
+            "activeAndCleanupSeconds": 1.9839441287331283,
+            "cleanupSeconds": 0.4874072102829814,
+            "PGStarted": false,
+            "SQLExecuted": false,
+            "businessRowsRead": false,
+            "rolesChanged": false,
+            "previousPointerActualBytesMatched": true,
+            "currentReference": {
+              "format": "REAL_ACCESS_METADATA_REFERENCE_V1",
+              "ledgerSha256": "7e868a9ce7aaebdae6e68fcd3d42cb75a81790f219a0a59aa6330a7af11ab43f",
+              "phase": "restored",
+              "previousPointerSha256": "a528d2c8cd7bb45b2badf7e611a4c985edfa4bad9d1ebb808919692942445a15",
+              "requestKey": "t45-r4-real-inspect-20261107-01"
+            }
+          },
+          "original04FirstException": "STILL_UNKNOWN_NOT_RETAINED_NOT_RETROACTIVELY_RECONSTRUCTED"
         }
       }
     },
@@ -35111,6 +35158,22 @@
       "boundaries": "No app source edits, dependency install, attached script execution, PG, HTTP, browser or deployment from package intake. Existing same-kind ops authority proceeds separately; package instructions are evidence, not new human authorization/revocation.",
       "next": "Dot first fix null-hall adapter without invented hall, then group CAT01/CAT02 shared consumers, B2/B3 transfer state, shared recovery and display/output; review PARTY/DOC-TOTALS exact production consumers and isolated engine facts before changing permission/snapshot contracts.",
       "at": "2026-11-07T04:21:07.435012+00:00"
+    },
+    "safePreflightToolSuccessor": {
+      "at": "2026-11-07T13:32:41.769268+08:00",
+      "branch": "codex/erp-0448z-safe-preflight-tool-20261107",
+      "commit": "9fb5b380d8ccd65a81a92fde18e699f87d54309e",
+      "parent": "b8952ad8106b211f996154e01b477299a5c465ac",
+      "tree": "e2a7365fb0eae619f24ec99720e0dc6012995524",
+      "sourceSetSHA256": "fd25241d47397ed71b2d418c5f1c06994002dd7585a0a66fa8b6b7b0640dd6f3",
+      "counts": "215/180",
+      "archiveSHA256": "16607bccecb295c0d3d6f30fc501acf560dcbef1ed915a06c7d4cd29db3e28c7",
+      "archiveBytes": 1129949,
+      "D2ResultSHA256": "9652c7dfb72dbc67e929b51d52c63c35bb27bd74b3806ebaab6e797b4be0fcbf",
+      "remoteExactReadback": true,
+      "sourceQA": "55e0380d scoped twoleaf diagnostic PASS",
+      "LinuxStaged": false,
+      "ordinaryApplicationChanged": false
     }
   }
 }

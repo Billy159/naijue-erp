@@ -1,0 +1,65 @@
+{
+  "PGStarted": false,
+  "SQLExecuted": false,
+  "automaticRetry": false,
+  "businessRowsRead": false,
+  "cleanupObservedSeconds": 0.4874072102829814,
+  "currentReference": {
+    "format": "REAL_ACCESS_METADATA_REFERENCE_V1",
+    "ledgerSha256": "7e868a9ce7aaebdae6e68fcd3d42cb75a81790f219a0a59aa6330a7af11ab43f",
+    "phase": "restored",
+    "previousPointerSha256": "a528d2c8cd7bb45b2badf7e611a4c985edfa4bad9d1ebb808919692942445a15",
+    "requestKey": "t45-r4-real-inspect-20261107-01"
+  },
+  "elapsedActiveAndCleanupSeconds": 1.9839441287331283,
+  "metadataChanges": 3,
+  "metadataObservations": 45,
+  "metadataRestored": true,
+  "phaseReceipts": 2,
+  "productionSwitched": false,
+  "requestKey": "t45-r4-real-inspect-20261107-01",
+  "results": [
+    {
+      "checks": [
+        {
+          "errno": "EACCES",
+          "ok": false,
+          "technicalFile": "package-root"
+        },
+        {
+          "errno": "EACCES",
+          "ok": false,
+          "technicalFile": "tables"
+        }
+      ],
+      "childReaped": true,
+      "gid": 61035,
+      "stage": "before",
+      "supplementaryGroups": [],
+      "uid": 61035
+    },
+    {
+      "checks": [
+        {
+          "errno": null,
+          "ok": true,
+          "technicalFile": "package-root"
+        },
+        {
+          "errno": null,
+          "ok": true,
+          "technicalFile": "tables"
+        }
+      ],
+      "childReaped": true,
+      "gid": 61035,
+      "stage": "after",
+      "supplementaryGroups": [],
+      "uid": 61035
+    }
+  ],
+  "rolesChanged": false,
+  "scopeSha256": "34d2d61619201cb1245028eee931365b644c2ba875401dd4bd22992ee2d9e910",
+  "secretProjectionsCreated": "[REDACTED]",
+  "state": "FIXED_TWO_DIRECTORY_OPENDIR_PERMISSION_DIAGNOSIS_COMPLETE"
+}

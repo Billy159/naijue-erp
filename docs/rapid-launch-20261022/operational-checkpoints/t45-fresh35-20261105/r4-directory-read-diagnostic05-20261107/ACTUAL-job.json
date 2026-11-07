@@ -1,0 +1,19 @@
+{
+  "jobId": "t45-r4-real-inspect-20261107-01",
+  "taskId": "T45",
+  "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+  "status": "COMPLETED",
+  "unit": "naijue-erp-op-5cc58239-f1f234f94bf0",
+  "atUTC": "2026-11-07T05:29:17.731274+00:00",
+  "grantId": "5cc58239751e4e2a",
+  "privateLogsExported": false,
+  "businessAcceptanceClaimed": false,
+  "exitCode": 0,
+  "elapsedSeconds": 2.1730478862300515,
+  "exports": [
+    "directory-diagnostic-result.json",
+    "directory-stage-after.json",
+    "directory-stage-before.json"
+  ],
+  "finishedAtUTC": "2026-11-07T05:29:19.915885+00:00"
+}

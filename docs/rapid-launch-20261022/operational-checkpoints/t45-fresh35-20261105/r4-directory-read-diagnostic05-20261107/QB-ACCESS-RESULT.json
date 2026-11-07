@@ -1,0 +1,91 @@
+{
+  "status": "PASS_SCOPED_ACCESS05_AND_SAFE_DIAGNOSTIC01_SOURCE",
+  "overallDiagnostic": "PENDING_T45_OUTER_AND_TIMEOUT_FIX",
+  "atUTC": "2026-11-07T05:20:55.586026+00:00",
+  "inputs": {
+    "diagnosticDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/STREAM-PREFLIGHT-SAFE-DIAGNOSTIC-01",
+    "diagnosticResult": {
+      "sha256": "ee8a374296104c3ba251546f1f7109a8fd303e5448d9dbb59b43939347ae1f13",
+      "bytes": 1819
+    },
+    "accessDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-directory-read-access-fix-05",
+    "accessResult": {
+      "sha256": "0ed976b6bf58c4825c0f07ffb7a79476efbfa7e9dfc7e7292aedbf747f879e39",
+      "bytes": 3217
+    },
+    "diagnosticSources": {
+      "tools/unified-import/stream-preflight.mjs": {
+        "sha256": "9d3cd7f17e532097d740f42fefe0b3f441ce04a0740ed6c2c513ccff286a4990",
+        "bytes": 32482
+      },
+      "tools/unified-import/stream-import-cli.mjs": {
+        "sha256": "6f20151b6c963d2a616213a1c6bd8e52aff5b4e03576808eca0dece5b4be9ec0",
+        "bytes": 23246
+      }
+    },
+    "accessSources": {
+      "fresh35-production-carrier.py": {
+        "sha256": "a1dfea26374bf9ce8321694e0ff93fdf95dcdffb7323e2e2f234692ea37e155a",
+        "bytes": 117622
+      },
+      "nonroot_input_access.py": {
+        "sha256": "29a2144ec56ba56b6ec1451381de63e07b0bc5fec4a968bbd8c76985c8fde610",
+        "bytes": 17131
+      },
+      "real_access_consumer.py": {
+        "sha256": "680a360bcda7c9db1f80e7757a3160ec57a43dd14abb25fc9a0ad72a52843dd2",
+        "bytes": 14163
+      },
+      "production-plan.json": {
+        "sha256": "5792007da5cf4fa35470c2a70612eab531748b79781ea3cabe058db85438456f",
+        "bytes": 785
+      },
+      "nonroot-access-plan.UNISSUED.json": {
+        "sha256": "9834efc5e429e7d3d2303cf5adbe3986798e0d9e7f56a9ac072b5075cf2e665d",
+        "bytes": 34685
+      },
+      "directory-probe-plan.UNISSUED.json": {
+        "sha256": "308b34854fd4910f813b8420190e576b5ed7a772daf679112e6f026edbbe5f32",
+        "bytes": 20877
+      }
+    }
+  },
+  "checks": {
+    "hashesAndParentHashes": "PASS",
+    "pythonSyntax": 3,
+    "accessTests": {
+      "passed": 6,
+      "skipped": 0
+    },
+    "additionalActualNarrowMutationBeforeAck": "REFUSED_NO_RESTORED_RECEIPT",
+    "diagnosticTests": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "realLocalMissingManifestAndMalformedJson": true
+    },
+    "nodeSyntax": 2,
+    "templateCounts": {
+      "fullChanges": 45,
+      "fullSmallProjections": 4,
+      "narrowChanges": 3,
+      "narrowObservations": 45,
+      "narrowSecretProjections": 0
+    },
+    "actualLinuxUidOrPG": "NOT_TESTED",
+    "wholeCarrier": "PENDING_T45_OUTER_AND_TIMEOUT_FIX"
+  },
+  "report": {
+    "sha256": "3ab0360fc3df9eb50cd37386f404dc5d194cba3fe59c020322d077fa93d68428",
+    "bytes": 3944
+  },
+  "reusedProbeFinding": "QB-DIR01-TIMEOUT-01 remains open",
+  "actualServerPG": "NOT_TESTED",
+  "runtime": {
+    "model": "UNVERIFIED",
+    "effort": "UNVERIFIED",
+    "fast": "UNVERIFIED"
+  }
+}

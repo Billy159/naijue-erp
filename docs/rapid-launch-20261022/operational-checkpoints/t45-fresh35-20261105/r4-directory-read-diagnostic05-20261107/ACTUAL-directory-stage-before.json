@@ -1,0 +1,46 @@
+{
+  "PGStartup": false,
+  "SQL": false,
+  "automaticRetry": false,
+  "checkedAtEpochMs": 1794029358712,
+  "childAttempted": true,
+  "childReaped": true,
+  "exitCode": 0,
+  "nodeSourceSha256": "4f62342a5bde0ccd823a6be60adb6ea34e604c21339b3dcf1282e5b1904c127e",
+  "observation": {
+    "identity": {
+      "gid": 61035,
+      "groups": [
+        61035
+      ],
+      "nodeVersion": "v24.21.0",
+      "uid": 61035
+    },
+    "iterationStarted": false,
+    "observations": [
+      {
+        "closed": false,
+        "code": "EACCES",
+        "opened": false,
+        "operation": "OPENDIR",
+        "slot": "PACKAGE_ROOT"
+      },
+      {
+        "closed": false,
+        "code": "EACCES",
+        "opened": false,
+        "operation": "OPENDIR",
+        "slot": "TABLES_DIRECTORY"
+      }
+    ],
+    "payloadRead": false,
+    "phase": "0710",
+    "readCalled": false,
+    "state": "EXPECTED_DIRECTORY_OBSERVATIONS"
+  },
+  "ownedDirectChildPid": 1067,
+  "pgAndGuardianStoppedBeforeChild": true,
+  "phase": "0710",
+  "scopeSha256": "34d2d61619201cb1245028eee931365b644c2ba875401dd4bd22992ee2d9e910",
+  "state": "EXPECTED_DIRECTORY_OBSERVATIONS"
+}

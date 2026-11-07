@@ -1,0 +1,18 @@
+{
+  "format": "T45_FIXED_OFFLINE_DIRECTORY_DIAGNOSTIC_V1",
+  "requestKey": "t45-r4-real-inspect-20261107-01",
+  "decision": "COMPARE_OPENDIR_BEFORE_AFTER_AND_RESTORE",
+  "startsAt": 1794029224164,
+  "expiresAt": 1794029404164,
+  "accessPlanSha256": "308b34854fd4910f813b8420190e576b5ed7a772daf679112e6f026edbbe5f32",
+  "expectedPreviousPointerSha256": "9c49bb30110942a1e1f79d756c0357a0e71048e061166e70452a6e0477f2b7b6",
+  "sourcePins": {
+    "diagnose_directories.py": "1d2e78e90c395e944d322f08fa992894a56001bd39446c941d69cf30b981a60f",
+    "run_probe_inside.py": "dfc5ab4ed2d94ad1399e047868a613904b34663e130e2db6aee42513c7138d96",
+    "directory_open_close.mjs": "4f62342a5bde0ccd823a6be60adb6ea34e604c21339b3dcf1282e5b1904c127e",
+    "fresh35-production-carrier.py": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+    "nonroot_input_access.py": "29a2144ec56ba56b6ec1451381de63e07b0bc5fec4a968bbd8c76985c8fde610",
+    "real_access_consumer.py": "680a360bcda7c9db1f80e7757a3160ec57a43dd14abb25fc9a0ad72a52843dd2",
+    "directory-probe-plan.UNISSUED.json": "308b34854fd4910f813b8420190e576b5ed7a772daf679112e6f026edbbe5f32"
+  }
+}

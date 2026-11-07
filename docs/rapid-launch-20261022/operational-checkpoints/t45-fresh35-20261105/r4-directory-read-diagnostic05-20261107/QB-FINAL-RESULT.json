@@ -1,0 +1,66 @@
+{
+  "status": "PASS_SCOPED_FINAL_DIRECTORY02_SOURCE",
+  "atUTC": "2026-11-07T05:25:54.139945+00:00",
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-season-directory-offline-diagnostic-preparation-02",
+  "ready": {
+    "sha256": "9fb81f99ef76a8602a72774021c1ab943081248b64f0959d876fa2e802b504d4",
+    "bytes": 4081
+  },
+  "sources": {
+    "diagnose_directories.py": {
+      "sha256": "1d2e78e90c395e944d322f08fa992894a56001bd39446c941d69cf30b981a60f",
+      "bytes": 8899
+    },
+    "run_probe_inside.py": {
+      "sha256": "dfc5ab4ed2d94ad1399e047868a613904b34663e130e2db6aee42513c7138d96",
+      "bytes": 7615
+    },
+    "directory_open_close.mjs": {
+      "sha256": "4f62342a5bde0ccd823a6be60adb6ea34e604c21339b3dcf1282e5b1904c127e",
+      "bytes": 1936
+    },
+    "fresh35-production-carrier.py": {
+      "sha256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+      "bytes": 96511
+    },
+    "nonroot_input_access.py": {
+      "sha256": "29a2144ec56ba56b6ec1451381de63e07b0bc5fec4a968bbd8c76985c8fde610",
+      "bytes": 17131
+    },
+    "real_access_consumer.py": {
+      "sha256": "680a360bcda7c9db1f80e7757a3160ec57a43dd14abb25fc9a0ad72a52843dd2",
+      "bytes": 14163
+    },
+    "directory-probe-plan.UNISSUED.json": {
+      "sha256": "308b34854fd4910f813b8420190e576b5ed7a772daf679112e6f026edbbe5f32",
+      "bytes": 20877
+    }
+  },
+  "closedFindings": [
+    {
+      "id": "QB-DIR01-TIMEOUT-01",
+      "closedOnlyForSource": {
+        "sha256": "dfc5ab4ed2d94ad1399e047868a613904b34663e130e2db6aee42513c7138d96",
+        "bytes": 7615
+      },
+      "proof": "Actual main finite interfaces, one shared3s wait,5+3=8; unreaped staysUNKNOWN"
+    }
+  ],
+  "finiteCasesPassed": 17,
+  "finiteCasesSkipped": 0,
+  "checks": {
+    "sha256": "e4e37f25cabe53bc89b09553554e44847294a23838bf15e706444e181a3468a8",
+    "bytes": 5968
+  },
+  "report": {
+    "sha256": "ff4e64f9f5f8685e0b2d1f40c53e730dccee99b67860503bda5d8b5ec5bdab6c",
+    "bytes": 4306
+  },
+  "reusedQBResult": "55e0380dda7c5ed8f241a69bddb18bb229e2d77c5fcee56a8478319d0f17167f",
+  "actualServerPG": "NOT_TESTED",
+  "actualCscope": "NOT_ISSUED_OR_EXECUTED_BY_QB",
+  "actualPredecessor": "NOT_READ_ENTRY_MUST_COMPARE_TRUE_BYTES",
+  "actualModel": "UNVERIFIED",
+  "actualEffort": "UNVERIFIED",
+  "fast": "UNVERIFIED"
+}
