@@ -35683,31 +35683,32 @@
     },
     "oldProductionRestoreLiveCapacity20261107": {
       "at": "2026-11-07T19:09:50.062+08:00",
-      "state": "AUTHORIZED_CLEANUP_CLOSED_EXACT_CAPACITY_SHORTFALL_REMAINS",
+      "state": "R4_FLOOR_MET_BY_ACTUAL_RETIREMENT_NEW_SYSTEM_RECOVERY_REQUIREMENT_PENDING",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 5513273344,
+      "actualAvailableBytes": 8332206080,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 30993948672,
+      "oldRestoreShortfallBytes": 28175015936,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 2694242302,
-      "next": "Actual additional server capacity or an expressly identified further eligible retired application source is required. No new same-state scans, R4 restart, independent restore or capacity guard relaxation.",
-      "latestResourceReceiptSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e",
+      "r4ShortfallBytes": 0,
+      "next": "Keep historical old47 requirement separate from current new-system backup/recovery. R4 margin124690434B is thin, no concurrent heavy history materialization.",
+      "latestResourceReceiptSHA256": "9fd6c965f701d80afd612ddcb442c6abc39fe0de7c97aa34d64a67deb725e901",
       "latestRequirementAdjustment": {
         "authorityHumanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
         "oldRestoreFloorStillHistoricalFact": true,
         "oldSystemRollbackRoute": "Human waived keeping server old-system assets; do not automatically treat old47 backup restoration31GB shortage as first-launch prerequisite. Exact old-backup restore still not proven.",
         "newSystemBackupRecoveryStillRequired": true,
         "newSystemScope": "R4/current new35 actual committed data, import receipt and new business continuity need applicable backup/recovery before final switch; cannot call old backup or discarded rollback a new-system restore PASS."
-      }
+      },
+      "r4MarginBytes": 124690434
     },
     "serverRetiredApplicationCleanup20261107": {
-      "at": "2026-11-07T19:11:11.563641+08:00",
+      "at": "2026-11-07T19:59:37.707927+08:00",
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
       "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
-      "state": "NEW_HUMAN_OLD_SERVER_RETIREMENT_SCOPE_VERIFIED_NEXT_FIXED_LIST_AFTER_LIVE_HISTORY_MATERIALIZE",
+      "state": "ACTUAL_FIXED38_CLEANUP_COMPLETE_R4_FLOOR_MET_THIN_MARGIN",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "T45 finishes original9f live materialize first; then fixes next retirement list from existing inventory under new direct human scope, releases R4 space without repeat per-directory human questions.",
+      "next": "Original T45 af395eba 1.14MB transfer/Linux loader, finite original-policy restoration; runtime floor checked again before any action. New-system independent restore needs separately accurate measured requirement; no old-backup PASS claimed.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35763,8 +35764,17 @@
         ],
         "items": 38,
         "estimatedAllocatedBytes": 3329675264,
-        "actualDeleted": false,
-        "sequence": "Only after9f terminal and cleanup. Original CAS, nofollow, FD/mount/current-consumer recheck, changed/current-dependent skip. Preserve all JSON/READY/logs/parents and current materials; no Docker/DB/backup operation."
+        "actualDeleted": true,
+        "sequence": "Only after9f terminal and cleanup. Original CAS, nofollow, FD/mount/current-consumer recheck, changed/current-dependent skip. Preserve all JSON/READY/logs/parents and current materials; no Docker/DB/backup operation.",
+        "actualDeletedCount": 38,
+        "actualSkippedCount": 0,
+        "actualReceiptSHA256": "9fd6c965f701d80afd612ddcb442c6abc39fe0de7c97aa34d64a67deb725e901",
+        "freeBytesBefore": 5002567680,
+        "freeBytesAfter": 8332206080,
+        "actualFreedBytes": 3329638400,
+        "SQLConnections": 0,
+        "signalsSent": 0,
+        "containerChanges": 0
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -35791,6 +35801,39 @@
       "next": "Preserve existing source conclusions. A precise supported immutable-input lifecycle and bounded real execution budget are prerequisites before any original-seam implementation; no speculative platform or new cross-job adoption performed.",
       "sameInvocationBoundarySHA256": "3ea711f7923e58a770b038ba724777c3f7472928d764ebe7e0ee56fa6dc814de",
       "sameInvocationFinding": "Worker0600 mutable SQLite file is not immutable merely because a reader uses O_RDONLY/query_only. T45 confirms no existing full-lifetime immutable inode/writable-FD/mmap handoff. Retain per-stage digests; no SHA/WeakMap bypass."
+    },
+    "history9fActualFailure20261107": {
+      "at": "2026-11-07T19:59:37.707927+08:00",
+      "candidate": "9f4022ca40b42eb92ef184d848f3beca212510f4",
+      "actualReceiptSHA256": "420e99a67ac18a9eafa7017965d4225e0bc653ebd6d1554f0c5dc1cea3a4cd6a",
+      "exitCode": 2,
+      "durationSeconds": 160.321,
+      "passed": [
+        "isolated35 installation and true record",
+        "synthetic import rollback/commit/original-key replay",
+        "independent snapshot verification"
+      ],
+      "failed": "First ordinary observe SQL42703: operation_receipt has no new_version; query must use linked audit_change. Stale phase REAL_CAPACITY_PREFLIGHT is not capacity diagnosis.",
+      "cleanupSHA256": "fdd76314eb1ba8c5aedc8767367281f15d14418a87d9cb319d1f66c99fd35650",
+      "cleanupConfirmed": true,
+      "ordinaryHistoryPassed": false,
+      "repairCommit": "856e5a5990c8de1624a218cd235a88797268ed8c",
+      "repairBranch": "codex/erp-history-anchor-readback-20261107",
+      "remoteExactReadback": true,
+      "repairFile": "tests/integration/live-ledger-balance-pairs.integration.test.ts",
+      "authorModelPass": 13,
+      "QB": "Dispatched original QB for one-leaf increment only; actual PostgreSQL successor not executed."
+    },
+    "r4Af395ebaToolStaging20261107": {
+      "at": "2026-11-07T19:59:37.707927+08:00",
+      "state": "C_EXACT_30MIN_STAGING_AUTHORITY_ISSUED_T45_EXECUTION_PENDING",
+      "materialSHA256": "488fc3aa62955af3c1ffe053ac4bd1fcbfd9a2400fae283b38256f27627c4311",
+      "authoritySHA256": "21c8d006d407c679c63f547db2ed5147b90c1f1ac87df4f8a8a795f9d2b5ecc8",
+      "startsAt": 1794052725289,
+      "expiresAt": 1794054525289,
+      "scope": "Existing original transport; archive0231d8f1/1139863B, Linux import only, current floor retained; restorecd2e532b bytes+metadata on every terminal. No PG/preflight/REAL/app.",
+      "proofCallbackIntegrated": false,
+      "next": "Actual READY then C materialize binding, Linux loader and original policy restore receipt. D1 Node seam/T45 Python carrier preparation parallel without server mutation."
     }
   }
 }
