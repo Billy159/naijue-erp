@@ -2324,3 +2324,6 @@ C exercised human noon delegation for a separately reviewed, bounded maintenance
 
 
 2026-11-07T14:12:06.054241+08:00 C: T45 staging03 39c6e5ec and QB d291d302 independently hash checked; 16 scoped model checks pass, old CAS/expiry failures closed, exact source-only staging ready. C preserved earlier 25-case BOOT06 verdict and tool pins. Exact root policy window for retained R4 after delegated noon deadline remains unissued; no staged READY, Linux materialization, BOOT06, REAL or public switch.
+
+
+2026-11-07T14:19:53.219493+08:00 C: Independent read-only 3b82 catalog-manifest comparison exit0 (Node25.8.2 source helper, no PG) verifies 4/5 routine pins match the final152. guard_unified_document reader fa51 vs final ff462d6a; --exact35 wires the shared published anchor into both sales and transfer UOWs. Added HISTORY-ANCHOR-EXACT35-01 to existing Dot handoff with profile-specific repair boundary and two representative ordinary-role PG cases. This is a source incompatibility, not an executed historical write. R4 staging03 stays ready with exact post-noon privileged scope unissued; no change to server.

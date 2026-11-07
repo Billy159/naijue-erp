@@ -33459,7 +33459,8 @@
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
       "lastCleanStopReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
       "importToolCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
-      "importToolSourceSetSHA256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3"
+      "importToolSourceSetSHA256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
+      "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -35262,6 +35263,38 @@
           "realDatabaseReadback": false
         },
         "independentFinding": "Historical inventory anchor reader still pins guard_unified_document fa51, fixed 35 catalog source installs ff462d6a. Check precise catalog evidence and historical unreview/re-review, including non-null halls, before business PASS. Source mismatch only, Dot owns app and C has not written app."
+      },
+      "sharedHistoricalAnchorSourceDelta": {
+        "at": "2026-11-07T14:19:53.219493+08:00",
+        "status": "CONFIRMED_SOURCE_INCOMPATIBILITY_FOR_BOTH_ORDINARY_HISTORICAL_DOCUMENT_WRITES_NOT_REAL_PG_VERIFIED",
+        "id": "HISTORY-ANCHOR-EXACT35-01",
+        "fixedCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+        "owner": "Original Dot application owner; C no source write, no reassignment",
+        "evidence": {
+          "method": "Byte-compare fixed source loader and anchor reader against git objects. Invoke the existing final 35-table settlement-difference source manifest loader and compare the five literal reader pins against its 152 final successor routine pins.",
+          "node": "v25.8.2 source-only helper",
+          "exitCode": 0,
+          "matchingReaderPins": 4,
+          "mismatchingReaderPins": 1,
+          "finalRoutineCount": 152,
+          "mismatch": {
+            "signature": "naijue_erp.guard_unified_document()",
+            "reader": "fa51aa3c79074a829c685127f6638152e26def788d919c19eb38bfffcb50f961",
+            "installedProfileExpected": "ff462d6a8a30eadea0d98991818cf15c9fd907db0d00956b3be51193846d3e83"
+          },
+          "engineTestPerformed": false,
+          "actualDatabaseQueryPerformed": false
+        },
+        "consumers": {
+          "exact35": "apps/api/src/postgres-read-api.ts:612–621,926–929 composes both writers using the ordinary runtime27 issuer",
+          "sales": "adapters/postgres/src/sales-unit-of-work.ts:447–465",
+          "transfer": "adapters/postgres/src/transfer-unit-of-work.ts:261–278",
+          "reader": "adapters/postgres/src/published-document-inventory-anchor-reader.ts:35–49,130"
+        },
+        "impact": "For an exact35 installed profile with an existing CUTOFF_HISTORY anchor row, a legitimate non-null-hall sales document and a transfer document both encounter schema_ready=false and INVALID_BASELINE_ANCHOR when calling the shared write-origin check. The null-hall adapter fix alone cannot address this. Actual historical writes and error surfaces still need scoped PostgreSQL verification.",
+        "repairBoundary": "Update the exact profile-specific verification in the common reader and original composition/capability seam; preserve the exact27 expected predecessor and keep the other routine, trigger, constraint, index and provenance checks. No general hash acceptance, no DDL or role change inferred.",
+        "minimumVerification": "On the fixed final PG catalog with ordinary authorized sessions, exercise one imported non-null-hall sales and one imported transfer through allowed save, unreview and re-review. Check unchanged original anchor, versions, audit, original-key replay and exact inventory deltas on both transfer endpoints. Confirm wrong digest and missing anchor still reject. Preserve existing exact27 coverage.",
+        "firstReleaseGate": "Resolve before claiming historical edits usable or switching the public route. Does not block source-only R4 tool staging or real-import preparation."
       }
     },
     "safePreflightToolSuccessor": {
