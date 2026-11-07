@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 independent minimumCLIENT_SHA fix and unique09 keys/latest08failurecleanup binding; QBonly actualrenew dualpin seam; preserve08source/results and no newwindow yet.",
+      "next": "OriginalT45 actual uniqueBOOT09 after QB866 and C41bc; no08replay. On success bind actualepoch/pids/roleexpiry/newparams before any newPREPARE, unchanged20min. Realimport/reconciliation/history/recovery/formalcutover incomplete.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36262,7 +36262,7 @@
       "failureDiagnosticSHA256": "207487f8ff1d0217db7ba33629a221d729938590910fdfc1725eb7259cd53fa4",
       "firstFailure": "ROLE_EXPIRED_MAINTENANCE AssertionError, fixed-expired-role-window line12. Driver line8 CLIENT_SHA37543ae5 retained while exact clienta16c2a5b changed. Failure before helper exec/HBA rule/role maintenance.",
       "cleanupSHA256": "ca0663849049b9fa50ab4f595551f72d445ceabcc853e6fbeeda1bd5a0264806",
-      "cleanup": "Originalreceipt cleanShutdown/cleanupComplete/dataPreserved/directChildReaped/ownedPidAbsent/portAbsent true,errors[],privilegesChangedfalse. Fresh exact guardian/HBA/record/params/role-scope readonly pending.",
+      "cleanup": "Actualca06 plus independent b4 finalreadonly adopted; PG/guardian/port absent, originalHBA/install/restart07/params unchanged, rolemaintenance scope absent. No new08 restart published.",
       "actualNewEpochAndProtectedRestart": "NOT_PUBLISHED",
       "rootStartedAtUTC": "2026-11-07T14:40:54.992222+00:00",
       "beforeRootStartDelaySeconds": 110.188222,
@@ -36296,6 +36296,30 @@
         "copyToRootSeconds": 43.9958,
         "subphaseAttribution": "UNVERIFIED; no claim allSSH/network/queue"
       }
+    },
+    "r4Boot09PinSuccessor20261107": {
+      "at": "2026-11-07T22:56:41.531252+08:00",
+      "owner": "OriginalT45 sole source/server; C sole QA dispatcher; originalQB minimal seam",
+      "status": "QB_MINIMUM_PASS_NEW09_WINDOW_ISSUED_ACTUAL_PENDING",
+      "READY": "34b77ce224eee87aa5472af5401e90804cfb38c37a88f0a6c120bf9a1994c90a",
+      "bundle": "88b5ad9922d350bd701e66d91ce0591c1ea5de0f93b7de587b5b68ace8270e78",
+      "localChecks": "4ac57a108530725d6361f7ee80989b109107fafa40fdbc1ad7552b56178ee169",
+      "localCases": 9,
+      "CVerifiedHashLeaves": 27,
+      "client": "27ab8272603065303a14db17f9298b923b47a71d6e8848acdb3f5a5076dd5c22",
+      "driver": "51b21ed8e028058f343c1d3636c87e7d725b240430f0e0512efbc848d7ead72b",
+      "boot": "d9ff2e5f3556faf2268f0d65373cfbd8c052210b88013a3b860d2fabe623de68",
+      "carrier": "847d141ad924828b65d0328d347384f7636d45ca55df4bdd362e112ab62cf052",
+      "failureResult": "3e7fc274691d4253cbb7357faaacf8e14454373563a6055d1231f78effddf0f3",
+      "scope": "Exact client-driver-outer finalpin chain, necessary09 keys and latest08 b4 cleanup schema. Last validrestart remains07ddb, no invented08 success. Original20/QB6 reused. No actualPG,window,newparameters orPREPARE issued.",
+      "QB": "866683ee5fb6e5c8c479f305f50645e94492dbce428db5ea3c192b960caf091a",
+      "QBAdditionalCases": 2,
+      "CDecision": "41bc0f83e42f9a4b9ea0ad7432e203188781dc93835d1ed0ed1065c136aae7d5",
+      "startsAt": 1794063461317,
+      "expiresAt": 1794063761317,
+      "guardianExpiresAt": 1794068861317,
+      "roleUntilRequestedNotApplied": "2026-11-07T16:27:11.317Z",
+      "job": "t45-r4-retained-restart-20261107-09"
     }
   }
 }
