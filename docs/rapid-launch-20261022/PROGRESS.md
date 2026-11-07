@@ -2619,3 +2619,19 @@ RECORDS END970152ms、RELATIONS END1026085ms、最后METADATA_FINISH BEGIN102617
 T45归档原键COMPLETED0/49.569s（34a02407）：321120335B私有archive e1bd5075、inode14561480/0400，index与journal两个成员全字节/完整meta验证。C采用6实际retirement引用并核最小常量绑定，按直接授权确认无排队消费者后，原退役键COMPLETED0/1.420s（83e3cf2f），只移除14561466与14561470两个生成文件。实际同盘释放2460872704B，余8812621824B，较原8207515646B门槛余605106178B（下次仍需fresh核定）。旧archive、12全部报告/progress/cost/context、a7d/6843/3a8c、数据及备份不变；无SQLite打开或新PG/BOOT/导入。
 
 术语更正：523.429s是REGISTRY注册身份键查询，SKU引用REF另计，CPU/IO只为已观测区间、不可硬归到每条get；缺旧cgroupCPU节流事实。D1本机同BEGIN假工作集3测试/5阶段完成，尚未复现Linux慢耗；脚本72953f60只用于100k全假219B键/60k hit/32351 miss的受限Linux补轴。T45准备原runner，等待C准确scope，不重读真实索引或重跑PREPARE。原12失败及真实导入/业务/上线未通过保持。
+
+
+## 2026-11-08T07:22:08.471449+08:00 小规模Linux对照完成但未复现真实慢耗
+
+原T45有限假数据键一次COMPLETED0/17.963s（actual b2fc7e64，RESULT76cf1985，C核6引用），五阶段完成；60k注册键get合计828.975ms，COMMIT4844.691ms。235次采样get物理读0、写466944B，当前cgroup节流增量0；不能反推PREPARE12旧运行没有节流，也不能用337MiB/RSS92.5MiB样本证明真实2.46GiB/RSS615MiB慢耗已解决。原39b应用工具源码未变，真实根因仍UNKNOWN。
+
+D1接续一次全假完整工作集/物理读取轴，脚本尚在途；固定460188键、26表608916量级、约512MiB驻留负载，上限3GiB产物/RSS不超原真实HWM801492KiB、原160/180秒与4GiB活动余量均保留。未达到工作集或物理读条件就记未知，不循环换小模型，不盲加缓存/改窗口。纯临时验证索引优化不扩大正式PG写合同，若有准确修复沿原QB增量验收。
+
+原T45已获本Chat持续+夜间授权执行一次BOOT14前序只读reader68fdc4a6/7617，实际回执尚待；本次不启动PG、不读业务表或SQLite。新BOOT14只做非时间接缝准备，等准确修复与工具加载，不提前消耗窗口。所有假模型产物、失败12证据及真实数据保留；R4导入、核账、历史业务及上线仍未通过。
+
+
+## 2026-11-08T07:23:29.666873+08:00 BOOT14前序真实停库核验完成，仅准备未启动
+
+T45原只读键COMPLETED0/.5182s，job e8690b22、实际metadata0f43cb1e/4073B，RESULT5f6a919a及5直接引用C已核。本次BOOT13 cleanup原raw1afe/193B来自实际新inode14561325，canonical逐字等；PG2421/guardian2414/Node2544、18654监听、PIDfile和writeauthority均不存在，HBA原bytes与inode、a7d/6843/3a8c、45项access恢复及2秘密投影缺失均保持。余8473841664B仅为本次观测，下次仍需fresh核资源。未查询角色口令或重新验业务，0PG/SQL/SQLite/服务变更。
+
+BOOT14原非时间草稿的stop后继dc4b7212已绑定本次凭据；旧草稿保留，新工具、时窗、准确UTC日期继续未绑定，未启动。唯一下一步仍D1完整假工作集结果及据证修复→原QB/D2增量→T45原工具通道；不把前序核验或小模型完成冒充真实导入/上线。

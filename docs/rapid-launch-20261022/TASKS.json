@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T07:05:05.288278+08:00",
-      "phase": "R4_CAPACITY_RECOVERED_GENERATED_PAIR_PRESERVED_DIRTY_WORKSET_DIAGNOSTIC_READY_PENDING",
+      "at": "2026-11-08T07:23:29.666873+08:00",
+      "phase": "R4_STOPPED_SMALL_DIRTY_MODEL_NEGATIVE_FULL_WORKSET_SOURCE_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 finite synthetic wrapper; D1 hotpath owner",
-      "nextOwner": "C bounded diagnostic scope then D1 exact evidence-based fix",
-      "latestActualReceiptSHA256": "83e3cf2f12f8ca1d87d1a6c3562831624553c9b9e5ac4ff9db57b20c148e5cae",
+      "currentOwner": "D1 fullworkset source; T45 authorized BOOT14 predecessor readonly only",
+      "nextOwner": "D1 exact fullworkset source→T45 existing finite runner",
+      "latestActualReceiptSHA256": "b2fc7e64684192f641bb03a7cfa3fc86e5be71f34686b2466f72677e69c6e6f8",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 reuse original finitefake runner; C exact scope; one Linux result→D1 minimumfix, no blind cache/transaction/window changes.",
+      "next": "D1 exact fullworkset script/bounds/local evidence→T45 minimum original wrapper→one bounded run; adopt result for minimum fix, no blind PREPARE retry or timeout extension.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33466,7 +33466,8 @@
         "sha256": "6843ee72551309f6c2b22d69ac165b3d7f046441546395b2e04f1442e42ace8c",
         "actualEpoch": "2026-11-07 22:07:48.306763+00",
         "businessVerified": false
-      }
+      },
+      "lastCleanStopMetadataReceiptSHA256": "0f43cb1edd28d5d584335e1092b7ef099f1819c61f66428186faea6ff1b5103d"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -37796,9 +37797,73 @@
       "CReadSourceAndCheckedThreePins": true,
       "model": "100k fake219B keys; one uncommitted BEGIN through registry/identities/raw/facts/refs/rows_seen;32351miss+60000hit;0realdata/PG",
       "limits": "Node cooperative145s/hard160s,outer180s,artifact768MiB,index576MiB,activefloor4GiB,existingstartupfloor8207515646B",
-      "status": "T45_WRAPPER_READY_AND_C_SCOPE_PENDING_NO_LINUX_DIAGNOSTIC_RUN_YET",
-      "rootCause": "UNKNOWN; context lacks pastcgroupCPU, lowrunqueue does not exclude throttling; intervalIO not attributed solelytoget",
-      "next": "T45 reuse original finitefake runner; C exact scope; one Linux result→D1 minimumfix, no blind cache/transaction/window changes."
+      "status": "ACTUAL_SMALL_DIRTY_LINUX_MODEL_COMPLETE_REAL_SLOW_GET_NOT_REPRODUCED",
+      "rootCause": "UNKNOWN. Small fake337MiB/RSS92.5MiB model has no physical get read and does not reproduce real2.46GiB/RSS615MiB/get523s. Sampled writes show dirty cache spill is possible, not root cause.",
+      "next": "D1 exact fullworkset script/bounds/local evidence→T45 minimum original wrapper→one bounded run; adopt result for minimum fix, no blind PREPARE retry or timeout extension.",
+      "actualJobKey": "t45-r4-synthetic-dirty-registry-diagnostic-20261108-01",
+      "actualReceiptSHA256": "b2fc7e64684192f641bb03a7cfa3fc86e5be71f34686b2466f72677e69c6e6f8",
+      "actualReceiptBytes": 65185,
+      "actualResultSHA256": "76cf19859d9edd6a3fc317ee3729fb49b1638494ac945dfa7c8b3724730e54c5",
+      "actualExitCode": 0,
+      "actualSeconds": 17.963172455,
+      "fiveStagesCompleted": true,
+      "actualTransfer60000GetMs": 828.975061,
+      "actualCommitMs": 4844.691257,
+      "sampledGetPhysicalReadBytes": 0,
+      "sampledGetPhysicalWriteBytes": 466944,
+      "artifactBytes": 337727488,
+      "actualCgroupThrottlingDelta": 0,
+      "cgroupResultDoesNotProvePastRealConditions": true,
+      "sourceCommitUnchanged": "39b3967a6a72266fa86bd2118cb9e8352072af07",
+      "fullWorksetNext": {
+        "owner": "D1 source; T45 sole Linux executor",
+        "status": "SCRIPT_IN_PROGRESS_NO_NEW_LINUX_RUN",
+        "model": "460188 fake219B registry; target608916 fakefacts/counts, near2.46GiB; retained512MiB touched buffer; finite20k get window",
+        "limits": "max3GiB artifacts; Node cooperative145s/hard160s;outer180s;RSS<=801492KiB; existing3GiBcontainer;freshstartup8207515646B and4GiBactivefloor",
+        "notReachedMeans": "UNKNOWN_NOT_REPRODUCED_NO_AUTORETRY",
+        "noRealDataPGOrApplicationSourceChange": true
+      }
+    },
+    "r4Boot14PredecessorRead20261108": {
+      "status": "ACTUAL_CURRENT_STOP_METADATA_CONFIRMED_NO_BOOT14",
+      "owner": "T45",
+      "jobKey": "t45-r4-boot14-predecessor-metadata-readonly-20261108-01",
+      "readySHA256": "dced528f5a7fc3ddfe460f1874bb61c78ba6600ef8bb25df472baab28f78e206",
+      "readerSHA256": "68fdc4a6b4228960c41a6716bd5ba6196c7091f7cc0a27355efeda17d894b3fc",
+      "readerBytes": 7617,
+      "CSourceAndSixRefsChecked": true,
+      "scope": "Exact BOOT13 stop afterPREPARE12/threeprocesses/port/PIDfile/install/params/HBA/free; noPGSQLSQLiteBOOTpermissionssignals",
+      "next": "Await D1 fixed source and D2 exact tool; C then bind actual future BOOT14. No replay/extra watcher.",
+      "jobSHA256": "e8690b22f4f75f6d52bd8b88cff18f966d9cc194a9d6c74c351d3a45d3735da3",
+      "actualReceiptSHA256": "0f43cb1edd28d5d584335e1092b7ef099f1819c61f66428186faea6ff1b5103d",
+      "actualReceiptBytes": 4073,
+      "exitCode": 0,
+      "seconds": 0.518193175,
+      "resultSHA256": "5f6a919ab1ed8c37d13faed2f7e15cb1a8600a799764b73cb82dc6d8ad6fe205",
+      "stopRawSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+      "stopRawMetadata": {
+        "bytes": 193,
+        "device": 66304,
+        "gid": 0,
+        "inode": 14561325,
+        "mode": "0o600",
+        "uid": 0
+      },
+      "freshCanonicalRawCompared": true,
+      "threeOwnedProcessesAbsent": true,
+      "portPidfileAndWriteAuthorityAbsent": true,
+      "HBABytesAndMetadataUnchanged": true,
+      "protectedAuthorityHashes": {
+        "installation": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+        "parameters": "3a8c28dd0c2b821b9e67ee5c3a4c99cf4368fec61993842b571d8d9cb0af78b7",
+        "restart": "6843ee72551309f6c2b22d69ac165b3d7f046441546395b2e04f1442e42ace8c"
+      },
+      "privateAccessRestored": true,
+      "freeBytes": 8473841664,
+      "freshCheckRequiredBeforeNextAction": true,
+      "noBOOTPGSQLSQLiteOrServerMutation": true,
+      "nextBootNonTimeDraftSHA256": "dc4b7212d563d2723730308bf6353d4a675e8893d15ff6545c9b2ff3cbf94d16",
+      "newToolAndTimeStillUnbound": true
     }
   }
 }
