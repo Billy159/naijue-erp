@@ -61,6 +61,7 @@ import { createCurrentFormHttpPlugin } from "./current-form-http.ts";
 import { createAuthenticatedDocumentCommandsPlugin } from "./authenticated-document-commands.ts";
 import { createStoreSettingsReadHttpPlugin } from "./store-settings-read-http.ts";
 import { PostgresStoreSettingsReadReader } from "../../../adapters/postgres/src/store-settings-read-reader.ts";
+import type { PublishedDocumentAnchorProfile } from '../../../adapters/postgres/src/published-document-inventory-anchor-reader.ts';
 import { PostgresSalesUnitOfWork } from "../../../adapters/postgres/src/sales-unit-of-work.ts";
 import type { PgSalesPool } from "../../../adapters/postgres/src/sales-unit-of-work.ts";
 import { PostgresTransferUnitOfWork } from "../../../adapters/postgres/src/transfer-unit-of-work.ts";
@@ -605,7 +606,7 @@ export async function createPostgresRuntime27DocumentApplicationApi(options: Pos
   if(!capabilities.commands || capabilities.organizationMaintenance || capabilities.catalogueMaintenance || capabilities.paymentMaintenance || capabilities.partyMaintenance || capabilities.staffMaintenance)
     throw new TypeError('Runtime27 document assembly does not grant unrelated maintenance routes');
   return await composePostgresApi(options,createDriver,capabilities,undefined,
-    Object.freeze({sales:selected.sales,transfers:selected.transfers}),undefined,undefined,true) as PostgresApplicationApi;
+    Object.freeze({sales:selected.sales,transfers:selected.transfers}),undefined,undefined,true,'EXACT27') as PostgresApplicationApi;
 }
 /** The fresh35 native tables retain migration chain 1..27 and its ordinary
  * runtime role. Reuse that issuer and its pool-bound ordinary readers. */
@@ -617,7 +618,7 @@ export async function createPostgresRuntime35ApplicationApi(options: PostgresApp
   if (!capabilities.commands || capabilities.coreInitializationRead)
     throw new TypeError('Fresh35 ordinary native application required');
   return await composePostgresApi(options, createDriver, capabilities, undefined,
-    Object.freeze({ sales: true, transfers: true }), media, undefined, true, true, productionV2) as PostgresApplicationApi;
+    Object.freeze({ sales: true, transfers: true }), media, undefined, true, 'EXACT35', productionV2) as PostgresApplicationApi;
 }
 /** Explicit isolated acceptance entry; never selected by the production parser or CLI. */
 export async function createPostgresSyntheticRuntime35ApplicationApi(options: PostgresApplicationApiOptions,
@@ -628,13 +629,15 @@ export async function createPostgresSyntheticRuntime35ApplicationApi(options: Po
   if (!capabilities.commands || capabilities.coreInitializationRead || !capacityTarget)
     throw new TypeError('Explicit synthetic ordinary application and actual capacity target required');
   return await composePostgresApi(options, createDriver, capabilities, undefined,
-    Object.freeze({ sales: true, transfers: true }), media, undefined, true, true, {capacityTarget}, true) as PostgresApplicationApi;
+    Object.freeze({ sales: true, transfers: true }), media, undefined, true, 'EXACT35', {capacityTarget}, true) as PostgresApplicationApi;
 }
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
-  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, ordinaryMaintenance = false, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}, synthetic35 = false): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27', productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}, synthetic35 = false): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
+  // Fresh35 has its own catalog pins and reuses the ordinary runtime27 role.
+  const ordinaryMaintenance = anchorProfile === 'EXACT35';
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || (capabilities?.productMaintenance && !ordinary27)) && runtime26Review === undefined && !ordinaryMaintenance) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   // Every non-CORE graph below mounts the new stored-pair ledger reader; command
   // graphs also construct the new pair writers. Generic EXACT26 is insufficient.
@@ -873,7 +876,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       ? { profile: "source-confirmed-normal-document-lists-v1" as const, runtime26: issuer.runtime26 } : undefined;
     if (issuer27) {
       const ordinary = { profile:'source-confirmed-unified-native-v1' as const, runtime27:issuer27.ordinaryRead };
-      const lists = new PostgresOrdinaryDocumentListReader(pool,ordinary), sales = new PostgresSalesQueryReader(pool,ordinary), transfers = new PostgresTransferQueryReader(pool,ordinary);
+      const lists = new PostgresOrdinaryDocumentListReader(pool,ordinary), sales = new PostgresSalesQueryReader(pool,ordinary,anchorProfile), transfers = new PostgresTransferQueryReader(pool,ordinary);
       app.register(createSalesQueryHttpPlugin({ authenticate, listProfile:'ordinary-v1', ordinaryHistory:true, dependencies:{authorization:policies.sales,reader:{
         readList:lists.readSalesList.bind(lists),readTotals:lists.readSalesTotals.bind(lists),readDetail:sales.readDetail.bind(sales),readReferences:sales.readReferences.bind(sales),readHistory:sales.readHistory.bind(sales),readSettlementStatistics:sales.readSettlementStatistics.bind(sales)}}}));
       app.register(createTransferQueryHttpPlugin({ authenticate:authenticateTransfer,listProfile:'ordinary-v1',dependencies:{authorization:policies.transfers,reader:{
@@ -925,8 +928,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       app.register(createAuthenticatedDocumentCommandsPlugin({ authentication,
         sales: { ...c.sales, now: host.now, unitOfWork: new PostgresSalesUnitOfWork(pool, issuer27 ? {runtime27:issuer27.runtime27} : { catalogueCompleteness: c.catalogueCompleteness!,
           ...(issuer === null ? {} : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion,
-            catalogueReadProof: { profile: "MAINTAINED_CATALOGUE26_V1" as const } }) }) },
-        transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool, issuer27 ? {runtime27:issuer27.runtime27} : issuer === null ? undefined : { runtime26: issuer.runtime26 }) },
+            catalogueReadProof: { profile: "MAINTAINED_CATALOGUE26_V1" as const } }) }, anchorProfile) },
+        transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool, issuer27 ? {runtime27:issuer27.runtime27} : issuer === null ? undefined : { runtime26: issuer.runtime26 }, anchorProfile) },
         nativeManualSalesPreparation: true, nativeManualTransferPreparation: true,
         ...(runtime26ExistingPreparation?.sales === true ? { nativeExistingSalesPreparation: true } : {}),
         ...(runtime26ExistingPreparation?.transfers === true ? { nativeExistingTransferPreparation: true } : {}) }));

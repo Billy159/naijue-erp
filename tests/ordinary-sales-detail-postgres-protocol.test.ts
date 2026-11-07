@@ -64,6 +64,17 @@ class OriginClient extends Client {
  }
 }
 
+test('EXACT35 ordinary sales detail passes its selected guard pin to retained approval',async()=>{
+ const c=new OriginClient(0);c.native=true;
+ const reader=new PostgresSalesQueryReader({async connect(){return c;}},
+  {profile:'source-confirmed-unified-native-v1',runtime27:setup(c).options.runtime27},'EXACT35');
+ const detail=await reader.readDetail(read());
+ assert.equal(detail.stockBasis,'CUTOFF_HISTORY');
+ const call=c.calls.find(row=>row.sql.includes('document-inventory:anchor'));
+ assert.deepEqual(call?.values,['SALES',ids.sales,'ff462d6a8a30eadea0d98991818cf15c9fd907db0d00956b3be51193846d3e83']);
+ assert.ok(c.calls.every(row=>!/FOR UPDATE|FOR SHARE|^INSERT|^UPDATE/.test(row.sql)));
+});
+
 test('historical detail exposes proven original signed-sale discount after current signs become positive',async()=>{
  const c=new OriginClient(0);const bootstrap=new OriginClient(0,'RUNTIME_LEDGER');
  const current=(await setup(bootstrap).reader.readDetail(read())).document;

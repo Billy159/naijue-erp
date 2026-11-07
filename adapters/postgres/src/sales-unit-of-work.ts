@@ -1,4 +1,4 @@
-import { readPublishedDocumentInventoryAnchor } from './published-document-inventory-anchor-reader.ts';
+import { readPublishedDocumentInventoryAnchor, type PublishedDocumentAnchorProfile } from './published-document-inventory-anchor-reader.ts';
 import { readSalesRetainedApprovalEvidence } from './sales-retained-approval-reader.ts';
 import type { SalesRetainedApprovalHistory } from '../../../packages/application/src/sales-retained-approval.ts';
 import { checkedRuntime27CommandCapability, type Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
@@ -102,8 +102,10 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
   private readonly historicalCustomers: NativeSalesHistoricalCustomers | undefined;
   private readonly runtime26: NativeRuntime26Capability | undefined;
   private readonly runtime27: Runtime27CommandCapability | undefined;
+  private readonly anchorProfile: PublishedDocumentAnchorProfile;
   private readonly maintainedCatalogue: boolean;
-  constructor(pool: PgSalesPool, options?: { readonly runtime27: Runtime27CommandCapability; readonly catalogueCompleteness?: never; readonly historicalCustomerExclusion?: never; readonly runtime26?: never; readonly catalogueReadProof?: never } | { readonly runtime27?: never; readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability; readonly catalogueReadProof?: { readonly profile: "MAINTAINED_CATALOGUE26_V1" } }) {
+  constructor(pool: PgSalesPool, options?: { readonly runtime27: Runtime27CommandCapability; readonly catalogueCompleteness?: never; readonly historicalCustomerExclusion?: never; readonly runtime26?: never; readonly catalogueReadProof?: never } | { readonly runtime27?: never; readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability; readonly catalogueReadProof?: { readonly profile: "MAINTAINED_CATALOGUE26_V1" } }, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27') {
+    this.anchorProfile = anchorProfile;
     this.pool = pool;
     if (options !== undefined && !("runtime27" in options) && typeof options.catalogueCompleteness?.assertComplete !== "function")
       throw new TypeError("Native catalogue facts require an explicit real completeness verifier");
@@ -139,7 +141,7 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
     let tx: PostgresSalesTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue, this.pool, this.runtime27);
+      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue, this.pool, this.runtime27, this.anchorProfile);
       // The first explicit runtime check is on this same client inside BEGIN,
       // before schema/current-actor/business work; the pre-COMMIT check remains.
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
@@ -215,7 +217,8 @@ class PostgresSalesTransaction implements SalesTransaction {
   private readonly specificationNativeFacts: PostgresNativeSalesFacts | undefined;
   private specificationResolved = false;
   private specificationResolving = false;
-  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false, pool?: PgSalesPool, runtime27?: Runtime27CommandCapability) {
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false, pool?: PgSalesPool, runtime27?: Runtime27CommandCapability, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27') {
+    this.anchorProfile = anchorProfile;
     this.runtime27 = runtime27;
     this.standardCatalogue=runtime27?createStandardCatalogue27TransactionProof(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 catalogue cannot outlive original transaction')):undefined;
     this.client = client; this.balances = runtime27 ? PostgresPostingBalances.forRuntime27(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 posting cannot outlive original transaction')) : runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
@@ -444,10 +447,14 @@ class PostgresSalesTransaction implements SalesTransaction {
     }
   }
   private readonly runtime27: Runtime27CommandCapability | undefined;
+  private readonly anchorProfile: PublishedDocumentAnchorProfile;
   async getDocumentInventoryAnchor(kind: 'SALES' | 'TRANSFER', documentId: EntityId<'sales'> | EntityId<'transfer'>): Promise<DocumentInventoryAnchor | undefined> {
     requireDomain(this.active && kind === 'SALES' && this.sales?.id === documentId, 'TRANSACTION_SCOPE', 'Anchor must belong to the loaded ordinary sales document');
     if (!this.anchorRead) {
-      const anchor = await (this.runtime27 ? readPublishedDocumentInventoryAnchor : readDocumentInventoryAnchor)((sql, values) => this.query(sql, values), kind, documentId);
+      const query = (sql: string, values?: unknown[]) => this.query(sql, values);
+      const anchor = this.runtime27
+        ? await readPublishedDocumentInventoryAnchor(query, kind, documentId, this.anchorProfile)
+        : await readDocumentInventoryAnchor(query, kind, documentId);
       requireDomain(this.active, 'TRANSACTION_CLOSED', 'Anchor read must remain on its original transaction');
       this.anchor = anchor; this.anchorRead = true;
     }
@@ -482,7 +489,7 @@ class PostgresSalesTransaction implements SalesTransaction {
         "TRANSACTION_SCOPE", "Retained approval needs the bound receipt actor, locked target and exact original version");
     };
     check();
-    const history = await readSalesRetainedApprovalEvidence((sql, values) => this.query(sql, values), salesId, expectedVersion, this.runtime27!==undefined, requireMigrationOrigin);
+    const history = await readSalesRetainedApprovalEvidence((sql, values) => this.query(sql, values), salesId, expectedVersion, this.runtime27!==undefined, requireMigrationOrigin, this.anchorProfile);
     check();
     if(history.inventoryAnchor){this.anchor=history.inventoryAnchor;this.anchorRead=true;}
     return Object.freeze({events:history.events,...(history.migrationOrigin?{migrationOrigin:history.migrationOrigin}:{}),assertCurrent:check});

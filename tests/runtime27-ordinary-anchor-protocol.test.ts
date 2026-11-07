@@ -16,6 +16,10 @@ import { createTransferService } from '../packages/application/src/transfer-serv
 import { ids as transferIds, actor as transferActor, draft as transferDraft } from './support/synthetic-transfer.ts';
 
 const at='2026-11-02T00:00:00.000000Z';
+const guardDigest={
+  EXACT27:'fa51aa3c79074a829c685127f6638152e26def788d919c19eb38bfffcb50f961',
+  EXACT35:'ff462d6a8a30eadea0d98991818cf15c9fd907db0d00956b3be51193846d3e83',
+} as const;
 function salesRow(unknown=false):Record<string,unknown>{
   const h=syntheticDraft().header;
   return {id:h.id,number:h.number,business_type:h.businessType,business_date:h.businessDate,hall_id:h.hallId,customer_id:h.customerId,
@@ -28,11 +32,13 @@ class Client implements PgSalesClient {
   readonly calls:{sql:string;values:unknown[]}[]=[];
   readonly row:Record<string,unknown>; readonly settlements:Record<string,unknown>[];
   lines:Record<string,unknown>[]=[]; anchors:Record<string,unknown>[]=[]; balances:Record<string,unknown>[]=[]; ledger:Record<string,unknown>[]=[];
+  anchorGuardDigest?: string;
   constructor(row:Record<string,unknown>,settlements:Record<string,unknown>[]=[]){this.row=row;this.settlements=settlements;}
   async query(sql:string,values:unknown[]=[]):Promise<PgSalesResult>{
     this.calls.push({sql,values:structuredClone(values)});
     let rows:Record<string,unknown>[]=[];
-    if(sql.includes('document-inventory:anchor'))rows=this.anchors;
+    if(sql.includes('document-inventory:anchor'))rows=this.anchorGuardDigest===undefined?this.anchors:
+      this.anchors.map(row=>({...row,schema_ready:row.schema_ready===true&&values[2]===this.anchorGuardDigest}));
     else if(sql.includes('sales-retained-approval:history'))rows=[];
     else if(sql.includes('FROM naijue_erp.operation_receipt WHERE actor_account_id'))rows=[];
     else if(sql.includes('sales:current-schema'))rows=[{current_sales_schema_ready:true}];
@@ -52,7 +58,8 @@ class Client implements PgSalesClient {
 }
 const runtime27=(client:Client)=>({profile:'EXACT27' as const,contract:'STANDARD_RUNTIME27_COMMAND_V1' as const,
   async assertReady(actual:object,purpose:string){assert.equal(actual,client);assert.ok(['DOCUMENT_COMMAND','INVENTORY_ADMISSION','CATALOGUE_READ'].includes(purpose));}});
-const uow=(client:Client)=>new PostgresSalesUnitOfWork({async connect(){return client;}},{runtime27:runtime27(client)});
+const uow=(client:Client,profile?:keyof typeof guardDigest)=>
+  new PostgresSalesUnitOfWork({async connect(){return client;}},{runtime27:runtime27(client)},profile);
 function salesLines():Record<string,unknown>[] {
   return syntheticDraft().lines.map(l=>({id:l.id,sales_id:l.salesId,line_no:l.lineNo,sku_id:l.skuId,quantity:l.quantity.toString(),
     reference_price:moneyToSql(l.referencePrice!),deal_price:moneyToSql(l.dealPrice),line_amount:moneyToSql(l.lineAmount),allocated_discount:null,is_gift:null,
@@ -67,16 +74,19 @@ function sealedRow(kind:'SALES'|'TRANSFER',header:Record<string,unknown>,lines:R
     source_system:'synthetic_only',source_entity_type:kind==='SALES'?'SALES_HEADER':'TRANSFER_HEADER',source_key:'original/001',source_record_hash:'1'.repeat(64),
     baseline_batch_id:baseline,baseline_manifest_sha256:'2'.repeat(64),cutoff_at:at,schema_ready:true,anchor_valid:true};
 }
-test('runtime27 UOW protocol: first imported approval reversal uses real migration anchor, current balance and no fake APPROVE history',async()=>{
+for(const profile of ['EXACT27','EXACT35'] as const)test(`${profile} sales UOW uses the selected anchor for the first imported reversal`,async()=>{
   const c=new Client({...salesRow(true),status:'APPROVED',version:4,unified_staff_columns:true});c.lines=salesLines();c.anchors=[sealedRow('SALES',c.row,c.lines)];
+  c.anchorGuardDigest=guardDigest[profile];
   c.balances=[{warehouse_id:ids.warehouse,sku_id:ids.sku,quantity:'41',version:9,last_operation_id:null,updated_at:at}];
-  let n=1000;const service=createSalesService({unitOfWork:uow(c),rules:SYNTHETIC_RULES,authorization:{async assertAllowed(){}},now:()=>at,newId:kind=>sid(kind,n++)});
+  let n=1000;const service=createSalesService({unitOfWork:uow(c,profile==='EXACT35'?profile:undefined),rules:SYNTHETIC_RULES,authorization:{async assertAllowed(){}},now:()=>at,newId:kind=>sid(kind,n++)});
   const result=await service.execute({action:'UNAPPROVE',actor,requestKey:'synthetic-first-reversal',salesId:ids.sales,expectedVersion:version(4)});
   assert.equal(result.status,'DRAFT');assert.equal(result.ledgerEntryIds.length,1);
   const ledger=c.calls.filter(x=>/^INSERT INTO naijue_erp.inventory_ledger/.test(x.sql));assert.equal(ledger.length,1);
   assert.equal(ledger[0]!.values[2],'UNAPPROVE');assert.equal(ledger[0]!.values[8],null);assert.deepEqual(ledger[0]!.values.slice(11),['41','43',sid('operation',810)]);
   assert.match(ledger[0]!.sql,/baseline_anchor_operation_id/);
-  assert.equal(c.calls.filter(x=>x.sql.includes('document-inventory:anchor')).length,1);
+  const anchorCalls=c.calls.filter(x=>x.sql.includes('document-inventory:anchor'));
+  assert.equal(anchorCalls.length,1);
+  assert.deepEqual(anchorCalls[0]!.values,['SALES',ids.sales,guardDigest[profile]]);
   assert.equal(c.calls.find(x=>/^INSERT INTO naijue_erp.operation_receipt/.test(x.sql))!.values[4],'UNAPPROVE');
 });
 function transferRow():Record<string,unknown>{const h=transferDraft().header;return {id:h.id,number:h.number,business_date:h.businessDate,
@@ -85,13 +95,15 @@ function transferRow():Record<string,unknown>{const h=transferDraft().header;ret
   approved_by_account_id:null,approved_by_staff_id:null,approved_at:null,stock_basis:'CUTOFF_HISTORY',unified_staff_columns:true};}
 function transferLines():Record<string,unknown>[]{return transferDraft().lines.map(l=>({id:l.id,transfer_id:l.transferId,line_no:l.lineNo,sku_id:l.skuId,quantity:l.quantity.toString(),is_current:true,
   product_code_snapshot:null,product_name_snapshot:null,color_name_snapshot:null,fit_name_snapshot:null,size_name_snapshot:null,barcode_snapshot:null}));}
-test('runtime27 transfer UOW protocol: null original account/time/role and known historical staff survive first anchor reversal on both endpoints',async()=>{
+for(const profile of ['EXACT27','EXACT35'] as const)test(`${profile} transfer UOW uses the selected anchor on both reversal endpoints`,async()=>{
   const c=new Client(transferRow());c.lines=transferLines();c.anchors=[sealedRow('TRANSFER',c.row,c.lines)];
+  c.anchorGuardDigest=guardDigest[profile];
   c.balances=[transferIds.fromWarehouse,transferIds.toWarehouse].map((warehouse_id,i)=>({warehouse_id,sku_id:transferIds.sku,quantity:i===0?'20':'8',version:9,last_operation_id:null,updated_at:at}));
-  let n=1000;const service=createTransferService({unitOfWork:new PostgresTransferUnitOfWork({async connect(){return c;}},{runtime27:runtime27(c)}),
+  let n=1000;const service=createTransferService({unitOfWork:new PostgresTransferUnitOfWork({async connect(){return c;}},{runtime27:runtime27(c)},profile==='EXACT35'?profile:undefined),
     authorization:{async assertAllowed(){}},references:{async assertValid(){}},now:()=>at,newId:kind=>sid(kind,n++)});
   const result=await service.execute({actor:transferActor,action:'UNAPPROVE',transferId:transferIds.transfer,expectedVersion:version(7),requestKey:'synthetic-transfer-first'});
   assert.equal(result.version,8);assert.equal(result.ledgerEntryIds.length,2);
+  assert.deepEqual(c.calls.find(x=>x.sql.includes('document-inventory:anchor'))?.values,['TRANSFER',transferIds.transfer,guardDigest[profile]]);
   const ledger=c.calls.filter(x=>/^INSERT INTO naijue_erp.inventory_ledger/.test(x.sql));
   assert.deepEqual(ledger.map(x=>x.values.slice(12)),[['20','22',sid('operation',810)],['8','6',sid('operation',810)]]);
   assert.ok(ledger.every(x=>x.values[2]==='UNAPPROVE'&&x.values[9]===null));
@@ -125,6 +137,28 @@ for(const spec of [false,true])test(`runtime27 sales SAVE selection ${spec?'reje
   assert.equal(c.calls.some(x=>x.sql.includes('business-catalogue27:')), !spec);
   assert.ok(c.calls.every(x=>!x.sql.includes('import_source_row')&&!x.sql.includes('import_history_closure_manifest')&&!/^INSERT|^UPDATE/.test(x.sql)));
 });
+test('EXACT35 retained approval binds the same anchor and rejects the old catalog on the original transaction',async()=>{
+  for(const actualDigest of [guardDigest.EXACT35,guardDigest.EXACT27]){
+    const c=new Client({...salesRow(true),status:'APPROVED',version:4,unified_staff_columns:true});
+    c.lines=salesLines();c.anchors=[sealedRow('SALES',c.row,c.lines)];c.anchorGuardDigest=actualDigest;
+    const read=uow(c,'EXACT35').transaction(async tx=>{
+      await tx.getReceipt(actor.accountId,'exact35-retained-approval');
+      await tx.getSales(ids.sales);
+      const evidence=await tx.getRetainedSalesApprovalHistory!(ids.sales,version(4),true);
+      assert.equal(evidence.migrationOrigin?.header.version,4);
+    });
+    if(actualDigest===guardDigest.EXACT35)await read;
+    else{
+      await assert.rejects(read,{code:'INVALID_BASELINE_ANCHOR'});
+      assert.equal(c.calls.at(-1)?.sql,'ROLLBACK');
+    }
+    const anchor=c.calls.find(x=>x.sql.includes('document-inventory:anchor'));
+    assert.match(anchor!.sql,/guard_unified_document\(\)',\$3::text/);
+    assert.deepEqual(anchor?.values,['SALES',ids.sales,guardDigest.EXACT35]);
+    assert.ok(c.calls.every(x=>!/^INSERT|^UPDATE/.test(x.sql)));
+  }
+});
+
 test('published runtime anchor never reads offline source mappings and preserves exact ordinary snapshot',async()=>{
   const {readPublishedDocumentInventoryAnchor}=await import('../adapters/postgres/src/published-document-inventory-anchor-reader.ts');
   const row=sealedRow('SALES',{...salesRow(true),status:'APPROVED',version:4},salesLines());

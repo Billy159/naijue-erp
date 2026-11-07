@@ -7,11 +7,16 @@ import { stringValue, versionFromSql, jsonObject } from './codec.ts';
 import type { PgSalesResult } from './sales-unit-of-work.ts';
 import { decodeInventorySnapshot } from './document-inventory-anchor-reader.ts';
 type Query=(sql:string,values?:unknown[])=>Promise<PgSalesResult>;
+export type PublishedDocumentAnchorProfile = 'EXACT27' | 'EXACT35';
+const guardUnifiedDocumentDigest: Readonly<Record<PublishedDocumentAnchorProfile, string>> = {
+  EXACT27: 'fa51aa3c79074a829c685127f6638152e26def788d919c19eb38bfffcb50f961',
+  EXACT35: 'ff462d6a8a30eadea0d98991818cf15c9fd907db0d00956b3be51193846d3e83',
+};
 const id=<K extends EntityKind>(kind:K,value:unknown):EntityId<K>=>entityId(kind,stringValue(value));
 const stamp=(column:string):string=>`to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 /** Runtime reads only the published ordinary audit, receipt and baseline control facts.
  * Import-time source validation is retained; no source identity is invented here. */
-export async function readVerifiedPublishedDocumentMigration(query:Query,kind:'SALES'|'TRANSFER',documentId:EntityId<'sales'>|EntityId<'transfer'>):Promise<{readonly anchor:DocumentInventoryAnchor;readonly snapshot:Record<string,unknown>}|undefined>{
+export async function readVerifiedPublishedDocumentMigration(query:Query,kind:'SALES'|'TRANSFER',documentId:EntityId<'sales'>|EntityId<'transfer'>,profile:PublishedDocumentAnchorProfile='EXACT27'):Promise<{readonly anchor:DocumentInventoryAnchor;readonly snapshot:Record<string,unknown>}|undefined>{
   const rows = (await query(`/* document-inventory:anchor */ WITH current_document AS (
     SELECT to_jsonb(h) AS h FROM naijue_erp.sales_header h WHERE $1::text='SALES' AND h.id=$2::uuid
     UNION ALL SELECT to_jsonb(h) FROM naijue_erp.transfer_header h WHERE $1::text='TRANSFER' AND h.id=$2::uuid
@@ -35,7 +40,7 @@ export async function readVerifiedPublishedDocumentMigration(query:Query,kind:'S
     (EXISTS(SELECT 1 FROM naijue_erp.schema_migration WHERE version=27)
       AND NOT EXISTS(SELECT 1 FROM (VALUES
         ('naijue_erp.guard_retained_settlement_identity()','73bde63d2dd84da3c5ad491f2b073344c2c6639e667f443f622c5b8d5ed006f6'),
-        ('naijue_erp.guard_unified_document()','fa51aa3c79074a829c685127f6638152e26def788d919c19eb38bfffcb50f961'),
+        ('naijue_erp.guard_unified_document()',$3::text),
         ('naijue_erp.reject_immutable_change()','3daef49e525ad973be82350a1551e979198d21ff58f3f1bb92a4f7292e4d038c'),
         ('naijue_erp.validate_unified_baseline_reversal()','e79f446269183dc9af235f7408344462e933f4ddd687231a671fc8b195923aed'),
         ('naijue_erp.validate_unified_ordinary_operation()','4df5ec2f7c3a25d2461a56586f83f20d63773f01e6ca80b9c45429676a1969a4')
@@ -123,7 +128,7 @@ export async function readVerifiedPublishedDocumentMigration(query:Query,kind:'S
       AND NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.operation_id=r.id)
       AND NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_balance balance WHERE balance.last_operation_id=r.id)) IS TRUE) AS anchor_valid
     FROM sealed r JOIN naijue_erp.import_batch b ON b.id=(r.snapshot->'header'->>'import_batch_id')::uuid
-    JOIN naijue_erp.import_batch baseline ON baseline.id=(r.coverage->>'baselineBatchId')::uuid`, [kind, documentId])).rows;
+    JOIN naijue_erp.import_batch baseline ON baseline.id=(r.coverage->>'baselineBatchId')::uuid`, [kind, documentId, guardUnifiedDocumentDigest[profile]])).rows;
   requireDomain(rows.length <= 1, 'INVALID_BASELINE_ANCHOR', 'One immutable migration anchor per ordinary document is required');
   const row = rows[0];
   if (!row) return undefined;
@@ -144,6 +149,6 @@ export async function readVerifiedPublishedDocumentMigration(query:Query,kind:'S
   return {anchor,snapshot:jsonObject(row.financial_snapshot ?? row.snapshot)};
 }
 
-export async function readPublishedDocumentInventoryAnchor(query:Query,kind:'SALES'|'TRANSFER',documentId:EntityId<'sales'>|EntityId<'transfer'>):Promise<DocumentInventoryAnchor|undefined>{
- return (await readVerifiedPublishedDocumentMigration(query,kind,documentId))?.anchor;
+export async function readPublishedDocumentInventoryAnchor(query:Query,kind:'SALES'|'TRANSFER',documentId:EntityId<'sales'>|EntityId<'transfer'>,profile:PublishedDocumentAnchorProfile='EXACT27'):Promise<DocumentInventoryAnchor|undefined>{
+ return (await readVerifiedPublishedDocumentMigration(query,kind,documentId,profile))?.anchor;
 }

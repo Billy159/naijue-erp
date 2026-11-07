@@ -1,4 +1,4 @@
-import { readPublishedDocumentInventoryAnchor } from './published-document-inventory-anchor-reader.ts';
+import { readPublishedDocumentInventoryAnchor, type PublishedDocumentAnchorProfile } from './published-document-inventory-anchor-reader.ts';
 import { checkedRuntime27CommandCapability, type Runtime27CommandCapability } from '../../../packages/application/src/runtime27-command-capability.ts';
 import { createStandardCatalogue27TransactionProof } from './standard-catalogue-completeness27.ts';
 import { readDocumentInventoryAnchor } from './document-inventory-anchor-reader.ts';
@@ -58,7 +58,9 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
   private readonly pool: PgSalesPool;
   private readonly runtime26: NativeRuntime26Capability | undefined;
   private readonly runtime27: Runtime27CommandCapability | undefined;
-  constructor(pool: PgSalesPool, options?: { readonly runtime26: NativeRuntime26Capability; readonly runtime27?: never } | { readonly runtime27: Runtime27CommandCapability; readonly runtime26?: never }) {
+  private readonly anchorProfile: PublishedDocumentAnchorProfile;
+  constructor(pool: PgSalesPool, options?: { readonly runtime26: NativeRuntime26Capability; readonly runtime27?: never } | { readonly runtime27: Runtime27CommandCapability; readonly runtime26?: never }, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27') {
+    this.anchorProfile = anchorProfile;
     this.pool = pool;
     if(options && 'runtime27' in options){
       const descriptor=Object.getOwnPropertyDescriptor(options,'runtime27');
@@ -76,7 +78,7 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
     const client = await this.pool.connect(); let tx: PostgresTransferTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresTransferTransaction(client, this.runtime26, this.pool, this.runtime27);
+      tx = new PostgresTransferTransaction(client, this.runtime26, this.pool, this.runtime27, this.anchorProfile);
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       if(this.runtime27)await this.runtime27.assertReady(client,"DOCUMENT_COMMAND");
@@ -124,7 +126,8 @@ class PostgresTransferTransaction implements TransferTransaction {
   private readonly specificationCatalogue: MaintainedCatalogue26TransactionProof | undefined;
   private readonly specificationRuntime: NativeRuntime26Capability | Runtime27CommandCapability | undefined;
   private readonly specificationPool: PgSalesPool | undefined;
-  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability, pool?: PgSalesPool, runtime27?: Runtime27CommandCapability) {
+  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability, pool?: PgSalesPool, runtime27?: Runtime27CommandCapability, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27') {
+    this.anchorProfile = anchorProfile;
     this.runtime27 = runtime27;
     this.standardCatalogue=runtime27?createStandardCatalogue27TransactionProof(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 catalogue cannot outlive original transaction')):undefined;
     this.client = client; this.balances = runtime27 ? PostgresPostingBalances.forRuntime27(client,runtime27,()=>requireDomain(this.active,'TRANSACTION_CLOSED','Runtime27 posting cannot outlive original transaction')) : runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
@@ -258,10 +261,14 @@ class PostgresTransferTransaction implements TransferTransaction {
     this.skuFacts.set(skuId, fact); return structuredClone(fact);
   }
   private readonly runtime27: Runtime27CommandCapability | undefined;
+  private readonly anchorProfile: PublishedDocumentAnchorProfile;
   async getDocumentInventoryAnchor(kind: 'SALES' | 'TRANSFER', documentId: EntityId<'sales'> | EntityId<'transfer'>): Promise<DocumentInventoryAnchor | undefined> {
     requireDomain(this.active && kind === 'TRANSFER' && this.loaded?.id === documentId, 'TRANSACTION_SCOPE', 'Anchor must belong to the loaded ordinary transfer');
     if (!this.anchorRead) {
-      const anchor = await (this.runtime27 ? readPublishedDocumentInventoryAnchor : readDocumentInventoryAnchor)((sql, values) => this.query(sql, values), kind, documentId);
+      const query = (sql: string, values?: unknown[]) => this.query(sql, values);
+      const anchor = this.runtime27
+        ? await readPublishedDocumentInventoryAnchor(query, kind, documentId, this.anchorProfile)
+        : await readDocumentInventoryAnchor(query, kind, documentId);
       requireDomain(this.active, 'TRANSACTION_CLOSED', 'Anchor read must remain on its original transaction');
       this.anchor = anchor; this.anchorRead = true;
     }

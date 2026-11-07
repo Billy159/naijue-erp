@@ -1,6 +1,7 @@
 import {HISTORICAL_SALES_HALL_PROJECTION_SQL,decodeHistoricalSalesHallProjection,decodeLegacySalesHallProjection} from './sales-historical-hall-projection.ts';
 import { historicalSaleOriginProjection } from '../../../packages/application/src/sales-retained-approval.ts';
 import { readSalesRetainedApprovalEvidence } from './sales-retained-approval-reader.ts';
+import type { PublishedDocumentAnchorProfile } from './published-document-inventory-anchor-reader.ts';
 import { ORDINARY_DOCUMENT_PUBLICATION_SQL, checkedOrdinaryDocumentListOptions, type OrdinaryDocumentListOptions, type NativeOrdinaryDocumentListOptions } from './ordinary-document-list-reader.ts';
 import { authorizedEffectiveDocumentIdentity, assertEffectiveDocumentPage, nullableEffectiveDocumentQuantity as normalNullableQuantity, nullableEffectiveDocumentMoney as normalNullableMoney } from '../../../packages/application/src/authorized-effective-documents.ts';
 import { importedHistoryReadSql, importedHistoryTransferSingleHallScopeSql } from "./imported-history-query-reader.ts";
@@ -134,7 +135,10 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
   private readonly pool: PgSalesQueryPool;
   private readonly normalLists: NativeDocumentListOptions | undefined;
   private readonly ordinaryDetail: OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions | undefined;
-  constructor(pool: PgSalesQueryPool, options?: NativeDocumentListOptions | OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions) {
+  private readonly anchorProfile: PublishedDocumentAnchorProfile;
+  constructor(pool: PgSalesQueryPool, options?: NativeDocumentListOptions | OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions,
+    anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27') {
+    this.anchorProfile = anchorProfile;
     const ordinary = options?.profile === 'source-confirmed-ordinary-documents-v1' || options?.profile === 'source-confirmed-unified-native-v1';
     const normalLists = ordinary ? undefined : options as NativeDocumentListOptions | undefined;
     if (ordinary && options) this.ordinaryDetail = checkedOrdinaryDocumentListOptions(options as OrdinaryDocumentListOptions | NativeOrdinaryDocumentListOptions);
@@ -316,7 +320,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
             l.fit_name_snapshot, l.size_name_snapshot, l.barcode_snapshot, l.is_current FROM naijue_erp.sales_line l
             WHERE l.sales_id=$1::uuid AND NOT l.is_current ORDER BY l.line_no,l.id LIMIT $2`,[header.id,SALES_DETAIL_MAX_CURRENT_LINES+1])).rows;
           if(inactive.length<=SALES_DETAIL_MAX_CURRENT_LINES){
-            const evidence=header.version===1?{events:[]}:await readSalesRetainedApprovalEvidence(query,header.id,header.version,this.ordinaryDetail!==undefined);
+            const evidence=header.version===1?{events:[]}:await readSalesRetainedApprovalEvidence(query,header.id,header.version,this.ordinaryDetail!==undefined,false,this.anchorProfile);
             historicalSaleOrigin=historicalSaleOriginProjection({...document,lines:[...document.lines,...inactive.map(decodeLine)]},stockBasis,{...evidence,assertCurrent(){activeSalesRead(read.signal);}});
           }
         } catch(error) {

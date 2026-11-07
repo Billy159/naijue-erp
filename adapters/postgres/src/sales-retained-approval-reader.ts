@@ -1,5 +1,5 @@
 import type {DocumentInventoryAnchor} from '../../../packages/domain/src/document-inventory-effects.ts';
-import {readVerifiedPublishedDocumentMigration} from './published-document-inventory-anchor-reader.ts';
+import {readVerifiedPublishedDocumentMigration,type PublishedDocumentAnchorProfile} from './published-document-inventory-anchor-reader.ts';
 import {readVerifiedDocumentMigration} from './document-inventory-anchor-reader.ts';
 import {decodeSealedSalesMigration} from './sales-migration-origin-codec.ts';
 import { SALES_RETAINED_APPROVAL_MAX_HISTORY } from '../../../packages/application/src/sales-retained-approval.ts';
@@ -44,11 +44,13 @@ export async function readSalesRetainedApprovalHistory(query:Query,salesId:Entit
 }
 
 /** Same-client optional terminal anchor; never infer it from a truncated UNAPPROVE event. */
-export async function readSalesRetainedApprovalEvidence(query:Query,salesId:EntityId<'sales'>,expectedVersion:Version,published=false,requireMigrationOrigin=false):Promise<Omit<SalesRetainedApprovalHistory,'assertCurrent'> & {readonly inventoryAnchor?:DocumentInventoryAnchor}>{
+export async function readSalesRetainedApprovalEvidence(query:Query,salesId:EntityId<'sales'>,expectedVersion:Version,published=false,requireMigrationOrigin=false,anchorProfile:PublishedDocumentAnchorProfile='EXACT27'):Promise<Omit<SalesRetainedApprovalHistory,'assertCurrent'> & {readonly inventoryAnchor?:DocumentInventoryAnchor}>{
  const events=await readSalesRetainedApprovalHistory(query,salesId,expectedVersion);
  const start=events[0]?.audit.oldVersion ?? expectedVersion;
  if(start===1&&!requireMigrationOrigin)return {events};
- const verified=await (published?readVerifiedPublishedDocumentMigration:readVerifiedDocumentMigration)(query,'SALES',salesId);
+ const verified=published
+  ? await readVerifiedPublishedDocumentMigration(query,'SALES',salesId,anchorProfile)
+  : await readVerifiedDocumentMigration(query,'SALES',salesId);
  if(!verified)return {events};
  const migrationOrigin=decodeSealedSalesMigration(verified.snapshot,salesId);
  requireDomain(migrationOrigin.header.version===start,'UNKNOWN_PRICING_FACTS','Sealed migration must meet the complete runtime audit prefix');
