@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T22:28:25.130462+08:00",
+    "at": "2026-11-07T22:47:21.020483+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,9 +28511,9 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Exact optionalphase delivered/fixeddbe523f2 andQB adopted; existing business/history ready work only, no duplicate phase implementation.",
-      "QB": "Optionalphase limited3 checks/byteequal/index/summary PASSfaeede91 adopted, no repeat.",
+      "QB": "BOOT08 priorbounded890 scope had missed inner driver clientpin; record actualfailure now; originalT45 fixes exactseam, C dispatch next fixedminimum only.",
       "D2": "dbe523f2 smalltool closure actualLinux adopted;856history ready retained, no repeat packaging or broad test.",
-      "T45": "Actualdbe toolLinuxload1cef726d/policyrestoreeff1e916 PASS; originalT45 now minimalBOOT08 previous06-cleanup schema/CAS increment, necessarytests thenQB; no newbootwindow until fixedsource andjust-in-time C.",
+      "T45": "OriginalT45 independent minimumCLIENT_SHA fix and unique09 keys/latest08failurecleanup binding; QBonly actualrenew dualpin seam; preserve08source/results and no newwindow yet.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Complete exact05-cache retirement and actualspace readback; adopt limited progress-diagnostic QA before new source closure/finite R4 attempt. No old job replay or EXECUTE without actualsuccessfulPREPARE.",
+      "next": "OriginalT45 independent minimumCLIENT_SHA fix and unique09 keys/latest08failurecleanup binding; QBonly actualrenew dualpin seam; preserve08source/results and no newwindow yet.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36234,13 +36234,67 @@
         },
         "BOOT08LocalInputs": {
           "inputSHA256": "bf91c4fa0d46a4ecc3b07d452e855010f42b001a6ba3bbd109e0c8d45d319e5b",
-          "state": "MINIMUM06_CLEANUP_SCHEMA_CONSUMER_INCREMENT_ORIGINAL_T45_WRITER",
+          "state": "ACTUAL08_FAILED_NEW_PIN_REPAIR_PENDING",
           "previousStop": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
           "previousRestart": "ddb9cf1a168a3b3ecbc25347d5bcc6aa6d9e7b8e30e4d4c6441c7c3cd424000d",
           "previousParameters": "3799e7b2a14fc385cfb4e1faf81030478409c3f0162bde32d4b414e9191547c2",
           "previousRoleExpiryCAS": "2026-11-07 14:18:51.599+00",
           "newWindowsEpochPids": "NOT_ISSUED_NOT_OBSERVED"
         }
+      }
+    },
+    "r4Boot08ActualAndPinRepair20261107": {
+      "owner": "OriginalT45 source/server; C dispatch; originalQB affected seam only",
+      "sourceReadySHA256": "41e4c87263822615276f7ff9925503036ff377f3ab77e9f42ce4cb3911821504",
+      "nonTimeBundleSHA256": "493a091dd73ec2ce90939c153ed3fbf57f76d36fad6455e5038ceba7e3ec3750",
+      "QBScopedSHA256": "89034952a8d74c98ffabce3a56c8ee587270f8f7648900c3fcd427a5a5d757c6",
+      "QBScope": "Original20models adopted+6 boundaries. Did not cover actual driver CLIENT_SHA/clientSource matching seam; realfailure supersedes startup viability. C/T45 duplicate messages merged once.",
+      "CDecisionSHA256": "3ab817b0fb9134dd7f259100ebdbcbc8ab931cb36caab05d7f1b4e2368183652",
+      "startsAt": 1794062344804,
+      "expiresAt": 1794062644804,
+      "guardianExpiresAt": 1794067744804,
+      "roleUntilRequestedNotApplied": "2026-11-07T16:08:34.804Z",
+      "job": "t45-r4-retained-restart-20261107-08",
+      "status": "ACTUAL_FAILED2_ROLE_MAINTENANCE_CLIENT_PIN_MISMATCH_NO_REPLAY",
+      "elapsedSeconds": 2.3740609916858375,
+      "jobReceiptSHA256": "3a332d254db2dfd36d777cc24975a67a9c7250e2bb68987b9447fe9b433ed6b5",
+      "errorSHA256": "a681dc4a9e5d6358de4800fe577a7338ea3036cf96cfe767cebde9a67fe329c5",
+      "failureDiagnosticSHA256": "207487f8ff1d0217db7ba33629a221d729938590910fdfc1725eb7259cd53fa4",
+      "firstFailure": "ROLE_EXPIRED_MAINTENANCE AssertionError, fixed-expired-role-window line12. Driver line8 CLIENT_SHA37543ae5 retained while exact clienta16c2a5b changed. Failure before helper exec/HBA rule/role maintenance.",
+      "cleanupSHA256": "ca0663849049b9fa50ab4f595551f72d445ceabcc853e6fbeeda1bd5a0264806",
+      "cleanup": "Originalreceipt cleanShutdown/cleanupComplete/dataPreserved/directChildReaped/ownedPidAbsent/portAbsent true,errors[],privilegesChangedfalse. Fresh exact guardian/HBA/record/params/role-scope readonly pending.",
+      "actualNewEpochAndProtectedRestart": "NOT_PUBLISHED",
+      "rootStartedAtUTC": "2026-11-07T14:40:54.992222+00:00",
+      "beforeRootStartDelaySeconds": 110.188222,
+      "delayCause": "UNVERIFIED; compare exact localcopy/submission/manager timestamps, no speculation",
+      "next": "OriginalT45 independent minimumCLIENT_SHA fix and unique09 keys/latest08failurecleanup binding; QBonly actualrenew dualpin seam; preserve08source/results and no newwindow yet.",
+      "QBActualFailureSupplementSHA256": "67ed0f1250f22156cc8108b151ac357a382438e5f949bc8519267c3636d38270",
+      "finalReadOnly": {
+        "receiptSHA256": "b4c1301f92035a09b04a0d3c140220a9a46ca81696c8d02eff168da203f81792",
+        "job": "t45-r4-boot08-failure-readonly-20261107-01",
+        "exitCode": 0,
+        "durationSeconds": 0.267579,
+        "observedShanghai": "2026-11-07T22:44:12.973+08:00",
+        "guardian1552": "ABSENT",
+        "PG1559": "ABSENT",
+        "portAbsent": true,
+        "postmasterPidAbsent": true,
+        "rawStopSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "HbaOriginalBytesMetadata": true,
+        "roleMaintenanceScopeAndCommitAckAndEpoch": "ABSENT",
+        "installA7dRestartDdbParameters3799": "ACTUAL_UNCHANGED",
+        "access45RestoredKey": "06",
+        "privateProjectionsAndWriterAuthority": "ABSENT",
+        "freeBytes": 9293602816,
+        "roles": "Not SQL-reread while stopped; old14:18:51.599+00 remains historicalCAS only. Driver failed before helper exec/HBA/SQL."
+      },
+      "timingEvidence": {
+        "CLocalStart": "2026-11-07T14:39:04.804Z",
+        "localDecisionCopyMtime": "2026-11-07T14:40:10.996422Z",
+        "rootJobAt": "2026-11-07T14:40:54.992222Z",
+        "beforeCopySeconds": 66.192422,
+        "copyToRootSeconds": 43.9958,
+        "subphaseAttribution": "UNVERIFIED; no claim allSSH/network/queue"
       }
     }
   }
