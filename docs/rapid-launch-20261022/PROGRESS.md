@@ -2612,3 +2612,10 @@ T45 原键一次 COMPLETED0（3.0257s），实际 PG epoch为2026-11-07 22:07:48
 原键FAILED2/1136.8047s（ac2e0d16，rootb8dc412b），首错仍为原20min窗口到期；采样最大.1898s<.25、最低6.683GB>4GiB，不能把这两项当根因。终态reader2b5a0e7f（577218B）COMPLETED0/.6193s，C核RESULT4f724c52及7引用：Node2544/PG2421/guardian2414均实际ABSENT、45access/HBA恢复、2秘密投影缺失，a7d/6843/3a8c未变。CLI与回滚仍UNKNOWN，无summary或preparedbinding。
 
 RECORDS END970152ms、RELATIONS END1026085ms、最后METADATA_FINISH BEGIN1026177ms；1098004扫描行/issues0不是整包通过。新context80866833：173完整数值快照/尾0；调拨明细区间702.533s，REGISTRY累计523.429s与校验重叠，CPU105.762s，读227848192B/写2099404800B，runqueue.1503s，键尝试273948次均219B（不是distinct/入库数）。D1据此修原热路径，根因尚未确认，不盲加缓存或延窗。T45准备将准确index inode14561466（2460839936B）与journal14561470（79464B）一起全字节保全后再退役；仍未归档或删。空闲6.675GB低于下一启动8.208GB，差1.533GB，禁止直接重启重跑。真实导入、核账、历史业务和上线均未完成。
+
+
+## 2026-11-08T07:05:05.288278+08:00 PREPARE12双文件保全及空间恢复实测
+
+T45归档原键COMPLETED0/49.569s（34a02407）：321120335B私有archive e1bd5075、inode14561480/0400，index与journal两个成员全字节/完整meta验证。C采用6实际retirement引用并核最小常量绑定，按直接授权确认无排队消费者后，原退役键COMPLETED0/1.420s（83e3cf2f），只移除14561466与14561470两个生成文件。实际同盘释放2460872704B，余8812621824B，较原8207515646B门槛余605106178B（下次仍需fresh核定）。旧archive、12全部报告/progress/cost/context、a7d/6843/3a8c、数据及备份不变；无SQLite打开或新PG/BOOT/导入。
+
+术语更正：523.429s是REGISTRY注册身份键查询，SKU引用REF另计，CPU/IO只为已观测区间、不可硬归到每条get；缺旧cgroupCPU节流事实。D1本机同BEGIN假工作集3测试/5阶段完成，尚未复现Linux慢耗；脚本72953f60只用于100k全假219B键/60k hit/32351 miss的受限Linux补轴。T45准备原runner，等待C准确scope，不重读真实索引或重跑PREPARE。原12失败及真实导入/业务/上线未通过保持。

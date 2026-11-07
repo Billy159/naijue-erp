@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T06:53:07.692708+08:00",
+    "at": "2026-11-08T07:05:05.288278+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T06:53:07.692708+08:00",
-      "phase": "R4_PREPARE12_FAILED_REAL_NUMERIC_CONTEXT_ADOPTED_D1_FIX_AND_T45_CAPACITY",
+      "at": "2026-11-08T07:05:05.288278+08:00",
+      "phase": "R4_CAPACITY_RECOVERED_GENERATED_PAIR_PRESERVED_DIRTY_WORKSET_DIAGNOSTIC_READY_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "D1 original hotpath; T45 exact index+journal archive preparation",
-      "nextOwner": "QB only fixed repair increment; D2 tiny closure; T45 reviewed continuation",
-      "latestActualReceiptSHA256": "2b5a0e7f7fcd678c37c1c4badc49bd5f9aecd5cdf81f0d42b62da59c9609085b",
+      "currentOwner": "T45 finite synthetic wrapper; D1 hotpath owner",
+      "nextOwner": "C bounded diagnostic scope then D1 exact evidence-based fix",
+      "latestActualReceiptSHA256": "83e3cf2f12f8ca1d87d1a6c3562831624553c9b9e5ac4ff9db57b20c148e5cae",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "D1 original39b owner evidence-based hotpath fix; T45 original two-member index+journal full-byte archive then exact retirement after C fixedpins; no blind retry/BOOT/import.",
+      "next": "T45 reuse original finitefake runner; C exact scope; one Linux result→D1 minimumfix, no blind cache/transaction/window changes.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -37729,7 +37729,7 @@
         "bytes": 2460839936,
         "journalInode": 14561470,
         "journalBytes": 79464,
-        "openedOrArchivedOrDeleted": false,
+        "openedOrArchivedOrDeleted": "Full-byte pair archive then exact two-inode retirement ACTUAL_COMPLETED0; never SQLite opened",
         "preserveBothAsOneSetBeforeExactRetirement": true
       },
       "freeBytesObserved": 6674747392,
@@ -37741,6 +37741,64 @@
       "state": "No PREPARED exists for12; hypothetical reuse subject to exact fullsource/plan/native rebinding",
       "facts": "Logical binding and business request keys exclude boot epoch, but new startup params/restart/current process proofs/real authorization must be renewed and full preflight/plan/native binding rechecked. Outerjob key is not business request_key; fixedrestartprovenance guards retained.",
       "next": "No execute preparation based on failed12; actualcontext hotpath has priority."
+    },
+    "r4Prepare12PairArchiveRetirement20261108": {
+      "status": "ACTUAL_PAIR_FULL_BYTE_PRESERVED_AND_EXACT_GENERATED_FILES_RETIRED",
+      "archive": {
+        "key": "t45-r4-prepare12-archive-preserve-20261108-01",
+        "CDecisionSHA256": "d0f4b9263e2d66230f9be162af003a7fc1639f7907e9ef3b1d4b6675879e36a4",
+        "receiptSHA256": "34a02407e5083b57d7e18ced7b028b3de84bb1bab150b61bc4954c6e4aa6b506",
+        "exitCode": 0,
+        "seconds": 49.568723657,
+        "sha256": "e1bd50755a82c4d53c709e0995691d0cc34239851718866b09abe231400ac503",
+        "bytes": 321120335,
+        "allocatedBytes": 321126400,
+        "inode": 14561480,
+        "mode": "0400",
+        "members": [
+          "index.sqlite",
+          "index.sqlite-journal"
+        ],
+        "sourceMetaAndFullBytePairVerified": true,
+        "SQLiteValidated": false
+      },
+      "retirement": {
+        "key": "t45-r4-retire-prepare12-index-20261108-01",
+        "CDecisionSHA256": "4b7c3df217c234a50c640dc368d00ad6cbe39dac510e053f8f38f98621ec434e",
+        "receiptSHA256": "83e3cf2f12f8ca1d87d1a6c3562831624553c9b9e5ac4ff9db57b20c148e5cae",
+        "bytes": 1810,
+        "exitCode": 0,
+        "seconds": 1.420137191,
+        "exactInodes": [
+          14561466,
+          14561470
+        ],
+        "filesDeleted": 2,
+        "freeBefore": 6351749120,
+        "freeAfter": 8812621824,
+        "actualReleasedBytes": 2460872704,
+        "startupFloorBytes": 8207515646,
+        "observedMarginBytes": 605106178,
+        "freshCheckStillRequiredForNextStart": true,
+        "protectedEvidenceAndAuthorityUnchanged": true,
+        "archivePreserved": true,
+        "noPGSQLSQLiteSignalsOrNewImport": true
+      },
+      "review": "C checked12 archive refs and exact source; six actualretirement refs/source only2constants+oneCbinding; no queued real-index consumer. All prior failure/context reports, archives, data and backups preserved."
+    },
+    "r4DirtyWorksetDiagnosticPreparation20261108": {
+      "owner": "D1 source / T45 sole Linux executor",
+      "sourceSHA256": "72953f60f9182c0a0909d7b9ba2515ddae7bdd3ac6ce0452ecfd807c0d789d95",
+      "sourceBytes": 13984,
+      "testsPassed": 3,
+      "testsAreLocalOnly": true,
+      "localModelSHA256": "18fdadacd7c684e5c26d6590df2f98731bd7abc23051561680661e09c8715793",
+      "CReadSourceAndCheckedThreePins": true,
+      "model": "100k fake219B keys; one uncommitted BEGIN through registry/identities/raw/facts/refs/rows_seen;32351miss+60000hit;0realdata/PG",
+      "limits": "Node cooperative145s/hard160s,outer180s,artifact768MiB,index576MiB,activefloor4GiB,existingstartupfloor8207515646B",
+      "status": "T45_WRAPPER_READY_AND_C_SCOPE_PENDING_NO_LINUX_DIAGNOSTIC_RUN_YET",
+      "rootCause": "UNKNOWN; context lacks pastcgroupCPU, lowrunqueue does not exclude throttling; intervalIO not attributed solelytoget",
+      "next": "T45 reuse original finitefake runner; C exact scope; one Linux result→D1 minimumfix, no blind cache/transaction/window changes."
     }
   }
 }
