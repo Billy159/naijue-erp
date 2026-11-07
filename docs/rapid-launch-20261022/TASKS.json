@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T19:43:41.918190+08:00",
+    "at": "2026-11-07T20:50:44.709947+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "bfafc3146a413e3ec4f644f279bd7c95ca3212cb"
+      "lastControllerCheckpoint": "8dbcce7cd52e23844fe1c8e6f5581adf9d5819da"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28511,9 +28511,9 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Current stop-pin backup producer1a9aea5d source/QB5-model PASS; no server/PG. Backup/restore actual size and committed R4 batch pending.",
-      "QB": "Carrier02 003c698a source/model PASS a2a3a576; backup1a9aea5d PASS3deaf3db. Only new actual Linux/PG results next; no duplicate whole backend.",
+      "QB": "BOOT07 exact20-leaf476731e6 source/models PASS, actual FD probe95af3805 PASS; no new source task until actual failure/delta.",
       "D2": "856e5a59 minimum history successor packedb968e4b5, old App/Web bytes reused; local7298 member readback and2.48MB tail valid; no server/PG.",
-      "T45": "Actual four-app cleanup0/6.981s, +528338944B, free8851918848B and644403202B above R4 originalfloor. OriginalBOOT07 exact current-stop/5min boot/90min guardian and original role/HBA binding local preparation in progress; no PG started.",
+      "T45": "BOOT07 exact current-stop scope69efa0fd issued; finite original5min boot/90min guardian/30sHBA. Actual terminal pending; then real-fact publisher and PREPARE06.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -33443,7 +33443,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED_PREPARE04_FAILED_OFFLINE_PREFLIGHT",
+        "REALImport": "NOT_EXECUTED_PREPARE05_SOURCE_PREFLIGHT_PASS_BUT_ORDINARY_OBSERVER_REJECTED; exact af carrier/BOOT07 successor pending",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33457,7 +33457,7 @@
         "productionDeployed": false
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
-      "lastCleanStopReceiptSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+      "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
       "importToolCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
       "importToolSourceSetSHA256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work."
@@ -35705,7 +35705,7 @@
       "oldRestoreShortfallBytes": 27655303168,
       "r4StartFloorBytes": 8207515646,
       "r4ShortfallBytes": 0,
-      "next": "Keep historical old47 requirement separate from current new-system backup/recovery. R4 margin124690434B is thin, no concurrent heavy history materialization.",
+      "next": "R4 original startup floor met at actual FD resource observation. Original T45 finiteBOOT07 next. New35 applicable recovery requirement remains unknown pending actual committed batch and measured sizes; old47 historic requirement separate.",
       "latestResourceReceiptSHA256": "3d6bc3192124d8171954d9f26cec568826c3ffb6bcfc023b5d15c356fcacac43",
       "latestRequirementAdjustment": {
         "authorityHumanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
@@ -35715,17 +35715,17 @@
         "newSystemScope": "R4/current new35 actual committed data, import receipt and new business continuity need applicable backup/recovery before final switch; cannot call old backup or discarded rollback a new-system restore PASS."
       },
       "r4MarginBytes": 644403202,
-      "latestPostToolFreeBytes": 8324141056,
-      "latestPostToolR4MarginBytes": 116625410
+      "latestPostToolFreeBytes": 8851300352,
+      "latestPostToolR4MarginBytes": 643784706
     },
     "serverRetiredApplicationCleanup20261107": {
       "at": "2026-11-07T19:59:37.707927+08:00",
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
       "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
-      "state": "ACTUAL_FIXED38_CLEANUP_COMPLETE_R4_FLOOR_MET_THIN_MARGIN",
+      "state": "ACTUAL_FIXED38_AND_FOUR_APPLICATION_CLEANUPS_COMPLETE_R4_FLOOR_MET",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "Original T45 af395eba 1.14MB transfer/Linux loader, finite original-policy restoration; runtime floor checked again before any action. New-system independent restore needs separately accurate measured requirement; no old-backup PASS claimed.",
+      "next": "No extra cleanup batch requested; protect currentR4/af/APP576, original receipts/data/backup. Original T45 BOOT07 current action; new35 restore capacity measured after actual committed data.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35868,7 +35868,7 @@
       "qbResultSHA256": "e3f3756d193507656ff16c7904d4cb9148d1693cb3cfdb9f3633414a1ebafde5",
       "qbIndependentNewModelPass": 1,
       "qbMismatchRejections": 6,
-      "next": "Original D2 fixed minimum successor; estimated materialization343MB exceeds current116625410B margin. T45 exact additional stopped rebuildable application-only list needed before successor PG. No historical ordinary-role PASS.",
+      "next": "Fixed856e5a59 min successor ready. Four stopped-app cleanup freed528338944B, so previous116MB-margin blocker superseded. Still serialize heavy materialization/PG with R4; exact new finite history target not yet issued. Ordinary history PG not passed.",
       "successorPackage": {
         "resultSHA256": "b968e4b5b76c1a49f00b10a9861030a10adaa2392a83fd51b13bdaff8d04a3f1",
         "archiveSHA256": "9e7d7efc4352d792afea412e1da2bb05b0f62a53c36d5a451f0fe89914238a9a",
@@ -35890,8 +35890,8 @@
       "startsAt": 1794052725289,
       "expiresAt": 1794054525289,
       "scope": "Existing original transport; archive0231d8f1/1139863B, Linux import only, current floor retained; restorecd2e532b bytes+metadata on every terminal. No PG/preflight/REAL/app.",
-      "proofCallbackIntegrated": false,
-      "next": "T45 original carrier finite callback/pass_fds integration from D1 HANDOFF9fa69570, then QB limited increment and actual Linux/UID61035 proof. No Node source or new platform needed; accurate BOOT07/admin/deadline still pending.",
+      "proofCallbackIntegrated": true,
+      "next": "Carrier003c and BOOT07 necessary increment scoped QB adopted; actual Linux FD passed. Original T45 actualBOOT07 then C exact new epoch/parameters/PREPARE06; actual admin proof and REAL remain unverified.",
       "readyReceiptSHA256": "e72785a3894a884736f9d6fe22873a1988ad655c853cc9013dc33f80dd1f0af2",
       "readyRawSHA256": "451792cedc11cc597d534527b3c0d076b0aa310f4dad5178595b4bf33636f559",
       "materializationReceiptSHA256": "cc75771003a672fedf14342dadb860f065e1b08f15983da2679e1233ea58c6f3",
@@ -35909,7 +35909,8 @@
       "PGConnections": 0,
       "BOOT07": false,
       "REAL": false,
-      "appDeployed": false
+      "appDeployed": false,
+      "proofCallbackActualSQL": false
     },
     "r4CaptureCarrier20261107": {
       "at": "2026-11-07T20:25:51.568620+08:00",
@@ -35932,6 +35933,48 @@
         "successful PREPARE timing and complete EXECUTE budget"
       ],
       "next": "T45 exact newBOOT07 scope and Linux/PG prerequisites, C current-fact binding. Existing staging window was restored and is not new boot authority."
+    },
+    "r4Boot07MaterialAndActual20261107": {
+      "at": "2026-11-07T20:50:44.709947+08:00",
+      "state": "ACTUAL_LINUX_UID_FD_PASS_BOOT07_ISSUED_AWAIT_ORIGINAL_RECEIPT",
+      "owner": "Original T45; original QB necessary increment only; C exact binding",
+      "readySHA256": "ebebff6e9d9a1e841e4031397ca85aedcfc1d78de34aa8c9b961e65202bd5524",
+      "qbResultSHA256": "476731e621872f271e5a6393de0afdd60abaddf3fe3676f31ce01f89023bfb03",
+      "verifiedLeafPins": 20,
+      "source": "insidef38b14d0/start872d1f74/role37543ae5/e00fdbc0; original restorer6ccee/carrier003c unchanged",
+      "FD": {
+        "decisionSHA256": "4c33679c547418d4239456de6ef3dee4e3a423605d847d54f2fc5f94142bd8d3",
+        "job": "t45-r4-linux-uid-fd-access-20261107-01",
+        "receiptSHA256": "95af380541c834b2fe619cb33ed6975e948b219f83f171b62d9a7f557462bdb1",
+        "exitCode": 0,
+        "durationSeconds": 0.467931,
+        "actualLinuxUID": 61035,
+        "actualNode": "v24.21.0",
+        "root0400InheritedRead": true,
+        "procDirectoryInheritedRead": true,
+        "childReaped": true,
+        "descriptorClosed": true,
+        "PGConnections": 0,
+        "notRetainedBackendProof": true,
+        "notAdminOrPGVerified": true,
+        "resourceReceiptSHA256": "9e09224e77b45728deb737be78b5163deb7414ae8df1d07821e8cb633c0113d0",
+        "resourceObservedAt": 1794055612946,
+        "freeBytes": 8851300352
+      },
+      "BOOT07": {
+        "decisionSHA256": "69efa0fd56d073bad175dad0775420b8faa6de9abd53e60a3fabb3853f9cc7e8",
+        "requestKey": "t45-r4-retained-restart-20261107-07",
+        "startsAt": 1794055761599,
+        "expiresAt": 1794056061599,
+        "guardianExpiresAt": 1794061161599,
+        "roleLoginValidUntil": "2026-11-07T14:18:51.599Z",
+        "priorRoleCASUTC": "2026-11-07T09:42:33Z",
+        "sameStopSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "oldParametersSHA256": "37e1422a2c21df472844b3abb4c11be022f0fdd03fbb0d69c540b3c5adf41d5f",
+        "actualStarted": "UNVERIFIED_PENDING_T45",
+        "scope": "Same retained R4/new actual epoch only, boot<=5min/guardian<=90min AND original serviceLease, two existing roles expiry CAS, HBA<=30s and exact restore. No installation/import/public application."
+      },
+      "next": "T45 original BOOT07 terminal and exact actual epoch/role/cleanup evidence; only then C bind publisher and PREPARE06. No invented future receipt or old-window replay."
     }
   }
 }
