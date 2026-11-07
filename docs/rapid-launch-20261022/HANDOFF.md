@@ -2854,3 +2854,11 @@ D1 commit73480c928a5950670ca3127b0eca3dc5719b3e55（parent49d）仅identity_keys
 - 真实最后phase是INDEX_FINALIZE END1086911.149648ms→INDEX_HASH BEGIN1086967.894344ms，无HASH END，无summary/binding。1098004globalrows与608916分表counter口径不同，均不是全预检PASS。transfer_line REGISTRY490609.482276ms/VALIDATION_INCLUSIVE558843.729638ms为重叠wall非CPU，实际比旧10registry更慢，不能套旧成本。新index2,567,147,520B/inode14560879保留，free7,443,914,752B低于下次启动floor。
 - 原技术observer无phase输出：实际journal证运行120s后timeout，当前unit无active；publicSTARTING保持为陈旧记录，不改成成功、不重提。该次原manager锁串行发生在RUNNING写入前，不能据此判断产品卡死。
 - 原D1接新11成本，先核实际Node/node:sqlite schema/EXPLAIN与可能已有CPU/IO事实，再选最小修复；未计时CPU/IO保持UNKNOWN。T45仅一次有界技术元数据/虚构key EXPLAIN，0业务SELECT/COUNT/大hash/PG/持久写，不新增平台或重复全审。归档候选只本地准备，待技术读取结束后绑定实metadata；无新BOOT/PREPARE/EXECUTE。
+
+
+### 2026-11-08T05:01:30.526609+08:00 — 实际查询计划已核；11归档/空间收尾完成，准备有界Linux环境对照
+- 原T45一次技术只读96a51c86…/4069B确认Node24.21/SQLite3.53.4、真实WITHOUT ROWID及PRIMARYKEY(entity,key)含id，排除未加载/仍二跳解释。0业务SELECT/PG，连接及child关闭，全部metadata/atime未改。旧进程CPU/IO/RSS未留存，保持UNKNOWN。
+- 11原index完成全字节归档：336038ed…/2207B，archive2b1222…341,722,785B/root0400，source375bc…准确保留，非SQLite完整性或数据库恢复验证。随后独立C决定ca878…使原key一次退休，实际332ca776…/1549B、COMPLETED0/1.47018s，仅一叶缺席/8保护不变；释放2,567,155,712B，剩余9,667,940,352B，启动margin1,460,424,706B。所有旧archive、真实资料和报告保留，无新BOOT/PREPARE/EXECUTE。
+- D1同Node本地纯合成460188键/273948hit/147708miss、首遍+两重复，前后ID/miss/PK拒绝一致；有限mixed60000条未复现Linux491秒。RESULT85ff5a32…/9597B及script17dc3f…/8461B保留，源码734未改，不能据此回滚、换布局或称Linux性能达标。
+- 原REGISTRY完整区间源码eb852cd5…确认仅native.get及其内部/等待，非二段业务SQL/JSON/全组扫描；原公开preflight10k有效证据复用，不再本机重复该get。
+- 下一步只安排一次同Linux/UID/卷的短时合成环境诊断：D1唯一脚本writer，T45唯一wrapper/服务器writer；<=768MiB、Node160s/outer180s、原freefloor保留，虚构key、0PG/业务资料/BOOT/新预检。CPU/IO/heap等仅自进程白名单技术计数，不加平台/插件/缓存/权限，不延窗。准确脚本pins及C执行scope尚待就绪，不能写成已执行或已修复。

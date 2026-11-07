@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T04:44:07.287144+08:00",
-      "phase": "R4_PREPARE11_FAILED_WINDOW_ACTUAL_INDEX_HASH_NO_SUMMARY",
+      "at": "2026-11-08T05:01:30.526609+08:00",
+      "phase": "R4_11_FAILURE_PRESERVED_EXACT_CACHE_RETIRED_LINUX_CONTEXT_DIAGNOSTIC_PREPARING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "OriginalD1 actual registry slowdown diagnosis; T45 bounded technical readonly",
-      "nextOwner": "C exact selected fix/QA/package after evidence; no mechanical rerun",
-      "latestActualReceiptSHA256": "d4648e31a2a8cf07d917b84e259d0f8820f1adfc47a37252d737b5c4effd845e",
+      "currentOwner": "D1 bounded pure-synthetic diagnostic script; originalT45 wrapper",
+      "nextOwner": "C exact finite Linux scope then originalowner evidence-based fix",
+      "latestActualReceiptSHA256": "332ca776e6c6d7df3e7b9719d0564888f6566287cac47d55d88f9af523439c79",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalD1 diagnose actual734 registry slowdown from11 safecost; soleT45 bounded Node readonly schema/EXPLAIN with fictional key, no business rows and noPG; no newBOOT/PREPARE/EXECUTE or blindrepeat. Preserve11 index until necessarytechnicalread and exactpostreadarchive binding.",
+      "next": "No blind PREPARE retry. Actual96a confirms734 nativePK plan; local460188 synthetic rawlookup/Mixed60000 does not reproduce491s. OriginalD1 confirmed native.get interval has no hidden secondquery. Prepare once sameLinux/UID/volume synthetic diagnostic with CPU/IO/heap counters and strict160/180s; source pins/C exactscope not yetissued. R4PG stopped, actualfree9.668GB after exact11 fullbytearchive and retirement. NoREALimport/deployment/bindingPASS.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -37322,7 +37322,97 @@
         "unitActive": false,
         "reason": "Existing execution.lock serialized before RUNNING/phase; RuntimeMaxSec120. No phase result generated. Not product or preflight defect evidence; no replay."
       },
-      "next": "OriginalD1 diagnose actual734 registry slowdown from11 safecost; soleT45 bounded Node readonly schema/EXPLAIN with fictional key, no business rows and noPG; no newBOOT/PREPARE/EXECUTE or blindrepeat. Preserve11 index until necessarytechnicalread and exactpostreadarchive binding."
+      "next": "OriginalD1 diagnose actual734 registry slowdown from11 safecost; soleT45 bounded Node readonly schema/EXPLAIN with fictional key, no business rows and noPG; no newBOOT/PREPARE/EXECUTE or blindrepeat. Preserve11 index until necessarytechnicalread and exactpostreadarchive binding.",
+      "technicalSQLiteObservation": {
+        "receiptSHA256": "96a51c86f305e9e3a845995c407f447056ecc6d12cf4e4b05d146381c0c4a7b9",
+        "bytes": 4069,
+        "status": "COMPLETED",
+        "node": "v24.21.0",
+        "SQLite": "3.53.4",
+        "plan": "SEARCH identity_keys USING PRIMARY KEY (entity=? AND key=?)",
+        "layout": "WITHOUT ROWID",
+        "actualBusinessSelect": false,
+        "connectionClosed": true,
+        "probeReaped": true,
+        "allMetadataIncludingAtimeUnchanged": true,
+        "CPU_IO_RSS": "UNKNOWN_NOT_RETAINED"
+      },
+      "opaqueArchive": {
+        "decisionSHA256": "e344e7361f87a93471c366731558ab404e19205d7284292376265f4443199898",
+        "jobSHA256": "63fec4704c2a162e6529d0b9740c5cd25df4ea1dcc61961ecc2226cb1c41ac6a",
+        "receiptSHA256": "336038ed7a522b3d430efc794921f57ba0b9ec4a12a099cda35c50b5d1cb3390",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 50.371925875,
+        "archiveSHA256": "2b1222cbf6f71c22f1842b5ab12d52e2513a93a466efcceb63e2867842461bbe",
+        "archiveBytes": 341722785,
+        "sourceIndexSHA256": "375bcfdca7fea00f20cfd473ea3920c63e3930e79a7d85a77b3bef7f24261b87",
+        "fullByteAndMetadataVerified": true,
+        "SQLiteValidated": false,
+        "DBBackupAcceptance": false
+      },
+      "retirement": {
+        "decisionSHA256": "ca878e25f9c030bd97b6af455c4d372a50fc43598b0225edd5555db34a761267",
+        "receiptSHA256": "332ca776e6c6d7df3e7b9719d0564888f6566287cac47d55d88f9af523439c79",
+        "jobSHA256": "828a198861f5a9bdd067f1f62e44cd940c4eeb8b353393fc6a6bdab24d514fc7",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 1.470180552,
+        "deletedOnly": 1,
+        "actualFreeBytes": 9667940352,
+        "actualReleasedBytes": 2567155712,
+        "startupMarginBytes": 1460424706,
+        "protectedPathsUnchanged": 8,
+        "archivePreserved": true,
+        "PG_SQL_SQLite_Signals": false
+      }
+    },
+    "r4RegistryLinuxContextDiagnostic20261108": {
+      "sourceOwner": "original D1 diagnostic script only",
+      "serverOwner": "original T45 wrapper/execution only",
+      "main734CodeChanged": false,
+      "localRepresentativeEvidence": {
+        "resultSHA256": "85ff5a32b3056d2f95da49e93c338dcefa2c9d1aec6125ba76824c0732c16209",
+        "bytes": 9597,
+        "scriptSHA256": "17dc3f404b75889d5ce97d10d8863e391e059175596756efc5231f2c55ab5b1c",
+        "fullSyntheticRegistryKeys": 460188,
+        "perPassHits": 273948,
+        "perPassMisses": 147708,
+        "interleavedRows": 60000,
+        "oldLookupWallMs": [
+          2397.79,
+          2418.21,
+          2483.06
+        ],
+        "newLookupWallMs": [
+          2085.64,
+          2192.75,
+          2106.58
+        ],
+        "dataMode": "PURE_SYNTHETIC",
+        "LinuxRegressionReproduced": false,
+        "OSColdCacheClaim": false,
+        "limitation": "rawSQL native.get model lacks full REAL working-set/context; only bounded mixed writes, no realkey distribution or old workerIOfacts"
+      },
+      "sourceIntervalConclusion": {
+        "SHA256": "eb852cd5777a2376c77175eebb1da86bbbeb90f56917581c2f7a443a15306f3d",
+        "timed": "native StatementSync.get only",
+        "hiddenSecondSQLOrJSONOrFullScan": false,
+        "originalPublicPath10kEvidenceReused": true
+      },
+      "nextFiniteLinuxScope": {
+        "status": "D1_SCRIPT_AND_T45_WRAPPER_IN_PREPARATION_NOT_EXECUTED",
+        "sameNodeUIDVolume": true,
+        "syntheticKeysOnly": true,
+        "maxNodeSeconds": 160,
+        "outerSeconds": 180,
+        "maxFilesBytes": 805306368,
+        "startupFloorBytes": 8207515646,
+        "activeFloorBytes": 4294967296,
+        "noPGOrBOOTOrRealPreflight": true,
+        "oneAttemptOnly": true,
+        "preciseSourcePinsAndCScopePending": true
+      }
     }
   }
 }
