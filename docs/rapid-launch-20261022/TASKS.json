@@ -36499,6 +36499,25 @@
       },
       "heavyLoadOverhead": "UNVERIFIED",
       "Fast": "UNVERIFIED"
+    },
+    "r4Prepare07Archive20261108": {
+      "at": "2026-11-08T00:08:04.807496+08:00",
+      "state": "ARCHIVE_ONLY_AUTHORIZED_ACTUAL_PENDING_BOTH_ORIGINALS_RETAINED",
+      "owner": "original T45",
+      "candidateSHA256": "c31f69c4098626846949cc963fbcdacacc2d2a47d55cd4131c7d0b27988fe8b0",
+      "reviewedSourceSHA256": "d76b0f551a48a26384fcf0aa90a10570981d64d3f47d9c6029173778cf88abea",
+      "QBReceiptSHA256": "5304087c8d2e3b2674f5f7da119093ce1caf9e9084ef1a65b7eb6c260d4b3203",
+      "metadataReceiptSHA256": "504e750224f5a09b1795ec3c65361e209dd7dad0bbf985d37b3b6020e744871b",
+      "controllerDecisionSHA256": "5819bd20e9c8eeb93edd8ce9248c0752f6251759aeb211762edbe421435bb593",
+      "jobKey": "t45-r4-prepare07-archive-preserve-20261107-01",
+      "maximumSeconds": 180,
+      "minimumAvailableBytes": 4294967296,
+      "sourceAllocationBytes": 2183913472,
+      "worstCaseNewArchiveBudgetBytes": 2200000000,
+      "deletionAuthorized": false,
+      "PGConnections": 0,
+      "SQLiteOpened": false,
+      "newBOOT": false
     }
   }
 }
