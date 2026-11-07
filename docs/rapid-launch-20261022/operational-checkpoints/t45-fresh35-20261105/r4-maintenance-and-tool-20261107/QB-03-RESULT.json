@@ -1,0 +1,60 @@
+{
+  "task": "T45_R4_LOCALHOST_MAINTENANCE_RECOVERY_03",
+  "status": "PASS_SCOPED_R4_MAINTENANCE_RECOVERY_SOURCE",
+  "findingClosure": {
+    "R4-MAINT-CLEANUP-01": "CLOSED_IN_EXACT03_SOURCE_ONLY",
+    "original01": "NEED_FIX_PRESERVED_NOT_EXECUTED_PER_DELIVERY",
+    "02": "NEW_GATES_AND_DISPATCH_VERIFIED; UNKNOWN_WRITER_PRECONDITION_RESOLVED_BY03",
+    "resolution": "C-selected minimum exact-maintenance-deadline gate; no PID tracking mechanism"
+  },
+  "readySha256": "71e4c57cdfb9604ba8caec353baf57c9015905894fb60f2c4f85a15d70d5baf9",
+  "sourcePins": {
+    "host": "a7932f32344ac000de2d85d6b24ae82e30a188cd4a66b19f4a4a9a859916b4d0",
+    "inside": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a",
+    "client": "66cd12f343f0756cdc538c23f5599e5aa273daf26463a5b821b3a1d7ac5d5954"
+  },
+  "checks": {
+    "sourceHashes": "PASS",
+    "hostAndClientIdenticalTo02": true,
+    "normalRecoveryAndHbaFunctionsUnchanged": true,
+    "changedFunctions": [
+      "close_evidence",
+      "close_main"
+    ],
+    "newSixCasesExitCode": 0,
+    "newSixCasesPassed": 6,
+    "additionalFiniteBoundaryAndProofCases": {
+      "missingNullNonbooleanDeadlineRefusals": 5,
+      "incompleteCommitProofRefusals": 3,
+      "deadlineAcceptances": 2
+    },
+    "dbDeadlineBoundToExactAuthority": "PASS",
+    "actualPgDockerHba": "NOT_TESTED",
+    "oldSuites": "REUSED_NOT_RERUN"
+  },
+  "reusedEvidence": [
+    "Original01 source review other than revised close path",
+    "Original author12 FS/fork/EOF/signal/timer/activation/CAS tests",
+    "Original unchanged Node client syntax/null-CAS/role attributes source checks",
+    "QB02 five affected close cases and three packet/bootstrap dispatch models"
+  ],
+  "requiredSemantics": [
+    "missing/STOP result does not imply COMMIT or writer-reaped",
+    "actual old-expired and no explicit COMMIT-ack+clientReaped: reject before exact authority deadline, keep private reference",
+    "at DB clock >= exact authority adminLoginValidUntil: expired reference cleanup allowed",
+    "actual new-expired cleanup unchanged; new-active only original one close, reference required, no prior-close SQL replay",
+    "expired-only key rejects active role, never enters management-client/HBA/role-SQL branch",
+    "original author/intent/key/sourcePins/target and actual physical/expiry checks remain"
+  ],
+  "scope": "Three exact maintenance-source leaves plus necessary close and fixed dispatch increments only; no source edits by QB",
+  "notTested": [
+    "actual Linux/Docker HBA <30s/reload/probe/process cleanup",
+    "actual PG password/expiry transaction and new credential authentication",
+    "actual close and private-reference cleanup",
+    "REAL PREPARE/EXECUTE/import, ordinary pool/API/HTTP"
+  ],
+  "operations": "Local source and finite pure checks only, no server/PG/credentials/business payload",
+  "requestedModel": "gpt-6.1-sol/high",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T01:57:37.747490+00:00"
+}

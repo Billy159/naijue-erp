@@ -1,0 +1,18 @@
+{
+  "jobId": "t45-r4-maintenance-recover-20261107-01",
+  "taskId": "T45",
+  "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+  "status": "COMPLETED",
+  "unit": "naijue-erp-op-5cc58239-92f37be4dcd6",
+  "atUTC": "2026-11-07T02:00:43.129886+00:00",
+  "grantId": "5cc58239751e4e2a",
+  "privateLogsExported": false,
+  "businessAcceptanceClaimed": false,
+  "exitCode": 0,
+  "elapsedSeconds": 4.677332559134811,
+  "exports": [
+    "maintenance-admission.json",
+    "r4-maintenance-recovery-result.json"
+  ],
+  "finishedAtUTC": "2026-11-07T02:00:47.835731+00:00"
+}

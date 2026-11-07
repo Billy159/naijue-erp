@@ -1,0 +1,32 @@
+{
+  "status": "READY_FOR_C_SELECTED_EXACT_DEADLINE_GATE_RECHECK_ONLY",
+  "sourcePaths": {
+    "host": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-localhost-maintenance-recovery-03/recover_exact_r4_admin.py",
+    "inside": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-localhost-maintenance-recovery-03/r4_recovery_inside.py",
+    "client": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-localhost-maintenance-recovery-03/exact_admin_client.mjs"
+  },
+  "sourcePins": {
+    "host": "a7932f32344ac000de2d85d6b24ae82e30a188cd4a66b19f4a4a9a859916b4d0",
+    "inside": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a",
+    "client": "66cd12f343f0756cdc538c23f5599e5aa273daf26463a5b821b3a1d7ac5d5954"
+  },
+  "parentReadySha256": "ae410f97fb6fa0780388e7361c8db5e5d3bc936b11b516b5e9d5840cc6e6cc29",
+  "changedFunctions": [
+    "close_evidence",
+    "close_main"
+  ],
+  "rule": "For actual OLD-expired with no existing explicit COMMIT-ack+clientReaped evidence, keep private reference and reject cleanup until DB clock reaches this exact authority adminLoginValidUntil. Then a late commit can only set expired login. NEW-expired unchanged; NEW-active only original single close with no prior-intent replay.",
+  "existingAcknowledgementReuse": "Only actual persisted clientResult COMMITTED acknowledgement plus clientReaped true; STOP alone or result absence is never definitive. NULL clientResult is not evidence.",
+  "newPidBackendMechanismAdded": false,
+  "secondClientOrPrivilegesAdded": false,
+  "hostClientBytesUnchangedFrom02": true,
+  "tests": {
+    "count": 6,
+    "passed": 6,
+    "scope": "Five prior cases updated only with deadline evidence plus exact deadline-before/after case; actual close_evidence pure function, no PG/server.",
+    "reused": "12 FS/fork/signal cases, Node source, 02dispatch and fiveMJS not rerun."
+  },
+  "authorityIssued": false,
+  "serverExecuted": false,
+  "previousCandidatesPreserved": true
+}

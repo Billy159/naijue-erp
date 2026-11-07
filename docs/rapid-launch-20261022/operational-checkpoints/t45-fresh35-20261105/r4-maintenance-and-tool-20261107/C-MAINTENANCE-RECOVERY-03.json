@@ -1,0 +1,32 @@
+{
+  "format": "T45_EXACT_INSTALLED_R4_MAINTENANCE_RECOVERY_V1",
+  "decision": "AUTHORIZE_EXACT_LOCALHOST_ADMIN_RECOVERY_AND_CLOSE_ONLY",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "requestKey": "t45-r4-maintenance-recover-20261107-01",
+  "startsAt": 1794016742000,
+  "expiresAt": 1794017942000,
+  "adminLoginValidUntil": "2026-11-07T03:29:02Z",
+  "target": {
+    "containerId": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+    "database": "erp_native35_20261107_r4",
+    "admin": "erp35_admin_20261107_r4",
+    "systemIdentifier": "7705224458832691236",
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-07 00:46:12.566314+00",
+    "serverVersionNum": "170011",
+    "port": 18654,
+    "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+    "programSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+    "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+    "catalogSha256": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9"
+  },
+  "sourcePins": {
+    "host": "a7932f32344ac000de2d85d6b24ae82e30a188cd4a66b19f4a4a9a859916b4d0",
+    "inside": "6ccee84496da9a98733fe38990cdb72bd3fd602c350682a0f58ad0e0893da38a",
+    "client": "66cd12f343f0756cdc538c23f5599e5aa273daf26463a5b821b3a1d7ac5d5954"
+  },
+  "independentSafetyReviewSha256": "f8f1e881f4c2bdf7239075ee7664aec162fbedfe9bcea0099d84f19fcaa5aecc",
+  "authorizationReference": "C exact delegated decision under human instruction in controller Chat through 2026-11-07T12:00:00+08:00. Only reviewed a793/6ccee/66cd source on retained installed empty R4: max30s exact localhost/admin HBA with independent original-byte restore, SCRAM-method-only probe, one existing admin password/finite expiry recovery and exact close/expired-reference cleanup. Original roles/attributes/grants, installation record, runtime and old production unchanged. No REAL import or APP deployment authorized by this maintenance leaf; failures/unknown retain original key and deadline semantics. This is C delegated authorization, not a separate human signature."
+}
