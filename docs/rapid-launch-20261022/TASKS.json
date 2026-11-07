@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T16:47:13.895726+08:00",
-      "phase": "R4_BOOT06_ACTUAL_NEW_EPOCH_OBSERVED_PREPARE_BINDING_IN_FLIGHT",
+      "at": "2026-11-07T17:03:26.169234+08:00",
+      "phase": "R4_BOOT06_PARAMETERS_PUBLISHED_PREPARE05_DISPATCHED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 actual restart/guardian; original D1 exact epoch binding",
-      "nextOwner": "Original D1 binding and QB affected source; original T45 PREPARE actual execution",
-      "latestActualReceiptSHA256": "6ea7ff6f0e4e658a9dd3b12f7cc1e03e852b83fd3981fd287539af2121e72df4",
+      "currentOwner": "Original T45 for PREPARE05; D1 and D2 for isolated historical acceptance inputs",
+      "nextOwner": "T45 terminal evidence; Controller exact import binding after PREPARE success",
+      "latestActualReceiptSHA256": "9a2a1d97f99586aea905f471556c52bea00a26dd380ad8a3ff252d935429dc59",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Bind current protected BOOT06 observation and exact program, then run original finite PREPARE no-write after verified parameters. Do not reuse BOOT05 or repeat BOOT06.",
+      "next": "T45 runs fixed PREPARE05 once with no business writes. Use actual prepared binding to derive the existing authorized REAL job, subject to the exact live window and input checks.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -35451,11 +35451,40 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "ORIGINAL_D1_DISPATCHED_SEPARATE_SOURCE_SUCCESSOR",
+      "state": "SOURCE_FIXED_AND_PUSHED_QB_SCOPED_REVIEW_AND_REAL_PG_PENDING",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "Preserve source progress if briefly reprioritized to current actual epoch binding; resume exact35 shared anchor, both UOWs and sales retained evidence, then isolated ordinary-role unreview/re-review and inventory readback."
+      "next": "Original D1 prepares a narrow history-only ordinary-role PG runner from proven fixtures while D2 prepares the fixed build and QB reviews the exact delta. T45 executes after a suitable isolated slot is fixed.",
+      "at": "2026-11-07T17:03:26.169234+08:00",
+      "branch": "codex/erp-history-anchor-exact35-20261107",
+      "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
+      "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
+      "d1ResultSHA256": "48aaa0d8c2f2f4ed92b5ff229c4c4e2934054455e5cb72a843a1b0b4348473d5",
+      "remoteExactReadback": true,
+      "authorChecks": {
+        "passed": 43,
+        "skipped": 0,
+        "typecheckExit": 0,
+        "level": "in-process assembly and scripted PostgreSQL protocol"
+      }
+    },
+    "r4Boot06RealPrepare05": {
+      "at": "2026-11-07T17:03:26.169234+08:00",
+      "state": "DISPATCHED_NO_ACTUAL_PREFLIGHT_RESULT",
+      "toolCommit": "798482ce91a5ff990787956ed93659f609e5f0db",
+      "sourceResultSHA256": "577ca71de199ce6488a4e59217ddbfa5bbafee13349bb09d0ca3717cabf12f72",
+      "QBResultSHA256": "29511821f7b6be04a2bcac2a80d10c422f2f1757b9f437b8dfbe5cb6f30b4bc0",
+      "scopedQBChecksPassed": 10,
+      "publishedParametersSHA256": "37e1422a2c21df472844b3abb4c11be022f0fdd03fbb0d69c540b3c5adf41d5f",
+      "publisherReceiptSHA256": "9a2a1d97f99586aea905f471556c52bea00a26dd380ad8a3ff252d935429dc59",
+      "actualAccessPlanSHA256": "fa45253438a69775f4beec76da38becee170784974fe67fdc9e48e051ea9ee77",
+      "descriptionSHA256": "1dd9fb0451f3c66a338f95d05f13b9676f4f70a32f3b590526343019df1227b6",
+      "requestKey": "t45-r4-real-prepare-20261107-05",
+      "startsAt": 1794041993528,
+      "expiresAt": 1794043193528,
+      "owner": "T45 only",
+      "next": "Adopt the actual fixed no-write terminal receipt, preserve any failure, and bind one later import only if exact PREPARE and live guard pass."
     }
   }
 }
