@@ -2605,3 +2605,10 @@ T45 原键一次 COMPLETED0（3.0257s），实际 PG epoch为2026-11-07 22:07:48
 ## 2026-11-08T06:29:05.765091+08:00 参数08真实完成，PREPARE12限时执行
 
 参数08原键COMPLETED0/.8700s，实际28eef5fe，新inode14561338/1769B；旧b1e4保留，C核实际access35eb95c4只变参数metadata。采用39b独立源码/定向模型结论及实际Linux载入，C核READY14a2c672的11引用后签bfcda10b/4597B，仅原键PREPARE12，1794090472549至1794091672549（20min）。100ms/250ms/4GiB/启动8207515646B及原窗口、原校验不变；私有records-context只加数值或UNKNOWN观察。实际终态、完整EOF、preparedbinding、真实导入/业务/上线均未通过。T45运行期间无并发server observer；终态后按实际结果接续，不重放旧11。
+
+
+## 2026-11-08T06:53:07.692708+08:00 PREPARE12真实失败，已取得本轮数值上下文
+
+原键FAILED2/1136.8047s（ac2e0d16，rootb8dc412b），首错仍为原20min窗口到期；采样最大.1898s<.25、最低6.683GB>4GiB，不能把这两项当根因。终态reader2b5a0e7f（577218B）COMPLETED0/.6193s，C核RESULT4f724c52及7引用：Node2544/PG2421/guardian2414均实际ABSENT、45access/HBA恢复、2秘密投影缺失，a7d/6843/3a8c未变。CLI与回滚仍UNKNOWN，无summary或preparedbinding。
+
+RECORDS END970152ms、RELATIONS END1026085ms、最后METADATA_FINISH BEGIN1026177ms；1098004扫描行/issues0不是整包通过。新context80866833：173完整数值快照/尾0；调拨明细区间702.533s，REGISTRY累计523.429s与校验重叠，CPU105.762s，读227848192B/写2099404800B，runqueue.1503s，键尝试273948次均219B（不是distinct/入库数）。D1据此修原热路径，根因尚未确认，不盲加缓存或延窗。T45准备将准确index inode14561466（2460839936B）与journal14561470（79464B）一起全字节保全后再退役；仍未归档或删。空闲6.675GB低于下一启动8.208GB，差1.533GB，禁止直接重启重跑。真实导入、核账、历史业务和上线均未完成。

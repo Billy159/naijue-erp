@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T06:29:05.765091+08:00",
+    "at": "2026-11-08T06:53:07.692708+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T06:29:05.765091+08:00",
-      "phase": "R4_REAL_PREPARE12_EXACT20MIN_ISSUED_ACTUAL_PENDING",
+      "at": "2026-11-08T06:53:07.692708+08:00",
+      "phase": "R4_PREPARE12_FAILED_REAL_NUMERIC_CONTEXT_ADOPTED_D1_FIX_AND_T45_CAPACITY",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 original REAL PREPARE12",
-      "nextOwner": "C actualterminal then originalD1 scopedfailure or originalT45 next ready",
-      "latestActualReceiptSHA256": "28eef5fe2f0f001099d1c0401f9573d00512d970c1d45147d09a5adac72c397c",
+      "currentOwner": "D1 original hotpath; T45 exact index+journal archive preparation",
+      "nextOwner": "QB only fixed repair increment; D2 tiny closure; T45 reviewed continuation",
+      "latestActualReceiptSHA256": "2b5a0e7f7fcd678c37c1c4badc49bd5f9aecd5cdf81f0d42b62da59c9609085b",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 original key terminal+newcontext; C adopt first failure or proven preparedbinding/cleanup only. No blindretry/window extension.",
+      "next": "D1 original39b owner evidence-based hotpath fix; T45 original two-member index+journal full-byte archive then exact retirement after C fixedpins; no blind retry/BOOT/import.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33443,7 +33443,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED; exact734 PREPARE11 FAILED2 original-window expiry at INDEX_HASH BEGIN, no END/summary/preparedbinding. Actualcleanupd464 confirms processes absent/HBA/access restored; originalCLI and rollback UNKNOWN, no PASS.",
+        "REALImport": "NOT_EXECUTED. PREPARE12 FAILED2 original20min expiry; records1098004/issue0 do not prove fullmetadata/summary/binding. CLI+rollback UNKNOWN; actualNode/PG/guardian absent and temporary access restored.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -37552,7 +37552,7 @@
       }
     },
     "r4Boot13Preparation20261108": {
-      "status": "BOOT13_PARAMETERS08_ACTUAL_SUCCESS_PREPARE12_SCOPE_ISSUED",
+      "status": "BOOT13_WAS_STARTED_NOW_ACTUAL_PG_AND_GUARDIAN_ABSENT_AFTER_PREPARE12",
       "actualStopMetadata": {
         "key": "t45-r4-boot13-predecessor-metadata-readonly-20261108-01",
         "jobSHA256": "b4243c857c12bc3656b0d3c36fe0905f0ef38b1451003cf00542ff18fb996093",
@@ -37640,7 +37640,7 @@
       }
     },
     "r4RealPrepare12_20261108": {
-      "status": "EXACT20MIN_SCOPE_ISSUED_T45_ACTUAL_PENDING",
+      "status": "ACTUAL_FAILED2_ORIGINAL_WINDOW_EXPIRED_NUMERIC_CONTEXT_CAPTURED_NO_PREPARED",
       "requestKey": "t45-r4-real-prepare-20261107-12",
       "toolCommit": "39b3967a6a72266fa86bd2118cb9e8352072af07",
       "toolSourceSetSHA256": "c10344c9af214a2b6ad192d6db1cf31965e0f17f523dbad80c2afd722fe5065b",
@@ -37659,9 +37659,88 @@
       "startupFloorBytes": 8207515646,
       "recordsContext": "PRIVATE_WX0600_NUMERIC_OR_UNKNOWN; complete lines only; partial is NOT_EOF",
       "indexLifecycle": "After genuine PREPARE completion use existing full-byte preservation/precise-retirement before freshEXECUTE index; not run while active",
-      "actual": "PENDING",
+      "actual": {
+        "jobSHA256": "ac2e0d16750da1dc17548d2ca7b1227bdee48a7cd664d939a4e01f0432e96a9f",
+        "rootSHA256": "b8dc412b5ccbf461a7087d4b7d7027bfcf9183f336baf187b79bce4ff3aee470",
+        "exitCode": 2,
+        "seconds": 1136.804693513,
+        "finishedAtUTC": "2026-11-07T22:47:55.994644Z",
+        "firstGuardReason": "REAL_ORIGINAL_WINDOW_EXPIRED",
+        "NodeExit": -15,
+        "allNodeReaped": true,
+        "originalInputMetadataRestored": true,
+        "maxSampleGapSeconds": 0.189801777713,
+        "minimumAvailableBytes": 6683693056,
+        "CLIStateCleanupVerification": "UNKNOWN",
+        "transactionRollbackProven": false,
+        "summaryAndPreparedBinding": "ABSENT_NOT_PASSED"
+      },
       "realImported": false,
-      "next": "T45 original key terminal+newcontext; C adopt first failure or proven preparedbinding/cleanup only. No blindretry/window extension."
+      "next": "D1 original39b owner evidence-based hotpath fix; T45 original two-member index+journal full-byte archive then exact retirement after C fixedpins; no blind retry/BOOT/import.",
+      "finalReadOnly": {
+        "key": "t45-r4-prepare12-final-readonly-20261108-01",
+        "jobSHA256": "7b8e7304be8a5008c8c8e6f8096f882617f8061e8722ade82b28bcd1197040c5",
+        "receiptSHA256": "2b5a0e7f7fcd678c37c1c4badc49bd5f9aecd5cdf81f0d42b62da59c9609085b",
+        "bytes": 577218,
+        "exitCode": 0,
+        "seconds": 0.619273305,
+        "resultSHA256": "4f724c520269b968e57bbb1314839ad2572ccf0d7472c6e3d9e55664b116636d",
+        "resultBytes": 39691,
+        "CCheckedActualRefs": 7,
+        "PGGuardianNodeActualAbsent": true,
+        "access45Restored": true,
+        "HBABytesAndInodeUnchanged": true,
+        "privateProjectionsAbsent": true,
+        "protectedA7d6843_3a8cUnchanged": true,
+        "PGConnections": 0,
+        "SQLiteOpen": false
+      },
+      "phaseEvidence": {
+        "RECORDS_END_ms": 970152.298495,
+        "RELATIONS_END_ms": 1026085.565817,
+        "METADATA_FINISH_BEGIN_ms": 1026177.312723,
+        "globalScannedRows": 1098004,
+        "globalScannedBytes": 1008361447,
+        "issuesObserved": 0,
+        "wholePackageSuccess": false
+      },
+      "numericContext": {
+        "rawSHA256": "80866833bfc1141f842a3ba32055e4d31bdf84748a46cb077a52ed391b3bc723",
+        "bytes": 318542,
+        "completeSnapshots": 173,
+        "partialTailBytes": 0,
+        "transferLineBeginToLastFlush_ms": 702532.682322,
+        "registryCumulative_ms": 523429.130176,
+        "validationInclusive_ms": 605746.554464,
+        "operationTimesOverlap": true,
+        "CPUUserSeconds": 89.835356,
+        "CPUSystemSeconds": 15.927081,
+        "processReadBytes": 227848192,
+        "processWriteBytes": 2099404800,
+        "runqueueSeconds": 0.150270354,
+        "attempts": 273948,
+        "attemptKeyUTF8Bytes": 219,
+        "attemptsNotDistinctOrSuccessfulInsert": true,
+        "rootCause": "UNKNOWN_PENDING_ORIGINAL_D1_CONTEXT_ANALYSIS"
+      },
+      "retainedIndex": {
+        "device": 66304,
+        "inode": 14561466,
+        "bytes": 2460839936,
+        "journalInode": 14561470,
+        "journalBytes": 79464,
+        "openedOrArchivedOrDeleted": false,
+        "preserveBothAsOneSetBeforeExactRetirement": true
+      },
+      "freeBytesObserved": 6674747392,
+      "startupShortfallBytes": 1532768254
+    },
+    "r4PreparedRestartSeamSourceFact20261108": {
+      "owner": "D1 original source only",
+      "noPGOrCodeChanges": true,
+      "state": "No PREPARED exists for12; hypothetical reuse subject to exact fullsource/plan/native rebinding",
+      "facts": "Logical binding and business request keys exclude boot epoch, but new startup params/restart/current process proofs/real authorization must be renewed and full preflight/plan/native binding rechecked. Outerjob key is not business request_key; fixedrestartprovenance guards retained.",
+      "next": "No execute preparation based on failed12; actualcontext hotpath has priority."
     }
   }
 }
