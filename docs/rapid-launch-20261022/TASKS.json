@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T20:50:44.709947+08:00",
+    "at": "2026-11-07T21:06:35.969865+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28399,12 +28399,12 @@
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
-      "latestIntegrationCheckpoint": "af34dbb88a5cfa8e6fd05b214c3e0fdc2045b21a",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-07T12:09:20.380721+08:00",
+      "latestIntegrationCheckpoint": "5c06c8765b04df3a2c74d4b3eb8fbe6d393cfc80",
+      "latestIntegrationRemoteVerifiedAt": "2026-11-07T21:04:06.294898+08:00",
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "8dbcce7cd52e23844fe1c8e6f5581adf9d5819da"
+      "lastControllerCheckpoint": "5c06c8765b04df3a2c74d4b3eb8fbe6d393cfc80"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28513,7 +28513,7 @@
       "D1": "Current stop-pin backup producer1a9aea5d source/QB5-model PASS; no server/PG. Backup/restore actual size and committed R4 batch pending.",
       "QB": "BOOT07 exact20-leaf476731e6 source/models PASS, actual FD probe95af3805 PASS; no new source task until actual failure/delta.",
       "D2": "856e5a59 minimum history successor packedb968e4b5, old App/Web bytes reused; local7298 member readback and2.48MB tail valid; no server/PG.",
-      "T45": "BOOT07 exact current-stop scope69efa0fd issued; finite original5min boot/90min guardian/30sHBA. Actual terminal pending; then real-fact publisher and PREPARE06.",
+      "T45": "Actual BOOT07 and parameters3799 publication passed; C78307a20 PREPARE06 single20min business/1500outer issued. Wait originalkey actual terminal, no import/EXECUTE/public change.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -33443,7 +33443,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED_PREPARE05_SOURCE_PREFLIGHT_PASS_BUT_ORDINARY_OBSERVER_REJECTED; exact af carrier/BOOT07 successor pending",
+        "REALImport": "NOT_EXECUTED; actualBOOT07+runtime parameters publication passed; PREPARE06 limited full input check issued, awaiting actual",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33458,9 +33458,15 @@
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
       "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
-      "importToolCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
-      "importToolSourceSetSHA256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
-      "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work."
+      "importToolCommit": "af395ebacd726a80d391bbed0181f556aafbc96f",
+      "importToolSourceSetSHA256": "722cf5272ed4c4930992348624ca8a481cebf6cf6b1ec248431f84d36fcf075c",
+      "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
+      "latestRetainedRestart": {
+        "requestKey": "t45-r4-retained-restart-20261107-07",
+        "sha256": "ddb9cf1a168a3b3ecbc25347d5bcc6aa6d9e7b8e30e4d4c6441c7c3cd424000d",
+        "actualEpoch": "2026-11-07 12:51:43.320484+00",
+        "businessVerified": false
+      }
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -35935,8 +35941,8 @@
       "next": "T45 exact newBOOT07 scope and Linux/PG prerequisites, C current-fact binding. Existing staging window was restored and is not new boot authority."
     },
     "r4Boot07MaterialAndActual20261107": {
-      "at": "2026-11-07T20:50:44.709947+08:00",
-      "state": "ACTUAL_LINUX_UID_FD_PASS_BOOT07_ISSUED_AWAIT_ORIGINAL_RECEIPT",
+      "at": "2026-11-07T21:06:35.969865+08:00",
+      "state": "ACTUAL_BOOT07_AND_PARAMETER_PUBLICATION_PASS_PREPARE06_ISSUED",
       "owner": "Original T45; original QB necessary increment only; C exact binding",
       "readySHA256": "ebebff6e9d9a1e841e4031397ca85aedcfc1d78de34aa8c9b961e65202bd5524",
       "qbResultSHA256": "476731e621872f271e5a6393de0afdd60abaddf3fe3676f31ce01f89023bfb03",
@@ -35971,10 +35977,59 @@
         "priorRoleCASUTC": "2026-11-07T09:42:33Z",
         "sameStopSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
         "oldParametersSHA256": "37e1422a2c21df472844b3abb4c11be022f0fdd03fbb0d69c540b3c5adf41d5f",
-        "actualStarted": "UNVERIFIED_PENDING_T45",
-        "scope": "Same retained R4/new actual epoch only, boot<=5min/guardian<=90min AND original serviceLease, two existing roles expiry CAS, HBA<=30s and exact restore. No installation/import/public application."
+        "actualStarted": true,
+        "scope": "Same retained R4/new actual epoch only, boot<=5min/guardian<=90min AND original serviceLease, two existing roles expiry CAS, HBA<=30s and exact restore. No installation/import/public application.",
+        "resultSHA256": "893267a45e5a7b240cb3574474b9470f4ed7a9446d38a4c616dd9068a866baad",
+        "exitCode": 0,
+        "durationSeconds": 3.6771746,
+        "actualPostmasterStart": "2026-11-07 12:51:43.320484+00",
+        "actualProtectedReceiptSHA256": "ddb9cf1a168a3b3ecbc25347d5bcc6aa6d9e7b8e30e4d4c6441c7c3cd424000d",
+        "observationSHA256": "c47d88b4d8441860ad38e8b73cf6d7344cd63101f3bdfb059482fd91af248e7f",
+        "postgresPid": 1350,
+        "postgresStartTicks": "295420040",
+        "guardianPid": 1343,
+        "guardianStartTicks": "295420004",
+        "HBAOriginalBytesAndInodeRestored": true,
+        "HBASeconds": 0.9210014641284943,
+        "roleMaintenanceChildrenReaped": true,
+        "roleAttributesUnchanged": true,
+        "grantsChanged": false,
+        "installationRecordUnchanged": true,
+        "credentialAuthentication": "NOT_SEPARATELY_TESTED",
+        "businessPassed": false
       },
-      "next": "T45 original BOOT07 terminal and exact actual epoch/role/cleanup evidence; only then C bind publisher and PREPARE06. No invented future receipt or old-window replay."
+      "next": "Original T45 PREPARE06 terminal/first meaningful failure, actual credentials/backend proof and plan/digests/resource/timing. No EXECUTE or import claimed; original-key-only recovery, bounded cleanup.",
+      "parameters": {
+        "issuedSHA256": "3799e7b2a14fc385cfb4e1faf81030478409c3f0162bde32d4b414e9191547c2",
+        "bytes": 1830,
+        "newPublisher": "a31f637e0fe1d5cfa10c0abacfd2cbcb51b5fbfa920f555b1bba06bcf2e6da81",
+        "draftSource": "88a40db9ed02458819536fa4f3b2e906df443ebbc83ec1b257aee4332e56f326",
+        "delta": "Only4 exact C decision/current actual restart constants; remainingAST unchanged. Exact prior37e142 inode14558680 CAS and preservation, original pure validator34 source pins. No SQL/role/install writes.",
+        "job": "t45-r4-retained-parameters-20261107-03",
+        "actualPublication": "EXACT_C_RESTART_PARAMETERS_PUBLISHED_NOT_REAL_PREPARED",
+        "actualReceiptSHA256": "198808f3cdf63a10f76db226e79c3bcaf060bb7e6821df381adb729d5c4830a7",
+        "exitCode": 0,
+        "durationSeconds": 0.86929,
+        "newInode": 14558844,
+        "oldParametersPreserved": true,
+        "actualAccessPlanSHA256": "974868f8282f5fd49add62405c8645c427556f8bd4ddc0b362eb82e11db36ed5"
+      },
+      "PREPARE06": {
+        "state": "ISSUED_WAIT_ACTUAL_TERMINAL",
+        "requestKey": "t45-r4-real-prepare-20261107-06",
+        "readySHA256": "4fcd88e5187fc2a042cf03aae4d623c2e285a9dc9a05e4a51124452aa4ee0a7b",
+        "descriptorSHA256": "78307a20555a4b97b42ac19006d2bf6ffe827743e1cef428e97997c8e5f4486e",
+        "descriptorBytes": 4597,
+        "startsAt": 1794056719143,
+        "expiresAt": 1794057919143,
+        "businessSeconds": 1200,
+        "outerSeconds": 1500,
+        "SSHSeconds": 40,
+        "actualBackendCaptureAndCredentialAuth": "UNVERIFIED_PENDING_ACTUAL_RESULT",
+        "businessWritesAuthorized": false,
+        "sourceIndexAdopted": false,
+        "EXECUTEBudget": "UNSET"
+      }
     }
   }
 }
