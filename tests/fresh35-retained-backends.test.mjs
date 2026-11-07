@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {validateRetainedRestartReceipt} from '../scripts/release/unified-install/fresh35-installed-real-window-v1.mjs';
 import {
  loadRetainedBackendProof,retainedBackendSetPredicate,retainedProcStatMatches,validateRetainedBackendProof
 } from '../scripts/release/unified-install/fresh35-retained-backends-v1.mjs';
@@ -158,4 +159,33 @@ test('only the retained controller render consumes the activity set and clears t
  assert(live.includes(predicate));
  assert(live.includes("TIMESTAMP '2026-11-07 03:15:00'"));
  assert.throws(()=>fresh35CombinedRuntimeTargetGuard(target,2),/WRONG_WINDOW/);
+});
+
+test('retained BOOT07 provenance accepts only the exact PREPARE05 protected stop digest',()=>{
+ const recordSha='a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f';
+ const oldPhysical={systemIdentifier:'7703999999999999999',databaseOid:'16384',serverVersionNum:'170011',
+  postmasterStart:'2026-11-07 00:00:00+00'};
+ const record={target:{physical:oldPhysical,proposal:{workspaceDirectory:'/synthetic/workspace'}},
+  binding:{targetSha256:'1'.repeat(64),sourceSetSha256:'2'.repeat(64)}};
+ const dataDirectoryIdentity={device:10,inode:20,uid:61035,gid:61035,mode:0o700};
+ const receipt={
+  format:'FRESH35_RETAINED_RESTART_OBSERVATION_V1',state:'SAME_DATA_RESTART_OBSERVED_NOT_BUSINESS_VERIFIED',
+  installationRecordSha256:recordSha,...record.binding,oldPhysical,
+  newPhysical:{...oldPhysical,postmasterStart:'2026-11-07 00:01:00+00'},
+  dataDirectory:'/synthetic/workspace/data',dataDirectoryBefore:dataDirectoryIdentity,dataDirectoryAfter:{...dataDirectoryIdentity},
+  previousStopReceiptSha256:'1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a',
+  restartAuthorizationSha256:'3'.repeat(64),authorizationReference:'synthetic model only',
+  checkedAt:Date.parse('2026-11-07T00:01:01Z'),serviceLeaseExpiresAt:Date.parse('2026-11-07T00:02:00Z')
+ };
+ const now=Date.parse('2026-11-07T00:01:02Z');
+ assert.equal(validateRetainedRestartReceipt(receipt,record,recordSha,now),receipt.newPhysical.postmasterStart);
+ for(const digest of [
+  '31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8',
+  '1afa16a877625bdb1099fa7602c7c791dfb9702f1ba8fda1c2f1eb9f1992ba76',
+  'ec32a189fc8028b43507ede34b5dac7359f741f14558b17cc985878dbee1aeed',
+  '0'.repeat(64)
+ ]){
+  assert.throws(()=>validateRetainedRestartReceipt({...receipt,previousStopReceiptSha256:digest},record,recordSha,now),
+   /FRESH35_REAL_WINDOW_EXACT_RESTART_PROVENANCE_REQUIRED/);
+ }
 });
