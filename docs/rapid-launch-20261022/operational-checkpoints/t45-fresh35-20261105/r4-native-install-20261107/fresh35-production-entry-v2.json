@@ -1,0 +1,36 @@
+{
+  "format": "FRESH35_PRODUCTION_ENTRY_AUTHORIZATION_V2",
+  "decision": "AUTHORIZE_EXACT_NEW35_PRODUCTION_INSTALL_AND_RECORD",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "target": {
+    "expiresAt": 1794013479661,
+    "ordinary": {
+      "connectHost": "127.0.0.1",
+      "connectPort": 18654,
+      "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+      "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
+      "serverAddress": "127.0.0.1",
+      "serverPort": 18654
+    },
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-07 00:46:12.566314+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7705224458832691236"
+    },
+    "proposal": {
+      "admin": "erp35_admin_20261107_r4",
+      "controller": "erp35_controller_20261107_r4",
+      "database": "erp_native35_20261107_r4",
+      "host": "127.0.0.1",
+      "owner": "erp35_owner_20261107_r4",
+      "port": 18654,
+      "runtime": "erp35_runtime_20261107_r4",
+      "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4"
+    },
+    "purpose": "PRODUCTION_NEW_EMPTY_EXACT35",
+    "startsAt": 1794012279661
+  },
+  "independentSafetyReviewSha256": "498cb2d5b41dce082dd551dbe3c5da556ec9c456427fc59152570f93e90629b9",
+  "authorizationReference": "C under human delegation through2026-11-07T12:00+08. ActualR4 creation2af3ec4c/job3293bada/C14a785 same20min; strict6mount/RAWreadonly passed. Exact freshR4 only, ops79c1/QB498cb2d5/catalogQB93c324. Preserve original0600 consumer readback. C9 requires actual program; no REAL or public switch."
+}

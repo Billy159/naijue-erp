@@ -1,0 +1,181 @@
+{
+  "status": "R4_NATIVE_INSTALL_RECORD_DURABLE_BUSINESS_NOT_VERIFIED",
+  "recordedAtUTC": "2026-11-07T00:56:27.465330+00:00",
+  "actualModelAndEffort": "UNVERIFIED",
+  "newDatabase": "erp_native35_20261107_r4",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "sourceRootCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "mainOpsSha256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
+  "reviewSha256": "498cb2d5b41dce082dd551dbe3c5da556ec9c456427fc59152570f93e90629b9",
+  "firstWindowExpiresAt": 1794013479661,
+  "actualFacts": {
+    "automaticRetry": false,
+    "businessVerified": false,
+    "carrier": {
+      "frontEndpoint": {
+        "aliases": [
+          "naijue-rewrite-exact35-20261107-r4-app"
+        ],
+        "id": "6cea35853fda1cafe535ec98e1eb1988363cb9780fa4ad24ecddf07ce58d76fc"
+      },
+      "hostPid": 3208878,
+      "id": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+      "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "t45-fresh35-production-20261107-r4",
+      "networkNamespace": {
+        "device": 4,
+        "inode": 4026534018
+      },
+      "startTicks": "291066051",
+      "startedAt": "2026-11-07T00:46:03.066896045Z"
+    },
+    "cid": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+    "creationFacts": {
+      "installStarted": false,
+      "serviceLease": {
+        "expiresAt": 1825560000000,
+        "onFailure": "STOP_EXACT_TARGET_PRESERVE_DATA",
+        "onSuccess": "RETAIN_EXACT_TARGET_UNTIL_SERVICE_DEADLINE"
+      },
+      "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+      "state": "NEW_EMPTY_PRODUCTION_TARGET_FACTS_ONLY",
+      "target": {
+        "expiresAt": 1794013479661,
+        "ordinary": {
+          "connectHost": "127.0.0.1",
+          "connectPort": 18654,
+          "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+          "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
+          "serverAddress": "127.0.0.1",
+          "serverPort": 18654
+        },
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-07 00:46:12.566314+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7705224458832691236"
+        },
+        "proposal": {
+          "admin": "erp35_admin_20261107_r4",
+          "controller": "erp35_controller_20261107_r4",
+          "database": "erp_native35_20261107_r4",
+          "host": "127.0.0.1",
+          "owner": "erp35_owner_20261107_r4",
+          "port": 18654,
+          "runtime": "erp35_runtime_20261107_r4",
+          "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4"
+        },
+        "purpose": "PRODUCTION_NEW_EMPTY_EXACT35",
+        "startsAt": 1794012279661
+      }
+    },
+    "hostEnabled": false,
+    "pgProcess": {
+      "exe": "/opt/naijue-erp/fresh35-combined-v1/runtime/pg/usr/lib/postgresql/17/bin/postgres",
+      "pid": 42,
+      "starttime": "291066982"
+    },
+    "programBinding": {
+      "catalogSha256": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+      "programSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+      "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+      "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
+    },
+    "running": true,
+    "sharedPostgresNamespace": {
+      "container": {
+        "frontEndpoint": {
+          "aliases": [
+            "naijue-rewrite-exact35-20261107-r4-app"
+          ],
+          "id": "6cea35853fda1cafe535ec98e1eb1988363cb9780fa4ad24ecddf07ce58d76fc"
+        },
+        "hostPid": 3208878,
+        "id": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+        "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "name": "t45-fresh35-production-20261107-r4",
+        "networkNamespace": {
+          "device": 4,
+          "inode": 4026534018
+        },
+        "startTicks": "291066051",
+        "startedAt": "2026-11-07T00:46:03.066896045Z"
+      },
+      "creationOperationId": "t45-prod35-3b82-20261107-r4",
+      "format": "OWNED_POSTGRES_SHARED_NAMESPACE_V1",
+      "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+      "serviceLeaseExpiresAt": 1825560000000,
+      "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+      "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
+    },
+    "status": "DURABLE_PRODUCTION_SHARED_NAMESPACE_FACTS_NOT_DEPLOYMENT_APPROVAL"
+  },
+  "receipts": {
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-preserve-failed-controls-20261107-01/transport/release-receipts/t45-r4-preserve-failed-controls-20261107-01/r3-controls-preservation-result.json": {
+      "sha256": "5511fd65c33cf06f4d76868ea261e92f2fd42663eaeb3050d82cbfcece75d086"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-preserve-failed-controls-20261107-01/transport/release-receipts/t45-r4-preserve-failed-controls-20261107-01/job.json": {
+      "sha256": "5db73da713cce5eea1f48756e811e46e26d7f9a77b3dea2bef9a1a9a638df51c"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-provision-resources-readonly-20261107-01/transport/release-receipts/t45-r4-provision-resources-readonly-20261107-01/r4-provision-resources-readonly.json": {
+      "sha256": "a41137bb888999074e4d3e9f28db563e7d0a6169fea82b5d3f8d848d7ed4cf92"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-provision-resources-readonly-20261107-01/transport/release-receipts/t45-r4-provision-resources-readonly-20261107-01/job.json": {
+      "sha256": "6ad9da8bb68ebb4db70cce0d232a7a61dc6697053eed83947b5b7b4665cb90fb"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-provision-20261107-01/transport/release-receipts/t45-prod35-r4-provision-20261107-01/fresh35-production-start-result.json": {
+      "sha256": "2af3ec4c9c56ec5df11fbce06ce0cb14c98fff6def20210db992cc6b2b53eaad"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-provision-20261107-01/transport/release-receipts/t45-prod35-r4-provision-20261107-01/job.json": {
+      "sha256": "3293badaa5b3c45ac5d8a913f59af96e16a6a191e45e66ba8e82d0e50c8a2740"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-entry-20261107-01/transport/release-receipts/t45-prod35-r4-entry-20261107-01/job.json": {
+      "sha256": "8dc82c6e63649d7add40ac07958a66262943f537c8eec03def83f5e2faaa43c8"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-entry-20261107-01/transport/release-receipts/t45-prod35-r4-entry-20261107-01/fresh35-production-entry-result.json": {
+      "sha256": "879db299e7989beae9e1a30c3b537fdfda771feee003a8d50c48f3b81f34f1b3"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-program-facts-20261107-01/transport/release-receipts/t45-prod35-r4-program-facts-20261107-01/job.json": {
+      "sha256": "a4934c013b1dc74f288e55cdaf1b75b8ce6339e77f1c25aaf7106b20e8603ffc"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-program-facts-20261107-01/transport/release-receipts/t45-prod35-r4-program-facts-20261107-01/fresh35-production-facts-result.json": {
+      "sha256": "3c80c7e2c515e71e1fce942a4e4d63426ec3dc1f8261b5063d0a2dc043127c42"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-install-20261107-01/transport/release-receipts/t45-prod35-r4-install-20261107-01/fresh35-production-install-result.json": {
+      "sha256": "25fc866dacef24f88e369660133cc863692368d4f334d2f9ef35f2b7ac17dc29"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-install-20261107-01/transport/release-receipts/t45-prod35-r4-install-20261107-01/job.json": {
+      "sha256": "a9816d4d2c4cb9f6520f3da2eeffc09e1f06c51cbbd45eafaa1b53b80fe9c449"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-install-facts-20261107-01/transport/release-receipts/t45-prod35-r4-install-facts-20261107-01/job.json": {
+      "sha256": "e941dc1138d390c0dd3e560e2fa37dcaef38807007709fde0375dcd64731b28b"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r4-install-facts-20261107-01/transport/release-receipts/t45-prod35-r4-install-facts-20261107-01/fresh35-production-facts-result.json": {
+      "sha256": "e442f9f948bbb8dd8406f0b9b96c68a599b493549101f177bcafe93936435495"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-controller-reference-20261107-01/transport/release-receipts/t45-r4-controller-reference-20261107-01/job.json": {
+      "sha256": "89d09082965187c451df5955a9911538e4189dd589602a5c5c0425afa9454ce6"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-controller-reference-20261107-01/transport/release-receipts/t45-r4-controller-reference-20261107-01/controller-reference-result.json": {
+      "sha256": "b1570ac5d7fc1860dfa1e3df75ba23b440b460cc1871f2fb73f257f426a2928a"
+    }
+  },
+  "priorMaterialParentFailurePreserved": true,
+  "priorR3ProvisionFailureAndStoppedContainerPreserved": true,
+  "programBuildRepeated": false,
+  "materialCopiedAgain": false,
+  "originalKeysReplayed": false,
+  "originalStagePolicyRestored": true,
+  "controllerReferencePrepared": true,
+  "controllerRoleCreatedOrExtendedByPreparer": false,
+  "REAL_PREPARE_INSPECT_EXECUTE": false,
+  "formalBusinessVerified": false,
+  "oldFormalApplicationOrDatabaseSwitch": false,
+  "publicSwitch": false,
+  "nextRequiredConditions": [
+    "C separate exact REAL scope/window authority within original first-window restriction",
+    "Actual target.json and five-volume namespace/device/inode/mount bindings; not prepared or observed yet",
+    "Current disk floor and immutable input bindings via existing reviewed monitor",
+    "No actual business/QA/backup/restore/performance acceptance claimed"
+  ]
+}

@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T08:45:57.263825+08:00",
+  "updatedAt": "2026-11-07T09:00:03.344466+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,12 +33302,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T08:45:57.263825+08:00",
-      "phase": "R4_EXACT3_CONTROL_PRESERVATION_ACTUAL_PASS_NEW_C14_DISPATCHED",
+      "at": "2026-11-07T09:00:03.344466+08:00",
+      "phase": "R4_NATIVE_INSTALL_DURABLE_SEPARATE_REAL_WINDOW_SOURCE_REPAIR",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 sole server execution",
-      "nextOwner": "Original QB affected T45 r3 ops/private transport deltas; C exact decisions and records",
+      "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
+      "nextOwner": "Original QB scope-only review; C accurate new execution binding",
       "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
       "scope": "ISOLATED_SYNTHETIC_ONLY",
       "schemaInstalled": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": true,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 actual six-bind R4 creation; C6/C9 only after actual new target/program; REAL separate",
+      "next": "Repair independent REAL session on retained installed R4 without renewing installation C14, faking record or repeating installation; then original T45 prepare/inspect/execute and independent readback.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "e422d07390c5a58c44b54452983638a2de5655b7",
       "buildRoot": "10fc5efdea99976590c47edd65a8e496a3b2b1dc",
@@ -33444,7 +33444,16 @@
         "actualPGInstallation": "NOT_TESTED",
         "REALImport": "NOT_EXECUTED",
         "deployment": "NOT_EXECUTED",
-        "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS"
+        "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
+        "nativeStructureInstalled": true,
+        "installationRecordPublished": true,
+        "actualInstallationRecordSHA256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+        "actualTargetSHA256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+        "actualProgramSHA256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+        "nativeCatalogCheck": "COMMITTED_AND_CATALOG_CHECKED",
+        "realImported": false,
+        "ordinaryRealBusinessPassed": false,
+        "productionDeployed": false
       }
     },
     "delayReviewAdoption": {
@@ -34311,7 +34320,7 @@
         }
       },
       "r4ControlledSuccessor": {
-        "at": "2026-11-07T08:45:57.263825+08:00",
+        "at": "2026-11-07T09:00:03.344466+08:00",
         "sourceQB_SHA256": "498cb2d5b41dce082dd551dbe3c5da556ec9c456427fc59152570f93e90629b9",
         "sourceREADY_SHA256": "96af0bb24b15b57d77ade3cf18d37526490d7174287479d0aab9ef393035a221",
         "mainSHA256": "79c169a03391223ee7154fac89e83db2b27d9783a63f0ceffeff518b6d52b8fd",
@@ -34331,9 +34340,80 @@
         "startsAt": 1794012279661,
         "expiresAt": 1794013479661,
         "currentOwner": "Original T45 sole executor",
-        "state": "EXACT_R4_PROVISION_DISPATCHED_NOT_YET_RECEIVED",
+        "state": "NATIVE_INSTALL_RECORD_DURABLE_REAL_NOT_STARTED",
         "REALExecuted": false,
-        "publicSwitch": false
+        "publicSwitch": false,
+        "actualResultSHA256": "7ca7aa75a040b2c8bd179eb454558bd6c3254215166d494fbb097e60d558003b",
+        "nativeFactSHA256": "e442f9f948bbb8dd8406f0b9b96c68a599b493549101f177bcafe93936435495",
+        "installationRecordSHA256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+        "actualTarget": {
+          "expiresAt": 1794013479661,
+          "ordinary": {
+            "connectHost": "127.0.0.1",
+            "connectPort": 18654,
+            "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+            "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
+            "serverAddress": "127.0.0.1",
+            "serverPort": 18654
+          },
+          "physical": {
+            "databaseOid": "16393",
+            "postmasterStart": "2026-11-07 00:46:12.566314+00",
+            "serverVersionNum": "170011",
+            "systemIdentifier": "7705224458832691236"
+          },
+          "proposal": {
+            "admin": "erp35_admin_20261107_r4",
+            "controller": "erp35_controller_20261107_r4",
+            "database": "erp_native35_20261107_r4",
+            "host": "127.0.0.1",
+            "owner": "erp35_owner_20261107_r4",
+            "port": 18654,
+            "runtime": "erp35_runtime_20261107_r4",
+            "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4"
+          },
+          "purpose": "PRODUCTION_NEW_EMPTY_EXACT35",
+          "startsAt": 1794012279661
+        },
+        "actualCarrier": {
+          "frontEndpoint": {
+            "aliases": [
+              "naijue-rewrite-exact35-20261107-r4-app"
+            ],
+            "id": "6cea35853fda1cafe535ec98e1eb1988363cb9780fa4ad24ecddf07ce58d76fc"
+          },
+          "hostPid": 3208878,
+          "id": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+          "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+          "name": "t45-fresh35-production-20261107-r4",
+          "networkNamespace": {
+            "device": 4,
+            "inode": 4026534018
+          },
+          "startTicks": "291066051",
+          "startedAt": "2026-11-07T00:46:03.066896045Z"
+        },
+        "programBinding": {
+          "catalogSha256": "90d9838f1896e012536d5d03bc33339832d570d0c69d894adfaa0e8b33478ef9",
+          "programSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+          "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+          "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
+        },
+        "controllerReferencePrepared": true,
+        "controllerReferenceSHA256": "b1570ac5d7fc1860dfa1e3df75ba23b440b460cc1871f2fb73f257f426a2928a",
+        "nativeCatalogCheck": "COMMITTED_AND_CATALOG_CHECKED",
+        "formalBusinessVerified": false,
+        "independentREALWindowGap": {
+          "status": "SOURCE_REPAIR_IN_FLIGHT",
+          "owners": {
+            "formalSource": "Original D1",
+            "opsAndServer": "Original T45",
+            "independentDeltaQA": "Original QB"
+          },
+          "scope": "Existing original install window and record unchanged; separate accurately authorized bounded REAL session must reuse existing installed target. No new R5 or repeated install.",
+          "cause": "Formal host, ops guard and temporary-role credentials still bound to first 20-minute installation window.",
+          "userDecisionNeededBeforeNoon": false
+        }
       }
     }
   }

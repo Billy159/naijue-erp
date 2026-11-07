@@ -1,0 +1,11 @@
+{
+  "format": "FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1",
+  "decision": "AUTHORIZE_EXACT_NEW35_PRODUCTION_INSTALL_ONLY",
+  "programSha256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+  "startsAt": 1794012279661,
+  "expiresAt": 1794013479661,
+  "independentSafetyReviewSha256": "498cb2d5b41dce082dd551dbe3c5da556ec9c456427fc59152570f93e90629b9",
+  "authorizationReference": "C under human delegation through2026-11-07T12:00+08. ActualR4 programfacts3c80c7e2/C6consumer879db299/C14a785 same20min. Exact69e1 program/8b9f target/90d9 catalog, source8694. QB498/e11/93c324 effective scope reused. Only exact new35 structure and true install record; no REAL/public switch/oldtarget mutation."
+}
