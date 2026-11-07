@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "No blind PREPARE retry. Actual96a confirms734 nativePK plan; local460188 synthetic rawlookup/Mixed60000 does not reproduce491s. OriginalD1 confirmed native.get interval has no hidden secondquery. Prepare once sameLinux/UID/volume synthetic diagnostic with CPU/IO/heap counters and strict160/180s; source pins/C exactscope not yetissued. R4PG stopped, actualfree9.668GB after exact11 fullbytearchive and retirement. NoREALimport/deployment/bindingPASS.",
+      "next": "D1 final48a7 standalone script ready; T45 sole originalwrapper preparing exactcandidate. C then authorizes once160/180s syntheticLinux diagnostic, noPG/BOOT/realdata; no blind PREPAREretry.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -37401,7 +37401,7 @@
         "originalPublicPath10kEvidenceReused": true
       },
       "nextFiniteLinuxScope": {
-        "status": "D1_SCRIPT_AND_T45_WRAPPER_IN_PREPARATION_NOT_EXECUTED",
+        "status": "D1_FINAL_SCRIPT_READY_T45_WRAPPER_PREPARING_NOT_EXECUTED",
         "sameNodeUIDVolume": true,
         "syntheticKeysOnly": true,
         "maxNodeSeconds": 160,
@@ -37412,6 +37412,23 @@
         "noPGOrBOOTOrRealPreflight": true,
         "oneAttemptOnly": true,
         "preciseSourcePinsAndCScopePending": true
+      },
+      "fixedD1Script": {
+        "at": "2026-11-08T05:11:45.486543+08:00",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/PREPARE09-RECORD-COST-PRIVATE-CALLER-20261108-01/PREPARE10-WITHOUT-ROWID-SOURCE/LINUX-BOUNDED-DIAGNOSTIC/bounded-registry.mjs",
+        "sha256": "48a7ebd9b647c8ecf56a9bf41b30aec0cbd7a6e64defd6eae700d1dfcb7d1f05",
+        "bytes": 14059,
+        "handoffSHA256": "1023825cc571f13e12f2bb4fb710f0d98ead348bab0250c74f072c5b727f2c54",
+        "handoffBytes": 7059,
+        "localChecks": {
+          "passed": 3,
+          "failed": 0,
+          "LinuxRun": false
+        },
+        "obsoletePreDispatchPin": "a151e01f1cc05edb6bc9d85ac08fd2b93c447995f770cc8abd9d5ee0d4c3d015",
+        "obsoletePinNeverExecuted": true,
+        "main734CodeChanged": false,
+        "syntheticOnly": true
       }
     }
   }
