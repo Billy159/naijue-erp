@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T00:01:52.011802+08:00",
-      "phase": "R4_STOPPED_PREPARE07_SAMPLER_INCREMENT_VERIFIED_SPACE_ARCHIVE_PENDING",
+      "at": "2026-11-08T00:19:44.640394+08:00",
+      "phase": "R4_STOPPED_CACHE_ARCHIVE_VERIFIED_EXACT_RETIREMENT_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 exact stopped07 cache metadata and lossless archive preparation",
       "nextOwner": "C fixes exact archive scope after actual metadata; T45 sole execution",
-      "latestActualReceiptSHA256": "34a963e8f33c7455001d2abfdbf517ef4bdd6c765bfa58724ceb145bf087b478",
+      "latestActualReceiptSHA256": "23a2f94a22ca59130c0df85a1f1f7cb33911743f244436412c81909b884f1479",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Complete exact metadata-only scope then archive both stopped07 derived files privately with full byte verification; originals stay until separate fixed retirement decision. Preserve06, business data and all receipts. No newBOOT until actual start space adequate. Whole import, reconciliation, history PG, backup/restore, formal host and cutover remain unverified.",
+      "next": "OriginalT45 prepares fixed exact two-file retirement from prior05 accepted method; C binds decision after source/receipt review, fresh occupancy+CAS and retained archive check. After actual deletion/statvfs satisfies original startupfloor prepare next BOOT. No business database backup/restore or import success claimed.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36501,8 +36501,8 @@
       "Fast": "UNVERIFIED"
     },
     "r4Prepare07Archive20261108": {
-      "at": "2026-11-08T00:08:04.807496+08:00",
-      "state": "ARCHIVE_ONLY_AUTHORIZED_ACTUAL_PENDING_BOTH_ORIGINALS_RETAINED",
+      "at": "2026-11-08T00:19:44.640394+08:00",
+      "state": "ACTUAL_ARCHIVE_COMPLETE_FULL_BYTES_VERIFIED_ORIGINALS_STILL_RETAINED",
       "owner": "original T45",
       "candidateSHA256": "c31f69c4098626846949cc963fbcdacacc2d2a47d55cd4131c7d0b27988fe8b0",
       "reviewedSourceSHA256": "d76b0f551a48a26384fcf0aa90a10570981d64d3f47d9c6029173778cf88abea",
@@ -36517,7 +36517,23 @@
       "deletionAuthorized": false,
       "PGConnections": 0,
       "SQLiteOpened": false,
-      "newBOOT": false
+      "newBOOT": false,
+      "boundSourceSHA256": "4b3ef63303b386fce57809d95e599474713276b777bb1a7b2104db83fa1e27fa",
+      "actualReceiptSHA256": "23a2f94a22ca59130c0df85a1f1f7cb33911743f244436412c81909b884f1479",
+      "archiveSHA256": "c0ae4d5a73319a4a54e4337f66b47259a2a005f0802bad955f5c41429da6e96c",
+      "archiveBytes": 263278234,
+      "archiveAllocatedBytes": 263282688,
+      "actualJobExitCode": 0,
+      "actualJobElapsedSeconds": 38.797232,
+      "freeAfterArchive": 6839791616,
+      "potentialNetAllocationGainBytes": 1920630784,
+      "originalsUnchanged": true,
+      "firstTransportFailure": {
+        "state": "NO_SERVER_SETUP_REQUEST_OR_UNIT_FOUND_THEN_FIRST_VALID_SUBMISSION_RECOVERED_SAME_UNREGISTERED_KEY",
+        "rootCause": "UNKNOWN",
+        "readonlyProofSHA256": "571ba3d9a93ac624cc1851b3dee3d666e456a8a73754f574fe5357b03bf9bf88",
+        "registeredRunRepeated": false
+      }
     }
   }
 }
