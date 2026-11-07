@@ -2789,3 +2789,13 @@ C13 `ce61f10b1360e0c3da1253967c9fe72b7fbac1306798ec3d6c9d3a44fc58e367`, fixed30m
 - T45 original once-upload/READY succeeded; raw READYce0b261c… is actual server bytes. Actual materialization receipt01445d8c…, COMPLETED0/26.388871s, Node24.21.0, sourceSet2501/current216/captured180 and CLI/readback module imports pass;361 files/5,123,939 logicalB, free8,705,261,568B. Independent operation49d, olddbe/install/APP/real inputs unchanged.
 - Restore receipt82a65798… confirms original expiredcd2e policy bytes/root:root0444/nlink1 restored without renewal; actual0/.317468s. Full result8738e48c…,10324B. PG/BOOT/REAL preflight0. Runtime diagnostic cost and full EOF/import remain unverified.
 - OriginalT45 next local BOOT11 non-time pins and PREPARE/EXECUTE index-coexistence budget only; C will bind actual scoped times when ready. No prior window extension or original key replay.
+
+
+### 2026-11-08T02:32:26.821203+08:00 — Dual-index capacity gap addressed; BOOT11 scoped once
+- Local fixed code confirms separate PREPARE/EXECUTE indexes coexist. Using actual05 allocation, priorfree8.705GB projected0.925GB below4GiB before PG/WAL; no EXECUTE release from startup-only capacity.
+- Original06 full byte evidence archived privately (`d49b81a3…`,265824042B, actual0/42.5506s; receipt0e1e01e8). Only two derived caches then retired (receipt780497bd…,actual0/1.2197s), release2,201,931,776B, free10,631,622,656B. Protected07/09 archives,06logs and authorities unchanged; no PG/SQLite/SQL. PG/WAL/temp/import/independent-restore peak still unverified.
+- C BOOT11 `4bc164eeeb88eaf500b99ad0176472ba9405c0ff1c2b1d5b431d2d55e2f0f296` issued to originalT45 once, exact5min1794076252654–1794076552654, guardian1794081652654, twoexistingroles until20:00:22.654Z, originalservicelease unchanged. Twenty fixed non-time pins verified, priorQA adopted. Await actual start/role/HBA/epoch evidence before parameters or real preflight; no EXECUTE issued.
+
+
+### 2026-11-08 BOOT11 实际启动与参数接续
+原 T45 原键一次 COMPLETED/0，实际新 epoch 2026-11-07 18:31:38.903933+00；PG1985/297459614、guardian1978/297459576，原 SID/OID/PGDATA 不变。实际 observer30634b2b…/3973B，restart6a9320e7…/1770B；原 HBA 1.009642秒内恢复，两既有角色有效期至20:00:22.654Z，属性和成员关系未变；登录尚未单独验证。实盘可用10,630,479,872B。C固定1857B参数df2dc4df…，原T45发布参数06在途，准备10未发、执行未发；启动通过不代表导入/对账/业务或部署通过。
