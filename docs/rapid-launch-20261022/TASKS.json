@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T21:06:35.969865+08:00",
+    "at": "2026-11-07T21:31:57.640058+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28399,12 +28399,12 @@
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
-      "latestIntegrationCheckpoint": "5c06c8765b04df3a2c74d4b3eb8fbe6d393cfc80",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-07T21:04:06.294898+08:00",
+      "latestIntegrationCheckpoint": "1e69d7a2a7b23c18b280654ba49aab5857562115",
+      "latestIntegrationRemoteVerifiedAt": "2026-11-07T21:24:12.643271+08:00",
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "5c06c8765b04df3a2c74d4b3eb8fbe6d393cfc80"
+      "lastControllerCheckpoint": "1e69d7a2a7b23c18b280654ba49aab5857562115"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28511,9 +28511,9 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Current stop-pin backup producer1a9aea5d source/QB5-model PASS; no server/PG. Backup/restore actual size and committed R4 batch pending.",
-      "QB": "BOOT07 exact20-leaf476731e6 source/models PASS, actual FD probe95af3805 PASS; no new source task until actual failure/delta.",
+      "QB": "New finiteEXECUTE-only f0e76333 two-predicate source/model22 PASSd012bf7a. No source repeat. Current003cPREPARE unchanged; actual complete import/readback unverified.",
       "D2": "856e5a59 minimum history successor packedb968e4b5, old App/Web bytes reused; local7298 member readback and2.48MB tail valid; no server/PG.",
-      "T45": "Actual BOOT07 and parameters3799 publication passed; C78307a20 PREPARE06 single20min business/1500outer issued. Wait originalkey actual terminal, no import/EXECUTE/public change.",
+      "T45": "PREPARE06 terminalFAILED2/1102.104543s originalwindowexpired, no binding. Parent/descendants reaped and input metadata restored; exact finalPG/controller status plus partialsummary/timing readonly in progress, no replay/writer.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -33443,7 +33443,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED; actualBOOT07+runtime parameters publication passed; PREPARE06 limited full input check issued, awaiting actual",
+        "REALImport": "NOT_EXECUTED; PREPARE06 FAILED original window expired, no successful binding; exactcleanup and stage timings pending",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -35941,8 +35941,8 @@
       "next": "T45 exact newBOOT07 scope and Linux/PG prerequisites, C current-fact binding. Existing staging window was restored and is not new boot authority."
     },
     "r4Boot07MaterialAndActual20261107": {
-      "at": "2026-11-07T21:06:35.969865+08:00",
-      "state": "ACTUAL_BOOT07_AND_PARAMETER_PUBLICATION_PASS_PREPARE06_ISSUED",
+      "at": "2026-11-07T21:31:57.640058+08:00",
+      "state": "PREPARE06_ACTUAL_FAILED_WINDOW_EXPIRED_NO_BINDING_FORENSICS_IN_PROGRESS",
       "owner": "Original T45; original QB necessary increment only; C exact binding",
       "readySHA256": "ebebff6e9d9a1e841e4031397ca85aedcfc1d78de34aa8c9b961e65202bd5524",
       "qbResultSHA256": "476731e621872f271e5a6393de0afdd60abaddf3fe3676f31ce01f89023bfb03",
@@ -35998,7 +35998,7 @@
         "credentialAuthentication": "NOT_SEPARATELY_TESTED",
         "businessPassed": false
       },
-      "next": "Original T45 PREPARE06 terminal/first meaningful failure, actual credentials/backend proof and plan/digests/resource/timing. No EXECUTE or import claimed; original-key-only recovery, bounded cleanup.",
+      "next": "Original T45 bounded readonly exact PG/controller/HBA/projection cleanup and existing partial summary/index/timing. Locate first exhausted stage before changing method/new budget; never replay old window or run EXECUTE without successful PREPARE.",
       "parameters": {
         "issuedSHA256": "3799e7b2a14fc385cfb4e1faf81030478409c3f0162bde32d4b414e9191547c2",
         "bytes": 1830,
@@ -36015,7 +36015,7 @@
         "actualAccessPlanSHA256": "974868f8282f5fd49add62405c8645c427556f8bd4ddc0b362eb82e11db36ed5"
       },
       "PREPARE06": {
-        "state": "ISSUED_WAIT_ACTUAL_TERMINAL",
+        "state": "ACTUAL_FAILED_ORIGINAL_WINDOW_EXPIRED",
         "requestKey": "t45-r4-real-prepare-20261107-06",
         "readySHA256": "4fcd88e5187fc2a042cf03aae4d623c2e285a9dc9a05e4a51124452aa4ee0a7b",
         "descriptorSHA256": "78307a20555a4b97b42ac19006d2bf6ffe827743e1cef428e97997c8e5f4486e",
@@ -36028,8 +36028,51 @@
         "actualBackendCaptureAndCredentialAuth": "UNVERIFIED_PENDING_ACTUAL_RESULT",
         "businessWritesAuthorized": false,
         "sourceIndexAdopted": false,
-        "EXECUTEBudget": "UNSET"
+        "EXECUTEBudget": "UNSET",
+        "lastT45ActualRemainingAt": 1794057278637,
+        "lastT45RemainingSeconds": 640.5,
+        "actualResultSHA256": "64f81891775cf75dfc15372ddc044cc3fbbc575a6cb93898df1cca084dfa4f10",
+        "jobSHA256": "e8e39c3d37fac9b5bb9876cfa81ff723ea11b3a0e7f6978725387ffa20c28b99",
+        "exitCode": 2,
+        "elapsedSeconds": 1102.104543,
+        "reason": "REAL_ORIGINAL_WINDOW_EXPIRED",
+        "nodeExitCode": -15,
+        "nodeParentReaped": true,
+        "nodeDescendantsReaped": true,
+        "childReaped": true,
+        "samples": 5410,
+        "maxSampleGapSeconds": 0.21210687700659037,
+        "minimumAvailableBytes": 6646222848,
+        "originalInputMetadataRestored": true,
+        "projectedSecretsRetired": "REDACTED_NOT_INFERRED",
+        "CLIState": "UNKNOWN",
+        "connectionCleanup": "UNKNOWN",
+        "verification": "UNKNOWN",
+        "bindingProduced": false,
+        "originalGuardianCleanupComplete": true,
+        "originalImmediateControllerStopped": false,
+        "actualFinalStop": "UNVERIFIED_PENDING_BOUNDED_READONLY",
+        "newPreflightSummaryAndTimings": "PENDING_READONLY_COLLECTION"
       }
+    },
+    "r4Execute45BoundedSuccessor20261107": {
+      "at": "2026-11-07T21:24:12.643271+08:00",
+      "state": "EXACT_TWO_PREDICATE_SOURCE_QB_PASS_NOT_EXECUTED",
+      "owner": "Original T45",
+      "parentSHA256": "003c698abe1895250dcdbeb27ac76e8542a8c066b397fe6fbb205850de30773e",
+      "sourceSHA256": "f0e76333a9fd5ccd8c6bf6402b0365aefebf15439b4554916f02a6d112d1f663",
+      "bytes": 127590,
+      "deltaSHA256": "e7e7eb9bd07a462134fbef507183265cfabb341e8a186682d572fde0c89d2c47",
+      "authorBoundaryCases": 20,
+      "qbIndependentBoundaryCases": 22,
+      "qbResultSHA256": "d012bf7ad1e7fa6796b17a1fe6fce1a0ca9b7818f71b2b2810fc50a8f7a85447",
+      "exactScope": "Only2 original duration predicates: explicitly new EXECUTE <=2700s. PREPARE/INSPECT/READONLY_STATUS retain1200s. No otherAST/runtime guards, grants, SQL/statement timeouts,21 full digests, transaction or original-key cleanup changed.",
+      "currentPrepareChanged": false,
+      "newBusinessWindowIssued": false,
+      "newEXECUTESubmitted": false,
+      "proposedOuterSeconds": 3000,
+      "throughput": "1672.074s D1 estimate remains extrapolation excluding SQL; no actual complete EXECUTE throughput claim",
+      "next": "Require actual PREPARE06 success/plan/resources plus all current grant/roles/guardian/service/parameter lifetimes sufficient for explicitly new window and cleanup; otherwise preserve outputs and separately bind reviewed original finite restart. No extension or replay of in-flight job."
     }
   }
 }
