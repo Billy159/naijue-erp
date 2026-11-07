@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 actual uniqueBOOT09 after QB866 and C41bc; no08replay. On success bind actualepoch/pids/roleexpiry/newparams before any newPREPARE, unchanged20min. Realimport/reconciliation/history/recovery/formalcutover incomplete.",
+      "next": "OriginalT45 publish exact C971e parameters via original constant-only publisher, actualreadback; C then binds freshPREPARE07 window after non-timeinputs ready. No08replay/newinstall/publicchange.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36300,7 +36300,7 @@
     "r4Boot09PinSuccessor20261107": {
       "at": "2026-11-07T22:56:41.531252+08:00",
       "owner": "OriginalT45 sole source/server; C sole QA dispatcher; originalQB minimal seam",
-      "status": "QB_MINIMUM_PASS_NEW09_WINDOW_ISSUED_ACTUAL_PENDING",
+      "status": "ACTUAL_BOOT09_COMPLETED_NEW_EPOCH_OBSERVED_PARAMETERS_PUBLICATION_PENDING",
       "READY": "34b77ce224eee87aa5472af5401e90804cfb38c37a88f0a6c120bf9a1994c90a",
       "bundle": "88b5ad9922d350bd701e66d91ce0591c1ea5de0f93b7de587b5b68ace8270e78",
       "localChecks": "4ac57a108530725d6361f7ee80989b109107fafa40fdbc1ad7552b56178ee169",
@@ -36319,7 +36319,35 @@
       "expiresAt": 1794063761317,
       "guardianExpiresAt": 1794068861317,
       "roleUntilRequestedNotApplied": "2026-11-07T16:27:11.317Z",
-      "job": "t45-r4-retained-restart-20261107-09"
+      "job": "t45-r4-retained-restart-20261107-09",
+      "jobReceipt": "d4e247c8ee6c5dd46588c8b465e3ee86648ef91970836c68293fa6d74f9d607d",
+      "exitCode": 0,
+      "durationSeconds": 2.6746855778619647,
+      "result": "7f94b13acb83615a64273ebc1de2e290b0bdd41fa6100ad437d20e12cc5a08ba",
+      "protectedRestart": "8eafb24f7fefef267735619ff41d3c14b27af90feafb69cbdf7c13bacf479e01",
+      "epoch": "2026-11-07 14:58:12.22333+00",
+      "PG": {
+        "pid": 1587,
+        "starttime": "296178948"
+      },
+      "guardian": {
+        "pid": 1580,
+        "starttime": "296178918"
+      },
+      "actualRoleUntil": "2026-11-07T16:27:11.317Z",
+      "readonlyObservation": "0f79b93a7dbe5b7dcf201ded2b352adaf8432b959c0648451f60b74f896501d1",
+      "HbaOriginalRestored": true,
+      "roleAttributesUnchanged": true,
+      "freeBytes": 9292066816,
+      "COperationParameters": "971e4724ed016807d2221a49f33e98da3896cf81912ea55b20fb62dff7cb29f6",
+      "parametersActualPublished": false,
+      "businessVerified": false,
+      "timing": {
+        "CToCopySeconds": 17.748932,
+        "copyToRootSeconds": 12.377266,
+        "CToRootSeconds": 30.126198,
+        "subphaseAttribution": "No SSH/queue cause inferred"
+      }
     }
   }
 }
