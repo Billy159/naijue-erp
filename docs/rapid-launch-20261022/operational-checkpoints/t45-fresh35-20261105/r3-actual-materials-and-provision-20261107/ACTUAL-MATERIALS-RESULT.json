@@ -1,0 +1,183 @@
+{
+  "status": "ORIGINAL_PARENT_FAILED_MATERIAL_CHILD_SUCCESS_PRESERVED_FOR_C_DISPOSITION",
+  "recordedAtUTC": "2026-11-07T00:25:11.556714+00:00",
+  "actualModelAndEffort": "UNVERIFIED",
+  "originalJobKey": "t45-prod35-r3-materials-20261107-01",
+  "originalJobReplayed": false,
+  "parentFailureRelabeled": false,
+  "childExitCode": "UNKNOWN_NOT_EXPORTED",
+  "receipts": {
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r3-materials-20261107-01/transport/release-receipts/t45-prod35-r3-materials-20261107-01/job.json": {
+      "sha256": "bc260ca031433a2f3264213f8b55c76f5e783b88e7d17d022b1a2bb7cbbc1314",
+      "value": {
+        "jobId": "t45-prod35-r3-materials-20261107-01",
+        "taskId": "T45",
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "FAILED",
+        "unit": "naijue-erp-op-5cc58239-f91e202e6b03",
+        "atUTC": "2026-11-07T00:18:26.126532+00:00",
+        "grantId": "5cc58239751e4e2a",
+        "privateLogsExported": false,
+        "businessAcceptanceClaimed": false,
+        "exitCode": 2,
+        "elapsedSeconds": 341.15153336385265,
+        "exports": [
+          "r3-material-preparation-guard-result.json",
+          "r3-material-preparation-result.json"
+        ],
+        "finishedAtUTC": "2026-11-07T00:24:07.356557+00:00"
+      }
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r3-materials-20261107-01/transport/release-receipts/t45-prod35-r3-materials-20261107-01/r3-material-preparation-result.json": {
+      "sha256": "38a65a9ef0e9c66e8eb51b95e4b6649dd72628a781bcff79cdc08196bc61c999",
+      "value": {
+        "status": "EXACT_R3_BASE_DELTA_AND_READONLY_RAW_INPUTS_PREPARED_NO_PG",
+        "jobKey": "t45-prod35-r3-materials-20261107-01",
+        "PGExecuted": false,
+        "approvalCreated": false,
+        "imageBuilt": false,
+        "RAWBytesCopied": 0,
+        "sourceChanged": false,
+        "hardLinksCreated": false,
+        "automaticRetry": false,
+        "applicationFiles": 7294,
+        "applicationBytes": 236712143,
+        "unchangedBaseMembersCopied": 7243,
+        "exactDeltaDeployMembers": 51,
+        "newMetadataMembers": 4,
+        "rawReference": {
+          "source": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r2/state/real-r3/package",
+          "manifestSha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+          "files": 31,
+          "bytes": 1008361447,
+          "copiedBytes": 0,
+          "readOnlyMountNotExecuted": true
+        },
+        "sixInputFiles": 6,
+        "sixInputBytes": 103353667,
+        "opaqueInput": {
+          "bytes": 188,
+          "mode": "0400",
+          "sameBytesMachineReadback": true,
+          "valueOrDigestExported": false
+        },
+        "canonicalSourceArchiveSha256": "99c7245e0222b300b6bd6c4b3e84990c3dbd183dd3008e5500a84211ec2fe4b4",
+        "sourceComposition": {
+          "baseArchiveSha256": "7b10bb912af07d26ef5f6f9339ba789b5e4f8f22191245b998c8741494a7c9be",
+          "deltaArchiveSha256": "2a68e9d4028c611d359f53c0c43dc6e95554fe6225eeb2cbbc6a71795a885c5e",
+          "deltaManifestSha256": "8870f955a5010cce2d9dc09c55e29d656d4093770156da113a71f4366e91f070",
+          "deltaArtifactKey": "f35-3b82c4-base-delta-20261107-01"
+        }
+      }
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r3-materials-20261107-01/transport/release-receipts/t45-prod35-r3-materials-20261107-01/r3-material-preparation-guard-result.json": {
+      "sha256": "aeb3837888383ce2ae9877e476dab2be6238acf6b18d440f978d609b972ee30b",
+      "value": {
+        "status": "STOP_OR_UNKNOWN_PARTIAL_PRESERVED_NO_REPLAY",
+        "jobKey": "t45-prod35-r3-materials-20261107-01",
+        "sourceSha256": "07eb922730d12cee530f33c67d4cac7f587043b7d38cdfb03b03b62be8816b48",
+        "postgresStarted": false,
+        "newImageBuilt": false,
+        "archiveUploaded": false,
+        "businessDatabaseWrites": false,
+        "automaticRetry": false,
+        "freeBeforeBytes": 8890961920,
+        "childReaped": true,
+        "samples": 1706,
+        "maxSampleGapSeconds": 0.20076593291014433,
+        "minimumAvailableBytes": 8521195520,
+        "stopFloorBytes": 4294967296,
+        "preparationOnly": true,
+        "safeCode": "OWNED_MATERIALIZER_IDENTITY_CHANGED",
+        "elapsedSeconds": 341.0608733468689
+      }
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-material-progress-readonly-20261107-01/transport/release-receipts/t45-r3-material-progress-readonly-20261107-01/job.json": {
+      "sha256": "3bb8437b25098ba8e851a7eb1685a61f98e6095682c5608ee2fd2e31f2c4dad0",
+      "value": {
+        "jobId": "t45-r3-material-progress-readonly-20261107-01",
+        "taskId": "T45",
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "COMPLETED",
+        "unit": "naijue-erp-op-5cc58239-285ffd83c4f8",
+        "atUTC": "2026-11-07T00:24:07.359221+00:00",
+        "grantId": "5cc58239751e4e2a",
+        "privateLogsExported": false,
+        "businessAcceptanceClaimed": false,
+        "exitCode": 0,
+        "elapsedSeconds": 0.21779605420306325,
+        "exports": [
+          "material-progress-readonly.json"
+        ],
+        "finishedAtUTC": "2026-11-07T00:24:07.610703+00:00"
+      }
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-material-progress-readonly-20261107-01/transport/release-receipts/t45-r3-material-progress-readonly-20261107-01/material-progress-readonly.json": {
+      "sha256": "fce32ebaabbbccb9e247a44cf8e0495a23e88477e91a4ff74644eb963a4b98e1",
+      "value": {
+        "status": "EXACT_ORIGINAL_MATERIAL_PROGRESS_METADATA_ONLY",
+        "observedAtEpoch": 1794011047.5654948,
+        "unit": {
+          "MainPID": "0",
+          "ControlPID": "0",
+          "Result": "success",
+          "ExecMainStatus": "0",
+          "ControlGroup": "",
+          "ActiveState": "inactive",
+          "SubState": "dead"
+        },
+        "originalProcesses": [],
+        "currentMetadata": {
+          "deploy": {
+            "files": 7294,
+            "bytes": 236712143,
+            "latestMtimeNs": 1794011043565830859
+          },
+          "metadata": {
+            "files": 4,
+            "bytes": 1512754,
+            "latestMtimeNs": 1794011044423875836
+          },
+          "state/real-r3/approvals": {
+            "files": 6,
+            "bytes": 103353667,
+            "latestMtimeNs": 1794011046813000700
+          },
+          "state/source-backup-inputs": {
+            "files": 2,
+            "bytes": 3357566,
+            "latestMtimeNs": 1794011047123016860
+          }
+        },
+        "originalResults": {
+          "r3-material-preparation-result.json": {
+            "status": "EXACT_R3_BASE_DELTA_AND_READONLY_RAW_INPUTS_PREPARED_NO_PG"
+          },
+          "r3-material-preparation-guard-result.json": {
+            "status": "STOP_OR_UNKNOWN_PARTIAL_PRESERVED_NO_REPLAY",
+            "safeCode": "OWNED_MATERIALIZER_IDENTITY_CHANGED",
+            "childReaped": true,
+            "minimumAvailableBytes": 8521195520,
+            "maxSampleGapSeconds": 0.20076593291014433,
+            "samples": 1706,
+            "freeBeforeBytes": 8890961920
+          }
+        },
+        "currentFreeBytes": 8521183232,
+        "recentParentDiskSamples": "Available in original parent terminal receipt only; current statvfs is independent readonly snapshot",
+        "businessPayloadRead": false,
+        "opaque188ContentRead": false,
+        "signalsSent": false,
+        "PGExecuted": false,
+        "automaticRetry": false
+      }
+    }
+  },
+  "PGExecuted": false,
+  "C14IssuedByT45": false,
+  "REALExecuted": false,
+  "oldFormalTargetChanged": false,
+  "sourceOrBuildRepeated": false,
+  "rootPolicyRestoredToOriginalSha256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+  "next": "C disposition of material receipt and original cleanup evidence; do not replay original job or copy again"
+}

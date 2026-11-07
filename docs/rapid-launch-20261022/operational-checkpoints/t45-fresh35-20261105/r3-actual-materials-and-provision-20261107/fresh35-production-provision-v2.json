@@ -1,0 +1,36 @@
+{
+  "format": "FRESH35_PRODUCTION_PROVISION_AUTHORIZATION_V2",
+  "decision": "AUTHORIZE_EXACT_NEW_EMPTY_PRODUCTION_TARGET_ONLY",
+  "deploymentManifestSha256": "e7b612814be23afe4fbc1b2b1ecaf680b5933cbed777bf26caeee31381d0ff62",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "proposal": {
+    "database": "erp_native35_20261107_r3",
+    "admin": "erp35_admin_20261107_r3",
+    "owner": "erp35_owner_20261107_r3",
+    "controller": "erp35_controller_20261107_r3",
+    "runtime": "erp35_runtime_20261107_r3",
+    "host": "127.0.0.1",
+    "port": 18653,
+    "workspaceDirectory": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r3"
+  },
+  "postgresUid": 61035,
+  "postgresGid": 61035,
+  "startsAt": 1794011264564,
+  "expiresAt": 1794012464564,
+  "independentSafetyReviewSha256": "e57352514e3123d087da58a955dfc81d92fec9f78acb068ca2e23ae2c4e2c508",
+  "authorizationReference": "C delegated by human until2026-11-07T12:00+08. Exact new R3 only; QB e573/dcc273/93c324, actual child38a65 and current no-live readonlyfce32 adopted. Original parentFAILED/unknown child exit retained. Fixed RAW read-only mount; no repeat copy. C6/C9/REAL/switch separately bound.",
+  "purpose": "PRODUCTION_NEW_EMPTY_EXACT35",
+  "ordinary": {
+    "connectHost": "127.0.0.1",
+    "connectPort": 18653,
+    "serverAddress": "127.0.0.1",
+    "serverPort": 18653,
+    "runtimeLoginValidUntil": "2027-11-07T04:00:00Z",
+    "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs"
+  },
+  "serviceLease": {
+    "expiresAt": 1825560000000,
+    "onSuccess": "RETAIN_EXACT_TARGET_UNTIL_SERVICE_DEADLINE",
+    "onFailure": "STOP_EXACT_TARGET_PRESERVE_DATA"
+  }
+}

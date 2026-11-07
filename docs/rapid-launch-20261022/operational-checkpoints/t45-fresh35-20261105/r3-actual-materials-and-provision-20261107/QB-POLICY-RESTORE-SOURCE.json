@@ -1,0 +1,18 @@
+{
+  "status": "PASS_SCOPED_POLICY_RESTORE_SOURCE",
+  "sourceSha256": "72dae8ab8d267e63a475da259ca54d4c10e0d859074f779e680e9b39301d4c30",
+  "parentSha256": "c7726775fddff22ad5b9ebd550be8a84965ed13f482c2682acef7d8a52d77d8a",
+  "parentPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-six-authority-bytes-20261107-01/bundle/install_stage_policy.py",
+  "expectedBeforeSha256": "80304c61a3fc5eff10037abfba483ff82c1eb926ae2462a3f49728e4696acec0",
+  "restoreSha256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": "CHECKS.json, exact source/parent review and CAS/retained-bytes finite models only",
+  "actualPolicyOrRetainedBytesReadByReview": false,
+  "actualRestore": "NOT_EXECUTED",
+  "liveStagingPrecondition": "External original-owner condition; no active staging at restore time not reverified by review",
+  "expiredRestoredPolicy": "Preserve exact existing expiry, not new permission/renewal",
+  "server": "NOT_ACCESSED",
+  "PG": "NOT_TESTED",
+  "modelRuntime": "UNVERIFIED"
+}
