@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T00:56:52.173957+08:00",
-      "phase": "R4_REAL_PREPARE08_FRESH_WINDOW_ISSUED_ACTUAL_PENDING",
+      "at": "2026-11-08T01:01:18.749000+08:00",
+      "phase": "R4_PREPARE08_FAILED_FIXED_ACCESS_LEDGER_SEAM_REPAIR",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 collect actualPREPARE08 original key",
-      "nextOwner": "C actual terminal scope; successfulPREPARE then exactEXECUTE scope else first-error repair",
-      "latestActualReceiptSHA256": "799c05533191f17800170c2e407207bd72d2e8cdf9bd69ec71faa10e8a0f7aed",
+      "currentOwner": "Original T45 exact access-ledger input contract diagnosis and minimum successor",
+      "nextOwner": "C sole originalQB scoped review of accurate successor input seam",
+      "latestActualReceiptSHA256": "54a73bb2d5f8dbbb8c69bbee4494febbb8bd98a3734117d406e82ffc5d09da57",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Await exactPREPARE08 acceptance and original-key terminal; no duplicate reader job or threshold/window relaxation. Real import/reconciliation/history PG/backup restore/formalhost/cutover incomplete.",
+      "next": "Fix exact requestKey/ledger plan wiring after first error diagnosis, preserve fixed-path access guard and any08 temporary evidence; reuse liveBOOT10/1118/guardian if valid. NoBOOT repetition, no08replay, no relax, no new window before ready. Real Nodepreflight/whole import/reconciliation remain unverified.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36612,8 +36612,8 @@
       }
     },
     "r4RealPrepare08_20261108": {
-      "at": "2026-11-08T00:56:52.173957+08:00",
-      "state": "FRESH_WINDOW_ISSUED_ACTUAL_PENDING",
+      "at": "2026-11-08T01:01:18.749000+08:00",
+      "state": "ACTUAL_FAILED_ACCESS_ROOT_FIXED_LEDGER_REQUIRED_BEFORE_NODE",
       "owner": "original T45",
       "readySHA256": "838ef38eebec87fe71747511655315d65bfd314cdfc7a2d78e600c119648546f",
       "sourcePinsVerified": 6,
@@ -36627,7 +36627,17 @@
       "outerSeconds": 1500,
       "actualEOF": "NOT_VERIFIED",
       "actualPreparedBinding": "NOT_VERIFIED",
-      "EXECUTEIssued": false
+      "EXECUTEIssued": false,
+      "actualResultSHA256": "54a73bb2d5f8dbbb8c69bbee4494febbb8bd98a3734117d406e82ffc5d09da57",
+      "jobReceiptSHA256": "c13db4bbb66e3641ed30e1afcc4ea6d320a307575ecfffa0704dcefc597a0d9c",
+      "exitCode": 2,
+      "elapsedSeconds": 0.919545,
+      "errorCode": "ACCESS_ROOT_FIXED_LEDGER_REQUIRED",
+      "NodePreflightEntered": "NO_EVIDENCE",
+      "databaseWrites": "NO_EVIDENCE",
+      "PGStillLiveInImmediateReadback": true,
+      "PGPid": 1759,
+      "replayAuthorized": false
     }
   }
 }
