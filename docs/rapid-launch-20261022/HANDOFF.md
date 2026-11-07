@@ -2943,3 +2943,19 @@ D1接续一次全假完整工作集/物理读取轴，脚本尚在途；固定46
 T45原只读键COMPLETED0/.5182s，job e8690b22、实际metadata0f43cb1e/4073B，RESULT5f6a919a及5直接引用C已核。本次BOOT13 cleanup原raw1afe/193B来自实际新inode14561325，canonical逐字等；PG2421/guardian2414/Node2544、18654监听、PIDfile和writeauthority均不存在，HBA原bytes与inode、a7d/6843/3a8c、45项access恢复及2秘密投影缺失均保持。余8473841664B仅为本次观测，下次仍需fresh核资源。未查询角色口令或重新验业务，0PG/SQL/SQLite/服务变更。
 
 BOOT14原非时间草稿的stop后继dc4b7212已绑定本次凭据；旧草稿保留，新工具、时窗、准确UTC日期继续未绑定，未启动。唯一下一步仍D1完整假工作集结果及据证修复→原QB/D2增量→T45原工具通道；不把前序核验或小模型完成冒充真实导入/上线。
+
+
+## 2026-11-08T07:31:14.258672+08:00 唯一完整假工作集诊断已固定并限时派达
+
+D1脚本a4935e0a/17651B与4项边界检查复用；本地index2692177920B、驻留670285824B、4096唯一get867.360ms，Mac实际物理读UNKNOWN正确退出2，不能算Linux复现。C完整读源及T45 READY1d50791a的16绝对引用，原PID/start/exe/reap函数AST不变，仅新假目录/pin、3GiB产物上限及准确观测判据接线。C6433d28e/1514B已派原T45唯一键t45-r4-synthetic-full-dirty-registry-diagnostic-20261108-01，执行前限1794094734883；原145/160/174/180秒及4GiB活动余量、8207515646启动门槛、RSS820727808上限均不放宽。
+
+本次仅接近实际规模/驻留/物理读轴，未满足条件保持UNKNOWN，禁止据此循环新小模型。真实39b源码、R4PG、资料/备份不变；实际终态尚未取得，BOOT14未启动。下一步D1采用本次事实及真实523s注册查询基线，原临时验证索引最小修复→QB增量，不新增PG业务合同或审批层。Git三记录断点8ff50140a567b6148901f5c7faa2fbd520735276已推送并远端读回确认。
+
+
+## 2026-11-08T07:35:59.101367+08:00 完整假模型未到查询阶段，收口诊断并转最小源码修复
+
+T45唯一fullfake键FAILED2/144.666s，actual31442d53/95069B、RESULTf630a890，C核7引用。原Node正常exit2/reaped，stopReason=null；首个未完成为FULL_DIRTY_PRECONDITION的DIAGNOSTIC_TIME_BUDGET，542720仅进度下界。只完成固定resident填充及460188假注册（57279.481ms），未进入目标get采样/驻留刷新/最终COMMIT，physical get仍NOT_REACHED/UNKNOWN，不能用前置read_bytes冒充查询证据。
+
+峰artifact2493857792B、最低余5979832320B、snapshot RSS677847040B均在原上限内；finally正常close后最终artifact192512B、余8473112576B，是不同观测，未人工清理，也未保全峰index或证明业务回滚。保留全部文件和30完整progress；0PG/真实包/BOOT14/重试。当前cgroup累计数值不倒推旧PREPARE12。
+
+不再循环小模型或延时。主控采用已有真实注册耗时与4→32MiB同字节最终SQLite反事实作为最小改动依据，原D1开始只调整现有临时页缓存，原PG事务/权限/校验/幂等/UNKNOWN语义及资源预算不改；收益和唯一根因均未证明。下一步固定提交→原QB定向验收→D2小工具→T45材化/未来BOOT14，真实导入与上线仍未完成。
