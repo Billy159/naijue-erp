@@ -28510,12 +28510,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Fiveleaf frozen/no new work; no actualPG claim",
-      "QB": "Application7leaf aggregatePASS after exactP2 fix6fec; wait only finalopsbinding",
-      "D2": "Unique final10fc5efd build+pack/tail in progress",
-      "T45": "Localr26ops accurate newname10fc5e, build pins unbound until actual result",
-      "D3": "REAL package and independent readback ready, waits exact target",
-      "QF": "Core browser prerequisites ready, waits actual normal host/login"
+      "D1": "Original D1: fixed retained-exclusive source, then prepare existing independent readback projections. No target writes.",
+      "QB": "Original QB: history candidate transport/carrier source scoped PASS; review 4199807b and T45 exact proof increment.",
+      "D2": "Original D2: fixed 4199807b minimal tool closure, no APP rebuild or server execution.",
+      "T45": "Original T45: fixed history C13 transfer only and original policy restoration. R4 remains stopped pending resources and reviewed successor.",
+      "D3": "Original D3: independent source expectations frozen, target readback follows actual verified original commit.",
+      "QF": "Original QF: formal normal-entry prerequisite open, no new speculative browser run."
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -35451,12 +35451,12 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "EXACT_ISOLATED_BUILD_READY_T45_RESOURCE_AND_SCOPE_PENDING",
+      "state": "FIXED_SYNTHETIC_TOOL_TRANSFER_AUTHORIZED_T45_ACTUAL_PENDING",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "T45 verifies available resource and unique fresh isolated target; then original audited C13/C11/C9 history-only flow. No PG result yet.",
-      "at": "2026-11-07T17:35:28.476142+08:00",
+      "next": "Original T45 completes exact transfer and verifies original policy restored. C11 after materialization and current resource verification, C9 after actual isolated start.",
+      "at": "2026-11-07T17:56:27.916204+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
       "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
@@ -35483,7 +35483,12 @@
       "isolatedBuildResultSHA256": "22e8ac8e4fb98548fe002b7e645b82ffb4a1063596adaf4fda648baabb1ec03c",
       "isolatedNativeSourceSetSHA256": "8549ae780a8a83f0de5031bb8dbdae471f6880713ba93e2fef299dcf1aa094be",
       "isolatedOrdinaryArtifactSHA256": "d1809f54af18afc2f74c0292c9685903b9be9dff6f790fa9881a1cf05c20ba70",
-      "isolatedFixtureManifestSHA256": "0b4b67dc59937da7e8d9446b26f187ed2830929d6110d1131b78ad4fcd15e3d1"
+      "isolatedFixtureManifestSHA256": "0b4b67dc59937da7e8d9446b26f187ed2830929d6110d1131b78ad4fcd15e3d1",
+      "currentResourceReceiptSHA256": "9c7063a798e445284ccb16ee28dc6ef994796b0d20784948b62b3f183a61489c",
+      "transportAndCarrierQBResultSHA256": "6b9fb3b1f69c41def5ff8f1e219af2b2a6f98fc2fbfbea7be28875b4ad327ece",
+      "c13TailDecisionSHA256": "c236d23a997690e1d6b5f4c9e2a98e6369b6eec33d3b40e20156862d5d579062",
+      "c13FullDecisionSHA256": "1a2f29e0f5b0ff82e418702958ebd3a1cb2f85d9d7fb3e242e1c27842327b976",
+      "c13ExpiresAt": 1794046815380
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
@@ -35554,24 +35559,34 @@
       "next": "Only rebind after a genuine new successful PREPARE and active exact operation window. No server action or import authority issued."
     },
     "r4RetainedBackendProofRepair20261107": {
-      "at": "2026-11-07T17:35:28.476142+08:00",
-      "state": "MINIMAL_SCOPE_REGISTERED_SEPARATE_SOURCE_WRITERS",
+      "at": "2026-11-07T17:56:27.916204+08:00",
+      "state": "FIXED_SOURCE_WIP_REMOTE_VERIFIED_QB_AND_SMALL_CLOSURE_PENDING",
       "d1ReviewSHA256": "693c03f382293e1c822078cd10ff38aa66f5b8f8c453bd3496f08464d94e8543",
       "modelSHA256": "e57b7043d14057e05c9f92db8ad324ed0c39d678c0c4b5d785d95ea3a5793af2",
       "modelPass": 3,
       "serverOperations": false,
-      "next": "D1 same-client proof and T45 existing privileged capture/carrier first, original QB scoped and real Linux/PG positive and negative; bind BOOT07 only after these and actual space."
+      "next": "Original QB review and D2 narrow closure. Actual Linux/PG proof and valid existing admin reference required. Existing stop pin remains historical until BOOT07 binding.",
+      "commit": "4199807b180ac6add75c66a57754bf77d35bf11d",
+      "tree": "255e288d78cf435c7b781c3915c2eeac14c0c470",
+      "branch": "codex/erp-r4-retained-backends-20261107",
+      "sourceSetSHA256": "f1bffe5bddbde74b743c63b3415e3609434f75fa12362e51e07b9ab4df99219e",
+      "patchSHA256": "40b5c27e6daab9cb11e2f6d6ec80040ca0511c3f8619ef2a31be29e84995da5c",
+      "python02SHA256": "d177c52cf7bd26fd5501954128814308c44d221cef330bd6e201da13d94a795c",
+      "remoteExactReadback": true,
+      "authorFocusedPassed": 29,
+      "oldHostModelFailuresReproduced": 8
     },
     "oldProductionRestoreLiveCapacity20261107": {
-      "at": "2026-11-07T17:35:28.476142+08:00",
-      "state": "ACTUAL_CAPACITY_INSUFFICIENT_EXACT_RESTORE_UNEXECUTED",
+      "at": "2026-11-07T17:56:27.916204+08:00",
+      "state": "ACTUAL_STORAGE_SHORTFALL_REPORTED_NO_OTHER_AUTHORIZED_VOLUME",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 5664706560,
+      "actualAvailableBytes": 5664595968,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 30842515456,
+      "oldRestoreShortfallBytes": 30842626048,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 2542809086,
-      "next": "T45 first checks safe isolated historical run, then verifies other volumes or actionable capacity. Do not relax guards or delete originals."
+      "r4ShortfallBytes": 2542919678,
+      "next": "Recheck actual volume after user/storage intervention. Preserve backups and failure evidence. Continue independent isolated history scope.",
+      "latestResourceReceiptSHA256": "9c7063a798e445284ccb16ee28dc6ef994796b0d20784948b62b3f183a61489c"
     }
   }
 }
