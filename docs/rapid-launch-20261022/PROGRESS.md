@@ -2495,3 +2495,11 @@ C13 `ce61f10b1360e0c3da1253967c9fe72b7fbac1306798ec3d6c9d3a44fc58e367`, fixed30m
 
 ### 2026-11-08 PREPARE10 已派实际预检
 原参数发布06实际退出0，receipt414002…，新inode14560170/1857B、原1118保留；derived access c7b7…/34667B。固定49d工具，7个输入及2个真实回执核齐；C scope926b14e7…/4597B，starts1794077041998至1794078241998，20分钟，原key t45-r4-real-prepare-20261107-10（真实运行日期11月8日）。原T45只提交一次并查原键，保留100ms采样、250ms最大间隔和4GiB活动底线。全量EOF、prepared binding及实际耗时仍待结果；未发EXECUTE，不将预检启动当导入成功。
+
+
+### 2026-11-08 PREPARE10 真实失败，转实际耗时定位
+原键 FAILED/2，1173.006898689秒，结束19:04:04.922059Z，首错 REAL_ORIGINAL_WINDOW_EXPIRED；root bc965904…/1645B。11615次采样最大间隔0.161786355秒低于0.25秒，最低空间7,687,286,784B高于4GiB，因此当前未证为空间或采样故障。Node及子孙已回收、原输入metadata已恢复，但CLI状态/连接清理/核验仍UNKNOWN，回滚未证明、无prepared binding。原T45仅一次原方法只读聚合cost/progress和真实PG/guardian/HBA收尾；原D1待真实成本定位最小修复，不延窗或原样重跑。
+
+
+### PREPARE10 真实成本与停止回执已收齐
+固定安全只读29d3b417…/35979B：PG与guardian、端口/pid/writeauthority均不存在；cleanShutdown/cleanupComplete/dataPreserved及HBA、45项输入metadata恢复已核实。26表cost末次累计覆盖608916业务行；预检进度已至1098004全局行、REPORT_FINALIZE END991818ms，尚无native prepared binding，不称全链通过。调拨明细273948次REGISTRY耗时319767ms，其他表同项合计约6228ms；这是重叠wall，不是CPU。C批准原D1对私域SQLite覆盖索引做合成对照及最小源码候选，不改PG；尾段具体耗时仍未知，原必要校验均保留。原T45仅准备本次精确派生index归档，不与D1争改源码，不启动新预检。
