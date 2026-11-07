@@ -50,7 +50,7 @@ export async function streamPreflight(directory,reportDirectory,{expectedManifes
  db.exec(`PRAGMA journal_mode=DELETE; PRAGMA cache_size=-4096; PRAGMA temp_store=FILE;
  CREATE TABLE registry_rows(ordinal INTEGER PRIMARY KEY,file TEXT,line INTEGER,raw_json TEXT NOT NULL);
  CREATE TABLE identities(entity TEXT,key TEXT,id TEXT,file TEXT,line INTEGER,identity_basis TEXT NOT NULL,PRIMARY KEY(entity,key),UNIQUE(id));
- CREATE TABLE identity_keys(entity TEXT,key TEXT,id TEXT,PRIMARY KEY(entity,key));
+ CREATE TABLE identity_keys(entity TEXT,key TEXT,id TEXT,PRIMARY KEY(entity,key)) WITHOUT ROWID;
  CREATE TABLE rows_seen(entity TEXT,key TEXT,id TEXT,file TEXT,line INTEGER,PRIMARY KEY(entity,key),UNIQUE(entity,id));
  CREATE TABLE refs(entity TEXT,id TEXT,file TEXT,line INTEGER,field TEXT);
  CREATE TABLE positions(entity TEXT,parent TEXT,position INTEGER,PRIMARY KEY(entity,parent,position));
