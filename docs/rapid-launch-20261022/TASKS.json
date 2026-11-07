@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T22:03:11.585048+08:00",
+    "at": "2026-11-07T22:05:30.318884+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -35847,7 +35847,23 @@
         "new35IndependentRestoreNeed": "UNKNOWN",
         "PGConnections": 0,
         "signalsSent": 0,
-        "protectedUnchanged": true
+        "protectedUnchanged": true,
+        "finalResultSHA256": "e5312b2bc9a5347a4a2831efe9b1ec28d85498e4e5bf776b60035c8fc3cc17ca",
+        "finalReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-retired-prepare05-cache-result-01/REPORT.md",
+        "restoreSpaceAssessment": {
+          "existingOldTargetOnlyFloorBytes": 36507222016,
+          "existingOldTargetOnlyGapBytes": 27204071424,
+          "notNew35Requirement": true,
+          "new35Need": "UNKNOWN",
+          "missing": [
+            "actual committed/verified import and initialization binding",
+            "postimport DB/PGDATA/relations/index/WAL sizes",
+            "actual backup packaged/expanded/coexistence size",
+            "restore PGDATA/index/WAL/temp peak",
+            "fresh pervolume identity/free/reserve/caps at execution"
+          ],
+          "newServerActionsForThisAssessment": 0
+        }
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
