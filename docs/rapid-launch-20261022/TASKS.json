@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T14:12:06.054241+08:00",
-      "phase": "R4_STAGING03_READY_CURRENT_EXACT_ROOT_SCOPE_UNISSUED",
+      "at": "2026-11-07T06:55:22.788890+00:00",
+      "phase": "R4_TOOL_STAGED_AND_LOADED_POLICY_RESTORED_BOOT06_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 execution after valid exact scope; C coordinates; QB staging fix adopted",
-      "nextOwner": "T45 stage then BOOT06 and D1 actual caller/publisher binding",
-      "latestActualReceiptSHA256": "824c8cb3a9de5863c03a4f1306a5515623ec905bfc0b8bedd0672772e116ba8a",
+      "currentOwner": "C coordinates; original T45 completed STAGING03",
+      "nextOwner": "Original T45 for BOOT06 on separate scope, D1 for actual binding",
+      "latestActualReceiptSHA256": "fd3a5e995bd2f13bb8e76cc27a401cf5840a37439ccb7aa7448da987a4923f43",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,8 +33318,8 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Confirm the exact current 798482ce root policy staging window; once valid, preserve old bytes, upload once, verify actual READY and materialize, then restore the policy. BOOT06 and REAL are separate steps.",
-      "authority": "Broad decision delegation through 12:00+08 expired. Standing authorization for bounded synthetic isolated operation is not used as new root-policy approval for the retained production candidate. No new external approval issued.",
+      "next": "Separate exact BOOT06 target and execution scope before runtime/REAL binding. Preserve verified stop31b7 and completed stage evidence; no repeat transfer.",
+      "authority": "Exact one 30 minute staging window completed and original policy restored. Standing user direction covers future equivalent staging only, with a fresh bounded scope each time. No BOOT06, REAL or deployment authorization is derived from this stage.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
@@ -35036,7 +35036,7 @@
         },
         "boot06StopBinding": {
           "at": "2026-11-07T13:51:24.968856+08:00",
-          "state": "STAGING03_SCOPED_SOURCE_PASS_EXACT_POST_NOON_PRIVILEGED_SCOPE_UNISSUED",
+          "state": "STAGING03_ACTUAL_LINUX_CLOSURE_PASS_ORIGINAL_POLICY_RESTORED_BOOT06_PENDING",
           "installationRecordSHA256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
           "earlierPrepare02StopSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
           "actualLatestPrepare04StopSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
@@ -35053,9 +35053,9 @@
             "QB": "independent affected delta"
           },
           "boundaries": {
-            "localOnly": true,
-            "newServerScopeIssued": false,
-            "stagePerformed": false,
+            "localOnly": false,
+            "newServerScopeIssued": true,
+            "stagePerformed": true,
             "boot06Performed": false,
             "realImportPerformed": false,
             "publicSwitch": false
@@ -35120,9 +35120,42 @@
               "fresh35-production-carrier.py": "a1dfea26374bf9ce8321694e0ff93fdf95dcdffb7323e2e2f234692ea37e155a",
               "production-plan.json": "5792007da5cf4fa35470c2a70612eab531748b79781ea3cabe058db85438456f"
             },
-            "externalAuthorityIssued": false,
-            "actualReady": false,
-            "actualLinuxMaterialization": false
+            "externalAuthorityIssued": true,
+            "actualReady": true,
+            "actualLinuxMaterialization": true,
+            "actualPolicyRestored": true,
+            "actual": {
+              "at": "2026-11-07T06:55:22.788890+00:00",
+              "receiptSHA256": "fd3a5e995bd2f13bb8e76cc27a401cf5840a37439ccb7aa7448da987a4923f43",
+              "receiptBytes": 6730,
+              "authoritySHA256": "f4e71810a7462f762cbebdce47c5b030dd5f0006a5ce147f80a9574fa9f3143c",
+              "windowStartsAt": 1794034184099,
+              "windowExpiresAt": 1794035984099,
+              "readySHA256": "12a6b074f601a35cffab8046d92db48fe38e86fea6326aa7d435dffa1d10f3f4",
+              "linuxNode": "v24.21.0",
+              "cliModuleImported": true,
+              "regularFiles": 357,
+              "logicalBytes": 5047924,
+              "installReceiptSHA256": "d29835f36f7710c3b4ae7d1a4f4d5a30562c16a7f735205ca3be4f447e18974d",
+              "linuxReceiptSHA256": "7a961268ddc6f35882f47630a4aa2f33b567f0a2698286d39d4506b63cd5e4a4",
+              "restoreReceiptSHA256": "5059fafb25881f9d04ff4e5f84635ce0b11835968396830d107588935f00a079",
+              "finalReadbackSHA256": "bb8d6203befb45d559d337c069bf98825453012f39ef35c41b124ff659ddbb12",
+              "originalPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+              "originalPolicyOwnerMode": "root:root 0444",
+              "originalPolicyLinks": 1,
+              "jobExitCodes": {
+                "install": 0,
+                "materialize": 0,
+                "restore": 0
+              },
+              "uploadAttempts": 1,
+              "pgConnections": 0
+            },
+            "standingScope": {
+              "userChat": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+              "userMessage": "01a1b4c2-745e-70c0-b410-0d59934bc555",
+              "scope": "Same previously reviewed fixed-tool transfer and independent Linux load only. C pins version, destination and up to 30 minutes per invocation. T45 preserves and restores exact prior strategy on success, failure or expiry. Valid until user changes or revokes. No standing server policy, database operation, REAL import or release authority."
+            }
           }
         }
       }
