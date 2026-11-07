@@ -2651,3 +2651,12 @@ T45唯一fullfake键FAILED2/144.666s，actual31442d53/95069B、RESULTf630a890，
 峰artifact2493857792B、最低余5979832320B、snapshot RSS677847040B均在原上限内；finally正常close后最终artifact192512B、余8473112576B，是不同观测，未人工清理，也未保全峰index或证明业务回滚。保留全部文件和30完整progress；0PG/真实包/BOOT14/重试。当前cgroup累计数值不倒推旧PREPARE12。
 
 不再循环小模型或延时。主控采用已有真实注册耗时与4→32MiB同字节最终SQLite反事实作为最小改动依据，原D1开始只调整现有临时页缓存，原PG事务/权限/校验/幂等/UNKNOWN语义及资源预算不改；收益和唯一根因均未证明。下一步固定提交→原QB定向验收→D2小工具→T45材化/未来BOOT14，真实导入与上线仍未完成。
+
+
+## 2026-11-08T07:46:45.478660+08:00 cache32固定源码、独立增量和远端交付已完成，工具待Linux加载
+
+D1固定8e22927a229881f1ed138ad8665c07a9d9761b24（父39b、tree0e86b71f）：仅现有临时SQLite常量/PRAGMA/summary三行，runtime c2f6d712/38222，另必要测试；无PG/plan/事务/窗口变化。作者40定向+273948行规模1项共41/41、0skip，规模239417246B/峰RSS350011392B仅合成。原QB准确cdba07a6/2684独立1项通过、原40+规模复用，无源阻塞；C采用PASS_SOURCE_AND_SCOPED_MODEL不重复技术验收。32MiB实际多28MiB页预算，原HWM不是硬RSS保证，真实收益/新RSS仍未验。
+
+D1旧直连75s失败完整保留；复用C已证临时网络路线单次正常push+lsremote均0，45b76c93/727准确确认原branch codex/erp-d1-record-context-20261108=8e22927a，未force/改凭据或全局配置。D2原微闭包RESULTe8765eef/9381已固定（仅采用QB替代先交21a，归档不变），sourceSet7edf12b8、216/180、361成员/5129492逻辑字节；1148193B独立归档da83766b、manifest103ea159、descriptor26400936、layout6bafa338及QB/HANDOFF六pin C已核。loader/CLI通过，旧734额外测试证据保留，不冒充本版新测试已装入。
+
+T45已获准确物料，沿原成对策略材化与恢复通道准备一次小工具加载；无新APPbuild或新平台，BOOT14未启动。旧工具39b/安装3b/APP576、资料和备份不变；真实PREPARE13/native绑定、608916导入核账及上线尚未完成。唯一下一步准确READY→C限时→T45实际材化/restore/load，再未来BOOT14和参数09。
