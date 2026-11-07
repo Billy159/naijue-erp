@@ -33303,12 +33303,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T14:00:16.906943+08:00",
-      "phase": "R4_STOPPED_FIXED_798482CE_TOOL_CLOSURE_WAIT_QB_AND_EXACT_T45_CARRIER",
+      "at": "2026-11-07T14:07:39.732471+08:00",
+      "phase": "R4_STOPPED_QB_BOOT_DELTA_PASS_STAGING_DEADLINE_AND_CAS_FIX_IN_FLIGHT",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 sole executor preparing exact 798482ce staging carrier; D1 binding actual packaged source into private main",
-      "nextOwner": "QB affected verification; C exact finite windows; T45 stage and boot",
+      "currentOwner": "Original T45 tight staging expiry and identity guards; QB targeted recheck",
+      "nextOwner": "T45 exact stage and same-data BOOT06 once corrected artifact matches scope; D1 final caller/publisher after actual boot",
       "latestActualReceiptSHA256": "824c8cb3a9de5863c03a4f1306a5515623ec905bfc0b8bedd0672772e116ba8a",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Adopt affected QB result, verify exact T45 carrier and stage the 798482ce tool once. Continue BOOT06 and original real preflight on actual epoch and clean-stop binding.",
+      "next": "Do not execute cc17b47a. Fix and independently verify affected staging checks only; use existing exact artifact channel, then BOOT06 and one actual runtime caller/publisher binding before real preflight.",
       "authority": "Time-limited user decision delegation through 12:00+08 expired. Standing same-kind authorization and the existing release objective remain, subject to exact action scope and effective runtime gates. No new execution scope issued here.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -35035,7 +35035,7 @@
         },
         "boot06StopBinding": {
           "at": "2026-11-07T13:51:24.968856+08:00",
-          "state": "FIXED_TOOL_CLOSURE_AND_STOP_CONSUMERS_LOCAL_READY_INDEPENDENT_REVIEW_AND_LINUX_PENDING",
+          "state": "QB_SCOPED_BOOT_AND_STOP_PASS_STAGING_EXPIRED_WINDOW_CAS_DELTA_IN_FLIGHT",
           "installationRecordSHA256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
           "earlierPrepare02StopSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
           "actualLatestPrepare04StopSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
@@ -35079,7 +35079,25 @@
           },
           "d1ScopedResultSHA256": "264ea08b1afd77604dfb512f8f233fa2f002325121923d5111b931cfdc129889",
           "privateMainStopOnlySHA256": "b9fb9a245d46e33a8deea745e841f034c571ea25621df738925b0d060953ed1a",
-          "materializerDecision": "Keep exact existing phase-1 authorization. Fixed source can consume an exact second phase digest issued by C only after actual READY, verifying protected original bytes, identity and archive through the existing mechanism. No invented inode, new server action or added control layer."
+          "materializerDecision": "Keep exact existing phase-1 authorization. Fixed source can consume an exact second phase digest issued by C only after actual READY, verifying protected original bytes, identity and archive through the existing mechanism. No invented inode, new server action or added control layer.",
+          "qbBootDelta": {
+            "status": "PASS_SCOPED_STOP31B7_BOOT06_AND_SECOND_CAS_SOURCE",
+            "resultSHA256": "ba269a5f86dc7373bf4e016f381beff092b923b0bfd02b97738b33ada1f66abc",
+            "finiteCasesPassed": 25,
+            "actualServerOrPGExecution": false
+          },
+          "binding09": {
+            "status": "LOCAL_TOOL_BINDING_ONLY_NOT_FINAL_PREPARE",
+            "resultSHA256": "213552331d49df3726606b7a4d10099854a389ce59d778094bf22137f5029784",
+            "mainSHA256": "12f19ddbebe85a86b91593cfdb414d5acc3eb86d265199525c34bb2bfe7b4e81",
+            "open": "Four BOOT05 runtime references at 523, 797, 929 and 931 require actual BOOT06 caller/cleanup binding together with publisher. This does not block BOOT06 itself."
+          },
+          "stagingQBBlock": {
+            "materialSHA256": "cc17b47a38465bd57ca2139029a30aacf9a15202bf4a30fed0128b1284960d21",
+            "status": "DO_NOT_EXECUTE_REPAIR_IN_FLIGHT",
+            "owner": "Original T45 only",
+            "reason": "Final install CAS can occur after expiry; materialization can cross expiry before Node or before success output; install/restore final CAS misses same-inode ownership/mode/link drift. Exact source, stage READY byte digest and archive identity remain."
+          }
         }
       }
     },
