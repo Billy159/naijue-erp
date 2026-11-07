@@ -33303,12 +33303,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T02:40:39.200487+08:00",
-      "phase": "R4_BOOT11_ACTUAL_PASS_PARAMETER_PUBLICATION_PENDING",
+      "at": "2026-11-08T02:44:38.544232+08:00",
+      "phase": "R4_REAL_PREPARE10_20MIN_ONCE_ISSUED_TERMINAL_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exact parameter publication key06",
-      "nextOwner": "C exact PREPARE10 scope after non-time materials READY",
+      "currentOwner": "Original T45 original key only",
+      "nextOwner": "C terminal+record-cost evidence then exact next action",
       "latestActualReceiptSHA256": "30634b2b1160e52539b4a2217d601e7735e6b8f0070309ca9893fef4ba943a20",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Actual BOOT11 retained same PGDATA and identity, new epoch observed, original HBA restored. Publish exact C parameters df2dc then prepare non-time PREPARE10 materials. No REAL import or business PASS.",
+      "next": "Fixed49d diagnostics and actualBOOT11 parameters published. PREPARE10 one20min scope issued after all6leaves locally staged. Await originalkey result; no replay, extension, business import or PASS claim.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36955,8 +36955,26 @@
       "authentication": "NOT_SEPARATELY_TESTED",
       "parametersSHA256": "df2dc4dfed3d331a9bbd37757bdaec1cdf8ef137a14282daf56dd4962d9ec739",
       "parametersBytes": 1857,
-      "parametersPublication": "ISSUED_ORIGINAL_T45_KEY06_PENDING",
-      "businessVerified": false
+      "parametersPublication": "ACTUAL_COMPLETED_EXIT0_0.919217473_SECONDS",
+      "businessVerified": false,
+      "parameterPublicationReceiptSHA256": "41400200016ce600017877f14fa8c332fbc6fd5b3e7e1533fb02d38d595c44e8"
+    },
+    "r4RealPrepare10_20261108": {
+      "state": "EXACT_C20MIN_SCOPE_ISSUED_TERMINAL_PENDING",
+      "requestKey": "t45-r4-real-prepare-20261107-10",
+      "startsAt": 1794077041998,
+      "expiresAt": 1794078241998,
+      "CActionSHA256": "926b14e79876ecf03c57e953fa5da8bdcd9ff420ae6abd13e2575f10b232e4af",
+      "CActionBytes": 4597,
+      "readySHA256": "1d804cecc3a17776b67cb94700cccfb14b7fe3dc80bef74e8dc1557d38a5a1aa",
+      "parametersSHA256": "df2dc4dfed3d331a9bbd37757bdaec1cdf8ef137a14282daf56dd4962d9ec739",
+      "accessPlanSHA256": "c7b7cf155016f43cae8c72dbf84e7aa4730c80b5bcdb420b6aa96d6a678877ee",
+      "sourceCommit": "49d13ebd87e6ec6805120c2913fcaf62b8a0aa09",
+      "sourceSetSHA256": "2501e7edb1808a3c7c7d8debb2661bb038fdc18ee880ccf71bd195e8e2ade1ff",
+      "owner": "Original T45",
+      "mode": "PREPARE",
+      "EXECUTEIssued": false,
+      "diagnosticBoundary": "Private enum/numeric records-cost only, original7key progress and fullEOF/strict-validation unchanged; no performance success claimed."
     }
   }
 }
