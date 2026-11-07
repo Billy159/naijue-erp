@@ -33303,12 +33303,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T01:01:18.749000+08:00",
-      "phase": "R4_PREPARE08_FAILED_FIXED_ACCESS_LEDGER_SEAM_REPAIR",
+      "at": "2026-11-08T01:06:48.133850+08:00",
+      "phase": "R4_PREPARE09_FIXED_NAMESPACE_FRESH_WINDOW_ISSUED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exact access-ledger input contract diagnosis and minimum successor",
-      "nextOwner": "C sole originalQB scoped review of accurate successor input seam",
+      "currentOwner": "Original T45 actualPREPARE09 only",
+      "nextOwner": "C exact original-key terminal then successfulbinding=>EXECUTE or targetedfirst-errorrepair",
       "latestActualReceiptSHA256": "54a73bb2d5f8dbbb8c69bbee4494febbb8bd98a3734117d406e82ffc5d09da57",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Fix exact requestKey/ledger plan wiring after first error diagnosis, preserve fixed-path access guard and any08 temporary evidence; reuse liveBOOT10/1118/guardian if valid. NoBOOT repetition, no08replay, no relax, no new window before ready. Real Nodepreflight/whole import/reconciliation remain unverified.",
+      "next": "Collect exactnewkey prepare-20261107-09, actual run date Nov8, original20min and guards unchanged; preserve08. Onlytask-key namespace corrected, no source/role/permission changes or repeatBOOT/QA. No actual EOF/import/reconciliation passed yet.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36637,7 +36637,39 @@
       "databaseWrites": "NO_EVIDENCE",
       "PGStillLiveInImmediateReadback": true,
       "PGPid": 1759,
-      "replayAuthorized": false
+      "replayAuthorized": false,
+      "rootCause": {
+        "type": "CALLER_TASK_KEY_DATE_NOT_IN_FIXED_R4_NAMESPACE",
+        "sourceGuardLocations": [
+          "nonroot_input_access.py prepare line97",
+          "real_access_consumer.py pointer_bytes line41"
+        ],
+        "contract": "t45-r4-real-(prepare|execute|inspect)-20261107-[0-9]{2}",
+        "failureBeforeMetadataChanges": true,
+        "readOnlyTailSHA256": "e5246b02278b1ad4166f0cf438c78db33e2054aa1be950870ac81df7ee9b1cae",
+        "new08TracesAbsent": true,
+        "cleanupWrites": false,
+        "sourceChangesRequired": false
+      }
+    },
+    "r4RealPrepare09_20261108": {
+      "at": "2026-11-08T01:06:48.133850+08:00",
+      "state": "FRESH_C_WINDOW_ISSUED_ACTUAL_PENDING",
+      "owner": "original T45",
+      "key": "t45-r4-real-prepare-20261107-09",
+      "namespaceDateIsTaskLabelNotActualRunDate": true,
+      "readySHA256": "3999a4e9fd6c4fb7c5961cd31a7010c3d4efd8bf8ad605b31085261a4ed1b65f",
+      "actionTemplateSHA256": "c81fd6db71cf8e0649f5a772a9eac61b38588959fef6bd94b7f12c691bd50825",
+      "controllerActionSHA256": "af4212a84355502995b2214e54e6a75ef6d07ab46a732f4c39572bfeb5ac9958",
+      "startsAt": 1794071137854,
+      "expiresAt": 1794072337854,
+      "mode": "PREPARE",
+      "sourceChanged": false,
+      "permissionsChanged": false,
+      "old08Replayed": false,
+      "BOOT10AndParameters1118Reused": true,
+      "actualEOF": "NOT_VERIFIED",
+      "EXECUTEIssued": false
     }
   }
 }
