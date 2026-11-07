@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T00:45:08.982836+08:00",
-      "phase": "R4_BOOT10_FRESH_WINDOW_ISSUED_ACTUAL_PENDING",
+      "at": "2026-11-08T00:56:52.173957+08:00",
+      "phase": "R4_REAL_PREPARE08_FRESH_WINDOW_ISSUED_ACTUAL_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 one retained R4 BOOT10",
-      "nextOwner": "C actual restart receipt then operation parameter binding",
-      "latestActualReceiptSHA256": "61532844385553deeaf2b82f61debb886230b47f18971064f84b0e0f31b8fdbf",
+      "currentOwner": "Original T45 collect actualPREPARE08 original key",
+      "nextOwner": "C actual terminal scope; successfulPREPARE then exactEXECUTE scope else first-error repair",
+      "latestActualReceiptSHA256": "799c05533191f17800170c2e407207bd72d2e8cdf9bd69ec71faa10e8a0f7aed",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect original BOOT10 key, no replay. If actual successful bind observed epoch/processes/restart receipt and C operation parameters, then newPREPARE08 original20min. Fresh space and originalCAS/HBA/cleanup guards required; no actual import or launch yet.",
+      "next": "Await exactPREPARE08 acceptance and original-key terminal; no duplicate reader job or threshold/window relaxation. Real import/reconciliation/history PG/backup restore/formalhost/cutover incomplete.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36562,8 +36562,8 @@
       }
     },
     "r4Boot10Successor20261108": {
-      "at": "2026-11-08T00:45:08.982836+08:00",
-      "state": "FRESH_C_WINDOW_ISSUED_ACTUAL_PENDING",
+      "at": "2026-11-08T00:56:52.173957+08:00",
+      "state": "ACTUAL_BOOT_AND_PARAMETER_PUBLICATION_PASSED_NOT_BUSINESS_VERIFIED",
       "readySHA256": "4e2837e13aea5eebccd62ca39bdc12b2574e93cbe4f1e8c15b04332922b1dba0",
       "sourcePinsVerified": 18,
       "QBReceiptSHA256": "ad470cec733f709727023afb9d6afc08ec222e3f76ccdf4d3e2442ccbfc97ca7",
@@ -36576,8 +36576,58 @@
       "carrierSHA256": "03e1b5ad41cac461140b7034e2ee4937c801d295c5c23017bec8734add179570",
       "oldRawNodeReceiptSHA256": "9d02b1318f8903243c43aca5c92cec56dbd6de620d0d64f58a7af981378fa445",
       "oldNodeTechnicalMetadataSHA256": "a0a9b1bfb0873f8cb6fc678a4dc98dbb0cc07ef14cd3251e66fbeaba0ef3cec2",
-      "realBootPassed": false,
-      "realImportPassed": false
+      "realBootPassed": true,
+      "realImportPassed": false,
+      "actualBootReceiptSHA256": "934bd02a5d802fb4646a1d280a193ea9b9c13686d621cc047eb9ec2dadcd33f0",
+      "actualJobExitCode": 0,
+      "actualJobElapsedSeconds": 3.326682892162353,
+      "actualEpoch": "2026-11-07 16:46:11.479855+00",
+      "protectedRestartSHA256": "3f5a6d75894ca3c59820ed1d46c6003af2855930fee3514c14d0a1b471fdc1b3",
+      "postgres": {
+        "pid": 1759,
+        "starttime": "296826869"
+      },
+      "guardian": {
+        "pid": 1752,
+        "starttime": "296826837"
+      },
+      "readOnlyObservationSHA256": "2072776b1e8bc8e4ab39b3ed969b27605db541385cc060d0aeeb37ae14dc5df3",
+      "HBAOriginalRestored": true,
+      "HBARestorationSeconds": 0.7884179390966892,
+      "roleAttributesUnchanged": true,
+      "roleCreated": false,
+      "actualObservedFreeBytes": 9021280256,
+      "separateCredentialLogin": "NOT_SEPARATELY_TESTED",
+      "parameterPublication": {
+        "key": "t45-r4-retained-parameters-20261108-05",
+        "receiptSHA256": "799c05533191f17800170c2e407207bd72d2e8cdf9bd69ec71faa10e8a0f7aed",
+        "exitCode": 0,
+        "elapsedSeconds": 0.871583912,
+        "parametersSHA256": "1118ddbafa0744ab10ebef35cc39bc60aee3ddd1dfdb422ccc3ee8fdf2da6b06",
+        "newInode": 14559592,
+        "bytes": 1789,
+        "accessPlanSHA256": "ec4ee223f6139fda71c302ed207ebc13a95602e5a2a0853cb8705db9040d247a",
+        "old971Preserved": true,
+        "databaseWrites": false
+      }
+    },
+    "r4RealPrepare08_20261108": {
+      "at": "2026-11-08T00:56:52.173957+08:00",
+      "state": "FRESH_WINDOW_ISSUED_ACTUAL_PENDING",
+      "owner": "original T45",
+      "readySHA256": "838ef38eebec87fe71747511655315d65bfd314cdfc7a2d78e600c119648546f",
+      "sourcePinsVerified": 6,
+      "actionTemplateSHA256": "2d91816722e03dc4f7f97ae61d1bf9da68f02864efdecd81cee947e503773a14",
+      "controllerActionSHA256": "86ace36fc3a824e946464acef73410357dc7598c056a7bc66ace7a7c3a8e6418",
+      "key": "t45-r4-real-prepare-20261108-08",
+      "startsAt": 1794070534948,
+      "expiresAt": 1794071734948,
+      "mode": "PREPARE",
+      "maximumBusinessSeconds": 1200,
+      "outerSeconds": 1500,
+      "actualEOF": "NOT_VERIFIED",
+      "actualPreparedBinding": "NOT_VERIFIED",
+      "EXECUTEIssued": false
     }
   }
 }
