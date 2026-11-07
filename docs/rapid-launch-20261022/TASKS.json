@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T21:31:57.640058+08:00",
+    "at": "2026-11-07T22:03:11.585048+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28399,12 +28399,12 @@
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
-      "latestIntegrationCheckpoint": "1e69d7a2a7b23c18b280654ba49aab5857562115",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-07T21:24:12.643271+08:00",
+      "latestIntegrationCheckpoint": "a860c6bc9739b4a6cd59fb638333e9ef0016e603",
+      "latestIntegrationRemoteVerifiedAt": "2026-11-07T21:48:18.071075+08:00",
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "1e69d7a2a7b23c18b280654ba49aab5857562115"
+      "lastControllerCheckpoint": "a860c6bc9739b4a6cd59fb638333e9ef0016e603"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28510,10 +28510,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Current stop-pin backup producer1a9aea5d source/QB5-model PASS; no server/PG. Backup/restore actual size and committed R4 batch pending.",
-      "QB": "New finiteEXECUTE-only f0e76333 two-predicate source/model22 PASSd012bf7a. No source repeat. Current003cPREPARE unchanged; actual complete import/readback unverified.",
-      "D2": "856e5a59 minimum history successor packedb968e4b5, old App/Web bytes reused; local7298 member readback and2.48MB tail valid; no server/PG.",
-      "T45": "PREPARE06 terminalFAILED2/1102.104543s originalwindowexpired, no binding. Parent/descendants reaped and input metadata restored; exact finalPG/controller status plus partialsummary/timing readonly in progress, no replay/writer.",
+      "D1": "Exact optionalphase delivered/fixeddbe523f2 andQB adopted; existing business/history ready work only, no duplicate phase implementation.",
+      "QB": "Optionalphase limited3 checks/byteequal/index/summary PASSfaeede91 adopted, no repeat.",
+      "D2": "OriginalD2 dbe523f2 optionalphase exact tool minimumclosure; reuseaf dependencies/valid checks, noWeb/fullsuite/PG.856history ready retained.",
+      "T45": "R4 original startfloor met; preserve06 unique interrupted evidence. OriginalT45 only existing new35 backup/restore capacity evidence assessment, no new restore or old47 threshold substitution.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Adopt the verified clean stop. Preserve PREPARE05. Repair only the physical backend visibility seam and measure the authorized execution timing before a new finite R4 epoch. No EXECUTE until exact successful binding.",
+      "next": "Complete exact05-cache retirement and actualspace readback; adopt limited progress-diagnostic QA before new source closure/finite R4 attempt. No old job replay or EXECUTE without actualsuccessfulPREPARE.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -35704,14 +35704,14 @@
     },
     "oldProductionRestoreLiveCapacity20261107": {
       "at": "2026-11-07T20:31:39.681123+08:00",
-      "state": "R4_FLOOR_MET_BY_ACTUAL_RETIREMENT_NEW_SYSTEM_RECOVERY_REQUIREMENT_PENDING",
+      "state": "ACTUAL_R4_STOPPED_AFTER_PREFLIGHT_TIMEOUT_NEW_DERIVED_INDEX_SPACE_CONSUMED",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
       "actualAvailableBytes": 8851918848,
       "oldRestoreStartFloorBytes": 36507222016,
       "oldRestoreShortfallBytes": 27655303168,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 0,
-      "next": "R4 original startup floor met at actual FD resource observation. Original T45 finiteBOOT07 next. New35 applicable recovery requirement remains unknown pending actual committed batch and measured sizes; old47 historic requirement separate.",
+      "r4ShortfallBytes": 1561976830,
+      "next": "Exact partial diagnostic evidence and current obsolete reproducible cache candidate evaluation; no removal authorized by this record. Do not lower startupfloor. New35 recovery capacity remains separately unknown; previous8851MB was after cleanup/before newpartial index.",
       "latestResourceReceiptSHA256": "3d6bc3192124d8171954d9f26cec568826c3ffb6bcfc023b5d15c356fcacac43",
       "latestRequirementAdjustment": {
         "authorityHumanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
@@ -35720,18 +35720,20 @@
         "newSystemBackupRecoveryStillRequired": true,
         "newSystemScope": "R4/current new35 actual committed data, import receipt and new business continuity need applicable backup/recovery before final switch; cannot call old backup or discarded rollback a new-system restore PASS."
       },
-      "r4MarginBytes": 644403202,
+      "r4MarginBytes": -1561976830,
       "latestPostToolFreeBytes": 8851300352,
-      "latestPostToolR4MarginBytes": 643784706
+      "latestPostToolR4MarginBytes": 643784706,
+      "latestActualFreeBytes": 6645538816,
+      "latestActualResourceSHA256": "3c6f118a87e947217cbbbb0621854e3dcb8dd4abc3e1ac82ca7a930d53887ee8"
     },
     "serverRetiredApplicationCleanup20261107": {
       "at": "2026-11-07T19:59:37.707927+08:00",
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
       "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
-      "state": "ACTUAL_FIXED38_AND_FOUR_APPLICATION_CLEANUPS_COMPLETE_R4_FLOOR_MET",
+      "state": "ACTUAL05_CACHE_RETIREMENT_COMPLETE_R4_START_SPACE_MET_RESTORE_NEED_UNKNOWN",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "No extra cleanup batch requested; protect currentR4/af/APP576, original receipts/data/backup. Original T45 BOOT07 current action; new35 restore capacity measured after actual committed data.",
+      "next": "R4 original startfloor met; preserve06 unique interrupted evidence. OriginalT45 only existing new35 backup/restore capacity evidence assessment, no new restore or old47 threshold substitution.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35759,8 +35761,8 @@
       "containerChanges": 0,
       "finalReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-retained-runtime-candidates-readonly-01/BOUNDED-CLEANUP-FINAL.json",
       "finalReportSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e",
-      "lastFreeBytes": 5513273344,
-      "lastFreeObservationShanghai": "2026-11-07T19:09:50.062+08:00",
+      "lastFreeBytes": 9303150592,
+      "lastFreeObservationShanghai": "2026-11-07T22:01:00.947+08:00",
       "furtherDeletedItems": 0,
       "retainedReasons": {
         "r48_server_web": "Exact bytes/mode rebuild and no current occupancy proven, but current old-formal rollback exclusion remains UNKNOWN. Both retained; prepared removal not submitted.",
@@ -35823,6 +35825,29 @@
         "signalsSent": 0,
         "containerChanges": 0,
         "permissionChanges": 0
+      },
+      "obsoletePrepare05Cache": {
+        "candidateSha256": "8278c4bf6b512d5138729c4177675e4c32c417f9efe2eba4136927a79f0129c9",
+        "readonlyInventorySha256": "020df52ace3ab2e2789d37833ab532dfcd9330cf5867fcbeafb258d80299bbf7",
+        "controllerDecisionSha256": "6f120c9420ec546f6f40639ca20974c7ac9def8f2660df72ca1c6c8395aae556",
+        "scope": "Only terminal05 runtime/stream/index.sqlite inode14558807 device66304 size2667474944 mtime1794042731692733049 uidgid61035 mode0600 nlink1. <=120s, fresh bounded manager job, no dirs/glob/SQL/signals/container/policy action.",
+        "estimatedAllocatedBytes": 2667495424,
+        "actualFreedBytes": 2667495424,
+        "state": "ACTUAL_DELETED_ABSENT_READBACK_PROTECTED_UNCHANGED",
+        "controllerConsumerDecision": "Original05 diagnostic complete; no queued or current consumer; no successful05 binding. Rebuild only newkey from retained inputs.06 unique interruption preserved.",
+        "job": "t45-r4-retire-prepare05-cache-20261107-01",
+        "receiptSHA256": "3fcb66ec62df54fb2afff4bfb38715f5c9cdb0917328d3f80a2ecba2bd595786",
+        "exitCode": 0,
+        "durationSeconds": 0.568371,
+        "freeBefore": 6635655168,
+        "freeAfter": 9303150592,
+        "r4StartFloorBytes": 8207515646,
+        "r4MarginBytes": 1095634946,
+        "r4ShortfallBytes": 0,
+        "new35IndependentRestoreNeed": "UNKNOWN",
+        "PGConnections": 0,
+        "signalsSent": 0,
+        "protectedUnchanged": true
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -35941,8 +35966,8 @@
       "next": "T45 exact newBOOT07 scope and Linux/PG prerequisites, C current-fact binding. Existing staging window was restored and is not new boot authority."
     },
     "r4Boot07MaterialAndActual20261107": {
-      "at": "2026-11-07T21:31:57.640058+08:00",
-      "state": "PREPARE06_ACTUAL_FAILED_WINDOW_EXPIRED_NO_BINDING_FORENSICS_IN_PROGRESS",
+      "at": "2026-11-07T21:48:18.071075+08:00",
+      "state": "ACTUAL_PREPARE06_TIMEOUT_CLEAN_STOP_CONFIRMED_PARTIAL_PREFLIGHT_DIAGNOSIS",
       "owner": "Original T45; original QB necessary increment only; C exact binding",
       "readySHA256": "ebebff6e9d9a1e841e4031397ca85aedcfc1d78de34aa8c9b961e65202bd5524",
       "qbResultSHA256": "476731e621872f271e5a6393de0afdd60abaddf3fe3676f31ce01f89023bfb03",
@@ -35998,7 +36023,7 @@
         "credentialAuthentication": "NOT_SEPARATELY_TESTED",
         "businessPassed": false
       },
-      "next": "Original T45 bounded readonly exact PG/controller/HBA/projection cleanup and existing partial summary/index/timing. Locate first exhausted stage before changing method/new budget; never replay old window or run EXECUTE without successful PREPARE.",
+      "next": "D1 exact existing SQLite schema/committed counts probe -> originalT45 boundedRO (sidecar present means skip, no immutable/recovery), locate measurable stage; preserve partial and facts. Minimal no-value phase progress source prepared conditionally, no source-preflight rerun or newPG/writer.",
       "parameters": {
         "issuedSHA256": "3799e7b2a14fc385cfb4e1faf81030478409c3f0162bde32d4b414e9191547c2",
         "bytes": 1830,
@@ -36051,8 +36076,27 @@
         "bindingProduced": false,
         "originalGuardianCleanupComplete": true,
         "originalImmediateControllerStopped": false,
-        "actualFinalStop": "UNVERIFIED_PENDING_BOUNDED_READONLY",
-        "newPreflightSummaryAndTimings": "PENDING_READONLY_COLLECTION"
+        "actualFinalStop": "EXACT_GUARDIAN_AND_PG_ABSENT_POSTMASTER_PID_ABSENT_PORT_NOT_LISTENING",
+        "newPreflightSummaryAndTimings": "PENDING_READONLY_COLLECTION",
+        "finalReadonlyResultSHA256": "3c6f118a87e947217cbbbb0621854e3dcb8dd4abc3e1ac82ca7a930d53887ee8",
+        "finalAggregatedResultSHA256": "add4ef5463d7f6f0485a7a460ac7e80b8c333b952455dd8a6f575be7ea177b32",
+        "actualCleanupReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "dataPreserved": true,
+        "originalHBABytesAndMetadataRestored": true,
+        "originalAccess45Restored": true,
+        "rootAdminRRROCapture": "ACTUAL_PASS_AT_2026-11-07T13:07:16.514Z_NOT_NODE_ALL_CHECKS",
+        "sourcePreflightCompleted": false,
+        "summaryAvailable": false,
+        "summaryTimings": null,
+        "planningDuration": null,
+        "exhaustedStage": "STREAM_PREFLIGHT_BEFORE_COMPLETION_SUMMARY",
+        "exactSubstage": "UNKNOWN",
+        "jobStartAfterCWindowStartsSeconds": 109.913832,
+        "partialSQLiteBytes": 2201923584,
+        "partialSQLitePreserved": true,
+        "freeBytes": 6645538816,
+        "startFloorBytes": 8207515646,
+        "startShortfallBytes": 1561976830
       }
     },
     "r4Execute45BoundedSuccessor20261107": {
@@ -36073,6 +36117,42 @@
       "proposedOuterSeconds": 3000,
       "throughput": "1672.074s D1 estimate remains extrapolation excluding SQL; no actual complete EXECUTE throughput claim",
       "next": "Require actual PREPARE06 success/plan/resources plus all current grant/roles/guardian/service/parameter lifetimes sufficient for explicitly new window and cleanup; otherwise preserve outputs and separately bind reviewed original finite restart. No extension or replay of in-flight job."
+    },
+    "r4PreflightPhaseDiagnosis20261107": {
+      "at": "2026-11-07T21:48:18.071075+08:00",
+      "source": "af395ebacd726a80d391bbed0181f556aafbc96f",
+      "owner": "OriginalD1 source / originalT45 server",
+      "reportSHA256": "1529a4f9ada3d6627eb6303d8e05f1ddabe8395bca8b92f39db023e7f6765d4f",
+      "whitelistSHA256": "fa65b4786203f5f415d3a3d8dfa0a3ed607a6ee990745ba88d23b5702d03f1d7",
+      "fact": "All11 tables/indices created first; one BEGIN101 spans records/metadata/relations until COMMIT160. File size/emptytables not stage marker. Indexhash162 then summary167; absent summary cannot isolate hash/report stage.",
+      "probeScope": "Fixedtwo indices only, metadata+sidecars+finite header/schema/11table counts/4factkind counts/pages, modeRO/queryonly/busy0/tempMEMORY,2s eachSQL/18s perindex/45s outer. Nonempty journal/wal/shm -> preserveandstop; no immutable, repair, rawbusinessrows or2.2GBhash. Unknown not0.",
+      "actualProbe": {
+        "receiptSHA256": "34a4a28350a3cfca8afa4c378a90418caae784d0e3dc8c2fc5dd4482269da94f",
+        "status": "COMPLETED_CARRIER_BUT_SQL_COUNTS_NOT_PASSED",
+        "prepare05": "11schema tables read; first COUNT interrupted11916.587ms,2s SQL target not enforced; remaining counts UNKNOWN, no retry.",
+        "prepare06": "Nonempty83560B rollback journal, SIDECAR_PRESENT_NOT_OPENED, unique index+journal preserved; actualphase UNKNOWN.",
+        "noPG": true,
+        "sourceMetadataUnchanged": true
+      },
+      "sourceProgressCandidate": {
+        "owner": "OriginalD1",
+        "state": "FIXED_SOURCE_QB_LIMITED_PASS_D2_MINIMUM_CLOSURE_DISPATCHED",
+        "parent": "af395ebacd726a80d391bbed0181f556aafbc96f",
+        "handoffSHA256": "17f5ff7429f263ff6f28c7b0f6e78d77b370001be58059f367dbc5e6ac319fc6",
+        "patchSHA256": "4db5f169bb0ca20e1a5941c0a2c52bcc415a7ae9beca75ba2591510c932cbaa0",
+        "files": [
+          "tools/unified-import/stream-preflight.mjs",
+          "tests/unified-import-stream-preflight.test.mjs"
+        ],
+        "boundary": "Optional phase/monotonic/count independent0600 progress; no businessvalues/stdout/transaction/hash changes. Small parent/new index byteequal; observed28.114->98.332ms smallcase overhead, realHDD/runtime unverified. No source/PG rerun.",
+        "commit": "dbe523f2d87b6878ba56588742dfe333d44f4353",
+        "branch": "codex/erp-r4-preflight-stage-progress-20261107",
+        "tree": "9b99f443e3937d8575f916f46d61b390c57a3257",
+        "QBReceiptSHA256": "faeede9120fa3549511b726aa6a0cdba604e7256e6eb213432b69873689b2abf",
+        "remoteReadback": true,
+        "currentWipTouched": false,
+        "runtimeBoundary": "Awaitedwrite+sync withoutownIOtimeout, ERRORdiagnosticbeforeoriginalrollback; actualLinux overhead/deadlinefit UNKNOWN. No PG or real-source PASS."
+      }
     }
   }
 }
