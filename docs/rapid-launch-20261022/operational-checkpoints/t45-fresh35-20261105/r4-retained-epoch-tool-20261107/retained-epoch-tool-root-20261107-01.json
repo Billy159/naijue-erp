@@ -1,0 +1,24 @@
+{
+  "branch": "codex/erp-0448z-retained-epoch-tool-20261107",
+  "commit": "b8952ad8106b211f996154e01b477299a5c465ac",
+  "tree": "4a91db31d5b8bd9f5fb6dbd871b0e92a43d6298a",
+  "parent": "d750ae8c90d54718f16731492bbc707061d82124",
+  "status": "WIP_FIXED_TWO_LEAF_SOURCE_PENDING_SCOPED_QB_AND_ACTUAL_RESTART",
+  "changedFiles": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "parentSha256": "05dc38fe7f004a2c11917c14bee00c00e2ed9f6bd5cf25086da243ce60e7c2b7",
+      "sha256": "4ad3704115c8be79ed47135639fc9d6924a70e9e9477c4f76b268d6ffb573d8a",
+      "bytes": 32534
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-installed-real-window-v1.mjs",
+      "parentSha256": "96a3491c7cee85dccad7dc9e5fdd49ad4afbb4394d07f6326fdbbc857dcb9aff",
+      "sha256": "c2e3a9cf8c5b186d7e4360f542694a2809863a3677aeb7078613633975002190",
+      "bytes": 13182
+    }
+  ],
+  "normalApplicationRootUnchanged": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "worktreeAndWIPNotChanged": true,
+  "realRestartPerformed": false
+}

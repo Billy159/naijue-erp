@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-b8952a-retained-real-tools-20261107-01",
+  "sourceSetSha256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
+  "archiveSha256": "99c7f019bdc2e4ce2cd2c014d69854d9ebf7df099150fa037b267b012b94a359",
+  "archiveBytes": 1128848,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-b8952a-retained-real-tools-20261107-01",
+  "startsAt": 1794020834089,
+  "expiresAt": 1794022634089,
+  "decisionReference": "C delegated decision under human authority through 2026-11-07T12:00:00+08:00; exact b8952ad8 import-only tool staging; QB scoped source verdict 2c07b4ee and D2 5271cdcc adopted. Distinct new root; retain d750/544 and ordinary 3b82/8694. No application deployment, REAL business data, database write or new authority platform.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T10:54:47.110242+08:00",
+  "updatedAt": "2026-11-07T11:09:04.313011+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,13 +33302,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T09:12:46.766934+08:00",
+      "at": "2026-11-07T11:09:04.313011+08:00",
       "phase": "RETAINED_R4_CLEAN_STOPPED_NONROOT_AND_SAME_DATA_EPOCH_REPAIR",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
       "nextOwner": "Original QB scope-only review; C accurate new execution binding",
-      "latestActualReceiptSHA256": "f92dee2a59725a5a850facb6e1f83c4f6881d907e5795783e438e80d7bc9b094",
+      "latestActualReceiptSHA256": "f2fa861f9120fffff8e3611dc0617077dfa4e953c1eec3710f36aaaf7db4f60a",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Correct OS runtime identity and exact same-data restart epoch; actual ordinaryAPP/REAL/backup/browser/deployment remain incomplete.",
+      "next": "OriginalT45 finishes exactsame-data restart and nonroot input lifecycle; QB only concrete increment; C new accurate scope. Tool b895 fixed and stagingauthorized; 0REAL/ordinaryAPP/backuprestore/deployment.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33455,7 +33455,10 @@
         "ordinaryRealBusinessPassed": false,
         "productionDeployed": false
       },
-      "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4."
+      "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
+      "lastCleanStopReceiptSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
+      "importToolCommit": "b8952ad8106b211f996154e01b477299a5c465ac",
+      "importToolSourceSetSHA256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -34715,6 +34718,40 @@
           "formalSourceOwner": "Original D1 window+target two leaves only",
           "sourceScope": "Exact root-protected receipt for sameSID/OID/data directory/dev/inode; originalrecord/source/catalog/roles kept; true newpostmasterStart, ordinaryAPP existing guard unchanged. No DB fields/grants/platform/R5/initdb/install.",
           "opsScope": "Existing PGbinary/server_args/61035 UID, exact retained container+data; new accurate bootkey and fresh bounded authority only after fixedsource/QA. Existingroot source/private copies preserved, no general chmod."
+        },
+        "retainedEpochTool": {
+          "at": "2026-11-07T11:09:04.313011+08:00",
+          "state": "FIXED_SOURCE_SCOPED_QB_PASS_PACKED_STAGING_AUTHORIZED_NOT_LINUX_LANDED",
+          "branch": "codex/erp-0448z-retained-epoch-tool-20261107",
+          "commit": "b8952ad8106b211f996154e01b477299a5c465ac",
+          "tree": "4a91db31d5b8bd9f5fb6dbd871b0e92a43d6298a",
+          "parent": "d750ae8c90d54718f16731492bbc707061d82124",
+          "remoteVerified": true,
+          "sourceSetSha256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3",
+          "scope": "Only two REAL import target/window leaves; original record and ordinary8694 immutable; sameSID/OID actual newepoch receipt required",
+          "QBReceiptSha256": "2c07b4ee20d055006c5c7d2b99eb901233e4d476bf53bd2741ad7968846b21f0",
+          "D2ReceiptSha256": "5271cdcc04517a26bb4733b0847c005d354518ab43eb759e1076be2a1f0dc267",
+          "archiveSha256": "99c7f019bdc2e4ce2cd2c014d69854d9ebf7df099150fa037b267b012b94a359",
+          "archiveBytes": 1128848,
+          "cliHelpAndImportGraph": "ACTUAL_LOCAL_EXIT0",
+          "C13Sha256": "d0d096a2885fee2b4a2e6fe20ecdda5cf9e0e36a3f5ee84d84c424e52a450e6c",
+          "C13ExpiresAt": 1794022634089,
+          "staging": "T45_ONLY_PENDING_ACTUAL_RECEIPT",
+          "actualRestart": "NOT_EXECUTED",
+          "actualREAL": "NOT_EXECUTED"
+        },
+        "retainedRestartOpsPreparation": {
+          "state": "ORIGINAL_T45_PARTIAL_QB_CONCRETE_FIXES_NOT_EXECUTABLE",
+          "accessPlanSha256": "818221bef00521005a37a4caa7db0adf1859c3188190b4541afef95c7b90611f",
+          "runtimeUid": 61035,
+          "scope": "Same retainedR4 PGDATA, exactnewboot guardian/PID/epoch; finite45metadata +4small projections and exactCASrestore; no RAW recopy",
+          "necessaryOpenFindings": [
+            "Hash actual original stop receipt bytes rather than compare plan constant only",
+            "Compare exact ordered memberships in existing role before/after query",
+            "Reap exact newly spawned direct child even if initial identity read fails"
+          ],
+          "newExecutionScope": "NOT_ISSUED",
+          "businessWrites": false
         }
       }
     },
