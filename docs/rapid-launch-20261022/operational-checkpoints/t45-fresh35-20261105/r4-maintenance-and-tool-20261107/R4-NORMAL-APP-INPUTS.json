@@ -1,0 +1,144 @@
+{
+  "task": "R4-NORMAL-APP-INPUTS-01",
+  "scope": "Read-only handoff and unbound no-secret inputs only; no source edits/build/server/PG/test rerun. Original r26 scoped synthetic ordinary business PASS and current3b82 pack PASS reused; no new normal production APP PASS.",
+  "binding": {
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-3b82c46ebc0b",
+    "commit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+    "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+    "recordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+    "targetSha256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0",
+    "target": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-07 00:46:12.566314+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7705224458832691236"
+    },
+    "database": "erp_native35_20261107_r4",
+    "runtimeRole": "erp35_runtime_20261107_r4",
+    "host": "127.0.0.1",
+    "port": 18654,
+    "factsMeaning": "R4 previously observed metadata; actual current state/process/mount mapping still needs original T45."
+  },
+  "entry": {
+    "packagedArgv": [
+      "EXISTING_PINNED_NODE",
+      "/app/backend/production-main.js",
+      "--exact35",
+      "ACTUAL_CANONICAL_PRIVATE_RUNTIME_JSON"
+    ],
+    "selection": "Prefer existing original3b82 packaged production-main.js/payload and its paired backend/native35-source8694; original source entry is also exact source CLI, not r26 scenario runner. T45 chooses actual already-materialized entry and paired native source path; no new APP build required. Do not launch new d750 operation root as normal API.",
+    "config": "Exactly one absolute canonical private regular file <=65536B, mode no group/other access, stable inode/bytes while read. Actual runtime password must be present privately; no built-in passfile loader in production CLI.",
+    "startup": "runProductionCli->runProductionRuntime35Main/launch(r35)->createProductionCapacityLaunch->credential tag reader->createProductionRuntime35ApplicationApi->single BoundedPostgresPool->admitFresh35OrdinaryPoolV2->original pool binder->same-pool capacity preflight->listen0.0.0.0:3000. Capacity fails before READY/listen if actual inputs missing.",
+    "sourceAlternative": "Exact original source function is apps/api/src/production-main.ts::runProductionCli/runProductionRuntime35Main; r26 runner is synthetic scenario harness, not the normal launch command.",
+    "network": "Use existing OWNED_POSTGRES_SHARED_NAMESPACE_V1: normal APP network must share exact current R4 PG carrier namespace (original observed CID5d8eb161..., must fresh-CAS). Loopback127.0.0.1:18654 is not reachable from an unrelated app namespace. Existing check_production_shared_namespace/create_capacity_gate_app owns this wiring. APP mount namespace/process facts are still separate even when network namespace is shared."
+  },
+  "credentials": {
+    "runtimePassFile": "/var/lib/naijue-erp/fresh35-production/production-fresh35-20261107-r4/credentials/erp35_runtime_20261107_r4.pgpass",
+    "format": "127.0.0.1:18654:*:erp35_runtime_20261107_r4:64hex+LF, exact original parser shape; only original T45 reads/hydrates memory/private config.",
+    "existingHydrator": "launch-fresh35-isolated-v1.py::hydrate_ordinary_configuration321-326 reuses exact private passfile parsing; do not reuse synthetic read_ordinary_configuration304-319 wholesale.",
+    "httpLogin": "Use actual imported/enabled ERP account and privately supplied password after REAL COMMITTED+readback. DB runtime username/password are not HTTP credentials; no default-admin creation/reset assumed.",
+    "staffCredentialKey": "production-main.ts::readProductionStaffCredentialRequestTag + readProductionCredentialRequestKey original stable32 reader; staffMaintenance=true requires actual existing/new C-authorized stable private key, never synthetic scenario material. Exact production-credential-key.ts contract: raw32 bytes, canonical regular non-symlink, mode0600, owner UID must equal actual nonroot APP process UID; parent not group/world-writable. A root0600 key copied without correct APP ownership fails. Runtime private JSON/password hydration must likewise remain readable only by actual APP UID; never broaden original root-private pgpass permissions."
+  },
+  "http": {
+    "publicOrigin": "https://1n5635n614.goho.co",
+    "listen": "0.0.0.0:3000",
+    "apiPrefix": "/api (production host strips it before routing)",
+    "routes": [
+      "POST /api/auth/login JSON {loginName,password}",
+      "GET /api/auth/session",
+      "POST /api/auth/logout JSON {}"
+    ],
+    "cookie": "__Host-naijue_session; Secure; HttpOnly; SameSite=Strict; Path=/",
+    "authenticationRules": "Exact trusted HTTPS Origin for writes, application/json, cookie-only auth, no Authorization header; Host must be explicitly accepted. Browser QF needs actual approved HTTPS normal entry, not localhost HTTP fake session.",
+    "health": "/healthz is HOST_ALIVE only; /readyz calls actual API readiness and returns READY/NOT_READY. Neither represents full business acceptance."
+  },
+  "capacity": {
+    "actualProducer": {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/parallel-cleaning-20261105/runtime35-frozen-D2-35/production-v2-packaging/full-erp-build/source-3b82c46ebc0b/scripts/ops/capacity-live-statfs.mjs",
+      "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338",
+      "runtimePath": "Owner actual protected executable; source/controller uses /opt/naijue-erp/fresh35-combined-v1/scripts/ops/capacity-live-statfs.mjs, formal helper binds /app collector path according to existing capacityHost plan",
+      "shebang": "/usr/local/bin/node; existing pinned interpreter must be available",
+      "profilePath": "/run/naijue-rewrite/capacity/owner-profile.json",
+      "args": [
+        "--profile=ACTUAL_PROFILE_FILE_SHA256"
+      ],
+      "reviewSha256": "de1de45ff4256a8f58c760e5f30af75d1e487fe5777ea2e44f9f1beb2b34226a",
+      "mode": "Original OWNER_FIXED_STATFS_V1 in actual APP mount namespace; readonly original five directories. OWNER_QA_FIFO_STATFS_V1 is an existing separate short QA channel, not a default production substitute."
+    },
+    "volumes": [
+      "postgres",
+      "wal",
+      "backup",
+      "system",
+      "media"
+    ],
+    "notRealImportVolumes": "REAL tool uses data/wal/reportIndex/tmp/sqliteScratch, a different schema; its space floor and old namespace facts cannot be renamed into APP capacity config.",
+    "requiredActualFacts": [
+      "Actual API process pid/linuxStartTicks/linuxBootId and resulting processInstanceId; PID survives original exec; never bind collector PID or old controller PID",
+      "Actual API mount namespace plus canonical five path/device/filesystemType/physicalVolume and access permissions, including new backup/system/media paths",
+      "Current actual R4 SID/OID/postmasterStart/role/endpoint/record generation, same target as original owned ordinary pool",
+      "After REAL verification: actual inventory/publication fingerprint and inventoryObservedAt; no synthetic scene or guessed zero",
+      "C-approved finite capacity window/token, session/upload budgets/minimumFreeBytes/safetyBytes, probe TTL/timeouts, stable producer/profile hashes and review reference",
+      "Actual private media root/rootKey/stable credential key, config ownership and paired application payload/native source8694"
+    ],
+    "samePool": "postgres-read-api.ts658-667 obtains genuine ordinary admission on ownedPool, compares actual admission physical target including OID/start to capacityTarget, then binds capacityRuntimePoolBinder. capacity-runtime-probe reads ledger/target through same pool; no independent admin probe/pool.",
+    "existingOpsFunctions": "Original deploy-candidate.py::create_capacity_gate_app / capacity_process_tuple / capacity_install_content already provide provisional actual PID1 -> final same-inode config/profile -> original gate release. T45 uses its adopted exact helper/final plan, not retained old9e914 or restore-onlyd45. D1 does not execute those functions or bypass their receipt/approval registration.",
+    "r26Reuse": "Use collect_ordinary_capacity_facts399 and prepare_ordinary_capacity421 as proven schema/process techniques only; synthetic scene/20min window/private dirs and numeric capacity seed are not current normal APP approval."
+  },
+  "missingSource": "No deterministic normal startup source defect found in this read-only seam review; all identified blockers are actual config/process/volume/credential/entry facts or pending REAL/operational work. If actual consumer later fails, report exact stage/new evidence and coordinate unique source owner before fixing.",
+  "nextForT45": "After actual maintenance/REAL state is confirmed by original owners, prepare actual normal private runtime/profile/target/process inputs using existing adopted capacity helper, original ordinary role/passfile and original3b82 payload/native8694. Report exact normal entry/Host/HTTPS+private credentials to C/QF. First readiness/login/session/representative query/save/approve exercise remains original authorized normal runtime validation, no r26 full replay.",
+  "inputTemplate": "RUNTIME.UNBOUND.json",
+  "sourcePins": [
+    {
+      "path": "apps/api/src/production-main.ts",
+      "sha256": "ebe10333ce76c5955a370c48cbf40d43015f3f9c8ac91b87cc9ca569784fdbda"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.ts",
+      "sha256": "98596a0c5a3c88a5775cea6b354668dad0f9c223683d23f5c830eb4d154e3788"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "sha256": "03a058fa8e92aeee037d123974a3abd52a6ca66f708c55fa26d95fba392ac2f5"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "f09c93e1ad50ec259c7ce60338a1af5b8c7af7d7b7d17faa95a7d0c248a11a3a"
+    },
+    {
+      "path": "apps/api/src/production-capacity-launch.ts",
+      "sha256": "11d85885d2ca9cf679e02e213de066a43fb91cfada74f7a6b083f8c5168afb59"
+    },
+    {
+      "path": "apps/api/src/capacity-runtime-probe.ts",
+      "sha256": "0233ba7f6315a52d5910f92c80e4c8fd5b60bdf3a529d515ef634015dc9fced7"
+    },
+    {
+      "path": "scripts/ops/capacity-live-statfs.mjs",
+      "sha256": "1c34a9c8707f53f62348b2bb6ca77f465f669eae2a16b598d0a303fc05533338"
+    },
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "sha256": "81ff199b977380f92886808567f3fdbe50d76b334094fd7c6ba6b14fa1e95e34"
+    },
+    {
+      "path": "apps/api/src/authentication.ts",
+      "sha256": "8a935682af1c523ceac6849939bb30f6311c064924f63bff2d7aae51b43574f3"
+    },
+    {
+      "path": "apps/api/src/production-application-host.ts",
+      "sha256": "3b94cb616a57afa2e1bd19660d31063f689f8c95f43274b3ed77bcd403b6e5c8"
+    },
+    {
+      "path": "apps/api/src/production-credential-key.ts",
+      "sha256": "c978355a18b5cad4d95d2e6adf8f71df46d94254b40aa549eb0709569722b0e8"
+    }
+  ],
+  "notTested": [
+    "Actual normal APP startup/owned-pool capacity producer/config",
+    "Current R4 runtime passfile/key/media readability or maintenance success",
+    "Post-REAL normal HTTP authentication/query/save/approve",
+    "Server/proxy/browser QF"
+  ],
+  "mainSourceModified": false
+}

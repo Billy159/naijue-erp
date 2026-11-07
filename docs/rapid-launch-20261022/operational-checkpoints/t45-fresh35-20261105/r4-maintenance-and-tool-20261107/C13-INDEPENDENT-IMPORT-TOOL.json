@@ -1,0 +1,15 @@
+{
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "taskId": "T45",
+  "grantId": "5cc58239751e4e2a",
+  "artifactKey": "f35-d750ae-installed-real-tools-20261107-01",
+  "sourceSetSha256": "544b29af81d461c602f72141117065973dff2a616a2f7c977cb0407cd4875ee1",
+  "archiveSha256": "0e267cc314b1d481715d2a796b0ec9780711dd5a4e07994138b6c162f28f1562",
+  "archiveBytes": 1127888,
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/artifacts/f35-d750ae-installed-real-tools-20261107-01",
+  "startsAt": 1794016386000,
+  "expiresAt": 1794018186000,
+  "decisionReference": "C delegated decision under human authority through 2026-11-07T12:00:00+08:00; exact reviewed d750 import-only source tool staging, QB930c718d and D2 3f65b75a; no application deployment, business data, database write or new authority platform.",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS"
+}

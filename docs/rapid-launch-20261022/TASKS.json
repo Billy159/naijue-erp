@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T09:22:31.046389+08:00",
+  "updatedAt": "2026-11-07T09:55:24.390107+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -34544,7 +34544,7 @@
           "commit": "d750ae8c90d54718f16731492bbc707061d82124",
           "tree": "36fe046946307f1d779bdfdaab0a8e7abe4c1ca8",
           "parent": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
-          "status": "WIP_SOURCE_FIXED_PENDING_SCOPED_QB_AND_REAL_PG",
+          "status": "SCOPED_SOURCE_QB_PASS_AND_MINIMAL_ARTIFACT_READY_SERVER_NOT_EXECUTED",
           "changedFiles": [
             {
               "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
@@ -34603,9 +34603,46 @@
           "serverTransfer": "NOT_EXECUTED",
           "serverPhysicalSpace": "NOT_VERIFIED",
           "realImport": "NOT_EXECUTED",
-          "normalAPI": "NOT_TESTED"
+          "normalAPI": "NOT_TESTED",
+          "stagingAuthority": {
+            "sha256": "9cc95e3f9179fb97b3d5b992c503d4386f9b9d2fc152aad7a9ce7a9960a46eda",
+            "bytes": 942,
+            "startsAt": 1794016386000,
+            "expiresAt": 1794018186000,
+            "state": "C_SIGNED_EXACT_ORDINARY_TOOL_STAGING_NOT_TRANSFER_SUCCESS",
+            "serverOwner": "Original T45",
+            "noBusinessOrAPPDeployment": true
+          }
+        },
+        "maintenanceRecovery": {
+          "at": "2026-11-07T09:48:08.293727+08:00",
+          "state": "DEADLINE_ONLY_03_FIX_PENDING_SCOPED_QB_NOT_EXECUTED",
+          "previousFinding": "R4-MAINT-CLEANUP-01",
+          "originalQBResultSHA256": "73f308602e9ad673856ddfd69249ca49bd7177fad0e3628f580c7e63191a4807",
+          "readySHA256": "ae410f97fb6fa0780388e7361c8db5e5d3bc936b11b516b5e9d5840cc6e6cc29",
+          "sourcePins": {
+            "host": "a7932f32344ac000de2d85d6b24ae82e30a188cd4a66b19f4a4a9a859916b4d0",
+            "inside": "75d7915b6d0ee4699aba559831b329edfe9db1312b32368b802b8c51e34e7f2b",
+            "client": "66cd12f343f0756cdc538c23f5599e5aa273daf26463a5b821b3a1d7ac5d5954"
+          },
+          "authorityIssued": false,
+          "serverExecuted": false,
+          "owner": "Original T45 only",
+          "reviewOwner": "Original QB only affected exception cleanup",
+          "decisionBy": "C under human delegation until 2026-11-07T12:00:00+08:00",
+          "boundary": "Fresh exact bounded maintenance on retained installed empty R4 only, original HBA restored, no old production, new R5 or repeated installation.",
+          "cleanupDecision": "Unknown writer and current old-expired before authorized new login expiry: retain secret reference and reject cleanup. After exact maintenance deadline late COMMIT can only set expired expiry; no added PID platform."
         }
       }
+    },
+    "r4NormalAppInputs": {
+      "handoffSHA256": "f8c3ed2bd37e94295b4c730697445c75d93c9abb8beaa03160524c35cbd15c90",
+      "owner": "Original D1 completed no-source-edit input seam; Original T45 actual binding",
+      "root": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+      "sourceSet": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+      "actualEntry": "production-main.js --exact35 private-runtime-json",
+      "state": "INPUTS_UNBOUND_NOT_APP_OR_PG_ACCEPTANCE",
+      "next": "Use actual normal APP PID/mount/capacity five dirs and private APP-UID credential key; do not start import-only d750 as API."
     }
   }
 }

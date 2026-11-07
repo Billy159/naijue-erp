@@ -1,0 +1,85 @@
+{
+  "task": "T45_R4_LOCALHOST_MAINTENANCE_RECOVERY_01",
+  "status": "NEED_FIX_SOURCE_EXCEPTION_CLEANUP",
+  "sourcePins": {
+    "host": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-localhost-maintenance-recovery-01/recover_exact_r4_admin.py",
+      "sha256": "4a7e74c2d972dda0919e86247979f212a64c07b779ff936728c736249f1a191b",
+      "bytes": 6275
+    },
+    "inside": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-localhost-maintenance-recovery-01/r4_recovery_inside.py",
+      "sha256": "98d113baff505be2d092396fd6ce1e76904f31df46e7c2dc92d2be100ddb8189",
+      "bytes": 25630
+    },
+    "client": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-localhost-maintenance-recovery-01/exact_admin_client.mjs",
+      "sha256": "66cd12f343f0756cdc538c23f5599e5aa273daf26463a5b821b3a1d7ac5d5954",
+      "bytes": 12920
+    }
+  },
+  "readySha256": "34bc3c97b689ee562854df5fb4de76751b48320e9fa0779a84b0a0af39634759",
+  "findings": [
+    {
+      "id": "R4-MAINT-CLEANUP-01",
+      "priority": "P2",
+      "title": "Unknown or failed recovery cannot reach private-reference cleanup",
+      "trigger": "private file written before SQL; failure/unknown final receipt; exact close gate only accepts SUCCESS",
+      "files": [
+        "exact_admin_client.mjs:101",
+        "r4_recovery_inside.py:225"
+      ],
+      "effect": "Root0600 private reference remains; even after natural expiry, original CLOSE cannot enter readonly cleanup branch",
+      "required": "Separate bounded failure/unknown cleanup using exact original authority/intent/target plus actual old/new expiry, preserving no replay and no HBA exception"
+    }
+  ],
+  "checked": [
+    "READY and three exact hashes/bytes",
+    "two Python AST parses and Node24 MJS syntax exit0",
+    "complete source review of HBA activation/restoration/probe/control lifecycle",
+    "NULL-safe old expiry CAS and physical/role attributes checks",
+    "new source-level finite close-gate counterexamples"
+  ],
+  "counterexamples": {
+    "exactSourceCounterexamples": [
+      {
+        "case": "rollback-after-private-file-created",
+        "exactOriginalCloseGateAccepts": false,
+        "secretAlreadyExists": true,
+        "postgresOrCredentialContentsUsed": false
+      },
+      {
+        "case": "commit-acknowledged-but-parent-final-read-lost",
+        "exactOriginalCloseGateAccepts": false,
+        "secretAlreadyExists": true,
+        "postgresOrCredentialContentsUsed": false
+      }
+    ],
+    "privateFileWrittenBeforeChangeAndCommit": true,
+    "mainFailureDoesNotUnlinkPrivateFile": true,
+    "originalCloseGateRequiresSuccess": true,
+    "pgOrCredentialsTouched": false,
+    "status": "REPRODUCED_SOURCE_CONTROL_FLOW_ONLY"
+  },
+  "authorEvidenceAdoptedNotRerun": [
+    "12 filesystem/fork/EOF/signal/timer tests",
+    "finite JS SQL/null/attrs/identity assertions"
+  ],
+  "positiveSourceObservations": [
+    "fixed exact local trust line, own child owns activation and restoration",
+    "20s helper restoration,23s ownchild emergency fallback,30s measured acceptance",
+    "original inode/bytes/uid/gid/mode restoration before role change and auth-method-only SCRAM confirmation",
+    "one pg.Client recovery connection; exact physical target and role attributes compare",
+    "server-side IS DISTINCT FROM old expiry; random64hex password; bounded new expiry",
+    "no business/REAL/record/newdatabase/restart/grant changes in reviewed leaves"
+  ],
+  "actualServerExecution": "NOT_EXECUTED_PER_DELIVERY_NOT_INDEPENDENTLY_OBSERVED",
+  "notTested": [
+    "actual Linux/Docker fork cleanup and HBA timing/reload",
+    "actual PG authentication/ALTER/COMMIT and private credential usability",
+    "actual close or exception cleanup",
+    "REAL/import/ordinaryAPI/HTTP"
+  ],
+  "at": "2026-11-07T01:37:34.953453+00:00",
+  "modelEffortFast": "UNVERIFIED"
+}
