@@ -35451,12 +35451,12 @@
     },
     "r4HistoricalAnchorLocalRepair20261107": {
       "id": "HISTORY-ANCHOR-EXACT35-01",
-      "state": "FIXED_SYNTHETIC_TOOL_TRANSFER_AUTHORIZED_T45_ACTUAL_PENDING",
+      "state": "TRANSFER_READY_ORIGINAL_POLICY_RESTORED_MATERIALIZATION_IN_FLIGHT",
       "owner": "Original D1 sole isolated successor writer, C integrates; QB focused checks; T45 only real PG executor",
       "baseCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "authority": "01a1b528-ccaa-7eb0-a250-4d30c8feeeee",
-      "next": "Original T45 completes exact transfer and verifies original policy restored. C11 after materialization and current resource verification, C9 after actual isolated start.",
-      "at": "2026-11-07T17:56:27.916204+08:00",
+      "next": "T45 recovers original materialize job result without replay. Issue C11 only after current exact post-materialization identity/resources, then C9 after actual isolated start.",
+      "at": "2026-11-07T18:05:24.249142+08:00",
       "branch": "codex/erp-history-anchor-exact35-20261107",
       "commit": "576acc3cca5420146c4eb58b92d20c4de084a592",
       "tree": "0a19121b1d2dedf26db24d257548eeaa8ea5c1b5",
@@ -35488,7 +35488,11 @@
       "transportAndCarrierQBResultSHA256": "6b9fb3b1f69c41def5ff8f1e219af2b2a6f98fc2fbfbea7be28875b4ad327ece",
       "c13TailDecisionSHA256": "c236d23a997690e1d6b5f4c9e2a98e6369b6eec33d3b40e20156862d5d579062",
       "c13FullDecisionSHA256": "1a2f29e0f5b0ff82e418702958ebd3a1cb2f85d9d7fb3e242e1c27842327b976",
-      "c13ExpiresAt": 1794046815380
+      "c13ExpiresAt": 1794046815380,
+      "transportActualReceiptSHA256": "fe09c75b84bda90e90082122c83fe2cf3533c457ef749efe57a920ce1f011a9e",
+      "transferActualReadySHA256": "16faefc1f07025510b844a5e098ed249b7906673c19ff47fbe991fad7ae12bfb",
+      "originalPolicyRestored": true,
+      "materializePlanSHA256": "c92d93de58a71e0f1febab21f251c0222ff09b5f9b140806c0773453e665b187"
     },
     "r4Boot06RealPrepare05": {
       "at": "2026-11-07T17:03:26.169234+08:00",
@@ -35559,13 +35563,13 @@
       "next": "Only rebind after a genuine new successful PREPARE and active exact operation window. No server action or import authority issued."
     },
     "r4RetainedBackendProofRepair20261107": {
-      "at": "2026-11-07T17:56:27.916204+08:00",
-      "state": "FIXED_SOURCE_WIP_REMOTE_VERIFIED_QB_AND_SMALL_CLOSURE_PENDING",
+      "at": "2026-11-07T18:05:24.249142+08:00",
+      "state": "EXACT_SOURCE_OFFLINE_QB_PASS_SMALL_TOOL_BUILT_ACTUAL_LINUX_PG_PENDING",
       "d1ReviewSHA256": "693c03f382293e1c822078cd10ff38aa66f5b8f8c453bd3496f08464d94e8543",
       "modelSHA256": "e57b7043d14057e05c9f92db8ad324ed0c39d678c0c4b5d785d95ea3a5793af2",
       "modelPass": 3,
       "serverOperations": false,
-      "next": "Original QB review and D2 narrow closure. Actual Linux/PG proof and valid existing admin reference required. Existing stop pin remains historical until BOOT07 binding.",
+      "next": "T45 exact cross-language carrier wiring and independent actual Linux/PG test. No usable R4 successor until storage, current clean stop and valid opaque admin reference are bound.",
       "commit": "4199807b180ac6add75c66a57754bf77d35bf11d",
       "tree": "255e288d78cf435c7b781c3915c2eeac14c0c470",
       "branch": "codex/erp-r4-retained-backends-20261107",
@@ -35574,19 +35578,24 @@
       "python02SHA256": "d177c52cf7bd26fd5501954128814308c44d221cef330bd6e201da13d94a795c",
       "remoteExactReadback": true,
       "authorFocusedPassed": 29,
-      "oldHostModelFailuresReproduced": 8
+      "oldHostModelFailuresReproduced": 8,
+      "qbResultSHA256": "00e2a03db69bac9aa697a7057257a51493454e62a42a124b93d4777e9f89bae3",
+      "d2ClosureResultSHA256": "dbb6a4a83f51e977924356b229055a060351e90b57f95f1de72b321cc4f8734c",
+      "d2ToolArchiveSHA256": "f1b57ea46ce7c980a788aaeb48172aa70fab8d976ce8349afc1f7ce753237584",
+      "d2ToolArchiveBytes": 1133462,
+      "d2ToolArchiveMembers": 358
     },
     "oldProductionRestoreLiveCapacity20261107": {
-      "at": "2026-11-07T17:56:27.916204+08:00",
+      "at": "2026-11-07T18:05:24.249142+08:00",
       "state": "ACTUAL_STORAGE_SHORTFALL_REPORTED_NO_OTHER_AUTHORIZED_VOLUME",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 5664595968,
+      "actualAvailableBytes": 5493587968,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 30842626048,
+      "oldRestoreShortfallBytes": 31013634048,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 2542919678,
+      "r4ShortfallBytes": 2713927678,
       "next": "Recheck actual volume after user/storage intervention. Preserve backups and failure evidence. Continue independent isolated history scope.",
-      "latestResourceReceiptSHA256": "9c7063a798e445284ccb16ee28dc6ef994796b0d20784948b62b3f183a61489c"
+      "latestResourceReceiptSHA256": "fe09c75b84bda90e90082122c83fe2cf3533c457ef749efe57a920ce1f011a9e"
     }
   }
 }
