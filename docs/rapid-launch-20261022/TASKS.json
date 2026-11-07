@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-07T19:02:15.708015+08:00",
+    "at": "2026-11-07T19:11:11.563641+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28510,12 +28510,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Original D1: bounded same-process repeated computation proposal; no new cross-job contract or actual source preflight rerun. History corrected9f source fixed, actual PG still pending.",
-      "QB": "Original QB scoped source/pin conclusions adopted; actual next isolated history and R4 runtime remain unverified. No repeat technical full review.",
-      "D2": "Original D2 completed9f history and af395 tool fixed packages; accurately idle awaiting T45 resource/execution result, no speculative rebuild.",
-      "T45": "Exactr26 two paths deleted343879680B and protected readback passed; bounded already-inventoried remaining application eligibility check. No BOOT07, REAL write or new history transfer before capacity.",
+      "D1": "Read-only time/recovery and same-invocation mutability review closed, no source edits. Await exact original-seam lifecycle and actual capacity. No duplicate tests/source scans.",
+      "QB": "Scoped source and fixture/pin evidence adopted; next actual history/R4 result pending, no repeat review.",
+      "D2": "Fixed9f history and af395 tool packages ready, waiting resource/actual execution; no new rebuild.",
+      "T45": "Bounded cleanup closed:exact2 applications deleted343879680B. Remaining protected/unknown kept,5513273344B available. Await real capacity change; do not replay BOOT06/PREPARE05 or start9f/af/BOOT07 under unmet floors.",
       "D3": "Original D3: independent source expectations frozen, target readback follows actual verified original commit.",
-      "QF": "Original QF: formal normal-entry prerequisite open, no new speculative browser run."
+      "QF": "Original normal-entry/core-business prerequisite still missing. No speculative new browser task."
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -35637,25 +35637,25 @@
       }
     },
     "oldProductionRestoreLiveCapacity20261107": {
-      "at": "2026-11-07T10:59:18.588078+00:00",
-      "state": "AFTER_AUTHORIZED_TWO_APP_COPIES_CLEANUP_STILL_INSUFFICIENT",
+      "at": "2026-11-07T19:09:50.062+08:00",
+      "state": "AUTHORIZED_CLEANUP_CLOSED_EXACT_CAPACITY_SHORTFALL_REMAINS",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 5513732096,
+      "actualAvailableBytes": 5513273344,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 30993489920,
+      "oldRestoreShortfallBytes": 30993948672,
       "r4StartFloorBytes": 8207515646,
-      "r4ShortfallBytes": 2693783550,
-      "next": "Continue only fixed eligible application cleanup; R4 and independent exact old-backup restore wait for their unchanged actual capacity floors. No other authorized suitable volume proven.",
-      "latestResourceReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3"
+      "r4ShortfallBytes": 2694242302,
+      "next": "Actual additional server capacity or an expressly identified further eligible retired application source is required. No new same-state scans, R4 restart, independent restore or capacity guard relaxation.",
+      "latestResourceReceiptSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e"
     },
     "serverRetiredApplicationCleanup20261107": {
-      "at": "2026-11-07T19:02:15.708015+08:00",
+      "at": "2026-11-07T19:11:11.563641+08:00",
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
       "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
-      "state": "EXACT_TWO_DELETED_PROTECTED_READBACK_PASS_REMAINING_BOUNDED_ELIGIBILITY_CHECK",
+      "state": "BOUNDED_CLEANUP_COMPLETE_TWO_DELETED_OTHERS_RETAINED_CAPACITY_STILL_BLOCKED",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "Original T45 bounded check only already-inventoried unmounted old rapid/formal/QA application leaves; exact reconstruction/current-rollback/reference proof before C fixes any further list. These upper bounds cannot satisfy R4 by themselves; no expansion to protected data, backups, unique archives, live Node/nginx or images/volumes.",
+      "next": "Cleanup scope exhausted without touching protected objects. Need additional actual available server space:2694242302B to original R4 floor,30993948672B to exact independent restore floor; small history run/reserve separate. No more unchanged inventory; resume original T45 only after a real resource change and exact current execution binding.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35680,12 +35680,24 @@
       "retainedArchiveAndReadyUnchanged": true,
       "processStops": 0,
       "SQLConnections": 0,
-      "containerChanges": 0
+      "containerChanges": 0,
+      "finalReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-retained-runtime-candidates-readonly-01/BOUNDED-CLEANUP-FINAL.json",
+      "finalReportSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e",
+      "lastFreeBytes": 5513273344,
+      "lastFreeObservationShanghai": "2026-11-07T19:09:50.062+08:00",
+      "furtherDeletedItems": 0,
+      "retainedReasons": {
+        "r48_server_web": "Exact bytes/mode rebuild and no current occupancy proven, but current old-formal rollback exclusion remains UNKNOWN. Both retained; prepared removal not submitted.",
+        "r46_r47_server_web": "Archive bytes or mode differ; kept.",
+        "rapid_unmounted_installed_payload": "Retained small source archive/cache exists, but complete original Linux dependency reconstruction not established; kept.",
+        "other_QA_app_leaves": "No exact complete reconstruction binding; kept.",
+        "live_applications": "14 real Node entrypoints on namespace port3000 and3 nginx on8080; not sleep-only; kept."
+      }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
       "owner": "Original D1 only",
       "at": "2026-11-07T19:02:15.708015+08:00",
-      "state": "ACTUAL_PREFLIGHT_KNOWN_FULL_WRITE_TIME_UNMEASURED_DUPLICATE_COMPUTE_PROPOSAL_PENDING",
+      "state": "READONLY_AUDIT_CLOSED_NO_EQUIVALENT_DIGEST_CACHE_PROVEN",
       "candidate": "af395ebacd726a80d391bbed0181f556aafbc96f",
       "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/BOOT07-TIME-RECOVERY-READONLY-01/REPORT.md",
       "reportSHA256": "54d1156a58e45c1e86097a26b7a93357207c098eb84e359f1104d6e0b5ac2bac",
@@ -35703,7 +35715,9 @@
         "executeAndReadbackSeconds": 1672.074,
         "basis": "49.328 second observed single digest rate extrapolation; excludes unknown SQL and graph costs"
       },
-      "next": "D1 only proposes original same-process duplicate-computation elimination with unchanged file identity and tamper rejection. No cross-job adoption contract, timeout relaxation, new cache platform or actual rerun authorized by this entry."
+      "next": "Preserve existing source conclusions. A precise supported immutable-input lifecycle and bounded real execution budget are prerequisites before any original-seam implementation; no speculative platform or new cross-job adoption performed.",
+      "sameInvocationBoundarySHA256": "3ea711f7923e58a770b038ba724777c3f7472928d764ebe7e0ee56fa6dc814de",
+      "sameInvocationFinding": "Worker0600 mutable SQLite file is not immutable merely because a reader uses O_RDONLY/query_only. T45 confirms no existing full-lifetime immutable inode/writable-FD/mmap handoff. Retain per-stage digests; no SHA/WeakMap bypass."
     }
   }
 }
