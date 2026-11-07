@@ -701,7 +701,7 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
                 events.append('communicate');context.update(json.loads(input))
                 if failure=='timeout':raise m.subprocess.TimeoutExpired(['node'],timeout)
                 self.returncode=1 if failure=='result' else 0
-                value=returned if returned is not None else {'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}
+                value=returned if returned is not None else {'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','coverage':'HISTORY_ANCHOR_ONLY','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}
                 return raw_stdout if raw_stdout is not None else json.dumps(value).encode(),stderr
             def send_signal(self,signal):events.append('terminate');self.returncode=-signal
             def kill(self):events.append('kill');self.returncode=-9
@@ -717,7 +717,7 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
     def test_actual_flow_sends_private_context_once_and_keeps_null_history(self):
         result,error,events,written,context=self.drive();self.assertIsNone(error);self.assertEqual(events.count('spawn'),1);self.assertEqual(events.count('communicate'),1)
         self.assertIsNone(context['publication']['historyPayloadHash']);self.assertEqual(context['publication']['planSha256'],'e'*64);self.assertIsNone(context['staffCredentialRequestTag'])
-        self.assertEqual(result['sourceSetSha256'],'a'*64);self.assertEqual(result['sourceCommit'],'f'*40);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('MODEL_PRIVATE_NO_EXPORT',json.dumps(result)+json.dumps(written))
+        self.assertEqual(result['sourceSetSha256'],'a'*64);self.assertEqual(result['sourceCommit'],'f'*40);self.assertEqual(result['coverage'],'HISTORY_ANCHOR_ONLY');self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('MODEL_PRIVATE_NO_EXPORT',json.dumps(result)+json.dumps(written))
     def test_unknown_result_not_replayed_and_receipt_kept_as_unknown(self):
         result,error,events,written,_=self.drive(failure='result');self.assertIsNone(result);self.assertIsNotNone(error);self.assertEqual(events.count('communicate'),1);self.assertEqual(written['ordinary-failure.json']['state'],'FAILED_OR_OUTCOME_UNKNOWN');self.assertFalse(written['ordinary-failure.json']['automaticRetry'])
     def test_closed_child_failure_survives_parent_and_cleanup_without_private_text(self):
@@ -778,8 +778,9 @@ class OrdinaryBusinessFlowTests(unittest.TestCase):
             with self.subTest(bytes=len(raw)):
                 result,error,events,written,_=self.drive(failure='result',raw_stdout=raw)
                 self.assertIsNone(result);self.assertIsNotNone(error);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertNotIn('entryFailure',written['ordinary-failure.json']);self.assertEqual(events.count('communicate'),1);self.assertTrue(written['ordinary-child-cleanup.json']['childReaped']);self.assertNotIn('SECRET_SENTINEL',json.dumps(written))
-        success={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}
-        for returned in [{**success,'diagnostic':None},value]:
+        success={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','coverage':'HISTORY_ANCHOR_ONLY','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False}
+        unmarked={k:v for k,v in success.items() if k!='coverage'}
+        for returned in [unmarked,{**success,'coverage':'RUNTIME_DOCUMENTS'},{**success,'diagnostic':None},value]:
             result,error,_,written,_=self.drive(returned=returned);self.assertIsNone(result);self.assertIsNotNone(error);self.assertNotIn('childFailure',written['ordinary-failure.json']);self.assertNotIn('entryFailure',written['ordinary-failure.json'])
     def test_generated_entry_catch_keeps_pre_reader_phase_without_private_text(self):
         import os
