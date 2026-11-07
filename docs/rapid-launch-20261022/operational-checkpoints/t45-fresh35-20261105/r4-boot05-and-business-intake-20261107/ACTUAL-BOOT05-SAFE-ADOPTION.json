@@ -1,0 +1,28 @@
+{
+  "observationSourceSHA256": "cc8855a324a8e6345baadd003b67d8303e2a78bd3f6c4620481e69ff6d502c9d",
+  "checkedAtEpochMs": 1794025229029,
+  "newPhysical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-07 04:19:08.978028+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7705224458832691236"
+  },
+  "hbaCurrent": {
+    "bytes": 416,
+    "gid": 61035,
+    "inode": 14555531,
+    "mode": "0o600",
+    "sha256": "720b3b068cd855a0b0aabe4e20e64bbb4dc3e03643e961e70bfa54b772497a00",
+    "uid": 61035
+  },
+  "HBAOriginalBytesAndInodeRestored": true,
+  "SCRAMOfferedAfterRestoration": true,
+  "roleOtherAttrsAndMembershipsUnchanged": true,
+  "roleUntil": "2026-11-07T05:03:00Z",
+  "actualPGAndGuardianMatch": true,
+  "serverOriginalRestartReceiptSHA256": "14193ae90dabf006bad860b6d4650845ceb1489b048d832d2c02ff0f90de8df8",
+  "redactedExportSHA256": "0dc18c6dfaaad66900e35a60ec90f63b0cfff8ad719d5ec70fea293d0128a86f",
+  "actualREAL": false,
+  "actualAPP": false,
+  "publicSwitch": false
+}

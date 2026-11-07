@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T11:58:22.398645+08:00",
+  "updatedAt": "2026-11-07T12:09:20.380721+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28399,8 +28399,8 @@
       "verifiedBuildRoot": "6c3439e6583a6b52899b47d9106e6fce3645f86c",
       "pendingLocalCheckpoint": null,
       "pushRecovery": "Separate integration and root pushes succeeded after transient commit_refs_rules; exactremote readback2026-11-06 07:44",
-      "latestIntegrationCheckpoint": "ff4a873b1a743599b083fcaceff074ca292e4e69",
-      "latestIntegrationRemoteVerifiedAt": "2026-11-07T11:58:22.398645+08:00",
+      "latestIntegrationCheckpoint": "af34dbb88a5cfa8e6fd05b214c3e0fdc2045b21a",
+      "latestIntegrationRemoteVerifiedAt": "2026-11-07T12:09:20.380721+08:00",
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00"
@@ -33302,13 +33302,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T11:58:22.398645+08:00",
-      "phase": "RETAINED_R4_BOOT04_GENERIC_PSQL_FAILURE_CLEAN_STOPPED_EXACT_READINESS_SUCCESSOR_SOURCE_PREPARATION",
+      "at": "2026-11-07T12:23:32.378149+08:00",
+      "phase": "R4_NEW_EPOCH_ACTUAL_READY_HBA_RESTORED_WAIT_REAL_PARAMS_AND_UNIQUE_MAIN_PUBLISHER05",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
       "nextOwner": "Original QB scope-only review; C accurate new execution binding",
-      "latestActualReceiptSHA256": "6911cc284dd49b148d9087f6558efd6f684b5c8e4414902bc5c7f91c5399bdd4",
+      "latestActualReceiptSHA256": "cc8855a324a8e6345baadd003b67d8303e2a78bd3f6c4620481e69ff6d502c9d",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 exact existingpg_isready startup consumer + C-approved finite metadata transition source; originalD1 publisher waits actualepoch. No expired04 livejob, no REAL/normalAPP/backuprestore/publicswitch.",
+      "next": "D1 bind exact05constants and currentaccessplan; C issue freshREALparams; QB only integrationdelta then originalT45 actualPREPARE17. NoAPP/PUBLICswitch and 8businessfindings still open.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -34709,7 +34709,7 @@
           "actualErrorLocalizationSHA256": "f2fa861f9120fffff8e3611dc0617077dfa4e953c1eec3710f36aaaf7db4f60a",
           "rootCause": "Actual docker/Popen Node inherited UID0; direct record loader rejects ORDINARY_RUNTIME_REQUIRED; CLI redacts all loader errors to PROTECTED_RECORD_REQUIRED. Path guard actualPASS, no WeakMap defect proven."
         },
-        "currentPGRunning": false,
+        "currentPGRunning": true,
         "currentContainerRunning": true,
         "sameDataRestartPreparation": {
           "at": "2026-11-07T10:54:47.110242+08:00",
@@ -34798,14 +34798,49 @@
             "facts": "Actualready log appeared after firstconnection; shutdown/reap/portabsence/data-preservation true; HBA originalhash/inode14555531/61035:61035/0600/416B unchanged; expiryintent/result absent",
             "HbaOrRoleTransactionReached": false,
             "replayed": false
+          },
+          "05": {
+            "CDecisionSHA256": "aad7149d3d9ae92b66372b0d1de1bfed9fa712140e90769209fd9f916502598b",
+            "requestKey": "t45-r4-retained-restart-20261107-05",
+            "state": "ACTUAL_COMPLETED0_NEW_EPOCH_AND_RESTORED_HBA_C_READBACK_VERIFIED",
+            "resultSHA256": "e099a85c2bdf3f412dd9ca935e37a875a8e1e6c9dec4ed1d13eedd7701defc57",
+            "newPhysicalStart": "2026-11-07 04:19:08.978028+00",
+            "protectedReceiptSHA256": "14193ae90dabf006bad860b6d4650845ceb1489b048d832d2c02ff0f90de8df8",
+            "roleUntil": "2026-11-07T05:03:00Z",
+            "replayed": false,
+            "REALExecuted": false,
+            "observationSHA256": "cc8855a324a8e6345baadd003b67d8303e2a78bd3f6c4620481e69ff6d502c9d",
+            "HbaOriginalRestored": true,
+            "roleOtherAttrsAndMembershipsUnchanged": true,
+            "restorerElapsedSeconds": 0.5290759392082691,
+            "originalProtectedReceiptExport": "REDACTED_COPY_HASH_0dc18_NOT_ORIGINAL14193",
+            "actualBusinessVerified": false
           }
         },
         "realAccessConsumerRepair": {
-          "state": "NEED_FIX_REAL_ACCESS_CONSUMERS_NO_RAW_CHANGE_EXECUTED",
+          "state": "SCOPED_SOURCE_PASS_WAIT_05_INTEGRATION_REAL_EXECUTION",
           "QB": "8124701bde1382c72146cf65ad8974294220783465ce20eb1d1c77e2772f802f",
           "finding": "RAW0710/member0440 and approval0440 conflict with existingprivate-mode consumers; permission restore cannot restore originalctime",
           "CChosenSourceScope": "Keep originalfrozen bytes, exactCaccessplan rootledger before/active/restore metadata and one protected observation reference CAS only; no broad guard weakening/registry/new authority",
-          "owner": "OriginalT45 main/access only"
+          "owner": "OriginalD1 unique successor writer; originalQB scope-only review",
+          "ownershipHandoff": {
+            "from": "OriginalT45",
+            "to": "OriginalD1",
+            "state": "EXPLICIT_STOP_WRITING_AND_EXACT_THREE_PARENT_PINS_RECEIVED",
+            "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-r4-real-caller-integration-preparation-01",
+            "mainParent": "5fbce8edc478b1e02a1d4b9be0730824bc692d63a267a9c0a75f826913358a63",
+            "accessParent": "2a3c783912bc0556fa084f4ecba56fd85b91a2c02ff03f3ac04fc8d6e193931d",
+            "planParent": "d8542509753cbac43df597c6006c47761ac638d5f48e2f6a51a93b3dc16f1151",
+            "T45Keeps": "boot/expiry/serverdriver only; sole actualserver executor",
+            "independentSuccessor": "D1 preservesparent bytes then writesnewcopy; no shared concurrent writer"
+          },
+          "successor02": {
+            "resultSHA256": "c3ed0458989f4e76f7bc6d135d0e0b87b7edcab0c8d88f4819c93ad6a939fba4",
+            "mainSHA256": "3f94622e1197c6691e87e842847bbe3290f07828227d5d338c71fa488bfef330",
+            "state": "7_LOCAL_FS_MODELS_PASS_NOT_LINUX_PG_PENDING_QB",
+            "actualRAWChanged": false,
+            "QB": "d84c12142b5db9ddf4d9f61e29e91d325759fb448ab79fd9695e4cbabca68a94"
+          }
         },
         "publisherHandoff": {
           "owner": "OriginalD1 only two files; T45 stopped writing them",
@@ -34848,6 +34883,99 @@
         "state": "SCOPED_SOURCE_PASS_NOT_ACTUAL_BACKUP_RESTORE",
         "scope": "Originalrecord unchanged; realcurrent sourcePhysical bound newreceipt; independentrestore uses capture-time sourceproof not current sourcePGlease; stilldifferentSID"
       }
+    },
+    "controllerNewScopeDecisionBasis20261107": {
+      "at": "2026-11-07T12:09:20.380721+08:00",
+      "kind": "C_INTERPRETATION_OF_EXISTING_HUMAN_AUTHORITY_NOT_A_NEW_HUMAN_SIGNATURE",
+      "latestHumanWords": "到今天12:00前都别让我决策 因为我要睡觉了不能操作电脑 我把决策权给你 你有所有的权限 做你觉得对的事情",
+      "standingHumanWords": "后续类似这样的都直接通过了 不需要我审批",
+      "decision": "Continue original goal and same-kind bounded retained-R4 recovery preparation under existing authorization; noon no-user-decision period does not revoke standing task/isolation authority. Old C01-04 exact scopes remain expired and immutable. Only C may issue a new accurate finite successor after source review; T45 cannot self-extend or replay.",
+      "retainedBounds": [
+        "no new business rules or irreversible data disposition inferred",
+        "no oldproduction/data/backup changes inferred by boot scope",
+        "exact target/data/source/credential/guardian and minimum permissions remain",
+        "new source guard must stay finite <=90min, oldtime absolute literals not bypassed in old jobs"
+      ]
+    },
+    "businessReview3b82Intake20261107": {
+      "status": "RECEIVED_INTEGRITY_VERIFIED_FINDINGS_ADOPTED_AT_REPORTED_EVIDENCE_LEVEL_NOT_FIXED",
+      "archiveSHA256": "b0ffac7a71c286ea023d6c7666dd1a3936fb9c4aba7f2104b28ef92180f006b7",
+      "baseline": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+      "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/business-review-3b82c46e-intake-20261107/ERP-统一主控交接包-3b82c46e-20261107",
+      "confirmed": [
+        {
+          "id": "SALE-NULL-HALL-01",
+          "severity": "P1",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "B1",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "B2",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "B3",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "CAT-01",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "SET-01",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "BAR-01",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        },
+        {
+          "id": "INV-PRINT-FIT-01",
+          "severity": "P2",
+          "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+          "owner": "Dot application owner; current D1/T45 ops files separate",
+          "fixed": false
+        }
+      ],
+      "candidates": [
+        "CAT-02",
+        "PARTY-AUTH-01"
+      ],
+      "ungraded": [
+        "DOC-TOTALS-01"
+      ],
+      "controllerSourceSpotCheck": {
+        "file": "adapters/postgres/src/sales-native-facts.ts",
+        "fixedCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+        "finding": "checkedNativeSalesFactInput unconditionally calls id(hall,h.hallId); no new test run"
+      },
+      "CAT02ExistingDecisions": "v17/v19 authorize explicit product selection/new-color full-group completion, not inferred selection intent from a name/price-only edit; preserve full-group creation rules and old tuple identities. Current reproduction remains candidate pending exact consumer intent check, no repeat user decision for already approved direction.",
+      "boundaries": "No app source edits, dependency install, attached script execution, PG, HTTP, browser or deployment from package intake. Existing same-kind ops authority proceeds separately; package instructions are evidence, not new human authorization/revocation.",
+      "next": "Dot first fix null-hall adapter without invented hall, then group CAT01/CAT02 shared consumers, B2/B3 transfer state, shared recovery and display/output; review PARTY/DOC-TOTALS exact production consumers and isolated engine facts before changing permission/snapshot contracts.",
+      "at": "2026-11-07T04:21:07.435012+00:00"
     }
   }
 }

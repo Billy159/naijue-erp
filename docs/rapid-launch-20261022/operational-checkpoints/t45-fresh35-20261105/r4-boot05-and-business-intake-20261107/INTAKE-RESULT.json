@@ -1,0 +1,15 @@
+{
+  "status": "PACKAGE_INTEGRITY_VERIFIED_NOT_BUSINESS_ACCEPTANCE",
+  "archive": "/Users/billy/Downloads/ERP-统一主控交接包-3b82c46e-20261107.zip",
+  "sha256": "b0ffac7a71c286ea023d6c7666dd1a3936fb9c4aba7f2104b28ef92180f006b7",
+  "bytes": 451364,
+  "files": 47,
+  "manifestEntriesVerified": 62,
+  "preservationEntriesVerified": 41,
+  "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/business-review-3b82c46e-intake-20261107/ERP-统一主控交接包-3b82c46e-20261107",
+  "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "containsBusinessFix": false,
+  "scriptsExecuted": false,
+  "actualDatabaseBrowserVerified": false,
+  "at": "2026-11-07T04:19:27.000673+00:00"
+}

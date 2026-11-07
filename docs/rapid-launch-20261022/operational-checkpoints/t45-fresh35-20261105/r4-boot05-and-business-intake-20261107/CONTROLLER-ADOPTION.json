@@ -1,0 +1,80 @@
+{
+  "status": "RECEIVED_INTEGRITY_VERIFIED_FINDINGS_ADOPTED_AT_REPORTED_EVIDENCE_LEVEL_NOT_FIXED",
+  "archiveSHA256": "b0ffac7a71c286ea023d6c7666dd1a3936fb9c4aba7f2104b28ef92180f006b7",
+  "baseline": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+  "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/business-review-3b82c46e-intake-20261107/ERP-统一主控交接包-3b82c46e-20261107",
+  "confirmed": [
+    {
+      "id": "SALE-NULL-HALL-01",
+      "severity": "P1",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "B1",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "B2",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "B3",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "CAT-01",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "SET-01",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "BAR-01",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    },
+    {
+      "id": "INV-PRINT-FIT-01",
+      "severity": "P2",
+      "state": "REPORTED_REPRODUCTION_SOURCE_OR_SYNTHETIC_NOT_REAL_PG_BROWSER",
+      "owner": "Dot application owner; current D1/T45 ops files separate",
+      "fixed": false
+    }
+  ],
+  "candidates": [
+    "CAT-02",
+    "PARTY-AUTH-01"
+  ],
+  "ungraded": [
+    "DOC-TOTALS-01"
+  ],
+  "controllerSourceSpotCheck": {
+    "file": "adapters/postgres/src/sales-native-facts.ts",
+    "fixedCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+    "finding": "checkedNativeSalesFactInput unconditionally calls id(hall,h.hallId); no new test run"
+  },
+  "CAT02ExistingDecisions": "v17/v19 authorize explicit product selection/new-color full-group completion, not inferred selection intent from a name/price-only edit; preserve full-group creation rules and old tuple identities. Current reproduction remains candidate pending exact consumer intent check, no repeat user decision for already approved direction.",
+  "boundaries": "No app source edits, dependency install, attached script execution, PG, HTTP, browser or deployment from package intake. Existing same-kind ops authority proceeds separately; package instructions are evidence, not new human authorization/revocation.",
+  "next": "Dot first fix null-hall adapter without invented hall, then group CAT01/CAT02 shared consumers, B2/B3 transfer state, shared recovery and display/output; review PARTY/DOC-TOTALS exact production consumers and isolated engine facts before changing permission/snapshot contracts.",
+  "at": "2026-11-07T04:21:07.435012+00:00"
+}

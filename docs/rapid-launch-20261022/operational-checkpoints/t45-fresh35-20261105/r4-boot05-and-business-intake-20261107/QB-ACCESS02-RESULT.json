@@ -1,0 +1,61 @@
+{
+  "task": "REAL_ACCESS_CONSUMER02",
+  "status": "PASS_SCOPED_REAL_ACCESS_METADATA_CONSUMERS_SOURCE",
+  "sources": {
+    "fresh35-production-carrier.py": {
+      "sha256": "3f94622e1197c6691e87e842847bbe3290f07828227d5d338c71fa488bfef330",
+      "bytes": 107330
+    },
+    "nonroot_input_access.py": {
+      "sha256": "e9d15db75b7f9bf30440b90c57e3c1d343aeede1fecba7731d6d0152bee159ba",
+      "bytes": 12057
+    },
+    "real_access_consumer.py": {
+      "sha256": "b176281e11e25386e3d1ae24cb0063ad10ac94f0f1c84deeb519addf2a9d17f1",
+      "bytes": 6193
+    },
+    "production-plan.json": {
+      "sha256": "ac355a0318ca39957d96ebf5dcc8978c4439a9b8958984471905006a49589b33",
+      "bytes": 785
+    },
+    "test_access_consumer.py": {
+      "sha256": "9fe44505e24dbc869b2fcc5360c236de18d295de1e3ab4bf6f79892e5e81610e",
+      "bytes": 8540
+    }
+  },
+  "producerResultSha256": "c3ed0458989f4e76f7bc6d135d0e0b87b7edcab0c8d88f4819c93ad6a939fba4",
+  "findingClosure": {
+    "REAL-ACCESS-CONSUMER-01": "CLOSED_IN_EXACT_MAIN3F94622E_ACCESS_E9D15_HELPER_B176_SOURCE",
+    "prior812470NeedFix": "PRESERVED_HISTORICAL"
+  },
+  "checks": {
+    "exactSourceManifest": "PASS",
+    "producerResultSha256": "c3ed0458989f4e76f7bc6d135d0e0b87b7edcab0c8d88f4819c93ad6a939fba4",
+    "newFiniteFSAndActualConsumerASTTests": 7,
+    "passed": 7,
+    "skips": 0,
+    "artifactsScope": "Only QB temp dirs/logs; author fixture dir redirected, no real RAW/approval data or source writes",
+    "LinuxUidGidChown": "EXPLICIT_DOUBLES_NOT_ACTUAL_LINUX_PROOF",
+    "actualServerPG": "NOT_TESTED"
+  },
+  "affectedExistingMainFunctions": [
+    "shared_real_package_snapshot",
+    "shared_real_package_binding",
+    "real_inside_run",
+    "production_real_with_prepared_inputs",
+    "production_real"
+  ],
+  "oldMonitorAndStopFunctions": "IDENTICAL_AST",
+  "knownExcludedIntegration": "Old boot03 constant retained; later actual newboot/currentepoch/params/caller binding not accepted here",
+  "trustBoundary": "Root protected immutable ledgers and exact C-bound source/description/plan are required; no caller-created metadata may replace them",
+  "notTested": [
+    "Linux uid/gid or actual container namespace",
+    "real RAW or approval metadata transition",
+    "PostgreSQL/REAL PREPARE17binding/EXE",
+    "restart/APP/business/release"
+  ],
+  "executionApproval": "NOT_PROVIDED; no full REALready claim or gate change",
+  "operations": "Source reads and7 local synthetic filesystem/actual consumerAST tests, only QB temporary outputs; no server/RAW/PG/payload/credentials",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T04:20:52.599477+00:00"
+}

@@ -1,0 +1,25 @@
+{
+  "automaticRetry": false,
+  "container": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+  "decisionSha256": "aad7149d3d9ae92b66372b0d1de1bfed9fa712140e90769209fd9f916502598b",
+  "installOrWriterReplayed": false,
+  "observed": {
+    "newPhysical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-07 04:19:08.978028+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7705224458832691236"
+    },
+    "process": {
+      "exe": "/opt/naijue-erp/fresh35-combined-v1/runtime/pg/usr/lib/postgresql/17/bin/postgres",
+      "pid": 850,
+      "starttime": "292344623"
+    },
+    "receiptSha256": "14193ae90dabf006bad860b6d4650845ceb1489b048d832d2c02ff0f90de8df8",
+    "roleLoginValidUntil": "2026-11-07T05:03:00+00:00",
+    "state": "ACTUAL_RUNTIME_NEW_EPOCH_METADATA_NOT_CATALOG_OR_BUSINESS_VERIFIED"
+  },
+  "oldRecordRewritten": false,
+  "requestKey": "t45-r4-retained-restart-20261107-05",
+  "status": "RETAINED_R4_ACTUAL_NEW_EPOCH_METADATA_OBSERVED_NOT_BUSINESS_VERIFIED"
+}
