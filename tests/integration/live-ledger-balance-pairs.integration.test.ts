@@ -486,11 +486,15 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
     const settlements=(await client.query('SELECT id,sales_id,line_no,payment_account_id,payment_method_id_snapshot,direction,amount::text FROM naijue_erp.sales_settlement WHERE sales_id=ANY($1::uuid[]) ORDER BY sales_id,line_no,id',[known.sales])).rows as Row[];
     const receipts=(await client.query('SELECT id,actor_account_id,request_key,action,target_id,status,result_data,completed_at::text FROM naijue_erp.operation_receipt WHERE actor_account_id=ANY($1::uuid[]) AND request_key=ANY($2::text[]) ORDER BY id',[[s.login.accountId,deniedAccountId??s.login.accountId],allKeys])).rows as Row[];
     const audits=(await client.query('SELECT id,operation_id,actor_account_id,object_id,action,old_version,new_version,occurred_at::text FROM naijue_erp.audit_change WHERE operation_id=ANY($1::uuid[]) ORDER BY id',[receipts.map(r=>r.id)])).rows as Row[];
-    const anchors=historical?(await client.query(`SELECT id,target_id,target_type,new_version,status,result_data->>'batchId' AS batch_id
-     FROM naijue_erp.operation_receipt WHERE action='MIGRATE_DOCUMENT' AND target_id=ANY($1::uuid[]) ORDER BY id`,[[...known.sales,...known.transfers]])).rows as Row[]:[];
+    const anchors=historical?(await client.query(`SELECT r.id,r.target_id,r.target_type,a.new_version,r.status,r.result_data->>'batchId' AS batch_id
+     FROM naijue_erp.operation_receipt r JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+      AND a.object_id=r.target_id AND a.object_type=r.target_type AND a.actor_account_id=r.actor_account_id
+      AND a.action=r.action AND a.occurred_at=r.completed_at
+     WHERE r.action='MIGRATE_DOCUMENT' AND r.target_id=ANY($1::uuid[]) ORDER BY r.id`,[[...known.sales,...known.transfers]])).rows as Row[]:[];
     await client.query('ROLLBACK');begun=false;return{balances,ledger,headers,lines,settlements,receipts,audits,anchors};
    }finally{try{if(begun)await client.query('ROLLBACK');}finally{await client.end();}}
   };
+  if(historical)phase='HISTORY_ANCHOR_FIXTURE';
   let initial=await observe();assert.equal(initial.receipts.length,0);for(const b of s.initialInventory){const actual=initial.balances.find(x=>key(x.warehouse_id,x.sku_id)===key(b.warehouseId,b.skuId));assert.ok(actual);assert.equal(actual.quantity,b.quantity);assert.equal(actual.version,b.version);}
   const login=async(credentials:Fresh35OrdinaryScenario['login'])=>{const r=await api!.app.inject({method:'POST',url:'/auth/login',headers:{origin:c.publicOrigin,'content-type':'application/json'},payload:{loginName:credentials.loginName,password:credentials.password}});assert.equal(r.statusCode,200);const cookie=r.headers['set-cookie'];assert.ok(typeof cookie==='string'&&cookie.startsWith('__Host-naijue_session='));const headers={origin:c.publicOrigin,cookie:cookie.split(';')[0]!,'content-type':'application/json'};if(credentials.accountId===deniedAccountId)phase='REAL_ADMIN_ACCOUNT_SETUP:SESSION';const session:LightMyRequestResponse=await api!.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json<{principal:{accountId:string;role:string}}>().principal;assert.equal(principal.accountId,credentials.accountId);assert.equal(principal.role,credentials.accountId===deniedAccountId?'SALESPERSON':'ADMIN');return headers;};
   const headers=await login(s.login);phase='REAL_ADMIN_ACCOUNT_SETUP';const setup=await prepareFresh35Salesperson(api,headers,s.forbidden,step=>{phase='REAL_ADMIN_ACCOUNT_SETUP:'+step;});deniedAccountId=setup.accountId;phase='REAL_ADMIN_ACCOUNT_SETUP:LOGIN';const deniedHeaders=await login({accountId:setup.accountId,loginName:setup.loginName,password:s.forbidden.password});
@@ -735,5 +739,45 @@ test('fresh35 ordinary failure descriptor excludes messages stacks getters arbit
  }
  const getterError=Error(secret);for(const property of ['code','message','stack'])Object.defineProperty(getterError,property,{get(){reads++;throw Error(secret);}});wrap(getterError);assert.equal(reads,0);
 });
+
+
+test('historical migration anchor reads its audit version on the original receipt relationship (SQLite column model)',async()=>{
+ const {DatabaseSync}=await import('node:sqlite'),db=new DatabaseSync(':memory:');
+ const body=runFresh35OrdinaryIntegration.toString();
+ const queries=[...body.matchAll(/client\.query\(`([^`]+)`/g)].map(match=>match[1]!).filter(sql=>sql.includes("action='MIGRATE_DOCUMENT'"));
+ assert.equal(queries.length,1);
+ // Only the array parameter changes SQL dialect. The queried columns and join
+ // remain the actual runner statement, so the original missing column is red.
+ const sql=queries[0]!.replace(/=ANY\(\$1::uuid\[\]\)/g,' IN (SELECT value FROM json_each(?))');
+ try{
+  db.exec("ATTACH DATABASE ':memory:' AS naijue_erp;"
+   +"CREATE TABLE naijue_erp.operation_receipt(id TEXT,actor_account_id TEXT,target_id TEXT,target_type TEXT,action TEXT,status TEXT,result_data TEXT,completed_at TEXT);"
+   +"CREATE TABLE naijue_erp.audit_change(operation_id TEXT,actor_account_id TEXT,object_id TEXT,object_type TEXT,action TEXT,new_version INTEGER,occurred_at TEXT);");
+  const receipt=db.prepare('INSERT INTO naijue_erp.operation_receipt VALUES(?,?,?,?,?,?,?,?)');
+  const audit=db.prepare('INSERT INTO naijue_erp.audit_change VALUES(?,?,?,?,?,?,?)');
+  for(const [id,target,kind,version] of [['sale-anchor','sale','SALES',2],['transfer-anchor','transfer','TRANSFER',1]] as const){
+   receipt.run(id,'actor',target,kind,'MIGRATE_DOCUMENT','COMMITTED',JSON.stringify({batchId:'batch'}),'2026-11-07');
+   audit.run(id,'actor',target,kind,'MIGRATE_DOCUMENT',version,'2026-11-07');
+  }
+  const read=()=>db.prepare(sql).all(JSON.stringify(['sale','transfer']));
+  assert.deepEqual(read().map(row=>[row.id,row.target_id,row.target_type,row.new_version,row.batch_id]),[
+   ['sale-anchor','sale','SALES',2,'batch'],['transfer-anchor','transfer','TRANSFER',1,'batch']
+  ]);
+  db.exec("UPDATE naijue_erp.audit_change SET actor_account_id='other' WHERE object_id='sale'");
+  assert.deepEqual(read().map(row=>row.target_id),['transfer']);
+  db.exec("UPDATE naijue_erp.audit_change SET actor_account_id='actor',occurred_at='different' WHERE object_id='sale'");
+  assert.deepEqual(read().map(row=>row.target_id),['transfer']);
+  const snapshotStart=body.match(/if\s*\(historical\)\s*phase\s*=\s*'HISTORY_ANCHOR_FIXTURE';\s*let\s+initial\s*=\s*await\s+observe\(\);/);
+  assert(snapshotStart);
+  const AsyncFunction=Object.getPrototypeOf(async()=>{}).constructor;
+  const runSnapshot=new AsyncFunction('historical','observe',"let phase='REAL_CAPACITY_PREFLIGHT';try{"+snapshotStart[0]+"}catch(error){return {phase,error};}") as (historical:boolean,observe:()=>Promise<never>)=>Promise<{phase:string;error:unknown}>;
+  const failure=Object.assign(Error('synthetic snapshot error'),{code:'42703'});
+  const observed=await runSnapshot(true,async()=>{throw failure;});
+  assert.equal(observed.error,failure);
+  assert.equal(observed.phase,'HISTORY_ANCHOR_FIXTURE');
+
+ }finally{db.close();}
+});
+
 
 }
