@@ -96,7 +96,7 @@ export async function main(){
    // cleaning package. Its planned warehouse binding is checked by SQL in the
    // same transaction; it is not an observation of a real imported warehouse.
    let failed=await reviewedHost(async(client,admission)=>{
-    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,encodedScrypt,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null,variant:'settlement-retention25'});
+    fixture=await buildSyntheticFresh35WholePackageFixture(standardTarget,encodedScrypt,{historicalSalesAdmission:admission,workspaceDirectory:join(workspace,'pg-private'),targetCapturedAt:null,variant:'historical-anchor'});
     const f=fixture.fixtureBinding;
     need(f&&Object.keys(f).sort().join(',')==='initializerSha256,manifestSha256,planSha256,stepsSha256'&&Object.values(f).every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))&&f.manifestSha256===fixture.program.initialize.package_manifest_sha256&&f.planSha256===fixture.program.initialize.plan_sha256&&f.initializerSha256===requestHash({initialize:fixture.program.initialize,encodedScrypt}),'SYNTHETIC_RETENTION_FIXTURE_BINDING_REQUIRED');
     const installed=describeFresh35CombinedProgram(program);

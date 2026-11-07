@@ -86,3 +86,58 @@ test('retention25 ordinary fixture binds warehouse02 to hall02 only and preserve
  assert.deepEqual(ordinary.syntheticSourceFiles,unchanged.syntheticSourceFiles,'historical capture, bridge and resolution source bytes remain original');
  assert.deepEqual(ordinary.historicalSalesHallApproval.records[0],unchanged.historicalSalesHallApproval.records[0]);
 });
+test('historical anchor fixture adds only one balanced re-approvable sale to the original r26 closure',async()=>{
+ const {createSyntheticFresh35WholePackageInput,SYNTHETIC_FRESH35_HISTORICAL_ANCHOR_SALE}=await import('./whole-package-synthetic.ts');
+ const {validateUnifiedPackage}=await import('../../../packages/application/src/unified-import-contract.ts');
+ const {streamPreflight}=await import('../../../tools/unified-import/stream-preflight.mjs');
+ const {streamDocumentRequests}=await import('../../../tools/unified-import/stream-document-requests.mjs');
+ const {mkdtemp,mkdir,writeFile,readFile,rm}=await import('node:fs/promises');
+ const {join,dirname}=await import('node:path');const {tmpdir}=await import('node:os');
+ const original=createSyntheticFresh35WholePackageInput(null,'settlement-retention25');
+ const input=createSyntheticFresh35WholePackageInput(null,'historical-anchor');
+ const {pkg,historicalSalesHallApproval,historicalLineAmountEvidence,historicalSettlementRetentionApproval}=input;
+ const sale=pkg.records.sales_header.find(r=>r.source_key===SYNTHETIC_FRESH35_HISTORICAL_ANCHOR_SALE);
+ assert.ok(sale&&sale.fields.hall_id&&sale.fields.stock_basis==='CUTOFF_HISTORY'&&sale.fields.status==='APPROVED');
+ assert.equal(sale.fields.version,2);
+ const lines=pkg.records.sales_line.filter(r=>r.fields.sales_id===sale.fields.id);
+ assert.deepEqual(lines.map(r=>[r.fields.quantity,r.fields.deal_price,r.fields.line_amount]),[['3','1.00','3.00'],['-1','1.00','-1.00']]);
+ const paid=pkg.records.sales_settlement.filter(r=>r.fields.sales_id===sale.fields.id);
+ assert.equal(paid.length,1);assert.equal(paid[0].fields.amount,sale.fields.net_due);
+ assert.equal(paid[0].fields.payment_method_id_snapshot,pkg.records.payment_method[0].fields.id);
+ const extras={sales_header:1,sales_line:2,sales_settlement:1};
+ for(const [table,rows] of Object.entries(original.pkg.records)){
+  assert.deepEqual(pkg.records[table].slice(0,rows.length),rows,table);
+  assert.equal(pkg.records[table].length,rows.length+(extras[table]??0),table);
+ }
+ assert.deepEqual(input.retainedSalesIds,original.retainedSalesIds);
+ assert.equal(historicalLineAmountEvidence.lines.length,6);
+ const options={allowSynthetic:true,expectedManifestSha256:input.expectedManifestSha256,historicalSalesHallApproval,historicalLineAmountEvidence,historicalSettlementRetentionApproval};
+ const checked=validateUnifiedPackage(pkg,options);
+ assert.equal(checked.valid,true,JSON.stringify(checked.issues));
+ const dir=await mkdtemp(join(tmpdir(),'fresh35-history-anchor-fixture-'));
+ try{
+  const dirPackage=join(dir,'package'),report=join(dir,'report');
+  await mkdir(dirPackage);
+  for(const [path,bytes] of Object.entries(pkg.artifacts)){
+   await mkdir(dirname(join(dirPackage,path)),{recursive:true});
+   await writeFile(join(dirPackage,path),bytes);
+  }
+  await writeFile(join(dirPackage,'manifest.json'),input.manifestBytes);
+  const summary=await streamPreflight(dirPackage,report,options);
+  assert.equal(summary.checks_passed,true,await readFile(join(report,'issues.jsonl'),'utf8'));
+  assert.equal(summary.complete_package_validation,true);
+  assert.equal(summary.historical_line_amount_differences,6);
+  const binding={historicalSalesHallApproval,historicalLineAmountEvidence,historicalSettlementRetentionApproval,
+   baselineBatchId:'00000000-0000-4000-8000-000000000001',documentBatchId:sale.fields.import_batch_id,
+   planSha256:'b'.repeat(64),manifestSha256:input.expectedManifestSha256,
+   namespace:pkg.manifest.source_namespace,cutoffAt:pkg.manifest.inventory_source.cutoff_at,
+   expectedDocuments:{SALES_HEADER:27,SALES_LINE:33,SALES_SETTLEMENT:29,TRANSFER_HEADER:1,TRANSFER_LINE:1,IMPORT_BATCH:1}};
+  const planned=[];
+  for await(const step of streamDocumentRequests(join(report,'index.sqlite'),summary,binding))planned.push(...step.request.payload.rows);
+  const migrated=planned.find(r=>r.entity_type==='SALES_HEADER'&&r.fields.id===sale.fields.id);
+  assert.ok(migrated);assert.equal(migrated.fields.version,2);
+  assert.equal(migrated.historical_hall_evidence.selected_hall_id,sale.fields.hall_id);
+  assert.equal(planned.filter(r=>r.entity_type==='SALES_LINE'&&r.fields.sales_id===sale.fields.id).length,2);
+  assert.equal(planned.filter(r=>r.entity_type==='SALES_SETTLEMENT'&&r.fields.sales_id===sale.fields.id).length,1);
+ }finally{await rm(dir,{recursive:true,force:true});}
+});

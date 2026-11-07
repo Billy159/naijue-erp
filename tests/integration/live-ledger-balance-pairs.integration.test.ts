@@ -402,7 +402,7 @@ export interface Fresh35OrdinaryFailure {
  readonly guardCode:string|null;readonly sqlstate:string|null;readonly errno:string|null;
  readonly expectedInteger:number|null;readonly actualInteger:number|null;
 }
-const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP',...fresh35AccountSetupSteps.map(step=>'REAL_ADMIN_ACCOUNT_SETUP:'+step),'AUTHENTICATED_SCOPE_DENIAL',...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
+const fresh35OrdinaryFailurePhases=Object.freeze(['PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP',...fresh35AccountSetupSteps.map(step=>'REAL_ADMIN_ACCOUNT_SETUP:'+step),'AUTHENTICATED_SCOPE_DENIAL','HISTORY_ANCHOR_FIXTURE',...['sales','transfers'].flatMap(family=>['DETAIL','DENIAL','UNAPPROVE','APPROVE'].map(step=>'HISTORY_ANCHOR:'+family+':'+step)),...['salesPositive','salesMixed','transfer'].flatMap(name=>['PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'].map(step=>name+':'+step))]);
 const fresh35OrdinaryGuardCodes=['ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED'] as const;
 const fresh35OrdinarySqlstates=['42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','28P01','3D000','53300','57P01','08006','55000','P0001'] as const;
 const fresh35OrdinaryErrnos=['EACCES','EPERM','ENOENT','ELOOP','ENOTDIR','ECONNREFUSED','ECONNRESET','ETIMEDOUT','EPIPE','EHOSTUNREACH','ENETUNREACH','EADDRINUSE'] as const;
@@ -426,7 +426,8 @@ function retainFresh35OrdinaryFailure(error:unknown,phase:string,source:Fresh35O
  fresh35OrdinaryFailures.set(failure,descriptor);return failure;
 }
 
-export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryContext):Promise<void>{
+export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryContext, scope:'HISTORY_ANCHOR'|'RUNTIME_DOCUMENTS'='RUNTIME_DOCUMENTS'):Promise<void>{
+ const historical=scope==='HISTORY_ANCHOR';
  let api:PostgresApplicationApi|undefined,capacity:Awaited<ReturnType<typeof createProductionCapacityLaunch>>|undefined,phase='PRIVATE_INPUT',failure:Error|undefined;
  try{
   const c=parseProductionRuntime35Configuration(context.configuration),t=parseProductionCapacityLaunch(context.capacityLaunch).target;
@@ -442,10 +443,25 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
   const handle=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);let bytes:Buffer;
   try{const first=await handle.stat();assert.ok(first.dev===before.dev&&first.ino===before.ino&&first.size===before.size&&first.mtimeMs===before.mtimeMs&&first.ctimeMs===before.ctimeMs&&first.nlink===1);bytes=await handle.readFile();const after=await handle.stat(),linked=await lstat(path);assert.ok(first.dev===after.dev&&first.ino===after.ino&&first.mtimeMs===after.mtimeMs&&first.ctimeMs===after.ctimeMs&&first.size===bytes.length&&linked.dev===first.dev&&linked.ino===first.ino&&linked.nlink===1&&!linked.isSymbolicLink());}finally{await handle.close();}
   const s=checkFresh35OrdinaryScenario(JSON.parse(bytes.toString('utf8')) as Fresh35OrdinaryScenario),fault=observedDriver(true);
-  const allKeys=[...Object.values(s.keys.salesPositive),...Object.values(s.keys.salesMixed),...Object.values(s.keys.transfer),s.forbidden.requestKey],known={sales:[] as string[],transfers:[] as string[]};let deniedAccountId:string|undefined;
+  const known={sales:[] as string[],transfers:[] as string[]};
+  let deniedAccountId:string|undefined;
+  const allKeys=historical
+   ? [s.keys.salesPositive.unapprove,s.keys.salesPositive.reapprove,s.keys.transfer.unapprove,s.keys.transfer.reapprove,s.forbidden.requestKey]
+   : [...Object.values(s.keys.salesPositive),...Object.values(s.keys.salesMixed),...Object.values(s.keys.transfer),s.forbidden.requestKey];
+  if(historical){
+   phase='HISTORY_ANCHOR_FIXTURE';
+   const {createSyntheticFresh35WholePackageInput,SYNTHETIC_FRESH35_HISTORICAL_ANCHOR_SALE}=
+    await import('../fixtures/unified-import/whole-package-synthetic.ts');
+   const fixture=createSyntheticFresh35WholePackageInput(null,'historical-anchor');
+   assert.equal(fixture.expectedManifestSha256,context.publication.sourceHash);
+   const sale=fixture.pkg.records.sales_header!.find(row=>row.source_key===SYNTHETIC_FRESH35_HISTORICAL_ANCHOR_SALE);
+   const transfer=fixture.pkg.records.transfer_header!.find(row=>row.source_key==='transfer_header:01');
+   assert.ok(typeof sale?.fields.id==='string'&&typeof transfer?.fields.id==='string');
+   known.sales.push(sale.fields.id);known.transfers.push(transfer.fields.id);
+  }
   phase='REAL_CAPACITY';capacity=await createProductionCapacityLaunch(context.capacityLaunch,c);
   phase='REAL_SYNTHETIC_ADMISSION';api=await createSyntheticRuntime35ApplicationApi(c,fault.driver,context.staffCredentialRequestTag,capacity,t);phase='REAL_CAPACITY_PREFLIGHT';await capacity.preflight();assert.equal(api.app.server.listening,false);
-  const observe=async():Promise<Snapshot>=>{
+  const observe=async():Promise<Snapshot & {anchors:Row[]}>=>{
    const client=new Client(fault.config());client.on('error',()=>{});let begun=false;
    try{
     await client.connect();
@@ -460,17 +476,19 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
     assertFresh35StandardPublication(published,p,s.login.accountId);
     const bound=[s.initialInventory.map(x=>x.warehouseId),s.initialInventory.map(x=>x.skuId)];
     const balances=(await client.query('SELECT b.warehouse_id,b.sku_id,b.quantity::text,b.version,b.last_operation_id,b.updated_at::text FROM naijue_erp.inventory_balance b JOIN unnest($1::uuid[],$2::uuid[]) k(w,s) ON k.w=b.warehouse_id AND k.s=b.sku_id ORDER BY b.warehouse_id,b.sku_id',bound)).rows as Row[];assert.equal(balances.length,s.initialInventory.length);
-    const ledger=(await client.query('SELECT l.id,l.operation_id,l.event_kind,l.warehouse_id,l.sku_id,l.quantity_delta::text,l.quantity_before::text,l.quantity_after::text,l.source_sales_line_id,l.source_transfer_line_id,l.source_import_batch_id,l.source_history_revision_id,l.endpoint,l.source_document_version,l.reverses_entry_id,l.posted_at::text FROM naijue_erp.inventory_ledger l JOIN unnest($1::uuid[],$2::uuid[]) k(w,s) ON k.w=l.warehouse_id AND k.s=l.sku_id ORDER BY l.id LIMIT 10001',bound)).rows as Row[];assert.ok(ledger.length<10001);
+    const ledger=(await client.query(`SELECT l.id,l.operation_id,l.event_kind,l.warehouse_id,l.sku_id,l.quantity_delta::text,l.quantity_before::text,l.quantity_after::text,l.source_sales_line_id,l.source_transfer_line_id,l.source_import_batch_id,l.source_history_revision_id,l.endpoint,l.source_document_version,l.reverses_entry_id,l.posted_at::text${historical?',l.baseline_anchor_operation_id':''} FROM naijue_erp.inventory_ledger l JOIN unnest($1::uuid[],$2::uuid[]) k(w,s) ON k.w=l.warehouse_id AND k.s=l.sku_id ORDER BY l.id LIMIT 10001`,bound)).rows as Row[];assert.ok(ledger.length<10001);
     for(const row of ledger)if(row.source_import_batch_id!==null||row.event_kind==='HISTORY_REVISION')assert.ok(row.quantity_before===null&&row.quantity_after===null);
     const headers:Row[]=[],lines:Row[]=[];
     for(const family of ['sales','transfers'] as const){const f=family==='sales'?'sales':'transfer';
-     headers.push(...(await client.query(`SELECT '${family}' family,id,status,version,stock_basis${family==='sales'?',gross_amount::text,order_discount::text,net_due::text':''} FROM naijue_erp.${f}_header WHERE id=ANY($1::uuid[]) ORDER BY id`,[known[family]])).rows);
+     headers.push(...(await client.query(`SELECT '${family}' family,id,status,version,stock_basis${historical?',created_by_account_id,created_by_staff_id,created_at::text':''}${family==='sales'?',gross_amount::text,order_discount::text,net_due::text':''} FROM naijue_erp.${f}_header WHERE id=ANY($1::uuid[]) ORDER BY id`,[known[family]])).rows);
      lines.push(...(await client.query(`SELECT '${family}' family,id,${f}_id document_id,line_no,sku_id,quantity::text,is_current${family==='sales'?',deal_price::text,line_amount::text,allocated_discount::text':''} FROM naijue_erp.${f}_line WHERE ${f}_id=ANY($1::uuid[]) ORDER BY document_id,line_no,id`,[known[family]])).rows);
     }
     const settlements=(await client.query('SELECT id,sales_id,line_no,payment_account_id,payment_method_id_snapshot,direction,amount::text FROM naijue_erp.sales_settlement WHERE sales_id=ANY($1::uuid[]) ORDER BY sales_id,line_no,id',[known.sales])).rows as Row[];
     const receipts=(await client.query('SELECT id,actor_account_id,request_key,action,target_id,status,result_data,completed_at::text FROM naijue_erp.operation_receipt WHERE actor_account_id=ANY($1::uuid[]) AND request_key=ANY($2::text[]) ORDER BY id',[[s.login.accountId,deniedAccountId??s.login.accountId],allKeys])).rows as Row[];
     const audits=(await client.query('SELECT id,operation_id,actor_account_id,object_id,action,old_version,new_version,occurred_at::text FROM naijue_erp.audit_change WHERE operation_id=ANY($1::uuid[]) ORDER BY id',[receipts.map(r=>r.id)])).rows as Row[];
-    await client.query('ROLLBACK');begun=false;return{balances,ledger,headers,lines,settlements,receipts,audits};
+    const anchors=historical?(await client.query(`SELECT id,target_id,target_type,new_version,status,result_data->>'batchId' AS batch_id
+     FROM naijue_erp.operation_receipt WHERE action='MIGRATE_DOCUMENT' AND target_id=ANY($1::uuid[]) ORDER BY id`,[[...known.sales,...known.transfers]])).rows as Row[]:[];
+    await client.query('ROLLBACK');begun=false;return{balances,ledger,headers,lines,settlements,receipts,audits,anchors};
    }finally{try{if(begun)await client.query('ROLLBACK');}finally{await client.end();}}
   };
   let initial=await observe();assert.equal(initial.receipts.length,0);for(const b of s.initialInventory){const actual=initial.balances.find(x=>key(x.warehouse_id,x.sku_id)===key(b.warehouseId,b.skuId));assert.ok(actual);assert.equal(actual.quantity,b.quantity);assert.equal(actual.version,b.version);}
@@ -479,7 +497,91 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
   const post=(family:Family,body:object,h=headers)=>api!.app.inject({method:'POST',url:`/${family}/commands`,headers:h,payload:body});
   const result=(r:LightMyRequestResponse):Result=>{assert.equal(r.statusCode,200);return r.json<Result>();};
   const idOf=(f:Family,r:Result)=>{const id=f==='sales'?r.salesId:r.transferId;assert.ok(typeof id==='string');return id;};
-  const committed=(x:Snapshot,r:Result,k:string,action:string,f:Family)=>{const id=idOf(f,r),h=x.headers.find(a=>a.id===id),receipt=x.receipts.find(a=>a.request_key===k),audit=x.audits.find(a=>a.operation_id===r.operationId);assert.ok(h&&h.status===r.status&&h.version===r.version&&h.stock_basis==='RUNTIME_LEDGER');assert.ok(receipt&&audit&&receipt.id===r.operationId&&receipt.status==='COMMITTED'&&receipt.action===action&&receipt.target_id===id&&receipt.actor_account_id===s.login.accountId);assert.deepEqual(receipt.result_data,r);assert.ok(audit.object_id===id&&audit.actor_account_id===s.login.accountId&&audit.action===action&&audit.new_version===r.version&&audit.old_version===(r.version===1?null:r.version-1)&&audit.occurred_at===receipt.completed_at);};
+  const committed=(x:Snapshot,r:Result,k:string,action:string,f:Family)=>{const id=idOf(f,r),h=x.headers.find(a=>a.id===id),receipt=x.receipts.find(a=>a.request_key===k),audit=x.audits.find(a=>a.operation_id===r.operationId);assert.ok(h&&h.status===r.status&&h.version===r.version&&h.stock_basis===(historical?'CUTOFF_HISTORY':'RUNTIME_LEDGER'));assert.ok(receipt&&audit&&receipt.id===r.operationId&&receipt.status==='COMMITTED'&&receipt.action===action&&receipt.target_id===id&&receipt.actor_account_id===s.login.accountId);assert.deepEqual(receipt.result_data,r);assert.ok(audit.object_id===id&&audit.actor_account_id===s.login.accountId&&audit.action===action&&audit.new_version===r.version&&audit.old_version===(r.version===1?null:r.version-1)&&audit.occurred_at===receipt.completed_at);};
+  if(historical){
+   assert.equal(initial.anchors.length,2);
+   let state:Snapshot & {anchors:Row[]}=initial;
+   for(const family of ['sales','transfers'] as const){
+    const [id]=known[family];assert.ok(id);
+    const sales=family==='sales',proposal=sales?s.salesPositive:s.transfer,keys=sales?s.keys.salesPositive:s.keys.transfer;
+    const from=sales?s.salesPositive.warehouseId:s.transfer.fromWarehouseId,to=sales?from:s.transfer.toWarehouseId;
+    const payload=sales?{salesId:id}:{transferId:id};
+    const header=initial.headers.find(row=>row.id===id);
+    assert.ok(header?.status==='APPROVED'&&header.stock_basis==='CUTOFF_HISTORY'&&header.version===(sales?2:1));
+    const own=initial.lines.filter(line=>line.document_id===id&&line.is_current===true);
+    assert.deepEqual(own.map(line=>line.quantity),sales?['3','-1']:['2']);
+    assert.ok(own.every(line=>line.sku_id===proposal.lines[0]!.skuId));
+    const anchor=initial.anchors.find(row=>row.target_id===id);
+    assert.ok(anchor?.status==='COMMITTED'&&anchor.batch_id===context.publication.batchId&&anchor.new_version===header.version
+     &&anchor.target_type===(sales?'SALES':'TRANSFER'));
+    assert.ok(initial.ledger.every(row=>!own.some(line=>(sales?row.source_sales_line_id:row.source_transfer_line_id)===line.id)));
+
+    const detail=async (status:string,version:number)=>{
+     phase='HISTORY_ANCHOR:'+family+':DETAIL';
+     const response=await api!.app.inject({method:'POST',url:`/${family}/detail/query`,headers,payload});
+     assert.equal(response.statusCode,200);
+     const read=response.json<{document:{header:{id:string;status:string;version:number};lines:Row[]};stockBasis:string;historicalSaleOrigin?:{kind:string}}>();
+     assert.equal(read.document.header.id,id);assert.equal(read.document.header.status,status);
+     assert.equal(read.document.header.version,version);assert.equal(read.stockBasis,'CUTOFF_HISTORY');
+     assert.deepEqual(read.document.lines.map(line=>line.id),own.map(line=>line.id));
+     if(sales)assert.equal(read.historicalSaleOrigin?.kind,'SIGNED_SALE');
+    };
+    await detail('APPROVED',Number(header.version));
+    if(sales){
+     phase='HISTORY_ANCHOR:sales:DENIAL';
+     const denied=await post(family,{action:'UNAPPROVE',requestKey:s.forbidden.requestKey,expectedVersion:header.version,...payload},deniedHeaders);
+     assert.equal(denied.statusCode,403);assert.equal(denied.json<{error:{code:string}}>().error.code,'FORBIDDEN');
+     assert.deepEqual(await observe(),state);
+    }
+    for(const action of ['UNAPPROVE','APPROVE'] as const){
+     phase='HISTORY_ANCHOR:'+family+':'+action;
+     const before=state;
+     const expectedVersion:number=Number(before.headers.find(row=>row.id===id)?.version);
+     const requestKey=action==='UNAPPROVE'?keys.unapprove:keys.reapprove;
+     const body={action,requestKey,expectedVersion,...payload};
+     const next=result(await post(family,body));
+     assert.equal(idOf(family,next),id);assert.equal(next.version,expectedVersion+1);
+     assert.equal(next.status,action==='UNAPPROVE'?'DRAFT':'APPROVED');
+     state=await observe();committed(state,next,requestKey,action,family);
+     assert.deepEqual(state.anchors,before.anchors);
+     assert.deepEqual(state.lines,before.lines);assert.deepEqual(state.settlements,before.settlements);
+     const actualHeader:Row|undefined=state.headers.find(row=>row.id===id);
+     assert.deepEqual(actualHeader,{...header,status:next.status,version:next.version});
+     const rows=state.ledger.filter(row=>row.operation_id===next.operationId);
+     assert.equal(rows.length,own.length*(sales?1:2));
+     assert.deepEqual(rows.map(row=>row.id).sort(),[...next.ledgerEntryIds].sort());
+     assert.deepEqual(state.ledger.filter(row=>row.operation_id!==next.operationId),before.ledger);
+     for(const line of own){
+      const effects=rows.filter(row=>(sales?row.source_sales_line_id:row.source_transfer_line_id)===line.id);
+      assert.deepEqual(effects.map(row=>row.endpoint).sort(),sales?['SALES_WAREHOUSE']:['FROM','TO']);
+      for(const row of effects){
+       const inbound=row.endpoint==='TO';
+       assert.equal(row.warehouse_id,inbound?to:from);assert.equal(row.sku_id,line.sku_id);
+       assert.equal(int(row.quantity_delta),int(line.quantity)*(inbound?1n:-1n)*(action==='APPROVE'?1n:-1n));
+       assert.equal(row.event_kind,action);assert.equal(row.source_document_version,next.version);
+       assert.equal(row.baseline_anchor_operation_id,action==='UNAPPROVE'?anchor.id:null);
+       assert.equal(row.reverses_entry_id,null);assert.equal(row.source_import_batch_id,null);
+      }
+     }
+     for(const balance of before.balances){
+      const effects=rows.filter(row=>row.warehouse_id===balance.warehouse_id&&row.sku_id===balance.sku_id);
+      const actual=state.balances.find(row=>row.warehouse_id===balance.warehouse_id&&row.sku_id===balance.sku_id);
+      assert.ok(actual);assertFresh35PostingChain(balance.quantity,effects,actual.quantity);
+      if(effects.length){
+       assert.equal(actual.version,Number(balance.version)+effects.length);assert.equal(actual.last_operation_id,next.operationId);
+      }else assert.deepEqual(actual,balance);
+     }
+     const recovery:LightMyRequestResponse=await api!.app.inject({method:'GET',url:`/${family}/receipts/${encodeURIComponent(requestKey)}`,headers});
+     assert.equal(recovery.statusCode,200);
+     const receipt=recovery.json<{status:string;result:Result}>();
+     assert.equal(receipt.status,'COMMITTED');assert.deepEqual(receipt.result,next);
+     assert.deepEqual(result(await post(family,body)),next);assert.deepEqual(await observe(),state);
+     await detail(next.status,next.version);
+    }
+    assert.deepEqual(state.balances.map(row=>[row.warehouse_id,row.sku_id,row.quantity]),
+     initial.balances.map(row=>[row.warehouse_id,row.sku_id,row.quantity]));
+   }
+  } else {
   phase='AUTHENTICATED_SCOPE_DENIAL';const denied=await post('sales',{action:'SAVE',requestKey:s.forbidden.requestKey,expectedVersion:null,proposal:s.forbidden.sales},deniedHeaders);assert.equal(denied.statusCode,403);assert.equal(denied.json<{error:{code:string}}>().error.code,'FORBIDDEN');assert.deepEqual(await observe(),initial);
   for(const name of ['salesPositive','salesMixed','transfer'] as const){
    const family:Family=name==='transfer'?'transfers':'sales',proposal=name==='transfer'?s.transfer:s[name],keys=s.keys[name];
@@ -516,6 +618,7 @@ export async function runFresh35OrdinaryIntegration(context:Fresh35OrdinaryConte
    phase=name+':REAL_ROLLBACK';before=state;fault.arm(family,'rollback');assert.equal((await post(family,command('UNAPPROVE',keys.rollback,reapproved.version))).statusCode,500);fault.assertConsumed();assert.deepEqual(await observe(),before);assert.equal((await api.app.inject({method:'GET',url:`/${family}/receipts/${encodeURIComponent(keys.rollback)}`,headers})).statusCode,404);
    phase=name+':LOST_COMMIT_ACK';const unknown=command('UNAPPROVE',keys.unknownCommit,reapproved.version);fault.arm(family,'unknown');assert.equal((await post(family,unknown)).statusCode,500);fault.assertConsumed();const receipt:LightMyRequestResponse=await api.app.inject({method:'GET',url:`/${family}/receipts/${encodeURIComponent(keys.unknownCommit)}`,headers});assert.equal(receipt.statusCode,200);const recovered=receipt.json<{status:string;result:Result}>();assert.equal(recovered.status,'COMMITTED');assert.equal(recovered.result.version,6);state=await observe();posting(before,state,recovered.result,keys.unknownCommit,'UNAPPROVE',active);assert.deepEqual(result(await post(family,unknown)),recovered.result);assert.deepEqual(await observe(),state);
    phase=name+':DETAIL';const detail:LightMyRequestResponse=await api.app.inject({method:'POST',url:`/${family}/detail/query`,headers,payload:family==='sales'?{salesId:idOf(family,saved)}:{transferId:idOf(family,saved)}});assert.equal(detail.statusCode,200);const read=detail.json<{document:{header:{id:string;status:string;version:number};lines:Row[]};stockBasis:string}>();assert.equal(read.document.header.id,idOf(family,saved));assert.equal(read.document.header.status,'DRAFT');assert.equal(read.document.header.version,recovered.result.version);assert.equal(read.stockBasis,'RUNTIME_LEDGER');assert.equal(read.document.lines.length,proposal.lines.length);
+  }
   }
  }catch(error){failure=retainFresh35OrdinaryFailure(error,phase,'runFresh35OrdinaryIntegration:catch');}
  finally{try{if(api)await api.close();else capacity?.close();}catch(error){failure??=retainFresh35OrdinaryFailure(error,phase,'runFresh35OrdinaryIntegration:cleanup');}}

@@ -334,7 +334,7 @@ def ordinary_child_process(proc):
     need(identity['exe']==str(NODE) and fields[0] not in ['Z','X'] and fields[1]==str(os.getpid()) and fields[19]==identity['starttime'] and re.fullmatch('[a-f0-9-]{36}',boot),'ORDINARY_NODE_CHILD_IDENTITY_DIFFERS')
     return {'pid':proc.pid,'linuxStartTicks':identity['starttime'],'linuxBootId':boot}
 
-ORDINARY_FAILURE_PHASES = ('PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL')+tuple('REAL_ADMIN_ACCOUNT_SETUP:'+step for step in ('STAFF_DETAIL','ABSENT_RECEIPT','CREATE','RESET_PASSWORD','ACCOUNT_DETAIL','RECEIPT_READBACK','REPLAY','ACCOUNT_READBACK','STAFF_LINK','LOGIN','SESSION'))+tuple(name+':'+step for name in ('salesPositive','salesMixed','transfer') for step in ('PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'))
+ORDINARY_FAILURE_PHASES = ('PRIVATE_INPUT','REAL_CAPACITY','REAL_SYNTHETIC_ADMISSION','REAL_CAPACITY_PREFLIGHT','REAL_ADMIN_ACCOUNT_SETUP','AUTHENTICATED_SCOPE_DENIAL')+tuple('REAL_ADMIN_ACCOUNT_SETUP:'+step for step in ('STAFF_DETAIL','ABSENT_RECEIPT','CREATE','RESET_PASSWORD','ACCOUNT_DETAIL','RECEIPT_READBACK','REPLAY','ACCOUNT_READBACK','STAFF_LINK','LOGIN','SESSION'))+tuple(name+':'+step for name in ('salesPositive','salesMixed','transfer') for step in ('PREPARE','SAVE','APPROVE','UNAPPROVE','REOPEN','REAL_ROLLBACK','LOST_COMMIT_ACK','DETAIL'))+('HISTORY_ANCHOR_FIXTURE',)+tuple('HISTORY_ANCHOR:'+family+':'+step for family in ('sales','transfers') for step in ('DETAIL','DENIAL','UNAPPROVE','APPROVE'))
 ORDINARY_ENTRY_PHASES = ('UID_CHECK','PRIVATE_CONTEXT','PRIVATE_PATHS','CAPACITY_BINDING','CREDENTIAL_TAG_IMPORT','CREDENTIAL_TAG_READ','INTEGRATION_IMPORT','INTEGRATION_CALL')
 ORDINARY_ERROR_TYPES = ('Error','AssertionError','TypeError','RangeError','SyntaxError')
 ORDINARY_GUARD_CODES = ('ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED')
@@ -378,8 +378,8 @@ def ordinary_runner_arguments(a, root):
             "phase='CREDENTIAL_TAG_IMPORT';const {readProductionStaffCredentialRequestTag}=await import('"+(DEPLOY/'apps/api/src/production-main.ts').as_uri()+"');"
             "phase='CREDENTIAL_TAG_READ';const tag=await readProductionStaffCredentialRequestTag(c.configuration);if(typeof tag!=='function')throw Error('REAL_CREDENTIAL_REQUEST_TAG_REQUIRED');"
             "phase='INTEGRATION_IMPORT';const {runFresh35OrdinaryIntegration,describeFresh35OrdinaryFailure}=await import('"+runner+"');readFailure=describeFresh35OrdinaryFailure;"
-            "phase='INTEGRATION_CALL';await runFresh35OrdinaryIntegration({...c,staffCredentialRequestTag:tag});"
-            "process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_RUNNER_COMPLETED',connectionCleanup:'CLOSED',browserVerified:false,networkVerified:false,productionVerified:false})+'\\n');"
+            "phase='INTEGRATION_CALL';await runFresh35OrdinaryIntegration({...c,staffCredentialRequestTag:tag},'HISTORY_ANCHOR');"
+            "process.stdout.write(JSON.stringify({state:'FRESH35_ORDINARY_RUNNER_COMPLETED',coverage:'HISTORY_ANCHOR_ONLY',connectionCleanup:'CLOSED',browserVerified:false,networkVerified:false,productionVerified:false})+'\\n');"
             "}catch(error){const diagnostic=typeof readFailure==='function'?readFailure(error):null,native=isNativeError(error);"
             "const own=k=>{try{const d=Object.getOwnPropertyDescriptor(error,k);return d&&'value'in d?d.value:undefined;}catch{return undefined;}};"
             "const code=native?own('code'):undefined,pick=(allowed,v)=>typeof v==='string'&&allowed.includes(v)?v:null;"
@@ -471,7 +471,7 @@ def run_ordinary_business(a,target,descriptor,root,scene,configuration,applicati
         need(len(stdout)<=4096,'ORDINARY_PUBLIC_RESULT_BOUND')
         returned=strict_json(stdout)
         if child.returncode!=0:child_failure=ordinary_failure_diagnostic(returned)
-        need(child.returncode==0 and returned=={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False},'ORDINARY_FAILED_OR_OUTCOME_UNKNOWN')
+        need(child.returncode==0 and returned=={'state':'FRESH35_ORDINARY_RUNNER_COMPLETED','coverage':'HISTORY_ANCHOR_ONLY','connectionCleanup':'CLOSED','browserVerified':False,'networkVerified':False,'productionVerified':False},'ORDINARY_FAILED_OR_OUTCOME_UNKNOWN')
         result={**returned,'sourceSetSha256':descriptor['sourceSetSha256'],'programSha256':descriptor['programSha256'],'targetSha256':descriptor['targetSha256'],'sourceCommit':capacity['window']['binding']['candidateFingerprint'],'capacityProfileSha256':capacity['producer']['args'][0].removeprefix('--profile='),'capacityReviewSha256':CAPACITY_REVIEW_SHA,'childProcess':process,'syntheticOnly':True}
     except Exception as error:
         failure={'state':'FAILED_OR_OUTCOME_UNKNOWN','phase':phase,'code':str(error) if re.fullmatch('FRESH35_[A-Z0-9_]+',str(error)) else type(error).__name__,'automaticRetry':False,'commitOutcome':'CONSULT_ORIGINAL_REQUEST_RECEIPTS_NO_REPLAY','childDiagnosticUnavailable':child_failure is None}
@@ -1141,8 +1141,8 @@ def main():
         files_clear=retry_parent_credential_cleanup(watch,lambda:clear_credentials(root,p,a['postgresUid']))
         cleanup=strict_json((root/'cleanup.json').read_bytes()) if (root/'cleanup.json').is_file() else {'cleanupComplete':False}
         success=success and files_clear and cleanup.get('cleanupComplete') is True
-        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'ordinaryBusinessVerified':ordinary_verified,'hostEnabled':False,'businessVerified':False,'productionVerified':False})
-        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'ordinaryBusinessVerified':ordinary_verified,'businessVerified':False,'productionVerified':False,'workspace':str(root)}))
+        json_new(root/'result.json',{'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','cleanup':cleanup,'recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'ordinaryBusinessVerified':ordinary_verified,'ordinaryCoverage':'HISTORY_ANCHOR_ONLY','hostEnabled':False,'businessVerified':False,'productionVerified':False})
+        print(json.dumps({'state':'ISOLATED_INSTALL_HOST_AND_SYNTHETIC_IMPORT_VERIFIED_AND_STOPPED' if success else 'FAILED_OR_CLEANUP_UNCONFIRMED','recordPublished':record_published,'hostVerified':host_verified,'syntheticImportVerified':synthetic_import_verified,'independentSnapshotsVerified':snapshots_verified,'ordinaryBusinessVerified':ordinary_verified,'ordinaryCoverage':'HISTORY_ANCHOR_ONLY','businessVerified':False,'productionVerified':False,'workspace':str(root)}))
     return 0 if success else 1
 
 if __name__=='__main__':
