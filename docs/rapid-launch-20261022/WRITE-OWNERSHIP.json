@@ -10556,5 +10556,15 @@
     "tests": "Only existing affected anchor/ordinary document tests or a narrowly needed regression case. Register an additional shared production file first if strictly necessary.",
     "scope": "Exact35 historical anchor in its existing composition, read and write consumers only. Existing Dot source and WIP untouched. No other application ownership moved. C integrates the fixed successor after directed review. T45 only for real server/PG execution.",
     "reviewer": "Original QB; ordinary sales and transfer isolated real PG, QF affected normal entry after build"
+  },
+  "r4RetainedBackendProofRepair20261107": {
+    "at": "2026-11-07T17:35:28.476142+08:00",
+    "authority": "Human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee. Preserve existing activity guard and database privileges.",
+    "baseCommit": "798482ce91a5ff990787956ed93659f609e5f0db",
+    "D1": "Isolated JS installed-window, controller guard and exact error projection; affected tests only. Existing runtime-app and server files frozen.",
+    "T45": "Only original Python carrier, existing bounded admin observation and Linux process identity handoff; no shared JS writer. T45 alone executes any exact server scope.",
+    "C": "Own exact fixture pin, protected purpose/permission binding and integration. New shared files require explicit registration.",
+    "QB": "Independent exact delta only.",
+    "boundary": "No new DB role, grant, object, migration, business contract, real write, or production change. Both original and successor materials kept."
   }
 }
