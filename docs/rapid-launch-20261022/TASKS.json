@@ -33303,8 +33303,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T01:06:48.133850+08:00",
-      "phase": "R4_PREPARE09_FIXED_NAMESPACE_FRESH_WINDOW_ISSUED",
+      "at": "2026-11-08T01:18:15.464357+08:00",
+      "phase": "R4_PREPARE09_ACTUAL_RUNNING_AWAIT_ORIGINAL_TERMINAL",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original T45 actualPREPARE09 only",
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Collect exactnewkey prepare-20261107-09, actual run date Nov8, original20min and guards unchanged; preserve08. Onlytask-key namespace corrected, no source/role/permission changes or repeatBOOT/QA. No actual EOF/import/reconciliation passed yet.",
+      "next": "OriginalT45collect only exact09 terminal and preserve actualphase/firsterror. No parallel rootreader/scan inference. EXECUTE-only non-time source ready using priorQA, but real successful binding, same batch/original business requestKeys and sufficient remaining leases required before C authority. No newBOOT/writer now.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36653,8 +36653,8 @@
       }
     },
     "r4RealPrepare09_20261108": {
-      "at": "2026-11-08T01:06:48.133850+08:00",
-      "state": "FRESH_C_WINDOW_ISSUED_ACTUAL_PENDING",
+      "at": "2026-11-08T01:18:15.464357+08:00",
+      "state": "ACTUAL_PUBLIC_JOB_AND_UNIT_RUNNING_TECHNICAL_STAGE_UNKNOWN",
       "owner": "original T45",
       "key": "t45-r4-real-prepare-20261107-09",
       "namespaceDateIsTaskLabelNotActualRunDate": true,
@@ -36669,7 +36669,32 @@
       "old08Replayed": false,
       "BOOT10AndParameters1118Reused": true,
       "actualEOF": "NOT_VERIFIED",
-      "EXECUTEIssued": false
+      "EXECUTEIssued": false,
+      "actualRootStartedAtUTC": "2026-11-07T17:07:06.461456+00:00",
+      "rootUnit": "naijue-erp-op-5cc58239-6d12ff962d9a",
+      "rootPIDReportedByT45": 3607539,
+      "CActionToRootSeconds": 88.607456,
+      "actualTechnicalPhase": "UNKNOWN_NO_LIVE_SAFE_PHASE_EXPORT",
+      "actualExitCode": null,
+      "autoRetry": false
+    },
+    "r4Current10Execute45Nontime20261108": {
+      "at": "2026-11-08T01:18:15.464357+08:00",
+      "state": "LOCAL_NON_TIME_PREPARATION_ONLY_NO_WRITE_AUTHORITY",
+      "readySHA256": "6c1af9ee69675e91a0789ca3c02326d76e6773f99531a88492270fe544f4f24d",
+      "sourceSHA256": "8847dd44dd37a0457eb2d2a34753085c69bbafcac98534144985de322d2e4e27",
+      "parentSHA256": "03e1b5ad41cac461140b7034e2ee4937c801d295c5c23017bec8734add179570",
+      "planSHA256": "6780e075a10ddbb3682c16f3aefa12633a6d097e31a7bca727a1fa5a4a59f43b",
+      "existingQBReceiptSHA256": "d012bf7ad1e7fa6796b17a1fe6fce1a0ca9b7818f71b2b2810fc50a8f7a85447",
+      "evidenceReused": "Same two EXECUTE-only <=2700000ms predicate ASTs as previous reviewed f0e; every other function AST unchanged from current03e1. Prior22boundary models not rerun. This is only inherited source scope, not runtimePASS.",
+      "PREPARE_INSPECTMaximumMilliseconds": 1200000,
+      "EXECUTEMaximumMilliseconds": 2700000,
+      "outerSecondsProposal": 3000,
+      "newBatchOrBusinessKeyCreated": false,
+      "PREPARE09Binding": "UNKNOWN_UNTIL_REAL_SUCCESS",
+      "authorityIssued": false,
+      "serverSubmitted": false,
+      "inFlight09Changed": false
     }
   }
 }
