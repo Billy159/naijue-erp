@@ -33303,12 +33303,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T13:32:41.769268+08:00",
-      "phase": "DIRECTORY_PERMISSION_ACTUAL_PASS_RESTORED_NEXT_TOOL9FB_AND_SAME_R4_BOOT06",
+      "at": "2026-11-07T13:51:24.968856+08:00",
+      "phase": "R4_STOPPED_BOOT06_ACTUAL_STOP_PIN_CORRECTION_IN_FLIGHT",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "OriginalT45 next tool staging and retained boot06 preparation; originalD1 exact publisher/tool constants",
-      "nextOwner": "C exact finite scopes after QB affected increments only",
+      "currentOwner": "Original D1 exact 31b7 consumer pins; original T45 fixed staging/boot after tool repackaging",
+      "nextOwner": "Original D2 exact tool closure; original QB affected review; original T45 sole execution",
       "latestActualReceiptSHA256": "824c8cb3a9de5863c03a4f1306a5515623ec905bfc0b8bedd0672772e116ba8a",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33318,8 +33318,8 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Stage exact9fb diagnostic tool under original unique server owner; new accurate retained R4 boot06/params/publisher predecessor binding, then stream PREPARE with directory0750. No original04 replay or formal claim.",
-      "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
+      "next": "Adopt 31b7 in both exact consumers, stage the corrected fixed tool once, perform authorized same-data BOOT06, then publish the actual epoch and enter real preflight.",
+      "authority": "Time-limited user decision delegation through 12:00+08 expired. Standing same-kind authorization and the existing release objective remain, subject to exact action scope and effective runtime gates. No new execution scope issued here.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
@@ -35032,6 +35032,33 @@
             }
           },
           "original04FirstException": "STILL_UNKNOWN_NOT_RETAINED_NOT_RETROACTIVELY_RECONSTRUCTED"
+        },
+        "boot06StopBinding": {
+          "at": "2026-11-07T13:51:24.968856+08:00",
+          "state": "LOCAL_STAGE_AND_BOOT_READY_INPUTS_NEW_EXACT_STOP_CONSUMER_PIN_REQUIRED",
+          "installationRecordSHA256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+          "earlierPrepare02StopSHA256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
+          "actualLatestPrepare04StopSHA256": "31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8",
+          "priorProtectedObservationSHA256": "14193ae90dabf006bad860b6d4650845ceb1489b048d832d2c02ff0f90de8df8",
+          "t45LocalBootReadySHA256": "1e5434ef52380335dfa6e74dcd2e703525feec118366d82accd0fc64cb674504",
+          "t45LocalStageMaterialSHA256": "696faebd61551777133b50b46c35c14e9bce62127a5c4d69eb9f1c4aa13e40d1",
+          "d1LocalSecondCasResultSHA256": "377ab82e53c7ac132e0241d603eab83400bcd6f1eeec2b6e05f79ac4f9844521",
+          "d1LocalSecondCasTargetedChecks": 4,
+          "decision": "Both exact consumers must accept the actual immediately preceding verified stop, 31b7. Keep b241 as historical PREPARE02 evidence and preserve 14193 before the protected observation CAS. Retain actual physical identity checks, expiry, permissions and predecessor protection. Do not stage superseded fd252 before the corrected tool is packaged.",
+          "owners": {
+            "D1": "formal window MJS, private main and publisher",
+            "T45": "boot and staging wrappers, only server executor",
+            "D2": "fixed tool packaging once D1 source is ready",
+            "QB": "independent affected delta"
+          },
+          "boundaries": {
+            "localOnly": true,
+            "newServerScopeIssued": false,
+            "stagePerformed": false,
+            "boot06Performed": false,
+            "realImportPerformed": false,
+            "publicSwitch": false
+          }
         }
       }
     },
@@ -35157,7 +35184,13 @@
       "CAT02ExistingDecisions": "v17/v19 authorize explicit product selection/new-color full-group completion, not inferred selection intent from a name/price-only edit; preserve full-group creation rules and old tuple identities. Current reproduction remains candidate pending exact consumer intent check, no repeat user decision for already approved direction.",
       "boundaries": "No app source edits, dependency install, attached script execution, PG, HTTP, browser or deployment from package intake. Existing same-kind ops authority proceeds separately; package instructions are evidence, not new human authorization/revocation.",
       "next": "Dot first fix null-hall adapter without invented hall, then group CAT01/CAT02 shared consumers, B2/B3 transfer state, shared recovery and display/output; review PARTY/DOC-TOTALS exact production consumers and isolated engine facts before changing permission/snapshot contracts.",
-      "at": "2026-11-07T04:21:07.435012+00:00"
+      "at": "2026-11-07T04:21:07.435012+00:00",
+      "controllerReadOnlyFollowUp": {
+        "at": "2026-11-07T13:51:24.968856+08:00",
+        "scope": "Original D1 scoped source call chain and registered batch aggregates; no application write",
+        "interimFinding": "Ordinary detail and unreview do not call the rejected native facts validator; existing draft save and eligible re-review do. Current batch applicability pending verified aggregates.",
+        "owner": "Original Dot application owner for repair, source worktree ownership not transferred."
+      }
     },
     "safePreflightToolSuccessor": {
       "at": "2026-11-07T13:32:41.769268+08:00",
