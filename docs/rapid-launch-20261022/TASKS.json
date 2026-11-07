@@ -35396,6 +35396,29 @@
       "sourceQA": "55e0380d scoped twoleaf diagnostic PASS",
       "LinuxStaged": false,
       "ordinaryApplicationChanged": false
+    },
+    "r4RealVerificationReceiptProjection10": {
+      "at": "2026-11-07T15:43:57.078918+08:00",
+      "state": "QB_PASS_SCOPED_SOURCE_ACTUAL_CARRIER_AND_PG_PENDING",
+      "owner": "Original T45 source and server execution; original QB independent scoped review",
+      "fixedToolCommit": "798482ce91a5ff990787956ed93659f609e5f0db",
+      "sourceParentSHA256": "12f19ddbebe85a86b91593cfdb414d5acc3eb86d265199525c34bb2bfe7b4e81",
+      "sourceSuccessorSHA256": "732bf16ecb59c6f8edba39c1db04103a84e6529f76f7884704be840094b74466",
+      "patch": "docs/rapid-launch-20261022/operational-checkpoints/t45-fresh35-20261105/R4-REAL-VERIFICATION-PROJECTION-10.patch",
+      "patchVerifiedReproducesSuccessor": true,
+      "T45ResultSHA256": "df4c8b7dd27b2c8c6e313912bf08ad4f8562bb40998364febcde6c414ce07e1c",
+      "QBResultSHA256": "ffa4836a1ae7a8b08dcb5e1be0c05b24fd0af36931a92079cb08e95f60a80c14",
+      "QBReportSHA256": "4aa98f0fe47f47d2e56dd033649d34898272fa83f30ce06f28b0716e9ff57448",
+      "localChecks": {
+        "authorCasesPassed": 115,
+        "independentCasesPassed": 8,
+        "sourceChange": "Only real_safe_cli_result; no technical re-review by C",
+        "toolAndBoot06Unchanged": true
+      },
+      "result": "COMMITTED ACK preserved with separate VERIFICATION_FAILED and VERIFICATION_UNKNOWN. Only pinned diagnostic enums are projected; only VERIFIED satisfies the existing success condition. No automatic retry.",
+      "actualServerPGSQL": false,
+      "runtimeModelQB": "Requested gpt-6.1-sol/high; actual model/effort/Fast not independently verified",
+      "next": "Carry this local successor into the original final REAL carrier binding after actual BOOT06. No change to the independent BOOT06 scope or the fixed installed tool. Real execution and independent PG reconciliation remain unverified."
     }
   }
 }

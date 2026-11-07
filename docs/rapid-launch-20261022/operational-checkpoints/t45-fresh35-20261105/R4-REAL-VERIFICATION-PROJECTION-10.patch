@@ -1,0 +1,41 @@
+--- a/fresh35-production-carrier.py
++++ b/fresh35-production-carrier.py
+@@ -879,8 +879,36 @@
+   v=strict(raw);need(type(v) is dict,'REAL_CLI_RESULT_INVALID')
+   states={'PRODUCTION_REAL_IMPORT_PREPARED','COMMITTED','ALREADY_COMMITTED','COMMITTED_RECEIPT_FOUND','ABSENT','ROLLED_BACK','UNKNOWN','NOT_STARTED'}
+   out={'state':v.get('state') if v.get('state') in states else 'UNKNOWN','connectionCleanup':v.get('connection_cleanup') if v.get('connection_cleanup') in ['CLOSED','FAILED'] else 'UNKNOWN'}
+-  ver=v.get('verification');ver=ver.get('state') if type(ver) is dict else ver
+-  out['verification']=ver if ver in ['NOT_RUN','VERIFIED','VERIFICATION_UNKNOWN','REDACTED'] else 'UNKNOWN'
++  verification=v.get('verification')
++  ver=verification.get('state') if type(verification) is dict else verification
++  out['verification']=ver if ver in ['NOT_RUN','VERIFIED','VERIFICATION_FAILED','VERIFICATION_UNKNOWN','REDACTED'] else 'UNKNOWN'
++  if type(verification) is dict and ver in ['VERIFICATION_FAILED','VERIFICATION_UNKNOWN']:
++   # Match the diagnostic enums emitted by the fixed whole-package reconciler.
++   code=verification.get('code')
++   codes={
++    'VERIFY_REPLY_INVALID','VERIFY_COUNTS_INVALID','VERIFY_SOURCE_COUNT_MISMATCH',
++    'VERIFY_TOTALS_INVALID','VERIFY_TOTAL_INVALID','VERIFY_TOTAL_PRECISION_INVALID',
++    'VERIFY_SOURCE_TOTAL_MISMATCH','VERIFY_COVERAGE_INVALID','VERIFY_BEGIN_ACK_INVALID',
++    'VERIFY_ROLE_ACK_INVALID','VERIFY_ROLLBACK_ACK_INVALID','VERIFY_DATABASE_OR_PROTOCOL_FAILED',
++   }
++   if type(code) is str and code in codes:
++    out['verificationCode']=code
++    field=verification.get('field')
++    fields={
++     'VERIFY_SOURCE_COUNT_MISMATCH':{
++      'HALL','WAREHOUSE','CUSTOMER','SUPPLIER','STAFF','PRODUCT_CATEGORY','COLOR','FIT',
++      'SIZE','SIZE_GROUP','SIZE_GROUP_MEMBER','SEASON','PRODUCT','PRODUCT_IMAGE','SKU',
++      'BARCODE_SCHEME','SKU_BARCODE','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL',
++      'SALES_HEADER','TRANSFER_HEADER','SALES_LINE','TRANSFER_LINE','SALES_SETTLEMENT',
++      'INVENTORY_KEY','IMPORT_BATCH',
++     },
++     'VERIFY_SOURCE_TOTAL_MISMATCH':{
++      'inventory_quantity','sales_quantity','sales_line_amount','sales_net_due',
++      'sales_settlement_amount','transfer_quantity',
++     },
++    }
++    if type(field) is str and field in fields.get(code,()):
++     out['verificationField']=field
+   if isinstance(v.get('code'),str) and re.fullmatch('[A-Z0-9_]{1,100}',v['code']):out['code']=v['code']
+   if v.get('local_cleanup')=='FAILED':out['localCleanup']='FAILED'
+   # The exact prepared binding is necessary for C's original independent
