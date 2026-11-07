@@ -1,0 +1,19 @@
+{
+  "format": "T45_EXACT_RETAINED_R4_RESTART_V1",
+  "requestKey": "t45-r4-retained-restart-20261107-02",
+  "decision": "RESTART_SAME_RETAINED_R4_DATA_AND_OBSERVE_NEW_EPOCH",
+  "startsAt": 1794021870947,
+  "expiresAt": 1794022127000,
+  "guardianExpiresAt": 1794024000000,
+  "installationRecordSha256": "a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f",
+  "previousStopReceiptSha256": "b2416e492c162af2162dcb280d73d38e82ba608e6cb03375b050b58bc469ed91",
+  "dataDirectory": {
+    "device": 66304,
+    "inode": 14555503,
+    "uid": 61035,
+    "gid": 61035,
+    "mode": 448
+  },
+  "authorizationReference": "C retained R4 same-data restart decision 20261107-02 under direct human delegation in controller Chat through 2026-11-07T12:00:00+08:00; QB3c28149c adopted; prior01 failed and actual8ca7090b confirms no boot. Container loader-only fix; no reinstall, business write, old-record rewrite or public switch.",
+  "roleLoginValidUntil": "2026-11-07T03:55:00Z"
+}

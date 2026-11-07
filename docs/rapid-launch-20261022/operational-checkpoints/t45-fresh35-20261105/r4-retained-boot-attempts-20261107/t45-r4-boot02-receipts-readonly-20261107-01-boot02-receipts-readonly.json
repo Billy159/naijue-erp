@@ -1,0 +1,60 @@
+{
+  "/etc/naijue-erp/fresh35-retained-restart-v1.json": {
+    "errno": 2,
+    "exists": false
+  },
+  "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/metadata/deployment-manifest.json": {
+    "errno": 2,
+    "exists": false
+  },
+  "/var/lib/naijue-erp/fresh35-production/real-r3/retained-boot-20261107-02": {
+    "bytes": 4096,
+    "exists": true,
+    "mode": "0o700",
+    "uid": 0
+  },
+  "caller-result.json": {
+    "automaticRetry": false,
+    "businessVerified": false,
+    "cleanup": {
+      "cleanShutdown": true,
+      "cleanupComplete": true,
+      "dataPreserved": true,
+      "databasePrivilegesChanged": false,
+      "directChildReaped": true,
+      "errors": [],
+      "ownedPidAbsent": true,
+      "portAbsent": true
+    },
+    "state": "RETAINED_RESTART_STOPPED_OR_OUTCOME_UNKNOWN"
+  },
+  "cleanup.json": {
+    "cleanShutdown": true,
+    "cleanupComplete": true,
+    "dataPreserved": true,
+    "databasePrivilegesChanged": false,
+    "directChildReaped": true,
+    "errors": [],
+    "ownedPidAbsent": true,
+    "portAbsent": true
+  },
+  "controller-process.json": {
+    "exe": "/usr/bin/python3.13",
+    "pid": 773,
+    "starttime": "292021034"
+  },
+  "oldPostmasterPidFileExists": false,
+  "owned-process.json": {
+    "exe": "/opt/naijue-erp/fresh35-combined-v1/runtime/pg/usr/lib/postgresql/17/bin/postgres",
+    "pid": 780,
+    "starttime": "292021055"
+  },
+  "safeServerLogFacts": {
+    "bytes": 988,
+    "fatalOrErrorLines": [
+      "2026-11-07 03:25:13.326 UTC [785] FATAL:  the database system is starting up"
+    ],
+    "readyMessagePresent": false,
+    "shutdownCompleteMessagePresent": true
+  }
+}

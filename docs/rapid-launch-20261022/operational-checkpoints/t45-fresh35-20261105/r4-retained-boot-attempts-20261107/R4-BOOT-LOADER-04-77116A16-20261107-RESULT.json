@@ -1,0 +1,62 @@
+{
+  "task": "R4_BOOT_LOADER04",
+  "status": "PASS_SCOPED_CONTAINER_BOOT_LOADER_SOURCE",
+  "sources": {
+    "retained_boot_inside.py": {
+      "sha256": "77116a168c513fe775084a38f88a75b60d56243c2005895bd850a06a92fdaf82",
+      "bytes": 17453
+    },
+    "start_retained_boot.py": {
+      "sha256": "6398d6bc3d686f0696f6c87d7dfb7989e7eda49110fa2701accb0402c3cb4d0c",
+      "bytes": 5060
+    }
+  },
+  "manifestSha256": "4be232a456a1ec96a926d3f3ad23186ac7fb9ac6997c52d8c21bd1dfdd5f37db",
+  "findingClosure": "Host/container loader seam corrected in source; previous03 scope limited here, actual01 rootcause pending original-key evidence",
+  "checks": {
+    "sources": {
+      "retained_boot_inside.py": {
+        "sha256": "77116a168c513fe775084a38f88a75b60d56243c2005895bd850a06a92fdaf82",
+        "bytes": 17453
+      },
+      "start_retained_boot.py": {
+        "sha256": "6398d6bc3d686f0696f6c87d7dfb7989e7eda49110fa2701accb0402c3cb4d0c",
+        "bytes": 5060
+      }
+    },
+    "syntaxFiles": 2,
+    "sourceLoaderFiniteCases": [
+      {
+        "case": "exact-pins",
+        "result": "EXACT_LOADER_AND_BINDCORE_VALIDATION_ACCEPTED"
+      },
+      {
+        "case": "changed-manifest",
+        "result": "BOOT_DEPLOYMENT_MANIFEST_DIFFERS"
+      },
+      {
+        "case": "changed-controlled-leaf",
+        "result": "BOOT_ORIGINAL_PYTHON_SOURCE_DIFFERS"
+      }
+    ],
+    "originalReaperAST": "IDENTICAL",
+    "newKeyEntryPacketBootDirectory": "02 consistent; old01 preserved",
+    "noServerOrPG": "TRUE",
+    "actualRootCause": "PENDING_ORIGINAL_KEY_RESULT_NOT_INFERRED_FROM_STATIC_DIFF"
+  },
+  "reused": "Original boot three-finding closure/roleCAS/stopguard/formal2leaf/maintenance/ops unchanged scope not rerun",
+  "executionPreconditions": [
+    "originalkey terminal and accurate readonly sideeffect state",
+    "fresh exact C decision/newkey/real fixed sources",
+    "existing admin login still valid; old11:29:02 not extended by sourcePASS"
+  ],
+  "notTested": [
+    "actual container loader/PG startup/newreceipt",
+    "actual sideeffect absence or raw rootcause",
+    "actual role expiry transaction/guardian shutdown",
+    "REAL access/publisher/catalog/ordinaryAPP/HTTP"
+  ],
+  "operations": "Exact source read and finite inert loader model only; no serverPG credentials or payload",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T03:23:42.552144+00:00"
+}

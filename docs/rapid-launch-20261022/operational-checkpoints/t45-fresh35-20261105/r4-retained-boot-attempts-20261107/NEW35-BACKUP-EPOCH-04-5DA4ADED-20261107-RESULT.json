@@ -1,0 +1,37 @@
+{
+  "task": "NEW35_BACKUP_R4_RESTART_EPOCH_FIX04",
+  "status": "PASS_SCOPED_BACKUP_CAPTURED_SOURCE_EPOCH_SOURCE",
+  "producer": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/0448Z-HALL-C-INITIALIZATION-20261105/NEW35-BACKUP-RESTORE-FIX-02/R4-BASELINE-WINDOW-FIX-03/R4-RESTART-EPOCH-FIX-04/new35-backup-restore.py",
+    "parentSha256": "839d1e3251ab1957e643a67e574b89664284718382220f12ab3b49ead3725d81",
+    "sha256": "5da4aded177358d5a1426268a1ee6646b3f3e5f7b65c72f336af17cdd3125112",
+    "bytes": 54454
+  },
+  "handoffSha256": "7db7e4623dcd085a739fd11b5dea37722bca30188b19a8a5b3bd4611ddbaf650",
+  "patchSha256": "ec6a5c5319a12c8254a1de94e323e9ea22f6b46595a681c1ab2df361ef7c14ba",
+  "findings": [],
+  "checks": {
+    "exactHashes": "PASS",
+    "syntax": "PASS",
+    "authorAffectedTestsActualRun": 4,
+    "passed": 4,
+    "skips": 0,
+    "exitCode": 0,
+    "jsPythonDistinctCases": 11,
+    "unaffectedOriginalFunctionAST": "PASS",
+    "actualBackupRestoreSourcePg": "NOT_TESTED"
+  },
+  "sourceIdentity": "Original record/target unchanged, separately captured current sourcePhysical; exact old/new guards retained",
+  "restore": "Captured proof checked at checkedAt; source need not remain live or within maintenance lease. DifferentSID/own restore physical checks retained.",
+  "reused": "Original839d sourcewindow/admin/dump/restore/ACL/space/fence/helpers/APP checks not rerun",
+  "trustBoundary": "Actual C restart/PGDATA observation delegated to protected root receipt producer, not newly established by these pure metadata checks",
+  "notTested": [
+    "actual new epoch/root receipt and fresh backup plan/admin login",
+    "actual REAL committed/readback and drained fence",
+    "actual dump/space/budgets/independent restore PG",
+    "actual restored native record/ordinaryAPP/HTTP"
+  ],
+  "operations": "Local read-only source and four affected tests including11 JS/Python metadata cases only; no PG/server/secrets/payload",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T03:18:32.560807+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "/etc/naijue-erp/fresh35-retained-restart-v1.json": {
+    "errno": 2,
+    "exists": false
+  },
+  "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/metadata/deployment-manifest.json": {
+    "errno": 2,
+    "exists": false
+  },
+  "/var/lib/naijue-erp/fresh35-production/real-r3/retained-boot-20261107-01": {
+    "errno": 2,
+    "exists": false
+  },
+  "oldPostmasterPidFileExists": false
+}

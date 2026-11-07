@@ -1,0 +1,57 @@
+{
+  "task": "R4_RETAINED_BOOT_TWO_LEAVES",
+  "status": "PASS_SCOPED_RETAINED_BOOT_SOURCE",
+  "sourceManifestSha256": "7d5eb37749089c616f68c7872bf03b97e53d131cfc849e3ecd8025778a545b11",
+  "sources": {
+    "retained_boot_inside.py": {
+      "sha256": "4ef0793b2e4c54e515de38df88cea93248368accc01a94c9f3f45f60c729fe29",
+      "bytes": 16478
+    },
+    "start_retained_boot.py": {
+      "sha256": "1a3a675f9a5f5ddf6c536cc54bcc16c6dcc2d8db728a08a9aa5999a84495ce06",
+      "bytes": 5060
+    }
+  },
+  "findingClosure": {
+    "R4-BOOT-STOP-PROOF-01": "CLOSED_SOURCE",
+    "R4-BOOT-MEMBERSHIP-01": "CLOSED_SOURCE",
+    "R4-BOOT-CHILD-CLEANUP-01": "CLOSED_SOURCE_FINITE_MODEL_ONLY"
+  },
+  "checks": {
+    "sourceSnapshot": "4ef079/1a3a67/2a3c78 exact hashes recorded separately",
+    "finiteCases": [
+      "missing-identity-INT-QUIT-reaped",
+      "absent-exited-no-signal",
+      "partial-prepare-no-summary-exact-created-secret-removed",
+      "already-removed-first-slot-does-not-block-second-retirement",
+      "creation-proof-failure-removes-own-empty-file-before-bytes",
+      "foreign-inode-refused-and-preserved"
+    ],
+    "count": 6,
+    "passed": true,
+    "adaptation": "Linux waitid and child finite models on Mac; projection tests use actual local FS, only REAL ledger/uid/gid adapted, no secret used",
+    "actualLinuxPgFinalCaller": "NOT_TESTED"
+  },
+  "extraSourcePredicateCases": [
+    "exact cleanup comparison same/changed",
+    "exact membership comparison same/changed"
+  ],
+  "mainDraftNotReady": true,
+  "notTested": [
+    "actual Linux root guardian/Popen/PG startup/reaping and shutdown deadline",
+    "actual stop metadata/C plan/password expiry/auth/role transaction",
+    "actual new epoch receipt/fullcatalog/normalAPP/REAL"
+  ],
+  "oldScopes": "REUSED_NOT_RERUN",
+  "operations": "QB source snapshots and finite model/localFS only, no serverPG secrets or business files",
+  "actualModelEffortFast": "UNVERIFIED",
+  "at": "2026-11-07T03:16:58.484856+00:00",
+  "scopeBoundary": "Independent same-R4 boot source only; does not wait for access/main/publisher. Requires C exact decision and actual prior stop input. No REAL readiness inferred.",
+  "finiteWindowReview": {
+    "decisionStartEnd": "current start<=now<end<=start+300000",
+    "guardian": "end<guardian<=1794024000000; monotonic timer begins beforePG, stops normal work at guardian-30s and invokes25s stop plus ownchild reaper",
+    "roleExpiry": "explicit offset and now<until<=1794023700000; original admin11:29:02/controller11:20 exact NULL-safe CAS; existing admin password reference only",
+    "sourceProtection": "external caller hash binds exact C decision bytes; root source closure packet; prior stop hash independently checked outer and inside"
+  },
+  "accessAndMain": "SEPARATE_PENDING_INTEGRATION_NOT_BOOT_PREREQUISITE"
+}

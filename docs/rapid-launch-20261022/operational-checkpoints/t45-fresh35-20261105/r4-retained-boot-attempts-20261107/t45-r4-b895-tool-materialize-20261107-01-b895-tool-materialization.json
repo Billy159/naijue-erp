@@ -1,0 +1,25 @@
+{
+  "REALModeExecuted": false,
+  "archiveSha256": "99c7f019bdc2e4ce2cd2c014d69854d9ebf7df099150fa037b267b012b94a359",
+  "automaticRetry": false,
+  "businessDatabaseWrites": false,
+  "containerSourceRoot": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-b8952ad8-20261107-01/operation",
+  "freeAfter": 8414769152,
+  "freeBefore": 8420888576,
+  "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/installed-real-operation-b8952ad8-20261107-01",
+  "logicalBytes": 5043991,
+  "newMountOrBuild": false,
+  "observedAtEpoch": 1794021082.846867,
+  "oldSourceOrAPPChanged": false,
+  "regularFiles": 357,
+  "sourceSet": {
+    "captured": 180,
+    "cliModuleImported": true,
+    "current": 215,
+    "installedSourceRoot": "/opt/naijue-erp/fresh35-combined-v1",
+    "node": "v24.21.0",
+    "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+    "sourceSetSha256": "6ed020f0d1c351774b56051a03c74b1addf2894d256946bcc816f9c35cb493a3"
+  },
+  "status": "INDEPENDENT_B895_TOOL_MATERIALIZED_ACTUAL_LINUX_SOURCE_CLOSURE"
+}

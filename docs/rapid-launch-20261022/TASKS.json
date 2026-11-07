@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T11:09:04.313011+08:00",
+  "updatedAt": "2026-11-07T11:29:39.978974+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
   "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33302,13 +33302,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-07T11:09:04.313011+08:00",
-      "phase": "RETAINED_R4_CLEAN_STOPPED_NONROOT_AND_SAME_DATA_EPOCH_REPAIR",
+      "at": "2026-11-07T11:29:39.978974+08:00",
+      "phase": "RETAINED_R4_BOOT02_FAILED_STARTUP_READINESS_CLEAN_STOPPED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "Original D1 formal host and Original T45 ops in separate files",
       "nextOwner": "Original QB scope-only review; C accurate new execution binding",
-      "latestActualReceiptSHA256": "f2fa861f9120fffff8e3611dc0617077dfa4e953c1eec3710f36aaaf7db4f60a",
+      "latestActualReceiptSHA256": "2ccc5fca7f6c4d3904b67d352f77f310b17b4c85da70ca2d71e93f6d6da174ee",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33317,7 +33317,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 finishes exactsame-data restart and nonroot input lifecycle; QB only concrete increment; C new accurate scope. Tool b895 fixed and stagingauthorized; 0REAL/ordinaryAPP/backuprestore/deployment.",
+      "next": "OriginalT45 fixes precise startup-readiness consumer, QB only increment; no expiredadmin usage, no unknown retry, no realimport/publicswitch. C delegated scope not automatic new auth.",
       "authority": "User current2026-11-07 delegates decisions until12:00+08; standing bounded isolation authorization remains. Precise target/source/window protection retained.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -34721,7 +34721,7 @@
         },
         "retainedEpochTool": {
           "at": "2026-11-07T11:09:04.313011+08:00",
-          "state": "FIXED_SOURCE_SCOPED_QB_PASS_PACKED_STAGING_AUTHORIZED_NOT_LINUX_LANDED",
+          "state": "ACTUAL_LINUX_LANDED_CLI_IMPORT_PASSED_NOT_PG",
           "branch": "codex/erp-0448z-retained-epoch-tool-20261107",
           "commit": "b8952ad8106b211f996154e01b477299a5c465ac",
           "tree": "4a91db31d5b8bd9f5fb6dbd871b0e92a43d6298a",
@@ -34738,7 +34738,9 @@
           "C13ExpiresAt": 1794022634089,
           "staging": "T45_ONLY_PENDING_ACTUAL_RECEIPT",
           "actualRestart": "NOT_EXECUTED",
-          "actualREAL": "NOT_EXECUTED"
+          "actualREAL": "NOT_EXECUTED",
+          "actualMaterializationSha256": "8de6ecbf38b2f9a441bbc34893fafc895dd58d27bc8dd4cfee161484be5cd350",
+          "actualFreeAfter": 8414769152
         },
         "retainedRestartOpsPreparation": {
           "state": "ORIGINAL_T45_PARTIAL_QB_CONCRETE_FIXES_NOT_EXECUTABLE",
@@ -34746,12 +34748,35 @@
           "runtimeUid": 61035,
           "scope": "Same retainedR4 PGDATA, exactnewboot guardian/PID/epoch; finite45metadata +4small projections and exactCASrestore; no RAW recopy",
           "necessaryOpenFindings": [
-            "Hash actual original stop receipt bytes rather than compare plan constant only",
-            "Compare exact ordered memberships in existing role before/after query",
-            "Reap exact newly spawned direct child even if initial identity read fails"
+            "Actual startup-only read readiness; new operation scope after original hard admin expiry"
           ],
           "newExecutionScope": "NOT_ISSUED",
-          "businessWrites": false
+          "businessWrites": false,
+          "threePriorFindings": "CLOSED_SOURCE_SCOPED_QB_DC5D; actualcaller namespace fixed with3c28, oldfailure preserved"
+        },
+        "retainedRestartAttempts": {
+          "01": {
+            "CDecisionSha256": "41870b40f7e605c18aa1a7f09b7d77604ab4ac6e4ebb8c639f7ae80112e9a474",
+            "state": "FAILED2_100.566s_BEFORE_BOOT_POPEN",
+            "reason": "Container consumer called hostnamespace factory; exact hostpathENOENT; fixedreceipt/BOOT/PGpidfile absent",
+            "readbackSha256": "8ca7090b796e7f17ce6d0161911c27694a3bce10e614a6508671f21a5993225f",
+            "replayed": false
+          },
+          "02": {
+            "CDecisionSha256": "576cec68e18d586a2dd023843b5fc3eadba05d24967c5dfbab739b512da7193b",
+            "sourceQA": "3c28149cf3b3bd9cc5b641a47ec69ef0ddf681838f2593f7ceea033205939546",
+            "state": "FAILED2_1.2707s_PG_STARTUP_NOT_READY_CLEAN_STOPPED",
+            "readbackSha256": "2ccc5fca7f6c4d3904b67d352f77f310b17b4c85da70ca2d71e93f6d6da174ee",
+            "facts": "PG780 and guardian773 started; server FATAL database system starting up; no roleintent/ack/observed/newrecord; shutdown/reap/portabsence/data-preservation true",
+            "sqlstate": "NOT_PERSISTED_NOT_CLAIMED",
+            "replayed": false
+          },
+          "next": {
+            "owner": "OriginalT45; originalQB scopedcheck only",
+            "scope": "Finite startup metadata readiness and precise error-stage feedback; no retry of authentication/identity failures or expiredadmin",
+            "actual": "NOT_EXECUTED",
+            "authority": "No routine human questions before noon. C accurate new scope required; originaladmin11:29:02 deadline remains real and not silently renewed."
+          }
         }
       }
     },
@@ -34777,7 +34802,14 @@
       "sourceQB_SHA256": "26be7984aa5c5469068abbf236d827a1a88ceff526892829f5c97a77db76426b",
       "handoffSHA256": "e810b4212016feb60f27d6c12cd4b7a598f3b5b35be640dc72aa71135f65c119",
       "actualBackup": false,
-      "actualRestore": false
+      "actualRestore": false,
+      "epochSuccessor": {
+        "sourceSha256": "5da4aded177358d5a1426268a1ee6646b3f3e5f7b65c72f336af17cdd3125112",
+        "parent": "839d1e3251ab1957e643a67e574b89664284718382220f12ab3b49ead3725d81",
+        "QA": "fd8e2f1420f3c351ab526aabe2f8cf51b879a6db86bd388d560bdbb23cc14c70",
+        "state": "SCOPED_SOURCE_PASS_NOT_ACTUAL_BACKUP_RESTORE",
+        "scope": "Originalrecord unchanged; realcurrent sourcePhysical bound newreceipt; independentrestore uses capture-time sourceproof not current sourcePGlease; stilldifferentSID"
+      }
     }
   }
 }
