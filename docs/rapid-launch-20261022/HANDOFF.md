@@ -2824,3 +2824,10 @@ D1 commit73480c928a5950670ca3127b0eca3dc5719b3e55（parent49d）仅identity_keys
 
 ### 734 索引生命周期接缝已只读查明
 采用原D1固定源码判断880d2226…/9421B：后续EXECUTE/INSPECT只用各自mode新建的完整预检index，持久binding不含旧index路径/inode/hash。成功PREPARE旧副本仍需完整PREPARED/binding/统计/cleanup固化、无reader/sidecar、完整字节归档并对齐summary、最终占用CAS与独立C清单后才释放；不是自动清理授权，不跳新mode完整校验。当前failed10的实际94af封存走独立失败派生index清单，不将其混写成PREPARED。T45单件retirement READY4621e6、source d79053、candidate c7be已交原QB只核新增一件范围及sidecar末检，未实际删除。
+
+
+### 2026-11-08T03:56:14.576008+08:00 — 实际单10索引收尾，接续734 Linux验证
+- 原T45唯一key t45-r4-retire-prepare10-index-20261108-01 实际COMPLETED0/1.42095s；receipt eb5671c513970e9ba24716366459ebd81b09dbea3a1996f6e14d0c168ad87967，QB33ff增量有效结论直接采用。只删已完整归档的一叶派生index，7保护路径与原a7d/6a/df2不变，归档0412保留；0PG/SQLite/信号。
+- 实际释放2,667,483,136B，剩余10,023,579,648B，超过既有启动floor1,816,064,002B；不据此宣称PG/WAL/temp/恢复或业务性能通过。
+- C核734传输READY28d93全部25pin后签C13 af87e116cb632c67aa2b6ca1f20aafd12257a9b6aeb9f67017f30ef7b5ab7023，窗口1794081309337–1794083109337，原T45正在唯一小包上传/Linuxload/原cd2e策略恢复；实际结果待回。734源码与合成QA不代表真实Linux或完整预检已过。
+- 当前唯一下一步：实际Linux及恢复回执→新BOOT12/真实epoch与参数→新的固定20分钟PREPARE。真实整包导入、独立对账、历史普通账号业务、备份恢复及正式切换均未完成；不因睡眠委托放宽这些事实条件。

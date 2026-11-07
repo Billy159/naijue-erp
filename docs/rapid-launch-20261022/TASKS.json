@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T03:37:22.386530+08:00",
-      "phase": "R4_INDEX10_ARCHIVE_ACTUAL_PASS_EXACT_RETIREMENT_PENDING",
+      "at": "2026-11-08T03:56:14.576008+08:00",
+      "phase": "R4_EXACT10_INDEX_RETIRED_734_LINUX_LOAD_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 single-index retirement preparation",
-      "nextOwner": "C exact retirement then 734 C13/Linux/BOOT12",
-      "latestActualReceiptSHA256": "29d3b417bf96365ab312760dcd2e95a213dffbe3c2681ca302e54a71a611c2fa",
+      "currentOwner": "Original T45 exact734 transfer/Linux load",
+      "nextOwner": "C freshBOOT12 after actual Linux and policy restoration",
+      "latestActualReceiptSHA256": "eb5671c513970e9ba24716366459ebd81b09dbea3a1996f6e14d0c168ad87967",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Actual10 archive04122728 fully byte verified, original kept. Currentfree7.356GB below loader8.207GB startup floor, so no staging yet. Exact retirement candidate pending. Future PREPARE old-index consumption queried readonly to D1; do not assume two-index PG/WAL coexistence.",
+      "next": "C13af87 fixed30min issued only for734 tiny tool and actualLinux imports plus exactcd2e restoration. Do notBOOT until actualreceipt; installeda7d retained, no realimport/binding/deployment yet. New20minPREPARE only after fresh12epoch/roles/params.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33443,7 +33443,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED; PREPARE10 FAILED original window expired. No prepared binding; actual record-cost and fresh cleanup readback pending. Old failures retained.",
+        "REALImport": "NOT_EXECUTED; PREPARE10 FAILED original-window expiry. Actualcost/reportfinal/clean stop29d3 retained; fullbytearchive94af and exactderivedsingleindex retirementeb5671 actualPASS, not PREPARED or businessPASS.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -37093,7 +37093,27 @@
       "archiveIsBusinessBackup": false,
       "retirementReadySHA256": "4621e6daa0d21e11a18f73e5a6291a327d1e006e2b69b71882e7ce91388a7906",
       "retirementSourceSHA256": "d79053f4d52d0b08716567c99d5310b4800b47ce4e8a99ec1ee951da79b81c8f",
-      "retirementCandidateSHA256": "c7be18af980448e9d5dd73551b1aa4c5c89af4f0e10040bf2bcdcaec109feb52"
+      "retirementCandidateSHA256": "c7be18af980448e9d5dd73551b1aa4c5c89af4f0e10040bf2bcdcaec109feb52",
+      "retirementActual": {
+        "jobId": "t45-r4-retire-prepare10-index-20261108-01",
+        "decisionSHA256": "46adad881602eb309c523cbd70af0d647a6cdf01955702927baa9ddb4155da5a",
+        "QBReceiptSHA256": "33ff8222a1341b6e33bfa899b6fc1132ab469298c81d13417ab557b9108c33fb",
+        "jobSHA256": "b0977a70c8c9c4bdc0c74d7ce03e90593cae2323bab1439ab8125da15e7b47d9",
+        "receiptSHA256": "eb5671c513970e9ba24716366459ebd81b09dbea3a1996f6e14d0c168ad87967",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 1.420949594,
+        "filesDeleted": 1,
+        "actualReleasedBytes": 2667483136,
+        "actualFreeBytes": 10023579648,
+        "startupFloorMarginBytes": 1816064002,
+        "protectedPathsUnchanged": 7,
+        "archivePreserved": true,
+        "PGConnections": 0,
+        "SQLiteOpened": false,
+        "signalsSent": 0,
+        "businessOrCapacityAcceptance": false
+      }
     },
     "r4Tool734Packaging20261108": {
       "state": "LOCAL_FIXED_SMALL_ARTIFACT_SOURCE_QB_ADOPTED_T45_LINUX_PENDING",
@@ -37126,7 +37146,15 @@
       "packagingResultBytesCurrent": 8882,
       "T45NonTimeReadySHA256": "28d93c1b7351d8fabdd7c66f495bbaa5cca176c0750ea83dcc6b23d9dc243caf",
       "T45NonTimeReadyBytes": 12467,
-      "C13": "UNISSUED_PENDING_EXACT_INDEX_RETIREMENT_AND_FRESH_SPACE_PREFLIGHT",
+      "C13": {
+        "sha256": "af87e116cb632c67aa2b6ca1f20aafd12257a9b6aeb9f67017f30ef7b5ab7023",
+        "bytes": 1439,
+        "startsAt": 1794081309337,
+        "expiresAt": 1794083109337,
+        "scope": "SOLE_T45_EXACT_SMALL_TOOL_TRANSFER_LINUX_LOAD_AND_ORIGINAL_POLICY_RESTORE",
+        "READY25PinsVerified": true,
+        "actualResult": "PENDING"
+      },
       "minimumStartupFreeBytes": 8207515646
     },
     "r4PrepareIndexLifecycle73420261108": {
