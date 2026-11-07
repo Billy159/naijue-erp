@@ -28513,7 +28513,7 @@
       "D1": "Current stop-pin backup producer1a9aea5d source/QB5-model PASS; no server/PG. Backup/restore actual size and committed R4 batch pending.",
       "QB": "Carrier02 003c698a source/model PASS a2a3a576; backup1a9aea5d PASS3deaf3db. Only new actual Linux/PG results next; no duplicate whole backend.",
       "D2": "856e5a59 minimum history successor packedb968e4b5, old App/Web bytes reused; local7298 member readback and2.48MB tail valid; no server/PG.",
-      "T45": "Exact four stopped rebuildable app directories fixed4b2483af, actual deletion pending. Carrier02 capture/pass_fds source scoped QB pass; next newBOOT07 exact scope and current facts, PREPARE business1200/outer1500 proposed, no EXECUTE budget.",
+      "T45": "Actual four-app cleanup0/6.981s, +528338944B, free8851918848B and644403202B above R4 originalfloor. OriginalBOOT07 exact current-stop/5min boot/90min guardian and original role/HBA binding local preparation in progress; no PG started.",
       "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
       "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
     },
@@ -35697,16 +35697,16 @@
       }
     },
     "oldProductionRestoreLiveCapacity20261107": {
-      "at": "2026-11-07T19:09:50.062+08:00",
+      "at": "2026-11-07T20:31:39.681123+08:00",
       "state": "R4_FLOOR_MET_BY_ACTUAL_RETIREMENT_NEW_SYSTEM_RECOVERY_REQUIREMENT_PENDING",
       "actualReadOnlyReceiptSHA256": "12c0c024b9fd4aab9788cb39c499c3ffee658f957ef5b0e9d3deed1dfe781065",
-      "actualAvailableBytes": 8332206080,
+      "actualAvailableBytes": 8851918848,
       "oldRestoreStartFloorBytes": 36507222016,
-      "oldRestoreShortfallBytes": 28175015936,
+      "oldRestoreShortfallBytes": 27655303168,
       "r4StartFloorBytes": 8207515646,
       "r4ShortfallBytes": 0,
       "next": "Keep historical old47 requirement separate from current new-system backup/recovery. R4 margin124690434B is thin, no concurrent heavy history materialization.",
-      "latestResourceReceiptSHA256": "9fd6c965f701d80afd612ddcb442c6abc39fe0de7c97aa34d64a67deb725e901",
+      "latestResourceReceiptSHA256": "3d6bc3192124d8171954d9f26cec568826c3ffb6bcfc023b5d15c356fcacac43",
       "latestRequirementAdjustment": {
         "authorityHumanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
         "oldRestoreFloorStillHistoricalFact": true,
@@ -35714,7 +35714,7 @@
         "newSystemBackupRecoveryStillRequired": true,
         "newSystemScope": "R4/current new35 actual committed data, import receipt and new business continuity need applicable backup/recovery before final switch; cannot call old backup or discarded rollback a new-system restore PASS."
       },
-      "r4MarginBytes": 124690434,
+      "r4MarginBytes": 644403202,
       "latestPostToolFreeBytes": 8324141056,
       "latestPostToolR4MarginBytes": 116625410
     },
@@ -35794,13 +35794,29 @@
         "containerChanges": 0
       },
       "fourStoppedSuccessor": {
-        "state": "C_FIXED_FOUR_LIST_T45_ACTUAL_CLEANUP_PENDING",
+        "state": "ACTUAL_CLEANUP_COMPLETE_FOUR_ABSENT_ARCHIVES_PROTECTED",
         "candidateSHA256": "6ae5375fe00ae43bfe6b6cac1fab435387acc771ca881f4b91924d5d8c9974d3",
         "readOnlySHA256": "289930f84798d406b663a93ac5a3c696adf34b81b94fc042d0674d69db49666b",
         "controllerFixedScopeSHA256": "4b2483afc1d1cc74b6b25c25ca49ef61e60a1e297623e3cddff087fc1065f429",
         "estimatedAllocatedBytes": 528338944,
-        "actualFreedBytes": null,
-        "scope": "cb8 deploy,9f deploy,r48 server,r48 web only; old archives/READY/state/authority/PGDATA and original receipts retained. No active/unknown consumers, no mount overlaps. Recheck CAS and reconstruction before deletion; no DB/container/image/shared-service action."
+        "actualFreedBytes": 528338944,
+        "scope": "cb8 deploy,9f deploy,r48 server,r48 web only; old archives/READY/state/authority/PGDATA and original receipts retained. No active/unknown consumers, no mount overlaps. Recheck CAS and reconstruction before deletion; no DB/container/image/shared-service action.",
+        "at": "2026-11-07T20:31:39.681123+08:00",
+        "job": "t45-retire-history-deploy-r48-four-20261107-01",
+        "actualReceiptSHA256": "3d6bc3192124d8171954d9f26cec568826c3ffb6bcfc023b5d15c356fcacac43",
+        "exitCode": 0,
+        "durationSeconds": 6.981,
+        "freeBytesBefore": 8323579904,
+        "freeBytesAfter": 8851918848,
+        "actualDeletedCount": 4,
+        "actualSkippedCount": 0,
+        "allAbsentReadback": true,
+        "protectedUnchanged": true,
+        "retainedArchiveSHAReadback": true,
+        "SQLConnections": 0,
+        "signalsSent": 0,
+        "containerChanges": 0,
+        "permissionChanges": 0
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
