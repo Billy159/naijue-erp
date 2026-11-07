@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T06:19:32.108855+08:00",
+    "at": "2026-11-08T06:29:05.765091+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T06:19:32.108855+08:00",
-      "phase": "R4_BOOT13_ACTUAL_SUCCESS_PARAMETERS08_PUBLICATION_PENDING",
+      "at": "2026-11-08T06:29:05.765091+08:00",
+      "phase": "R4_REAL_PREPARE12_EXACT20MIN_ISSUED_ACTUAL_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 original parameter08 publisher",
-      "nextOwner": "C actualparameter/access then exact PREPARE12 scope",
-      "latestActualReceiptSHA256": "64a007e4fd94de296e41614151c07b780b74d0cba2f7b3243930d06730fc7eef",
+      "currentOwner": "T45 original REAL PREPARE12",
+      "nextOwner": "C actualterminal then originalD1 scopedfailure or originalT45 next ready",
+      "latestActualReceiptSHA256": "28eef5fe2f0f001099d1c0401f9573d00512d970c1d45147d09a5adac72c397c",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 publish only exact C3a8c parameter08 once with originalb1e4 CAS. Then actualinode/access/newscope for separate20m REAL PREPARE12; no import yet.",
+      "next": "T45 original key terminal+newcontext; C adopt first failure or proven preparedbinding/cleanup only. No blindretry/window extension.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -37552,7 +37552,7 @@
       }
     },
     "r4Boot13Preparation20261108": {
-      "status": "BOOT13_ACTUAL_SUCCESS_EXACT_PARAMETERS08_ISSUED_PUBLICATION_PENDING",
+      "status": "BOOT13_PARAMETERS08_ACTUAL_SUCCESS_PREPARE12_SCOPE_ISSUED",
       "actualStopMetadata": {
         "key": "t45-r4-boot13-predecessor-metadata-readonly-20261108-01",
         "jobSHA256": "b4243c857c12bc3656b0d3c36fe0905f0ef38b1451003cf00542ff18fb996093",
@@ -37572,7 +37572,7 @@
         "PGConnections": 0,
         "serverChanges": false
       },
-      "next": "T45 publish only exact C3a8c parameter08 once with originalb1e4 CAS. Then actualinode/access/newscope for separate20m REAL PREPARE12; no import yet.",
+      "next": "T45 original PREPARE12 exact minimalready; C20min scope then one original-context REAL preflight. No REAL import/EXECUTE.",
       "stopBoundReadySHA256": "84cf3fed2ca2312647fc4b7dd534cc7291fba5207d867e6690b0314745e5c073",
       "stopBoundAbsoluteRefsChecked": 23,
       "toolBoundReadySHA256": "e5423095c51f428a9ff64d7fe50d228fb975240d3418ddc5e90145a73dd2d6db",
@@ -37623,8 +37623,45 @@
         "fourConstantOnlyReverseBytesChecked": true,
         "CCheckedActualReferences": 14,
         "requestKey": "t45-r4-retained-parameters-20261108-08",
-        "publication": "PENDING_ACTUAL_RECEIPT"
+        "publication": "ACTUAL_COMPLETED0_NOT_PREPARED",
+        "jobSHA256": "dc9ae341ea62491af57c69b08b65d2ac8d5042a58dc21720eff3409a003b1afb",
+        "resultSHA256": "28eef5fe2f0f001099d1c0401f9573d00512d970c1d45147d09a5adac72c397c",
+        "resultBytes": 602,
+        "elapsedSeconds": 0.869995315,
+        "actualInode": 14561338,
+        "actualDevice": 66304,
+        "actualUid": 0,
+        "actualGid": 61035,
+        "actualMode": "0o640",
+        "oldParametersPreserved": true,
+        "derivedAccessSHA256": "35eb95c4f18103ca6671ca9d5788deb565a2cb7bd69f3563c1d681a596d2dce3",
+        "derivedAccessBytes": 34667,
+        "CCheckedExactAccessDerivation": true
       }
+    },
+    "r4RealPrepare12_20261108": {
+      "status": "EXACT20MIN_SCOPE_ISSUED_T45_ACTUAL_PENDING",
+      "requestKey": "t45-r4-real-prepare-20261107-12",
+      "toolCommit": "39b3967a6a72266fa86bd2118cb9e8352072af07",
+      "toolSourceSetSHA256": "c10344c9af214a2b6ad192d6db1cf31965e0f17f523dbad80c2afd722fe5065b",
+      "readinessSHA256": "14a2c672ceccac138240f4dd5ad54f81a9de4f4f2d16bcd5bf2c4e1cdee5bef2",
+      "CCheckedAbsoluteRefs": 11,
+      "decisionSHA256": "bfcda10ba150db0343e0aaec556e54d12348e947e02199b8a1e121a902604f18",
+      "decisionBytes": 4597,
+      "startsAt": 1794090472549,
+      "expiresAt": 1794091672549,
+      "parametersSHA256": "3a8c28dd0c2b821b9e67ee5c3a4c99cf4368fec61993842b571d8d9cb0af78b7",
+      "accessSHA256": "35eb95c4f18103ca6671ca9d5788deb565a2cb7bd69f3563c1d681a596d2dce3",
+      "outerSeconds": 1500,
+      "samplingMs": 100,
+      "maxSampleGapMs": 250,
+      "lowWaterBytes": 4294967296,
+      "startupFloorBytes": 8207515646,
+      "recordsContext": "PRIVATE_WX0600_NUMERIC_OR_UNKNOWN; complete lines only; partial is NOT_EOF",
+      "indexLifecycle": "After genuine PREPARE completion use existing full-byte preservation/precise-retirement before freshEXECUTE index; not run while active",
+      "actual": "PENDING",
+      "realImported": false,
+      "next": "T45 original key terminal+newcontext; C adopt first failure or proven preparedbinding/cleanup only. No blindretry/window extension."
     }
   }
 }
