@@ -1,0 +1,21 @@
+{
+  "status": "READY_FOR_EXACT_DOCKER_MOUNT_ARGV_SOURCE_REVIEW_ONLY",
+  "sourcePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-production35-r3-mount-argv-fix-01/fresh35-production-carrier.py",
+  "sourceSha256": "e1e777a8828fd7081c6880a2c8540e3028ca10cae388c7dad7812d6c86dcba21",
+  "parentSha256": "07eb922730d12cee530f33c67d4cac7f587043b7d38cdfb03b03b62be8816b48",
+  "changedFunctions": [
+    "production_common"
+  ],
+  "change": "Insert the same fixed readonly RAW mount tokens before original --entrypoint; preserve image/timeout/sleep suffix. Exact expected mount map and all guards unchanged.",
+  "tests": {
+    "passed": 2,
+    "elapsedSeconds": 0.03,
+    "scope": "Actual production_common/common argv construction; exact six mounts before image+entrypoint, original suffix; retained parent reproduces post-image bug. No Docker/PG/server."
+  },
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "serverExecuted": false,
+  "businessSourceChanged": false,
+  "buildRepeated": false,
+  "oldJobReplayed": false,
+  "existingStoppedCarrier": "Preserved; no restart/remove/rename. Controlled successor reuse route remains C decision."
+}

@@ -1,0 +1,23 @@
+{
+  "status": "PASS_SCOPED_MOUNT_ARGV_SOURCE_FIX",
+  "closedFinding": "R3-MOUNT-ARGV-01",
+  "sourceSha256": "e1e777a8828fd7081c6880a2c8540e3028ca10cae388c7dad7812d6c86dcba21",
+  "parentSha256": "07eb922730d12cee530f33c67d4cac7f587043b7d38cdfb03b03b62be8816b48",
+  "standardsFindings": [],
+  "specFindings": [],
+  "checks": {
+    "onlyExactSingleLineChanged": true,
+    "changedFunctionOnly": "production_common",
+    "sameMountArgumentsInsertedBeforeEntrypoint": true,
+    "ownedProductionAndAllOtherCodeUnchanged": true,
+    "authorActualArgv2": "adopted, not rerun",
+    "harnessCorrection": "Initial AST selector chose network subscript assignment; narrowed selector to mount slice assignment. Initial assertion not counted."
+  },
+  "parentReviewCorrection": "Previous source review missed post-image RAW mount argument. Parent07eb now has known R3-MOUNT-ARGV-01 defect; previous valid unaffected scope retained, failure not rewritten.",
+  "actualContainerOrMount": "NOT_TESTED",
+  "businessSourceSet": "8694 unchanged",
+  "build": "NOT_RERUN",
+  "serverPGOrReplay": "NOT_EXECUTED",
+  "futureRoute": "Existing stoppedR3/failed job/C14 preserved; reuse/replacement route and exact configuration binding remain C decision, not approved by source fix",
+  "modelRuntime": "UNVERIFIED"
+}

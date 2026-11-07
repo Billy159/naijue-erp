@@ -1,0 +1,50 @@
+{
+  "status": "ORIGINAL_R3_PROVISION_FAILED_EXACT_MOUNT_GUARD_PRESERVED",
+  "recordedAtUTC": "2026-11-07T00:34:33.641250+00:00",
+  "originalJobKey": "t45-prod35-r3-provision-20261107-01",
+  "jobState": "FAILED",
+  "exitCode": 2,
+  "errorCode": "EXACT_PRODUCTION_MOUNTS_REQUIRED",
+  "sourceSetSha256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+  "opsSourceSha256": "07eb922730d12cee530f33c67d4cac7f587043b7d38cdfb03b03b62be8816b48",
+  "C14Sha256": "f65138aef3cb0ac4a846bc794f99c4b5b1bf755ffee9c9d8b103c051776a88e9",
+  "containerId": "aebc1ded534bbbc975f59f17e470a4bc64f48f6e94e9abb4d2ac14220982667a",
+  "readOnlyFacts": {
+    "running": false,
+    "pid": 0,
+    "matchingCgroupProcesses": 0,
+    "productionWorkspaceExists": false,
+    "creationProgramBindingInstallationRetentionFilesExist": false,
+    "actualBindMounts": 5,
+    "fixedReadonlyRawBindPresent": false,
+    "currentFreeBytes": 8520114176
+  },
+  "sourceCause": "production_common appended --mount after image and timeout/sleep suffix; Docker did not consume it as a mount option. Original closed mount guard correctly rejected before launcher detach.",
+  "authorityWindowExtended": false,
+  "originalJobReplayed": false,
+  "containerRestartedOrRemoved": false,
+  "businessSourceBuildRepeated": false,
+  "REALExecuted": false,
+  "formalDatabaseOrPublicSwitchChanged": false,
+  "receipts": {
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r3-provision-20261107-01/transport/release-receipts/t45-prod35-r3-provision-20261107-01/job.json": {
+      "sha256": "364b1a816542d9e31618bd28254fd598e7c46e6352bff5f1c4fdfbb618ca950a"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-prod35-r3-provision-20261107-01/transport/release-receipts/t45-prod35-r3-provision-20261107-01/fresh35-production-start-result.json": {
+      "sha256": "6ee8aaa489f6892ec101ac176d2405426ef73cf451555f0c8d802ce8644a0228"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-mount-failure-readonly-20261107-01/transport/release-receipts/t45-r3-mount-failure-readonly-20261107-01/job.json": {
+      "sha256": "73fefc1e951d317acf4a2f467ba4c7b95a58d385a9d4e569cf35c6c9861ccc2c"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-mount-failure-readonly-20261107-01/transport/release-receipts/t45-r3-mount-failure-readonly-20261107-01/r3-mount-failure-readonly.json": {
+      "sha256": "1eb1a969332c174a1b0b819e493ff6930b20c872ef101d5504b9961f69d79587"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-provision-resources-readonly-20261107-01/transport/release-receipts/t45-r3-provision-resources-readonly-20261107-01/job.json": {
+      "sha256": "df372726f91675082b7b7c3197c0ba2580b3c37d0a20c9597acaabc19cc3bb61"
+    },
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r3-provision-resources-readonly-20261107-01/transport/release-receipts/t45-r3-provision-resources-readonly-20261107-01/r3-provision-resources-readonly.json": {
+      "sha256": "d39c12007e676c9a0a74e96da1488302bb054d7b0bbf1d878af6be17d9730535"
+    }
+  },
+  "next": "Independent exact argv fix review; C specifies controlled successor retaining original failed intent/container/receipts and existing material. Do not re-run original start."
+}
