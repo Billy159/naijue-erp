@@ -2580,3 +2580,11 @@ C 核11个固定引用及原包装，准确范围f730f800eb0fddbfb7c652878eb2f48
 - D1固定解读aa8acb6c03a97deb1f8e979da04893c6a6e58fd3f9aa33dddb5f640d27177b94（9,048B）：真实预检一个连接/事务内写登记raw、身份和事实，ref写入后再查身份；短模型先提交key再换连接，混写也先get。此为源码事实，不能用34秒模型代替真实事务或宣称根因修复。
 - C已交原D1仅补默认关闭、私域数值的资源/key长度观测，沿原cost刷新点，不改SQL、schema、cache、事务、身份/数量金额验证或20分钟窗口。固定增量后QB只验受影响范围，D2只交最小闭包。
 - 原T45并行准备BOOT13/参数发布的非时间接线；暂不签时窗、不连接/启动。新tool固定、增量结论与Linux加载到达后C准确绑定一次。全局目标仍是真实导入、独立对账、历史业务、适用备份恢复与正式切换，均未以合成阶段代替。
+
+
+### 2026-11-08T05:45:49.319184+08:00｜39b观测工具增量独立通过，小闭包与停止元数据到达
+
+- D1固定39b3967a6a72266fa86bd2118cb9e8352072af07（父734），唯一运行叶2d2204da/38,170B；caller207275fd及其余215pins不变。QB回执aaa0ddd0b7257b803c928a96dce4307a7ebba0d1614779c0969ed48b2610f3ef，5新增定向检查通过、0跳过，C采用其有效结论，不重复技术验收。Linux开销、真实根因和EOF仍未验。
+- D2仅1.148MB完整小包4f817c4a127f43d425cecab7af3afd22297a03f06f866cb72c97f9f04d2c3f23；sourceSet c10344c9，216/180，361成员全字节核对。打包时QA_PENDING保留原状态，C现独立采用后来QB结论，不改旧证据。未重建fullAPP，未Linux加载。
+- 原T45停止metadata补读实际COMPLETED/0/.318s：8c6a1a85c4b8d325e130190f721faf9ca29032f57bc46ede7cf26885fa8aa5cc/3,513B，实际cleanup1afe/193B且canonical bytes相同；PG/guardian/监听/PIDfile/writeauthority均absent，HBA/保护pins与45entry原样，0PG/SQL/配置改。虽cleanup hash与旧同值，本次来源为fresh BOOT12实读，不能仅借旧文件推断。
+- 下一步原T45准备准确39b材化+成对policy恢复，C到READY即绑定一次限时；新tool加载到达后才签BOOT13时窗。真实导入、核账、历史业务、备份恢复及正式发布继续未完成。
