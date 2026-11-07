@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 exactstopped07 phase proof and minimumsampler scheduling fix retaining250ms/floors/20min; fixedREADY toC thenoriginalQB. Reader01unitnotfound,notlivewaiting. Startupspace short1,102,639,102B mustresolve viaexactauthorizedprotectedcleanup beforeanynextBOOT; preservefailed07/06 now. No business/import/cutoverPASS.",
+      "next": "OriginalT45 fixedminimumsampler schedule and startupspace exactcandidate undernightdelegation; sourceREADY->C soleQB dispatch; preserve250ms+4GiB+20min and originaldata/receipts; noold07replay. Actualwholeimport/independentreconcile/history/new35backup/formalbrowser/cutover still incomplete.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36381,7 +36381,32 @@
       "rootStartedUTC": "2026-11-07T15:09:54.792254+00:00",
       "actualUnit": "naijue-erp-op-5cc58239-379100d0a481",
       "lastCollectedReceiptSHA256": "a118de908ef2152c7c8d86dfa100f173939dc19ea25d39780045dc487a13614f",
-      "phaseProgress": "Originalreader01 STARTING; no phase/NodePID inferred. Retainedpartial07/06 untouched, noSQLiteopen/recovery.",
+      "phaseProgress": {
+        "receipt": "d7594163470416668ed1fb7c86d6264a74d9b85c52d1c9bb1602c7ab982e7c20",
+        "job": "t45-r4-reader01-recovery-readonly-20261107-01",
+        "jobReceipt": "e2490d24a2fb0650a4d2ef61f60d6cee9e482264c52d7b2d11c5006379ef1781",
+        "exitCode": 0,
+        "seconds": 2.123976282775402,
+        "capturedAfterTerminal": true,
+        "fileBytes": 22636,
+        "completeRecords": 137,
+        "lastPhase": "RECORDS",
+        "lastEvent": "PROGRESS",
+        "elapsedMs": 892338.408643,
+        "phaseElapsedMs": 820957.837982,
+        "rowsScanned": 929000,
+        "bytesScanned": 874235265,
+        "recordedIssues": 0,
+        "targetRowsImported": "NOT_PROVEN_NOT_EQUIVALENT_TO_SCAN_COUNT",
+        "summaryAbsent": true,
+        "indexBytes": 2183897088,
+        "indexAllocatedBytes": 2183827456,
+        "journalBytes": 83560,
+        "journalAllocatedBytes": 86016,
+        "SQLiteOpened": false,
+        "PGConnections": 0,
+        "signals": 0
+      },
       "terminal": "FAILED_NO_REPLAY",
       "jobReceipt": "765ff944365465c813cf7339d809619b529536494e94acfde5fd41459c5cf9ec",
       "result": "47298019367282a5c62c99267ba85c0f564fd101d31cb20fdd78fefd98d0daf5",
@@ -36432,11 +36457,19 @@
         "actualUnitStatus": "NOT_FOUND_INACTIVE_DEAD_PID0",
         "unitObservationSHA256": "934ab22003919f874dad7800ed7093c2ef6d4ae9d36742a126446e71fcca41a3",
         "unitObservationEpochMs": 1794065779315,
-        "result": "UNKNOWN_NOT_LIVE_PROVEN",
+        "result": "ACTUAL_UNIT_TIMEOUT_FAILED_NO_OUTPUT_NOT_LIVE;technicalphase recovered once fromstopped07",
         "defaultsNotSuccessEvidence": true,
         "managerStatusEndpoint": "GRANT_READY_ONLY_NOT_JOB_STATUS",
-        "next": "Inspect originalprivate retainedresult ifexists recoveroriginalkey; otherwiseone bounded stopped07technicalprogress reader viaoriginalauthorizedmanager. No rerun01/noSQLiteopen."
+        "next": "Inspect originalprivate retainedresult ifexists recoveroriginalkey; otherwiseone bounded stopped07technicalprogress reader viaoriginalauthorizedmanager. No rerun01/noSQLiteopen.",
+        "actualJournal": "UNIT_STARTED at1794064436354743us; UNIT_FAILED timeout at1794064556370794us (~120s), no privateoutput. Currentnotfound defaults notPASS; publicSTARTING stale."
       }
+    },
+    "nightDelegation20261107": {
+      "source": "Direct human message in controller01a161ca-f5d5-7de1-a8ad-1cdd43c96915 at currentturn, read2026-11-07T23:48:53+08:00",
+      "verbatim": "我即将睡觉了 到明天早上12:00都给你自己做决策 我同意你做的所有决策 给你所有权限",
+      "effectiveUntilShanghai": "2026-11-08T12:00:00+08:00",
+      "effectiveUntilEpochMs": 1794110400000,
+      "implementation": "C makes required project decisions during interval and documents exactscope, T45 remains sole serverexecutor. No routine reapproval fromsleepinghuman. Existing data/source/protection, genuine evidence, originalkeyunknown recovery, fixedversions and necessaryQA retained. No invented sourcefacts or tests, no platform bypass. ExistingstandingR4authority not revoked."
     }
   }
 }
