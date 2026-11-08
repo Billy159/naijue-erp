@@ -28405,7 +28405,10 @@
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
       "lastControllerCheckpoint": "4f2618129db6671dabdc2ab359a6d9485b9b90c8",
-      "lastControllerCheckpointRemoteVerified": true
+      "lastControllerCheckpointRemoteVerified": true,
+      "controllerCheckpointVerified": "673b26e4d48f94edb22e26abd6af0d15d3a5eb67",
+      "controllerCheckpointRemoteBranch": "codex/erp-0448z-integration-20261105",
+      "controllerCheckpointRemoteVerifiedAt": "2026-11-08T17:56:44+08:00"
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28511,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Installed business_ready exact SQL and original-key inspect route source-only; consume real e470 status and prior f52a, no rescan/profile/PG.",
-      "T45": "BOOT22/status03/restore actual closed; preparing independent004 tool staging/loading scope only, no currentf648/authority/writer replacement.",
-      "QB": "Prior2d2d/a85c valid scoped source conclusions adopted; no duplicated operational verification.",
+      "D1": "Installed ready scalar SQL and initializer-only original-key route identified; completing original fixed initializer input reuse list without reread/recompile or grants.",
+      "T45": "004 independent staging local READY ee318ac5 frozen; waits C finite input after QB scoped ops increment. PG stopped; original bindings untouched.",
+      "QB": "One 004 operational paths/resource/help delta only; valid 8fc source and prior channel evidence reused; no server/PG.",
       "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
@@ -39808,6 +39811,18 @@
             "finalResultSHA256": "3bc587ae427933496253d5ed37be13d9663facb85a77af262abd45220fa74cc7",
             "finalResultBytes": 12482
           }
+        },
+        "readyDefinitionSourceFacts": {
+          "at": "2026-11-08T17:56:44+08:00",
+          "owner": "D1",
+          "state": "SOURCE_FACTS_REPORTED_FIXED_INPUT_REUSE_STILL_IN_PROGRESS",
+          "source": "installed 3b82/8694 adapters/postgres/patches/0027_standard_import_initialization.sql:151-161",
+          "definition": "single scalar SELECT EXISTS STABLE SECURITY DEFINER",
+          "required": "baseline imported cutoff profile + documents imported conversion profile + matching source hash/name/cutoff and document publish committed receipt; not original-key status",
+          "actualStatus03": "e470e656 does not preserve nontrue result shape; actual false not individually proven",
+          "ordinaryRLS": "ordinary zero rows after nontrue gate cannot prove original ABSENT",
+          "existingAuthoritySeam": "standard_whole_package_inspect_v2(init_request,encoded_scrypt) initializer-only with original advisory locks and full inputs",
+          "notPermitted": "No fake initializer/token, new grant, ready/RLS bypass, legacy revoked inspect, or new-key reimport"
         }
       }
     },
@@ -39909,6 +39924,27 @@
           "otherPinsUnchanged": 214,
           "installed8694AndOriginalD250Retained": true,
           "linuxLoaded": false
+        },
+        "linuxStagingPreparation": {
+          "at": "2026-11-08T17:56:44+08:00",
+          "owner": "T45",
+          "state": "FIXED_LOCAL_SCOPE_QB_INCREMENT_REVIEW_IN_FLIGHT_NO_SERVER_ACTION",
+          "readyPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool004dea84-transfer-preparation-01/c-resource-bound/READY.json",
+          "readySHA256": "ee318ac5859a8308b3bdca2358654f6cd28f1a44348f50b17776b4ad1967c0c5",
+          "readyBytes": 15262,
+          "commit": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
+          "sourceSet": "9dafc594981d7d7aa6304edd3ef1ca6d53329ad881e74114d96907345b7124b6",
+          "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/installed-real-operation-004dea84-20261108-01",
+          "preUploadFreeFloorBytes": 5377097728,
+          "postExtractFreeFloorBytes": 5368709120,
+          "originalWriterFloorUnchanged": 8207515646,
+          "sourceQBAdopted": "8fc990827b1c69b217ad8bb8cc5b085d688ac12faae68a5de93d0ea3deb1b030",
+          "opsQB": "Only paths/resource/public-help and actual affected policy CAS restoration; no duplicated source tests/build/PG",
+          "C13": "UNISSUED pending independent narrow conclusion then fresh <=30min window",
+          "PGConnections": 0,
+          "serverActions": 0,
+          "originalExecutionBindingsChanged": false,
+          "next": "QB scoped conclusion then C fixed finite input, T45 live same-device/free/policy/path preflight and one staging/loading"
         }
       }
     }

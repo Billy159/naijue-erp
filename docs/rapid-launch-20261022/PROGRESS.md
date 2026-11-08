@@ -3049,3 +3049,10 @@ C采用原QB a85cbf3f/4619键/closure窄增量，原715f/2d2d有效目录证据�
 observerf183b054/6007已C实读：普通61035父watch实际成功、HBA.5375s恢复、原a7d/0dc/1af保全。C原13字段status03 4629fda7/930窗1794130504140至1794130804140；实际e470e656/1114 COMPLETED0/10.6389s已过准入并完成RR只读回滚，acktrue/CLOSED/child0/reaped，但phase BUSINESS_READY_NOT_CONFIRMED、firstFailure/code null，业务仍UNKNOWN，不能推未提交/已回滚/COMMIT。不重status、不重导。原D1接同项只读核安装8694 business_ready实际SQL和现有最小inspect权限/输入，不造新接口或猜事实。
 
 原ownedcleanup5c1720ac/5512已C实读：PG4048/guardian4040/sampler4047与port/pidfile实际缺席，原45metadata/2projections/HBA/3叶保持。同inode14555460目录已root:root0711、双ACL无，child恢复changedtrue+guardianFD复核changedfalse，recordParentOriginalRestoredtrue/独立9197da8c/266；mtime1794130154723920181、ctime1794130736289110130自然保留，不伪还原。5819samples/min5433556992/maxgap.156489/maxdrop1871872在预算；即时controllerStoppedfalse保留而真实缺席已核，不重复STOP。最终汇总3bc587ae/12482；只关闭本轮临时watch缺口及恢复，不称正式准入长期配置、导入或业务通过。T45仅准备独立004工具落地，不替换f648/安装根/原批，不写DB。
+
+
+## 2026-11-08 17:56 — 原键核验接缝明确，004独立落地只补运维增量
+
+D1已实读安装3b82/8694：business_ready为单行布尔EXISTS，要求两种已导入批及文档发布回执匹配，是全局就绪而非原键状态。e470只保留非true阶段，不能断言真实false/缺行，更不能从普通RLS零行推ABSENT。现有权威入口为initializer-only standard_whole_package_inspect_v2，仍需准确原初始化及私有身份；D1继续只核现有固定输入的最少复用，不伪造token/改RLS或grant，不重导。
+
+T45本地READY ee318ac5/15262固定004独立目录及原通道，零服务器/PG；C核本工具上传前5GiB+8MiB、解压/结束5GiB，原完整writer8207515646不改。原QB只验路径、空间、公开help及策略CAS收尾的实际增量，8fc源码/旧通道有效证据复用。待结论后C才绑定新有限C13，现模板未签。主控673b26e4d48f94edb22e26abd6af0d15d3a5eb67已推GitHub同名分支并ls-remote逐字核实；原WIP与未验范围保留。
