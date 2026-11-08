@@ -161,7 +161,7 @@ test('only the retained controller render consumes the activity set and clears t
  assert.throws(()=>fresh35CombinedRuntimeTargetGuard(target,2),/WRONG_WINDOW/);
 });
 
-test('retained BOOT07 provenance accepts only the exact PREPARE05 protected stop digest',()=>{
+test('retained restart metadata supports operation-pinned predecessor digests across BOOT generations',()=>{
  const recordSha='a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f';
  const oldPhysical={systemIdentifier:'7703999999999999999',databaseOid:'16384',serverVersionNum:'170011',
   postmasterStart:'2026-11-07 00:00:00+00'};
@@ -179,13 +179,12 @@ test('retained BOOT07 provenance accepts only the exact PREPARE05 protected stop
  };
  const now=Date.parse('2026-11-07T00:01:02Z');
  assert.equal(validateRetainedRestartReceipt(receipt,record,recordSha,now),receipt.newPhysical.postmasterStart);
- for(const digest of [
-  '31b7c27366daef28aceaa59c8bbe563279d8b79a1f13cc24f30e409300f6e6c8',
-  '1afa16a877625bdb1099fa7602c7c791dfb9702f1ba8fda1c2f1eb9f1992ba76',
-  'ec32a189fc8028b43507ede34b5dac7359f741f14558b17cc985878dbee1aeed',
-  '0'.repeat(64)
- ]){
-  assert.throws(()=>validateRetainedRestartReceipt({...receipt,previousStopReceiptSha256:digest},record,recordSha,now),
-   /FRESH35_REAL_WINDOW_EXACT_RESTART_PROVENANCE_REQUIRED/);
+ // Metadata alone grants no authority. The loader separately pins the entire
+ // raw receipt, including this predecessor, to the current protected window.
+ for(const digest of [receipt.previousStopReceiptSha256,'f2c89b10927ae1a013c370c96415212bc65eebfcceb772e8d109cf2efc128001','9'.repeat(64)]){
+  assert.equal(validateRetainedRestartReceipt({...receipt,previousStopReceiptSha256:digest},record,recordSha,now),receipt.newPhysical.postmasterStart);
+ }
+ for(const digest of [null,'','not-a-digest','A'.repeat(64),'1'.repeat(63)]){
+  assert.throws(()=>validateRetainedRestartReceipt({...receipt,previousStopReceiptSha256:digest},record,recordSha,now),/FRESH35_REAL_WINDOW_EXACT_RESTART_PROVENANCE_REQUIRED/);
  }
 });

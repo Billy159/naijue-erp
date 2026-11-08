@@ -35,7 +35,9 @@ export function validateInstalledRealWindow(value,record,recordSha,currentSource
  need(exact(value.serviceReceipt,['path','sha256'])&&value.serviceReceipt.path===etc+'/naijue-erp/fresh35-retained-service-v1.json'&&hex(value.serviceReceipt.sha256),'EXACT_SERVICE_RECEIPT_REQUIRED');return true;
 }
 /** Protected root observation only; native runtime still verifies the exact new
- * epoch on its original owned physical client. This never rewrites a record. */
+ * epoch on its original owned physical client. This never rewrites a record.
+ * Metadata only: the loader pins the entire receipt bytes, including the
+ * predecessor, to the current protected operation and root FD proof. */
 export function validateRetainedRestartReceipt(receipt,record,recordSha,now=Date.now()){
  const old=record.target.physical,p=record.target.proposal;
  need(exact(receipt,['format','state','installationRecordSha256','targetSha256','sourceSetSha256','oldPhysical','newPhysical','dataDirectory','dataDirectoryBefore','dataDirectoryAfter','previousStopReceiptSha256','restartAuthorizationSha256','authorizationReference','checkedAt','serviceLeaseExpiresAt'])&&receipt.format==='FRESH35_RETAINED_RESTART_OBSERVATION_V1'&&receipt.state==='SAME_DATA_RESTART_OBSERVED_NOT_BUSINESS_VERIFIED','EXACT_RESTART_OBSERVATION_REQUIRED');
@@ -45,7 +47,7 @@ export function validateRetainedRestartReceipt(receipt,record,recordSha,now=Date
  const epoch=x=>Date.parse(x.replace(' ','T').replace(/\+00$/,'Z')),birth=epoch(n.postmasterStart);
  need(Number.isFinite(birth)&&birth>epoch(old.postmasterStart)&&Number.isSafeInteger(receipt.checkedAt)&&birth<=receipt.checkedAt&&receipt.checkedAt<=now&&Number.isSafeInteger(receipt.serviceLeaseExpiresAt)&&now<receipt.serviceLeaseExpiresAt,'NEW_EPOCH_OR_LEASE_REQUIRED');
  need(receipt.dataDirectory===resolve(p.workspaceDirectory,'data')&&exact(receipt.dataDirectoryBefore,['device','inode','uid','gid','mode'])&&Object.values(receipt.dataDirectoryBefore).every(Number.isSafeInteger)&&receipt.dataDirectoryBefore.device>0&&receipt.dataDirectoryBefore.inode>0&&receipt.dataDirectoryBefore.uid===61035&&receipt.dataDirectoryBefore.gid===61035&&receipt.dataDirectoryBefore.mode===0o700&&isDeepStrictEqual(receipt.dataDirectoryBefore,receipt.dataDirectoryAfter),'ORIGINAL_PGDATA_IDENTITY_REQUIRED');
- need(recordSha==='a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f'&&receipt.previousStopReceiptSha256==='1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a'&&hex(receipt.restartAuthorizationSha256)&&typeof receipt.authorizationReference==='string'&&receipt.authorizationReference.trim().length>0&&receipt.authorizationReference.length<=512,'EXACT_RESTART_PROVENANCE_REQUIRED');
+ need(recordSha==='a7d12f1f21f730c0e0c19dd6136c501c74d43e0e866e62d2f51aa908ea4f970f'&&hex(receipt.previousStopReceiptSha256)&&hex(receipt.restartAuthorizationSha256)&&typeof receipt.authorizationReference==='string'&&receipt.authorizationReference.trim().length>0&&receipt.authorizationReference.length<=512,'EXACT_RESTART_PROVENANCE_REQUIRED');
  return n.postmasterStart;
 }
 async function protectedFile(path,max=65536){
