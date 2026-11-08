@@ -27,18 +27,23 @@ test('credential-bearing row is blocked before disk identity insertion and not e
 test('canonical registry aliases resolve but cannot duplicate a physical target row',async()=>{const root=await workspace();try{const a=row(1),b=row(1);b.source_key='alias:one';await fixture(root,JSON.stringify(a)+'\n'+JSON.stringify(b)+'\n');const registry=JSON.stringify({entity_type:'TRANSFER_LINE',source_namespace:'synthetic.unified.v1',canonical_source_key:'line:1',target_id:id(1),aliases:['alias:one'],identity_basis:'EXISTING_VERIFIED',source_refs:[{file_sha256:'a'.repeat(64),sheet:null,row:1}]})+'\n';await writeFile(join(root,'identity.jsonl'),registry);const m=JSON.parse(await readFile(join(root,'manifest.json'),'utf8'));m.identity_registry={relative_path:'identity.jsonl',bytes:Buffer.byteLength(registry),sha256:sha256(registry),row_count:1};const manifest=JSON.stringify(m);await writeFile(join(root,'manifest.json'),manifest);await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true});const issues=await readFile(join(root,'../report/issues.jsonl'),'utf8');assert(issues.includes('DUPLICATE_ROW_IDENTITY'));assert(!issues.trim().split('\n').map(JSON.parse).some(x=>x.file==='transfer_line.jsonl'&&x.code==='REGISTRY_TARGET_MISMATCH'));}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('full offline validation still never implies execution admission',async()=>{const root=await workspace();try{const hash=await fixture(root,null);const result=await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:hash,allowSynthetic:true});assert.equal(result.checks_passed,true);assert.equal(result.complete_package_validation,true);assert.equal(result.import_eligible,false);assert.equal(result.business_database_writes,false);}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 
-test('32MiB scratch cache preserves the 4MiB index, complete requests and rejection boundary',async t=>{
+test('sealed TEMP lookup preserves the main lookup index, complete requests and rejection boundary',async t=>{
  const root=await workspace();
  const {DatabaseSync}=await import('node:sqlite');
  const {prepareStreamPlan}=await import('../tools/unified-import/stream-plan.mjs');
  const {buildStreamProgram}=await import('../tools/unified-import/stream-program.mjs');
  const {stableImportId}=await import('../packages/application/src/inventory-cutoff-import.ts');
- const exec=DatabaseSync.prototype.exec,observed=[],transactions=[],preflightDbs=new WeakSet();
+ const exec=DatabaseSync.prototype.exec,prepare=DatabaseSync.prototype.prepare,observed=[],transactions=[],preflightDbs=new WeakSet();
  let reference=false;
- // Change only the engine setting for the reference run, never the source data.
+ // Reference the preceding single-main-pager lookup without changing source rows.
+ t.mock.method(DatabaseSync.prototype,'prepare',function(sql,...args){
+  if(reference&&sql==='SELECT id FROM temp.registry_lookup WHERE entity=? AND key=?')sql='SELECT id FROM identity_keys WHERE entity=? AND key=?';
+  return prepare.call(this,sql,...args);
+ });
  t.mock.method(DatabaseSync.prototype,'exec',function(sql,...args){
   const setup=sql.includes('CREATE TABLE registry_rows(');
-  if(setup&&reference)sql=sql.replace(/PRAGMA cache_size=-\d+;/,'PRAGMA cache_size=-4096;');
+  if(setup&&reference)sql=sql.replace(/PRAGMA cache_size=-\d+;/,'PRAGMA cache_size=-32768;');
+  if(reference&&sql==='INSERT INTO temp.registry_lookup SELECT entity,key,id FROM main.identity_keys')return;
   const result=exec.call(this,sql,...args);
   if(setup){preflightDbs.add(this);observed.push(this.prepare('PRAGMA cache_size').get().cache_size);}
   if(preflightDbs.has(this)&&['BEGIN','COMMIT','ROLLBACK'].includes(sql))transactions.push(sql);
@@ -66,9 +71,65 @@ test('32MiB scratch cache preserves the 4MiB index, complete requests and reject
     outputs.push({bytes,identity:program.identity,initialize:program.initialize,steps,totals:plan.totals});
    }finally{await plan.dispose();}
   }
-  assert.deepEqual(observed,[-4096,-32768]);
+  assert.deepEqual(observed,[-32768,-28672]);
   assert.deepEqual(transactions,['BEGIN','COMMIT','BEGIN','COMMIT']);
   assert.deepEqual(outputs[1],outputs[0]);
+ }finally{await rm(join(root,'..'),{recursive:true,force:true});}
+});
+
+test('sealed lookup copies every canonical and alias key into the FILE-backed TEMP pager',async t=>{
+ const root=await workspace();const {DatabaseSync}=await import('node:sqlite');
+ const exec=DatabaseSync.prototype.exec;let copies=0;
+ t.mock.method(DatabaseSync.prototype,'exec',function(sql,...args){
+  const result=exec.call(this,sql,...args);
+  if(sql==='INSERT INTO temp.registry_lookup SELECT entity,key,id FROM main.identity_keys'){
+   copies++;
+   assert.equal(this.prepare('PRAGMA temp_store').get().temp_store,1);
+   assert.equal(this.prepare('PRAGMA main.cache_size').get().cache_size,-28672);
+   assert.equal(this.prepare('PRAGMA temp.cache_size').get().cache_size,-4096);
+   assert.equal(this.prepare('PRAGMA main.journal_mode').get().journal_mode,'delete');
+   assert.equal(this.prepare('PRAGMA main.synchronous').get().synchronous,2);
+   assert(this.prepare("SELECT sql FROM temp.sqlite_schema WHERE name='registry_lookup'").get().sql.includes('WITHOUT ROWID'));
+   assert.deepEqual(this.prepare('SELECT entity,key,id FROM main.identity_keys EXCEPT SELECT entity,key,id FROM temp.registry_lookup').all(),[]);
+   assert.deepEqual(this.prepare('SELECT entity,key,id FROM temp.registry_lookup EXCEPT SELECT entity,key,id FROM main.identity_keys').all(),[]);
+   for(const row of this.prepare('SELECT entity,key,id FROM main.identity_keys').iterate())assert.equal(this.prepare('SELECT id FROM temp.registry_lookup WHERE entity=? AND key=?').get(row.entity,row.key).id,row.id);
+   assert.equal(this.prepare('SELECT id FROM temp.registry_lookup WHERE entity=? AND key=?').get('transfer_line','UNREGISTERED_SYNTHETIC_KEY'),undefined);
+  }
+  return result;
+ });
+ try{
+  const p=createSyntheticPackage();p.registry[0].aliases.push('汉'.repeat(400),'SYNTHETIC_ALIAS');repinSyntheticPackage(p);
+  for(const[path,bytes]of Object.entries(p.artifacts)){await mkdir(join(root,path,'..'),{recursive:true});await writeFile(join(root,path),bytes);}
+  const manifest=JSON.stringify(p.manifest);await writeFile(join(root,'manifest.json'),manifest);
+  const result=await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true});
+  assert.equal(result.checks_passed,true);assert.equal(copies,1);assert.equal(result.limits.sqlite_cache_kib,32768);
+  const db=new DatabaseSync(join(root,'..','report','index.sqlite'),{readOnly:true});
+  try{assert.equal(db.prepare("SELECT count(*) AS n FROM main.sqlite_schema WHERE name='registry_lookup'").get().n,0);}finally{db.close();}
+ }finally{await rm(join(root,'..'),{recursive:true,force:true});}
+});
+
+test('lookup-copy failure preserves the error, rolls back main facts and cannot produce a plan',async t=>{
+ const root=await workspace();const {DatabaseSync}=await import('node:sqlite');
+ const {prepareStreamPlan}=await import('../tools/unified-import/stream-plan.mjs');
+ const exec=DatabaseSync.prototype.exec;let rollback=false,partialRows=0;
+ t.mock.method(DatabaseSync.prototype,'exec',function(sql,...args){
+  if(sql==='INSERT INTO temp.registry_lookup SELECT entity,key,id FROM main.identity_keys'){
+   exec.call(this,'INSERT INTO temp.registry_lookup SELECT entity,key,id FROM main.identity_keys LIMIT 1');
+   partialRows=this.prepare('SELECT count(*) AS n FROM temp.registry_lookup').get().n;
+   throw new Error('SYNTHETIC_LOOKUP_COPY_FAILURE');
+  }
+  if(sql==='ROLLBACK')rollback=true;
+  return exec.call(this,sql,...args);
+ });
+ try{
+  const hash=await fixture(root,null),report=join(root,'..','report');
+  await assert.rejects(streamPreflight(root,report,{expectedManifestSha256:hash,allowSynthetic:true}),/SYNTHETIC_LOOKUP_COPY_FAILURE/);
+  assert.equal(partialRows,1);assert.equal(rollback,true);await assert.rejects(readFile(join(report,'summary.json')),{code:'ENOENT'});
+  const db=new DatabaseSync(join(report,'index.sqlite'),{readOnly:true});
+  try{assert.equal(db.prepare('SELECT count(*) AS n FROM identity_keys').get().n,0);}finally{db.close();}
+  const issues=(await readFile(join(report,'issues.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
+  assert(issues.some(x=>x.diagnostic?.phase==='REGISTRY'&&x.diagnostic?.operation==='SQLITE'));
+  await assert.rejects(prepareStreamPlan(join(report,'index.sqlite'),null,await readFile(join(root,'manifest.json')),{}),/STREAM_PLAN_BINDING_INVALID/);
  }finally{await rm(join(root,'..'),{recursive:true,force:true});}
 });
 test('staff departure profile uses shared nullable date validation; unknown profiles fail closed',async()=>{const root=await workspace();try{await fixture(root,'');const {STAFF_DEPARTURE_SCHEMA_DECLARATIONS_SHA256}=await import('../packages/application/src/unified-import-contract.ts');const m=JSON.parse(await readFile(join(root,'manifest.json'),'utf8'));m.schema_contract={source_declarations_sha256:STAFF_DEPARTURE_SCHEMA_DECLARATIONS_SHA256};const r={source_key:'staff:one',source_refs:[],fields:{departure_date:'2026-02-30'}};const text=JSON.stringify(r)+'\n';await writeFile(join(root,'staff.jsonl'),text);Object.assign(m.files.find(p=>p.table==='staff'),{bytes:Buffer.byteLength(text),sha256:sha256(text),row_count:1});let manifest=JSON.stringify(m);await writeFile(join(root,'manifest.json'),manifest);await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true});const issues=(await readFile(join(root,'../report/issues.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);assert(issues.some(x=>x.field==='departure_date'&&x.code==='FIELD_TYPE'));assert(!issues.some(x=>x.field==='departure_date'&&x.code==='FIELD_UNKNOWN'));m.schema_contract.source_declarations_sha256='0'.repeat(64);manifest=JSON.stringify(m);await writeFile(join(root,'manifest.json'),manifest);await assert.rejects(streamPreflight(root,join(root,'..','report2'),{expectedManifestSha256:sha256(manifest),allowSynthetic:true}),/UNKNOWN_SCHEMA_PROFILE/);}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
@@ -80,7 +141,7 @@ test('every registry identity must have a valid materialized row',async()=>{cons
 test('closed disk registry preserves the explicit identity basis for read-only consumers',async()=>{const root=await workspace();try{const hash=await fixture(root,null),report=join(root,'..','report');const result=await streamPreflight(root,report,{expectedManifestSha256:hash,allowSynthetic:true});const {DatabaseSync}=await import('node:sqlite');const db=new DatabaseSync(join(report,'index.sqlite'),{readOnly:true});try{assert.equal(db.prepare("SELECT identity_basis FROM identities WHERE entity='barcode_scheme' LIMIT 1").get().identity_basis,'EXISTING_VERIFIED');assert.equal(db.prepare("SELECT identity_basis FROM identities WHERE entity='product' LIMIT 1").get().identity_basis,'STABLE_IMPORT_ID_V1');assert.equal(result.index_schema_version,'UNIFIED_STREAM_FACTS_V3');}finally{db.close();}}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('invalid JSON report identifies the actual report file',async()=>{const root=await workspace();try{await fixture(root,null);const m=JSON.parse(await readFile(join(root,'manifest.json'),'utf8')),bytes='[]\n';await writeFile(join(root,'decisions.json'),bytes);Object.assign(m.reports.find(r=>r.role==='DECISIONS'),{bytes:Buffer.byteLength(bytes),sha256:sha256(bytes),row_count:0});const text=JSON.stringify(m);await writeFile(join(root,'manifest.json'),text);await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(text),allowSynthetic:true});const issues=(await readFile(join(root,'../report/issues.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);assert(issues.some(i=>i.code==='INVALID_REPORT'&&i.file==='decisions.json'));}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('actual asset size is bounded even when its declared pin is tiny',async()=>{const root=await workspace();try{const hash=await fixture(root,null);await writeFile(join(root,'synthetic-images/example.png'),Buffer.alloc(8388609));await assert.rejects(streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:hash,allowSynthetic:true}),/ASSET_SIZE_LIMIT/);const issues=(await readFile(join(root,'../report/issues.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);assert(issues.some(i=>i.code==='ASSET_SIZE_LIMIT'&&i.file==='synthetic-images/example.png'));}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
-test('registry lookup SQL is prepared once rather than once per source row',async()=>{const root=await workspace();const {DatabaseSync}=await import('node:sqlite');const original=DatabaseSync.prototype.prepare;let lookupCompiles=0;DatabaseSync.prototype.prepare=function(sql,...args){if(sql==='SELECT id FROM identity_keys WHERE entity=? AND key=?')lookupCompiles++;return original.call(this,sql,...args);};try{const hash=await fixture(root,null);const result=await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:hash,allowSynthetic:true});assert.equal(result.checks_passed,true);assert.equal(lookupCompiles,1);}finally{DatabaseSync.prototype.prepare=original;await rm(join(root,'..'),{recursive:true,force:true});}});
+test('registry lookup SQL is prepared once rather than once per source row',async()=>{const root=await workspace();const {DatabaseSync}=await import('node:sqlite');const original=DatabaseSync.prototype.prepare;let lookupCompiles=0;DatabaseSync.prototype.prepare=function(sql,...args){if(sql==='SELECT id FROM temp.registry_lookup WHERE entity=? AND key=?')lookupCompiles++;return original.call(this,sql,...args);};try{const hash=await fixture(root,null);const result=await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:hash,allowSynthetic:true});assert.equal(result.checks_passed,true);assert.equal(lookupCompiles,1);}finally{DatabaseSync.prototype.prepare=original;await rm(join(root,'..'),{recursive:true,force:true});}});
 test('V3 index retains complete ordered registry objects for canonical plan hashing',async()=>{const root=await workspace();try{const expected=createSyntheticPackage().registry,hash=await fixture(root,null),report=join(root,'..','report');const result=await streamPreflight(root,report,{expectedManifestSha256:hash,allowSynthetic:true});const {DatabaseSync}=await import('node:sqlite');const db=new DatabaseSync(join(report,'index.sqlite'),{readOnly:true});try{const rows=db.prepare('SELECT ordinal,raw_json FROM registry_rows ORDER BY ordinal').all();assert.deepEqual(rows.map(r=>JSON.parse(r.raw_json)),expected);assert.deepEqual(rows.map(r=>r.ordinal),expected.map((_,i)=>i+1));assert.equal(result.index_schema_version,'UNIFIED_STREAM_FACTS_V3');}finally{db.close();}}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 test('CLEANED generated-field omission matches the original validator',async()=>{const root=await workspace();try{const p=createSyntheticPackage();p.manifest.stage='CLEANED';for(const [table,rows]of Object.entries(p.records))for(const row of rows)for(const [key,rule]of Object.entries(TABLE_SCHEMAS[table]))if(rule.generated)delete row.fields[key];repinSyntheticPackage(p);const {validateUnifiedPackage}=await import('../packages/application/src/unified-import-contract.ts');assert.equal(validateUnifiedPackage(p,{allowSynthetic:true}).valid,true);for(const [path,bytes]of Object.entries(p.artifacts)){await mkdir(join(root,path,'..'),{recursive:true});await writeFile(join(root,path),bytes);}const text=JSON.stringify(p.manifest);await writeFile(join(root,'manifest.json'),text);const result=await streamPreflight(root,join(root,'..','report'),{expectedManifestSha256:sha256(text),allowSynthetic:true});assert.equal(result.issue_count,0,await readFile(join(root,'../report/issues.jsonl'),'utf8'));assert.equal(result.package_stage,'CLEANED');}finally{await rm(join(root,'..'),{recursive:true,force:true});}});
 

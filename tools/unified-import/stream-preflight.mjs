@@ -18,7 +18,7 @@ import {resolve,join,sep,dirname,basename} from 'node:path';
 import {createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 import {TABLE_SCHEMAS,SCHEMA_DECLARATIONS_SHA256,NUMERIC_FIT_TABLE_SCHEMAS,NUMERIC_FIT_SCHEMA_DECLARATIONS_SHA256,STAFF_DEPARTURE_TABLE_SCHEMAS,STAFF_DEPARTURE_SCHEMA_DECLARATIONS_SHA256,HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,HISTORICAL_SALES_HALL_V2_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile,historicalSalesHallEvidenceMatchesProfile,isHistoricalSalesSourceProfile,HISTORICAL_SALES_SOURCE_TABLE_SCHEMAS,UNIFIED_PACKAGE_VERSION,safePackagePath,findCredentialPath,parseStrictJson,decodeUtf8,sha256,validateStandardImportField} from '../../packages/application/src/unified-import-contract.ts';
-const MAX_LINE=1024*1024,MAX_TOTAL=8*1024**3,MAX_ROWS=5_000_000,MAX_ISSUES=100_000,SQLITE_CACHE_KIB=32*1024;
+const MAX_LINE=1024*1024,MAX_TOTAL=8*1024**3,MAX_ROWS=5_000_000,MAX_ISSUES=100_000,SQLITE_CACHE_KIB=32*1024,REGISTRY_CACHE_KIB=4*1024;
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 const uuid=x=>typeof x==='string'&&/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(x);
 // Diagnostic fields are technical enums only. Original exceptions still reject.
@@ -48,7 +48,7 @@ export async function streamPreflight(directory,reportDirectory,{expectedManifes
  const differenceFile=await open(join(report,'historical-line-amount-differences.jsonl'),'wx',0o600);let differenceCount=0,differenceBytes=0;const differenceDigest=createHash('sha256');
  const indexFile=await open(join(report,'index.sqlite'),'wx',0o600);await indexFile.close();
  const db=new DatabaseSync(join(report,'index.sqlite'));
- db.exec(`PRAGMA journal_mode=DELETE; PRAGMA cache_size=-${SQLITE_CACHE_KIB}; PRAGMA temp_store=FILE;
+ db.exec(`PRAGMA journal_mode=DELETE; PRAGMA cache_size=-${SQLITE_CACHE_KIB-REGISTRY_CACHE_KIB}; PRAGMA temp_store=FILE;
  CREATE TABLE registry_rows(ordinal INTEGER PRIMARY KEY,file TEXT,line INTEGER,raw_json TEXT NOT NULL);
  CREATE TABLE identities(entity TEXT,key TEXT,id TEXT,file TEXT,line INTEGER,identity_basis TEXT NOT NULL,PRIMARY KEY(entity,key),UNIQUE(id));
  CREATE TABLE identity_keys(entity TEXT,key TEXT,id TEXT,PRIMARY KEY(entity,key)) WITHOUT ROWID;
@@ -59,6 +59,8 @@ export async function streamPreflight(directory,reportDirectory,{expectedManifes
  CREATE TABLE transfer_parents(id TEXT PRIMARY KEY,file TEXT,line INTEGER);
  CREATE TABLE transfer_children(parent TEXT,file TEXT,line INTEGER);
  CREATE INDEX child_parent ON transfer_children(parent);`);
+ // A sealed lookup uses its own FILE-backed TEMP pager; facts keep the main pager.
+ db.exec(`PRAGMA temp.cache_size=-${REGISTRY_CACHE_KIB}; CREATE TEMP TABLE registry_lookup(entity TEXT,key TEXT,id TEXT,PRIMARY KEY(entity,key)) WITHOUT ROWID`);
  initializeRelationIndex(db);
  db.exec("ALTER TABLE facts ADD COLUMN explicit_zero_evidence TEXT; ALTER TABLE facts ADD COLUMN zero_amount_archive TEXT; ALTER TABLE facts ADD COLUMN historical_hall_evidence TEXT");
  // Optional RECORDS-only costs never change the seven-key progress stream.
@@ -74,7 +76,7 @@ export async function streamPreflight(directory,reportDirectory,{expectedManifes
  function timedStatement(statement,op){if(!recordMetrics)return statement;const measured=method=>(...args)=>{if(!cost)return statement[method](...args);const start=performance.now();try{return statement[method](...args);}finally{addCost(op,performance.now()-start);}};return{get:measured('get'),run:measured('run')};}
  async function flushCosts(){if(!costFile||!cost)return;try{await costFile.writeFile(costOps.map(op=>JSON.stringify({table:cost.table,op,calls:cost.operations[op].calls,elapsed_ms:cost.operations[op].elapsed_ms,rows_seen:cost.rows_seen})+'\n').join(''));await costFile.sync();await flushContext('COST_FLUSH',cost.table);lastCostFlush=performance.now();}catch{try{await costFile.close();}catch{}costFile=null;cost=null;}}
  const registryRow=db.prepare('INSERT INTO registry_rows VALUES(?,?,?,?)');
- const registryLookup=timedStatement(db.prepare('SELECT id FROM identity_keys WHERE entity=? AND key=?'),'REGISTRY');
+ const registryLookup=timedStatement(db.prepare('SELECT id FROM temp.registry_lookup WHERE entity=? AND key=?'),'REGISTRY');
  const insertFact=timedStatement(db.prepare('INSERT INTO facts(entity,id,source_key,file,line,fields,source_refs,zero_amount_archive,explicit_zero_evidence,historical_hall_evidence) VALUES(?,?,?,?,?,?,?,?,?,?)'),'FACT');
  const identity=db.prepare('INSERT INTO identities VALUES(?,?,?,?,?,?)'), identityKey=db.prepare('INSERT INTO identity_keys VALUES(?,?,?)'), seen=timedStatement(db.prepare('INSERT INTO rows_seen VALUES(?,?,?,?,?)'),'SEEN'),ref=timedStatement(db.prepare('INSERT INTO refs VALUES(?,?,?,?,?)'),'REF'),position=db.prepare('INSERT INTO positions VALUES(?,?,?)');
  let issueCount=0,total=0,rows=0,peakRss=process.memoryUsage().rss;
@@ -130,6 +132,8 @@ export async function streamPreflight(directory,reportDirectory,{expectedManifes
    if(contextFile){observeKey(registryKeyStats.canonical,r.canonical_source_key);for(const key of r.aliases??[])observeKey(registryKeyStats.aliases,key);}
    for(const key of [r.canonical_source_key,...(r.aliases??[])])try{identityKey.run(r.entity_type.toLowerCase(),key,r.target_id);}catch{await issue('DUPLICATE_REGISTRY_ALIAS',file,line,'aliases');}
   });
+  diagnosticContext.operation='SQLITE';location={file:'index.sqlite',row:null,field:'$'};
+  db.exec('INSERT INTO temp.registry_lookup SELECT entity,key,id FROM main.identity_keys');
   await flushContext('REGISTRY_END');
   timings.registry_ms=performance.now()-registryStarted;const recordsStarted=performance.now();
   await enterPhase('RECORDS');for(const pin of manifest.files){
