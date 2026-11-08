@@ -3079,3 +3079,12 @@ C采用D1固定97c8f36fde576e563e9c0e65351561c5a1ce732b（原branch、parent318�
 原metadata第一次a8cda029/3223 FAILED2 FileNotFound缺失层未投影，原键保留；准确后继3da70dd3/6180与actual61e48c6a/31779已核：PREPARE15仅index叶ENOENT2，summary存在，不推删除原因；EXECUTE02同轮两叶真实存在，祖先无symlink。C据此只选EXECUTE02，不跨轮拼pair。实际summary白名单1bfac1d1/3621与c24b3e89/2150 COMPLETED0，raw846b7e42/57725557，声明index375bcfdc/2567147520与stat相符，summary inode14563547/index14563544及前后metadata稳定，未hash完整index、零PG/秘密输出。缺sourceSet/cutoff字段如实保留，未从正文猜。原400e仍待真实重算，原业务UNKNOWN。
 
 T45仅准备既有004通道的97独立落地pins和原BOOT22后继/新有限只读inspection接缝；C给准确范围后执行，不让新工具权限变成PG/writer许可。原004加载/策略恢复有效，原f648/8694/0dc/1af及旧失败、原数据保留；不重全源预检、不重建index或换键重导。当前正式业务、独立核账及切换尚未完成。
+
+
+## 2026-11-08 18:52 — 97实际Linux落地与原策略恢复完成，继续原键只读接线
+
+C采用QB7b3b74fe/4172准确literal/C13 PASS，原控制流及97源码36项复用。C13 2f540ae3/1114原13字段、412字符ref、18:40:09.627至19:10:09.627BJT，原T45实际RESULT7ec5e549/11919及5job+5actual已C逐叶hash/status核实，全COMPLETED0、唯一READY f6a03516、无UNKNOWN/重传。Linux22.2263s完成361文件/52目录，Node24.21.0 loader及公开help0；实际新分配6225920B，freeAfter5408174080>=5GiB。原完整过期cd2e/root:root0444/nlink1实际恢复8dc6bcee；0PG/BOOT/prepare/inspect/业务写/部署，原1af/0dc/安装记录及EXECUTE02输入未动。不能把工具成功称原400e、提交或业务通过。
+
+C完整读并采用PLAN b7d244e3/7179、REPORT c777a12f/1560：原固定入口临时消费当前准确参数，同盘rename保留原1af inode/字节/mtime，全部消费者关闭后原inode恢复；自然ctime记录，不伪还原，不称原子替换。先核无外来消费者/同盘/原FD及路径CAS，外来变更拒绝覆盖并保留私有恢复路径。原0dc不动不续期，不再增加D1读取层。真实BOOT23 restart→新参数SHA→八字段inspection→genuine retained proof→原400e实际比较→原initializer只读SQL及ROLLBACK/CLOSED，不能以描述代替真实准入。
+
+原T45只做本地准确carrier增量：BOOT仍<=5min，首轮只读服务窗<=10min、owned Node<=480s，原20min guardian、3GiB容器及writer8207515646保持。完整index hash/临时图耗时内存未测，以上是上限而非性能PASS。READY/受影响QB/可执行C原字节尚待；PG/guardian/sampler仍停、业务UNKNOWN，不重导换键。主控c697fecb0ce4c7972bbf95466dfa4d68e04fa7d5已推原GitHub分支并ls-remote逐字确认。

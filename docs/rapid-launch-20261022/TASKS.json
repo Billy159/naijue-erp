@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-07T13:32:41.769268+08:00",
+  "updatedAt": "2026-11-08T18:52:00+08:00",
   "stage": "V5_PRIVATE_CLEANING_CANDIDATE_PARTIAL_NOT_STANDARD_PACKAGE_NOT_RELEASE",
-  "lastVerifiedRemoteCommit": "a10d8daa06988abe63de28108473098adf19fff7",
+  "lastVerifiedRemoteCommit": "c697fecb0ce4c7972bbf95466dfa4d68e04fa7d5",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,10 +28514,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "97c source fixed, RI-01 closed by QB96d/36 scoped. Standby exact operational consumer issues; no DB/secret/source changes unless actual gap.",
-      "T45": "EXECUTE02 same-round summary/index actual pins observed; preparing fixed97 independent tool stage and original finiteBOOT/readonly inspection exact wiring, no new PG yet.",
-      "QB": "97c eight-file scoped PASS adopted; only forthcoming actual ops delta/binding if changed; do not repeat source36 or operational facts.",
-      "D2": "97c fixed candidate93f75a1a frozen, local loader/closure good. Source96d adopted by C separately; wait any real material delta, no repeat APP/build/tests.",
+      "D1": "97 source/RI-01 PASS adopted; no new reader/control layer required, standby actual source defect.",
+      "T45": "97 actual Linux tool+old policy restoration closed; adopted temporary config/BOOT23 preparation in progress, PG still stopped.",
+      "QB": "97 literal/C13 narrow PASS adopted; wait exactBOOT23/config consumer delta only.",
+      "D2": "97 frozen material and Linux closure adopted; no repeat build/profile/repackage without changed input.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
     },
@@ -39832,18 +39832,18 @@
           "serverCalls": 0,
           "PG": 0
         },
-        "sourceOnlyContinuation": "Original D1 implementing minimum deterministic initialize + genuine initializer inspect readonly consumer on existing004 successor; no fake values/token/RLS/grants/write; no automatic reprepare.",
+        "sourceOnlyContinuation": "Fixed97 scoped source QA adopted; independent Linux97 tool closure complete; original T45 preparing current readonly params/BOOT23. No actual400e or PG outcome.",
         "originalIndexReuseContinuation": {
           "at": "2026-11-08T18:09:39+08:00",
           "owner": "D1",
-          "state": "IMPLEMENTING_SOURCE_ONLY",
+          "state": "FIXED97_SOURCE_QA_ADOPTED_REAL_INDEX_PG_NOT_RUN",
           "sourceFact": "Original index retains facts/registry/identities/identity_keys but not final plan fields. Existing prepareStreamPlan can reverify original index and deterministically rebuild plan without all-source preflight; still plan computation, not measured performance.",
           "scope": "Exact existing index+summary+manifest and genuine admission; original initializerhash400e; initializer-only existing SQL inspect and readonly rollback. No new DB permissions/rules/writes; no full index rebuild or digest DTO."
         },
         "retainedIndexInspection": {
-          "at": "2026-11-08T18:37:00+08:00",
+          "at": "2026-11-08T18:52:00+08:00",
           "owner": "D1(source),T45(server),QB(review),D2(package)",
-          "state": "SOURCE97_SCOPED_QA_PASS_EXECUTE02_PAIR_PINS_OBSERVED_TOOL97_STAGE_PREPARATION",
+          "state": "TOOL97_LINUX_POLICY_RESTORE_COMPLETE_BOOT23_LOCAL_PREPARATION",
           "sourceCommit": "97c8f36fde576e563e9c0e65351561c5a1ce732b",
           "parent": "318618330c513905d3c748a4406d73d1b5cf9403",
           "base": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
@@ -39915,9 +39915,183 @@
             "manifestBytes": 90483,
             "descriptorSHA256": "69469d3035b4c92e59996a744ab5d0004d5c5a7f2853d605acafe9ac904694ce",
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
-            "stage": "LOCAL_ONLY source QA adopted independently; no field97/PG proof; frozen original reports retain pending at-time labels"
+            "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "T45 prepare original004 exact97 staging pin/path successor plus BOOT23/current readonly inspection input; C finite authority after scoped review; no writer/reprepare."
+          "next": "T45 fixes originalBOOT23/readonly consumer READY; QB only newmode/CLI/pins/config restoration; C exact finite authority afterward. No tool/source36 rerun.",
+          "linuxStagingActual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
+            "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
+            "bytes": 11919,
+            "C13": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/C13-ACTUAL.json",
+              "sha256": "2f540ae398087153c2a362bf2e76cc252d3abab848c86557e8b691c78e029ba0",
+              "bytes": 1114
+            },
+            "QA": {
+              "sha256": "7b3b74fe6c1f88478263a2fb707c3cf13435a5d3d462d21b46bcf8e63b1decae",
+              "bytes": 4172,
+              "state": "PASS_EXACT_LITERAL_SUCCESSOR_AND_C13_BINDING"
+            },
+            "binding": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/BINDING.json",
+              "sha256": "857ef78be78020e60e515d61564393a54c7773936f94150424ad3d6a908586a2",
+              "bytes": 1512
+            },
+            "receipts": {
+              "preflight": {
+                "job": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-tool-preflight-readonly-20261108-01/transport/release-receipts/t45-97c8f36f-tool-preflight-readonly-20261108-01/job.json",
+                  "sha256": "de835d5c0535f427b8535f4c8f73ef123b948e0cde1fe011b85ba21d8b6c42eb",
+                  "bytes": 513
+                },
+                "actual": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-tool-preflight-readonly-20261108-01/transport/release-receipts/t45-97c8f36f-tool-preflight-readonly-20261108-01/tool-preflight.json",
+                  "sha256": "68333e48d610c210b2378cc7b6f52e42189f9bd1e80355bad93c20270e0c9d32",
+                  "bytes": 399
+                },
+                "elapsedSeconds": 0.06717147585004568
+              },
+              "install": {
+                "job": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-tool-authority-bytes-20261108-01/transport/release-receipts/t45-97c8f36f-tool-authority-bytes-20261108-01/job.json",
+                  "sha256": "91ddc0b1dc97c9f880febb537f16d08bffa4c0a5b903c9e1e435b7d47966b6f5",
+                  "bytes": 517
+                },
+                "actual": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-tool-authority-bytes-20261108-01/transport/release-receipts/t45-97c8f36f-tool-authority-bytes-20261108-01/staging-policy-readback.json",
+                  "sha256": "97ec1b49e945d2d93a5928b374fddfc882263f58cfb2bd9f91b7d9c7253884b2",
+                  "bytes": 791
+                },
+                "elapsedSeconds": 0.268176747020334
+              },
+              "ready": {
+                "job": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-ready-readonly-20261108-01/transport/release-receipts/t45-97c8f36f-ready-readonly-20261108-01/job.json",
+                  "sha256": "1033875dd249257073cb5aba73692c51c330c4cb3661fb90afbec5ddf901eb15",
+                  "bytes": 501
+                },
+                "actual": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-ready-readonly-20261108-01/transport/release-receipts/t45-97c8f36f-ready-readonly-20261108-01/actual-ready.json",
+                  "sha256": "21be40d84fb56a103fd4e6d2477143bf09c56beef2d8f456334017714d1ac66a",
+                  "bytes": 895
+                },
+                "elapsedSeconds": 0.0673468909226358
+              },
+              "materialize": {
+                "job": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-97c8f36f-tool-materialize-20261108-01/transport/release-receipts/t45-r4-97c8f36f-tool-materialize-20261108-01/job.json",
+                  "sha256": "1dac4e9c5384c2233f239b8c71c0d9c96990aba2c0ee60093552f334e2d8b6d3",
+                  "bytes": 523
+                },
+                "actual": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-97c8f36f-tool-materialize-20261108-01/transport/release-receipts/t45-r4-97c8f36f-tool-materialize-20261108-01/97c8f36f-tool-materialization.json",
+                  "sha256": "de63379aa7b5c061fac1813a83ca0e8df6f26ef8ec93070f944f53ff8b7e84d9",
+                  "bytes": 1783
+                },
+                "elapsedSeconds": 22.226341536734253
+              },
+              "restore": {
+                "job": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-tool-authority-restore-20261108-01/transport/release-receipts/t45-97c8f36f-tool-authority-restore-20261108-01/job.json",
+                  "sha256": "a336be33f681f9b0821d745f8c39d538ab81b3777e118a4044bafe8a3528cd09",
+                  "bytes": 519
+                },
+                "actual": {
+                  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-97c8f36f-tool-authority-restore-20261108-01/transport/release-receipts/t45-97c8f36f-tool-authority-restore-20261108-01/staging-policy-readback.json",
+                  "sha256": "8dc6bcee8ada93595d6c166fe325d407900fe805d1ea855eed91901be4540c31",
+                  "bytes": 843
+                },
+                "elapsedSeconds": 0.267959657125175
+              }
+            },
+            "materialize": {
+              "REALModeExecuted": false,
+              "SQLConnectionsRequested": 0,
+              "actualExpandedAllocatedBytes": 6225920,
+              "allocationIncludesRootAnd52Directories": true,
+              "archiveSha256": "bfbad89e20c41c5f76123e61337aec4d8540df2a069b05ba32ba3cd2216810dc",
+              "automaticRetry": false,
+              "businessDatabaseWrites": false,
+              "cliHelp": {
+                "databaseOperationRequested": false,
+                "exitCode": 0,
+                "stdoutBytes": 4748,
+                "stdoutSha256": "c512b9442fceb9f0bdca6f9cd2ff51c05f14c8aee1e56e2fee534bb1398d2c46",
+                "usageReturned": true
+              },
+              "containerSourceRoot": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-97c8f36f-20261108-01/operation",
+              "freeAfter": 5408174080,
+              "freeBefore": 5414416384,
+              "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/installed-real-operation-97c8f36f-20261108-01",
+              "logicalBytes": 5142821,
+              "newMountOrBuild": false,
+              "observedAtEpoch": 1794134758.3804238,
+              "oldSourceOrAPPChanged": false,
+              "postMaterializationFloor": 5368709120,
+              "regularFiles": 361,
+              "sourceSet": {
+                "captured": 180,
+                "cliModuleImported": true,
+                "current": 216,
+                "installedSourceRoot": "/opt/naijue-erp/fresh35-combined-v1",
+                "node": "v24.21.0",
+                "readbackModuleImported": true,
+                "referenceDirectory": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+                "sourceSetSha256": "21ede1d0f3a22a8f0d8521b6f35ef6186654666fe3065fdcfe90f599c83119f3"
+              },
+              "stageReadySha256": "f6a03516a67f24e763d25e0bf1e81247605f3ecbc79d737d592e859563a7d126",
+              "stagedFileIdentity": [
+                66304,
+                393821,
+                1151061,
+                1794134713715711699,
+                1794134713770712288
+              ],
+              "status": "INDEPENDENT_97C8F36F_TOOL_MATERIALIZED_ACTUAL_LINUX_SOURCE_CLOSURE",
+              "toolOnlyFreeFloor": 5377097728
+            },
+            "restore": {
+              "status": "EXACT_RETAINED_POLICY_BYTES_RESTORED_NO_AUTHORITY_RENEWAL",
+              "before": {
+                "uid": 0,
+                "gid": 0,
+                "mode": "0o444",
+                "sha256": "2f540ae398087153c2a362bf2e76cc252d3abab848c86557e8b691c78e029ba0",
+                "backupPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-97c8f36f-tool-authority-restore-20261108-01/staging-policy-before.json"
+              },
+              "after": {
+                "uid": 0,
+                "gid": 0,
+                "mode": "0o444",
+                "nlink": 1,
+                "sha256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530"
+              },
+              "restoredExpiredPolicyWithoutRenewal": true,
+              "approvalCreated": false,
+              "oldSourceArtifactOrReadyChanged": false,
+              "restore": "Use retained exact old bytes and metadata via original root controlled channel only after no live ordinary staging consumption; preserve new policy evidence."
+            },
+            "singleUpload": true,
+            "all10ReceiptLeavesCVerified": true,
+            "PGConnections": 0,
+            "businessOutcome": "UNKNOWN"
+          },
+          "temporaryConfigPreparation": {
+            "PLAN": "b7d244e3efebcea27d643cf13126ce7ebdfd1594678cdded09af61088d6efa36",
+            "REPORT": "c777a12f0c7b49451ed0142e852516dcaad5faaa1c1beecac105f0d6aef045bc",
+            "state": "C_ADOPTED_MINIMUM_LOCAL_PREPARATION_NO_ENVIRONMENT_CHANGE",
+            "owner": "T45",
+            "method": "Original fixed entry temporarily consumes current C exact97 params; same-device rename preserves original1af inode14563415/bytes/mtime in private state/inspection-window-restore-20261108-01 and restores after all consumers close; natural ctime recorded, not atomic swap. Nofollow FD/path/metadata/hash CAS, same target/no foreign consumer; foreign change refuses overwrite. Original0dc untouched/expired. No new D1 reader layer.",
+            "binding": "C finiteBOOT -> actual restart -> paramsSHA -> independent8field inspection -> genuine retained proof -> actual400e match -> initializer-only readonlySQL -> ROLLBACK/CLOSED",
+            "bootMaxSeconds": 300,
+            "readonlyWindowMaxSeconds": 600,
+            "ownedNodeMaxSeconds": 480,
+            "originalGuardianSeconds": 1200,
+            "containerMemoryBytes": 3221225472,
+            "writerFloorBytesUnchanged": 8207515646,
+            "realCost": "NOT_MEASURED",
+            "runnableExactAuthority": "NOT_YET_ISSUED"
+          }
         }
       }
     },
