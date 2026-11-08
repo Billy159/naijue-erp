@@ -33305,12 +33305,12 @@
     },
     "currentExecution": {
       "at": "2026-11-08T12:33:44.301571+08:00",
-      "phase": "REAL_EXECUTE01_RUNNING_ORIGINAL_45_MINUTE_WINDOW",
+      "phase": "REAL_EXECUTE01_FAILED_BATCH_AUTHORIZATION_REQUIRED_TERMINAL_CLEANUP_COMPLETE",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 terminal restore proof and minimal index/space binding; C exact next scope",
+      "currentOwner": "D1 exact source consumer; T45 actual stopped target retained",
       "nextOwner": "C authorized EXECUTE45 after current prerequisites; D3 independent actual readback",
-      "latestActualReceiptSHA256": "0d5e356c0c845e44b9f3e9ddd7a701794ed7cbe720b598eaf0bf89e361eed813",
+      "latestActualReceiptSHA256": "323cad497447cfbbc6d5d81fd5b0556e3a85eb0f14b65f1c266b3db2036fc90d",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 collect original execute01 terminal only; on unknown original keys, no replay. Need actual COMMIT, exact cleanup then independent D3 readback.",
+      "next": "Original D1 exact host/CLI production batch authorization consumer diagnosis/minimal fix; QB narrow increment review; T45 sole server waits without replay.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33382,7 +33382,7 @@
         "actualIndependentQBReceiptSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29"
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "aab12bf04c5590528cfbec0685468ecf0008c50e",
+      "githubReadbackCommit": "0e3f08376718fe90a020dd041313567695e86de4",
       "boundaryQBReceiptSHA256": "1dc67c609d7f68ed54ce2105886af49909887a4b5c4ba3ba64e4a4ea57528dda",
       "opsQBReceiptSHA256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
       "stageReadonlySHA256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7",
@@ -33444,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "Original EXECUTE01 uniquely accepted QUEUED at13:09:28BJT in exact45min window ending13:53:41.857; no actual COMMIT/independent reconciliation yet. Native PREPARED15 retained.",
+        "REALImport": "First EXECUTE01 actual FAILED2/1459.612s at13:33:58.999BJT. CLI FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED/NOT_STARTED; guard REAL_STREAM_CHILD_IDENTITY_CHANGED. Actual terminal cleanup completed separately; no business or rollback PASS.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "ACTUAL_BOOT17_PG3378_START301212544_GUARDIAN3371_START301212497_LIVE_IN_EXACT_NAMESPACES"
+      "currentR4ProcessState": "ACTUAL_NODE3475_GUARDIAN3371_PG3378_ABSENT_PORT_AND_POSTMASTER_ABSENT; NO_COMMIT_OR_ROLLBACK_INFERENCE"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -39187,7 +39187,7 @@
     "r4RealExecute01_20261108": {
       "owner": "original T45 only",
       "jobId": "t45-r4-real-execute-20261107-01",
-      "status": "ACTUAL_RUNNING_ORIGINAL_KEY_COMMIT_UNKNOWN",
+      "status": "ACTUAL_FAILED2_BATCH_AUTHORIZATION_REQUIRED_TERMINAL_CLEANUP_COMPLETE",
       "acceptedAtBJT": "2026-11-08T13:09:28+08:00",
       "unit": "naijue-erp-op-5cc58239-3f13ad3ef5ac",
       "managerManifestSHA256": "0735906996f3e1c18e33f12a0d9da4b796092c6d40825109d8250f37a1c32d3a",
@@ -39217,11 +39217,58 @@
       "automaticRetry": false,
       "resourceGuardUnchanged": "4GiB,.1s samples,.25s maxgap; Node reap then45restore and2projection absence",
       "realImported": false,
-      "COMMIT": "UNKNOWN_PENDING_TERMINAL",
+      "COMMIT": "NOT_PROVEN_FROM_CLEANUP_OR_CLI_NOT_STARTED",
       "independentReconciliation": "NOT_RUN",
       "productionSwitch": "NOT_RUN",
       "Fast": "UNVERIFIED",
-      "lastOwnerRunningReportBJT": "2026-11-08T13:11:00+08:00"
+      "lastOwnerRunningReportBJT": "2026-11-08T13:11:00+08:00",
+      "jobSHA256": "4f6041a37d8a2696e9bbc817473f9c0a3f381d362403271a035993c74921e536",
+      "actualSHA256": "55e29a3bb6f50f2916172041c214e9c191bb948427d49d7f83ce990c5323f367",
+      "elapsedSeconds": 1459.611721504,
+      "finishedAtBJT": "2026-11-08T13:33:58.999587+08:00",
+      "CLI": {
+        "code": "FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED",
+        "state": "NOT_STARTED",
+        "connectionCleanup": "UNKNOWN",
+        "verification": "NOT_RUN"
+      },
+      "guard": {
+        "reason": "REAL_STREAM_CHILD_IDENTITY_CHANGED",
+        "status": "STOPPED_OUTCOME_UNKNOWN",
+        "exitCode": null,
+        "samples": 14477,
+        "maxSampleGapSeconds": 0.1443546819500625,
+        "minimumAvailableBytes": 5426651136,
+        "allThreeNodeReapFlags": true,
+        "transactionRollbackProven": false
+      },
+      "noReplay": true,
+      "sourceOwner": "D1 original d250 continuation only",
+      "sourceOwnerBeforeDispatch": "ACTUAL_IDLE_D250_QB12PASS",
+      "sourceTaskModel": "gpt-6.1-sol/high",
+      "terminalCleanup": {
+        "jobId": "t45-r4-execute01-terminal-cleanup-readonly-20261108-01",
+        "jobSHA256": "6ed8859c57e88e2f3cf6f68b5e7427b3a4a7cf96502a32e671681a18cebe0a94",
+        "actualSHA256": "323cad497447cfbbc6d5d81fd5b0556e3a85eb0f14b65f1c266b3db2036fc90d",
+        "status": "ACTUAL_COMPLETED0_ONLY_METADATA_RESTORE_AND_ABSENCE",
+        "elapsedSeconds": 0.418088558,
+        "node": {
+          "pid": 3475,
+          "starttime": "301288481",
+          "state": "ABSENT",
+          "rawIdentitySHA256Prefix": "30e12a11"
+        },
+        "guardian3371AndPG3378Absent": true,
+        "port18654AndPostmasterPidAbsent": true,
+        "all45OriginalMetadataMatch": true,
+        "accessRestored": true,
+        "exact2ProjectionObjectsAbsent": true,
+        "cleanupSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "cleanupAllSixTrueErrorsEmpty": true,
+        "databasePrivilegesChanged": false,
+        "SQLAndPGAndSignalsAndPermissionWrites": 0,
+        "businessTransactionOutcomeNotInferred": true
+      }
     }
   }
 }
