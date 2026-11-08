@@ -3498,3 +3498,17 @@ T45已核原two-old-web02、old38archive/payload、history/r48均已清，不重
 Exact old app stop COMPLETED0/48.258929s, actual1ea8162d/7208;14 Running=false/PID0, code/config/image retained,0DB stop/SQL/volume removal, R4 protected. Free5,387,841,536; readonly margin19,132,416; fullwriter gap2,819,674,110. No code deletion claimed.
 
 Original QB a2e8/3736 accepted96bfe source/local increment. C issued3a7ddd/1349 under existing standing authority. Actual BOOT26 COMPLETED0/2.723923s, job71f7ace0, boot67f273b1; restartfe3d2346, PG4563 epoch13:49:54.221858UTC. Operation ends21:58:45.983BJT, guardian22:08:45.983. Next actual observer then C params/inspection/publish04/new45/uniqueinspect02. Original EXECUTE02 commit remains UNKNOWN;0dc not renewed; no concurrent cleanup.
+
+
+## 2026-11-08T22:03:02+08:00 - inspect02 actual expiry failure; restore and retirement continue
+
+Observer02 actuale1bd55bd/3566 COMPLETED0;observer01 retained FAILED1 beforeSQL due old guardian template, corrected without reboot. Publish04 actualb3f7c524/1473 COMPLETED0/.919686s. C exact45 737efcf1 andOPSff320c7c fixed. Uniqueinspect02 joba6338166/result33405092/1775 FAILED2/38.015047s: actualNode274samples,RSS/HWM1,886,437,376B,minfree5,383,794,688,samplegap.108616s;reason REAL_ORIGINAL_WINDOW_EXPIRED,exit-15. Submitted13:58:10UTC against13:58:45.983 deadline;actualNode budget about27s. No OOM evidence;CLI/connection/400e/SQL/COMMIT remain UNKNOWN,rollback not proven. Child/descendants reaped and45 access restored. Hostrestore04 and ownedcleanup final receipts pending; no retry/renewed0dc.
+
+The start-to-CLI handoff consumed most of the fixed window. Next bounded attempt must have all existing executable steps prepared offline first; no reporting/build preparation inside the window and no simple timeout extension. After current cleanup, originalT45 resumes already-authorized old application code/dependency retirement only where exact recovery/protection checks pass;realDB/data/backups/R4 retained. No new team,fullsource rebuild or duplicate technicalQA.
+
+
+## 2026-11-08T22:07:31+08:00 - BOOT26 final actual restoration confirmed
+
+Hostrestore04 actual11f7addc/1115 COMPLETED0/.668797s restored original1af inode14563415,originalmtime,naturalctime1794146422943044178;old authority not renewed. Exactowned26 jobf95700d6/552,actuala06fbd35/5676 COMPLETED0/.468661s confirms PG4563/guardian4555/sampler4562,port18654,postmaster.pid absent;45metadata,HBA,parentroot0711/noACL,1af/0dc/a7d correct;both private projections andinspection removed. Rawf4false is retained separately from positive final recovery proof. No activePG/window remains. Free5,382,467,584;fullwriter gap2,825,048,062.
+
+OriginalEXECUTE02 remainsUNKNOWN. User latest old online retirement authority is active;T45 immediately continues exact recoverable stopped application code/dependency cleanup, preserving DB/data/backups/R4. The next readonly attempt is not issued until its existing executable steps and required files are prepared offline; do not repeat the consumed start-to-CLI handoff or extend timeout to hide it. Previous all scoped sourceQA,physicalsource andLinux evidence reused.

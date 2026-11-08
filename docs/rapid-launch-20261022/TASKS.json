@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T21:52:04+08:00",
-  "stage": "BOOT26_ACTUALLY_STARTED_14_OLD_NODE_APPS_STOPPED_ORIGINAL_COMMIT_UNKNOWN",
-  "lastVerifiedRemoteCommit": "ef0386c6cea417b0de6fc5de81b2b7af92ba7b13",
+  "updatedAt": "2026-11-08T22:07:31+08:00",
+  "stage": "BOOT26_ACTUAL_CLEANUP_COMPLETE_ORIGINAL_COMMIT_UNKNOWN_OLD_APP_RETIREMENT_AND_NEXT_OFFLINE_EXECUTION_PREP",
+  "lastVerifiedRemoteCommit": "2c83e8d66b96083aa6819ba3f14d6937bb542ca8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,11 +28514,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Only actual BOOT26 observer then publish04/inspect02; no concurrent stopping/deleting",
-      "QB": "a2e8 on96bfe adopted PASS source/local increment only; no repeat",
+      "T45": "No PG/window/job remains. Resume proven recoverable old application files and prepare entire next runnable path offline before C window",
+      "QB": "Source-local increment adopted. Next only actual necessary unique-key/pin delta once ready",
       "D1": "f56 source valid; no duplicate ops task",
       "D2": "f56 Linux material valid; no rebuild/retransfer",
-      "D3": "Original EXECUTE02 UNKNOWN; wait original-key PG result",
+      "D3": "Original400e outcomeUNKNOWN; no new import or independent reconciliation triggered",
       "QF": "Wait normal real35 app/auth readiness"
     },
     "actualExecution": {
@@ -40494,7 +40494,7 @@
             "READYPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-boot26-inspect02-preparation-01/READY.json",
             "READY": "96bfe60fcadfb0333ce1259bd8a6bc31257012a8e01f44e335db67f43c71c0f2",
             "READYBytes": 8944,
-            "state": "QB_INCREMENT_PASS_BOOT26_ACTUAL_START_COMPLETE_OBSERVER_PENDING",
+            "state": "CLOSED_ACTUAL_NODE_WINDOW_EXPIRED_ALL_OWNED_RESOURCES_AND_CONFIG_RESTORED",
             "QBActiveTurn": "01a1bb5f-a700-7861-96e9-2e41a9161027",
             "keys": {
               "boot": "t45-r4-retained-restart-20261108-26",
@@ -40517,7 +40517,7 @@
             ],
             "CWindowIssued": true,
             "serverSubmitted": true,
-            "NodePGSQL": "PG_STARTED_NODE_BUSINESS_SQL_NOT_EXECUTED",
+            "NodePGSQL": "Node actually ran;400e/PG businessSQL not proven;BOOT PG live before cleanup;not business PASS",
             "QBResultSHA256": "a2e8a79b1b93132229aa6a8b862e843fb8071e12c9d13468a76c226b9dfacdd2",
             "QBResultBytes": 3736,
             "CDecisionSHA256": "3a7dddb057ff12e6b733626125a0fa626803449ca056bf6dd9177d4775d70ecd",
@@ -40528,7 +40528,71 @@
             "guardianExpiresAt": 1794146925983,
             "actualJobSHA256": "71f7ace05f1502d1736bafa0698a4eeeea9de389bff52dfc04aff4fbbec30af2",
             "actualBootSHA256": "67f273b119f598d2e8c4e0c21e7a30f053296f7b29a6aaeafbc2c77349e8b43b",
-            "actualRestartSHA256": "fe3d23462730ba652b8967ee3aa0ca1a3f0971ab035294fbfbff64f1124d7874"
+            "actualRestartSHA256": "fe3d23462730ba652b8967ee3aa0ca1a3f0971ab035294fbfbff64f1124d7874",
+            "observer02": {
+              "SHA256": "e1bd55bd0301ee13fbd78d11bb194927d117a278cbe1ea743f2f7c14bc82962d",
+              "bytes": 3566,
+              "exitCode": 0
+            },
+            "observer01": "FAILED1 old guardian deadline template assertion before SQL; preserved,not replayed",
+            "actualParameters": {
+              "SHA256": "3ecf82cee8034083ac98efa22f3a39067f53fcf5006c91a4770c3682421d9e41",
+              "bytes": 1649
+            },
+            "inspection": {
+              "SHA256": "1cf2d84cb199f32339f129e2a5452dca7f95471a2fc59d50d8e5a54c289977f6",
+              "bytes": 2066
+            },
+            "publish04": {
+              "SHA256": "b3f7c52492b0155a5840d709d15a510a45bf1ad1ccaa689dd78f764aa6bb8e94",
+              "bytes": 1473,
+              "exitCode": 0,
+              "elapsedSeconds": 0.919686,
+              "paramsInode": 14565133,
+              "inspectionInode": 14565134
+            },
+            "accessPlanSHA256": "737efcf1a710163433e385ffb77fbde0457a80b66765ca06dbda47466652fb4c",
+            "OPS_SHA256": "ff320c7c22dfea64950061a95af2c21de949a51e8dae0b605cffb94951502126",
+            "inspect02Actual": {
+              "jobSHA256": "a633816616518db414ae151756ba225573452ea5661ee567df3ee1b573506347",
+              "resultSHA256": "33405092a1a86d25818b8916739c9196ede280dcb838d6d8f71eb277d8bf0383",
+              "resultBytes": 1775,
+              "exitCode": 2,
+              "elapsedSeconds": 38.0150469369255,
+              "reason": "REAL_ORIGINAL_WINDOW_EXPIRED",
+              "NodeActuallyStarted": true,
+              "samples": 274,
+              "maxNodeRSSBytes": 1886437376,
+              "minFreeBytes": 5383794688,
+              "maxSampleGapSeconds": 0.10861637676134706,
+              "childReaped": true,
+              "inputMetadataRestored": true,
+              "transactionRollbackProven": false,
+              "CLIState": "UNKNOWN",
+              "originalCommit": "UNKNOWN",
+              "replayed": false
+            },
+            "cleanup": {
+              "state": "ACTUAL_FINAL_READBACK_CONFIRMED",
+              "restore04SHA256": "11f7addc440cb95e4c79a933e59fb9a8b613e4d67ed0d0df3a371d30b3e984c4",
+              "restoreBytes": 1115,
+              "restoreExitCode": 0,
+              "restoreElapsedSeconds": 0.668797,
+              "jobSHA256": "f95700d6326f65a40a07fb6a49f64377f5a686bff88a45a0cb20a529003381bd",
+              "actualSHA256": "a06fbd350b8fb530aecd3893cd831815b381f8e177f13fa1ff44f62cd57b828e",
+              "actualBytes": 5676,
+              "exitCode": 0,
+              "elapsedSeconds": 0.46866114903241396,
+              "processesPortPidFileAbsent": true,
+              "all45AndHBAAndOriginalFilesRestored": true,
+              "postRecoveryOriginalFilesConfirmed": true,
+              "rawOldPreservationFalseNotRewritten": true,
+              "originalParamsNaturalCtime": 1794146422943044178,
+              "freeBytes": 5382467584,
+              "fullWriterShortfall": 2825048062,
+              "SQLStatements": 0,
+              "businessOutcome": "UNKNOWN"
+            }
           }
         }
       }
