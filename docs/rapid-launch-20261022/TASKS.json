@@ -33303,13 +33303,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T08:15:20.756578+08:00",
-      "phase": "R4_BOOT14_STARTED_PARAMETERS09_PUBLISHED_PREPARE13_ISSUED",
+      "at": "2026-11-08T08:38:26.940149+08:00",
+      "phase": "R4_PREPARE13_FAILED_EXPIRED_D1_HOTPATH_FIX_T45_PRESERVE",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 sole executor",
-      "nextOwner": "C consumes terminal PREPARE13 evidence",
-      "latestActualReceiptSHA256": "6e907c4396b0b1e5b0a55cf927db3ac2f4b59c28238ff4aaba8c5f11c0a7a3fd",
+      "currentOwner": "D1 only source writer; T45 only server executor",
+      "nextOwner": "QB narrow actual source delta when fixed",
+      "latestActualReceiptSHA256": "087ecc3ba2afcec14d6fe5bd6eca5b6b43c38771723a63a3b71e2e46a3f64503",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33318,7 +33318,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Adopt actual full summary/native binding/cleanup, then exact archive-retire before new EXECUTE index if PREPARE passes; preserve first failure and no blind replay otherwise.",
+      "next": "Original D1 actual13-vs12 numeric diagnosis/minimal correct-source fix; T45 preserve exact pair then controlled retirement, no same-source retry/window extension or EXECUTE.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33381,7 +33381,7 @@
         "actualIndependentQBReceiptSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29"
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "261d1a761d6c23f2a740cc9d72c1aac78a88aba4",
+      "githubReadbackCommit": "77a3d3acccc2c58350cbc5e0010623148e159a1e",
       "boundaryQBReceiptSHA256": "1dc67c609d7f68ed54ce2105886af49909887a4b5c4ba3ba64e4a4ea57528dda",
       "opsQBReceiptSHA256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
       "stageReadonlySHA256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7",
@@ -33390,18 +33390,18 @@
       "materialResultSHA256": "d1a1c0e19083c8914758e068e016e7297ec974b07fd2031c06367cb113dbcf2a",
       "currentResourceReceiptSHA256": "3d06d7f8f1583d72b1b1c626b69d143e09abf8bc38df2c71f1c969b96b151924",
       "C11ExpiresAt": 1793987722139,
-      "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784",
-      "actualCID": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+      "actualStartReceiptSHA256": "e49de234bef79e4485b6f1b3477537ffaaaf5d5bc01ca82228d30070226bb33e",
+      "actualCID": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
       "actualTarget": {
-        "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
-        "systemIdentifier": "7705135436364169263",
+        "cid": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
+        "systemIdentifier": "7705224458832691236",
         "databaseOid": 16393,
-        "postmasterStart": "2026-11-06 19:00:47.538028+00",
+        "postmasterStart": "2026-11-08 00:02:53.78896+00",
         "serverVersionNum": 170011,
-        "programSHA256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
-        "targetSHA256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365"
+        "programSHA256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
+        "targetSHA256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
       },
-      "actualProgram": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+      "actualProgram": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
       "opsFrozenSHA256": "36eddc03fd9c97aaa78000070fa80cfd191a80fff1bc6f146d813748c6b5e947",
       "actualStageReceiptSHA256": "1e649b7ea7207900bf5acd7c10397b0582ad32267b6edcf640244c086df33637",
       "C13": {
@@ -33469,7 +33469,20 @@
       },
       "lastCleanStopMetadataReceiptSHA256": "0f43cb1edd28d5d584335e1092b7ef099f1819c61f66428186faea6ff1b5103d",
       "plannedImportToolCommit": "8e22927a229881f1ed138ad8665c07a9d9761b24",
-      "plannedImportToolSourceSetSHA256": "7edf12b83f575ac4a84dcfefaf4adb00727a4ff97bb80bdaa854fc6ec45143ab"
+      "plannedImportToolSourceSetSHA256": "7edf12b83f575ac4a84dcfefaf4adb00727a4ff97bb80bdaa854fc6ec45143ab",
+      "priorRuntimeIdentityBeforeR4Boot14": {
+        "actualCID": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+        "actualTarget": {
+          "cid": "2cf947a041ec3fc06c3028bcc1f7fe13532ad91ec0618dc8f5dc91ffc978bd12",
+          "systemIdentifier": "7705135436364169263",
+          "databaseOid": 16393,
+          "postmasterStart": "2026-11-06 19:00:47.538028+00",
+          "serverVersionNum": 170011,
+          "programSHA256": "3da708a5ecab75fa5bffb5a6b2d7e1ce1bef195fe6afeabcb376becd4e866ce3",
+          "targetSHA256": "82a730195e53ac8a27df9cd8317864fff0c3a024b02215ed76eb2dd6190fa365"
+        },
+        "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
+      }
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -37941,7 +37954,8 @@
       "remoteReadbackSHA": "8e22927a229881f1ed138ad8665c07a9d9761b24",
       "remoteReceiptSHA256": "45b76c93da5802bf832bfb399a81af3650a94d6e9e393a358cbbcf265795fbdc",
       "remotePushAndReadbackExitCode": 0,
-      "remoteViaExistingEphemeralProxyGlobalConfigUnchanged": true
+      "remoteViaExistingEphemeralProxyGlobalConfigUnchanged": true,
+      "actual13Boundary": "Source/scoped model PASS retained; actual13 still expired with summary absent and registry hotspot634159ms versus prior523429ms. No real benefit claimed."
     },
     "r4Cache32TinyToolPackage20261108": {
       "status": "ACTUAL_LINUX_LOADER_PASS_POLICY_RESTORED_BOOT14_ACTUAL_STARTED",
@@ -38065,7 +38079,7 @@
       "automaticRetry": false
     },
     "r4RealPrepare13_20261108": {
-      "status": "EXACT_20MIN_SCOPE_ISSUED_ACTUAL_RESULT_PENDING",
+      "status": "ACTUAL_FAILED_ORIGINAL_WINDOW_EXPIRED_SUMMARY_ABSENT_NO_EXECUTE",
       "owner": "T45",
       "requestKey": "t45-r4-real-prepare-20261107-13",
       "CDecisionSHA256": "0f456e1251d8dab332d43302febf25922d0e08749f799bbc96690a50fbeb6904",
@@ -38080,8 +38094,72 @@
       "samePrior12FieldsExceptKeyTimesParametersAccess": true,
       "existing1200000msAndResourceGuardsUnchanged": true,
       "EXECUTEAuthorized": false,
-      "actualFullPreflight": "PENDING",
-      "next": "Adopt actual full summary/native binding/cleanup, then exact archive-retire before new EXECUTE index if PREPARE passes; preserve first failure and no blind replay otherwise."
+      "actualFullPreflight": "NOT_COMPLETED",
+      "next": "Original D1 actual13-vs12 numeric diagnosis/minimal correct-source fix; T45 preserve exact pair then controlled retirement, no same-source retry/window extension or EXECUTE.",
+      "actualJobSHA256": "c53012f89df650bd1baac92b847d73b326ca3484b4abf2af77d84e443ccd56b0",
+      "actualJobExitCode": 2,
+      "actualJobSeconds": 1135.033271842,
+      "actualFinishedAtUTC": "2026-11-08T00:33:28.659699Z",
+      "actualRootResultSHA256": "db2c0803cc0c14f3643ef579696baf5f3fdfbf9f8203a62d79380c01d3852004",
+      "actualRootResultBytes": 1645,
+      "firstGuard": "REAL_ORIGINAL_WINDOW_EXPIRED",
+      "allThreeReapFlags": true,
+      "originalInputMetadataRestored": true,
+      "maxSampleGapSeconds": 0.128132211,
+      "minimumAvailableBytes": 6032543744,
+      "CLIState": "UNKNOWN",
+      "CLIVerification": "UNKNOWN",
+      "CLIConnectionCleanup": "UNKNOWN",
+      "transactionRollbackProven": false,
+      "actualFinalReadbackSHA256": "087ecc3ba2afcec14d6fe5bd6eca5b6b43c38771723a63a3b71e2e46a3f64503",
+      "actualFinalReadbackBytes": 614762,
+      "actualFinalReadbackJobSHA256": "77c1429081c22bc67582109fde4e1ab2f7edb153d20f832a8105d4c970d2c170",
+      "actualFinalReadbackExitCode": 0,
+      "summary": "ABSENT_UNKNOWN_NOT_PASS",
+      "recordCostCompleteRecords": 1106,
+      "recordCostBytes": 115744,
+      "recordsContextCompleteSnapshots": 185,
+      "recordsContextBytes": 340503,
+      "recordsContextSHA256": "8b5244732cc5c170c752d9c9a017c45ba0bc2c5e04cac994cc4113aca75649bc",
+      "RECORDSEndMs": 1038246.969842,
+      "RELATIONSEndMs": 1115972.381603,
+      "metadataFinishBeginMs": 1116173.698503,
+      "metadataFinishEnd": "NOT_REACHED",
+      "globalCounterNotEOF": 1098004,
+      "issueCounterNotPass": 0,
+      "transferRegistryCumulativeMs": 634159.15485,
+      "prior12SameTransferRegistryMs": 523429.13,
+      "transferRowsBothAttempts": 273948,
+      "cache32RealHotspotImprovement": "NOT_OBSERVED_IN_THIS_ACTUAL_ATTEMPT",
+      "preservedIndex": {
+        "device": 66304,
+        "inode": 14562062,
+        "bytes": 2457419776
+      },
+      "preservedJournal": {
+        "device": 66304,
+        "inode": 14562066,
+        "bytes": 79464
+      }
+    },
+    "r4PostImportExistingDeliveryReadiness20261108": {
+      "owner": "Original D2 artifacts / T45 sole server executor",
+      "status": "EXISTING_FIXED_DELIVERIES_AVAILABLE_NO_NEW_BUILD",
+      "APPCommit": "576acc3cca5420146c4eb58b92d20c4de084a592",
+      "APPResultSHA256": "1c1d5a7e53d1ad6ec1128ca190accd6fc64b25cd6b9e2e7147156510b4275cfc",
+      "APPReleaseArchiveSHA256": "940d5cee86dd57766ef6fbe522ab0fb29cd5e395f72768753b48cb4da1ca2235",
+      "APPReleaseArchiveBytes": 3358426,
+      "APPManifestSHA256": "b7e81b0d02135e14c8e4e32bdb1a954e55ea401996dc4a0ff719b0aa499d5169",
+      "fullLinuxArchiveSHA256": "b8069af0e2f42b990b4645b4fd34857d184db0529e43132faa04d218bbfff830",
+      "fullLinuxArchiveBytes": 83704313,
+      "entry": "backend/production-main.js --exact35; web/index.html and web/application.js; apiPrefix=/api; actual authorized config still needed",
+      "historyRunnerCommit": "856e5a5990c8de1624a218cd235a88797268ed8c",
+      "historyResultSHA256": "b968e4b5b76c1a49f00b10a9861030a10adaa2392a83fd51b13bdaff8d04a3f1",
+      "historyScope": "HISTORY_ANCHOR_ONLY; APP576 business/Web reused; not ordinary all-business acceptance",
+      "new35BackupAndRestore": "TOOLS_EXIST_ACTUAL_NEW35_BACKUP_RESTORE_NOT_TESTED",
+      "trueImportOrdinaryBusinessAndLinuxPerformance": "PENDING_T45_ACTUALS",
+      "CChecks": "two small fixed RESULT pins; archive hashes adopted from existing valid D2 evidence, not rehashed or rebuilt",
+      "next": "After actual PREPARE/import/reconciliation, T45 uses existing fixed deliveries; no independent server work during active PREPARE."
     }
   }
 }
