@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T20:31:59+08:00",
-  "stage": "R4_HOST_CONFIG_RESTORE_ACTUALLY_PASSED_INSPECT_KEY_GUARD_REPAIR_PENDING",
-  "lastVerifiedRemoteCommit": "77029cb26ad1612ea442551b8d3fe4db251f30a1",
+  "updatedAt": "2026-11-08T20:52:21+08:00",
+  "stage": "BOOT25_ACTUAL_CONFIG_PUBLISHED_ORIGINAL_KEY_INSPECTION_RUNNING_OUTCOME_UNKNOWN",
+  "lastVerifiedRemoteCommit": "5d54dc62276e6d6c2876d8e0c4b4eddfcc4e02e1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,12 +28514,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Original T45 minimally align exact approved inspect key across existing nonroot access prepare/restore/probe and carrier reference guards plus pins. QB only key reachability and wrong-key rejection. New finite window after frozen repair; no writer replay or data change.",
-      "D1": "f56 minimal loader source pushed and independently accepted; idle until concrete source defect, no duplicate audit.",
-      "QB": "d3f7 diagnostic/literal PASS scope retained, addendum9b85 clarifies no key reachability. Await frozen exact key guard repair only; no fullsuite.",
-      "D2": "f56 tool frozen/Linux complete; no rebuild until exact changed source.",
-      "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
-      "QF": "Normal HTTPS/login/new35 business prerequisites absent; actual acceptance not passed; no filler tasks."
+      "T45": "Collect exact inspect01 terminal then restore03/owned cleanup; no competing cleanup while active",
+      "QB": "13b9f2f0 accepted; wait actual affected result, no repeated source QA",
+      "D1": "f56 source delivery retained",
+      "D2": "f56 Linux source retained, no restage",
+      "D3": "Wait original authoritative committed status before independent reconciliation",
+      "QF": "Wait normal real35 app/auth readiness"
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -39843,7 +39843,7 @@
         "retainedIndexInspection": {
           "at": "2026-11-08T19:49:30+08:00",
           "owner": "D1(source),T45(server),QB(review),D2(package)",
-          "state": "BOOT24_ACTUAL_HOST_CONFIG_PUBLISH_RESTORE_PASSED_DATE_KEY_GUARDS_BLOCK_INSPECT_NOT_SUBMITTED",
+          "state": "BOOT25_ORIGINAL_KEY_ACTUAL_READONLY_INSPECTION_RUNNING",
           "sourceCommit": "97c8f36fde576e563e9c0e65351561c5a1ce732b",
           "parent": "318618330c513905d3c748a4406d73d1b5cf9403",
           "base": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "Original T45 minimally align exact approved inspect key across existing nonroot access prepare/restore/probe and carrier reference guards plus pins. QB only key reachability and wrong-key rejection. New finite window after frozen repair; no writer replay or data change.",
+          "next": "Collect same unique inspect01 terminal, never replay. Reap children/proofFD, restore access, hostrestore03, owned cleanup; then act on authoritative original request status.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40319,6 +40319,60 @@
             },
             "businessOutcome": "UNKNOWN",
             "SQLStatements": 0
+          },
+          "exactInspectKeyGuardQA": {
+            "readySHA256": "481947fdede75528769ecb36e38218d5186b4bd53d301473906990689a4a986f",
+            "resultSHA256": "445eeda8ed4e9a86147ee444026e21d1c2ba1004c5f50bd3e00823c2b7693eda",
+            "scope": "SOURCE_LOCAL_6_SCOPED_15_INDEPENDENT_CONSUMER_MODELS_ONLY",
+            "finding": "CLOSED"
+          },
+          "boot25Actual": {
+            "rejectedParentREADY": "d6701e42dcc7e94e7c55e3eff1d0f21c9f080cfc66d3dafce05ac2778da15219",
+            "parentFinding": "B25-PIN-01 stale client hash rejected before server execution; failure retained",
+            "fixedREADY": "59c09b37674f39a4d59dce2e5341d67c0eca49b962547736773bea2471fecfc2",
+            "QAResult": "13b9f2f0a55d8f2346edb57584c75b02786e566eaa850d2afe744f9d68cba4ee",
+            "QAScope": "PASS_BOOT25_LITERAL_AND_CLIENT_PIN_SOURCE_ONLY; effective prior evidence reused",
+            "CDecision": "e06cfbc996c1da960ba18d66817ba8a3bf884bee799084700844ba0e580b9212",
+            "CParameters": "327255bfb36200ef9265b71a168cef2bf0c991c37cd6fff8e26fd577d9e01954",
+            "CInspection": "579c3f51dd4256bc6b89908143b71823e321bbc136e412febdac19fef0b3d9c8",
+            "startsAt": 1794141880053,
+            "bootExpiresAt": 1794142180053,
+            "operationExpiresAt": 1794142480053,
+            "guardianExpiresAt": 1794143080053,
+            "roleLoginValidUntil": "2026-11-08T12:54:40.053Z",
+            "jobSHA256": "4b31d71a9e72766284edd24e51836e31c280314e626155f6dcb1900490944916",
+            "actualSHA256": "e8c504a012a0cd17a7e4f62ca41b315c7ae7b929883d6c4e8eb49f00bb06f82a",
+            "restartSHA256": "48ee03c3b7b5a2a0923f149727a6c24388648a0ae1d11a308093e4051271f2bc",
+            "observationSHA256": "d8844e5f1ad99bfca6d564a7645c845a9723e7cae4d629cb4d5e2bff23364819",
+            "epoch": "2026-11-08 12:46:28.27777+00",
+            "state": "ACTUAL_COMPLETED_0_BOOT_AND_OBSERVER_NEW_PARAMETERS_ISSUED",
+            "guardian": 4416,
+            "postgres": 4424,
+            "sampler": 4423,
+            "HBAOriginalRestored": true,
+            "oldWriterRenewed": false,
+            "inspectionSubmitted": true,
+            "businessOutcome": "UNKNOWN",
+            "publication": {
+              "requestKey": "t45-r4-inspection-config-publish-20261108-03",
+              "jobSHA256": "3d3601c7b7ac75fb2bf7246072b2051f2d4b27bd0f35805c46f065e1655eb1c4",
+              "actualSHA256": "6d0f093222d7f72e3c2d9e3787cbf92856e1aa02c3347eb24027c998a6e2f349",
+              "state": "ACTUAL_COMPLETED_0",
+              "elapsedSeconds": 1.220399736892432,
+              "newParametersInode": 14564977,
+              "newInspectionInode": 14564978,
+              "oldParametersOriginalInodePreserved": 14563415
+            },
+            "C45": "b27fc7fdcaa15639c283eab6ba8762321318fb20fce45c15031f84a74aace499",
+            "COPS": "360a4fced18df924dc05e865941114e957c392cc48cf4752df9071366c3f8fe4",
+            "inspection": {
+              "requestKey": "t45-r4-real-inspect-20261108-01",
+              "state": "ACTUAL_SUBMITTED_RUNNING_TERMINAL_PENDING",
+              "unit": "naijue-erp-op-5cc58239-3105f05fe83e",
+              "automaticRetry": false,
+              "remainingSecondsBeforeSubmit": 196.52,
+              "originalKeyOnly": true
+            }
           }
         }
       }
@@ -40472,6 +40526,18 @@
           "ordinaryArtifactStages": 1
         }
       }
+    },
+    "latestOldOnlineRemovalClarification": {
+      "at": "2026-11-08T20:49:43+08:00",
+      "source": "User current controller message authorizes old online environment retirement",
+      "scope": "Original T45 checks exact old target, occupancy, references and rebuildability, then deletes covered retired applications without another approval",
+      "preserve": [
+        "R4 and current required materials",
+        "real business data/originals",
+        "backups and receipts",
+        "current rollback"
+      ],
+      "timing": "After active finite window"
     }
   }
 }

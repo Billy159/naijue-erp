@@ -3131,3 +3131,13 @@ C已读采用QB d3f7f135/2202：CFG-DIAG-01 CLOSED、2诊断反例和BOOT24必�
 进入inspection前发现旧日期谓词：nonroot_input_access.py prepare/restore/probe及carrier real_access_reference仍限20261107，production_real却要求准确已批inspect20261108-01。唯一inspect原键未提交、0SQL，不能称真实SQL失败或原事务ABSENT。QB范围补充9b85ac6e/1041明确旧literal/sourcePASS不含实际CLI可达，原结论不倒改。原T45保持唯一运维writer，只修准确key语义与必要pins，核所有实际消费者；允许此唯一08inspect但其他日期/动作/路径仍拒，非D1业务改造、不新建层/不重传f56。固定后原QB只复相关key正反例。
 
 原hostrestore02实际COMPLETED0/.619321秒，jobf0962186/514、actual659335da/1115已C读：旧1af原bytes/inode/mtime恢复、自然ctime1794140910107391910，不伪时间、不续0dc。ownedcleanup b7df9faa/551、实际1e057ef3/5525已C读：三进程/18654/postmaster.pid全缺席，HBA/parentroot0711无ACL/原45metadata/双私有投影/0dc/a7d保全，errors空，free5391433728。原业务仍UNKNOWN，整包提交/独立核账/历史普通角色/新35备份恢复/正式入口切换未通过。主控77029cb26ad1612ea442551b8d3fe4db251f30a1已远端核实；本段后继提交另记，真实数据不入Git。
+
+## 2026-11-08T20:49:43+08:00 — BOOT25真实启动完成，当前参数已绑定，原提交仍未知
+
+采用原QB445eeda8作业键定向验证及13b9f2f0准确客户端pin闭包验收，不重复源验。原d670旧客户端pin错误在服务器执行前发现并冻结；唯一后继59c09b37已由T45实际BOOT25启动，COMPLETED0/2.824791秒，实际回执e8c504a0、observer d8844e5f，PG4424/guardian4416/sampler4423均存活，原HBA恢复。C固定新参数327255bf及8字段inspection579c3f51，原17项绑定/400e/846b/375b不变，0dc不续期。下一步唯一hostpublish03后绑定真实新45及OPS，再只读核原请求；不能把启动当业务通过。
+
+用户补充旧线上可退役删除。原T45先核准确目标、占用、引用和可重建性；保留当前R4、真实资料、备份、现用回退及回执，清理在本次运行窗口结束后安排，不以排障失败为由删R4或真实数据。操作截至北京时间20:54:40.053，guardian截至21:04:40.053；到期恢复与清理，不续写授权。
+
+## 2026-11-08T20:52:21+08:00 — BOOT25配置真实发布，唯一原键只读作业已运行
+
+publish03实际COMPLETED0/1.220400秒，回执6d0f0932；新params inode14564977、inspection14564978，原1af原inode14563415保留。C准确绑定45项b27fc7fd与OPS360a4fce后，原T45已提交唯一inspect01，运行unit3105f05fe83e、禁止自动重试，提交前余196.52秒。实际CLI/400e/SQL及原提交终态尚待同键收据，不能标通过或未提交。完成/失败/到期均先回收子进程与证明FD，再恢复原访问元数据、hostrestore03及本轮PG/guardian/sampler；其他owner继续复用已交付材料。
