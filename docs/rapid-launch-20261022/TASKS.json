@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T16:27:54.282895+08:00",
+    "at": "2026-11-08T16:41:26.101630+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,12 +28511,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Exact-canonical private synchronous hash fix after2 bounded counterexamples; typecheck pending",
-      "QB": "BOOT19/READONLY_STATUS purpose budget+cleanup+one outer epoch delta only; no whole-suite rerun",
-      "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
-      "T45": "BOOT19 readonly-purpose source df148802 ready; QB affected review; no server start/status yet",
-      "D3": "Wait proven actual COMMIT; no rescan or real-record re-cleaning",
-      "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
+      "D1": "Original ORDINARY_ADMIT filesystem scope: exact installed8694 directory metadata acceptance and minimum runtime-only r-x proposal; no environment/source writes.",
+      "T45": "Original same-R4 two-object probe complete; finite original directory provenance and existing ACL mechanism read-only prep; no PG/permission/tool replacement yet.",
+      "QB": "004dea84 exact four-leaf source/local increment accepted; idle until precise filesystem repair increment ready; no duplicate tests.",
+      "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
+      "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
+      "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -39547,7 +39547,7 @@
         "state": "STOPPED_AFTER_CLEANUP"
       },
       "diagnosticSuccessor": {
-        "state": "STATUS02_ADMIT_EACCES_OWNED_CLEANUP_CONFIRMED_EXACT_FS_PROBE_SCOPE_IN_PROGRESS",
+        "state": "EXACT_PARENT_WATCH_EACCES_REPRODUCED_MINIMAL_FIX_PREPARATION",
         "readySHA256": "41540e4bd666539293894a39b2565fa43dd77b9547a3af6644a91bd9cd7a1f0c",
         "readyBytes": 22014,
         "carrierSHA256": "d5b9828017de3fa7cfdd91842c1c7238c0ac245e5adeb213afb998786f4b52c4",
@@ -39555,7 +39555,7 @@
         "bootKey": "t45-r4-retained-restart-20261108-20",
         "statusKey": "t45-r4-execute02-business-status-readonly-20261108-02",
         "previousStopMetadataSHA256": "92b94f633c0a561cd901a279c7ad422641cf583a752129f38a5334b58128da38",
-        "purpose": "Original phase/sticky firstfailure/staticcode whitelist; no SQL/admission/RLS/permission change, no writer; same budget; not executed",
+        "purpose": "Actual BOOT20/status02 completed and cleaned; source-only diagnostic delta accepted; original SQL/admission/RLS/13schema/8keys unchanged.",
         "QBResultSHA256": "f4f03327858af34e9f134c946cc97bd7240822a19da0009de94b2a60016cb3da",
         "QBResultBytes": 5329,
         "CBootDecisionSHA256": "5573023598fd1044e3624508be1d24238961b2590b44a78e103939d0694e1dad",
@@ -39598,7 +39598,7 @@
         "readOnlyRollbackAck": false,
         "connectionCleanup": "CLOSED",
         "businessOutcome": "UNKNOWN",
-        "next": "T45 cleanup first; D1 installed8694 source finite filesystem objects; T45 metadata/open-without-body probe only after exact scoped list; no blind retry/permission write",
+        "next": "D1 exact directory guard compatibility + T45 original setup provenance -> smallest reviewed runtime-only filesystem repair -> fresh bounded same-key read-only status, no writer.",
         "cleanupSHA256": "ed3e2eb1696bb3922485a64e2de9cb177fcfae2444e28a6a8512892822c87cc3",
         "cleanupJobSHA256": "897dec9d1667a54f1abedd7085e3b8942e303d46db5e5a350839b64cd96b045b",
         "finalResultSHA256": "06ed322b25943e0950f96cfc821527f92f62a11e4b4754f598f5f7cf9fdd41b0",
@@ -39613,7 +39613,43 @@
           "maxGapSeconds": 0.10283955605700612,
           "maxDropBytes": 1822720
         },
-        "exactFilesystemObject": "UNVERIFIED_NO_PERMISSION_CHANGE"
+        "exactFilesystemObject": {
+          "probeJobKey": "t45-r4-ordinary-admit-record-watch-readonly-20261108-01",
+          "receiptSHA256": "7f0c3b6e6e44870b35098752d985bccb8815e8a84b59386409022cb7870b28f1",
+          "bytes": 2324,
+          "worker": "uid/gid/euid/egid61035, requested extra_groups=[], Node getgroups[61035]",
+          "recordOpenNoFollowFstatClose": "PASS_ZERO_BODY_READ",
+          "recordWatch": "PASS_CREATE_CLOSE",
+          "parentWatch": "EACCES",
+          "parent": {
+            "alias": "RECORD_PARENT",
+            "device": 66304,
+            "inode": 14555460,
+            "uid": 0,
+            "gid": 0,
+            "mode": "0711"
+          },
+          "record": {
+            "alias": "RECORD",
+            "device": 66304,
+            "inode": 14557061,
+            "uid": 0,
+            "gid": 0,
+            "mode": "0644",
+            "bytes": 1771
+          },
+          "metadataUnchanged": true,
+          "PGStarted": false,
+          "PGConnections": 0,
+          "hostImported": false,
+          "directoryEnumerated": false,
+          "permissionChanged": false,
+          "childSeconds": 0.03413579007610679,
+          "childReaped": true,
+          "PGGuardianSamplerStopped": true,
+          "freeBytes": 5437956096,
+          "scopeLimit": "One reproducible required-parent-watch blocker; not proof other reference objects pass or this is the sole error. Business COMMIT remains UNKNOWN."
+        }
       }
     },
     "r4MemoryCopyFix20261108": {
@@ -39686,9 +39722,9 @@
           "tests/unified-stream-repeatable-steps.test.mjs",
           "tests/unified-stream-import-outcome.test.mjs"
         ],
-        "state": "FIXED_004D_QB_PASS_D2_LOCAL_MATERIAL_IN_PROGRESS",
+        "state": "FIXED_004D_QB_PASS_LOCAL_TOOL_FROZEN_LINUX_NOT_RUN",
         "scope": "First full build/checks retained once; independent periterator counters and request metadata; no largeprofile/PG/server; no mutable summary exposed",
-        "next": "D2 exact local material then C/T45 separate tool staging only, preserve installed8694/currentd250; original EACCES diagnosis remains priority",
+        "next": "C/T45 minimal filesystem recovery first; any new tool staging separate fixed directory, no writer or replacement of original recovery proof.",
         "commit": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
         "parent": "b2d7fb0efbdb969af75a9cac25f89a6b7c08a4ac",
         "tree": "a954c2210a06ff94e80d023605583c13973ae66b",
@@ -39698,7 +39734,23 @@
         "remote": "Exact commit independently verified by C",
         "QBResultSHA256": "8fc990827b1c69b217ad8bb8cc5b085d688ac12faae68a5de93d0ea3deb1b030",
         "QBResultBytes": 3054,
-        "independentChecks": "14/14,0skip +2syntax; independent fixedparent golden identical legacy7/coalesced6; no largeprofile/PG"
+        "independentChecks": "14/14,0skip +2syntax; independent fixedparent golden identical legacy7/coalesced6; no largeprofile/PG",
+        "fixedMaterial": {
+          "resultSHA256": "96462a7719bd52675d8df0d2741d0c6c72ec75524decf424a9455e10c5c6316c",
+          "bytes": 9889,
+          "sourceSetSHA256": "9dafc594981d7d7aa6304edd3ef1ca6d53329ad881e74114d96907345b7124b6",
+          "archiveSHA256": "2962f748e4611dbdd1672362bd8f53483f1f7a2a3b907978ce7e49e67672520a",
+          "archiveBytes": 1149448,
+          "expandedFileBytes": 5134418,
+          "allocation4KiBAssumptionBytes": 6000640,
+          "actualLinuxAllocationMeasured": false,
+          "loaderExit": 0,
+          "cliExit": 0,
+          "changedRuntimeLeaves": 2,
+          "otherPinsUnchanged": 214,
+          "installed8694AndOriginalD250Retained": true,
+          "linuxLoaded": false
+        }
       }
     }
   }

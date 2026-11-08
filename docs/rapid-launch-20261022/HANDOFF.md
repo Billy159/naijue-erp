@@ -3316,3 +3316,10 @@ D1按已登记2runtime改内部步骤factory，首次全量组装/clone/hash校�
 T45本轮ownedcleanup实际COMPLETED0/1.7715s，ed3e2eb1/2828，汇总06ed322b/7147已C实读；PG3935/guardian3927/sampler3934及port/pidfile实际缺席，45metadata/2projection及HBA/原0dc/1af保持，2996samples/minFree5438562304/maxgap.102839556/maxdrop1822720在原预算内。helper即时controllerStoppedfalse保留，通过等待真实进程缺席核定，不重复STOP。状态仍ORDINARY_ADMIT/EACCES/UNKNOWN，不推原事务回滚或提交；D1只读安装8694链给有限fs对象范围，未修改任何权限。
 
 原QB004 RESULT8fc99082/3054实读采用PASS_SOURCE_AND_LOCAL_SCOPED，无finding；独立父黄金同值，14小测及2syntax过，原SQL/权限/事务合同保持，不认定真实OOM或性能通过。原D2仅新独立工具包装；旧004父版本、失败证据、安装根与当前d250完整保留，T45服务器操作仍唯一。
+
+
+## 2026-11-08 16:33 — 准入父目录监听拒绝已真实复现，最小修复准备
+
+T45同项两对象探针actual7f0c3b6e/2324已C实读：Node24.21.0普通uid/gid61035能以O_RDONLY|O_NOFOLLOW打开记录并fstat/关闭，记录自身watch成功；父目录watch明确EACCES。父目录root:root0711/inode14555460、记录root:root0644/inode14557061前后不变，0正文读取/列目录/网络/PG/权限改动，子进程.0341s已回收，原三进程/端口/pidfile仍缺席。这证明一个真实必要监听阻点，不代表其他引用对象通过或原事务已提交。D1核安装目录守卫兼容和最小runtime-only r-x方案，T45核原设置依据与现有机制，禁止world-readable、root应用或取消防替换监听；原键结果仍UNKNOWN，不重导。
+
+D2 final-004dea84-operation冻结RESULT96462a77/9889、archive2962f748/1149448、sourceSet9dafc594；216pins中2运行叶变化、214保持，361成员hash/模式及本地loader/CLI通过，原QB004有效结论直接采用。尚未Linux落地/测实际内存收益，不替换安装根8694或原d250恢复工具。主控远端8db9ca1ca436773514b0e93d856dc4fceb11541b已准确读回；后续仅提交这三份接续记录，无真实数据或秘密。
