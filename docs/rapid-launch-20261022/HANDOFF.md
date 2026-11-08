@@ -3364,3 +3364,17 @@ observerf183b054/6007已C实读：普通61035父watch实际成功、HBA.5375s恢
 D1已实读安装3b82/8694：business_ready为单行布尔EXISTS，要求两种已导入批及文档发布回执匹配，是全局就绪而非原键状态。e470只保留非true阶段，不能断言真实false/缺行，更不能从普通RLS零行推ABSENT。现有权威入口为initializer-only standard_whole_package_inspect_v2，仍需准确原初始化及私有身份；D1继续只核现有固定输入的最少复用，不伪造token/改RLS或grant，不重导。
 
 T45本地READY ee318ac5/15262固定004独立目录及原通道，零服务器/PG；C核本工具上传前5GiB+8MiB、解压/结束5GiB，原完整writer8207515646不改。原QB只验路径、空间、公开help及策略CAS收尾的实际增量，8fc源码/旧通道有效证据复用。待结论后C才绑定新有限C13，现模板未签。主控673b26e4d48f94edb22e26abd6af0d15d3a5eb67已推GitHub同名分支并ls-remote逐字核实；原WIP与未验范围保留。
+
+
+## 2026-11-08 18:04 — 004有限落地已执行派达，原键恢复进入最小源码接线
+
+C实读采用QB074e22c9/4855及5b4bf645/3096，后者只核两处None到同Csha替换/其他五叶同字节。C13 4ab0a78d/1105准确13字段，18:01:16.108至18:31:16.108BJT，403字符ref；原T45可执行唯一新004目录的预检、上传、Linux loader/help和完整原策略恢复。现场结果尚待，零PG/prepare/inspect/writer/app/deploy授权，原门槛及f648/8694/0dc/1af不变。
+
+T45声明核对3261dffd/10762没有建立完整initialize载体绑定，只是准确原声明范围、不声称服务器全局不存在；C采用D1源审9e91b149。原D1接最小只读恢复消费者：原确定性producer生成完整值并核400e1944，复用现有initializer-only inspect与真实受控连接及只读回滚，避免全量steps/index重复。未改DB权限/规则、不伪造输入、不重导；源码/必要小测试尚在途。主控60fa4b99524e61e59683c3e731fc025c87da7ae6已远端准确验证。
+
+
+## 2026-11-08 18:09 — 004真实Linux落地及原策略恢复完成，旧导入结果仍未知
+
+C已实读e2696219/11939并逐一回读校验5job与5actual：全部COMPLETED0；preflight5433135104同盘/原策略/新路径通过，唯一上传READY原字节6eed5b44，无UNKNOWN或重传。materialize a8bfbc56/1782耗22.9305s，361文件/52目录，Node24.21.0 loader及公开--help0/4748B/c512b944通过，新目录实际6217728B，freeAfter5416824832。restore f1cb5767/843实际回到完整原过期cd2e/root:root0444/nlink1，无续期。保留独立004，不替换旧f648/8694/0dc/1af/45+2/index，零PG/BOOT/import/app/deploy；不代表内存收益、原COMMIT或业务验收。
+
+原D1进一步核明：原index保存facts/registry/identities/keys，虽未存最终plan字段，可沿原prepareStreamPlan只读重核原index并重建准确plan，省全源preflight及steps迭代；仍有index/plan计算，性能未测。C授权仅在原producer/host/CLI最小接缝实现genuine只读initializer inspect，原hash400e/key/权限/当前有限窗/ROLLBACK释放保持，不新建DB函数或grant，不伪token、不续旧writer。T45等固定后继及准确index叶，不做无效stat或重复盘点。真实整包提交与核账、历史普通角色、new35备份恢复、正式入口及切换仍未通过。

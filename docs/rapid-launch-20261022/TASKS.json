@@ -28514,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Installed ready scalar SQL and initializer-only original-key route identified; completing original fixed initializer input reuse list without reread/recompile or grants.",
-      "T45": "004 independent staging local READY ee318ac5 frozen; waits C finite input after QB scoped ops increment. PG stopped; original bindings untouched.",
-      "QB": "One 004 operational paths/resource/help delta only; valid 8fc source and prior channel evidence reused; no server/PG.",
+      "D1": "Implementing minimum original-index reuse + initializer-only original-key readonly host/CLI consumer; models16/16 source-only interim, fixed successor not yet delivered.",
+      "T45": "004 actual staging/loader/help/policy restoration completed e2696219. PG remains stopped; wait D1 fixed readonly recovery successor and exact existing-index inputs, no filler scan/retry.",
+      "QB": "0048fc/source,074e/ops,5b4b/bind valid and actual e269 adopted by C. Wait D1 complete fixed consumer; do not repeat operational or old full suites.",
       "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
@@ -39823,6 +39823,22 @@
           "ordinaryRLS": "ordinary zero rows after nontrue gate cannot prove original ABSENT",
           "existingAuthoritySeam": "standard_whole_package_inspect_v2(init_request,encoded_scrypt) initializer-only with original advisory locks and full inputs",
           "notPermitted": "No fake initializer/token, new grant, ready/RLS bypass, legacy revoked inspect, or new-key reimport"
+        },
+        "sourceFactsAdoptedSHA256": "9e91b149635197bed3a265dfb7d3ecafc85865bea2e19c0c3f7f27c70bc975bf",
+        "declaredCarrierReview": {
+          "SHA256": "3261dffdff0fce70022578c308b9faea2af1a972128109461a54d97f8bca47e4",
+          "bytes": 10762,
+          "state": "No bound full initializer carrier in exact declared receipts; not claim global server absence",
+          "serverCalls": 0,
+          "PG": 0
+        },
+        "sourceOnlyContinuation": "Original D1 implementing minimum deterministic initialize + genuine initializer inspect readonly consumer on existing004 successor; no fake values/token/RLS/grants/write; no automatic reprepare.",
+        "originalIndexReuseContinuation": {
+          "at": "2026-11-08T18:09:39+08:00",
+          "owner": "D1",
+          "state": "IMPLEMENTING_SOURCE_ONLY",
+          "sourceFact": "Original index retains facts/registry/identities/identity_keys but not final plan fields. Existing prepareStreamPlan can reverify original index and deterministically rebuild plan without all-source preflight; still plan computation, not measured performance.",
+          "scope": "Exact existing index+summary+manifest and genuine admission; original initializerhash400e; initializer-only existing SQL inspect and readonly rollback. No new DB permissions/rules/writes; no full index rebuild or digest DTO."
         }
       }
     },
@@ -39926,9 +39942,9 @@
           "linuxLoaded": false
         },
         "linuxStagingPreparation": {
-          "at": "2026-11-08T17:56:44+08:00",
+          "at": "2026-11-08T18:09:39+08:00",
           "owner": "T45",
-          "state": "FIXED_LOCAL_SCOPE_QB_INCREMENT_REVIEW_IN_FLIGHT_NO_SERVER_ACTION",
+          "state": "ACTUAL_LINUX_TOOL_LOADED_COMPLETE_ORIGINAL_POLICY_RESTORED",
           "readyPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool004dea84-transfer-preparation-01/c-resource-bound/READY.json",
           "readySHA256": "ee318ac5859a8308b3bdca2358654f6cd28f1a44348f50b17776b4ad1967c0c5",
           "readyBytes": 15262,
@@ -39944,7 +39960,34 @@
           "PGConnections": 0,
           "serverActions": 0,
           "originalExecutionBindingsChanged": false,
-          "next": "QB scoped conclusion then C fixed finite input, T45 live same-device/free/policy/path preflight and one staging/loading"
+          "next": "Retain independent004; no repeat stage. Original-key recovery source successor still required.",
+          "opsQBResultSHA256": "074e22c9fd412bd07771fee5a0bd85f001ef52df542bbb26ae3c4bc09ab4d0fb",
+          "opsQBBindingResultSHA256": "5b4bf64573a730bbbd6696c18fa40c7d54c5d1099bee655980a844a5c2f5897d",
+          "bindingSHA256": "a15c0f8d768402c2c3629a906fa758914556363613ff2f628f7bdc2e8b96d37c",
+          "C13SHA256": "4ab0a78df78dd4e4439f4ef3a72e09f920b4a60e118e5008aa90945adb66571c",
+          "C13Bytes": 1105,
+          "startsAt": 1794132076108,
+          "expiresAt": 1794133876108,
+          "actualServerResult": "PENDING",
+          "actualResultSHA256": "e2696219564e011356b0be793b4b01afcb39d7f605f0d1b5b8fc7f7f959ba74b",
+          "actualResultBytes": 11939,
+          "allFiveJobs": "COMPLETED exit0, exact ten job/actual leaves C read and hash verified",
+          "actualMaterializeSHA256": "a8bfbc56e9e3f0d6942686744f78e601becb927893d6d9a01163f4bb6963ad45",
+          "actualMaterializeBytes": 1782,
+          "materializeSeconds": 22.930465559940785,
+          "newExpandedAllocatedBytes": 6217728,
+          "actualFreeBeforeUpload": 5433135104,
+          "actualFreeAfter": 5416824832,
+          "actualNode": "v24.21.0",
+          "cliHelpExit": 0,
+          "cliHelpBytes": 4748,
+          "cliHelpSHA256": "c512b9442fceb9f0bdca6f9cd2ff51c05f14c8aee1e56e2fee534bb1398d2c46",
+          "actualPolicyRestoreSHA256": "f1cb576773dbb91c77a86d623b7948f23ab20dd530ad1aa0056925fc36ac5065",
+          "actualPolicyRestoreBytes": 843,
+          "oldPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+          "oldPolicyRestored": true,
+          "oldPolicyMode": "root:root0444 nlink1",
+          "currentExecutionBindingReplaced": false
         }
       }
     }
