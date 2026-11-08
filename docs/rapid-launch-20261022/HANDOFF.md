@@ -3403,3 +3403,14 @@ C完整读并采用PLAN b7d244e3/7179、REPORT c777a12f/1560：原固定入口�
 C已完整读T45 READY75f0be17/18422：原同盘配置恢复与BOOT23载体、本地10定向模型及未签模板均固定，0server/PG。采用原QB1f1f4e0b/2250 NEED_FIX：B23-01/P2，actual real_retained_capture:1136仍要求旧1afe29，BOOT23真实producer则写上一轮实际停稳f2c89，正确回执会在proof/Node/SQL前被拒。小型guard反例已证，原75f0/失败保留，原T45只修该处及同pin real_operation_parameters；其余有效控制流不重跑。
 
 T45追出同类第三消费者：固定97工具 fresh35-installed-real-window-v1.mjs:48/63也硬绑旧1afe。只改carrier不能闭环，C未签可执行BOOT。原D1已接同一恢复包的最小源码修复：优先复用现有C精确restart原字节SHA/同reference/有限窗/目标及genuine FD proof核验当前回执，避免每次合法BOOT再替换旧常量；不新增描述层/接口/DB/grant、不伪造旧前驱或放宽错误拒绝。确需新字段时仅报准确差异，不自行扩大。QB只收实际受影响source及未完成config模型，97源码36与Linux7ec5有效范围保留。原数据、原key、旧0dc与UNKNOWN不变；实际index/400e/PG/性能/正式业务及切换未验。主控517b928bd711430cbd475ccbdc2d31439db89f90已远端准确核实。
+
+
+## 2026-11-08 19:50 — f56源码与Linux通过；BOOT23配置递交失败，已完整收尾
+
+原D1固定f56ba31bd2891238372c1341c1a47c48e1f9118b（parent97，原分支）已推送并由原owner核远端。C采用QB bdf90347/3982：11定向＋2独立负例通过，旧硬编码前驱缺口关闭；实际C原字节、目标、同ref、期限与真实FD保护保留。原T45根增量ca9a8aba/3468及literal/C13 83438c19/3379有效范围复用，不重复技术验收。D2 f56 sourceSet48ba48d8/archive2659de24/1151158固定；T45实际11520aa4/11982的5阶段全COMPLETED0，361文件52目录、Node24.21.0加载/help0，23.332876秒，新分配6225920B，freeAfter5399744512。完整原过期传输策略cd2e已恢复；这不是业务或部署通过。
+
+BOOT23原键实际COMPLETED0/2.624802秒，PG4250/guardian4242/sampler4249，新epoch11:37:31.131516UTC、restart5225d0e5，C准确参数74681ca9/1825及8字段inspection6d710e6e/2242已绑定同433字符ref、10分钟操作与20分钟guardian上限。随后唯一配置发布t45-r4-inspection-config-publish-20261108-01实际FAILED2/.618831秒，job924fa3ef/511、结果27456501/538已C实读校验。只有OSError，无errno/syscall/阶段，根因未定；不能猜为权限、跨盘或缺文件。failureRestoration证明原1af inode14563415从未移走；没有新45绑定、inspection child或业务SQL，原导入结果仍UNKNOWN，旧作业不重放。
+
+原ownedcleanup已COMPLETED0/1.019985秒，job2d87e9fa/551、实际bfeb44d0/5522已C实读：上述三进程、端口和postmaster.pid全缺席；原parent同inode root:root0711、双ACL无，HBA720b/1af/0dc/a7d及45项原metadata保全，两个私有投影缺席。4102采样/minfree5397016576/maxgap.169868秒；最终free5396873216。自然目录时间变化保留，不伪恢复。失败与recovery目录原样保留，不称原事务已提交或回滚。
+
+唯一下一步：原T45读取停库现场的准确必要metadata，定位原helper首个失败syscall/errno；只修该增量并交QB，不再用一次BOOT猜原因、不新增控制层。C主控5e7b934ee4a955a42b801bfcff33fc9c6917e926已远端核实；本段是后续进度，下一检查点另记。真实整包提交/独立对账、历史普通角色、new35备份恢复、正式入口与切换仍未完成；D3/QF只等准确实际前置，其他有效证据保留。
