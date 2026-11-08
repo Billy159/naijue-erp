@@ -3377,3 +3377,11 @@ C read T45READY247ca436/25044 andQBaa3f0b7c/8234 NEED_FIX_B30_RESTORED05_SOURCE_
 Previous goalturn advanced actualstate:50d3Linuxload/policyrestore andexactendedprobe retirement complete,notmerelyplanorwait. C currentreadglobalhashunchangedff9121c6,HEADb31b80d6,onlyoriginalintegration-logs/npm-cacheuntracked. No duplicatecleanup/sourcepack. C firstreadQBf11034c2/4390 PASS/findings0,7independentfocusedcases closedB30-RESTORED05-SOURCE-01;exactb311restored-onlyaddition and31propagation,otherchecksreused. Original247ca/aa3f preserved.
 
 C consumedcontinuinghuman01a1b528 into raw8294013e/1644,exactBOOT30. B1794165039189,bootend1794165339189,operation1794165339189..1794165939189,guardian1794166239189,rolesexpire2026-11-08T19:25:39.189Z. T45soleactualBOOT30/observerdispatched;Cparameters/inspectionmustbindactualrestart/service,notguessed. Publish08onlyafteroperationstart;actualmetadata→C45access/OPS→singleinspect06. Node≤480/HBA≤30and5/10/20capsunchanged,original400e/key/installed3b82-8694-a7d/realpackageunchanged;old0dcnotrenewed,no writerreplay. Allterminalpathsrestore08+owned30. NoBOOT/result/COMMITclaimuntilactualreceipt;sourcePASSnotPG/business/formalPASS. PreviousGitHubb31b80d61b76292d8fd9c1577b03981a9189da0a push/readbackverified.
+
+## 2026-11-09 — 旧资产清理范围再次明确；BOOT30失败安全收口，31仅增量复核
+
+用户要求线上仅保留本次新系统相关资产。既有实删210个旧容器、69个旧镜像及旧应用文件采用原回执，不重复执行。剩余60个容器的D3分类b896f344不是“全部必须保留”的证明，也不是删除许可的替代；原T45复用已有引用、占用、可重建性证据，仅接续确证无关项。真实数据、附件、备份、原始回执、新R4和本轮恢复/运维材料保留，不盲删卷或数据库。
+
+BOOT30实际FAILED2/0.769秒：C授权引用552字符超过既有512上限，guard在数据库、角色维护和前驱验证前拒绝。原失败文件8294013e保持；RESULT dd80c17d/5724和安全只读回执961f6998/1570已实际核SHA，PG/Node/18654/新BOOT目录均不存在，a7d/0dc/1af/HBA/父目录及上一e7e0重启证明不变；其余5键未提交，不盲执行无对象清理。该失败不等于原inspect05原因已解决。
+
+原T45已准备不同键BOOT31/inspect07，READY248ea51f/25499、carrier531c17dc、plan89420f88；真实前驱仍29，保留历史05恢复兼容。原QB只复核新字面量/时间绑定/源摘要和实际输入首段增量，复用既有源码、材料和Linux加载证据。C新授权引用须<=512且用现成实际guard检查后才提交；此刻未发31窗口、无新服务器/PG动作。原400e及原请求键提交状态仍UNKNOWN，禁止重洗、换键、重放写入。下一步：QB结果→C准确短引用有限输入→T4531启动观察→绑定真实restart再原键只读核实。

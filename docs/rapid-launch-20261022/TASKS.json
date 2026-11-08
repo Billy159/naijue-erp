@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T02:29:21+08:00",
+  "updatedAt": "2026-11-09T03:21:09+08:00",
   "stage": "191_OLD_APP_CONTAINERS_158_PATHS_4_ROUTES_67_IMAGES_ACTUALLY_RETIRED_REMAINING_TARGETED_CLOSURE",
   "lastVerifiedRemoteCommit": "1a96699f5cf012dba1dffc21d056ef93e02aefcd",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33307,13 +33307,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T03:11:32+08:00",
-      "phase": "BOOT30_R2_PASSED_FINITE_START_AND_OBSERVER_DISPATCHED",
+      "at": "2026-11-09T03:21:09+08:00",
+      "phase": "BOOT30_SAFE_PRESTART_FAILURE_BOOT31_QB_INCREMENTAL_REVIEW",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exactBOOT30 and readonly actual observer",
-      "nextOwner": "Original C binds actual new restart/service to parameters/inspection, then actual published metadata access/OPS",
-      "latestActualReceiptSHA256": "eb09472478fddc2b69db5422a9e77cb1565c818ebfc33af0b6e1e3a37385874d",
+      "currentOwner": "OriginalQB exact31 increment; originalT45 sole server executor",
+      "nextOwner": "C checks actual short finite input before originalT4531",
+      "latestActualReceiptSHA256": "961f6998904ea378b175969be5bb70b5e42a17da5b60555683622672ca7d84eb",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalT45 actualBOOT30/observer first; C exact parameters/inspection bind actual restart/service; publish08 after operationstart; C exact access/OPS from actual metadata, singleinspect06 then restore08+owned30 on every outcome. No writer/old0dc renewal.",
+      "next": "OriginalQB only literal/source-time/pin/input delta; C exact finite raw with reference <=512 and actual checker; T45 boot31+observer then bind actual restart before inspect07.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33487,7 +33487,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "BOOT29_ALL_OWNED_PROCESSES_ABSENT_45_METADATA_HBA_AUTHORITY_RESTORED",
+      "currentR4ProcessState": "STOPPED_NO_PG_NODE_OR_31_START",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF",
       "latestCleanupResultSHA256": "efa5414bfbf2e58235faf27e6745b771a1ae1e8c52b95be2e7a125a559cd387d",
       "currentFreeBytes": 8803291136,
@@ -35761,7 +35761,7 @@
       "protected": "Current new R4/15af system and necessary runtime/recovery materials; real business DB/data/originals/media/backups/original receipts; required SSH/Docker/operations/shared service. Old public applications or old rollback applications have no blanket preservation after latest direct user override.",
       "state": "EXACT_OLD_APPLICATION_RETIREMENT_AND_16_MIXED_LEAVES_COMPLETED",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "Exact existing cleanup scope closed. Preserve media/data/backups/receipts and needed new-system/recovery dependencies; no broad duplicate sweep.",
+      "next": "OriginalT45 reuse b896f344/83b3 existing evidence; report only additional exactly stopped/unreferenced/rebuildable eligible assets; no broad repeated sweep or interruption of31 window.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -36260,7 +36260,13 @@
         "imagesRemovedCountUnchanged": 69,
         "successfulBatchMeasuredFreeDeltaSumIncludingPrior": 3414831104,
         "oldAggregatePreserved": true
-      }
+      },
+      "latestScopeReaffirmedAt": "2026-11-09T03:21:09+08:00",
+      "latestScope": "Direct human: remove online assets unrelated to the new system. Reuse exact occupancy/reference/reconstructability evidence; new system, real data, backups, original receipts and required recovery/operations protected; no blind volume/database deletion.",
+      "deletedContainersActual": 210,
+      "deletedImagesActual": 69,
+      "remainingContainerCountFromLastClassificationAfterProbe": 60,
+      "remainingClassification": "4 new production contexts;27 shared synthetic validations lacking exact consumer exclusion;1 r26 shared-bind context;20 old real-data/recovery;6 unresolved QA/probes;2 unresolved volume holders. Classification is not proof all60 are current dependencies."
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
       "owner": "Original D1 only",
@@ -41726,14 +41732,14 @@
     "boot30Inspect06Binding20261109": {
       "originalREADY_SHA256": "247ca436602971bd6a60259ca8d23301408c2858eb4874f1c9b09a80d9514fab",
       "originalREADY_bytes": 25044,
-      "status": "R2_QB_SOURCE_PASS_FINITE_BOOT30_WINDOW_ISSUED",
+      "status": "TERMINAL_PRESTART_AUTHREF_552_EXCEEDS_512_NO_PG_OR_CONFIG_CHANGE",
       "QBReceiptSHA256": "aa3f0b7cf814aec84c59207bde5dcf30692eef4b9acd94a74e619d8bd6de74ac",
       "QBReceiptBytes": 8234,
       "finding": "B30-RESTORED05-SOURCE-01",
       "firstRejectedGuard": "REAL_ACCESS_CONSUMER_SOURCE_CHANGED",
       "scope": "Exact real_access_observation restored-only historical05 consumer b311 omitted after current06 pin updated to1a36; verify_previous_stop must consume actual05/restored/45entries. No server execution.",
       "fixOwner": "Original T45 only",
-      "next": "OriginalT45 actualBOOT30/observer first; C exact parameters/inspection bind actual restart/service; publish08 after operationstart; C exact access/OPS from actual metadata, singleinspect06 then restore08+owned30 on every outcome. No writer/old0dc renewal.",
+      "next": "Never replay30; exact31 successor remains actual29 predecessor; short C reference checked against real prefix before submission.",
       "currentSourceMaterialAndTimeEvidenceReused": [
         "43906277",
         "cdc5d605",
@@ -41758,7 +41764,26 @@
       "operationStart": 1794165339189,
       "operationEnd": 1794165939189,
       "guardianEnd": 1794166239189,
-      "rolesExpireUTC": "2026-11-08T19:25:39.189Z"
+      "rolesExpireUTC": "2026-11-08T19:25:39.189Z",
+      "actualResultSHA256": "dd80c17de4a21381ce2cc4c0952dabdb2f6518c7bcc873d2b142bc3ce2016749",
+      "actualResultBytes": 5724,
+      "safeReadbackSHA256": "961f6998904ea378b175969be5bb70b5e42a17da5b60555683622672ca7d84eb",
+      "safeReadbackBytes": 1570,
+      "automaticRetry": false
+    },
+    "boot31Inspect07Binding20261109": {
+      "at": "2026-11-09T03:21:09+08:00",
+      "status": "LOCAL_READY_ORIGINAL_QB_EXACT_DELTA_REVIEW_IN_PROGRESS",
+      "owner": "Original T45 only; original QB incremental review; C original finite input only",
+      "READY_SHA256": "248ea51febe137e92b038d82a43a80089659e5f3c0e3b061a9085a84b5260239",
+      "READY_bytes": 25499,
+      "carrierSHA256": "531c17dc7415dc4e9583e85bec2c4d950418011c70f83ce0ec75d459aba12025",
+      "planSHA256": "89420f88cca305152b890e6241c00f6a85890162a706ae120dfa81536df81573",
+      "truePredecessor": "Actual BOOT29 b1a72946/e7e0; BOOT30 never reached PG/role maintenance",
+      "windowIssued": false,
+      "serverOrPGExecuted": false,
+      "originalCommit": "UNKNOWN_NO_WRITER_REPLAY",
+      "next": "OriginalQB only literal/source-time/pin/input delta; C exact finite raw with reference <=512 and actual checker; T45 boot31+observer then bind actual restart before inspect07."
     }
   }
 }
