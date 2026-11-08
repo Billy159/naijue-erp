@@ -3027,3 +3027,13 @@ T45原carrier唯一writer合21/03未签模板及异常/到期恢复，固定后Q
 ## 2026-11-08 — BOOT21默认ACL漏项定向修复，尚未执行
 
 原QB216356ba/1062对READY4082提出DIR-01：只有access ACL检查，模型中default ACL存在仍能变更；不表示现场存在该ACL。C采用NEED_FIX并保留旧候选，未签真实窗口。原T45固定后继READY715f9b75/21878，仅boot输入a3f07f62/41078改变，其他13输入同原字节；heldFD双ACL仅ENODATA放行，存在/未知grant和restore前拒绝无写，新增mtime/ctime事实仅观察、不入CAS、不utime。作者有限增量3788f8b2/1448通过，原QB仅补失败及受影响范围，未重PG/旧全套；独立后继结论、实际0751/恢复及原业务状态仍待。
+
+
+## 2026-11-08 17:14 — 原QB后继通过，C有限BOOT21已派T45
+
+C实读采用QB2d2df010/3547 PASS_SOURCE_AND_LOCAL_SCOPED：DIR-01 CLOSED，除双ACL/时间增量外，前轮未完成的目录CAS/sharedCID/真实20序列化及expiry/parent-loss/owned-child-kill恢复小模型已收完；旧20/HBA/SQL与其他13同字节证据复用，零真实权限/PG。C固定dd74570e/1969：starts1794129262027，启动止1794129562027，guardian止1794130462027，原2role止09:33:52.027UTC；原T45715f/a3f07f62一次执行。仅准确父目录临时0751与收尾恢复，原batch0dc/params1af/安装记录保持，不重导、不newparams/index/004替换。实际启动/observer待回后另签status03，当前不称服务器或业务通过。主控12f1ec959d6900c6271ae7801dd4cc0a61fa4558已远端准确核实。
+
+
+## 2026-11-08 17:16 — BOOT21在C输入上限守卫前拒绝，不重放
+
+实际FAILED2/.7695s，joba5d99571/588、error6c0a99c0/384已C实读：C引用863字符超过原512上限，是C输入错误，原guard不改、dd74570e与21key永久保留不覆盖。此前shared10e208dd/559实际通过Docker过滤仅R4/旧R3停/source原0711；失败源码位置在任何目录grant/PG启动前，必要末端metadata读回仍在途，不凭源码顺序冒称末端观察。原715f/QB2d2d通过结论保持，T45只收小读回及最小22新键/owned绑定后继，前驱仍实际20；status03未提交，业务仍UNKNOWN。后继C引用将准确限制<=512，不放宽校验、不重整包、不改真实资料。

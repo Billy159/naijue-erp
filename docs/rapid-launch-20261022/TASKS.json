@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T17:10:42.105775+08:00",
+    "at": "2026-11-08T17:20:47.404331+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28512,8 +28512,8 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Exact directory proposal fixed5f71f8c2; idle, no operational file co-writing.",
-      "T45": "Fixed715f DIR01 successor, no actual server change; waiting originalQB exact increment then C finite times.",
-      "QB": "715f successor actual failed/defaultACL and time-observation incremental review in progress; original4082 NEED_FIX retained.",
+      "T45": "BOOT21 early input refusal, no replay; postfailure finite metadata readback then minimal22 binding successor.",
+      "QB": "715f exact source/local conclusion retained; only22 newkey/closure/ref max512 after fixed candidate, no whole-suite rerun.",
       "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
@@ -39651,7 +39651,7 @@
           "scopeLimit": "One reproducible required-parent-watch blocker; not proof other reference objects pass or this is the sole error. Business COMMIT remains UNKNOWN."
         },
         "directoryRepairPreparation": {
-          "state": "DIR01_FIXED_SUCCESSOR715F_QB_REVIEW_IN_PROGRESS_NO_EXECUTION",
+          "state": "BOOT21_C_REFERENCE_TOO_LONG_EARLY_REFUSAL_NO_REPLAY_MINIMAL22_PREPARATION",
           "proposalSHA256": "5f71f8c28aff84957b417a0ec729f871534288fa5989c326e944a3558c2d05f8",
           "proposalBytes": 7845,
           "mountPreparationSHA256": "f0010d5303b0fcda3f0a86f36af8943dc0f30425f8e88264077ed9ce9c42ae2f",
@@ -39680,7 +39680,38 @@
           "planSHA256": "32b555e687e62dd330f22c69d1dbe573357083008a3ae2edb10b89d24cc63d09",
           "authorDeltaChecksSHA256": "3788f8b290045dfc87be0355287b88d08c60251425d547d8d1160f7fa4d83d11",
           "fixScope": "Both heldFD access/default xattrs require ENODATA before grant/restore; unknown refused; only observedTimes mtime/ctime JSON added, not CAS identity or utime. Only1 runtime input changed vs4082;13 unchanged.",
-          "QBStatus": "PENDING_EXACT_SUCCESSOR"
+          "QBStatus": "PASS_SOURCE_AND_LOCAL_SCOPED",
+          "QBResultSHA256": "2d2df010f4bf87b07096981677d0aaaff3f596428a06b4b297ba30943699e1c4",
+          "QBResultBytes": 3547,
+          "DIR01": "CLOSED",
+          "CBootDecisionSHA256": "dd74570e40c2bbd21666a62647282c471de14dfff0fc02f07dedf2454eb426a3",
+          "CBootDecisionBytes": 1969,
+          "CBootStartsAt": 1794129262027,
+          "CBootExpiresAt": 1794129562027,
+          "CGuardianExpiresAt": 1794130462027,
+          "roleLoginValidUntil": "2026-11-08T09:33:52.027Z",
+          "next": "T45 necessary post-failure stop/metadata readback, minimal22 key/owned process closure only; reuse715f/2d2d valid reviews. C next reference must<=512, new key only; status03 unsubmitted.",
+          "boot21Actual": {
+            "jobSHA256": "a5d99571209da7c001ad21065d9e1590d7f48542e000d2419a5462f4064031c3",
+            "jobBytes": 588,
+            "errorSHA256": "6c0a99c0bcb8053a46c1c777fd94391a47f3cff815e300c3a78493b384a9b711",
+            "errorBytes": 384,
+            "status": "FAILED2",
+            "elapsedSeconds": 0.7695378451608121,
+            "code": "BOOT_EXTERNAL_REFERENCE_REQUIRED",
+            "CInputMistake": "authorizationReference 863 characters exceeds existing512; preserve guard and originalCfile, never overwrite/replay21",
+            "sharedPrecheckSHA256": "10e208ddd8f35f5dc44a110a6af99c55c16f1521c85729f2393f45d89f84c51c",
+            "sharedPrecheckBytes": 559,
+            "actualDockerRunningFilter": "exact currentR4 only; oldR3 stopped, root:root0711 source matches",
+            "sourceOrder": "early failure before BOOT directory/ACL/permission grant/PG; postfailure metadata readback pending",
+            "actualBusinessOutcome": "UNKNOWN",
+            "postfailureReadbackSHA256": "868f576c4e41afd6200dc2d170aa6372b4ce6ec688986fb87c14da7b3f09ac3c",
+            "postfailureReadbackBytes": 1078,
+            "postfailureActual": "BOOT21 state directory absent; same originalroot:root0711/dev66304/inode14555460; bothACLabsent; PG/guardian/sampler/port/pidfile absent; record/batch/params/restart20 preserved",
+            "postfailureFreeBytes": 5435854848,
+            "directoryMtimeNs": 1794125885178655632,
+            "directoryCtimeNs": 1794125885178655632
+          }
         }
       }
     },
