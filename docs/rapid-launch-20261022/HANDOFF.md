@@ -3281,3 +3281,10 @@ QB补对照发现4e3b不可枚举数组数字项嵌套自定义数组时hash/错
 status01实际COMPLETED0/9.937322899s，job420b6194/532、actualf4ea966c/1017已实读；业务observation UNKNOWN、connectionCleanup CLOSED、readOnlyRollbackAckfalse、childReapedtrue，未返回SQLSTATE。传输COMPLETED不代表事务提交；无COMMIT/ABSENT结论、不重writer。T45继续原owned cleanup，C不接触服务器。原carrier存在确定诊断信息丢失：JS catch genericcode未进Python输出白名单，不能从code null认定无异常；同入口只补受控phase/code，不新增权限/控制层，QB仅核实际增量后才下一次观察。D1收IH-01后只读现有host接缝，先不猜失败原因。
 
 QB4e3b RESULT32a78c81/2694已采用NEED_FIX；D1原两反例2RED、最小2文件修复12/12必要项PASS待固定。原4e3b物料冻结不用，修后性能及R4事务仍UNKNOWN。
+
+
+## 2026-11-08 15:58 — BOOT19实际收尾闭合，b2d7定向验收通过
+
+cleanup01任务FAILED2/.869s保留且不重放；后继只读92b94f63/5443实际证明PG3840/guardian3832/sampler3839和端口/pidfile均缺席。原cleanupba79abe9/310全部保全/直属回收/空间守护成功、errors空，45metadata与2projection、HBA/batch/params/restart保持。4222samples/minFree5441445888/maxgap.101422771/maxObservedDrop1781760均在原目的预算内；正常STOPPED_AFTER_CLEANUP。不能从清理推断原业务回滚或提交，status01仍UNKNOWN。原child原始stdout/stderr/phase未落盘无法追溯；T45只在既有JS/投影补受控phase与静态code，并同包准备20/02未签模板，原SQL/RLS/权限/容量不放宽，先QB实际增量。
+
+D1 b2d7fb0efbdb969af75a9cac25f89a6b7c08a4ac/parent4e3b/tree27e27438，C远端已核；QB RESULT8cef8653/2964已实读采用IH-01 CLOSED。仅5小测+6独立对照+syntax PASS，原25复用，不重复BOOT19/大profile/PG。原D2正在新独立物料固定；旧4e3b NEED_FIX及物料均保留，不冒充修后。修后大载荷内存收益仍UNMEASURED，R4事务/独立核账/备份恢复/正式切换仍未完成。
