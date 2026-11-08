@@ -3323,3 +3323,10 @@ T45本轮ownedcleanup实际COMPLETED0/1.7715s，ed3e2eb1/2828，汇总06ed322b/7
 T45同项两对象探针actual7f0c3b6e/2324已C实读：Node24.21.0普通uid/gid61035能以O_RDONLY|O_NOFOLLOW打开记录并fstat/关闭，记录自身watch成功；父目录watch明确EACCES。父目录root:root0711/inode14555460、记录root:root0644/inode14557061前后不变，0正文读取/列目录/网络/PG/权限改动，子进程.0341s已回收，原三进程/端口/pidfile仍缺席。这证明一个真实必要监听阻点，不代表其他引用对象通过或原事务已提交。D1核安装目录守卫兼容和最小runtime-only r-x方案，T45核原设置依据与现有机制，禁止world-readable、root应用或取消防替换监听；原键结果仍UNKNOWN，不重导。
 
 D2 final-004dea84-operation冻结RESULT96462a77/9889、archive2962f748/1149448、sourceSet9dafc594；216pins中2运行叶变化、214保持，361成员hash/模式及本地loader/CLI通过，原QB004有效结论直接采用。尚未Linux落地/测实际内存收益，不替换安装根8694或原d250恢复工具。主控远端8db9ca1ca436773514b0e93d856dc4fceb11541b已准确读回；后续仅提交这三份接续记录，无真实数据或秘密。
+
+
+## 2026-11-08 — 父目录最小修复已定界，原共享挂载保留
+
+C实读D1方案5f71f8c2/7845及T45只读f0010d53/2760：无ACL，authority同inode被运行R4与停止R3两个RW挂载共享，不能声称专属。C明确接受该准确可逆影响，旧R3不启动/改挂载；不是再请求用户或重做全机独占证明。只准备目录UID0不变、GID0/0711→既有61035/0751→原GID0/0711，禁止world读/任何新增写/ACL或叶内容变更，所有ordinary watcher关闭后恢复，ctime自然变化如实记。安装守卫允许该POSIX元数据，保留父目录替换监听。
+
+T45原carrier唯一writer合21/03未签模板及异常/到期恢复，固定后QB只验增量，C随后绑定有限时间；当前0实际权限变更/PG启动/新writer，原批提交仍UNKNOWN。D1准确方案交回即空闲，D2物料已就绪，D3等真实COMMIT，QF等正常入口，不编造填槽任务。主控44aa3f373513478b70c8c74a3cf3d841fa6801d3已远端准确读回。

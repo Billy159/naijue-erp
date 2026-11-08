@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T16:41:26.101630+08:00",
+    "at": "2026-11-08T16:51:28.947137+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,9 +28511,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Original ORDINARY_ADMIT filesystem scope: exact installed8694 directory metadata acceptance and minimum runtime-only r-x proposal; no environment/source writes.",
-      "T45": "Original same-R4 two-object probe complete; finite original directory provenance and existing ACL mechanism read-only prep; no PG/permission/tool replacement yet.",
-      "QB": "004dea84 exact four-leaf source/local increment accepted; idle until precise filesystem repair increment ready; no duplicate tests.",
+      "D1": "Exact directory proposal fixed5f71f8c2; idle, no operational file co-writing.",
+      "T45": "Preparing only original carrier BOOT21/status03 temporary parent root:61035 0751 and restore root:root0711; exact shared stoppedR3 accepted by C; fixed READY -> QB affected review -> C finite times -> execute.",
+      "QB": "Waiting precise T45 READY for parent metadata/restore and actual owned-PG successor only; original 004 and BOOT20 unaffected checks adopted.",
       "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
@@ -39649,6 +39649,25 @@
           "PGGuardianSamplerStopped": true,
           "freeBytes": 5437956096,
           "scopeLimit": "One reproducible required-parent-watch blocker; not proof other reference objects pass or this is the sole error. Business COMMIT remains UNKNOWN."
+        },
+        "directoryRepairPreparation": {
+          "state": "MINIMAL_POSIX_TEMPORARY_CANDIDATE_IN_PROGRESS_NO_ENVIRONMENT_CHANGE",
+          "proposalSHA256": "5f71f8c28aff84957b417a0ec729f871534288fa5989c326e944a3558c2d05f8",
+          "proposalBytes": 7845,
+          "mountPreparationSHA256": "f0010d5303b0fcda3f0a86f36af8943dc0f30425f8e88264077ed9ce9c42ae2f",
+          "mountPreparationBytes": 2760,
+          "exactDirectory": "device66304/inode14555460/UID0",
+          "temporaryChange": "GID0 mode0711 -> existing GID61035 mode0751 -> GID0 mode0711 after all ordinary leases/watchers close",
+          "ctime": "Naturally changes; never falsely restored as original",
+          "noACLOrWorldReadOrNewWrite": true,
+          "noLeafOrRecordOrSQLChange": true,
+          "sharedBoundary": "SAME_SOURCE RW mounts: currentR4 running and oldR3 aebc1ded534bbbc975f59f17e470a4bc64f48f6e94e9abb4d2ac14220982667a stopped; not exclusive; known temporary reversible effect accepted by C under continuing authority; oldR3 never started or remounted",
+          "initialExclusiveCondition": "Earlier refusal retained, superseded only by explicit C acceptance of these exact two known mounts; not user or tool fabricated approval",
+          "sourceGuard": "Installed trusted UID0/no0022/no symlink and Python noACL accept POSIX0751; parent replacement watch retained",
+          "actualRepairPassed": false,
+          "ordinaryOutcome": "UNKNOWN",
+          "newBOOTOrStatusExecuted": false,
+          "owner": "Original T45 same operational files only; D1 report only; QB exact increment; C binds time after fixed review"
         }
       }
     },
