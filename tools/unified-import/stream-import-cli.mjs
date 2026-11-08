@@ -178,8 +178,9 @@ async function runStreamOperation(argv,verifyOnly,whole){
   }
   return output=candidate;
  }catch(error){
+  const hostDiagnostic=retained?(await import('./whole-host-session.mjs')).wholeHostFailureDiagnostic(error):null;
   if(acknowledgedRollback)return output={state:'ROLLED_BACK',code:'POST_ROLLBACK_HOST_FAILURE',verification:{state:'NOT_RUN'},connection_cleanup:'FAILED'};
   if(acknowledgedImport)return output={state:acknowledgedImport,code:'POST_COMMIT_HOST_FAILURE',verification:{state:'VERIFICATION_UNKNOWN'},connection_cleanup:'FAILED'};
-  return output={state:retained?'UNKNOWN':executionStarted?(verifyOnly?'VERIFICATION_UNKNOWN':'UNKNOWN'):'NOT_STARTED',code:(productionReal?retainedBackendSafeFailure(error):null)??(typeof error?.message==='string'&&SAFE_CODES.has(error.message)?error.message:(verifyOnly?'VERIFY_FAILED':'IMPORT_FAILED')),verification:'NOT_RUN',...(streamPreflightFailureDiagnostic(error)?{diagnostic:streamPreflightFailureDiagnostic(error)}:{})};
+  return output={state:retained?'UNKNOWN':executionStarted?(verifyOnly?'VERIFICATION_UNKNOWN':'UNKNOWN'):'NOT_STARTED',code:(productionReal?retainedBackendSafeFailure(error):null)??(typeof error?.message==='string'&&SAFE_CODES.has(error.message)?error.message:(verifyOnly?'VERIFY_FAILED':'IMPORT_FAILED')),verification:'NOT_RUN',...(hostDiagnostic?{diagnostic:hostDiagnostic}:streamPreflightFailureDiagnostic(error)?{diagnostic:streamPreflightFailureDiagnostic(error)}:{})};
  }finally{try{await plan?.dispose()}catch{if(output)output.local_cleanup='FAILED'}}
 }

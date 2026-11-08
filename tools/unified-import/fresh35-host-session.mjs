@@ -20,7 +20,7 @@ import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,reconstructFresh
 import {buildFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram} from '../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
 import {parseStrictJson,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
-import {sameActiveWholeHostSession} from './whole-host-session.mjs';
+import {sameActiveWholeHostSession,markWholeHostFailure} from './whole-host-session.mjs';
 const loadedHostSha256=hash(await readFile(new URL(import.meta.url)));
 const moduleRoot=resolve(fileURLToPath(new URL('../../',import.meta.url)));
 const contexts=new WeakMap(),verifications=new WeakMap();
@@ -101,8 +101,9 @@ const productionImportAuthorities=new WeakMap(),productionImportBindings=new Wea
 const importFileIdentity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
 const exactImportKeys=(x,keys)=>x&&Object.getPrototypeOf(x)===Object.prototype&&Reflect.ownKeys(x).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(x,k);return d?.enumerable&&Object.hasOwn(d,'value')});
 export async function loadFresh35ProductionImportContext(sourceRoot,referenceDirectory,requestKey){
+ let failurePhase='CONTEXT';try{
  need(typeof sourceRoot==='string'&&resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');
- const envelope=await loadFresh35CombinedRecordEnvelope();
+ failurePhase='RECORD_PIN';const envelope=await loadFresh35CombinedRecordEnvelope();failurePhase='CONTEXT';
  need(envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2','PRODUCTION_V2_RECORD_REQUIRED');
  const target=await reconstructFresh35InstalledProductionTargetV2(envelope),t=describeFresh35CombinedTarget(target);
  need(referenceDirectory===t.ordinary.referenceDirectory,'PRODUCTION_REFERENCE_DIRECTORY_DIFFERS');
@@ -113,14 +114,15 @@ export async function loadFresh35ProductionImportContext(sourceRoot,referenceDir
  const pins=describeFresh35CombinedSource(source).currentSourcePins;
  for(const pin of pins)await assertTrustedRootPath(resolve(sourceRoot,pin.path));
  for(const [path,digest]of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===digest),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
- const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),operation=await loadInstalledRealWindow(envelope,snapshot.sha256,source,referenceDirectory,moduleRoot,requestKey),proof=installedRealWindowData(operation,t);
- const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=proof.program,record=proof.record;
+ failurePhase='RECORD_PIN';const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),operation=await loadInstalledRealWindow(envelope,snapshot.sha256,source,referenceDirectory,moduleRoot,requestKey),proof=installedRealWindowData(operation,t);
+ failurePhase='CONTEXT';const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=proof.program,record=proof.record;
  const {describeFresh35CombinedCatalog}=await import('../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs');
  need(describeFresh35CombinedCatalog(catalog).modelSha256===proof.modelSha256,'INSTALLED_BUSINESS_MODEL_DIFFERS');
  await assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);
  const token=Object.freeze({profile:'FRESH35_PRODUCTION_IMPORT_CONTEXT_V1'});
  contexts.set(token,Object.freeze({productionImport:true,operation,recordValidator:proof.validateRecord,envelope,source,target,catalog,program,record,recordSha256:hash(JSON.stringify(record)),recordFileSha256:snapshot.sha256}));
  await assertFresh35HostCurrent(token);return token;
+ }catch(error){markWholeHostFailure(error,failurePhase);throw error}
 }
 export async function describeFresh35ProductionImportBinding(context,prepared){
  const c=fresh35HostContext(context);need(c.productionImport===true,'PRODUCTION_IMPORT_CONTEXT_REQUIRED');
