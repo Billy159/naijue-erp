@@ -13,6 +13,14 @@ test('fallback preserves observable getter and proxy order without new validatio
  const run=fn=>{const events=[],nested={};Object.defineProperty(nested,'value',{enumerable:true,get(){events.push('getter');return 2}});const value=new Proxy({z:nested,a:1},{getPrototypeOf(t){events.push('prototype');return Reflect.getPrototypeOf(t)},ownKeys(t){events.push('keys');return Reflect.ownKeys(t)},getOwnPropertyDescriptor(t,k){events.push('descriptor:'+String(k));return Reflect.getOwnPropertyDescriptor(t,k)},get(t,k,r){events.push('get:'+String(k));return Reflect.get(t,k,r)}});return {outcome:result(fn,value),events}};
  assert.deepEqual(run(requestHashIncremental),run(requestHash));
 });
+test('IH-01 non-enumerable numeric array slots retain nested custom map output',()=>{
+ const make=()=>{const outer=[],inner=[1,2];inner.map=()=>['CUSTOM','MAP'];Object.defineProperty(outer,'0',{value:inner,enumerable:false});return outer};
+ assert.deepEqual(result(requestHashIncremental,make()),result(requestHash,make()));
+});
+test('IH-01 non-enumerable numeric array slots retain nested map getter exceptions',()=>{
+ const make=()=>{const outer=[],inner=[1,2];Object.defineProperty(inner,'map',{get(){throw Error('SYNTHETIC_MAP_ACCESSOR')}});Object.defineProperty(outer,'0',{value:inner,enumerable:false});return outer};
+ assert.deepEqual(result(requestHashIncremental,make()),result(requestHash,make()));
+});
 test('exact production initializer guard accepts original typed hash and rejects changed wire or private parameter (unit only)',async()=>{
  const url=new URL('../tools/unified-import/fresh35-host-session.mjs',import.meta.url),source=await readFile(url,'utf8');
  const body=source.slice(source.indexOf('export function fresh35ProductionImportQueryGuard('),source.indexOf('export async function openReviewedFresh35ProductionHost('));

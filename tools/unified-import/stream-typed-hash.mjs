@@ -15,7 +15,11 @@ export function requestHashIncremental(value){
   if(prototype!==(array?Array.prototype:Object.prototype)){owned=false;break}
   const descriptors=Object.getOwnPropertyDescriptors(v);
   if(array&&(Object.hasOwn(descriptors,'map')||Object.hasOwn(descriptors,'constructor')||Array.prototype.map!==arrayMap||Object.getOwnPropertyDescriptor(Array.prototype,'constructor')?.value!==Array||Object.getOwnPropertyDescriptor(Array,Symbol.species)?.get!==arraySpecies)){owned=false;break}
-  for(const d of Object.values(descriptors)){if(!Object.hasOwn(d,'value')){owned=false;break}if(d.enumerable)pending.push(d.value)}
+  if(array){
+   // map reads numeric slots regardless of enumerability. Inherited slots
+   // retain the original encoder's prototype/accessor behavior.
+   for(let i=0;i<v.length;i++){const d=Object.getOwnPropertyDescriptor(v,String(i));if(!d){if(i in v){owned=false;break}continue}if(!Object.hasOwn(d,'value')){owned=false;break}pending.push(d.value)}
+  }else for(const d of Object.values(descriptors)){if(!Object.hasOwn(d,'value')){owned=false;break}if(d.enumerable)pending.push(d.value)}
  }
  if(!owned)return requestHash(value);
  const h=createHash('sha256'),seen=new Set();
