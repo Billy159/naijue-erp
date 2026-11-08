@@ -2772,3 +2772,19 @@ C核退役29dc READY六refs与actual11最小delta85b3，按原singleindex有效�
 T45 d250 paired传输非时间READY24e8f665/12811，C核26refs及五helpers常量差异/AST结构，原save/install/stage/materialize/restore算法保持；archiveBytes为准确整数1148589。原cd2e过期policy须精确恢复，旧2b6/安装8694/APP576/history856均留，未签C13、未上传或加载。只有实际空间满足后签准确≤30min落地，不重复物料/源码验收。
 
 已有四叶因真实引用和恢复缺口全部保留。C授权一次有界只读：仅原pin6a14清单筛出的58formal代码叶、20QAserver代码叶与准确cb8af重复包/d180保留对照包，本地先固化路径，再核实际分配/现引用/恢复pin/完整双包SHA；非全盘发现，不读DB/真实正文/凭据，不停容器、不删文件。收实际回执后只选最小足额可恢复冷资产，原10fc已删不重查。源码QB通过不代表Linux/native或业务；完整导入/核账/历史业务/备份恢复/正式入口尚未完成。C远端断点4f2618129db6671dabdc2ab359a6d9485b9b90c8已核。
+
+
+## 2026-11-08T11:22:57.425011+08:00 旧06/07完整归档本机保全并封闭传输，待准确四文件退役
+
+有限冷资产只读02实际0/7.885s，5ed82743/34570；承接01的52项，不重扫。79项总分配上界319930368B，哪怕全删仍差83746814B（含8MiB工具），6共享链接保留、代码恢复闭包未证，全部0删。四旧APP仍保留。
+
+C按既有委托批准仅旧06/07压缩档的私有原字节保全，不解码业务正文/不传Git或Dot。原whole-cat在40s超时，06已落盘215023616B并校验prefix99c2b41c，07未读；原失败、copy及seal01保留。不是权限拒绝，不加超时或新身份。C6801e170/4008核定原expiry1794109074541内的准确后继：旧2copy完整SHA/CAS重开、原timer不延；只续06尾50800426B及07两段134217728+129060506B。reopen3fb5577c/509实际0/1.320s，actual6e0a05f6/967；三range全部长度精确，11:19:47实际磁盘全读SHA通过，两wholefile共529102276B：06 d49b81a3/265824042，07 c0ae4d5a/263278234，本机0700/0600保留。RAW-RANGE-RESULT24481c3d/2290、localproofe8ace163/1778；seal02实际0/.067s、fd94134d/271，servertemp重新root0700/files0400。服务器原件和temp当前均未删，0PG/SQLite。
+
+唯一下一步：C核四准确路径+完整本机恢复旁证后，T45仅退役原06/07和两临时重复文件，保留所有原始回执及本机完整字节。实测free满足原8207515646B门槛与新工具后，再签已核d250 paired落地、实际Linux加载及原policy恢复，然后新BOOT/PREPARE60。此次保全不代表数据库恢复、native PREPARED或真实导入通过；真实核账、历史业务、新35备份恢复、正式入口切换未完成。
+
+
+## 2026-11-08T11:28:42.181710+08:00 R4启动空间实际恢复，d250工具准确落地已派原T45
+
+C7beb4c69/5895只核4files精确退役，bound2c14dbe3/12580。原key t45-prepare06-07-local-preserved-archive-retire-20261108-01，job23a3695f/571实际COMPLETED0/3.023s；actualb3271d7a/2293、intent867b4422/4658，C已实读小回执。仅inode14560148/393811/14559570/393812移除且absence全true；两次occupancy无hit/unknown，0目录/PG/SQLite/信号/权限/停服；本机06/07完整原字节0600仍留，全部原验证回执、09-14和3authority保留不变。free7282282496→8340500480，实际delta1058217984B，距原floor8207515646+8MiB工具仍有124596226B；这是当前读回，不承诺后续容量。
+
+C13-D2500203-ARTIFACT-STAGING.json固定65472af8/1082，1794108387693至1794110187693（30min），沿原AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING，sourceSetf648efa6、archive1eb98ed3/1148589。原T45先freshfloor/newpaths/oldcd2e完整CAS，再一次UID1000上传、rawREADY、LinuxNode24.21固定361闭包/CLI/readback模块，成功失败均恢复原cd2e过期policy/root0444，不新增批准或续旧policy。26refs和五helper已核复用，不重复QA；实际结果待回。该工具授权不含PG/BOOT/import/发布。唯一下一步工具实际通过和策略恢复后freshBOOT16/参数/60分钟PREPARE；完整真实导入、独立对账、历史业务、新35备份恢复和正式入口仍未验。

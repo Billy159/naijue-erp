@@ -33304,13 +33304,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T10:52:16.141581+08:00",
-      "phase": "R4_D250_READY_STARTUP_SPACE_SHORT394633214_PLUS_TOOL_COLD_ASSET_READONLY",
+      "at": "2026-11-08T11:28:42.181710+08:00",
+      "phase": "R4_STARTUP_SPACE_RESTORED_D250_PAIRED_TOOL_LOAD_IN_FLIGHT",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "D1 source seam; T45 sole server executor",
-      "nextOwner": "QB targeted delta then D2 tiny tool; C exact scoped T45 continuation",
-      "latestActualReceiptSHA256": "7361b1776926e8c2e049fb001621587d25aa240b847439b4c50c1911ec5b5918",
+      "currentOwner": "T45",
+      "nextOwner": "C exact4 review then T45 actual load",
+      "latestActualReceiptSHA256": "b3271d7a01f3d2a0c9c2d1e841bcbf4850ad2fe481a135a492191d41f20c3c60",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "One finite cold asset/duplicatearchive actual read -> exact minimum verified cleanup -> d250 paired Linuxload/restore -> freshBOOT/parameters/newPREPARE.",
+      "next": "Actual d250 paired upload/Linux load/policy restore -> freshBOOT/parameters/PREPARE60 -> original45min EXECUTE only after genuine PREPARED, then independent readback/business/restore/formal entry.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -38759,7 +38759,13 @@
       "actualLinux": "NOT_RUN",
       "startupMinimumBytes": 8207515646,
       "futureToolAllocation": "Actual unknown; archive1148589+4KiBfiles5992448=7141037 estimated only, budget8MiB.",
-      "noAPPBuildPGOrRealReads": true
+      "noAPPBuildPGOrRealReads": true,
+      "C13Path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/R4-TOOL798482CE-STAGING03-20261107-01/C13-D2500203-ARTIFACT-STAGING.json",
+      "C13SHA256": "65472af8ca1adb8a317d7b5457e6e560f253a15b12ae4c36829dd352e1bd5d7a",
+      "C13Bytes": 1082,
+      "C13StartsAt": 1794108387693,
+      "C13ExpiresAt": 1794110187693,
+      "execution": "DISPATCHED_ORIGINAL_T45_ACTUAL_RESULT_PENDING"
     },
     "r4AdditionalColdAssetReadonlyScope20261108": {
       "status": "C_AUTHORIZED_ONE_BOUNDED_READONLY_TARGET_PREPARATION",
@@ -38768,7 +38774,65 @@
       "scope": "Only exact local frozen list58formalcode leaves+20QAservercode leaves from existing pinnedinventory, plus exact rootcb8af duplicatearchive/UID1000d180 retainedsameversion archive. Save paths before read.",
       "purpose": "Actual allocation/currentrefs/retained recoverypins/complete duplicatearchive SHA; choose minimum eligible exact final cleanup set",
       "forbidden": "No global discovery, PGDATA/realbusiness/approvalbody/credentials read, DB write, container stop or deletion. Prior4referencedAPPs and alreadydeleted10fc excluded.",
-      "actualResult": "PENDING_NOT_DELETE_READY"
+      "actualResult": "PENDING_NOT_DELETE_READY",
+      "actualSuccessor": {
+        "key": "t45-cold-code-leaves-readonly-20261108-02",
+        "actualSHA256": "5ed82743a5dd48c5c6d6d3f5188ecd99618f3c06743c8de8561791d57c8b7c43",
+        "exitCode": 0,
+        "previousStoppedOn": "SHARED_LINK_KEEP after52 completed; old result preserved",
+        "maximumAll79AllocationBytes": 319930368,
+        "evenHypotheticalAllCleanupShortBytesIncludingTool": 83746814,
+        "deletions": 0,
+        "reasonKept": "6 sharedlink leaves remain KEEP; code recovery closure not proven; total cannot satisfy required space."
+      }
+    },
+    "r4Prepare06_07PrivatePreservation20261108": {
+      "at": "2026-11-08T11:22:57.425011+08:00",
+      "owner": "T45 sole server executor; C exact scope coordination",
+      "state": "TWO_LOCAL_FULL_ARCHIVES_PRESERVED_EXACT4_SERVER_FILES_RETIRED",
+      "authorityDecisionSHA256": "5d4ea52ff32542a97bfbaa1ab643a5d56df7e7e3501b841f86a8b1da27a40068",
+      "resumeDecisionSHA256": "6801e170f9cd3269a620faf4803846ea782a1154b811ce341c11fc786ce76b4e",
+      "expiresAtEpochMs": 1794109074541,
+      "wholeCatFailure": {
+        "reason": "40 second original raw SSH transfer timeout",
+        "savedPrefixBytes": 215023616,
+        "savedPrefixSHA256": "99c2b41c1d787ef0a24d4165452f5e0994438129790c1bbe6fcbcc654e6a1e76",
+        "retained": true,
+        "notPermissionDenial": true
+      },
+      "resumeReadySHA256": "02201529ae19cacdf6cbd4eb607009eb1c7d7a961d1caff84873c39a0318569f",
+      "actualResumeSHA256": "6e0a05f644078e53fd019cc5aa48703cdf69f9114f61a369fb278fb9443e1e44",
+      "actualLocalResultSHA256": "24481c3d0196f9ffc83c66d1d279b4c8c42c8b4e012544d771b9c37b560d7aaa",
+      "actualSeal02SHA256": "fd94134d7dc8205666d04d43d6c828d4f87d46fcf71a343378d314a4ec5d6a37",
+      "localProofSHA256": "e8ace163b52cca8ee15ecf246c8e8076d93f224b9884048ce122cfa5d8c40451",
+      "archives": [
+        {
+          "name": "prepare06-index-and-journal.tar.gz",
+          "sha256": "d49b81a3c594ad5bffb60df5a117fa9cd63da26032730f1d2234e51e2f711182",
+          "bytes": 265824042
+        },
+        {
+          "name": "prepare07-index-and-journal.tar.gz",
+          "sha256": "c0ae4d5a73319a4a54e4337f66b47259a2a005f0802bad955f5c41429da6e96c",
+          "bytes": 263278234
+        }
+      ],
+      "localPrivacy": "Private local0700 directory,0600 files; no body decode, no Git or Dot data upload",
+      "serverFilesDeleted": 4,
+      "PGConnections": 0,
+      "SQLiteOpened": false,
+      "next": "Original reviewed d250 paired upload/Linux load and exact policy restoration, then freshBOOT/PREPARE60.",
+      "retirementDecisionSHA256": "7beb4c6938df77e88bfcdf3895eb46990ed81ec437219bf05b352274f4b9b7dc",
+      "retirementJobSHA256": "23a3695f0e02ff8e378c79bf9d6111dcd8273523f64e31a5a9d5608acb5ca125",
+      "actualRetirementSHA256": "b3271d7a01f3d2a0c9c2d1e841bcbf4850ad2fe481a135a492191d41f20c3c60",
+      "deleteIntentSHA256": "867b4422ce02bf1a2c18dbc091e8d44a84937e6d80a90e27b08a827f46d5fe5f",
+      "actualFreeBefore": 7282282496,
+      "actualFreeAfter": 8340500480,
+      "actualFreeDelta": 1058217984,
+      "startupFloorBytes": 8207515646,
+      "toolBudgetBytes": 8388608,
+      "actualFloorPlusToolMarginBytes": 124596226,
+      "protectedUnchanged": true
     }
   }
 }
