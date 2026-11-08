@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T17:20:47.404331+08:00",
+    "at": "2026-11-08T17:43:25.356119+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,9 +28511,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Exact directory proposal fixed5f71f8c2; idle, no operational file co-writing.",
-      "T45": "BOOT21 early input refusal, no replay; postfailure finite metadata readback then minimal22 binding successor.",
-      "QB": "715f exact source/local conclusion retained; only22 newkey/closure/ref max512 after fixed candidate, no whole-suite rerun.",
+      "D1": "Installed business_ready exact SQL and original-key inspect route source-only; consume real e470 status and prior f52a, no rescan/profile/PG.",
+      "T45": "BOOT22/status03/restore actual closed; preparing independent004 tool staging/loading scope only, no currentf648/authority/writer replacement.",
+      "QB": "Prior2d2d/a85c valid scoped source conclusions adopted; no duplicated operational verification.",
       "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
@@ -33397,7 +33397,7 @@
         "cid": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
         "systemIdentifier": "7705224458832691236",
         "databaseOid": 16393,
-        "postmasterStart": "2026-11-08 06:14:53.079979+00",
+        "postmasterStart": "2026-11-08 09:29:13.480407+00",
         "serverVersionNum": 170011,
         "programSHA256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
         "targetSHA256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
@@ -39651,7 +39651,7 @@
           "scopeLimit": "One reproducible required-parent-watch blocker; not proof other reference objects pass or this is the sole error. Business COMMIT remains UNKNOWN."
         },
         "directoryRepairPreparation": {
-          "state": "BOOT21_C_REFERENCE_TOO_LONG_EARLY_REFUSAL_NO_REPLAY_MINIMAL22_PREPARATION",
+          "state": "ACTUAL_TEMPORARY_PARENT_WATCH_FIX_AND_RESTORE_CLOSED_STATUS03_BUSINESS_READY_UNCONFIRMED",
           "proposalSHA256": "5f71f8c28aff84957b417a0ec729f871534288fa5989c326e944a3558c2d05f8",
           "proposalBytes": 7845,
           "mountPreparationSHA256": "f0010d5303b0fcda3f0a86f36af8943dc0f30425f8e88264077ed9ce9c42ae2f",
@@ -39690,7 +39690,7 @@
           "CBootExpiresAt": 1794129562027,
           "CGuardianExpiresAt": 1794130462027,
           "roleLoginValidUntil": "2026-11-08T09:33:52.027Z",
-          "next": "T45 necessary post-failure stop/metadata readback, minimal22 key/owned process closure only; reuse715f/2d2d valid reviews. C next reference must<=512, new key only; status03 unsubmitted.",
+          "next": "D1 installed business_ready predicate and existing original-key inspection minimal source route; T45 only fixed004 tool Linux staging preparation while no PG/writer. Do not repeat status03 or infer absent.",
           "boot21Actual": {
             "jobSHA256": "a5d99571209da7c001ad21065d9e1590d7f48542e000d2419a5462f4064031c3",
             "jobBytes": 588,
@@ -39711,6 +39711,102 @@
             "postfailureFreeBytes": 5435854848,
             "directoryMtimeNs": 1794125885178655632,
             "directoryCtimeNs": 1794125885178655632
+          },
+          "boot22": {
+            "readySHA256": "8d79791ee18caa1bfad8c6aa0f688dfc1fa34bc6da0d3bf3716f59dc2f21f3a2",
+            "readyBytes": 28151,
+            "QBResultSHA256": "a85cbf3f10b24db343a9123bfc24b91cbf0af0f5c9f37f234378961f1023cc30",
+            "QBResultBytes": 4619,
+            "QBStatus": "PASS_SOURCE_AND_LOCAL_SCOPED_KEY_DELTA_REUSING_2d2d",
+            "CDecisionSHA256": "33f57034e26fc6a8bc237a49088555ff1e2d1e2e0d7f888a073a7ee648c3a06b",
+            "CDecisionBytes": 1482,
+            "CReferenceActualCharacters": 376,
+            "startsAt": 1794130070954,
+            "expiresAt": 1794130370954,
+            "guardianExpiresAt": 1794131270954,
+            "roleValidUntil": "2026-11-08T09:47:20.954Z",
+            "jobSHA256": "0631785ea3ddcc98a6d43fd9db2e98aa9c9c3f1798dda8e2762c6a1c3a38cdb4",
+            "jobBytes": 591,
+            "actualBootSHA256": "a86521f4a50fb183ececdb1cc4d01d7bbdaa872b8c3e9f7a972a09b1116114dc",
+            "actualBootBytes": 2027,
+            "elapsedSeconds": 2.524309498,
+            "epoch": "2026-11-08 09:29:13.480407+00",
+            "PG": {
+              "pid": 4048,
+              "starttime": "302845074"
+            },
+            "restartSHA256": "c1a82ef2d1a9ff6cc6863f9f0d0afb2c7146fdf7b5fa6b56cd4919989649b834",
+            "actualDirectory": {
+              "device": 66304,
+              "inode": 14555460,
+              "uid": 0,
+              "gid": 61035,
+              "mode": "0751",
+              "bothAclAbsent": true,
+              "mtimeNs": 1794125885178655632,
+              "ctimeNs": 1794130153228927564
+            },
+            "restoreRequired": false,
+            "observer": "PENDING",
+            "status03": {
+              "jobSHA256": "cf15d9261498911d95c85dd335a81a7381f05140f7cf2199f4bbf67b57127895",
+              "receiptSHA256": "e470e65645d612436abdde6406666182d854eb4e3646c231aa9397171d428c13",
+              "bytes": 1114,
+              "seconds": 10.638853083,
+              "phase": "BUSINESS_READY_NOT_CONFIRMED",
+              "firstFailurePhase": null,
+              "code": null,
+              "readOnlyRollbackAck": true,
+              "connectionCleanup": "CLOSED",
+              "childExit": 0,
+              "childReaped": true,
+              "businessOutcome": "UNKNOWN_NOT_ABSENT_OR_COMMITTED"
+            },
+            "originalBusinessOutcome": "UNKNOWN",
+            "observerSHA256": "f183b0543bfbc53b75c6c624a4cc4631783fde2f812348e96169d46758732259",
+            "observerBytes": 6007,
+            "hbaRestoreSeconds": 0.5375258377753198,
+            "guardian": {
+              "pid": 4040,
+              "starttime": "302845017"
+            },
+            "sampler": {
+              "pid": 4047,
+              "starttime": "302845063"
+            },
+            "actualWorkerParentWatch": "SUCCESS uid/gid61035, requested extra groups[], .036380381s, childreaped,0PG/hostimport",
+            "CStatus03SHA256": "4629fda70ef4a2da1f5c4d88feb1be152e6eff3302db8232ec86fb60e13edd25",
+            "CStatus03Bytes": 930,
+            "statusStartsAt": 1794130504140,
+            "statusExpiresAt": 1794130804140,
+            "cleanupSHA256": "5c1720acf8ffdb12ac1e1de2b28434d660e9ab99dc55acc4ea95d2fbe9b3a6c5",
+            "cleanupBytes": 5512,
+            "cleanupJobSHA256": "7ea263e9abd5c4ee0d020ac3ff6d4bd993c2a017f340d4b7b53c52108e5a759a",
+            "ownedCleanupRawSHA256": "f2c89b10927ae1a013c370c96415212bc65eebfcceb772e8d109cf2efc128001",
+            "recordParentOriginalRestored": true,
+            "directoryAfterRestore": {
+              "device": 66304,
+              "inode": 14555460,
+              "uid": 0,
+              "gid": 0,
+              "mode": "0711",
+              "bothAclAbsent": true,
+              "mtimeNs": 1794130154723920181,
+              "ctimeNs": 1794130736289110130
+            },
+            "parentRestorationRawSHA256": "9197da8c901a1f866b85f38df6525bd9c52832118c1d52ee49f6f3e5238408ac",
+            "original45And2AndHBAAndThreeLeavesPreserved": true,
+            "PGGuardianSamplerAndPortPidfileAbsent": true,
+            "finalSampling": {
+              "sha256": "48d03a68c64381a9d22dfc422f0d104dc53e0203b04d5dd595aef90c48c7d49c",
+              "samples": 5819,
+              "minFreeBytes": 5433556992,
+              "maxGapSeconds": 0.1564887617714703,
+              "maxDropBytes": 1871872,
+              "parentStopRequested": false
+            },
+            "finalResultSHA256": "3bc587ae427933496253d5ed37be13d9663facb85a77af262abd45220fa74cc7",
+            "finalResultBytes": 12482
           }
         }
       }

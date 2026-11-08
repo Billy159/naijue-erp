@@ -3037,3 +3037,15 @@ C实读采用QB2d2df010/3547 PASS_SOURCE_AND_LOCAL_SCOPED：DIR-01 CLOSED，除�
 ## 2026-11-08 17:16 — BOOT21在C输入上限守卫前拒绝，不重放
 
 实际FAILED2/.7695s，joba5d99571/588、error6c0a99c0/384已C实读：C引用863字符超过原512上限，是C输入错误，原guard不改、dd74570e与21key永久保留不覆盖。此前shared10e208dd/559实际通过Docker过滤仅R4/旧R3停/source原0711；失败源码位置在任何目录grant/PG启动前，必要末端metadata读回仍在途，不凭源码顺序冒称末端观察。原715f/QB2d2d通过结论保持，T45只收小读回及最小22新键/owned绑定后继，前驱仍实际20；status03未提交，业务仍UNKNOWN。后继C引用将准确限制<=512，不放宽校验、不重整包、不改真实资料。
+
+
+## 2026-11-08 17:29 — BOOT22真实启动及临时权限通过，状态与恢复仍待
+
+C采用原QB a85cbf3f/4619键/closure窄增量，原715f/2d2d有效目录证据直接复用；C新文件33f57034/1482已实际断言引用376<=512，原21失败不重放。实际BOOT22 COMPLETED0/2.5243s，job0631785e/591、启动a86521f4/2027已C实读；同SID/OID，新epoch09:29:13.480407UTC、PG4048/start302845074、restartc1a82ef2，原两role止09:47:20.954UTC/guardian止09:47:50.954。同父inode实际root:61035/0751且access/default皆无，mtime原值保留、ctime自然变1794130153228927564；此为grant，不是恢复完成。T45继续实际observer/同身份watch正向，C随后另签status03；0writer/重导/改安装记录，原业务仍UNKNOWN，结束必须独立确认目录恢复。
+
+
+## 2026-11-08 17:38 — 父监听真实修复与恢复闭环，下一阻点为业务就绪
+
+observerf183b054/6007已C实读：普通61035父watch实际成功、HBA.5375s恢复、原a7d/0dc/1af保全。C原13字段status03 4629fda7/930窗1794130504140至1794130804140；实际e470e656/1114 COMPLETED0/10.6389s已过准入并完成RR只读回滚，acktrue/CLOSED/child0/reaped，但phase BUSINESS_READY_NOT_CONFIRMED、firstFailure/code null，业务仍UNKNOWN，不能推未提交/已回滚/COMMIT。不重status、不重导。原D1接同项只读核安装8694 business_ready实际SQL和现有最小inspect权限/输入，不造新接口或猜事实。
+
+原ownedcleanup5c1720ac/5512已C实读：PG4048/guardian4040/sampler4047与port/pidfile实际缺席，原45metadata/2projections/HBA/3叶保持。同inode14555460目录已root:root0711、双ACL无，child恢复changedtrue+guardianFD复核changedfalse，recordParentOriginalRestoredtrue/独立9197da8c/266；mtime1794130154723920181、ctime1794130736289110130自然保留，不伪还原。5819samples/min5433556992/maxgap.156489/maxdrop1871872在预算；即时controllerStoppedfalse保留而真实缺席已核，不重复STOP。最终汇总3bc587ae/12482；只关闭本轮临时watch缺口及恢复，不称正式准入长期配置、导入或业务通过。T45仅准备独立004工具落地，不替换f648/安装根/原批，不写DB。
