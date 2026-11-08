@@ -3070,3 +3070,12 @@ T45声明核对3261dffd/10762没有建立完整initialize载体绑定，只是�
 C已实读e2696219/11939并逐一回读校验5job与5actual：全部COMPLETED0；preflight5433135104同盘/原策略/新路径通过，唯一上传READY原字节6eed5b44，无UNKNOWN或重传。materialize a8bfbc56/1782耗22.9305s，361文件/52目录，Node24.21.0 loader及公开--help0/4748B/c512b944通过，新目录实际6217728B，freeAfter5416824832。restore f1cb5767/843实际回到完整原过期cd2e/root:root0444/nlink1，无续期。保留独立004，不替换旧f648/8694/0dc/1af/45+2/index，零PG/BOOT/import/app/deploy；不代表内存收益、原COMMIT或业务验收。
 
 原D1进一步核明：原index保存facts/registry/identities/keys，虽未存最终plan字段，可沿原prepareStreamPlan只读重核原index并重建准确plan，省全源preflight及steps迭代；仍有index/plan计算，性能未测。C授权仅在原producer/host/CLI最小接缝实现genuine只读initializer inspect，原hash400e/key/权限/当前有限窗/ROLLBACK释放保持，不新建DB函数或grant，不伪token、不续旧writer。T45等固定后继及准确index叶，不做无效stat或重复盘点。真实整包提交与核账、历史普通角色、new35备份恢复、正式入口及切换仍未通过。
+
+
+## 2026-11-08 18:37 — 原键只读恢复97c源码验收通过，同EXECUTE02输入准确固定
+
+C采用D1固定97c8f36fde576e563e9c0e65351561c5a1ce732b（原branch、parent318、base004）及QB96d959ad/5336：RI-01 CLOSED，36小测0skip/7MJS与声明syntax/父004两模式真tiny index逐值一致；完整semantic tsc、真实400e/index/PG/性能未验。原318/b09c失败保留：空retained参数误退旧路线；原owner仅两文件后继修复、零事件拒绝，C不重复技术验收。D2本地97物料93f75a1a/10348、sourceSet21ede1d0、archivebfbad89e/1151061已C实读，216/180与361闭包，本地loader/help通过；未Linux落地，原冻结报告pending标签只属首次时点，后继QA单独采用。
+
+原metadata第一次a8cda029/3223 FAILED2 FileNotFound缺失层未投影，原键保留；准确后继3da70dd3/6180与actual61e48c6a/31779已核：PREPARE15仅index叶ENOENT2，summary存在，不推删除原因；EXECUTE02同轮两叶真实存在，祖先无symlink。C据此只选EXECUTE02，不跨轮拼pair。实际summary白名单1bfac1d1/3621与c24b3e89/2150 COMPLETED0，raw846b7e42/57725557，声明index375bcfdc/2567147520与stat相符，summary inode14563547/index14563544及前后metadata稳定，未hash完整index、零PG/秘密输出。缺sourceSet/cutoff字段如实保留，未从正文猜。原400e仍待真实重算，原业务UNKNOWN。
+
+T45仅准备既有004通道的97独立落地pins和原BOOT22后继/新有限只读inspection接缝；C给准确范围后执行，不让新工具权限变成PG/writer许可。原004加载/策略恢复有效，原f648/8694/0dc/1af及旧失败、原数据保留；不重全源预检、不重建index或换键重导。当前正式业务、独立核账及切换尚未完成。
