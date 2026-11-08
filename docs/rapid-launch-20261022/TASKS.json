@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T22:53:25+08:00",
-  "stage": "EXACT708_DEPENDENCIES_ACTUALLY_RETIRED_BOOT27_INSPECT03_RUNNING_ORIGINAL_COMMIT_PENDING",
-  "lastVerifiedRemoteCommit": "19a7b9da1adc4c588b5415c560fb776ae211500e",
+  "updatedAt": "2026-11-08T23:03:30+08:00",
+  "stage": "INSPECT03_EXPIRED_UNKNOWN_COMMIT_ALL_RESTORED_CONTINUE_ELIGIBLE_OLD_APP_CLEANUP_AND_D1_DIAGNOSIS",
+  "lastVerifiedRemoteCommit": "1f86fd21b790a389f5c3f77f4884b813f7caee26",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,12 +28514,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Only actualinspect03 same-key collection; terminal/expiry then restore05 and exactowned27; no cleanup concurrent",
-      "QB": "b70r1 accepted7d44, no duplicate technical review",
-      "D1": "f56 source valid; no duplicate ops task",
-      "D2": "f56 Linux material valid; no rebuild/retransfer",
-      "D3": "Original400e outcome UNKNOWN until authoritative actual03; no duplicate import",
-      "QF": "Wait normal real35 app/auth readiness"
+      "T45": "BOOT27 all stopped/restored; existing-log precise diagnosis and continued eligible old-code/build/dependency cleanup after recording exact paths; protect data/R4/recovery",
+      "D1": "Existing stream-import retained inspector phase diagnosis and smallest verified fix; source owner only",
+      "QB": "7d44 adopted; await actual D1 related delta, no repeated source QA",
+      "D2": "Existing f56 Linux material preserved; no duplicate packaging",
+      "D3": "Original400e COMMIT UNKNOWN; independent reconciliation only after authoritative result",
+      "QF": "Await real35 normal app/auth readiness, no filler tests"
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -33307,13 +33307,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T15:11:47.403819+08:00",
-      "phase": "EXECUTE02_OOM_EVIDENCE_RETAINED_ORIGINAL_KEY_READONLY_RECOVERY_PREPARATION",
+      "at": "2026-11-08T23:03:30+08:00",
+      "phase": "INSPECT03_EXPIRED_ALL_RESTORED_SOURCE_PHASE_DIAGNOSIS_AND_OLD_APP_CLEANUP",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 exact terminal/first-cause readonly; D1 existing original-key recovery source seam",
+      "currentOwner": "Original D1 exact retained inspector source; original T45 existing-log observation and old application cleanup",
       "nextOwner": "C adopt actual result then original-key status; D3 reconciliation only after proven COMMIT",
-      "latestActualReceiptSHA256": "75cf0bf7f59303ec21e33b77e6ca35c336951b56018b0f130e1d204a93f66a60",
+      "latestActualReceiptSHA256": "43c68bf38c45cf68c60d2699f813a4aee2d8fbd2e9555da100434b65a5bf5d96",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 purpose-bounded readonly BOOT resource evidence/current-epoch constant; D1 precise OOM assembly source diagnosis. No writer replay.",
+      "next": "Locate direct reconstruction cost before new attempt; original-key business COMMIT remains UNKNOWN. Do not blindly BOOT28, extend timeout or replay writer.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -40599,7 +40599,7 @@
             "READYBytes": 9581,
             "QB": "7d44b5ec802ac3421c54a10445d0a2fd6175e867654255e1b9aee62ff079617b",
             "QBBytes": 2788,
-            "status": "SOURCE_PASS_ACTUAL_BOOT27_AND_PUBLISH05_COMPLETE_INSPECT03_RUNNING",
+            "status": "ACTUAL_INSPECT03_WINDOW_EXPIRED_ORIGINAL_COMMIT_UNKNOWN_ALL_RESOURCES_RESTORED",
             "closedFinding": "B27-BIND-01",
             "old90712184": "NEED_FIX five active BOOT26 consumers; preserved not executed",
             "fixedOpsSHA256": "6ac9b307b42758f2e8b549dc2947036ce7869f414bdfceb8bacfc5c0669a8aed",
@@ -40607,7 +40607,7 @@
             "allSixStageBundlesAndCommandsOfflineReady": true,
             "observerAndCleanupDeriveFromExactOriginalCIntent": true,
             "windowIssued": true,
-            "wait": "Original03 terminal; no concurrent cleanup,writer,source/build change",
+            "wait": "No active window. D1 locates actual reconstruction seam; T45 existing-log diagnosis and eligible old-application cleanup. No identical retry or writer replay.",
             "CDecision": {
               "SHA256": "a09070bea285cc1512d79ef03bd9d3fde5125269aa931b4b7cd7b3679423688f",
               "bytes": 1349,
@@ -40645,10 +40645,57 @@
             "OPSSHA256": "bed389c001c82cd90cc70399a9b280aeb77d8e34833fcf9bbbc7624ab2e672ad",
             "inspect03": {
               "key": "t45-r4-real-inspect-20261108-03",
-              "state": "ACTUAL_SUBMITTED_RUNNING",
+              "state": "ACTUAL_FAILED_2",
               "remainingAtSubmissionSeconds": 260,
-              "terminal": "PENDING",
-              "originalCommit": "UNKNOWN"
+              "terminal": "REAL_ORIGINAL_WINDOW_EXPIRED",
+              "originalCommit": "UNKNOWN",
+              "elapsedSeconds": 261.576397,
+              "actualSHA256": "43c68bf38c45cf68c60d2699f813a4aee2d8fbd2e9555da100434b65a5bf5d96",
+              "actualBytes": 1775,
+              "jobSHA256": "43a0b74c030975e66aac2444b2606d10417f034f0b197ba3eff2a9cfa59e25c4",
+              "samples": 2515,
+              "maxNodeRssBytes": 1917116416,
+              "maxNodeHwmBytes": 1917116416,
+              "minimumFreeBytes": 5625364480,
+              "nodeExitCode": -15,
+              "initializer400eReached": "UNKNOWN",
+              "businessSQLReached": "UNKNOWN",
+              "childAndDescendantsReaped": true,
+              "original45MetadataRestored": true,
+              "noOOMConclusion": true
+            },
+            "restore05": {
+              "actualSHA256": "cd22efb7dc3313d3a3ea8475e56eb8e858830861238e03bb2f86735dc07fdb1e",
+              "actualBytes": 1115,
+              "jobSHA256": "72d76bab543085f82eb406f061161814e762f2d95bb4b4e4ffd463212727699e",
+              "exitCode": 0,
+              "elapsedSeconds": 0.618497,
+              "oldAuthorityRenewed": false,
+              "originalParametersInode": 14563415,
+              "mtimeNs": 1794118772376501063,
+              "naturalCtimeNs": 1794149818827716866
+            },
+            "owned27Cleanup": {
+              "actualSHA256": "3d588f0b86845e0435b5784ee8dbb2f60908d6421fd7172a4adf1d4d2d12a0b8",
+              "actualBytes": 5678,
+              "jobSHA256": "ecfa23b293a0c64ff63e71697385076cba177b75feefac61c4a053cd1ca3e1a5",
+              "exitCode": 0,
+              "elapsedSeconds": 0.568802,
+              "allThreeProcessesAbsent": true,
+              "port18654Absent": true,
+              "postmasterPidAbsent": true,
+              "originalMetadataAndHBAParentRestored": true,
+              "postRecoveryOriginalFilesConfirmed": true,
+              "rawOldPreservationFalseRetained": true,
+              "freeBytes": 5632720896,
+              "fullWriterShortfallBytes": 2574794750
+            },
+            "resultSHA256": "3796f43f8b0934fcb98c1046ecb4a494325e9bacee36039f60004f0895476332",
+            "diagnosticSourceFacts": {
+              "provenBySourceOnly": "retained-preflight avoids source preflight/steps but still calls complete prepareStreamPlan, facts traversals/two typed-facts hashes/index verify/graph dispose before outcome; CLI emits only at completion",
+              "actualSlowPhase": "UNKNOWN",
+              "D1OwnerTask": "Existing stream inspect recovery seam, preserve WIP, minimal repro/fix and incremental QB",
+              "T45OwnerTask": "Existing stdout/stderr and scratch metadata only, no new PG/Node; eligible old application cleanup separately"
             }
           }
         }
@@ -40814,13 +40861,13 @@
         "backups and receipts",
         "current rollback"
       ],
-      "timing": "After active finite window",
+      "timing": "BOOT27 closed; eligible cleanup may continue without concurrent R4 window",
       "lastT45Dispatch": "2026-11-08T21:11:25+08:00",
-      "lastVerifiedFreeBytes": 5388066816,
+      "lastVerifiedFreeBytes": 5632720896,
       "readOnlyStartFloor": 5368709120,
       "fullWriterFloor": 8207515646,
-      "fullWriterGapBytes": 2819448830,
-      "execution": "Original T45 has explicit dispatch to record accurate eligible old application paths then directly clean and read back actual space; no deletion claimed yet",
+      "fullWriterGapBytes": 2574794750,
+      "execution": "14 old apps stopped; three web leaves and 708 exact dependency directories actually deleted. 505270272 bytes freed by dependency retirement; remaining eligible old versions delegated to original T45 without repeated human permission. Current R4 all stopped.",
       "latestInventory": "Exact33 container metadata gathered. Old R1/R2 timeout/sleep without PG but shared data mounts retained; other exact old ERP Node services require recovery provenance binding before retirement. Not a claim of all old environments removed.",
       "supersedes": "Earlier blanket preserve-current-old-online-application statement only. Existing real data, attachments, backups, R4 dependencies, original request evidence and necessary recovery material protection remains.",
       "dispatchAt": "2026-11-08T21:24:52+08:00",
@@ -40918,7 +40965,8 @@
           "imageRetained": true,
           "SQLOrPermissionOrContainerChanges": 0
         }
-      }
+      },
+      "latestUserClarification": "User permits deleting old online environments when needed; real data, media, backups, R4, needed rollback and original receipts protected"
     }
   }
 }

@@ -3526,3 +3526,11 @@ QB抓出90712184中5处仍选BOOT26，未开窗且保留NEED_FIX。唯一后继b
 删除01真实FAILED2/.117709秒，原c188e8a9/797确认0items、0删除；原因是.gz不属原传输文本白名单，失败保留不重放。准确后继02使用支持的JSON文本载体146c6fb0/1,345,696，仍为同一b438原proof、限20MB解压和原哈希，C ef896539明确02。实际job18dc28e1/527、result9e3b4301/204869 COMPLETED0/28.289895秒，全部708 DELETED且absent、skipped0，原镜像及R4四authority/data/index/summary/f56保护不变，0SQL/权限/容器删除。实盘free5,339,684,864→5,844,955,136，释放505,270,272字节；完整writer仍差2,362,560,510，不降底线。
 
 待清理完全终态后，C依既有持续授权固定BOOT27 a09070be/1349。实际bootd693ca99/2027、observerb1b51f3e/3566通过，PG4690/guardian4682/sampler4689，epoch14:47:30.791073UTC。C收到即首工具生成params528579f8、inspection0c107d88；publish05实际40d78958/1473后首工具固定45项5f4e02bc及OPSbed389c0。原T45已唯一提交inspect03，提交时余260秒（上轮仅约27秒），原operation截至北京时间22:56:15.684、guardian23:06:15.684，不续旧0dc，不并发清理或写入。当前终态/400e/SQL/原COMMIT仍待实际结果，不把源验、启动或RUNNING写成通过。
+
+## 2026-11-08T23:03:30+08:00 — BOOT27实际到期收尾，旧版本清理继续，无原键重放
+
+实际inspect03运行261.576秒、2515次采样后因窗口到期退出-15；Node峰值1,917,116,416字节，不能据此称OOM或未提交。实际回执43c68bf3…/1775；原400e、SQL到达和原COMMIT均UNKNOWN。restore05 cd22efb7…/1115及owned27 3d588f0b…/5678已实读采用：PG4690、guardian4682、sampler4689及18654端口全部消失；45项元数据、HBA、原1af/0dc/a7d、父目录root:root0711/noACL恢复。原cleanup preservation=false原件保留，独立恢复证明为true，不改旧回执。当前无新窗口、无writer重放。
+
+708条旧依赖已实际删除并释放505,270,272字节，先前3个旧web目录和14个旧Node服务的已完成结果直接复用。收尾后实盘5,632,720,896字节，完整writer原预算仍差2,574,794,750字节，不降低门槛。用户最新明确可删除旧线上环境，原T45继续登记准确路径、占用/共享引用及恢复材料后直接清理可重建旧应用/重复包；真实数据、媒体、备份、R4、现用回退及回执保留，不全局prune。
+
+原D1接续retained inspector直接原因定位和最小修复，原T45只取现存stdout/stderr/scratch元数据定位实际阶段，不再原样开窗。源码已确认retained仍走完整planner及事实/索引核验，但实际03停在哪层尚未证实。D3等原键权威COMMIT后独立核账；QF等真实正常入口，不重复已验或凑任务。接续分支codex/erp-0448z-integration-20261105，此前远端1f86fd21b790a389f5c3f77f4884b813f7caee26已独立核实。本节是实际失败/收尾和调度记录，不是导入/上线通过。
