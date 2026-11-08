@@ -2824,3 +2824,21 @@ C核最后READY38393143/6743的7refs+2实际回执，REAL原模板只补实际�
 真正native binding：plan8a9e67c98eafa48b4d428b27628b8ad31f9463fb2735a366abd8a392a21a0dc0，steps35538674993ae2d8b0a618f5d37faa02c3c3517aecfb600d4053e9d5f2887d62/count45278，initializer400e19446d10a42d6d602feedef38cc52b4e3b34f4cf3609dcf61df07572ce4d。固定manifest、原初始化键及baseline/document批次保留于TASKS技术binding，不重造身份或请求键。此为原生准备闭合，明显区别于14离线摘要通过后失败；尚未发业务EXECUTE，真实608916行导入、独立数量金额收退款逐仓核账、历史普通账号业务、适用备份恢复、正式入口切换均未完成。
 
 下一由原T45收本轮Node真实身份/45恢复/2投影absence最小回执，随后仅原有界技术summary+index/当前free读取，判断能否复用已验证14 archive25b6的完整恢复旁证。只有新index实际完整SHA/长度与14源375bcfdc/2567147520相同才复用，不假定、不重扫旧源或做SQLite/PG查询。EXECUTE沿原45分钟，结束须在actualrole13:11:05.346及guardian13:11:35.346之前；若不足按既有受控停止/BOOT/参数接续，复用本次真实PREPARED而由EXECUTE自带完整预检重建，不再单独PREPARE。未签后继EXECUTE或index退役。C远端断点048653e89ab24642f5dcf221f95949d7b16d2dc3已核。
+
+
+## 2026-11-08T12:33:44.301571+08:00 PREPARE15收尾真实通过，15索引内容与已保全14完全相同
+
+唯一terminal收尾reader0/.268s，jobdff631f3/532，a0f2b5a4/2546，12:24:44；C已实读。真实Node3177/start300823259、108B身份7df9bb0b，当前ABSENT、3reaptrue；45项dev/inode/uid/gid/mode/size/nlink全匹配，pointer restored/key15/count45；exact2projected objects lstat均absent。0PG/SQL/信号/权限变更/大报告或index读取。至此projectedSecretsRetired遮盖缺口由独立absence实际闭合，不从原被遮盖布尔猜结论。
+
+一次必要技术summary/index reader0/53.836s，job9adff475/526、7de65a1a/12540，C已实读。原14框架/64MiB/80s/selected限制不改，57,725,562B摘要结构EOF，12大值跳过不展开，技术issue0/fullpackage true/26targets608916。summarycb1dc420/inode14563226。offline847061.707ms与855588864B peak只属于该scope，不声称全CLI或性能优化达标。native PREPARED仍独立以54720fff为准。
+
+15index实际稳定FD/path+完整opaque375bcfdc/2567147520，dev66304/inode14563221/61035:61035/0600/nlink1/alloc2567540736，mtime=ctime1794110748484167975；215proc/2117FD/215maps无hit/unknown，0SQLite引擎/业务正文解码。完整SHA和长度确与已逐字节归档的14源相同；14 archive25b6/341722832/root0400/inode14562655 metadata未变，可复用既有恢复旁证，不再重hash/archive，不把14/15说成同inode。prepared ops09682cb7/2405、stdout4a2cad2f/2753及Node7df9固定pin保留。当前free5705089024，单index退役预计8272629760，仅估算，必须删后实际回读。
+
+现BOOT16 role只到13:11:05.346、guardian13:11:35.346，约12:30时已不足完整45min后继，不压缩/假借旧窗口。已派原T45准备最小单15index退役（复用14完整字节证明）和原owned BOOT16受控停稳/freshstop，再新BOOT17/参数12/直接EXECUTE自带完整重建；不重复一轮独立PREPARE，不新增清洗/构建/控制平台。尚未退役、stop、BOOT17或EXECUTE。业务导入、独立核账、历史普通账号业务、备份恢复、正式入口仍未完成。C远端a17c9752eddb65cb9b992942507a27b6e47f7710已核。
+
+
+## 2026-11-08T12:42:36.988566+08:00 只退役可重建15索引，受控后继已核未执行
+
+C已核READY94254543的7固定pin、source928da244及相对14差异30239260；15索引完整375bcfdc/2567147520与14已逐字节保全来源一致，分开原14与现15 inode。C准确单项9e445a66/2826已派T45原key，120/95秒、现元数据CAS/占用/sidecar/归档完整hash守卫保留，全部PREPARED/日志和归档保留。实际删除与空间待原键回执，未冒执行完成。原服务器可重建清理及持续同类已复核T45授权继续有效，不援引已过12点的临时决策委托。
+
+受控STOP16 READY4525adb4/3784六pin已核，helper d13658cf main与原parent加清单常量AST一致；仅SIGTERM精确guardian3086/start300773138，经原real_stop_controller及其finally停止直属PG3093/start300773169，不直接杀PG或其他任务。新BOOT17/params12必须用真实freshstop元数据，原EXECUTE45本身完整重建，绝不再单独PREPARE。目前仅准备/待发，真实导入、核账、普通业务、恢复与正式切换仍未通过。

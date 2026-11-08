@@ -33304,13 +33304,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T12:25:41.946926+08:00",
-      "phase": "R4_REAL_PREPARE15_NATIVE_BINDING_ACTUALLY_PASSED_NO_BUSINESS_IMPORT",
+      "at": "2026-11-08T12:33:44.301571+08:00",
+      "phase": "REAL_PREPARED_AND_TERMINAL_CLEANUP_PASS_EXACT15_INDEX_REUSE_AND_NEXT_WINDOW_PREPARATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "T45 terminal restore proof and minimal index/space binding; C exact next scope",
       "nextOwner": "C authorized EXECUTE45 after current prerequisites; D3 independent actual readback",
-      "latestActualReceiptSHA256": "54720fffe7f162fe105a86de18947ab2348cc15884275ac5195589ca657a9f8a",
+      "latestActualReceiptSHA256": "7de65a1acc514f7765311e3cdfcbcaa6f1bec6819ace4b79d1e260c2a7bc383c",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original minimal terminal readback; exact summary/index proof reuse and currentfree; bind EXECUTE45 with adequate actual role/guardian lifetime, no standalone PREPARE repeat.",
+      "next": "Exact single15 index retirement using14 byte-identical archive proof, then actualfree; controlled owned BOOT16 stop/newBOOT17/params12 and original EXECUTE45. No independent PREPARE rerun.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33382,7 +33382,7 @@
         "actualIndependentQBReceiptSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29"
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "048653e89ab24642f5dcf221f95949d7b16d2dc3",
+      "githubReadbackCommit": "a17c9752eddb65cb9b992942507a27b6e47f7710",
       "boundaryQBReceiptSHA256": "1dc67c609d7f68ed54ce2105886af49909887a4b5c4ba3ba64e4a4ea57528dda",
       "opsQBReceiptSHA256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
       "stageReadonlySHA256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7",
@@ -33444,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED. PREPARE14 offline full-package summary checks_passed=true, issue0/count608916. Post-preflight CLI IMPORT_FAILED, no PREPARED/native binding/plan. Original exception lost; narrow source reproduction in progress.",
+        "REALImport": "NOT_EXECUTED. Actual PREPARE15 REAL_PREPARED_EXACT_BINDING_ONLY/COMPLETED0; native54720, plan8a9e67c9, steps35538674/count45278. Terminal cleanup and index equivalence proved. New controlled epoch needed before original EXECUTE45.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33459,13 +33459,13 @@
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
       "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
-      "importToolCommit": "2b6b1e53547222bee372f0c6a7468ff3319774cb",
-      "importToolSourceSetSHA256": "8f6d1841191ba44aaa3b02b47e158deb3b4d1a2492338283dc5b97e1a0cd34a3",
+      "importToolCommit": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
+      "importToolSourceSetSHA256": "f648efa6191f800abe64b8402e5ddbeb2dbd80c7587f0855ad147a23b7a7b529",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
-        "requestKey": "t45-r4-retained-restart-20261108-15",
-        "sha256": "e094929e8881c2a94e68a4c0e985e12f3d96ddaf49359eb2b4bf21b73654e2f0",
-        "actualEpoch": "2026-11-08 01:31:21.984278+00",
+        "requestKey": "t45-r4-retained-restart-20261108-16",
+        "sha256": "e5f8b9f9328c340addc906aed92f88293e3c64a0d5e81888c220ba572347c6cb",
+        "actualEpoch": "2026-11-08 03:43:54.589972+00",
         "businessVerified": false
       },
       "lastCleanStopMetadataReceiptSHA256": "6a06254c906c538f8ab44a4e5181db0266f705b3611967370818c6327e017b10",
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "Node2958/PG2875/guardian2868 ABSENT at actual terminal02 readback"
+      "currentR4ProcessState": "BOOT16 PG3093/guardian3086 latest actual live; PREPARE15 Node3177 absent. Controlled stop not executed yet."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -38966,7 +38966,7 @@
       "actualPREPARED": true,
       "businessEXECUTEIssued": false,
       "realImported": false,
-      "next": "Original minimal terminal readback; exact summary/index proof reuse and currentfree; bind EXECUTE45 with adequate actual role/guardian lifetime, no standalone PREPARE repeat.",
+      "next": "Exact single15 index retirement using14 byte-identical archive proof, then actualfree; controlled owned BOOT16 stop/newBOOT17/params12 and original EXECUTE45. No independent PREPARE rerun.",
       "actualJobSHA256": "a9fc3d9a068a19c696ce7e5850fe6490d311eb31937560070af63a4894a57607",
       "actualReceiptSHA256": "54720fffe7f162fe105a86de18947ab2348cc15884275ac5195589ca657a9f8a",
       "actualReceiptBytes": 2725,
@@ -39010,10 +39010,71 @@
       },
       "connectionCleanup": "CLOSED",
       "originalInputMetadataRestored": true,
-      "projectedSecretsRetired": "REDACTED; exact absence independently pending",
+      "projectedSecretsRetired": "EXACT_TWO_ABSENCES_ACTUALLY_VERIFIED",
       "businessDatabaseWrites": false,
       "verification": "NOT_RUN",
-      "terminalExports": "Actual root receipt adopted; Node identity/45metadata/2projection last readback pending"
+      "terminalExports": "ACTUAL_NODE_ABSENT_45_METADATA_RESTORED_TWO_PROJECTIONS_ABSENT",
+      "terminalCleanupSHA256": "a0f2b5a42fd4847edc0c19ea1b7c60a2464fc97b6c4c27ad3fed14394c919b07",
+      "terminalCleanupJobSHA256": "dff631f35176473994523881e1d3ce37fe6fe7809199491906dac21075e8bc9a",
+      "actualNode": {
+        "pid": 3177,
+        "starttime": "300823259",
+        "rawIdentitySHA256": "7df9bb0b23f23fcc3f802b2d4978a31ea18626181d6f8b6030cc5a4cd6240e44",
+        "currentState": "ABSENT"
+      },
+      "all45MetadataMatch": true,
+      "summaryIndexActualSHA256": "7de65a1acc514f7765311e3cdfcbcaa6f1bec6819ace4b79d1e260c2a7bc383c",
+      "summaryIndexJobSHA256": "9adff4752a913a3b490c3cc9f419d2bc42599564ac91dc9e3a7830fe36967730",
+      "index": {
+        "sha256": "375bcfdca7fea00f20cfd473ea3920c63e3930e79a7d85a77b3bef7f24261b87",
+        "bytes": 2567147520,
+        "allocatedBytes": 2567540736,
+        "device": 66304,
+        "inode": 14563221,
+        "uid": 61035,
+        "gid": 61035,
+        "mode": "0600",
+        "nlink": 1,
+        "mtimeNs": 1794110748484167975,
+        "ctimeNs": 1794110748484167975,
+        "stableFDAndPath": true,
+        "opaqueHashOnlyNoSQLiteEngine": true
+      },
+      "archiveReuse": {
+        "actualCurrent15FullHashAndBytesEqualVerified14Source": true,
+        "archive14SHA256": "25b6dd07e4de3fb8cb930c0f1daabcb4bfb57b31768abe724fcd3568e0aaea8b",
+        "archive14Bytes": 341722832,
+        "archive14Inode": 14562655,
+        "archive14MetadataUnchanged": true,
+        "archive14NotRehashedOrRecreated": true,
+        "source14And15InodesNotIdentical": true
+      },
+      "summary": {
+        "sha256": "cb1dc420f47cf69e3ee1bd6f658125c61babf1f2fce2a178863849359a3d1c68",
+        "bytes": 57725562,
+        "inode": 14563226,
+        "structuralEOF": true,
+        "issueCount": 0,
+        "fullPackageChecksPassed": true,
+        "scope": "STANDARD_PACKAGE_OFFLINE_V1",
+        "importEligible": false,
+        "offlineMilliseconds": 847061.7070030001,
+        "peakRssBytes": 855588864,
+        "scopeNotWholeCliPerformanceAcceptance": true
+      },
+      "currentFreeBytes": 5705089024,
+      "projectedFreeIfIndexRemovedNotActual": 8272629760,
+      "sourceBusinessWrites": false,
+      "indexRetirement": {
+        "status": "C_REVIEWED_DISPATCHED_NOT_ACTUAL",
+        "jobId": "t45-r4-retire-prepare15-index-20261108-01",
+        "candidateSHA256": "1422d1e5213e082515606fb541bcc8271ad265406005a6030215c0e4caf47497",
+        "sourceSHA256": "928da24434691bac92fde160cfb893f329d95880cf9003602cbe044f8e4056c8",
+        "CDecisionSHA256": "9e445a66d61cb80ba24e80adc42076376d55b0ade3565562e25dd39f28371e01",
+        "reusesVerified14Archive": true,
+        "onlyOneGeneratedIndex": true,
+        "preservesActualPrepared": true
+      }
     }
   }
 }
