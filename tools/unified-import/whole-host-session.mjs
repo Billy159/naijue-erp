@@ -88,14 +88,14 @@ export async function openReviewedWholeSalesHost(config,sourceRoot,target,work,o
  * verifier. This factory accepts neither clients, catalog callbacks nor records. */
 export async function openReviewedFresh35PhysicalHost(config,sourceRoot,target,work,options={}){return openFresh35PhysicalHost(config,sourceRoot,target,work,options)}
 export async function openReviewedFresh35ProductionPhysicalHost(config,sourceRoot,target,prepare,work,options={}){
- if(typeof prepare!=='function'||typeof work!=='function'||!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256','prepareOnly','requestKey'].includes(k))||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_OPTIONS_INVALID');
+ if(typeof prepare!=='function'||typeof work!=='function'||!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256','prepareOnly','inspectOnly','requestKey'].includes(k))||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean')||('inspectOnly'in options&&typeof options.inspectOnly!=='boolean')||options.inspectOnly&&options.prepareOnly)throw Error('FRESH35_HOST_OPTIONS_INVALID');
  return openFresh35PhysicalHost(config,sourceRoot,target,work,options,prepare);
 }
 async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},productionPrepare){
  const host=await import('./fresh35-host-session.mjs');const {loadFresh35HostContext,loadFresh35ProductionImportContext,fresh35HostContext,verifyFresh35InstalledV1,assertFresh35HostCurrent}=host;
  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
- if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256',...(productionPrepare?['prepareOnly','requestKey']:[])].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
+ if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256',...(productionPrepare?['prepareOnly','inspectOnly','requestKey']:[])].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
  if(options.explicitZeroApproval)explicitZeroApprovalDescriptor(options.explicitZeroApproval);
  const context=await (productionPrepare?loadFresh35ProductionImportContext(sourceRoot,options.referenceDirectory,options.requestKey):loadFresh35HostContext(sourceRoot,options.referenceDirectory)),c=fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target);
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
@@ -121,10 +121,15 @@ async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},
   return withVerifiedFresh35AdmissionV1(verified,gateClient,controlled,target,async admission=>{
    if(!productionPrepare)return work(controlled,admission);
    // Preparation receives only planner admission, never a client that can write.
-   const prepared=await productionPrepare(admission),binding=await host.describeFresh35ProductionImportBinding(context,prepared);
-   if(options.prepareOnly)return {state:'PRODUCTION_REAL_IMPORT_PREPARED',binding,business_database_writes:false,verification:{state:'NOT_RUN'}};
-   const authorization=await host.loadFresh35ProductionImportAuthorization(context,binding);
-   queryGuard=host.fresh35ProductionImportQueryGuard(context,authorization,prepared);tightenDeadline(queryGuard.expiresAt);
+   const prepared=await productionPrepare(admission);let binding,authorization;
+   if(options.inspectOnly){
+    authorization=await host.loadFresh35ProductionInspectionAuthorization(context,prepared);
+   }else{
+    binding=await host.describeFresh35ProductionImportBinding(context,prepared);
+    if(options.prepareOnly)return {state:'PRODUCTION_REAL_IMPORT_PREPARED',binding,business_database_writes:false,verification:{state:'NOT_RUN'}};
+    authorization=await host.loadFresh35ProductionImportAuthorization(context,binding);
+   }
+   queryGuard=host.fresh35ProductionImportQueryGuard(context,authorization,prepared);binding??=queryGuard.binding;tightenDeadline(queryGuard.expiresAt);
    hostVerification=Object.freeze({...hostVerification,production_import_authorization_sha256:queryGuard.authorizationSha256,production_import_binding:binding});
    return work(controlled,admission,binding);
   });

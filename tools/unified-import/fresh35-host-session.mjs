@@ -96,6 +96,7 @@ export async function openReviewedFresh35Host(config,sourceRoot,target,work,opti
 // Independent REAL-batch authority. Installation, source registration and an
 // ordinary-runtime capability never authorize this fixed production entry.
 export const FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH=(process.platform==='darwin'?'/private/etc':'/etc')+'/naijue-erp/fresh35-production-import-v1.json';
+export const FRESH35_PRODUCTION_INSPECTION_PATH=(process.platform==='darwin'?'/private/etc':'/etc')+'/naijue-erp/fresh35-production-inspection-v1.json';
 const productionImportAuthorities=new WeakMap(),productionImportBindings=new WeakMap();
 const importFileIdentity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
 const exactImportKeys=(x,keys)=>x&&Object.getPrototypeOf(x)===Object.prototype&&Reflect.ownKeys(x).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(x,k);return d?.enumerable&&Object.hasOwn(d,'value')});
@@ -151,13 +152,39 @@ export async function loadFresh35ProductionImportAuthorization(context,binding){
   productionImportAuthorities.set(token,{context,bindingOriginal:binding,binding:Object.freeze(structuredClone(binding)),startsAt:value.startsAt,expiresAt:value.expiresAt,identity:importFileIdentity(before),sha256:hash(bytes)});return token;
  }finally{await file.close()}
 }
+/** A separate current read-only description binds the original initializer and
+ * retained preflight, never renews the writer authorization or consumes steps. */
+export async function loadFresh35ProductionInspectionAuthorization(context,prepared){
+ const c=await assertFresh35HostCurrent(context);need(c.productionImport===true,'PRODUCTION_IMPORT_CONTEXT_REQUIRED');
+ need(prepared?.packageKind==='REAL'&&isNodeScryptPasswordHash(prepared.encodedScrypt),'REAL_PREPARED_PROGRAM_REQUIRED');
+ const init=prepared.initialize,id=prepared.identity;validateStandardImportRequest(init);
+ await assertTrustedRootPath(FRESH35_PRODUCTION_INSPECTION_PATH);
+ const file=await open(FRESH35_PRODUCTION_INSPECTION_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{
+  const before=await file.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&before.size>0n&&before.size<=65536n,'PRODUCTION_INSPECTION_PROTECTED_DESCRIPTION_REQUIRED');
+  const bytes=await file.readFile(),after=await file.stat({bigint:true}),now=await lstat(FRESH35_PRODUCTION_INSPECTION_PATH,{bigint:true});
+  need(BigInt(bytes.length)===before.size&&importFileIdentity(before)===importFileIdentity(after)&&importFileIdentity(before)===importFileIdentity(now),'PRODUCTION_INSPECTION_DESCRIPTION_CHANGED');
+  const a=parseStrictJson(bytes.toString('utf8')),window=installedRealWindowData(c.operation,describeFresh35CombinedTarget(c.target));
+  need(exactImportKeys(a,['format','decision','binding','preflight','operationParametersSha256','startsAt','expiresAt','authorizationReference'])&&a.format==='FRESH35_PRODUCTION_INSPECTION_V1'&&a.decision==='INSPECT_EXACT_ORIGINAL_REAL_BATCH_READ_ONLY','PRODUCTION_INSPECTION_DESCRIPTION_REQUIRED');
+  assertInstalledRealBinding(c.operation,a.binding);
+  need(a.operationParametersSha256===window.parametersSha256&&a.authorizationReference===window.value.authorizationReference,'PRODUCTION_OPERATION_PARAMETERS_DIFFERS');
+  need(Number.isSafeInteger(a.startsAt)&&Number.isSafeInteger(a.expiresAt)&&a.startsAt>=window.value.startsAt&&a.expiresAt<=window.value.expiresAt&&a.startsAt<a.expiresAt&&Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_INSPECTION_WINDOW_EXPIRED');
+  need(exactImportKeys(a.preflight,['summarySha256','indexSha256','indexBytes'])&&/^[a-f0-9]{64}$/.test(a.preflight.summarySha256)&&/^[a-f0-9]{64}$/.test(a.preflight.indexSha256)&&Number.isSafeInteger(a.preflight.indexBytes)&&a.preflight.indexBytes>0&&exactImportKeys(prepared.preflight,['summarySha256','indexSha256','indexBytes'])&&requestHash(a.preflight)===requestHash(prepared.preflight),'PRODUCTION_INSPECTION_PREFLIGHT_DIFFERS');
+  const b=a.binding;
+  need(init.payload.document_batch_id===id?.documentBatchId&&init.batch_id===id?.batchId&&init.package_manifest_sha256===id?.packageSha256&&init.plan_sha256===id?.planSha256&&init.namespace===id?.namespace&&init.cutoff_at===id?.cutoffAt&&b.baselineBatchId===id.batchId&&b.documentBatchId===id.documentBatchId&&b.manifestSha256===id.packageSha256&&b.planSha256===id.planSha256&&b.sourceNamespace===id.namespace&&b.cutoffAt===id.cutoffAt&&b.initializerOperationId===init.operation_id&&b.initializerRequestKey===init.request_key&&b.initializerSha256===requestHashIncremental({initialize:init,encodedScrypt:prepared.encodedScrypt}),'PRODUCTION_INITIALIZER_BINDING_DIFFERS');
+  const binding=Object.freeze(structuredClone(b)),token=Object.freeze({profile:'FRESH35_PRODUCTION_INSPECTION_V1'});
+  productionImportBindings.set(binding,{context,prepared});
+  productionImportAuthorities.set(token,{context,bindingOriginal:binding,binding,inspectOnly:true,path:FRESH35_PRODUCTION_INSPECTION_PATH,startsAt:a.startsAt,expiresAt:a.expiresAt,identity:importFileIdentity(before),sha256:hash(bytes)});
+  await assertFresh35HostCurrent(context);return token;
+ }finally{await file.close()}
+}
 async function currentProductionImportAuthority(context,authorization){
  const a=productionImportAuthorities.get(authorization),c=fresh35HostContext(context);
  if(c.operation)await assertInstalledRealWindowCurrent(c.operation);
  need(c.productionImport===true&&a?.context===context,'GENUINE_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
  need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
  await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);
- need(importFileIdentity(await lstat(FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH,{bigint:true}))===a.identity,'PRODUCTION_BATCH_AUTHORIZATION_CHANGED');
+ need(importFileIdentity(await lstat(a.path??FRESH35_PRODUCTION_IMPORT_AUTHORIZATION_PATH,{bigint:true}))===a.identity,'PRODUCTION_BATCH_AUTHORIZATION_CHANGED');
  need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');return a;
 }
 /** Request checks are added to the original controlled client, not a second
@@ -170,6 +197,11 @@ export function fresh35ProductionImportQueryGuard(context,authorization,prepared
  const check=async(sql,values)=>{
   if(sql==='ROLLBACK'){await close();return;}
   await currentProductionImportAuthority(context,authorization);
+  if(a.inspectOnly){
+   need(sql==='BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY'||sql==='SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2'||sql==='SELECT naijue_erp.standard_whole_package_inspect_v2($1::jsonb,$2::text)::text AS result_json','PRODUCTION_INSPECTION_SQL_NOT_ALLOWED');
+   if(sql.startsWith('SELECT '))need(requestHashIncremental({initialize:parseStrictJson(values?.[0]),encodedScrypt:values?.[1]})===a.binding.initializerSha256,'PRODUCTION_INITIALIZER_BINDING_DIFFERS');
+   return;
+  }
   if(sql.startsWith('BEGIN')){await close();ordinal=0;initialized=false;finished=false;return;}
   if(/^SELECT naijue_erp\.standard_whole_package_(inspect|prepare|verify)_v2\(/.test(sql)){
    need(requestHashIncremental({initialize:parseStrictJson(values?.[0]),encodedScrypt:values?.[1]})===a.binding.initializerSha256,'PRODUCTION_INITIALIZER_BINDING_DIFFERS');
@@ -187,7 +219,7 @@ export function fresh35ProductionImportQueryGuard(context,authorization,prepared
   if(sql==='COMMIT'||sql==='SET CONSTRAINTS ALL IMMEDIATE'){need(!initialized||finished,'PRODUCTION_COMPLETE_ORIGINAL_STEPS_REQUIRED');if(sql==='COMMIT')await close();return;}
   need(sql==='SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2'||sql==='SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2','PRODUCTION_SQL_NOT_ALLOWED');
  };
- return Object.freeze({check,close,expiresAt:a.expiresAt,authorizationSha256:a.sha256});
+ return Object.freeze({check,close,expiresAt:a.expiresAt,authorizationSha256:a.sha256,binding:a.binding});
 }
 export async function openReviewedFresh35ProductionHost(config,sourceRoot,target,prepare,work,options={}){
  const {openReviewedFresh35ProductionPhysicalHost}=await import('./whole-host-session.mjs');

@@ -1,7 +1,7 @@
-import{streamSummaryBinding}from'./stream-binding.mjs';import{TABLE_SCHEMAS}from'../../packages/application/src/unified-import-contract.ts';import{STANDARD_MASTER_TABLES}from'../../packages/application/src/unified-import-execution.ts';import{stableImportId}from'../../packages/application/src/inventory-cutoff-import.ts';import{requestHash}from'../../packages/application/src/request-hash.ts';import{streamTypedHash,typedHashArray}from'./stream-typed-hash.mjs';import{iteratePreparedMasterRows,assertActiveStreamPlan,preparedMasterChunkTokens,preparedMasterLayout}from'./stream-plan.mjs';import{streamBaselineRequests}from'./stream-baseline-requests.mjs';import{streamDocumentRequests,coalescedPlanHash}from'./stream-document-requests.mjs';
+import{streamSummaryBinding}from'./stream-binding.mjs';import{TABLE_SCHEMAS}from'../../packages/application/src/unified-import-contract.ts';import{STANDARD_MASTER_TABLES}from'../../packages/application/src/unified-import-execution.ts';import{stableImportId}from'../../packages/application/src/inventory-cutoff-import.ts';import{requestHash}from'../../packages/application/src/request-hash.ts';import{streamTypedHash,typedHashArray}from'./stream-typed-hash.mjs';import{iteratePreparedMasterRows,assertActiveStreamPlan,preparedMasterChunkTokens,preparedMasterLayout,prepareStreamPlan}from'./stream-plan.mjs';import{streamBaselineRequests}from'./stream-baseline-requests.mjs';import{streamDocumentRequests,coalescedPlanHash}from'./stream-document-requests.mjs';
 /** Offline request construction only; callers must own validated preflight,
  * source immutability, target admission, one transaction and graph disposal. */
-export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=false,metrics=null}={}){
+async function prepareStreamProgram(plan,summary,admin,coalesce){
  assertActiveStreamPlan(plan);summary=structuredClone(summary);admin=structuredClone(admin);if(!plan||requestHash(admin)!==plan.initializationIdentityHash)throw Error('STREAM_INITIALIZATION_IDENTITY_MISMATCH');if(streamSummaryBinding(summary)!==plan.summaryBindingHash)throw Error('STREAM_PLAN_SUMMARY_MISMATCH');const p=plan.common,c=p.counts,basePlan=plan.planHash,planHash=coalesce?coalescedPlanHash(basePlan):basePlan;const descriptor={...plan.schedule,execution_plan_sha256:planHash};delete descriptor.chunk_plan_sha256;const chunkHash=coalesce?await streamTypedHash({...descriptor,chunks:preparedMasterChunkTokens(plan,'coalesced')}):plan.schedule.chunk_plan_sha256;
  const effectiveLayoutHash=coalesce?await streamTypedHash(preparedMasterLayout(plan,'coalesced')):plan.layoutHash;const docs={SALES_HEADER:c.sales_headers,SALES_LINE:c.sales_lines,SALES_SETTLEMENT:c.sales_settlements,TRANSFER_HEADER:c.transfer_headers,TRANSFER_LINE:c.transfer_lines,IMPORT_BATCH:1},effects=plan.sourceV2Progress.baseline_cursor-c.master_occurrences-c.explicit_keys-2;
  function request(kind,index,payload,batch=p.baseline_batch_id,operation){if(payload.expected_sequence!==null&&payload.expected_sequence!==undefined&&(!Number.isSafeInteger(payload.expected_sequence)||payload.expected_sequence<0||payload.expected_sequence>2147483646))throw Error('STREAM_SEQUENCE_OVERFLOW');const op=operation??stableImportId('standard-whole-package-operation-v2',batch,planHash,kind,String(index));const r={protocol:'STANDARD_IMPORT_SQL_V1',operation_id:op,request_key:op,batch_id:batch,plan_sha256:planHash,package_manifest_sha256:p.manifest_sha256,namespace:p.source_namespace,cutoff_at:p.cutoff_at,payload};
@@ -19,6 +19,26 @@ export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=
   }
   if(Buffer.byteLength(JSON.stringify(bounded))>8*1024*1024)throw Error('STREAM_REQUEST_TOO_LARGE');return r}
  const initialize=request('INITIALIZE',0,{...(p.historical_settlement_retention_approval?{historical_settlement_retention_approval:structuredClone(p.historical_settlement_retention_approval)}:{}),...(p.historical_line_amount_approval?{historical_line_amount_approval:structuredClone(p.historical_line_amount_approval)}:{}),...(p.historical_hall_approval?{historical_hall_approval:structuredClone(p.historical_hall_approval)}:{}),...(p.explicit_zero_approval?{explicit_zero_approval:structuredClone(p.explicit_zero_approval)}:{}),...(p.historical_staff_hall_approval?{historical_staff_hall_approval:structuredClone(p.historical_staff_hall_approval)}:{}),mode:'NEW_EMPTY',manifest_ref:'manifest.json',registry_sha256:p.registry_sha256,alignment_sha256:p.alignment_sha256,document_batch_id:p.document_batch_id,namespace_record_id:stableImportId('standard-import-namespace-record-v1',p.source_namespace,p.baseline_batch_id),admin:structuredClone(admin),expected:{MASTER:c.master_occurrences,INVENTORY_KEY:c.explicit_keys,INVENTORY_EFFECT:effects,NAMESPACE:1,IMPORT_BATCH:1},expected_master_counts:Object.fromEntries(STANDARD_MASTER_TABLES.map(t=>[t.toUpperCase(),summary.counts[t]??0])),expected_documents:structuredClone(docs),execution_contract:{format_version:'UNIFIED_STANDARD_EXECUTION_PLAN_V2',compiler_version:'DEPENDENCY_ORDERED_STANDARD_PROGRAM_V2',scheduler_version:'UNIFIED_STANDARD_MASTER_CHUNK_PLAN_V2',max_master_chunk_rows:plan.schedule.max_chunk_rows,master_chunks:coalesce?plan.coalescedMasterChunkCount:plan.masterChunkCount,master_schedule_layout_sha256:effectiveLayoutHash,master_chunk_plan_sha256:chunkHash,initialization_identity_sha256:requestHash(admin)},schema_declarations_sha256:summary.schema_declarations_sha256});
+ const identity={batchId:p.baseline_batch_id,documentBatchId:p.document_batch_id,packageSha256:p.manifest_sha256,planSha256:planHash,namespace:p.source_namespace,cutoffAt:p.cutoff_at};
+ return{summary,p,c,basePlan,planHash,chunkHash,docs,request,initialize,identity};
+}
+/** Construct only the original initializer from a genuine active plan. This
+ * does not read baseline/document rows or create a step cursor. The original
+ * plan is still required; digest-only bindings cannot reconstruct its facts. */
+export async function buildStreamInitializer(plan,summary,admin,{coalesce=false}={}){
+ const {initialize,identity}=await prepareStreamProgram(plan,summary,admin,coalesce);
+ return{initialize,identity};
+}
+/** Reuse a retained completed preflight index through the original planner.
+ * Rechecks its full binding and rebuilds the private graph; never runs source
+ * preflight or steps. This is preparation only, not controller admission. */
+export async function prepareStreamInitializerFromIndex(indexPath,summary,manifestBytes,options,{coalesce=false}={}){
+ const plan=await prepareStreamPlan(indexPath,summary,manifestBytes,options);
+ try{return await buildStreamInitializer(plan,summary,options.initialization_identity,{coalesce})}
+ finally{await plan.dispose()}
+}
+export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=false,metrics=null}={}){
+ const {summary:ownedSummary,p,c,basePlan,planHash,chunkHash,docs,request,initialize,identity}=await prepareStreamProgram(plan,summary,admin,coalesce);summary=ownedSummary;
  const binding={historicalSalesHallApproval:plan.historicalSalesHallApproval,historicalLineAmountEvidence:plan.historicalLineAmountEvidence,baselineBatchId:p.baseline_batch_id,documentBatchId:p.document_batch_id,planSha256:planHash,manifestSha256:p.manifest_sha256,namespace:p.source_namespace,cutoffAt:p.cutoff_at};
  async function* timed(source,key){const iterator=source[Symbol.asyncIterator]();let done=false;try{for(;;){const start=performance.now();let next;try{next=await iterator.next()}finally{if(metrics)metrics[key]=(metrics[key]??0)+(performance.now()-start)}if(next.done){done=true;break}yield next.value}}finally{if(!done&&typeof iterator.return==='function')await iterator.return()}}
  function createSteps(){
@@ -33,5 +53,5 @@ export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=
  }
  return steps();
  }
- return{identity:{batchId:p.baseline_batch_id,documentBatchId:p.document_batch_id,packageSha256:p.manifest_sha256,planSha256:planHash,namespace:p.source_namespace,cutoffAt:p.cutoff_at},initialize,steps:createSteps(),createSteps};
+ return{identity,initialize,steps:createSteps(),createSteps};
 }
