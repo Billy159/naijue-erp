@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T10:52:16.141581+08:00",
+    "at": "2026-11-08T13:54:46.415962+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,11 +28511,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Fixedd250 source/QB44bbe pass, wait only actual next first error. No expanded tests/refactor.",
-      "QB": "d25012 independent PASS, parent expectedRED, original25 reused; adopted. Next only actual new affected delta, no whole suite.",
-      "D2": "Fixedd250 tiny closure localPASS; QB44bbe adopted as external evidence, frozen4272 RESULT unchanged. APP576/history856 reused.",
-      "T45": "14 index actualretired7361, fullarchive/report protection intact. Startup still394633214B short plus tool; one finite pinned coldcode+duplicatearchive read authorized, no arbitrary stop/delete. d25026refs ready, C13 unissued untilcapacity.",
-      "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
+      "D1": "Existing exact batch seam diagnosis delivered; no Node fix or new source tests.",
+      "QB": "Existing real-batch safety review active; six approval/backup/source summary refs requested, original D3 paths only. No index reader.",
+      "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
+      "T45": "Exact singleEXECUTE01index retirement authorized once; prepare native V2 publisher plus exact nonsecret readonly consumer delta, no PG/Node yet.",
+      "D3": "Provide only existing six approval/independent expectation summary paths; no source/records/index rescan. Then actual COMMIT independent readback.",
       "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
     "actualExecution": {
@@ -33305,7 +33305,7 @@
     },
     "currentExecution": {
       "at": "2026-11-08T12:33:44.301571+08:00",
-      "phase": "REAL_EXECUTE01_FAILED_BATCH_AUTHORIZATION_REQUIRED_TERMINAL_CLEANUP_COMPLETE",
+      "phase": "REAL_EXECUTE01_FIXED_BATCH_AUTHORIZATION_ENOENT_T45_PUBLISHER_AND_QB_REVIEW",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "D1 exact source consumer; T45 actual stopped target retained",
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original D1 exact host/CLI production batch authorization consumer diagnosis/minimal fix; QB narrow increment review; T45 sole server waits without replay.",
+      "next": "Original T45 exact single-index retirement and V2 publisher seam; QB exact real-batch review; new actual BOOT/params before revisedEXECUTE, preserve original business keys.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -39268,7 +39268,67 @@
         "databasePrivilegesChanged": false,
         "SQLAndPGAndSignalsAndPermissionWrites": 0,
         "businessTransactionOutcomeNotInferred": true
+      },
+      "indexTechnicalEvidence": {
+        "actualSHA256": "9058d0a123903a56eef34e9bf026eb5f770fe2e8bc4b559e75b2b1d613b0fe33",
+        "jobSHA256": "03630aa8447850a8b873e0695635387fa4f54763f228a858d510066be9a319d7",
+        "indexSHA256": "375bcfdca7fea00f20cfd473ea3920c63e3930e79a7d85a77b3bef7f24261b87",
+        "bytes": 2567147520,
+        "inode": 14563383,
+        "allocatedBytes": 2567327744,
+        "sameFullBytesAsRetained14": true,
+        "summaryStructuralEOF": true,
+        "issueCount": 0,
+        "offlineOnly": true,
+        "importEligible": false,
+        "doesNotReplacePREPARED15": true
+      },
+      "indexRetirement": {
+        "state": "ACTUAL_COMPLETED0_EXACT_ONE_INDEX_RETIRED_ARCHIVE_ALL_EVIDENCE_KEPT",
+        "readySHA256": "6b1189b6d272a2b8d809e6198f4cb489a46729f86a1c15022c197b0d5d663911",
+        "candidateSHA256": "a735df5e2f359b6f8e7452f8b1bac365e7150be0ed48cff6a60a056561b4734d",
+        "sourceSHA256": "94c72ff110df630bcdd0a6da6c45910a61489bb0969c00c1aab5fa7a815c4165",
+        "CDecisionSHA256": "68d6025bf600611eb6995d10c6a4fbf722ec76b210d2b374348882e4e38742d5",
+        "reviewedPins": 9,
+        "noQueuedConsumerConfirmed": true,
+        "oldArchiveAndAllReceiptsPreserved": true,
+        "projectedStartupFloorMargin": 847874,
+        "projectionNotActualFree": true,
+        "jobSHA256": "42d5debc9d51bc123d8f0f5c3c5dd4df38dc7f02569f11b7d102918c2332c28c",
+        "actualSHA256": "0b918dc7974011f5193e072d8d2c206932606e4bc628f619b8f6d117f7fe00d9",
+        "intentSHA256": "b2b948b63f1b2a643be9a67a3d3d32515e54324c10a32489d7c1c44901fc12fe",
+        "exitCode": 0,
+        "elapsedSeconds": 1.6204466740600765,
+        "freeBefore": 5640470528,
+        "freeAfter": 8207798272,
+        "actualFreeDelta": 2567327744,
+        "actualFloorMargin": 282626,
+        "capacityStillRequiresActualNextGuard": true
       }
+    },
+    "r4Execute01ExistingBatchAuthorizationSeam20261108": {
+      "owner": "C exact batch record / T45 sole publisher and nonsecret readonly consumer / QB existing independent real batch review",
+      "status": "ACTUAL_FIXED_LEAF_ENOENT_NO_NODE_SOURCE_CHANGE; PUBLISHER_PREPARATION_AND_REAL_BATCH_REVIEW_IN_PROGRESS",
+      "D1HandoffSHA256": "cee3b5e20fa9fd35ed6d58a9c85945f28076553f4e4a0f05d479789463546152",
+      "D1HandoffMD_SHA256": "b969f2a3c6c2c197ff3cc1e6429cb00e84d40704b2135765f1a14b2c1bdb9690",
+      "fixedPath": "/etc/naijue-erp/fresh35-production-import-v1.json",
+      "format": "FRESH35_PRODUCTION_REAL_IMPORT_AUTHORIZATION_V2",
+      "requiredTopFields": 8,
+      "bindingFields": 17,
+      "metadataActualSHA256": "2e90c3004ac6c20c0966cd2aa48f3d9fecb1f64c2e14bbe0573bcd0ead985aef",
+      "metadataJobSHA256": "e1d3c478d5deeca5b613fa95ad60121d33a5f5cd2403a09cbbb497511d3ec1de",
+      "actualRootAndWorkerOpen": "ENOENT errno2, not EACCES",
+      "parent0711Traversal": "ACTUALLY_VERIFIED",
+      "nativeOrder": "connect/read-only catalog/binding then exact batch authorization before business callback; no rollback inference",
+      "nonsecretConsumerDelta": "Original private=True reader conflicts with worker-readable0640; correct only exact nonsecret record, credential checks unchanged",
+      "sourceCommitKept": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
+      "sourceChanged": false,
+      "QBReviewInputSHA256": "e850dabdb6d933bc818d7227379182e42472f2437d42a714ce314bb842a87de4",
+      "QBReview": "IN_PROGRESS; exact real-batch evidence, not sourceQA44bbe or PREPARED relabel",
+      "actualPublisher": "NOT_YET_RUN",
+      "newBOOTAndParameters": "NOT_YET_ISSUED; previous17epoch stopped",
+      "businessImport": "NOT_VERIFIED",
+      "next": "T45 exact publisher/read-only consumer delta -> QB affected seam and exact batch review -> actual capacity/new BOOT18/params13/V2 bytes -> revised EXECUTE under original business keys; no standalone PREPARE rerun."
     }
   }
 }
