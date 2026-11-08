@@ -3164,3 +3164,10 @@ C精确15字段STOP16决定b3bb0aa3/1274、5min已派原T45，唯一stopkey12:44
 原STOP仍FAILED2/25d321不改判；原键单次readonly 12:47:38实际COMPLETED0/.619s，joba2cf8e6a/550、actuala17753ea/1735及freshstop258916c7/4105已C全读核hash。精确PG3093/guardian3086/Node3177全ABSENT，18654及postmaster.pid absent，cleanup六项true/errors空/data保留/DB权限未改；namespace/原身份/三authority/HBA720原inode14555531均对应。0信号/SQL/权限，未重STOP。真实freshstop serverraw d7cc2728/3475，collect同JSON pretty258916c7/4105是下一BOOT实际输入，明确载体区别，未伪称取得原raw。45 restored/exact2投影absence仍真，free8270688256。停止首子异常仍未知，不因1秒耗时猜因，也不为非阻断诊断新增一轮。
 
 下一原T45以真实freshstop准备BOOT17/params12常量后继；当前没有新BOOT、业务EXECUTE、核账或正式部署通过。native PREPARED15和全部证据保留，BOOT后原EXECUTE45自带完整重建，不再独立预检。
+
+
+## 2026-11-08T13:02:04.723361+08:00 BOOT17实际成功，参数12准确发布待回
+
+C核非时间READY591deeea全部42refs/12必要delta，Python仅常量、4criticalhelpers原字节；成功PREPARED15/stop真实证据保留，roleclient只旧expiry CAS三处。C6aa4363e/1405签5min启动、guardian90min/role晚30秒前截止/ref333。原BOOT17唯一key12:57:11实际COMPLETED0/4.129s，joba011e8dd/548、actual356c616a/1034，observer2afc5c59/3973（job7541b269/521）已C实读。新PG3378/start301212544、guardian3371/start301212497 live，epoch04:57:08.477902UTC，SID/OID/PGDATA/installation不变；HBA720原inode/metadata真恢复，client/restorer已回收，两既有role05:11:05.346→06:25:31.428UTC且attributes/grants/create不变。passwordChanged被collect遮盖不冒actual布尔，独立认证仍未验。当前free8269660160超过原floor，未发业务EXECUTE。
+
+参数12READYb75568cb四refs已核，publisher四None按C/实际restart/start/ref重构完全176aebeb/11321，entry仅transitiveSHA完全62ec97d9/4499。restart实际1638B/e21通过原2非秘密缺项重建canonical全hash验证，方法保留。C准确参数ebc0116a/1725原字节已派，start1794113761428/expires1794119131428/authorizationExpires1794119161428与role/guardian实值一致；待唯一params12回新inode/accesshash，随后C原45分钟EXECUTE。无独立PREPARE、无新源码QA或构建。真实导入、独立核账、普通历史业务、恢复和正式部署仍未通过。

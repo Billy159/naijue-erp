@@ -33305,12 +33305,12 @@
     },
     "currentExecution": {
       "at": "2026-11-08T12:33:44.301571+08:00",
-      "phase": "REAL_PREPARED_BOOT16_ACTUAL_STOP_RECOVERED_WAIT_EXACT_BOOT17",
+      "phase": "REAL_PREPARED_BOOT17_ACTUAL_LIVE_PARAMS12_PUBLISH_DISPATCHED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "T45 terminal restore proof and minimal index/space binding; C exact next scope",
       "nextOwner": "C authorized EXECUTE45 after current prerequisites; D3 independent actual readback",
-      "latestActualReceiptSHA256": "a17753ead7928d7931c82caae8cccffdc7d68913763dc5d4e53173fd62c01721",
+      "latestActualReceiptSHA256": "2afc5c59612f7e8b6e3bdae3cbcf2bf8bdde1189acc8dfc8eb3850fa7fd8da4d",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 prepare original BOOT17/parameters12 minimal constant successor bound to actual freshstop258916; C exact time scope, then native PREPARED15 direct EXECUTE45.",
+      "next": "T45 actual params12 CAS/newinode/access readback then C original business EXECUTE45 precise scope. No standalone PREPARE.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33382,7 +33382,7 @@
         "actualIndependentQBReceiptSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29"
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "53675ae5c92f2ec884ed69325d93e5f8a7dfaa83",
+      "githubReadbackCommit": "5e190ef6a64fc2358fa9b8ed02729136d79e04ce",
       "boundaryQBReceiptSHA256": "1dc67c609d7f68ed54ce2105886af49909887a4b5c4ba3ba64e4a4ea57528dda",
       "opsQBReceiptSHA256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
       "stageReadonlySHA256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7",
@@ -33397,7 +33397,7 @@
         "cid": "5d8eb16163d22593513a01ad3d7ddb600fd2fce482e9a98886aade33d2b3fb06",
         "systemIdentifier": "7705224458832691236",
         "databaseOid": 16393,
-        "postmasterStart": "2026-11-08 00:02:53.78896+00",
+        "postmasterStart": "2026-11-08 04:57:08.477902+00",
         "serverVersionNum": 170011,
         "programSHA256": "69e1a3cfa70d2304b9fca3f7338b0ac55dc038e015bdae67f0c213238f49ad2d",
         "targetSHA256": "8b9fb64ac1cccb9bdaec4c68a3ceaf468052f71e8fb3e48baeba3581ec9bfff0"
@@ -33463,9 +33463,9 @@
       "importToolSourceSetSHA256": "f648efa6191f800abe64b8402e5ddbeb2dbd80c7587f0855ad147a23b7a7b529",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
-        "requestKey": "t45-r4-retained-restart-20261108-16",
-        "sha256": "e5f8b9f9328c340addc906aed92f88293e3c64a0d5e81888c220ba572347c6cb",
-        "actualEpoch": "2026-11-08 03:43:54.589972+00",
+        "requestKey": "t45-r4-retained-restart-20261108-17",
+        "sha256": "e21b46ef932b90132a40ca9b15a5cb547f53d58f894d2c1706f5001fee26b25b",
+        "actualEpoch": "2026-11-08 04:57:08.477902+00",
         "businessVerified": false
       },
       "lastCleanStopMetadataReceiptSHA256": "6a06254c906c538f8ab44a4e5181db0266f705b3611967370818c6327e017b10",
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "ACTUAL_GUARDIAN3086_PG3093_NODE3177_ABSENT; original STOP job stays FAILED2, independent original-key recovery COMPLETED0"
+      "currentR4ProcessState": "ACTUAL_BOOT17_PG3378_START301212544_GUARDIAN3371_START301212497_LIVE_IN_EXACT_NAMESPACES"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -39123,6 +39123,60 @@
         "originalJobVerdict": "FAILED2_NOT_REWRITTEN",
         "firstChildException": "UNKNOWN_NO_FURTHER_DIAGNOSTIC_NEEDED_TO_ADVANCE_ACTUAL_STOP"
       }
+    },
+    "r4Boot17Parameters12Preparation20261108": {
+      "owner": "T45",
+      "readySHA256": "591deeeaef0eeb832255645cbaefc27d59bbf0931aa6a59624e1d1169bf65e94",
+      "fixedReferencesVerified": 42,
+      "changedSourceGroups": 12,
+      "pythonASTIgnoringConstantsUnchanged": true,
+      "fourCriticalHelpersUnchanged": true,
+      "carrierSHA256": "f7c38ce0cb126add8749c3dadde56835ecf290c65abf53bbc8b305cd597ba287",
+      "planSHA256": "dca772dd8173b9914ec1804d95ddbbee95385acbd39f896d51cc6795c90af002",
+      "CBOOTDecisionSHA256": "6aa4363ea90ccc5619f7bd6fdf5d663bf4de20177594108e07a26ae0928fc001",
+      "startsAt": 1794113761428,
+      "BOOTExpiresAt": 1794114061428,
+      "guardianExpiresAt": 1794119161428,
+      "roleExpiresAt": 1794119131428,
+      "roleValidUntil": "2026-11-08T06:25:31.428Z",
+      "actualBOOTJobSHA256": "a011e8dd32ca3b045bffc55d24f6bd15010d56fce29bd808813a94d852fc4774",
+      "actualBOOTReceiptSHA256": "356c616a9a3c85878b9c4988b389289fe070bfa747b73cf6f622ae43160fbe73",
+      "actualBOOTSeconds": 4.129432627,
+      "restartRawSHA256": "e21b46ef932b90132a40ca9b15a5cb547f53d58f894d2c1706f5001fee26b25b",
+      "restartRawBytes": 1638,
+      "restartCanonicalHashReconstructionVerified": true,
+      "observationSHA256": "2afc5c59612f7e8b6e3bdae3cbcf2bf8bdde1189acc8dfc8eb3850fa7fd8da4d",
+      "observationJobSHA256": "7541b26992bb9a9ec05d282238be0486f7139d5fd00d2194e662dd23af278390",
+      "guardian": {
+        "pid": 3371,
+        "starttime": "301212497",
+        "alive": true
+      },
+      "postgres": {
+        "pid": 3378,
+        "starttime": "301212544",
+        "alive": true
+      },
+      "actualEpoch": "2026-11-08 04:57:08.477902+00",
+      "hbaOriginalBytesAndInodeRestored": true,
+      "roleAttributesUnchanged": true,
+      "roleCreated": false,
+      "grantsChanged": false,
+      "roleClientAndRestorerReaped": true,
+      "passwordChanged": "COLLECT_REDACTED_NOT_CLAIMED_ACTUAL_BOOLEAN",
+      "freeBytes": 8269660160,
+      "parametersBindingReadySHA256": "b75568cb64ad2b90cd129d80a9597eb8c6c50ab3a6b653eede3a8aa7f3df2908",
+      "publisherFourNoneBindingsExactlyReconstructed": true,
+      "publisherSHA256": "176aebeb74563e816c3fd21dac4a18a452c89a258a7c59c06afbdbac984c6051",
+      "entryOnlyTransitivePublisherHashChanged": true,
+      "entrySHA256": "62ec97d902971f54920ec9108723cb18829a54c31497694a2b7fc4cb427b372a",
+      "CParametersSHA256": "ebc0116a575e17eabf6945c2b35291b7e2692f628df650d4ff395d64b3c88649",
+      "CParametersBytes": 1725,
+      "parametersState": "DISPATCHED_NOT_ACTUAL_YET",
+      "businessEXECUTESubmitted": false,
+      "nativePREPARED15Preserved": true,
+      "noStandalonePREPARERerun": true,
+      "Fast": "UNVERIFIED"
     }
   }
 }
