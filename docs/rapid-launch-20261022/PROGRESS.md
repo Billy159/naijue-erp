@@ -2697,3 +2697,21 @@ C核PREPARE13 READYcba7cd8a/5397的10refs，除key/时间/参数/access外与原
 同273948调拨行REGISTRY累计634159.155ms，对原12的523429.130ms，本次cache32没有显示该热点改善，原源码/合成PASS不改为真实性能PASS。原D1只读这两次脱敏数值并沿原stream-preflight唯一writer作最小修复，必要正确性检查后交QB增量；不再假模型循环、扩20min或原样重试。正式PG事务/权限/幂等/完整核验保持，允许优化临时SQLite内部实现。T45只准备本次index inode14562062/2457419776B+journal14562066/79464B完整归档及准确退役；原日志/资料/备份/前12归档保留。
 
 D2复用物料已确认无新构建缺口：APP576正常EXACT35入口包940d5cee与完整Linux b8069af0；历史856 runner仅HISTORY_ANCHOR_ONLY，不能代替普通账号全业务。C核两个小RESULT1c1d5a7e/b968e4b5，既有包hash采用原有效证据，无重包/重验/读真实行。当前身份已明确更新为R4 CID5d8/SID7705224458832691236和BOOT14实际epoch；前一目标保留历史字段。上个C断点77a3d3acccc2c58350cbc5e0010623148e159a1e已推且远端核实。真实导入/独立核账/历史业务/新35恢复/正式入口切换均未完成。
+
+
+## 2026-11-08T08:48:42.296864+08:00 已核实用户下一轮60分钟裁决，源码热点修复继续
+
+C实际read原Chat01a19f9f/turn01a1b89e-a59a/user01a1b89e-a5b5的直接人类原文：“下一轮预检设为 **60分钟上限吧 你告诉主控**”。下一新键PREPARE14上限3600000ms，覆盖原C20min口径；不补时/重放13、不改变EXECUTE与切换前置，60是上限不要求跑满。T45负责原ops/outer/role/guardian期限配套，guardian沿原≤90min ANDservicelease；D1只处理自己owned host若有实际限制，不双写。磁盘/内存/采样/完整验证保留，无需就这次期限再次向用户申请。
+
+D1已交实际热点定位，修复为完整identity_keys复制到FILE型TEMP WITHOUT ROWID专用pager、main28+TEMP4总预算32MiB，原main与正式PG原子性/校验保留；42项定向通过，规模检查/固定提交/独立QB仍待。原受控SQLITE_TMPDIR/TMPDIR按每作业0700目录复用，Linux新增TEMP落点尚未实测。T45原13归档READY3358的12refs和archive3443经准确literal替换与已执行d643 AST一致；C e7841fe8/1281签仅一次成组保全，actual archive/退役仍待，不能先称已释放启动空间。
+
+
+## 2026-11-08T09:04:28.000318+08:00 TEMP修复2b6与60min两谓词通过独立增量，13现场完整保全后退役
+
+D1固定2b6b1e53547222bee372f0c6a7468ff3319774cb（父8e/tree042f），只有runtime b8448506/38702与testc4e0fa1c/45379两叶；HANDOFFbf00/5641，作者42+规模1均PASS、partial-copy失败无有效summary/plan，原main bytes/hash/完整requests/totals一致。实际push/readback eac6/718单次3.522s，无force。QB独立4项PASS/0skip，原42+规模直接复用；同轮60min两谓词source-onlyPASS，逆撤恢复原8c256，其他模式/PG/权限/资源保护不变，QB3f90d268/4259，C采用不重复技术验收。
+
+D2唯一2b6小工具包0cf1cb8c/1148268、本机loader/CLI/361成员读回通过，sourceSet8f6d1841/216-180；冻结RESULT28bd7220/9057不再回填QA，以上3f90为独立旁证，C核5物料pins。无APPbuild/新依赖/真实行读取。T45 source60草案0335/127684只改两个PREPARE上限，outer拟3900仍待实际通道；角色/guardian须新90min内覆盖60min与余量，旧7edf/BOOT14占位非运行权限。实际Linux TEMP磁盘/FD/RSS/收益、native binding、608916导入核账均未验。
+
+原13归档实际946ab425/2846（job48b0，0/49.569s）两成员全字节与完整metadata核对，无占用；archive dd9b6bac/320223963B/root0400。C核6退役refs、签d913e081/1407后，唯一退役实际a8f6cb2f/1812（jobe366，0/1.570s）仅移除已保全index14562062+journal14562066，实际释放2456559616B，余8166342656B，距原启动floor仍差41172990B，未标达标。全部原13记录/旧档案/authority/资料/备份保留，不称SQLite或DB恢复验证。
+
+T45正按用户已批服务器清理范围，核原清单中最小足额旧停用APP叶；无当前线上/回退/R4/数据/备份删除。原26archive+12payload已退役的38项直接采用旧回执，不重删；新只读键仅核两个旧web叶，实际占用/引用/可重建结论待回。下一步最小空间补足→2b6准确paired传输/加载/策略恢复→新BOOT15/参数10→PREPARE14最多60min。上个C断点35ccc5e96a6aa9450c5880e6a75572b838bceca2已推并远端读回；正式入口未切换。
