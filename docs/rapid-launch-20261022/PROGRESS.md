@@ -2915,3 +2915,10 @@ C核最终READY6bf22681五文件和publisher54343e40，只五个准确摘要绑�
 T45临提交核双registry/jobdir无原key后，唯一t45-r4-real-execute-20261107-02已QUEUED→RUNNING，unit2f577d485aa0；业务截止仍15:10:08.979BJT，outer3000仅清理。不重放EXECUTE01、不另PREPARE、不换数据库批次或请求键，长作业期间无并发serverobserver。授权文件保持到writer及独立读回终态。原QB仅补其既定实际绑定/发布增量；没有扩大验收。COMMIT、独立核账、普通业务、备份恢复和正式部署均仍未通过。
 
 14:38 补记：原QB实际绑定/发布增量9b6bbdca/13697为PASS_REQUIRED_NARROW_BINDING_AND_PUBLICATION_READBACKS，C已读取采用。只关闭exact8/17、五摘要、BOOT18/params13及root/worker实读项；原d987不改、零测试重跑/服务器/PG/真实明细。EXECUTE02运行中，COMMIT及其后核账/业务/恢复/切换仍待，不据publication误称业务通过。
+
+
+## 2026-11-08 15:00 — EXECUTE02实失败，提交状态未知；禁止重导，转原键恢复
+
+14:56:14.144BJT实际FAILED2/1509.257s，job19904488/508、actual75cf0bf7/1569已C实读。Node exit-9、STOPPED_OUTCOME_UNKNOWN，无reason或明确CLI code，state/connectionCleanup/verification均UNKNOWN。14959samples/maxgap.235865<.25，各卷min5423525888>4GiB；未到15:10窗。3reap真/45原输入metadata恢复真；cleanupComplete真但controllerStopped假/rollbackProven假。不得凭-9判断OOM、没有写入或已回滚。
+
+原T45接续在途唯一终态reader，核owned Node/guardian3592/PG3599、exact2投影absence及batch0dc/inode14563387原身份；仅补与失败时刻有关的cgroup/资源/kernel/原guard/CLI必要脱敏首因事实，累计OOM计数不单独定因。D1原owner只核既有inspect/lockAndInspect如何按原binding/批次/请求键最小恢复，不先重跑25分钟编译或造平台，0server/PG。batch授权与全部index/失败现场保留，不重放EXECUTE02或01、不换键重导。独立核账/业务/恢复/上线仍未通过。

@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T14:34:04.644177+08:00",
+    "at": "2026-11-08T14:59:48.739567+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,11 +28511,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Original seam diagnosis delivered; d250 unchanged, no duplicate source repair.",
-      "QB": "Narrow actual9b6bbdca PASS adopted; wait actual terminal evidence, no further task until meaningful delta",
+      "D1": "Existing inspect/lockAndInspect minimal original-key recovery entry source only; no server",
+      "QB": "Narrow publication PASS kept; next only actual affected evidence",
       "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
-      "T45": "Unique EXECUTE02 actually RUNNING; original-key collection only, no concurrent observer",
-      "D3": "Existing six scopes/reviews/expectation paths delivered. Wait actual COMMIT independent readback.",
+      "T45": "Necessary exact terminal metadata/first-cause bounded readonly; no writer replay",
+      "D3": "Wait proven actual COMMIT; no rescan or real-record re-cleaning",
       "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
     "actualExecution": {
@@ -33304,13 +33304,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T14:34:04.644177+08:00",
-      "phase": "EXACT_BATCH_PUBLISHED_EXECUTE02_RUNNING_PENDING_COMMIT_AND_INDEPENDENT_READBACK",
+      "at": "2026-11-08T14:59:48.739567+08:00",
+      "phase": "EXECUTE02_FAILED_NODE_MINUS9_UNKNOWN_COMMIT_NEEDS_ORIGINAL_KEY_RECOVERY",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 original-key collection; unique actual EXECUTE02 running",
-      "nextOwner": "D3 independent target reconciliation after actual COMMIT/ALREADY; C coordinates ordinary history and restore",
-      "latestActualReceiptSHA256": "1dba19dc88d14203db3bd23ba1bffded40a6d1228c9ecaa3bcd983bab160e8f9",
+      "currentOwner": "T45 exact terminal/first-cause readonly; D1 existing original-key recovery source seam",
+      "nextOwner": "C adopt actual result then original-key status; D3 reconciliation only after proven COMMIT",
+      "latestActualReceiptSHA256": "75cf0bf7f59303ec21e33b77e6ca35c336951b56018b0f130e1d204a93f66a60",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Wait original EXECUTE02 terminal; unknown uses same DB keys inspect/lockAndInspect; then D3 actual target independent reconciliation.",
+      "next": "T45 exact terminal metadata and bounded first-cause read only; D1 existing original-key inspect/lockAndInspect seam. No replay/new batch keys/publisher retirement.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33444,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "First EXECUTE01 actual FAILED2/1459.612s at13:33:58.999BJT. CLI FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED/NOT_STARTED; guard REAL_STREAM_CHILD_IDENTITY_CHANGED. Actual terminal cleanup completed separately; no business or rollback PASS.",
+        "REALImport": "EXECUTE02 actualFAILED2/1509.257s, Node-9, CLI allUNKNOWN; exact publication remains PASS, COMMIT/rollback unproven. Original-key recovery only.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33484,7 +33484,8 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "EXECUTE02_RUNNING_SAME_BOOT18_RETAINED_TARGET"
+      "currentR4ProcessState": "NODE_REAPED_BY_ACTUAL_GUARD; GUARDIAN_AND_PG_CURRENT_STATE_PENDING_TERMINAL_READ",
+      "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -39400,7 +39401,7 @@
     },
     "r4RealExecute02_20261108": {
       "owner": "C exact existing authorization; T45 sole publisher/executor",
-      "status": "BATCH_AUTHORITY_PUBLISHED_AND_ROOT_WORKER_READBACK_PASS_EXECUTE02_ACTUAL_RUNNING",
+      "status": "ACTUAL_FAILED2_NODE_MINUS9_BUSINESS_OUTCOME_UNKNOWN",
       "nativeBatchSHA256": "0dc0ecb1a0fd099b16f84c3debec083a1fc93bdcc0e0d387f6362d19eb5e0af1",
       "nativeBatchBytes": 2094,
       "executeSHA256": "04a795ffb6017176e7f65b3a59ae4e8e92e38c292cb8e45434850fab9d14facc",
@@ -39415,7 +39416,7 @@
       "standalonePREPARE": false,
       "businessImportVerified": false,
       "independentReadbackVerified": false,
-      "next": "T45 original-key terminal collection only; retain batch leaf through write and independent readback. No concurrent server observer.",
+      "next": "T45 exact terminal metadata and bounded first-cause read only; D1 existing original-key inspect/lockAndInspect seam. No replay/new batch keys/publisher retirement.",
       "actualPublisherSHA256": "8424a35fea3106652711c74c1e96da8937ded83bb831882f6489e18121f4ac46",
       "actualPublisherJobSHA256": "056ee7a91badc6229d87e4c46fffec6a94075a163e221791550bfb251cb20a76",
       "actualPublisherElapsedSeconds": 0.468264449,
@@ -39432,7 +39433,7 @@
         "nlink": 1,
         "bytes": 2094
       },
-      "actualExecutionState": "RUNNING",
+      "actualExecutionState": "FAILED",
       "actualUnit": "naijue-erp-op-5cc58239-2f577d485aa0",
       "automaticRetry": false,
       "narrowActualQBResult": {
@@ -39440,7 +39441,25 @@
         "sha256": "9b6bbdca261936b183412ba7c88c3dfa22d2fc8d6133f3a5795df5806d923f48",
         "bytes": 13697,
         "scope": "Actual C eight keys/unchanged17 binding/five SHA constants/BOOT18 params13/root and worker publication readback only. No COMMIT/reconciliation/production PASS."
-      }
+      },
+      "actualResultSHA256": "75cf0bf7f59303ec21e33b77e6ca35c336951b56018b0f130e1d204a93f66a60",
+      "actualResultBytes": 1569,
+      "actualJobSHA256": "1990448838be749f320b578c75c373f97353ed844a480cbe52b175e80873afc7",
+      "elapsedSeconds": 1509.2574120219797,
+      "finishedAtUTC": "2026-11-08T06:56:14.144194+00:00",
+      "nodeExitCode": -9,
+      "guardState": "STOPPED_OUTCOME_UNKNOWN",
+      "CLISubstate": "UNKNOWN",
+      "connectionCleanup": "UNKNOWN",
+      "verification": "UNKNOWN",
+      "transactionRollbackProven": false,
+      "COMMITProven": false,
+      "samples": 14959,
+      "maxSampleGapSeconds": 0.23586538387462497,
+      "minimumFreeBytes": 5423525888,
+      "originalInputMetadataRestored": true,
+      "exactTwoProjectionAbsence": "PENDING_TERMINAL_READER",
+      "failureCause": "UNKNOWN; signal-9 alone does not prove OOM; no guard reason in current receipt"
     }
   }
 }
