@@ -48,8 +48,8 @@ async function runStreamOperation(argv,verifyOnly,whole){
  // Explicit Fresh35 selection never routes through either historical host.
  const fresh35=Object.hasOwn(v,'--target-profile'),productionReal=v['--target-profile']==='FRESH35_PRODUCTION_REAL_IMPORT_V1';
  if(flags.has('--prepare-only')&&(!productionReal||whole||verifyOnly||flags.has('--inspect-only'))||productionReal&&(whole||flags.has('--allow-synthetic')))throw Error('OPTION_INVALID');
- const retained=v['--retained-preflight'];
- if(retained&&(!productionReal||whole||verifyOnly||!flags.has('--inspect-only')||flags.has('--prepare-only')))throw Error('OPTION_INVALID');
+ const retained=v['--retained-preflight'],hasRetainedOption=Object.hasOwn(v,'--retained-preflight');
+ if(hasRetainedOption&&(retained===''||!productionReal||whole||verifyOnly||!flags.has('--inspect-only')||flags.has('--prepare-only')))throw Error('OPTION_INVALID');
  if(fresh35){
   const diagnostic=await import('./fresh35-receiver-diagnostics.ts');
   if(v['--target-profile']!==diagnostic.FRESH35_RECEIVER_TARGET_PROFILE&&v['--target-profile']!==diagnostic.FRESH35_PRODUCTION_REAL_IMPORT_PROFILE)throw Error('OPTION_INVALID');

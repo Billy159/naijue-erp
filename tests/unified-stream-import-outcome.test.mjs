@@ -180,3 +180,9 @@ test('retained inspection CLI uses the original summary/index path without sourc
  await assert.rejects(bad.runStreamImport([...args,'--retained-preflight',retained]),/OPTION_INVALID/);
  await assert.rejects(bad.runStreamVerify([...args,'--inspect-only','--retained-preflight',retained]),/OPTION_INVALID/);
 }));
+
+for(const inspectOnly of [false,true])test(`explicit empty retained-preflight is rejected before any work, inspectOnly=${inspectOnly}`,async()=>withProductionCliInputs(async args=>{
+ const m=await productionCliModel('COMMITTED');
+ await assert.rejects(m.runStreamImport([...args,...(inspectOnly?['--inspect-only']:[]),'--retained-preflight','']),error=>error.message==='OPTION_INVALID');
+ assert.deepEqual(m.events,[]);
+}));
