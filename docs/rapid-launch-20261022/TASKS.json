@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T23:24:06+08:00",
-  "stage": "OLD_TWO_IMAGES_ACTUALLY_RETIRED_15AF_DIAGNOSTIC_TOOL_SOURCE_PASS_PREPARING_LINUX",
-  "lastVerifiedRemoteCommit": "52aa6aeb15e3861a4032072419b7cc0a0a2e9ff9",
+  "updatedAt": "2026-11-08T23:46:04+08:00",
+  "stage": "USER_REQUIRES_WHOLE_RETIREMENT_TWO_OLD_FORMAL_SYSTEMS_KEEP_ONLY_NEW_REQUIRED_MATERIALS_BEFORE_IMPORT",
+  "lastVerifiedRemoteCommit": "e72af2fe271796eac833b855a0f8297b6967940c",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,12 +28514,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Two exact old R50 images actually deleted; prepare original 15af tool upload/Linux loading and bounded stderr phase collection; no new PG yet",
-      "D1": "15af phase observation source handed off and QB accepted; await actual stage before direct cause fix",
-      "D2": "15af single frozen tool ready; original prior materials retained; no APP build",
-      "QB": "e1d6 accepted; no repeat of prior30 or technical QA",
-      "D3": "Original400e COMMIT UNKNOWN; independent reconciliation only after authoritative result",
-      "QF": "Wait real35 normal app/auth; no filler work"
+      "T45": "Priority whole retirement of two actual old formal systems and unrelated app assets, keeping only new R4 and necessary data/recovery/runtime; accurate full executable list then deletion. No BOOT28/import yet. Local parser02 exact fix and next carrier prepare may continue.",
+      "QB": "Original parser01 closed, parser02 only affected follow-up; no prior30 or PG rerun",
+      "D1": "15af source accepted and Linux loaded; await real phase for direct cause fix",
+      "D2": "15af frozen material accepted; no duplicate packaging/build",
+      "D3": "Original400e COMMIT stillUNKNOWN; no reimport under new key",
+      "QF": "Wait new real35 normal app/auth"
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -35752,10 +35752,10 @@
       "at": "2026-11-07T19:59:37.707927+08:00",
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
-      "protected": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped.",
-      "state": "ACTUAL05_CACHE_RETIREMENT_COMPLETE_R4_START_SPACE_MET_RESTORE_NEED_UNKNOWN",
+      "protected": "Current new R4/15af system and necessary runtime/recovery materials; real business DB/data/originals/media/backups/original receipts; required SSH/Docker/operations/shared service. Old public applications or old rollback applications have no blanket preservation after latest direct user override.",
+      "state": "LATEST_HUMAN_DIRECTIVE_RETIRE_TWO_OLD_FORMAL_SYSTEMS_AND_ALL_UNRELATED_APP_ASSETS_KEEP_NEW_SYSTEM_REQUIRED_MATERIALS",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "R4 original startfloor met; preserve06 unique interrupted evidence. OriginalT45 only existing new35 backup/restore capacity evidence assessment, no new restore or old47 threshold substitution.",
+      "next": "Original T45 exact whole old-system retirement inventory from actual formal configs/ports/process/mounts, one executable fixed list; C consumes existing explicit authority immediately. Do not substitute two old images for retirement of two systems.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35794,13 +35794,14 @@
         "live_applications": "14 real Node entrypoints on namespace port3000 and3 nginx on8080; not sleep-only; kept."
       },
       "latestHumanOverride": {
-        "sourceChat": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
-        "humanMessage": "01a1b5c3-8b61-7d62-88a0-5e8c3b499a0f",
-        "verbatim": "旧的服务器上所有旧的东西可以都不要了 你和主控说",
-        "directlyReadByC": true,
-        "meaning": "Server old-system retirement authorized; old rollback use or lack of reconstructability alone no longer blocks clearly retired application assets. Fix exact path/CID/image list and current consumers before execution.",
-        "stillProtected": "Current R4,9f/af/currentAPP576 materials, true import source and necessary identity mappings, current receipts, current credentials and shared connection/proxy services. Local workspace and frozenDemo excluded.",
-        "dataBoundary": "Prioritize old applications/builds and dedicated old containers/images. Before any actual database/unique backup removal, prove relation to current retained real sources and current dependencies; unknown blocks only that item. No indiscriminate prune."
+        "at": "2026-11-08T23:44:40+08:00",
+        "first": "I require deleting the two old formal systems, retaining the new system, then importing.",
+        "second": "Except the new system currently to be launched, retain no unrelated things in the online environment.",
+        "owner": "Original T45 server executor, C exact target coordination",
+        "effect": "Whole old application systems including exact service/container/app root/old routes/builds/images/caches may be retired. Prior preservation of old public app/rollback app or20ee solely for old package rebuilding is superseded if no new-system or necessary data-recovery dependency.",
+        "doNotInfer": "No permission inferred to erase unique real data/media/backups, current R4 inputs/unknown original transaction, required operations or unrelated projects of unverified ownership.",
+        "order": "Complete in-flight small item and restore; bind actual old two formal targets and necessary keep list; retire application systems and read back actual deletion/space; preserve R4 and then resolve original key before import/reconciliation.",
+        "repeatedUserApprovalRequired": false
       },
       "nextFixedBatch": {
         "sourceListSHA256": "f539d81c6720fb07900b825973ac9491bbde780604ffdd565f3293a6f99d172f",
@@ -35886,7 +35887,8 @@
           ],
           "newServerActionsForThisAssessment": 0
         }
-      }
+      },
+      "historicalProtectedBeforeLatestWholeSystemDirective": "Current public app, current rollback, R4 and current materials, all actual data, backups, original receipts; unknown or occupied skipped."
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
       "owner": "Original D1 only",
@@ -40699,7 +40701,7 @@
             }
           },
           "phaseObservationSuccessor": {
-            "status": "SOURCE_QB_PASS_FIXED_TOOL_READY_LINUX_NOT_YET_VERIFIED",
+            "status": "15AF_LINUX_LOAD_PASS_AND_POLICY_RESTORED_CARRIER_PARSER02_PENDING_NO_NEW_BOOT",
             "commit": "15afb4bfdec3a564252697d4e155101ef4bcd1f1",
             "parent": "9d67925dfeacc04b55c030f994f4800e0e084d98",
             "tree": "3b5eb9fbfcb0fc0d8f2e0b4bab1acc490fc57540",
@@ -40720,7 +40722,50 @@
             "realSlowPhase": "UNKNOWN",
             "originalCOMMIT": "UNKNOWN",
             "hostReturnedDoesNotMeanClosed": true,
-            "sourceNoValidationBypass": true
+            "sourceNoValidationBypass": true,
+            "LinuxActual": {
+              "RESULT": "87dac2469dc08510e0de02b399c8e69f23047013e50234143bb3e633f2675e86",
+              "RESULTBytes": 4079,
+              "materialize01Failure": "REAL_ACCESS_REFERENCE_KEY_REQUIRED in old f56 metadata carrier before archive/target/Node; original failure preserved not replayed",
+              "successor02Helper": "b51a23f53dae936d93bbab995cc64670413f683f432e81baf665fe23d42a7191",
+              "reusedPassedCarrier": "6ac9b307b42758f2e8b549dc2947036ce7869f414bdfceb8bacfc5c0669a8aed",
+              "reusedPlan": "1c23959689e8f451ca39cd2306e86ecce3d4f55fc10da171248115c439048693",
+              "C13SHA256": "a1b691ec85e04eebbd72a315486e30f8571e517cdc76ec5553c8cd33732c4d59",
+              "materialize02": {
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-15afb4bf-tool-materialize-20261108-02/transport/release-receipts/t45-r4-15afb4bf-tool-materialize-20261108-02/15afb4bf-tool-materialization.json",
+                "sha256": "77253d5680800d668ea26d7abdc3e8bd387940be9f5c464fc2449df4471ce283",
+                "bytes": 1783
+              },
+              "postLoadPolicyReadback": {
+                "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-15afb4bf-post-load-policy-readonly-20261108-01/transport/release-receipts/t45-15afb4bf-post-load-policy-readonly-20261108-01/post-load-policy-readback.json",
+                "sha256": "0e2277c3ee0b9b1d34b1c3a88d0f76cf501cdf00c5868eacbbb10b70a15ae068",
+                "bytes": 1760
+              },
+              "policyRestored": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+              "archiveUploadRepeated": false,
+              "Node": "24.21.0",
+              "sourceSet": "c35b81425aaa768e2015c3b6dd504d9d9f53e443315ed29220694c5c5a090926",
+              "sourcePins": [
+                216,
+                180
+              ],
+              "SQLConnections": 0,
+              "newBOOT": false,
+              "businessOutcome": "UNKNOWN"
+            },
+            "phaseCarrier": {
+              "original": "68d2d2734605faad0cf2f0a50338d3bbe71331558dd82bb27b0b8c376f89284b",
+              "R1": "edba4339f1a9559bea0c479f06d09225a73b82568e8237108c1676091d2dcb84",
+              "QBoriginal": "73501426 /2055 NEED_FIX_PARSER01_AND_PARSER02",
+              "QBR1": "63b73364 /1362 NEED_FIX_PARSER02_ONLY",
+              "PARSER01": "CLOSED in local scoped tests; malformed line must not erase prior valid phases",
+              "PARSER02": "CLOSED by exact four V1/V2 phase additions; local saved actual-producer compatibility only",
+              "sourceAndPGNotConfused": true,
+              "R2": "48f644e84ea43463d616ec538f9efa41ee35933f3944e32ca25aa5708607c6a8",
+              "R2QA": "b4f4f986bb0cd8ecc8b65ad77fbc293291dfa0c4ba41978a686ed71c0d7d9f76",
+              "R2QABytes": 4817,
+              "status": "PARSER_SOURCE_AND_SAVED_PRODUCER_PASS_STILL_NOT_RUNNABLE_NEW_WINDOW"
+            }
           }
         }
       }
@@ -40878,7 +40923,7 @@
     "latestOldOnlineRemovalClarification": {
       "at": "2026-11-08T20:49:43+08:00",
       "source": "User current controller message authorizes old online environment retirement",
-      "scope": "User explicitly permits retirement of the confirmed old online application, including orderly stop of its precise application service to release references, then deletion of rebuildable code/dependencies/duplicate builds after preserving recovery source. Do not stop/delete business DB or shared R4/new application materials.",
+      "scope": "Latest human explicitly requests removal of both old formal systems and all unrelated application assets. Preserve only current new system and necessary real data, backups, originals, runtime and recovery dependencies; exact target and mount references must be verified before removal.",
       "preserve": [
         "R4 and current required materials",
         "real business data/originals",
@@ -40891,7 +40936,7 @@
       "readOnlyStartFloor": 5368709120,
       "fullWriterFloor": 8207515646,
       "fullWriterGapBytes": 2571116542,
-      "execution": "14 old apps stopped; three web leaves and 708 exact dependency directories actually deleted. 505270272 bytes freed by dependency retirement; remaining eligible old versions delegated to original T45 without repeated human permission. Current R4 all stopped.",
+      "execution": "Two images and prior708dependencies are partial cleanup only; not whole two-system deletion. Whole systems now first operational priority.",
       "latestInventory": "Exact33 container metadata gathered. Old R1/R2 timeout/sleep without PG but shared data mounts retained; other exact old ERP Node services require recovery provenance binding before retirement. Not a claim of all old environments removed.",
       "supersedes": "Earlier blanket preserve-current-old-online-application statement only. Existing real data, attachments, backups, R4 dependencies, original request evidence and necessary recovery material protection remains.",
       "dispatchAt": "2026-11-08T21:24:52+08:00",
@@ -41031,6 +41076,16 @@
           "remainingFullWriterShortfall": 2571116542,
           "finishedAtUTC": "2026-11-08T15:20:42.313267+00:00"
         }
+      },
+      "wholeSystemDirective": {
+        "at": "2026-11-08T23:44:40+08:00",
+        "first": "I require deleting the two old formal systems, retaining the new system, then importing.",
+        "second": "Except the new system currently to be launched, retain no unrelated things in the online environment.",
+        "owner": "Original T45 server executor, C exact target coordination",
+        "effect": "Whole old application systems including exact service/container/app root/old routes/builds/images/caches may be retired. Prior preservation of old public app/rollback app or20ee solely for old package rebuilding is superseded if no new-system or necessary data-recovery dependency.",
+        "doNotInfer": "No permission inferred to erase unique real data/media/backups, current R4 inputs/unknown original transaction, required operations or unrelated projects of unverified ownership.",
+        "order": "Complete in-flight small item and restore; bind actual old two formal targets and necessary keep list; retire application systems and read back actual deletion/space; preserve R4 and then resolve original key before import/reconciliation.",
+        "repeatedUserApprovalRequired": false
       }
     }
   }
