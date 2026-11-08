@@ -3204,3 +3204,17 @@ The start-to-CLI handoff consumed most of the fixed window. Next bounded attempt
 Hostrestore04 actual11f7addc/1115 COMPLETED0/.668797s restored original1af inode14563415,originalmtime,naturalctime1794146422943044178;old authority not renewed. Exactowned26 jobf95700d6/552,actuala06fbd35/5676 COMPLETED0/.468661s confirms PG4563/guardian4555/sampler4562,port18654,postmaster.pid absent;45metadata,HBA,parentroot0711/noACL,1af/0dc/a7d correct;both private projections andinspection removed. Rawf4false is retained separately from positive final recovery proof. No activePG/window remains. Free5,382,467,584;fullwriter gap2,825,048,062.
 
 OriginalEXECUTE02 remainsUNKNOWN. User latest old online retirement authority is active;T45 immediately continues exact recoverable stopped application code/dependency cleanup, preserving DB/data/backups/R4. The next readonly attempt is not issued until its existing executable steps and required files are prepared offline; do not repeat the consumed start-to-CLI handoff or extend timeout to hide it. Previous all scoped sourceQA,physicalsource andLinux evidence reused.
+
+
+## 2026-11-08T22:42:03+08:00 — 已核708个旧依赖目录，原授权删除已提交；BOOT27后继源验通过
+
+原readonly02实际127.85秒完成，proof b4388bd8/16,618,332字节；12旧payload各59包共708目录/371,509,080逻辑字节，与保留20ee镜像逐成员、类型、内容、符号链接一致。只纳入准确3b848500/96077清单，3项脱敏及37不匹配包/根保留。C消费用户既有退役授权固定9507a733/2021，原T45已提交唯一删除键，原metadata CAS/引用/恢复镜像及R4保护不减；尚未取得真实删除/释放量。首个本地传输被4MiB硬限制拒绝、服务器registry ABSENT，0远端提交；同一proof无损gzip1,009,135字节并限20MB解码、原SHA不变后提交，不放宽传输限制，不重做内容核对。
+
+QB抓出90712184中5处仍选BOOT26，未开窗且保留NEED_FIX。唯一后继b70b63f5/9581已由原QB7d44b5ec/2788窄验通过：5active引用准确27，前驱OLD_BOOT26保留、其余只传播ops6ac9/plan1c239指纹。原4模型/draft45/observer与cleanup有效证据复用。六阶段命令和bundle均离线备妥；当前C新窗未发，先收旧依赖删除终态，不并发PG与清理。原导入COMMIT仍UNKNOWN，不将源码源验或预组称真实业务通过。
+
+
+## 2026-11-08T22:53:25+08:00 — 708目录实际删除释放505MB，BOOT27原键只读已运行
+
+删除01真实FAILED2/.117709秒，原c188e8a9/797确认0items、0删除；原因是.gz不属原传输文本白名单，失败保留不重放。准确后继02使用支持的JSON文本载体146c6fb0/1,345,696，仍为同一b438原proof、限20MB解压和原哈希，C ef896539明确02。实际job18dc28e1/527、result9e3b4301/204869 COMPLETED0/28.289895秒，全部708 DELETED且absent、skipped0，原镜像及R4四authority/data/index/summary/f56保护不变，0SQL/权限/容器删除。实盘free5,339,684,864→5,844,955,136，释放505,270,272字节；完整writer仍差2,362,560,510，不降底线。
+
+待清理完全终态后，C依既有持续授权固定BOOT27 a09070be/1349。实际bootd693ca99/2027、observerb1b51f3e/3566通过，PG4690/guardian4682/sampler4689，epoch14:47:30.791073UTC。C收到即首工具生成params528579f8、inspection0c107d88；publish05实际40d78958/1473后首工具固定45项5f4e02bc及OPSbed389c0。原T45已唯一提交inspect03，提交时余260秒（上轮仅约27秒），原operation截至北京时间22:56:15.684、guardian23:06:15.684，不续旧0dc，不并发清理或写入。当前终态/400e/SQL/原COMMIT仍待实际结果，不把源验、启动或RUNNING写成通过。

@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T22:07:31+08:00",
-  "stage": "BOOT26_ACTUAL_CLEANUP_COMPLETE_ORIGINAL_COMMIT_UNKNOWN_OLD_APP_RETIREMENT_AND_NEXT_OFFLINE_EXECUTION_PREP",
-  "lastVerifiedRemoteCommit": "2c83e8d66b96083aa6819ba3f14d6937bb542ca8",
+  "updatedAt": "2026-11-08T22:53:25+08:00",
+  "stage": "EXACT708_DEPENDENCIES_ACTUALLY_RETIRED_BOOT27_INSPECT03_RUNNING_ORIGINAL_COMMIT_PENDING",
+  "lastVerifiedRemoteCommit": "19a7b9da1adc4c588b5415c560fb776ae211500e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,11 +28514,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "No PG/window/job remains. Resume proven recoverable old application files and prepare entire next runnable path offline before C window",
-      "QB": "Source-local increment adopted. Next only actual necessary unique-key/pin delta once ready",
+      "T45": "Only actualinspect03 same-key collection; terminal/expiry then restore05 and exactowned27; no cleanup concurrent",
+      "QB": "b70r1 accepted7d44, no duplicate technical review",
       "D1": "f56 source valid; no duplicate ops task",
       "D2": "f56 Linux material valid; no rebuild/retransfer",
-      "D3": "Original400e outcomeUNKNOWN; no new import or independent reconciliation triggered",
+      "D3": "Original400e outcome UNKNOWN until authoritative actual03; no duplicate import",
       "QF": "Wait normal real35 app/auth readiness"
     },
     "actualExecution": {
@@ -40593,6 +40593,63 @@
               "SQLStatements": 0,
               "businessOutcome": "UNKNOWN"
             }
+          },
+          "boot27Candidate": {
+            "READY": "b70b63f5ad76f83322a3ce5b95a01e9a970dc6b7b21e0f6096381a13093ae608",
+            "READYBytes": 9581,
+            "QB": "7d44b5ec802ac3421c54a10445d0a2fd6175e867654255e1b9aee62ff079617b",
+            "QBBytes": 2788,
+            "status": "SOURCE_PASS_ACTUAL_BOOT27_AND_PUBLISH05_COMPLETE_INSPECT03_RUNNING",
+            "closedFinding": "B27-BIND-01",
+            "old90712184": "NEED_FIX five active BOOT26 consumers; preserved not executed",
+            "fixedOpsSHA256": "6ac9b307b42758f2e8b549dc2947036ce7869f414bdfceb8bacfc5c0669a8aed",
+            "fixedPlanSHA256": "1c23959689e8f451ca39cd2306e86ecce3d4f55fc10da171248115c439048693",
+            "allSixStageBundlesAndCommandsOfflineReady": true,
+            "observerAndCleanupDeriveFromExactOriginalCIntent": true,
+            "windowIssued": true,
+            "wait": "Original03 terminal; no concurrent cleanup,writer,source/build change",
+            "CDecision": {
+              "SHA256": "a09070bea285cc1512d79ef03bd9d3fde5125269aa931b4b7cd7b3679423688f",
+              "bytes": 1349,
+              "starts": 1794149175684,
+              "bootends": 1794149475684,
+              "opends": 1794149775684,
+              "guardianends": 1794150375684
+            },
+            "actualBoot": {
+              "SHA256": "d693ca9982cca2db863f77c689ba1408decfebb836992fd1497b005790237235",
+              "bytes": 2027,
+              "exitCode": 0,
+              "elapsedSeconds": 2.775,
+              "restartSHA256": "9aaf8fdd15bdb298f02b7bbb7b5a9a6504c36d5d12fd0c55930fb49d77eb95aa",
+              "PG": 4690,
+              "epoch": "2026-11-08 14:47:30.791073+00"
+            },
+            "actualObserver": {
+              "SHA256": "b1b51f3ee42821d007e51a08dfbe1266e7672b52de36ad52a9224a35f7db51e0",
+              "bytes": 3566,
+              "exitCode": 0,
+              "elapsedSeconds": 0.318,
+              "allThreeLive": true
+            },
+            "paramsSHA256": "528579f8fb385b77d641555da0435dcd22a6e3dea8cfe8a548e54271c573f25b",
+            "inspectionSHA256": "0c107d88a423165c99808bf9ced3e82312bcf39532d9d7613ea2c9cd36e93681",
+            "publish05": {
+              "SHA256": "40d7895802264e51ad3cbad1b9f9ec153ca9c0637310085398b011170b35b838",
+              "bytes": 1473,
+              "exitCode": 0,
+              "elapsedSeconds": 0.919765,
+              "paramsInode": 14565298
+            },
+            "accessSHA256": "5f4e02bc55ecd4427c8dc209cb6fbb8f7dc867ea662fde20db812396faec975a",
+            "OPSSHA256": "bed389c001c82cd90cc70399a9b280aeb77d8e34833fcf9bbbc7624ab2e672ad",
+            "inspect03": {
+              "key": "t45-r4-real-inspect-20261108-03",
+              "state": "ACTUAL_SUBMITTED_RUNNING",
+              "remainingAtSubmissionSeconds": 260,
+              "terminal": "PENDING",
+              "originalCommit": "UNKNOWN"
+            }
           }
         }
       }
@@ -40814,6 +40871,53 @@
         "freeBytesAfter": 5387841536,
         "readonlyMarginBytes": 19132416,
         "fullWriterGapBytes": 2819674110
+      },
+      "exact708DependencyRetirement": {
+        "candidateSHA256": "3b8485008666c98543d47ccaa0621f5dcee5707a01d35239824110cc520cede3",
+        "candidateBytes": 96077,
+        "actualRecoveryProofSHA256": "b4388bd87e10920f12cd3053e3364c25d64a8f150d834a7d650c61226adc0354",
+        "actualProofBytes": 16618332,
+        "qualifiedCount": 708,
+        "roots": 12,
+        "logicalBytes": 371509080,
+        "CDecisionSHA256": "9507a73340e56d4b64d40311748bd999daaf8504c5a195f3cf09fbfc289ec96c",
+        "CDecisionBytes": 2021,
+        "sourceSHA256": "16168c02aefd70f548fce6a5b5fbbc0f8f4c61cfa4a1f70a3e9b8da104b9f80a",
+        "sourceCorrection": "Original16.6MB proof exceeded4MiB file transport bound before submit; lossless gzip1009135B,bounded20MB decode,originalrawSHA unchanged; no limit bypass or new approval",
+        "key": "t45-retire-verified-old-node-dependencies-20261108-01",
+        "state": "ACTUAL_COMPLETED0_ALL708_DELETED_AND_ABSENT",
+        "actualFreedBytes": 505270272,
+        "preserved": "Mismatched/redacted packages,configuration,data,media,backup,R4/index/receipts and recovery image",
+        "original01": {
+          "jobSHA256": "83a02bece0e6d46221cba904eec96e5dcd51cfe9337c248d0d7592b1ca236d0c",
+          "resultSHA256": "c188e8a97f534a04f27af91622014407ab6cc91704e933d3ee71c90cfd293355",
+          "exitCode": 2,
+          "elapsedSeconds": 0.1177087971009314,
+          "items": 0,
+          "reason": "gzip suffix not uploaded by original text allowlist; no deletion; retained no replay"
+        },
+        "successor02": {
+          "CDecisionSHA256": "ef896539a4a937dd2ef3370491fe6a609afa5d1bf6ba066927e1cdbc5bfdde7f",
+          "CDecisionBytes": 2155,
+          "transportJSONSHA256": "146c6fb03b4eb20306adeb7eca10983d940505afa0d7329244794ae2271e0460",
+          "transportJSONBytes": 1345696,
+          "rawOriginalProofUnchanged": true,
+          "sourceSHA256": "d0fe97c05e083e848c2b1f5434c4da3a37f35b74feaf0348eb53c04950d5e0c6",
+          "jobSHA256": "18dc28e15984c56c11ae90ac4c9f5d78713f3b4f3ad120c7f698c8827fa08584",
+          "actualSHA256": "9e3b4301ddbee91de91cb521a6a62afd9912a13ff1507d935e04d613ce3ac30e",
+          "actualBytes": 204869,
+          "exitCode": 0,
+          "elapsedSeconds": 28.289895,
+          "deletedCount": 708,
+          "skippedCount": 0,
+          "freeBefore": 5339684864,
+          "freeAfter": 5844955136,
+          "actualSameDeviceFreeDelta": 505270272,
+          "fullWriterShortfall": 2362560510,
+          "protectedUnchanged": true,
+          "imageRetained": true,
+          "SQLOrPermissionOrContainerChanges": 0
+        }
       }
     }
   }
