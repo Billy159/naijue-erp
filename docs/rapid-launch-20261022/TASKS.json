@@ -33305,12 +33305,12 @@
     },
     "currentExecution": {
       "at": "2026-11-08T12:33:44.301571+08:00",
-      "phase": "REAL_PREPARED_AND_TERMINAL_CLEANUP_PASS_EXACT15_INDEX_REUSE_AND_NEXT_WINDOW_PREPARATION",
+      "phase": "REAL_PREPARED_BOOT16_ACTUAL_STOP_RECOVERED_WAIT_EXACT_BOOT17",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "T45 terminal restore proof and minimal index/space binding; C exact next scope",
       "nextOwner": "C authorized EXECUTE45 after current prerequisites; D3 independent actual readback",
-      "latestActualReceiptSHA256": "7de65a1acc514f7765311e3cdfcbcaa6f1bec6819ace4b79d1e260c2a7bc383c",
+      "latestActualReceiptSHA256": "a17753ead7928d7931c82caae8cccffdc7d68913763dc5d4e53173fd62c01721",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Exact single15 index retirement using14 byte-identical archive proof, then actualfree; controlled owned BOOT16 stop/newBOOT17/params12 and original EXECUTE45. No independent PREPARE rerun.",
+      "next": "T45 prepare original BOOT17/parameters12 minimal constant successor bound to actual freshstop258916; C exact time scope, then native PREPARED15 direct EXECUTE45.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33382,7 +33382,7 @@
         "actualIndependentQBReceiptSHA256": "8c63092e5113bc91a5880336e2716ab39604c3c5c0a629abf32c8ecc57677e29"
       },
       "diagnosisReceiptSHA256": "81ba5198085200e50209e180fb2a94f218ff3935dab5b3a9052481b0b6ffe39c",
-      "githubReadbackCommit": "a17c9752eddb65cb9b992942507a27b6e47f7710",
+      "githubReadbackCommit": "53675ae5c92f2ec884ed69325d93e5f8a7dfaa83",
       "boundaryQBReceiptSHA256": "1dc67c609d7f68ed54ce2105886af49909887a4b5c4ba3ba64e4a4ea57528dda",
       "opsQBReceiptSHA256": "e4bbd65fbf2065e4256215f22101f855351460fb40f2b5e90277c884de4364c7",
       "stageReadonlySHA256": "aa026f80ebc328bf1db9a8318eaa867ec6936cac66cbb275fe4fa9ca89c9b5c7",
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "BOOT16 PG3093/guardian3086 latest actual live; PREPARE15 Node3177 absent. Controlled stop not executed yet."
+      "currentR4ProcessState": "ACTUAL_GUARDIAN3086_PG3093_NODE3177_ABSENT; original STOP job stays FAILED2, independent original-key recovery COMPLETED0"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -39066,14 +39066,62 @@
       "projectedFreeIfIndexRemovedNotActual": 8272629760,
       "sourceBusinessWrites": false,
       "indexRetirement": {
-        "status": "C_REVIEWED_DISPATCHED_NOT_ACTUAL",
+        "status": "ACTUAL_COMPLETED0_EXACT_ONE_INDEX_RETIRED_ARCHIVE_AND_EVIDENCE_KEPT",
         "jobId": "t45-r4-retire-prepare15-index-20261108-01",
         "candidateSHA256": "1422d1e5213e082515606fb541bcc8271ad265406005a6030215c0e4caf47497",
         "sourceSHA256": "928da24434691bac92fde160cfb893f329d95880cf9003602cbe044f8e4056c8",
         "CDecisionSHA256": "9e445a66d61cb80ba24e80adc42076376d55b0ade3565562e25dd39f28371e01",
         "reusesVerified14Archive": true,
         "onlyOneGeneratedIndex": true,
-        "preservesActualPrepared": true
+        "preservesActualPrepared": true,
+        "jobSHA256": "07796f44e4ff690f89cff9e7f3225f7e9bfc0c45f1154a80d523d8906cf6a306",
+        "actualSHA256": "e325f872bfabbe15edc1bff28cb2471f05fe3533f34e022efe2cdc932968cc4d",
+        "freeBefore": 5704519680,
+        "freeAfter": 8272060416,
+        "actualFreeDelta": 2567540736,
+        "actualFloorMargin": 64544770
+      }
+    },
+    "r4Boot16ControlledStop20261108": {
+      "jobId": "t45-r4-controlled-stop-boot16-20261108-01",
+      "status": "FAILED2_FIRST_INNER_EXCEPTION_AND_STOP_STATE_UNKNOWN_NOT_REPLAYED",
+      "jobSHA256": "7843803eb1d3d68777ced2ed4f63007aece7456afb745d42a435a3fe596b004f",
+      "actualSHA256": "25d321c78c398a5f86386ed7d61e2bdba5cf9636e6548f9b9b605f329d1feb87",
+      "elapsedSeconds": 1.019988029,
+      "CDecisionSHA256": "b3bb0aa3721d32b0b7a6034b8f406e63345c274c8a8c86210761962d221df33b",
+      "sourceSHA256": "881380f45aaa91eb122d6c1a0f4822cdde1874334973170ad5fdd1db64313ca5",
+      "boundSourceSHA256": "8f2fb06d84ca05ce021f9a66b40ec3af19dc1fb7a03a67ecd180122ea174fef9",
+      "firstObservedError": "COMMAND_FAILED_1",
+      "failureBoundary": "Child first exception not captured by original carrier wrapper; elapsed one second does not prove no stop occurred. No freshstop output.",
+      "next": "Original-key necessary single owned process/cleanup read-only recovery; no STOP replay/newBOOT/PGdirectkill/business writes.",
+      "actualOutcomeRecovery": {
+        "status": "ORIGINAL_STOP_FAILED_RECEIPT_RETAINED_ACTUAL_STOP_RECOVERED_READONLY",
+        "jobId": "t45-r4-stop16-outcome-readonly-20261108-01",
+        "jobSHA256": "a2cf8e6a09a6ecc3010c126f673b4601a765cd27f2f315c9f23aff63acfd6bf6",
+        "actualSHA256": "a17753ead7928d7931c82caae8cccffdc7d68913763dc5d4e53173fd62c01721",
+        "elapsedSeconds": 0.618694536,
+        "signalsSent": 0,
+        "SQLStatements": 0,
+        "stopReplayed": false,
+        "allOwnedProcessesAbsent": true,
+        "port18654Absent": true,
+        "postmasterPidAbsent": true,
+        "cleanupAllSixTrueErrorsEmpty": true,
+        "dataPreserved": true,
+        "databasePrivilegesChanged": false,
+        "cleanupSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "cleanupInode": 14563080,
+        "serverFreshStopRawSHA256": "d7cc27284767e0a8375116944323879ca2971a3a36770c70e45a712c17d73ff7",
+        "serverFreshStopRawBytes": 3475,
+        "collectedSameJSONSHA256": "258916c73bd0b472949f86f48e6126b84c85fbf3cbd0ef2e37e882c5143f820a",
+        "collectedSameJSONBytes": 4105,
+        "payloadCarrierDistinctionPreserved": true,
+        "all45Restored": true,
+        "projected2Absent": true,
+        "hbaAndThreeAuthorityUnchanged": true,
+        "freeBytes": 8270688256,
+        "originalJobVerdict": "FAILED2_NOT_REWRITTEN",
+        "firstChildException": "UNKNOWN_NO_FURTHER_DIAGNOSTIC_NEEDED_TO_ADVANCE_ACTUAL_STOP"
       }
     }
   }

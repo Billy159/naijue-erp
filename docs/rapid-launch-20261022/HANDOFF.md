@@ -3150,3 +3150,17 @@ C核最后READY38393143/6743的7refs+2实际回执，REAL原模板只补实际�
 C已核READY94254543的7固定pin、source928da244及相对14差异30239260；15索引完整375bcfdc/2567147520与14已逐字节保全来源一致，分开原14与现15 inode。C准确单项9e445a66/2826已派T45原key，120/95秒、现元数据CAS/占用/sidecar/归档完整hash守卫保留，全部PREPARED/日志和归档保留。实际删除与空间待原键回执，未冒执行完成。原服务器可重建清理及持续同类已复核T45授权继续有效，不援引已过12点的临时决策委托。
 
 受控STOP16 READY4525adb4/3784六pin已核，helper d13658cf main与原parent加清单常量AST一致；仅SIGTERM精确guardian3086/start300773138，经原real_stop_controller及其finally停止直属PG3093/start300773169，不直接杀PG或其他任务。新BOOT17/params12必须用真实freshstop元数据，原EXECUTE45本身完整重建，绝不再单独PREPARE。目前仅准备/待发，真实导入、核账、普通业务、恢复与正式切换仍未通过。
+
+
+## 2026-11-08T12:47:33.964279+08:00 单索引退役实际闭合；受控停稳失败，先只读恢复状态
+
+15index退役原key12:41:45实际COMPLETED0/1.521s，job07796f44/541、actuale325f872/1557、intent6630ccd2/1156已C实读并核hash。仅一个生成索引移除且absence真，free5704519680→8272060416，实际释放2567540736B，原startupfloor8207515646余64544770B；14完整归档hash/metadata/全部PREPARED/summary/Node/ops/CLI/authority保留，无PG/SQL/信号或权限动作。预测空间现已用实际回执闭合。
+
+C精确15字段STOP16决定b3bb0aa3/1274、5min已派原T45，唯一stopkey12:44:14实际FAILED2/1.020s，job7843803e/535、actual25d321c7/679已实读。原carrier只保留COMMAND_FAILED_1，docker子程序第一异常和是否已发guardianSTOP未保留，不能凭1秒耗时猜未停止，freshstop未导出。立即只读原键+原owned进程/cleanup恢复状态；禁止原样重发STOP、新BOOT、PG直kill或业务写。PREPARED仍有效，真实导入尚未执行。C已推并远端核53675ae5c92f2ec884ed69325d93e5f8a7dfaa83。
+
+
+## 2026-11-08T12:51:06.632417+08:00 STOP16实际停稳由只读恢复证明，不重放原失败
+
+原STOP仍FAILED2/25d321不改判；原键单次readonly 12:47:38实际COMPLETED0/.619s，joba2cf8e6a/550、actuala17753ea/1735及freshstop258916c7/4105已C全读核hash。精确PG3093/guardian3086/Node3177全ABSENT，18654及postmaster.pid absent，cleanup六项true/errors空/data保留/DB权限未改；namespace/原身份/三authority/HBA720原inode14555531均对应。0信号/SQL/权限，未重STOP。真实freshstop serverraw d7cc2728/3475，collect同JSON pretty258916c7/4105是下一BOOT实际输入，明确载体区别，未伪称取得原raw。45 restored/exact2投影absence仍真，free8270688256。停止首子异常仍未知，不因1秒耗时猜因，也不为非阻断诊断新增一轮。
+
+下一原T45以真实freshstop准备BOOT17/params12常量后继；当前没有新BOOT、业务EXECUTE、核账或正式部署通过。native PREPARED15和全部证据保留，BOOT后原EXECUTE45自带完整重建，不再独立预检。
