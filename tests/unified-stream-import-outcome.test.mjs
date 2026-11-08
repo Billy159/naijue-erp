@@ -92,7 +92,7 @@ async function productionCliModel(mode='COMMITTED'){
  inject('../../scripts/release/unified-install/fresh35-combined-record-v1.mjs',`export async function loadFresh35CombinedRecordEnvelope(){return{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2'}}`);
  inject('./stream-preflight.mjs',`export function streamPreflightFailureDiagnostic(){return null}export async function streamPreflight(){events.push('preflight');return{checks_passed:true,complete_package_validation:true,manifest_sha256:'a'.repeat(64),counts:{sales_header:25,sales_settlement:27}}}`);
  inject('./stream-plan.mjs',`export async function prepareStreamPlan(p,s,m,o){events.push('plan:'+o.historicalSalesAdmission.modelAdmission);return{totals:{sales_net_due_cents:'123'},async dispose(){events.push('dispose')}}}`);
- inject('./stream-program.mjs',`export async function buildStreamProgram(){return{identity:{planSha256:'b'.repeat(64)},initialize:{modelOriginalKey:'unchanged'},steps:(async function*(){yield{method:'publish',request:{request_key:'original-1'}};yield{method:'publish',request:{request_key:'original-2'}}})()}}`);
+ inject('./stream-program.mjs',`export async function buildStreamProgram(){events.push('program-build');function createSteps(){events.push('steps-factory');return (async function*(){yield{method:'publish',request:{request_key:'original-1'}};yield{method:'publish',request:{request_key:'original-2'}}})()}return{identity:{planSha256:'b'.repeat(64)},initialize:{modelOriginalKey:'unchanged'},steps:createSteps(),createSteps}}`);
  inject('./whole-package-client.ts',`export async function executeWholePackage(client,id,initialize,steps){events.push('execute:'+client.modelConnection);for await(const s of steps)events.push(s.request.request_key);return{state:mode==='READBACK_FAIL'||mode==='CLOSE_FAIL'?'COMMITTED':mode}}`);
  inject('./whole-package-reconcile.mjs',`export async function reconcileWholePackage(client,init,encoded,counts,totals){events.push('verify:'+client.modelConnection);if(counts.sales_header!==25||counts.sales_settlement!==27||totals.sales_net_due_cents!=='123'||init.modelOriginalKey!=='unchanged')throw Error('SOURCE_MODEL_FACTS_DIFFER');return{state:'VERIFIED'}}`);
  inject('./whole-package-inspect.ts',`export async function inspectWholePackage(client){events.push('inspect:'+client.modelConnection);return{state:'ABSENT'}}`);
@@ -114,8 +114,8 @@ async function withProductionCliInputs(work,packageKind='REAL'){
 test('REAL preparation and missing authority never invoke a writer; original steps are repeatable (CLI model)',async()=>{
  await withProductionCliInputs(async args=>{
   const prep=await productionCliModel();const p=await prep.runStreamImport([...args,'--prepare-only']);
-  assert.equal(p.state,'PRODUCTION_REAL_IMPORT_PREPARED');assert.equal(p.business_database_writes,false);assert.equal(p.verification.state,'NOT_RUN');assert.equal(p.connection_cleanup,'CLOSED');assert(!prep.events.some(x=>/authorize|execute|kernel|verify/.test(x)));
-  const rejected=await productionCliModel('NO_AUTH'),r=await rejected.runStreamImport(args);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');assert(!rejected.events.some(x=>/execute|kernel|verify/.test(x)));
+  assert.equal(p.state,'PRODUCTION_REAL_IMPORT_PREPARED');assert.equal(prep.events.filter(x=>x==='program-build').length,1);assert.equal(p.business_database_writes,false);assert.equal(p.verification.state,'NOT_RUN');assert.equal(p.connection_cleanup,'CLOSED');assert(!prep.events.some(x=>/authorize|execute|kernel|verify/.test(x)));
+  const rejected=await productionCliModel('NO_AUTH'),r=await rejected.runStreamImport(args);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'FRESH35_HOST_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');assert.equal(rejected.events.filter(x=>x==='program-build').length,1);assert(!rejected.events.some(x=>/execute|kernel|verify/.test(x)));
  });
  await withProductionCliInputs(async args=>{const m=await productionCliModel(),r=await m.runStreamImport(args);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'FRESH35_HOST_REAL_PREPARED_PROGRAM_REQUIRED');assert.deepEqual(m.events,[])},'SYNTHETIC');
 });
@@ -124,7 +124,7 @@ test('REAL commit and same-key replay close their original connection before ind
   for(const mode of ['COMMITTED','ALREADY_COMMITTED']){
    const m=await productionCliModel(mode),r=await m.runStreamImport(args);assert.equal(r.state,mode);assert.equal(r.verification.state,'VERIFIED');assert.equal(r.readback_connection_cleanup,'CLOSED');
    assert(m.events.indexOf('close:1')<m.events.indexOf('open:2'));assert(m.events.indexOf('authorize:1')<m.events.indexOf('execute:1'));assert(m.events.indexOf('authorize:2')<m.events.indexOf('verify:2'));
-   assert.equal(m.events.filter(x=>x.startsWith('execute:')).length,1);assert.equal(m.events.filter(x=>x.startsWith('verify:')).length,1);assert(m.events.includes('original-1'));assert(m.events.includes('original-2'));assert.equal(r.host_verification.modelConnection,1);assert.equal(r.readback_host_verification.modelConnection,2);
+   assert.equal(m.events.filter(x=>x==='program-build').length,2);assert.equal(m.events.filter(x=>x.startsWith('execute:')).length,1);assert.equal(m.events.filter(x=>x.startsWith('verify:')).length,1);assert(m.events.includes('original-1'));assert(m.events.includes('original-2'));assert.equal(r.host_verification.modelConnection,1);assert.equal(r.readback_host_verification.modelConnection,2);
   }
  });
 });

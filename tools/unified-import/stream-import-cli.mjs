@@ -134,7 +134,7 @@ async function runStreamOperation(argv,verifyOnly,whole){
    if(plan)await plan.dispose();await prepare(admission);
    // Independent cursors use the same pinned plan and original request keys.
    // No production stream is materialized or reused after it is exhausted.
-   program={...program,steps:{async *[Symbol.asyncIterator](){const original=await buildStreamProgram(plan,join(report,'index.sqlite'),summary,admin,{coalesce:flags.has('--coalesce')});yield* original.steps;}}};
+   const compiled=program;program={...compiled,steps:{[Symbol.asyncIterator](){return compiled.createSteps();}}};
    return {packageKind:manifestObject.package_kind,initialize:program.initialize,identity:program.identity,steps:program.steps,encodedScrypt:encoded};
   };
   let result=productionReal?await openReviewedFresh35ProductionHost(config,root,target,prepareProduction,execute,{...hostOptions,prepareOnly:flags.has('--prepare-only')}):await openHost(config,root,target,execute,hostOptions);
