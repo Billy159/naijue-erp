@@ -3120,3 +3120,14 @@ BOOT23原键实际COMPLETED0/2.624802秒，PG4250/guardian4242/sampler4249，新
 C采用QB49f856e0/2769：host固定别名、真实mountID、容器消费者观察、CAS/恢复及10项受影响模型有效通过；唯一CFG-DIAG-01/P2为mkdir EACCES误用旧lstat/PARAM归因。原T45仅补准确调用及未知归因清空，QB只复此反例与必要后继literal，不重10项或f56/旧15+8。
 
 已核准准确37B双合成inode路径的独立scratch，原键COMPLETED0/.367899秒，job64885b73/522与actual9b67b102/998已C实读：host authority/state均真实mount31，四次rename/恢复保留synthetic inode14564919及mtime、ctime自然改变，精确叶/目录全部清理。0PG/原配置或authority nlink变化；这是真实host机制验证，不是业务或原publish历史errno证明。原BOOT24/publish02/restore02尚在准备，旧窗不续、原业务UNKNOWN。主控20f273c13379cf1985e56fd9d64a43042ce9c899已推GitHub并核远端；本段后续检查点另记。
+
+
+## 2026-11-08 20:33 — BOOT24真实配置发布和原inode恢复通过；原键检查因旧日期guard未提交
+
+C已读采用QB d3f7f135/2202：CFG-DIAG-01 CLOSED、2诊断反例和BOOT24必要literal闭包通过，原host10/root15+8/sourcef56复用。C准确12字段决定798f9ca4/1533（441字符ref）、13参数3ab4d01d/1833及8字段inspectione172a169/2250绑定真实BOOT24回执，不由客户端自制批准。BOOT原键COMPLETED0/2.324497秒，job678b9964/591、actual7ded41d6/2027；restartb01c5325，新epoch12:21:42.528633UTC、PG4333/guardian4325/sampler4332；observerfb08802d/3566真实live/HBA恢复。原操作止20:30:20.707BJT、guardian止20:40:20.707，未续期。
+
+新host publish02实际COMPLETED0/1.069605秒，job2847fe3c/513、actual15aaac65/1473已C实读：3个host路径同mount31，新params inode14564941/1833、inspection14564942/2250，原1af inode14563415保留。跨bindmount发布缺口实际修通，不再只有模型证明。新45 draft ad6ef14f/34667保留但未由C签发，不用于下一轮复用。
+
+进入inspection前发现旧日期谓词：nonroot_input_access.py prepare/restore/probe及carrier real_access_reference仍限20261107，production_real却要求准确已批inspect20261108-01。唯一inspect原键未提交、0SQL，不能称真实SQL失败或原事务ABSENT。QB范围补充9b85ac6e/1041明确旧literal/sourcePASS不含实际CLI可达，原结论不倒改。原T45保持唯一运维writer，只修准确key语义与必要pins，核所有实际消费者；允许此唯一08inspect但其他日期/动作/路径仍拒，非D1业务改造、不新建层/不重传f56。固定后原QB只复相关key正反例。
+
+原hostrestore02实际COMPLETED0/.619321秒，jobf0962186/514、actual659335da/1115已C读：旧1af原bytes/inode/mtime恢复、自然ctime1794140910107391910，不伪时间、不续0dc。ownedcleanup b7df9faa/551、实际1e057ef3/5525已C读：三进程/18654/postmaster.pid全缺席，HBA/parentroot0711无ACL/原45metadata/双私有投影/0dc/a7d保全，errors空，free5391433728。原业务仍UNKNOWN，整包提交/独立核账/历史普通角色/新35备份恢复/正式入口切换未通过。主控77029cb26ad1612ea442551b8d3fe4db251f30a1已远端核实；本段后继提交另记，真实数据不入Git。

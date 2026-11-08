@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T20:13:38+08:00",
-  "stage": "R4_ORIGINAL_KEY_RECOVERY_CONFIG_FAILURE_CLEANED_OUTCOME_UNKNOWN",
-  "lastVerifiedRemoteCommit": "20f273c13379cf1985e56fd9d64a43042ce9c899",
+  "updatedAt": "2026-11-08T20:31:59+08:00",
+  "stage": "R4_HOST_CONFIG_RESTORE_ACTUALLY_PASSED_INSPECT_KEY_GUARD_REPAIR_PENDING",
+  "lastVerifiedRemoteCommit": "77029cb26ad1612ea442551b8d3fe4db251f30a1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T20:13:38+08:00",
+    "at": "2026-11-08T20:31:59+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28514,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "T45 freeze CFG-DIAG-01-only successor plus BOOT24/publish02/restore02 exact literals; original QB incremental recheck, then C fresh finite window. No old key replay, no writer/import.",
+      "T45": "Original T45 minimally align exact approved inspect key across existing nonroot access prepare/restore/probe and carrier reference guards plus pins. QB only key reachability and wrong-key rejection. New finite window after frozen repair; no writer replay or data change.",
       "D1": "f56 minimal loader source pushed and independently accepted; idle until concrete source defect, no duplicate audit.",
-      "QB": "49f856 host alias/recovery 10 scoped PASS adopted; only CFG-DIAG-01 counterexample and necessary BOOT24 literals await frozen successor.",
+      "QB": "d3f7 diagnostic/literal PASS scope retained, addendum9b85 clarifies no key reachability. Await frozen exact key guard repair only; no fullsuite.",
       "D2": "f56 tool frozen/Linux complete; no rebuild until exact changed source.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; actual acceptance not passed; no filler tasks."
@@ -33471,7 +33471,7 @@
         "actualEpoch": "2026-11-08 11:37:31.131516+00",
         "businessVerified": false
       },
-      "lastCleanStopMetadataReceiptSHA256": "bfeb44d0d21bf6444ba84f8f336b7a35892c7f0398304148e068bda9460abcfc",
+      "lastCleanStopMetadataReceiptSHA256": "1e057ef3b85366a90ee6482bf1c0f04c9d06a8a6742a22de58b227884d46c115",
       "plannedImportToolCommit": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
       "plannedImportToolSourceSetSHA256": "f648efa6191f800abe64b8402e5ddbeb2dbd80c7587f0855ad147a23b7a7b529",
       "priorRuntimeIdentityBeforeR4Boot14": {
@@ -33487,7 +33487,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "BOOT23_PG4250_GUARDIAN4242_SAMPLER4249_ABSENT_PORT_AND_POSTMASTER_ABSENT",
+      "currentR4ProcessState": "BOOT24_PG4333_GUARDIAN4325_SAMPLER4332_ABSENT_PORT_AND_POSTMASTER_ABSENT",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF"
     },
     "delayReviewAdoption": {
@@ -39843,7 +39843,7 @@
         "retainedIndexInspection": {
           "at": "2026-11-08T19:49:30+08:00",
           "owner": "D1(source),T45(server),QB(review),D2(package)",
-          "state": "HOST_RENAME_ACTUAL_SYNTHETIC_PASS_DIAGNOSTIC_ONLY_QA_FIX_IN_PROGRESS",
+          "state": "BOOT24_ACTUAL_HOST_CONFIG_PUBLISH_RESTORE_PASSED_DATE_KEY_GUARDS_BLOCK_INSPECT_NOT_SUBMITTED",
           "sourceCommit": "97c8f36fde576e563e9c0e65351561c5a1ce732b",
           "parent": "318618330c513905d3c748a4406d73d1b5cf9403",
           "base": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "T45 freeze CFG-DIAG-01-only successor plus BOOT24/publish02/restore02 exact literals; original QB incremental recheck, then C fresh finite window. No old key replay, no writer/import.",
+          "next": "Original T45 minimally align exact approved inspect key across existing nonroot access prepare/restore/probe and carrier reference guards plus pins. QB only key reachability and wrong-key rejection. New finite window after frozen repair; no writer replay or data change.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40239,6 +40239,86 @@
               "originalConfigChanged": false,
               "historicalEXDEVMeasured": false
             }
+          },
+          "hostAliasSuccessor": {
+            "READY": "e1e24e7dd65b057fad96a4347fec55ec49939576a0061e7395f94822468a1445",
+            "READYBytes": 16552,
+            "QA": "d3f7f135d4ba7f72c190ca0a1ee223d3e05b8cbb0445e20347baa58973252923",
+            "QABytes": 2202,
+            "state": "DIAGNOSTIC_FIX_AND_BOOT24_LITERAL_SOURCE_ONLY_PASS",
+            "CFG-DIAG-01": "CLOSED",
+            "twoDiagnosticRegressions": "PASS",
+            "effectiveReuse": "host10,root15+8,source11+2/36 not rerun",
+            "QAReachabilityAddendum": "9b85ac6ec592ad2816ca25fb5436db9594030dc35d64e82a68572bad3a030eb4"
+          },
+          "boot24Actual": {
+            "requestKey": "t45-r4-retained-restart-20261108-24",
+            "jobSHA256": "678b99646b0bf235d23d60c38531bdfa3bb186b69070b43505a90d80b467942c",
+            "actualSHA256": "7ded41d6b4e36440869b2d2c0a13e1ce1ebc1f2bf1e93e8244e3c139d4dd7342",
+            "restartSHA256": "b01c5325a8c52f9749f2f54072d11c4a6d199defa9ad53f169e3a009dcab20a6",
+            "observationSHA256": "fb08802da9fbd55cb74ff1a2f4c07522fa97f020f258c1fdea70da857542f615",
+            "epoch": "2026-11-08 12:21:42.528633+00",
+            "bootElapsedSeconds": 2.324497227091342,
+            "CDecision": "798f9ca4172fd241fd2f6099ce0d353b184b2618b7501df02ecf5a2a371c771a",
+            "CParameters": "3ab4d01d82926a889850c5a1944631416babc2defe395716de91d3044962a606",
+            "CInspection": "e172a1698e053d2853839cedf74b25bee0bca50a84ee820708b4024a6a71bbfb",
+            "operationExpiresAt": 1794141020707,
+            "guardianExpiresAt": 1794141620707,
+            "publication": {
+              "requestKey": "t45-r4-inspection-config-publish-20261108-02",
+              "jobSHA256": "2847fe3cdfb24cff53809bccfecbd7487e0689e207c2c322800c73438209d775",
+              "actualSHA256": "15aaac65f728e76bf3694b7fb601d054af9b325976c679bea3840d6d4da61124",
+              "state": "ACTUAL_COMPLETED_0_HOST_CONFIG_PUBLISHED",
+              "elapsedSeconds": 1.069605,
+              "sameHostMount": "31",
+              "newParametersInode": 14564941,
+              "newInspectionInode": 14564942,
+              "oldParametersOriginalInodePreserved": 14563415
+            },
+            "new45Draft": {
+              "sha256": "ad6ef14f15031e0a163fddd568c268633588bc2e229a2a54e3a26a31acedc3a3",
+              "bytes": 34667,
+              "state": "RETAINED_ONLY_NOT_C_SIGNED_OR_EXECUTED",
+              "onlyParameterLeafChanged": true
+            },
+            "inspect": {
+              "requestKey": "t45-r4-real-inspect-20261108-01",
+              "submitted": false,
+              "COPSBindingIssued": false,
+              "PGOrSQLStarted": false,
+              "blocker": "Actual nonroot prepare/restore/probe and carrier access-reference key guards accept 20261107 only; exact production inspector requires 20261108-01. New key statically unreachable; do not claim actual SQL failure."
+            },
+            "restore": {
+              "requestKey": "t45-r4-inspection-config-restore-20261108-02",
+              "jobSHA256": "f0962186ad2efd0a3d3425ef9a0d9451250e5b5269f517808b9ab3450b741eea",
+              "actualSHA256": "659335da86caac2acb4ed0758055019e2c3d1194c1b34826e87d04b8572724f9",
+              "state": "ACTUAL_COMPLETED_0_ORIGINAL_INODE_BYTES_MTIME_RESTORED",
+              "elapsedSeconds": 0.6193207520991564,
+              "inode": 14563415,
+              "mtimeNs": 1794118772376501063,
+              "ctimeNs": 1794140910107391910,
+              "artificialCtimeRestoration": false,
+              "oldAuthorityRenewed": false
+            },
+            "cleanup": {
+              "requestKey": "t45-r4-boot24-owned-cleanup-20261108-01",
+              "jobSHA256": "b7df9faa113b06e19fe8c83f4ac3267e9587e439076b1d3be49d621c93bcad4d",
+              "actualSHA256": "1e057ef3b85366a90ee6482bf1c0f04c9d06a8a6742a22de58b227884d46c115",
+              "actualBytes": 5525,
+              "state": "ACTUAL_COMPLETED_0_ALL_OWNED_PROCESSES_AND_PORT_ABSENT_ORIGINAL_FILES_RESTORED",
+              "elapsedSeconds": 1.1699884422123432,
+              "PG": 4333,
+              "guardian": 4325,
+              "sampler": 4332,
+              "all45OriginalMetadataMatch": true,
+              "bothPrivateProjectionsAbsent": true,
+              "originalHBAParentAndWriterPreserved": true,
+              "databasePrivilegesChanged": false,
+              "errors": [],
+              "freeBytes": 5391433728
+            },
+            "businessOutcome": "UNKNOWN",
+            "SQLStatements": 0
           }
         }
       }
