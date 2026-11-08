@@ -3444,3 +3444,13 @@ C原有限绑定07f2c75d/3404，candidate8d468f4b/138786、script4d231953/7485�
 原8未知来源补查已闭：4来源明确对象现已退役，1个v22确属真实R1恢复；余28容器为4新系统上下文、21真实数据/恢复上下文及3来源未证。不能把真实资料/恢复载体当无关废物，也不把3未知推定为空；未要求用户重复审批或删除数据卷。清理小项终态，T45确认所有已提交作业结束。
 
 唯一下一步由C按已验READY3109b9d3、QB1675e659及已实际加载4279工具签发准确新BOOT32有限绑定，原T45执行，复用原400e/原键只读核状态。32尚未提交；原导入仍UNKNOWN_NO_REPLAY，不能写成已导入/对账/业务或上线通过。旧失败原样保留，不重洗、不换键重导，未知3不阻断主线。
+
+## 2026-11-09 — BOOT32实际启动，INSPECT08采样超限停止；六原键及恢复停库已收齐
+
+清理终态后C按原持续授权签发原始70180952/1372，actual-prefix准确字节exit0（ref280），BOOT32启动5分钟、读取10分钟、guardian20分钟，未续旧窗口。原T45启动d0851f37/2027与观察b55699fb/3566均COMPLETED0；原SID/OID/PGDATA一致、新epoch20:59:14.535544+00、restart172063e8/1585，service7d68保持。C随后绑定参数9a29a8ec/1672、inspection5122edc3/2089；publish10实际ba00a368/1473，参数inode14550354。访问计划1ab537e2/34685相较31仅45项中parameters的inode/bytes变化，OPS e8ad927b/4597仅原5处新绑定；未扩大业务引用或权限。
+
+唯一INSPECT08 FAILED2/264.803988秒，actual54d7767b/7274、job8bc5156d/506。RECORD_PIN本轮已越过，有HOST_CATALOG_COMPLETE23.977秒、INDEX_VERIFY_COMPLETE66.954、MASTER_GRAPH_COMPLETE131.787、FACT_VALIDATION_COMPLETE149.887、FACT_HASH_V1_COMPLETE207.505，最后FACT_HASH_V2_BEGIN221.084；没有INSPECT_SQL或原请求状态结果，原400e仍UNKNOWN_NO_REPLAY。停止准确原因REAL_SPACE_SAMPLE_LATE，外层最大间隔0.404091902秒超过原0.25，2517样本、最少空间8562028544B、Node最高RSS/HWM1879834624B、无heap cap，Node-15父/子均回收；不能据此推断磁盘不足、CPU根因或COMMIT/回滚。独立BOOT sampler最大0.171272903秒属于另一观测范围，两证据不替换。
+
+restore10 actual7cac6df8/1115及owned32 actual865784d4/5677均COMPLETED0，六键全终态；完整RESULT9af5570e/28325及原actual/job由C核字节和终态。guardian5282/PG5290/sampler5289均ABSENT，18654/pidfile不存在，HBA/45metadata/parent0711无ACL及原a7d/0dc/1af摘要、inode、权限读回确认；自然ctime1794172286262905883保留、原mtime不变。原rawcleanup false与独立postRecovery true分开，未覆写原失败。末次可用8569335808B。
+
+当前没有服务器在途或新窗口。C采用原T45仅本地诊断c6a3c6a5/5110：原real_watch第953/968两处共用错误，失败迭代可算2518，但pre/post分支、邻近逐样及共同时钟锚未导出，不能补造准确UTC或CPU/磁盘根因。已由原T45沿原同文件准备最小有界诊断后继，仅现有watch/result增加pre/post、最多两邻近样和固定耗时/锚，不加控制层、不放宽.1/.25/floor/期限/PID等守卫；固定后交原QB增量验收再核实际范围，不原样重试08。历史业务、独立对账、备份适用和正式切换仍未通过。
