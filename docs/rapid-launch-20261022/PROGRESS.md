@@ -2947,3 +2947,29 @@ D1完成两次57,647,676B合成反例：首run kernel/guard完成但heap因旧�
 采用原D1固定4e3b99466b4084eccd8c90dc863e76e497d8c988，parent d250/tree9a6712d8，原分支codex/erp-d1-record-context-20261108；C已核远端准确提交。仅3个runtime及2个小型测试文件，原共享encoder、wire、权限、事务和业务键保持。作者25/25无skip、定向严格TS及2MJS语法通过；原QB先收BOOT19再验此增量。修后大载荷内存收益、实际Linux加载及R4事务结果均未验证，不能标现场OOM已修复。原D2空闲已复用，仅准备固定本地工具物料，不改源码、不重应用构建、不操作服务器。
 
 BOOT19仍由原QB收受影响结论；C随后签限时只读启动/观察，T45唯一执行。未查明原EXECUTE02结果，不重导、不发布、不把旧安装根8694换成工具根。全部旧物料、失败记录和原batch/params保留。
+
+
+## 2026-11-08 15:45 — BOOT19独立验收采用，限时实际只读恢复已派原T45
+
+C实读并采用QB RESULT33bc271e/7765的PASS_AFFECTED_SOURCE_AND_LOCAL_MODELS，无增量阻塞，不重复技术验收。有限目的6外层/5原sampler/2边界/2JSON前驱检查仅为本机模型，不冒Linux/PG。C签c44aa283/1481：BOOT1794123876579至1794124176579，guardian1794125076579，原2role到2026-11-08T08:04:06.579Z，HBA最多30s恢复。原T45已收到并执行前置精确版本、身份、空间和唯一作业键核验；实际启动结果仍待回，原13字段状态窗口尚未签发。仅同R4原键只读，1af3/0dc不换，原写入与全包空间门槛不降，不重导、不切换。
+
+
+## 2026-11-08 15:47 — BOOT19实际成功；4e3b本地工具固定交付
+
+原BOOT19实际COMPLETED0/4.129060765s，jobdb5f68a6/548、启动7358381f/1034，C实读。保留同SID7705224458832691236/OID16393/PG170011，实际新epoch2026-11-08 07:45:50.354443+00、PG3840/start302224734，protected restartc32de086；原安装记录不重写、writer不重放。完整observer和只读业务状态尚待，不称COMMIT。
+
+D2原路径final-4e3b9946-operation冻结RESULT87233bab/10362、工具包b3448569/1149357、sourceSet12c2bb1e。只更3运行叶，其余213pins保持；原loader/CLI/help及资源归档核验通过，不重跑技术套件/不重应用构建；原QB独立增量仍在途。Linux加载、修后大wire收益、真实导入和发布未验，原d250与安装根3b82/8694完整保留。
+
+
+## 2026-11-08 15:50 — 只读原键状态已签；4e3b独立验收发现兼容性缺口
+
+BOOT19完整observerd70f2b2d/4496实际同SID/OID/epoch，PG/guardian/sampler活跃；HBA1.164876s恢复原inode，两role属性/授权不变，1af3/0dc原文件身份保持。C实读后签原13字段只读状态0e7c2472/930，1794124165714至1794124465714，原T45仅status01单RR只读/原8键/45schild；不重预检/不writer。只有完整强链才COMMITTED，所有其他UNKNOWN，不当ABSENT。末端资源汇总待owned cleanup。
+
+QB补对照发现4e3b不可枚举数组数字项嵌套自定义数组时hash/错误行为可能改变；25小型PASS不能覆盖该项，4e3b未采用/未传服务器。已沿原QB→D1同文件定向修复路由，保留准确反例；没有证据三个JSON调用点受影响，也不据此解释现场OOM。D2固定物料保留不覆盖，待后继源码只补受影响验证。
+
+
+## 2026-11-08 15:53 — 原键status实际UNKNOWN，保留并定位最初失败
+
+status01实际COMPLETED0/9.937322899s，job420b6194/532、actualf4ea966c/1017已实读；业务observation UNKNOWN、connectionCleanup CLOSED、readOnlyRollbackAckfalse、childReapedtrue，未返回SQLSTATE。传输COMPLETED不代表事务提交；无COMMIT/ABSENT结论、不重writer。T45继续原owned cleanup，C不接触服务器。原carrier存在确定诊断信息丢失：JS catch genericcode未进Python输出白名单，不能从code null认定无异常；同入口只补受控phase/code，不新增权限/控制层，QB仅核实际增量后才下一次观察。D1收IH-01后只读现有host接缝，先不猜失败原因。
+
+QB4e3b RESULT32a78c81/2694已采用NEED_FIX；D1原两反例2RED、最小2文件修复12/12必要项PASS待固定。原4e3b物料冻结不用，修后性能及R4事务仍UNKNOWN。
