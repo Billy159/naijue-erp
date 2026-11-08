@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T10:09:09.429417+08:00",
+    "at": "2026-11-08T10:28:04.559303+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "9ab5421821572ab07f32c2f0c4e33193303e7db2",
+      "lastControllerCheckpoint": "12508861aa6cdf2b443f4985c218788487d6192d",
       "lastControllerCheckpointRemoteVerified": true
     },
     "cleanInstall": {
@@ -28511,12 +28511,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "No source changes/tests. Read minimal frozenCLI/host catch and existing first-error carrier while T45 actual terminalreadback arrives; no guessedrootcause.",
-      "QB": "2b6 + PREPARE60 narrow independent conclusions adopted; no duplicate whole-suite or ops validation.",
-      "D2": "Fixed2b6 tiny tool and APP576/history856 available. No new packaging or APP build.",
-      "T45": "PREPARE14 actualFAILED2. Only original terminal necessary readback and originalalready-submitted readonly key collect; no new runtimeobservers/SQL/cleanup/replay. Preserve full outputs; get exactfirst cause.",
+      "D1": "In-flight minimal synthetic reproduction of valid large hall approval versus uniform INITIALIZE8MiB cap; inspect complete consumer chain, fix only proven seam, preserve full proof/hash and ordinary guards.",
+      "QB": "2b6 + PREPARE60 evidence adopted; next only actual D1 new fixed increment, no duplicate whole suite.",
+      "D2": "APP576/history856 and prior2b6 ready; next only new minimal operation closure after D1/QB, no APP rebuild.",
+      "T45": "14 terminal and streamed-summary technical reads complete. Prepare full-byte exact14index archive and minimum old stopped rebuildable APP space; preserve all evidence, no replay/EXECUTE.",
       "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
-      "QF": "Normal host/login/core business prerequisites not yet available; no new synthetic UI queue."
+      "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -33304,13 +33304,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T09:04:28.000318+08:00",
-      "phase": "R4_PREPARE13_CLOSED_2B6_QB_PASS_T45_CAPACITY_AND_60MIN_BINDING_PREPARATION",
+      "at": "2026-11-08T10:28:04.559303+08:00",
+      "phase": "R4_PREPARE14_OFFLINE_SUMMARY_PASS_POST_PREFLIGHT_FAILURE_SCOPED_REPAIR_AND_PRESERVATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 sole server executor",
-      "nextOwner": "C exact 2b6 upload scope after T45 ready",
-      "latestActualReceiptSHA256": "a8f6cb2fdf2fb3d9f9a5c9dcb4e832da49434ad7d9d9c258e8c279ad8048343f",
+      "currentOwner": "D1 source seam; T45 sole server executor",
+      "nextOwner": "QB targeted delta then D2 tiny tool; C exact scoped T45 continuation",
+      "latestActualReceiptSHA256": "04c432f3dedeb7d6b94cef4993182174c8c2129431e465c413a6bc415d2300a3",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 minimal authorized old stopped app cleanup then exact paired upload/materialize/Linux load/old-policy restore, new BOOT15/parameters10/PREPARE14<=60min.",
+      "next": "Prove and fix legitimate initializer-size conflict; preserve exact14generatedindex and restore startup space before a new bounded run. No old replay/EXECUTE.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33444,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED. PREPARE14 FAILED2 after1611.795s, Nodeexit1/IMPORT_FAILED; not60min expiry, lowdisk orsamplegap. Fullsummary/nativebinding and exactcause pending. No inference of PG rollback/businesspass.",
+        "REALImport": "NOT_EXECUTED. PREPARE14 offline full-package summary checks_passed=true, issue0/count608916. Post-preflight CLI IMPORT_FAILED, no PREPARED/native binding/plan. Original exception lost; narrow source reproduction in progress.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "Node parent/descendants actually reaped after14; final PG/guardian state not yet read. No newBOOT authorized."
+      "currentR4ProcessState": "Node2958/PG2875/guardian2868 ABSENT at actual terminal02 readback"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -38419,7 +38419,7 @@
     },
     "r4RealPrepare14_20261108": {
       "owner": "T45 only",
-      "status": "ACTUAL_FAILED_NODE_EXIT1_FIRST_CAUSE_PENDING_NOT_WINDOW_OR_RESOURCE_GUARD",
+      "status": "OFFLINE_PREFLIGHT_PASS_POST_PREFLIGHT_FAILED_FIRST_EXCEPTION_LOST_SCOPED_REPRODUCTION_IN_PROGRESS",
       "readySHA256": "145e3d3e9865194a5ab4af4062f9e7631e2f13f85b77a6227ab2f6f7e22da6bd",
       "readyBytes": 6916,
       "CVerifiedRefs": 9,
@@ -38439,7 +38439,7 @@
       "original100ms250ms4GiBAndPGGuardsPreserved": true,
       "mode": "PREPARE_ONLY_NOT_EXECUTE",
       "registrationNullPreserved": true,
-      "summaryNativeBindingCLIResult": "NOT_YET_VERIFIED",
+      "summaryNativeBindingCLIResult": "OFFLINE_SUMMARY_PASS_ONLY; PREPARED/native binding/CLI plan not obtained",
       "old13NotReplayed": true,
       "actualJobSHA256": "92e3a0936b8b979eaa4754305c2c57777f6e120abb6eca1f3f6c80e39b4a63d1",
       "actualJobBytes": 508,
@@ -38463,9 +38463,122 @@
         "state": "NOT_STARTED",
         "verification": "NOT_RUN"
       },
-      "firstCause": "PENDING_ORIGINAL_TERMINAL_TECHNICAL_READBACK; genericCLI state does not prove preflight never ran",
+      "firstCause": "Original exception not retained. D1 proving legitimate approval versus uniform 8MiB INITIALIZE request cap using synthetic counterexample; actual-first-cause not asserted.",
       "extraReadonlyAlreadySubmittedBeforeNoNewObserverDirection": "t45-r4-prepare14-temp-metadata-readonly-20261108-01; last publicSTARTING, not resubmitted/interrupted, exact original status pending",
-      "next": "T45 original terminal summary/progress/context/first error+cleanup; D1 minimum existing catch/source fact; no rerun/new window/EXECUTE before actual cause"
+      "next": "D1 minimal source diagnosis/fix -> QB scoped increment -> D2 tiny tool. T45 full-byte preserve exact14 generated index and prepare minimum old stopped APP capacity cleanup; no replay/EXECUTE."
+    },
+    "r4Prepare14TerminalAndSummary20261108": {
+      "owner": "T45 sole server executor; C adopts exact receipts",
+      "terminalReaderKey": "t45-r4-prepare14-final-readonly-20261108-02",
+      "terminalReaderJobSHA256": "b26b16031dafd8292b70514a68a43da8f373bc19547a3a97e315bd48dcdeefae",
+      "terminalSHA256": "7a8f64483ebb222cb57038de97c918f2feb16bd75d0f20a6422c1efec100f700",
+      "terminalBytes": 324411,
+      "firstReaderFailure": "Empty stderr rejected by generic nonempty guard; preserved, successor02 accepts stable zero bytes without weakening nonempty helper",
+      "summaryReaderKey": "t45-r4-prepare14-summary-readonly-20261108-01",
+      "summaryReaderJobSHA256": "b21686b9bf385045bd954025913d76ca5fc2ca57834bc38b115a30343bb9160e",
+      "technicalReceiptPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r4-prepare14-summary-readonly-20261108-01/transport/release-receipts/t45-r4-prepare14-summary-readonly-20261108-01/summary14-technical.json",
+      "technicalReceiptSHA256": "04c432f3dedeb7d6b94cef4993182174c8c2129431e465c413a6bc415d2300a3",
+      "technicalReceiptBytes": 7869,
+      "exitCode": 0,
+      "elapsedSeconds": 22.856081136036664,
+      "summarySHA256": "40a3ffa0d4bfbf818e17ad055caaeaf178dadb6e5edb1434cf21273268d7d6a5",
+      "summaryBytes": 57725546,
+      "summaryInode": 14562645,
+      "structuralEOF": true,
+      "approvalBodiesDecodedOrExported": false,
+      "selected": {
+        "timings_ms": {
+          "metadata_ms": 5580.298432,
+          "registry_ms": 50385.442038,
+          "records_ms": 285023.532205,
+          "relations_and_reconciliation_ms": 903992.176397,
+          "index_hash_ms": 46697.58626600006,
+          "total_ms": 1293558.2783579999,
+          "jsonl_read_ms": 35897.03082199859,
+          "jsonl_decode_parse_ms": 22902.367002001745
+        },
+        "schema_declarations_sha256": "b460db7ded610e6afe0fc8d506fedb8eda9d947819571211a25ecc5b52a39c0b",
+        "manifest_sha256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+        "index_schema_version": "UNIFIED_STREAM_FACTS_V3",
+        "index_sha256": "375bcfdca7fea00f20cfd473ea3920c63e3930e79a7d85a77b3bef7f24261b87",
+        "index_bytes": 2567147520,
+        "validation_scope": "STANDARD_PACKAGE_OFFLINE_V1",
+        "state": "STREAM_PREFLIGHT_COMPLETE",
+        "checks_passed": true,
+        "complete_package_validation": true,
+        "import_eligible": false,
+        "business_database_writes": false,
+        "counts": {
+          "barcode_scheme": 6,
+          "color": 182,
+          "customer": 263,
+          "fit": 6,
+          "hall": 43,
+          "inventory_baseline": 147708,
+          "payment_account": 80,
+          "payment_account_hall": 985,
+          "payment_method": 12,
+          "product": 2970,
+          "product_category": 47,
+          "sales_header": 28894,
+          "sales_line": 83399,
+          "sales_settlement": 26360,
+          "size": 256,
+          "size_group": 4,
+          "size_group_member": 35,
+          "sku": 14784,
+          "sku_barcode": 13721,
+          "staff": 103,
+          "supplier": 222,
+          "transfer_header": 14835,
+          "transfer_line": 273948,
+          "warehouse": 53,
+          "product_image": 0,
+          "season": 0
+        },
+        "issue_count": 0,
+        "bytes_scanned": 1008361447,
+        "peak_rss_bytes": 860393472,
+        "limits": {
+          "line_bytes": 1048576,
+          "total_bytes": 8589934592,
+          "rows": 5000000,
+          "issues": 100000,
+          "sqlite_cache_kib": 32768
+        }
+      },
+      "approvalEncodedValueBytes": {
+        "hall": 57647676,
+        "settlement": 73200,
+        "staff": 802
+      },
+      "index": {
+        "inode": 14562640,
+        "bytes": 2567147520,
+        "allocatedBytes": 2567364608,
+        "sha256FromSummary": "375bcfdca7fea00f20cfd473ea3920c63e3930e79a7d85a77b3bef7f24261b87",
+        "independentFullHashReverified": false,
+        "journalWalShm": "ABSENT"
+      },
+      "processState": "Node2958/PG2875/guardian2868 all ABSENT at terminal02 observation",
+      "HBAAndInputMetadata": "Original HBA bytes+inode and 45 inputs restored; both private projections absent",
+      "availableBytesAtTerminal": 5597532160,
+      "CLIOriginalStdout": {
+        "bytes": 72,
+        "sha256": "caf7128bb903782dcf7c07bb9927610d0937c08d3fe9b2f6b1ad6a042ef8e80b",
+        "code": "IMPORT_FAILED",
+        "state": "NOT_STARTED",
+        "diagnostic": "ABSENT",
+        "stderrBytes": 0,
+        "issuesBytes": 0,
+        "originalException": "NOT_RETAINED_NOT_INVENTED"
+      },
+      "fullCliPlanOrNativeBinding": "NOT_OBTAINED",
+      "PREPARED": false,
+      "realImportExecuted": false,
+      "businessAcceptance": false,
+      "preservation": "Exact14 index single member, no journal; full archive and occupancy/ref proof before any retirement; all summary/progress/cost/context/auth/raw receipts retained",
+      "next": "D1 valid synthetic request-size reproduction and narrow fix, T45 archive/space preparation in parallel; no blind rerun or extra server observer."
     }
   }
 }

@@ -3051,3 +3051,12 @@ C核params100177 READY与五refs/四事实，签1a12ccea/1822；publisher job8c2
 原manager显式3900已实际准入，唯一14 job92e3a093/508于10:06:02终态FAILED2/1611.795s，actual b0eb092a/1599。Node自己exit1，guardSTOPPED_OUTCOME_UNKNOWN；15995samples/maxgap.141227<.25，minfree5382848512>4GiB，尚未到60min截止，因此不能归因旧时限、低水位或采样gap。三Node reap均true、原45输入metadata restored；秘密投影收尾导出REDACTED，不当布尔已验。CLI IMPORT_FAILED/stateNOT_STARTED/cleanupUNKNOWN/verificationNOT_RUN仅外层输出，不能推断预检没运行或PG回滚已证。
 
 T45沿原终态必要读取summary/progress/context与首个技术错误，原私有完整输出保留，不输出真实来源行/凭据；先前已提交一次只读metadata key在C禁止新增observer前发起，lastpublicSTARTING，原键安全收终态，不重投或强中断。后续无新observer/SQL/清理/窗口或EXECUTE。D1仅查冻结CLI/host既有错误承载和catch，实际首错回来再最小定向修，不猜原因、不再合成性能循环。真实整批导入、核账、历史业务、新35恢复及正式切换均未完成。上个C断点9ab5421821572ab07f32c2f0c4e33193303e7db2已推且远端核实。
+
+
+## 2026-11-08T10:28:04.559303+08:00 PREPARE14完整离线预检已证，后续失败定向修复与保全并行
+
+终态02原键COMPLETED0/.368s，job b26b/529、actual7a8f6448/324411：Node2958、PG2875、guardian2868均absent，原HBA和45输入metadata恢复、两个私有投影absent。01因空stderr被非空通用守卫拒绝保留；02仅接受零字节稳定元数据，不放宽非空读取。原stdout仅72B/generic IMPORT_FAILED，无diagnostic，stderr/issues为空，首异常确未保留，不臆造。原在途TEMP观察unit inactive/dead但无私有回执，publicSTARTING不改写、不重放。
+
+同一summary只读原键COMPLETED0/22.856s，job b216/514、technical04c432f3/7869，C核hash。64MiB/80s流式框架到EOF，未解码或输出12个未选根值正文；fullSHA40a3ffa0/57725546B/inode14562645。实际state STREAM_PREFLIGHT_COMPLETE，complete_package_validation/checks_passed均true、issue0，26目标合608916；scope STANDARD_PACKAGE_OFFLINE_V1、import_eligible=false、businesswrites=false。index375bcfdc/2567147520B仅从summary取，不冒充独立重哈希。records285023.532ms、relations903992.176ms、indexhash46697.586ms、total1293558.278ms；summarypeakRSS860393472B不代表整个CLI峰值。只采用离线整包预检通过，未得CLI plan/nativebinding/PREPARED，更无实际导入。
+
+hall根编码值57647676B、settlement73200B、staff802B。D1在途核合法64MiB证明与stream-program统一8MiB INITIALIZE限额冲突，先小合成反例再最小修复；原真实首异常丢失，尚不把推测写成首错定论。普通请求护栏、证明全文/哈希、权限事务不放宽。T45准备14单一index完整归档和最小旧停用可重建APP补空间；journal/wal/shm实际不存在，不能套旧pair模板。保留summary、cost/context、全部旧失败、资料和备份，不开SQLite或重扫真实行。实际余5597532160B，下一轮启动空间仍未达标。D2复用APP576/history856，仅待确切新工具；QB只验新增量。整包导入、独立核账、普通历史业务、新35恢复、正式切换仍未完成。上个C断点12508861aa6cdf2b443f4985c218788487d6192d已推且核远端。
