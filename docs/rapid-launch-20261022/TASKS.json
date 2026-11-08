@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T01:59:11+08:00",
+  "updatedAt": "2026-11-09T02:16:44+08:00",
   "stage": "191_OLD_APP_CONTAINERS_158_PATHS_4_ROUTES_67_IMAGES_ACTUALLY_RETIRED_REMAINING_TARGETED_CLOSURE",
-  "lastVerifiedRemoteCommit": "2146220152b94148dcbf014b4eb3c661965daf33",
+  "lastVerifiedRemoteCommit": "ae9f9382fa364f50c6d3ed80db6fea61f2e64da1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,10 +28514,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Original T45 existing05 private-log whitelist extraction only, then two existing mixed roots exact application-leaf metadata. No PG/Node/SQL/replay until actual cause fixed.",
-      "QB": "43906277/4299 scoped PASS adopted; B29-WINDOW-01 closed, 35 independent cases plus5 focused tests. No repeat technical acceptance.",
-      "D1": "15af source and observational phases valid; no speculative V2/hash rewrite based only on window expiration. Await exact successor result/direct source defect.",
-      "D2": "15af frozen operation ready/loaded; no duplicate packaging.",
+      "T45": "Exact old cleanup closed16/16 actual; all29 runtime restored/stopped. Local safe diagnostic consumer only, await source QA; no more old log sampling or broad cleanup.",
+      "QB": "Review only50d3 failed-host safe diagnostic propagation/privacy/unchanged outcome; local focused tests allowed with existing locked runtime, no new server/PG/real data.",
+      "D1": "Fixed50d3 diagnostic source pushed;22 scoped author checks. No actual05 cause repaired; await original QB.",
+      "D2": "Wait independent fixed-source result, then single exact packaging; reuse prior fixed resources, no duplicate build now.",
       "D3": "Original400e COMMIT remains UNKNOWN; independent reconciliation only after authoritative COMMITTED, no reimport/reclean.",
       "QF": "Wait actual real35 normal application and authentication; no filler QA."
     },
@@ -33307,12 +33307,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T01:59:11+08:00",
-      "phase": "INSPECT05_FAILED_HOST_OPEN_RESTORE07_OWNED29_ACTUAL_CONFIRMED",
+      "at": "2026-11-09T02:16:44+08:00",
+      "phase": "CLEANUP_COMPLETE_INSPECT05_DIAGNOSTIC_SOURCE_UNDER_QB",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 existing-log and exact residual metadata only",
-      "nextOwner": "C consumes scoped result then original T45 exact finite execution",
+      "currentOwner": "Original D1 fixed50d3; original QB scoped review; T45 local consumer only",
+      "nextOwner": "Original D2 exact packaging after valid fixed-source result, then original T45 reviewed finite execution",
       "latestActualReceiptSHA256": "b1a7294673c9c8762fa929b4922e47793e43f94abddfa7d6f33d1c49f42b1d56",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 existing05 private-log whitelist extraction only, then two existing mixed roots exact application-leaf metadata. No PG/Node/SQL/replay until actual cause fixed.",
+      "next": "Adopt original QB scoped 50d3 diagnostic result; fix only demonstrated gaps; complete original T45 safe consumer and D2 single frozen successor. No blind REAL replay, no new cleanup sweep. Actual root cause and original400e/key COMMIT remain UNKNOWN.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33489,8 +33489,8 @@
       },
       "currentR4ProcessState": "BOOT29_ALL_OWNED_PROCESSES_ABSENT_45_METADATA_HBA_AUTHORITY_RESTORED",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF",
-      "latestCleanupResultSHA256": "ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba",
-      "currentFreeBytes": 8564260864,
+      "latestCleanupResultSHA256": "efa5414bfbf2e58235faf27e6745b771a1ae1e8c52b95be2e7a125a559cd387d",
+      "currentFreeBytes": 8803291136,
       "fullWriterFloorSatisfiedByLatestObservation": true,
       "businessCommitState": "UNKNOWN_ORIGINAL_KEY_NOT_REPLAYED",
       "spaceDoesNotProveImportOrDeployment": true,
@@ -35759,9 +35759,9 @@
       "owner": "Original T45 only; C reviews fixed deletion list",
       "authorization": "Direct current human permits exact listed stopped rebuildable old application directories, duplicate build archives and old isolated application copies after occupancy/reference/reconstruction checks. No repeated human permission for this scope.",
       "protected": "Current new R4/15af system and necessary runtime/recovery materials; real business DB/data/originals/media/backups/original receipts; required SSH/Docker/operations/shared service. Old public applications or old rollback applications have no blanket preservation after latest direct user override.",
-      "state": "EXACT_OLD_APPLICATION_RETIREMENT_BATCH_COMPLETED",
+      "state": "EXACT_OLD_APPLICATION_RETIREMENT_AND_16_MIXED_LEAVES_COMPLETED",
       "previousDeletedSixAnd42": "Reuse 49d4b37f and df472f7b; do not repeat.",
-      "next": "Fixed cleanup scope closed; no more broad server inventory. Original T45 finishes offline BOOT28/inspect04 five-consumer binding to actual15af root/parser-r2, original QB reviews only binding delta, then C fixes new finite read-only original-key window. No writer replay while original COMMIT unknown.",
+      "next": "Exact existing cleanup scope closed. Preserve media/data/backups/receipts and needed new-system/recovery dependencies; no broad duplicate sweep.",
       "deletionProofSHA256": "8108999fe7c2e69fe91f1073af698dcfe203cc8cf47266b530c59baf06830a38",
       "actualReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-r26-authorized-two-20261107-01/transport/release-receipts/t45-retire-r26-authorized-two-20261107-01/authorized-r26-two-retirement.json",
       "actualReceiptSHA256": "b19a8146f660411d16f470baddc2bc757f7288d865b09458b3857bc48a25dbe3",
@@ -35789,8 +35789,8 @@
       "containerChanges": 0,
       "finalReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261107-retained-runtime-candidates-readonly-01/BOUNDED-CLEANUP-FINAL.json",
       "finalReportSHA256": "a32a99fd666a2c1d6cf4fdc2792bd6f5439364ae1965173461fcdd44eb8ee05e",
-      "lastFreeBytes": 9303150592,
-      "lastFreeObservationShanghai": "2026-11-07T22:01:00.947+08:00",
+      "lastFreeBytes": 8803291136,
+      "lastFreeObservationShanghai": "2026-11-09T02:10:13+08:00",
       "furtherDeletedItems": 0,
       "retainedReasons": {
         "r48_server_web": "Exact bytes/mode rebuild and no current occupancy proven, but current old-formal rollback exclusion remains UNKNOWN. Both retained; prepared removal not submitted.",
@@ -36019,7 +36019,7 @@
         "PGOrBOOTStarted": false,
         "readByController": true
       },
-      "updatedAt": "2026-11-09T00:55:41+08:00",
+      "updatedAt": "2026-11-09T02:16:44+08:00",
       "finalBatch20261109": {
         "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-two-old-erp-systems-retirement-01/RESULT.json",
         "resultSHA256": "ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba",
@@ -36184,6 +36184,29 @@
           "R4,15af,real-r3 and required operations/recovery dependencies"
         ],
         "next": "Original T45 answers from existing residual list; clean only proven unused old applications; no broad duplicate inventory or shared-volume removal."
+      },
+      "mixedR16Leaves20261109": {
+        "requestKey": "t45-retire-r16-mixed-application-leaves-20261109-01",
+        "CDecisionSHA256": "a4d21d69e8b86e18d727c4c93cbe5c27fa441998fc844544a0285f9a336be9dd",
+        "candidateSHA256": "2e5bbd7f36891b4c62ca708ed0f9130164d10ed3619906f0f22c328fee641231",
+        "scriptSHA256": "f529e8e8dfceb80967437418dea449d6b4c0f2bd9edcaff2d5b386cc4d758148",
+        "actualReceiptSHA256": "efa5414bfbf2e58235faf27e6745b771a1ae1e8c52b95be2e7a125a559cd387d",
+        "finalResultSHA256": "9fabe543eb2954efea22297c3a85bcbdace874a24e16c9e270975399f088cd69",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 4.275650344,
+        "removedFullPaths": 13,
+        "applicationOnlyMediaRetained": 3,
+        "skipped": 0,
+        "freeBytesBefore": 8563630080,
+        "freeBytesAfter": 8803291136,
+        "actualFreedBytes": 239661056,
+        "protectedPathsAndKeptContainersUnchanged": true,
+        "containersOrImagesOrVolumesDeleted": false,
+        "PGOrNodeOrSQL": false,
+        "wholeWorkAndOutputs": "RETAINED_ORIGINAL_MATERIALS_NOT_APPLICATION_RUNTIME",
+        "priorAggregateUnchanged": "ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba",
+        "successfulBatchMeasuredFreeDeltaSumIncludingPrior": 3414659072
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -41553,7 +41576,26 @@
       "portAndPostmasterAbsent": true,
       "all45MetadataAndHBAAndOriginalAuthorityRestored": true,
       "originalParameterNaturalCTimeNs": 1794160500907749076,
-      "currentFreeBytes": 8564260864
+      "currentFreeBytes": 8564260864,
+      "finalResultSHA256": "b52be77d994cef36a031987aec9b8765e4f1814f10a3243e046fba75c16288bd",
+      "safeExistingErrorExtractionSHA256": "ad531bab0bf3d65987f2a689c7c26f8b5180c5cf5d369517025453219785de6f",
+      "specificError": "NOT_RECORDED",
+      "storedRoleExpiryCoversActualJob": true,
+      "actualAuthentication": "UNKNOWN_NOT_QUERIED"
+    },
+    "inspect05SafeDiagnosticSourceSuccessor20261109": {
+      "owner": "Original D1",
+      "commit": "50d3fea3383b2a821d4caaf06dfc19922f5337ea",
+      "parent": "15afb4bfdec3a564252697d4e155101ef4bcd1f1",
+      "tree": "066cb52d85336818590d13a08edd22bb1877eb21",
+      "handoffSHA256": "4ad66b2670dabb35a5c26e46465b130ca9202a827d6e14d6c2a10b0bdde7cb31",
+      "sourceReadOnlyAnalysisSHA256": "9084e73e13e829bef5fab4d5fc57bd021f413a7160fdc9d6a45fa06b52bee28e",
+      "scope": "Three original CLI/host leaves and three focused tests. Existing failed CLI diagnostic only; module-private safe summary, fixed fields, no raw error or business payload.",
+      "authorChecks": "22 scoped PASS/0skip and parent RED; independent QB pending",
+      "rootCauseResolved": false,
+      "state": "FIXED_SOURCE_PUSHED_ORIGINAL_QB_SCOPED_REVIEW_IN_PROGRESS",
+      "T45": "Local exact diagnostic consumer preparation only; no package/upload/PG until independent fixed-source result",
+      "environmentExecuted": false
     }
   }
 }
