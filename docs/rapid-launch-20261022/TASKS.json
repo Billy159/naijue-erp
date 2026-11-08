@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T09:40:01.519819+08:00",
+    "at": "2026-11-08T10:09:09.429417+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "9f7223f57235cc9999b0bdf3462c98907b45250b",
+      "lastControllerCheckpoint": "9ab5421821572ab07f32c2f0c4e33193303e7db2",
       "lastControllerCheckpointRemoteVerified": true
     },
     "cleanInstall": {
@@ -28511,10 +28511,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Fixed2b6 TEMP pager delivered/pushed; source and focused models accepted by original QB. No repeated tests. Wait actual T45 first failure or real preflight.",
+      "D1": "No source changes/tests. Read minimal frozenCLI/host catch and existing first-error carrier while T45 actual terminalreadback arrives; no guessedrootcause.",
       "QB": "2b6 + PREPARE60 narrow independent conclusions adopted; no duplicate whole-suite or ops validation.",
       "D2": "Fixed2b6 tiny tool and APP576/history856 available. No new packaging or APP build.",
-      "T45": "BOOT15 and params10 actually passed with originalHBA restored. Execute original PREPARE14 once, explicitouter3900 and absolute60min; collect original key. No new observer during activepreflight.",
+      "T45": "PREPARE14 actualFAILED2. Only original terminal necessary readback and originalalready-submitted readonly key collect; no new runtimeobservers/SQL/cleanup/replay. Preserve full outputs; get exactfirst cause.",
       "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
       "QF": "Normal host/login/core business prerequisites not yet available; no new synthetic UI queue."
     },
@@ -33444,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED. PREPARE13 failed; next PREPARE14 fixed2b6/current8f6 exact C60min description dispatched. Actualcomplete summary/nativebinding/CLIcleanup pending.",
+        "REALImport": "NOT_EXECUTED. PREPARE14 FAILED2 after1611.795s, Nodeexit1/IMPORT_FAILED; not60min expiry, lowdisk orsamplegap. Fullsummary/nativebinding and exactcause pending. No inference of PG rollback/businesspass.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "ActualBOOT15 guardian2868 and PG2875 live atd77c observation; newPREPARE14 dispatched, terminal result pending."
+      "currentR4ProcessState": "Node parent/descendants actually reaped after14; final PG/guardian state not yet read. No newBOOT authorized."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -38419,7 +38419,7 @@
     },
     "r4RealPrepare14_20261108": {
       "owner": "T45 only",
-      "status": "EXACT_C_DESCRIPTION_DISPATCHED_ACTUAL_TERMINAL_PENDING",
+      "status": "ACTUAL_FAILED_NODE_EXIT1_FIRST_CAUSE_PENDING_NOT_WINDOW_OR_RESOURCE_GUARD",
       "readySHA256": "145e3d3e9865194a5ab4af4062f9e7631e2f13f85b77a6227ab2f6f7e22da6bd",
       "readyBytes": 6916,
       "CVerifiedRefs": 9,
@@ -38430,7 +38430,7 @@
       "expiresAt": 1794105504178,
       "maximumMs": 3600000,
       "managerOuterSeconds": 3900,
-      "actualManagerAdmission": "PENDING",
+      "actualManagerAdmission": "ACTUAL_3900_ACCEPTED_QUEUED_THEN_RUNNING",
       "carrierSHA256": "6ed72741265a4c5cf35c04315d6e846183bdd8fe8fa33dbb73336b67a9e5cdc4",
       "planSHA256": "2bfe1caa419e53a772fc77932f19753c8b5a42d2df516f5aae3d34bfb7ce0d99",
       "sourceSet": "8f6d1841191ba44aaa3b02b47e158deb3b4d1a2492338283dc5b97e1a0cd34a3",
@@ -38440,7 +38440,32 @@
       "mode": "PREPARE_ONLY_NOT_EXECUTE",
       "registrationNullPreserved": true,
       "summaryNativeBindingCLIResult": "NOT_YET_VERIFIED",
-      "old13NotReplayed": true
+      "old13NotReplayed": true,
+      "actualJobSHA256": "92e3a0936b8b979eaa4754305c2c57777f6e120abb6eca1f3f6c80e39b4a63d1",
+      "actualJobBytes": 508,
+      "actualResultSHA256": "b0eb092a088e169197647421b8bf2f00ecff310e37bfe19b717e2b0c70547e2e",
+      "actualResultBytes": 1599,
+      "actualExitCode": 2,
+      "actualSeconds": 1611.7953980560414,
+      "actualFinishedAtUTC": "2026-11-08T02:06:02.783230Z",
+      "nodeExitCode": 1,
+      "guard": "STOPPED_OUTCOME_UNKNOWN",
+      "samples": 15995,
+      "maxSampleGapSeconds": 0.141227463260293,
+      "minimumAvailableBytes": 5382848512,
+      "allThreeNodeReaps": true,
+      "originalInputMetadataRestored": true,
+      "projectedSecretsRetired": "REDACTED_NOT_BOOLEAN_VERIFIED",
+      "transactionRollbackProven": false,
+      "CLI": {
+        "code": "IMPORT_FAILED",
+        "connectionCleanup": "UNKNOWN",
+        "state": "NOT_STARTED",
+        "verification": "NOT_RUN"
+      },
+      "firstCause": "PENDING_ORIGINAL_TERMINAL_TECHNICAL_READBACK; genericCLI state does not prove preflight never ran",
+      "extraReadonlyAlreadySubmittedBeforeNoNewObserverDirection": "t45-r4-prepare14-temp-metadata-readonly-20261108-01; last publicSTARTING, not resubmitted/interrupted, exact original status pending",
+      "next": "T45 original terminal summary/progress/context/first error+cleanup; D1 minimum existing catch/source fact; no rerun/new window/EXECUTE before actual cause"
     }
   }
 }

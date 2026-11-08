@@ -2736,3 +2736,10 @@ T45原paired链全终态：RESULTf7bbfc24/6384；materialize jobf591/523实际0/
 C核a104 READY41refs和六Python常量外AST同父，采用原QB两谓词结论，签e9902988/1502。BOOT15 jobb989/549实际0/3.327s，17879165/1034读回PG2875/start299977922、新epoch2026-11-08 01:31:21.984278Z，同SID/OID/PG版本。restart e094929e，guardian2868；两既有角色至02:59:38.307Z、guardian03:00:08.307Z（准确epoch1794106808307），不超过原servicelease。必要observationd77c/3973核HBA原720b/inode恢复(.814s)、PG/guardian真实活身份，无新增角色或grant。password字段由原导出REDACTED，未当布尔PASS，未绕过脱敏；凭据认证未单验。
 
 C核params100177 READY与五refs/四事实，签1a12ccea/1822；publisher job8c22/614实际0/.870s，f0f2709c/602确认新inode14562512/root61035/0640、旧bbff保留。准确access52c29d88/34667仅参数metadata变化，其他44条不变，无DB写。C核PREPARE14 READY145e3d3e/6916九refs，签f01c619d/4597：1794101904178至1794105504178（09:38:24—10:38:24 BJT）最大60min，modePREPARE与registrationnull保留，未含EXECUTE。原唯一T45按新14键/manager显式3900派达；原100ms/250ms、4GiB、PG事务/权限/原键/清理不放宽，实际准入和完整预检回执仍待。新工具2b6/current8f6与installed8694/a7d分开绑定，失败13不重放。实际导入、独立对账、普通历史业务、新35恢复、正式入口均未完成。上个C远端断点9f7223f57235cc9999b0bdf3462c98907b45250b已核。
+
+
+## 2026-11-08T10:09:09.429417+08:00 PREPARE14实际Node退出1，准确首错待原终态读回
+
+原manager显式3900已实际准入，唯一14 job92e3a093/508于10:06:02终态FAILED2/1611.795s，actual b0eb092a/1599。Node自己exit1，guardSTOPPED_OUTCOME_UNKNOWN；15995samples/maxgap.141227<.25，minfree5382848512>4GiB，尚未到60min截止，因此不能归因旧时限、低水位或采样gap。三Node reap均true、原45输入metadata restored；秘密投影收尾导出REDACTED，不当布尔已验。CLI IMPORT_FAILED/stateNOT_STARTED/cleanupUNKNOWN/verificationNOT_RUN仅外层输出，不能推断预检没运行或PG回滚已证。
+
+T45沿原终态必要读取summary/progress/context与首个技术错误，原私有完整输出保留，不输出真实来源行/凭据；先前已提交一次只读metadata key在C禁止新增observer前发起，lastpublicSTARTING，原键安全收终态，不重投或强中断。后续无新observer/SQL/清理/窗口或EXECUTE。D1仅查冻结CLI/host既有错误承载和catch，实际首错回来再最小定向修，不猜原因、不再合成性能循环。真实整批导入、核账、历史业务、新35恢复及正式切换均未完成。上个C断点9ab5421821572ab07f32c2f0c4e33193303e7db2已推且远端核实。
