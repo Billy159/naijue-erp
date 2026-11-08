@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T21:11:25+08:00",
-  "stage": "BOOT25_ACTUAL_RECOVERY_CLOSED_PROBE_REPAIR_AND_AUTHORIZED_RETIRED_APP_CLEANUP_NEXT",
-  "lastVerifiedRemoteCommit": "e3e8c5bd3291c568cbc6d48795da9582c7951d9c",
+  "updatedAt": "2026-11-08T21:28:36+08:00",
+  "stage": "CURRENT_RESTART_PROBE_INSPECT02_SOURCE_QA_PASSED_RETIRED_APP_SPACE_CHECK_LIVE",
+  "lastVerifiedRemoteCommit": "76fdd16e3b651e14c55c92f113a4e10b21f5ef94",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "All BOOT25 resources restored/stopped; local exact-current-restart probe repair and prior retired-application cleanup continuation; no active PG or new inspection",
-      "QB": "fffce4a5 adopted; next only actual changed probe/inspect02 consumer closure when original owner freezes",
+      "T45": "New exact old-application metadata/read-only reference check then authorized cleanup; BOOT26 literal offline assembly, no PG/window",
+      "QB": "ce8003f3 adopted; next only exact changed BOOT26 closure if needed, no repeated 7+8 source cases",
       "D1": "f56 source valid; no duplicate ops task",
       "D2": "f56 Linux material valid; no rebuild/retransfer",
       "D3": "Original EXECUTE02 state remains UNKNOWN; wait authoritative committed result",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "Original T45 repair stale BOOT22 probe using validated current restart/process context; unique inspect02 exact consumer closure, QB only affected range. Existing retired-app cleanup authorization after occupancy/reference/rebuildability checks; no new PG window yet.",
+          "next": "Await T45 exact remaining application eligibility/space evidence and fixed BOOT26 assembly; then current finite C-bound original-key inspect02. No source rebuild or writer replay.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40471,6 +40471,23 @@
               "SQLStatements": 0,
               "businessOutcome": "UNKNOWN"
             }
+          },
+          "currentRestartProbeSuccessor": {
+            "READY": "fa2ecdec4e705c141265eb19c8d1596d7007ff666cb0272849eaa6ddfba218b4",
+            "READYBytes": 6449,
+            "QB": "ce8003f3c60ce8b3a9e91529cf855f7945b4978529a1757adf494b9df106753d",
+            "QBBytes": 3522,
+            "state": "PASS_CURRENT_BOUND_PROCESS_PROBE_AND_INSPECT02_SOURCE_LOCAL_ONLY",
+            "scope": "Actual caller passes current descriptor; params->restart->original C decision raw hashes choose exact boot directory, observed physical/process and proc exe/starttime validated",
+            "fixedOriginalInputLeaf": "retained-restart-decision.json carries existing original C bytes; no new authority or override",
+            "newExactInspectKey": "t45-r4-real-inspect-20261108-02",
+            "old01NotReplayed": true,
+            "targetedModels": 7,
+            "ordinaryCompatibilityCases": 8,
+            "noForeignOrOldActiveFallback": true,
+            "copiedTerminalBoot25NotRunnable": true,
+            "actualCLI400ePG": "NOT_TESTED",
+            "next": "BOOT26 exact assembly reuses original ctime recovery fix and current actual f4/637f predecessor; C new window only after actual space and source closure"
           }
         }
       }
@@ -40628,7 +40645,7 @@
     "latestOldOnlineRemovalClarification": {
       "at": "2026-11-08T20:49:43+08:00",
       "source": "User current controller message authorizes old online environment retirement",
-      "scope": "Original T45 checks exact old target, occupancy, references and rebuildability, then deletes covered retired applications without another approval",
+      "scope": "User explicitly permits retirement of the confirmed old online application, including orderly stop of its precise application service to release references, then deletion of rebuildable code/dependencies/duplicate builds after preserving recovery source. Do not stop/delete business DB or shared R4/new application materials.",
       "preserve": [
         "R4 and current required materials",
         "real business data/originals",
@@ -40641,7 +40658,29 @@
       "readOnlyStartFloor": 5368709120,
       "fullWriterFloor": 8207515646,
       "fullWriterGapBytes": 2825121790,
-      "execution": "Original T45 has explicit dispatch to record accurate eligible old application paths then directly clean and read back actual space; no deletion claimed yet"
+      "execution": "Original T45 has explicit dispatch to record accurate eligible old application paths then directly clean and read back actual space; no deletion claimed yet",
+      "latestInventory": "Original T45 confirms two-old-web02 and old38archive/payload/history/r48 already deleted; do not repeat. New exact metadata-only check of remaining old application leaves and live mounts/references/rebuild provenance is in progress. R2state and R3deploy retained as R4 dependencies.",
+      "supersedes": "Earlier blanket preserve-current-old-online-application statement only. Existing real data, attachments, backups, R4 dependencies, original request evidence and necessary recovery material protection remains.",
+      "dispatchAt": "2026-11-08T21:24:52+08:00",
+      "threeWebLeafExecution": {
+        "readySHA256": "924cf865c125b288f1faf6984a2a4b7a88475ee792911ade95cf6eba756c2655",
+        "candidateSHA256": "fad351f0f6536a074919a8d77b3afba15f67a7c38fc57d3658975429c9db9abb",
+        "sourceSHA256": "edb01a16f447414af9d61892d641123ba6fe864493403df9379f9cad6ca5e6dd",
+        "CDecisionSHA256": "d13b14220b178ac04c5eb2a98534556d5f61b6565623a2014c15ee2f370e587a",
+        "CDecisionBytes": 900,
+        "startsAt": 1794144455599,
+        "expiresAt": 1794145055599,
+        "requestKey": "t45-retire-three-verified-old-web-apps-20261108-01",
+        "allocatedCandidateBytes": 6828032,
+        "actualDeletion": "ISSUED_AWAIT_REAL_RESULT",
+        "targets": [
+          "/srv/naijue-erp/prod/formal-20261007-01/frontend-on-demand-read-20261008-01/web",
+          "/srv/naijue-erp/prod/formal-20261007-01/frontend-transfer-historical-20261008-01/web",
+          "/srv/naijue-erp/prod/formal-20261007-01/frontend-valid-repair-20261008-01/web"
+        ],
+        "pairedFullVerifiedArchivesRetained": true,
+        "fullWriterReady": false
+      }
     }
   }
 }
