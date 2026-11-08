@@ -3762,3 +3762,11 @@ C原有限绑定07f2c75d/3404，candidate8d468f4b/138786、script4d231953/7485�
 restore10 actual7cac6df8/1115及owned32 actual865784d4/5677均COMPLETED0，六键全终态；完整RESULT9af5570e/28325及原actual/job由C核字节和终态。guardian5282/PG5290/sampler5289均ABSENT，18654/pidfile不存在，HBA/45metadata/parent0711无ACL及原a7d/0dc/1af摘要、inode、权限读回确认；自然ctime1794172286262905883保留、原mtime不变。原rawcleanup false与独立postRecovery true分开，未覆写原失败。末次可用8569335808B。
 
 当前没有服务器在途或新窗口。C采用原T45仅本地诊断c6a3c6a5/5110：原real_watch第953/968两处共用错误，失败迭代可算2518，但pre/post分支、邻近逐样及共同时钟锚未导出，不能补造准确UTC或CPU/磁盘根因。已由原T45沿原同文件准备最小有界诊断后继，仅现有watch/result增加pre/post、最多两邻近样和固定耗时/锚，不加控制层、不放宽.1/.25/floor/期限/PID等守卫；固定后交原QB增量验收再核实际范围，不原样重试08。历史业务、独立对账、备份适用和正式切换仍未通过。
+
+## 2026-11-09 — 采样超限诊断最小后继固定，交原QB只验增量
+
+上一goal段为实际进展：清理累计242容器/69镜像，4279Linux加载成功，32实际启动和08实际失败改变下一步；原请求未重放。现T45保全baseline ac223ffb，固定候选carrier260538fb/148401、READY01a5a0ab/4076、DELTA35568b9e/5242、测试40076ba6/8192、CHECKS9772d412/865、HANDOFFa3ecaad4/1695。C实际逐6文件核字节摘要，仅读交付和差异，不重复技术验收。
+
+仅原real_watch增加有界纯数字/固定标签诊断：PRE/POST两触发点、最多2邻近成功样和1失败样、六固定检查耗时与诚实UTC/monotonic锚/子进程创建上下界；未冒充CLI精确起点。原.1/.25、floor/drop/PID/source/权限/window/停止清理不变，其他顶层AST相同。原owner本地5方法/8场景通过、2个旧版新增字段RED，原守卫仍拒绝；不是实际根因修好或真实运行开销通过。
+
+原QB已核idle后实际派达Sol6.1/high，当前turn01a1bd0b-91e5-71b3-9bf2-83c28ffe0929在验这项增量，既有1675e659/source/material/parser结论不重跑。原T45同文件唯一writer，候选冻结，暂不新整套runtime/传输/PG/窗口。服务器仍已停、六原键终态、原COMMIT UNKNOWN_NO_REPLAY；待QB有效结论接必要后继，失败只交T45定向修复，不增加控制层或人工批准。
