@@ -3171,3 +3171,9 @@ T45已核原two-old-web02、old38archive/payload、history/r48均已清，不重
 ## 2026-11-08T21:28:36+08:00 — 三个有完整恢复包的旧web叶已交T45直接清理
 
 唯一READY924cf865及候选fad351f0列三叶：frontend-on-demand-read、frontend-transfer-historical、frontend-valid-repair各自/web，均位于formal-20261007-01。账面6,828,032字节，既有web.tar.gz完整恢复材料保留。C消费用户原退役授权，固定d13b1422/900字节、600秒准确决定交原T45，复用已有逐成员/内容/权限/引用/CAS删除流程，不重问人类。尚待真实执行/删后空间回执，不将小额候选称完整writer空间已足。首轮metadata遇一硬链接停止未删，后续48剩余叶已只读收口；共享/特殊保留、13个引用对象待准确有序退役，29未引用但恢复来源未齐，不伪称都可删。
+
+## 2026-11-08T21:36:50+08:00 — 三个旧web目录实际删除，恢复压缩包保留
+
+唯一t45-retire-three-verified-old-web-apps-20261108-01实际COMPLETED0/21.760720秒，job f2ba1f29、actual3b6399ff/7697；三叶逐文件byte/mode/tar闭包、引用和metadata CAS通过后删除并读回absent，三份原web.tar.gz保留，R4及authority不变，无SQL/信号/容器改动。实际同盘free增加6,823,936字节，剩5,388,066,816，readonly启动余量19,357,696；距完整writer底线仍差2,819,448,830，不能称完整导入空间就绪。
+
+剩余33个准确旧服务metadata已收齐，R1/R2虽无PG进程但共享数据挂载保留；其他旧ERP Node服务先绑定恢复来源，再沿用户已授权准确退役。BOOT26离线合包在收口，复用当前启动探测与inspect02源验、合法ctime恢复修复，准确消费原f4false和独立637f最终恢复证据；未开新窗，原EXECUTE02仍UNKNOWN，不让完整writer空间缺口阻挡具备条件的安全只读核验。

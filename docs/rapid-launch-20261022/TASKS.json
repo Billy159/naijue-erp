@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T21:28:36+08:00",
-  "stage": "CURRENT_RESTART_PROBE_INSPECT02_SOURCE_QA_PASSED_RETIRED_APP_SPACE_CHECK_LIVE",
-  "lastVerifiedRemoteCommit": "76fdd16e3b651e14c55c92f113a4e10b21f5ef94",
+  "updatedAt": "2026-11-08T21:36:50+08:00",
+  "stage": "THREE_OLD_WEB_LEAVES_ACTUALLY_RETIRED_PROBE_QA_PASSED_BOOT26_ASSEMBLY_PENDING",
+  "lastVerifiedRemoteCommit": "e6b93c6686bcbef42fd36a621c045cdb04767068",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "New exact old-application metadata/read-only reference check then authorized cleanup; BOOT26 literal offline assembly, no PG/window",
-      "QB": "ce8003f3 adopted; next only exact changed BOOT26 closure if needed, no repeated 7+8 source cases",
+      "T45": "3 old web leaves actually retired; freeze BOOT26 literal proof/current-process/inspect02/ctime restore closure for original QB; safe readonly inspection must not wait on fullwriter cleanup",
+      "QB": "ce8003f3 valid; await only changed BOOT26 exact assembly/predecessor closure",
       "D1": "f56 source valid; no duplicate ops task",
       "D2": "f56 Linux material valid; no rebuild/retransfer",
       "D3": "Original EXECUTE02 state remains UNKNOWN; wait authoritative committed result",
@@ -40654,12 +40654,12 @@
       ],
       "timing": "After active finite window",
       "lastT45Dispatch": "2026-11-08T21:11:25+08:00",
-      "lastVerifiedFreeBytes": 5382393856,
+      "lastVerifiedFreeBytes": 5388066816,
       "readOnlyStartFloor": 5368709120,
       "fullWriterFloor": 8207515646,
-      "fullWriterGapBytes": 2825121790,
+      "fullWriterGapBytes": 2819448830,
       "execution": "Original T45 has explicit dispatch to record accurate eligible old application paths then directly clean and read back actual space; no deletion claimed yet",
-      "latestInventory": "Original T45 confirms two-old-web02 and old38archive/payload/history/r48 already deleted; do not repeat. New exact metadata-only check of remaining old application leaves and live mounts/references/rebuild provenance is in progress. R2state and R3deploy retained as R4 dependencies.",
+      "latestInventory": "Exact33 container metadata gathered. Old R1/R2 timeout/sleep without PG but shared data mounts retained; other exact old ERP Node services require recovery provenance binding before retirement. Not a claim of all old environments removed.",
       "supersedes": "Earlier blanket preserve-current-old-online-application statement only. Existing real data, attachments, backups, R4 dependencies, original request evidence and necessary recovery material protection remains.",
       "dispatchAt": "2026-11-08T21:24:52+08:00",
       "threeWebLeafExecution": {
@@ -40672,14 +40672,25 @@
         "expiresAt": 1794145055599,
         "requestKey": "t45-retire-three-verified-old-web-apps-20261108-01",
         "allocatedCandidateBytes": 6828032,
-        "actualDeletion": "ISSUED_AWAIT_REAL_RESULT",
+        "actualDeletion": "ACTUAL_COMPLETED_0_THREE_EXACT_WEB_LEAVES_DELETED_AND_ABSENT",
         "targets": [
           "/srv/naijue-erp/prod/formal-20261007-01/frontend-on-demand-read-20261008-01/web",
           "/srv/naijue-erp/prod/formal-20261007-01/frontend-transfer-historical-20261008-01/web",
           "/srv/naijue-erp/prod/formal-20261007-01/frontend-valid-repair-20261008-01/web"
         ],
         "pairedFullVerifiedArchivesRetained": true,
-        "fullWriterReady": false
+        "fullWriterReady": false,
+        "jobSHA256": "f2ba1f29f741a54ffd53ab75cf4e4241957f057e01d3386892a28d1c399bf264",
+        "actualSHA256": "3b6399ff6edb01ed4221f57d36d3ffde149e434a620eee3c012e9435c401b969",
+        "actualBytes": 7697,
+        "elapsedSeconds": 21.760719791986048,
+        "deletedCount": 3,
+        "actualSameDeviceReleasedBytes": 6823936,
+        "freeAfterBytes": 5388066816,
+        "startupFloorMarginBytes": 19357696,
+        "SQLConnections": 0,
+        "signalsSent": 0,
+        "protectedR4AndAuthorityUnchanged": true
       }
     }
   }
