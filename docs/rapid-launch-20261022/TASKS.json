@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T09:28:32.353710+08:00",
+    "at": "2026-11-08T09:40:01.519819+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "0dded5f880616cbe74ce602f8677c7306fe324b5",
+      "lastControllerCheckpoint": "9f7223f57235cc9999b0bdf3462c98907b45250b",
       "lastControllerCheckpointRemoteVerified": true
     },
     "cleanInstall": {
@@ -28514,7 +28514,7 @@
       "D1": "Fixed2b6 TEMP pager delivered/pushed; source and focused models accepted by original QB. No repeated tests. Wait actual T45 first failure or real preflight.",
       "QB": "2b6 + PREPARE60 narrow independent conclusions adopted; no duplicate whole-suite or ops validation.",
       "D2": "Fixed2b6 tiny tool and APP576/history856 available. No new packaging or APP build.",
-      "T45": "Actual2b6 Linux loading and exact original expiredpolicyrestore passed. Freshstop6a062/physicalinode14561921 obtained; BOOT15/params10/PREPARE14-60min non-time binding preparation active.",
+      "T45": "BOOT15 and params10 actually passed with originalHBA restored. Execute original PREPARE14 once, explicitouter3900 and absolute60min; collect original key. No new observer during activepreflight.",
       "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
       "QF": "Normal host/login/core business prerequisites not yet available; no new synthetic UI queue."
     },
@@ -33444,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED. PREPARE13 original20min expiry; summary absent, metadata_finish not completed. CLI/rollback UNKNOWN. New2b6 preflight14 maximum60min not yet executed.",
+        "REALImport": "NOT_EXECUTED. PREPARE13 failed; next PREPARE14 fixed2b6/current8f6 exact C60min description dispatched. Actualcomplete summary/nativebinding/CLIcleanup pending.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33463,9 +33463,9 @@
       "importToolSourceSetSHA256": "8f6d1841191ba44aaa3b02b47e158deb3b4d1a2492338283dc5b97e1a0cd34a3",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
-        "requestKey": "t45-r4-retained-restart-20261108-14",
-        "sha256": "c6ac9ff89241ba7733e7c864dff1f1549c32b7c3b6caf0f33478983971b74420",
-        "actualEpoch": "2026-11-08 00:02:53.78896+00",
+        "requestKey": "t45-r4-retained-restart-20261108-15",
+        "sha256": "e094929e8881c2a94e68a4c0e985e12f3d96ddaf49359eb2b4bf21b73654e2f0",
+        "actualEpoch": "2026-11-08 01:31:21.984278+00",
         "businessVerified": false
       },
       "lastCleanStopMetadataReceiptSHA256": "6a06254c906c538f8ab44a4e5181db0266f705b3611967370818c6327e017b10",
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "Fresh actual6a062 at2026-11-08T01:24:15Z confirms PG2674/guardian2667/Node2771 absent. No newBOOT15."
+      "currentR4ProcessState": "ActualBOOT15 guardian2868 and PG2875 live atd77c observation; newPREPARE14 dispatched, terminal result pending."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -38367,6 +38367,80 @@
       "freeBytes": 8227532800,
       "floorMargin": 20017154,
       "next": "T45 exact newBOOT15 non-time pins then C future5min/guardian<=90min; original two existing roles CAS. No authority issued from stale14."
+    },
+    "r4Boot15Execution20261108": {
+      "status": "ACTUAL_RETAINED_NEW_EPOCH_AND_HBA_RESTORATION_PASS_NOT_BUSINESS",
+      "owner": "T45",
+      "readySHA256": "a104c8fa653abfa43de4e6359dd301f5a930546cc0f69098ac48b2e1efd3db8c",
+      "CVerifiedRefs": 41,
+      "CDecisionSHA256": "e9902988b17c43658f3ce466041432e4fcff148e40c260aa017e62cc9d62f3bd",
+      "startsAt": 1794101408307,
+      "startExpiresAt": 1794101708307,
+      "guardianExpiresAt": 1794106808307,
+      "existingTwoRolesUntil": "2026-11-08T02:59:38.307Z",
+      "jobSHA256": "b989643a37a89fde841c5231454bb5951e6f94363334aac3734955b66ffaba4d",
+      "actualSHA256": "17879165e714bbb995dec37ba9de9686e69dce1875e38a7afaa3d493fbb6fe3f",
+      "actualExit": 0,
+      "actualSeconds": 3.3265545926988125,
+      "actualEpoch": "2026-11-08 01:31:21.984278+00",
+      "postgresPID": 2875,
+      "postgresStart": "299977922",
+      "guardianPID": 2868,
+      "guardianStart": "299977888",
+      "restartSHA256": "e094929e8881c2a94e68a4c0e985e12f3d96ddaf49359eb2b4bf21b73654e2f0",
+      "observationSHA256": "d77c7de1a5f90c69fc94cd4324f829fc8d6787bfb8156461836888a7c028ec31",
+      "observationBytes": 3973,
+      "HBARestoredOriginalBytesAndInode": true,
+      "HBARestoreSeconds": 0.8137302310205996,
+      "credentialAuthentication": "NOT_SEPARATELY_TESTED",
+      "passwordExport": "REDACTED_NOT_BOOLEAN_VERIFIED; fixed client only VALID UNTIL action; no bypass/no extra SQL",
+      "sourceASTConstantsOnlySix": true,
+      "originalHBAHelperUnchanged": true
+    },
+    "r4Boot15Parameters10_20261108": {
+      "status": "ACTUAL_PARAMETERS_AND_ACCESS_METADATA_PUBLISHED",
+      "owner": "T45",
+      "sourceReadySHA256": "10017773e1c567c38f73d42ac1a9cba33c1a5bbe2cfc2d728527e2e452aeebdb",
+      "CParametersSHA256": "1a12ccead4ed4cd831909f8217e5426e07174c37ab605411bfb39e7c04f231d5",
+      "CParametersBytes": 1822,
+      "jobSHA256": "8c22053f20913a67ac6cbfbd97ad9f634d30277681eb683758ea78b1b515afab",
+      "actualSHA256": "f0f2709cfd10892a7979d70f68684331aba9332e58f395e521e0142b2619aa25",
+      "exitCode": 0,
+      "elapsedSeconds": 0.870146,
+      "actualDevice": 66304,
+      "actualInode": 14562512,
+      "root61035mode": "0640",
+      "oldBbffPreserved": true,
+      "accessPlanSHA256": "52c29d883895fe1520f9092c054d2836ec8f923995ee6c3f5a2740240d2b09c0",
+      "accessPlanBytes": 34667,
+      "accessEntries": 45,
+      "other44Unchanged": true,
+      "DBWrites": false
+    },
+    "r4RealPrepare14_20261108": {
+      "owner": "T45 only",
+      "status": "EXACT_C_DESCRIPTION_DISPATCHED_ACTUAL_TERMINAL_PENDING",
+      "readySHA256": "145e3d3e9865194a5ab4af4062f9e7631e2f13f85b77a6227ab2f6f7e22da6bd",
+      "readyBytes": 6916,
+      "CVerifiedRefs": 9,
+      "requestKey": "t45-r4-real-prepare-20261107-14",
+      "CDecisionSHA256": "f01c619db292f8889f09900166003bb82788e67076f12a5cf96b4a2ab0dc7e75",
+      "CDecisionBytes": 4597,
+      "startsAt": 1794101904178,
+      "expiresAt": 1794105504178,
+      "maximumMs": 3600000,
+      "managerOuterSeconds": 3900,
+      "actualManagerAdmission": "PENDING",
+      "carrierSHA256": "6ed72741265a4c5cf35c04315d6e846183bdd8fe8fa33dbb73336b67a9e5cdc4",
+      "planSHA256": "2bfe1caa419e53a772fc77932f19753c8b5a42d2df516f5aae3d34bfb7ce0d99",
+      "sourceSet": "8f6d1841191ba44aaa3b02b47e158deb3b4d1a2492338283dc5b97e1a0cd34a3",
+      "installedSourceSet": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+      "roleGuardianServiceLimitsPreserved": true,
+      "original100ms250ms4GiBAndPGGuardsPreserved": true,
+      "mode": "PREPARE_ONLY_NOT_EXECUTE",
+      "registrationNullPreserved": true,
+      "summaryNativeBindingCLIResult": "NOT_YET_VERIFIED",
+      "old13NotReplayed": true
     }
   }
 }
