@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T23:03:30+08:00",
-  "stage": "INSPECT03_EXPIRED_UNKNOWN_COMMIT_ALL_RESTORED_CONTINUE_ELIGIBLE_OLD_APP_CLEANUP_AND_D1_DIAGNOSIS",
-  "lastVerifiedRemoteCommit": "1f86fd21b790a389f5c3f77f4884b813f7caee26",
+  "updatedAt": "2026-11-08T23:24:06+08:00",
+  "stage": "OLD_TWO_IMAGES_ACTUALLY_RETIRED_15AF_DIAGNOSTIC_TOOL_SOURCE_PASS_PREPARING_LINUX",
+  "lastVerifiedRemoteCommit": "52aa6aeb15e3861a4032072419b7cc0a0a2e9ff9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,12 +28514,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "BOOT27 all stopped/restored; existing-log precise diagnosis and continued eligible old-code/build/dependency cleanup after recording exact paths; protect data/R4/recovery",
-      "D1": "Existing stream-import retained inspector phase diagnosis and smallest verified fix; source owner only",
-      "QB": "7d44 adopted; await actual D1 related delta, no repeated source QA",
-      "D2": "Existing f56 Linux material preserved; no duplicate packaging",
+      "T45": "Two exact old R50 images actually deleted; prepare original 15af tool upload/Linux loading and bounded stderr phase collection; no new PG yet",
+      "D1": "15af phase observation source handed off and QB accepted; await actual stage before direct cause fix",
+      "D2": "15af single frozen tool ready; original prior materials retained; no APP build",
+      "QB": "e1d6 accepted; no repeat of prior30 or technical QA",
       "D3": "Original400e COMMIT UNKNOWN; independent reconciliation only after authoritative result",
-      "QF": "Await real35 normal app/auth readiness, no filler tests"
+      "QF": "Wait real35 normal app/auth; no filler work"
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -40697,6 +40697,30 @@
               "D1OwnerTask": "Existing stream inspect recovery seam, preserve WIP, minimal repro/fix and incremental QB",
               "T45OwnerTask": "Existing stdout/stderr and scratch metadata only, no new PG/Node; eligible old application cleanup separately"
             }
+          },
+          "phaseObservationSuccessor": {
+            "status": "SOURCE_QB_PASS_FIXED_TOOL_READY_LINUX_NOT_YET_VERIFIED",
+            "commit": "15afb4bfdec3a564252697d4e155101ef4bcd1f1",
+            "parent": "9d67925dfeacc04b55c030f994f4800e0e084d98",
+            "tree": "3b5eb9fbfcb0fc0d8f2e0b4bab1acc490fc57540",
+            "original9dQA": "9c0912dbfb8abd739883e6ae8b3c0ef362d07fdc88740c8a63ab85d76ae73176",
+            "closedFinding": "PHASE-01",
+            "QA": "e1d6fa66a43f1d95d32d1590bcc7b68fd25666257ec4723b1a5166b8dc91b98e",
+            "QABytes": 2921,
+            "checks": "Prior30 reused; one focused test two cases plus parent red and two syntax; no PG/server/business pass",
+            "D2RESULT": "17d24c66bab8f8f283d79d73892f8563d30188db4b47b0c70eda61be094bea2b",
+            "D2RESULTBytes": 11155,
+            "toolArchiveSHA256": "d86b582ba2dcdbde1e178ec1a429b890db6541bdee23bdd60d5d9b1943a2f360",
+            "toolArchiveBytes": 1151681,
+            "toolSourceSet": "c35b81425aaa768e2015c3b6dd504d9d9f53e443315ed29220694c5c5a090926",
+            "manifest": "ee67a4e03523955d103e3a169cd2f75361836c274ea5aaf160e3be586d8b623a",
+            "descriptor": "9a003649428cd57e985af19dceebb4fbbfc18cad5aefa46d8ebe3a7872e33a96",
+            "layout": "3f7e2194fab35de3b1e3f699c11307ef3b67a16a5f57a7c460c6dae4f37ebd89",
+            "operation": "Original T45 preparing precise standalone upload/Linux loading; original installation8694/a7d unchanged",
+            "realSlowPhase": "UNKNOWN",
+            "originalCOMMIT": "UNKNOWN",
+            "hostReturnedDoesNotMeanClosed": true,
+            "sourceNoValidationBypass": true
           }
         }
       }
@@ -40863,10 +40887,10 @@
       ],
       "timing": "BOOT27 closed; eligible cleanup may continue without concurrent R4 window",
       "lastT45Dispatch": "2026-11-08T21:11:25+08:00",
-      "lastVerifiedFreeBytes": 5632720896,
+      "lastVerifiedFreeBytes": 5636399104,
       "readOnlyStartFloor": 5368709120,
       "fullWriterFloor": 8207515646,
-      "fullWriterGapBytes": 2574794750,
+      "fullWriterGapBytes": 2571116542,
       "execution": "14 old apps stopped; three web leaves and 708 exact dependency directories actually deleted. 505270272 bytes freed by dependency retirement; remaining eligible old versions delegated to original T45 without repeated human permission. Current R4 all stopped.",
       "latestInventory": "Exact33 container metadata gathered. Old R1/R2 timeout/sleep without PG but shared data mounts retained; other exact old ERP Node services require recovery provenance binding before retirement. Not a claim of all old environments removed.",
       "supersedes": "Earlier blanket preserve-current-old-online-application statement only. Existing real data, attachments, backups, R4 dependencies, original request evidence and necessary recovery material protection remains.",
@@ -40966,7 +40990,48 @@
           "SQLOrPermissionOrContainerChanges": 0
         }
       },
-      "latestUserClarification": "User permits deleting old online environments when needed; real data, media, backups, R4, needed rollback and original receipts protected"
+      "latestUserClarification": "User permits deleting old online environments when needed; real data, media, backups, R4, needed rollback and original receipts protected",
+      "twoFixedOldImages": {
+        "candidateSHA256": "013bc7f2378dc61afec642f5a74d499919d2d4e8c50c2e2bbf7384cbe53dd4a2",
+        "sourceSHA256": "eba0a043ab73a65b968e8da2b331c082795f9643cf4779fe31cd4750c1396d93",
+        "CDecisionSHA256": "cf1fa8187e224d9d9238b26d5fcec660d14fc6f742979b19cb4e0dac98e9c5b8",
+        "actualSHA256": "6174dcffd13e0b6aa429869a9c71858ec3a88283775113190f40c98419ed90e9",
+        "actualBytes": 849,
+        "key": "t45-retire-two-fixed-old-r50-app-images-20261108-01",
+        "exitCode": 0,
+        "elapsedSeconds": 6.580367,
+        "imageIds": [
+          "sha256:69a3831e60eb9dda19f9193e7fe68e5027b2b56b1294f8c5d6022e39e706eff9",
+          "sha256:c2f9c7e5d20237622b5c679ec003777a750a9bbbcbc9e60298ce551b52ac9ed4"
+        ],
+        "actual": {
+          "jobId": "t45-retire-two-fixed-old-r50-app-images-20261108-01",
+          "startedAtUTC": "2026-11-08T15:20:35.787558+00:00",
+          "items": [
+            {
+              "imageId": "sha256:69a3831e60eb9dda19f9193e7fe68e5027b2b56b1294f8c5d6022e39e706eff9",
+              "removed": true,
+              "absentReadback": true
+            },
+            {
+              "imageId": "sha256:c2f9c7e5d20237622b5c679ec003777a750a9bbbcbc9e60298ce551b52ac9ed4",
+              "removed": true,
+              "absentReadback": true
+            }
+          ],
+          "SQLStatements": 0,
+          "PGOrNodeStarted": false,
+          "containersOrVolumesRemoved": false,
+          "forceUsed": false,
+          "freeBefore": 5631516672,
+          "status": "TWO_EXACT_OLD_UNUSED_APP_IMAGES_REMOVED",
+          "recoveryMaterialsAndR4Unchanged": true,
+          "freeAfter": 5636399104,
+          "actualFreeDelta": 4882432,
+          "remainingFullWriterShortfall": 2571116542,
+          "finishedAtUTC": "2026-11-08T15:20:42.313267+00:00"
+        }
+      }
     }
   }
 }
