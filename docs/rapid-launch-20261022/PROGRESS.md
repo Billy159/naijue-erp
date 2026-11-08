@@ -2980,3 +2980,10 @@ QB4e3b RESULT32a78c81/2694已采用NEED_FIX；D1原两反例2RED、最小2文件
 cleanup01任务FAILED2/.869s保留且不重放；后继只读92b94f63/5443实际证明PG3840/guardian3832/sampler3839和端口/pidfile均缺席。原cleanupba79abe9/310全部保全/直属回收/空间守护成功、errors空，45metadata与2projection、HBA/batch/params/restart保持。4222samples/minFree5441445888/maxgap.101422771/maxObservedDrop1781760均在原目的预算内；正常STOPPED_AFTER_CLEANUP。不能从清理推断原业务回滚或提交，status01仍UNKNOWN。原child原始stdout/stderr/phase未落盘无法追溯；T45只在既有JS/投影补受控phase与静态code，并同包准备20/02未签模板，原SQL/RLS/权限/容量不放宽，先QB实际增量。
 
 D1 b2d7fb0efbdb969af75a9cac25f89a6b7c08a4ac/parent4e3b/tree27e27438，C远端已核；QB RESULT8cef8653/2964已实读采用IH-01 CLOSED。仅5小测+6独立对照+syntax PASS，原25复用，不重复BOOT19/大profile/PG。原D2正在新独立物料固定；旧4e3b NEED_FIX及物料均保留，不冒充修后。修后大载荷内存收益仍UNMEASURED，R4事务/独立核账/备份恢复/正式切换仍未完成。
+
+
+## 2026-11-08 16:08 — 只读诊断后继与修后内存局部证据
+
+T45 READY7705445b/20236合并原status诊断及20/02未签模板，原QB只验受影响增量。受控phase/firstfailure/静态码及原SQLSTATE白名单；原13schema、SQL、8键、普通角色、admission不变，4criticalhelpers原字节。原19/01及cleanup失败记录冻结，实际停稳92b/ba79复用。不新params、不writer、不重整包。
+
+D1新b2唯一合成run3b9f6f76/12421：V8总460MiB，1.150s，guard/kernel哈希与同run原算法参考一致；无历史保存golden。第一factory完成，第二开始后父进程内存保护停止(-9)，采样峰949796864B<1GiB，不算完整PASS/现场3GiB复现/整体下降比例。不再大profile，仅只读核具体重复factory消费。真实业务仍UNKNOWN，禁止换键重导。

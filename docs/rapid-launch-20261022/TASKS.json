@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T16:01:56.721690+08:00",
+    "at": "2026-11-08T16:07:52.347989+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -39545,6 +39545,17 @@
         "maxGapSeconds": 0.101422771345824,
         "maxObservedDropBytes": 1781760,
         "state": "STOPPED_AFTER_CLEANUP"
+      },
+      "diagnosticSuccessor": {
+        "state": "T45_FIXED_READY_QB_AFFECTED_REVIEW_IN_PROGRESS_NOT_TIMED_OR_EXECUTED",
+        "readySHA256": "7705445b338084957e4e7af973a762c02d3614efd6a413ec6a6c6c5275cfcff4",
+        "readyBytes": 20236,
+        "carrierSHA256": "b718b6a84e28dba2573094d6d0623170f3f07f8dae13342a97d781bec40fd74c",
+        "bootSHA256": "8124fb2e153ebc7d56adb30c901a752f9c966292067e6c3afeb147a014998e8b",
+        "bootKey": "t45-r4-retained-restart-20261108-20",
+        "statusKey": "t45-r4-execute02-business-status-readonly-20261108-02",
+        "previousStopMetadataSHA256": "92b94f633c0a561cd901a279c7ad422641cf583a752129f38a5334b58128da38",
+        "purpose": "Original phase/sticky firstfailure/staticcode whitelist; no SQL/admission/RLS/permission change, no writer; same budget; not executed"
       }
     },
     "r4MemoryCopyFix20261108": {
@@ -39559,9 +39570,9 @@
       "incompatibleHelperNotAdopted": "Existing streamTypedHash rejects sparse/getter/deep>64 or changes DomainError behavior, so direct substitution WIP not committed.",
       "controllerAllowedMinimum": "Same backend private synchronous token hash with exact original canonical and DomainError semantics only at three initializer sites; no shared encoder/wire/permission/role/key/transaction change.",
       "reportedSmallChecks": "25/25,0skip; targeted strict TypeScript and two MJS syntax PASS; independent QB still pending",
-      "largePayloadAfterFixMemoryBenefit": "UNMEASURED",
+      "largePayloadAfterFixMemoryBenefit": "Guard+kernel local hash phases completed; fullrun memory gain UNMEASURED, reference computations/GC differ",
       "actualR4OOMPhaseAndCommit": "UNKNOWN",
-      "next": "D2 new fixed b2d7 material; T45 staging only after original-key outcome, no actual memory benefit claimed",
+      "next": "D1 readonly exact secondfactory consumption/minimum source seam, no largeprofile; original R4 outcome first",
       "commit": "b2d7fb0efbdb969af75a9cac25f89a6b7c08a4ac",
       "tree": "27e274389a701ffd7b5e32fbeb95ab238b2a5fd6",
       "branch": "codex/erp-d1-record-context-20261108",
@@ -39591,8 +39602,21 @@
         "groupRSSLimitBytes": 1073741824,
         "secondsMax": 15,
         "PGOrRealDataOrServer": false,
-        "state": "IN_PROGRESS",
-        "reason": "new fixed code requires measured benefit before any native execution; not wholeR4 cause or transaction evidence"
+        "state": "HASH_PHASES_PASS_THEN_PARENT_LOCAL_MEMORY_STOP_NOT_WHOLE_PASS",
+        "reason": "new fixed code requires measured benefit before any native execution; not wholeR4 cause or transaction evidence",
+        "resultSHA256": "3b9f6f761e0cb077dec38f9dbcfd8179ebad6a729d2e02949d7409eacb335c47",
+        "bytes": 12421,
+        "durationSeconds": 1.150231125,
+        "exitCode": -9,
+        "parentStopReason": "LOCAL_MEMORY_BUDGET",
+        "actualTotalHeapLimitBytes": 482344960,
+        "peakSampledGroupBytes": 949796864,
+        "killThresholdBytes": 891289600,
+        "guardAndKernelSameRunOldAlgorithmReference": "MATCH",
+        "historicalSavedGolden": "NOT_TESTED_NO_SAVED_DIGEST",
+        "secondFactory": "STARTED_NOT_COMPLETED",
+        "furtherLargeProfile": "NOT_AUTHORIZED",
+        "actualR4Inference": false
       }
     }
   }
