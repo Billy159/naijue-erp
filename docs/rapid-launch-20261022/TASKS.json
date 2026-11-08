@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T16:51:28.947137+08:00",
+    "at": "2026-11-08T17:10:42.105775+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28512,8 +28512,8 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Exact directory proposal fixed5f71f8c2; idle, no operational file co-writing.",
-      "T45": "Preparing only original carrier BOOT21/status03 temporary parent root:61035 0751 and restore root:root0711; exact shared stoppedR3 accepted by C; fixed READY -> QB affected review -> C finite times -> execute.",
-      "QB": "Waiting precise T45 READY for parent metadata/restore and actual owned-PG successor only; original 004 and BOOT20 unaffected checks adopted.",
+      "T45": "Fixed715f DIR01 successor, no actual server change; waiting originalQB exact increment then C finite times.",
+      "QB": "715f successor actual failed/defaultACL and time-observation incremental review in progress; original4082 NEED_FIX retained.",
       "D2": "004 fixed local tool/archive frozen; no server staging or repeat build.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; browser actual verification not passed; no filler synthetic queue."
@@ -39651,7 +39651,7 @@
           "scopeLimit": "One reproducible required-parent-watch blocker; not proof other reference objects pass or this is the sole error. Business COMMIT remains UNKNOWN."
         },
         "directoryRepairPreparation": {
-          "state": "MINIMAL_POSIX_TEMPORARY_CANDIDATE_IN_PROGRESS_NO_ENVIRONMENT_CHANGE",
+          "state": "DIR01_FIXED_SUCCESSOR715F_QB_REVIEW_IN_PROGRESS_NO_EXECUTION",
           "proposalSHA256": "5f71f8c28aff84957b417a0ec729f871534288fa5989c326e944a3558c2d05f8",
           "proposalBytes": 7845,
           "mountPreparationSHA256": "f0010d5303b0fcda3f0a86f36af8943dc0f30425f8e88264077ed9ce9c42ae2f",
@@ -39667,7 +39667,20 @@
           "actualRepairPassed": false,
           "ordinaryOutcome": "UNKNOWN",
           "newBOOTOrStatusExecuted": false,
-          "owner": "Original T45 same operational files only; D1 report only; QB exact increment; C binds time after fixed review"
+          "owner": "Original T45 same operational files only; D1 report only; QB exact increment; C binds time after fixed review",
+          "rejectedReadySHA256": "4082a197c6f0b8054e6e64adecc0511a41c56f2779c0f335f28c5b38b66a9d54",
+          "rejectedQBResultSHA256": "216356bafc5c0fa7f758721f3b3037b306f983f37aa422d47feed67576c73131",
+          "finding": "DIR-01 default ACL not checked; finite model demonstrated possible grant with defaultACL; live presence not demonstrated; original failed candidate retained not used",
+          "readySHA256": "715f9b75a48f494c21a4e67e61b0d21b0407512891be328a2ad91ea014154426",
+          "readyBytes": 21878,
+          "carrierSHA256": "8bb59fe8ee059740977204eafc3b97c2858b6cefa707fe8241eedc39f9d81bf7",
+          "bootSHA256": "a3f07f62a5a0ad86f82ee72233a449ebaa4f1a04ebb5208c272f62f0597c74e2",
+          "bootBytes": 41078,
+          "entrySHA256": "bff06df32b96ee9ea2a7b744c08d1452cca2c9512aca49a8c7474744bba51e50",
+          "planSHA256": "32b555e687e62dd330f22c69d1dbe573357083008a3ae2edb10b89d24cc63d09",
+          "authorDeltaChecksSHA256": "3788f8b290045dfc87be0355287b88d08c60251425d547d8d1160f7fa4d83d11",
+          "fixScope": "Both heldFD access/default xattrs require ENODATA before grant/restore; unknown refused; only observedTimes mtime/ctime JSON added, not CAS identity or utime. Only1 runtime input changed vs4082;13 unchanged.",
+          "QBStatus": "PENDING_EXACT_SUCCESSOR"
         }
       }
     },

@@ -3022,3 +3022,8 @@ D2 final-004dea84-operation冻结RESULT96462a77/9889、archive2962f748/1149448�
 C实读D1方案5f71f8c2/7845及T45只读f0010d53/2760：无ACL，authority同inode被运行R4与停止R3两个RW挂载共享，不能声称专属。C明确接受该准确可逆影响，旧R3不启动/改挂载；不是再请求用户或重做全机独占证明。只准备目录UID0不变、GID0/0711→既有61035/0751→原GID0/0711，禁止world读/任何新增写/ACL或叶内容变更，所有ordinary watcher关闭后恢复，ctime自然变化如实记。安装守卫允许该POSIX元数据，保留父目录替换监听。
 
 T45原carrier唯一writer合21/03未签模板及异常/到期恢复，固定后QB只验增量，C随后绑定有限时间；当前0实际权限变更/PG启动/新writer，原批提交仍UNKNOWN。D1准确方案交回即空闲，D2物料已就绪，D3等真实COMMIT，QF等正常入口，不编造填槽任务。主控44aa3f373513478b70c8c74a3cf3d841fa6801d3已远端准确读回。
+
+
+## 2026-11-08 — BOOT21默认ACL漏项定向修复，尚未执行
+
+原QB216356ba/1062对READY4082提出DIR-01：只有access ACL检查，模型中default ACL存在仍能变更；不表示现场存在该ACL。C采用NEED_FIX并保留旧候选，未签真实窗口。原T45固定后继READY715f9b75/21878，仅boot输入a3f07f62/41078改变，其他13输入同原字节；heldFD双ACL仅ENODATA放行，存在/未知grant和restore前拒绝无写，新增mtime/ctime事实仅观察、不入CAS、不utime。作者有限增量3788f8b2/1448通过，原QB仅补失败及受影响范围，未重PG/旧全套；独立后继结论、实际0751/恢复及原业务状态仍待。
