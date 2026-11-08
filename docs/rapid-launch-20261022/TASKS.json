@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T01:21:58+08:00",
+  "updatedAt": "2026-11-09T01:44:20+08:00",
   "stage": "191_OLD_APP_CONTAINERS_158_PATHS_4_ROUTES_67_IMAGES_ACTUALLY_RETIRED_REMAINING_TARGETED_CLOSURE",
-  "lastVerifiedRemoteCommit": "9eb2fb1e476838c74e0faeabec4978b1a90f741e",
+  "lastVerifiedRemoteCommit": "0c402b0ea152ed594e9c545ecf17b8b7f6406df0",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Original T45 offline exact successor timing arrangement: retain five-minute boot, ten-minute operation and twenty-minute guardian ceilings; verify existing sources allow a separate later600s parameter window and bounded role expiry inside guardian. No business/hash code change or new runtime until same-scope binding review. No blind retry, writer replay or COMMIT inference.",
-      "QB": "BOOT28 binding-only PASS06d24c09 adopted; no duplicate technical review.",
+      "T45": "BOOT29-r2 frozen377a2660 awaiting original QB limited result; no C window/server action. Latest cleanup authorization consumed along existing exact residual list only.",
+      "QB": "Recheck only B29-WINDOW-01 actual provenance and affected carrier/plan/six-bundle propagation; do not repeat prior passed ranges.",
       "D1": "15af source and observational phases valid; no speculative V2/hash rewrite based only on window expiration. Await exact successor result/direct source defect.",
       "D2": "15af frozen operation ready/loaded; no duplicate packaging.",
       "D3": "Original400e COMMIT remains UNKNOWN; independent reconciliation only after authoritative COMMITTED, no reimport/reclean.",
@@ -33307,12 +33307,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T01:21:58+08:00",
-      "phase": "INSPECT04_EXPIRED_ACTUAL33_PHASES_ALL_RESTORED_OFFLINE_TIMING_CORRECTION",
+      "at": "2026-11-09T01:44:20+08:00",
+      "phase": "BOOT29_R2_EXACT_SOURCE_TIME_BINDING_REPAIR_UNDER_SCOPED_QB",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 exact timing successor preparation only",
-      "nextOwner": "Original QB binding-only review then C finite scope and original T45 execution",
+      "currentOwner": "Original T45 fixed r2; original QB scoped review",
+      "nextOwner": "C consumes scoped result then original T45 exact finite execution",
       "latestActualReceiptSHA256": "701b1ad61b4a481b6541f01f0d4eeba87d90fd55dca114a1b0daba231a4cae65",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 offline exact successor timing arrangement: retain five-minute boot, ten-minute operation and twenty-minute guardian ceilings; verify existing sources allow a separate later600s parameter window and bounded role expiry inside guardian. No business/hash code change or new runtime until same-scope binding review. No blind retry, writer replay or COMMIT inference.",
+      "next": "Adopt original QB limited result; only on PASS issue new exact C finite window and T45 boot/inspect/restore/owned cleanup.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33460,7 +33460,7 @@
         "ordinaryRealBusinessPassed": false,
         "productionDeployed": false
       },
-      "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
+      "currentEvidenceBoundary": "R2 source preparation and local five models only; prior R1 NEED_FIX preserved. Original REAL commit remains UNKNOWN; no real import, ordinary business, backup restore or formal deployment PASS.",
       "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
       "importToolCommit": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
       "importToolSourceSetSHA256": "f648efa6191f800abe64b8402e5ddbeb2dbd80c7587f0855ad147a23b7a7b529",
@@ -33487,7 +33487,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "BOOT24_PG4333_GUARDIAN4325_SAMPLER4332_ABSENT_PORT_AND_POSTMASTER_ABSENT",
+      "currentR4ProcessState": "BOOT28_OWNED_PROCESSES_STOPPED_RESTORED_NO_NEW_WINDOW",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF",
       "latestCleanupResultSHA256": "ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba",
       "currentFreeBytes": 8569237504,
@@ -36170,6 +36170,20 @@
         "globalPruneOrForcedRemovalOrVolumeDeletion": false,
         "retained": "Old R16 source/image-context contains data/media markers and remains preserved. Source/current-r27, approved resources, credentials, DB recovery config, backups, receipts and current R4/15af/f56/real-r3 retained. No global prune or foreign project deletion.",
         "notWholeServerCleared": true
+      },
+      "latestHumanReaffirmation": {
+        "at": "2026-11-09T01:44:20+08:00",
+        "source": "Current user message in controller C",
+        "instruction": "Online environment retains only new system and necessary related assets; continue exact original T45 cleanup.",
+        "alreadyCompletedReceiptSHA256": "ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba",
+        "state": "PRIOR_EXACT_BATCH_ADOPTED_REMAINING_EXISTING_LIST_ONLY",
+        "preserve": [
+          "real databases and source data",
+          "attachments/media",
+          "backups and original receipts",
+          "R4,15af,real-r3 and required operations/recovery dependencies"
+        ],
+        "next": "Original T45 answers from existing residual list; clean only proven unused old applications; no broad duplicate inventory or shared-volume removal."
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -41472,6 +41486,30 @@
         "bytes": 13451,
         "readByController": true
       }
+    },
+    "r4Boot29Inspect05RelativeWindow20261109": {
+      "at": "2026-11-09T01:44:20+08:00",
+      "owner": "Original T45",
+      "firstCandidateREADY": "48960a50e1df26aff26e760431fc8254bece1765ea170e15a2a338e5ad0f6f59",
+      "firstQBResultSHA256": "03330c47c109e0b907fb0e31f6e88ae5bcdc7617ba20fcac36e76dbfac42030c",
+      "finding": "B29-WINDOW-01 P1: actual provenance consumer required equal boot and operation starts; 14 scoped tests omitted it. Original candidate unsubmitted and forbidden.",
+      "r2READY": "377a2660701eaa77e7cfd2fc565c424b2ef7bc5dd68ebe58309e1a9040a024f1",
+      "r2CarrierSHA256": "af28f8420b491bf7adb4179514dd548a09960719b190d1184795b15cd7d34a2c",
+      "r2PlanSHA256": "4f4fd10a71375a3e2fee341019b9e60c0537df803434b8a141824a1440fd45f3",
+      "state": "R2_SOURCE_FIXED_ORIGINAL_QB_SCOPED_REVIEW_IN_PROGRESS",
+      "scope": "Only real_retained_process_binding exact29/05 INSPECT; operation B+300000..B+900000; all three role expiries exactly operation end; end inside guardian. Preserve original C authorization, raw SHA, restart, installation, target and source identities.",
+      "caps": {
+        "bootMs": 300000,
+        "operationMs": 600000,
+        "guardianMs": 1200000,
+        "nodeSeconds": 480,
+        "temporaryHBASeconds": 30
+      },
+      "ownerChecks": "5 new consumer models PASS; prior14,15af,parser,30/golden reused not rerun; not independent or actual PG proof.",
+      "serverSubmitted": false,
+      "CWindowIssued": false,
+      "businessCommitState": "UNKNOWN_ORIGINAL_KEY_NO_REPLAY",
+      "next": "Adopt original QB limited result; only on PASS issue new exact C finite window and T45 boot/inspect/restore/owned cleanup."
     }
   }
 }
