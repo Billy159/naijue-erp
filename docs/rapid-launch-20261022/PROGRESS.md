@@ -2722,3 +2722,10 @@ T45正按用户已批服务器清理范围，核原清单中最小足额旧停�
 原01清理job c1b6/511虽退出0，但actual d2e8/1748两项均被保留、0删除，不能算清理通过。只读fd2e/4343查明tar有全部458文件、没有显式9目录头；最小02仅按完整文件路径推导目录并核0755，其余完整SHA/size/mode、占用/挂载/CAS/保护不变。C核READY7bcc、source9cf7及diff，签723e1901/1827。02 job805e/510实际0/18.906s，actual304986f6/9013两叶均absent，完整归档hash15fe817e与152635f6保持，原目录metadata保留。实际释放71626752B，余8236060672B，超过原floor28545026B；当前线上、回退、R4、资料、备份和回执未动，无PG/服务/权限变化。
 
 C已签2b6唯一20min staging c7881181/1150（1794100513643—1794101713643），最终archiveBytes1148268纠正未签草稿遗留1148193，匹配D2包与原install/materialize guard，不改源码或保护。T45正顺序原preflight/policy/普通身份单次传输/rawREADY/Linux加载/精确旧cd2e expiredpolicy恢复，实际Linux及恢复尚未完成。此后唯一下一步freshstop→BOOT15五分钟/guardian≤90min→参数10→固定2b6 PREPARE14最多60min；不重放13、不提前EXECUTE。60.9万真实导入、独立核账、普通历史业务、新35恢复和正式入口切换仍未完成。上个C远端断点f524b917b401955539bc134f3069128c6fd4dd7e已核实。
+
+
+## 2026-11-08T09:28:32.353710+08:00 固定2b6工具实际Linux加载及传输策略恢复通过
+
+T45原paired链全终态：RESULTf7bbfc24/6384；materialize jobf591/523实际0/27.846s，39914c0b/1362确认Node24.21.0、8f6d sourceSet216/180、361文件/5129969B，CLI与readback实际import。原安装8694/a7d、APP576和旧工具保留。restore jobe8cb/521实际0/.268s，f3e272e9/843核原cd2e完整过期字节/root0444/nlink1恢复，无续期。C核小回执hash采用实际结论，不重复加载。free8227995648B，比原floor多20480002B；真实性能/TEMP FD/完整预检及业务仍未验。
+
+新只读前驱jobb287/528、actual6a06254c/4073于09:24取得：原PG/guardian/Node均absent，HBA原720b/inode14555531、a7d/c6ac/bbff稳定，原临时访问及两个投影收回，0PG连接。stop193B的1afe与旧布尔内容相同，但实际inode14561921，必须绑定这次metadata，不借旧LAYOUT或14561325。BOOT15尚未启动，T45准备新非时间材料后C准确签5min启动/≤90minguardian，再参数10和60min PREPARE14。上个C断点0dded5f880616cbe74ce602f8677c7306fe324b5已推且远端精确回读。

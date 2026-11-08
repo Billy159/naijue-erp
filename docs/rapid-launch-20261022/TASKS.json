@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T09:21:40.023376+08:00",
+    "at": "2026-11-08T09:28:32.353710+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "f524b917b401955539bc134f3069128c6fd4dd7e",
+      "lastControllerCheckpoint": "0dded5f880616cbe74ce602f8677c7306fe324b5",
       "lastControllerCheckpointRemoteVerified": true
     },
     "cleanInstall": {
@@ -28514,7 +28514,7 @@
       "D1": "Fixed2b6 TEMP pager delivered/pushed; source and focused models accepted by original QB. No repeated tests. Wait actual T45 first failure or real preflight.",
       "QB": "2b6 + PREPARE60 narrow independent conclusions adopted; no duplicate whole-suite or ops validation.",
       "D2": "Fixed2b6 tiny tool and APP576/history856 available. No new packaging or APP build.",
-      "T45": "Exact two retired oldweb leaves actually cleaned; original paired2b6 stage/Linuxload/expiredpolicyrestore underway, then freshstop/BOOT15/params10/PREPARE14 maximum60min. Sole server executor.",
+      "T45": "Actual2b6 Linux loading and exact original expiredpolicyrestore passed. Freshstop6a062/physicalinode14561921 obtained; BOOT15/params10/PREPARE14-60min non-time binding preparation active.",
       "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
       "QF": "Normal host/login/core business prerequisites not yet available; no new synthetic UI queue."
     },
@@ -33459,8 +33459,8 @@
       },
       "currentEvidenceBoundary": "Prior synthetic r26 PASS remains in latestActualRuntime and currentCandidateActualRuntime; current flags now describe R4 only. No initialization/import/ordinary business PASS for R4.",
       "lastCleanStopReceiptSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
-      "importToolCommit": "8e22927a229881f1ed138ad8665c07a9d9761b24",
-      "importToolSourceSetSHA256": "7edf12b83f575ac4a84dcfefaf4adb00727a4ff97bb80bdaa854fc6ec45143ab",
+      "importToolCommit": "2b6b1e53547222bee372f0c6a7468ff3319774cb",
+      "importToolSourceSetSHA256": "8f6d1841191ba44aaa3b02b47e158deb3b4d1a2492338283dc5b97e1a0cd34a3",
       "parallelReleaseFindings": "HISTORY-ANCHOR-EXACT35-01 scope now confirmed for both document UOWs from fixed source; Dot handoff stays with user, no duplicate work.",
       "latestRetainedRestart": {
         "requestKey": "t45-r4-retained-restart-20261108-14",
@@ -33468,7 +33468,7 @@
         "actualEpoch": "2026-11-08 00:02:53.78896+00",
         "businessVerified": false
       },
-      "lastCleanStopMetadataReceiptSHA256": "0f43cb1edd28d5d584335e1092b7ef099f1819c61f66428186faea6ff1b5103d",
+      "lastCleanStopMetadataReceiptSHA256": "6a06254c906c538f8ab44a4e5181db0266f705b3611967370818c6327e017b10",
       "plannedImportToolCommit": "2b6b1e53547222bee372f0c6a7468ff3319774cb",
       "plannedImportToolSourceSetSHA256": "8f6d1841191ba44aaa3b02b47e158deb3b4d1a2492338283dc5b97e1a0cd34a3",
       "priorRuntimeIdentityBeforeR4Boot14": {
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "Last actual087ecc after13: PG/guardian/Node absent. New BOOT15 not started. Exact oldweb02 cleanup changed no PG/service."
+      "currentR4ProcessState": "Fresh actual6a062 at2026-11-08T01:24:15Z confirms PG2674/guardian2667/Node2771 absent. No newBOOT15."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -38299,12 +38299,27 @@
       "actualLinux": "PENDING",
       "layoutOldStopPointerNotFreshObservation": true,
       "next": "T45 minimal authorized old stopped app cleanup then exact paired upload/materialize/Linux load/old-policy restore, new BOOT15/parameters10/PREPARE14<=60min.",
-      "actualTransferStatus": "ORIGINAL_T45_PAIRED_SEQUENCE_IN_PROGRESS_NOT_LINUX_PASS",
+      "actualTransferStatus": "ACTUAL_LINUX_CLOSURE_AND_EXACT_EXPIRED_POLICY_RESTORED",
       "T45ReadySHA256": "a1ce69681091036a4c465f2775e131df371bc0015b4f8343eed34df7adaa4e45",
       "C13DecisionSHA256": "c78811814318a34453dd0baaba0ba255de3d9a09b142ebbee76d0102d4c7a74f",
       "C13Start": 1794100513643,
       "C13Expires": 1794101713643,
-      "unissuedDraftOldArchiveSizeCorrectedInFinalDecision": "1148193 historical draft; final1148268 matches D2 archive and original guards. No source guard change."
+      "unissuedDraftOldArchiveSizeCorrectedInFinalDecision": "1148193 historical draft; final1148268 matches D2 archive and original guards. No source guard change.",
+      "actualT45ResultSHA256": "f7bbfc2403ffe7ec5d7ac0f41050cd747fddb8be89b68548e5fe1c63ca907f93",
+      "actualMaterializeSHA256": "39914c0b33fb41fdec6ce6b756d7e0da4f72053e5e333657a08b18e168331261",
+      "actualMaterializeBytes": 1362,
+      "actualLinuxNode": "v24.21.0",
+      "actualLinuxCurrentPins": 216,
+      "actualLinuxCapturedPins": 180,
+      "actualLinuxCLIAndReadbackImported": true,
+      "actualLinuxRegularFiles": 361,
+      "actualLinuxLogicalBytes": 5129969,
+      "actualRestoreSHA256": "f3e272e986db73307437b24f56c4ec3098a8ab1f3cef623094518652e838aa21",
+      "actualRestoredPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+      "actualExpiredPolicyRoot0444": true,
+      "actualFreeAfter": 8227995648,
+      "actualFloorMargin": 20480002,
+      "PGOrBOOTExecuted": false
     },
     "r4TwoRetiredWebLeaves20261108": {
       "owner": "T45 only",
@@ -38339,6 +38354,19 @@
       ],
       "onlineRollbackR4DataBackupsReceiptsAuthoritiesPreserved": true,
       "PGOrServiceChanges": false
+    },
+    "r4Boot15Predecessor20261108": {
+      "status": "ACTUAL_FRESH_STOP_AND_ACCESS_RESTORATION_READBACK",
+      "receiptSHA256": "6a06254c906c538f8ab44a4e5181db0266f705b3611967370818c6327e017b10",
+      "jobSHA256": "b287243e34a066e34ba72585104e9c3492f3dc0906f087abb78fe5ce1667ad55",
+      "stopBytesSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+      "actualStopInode": 14561921,
+      "oldSameSHAOldInode14561325NotFreshEvidence": true,
+      "originalHBAInode": 14555531,
+      "noPG": true,
+      "freeBytes": 8227532800,
+      "floorMargin": 20017154,
+      "next": "T45 exact newBOOT15 non-time pins then C future5min/guardian<=90min; original two existing roles CAS. No authority issued from stale14."
     }
   }
 }
