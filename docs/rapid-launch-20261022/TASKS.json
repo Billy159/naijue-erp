@@ -28511,10 +28511,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Existing inspect/lockAndInspect minimal original-key recovery entry source only; no server",
+      "D1": "Existing readonly seam adopted, one outer production_facts epoch correction advice and memory assembly diagnosis",
       "QB": "Narrow publication PASS kept; next only actual affected evidence",
       "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
-      "T45": "Necessary exact terminal metadata/first-cause bounded readonly; no writer replay",
+      "T45": "Original-key READONLY_STATUS BOOT19/space purpose evidence and one outer epoch pin; no writer",
       "D3": "Wait proven actual COMMIT; no rescan or real-record re-cleaning",
       "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
@@ -33304,8 +33304,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T14:59:48.739567+08:00",
-      "phase": "EXECUTE02_FAILED_NODE_MINUS9_UNKNOWN_COMMIT_NEEDS_ORIGINAL_KEY_RECOVERY",
+      "at": "2026-11-08T15:11:47.403819+08:00",
+      "phase": "EXECUTE02_OOM_EVIDENCE_RETAINED_ORIGINAL_KEY_READONLY_RECOVERY_PREPARATION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "T45 exact terminal/first-cause readonly; D1 existing original-key recovery source seam",
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 exact terminal metadata and bounded first-cause read only; D1 existing original-key inspect/lockAndInspect seam. No replay/new batch keys/publisher retirement.",
+      "next": "T45 purpose-bounded readonly BOOT resource evidence/current-epoch constant; D1 precise OOM assembly source diagnosis. No writer replay.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "NODE_REAPED_BY_ACTUAL_GUARD; GUARDIAN_AND_PG_CURRENT_STATE_PENDING_TERMINAL_READ",
+      "currentR4ProcessState": "ACTUAL_NODE3725_GUARDIAN3592_PG3599_ABSENT_PORT_AND_POSTMASTER_ABSENT",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF"
     },
     "delayReviewAdoption": {
@@ -39416,7 +39416,7 @@
       "standalonePREPARE": false,
       "businessImportVerified": false,
       "independentReadbackVerified": false,
-      "next": "T45 exact terminal metadata and bounded first-cause read only; D1 existing original-key inspect/lockAndInspect seam. No replay/new batch keys/publisher retirement.",
+      "next": "T45 purpose-bounded readonly BOOT resource evidence/current-epoch constant; D1 precise OOM assembly source diagnosis. No writer replay.",
       "actualPublisherSHA256": "8424a35fea3106652711c74c1e96da8937ded83bb831882f6489e18121f4ac46",
       "actualPublisherJobSHA256": "056ee7a91badc6229d87e4c46fffec6a94075a163e221791550bfb251cb20a76",
       "actualPublisherElapsedSeconds": 0.468264449,
@@ -39458,8 +39458,21 @@
       "maxSampleGapSeconds": 0.23586538387462497,
       "minimumFreeBytes": 5423525888,
       "originalInputMetadataRestored": true,
-      "exactTwoProjectionAbsence": "PENDING_TERMINAL_READER",
-      "failureCause": "UNKNOWN; signal-9 alone does not prove OOM; no guard reason in current receipt"
+      "exactTwoProjectionAbsence": "ACTUALLY_VERIFIED",
+      "failureCause": "UNKNOWN; signal-9 alone does not prove OOM; no guard reason in current receipt",
+      "terminalReadbackSHA256": "fa7d463efdcd5ff5915325d718b4d11f3b524d1bb5c9e7eaa7f79cd68a58ef2c",
+      "terminalReadbackBytes": 3080,
+      "all45OriginalMetadataMatch": true,
+      "ownedNodeGuardianPGAbsent": true,
+      "batchAuthorityUnchanged": true,
+      "resourceFirstCauseSHA256": "a70ef09607d7750ddadb45ea0fb85655b1408f4d539a545bdcb2388065356545",
+      "resourceFirstCauseBytes": 3389,
+      "causeEvidence": "Exact CID kernel OOM at06:56:10.962UTC linked same hostPID victim UID61035/MainThread anonRSS1712596KiB under3GiB/no swap, ~3s before terminal; original namespaceNode->hostPID direct map missing, so not claiming precise owned PID match.",
+      "currentFreeBytes": 5444165632,
+      "fullImportStartupFloorBytes": 8207515646,
+      "fullImportStartupDeficitBytes": 2763350014,
+      "readonlyRecoveryHandoffSHA256": "f52a813a103db183913e2a30aebb0666ac32bd5e4aa960429794b45d0eb6b747",
+      "readonlyRecoveryStatus": "Existing13field ordinary status; needs sameR4 BOOT19/current outer production_facts pin; preserve old1af3/0dc; positive only COMMITTED_RECEIPT_FOUND, all other UNKNOWN not ABSENT."
     }
   }
 }

@@ -2922,3 +2922,12 @@ T45临提交核双registry/jobdir无原key后，唯一t45-r4-real-execute-202611
 14:56:14.144BJT实际FAILED2/1509.257s，job19904488/508、actual75cf0bf7/1569已C实读。Node exit-9、STOPPED_OUTCOME_UNKNOWN，无reason或明确CLI code，state/connectionCleanup/verification均UNKNOWN。14959samples/maxgap.235865<.25，各卷min5423525888>4GiB；未到15:10窗。3reap真/45原输入metadata恢复真；cleanupComplete真但controllerStopped假/rollbackProven假。不得凭-9判断OOM、没有写入或已回滚。
 
 原T45接续在途唯一终态reader，核owned Node/guardian3592/PG3599、exact2投影absence及batch0dc/inode14563387原身份；仅补与失败时刻有关的cgroup/资源/kernel/原guard/CLI必要脱敏首因事实，累计OOM计数不单独定因。D1原owner只核既有inspect/lockAndInspect如何按原binding/批次/请求键最小恢复，不先重跑25分钟编译或造平台，0server/PG。batch授权与全部index/失败现场保留，不重放EXECUTE02或01、不换键重导。独立核账/业务/恢复/上线仍未通过。
+
+
+## 2026-11-08 15:12 — 收尾实证闭合；容器OOM证据固定，先原键只读恢复
+
+采用T45终态fa7d463e/3080：Node3725、guardian3592、PG3599及port/pidfile均ABSENT，45原metadata恢复、exact2投影absence，batch0dc/inode14563387和原HBA保持。cleanup不是业务回滚证明。唯一有界诊断a70ef096/3389（job3f97527c）实核同CID3GiB/无swap、峰值3221528576；14:56:10.962BJT确切CID OOM事件与同hostPID3949468/UID61035 MainThread victim相连、RSS1712596KiB，距终态约3秒。没有死前namespace Node→hostPID映射，保留这一限度，不凭累计计数或-9单独定因。stdout/stderr零字节、原guard无reason。真实提交仍UNKNOWN。
+
+采用D1现成恢复接缝f52a813a/b403ae2f：READONLY_STATUS只用原13字段/八业务键及普通角色RR READ ONLY，不重25分钟全包编译；完整强证据才COMMITTED_RECEIPT_FOUND，其他UNKNOWN，不能ABSENT。保留固定旧1af3/0dc，新BOOT/观察窗不当writer授权。T45指出外层production_facts仍固定18 owned-process，需唯一该只读候选常量18→19，保留实际进程身份检查；原D1只补此链意见，T45唯一carrier writer。原CONTROL/results终态199044已被两个服务器reader实际hash核，不重复读。
+
+当前free5444165632低于原完整导入startupfloor8207515646；不据此再导入或降原writer保护。T45先核一次只读BOOT目的所需实际空间/原公式，若确有目的适配仅交最窄差异；否则只按既有授权评估可重建index的精确保全与剩余缺口，不盲删或广扫。D1并行定位首次跨过授权后的内存实化位置，不盲扩容/改超时。独立核账、普通历史业务、新35恢复和正式切换均未通过。
