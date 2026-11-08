@@ -2913,3 +2913,5 @@ C沿持续用户授权签发8键V2 0dc0ecb1/2094，17字段完整绑定直接取
 C核最终READY6bf22681五文件和publisher54343e40，只五个准确摘要绑定，函数体/保护保持；未重复原QB16模型。唯一publisher实际COMPLETED0/.468s（job056ee7a9，actual8424a35f），固定V2叶dev66304/inode14563387/root:61035/0640/nlink1/2094B。原只读1dba19dc（job7c9ba0d7，COMPLETED0/.368s）证明root及UID/GID61035、额外groups[]均完整读回同0dc摘要及同文件身份，不导出正文、SQL0、权限改变0。这仅关闭原ENOENT发布接线缺口。
 
 T45临提交核双registry/jobdir无原key后，唯一t45-r4-real-execute-20261107-02已QUEUED→RUNNING，unit2f577d485aa0；业务截止仍15:10:08.979BJT，outer3000仅清理。不重放EXECUTE01、不另PREPARE、不换数据库批次或请求键，长作业期间无并发serverobserver。授权文件保持到writer及独立读回终态。原QB仅补其既定实际绑定/发布增量；没有扩大验收。COMMIT、独立核账、普通业务、备份恢复和正式部署均仍未通过。
+
+14:38 补记：原QB实际绑定/发布增量9b6bbdca/13697为PASS_REQUIRED_NARROW_BINDING_AND_PUBLICATION_READBACKS，C已读取采用。只关闭exact8/17、五摘要、BOOT18/params13及root/worker实读项；原d987不改、零测试重跑/服务器/PG/真实明细。EXECUTE02运行中，COMMIT及其后核账/业务/恢复/切换仍待，不据publication误称业务通过。

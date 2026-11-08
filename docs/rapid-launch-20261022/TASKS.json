@@ -28512,7 +28512,7 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Original seam diagnosis delivered; d250 unchanged, no duplicate source repair.",
-      "QB": "Original d987 adopted; narrow actual five pins/BOOT18/params13/root-worker metadata increment only",
+      "QB": "Narrow actual9b6bbdca PASS adopted; wait actual terminal evidence, no further task until meaningful delta",
       "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
       "T45": "Unique EXECUTE02 actually RUNNING; original-key collection only, no concurrent observer",
       "D3": "Existing six scopes/reviews/expectation paths delivered. Wait actual COMMIT independent readback.",
@@ -39434,7 +39434,13 @@
       },
       "actualExecutionState": "RUNNING",
       "actualUnit": "naijue-erp-op-5cc58239-2f577d485aa0",
-      "automaticRetry": false
+      "automaticRetry": false,
+      "narrowActualQBResult": {
+        "status": "PASS_REQUIRED_NARROW_BINDING_AND_PUBLICATION_READBACKS",
+        "sha256": "9b6bbdca261936b183412ba7c88c3dfa22d2fc8d6133f3a5795df5806d923f48",
+        "bytes": 13697,
+        "scope": "Actual C eight keys/unchanged17 binding/five SHA constants/BOOT18 params13/root and worker publication readback only. No COMMIT/reconciliation/production PASS."
+      }
     }
   }
 }
