@@ -2987,3 +2987,24 @@ D1 b2d7fb0efbdb969af75a9cac25f89a6b7c08a4ac/parent4e3b/tree27e27438，C远端已
 T45 READY7705445b/20236合并原status诊断及20/02未签模板，原QB只验受影响增量。受控phase/firstfailure/静态码及原SQLSTATE白名单；原13schema、SQL、8键、普通角色、admission不变，4criticalhelpers原字节。原19/01及cleanup失败记录冻结，实际停稳92b/ba79复用。不新params、不writer、不重整包。
 
 D1新b2唯一合成run3b9f6f76/12421：V8总460MiB，1.150s，guard/kernel哈希与同run原算法参考一致；无历史保存golden。第一factory完成，第二开始后父进程内存保护停止(-9)，采样峰949796864B<1GiB，不算完整PASS/现场3GiB复现/整体下降比例。不再大profile，仅只读核具体重复factory消费。真实业务仍UNKNOWN，禁止换键重导。
+
+
+## 2026-11-08 16:17 — 最终状态诊断增量通过，BOOT20具体窗口已派
+
+C实读采用QBf4f03327/5329，唯一最终READY41540e4b/22014；770/d126未执行历史保留。只补精确69结构码/59静态消息白名单及闭包pins，首错粘滞，无错误全文/路径；原SQL/13schema/8键/角色/admission/预算保持，33bc和中间有效证据复用不重全套。C签55730235/1491，BOOT1794125814541至1794126114541，guardian1794127014541，原2role到08:36:24.541UTC，原T45一次执行，实际启动/状态未验。status02时间尚未签，原批UNKNOWN不改判。
+
+D1按已登记2runtime改内部步骤factory，首次全量组装/clone/hash校验保留一次，两个消费者各有独立iterator/计数/逐请求小meta，原.steps.next兼容。仅新增repeatable小测及既有outcome stub/次数断言，其他有效测试复用。未改业务合同、权限或数据库，未再profile或触碰服务器；固定交付后原QB只验真实增量。
+
+
+## 2026-11-08 16:23 — 状态02定位准入文件EACCES，仍不得认定原事务结果
+
+原BOOT20实际COMPLETED0/2.473s，6fe83ce5/1033；observerc27b83bf/4495已实读，同SID/OID/新epoch08:18:03.84607UTC，PG3935/guardian3927/sampler3934活跃；HBA.530614s恢复原inode，2role属性授权及原0dc/1af身份保持。C原13字段status02窗035f6893/930，1794126019822至1794126319822。实际状态08d88383/1218，COMPLETED0/9.086675s只表示观察完成；真实UNKNOWN，firstFailurePhase ORDINARY_ADMIT/applicationCode EACCES，CLOSED/rollbackAckfalse、childExit0/reaped。无SQLSTATE，尚未证具体文件/目录或PG权限，不猜根因、不改权限、不重status或writer。原T45先ownedcleanup，D1仅按实际安装8694源码给有限fs无正文probe清单，不全盘扫描。
+
+原D1步骤factory固定004dea849f1f41b407dfbe0fe1eb5f259f04f630/parentb2d7/treea954c221，C已实读HANDOFF2730652f/6329并核远端；作者14/14必要小项及2MJS语法过，父黄金先保全/输出保持。原QB仅受影响四叶在途，未做新内存profile/PG，真实OOM收益未测。已安装根和服务器工具仍未替换。
+
+
+## 2026-11-08 16:27 — 状态02收尾真实通过；004增量独立通过
+
+T45本轮ownedcleanup实际COMPLETED0/1.7715s，ed3e2eb1/2828，汇总06ed322b/7147已C实读；PG3935/guardian3927/sampler3934及port/pidfile实际缺席，45metadata/2projection及HBA/原0dc/1af保持，2996samples/minFree5438562304/maxgap.102839556/maxdrop1822720在原预算内。helper即时controllerStoppedfalse保留，通过等待真实进程缺席核定，不重复STOP。状态仍ORDINARY_ADMIT/EACCES/UNKNOWN，不推原事务回滚或提交；D1只读安装8694链给有限fs对象范围，未修改任何权限。
+
+原QB004 RESULT8fc99082/3054实读采用PASS_SOURCE_AND_LOCAL_SCOPED，无finding；独立父黄金同值，14小测及2syntax过，原SQL/权限/事务合同保持，不认定真实OOM或性能通过。原D2仅新独立工具包装；旧004父版本、失败证据、安装根与当前d250完整保留，T45服务器操作仍唯一。

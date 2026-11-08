@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T16:07:52.347989+08:00",
+    "at": "2026-11-08T16:27:54.282895+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -39547,15 +39547,73 @@
         "state": "STOPPED_AFTER_CLEANUP"
       },
       "diagnosticSuccessor": {
-        "state": "T45_FIXED_READY_QB_AFFECTED_REVIEW_IN_PROGRESS_NOT_TIMED_OR_EXECUTED",
-        "readySHA256": "7705445b338084957e4e7af973a762c02d3614efd6a413ec6a6c6c5275cfcff4",
-        "readyBytes": 20236,
-        "carrierSHA256": "b718b6a84e28dba2573094d6d0623170f3f07f8dae13342a97d781bec40fd74c",
+        "state": "STATUS02_ADMIT_EACCES_OWNED_CLEANUP_CONFIRMED_EXACT_FS_PROBE_SCOPE_IN_PROGRESS",
+        "readySHA256": "41540e4bd666539293894a39b2565fa43dd77b9547a3af6644a91bd9cd7a1f0c",
+        "readyBytes": 22014,
+        "carrierSHA256": "d5b9828017de3fa7cfdd91842c1c7238c0ac245e5adeb213afb998786f4b52c4",
         "bootSHA256": "8124fb2e153ebc7d56adb30c901a752f9c966292067e6c3afeb147a014998e8b",
         "bootKey": "t45-r4-retained-restart-20261108-20",
         "statusKey": "t45-r4-execute02-business-status-readonly-20261108-02",
         "previousStopMetadataSHA256": "92b94f633c0a561cd901a279c7ad422641cf583a752129f38a5334b58128da38",
-        "purpose": "Original phase/sticky firstfailure/staticcode whitelist; no SQL/admission/RLS/permission change, no writer; same budget; not executed"
+        "purpose": "Original phase/sticky firstfailure/staticcode whitelist; no SQL/admission/RLS/permission change, no writer; same budget; not executed",
+        "QBResultSHA256": "f4f03327858af34e9f134c946cc97bd7240822a19da0009de94b2a60016cb3da",
+        "QBResultBytes": 5329,
+        "CBootDecisionSHA256": "5573023598fd1044e3624508be1d24238961b2590b44a78e103939d0694e1dad",
+        "CBootDecisionBytes": 1491,
+        "CBootStartsAt": 1794125814541,
+        "CBootExpiresAt": 1794126114541,
+        "CGuardianExpiresAt": 1794127014541,
+        "roleLoginValidUntil": "2026-11-08T08:36:24.541Z",
+        "supersededUnexecuted": [
+          "7705445b",
+          "d12627cc"
+        ],
+        "actualBootSHA256": "6fe83ce595c5fa3101a038ef2a03c478dec9b3f125cfac969e52113d338eba2d",
+        "actualBootSeconds": 2.4731125,
+        "observerSHA256": "c27b83bf559d1853db0db5b7c12ca7c406644e1bfdd78785c294689f177aa174",
+        "hbaRestoredSeconds": 0.5306143541820347,
+        "newEpoch": "2026-11-08 08:18:03.84607+00",
+        "newPG": {
+          "pid": 3935,
+          "starttime": "302418105"
+        },
+        "newGuardian": {
+          "pid": 3927,
+          "starttime": "302418067"
+        },
+        "newSampler": {
+          "pid": 3934,
+          "starttime": "302418100"
+        },
+        "CStatusSHA256": "035f68933078f08684f6f0aad8ce1a99b459ad0c96e41910f0827c29410b367a",
+        "CStatusStartsAt": 1794126019822,
+        "CStatusExpiresAt": 1794126319822,
+        "statusActualSHA256": "08d883832c0c1892128426a7eae288d6b001e30d4cf2ab5b5f89ee875176ee51",
+        "statusJobSHA256": "f647910df9e800f317a3a38004bfde624035d24a7e173ee05877de64ccc7e024",
+        "statusElapsedSeconds": 9.086675418,
+        "phase": "ORDINARY_ADMIT",
+        "firstFailurePhase": "ORDINARY_ADMIT",
+        "applicationCode": "EACCES",
+        "childExitCode": 0,
+        "readOnlyRollbackAck": false,
+        "connectionCleanup": "CLOSED",
+        "businessOutcome": "UNKNOWN",
+        "next": "T45 cleanup first; D1 installed8694 source finite filesystem objects; T45 metadata/open-without-body probe only after exact scoped list; no blind retry/permission write",
+        "cleanupSHA256": "ed3e2eb1696bb3922485a64e2de9cb177fcfae2444e28a6a8512892822c87cc3",
+        "cleanupJobSHA256": "897dec9d1667a54f1abedd7085e3b8942e303d46db5e5a350839b64cd96b045b",
+        "finalResultSHA256": "06ed322b25943e0950f96cfc821527f92f62a11e4b4754f598f5f7cf9fdd41b0",
+        "finalResultBytes": 7147,
+        "PGGuardianSamplerAbsent": true,
+        "portPidfileAbsent": true,
+        "original45And2AndHBAAndBatchParametersPreserved": true,
+        "finalSampling": {
+          "sha256": "c1694a464a584bb0ccda217840f5441988231da2fda57dd160166189271b7ca6",
+          "samples": 2996,
+          "minFreeBytes": 5438562304,
+          "maxGapSeconds": 0.10283955605700612,
+          "maxDropBytes": 1822720
+        },
+        "exactFilesystemObject": "UNVERIFIED_NO_PERMISSION_CHANGE"
       }
     },
     "r4MemoryCopyFix20261108": {
@@ -39617,6 +39675,30 @@
         "secondFactory": "STARTED_NOT_COMPLETED",
         "furtherLargeProfile": "NOT_AUTHORIZED",
         "actualR4Inference": false
+      },
+      "factoryIncrementOwnership": {
+        "owner": "Original D1",
+        "runtime": [
+          "tools/unified-import/stream-program.mjs",
+          "tools/unified-import/stream-import-cli.mjs"
+        ],
+        "tests": [
+          "tests/unified-stream-repeatable-steps.test.mjs",
+          "tests/unified-stream-import-outcome.test.mjs"
+        ],
+        "state": "FIXED_004D_QB_PASS_D2_LOCAL_MATERIAL_IN_PROGRESS",
+        "scope": "First full build/checks retained once; independent periterator counters and request metadata; no largeprofile/PG/server; no mutable summary exposed",
+        "next": "D2 exact local material then C/T45 separate tool staging only, preserve installed8694/currentd250; original EACCES diagnosis remains priority",
+        "commit": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
+        "parent": "b2d7fb0efbdb969af75a9cac25f89a6b7c08a4ac",
+        "tree": "a954c2210a06ff94e80d023605583c13973ae66b",
+        "handoffSHA256": "2730652f10932620e024ec6399cfab7f3a1c0bd946db4c6cd5f8a14c847c5083",
+        "handoffBytes": 6329,
+        "reportedSmallChecks": "14/14 and syntax; actual fixed parent golden preserved beforechange, no profile",
+        "remote": "Exact commit independently verified by C",
+        "QBResultSHA256": "8fc990827b1c69b217ad8bb8cc5b085d688ac12faae68a5de93d0ea3deb1b030",
+        "QBResultBytes": 3054,
+        "independentChecks": "14/14,0skip +2syntax; independent fixedparent golden identical legacy7/coalesced6; no largeprofile/PG"
       }
     }
   }
