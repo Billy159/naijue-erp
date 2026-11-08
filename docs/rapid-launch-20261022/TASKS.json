@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T20:52:21+08:00",
-  "stage": "BOOT25_ACTUAL_CONFIG_PUBLISHED_ORIGINAL_KEY_INSPECTION_RUNNING_OUTCOME_UNKNOWN",
-  "lastVerifiedRemoteCommit": "5d54dc62276e6d6c2876d8e0c4b4eddfcc4e02e1",
+  "updatedAt": "2026-11-08T21:02:37+08:00",
+  "stage": "BOOT25_OWNED_PROCESSES_STOPPED_CONFIGURATION_RECOVERY_PENDING_ORIGINAL_OUTCOME_UNKNOWN",
+  "lastVerifiedRemoteCommit": "2f70275aa48b2b70b482b113ce2f7bf05b81e9f9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Collect exact inspect01 terminal then restore03/owned cleanup; no competing cleanup while active",
-      "QB": "13b9f2f0 accepted; wait actual affected result, no repeated source QA",
+      "T45": "BOOT25 owned stop/config recovery first; then existing carrier exact restart probe seam, no competing server cleanup",
+      "QB": "Await fixed exact probe/config restoration delta from original T45; reuse prior valid QA",
       "D1": "f56 source delivery retained",
       "D2": "f56 Linux source retained, no restage",
       "D3": "Wait original authoritative committed status before independent reconciliation",
@@ -39843,7 +39843,7 @@
         "retainedIndexInspection": {
           "at": "2026-11-08T19:49:30+08:00",
           "owner": "D1(source),T45(server),QB(review),D2(package)",
-          "state": "BOOT25_ORIGINAL_KEY_ACTUAL_READONLY_INSPECTION_RUNNING",
+          "state": "BOOT25_FIRST_PROBE_CAUSE_LOCALIZED_SAFE_RECOVERY_IN_PROGRESS",
           "sourceCommit": "97c8f36fde576e563e9c0e65351561c5a1ce732b",
           "parent": "318618330c513905d3c748a4406d73d1b5cf9403",
           "base": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "Collect same unique inspect01 terminal, never replay. Reap children/proofFD, restore access, hostrestore03, owned cleanup; then act on authoritative original request status.",
+          "next": "All owned BOOT25 processes absent. T45 fix exact own access-ledger/config restore ctime seam and old BOOT22 probe; QB narrow delta. Execute only exact recovery successor, no PG/Node/SQL or retry until safe original configuration recovery proven.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40367,11 +40367,69 @@
             "COPS": "360a4fced18df924dc05e865941114e957c392cc48cf4752df9071366c3f8fe4",
             "inspection": {
               "requestKey": "t45-r4-real-inspect-20261108-01",
-              "state": "ACTUAL_SUBMITTED_RUNNING_TERMINAL_PENDING",
+              "state": "ACTUAL_FAILED_2_NOT_REPLAYED",
               "unit": "naijue-erp-op-5cc58239-3105f05fe83e",
               "automaticRetry": false,
               "remainingSecondsBeforeSubmit": 196.52,
-              "originalKeyOnly": true
+              "originalKeyOnly": true,
+              "jobSHA256": "6516d6f701e6aef0f36dce4b77f19f3ccf462cba38f5e6ab05095e9d367fbd1d",
+              "actualSHA256": "faadcf15f8edae4d45c4b6a9c42320d2dc2aa13b4431a62d247fe3f71dc4b020",
+              "elapsedSeconds": 7.789940109010786,
+              "firstError": "production_facts probe at carrier line523 hardcodes retained-boot-20261108-22 while actual boot is25; old PG absent -> COMMAND_FAILED_1",
+              "businessNodeSpawned": false,
+              "initializer400eReached": false,
+              "businessSQLReached": false,
+              "businessOutcome": "UNKNOWN"
+            },
+            "diagnostic03": {
+              "jobSHA256": "ea93a9ad4646bd5d805757e7c04e8afe61f8d6519920a63a4d8226bb0cd86163",
+              "actualSHA256": "2442cd025407d6978b015a135ad5834540bf211e775db2e125e74defe6165455",
+              "state": "ACTUAL_COMPLETED_0_READONLY_NO_PG",
+              "frames": [
+                1346,
+                1294,
+                524,
+                96,
+                46
+              ],
+              "reportDirectoryExists": false,
+              "nodeProcesses": [],
+              "priorDiagnostic01and02": "Retained failures due missing exact active C context;03 used accurate b27f/360a context"
+            },
+            "accessRestoration": {
+              "state": "T45_REPORTED_ACTUAL_COMPLETED_0_RECEIPT_PENDING_C_ADOPTION",
+              "elapsedSeconds": 1.420957,
+              "original45Restored": true,
+              "privateProjectionsAbsent": true
+            },
+            "restore": {
+              "requestKey": "t45-r4-inspection-config-restore-20261108-03",
+              "state": "ACTUAL_FAILED_2_CONFIG_FOREIGN_IDENTITY_NO_PG",
+              "elapsedSeconds": 0.318757,
+              "original1afPreservedInRecovery03": true,
+              "configurationMoves": 0,
+              "reportedCause": "Legitimate access prepare/restore fchown/fchmod changes published parameter ctime; config restore exact saved metadata includes old ctime",
+              "next": "Only exact completed C-bound access restoration ledger may prove this same inode/content/mtime/permission change; preserve foreign rejection and natural ctime",
+              "jobSHA256": "2bc89a1d8e8e7e0cbb89c374379fb908c373e734d85223fb63dd226c093e8e2a",
+              "actualSHA256": "431d17cdfef545f68a25112ce6373eccb5e564545961210f89d4dd8ce78e149d"
+            },
+            "cleanup": {
+              "state": "ACTUAL_OWNED_STOP_COMPLETED_0_CONFIGURATION_RECOVERY_PENDING_NOT_OVERALL_COMPLETE",
+              "requestKey": "t45-r4-boot25-owned-stop-20261108-01",
+              "jobSHA256": "5e0e341f2629e599a1aa9d8856b415b9fe24f23a5d60085e047ebfad5dbb7ab5",
+              "actualSHA256": "ee714d6d7b67e5504b73a2e1635e037a1344dcad7a19fb6137180c1ecada41d9",
+              "elapsedSeconds": 0.9691853518597782,
+              "guardian4416Absent": true,
+              "postgres4424Absent": true,
+              "sampler4423Absent": true,
+              "portAbsent": true,
+              "dataPreserved": true,
+              "parentOriginalRestored": true,
+              "databasePrivilegesChanged": false,
+              "originalBatchAndParametersPreserved": false,
+              "configurationRecoveryPending": true,
+              "transactionRollbackProven": false,
+              "businessOutcome": "UNKNOWN"
             }
           }
         }

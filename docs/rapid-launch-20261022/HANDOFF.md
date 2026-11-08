@@ -3449,3 +3449,13 @@ C已读采用QB d3f7f135/2202：CFG-DIAG-01 CLOSED、2诊断反例和BOOT24必�
 ## 2026-11-08T20:52:21+08:00 — BOOT25配置真实发布，唯一原键只读作业已运行
 
 publish03实际COMPLETED0/1.220400秒，回执6d0f0932；新params inode14564977、inspection14564978，原1af原inode14563415保留。C准确绑定45项b27fc7fd与OPS360a4fce后，原T45已提交唯一inspect01，运行unit3105f05fe83e、禁止自动重试，提交前余196.52秒。实际CLI/400e/SQL及原提交终态尚待同键收据，不能标通过或未提交。完成/失败/到期均先回收子进程与证明FD，再恢复原访问元数据、hostrestore03及本轮PG/guardian/sampler；其他owner继续复用已交付材料。
+
+## 2026-11-08T21:00:06+08:00 — inspect01首错已定位，访问已恢复，配置恢复接缝处理中
+
+唯一inspect01实际FAILED2/7.789940秒，job6516d6f7、外层faadcf15。精确只读diag03实际COMPLETED0，回执2442cd02：carrier production_facts探测硬编码BOOT22，而实际BOOT25；失败在业务Node启动前，400e与本次业务SQL未到达，原EXECUTE02提交状态仍UNKNOWN。前两诊断缺精确active Ccontext失败也保留，03按b27f/360a上下文成功，不放宽守卫。
+
+原T45回报45项访问恢复和两秘密投影清理实际成功；hostrestore03因合法fchown/fchmod改变params ctime被CONFIG_FOREIGN_IDENTITY拒绝，未移动配置，原1af完整在recovery03。优先准确停止本轮三个进程，再用本次已闭合访问恢复账本证明同inode/内容/mtime/权限与自然ctime变化，最小修原恢复接缝，由QB仅验受影响范围。不得忽略任意ctime、伪造时间、重放失败键或称完整清理通过；原所有失败现场保留。旧环境清理不抢此恢复任务。
+
+## 2026-11-08T21:02:37+08:00 — 本轮三个进程已实停，配置恢复仍未闭合
+
+原T45 ownedstop实际COMPLETED0/0.969185秒，job5e0e341f、回执ee714d6d：guardian4416、PG4424、sampler4423均ABSENT，端口已无、数据保留、父目录恢复。原回执originalBatchAndParametersPreserved=false准确保留，指配置恢复待办，不把stop内部cleanupComplete当全部恢复通过。hostrestore03实际失败回执431d17cd保留；当前没有运行中的PG/窗口，下一步仅本次访问恢复账本与配置自然ctime接缝的最小源码修复和原入口恢复。原提交状态UNKNOWN，不声明回滚或重导。
