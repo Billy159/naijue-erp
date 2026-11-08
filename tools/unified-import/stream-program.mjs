@@ -32,9 +32,10 @@ export async function buildStreamInitializer(plan,summary,admin,{coalesce=false}
 /** Reuse a retained completed preflight index through the original planner.
  * Rechecks its full binding and rebuilds the private graph; never runs source
  * preflight or steps. This is preparation only, not controller admission. */
-export async function prepareStreamInitializerFromIndex(indexPath,summary,manifestBytes,options,{coalesce=false}={}){
- const plan=await prepareStreamPlan(indexPath,summary,manifestBytes,options);
- try{return await buildStreamInitializer(plan,summary,options.initialization_identity,{coalesce})}
+export async function prepareStreamInitializerFromIndex(indexPath,summary,manifestBytes,options,{coalesce=false,onPhase=()=>{}}={}){
+ onPhase('PLAN_BEGIN');
+ const plan=await prepareStreamPlan(indexPath,summary,manifestBytes,options,onPhase);
+ try{onPhase('INITIALIZER_BUILD_BEGIN');const result=await buildStreamInitializer(plan,summary,options.initialization_identity,{coalesce});onPhase('INITIALIZER_BUILD_COMPLETE');return result}
  finally{await plan.dispose()}
 }
 export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=false,metrics=null}={}){

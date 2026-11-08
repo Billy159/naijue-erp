@@ -4,6 +4,7 @@ import type {StreamPreflightSummary} from './stream-preflight.mjs';
 
 export interface StreamProgramOptions {
   coalesce?: boolean;
+  onPhase?: (phase: string) => void;
   metrics?: Partial<Record<'master_cursor_ms' | 'baseline_cursor_ms' | 'document_cursor_ms', number>> | null;
 }
 
@@ -29,4 +30,4 @@ export function buildStreamInitializer(plan: PreparedStreamPlan, summary: Stream
 
 /** Revalidates a retained preflight index with the original planner; does not
  * repeat source preflight, construct steps or grant database authority. */
-export function prepareStreamInitializerFromIndex(indexPath: string, summary: StreamPreflightSummary, manifestBytes: Uint8Array, options: PrepareStreamPlanOptions, programOptions?: Pick<StreamProgramOptions, 'coalesce'>): Promise<Pick<StreamProgram, 'identity' | 'initialize'>>;
+export function prepareStreamInitializerFromIndex(indexPath: string, summary: StreamPreflightSummary, manifestBytes: Uint8Array, options: PrepareStreamPlanOptions, programOptions?: Pick<StreamProgramOptions, 'coalesce' | 'onPhase'>): Promise<Pick<StreamProgram, 'identity' | 'initialize'>>;

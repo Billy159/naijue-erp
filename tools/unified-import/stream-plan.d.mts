@@ -50,7 +50,7 @@ export type StreamMasterMode = 'legacy' | 'coalesced';
 declare const streamHashArrayToken: unique symbol;
 export interface StreamHashArrayToken {readonly [streamHashArrayToken]: true;}
 
-export function prepareStreamPlan(indexPath: string, summary: StreamPreflightSummary, manifestBytes: Uint8Array, options: PrepareStreamPlanOptions): Promise<PreparedStreamPlan>;
+export function prepareStreamPlan(indexPath: string, summary: StreamPreflightSummary, manifestBytes: Uint8Array, options: PrepareStreamPlanOptions, onPhase?: (phase: string) => void): Promise<PreparedStreamPlan>;
 export function assertActiveStreamPlan(plan: unknown): asserts plan is PreparedStreamPlan;
 export function iteratePreparedMasterRows(plan: PreparedStreamPlan, mode?: StreamMasterMode): AsyncGenerator<StandardImportOccurrence[], void, unknown>;
 export function preparedMasterChunkTokens(plan: PreparedStreamPlan, mode?: StreamMasterMode): StreamHashArrayToken;

@@ -71,7 +71,8 @@ for(const coalesce of [false,true])test(`initializer-only uses the original byte
 
 for(const coalesce of [false,true])test(`retained preflight index reconstructs a genuine initializer with original binding, coalesce=${coalesce}`,async()=>fixture(async f=>{
  const options={target:f.target,initialization_identity:f.admin,allowSynthetic:true};
- const recovered=await prepareStreamInitializerFromIndex(f.index,f.summary,f.manifest,options,{coalesce});
+ const phases=[];const recovered=await prepareStreamInitializerFromIndex(f.index,f.summary,f.manifest,options,{coalesce,onPhase:name=>phases.push(name)});
+ assert.equal(phases[0],'PLAN_BEGIN');assert.equal(phases.at(-1),'INITIALIZER_BUILD_COMPLETE');for(const name of ['INDEX_VERIFY_BEGIN','INDEX_VERIFY_COMPLETE','MASTER_GRAPH_BEGIN','MASTER_GRAPH_COMPLETE','FACT_HASH_V1_BEGIN','FACT_HASH_V1_COMPLETE','FACT_HASH_V2_BEGIN','FACT_HASH_V2_COMPLETE','INDEX_RECHECK_COMPLETE'])assert(phases.includes(name),name);
  assert.deepEqual(Object.keys(recovered).sort(),['identity','initialize']);
  assert.deepEqual(recovered.identity,golden.modes[String(coalesce)].identity);
  assert.equal(requestHash(recovered.initialize),golden.modes[String(coalesce)].initializeHash);

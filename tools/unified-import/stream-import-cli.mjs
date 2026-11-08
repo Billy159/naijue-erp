@@ -50,6 +50,9 @@ async function runStreamOperation(argv,verifyOnly,whole){
  if(flags.has('--prepare-only')&&(!productionReal||whole||verifyOnly||flags.has('--inspect-only'))||productionReal&&(whole||flags.has('--allow-synthetic')))throw Error('OPTION_INVALID');
  const retained=v['--retained-preflight'],hasRetainedOption=Object.hasOwn(v,'--retained-preflight');
  if(hasRetainedOption&&(retained===''||!productionReal||whole||verifyOnly||!flags.has('--inspect-only')||flags.has('--prepare-only')))throw Error('OPTION_INVALID');
+ const phaseStart=performance.now();
+ const phase=name=>{if(retained){const memory=process.memoryUsage();process.stderr.write(JSON.stringify({event:'RETAINED_INSPECTION_PHASE',phase:name,elapsed_ms:Math.round((performance.now()-phaseStart)*1000)/1000,rss_bytes:memory.rss,heap_used_bytes:memory.heapUsed})+'\n');}};
+ phase('CLI_INPUTS_BEGIN');
  if(fresh35){
   const diagnostic=await import('./fresh35-receiver-diagnostics.ts');
   if(v['--target-profile']!==diagnostic.FRESH35_RECEIVER_TARGET_PROFILE&&v['--target-profile']!==diagnostic.FRESH35_PRODUCTION_REAL_IMPORT_PROFILE)throw Error('OPTION_INVALID');
@@ -79,37 +82,48 @@ async function runStreamOperation(argv,verifyOnly,whole){
    if(sha256(manifest)!==v['--manifest-sha256'])throw Error('MANIFEST_HASH_MISMATCH');
    return output={state:'NOT_STARTED',code:'WHOLE_PACKAGE_MATERIALIZATION_LIMIT',limit:materializationLimit,required_command:'stream-import',automatic_switch:false,business_database_writes:false,message:'Use stream-import explicitly with the same approved inputs and a new report directory. It retains one whole-package transaction; no preflight or host connection was started.'};
   }
+  phase('APPROVAL_READS_BEGIN');
+  phase('APPROVAL_SETTLEMENT_BEGIN');
   const historicalSettlementRetentionApproval=v['--historical-settlement-retention-approval']?await readHistoricalSettlementRetentionCliApproval(pkg,manifestObject,v['--historical-settlement-retention-approval'],v['--historical-settlement-retention-approval-sha256']):undefined;
+  phase('APPROVAL_SETTLEMENT_COMPLETE');phase('APPROVAL_LINE_AMOUNT_BEGIN');
   const historicalLineAmountEvidence=v['--historical-line-amount-evidence']?await readHistoricalLineAmountCliEvidence(pkg,manifestObject,v['--historical-line-amount-evidence'],v['--historical-line-amount-evidence-sha256']):undefined;
+  phase('APPROVAL_LINE_AMOUNT_COMPLETE');phase('APPROVAL_HALL_BEGIN');
   let historicalSalesHallApproval;
   if(v['--historical-hall-approval']){
    if(sha256(manifest)!==v['--manifest-sha256'])throw Error('MANIFEST_HASH_MISMATCH');
    historicalSalesHallApproval=await readHistoricalHallCliApproval(pkg,manifestObject,v['--historical-hall-approval'],v['--historical-hall-approval-sha256']);
   }
+  phase('APPROVAL_HALL_COMPLETE');phase('APPROVAL_ALIGNMENT_BEGIN');
   let currentEffectiveAlignmentEvidence;
   if(v['--current-effective-alignment']){
    if(sha256(manifest)!==v['--manifest-sha256'])throw Error('MANIFEST_HASH_MISMATCH');
    currentEffectiveAlignmentEvidence=await readCurrentEffectiveAlignmentCliEvidence(pkg,manifestObject,v['--current-effective-alignment'],v['--current-effective-alignment-sha256']);
   }
+  phase('APPROVAL_ALIGNMENT_COMPLETE');phase('APPROVAL_ZERO_BEGIN');
   let explicitZeroApproval;
   if(v['--explicit-zero-approval']){
    const {readExplicitZeroCliApproval}=await import('./explicit-zero-cli-input.mjs');
    explicitZeroApproval=await readExplicitZeroCliApproval(pkg,manifestObject,v['--explicit-zero-approval'],v['--explicit-zero-approval-sha256']);
   }
+  phase('APPROVAL_ZERO_COMPLETE');phase('APPROVAL_STAFF_BEGIN');
   let historicalStaffHallApproval;
   if(v['--staff-hall-approval']){
    const {readStaffHallCliApproval}=await import('./explicit-zero-cli-input.mjs');
    historicalStaffHallApproval=await readStaffHallCliApproval(pkg,manifestObject,v['--staff-hall-approval'],v['--staff-hall-approval-sha256']);
   }
+  phase('APPROVAL_STAFF_COMPLETE');phase('APPROVAL_READS_COMPLETE');
   let retainedPreflight;
+  phase('SUMMARY_READ_BEGIN');
   const summaryBytes=retained?await readBounded(join(resolve(retained),'summary.json'),256*1024*1024):null;
+  phase('SUMMARY_PARSE_BEGIN');
   const summary=summaryBytes?parseStrictJson(decodeUtf8(summaryBytes)):await streamPreflight(pkg,report,{recordMetrics:productionReal&&flags.has('--prepare-only'),expectedManifestSha256:v['--manifest-sha256'],allowSynthetic:flags.has('--allow-synthetic'),...(historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval}:{}),...(historicalLineAmountEvidence?{historicalLineAmountEvidence}:{}),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(currentEffectiveAlignmentEvidence?{currentEffectiveAlignmentEvidence}:{}),...(historicalStaffHallApproval?{historicalStaffHallApproval}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{})});
+  phase('SUMMARY_PARSE_COMPLETE');
   if(!summary.checks_passed||!summary.complete_package_validation)return output={state:retained?'UNKNOWN':'PREFLIGHT_REJECTED',issue_count:summary.issue_count,issues_file:join(report,'issues.jsonl'),business_database_writes:false};
   if(summaryBytes)retainedPreflight={summarySha256:sha256(summaryBytes),indexSha256:summary.index_sha256,indexBytes:summary.index_bytes};
   const options={target,initialization_identity:admin,allowSynthetic:flags.has('--allow-synthetic'),...(historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval}:{}),...(historicalLineAmountEvidence?{historicalLineAmountEvidence}:{}),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(currentEffectiveAlignmentEvidence?{currentEffectiveAlignmentEvidence}:{}),...(registration?{registration}:{}),...(historicalStaffHallApproval?{historicalStaffHallApproval}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{})};
   const prepare=async historicalSalesAdmission=>{
    const admitted={...options,...(historicalSalesAdmission?{historicalSalesAdmission}:{})};
-   if(retained){const {prepareStreamInitializerFromIndex}=await import('./stream-program.mjs');program=await prepareStreamInitializerFromIndex(join(resolve(retained),'index.sqlite'),summary,manifest,admitted,{coalesce:flags.has('--coalesce')});return;}
+   if(retained){const {prepareStreamInitializerFromIndex}=await import('./stream-program.mjs');program=await prepareStreamInitializerFromIndex(join(resolve(retained),'index.sqlite'),summary,manifest,admitted,{coalesce:flags.has('--coalesce'),onPhase:phase});return;}
    plan=await prepareStreamPlan(join(report,'index.sqlite'),summary,manifest,admitted);
    if(whole){
     const {readPinnedPackageForExecution}=await import('./execution-plan.ts');
@@ -121,14 +135,17 @@ async function runStreamOperation(argv,verifyOnly,whole){
   };
   const historical=fresh35||manifestObject.schema_contract?.source_declarations_sha256===HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256;
   if(!historical)await prepare();
+  phase('CONNECTION_INPUT_READ_BEGIN');
   const config=await json(v['--connection'],true),encoded=decodeUtf8(await readBounded(v['--scrypt-file'],4096,true)).trim();
   if(!isNodeScryptPasswordHash(encoded))throw Error('PRIVATE_CREDENTIAL_FORMAT_INVALID');
+  phase('CONNECTION_INPUT_READ_COMPLETE');
   const openHost=fresh35?openReviewedFresh35Host:historical?openReviewedWholeSalesHost:openReviewedWholeHost;
   const execute=async(client,admission)=>{
    if(historical&&!productionReal)await prepare(admission);
    executionStarted=true;
    if(verifyOnly)return reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals);
-   const kernel=createWholePackageSqlKernel(encoded,{explicitZeroApproval});
+   phase('ORIGINAL_INITIALIZER_VERIFIED');
+   const kernel=createWholePackageSqlKernel(encoded,{explicitZeroApproval,...(retained?{onPhase:phase}:{})});
    if(flags.has('--inspect-only')){const inspected=await inspectWholePackage(client,program.identity,program.initialize,kernel);return{...(retained?{state:['COMMITTED_RECEIPT_FOUND','ABSENT'].includes(inspected.state)?inspected.state:'UNKNOWN',business_database_writes:false}:inspected),verification:{state:'NOT_RUN'}};}
    const imported=await executeWholePackage(client,program.identity,program.initialize,program.steps,kernel);
    if(imported.state==='ROLLED_BACK')acknowledgedRollback=true;
@@ -137,18 +154,21 @@ async function runStreamOperation(argv,verifyOnly,whole){
   };
   const hostOptions={explicitZeroApproval,...(fresh35?{referenceDirectory:resolve(v['--fresh35-reference-inputs']),sourceProfileSha256:manifestObject.schema_contract.source_declarations_sha256}:{}),...(requestKey?{requestKey}:{})};
   const prepareProduction=async admission=>{
+   phase('HOST_CATALOG_COMPLETE');
    if(plan)await plan.dispose();await prepare(admission);
    // Independent cursors use the same pinned plan and original request keys.
    // No production stream is materialized or reused after it is exhausted.
    if(!retained){const compiled=program;program={...compiled,steps:{[Symbol.asyncIterator](){return compiled.createSteps();}}};}
    return {packageKind:manifestObject.package_kind,initialize:program.initialize,identity:program.identity,...(retained?{preflight:retainedPreflight}:{steps:program.steps}),encodedScrypt:encoded};
   };
+  phase('HOST_OPEN_BEGIN');
   let result=productionReal?await openReviewedFresh35ProductionHost(config,root,target,prepareProduction,execute,{...hostOptions,prepareOnly:flags.has('--prepare-only'),...(retained?{inspectOnly:true}:{})}):await openHost(config,root,target,execute,hostOptions);
   if(productionReal&&acknowledgedImport){
    if(result.cleanup!=='CLOSED')return output={state:acknowledgedImport,connection_cleanup:result.cleanup,verification:{state:'VERIFICATION_UNKNOWN'}};
    const readback=await openReviewedFresh35ProductionHost(config,root,target,prepareProduction,client=>reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals),hostOptions);
    result={...result,result:{...result.result,verification:readback.cleanup==='CLOSED'?readback.result:{state:'VERIFICATION_UNKNOWN'},readback_connection_cleanup:readback.cleanup,readback_host_verification:readback.host_verification}};
   }
+  phase('HOST_CLOSED');
   const candidate={...result.result,...(retained&&result.cleanup!=='CLOSED'?{state:'UNKNOWN'}:{}),...(productionReal?{target_profile:'FRESH35_PRODUCTION_REAL_IMPORT_V1'}:{}),...(fresh35?{host_verification:result.host_verification}:{}),connection_cleanup:result.cleanup,manifest_sha256:summary.manifest_sha256,plan_sha256:program.identity.planSha256,...(!verifyOnly||result.result?.state==='VERIFIED'?{source_counts:summary.counts,source_totals:plan?.totals}:{})};
   try{assertPublicValuesExcludePrivateInputs(candidate,[config.password,encoded])}catch{
    const state=result.result?.state;
