@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T07:05:05.288278+08:00",
+    "at": "2026-11-08T09:21:40.023376+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,8 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "a860c6bc9739b4a6cd59fb638333e9ef0016e603"
+      "lastControllerCheckpoint": "f524b917b401955539bc134f3069128c6fd4dd7e",
+      "lastControllerCheckpointRemoteVerified": true
     },
     "cleanInstall": {
       "node": "24.21.0",
@@ -28510,12 +28511,12 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Exact optionalphase delivered/fixeddbe523f2 andQB adopted; existing business/history ready work only, no duplicate phase implementation.",
-      "QB": "BOOT08 priorbounded890 scope had missed inner driver clientpin; record actualfailure now; originalT45 fixes exactseam, C dispatch next fixedminimum only.",
-      "D2": "dbe523f2 smalltool closure actualLinux adopted;856history ready retained, no repeat packaging or broad test.",
-      "T45": "OriginalT45 independent minimumCLIENT_SHA fix and unique09 keys/latest08failurecleanup binding; QBonly actualrenew dualpin seam; preserve08source/results and no newwindow yet.",
-      "D3": "Independent real source expectations frozen; ordinary independent target reconciliation after actual committed import.",
-      "QF": "Actual normal formal host/core prerequisites pending; no new synthetic browser queue."
+      "D1": "Fixed2b6 TEMP pager delivered/pushed; source and focused models accepted by original QB. No repeated tests. Wait actual T45 first failure or real preflight.",
+      "QB": "2b6 + PREPARE60 narrow independent conclusions adopted; no duplicate whole-suite or ops validation.",
+      "D2": "Fixed2b6 tiny tool and APP576/history856 available. No new packaging or APP build.",
+      "T45": "Exact two retired oldweb leaves actually cleaned; original paired2b6 stage/Linuxload/expiredpolicyrestore underway, then freshstop/BOOT15/params10/PREPARE14 maximum60min. Sole server executor.",
+      "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
+      "QF": "Normal host/login/core business prerequisites not yet available; no new synthetic UI queue."
     },
     "actualExecution": {
       "newClusterCreated": true,
@@ -33443,7 +33444,7 @@
         "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
         "build": "PASS",
         "actualPGInstallation": "COMMITTED_AND_CATALOG_CHECKED_R4_A7D_RECORD_RETAINED",
-        "REALImport": "NOT_EXECUTED. PREPARE12 FAILED2 original20min expiry; records1098004/issue0 do not prove fullmetadata/summary/binding. CLI+rollback UNKNOWN; actualNode/PG/guardian absent and temporary access restored.",
+        "REALImport": "NOT_EXECUTED. PREPARE13 original20min expiry; summary absent, metadata_finish not completed. CLI/rollback UNKNOWN. New2b6 preflight14 maximum60min not yet executed.",
         "deployment": "NOT_EXECUTED",
         "scope": "NEW_FORMAL_CANDIDATE_SEPARATE_FROM_PRIOR_SYNTHETIC_PASS",
         "nativeStructureInstalled": true,
@@ -33483,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "Actual087ecc after13: PG2674/guardian2667/Node2771 all absent; new BOOT15 not started"
+      "currentR4ProcessState": "Last actual087ecc after13: PG/guardian/Node absent. New BOOT15 not started. Exact oldweb02 cleanup changed no PG/service."
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -38297,7 +38298,47 @@
       "QBIndependentReceiptSHA256": "3f90d26862cf0fb8ddb7c08b1af6de3148e2caed22ac32600dee569b638223e0",
       "actualLinux": "PENDING",
       "layoutOldStopPointerNotFreshObservation": true,
-      "next": "T45 minimal authorized old stopped app cleanup then exact paired upload/materialize/Linux load/old-policy restore, new BOOT15/parameters10/PREPARE14<=60min."
+      "next": "T45 minimal authorized old stopped app cleanup then exact paired upload/materialize/Linux load/old-policy restore, new BOOT15/parameters10/PREPARE14<=60min.",
+      "actualTransferStatus": "ORIGINAL_T45_PAIRED_SEQUENCE_IN_PROGRESS_NOT_LINUX_PASS",
+      "T45ReadySHA256": "a1ce69681091036a4c465f2775e131df371bc0015b4f8343eed34df7adaa4e45",
+      "C13DecisionSHA256": "c78811814318a34453dd0baaba0ba255de3d9a09b142ebbee76d0102d4c7a74f",
+      "C13Start": 1794100513643,
+      "C13Expires": 1794101713643,
+      "unissuedDraftOldArchiveSizeCorrectedInFinalDecision": "1148193 historical draft; final1148268 matches D2 archive and original guards. No source guard change."
+    },
+    "r4TwoRetiredWebLeaves20261108": {
+      "owner": "T45 only",
+      "status": "ACTUAL_EXACT_TWO_RETIRED_COMPLETE_RECOVERY_ARCHIVES_PRESERVED",
+      "prior01": {
+        "jobSHA256": "c1b6c5aea6f6a21049bcf8d29b2264495ddd0c9acfa7e27b620d927934dfcf90",
+        "receiptSHA256": "d2e8788d533d8688118ae9bc52f4219a390be6bcda2ff41314559fd8a6c12e29",
+        "deletedCount": 0,
+        "firstGuard": "RECOVERY_ARCHIVE_MEMBER_SET_DIFFERS_KEEP",
+        "terminalNoReplay": true
+      },
+      "diagnosticReceiptSHA256": "fd2e0ed2472fbfcca5ce82840d7ae75c820d5adc97a852b6dd74cbe6fcc045dd",
+      "cause": "Both archives have exact458 files, zero explicit directory headers; all9 directories inferred from complete member paths, no missing files. Only representation test corrected; full content/mode/size and fresh occupation/CAS preserved.",
+      "ready02SHA256": "7bcc405319d50c08a5ee333bc783736cf3b3a06b2926595b5d11aeab80dd8c46",
+      "candidate02SHA256": "a06fa00f23a43596f2d3a840b8b1cc02468c0817b54f6da983984f6d4f540712",
+      "source02SHA256": "9cf7fcafbbe6264acadfc681fc36f30b3b936ab308041fe64d1400a48bd64227",
+      "decision02SHA256": "723e1901a6616a1927d13e710017df0c58d25a3894cbf77b0bdcde8b74138e9d",
+      "actual02JobSHA256": "805eab34e2700773066da515a0ee15d49aee807ec286dad467ea9905a777080a",
+      "actual02ReceiptSHA256": "304986f6b86de0a96114e9b40a6b2010b756086af177dd76f66689fdf159ff98",
+      "actual02Bytes": 9013,
+      "exitCode": 0,
+      "elapsedSeconds": 18.90585213387385,
+      "deletedCount": 2,
+      "actualReleasedBytes": 71626752,
+      "actualFreeAfter": 8236060672,
+      "startupFloor": 8207515646,
+      "startupMargin": 28545026,
+      "floorSatisfied": true,
+      "archiveHashesPreserved": [
+        "15fe817eabb60dcbd58d2f4ddf5afa1ebc8c5798471412ba6cfe4a83a3bdfde4",
+        "152635f68d1f03bc02e9702c85940a2723b818e6931d20b2b775d3304ad2773b"
+      ],
+      "onlineRollbackR4DataBackupsReceiptsAuthoritiesPreserved": true,
+      "PGOrServiceChanges": false
     }
   }
 }
