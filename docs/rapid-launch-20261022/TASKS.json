@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T21:36:50+08:00",
+  "updatedAt": "2026-11-08T21:38:29+08:00",
   "stage": "THREE_OLD_WEB_LEAVES_ACTUALLY_RETIRED_PROBE_QA_PASSED_BOOT26_ASSEMBLY_PENDING",
   "lastVerifiedRemoteCommit": "e6b93c6686bcbef42fd36a621c045cdb04767068",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "3 old web leaves actually retired; freeze BOOT26 literal proof/current-process/inspect02/ctime restore closure for original QB; safe readonly inspection must not wait on fullwriter cleanup",
-      "QB": "ce8003f3 valid; await only changed BOOT26 exact assembly/predecessor closure",
+      "T45": "Actual 3 web cleanup closed; BOOT26 fixed READY96bfe60f pending original QB; no PG/window. Continue exact larger old app recovery binding/retirement without touching DB/shared R4.",
+      "QB": "Actual active turn01a1bb5f only BOOT26 exact proof/02 restore identity/literal pins increment; wait specific receipt, do not duplicate",
       "D1": "f56 source valid; no duplicate ops task",
       "D2": "f56 Linux material valid; no rebuild/retransfer",
       "D3": "Original EXECUTE02 state remains UNKNOWN; wait authoritative committed result",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "Await T45 exact remaining application eligibility/space evidence and fixed BOOT26 assembly; then current finite C-bound original-key inspect02. No source rebuild or writer replay.",
+          "next": "Collect original QB exact96bfe60f conclusion. Only after effective PASS, C fixes fresh BOOT26 12-field decision and T45 actual boot/observer->current params/inspection->publish04->new45/OPS->unique inspect02. Same original initializer; no fullwriter until space fact sufficient.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40488,6 +40488,36 @@
             "copiedTerminalBoot25NotRunnable": true,
             "actualCLI400ePG": "NOT_TESTED",
             "next": "BOOT26 exact assembly reuses original ctime recovery fix and current actual f4/637f predecessor; C new window only after actual space and source closure"
+          },
+          "boot26Candidate": {
+            "at": "2026-11-08T21:38:29+08:00",
+            "READYPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-boot26-inspect02-preparation-01/READY.json",
+            "READY": "96bfe60fcadfb0333ce1259bd8a6bc31257012a8e01f44e335db67f43c71c0f2",
+            "READYBytes": 8944,
+            "state": "SOURCE_LITERAL_PREPARED_ORIGINAL_QB_INCREMENTAL_REVIEW_LIVE_C_UNISSUED",
+            "QBActiveTurn": "01a1bb5f-a700-7861-96e9-2e41a9161027",
+            "keys": {
+              "boot": "t45-r4-retained-restart-20261108-26",
+              "inspect": "t45-r4-real-inspect-20261108-02",
+              "publish": "t45-r4-inspection-config-publish-20261108-04",
+              "restore": "t45-r4-inspection-config-restore-20261108-04"
+            },
+            "rawStopSHA256": "f4b78faf259eba9e61699f932604a241d167f740e1f28fed05b1a8b0e1017273",
+            "postRecoveryProofSHA256": "637f624400ed3f631d5317f3684b742840b6637344680203427d6ea246b85baa",
+            "originalFalsePreserved": true,
+            "oldRestartSHA256": "48ee03c3b7b5a2a0923f149727a6c24388648a0ae1d11a308093e4051271f2bc",
+            "oldRoleExpiry": "2026-11-08 12:54:40.053+00",
+            "CDecisionTemplateSHA256": "d998455f101981c09c7567088dcaabf7368ab7322528f8e6947ba4696356d484",
+            "existingCDecisionInputLeaf": "retained-restart-decision.json must exactly carry future original C BOOT26 bytes; not new authority",
+            "producerArgvSHA256": "d7c7d70bb9a1766fbafa8abba886c06ffd394313138b9b989f040c8acd229329",
+            "newLocalModels": 4,
+            "parentQAReused": [
+              "ce8003f3",
+              "fffce4a5"
+            ],
+            "CWindowIssued": false,
+            "serverSubmitted": false,
+            "NodePGSQL": "NOT_EXECUTED"
           }
         }
       }
