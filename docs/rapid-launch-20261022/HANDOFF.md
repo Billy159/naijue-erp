@@ -3214,3 +3214,10 @@ params13实际COMPLETED0/.919s（jobc9c5dd24，actualfb88f652），准确1af3588
 C沿持续用户授权签发8键V2 0dc0ecb1/2094，17字段完整绑定直接取真实QB d987安全复核；与EXECUTE02决定04a795ff/4597同窗1794119108979→1794121808979（14:25:08至15:10:08 BJT），原六批准、业务批次、原键、安装与source不变，registration仍null。现只待T45绑定原publisher五个准确SHA、固定叶单次发布和worker实际可读，再唯一EXECUTE02；没有新独立PREPARE。授权签发不是实际发布、导入或COMMIT证明。
 
 旧EXECUTE01失败与清理证据保留，不重放，结果未知仍原键检查。独立数量/金额/逐仓SKU核账、普通历史弃审重审、新35备份恢复、正常登录与正式切换尚未通过。全部执行仍T45独占；Dot可以从本节及TASKS的r4RealExecute02_20261108接续。
+
+
+## 2026-11-08 14:32 — 原固定批次授权缺口已实际补齐，EXECUTE02运行中
+
+C核最终READY6bf22681五文件和publisher54343e40，只五个准确摘要绑定，函数体/保护保持；未重复原QB16模型。唯一publisher实际COMPLETED0/.468s（job056ee7a9，actual8424a35f），固定V2叶dev66304/inode14563387/root:61035/0640/nlink1/2094B。原只读1dba19dc（job7c9ba0d7，COMPLETED0/.368s）证明root及UID/GID61035、额外groups[]均完整读回同0dc摘要及同文件身份，不导出正文、SQL0、权限改变0。这仅关闭原ENOENT发布接线缺口。
+
+T45临提交核双registry/jobdir无原key后，唯一t45-r4-real-execute-20261107-02已QUEUED→RUNNING，unit2f577d485aa0；业务截止仍15:10:08.979BJT，outer3000仅清理。不重放EXECUTE01、不另PREPARE、不换数据库批次或请求键，长作业期间无并发serverobserver。授权文件保持到writer及独立读回终态。原QB仅补其既定实际绑定/发布增量；没有扩大验收。COMMIT、独立核账、普通业务、备份恢复和正式部署均仍未通过。

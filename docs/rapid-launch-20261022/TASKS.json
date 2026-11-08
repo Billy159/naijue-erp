@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T14:26:59.721462+08:00",
+    "at": "2026-11-08T14:34:04.644177+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28512,9 +28512,9 @@
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
       "D1": "Original seam diagnosis delivered; d250 unchanged, no duplicate source repair.",
-      "QB": "Exact real-batch d987 and publisher16 finitePASS adopted. Next actual operation binding readback only, no six-proof rerun.",
+      "QB": "Original d987 adopted; narrow actual five pins/BOOT18/params13/root-worker metadata increment only",
       "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
-      "T45": "Duplicate02 actual freed83.71MB; exact BOOT18 C issued, actual startup then params13/V2/EXECUTE02.",
+      "T45": "Unique EXECUTE02 actually RUNNING; original-key collection only, no concurrent observer",
       "D3": "Existing six scopes/reviews/expectation paths delivered. Wait actual COMMIT independent readback.",
       "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
@@ -33304,13 +33304,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T14:26:59.721462+08:00",
-      "phase": "BOOT18_PARAMS13_ACTUAL_PASS_EXACT_V2_AND_EXECUTE02_ISSUED_PENDING_PUBLICATION",
+      "at": "2026-11-08T14:34:04.644177+08:00",
+      "phase": "EXACT_BATCH_PUBLISHED_EXECUTE02_RUNNING_PENDING_COMMIT_AND_INDEPENDENT_READBACK",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "T45 sole server executor: final fixed batch publication then unique EXECUTE02",
+      "currentOwner": "T45 original-key collection; unique actual EXECUTE02 running",
       "nextOwner": "D3 independent target reconciliation after actual COMMIT/ALREADY; C coordinates ordinary history and restore",
-      "latestActualReceiptSHA256": "fb88f6526ae7a82a57b094a71a80fdbeb11c60a5da81d1aee88a936fa269d831",
+      "latestActualReceiptSHA256": "1dba19dc88d14203db3bd23ba1bffded40a6d1228c9ecaa3bcd983bab160e8f9",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Publish C exact8key V2 0dc0ecb1 and actual worker-readable root leaf, then original EXECUTE02 04a795ff within14:25:08–15:10:08 BJT. No standalone PREPARE or database key change.",
+      "next": "Wait original EXECUTE02 terminal; unknown uses same DB keys inspect/lockAndInspect; then D3 actual target independent reconciliation.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33484,7 +33484,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "BOOT18_ACTUAL_GUARDIAN3592_PG3599_LIVE; business import pending"
+      "currentR4ProcessState": "EXECUTE02_RUNNING_SAME_BOOT18_RETAINED_TARGET"
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -39308,7 +39308,7 @@
     },
     "r4Execute01ExistingBatchAuthorizationSeam20261108": {
       "owner": "C exact batch record / T45 sole publisher and nonsecret readonly consumer / QB existing independent real batch review",
-      "status": "GENUINE_QB_REVIEW_AND_EXACT_C_V2_ISSUED_PUBLICATION_PENDING",
+      "status": "EXISTING_FIXED_LEAF_GAP_ACTUALLY_REPAIRED_AND_WORKER_READBACK_VERIFIED",
       "D1HandoffSHA256": "cee3b5e20fa9fd35ed6d58a9c85945f28076553f4e4a0f05d479789463546152",
       "D1HandoffMD_SHA256": "b969f2a3c6c2c197ff3cc1e6429cb00e84d40704b2135765f1a14b2c1bdb9690",
       "fixedPath": "/etc/naijue-erp/fresh35-production-import-v1.json",
@@ -39325,9 +39325,9 @@
       "sourceChanged": false,
       "QBReviewInputSHA256": "e850dabdb6d933bc818d7227379182e42472f2437d42a714ce314bb842a87de4",
       "QBReview": "PASS_EXACT_REAL_BATCH_SAFETY_REVIEW",
-      "actualPublisher": "NOT_YET_RUN",
+      "actualPublisher": "COMPLETED0; actual8424a35f, root/worker readback1dba19dc",
       "newBOOTAndParameters": "BOOT18/params13 actual complete, old params retained",
-      "businessImport": "NOT_VERIFIED",
+      "businessImport": "EXECUTE02_RUNNING_NOT_COMMIT_OR_PASS",
       "next": "T45 exact publisher/read-only consumer delta -> QB affected seam and exact batch review -> actual capacity/new BOOT18/params13/V2 bytes -> revised EXECUTE under original business keys; no standalone PREPARE rerun.",
       "QBResultSHA256": "d987067e55debd804810ca1584e69c8f24c2b2f000bdbcbf0977b3597eb100bd",
       "QBResultBytes": 8668,
@@ -39400,7 +39400,7 @@
     },
     "r4RealExecute02_20261108": {
       "owner": "C exact existing authorization; T45 sole publisher/executor",
-      "status": "EXACT_C_FILES_ISSUED_NOT_YET_PUBLISHED_OR_EXECUTED",
+      "status": "BATCH_AUTHORITY_PUBLISHED_AND_ROOT_WORKER_READBACK_PASS_EXECUTE02_ACTUAL_RUNNING",
       "nativeBatchSHA256": "0dc0ecb1a0fd099b16f84c3debec083a1fc93bdcc0e0d387f6362d19eb5e0af1",
       "nativeBatchBytes": 2094,
       "executeSHA256": "04a795ffb6017176e7f65b3a59ae4e8e92e38c292cb8e45434850fab9d14facc",
@@ -39415,7 +39415,26 @@
       "standalonePREPARE": false,
       "businessImportVerified": false,
       "independentReadbackVerified": false,
-      "next": "Exact five constant binding -> publish once root:61035/0640/nlink1 -> worker actual read -> unique EXECUTE02; unknown result original-key query only."
+      "next": "T45 original-key terminal collection only; retain batch leaf through write and independent readback. No concurrent server observer.",
+      "actualPublisherSHA256": "8424a35fea3106652711c74c1e96da8937ded83bb831882f6489e18121f4ac46",
+      "actualPublisherJobSHA256": "056ee7a91badc6229d87e4c46fffec6a94075a163e221791550bfb251cb20a76",
+      "actualPublisherElapsedSeconds": 0.468264449,
+      "actualReadbackSHA256": "1dba19dc88d14203db3bd23ba1bffded40a6d1228c9ecaa3bcd983bab160e8f9",
+      "rootAndWorkerReadable": true,
+      "workerUIDGID": 61035,
+      "workerExtraGroups": [],
+      "authorityMetadata": {
+        "device": 66304,
+        "inode": 14563387,
+        "uid": 0,
+        "gid": 61035,
+        "mode": "0640",
+        "nlink": 1,
+        "bytes": 2094
+      },
+      "actualExecutionState": "RUNNING",
+      "actualUnit": "naijue-erp-op-5cc58239-2f577d485aa0",
+      "automaticRetry": false
     }
   }
 }
