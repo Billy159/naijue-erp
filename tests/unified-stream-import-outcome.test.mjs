@@ -196,3 +196,13 @@ test('retained phase output survives planner failure without values or secret te
  for(let i=0;i<events.length;i++){assert.deepEqual(Object.keys(events[i]).sort(),['elapsed_ms','event','heap_used_bytes','phase','rss_bytes']);assert(events[i].elapsed_ms>=0);if(i)assert(events[i].elapsed_ms>=events[i-1].elapsed_ms)}
  assert.doesNotMatch(lines.join(''),/MODEL_PRIVATE|scrypt|password|original-key|manifest_sha256/);
 }));
+
+test('host return phase does not assert physical closure (success and failed cleanup model)',async()=>withProductionCliInputs(async(args,d)=>{
+ const fs=await import('node:fs/promises'),dir=join(d,'retained');await fs.mkdir(dir);await fs.writeFile(join(dir,'summary.json'),JSON.stringify({checks_passed:true,complete_package_validation:true,index_sha256:'e'.repeat(64),index_bytes:4096,manifest_sha256:'a'.repeat(64),counts:{sales_header:25}}));
+ for(const [mode,state,cleanup] of [['INSPECT_ABSENT','ABSENT','CLOSED'],['INSPECT_CLOSE_FAIL','UNKNOWN','CLOSE_FAILED']]){
+  const m=await productionCliModel(mode),lines=[],write=process.stderr.write;let result;
+  process.stderr.write=function(chunk){lines.push(String(chunk));return true};
+  try{result=await m.runStreamImport([...args,'--inspect-only','--retained-preflight',dir])}finally{process.stderr.write=write}
+  assert.equal(result.state,state);assert.equal(result.connection_cleanup,cleanup);const phases=lines.join('').trim().split('\n').map(JSON.parse).map(x=>x.phase);assert.equal(phases.at(-1),'HOST_RETURNED');assert(!phases.includes('HOST_CLOSED'));
+ }
+}));

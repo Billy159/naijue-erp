@@ -168,7 +168,7 @@ async function runStreamOperation(argv,verifyOnly,whole){
    const readback=await openReviewedFresh35ProductionHost(config,root,target,prepareProduction,client=>reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals),hostOptions);
    result={...result,result:{...result.result,verification:readback.cleanup==='CLOSED'?readback.result:{state:'VERIFICATION_UNKNOWN'},readback_connection_cleanup:readback.cleanup,readback_host_verification:readback.host_verification}};
   }
-  phase('HOST_CLOSED');
+  phase('HOST_RETURNED');
   const candidate={...result.result,...(retained&&result.cleanup!=='CLOSED'?{state:'UNKNOWN'}:{}),...(productionReal?{target_profile:'FRESH35_PRODUCTION_REAL_IMPORT_V1'}:{}),...(fresh35?{host_verification:result.host_verification}:{}),connection_cleanup:result.cleanup,manifest_sha256:summary.manifest_sha256,plan_sha256:program.identity.planSha256,...(!verifyOnly||result.result?.state==='VERIFIED'?{source_counts:summary.counts,source_totals:plan?.totals}:{})};
   try{assertPublicValuesExcludePrivateInputs(candidate,[config.password,encoded])}catch{
    const state=result.result?.state;
