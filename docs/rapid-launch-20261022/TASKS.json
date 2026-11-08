@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T00:55:41+08:00",
+  "updatedAt": "2026-11-09T01:13:50+08:00",
   "stage": "191_OLD_APP_CONTAINERS_158_PATHS_4_ROUTES_67_IMAGES_ACTUALLY_RETIRED_REMAINING_TARGETED_CLOSURE",
-  "lastVerifiedRemoteCommit": "ee75f3816e59eb3a3cb4ca85122e71ffd845832d",
+  "lastVerifiedRemoteCommit": "306dcb29f6a62e99b470e2ae84d46bbcfd209fef",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Fixed cleanup scope closed; no more broad server inventory. Original T45 finishes offline BOOT28/inspect04 five-consumer binding to actual15af root/parser-r2, original QB reviews only binding delta, then C fixes new finite read-only original-key window. No writer replay while original COMMIT unknown.",
-      "QB": "Phase parser01/02 closed b4f4f986. Await only complete BOOT28/inspect04 binding delta; do not duplicate producer30/golden/PG or old source reviews.",
+      "T45": "Read actual inspect04 result and phases, then restore06 and owned28; no expiry extension or writer replay. COMMITTED goes to D3 independent reconciliation; failure direct phase goes original D1.",
+      "QB": "BOOT28 binding-only PASS06d24c09 adopted; no duplicate technical review.",
       "D1": "15af source QA and Linux loading accepted; wait actual first phase/direct failure for exact repair.",
       "D2": "15af frozen operation ready/loaded; no duplicate packaging.",
       "D3": "Original400e COMMIT remains UNKNOWN; independent reconciliation only after authoritative COMMITTED, no reimport/reclean.",
@@ -33307,13 +33307,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T00:55:41+08:00",
-      "phase": "OLD_APPLICATION_RETIREMENT_ACTUALLY_COMPLETED_ORIGINAL_KEY_INSPECTION_BINDING_PREPARATION",
+      "at": "2026-11-09T01:13:50+08:00",
+      "phase": "BOOT28_AND_PUBLISH06_ACTUAL_COMPLETED_INSPECT04_SUBMITTED",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 offline BOOT28/inspect04 material only; C adopts scoped retirement result",
+      "currentOwner": "Original T45 actual original-key read-only inspection",
       "nextOwner": "Original QB binding-only review then C finite scope and original T45 execution",
-      "latestActualReceiptSHA256": "43c68bf38c45cf68c60d2699f813a4aee2d8fbd2e9555da100434b65a5bf5d96",
+      "latestActualReceiptSHA256": "a8883857c94a7497e8256747c1ce426597713d995847ddb29136365413033516",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Fixed cleanup scope closed; no more broad server inventory. Original T45 finishes offline BOOT28/inspect04 five-consumer binding to actual15af root/parser-r2, original QB reviews only binding delta, then C fixes new finite read-only original-key window. No writer replay while original COMMIT unknown.",
+      "next": "Read actual inspect04 result and phases, then restore06 and owned28; no expiry extension or writer replay. COMMITTED goes to D3 independent reconciliation; failure direct phase goes original D1.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33493,7 +33493,8 @@
       "currentFreeBytes": 8789594112,
       "fullWriterFloorSatisfiedByLatestObservation": true,
       "businessCommitState": "UNKNOWN_ORIGINAL_KEY_NOT_REPLAYED",
-      "spaceDoesNotProveImportOrDeployment": true
+      "spaceDoesNotProveImportOrDeployment": true,
+      "actualOperationWindowExpiresAt": 1794158180988
     },
     "delayReviewAdoption": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线迟延原因审查-20261106-01/上线迟延原因与主控处理清单.md",
@@ -41368,6 +41369,60 @@
         "order": "Complete in-flight small item and restore; bind actual old two formal targets and necessary keep list; retire application systems and read back actual deletion/space; preserve R4 and then resolve original key before import/reconciliation.",
         "repeatedUserApprovalRequired": false
       }
+    },
+    "r4Boot28Inspect04Actual20261109": {
+      "at": "2026-11-09T01:13:50+08:00",
+      "owner": "Original T45 only, gpt-6.1-sol/high explicitly sent; live model/Fast not independently observable",
+      "sourceBindingQB": "06d24c09f5be22c46bbc2b17e3ab60eed7ea6499c7950d4484a51d135bb62f71",
+      "readySHA256": "01c5bf30d2e373f54df7e225b2bd7c9ac2609458d29df03a5fabec1b3d591ed8",
+      "QBStatus": "PASS_BOOT28_INSPECT04_COMBINED_SOURCE_BINDING_ONLY",
+      "newWindowOriginalC": "7a01b37ae2acc3d3a6c003e9e49213cefa6bf254f4e602d6af3ff5beb658e887",
+      "startsAt": 1794157580988,
+      "bootExpiresAt": 1794157880988,
+      "operationExpiresAt": 1794158180988,
+      "guardianExpiresAt": 1794158780988,
+      "roleUntil": "2026-11-08T17:16:20.988Z",
+      "bootActual": {
+        "sha256": "d229f960cec897fa86866b6b3a1e6348488a0474950e0fd94e69f4cf83b3a839",
+        "bytes": 2027,
+        "exitCode": 0,
+        "elapsedSeconds": 2.824263351969421,
+        "restartSHA256": "bd9be0eb323e7d1cb20f74c9eaceee37e019f84962cb805cb381df1b03670e2e",
+        "epoch": "2026-11-08 17:07:14.574106+00"
+      },
+      "observerActual": {
+        "sha256": "8f4b6ab40ec24015e22770c3b6bdb39539cc08c38563372397aa2c995cc3e366",
+        "bytes": 3566,
+        "exitCode": 0,
+        "elapsedSeconds": 0.3180000549182296,
+        "guardian": 4841,
+        "postgres": 4849,
+        "sampler": 4848,
+        "live": true,
+        "redactedFieldsNotIndependentProof": true
+      },
+      "parametersOriginalC": "480dd15372d1ac52f29c2f16aa3ee16f790d2cfc8bca13dfe041c03d6eae41f5",
+      "inspectionOriginalC": "cc380ca3201e646a333e4a9f4d392f78e6b2700553f9b749b125650cb4db7e52",
+      "publish06Actual": {
+        "sha256": "a8883857c94a7497e8256747c1ce426597713d995847ddb29136365413033516",
+        "bytes": 1473,
+        "exitCode": 0,
+        "elapsedSeconds": 0.8198005,
+        "newParameterInode": 14549024,
+        "originalParameterInode": 14563415,
+        "PGConnections": 0
+      },
+      "accessOriginalC": "70de6ad130baf6ec1b980da44dee5f769678c569b0c3b867afdd629c4eea233e",
+      "opsOriginalC": "ac88c9bbdfbda1ed780538379214ac440e9abb6a63463a0732069a13e8fe30c6",
+      "inspect04": {
+        "key": "t45-r4-real-inspect-20261108-04",
+        "state": "SUBMITTED_ACTUAL_RESULT_PENDING",
+        "remainingSecondsAtSubmission": 237.045,
+        "mode": "INSPECT_ONLY_ORIGINAL_KEY",
+        "initializerSHA256": "400e19446d10a42d6d602feedef38cc52b4e3b34f4cf3609dcf61df07572ce4d",
+        "commitState": "UNKNOWN_NOT_A_PASS"
+      },
+      "next": "Read actual inspect04 result and phases, then restore06 and owned28; no expiry extension or writer replay. COMMITTED goes to D3 independent reconciliation; failure direct phase goes original D1."
     }
   }
 }
