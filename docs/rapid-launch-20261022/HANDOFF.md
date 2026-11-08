@@ -3612,3 +3612,22 @@ Unique next step: consume original QB scoped result; PASS permits original C fin
 ## 2026-11-09T01:48:24+08:00 — BOOT29-r2 source issue closed; finite execution issued
 
 C actually read QB43906277/4299 PASS with0findings,B29-WINDOW-01 closed. Correct relative schedule accepted and old same-start rejected;35independent negative/positive cases and5focused tests passed,65file/sixbundle closure verified. Only source/local proof,no actualPG or400e result. Prior4896/03330failure preserved. C consumed continuing direct-human01a1b528 scope in original872b7239/1432: B1794159993886,bootend1794160293886,operation1794160293886..1794160893886,guardian1794161193886,existingroleend2026-11-08T18:01:33.886Z. Sole T45 instructed immediate exactBOOT29/observer,then actual restart-bound parameters;publish cannot precede operationstart. Restore07/owned29 on every outcome. Residual two known mixed old roots deferred until this window closes. Original400e/key COMMIT remainsUNKNOWN,no writer replay or new approval fabrication. GitHub587ea0ec4c7b2d9a334f6a1009b5afe055974a52 push/readback verified.
+
+
+## 2026-11-09T01:55:34+08:00 — Actual BOOT29 and config07 passed; single inspect05 running
+
+C read actual boot169dbe03/2027 and job98e1828a/591 COMPLETED0/4.228898s,observer7e5c74fe/3566+job768d8c5a/521 COMPLETED0/.317570s. SameR4SID/OID/PG,epoch17:48:28.635983UTC,restart e7e0f2ff/1645;PG4977/guardian4969/sampler4976 live,HBArestored,original1afretained. Exporter two redacted fields not treated as content proof. C bound actualservice7d68/restart to parameterse197436e/1732 andinspection6106b06f/2149,exactauthrefsame872b.
+
+Publish07 afterfuturestart actuald86785c1/1473 CONFIGURATION_PUBLISHED/PG0;paramsinode14549193/mtime1794160308804067829/ctime1794160309102067340,original1afinode14563415retained. C fixed reviewed45path access ea1431a8/34685 andOPS ea0ef6a0/4597,INSPECT/regnull/original400e-key unchanged. T45 reports soleinspect05 RUNNING,465.679sleft atsubmission,Node min480/remaining unchanged. No blind replay or concurrentcleanup. Actualoutcome/transactionstate remainsUNKNOWN until receipt;all terminalpathsrestore07→owned29. Latestremote2146220152b94148dcbf014b4eb3c661965daf33 verified.
+
+
+## 2026-11-09T01:57:14+08:00 — Actual inspect05 failure corrects preliminary RUNNING report
+
+Original owner had reported RUNNING before judging the same-key collected terminal; C preserves that history and corrects it with actual1d9e3f6d/5298:inspect05 FAILED2/24.932377s,CLI IMPORT_FAILED/stateUNKNOWN/verificationNOT_RUN/connectionCleanupUNKNOWN.21valid phases,lastHOST_OPEN_BEGIN7.237775s,noHOST_CATALOG_COMPLETE. PeakRSS1170100224B,minfree8565587968B,maxgap.118006s;not windowexpiry or observedOOM. Exactnew source-time binding did reachNode;SQL/role/network root cause not yet recorded. Original400e/key COMMIT remainsUNKNOWN;cleanup is notrollbackproof.
+
+Original T45 is completingrestore07→owned29 first. Then only existing05private-log bounded64KiB whitelist(errorcode/class/SQLSTATE/source location,safephase)may be extracted;no rawmessages/secrets/businessdetails,newPG/Node/SQL or blindreplay. If absent,recordNOT_RECORDED. Existingtwo mixed-root residual metadata resumes afterwindowclosure,no broadserverinventory.
+
+
+## 2026-11-09T01:59:11+08:00 — BOOT29 window fully closed and restored
+
+C read restore07 bb5c2bec/1115 COMPLETED0/.620127s and owned29 b1a72946/5675 COMPLETED0/.518592s. PG4977/guardian4969/sampler4976 ABSENT,18654 andpostmaster.pid absent;45metadata,HBA,originala7d/0dc/1af hash/inode,rootroot0711parent/noACL andbothprivateprojections confirmed. Originalparamsnaturalctime1794160500907749076,mtimeunchanged;noartificialtimestamprestore oroldauthorityrenewal. Originalrawf4 falseflag preserved separately frompostRecoveryOriginalFilesConfirmed=true. Latestfree8564260864B;cleanupnottransactionoutcomeproof. Currentwindowclosed,noPG/Node/serverjobactive. Nextonlyboundedexisting05errorwhitelist andexistingtwo mixed-rootapplicationleaf metadata;notnewquery orblindrerun.
