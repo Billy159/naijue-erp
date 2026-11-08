@@ -3088,3 +3088,10 @@ C采用QB7b3b74fe/4172准确literal/C13 PASS，原控制流及97源码36项复�
 C完整读并采用PLAN b7d244e3/7179、REPORT c777a12f/1560：原固定入口临时消费当前准确参数，同盘rename保留原1af inode/字节/mtime，全部消费者关闭后原inode恢复；自然ctime记录，不伪还原，不称原子替换。先核无外来消费者/同盘/原FD及路径CAS，外来变更拒绝覆盖并保留私有恢复路径。原0dc不动不续期，不再增加D1读取层。真实BOOT23 restart→新参数SHA→八字段inspection→genuine retained proof→原400e实际比较→原initializer只读SQL及ROLLBACK/CLOSED，不能以描述代替真实准入。
 
 原T45只做本地准确carrier增量：BOOT仍<=5min，首轮只读服务窗<=10min、owned Node<=480s，原20min guardian、3GiB容器及writer8207515646保持。完整index hash/临时图耗时内存未测，以上是上限而非性能PASS。READY/受影响QB/可执行C原字节尚待；PG/guardian/sampler仍停、业务UNKNOWN，不重导换键。主控c697fecb0ce4c7972bbf95466dfa4d68e04fa7d5已推原GitHub分支并ls-remote逐字确认。
+
+
+## 2026-11-08 19:16 — BOOT23增量独立验收拦住旧前驱绑定，原owner定向修复
+
+C已完整读T45 READY75f0be17/18422：原同盘配置恢复与BOOT23载体、本地10定向模型及未签模板均固定，0server/PG。采用原QB1f1f4e0b/2250 NEED_FIX：B23-01/P2，actual real_retained_capture:1136仍要求旧1afe29，BOOT23真实producer则写上一轮实际停稳f2c89，正确回执会在proof/Node/SQL前被拒。小型guard反例已证，原75f0/失败保留，原T45只修该处及同pin real_operation_parameters；其余有效控制流不重跑。
+
+T45追出同类第三消费者：固定97工具 fresh35-installed-real-window-v1.mjs:48/63也硬绑旧1afe。只改carrier不能闭环，C未签可执行BOOT。原D1已接同一恢复包的最小源码修复：优先复用现有C精确restart原字节SHA/同reference/有限窗/目标及genuine FD proof核验当前回执，避免每次合法BOOT再替换旧常量；不新增描述层/接口/DB/grant、不伪造旧前驱或放宽错误拒绝。确需新字段时仅报准确差异，不自行扩大。QB只收实际受影响source及未完成config模型，97源码36与Linux7ec5有效范围保留。原数据、原key、旧0dc与UNKNOWN不变；实际index/400e/PG/性能/正式业务及切换未验。主控517b928bd711430cbd475ccbdc2d31439db89f90已远端准确核实。
