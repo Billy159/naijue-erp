@@ -8,7 +8,7 @@ import {canonicalRequestValue} from '../../packages/application/src/canonical-re
 import {requestHash} from '../../packages/application/src/request-hash.ts';
 import {validateStandardImportRequest} from '../../packages/application/src/unified-import-execution.ts';
 import {isNodeScryptPasswordHash} from '../../packages/authentication/src/passwords.ts';
-import {streamTypedHash,typedHashArray} from './stream-typed-hash.mjs';
+import {streamTypedHash,typedHashArray,requestHashIncremental} from './stream-typed-hash.mjs';
 import {watch} from 'node:fs';
 import {assertTrustedRootPath,assertTrustedRootTree} from '../../scripts/release/unified-install/trusted-install-path.mjs';
 import {resolve,dirname} from 'node:path';
@@ -172,7 +172,7 @@ export function fresh35ProductionImportQueryGuard(context,authorization,prepared
   await currentProductionImportAuthority(context,authorization);
   if(sql.startsWith('BEGIN')){await close();ordinal=0;initialized=false;finished=false;return;}
   if(/^SELECT naijue_erp\.standard_whole_package_(inspect|prepare|verify)_v2\(/.test(sql)){
-   need(requestHash({initialize:parseStrictJson(values?.[0]),encodedScrypt:values?.[1]})===a.binding.initializerSha256,'PRODUCTION_INITIALIZER_BINDING_DIFFERS');
+   need(requestHashIncremental({initialize:parseStrictJson(values?.[0]),encodedScrypt:values?.[1]})===a.binding.initializerSha256,'PRODUCTION_INITIALIZER_BINDING_DIFFERS');
    if(sql.includes('_prepare_v2(')){need(!initialized,'PRODUCTION_ORIGINAL_STEP_REQUIRED');initialized=true;streamHash=createHash('sha256').update('[')}return;
   }
   if(sql==='SELECT naijue_erp.standard_whole_package_step_v2($1::uuid,$2::integer,$3::text,$4::jsonb)::text AS result_json'){

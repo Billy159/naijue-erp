@@ -31,3 +31,15 @@ test('SQL kernel binds its initial client before awaiting role acknowledgment',a
 });
 
 test('zero-approval descriptor cannot cross SQL adapter without independent verified token',async()=>{let calls=0;const c={async query(){calls++;throw Error('must not query')},async discard(){}};const k=createWholePackageSqlKernel(secret);await assert.rejects(()=>k.lockAndInspect(c,id,{...req,payload:{...req.payload,explicit_zero_approval:{sha256:'a'.repeat(64)}}}),/EXPLICIT_ZERO_APPROVAL_BINDING_INVALID/);assert.equal(calls,0);});
+
+test('initializer hash keeps exact request bytes and rejects changed initialization before prepare SQL',async()=>{
+ const calls:{sql:string;values:readonly unknown[]}[]=[];
+ const c={async query(sql:string,values:readonly unknown[]=[]){calls.push({sql,values});return sql.startsWith('SET LOCAL')?{command:'SET'}:{command:'SELECT',rows:[{result_json:'{"state":"ABSENT"}'}]}},async discard(){}};
+ const init={...req,payload:{...req.payload,historical_hall_approval:{utf8:'{"synthetic":"中"}\n ',sha256:'c'.repeat(64)}}};
+ const kernel=createWholePackageSqlKernel(secret);await kernel.lockAndInspect(c,id,init);
+ assert.equal(calls.at(-1)?.values[0],JSON.stringify(init));assert.equal(calls.at(-1)?.values[1],secret);
+ const before=calls.length;
+ await assert.rejects(kernel.initialize(c,id,{...init,request_key:'different'}),/KERNEL_STATE_INVALID/);
+ await assert.rejects(kernel.initialize(c,id,{...init,payload:{...init.payload,historical_hall_approval:{...init.payload.historical_hall_approval,utf8:'different'}}}),/KERNEL_STATE_INVALID/);
+ assert.equal(calls.length,before);
+});
