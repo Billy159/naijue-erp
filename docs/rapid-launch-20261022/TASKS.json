@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T03:21:09+08:00",
+  "updatedAt": "2026-11-09T03:28:39+08:00",
   "stage": "191_OLD_APP_CONTAINERS_158_PATHS_4_ROUTES_67_IMAGES_ACTUALLY_RETIRED_REMAINING_TARGETED_CLOSURE",
   "lastVerifiedRemoteCommit": "1a96699f5cf012dba1dffc21d056ef93e02aefcd",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33307,12 +33307,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T03:21:09+08:00",
-      "phase": "BOOT30_SAFE_PRESTART_FAILURE_BOOT31_QB_INCREMENTAL_REVIEW",
+      "at": "2026-11-09T03:28:39+08:00",
+      "phase": "ACTUAL_BOOT31_AND_OBSERVER_PASS_WAIT_FINITE_OPERATION_START",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "OriginalQB exact31 increment; originalT45 sole server executor",
-      "nextOwner": "C checks actual short finite input before originalT4531",
+      "currentOwner": "OriginalT45 publish09 not before exact operation start",
+      "nextOwner": "C original access+OPS from actual published metadata",
       "latestActualReceiptSHA256": "961f6998904ea378b175969be5bb70b5e42a17da5b60555683622672ca7d84eb",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "OriginalQB only literal/source-time/pin/input delta; C exact finite raw with reference <=512 and actual checker; T45 boot31+observer then bind actual restart before inspect07.",
+      "next": "OriginalT45 publish09 only after1794166153966; C derives exact access+OPS from actual45metadata, originalkey read-only inspect07 then restore09+owned31.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33487,7 +33487,7 @@
         },
         "actualStartReceiptSHA256": "483ff693acb4de4e3d62e56d2acc566345274f452a3b0364ed11220b5c74a784"
       },
-      "currentR4ProcessState": "STOPPED_NO_PG_NODE_OR_31_START",
+      "currentR4ProcessState": "BOOT31_PG_GUARDIAN_SAMPLER_LIVE_HBA_RESTORED_PARENT_TEMP_GRANT",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF",
       "latestCleanupResultSHA256": "efa5414bfbf2e58235faf27e6745b771a1ae1e8c52b95be2e7a125a559cd387d",
       "currentFreeBytes": 8803291136,
@@ -41773,17 +41773,59 @@
     },
     "boot31Inspect07Binding20261109": {
       "at": "2026-11-09T03:21:09+08:00",
-      "status": "LOCAL_READY_ORIGINAL_QB_EXACT_DELTA_REVIEW_IN_PROGRESS",
+      "status": "ACTUAL_BOOT31_AND_OBSERVER_PASS_WAIT_FINITE_OPERATION_START",
       "owner": "Original T45 only; original QB incremental review; C original finite input only",
       "READY_SHA256": "248ea51febe137e92b038d82a43a80089659e5f3c0e3b061a9085a84b5260239",
       "READY_bytes": 25499,
       "carrierSHA256": "531c17dc7415dc4e9583e85bec2c4d950418011c70f83ce0ec75d459aba12025",
       "planSHA256": "89420f88cca305152b890e6241c00f6a85890162a706ae120dfa81536df81573",
       "truePredecessor": "Actual BOOT29 b1a72946/e7e0; BOOT30 never reached PG/role maintenance",
-      "windowIssued": false,
-      "serverOrPGExecuted": false,
+      "windowIssued": true,
+      "serverOrPGExecuted": true,
       "originalCommit": "UNKNOWN_NO_WRITER_REPLAY",
-      "next": "OriginalQB only literal/source-time/pin/input delta; C exact finite raw with reference <=512 and actual checker; T45 boot31+observer then bind actual restart before inspect07."
+      "next": "OriginalT45 publish09 only after1794166153966; C derives exact access+OPS from actual45metadata, originalkey read-only inspect07 then restore09+owned31.",
+      "QBReceiptSHA256": "b7ffc69241fc7b9cd98020927cf077ef0692f14d8c94d2a5b3825f0692f9b05a",
+      "QBReceiptBytes": 5653,
+      "findings": 0,
+      "controllerDecisionSHA256": "c38eb0a81a7df5a8903107b3150d59bcec8cb17f9cfe67f400e1bb7f8b58719a",
+      "controllerDecisionBytes": 1343,
+      "actualAuthorizationReferenceCharacters": 251,
+      "actualCInputPrefixExitCode": 0,
+      "B": 1794165853966,
+      "bootEnd": 1794166153966,
+      "operationStart": 1794166153966,
+      "operationEnd": 1794166753966,
+      "guardianEnd": 1794167053966,
+      "rolesExpireUTC": "2026-11-08T19:39:13.966Z",
+      "bootResultSHA256": "38ff2faf1e8b9f982afc18d263ca93a07b5ad90fadeb4913ba5f1c2a79c47fd9",
+      "bootExitCode": 0,
+      "bootElapsedSeconds": 2.5238882061094046,
+      "observerSHA256": "9dda24fa34722774dd39440a3959c2e9460937c91a349c20d8d35206cc2afabf",
+      "observerBytes": 3566,
+      "observerExitCode": 0,
+      "restartSHA256": "b9346cde8ca098bb592071ad04663d30033367e6597aeafcfcfd9744b6207275",
+      "serviceSHA256": "7d68bbc7effccb78f3c28afc12cd7e2c3412df8fe58c833dc4cea1229172b118",
+      "actualEpoch": "2026-11-08 19:25:08.992615+00",
+      "ownedProcesses": {
+        "guardian": {
+          "pid": 5130,
+          "starttime": "306420579"
+        },
+        "postgres": {
+          "pid": 5138,
+          "starttime": "306420622"
+        },
+        "sampler": {
+          "pid": 5137,
+          "starttime": "306420612"
+        }
+      },
+      "HBAOriginalRestored": true,
+      "recordParentTemporarilyGranted": "14555460 root:61035 0751; restore required",
+      "parametersOriginalSHA256": "f131ca1427c9984f8d0f14aac0938646a7abaed1c75e7bef7dcf47604c18bb1b",
+      "parametersOriginalBytes": 1643,
+      "inspectionOriginalSHA256": "e23de5179ac46a07e57c87a4b118f7748f8b5dc705ea4ed44ba7a0febc17ad45",
+      "inspectionOriginalBytes": 2060
     }
   }
 }
