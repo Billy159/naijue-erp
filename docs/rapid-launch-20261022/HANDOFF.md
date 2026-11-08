@@ -3566,3 +3566,19 @@ phase消费r2已由原QB b4f4f986实际独立关闭PARSER01/02，同范围有效
 185后继补记：原01因已有旧bind源目录不存在而在任何删除前失败，actual2de31906…/704、items=[]；失败原件保留，不重放。准确02只对已有路径核inode并记录原已不存在源，固定185容器不变，C a5318d8c核定后已实际RUNNING。app-files0f341437/44869f6a、images b9eaf7f6/b32b4760已备，等待当前实际终态顺序执行，尚不称清理完成。
 
 185后继02已实际COMPLETED0/113.746582秒，C实读0937327e…/53282：185/185删除且原ID不存在，42个原已缺失bind源如实记，现存来源/79保护容器/R4原授权/基础服务保持，旧service仍disabled且18080closed。实盘5625450496→5647081472，净21630976字节。累计本次190个旧应用容器实际退役；未将容器删除当主机代码清完。C已准确eeacf132核定158应用路径+4旧route，原T45顺序执行；67旧应用镜像后继已核待实际终态再绑定，无新PG/导入窗口。
+
+## 2026-11-09T00:31:33+08:00 - Actual old-system retirement; residual targeted closure
+
+Controller read files cd981c18/59579 COMPLETED0/13.946648s:127 paths removed,31 code-only removals retained media,0 skipped,4 old routes removed; protected paths/containers unchanged; actual free delta1454100480B. Empty no-mounts proof d292e234/1183 COMPLETED0/6.684854s removed and absent,delta98304B. Total191 exact old application containers actually removed.
+
+67-image actual d90e4dce/20616 and job eb784f01 read:COMPLETED0/47.539452s,67/67 removed and absent,0 skips/no force or prune,79 kept containers and7 protected images unchanged,0SQL/PG/volume/host-file changes. Free7099318272 to7598669824,delta499351552B. Original full-writer floor8207515646 still short608845822B. This is cleanup, not import or deployment success.
+
+T45 continues only17 known old nginx web/gateway copies and6 residual roots, no broad re-inventory. Preserve unique real data/media/backups/receipts,current R4/15af/original400e key and required infrastructure. Old public apps/autostart retired; original COMMIT remains UNKNOWN,no BOOT28/import window. GitHub checkpoint ee75f3816e59eb3a3cb4ca85122e71ffd845832d push and ls-remote verified.
+
+## 2026-11-09T00:55:41+08:00 - Old application retirement closed; original-key inspection is next
+
+C read final T45 RESULT ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba (7641 bytes) and all12 fixed actual receipt hashes. This scoped batch actually removed209 old containers and69 old images,158 old application targets (127 whole,31 code-only preserving media),4 old route files,5 old application archives,1 obsolete nginx config,5 old R16 image caches and2 old npm-cache roots. The final R16 holder22bc7931 and Node-image266ec6f8 are COMPLETED0 with exact IDs absent. Old formal autostart disabled and port18080 closed; new formal application has not been deployed.
+
+Actual successful-job free deltas sum3174998016 bytes, distinct from whole-disk net/background changes. Latest actual free8789594112 bytes exceeds unchanged full-writer floor8207515646 by582078466. Current real DB/data/originals/media/backups/original receipts, R4/15af/f56/real-r3, needed recovery config/credential references and operations remain. Old R16 source/image-context with data/media markers remain as mixed necessary source, not counted as whole-root deletion. No global prune,forced removal,volume deletion,SQL,newPG/BOOT or import occurred. Original185-01 failure before mutation and remaining-files40be partial cache retention remain unchanged; exact cache successor bc48110f proves later removal.
+
+Cleanup is closed without another broad inventory. Original T45 resumes only unfinished offline BOOT28/inspect04 five-consumer binding to actual15af root and accepted parser-r2; original QB reviews only that delta. New runtime scope will bind a fresh finite window under standing authorization after complete evidence; old windows are not reused. Original400e/request-key COMMIT remains UNKNOWN, so no writer replay; authoritativeCOMMITTED goes to D3 independent reconciliation. Space readiness is not import,business,backup-restore or deployment acceptance. GitHub previous verified checkpoint ee75f3816e59eb3a3cb4ca85122e71ffd845832d; this record is the next checkpoint.
