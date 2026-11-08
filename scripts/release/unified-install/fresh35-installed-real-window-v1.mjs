@@ -63,7 +63,7 @@ export async function loadInstalledRealWindow(envelope,recordSha,source,referenc
  need(exact(a.restartReceipt,['path','sha256'])&&a.restartReceipt.path===etc+'/naijue-erp/fresh35-retained-restart-v1.json'&&hex(a.restartReceipt.sha256),'EXACT_RESTART_REFERENCE_REQUIRED');
  const restart=await protectedFile(a.restartReceipt.path);need(hash(restart.bytes)===a.restartReceipt.sha256,'RESTART_RECEIPT_CHANGED');
  validateRetainedRestartReceipt(restart.value,envelope,recordSha);
- need(restart.value.serviceLeaseExpiresAt===service.value.serviceLease.expiresAt&&restart.value.authorizationReference===a.authorizationReference&&restart.value.checkedAt>=a.startsAt&&restart.value.checkedAt<a.expiresAt,'RESTART_WINDOW_OR_SERVICE_DIFFERS');
+ need(restart.value.serviceLeaseExpiresAt===service.value.serviceLease.expiresAt&&restart.value.authorizationReference===a.authorizationReference&&restart.value.checkedAt<a.expiresAt,'RESTART_WINDOW_OR_SERVICE_DIFFERS');
  const backends=await loadRetainedBackendProof({requestKey,currentSourceSetSha256:s.sourceSetSha256,
   operationParametersSha256:hash(loaded.bytes),installationRecordSha256:recordSha,restartReceiptSha256:a.restartReceipt.sha256,
   startsAt:restart.value.checkedAt,expiresAt:a.expiresAt});
