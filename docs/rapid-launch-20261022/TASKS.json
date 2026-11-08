@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T19:58:56+08:00",
+  "updatedAt": "2026-11-08T20:13:38+08:00",
   "stage": "R4_ORIGINAL_KEY_RECOVERY_CONFIG_FAILURE_CLEANED_OUTCOME_UNKNOWN",
-  "lastVerifiedRemoteCommit": "ed0295d8399fd09e1816c9ba7c3722ade3f560fe",
+  "lastVerifiedRemoteCommit": "20f273c13379cf1985e56fd9d64a43042ce9c899",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T19:58:56+08:00",
+    "at": "2026-11-08T20:13:38+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28514,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Original config helper minimal host-alias rename repair after exact different-bind-mount diagnosis; original failed recovery01 retained. Local targeted models then QB increment; no PG.",
+      "T45": "T45 freeze CFG-DIAG-01-only successor plus BOOT24/publish02/restore02 exact literals; original QB incremental recheck, then C fresh finite window. No old key replay, no writer/import.",
       "D1": "f56 minimal loader source pushed and independently accepted; idle until concrete source defect, no duplicate audit.",
-      "QB": "Await frozen T45 host-alias/config failure attribution increment; original f56/loader/control scopes already accepted, no repeat fullsuite.",
+      "QB": "49f856 host alias/recovery 10 scoped PASS adopted; only CFG-DIAG-01 counterexample and necessary BOOT24 literals await frozen successor.",
       "D2": "f56 tool frozen/Linux complete; no rebuild until exact changed source.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; actual acceptance not passed; no filler tasks."
@@ -39843,7 +39843,7 @@
         "retainedIndexInspection": {
           "at": "2026-11-08T19:49:30+08:00",
           "owner": "D1(source),T45(server),QB(review),D2(package)",
-          "state": "CONFIG_CROSS_BIND_MOUNT_DEFECT_IDENTIFIED_T45_MINIMAL_REPAIR_IN_PROGRESS",
+          "state": "HOST_RENAME_ACTUAL_SYNTHETIC_PASS_DIAGNOSTIC_ONLY_QA_FIX_IN_PROGRESS",
           "sourceCommit": "97c8f36fde576e563e9c0e65351561c5a1ce732b",
           "parent": "318618330c513905d3c748a4406d73d1b5cf9403",
           "base": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "T45 minimal existing helper host fixed-alias CAS/rename and actual deepest-mount validation, keeping container consumer observation. No new authority directory/read layer, no BOOT before frozen repair and QB increment.",
+          "next": "T45 freeze CFG-DIAG-01-only successor plus BOOT24/publish02/restore02 exact literals; original QB incremental recheck, then C fresh finite window. No old key replay, no writer/import.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40212,7 +40212,33 @@
             "original1afUnchanged": true,
             "originalErrno": "NOT_CAPTURED",
             "confirmedImplementationDefect": "Container bind aliases cross mount boundary for required rename; checking st_dev alone was insufficient. Do not claim original EXDEV errno was observed.",
-            "next": "T45 minimal existing helper host fixed-alias CAS/rename and actual deepest-mount validation, keeping container consumer observation. No new authority directory/read layer, no BOOT before frozen repair and QB increment."
+            "next": "T45 minimal existing helper host fixed-alias CAS/rename and actual deepest-mount validation, keeping container consumer observation. No new authority directory/read layer, no BOOT before frozen repair and QB increment.",
+            "hostRepairReady": {
+              "sha256": "9a7882411a551f3ce9c1b096f4872d77e2d07a0e8638df0872f4eab8e864f164",
+              "bytes": 5501,
+              "QA": "49f856e041355a2465c2660903fcfa6d0122c7f84b0f9c9c180f4abc3a8c497f",
+              "hostAliasAndRecoveryModels": "PASS_SCOPED_10",
+              "overall": "NEED_FIX_DIAGNOSTIC_ONLY",
+              "openFinding": "CFG-DIAG-01 mkdir failure misattributed to previous lstat/PARAM; T45 fixes only diagnostic then QB counterexample recheck.",
+              "proposedNewRecovery": "ROOT/state/inspection-window-restore-20261108-02",
+              "oldRecovery01Preserved": true
+            },
+            "actualHostSyntheticRename": {
+              "jobKey": "t45-r4-host-config-rename-scratch-20261108-01",
+              "jobSHA256": "64885b73948b5f4de82cc97ac291f4da8b131966d901e882608fdba9ff9836a1",
+              "actualSHA256": "9b67b1024afa1c77671074a68a14ce090c2d8320f77ced349f5980f21ff52327",
+              "actualBytes": 998,
+              "state": "COMPLETED_0_HOST_SYNTHETIC_RENAME_INODE_RESTORE_AND_CLEANUP_PASSED",
+              "elapsedSeconds": 0.36789936292916536,
+              "hostAuthorityAndStateMountId": "31",
+              "originalSyntheticInode": 14564919,
+              "mtimePreserved": true,
+              "ctimeArtificiallyRestored": false,
+              "scratchCleanupComplete": true,
+              "PGConnections": 0,
+              "originalConfigChanged": false,
+              "historicalEXDEVMeasured": false
+            }
           }
         }
       }

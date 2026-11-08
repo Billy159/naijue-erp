@@ -3421,3 +3421,10 @@ BOOT23原键实际COMPLETED0/2.624802秒，PG4250/guardian4242/sampler4249，新
 原新metadata01 FAILED1原因是诊断自身嵌入regex转义错误，local复现后保留，不能混称原publish根因。修正后独立metadata02原键COMPLETED0/.317808秒，job a8532d95/524与actual90bcef3c/5975已C实读，0PG/0配置正文/0服务器文件变化。原1af inode和全部metadata未动，original-bytes/before-metadata/新params/新inspection/new-files均存在且hash匹配C原字节，old/retained/published叶缺席，首次rename未完成。
 
 准确mountinfo显示PARAM的/etc别名mount2775，恢复目录的/var/lib别名mount2780；同dev66304/ext4并不等于同mount。原helper只核st_dev，确有跨bind-mount rename接线缺陷；历史原OSError未保留errno，不能写成已实测EXDEV。T45只修现有root manager的host固定别名文件操作，保留容器消费者关闭观察、FD/CAS、真实同mount验证和原inode恢复，不新建控制层/挂载或authority子目录，不动旧失败recovery01。必要阶段/errno/syscall/白名单路径错误归因同步补齐，冻结新增量后交原QB，不重复有效11/15+8范围。原业务仍UNKNOWN、不重导或BOOT猜原因。主控ed0295d8399fd09e1816c9ba7c3722ade3f560fe已推GitHub并ls-remote逐字核实；本段为后续未发布进度。
+
+
+## 2026-11-08 20:14 — 宿主机rename实证通过，独立验收只余诊断归因修订
+
+C采用QB49f856e0/2769：host固定别名、真实mountID、容器消费者观察、CAS/恢复及10项受影响模型有效通过；唯一CFG-DIAG-01/P2为mkdir EACCES误用旧lstat/PARAM归因。原T45仅补准确调用及未知归因清空，QB只复此反例与必要后继literal，不重10项或f56/旧15+8。
+
+已核准准确37B双合成inode路径的独立scratch，原键COMPLETED0/.367899秒，job64885b73/522与actual9b67b102/998已C实读：host authority/state均真实mount31，四次rename/恢复保留synthetic inode14564919及mtime、ctime自然改变，精确叶/目录全部清理。0PG/原配置或authority nlink变化；这是真实host机制验证，不是业务或原publish历史errno证明。原BOOT24/publish02/restore02尚在准备，旧窗不续、原业务UNKNOWN。主控20f273c13379cf1985e56fd9d64a43042ce9c899已推GitHub并核远端；本段后续检查点另记。
