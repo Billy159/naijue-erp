@@ -3171,3 +3171,10 @@ C精确15字段STOP16决定b3bb0aa3/1274、5min已派原T45，唯一stopkey12:44
 C核非时间READY591deeea全部42refs/12必要delta，Python仅常量、4criticalhelpers原字节；成功PREPARED15/stop真实证据保留，roleclient只旧expiry CAS三处。C6aa4363e/1405签5min启动、guardian90min/role晚30秒前截止/ref333。原BOOT17唯一key12:57:11实际COMPLETED0/4.129s，joba011e8dd/548、actual356c616a/1034，observer2afc5c59/3973（job7541b269/521）已C实读。新PG3378/start301212544、guardian3371/start301212497 live，epoch04:57:08.477902UTC，SID/OID/PGDATA/installation不变；HBA720原inode/metadata真恢复，client/restorer已回收，两既有role05:11:05.346→06:25:31.428UTC且attributes/grants/create不变。passwordChanged被collect遮盖不冒actual布尔，独立认证仍未验。当前free8269660160超过原floor，未发业务EXECUTE。
 
 参数12READYb75568cb四refs已核，publisher四None按C/实际restart/start/ref重构完全176aebeb/11321，entry仅transitiveSHA完全62ec97d9/4499。restart实际1638B/e21通过原2非秘密缺项重建canonical全hash验证，方法保留。C准确参数ebc0116a/1725原字节已派，start1794113761428/expires1794119131428/authorizationExpires1794119161428与role/guardian实值一致；待唯一params12回新inode/accesshash，随后C原45分钟EXECUTE。无独立PREPARE、无新源码QA或构建。真实导入、独立核账、普通历史业务、恢复和正式部署仍未通过。
+
+
+## 2026-11-08T13:11:07.733526+08:00 原EXECUTE01首次唯一受理，45分钟不扩窗
+
+params12实际COMPLETED0/.872s，job7e6e645e/614、actual0d5e356c/602已C实读，ebc0116a/1725实际CAS，新inode14563255/root:61035/0640；old45af及installation留存、0DB写。access135597c9/34667已C全递归比对仅changes33.before bytes1742→1725、inode14563093→14563255，其他44及所有字段相同。最终READY7f945f55/5953的7file+2actualpins采用，fixed REAL template只actual params/access、原6批准/volumes/source/target/program不改、registrationnull。
+
+C-REAL-EXECUTE01-DECISION.json准确ea016ef5/4597仅填时间1794114521857→1794117221857=45min，截止13:53:41.857BJT，早于实际role14:25:31.428/guardian14:26:01.428。T45临提交复核双registry/jobdir absent，13:09:28原key t45-r4-real-execute-20261107-01已一次accepted QUEUED，unit3f13ad3ef5ac、manifest07359069；outer3000s仅清理余量，不延业务时间。无新独立PREPARE，native15 plan8a9/steps3553/count45278/init400e保留，EXECUTE自带原完整预检重建。只原键collect，unknown不换键重导；0业务COMMIT/回滚/核账/上线结论，均待实际结果。原失败保留。C断点aab12bf04c5590528cfbec0685468ecf0008c50e已推并远端核。
