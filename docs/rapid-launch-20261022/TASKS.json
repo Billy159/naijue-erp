@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T01:13:50+08:00",
+  "updatedAt": "2026-11-09T01:21:58+08:00",
   "stage": "191_OLD_APP_CONTAINERS_158_PATHS_4_ROUTES_67_IMAGES_ACTUALLY_RETIRED_REMAINING_TARGETED_CLOSURE",
-  "lastVerifiedRemoteCommit": "306dcb29f6a62e99b470e2ae84d46bbcfd209fef",
+  "lastVerifiedRemoteCommit": "9eb2fb1e476838c74e0faeabec4978b1a90f741e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Read actual inspect04 result and phases, then restore06 and owned28; no expiry extension or writer replay. COMMITTED goes to D3 independent reconciliation; failure direct phase goes original D1.",
+      "T45": "Original T45 offline exact successor timing arrangement: retain five-minute boot, ten-minute operation and twenty-minute guardian ceilings; verify existing sources allow a separate later600s parameter window and bounded role expiry inside guardian. No business/hash code change or new runtime until same-scope binding review. No blind retry, writer replay or COMMIT inference.",
       "QB": "BOOT28 binding-only PASS06d24c09 adopted; no duplicate technical review.",
-      "D1": "15af source QA and Linux loading accepted; wait actual first phase/direct failure for exact repair.",
+      "D1": "15af source and observational phases valid; no speculative V2/hash rewrite based only on window expiration. Await exact successor result/direct source defect.",
       "D2": "15af frozen operation ready/loaded; no duplicate packaging.",
       "D3": "Original400e COMMIT remains UNKNOWN; independent reconciliation only after authoritative COMMITTED, no reimport/reclean.",
       "QF": "Wait actual real35 normal application and authentication; no filler QA."
@@ -33307,13 +33307,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T01:13:50+08:00",
-      "phase": "BOOT28_AND_PUBLISH06_ACTUAL_COMPLETED_INSPECT04_SUBMITTED",
+      "at": "2026-11-09T01:21:58+08:00",
+      "phase": "INSPECT04_EXPIRED_ACTUAL33_PHASES_ALL_RESTORED_OFFLINE_TIMING_CORRECTION",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 actual original-key read-only inspection",
+      "currentOwner": "Original T45 exact timing successor preparation only",
       "nextOwner": "Original QB binding-only review then C finite scope and original T45 execution",
-      "latestActualReceiptSHA256": "a8883857c94a7497e8256747c1ce426597713d995847ddb29136365413033516",
+      "latestActualReceiptSHA256": "701b1ad61b4a481b6541f01f0d4eeba87d90fd55dca114a1b0daba231a4cae65",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Read actual inspect04 result and phases, then restore06 and owned28; no expiry extension or writer replay. COMMITTED goes to D3 independent reconciliation; failure direct phase goes original D1.",
+      "next": "Original T45 offline exact successor timing arrangement: retain five-minute boot, ten-minute operation and twenty-minute guardian ceilings; verify existing sources allow a separate later600s parameter window and bounded role expiry inside guardian. No business/hash code change or new runtime until same-scope binding review. No blind retry, writer replay or COMMIT inference.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -33490,7 +33490,7 @@
       "currentR4ProcessState": "BOOT24_PG4333_GUARDIAN4325_SAMPLER4332_ABSENT_PORT_AND_POSTMASTER_ABSENT",
       "realImportOutcome": "UNKNOWN_NOT_COMMIT_OR_ROLLBACK_PROOF",
       "latestCleanupResultSHA256": "ad872f9e5b39312e027d3523d085d215e72d2c8127f67188d3decd51faae14ba",
-      "currentFreeBytes": 8789594112,
+      "currentFreeBytes": 8569237504,
       "fullWriterFloorSatisfiedByLatestObservation": true,
       "businessCommitState": "UNKNOWN_ORIGINAL_KEY_NOT_REPLAYED",
       "spaceDoesNotProveImportOrDeployment": true,
@@ -41371,7 +41371,7 @@
       }
     },
     "r4Boot28Inspect04Actual20261109": {
-      "at": "2026-11-09T01:13:50+08:00",
+      "at": "2026-11-09T01:21:58+08:00",
       "owner": "Original T45 only, gpt-6.1-sol/high explicitly sent; live model/Fast not independently observable",
       "sourceBindingQB": "06d24c09f5be22c46bbc2b17e3ab60eed7ea6499c7950d4484a51d135bb62f71",
       "readySHA256": "01c5bf30d2e373f54df7e225b2bd7c9ac2609458d29df03a5fabec1b3d591ed8",
@@ -41416,13 +41416,62 @@
       "opsOriginalC": "ac88c9bbdfbda1ed780538379214ac440e9abb6a63463a0732069a13e8fe30c6",
       "inspect04": {
         "key": "t45-r4-real-inspect-20261108-04",
-        "state": "SUBMITTED_ACTUAL_RESULT_PENDING",
+        "state": "FAILED_WINDOW_EXPIRED_OUTCOME_UNKNOWN",
         "remainingSecondsAtSubmission": 237.045,
         "mode": "INSPECT_ONLY_ORIGINAL_KEY",
         "initializerSHA256": "400e19446d10a42d6d602feedef38cc52b4e3b34f4cf3609dcf61df07572ce4d",
-        "commitState": "UNKNOWN_NOT_A_PASS"
+        "commitState": "UNKNOWN_NO_WRITER_REPLAY",
+        "exitCode": 2,
+        "elapsedSeconds": 237.585693,
+        "actualSHA256": "701b1ad61b4a481b6541f01f0d4eeba87d90fd55dca114a1b0daba231a4cae65",
+        "actualBytes": 7279,
+        "guardReason": "REAL_ORIGINAL_WINDOW_EXPIRED",
+        "nodeExitCode": -15,
+        "safePhases": 33,
+        "invalidPhaseLines": 0,
+        "lastPhase": "FACT_HASH_V2_BEGIN",
+        "lastPhaseElapsedMs": 219448.235,
+        "factHashV1CompleteMs": 205953.414,
+        "masterGraphCompleteMs": 129619.238,
+        "indexVerifyCompleteMs": 64136.281,
+        "maximumObservedNodeRssBytes": 1843654656,
+        "minimumFreeBytes": 8561897472,
+        "sampleCount": 2275,
+        "maximumSampleGapSeconds": 0.14266036171466112,
+        "initializer400eAndInspectorSQL": "NOT_REACHED_OR_NOT_PROVEN",
+        "cleanupNotTransactionProof": true
       },
-      "next": "Read actual inspect04 result and phases, then restore06 and owned28; no expiry extension or writer replay. COMMITTED goes to D3 independent reconciliation; failure direct phase goes original D1."
+      "next": "Original T45 offline exact successor timing arrangement: retain five-minute boot, ten-minute operation and twenty-minute guardian ceilings; verify existing sources allow a separate later600s parameter window and bounded role expiry inside guardian. No business/hash code change or new runtime until same-scope binding review. No blind retry, writer replay or COMMIT inference.",
+      "restore06Actual": {
+        "sha256": "3b1facb864cb46d4b321ec5335c15035bdddfc7854f43177ae395aaade7b0c8f",
+        "bytes": 1115,
+        "exitCode": 0,
+        "elapsedSeconds": 0.668296,
+        "originalParamsRestored": true,
+        "oldAuthorityRenewed": false,
+        "naturalCtime": 1794158221517299471
+      },
+      "owned28CleanupActual": {
+        "sha256": "51fc27670b42a21d1efae21bc4ee811dd143b179da1f9e53172b9777aa0379ce",
+        "bytes": 5678,
+        "exitCode": 0,
+        "elapsedSeconds": 0.518582,
+        "guardian4841Postgres4849Sampler4848": "ABSENT",
+        "port18654AndPidFileAbsent": true,
+        "all45MetadataAndOriginalHbaRestored": true,
+        "privateProjectionsAbsent": true,
+        "parentRootRoot0711NoAcl": true,
+        "original0dc1afa7dUnchanged": true,
+        "rawFalseFlagPreserved": true,
+        "independentPostRecoveryOriginalFilesConfirmed": true,
+        "freeBytes": 8569237504
+      },
+      "finalActualResult": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-boot28-inspect04-combined-preparation-01/RESULT.json",
+        "sha256": "108db0b0af88f5175b6ff170d5dcfbabdeb92f07f47e7bbcee3276205053e7d4",
+        "bytes": 13451,
+        "readByController": true
+      }
     }
   }
 }
