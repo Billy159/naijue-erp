@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T21:38:29+08:00",
-  "stage": "THREE_OLD_WEB_LEAVES_ACTUALLY_RETIRED_PROBE_QA_PASSED_BOOT26_ASSEMBLY_PENDING",
-  "lastVerifiedRemoteCommit": "e6b93c6686bcbef42fd36a621c045cdb04767068",
+  "updatedAt": "2026-11-08T21:52:04+08:00",
+  "stage": "BOOT26_ACTUALLY_STARTED_14_OLD_NODE_APPS_STOPPED_ORIGINAL_COMMIT_UNKNOWN",
+  "lastVerifiedRemoteCommit": "ef0386c6cea417b0de6fc5de81b2b7af92ba7b13",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28514,11 +28514,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Actual 3 web cleanup closed; BOOT26 fixed READY96bfe60f pending original QB; no PG/window. Continue exact larger old app recovery binding/retirement without touching DB/shared R4.",
-      "QB": "Actual active turn01a1bb5f only BOOT26 exact proof/02 restore identity/literal pins increment; wait specific receipt, do not duplicate",
+      "T45": "Only actual BOOT26 observer then publish04/inspect02; no concurrent stopping/deleting",
+      "QB": "a2e8 on96bfe adopted PASS source/local increment only; no repeat",
       "D1": "f56 source valid; no duplicate ops task",
       "D2": "f56 Linux material valid; no rebuild/retransfer",
-      "D3": "Original EXECUTE02 state remains UNKNOWN; wait authoritative committed result",
+      "D3": "Original EXECUTE02 UNKNOWN; wait original-key PG result",
       "QF": "Wait normal real35 app/auth readiness"
     },
     "actualExecution": {
@@ -40490,11 +40490,11 @@
             "next": "BOOT26 exact assembly reuses original ctime recovery fix and current actual f4/637f predecessor; C new window only after actual space and source closure"
           },
           "boot26Candidate": {
-            "at": "2026-11-08T21:38:29+08:00",
+            "at": "2026-11-08T21:52:04+08:00",
             "READYPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-boot26-inspect02-preparation-01/READY.json",
             "READY": "96bfe60fcadfb0333ce1259bd8a6bc31257012a8e01f44e335db67f43c71c0f2",
             "READYBytes": 8944,
-            "state": "SOURCE_LITERAL_PREPARED_ORIGINAL_QB_INCREMENTAL_REVIEW_LIVE_C_UNISSUED",
+            "state": "QB_INCREMENT_PASS_BOOT26_ACTUAL_START_COMPLETE_OBSERVER_PENDING",
             "QBActiveTurn": "01a1bb5f-a700-7861-96e9-2e41a9161027",
             "keys": {
               "boot": "t45-r4-retained-restart-20261108-26",
@@ -40515,9 +40515,20 @@
               "ce8003f3",
               "fffce4a5"
             ],
-            "CWindowIssued": false,
-            "serverSubmitted": false,
-            "NodePGSQL": "NOT_EXECUTED"
+            "CWindowIssued": true,
+            "serverSubmitted": true,
+            "NodePGSQL": "PG_STARTED_NODE_BUSINESS_SQL_NOT_EXECUTED",
+            "QBResultSHA256": "a2e8a79b1b93132229aa6a8b862e843fb8071e12c9d13468a76c226b9dfacdd2",
+            "QBResultBytes": 3736,
+            "CDecisionSHA256": "3a7dddb057ff12e6b733626125a0fa626803449ca056bf6dd9177d4775d70ecd",
+            "CDecisionBytes": 1349,
+            "startsAt": 1794145725983,
+            "bootExpiresAt": 1794146025983,
+            "operationExpiresAt": 1794146325983,
+            "guardianExpiresAt": 1794146925983,
+            "actualJobSHA256": "71f7ace05f1502d1736bafa0698a4eeeea9de389bff52dfc04aff4fbbec30af2",
+            "actualBootSHA256": "67f273b119f598d2e8c4e0c21e7a30f053296f7b29a6aaeafbc2c77349e8b43b",
+            "actualRestartSHA256": "fe3d23462730ba652b8967ee3aa0ca1a3f0971ab035294fbfbff64f1124d7874"
           }
         }
       }
@@ -40721,6 +40732,24 @@
         "SQLConnections": 0,
         "signalsSent": 0,
         "protectedR4AndAuthorityUnchanged": true
+      },
+      "fourteenOldNodeStopActual": {
+        "key": "t45-stop-fourteen-retired-node-app-services-20261108-01",
+        "jobSHA256": "a704460b07cb003b707962a426e3a8d2bfff6c5a82ea4834e3ae07171084d3e8",
+        "actualSHA256": "1ea8162dcae763d97c3a8ba2f3004151c4cc65df9f34862731e7fd33b9e20119",
+        "actualBytes": 7208,
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 48.25892914412543,
+        "stoppedCount": 14,
+        "allAfterRunning": false,
+        "codeImageConfigurationRetained": true,
+        "databaseStopCommands": 0,
+        "SQL": 0,
+        "R4AndAuthorityUnchanged": true,
+        "freeBytesAfter": 5387841536,
+        "readonlyMarginBytes": 19132416,
+        "fullWriterGapBytes": 2819674110
       }
     }
   }

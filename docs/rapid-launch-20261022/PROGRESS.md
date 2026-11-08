@@ -3183,3 +3183,10 @@ T45已核原two-old-web02、old38archive/payload、history/r48均已清，不重
 原T45 READY96bfe60f/8944已实际核哈希，原QB真实活动回合01a1bb5f正在审准确原f4false与637f恢复证明配对、inspect02恢复metadata来源及新literal pins。当前C窗口未发行、无新PG/Node/SQL。复用ce800探测和fffce恢复源验，不重跑7+8或原4+7；本次4新本地模型仅作为实现自检，不称独立验收。
 
 下一步先取原QB准确同READY结论，再由C绑定新BOOT26原字节并交T45实际启动；该原文必须原样进入inspect bundle的retained-restart-decision.json，经实际rootrestart authorizationSHA核实。新params、inspection及45计划分别依本轮实际启动/发布绑定；旧1af/0dc不续期，原EXECUTE02 initializer保持。当前readonly空间满足上次测值，不代表未来实际启动；完整writer仍差2.819GB，旧应用退役继续但不阻挡安全只读分支。
+
+
+## 2026-11-08T21:52:04+08:00 - BOOT26 actual start and14 retired Node apps stopped
+
+Exact old app stop COMPLETED0/48.258929s, actual1ea8162d/7208;14 Running=false/PID0, code/config/image retained,0DB stop/SQL/volume removal, R4 protected. Free5,387,841,536; readonly margin19,132,416; fullwriter gap2,819,674,110. No code deletion claimed.
+
+Original QB a2e8/3736 accepted96bfe source/local increment. C issued3a7ddd/1349 under existing standing authority. Actual BOOT26 COMPLETED0/2.723923s, job71f7ace0, boot67f273b1; restartfe3d2346, PG4563 epoch13:49:54.221858UTC. Operation ends21:58:45.983BJT, guardian22:08:45.983. Next actual observer then C params/inspection/publish04/new45/uniqueinspect02. Original EXECUTE02 commit remains UNKNOWN;0dc not renewed; no concurrent cleanup.
