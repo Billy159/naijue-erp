@@ -28514,11 +28514,11 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Actual50d3 load/policy restore complete and C receipts read. Preparing sole newBOOT30/inspect06 localcontext; no PG/window yet.",
-      "QB": "Material1025 and actualowner Linux evidence adopted; next only newBOOT30/06 context delta, no prior source/matrix reruns.",
+      "T45": "Singleprobe actual cleanup completed. Separate r2 fixes only exact historical05 restored-source omission, no actualR4window.",
+      "QB": "aa3f singleP1 adopted; awaiting originalT45 fixedr2 for finding-only recheck, other31context checks retained.",
       "D1": "Fixed50d3 source and combined QB accepted; available only for exact new runtime cause, no speculative changes.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
-      "D3": "Existing retained-environment local relation review only, no server/SQL/data traversal; original-key COMMITTED arrival immediately takes reconciliation priority.",
+      "D3": "Historical61 classification b896 delivered; one real probe retirement adopted, return originalCOMMITTED reconciliation wait, no repeated classification/reclean.",
       "QF": "Wait actual real35 normal application and authentication; no filler QA."
     },
     "actualExecution": {
@@ -33307,12 +33307,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T02:53:26+08:00",
-      "phase": "FIXED_50D3_TOOL_ACTUAL_LINUX_PASS_RETAINED_INSPECTION_CONTEXT_PREPARATION",
+      "at": "2026-11-09T03:06:23+08:00",
+      "phase": "BOOT30_SOURCE_BINDING_SINGLE_FAILURE_FIX_R2_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original T45 localBOOT30/inspect06 six-flow exact successor preparation",
-      "nextOwner": "Original QB only new context/source-time/key/predecessor binding delta; original C finite operation window after readiness",
+      "currentOwner": "Original T45 exact restored05 provenance fix in separate r2; exact single-probe cleanup complete",
+      "nextOwner": "Original QB only B30-RESTORED05-SOURCE-01 and affected hash closure",
       "latestActualReceiptSHA256": "eb09472478fddc2b69db5422a9e77cb1565c818ebfc33af0b6e1e3a37385874d",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Prepare existing reviewed six-flow successor before issuing B30 window; exact30/06 keys, latest stopped predecessor and source-time guards across actual helpers, no expired authority reuse. Then scoped QB delta and C finite window, soleT45 actual original-key readonly inspection. No writer replay or new package.",
+      "next": "Adopt fixedr2 finding-specific QA before finiteBOOT30 window; retain original247ca. Actual50d3 Linuxload passed. Unknown400e COMMIT no replay. Cleanup210/69 complete for proven objects;remaining60 data/shared/unknown preserved.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36218,7 +36218,48 @@
         "serverOperationsAuthorizedByThisLocalTask": false,
         "originalDataMediaBackupAndReceiptsProtected": true,
         "newTeams": 0,
-        "next": "Exact ID+evidence categories for current dependency, real recovery, proved ended synthetic/probe container, unknown. No volume deletion, no broad new inventory; actualCOMMITTED reconciliation has priority."
+        "next": "Exact ID+evidence categories for current dependency, real recovery, proved ended synthetic/probe container, unknown. No volume deletion, no broad new inventory; actualCOMMITTED reconciliation has priority.",
+        "status": "LOCAL61CLASSIFICATION_COMPLETE_ONE_PROBE_RETIRED_REMAINING60_PRESERVED",
+        "D3ReceiptSHA256": "b896f3442f19e6fa08f7535466becf74f9aa319cb982628e04352b84d32fe7d0",
+        "D3ReceiptBytes": 81133,
+        "historical270MinusActual209": 61,
+        "classifications": {
+          "sharedNewSystemValidationPendingExactLeafProof": 27,
+          "currentRealProductionContext": 4,
+          "completedSyntheticWithUnexcludedSharedDependency": 1,
+          "unknownOrUnproven": 6,
+          "oldRealDataOrBackupRecovery": 20,
+          "unknownVolumeHolders": 2,
+          "exactEndedSyntheticProbe": 1
+        },
+        "remainingAfterProbeRetirement": 60,
+        "currentDependencyNotAutomaticallyClaimed": true
+      },
+      "xmin205ProbeRetirement20261109": {
+        "controllerScopeSHA256": "6672408973c6e3500433ba2f3528dba3113f3f95b6ff7c006ee280e24c4e5a81",
+        "requestKey": "t45-retire-exact-xmin205-probe-20261109-01",
+        "containerId": "4ef68faedf28b431cd884fedc5a40435f20b2bc16ea6475e59424426a54a8251",
+        "purposeProof": "Original205 system-column/ACL synthetic probe, businessRows0/no mounts/no ports/networknone;207terminal and ACL restored; actual nootheractiveorqueuedconsumer",
+        "finalResultSHA256": "f64bd52e8139291b1c9b31ae1c9491814d08b33014da6758b11fdeb72d28e074",
+        "finalResultBytes": 2874,
+        "actualReceiptSHA256": "5b65c34ea0af8043bfe24b7e92d7f16fb4a3ec5b7f39964b6d81cba95388fd60",
+        "actualReceiptBytes": 1198,
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 4.828550243750215,
+        "finishedAtUTC": "2026-11-08T19:02:27.329332Z",
+        "absentReadback": true,
+        "other60ContainerIdentitiesAndProcessesUnchanged": true,
+        "originalAuthorityAndFilesUnchanged": true,
+        "SQLOrNewPGOrBOOT": false,
+        "volumeOrImageOrHostFileDeletion": false,
+        "freeBytesBefore": 8794386432,
+        "freeBytesAfter": 8794558464,
+        "actualFreedBytes": 172032,
+        "cumulativeProvenContainersRemoved": 210,
+        "imagesRemovedCountUnchanged": 69,
+        "successfulBatchMeasuredFreeDeltaSumIncludingPrior": 3414831104,
+        "oldAggregatePreserved": true
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -41681,6 +41722,26 @@
       "actualPGOrSQLOrREAL": false,
       "oldInstallationProofUnchanged": true,
       "policyRestored": true
+    },
+    "boot30Inspect06Binding20261109": {
+      "originalREADY_SHA256": "247ca436602971bd6a60259ca8d23301408c2858eb4874f1c9b09a80d9514fab",
+      "originalREADY_bytes": 25044,
+      "status": "ORIGINAL_QB_NEED_FIX_SINGLE_RESTORED05_SOURCE_P1_NO_WINDOW",
+      "QBReceiptSHA256": "aa3f0b7cf814aec84c59207bde5dcf30692eef4b9acd94a74e619d8bd6de74ac",
+      "QBReceiptBytes": 8234,
+      "finding": "B30-RESTORED05-SOURCE-01",
+      "firstRejectedGuard": "REAL_ACCESS_CONSUMER_SOURCE_CHANGED",
+      "scope": "Exact real_access_observation restored-only historical05 consumer b311 omitted after current06 pin updated to1a36; verify_previous_stop must consume actual05/restored/45entries. No server execution.",
+      "fixOwner": "Original T45 only",
+      "next": "Only exact b311 historical source in restored-only chain; active/before reject, new06 active passes, all identity/state/hash guards preserved. Freeze separate r2 and originalQB only affected chain+SHA closure. Keep original247ca/failure evidence.",
+      "currentSourceMaterialAndTimeEvidenceReused": [
+        "43906277",
+        "cdc5d605",
+        "1025a71e",
+        "eb094724"
+      ],
+      "windowIssued": false,
+      "actualPGOrSQL": false
     }
   }
 }
