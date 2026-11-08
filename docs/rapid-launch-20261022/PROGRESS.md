@@ -2763,3 +2763,12 @@ D2唯一d250小包1eb98ed3/1148589、sourceSetf648efa6/216-180，manifest8252b0a
 T45按C95059043/2346完成14单index完整归档：jobd8cb/514、actual74ddcba4/2493，0/61.093s。archive25b6dd07/341722832B、alloc341729280/root0400/inode14562655；源index375bcfdc完整digest匹配summary，解压每字节与uid/gid/mode/mtime核对，原件尚留、0SQLite/PG/信号，summary/旧档案/authority不变。余5246201856B，假设后续释放index仍差393949182B加新工具/实时FS，不能称启动空间达标。14准确退役READY准备中。
 
 原四旧APP只读job9c071cf4/506实际0/9.385s，a89a3c25/20012：总alloc408018944，但各1process引用/4Docker挂载、限定offline未核原恢复包、依赖cache未知，因此四叶全部保留0删。未逐CID取running，不把mount冒称running。继续从已有清单选最小冷应用/重复构建，不盲扫、不停任意容器或动资料备份。真实导入/独立核账/普通历史/新35恢复/正式入口切换均未完成。C断点baef12eec91e6683df9f3b861906c1bdd34cea07已推并核远端。
+
+
+## 2026-11-08T10:52:16.141581+08:00 14工作索引准确退役完成，d250落地材料已核，启动尚差空间
+
+C核退役29dc READY六refs与actual11最小delta85b3，按原singleindex有效守卫签fdb76c03/2913。唯一key t45-r4-retire-prepare14-index-20261108-01 job7398d944/540实际COMPLETED0/1.422s，actual7361b177/1550、intentcd146b6e/1196，C核原小回执。仅index14562640移除并absence读回，archive25b6/summary/全部日志/旧06-13/authority保留；0SQLite/PG/信号/APP删除/容器停止。实际free5245513728→7812882432，释放2567368704B，距原startup8207515646仍差394633214B，另需tinytool实际占用，不标达标。
+
+T45 d250 paired传输非时间READY24e8f665/12811，C核26refs及五helpers常量差异/AST结构，原save/install/stage/materialize/restore算法保持；archiveBytes为准确整数1148589。原cd2e过期policy须精确恢复，旧2b6/安装8694/APP576/history856均留，未签C13、未上传或加载。只有实际空间满足后签准确≤30min落地，不重复物料/源码验收。
+
+已有四叶因真实引用和恢复缺口全部保留。C授权一次有界只读：仅原pin6a14清单筛出的58formal代码叶、20QAserver代码叶与准确cb8af重复包/d180保留对照包，本地先固化路径，再核实际分配/现引用/恢复pin/完整双包SHA；非全盘发现，不读DB/真实正文/凭据，不停容器、不删文件。收实际回执后只选最小足额可恢复冷资产，原10fc已删不重查。源码QB通过不代表Linux/native或业务；完整导入/核账/历史业务/备份恢复/正式入口尚未完成。C远端断点4f2618129db6671dabdc2ab359a6d9485b9b90c8已核。

@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T10:40:22.038474+08:00",
+    "at": "2026-11-08T10:52:16.141581+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28404,7 +28404,7 @@
       "latestSourceIntegration": "5e28855e1455a639514524f868528c20f1782c76",
       "latestBuildRoot": "9c2748dd128a5e5264d32ff9e89555b099ab2abc",
       "sourceAndBuildRemoteVerifiedAt": "2026-11-06T09:00:21+08:00",
-      "lastControllerCheckpoint": "baef12eec91e6683df9f3b861906c1bdd34cea07",
+      "lastControllerCheckpoint": "4f2618129db6671dabdc2ab359a6d9485b9b90c8",
       "lastControllerCheckpointRemoteVerified": true
     },
     "cleanInstall": {
@@ -28514,7 +28514,7 @@
       "D1": "Fixedd250 source/QB44bbe pass, wait only actual next first error. No expanded tests/refactor.",
       "QB": "d25012 independent PASS, parent expectedRED, original25 reused; adopted. Next only actual new affected delta, no whole suite.",
       "D2": "Fixedd250 tiny closure localPASS; QB44bbe adopted as external evidence, frozen4272 RESULT unchanged. APP576/history856 reused.",
-      "T45": "14index completearchive actual74dd passed, original retained. Exactindex retirement and d250 paired-load ready preparation; four oldAPPs all retained due refs/recovery gaps. Next minimum eligible capacity from existing list.",
+      "T45": "14 index actualretired7361, fullarchive/report protection intact. Startup still394633214B short plus tool; one finite pinned coldcode+duplicatearchive read authorized, no arbitrary stop/delete. d25026refs ready, C13 unissued untilcapacity.",
       "D3": "Frozen independent real expectations retained; new-connection reconciliation only after actual committed import.",
       "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
@@ -33304,13 +33304,13 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-08T10:40:22.038474+08:00",
-      "phase": "R4_D250_QB_PASS_TINY_TOOL_READY_EXACT_INDEX_RETIREMENT_AND_MINIMUM_CAPACITY_PENDING",
+      "at": "2026-11-08T10:52:16.141581+08:00",
+      "phase": "R4_D250_READY_STARTUP_SPACE_SHORT394633214_PLUS_TOOL_COLD_ASSET_READONLY",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "D1 source seam; T45 sole server executor",
       "nextOwner": "QB targeted delta then D2 tiny tool; C exact scoped T45 continuation",
-      "latestActualReceiptSHA256": "04c432f3dedeb7d6b94cef4993182174c8c2129431e465c413a6bc415d2300a3",
+      "latestActualReceiptSHA256": "7361b1776926e8c2e049fb001621587d25aa240b847439b4c50c1911ec5b5918",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
       "installationRecordPublished": true,
@@ -33319,7 +33319,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 exact14index retirement after signed scope, minimum eligible cold asset cleanup, d250 paired Linuxload/restore, new bounded PREPARE. No old14 replay or EXECUTE before native PREPARED.",
+      "next": "One finite cold asset/duplicatearchive actual read -> exact minimum verified cleanup -> d250 paired Linuxload/restore -> freshBOOT/parameters/newPREPARE.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -38643,15 +38643,69 @@
       "sourceAllocatedBytes": 2567364608,
       "sourceFullSHA256": "375bcfdca7fea00f20cfd473ea3920c63e3930e79a7d85a77b3bef7f24261b87",
       "fullDecompressedByteAndMetadataCompared": true,
-      "originalDeleted": false,
+      "originalDeleted": true,
       "originalReportsPriorArchivesAuthoritiesPreserved": true,
       "SQLiteOpened": false,
       "PGConnections": 0,
-      "freeAfter": 5246201856,
-      "retirement": "PREPARATION_ONLY_NOT_EXECUTED",
+      "freeAfter": 7812882432,
+      "retirement": "ACTUAL_EXACT_SINGLE_INDEX_RETIRED_READBACK_CONFIRMED",
       "startupFloor": 8207515646,
       "deficitAfterHypotheticalIndexRetirement": 393949182,
-      "actualSQLiteOrPGRestore": "NOT_CLAIMED"
+      "actualSQLiteOrPGRestore": "NOT_CLAIMED",
+      "retirementCDecisionSHA256": "fdb76c03a074375328fb817de4ff2505fa60ff7376446db509c91843ec6554ec",
+      "retirementCDecisionBytes": 2913,
+      "retirementReadySHA256": "29dc1f6f987fd04a492c5d34da376c05a9cfeed10ec51fe07a71793cc7ee56fd",
+      "retirementReviewedRefs": 6,
+      "retirementSourceSHA256": "3fceb72e1fb3559b5c1d91d2918b039e4864123d9d8a486684ac3da025c79129",
+      "retirementActualSHA256": "7361b1776926e8c2e049fb001621587d25aa240b847439b4c50c1911ec5b5918",
+      "retirementActualBytes": 1550,
+      "retirementJobSHA256": "7398d944ddc6680dd632744dc04bb41403b88dd48fc6716bd0be9fce9fc7c8fe",
+      "retirementJobBytes": 540,
+      "retirementActual": {
+        "jobId": "t45-r4-retire-prepare14-index-20261108-01",
+        "status": "EXACT_ARCHIVED_PREPARE14_SINGLE_INDEX_RETIRED_READBACK_CONFIRMED",
+        "filesDeleted": 1,
+        "items": [
+          {
+            "path": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/reports/t45-r4-real-prepare-20261107-14/runtime/stream/index.sqlite",
+            "absentReadback": true
+          }
+        ],
+        "PGConnections": 0,
+        "SQLStatements": 0,
+        "SQLiteOpened": false,
+        "signalsSent": 0,
+        "permissionsChanged": false,
+        "originalJobReplayed": false,
+        "newBOOTOrPREPAREOrEXECUTE": false,
+        "occupancy": {
+          "counts": {
+            "processes": 208,
+            "fileDescriptors": 2058,
+            "maps": 207
+          },
+          "hits": [],
+          "unknown": []
+        },
+        "freeBefore": 5245513728,
+        "protectedPrivateArchivesAnd11EvidenceUnchanged": true,
+        "protectedAuthorityUnchanged": true,
+        "freeAfter": 7812882432,
+        "device": 66304,
+        "archivePath": "/srv/naijue-erp/isolated-targets/fresh35-deb13-20261105-r1/phaseb-application-production-20261107-r3/state/real-r3/retained-partials/t45-r4-prepare14-archive-preserve-20261108-01/prepare14-index-only.tar.gz",
+        "archiveSha256": "25b6dd07e4de3fb8cb930c0f1daabcb4bfb57b31768abe724fcd3568e0aaea8b",
+        "archivePreserved": true,
+        "archivedOriginalBytesRestorable": true,
+        "actualSameDeviceFreeDelta": 2567368704,
+        "startupMinimumBytes": 8207515646,
+        "startupFloorMarginBytes": -394633214,
+        "startupFloorSatisfied": false,
+        "finishedAtEpochMs": 1794105823070,
+        "elapsedSeconds": 1.3695401661098003
+      },
+      "retirementLocalRESULTSHA256": "af0d43654aa117293aa307d68ecc0d56922aa67a117d59a701f72e48d593015d",
+      "startupFloorSatisfied": false,
+      "remainingDeficitBeforeTinyTool": 394633214
     },
     "r4FourOldAppCandidates20261108": {
       "owner": "T45",
@@ -38690,6 +38744,31 @@
       "eligibleCount": 0,
       "freeBytes": 5246021632,
       "next": "Retain all4; choose minimum cold app/redundant build candidates from existing evidence. No blind pool probes or arbitrary stop/cache/data cleanup."
+    },
+    "r4D250PairedTransportPreparation20261108": {
+      "status": "LOCAL_NON_TIME_READY_C_REVIEWED_26REFS_NO_ACTUAL_UPLOAD",
+      "owner": "T45",
+      "readySHA256": "24e8f6655a22964c0f13809ecaf55638949c3e770a3e051694e4800de0623b59",
+      "readyBytes": 12811,
+      "CVerifiedRefs": 26,
+      "fiveHelpers": "AST structure identical, exact changed literal list reviewed; source/archive/layout/manifest paths, sizes and pins only. Original paired policy save/install/stage/materialize/restore flow reused.",
+      "QB": "44bbe960 scoped PASS adopted",
+      "oldPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+      "plannedSourceSet": "f648efa6191f800abe64b8402e5ddbeb2dbd80c7587f0855ad147a23b7a7b529",
+      "C13": "UNISSUED_WAIT_ACTUAL_STARTUP_SPACE",
+      "actualLinux": "NOT_RUN",
+      "startupMinimumBytes": 8207515646,
+      "futureToolAllocation": "Actual unknown; archive1148589+4KiBfiles5992448=7141037 estimated only, budget8MiB.",
+      "noAPPBuildPGOrRealReads": true
+    },
+    "r4AdditionalColdAssetReadonlyScope20261108": {
+      "status": "C_AUTHORIZED_ONE_BOUNDED_READONLY_TARGET_PREPARATION",
+      "owner": "T45",
+      "sourceInventorySHA256": "6a14b6171138cb7a060fb2113eb5369c347eb8a3ab63a452030a7efd5fed0b8d",
+      "scope": "Only exact local frozen list58formalcode leaves+20QAservercode leaves from existing pinnedinventory, plus exact rootcb8af duplicatearchive/UID1000d180 retainedsameversion archive. Save paths before read.",
+      "purpose": "Actual allocation/currentrefs/retained recoverypins/complete duplicatearchive SHA; choose minimum eligible exact final cleanup set",
+      "forbidden": "No global discovery, PGDATA/realbusiness/approvalbody/credentials read, DB write, container stop or deletion. Prior4referencedAPPs and alreadydeleted10fc excluded.",
+      "actualResult": "PENDING_NOT_DELETE_READY"
     }
   }
 }
