@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T14:59:48.739567+08:00",
+    "at": "2026-11-08T15:43:11.172961+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28511,10 +28511,10 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "D1": "Existing readonly seam adopted, one outer production_facts epoch correction advice and memory assembly diagnosis",
-      "QB": "Narrow publication PASS kept; next only actual affected evidence",
+      "D1": "Exact-canonical private synchronous hash fix after2 bounded counterexamples; typecheck pending",
+      "QB": "BOOT19/READONLY_STATUS purpose budget+cleanup+one outer epoch delta only; no whole-suite rerun",
       "D2": "Actual idle fixed d250/APP576/history856 deliveries kept, no duplicate build.",
-      "T45": "Original-key READONLY_STATUS BOOT19/space purpose evidence and one outer epoch pin; no writer",
+      "T45": "BOOT19 readonly-purpose source df148802 ready; QB affected review; no server start/status yet",
       "D3": "Wait proven actual COMMIT; no rescan or real-record re-cleaning",
       "QF": "Normal host/login/core business prerequisites unavailable; no filler synthetic UI queue."
     },
@@ -39473,6 +39473,51 @@
       "fullImportStartupDeficitBytes": 2763350014,
       "readonlyRecoveryHandoffSHA256": "f52a813a103db183913e2a30aebb0666ac32bd5e4aa960429794b45d0eb6b747",
       "readonlyRecoveryStatus": "Existing13field ordinary status; needs sameR4 BOOT19/current outer production_facts pin; preserve old1af3/0dc; positive only COMMITTED_RECEIPT_FOUND, all other UNKNOWN not ABSENT."
+    },
+    "r4OriginalKeyReadOnlyRecovery20261108": {
+      "at": "2026-11-08T15:34:48.770018+08:00",
+      "owner": "T45 same retained target, QB affected source only, C timed inputs",
+      "state": "BOOT19_READONLY_PURPOSE_DELTA_READY_QB_PENDING_NOT_EXECUTED",
+      "technicalScopeSHA256": "ee18eac80656e25d80093184cfc7d85ae6da205b0ee50d072d9133b32e530208",
+      "readySHA256": "df14880287daf5310fceeebcc90f0022c06acf511da36af932602b32e5430153",
+      "readyBytes": 18280,
+      "carrierSHA256": "8c1b2de55529c9b3b9348c6875e036b20f5bc483083ba5bcf08c9b8400335afb",
+      "bootSourceSHA256": "f0ade3f9100b4badcecf2ce7c4514a84ba08f3af82dad3aef8d6a27c4f7dd07f",
+      "planSHA256": "061fc7f6cfe89e26dc4ca0067a8444bcb3542171290b5e49b66541d20f9b0df2",
+      "readonlyStartMinimumBytes": 5368709120,
+      "retainedFloorBytes": 4294967296,
+      "readonlyGrowthBudgetBytes": 1073741824,
+      "budgetNotMeasuredPeak": true,
+      "originalFullImportFloorUnchanged": 8207515646,
+      "maxBOOTMs": 300000,
+      "maxGuardianMs": 1200000,
+      "maxStatusMs": 300000,
+      "statusChildSeconds": 45,
+      "originalParametersAndBatchMustRemain": true,
+      "businessOutcome": "UNKNOWN",
+      "next": "QB exact delta result -> C timed BOOT19 -> actual same target epoch/roles/HBA/resource -> C13field status -> original-key positive proof or UNKNOWN, then owned cleanup"
+    },
+    "r4MemoryCopyFix20261108": {
+      "owner": "Original D1 backend source only, original QB independent increment",
+      "state": "FIXED_SOURCE_4E3B_PUSHED_AFFECTED_QB_PENDING_LOCAL_MATERIAL_PREPARATION",
+      "originalCommit": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
+      "sourceScope": "kernel initializer publicRequest/requestHash + host guard repeated full initialize parse/hash; no full45278-step array found. Shared request-hash/canonical unchanged.",
+      "syntheticWireBytes": 57647676,
+      "maxRepresentativeRuns": 2,
+      "firstRun": "Kernel+sameguard completed; maxRSS837424KiB; heapUsed584022280 exceeded requested512MiB due oldspace vs totalheap; later invalid fixture summary stopped run, not full PASS.",
+      "secondRun": "V8 heap_size_limit482344960B and sampled process group707903488B; exact same guard whole-value canonical hash hit FATAL heap limit; no PG/host/server or third large profile.",
+      "incompatibleHelperNotAdopted": "Existing streamTypedHash rejects sparse/getter/deep>64 or changes DomainError behavior, so direct substitution WIP not committed.",
+      "controllerAllowedMinimum": "Same backend private synchronous token hash with exact original canonical and DomainError semantics only at three initializer sites; no shared encoder/wire/permission/role/key/transaction change.",
+      "reportedSmallChecks": "25/25,0skip; targeted strict TypeScript and two MJS syntax PASS; independent QB still pending",
+      "largePayloadAfterFixMemoryBenefit": "UNMEASURED",
+      "actualR4OOMPhaseAndCommit": "UNKNOWN",
+      "next": "QB BOOT19 first then4e3b increment; D2 fixed local material concurrently; no T45 staging before original-key outcome and QA",
+      "commit": "4e3b99466b4084eccd8c90dc863e76e497d8c988",
+      "tree": "9a6712d8fa638faa43f6a8b09acbe11e3fd46ce7",
+      "branch": "codex/erp-d1-record-context-20261108",
+      "handoffSHA256": "3f3d1eeccc55b17c15c584e79ce9b52d316a2ff317ee024c66cc63298d0e66fb",
+      "remoteReadback": "Exact 4e3b remote verified by C before continuation",
+      "packagingOwner": "Existing D2 gpt-6.1-sol/medium, independent fixed local tool material only; no source edits/server/PG"
     }
   }
 }

@@ -3239,3 +3239,19 @@ T45临提交核双registry/jobdir无原key后，唯一t45-r4-real-execute-202611
 采用D1现成恢复接缝f52a813a/b403ae2f：READONLY_STATUS只用原13字段/八业务键及普通角色RR READ ONLY，不重25分钟全包编译；完整强证据才COMMITTED_RECEIPT_FOUND，其他UNKNOWN，不能ABSENT。保留固定旧1af3/0dc，新BOOT/观察窗不当writer授权。T45指出外层production_facts仍固定18 owned-process，需唯一该只读候选常量18→19，保留实际进程身份检查；原D1只补此链意见，T45唯一carrier writer。原CONTROL/results终态199044已被两个服务器reader实际hash核，不重复读。
 
 当前free5444165632低于原完整导入startupfloor8207515646；不据此再导入或降原writer保护。T45先核一次只读BOOT目的所需实际空间/原公式，若确有目的适配仅交最窄差异；否则只按既有授权评估可重建index的精确保全与剩余缺口，不盲删或广扫。D1并行定位首次跨过授权后的内存实化位置，不盲扩容/改超时。独立核账、普通历史业务、新35恢复和正式切换均未通过。
+
+
+## 2026-11-08 15:34 — 原键只读恢复与内存修复并行，不重导
+
+原T45交BOOT19准确只读候选READYdf148802/18280，carrier8c1b2de5/bootf0ade3f9/plan061fc7f6。原QB已受托只核受影响增量，C不重复技术验收：新目的预算ee18eac8为明确5GiB启动（保留4GiB+有限1GiB余量，非实测峰值），原完整导入8.207GB不动；只读启动及45秒状态查询不重建index，不发新params，原1af3/0dc保持，外层livePG pin唯一18→19。真实BOOT19/status尚未执行，时间模板仍null；实际仍UNKNOWN。
+
+D1完成两次57,647,676B合成反例：首run kernel/guard完成但heap因旧生代与总堆差异超512MiB，后因摘要夹具缺项拒绝，不全runPASS；第二run V8总堆460MiB/进程组约675MiB，在原guard整值canonical哈希出现heap-limit FATAL。没有实库/host/真实资料/第三次大profile。原helper稀疏数组、getter、深度和错误语义与requestHash不同，未直接替换；C明确允许同backend私有同步分块算法保持原canonical/DomainError，仅3处initializer调用，共享encoder不变。作者报小值25/25，类型检查与固定交付待回，原QB后续只验该真实增量。修后大载荷内存收益未测，现场OOM阶段和事务结果未证，不能称实际OOM已修复。
+
+继续唯一下一步：QB候选通过后C签有限BOOT19及原13字段只读观察，T45实际读取原业务键；D1代码修复独立推进。没有业务重导、库清空、真实记录删改或正式切换。
+
+
+## 2026-11-08 15:44 — 内存修复固定源码交付，原键恢复优先
+
+采用原D1固定4e3b99466b4084eccd8c90dc863e76e497d8c988，parent d250/tree9a6712d8，原分支codex/erp-d1-record-context-20261108；C已核远端准确提交。仅3个runtime及2个小型测试文件，原共享encoder、wire、权限、事务和业务键保持。作者25/25无skip、定向严格TS及2MJS语法通过；原QB先收BOOT19再验此增量。修后大载荷内存收益、实际Linux加载及R4事务结果均未验证，不能标现场OOM已修复。原D2空闲已复用，仅准备固定本地工具物料，不改源码、不重应用构建、不操作服务器。
+
+BOOT19仍由原QB收受影响结论；C随后签限时只读启动/观察，T45唯一执行。未查明原EXECUTE02结果，不重导、不发布、不把旧安装根8694换成工具根。全部旧物料、失败记录和原batch/params保留。
