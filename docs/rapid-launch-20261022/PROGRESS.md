@@ -2752,3 +2752,14 @@ T45沿原终态必要读取summary/progress/context与首个技术错误，原�
 同一summary只读原键COMPLETED0/22.856s，job b216/514、technical04c432f3/7869，C核hash。64MiB/80s流式框架到EOF，未解码或输出12个未选根值正文；fullSHA40a3ffa0/57725546B/inode14562645。实际state STREAM_PREFLIGHT_COMPLETE，complete_package_validation/checks_passed均true、issue0，26目标合608916；scope STANDARD_PACKAGE_OFFLINE_V1、import_eligible=false、businesswrites=false。index375bcfdc/2567147520B仅从summary取，不冒充独立重哈希。records285023.532ms、relations903992.176ms、indexhash46697.586ms、total1293558.278ms；summarypeakRSS860393472B不代表整个CLI峰值。只采用离线整包预检通过，未得CLI plan/nativebinding/PREPARED，更无实际导入。
 
 hall根编码值57647676B、settlement73200B、staff802B。D1在途核合法64MiB证明与stream-program统一8MiB INITIALIZE限额冲突，先小合成反例再最小修复；原真实首异常丢失，尚不把推测写成首错定论。普通请求护栏、证明全文/哈希、权限事务不放宽。T45准备14单一index完整归档和最小旧停用可重建APP补空间；journal/wal/shm实际不存在，不能套旧pair模板。保留summary、cost/context、全部旧失败、资料和备份，不开SQLite或重扫真实行。实际余5597532160B，下一轮启动空间仍未达标。D2复用APP576/history856，仅待确切新工具；QB只验新增量。整包导入、独立核账、普通历史业务、新35恢复、正式切换仍未完成。上个C断点12508861aa6cdf2b443f4985c218788487d6192d已推且核远端。
+
+
+## 2026-11-08T10:40:22.038474+08:00 d250初始化证明修复独立通过，小工具闭包就绪；14归档已实证、四旧APP保留
+
+D1固定d2500203db68c17210b1f640d9b45d90f14ccbe1/parent2b6/tree797ffc，原分支已推远端核实。仅INITIALIZE四闭合且与activeplan逐字匹配的完整utf8+SHA证明退出普通8MiB计量，普通主体/额外字段/后续step仍8MiB，原reader4/4/64/1MiB不变，完整wire/请求键/hash保留；CLI仅补静态STREAM_REQUEST_TOO_LARGE。原QB44bbe960/3784独立12PASS/0skip、父版本同反例RED；旧25检查复用，不凑成49新场景。C采用不重复QA。HANDOFF补remote_push后b96c/4120，旧e4c/3915实际早读保留，源码未变。只证明确定阻断已修，不声称恢复14丢失首异常或native PREPARED。
+
+D2唯一d250小包1eb98ed3/1148589、sourceSetf648efa6/216-180，manifest8252b0a4、descriptor9d681c9c、layout89b14f79，冻结RESULT42723e1e/10078；本机loader/CLI/361归档成员完整核对通过，原QB作为独立旁证不回填RESULT。只有两运行叶改变，APP576/history856/原14PG依赖复用，无全APP重建或真实资料读取；实际Linux/完整native仍待T45。
+
+T45按C95059043/2346完成14单index完整归档：jobd8cb/514、actual74ddcba4/2493，0/61.093s。archive25b6dd07/341722832B、alloc341729280/root0400/inode14562655；源index375bcfdc完整digest匹配summary，解压每字节与uid/gid/mode/mtime核对，原件尚留、0SQLite/PG/信号，summary/旧档案/authority不变。余5246201856B，假设后续释放index仍差393949182B加新工具/实时FS，不能称启动空间达标。14准确退役READY准备中。
+
+原四旧APP只读job9c071cf4/506实际0/9.385s，a89a3c25/20012：总alloc408018944，但各1process引用/4Docker挂载、限定offline未核原恢复包、依赖cache未知，因此四叶全部保留0删。未逐CID取running，不把mount冒称running。继续从已有清单选最小冷应用/重复构建，不盲扫、不停任意容器或动资料备份。真实导入/独立核账/普通历史/新35恢复/正式入口切换均未完成。C断点baef12eec91e6683df9f3b861906c1bdd34cea07已推并核远端。
