@@ -3151,3 +3151,9 @@ publish03实际COMPLETED0/1.220400秒，回执6d0f0932；新params inode14564977
 ## 2026-11-08T21:02:37+08:00 — 本轮三个进程已实停，配置恢复仍未闭合
 
 原T45 ownedstop实际COMPLETED0/0.969185秒，job5e0e341f、回执ee714d6d：guardian4416、PG4424、sampler4423均ABSENT，端口已无、数据保留、父目录恢复。原回执originalBatchAndParametersPreserved=false准确保留，指配置恢复待办，不把stop内部cleanupComplete当全部恢复通过。hostrestore03实际失败回执431d17cd保留；当前没有运行中的PG/窗口，下一步仅本次访问恢复账本与配置自然ctime接缝的最小源码修复和原入口恢复。原提交状态UNKNOWN，不声明回滚或重导。
+
+## 2026-11-08T21:11:25+08:00 — BOOT25原配置实际恢复并最终核对通过，原提交状态仍未知
+
+采用QBfffce4a5对唯一7f2a1511恢复修订的4+7窄验。原T45 recover01实际COMPLETED0/0.668766秒，jobf777b506、回执51f74ef5：原1af入口inode14563415/1783字节/mtime原值恢复，ctime自然1794143213895453012，不伪造时间、不续旧批准、0PG。最终纯读job b292b36e、回执637f6244/5633确认45元数据、0dc及安装记录、HBA、父目录0711/无ACL、两秘密投影/inspection入口清理、三个进程及端口全部消失。原f4中恢复未完的false原样保留，以后继postRecoveryOriginalFilesConfirmed=true单列，不改旧回执。
+
+本轮调用未进入Node/400e/业务SQL，原EXECUTE02仍UNKNOWN。原T45继续修固定BOOT22探测，使用既有准确restart/进程事实；下一实际检查必须唯一inspect02，原键状态核实不换initializer。QB仅验受影响接缝，不重复source/Linux。现free5,382,393,856字节，距完整writer底线尚差2,825,121,790字节。已按用户最新旧线上可退役授权接续原清理任务，由T45核占用/引用/可重建、列准确路径后直接处理合格旧应用及重复包；当前未声称新删除已执行，R4、原键现场、真实数据、备份及现用回退保留。
