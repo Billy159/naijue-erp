@@ -3709,3 +3709,13 @@ C实际核publish09 5152e142/1473及原job：在operationStart后发布；C采�
 restore09 329c09d6/1115、owned31 d16f4ec2/5676均COMPLETED0，完整RESULT1de51a2e/14402实际核SHA。45项元数据/1af原参数/a7d安装/0dc旧批准/HBA恢复，父14555460 rootroot0711无ACL；PG5138、guardian5130、sampler5137及18654/postmaster.pid均不存在，inspection及私有投影已移除。原参数自然ctime1794166374093917725保留，未伪造恢复；原rawcleanup false与独立postRecovery true分开记录。既有角色按本次规定时刻到期；临时文件权限与连接规则按清单恢复。最新可用8788635648B。无在途未知作业、无重放。
 
 当前唯一下一步由原D1沿原归属定位RECORD_PIN实际调用/守卫，先复用既有安全字段做源码与本地复现，确需服务器事实只列准确非敏感字段交原T45，原QB只验必要增量。不新增宽范围调查、PG重跑或新团队。原COMMIT仍UNKNOWN，D3独立核账暂不能放行；历史业务、备份恢复及正式切换未完成。清理既有210容器/69镜像采用；剩余60暂无同时已证停用/无引用/可重建的新项目，不为凑清理继续扫或盲删数据卷。
+
+## 2026-11-09 — 4279时间接线单谓词修复已独立验收；后继物料本地冻结
+
+原T45唯一补缺只读key取得090bf268/4662（三原raw a7d/7d68/b934先逐hash），0PG/Node/SQL/权限修改；C/D1实际核SHA。原restart.checkedAt1794165910225确早于原f131 operationStart1794166153966，共243741ms。D1按源顺序的安全投影5e4668b4/1564中，旧时间下限是确定false；投影不能替代完整非rootenvelope/loadedpin/rawtarget/keyset/ref/继承FD或实际首throw证明。
+
+原D1固定提交4279babc3408f6b07ae11ba6a5819271469bb5ef（parent50d3/treea46fa7c6），仅原runtime和原测试两叶；运行叶ae652970/13778只删除restart.checkedAt>=operation.startsAt错误同步要求，其他字节与权限/精确摘要/reference/service/epoch/lease/当前有限窗/rootFD/latechange守卫均保留。原QB c90d35c4/4269实际核SHA并采用，findings0、12定向PASS0skip、父版正例准确RED，不重复30/golden/诊断套件。此为已证后续阻点修复，未宣称实际首throw或现场修好。
+
+原D2唯一final-4279babc-operation物料ba5b254c/14010已固定，currentSourceSet9d0e52c9与旧安装8694/a7d分离；archive5a3d71fd/1152886、manifest9d039747/90473、descriptorf2078586/352466、layout7a0e588d/3008均C实际核字节摘要。361成员中357原字节/模式相同、4变化仅runtime+3metadata，无增删；216current/180captured/104inputs原范围不变。包冻结时QA_PENDING文字按当时事实保留，后到独立c90d旁证采用，不回填包。
+
+C已交原T45只做新4279工具及consumer/pin准确后继本地准备，复用旧传输/31和真实前驱31/d16f4ec2/b934/自然ctime1794166374093917725；暂定32/08及publish10/restore10键仍须去重和固定，不发新窗口或服务器动作。原QB下一次只合核新材料/consumer必要闭包，旧有效结论复用。原数据、400e请求、summary/index和真实包未改，COMMIT仍UNKNOWN，不重洗/换键/writer。旧资产清理范围已准确交T45，暂无新增确证可删项；主线继续解除当前接线阻点。
