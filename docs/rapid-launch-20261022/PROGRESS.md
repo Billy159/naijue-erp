@@ -3106,3 +3106,10 @@ BOOT23原键实际COMPLETED0/2.624802秒，PG4250/guardian4242/sampler4249，新
 原ownedcleanup已COMPLETED0/1.019985秒，job2d87e9fa/551、实际bfeb44d0/5522已C实读：上述三进程、端口和postmaster.pid全缺席；原parent同inode root:root0711、双ACL无，HBA720b/1af/0dc/a7d及45项原metadata保全，两个私有投影缺席。4102采样/minfree5397016576/maxgap.169868秒；最终free5396873216。自然目录时间变化保留，不伪恢复。失败与recovery目录原样保留，不称原事务已提交或回滚。
 
 唯一下一步：原T45读取停库现场的准确必要metadata，定位原helper首个失败syscall/errno；只修该增量并交QB，不再用一次BOOT猜原因、不新增控制层。C主控5e7b934ee4a955a42b801bfcff33fc9c6917e926已远端核实；本段是后续进度，下一检查点另记。真实整包提交/独立对账、历史普通角色、new35备份恢复、正式入口与切换仍未完成；D3/QF只等准确实际前置，其他有效证据保留。
+
+
+## 2026-11-08 19:58 — 停库实证定位配置跨挂载接线，原T45最小修复
+
+原新metadata01 FAILED1原因是诊断自身嵌入regex转义错误，local复现后保留，不能混称原publish根因。修正后独立metadata02原键COMPLETED0/.317808秒，job a8532d95/524与actual90bcef3c/5975已C实读，0PG/0配置正文/0服务器文件变化。原1af inode和全部metadata未动，original-bytes/before-metadata/新params/新inspection/new-files均存在且hash匹配C原字节，old/retained/published叶缺席，首次rename未完成。
+
+准确mountinfo显示PARAM的/etc别名mount2775，恢复目录的/var/lib别名mount2780；同dev66304/ext4并不等于同mount。原helper只核st_dev，确有跨bind-mount rename接线缺陷；历史原OSError未保留errno，不能写成已实测EXDEV。T45只修现有root manager的host固定别名文件操作，保留容器消费者关闭观察、FD/CAS、真实同mount验证和原inode恢复，不新建控制层/挂载或authority子目录，不动旧失败recovery01。必要阶段/errno/syscall/白名单路径错误归因同步补齐，冻结新增量后交原QB，不重复有效11/15+8范围。原业务仍UNKNOWN、不重导或BOOT猜原因。主控ed0295d8399fd09e1816c9ba7c3722ade3f560fe已推GitHub并ls-remote逐字核实；本段为后续未发布进度。

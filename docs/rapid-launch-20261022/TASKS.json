@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-08T19:49:30+08:00",
+  "updatedAt": "2026-11-08T19:58:56+08:00",
   "stage": "R4_ORIGINAL_KEY_RECOVERY_CONFIG_FAILURE_CLEANED_OUTCOME_UNKNOWN",
-  "lastVerifiedRemoteCommit": "5e7b934ee4a955a42b801bfcff33fc9c6917e926",
+  "lastVerifiedRemoteCommit": "ed0295d8399fd09e1816c9ba7c3722ade3f560fe",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -28126,7 +28126,7 @@
     "serverRoute": "T45 existingsoleowner terminal/notLoaded perlive snapshot; no newserverjob sent"
   },
   "integration0448Continuation": {
-    "at": "2026-11-08T19:49:30+08:00",
+    "at": "2026-11-08T19:58:56+08:00",
     "authorityThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
     "inputZipSHA256": "53592186062f5bfd1dc264630b07242ff724a3754c5d6e3bae6e58c6532c5e7f",
@@ -28514,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Diagnose exact config publish OSError from stopped retained scope; finite readonly metadata only; preserve failed key and original1af. Then minimal helper repair/QB increment.",
+      "T45": "Original config helper minimal host-alias rename repair after exact different-bind-mount diagnosis; original failed recovery01 retained. Local targeted models then QB increment; no PG.",
       "D1": "f56 minimal loader source pushed and independently accepted; idle until concrete source defect, no duplicate audit.",
-      "QB": "f56/root/literal effective conclusions adopted; await only new frozen operational diagnostic/repair increment.",
+      "QB": "Await frozen T45 host-alias/config failure attribution increment; original f56/loader/control scopes already accepted, no repeat fullsuite.",
       "D2": "f56 tool frozen/Linux complete; no rebuild until exact changed source.",
       "D3": "Wait proven original COMMIT before independent real reconciliation; no rescan or reclean.",
       "QF": "Normal HTTPS/login/new35 business prerequisites absent; actual acceptance not passed; no filler tasks."
@@ -39843,7 +39843,7 @@
         "retainedIndexInspection": {
           "at": "2026-11-08T19:49:30+08:00",
           "owner": "D1(source),T45(server),QB(review),D2(package)",
-          "state": "F56_SOURCE_AND_LINUX_ACCEPTED_BOOT23_CONFIG_PUBLISH_FAILED_CLEANED_ORIGINAL_OUTCOME_UNKNOWN",
+          "state": "CONFIG_CROSS_BIND_MOUNT_DEFECT_IDENTIFIED_T45_MINIMAL_REPAIR_IN_PROGRESS",
           "sourceCommit": "97c8f36fde576e563e9c0e65351561c5a1ce732b",
           "parent": "318618330c513905d3c748a4406d73d1b5cf9403",
           "base": "004dea849f1f41b407dfbe0fe1eb5f259f04f630",
@@ -39917,7 +39917,7 @@
             "layoutSHA256": "efff34a015104829c394d1fa564f7dc919d9f11436fb88853c826a4f69e26f5c",
             "stage": "Independent Linux97 loader/help passed by T45; actual index/400e/PG/business not yet verified. Original frozen report retained."
           },
-          "next": "T45 exact existing-helper diagnosis: identify first syscall/errno from retained recovery metadata; no old publish replay or new BOOT until repair is proven. QB increment only.",
+          "next": "T45 minimal existing helper host fixed-alias CAS/rename and actual deepest-mount validation, keeping container consumer observation. No new authority directory/read layer, no BOOT before frozen repair and QB increment.",
           "linuxStagingActual": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261108-r4-tool97c8f36f-transfer-preparation-01/c13-bound/RESULT.json",
             "sha256": "7ec5e5494b79bc66847f3877bb581fe807c90824ae0f6e86c3bd7f932426fbf6",
@@ -40189,6 +40189,30 @@
             },
             "businessOutcome": "UNKNOWN",
             "finalResultSHA256": "31a6c9f512d51f7ffc1be45bf8afd1005d2564ceaeef09c92e16b9b214b3caf3"
+          },
+          "publicationDiagnosis": {
+            "at": "2026-11-08T19:58:56+08:00",
+            "owner": "T45",
+            "priorDiagnostic": "metadata01 FAILED1 local embedded regex error, retained, not original publication root cause",
+            "metadata02Job": "t45-r4-config-failure-metadata-readonly-20261108-02",
+            "jobSHA256": "a8532d9566da4f9155beb20a6dcb37802910a0d6d30911336a0eb2f904845abd",
+            "actualSHA256": "90bcef3c3069dfd53336f889ce3ba001e2a2876d904fb5a7f0a817fddfcf0a39",
+            "actualBytes": 5975,
+            "result": "COMPLETED_0_READONLY_METADATA_ONLY",
+            "elapsedSeconds": 0.3178077847696841,
+            "configurationBodyRead": false,
+            "PGConnections": 0,
+            "serverFilesChanged": false,
+            "parameterMountId": "2775",
+            "recoveryMountId": "2780",
+            "sameDevice": true,
+            "sameMount": false,
+            "newStagedFilesAndJournalComplete": true,
+            "firstRenameCompleted": false,
+            "original1afUnchanged": true,
+            "originalErrno": "NOT_CAPTURED",
+            "confirmedImplementationDefect": "Container bind aliases cross mount boundary for required rename; checking st_dev alone was insufficient. Do not claim original EXDEV errno was observed.",
+            "next": "T45 minimal existing helper host fixed-alias CAS/rename and actual deepest-mount validation, keeping container consumer observation. No new authority directory/read layer, no BOOT before frozen repair and QB increment."
           }
         }
       }
