@@ -42374,7 +42374,10 @@
           "actualPrivateInputJobReceiptSHA256": "d0757e475217f09460e7908c5c14d58c29a222f82a5173db5bb11a62ddc4fa5d",
           "actualPrivateInputResultSHA256": "352d78053b41bc43b94fb2a2b9c3794926faae4718dae3373ec55bbe647e4a06",
           "actualPrivateInputCombinedEvidenceSHA256": "9bfd75f1ae80503d771f12256dc8b42f2b2fb9c8b34597101b83728a2338fea1",
-          "actualPrivateInputNext": "Original T45 checks retained raw job and exact partial root via the original bounded read-only manager route. No retry, permission change, threshold change, new PostgreSQL, import or switch until precise closure.",
+          "actualPrivateInputDiagnosis": "t45-first-r1-input-partial-readonly-20261109-01 COMPLETED/0 in 3.224 s, original unit ended and phase log empty. Two existing 0400 leaves fully match 278769097 B, 29 absent (729592350 B), no truncated or wrong leaf, no binding. Same root and staged input. Precise merged guard subcondition remains unknown. Postflight diagnostic unit absent, volume 66304 free 32075407360 B.",
+          "actualPrivateInputDiagnosticEvidenceSHA256": "71183e2439781090cd9b1c7e1a842ba47b2047c932114783bfbd39cfe3e6a116",
+          "actualPrivateInputDiagnosticReceiptSHA256": "6d02ac41b3f93d70cffb2bff3a17636f0447cb9c73100b066b889d01d3cb5c41",
+          "actualPrivateInputNext": "Original T45 develops a fixed missing-29-only continuation, keeps both matched leaves and original receipts, differentiates guard reasons and retains the 250 ms/device/namespace/space/window protections. QB checks only its increment. No actual successor, permission change, threshold change, PostgreSQL, import or switch until precise closure.",
           "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
         },
         "freshTargetVaultMaterialization": "Original install, assemble, restore all COMPLETED/0. Assemble 2.072 s, independent new inode and exact complete SHA; no 45 chunk retransmission. The original root slot was verified restored to cd2e532b/0:0/0444 before tool staging. Raw input materialization still depends on native closure.",
