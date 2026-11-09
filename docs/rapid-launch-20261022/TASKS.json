@@ -42397,6 +42397,16 @@
             "actualCombinedEvidenceSHA256": "6b274d8b2b1548430ddc18e26fc668a0e547816f5e24679aa87e84fb1e37e14d",
             "actualClosure": "COMPLETED/0 in 20.819 s. Original two leaves/inodes preserved, 29 new, 0 overwritten, all 31 and 1008361447 bytes verified, original consumer read back binding. Device 66304 free 31345057792 B. Original unit absent, PID/cgroup empty, original slot and dual READY unchanged. No PG.",
             "firstInstallPreflight": "Host 15276093440 B MemAvailable and ordinary SSH affinity 4. Ordinary Docker network inspect denied, exact front id unknown. C authorized one bounded existing T45 manager read-only check for exact internal bridge naijue-fresh35-first-20261109-r1-front and proposed alias naijue-rewrite-fresh35-first-20261109-r1-app, same-root/empty-target/image and actual root resource checks. No network creation, container start, or PostgreSQL.",
+            "firstInstallFrontActualReadback": {
+              "jobId": "t45-first-r1-front-readonly-20261109-01",
+              "state": "COMPLETED_0_EXACT_FRONT_ABSENT",
+              "resultSHA256": "d29552e069ed5fa8f38ab7b568f406f21f466a693c471b04c0c978b8c1305568",
+              "terminalSHA256": "0dd1b7d9e7a0601c46e8503240af156f94fe848713dcf5651e97e4cb519e5dba",
+              "readbackSHA256": "8dba185a13ae05167e832305421f4922d253efb7ef7c81c91baf53a3040e79d9",
+              "resource": "Fixed R1 root and Linux/amd64 image matched. Target container and port empty, root affinity 4, MemAvailable 14.22 GiB, free 29.19 GiB. Unit absent and no active cgroup at cleanup. No PG or network change.",
+              "creationProposal": "Local only ad3fa4c53f15db25312de02393015c0696e1c0fe329e69d707a4c71642190c0f. QB demonstrated mutation can be launched with 100 ms authorization remaining. T45 fixes only budget coverage for the 15 s create and 8 s readback before mutation, then QB reviews only the delta."
+            },
+            "firstInstallExactCapacityGap": "T45 verified 28 GiB is enforced by native materialization but not production_start itself. No existing 6 GiB automatic stop is proven for first native install. T45 to reuse current exact-target monitoring/stop path and attach only the needed bounds, with QB review. Production entry/install actually needs >90 s from upstream validation, even though its second gate is >60 s. No install, import, or cutover authorization issued.",
             "next": "T45 fixes only the write boundary and first error precedence, then QB reruns those two counterexamples. Exact front network and fresh resource readings remain separate read-only readiness facts. No server write or new PostgreSQL authorized by this review."
           },
           "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
