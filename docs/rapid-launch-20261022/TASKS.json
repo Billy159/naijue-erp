@@ -28514,7 +28514,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Outer05 fixed, exact R4/temporary-auth decision pending, no R4 action issued. Independent synthetic history856e ordinary copy deferred: latest dated estimate leaves 394579966 bytes below unchanged writer admission floor; fresh resource and materials preflight after R4 track permits.",
+      "T45": "Exact outer05 authorized and dispatched to original T45 once; query/cleanup receipts pending. Independent history856e ordinary copy stays deferred until fresh resource preflight.",
       "QB": "Outer05 offline pass, no live R4 proof.",
       "D1": "Dispatched original D1 offline-only exact APP576 backup producer binding. Real stop pin remains pending original COMMIT, reconciliation and the new actual stop.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
@@ -42239,7 +42239,7 @@
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
       "at": "2026-11-09T16:02:05+08:00",
-      "state": "UNKNOWN_NO_REPLAY_ISOLATED_LINUX_PROBE_PASS_REAL_POINT_UNTESTED",
+      "state": "UNKNOWN_NO_REPLAY_OUTER05_ACTUAL_SCOPE_APPROVED_DISPATCHED_TO_T45",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42256,7 +42256,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "Wait for the specific user decision on R4 startup, existing dispatcher lock transfer, conditional loopback HBA and OID10 VALID UNTIL CAS and restoration, one fixed original-key read, and same-epoch shutdown. Then T45 alone may bind the exact finite windows and issue once. No job or authority issued yet.",
+      "next": "Original T45 verifies exact target, unused job key and finite window before one original-key query. Retrieve query and cleanup receipts; no row leaves UNKNOWN.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42303,7 +42303,14 @@
       "outer05ReadySHA256": "af844d66c47f96dd89c12d1e0691c8ba9e8c6b984b90ccbddf0e79918ca41395",
       "outer05ReportSHA256": "306cd263b80c0cce16814b58fb74acc1084416d9ce450ac74392222ff2ff89f8",
       "outer05StagesSHA256": "d8b926dfc57e3eee70c7c2890ae52ceaa86c63eb4cc7a3210eb41c7d4c7ab957",
-      "outer05Review": "QB PASS_TWO_TARGETED_FIXES_OFFLINE_READY_FOR_USER_CONFIRMATION. Six targeted tests, roundtrip identity/ACK failure model, and 25 static references verified. No installed dispatcher FD or actual R4/PostgreSQL/HBA/role operation verified."
+      "outer05Review": "QB PASS_TWO_TARGETED_FIXES_OFFLINE_READY_FOR_USER_CONFIRMATION. Six targeted tests, roundtrip identity/ACK failure model, and 25 static references verified. No installed dispatcher FD or actual R4/PostgreSQL/HBA/role operation verified.",
+      "outer05HumanAuthorization": {
+        "at": "2026-11-09T16:30:17+08:00",
+        "source": "Original main controller user reply to call_308aef713eda404d822817840e9f0529/0",
+        "answer": "确认本次 R4 原键核查和临时认证恢复",
+        "scope": "Same R4 once, existing host identity and actual dispatcher lock transfer, original-key read-only. Conditional exact single-role, loopback HBA and OID 10 expiry CAS only; restore and verify original state. 300 s operation + 90 s cleanup only.",
+        "state": "DELIVERED_TO_ORIGINAL_T45_EXECUTION_AND_CLEANUP_RECEIPTS_PENDING"
+      }
     }
   }
 }
