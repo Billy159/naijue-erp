@@ -4000,3 +4000,5 @@ T45 后继 3cfd13281fdc4b0963f5abe2732a742a0e9fcaa9 与清单 b3d74bbf 独立重
 原 QB 对首装容量 c89321e0 NEED_FIX。29条既有用例通过，但两条实跑反例证实触底时同步写回执会阻塞 TERM 和 PID1 兜底，首次观察到 PGDATA/pg_wal 后同设备 inode 替换或消失未触发停止。原 T45 已接最小修复，QB 仅复验这两项。当前本地检查点未推，GitHub 连通及低速超时，最后确认远端 ef247bcfec904828656d357fdf213a3b41c13b21。未起容器/建库或切换。
 
 2026-11-10 首装容量后继 be7ea5c1981c9158d98daedc64df8b7b2e968dc4 / tree 50dbc7c7623b9d0a36b4edb2629a4cb573f293dc 已由原T45提交且主控重核。carrier 2d9d07fe、tests 065978e5。QB 31定向（9容量）通过，TERM及准确PID1兜底不依赖回执落盘，PGDATA/WAL首次观察后锁定目录身份。现场Linux/Docker/PG未执行。T45 找到旧默认池拒绝、固定网段内桥成功证据，核现行适用性；不能据旧回执归因本次。GitHub DNS可解析，HTTPS及ls-remote均无响应，未重推。
+
+11-10 00:03:15.886 +08 T45 IPAM只读 t45-first-r1-front-ipam-readonly-20261110-01 COMPLETED/0、0.569s，terminal f5c3b316、phase0299366f。实际48网络/46 Docker IPv4子网/148去重路由和接口前缀；同名0，候选10.248.42.208/28零重叠。同机原T15显式 /28 内桥仍匹配；当前默认池耗尽及原失败原因未证。00:03:40 收尾unit/cgroup/PID空。仅让原T45准备同名、独立新键、显式CIDR的一次后继，实际发前重查重叠/空目标/余窗，QB验差异。未写网络、PG或签发。

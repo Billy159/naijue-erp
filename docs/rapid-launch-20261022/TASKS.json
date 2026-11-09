@@ -42413,7 +42413,15 @@
               "creationResultSHA256": "d2d90a60efeefba9f665a7069fe70c016f1acc025d365c63ce021cf419389ff1",
               "creationNext": "23:48:21.873 +08 0.168618 s. Docker gave no usable ID. Exact postcheck at 23:52:50.626 completed/0 in 2.424859 s, zero same-name networks and inspect absent. No matching original Docker/unit logs; reason unproven. Unit/cgroup/PID empty. T45 compares existing successful private bridge evidence and narrowly checks actual network pool/policy facts if needed. No replay, network cleanup, PostgreSQL, or permission change.",
               "creationPostcheckTerminalSHA256": "18c9949e04a52458f525c2ecc5a43a1bb7d0b6a28d9bd4ceff13acbb285a770f",
-              "creationPostcheckPhaseSHA256": "6d393d566a8f9d35370d106b3665bdc6d334a85aeaac5bb124fa940b1910d0c8"
+              "creationPostcheckPhaseSHA256": "6d393d566a8f9d35370d106b3665bdc6d334a85aeaac5bb124fa940b1910d0c8",
+              "explicitSubnetReadback": {
+                "jobId": "t45-first-r1-front-ipam-readonly-20261110-01",
+                "status": "COMPLETED_0_CANDIDATE_OBSERVED_ZERO_OVERLAP_NO_CREATE",
+                "terminalSHA256": "f5c3b31614e365ac19d5b1da6da0614da5be9d6e317e88209077867a6f27cb73",
+                "resultSHA256": "0299366f7c9d3ce6f27b8f07e529cb71c190d2f3a1796f3b67eaa6c3f1403269",
+                "observation": "48 Docker networks, 46 IPv4 subnets, 148 deduplicated route and address prefixes, zero exact R1 front. Candidate 10.248.42.208/28 overlaps none in observed scope. Existing same-host T15 explicit /28 internal bridge matches historical successful evidence. Present default-pool exhaustion and original reject cause remain unproven.",
+                "next": "T45 prepares only one explicit-subnet empty internal bridge successor, with refreshed zero-overlap and empty-target checks immediately before Docker create, and fixed CIDR/empty-endpoint readback. Original QB reviews only the change before any signature. No replay or PG."
+              }
             },
             "firstInstallExactCapacityGap": "T45 verified 28 GiB is enforced by native materialization but not production_start itself. No existing 6 GiB automatic stop is proven for first native install. Local two-file increment under 3cfd1328 has carrier c89321e0a39b2253c5c8eb7806539a4c71f3bfcfa3905d4068fa9dc8a21fc8d1, test 32055e69ef1bef27a164c0a1e673e1efdb55bf3610f073b1cf6c42558e7d0308, 29 targeted plus 16 V2 tests pass, original QB reviewing. Production entry/install actually needs >90 s from upstream validation, even though its second gate is >60 s. No live install, import, or cutover authorization issued.",
             "firstInstallCapacityIndependentReview": "QB NEED_FIX on c89321e0. Two local counterexamples: synchronous stop receipt fsync blocks TERM/owned PID1 fallback; same-device PGDATA or pg_wal inode replacement or disappearance is not rejected after first observation. Original T45 fixes only these two, QB retests the same counterexamples. 28 GiB/6 GiB thresholds retained. No first install approval issued.",
