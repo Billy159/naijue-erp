@@ -42308,11 +42308,22 @@
         }
       },
       "fresh35DirectInstallAfterRetirement20261109": {
-        "status": "ACTIVE_PREPARE_ONE_RETIREMENT_SCOPE_THEN_INSTALL_NEW_TARGET_WITH_NO_SEPARATE_REHEARSAL",
+        "status": "ACTIVE_DUMPS_DELETED_DATABASE_AND_R4_HELD_FRESH_TARGET_ADMISSION_PREPARING",
         "approvedPreviousRestoreRetirementReused": true,
         "newRetirementConfirmationPending": false,
         "newRetirementConfirmedByUser": "2026-11-09 21:03 +08, direct reply to the unique SHA-256-pinned A/B/C retirement checklist",
-        "newRetirementExecutionStatus": "QB passed the three exact dump deletions at source level in R2. A remains held for unproven DDL exclusivity; C remains held for possible R3 access through the shared parent. T45 is fixing one dump-only candidate for the same unused manager key.",
+        "newRetirementExecutionStatus": "Original T45 one-shot job COMPLETED/0 in 1.421 s. Three exact dump leaves independently read back absent. A held for unproven DDL exclusivity, C held for possible R3 access through the shared parent. All containers, infrastructure and 13 protected paths unchanged.",
+        "retirementExecutedJobId": "t45-exact-retirement-20261109-01",
+        "retirementExecutedScriptSHA256": "9ca537bddefe8c475de0e79824bd1492baf36c0cd27343c0169f8b25a6149723",
+        "retirementJobReceiptSHA256": "5b4b498b2b9b0bc9f135676b01fb3c95ac642670d93ab89458da1b7281a3e1ef",
+        "retirementReadbackReceiptSHA256": "b59cd4ce466351bc29e4ca604c04f76699f5e544d8bde276503fa2b95b58f02d",
+        "retirementVolume": {
+          "device": 66304,
+          "freeBeforeBytes": 29450407936,
+          "freeAfterBytes": 32723640320,
+          "actualFreeDeltaBytes": 3273232384,
+          "proposedFreshTargetBudgetBytes": 30064771072
+        },
         "retirementHostOnlyPreflight": "Original T45 host preflight: all three groups matched, original manager queue empty and unique key unused, same-device available 29450711040 B. Actual maintenance session and deletion not executed.",
         "rejectedRetirementScriptSHA256": "f2d17462a6f393eaf2733b979f51604d25de98038436b664ea593929a17c2430",
         "rejectedRetirementReview": "Original QB: T48 state could change after precheck and same-name DROP needs DDL exclusivity; dump inode could change before unlink; R4 traversal could cross a late mount and skipped StartedAt on stopped carrier. Correct only these guards or hold the affected group.",
@@ -42342,7 +42353,7 @@
         "verifiedLocalToolArchiveSHA256": "5a3d71fda74bcd12b5d11997ff3c466898b094cac60b08ae13b6d6b91f4fa021",
         "importBindingGap": "Current 4279 host/tool/carrier pin R4 report root, job-key domain and protected restart identity. Downstream e409ff82 first-install helper does not supply this import binding.",
         "independentReadbackSource": "8874ce044e1d7696eb50f433187c62ffca066f8f",
-        "execution": "Exact old catalog READ ONLY completed and rolled back; user confirmed only the fixed A/B/C conditional retirement list. Original T45 preparing the only execution. No new target installation/import/entry switch approval from this confirmation.",
+        "execution": "Original T45 resumes first-install lifecycle and verifies current new target capacity and fixed Linux dependencies. The deletion checklist confirmation does not authorize installation, import or entry switch. No new target created.",
         "owners": "C coordinates; T45 high sole server and carrier; D1 high native import binding; D3 high independent readback"
       },
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
