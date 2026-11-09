@@ -42417,6 +42417,15 @@
             },
             "firstInstallExactCapacityGap": "T45 verified 28 GiB is enforced by native materialization but not production_start itself. No existing 6 GiB automatic stop is proven for first native install. Local two-file increment under 3cfd1328 has carrier c89321e0a39b2253c5c8eb7806539a4c71f3bfcfa3905d4068fa9dc8a21fc8d1, test 32055e69ef1bef27a164c0a1e673e1efdb55bf3610f073b1cf6c42558e7d0308, 29 targeted plus 16 V2 tests pass, original QB reviewing. Production entry/install actually needs >90 s from upstream validation, even though its second gate is >60 s. No live install, import, or cutover authorization issued.",
             "firstInstallCapacityIndependentReview": "QB NEED_FIX on c89321e0. Two local counterexamples: synchronous stop receipt fsync blocks TERM/owned PID1 fallback; same-device PGDATA or pg_wal inode replacement or disappearance is not rejected after first observation. Original T45 fixes only these two, QB retests the same counterexamples. 28 GiB/6 GiB thresholds retained. No first install approval issued.",
+            "firstInstallCapacityFixed": {
+              "status": "QB_PASS_LOCAL_SOURCE_COMMITTED_NOT_EXECUTED",
+              "commit": "be7ea5c1981c9158d98daedc64df8b7b2e968dc4",
+              "tree": "50dbc7c7623b9d0a36b4edb2629a4cb573f293dc",
+              "carrierSHA256": "2d9d07fef1db6f69f21d284e11b3b8eb24b07e32abfadb79e9b54ce91cb5738c",
+              "testSHA256": "065978e56ec43927456d4febd4dce98c8440c600933767d3b001b7f50d29212f",
+              "review": "31 targeted offline cases pass, including nine capacity cases. TERM and exact PID1 fallback do not depend on receipt fsync; first observed PGDATA and WAL identities remain pinned. Original failed/unknown stays no-replay. Actual Linux, Docker, PostgreSQL and first install untested.",
+              "next": "T45 checks earlier successful explicit-subnet evidence against current facts. First-install carrier is pinned but still needs exact current network ID and separately authorized provision, entry, and install."
+            },
             "next": "T45 fixes only the write boundary and first error precedence, then QB reruns those two counterexamples. Exact front network and fresh resource readings remain separate read-only readiness facts. No server write or new PostgreSQL authorized by this review."
           },
           "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
