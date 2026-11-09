@@ -42443,6 +42443,7 @@
                 "localHandoffSHA256": "eb6bc6306aa441415f77c50bd85e6b0b38210832d92902a8e14f81a14b864771",
                 "currentHandoffSHA256": "cf9003513ba614c668fab2bce35992702e806a0660190ff0b88bc2b8b5011951",
                 "currentHandoffCheck": "T45 and C recomputed the current HANDOFF and original plan and three templates. No replacement keys or templates. The observed front prerequisites and approved same-data source rules are separate from live decisions. Final compatible continuation tool/READY, STOP reserve and exact first-install time bounds still needed.",
+                "sameDataTimingCheck": "C ran pure validators from 490a311e with synthetic times only, exit 0. Exact initial provision, STOP and restart validate together when the original ordinary login is bound through the later service lease. A login ending before the initial service lease and a guardian exceeding the restart cap each reject. The favorable model gives 5,370 s from restart window opening to the effective connection deadline. A 38 min PREPARE allowance plus a 45 min EXECUTE allowance leaves at most 390 s before deducting launch, transfer, readback, backup and cleanup. This is a cap, not a measured duration or issued window.",
                 "qb": "PASS fixed plan and three unissued templates, then corrected handoff only. PGDATA metadata is an actual post-install observation; original continuous capacity and identity checks remain. Seven new keys absent from local registers, actual manager status pending.",
                 "freshAdmissionReadback": {
                   "status": "EXACT_PRIVILEGED_READONLY_JOB_COMPLETED_CLEANUP_VERIFIED",
@@ -42858,7 +42859,7 @@
           "dependencyLock": "The baseline inner archive root package-lock.json SHA is c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048. It contains no node_modules or npm cache. Existing readiness receipt d70d1d24 confirms thirteen locked runtime archives and matching local files, but no install or Linux runtime proof in that receipt. Current deploy-candidate.py 2389–2407 uses npm ci --omit=dev with new tmpfs cache, no mounted offline cache and no --offline. Native installation tools already staged do not prove registry access or dependency install for the final public release.",
           "dependencyReuse": "C compared the APP576 tar root files against fixed 092821ff. Raw lock is equal, package.json differs but runtime dependency declarations and npm@11.9.0 project pin match. Original B12 actual 9b7fd38c exited 0 on Linux amd64 Node 24.21.0/npm 11.19.0 with 111 placements and native sharp load using the offline cache. Existing direct lookup at 07:07 returned EACCES (5131233e), so server cache availability remains unknown. Reuse prior inputs if verified available; it is not the final installation test or proof that the current carrier consumes that cache.",
           "pinnedOfflineCacheCandidate": {
-            "status": "LOCAL_PINNED_NPM_OFFLINE_LINUX_SELECTION_PASS_SERVER_LOAD_PENDING",
+            "status": "LOCAL_INSTALLER_WIP_QB_EXACT_READY_BYTES_FINDING_LINUX_UNTESTED",
             "resultSHA256": "cff192e033f2babd23f868da92ba63b0635dfea0b2b029fb11ff95eb11cadfcc",
             "archiveSHA256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
             "archiveBytes": 15064708,
@@ -42866,7 +42867,15 @@
             "offlineCiLogSHA256": "7a26a1bc2ad7984edde711b815bb166dcf5eb8d0dfbdfe27d634c11b1f1eac1a",
             "check": "C read 103 exact public request-cache entries and their locked bytes from the retained local cache and used pinned npm 11.9.0 cache add for the two missing Linux amd64 sharp archives, exit 0. Exact request and integrity reads 105/105; cache archive 210 PAX members SHA/size/mode readback. With APP576 root package and lock, Node 24.21.0/npm 11.9.0 ran ci --omit=dev --ignore-scripts --bin-links=false --no-audit --no-fund --offline --os=linux --cpu=x64 --libc=glibc, exit 0 on macOS arm64, 111 exact placements and locked integrity fields, both amd64 ELF headers verified. Lock unchanged. Initial archive input reader and USTAR long-path packaging failures retained; corrected before final archive readback. No real Linux load or server stage.",
             "oldCacheLookup": "T45 candidate d952e13e/3bff168f remains local and unsubmitted. C chose the locally verified exact-version material for the fallback and did not spend a manager window to enumerate the older cache.",
-            "next": "T45 checks whether the original release installer can consume the closed archive with the final same-lock app and which exact source or carrier adjustment is necessary. Real Linux npm ci and native module load are still required in the original candidate stage. No dependency versions, lock file, release helper, server policies or installation were changed."
+            "firstInstallHelper": {
+              "commit": "ea76e61d1865de5ce84baed925c67a764cbd60b3",
+              "parent": "fb0116238068b923b9ebb92bdc0e59e6663aba17",
+              "tree": "4b3f9dfd0ab0a98da81acc7ceb90f8307aea537b",
+              "helperSHA256": "fc665bcb5519b246f024405cb4a30386e678eeeaf4d796a221253816064b4a5d",
+              "legacyHelperSHA256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+              "check": "T45 five focused local tests; C recomputed the tree, both helper digests and original retirement receipts. QB ran the exact consumer with the real 210-member PAX archive and modeled ownership/READY. Locked package, actual archive and only one original npm call were verified locally. QB reproduced one remaining flaw: a newline-only READY byte change passes decoded JSON equality. T45 owns the exact byte-comparison fix. No server stage, actual Linux install, PG or publication."
+            },
+            "next": "T45 fixes the READY byte comparison and prepares the original ordinary artifact stage and frozen job inputs. QB rechecks only that difference. Actual READY, original helper review and Linux npm/native load remain required for private app stage. Empty database installation is separate."
           },
           "networkPreparationSHA256": "9bc1d67dbd3a9e14706d91134fff0e777d1fd655c273e73044cfcf3dc1db4069",
           "networkPreparation": "T45 fixed a single unsigned scope for data internal 10.248.42.224/28 and ingress noninternal 10.248.42.240/28, adjacent to and distinct from existing front 10.248.42.208/28 by CIDR arithmetic. These are proposals pending actual Docker IPAM, host routes and interface-prefix conflict readback. Later creation requires the exact same-version release plan and its decision, original single-slot sequencing and per-bridge full ID/attributes/zero endpoint readback.",
