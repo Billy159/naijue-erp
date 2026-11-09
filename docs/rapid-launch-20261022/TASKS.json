@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Offline short-window successor in progress, including late CLOSE counterexample and timing/role refresh plan. No additional R4 job or window.",
-      "QB": "Outer05 offline pass, no live R4 proof.",
+      "T45": "QB rejected 06 timing enforcement. Original T45 preparing fixed offline launch/point budget gates; preserve accepted 06 closure guards. No new R4 job.",
+      "QB": "06 rejected on two reproduced budget gates; accepted independent C and CLOSE/lock changes offline.",
       "D1": "Dispatched original D1 offline-only exact APP576 backup producer binding. Real stop pin remains pending original COMMIT, reconciliation and the new actual stop.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
       "D3": "Independent original400e COMMITTED reconciliation wait; latestclassification/probe result adopted, no new cleaning task.",
@@ -42332,7 +42332,17 @@
         "oneHour": "Frozen 05 local/host/container BOOT limits 300 s; handoff/reader cap short POINT independently. One hour offline prep/coordination preferred; live 1 hour requires a separately approved successor and preserving short authentication.",
         "shortRoute": "Offline original T45 successor in progress. Prestage fixed input and C-side validation; maintain 300 s live plus no more than 90 s total cleanup, POINT lower-bound guards and independent same-lock verification. Refresh manager grant, service and role expiry facts before any new BOOT.",
         "closeLateSignalModel": "Original root_entry.py SHA 60bc100f; AST-isolated function with mocked clock/identity/signal: an early CLOSE refused, but +91 seconds attempted guardian SIGTERM. No actual signal, server, or database access. Original T45 reviewing narrow actual-host deadline check.",
-        "actualExecution": "Previous approval consumed; no new window or authorization."
+        "actualExecution": "Previous approval consumed; no new window or authorization.",
+        "outer06IndependentReview": {
+          "readySHA256": "aca9140c3c9ed3b6e2bc077572143bd4af1a68569dbd506dfde8ce95474f49c1",
+          "stageSHA256": "337401bd488c7d94b48f60df9904e1204a7c22c8547d0cfa351566b08ad2e74c",
+          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HOST-DIAGNOSTIC-50D3FEA3-20261109/EXECUTE02-OUTER06-ACA9140C/REPORT.md",
+          "reportSHA256": "0d913eb130f192df4fa1d1b3d9453939de1b2090024ab8f40a7a05da2cd4e322",
+          "state": "NEED_FIX_06_LAUNCH_BUDGET_GATES",
+          "adopted": "C epoch binding, no replay, POINT lock unknown CLOSE suppression, guardian +60, CLOSE entry +65 / signals +90 passed offline; 19 tests rerun.",
+          "findings": "Actual submit accepted both BOOT and POINT at 100s remaining. POINT command then got 50s, below 52.766s measured prior BOOT transport/queue proxy. Planned 120s lacked enforcement; 185s local check not immediately before BOOT submit.",
+          "next": "Original T45 offline-only fixed successor, enforce planning 120s in independent issuance and submit while preserving old 60/50/36. Confirm adequate BOOT budget and late arrival at actual launch. No new approval/window."
+        }
       }
     }
   }
