@@ -3996,3 +3996,5 @@ T45 后继 3cfd13281fdc4b0963f5abe2732a742a0e9fcaa9 与清单 b3d74bbf 独立重
 网桥后继脚本实算813fb0fd9e40c4cf1f6f5a0f146fa018ec0535206f4cde7c411da748b3206f7e，QB 四条本机模拟通过，双窗须剩>24秒。C 按新系统准备指令签发仅一个空内桥，授权SHA a6058aa7a3b87f872c671ed5bb8f8a007986e16090c432927c366488e8c43d5d。T45 原键23:48:21.873 +08 FAILED/2、0.168618s、creationAttempted=true、FRONT_CREATE_RESULT_UNKNOWN_NO_REPLAY，未获可用Docker ID且无stderr证据。终态1a654d28、阶段d2d90a60；23:50:24 unit/cgroup/PID清空，未重提。C 只授权原T45限定root后验该唯一名称、属性、端点及原有诊断，不重提、不清理或建库。首装容量改动本地继续。
 
 23:52:50.626 +08 原T45唯一只读后验 COMPLETED/0、2.424859s，同名网0、inspect absent。terminal18c9949e、phase6d393d56，原create保留FAILED/2及已发事实。原时窗Docker/作业日志无可归属记录，拒绝原因未知；23:54:27 unit/cgroup/PID清空。原T45只比照此前实际已成内桥并查必要脱敏池/策略事实，不重提。首装容量本地两文件 c89321e0/32055e69，29定向+16原V2通过，已交原QB，真实Linux/PG未运行。
+
+原 QB 对首装容量 c89321e0 NEED_FIX。29条既有用例通过，但两条实跑反例证实触底时同步写回执会阻塞 TERM 和 PID1 兜底，首次观察到 PGDATA/pg_wal 后同设备 inode 替换或消失未触发停止。原 T45 已接最小修复，QB 仅复验这两项。当前本地检查点未推，GitHub 连通及低速超时，最后确认远端 ef247bcfec904828656d357fdf213a3b41c13b21。未起容器/建库或切换。
