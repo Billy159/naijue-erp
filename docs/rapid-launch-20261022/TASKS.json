@@ -42414,6 +42414,19 @@
               "creationNext": "23:48:21.873 +08 0.168618 s. Docker gave no usable ID. Exact postcheck at 23:52:50.626 completed/0 in 2.424859 s, zero same-name networks and inspect absent. No matching original Docker/unit logs; reason unproven. Unit/cgroup/PID empty. T45 compares existing successful private bridge evidence and narrowly checks actual network pool/policy facts if needed. No replay, network cleanup, PostgreSQL, or permission change.",
               "creationPostcheckTerminalSHA256": "18c9949e04a52458f525c2ecc5a43a1bb7d0b6a28d9bd4ceff13acbb285a770f",
               "creationPostcheckPhaseSHA256": "6d393d566a8f9d35370d106b3665bdc6d334a85aeaac5bb124fa940b1910d0c8",
+              "explicitSubnetCreation": {
+                "jobId": "t45-first-r1-front-create-subnet-20261110-01",
+                "status": "COMPLETED_0_EXACT_INTERNAL_BRIDGE_UNATTACHED",
+                "owner": "T45",
+                "bindingSHA256": "9bb9384802b703511d1c4a64bb67ae99e715ab66c66d584fa04ecddb7bbdcf87",
+                "scriptSHA256": "d451731057d776d31e21633466bd631b8eba9a5131b76a7a9402d8f96312d7cb",
+                "terminalSHA256": "426f9fa40095ab9a3e1da576bfc4edb82ae79456c706dc9d76a85d98a7219330",
+                "phaseSHA256": "13f07af2509ca29be2ac32428fa31558628a6f8410d9d53530acdc3af36bd4db",
+                "cleanupSHA256": "d2eb9d0e164ba0b86ea93ab742b8402740c85dcd0a8ae8c932edde2c53f95f85",
+                "networkId": "f1caea1ce82b4804b7ba8b84d2c55fbe7d0a44d57e6e8d8f8ab90ac21628584c",
+                "observation": "00:10:34.546 +08, 0.719 s. Bridge naijue-fresh35-first-20261109-r1-front, internal, 10.248.42.208/28, zero endpoints. Creation preflight found zero same-name or overlapping networks/prefixes. At 00:10:58.856 unit, grants and cgroup were clear. No container mutation or PostgreSQL connection. Original failed create retained without replay.",
+                "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
+              },
               "explicitSubnetReadback": {
                 "jobId": "t45-first-r1-front-ipam-readonly-20261110-01",
                 "status": "COMPLETED_0_CANDIDATE_OBSERVED_ZERO_OVERLAP_NO_CREATE",
