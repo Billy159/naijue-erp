@@ -42352,6 +42352,13 @@
         "freshTargetNativePartialReadOnlyReceiptSHA256": "edb423bfd7f3c1c9418dd01e2e53ba6731baae6577ca1b092999c96be4e5f968",
         "freshTargetNativePartialObserved": "Original unit not-found/inactive/dead and cgroup empty. Exact new root device 66304 inode 13238273. 6878 correct deploy files and marker; 416 deploy plus 4 metadata absent, no invalid or extra leaves. Old source complete and stable. The two fixed authority/capacity leaves are absent. Timeout occurred while writing; phase log empty, root cause unproven.",
         "freshTargetNativeResume": "T45 prepares one separate reviewed continuation scoped to exact current root and the 420 missing leaves plus fixed authority/capacity leaves. No overwrite, no original key replay, no retransfer or timeout extension. Raw input consumes only actual exact successor success.",
+        "freshTargetNativeResumeReview": {
+          "candidate": "f22c7f9233d7e64556632bb7874d46d75e7c0aa4",
+          "scopeSHA256": "98100097dd3fe72a507f2c832419a67af4f1965ae59532103bb743a36efba144",
+          "status": "NEED_FIX_NO_ISSUANCE",
+          "finding": "QB reproduced raw admission reaching staged_artifact with a different plan SHA and the prior success receipt. Native receipt must carry the exact same plan SHA, and raw admission must reject a mismatch before consuming staged material.",
+          "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
+        },
         "freshTargetVaultMaterialization": "Original install, assemble, restore all COMPLETED/0. Assemble 2.072 s, independent new inode and exact complete SHA; no 45 chunk retransmission. The original root slot was verified restored to cd2e532b/0:0/0444 before tool staging. Raw input materialization still depends on native closure.",
         "freshTargetVaultReadySHA256": "34abd06e8cbdebdc0835ace6b2845a4e18ba8730dd6ccc37fc33dc5bacbbb8b5",
         "freshTargetVaultResultSHA256": "f09f481879e19953c9c0a9847096a1af8e9e0b74f78a590b13ac5a49573c8124",
