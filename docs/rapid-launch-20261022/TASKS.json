@@ -42792,10 +42792,18 @@
               "fixedCandidateSHA256": "e5d3f400119418f02c4a23661bc896e7640cfaa816a33fd60daf59446fd011e3",
               "check": "D3 author 16/16 synthetic. QB Node24.14.1 independently reproduced all three r3 acceptances, confirmed all three r4 rejections and verified mismatched V2 path with the unchanged digest rejects. Both legitimate same-generation V2 and prior V1 PREPARE with V2 EXECUTE pass. Ordinary runtime credential already shares the pinned expiry and rechecks physical server generation; actual issuer, PostgreSQL, RLS and business reconciliation remain pending.",
               "actualCallerReview": {
-                "status": "OFFLINE_FIXED_PROJECTION_MATCHED_V2_ORDINARY_CALLER_UNWIRED",
+                "status": "LOCAL_CALLER_FIX_AUTHOR_PASS_INDEPENDENT_RECHECK_INTERRUPTED_EXTERNAL_ENTRY_UNWIRED",
                 "reportSHA256": "261fee7ea2844d7dc6c43369b0af409215b7a63cba3162bdb1a6f48ccec833e2",
                 "check": "T45 and C checked 490a311e and 1b37415c. The existing status runner can admit the exact ordinary role before APP deployment but only checks the original key and rejects V2 at READONLY_STATUS_ORIGINAL_V1_GENERATION_REQUIRED. The 1b37415c projection leaf SHA256 is exactly 647f0fac9434fc7eb494b98078cd861cc76a828c06e78be710bc63fab550682c. D3 separately requires the original writer VERIFIED and both connections CLOSED, protected raw PREPARE and EXECUTE receipts and two fixed private expected-input files. It checks per-warehouse exact key digests, current inventory and separate receive/refund totals. The previous privileged admission completed without a PG connection.",
-                "next": "T45 owns the minimal V2 private caller in the existing runner, using the same runtime module and single pool for admission and issuer, the fixed tool projection and D3 bundle, actual writer terminals and a closed-write boundary. Reuse revocation, rollback and pool/process close. Pin the exact input scope and timing before the actual operation. This does not require APP deployment or permit substituting a point status response for a verified writer. Interrupted verifier recovery remains separate. No source change, private input contents, database operation or business verification."
+                "localCaller": {
+                  "rejectedCommit": "d2957cb3a6d77483623bd93ff85ebe00a3e638b2",
+                  "fixedCommit": "fb0116238068b923b9ebb92bdc0e59e6663aba17",
+                  "fixedTree": "7edd762abf1467ce603ab8759d8c23d117c95725",
+                  "carrierSHA256": "d1ce30ddca1d0102318a2439814c8a4a963110520a19e92aeb17ae2b7e17e178",
+                  "testSHA256": "03cb0584e301098b923ebb4c3291f422bb5c812dad111c3197dd35619a5b914b",
+                  "checks": "QB independently reran the first four tests and found two source regressions. T45 reproduced both on the rejected commit and corrected the verified-byte module load and last-generation/cleanup success condition. Five author model cases passed on Node 25.8.2 and 24.14.1. C tested the narrow checked-byte load and same-directory resolution on pinned Node 24.21.0, exit 0, and recomputed both fixed file digests. QB fixed-version independent turn terminated at automated review, so no independent acceptance is recorded for this fix."
+                },
+                "next": "Keep the fixed source for independent recheck. T45 still owns binding the existing carrier's external issue boundary, private-file custody and real closed-write guard before actual execution. Use the same runtime module and single pool for admission and issuer, the fixed projection and D3 bundle, original writer terminal and original key. Reuse revocation, rollback and pool/process close. No APP deployment dependency. A point status reply cannot substitute for the verified writer. Interrupted verifier recovery remains separate. No external issue, private staging, database operation or business verification."
               }
             }
           },
