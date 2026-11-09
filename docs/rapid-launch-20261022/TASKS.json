@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T13:19:41+08:00",
+  "updatedAt": "2026-11-09T13:35:27+08:00",
   "stage": "R4_TOOL4279_LINUX_PASS_238_RETIRED_CONTAINERS69_IMAGES_FOUR_EXACT_METADATA_NEXT",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -33307,12 +33307,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T13:19:41+08:00",
-      "phase": "BOOT33_LOCAL_SIX_STAGES_QB_PROPAGATION_REVIEW_AND_T45_RESIDUAL_CLEANUP_CHECK",
+      "at": "2026-11-09T13:35:27+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_MINIMUM_READ_PATH_HELD",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "Original QB only propagation review; original T45 sole server executor and bounded residual retirement followup",
-      "nextOwner": "Original T45 for BOOT33 after independent increment and current residual check",
+      "currentOwner": "C evidence and exact read-only route; T45 fixed evidence returned",
+      "nextOwner": "Original T45 only after usable verified read-only route",
       "latestActualReceiptSHA256": "54d7767b4e7f1e1ee245dbf0930b91f8db121ad81b3d2ab27e1341daf67acb10",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Only after incremental QB and original T45 cleanup check, bind fresh exact finite BOOT33 and inspect same original request in read-only mode.",
+      "next": "Report limit. Look for an existing authorized exact original-XID or status input path. If absent, review minimal read-only lane preserving target and privileges before any real query. If COMMITTED, reconcile; if confirmed aborted and no writes, only then diagnose writer and plan bounded same-key retry. No cutover.",
       "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -36375,14 +36375,17 @@
       "residualReviewCurrent20261109": {
         "at": "2026-11-09T13:19:41+08:00",
         "request": "Current direct human request to leave only the new online system and its required assets.",
-        "state": "ORIGINAL_T45_BOUNDED_RESIDUAL_CHECK_ACTIVE",
+        "state": "TWO_OLD_ENTRYPOINTS_CONFIRMED_RETIRED_NO_NEW_DELETION",
         "thread": "01a100d0-cad5-71c1-8042-dc594311d3be",
         "turn": "01a1bebd-33d4-7bc0-8b97-2862daefc366",
         "previousVerifiedContainerRemovals": 242,
         "previousVerifiedImageRemovals": 69,
-        "pending": "Retirement of two old public app routes and autostarts, distinct old application leaves/caches in mixed roots, and exact missing attribution for up to three retained containers.",
+        "pending": "None eligible. Two old entrypoints confirmed absent, legacy disabled one-shot has zero processes. Three exact stopped containers have unproven writable-layer reconstructability or data purpose; real recovery data remains protected.",
         "protection": "R4 and original request evidence, unique data and attachments, backups and recovery, and shared operational prerequisites.",
-        "newRemovalEvidence": false
+        "newRemovalEvidence": false,
+        "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-retirement-fixed-endpoints-three-origin-readonly-01/RESULT.json",
+        "receiptSHA256": "b2aeeb741532b5e844098dfb613f10f3b2aa7b79b3e0910d6b08df23b6313a52",
+        "actualFreeBytes": 8560492544
       }
     },
     "r4ExecutionTimeReadOnlyAudit20261107": {
@@ -42184,7 +42187,7 @@
     },
     "boot33Inspect09Preparation20261109": {
       "at": "2026-11-09T13:19:41+08:00",
-      "state": "FIXED_LOCAL_SIX_STAGES_ORIGINAL_QB_INCREMENT_REVIEW_ACTIVE",
+      "state": "ORIGINAL_QB_SOURCE_PROPAGATION_PASS_THEN_HOLD_PER_USER_ORIGINAL_KEY_FIRST",
       "T45Thread": "01a100d0-cad5-71c1-8042-dc594311d3be",
       "T45DeliveryTurn": "01a1beb4-db28-7b92-9b79-06beb61da427",
       "QBThread": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
@@ -42202,7 +42205,32 @@
       "serverSubmitted": false,
       "scope": "Reuse installed 4279 and previous independent source PASS. Prior raw vs independent cleanup facts preserved, old 08 restored pin is distinct from new 09. Prior 400e exact request and 17 business pins unchanged.",
       "cleanupEdge": "Use actual reached state for publish-before-mutation / inspect-before-access-takeover. Do not replay blindly or substitute prior08 pointer. Actual edge recovery pending.",
-      "next": "Only after incremental QB and original T45 cleanup check, bind fresh exact finite BOOT33 and inspect same original request in read-only mode."
+      "next": "Preserve unissued BOOT33/INSPECT09 and its sampling diagnostic. Prefer original-key status capability, no full source rebuild or rerun pending explicit decision on the approved route.",
+      "QBResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HOST-DIAGNOSTIC-50D3FEA3-20261109/SAMPLE-LATE-01A5A0AB/BOOT33-7F7A44BF/RESULT.json",
+      "QBResultSHA256": "2774cfe3d2fb8d878b247a3871cb0b554ec61c97398c520591b3463861d8dbfc",
+      "QBResultBytes": 7520,
+      "findings": 0
+    },
+    "r4Execute02OriginalKeyMinimalReadback20261109": {
+      "at": "2026-11-09T13:35:27+08:00",
+      "state": "UNKNOWN_NO_REPLAY_EXISTING_CHANNEL_LIMIT_CONFIRMED",
+      "owner": "C exact source and query design; original T45 sole server executor",
+      "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
+      "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
+      "queryDraft": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/R4-TOOL798482CE-STAGING03-20261107-01/C-EXECUTE02-ORIGINAL-KEY-EVIDENCE-20261109.md",
+      "queryDraftSHA256": "f2fa8501fb56d495b198235fac4c45819066b78d990440330453ac7b0fa67aef",
+      "queryExecuted": false,
+      "newWindow": false,
+      "oldImportReplayed": false,
+      "originalOperation": "t45-r4-real-execute-20261107-02",
+      "originalInitializerOperationAndRequestKey": "a5ae6007-0e5b-3b5a-9c96-ea8a240c9063",
+      "writerSourceCommit": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
+      "installedSourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
+      "transactionProofDesign": "Root and two exact publish receipts + linked audit + both imported batches. Root audit persists full_xid. Same-client whole-package transaction validates deferred closure before single COMMIT. Absence and unrelated XID do not prove rollback.",
+      "existingChannelLimit": "STATUS03 read-only connection reached BUSINESS_READY_NOT_CONFIRMED and never sent original-key SELECT. Installed runtime RLS enforces same readiness. Current controller host only allows exact prepared inspect V2 and original initializer proof. No confirmed minimal route for R4 pre-ready; no bypass, role change or direct SQL execution.",
+      "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
+      "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
+      "next": "Report limit. Look for an existing authorized exact original-XID or status input path. If absent, review minimal read-only lane preserving target and privileges before any real query. If COMMITTED, reconcile; if confirmed aborted and no writes, only then diagnose writer and plan bounded same-key retry. No cutover."
     }
   }
 }
