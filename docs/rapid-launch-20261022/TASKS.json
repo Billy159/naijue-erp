@@ -42462,6 +42462,15 @@
                   "next": "Adopt same-window facts and revised scope r2. Recheck live drift in the exact launcher before mutation. Only issue actual first installation when final staged tool, STOP reserve, real execution authority and all three original operation bindings can be honored. Container-side mounts and actual PostgreSQL install remain unverified."
                 },
                 "handoffTimingReference": {
+                  "sameDataLaunchHandoff": {
+                    "status": "FIXED_LOCAL_PAIR_AND_LIVE_OLD_CARRIER_CHECK_REQUIRED",
+                    "nativePlanSHA256": "639c90678a3e8e1c55e8d845d240a79dfcea1e3cb6ceb54d5464017e9f74053a",
+                    "supersededRecoveryPlanSHA256": "46c2bf1cfc2808904d60a70e932707675110ac033771d44c7e0ceab5936cb725",
+                    "reviewedRecoveryCarrierPlanSHA256": "61096a0f9f21854f70e5590c5be8d67411adbb3238ffc35798ff4fdedc886d7b",
+                    "ownerHandoffSHA256": "178908579d4d21d3fca5ce85afdc9fe6fdf6544807a91f14aae70929c85f750d",
+                    "check": "C used python3 -B and the exact 490a311e load_production_plan. The native be7 and earlier 610 recovery plans reject EXACT_PRODUCTION_OPS_BINDING_REQUIRED; the 490a matching local V2 plan is accepted. All three parsed plans differ only in the carrier source pin. Separate model ran the actual 490a same_data_recovery.validate_decision and run_host: S+1ms passes the time validator, while an old running CID refuses FIRST_RECOVERY_OLD_CARRIER_STILL_ACTIVE. Both completed local models exit 0, no Docker, PG, live credentials or server requests.",
+                    "next": "T45 preserves the native original plan bytes and binds a matching V2 plan to the final approved execution carrier, keeping the same target and source composition. The old native container has its own timeout, including the original 30-second cleanup allowance and a launch offset. Before signing the new start window, verify exact old CID stopped with PID zero, original clean PG receipt, and the empty internal bridge. Fit that observation and delivery within S+30m and the already pinned finite runtime login and guardian limits. Do not use elapsed time as evidence of exit or submit against the older recovery plan."
+                  },
                   "historicalReceiptSHA256": "7ca7aa75a040b2c8bd179eb454558bd6c3254215166d494fbb097e60d558003b",
                   "sourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
                   "provisionToDurableRecordReadbackSeconds": 444.427,
