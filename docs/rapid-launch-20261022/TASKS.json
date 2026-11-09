@@ -42689,13 +42689,25 @@
                 "check": "D2 361-member byte/mode readback and original carrier archive parser passed, 355 member pins unchanged and six changed, no additions or removals. Pinned Node24.21 local loader/help/readback imports pass. C recomputed six delivered digests. T45 prepares exact V2 root and staging plan. Local READY is not a server receipt."
               }
             },
-            "firstWriterAuthorityBinding": "T45 verified materializer checks external stage SHA, raw READY, file identity and exact archive before first material write. Node checks externally pinned operation parameters through the existing protected descriptor. The first V2 batch-authority load checks live path, bytes stability, format, fields, parameter digest and window, but has no first-read equality to the original same-job externally issued batch-authority raw SHA. C asked original D1 to check and close the existing proof seam before first write if no approval contract change is required. T45 remains carrier owner. No authorization issuance or upload.",
+            "firstWriterAuthorityBinding": {
+              "status": "EXACT_EXTERNAL_EXECUTE_CONTRACT_DELTA_AWAITING_USER_DECISION",
+              "finding": "T45 490a311e and D1 1b37415c show the exact closed execution description and existing 8192 B protected descriptor bind original parameters but have no externally frozen batch-authority raw SHA for V2 EXECUTE. The status path already uses originalImportAuthoritySha256. The current V2 loader validates path, stable bytes, binding fields and window, then records the first bytes' own digest. Those checks cannot establish equality to the issuer's earlier authorized bytes.",
+              "proposedDelta": "For the authenticated new R1 V2 EXECUTE only, require originalImportAuthoritySha256 in the existing same-job external execution description. The existing external issuer takes the SHA-256 of the authorized original batch-authority bytes and binds it to the original request and original operation-parameter SHA. T45 verifies the external description and carries that SHA over the same protected descriptor. D1 compares the first read's raw bytes with the pin before accepting write authority, and repeats the match on the separate verification open. Initial missing or different bytes reject before the first write. A post-commit mismatch keeps COMMITTED or ALREADY_COMMITTED and reports VERIFICATION_UNKNOWN for the original-key recovery path.",
+              "scope": "Source and existing input-contract delta only. Existing batch authority payload, issuer, role grants, database schema, original request key, time windows, and V1/PREPARE/INSPECT/READONLY_STATUS contracts stay as-is. No signing, upload, database action, or cutover authorized by this source decision. T45 owns the carrier, D1 the Node consumer, QB the affected checks. Pin one final package after closure."
+            },
+            "localV2Materializer": {
+              "status": "FIXED_LOCAL_UNISSUED_WAITING_FINAL_TOOL",
+              "commit": "490a311ead8d7f680d4b8f1bd2c3e0b37ac285f8",
+              "tree": "ec2b2934eaf52a3a6f03861970ae1a3e3022b85a",
+              "scopeSHA256": "d5c12f025a92da760d5bf4a7f09de09624c3251d53caa88c5235fe7863025f2f",
+              "check": "Local stage scripts and distinct root pin 1b37415c only. T45 verified prior paths and rejects missing pin, mismatched source/root and wrong job. C verified commit, tree and carrier contract directly. Wait for the final package instead of uploading a temporary predecessor. No staged artifact, CID, actual installation record or issued window."
+            },
             "independentReadbackV2": {
-              "status": "AUTHOR_R4_FIXED_THREE_COUNTEREXAMPLES_QB_PENDING",
+              "status": "QB_TARGETED_OFFLINE_PASS_LIVE_READBACK_PENDING",
               "candidateSHA256": "5004f821abf888a64c051e93696c0ef2fde053fb4e49d2f348ae78c5ea9068d7",
               "testSHA256": "156e56f46721e1ac21667ac5fd97a7fe986c6d746f9c6c6ea6e5f23791a4769a",
               "fixedCandidateSHA256": "e5d3f400119418f02c4a23661bc896e7640cfaa816a33fd60daf59446fd011e3",
-              "check": "QB independently reproduced acceptance of the wrong terminal current-operation source set for either job and of a replaced V2 PREPARE restart receipt hash paired with a changed parameter digest. D3 r4 reproduces all three on r3 and rejects them on r4; 16 cases include same-generation PREPARE then EXECUTE and legitimate V1 PREPARE to V2 EXECUTE. QB retests only the delta. Ordinary runtime credential already shares the pinned expiry and rechecks physical server generation; actual issuer, PostgreSQL, RLS and business reconciliation remain pending."
+              "check": "D3 author 16/16 synthetic. QB Node24.14.1 independently reproduced all three r3 acceptances, confirmed all three r4 rejections and verified mismatched V2 path with the unchanged digest rejects. Both legitimate same-generation V2 and prior V1 PREPARE with V2 EXECUTE pass. Ordinary runtime credential already shares the pinned expiry and rechecks physical server generation; actual issuer, PostgreSQL, RLS and business reconciliation remain pending."
             }
           },
           "next": "T45 prepares the exact independent V2 stage and materialization binding. D1 checks the minimal original authority proof and C coordinates one final package. QB retests the three D3 r4 counterexamples and valid counterpart paths. Durable production service and actual PostgreSQL remain separate. No new execution authority or live action. An already-issued writer is always recovered by its original key."
