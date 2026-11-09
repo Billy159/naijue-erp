@@ -42859,7 +42859,7 @@
           "dependencyLock": "The baseline inner archive root package-lock.json SHA is c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048. It contains no node_modules or npm cache. Existing readiness receipt d70d1d24 confirms thirteen locked runtime archives and matching local files, but no install or Linux runtime proof in that receipt. Current deploy-candidate.py 2389–2407 uses npm ci --omit=dev with new tmpfs cache, no mounted offline cache and no --offline. Native installation tools already staged do not prove registry access or dependency install for the final public release.",
           "dependencyReuse": "C compared the APP576 tar root files against fixed 092821ff. Raw lock is equal, package.json differs but runtime dependency declarations and npm@11.9.0 project pin match. Original B12 actual 9b7fd38c exited 0 on Linux amd64 Node 24.21.0/npm 11.19.0 with 111 placements and native sharp load using the offline cache. Existing direct lookup at 07:07 returned EACCES (5131233e), so server cache availability remains unknown. Reuse prior inputs if verified available; it is not the final installation test or proof that the current carrier consumes that cache.",
           "pinnedOfflineCacheCandidate": {
-            "status": "LOCAL_INSTALLER_WIP_QB_EXACT_READY_BYTES_FINDING_LINUX_UNTESTED",
+            "status": "QB_EXACT_READY_BYTES_FIX_PASS_LOCAL_STAGE_ONLY_LINUX_UNTESTED",
             "resultSHA256": "cff192e033f2babd23f868da92ba63b0635dfea0b2b029fb11ff95eb11cadfcc",
             "archiveSHA256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
             "archiveBytes": 15064708,
@@ -42875,7 +42875,17 @@
               "legacyHelperSHA256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
               "check": "T45 five focused local tests; C recomputed the tree, both helper digests and original retirement receipts. QB ran the exact consumer with the real 210-member PAX archive and modeled ownership/READY. Locked package, actual archive and only one original npm call were verified locally. QB reproduced one remaining flaw: a newline-only READY byte change passes decoded JSON equality. T45 owns the exact byte-comparison fix. No server stage, actual Linux install, PG or publication."
             },
-            "next": "T45 fixes the READY byte comparison and prepares the original ordinary artifact stage and frozen job inputs. QB rechecks only that difference. Actual READY, original helper review and Linux npm/native load remain required for private app stage. Empty database installation is separate."
+            "exactReadyFix": {
+              "commit": "23a0253f91d58b447ce9d89c0083373d2c0332d7",
+              "tree": "bfc0ffb0525b25658837546f6a29233ea0596f1d",
+              "helperSHA256": "b6136734058139500bef55c62a502e2d79280f3e220ff72044516f21fae1db1f",
+              "artifactKey": "app576-c0997c16-npm119-cache-20261110-01",
+              "unissuedStagingSHA256": "0305ad43412d6a5ef31400d9513d6e5bc93ea5bd5544d603ecf89db008f40b76",
+              "unissuedBundlePinsSHA256": "cff8f8a176f7bcb3ce4f8672fa6bacd1fd9e7e51c7bda5fe0cbf7667d4a29cbf",
+              "resultSHA256": "3a863d1b3071e178b4f77872402b83a6edff3eafc42581c5b965a5b3dd8ae09a",
+              "check": "QB 1/1 regression plus an independent run with the exact archive, lock and manifest and modeled READY/ownership. Original raw bytes read 210 members. The newline-only mutation now rejects before opening the archive or making a release directory or Docker/npm call. T45 local original artifact receiver read ABSENT to READY to same-key status and rejected a duplicate. Root job manifest permissions inherit dispatcher umask in the model; 0644 rejects at the original private manifest guard. Real mode not observed. C recomputed the three artifact digests, helper, commit tree and parent."
+            },
+            "next": "T45 binds the final APP, actual ordinary artifact READY bytes and original helper review to a single private candidate. Confirm actual root bundle manifest permissions before a capacity window. Real Linux npm/native load remains required. Empty database installation is separate."
           },
           "networkPreparationSHA256": "9bc1d67dbd3a9e14706d91134fff0e777d1fd655c273e73044cfcf3dc1db4069",
           "networkPreparation": "T45 fixed a single unsigned scope for data internal 10.248.42.224/28 and ingress noninternal 10.248.42.240/28, adjacent to and distinct from existing front 10.248.42.208/28 by CIDR arithmetic. These are proposals pending actual Docker IPAM, host routes and interface-prefix conflict readback. Later creation requires the exact same-version release plan and its decision, original single-slot sequencing and per-bridge full ID/attributes/zero endpoint readback.",
