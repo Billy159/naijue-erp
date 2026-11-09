@@ -42310,7 +42310,11 @@
       "fresh35DirectInstallAfterRetirement20261109": {
         "status": "ACTIVE_PREPARE_ONE_RETIREMENT_SCOPE_THEN_INSTALL_NEW_TARGET_WITH_NO_SEPARATE_REHEARSAL",
         "approvedPreviousRestoreRetirementReused": true,
-        "newRetirementConfirmationPending": true,
+        "newRetirementConfirmationPending": false,
+        "newRetirementConfirmedByUser": "2026-11-09 21:03 +08, direct reply to the unique SHA-256-pinned A/B/C retirement checklist",
+        "newRetirementExecutionStatus": "Original T45 high preparing exact manager bundle and QB review, not yet executed",
+        "carrierSourceCommit": "75b5f62e0c91b2f5896d6dafc3b8aa85d70b88cf",
+        "carrierSourceTree": "b91ba576edf3f300848314a366c9ed990be5f9c4",
         "retirementIntention": [
           "erp_prod only, no other database or unproven shared asset",
           "three exact old backup roots subject to dependency exclusions",
@@ -42333,7 +42337,7 @@
         "verifiedLocalToolArchiveSHA256": "5a3d71fda74bcd12b5d11997ff3c466898b094cac60b08ae13b6d6b91f4fa021",
         "importBindingGap": "Current 4279 host/tool/carrier pin R4 report root, job-key domain and protected restart identity. Downstream e409ff82 first-install helper does not supply this import binding.",
         "independentReadbackSource": "8874ce044e1d7696eb50f433187c62ffca066f8f",
-        "execution": "One exact old catalog READ ONLY job succeeded and rolled back. No deletion, service stop, or installation. Await one exact conditional deletion approval. New target resource/identity and actual Linux carrier pending.",
+        "execution": "Exact old catalog READ ONLY completed and rolled back; user confirmed only the fixed A/B/C conditional retirement list. Original T45 preparing the only execution. No new target installation/import/entry switch approval from this confirmation.",
         "owners": "C coordinates; T45 high sole server and carrier; D1 high native import binding; D3 high independent readback"
       },
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
