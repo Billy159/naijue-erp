@@ -33307,8 +33307,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T13:51:15+08:00",
-      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_ADMIN_ACCESS_OFFLINE",
+      "at": "2026-11-09T14:04:28+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_QUERY_OFFLINE_PASS_OUTER_ROUTE_PENDING",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 prepares only a bounded local evidence carrier. QB reviews the fixed increment. Exact new access and database changes, if required, need direct human approval before any action. Original stopped R4 and keys remain preserved.",
+      "next": "Original T45 is implementing the minimum outer route and authoritative cleanup offline. QB reviews only the fixed delta. Submit exact auth and restoration scope to human before real execution.",
       "authority": "Latest human steering allows asking for and using necessary scoped management access; any new access or database change requires exact scope and direct confirmation before execution. No original-key replay or cutover.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -42212,8 +42212,8 @@
       "findings": 0
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
-      "at": "2026-11-09T13:51:15+08:00",
-      "state": "UNKNOWN_NO_REPLAY_ADMIN_CARRIER_OFFLINE_PREPARATION",
+      "at": "2026-11-09T14:04:28+08:00",
+      "state": "UNKNOWN_NO_REPLAY_FIXED_SQL_OFFLINE_PASS_OUTER_ROUTE_NEED_BINDING",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42230,10 +42230,17 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "T45 prepares only a bounded local evidence carrier. QB reviews the fixed increment. Exact new access and database changes, if required, need direct human approval before any action. Original stopped R4 and keys remain preserved.",
+      "next": "Original T45 is implementing the minimum outer route and authoritative cleanup offline. QB reviews only the fixed delta. Submit exact auth and restoration scope to human before real execution.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
-      "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c"
+      "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
+      "fixedCarrierReadySHA256": "9f60b8fb95ce6041fca2cf3b6e5bb3bdfc3e89dd4a345d53f2ffd54eda7ce09e",
+      "fixedCarrierSHA256": "d55928d9a1b84994250655f9a5d6d0f5b4cc67b395cd84c28ca5faf96403a932",
+      "fixedProofSqlSHA256": "0b1f50b5913feeee0448ef81fbad2d590641308a8ea1e48f6ea355039e0dbd5b",
+      "fixedProofBindingsSHA256": "088c39cf0214f774b48412b05dffa35523a501125e114684dab5770e37cfea3a",
+      "QBResultSHA256": "5326a78a6be4aa3118e1c1fb7ec5ab083ab131c549a04976e1f169f1b684ed1b",
+      "offline": "QB 5/5 files, 7/7 prior evidence, 8/8 binding fields, 3/3 original IDs, 4/4 offline methods. SQLite predicates and modeled execution only.",
+      "outerFindings": "E02-01 registration and one-use; E02-02 retained boot actual identity; E02-03 single admin expiry CAS and recovery; E02-04 owned stop; E02-05 failure postflight skipped after timeout/spawn failure."
     }
   }
 }
