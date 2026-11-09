@@ -42434,7 +42434,13 @@
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
                 "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
-                "next": "Prepare final plan, stage templates and request keys off host. T45 may provision, enter and install only after confirmed scope and actual stage bindings. Require same-target installation record/catalog/role readback and clean stop. Business import, public application deployment and cutover outside this scope."
+                "planSHA256": "639c90678a3e8e1c55e8d845d240a79dfcea1e3cb6ceb54d5464017e9f74053a",
+                "provisionTemplateSHA256": "8f2a4c2217a9fe5b0c7a97f7544d7bc227192df0306b3ce656d943659229e8f0",
+                "entryTemplateSHA256": "ad3c5761d6151776c3a3b49c5f184cade7cf7ac5e0207ffd516655aa62ca17cf",
+                "installTemplateSHA256": "1b82e100cd6739d9ab79906cb7268670b97c524a274aedd2c47065bfb3c45e01",
+                "localHandoffSHA256": "eb6bc6306aa441415f77c50bd85e6b0b38210832d92902a8e14f81a14b864771",
+                "qb": "PASS fixed plan and three unissued templates, then corrected handoff only. PGDATA metadata is an actual post-install observation; original continuous capacity and identity checks remain. Seven new keys absent from local registers, actual manager status pending.",
+                "next": "T45 prepares existing-path closeout off host; actual carrier identity and protected close receipts must come from the run. Provision, entry and install require confirmed scope and actual stage bindings. Business import, public application deployment and cutover are outside this scope."
               },
               "explicitSubnetReadback": {
                 "jobId": "t45-first-r1-front-ipam-readonly-20261110-01",
@@ -42488,6 +42494,7 @@
         "newTargetIndependentReadbackAdapterSHA256": "ebd5927fef8ca46ed311e89a20332aa0cbe2dda608a9bd44a9bdd6fe527e4cb3",
         "supersededIndependentReadbackAdapterSHA256": "93446fe4f342de9b5c4080537beae0b978670871efbdb519e7f1c91b95aa0aaa",
         "newTargetIndependentReadbackVerification": "Original QB passed r2 container-path binding and rejected the host-path regression in offline targeted verification. Actual ordinary-account issuance and data readback pending.",
+        "newTargetBackupPreparation": "Original D1 now adapts only the private df7aedc6 backup producer to the R1 handoff, retaining independently pinned APP576 artifacts and using actual install, restart, closed writer fence, COMMIT and reconciliation. D1 checks whether same live import epoch with sufficient admin/runtime and guardian budget can perform the online backup before its terminal clean stop. The existing first retained stop/restart only handles the initial installation epoch and must not be assumed reusable. No server backup, restart, restore or deployment issued.",
         "verifiedLocalInputSHA256": "fc831c282f982ca22c840906aae96bf69acf23e785a42c199655e0ccf297365e",
         "verifiedLocalAppArtifactSHA256": "b8069af0e2f42b990b4645b4fd34857d184db0529e43132faa04d218bbfff830",
         "verifiedLocalRestoreArtifactSHA256": "7d3af69c308aaf50c1154d12db0075fa6f55011925457c58119f5f8d251d3889",
