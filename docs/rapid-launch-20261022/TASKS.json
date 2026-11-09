@@ -28516,7 +28516,7 @@
     "currentParallelQueue": {
       "T45": "Outer05 fixed, exact R4/temporary-auth decision pending, no R4 action issued. Independent synthetic history856e ordinary copy deferred: latest dated estimate leaves 394579966 bytes below unchanged writer admission floor; fresh resource and materials preflight after R4 track permits.",
       "QB": "Outer05 offline pass, no live R4 proof.",
-      "D1": "Backup producer1a9a offline pin rejection verified against both outer05 predecessors. No change before actual R4 terminal, proven batch and required runtime facts; later one exact adaptation by original owner.",
+      "D1": "Dispatched original D1 offline-only exact APP576 backup producer binding. Real stop pin remains pending original COMMIT, reconciliation and the new actual stop.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
       "D3": "Independent original400e COMMITTED reconciliation wait; latestclassification/probe result adopted, no new cleaning task.",
       "QF": "Wait actual real35 normal application and authentication; no filler QA."
@@ -35310,6 +35310,19 @@
         "commandScope": "python3 -B, original test_current_stop.py fixture; accepted existing exact pin, then substituted only each two bound digests. Two EXPECTED_REJECTIONS, exit 0.",
         "result": "POINT_QUERY_STOP_REFERENCES_REJECTED_BY_BACKUP_PRODUCER_OFFLINE_NO_DATABASE_ACCESS",
         "next": "After proven original COMMIT, independent reconciliation and the new actual stop, ask original D1 to bind the exact new predecessor and current actual source epoch. Require closed/drained fence and independent backup/restore capacity facts. Preserve raw failed receipts and do not relabel independent stop metadata as a clean original receipt."
+      },
+      "normalAppBuildCompatibility20261109": {
+        "state": "OFFLINE_FIXED_OLD_BUILD_ACCEPTED_APP576_REJECTED_D1_DISPATCHED",
+        "producerSHA256": "1a9aea5d6d4dc7fe1083b7ce0b570640142d527920b6ae70ca461575045ae3f4",
+        "installedBuild": "erp-3b82c46ebc0b-full-20261107",
+        "preparedAppBuild": "erp-576acc3cca54-history-20261107",
+        "preparedAppCommit": "576acc3cca5420146c4eb58b92d20c4de084a592",
+        "preparedAppResultSHA256": "1c1d5a7e53d1ad6ec1128ca190accd6fc64b25cd6b9e2e7147156510b4275cfc",
+        "preparedAppArchiveSHA256": "940d5cee86dd57766ef6fbe522ab0fb29cd5e395f72768753b48cb4da1ca2235",
+        "unchangedDatabaseSourceSetSHA256": "8694c5c7e1bc4b09f9511869f2665e8ec9fad65d6aa832b139a24d47258f998d",
+        "check": "python3 -B exact producer validator against the existing build result. Old exact build accepted; actual APP576 rejected RELEASE_AND_INTEGRATION_SOURCE_DIFFER. Exit 0; zero builds/server/PG.",
+        "releaseCallerBoundary": "Application archive and reviewed release caller fdd990f7 / 50d4e395 are separate evidence. Original T45/controller owns the release caller. Existing restore-only runtime is also distinct.",
+        "next": "D1 exact offline binding of installation proof and prepared app artifacts, preserve the original stop gate; bind a new actual stop only after confirmed COMMIT and independent reconciliation."
       }
     },
     "controllerNewScopeDecisionBasis20261107": {
@@ -38677,7 +38690,8 @@
       "new35BackupAndRestore": "TOOLS_EXIST_ACTUAL_NEW35_BACKUP_RESTORE_NOT_TESTED",
       "trueImportOrdinaryBusinessAndLinuxPerformance": "PENDING_T45_ACTUALS",
       "CChecks": "two small fixed RESULT pins; archive hashes adopted from existing valid D2 evidence, not rehashed or rebuilt",
-      "next": "After actual PREPARE/import/reconciliation, T45 uses existing fixed deliveries; no independent server work during active PREPARE."
+      "next": "After actual PREPARE/import/reconciliation, T45 uses existing fixed deliveries; no independent server work during active PREPARE.",
+      "backupAppBinding": "APP576 rejected by current producer identity validator in offline repro; original D1 handling offline-only."
     },
     "nextPrepareWindowHumanOverride20261108": {
       "status": "DIRECT_HUMAN_MESSAGE_VERIFIED_AND_DISPATCHED",
