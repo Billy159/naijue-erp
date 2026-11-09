@@ -42335,7 +42335,11 @@
         "freshTargetAdmissionReceiptSHA256": "8b734858875c3a758ae8f902f276fe91913f2783e17ed7e98530dc077e8ada74",
         "freshTargetRuntimeReceiptSHA256": "c5440553563a0429765dda21428b61b2867cd8899388923d4d41d3799e3acf25",
         "freshTargetTransferReviewSHA256": "a93ee5138a0b171ec51b6d493eee0bcc0aabf377db2493627491ddcd3556ad1c",
-        "freshTargetTransferStatus": "Three fixed local archive digests and 45 private source chunks confirmed. Existing two ordinary materializers and private receiver still need precise new-target key and ready bindings before real transfer; T45 sole owner.",
+        "freshTargetTransferStatus": "T45 pinned first R1 material staging at f78e95cd and QB independently verified all three real local parsers, ordinary archive hashes and 45 private chunks. QB found the original transport filters the required binding filename and the materializer can report success past expiry. T45 is correcting just these before issuance. No transport or host mutation.",
+        "freshTargetMaterialCandidateCommit": "f78e95cd73518b1aa1415f0587defc325ac64355",
+        "freshTargetMaterialCandidateTree": "33afbd2eba580e362935aaaa966372bd5c8620f6",
+        "freshTargetUnsignedIssuanceScopeSHA256": "7d9adf20e81477c7a080a123e318803789121e67ae8f6732825779f685f7a963",
+        "freshTargetNativeTransportLimit": "Exact ordinary native archive 83705857 B. Original SSH operation hard timeout 40 s, theoretical payload floor 2.09 MB/s plus protocol overhead. Old 4064380 B delta READY does not prove this transfer. No measured complete attempt and no permission to relax or replay.",
         "freshTargetObservedHost": "21:24:53 +08, device 66304, free 32723607552 B, MemAvailable 15255433216 B and 4 CPUs, exact new production/restore targets vacant. Fixed Linux image and existing Node/npm files present; no new container resource or runtime-load evidence.",
         "retirementIntention": [
           "erp_prod only, no other database or unproven shared asset",
