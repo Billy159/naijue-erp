@@ -33307,12 +33307,12 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T13:35:27+08:00",
-      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_MINIMUM_READ_PATH_HELD",
+      "at": "2026-11-09T13:51:15+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_ADMIN_ACCESS_OFFLINE",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
-      "currentOwner": "C evidence and exact read-only route; T45 fixed evidence returned",
-      "nextOwner": "Original T45 only after usable verified read-only route",
+      "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
+      "nextOwner": "Original T45 only after offline acceptance and applicable explicit approval",
       "latestActualReceiptSHA256": "54d7767b4e7f1e1ee245dbf0930b91f8db121ad81b3d2ab27e1341daf67acb10",
       "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
       "schemaInstalled": true,
@@ -33322,8 +33322,8 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Report limit. Look for an existing authorized exact original-XID or status input path. If absent, review minimal read-only lane preserving target and privileges before any real query. If COMMITTED, reconcile; if confirmed aborted and no writes, only then diagnose writer and plan bounded same-key retry. No cutover.",
-      "authority": "Direct human 01a1b528-ccaa-7eb0-a250-4d30c8feeeee authorized BOOT06 and equivalent scoped, reviewed temporary operations. Import and public switch retain their existing specific scope and preconditions.",
+      "next": "T45 prepares only a bounded local evidence carrier. QB reviews the fixed increment. Exact new access and database changes, if required, need direct human approval before any action. Original stopped R4 and keys remain preserved.",
+      "authority": "Latest human steering allows asking for and using necessary scoped management access; any new access or database change requires exact scope and direct confirmation before execution. No original-key replay or cutover.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "tree": "67b383c24d3ab66a74f252af9afc3e8dc810ec7c",
@@ -42212,8 +42212,8 @@
       "findings": 0
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
-      "at": "2026-11-09T13:35:27+08:00",
-      "state": "UNKNOWN_NO_REPLAY_EXISTING_CHANNEL_LIMIT_CONFIRMED",
+      "at": "2026-11-09T13:51:15+08:00",
+      "state": "UNKNOWN_NO_REPLAY_ADMIN_CARRIER_OFFLINE_PREPARATION",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42227,10 +42227,13 @@
       "writerSourceCommit": "d2500203db68c17210b1f640d9b45d90f14ccbe1",
       "installedSourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "transactionProofDesign": "Root and two exact publish receipts + linked audit + both imported batches. Root audit persists full_xid. Same-client whole-package transaction validates deferred closure before single COMMIT. Absence and unrelated XID do not prove rollback.",
-      "existingChannelLimit": "STATUS03 read-only connection reached BUSINESS_READY_NOT_CONFIRMED and never sent original-key SELECT. Installed runtime RLS enforces same readiness. Current controller host only allows exact prepared inspect V2 and original initializer proof. No confirmed minimal route for R4 pre-ready; no bypass, role change or direct SQL execution.",
+      "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "Report limit. Look for an existing authorized exact original-XID or status input path. If absent, review minimal read-only lane preserving target and privileges before any real query. If COMMITTED, reconcile; if confirmed aborted and no writes, only then diagnose writer and plan bounded same-key retry. No cutover."
+      "next": "T45 prepares only a bounded local evidence carrier. QB reviews the fixed increment. Exact new access and database changes, if required, need direct human approval before any action. Original stopped R4 and keys remain preserved.",
+      "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
+      "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
+      "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c"
     }
   }
 }
