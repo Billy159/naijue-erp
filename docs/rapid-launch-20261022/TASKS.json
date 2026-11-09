@@ -42498,7 +42498,7 @@
         "legacyCatalogReceiptSHA256": "a39cafac4d415dbcdf4e202b15bc1d9ef49bd0281b7d14f45b2a3b0a181f3467",
         "knownDumpAllocatedBytes": 3273240576,
         "newTargetWriterReceiptPreservation": {
-          "status": "QB_SOURCE_AND_LOCAL_PACKAGE_MAPPING_PASS_CONSUMER_IMPLEMENTATION_PENDING_NO_DEPLOYMENT",
+          "status": "QB_LOCAL_MATERIALIZER_PASS_ACTIVE_CARRIER_UNCONNECTED_NO_DEPLOYMENT",
           "commit": "75144abc47d89bf5204cf88a92737981bb5e025d",
           "tree": "7257f63f019b97f2b5a588fa4861a864f64f3ff7",
           "parent": "72eb4b8ccd2a55078f3f32f83e74ac1f0d44eff3",
@@ -42516,7 +42516,16 @@
             "layoutSHA256": "47b4fc8bf350235fd4ee2f5783b3afc307b6bdce84181960859ddd7a1c248dfd",
             "checks": "D2 361 member byte/mode readback, 357 unchanged and 4 changed, zero added/removed. Node 24.21.0 local packaging, loader, CLI help and readback module import exit 0. C recomputed six delivered file digests. Linux live loading and real PostgreSQL unverified."
           },
-          "next": "T45 and QB confirmed the static consumer mapping only. The same carrier constant currently binds both current execution and historical original-key lookup. Coordinate one candidate that separates the current tool and original writer identity with the frozen writer archive seam. Preserve original keys, digests, and the staged 72eb. Confirm issuer binding and pending recovery contract before implementing dependency changes. No server transfer or app rebuild."
+          "materializer": {
+            "commit": "aa6c58addfd78afc1a98b354cc95ccbbc0c71186",
+            "tree": "6cd6ab6efa11d33d8ed3244b1690d2246fe581f2",
+            "parent": "be7ea5c1981c9158d98daedc64df8b7b2e968dc4",
+            "sourceSHA256": "726e3810e416c8d75b22c4a2202a3e03b1fbf40420d20d13ee040008d98ee212",
+            "testSHA256": "fb1582119f492a33f016a96c999d7eac2d666c76f61f7432067a82bdc273d53d",
+            "jobKey": "t45-first-r1-tool-materialize-75144abc-20261110-01",
+            "test": "T45 actual 75144abc archive parser exit 0, 361 files, 52 directories, 5151292 bytes; rejects old archive configuration or incorrect source. python3 -B -m unittest -v, three affected tests exit 0. Original QB independently passed three focused tests and actual be7 carrier source with offline root-read substitutes. Existing RAW/RAW_REMAINING/72eb matches; successor rejects before artifact read or writes as FIRST_MATERIAL_FIXED_CARRIER_TARGET_REQUIRED. No actual stage, Linux or deployment."
+          },
+          "next": "T45 local materializer ready. Active carrier, issuer consumption and real READY are unconnected. Coordinate the same carrier candidate that separates the current tool and original writer identity with the frozen writer archive seam. Preserve original keys, digests, and the staged 72eb. Pending recovery contract before implementing dependency changes. No server transfer or app rebuild."
         },
         "newTargetOriginalWriterArchiveCheck": "T45 report 7213aefe0692703e32dc80587ad3d9bc3f93abe851bf1c5b11ca3c91d5d7e669, test d3b56e32386a4e6d499488f230ebb9fdf3f7ddcc7c309dfe275e6a4323675ef2. QB independent 6/6 offline. Present writer result does not establish actual consumed V2 authority and matching parameters raw in same root-frozen key, or old carrier birth. Swapped live input keeps UNKNOWN and shared parameter digest cannot prove original authority. T45 prepares minimal reuse of manager freeze with exact execution and reaping proof, no new SQL/privilege, no reactivation or replay. D1 verified standalone verifier cannot complete split backup proof until actual rooted verify raw and writer CLOSE are available; partial raw never sufficient.",
         "newTargetOriginalWriterArchiveDesign": "T45 design SHA256 34b8f73a248f704ef5dce6f29b345feab7559a1d0e5046e9a5921679f41df5c0, proposal only. Existing submit hashes the bytes after text decode and path rewrite, so prove issued bytes match the manager-frozen leaves before relying on them. Reuse the fixed Docker stdin bootstrap and only then pass internal FDs to the Node child. Persist actual loader digests and original epoch in the protected writer job before any business write. Consumption does not prove commit. Check the existing issuer binding before adopting any change to the authorization dependency. No source acceptance, role change, or server execution.",
@@ -42537,6 +42546,7 @@
         "supersededIndependentReadbackAdapterSHA256": "93446fe4f342de9b5c4080537beae0b978670871efbdb519e7f1c91b95aa0aaa",
         "newTargetIndependentReadbackVerification": "Original QB passed r2 container-path binding and rejected the host-path regression in offline targeted verification. Actual ordinary-account issuance and data readback pending.",
         "newTargetBackupPreparation": "D1 fixed R1 private producer a902ce2f84bf43b870e9d02b68db78acfcdceabd7dfd76dd78e5138615dbcea9 / handoff 07928334f4b46a9dded029c3009c99eb474b92ee5e87680f9b0f20c2cd620ac5 against df7aedc6. QB independently passed the five new focused offline checks. Five actual installation/program/target/catalog/first stop pins are null, so execution rejects. Preserve APP576 closure, original COMMIT and readback, closed drained fence and current role/service/guardian. Existing successful EXECUTE can retain the same epoch, allowing backup after independent reconciliation and before the terminal stop if there is enough authorized time. No second restart requirement in the backup contract. Actual database backup, restore and release untested.",
+        "newTargetBackupRestoreAuthenticationExpiry": "D1 read-only scope of a902ce2f and aca4cebb plus upstream REL_17_11. pg_dumpall --roles-only serializes original finite VALID UNTIL independently of --no-password. The restore applies the original bytes, compares ACL including validUntil, then requires a new password-authenticated connection as the exact ordinary runtime before producing DB_RESTORED_APP_NOT_VERIFIED. The app recovery gate also requires that successful ordinary read and binds the same expiry. A restore beginning or reaching ordinary login after proposed L cannot complete this chain with the unchanged password authentication. No real restore or duration evidence. Preserve original backup and source ACL; account for enough verified remaining time or an explicitly approved isolated-restore-only bounded authentication handoff before first install. No authority issued or permissions changed.",
         "verifiedLocalInputSHA256": "fc831c282f982ca22c840906aae96bf69acf23e785a42c199655e0ccf297365e",
         "verifiedLocalAppArtifactSHA256": "b8069af0e2f42b990b4645b4fd34857d184db0529e43132faa04d218bbfff830",
         "verifiedLocalRestoreArtifactSHA256": "7d3af69c308aaf50c1154d12db0075fa6f55011925457c58119f5f8d251d3889",
