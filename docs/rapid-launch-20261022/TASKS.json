@@ -42427,6 +42427,15 @@
                 "observation": "00:10:34.546 +08, 0.719 s. Bridge naijue-fresh35-first-20261109-r1-front, internal, 10.248.42.208/28, zero endpoints. Creation preflight found zero same-name or overlapping networks/prefixes. At 00:10:58.856 unit, grants and cgroup were clear. No container mutation or PostgreSQL connection. Original failed create retained without replay.",
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
+              "firstNativeInstallConfirmation": {
+                "status": "SCOPE_FIXED_AWAITING_USER_CONFIRMATION_NO_ISSUANCE",
+                "owner": "T45",
+                "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
+                "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
+                "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
+                "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
+                "next": "Prepare final plan, stage templates and request keys off host. T45 may provision, enter and install only after confirmed scope and actual stage bindings. Require same-target installation record/catalog/role readback and clean stop. Business import, public application deployment and cutover outside this scope."
+              },
               "explicitSubnetReadback": {
                 "jobId": "t45-first-r1-front-ipam-readonly-20261110-01",
                 "status": "COMPLETED_0_CANDIDATE_OBSERVED_ZERO_OVERLAP_NO_CREATE",
