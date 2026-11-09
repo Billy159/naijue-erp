@@ -28514,8 +28514,8 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "QB rejected 06 timing enforcement. Original T45 preparing fixed offline launch/point budget gates; preserve accepted 06 closure guards. No new R4 job.",
-      "QB": "06 rejected on two reproduced budget gates; accepted independent C and CLOSE/lock changes offline.",
+      "T45": "07 approved one-shot BOOT/POINT consumed, both processes absent, no confirmed full cleanup or query. Only existing authorized readback for original failure and protected cleanup evidence to be considered, no replay.",
+      "QB": "07 8 targeted budget checks offline pass; actual query/cleanup proof absent.",
       "D1": "Dispatched original D1 offline-only exact APP576 backup producer binding. Real stop pin remains pending original COMMIT, reconciliation and the new actual stop.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
       "D3": "Independent original400e COMMITTED reconciliation wait; latestclassification/probe result adopted, no new cleaning task.",
@@ -42239,7 +42239,7 @@
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
       "at": "2026-11-09T16:02:05+08:00",
-      "state": "UNKNOWN_NO_REPLAY_OUTER05_ACTUAL_BOOT_AND_CLEAN_CLOSE_POINT_NOT_SUBMITTED",
+      "state": "UNKNOWN_NO_REPLAY_OUTER07_POINT_FAILED_PROCESSES_EXITED_FULL_RESTORATION_UNPROVEN",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42256,7 +42256,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "T45 offline full deadline and handoff budget. Evaluate one-hour outer scheduling and actual point cap, current role/service facts, frozen phase preparation, no server execution or new authority.",
+      "next": "Identify an existing explicitly permitted, redacted readback of this original POINT phase failure and original protected cleanup evidence without restarting. No reuse of consumed BOOT or POINT keys; keep original writer UNKNOWN.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42342,6 +42342,29 @@
           "adopted": "C epoch binding, no replay, POINT lock unknown CLOSE suppression, guardian +60, CLOSE entry +65 / signals +90 passed offline; 19 tests rerun.",
           "findings": "Actual submit accepted both BOOT and POINT at 100s remaining. POINT command then got 50s, below 52.766s measured prior BOOT transport/queue proxy. Planned 120s lacked enforcement; 185s local check not immediately before BOOT submit.",
           "next": "Original T45 offline-only fixed successor, enforce planning 120s in independent issuance and submit while preserving old 60/50/36. Confirm adequate BOOT budget and late arrival at actual launch. No new approval/window."
+        },
+        "outer07": {
+          "readySHA256": "e88cc394a8ad7227ee712219fa97adf42413260991d80c9c009a78684c9157e1",
+          "stageSHA256": "b99d6dbf85ec1e151187012430b4137ec99a0abb29bef7768160368da484b782",
+          "qb": "PASS_07_LAUNCH_BUDGET_GATES_OFFLINE, 8 targeted tests; original 26 adopted, 16 READY/25 static/8 BOOT pins.",
+          "authorizationReference": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915/call_2ff72c8e7a4f4298a6c33094c2d04cf9/0",
+          "authorizationConsumed": true,
+          "actualPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-fixed-readonly-actual-02/RESULT.json",
+          "actualSHA256": "11a7bdd5635558ea3e20a38388343bd7b24a82894945a18e2c5c807b62381b1b",
+          "bootJobSHA256": "0402af857fbf8570c0668b73004acf2f279dd79bb377fdd282ed6bbbe4f1ad1d",
+          "pointJobSHA256": "b4b806dd8b71a72827bf8280a53ac3e1d45ad62c1fd415ee5ab5915339fb6b11",
+          "finalKeyCheckSHA256": "a490e6f2314bdf6ec33f56e9ec0416cf96927857ed9aa6ec512053ae45bd095e",
+          "finalProcessCheckSHA256": "edaf4925d43348ad9f36f0104cc099985b2871907101ca554824e4426d4a61aa",
+          "outcome": "BOOT_COMPLETED_POINT_FAILED_OWNED_PROCESSES_ABSENT_FULL_RESTORATION_UNPROVEN",
+          "budget": {
+            "bootLocalIntent": 1794215717548,
+            "pointAuthorityStartsAt": 1794215767364,
+            "pointLocalIntent": 1794215767430,
+            "bootRemainingAtIntent": 299991,
+            "pointRemainingAtIntent": 250109
+          },
+          "point": "FAILED exit 2 at 0.218 s, no exports. Query result, exact failure stage and authentication mutation/restoration unproven.",
+          "cleanup": "After guardian deadline exact PG and guardian both absent, manager inactive. CLOSE not submitted without lock custody proof; HBA readback PERMISSION_DENIED; clean stop, full restoration and lock release evidence incomplete."
         }
       }
     }
