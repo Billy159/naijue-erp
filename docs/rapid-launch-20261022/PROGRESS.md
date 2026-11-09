@@ -3688,3 +3688,5 @@ T45 后继 3cfd13281fdc4b0963f5abe2732a742a0e9fcaa9 与清单 b3d74bbf 独立重
 23:33:36 +08 原 T45 限定 root 只读 front COMPLETED/0、0.167 秒，固定专用网实际不存在。准确空容器/端口、根、固定镜像匹配，root 可用内存14.22 GiB/4核、同盘29.19 GiB。终态0dd1b7d9、读回8dba185a、总实证d29552e0，收尾unit/cgroup空。网桥待签稿 ad3fa4c5 被QB拒绝：最后只剩100ms仍能发最长15秒 create。原T45只补双窗剩余覆盖 create+读回，原QB验差异。另T45本地实核首装入口未内置同卷28GiB和运行6GiB自动停线，沿原容量/停线设施补确切接线，启动三段实际须余>90秒。未签发建网、建库、导入或切换。
 
 网桥后继脚本实算813fb0fd9e40c4cf1f6f5a0f146fa018ec0535206f4cde7c411da748b3206f7e，QB 四条本机模拟通过，双窗须剩>24秒。C 按新系统准备指令签发仅一个空内桥，授权SHA a6058aa7a3b87f872c671ed5bb8f8a007986e16090c432927c366488e8c43d5d。T45 原键23:48:21.873 +08 FAILED/2、0.168618s、creationAttempted=true、FRONT_CREATE_RESULT_UNKNOWN_NO_REPLAY，未获可用Docker ID且无stderr证据。终态1a654d28、阶段d2d90a60；23:50:24 unit/cgroup/PID清空，未重提。C 只授权原T45限定root后验该唯一名称、属性、端点及原有诊断，不重提、不清理或建库。首装容量改动本地继续。
+
+23:52:50.626 +08 原T45唯一只读后验 COMPLETED/0、2.424859s，同名网0、inspect absent。terminal18c9949e、phase6d393d56，原create保留FAILED/2及已发事实。原时窗Docker/作业日志无可归属记录，拒绝原因未知；23:54:27 unit/cgroup/PID清空。原T45只比照此前实际已成内桥并查必要脱敏池/策略事实，不重提。首装容量本地两文件 c89321e0/32055e69，29定向+16原V2通过，已交原QB，真实Linux/PG未运行。
