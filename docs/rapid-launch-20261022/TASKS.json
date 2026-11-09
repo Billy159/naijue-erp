@@ -33307,8 +33307,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T15:15:53+08:00",
-      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_ISOLATED_PROBE_QB_NEED_FIX",
+      "at": "2026-11-09T15:23:10+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_PROBE_QB_PARENT_CANCEL_FIX",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 repairs the two QB-reproduced probe defects offline. QB retests only the affected interruption/FD and deadline paths. No probe or R4 job has been issued.",
+      "next": "T45 fixes immediate parent-only cancellation propagation through the existing pipe. QB retests that real local fork/signal case and adopts the already closed FD-slot and absolute-deadline findings. No live probe or R4 job issued.",
       "authority": "Latest human steering allows asking for and using necessary scoped management access; any new access or database change requires exact scope and direct confirmation before execution. No original-key replay or cutover.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -42212,7 +42212,7 @@
       "findings": 0
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
-      "at": "2026-11-09T15:15:53+08:00",
+      "at": "2026-11-09T15:23:10+08:00",
       "state": "UNKNOWN_NO_REPLAY_DISPATCHER_LIVE_PIN_MATCH_POINT_CAPABILITY_UNTESTED",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
@@ -42230,7 +42230,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "T45 repairs the two QB-reproduced probe defects offline. QB retests only the affected interruption/FD and deadline paths. No probe or R4 job has been issued.",
+      "next": "T45 fixes immediate parent-only cancellation propagation through the existing pipe. QB retests that real local fork/signal case and adopts the already closed FD-slot and absolute-deadline findings. No live probe or R4 job issued.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42258,7 +42258,10 @@
       "dispatcherLiveCapabilityResultSHA256": "35a50fc970a95e30d59a1d38ab64303c47ddcbc570c77f3a282c2023d93a7cf4",
       "pointFixtureProbeReadySHA256": "3a11bed9183dc2a097dc74936dee8ba107ce1f604df801ec8a6683ea27d11550",
       "pointFixtureProbeSHA256": "059d49cb287fae3b7127d4aed0b3922aae4fcd9486f7927ac75806b0b8b52242",
-      "pointFixtureProbeReview": "QB turn 01a1bf26-947e-7440-b9c5-fb1b32ab6a3d: NEED_FIX_FIXTURE_FD_LIFETIME_AND_CHILD_WINDOW_BEFORE_ISSUANCE. Independently reproduced FD reuse during interrupted reap and an attempted duplicate after the window. Manager layout, exact pins, repeat rejection and 7 author offline checks verified. Linux syscall and real POINT remain untested."
+      "pointFixtureProbeReview": "QB turn 01a1bf26-947e-7440-b9c5-fb1b32ab6a3d: NEED_FIX_FIXTURE_FD_LIFETIME_AND_CHILD_WINDOW_BEFORE_ISSUANCE. Independently reproduced FD reuse during interrupted reap and an attempted duplicate after the window. Manager layout, exact pins, repeat rejection and 7 author offline checks verified. Linux syscall and real POINT remain untested.",
+      "pointFixtureProbe02ReadySHA256": "1655a6edda346d23acba7bc344d6e6b3095aa9982d08d87768990d9a1659957e",
+      "pointFixtureProbe02SHA256": "509fd13ce3c96713f90f0e2c960d7f156012ba0c2e3ebab03049100fd86437ba",
+      "pointFixtureProbe02Review": "QB: FD slot preservation and wall/monotonic deadline findings closed offline. NEED_FIX_PARENT_CANCEL_PROPAGATION_BEFORE_ISSUANCE. Real local fork/SIGTERM reproduced only-parent cancellation not reaching child before simulated syscall. Linux syscall and real POINT untested."
     }
   }
 }
