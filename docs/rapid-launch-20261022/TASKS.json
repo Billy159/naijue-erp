@@ -33307,8 +33307,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T15:29:21+08:00",
-      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_PROBE_OFFLINE_PASS_LIVE_SCOPE_CONFIRMATION",
+      "at": "2026-11-09T15:38:38+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_ISOLATED_LINUX_PROBE_PASS_POINT_BINDING_PREP",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Obtain confirmation for the exact host-root synthetic probe outside the current R4 database-only approval. T45 then uses the existing manager once; 60-second probe authority and 20-second stage wait are distinct from manager queue and receipt time. No new privilege, database changes or production-lock access.",
+      "next": "T45 binds the existing dispatcher lock to POINT offline using the now-proved same-context Linux duplication primitive; QB reviews only this delta. Prepare the exact R4 query/authentication/cleanup scope for separate user confirmation if it changes authentication or the database. No R4 job has been issued.",
       "authority": "Latest human steering allows asking for and using necessary scoped management access; any new access or database change requires exact scope and direct confirmation before execution. No original-key replay or cutover.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -42212,8 +42212,8 @@
       "findings": 0
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
-      "at": "2026-11-09T15:29:21+08:00",
-      "state": "UNKNOWN_NO_REPLAY_DISPATCHER_LIVE_PIN_MATCH_POINT_CAPABILITY_UNTESTED",
+      "at": "2026-11-09T15:38:38+08:00",
+      "state": "UNKNOWN_NO_REPLAY_ISOLATED_LINUX_PROBE_PASS_REAL_POINT_UNTESTED",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42230,7 +42230,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "Obtain confirmation for the exact host-root synthetic probe outside the current R4 database-only approval. T45 then uses the existing manager once; 60-second probe authority and 20-second stage wait are distinct from manager queue and receipt time. No new privilege, database changes or production-lock access.",
+      "next": "T45 binds the existing dispatcher lock to POINT offline using the now-proved same-context Linux duplication primitive; QB reviews only this delta. Prepare the exact R4 query/authentication/cleanup scope for separate user confirmation if it changes authentication or the database. No R4 job has been issued.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42264,7 +42264,12 @@
       "pointFixtureProbe02Review": "QB: FD slot preservation and wall/monotonic deadline findings closed offline. NEED_FIX_PARENT_CANCEL_PROPAGATION_BEFORE_ISSUANCE. Real local fork/SIGTERM reproduced only-parent cancellation not reaching child before simulated syscall. Linux syscall and real POINT untested.",
       "pointFixtureProbe03ReadySHA256": "cb2990bf9440fd2730a6a73b0be1ae5fc7597c68b4b063bd2f95ff4bc2425d74",
       "pointFixtureProbe03SHA256": "4531ff282801b825f482d9e4193bbd78977746cbbbba26ea034d253e5a6b89db",
-      "pointFixtureProbe03Review": "QB PASS_PARENT_CANCELLATION_OFFLINE_READY_FOR_USER_CONFIRMATION, 4/4 local targeted tests. All three local findings closed; real Linux syscall and R4 untested. The exact host probe and database approval are separate."
+      "pointFixtureProbe03Review": "QB PASS_PARENT_CANCELLATION_OFFLINE_READY_FOR_USER_CONFIRMATION, 4/4 local targeted tests. All three local findings closed; real Linux syscall and R4 untested. The exact host probe and database approval are separate.",
+      "pointFixtureProbeActualResultSHA256": "77cea2341f54c0cc6ca40d32ac8ef3f8677a3e9d792fe692362f87d8d982bbbc",
+      "pointFixtureProbeActualReportSHA256": "4d52d5d2f23e45a9c9b6ff5f15f31087a10162363a537267aebc5117ceb5f05c",
+      "pointFixtureProbeActualJobReceiptSHA256": "098aaa9cfbe1c2d2daa6147df4e717c924833b70a3b691e764bb630ec954ed30",
+      "pointFixtureProbeActualPayloadReceiptSHA256": "39b4d1b8fda6caed2c3e690f46f790ec7d2ae72e8865603a0b78922c9107d2e8",
+      "pointFixtureProbeActual": "Single approved isolated run completed with code 0; existing T45 service launch context and actual Linux pidfd_getfd succeeded on an anonymous fixture in the direct parent. Shared offset and lock retention verified; child reaped, lock and file released. Actual dispatcher FD, POINT, PostgreSQL and R4 untested."
     }
   }
 }
