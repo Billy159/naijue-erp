@@ -42272,6 +42272,61 @@
         "owner": "T45 volume/topology and actual operations; D1 loader; D2 fixed artifacts; QB isolation/peak/transactions; D3 independent reconciliation; C exact authorization and cutover gates.",
         "actualBoundary": "No new job, PostgreSQL connection or start, grant, import, or switch. Exact target, new capacity, full-writer and recovery proof are outstanding; no ETA."
       },
+      "approvedRestoreRetirement20261109": {
+        "status": "PASS_EXACT_FOUR_RESTORE_CONTAINERS_FOUR_DATA_LEAVES_ONE_EMPTY_VOLUME",
+        "approvedScopeSHA256": "39f7e29c464dfa9b17f8c107fa578fb183cadd959b27f5a6cee72299f0fd48e7",
+        "job": "t45-retire-four-restore-data-leaves-20261109-01",
+        "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-retire-four-restore-data-leaves-20261109-01/transport/release-receipts/t45-retire-four-restore-data-leaves-20261109-01/restore-retirement.json",
+        "receiptSHA256": "f74deb40425144e3e60a4b9b1f653b4ff6985457bfef48ea7e3183ffbd26c08c",
+        "device": 66304,
+        "availableBeforeBytes": 8553799680,
+        "availableAfterBytes": 29451563008,
+        "actualAvailableIncreaseBytes": 20897763328,
+        "absent": 9,
+        "sourcePreparation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/FRESH35-CLEAN-INSTALL-20261109/IMPLEMENTATION-HANDOFF.md",
+        "remainingReadback": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-retire-four-restore-data-leaves-approved-01/REMAINING-LIVE-READBACK.json",
+        "remainingReadbackSHA256": "aa7de6c33cabae67527dcbde3adcc33f948b259812645655ab33c0c8665a7d55",
+        "remainingReview": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/FRESH35-CLEAN-INSTALL-20261109/REMAINING-RETIREMENT-REVIEW.md",
+        "remainingStatus": "No second execution list. The prior exact read-only authentication carrier is absent; T45 made no connection. Three backup roots have 16/17/16 ordinary files, but independent replacements and evidence references are not closed. R4 unknown result, parent binds and unique ability to re-query retained.",
+        "rebuildStatus": "Server root 29451509760 B available and derived PG image present; no independent locked APT closure. Historical 3 GiB cgroup OOM. New whole-writer peak not proven; T45 xhigh offline source in progress and D1 recovery receipt bindings checked.",
+        "owner": "T45 sole host and deployment source owner; D1 exact recovery receipt and writer peak review; C coordinates and binds one residual approval",
+        "next": "Identify an existing exact read-only route to the old catalog and close backup references. Bind new target disk and same-scale import peak, then propose the bounded host validation of the fixed first-install path. No further deletion, database creation, import or entry switch approved.",
+        "remainingCatalogAndBackupResultSHA256": "aabd2ee10458bfef69ba7e483497e94cb38627b4388473e3096effb9c39d2c25",
+        "firstInstallSource": {
+          "previous": "b4f34a77faf56418ffd1696491678573ffaae259",
+          "current": "e409ff82c074c3e19dc5c277830253a935c439ed",
+          "currentTree": "c9d19d6ab9b93a016b2e4af631334587bec30b8e",
+          "bootSHA256": "7e50064b89f54b6095c4172df58d54a5bc9b9621c8cb35dd6fd46671526cd196",
+          "branch": "codex/fresh35-clean-install-t45-20261109",
+          "state": "T45 36 targeted PASS and QB 6 independent targeted PASS for the four boot fixes; prior passing stage/activate and legacy pins reused. Actual systemd/Docker, PostgreSQL and server deployment untested. No helper registration or push.",
+          "previousReceiptSHA256": "c6e04464256bc4d3aaf4832311c258fbb19b9541a66b257290dcdb1407bf263c"
+        },
+        "restoreApplicationSource": {
+          "commit": "aca4cebb4813cb52691cf5b8507ed6a208f75cb4",
+          "state": "D1 32+4 and API typecheck; D2 local build and pack exit 0; 454 archive members verified. Independent PostgreSQL recovery and ordinary app login not tested.",
+          "archiveSHA256": "7d3af69c308aaf50c1154d12db0075fa6f55011925457c58119f5f8d251d3889"
+        }
+      },
+      "fresh35DirectInstallAfterRetirement20261109": {
+        "status": "ACTIVE_PREPARE_ONE_RETIREMENT_SCOPE_THEN_INSTALL_NEW_TARGET_WITH_NO_SEPARATE_REHEARSAL",
+        "approvedPreviousRestoreRetirementReused": true,
+        "newRetirementConfirmationPending": true,
+        "retirementIntention": [
+          "erp_prod only, no other database or unproven shared asset",
+          "three exact old backup roots subject to dependency exclusions",
+          "R4 data leaf including potentially committed data; original receipts preserved"
+        ],
+        "originalExecute02": "UNKNOWN_NO_REPLAY; no further R4 boot or lookup",
+        "noSeparateRehearsal": true,
+        "verifiedLocalInputSHA256": "fc831c282f982ca22c840906aae96bf69acf23e785a42c199655e0ccf297365e",
+        "verifiedLocalAppArtifactSHA256": "b8069af0e2f42b990b4645b4fd34857d184db0529e43132faa04d218bbfff830",
+        "verifiedLocalRestoreArtifactSHA256": "7d3af69c308aaf50c1154d12db0075fa6f55011925457c58119f5f8d251d3889",
+        "verifiedLocalToolArchiveSHA256": "5a3d71fda74bcd12b5d11997ff3c466898b094cac60b08ae13b6d6b91f4fa021",
+        "importBindingGap": "Current 4279 host/tool/carrier pin R4 report root, job-key domain and protected restart identity. Downstream e409ff82 first-install helper does not supply this import binding.",
+        "independentReadbackSource": "8874ce044e1d7696eb50f433187c62ffca066f8f",
+        "execution": "No new server action in this checkpoint. Exact independent target, same disk phase budget, cgroup limits, install materials, authority, and second deletion confirmation pending.",
+        "owners": "C coordinates; T45 high sole server and carrier; D1 high native import binding; D3 high independent readback"
+      },
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
