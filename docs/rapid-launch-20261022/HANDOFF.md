@@ -4022,3 +4022,5 @@ T45 后继 3cfd13281fdc4b0963f5abe2732a742a0e9fcaa9 与清单 b3d74bbf 独立重
 11-10 D2交付75144abc定向工具包。C实算RESULT 6f669d2c、READY b8033760、归档57445437、manifest beaa2a69、descriptor 00967649、layout 47b4fc8b，全部一致。361成员，357原样、4变化、无增删。四项本机命令exit0。原T45已收到本机消费方重绑，原QB仅核增量。现72eb服务器物料未改，新工具实际Linux加载与PG未验。T45归档接线仅设计34b8f73a。C实际核原提交是文本读取及替换后计算manifest，故须锁定签发与冻结的实际同字节，并经Docker stdin送容器root后用内部FD交CLI。首写前保存实际消费证明与原代次，证明消费与提交分开。签发方与冻结job的绑定仍需核明，有限续启合同仍未获新确认。未起库、写入、清理或切换。
 
 11-10 原T45和QB独立核对75144abc消费方映射：物料、入口、三个正常作业及回执须同版，当前常量还用于旧writer的原键核对，不能全局换版本；物料脚本同时固定载体SHA。由原T45在同一候选分离当前执行与原writer来源，确认签发绑定再接，保留旧键和72eb。仅静态映射通过，消费方未实现。前一检查点6d036a9a已推送并读回。
+
+11-10 C在be7ea5c1从实际deploy-first-install.py（b461e37e）加载原APP576基础helper（0f2a35cf），用现有合成SharedNamespace对照：租约到期前1ms接收同一绑定，到期瞬间拒绝EXACT35_SHARED_SERVICE_LEASE_EXPIRED。python3 -B exit0，零Docker/PG/服务器动作。原T45另核现有manager可用原request.manifestSha256冻结同键原字节，但新writer未发、两个加载器仍消费活/etc，冻结不能代实际消费。正式入口e409ff82仅启动web、依赖已活PG与APP本代容量证明，首装helper pin仍None待原审核。有限首装载体到期停PG，原同CID续启不得跨S，当前没有正式持续运行交接。把正式交接纳入同一R1载体接续，保持原审核、真实备份恢复、初装和公开入口仍HOLD。
