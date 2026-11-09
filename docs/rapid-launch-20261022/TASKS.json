@@ -42343,6 +42343,13 @@
         "retainedNativeSourceReadOnlyJob": "t45-first-r1-old-r3-closure-readonly-20261109-01 COMPLETED/0, 6.382s, 7294 deployment + 4 metadata files, 238224897 B, no difference, original unit cleaned up",
         "retainedNativeSourceReadOnlyReceiptSHA256": "a8ccc7731c9328b169b44aa31206451a93c2db244a05c330b9a635635bbe720a",
         "retainedNativeSourceReadOnlyResultSHA256": "4c589ae6eb7cb6c0e42e1530dcfffdb012e485da4da1d6052235ff7a1977db36",
+        "freshTargetServerReuseCandidateCommit": "31086e0c76df7bf28d138f4cb1283cfaa0083c95",
+        "freshTargetServerReuseCandidateTree": "73e6e46f8197846b452a2aecd8a66ac1e3778e86",
+        "freshTargetServerReuseIssuanceScopeSHA256": "b363fa1e4ecc182a5e9c88ae09b264171170c742f5343cf887feb04b0d027b7c",
+        "freshTargetServerReuseLiveReadbackSHA256": "7fb3caa9a5f9eed3794596144451610972ba464acde29ac2f62406fc916a7ace",
+        "freshTargetNativeCopyAuthorization": "C issued only t45-first-r1-native-materialize-20261109-01. SHA e8c6449e4cc03eaa0356d1f51be254dc0872ee82e72ee76ef653890708142f01, [1794234135377,1794234735377). T45 only executor; actual receipt pending. No DB or existing-root mutation. Vault and small-tool root policy authorization stages are separate and serialized.",
+        "retainedOriginalBusinessApprovals": "T45 read-only verified original protected approval archive retained and all six member SHAs. Existing admin nonsecret metadata remains separately pinned, old server file EACCES for ordinary account. No credentials read or projection executed.",
+        "freshTargetPrepareInputReview": "D1 72eb actual consumer matches T45 new key and roots. Six already approved original-byte inputs may be reused with their SHA; installation, new runtime identity, exact 45 access entries and four projections are new physical inputs. PREPARE needs them but no execute authority. Old d987 business proof remains valid, its old 17-field exact R4 safety-review binding cannot authorize new EXECUTE. After actual PREPARE yields the new 17 fields, get a narrow independent review and exact EXECUTE decision.",
         "freshTargetNativeTransportLimit": "Exact ordinary native archive 83705857 B. Original SSH operation hard timeout 40 s, theoretical payload floor 2.09 MB/s plus protocol overhead. Old 4064380 B delta READY does not prove this transfer. No measured complete attempt and no permission to relax or replay.",
         "freshTargetObservedHost": "21:24:53 +08, device 66304, free 32723607552 B, MemAvailable 15255433216 B and 4 CPUs, exact new production/restore targets vacant. Fixed Linux image and existing Node/npm files present; no new container resource or runtime-load evidence.",
         "retirementIntention": [
