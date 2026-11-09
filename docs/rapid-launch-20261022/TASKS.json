@@ -28514,7 +28514,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Exact outer05 authorized and dispatched to original T45 once; query/cleanup receipts pending. Independent history856e ordinary copy stays deferred until fresh resource preflight.",
+      "T45": "Outer05 clean terminal; POINT never submitted. Original T45 preparing coordinated offline full deadline and receipt plan; no new job or authority.",
       "QB": "Outer05 offline pass, no live R4 proof.",
       "D1": "Dispatched original D1 offline-only exact APP576 backup producer binding. Real stop pin remains pending original COMMIT, reconciliation and the new actual stop.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
@@ -42239,14 +42239,14 @@
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
       "at": "2026-11-09T16:02:05+08:00",
-      "state": "UNKNOWN_NO_REPLAY_OUTER05_ACTUAL_SCOPE_APPROVED_DISPATCHED_TO_T45",
+      "state": "UNKNOWN_NO_REPLAY_OUTER05_ACTUAL_BOOT_AND_CLEAN_CLOSE_POINT_NOT_SUBMITTED",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
       "queryDraft": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/R4-TOOL798482CE-STAGING03-20261107-01/C-EXECUTE02-ORIGINAL-KEY-EVIDENCE-20261109.md",
       "queryDraftSHA256": "f2fa8501fb56d495b198235fac4c45819066b78d990440330453ac7b0fa67aef",
       "queryExecuted": false,
-      "newWindow": false,
+      "newWindow": true,
       "oldImportReplayed": false,
       "originalOperation": "t45-r4-real-execute-20261107-02",
       "originalInitializerOperationAndRequestKey": "a5ae6007-0e5b-3b5a-9c96-ea8a240c9063",
@@ -42256,7 +42256,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "Original T45 verifies exact target, unused job key and finite window before one original-key query. Retrieve query and cleanup receipts; no row leaves UNKNOWN.",
+      "next": "T45 offline full deadline and handoff budget. Evaluate one-hour outer scheduling and actual point cap, current role/service facts, frozen phase preparation, no server execution or new authority.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42309,7 +42309,20 @@
         "source": "Original main controller user reply to call_308aef713eda404d822817840e9f0529/0",
         "answer": "确认本次 R4 原键核查和临时认证恢复",
         "scope": "Same R4 once, existing host identity and actual dispatcher lock transfer, original-key read-only. Conditional exact single-role, loopback HBA and OID 10 expiry CAS only; restore and verify original state. 300 s operation + 90 s cleanup only.",
-        "state": "DELIVERED_TO_ORIGINAL_T45_EXECUTION_AND_CLEANUP_RECEIPTS_PENDING"
+        "state": "CONSUMED_AND_EXPIRED_AFTER_ONE_BOOT_AND_CLOSE"
+      },
+      "outer05Actual": {
+        "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-fixed-readonly-actual-01/RESULT.json",
+        "resultSHA256": "11088fae5146b80c1829ea8648760ad4447530da5a799102fc55aa4af962dc40",
+        "bootJobSHA256": "830386fcbb6ba119a7df3709df6a0ce9093ae4d11ac0d2bcec52c9ec07783917",
+        "closeReadbackSHA256": "4b203189ad00cff916d33a8d9ec6dc2d1ba264a676cbba120b6446200a5e14e5",
+        "noPointSHA256": "90c899d8ec7e522a084dda261484ecfdbc2608ba7b0ad858f691425697d7aac5",
+        "fixedSqlSHA256": "0b1f50b5913feeee0448ef81fbad2d590641308a8ea1e48f6ea355039e0dbd5b",
+        "queryResult": "NOT_RUN",
+        "authorizationRestoration": "NEVER_CHANGED_ORIGINAL_HBA_VERIFIED",
+        "shutdown": "CONFIRMED_EXACT_FULL_RESTORATION",
+        "actualTimeline": "Window issued 16:33:03.949 +08, BOOT intent 16:33:41.707, BOOT complete 16:34:37.582 (engine 3.075 s), POINT C file 16:36:46.059 (77.890 s remaining), local guard refused before dispatch, CLOSE complete 16:38:06.624 (engine 0.268 s).",
+        "nextReadOnlyPreparation": "Compare all windows and observed costs; freeze every precomputable item, bind only actual epoch after BOOT. Never reuse this authorization or writer job."
       }
     }
   }
