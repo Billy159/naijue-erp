@@ -42584,13 +42584,14 @@
             }
           },
           "documentOriginCandidate": {
-            "status": "FIXED_PINNED_NODE_3_PASS_QB_DELTA_IN_PROGRESS",
+            "status": "QB_NEED_FIX_DELAYED_HALL_CAPTURE_SOURCE_BINDING",
             "commit": "f90287eecec973377b33142bab7f386e30c6d18d",
             "parent": "ba00fef881744d82b0a9c9a9a2f81fcc1d626a0f",
             "tree": "317c3b343d4e219ba3d8f7ac4d0e03b40b64215f",
             "sourceSHA256": "02037adbd48305fb635fda373f61e96fe6ec655aab8e7753887310a3b2353de3",
             "testLogSHA256": "043ffe9bd65ea1eb425947b3c02e505eb00932b86837338027b2de64caa508d3",
-            "scope": "One additional ordinary read-only query in the same snapshot checks original sales headers, lines, settlements, transfer headers and lines against immutable origin, migration receipts and original snapshots. Later changes are counted as replay pending. C used exact committed leaves under Node 24.21.0 and ran the three new offline cases, exit 0. QB independent delta in progress. No live SQL/RLS/performance evidence."
+            "scope": "One additional ordinary read-only query in the same snapshot checks original sales headers, lines, settlements, transfer headers and lines against immutable origin, migration receipts and original snapshots. Later changes are counted as replay pending. C used exact committed leaves under Node 24.21.0 and ran the three new offline cases, exit 0. No live SQL/RLS/performance evidence.",
+            "qbFinding": "A delayed V2 sales hall capture can replace the warehouse operation ID with an absent UUID and recompute its own map digest. The candidate does not verify the warehouse source record, operation or capture time against the earlier same-root MASTER audit as the original 0035 verifier does. Do not adopt origin matched. Original D1 is correcting the exact capture or will leave the affected origin explicitly unverified. Existing offline model did not cover this rejection."
           },
           "next": "Keep immutable original writer and its interrupted state. Prepare only the missing batch-scoped read-only assertions and root proof; validate no expanded database permissions and no private rows in public logs. Separate evidence consumption in backup/release requires an exact same-target source/batch/plan/receipt binding and approval of snapshot semantics. No live action issued."
         },
