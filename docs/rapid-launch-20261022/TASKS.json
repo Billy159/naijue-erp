@@ -33307,8 +33307,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T14:49:48+08:00",
-      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_DISPATCHER_LOCK_LIFETIME_FIX",
+      "at": "2026-11-09T15:03:36+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_LIVE_DISPATCHER_PIN_MATCH_ISOLATED_PROBE_PREP",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "T45 verifies original lock lifetime at HBA admission and cleanup; use exact existing supported mechanism or report prerequisite. Reproduce dispatcher death while POINT stays live, then QB reviews only the delta before approval. Three keys remain unissued.",
+      "next": "T45 prepares a fixed isolated capability probe using the existing manager and synthetic processes only, then verify exact scope. No real dispatcher FD access, no database or policy changes. If existing permissions cannot support it, the single-POINT-key shared dispatcher inheritance delta requires separate review/approval.",
       "authority": "Latest human steering allows asking for and using necessary scoped management access; any new access or database change requires exact scope and direct confirmation before execution. No original-key replay or cutover.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -42212,8 +42212,8 @@
       "findings": 0
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
-      "at": "2026-11-09T14:49:48+08:00",
-      "state": "UNKNOWN_NO_REPLAY_OUTER03_FRESH_ROLE_READ_PASS_DISPATCHER_LOCK_LOSS",
+      "at": "2026-11-09T15:03:36+08:00",
+      "state": "UNKNOWN_NO_REPLAY_DISPATCHER_LIVE_PIN_MATCH_POINT_CAPABILITY_UNTESTED",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42230,7 +42230,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "T45 verifies original lock lifetime at HBA admission and cleanup; use exact existing supported mechanism or report prerequisite. Reproduce dispatcher death while POINT stays live, then QB reviews only the delta before approval. Three keys remain unissued.",
+      "next": "T45 prepares a fixed isolated capability probe using the existing manager and synthetic processes only, then verify exact scope. No real dispatcher FD access, no database or policy changes. If existing permissions cannot support it, the single-POINT-key shared dispatcher inheritance delta requires separate review/approval.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42244,7 +42244,7 @@
       "rejectedOuterReadySHA256": "bea1dff2153df33181809434a51297da36ca07f0c43dce8e45f46daceec90330",
       "rejectedOuterStagesSHA256": "c8e389d238e7fa393388086a9f9a52f68a72c34bda9e8d3d8ef98a19761cee20",
       "outerReview": "Original QB completed turn 01a1bef6-1b02-7d23-9bc3-f608b226c214: NEED_FIX_OUTER_BINDING_BEFORE_ISSUANCE. Existing manager contract compatible; 8 Python + 4 Node offline PASS, E02-05 covered. Three templates unissued.",
-      "newBlockingFindings": "P1 E02-03: QB reproduced with real local flock and child processes that original execution.lock can be acquired by another job after dispatcher death while the POINT process and secondary flock stay live.",
+      "newBlockingFindings": "Installed dispatcher has no pass_fds. Three real local process/flock checks distinguish shared OFD, separate opens and explicit unlock. Live Linux 6.8 and installed dispatcher pin confirmed. The existing metadata-only entry runs at EUID1000 without effective CAP_SYS_PTRACE; exact POINT-to-parent policy remains untested, not denied.",
       "outer02ReadySHA256": "cb60433b9099c204e44f5b4056e585cd2cca85ee99f66ddd1d88617d591495a1",
       "outer02ReportSHA256": "22e2c6dd18c766aa290d16d0d5f27d5dd70fc5e30adc2829a2fb2b58a4d707e4",
       "outer02StagesSHA256": "d20f7d6d1980d534cbecb44441dda1093e7c72e691172129e132ead15b6b7ed6",
@@ -42252,7 +42252,10 @@
       "outer03ReadySHA256": "ee539b52c95e72d758ca3b5552f090e7af6aea0983ed355db56845240d6104a6",
       "outer03ReportSHA256": "2bac749bac6f65ef6a176d8e125e519bd3d4c82142c3d0092b53a175a6261ea2",
       "outer03StagesSHA256": "58ebfa2ce1d0223f8ed40eb7184cbf52f9d7f254a4e71eff674caf00cd80415f",
-      "outer03Review": "QB: fresh POINT runtime same epoch OID10 read before HBA passes offline, nine author checks and 24 static pins pass. NEED_FIX_ORIGINAL_DISPATCHER_LOCK_LOSS_BEFORE_ISSUANCE."
+      "outer03Review": "QB: fresh POINT runtime same epoch OID10 read before HBA passes offline, nine author checks and 24 static pins pass. NEED_FIX_ORIGINAL_DISPATCHER_LOCK_LOSS_BEFORE_ISSUANCE.",
+      "dispatcherInstalledSHA256": "9c7c5eabe4697fc1768e370f4e972dc6ca6a0f8306ed0c5c04729e798c66e15d",
+      "dispatcherLockCustodyResultSHA256": "b3de66a9a9185770806fbfa34a659309917e4a03276dc90d61226b8816b53072",
+      "dispatcherLiveCapabilityResultSHA256": "35a50fc970a95e30d59a1d38ab64303c47ddcbc570c77f3a282c2023d93a7cf4"
     }
   }
 }
