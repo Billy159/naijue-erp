@@ -42378,6 +42378,15 @@
           "actualPrivateInputDiagnosticEvidenceSHA256": "71183e2439781090cd9b1c7e1a842ba47b2047c932114783bfbd39cfe3e6a116",
           "actualPrivateInputDiagnosticReceiptSHA256": "6d02ac41b3f93d70cffb2bff3a17636f0447cb9c73100b066b889d01d3cb5c41",
           "actualPrivateInputNext": "Original T45 develops a fixed missing-29-only continuation, keeps both matched leaves and original receipts, differentiates guard reasons and retains the 250 ms/device/namespace/space/window protections. QB checks only its increment. No actual successor, permission change, threshold change, PostgreSQL, import or switch until precise closure.",
+          "privateInputMissingLeavesCandidate": {
+            "commit": "3bf9d63076ef46d4a173f6649a7e2b909c2c988c",
+            "tree": "480cffe454d36845de8cf50c11cd06ff805a87fb",
+            "scopeSHA256": "f2918a20cf7668fb8028d03d71ff66415987311ea1bde738eba2d7e59c02533b",
+            "jobId": "t45-first-r1-input-remaining-20261109-01",
+            "status": "QB_NEED_FIX_NO_ISSUANCE",
+            "finding": "Actual local reproductions show bytes can be buffered and written after the sampler failure is latched during a blocking read, and a late sampler failure can overwrite an earlier writer error during context exit.",
+            "next": "T45 fixes only the write boundary and first error precedence, then QB reruns those two counterexamples. Exact front network and fresh resource readings remain separate read-only readiness facts. No server write or new PostgreSQL authorized by this review."
+          },
           "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
         },
         "freshTargetVaultMaterialization": "Original install, assemble, restore all COMPLETED/0. Assemble 2.072 s, independent new inode and exact complete SHA; no 45 chunk retransmission. The original root slot was verified restored to cd2e532b/0:0/0444 before tool staging. Raw input materialization still depends on native closure.",
