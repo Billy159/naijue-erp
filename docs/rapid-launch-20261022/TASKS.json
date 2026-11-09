@@ -42552,7 +42552,13 @@
             "restoredPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
             "finalAvailableBytes": 31342133248
           },
-          "next": "Original T45 binds the actual READY to the later exact carrier plan; real materialization and Linux load need the new R1 installation and actual live CID. Future execution consumer and protected writer evidence are separate. Preserve original keys, digests, and staged 72eb."
+          "materializationPlan": {
+            "status": "READY_BOUND_UNSIGNED_WAITING_ACTUAL_INSTALLATION",
+            "planSHA256": "d654f6dbcc832550c3444fc1423354911050943589584d017fab4c4e047e6bc6",
+            "bindingTemplateSHA256": "d4b6eea1b0400e4f86a03b30df6bdebd985a51cbaba31e9503cf6d77ac6c4fb1",
+            "check": "C independently compared actual original/new plan fields and checked the actual READY/authority digests, with five live or issuance fields null. Only carrier source pin differs. The original installation and closeout plans are preserved, and old stream entry stays pinned. Unissued; no Linux or server check."
+          },
+          "next": "Real materialization and Linux load wait for actual new R1 installation, live CID, exact target, service and valid window. Original T45 prepares only the independent successor stream wiring without changing protected historical writer lookup or existing approval consumption. Preserve old keys and staged 72eb."
         },
         "newTargetOriginalWriterArchiveCheck": "T45 report 7213aefe0692703e32dc80587ad3d9bc3f93abe851bf1c5b11ca3c91d5d7e669, test d3b56e32386a4e6d499488f230ebb9fdf3f7ddcc7c309dfe275e6a4323675ef2. QB independent 6/6 offline. Present writer result does not establish actual consumed V2 authority and matching parameters raw in same root-frozen key, or old carrier birth. Swapped live input keeps UNKNOWN and shared parameter digest cannot prove original authority. T45 prepares minimal reuse of manager freeze with exact execution and reaping proof, no new SQL/privilege, no reactivation or replay. D1 verified standalone verifier cannot complete split backup proof until actual rooted verify raw and writer CLOSE are available; partial raw never sufficient.",
         "newTargetOriginalWriterArchiveDesign": "T45 design SHA256 34b8f73a248f704ef5dce6f29b345feab7559a1d0e5046e9a5921679f41df5c0, proposal only. Existing submit hashes the bytes after text decode and path rewrite, so prove issued bytes match the manager-frozen leaves before relying on them. Reuse the fixed Docker stdin bootstrap and only then pass internal FDs to the Node child. Persist actual loader digests and original epoch in the protected writer job before any business write. Consumption does not prove commit. Check the existing issuer binding before adopting any change to the authorization dependency. No source acceptance, role change, or server execution.",
