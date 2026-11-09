@@ -42498,7 +42498,7 @@
         "legacyCatalogReceiptSHA256": "a39cafac4d415dbcdf4e202b15bc1d9ef49bd0281b7d14f45b2a3b0a181f3467",
         "knownDumpAllocatedBytes": 3273240576,
         "newTargetWriterReceiptPreservation": {
-          "status": "QB_TARGETED_SOURCE_PASS_PACKAGING_PENDING_NO_DEPLOYMENT",
+          "status": "QB_TARGETED_SOURCE_PASS_LOCAL_PACKAGE_VERIFIED_CONSUMER_PENDING_NO_DEPLOYMENT",
           "commit": "75144abc47d89bf5204cf88a92737981bb5e025d",
           "tree": "7257f63f019b97f2b5a588fa4861a864f64f3ff7",
           "parent": "72eb4b8ccd2a55078f3f32f83e74ac1f0d44eff3",
@@ -42506,9 +42506,20 @@
           "productionLeafSHA256": "42db8324432afeab16da848bd5af96354e389e6f952bdbe887630bb3abaf7d02",
           "toolSourceSetSHA256": "50bd7bf46362487fabb6b709c47b55feb51436df318c55191c6e1433b617d96c",
           "result": "D1 15/15 affected tests; QB independent regression and actual wrapper model exit 3 for both COMMITTED and ALREADY_COMMITTED with UNKNOWN verifier. Preserve only real writer CLOSED, original 17 bindings, manifest and writer plan in protected raw; no second CLOSED, backup readiness, or actual PG verification inferred.",
-          "next": "D2 packages only the pinned tool closure, then T45 rebinds the loader/carrier/actual parameter inputs. Existing 72eb installation and staged artifact stay historical and unchanged. No app rebuild or server transfer."
+          "localPackage": {
+            "archiveBytes": 1153960,
+            "archiveSHA256": "57445437cf04029f1da00b14e2e9f6d287a678275a771645b2af057c52a858a6",
+            "readySHA256": "b8033760e68e1e242703b23c807812069302debfa0f484680bad4330b2a6e17e",
+            "resultSHA256": "6f669d2cd288f3938b69f4985e5da319b066d358ad2c129223514fa60a24f871",
+            "manifestSHA256": "beaa2a699a318265c47a721cc810951134e6d5b583852af3b4b597255fcdf9e1",
+            "descriptorSHA256": "00967649c2e906c5806810c1413957624770b1a0122dfebc9b7bc24fe17fb06a",
+            "layoutSHA256": "47b4fc8bf350235fd4ee2f5783b3afc307b6bdce84181960859ddd7a1c248dfd",
+            "checks": "D2 361 member byte/mode readback, 357 unchanged and 4 changed, zero added/removed. Node 24.21.0 local packaging, loader, CLI help and readback module import exit 0. C recomputed six delivered file digests. Linux live loading and real PostgreSQL unverified."
+          },
+          "next": "T45 received the six pinned local tool materials for exact local materializer/carrier/operation consumer binding. QB to review only that delta. Keep existing 72eb staged artifact unchanged. No server transfer or app rebuild."
         },
         "newTargetOriginalWriterArchiveCheck": "T45 report 7213aefe0692703e32dc80587ad3d9bc3f93abe851bf1c5b11ca3c91d5d7e669, test d3b56e32386a4e6d499488f230ebb9fdf3f7ddcc7c309dfe275e6a4323675ef2. QB independent 6/6 offline. Present writer result does not establish actual consumed V2 authority and matching parameters raw in same root-frozen key, or old carrier birth. Swapped live input keeps UNKNOWN and shared parameter digest cannot prove original authority. T45 prepares minimal reuse of manager freeze with exact execution and reaping proof, no new SQL/privilege, no reactivation or replay. D1 verified standalone verifier cannot complete split backup proof until actual rooted verify raw and writer CLOSE are available; partial raw never sufficient.",
+        "newTargetOriginalWriterArchiveDesign": "T45 design SHA256 34b8f73a248f704ef5dce6f29b345feab7559a1d0e5046e9a5921679f41df5c0, proposal only. Existing submit hashes the bytes after text decode and path rewrite, so prove issued bytes match the manager-frozen leaves before relying on them. Reuse the fixed Docker stdin bootstrap and only then pass internal FDs to the Node child. Persist actual loader digests and original epoch in the protected writer job before any business write. Consumption does not prove commit. Check the existing issuer binding before adopting any change to the authorization dependency. No source acceptance, role change, or server execution.",
         "newTargetImportSourceCommit": "72eb4b8ccd2a55078f3f32f83e74ac1f0d44eff3",
         "newTargetImportPackageSHA256": "92c53cdaa5f1136194936df9f52bbaead67f206d8ba5a46f2fc697b193185f46",
         "newTargetImportSourceSetSHA256": "964a925adcad201f10d5e5b18d158cb6abd229cfa7f1d0e3402105c0dcf187b3",
