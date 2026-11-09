@@ -42385,6 +42385,18 @@
             "jobId": "t45-first-r1-input-remaining-20261109-01",
             "status": "QB_NEED_FIX_NO_ISSUANCE",
             "finding": "Actual local reproductions show bytes can be buffered and written after the sampler failure is latched during a blocking read, and a late sampler failure can overwrite an earlier writer error during context exit.",
+            "fixedCommit": "3cfd13281fdc4b0963f5abe2732a742a0e9fcaa9",
+            "fixedTree": "9d73b009b61e8b08e0ce8afcd9dee159c1036062",
+            "fixedScopeSHA256": "b3d74bbf4b6dcc217e434eadb476b9afb33c08f334d856a5100d4c9b80bd89f7",
+            "fixedReview": "QB independently reproduced three failures on previous source and passed six narrow cases on the successor. Actual Linux I/O and original cause still unverified.",
+            "actualStagingAuthoritySHA256": "29651bf4332afcc949ae584a6b52944cd5598214f777f6607931d26444b262f4",
+            "actualStagingWindowMs": [1794238048579, 1794238648579],
+            "executionState": "ACTUAL_COMPLETE_31_LEAVES_AND_ORIGINAL_BINDING_READBACK",
+            "actualJobReceiptSHA256": "71cfeaeacf7569685adfd0ba0a64d625b9dfdc51ee504036b88d74b3896c6895",
+            "actualResultSHA256": "e9e3c0a0192243746368eb2b532fe739465374fd135c3acd6f4262c9036d7c77",
+            "actualCombinedEvidenceSHA256": "6b274d8b2b1548430ddc18e26fc668a0e547816f5e24679aa87e84fb1e37e14d",
+            "actualClosure": "COMPLETED/0 in 20.819 s. Original two leaves/inodes preserved, 29 new, 0 overwritten, all 31 and 1008361447 bytes verified, original consumer read back binding. Device 66304 free 31345057792 B. Original unit absent, PID/cgroup empty, original slot and dual READY unchanged. No PG.",
+            "firstInstallPreflight": "Host 15276093440 B MemAvailable and ordinary SSH affinity 4. Ordinary Docker network inspect denied, exact front id unknown. C authorized one bounded existing T45 manager read-only check for exact internal bridge naijue-fresh35-first-20261109-r1-front and proposed alias naijue-rewrite-fresh35-first-20261109-r1-app, same-root/empty-target/image and actual root resource checks. No network creation, container start, or PostgreSQL.",
             "next": "T45 fixes only the write boundary and first error precedence, then QB reruns those two counterexamples. Exact front network and fresh resource readings remain separate read-only readiness facts. No server write or new PostgreSQL authorized by this review."
           },
           "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
