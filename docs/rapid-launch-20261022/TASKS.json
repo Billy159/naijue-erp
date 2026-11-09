@@ -28419,9 +28419,9 @@
       "lockUnchanged": true
     },
     "sourceFactGaps": [
-      "New35 successful actual installation/import/ordinarybusiness/independent readback unverified; r4 actual install refused and rolledback, r5 actual start then noinstall and clean stop, failures retained.",
-      "Exact REAL production target/identity/configuration/execution binding not established; original real private archive is transportREADY only.",
-      "Current formal API front/data namespace cannot reach newPG loopback by address substitution; originalT45 minimal explicitnative35 namespace/release successor inprogress, no current productionnetwork claim.",
+      "R4 exact new35 schema and installation record are installed/published (3b82c46e, a7d12f1f), separate from the unchanged public target. The original REAL writer EXECUTE02 ran, commit and rollback remain unproven; no verified REAL reconciliation or R4 ordinary-business/browser acceptance.",
+      "For the one fixed original-key point query, exact user authorization of temporary authentication and shutdown is pending. Public app/version/start remains unverified. The prepared namespace/release source and APP576 build are not deployed evidence.",
+      "Applicable new35 backup and independent restore are unverified. The fixed backup producer rejects both stop references used by the current point-query candidate; bind a successor only to a verified actual source epoch, authentic stop and confirmed batch.",
       "Raw full-universe source_truth_verified remains false by scope; full declaredEOF/preflight valid evidence reused, no source rescan invented as prerequisite."
     ],
     "portableReferences": {
@@ -28514,9 +28514,9 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Outer05 fixed, wait exact R4/temporary-auth user decision. No R4 action issued.",
+      "T45": "Outer05 fixed, exact R4/temporary-auth decision pending, no R4 action issued. Independent synthetic history856e ordinary copy deferred: latest dated estimate leaves 394579966 bytes below unchanged writer admission floor; fresh resource and materials preflight after R4 track permits.",
       "QB": "Outer05 offline pass, no live R4 proof.",
-      "D1": "Fixed50d3 source and combined QB accepted; available only for exact new runtime cause, no speculative changes.",
+      "D1": "Backup producer1a9a offline pin rejection verified against both outer05 predecessors. No change before actual R4 terminal, proven batch and required runtime facts; later one exact adaptation by original owner.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
       "D3": "Independent original400e COMMITTED reconciliation wait; latestclassification/probe result adopted, no new cleaning task.",
       "QF": "Wait actual real35 normal application and authentication; no filler QA."
@@ -33314,7 +33314,7 @@
       "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
       "nextOwner": "Original T45 only after offline acceptance and applicable explicit approval",
       "latestActualReceiptSHA256": "54d7767b4e7f1e1ee245dbf0930b91f8db121ad81b3d2ab27e1341daf67acb10",
-      "scope": "NEW_INSTALLED_R4_FORMAL_CANDIDATE_REAL_IMPORT_NOT_EXECUTED",
+      "scope": "R4_NEW35_INSTALLED_FORMAL_CANDIDATE_ORIGINAL_REAL_IMPORT_ATTEMPTED_COMMIT_UNKNOWN_NO_PUBLIC_SWITCH",
       "schemaInstalled": true,
       "installationRecordPublished": true,
       "initializationPassed": false,
@@ -35298,6 +35298,18 @@
         "actualBackup": false,
         "actualRestore": false,
         "new35CapacityRequirement": "UNKNOWN actual postimport source size/backup outputs/restore peak/per-device free facts missing"
+      },
+      "pointQueryStopCompatibility20261109": {
+        "producerSHA256": "1a9aea5d6d4dc7fe1083b7ce0b570640142d527920b6ae70ca461575045ae3f4",
+        "existingAcceptedStopSHA256": "1afe2929073cff8745a91f568da6e3b281d4f919c2cad1fa0a4051eee130203a",
+        "currentPointQueryStaticStagesSHA256": "d8b926dfc57e3eee70c7c2890ae52ceaa86c63eb4cc7a3210eb41c7d4c7ab957",
+        "checkedStopReferences": [
+          "f4b78faf259eba9e61699f932604a241d167f740e1f28fed05b1a8b0e1017273",
+          "865784d424cc00fe6b1c46abe5a77a5186a8e039394b793fe3b495098693b878"
+        ],
+        "commandScope": "python3 -B, original test_current_stop.py fixture; accepted existing exact pin, then substituted only each two bound digests. Two EXPECTED_REJECTIONS, exit 0.",
+        "result": "POINT_QUERY_STOP_REFERENCES_REJECTED_BY_BACKUP_PRODUCER_OFFLINE_NO_DATABASE_ACCESS",
+        "next": "After proven original COMMIT, independent reconciliation and the new actual stop, ask original D1 to bind the exact new predecessor and current actual source epoch. Require closed/drained fence and independent backup/restore capacity facts. Preserve raw failed receipts and do not relabel independent stop metadata as a clean original receipt."
       }
     },
     "controllerNewScopeDecisionBasis20261107": {
