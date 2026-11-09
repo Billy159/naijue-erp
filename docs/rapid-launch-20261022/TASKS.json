@@ -42661,7 +42661,7 @@
           "decision": "User answered 确认 to the immediately preceding explicit new R1 same-data continuation and backup contract question. Approved source and finite authentication rules only, bound to the recorded proposal SHA. Exact live target, window and operating authority remain necessary. Old retirement decision is separate.",
           "ownerHandoff": "T45 fixed the proposed V2 observation fields and private path and C relayed them to D1. D1 rechecked three original a902 window and rejection cases offline, then started the V2 consumer. T45 still owns final stop/producer and lifecycle wiring. The normal writer VERIFIED plus its original closed result is reusable. Interrupted writer reconciliation remains PARTIAL and cannot satisfy backup.",
           "jointCandidate": {
-            "status": "QB_CLOSED_TWO_DELTA_FINDINGS_IMPORT_CONSUMPTION_UNWIRED",
+            "status": "QB_OFFLINE_V2_TRANSPORT_AND_LOADER_PASS_STAGE_PENDING_READBACK_BINDING_NEED_FIX",
             "carrierCommit": "610d041f03a38ca09b03b0cf0619891d7abf622e",
             "carrierTree": "f8fa3a3b2dd4cfd707711c911e53913758420533",
             "carrierPlanSHA256": "46c2bf1cfc2808904d60a70e932707675110ac033771d44c7e0ceab5936cb725",
@@ -42673,9 +42673,32 @@
             "cleanupFixCheck": "T45 fixed the absent stop receipt with no claim case and ran three targeted offline tests. QB independently reproduced old failure and confirmed timely cleanup when unclaimed, protection when claimed, and no change to the previous operation result.",
             "originalWriterFixSHA256": "9f71d798b780db769492b17af1d60648d3d8667e2c6c207060bc5788a8d29daf",
             "originalWriterFixCheck": "Author 7/7 and QB targeted 5/5 offline. Both report leaves must match the independently pinned original writer key, and the terminal raw SHA must match the protected backup plan. Rejects replacement by a self-consistent same-batch ALREADY_COMMITTED job, a modified terminal, PARTIAL, UNKNOWN and missing pins. Actual writer and terminal pins unissued.",
-            "importConsumer": "T45 and D1 implement the exact V2 seam using the existing protected descriptor and original 8192-byte cap. V2 adds UTF-8 restart receipt bytes bound by their raw SHA, with no new ordinary role permission. The original parameter filename and format remain. V2 requires the authenticated first R1, fixed V2 receipt reference, and bound parameter/receipt bytes. Its current window is capped by the earliest actual stage, two external grants, new service, guardian reserve and three role expiries. The fixed 75144 still only accepts V1. Preserve V1, the original batch grant and original-key recovery. Actual proof of consumed parameters and batch authority remains distinct."
+            "importConsumer": {
+              "carrierCommit": "cfd8de426238d7d307f85d43782114c0b985b20d",
+              "carrierTree": "2f1545fe3af5cc287fc5264b7914c93050f49db6",
+              "nodeCommit": "1b37415c36b61648a0f05232d4217177ac4f0c17",
+              "nodeTree": "699c59d549c71fb426904526ffc8cfd16b0cf3b2",
+              "sourceSetSHA256": "14fa39877310815f6f26b517e27463aedd59b0416f49494e62bf5ddbad589e3a",
+              "check": "QB independently passed the carrier's pre-custody ASCII limit and two boundary tests, then actual carrier producer and Node parser on synthetic evidence. D1 pinned Node24.21 and QB Node24.14.1 each passed 20 window/FD and 1 stage-authority cases, including two opens of the same positional descriptor, expiry, wrong namespace and V1. Largest modeled complete descriptor 4957 B against unchanged 8192 B. C checked the nine D1 handoff digests. Original 75144 host suite remains 6/18 with twelve same-class baseline failures. Neither actual grant consumption nor live PostgreSQL was tested.",
+              "localPackage": {
+                "archiveBytes": 1156194,
+                "archiveSHA256": "9f80c13ecc38f9bbd9460d0e12239876de2d4dba1946e4864b840d3c184c75f9",
+                "manifestSHA256": "0a2ed790d45eba89550c30e66e5c6d406ec27822f41fd8c6ad01041bf1645e25",
+                "readySHA256": "a52a6ee5598d041a432fcf8fa71c4ee6a4a80912f21ff4830780136099ed1ef7",
+                "resultSHA256": "fa96fcb6206c397a686f3bbb73d17758b69825054a7068f0a3a89980b16816fc",
+                "check": "D2 361-member byte/mode readback and original carrier archive parser passed, 355 member pins unchanged and six changed, no additions or removals. Pinned Node24.21 local loader/help/readback imports pass. C recomputed six delivered digests. T45 prepares exact V2 root and staging plan. Local READY is not a server receipt."
+              }
+            },
+            "firstWriterAuthorityBinding": "T45 verified materializer checks external stage SHA, raw READY, file identity and exact archive before first material write. Node checks externally pinned operation parameters through the existing protected descriptor. The first V2 batch-authority load checks live path, bytes stability, format, fields, parameter digest and window, but has no first-read equality to the original same-job externally issued batch-authority raw SHA. C asked original D1 to check and close the existing proof seam before first write if no approval contract change is required. T45 remains carrier owner. No authorization issuance or upload.",
+            "independentReadbackV2": {
+              "status": "AUTHOR_R4_FIXED_THREE_COUNTEREXAMPLES_QB_PENDING",
+              "candidateSHA256": "5004f821abf888a64c051e93696c0ef2fde053fb4e49d2f348ae78c5ea9068d7",
+              "testSHA256": "156e56f46721e1ac21667ac5fd97a7fe986c6d746f9c6c6ea6e5f23791a4769a",
+              "fixedCandidateSHA256": "e5d3f400119418f02c4a23661bc896e7640cfaa816a33fd60daf59446fd011e3",
+              "check": "QB independently reproduced acceptance of the wrong terminal current-operation source set for either job and of a replaced V2 PREPARE restart receipt hash paired with a changed parameter digest. D3 r4 reproduces all three on r3 and rejects them on r4; 16 cases include same-generation PREPARE then EXECUTE and legitimate V1 PREPARE to V2 EXECUTE. QB retests only the delta. Ordinary runtime credential already shares the pinned expiry and rechecks physical server generation; actual issuer, PostgreSQL, RLS and business reconciliation remain pending."
+            }
           },
-          "next": "T45 and D1 wire the current-generation proof through the original carrier and loader, then QB reviews that increment. The two backup and credential corrections passed targeted offline review. Durable production service is separate. No new execution authority or live action. An already-issued writer is always recovered by its original key."
+          "next": "T45 prepares the exact independent V2 stage and materialization binding. D1 checks the minimal original authority proof and C coordinates one final package. QB retests the three D3 r4 counterexamples and valid counterpart paths. Durable production service and actual PostgreSQL remain separate. No new execution authority or live action. An already-issued writer is always recovered by its original key."
         },
         "verifiedLocalInputSHA256": "fc831c282f982ca22c840906aae96bf69acf23e785a42c199655e0ccf297365e",
         "verifiedLocalAppArtifactSHA256": "b8069af0e2f42b990b4645b4fd34857d184db0529e43132faa04d218bbfff830",
