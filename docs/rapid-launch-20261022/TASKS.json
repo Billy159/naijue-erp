@@ -28514,7 +28514,7 @@
     },
     "productionInstallProofGap": "V2 bind/run/publish/REALstream APIs exist; D1 production JS entry and T45 unique production Python bootstrap source in progress. No actual production target/install/import evidence.",
     "currentParallelQueue": {
-      "T45": "Outer05 clean terminal; POINT never submitted. Original T45 preparing coordinated offline full deadline and receipt plan; no new job or authority.",
+      "T45": "Offline short-window successor in progress, including late CLOSE counterexample and timing/role refresh plan. No additional R4 job or window.",
       "QB": "Outer05 offline pass, no live R4 proof.",
       "D1": "Dispatched original D1 offline-only exact APP576 backup producer binding. Real stop pin remains pending original COMMIT, reconciliation and the new actual stop.",
       "D2": "Fixedb944 material delivered; no repack or new work without actual material finding.",
@@ -42323,6 +42323,16 @@
         "shutdown": "CONFIRMED_EXACT_FULL_RESTORATION",
         "actualTimeline": "Window issued 16:33:03.949 +08, BOOT intent 16:33:41.707, BOOT complete 16:34:37.582 (engine 3.075 s), POINT C file 16:36:46.059 (77.890 s remaining), local guard refused before dispatch, CLOSE complete 16:38:06.624 (engine 0.268 s).",
         "nextReadOnlyPreparation": "Compare all windows and observed costs; freeze every precomputable item, bind only actual epoch after BOOT. Never reuse this authorization or writer job."
+      },
+      "coordinatedTimingAssessment": {
+        "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-timing-assessment-01/REPORT.md",
+        "reportSHA256": "b79623910109572fd15433b6ff6365b109a50c2be001e57e65b5d55fb730b54a",
+        "offlineChecksSHA256": "dfffbe501d9ac6d936ad32132a857b10c0bfab99f17cb28804e9b895d5951987",
+        "evidence": "12 offline checks. BOOT transport/queue 52.766 s, service 3.075 s, receipts 7.195 s, authority preparation after receipts 121.282 s. POINT local refusal at 55.960 s remaining; actual POINT transport and query unmeasured.",
+        "oneHour": "Frozen 05 local/host/container BOOT limits 300 s; handoff/reader cap short POINT independently. One hour offline prep/coordination preferred; live 1 hour requires a separately approved successor and preserving short authentication.",
+        "shortRoute": "Offline original T45 successor in progress. Prestage fixed input and C-side validation; maintain 300 s live plus no more than 90 s total cleanup, POINT lower-bound guards and independent same-lock verification. Refresh manager grant, service and role expiry facts before any new BOOT.",
+        "closeLateSignalModel": "Original root_entry.py SHA 60bc100f; AST-isolated function with mocked clock/identity/signal: an early CLOSE refused, but +91 seconds attempted guardian SIGTERM. No actual signal, server, or database access. Original T45 reviewing narrow actual-host deadline check.",
+        "actualExecution": "Previous approval consumed; no new window or authorization."
       }
     }
   }
