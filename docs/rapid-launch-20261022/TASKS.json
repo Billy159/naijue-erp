@@ -42534,7 +42534,25 @@
             "carrierSHA256": "3cb4f7293f0bc30fd1b8b3c0ae12b91412538ede2df190cf850a081e67b6fde9",
             "check": "T45 used actual 361-member archive and the existing control route in a local substitute. Actual candidate carrier produced a locally checked READY, and wrong READY digest, old source and wrong authority rejected. One new focused test passed. QB independently checked exact three leaves, actual archive/source and READY binding. Original active CLI and original writer lookup remain unchanged. A server READY receipt, a plan pinned to this carrier, valid authority and actual installation identity are still required."
           },
-          "next": "Preserve the reviewed local successor stage wiring. Before server execution, bind the real READY and matching carrier plan and resolve the exact future execution consumer and protected writer evidence. Keep original keys, digests, and staged 72eb. No signed stage or server transfer."
+          "successorArtifactStage": {
+            "status": "SERVER_ARTIFACT_READY_ORIGINAL_POLICY_RESTORED_LINUX_LOAD_PENDING",
+            "scopeSHA256": "e12fc7d19d5e5dd7f4ac01068302413d16ecc0230ed99c0a9e915d283dd77c63",
+            "authoritySHA256": "270ba30dbe66c430deea30592da922f0c85e634af5b8f7605593fb243119cd98",
+            "authorityBytes": 886,
+            "startsAtEpochMs": 1794248833216,
+            "expiresAtEpochMs": 1794250633216,
+            "installJob": "t45-first-r1-75144-tool-policy-install-20261110-01",
+            "restoreJob": "t45-first-r1-75144-tool-policy-restore-20261110-01",
+            "stageKey": "f35-75144abc-first-production-20261109-r1",
+            "check": "C recomputed both scoped scripts, tool archive, manifest and original client digests before issuing under the user's standing authorization item 2. Original dispatcher, slot/jobs, absence of other consumers, and device 66304 checked. T45 performed install and restore once, both COMPLETED/0. Original ssh-control upload exit 0 on its only attempt. C read RESULT and actual raw READY. Original policy digest restored at root 0444, nlink 1; stage and archive identity unchanged, no active units, consumers or unknown results. Stage independently of R1; Linux load, materialization, PG and publication excluded.",
+            "resultSHA256": "c6a64583a329c2b6118730e3a1df7a00f67d438df718580bae429c0383be7a59",
+            "readySHA256": "32a4b87d30b63be26f0d18588c7c1b77496a1f4632ef85931f403acc2cb3834c",
+            "installTerminalSHA256": "9ca32429c681bf7517668cedcd35345e82408456465d992200b33c89375b2d1a",
+            "restoreTerminalSHA256": "2e2832fbe398668f2834b94465d928dcb6b84cfb9ebf910dce11fdefd3133c75",
+            "restoredPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
+            "finalAvailableBytes": 31342133248
+          },
+          "next": "Original T45 binds the actual READY to the later exact carrier plan; real materialization and Linux load need the new R1 installation and actual live CID. Future execution consumer and protected writer evidence are separate. Preserve original keys, digests, and staged 72eb."
         },
         "newTargetOriginalWriterArchiveCheck": "T45 report 7213aefe0692703e32dc80587ad3d9bc3f93abe851bf1c5b11ca3c91d5d7e669, test d3b56e32386a4e6d499488f230ebb9fdf3f7ddcc7c309dfe275e6a4323675ef2. QB independent 6/6 offline. Present writer result does not establish actual consumed V2 authority and matching parameters raw in same root-frozen key, or old carrier birth. Swapped live input keeps UNKNOWN and shared parameter digest cannot prove original authority. T45 prepares minimal reuse of manager freeze with exact execution and reaping proof, no new SQL/privilege, no reactivation or replay. D1 verified standalone verifier cannot complete split backup proof until actual rooted verify raw and writer CLOSE are available; partial raw never sufficient.",
         "newTargetOriginalWriterArchiveDesign": "T45 design SHA256 34b8f73a248f704ef5dce6f29b345feab7559a1d0e5046e9a5921679f41df5c0, proposal only. Existing submit hashes the bytes after text decode and path rewrite, so prove issued bytes match the manager-frozen leaves before relying on them. Reuse the fixed Docker stdin bootstrap and only then pass internal FDs to the Node child. Persist actual loader digests and original epoch in the protected writer job before any business write. Consumption does not prove commit. Check the existing issuer binding before adopting any change to the authorization dependency. No source acceptance, role change, or server execution.",
@@ -42591,8 +42609,17 @@
             "sourceSHA256": "02037adbd48305fb635fda373f61e96fe6ec655aab8e7753887310a3b2353de3",
             "testLogSHA256": "043ffe9bd65ea1eb425947b3c02e505eb00932b86837338027b2de64caa508d3",
             "scope": "One additional ordinary read-only query in the same snapshot checks original sales headers, lines, settlements, transfer headers and lines against immutable origin, migration receipts and original snapshots. Later changes are counted as replay pending. C used exact committed leaves under Node 24.21.0 and ran the three new offline cases, exit 0. No live SQL/RLS/performance evidence.",
-            "qbFinding": "A delayed V2 sales hall capture can replace the warehouse operation ID with an absent UUID and recompute its own map digest. The candidate does not verify the warehouse source record, operation or capture time against the earlier same-root MASTER audit as the original 0035 verifier does. Do not adopt origin matched. Original D1 is correcting the exact capture or will leave the affected origin explicitly unverified. Existing offline model did not cover this rejection."
+            "qbFinding": "A delayed V2 sales hall capture can replace the warehouse operation ID with an absent UUID and recompute its own map digest. This predecessor does not verify the warehouse source record, operation or capture time against the earlier same-root MASTER audit. Do not adopt its origin matched result.",
+            "delayedHallFix": {
+              "status": "QB_STATIC_DELTA_PASS_AUTHOR_NODE24_RED_GREEN_LIVE_PG_UNVERIFIED",
+              "commit": "24fed531623a722f39a3f0a70ff15b9be5a7319a",
+              "tree": "cb05381911c229be9141613e5ad10199b144601e",
+              "sourceSHA256": "d4c496030be1bd686447df7d709c059e1e54ea4b1ab9d6a6b45d4bad9932753c",
+              "testLogSHA256": "400a6172a39b85fc39e51c28d9109b4b3db50dd391005f9867b89d40bfd30817",
+              "check": "D1 Node24.21 old red/new 4/4 using finite models, no real PG. QB independently checked original 0035 source record, real same-root earlier MASTER, approval evidence, warehouse/hall/version, capture bounds and matching transaction. No standalone live result. Overall PARTIAL."
+            }
           },
+          "protectedRootWitnessAssessment": "D1 verified SQL prepare returns the credential-derived root request_sha256 stored in operation_receipt, but 75144 kernel discards it; protected first-writer stdout/terminal and READONLY_STATUS do not carry an independent comparable value. A genuine prior protected ALREADY_COMMITTED or original authorized inspect success may prove original credential match through inspect_v2, but its output still does not return the digest. A future minimal source seam can retain the already validated digest at the original writer COMMITTED/CLOSED boundary before launching its verifier, inside the existing protected job, without carrying the credential or changing SQL. No implementation, grants or writer replay. Existing normal verifier remains authoritative.",
           "next": "Keep immutable original writer and its interrupted state. Prepare only the missing batch-scoped read-only assertions and root proof; validate no expanded database permissions and no private rows in public logs. Separate evidence consumption in backup/release requires an exact same-target source/batch/plan/receipt binding and approval of snapshot semantics. No live action issued."
         },
         "newTargetBackupPreparation": "D1 fixed R1 private producer a902ce2f84bf43b870e9d02b68db78acfcdceabd7dfd76dd78e5138615dbcea9 / handoff 07928334f4b46a9dded029c3009c99eb474b92ee5e87680f9b0f20c2cd620ac5 against df7aedc6. QB independently passed the five new focused offline checks. Five actual installation/program/target/catalog/first stop pins are null, so execution rejects. Preserve APP576 closure, original COMMIT and readback, closed drained fence and current role/service/guardian. Existing successful EXECUTE can retain the same epoch, allowing backup after independent reconciliation and before the terminal stop if there is enough authorized time. No second restart requirement in the backup contract. Actual database backup, restore and release untested.",
