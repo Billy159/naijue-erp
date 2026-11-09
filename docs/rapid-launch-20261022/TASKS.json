@@ -42357,6 +42357,12 @@
           "scopeSHA256": "98100097dd3fe72a507f2c832419a67af4f1965ae59532103bb743a36efba144",
           "status": "NEED_FIX_NO_ISSUANCE",
           "finding": "QB reproduced raw admission reaching staged_artifact with a different plan SHA and the prior success receipt. Native receipt must carry the exact same plan SHA, and raw admission must reject a mismatch before consuming staged material.",
+          "fixedCandidate": "7f6e54a493933367dcf1f6183fc0f7ecde458d9a",
+          "fixedScopeSHA256": "24b3e74872a4239d467cc67a3a26a7ab8f0656de2fccff45dcca56d3e98be424",
+          "fixedReview": "QB two offline targeted tests PASS, including changed or missing plan SHA rejected before reading staged material.",
+          "actualStagingAuthoritySHA256": "1aee892ac6065dfebd613cc3d7ffaa9ce56d6b2f5394596143d9097563dadbfd",
+          "executionWindowMs": [1794236063999, 1794236663999],
+          "executionState": "SIGNED_FOR_T45_EXACT_STAGING_ONLY_ACTUAL_RECEIPT_PENDING",
           "next": "T45 owns the minimal fix. QB retests the mismatch only. After fixed scope review, authorize the single missing-leaf continuation under standing staging authority and collect its actual receipt before raw materialization. No PostgreSQL or deletion in this step."
         },
         "freshTargetVaultMaterialization": "Original install, assemble, restore all COMPLETED/0. Assemble 2.072 s, independent new inode and exact complete SHA; no 45 chunk retransmission. The original root slot was verified restored to cd2e532b/0:0/0444 before tool staging. Raw input materialization still depends on native closure.",
