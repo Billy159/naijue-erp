@@ -42329,6 +42329,12 @@
         "rejectedRetirementReview": "Original QB: T48 state could change after precheck and same-name DROP needs DDL exclusivity; dump inode could change before unlink; R4 traversal could cross a late mount and skipped StartedAt on stopped carrier. Correct only these guards or hold the affected group.",
         "carrierSourceCommit": "75b5f62e0c91b2f5896d6dafc3b8aa85d70b88cf",
         "carrierSourceTree": "b91ba576edf3f300848314a366c9ed990be5f9c4",
+        "carrierRetainedLifecycleCandidateCommit": "4a8c856be8262ae6008f62ca9f70ae3a5e1333c2",
+        "carrierRetainedLifecycleCandidateTree": "3ca8c7fcd7748084e417a544c55caa806f8f6e18",
+        "carrierRetainedLifecycleState": "T45 five targeted offline checks passed; original QB reviewing only the stopped and new-epoch issuance seam. No actual first installation, stopped/restarted cluster or PREPARE.",
+        "freshTargetAdmissionReceiptSHA256": "8b734858875c3a758ae8f902f276fe91913f2783e17ed7e98530dc077e8ada74",
+        "freshTargetRuntimeReceiptSHA256": "c5440553563a0429765dda21428b61b2867cd8899388923d4d41d3799e3acf25",
+        "freshTargetObservedHost": "21:24:53 +08, device 66304, free 32723607552 B, MemAvailable 15255433216 B and 4 CPUs, exact new production/restore targets vacant. Fixed Linux image and existing Node/npm files present; no new container resource or runtime-load evidence.",
         "retirementIntention": [
           "erp_prod only, no other database or unproven shared asset",
           "three exact old backup roots subject to dependency exclusions",
