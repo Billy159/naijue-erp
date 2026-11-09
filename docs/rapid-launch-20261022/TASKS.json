@@ -33307,8 +33307,8 @@
       "actualLoginVerified": false
     },
     "currentExecution": {
-      "at": "2026-11-09T14:04:28+08:00",
-      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_QUERY_OFFLINE_PASS_OUTER_ROUTE_PENDING",
+      "at": "2026-11-09T14:26:22+08:00",
+      "phase": "EXECUTE02_ORIGINAL_STATUS_UNKNOWN_OUTER_BINDING_FIX_IN_PROGRESS",
       "sourceCommitBeforeRepair": "4adb9fa26b892dfd948d7cf7f7f2b33fb94b2e81",
       "fixedBuildRootBeforeRepair": "1e6ba0713610e1655584fcfbfeba0e1ecb62bbaf",
       "currentOwner": "C coordinates original-key proof; T45 sole ops writer, offline only; QB reviews fixed increment",
@@ -33322,7 +33322,7 @@
       "ordinaryBusinessPassed": false,
       "realImported": false,
       "productionDeployed": false,
-      "next": "Original T45 is implementing the minimum outer route and authoritative cleanup offline. QB reviews only the fixed delta. Submit exact auth and restoration scope to human before real execution.",
+      "next": "Original T45 fixes the three precise defects in outer-binding-02, preserving the original restart record with a new exact read-only receipt path, then freezes manager materials for QB targeted review. Only after accepted, seek explicit approval of the exact conditional HBA/role and R4 window. No actual job issued.",
       "authority": "Latest human steering allows asking for and using necessary scoped management access; any new access or database change requires exact scope and direct confirmation before execution. No original-key replay or cutover.",
       "sourceCommit": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
       "buildRoot": "3b82c46ebc0b49b26005b023c5e97bc779c8628c",
@@ -42212,8 +42212,8 @@
       "findings": 0
     },
     "r4Execute02OriginalKeyMinimalReadback20261109": {
-      "at": "2026-11-09T14:04:28+08:00",
-      "state": "UNKNOWN_NO_REPLAY_FIXED_SQL_OFFLINE_PASS_OUTER_ROUTE_NEED_BINDING",
+      "at": "2026-11-09T14:26:22+08:00",
+      "state": "UNKNOWN_NO_REPLAY_OFFLINE_OUTER_REJECTED_SUCCESSOR_IN_PROGRESS",
       "owner": "C exact source and query design; original T45 sole server executor",
       "T45StatusReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261109-r4-execute02-original-status-evidence-01/RESULT.json",
       "T45StatusReceiptSHA256": "d4a88752f8052980e7a33c30a7cd24d21bbeb3aae8460b13e9582132130928d7",
@@ -42230,7 +42230,7 @@
       "existingChannelLimit": "Ordinary RLS requires readiness. The original admin observer accepts only its fixed identity/process SQL. The retained admin SCRAM lease expired; no authorized direct pre-ready original-key query exists.",
       "oom": "Same CID kernel OOM proven; original Node namespace PID3725 to host PID3949468 mapping not found in bounded journal job9e16122f. Transaction unresolved.",
       "sampling": "INSPECT08 REAL_SPACE_SAMPLE_LATE 0.404091902 > 0.25 before SQL. Historical PRE versus POST and scheduling root cause unknown. Diagnostic source and propagation QA pass, no live rerun.",
-      "next": "Original T45 is implementing the minimum outer route and authoritative cleanup offline. QB reviews only the fixed delta. Submit exact auth and restoration scope to human before real execution.",
+      "next": "Original T45 fixes the three precise defects in outer-binding-02, preserving the original restart record with a new exact read-only receipt path, then freezes manager materials for QB targeted review. Only after accepted, seek explicit approval of the exact conditional HBA/role and R4 window. No actual job issued.",
       "T45AccessDesignSHA256": "fce97969963434dcf6f506c0eaccc7b1b7ea04258b8c4e6aa9a1676aeecb5f6a",
       "D1OriginalInputReuseSHA256": "6228e27d2ffd27dd18577504ad99db80e38c57955c52eb15254ed0b09af44240",
       "T45HistoryPreparationSHA256": "77c94ce9f54a7d1cf75cface8ea8132445dcfb76d1e9176fda896beff5078e9c",
@@ -42240,7 +42240,11 @@
       "fixedProofBindingsSHA256": "088c39cf0214f774b48412b05dffa35523a501125e114684dab5770e37cfea3a",
       "QBResultSHA256": "5326a78a6be4aa3118e1c1fb7ec5ab083ab131c549a04976e1f169f1b684ed1b",
       "offline": "QB 5/5 files, 7/7 prior evidence, 8/8 binding fields, 3/3 original IDs, 4/4 offline methods. SQLite predicates and modeled execution only.",
-      "outerFindings": "E02-01 registration and one-use; E02-02 retained boot actual identity; E02-03 single admin expiry CAS and recovery; E02-04 owned stop; E02-05 failure postflight skipped after timeout/spawn failure."
+      "outerFindings": "E02-01 registration and one-use; E02-02 retained boot actual identity; E02-03 single admin expiry CAS and recovery; E02-04 owned stop; E02-05 failure postflight skipped after timeout/spawn failure.",
+      "rejectedOuterReadySHA256": "bea1dff2153df33181809434a51297da36ca07f0c43dce8e45f46daceec90330",
+      "rejectedOuterStagesSHA256": "c8e389d238e7fa393388086a9f9a52f68a72c34bda9e8d3d8ef98a19761cee20",
+      "outerReview": "Original QB completed turn 01a1bef6-1b02-7d23-9bc3-f608b226c214: NEED_FIX_OUTER_BINDING_BEFORE_ISSUANCE. Existing manager contract compatible; 8 Python + 4 Node offline PASS, E02-05 covered. Three templates unissued.",
+      "newBlockingFindings": "E02-02 cross-bind EXDEV before actual epoch export; E02-03 HBA emergency restore starts at 53.02s in no-reply model, and no prior same-role expiry/SCRAM evidence; E02-04 incomplete independent close returns success."
     }
   }
 }
