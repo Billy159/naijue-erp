@@ -8,10 +8,10 @@ import {readFile,writeFile,mkdir,mkdtemp,rm,rename,unlink} from 'node:fs/promise
 import * as real from '../tools/unified-import/fresh35-host-session.mjs';
 const original=await readFile(new URL('../tools/unified-import/fresh35-host-session.mjs',import.meta.url),'utf8');
 const role='erp_unified27_runtime_2393dbc6db9581c2';
-const firstR2={database:'erp_fresh35_20261110_r2',host:'127.0.0.1',port:56791,
- workspaceDirectory:'/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r2',
- admin:'erp35_admin_20261110_r2',owner:'erp35_owner_20261110_r2',
- controller:'erp35_controller_20261110_r2',runtime:'erp35_runtime_20261110_r2'};
+const firstR3={database:'erp_fresh35_20261110_r3',host:'127.0.0.1',port:56791,
+ workspaceDirectory:'/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3',
+ admin:'erp35_admin_20261110_r3',owner:'erp35_owner_20261110_r3',
+ controller:'erp35_controller_20261110_r3',runtime:'erp35_runtime_20261110_r3'};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const encodeProof=value=>JSON.stringify(value,(_key,member)=>member&&Object.getPrototypeOf(member)===Object.prototype
  ? Object.fromEntries(Object.keys(member).sort().map(key=>[key,member[key]])) : member)+'\n';
@@ -27,7 +27,7 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,pro
  const now=Date.now(),expiry=now+300000,serviceFile=join(root,'service.json'),oldRoot=join(root,'installed');
  const pgDate=n=>new Date(n).toISOString().replace('T',' ').replace('Z','+00');
  if(formal){
-  t.proposal={...firstR2,...proposal};
+  t.proposal={...firstR3,...proposal};
   t.physical.postmasterStart=pgDate(now-300000);
   t.ordinary={connectHost:t.proposal.host,connectPort:t.proposal.port,serverAddress:t.proposal.host,serverPort:t.proposal.port,
    runtimeLoginValidUntil:new Date(now-2000).toISOString(),referenceDirectory:reference};
@@ -40,15 +40,15 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,pro
   ...(synthetic?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',target:t}:formal?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2',target:t}:{})};
  const recordBytes=JSON.stringify(record)+'\n';await writeFile(recordPath,recordBytes);
  const pins={installationRecordSha256:hash(recordBytes),...record.binding};
- const proof={format:'FRESH35_CURRENT_PRODUCTION_SERVICE_V1',requestKey:'t45-first-20261110-r2-recovery-restart-20261110-01',
-  oldStopRequestKey:'t45-first-20261110-r2-recovery-stop-20261110-01',authorizationSha256:'a'.repeat(64),
+ const proof={format:'FRESH35_CURRENT_PRODUCTION_SERVICE_V1',requestKey:'t45-first-20261110-r3-recovery-restart-20261110-01',
+  oldStopRequestKey:'t45-first-20261110-r3-recovery-stop-20261110-01',authorizationSha256:'a'.repeat(64),
   previousStopReceiptSha256:'c'.repeat(64),previousStopTerminalSha256:'d'.repeat(64),checkedAt:now-300,
   ...pins,dataDirectory:t.proposal.workspaceDirectory+'/data',dataDirectoryIdentity:{device:8,inode:22,uid:61035,gid:61035,mode:448},
   physical:{...t.physical,postmasterStart:pgDate(now-500)},runtimeRole:t.proposal.runtime,runtimeLoginValidUntil:new Date(now+120000).toISOString(),
   sharedPostgresNamespace:{format:'OWNED_POSTGRES_SHARED_NAMESPACE_V1',...pins,creationOperationId:'first-operation',
-   serviceLeaseExpiresAt:now+180000,container:{id:'e'.repeat(64),name:'t45-fresh35-first-production-20261110-r2-recovery',imageId:'sha256:'+'f'.repeat(64),
+   serviceLeaseExpiresAt:now+180000,container:{id:'e'.repeat(64),name:'t45-fresh35-first-production-20261110-r3-recovery',imageId:'sha256:'+'f'.repeat(64),
     startedAt:new Date(now-2000).toISOString(),hostPid:100,startTicks:'200',networkNamespace:{device:4,inode:5},
-    frontEndpoint:{id:'1'.repeat(64),aliases:['naijue-rewrite-fresh35-first-20261110-r2-app']}}},
+    frontEndpoint:{id:'1'.repeat(64),aliases:['naijue-rewrite-fresh35-first-20261110-r3-app']}}},
   postmaster:{pid:20,starttime:'301',exe:'/usr/bin/postgres'},guardian:{pid:21,starttime:'300',exe:'/usr/bin/python3'}};
  const catalogStub='data:text/javascript;base64,'+Buffer.from("export function fresh35CombinedOrdinaryCatalogSql(){return {guardSql:'MODEL_GUARDS',observationSql:'MODEL_OBSERVATION'}};export function validateFresh35CombinedOrdinaryCatalogObservation(raw){if(raw!=='SYNTHETIC_ONLY')throw Error('MODEL_CATALOG_REJECTED')};export const fresh35CombinedSyntheticOrdinaryCatalogSql=fresh35CombinedOrdinaryCatalogSql;export const validateFresh35CombinedSyntheticOrdinaryCatalogObservation=validateFresh35CombinedOrdinaryCatalogObservation").toString('base64');
  const prefix=`import {lstat as nativeLstat,open as nativeOpen,readFile} from 'node:fs/promises';import {watch as nativeWatch,writeFileSync,renameSync,unlinkSync,constants} from 'node:fs';import {resolve,dirname} from 'node:path';import {createHash} from 'node:crypto';
@@ -115,7 +115,7 @@ test('ordinary startup uses one pool/lease and direct LOGIN identity before inte
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose();}
 });
 
-test('first R2 current service binds historical installation, proven live epoch and the earliest expiry on one pool',async()=>{
+test('first R3 current service binds historical installation, proven live epoch and the earliest expiry on one pool',async()=>{
  const m=await model({formal:true});let cap;
  try{
   const input=await m.putProof();
@@ -137,23 +137,24 @@ test('first R2 current service binds historical installation, proven live epoch 
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
 });
 
-test('first R2 current service refuses R1 and mismatched target components before pool checkout',async()=>{
- const r1=Object.fromEntries(Object.entries(firstR2).map(([key,value])=>[key,typeof value==='string'
-  ? value.replace('20261110','20261109').replace(/([_-])r2$/,'$1r1') : value]));
- const cases=[r1,{database:r1.database},{workspaceDirectory:r1.workspaceDirectory},
+test('first R3 current service refuses R1 and mismatched target components before pool checkout',async()=>{
+ const r1=Object.fromEntries(Object.entries(firstR3).map(([key,value])=>[key,typeof value==='string'
+  ? value.replace('20261110','20261109').replace(/([_-])r3$/,'$1r1') : value]));
+ const r2=Object.fromEntries(Object.entries(firstR3).map(([key,value])=>[key,typeof value==='string'?value.replace(/([_-])r3$/,'$1r2'):value]));
+ const cases=[r1,r2,{database:r2.database},{runtime:r2.runtime},{workspaceDirectory:r2.workspaceDirectory},{database:r1.database},{workspaceDirectory:r1.workspaceDirectory},
   {admin:r1.admin},{owner:r1.owner},{controller:r1.controller},{runtime:r1.runtime},
   {host:'127.0.0.2'},{port:56792}];
  for(const proposal of cases){
   const m=await model({formal:true,proposal});
   try{
    const input=await m.putProof();
-   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input),/FIRST_R2_REQUIRED/);
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input),/FIRST_R3_REQUIRED/);
    assert.equal(m.clients.length,0);
   }finally{await m.dispose()}
  }
 });
 
-test('first R2 current service rejects wrong protected bytes, closed fields, historical model and namespace before pool checkout',async()=>{
+test('first R3 current service rejects wrong protected bytes, closed fields, historical model and namespace before pool checkout',async()=>{
  const cases=[
   [m=>m.putProof().then(input=>({...input,sha256:'0'.repeat(64)})),/SHA_DIFFERS/],
   [m=>m.putProof(JSON.stringify(m.proof)+'\n'),/ENCODING_DIFFERS/],
@@ -161,10 +162,10 @@ test('first R2 current service rejects wrong protected bytes, closed fields, his
   [m=>{m.proof.extra=true;return m.putProof()},/FORMAT_REQUIRED/],
   [m=>{delete m.proof.previousStopTerminalSha256;return m.putProof()},/FORMAT_REQUIRED/],
   [m=>{m.proof.installationRecordSha256='0'.repeat(64);return m.putProof()},/PROVENANCE_DIFFERS/],
-  [m=>{m.proof.requestKey=m.proof.requestKey.replace('r2-recovery','r1-recovery');return m.putProof()},/PROVENANCE_DIFFERS/],
-  [m=>{m.proof.oldStopRequestKey=m.proof.oldStopRequestKey.replace('r2-recovery','r1-recovery');return m.putProof()},/PROVENANCE_DIFFERS/],
+  [m=>{m.proof.requestKey=m.proof.requestKey.replace('r3-recovery','r1-recovery');return m.putProof()},/PROVENANCE_DIFFERS/],
+  [m=>{m.proof.oldStopRequestKey=m.proof.oldStopRequestKey.replace('r3-recovery','r1-recovery');return m.putProof()},/PROVENANCE_DIFFERS/],
   [m=>{m.proof.runtimeRole='erp35_runtime_20261109_r1';return m.putProof()},/PROVENANCE_DIFFERS/],
-  [m=>{m.proof.dataDirectory=m.proof.dataDirectory.replace('20261110-r2','20261109-r1');return m.putProof()},/PGDATA_DIFFERS/],
+  [m=>{m.proof.dataDirectory=m.proof.dataDirectory.replace('20261110-r3','20261109-r1');return m.putProof()},/PGDATA_DIFFERS/],
   [m=>{m.proof.dataDirectoryIdentity.extra=true;return m.putProof()},/PGDATA_DIFFERS/],
   [m=>{m.proof.sharedPostgresNamespace.container.name=m.proof.sharedPostgresNamespace.container.name.replace(/-recovery$/,'');return m.putProof()},/CARRIER_REQUIRED/],
   [m=>{m.proof.sharedPostgresNamespace.container.frontEndpoint.aliases=['model-app'];return m.putProof()},/ENDPOINT_REQUIRED/],
@@ -184,7 +185,7 @@ test('first R2 current service rejects wrong protected bytes, closed fields, his
  }
 });
 
-test('first R2 current service refuses live login or epoch drift and revokes a replaced proof',async()=>{
+test('first R3 current service refuses live login or epoch drift and revokes a replaced proof',async()=>{
  for(const kind of ['login','epoch','file']){
   const m=await model({formal:true});let cap;
   try{
@@ -199,12 +200,12 @@ test('first R2 current service refuses live login or epoch drift and revokes a r
  }
 });
 
-test('first R2 current service launch forwards only the private environment digest with the existing process window',async()=>{
+test('first R3 current service launch forwards only the private environment digest with the existing process window',async()=>{
  const main=await readFile(new URL('../apps/api/src/production-main.ts',import.meta.url),'utf8');
  const body=main.slice(main.indexOf('async function launch('),main.indexOf('export async function runProductionMain('));
  const compile=new Function('model','with(model){'+stripTypeScriptTypes(body)+'\nreturn launch;}');
  const filename='/run/naijue-rewrite/runtime.json',sha256='4'.repeat(64),profile='source-confirmed-native-exact35-production-v2';
- const runtime={profile,postgres:{target:{host:firstR2.host,port:firstR2.port,database:firstR2.database,user:firstR2.runtime}}};
+ const runtime={profile,postgres:{target:{host:firstR3.host,port:firstR3.port,database:firstR3.database,user:firstR3.runtime}}};
  const capacityLaunch={target:{postmasterStart:'approved epoch'},window:{expiresAt:100000}};
  const bytes=Buffer.from(JSON.stringify({...runtime,capacityLaunch}));
  const file={isFile:()=>true,isSymbolicLink:()=>false,size:bytes.length,mode:0o400,dev:1,ino:2,mtimeMs:1,ctimeMs:1};

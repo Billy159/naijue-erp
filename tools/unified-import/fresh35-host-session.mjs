@@ -191,7 +191,7 @@ export async function openReviewedFresh35ProductionHost(config,sourceRoot,target
 const ordinaryAdmissions=new WeakMap(),ordinaryPendingPools=new WeakSet(),ordinaryUsedPools=new WeakSet();
 const ordinaryInstalledSourceRoot='/opt/naijue-erp/fresh35-combined-v1';
 const currentProductionServicePath='/run/naijue-rewrite/current-production-service.json';
-const firstR2Workspace='/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r2';
+const firstR3Workspace='/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3';
 const ordinaryRole='erp_unified27_runtime_2393dbc6db9581c2';
 
 async function loadOrdinaryInstalledHistory(snapshot,referenceDirectory,currentCatalog){
@@ -264,13 +264,13 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   &&resolve(value)===value&&!/[\x00-\x1f\x7f]/.test(value);
  const {proposal,ordinary,physical:installed}=target;
  need(exactImportKeys(input,['sha256','capacityExpiresAt'])&&positive(input.capacityExpiresAt)
-  &&target.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&proposal.database==='erp_fresh35_20261110_r2'
-  &&proposal.workspaceDirectory===firstR2Workspace&&proposal.host==='127.0.0.1'&&proposal.port===56791
-  &&proposal.admin==='erp35_admin_20261110_r2'&&proposal.owner==='erp35_owner_20261110_r2'
-  &&proposal.controller==='erp35_controller_20261110_r2'&&proposal.runtime==='erp35_runtime_20261110_r2'
+  &&target.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&proposal.database==='erp_fresh35_20261110_r3'
+  &&proposal.workspaceDirectory===firstR3Workspace&&proposal.host==='127.0.0.1'&&proposal.port===56791
+  &&proposal.admin==='erp35_admin_20261110_r3'&&proposal.owner==='erp35_owner_20261110_r3'
+  &&proposal.controller==='erp35_controller_20261110_r3'&&proposal.runtime==='erp35_runtime_20261110_r3'
   &&ordinary.connectHost===proposal.host&&ordinary.serverAddress===proposal.host
   &&ordinary.connectPort===proposal.port&&ordinary.serverPort===proposal.port,
-  'ORDINARY_CURRENT_SERVICE_FIRST_R2_REQUIRED');
+  'ORDINARY_CURRENT_SERVICE_FIRST_R3_REQUIRED');
  const {sha256,capacityExpiresAt}=input;
  const {identity,value:proof}=await readOrdinaryCurrentService(sha256);
  need(exactImportKeys(proof,['format','requestKey','oldStopRequestKey','authorizationSha256','checkedAt',
@@ -278,8 +278,8 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
   'runtimeRole','runtimeLoginValidUntil'])&&proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1',
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
- need(typeof proof.requestKey==='string'&&/^t45-first-20261110-r2-recovery-restart-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
-  &&typeof proof.oldStopRequestKey==='string'&&/^t45-first-20261110-r2-recovery-stop-[0-9]{8}-[0-9]{2}$/.test(proof.oldStopRequestKey)
+ need(typeof proof.requestKey==='string'&&/^t45-first-20261110-r3-recovery-restart-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
+  &&typeof proof.oldStopRequestKey==='string'&&/^t45-first-20261110-r3-recovery-stop-[0-9]{8}-[0-9]{2}$/.test(proof.oldStopRequestKey)
   &&[proof.authorizationSha256,proof.previousStopReceiptSha256,proof.previousStopTerminalSha256,
    proof.installationRecordSha256,proof.targetSha256,proof.sourceSetSha256].every(digest)
   &&proof.installationRecordSha256===snapshot.sha256&&proof.targetSha256===record.binding.targetSha256
@@ -300,14 +300,14 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
  const container=shared.container;
  need(exactImportKeys(container,['id','name','imageId','startedAt','hostPid','startTicks','networkNamespace','frontEndpoint'])
-  &&digest(container.id)&&container.name==='t45-fresh35-first-production-20261110-r2-recovery'
+  &&digest(container.id)&&container.name==='t45-fresh35-first-production-20261110-r3-recovery'
   &&typeof container.imageId==='string'&&/^sha256:[a-f0-9]{64}$/.test(container.imageId)
   &&positive(container.hostPid)&&container.hostPid>1&&decimal(container.startTicks)
   &&exactImportKeys(container.networkNamespace,['device','inode'])&&Object.values(container.networkNamespace).every(positive),
   'ORDINARY_CURRENT_SERVICE_CARRIER_REQUIRED');
  const endpoint=container.frontEndpoint;
  need(exactImportKeys(endpoint,['id','aliases'])&&digest(endpoint.id)&&Array.isArray(endpoint.aliases)
-  &&endpoint.aliases.includes('naijue-rewrite-fresh35-first-20261110-r2-app')
+  &&endpoint.aliases.includes('naijue-rewrite-fresh35-first-20261110-r3-app')
   &&endpoint.aliases.every(alias=>typeof alias==='string'&&alias.length>0)
   &&new Set(endpoint.aliases).size===endpoint.aliases.length,'ORDINARY_CURRENT_SERVICE_ENDPOINT_REQUIRED');
  const namespace=await stat('/proc/self/ns/net',{bigint:true});
