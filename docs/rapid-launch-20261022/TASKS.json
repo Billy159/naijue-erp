@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-09T13:35:27+08:00",
-  "stage": "R4_TOOL4279_LINUX_PASS_238_RETIRED_CONTAINERS69_IMAGES_FOUR_EXACT_METADATA_NEXT",
+  "updatedAt": "2026-11-10T19:40:28+08:00",
+  "stage": "R2_INITDB_AB_VERIFIED_R3_SOURCE_READY_TRANSPORT_DIAGNOSIS_FORMAL_INSTALL_NOT_STARTED",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1784,6 +1784,42 @@
     ],
     "sourceThread": "01a1aa63-3402-70e3-83af-cd393446504b",
     "supersedes": "Prior execution model settings only; historical actual records preserved"
+  },
+  "currentExecutionSnapshot": {
+    "asOf": "2026-11-10T19:40:28+08:00",
+    "currentTarget": "erp_fresh35_20261110_r3",
+    "currentPhysicalStage": "NOT_CREATED_MATERIALIZATION_REQUEST_NOT_PUBLISHED",
+    "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
+    "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
+    "directoryPermissionPhysical": "NOT_APPLIED_NEW_ROOT_NOT_CREATED",
+    "formal35Install": "NOT_STARTED",
+    "publicStatusCommit": "8062e41bcae6855495138ba184630942c17450e8",
+    "currentOwners": {
+      "T45": "Fixed local channel observability e471; prepare one exact non-DB read-only channel diagnostic, await original QB incremental review. Own first-install producer seam.",
+      "D1": "Fixed R3 APP/B literal successors reviewed. Draft initial-generation service consumer in original files, preserve exact installed-source verification, finite service/capacity expiry and nullable actual role deadline.",
+      "C": "Integrate exact fixed source and original QB incremental reviews, keep install inputs ready.",
+      "QB": "Review e471 exact observability increment; R3 literal-only review passed, no real install or PG claims."
+    },
+    "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
+    "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
+    "channelObservability": {
+      "commit": "e471baa21c92a4c8a1e49889059d9e5f8d25ae40",
+      "clientSha256": "98148ed01a6cac0b94ecba37f8fb60bfebf67e4e8192f9823fc146b507acda64",
+      "authorChecks": "47_LOCAL_CHECKS_PASS_NOT_SSH",
+      "controllerVerification": "RESULT_TEST_AND_FIVE_SOURCE_HASHES_MATCH",
+      "independentReview": "QB_LOCAL_INCREMENT_PASS_ACTUAL_TRANSPORT_NOT_YET_TESTED",
+      "liveTransport": "NOT_VALIDATED",
+      "serverActionsThisIncrement": 0
+    },
+    "r3Consumers": {
+      "ordinaryCommit": "71b098c54ce366e8eec4bb5ee910c82d4959b760",
+      "writerCommit": "25e765db176006830d5ee99050e325a212a8de1a",
+      "independentReview": "QB_LITERAL_ONLY_PASS",
+      "ordinaryChecks": "AUTHOR_17_PASS_REUSED",
+      "writerChecks": "AUTHOR_24_PASS_REUSED",
+      "firstInstallProof": "MISSING_CLOSED_INITIAL_GENERATION_CONSUMER_AND_PRODUCER; D1_AND_T45_PARALLEL; NO_RECOVERY_PROOF_FABRICATION",
+      "actualInstall": "NOT_STARTED"
+    }
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
@@ -5216,7 +5252,7 @@
       "model": "gpt-6.1-sol/medium"
     }
   },
-  "currentGoal": "UNIFIED_ORDINARY_SALES_TRANSFER_CLEANING_STANDARD_PACKAGE_ISOLATED_IMPORT_AND_BUSINESS_ACCEPTANCE_THEN_EXPLICITLY_APPROVED_PRODUCTION",
+  "currentGoal": "CONTINUE_CURRENT_APPROVED_NAIJUE_ERP_INSTALL_DATA_BUSINESS_ACCEPTANCE_AND_FORMAL_LAUNCH_USING_LATEST_USER_SCOPE",
   "historyHeaderProposal": {
     "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",
     "status": "APPROVED_WITH_SUPERSEDING_BUSINESS_DEFINITION",
@@ -42361,7 +42397,10 @@
           "fixedScopeSHA256": "24b3e74872a4239d467cc67a3a26a7ab8f0656de2fccff45dcca56d3e98be424",
           "fixedReview": "QB two offline targeted tests PASS, including changed or missing plan SHA rejected before reading staged material.",
           "actualStagingAuthoritySHA256": "1aee892ac6065dfebd613cc3d7ffaa9ce56d6b2f5394596143d9097563dadbfd",
-          "executionWindowMs": [1794236063999, 1794236663999],
+          "executionWindowMs": [
+            1794236063999,
+            1794236663999
+          ],
           "executionState": "COMPLETED_NATIVE_7298_EXACT_PRIVATE_INPUT_FAILED_PRESERVED",
           "actualNativeJobReceiptSHA256": "d1a340838fbc2ca6b87fca5b18b9731e77d219c8c1bef056ef8982f258272c2a",
           "actualNativeResultSHA256": "79a634d296babe94166e6a9089ff55b14e6f8a946fa314163c37201a16c5d1e4",
@@ -42369,7 +42408,10 @@
           "actualNativeCombinedEvidenceSHA256": "9cbc1166cc0a2ddec9bc8db9fbc975651b6f0a035bcf027c8cdeb21c9e20bca3",
           "actualNativeFiles": "23.685 s, 6878 preserved, 420 + 2 new, 7298 native files verified, zero overwrites. Original unit and cgroup gone, original slot restored, source stable, PG not started. Volume 66304 free 32354811904 B.",
           "actualPrivateInputAuthoritySHA256": "d65e802baf21fc4f7949d1fa5608fb6338d81826f46b93ed0a1713371bfa4a72",
-          "privateInputWindowMs": [1794236559572, 1794237159572],
+          "privateInputWindowMs": [
+            1794236559572,
+            1794237159572
+          ],
           "actualPrivateInputResult": "t45-first-r1-input-materialize-20261109-01 FAILED/2 in 5.033 s, FIRST_MATERIAL_INPUT_VOLUME_OR_SAMPLE_DIFFERS. No 31-member binding completion. Postflight original unit and cgroup absent, current slot and staged READY receipts unchanged, host free 32075517952 B. Unprivileged private-root reads returned EACCES. Exact subcondition and partial contents remain unknown. No replay or PostgreSQL.",
           "actualPrivateInputJobReceiptSHA256": "d0757e475217f09460e7908c5c14d58c29a222f82a5173db5bb11a62ddc4fa5d",
           "actualPrivateInputResultSHA256": "352d78053b41bc43b94fb2a2b9c3794926faae4718dae3373ec55bbe647e4a06",
@@ -42390,7 +42432,10 @@
             "fixedScopeSHA256": "b3d74bbf4b6dcc217e434eadb476b9afb33c08f334d856a5100d4c9b80bd89f7",
             "fixedReview": "QB independently reproduced three failures on previous source and passed six narrow cases on the successor. Actual Linux I/O and original cause still unverified.",
             "actualStagingAuthoritySHA256": "29651bf4332afcc949ae584a6b52944cd5598214f777f6607931d26444b262f4",
-            "actualStagingWindowMs": [1794238048579, 1794238648579],
+            "actualStagingWindowMs": [
+              1794238048579,
+              1794238648579
+            ],
             "executionState": "ACTUAL_COMPLETE_31_LEAVES_AND_ORIGINAL_BINDING_READBACK",
             "actualJobReceiptSHA256": "71cfeaeacf7569685adfd0ba0a64d625b9dfdc51ee504036b88d74b3896c6895",
             "actualResultSHA256": "e9e3c0a0192243746368eb2b532fe739465374fd135c3acd6f4262c9036d7c77",
@@ -42406,7 +42451,10 @@
               "resource": "Fixed R1 root and Linux/amd64 image matched. Target container and port empty, root affinity 4, MemAvailable 14.22 GiB, free 29.19 GiB. Unit absent and no active cgroup at cleanup. No PG or network change.",
               "creationProposal": "Initial ad3fa4c5 rejected by QB: mutation could launch with only 100 ms authorization remaining. Fixed original script SHA 813fb0fd9e40c4cf1f6f5a0f146fa018ec0535206f4cde7c411da748b3206f7e and QB four mock Docker tests pass. Both windows must have >24 s remaining before the sole create.",
               "creationAuthorizationSHA256": "a6058aa7a3b87f872c671ed5bb8f8a007986e16090c432927c366488e8c43d5d",
-              "creationAuthorizationWindowMs": [1794239118013, 1794239418013],
+              "creationAuthorizationWindowMs": [
+                1794239118013,
+                1794239418013
+              ],
               "creationJobId": "t45-first-r1-front-create-20261109-01",
               "creationState": "FAILED_2_ATTEMPTED_NO_NETWORK_ID_POSTCHECK_ABSENT_NO_REPLAY",
               "creationTerminalSHA256": "1a654d28a1009a12411633187503f4812cff65fb1ba2403a218647b6ad987713",
@@ -42428,7 +42476,7 @@
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
               "firstNativeInstallConfirmation": {
-                "status": "R2_INSTALL_NOT_SUBMITTED_PG_STOP_OBSERVED_FULL_CLOSEOUT_UNCONFIRMED",
+                "status": "R2_CREATE_INITIALIZER_FAILED_ORIGINAL_CLOSEOUT_READBACK_COMPLETE_CREDENTIAL_CLEANUP_UNCONFIRMED",
                 "owner": "T45",
                 "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
@@ -42541,6 +42589,140 @@
                     "originalKeyCgroupReadbackSHA256": "30f98f7167b3d89093a9199fc153f964c3a3aa2b9b8962c5afa2ebe783c59ef4",
                     "readbackFailureTerminalSHA256": "b6520dee9bcb9c117c50d3d3e2961d2ca6da90548c5f0a6206da96b579d9102c",
                     "originalKeyReadback": "At 13:12:13 CST C verified T45's original CID and same cgroup evidence. Two samples contained only timeout and sleep, with no PostgreSQL, initdb, launcher or guardian process. Six dependent job keys all absent, original terminal unchanged. One privileged read-only probe failed/1 in 0.218 seconds with no phase exports; it did not disclose the first error, PGDATA identity or cleanup state. No rerun. Original controlled stop requires durable installation and cannot be used. T45 waits for the exact original carrier lease exit, then C/T45 perform the existing read-only closeout.",
+                    "originalReadOnlyCloseout": {
+                      "owner": "T45",
+                      "state": "CONTAINER_STOPPED_FRONT_EMPTY_PGDATA_RETAINED_FULL_CLEANUP_UNCONFIRMED",
+                      "closeoutTerminalSHA256": "b51d1b1189e806b7eee64428be415e7dc0745e885020527e44364a2c7d6c0aaf",
+                      "closeoutPhaseSHA256": "a3704f166376aa3bfd67d841342a1168b1f77f317ccad0adb66c9e685ddd7467",
+                      "diagnosticTerminalSHA256": "6d2c94d2036fd6d377c69596f4c3a1f5b1829f395c55ca62a1a569f7378f3cc3",
+                      "diagnosticPhaseSHA256": "b93ba0bbbae881097dbce9689c4d75183654ad067b3405ffeb6aca0ab3350c91",
+                      "checked": "C provided the original read-only binding. At 14:21:50 CST T45 observed original container stopped, zero bridge endpoints and retained PGDATA. The closeout returned FAILED/2 because clean shutdown and credential removal were unconfirmed. At 14:31:24 CST the exact original receipt readback completed/0 in 0.068 seconds. CREATE and INITIALIZER_FAILED, initialized false, initializer and descendants reaped, native launcher 2. The initdb numeric code and stderr were not retained. Temporary credential removal not attested, on-disk existence not checked.",
+                      "postFailureMetadataTerminalSHA256": "ef9d4d39f4aed59a7d2a4072930fd6e38ac934d87f38cb5b789100bdbc85371b",
+                      "postFailureMetadataPhaseSHA256": "33e5bd6f653ddc7518791320437776165bc6b617cb2274e59cef0f7bb44d8b4c",
+                      "postFailureMetadata": "T45 completed the one requested read-only job at 14:46:56 CST in 0.167 seconds. Same stopped R2, retained empty PGDATA, no PG_VERSION, pg_control or PID marker. Six temporary credential leaves remain, all single-link regular 0600, with no file contents opened. Original fixed Linux image and initdb binary hash match. Original initdb ELF dependency load and historical PID identity were not recorded. The R2 materializer creates and verifies root-owned mode 0700 on the state bind root. The same live metadata conflicts with traversal by the configured non-root initializer. Original stderr and exact initdb code are not recoverable from the checked carriers.",
+                      "isolationABTerminalSHA256": "63d912c421a2e8bf57eb4a883bb00e8229fad26b507b9f30918a4444a912a522",
+                      "isolationABPhaseSHA256": "e22f1d4e68dd7dd978e176865b885ec2c3fb47fc8f5b7166e842af5febd1f3a4",
+                      "isolationABCheck": "User authorized one isolated A/B and source diagnostics while formal rollout remains paused. T45 ran it at 15:06:02 CST. Both containers used the fixed image and read-only PostgreSQL programs with independent writable empty temporary data paths. The only intended contrast was 0700 vs 0710. Both results stopped at the combined identity or child receipt guard. Neither effective identity nor initdb status survived that guard. Manager COMPLETED/0 confirms evidence and cleanup only. Both containers and temporary trees were removed, with no R2, old data, or listening database service. No permission conclusion or rerun.",
+                      "initializerDiagnosticsCommit": "69bfccc98df214823d5d71e91d4adb5f2d36c9b6",
+                      "freshOnlyCandidateCommit": "bbb5bb98a0f11e242ec180e95a067ec6cc9fdc3b",
+                      "freshOnlyCandidateTree": "eadb8402ee95cd11147ac7d93de9fb260d5341a6",
+                      "unissuedIsolationSuccessorSHA256": "3d394158346ac8c81ffcf6e39af3ee44e9328e87dd6d9ad9aa0d51398e81bec6",
+                      "candidateVerification": "T45 reports 135 launcher, 14 capacity and 24 lifecycle checks passed. C ran the two changed diagnostic negatives successfully and verified exact source and outcome receipts. No packaged or deployed candidate. Original 0700 state creation and validation still present pending a valid A/B. The fresh-only carrier no longer requires the November 2 package mount.",
+                      "secondIsolationAB": {
+                        "job": "t45-r2-initdb-mode-ab-20261110-02",
+                        "issuedScriptSHA256": "22cc2924d11b0d28c3c1a196cfe7177ec46827f51458a1b7105813558c961d8d",
+                        "phaseSHA256": "0776efda5aa361a23dc85e50e8868a5385a65e43e5005d8f261bb19b711cb3e9",
+                        "terminalSHA256": "6ed325823c1f1f5ea4d37cdda80ef814d617a264baf264bdb773e044d29c3912",
+                        "result": "15:38:56 CST, manager FAILED/2 in 12.954 s. Same fixed image and observed non-root service identity, no supplementary groups. 0700 initdb exited 1 with nonempty unclassified stderr and no PG_VERSION. 0710 initdb exited 0 with PG_VERSION. Both temporary containers and trees removed, no R2 mount, PostgreSQL listener or connection. Strict path-error evidence absent. Candidate directory permissions unchanged."
+                      },
+                      "r2CredentialRetirement": {
+                        "job": "t45-first-r2-temporary-artifacts-retire-20261110-01",
+                        "phaseSHA256": "de39642cc5c61de881cd733df4ef9c67b14ab9ffc895febdb9ceffa62c686e77",
+                        "terminalSHA256": "3730c62edffcceca6dd5e125b9f286733531ced4cff0242062ddaea0e0a19e64",
+                        "result": "15:42:06 CST COMPLETED/0 in 0.167 s. Six authorized regular single-link 0600 leaves verified and removed, all six absent afterward. Same stopped container, no bridge endpoints, empty PGDATA identity and metadata and original receipts unchanged. No credential bodies opened, PG connections or container mutations."
+                      },
+                      "pwfileDiagnosticFollowup": {
+                        "commit": "011bdae89156956f499dc54978ec99e86c11d83c",
+                        "tree": "a0296e2eca71ebbb314dd4bf5508d8edd11c1f95",
+                        "unissuedIsolationScriptSHA256": "cdcc9d4eda01d4fb38c3ca58a506305e9410feaa1b2002042c6df464fafa6207",
+                        "check": "PostgreSQL 17.11 initdb get_su_pwd can emit 'for reading: Permission denied', missing from both old classifiers. T45 reports 135 launcher and 4 substitute A/B checks passed after the fix. C verified commit, tree, two changed files, script digest and independently passed both targeted launcher diagnostics. Actual failing stderr unknown. No new on-host execution."
+                      },
+                      "thirdIsolationAB": {
+                        "job": "t45-r2-initdb-mode-ab-20261110-03",
+                        "scriptSHA256": "4c1bc0378ac472f2e8d56678f516cb3b228d322e9b8fa3e663a16e961475a15b",
+                        "phaseSHA256": "cb37f453b8cb85e4d836fbc03b9741354cee620cfdea38e7c1624d516d5aeb52",
+                        "terminalSHA256": "0bc3ee759f058e43882660463ed46f957ae44054d16882fe55650c7a69412e6a",
+                        "result": "16:01:14 CST, COMPLETED/0 in 13.806 s. A 0700 exited 1 with INITDB_PATH_PERMISSION_DENIED and no PG_VERSION. B 0710 exited 0 with PG_VERSION. Both same fixed image and effective UID/GID 61035 with no supplementary groups, no PostgreSQL listener or R2 mount. Both containers and temporary tree removed. C verified exact receipts."
+                      },
+                      "stateTraverseFix": {
+                        "commit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
+                        "tree": "4cc12083ab3d852d4acf79ba3576379b998f3bd8",
+                        "inputsSHA256": "3101722a1a88a29c5b822bba9699001ed765eacf7bdb41b3627f03d35260c762",
+                        "result": "New state bind root creation and host/container validation use root:61035/0710. The outer root remains root:root/0700. Service group gains search only. T45 17 capacity + 24 lifecycle + 135 launcher, C three focused regressions pass. No formal host directory materialized or modified."
+                      },
+                      "r3LocalInstallPreparation": {
+                        "commit": "44f9b603d6b27f2d16ec3ad2b1505f8f8fa8c2b2",
+                        "tree": "72a7d179fc25476ac67b8a88bd0dcd771e281274",
+                        "sourceSetSHA256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+                        "deploymentManifestSHA256": "53de9b380bc7c6aec1bcd136fa554bc43077e7557b0f441710032c89f8aaab9e",
+                        "readySHA256": "8229f32d2c10cc7db48ec93c2a3a8a41ce56eb3387bd847c0b32709e4dfc710e",
+                        "staticRequestsSHA256": "730bc2809ab16dfde528f14a11632ea9f3bfe6554eb57fb8edc864526ad91a6a",
+                        "productionPlanSHA256": "ae0645f2f93bc7d61fa814ffbf1045ec91e2ec7b8d53b5229f1a3bce603692ca",
+                        "verification": "C recovered and rehashed e7b61281/99c7245e original closure. C checked eight unique keys, all 22 static leaves, 6 READY pins, exact two-leaf diff across 7294 manifest entries and 214 source pins with unchanged base SQL, and 3 targeted tests. T45 19 capacity + 24 lifecycle + 135 launcher passed. Local Node descriptor readback used v25.8.2. Linux runtime and nested read-only binds remain unverified.",
+                        "limits": "Materialization 5 minutes max, installation 20 minutes max, service 60 minutes max, 270-second install cutoff reserved for STOP. Admission needs live distinct root/keys, old base identity, bridge/alias/port, image, capacity, original slot and same-window execution approvals. No window or installation started."
+                      },
+                      "qbReviewSHA256": "aabd657e389a3e9742ab52501dda9f5845e71469874ee9ecf01a3e9002546251",
+                      "readOnlyR3Admission": {
+                        "job": "t45-first-r3-admission-readonly-20261110-01",
+                        "phaseSHA256": "99f4d4d6f23b5aaac39ab26557f3732ce35a2d7a5be8e7b131f7a7328fd49dab",
+                        "terminalSHA256": "ad1fe044226ec69222969ad6ab8a423aeb7ceaa6b88a57ee36704433519e6c33",
+                        "slotReadbackSHA256": "d5a82e19341ba5818b7a3bca9e12f8702c126b61a9507e6762a1e077d9be67a1",
+                        "result": "16:32:49 CST COMPLETED/0 in 0.268 s. Ten gates true. Eight keys, target, candidate names, port, aliases and original slot empty. Fixed image and base identity match. Same volume 31,262,093,312 B available, stage-reserved headroom 1,130,213,376 B over floor; 4 CPU and 15,174,258,688 B memory available. No DB connection, container or network mutation. Nested live mounts and full deployed byte readback remain pending."
+                      },
+                      "firstR3MaterializationAttempt": {
+                        "job": "t45-first-r3-native-bind-20261110-01",
+                        "authoritySHA256": "b7bbe29da65705b90587b49e75db85b1f35f194e8f70462229eb1cd29e3a43f6",
+                        "originalKeyReadbackSHA256": "703b21939838c7686bb9830e596f7f4cddfcd0e1959af1a2c08fc2a5a750d055",
+                        "partialUploadReadbackSHA256": "baf95bf65d86640330c01177f52f51ff9fa0bf1347cddb0aadd9c9ce2fa75998",
+                        "result": "User resumed the goal. C reread the direct standing empty-install authorization and issued only materialization. Original leased DATA_UPLOAD timed out. No local history, remote request/tmp/terminal or active unit. Remote partial directory contains exactly one complete fixed static leaf. Manifest and materialization authority not delivered. Original operation was never submitted; no R3 materialization or T0. Exact SSH timeout cause unknown, original receipt and partial directory preserved without replay."
+                      },
+                      "secondR3MaterializationCandidate": {
+                        "commit": "f89f4e88129021be11933de93f5119434bf44f09",
+                        "tree": "2264eb2b51ddbc8cf6557c3927ef554ff8a50e8d",
+                        "readySHA256": "5a1c825302b73cb40532e25c3c85d774933ab58801159c598af82574e0d3e2ee",
+                        "staticRequestsSHA256": "dcca99c2938f959d879dc3c7ac4a0526ab6c1731321285a55852a89a7c6f7630",
+                        "next": "T45 adds local upload stage and fixed leaf timeout diagnostics with no policy change. Recheck new bind-02 before a bounded, freshly issued materialization. The other seven keys and exact deploy/source pins remain fixed."
+                      },
+                      "thirdR3MaterializationAttempt": {
+                        "jobId": "t45-first-r3-native-bind-20261110-03",
+                        "status": "UPLOAD_TIMEOUT_REQUEST_NOT_PUBLISHED",
+                        "minimumReadbackSha256": "6cedb765215b452bc61049ee9d2348ae68cd4a2d17f487e2ab28fd22cbc9d5fe",
+                        "firstLeafComplete": true,
+                        "partialUploadAbsent": true,
+                        "executionRequestAbsent": true,
+                        "formalInstallationStarted": false
+                      },
+                      "transportSuccessor": {
+                        "commit": "ced2e020547759c19eabdb00f1462558338b32f4",
+                        "clientSha256": "a20a43f42df1a734401358c2c29af4b60a400514389a68b19e3b0dd2f638dd97",
+                        "qbStatus": "PASS_LOCAL_INCREMENT_ONLY",
+                        "actualUploadPathPassed": false,
+                        "timeoutSeconds": 40,
+                        "automaticRetry": false
+                      },
+                      "fourthR3MaterializationCandidate": {
+                        "commit": "dc20c7bf7d0c0e327efaca22c87bd39f288c601d",
+                        "jobId": "t45-first-r3-native-bind-20261110-04",
+                        "authoritySha256": "c1db81059ac71b903a4a1f68c33838274de441884b137d20353febcf4468b36a",
+                        "startsAt": 1794303274386,
+                        "expiresAt": 1794303574386,
+                        "status": "PARTIAL_UPLOAD_TIMEOUT_NO_REQUEST_NO_TARGET",
+                        "timeoutSafeSummary": {
+                          "stdoutBytes": 0,
+                          "fixedUploadAckComplete": false,
+                          "clientExitCode": 1
+                        },
+                        "originalKeyReadbackSha256": "40d6e7e70f8c17357ed5c361a520f5ba41e09466b800a0cbe0710a28d59f54d5",
+                        "resultSha256": "89e11279576478f1edf1624aa741782e16e8e11106d6ec2fab1d07cb15193334"
+                      },
+                      "boundedTransportProbe": {
+                        "operationId": "t45-r3-input-exit-20261110-01",
+                        "authoritySha256": "a6f019dac8388c66df6b745f37c36a0526c7edb766355650881a4e912da5c026",
+                        "resultSha256": "09e73e2f5778a62fb8f965ad10d80725aa5d6ec78f47aa22f42158d123d9305d",
+                        "status": "INCONCLUSIVE_REMOTE_TREE_ABSENT_CONFIRMED",
+                        "executedArms": 1,
+                        "unexecutedArms": 2,
+                        "directoryAbsentReadbackSha256": "550f5459adce91e8b5b1908a31cf9635e9f863fcab6cce35276ee11911dc71cd",
+                        "directoryAbsentCheckedAt": "2026-11-10T19:14:13.502+08:00",
+                        "processEndState": "UNKNOWN_IDENTITY_MATERIAL_NOT_PRESENT",
+                        "additionalCleanupWrites": 0,
+                        "measuredFirstArmEpochDeltaMs": 88331,
+                        "remoteTimeoutConfigurationSeconds": 40,
+                        "causeOfTimingDifference": "UNKNOWN"
+                      },
+                      "publicStatusCommit": "8062e41bcae6855495138ba184630942c17450e8",
+                      "next": "Permission A/B passed and source fix ready. Actual new target permissions and formal35 installation remain NOT_STARTED. Bounded synthetic transport probe inconclusive: no-input arm also timed out, later arms not run. At19:14 exact diagnostic tree absent; process end unknown. T45 physical actions ended, local-only next-step diagnostic/repair design awaits causal evidence. No bind05 or repeated window. Preserve R2 and01-04. No new human approval currently required."
+                    },
                     "qbFirstFaultLocalReview": "QB compared the actual R1/R2 receipts and original identical native file f2adbe41. Independently executed both generated Python -I -S layers with explicit local Linux, UID, volume and input stand-ins, passed the real argv entry check and reached protected provision read. Outer exit receipt was preserved. No deterministic wrapper pre-entry failure found by this limited check. Actual first failure, server log and historical PG state remain unknown."
                   },
                   "r2ApplicationAndWriterSource": {
