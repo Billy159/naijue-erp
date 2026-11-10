@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-10T22:54:00+08:00",
-  "stage": "R3_ACTUAL_35_TABLE_INSTALL_AND_CLEAN_CLOSEOUT_COMPLETED_APP_NOT_DEPLOYED",
+  "updatedAt": "2026-11-10T23:13:02+08:00",
+  "stage": "R3_INSTALLED_CLEAN_NORMAL_SERVICE_AND_LINUX_DEPENDENCIES_PARALLEL_IMPLEMENTATION",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1786,20 +1786,20 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-10T22:54:00+08:00",
+    "asOf": "2026-11-10T23:13:02+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_STOPPED_CLEAN_WITH_DURABLE_35_TABLE_INSTALLATION",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "8edb059145fe4fef7e305dedfee1e180e2fd643e",
+    "publicStatusCommit": "b312fbd66222238a5cb1b84edaeaeab3eaacb6fa",
     "currentOwners": {
-      "T45": "Sole server writer. Closeout complete. Next prepare same R3/e894 APP normal entry, authentication recovery, current-generation proof and capacity/Linux inputs offline; no further server action this phase.",
-      "D1": "Narrow finally cleanup review done, no T45 writes. Null-runtime recovery remains unsupported.",
+      "T45": "Sole server/ops writer; implement same R3 normal-service source and prepare parallel real Linux dependency check; no server job until fixed source/QB/C exact binding.",
+      "D1": "Implement exact frozen normal V2 in two owned source/test leaves only; fixed commit then original QB incremental review.",
       "C": "Validate actual receipts, bind reviewed cleanup, maintain existing records/status.",
       "QB": "Only fixed new closeout increment on T45 delivery.",
-      "D2": "e894 APP locally built and packaged, no server claim."
+      "D2": "Same-lock Linux artifact review done; no redownload. Await fixed new consumer/QB for single replacement APP build."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
     "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
@@ -1909,7 +1909,40 @@
       "capacityLoginAndBusiness": "NOT_VERIFIED",
       "publicSwitch": "NOT_EXECUTED"
     },
-    "controllerRecordsRemote": "PUSH_TIMEOUT_API_CONFIRMED_REMOTE_STILL_2927d9ac_NOT_CLAIMED_PUSHED"
+    "controllerRecordsRemote": "PUSH_TIMEOUT_API_CONFIRMED_REMOTE_STILL_2927d9ac_NOT_CLAIMED_PUSHED",
+    "publicStatusSha256": "fc12c0e0176b02f79db2a2ff5a61d3e717dc3abc795f01ce05ac137bcc1b065a",
+    "nextStartupGaps": {
+      "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
+      "linuxDependencies": "e894 archive has no node_modules; actual Linux fastify/pg/sharp installation and loading unverified.",
+      "owners": {
+        "T45": "Prepare same installed R3 normal-service launcher, bounded existing-role authentication inputs and generation/capacity facts offline.",
+        "D1": "Prepare minimal original consumer and targeted tests seam, no T45 writes.",
+        "D2": "Check existing lock/platform/Linux dependency artifacts; no redundant APP build or server action."
+      },
+      "serverActionsThisPreparation": 0
+    },
+    "normalServiceSource": {
+      "seamSha256": "837f3f3ac5da24091768c2a60a7a0dd9e4c43b980dfb4f218f6646e9aef32ee8",
+      "format": "FRESH35_CURRENT_PRODUCTION_SERVICE_V2",
+      "closedFields": 16,
+      "jobId": "t45-first-r3-native-service-start-20261110-01",
+      "containerName": "t45-fresh35-first-production-20261110-r3-service-01",
+      "exactScope": "Same installed R3/record/source/PGDATA, authentic later birth; preserve runtime null and finite service/capacity. No old recovery proof fabrication.",
+      "D1": "Two-file consumer WIP started; microsecond comparison targeted 1/1 PASS only.",
+      "T45": "Normal same-data launcher/proof implementation; credential reference metadata first, exact recovery proposal if absent.",
+      "execution": "NOT_STARTED_SOURCE_ONLY"
+    },
+    "linuxDependencyPreparation": {
+      "cacheSha256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
+      "cacheBytes": 15064708,
+      "packageSha256": "df132518fffedcac3dd2842f773de1f191b563a12887788a06c196a4ce753902",
+      "lockSha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "resultSha256": "34155c8af20161a1df32ceb18745b1a9ba14928e5eafd715f6e8345f0e5afd87",
+      "planSha256": "d72e63385e253e672e7bdcbe16c2dee50750c34828edeb346b7673bf49c3766d",
+      "localCoverage": "105_TARBALLS_111_PLACEMENTS_0_MISSING_REUSED",
+      "realLinuxInstallAndLoad": "NOT_VERIFIED",
+      "next": "T45 prepare independent bounded no-PG npm ci offline + required externals/native load; do not wait consumer build."
+    }
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
