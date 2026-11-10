@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T01:35:00+08:00",
+  "updatedAt": "2026-11-11T01:44:00+08:00",
   "stage": "R3_INSTALLED_CLEAN_LINUX_ACTUAL_PASS_NORMAL_START_SOURCE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,9 +1786,9 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T01:35:00+08:00",
+    "asOf": "2026-11-11T01:44:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "R3_35_INSTALLED_LINUX_DEPENDENCIES_VERIFIED_NORMAL02_CLEAN_FAILED_SERVER_STARTING_NORMAL03_SOURCE_REVIEW_PENDING",
+    "currentPhysicalStage": "R3_35_INSTALLED_AND_NORMAL03_RUNTIME_AUTHENTICATED_APP_NOT_STARTED",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
@@ -1921,7 +1921,7 @@
         "status": "D2_BUILD_PACK_LOCKED24_21_PASS_C_ARTIFACT_PINS_MATCH_NOT_SERVER_APP"
       }
     },
-    "controllerRecordsRemote": "5786dfb2a9dd9961b92bbcf819e66079d3fd0598",
+    "controllerRecordsRemote": "be6c315703c9d56a01aa2f47e5d3a06c40209465",
     "publicStatusSha256": "e3c251e297741945bc99e79b40dfa1b8dee19548145dc03a8e1030eec9d951b4",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
@@ -1942,22 +1942,22 @@
       "exactScope": "Same installed R3/record/source/PGDATA, authentic later birth; preserve runtime null and finite service/capacity. No old recovery proof fabrication.",
       "D1": "FIXED_C73_AUTHOR_14_AND_QB_LIMITED_PASS",
       "T45": "Normal same-data launcher/proof implementation; credential reference metadata first, exact recovery proposal if absent.",
-      "execution": "NORMAL03_NOT_DISPATCHED_READONLY_READY_REPAIR",
+      "execution": "NORMAL03_ACTUAL_COMPLETED0_READONLY_CURRENT_REFERENCE_VALID",
       "consumerCommit": "da7c73df2793a37fde65721794da4deaffff2e6f",
-      "consumerSourceSet": "127efa6cf06a0e9d228e97bfd375ebb7ba6c18fbed109b5fa8f660a5dee2f036",
+      "consumerSourceSet": "a29778ccf12bfe4770644ee15a6d468b85648c16c74e05564daa474e9934cc0d",
       "consumerHostSha256": "3f3251be80c0c6a61e9ef22a1717d6f66feb4acb6bf3d4b03180f7ddb28b125e",
-      "consumerReceiptSha256": "a3cecd49b1cd96271caed73e6b7cda17236658f33f85d626f19d18dfdd7b19f7",
+      "consumerReceiptSha256": "2c86de717a6970c5b29176511302703148ff02c253bdb2654eb5f1417532af88",
       "authenticationMechanismDecision": {
         "decision": "SOURCE_AND_TARGETED_QB_REVIEW_ONLY",
         "scope": "Same clean stopped PGDATA/exact runtime role: original nonroot PG17 single-user password-only rotation. No new role/grant/HBA/trust/VALID UNTIL/business rows/installation-record change.",
         "secrets": "Per-job private exclusive files/pipe; no argv/output/logs/Git. Exact consumer UID access. Unknown commit uses original key and retained private material; no regeneration/replay.",
         "liveExecution": "01/02 already executed with preserved UNKNOWN history. No further password SQL authorized for03; same original material readonly readiness/authentication only."
       },
-      "producerCommit": "b0e91015cf3c0c02f5989e526388578a84b65c0f",
-      "producerReadySha256": "d3e281f7f058837aea317530cb29a53d4c2691baedd10d74399d1cd02d5b61f7",
+      "producerCommit": "0d643d50c7f66da4218d0f15e6d340bdc36525de",
+      "producerReadySha256": "0ad235182915a3f52325f31e6ed03426063f61cf53d548c181b9fbf2749fb349",
       "producerResultSha256": "11807e3be5c00c52df2520f4bf4571df56c2251c0cc4a5b55e142c96f62494ae",
-      "producerChecks": "AUTHOR_18_TARGETED_PASS_NOT_ACTUAL_SERVER",
-      "producerReview": "QB_NEED_FIX_TWO_OFFLINE_P2_DEADLINE_AFTER_SUCCESS_AND_ABNORMAL_EXIT_TRANSIENT_RETRY",
+      "producerChecks": "18_PRIOR_MODELS_REUSED_2_TARGETED_METHODS_6_NEGATIVES_PASS",
+      "producerReview": "QB_TWO_P2_CLOSED_SOURCE_DELTA_ONLY",
       "consumerReview": "QB_EXACT_MAPPING_INCREMENT_PASS_SOURCE_ONLY",
       "current03Consumer": {
         "branch": "codex/d1-normal03-consumer-20261111",
@@ -1990,11 +1990,20 @@
         "policyRestorationSHA256": "c30ee79ff754ac41c5ea7817075f71c885c96acf301a8771b8e8f0ee3fad5e29",
         "restoredOriginalPolicy": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530"
       },
-      "next": "T45 fix two proven P2 on unconsumed03; QB only affected negatives; C fresh exact window only after fixed review. DA7 APP build complete separately.",
+      "next": "T45 retain current proof under finite lease and prepare matched DA7 APP; D1 admin154 source in parallel; no old Nov2 import",
       "source03Findings": [
         "Success accepted after shared20s deadline without postquery check",
         "exit127 or signaled process with stale startup stderr could be retried"
-      ]
+      ],
+      "normal03Authority": {
+        "sha256": "55f3e0d51cd138db6543768211f096f4b009a11b8eaf98b62700c7c66ac3410b",
+        "startsAt": 1794332289299,
+        "coordinationExpiresAt": 1794334089299,
+        "serviceExpiresAt": 1794335889299,
+        "roleOrBusinessSqlWrites": 0,
+        "source": "Direct current human delegation to C through noon; same R3 existing authorization; T45 sole executor"
+      },
+      "source03FindingsState": "BOTH_CLOSED_BY_FIXED_0D643D50_NO_SERVER_VALIDATION_YET"
     },
     "linuxDependencyPreparation": {
       "cacheSha256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
@@ -2092,7 +2101,27 @@
         "action": "C explicit retained identical password repair; 0 new password, never replay01",
         "newProof": false
       },
-      "next": "T45 exact02 readonly stage/exit first; no03 or writer replay without cause and fixed review"
+      "next": "T45 exact02 readonly stage/exit first; no03 or writer replay without cause and fixed review",
+      "normal03": {
+        "jobId": "t45-first-r3-native-service-start-20261111-03",
+        "startedAt": "2026-11-11T01:40:36.320833+08:00",
+        "finishedAt": "2026-11-11T01:40:41.706611+08:00",
+        "status": "COMPLETED",
+        "exitCode": 0,
+        "elapsedSeconds": 5.3315769247710705,
+        "terminalSha256": "dc54983b1b05e88b1adafb7e9642809342ab5bdbd64ab86c32be01d198552bc7",
+        "resultSha256": "c9923facf2cb6a42f67de2febac5cc15954634436a967b2633f736e269004f6c",
+        "proofSha256": "d1b6c766d96e2301ca62e92019df1128884b8e90f09b51ef270ea01b49a7d9eb",
+        "retainedSha256": "14a55e53fb78e887eef474f75e6a946a5f860898f247506ba2cf73689d3c1621",
+        "postmasterStart": "2026-11-10 17:40:40.730929+00",
+        "cid": "686989b5e1f3b1b3109b11454b47fa992665906b4e1456c5b531d14be429a569",
+        "serviceExpiresAt": 1794335889299,
+        "roleChanges": 0,
+        "businessWrites": 0,
+        "appStarted": false,
+        "previous01_02Commit": "UNKNOWN_PRESERVED",
+        "currentOriginalReference": "ACTUAL_RUNTIME_SESSION_AUTHENTICATED"
+      }
     }
   },
   "operationalState": {

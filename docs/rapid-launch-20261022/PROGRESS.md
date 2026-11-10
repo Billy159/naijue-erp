@@ -3984,3 +3984,10 @@ STATUS 730db69ccb1501f58612af81c0d5f69680a9c825 / SHA256 883e58dcbe231e270be36f0
 ### 2026-11-11T01:35:00+08:00
 
 DA7完整APP在固定Node24.21.0/npm11.9.0一次build/pack退出0，原新增真实catalog模块绑定1/1；C独立复算6制品和包内host，archive0c348a4c/sourceSeta29778cc/RESULT2c86de71匹配。非APP启动或业务证据。QB对normal03 b0e91015复现两项P2：20秒后成功未被拒绝、异常退出携带暂态文字被重试；T45原owner只补两处和反例，原03键未消费，无新窗口。旧密码原材料、PGDATA及旧未知事实保留。D1 154目录/记录及类型定向通过，完整宿主与CLI尚在核；准确后继包会保留779及DA7，不把WIP称已交付。公开STATUS于01:33:53核远端dcb771bffc1a36d496edd6818f23b6bb6ff541dc/SHAe3c251e297741945bc99e79b40dfa1b8dee19548145dc03a8e1030eec9d951b4。C三记录5786dfb2已非强推核实。
+
+
+### 2026-11-11T01:44:00+08:00 — 同一R3正常03真实只读启动通过
+
+原T45一次 t45-first-r3-native-service-start-20261111-03，01:40:36.320833–01:40:41.706611 COMPLETED/0、5.331576925秒，C独立复算terminal dc54983b1b05e88b1adafb7e9642809342ab5bdbd64ab86c32be01d198552bc7、result c9923facf2cb6a42f67de2febac5cc15954634436a967b2633f736e269004f6c。BASIC首次真实SERVER_STARTING/exit2，原20秒内第二次通过；ROLE_ATTRIBUTES/PRIVILEGES/READINESS各0、stderr0、readOnly=on，真实runtime为原角色，NOSUPER/NOCREATEDB/NOCREATEROLE/NOINHERIT/NOREPLICATION/NOBYPASS、连接上限2。原SID7706545564479176741/OID16393/PG170011保持，新birth 2026-11-10 17:40:40.730929+00；proof d1b6c766d96e2301ca62e92019df1128884b8e90f09b51ef270ea01b49a7d9eb、retained 14a55e53fb78e887eef474f75e6a946a5f860898f247506ba2cf73689d3c1621。服务和容量有限至02:38:09.299，0PASSWORD/角色修改/业务写/APP。原01/02历史提交未知不追认回滚，仅当前同原材料登录实证成功。
+
+正常03源码0d643d50两P2经QB限定关闭，C原件55f3e0d5真实外部签发；不是客户端自批。T45一次只读回收root canonical及当前代次供APP，D2 DA7完整包已通过锁定构建，T45准备同锁依赖复用与root私有配置水合；尚无APP/登录业务/新数据/备份恢复/正式切换。154身份缺口已明确：原首装owner临时材料退役，禁止冒用runtime为owner或原NEW_EMPTY重装；仅场外准备同R3备份、准确有限维护身份和已审154后继，C另绑本轮具体动作，不问睡眠用户重复授权。
