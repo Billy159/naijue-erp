@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T02:51:32+08:00",
-  "stage": "R3_NORMAL03_ACTUAL_READY_APP_STAGE_COMPLETE_ADMIN154_SOURCE_ACCEPTED_APP_NOT_STARTED",
-  "lastVerifiedRemoteCommit": "7ef9fd0739c502aa53df82112e60d2cae7e462a1",
+  "updatedAt": "2026-11-11T03:14:00+08:00",
+  "stage": "MOUNT_FIX_ACTUAL_LINUX_PASS_SAME_R3_STOPPED_BACKUP_AND_ADMIN154_MAINTENANCE_SOURCE_PREPARATION",
+  "lastVerifiedRemoteCommit": "6175542787b909d2f37233c51192515a2dbba210",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,20 +1786,20 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T02:51:32+08:00",
+    "asOf": "2026-11-11T03:14:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "NORMAL03_CLEAN_EXPIRY_READBACK_CONFIRMED_APP_OCI_MOUNT_ROOT_CAUSE_FIXED_SCOPE_IN_PROGRESS",
+    "currentPhysicalStage": "MOUNT_FIX_ACTUAL_LINUX_PASS_SAME_R3_STOPPED_BACKUP_AND_ADMIN154_MAINTENANCE_SOURCE_PREPARATION",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
     "publicStatusCommit": "cbfcb0407bb7f545d3b010825ab06743823df3f6",
     "currentOwners": {
-      "T45": "Collect02 first stage and exact exit readonly; preserve unique password and stopped data. APP exact staging/restore may proceed after manager free. No03 replay.",
-      "D1": "normal02 source/remote delivered; A+B a53 preserved; implement bounded154 catalog and original host successor source only.",
-      "C": "Bind source/actual receipts, autonomous bounded decisions, three original records and status.",
-      "QB": "02 producer and consumer limited increments PASS; A+B review active, local PASS is not PG success.",
-      "D2": "3f actual single build/pack delivered; all exact hashes and package host C verified. No duplicate build/install."
+      "T45": "Sole server executor: actual mount-load completed and exact container removed; fix cold-copy durability two findings, prepare same-R3 owner/controller finite maintenance and SQL36 actual transaction witness. No new database or old-job replay.",
+      "D1": "Fixed9830 source delivered; precise154 transaction/record/controller-login seams handed toT45, no concurrent writes.",
+      "QB": "Original limited increment reviewer: mount sourcePASS actual runtime ownedT45; cold-copy79e1 two durability findings require fix, no actual copy authorization.",
+      "D2": "Fixed9830 Node24.21/npm11.9 actual build/loader/pack complete; reuse archive59ed9165, no duplicate build/download.",
+      "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
     "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
@@ -1950,7 +1950,7 @@
         "serverAPP": "NOT_RUN"
       }
     },
-    "controllerRecordsRemote": "7ef9fd0739c502aa53df82112e60d2cae7e462a1",
+    "controllerRecordsRemote": "6175542787b909d2f37233c51192515a2dbba210",
     "publicStatusSha256": "d96ba00e3eeeb078c97e707475e74eb5827f7829cd8b813e7f0be6216064b84c",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
@@ -2250,6 +2250,52 @@
       "mountEvidenceSha256": "64ff3d9bc1e7af98b029b60fe6fa93c4777ba051603964f0e4c49ffa51c8f70e",
       "originalExecStderr": "NOT_CAPTURED_NOT_FABRICATED_ORIGINAL_DOCKER_STATE_ERROR_RECOVERED",
       "nonrootExecuted": false
+    },
+    "mountLoadActual": {
+      "jobId": "t45-r3-da7-mount-fix-linux-load-20261111-01",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 7.438102430664003,
+      "sourceCommit": "28e2ad0d1106a1dc9d639d965a77abf2f98f0773",
+      "authoritySha256": "0cebb238bb5e1c06b2713c50a66f12da4a4a4e8ef1378b962f7f22eac3dcf42d",
+      "aggregateSha256": "b6b0928c732ef4c65af3a1f528e84fb9fcacdafc9620a00ac899c6a04d5c393f",
+      "terminalSha256": "190971f742c148bc7d5a375e5022dea2b415be552a29c4c3ab303c2bde989943",
+      "resultSha256": "7ce0b5f7a023b0b8d929b1923b750cb824b23fbaab7aa43f25a43e5224409048",
+      "cleanupSha256": "79180d5a58a4f3b7eacc4b70156b7b3610f66f918767bb68f472629a3c717422",
+      "controllerCheck": "RAW_BYTES_HASH_CHECKED",
+      "nonrootLinuxModules": "PASS_ACTUAL",
+      "ownContainerStoppedRemovedAbsent": true,
+      "pgOrAppStarted": false,
+      "appCapacityReadyz": "NOT_TESTED"
+    },
+    "sameR3ColdCopy": {
+      "status": "NOT_COPIED_SOURCE_79E1_NEED_TWO_DURABILITY_FIXES",
+      "sourceCommit": "79e1cd8a6b161de5093d02aa0cedb0bc2e339623",
+      "measurementReportedBy": "OriginalT45 actual read-only job",
+      "files": 1491,
+      "directories": 28,
+      "logicalBytes": 68501885,
+      "walIncludedBytes": 33554432,
+      "availableBytesAtMeasurement": 31037227008,
+      "copyBudgetBytes": 73400320,
+      "minimumAvailableAfterBytes": 30064771072,
+      "independentRestore": "NOT_RUN",
+      "findings": [
+        "Published complete marker can survive final parent fsync error",
+        "Full target child-directory and final-attribute durability not yet synchronized before marker"
+      ],
+      "owner": "T45",
+      "reviewer": "QB"
+    },
+    "successor154Maintenance": {
+      "status": "SOURCE_PREPARATION_ONLY_NOT_EXECUTED",
+      "sourceCommit": "9830e54fa82bd36c62f997d8ef859e8488c93512",
+      "existingOwnerForDDL": "erp35_owner_20261110_r3",
+      "existingControllerLoginForAdminA": "erp35_controller_20261110_r3",
+      "missing": "OriginalT45 SQL36 same-transaction witness, confirmedCOMMIT, independent full154catalog readback and protected successor publication",
+      "runtimePermissionExpansion": false,
+      "newDatabase": false,
+      "oldInstallationImmutable": true
     }
   },
   "operationalState": {
