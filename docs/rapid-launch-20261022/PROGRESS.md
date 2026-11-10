@@ -4073,3 +4073,21 @@ T45有限两角色helper被QB查出旧client_min_messages=panic无效参数，�
 C依据用户本主控持续T45传输和睡眠委托，签发准确1b8材料一次30分钟授权8717b0133deeb3d922c98e47774ad1c6144ce37da3ceab9bfc7ea0704807af53，04:00:00.028–04:30:00.028；仅原artifactKey r3-1b8d24b4-app154-20261111-01与惰性ops506f随原install worker bundle。原通道install→staging→READY/ops保护元数据回读→restore原cd2/root0444/旧过期policy，完成失败到期均收尾；不授权PG/角色/SQL/APP，实际回执待T45。维护04→停稳/准确恢复→05方案继续，不在开窗后准备代码，原冷副本和旧失败现场保全。
 
 STATUS03:58:53已核远端8f161a9c1db148720b6dcc7b5ce9b566333aad64、内容SHA1ee9da1e739d049f9ed219400cc0e38ff5b061282ec369199024f7ec4e067e69。C上一三记录完整73b74606b1e5212d6eaf902b37b21c203cc911e4已核；用户无需操作。下一步T45准确材料上传与外层接线、QB核心事务及外层增量，齐备后C绑定同库真实维护。35表原安装/03安全停止/冷副本/挂载实测通过；154真实安装、管理员、CLI/容量/readyz、业务/新数据/正式切换仍未验，不使用11.2旧批。
+
+
+### 2026-11-11 04:07 — 原QB升级增量通过，原D1接续纯Node调用边界
+
+C实际核QB1b8五叶RESULT00437a48cc95209fec99b5f90a1a794f86d75d46de4dd1f964bd103e2d397027及报告b8ce15bc2cea92315c4f87ecd54b0a96bd3216ff356d64db05dd8ff5b1cac092：Node24.21原生模型8+05配对2项通过，无新增发现，仍仅源码。D2已有完整构建证据复用，不再构建；T45原root两叶继续同一QB，不增加验收队。
+
+T45明确尚无SQL36 Node driver/A调用文件、WIP或未落盘稿后，C将纯Node调用两叶唯一交原D1：tools/unified-import/fresh35-admin154-maintenance-driver.mjs与对应tests。仅沿原受保护job输入和外部C授权、准确one-use reservation、持久fsync日志消费固定506f及原ADMIN_PROVISION_ONLY；UPGRADE返回候选后由T45root实际publish/load，再A。D1不碰root/秘密采集生成/容器/签发/保护记录发布/04和05producer；T45不重复写Node叶。APP219和1b8固定包不改，不另建控制平台或连接池。现场尚未开维护窗口，当前先完成材料传输及原policy恢复。C上一三记录67563dd68df0dc3b9cfa3c06ace23bafb1343e90已逐对象非强推并核远端。
+
+
+### 2026-11-11 04:13 — 最终1b8服务器上传及策略恢复完成，维护root增量通过
+
+T45原一次材料传输已完成，实际READY93518290精确绑定1b8/fdf219/archive3384782B a9b75397；准确dev66304/inode393877及mtime/ctime未变。惰性升级ops506fc66b已在原install worker bundle保护：18952B/root0:0/0600/nlink1/inode18116269，未import或执行，不加入APP219。install原键COMPLETED0/.268241秒(job2678424a、typed36fb1ab3)；restore原键COMPLETED0/.318722秒(job665e6e75、typed4f974989)。04:07:35.733独立读回原cd2完整字节/root0444/nlink1/原过期期限，pending/active=[]，同R3原PGDATA身份与无postmaster.pid保持。汇总8677d2a7eb21ceddbf6b597cabb91c462373d60ccf7f03df762f82f4d3a61b62及3引用证据、4job/typed均C实际核原字节；0PG启停/角色/SQL36/APP/正式切换，不把上传当部署。
+
+原QB已收T45 root96e5两叶：SOURCE_ROOT_JOB_ONLY PASS，6新mock方法通过、无新增问题，报告a22fdc41/RESULTfff44ef7a670e85bcf8f46e80445c6cf42fcf713d9ab12a7d0c2432b8a747c0a由C核字节。原helper/04/冷copy复用，不重复全套。300秒dispatcher总预算仍须真实绑定，不以240秒inside+260秒poll推称现场通过。
+
+T45已固定05 producer三叶7ef828842566a7cb08a3db63c60adc0dfe0ba809，SOURCE-READYe0ba7e14b387f0e85f33b526dd9694fe489cf15bac2c435b118da03f2a8e740a，交同一QB仅受影响增量。其所需04/恢复/154七个动态事实均未发生，C不填NULL/猜CID或提前签发。D1两Node调用叶与T45原Python/05producer并行，逐文件唯一owner；C准一次固定OS root维护Node仅消费原受保护job输入及持久事件，DB仍原owner/controller有限身份，业务APP不改root，不增控制平台/RPC/连接池。实际维护窗口未开。
+
+STATUS04:11:58已推388311905eecc3bbfaebd37124cd9857096f3a5c，内容SHAebd7339ccf993c7b4fff7f05f3b30a6c56989a5e25a26ef22e2f2ab4305e7930；下次预计04:35前给接线/准备实质进展，不承诺上线。用户无需操作，原11.2批继续排除，管理员/154真实升级/APP CLI/容量/readyz及业务/新数据/切换均未验。

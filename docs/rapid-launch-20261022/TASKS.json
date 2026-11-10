@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T04:01:00+08:00",
+  "updatedAt": "2026-11-11T04:13:00+08:00",
   "stage": "R3_COLD_COPY_VERIFIED_9830_STAGED_POLICY_RESTORED_ADMIN154_UPGRADE_LEAF_PARALLEL",
   "lastVerifiedRemoteCommit": "dd385dacae8f0bee98f5c1d8ba439fdc69e440da",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,14 +1786,14 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T04:01:00+08:00",
+    "asOf": "2026-11-11T04:13:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_COLD_COPY_VERIFIED_FINAL1B8_LOCAL_BUILD_PASS_154_SQL_ADMIN_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "8f161a9c1db148720b6dcc7b5ce9b566333aad64",
+    "publicStatusCommit": "388311905eecc3bbfaebd37124cd9857096f3a5c",
     "currentOwners": {
       "T45": "Sole server executor/root outer writer; coldcopy actual verified and9830 staged policy restored. Prepare finite existing owner/controller authentication recovery and normal04. PureNode upgrade leaf explicitly handed toD1.",
       "D1": "Sole writer of new tools/unified-import/fresh35-admin154-upgrade.mjs and necessary focused tests; fixed9830 APP/manifest unchanged. SameDDL receipt, confirmedCOMMIT, independent154catalog, true record assembly.",
@@ -1950,8 +1950,8 @@
         "serverAPP": "NOT_RUN"
       }
     },
-    "controllerRecordsRemote": "73b74606b1e5212d6eaf902b37b21c203cc911e4",
-    "publicStatusSha256": "1ee9da1e739d049f9ed219400cc0e38ff5b061282ec369199024f7ec4e067e69",
+    "controllerRecordsRemote": "67563dd68df0dc3b9cfa3c06ace23bafb1343e90",
+    "publicStatusSha256": "ebd7339ccf993c7b4fff7f05f3b30a6c56989a5e25a26ef22e2f2ab4305e7930",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -2301,7 +2301,7 @@
       "sourceCommit": "1b8d24b4516760ffc6a2ce8ca1a20e6194644f9a",
       "existingOwnerForDDL": "erp35_owner_20261110_r3",
       "existingControllerLoginForAdminA": "erp35_controller_20261110_r3",
-      "missing": "QB D1 five-leaf/root-outer source acceptance; T45 exact native module path/remaining current04/05 materials; actual window binding not issued",
+      "missing": "D1 minimal native Node driver plus QB; normal05 source QB; exact04/154/A/restore current receipts not yet created",
       "runtimePermissionExpansion": false,
       "newDatabase": false,
       "oldInstallationImmutable": true,
@@ -2343,8 +2343,10 @@
           "sha256": "506fc66b6b1360f562672cebe8333a3c53145638e96a5024405e4e2433f1aa34",
           "inApp219": false
         },
-        "qb": "FIVE_LEAF_INCREMENTAL_REVIEW_IN_PROGRESS",
-        "actualDatabaseOrApp": "NOT_RUN"
+        "qb": "PASS_SOURCE_UPGRADE_DELTA_ONLY",
+        "actualDatabaseOrApp": "NOT_RUN",
+        "qbResultSha256": "00437a48cc95209fec99b5f90a1a794f86d75d46de4dd1f964bd103e2d397027",
+        "qbReviewSha256": "b8ce15bc2cea92315c4f87ecd54b0a96bd3216ff356d64db05dd8ff5b1cac092"
       },
       "intermediate9830Preserved": true,
       "normal04SourceCommit": "c729c462e702549a8e6af2048527bf09d557d439",
@@ -2361,12 +2363,13 @@
         "originalTestsReused": 8,
         "newArgvTest": 1,
         "actualRolesOrPG": "NOT_RUN",
-        "rootOuter": "96e5f9ffc04e2216dcba728e9461e652650ff580_QB_PENDING"
+        "rootOuter": "PASS_SOURCE_ROOT_JOB_ONLY",
+        "rootOuterReviewSha256": "fff44ef7a670e85bcf8f46e80445c6cf42fcf713d9ab12a7d0c2432b8a747c0a"
       },
       "exactStaging": {
-        "status": "C_EXACT_EXTERNAL_AUTHORITY_ISSUED_NOT_YET_ACTUAL",
+        "status": "ACTUAL_READY_OPS_INERT_ORIGINAL_POLICY_RESTORED",
         "artifactKey": "r3-1b8d24b4-app154-20261111-01",
-        "readySha256": "6b83d31ca060414ceab2ba77e7a40c8cd0ded4b757901fc24ac5d3738b8bfea3",
+        "readySha256": "93518290105acc8d0c88a3469aeac6e24f4e4f20e04ee3b9cae08ed295e36625",
         "authoritySha256": "8717b0133deeb3d922c98e47774ad1c6144ce37da3ceab9bfc7ea0704807af53",
         "startsAt": 1794340800028,
         "expiresAt": 1794342600028,
@@ -2374,9 +2377,35 @@
         "restoreJob": "t45-r3-1b8-app154-policy-restore-20261111-01",
         "inertOps": "EXACT_506F_SINGLE_LEAF_ORIGINAL_INSTALL_JOB_BUNDLE_NO_EXECUTION",
         "policyToRestore": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
-        "executionAllowed": "MATERIAL_TRANSFER_AND_READBACK_ONLY_NO_PG_ROLES_SQL_OR_APP"
+        "executionAllowed": "MATERIAL_TRANSFER_AND_READBACK_ONLY_NO_PG_ROLES_SQL_OR_APP",
+        "resultSha256": "8677d2a7eb21ceddbf6b597cabb91c462373d60ccf7f03df762f82f4d3a61b62",
+        "restoreJobSha256": "665e6e75861c84412d2a0082c254cb28e1c1bf9996c80faabf291fb9b270f7a4",
+        "restoreReadbackSha256": "4f9749895a45ab603d0587fb80dcd381d1a4796038e0c7c51f2caf42e4ccfb0f",
+        "postReadbackSha256": "1f68fdc19e89b2fa5098c2e84282e8c6d2f014f868f4990d02341feb3e7e1c1c",
+        "atShanghai": "2026-11-11T04:07:35.733+08:00",
+        "pgStarts": 0,
+        "roles": 0,
+        "sql36": false,
+        "appStarts": 0
       },
-      "next": "T45 single accurate transfer and restoration in parallel QB; only after source/materials ready C bind same R3 maintenance"
+      "next": "Finish fixed call/producer materials before C opens real same-R3 maintenance window; no role or SQL action yet",
+      "nodeDriver": {
+        "owner": "D1",
+        "status": "IN_PROGRESS_AFTER_T45_EXPLICIT_NO_WIP_HANDOFF",
+        "files": [
+          "tools/unified-import/fresh35-admin154-maintenance-driver.mjs",
+          "tests/fresh35-admin154-maintenance-driver.test.mjs"
+        ],
+        "boundary": "Only native Node invocation of fixed506f and existing ADMIN_PROVISION_ONLY; original protected job input/external C authority/one-use reservation/durable fsync log; no root/publication/server/credentials generation/04 or05 producer",
+        "app219Changes": false,
+        "newPool": false
+      },
+      "normal05Producer": {
+        "commit": "7ef828842566a7cb08a3db63c60adc0dfe0ba809",
+        "sourceReadySha256": "e0ba7e14b387f0e85f33b526dd9694fe489cf15bac2c435b118da03f2a8e740a",
+        "owner": "T45",
+        "status": "SOURCE_FIXED_QB_INCREMENT_PENDING_ACTUAL_DYNAMIC_PINS_NOT_CREATED"
+      }
     }
   },
   "operationalState": {
