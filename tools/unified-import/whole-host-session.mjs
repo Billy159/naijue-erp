@@ -104,7 +104,7 @@ export async function openReviewedFresh35Admin154PhysicalHost(config,sourceRoot,
  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
- const context=await host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256);
+ const context=await host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256,options.purpose);
  const c=host.fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target),successor=recordModule.describeFresh35Admin154Record(c.successor);
  const pins=describeFresh35CombinedSource(c.source).currentSourcePins;
  if(!pins.some(p=>p.path==='tools/unified-import/whole-host-session.mjs'&&p.sha256===loadedPhysicalHostSha256)

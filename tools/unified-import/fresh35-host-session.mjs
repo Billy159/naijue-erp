@@ -140,12 +140,13 @@ export async function loadFresh35ProductionImportContext(sourceRoot,referenceDir
 }
 /** Exact a53 successor, independently recorded after the original installation.
  * No old-window revival or caller-supplied installation record is accepted. */
-export async function loadFresh35Admin154Context(sourceRoot,referenceDirectory,currentServiceInput,successorSha256){
+export async function loadFresh35Admin154Context(sourceRoot,referenceDirectory,currentServiceInput,successorSha256,purpose='FIRST_REAL_BUSINESS_IMPORT'){
+ need(['ADMIN_PROVISION_ONLY','FIRST_REAL_BUSINESS_IMPORT'].includes(purpose),'ADMIN154_CONTEXT_PURPOSE_REQUIRED');
  need(typeof sourceRoot==='string'&&resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');
  const envelope=await loadFresh35CombinedRecordEnvelope(),snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
  const target=await reconstructFresh35InstalledProductionTargetV2(envelope),t=describeFresh35CombinedTarget(target);
  need(referenceDirectory===t.ordinary.referenceDirectory&&currentServiceInput,'ADMIN154_REFERENCE_AND_SERVICE_REQUIRED');
- const currentService=await loadOrdinaryCurrentService(currentServiceInput,t,envelope,snapshot);
+ const currentService=await loadOrdinaryCurrentService(currentServiceInput,t,envelope,snapshot,purpose==='ADMIN_PROVISION_ONLY');
  await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(referenceDirectory);
  const paths=await resolveFresh35ReferenceInputPaths(referenceDirectory),source=await loadFresh35Admin154Source(sourceRoot,{baselineDirectory:paths.baselineDirectory});
  for(const pin of describeFresh35CombinedSource(source).currentSourcePins)await assertTrustedRootPath(resolve(sourceRoot,pin.path));
@@ -398,7 +399,7 @@ function ordinaryPgMicroseconds(value){
  const fraction=value.match(/\.(\d{1,6})\+00$/)?.[1]??'';
  return BigInt(Math.floor(at/1000))*1000000n+BigInt(fraction.padEnd(6,'0'));
 }
-async function loadOrdinaryCurrentService(input,target,record,snapshot){
+async function loadOrdinaryCurrentService(input,target,record,snapshot,maintenance=false){
  const positive=value=>Number.isSafeInteger(value)&&value>0;
  const decimal=value=>typeof value==='string'&&/^[1-9][0-9]*$/.test(value);
  const digest=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
@@ -426,7 +427,9 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
   'runtimeRole','runtimeLoginValidUntil'])&&(service||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
- const normalContainerName=proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
+ const normalContainerName=maintenance
+  ? (proof.requestKey==='t45-first-r3-native-service-start-20261111-06'?'t45-fresh35-first-production-20261110-r3-service-06':null)
+  : proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
   ? 't45-fresh35-first-production-20261110-r3-service-01'
   : proof.requestKey==='t45-first-r3-native-service-start-20261110-02'
   ? 't45-fresh35-first-production-20261110-r3-service-02'
@@ -447,7 +450,7 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   : typeof proof.requestKey==='string'&&/^t45-first-20261110-r3-recovery-restart-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
   &&typeof proof.oldStopRequestKey==='string'&&/^t45-first-20261110-r3-recovery-stop-[0-9]{8}-[0-9]{2}$/.test(proof.oldStopRequestKey)
     &&[proof.previousStopReceiptSha256,proof.previousStopTerminalSha256].every(digest);
- need(provenanceMatches&&[proof.authorizationSha256,
+ need((!maintenance||normal)&&provenanceMatches&&[proof.authorizationSha256,
    proof.installationRecordSha256,proof.targetSha256,proof.sourceSetSha256].every(digest)
   &&proof.installationRecordSha256===snapshot.sha256&&proof.targetSha256===record.binding.targetSha256
   &&proof.sourceSetSha256===record.binding.sourceSetSha256&&proof.runtimeRole===proposal.runtime,

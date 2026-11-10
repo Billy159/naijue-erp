@@ -124,7 +124,8 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
   .replace("const ordinaryInstalledSourceRoot='/opt/naijue-erp/fresh35-combined-v1';",'const ordinaryInstalledSourceRoot=oldRoot;')
   .replace("const currentProductionServicePath='/run/naijue-rewrite/current-production-service.json';",'const currentProductionServicePath=serviceFile;')
   .replace(/const installedModule=.*?;/,'const installedModule=modelInstalledModule;');
- const api=await import('data:text/javascript;base64,'+Buffer.from(prefix+original.slice(original.indexOf('function admin154ExpectedRecord('),original.indexOf('export async function describeFresh35ProductionImportBinding('))+tail).toString('base64'));
+ const probe='\nexport async function checkCurrentService(input,maintenance){const envelope=await loadFresh35CombinedRecordEnvelope();return loadOrdinaryCurrentService(input,t,envelope,describeFresh35ProtectedRecordSnapshot(envelope),maintenance)}';
+ const api=await import('data:text/javascript;base64,'+Buffer.from(prefix+original.slice(original.indexOf('function admin154ExpectedRecord('),original.indexOf('export async function describeFresh35ProductionImportBinding('))+tail+probe).toString('base64'));
  const row={systemIdentifier:'123',databaseOid:'42',database:'synthetic_model',currentUser:'model_login',sessionUser:'model_login',serverAddress:'172.20.0.4',serverPort:5432,postmasterStart:'NEW_ACTUAL_START_NOT_INSTALL_TIME',backendPid:42,serverVersionNum:'170011',rowSecurity:'on',replicationRole:'origin',recovery:false,ordinaryAttributes:true,lifetimeMatches:true,memberships:[[role,false,false,true]]};
  if(synthetic)Object.assign(row,{database:t.proposal.database,currentUser:t.proposal.runtime,sessionUser:t.proposal.runtime,serverAddress:t.proposal.host,serverPort:t.proposal.port,postmasterStart:t.physical.postmasterStart,observedLoginValidUntil:new Date(expiry-1000).toISOString()});
  if(formal)Object.assign(row,{database:t.proposal.database,currentUser:t.proposal.runtime,sessionUser:t.proposal.runtime,
@@ -145,6 +146,28 @@ test('ordinary startup uses one pool/lease and direct LOGIN identity before inte
  await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,{},c),/SAME_POOL/);await assert.rejects(()=>m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection),/EXCLUSIVE_STARTUP/);
  m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose();}
+});
+
+test('V2 maintenance 06 proof is exact and cannot admit ordinary or REAL startup',async()=>{
+ const m=await model({formal:true,normal:true});
+ const setPair=suffix=>{
+  m.proof.requestKey='t45-first-r3-native-service-start-20261111-'+suffix;
+  m.proof.sharedPostgresNamespace.creationOperationId=m.proof.requestKey;
+  m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+suffix;
+ };
+ try{
+  setPair('06');const maintenance=await m.putProof();
+  assert.equal((await m.api.checkCurrentService(maintenance,true)).postmasterStart,m.proof.physical.postmasterStart);
+  await assert.rejects(m.api.checkCurrentService(maintenance,false),/SERVICE_PROVENANCE_DIFFERS/);
+  await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,maintenance),/SERVICE_PROVENANCE_DIFFERS/);
+  m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-04';
+  await assert.rejects(m.api.checkCurrentService(await m.putProof(),true),/SERVICE_CARRIER_REQUIRED/);
+  setPair('04');await assert.rejects(m.api.checkCurrentService(await m.putProof(),true),/SERVICE_PROVENANCE_DIFFERS/);
+  setPair('05');const ordinary=await m.putProof();
+  assert.equal((await m.api.checkCurrentService(ordinary,false)).postmasterStart,m.proof.physical.postmasterStart);
+  await assert.rejects(m.api.checkCurrentService(ordinary,true),/SERVICE_PROVENANCE_DIFFERS/);
+  assert.equal(m.clients.length,0);
+ }finally{await m.dispose();}
 });
 
 test('V2 epoch comparison keeps six fractional digits and canonical calendar validation',async()=>{

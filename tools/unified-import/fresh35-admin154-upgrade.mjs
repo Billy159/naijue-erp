@@ -12,7 +12,7 @@ const need=(ok,code)=>{if(!ok)throw Error('ADMIN154_UPGRADE_'+code);};
 const digest=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
 const oldRoot='/opt/naijue-erp/fresh35-combined-v1';
-const sourceSha='fdf29cd82bc54110a91d224a970537216417168792bc83b4b8f73c17a559da75';
+const sourceSha='bbab2a72bae46b48f4644df38cf2bb9de4483cb1e57c5f454bfc07cc18d75e66';
 const patchSha='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b';
 const moduleAt=(root,name)=>import(pathToFileURL(join(root,'scripts/release/unified-install',name+'.mjs')).href);
 const ack=(r,command)=>need(r?.command===command,'ACK_'+command+'_REQUIRED');
@@ -125,16 +125,17 @@ async function driveUpgrade(p,io){
  }
 }
 
-/** client is an already-connected original owner pg.Client. openReadback must
- * return a NEW connected pg.Client. This leaf owns closing adopted clients.
+/** openClient returns a new connected original owner pg.Client per call.
+ * The first call follows the full preparation and authorization check.
+ * This leaf owns closing adopted clients.
  * assertAuthorized(binding) must enforce the external exact one-use job grant;
  * emit(event) must durably persist before resolving. Neither has a default. */
 export async function runFresh35Admin154Upgrade(o){
- need(o&&Object.getPrototypeOf(o)===Object.prototype&&Object.keys(o).sort().join(',')==='assertAuthorized,authorizationSha256,client,emit,expiresAt,openReadback,postmasterStart,referenceDirectory,sourceRoot,startsAt','EXACT_OPTIONS_REQUIRED');o={...o};
+ need(o&&Object.getPrototypeOf(o)===Object.prototype&&Object.keys(o).sort().join(',')==='assertAuthorized,authorizationSha256,emit,expiresAt,openClient,postmasterStart,referenceDirectory,sourceRoot,startsAt','EXACT_OPTIONS_REQUIRED');o={...o};
  need(process.version==='v24.21.0'&&!Object.keys(process.env).some(k=>k==='DATABASE_URL'||k.startsWith('PG')||['NODE_OPTIONS','NODE_PATH'].includes(k)||k.startsWith('LD_')||k.startsWith('DYLD_')),'PINNED_CLEAN_RUNTIME_REQUIRED');
  need(typeof o.sourceRoot==='string'&&resolve(o.sourceRoot)===o.sourceRoot&&await realpath(o.sourceRoot)===o.sourceRoot&&o.sourceRoot!==oldRoot
   &&digest(o.authorizationSha256)&&Number.isSafeInteger(o.startsAt)&&Number.isSafeInteger(o.expiresAt)&&o.startsAt<o.expiresAt
-  &&['openReadback','assertAuthorized','emit'].every(k=>typeof o[k]==='function'),'TRUSTED_INPUTS_REQUIRED');
+  &&['openClient','assertAuthorized','emit'].every(k=>typeof o[k]==='function'),'TRUSTED_INPUTS_REQUIRED');
  const trust=await moduleAt(o.sourceRoot,'trusted-install-path');await trust.assertTrustedRootTree(o.sourceRoot);await trust.assertTrustedRootTree(oldRoot);await trust.assertTrustedRootPath(process.execPath);
  const require=createRequire(pathToFileURL(join(o.sourceRoot,'package.json'))),{Client}=require('pg');need(require('pg/package.json').version==='8.23.1','PINNED_PG_REQUIRED');
  const {closePhysical}=await import(pathToFileURL(join(o.sourceRoot,'tools/unified-import/whole-host-session.mjs')).href);
@@ -142,10 +143,17 @@ export async function runFresh35Admin154Upgrade(o){
  const adopt=c=>{need(c instanceof Client&&Object.getPrototypeOf(c)===Client.prototype&&c.query===Client.prototype.query&&c.end===Client.prototype.end&&c._connected===true&&!adopted.has(c),'ORIGINAL_NATIVE_CLIENT_REQUIRED');adopted.add(c);c.on('error',()=>{});protocol(c,true);return c;};
  const close=c=>{if(!closing.has(c))closing.set(c,(async()=>{await closePhysical(c);closed.add(c);})());return closing.get(c);};
  try{
-  adopt(o.client);p=await prepareUpgrade(o);
-  const target=c=>{const v=c.connectionParameters;need(v.host===p.t.proposal.host&&Number(v.port)===p.t.proposal.port&&v.database===p.t.proposal.database&&v.user===p.expected.owner&&!v.ssl,'NATIVE_CONNECTION_DIFFERS');};target(o.client);
-  enteredDriver=true;outcome=await driveUpgrade(p,{client:o.client,emit:o.emit,nonce:()=>randomBytes(24).toString('hex'),now:()=>new Date().toISOString(),close,
-   async openReadback(){const c=adopt(await o.openReadback());try{target(c);return c;}catch(e){await close(c);throw e;}},
+  p=await prepareUpgrade(o);
+  await p.current();
+  const connect=async()=>{
+   const c=adopt(await o.openClient()),v=c.connectionParameters;
+   try{need(v.host===p.t.proposal.host&&Number(v.port)===p.t.proposal.port&&v.database===p.t.proposal.database&&v.user===p.expected.owner&&!v.ssl,'NATIVE_CONNECTION_DIFFERS');}
+   catch(error){await close(c);throw error;}
+   return c;
+  };
+  const client=await connect();
+  enteredDriver=true;outcome=await driveUpgrade(p,{client,emit:o.emit,nonce:()=>randomBytes(24).toString('hex'),now:()=>new Date().toISOString(),close,
+   openReadback:connect,
    rollbackReady:c=>rollbackReady(c,Math.min(Date.now()+5000,o.expiresAt)),
    async query(c,text,values,cleanup=false){
     need(adopted.has(c)&&!closed.has(c),'ADOPTED_CONNECTION_REQUIRED');protocol(c);if(!cleanup)await p.current();
