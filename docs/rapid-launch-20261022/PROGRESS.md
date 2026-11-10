@@ -3913,3 +3913,15 @@ T45 后继 3cfd13281fdc4b0963f5abe2732a742a0e9fcaa9 与清单 b3d74bbf 独立重
 11-10 19:24:45 CST 主控接续active目标，已核上一轮产生有效A/B和改变下一步的通道失败证据，本轮不重复。原T45独占通道源码，补输入模式/实际计时/安全退出摘要；原D1已从同版交付断点接续，只核精确R3普通APP与B writer目标绑定，传输和应用准备并行。未新建团队/服务器作业/窗口。TASKS顶部时间及阶段已更新，并明确旧operationalState为保留历史证据，当前目标取新快照和最新回执。
 
 11-10 19:40:28 CST 原T45固定通道本地观测 `e471baa21c92a4c8a1e49889059d9e5f8d25ae40`，客户端 `98148ed0`，仅原SSH客户端及4测试。47项本地定向通过；C核RESULT/TEST及5源码原字节，原QB正在补审。新增准确stdin模式、单调时钟耗时、安全退出码与有限stderr分类，不持久化命令或秘密，原40秒/SSH身份/防重放不变；没有本轮服务器动作或通道成功证明。D1的R3普通APP `71b098c5` 17/17、B writer `25e765db` 24/24局部成果由QB限定复核通过。已查APP源码不同于不可变安装源码，首装不能冒用恢复V1或删source校验；D1与T45分别准备原路径上的首装同代consumer/producer，实际role期限为空保留空，有限服务/容量期限不放宽。R3仍未创建，无物化、权限现场修改或安装T0；旧失败及原件保留。
+
+11-10 19:56:42 CST 主控核T45两次真实固定ACK原件：e471空pipe 10.810481667秒、非空109344B合成pipe 1.036133458秒，均真实SSH退出0/exact22B/stderr0，masterclose返回0/socket消失。均无远端文件或DB动作，只证明各自调用。非空回执 `8836b7b602fb254fd531dc9632b087870d1acdecf4b9e3e14b6bb2193426e946`。原None首建master与原上传链尚未过；T45固定仅None加DEVNULL的后继 `97b616e5`、11项本地通过，QB补增量审，待单次同mux顺序验证。D1首装consumer `e894b5e2` 两叶、APP源集 `30cf71b1` 已获QB局部PASS，原安装6c49不动，实际producer/安装仍未验。C三记录检查点 `2927d9ac` 已在准确GitHub分支非强推并远端回读；工作树origin实际为旧本地bundle，推送使用已核Billy159/naijue-erp HTTPS，没有改origin。STATUS v13 `3468b423` 已远端回读，无新增用户审批等待。
+
+11-10 22:07:54 CST bind05真实完成：22:01:26.964–22:01:27.830，COMPLETED/0、0.820秒。C重算原job `9050206f`、结果 `2346b716`、汇总 `57cf72c2`。固定5396执行原6c49/53de物化，1261568B，新root/state身份匹配；成功前守卫核state0:61035/0710、外层0:0/0700，22:03普通只读根身份吻合，未越权打开state。11个实际submit调用退出0，7数据ACK完整，0PG/安装/导入。原01–04仍无request/tmp/terminal，仅旧partial目录保留。C发现通用后序runner错误沿用目标必须不存在条件，已交T45仅改为绑定本次实际身份/原物化终态，保持server校验；未抢开20min窗。QB原aabd安全报告已核原件，native/SQL未变直接复用。STATUS v14 `d82ba03c` 远端内容已核。
+
+## 2026-11-10 22:34 — R3真实35表已安装并读回，收尾兼容问题单独处理
+
+R3实际22:12:49完成PROVISION；ENTRY/INSTALL只为批准递交，不算安装凭据。22:20:35原installed键完成，主控重算结果 d663dd7d… 与终态 b001d655…：真实持久安装记录raw SHA 4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e，首装证明raw SHA 00e8ece7af1ed04579b54c1f1656598ce402290d40bb8a1f4862d1cdd0d3dccf。实际PGDATA为61035:61035/0700，新state0:61035/0710、外层0:0/0700；R2访问问题没有再次阻断初始化。R2原始stderr无法恢复的边界保留。
+
+原恢复STOP的host与inside守卫要求原runtime期限finite str，本次PROVISION合法null；0旧STOP提交，不改原件或伪造期限。admin/controller仍原有限期限，不能从runtime null推它们也null。T45唯一writer准备只停准确native controller的最小后继，复用原finally/stop_owned；实际PG和controller退出且clean shutdown后清准确六秘密、停精确容器并核内桥，保PGDATA和安装记录；不改角色、不留恢复凭据。原guardian23:09:19.024不延，先到期则回收实际终态不重复signal。当前收尾未完成。D1只读核finally明确提前停不会自动清全部秘密/容器，已并入T45一次范围；QB只验此增量，无新增人类审批等待。
+
+D2固定Node24.21/npm11.9的e894 APP已构建打包，release db6db905909b3445c27aad71566e4b328e8f1a56144d7130d077fcc5df86dcc5；主控核归一化路径及452列入文件大小/hash，另1份manifest，共453文件，无路径越界/链接/重复。9c3生产方与e894消费者原QB/D1配对通过，不能替代服务器APP启动、容量、登录/业务或上线，均未验。11月2日旧包不重新导入。STATUS v15已22:28:29远端发布及原字节回读，提交6439e7c780d4edb2cad8233bb6eeae2790e549f5。当前真实安装通过，收尾与APP部署未完成。

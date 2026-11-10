@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-10T19:40:28+08:00",
-  "stage": "R2_INITDB_AB_VERIFIED_R3_SOURCE_READY_TRANSPORT_DIAGNOSIS_FORMAL_INSTALL_NOT_STARTED",
+  "updatedAt": "2026-11-10T22:34:00+08:00",
+  "stage": "R3_ACTUAL_35_TABLE_INSTALL_COMMITTED_CLOSEOUT_PENDING_NO_APPLICATION_DEPLOYMENT",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1786,19 +1786,20 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-10T19:40:28+08:00",
+    "asOf": "2026-11-10T22:34:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "NOT_CREATED_MATERIALIZATION_REQUEST_NOT_PUBLISHED",
+    "currentPhysicalStage": "R3_POSTGRES_STARTED_35_TABLES_INSTALLED_DURABLE_RECORD_READBACK_CLOSEOUT_PENDING",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
-    "directoryPermissionPhysical": "NOT_APPLIED_NEW_ROOT_NOT_CREATED",
-    "formal35Install": "NOT_STARTED",
-    "publicStatusCommit": "8062e41bcae6855495138ba184630942c17450e8",
+    "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
+    "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
+    "publicStatusCommit": "6439e7c780d4edb2cad8233bb6eeae2790e549f5",
     "currentOwners": {
-      "T45": "Fixed local channel observability e471; prepare one exact non-DB read-only channel diagnostic, await original QB incremental review. Own first-install producer seam.",
-      "D1": "Fixed R3 APP/B literal successors reviewed. Draft initial-generation service consumer in original files, preserve exact installed-source verification, finite service/capacity expiry and nullable actual role deadline.",
-      "C": "Integrate exact fixed source and original QB incremental reviews, keep install inputs ready.",
-      "QB": "Review e471 exact observability increment; R3 literal-only review passed, no real install or PG claims."
+      "T45": "Sole server writer; exact no-role-write native stop/cleanup successor, guardian deadline unchanged. No incompatible recovery STOP.",
+      "D1": "Narrow finally cleanup review done, no T45 writes. Null-runtime recovery remains unsupported.",
+      "C": "Validate actual receipts, bind reviewed cleanup, maintain existing records/status.",
+      "QB": "Only fixed new closeout increment on T45 delivery.",
+      "D2": "e894 APP locally built and packaged, no server claim."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
     "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
@@ -1808,7 +1809,7 @@
       "authorChecks": "47_LOCAL_CHECKS_PASS_NOT_SSH",
       "controllerVerification": "RESULT_TEST_AND_FIVE_SOURCE_HASHES_MATCH",
       "independentReview": "QB_LOCAL_INCREMENT_PASS_ACTUAL_TRANSPORT_NOT_YET_TESTED",
-      "liveTransport": "NOT_VALIDATED",
+      "liveTransport": "ACTUAL_FIXED_ACK_SEQUENCE_AND_BIND05_UPLOAD_DISPATCH_COMPLETED",
       "serverActionsThisIncrement": 0
     },
     "r3Consumers": {
@@ -1817,8 +1818,77 @@
       "independentReview": "QB_LITERAL_ONLY_PASS",
       "ordinaryChecks": "AUTHOR_17_PASS_REUSED",
       "writerChecks": "AUTHOR_24_PASS_REUSED",
-      "firstInstallProof": "MISSING_CLOSED_INITIAL_GENERATION_CONSUMER_AND_PRODUCER; D1_AND_T45_PARALLEL; NO_RECOVERY_PROOF_FABRICATION",
-      "actualInstall": "NOT_STARTED"
+      "firstInstallProof": "9c3_PRODUCER_e894_CONSUMER_PAIR_PASS_ACTUAL_PROOF_PUBLISHED",
+      "actualInstall": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
+      "ordinaryInitialCommit": "e894b5e2c337cda37aeeb85057b6cc57b21342ea",
+      "ordinaryInitialSourceSet": "30cf71b1b739e620de6c9c092dcaa0a22c414e6f3509a9b68f4d6e7b195f20ad",
+      "ordinaryInitialReview": "QB_AND_D1_FIXED_PAIR_PASS_LOCAL_APP_BUILD_ONLY"
+    },
+    "controllerRecordsCommit": "2927d9ac320ddb1eb069492f40f392866a61fe47",
+    "channelActualScopedChecks": {
+      "emptyPipeAck": "19:42:08.835-19:42:19.645 CST; SSH exit0/exact22B/stderr0/10.810481667s",
+      "nonemptyAck": "19:48:00.473-19:48:01.509 CST; SSH exit0/exact22B/stderr0/1.036133458s;109344B synthetic only",
+      "source": "e471baa21c92a4c8a1e49889059d9e5f8d25ae40",
+      "serverFileOrDatabaseActions": 0,
+      "actualUploadRepair": "BIND05_ACTUAL_UPLOAD_AND_DISPATCH_COMPLETED; PRIOR_ROOT_CAUSE_NOT_RETROACTIVELY_PROVEN"
+    },
+    "channelNoneEOFSuccessor": {
+      "commit": "97b616e58a7b6548826257020454faf5d6f324aa",
+      "clientSha256": "e5ad2801fa82fa703910fb9f11420998af36f07748f6c85a13896d9bda53b02f",
+      "checks": "AUTHOR_11_LOCAL_PASS",
+      "review": "QB_LOCAL_INCREMENT_PASS",
+      "actualSequence": "19:59 BOTH_FIXED_ACKS_EXIT0_SAME_CONTROL_PATH"
+    },
+    "materialization": {
+      "job": "t45-first-r3-native-bind-20261110-05",
+      "authoritySha256": "d715537c3c1cae0050766c5a4212d076de15c46b61749425a1d5b92b6acf0d9a",
+      "sourceCommit": "5396b9947e6773a181fc5f5140048a590855a9d2",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "finishedAt": "2026-11-10T22:01:27.830320+08:00",
+      "elapsedSeconds": 0.82008744077757,
+      "terminalSha256": "9050206f5eb74fd589a0ff8195244f2a02148ff04f83a44c90947b195fde5b36",
+      "resultSha256": "2346b71690b2e997ad859b64148842f7fbfb21673cdaca4c74ae9fc87671f7d5",
+      "allocatedBytes": 1261568,
+      "freeAfterBytes": 31257255936,
+      "postgresStarted": false,
+      "oldKeysPreserved": true
+    },
+    "actualInstallation": {
+      "provisionJob": "t45-first-r3-native-provision-20261110-01",
+      "provisionFinishedAt": "2026-11-10T22:12:49.889412+08:00",
+      "installedJob": "t45-first-r3-native-facts-installed-20261110-01",
+      "installedFinishedAt": "2026-11-10T22:20:35.774102+08:00",
+      "resultSha256": "d663dd7d86287524a426f77ecee537f60318ec81f4ae64bd5210d089b9bd37b5",
+      "terminalSha256": "b001d655d22751e349a81dcaef6a200812c36eea9cb939b950ddfd0d7ac9e411",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "initialServiceProofSha256": "00e8ece7af1ed04579b54c1f1656598ce402290d40bb8a1f4862d1cdd0d3dccf",
+      "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+      "hostEnabled": false,
+      "businessVerified": false,
+      "controllerCheck": "RESULT_AND_TERMINAL_RAW_SHA_MATCH_EXACT_TARGET_SOURCE_RECORD",
+      "authorityEndedAt": "2026-11-10T22:29:19.024+08:00",
+      "guardianDeadline": "2026-11-10T23:09:19.024+08:00"
+    },
+    "closeoutCurrent": {
+      "status": "PENDING_ACTUAL_RECEIPTS",
+      "confirmedIssue": "Original recovery STOP host and inside guards require original runtimeLoginValidUntil finite str; actual immutable provision has null. Zero invalid STOP submissions.",
+      "selectedScope": "Stop exact native controller; original clean shutdown then remove six registered temporary inputs and stop exact container; preserve PGDATA and record. No role SQL, credential retention, restart, data deletion or deployment.",
+      "owner": "T45",
+      "deadlineUnchanged": "2026-11-10T23:09:19.024+08:00",
+      "eta": "15-20 minutes from 22:29; not a guarantee; guardian expiry first if earlier.",
+      "requiresHumanConfirmation": false
+    },
+    "applicationArtifact": {
+      "sourceCommit": "e894b5e2c337cda37aeeb85057b6cc57b21342ea",
+      "nativeSourceSetSha256": "30cf71b1b739e620de6c9c092dcaa0a22c414e6f3509a9b68f4d6e7b195f20ad",
+      "releaseSha256": "db6db905909b3445c27aad71566e4b328e8f1a56144d7130d077fcc5df86dcc5",
+      "releaseManifestSha256": "33077c58da11ff39ce9d51f7acdb7ee2bf7db4048e3172f75e9c35c2bf75f6b1",
+      "localBuild": "D2_PASS_FIXED_NODE_24_21_NPM_11_9",
+      "controllerArchiveCheck": "452_LISTED_HASHES_AND_BYTES_MATCH_PLUS_MANIFEST_453_FILES_NO_ESCAPE_LINKS_DUPLICATES",
+      "serverApplicationStartup": "NOT_EXECUTED",
+      "capacityLoginAndBusiness": "NOT_VERIFIED",
+      "publicSwitch": "NOT_EXECUTED"
     }
   },
   "operationalState": {
