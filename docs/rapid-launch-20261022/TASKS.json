@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T06:27:39+08:00",
-  "stage": "R3_RUNTIME_READINESS_ACTUAL_UPGRADE_PREPARATION_FAILED_SAFE_CLOSEOUT",
-  "lastVerifiedRemoteCommit": "a94c10e1a3f483dcd150049e0bb1543a2207d6b6",
+  "updatedAt": "2026-11-11T06:38:36+08:00",
+  "stage": "R3_STOPPED_EXACT_RESTORE02_UPGRADE_PREPARATION_DIAGNOSIS",
+  "lastVerifiedRemoteCommit": "3b22dff008c37e9ccbe71f2632a17cf9bc1f757b",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,17 +1786,17 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T06:27:39+08:00",
+    "asOf": "2026-11-11T06:38:36+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "R3_35_INSTALLED_04_STARTED_RUNTIME_READONLY_PASSED_UPGRADE_PREP_FAILED_CLOSEOUT_PENDING",
+    "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "eede331bf2f487dd83f18e25f6c30b818a2ba032",
+    "publicStatusCommit": "6b558219be4c7e7f3ac482ea22d2e339b45c3a1a",
     "currentOwners": {
-      "T45": "Sole executor; original04 safe closeout, then exact restore02; read-only original UPGRADE diagnostic in parallel. No replay.",
-      "D1": "Fixed b0a72b6a driver and 1b8d24b4 upgrade/application; no changes requested.",
+      "T45": "Sole server executor; exact stop and restore02 complete. Preserve original operation evidence and stopped R3.",
+      "D1": "Diagnose fixed b0 preparation and deployed material seam read-only; no server, no private input or rebuild.",
       "QB": "Review only new fixed T45 carrier, delivery and restoration-binding delta.",
       "D2": "Fixed 1b8d24b4 build and upload done; reuse without rebuild.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
@@ -44227,8 +44227,8 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 exact04 stopped receipt and restore02, parallel read-only original preparation diagnosis",
-    "activeWindow": true,
+    "next": "D1 targeted read-only preparation diagnosis; T45 preserves evidence and stopped target; no replay",
+    "activeWindow": false,
     "sql36Run": false,
     "appStarted": false,
     "productionSwitched": false,
@@ -44238,18 +44238,27 @@
       "sourceReadySha256": "dae52600ad082f1f45cfb2abb40431b09fbb5cfca7d10b5f79ca893f69c3ad50",
       "bundleInputsSha256": "050a705c8273e90507114a6bd313e75dc9d7f83e2552b571b4f49a37ada5e339"
     },
-    "apply04": "ACTUAL_FINITE_AUTH_FIELDS_READ_BACK_RESTORATION_PENDING",
+    "apply04": "ACTUAL_FINITE_AUTH_FIELDS_READ_BACK_AND_EXACTLY_RESTORED",
     "carrier04_02": {
-      "status": "ACTUAL_STARTED_RUNTIME_READONLY_NOT_APP_ACCEPTANCE",
+      "status": "ACTUAL_RUNTIME_READONLY_PASSED_THEN_CLEAN_STOP",
       "jobSha256": "256e91d80ac485bb430ed9874eebc91c32567c5d6ffc617a44f94ea0dad0c0bf",
-      "proofSha256": "5b029c361c28ba2940c3160323be57267c49845a744c25a76407e4ebf2756241"
+      "proofSha256": "5b029c361c28ba2940c3160323be57267c49845a744c25a76407e4ebf2756241",
+      "cleanupSha256": "2ca831402a3daf34d11b70380bfac80ac328c9bd9a522d3704713c0d8596b74c"
     },
     "upgrade01": {
       "status": "FAILED_PREPARATION_NO_NODE_GRANT_NO_REPLAY",
       "safeCode": "ValueError",
       "firstError": "UNCONFIRMED",
       "jobSha256": "a6b56b7ac695ae7ce859211ee901ceeea252298ff2f7bdb1ff3a2fe3e23971e5",
-      "resultSha256": "d26cba0c26484c409553d2230dde6364c6cab391da8fd8b74a182702e0b1efdc"
+      "resultSha256": "d26cba0c26484c409553d2230dde6364c6cab391da8fd8b74a182702e0b1efdc",
+      "stage": "PARAMETER_METADATA_BEFORE_NODE_GRANT",
+      "whitelistedCode": "ADMIN154_DRIVER_PREPARATION_METADATA_FAILED",
+      "safeErrorSha256": "5dbe19e56b69dfa03fc79fc602c885bd1c951a73531a768e9661aab224445478"
+    },
+    "restore02": {
+      "status": "ACTUAL_EXACT_RESTORATION_DATABASE_STOPPED",
+      "jobSha256": "d22436cdc943d2debda0bbb91434c2d741a54610a686a8defb6c797161007191",
+      "resultSha256": "38f60d89d48d3e676c0266be331a897acf72858557fe8a7c5d2923335fe8adcb"
     }
   }
 }

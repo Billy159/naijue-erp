@@ -4179,3 +4179,11 @@ C已核QB1f5f原RESULTd241df8c45545843addbcea872a4a8c1f5985dd1d9bc291da5b8e99aac
 - 04-02 06:19:16 COMPLETED/退出0、5.633210秒；固定原 R3 普通角色的四个只读步骤通过，实际服务证明 `5b029c361c28ba2940c3160323be57267c49845a744c25a76407e4ebf2756241`。终态 `256e91d80ac485bb430ed9874eebc91c32567c5d6ffc617a44f94ea0dad0c0bf`，结果 `7d50e5d7cc67b6f7d64404bb3a6ade41dff8422e0cacab405c529de2113a5cc5`。本轮角色期限06:44:18、服务期限06:49:18；未启动 APP。
 - 原 UPGRADE 准备 06:24:12.025212–06:24:45.876971 FAILED/退出2、33.820738秒。现场只回 `ValueError`，未产生实际参数回执，无 Node 执行批准；没有 SQL36、154 发布或管理员动作。已核终态 `a6b56b7ac695ae7ce859211ee901ceeea252298ff2f7bdb1ff3a2fe3e23971e5`、结果 `d26cba0c26484c409553d2230dde6364c6cab391da8fd8b74a182702e0b1efdc`、自有 Node 清理 `73d8e9221b8da8cb67aeaed2799031a89c464aade3e91e3cd10593715ebb3290`。Node 容器已停，未改 PG 容器；R3 收尾以另一次真实回执为准。
 - T45 唯一下一步：用原受控关闭/guardian 核同一 PG、PID、锁及停止回执，再走 restore02 私下核两角色原值。并行只读保全原错误和阶段证据，原 UPGRADE 不重放；目前首错未确认。不接 11 月 2 日旧数据、未验应用、不切换。当前 [GitHub STATUS](https://github.com/Billy159/naijue-erp/blob/codex/dot-launch-status/STATUS.md) 下一次同步实际收尾或诊断。
+
+### 2026-11-11 06:37 — 同 R3 干净停稳，第二轮临时认证已实际恢复
+
+04 维护服务使用原关闭路径，06:31:44.323572 读回原 PG 干净停库、端点和自有 PID 均退出、锁可取、PGDATA 保留及原容器 PID0。实际 cleanup SHA256 `2ca831402a3daf34d11b70380bfac80ac328c9bd9a522d3704713c0d8596b74c`。关闭前一次只读预检误用了调度专用读取函数而报 KeyError，未进入关闭；改为校验原已接受 plan 的实际字节后按原专用关闭完成。
+
+restore02 06:34:44.062921–06:34:51.781671 COMPLETED/退出0，7.688974秒。两角色原认证和原期限私下准确读回，普通运行认证和角色成员属性不变，R3 仍停止，自有容器退出 PID0，无 OOM。终态 `d22436cdc943d2debda0bbb91434c2d741a54610a686a8defb6c797161007191`，结果 `38f60d89d48d3e676c0266be331a897acf72858557fe8a7c5d2923335fe8adcb`。没有在途维护窗口。
+
+原升级脱敏回执 `5dbe19e56b69dfa03fc79fc602c885bd1c951a73531a768e9661aab224445478` 仅见 `ADMIN154_DRIVER_PREPARATION_METADATA_FAILED`。阶段 `PARAMETER_METADATA_BEFORE_NODE_GRANT`；子进程准确退出码、内部首错未记录。原作业保留且不重放。D1 正定向核固定 Node 准备链和载体输入；T45 不再启库，QB 待可复核增量。SQL36、154 发布、管理员、应用和正式切换未执行。GitHub STATUS 提交 `6b558219be4c7e7f3ac482ea22d2e339b45c3a1a` 已读回。
