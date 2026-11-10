@@ -42487,13 +42487,14 @@
                   "next": "T45 confirmed the original carrier cannot resume this stopped and uninstalled R1 through its existing entry points. Original startup rejects the expired window and, with a fresh window, the existing container name. Entry and install require the original live carrier. Same-data recovery requires the absent durable service, installation and STOP evidence. Preserve all R1 state and receipts. T45 checks only the proposed empty successor through the existing read-only management route."
                 },
                 "proposedEmptySuccessor": {
-                  "status": "USER_APPROVED_SINGLE_R2_EMPTY_INSTALL_CURRENT_ADMISSION_RECHECK_PENDING",
+                  "status": "R2_MATERIALIZED_PROVISION_FAILED_ORIGINAL_KEY_READBACK",
                   "database": "erp_fresh35_20261110_r2",
                   "container": "t45-fresh35-first-production-20261110-r2",
                   "root": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r2",
                   "work": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r2",
                   "appAlias": "naijue-rewrite-fresh35-first-20261110-r2-app",
                   "userDecision": "C read the original human message 01a1c3cd-a90d-7f33-b372-37c51867671b in thread 01a19f9f-97b5-7f81-b1ea-5479df73b469 and its immediate context. User said to relay their confirmation of this exact R2 empty installation and safe stop. It covers deb86dd5 fixed scope, at most 20 minutes for install and 60 minutes for service, with the original reserve, exclusive owner and clean stop. No REAL input copy, business import, old system deletion, release pin registration or public switch.",
+                  "standingEmptyTargetDecision": "C directly verified human message 01a1c3d4-c51f-7c52-8172-a7615fad2d70 in the same chat. Later comparable independent empty targets may be prechecked, created, installed, verified and safely stopped by sole T45 without asking again, keeping exact target, version, isolation, capacity, window and closeout. No expansion to REAL import, deletion, permission changes outside that installation, or public cutover. Prior request keys still cannot be replayed.",
                   "reuse": "Reuse immutable reviewed image, deploy, Node and 31 input members at their verified current locations, read-only. Rebind the new target, roots, roles and authorities. Existing internal bridge requires exact ID and zero endpoints. Prior inode, request, receipt and data bindings stay with R1. Recheck 28 GiB admission after actual staging and preserve 6 GiB stop floor.",
                   "admission": {
                     "job": "t45-first-r2-empty-admission-readonly-20261110-01",
@@ -42526,6 +42527,17 @@
                     "manifestSHA256": "4259604b8b3ea7293cb574982b378b316fafc2721b4a588c82f4fde6e6c560f0",
                     "handoffSHA256": "2cf6feb8e3e8a0bbc5e33787b100659f0855fa66b762ca345b2278f5bbb0409e",
                     "check": "C verified every regular single-link static leaf, template digest and exact closure against deb86dd5 READY using python3 -B, exit 0. Eight unique local job keys have no formal manager job directory. Static and private dynamic inputs remain separate. Server key and resource recheck, actual authorization, start time, materialization and installer not run."
+                  },
+                  "actualNativeR2": {
+                    "status": "MATERIALIZATION_PASS_PROVISION_FAILED_CREATION_FACTS_ABSENT",
+                    "admissionPhaseSHA256": "f36fe66f83ef6cd1bda6f5f595fc10d256594028871e4d47d2d8ebae2326d6ba",
+                    "admissionTerminalSHA256": "0226a5a2967e9b6a41b3e74b2bbe553267793ac080a16298c4928d94fb34b14c",
+                    "materializationPhaseSHA256": "79a5efb3dee705ee554a4517117e03c1071f77261602034be3b592a0a89e8683",
+                    "materializationTerminalSHA256": "10594e757036601e0aa2166978beb61f3e70a84f9cd21eca33ac157d92dc7b47",
+                    "materializationCheck": "C independently recalculated actual raw receipts. Live preflight at 12:58:59 CST passed every gate. Materialize-app completed/0 in 0.569 seconds, only 1,114,112 B allocated, 31,265,824,768 B remaining on device 66304, original shared material read-only, PostgreSQL not started in this step.",
+                    "provisionPhaseSHA256": "dbaef43f2b4ab97db1eb21cee4ace4eb9c396337acc19dc405be1cf7d6a8b5a7",
+                    "provisionTerminalSHA256": "b34153b82c81acc6f5aff52df2a8bc867e0a6dccab3f4c8b354fe60bacdeedc5",
+                    "provisionCheck": "Original provision at 13:07:37 CST failed/2 after 13.648 seconds while far from the install deadline. Raw stage reports STOP_OR_UNKNOWN_NO_REPLAY / PRODUCTION_FACTS_NOT_CONFIRMED_OR_WINDOW_SHORT_NO_REPLAY, same carrier running, creationFacts and sharedPostgresNamespace null. The general code is not a confirmed timeout. C did not issue ENTRY or INSTALL. T45 performs one exact original-key readback for first error and protected closeout. No replay, real import or public switch."
                   },
                   "r2ApplicationAndWriterSource": {
                     "ordinaryCommit": "db624feafd98568b16f91e02a0604ab6e57a3528",
