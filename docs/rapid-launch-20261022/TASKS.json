@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T02:12:02+08:00",
+  "updatedAt": "2026-11-11T02:28:00+08:00",
   "stage": "R3_NORMAL03_ACTUAL_READY_APP_STAGE_COMPLETE_ADMIN154_SOURCE_ACCEPTED_APP_NOT_STARTED",
-  "lastVerifiedRemoteCommit": "19e0690230e2eff7c24c443a882a1bd2382cc9be",
+  "lastVerifiedRemoteCommit": "7ef9fd0739c502aa53df82112e60d2cae7e462a1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,14 +1786,14 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T02:12:02+08:00",
+    "asOf": "2026-11-11T02:28:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "SAME_R3_NORMAL03_RUNTIME_READONLY_AUTH_ACTUAL_PASS_FINITE_UNTIL_023809_APP_NOT_STARTED",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "bdee279ef93454e9daf89f379f45e7ec8b5acd1d",
+    "publicStatusCommit": "8f5f3a35801aaadbb366cc76db56171993756c7f",
     "currentOwners": {
       "T45": "Collect02 first stage and exact exit readonly; preserve unique password and stopped data. APP exact staging/restore may proceed after manager free. No03 replay.",
       "D1": "normal02 source/remote delivered; A+B a53 preserved; implement bounded154 catalog and original host successor source only.",
@@ -1925,10 +1925,33 @@
         "restoreFinishedAt": "2026-11-11T01:58:19.275251+08:00",
         "restoredPolicySha256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
         "appStarts": 0
+      },
+      "admin154": {
+        "commit": "9830e54fa82bd36c62f997d8ef859e8488c93512",
+        "buildId": "erp-9830e54fa82b-r3-admin154-20261111",
+        "archiveBytes": 3382274,
+        "archiveSHA256": "59ed91650c534675f1e9fe0c5f3e5f07b666cbf34f84a200afc6e1b04e134a01",
+        "manifestSHA256": "43385b448f3fa3ce79297479a6b26cc964e7a4e86b60e5ed925c99470cee39e1",
+        "resultSHA256": "18c6636f6bbb7e9bb4d47ae3680707ca7fba5c0d73b40bcce0318d8c4459b2a7",
+        "readySHA256": "73f4f65886e0e285e9ebed7f3ef8b366dc7a2836d8822b06f781ad8f18d80f25",
+        "node": "24.21.0",
+        "npm": "11.9.0",
+        "buildSeconds": 18.4073,
+        "relocatedLoaderSeconds": 6.4736,
+        "packSeconds": 15.6732,
+        "exits": [
+          0,
+          0,
+          0
+        ],
+        "newDependencyInstall": 0,
+        "CCheck": "SIX_PINS_AND_TAR_SQL36_HOST_COMPILED_DUAL_ENV_MATCH",
+        "actualSQL154": "NOT_RUN",
+        "serverAPP": "NOT_RUN"
       }
     },
-    "controllerRecordsRemote": "19e0690230e2eff7c24c443a882a1bd2382cc9be",
-    "publicStatusSha256": "8cf7f1eb5f0ccfa03edd3ac6df7efa113fbdf27102feb911e217a5d098a4fbee",
+    "controllerRecordsRemote": "7ef9fd0739c502aa53df82112e60d2cae7e462a1",
+    "publicStatusSha256": "aa3216e5bc3f80f4477fba203e058842f4efd62765cce71d2b3442f0d5a02af4",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -2085,7 +2108,18 @@
       "sourceBranch": "codex/d1-admin154-host-successor-20261111",
       "sourceTree": "b7fdd2917588acaa7466ce0cb7b486a9d75d51d2",
       "qbResultSha256": "0c515afae542f021253e106675cbc80e5fdf12dc5e5a475ab366dad3566e6e87",
-      "qbReviewSha256": "34a7fa18a0eebf8887867c3dc7a80bee648b9e9e87f7611ba185fafdfe3513ac"
+      "qbReviewSha256": "34a7fa18a0eebf8887867c3dc7a80bee648b9e9e87f7611ba185fafdfe3513ac",
+      "packageClosureSuccessor": {
+        "commit": "9830e54fa82bd36c62f997d8ef859e8488c93512",
+        "tree": "0fd3178cb194fe2327dac0782efd1cf194e3b79e",
+        "branch": "codex/d1-admin154-package-closure-20261111",
+        "remote": "EXACT_NONFORCE_OBJECT_PUBLICATION_AND_READBACK",
+        "count": 219,
+        "sourceSet": "3639e721deaec087cb1824716130433a2699fcc38dd44806b3caf22698e33edf",
+        "qb": "6ebc1fcfe6178cba9cc5dab6d40b604be31b8103195ae1839e6c2789b35a701d",
+        "default152": "UNCHANGED_218_AND_13_RUNTIME_PATCHES",
+        "sql36": "NATIVE_SOURCE_MEMBER_NOT_AUTOMATIC_OLD_MIGRATION"
+      }
     },
     "currentHumanDelegation": {
       "untilShanghai": "2026-11-11T12:00:00+08:00",
@@ -2163,7 +2197,11 @@
       "decision": "Retain original tracked TTL900/login admission/max1 pool; six existing maintenance modules; DA7/R3 exact profile. Persistent32raw-byte staff request key UID10001 mode0600/0710parent once only; new empty media UID10001 mode0700. No real capacity facts invented. Root caller/QB and exact live scope still pending.",
       "parser": "LOCKED24_21_SYNTHETIC_PASSWORD_PARSE_PASS_NOT_CLI_OR_READYZ",
       "actualSecretsGenerated": false,
-      "appStarted": false
+      "appStarted": false,
+      "helperReviewSha256": "9004f316b5bef5a629a08ef5b89419766dad119d9db71346b20497a89fcfc5d6",
+      "callerCommit": "3b9c4fa52e2a721351ae7265e6e5a2a1540a4448",
+      "callerReview": "NEED_TARGETED_TIME_BOUNDARY_FIXES",
+      "liveAuthorityIssued": false
     }
   },
   "operationalState": {
