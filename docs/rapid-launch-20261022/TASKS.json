@@ -1786,19 +1786,19 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T07:19:05+08:00",
+    "asOf": "2026-11-11T07:48:53+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "d1e7966753d8da37c06c8830bb6838c14264a170",
+    "publicStatusCommit": "7d3cc2b210a85129decee213d81393ef8ccb8d35",
     "currentOwners": {
-      "T45": "Fix QB cleanup F01/F02 on c22b0bff and prepare no-network same-image Linux run. Then fixed APP05 caller and actual binding.",
+      "T45": "Actual APP reception and Linux probe completed. Fix finite role carrier cleanup budget and receipt, then deliver exact same R3 apply06/06/restore03 inputs. APP05 prepares in parallel.",
       "D1": "Fixed maintenance06 commit 4602dd0965c202016cf89e1be7bab6c9e82e97da, three affected test files serial 55 pass. Await integrated Linux evidence.",
-      "QB": "c22b0bff/4602dd09 source review NEED_FIX_SOURCE_CLEANUP. Recheck F01/F02 only after fixed follow-up.",
-      "D2": "One exact 4602dd09 APP rebuild and readback complete. Upload not run. Existing 1b8 artifact retained.",
+      "QB": "F01/F02 and isolated probe source independently pass. Reviewed exact dispatcher flag delta. Recheck only finite-role cleanup follow-up when fixed.",
+      "D2": "Exact 4602dd09 APP rebuild and T45 controlled reception complete. Existing 1b8 artifact retained.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
@@ -44227,7 +44227,25 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 fixes F01 and F02 and prepares the same-image no-network check. QB rechecks the affected cleanup paths. New APP is built locally. R3 remains stopped.",
+    "next": "T45 fixes finite-role apply/restore carrier cleanup budget and failure receipt. QB checks the exact delta, then C aligns bounded same-R3 authorization inputs. R3 remains cleanly stopped.",
+    "maintenance06LinuxActual": {
+      "sourceCommit": "e94ae84fa3b0ad28430c853b9120e76826fb35aa",
+      "sourceManifestSha256": "e250e4768032373ff693e85801b498276c46a85800e2632f6efd4818bb09a92a",
+      "requestKey": "t45-r3-admin154-linux-custody-load-20261111-01",
+      "terminalSha256": "6631a1b8a1b90f71f6fc2fdd02ed6e6290e8177a5addb4351fb65f8d3576216e",
+      "typedResultSha256": "bd00da626b7ac0364885d3db96d0a55e8f1319d3951fe45d17cd2d4215eefda1",
+      "cleanupReadbackSha256": "ad5ac93a4a000a225a3b454cbeb0d699ea170f3b340d888d40836075df124021",
+      "state": "ACTUAL_COMPLETED_0_ALL_THREE_CASES_AND_CLEANUP_CONFIRMED",
+      "elapsedSeconds": 43.5496,
+      "pgConnections": 0,
+      "appStarted": false
+    },
+    "maintenance06LivePreflight": {
+      "sha256": "62f488b005b031aa1aac098718b9a52998036bfab107b3e877e66e061e74d996",
+      "checkedAt": "2026-11-11T07:48:47+08:00",
+      "state": "R3_CLEAN_STOP_AND_SIX_UNCONSUMED_KEYS_CONFIRMED_READONLY",
+      "blocker": "Finite role carrier 260s work plus up to 50s cleanup exceeds real 300s child deadline, and a stop failure can omit cleanup receipt. Same owner fixing."
+    },
     "maintenance06Carrier": {
       "commit": "c22b0bff788e5bfead69a543e5cba10023372634",
       "tree": "7046c02ff7984c778e03475c1a0b171ea255a7b7",
@@ -44248,7 +44266,9 @@
       "releaseManifestSha256": "e2f083ba0a4be531adf7302969b0a84e9d707a98a706363fc127f3efbb388e34",
       "verifiedMembers": 458,
       "sourceRemoteVerified": true,
-      "uploaded": false,
+      "uploaded": true,
+      "receiverReadySha256": "4099c626a76bb5e4477cff882d7579d8bcdc8aa9d33abb2107fa863be64f1789",
+      "originalTransferPolicyRestored": true,
       "cliReadyz": "NOT_RUN"
     },
     "maintenance06Driver": {
