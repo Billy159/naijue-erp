@@ -42487,12 +42487,13 @@
                   "next": "T45 confirmed the original carrier cannot resume this stopped and uninstalled R1 through its existing entry points. Original startup rejects the expired window and, with a fresh window, the existing container name. Entry and install require the original live carrier. Same-data recovery requires the absent durable service, installation and STOP evidence. Preserve all R1 state and receipts. T45 checks only the proposed empty successor through the existing read-only management route."
                 },
                 "proposedEmptySuccessor": {
-                  "status": "READ_ONLY_ADMISSION_COMPLETE_FIXED_CARRIER_QB_DELTA_PASS_NEW_TARGET_APPROVAL_PENDING",
+                  "status": "USER_APPROVED_SINGLE_R2_EMPTY_INSTALL_CURRENT_ADMISSION_RECHECK_PENDING",
                   "database": "erp_fresh35_20261110_r2",
                   "container": "t45-fresh35-first-production-20261110-r2",
                   "root": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r2",
                   "work": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r2",
                   "appAlias": "naijue-rewrite-fresh35-first-20261110-r2-app",
+                  "userDecision": "C read the original human message 01a1c3cd-a90d-7f33-b372-37c51867671b in thread 01a19f9f-97b5-7f81-b1ea-5479df73b469 and its immediate context. User said to relay their confirmation of this exact R2 empty installation and safe stop. It covers deb86dd5 fixed scope, at most 20 minutes for install and 60 minutes for service, with the original reserve, exclusive owner and clean stop. No REAL input copy, business import, old system deletion, release pin registration or public switch.",
                   "reuse": "Reuse immutable reviewed image, deploy, Node and 31 input members at their verified current locations, read-only. Rebind the new target, roots, roles and authorities. Existing internal bridge requires exact ID and zero endpoints. Prior inode, request, receipt and data bindings stay with R1. Recheck 28 GiB admission after actual staging and preserve 6 GiB stop floor.",
                   "admission": {
                     "job": "t45-first-r2-empty-admission-readonly-20261110-01",
@@ -42518,7 +42519,7 @@
                     "readySHA256": "86b6861836da3b50ea55edb656d79ddc85f64f2d87c0e55a1aa425c76bc72bd7",
                     "planSHA256": "5e62cfbe6b04b6391b7cc04005f26d2da40ac5a2f4b4268d2a2bc2fdf1b66172",
                     "check": "Original QB fixed-source delta PASS 4/4. Volume or staged fsync crossing cutoff leaves no visible authority. Existing destination stays intact. Simulated late atomic publication reports unknown with the original leaf preserved. Fixed native protected read accepts only before the same cutoff. Wrong original launcher SHA refuses before exec. QB verified five execution leaves/seven inputs and references, historical native and original guard preserved. Actual Linux and PostgreSQL not executed.",
-                    "next": "A approved only the former erp_fresh35_20261109_r1. Await the separately requested single exact R2 authorization for in-place read-only input binding, new dedicated tree and four roles, one native installation of 35 tables, 20-minute install and 60-minute service limits, and protected clean STOP and readback. Keep old R1 and receipts. No REAL, public service, delete or old state changes. Bind actual target, job and resource facts at execution and fail closed on drift. T45 continues previously approved APP/backup source work."
+                    "next": "The user separately approved the exact R2 empty installation and protected clean STOP. Original T45 rechecks live target, original keys, resources and handoff outside T0. After materialization readback C and T45 take the same bounded install window. Keep old R1 and receipts. No REAL, public service, delete or old state changes."
                   },
                   "staticHandoff": {
                     "status": "LOCAL_FROZEN_8_STAGES_20_LEAVES_VERIFIED_NO_ISSUANCE",
@@ -42814,7 +42815,13 @@
                 "readySHA256": "b8ef5393b17cfa0b12e113584963cc5b9e942f04152eceb91bd9c444cee205ff",
                 "check": "D2 one local build and pack using fixed source and unchanged Web inputs. C recalculated archive and manifest hashes, checked path uniqueness and read all 452 listed member sizes and SHA256 plus the embedded manifest. The APP archive is independent of T45 deployment and backup code. New outer pairing, actual Linux startup, PG, restore and public release remain unverified."
               },
-              "next": "Original T45 resumes exact R2 REAL source pairing, first inspecting why old nonroot ledger chmod conflicts with in-place read-only material reuse. Continue only within approved source contract. Pair the fixed APP archive with the outer release material offline. New R2 initial install remains awaiting its exact user decision."
+              "outerStaticBinding": {
+                "status": "LOCAL_BINDING_PASS_APP_AND_HELPER_REGISTRATION_UNISSUED",
+                "sha256": "6c691b90212d6c848cf4852182cd617ccbb6b91571dcddadc8bafead534679e5",
+                "handoffSHA256": "c3f97358953b86f8561774b3c322fcef2fce783eeb854a336f8ebde5f7081232",
+                "check": "Original T45 tied the existing APP archive to three exact helpers. C recomputed both report hashes. One-line archive registration would yield helper e85654b60cff0c17721088bb619a581fbec2de1b7dfb045f60d355c69e1867c9 in memory only, pending exact independent review and approved boot registration. The known old R1/APP576 backup is not R2 backup evidence."
+              },
+              "next": "User separately approved the fixed R2 empty installation. T45 prioritizes it. For later REAL, original 31-member package is root-only while UID 61035 opens manifest by path. The current read-only mount and process proof FDs do not resolve that. Proposed separate same-volume read-only package copy and fixed recovery/REAL consumers remain unissued. At historical free space and after 64 MiB reserved for install, 1 GiB for the proposed copy leaves 62,607,360 B above the 28 GiB floor. Need current facts before a separate copy. Preserve original package, proof and permissions."
             },
             "scope": "New R1 first public deployment and later controlled replacement of its process only. Add one firstInstall.currentProductionService {path,sha256} reference and consume the same original bytes in the private application input. T45 produces exact same installed PGDATA identity, source/catalog pins, fresh SID/OID/epoch/CID/namespace and process facts, ordinary role and measured login expiration, finite service deadline, original approval and predecessor closeout. Require the trusted proof when its branch is selected, verify the live target and retain original installation evidence; no forged production or restore origin.",
             "continuity": "For the same fixed release, the authorized replacement is a new exact launch instance, after the previous application is proven drained and stopped. Reuse existing private final-input and capacity producer with a fresh finite observed process window and unchanged capacity controls, then private readiness and controlled opening. Keep one writer. Reject missing proof, wrong generation/role/source, reused instance or process, and expiry. No automatic renewal, host restart, or extension of import credentials implied. Current ordinary login validity and real later credential changes are independently approved by exact target and cutoff; existing ACL and RLS stay unchanged.",
