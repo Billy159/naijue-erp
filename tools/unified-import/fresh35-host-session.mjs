@@ -273,14 +273,22 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'ORDINARY_CURRENT_SERVICE_FIRST_R3_REQUIRED');
  const {sha256,capacityExpiresAt}=input;
  const {identity,value:proof}=await readOrdinaryCurrentService(sha256);
- need(exactImportKeys(proof,['format','requestKey','oldStopRequestKey','authorizationSha256','checkedAt',
-  'installationRecordSha256','targetSha256','sourceSetSha256','previousStopReceiptSha256','previousStopTerminalSha256',
+ // First installation binds the original epoch; recovery retains its distinct proof shape.
+ const initial=proof.format==='FRESH35_INITIAL_PRODUCTION_SERVICE_V1';
+ need(exactImportKeys(proof,['format','requestKey','authorizationSha256','checkedAt',
+  'installationRecordSha256','targetSha256','sourceSetSha256',
+  ...(initial?['serviceReceiptSha256']:['oldStopRequestKey','previousStopReceiptSha256','previousStopTerminalSha256']),
   'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
-  'runtimeRole','runtimeLoginValidUntil'])&&proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1',
+  'runtimeRole','runtimeLoginValidUntil'])&&(initial||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
- need(typeof proof.requestKey==='string'&&/^t45-first-20261110-r3-recovery-restart-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
+ const provenanceMatches=initial
+  ? typeof proof.requestKey==='string'&&/^t45-first-r3-native-facts-installed-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
+    &&digest(proof.serviceReceiptSha256)&&proof.authorizationSha256===record.authorizationSha256
+    &&(ordinary.runtimeLoginValidUntil===null||proof.runtimeLoginValidUntil===ordinary.runtimeLoginValidUntil)
+  : typeof proof.requestKey==='string'&&/^t45-first-20261110-r3-recovery-restart-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
   &&typeof proof.oldStopRequestKey==='string'&&/^t45-first-20261110-r3-recovery-stop-[0-9]{8}-[0-9]{2}$/.test(proof.oldStopRequestKey)
-  &&[proof.authorizationSha256,proof.previousStopReceiptSha256,proof.previousStopTerminalSha256,
+    &&[proof.previousStopReceiptSha256,proof.previousStopTerminalSha256].every(digest);
+ need(provenanceMatches&&[proof.authorizationSha256,
    proof.installationRecordSha256,proof.targetSha256,proof.sourceSetSha256].every(digest)
   &&proof.installationRecordSha256===snapshot.sha256&&proof.targetSha256===record.binding.targetSha256
   &&proof.sourceSetSha256===record.binding.sourceSetSha256&&proof.runtimeRole===proposal.runtime,
@@ -300,7 +308,7 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
  const container=shared.container;
  need(exactImportKeys(container,['id','name','imageId','startedAt','hostPid','startTicks','networkNamespace','frontEndpoint'])
-  &&digest(container.id)&&container.name==='t45-fresh35-first-production-20261110-r3-recovery'
+  &&digest(container.id)&&container.name===(initial?'t45-fresh35-first-production-20261110-r3':'t45-fresh35-first-production-20261110-r3-recovery')
   &&typeof container.imageId==='string'&&/^sha256:[a-f0-9]{64}$/.test(container.imageId)
   &&positive(container.hostPid)&&container.hostPid>1&&decimal(container.startTicks)
   &&exactImportKeys(container.networkNamespace,['device','inode'])&&Object.values(container.networkNamespace).every(positive),
@@ -321,10 +329,13 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
  const birth=ordinaryUtcMillis(physical.postmasterStart,pgStamp);
  const prior=ordinaryUtcMillis(installed.postmasterStart,pgStamp);
  const carrierBirth=ordinaryUtcMillis(container.startedAt,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/);
- const loginUntil=ordinaryUtcMillis(proof.runtimeLoginValidUntil,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/);
+ const unboundedLogin=initial&&(proof.runtimeLoginValidUntil===null||proof.runtimeLoginValidUntil==='infinity');
+ const loginUntil=unboundedLogin?Number.POSITIVE_INFINITY:
+  ordinaryUtcMillis(proof.runtimeLoginValidUntil,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/);
  const expiresAt=Math.min(shared.serviceLeaseExpiresAt,loginUntil,capacityExpiresAt),now=Date.now();
  need(positive(proof.checkedAt)&&positive(shared.serviceLeaseExpiresAt)
-  &&prior<birth&&carrierBirth<=birth&&birth<=proof.checkedAt&&proof.checkedAt<=now&&now<expiresAt,
+  &&(initial?physical.postmasterStart===installed.postmasterStart:prior<birth)
+  &&carrierBirth<=birth&&birth<=proof.checkedAt&&proof.checkedAt<=now&&now<expiresAt,
   'ORDINARY_CURRENT_SERVICE_WINDOW_REQUIRED');
  return {identity,checkedAt:proof.checkedAt,expiresAt,postmasterStart:physical.postmasterStart,
   runtimeLoginValidUntil:proof.runtimeLoginValidUntil};

@@ -15,7 +15,7 @@ const firstR3={database:'erp_fresh35_20261110_r3',host:'127.0.0.1',port:56791,
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const encodeProof=value=>JSON.stringify(value,(_key,member)=>member&&Object.getPrototypeOf(member)===Object.prototype
  ? Object.fromEntries(Object.keys(member).sort().map(key=>[key,member[key]])) : member)+'\n';
-async function model({synthetic=false,recordParentPrivate=false,formal=false,proposal={}}={}){
+async function model({synthetic=false,recordParentPrivate=false,formal=false,initial=false,initialRoleUntil,proposal={}}={}){
  const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,synthetic?'reference-inputs':'references');
  const paths={baselineDirectory:join(reference,'baseline'),modelPath:join(reference,'model.json'),functionsPath:join(reference,'functions.json')};
  const networkWorkspace=join(root,'network-workspace'),networkPath=join(networkWorkspace,'bootstrap-network-observation.json');
@@ -36,7 +36,10 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,pro
   await writeFile(join(oldRoot,recordModulePath),'SYNTHETIC HISTORICAL RECORD MODULE');
  }
  if(synthetic){delete t.purpose;t.format='FRESH35_COMBINED_TARGET_BINDING_V1';t.startsAt=now-1000;t.expiresAt=expiry;t.proposal={database:'synthetic_fresh35_20261105_r9',runtime:'fresh35_runtime_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:networkWorkspace};t.physical.postmasterStart='2026-11-05 03:00:00+00';t.ordinary={connectHost:'127.0.0.1',connectPort:57639,serverAddress:'127.0.0.1',serverPort:57639,runtimeLoginValidUntil:null,referenceDirectory:reference};}
+ if(initial)t.ordinary.runtimeLoginValidUntil=initialRoleUntil===undefined?new Date(now+120000).toISOString():
+  initialRoleUntil==='infinity'?null:initialRoleUntil;
  const record={binding:{sourceSetSha256:'b'.repeat(64),...(formal?{targetSha256:hash(JSON.stringify(t))}:{})},synthetic_only:true,
+  authorizationSha256:'a'.repeat(64),
   ...(synthetic?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',target:t}:formal?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2',target:t}:{})};
  const recordBytes=JSON.stringify(record)+'\n';await writeFile(recordPath,recordBytes);
  const pins={installationRecordSha256:hash(recordBytes),...record.binding};
@@ -50,6 +53,16 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,pro
     startedAt:new Date(now-2000).toISOString(),hostPid:100,startTicks:'200',networkNamespace:{device:4,inode:5},
     frontEndpoint:{id:'1'.repeat(64),aliases:['naijue-rewrite-fresh35-first-20261110-r3-app']}}},
   postmaster:{pid:20,starttime:'301',exe:'/usr/bin/postgres'},guardian:{pid:21,starttime:'300',exe:'/usr/bin/python3'}};
+ if(initial){
+  proof.format='FRESH35_INITIAL_PRODUCTION_SERVICE_V1';
+  proof.requestKey='t45-first-r3-native-facts-installed-20261110-01';
+  proof.serviceReceiptSha256='9'.repeat(64);
+  delete proof.oldStopRequestKey;delete proof.previousStopReceiptSha256;delete proof.previousStopTerminalSha256;
+  proof.physical.postmasterStart=t.physical.postmasterStart;
+  proof.runtimeLoginValidUntil=initialRoleUntil===undefined?t.ordinary.runtimeLoginValidUntil:initialRoleUntil;
+  proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3';
+  proof.sharedPostgresNamespace.container.startedAt=new Date(now-400000).toISOString();
+ }
  const catalogStub='data:text/javascript;base64,'+Buffer.from("export function fresh35CombinedOrdinaryCatalogSql(){return {guardSql:'MODEL_GUARDS',observationSql:'MODEL_OBSERVATION'}};export function validateFresh35CombinedOrdinaryCatalogObservation(raw){if(raw!=='SYNTHETIC_ONLY')throw Error('MODEL_CATALOG_REJECTED')};export const fresh35CombinedSyntheticOrdinaryCatalogSql=fresh35CombinedOrdinaryCatalogSql;export const validateFresh35CombinedSyntheticOrdinaryCatalogObservation=validateFresh35CombinedOrdinaryCatalogObservation").toString('base64');
  const prefix=`import {lstat as nativeLstat,open as nativeOpen,readFile} from 'node:fs/promises';import {watch as nativeWatch,writeFileSync,renameSync,unlinkSync,constants} from 'node:fs';import {resolve,dirname} from 'node:path';import {createHash} from 'node:crypto';
  import {decodeUtf8,parseStrictJson} from ${JSON.stringify(new URL('../packages/application/src/unified-import-contract.ts',import.meta.url).href)};
@@ -113,6 +126,92 @@ test('ordinary startup uses one pool/lease and direct LOGIN identity before inte
  await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,{},c),/SAME_POOL/);await assert.rejects(()=>m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection),/EXCLUSIVE_STARTUP/);
  m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose();}
+});
+
+test('first R3 service reuses historical source and one pool with the exact installed epoch',async()=>{
+ const m=await model({formal:true,initial:true});let cap;
+ try{
+  const input=await m.putProof();
+  cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+  assert.equal(m.api.describeFresh35OrdinaryAdmissionV2(cap).postmasterStart,m.t.physical.postmasterStart);
+  assert.deepEqual(m.identityParams,[m.proof.runtimeLoginValidUntil,m.proof.runtimeLoginValidUntil]);
+  assert.equal(m.clients.length,1);
+  assert(m.api.modelWatchedPaths().includes(join(m.root,'installed','source.mjs')));
+  await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+
+test('initial unbounded role remains bounded by retained service and process capacity',async()=>{
+ for(const initialRoleUntil of [null,'infinity']){
+  const m=await model({formal:true,initial:true,initialRoleUntil});let cap;
+  try{
+   const input=await m.putProof();
+   cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+   assert.deepEqual(m.identityParams,[initialRoleUntil,initialRoleUntil]);
+   assert.equal(m.api.describeFresh35OrdinaryAdmissionV2(cap).expiresAt,input.capacityExpiresAt);
+   m.api.setTime(input.capacityExpiresAt);
+   await assert.rejects(m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/EXPIRED/);
+  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+ }
+});
+
+test('initial service refuses epoch drift at microsecond precision and proof-kind crossover',async()=>{
+ const cases=[
+  m=>{m.proof.format='FRESH35_INITIAL_PRODUCTION_SERVICE_DRAFT'},
+  m=>{m.proof.physical.postmasterStart=m.proof.physical.postmasterStart.replace('+00','001+00')},
+  m=>{m.proof.physical.postmasterStart=new Date(m.now-500).toISOString().replace('T',' ').replace('Z','+00')},
+  m=>{m.proof.format='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'},
+  m=>{m.proof.oldStopRequestKey='t45-first-20261110-r3-recovery-stop-20261110-01'},
+  m=>{m.proof.requestKey='t45-first-20261110-r3-recovery-restart-20261110-01'},
+  m=>{m.proof.sharedPostgresNamespace.container.name+='-recovery'},
+  m=>{m.proof.physical.databaseOid='43'},
+  m=>{m.proof.runtimeLoginValidUntil=new Date(m.now+120001).toISOString()},
+  m=>{m.proof.authorizationSha256='0'.repeat(64)},
+  m=>{m.proof.sourceSetSha256='0'.repeat(64)},
+  m=>{delete m.proof.serviceReceiptSha256},
+  m=>{m.api.changeHistoricalModel()},
+ ];
+ for(const mutate of cases){
+  const m=await model({formal:true,initial:true});
+  try{mutate(m);const input=await m.putProof();
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input));
+   assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
+test('initial service requires all sixteen closed fields before pool checkout',async()=>{
+ const keys=['format','requestKey','authorizationSha256','checkedAt','installationRecordSha256',
+  'targetSha256','sourceSetSha256','serviceReceiptSha256','dataDirectory','dataDirectoryIdentity',
+  'physical','sharedPostgresNamespace','postmaster','guardian','runtimeRole','runtimeLoginValidUntil'];
+ for(const key of keys){
+  const m=await model({formal:true,initial:true,initialRoleUntil:null});
+  try{
+   assert.deepEqual(Object.keys(m.proof).sort(),[...keys].sort());
+   delete m.proof[key];
+   const input=await m.putProof();
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input),/FORMAT_REQUIRED/);
+   assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
+test('initial service expires at the earliest role, retained service or capacity deadline',async()=>{
+ for(const limit of ['role','service','capacity']){
+  const m=await model({formal:true,initial:true});let cap;
+  try{
+   const deadline=m.now+60000;
+   if(limit==='role')m.proof.sharedPostgresNamespace.serviceLeaseExpiresAt=m.now+180000;
+   if(limit==='service')m.proof.sharedPostgresNamespace.serviceLeaseExpiresAt=deadline;
+   const input=await m.putProof();input.capacityExpiresAt=limit==='capacity'?deadline:m.now+180000;
+   const expected=limit==='role'?m.now+120000:deadline;
+   cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+   assert.equal(m.api.describeFresh35OrdinaryAdmissionV2(cap).expiresAt,expected);
+   m.api.setTime(expected);
+   await assert.rejects(m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/EXPIRED/);
+   assert.equal(m.api.activeWatchers(),0);
+  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+ }
 });
 
 test('first R3 current service binds historical installation, proven live epoch and the earliest expiry on one pool',async()=>{
