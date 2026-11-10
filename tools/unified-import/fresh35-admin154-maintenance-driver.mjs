@@ -82,7 +82,10 @@ async function openJob(p,rawInput,authorizationSha,m){
  const {proof,alias,value:v}=await readCurrentService(p,a,m);
  const entries=await readdir(JOB);need(entries.length===1&&entries[0]==='maintenance-node-authorization.json','JOB_ALREADY_USED');
  const reservation=await writeDurable(join(JOB,'maintenance-node-reservation.json'),Buffer.from(JSON.stringify({format:'T45_R3_ADMIN154_NODE_RESERVATION_V1',phase:p.phase,requestKey:a.requestKey,inputSha256:inputSha,authorizationSha256:auth.sha256,at:new Date().toISOString()})+'\n'));
- await mkdir(join(JOB,'events'),{mode:0o700});const eventIdentity=await privateDirectory(join(JOB,'events'),m.trust);let index=0,previous=null;
+ await mkdir(join(JOB,'events'),{mode:0o700});
+ const parent=await open(JOB,constants.O_RDONLY|constants.O_DIRECTORY|constants.O_NOFOLLOW);try{await parent.sync();}finally{await parent.close();}
+ need(await privateDirectory(JOB,m.trust)===jobIdentity,'JOB_GENERATION_CHANGED');
+ const eventIdentity=await privateDirectory(join(JOB,'events'),m.trust);let index=0,previous=null;
  const fileCurrent=async()=>{need(await privateDirectory(JOB,m.trust)===jobIdentity&&await privateDirectory(join(JOB,'events'),m.trust)===eventIdentity,'JOB_GENERATION_CHANGED');await unchanged(auth);await unchanged(reservation);
   const actual=await protectedBytes(PROOF),currentAlias=await protectedBytes(HOST_PROOF);need(actual.identity===proof.identity&&actual.sha256===proof.sha256&&currentAlias.identity===alias.identity&&currentAlias.sha256===alias.sha256,'CURRENT04_PROOF_CHANGED');};
  const privateValues=[p.connection.password,...(p.phase==='ADMIN_PROVISION_ONLY'?[p.encodedScrypt]:[])];

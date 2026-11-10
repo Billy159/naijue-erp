@@ -39,7 +39,15 @@ async function fixture(phase='UPGRADE'){
   'old:source':{...sources,loadFresh35CombinedSource:async()=>({})},'old:target':targets,'old:catalog':{buildFresh35CombinedCatalog:async()=>({}),describeFresh35CombinedCatalog:()=>({modelSha256:descriptor.predecessorModelSha256})},'old:lifecycle':{compileFresh35CombinedProgram:async()=>({})},'old:record':{...records,validateFresh35CombinedRecord:()=>oldRecord},
   'scripts/release/unified-install/fresh35-admin154-record-v1.mjs':{ADMIN154_RECORD_PATH:recordPath,async loadFresh35Admin154Authorization(b,p){assert.deepEqual(b,aBinding);assert.equal(p,'ADMIN_PROVISION_ONLY');ctx.authorityLoads++;return {};},assertFresh35Admin154AuthorizationCurrent:async()=>({sha256:ctx.aAuthoritySha})},
   'tools/unified-import/fresh35-host-session.mjs':{async loadFresh35Admin154Context(_s,_r,_c,sha){assert.equal(sha,packet.successorRecordSha256);return {};},describeFresh35Admin154SetupBinding:async()=>aBinding,async runFresh35Admin154Setup(config,_s,_target,request){ctx.aCalls++;assert.deepEqual(Object.keys(config).sort(),['database','host','password','port','user']);assert.deepEqual(request,packet.request);return {result:ctx.aResult==='UNKNOWN'?{state:'UNKNOWN',code:'TRANSACTION_OUTCOME_UNKNOWN'}:{state:'COMMITTED',receipt:{operationId:packet.request.operation_id,kind:'STAFF',targetId:packet.request.admin.staff_id,version:1},request_sha256:'7'.repeat(64)},cleanup:'CLOSED'};}}};
- const io=stub("import * as fs from 'node:fs/promises';const root=s=>Object.create(s,{uid:{value:0n},gid:{value:0n}});export const realpath=fs.realpath,readdir=fs.readdir,mkdir=fs.mkdir,readFile=fs.readFile;export async function lstat(p,o){return root(await fs.lstat(p,o))}export async function stat(p,o){if(p==='/proc/self/ns/net')return{dev:4n,ino:5n};return root(await fs.stat(p,o))}export async function open(p,f,m){const h=await fs.open(p,f,m);return{stat:async o=>root(await h.stat(o)),read:(...a)=>h.read(...a),writeFile:(...a)=>h.writeFile(...a),sync:()=>h.sync(),close:()=>h.close()}} ");
+ const io=stub(`import * as fs from 'node:fs/promises';
+ const root=s=>Object.create(s,{uid:{value:0n},gid:{value:0n}});let watched=null,made=false,fail=false;export const order=[];
+ export function observe(path,injectFailure){watched=path;made=false;fail=injectFailure;order.length=0;}
+ export const realpath=fs.realpath,readdir=fs.readdir,readFile=fs.readFile;
+ export async function mkdir(p,o){await fs.mkdir(p,o);if(p===watched+'/events'){made=true;order.push('EVENTS_MKDIR');}}
+ export async function lstat(p,o){return root(await fs.lstat(p,o))}
+ export async function stat(p,o){if(p==='/proc/self/ns/net')return{dev:4n,ino:5n};return root(await fs.stat(p,o))}
+ export async function open(p,f,m){if(watched&&p.startsWith(watched+'/events/'))order.push('EVENT_OPEN');const h=await fs.open(p,f,m);return{stat:async o=>root(await h.stat(o)),read:(...a)=>h.read(...a),writeFile:(...a)=>h.writeFile(...a),async sync(){if(p===watched){order.push(made?'PARENT_SYNC_AFTER_MKDIR':'PARENT_SYNC_BEFORE_MKDIR');if(made&&fail)throw Error('MODEL_PARENT_SYNC_FAILED');}await h.sync();},close:()=>h.close()}}
+ `);const ioAPI=await import(io);
  let source=text.replace("'node:fs/promises'",JSON.stringify(io)).replaceAll('import.meta.url',JSON.stringify(url.href));
  for(const [from,to] of [["'/app/backend/native35-source'","'/MODEL_SOURCE'"],["'/opt/naijue-erp/fresh35-combined-v1/reference-inputs'","'/MODEL_REFERENCE'"],["'/run/t45-admin154/job'",JSON.stringify(job)],["'/etc/naijue-erp/fresh35-current-production-service-v2-service-04.json'",JSON.stringify(proofPath)],["'/run/naijue-rewrite/current-production-service.json'",JSON.stringify(alias)]])source=source.replaceAll(from,to);
  source=source.replace(/const moduleAt=.*?;\n/,'const moduleAt=async name=>modelModule(name);\n');
@@ -47,7 +55,7 @@ async function fixture(phase='UPGRADE'){
  source=source.replace("import(pathToFileURL(join(oldRoot,'scripts/release/unified-install/fresh35-combined-'+n+'-v1.mjs')).href)","modelModule('old:'+n)");
  source=source.replace("const {runFresh35Admin154Upgrade}=await import(pathToFileURL(leaf).href);","const runFresh35Admin154Upgrade=modelUpgrade;");
  source=source.replace("const require=createRequire(pathToFileURL(join(SOURCE,'package.json'))),{Client}=require('pg');","const require=modelRequire,{Client}=require('pg');");
- source+=`\nlet selected;export function configure(v){selected=v;}function modelModule(n){if(!selected.modules[n])throw Error('UNEXPECTED_MODEL_MODULE:'+n);return selected.modules[n];}function modelRequire(n){selected.requireCalls++;return n==='pg'?{Client:ModelClient}:{version:'8.23.1'};}class ModelClient{constructor(options){this.options=options;this._ended=false;selected.clients.push(this);}on(){}async connect(){if(selected.connectFail)throw Error('SYNTHETIC CONNECT FAILURE');}async end(){this._ended=true;selected.closed.push(this);}}
+ source+=`\nlet selected;export function configure(v){selected=v;}function modelModule(n){if(!selected.modules[n])throw Error('UNEXPECTED_MODEL_MODULE:'+n);return selected.modules[n];}function modelRequire(n){selected.requireCalls++;return n==='pg'?{Client:ModelClient}:{version:'8.23.1'};}class ModelClient{constructor(options){this.options=options;this._ended=false;selected.clients.push(this);selected.order?.push('CLIENT');}on(){}async connect(){if(selected.connectFail)throw Error('SYNTHETIC CONNECT FAILURE');}async end(){this._ended=true;selected.closed.push(this);}}
  async function modelUpgrade(o){try{const b=structuredClone(selected.binding);if(selected.badBinding)b.physical.databaseOid='999';await o.assertAuthorized({...b,authorizationSha256:o.authorizationSha256});await o.emit({state:'MODEL_PRECOMMIT'});if(selected.upgradeUnknown){await o.client.end();return{state:'COMMIT_OUTCOME_UNKNOWN',connectionCleanup:'CLOSED',recordPublished:false,automaticRetry:false};}await o.client.end();const reader=await o.openReadback();if(selected.failReadback){await reader.end();return{state:'COMMITTED_UNPUBLISHED',catalogReadback:'NOT_VERIFIED',connectionCleanup:'CLOSED',recordPublished:false,automaticRetry:false};}await reader.end();if(selected.breakJournal)await modelBreakJournal();return{...(selected.leakResult?{privateLeak:selected.packet.connection.password}:{}),state:'COMMITTED_UNPUBLISHED',catalogReadback:'VERIFIED',connectionCleanup:'CLOSED',record:{SYNTHETIC_MODEL_RECORD:true},recordJson:'SYNTHETIC_MODEL_RECORD',recordSha256:'8'.repeat(64),recordPublished:false,automaticRetry:false};}catch{await o.client.end();return{state:'NOT_STARTED',connectionCleanup:'CLOSED',recordPublished:false,automaticRetry:false};}}
  `;
  source+='\nasync function modelBreakJournal(){const fs=await import("node:fs/promises");await fs.writeFile('+JSON.stringify(join(job,'events','000003.json'))+',"SYNTHETIC_COLLISION",{flag:"wx",mode:0o400});}';
@@ -58,7 +66,7 @@ async function fixture(phase='UPGRADE'){
   const a={format:'T45_R3_ADMIN154_MAINTENANCE_NODE_AUTHORIZATION_V1',phase,requestKey:prep.requestKey,jobDirectory:job,inputSha256:hash(raw),currentServiceSha256:packet.currentService.sha256,sourceSetSha256:sourceSha,driverSha256:hash(text),...window,independentSafetyReviewSha256:'6'.repeat(64),authorizationReference:'SYNTHETIC MODEL ONLY',binding:prep.binding,...(phase==='ADMIN_PROVISION_ONLY'?{operationAuthoritySha256:ctx.aAuthoritySha}:{}),...edits};
   const bytes=Buffer.from(JSON.stringify(a));await fs.writeFile(authPath,bytes,{mode:0o400});return {inputSha:hash(raw),authorizationSha:hash(bytes),a};
  };
- return {ctx,api,job,raw,proofPath,alias,authPath,recordPath,recordRaw,authorize,run:a=>api.runMaintenanceDriver(raw,a.inputSha,a.authorizationSha),close:()=>fs.rm(dir,{recursive:true,force:true})};
+ return {ctx,api,job,raw,proofPath,alias,authPath,recordPath,recordRaw,authorize,observeParent:fail=>{ioAPI.observe(job,fail);ctx.order=ioAPI.order;return ioAPI.order;},run:a=>api.runMaintenanceDriver(raw,a.inputSha,a.authorizationSha),close:()=>fs.rm(dir,{recursive:true,force:true})};
 }
 test('maintenance preparation reads actual protected model metadata without pg, claim, events, authority or secret output',async()=>{
  for(const phase of ['UPGRADE','ADMIN_PROVISION_ONLY']){const f=await fixture(phase);try{
@@ -99,5 +107,14 @@ test('maintenance connect failure closes its client once; durable final-log fail
   f.ctx[fault]=true;const a=await f.authorize(),r=await f.run(a);assert.equal(r.state,fault==='connectFail'?'NOT_STARTED':'COMMITTED_UNPUBLISHED');assert.equal(r.record,undefined);assert.equal(f.ctx.closed.length,f.ctx.clients.length);assert.equal(new Set(f.ctx.closed).size,f.ctx.closed.length);
   if(fault==='breakJournal')assert.equal(r.journal,'UNCONFIRMED');if(fault==='leakResult')assert.equal(r.summary_redacted,true);
   assert(!JSON.stringify(r).includes(f.ctx.packet.connection.password));for(const name of await fs.readdir(join(f.job,'events')))assert(!(await fs.readFile(join(f.job,'events',name))).includes(f.ctx.packet.connection.password));
+ }finally{await f.close();}}
+});
+
+test('maintenance event directory parent entry sync precedes first emit/client; sync failure keeps claim and sends no operation',async()=>{
+ for(const fail of [false,true]){const f=await fixture();try{
+  const a=await f.authorize(),order=f.observeParent(fail),r=await f.run(a);
+  const created=order.indexOf('EVENTS_MKDIR'),synced=order.indexOf('PARENT_SYNC_AFTER_MKDIR');assert(created>=0&&synced>created);
+  if(fail){assert.equal(r.state,'NOT_STARTED');assert.equal(f.ctx.clients.length,0);assert(!order.includes('EVENT_OPEN'));assert((await fs.stat(join(f.job,'maintenance-node-reservation.json'))).isFile());const again=await f.run(a);assert.equal(again.code,'ADMIN154_DRIVER_JOB_ALREADY_USED');assert.equal(f.ctx.clients.length,0);}
+  else{assert.equal(r.catalogReadback,'VERIFIED');assert(order.indexOf('EVENT_OPEN')>synced);assert(order.indexOf('CLIENT')>synced);}
  }finally{await f.close();}}
 });
