@@ -1786,19 +1786,19 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T07:07:20+08:00",
+    "asOf": "2026-11-11T07:19:05+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "ba5e29ad7b9baa573e336fe3316bc66ce17c543b",
+    "publicStatusCommit": "d1e7966753d8da37c06c8830bb6838c14264a170",
     "currentOwners": {
-      "T45": "Original carrier writer; fixed new maintenance06 producer, restore and ordinary05 predecessor; then APP caller and material binding.",
+      "T45": "Fix QB cleanup F01/F02 on c22b0bff and prepare no-network same-image Linux run. Then fixed APP05 caller and actual binding.",
       "D1": "Fixed maintenance06 commit 4602dd0965c202016cf89e1be7bab6c9e82e97da, three affected test files serial 55 pass. Await integrated Linux evidence.",
-      "QB": "Review only the fixed next affected D1/T45 delta, not prior accepted work.",
-      "D2": "Building one impacted APP candidate from exact 4602dd09. Existing 1b8 artifact retained.",
+      "QB": "c22b0bff/4602dd09 source review NEED_FIX_SOURCE_CLEANUP. Recheck F01/F02 only after fixed follow-up.",
+      "D2": "One exact 4602dd09 APP rebuild and readback complete. Upload not run. Existing 1b8 artifact retained.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
@@ -44227,7 +44227,30 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 fixes and pins the integrated carrier and proves actual Linux UID 10001 behavior. D2 builds the affected APP candidate in parallel. QB reviews the fixed delta before any R3 execution.",
+    "next": "T45 fixes F01 and F02 and prepares the same-image no-network check. QB rechecks the affected cleanup paths. New APP is built locally. R3 remains stopped.",
+    "maintenance06Carrier": {
+      "commit": "c22b0bff788e5bfead69a543e5cba10023372634",
+      "tree": "7046c02ff7984c778e03475c1a0b171ea255a7b7",
+      "manifestSha256": "ad811f43019f435ba9cd65c7144cba911b09fda2de5e1cf5e81c810ebc754d4f",
+      "localChecks": 29,
+      "independentResult": "NEED_FIX_SOURCE_CLEANUP",
+      "independentResultSha256": "fc97ebd0dded15877067bd6e551b22b1967f859b4fc6ea1aece50c8ec72a9a99",
+      "F01": "Reproduced: known CID stop timeout skips native154-cleanup.json.",
+      "F02": "Verify real outer deadline. Startup waits may use 300s, plus 65+10s cleanup and readback.",
+      "actualLinux": "PENDING",
+      "serverJobsSubmitted": 0
+    },
+    "maintenance06App": {
+      "commit": "4602dd0965c202016cf89e1be7bab6c9e82e97da",
+      "buildId": "erp-4602dd0965c2-r3-admin154-maintenance06-20261111",
+      "archiveBytes": 3383005,
+      "archiveSha256": "a4c356f734db445ec13b40a0170a6fb61e47ac9f8b95b037be1c22264ddaa4a2",
+      "releaseManifestSha256": "e2f083ba0a4be531adf7302969b0a84e9d707a98a706363fc127f3efbb388e34",
+      "verifiedMembers": 458,
+      "sourceRemoteVerified": true,
+      "uploaded": false,
+      "cliReadyz": "NOT_RUN"
+    },
     "maintenance06Driver": {
       "commit": "4602dd0965c202016cf89e1be7bab6c9e82e97da",
       "tree": "717c86b88efb7b56b45624cfed071ed1c191493d",
