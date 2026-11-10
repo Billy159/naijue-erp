@@ -288,8 +288,12 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
   'runtimeRole','runtimeLoginValidUntil'])&&(service||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
+ const normalContainerName=proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
+  ? 't45-fresh35-first-production-20261110-r3-service-01'
+  : proof.requestKey==='t45-first-r3-native-service-start-20261110-02'
+  ? 't45-fresh35-first-production-20261110-r3-service-02':null;
  const provenanceMatches=normal
-  ? proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
+  ? normalContainerName!==null
     &&digest(proof.serviceReceiptSha256)&&proof.authorizationSha256!==record.authorizationSha256
     &&ordinary.runtimeLoginValidUntil===null&&proof.runtimeLoginValidUntil===null
   : initial
@@ -321,7 +325,7 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
  if(normal)need(shared.creationOperationId===proof.requestKey,'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
  const container=shared.container;
  need(exactImportKeys(container,['id','name','imageId','startedAt','hostPid','startTicks','networkNamespace','frontEndpoint'])
-  &&digest(container.id)&&container.name===(normal?'t45-fresh35-first-production-20261110-r3-service-01':
+  &&digest(container.id)&&container.name===(normal?normalContainerName:
    initial?'t45-fresh35-first-production-20261110-r3':'t45-fresh35-first-production-20261110-r3-recovery')
   &&typeof container.imageId==='string'&&/^sha256:[a-f0-9]{64}$/.test(container.imageId)
   &&positive(container.hostPid)&&container.hostPid>1&&decimal(container.startTicks)
