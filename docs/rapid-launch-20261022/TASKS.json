@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T06:44:53+08:00",
-  "stage": "R3_STOPPED_EXACT_RESTORED_ORDINARY_IDENTITY_DELTA_IN_PROGRESS",
-  "lastVerifiedRemoteCommit": "b52f0a3123713bc2229b60c59f6563723933196e",
+  "updatedAt": "2026-11-11T06:57:43+08:00",
+  "stage": "R3_STOPPED_SUCCESSOR06_SOURCE_AND_05_APP_BINDING_PENDING",
+  "lastVerifiedRemoteCommit": "251090b8ff3012837228029bedcaec46a8e8b34a",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,19 +1786,19 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T06:44:53+08:00",
+    "asOf": "2026-11-11T06:57:43+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "9e193b71013f43056121484cb61e580311746a3c",
+    "publicStatusCommit": "45a17aff35a9b715a7ccd2aae81626c253c7ccff",
     "currentOwners": {
-      "T45": "Original carrier writer; retain protected root authority/audit and exact ordinary UID mount and diagnostics seam; no live operation.",
-      "D1": "Original driver/leaf writer; same ordinary runtime identity in DESCRIBE, pre-connect UPGRADE and admin context; synthetic delta checks.",
+      "T45": "Original carrier writer; fixed new maintenance06 producer, restore and ordinary05 predecessor; then APP caller and material binding.",
+      "D1": "Original driver/leaf and exact maintenance06 consumer; synthetic preconnect/custody tests and source pin reconciliation.",
       "QB": "Review only the fixed next affected D1/T45 delta, not prior accepted work.",
-      "D2": "Fixed 1b8d24b4 build and upload done; reuse without rebuild.",
+      "D2": "Existing 1b8 artifact retained. Build one impacted candidate only when new exact APP member set is fixed.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
@@ -44227,7 +44227,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "D1/T45 minimal ordinary runtime and protected-root seam, exact synthetic checks then QB; no live replay.",
+    "next": "D1/T45 fix and pin maintenance06, real non-root synthetic checks, QB delta review, then T45 once.",
     "activeWindow": false,
     "sql36Run": false,
     "appStarted": false,
@@ -44260,6 +44260,18 @@
       "status": "ACTUAL_EXACT_RESTORATION_DATABASE_STOPPED",
       "jobSha256": "d22436cdc943d2debda0bbb91434c2d741a54610a686a8defb6c797161007191",
       "resultSha256": "38f60d89d48d3e676c0266be331a897acf72858557fe8a7c5d2923335fe8adcb"
+    },
+    "plannedSuccessor": {
+      "maintenanceRequestKey": "t45-first-r3-native-service-start-20261111-06",
+      "containerName": "t45-fresh35-first-production-20261110-r3-service-06",
+      "predecessorCarrier": "t45-first-r3-native-service-start-20261111-04-02",
+      "predecessorRestore": "t45-r3-admin154-maintenance-auth-restore-20261111-02",
+      "ordinaryRequestKey": "t45-first-r3-native-service-start-20261111-05",
+      "state": "SOURCE_ONLY_NO_LIVE_PROOF"
+    },
+    "appCaller": {
+      "currentFixedCaller": "DA7_CURRENT03_DIAGNOSTIC",
+      "next": "T45 rebind once to fixed successor APP and real ordinary05 proof"
     }
   }
 }
