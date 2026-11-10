@@ -226,7 +226,7 @@ test('normal03 admits the exact November 11 request with its November 10 carrier
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
 });
 
-test('normal03 rejects false dates, crossed 01/02/03 pairs and every unapproved05',async()=>{
+test('normal03 rejects false dates, crossed 01/02/03 pairs and every unapproved06',async()=>{
  const old=n=>'t45-first-r3-native-service-start-20261110-'+n,newKey=n=>'t45-first-r3-native-service-start-20261111-'+n;
  for(const [request,creation,carrier,code] of [
   [old('03'),old('03'),'03','PROVENANCE_DIFFERS'],
@@ -234,7 +234,7 @@ test('normal03 rejects false dates, crossed 01/02/03 pairs and every unapproved0
   [newKey('03'),old('01'),'03','NAMESPACE_DIFFERS'],[newKey('03'),old('02'),'03','NAMESPACE_DIFFERS'],
   [newKey('03'),newKey('03'),'01','CARRIER_REQUIRED'],[newKey('03'),newKey('03'),'02','CARRIER_REQUIRED'],
   [old('01'),old('01'),'03','CARRIER_REQUIRED'],[old('02'),old('02'),'03','CARRIER_REQUIRED'],
-  [newKey('05'),newKey('05'),'05','PROVENANCE_DIFFERS'],
+  [newKey('06'),newKey('06'),'06','PROVENANCE_DIFFERS'],
  ]){
   const m=await model({formal:true,normal:true});
   try{
@@ -256,14 +256,40 @@ test('normal04 admits only its exact November 11 request with the preserved Nove
   await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
 });
-test('normal04 rejects false dates, crossed service pairs and all unapproved05 before pool checkout',async()=>{
+test('normal04 rejects false dates, crossed service pairs and all unapproved06 before pool checkout',async()=>{
  const key=n=>'t45-first-r3-native-service-start-20261111-'+n,old=n=>'t45-first-r3-native-service-start-20261110-'+n;
  for(const [request,creation,carrier,code] of [
   [old('04'),old('04'),'04','PROVENANCE_DIFFERS'],[key('04'),key('03'),'04','NAMESPACE_DIFFERS'],
   [key('04'),old('01'),'04','NAMESPACE_DIFFERS'],[key('04'),old('02'),'04','NAMESPACE_DIFFERS'],
   [key('04'),key('04'),'03','CARRIER_REQUIRED'],[key('04'),key('04'),'01','CARRIER_REQUIRED'],[key('04'),key('04'),'02','CARRIER_REQUIRED'],
   [key('03'),key('03'),'04','CARRIER_REQUIRED'],[old('01'),old('01'),'04','CARRIER_REQUIRED'],[old('02'),old('02'),'04','CARRIER_REQUIRED'],
-  [key('05'),key('05'),'05','PROVENANCE_DIFFERS'],
+  [key('06'),key('06'),'06','PROVENANCE_DIFFERS'],
+ ]){
+  const m=await model({formal:true,normal:true});try{
+   m.proof.requestKey=request;m.proof.sharedPostgresNamespace.creationOperationId=creation;m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+carrier;
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof()),new RegExp(code));assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
+test('normal05 admits only its exact November 11 request with the preserved November 10 carrier date',async()=>{
+ const m=await model({formal:true,normal:true});let cap;
+ try{
+  m.proof.requestKey='t45-first-r3-native-service-start-20261111-05';m.proof.sharedPostgresNamespace.creationOperationId=m.proof.requestKey;
+  m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-05';
+  cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof());
+  assert.equal(m.clients.length,1);assert.deepEqual(m.identityParams,[null,null]);
+  await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+test('normal05 rejects false dates, crossed service pairs and all unapproved06 before pool checkout',async()=>{
+ const key=n=>'t45-first-r3-native-service-start-20261111-'+n,old=n=>'t45-first-r3-native-service-start-20261110-'+n;
+ for(const [request,creation,carrier,code] of [
+  [old('05'),old('05'),'05','PROVENANCE_DIFFERS'],[key('05'),key('03'),'05','NAMESPACE_DIFFERS'],[key('05'),key('04'),'05','NAMESPACE_DIFFERS'],
+  [key('05'),old('01'),'05','NAMESPACE_DIFFERS'],[key('05'),old('02'),'05','NAMESPACE_DIFFERS'],
+  [key('05'),key('05'),'03','CARRIER_REQUIRED'],[key('05'),key('05'),'04','CARRIER_REQUIRED'],[key('05'),key('05'),'01','CARRIER_REQUIRED'],[key('05'),key('05'),'02','CARRIER_REQUIRED'],
+  [key('03'),key('03'),'05','CARRIER_REQUIRED'],[key('04'),key('04'),'05','CARRIER_REQUIRED'],[old('01'),old('01'),'05','CARRIER_REQUIRED'],[old('02'),old('02'),'05','CARRIER_REQUIRED'],
+  [key('06'),key('06'),'06','PROVENANCE_DIFFERS'],
  ]){
   const m=await model({formal:true,normal:true});try{
    m.proof.requestKey=request;m.proof.sharedPostgresNamespace.creationOperationId=creation;m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+carrier;

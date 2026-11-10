@@ -433,7 +433,9 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   : proof.requestKey==='t45-first-r3-native-service-start-20261111-03'
   ? 't45-fresh35-first-production-20261110-r3-service-03'
   : proof.requestKey==='t45-first-r3-native-service-start-20261111-04'
-  ? 't45-fresh35-first-production-20261110-r3-service-04':null;
+  ? 't45-fresh35-first-production-20261110-r3-service-04'
+  : proof.requestKey==='t45-first-r3-native-service-start-20261111-05'
+  ? 't45-fresh35-first-production-20261110-r3-service-05':null;
  const provenanceMatches=normal
   ? normalContainerName!==null
     &&digest(proof.serviceReceiptSha256)&&proof.authorizationSha256!==record.authorizationSha256
