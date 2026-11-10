@@ -42428,13 +42428,19 @@
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
               "firstNativeInstallConfirmation": {
-                "status": "USER_APPROVED_R2_EXACT_EMPTY_INSTALL_T45_ADMISSION_IN_PROGRESS",
+                "status": "USER_APPROVED_R2_CURRENT_ADMISSION_PASS_FINAL_TOOL_NOT_STAGED",
                 "owner": "T45",
                 "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
                 "revisedScopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.r2.md",
                 "revisedScopeSHA256": "32c895c5593d7d96a0819912c86d649975a14090da07c54c8a736d8ef7ddbcad",
                 "userDecision": "Direct answer '确认 A 和 B' to request_user_input_async call_1e418198c37e478ba6e7b4908a84a022. A approves the exact empty R1 native install only, with the verified same-version prerequisites and r2 closeout. No data import, retirement or public switch.",
+                "approvedAFinalReadOnly": {
+                  "job": "t45-first-r1-native-a-final-preflight-readonly-20261110-01",
+                  "jobSHA256": "cad8cf2c62f1d950c19908c6385ab795ea7ceaa7f6aded42c9c4702b3bb82373",
+                  "phaseSHA256": "f2aa6eec3cfd8fbe06195b30f011d0b6ce7dcb1d9ff9f959d9f9f27347eb7b17",
+                  "check": "08:10:49 +08, COMPLETED/0, 0.218 s. C recomputed both actual files. 31,330,955,264 B on the exact state volume and 15,243,304,960 B available memory, affinity 4. Exact empty front and alias, target container/56791 absent, all seven planned keys absent, Linux image matches. Original 75144 tool READY leaves present, 1b37415c leaves absent. No network/container mutations or PG connection. Final successor tool READY and compatible STOP window still required."
+                },
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
                 "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
                 "planSHA256": "639c90678a3e8e1c55e8d845d240a79dfcea1e3cb6ceb54d5464017e9f74053a",
@@ -42801,8 +42807,16 @@
               }
             },
             "firstWriterAuthorityBinding": {
-              "status": "USER_APPROVED_SOURCE_ONLY_D1_AND_T45_IMPLEMENTING",
+              "status": "USER_APPROVED_D1_SOURCE_QB_PASS_PRODUCER_AND_TOOL_PENDING",
               "userDecision": "Direct answer '确认 A 和 B' to request_user_input_async call_1e418198c37e478ba6e7b4908a84a022. B approves only the exact originalImportAuthoritySha256 source/input-contract change. D1 owns Node, T45 owns the original carrier; both requested gpt-6.1-sol/high. No import authority is issued.",
+              "nodeCandidate": {
+                "commit": "94152ed1c61e508255e0f20cc35e23d00253f635",
+                "tree": "f441bfabece6d2bb9673055b0c3bdd7dccf86ce1",
+                "sourceSetSHA256": "f9d7b100b628ecf5072a208bc0f28ed93b987a1f9150dc54398c36f785774054",
+                "reportSHA256": "815f416a649b45723c78201c4af755b075f1a6e0b80926b99e777bc8bc755bfe",
+                "patchSHA256": "abf38a91ae8d6a682e24335d19014e9343a8fd69e0b41e0a41be34f71ccd5342",
+                "check": "D1 27/27 focused local tests, no skips; original QB independently ran 7/7 affected model tests. Raw-byte equality precedes parsing and use in both host opens; post-commit mismatch keeps original COMMITTED or ALREADY_COMMITTED and independently reports VERIFICATION_UNKNOWN in the original CLI model. C confirmed exact tree and artifact digests. D2 packs one local 361-member successor, T45 retains sole producer owner, QB will verify only the new handoff pair. No Linux load, live writer, authority issuance or database check."
+              },
               "finding": "T45 490a311e and D1 1b37415c show the exact closed execution description and existing 8192 B protected descriptor bind original parameters but have no externally frozen batch-authority raw SHA for V2 EXECUTE. The status path already uses originalImportAuthoritySha256. The current V2 loader validates path, stable bytes, binding fields and window, then records the first bytes' own digest. Those checks cannot establish equality to the issuer's earlier authorized bytes.",
               "proposedDelta": "For the authenticated new R1 V2 EXECUTE only, require originalImportAuthoritySha256 in the existing same-job external execution description. The existing external issuer takes the SHA-256 of the authorized original batch-authority bytes and binds it to the original request and original operation-parameter SHA. T45 verifies the external description and carries that SHA over the same protected descriptor. D1 compares the first read's raw bytes with the pin before accepting write authority, and repeats the match on the separate verification open. Initial missing or different bytes reject before the first write. A post-commit mismatch keeps COMMITTED or ALREADY_COMMITTED and reports VERIFICATION_UNKNOWN for the original-key recovery path.",
               "scope": "Source and existing input-contract delta only. Existing batch authority payload, issuer, role grants, database schema, original request key, time windows, and V1/PREPARE/INSPECT/READONLY_STATUS contracts stay as-is. No signing, upload, database action, or cutover authorized by this source decision. T45 owns the carrier, D1 the Node consumer, QB the affected checks. Pin one final package after closure."
