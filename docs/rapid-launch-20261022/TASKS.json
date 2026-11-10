@@ -42487,7 +42487,7 @@
                   "next": "T45 confirmed the original carrier cannot resume this stopped and uninstalled R1 through its existing entry points. Original startup rejects the expired window and, with a fresh window, the existing container name. Entry and install require the original live carrier. Same-data recovery requires the absent durable service, installation and STOP evidence. Preserve all R1 state and receipts. T45 checks only the proposed empty successor through the existing read-only management route."
                 },
                 "proposedEmptySuccessor": {
-                  "status": "READ_ONLY_PREFLIGHT_COMPLETED_FIXED_SUCCESSOR_SOURCE_PENDING_NO_CREATION_APPROVAL",
+                  "status": "READ_ONLY_ADMISSION_COMPLETE_FIXED_SOURCE_QB_NEED_FIX_NO_CREATION_APPROVAL",
                   "database": "erp_fresh35_20261110_r2",
                   "container": "t45-fresh35-first-production-20261110-r2",
                   "root": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r2",
@@ -42503,6 +42503,22 @@
                     "check": "At 11:19:53 CST COMPLETED/0, 0.167 s. Absent new roots and containers, port 56791 and new alias free, fixed same bridge zero endpoints, exact Linux amd64 image, 4 CPUs and 15,201,026,048 B MemAvailable. Same-volume free 31,268,229,120 B. With 64 MiB provisional incremental ceiling and all large assets bound in place, net 31,201,120,256 B, 1,136,349,184 B above 28 GiB. Actual incremental staging and new PG catalog untested. At 11:22:05 unit inactive and PID zero. C recomputed all three receipt hashes and checklist. No target creation, PG or permissions."
                   },
                   "writerSeams": "D1 confirmed original Node describe/install accepts the pinned protected V2 target. Current APP f3856263 only accepts the stopped R1 database and workspace, and exact B writer pins in the installed-window loader, retained-backends consumer and stream CLI require a distinct R2 receipt/report binding. D1 prepares only exact scope source changes and targeted checks. T45 fixes the new carrier and plan, supplies exact receipt/report paths and keys, and owns Python release and backup. QB reviews the fixed deltas. No actual authority issued.",
+                  "firstInstallCarrier": {
+                    "commit": "7e06b42d4a4638759f266d47a6c2b76bb791bd0c",
+                    "tree": "836f3b8ac3d622a230ad4dfdc56408ae70cab932",
+                    "parent": "09a7f67125622e0dbe56e30c4583c265ba9a985e",
+                    "readySHA256": "efffe0ad81709a85a4c470178800e379fa344b6ad8718663ca17876e8cbe9472",
+                    "planSHA256": "26db1bfc207366330476fbf7e0eda9fbbc37e7777e1d01a25158e5a288cfcd10",
+                    "check": "C verified five exact Git execution leaves and seven local inputs. T45 author 11 capacity and 24 lifecycle tests, budget/no replay checks and native/STOP models. Original QB three local independent scope checks passed. QB reproduced a time-of-check gap: entering 100 ms before T1s minus 270 seconds, the volume read crosses the line by 100 ms and the original consumer-visible install authority is still published. NEED_FIX. T45 to recheck the same limit after blocking validation at the protected publication boundary and prove zero visible writes on overrun. Preserve existing authority and STOP policy. No staging, server run or actual approval."
+                  },
+                  "r2ApplicationAndWriterSource": {
+                    "ordinaryCommit": "db624feafd98568b16f91e02a0604ab6e57a3528",
+                    "ordinaryTree": "3093863df87a578fbc0cbc72aef31d89a90e3413",
+                    "ordinaryCheck": "C checked exact object and diff. D1 17/17 synthetic and targeted APP launch typecheck. QB 8/8 local, including missing new-generation proof and group/other writable or symlink proof refusals before connection. Actual T45 producer, read-only mount and PG/APP unverified.",
+                    "writerCommit": "9a768a9cca533be317892ad638463b66f6be2635",
+                    "writerTree": "1bf57831ea16198901a3f2a71f25ba3f21438d93",
+                    "writerCheck": "D1 24/24 targeted synthetic, and exact R2 catalog/model program. Wider host suite has eight known preexisting fixture omissions of assertInstalledRealBinding. No new data, server or SQL. QB only preserved the B review breakpoint while prioritizing first-install. T45 exact REAL-side producer and new archive pin pending."
+                  },
                   "handoff": "Previous described-to-pre-submit took 628 s against 512 s available. Freeze static inputs before T0 and keep C and T45 on the same live handoff. Aim to transfer the checked third authority within 60 s of the actual described receipt, subject to the original hard 20-minute install cap and STOP handoff cutoff. Never pre-sign unknown target or program fields. Stop rather than consume the reserve if durable installation facts are late. Source-only release work proceeds independently."
                 },
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
