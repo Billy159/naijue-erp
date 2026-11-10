@@ -1786,19 +1786,19 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T06:57:43+08:00",
+    "asOf": "2026-11-11T07:07:20+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "45a17aff35a9b715a7ccd2aae81626c253c7ccff",
+    "publicStatusCommit": "ba5e29ad7b9baa573e336fe3316bc66ce17c543b",
     "currentOwners": {
       "T45": "Original carrier writer; fixed new maintenance06 producer, restore and ordinary05 predecessor; then APP caller and material binding.",
-      "D1": "Original driver/leaf and exact maintenance06 consumer; synthetic preconnect/custody tests and source pin reconciliation.",
+      "D1": "Fixed maintenance06 commit 4602dd0965c202016cf89e1be7bab6c9e82e97da, three affected test files serial 55 pass. Await integrated Linux evidence.",
       "QB": "Review only the fixed next affected D1/T45 delta, not prior accepted work.",
-      "D2": "Existing 1b8 artifact retained. Build one impacted candidate only when new exact APP member set is fixed.",
+      "D2": "Building one impacted APP candidate from exact 4602dd09. Existing 1b8 artifact retained.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
@@ -44227,7 +44227,17 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "D1/T45 fix and pin maintenance06, real non-root synthetic checks, QB delta review, then T45 once.",
+    "next": "T45 fixes and pins the integrated carrier and proves actual Linux UID 10001 behavior. D2 builds the affected APP candidate in parallel. QB reviews the fixed delta before any R3 execution.",
+    "maintenance06Driver": {
+      "commit": "4602dd0965c202016cf89e1be7bab6c9e82e97da",
+      "tree": "717c86b88efb7b56b45624cfed071ed1c191493d",
+      "driverSha256": "70059fa229dac6b169ee94e8cbd86e094ad1ea649a8d7d74eb9603784756c1ac",
+      "leafSha256": "2285d782a38aca86b2be0494ea4bf5d8725b41f5e065a0a060b876329fd626c9",
+      "appSourceSetSha256": "bbab2a72bae46b48f4644df38cf2bb9de4483cb1e57c5f454bfc07cc18d75e66",
+      "catalogSpecSha256": "ee4d7c7ad69c3fbd318af0f074a48d27f452be6709bbcf71139deae768e0d669",
+      "observationSqlSha256": "802231844d453d2a2827f4695d89739c6c8c8fdc6fef6a275802b3c8bd0df6ed",
+      "validation": "D1 serial 55 local checks pass, C verified four committed file hashes. D2 building. Actual Linux, PostgreSQL and QB review pending."
+    },
     "activeWindow": false,
     "sql36Run": false,
     "appStarted": false,
