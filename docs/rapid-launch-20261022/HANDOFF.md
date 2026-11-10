@@ -4252,3 +4252,14 @@ C沿已批正式运行证明“每次启动核当前代次”、同target限时�
 原D1 normal V2两叶固定 c73c104e6d9d0d20442b76acb23f87c4a843559d，作者14项通过；原QB独立限定复核同毫秒微秒先后、旧授权、错误job/容器/operation及null期限/finite容量等分支，无关键阻塞。原initial/recovery守卫、不可变安装源集6c49和record4ed保持。D1归档a3cecd49…，新APP源集127efa6c…/214，host8152a707…。原D2在QB后一次build/pack实际退出0（11.9844/9.1174秒），release0b918267…/3359787B，manifest58ff500c…，RESULT322b50e3…。C核RESULT/READY、四制品原字节hash及包内消费者46756B一致，不重复整Web或105包检查。与作者终态交叉的接续消息已明确去重，新增构建0。T45独占服务器，独立无PG离线npm安装/fastify-pg-sharp真实加载仍准备，正常sameR3 producer及认证引用并行；尚无新server/APP启动或登录业务通过。
 
 C本地三记录3f5210bf、361e7578、d9980bd045ddae160c406377c1f28b0d0236aa57经同仓库GitHub接口逐blob/tree/commit原OID完全匹配后非强推，远端分支codex/erp-0448z-integration-20261105精确回读d9980bd0；未改origin或其他分支。公共STATUS v18已23:24:04发布，commit8619f5a88f12ed996ac0223e50093e9c18f21fd5，文件SHA11d7edfdd24acb6174aeeb89bf66f603ebd9f0e59b5a0c062da21dbddbba4fe3，明确R2有效A/B及清理→权限物化→R3实际35表安装和安全停库闭环，与APP/业务/上线未验分开。当前无新增用户确认；下一责任人T45，场外材料完成不承诺实际启动时刻。保留11月2日旧资料但不重新导入；未新建下一套库。
+
+
+## 2026-11-11 00:08 — Linux实装通过，正常启动与首次账号前置并行
+
+原缓存4554/15,064,708B已真实READY，原策略cd2已恢复。原7a0f五分钟授权因交接耗时而不足220秒余量，未提交且原件不改。C采纳QB窄审d530/04的新外部30分钟协调窗口d8063ece，实际container180+5/job240与原220/180余量、锁和清理不变；未换作业身份。唯一 t45-r3-e894-linux-deps-check-20261110-01 于23:52:04.514至23:52:30.259实际COMPLETED/0、25.740699秒。C核9叶实际投递字节、terminal76014991、result46518bcb及总回执03bad6ca。Node24.21/npm11.9/glibc2.41、锁c099/package df13不变；npm/load/container退出0，fastify5.12.5/pg8.23.1/sharp0.35.5与2x2 PNG往返、两native摘要通过。0PG/APP/build/监听。固定worker准确清理工具容器和本次可写cache，保留同锁payload/node_modules供c73复用；附加只读观察遇通道return1，首因UNKNOWN，不重试/升权，不据此声称新R3状态。
+
+00:00:15.973同R3元数据作业COMPLETED/0（0.067秒），terminalb2f3f4b2/resultc1778c1e：原六认证槽均缺、已知credentials空、ordinary-private缺，record4ed和PGDATA13502421/61035/0700匹配；0秘密内容/SQL/PG/容器变动，不扩大为全盘无凭据证明。C依用户新委托至11-11 12:00，准许T45实施并交QB窄审password-only最小源码机制：准确同库/同runtime角色、原非root PG17 single-user，0新增角色/grant/HBA/trust/期限/业务行/安装记录变化。新秘密仅本键私有独占文件和管道，不进argv/输出/错误语句日志/Git；未知提交仅原键和保留秘密恢复。尚未放行真实密码写或启动，待固定源、准确输入和新现场绑定。T45正常launcher/proof继续，不新建库、不重装。
+
+D1首次ADMIN入口建议仍SOURCE_ONLY：原SQL可做零业务完整闭包，现REAL路径的库存对齐/六方案守卫不应伪造或绕过。C要求先核这份技术闭包是否消耗将来真实导入的一次性资格，不采用只让空账号成功却阻断最终目标的方案；未实施或实际写入。人类已委托主控至2026-11-11 12:00自主决策，T45保持唯一服务器执行者；未知事实、权限与安全边界仍如实处理。
+
+STATUS v20已23:59:33发布并原字节回读，commit bd9e30f8f377ccc7fb432628708e896a083af970，文件SHA d53b4f8c415fa4ae684d56b5b8f5d7df71b7b5c563d7489e0aee41960d7bb7ef。当前真实安装及依赖通过；APP、业务账号与核心业务、备份恢复、正式切换仍未验。三份接续记录沿原分支维护，没有新报告体系。
