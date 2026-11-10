@@ -42794,7 +42794,27 @@
               "check": "T45 reported 32 release and ten namespace models. C recomputed the exact commit and four handoff/delta file hashes. QB adopted exact CLI/RO mount and original baseline proof route, independently passed five relevant cases and real local tar evidence. Backup successor is proof-only on old R1/APP576 execution pins. QB reproduced a real local configuration race: after outer raw and ctime validation, same-length changed business bytes with restored mtime were read and written back together with capacityLaunch before the final guard rejected. T45 owns the one actual-write FD/raw/identity fix and negative regression. No helper registration, Linux, PG, backup, restore or deployment.",
               "exactAppNativeSourceSet": "d18701505f7e90c7736514ad76d08df5f620578b4d4ccc39fd138e954f8b67e3",
               "sourceSetReconciliationSHA256": "06cffc053d3b573746d3329a99cd47e1d84bd918c29b08552597ebfffa6c3063",
-              "sourceSetCheck": "D1/T45 matched original build export and native35Closure on 5,921 fixed Git items and 214 exact APP leaves for db624fea. Prior 0a073bfc was a pre-commit host-session intermediate, reproduced by reversing only the last STOP/restart key, recovery container and alias checks. Original historical 8694 remains distinct. C recomputed exact receipt. Original D2 checks independent packaging and builds only the exact local app candidate if compatible. Actual deploy/review registration pending."
+              "sourceSetCheck": "D1/T45 matched original build export and native35Closure on 5,921 fixed Git items and 214 exact APP leaves for db624fea. Prior 0a073bfc was a pre-commit host-session intermediate, reproduced by reversing only the last STOP/restart key, recovery container and alias checks. Original historical 8694 remains distinct. C recomputed exact receipt. Actual deploy/review registration pending.",
+              "configurationWriteSuccessor": {
+                "status": "QB_TARGETED_PASS_LOCAL_NO_LIVE_REGISTRATION",
+                "commit": "9b870ad1b2453bd53ab111743b164873cc8ab345",
+                "tree": "0456cc8f3713aaf55fc35213c98a40719a7bfbae",
+                "readySHA256": "1b59f104807d0ff63828f0ecedd5d3a5706e04c1fa6a74dc66c004b38e400b03",
+                "deltaSHA256": "2922a9be78d1fbb23bc043f89375d7eb3793a88f0e9b4a03838d738d9ad86000",
+                "check": "T45 33 first-install, ten namespace and 49 base capacity tests pass locally. One old namespace mount fixture remains out of scope. QB 1/1 plus real local early and late drift and normal writes verified the same open FD, current pathname identity, raw hash and ctime. Neither drift overwrites runtime or opens FIFO. A late change retains the profile as evidence, and the modeled original stop targets only this CID and preserves the failed key. Boot and backup remain unchanged. No live helper registration or production execution."
+              },
+              "exactAppArchive": {
+                "status": "LOCAL_BUILD_PACK_INDEPENDENT_BYTE_READBACK_PASS",
+                "commit": "db624feafd98568b16f91e02a0604ab6e57a3528",
+                "tree": "3093863df87a578fbc0cbc72aef31d89a90e3413",
+                "buildId": "erp-db624feafd98-r2-current-service-20261110",
+                "archiveBytes": 3361591,
+                "archiveSHA256": "3461a054cd42b96fedefd5f68988ff51e9ca9b27679386a72fa11d371de455a5",
+                "manifestSHA256": "ae25712d5ad1b4ff87a496d8754a9c6027326928f4cdb13b020dd741c734ebca",
+                "readySHA256": "b8ef5393b17cfa0b12e113584963cc5b9e942f04152eceb91bd9c444cee205ff",
+                "check": "D2 one local build and pack using fixed source and unchanged Web inputs. C recalculated archive and manifest hashes, checked path uniqueness and read all 452 listed member sizes and SHA256 plus the embedded manifest. The APP archive is independent of T45 deployment and backup code. New outer pairing, actual Linux startup, PG, restore and public release remain unverified."
+              },
+              "next": "Original T45 resumes exact R2 REAL source pairing, first inspecting why old nonroot ledger chmod conflicts with in-place read-only material reuse. Continue only within approved source contract. Pair the fixed APP archive with the outer release material offline. New R2 initial install remains awaiting its exact user decision."
             },
             "scope": "New R1 first public deployment and later controlled replacement of its process only. Add one firstInstall.currentProductionService {path,sha256} reference and consume the same original bytes in the private application input. T45 produces exact same installed PGDATA identity, source/catalog pins, fresh SID/OID/epoch/CID/namespace and process facts, ordinary role and measured login expiration, finite service deadline, original approval and predecessor closeout. Require the trusted proof when its branch is selected, verify the live target and retain original installation evidence; no forged production or restore origin.",
             "continuity": "For the same fixed release, the authorized replacement is a new exact launch instance, after the previous application is proven drained and stopped. Reuse existing private final-input and capacity producer with a fresh finite observed process window and unchanged capacity controls, then private readiness and controlled opening. Keep one writer. Reject missing proof, wrong generation/role/source, reused instance or process, and expiry. No automatic renewal, host restart, or extension of import credentials implied. Current ordinary login validity and real later credential changes are independently approved by exact target and cutoff; existing ACL and RLS stay unchanged.",
