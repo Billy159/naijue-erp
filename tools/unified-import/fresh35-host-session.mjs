@@ -255,6 +255,11 @@ function ordinaryUtcMillis(value,pattern){
   'ORDINARY_CURRENT_SERVICE_UTC_REQUIRED');
  return at;
 }
+function ordinaryPgMicroseconds(value){
+ const at=ordinaryUtcMillis(value,/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00$/);
+ const fraction=value.match(/\.(\d{1,6})\+00$/)?.[1]??'';
+ return BigInt(Math.floor(at/1000))*1000000n+BigInt(fraction.padEnd(6,'0'));
+}
 async function loadOrdinaryCurrentService(input,target,record,snapshot){
  const positive=value=>Number.isSafeInteger(value)&&value>0;
  const decimal=value=>typeof value==='string'&&/^[1-9][0-9]*$/.test(value);
@@ -273,15 +278,21 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'ORDINARY_CURRENT_SERVICE_FIRST_R3_REQUIRED');
  const {sha256,capacityExpiresAt}=input;
  const {identity,value:proof}=await readOrdinaryCurrentService(sha256);
- // First installation binds the original epoch; recovery retains its distinct proof shape.
+ // First installation binds the original epoch; current service V2 has a new epoch.
  const initial=proof.format==='FRESH35_INITIAL_PRODUCTION_SERVICE_V1';
+ const normal=proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V2';
+ const service=initial||normal;
  need(exactImportKeys(proof,['format','requestKey','authorizationSha256','checkedAt',
   'installationRecordSha256','targetSha256','sourceSetSha256',
-  ...(initial?['serviceReceiptSha256']:['oldStopRequestKey','previousStopReceiptSha256','previousStopTerminalSha256']),
+  ...(service?['serviceReceiptSha256']:['oldStopRequestKey','previousStopReceiptSha256','previousStopTerminalSha256']),
   'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
-  'runtimeRole','runtimeLoginValidUntil'])&&(initial||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
+  'runtimeRole','runtimeLoginValidUntil'])&&(service||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
- const provenanceMatches=initial
+ const provenanceMatches=normal
+  ? proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
+    &&digest(proof.serviceReceiptSha256)&&proof.authorizationSha256!==record.authorizationSha256
+    &&ordinary.runtimeLoginValidUntil===null&&proof.runtimeLoginValidUntil===null
+  : initial
   ? typeof proof.requestKey==='string'&&/^t45-first-r3-native-facts-installed-[0-9]{8}-[0-9]{2}$/.test(proof.requestKey)
     &&digest(proof.serviceReceiptSha256)&&proof.authorizationSha256===record.authorizationSha256
     &&(ordinary.runtimeLoginValidUntil===null||proof.runtimeLoginValidUntil===ordinary.runtimeLoginValidUntil)
@@ -296,6 +307,7 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
  const {dataDirectoryIdentity:directory,physical,sharedPostgresNamespace:shared,postmaster,guardian}=proof;
  need(proof.dataDirectory===resolve(proposal.workspaceDirectory,'data')
   &&exactImportKeys(directory,['device','inode','uid','gid','mode'])&&positive(directory.device)&&positive(directory.inode)
+  &&(!normal||directory.device===66304&&directory.inode===13502421)
   &&directory.uid===61035&&directory.gid===61035&&directory.mode===0o700,
   'ORDINARY_CURRENT_SERVICE_PGDATA_DIFFERS');
  const processProof=entry=>exactImportKeys(entry,['pid','starttime','exe'])
@@ -306,9 +318,11 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
   'installationRecordSha256','serviceLeaseExpiresAt'])&&shared.format==='OWNED_POSTGRES_SHARED_NAMESPACE_V1'
   &&jobKey(shared.creationOperationId)&&['installationRecordSha256','targetSha256','sourceSetSha256'].every(k=>shared[k]===proof[k]),
   'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
+ if(normal)need(shared.creationOperationId===proof.requestKey,'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
  const container=shared.container;
  need(exactImportKeys(container,['id','name','imageId','startedAt','hostPid','startTicks','networkNamespace','frontEndpoint'])
-  &&digest(container.id)&&container.name===(initial?'t45-fresh35-first-production-20261110-r3':'t45-fresh35-first-production-20261110-r3-recovery')
+  &&digest(container.id)&&container.name===(normal?'t45-fresh35-first-production-20261110-r3-service-01':
+   initial?'t45-fresh35-first-production-20261110-r3':'t45-fresh35-first-production-20261110-r3-recovery')
   &&typeof container.imageId==='string'&&/^sha256:[a-f0-9]{64}$/.test(container.imageId)
   &&positive(container.hostPid)&&container.hostPid>1&&decimal(container.startTicks)
   &&exactImportKeys(container.networkNamespace,['device','inode'])&&Object.values(container.networkNamespace).every(positive),
@@ -329,12 +343,13 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot){
  const birth=ordinaryUtcMillis(physical.postmasterStart,pgStamp);
  const prior=ordinaryUtcMillis(installed.postmasterStart,pgStamp);
  const carrierBirth=ordinaryUtcMillis(container.startedAt,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/);
- const unboundedLogin=initial&&(proof.runtimeLoginValidUntil===null||proof.runtimeLoginValidUntil==='infinity');
+ const unboundedLogin=service&&(proof.runtimeLoginValidUntil===null||proof.runtimeLoginValidUntil==='infinity');
  const loginUntil=unboundedLogin?Number.POSITIVE_INFINITY:
   ordinaryUtcMillis(proof.runtimeLoginValidUntil,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/);
  const expiresAt=Math.min(shared.serviceLeaseExpiresAt,loginUntil,capacityExpiresAt),now=Date.now();
  need(positive(proof.checkedAt)&&positive(shared.serviceLeaseExpiresAt)
-  &&(initial?physical.postmasterStart===installed.postmasterStart:prior<birth)
+  &&(initial?physical.postmasterStart===installed.postmasterStart:
+   normal?ordinaryPgMicroseconds(physical.postmasterStart)>ordinaryPgMicroseconds(installed.postmasterStart):prior<birth)
   &&carrierBirth<=birth&&birth<=proof.checkedAt&&proof.checkedAt<=now&&now<expiresAt,
   'ORDINARY_CURRENT_SERVICE_WINDOW_REQUIRED');
  return {identity,checkedAt:proof.checkedAt,expiresAt,postmasterStart:physical.postmasterStart,

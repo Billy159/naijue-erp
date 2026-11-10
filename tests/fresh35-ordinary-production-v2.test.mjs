@@ -15,7 +15,7 @@ const firstR3={database:'erp_fresh35_20261110_r3',host:'127.0.0.1',port:56791,
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const encodeProof=value=>JSON.stringify(value,(_key,member)=>member&&Object.getPrototypeOf(member)===Object.prototype
  ? Object.fromEntries(Object.keys(member).sort().map(key=>[key,member[key]])) : member)+'\n';
-async function model({synthetic=false,recordParentPrivate=false,formal=false,initial=false,initialRoleUntil,proposal={}}={}){
+async function model({synthetic=false,recordParentPrivate=false,formal=false,initial=false,normal=false,initialRoleUntil,proposal={}}={}){
  const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,synthetic?'reference-inputs':'references');
  const paths={baselineDirectory:join(reference,'baseline'),modelPath:join(reference,'model.json'),functionsPath:join(reference,'functions.json')};
  const networkWorkspace=join(root,'network-workspace'),networkPath=join(networkWorkspace,'bootstrap-network-observation.json');
@@ -38,6 +38,7 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
  if(synthetic){delete t.purpose;t.format='FRESH35_COMBINED_TARGET_BINDING_V1';t.startsAt=now-1000;t.expiresAt=expiry;t.proposal={database:'synthetic_fresh35_20261105_r9',runtime:'fresh35_runtime_20261105_r9',host:'127.0.0.1',port:57639,workspaceDirectory:networkWorkspace};t.physical.postmasterStart='2026-11-05 03:00:00+00';t.ordinary={connectHost:'127.0.0.1',connectPort:57639,serverAddress:'127.0.0.1',serverPort:57639,runtimeLoginValidUntil:null,referenceDirectory:reference};}
  if(initial)t.ordinary.runtimeLoginValidUntil=initialRoleUntil===undefined?new Date(now+120000).toISOString():
   initialRoleUntil==='infinity'?null:initialRoleUntil;
+ if(normal)t.ordinary.runtimeLoginValidUntil=null;
  const record={binding:{sourceSetSha256:'b'.repeat(64),...(formal?{targetSha256:hash(JSON.stringify(t))}:{})},synthetic_only:true,
   authorizationSha256:'a'.repeat(64),
   ...(synthetic?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',target:t}:formal?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2',target:t}:{})};
@@ -62,6 +63,16 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
   proof.runtimeLoginValidUntil=initialRoleUntil===undefined?t.ordinary.runtimeLoginValidUntil:initialRoleUntil;
   proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3';
   proof.sharedPostgresNamespace.container.startedAt=new Date(now-400000).toISOString();
+ }
+ if(normal){
+  proof.format='FRESH35_CURRENT_PRODUCTION_SERVICE_V2';
+  proof.requestKey='t45-first-r3-native-service-start-20261110-01';
+  proof.authorizationSha256='8'.repeat(64);proof.serviceReceiptSha256='9'.repeat(64);
+  delete proof.oldStopRequestKey;delete proof.previousStopReceiptSha256;delete proof.previousStopTerminalSha256;
+  proof.runtimeLoginValidUntil=null;
+  proof.dataDirectoryIdentity.device=66304;proof.dataDirectoryIdentity.inode=13502421;
+  proof.sharedPostgresNamespace.creationOperationId=proof.requestKey;
+  proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-01';
  }
  const catalogStub='data:text/javascript;base64,'+Buffer.from("export function fresh35CombinedOrdinaryCatalogSql(){return {guardSql:'MODEL_GUARDS',observationSql:'MODEL_OBSERVATION'}};export function validateFresh35CombinedOrdinaryCatalogObservation(raw){if(raw!=='SYNTHETIC_ONLY')throw Error('MODEL_CATALOG_REJECTED')};export const fresh35CombinedSyntheticOrdinaryCatalogSql=fresh35CombinedOrdinaryCatalogSql;export const validateFresh35CombinedSyntheticOrdinaryCatalogObservation=validateFresh35CombinedOrdinaryCatalogObservation").toString('base64');
  const prefix=`import {lstat as nativeLstat,open as nativeOpen,readFile} from 'node:fs/promises';import {watch as nativeWatch,writeFileSync,renameSync,unlinkSync,constants} from 'node:fs';import {resolve,dirname} from 'node:path';import {createHash} from 'node:crypto';
@@ -101,6 +112,7 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
  }[name]}
  `;
  const tail=original.slice(original.indexOf('const ordinaryAdmissions='))
+  .replace('function ordinaryPgMicroseconds(', 'export function ordinaryPgMicroseconds(')
   .replace("'../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs'",JSON.stringify(catalogStub))
   .replace("const ordinaryInstalledSourceRoot='/opt/naijue-erp/fresh35-combined-v1';",'const ordinaryInstalledSourceRoot=oldRoot;')
   .replace("const currentProductionServicePath='/run/naijue-rewrite/current-production-service.json';",'const currentProductionServicePath=serviceFile;')
@@ -126,6 +138,105 @@ test('ordinary startup uses one pool/lease and direct LOGIN identity before inte
  await assert.rejects(()=>m.api.assertFresh35OrdinaryLeaseV2(cap,{},c),/SAME_POOL/);await assert.rejects(()=>m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection),/EXCLUSIVE_STARTUP/);
  m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);assert.throws(()=>m.api.describeFresh35OrdinaryAdmissionV2(cap),/ACTIVE_ADMISSION/);
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose();}
+});
+
+test('V2 epoch comparison keeps six fractional digits and canonical calendar validation',async()=>{
+ const m=await model();
+ try{
+  const micros=m.api.ordinaryPgMicroseconds;
+  assert(micros('2026-11-10 14:12:37.123457+00')>micros('2026-11-10 14:12:37.123456+00'));
+  assert(micros('2026-11-10 14:12:37.123455+00')<micros('2026-11-10 14:12:37.123456+00'));
+  assert.equal(micros('2026-11-10 14:12:37.1+00'),micros('2026-11-10 14:12:37.100000+00'));
+  assert.equal(micros('2026-11-10 14:12:37+00')+1n,micros('2026-11-10 14:12:37.000001+00'));
+  for(const bad of ['2026-02-30 14:12:37+00','2026-11-10 14:12:37.1234567+00','2026-11-10T14:12:37Z'])
+   assert.throws(()=>micros(bad),/UTC_REQUIRED/);
+ }finally{await m.dispose()}
+});
+
+test('normal V2 service admits a new epoch and null role on the original pool and expires at the service or capacity bound',async()=>{
+ for(const limitedBy of ['service','capacity']){
+  const m=await model({formal:true,normal:true});let cap;
+  try{
+   const expiry=m.now+60000;
+   if(limitedBy==='service')m.proof.sharedPostgresNamespace.serviceLeaseExpiresAt=expiry;
+   const input=await m.putProof();if(limitedBy==='capacity')input.capacityExpiresAt=expiry;
+   cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+   const described=m.api.describeFresh35OrdinaryAdmissionV2(cap);
+   assert.equal(described.postmasterStart,m.proof.physical.postmasterStart);
+   assert.equal(described.expiresAt,expiry);assert.equal(m.clients.length,1);
+   assert.deepEqual(m.identityParams,[null,null]);
+   assert(m.api.modelWatchedPaths().includes(join(m.root,'installed','source.mjs')));
+   await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+   m.api.setTime(expiry);
+   await assert.rejects(m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/EXPIRED/);
+   assert.equal(m.api.activeWatchers(),0);
+  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+ }
+});
+
+test('normal V2 service rejects old identities, keys, authority and lease drift before pool checkout',async()=>{
+ const cases=[
+  m=>{m.proof.requestKey='t45-first-r3-native-service-start-20261110-02'},
+  m=>{m.proof.requestKey='t45-first-r3-native-facts-installed-20261110-01'},
+  m=>{m.proof.authorizationSha256='a'.repeat(64)},
+  m=>{m.proof.sharedPostgresNamespace.creationOperationId='old-install'},
+  m=>{m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3'},
+  m=>{m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-recovery'},
+  m=>{m.proof.dataDirectoryIdentity.inode++},
+  m=>{m.proof.dataDirectoryIdentity.device++},
+  m=>{m.proof.physical.systemIdentifier='124'},
+  m=>{m.proof.physical.databaseOid='43'},
+  m=>{m.proof.physical.postmasterStart=m.t.physical.postmasterStart},
+  m=>{m.proof.sourceSetSha256='0'.repeat(64)},
+  m=>{m.proof.installationRecordSha256='0'.repeat(64)},
+  m=>{m.proof.runtimeLoginValidUntil='infinity'},
+  m=>{m.proof.runtimeLoginValidUntil=new Date(m.now+120000).toISOString()},
+  m=>{m.proof.sharedPostgresNamespace.serviceLeaseExpiresAt='infinity'},
+  m=>{m.proof.sharedPostgresNamespace.serviceLeaseExpiresAt=m.now},
+  m=>{m.proof.oldStopRequestKey='t45-first-20261110-r3-recovery-stop-20261110-01'},
+  m=>{delete m.proof.serviceReceiptSha256},
+  m=>{m.api.changeHistoricalModel()},
+ ];
+ for(const mutate of cases){
+  const m=await model({formal:true,normal:true});
+  try{mutate(m);const input=await m.putProof();
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input));
+   assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
+test('normal V2 service compares epochs within the same millisecond and checks live drift on every lease',async()=>{
+ const m=await model({formal:true,normal:true});let cap;
+ try{
+  m.proof.physical.postmasterStart=m.t.physical.postmasterStart.replace('+00','001+00');
+  m.row.postmasterStart=m.proof.physical.postmasterStart;
+  m.proof.sharedPostgresNamespace.container.startedAt=new Date(m.now-400000).toISOString();
+  cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof());
+  m.row.postmasterStart=m.t.physical.postmasterStart;
+  await assert.rejects(m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client()),/PHYSICAL_OR_LOGIN_DIFFERS/);
+  assert.equal(m.api.activeWatchers(),0);
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+
+test('normal V2 service revokes changed login and proof and refuses an expired capacity input',async()=>{
+ for(const changed of ['login','proof','capacity']){
+  const m=await model({formal:true,normal:true});let cap;
+  try{
+   const input=await m.putProof();
+   if(changed==='capacity'){
+    input.capacityExpiresAt=m.now;
+    await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input),/WINDOW_REQUIRED/);
+    assert.equal(m.clients.length,0);
+    continue;
+   }
+   cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+   if(changed==='login')m.setActualLifetime(new Date(m.now+60000).toISOString());
+   else await writeFile(m.serviceFile+'.next',encodeProof(m.proof)).then(()=>rename(m.serviceFile+'.next',m.serviceFile));
+   await assert.rejects(m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client()),/PHYSICAL_OR_LOGIN_DIFFERS|CURRENT_SERVICE_CHANGED|ACTIVE_SAME_POOL_REQUIRED/);
+   assert.equal(m.api.activeWatchers(),0);
+  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+ }
 });
 
 test('first R3 service reuses historical source and one pool with the exact installed epoch',async()=>{
