@@ -4278,3 +4278,10 @@ STATUS: 87554cb2d510eb72f25064dd08159e4b80652ac8; producer: ddfdc8b3539601f7b6ff
 ### 2026-11-11T00:52:00+08:00
 
 R3 normal01/02 FAILED; both clean stopped, original unique authentication material and PGDATA preserved. 01 exact exit not recorded and password COMMIT UNKNOWN. Fixed PG parameter parse actual PANIC=1 / ERROR=0 and both tool containers removed; this is reproduction, not original log. 02 corrected source independently reviewed but actual failed, so T45 now only collects02 safe phase/exit. No03 blind start. 3f4373e1 APP built/packed once, C exact pins/host verified. a53 A+B source has no PG validation and no154 host admission; D1 continues narrow successor source separately. Human decisions delegated to C until noon; no user action needed.
+
+
+### 2026-11-11T01:28:00+08:00
+
+原02实际安全日志为SERVER_STARTING，客户端17.11正常；端口出现早于可接受会话，原工具过早查询。03仅在原20秒内对明确启动中/连接拒绝做只读SELECT1等待，再核原角色权限；不再执行PASSWORD/ALTER或生成新秘密。原01/02提交未知不追认回滚，原PGDATA和唯一01材料保留。T45 b0e91015源码已固定、18项作者定向通过，READY/独立复核尚待，不先签现场窗口。D1 da7c73df含779真实缺失导入修复及03固定配对，QB限定PASS；D2一次合批构建在途，远端推送尚未确认。原3f制品已落地、临时传输策略实读恢复，不能部署缺import版。A+B a53仍仅源码，154宿主/安装后继由原D1并行完成，无实际管理员或SQL。授权至今日12:00由C判断；无需用户操作，未称APP/业务/上线通过。
+
+STATUS 730db69ccb1501f58612af81c0d5f69680a9c825 / SHA256 883e58dcbe231e270be36f06a6e3265e7fdbcf1a24b13a3a5aa33f415a023547。实际诊断job t45-first-r3-client-preflight-20261111-01，result ad7d92b37b93a65c225f69552611f0c2f5c3320e9bd9685fe6cbe117d344e09c。
