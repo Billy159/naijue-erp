@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-10T22:34:00+08:00",
-  "stage": "R3_ACTUAL_35_TABLE_INSTALL_COMMITTED_CLOSEOUT_PENDING_NO_APPLICATION_DEPLOYMENT",
+  "updatedAt": "2026-11-10T22:54:00+08:00",
+  "stage": "R3_ACTUAL_35_TABLE_INSTALL_AND_CLEAN_CLOSEOUT_COMPLETED_APP_NOT_DEPLOYED",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1786,16 +1786,16 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-10T22:34:00+08:00",
+    "asOf": "2026-11-10T22:54:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "R3_POSTGRES_STARTED_35_TABLES_INSTALLED_DURABLE_RECORD_READBACK_CLOSEOUT_PENDING",
+    "currentPhysicalStage": "R3_STOPPED_CLEAN_WITH_DURABLE_35_TABLE_INSTALLATION",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "6439e7c780d4edb2cad8233bb6eeae2790e549f5",
+    "publicStatusCommit": "8edb059145fe4fef7e305dedfee1e180e2fd643e",
     "currentOwners": {
-      "T45": "Sole server writer; exact no-role-write native stop/cleanup successor, guardian deadline unchanged. No incompatible recovery STOP.",
+      "T45": "Sole server writer. Closeout complete. Next prepare same R3/e894 APP normal entry, authentication recovery, current-generation proof and capacity/Linux inputs offline; no further server action this phase.",
       "D1": "Narrow finally cleanup review done, no T45 writes. Null-runtime recovery remains unsupported.",
       "C": "Validate actual receipts, bind reviewed cleanup, maintain existing records/status.",
       "QB": "Only fixed new closeout increment on T45 delivery.",
@@ -1824,7 +1824,7 @@
       "ordinaryInitialSourceSet": "30cf71b1b739e620de6c9c092dcaa0a22c414e6f3509a9b68f4d6e7b195f20ad",
       "ordinaryInitialReview": "QB_AND_D1_FIXED_PAIR_PASS_LOCAL_APP_BUILD_ONLY"
     },
-    "controllerRecordsCommit": "2927d9ac320ddb1eb069492f40f392866a61fe47",
+    "controllerRecordsCommit": "3f5210bfb46dc143a348eaef06fb84cf84ca8a01",
     "channelActualScopedChecks": {
       "emptyPipeAck": "19:42:08.835-19:42:19.645 CST; SSH exit0/exact22B/stderr0/10.810481667s",
       "nonemptyAck": "19:48:00.473-19:48:01.509 CST; SSH exit0/exact22B/stderr0/1.036133458s;109344B synthetic only",
@@ -1871,13 +1871,32 @@
       "guardianDeadline": "2026-11-10T23:09:19.024+08:00"
     },
     "closeoutCurrent": {
-      "status": "PENDING_ACTUAL_RECEIPTS",
+      "status": "ACTUAL_CLEANUP_AND_INDEPENDENT_READONLY_CLOSEOUT_PASS",
       "confirmedIssue": "Original recovery STOP host and inside guards require original runtimeLoginValidUntil finite str; actual immutable provision has null. Zero invalid STOP submissions.",
       "selectedScope": "Stop exact native controller; original clean shutdown then remove six registered temporary inputs and stop exact container; preserve PGDATA and record. No role SQL, credential retention, restart, data deletion or deployment.",
       "owner": "T45",
       "deadlineUnchanged": "2026-11-10T23:09:19.024+08:00",
-      "eta": "15-20 minutes from 22:29; not a guarantee; guardian expiry first if earlier.",
-      "requiresHumanConfirmation": false
+      "eta": null,
+      "requiresHumanConfirmation": false,
+      "actualReceipts": {
+        "job": "t45-first-r3-native-controller-cleanup-20261110-01",
+        "resultSha256": "ff0992f717ba72976f20dfbb1060c83ff82e6945b549c7fd6839676f80f1b391",
+        "terminalSha256": "b70a2f253dae0e81ed95ba6ae0afcf11be5538d359fb7f64fca90668b9c548b0",
+        "finishedAt": "2026-11-10T22:45:24.194839+08:00",
+        "closeoutJob": "t45-first-r3-native-facts-close-20261110-01",
+        "closeoutResultSha256": "4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16",
+        "closeoutTerminalSha256": "7f42835e7541b495e3f0c0e26c66aa08721d98e3aa1efcd7984116f5a4e5163f",
+        "closeoutFinishedAt": "2026-11-10T22:49:23.969001+08:00"
+      },
+      "containerRunning": false,
+      "containerPid": 0,
+      "frontAttachedCount": 0,
+      "cleanShutdown": true,
+      "pgdataAndRecordPreserved": true,
+      "sixRegisteredTemporaryInputs": "ABSENCE_CONFIRMED_BY_FIXED_INSIDE_AND_HOST_GUARDS_PUBLIC_BOOLEAN_REDACTED",
+      "roleChanges": 0,
+      "sqlCalls": 0,
+      "recoveryCredentialsRetained": false
     },
     "applicationArtifact": {
       "sourceCommit": "e894b5e2c337cda37aeeb85057b6cc57b21342ea",
@@ -1889,7 +1908,8 @@
       "serverApplicationStartup": "NOT_EXECUTED",
       "capacityLoginAndBusiness": "NOT_VERIFIED",
       "publicSwitch": "NOT_EXECUTED"
-    }
+    },
+    "controllerRecordsRemote": "PUSH_TIMEOUT_API_CONFIRMED_REMOTE_STILL_2927d9ac_NOT_CLAIMED_PUSHED"
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",

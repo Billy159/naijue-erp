@@ -4231,3 +4231,11 @@ R3实际22:12:49完成PROVISION；ENTRY/INSTALL只为批准递交，不算安装
 原恢复STOP的host与inside守卫要求原runtime期限finite str，本次PROVISION合法null；0旧STOP提交，不改原件或伪造期限。admin/controller仍原有限期限，不能从runtime null推它们也null。T45唯一writer准备只停准确native controller的最小后继，复用原finally/stop_owned；实际PG和controller退出且clean shutdown后清准确六秘密、停精确容器并核内桥，保PGDATA和安装记录；不改角色、不留恢复凭据。原guardian23:09:19.024不延，先到期则回收实际终态不重复signal。当前收尾未完成。D1只读核finally明确提前停不会自动清全部秘密/容器，已并入T45一次范围；QB只验此增量，无新增人类审批等待。
 
 D2固定Node24.21/npm11.9的e894 APP已构建打包，release db6db905909b3445c27aad71566e4b328e8f1a56144d7130d077fcc5df86dcc5；主控核归一化路径及452列入文件大小/hash，另1份manifest，共453文件，无路径越界/链接/重复。9c3生产方与e894消费者原QB/D1配对通过，不能替代服务器APP启动、容量、登录/业务或上线，均未验。11月2日旧包不重新导入。STATUS v15已22:28:29远端发布及原字节回读，提交6439e7c780d4edb2cad8233bb6eeae2790e549f5。当前真实安装通过，收尾与APP部署未完成。
+
+## 2026-11-10 22:54 — R3真实安装及干净收尾闭环，应用业务仍未验
+
+T45窄收尾固定1a337cf07caf09e6d831868b4f69d93b6a469b6e（原88c76到期边界P2保留，新增紧邻信号原lease复核，QB独立反例0signal/0retire关闭）；主控核3静态叶、runner两pin变化、原模板与实际身份后，依既有本批收尾授权签2082f2a2原件，22:44:10.904–22:49:10.904。唯一cleanup键22:45:19.238–22:45:24.194 COMPLETED/0、4.932秒，C核原terminal b70a2f25与result ff0992f7。原native cleanup五flags全true/errors[]，controller/PG/port退出，容器PID0/不运行、内桥端点0，PGDATA13502421/61035:61035/0700和原record4ed44478不变，0role修改/0SQL/0恢复凭据保留。六注册项缺失由已核固定程序的inside及host硬守卫成功证明；公开redactor隐藏同名布尔，不把[REDACTED]作直接true。非自然lease到期完成，未改原期限。
+
+再沿原close键一次只读独立回收，绑定f8d8fa3d原件、22:48:40.376–22:50:40.376；stopTerminal/Receipt保null，不冒用本次cleanup充作未提交的旧recoverySTOP。22:49:23.735–23.969 COMPLETED/0、0.217秒，C复算terminal 7f42835e7541b495e3f0c0e26c66aa08721d98e3aa1efcd7984116f5a4e5163f、result 4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16。EXACT_R3_STOPPED_WITH_DURABLE_INSTALLATION，durableInstallationConfirmed/receiptCleanupMatched/PGidentity/priorPGDATA匹配均真，原CID和StartedAt不变，PID0/front0/record保持，pgConnections0/containerMutations0，无重复停止/清理。custody均null，不称恢复已就绪。独立总回执77c3571c在原T45 revisions/20261110-r3-installation-and-clean-closeout-01保存。
+
+本轮R2→有效A/B→最小目录访问修复实际落地→新R3 initdb0/启动→35表提交记录读回→真实干净收尾与独立只读回收已完成。不是APP部署或业务通过。旧runtime-null恢复/B不兼容仍保留待接；不得再次装库、重导旧包、复用已删除临时认证或旧proof伪装新代次。T45下一仅场外核同一R3+e894 APP正常入口/认证恢复/当前代次与容量/Linux依赖，主控协调，仍无实际APP启动/新数据导入/登录保存审核/备份恢复/正式切换。STATUS v16已22:53:03推送并读回，commit8edb059145fe4fef7e305dedfee1e180e2fd643e、文件SHA399be864be5caa4606cdf61223524c40a6aa83ba1fde3e47b920708123d123b5。C源码三记录3f5210bf本地已提交但Git推送超时，API确认远端仍2927，不冒称已推；公共进度分支独立同步成功。
