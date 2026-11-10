@@ -4470,3 +4470,10 @@ C沿用户委托核准并实际核固定30798B/7d8c515b52cb6f6104d972f2b6ab07277
 C已核QB1f5f原RESULTd241df8c45545843addbcea872a4a8c1f5985dd1d9bc291da5b8e99aac5f9984与REVIEW77eed83e12cdf18b55759335b76a3d64fb732e23dc74257c6905c6a489c5ff9f：PASS_SOURCE_FCHMOD_ORDER_DELTA_ONLY/0发现，parent原字节新owner方法红PermissionError，后继受影响2方法绿；同Linux实际4.932458秒/旧errno1/新全0及完整600→400证据准确复核，未重复旧helper/04/05/root/driver/APP测试。4源码5模板原字节C已核，真实PG和role03尚未通过。
 
 05:46:48.630 C发行同原AUTH目录roles03原件1594B/1694d700f9ab22badcce3e00f3fc968edbe99e06c29aecdc62e5165ff4e2cf8c、hostapply03原件1100B/f62f8c3c5d9f2aa822d8bdb7190310581676f7f9651908f0959387831c4214ee。T=1794347208630，apply截止05:56:48.630、roleUntil06:16:48.630、restoreDeadline06:46:48.630、拟04lease06:21:48.630；严格准确03/custody03，未消费restore01保持。已交原T45实时核同R3停稳/新03未投递/old01和02终态/源身份余量后一次提交，不等待大报告。0新cap、0旧key重放、0旧现场chmod/覆盖；04/Native/A/05仍只在实际前置成立后签。用户无需操作，goal继续active，不用11.2旧批。
+
+### 2026-11-11 06:07 — R3 维护启动缺材料，认证已实际恢复
+
+- apply03（T45）05:50:01.849925–05:50:08.770204 退出 0，有限角色字段离线读回通过，随后已恢复。作业 SHA256 `7fda0677f553d622694c75a9375c5e173927cd733bd92e395c7aac6490a03f72`，结果 `7b1a9d127827f462d3b18674d6f3a3ed3344e76754cfeea3ac054cebd7acc2ba`。
+- 外层 normal04 05:53:35.909054–05:53:36.078152 退出 2。首错 `FileNotFoundError`：新作业材料缺固定 `production-plan.json`（原 747 字节版本仍可复用）。无容器创建、无 PG 启动。保留原终态 `b707b63ad1e00c2f7cdac5ace12819ea4c4fbefaa00f7e597de92113131ae565`、结果 `4fcdc4a7cf9f4c2c6d9dddba4b0922a5f1a2a1e642997f1da9f56075284a0d43`，不重放。
+- restore01 05:58:55.927249–05:59:03.277505 退出 0，私下准确读回两角色原认证值和原期限；原普通运行认证、成员属性和连接规则未改。R3 和本次容器已停，作业 `068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330`、结果 `650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb`。无需依靠自然过期，当前无在途认证窗口。
+- T45 固定并核对完整交付材料（含原 `production-plan.json`），将已失败的外层作业与从未启动的 04 服务分开。QB 只复核这次接线和下一轮临时认证、恢复配对的改动；通过后才为同一 R3 开新窗口。 外层使用独立后继 04-02，保持原 04 服务身份、证明和输出契约；下一轮 apply04 与 restore02 用各自独立绑定，原失败和恢复凭据保留。复用 D1 固定调用和已上传 APP，不重复构建。SQL36、154 发布、管理员、普通应用实际就绪、业务和正式切换均未执行；不使用 11 月 2 日旧批。
