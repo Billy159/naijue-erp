@@ -42428,12 +42428,13 @@
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
               "firstNativeInstallConfirmation": {
-                "status": "R2_ACTUAL_READONLY_PREREQUISITES_OBSERVED_LAUNCH_UNISSUED",
+                "status": "USER_APPROVED_R2_EXACT_EMPTY_INSTALL_T45_ADMISSION_IN_PROGRESS",
                 "owner": "T45",
                 "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
                 "revisedScopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.r2.md",
                 "revisedScopeSHA256": "32c895c5593d7d96a0819912c86d649975a14090da07c54c8a736d8ef7ddbcad",
+                "userDecision": "Direct answer '确认 A 和 B' to request_user_input_async call_1e418198c37e478ba6e7b4908a84a022. A approves the exact empty R1 native install only, with the verified same-version prerequisites and r2 closeout. No data import, retirement or public switch.",
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
                 "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
                 "planSHA256": "639c90678a3e8e1c55e8d845d240a79dfcea1e3cb6ceb54d5464017e9f74053a",
@@ -42800,7 +42801,8 @@
               }
             },
             "firstWriterAuthorityBinding": {
-              "status": "EXACT_EXTERNAL_EXECUTE_CONTRACT_DELTA_AWAITING_USER_DECISION",
+              "status": "USER_APPROVED_SOURCE_ONLY_D1_AND_T45_IMPLEMENTING",
+              "userDecision": "Direct answer '确认 A 和 B' to request_user_input_async call_1e418198c37e478ba6e7b4908a84a022. B approves only the exact originalImportAuthoritySha256 source/input-contract change. D1 owns Node, T45 owns the original carrier; both requested gpt-6.1-sol/high. No import authority is issued.",
               "finding": "T45 490a311e and D1 1b37415c show the exact closed execution description and existing 8192 B protected descriptor bind original parameters but have no externally frozen batch-authority raw SHA for V2 EXECUTE. The status path already uses originalImportAuthoritySha256. The current V2 loader validates path, stable bytes, binding fields and window, then records the first bytes' own digest. Those checks cannot establish equality to the issuer's earlier authorized bytes.",
               "proposedDelta": "For the authenticated new R1 V2 EXECUTE only, require originalImportAuthoritySha256 in the existing same-job external execution description. The existing external issuer takes the SHA-256 of the authorized original batch-authority bytes and binds it to the original request and original operation-parameter SHA. T45 verifies the external description and carries that SHA over the same protected descriptor. D1 compares the first read's raw bytes with the pin before accepting write authority, and repeats the match on the separate verification open. Initial missing or different bytes reject before the first write. A post-commit mismatch keeps COMMITTED or ALREADY_COMMITTED and reports VERIFICATION_UNKNOWN for the original-key recovery path.",
               "scope": "Source and existing input-contract delta only. Existing batch authority payload, issuer, role grants, database schema, original request key, time windows, and V1/PREPARE/INSPECT/READONLY_STATUS contracts stay as-is. No signing, upload, database action, or cutover authorized by this source decision. T45 owns the carrier, D1 the Node consumer, QB the affected checks. Pin one final package after closure."
