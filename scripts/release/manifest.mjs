@@ -15,6 +15,12 @@ export const releaseContractSource = Object.freeze({ path: 'config/release-contr
 
 // Exact native module identity boundary; no arbitrary external or copied JS.
 export const native35Contract = releaseContract.native35;
+export const native35DefaultSourceProfile = 'FRESH35_COMBINED_CURRENT_SOURCE_V1';
+export const native35Admin154SourceProfile = 'FRESH35_A53_ADMIN154_SOURCE_V1';
+export function native35SourceProfile(value=native35DefaultSourceProfile) {
+  requireRelease(value===native35DefaultSourceProfile || value===native35Admin154SourceProfile, 'NATIVE35_UNKNOWN_SOURCE_PROFILE');
+  return value;
+}
 export function native35SourceName(name) {
   relativeName(name);
   if(native35Contract.fixturePins.some(p=>p.path===name))return name;
@@ -24,17 +30,21 @@ export function native35SourceName(name) {
     && /\.(?:ts|mjs|json|sql|psql|py)$/.test(name), 'NATIVE35_PROHIBITED_SOURCE:'+name);
   return name;
 }
-export async function native35Closure(sourceRoot,referenceDirectory) {
+export async function native35Closure(sourceRoot,referenceDirectory,profile) {
+  profile=native35SourceProfile(profile);
   requireRelease(typeof referenceDirectory==='string' && path.isAbsolute(referenceDirectory), 'NATIVE35_EXPLICIT_REFERENCE_INPUTS_REQUIRED');
   await canonicalAbsolute(referenceDirectory,'directory');
   const module=await import(pathToFileURL(path.join(sourceRoot,'scripts/release/unified-install/fresh35-combined-source-v1.mjs')).href);
   const references=await module.resolveFresh35ReferenceInputPaths(referenceDirectory);
-  const descriptor=module.describeFresh35CombinedSource(await module.loadFresh35CombinedSource(sourceRoot,references));
-  requireRelease(descriptor.format==='FRESH35_COMBINED_CURRENT_SOURCE_V1' && descriptor.capturedSourcePins.length===180
+  const descriptor=module.describeFresh35CombinedSource(await (profile===native35Admin154SourceProfile?module.loadFresh35Admin154Source:module.loadFresh35CombinedSource)(sourceRoot,references));
+  requireRelease(descriptor.format===profile && descriptor.capturedSourcePins.length===180
     && Array.isArray(descriptor.currentSourcePins) && native35Contract.boundaries.every(boundary=>descriptor.currentSourcePins.some(p=>p.path===boundary.entry)), 'NATIVE35_COMPLETE_SOURCE_SET_REQUIRED');
+  if(profile===native35Admin154SourceProfile)requireRelease(descriptor.currentSourcePins.length===219
+    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'
+      && p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'), 'NATIVE35_EXACT_ADMIN154_PATCH_REQUIRED');
   for(const pin of descriptor.currentSourcePins){native35SourceName(pin.path);requireRelease(/^[a-f0-9]{64}$/.test(pin.sha256),'NATIVE35_SOURCE_PIN_REQUIRED');
     const fixture=native35Contract.fixturePins.find(p=>p.path===pin.path);if(fixture)requireRelease(fixture.sha256===pin.sha256,'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED');}
-  return {sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};
+  return {...(profile===native35Admin154SourceProfile?{sourceProfile:profile}:{}),sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};
 }
 
 export class ReleaseError extends Error {
@@ -440,7 +450,7 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
   const sources = indexRecords(source.files), files = indexRecords(build.files);
   requireRelease(sources.has('package.json') && sources.has('package-lock.json'), 'LOCKED_PACKAGE_SOURCES_REQUIRED');
   let native35;
-  if(build.native35){native35=await native35Closure(sourceRoot,build.native35.referenceDirectory);
+  if(build.native35){native35=await native35Closure(sourceRoot,build.native35.referenceDirectory,build.native35.closure?.sourceProfile);
     requireRelease(JSON.stringify(native35)===JSON.stringify(build.native35.closure),'NATIVE35_SOURCE_SET_CHANGED');}
   const nativePins=new Map((native35?.pins??[]).map(p=>[p.path,p]));
   let total = 0; const sourceBytes = new Map();

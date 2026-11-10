@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError, native35Closure, native35Contract } from './manifest.mjs';
+import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError, native35Closure, native35Contract, native35SourceProfile, native35Admin154SourceProfile } from './manifest.mjs';
 
 const FRONTEND_BUILDER = 'apps/web/demo-replica/build-production-host.mjs';
 const FRONTEND_ENTRY = releaseContract.entrypoints.frontend.source;
@@ -123,6 +123,7 @@ function checkPublicConfiguration(value) {
 /** Build only a verified fixed export. Does not execute the backend entry or start any application. */
 export async function buildProduction(options) {
   const { sourceRoot, sourceCommit, buildId, publicConfig, buildRoot, manifestDirectory } = options;
+  const sourceProfile=native35SourceProfile(options.native35SourceProfile);
   requireRelease(process.versions.node === '24.21.0', 'NODE_24_21_0_REQUIRED');
   requireRelease(!process.env.ESBUILD_BINARY_PATH && !process.env.NODE_OPTIONS, 'AMBIENT_BUILD_OVERRIDE_FORBIDDEN');
   requireRelease(/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(buildId ?? ''), 'EXACT_BUILD_ID_REQUIRED');
@@ -178,8 +179,9 @@ export async function buildProduction(options) {
       });
     } }] });
   let native35;
+  requireRelease(sourceProfile!==native35Admin154SourceProfile || native35Needed, 'NATIVE35_PROFILE_REQUIRES_NATIVE_BOUNDARY');
   if(native35Needed){
-    const closure=await native35Closure(sourceRoot,options.native35ReferenceDirectory);
+    const closure=await native35Closure(sourceRoot,options.native35ReferenceDirectory,sourceProfile);
     native35={referenceDirectory:options.native35ReferenceDirectory,closure};
     for(const pin of closure.pins){const original=frozen.records.get(pin.path);requireRelease(original && original.sha256===pin.sha256,'NATIVE35_FROZEN_SOURCE_REQUIRED');
       await select(pin.path,undefined,true);const member=native35Contract.root+'/'+pin.path;
@@ -250,8 +252,8 @@ export async function buildProduction(options) {
 
 export async function main(args) {
   const names = new Map([['--source-root', 'sourceRoot'], ['--source-commit', 'sourceCommit'], ['--build-id', 'buildId'],
-    ['--native35-reference-inputs', 'native35ReferenceDirectory'], ['--public-config', 'publicConfig'], ['--build-root', 'buildRoot'], ['--manifest-dir', 'manifestDirectory']]);
-  requireRelease(args.length === 12 || args.length === 14, 'BUILD_USAGE'); const options = {};
+    ['--native35-reference-inputs', 'native35ReferenceDirectory'], ['--native35-source-profile', 'native35SourceProfile'], ['--public-config', 'publicConfig'], ['--build-root', 'buildRoot'], ['--manifest-dir', 'manifestDirectory']]);
+  requireRelease(args.length === 12 || args.length === 14 || args.length === 16, 'BUILD_USAGE'); const options = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = names.get(args[index]); requireRelease(key && !Object.hasOwn(options, key) && typeof args[index + 1] === 'string', 'BUILD_USAGE'); options[key] = args[index + 1];
   }
@@ -261,7 +263,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   try { process.stdout.write(JSON.stringify(await main(process.argv.slice(2))) + '\n'); }
   catch (error) {
     process.stderr.write((error instanceof ReleaseError ? error.code : 'PRODUCTION_BUILD_FAILED') + '\n');
-    if (error?.code === 'BUILD_USAGE') process.stderr.write('Usage: node scripts/release/build-production.mjs --source-root ABS_FIXED_EXPORT --source-commit FULL_SHA --build-id UNIQUE_ID --public-config ABS_PUBLIC_JSON --build-root ABS_FRESH_DIRECTORY --manifest-dir ABS_FRESH_DIRECTORY\n');
+    if (error?.code === 'BUILD_USAGE') process.stderr.write('Usage: node scripts/release/build-production.mjs --source-root ABS_FIXED_EXPORT --source-commit FULL_SHA --build-id UNIQUE_ID --public-config ABS_PUBLIC_JSON --build-root ABS_FRESH_DIRECTORY --manifest-dir ABS_FRESH_DIRECTORY [--native35-reference-inputs ABS_READONLY_REFERENCE_DIR --native35-source-profile FRESH35_A53_ADMIN154_SOURCE_V1]\n');
     process.exitCode = 1;
   }
 }
