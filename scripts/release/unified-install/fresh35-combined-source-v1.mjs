@@ -110,6 +110,27 @@ export async function loadFresh35CombinedSource(root,{baselineDirectory}){
 }
 export function describeFresh35CombinedSource(token){need(sources.has(token),'GENUINE_SOURCE_REQUIRED');return sources.get(token).source}
 export function fresh35CombinedSourceData(token){describeFresh35CombinedSource(token);const s=sources.get(token);return freeze({root:s.root,baselineDirectory:s.baselineDirectory,schema:s.schema,core:s.core,declarations:s.declarations,lineageSql:s.artifacts['02-lineage-REVIEW-ONLY.sql'],lineage:JSON.parse(s.artifacts['migration-lineage.json']),patches:s.patches})}
+/** One explicit successor of a53. Never selected by the original installer. */
+export async function loadFresh35Admin154Source(root,options){
+ root=resolve(root);
+ const base=await loadFresh35CombinedSource(root,options),original=sources.get(base);
+ const {loadFresh35AdminProvisionCandidate}=await import('./fresh35-admin-provision-candidate.mjs');
+ const candidate=await loadFresh35AdminProvisionCandidate(root);
+ need(candidate.manifest.patchSqlSha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'
+  &&candidate.manifest.tableCount===35&&candidate.manifest.predecessorRoutineCount===152&&candidate.manifest.routineCount===154
+  &&candidate.newRoutines.length===2&&candidate.changedBodies.length===4,'EXACT_A53_ADMIN154_REQUIRED');
+ const pins=new Map(original.source.currentSourcePins.map(p=>[p.path,p]));
+ for(const p of candidate.manifest.sourcePins){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'ADMIN154_SOURCE_CONFLICT');pins.set(p.path,p);}
+ const extra=await importClosure(root,['scripts/release/unified-install/fresh35-admin154-record-v1.mjs','tools/unified-import/first-admin-setup.mjs','tools/unified-import/admin154-setup-cli.mjs','tools/unified-import/cli.mjs']);
+ for(const p of extra){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'ADMIN154_SOURCE_CONFLICT');pins.set(p.path,p);}
+ const binding={format:'FRESH35_A53_ADMIN154_SOURCE_V1',predecessorSourceSetSha256:original.source.sourceSetSha256,
+  currentSourcePins:[...pins.values()].sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0),patchSqlSha256:candidate.manifest.patchSqlSha256,
+  routineChanges:candidate.manifest.routineChanges,permissionChanges:candidate.manifest.permissionChanges};
+ const source=freeze({...original.source,...binding,sourceSetSha256:hash(JSON.stringify(binding))});
+ const token=Object.freeze({profile:binding.format});sources.set(token,{...original,source,admin154:freeze({base,candidate})});
+ await assertFresh35CombinedSourcesCurrent(token);return token;
+}
+export function fresh35Admin154SourceData(token){describeFresh35CombinedSource(token);const s=sources.get(token);need(s.admin154&&s.source.format==='FRESH35_A53_ADMIN154_SOURCE_V1','GENUINE_ADMIN154_SOURCE_REQUIRED');return s.admin154;}
 export async function assertFresh35CombinedSourcesCurrent(token){
  const descriptor=describeFresh35CombinedSource(token),s=sources.get(token);
  for(const pin of descriptor.currentSourcePins)need(hash(await regularFile(s.root,pin.path))===pin.sha256,'CURRENT_SOURCE_CHANGED:'+pin.path);
@@ -117,6 +138,7 @@ export async function assertFresh35CombinedSourcesCurrent(token){
  return descriptor;
 }
 export function renderFresh35CombinedSchema(token,target,options){
+ need(!sources.get(token)?.admin154,'ADMIN154_REQUIRES_SEPARATE_SUCCESSOR_NOT_REINSTALL');
  need(options===undefined||options&&Object.keys(options).join(',')==='profile'&&options.profile==='PRODUCTION_NEW_EMPTY_EXACT35','EXPLICIT_PRODUCTION_MAPPING_PROFILE_REQUIRED');
  const s=fresh35CombinedSourceData(token);need(target&&typeof target.owner==='string'&&typeof target.controller==='string','EXPLICIT_TARGET_ROLES_REQUIRED');
  const unchanged=target.owner==='fresh35_owner_20261105_r1'&&target.controller==='fresh35_controller_20261105_r1';

@@ -27,6 +27,8 @@ export async function withReviewedWholeSession(client,spec,reviewed,target,work,
 // Trust is granted only by the fixed physical factory below, never by the
 // exported state-machine helper or caller-provided clients/verifiers.
 async function runWholeSession(client,spec,reviewed,target,work,verifyCatalog,profile,trustedPhysical,options={}){
+ const fresh35=profile==='FRESH35_RETIRED152_V1'||profile==='FRESH35_A53_ADMIN154_V1';
+ if(profile==='FRESH35_A53_ADMIN154_V1'&&(!trustedPhysical||typeof options.authorizedQuery!=='function'))throw Error('ADMIN154_FIXED_PHYSICAL_AUTHORIZED_HOST_REQUIRED');
  const approval=options.explicitZeroApproval;let descriptor;try{descriptor=approval?explicitZeroApprovalDescriptor(approval):null;}catch(error){await closePhysical(client);throw error}
  const checkApproval=(sql,values)=>{
   if(/^SELECT naijue_erp\.standard_whole_package_(inspect|prepare|verify)_v2\(/.test(sql)){
@@ -59,13 +61,13 @@ async function runWholeSession(client,spec,reviewed,target,work,verifyCatalog,pr
  const ack=(r,command)=>{const d=r&&Object.getOwnPropertyDescriptor(r,'command');return !!d&&Object.hasOwn(d,'value')&&d.value===command};
  client.on('error',()=>{failed=true;poisoned=true;void close().catch(()=>{})});
  const armDeadline=()=>{if(deadlineTimer)clearTimeout(deadlineTimer);deadlineTimer=setTimeout(()=>{failed=true;poisoned=true;void close().catch(()=>{})},Math.max(0,options.fresh35ExpiresAt-Date.now()));deadlineTimer.unref?.()};
- const tightenDeadline=expiresAt=>{if(profile!=='FRESH35_RETIRED152_V1'||!Number.isSafeInteger(expiresAt)||expiresAt>options.fresh35ExpiresAt||expiresAt<=Date.now())throw Error('FRESH35_HOST_WINDOW_EXPIRED');options={...options,fresh35ExpiresAt:expiresAt};armDeadline()};
- if(profile==='FRESH35_RETIRED152_V1'&&Number.isSafeInteger(options.fresh35ExpiresAt))armDeadline();
- try{if(!['ORIGINAL177','WHOLE_SALES_V1','FRESH35_RETIRED152_V1'].includes(profile))throw Error('WHOLE_HOST_PROFILE_INVALID');reviewed=structuredClone(reviewed);target=structuredClone(target);if(!ready()||client.getTransactionStatus()!=='I')throw Error('WHOLE_CONNECTION_NOT_IDLE');let gateError,hasGateError=false;
+ const tightenDeadline=expiresAt=>{if(!fresh35||!Number.isSafeInteger(expiresAt)||expiresAt>options.fresh35ExpiresAt||expiresAt<=Date.now())throw Error('FRESH35_HOST_WINDOW_EXPIRED');options={...options,fresh35ExpiresAt:expiresAt};armDeadline()};
+ if(fresh35&&Number.isSafeInteger(options.fresh35ExpiresAt))armDeadline();
+ try{if(!['ORIGINAL177','WHOLE_SALES_V1','FRESH35_RETIRED152_V1','FRESH35_A53_ADMIN154_V1'].includes(profile))throw Error('WHOLE_HOST_PROFILE_INVALID');reviewed=structuredClone(reviewed);target=structuredClone(target);if(!ready()||client.getTransactionStatus()!=='I')throw Error('WHOLE_CONNECTION_NOT_IDLE');let gateError,hasGateError=false;
   try{const start=await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');if(!ack(start,'BEGIN')||!ready()||client.getTransactionStatus()!=='T')throw Error('WHOLE_CATALOG_BEGIN_UNCERTAIN');const gateClient={async query(sql,values){if(!ready()||client.getTransactionStatus()!=='T'||failed)throw Error('WHOLE_CATALOG_WIRE_INVALID');const r=await client.query(sql,values);if(!ready()||client.getTransactionStatus()!=='T'||failed)throw Error('WHOLE_CATALOG_WIRE_INVALID');return r}};if(trustedPhysical)sessionClients.set(gateClient,sessionBinding);verified=await verifyCatalog(gateClient,spec,reviewed)}catch(e){gateError=e;hasGateError=true}
   try{if(!ready()||!['T','E'].includes(client.getTransactionStatus()))throw Error('WHOLE_CATALOG_ROLLBACK_UNCERTAIN');const r=await client.query('ROLLBACK');if(!ack(r,'ROLLBACK')||!ready()||client.getTransactionStatus()!=='I')throw Error('WHOLE_CATALOG_ROLLBACK_UNCERTAIN')}catch{throw Error('WHOLE_CATALOG_ROLLBACK_UNCERTAIN')}if(hasGateError)throw gateError;
   if(closed||failed)throw Error('WHOLE_CONNECTION_UNCERTAIN');validateStandardImportTarget(target);if(!target||target.protocol!=='STANDARD_IMPORT_SQL_V1'||target.system_identifier!==reviewed.system_identifier||target.database_oid!==reviewed.database_oid||target.database_name!==reviewed.database_name||target.catalog_sha256!==reviewed.catalog_sha256)throw Error('WHOLE_TARGET_BINDING_MISMATCH');
-  const controlled=Object.freeze({async query(sql,values){const expired=profile==='FRESH35_RETIRED152_V1'&&Date.now()>=options.fresh35ExpiresAt;const cleaning=sql==='ROLLBACK'&&(poisoned||expired)&&!rollbackUsed;if(expired&&!cleaning){poisoned=true;throw Error('FRESH35_HOST_WINDOW_EXPIRED')}if(closed||failed||busy||(poisoned&&!cleaning)){poisoned=true;throw Error('WHOLE_CONNECTION_UNAVAILABLE')}try{values=ownedSqlParameters(values)}catch(error){poisoned=true;throw error}const salesRead=['WHOLE_SALES_V1','FRESH35_RETIRED152_V1'].includes(profile)&&sql==='SELECT * FROM naijue_erp.standard_zero_amount_archive_trace($1::uuid)'&&Array.isArray(values)&&values.length===1&&typeof values[0]==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(values[0]);if(!allowed.has(sql)&&!salesRead){poisoned=true;throw Error('WHOLE_SQL_NOT_ALLOWED')}try{checkApproval(sql,values)}catch(error){poisoned=true;throw error}if(cleaning){rollbackUsed=true;if(serverErrorPendingReady&&!ready()){busy=true;try{await waitRollbackReady(Math.min(Date.now()+CLOSE_TIMEOUT_MS,profile==='FRESH35_RETIRED152_V1'?options.fresh35ExpiresAt:Infinity))}finally{busy=false}}}if(!ready()){poisoned=true;throw Error('WHOLE_WIRE_STATE_INVALID')}const before=client.getTransactionStatus();if(sql.startsWith('BEGIN')?before!=='I':sql==='ROLLBACK'?!['T','E'].includes(before):before!=='T'){poisoned=true;throw Error('WHOLE_WIRE_STATE_INVALID')}busy=true;try{if(options.authorizedQuery){await options.authorizedQuery(sql,values);if(!cleaning&&(closed||failed||poisoned||Date.now()>=options.fresh35ExpiresAt))throw Error('FRESH35_HOST_WINDOW_EXPIRED')}let r;serverErrorPendingReady=false;try{r=await client.query(sql,values)}catch(error){const code=error!==null&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'code')?.value:undefined;serverErrorPendingReady=typeof code==='string'&&/^[A-Z0-9]{5}$/.test(code)&&client.readyForQuery===false;throw error}const after=client.getTransactionStatus(),expected=(sql==='COMMIT'||sql==='ROLLBACK')?'I':'T',command=sql.startsWith('BEGIN')?'BEGIN':sql==='COMMIT'?'COMMIT':sql==='ROLLBACK'?'ROLLBACK':sql.startsWith('SET ')?'SET':'SELECT';if(closed||failed||(poisoned&&!cleaning)||!ready()||after!==expected||!ack(r,command))throw Error('WHOLE_CONNECTION_UNCERTAIN');return r}catch(e){poisoned=true;throw e}finally{busy=false}},async discard(){failed=true;poisoned=true;await close()}});
+  const controlled=Object.freeze({async query(sql,values){const expired=fresh35&&Date.now()>=options.fresh35ExpiresAt;const cleaning=sql==='ROLLBACK'&&(poisoned||expired)&&!rollbackUsed;if(expired&&!cleaning){poisoned=true;throw Error('FRESH35_HOST_WINDOW_EXPIRED')}if(closed||failed||busy||(poisoned&&!cleaning)){poisoned=true;throw Error('WHOLE_CONNECTION_UNAVAILABLE')}try{values=ownedSqlParameters(values)}catch(error){poisoned=true;throw error}const salesRead=['WHOLE_SALES_V1','FRESH35_RETIRED152_V1'].includes(profile)&&sql==='SELECT * FROM naijue_erp.standard_zero_amount_archive_trace($1::uuid)'&&Array.isArray(values)&&values.length===1&&typeof values[0]==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(values[0]);if(!allowed.has(sql)&&!salesRead&&!(profile==='FRESH35_A53_ADMIN154_V1'&&sql==='SELECT naijue_erp.standard_admin_provision_only_v1($1::jsonb,$2::text)::text AS result_json')){poisoned=true;throw Error('WHOLE_SQL_NOT_ALLOWED')}try{checkApproval(sql,values)}catch(error){poisoned=true;throw error}if(cleaning){rollbackUsed=true;if(serverErrorPendingReady&&!ready()){busy=true;try{await waitRollbackReady(Math.min(Date.now()+CLOSE_TIMEOUT_MS,fresh35?options.fresh35ExpiresAt:Infinity))}finally{busy=false}}}if(!ready()){poisoned=true;throw Error('WHOLE_WIRE_STATE_INVALID')}const before=client.getTransactionStatus();if(sql.startsWith('BEGIN')?before!=='I':sql==='ROLLBACK'?!['T','E'].includes(before):before!=='T'){poisoned=true;throw Error('WHOLE_WIRE_STATE_INVALID')}busy=true;try{if(options.authorizedQuery){await options.authorizedQuery(sql,values);if(!cleaning&&(closed||failed||poisoned||Date.now()>=options.fresh35ExpiresAt))throw Error('FRESH35_HOST_WINDOW_EXPIRED')}let r;serverErrorPendingReady=false;try{r=await client.query(sql,values)}catch(error){const code=error!==null&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'code')?.value:undefined;serverErrorPendingReady=typeof code==='string'&&/^[A-Z0-9]{5}$/.test(code)&&client.readyForQuery===false;throw error}const after=client.getTransactionStatus(),expected=(sql==='COMMIT'||sql==='ROLLBACK')?'I':'T',command=sql.startsWith('BEGIN')?'BEGIN':sql==='COMMIT'?'COMMIT':sql==='ROLLBACK'?'ROLLBACK':sql.startsWith('SET ')?'SET':'SELECT';if(closed||failed||(poisoned&&!cleaning)||!ready()||after!==expected||!ack(r,command))throw Error('WHOLE_CONNECTION_UNCERTAIN');return r}catch(e){poisoned=true;throw e}finally{busy=false}},async discard(){failed=true;poisoned=true;await close()}});
   if(trustedPhysical)sessionClients.set(controlled,sessionBinding);result=await work(controlled,verified,tightenDeadline);if(!closed&&(!ready()||client.getTransactionStatus()!=='I'))throw Error('WHOLE_TRANSACTION_NOT_CLOSED');
  }catch(e){problem=e;hasProblem=true}finally{sessionBinding.active=false;if(deadlineTimer)clearTimeout(deadlineTimer);try{await close()}catch{}if(closeFailed)cleanup='CLOSE_FAILED'}if(hasProblem){if(closeFailed)throw Error('WHOLE_CONNECTION_CLEANUP_FAILED');throw problem}return{result,cleanup}}
 
@@ -89,6 +91,60 @@ export async function openReviewedFresh35PhysicalHost(config,sourceRoot,target,w
 export async function openReviewedFresh35ProductionPhysicalHost(config,sourceRoot,target,prepare,work,options={}){
  if(typeof prepare!=='function'||typeof work!=='function'||!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256','prepareOnly'].includes(k))||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_OPTIONS_INVALID');
  return openFresh35PhysicalHost(config,sourceRoot,target,work,options,prepare);
+}
+/** Fixed 154 entry on the original physical wire coordinator. Installation,
+ * setup and REAL import have distinct protected evidence; none is a fallback. */
+export async function openReviewedFresh35Admin154PhysicalHost(config,sourceRoot,target,prepare,work,options){
+ if(typeof prepare!=='function'||typeof work!=='function'||!options
+  ||Object.keys(options).some(k=>!['purpose','currentService','successorSha256','referenceDirectory','sourceProfileSha256','explicitZeroApproval','prepareOnly'].includes(k))
+  ||!['ADMIN_PROVISION_ONLY','FIRST_REAL_BUSINESS_IMPORT'].includes(options.purpose)
+  ||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_ADMIN154_OPTIONS_REQUIRED');
+ const host=await import('./fresh35-host-session.mjs');
+ const recordModule=await import('../../scripts/release/unified-install/fresh35-admin154-record-v1.mjs');
+ const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
+ const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
+ const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
+ const context=await host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256);
+ const c=host.fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target),successor=recordModule.describeFresh35Admin154Record(c.successor);
+ const pins=describeFresh35CombinedSource(c.source).currentSourcePins;
+ if(!pins.some(p=>p.path==='tools/unified-import/whole-host-session.mjs'&&p.sha256===loadedPhysicalHostSha256)
+  ||!pins.some(p=>p.path==='scripts/release/unified-install/whole-sales-admission-v1.mjs'&&p.sha256===WHOLE_SALES_ADMISSION_MODULE_SHA256))throw Error('FRESH35_HOST_LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
+ const reviewed={system_identifier:t.physical.systemIdentifier,database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:successor.value.successor.catalogSha256};
+ validateStandardImportTarget(target);target=structuredClone(target);
+ if(Object.keys(reviewed).some(k=>target[k]!==reviewed[k]))throw Error('FRESH35_HOST_TARGET_BINDING_MISMATCH');
+ config=structuredClone(config);
+ if(!config||!['database,host,password,port,user','database,host,password,port,statement_timeout_ms,user'].includes(Object.keys(config).sort().join(','))
+  ||config.host!==t.proposal.host||config.port!==t.proposal.port||config.database!==t.proposal.database||config.user!==t.proposal.controller
+  ||typeof config.password!=='string'||!config.password||(config.statement_timeout_ms!==undefined&&(!Number.isSafeInteger(config.statement_timeout_ms)||config.statement_timeout_ms<1000||config.statement_timeout_ms>3600000)))throw Error('WHOLE_CONNECTION_CONFIG_INVALID');
+ if(Object.keys(process.env).some(k=>k==='DATABASE_URL'||/^PG[A-Z_]+$/.test(k)))throw Error('AMBIENT_DATABASE_CONFIGURATION_PROHIBITED');
+ const timeout=Math.min(config.statement_timeout_ms??900000,c.currentService.expiresAt-Date.now());if(timeout<=0)throw Error('FRESH35_HOST_WINDOW_EXPIRED');
+ const {Client}=await import('pg');const client=new Client({host:config.host,port:config.port,database:config.database,user:config.user,password:()=>config.password,
+  ssl:false,application_name:'unified-fresh35-admin154',connectionTimeoutMillis:Math.min(5000,timeout),statement_timeout:timeout,query_timeout:timeout+5000,lock_timeout:Math.min(5000,timeout),options:'-c search_path=pg_catalog'});
+ let connectFailed=false;client.on('error',()=>{connectFailed=true});
+ try{await client.connect();if(connectFailed)throw Error('WHOLE_CONNECTION_FAILED')}catch{try{await closePhysical(client)}catch{throw Error('WHOLE_CONNECTION_CLEANUP_FAILED')}throw Error('WHOLE_CONNECTION_FAILED')}
+ let gateClient,queryGuard,hostVerification;
+ const setup=options.purpose==='ADMIN_PROVISION_ONLY';
+ try{
+  const result=await runWholeSession(client,context,reviewed,target,async(controlled,verified,tightenDeadline)=>{
+   await host.assertFresh35HostCurrent(context);
+   const execute=async admission=>{
+    const prepared=await prepare(admission);
+    const binding=await (setup?host.describeFresh35Admin154SetupBinding:host.describeFresh35ProductionImportBinding)(context,prepared);
+    if(options.prepareOnly)return {state:'ADMIN154_PREPARED',purpose:options.purpose,binding,business_database_writes:false};
+    const authority=await host.loadFresh35ProductionImportAuthorization(context,binding);
+    queryGuard=(setup?host.fresh35Admin154SetupQueryGuard:host.fresh35ProductionImportQueryGuard)(context,authority,prepared);tightenDeadline(queryGuard.expiresAt);
+    hostVerification=Object.freeze({profile:'FRESH35_A53_ADMIN154_SAME_CLIENT_VERIFICATION_V1',predecessor_record_sha256:c.recordFileSha256,
+     successor_record_sha256:successor.sha256,live_catalog_sha256:verified.live_catalog_sha256,authorization_sha256:queryGuard.authorizationSha256,binding});
+    return work(controlled,admission,binding);
+   };
+   return setup?execute(undefined):withVerifiedFresh35AdmissionV1(verified,gateClient,controlled,target,execute);
+  },async gate=>{gateClient=gate;return setup?host.verifyFresh35Admin154SetupInstalled(gate,context):host.verifyFresh35InstalledV1(gate,context,options.sourceProfileSha256)},
+  'FRESH35_A53_ADMIN154_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:c.currentService.expiresAt,async authorizedQuery(sql,values){
+   if(sql==='ROLLBACK'){if(queryGuard)await queryGuard.check(sql,values);return;}
+   if(!queryGuard)throw Error('FRESH35_HOST_ADMIN154_EXACT_AUTHORIZATION_REQUIRED');await queryGuard.check(sql,values);
+  }});
+  return {...result,host_verification:hostVerification};
+ }finally{await queryGuard?.close()}
 }
 async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},productionPrepare){
  const host=await import('./fresh35-host-session.mjs');const {loadFresh35HostContext,loadFresh35ProductionImportContext,fresh35HostContext,verifyFresh35InstalledV1,assertFresh35HostCurrent}=host;

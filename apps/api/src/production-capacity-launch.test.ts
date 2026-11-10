@@ -130,6 +130,31 @@ test('A02 CLI failed API/host construction closes its capacity and API without l
     await assert.rejects(runProductionCli(['--exact26-full',await f.config('--exact26-full')],deps));assert.equal(h.resource.snapshot().closed,true);
     assert.equal(h.counts().closed,failure==='api'?0:1);assert.deepEqual([process.listenerCount('SIGTERM'),process.listenerCount('SIGINT')],before);}
 });
+
+test('admin154 CLI forwards the explicit successor digest at the original production capacity and API boundary',async t=>{
+ const f=await fixture(t),h=scriptedHost(),filename=path.join(f.root,'admin154-model.json');
+ const before={service:process.env.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256,successor:process.env.NAIJUE_ADMIN154_SUCCESSOR_SHA256};
+ t.after(()=>{for(const [key,value] of [['NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256',before.service],['NAIJUE_ADMIN154_SUCCESSOR_SHA256',before.successor]]as const){if(value===undefined)delete process.env[key];else process.env[key]=value;}});
+ process.env.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256='a'.repeat(64);process.env.NAIJUE_ADMIN154_SUCCESSOR_SHA256='b'.repeat(64);
+ await writeFile(filename,JSON.stringify({...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity}),{mode:0o600});
+ let captured:Parameters<ProductionMainDependencies['createApi']>|undefined;
+ const deps={...h.deps,async createApi(...args:Parameters<ProductionMainDependencies['createApi']>){captured=args;throw Error('SYNTHETIC_STOP_AT_API_BOUNDARY');}};
+ await assert.rejects(runProductionCli(['--exact35',filename],deps),/startup refused/);
+ assert(captured);assert.deepEqual(captured[5],{sha256:'a'.repeat(64),capacityExpiresAt:f.capacity.window.expiresAt,admin154SuccessorSha256:'b'.repeat(64)});
+ assert.equal(captured[2],h.resource);assert.equal(h.counts().created,1);assert.equal(h.counts().starts,0);assert.equal(h.resource.snapshot().closed,true);
+});
+
+test('admin154 CLI rejects implicit or malformed successor selection before capacity or pool creation',async t=>{
+ const f=await fixture(t),filename=path.join(f.root,'admin154-invalid-model.json');
+ const before={service:process.env.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256,successor:process.env.NAIJUE_ADMIN154_SUCCESSOR_SHA256};
+ t.after(()=>{for(const [key,value] of [['NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256',before.service],['NAIJUE_ADMIN154_SUCCESSOR_SHA256',before.successor]]as const){if(value===undefined)delete process.env[key];else process.env[key]=value;}});
+ await writeFile(filename,JSON.stringify({...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity}),{mode:0o600});
+ for(const [service,successor]of [[undefined,'b'.repeat(64)],['a'.repeat(64),''],['a'.repeat(64),'x'.repeat(64)]]as const){
+  if(service===undefined)delete process.env.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256;else process.env.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256=service;
+  process.env.NAIJUE_ADMIN154_SUCCESSOR_SHA256=successor;const h=scriptedHost();
+  await assert.rejects(runProductionCli(['--exact35',filename],h.deps),/Admin154 requires/);assert.equal(h.counts().created,0);assert.equal(h.counts().starts,0);
+ }
+});
 test('A02 live producer refuses changed executable and unsafe permissions',async t=>{
   const f=await fixture(t),c=parseProductionCapacityLaunch(f.capacity),producer=createCapacityExecProducer(c),controller=new AbortController();
   await chmod(f.capacity.producer.executable,0o777);await assert.rejects(producer({window:c.window,signal:controller.signal}));await chmod(f.capacity.producer.executable,0o700);

@@ -76,6 +76,9 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
   const currentServiceSha=process.env.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256;
   if(currentServiceSha!==undefined&&(!production35||injected!==undefined||!/^[a-f0-9]{64}$/.test(currentServiceSha)))
     throw new TypeError('Current service digest requires the approved production Exact35 launch');
+  const admin154SuccessorSha=process.env.NAIJUE_ADMIN154_SUCCESSOR_SHA256;
+  if(admin154SuccessorSha!==undefined&&(!production35||injected!==undefined||currentServiceSha===undefined||!/^[a-f0-9]{64}$/.test(admin154SuccessorSha)))
+    throw new TypeError('Admin154 requires the exact successor digest and current production service');
   let capacity:CapacityAdmission|undefined=injected,api:PostgresApplicationApi|undefined,host:ProductionApplicationHost|undefined;
   let stopping=false;
   const stop=():void=>{
@@ -92,7 +95,7 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
     const tag=mode==='r3'||mode==='full'||mode==='r35'?await readProductionStaffCredentialRequestTag(c as ProductionRuntime26R3Configuration | ProductionRuntime35Configuration):null;
     const parsedCapacity=production35?parseProductionCapacityLaunch(capacityLaunch):undefined;
     const currentService=currentServiceSha!==undefined&&parsedCapacity
-      ? {sha256:currentServiceSha,capacityExpiresAt:parsedCapacity.window.expiresAt} : undefined;
+      ? {sha256:currentServiceSha,capacityExpiresAt:parsedCapacity.window.expiresAt,...(admin154SuccessorSha!==undefined?{admin154SuccessorSha256:admin154SuccessorSha}:{})} : undefined;
     api=await dependencies.createApi(mode,c,capacity,tag,parsedCapacity?.target,currentService);
     if(stopping)throw new Error('Production startup was cancelled');
     if(!injected){

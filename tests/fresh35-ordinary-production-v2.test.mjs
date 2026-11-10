@@ -15,7 +15,7 @@ const firstR3={database:'erp_fresh35_20261110_r3',host:'127.0.0.1',port:56791,
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const encodeProof=value=>JSON.stringify(value,(_key,member)=>member&&Object.getPrototypeOf(member)===Object.prototype
  ? Object.fromEntries(Object.keys(member).sort().map(key=>[key,member[key]])) : member)+'\n';
-async function model({synthetic=false,recordParentPrivate=false,formal=false,initial=false,normal=false,initialRoleUntil,proposal={}}={}){
+async function model({synthetic=false,recordParentPrivate=false,formal=false,initial=false,normal=false,initialRoleUntil,proposal={},admin154=false}={}){
  const root=await mkdtemp(join(tmpdir(),'ordinary35-model-')),reference=join(root,synthetic?'reference-inputs':'references');
  const paths={baselineDirectory:join(reference,'baseline'),modelPath:join(reference,'model.json'),functionsPath:join(reference,'functions.json')};
  const networkWorkspace=join(root,'network-workspace'),networkPath=join(networkWorkspace,'bootstrap-network-observation.json');
@@ -44,6 +44,7 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
   ...(synthetic?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V1',target:t}:formal?{format:'FRESH35_COMBINED_INSTALLATION_RECORD_V2',target:t}:{})};
  const recordBytes=JSON.stringify(record)+'\n';await writeFile(recordPath,recordBytes);
  const pins={installationRecordSha256:hash(recordBytes),...record.binding};
+ const successorFile=join(root,'successor.json');if(admin154)await writeFile(successorFile,'SYNTHETIC SUCCESSOR ONLY');
  const proof={format:'FRESH35_CURRENT_PRODUCTION_SERVICE_V1',requestKey:'t45-first-20261110-r3-recovery-restart-20261110-01',
   oldStopRequestKey:'t45-first-20261110-r3-recovery-stop-20261110-01',authorizationSha256:'a'.repeat(64),
   previousStopReceiptSha256:'c'.repeat(64),previousStopTerminalSha256:'d'.repeat(64),checkedAt:now-300,
@@ -100,8 +101,14 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
  function describeFresh35ProtectedRecordSnapshot(e){return snapshots.get(e)}
  async function assertFresh35ProtectedRecordSnapshotCurrent(e,bytes=false){const s=snapshots.get(e);need(s&&identity(await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true}))===s.identity,'PROTECTED_RECORD_GENERATION_CHANGED');if(bytes)need(hash(await readFile(FRESH35_COMBINED_RECORD_PATH))===s.sha256,'PROTECTED_RECORD_BYTES_CHANGED')}
  async function reconstructFresh35InstalledProductionTargetV2(){return {}}function describeFresh35CombinedTarget(){return t}
- async function resolveFresh35ReferenceInputPaths(){return ${JSON.stringify(paths)}}async function loadFresh35CombinedSource(){return {}}function describeFresh35CombinedSource(){return {currentSourcePins:[{path:${JSON.stringify(hostPath)},sha256:loadedHostSha256},{path:${JSON.stringify(recordModulePath)},sha256:FRESH35_COMBINED_RECORD_MODULE_SHA256}]}}
- async function buildFresh35CombinedCatalog(){return {}}function describeFresh35CombinedCatalog(){return {modelSha256:'same-model'}}
+ async function resolveFresh35ReferenceInputPaths(){return ${JSON.stringify(paths)}}async function loadFresh35CombinedSource(){modelLoads.base++;return {}}function describeFresh35CombinedSource(){return {currentSourcePins:[{path:${JSON.stringify(hostPath)},sha256:loadedHostSha256},{path:${JSON.stringify(recordModulePath)},sha256:FRESH35_COMBINED_RECORD_MODULE_SHA256}]}}
+ async function buildFresh35CombinedCatalog(){return {}}function describeFresh35CombinedCatalog(c){return c?.admin154?{format:'FRESH35_A53_ADMIN154_CATALOG_SPEC_V1',predecessorModelSha256:'same-model',modelSha256:'new-model',sourceSetSha256:'e'.repeat(64),catalogSpecSha256:'f'.repeat(64)}:{modelSha256:'same-model'}}
+ const modelLoads={base:0,successor:0};export function sourceLoads(){return {...modelLoads}}
+ async function loadFresh35Admin154Source(){modelLoads.successor++;return {}}async function buildFresh35Admin154Catalog(){return {admin154:true}}
+ const ADMIN154_RECORD_PATH=${JSON.stringify(successorFile)},successors=new WeakMap();let successorMissing=false,successorExpected;export function omitSuccessor(){successorMissing=true}export function expectedSuccessor(){return successorExpected}
+ async function loadFresh35Admin154Record(expected,sha){need(!successorMissing&&sha==='d'.repeat(64),'MODEL_SUCCESSOR_REQUIRED');successorExpected=expected;const token={};successors.set(token,identity(await lstat(ADMIN154_RECORD_PATH,{bigint:true})));return token}
+ function describeFresh35Admin154Record(){return {sha256:'d'.repeat(64)}}async function assertFresh35Admin154RecordCurrent(token){need(successors.get(token)===identity(await lstat(ADMIN154_RECORD_PATH,{bigint:true})),'MODEL_SUCCESSOR_CHANGED')}
+
  async function compileFresh35CombinedProgram(){return {}}function validateFresh35CombinedRecord(){if(${formal})throw Error('MODEL_CURRENT_PROGRAM_CANNOT_VALIDATE_OLD_RECORD');for(const stage of ['validate-replace','validate-overwrite','validate-delete'])changeRecord(stage);return record}async function assertFresh35CombinedSourcesCurrent(){changeRecord('after-watch-replace')}async function assertFresh35CombinedCatalogCurrent(){}
  async function modelInstalledModule(name){return{
   'fresh35-combined-source-v1.mjs':{resolveFresh35ReferenceInputPaths,async loadFresh35CombinedSource(root){need(root===oldRoot,'MODEL_HISTORICAL_ROOT');return {}},describeFresh35CombinedSource:()=>({sourceSetSha256:record.binding.sourceSetSha256,currentSourcePins:[{path:'source.mjs'},{path:'scripts/release/unified-install/fresh35-combined-record-v1.mjs',sha256:'d'.repeat(64)}]}),assertFresh35CombinedSourcesCurrent},
@@ -117,7 +124,7 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
   .replace("const ordinaryInstalledSourceRoot='/opt/naijue-erp/fresh35-combined-v1';",'const ordinaryInstalledSourceRoot=oldRoot;')
   .replace("const currentProductionServicePath='/run/naijue-rewrite/current-production-service.json';",'const currentProductionServicePath=serviceFile;')
   .replace(/const installedModule=.*?;/,'const installedModule=modelInstalledModule;');
- const api=await import('data:text/javascript;base64,'+Buffer.from(prefix+tail).toString('base64'));
+ const api=await import('data:text/javascript;base64,'+Buffer.from(prefix+original.slice(original.indexOf('function admin154ExpectedRecord('),original.indexOf('export async function describeFresh35ProductionImportBinding('))+tail).toString('base64'));
  const row={systemIdentifier:'123',databaseOid:'42',database:'synthetic_model',currentUser:'model_login',sessionUser:'model_login',serverAddress:'172.20.0.4',serverPort:5432,postmasterStart:'NEW_ACTUAL_START_NOT_INSTALL_TIME',backendPid:42,serverVersionNum:'170011',rowSecurity:'on',replicationRole:'origin',recovery:false,ordinaryAttributes:true,lifetimeMatches:true,memberships:[[role,false,false,true]]};
  if(synthetic)Object.assign(row,{database:t.proposal.database,currentUser:t.proposal.runtime,sessionUser:t.proposal.runtime,serverAddress:t.proposal.host,serverPort:t.proposal.port,postmasterStart:t.physical.postmasterStart,observedLoginValidUntil:new Date(expiry-1000).toISOString()});
  if(formal)Object.assign(row,{database:t.proposal.database,currentUser:t.proposal.runtime,sessionUser:t.proposal.runtime,
@@ -127,7 +134,7 @@ async function model({synthetic=false,recordParentPrivate=false,formal=false,ini
  const pool={async connect(){return client()}},connection=synthetic||formal?{host:t.proposal.host,port:t.proposal.port,database:t.proposal.database,user:t.proposal.runtime}:{host:'postgres',port:5432,database:'synthetic_model',user:'model_login'};
  async function putProof(bytes=encodeProof(proof)){await writeFile(serviceFile,bytes);return{sha256:hash(bytes),capacityExpiresAt:now+90000}}
  return {api,root,recordPath,networkPath,networkWorkspace,hostPath:join(root,hostPath),pool,connection,row,calls,clients,client,identityParams,
-  proof,putProof,setActualLifetime:v=>{actualLifetime=v},now,t,serviceFile,fail:x=>failure=x,dispose:()=>rm(root,{recursive:true,force:true})};
+  successorFile,proof,putProof,setActualLifetime:v=>{actualLifetime=v},now,t,serviceFile,fail:x=>failure=x,dispose:()=>rm(root,{recursive:true,force:true})};
 }
 test('ordinary startup uses one pool/lease and direct LOGIN identity before interface catalog; business checks do not repeat static scans',async()=>{
  const m=await model();let cap;
@@ -202,6 +209,65 @@ test('normal02 rejects cross01/02 request, namespace and carrier pairs and refus
    m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+carrier;
    await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof()),new RegExp(code));
    assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
+test('normal03 admits the exact November 11 request with its November 10 carrier identity',async()=>{
+ const m=await model({formal:true,normal:true});let cap;
+ try{
+  m.proof.requestKey='t45-first-r3-native-service-start-20261111-03';
+  m.proof.sharedPostgresNamespace.creationOperationId=m.proof.requestKey;
+  m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-03';
+  const input=await m.putProof();cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+  assert.equal(m.clients.length,1);assert.deepEqual(m.identityParams,[null,null]);
+  assert.equal(m.api.describeFresh35OrdinaryAdmissionV2(cap).postmasterStart,m.proof.physical.postmasterStart);
+  await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+
+test('normal03 rejects false dates, crossed 01/02/03 pairs and every unapproved05',async()=>{
+ const old=n=>'t45-first-r3-native-service-start-20261110-'+n,newKey=n=>'t45-first-r3-native-service-start-20261111-'+n;
+ for(const [request,creation,carrier,code] of [
+  [old('03'),old('03'),'03','PROVENANCE_DIFFERS'],
+  [newKey('03'),old('03'),'03','NAMESPACE_DIFFERS'],
+  [newKey('03'),old('01'),'03','NAMESPACE_DIFFERS'],[newKey('03'),old('02'),'03','NAMESPACE_DIFFERS'],
+  [newKey('03'),newKey('03'),'01','CARRIER_REQUIRED'],[newKey('03'),newKey('03'),'02','CARRIER_REQUIRED'],
+  [old('01'),old('01'),'03','CARRIER_REQUIRED'],[old('02'),old('02'),'03','CARRIER_REQUIRED'],
+  [newKey('05'),newKey('05'),'05','PROVENANCE_DIFFERS'],
+ ]){
+  const m=await model({formal:true,normal:true});
+  try{
+   m.proof.requestKey=request;m.proof.sharedPostgresNamespace.creationOperationId=creation;
+   m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+carrier;
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof()),new RegExp(code));
+   assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
+test('normal04 admits only its exact November 11 request with the preserved November 10 carrier date',async()=>{
+ const m=await model({formal:true,normal:true});let cap;
+ try{
+  m.proof.requestKey='t45-first-r3-native-service-start-20261111-04';m.proof.sharedPostgresNamespace.creationOperationId=m.proof.requestKey;
+  m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-04';
+  cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof());
+  assert.equal(m.clients.length,1);assert.deepEqual(m.identityParams,[null,null]);
+  await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+test('normal04 rejects false dates, crossed service pairs and all unapproved05 before pool checkout',async()=>{
+ const key=n=>'t45-first-r3-native-service-start-20261111-'+n,old=n=>'t45-first-r3-native-service-start-20261110-'+n;
+ for(const [request,creation,carrier,code] of [
+  [old('04'),old('04'),'04','PROVENANCE_DIFFERS'],[key('04'),key('03'),'04','NAMESPACE_DIFFERS'],
+  [key('04'),old('01'),'04','NAMESPACE_DIFFERS'],[key('04'),old('02'),'04','NAMESPACE_DIFFERS'],
+  [key('04'),key('04'),'03','CARRIER_REQUIRED'],[key('04'),key('04'),'01','CARRIER_REQUIRED'],[key('04'),key('04'),'02','CARRIER_REQUIRED'],
+  [key('03'),key('03'),'04','CARRIER_REQUIRED'],[old('01'),old('01'),'04','CARRIER_REQUIRED'],[old('02'),old('02'),'04','CARRIER_REQUIRED'],
+  [key('05'),key('05'),'05','PROVENANCE_DIFFERS'],
+ ]){
+  const m=await model({formal:true,normal:true});try{
+   m.proof.requestKey=request;m.proof.sharedPostgresNamespace.creationOperationId=creation;m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+carrier;
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof()),new RegExp(code));assert.equal(m.clients.length,0);
   }finally{await m.dispose()}
  }
 });
@@ -582,4 +648,29 @@ test('production non-listable authority still fails its directory watch without 
  const m=await model({recordParentPrivate:true});
  try{await assert.rejects(()=>m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection),e=>e.code==='EACCES');assert(m.api.modelWatchedPaths().includes(join(m.root,'authority')));assert.equal(m.clients.length,0);assert.equal(m.api.activeWatchers(),0);}
  finally{await m.dispose();}
+});
+
+// The fixed record/catalog I/O above is an explicit OS model; the startup,
+// historical-model selection, pool ownership and invalidation body is real.
+test('admin154 ordinary startup selects its distinct catalog and retains the predecessor and current epoch on the same pool',async()=>{
+ const m=await model({formal:true,normal:true,admin154:true});let cap;
+ try{
+  const input={...await m.putProof(),admin154SuccessorSha256:'d'.repeat(64)};
+  cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+  assert.deepEqual(m.api.sourceLoads(),{base:0,successor:1});assert.equal(m.clients.length,1);
+  const d=m.api.describeFresh35OrdinaryAdmissionV2(cap);assert.equal(d.recordSha256,m.proof.installationRecordSha256);assert.equal(d.sourceSetSha256,m.proof.sourceSetSha256);
+  assert.equal(d.admin154Successor.recordSha256,input.admin154SuccessorSha256);assert.equal(d.postmasterStart,m.proof.physical.postmasterStart);
+  assert.equal(m.api.expectedSuccessor().physical.postmasterStart,m.proof.physical.postmasterStart);assert.equal(m.api.expectedSuccessor().successor.modelSha256,'new-model');
+  await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+  await writeFile(m.successorFile,'CHANGED SUCCESSOR');await assert.rejects(m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/SUCCESSOR_CHANGED|ACTIVE_SAME_POOL/);assert.equal(m.api.activeWatchers(),0);
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+test('admin154 ordinary selection refuses missing successor and changed predecessor model without fallback or checkout',async()=>{
+ for(const fault of ['missing','model']){
+  const m=await model({formal:true,normal:true,admin154:true});try{
+   if(fault==='missing')m.api.omitSuccessor();else m.api.changeHistoricalModel();
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,{...await m.putProof(),admin154SuccessorSha256:'d'.repeat(64)}),/MODEL_SUCCESSOR_REQUIRED|INSTALLED_MODEL_DIFFERS/);
+   assert.deepEqual(m.api.sourceLoads(),{base:0,successor:1});assert.equal(m.clients.length,0);assert.equal(m.api.activeWatchers(),0);
+  }finally{await m.dispose()}
+ }
 });

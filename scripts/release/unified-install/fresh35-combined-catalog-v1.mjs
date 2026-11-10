@@ -4,7 +4,7 @@
 import {readFile,realpath} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
-import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
+import {describeFresh35CombinedSource,fresh35CombinedSourceData,fresh35Admin154SourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
 import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverCheck,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation} from './fresh35-combined-target-v1.mjs';
 import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
@@ -80,7 +80,7 @@ function guardSql(model,lineage,target,{requireEmpty=true}={}){
  ${fresh35CombinedObserverCheck(target)}
  PERFORM pg_catalog.set_config('search_path','pg_catalog',true);
  PERFORM pg_catalog.set_config('quote_all_identifiers','off',true);
- IF pg_catalog.current_setting('server_version_num')<>'170011' OR (SELECT count(*) FROM pg_catalog.pg_proc WHERE pronamespace='naijue_erp'::regnamespace)<>152 THEN RAISE EXCEPTION 'FRESH35_COMBINED_ROUTINE_COHORT_DIFFERS'; END IF;
+ IF pg_catalog.current_setting('server_version_num')<>'170011' OR (SELECT count(*) FROM pg_catalog.pg_proc WHERE pronamespace='naijue_erp'::regnamespace)<>${model.routines.length} THEN RAISE EXCEPTION 'FRESH35_COMBINED_ROUTINE_COHORT_DIFFERS'; END IF;
  FOR item IN SELECT value FROM jsonb_array_elements(model->'routines') LOOP
   SELECT jsonb_build_object('definitionSha256',encode(sha256(convert_to(pg_get_functiondef(p.oid),'UTF8')),'hex'),'bodySha256',encode(sha256(convert_to(p.prosrc,'UTF8')),'hex'),'owner',o.rolname,'acl',${aclSql('p.proacl')}) INTO actual FROM pg_catalog.pg_proc p JOIN pg_catalog.pg_roles o ON o.oid=p.proowner WHERE p.oid=to_regprocedure(item->>'signature') AND p.pronamespace='naijue_erp'::regnamespace;
   IF actual IS DISTINCT FROM item-'signature' THEN RAISE EXCEPTION 'FRESH35_COMBINED_ROUTINE_SOURCE_OR_ACL_DIFFERS'; END IF;
@@ -159,6 +159,7 @@ function restoreGeneratedExpressionPrefixes(model,declarations,sections){
 }
 export async function buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}){
  const s=describeFresh35CombinedSource(source),data=fresh35CombinedSourceData(source),t=describeFresh35CombinedTarget(target);
+ need(s.format!=='FRESH35_A53_ADMIN154_SOURCE_V1','ADMIN154_EXPLICIT_CATALOG_REQUIRED');
  need(hash(await readFile(resolve(data.root,ownPath)))===ownHash,'RUNNING_MODULE_DIFFERS');
  const bootstrapNetworkObservationSha256=await loadFresh35SyntheticBootstrapNetwork(target,s.sourceSetSha256);
  const original=await pinned(modelPath,MODEL_SHA),functions=await pinned(functionsPath,FUNCTIONS_SHA);
@@ -213,12 +214,60 @@ export async function buildFresh35CombinedCatalog(source,target,{modelPath,funct
  const sql=guardSql(mapped,lineage,target),observation=observationSql(s),descriptor=freeze({format:'FRESH35_COMBINED_CATALOG_SPEC_V1',...(bootstrapNetworkObservationSha256?{bootstrapNetworkObservationSha256}:{}),sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),modelSha256:hash(JSON.stringify(mapped)),evidencePins:{model:MODEL_SHA,functions:FUNCTIONS_SHA},changes,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation),completeMetadataGuard:true,controllerLineageReadColumns:['version','description'],
   accountColumnWrites,rawRowtypeComparison:'ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES',dependencyValidation:'PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION',captureMissingEvidencePreserved:original.missingEvidence,independentSafetyReviewComplete:false,sqlParsedByPostgres:false,engineVerified:false,hostEnabled:false});
  const token=Object.freeze({profile:'FRESH35_COMBINED_CATALOG_SPEC_V1'});
- catalogs.set(token,{source,target,model:mapped,lineage,sql,observation,modelPath,functionsPath,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
+ catalogs.set(token,{source,target,model:mapped,lineage,sql,observation,modelPath,functionsPath,definitions,bodies,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
  await assertFresh35CombinedCatalogCurrent(token);return token;
 }
 export function describeFresh35CombinedCatalog(catalog){need(catalogs.has(catalog),'GENUINE_CATALOG_REQUIRED');return catalogs.get(catalog).descriptor}
+/** Only the frozen a53 4+2/EXECUTE delta. All non-routine model categories are
+ * copied from the original 152 model and cannot be supplied by a caller. */
+export async function buildFresh35Admin154Catalog(source,target,paths){
+ const {base,candidate}=fresh35Admin154SourceData(source),s=describeFresh35CombinedSource(source),t=describeFresh35CombinedTarget(target);
+ const baseCatalog=await buildFresh35CombinedCatalog(base,target,paths),prior=catalogs.get(baseCatalog);
+ const model=structuredClone(prior.model),definitions=new Map(prior.definitions),bodies=new Map(prior.bodies);
+ for(const change of candidate.manifest.routineChanges){
+  const key=normal(change.signature),before=bodies.get(key),after=candidate.changedBodies.find(r=>normal(r.signature)===key)?.body;
+  need(typeof before==='string'&&typeof after==='string'&&hash(before)===change.before&&hash(after)===change.after,'ADMIN154_EXACT_ROUTINE_SUCCESSOR_REQUIRED');
+  definitions.set(key,replacement(definitions.get(key),before,after));bodies.set(key,after);
+ }
+ model.routines=model.routines.map(r=>({...r,definitionSha256:hash(definitions.get(normal(r.signature))),bodySha256:hash(bodies.get(normal(r.signature)))}));
+ const template=definitions.get(normal('naijue_erp.standard_whole_package_inspect_v2(jsonb,text)'));
+ need(typeof template==='string'&&template.startsWith('CREATE OR REPLACE FUNCTION naijue_erp.standard_whole_package_inspect_v2('),'ADMIN154_CANONICAL_TEMPLATE_REQUIRED');
+ const args={standard_admin_provision_proof_v1:'provision_operation uuid, provision_fingerprint text, admin jsonb, require_empty boolean',standard_admin_provision_only_v1:'request jsonb, encoded_scrypt text'};
+ for(const routine of candidate.newRoutines){
+  need(Object.hasOwn(args,routine.name)&&!model.routines.some(r=>name(r.signature)===routine.name),'ADMIN154_EXACT_NEW_ROUTINE_REQUIRED');
+  const definition=replacement(template,body(template),routine.body).replace(/^CREATE OR REPLACE FUNCTION[^\n]+/,'CREATE OR REPLACE FUNCTION naijue_erp.'+routine.name+'('+args[routine.name]+')');
+  const acl=[t.proposal.owner+'=X/'+t.proposal.owner,...routine.acl.map(a=>a.role+'=X/'+t.proposal.owner)].sort();
+  model.routines.push({signature:routine.signature,definitionSha256:hash(definition),bodySha256:routine.sha256,owner:t.proposal.owner,acl});
+  definitions.set(normal(routine.signature),definition);bodies.set(normal(routine.signature),routine.body);
+ }
+ need(model.routines.length===154&&candidate.manifest.successorRoutinePins.every(p=>hash(bodies.get(normal(p.signature)))===p.sha256),'ADMIN154_COMPLETE_COHORT_REQUIRED');
+ const sql=guardSql(model,prior.lineage,target,{requireEmpty:false}),observation=observationSql(s);
+ const descriptor={...prior.descriptor,format:'FRESH35_A53_ADMIN154_CATALOG_SPEC_V1',sourceSetSha256:s.sourceSetSha256,
+  predecessorModelSha256:prior.descriptor.modelSha256,patchSqlSha256:candidate.manifest.patchSqlSha256,
+  modelSha256:hash(JSON.stringify(model)),changes:candidate.manifest.routineChanges,permissionChanges:candidate.manifest.permissionChanges,
+  routineCount:154,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation)};
+ delete descriptor.catalogSpecSha256;
+ const token=Object.freeze({profile:'FRESH35_A53_ADMIN154_CATALOG_SPEC_V1'});
+ catalogs.set(token,{...prior,source,model,definitions,bodies,sql,observation,baseCatalog,
+  descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
+ await assertFresh35CombinedCatalogCurrent(token);return token;
+}
+export function fresh35Admin154PredecessorCatalogSql(catalog){
+ describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.baseCatalog,'ADMIN154_CATALOG_REQUIRED');
+ const base=catalogs.get(c.baseCatalog);return Object.freeze({guardSql:base.sql,observationSql:base.observation,descriptor:base.descriptor});
+}
+/** Current controller epoch is supplied only by the fixed protected-service
+ * loader. The old installation observer remains unchanged historical metadata. */
+export function fresh35Admin154ControllerCatalogSql(catalog,source,target,postmasterStart,expiresAt){
+ fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),t=describeFresh35CombinedTarget(target);
+ need(c.baseCatalog&&t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&typeof postmasterStart==='string'&&Number.isSafeInteger(expiresAt)&&expiresAt>Date.now(),'ADMIN154_CURRENT_CONTROLLER_REQUIRED');
+ const members=JSON.stringify([['erp_unified27_importer_2393dbc6db9581c2',false,false,true],['erp_unified27_initializer_2393dbc6db9581c2',false,false,true]]);
+ const safety=`EXISTS(SELECT 1 FROM pg_catalog.pg_roles r WHERE r.rolname=session_user AND r.rolcanlogin AND NOT r.rolsuper AND NOT r.rolinherit AND NOT r.rolcreatedb AND NOT r.rolcreaterole AND NOT r.rolreplication AND NOT r.rolbypassrls AND r.rolconnlimit=2 AND r.rolvaliduntil>clock_timestamp() AND extract(epoch FROM r.rolvaliduntil)*1000<=${expiresAt}) AND (SELECT coalesce(jsonb_agg(jsonb_build_array(parent.rolname,m.admin_option,m.inherit_option,m.set_option) ORDER BY parent.rolname),'[]'::jsonb) FROM pg_catalog.pg_auth_members m JOIN pg_catalog.pg_roles parent ON parent.oid=m.roleid WHERE m.member=session_user::regrole::oid)=${q(members)}::jsonb`;
+ const identity=`DO $admin154_controller$ BEGIN IF (${safety} AND current_database()=${q(t.proposal.database)} AND current_user=${q(t.proposal.controller)} AND session_user=${q(t.proposal.controller)} AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(t.physical.systemIdentifier)} AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(t.physical.databaseOid)} AND current_setting('server_version_num')=${q(t.physical.serverVersionNum)} AND pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(postmasterStart.replace(/\+00$/,''))} AND host(inet_server_addr())=${q(t.proposal.host)} AND inet_server_port()=${t.proposal.port} AND current_setting('transaction_isolation')='repeatable read' AND current_setting('transaction_read_only')='on' AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery() AND extract(epoch FROM clock_timestamp())*1000<${expiresAt}) IS DISTINCT FROM true THEN RAISE EXCEPTION 'FRESH35_ADMIN154_CONTROLLER_DIFFERS'; END IF; END $admin154_controller$;`;
+ return Object.freeze({guardSql:identity+'\n'+guardSql(c.model,c.lineage,target,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
+}
 export function fresh35CombinedCatalogSql(catalog,source,target){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.source===source&&c.target===target,'SAME_SOURCE_AND_TARGET_REQUIRED');return Object.freeze({guardSql:c.sql,observationSql:c.observation})}
-export async function assertFresh35CombinedCatalogCurrent(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);await assertFresh35CombinedSourcesCurrent(c.source);await assertFresh35SyntheticBootstrapNetworkCurrent(c.target,describeFresh35CombinedSource(c.source).sourceSetSha256);await pinned(c.modelPath,MODEL_SHA);await pinned(c.functionsPath,FUNCTIONS_SHA);return true}
+export async function assertFresh35CombinedCatalogCurrent(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);await assertFresh35CombinedSourcesCurrent(c.source);if(c.baseCatalog)await assertFresh35CombinedCatalogCurrent(c.baseCatalog);else await assertFresh35SyntheticBootstrapNetworkCurrent(c.target,describeFresh35CombinedSource(c.source).sourceSetSha256);await pinned(c.modelPath,MODEL_SHA);await pinned(c.functionsPath,FUNCTIONS_SHA);return true}
 export function fresh35CombinedRuntimeCatalogSql(catalog,source,target){
  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog);
  return Object.freeze({guardSql:fresh35CombinedRuntimeTargetGuard(target)+'\n'+guardSql(c.model,c.lineage,target,{requireEmpty:false}),observationSql:observationSql(describeFresh35CombinedSource(source),{runtime:true})});
@@ -235,7 +284,7 @@ function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=f
  need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===s.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner)&&i.host===(ordinary===true?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary===true?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
  const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership','bootstrapObserver'];
  need(packet.catalog&&Object.keys(packet.catalog).sort().join(',')===expectedKeys.sort().join(',')&&expectedKeys.every(k=>Array.isArray(packet.catalog[k])),'FULL_RAW_CATALOG_REQUIRED');
- need(packet.catalog.types.length===70&&packet.catalog.routines.length===152&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');
+ need(packet.catalog.types.length===70&&packet.catalog.routines.length===c.model.routines.length&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');
  validateFresh35CombinedObserverObservation(packet.catalog.bootstrapObserver,target);
  for(const routine of packet.catalog.routines){const expected=c.model.routines.find(r=>name(r.signature)===routine.catalog?.proname);need(expected&&hash(routine.catalog.prosrc)===expected.bodySha256&&hash(routine.definition)===expected.definitionSha256,'RAW_ROUTINE_DIFFERS')}
  need(isDeepStrictEqual(packet.lineage,c.lineage.map(({version,description})=>({version,description}))),'RAW_LINEAGE_DIFFERS');

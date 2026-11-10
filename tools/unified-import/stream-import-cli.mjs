@@ -1,5 +1,5 @@
 import {readHistoricalSettlementRetentionCliApproval} from './historical-settlement-retention-cli-input.mjs';
-import{openReviewedFresh35Host,openReviewedFresh35ProductionHost}from'./fresh35-host-session.mjs';
+import{openReviewedFresh35Host,openReviewedFresh35ProductionHost,openReviewedFresh35Admin154Host,prepareFresh35Admin154Import}from'./fresh35-host-session.mjs';
 import{loadFresh35CombinedRecordEnvelope}from'../../scripts/release/unified-install/fresh35-combined-record-v1.mjs';
 import {readHistoricalLineAmountCliEvidence} from './historical-line-amount-cli-input.mjs';
 import {readHistoricalHallCliApproval} from './historical-hall-cli-input.mjs';
@@ -30,21 +30,27 @@ export const runStreamVerify=argv=>runStreamOperation(argv,true,false);
 export const runWholeImport=argv=>runStreamOperation(argv,false,true);
 async function runStreamOperation(argv,verifyOnly,whole){
  const command=whole?'whole-import':verifyOnly?'stream-verify':'stream-import';
- if(argv.length===1&&argv[0]==='--help')return{fresh35_execution:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_RECEIVER_CAPABILITY,fresh35_production_real_import:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_PRODUCTION_REAL_IMPORT_CAPABILITY,usage:command+' --package DIR --report DIR --manifest-sha256 SHA --target JSON --admin JSON --connection PRIVATE_JSON --scrypt-file PRIVATE_FILE [--registration JSON] [--allow-synthetic] '+(whole?'':'[--coalesce] ')+'[--explicit-zero-approval FILE --explicit-zero-approval-sha256 SHA] [--staff-hall-approval FILE --staff-hall-approval-sha256 SHA] [--historical-hall-approval FILE --historical-hall-approval-sha256 SHA] [--current-effective-alignment FILE --current-effective-alignment-sha256 SHA] '+(verifyOnly?'':'[--inspect-only] ')+'[--historical-settlement-retention-approval FILE --historical-settlement-retention-approval-sha256 SHA] [--historical-line-amount-evidence FILE --historical-line-amount-evidence-sha256 SHA] [--target-profile FRESH35_RETIRED152_V1|FRESH35_PRODUCTION_REAL_IMPORT_V1 --fresh35-reference-inputs DIR] [--prepare-only (production REAL stream-import only; no writer)] --ack-exclusive-ddl-window',postgresql_acceptance:'NOT_RUN',scope:'LOCAL_OPERATOR_CONTROLLED',package_loading:whole?'MATERIALIZED_SMALL_PACKAGE':'STREAMED_INDEX_AND_REQUESTS',large_package_command:'stream-import',small_package_limits:{file_bytes:64*1024*1024,package_bytes:256*1024*1024},stream_scope:'One whole-package transaction; bounded index/request iteration, not a claim of unlimited size or live acceptance'};
+ if(argv.length===1&&argv[0]==='--help')return{fresh35_execution:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_RECEIVER_CAPABILITY,fresh35_production_real_import:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_PRODUCTION_REAL_IMPORT_CAPABILITY,usage:command+' --package DIR --report DIR --manifest-sha256 SHA --target JSON --admin JSON --connection PRIVATE_JSON --scrypt-file PRIVATE_FILE [--registration JSON] [--allow-synthetic] '+(whole?'':'[--coalesce] ')+'[--explicit-zero-approval FILE --explicit-zero-approval-sha256 SHA] [--staff-hall-approval FILE --staff-hall-approval-sha256 SHA] [--historical-hall-approval FILE --historical-hall-approval-sha256 SHA] [--current-effective-alignment FILE --current-effective-alignment-sha256 SHA] '+(verifyOnly?'':'[--inspect-only] ')+'[--historical-settlement-retention-approval FILE --historical-settlement-retention-approval-sha256 SHA] [--historical-line-amount-evidence FILE --historical-line-amount-evidence-sha256 SHA] [--target-profile FRESH35_RETIRED152_V1|FRESH35_PRODUCTION_REAL_IMPORT_V1|FRESH35_A53_ADMIN154_FIRST_IMPORT_V1 --fresh35-reference-inputs DIR] [--admin154-successor-sha256 SHA --current-service-sha256 SHA --capacity-expires-at MS --provision-receipt PRIVATE_JSON] [--prepare-only (production REAL stream-import only; no writer)] --ack-exclusive-ddl-window',postgresql_acceptance:'NOT_RUN',scope:'LOCAL_OPERATOR_CONTROLLED',package_loading:whole?'MATERIALIZED_SMALL_PACKAGE':'STREAMED_INDEX_AND_REQUESTS',large_package_command:'stream-import',small_package_limits:{file_bytes:64*1024*1024,package_bytes:256*1024*1024},stream_scope:'One whole-package transaction; bounded index/request iteration, not a claim of unlimited size or live acceptance'};
  const v={},flags=new Set();
  for(let i=0;i<argv.length;i++){
   const k=argv[i];
   if(['--allow-synthetic','--coalesce','--inspect-only','--prepare-only','--ack-exclusive-ddl-window'].includes(k)){if(flags.has(k))throw Error('OPTION_DUPLICATE');flags.add(k);continue}
-  if(!['--package','--report','--manifest-sha256','--target','--admin','--registration','--connection','--scrypt-file','--staff-hall-approval','--staff-hall-approval-sha256','--historical-hall-approval','--historical-hall-approval-sha256','--current-effective-alignment','--current-effective-alignment-sha256','--explicit-zero-approval','--explicit-zero-approval-sha256','--target-profile','--fresh35-reference-inputs','--historical-settlement-retention-approval','--historical-settlement-retention-approval-sha256','--historical-line-amount-evidence','--historical-line-amount-evidence-sha256'].includes(k)||Object.hasOwn(v,k)||i+1>=argv.length)throw Error('OPTION_INVALID');v[k]=argv[++i];
+  if(!['--package','--report','--manifest-sha256','--target','--admin','--registration','--connection','--scrypt-file','--staff-hall-approval','--staff-hall-approval-sha256','--historical-hall-approval','--historical-hall-approval-sha256','--current-effective-alignment','--current-effective-alignment-sha256','--explicit-zero-approval','--explicit-zero-approval-sha256','--target-profile','--admin154-successor-sha256','--current-service-sha256','--capacity-expires-at','--provision-receipt','--fresh35-reference-inputs','--historical-settlement-retention-approval','--historical-settlement-retention-approval-sha256','--historical-line-amount-evidence','--historical-line-amount-evidence-sha256'].includes(k)||Object.hasOwn(v,k)||i+1>=argv.length)throw Error('OPTION_INVALID');v[k]=argv[++i];
  }
  if(verifyOnly&&flags.has('--inspect-only')||whole&&flags.has('--coalesce'))throw Error('OPTION_INVALID');
  // Explicit Fresh35 selection never routes through either historical host.
- const fresh35=Object.hasOwn(v,'--target-profile'),productionReal=v['--target-profile']==='FRESH35_PRODUCTION_REAL_IMPORT_V1';
+ const admin154=v['--target-profile']==='FRESH35_A53_ADMIN154_FIRST_IMPORT_V1';
+ const fresh35=Object.hasOwn(v,'--target-profile'),productionReal=admin154||v['--target-profile']==='FRESH35_PRODUCTION_REAL_IMPORT_V1';
+ const admin154Keys=['--admin154-successor-sha256','--current-service-sha256','--capacity-expires-at','--provision-receipt'];
+ if(admin154){
+  if(admin154Keys.some(k=>!v[k]))throw Error('OPTION_REQUIRED');
+  if(!/^[a-f0-9]{64}$/.test(v['--admin154-successor-sha256'])||!/^[a-f0-9]{64}$/.test(v['--current-service-sha256'])||!Number.isSafeInteger(Number(v['--capacity-expires-at']))||Number(v['--capacity-expires-at'])<=Date.now())throw Error('OPTION_INVALID');
+ }else if(admin154Keys.some(k=>Object.hasOwn(v,k)))throw Error('OPTION_INVALID');
  if(flags.has('--prepare-only')&&(!productionReal||whole||verifyOnly||flags.has('--inspect-only'))||productionReal&&(whole||flags.has('--allow-synthetic')))throw Error('OPTION_INVALID');
  if(fresh35){
   const diagnostic=await import('./fresh35-receiver-diagnostics.ts');
-  if(v['--target-profile']!==diagnostic.FRESH35_RECEIVER_TARGET_PROFILE&&v['--target-profile']!==diagnostic.FRESH35_PRODUCTION_REAL_IMPORT_PROFILE)throw Error('OPTION_INVALID');
-  try{await loadFresh35CombinedRecordEnvelope()}catch{return diagnostic.fresh35ReceiverBlocked(v['--target-profile'])}
+  if(!admin154&&v['--target-profile']!==diagnostic.FRESH35_RECEIVER_TARGET_PROFILE&&v['--target-profile']!==diagnostic.FRESH35_PRODUCTION_REAL_IMPORT_PROFILE)throw Error('OPTION_INVALID');
+  try{await loadFresh35CombinedRecordEnvelope()}catch{return admin154?{state:'NOT_STARTED',code:'FRESH35_PROTECTED_RECORD_REQUIRED',target_profile:v['--target-profile'],business_database_writes:false,postgresql_acceptance:'NOT_RUN'}:diagnostic.fresh35ReceiverBlocked(v['--target-profile'])}
   if(!v['--fresh35-reference-inputs'])throw Error('OPTION_REQUIRED');
  }else if(v['--fresh35-reference-inputs'])throw Error('OPTION_INVALID');
  if(Boolean(v['--historical-settlement-retention-approval'])!==Boolean(v['--historical-settlement-retention-approval-sha256']))throw Error('OPTION_REQUIRED');
@@ -122,20 +128,24 @@ async function runStreamOperation(argv,verifyOnly,whole){
    return{...imported,verification:{state:'NOT_RUN'}};
   };
   const hostOptions={explicitZeroApproval,...(fresh35?{referenceDirectory:resolve(v['--fresh35-reference-inputs']),sourceProfileSha256:manifestObject.schema_contract.source_declarations_sha256}:{})};
+  const provisionOrigin=admin154?await json(v['--provision-receipt'],true):undefined;
   const prepareProduction=async admission=>{
    if(plan)await plan.dispose();await prepare(admission);
+   if(admin154){program=await prepareFresh35Admin154Import(plan,join(report,'index.sqlite'),summary,admin,provisionOrigin,encoded,{coalesce:flags.has('--coalesce')});return program;}
    // Independent cursors use the same pinned plan and original request keys.
    // No production stream is materialized or reused after it is exhausted.
    program={...program,steps:{async *[Symbol.asyncIterator](){const original=await buildStreamProgram(plan,join(report,'index.sqlite'),summary,admin,{coalesce:flags.has('--coalesce')});yield* original.steps;}}};
    return {packageKind:manifestObject.package_kind,initialize:program.initialize,identity:program.identity,steps:program.steps,encodedScrypt:encoded};
   };
-  let result=productionReal?await openReviewedFresh35ProductionHost(config,root,target,prepareProduction,execute,{...hostOptions,prepareOnly:flags.has('--prepare-only')}):await openHost(config,root,target,execute,hostOptions);
+  const productionHost=admin154?openReviewedFresh35Admin154Host:openReviewedFresh35ProductionHost;
+  const productionOptions={...hostOptions,prepareOnly:flags.has('--prepare-only'),...(admin154?{purpose:'FIRST_REAL_BUSINESS_IMPORT',successorSha256:v['--admin154-successor-sha256'],currentService:{sha256:v['--current-service-sha256'],capacityExpiresAt:Number(v['--capacity-expires-at'])}}:{})};
+  let result=productionReal?await productionHost(config,root,target,prepareProduction,execute,productionOptions):await openHost(config,root,target,execute,hostOptions);
   if(productionReal&&acknowledgedImport){
    if(result.cleanup!=='CLOSED')return output={state:acknowledgedImport,connection_cleanup:result.cleanup,verification:{state:'VERIFICATION_UNKNOWN'}};
-   const readback=await openReviewedFresh35ProductionHost(config,root,target,prepareProduction,client=>reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals),hostOptions);
+   const readback=await productionHost(config,root,target,prepareProduction,client=>reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals),{...productionOptions,prepareOnly:false});
    result={...result,result:{...result.result,verification:readback.cleanup==='CLOSED'?readback.result:{state:'VERIFICATION_UNKNOWN'},readback_connection_cleanup:readback.cleanup,readback_host_verification:readback.host_verification}};
   }
-  const candidate={...result.result,...(productionReal?{target_profile:'FRESH35_PRODUCTION_REAL_IMPORT_V1'}:{}),...(fresh35?{host_verification:result.host_verification}:{}),connection_cleanup:result.cleanup,manifest_sha256:summary.manifest_sha256,plan_sha256:program.identity.planSha256,...(!verifyOnly||result.result?.state==='VERIFIED'?{source_counts:summary.counts,source_totals:plan.totals}:{})};
+  const candidate={...result.result,...(productionReal?{target_profile:v['--target-profile']}:{}),...(fresh35?{host_verification:result.host_verification}:{}),connection_cleanup:result.cleanup,manifest_sha256:summary.manifest_sha256,plan_sha256:program.identity.planSha256,...(!verifyOnly||result.result?.state==='VERIFIED'?{source_counts:summary.counts,source_totals:plan.totals}:{})};
   try{assertPublicValuesExcludePrivateInputs(candidate,[config.password,encoded])}catch{
    const state=result.result?.state;
    if(acknowledgedRollback)return output={state:'ROLLED_BACK',code:'PUBLIC_OUTPUT_REDACTED',summary_redacted:true,connection_cleanup:result.cleanup,verification:{state:'NOT_RUN'}};

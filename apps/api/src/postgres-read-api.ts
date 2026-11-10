@@ -662,6 +662,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       ...(runtime26HistoryAuthorization !== undefined ? { requiredObservation: "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8" as const } : requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
     });
     if(productionV2){
+      if(synthetic35&&productionV2.currentService?.admin154SuccessorSha256!==undefined)throw new TypeError('Admin154 successor requires the current production installation');
       if(!ordinaryMaintenance || !host.capacityRuntimePoolBinder || !productionV2.capacityTarget)throw new TypeError('Production V2 requires original owned-pool capacity target');
       const {host:connectHost,port,database,user}=options.postgres.target;
       const connection={host:connectHost,port,database,user};

@@ -275,7 +275,7 @@ test('REAL authorized query failure poisons original wire and preserves acknowle
 
 async function productionPhysicalFactoryModel(m){
  const source=await m.fs.readFile(new URL('../tools/unified-import/whole-host-session.mjs',import.meta.url),'utf8');
- let body=source.slice(source.indexOf('export async function openReviewedFresh35ProductionPhysicalHost('));
+ let body=source.slice(source.indexOf('export async function openReviewedFresh35ProductionPhysicalHost('),source.indexOf('/** Fixed 154 entry'))+source.slice(source.indexOf('async function openFresh35PhysicalHost('));
  const stub=s=>'data:text/javascript;base64,'+Buffer.from(s).toString('base64');
  const host=stub(`import * as api from ${JSON.stringify(m.moduleURL)};const context=api.seed();export const fresh35HostContext=api.fresh35HostContext,assertFresh35HostCurrent=api.assertFresh35HostCurrent,describeFresh35ProductionImportBinding=api.describeFresh35ProductionImportBinding,loadFresh35ProductionImportAuthorization=api.loadFresh35ProductionImportAuthorization,fresh35ProductionImportQueryGuard=api.fresh35ProductionImportQueryGuard;export async function loadFresh35ProductionImportContext(){return context}export async function loadFresh35HostContext(){throw Error('OLD_HOST_FORBIDDEN')}export async function verifyFresh35InstalledV1(){return{live_catalog_sha256:'3'.repeat(64),source_profile_sha256:'a'.repeat(64)}}`);
  body=body.replace("'./fresh35-host-session.mjs'",JSON.stringify(host))
