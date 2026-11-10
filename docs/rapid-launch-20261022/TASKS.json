@@ -42428,7 +42428,7 @@
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
               "firstNativeInstallConfirmation": {
-                "status": "USER_APPROVED_R2_SERVER_TOOL_READY_QB_REVIEW_FIXED_STOP_FACT_LEAF_PENDING",
+                "status": "R2_EMPTY_TARGET_CREATED_ENTRY_DELIVERED_INSTALL_NOT_SUBMITTED_CLOSEOUT_PENDING",
                 "owner": "T45",
                 "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
@@ -42465,6 +42465,23 @@
                   "fixedInputsSHA256": "5bc9da67e00b34cff565aebc56dacec6a531fcca4f4499b255a5f47d03995dfe",
                   "stopBudgetSHA256": "d33280deebfef7909ef9f679d202e605abb814b5dde98436d219ff8b75b93be5",
                   "check": "Original QB verified both exact plan loaders, cross-plan refusal, the final archive and server READY, and two materializer models. STOP source budget 148 s, reserve at least 150 s plus observed signing/queue/readback margin, always E_STOP + 40 s < floor(T1). C recomputed review and input SHA. The original be7 production_facts does not expose service-retained raw SHA needed by STOP. T45 is adding that one bounded read to the existing facts-installed receipt; unchanged r2 write carrier and plan. No T0 or absolute times until the missing receipt binding is ready."
+                },
+                "nativeWindowActual": {
+                  "window": "2026-11-10 CST T0 10:27, T1 10:47, S 10:53, ordinary L 12:25:30. STOP handoff cutoff 10:42:30, 150 s source reserve plus 120 s field margin. The longer finite L only prebinds later compatibility; this window authorizes no restart or import.",
+                  "stopFactsReaderSHA256": "bbac20d146bd66b1de0f171eddbc53fc67cd92f63eb10be9182cf1a121a22cca",
+                  "closeoutReaderSHA256": "54631943a314def3618c6d2dd9ec4d201b531a8f2b97a182029a16bffad54f27",
+                  "provisionAuthoritySHA256": "a356cb1fb33143aa8fbb10f362e015feccac3844870fc57bdeb3abaca9588934",
+                  "provisionTerminalSHA256": "36130279f5a3006a797574be10fb3d45b8b0eb2b512027fedf1822830515584e",
+                  "provisionFactsSHA256": "5ca510ae142292e0bab8bdfcf928b6f84676e24e6d4c76d17491b819206776cd",
+                  "entryAuthoritySHA256": "a4dbf67d5c51eeda32826131e4c7562a9057d21966b63c695c82b7044e781ada",
+                  "entryTerminalSHA256": "b2cbebe8d7a1292dc6757af717beac3c4995e7dc20d4ca5d66edd6bb80e07153",
+                  "entryFactsSHA256": "862263081328a47d7ae3b624e71d2f5b770a70dc107ca2e9b3112ffc351ed0d7",
+                  "describedTerminalSHA256": "51a50427e6873fc93c0ac7e4dd79003c6774c822b9951065f9cf35080d957acd",
+                  "describedFactsSHA256": "e61c6cfa425ac9ebf31850963bed17f4767e84f6fa86ce3fa5d93f2657b762eb",
+                  "installAuthoritySHA256": "465c5c4b77a4af7ca60e5b91e9199f5d2e2d4f818da67c14bd913485071620bb",
+                  "installOriginalKeyReadbackSHA256": "71f17109a9cbb8b98b638b1d957d528dfa805fc6485c386ab651d2c975206ae1",
+                  "check": "T45 actual provision COMPLETED/0 at 10:27:54, 17.157 s, created exact empty PG17.11 R1 target. Actual entry COMPLETED/0 at 10:30:52, same protected bytes and CID. Actual description COMPLETED/0 at 10:33:58, same target and current catalog/program/source. C recomputed actual terminal/phase pairs and validated all three private issued files with the original be7 validator. Staged coordination exceeded the reserved handoff time. T45 local pre-submit at 10:44:26 refused ORIGINAL_INSTALL_WINDOW_OR_STOP_RESERVE_TOO_SHORT before mkdir, submit or server request. At 10:47:04 original key readback showed all server request/temp/job/result and local registers empty. NOT_SUBMITTED, no installation, no durable record, no custody STOP. Preserve the exact original target and keys; actual guardian shutdown/empty front pending at S, no import or deployment.",
+                  "next": "T45 original facts-close readback after actual S. If clean and uninstalled, compare existing same-physical continuation prerequisites with a distinct exact empty install scope. No original replay, deletion, start, schema or role change authorized by this checkpoint."
                 },
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
                 "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
