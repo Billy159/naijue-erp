@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T03:36:00+08:00",
+  "updatedAt": "2026-11-11T03:43:30+08:00",
   "stage": "R3_COLD_COPY_VERIFIED_9830_STAGED_POLICY_RESTORED_ADMIN154_UPGRADE_LEAF_PARALLEL",
-  "lastVerifiedRemoteCommit": "97b1172e4f2f149c697b38287a084e87f3344be9",
+  "lastVerifiedRemoteCommit": "dd385dacae8f0bee98f5c1d8ba439fdc69e440da",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,7 +1786,7 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T03:36:00+08:00",
+    "asOf": "2026-11-11T03:43:30+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_COLD_COPY_VERIFIED_9830_STAGED_POLICY_RESTORED_ADMIN154_UPGRADE_LEAF_PARALLEL",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
@@ -1950,7 +1950,7 @@
         "serverAPP": "NOT_RUN"
       }
     },
-    "controllerRecordsRemote": "97b1172e4f2f149c697b38287a084e87f3344be9",
+    "controllerRecordsRemote": "dd385dacae8f0bee98f5c1d8ba439fdc69e440da",
     "publicStatusSha256": "9f34a04b47ece9c022c514ebad308554af8a2ee831417a251dc93c37badadfd9",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
@@ -2310,7 +2310,17 @@
       "rootOuterOwner": "T45",
       "writerHandoff": "T45 explicitly no file/WIP/in-memory draft; D1 accepted no overlap",
       "app9830Artifact": "ACTUAL_READY_AND_ORIGINAL_POLICY_RESTORED",
-      "app9830ArtifactReceiptSha256": "e83e57076a1cf76d951c61ec7b0ba7646955a4cf79acc67d088ae6184cefd027"
+      "app9830ArtifactReceiptSha256": "e83e57076a1cf76d951c61ec7b0ba7646955a4cf79acc67d088ae6184cefd027",
+      "maintenancePair": "t45-first-r3-native-service-start-20261111-04",
+      "runtimeAfterAuthenticationRestorationPair": "t45-first-r3-native-service-start-20261111-05",
+      "runtimeAfterAuthenticationRestorationContainer": "t45-fresh35-first-production-20261110-r3-service-05",
+      "ordinaryMaintainerExpiryGuardCheck": "SOURCE_CONFIRMED_NO_OWNER_CONTROLLER_LIFETIME_REQUIREMENT_IN_ORDINARY_APP_NO_RELAXATION_NEEDED",
+      "finalAppSource": "D1_BATCHED_SUCCESSOR_PENDING_05_CURRENT_SOURCE_PINS_CHANGE_BEFORE_REAL_DDL_RECORD",
+      "intermediate9830Preserved": true,
+      "normal04SourceCommit": "c729c462e702549a8e6af2048527bf09d557d439",
+      "normal04SourceReview": "PASS_SOURCE_NORMAL04_DELTA_ONLY",
+      "normal04Actual": "NOT_RUN",
+      "normal04SourceReviewSha256": "69a9d699c5a60b1ed200c74f66568f24779bb569f52bc452def3e6b3fee77f85"
     }
   },
   "operationalState": {

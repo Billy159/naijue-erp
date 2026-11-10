@@ -4051,3 +4051,14 @@ D1准确确认9830只有154记录校验/加载，尚缺实际SQL36事务writer�
 避免唯一服务器owner串行等代码，C先核T45无154/upgrade文件或tracked WIP，再取得T45明确“未创建/修改、无内存稿、交还且不双写”。原D1唯一新增其本人checkout的 tools/unified-import/fresh35-admin154-upgrade.mjs 及必要定向测试；T45保持root外层/有限owner+controller认证恢复/normal04/原受保护发布调用唯一writer。接口使用既有owner连接及关闭后独立新连接factory，0新池；同事务SQL36+receipt、明确COMMIT、后提交154目录读回后才返回可发布record，UNKNOWN与COMMITTED_UNPUBLISHED分开。固定9830APP/manifest不回改、不重打包；未新增团队、平台或业务规则。D1已按gpt-6.1-sol/high实际接续，QB之后只验该增量。
 
 STATUS03:35:51已推GitHub f66a0e9f36b171b33051da43dfa0a636fbfb1a59 / 内容SHA9f34a04b47ece9c022c514ebad308554af8a2ee831417a251dc93c37badadfd9；上一C三记录远端97b1172e4f2f149c697b38287a084e87f3344be9已核。当前没有待用户操作。下一步原D1与T45并行完成准确维护源码与窗口材料，C核实后按现有委托直接衔接同R3，未签实际04/SQL36/A，应用CLI/容量/readyz/业务和正式切换仍未验；11.2旧数据继续排除。
+
+
+### 2026-11-11 — 维护认证恢复后的准确05运行代已提前确定
+
+T45确认普通owner/controller无法自行还原认证，04完成SQL36及A后须停稳、沿原single-user准确恢复旧认证并读回；自然到期不能代替恢复。C已自主选择唯一05 pair：t45-first-r3-native-service-start-20261111-05 / t45-fresh35-first-production-20261110-r3-service-05，04仍仅维护，不能重启04或冒用其epoch。原D1在本人host唯一补精确05及受影响反例，06/错日期/跨pair仍拒；T45独占原root外层和05 producer。没有实际04/05启动或认证改动。
+
+D1依据当前ordinary admission/catalog/每租借identity源码确认：154普通APP只核runtime自身身份/属性/权限与当前epoch，未要求owner/controller维护认证持续有效，不需要放宽任何guard或权限。升级owner和A专用controller的有限有效认证要求保留。154记录已支持保留真实DDL04历史birth并与当前05分别核验，不改原receipt。
+
+当前host列在currentSourcePins，增加05会改变真实154 sourceSet。因此必须在SQL36实际记录生成前固定D1合批后继，并由原D2依固定Node24.21/npm11.9/原依赖一次成包；9830及3639指纹、既有包和上传证据全部留档，不把旧sourceSet贴到新源码。D2已收到准确待接条件，未启动重复构建。D1新增升级leaf/测试、host05合批，T45有限认证恢复/04与05外层并行，复用各自原owner，不另建团队。
+
+QB已交normal04源码c729c462三叶定向PASS_SOURCE_NORMAL04_DELTA_ONLY，RESULT69a9d699c5a60b1ed200c74f66568f24779bb569f52bc452def3e6b3fee77f85；实际04未执行，认证恢复源码尚待。下一步是固定上述完整接线与窗口后再启动同库，避免开窗后准备。C三记录此前dd385dacae8f0bee98f5c1d8ba439fdc69e440da已核远端；STATUS03:35现有实际冷副本和上传回执结论不变。用户无需再批准这些已受托准备与必要修复。
