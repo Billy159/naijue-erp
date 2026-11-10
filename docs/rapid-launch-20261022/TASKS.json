@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T05:05:00+08:00",
-  "stage": "R3_APP_STAGED_NODE_DRIVER_QB_PASSED_ROOT_INCREMENT_FIXED_REVIEWING",
+  "updatedAt": "2026-11-11T05:24:00+08:00",
+  "stage": "R3_CAPTURE_CREATE_MODE_0644_VS_REQUIRED0600_CONFIRMED_MINIMAL_SUCCESSOR",
   "lastVerifiedRemoteCommit": "dd385dacae8f0bee98f5c1d8ba439fdc69e440da",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1786,14 +1786,14 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T05:05:00+08:00",
+    "asOf": "2026-11-11T05:24:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_COLD_COPY_VERIFIED_FINAL1B8_LOCAL_BUILD_PASS_154_SQL_ADMIN_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "d6443ae9422667101e729e396e3992e09a864825",
+    "publicStatusCommit": "74388a902a004e9287c646dc4a727da526a3f53c",
     "currentOwners": {
       "T45": "Sole server executor/root outer writer; coldcopy actual verified and9830 staged policy restored. Prepare finite existing owner/controller authentication recovery and normal04. PureNode upgrade leaf explicitly handed toD1.",
       "D1": "Sole writer of new tools/unified-import/fresh35-admin154-upgrade.mjs and necessary focused tests; fixed9830 APP/manifest unchanged. SameDDL receipt, confirmedCOMMIT, independent154catalog, true record assembly.",
@@ -1951,7 +1951,7 @@
       }
     },
     "controllerRecordsRemote": "a790e308e0129974edd46db49958630ad3d0dbe6",
-    "publicStatusSha256": "6ceb030392b9d5215006393142a23dabe2f390364ba6021480013c06b5e66e19",
+    "publicStatusSha256": "89d85ea453d2b975a910f7440ae325dacd14d9a1f5d66cf60f5851920788c36a",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -2388,7 +2388,7 @@
         "sql36": false,
         "appStarts": 0
       },
-      "next": "Original QB review root six-leaf increment; T45 finish exact time/authority templates, C bind same-R3 real window only after static ready; no repeated APP build",
+      "next": "T45 create sensitive snapshot as0600 before content, fixed minimal successor and real umask022 regression; original QB affected delta only; C then exact new finite window.",
       "nodeDriver": {
         "owner": "D1",
         "status": "PASS_SOURCE_MAINTENANCE_DRIVER_ONLY",
@@ -2431,10 +2431,15 @@
         "commit": "4e348492535b1a4e75a8494aa150aa53131e1233",
         "tree": "67260bfa7ebafc6e84518927919c3909e6ba3f1b",
         "readySha256": "b939694df69ff69e55307bb56a1df61f95061a7014d406c972db7c6f8992efa7",
-        "sourceStatus": "FIXED_SIX_LEAVES_ORIGINAL_QB_INCREMENT_REVIEW_IN_PROGRESS",
+        "sourceStatus": "PASS_SOURCE_NATIVE154_ROOT_DELTA_ONLY",
         "authorChecks": "16_MODEL_METHODS_PASS",
         "driver": "FINAL_B0_9BB_ONLY",
-        "actualSQLorPG": false
+        "actualSQLorPG": false,
+        "qbResultSha256": "4656959f10ac32a111324c3f43242fd8b62ce2d3369a3bb4c8f28ede19a8dc79",
+        "qbReviewSha256": "563c94eeffc7ba449d79bff4ffe9af5ee79403324920d7e95694e2b7b7c1f9d5",
+        "controllerReportBytesVerified": true,
+        "independentMethods": 16,
+        "inlineNode24_21Parse": 3
       },
       "externalDependencyUidObservation": {
         "status": "EXISTING_GUARD_BOUNDARY_VERIFIED_NO_NEW_RULE",
@@ -2442,6 +2447,55 @@
         "mode": "READONLY_APPROVED_EXISTING_MOUNT",
         "notInsideSource": true,
         "newChownOrDownload": false
+      },
+      "executionMatrix": {
+        "sha256": "5460d5a390f50a1b2045aa4b8387921d35b13efdccddff00bca8437cef8fb030",
+        "bytes": 13836,
+        "allSevenOriginalTemplatesBytesVerified": true,
+        "status": "EXACT_STATIC_PROPOSAL_NOT_AUTHORITY"
+      },
+      "actualMaintenanceWindow01": {
+        "owner": "T45",
+        "startsAt": 1794345069726,
+        "applyExpiresAt": 1794345669726,
+        "credentialValidUntil": 1794346869726,
+        "restorationDeadline": 1794348669726,
+        "normal04LeaseProposal": 1794347169726,
+        "rolesAuthoritySha256": "d7a3363911d0f48d01a7eba3bf6a197f63524d5a88773c2249782643c06fbc90",
+        "hostApplyAuthoritySha256": "c171259153954acf29d7f320791f247cec4627fb4ea1cac760c588bcd97649f4",
+        "status": "ACTUAL_FAILED_CAPTURE_METADATA_REQUIRED_NO_APPLY_STEP_REACHED",
+        "normal04AndLater": "NOT_ISSUED_REQUIRE_ACTUAL_FACTS",
+        "input": "NO_NOV2_OR_OTHER_IMPORT",
+        "job": "t45-r3-admin154-maintenance-auth-20261111-01",
+        "jobSha256": "96d608ec019a19df5936dd77393b1e3e4d4b6ab5d2c506e9702f0697834f316c",
+        "resultSha256": "b69104971be888e5578b130a3366a77d7392e476ff3c3ae97f31abff4538b9ed",
+        "insideSha256": "1721dec250728fe33ba968f0dbec44de27ac96c5e582c5a49c7b1a5d4b5def4c",
+        "cleanupSha256": "09623515964d5574e581b95c01c48b78f4e790858b53f5281ffc6bef22f4776c",
+        "exitCode": 2,
+        "seconds": 6.386199,
+        "startedAtShanghai": "2026-11-11T05:14:09.587+08:00",
+        "finishedAtShanghai": "2026-11-11T05:14:16.041+08:00",
+        "safeCode": "MAINT_CAPTURE_METADATA_REQUIRED",
+        "sqlstate": null,
+        "originalTypedStatus": "FINITE_AUTH_STEP_UNCONFIRMED_ORIGINAL_KEY_ONLY",
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "oomKilled": false,
+        "controllerFourRawReceiptsVerified": true,
+        "rolePasswordOrExpiryStage": "NOT_REACHED_SOURCE_AND_ALL_PROGRESS_ABSENT",
+        "normal04": false,
+        "sql36": false,
+        "adminA": false,
+        "actualMetadataDifference": {
+          "source": "T45 fresh stat observation; raw receipt pending",
+          "snapshotMode": "0644",
+          "requiredMode": "0600",
+          "ownerTypeNlink": "MATCHED",
+          "parentMode": "0700",
+          "manager": "NO_PENDING_OR_ACTIVE",
+          "oldApplyWindow": "EXPIRED_NO_REPLAY"
+        },
+        "automaticReplay": false
       }
     }
   },
