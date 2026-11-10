@@ -42883,9 +42883,28 @@
               "unissuedStagingSHA256": "0305ad43412d6a5ef31400d9513d6e5bc93ea5bd5544d603ecf89db008f40b76",
               "unissuedBundlePinsSHA256": "cff8f8a176f7bcb3ce4f8672fa6bacd1fd9e7e51c7bda5fe0cbf7667d4a29cbf",
               "resultSHA256": "3a863d1b3071e178b4f77872402b83a6edff3eafc42581c5b965a5b3dd8ae09a",
-              "check": "QB 1/1 regression plus an independent run with the exact archive, lock and manifest and modeled READY/ownership. Original raw bytes read 210 members. The newline-only mutation now rejects before opening the archive or making a release directory or Docker/npm call. T45 local original artifact receiver read ABSENT to READY to same-key status and rejected a duplicate. Root job manifest permissions inherit dispatcher umask in the model; 0644 rejects at the original private manifest guard. Real mode not observed. C recomputed the three artifact digests, helper, commit tree and parent."
+              "check": "QB 1/1 regression plus an independent run with the exact archive, lock and manifest and modeled READY/ownership. Original raw bytes read 210 members. The newline-only mutation now rejects before opening the archive or making a release directory or Docker/npm call. T45 local original artifact receiver read ABSENT to READY to same-key status and rejected a duplicate. C recomputed the three artifact digests, helper, commit tree and parent."
             },
-            "next": "T45 binds the final APP, actual ordinary artifact READY bytes and original helper review to a single private candidate. Confirm actual root bundle manifest permissions before a capacity window. Real Linux npm/native load remains required. Empty database installation is separate."
+            "rootBundleMode": {
+              "status": "LIVE_0644_BLOCKER_QB_FIX_PASS_INSTALLATION_UNISSUED",
+              "unprivilegedReadbackSHA256": "136384d9a3cb116032cd53e1f90fbc5e3bbc456964d3a961df5d39ddc2865c98",
+              "job": "t45-first-r1-root-bundle-metadata-readonly-20261110-01",
+              "jobSHA256": "f13fc309832a4c5eae6d4c59a884e45da68b03ddf91cb7501c7770a694fdd419",
+              "metadataSHA256": "7860bb2f1f881988c275cc4819185775067b15c0b5c29e9f605dc9a256c2796b",
+              "unissuedFixScopeSHA256": "586865a623df996ec703d59b5284ef6533405a68b4f563faef2cfdba1a02cdaf",
+              "check": "Original T45 read-only job completed 0 in 0.035 s. Prior completed job and same-dispatcher current freeze both root:root 0644, nlink 1. Installed freeze does not set the manifest file mode. Both capacity consumers require a private manifest; first-install would fail before gate-ready with PRIVATE_REFERENCE_PERMISSIONS_REQUIRED after dependency install and candidate startup. No stage attempted. C recomputed the three digests and confirmed native empty install carrier does not consume this manifest path. Earlier ordinary read denial is retained.",
+              "offlineFix": {
+                "installedOriginalSHA256": "9c7c5eabe4697fc1768e370f4e972dc6ca6a0f8306ed0c5c04729e798c66e15d",
+                "candidateSHA256": "c9ea0e6779db8822a336828ee1654c96ce7896707101403462e371b0e215d543",
+                "patchSHA256": "7b75a3f1dd029fe93fbb5851ecb4cec0000ba70a11e0a7fe800acfac1cd8afc0",
+                "testSHA256": "e7cf954585d34895bad6c21b45c386c6341f494cc4d3dd48457212d527d15f25",
+                "resultSHA256": "fb92ac931ebc8f5fdc3f136a8e414a353646074853b1d7ac580e664df0876ca2",
+                "check": "QB reconstructed the exact candidate, compared the AST and ran 3/3 plus a symlink rejection. Only freeze changes. Modes 0022 and 0077 yield a new file at 0600, with the original bytes and digest. Existing file/key, symlink, wrong digest and denied admission reject. C independently ran actual old/new freeze snippets and the unchanged exact consumer: 0644 rejects, 0600 accepts, SHA identical, exit 0. No installed shared component changed."
+              },
+              "next": "T45 verifies the existing installation/rollback channel and prepares an exact unissued one-leaf scope. Apply only once the live original, authority and rollback are established; then verify a new freeze. Do not modify historical manifests. The separate offline cache transfer can reuse the established ordinary source-and-tools route when its exact live inputs are verified."
+            },
+            "dependencyReuseAcrossFixedTrees": "C recomputed root package.json df132518 and package-lock.json c0997c16 in APP576, 23a0253f, D1 1b37415c and restoration aca4cebb. All four match byte-for-byte. build-production.mjs:210 copies these bytes verbatim. The cache can be reused with a successor that retains both files; exact final archive binding is still required.",
+            "next": "T45 binds the final APP, actual ordinary artifact READY bytes and original helper review to a single private candidate. Resolve the verified root manifest mode before a capacity window. Real Linux npm/native load remains required. Empty database installation is separate."
           },
           "networkPreparationSHA256": "9bc1d67dbd3a9e14706d91134fff0e777d1fd655c273e73044cfcf3dc1db4069",
           "networkPreparation": "T45 fixed a single unsigned scope for data internal 10.248.42.224/28 and ingress noninternal 10.248.42.240/28, adjacent to and distinct from existing front 10.248.42.208/28 by CIDR arithmetic. These are proposals pending actual Docker IPAM, host routes and interface-prefix conflict readback. Later creation requires the exact same-version release plan and its decision, original single-slot sequencing and per-bridge full ID/attributes/zero endpoint readback.",
