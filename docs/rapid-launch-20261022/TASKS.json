@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-10T23:13:02+08:00",
-  "stage": "R3_INSTALLED_CLEAN_NORMAL_SERVICE_AND_LINUX_DEPENDENCIES_PARALLEL_IMPLEMENTATION",
+  "updatedAt": "2026-11-10T23:25:54+08:00",
+  "stage": "R3_INSTALLED_CLEAN_NORMAL_V2_APP_FIXED_LINUX_ACTUAL_PENDING",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1786,20 +1786,20 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-10T23:13:02+08:00",
+    "asOf": "2026-11-10T23:25:54+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_STOPPED_CLEAN_WITH_DURABLE_35_TABLE_INSTALLATION",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "b312fbd66222238a5cb1b84edaeaeab3eaacb6fa",
+    "publicStatusCommit": "8619f5a88f12ed996ac0223e50093e9c18f21fd5",
     "currentOwners": {
-      "T45": "Sole server/ops writer; implement same R3 normal-service source and prepare parallel real Linux dependency check; no server job until fixed source/QB/C exact binding.",
-      "D1": "Implement exact frozen normal V2 in two owned source/test leaves only; fixed commit then original QB incremental review.",
-      "C": "Validate actual receipts, bind reviewed cleanup, maintain existing records/status.",
-      "QB": "Only fixed new closeout increment on T45 delivery.",
-      "D2": "Same-lock Linux artifact review done; no redownload. Await fixed new consumer/QB for single replacement APP build."
+      "T45": "Sole server/ops writer; finish independent no-PG Linux npm ci/load fixed job then normal same-R3 source/auth/real proof pairing. No new database or installation replay.",
+      "D1": "c73 two-leaf normal V2 consumer fixed and QB limited PASS; follow exact producer pairing only.",
+      "C": "Reuse actual A/B/install/cleanup/CLOSE evidence, bind fixed source/authorized precise scope, update original records and public status.",
+      "QB": "Consumer c73 limited PASS; only new fixed T45 increment when delivered.",
+      "D2": "c73 APP single build/pack complete; no duplicate build or dependency download; server validation T45."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
     "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
@@ -1822,9 +1822,11 @@
       "actualInstall": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
       "ordinaryInitialCommit": "e894b5e2c337cda37aeeb85057b6cc57b21342ea",
       "ordinaryInitialSourceSet": "30cf71b1b739e620de6c9c092dcaa0a22c414e6f3509a9b68f4d6e7b195f20ad",
-      "ordinaryInitialReview": "QB_AND_D1_FIXED_PAIR_PASS_LOCAL_APP_BUILD_ONLY"
+      "ordinaryInitialReview": "QB_AND_D1_FIXED_PAIR_PASS_LOCAL_APP_BUILD_ONLY",
+      "ordinaryNormalCommit": "c73c104e6d9d0d20442b76acb23f87c4a843559d",
+      "ordinaryNormalReview": "QB_LIMITED_PASS_AUTHOR_14_REUSED_APP_BUILD_PACK_COMPLETE"
     },
-    "controllerRecordsCommit": "3f5210bfb46dc143a348eaef06fb84cf84ca8a01",
+    "controllerRecordsCommit": "d9980bd045ddae160c406377c1f28b0d0236aa57",
     "channelActualScopedChecks": {
       "emptyPipeAck": "19:42:08.835-19:42:19.645 CST; SSH exit0/exact22B/stderr0/10.810481667s",
       "nonemptyAck": "19:48:00.473-19:48:01.509 CST; SSH exit0/exact22B/stderr0/1.036133458s;109344B synthetic only",
@@ -1899,21 +1901,27 @@
       "recoveryCredentialsRetained": false
     },
     "applicationArtifact": {
-      "sourceCommit": "e894b5e2c337cda37aeeb85057b6cc57b21342ea",
-      "nativeSourceSetSha256": "30cf71b1b739e620de6c9c092dcaa0a22c414e6f3509a9b68f4d6e7b195f20ad",
-      "releaseSha256": "db6db905909b3445c27aad71566e4b328e8f1a56144d7130d077fcc5df86dcc5",
-      "releaseManifestSha256": "33077c58da11ff39ce9d51f7acdb7ee2bf7db4048e3172f75e9c35c2bf75f6b1",
-      "localBuild": "D2_PASS_FIXED_NODE_24_21_NPM_11_9",
-      "controllerArchiveCheck": "452_LISTED_HASHES_AND_BYTES_MATCH_PLUS_MANIFEST_453_FILES_NO_ESCAPE_LINKS_DUPLICATES",
-      "serverApplicationStartup": "NOT_EXECUTED",
-      "capacityLoginAndBusiness": "NOT_VERIFIED",
-      "publicSwitch": "NOT_EXECUTED"
+      "commit": "c73c104e6d9d0d20442b76acb23f87c4a843559d",
+      "tree": "937e6731ee4783627bdca207fd3fcd80cc196536",
+      "buildId": "erp-c73c104e6d9d-r3-normal-service-20261110",
+      "archiveSha256": "0b9182676c734a79bd06b4e5d618865ad1b48871b6744475bd182800d28905d4",
+      "archiveBytes": 3359787,
+      "manifestSha256": "58ff500c581d4e3443c2225d1cbca7ac964a5a0f5c163195ccb6af4674e480a4",
+      "D2ReceiptSha256": "322b50e38115d2858f10521d68e73955567a7994b9b30fd585c133970dd17656",
+      "D2Checks": "Single actual build and pack exit0; prior same Web input business evidence reused; 214 native leaves and archive bytes checked",
+      "CChecks": "RESULT/READY exact bytes; four artifact hashes and exact consumer bytes inside archive match",
+      "serverInstallLoadAndApp": "NOT_VERIFIED"
     },
-    "controllerRecordsRemote": "PUSH_TIMEOUT_API_CONFIRMED_REMOTE_STILL_2927d9ac_NOT_CLAIMED_PUSHED",
-    "publicStatusSha256": "fc12c0e0176b02f79db2a2ff5a61d3e717dc3abc795f01ce05ac137bcc1b065a",
+    "controllerRecordsRemote": {
+      "state": "REMOTE_EXACT_COMMIT_VERIFIED_NO_FORCE",
+      "branch": "codex/erp-0448z-integration-20261105",
+      "commit": "d9980bd045ddae160c406377c1f28b0d0236aa57",
+      "method": "GitHub API exact blob/tree/commit OIDs and final ref readback; previous HTTPS timeout resolved"
+    },
+    "publicStatusSha256": "11d7edfdd24acb6174aeeb89bf66f603ebd9f0e59b5a0c062da21dbddbba4fe3",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
-      "linuxDependencies": "e894 archive has no node_modules; actual Linux fastify/pg/sharp installation and loading unverified.",
+      "linuxDependencies": "c73 archive has no node_modules; same c099 lock Linux cache ready locally, actual Linux npm ci and fastify/pg/sharp load pending T45 independent bounded no-PG job.",
       "owners": {
         "T45": "Prepare same installed R3 normal-service launcher, bounded existing-role authentication inputs and generation/capacity facts offline.",
         "D1": "Prepare minimal original consumer and targeted tests seam, no T45 writes.",
@@ -1928,9 +1936,13 @@
       "jobId": "t45-first-r3-native-service-start-20261110-01",
       "containerName": "t45-fresh35-first-production-20261110-r3-service-01",
       "exactScope": "Same installed R3/record/source/PGDATA, authentic later birth; preserve runtime null and finite service/capacity. No old recovery proof fabrication.",
-      "D1": "Two-file consumer WIP started; microsecond comparison targeted 1/1 PASS only.",
+      "D1": "FIXED_C73_AUTHOR_14_AND_QB_LIMITED_PASS",
       "T45": "Normal same-data launcher/proof implementation; credential reference metadata first, exact recovery proposal if absent.",
-      "execution": "NOT_STARTED_SOURCE_ONLY"
+      "execution": "CONSUMER_FIXED_QB_PASS_APP_BUILT_NO_SERVICE_START",
+      "consumerCommit": "c73c104e6d9d0d20442b76acb23f87c4a843559d",
+      "consumerSourceSet": "127efa6cf06a0e9d228e97bfd375ebb7ba6c18fbed109b5fa8f660a5dee2f036",
+      "consumerHostSha256": "8152a707b4f2c16642c2b06ef290c93cd72d575cf3e952d053113fad0c85238b",
+      "consumerReceiptSha256": "a3cecd49b1cd96271caed73e6b7cda17236658f33f85d626f19d18dfdd7b19f7"
     },
     "linuxDependencyPreparation": {
       "cacheSha256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
