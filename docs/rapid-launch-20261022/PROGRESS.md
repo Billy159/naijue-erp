@@ -4171,3 +4171,11 @@ C已核QB1f5f原RESULTd241df8c45545843addbcea872a4a8c1f5985dd1d9bc291da5b8e99aac
 - 外层 normal04 05:53:35.909054–05:53:36.078152 退出 2。首错 `FileNotFoundError`：新作业材料缺固定 `production-plan.json`（原 747 字节版本仍可复用）。无容器创建、无 PG 启动。保留原终态 `b707b63ad1e00c2f7cdac5ace12819ea4c4fbefaa00f7e597de92113131ae565`、结果 `4fcdc4a7cf9f4c2c6d9dddba4b0922a5f1a2a1e642997f1da9f56075284a0d43`，不重放。
 - restore01 05:58:55.927249–05:59:03.277505 退出 0，私下准确读回两角色原认证值和原期限；原普通运行认证、成员属性和连接规则未改。R3 和本次容器已停，作业 `068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330`、结果 `650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb`。无需依靠自然过期，当前无在途认证窗口。
 - T45 固定并核对完整交付材料（含原 `production-plan.json`），将已失败的外层作业与从未启动的 04 服务分开。QB 只复核这次接线和下一轮临时认证、恢复配对的改动；通过后才为同一 R3 开新窗口。 外层使用独立后继 04-02，保持原 04 服务身份、证明和输出契约；下一轮 apply04 与 restore02 用各自独立绑定，原失败和恢复凭据保留。复用 D1 固定调用和已上传 APP，不重复构建。SQL36、154 发布、管理员、普通应用实际就绪、业务和正式切换均未执行；不使用 11 月 2 日旧批。
+
+### 2026-11-11 06:26 — 同 R3 实际启库；SQL36 准备失败，先收尾
+
+- T45 候选 `5348a7974fa2318fc37bddf41442527b91e9d810`，QB `PASS_SOURCE_NORMAL04_CARRIER02_DELTA_ONLY`，RESULT SHA256 `0299029ae233b533d97390a37347b6bdf88c591473bfb24ac2322fa599ffa336`。主控已核固定10源码、7模板、6阶段本地直接输入。旧作业失败保留。
+- apply04 06:16:49 COMPLETED/退出0；实际临时字段读回、原恢复依据保留，普通角色认证和成员属性不变。终态 `46ddc1c0d4ab43f0abaf97d010fd14ea6877998f37e7cbcf5d6b4fad5008f5db`，结果 `4803676f3c052b2fee8993d70eb1838fac1e2b596f7139203cd9b639552d2949`。
+- 04-02 06:19:16 COMPLETED/退出0、5.633210秒；固定原 R3 普通角色的四个只读步骤通过，实际服务证明 `5b029c361c28ba2940c3160323be57267c49845a744c25a76407e4ebf2756241`。终态 `256e91d80ac485bb430ed9874eebc91c32567c5d6ffc617a44f94ea0dad0c0bf`，结果 `7d50e5d7cc67b6f7d64404bb3a6ade41dff8422e0cacab405c529de2113a5cc5`。本轮角色期限06:44:18、服务期限06:49:18；未启动 APP。
+- 原 UPGRADE 准备 06:24:12.025212–06:24:45.876971 FAILED/退出2、33.820738秒。现场只回 `ValueError`，未产生实际参数回执，无 Node 执行批准；没有 SQL36、154 发布或管理员动作。已核终态 `a6b56b7ac695ae7ce859211ee901ceeea252298ff2f7bdb1ff3a2fe3e23971e5`、结果 `d26cba0c26484c409553d2230dde6364c6cab391da8fd8b74a182702e0b1efdc`、自有 Node 清理 `73d8e9221b8da8cb67aeaed2799031a89c464aade3e91e3cd10593715ebb3290`。Node 容器已停，未改 PG 容器；R3 收尾以另一次真实回执为准。
+- T45 唯一下一步：用原受控关闭/guardian 核同一 PG、PID、锁及停止回执，再走 restore02 私下核两角色原值。并行只读保全原错误和阶段证据，原 UPGRADE 不重放；目前首错未确认。不接 11 月 2 日旧数据、未验应用、不切换。当前 [GitHub STATUS](https://github.com/Billy159/naijue-erp/blob/codex/dot-launch-status/STATUS.md) 下一次同步实际收尾或诊断。

@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T06:08:45+08:00",
-  "stage": "R3_NORMAL04_PRECREATE_FAILED_MISSING_PLAN_AUTH_RESTORED",
-  "lastVerifiedRemoteCommit": "a296d7a4f596103659391beacec373c8206d87ed",
+  "updatedAt": "2026-11-11T06:27:39+08:00",
+  "stage": "R3_RUNTIME_READINESS_ACTUAL_UPGRADE_PREPARATION_FAILED_SAFE_CLOSEOUT",
+  "lastVerifiedRemoteCommit": "a94c10e1a3f483dcd150049e0bb1543a2207d6b6",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,16 +1786,16 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T06:08:45+08:00",
+    "asOf": "2026-11-11T06:27:39+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
+    "currentPhysicalStage": "R3_35_INSTALLED_04_STARTED_RUNTIME_READONLY_PASSED_UPGRADE_PREP_FAILED_CLOSEOUT_PENDING",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "2688f471a6c42fc6b6757b05ab6a1deb99585760",
+    "publicStatusCommit": "eede331bf2f487dd83f18e25f6c30b818a2ba032",
     "currentOwners": {
-      "T45": "Sole server executor; fix exact outer carrier and bundle closure plus next finite apply04/restore02. Await fixed source review before any new window.",
+      "T45": "Sole executor; original04 safe closeout, then exact restore02; read-only original UPGRADE diagnostic in parallel. No replay.",
       "D1": "Fixed b0a72b6a driver and 1b8d24b4 upgrade/application; no changes requested.",
       "QB": "Review only new fixed T45 carrier, delivery and restoration-binding delta.",
       "D2": "Fixed 1b8d24b4 build and upload done; reuse without rebuild.",
@@ -44227,16 +44227,29 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 fixed carrier04-02, complete delivery, apply04/restore02; QB delta review before new window",
-    "activeWindow": false,
+    "next": "T45 exact04 stopped receipt and restore02, parallel read-only original preparation diagnosis",
+    "activeWindow": true,
     "sql36Run": false,
     "appStarted": false,
     "productionSwitched": false,
     "nextCandidate": {
       "commit": "5348a7974fa2318fc37bddf41442527b91e9d810",
-      "state": "FIXED_AUTHOR_DELTA_CHECKS_PASS_QB_IN_PROGRESS_NO_SERVER_ACTION",
+      "state": "QB_SOURCE_DELTA_PASS_FIXED_CARRIER_ACTUALLY_STARTED",
       "sourceReadySha256": "dae52600ad082f1f45cfb2abb40431b09fbb5cfca7d10b5f79ca893f69c3ad50",
       "bundleInputsSha256": "050a705c8273e90507114a6bd313e75dc9d7f83e2552b571b4f49a37ada5e339"
+    },
+    "apply04": "ACTUAL_FINITE_AUTH_FIELDS_READ_BACK_RESTORATION_PENDING",
+    "carrier04_02": {
+      "status": "ACTUAL_STARTED_RUNTIME_READONLY_NOT_APP_ACCEPTANCE",
+      "jobSha256": "256e91d80ac485bb430ed9874eebc91c32567c5d6ffc617a44f94ea0dad0c0bf",
+      "proofSha256": "5b029c361c28ba2940c3160323be57267c49845a744c25a76407e4ebf2756241"
+    },
+    "upgrade01": {
+      "status": "FAILED_PREPARATION_NO_NODE_GRANT_NO_REPLAY",
+      "safeCode": "ValueError",
+      "firstError": "UNCONFIRMED",
+      "jobSha256": "a6b56b7ac695ae7ce859211ee901ceeea252298ff2f7bdb1ff3a2fe3e23971e5",
+      "resultSha256": "d26cba0c26484c409553d2230dde6364c6cab391da8fd8b74a182702e0b1efdc"
     }
   }
 }
