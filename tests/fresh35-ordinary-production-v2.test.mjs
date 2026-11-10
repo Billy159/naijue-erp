@@ -174,6 +174,38 @@ test('normal V2 service admits a new epoch and null role on the original pool an
  }
 });
 
+test('normal02 admits only its matched request and carrier with the original identity and capacity checks',async()=>{
+ const m=await model({formal:true,normal:true});let cap;
+ try{
+  m.proof.requestKey='t45-first-r3-native-service-start-20261110-02';
+  m.proof.sharedPostgresNamespace.creationOperationId=m.proof.requestKey;
+  m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-02';
+  const input=await m.putProof();cap=await m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,input);
+  assert.equal(m.clients.length,1);assert.deepEqual(m.identityParams,[null,null]);
+  assert.equal(m.api.describeFresh35OrdinaryAdmissionV2(cap).postmasterStart,m.proof.physical.postmasterStart);
+  await m.api.assertFresh35OrdinaryLeaseV2(cap,m.pool,m.client());
+  m.api.setTime(input.capacityExpiresAt);
+  await assert.rejects(m.api.assertFresh35OrdinaryAdmissionCurrentV2(cap,m.pool),/EXPIRED/);
+ }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose()}
+});
+
+test('normal02 rejects cross01/02 request, namespace and carrier pairs and refuses an unapproved03',async()=>{
+ for(const [request,creation,carrier,code] of [
+  ['02','01','02','NAMESPACE_DIFFERS'],['01','02','01','NAMESPACE_DIFFERS'],
+  ['02','02','01','CARRIER_REQUIRED'],['01','01','02','CARRIER_REQUIRED'],
+  ['03','03','03','PROVENANCE_DIFFERS'],
+ ]){
+  const m=await model({formal:true,normal:true});
+  try{
+   m.proof.requestKey='t45-first-r3-native-service-start-20261110-'+request;
+   m.proof.sharedPostgresNamespace.creationOperationId='t45-first-r3-native-service-start-20261110-'+creation;
+   m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+carrier;
+   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,await m.putProof()),new RegExp(code));
+   assert.equal(m.clients.length,0);
+  }finally{await m.dispose()}
+ }
+});
+
 test('normal V2 service rejects old identities, keys, authority and lease drift before pool checkout',async()=>{
  const cases=[
   m=>{m.proof.requestKey='t45-first-r3-native-service-start-20261110-02'},
