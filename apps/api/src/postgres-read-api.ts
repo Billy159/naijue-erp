@@ -1,7 +1,7 @@
 import {createAccountMaintenanceHttpPlugin} from './account-maintenance-http.ts';
 import {PostgresAccountMaintenanceUnitOfWork} from '../../../adapters/postgres/src/account-maintenance-store.ts';
 import {admitFresh35SyntheticOrdinaryPoolV1,admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
-import type {Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import type {Fresh35CurrentProductionServiceInput,Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import { Ordinary27ProductWarehouseStockReader } from '../../../adapters/postgres/src/ordinary27-product-warehouse-stock-reader.ts';
 import { createOrdinary27ProductCapacityFactory } from '../../../adapters/postgres/src/ordinary27-product-capacity.ts';
@@ -610,8 +610,12 @@ export async function createPostgresRuntime27DocumentApplicationApi(options: Pos
 }
 /** The fresh35 native tables retain migration chain 1..27 and its ordinary
  * runtime role. Reuse that issuer and its pool-bound ordinary readers. */
+interface Runtime35ProductionAdmission {
+  readonly capacityTarget?: CapacityRuntimeTarget;
+  readonly currentService?: Fresh35CurrentProductionServiceInput;
+}
 export async function createPostgresRuntime35ApplicationApi(options: PostgresApplicationApiOptions,
-  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration, productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}): Promise<PostgresApplicationApi> {
+  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration, productionV2?: Runtime35ProductionAdmission): Promise<PostgresApplicationApi> {
   if (!options || typeof options !== 'object' || !('documentCommands' in options) || !('currentForms' in options))
     throw new TypeError('Fresh35 native document commands and current forms required');
   const capabilities = checkedApplicationCapabilities(options, true);
@@ -634,7 +638,7 @@ export async function createPostgresSyntheticRuntime35ApplicationApi(options: Po
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
-  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27', productionV2?: {readonly capacityTarget?:CapacityRuntimeTarget}, synthetic35 = false): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization, ordinary27 = false, anchorProfile: PublishedDocumentAnchorProfile = 'EXACT27', productionV2?: Runtime35ProductionAdmission, synthetic35 = false): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   // Fresh35 has its own catalog pins and reuses the ordinary runtime27 role.
   const ordinaryMaintenance = anchorProfile === 'EXACT35';
@@ -660,7 +664,9 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if(productionV2){
       if(!ordinaryMaintenance || !host.capacityRuntimePoolBinder || !productionV2.capacityTarget)throw new TypeError('Production V2 requires original owned-pool capacity target');
       const {host:connectHost,port,database,user}=options.postgres.target;
-      admission35=await (synthetic35 ? admitFresh35SyntheticOrdinaryPoolV1 : admitFresh35OrdinaryPoolV2)(ownedPool,{host:connectHost,port,database,user});
+      const connection={host:connectHost,port,database,user};
+      admission35=synthetic35 ? await admitFresh35SyntheticOrdinaryPoolV1(ownedPool,connection)
+        : await admitFresh35OrdinaryPoolV2(ownedPool,connection,productionV2.currentService);
       const actual=describeFresh35OrdinaryAdmissionV2(admission35), expected=productionV2.capacityTarget;
       if(synthetic35 && (actual.purpose!=='SYNTHETIC_ISOLATED_ORDINARY_V1' || !Number.isSafeInteger(actual.expiresAt) || actual.expiresAt! <= Date.now()))
         throw new TypeError('Current genuine synthetic ordinary admission required');

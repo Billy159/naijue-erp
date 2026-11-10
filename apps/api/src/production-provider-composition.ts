@@ -1,4 +1,5 @@
 import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
+import type {Fresh35CurrentProductionServiceInput} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { PostgresImportedCatalogueCompletenessVerifier } from "../../../adapters/postgres/src/catalogue-completeness.ts";
@@ -176,13 +177,17 @@ export function productionRuntime35HostConfiguration(input: unknown): Production
   return parseProductionRuntimeConfiguration({ ...base, profile: 'source-confirmed-native-v1' });
 }
 export async function createProductionRuntime35ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission, capacityTarget?: CapacityRuntimeTarget): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission, capacityTarget?: CapacityRuntimeTarget,
+  currentService?: Fresh35CurrentProductionServiceInput): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime35Configuration(input);
+  if (currentService !== undefined && config.profile !== 'source-confirmed-native-exact35-production-v2')
+    throw new TypeError('Current service proof requires the production Exact35 profile');
   const options = productionApplicationOptions(productionRuntime35HostConfiguration(config), capacityAdmission);
   const { catalogueCompleteness: _legacy, ...commands } = options.documentCommands!;
   return createPostgresRuntime35ApplicationApi({ ...options, ...maintenanceOptions(config, staffCredentialRequestTag), documentCommands: commands },
     driver, { ...config.productMedia, publicRoots: [config.assets.root] },
-    config.profile === 'source-confirmed-native-exact35-production-v2' ? {...(capacityTarget?{capacityTarget}:{})} : undefined);
+    config.profile === 'source-confirmed-native-exact35-production-v2'
+      ? {...(capacityTarget?{capacityTarget}:{}),...(currentService?{currentService}:{})} : undefined);
 }
 
 /** Explicit in-process synthetic acceptance only. No production profile/CLI routing. */

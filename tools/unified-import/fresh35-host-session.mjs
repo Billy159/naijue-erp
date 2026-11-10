@@ -1,6 +1,6 @@
 /** Fixed Fresh35 host. A record, a parsed catalog, or a supplied client alone
  * cannot mint execution authority. Only the owned physical session can do so. */
-import {readFile,open,lstat} from 'node:fs/promises';
+import {readFile,open,lstat,stat} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {canonicalRequestValue} from '../../packages/application/src/canonical-request-value.ts';
@@ -11,14 +11,14 @@ import {streamTypedHash,typedHashArray} from './stream-typed-hash.mjs';
 import {watch} from 'node:fs';
 import {assertTrustedRootPath,assertTrustedRootTree} from '../../scripts/release/unified-install/trusted-install-path.mjs';
 import {resolve,dirname} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 import {describeFresh35CatalogSpec} from '../../scripts/release/unified-install/fresh35-catalog-contract.mjs';
 import {loadFresh35CombinedRecordEnvelope,validateFresh35CombinedRecord,describeFresh35ProtectedRecordSnapshot,assertFresh35ProtectedRecordSnapshotCurrent,FRESH35_COMBINED_RECORD_PATH,FRESH35_COMBINED_RECORD_MODULE_SHA256} from '../../scripts/release/unified-install/fresh35-combined-record-v1.mjs';
 import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,describeFresh35CombinedSource,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from '../../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
 import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,reconstructFresh35InstalledProductionTargetV2} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
 import {buildFresh35CombinedCatalog,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
 import {compileFresh35CombinedProgram} from '../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
-import {parseStrictJson,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
+import {decodeUtf8,parseStrictJson,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
 import {sameActiveWholeHostSession} from './whole-host-session.mjs';
 const loadedHostSha256=hash(await readFile(new URL(import.meta.url)));
 const moduleRoot=resolve(fileURLToPath(new URL('../../',import.meta.url)));
@@ -189,7 +189,142 @@ export async function openReviewedFresh35ProductionHost(config,sourceRoot,target
 }
 
 const ordinaryAdmissions=new WeakMap(),ordinaryPendingPools=new WeakSet(),ordinaryUsedPools=new WeakSet();
+const ordinaryInstalledSourceRoot='/opt/naijue-erp/fresh35-combined-v1';
+const currentProductionServicePath='/run/naijue-rewrite/current-production-service.json';
+const firstR1Workspace='/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261109-r1';
 const ordinaryRole='erp_unified27_runtime_2393dbc6db9581c2';
+
+async function loadOrdinaryInstalledHistory(snapshot,referenceDirectory,currentCatalog){
+ const root=ordinaryInstalledSourceRoot;
+ need(root!==moduleRoot,'ORDINARY_INDEPENDENT_INSTALLED_SOURCE_REQUIRED');
+ await assertTrustedRootTree(root);
+ const installedModule=name=>import(pathToFileURL(resolve(root,'scripts/release/unified-install/'+name)).href);
+ const [sources,targets,catalogs,programs,records]=await Promise.all([
+  'source','target','catalog','lifecycle','record'
+ ].map(name=>installedModule('fresh35-combined-'+name+'-v1.mjs')));
+ const envelope=await records.loadFresh35CombinedRecordEnvelope();
+ need(records.describeFresh35ProtectedRecordSnapshot(envelope).sha256===snapshot.sha256,
+  'ORDINARY_INSTALLED_RECORD_GENERATION_DIFFERS');
+ const paths=await sources.resolveFresh35ReferenceInputPaths(referenceDirectory);
+ const source=await sources.loadFresh35CombinedSource(root,paths);
+ const target=await targets.reconstructFresh35InstalledProductionTargetV2(envelope);
+ const catalog=await catalogs.buildFresh35CombinedCatalog(source,target,paths);
+ const program=await programs.compileFresh35CombinedProgram({source,target,catalog});
+ const record=records.validateFresh35CombinedRecord(envelope,program);
+ const installed=sources.describeFresh35CombinedSource(source);
+ need(installed.currentSourcePins.some(pin=>pin.path==='scripts/release/unified-install/fresh35-combined-record-v1.mjs'
+  &&pin.sha256===records.FRESH35_COMBINED_RECORD_MODULE_SHA256),'ORDINARY_INSTALLED_RECORD_SOURCE_DIFFERS');
+ need(installed.sourceSetSha256===record.binding.sourceSetSha256
+  &&catalogs.describeFresh35CombinedCatalog(catalog).modelSha256===describeFresh35CombinedCatalog(currentCatalog).modelSha256,
+  'ORDINARY_INSTALLED_MODEL_DIFFERS');
+ return {
+  record,watched:installed.currentSourcePins.map(pin=>resolve(root,pin.path)),
+  async assertCurrent(){
+   await sources.assertFresh35CombinedSourcesCurrent(source);
+   await catalogs.assertFresh35CombinedCatalogCurrent(catalog);
+   await records.assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);
+  },
+ };
+}
+
+async function readOrdinaryCurrentService(expectedSha256){
+ need(typeof expectedSha256==='string'&&/^[a-f0-9]{64}$/.test(expectedSha256),'ORDINARY_CURRENT_SERVICE_SHA_REQUIRED');
+ await assertTrustedRootPath(currentProductionServicePath);
+ const file=await open(currentProductionServicePath,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{
+  const before=await file.stat({bigint:true});
+  need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n
+   &&before.size>0n&&before.size<=65536n,'ORDINARY_CURRENT_SERVICE_PROTECTED_FILE_REQUIRED');
+  const identity=importFileIdentity(before),bytes=await file.readFile();
+  need(BigInt(bytes.length)===before.size&&importFileIdentity(await file.stat({bigint:true}))===identity
+   &&importFileIdentity(await lstat(currentProductionServicePath,{bigint:true}))===identity,
+   'ORDINARY_CURRENT_SERVICE_CHANGED');
+  need(hash(bytes)===expectedSha256,'ORDINARY_CURRENT_SERVICE_SHA_DIFFERS');
+  const text=decodeUtf8(bytes),value=parseStrictJson(text);
+  const encoded=JSON.stringify(value,(_key,member)=>member&&Object.getPrototypeOf(member)===Object.prototype
+   ? Object.fromEntries(Object.keys(member).sort().map(key=>[key,member[key]])) : member)+'\n';
+  need(encoded===text,'ORDINARY_CURRENT_SERVICE_ENCODING_DIFFERS');
+  return {identity,value};
+ }finally{await file.close()}
+}
+
+function ordinaryUtcMillis(value,pattern){
+ need(typeof value==='string'&&pattern.test(value),'ORDINARY_CURRENT_SERVICE_UTC_REQUIRED');
+ const iso=value.replace(' ','T').replace(/\+00$/,'Z'),at=Date.parse(iso);
+ need(Number.isSafeInteger(at)&&new Date(at).toISOString().slice(0,19)===iso.slice(0,19),
+  'ORDINARY_CURRENT_SERVICE_UTC_REQUIRED');
+ return at;
+}
+async function loadOrdinaryCurrentService(input,target,record,snapshot){
+ const positive=value=>Number.isSafeInteger(value)&&value>0;
+ const decimal=value=>typeof value==='string'&&/^[1-9][0-9]*$/.test(value);
+ const digest=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
+ const jobKey=value=>typeof value==='string'&&/^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$/.test(value);
+ const absolute=value=>typeof value==='string'&&value.startsWith('/')&&value!=='/'
+  &&resolve(value)===value&&!/[\x00-\x1f\x7f]/.test(value);
+ const {proposal,ordinary,physical:installed}=target;
+ need(exactImportKeys(input,['sha256','capacityExpiresAt'])&&positive(input.capacityExpiresAt)
+  &&target.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&proposal.database==='erp_fresh35_20261109_r1'
+  &&proposal.workspaceDirectory===firstR1Workspace&&proposal.host==='127.0.0.1'&&proposal.port===56791
+  &&ordinary.connectHost===proposal.host&&ordinary.serverAddress===proposal.host
+  &&ordinary.connectPort===proposal.port&&ordinary.serverPort===proposal.port,
+  'ORDINARY_CURRENT_SERVICE_FIRST_R1_REQUIRED');
+ const {sha256,capacityExpiresAt}=input;
+ const {identity,value:proof}=await readOrdinaryCurrentService(sha256);
+ need(exactImportKeys(proof,['format','requestKey','oldStopRequestKey','authorizationSha256','checkedAt',
+  'installationRecordSha256','targetSha256','sourceSetSha256','previousStopReceiptSha256','previousStopTerminalSha256',
+  'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
+  'runtimeRole','runtimeLoginValidUntil'])&&proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1',
+  'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
+ need(jobKey(proof.requestKey)&&jobKey(proof.oldStopRequestKey)&&proof.requestKey!==proof.oldStopRequestKey
+  &&[proof.authorizationSha256,proof.previousStopReceiptSha256,proof.previousStopTerminalSha256,
+   proof.installationRecordSha256,proof.targetSha256,proof.sourceSetSha256].every(digest)
+  &&proof.installationRecordSha256===snapshot.sha256&&proof.targetSha256===record.binding.targetSha256
+  &&proof.sourceSetSha256===record.binding.sourceSetSha256&&proof.runtimeRole===proposal.runtime,
+  'ORDINARY_CURRENT_SERVICE_PROVENANCE_DIFFERS');
+ const {dataDirectoryIdentity:directory,physical,sharedPostgresNamespace:shared,postmaster,guardian}=proof;
+ need(proof.dataDirectory===resolve(proposal.workspaceDirectory,'data')
+  &&exactImportKeys(directory,['device','inode','uid','gid','mode'])&&positive(directory.device)&&positive(directory.inode)
+  &&directory.uid===61035&&directory.gid===61035&&directory.mode===0o700,
+  'ORDINARY_CURRENT_SERVICE_PGDATA_DIFFERS');
+ const processProof=entry=>exactImportKeys(entry,['pid','starttime','exe'])
+  &&positive(entry.pid)&&decimal(entry.starttime)&&absolute(entry.exe);
+ need(processProof(postmaster)&&processProof(guardian)&&postmaster.pid!==guardian.pid,
+  'ORDINARY_CURRENT_SERVICE_PROCESS_REQUIRED');
+ need(exactImportKeys(shared,['format','container','creationOperationId','sourceSetSha256','targetSha256',
+  'installationRecordSha256','serviceLeaseExpiresAt'])&&shared.format==='OWNED_POSTGRES_SHARED_NAMESPACE_V1'
+  &&jobKey(shared.creationOperationId)&&['installationRecordSha256','targetSha256','sourceSetSha256'].every(k=>shared[k]===proof[k]),
+  'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
+ const container=shared.container;
+ need(exactImportKeys(container,['id','name','imageId','startedAt','hostPid','startTicks','networkNamespace','frontEndpoint'])
+  &&digest(container.id)&&typeof container.name==='string'&&/^t45-fresh35-[a-z0-9-]{1,90}$/.test(container.name)
+  &&typeof container.imageId==='string'&&/^sha256:[a-f0-9]{64}$/.test(container.imageId)
+  &&positive(container.hostPid)&&container.hostPid>1&&decimal(container.startTicks)
+  &&exactImportKeys(container.networkNamespace,['device','inode'])&&Object.values(container.networkNamespace).every(positive),
+  'ORDINARY_CURRENT_SERVICE_CARRIER_REQUIRED');
+ const endpoint=container.frontEndpoint;
+ need(exactImportKeys(endpoint,['id','aliases'])&&digest(endpoint.id)&&Array.isArray(endpoint.aliases)
+  &&endpoint.aliases.length>0&&endpoint.aliases.every(alias=>typeof alias==='string'&&alias.length>0)
+  &&new Set(endpoint.aliases).size===endpoint.aliases.length,'ORDINARY_CURRENT_SERVICE_ENDPOINT_REQUIRED');
+ const namespace=await stat('/proc/self/ns/net',{bigint:true});
+ need(namespace.dev===BigInt(container.networkNamespace.device)&&namespace.ino===BigInt(container.networkNamespace.inode),
+  'ORDINARY_CURRENT_SERVICE_NAMESPACE_DIFFERS');
+ need(exactImportKeys(physical,['systemIdentifier','databaseOid','serverVersionNum','postmasterStart'])
+  &&decimal(physical.systemIdentifier)&&decimal(physical.databaseOid)&&physical.serverVersionNum==='170011'
+  &&['systemIdentifier','databaseOid','serverVersionNum'].every(k=>physical[k]===installed[k]),
+  'ORDINARY_CURRENT_SERVICE_PHYSICAL_DIFFERS');
+ const pgStamp=/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00$/;
+ const birth=ordinaryUtcMillis(physical.postmasterStart,pgStamp);
+ const prior=ordinaryUtcMillis(installed.postmasterStart,pgStamp);
+ const carrierBirth=ordinaryUtcMillis(container.startedAt,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/);
+ const loginUntil=ordinaryUtcMillis(proof.runtimeLoginValidUntil,/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/);
+ const expiresAt=Math.min(shared.serviceLeaseExpiresAt,loginUntil,capacityExpiresAt),now=Date.now();
+ need(positive(proof.checkedAt)&&positive(shared.serviceLeaseExpiresAt)
+  &&prior<birth&&carrierBirth<=birth&&birth<=proof.checkedAt&&proof.checkedAt<=now&&now<expiresAt,
+  'ORDINARY_CURRENT_SERVICE_WINDOW_REQUIRED');
+ return {identity,checkedAt:proof.checkedAt,expiresAt,postmasterStart:physical.postmasterStart,
+  runtimeLoginValidUntil:proof.runtimeLoginValidUntil};
+}
 const ordinaryIdentitySql=`/* fresh35-ordinary:physical-before-role */ SELECT
  (SELECT system_identifier::text FROM pg_catalog.pg_control_system()) AS "systemIdentifier",
  (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS "databaseOid",
@@ -212,20 +347,35 @@ function syntheticWindow(state){
  try{need(Date.now()>=state.t.startsAt&&Date.now()<deadline,'SYNTHETIC_ORDINARY_WINDOW_EXPIRED')}catch(error){revokeOrdinary(state);throw error}
  return deadline;
 }
+function ordinaryWindow(state){
+ if(!state.currentService)return syntheticWindow(state);
+ const {checkedAt,expiresAt}=state.currentService,now=Date.now();
+ try{need(now>=checkedAt&&now<expiresAt,'ORDINARY_CURRENT_SERVICE_EXPIRED')}
+ catch(error){revokeOrdinary(state);throw error}
+ return expiresAt;
+}
+async function assertOrdinaryCurrentService(state){
+ if(state.currentService){
+  need(importFileIdentity(await lstat(currentProductionServicePath,{bigint:true}))===state.currentService.identity,
+   'ORDINARY_CURRENT_SERVICE_CHANGED');
+  ordinaryWindow(state);
+ }
+}
 const identityQuery=state=>state.synthetic?syntheticIdentitySql:ordinaryIdentitySql;
-const identityParameter=state=>state.synthetic?state.t.expiresAt:state.t.ordinary.runtimeLoginValidUntil;
-function ordinaryState(cap,pool){const state=ordinaryAdmissions.get(cap);need(state&&state.active&&state.pool===pool,'ORDINARY_ACTIVE_SAME_POOL_REQUIRED');syntheticWindow(state);return state;}
+const identityParameter=state=>state.synthetic?state.t.expiresAt:
+ (state.currentService?state.currentService.runtimeLoginValidUntil:state.t.ordinary.runtimeLoginValidUntil);
+function ordinaryState(cap,pool){const state=ordinaryAdmissions.get(cap);need(state&&state.active&&state.pool===pool,'ORDINARY_ACTIVE_SAME_POOL_REQUIRED');ordinaryWindow(state);return state;}
 function revokeOrdinary(state){state.active=false;for(const w of state.watchers)w.close();state.watchers.length=0;}
 function matchOrdinaryIdentity(row,t,currentStart){
  need(row&&row.systemIdentifier===t.physical.systemIdentifier&&row.databaseOid===t.physical.databaseOid&&row.database===t.proposal.database&&row.currentUser===t.proposal.runtime&&row.sessionUser===t.proposal.runtime&&row.serverAddress===t.ordinary.serverAddress&&row.serverPort===t.ordinary.serverPort&&row.serverVersionNum===t.physical.serverVersionNum&&row.rowSecurity==='on'&&row.replicationRole==='origin'&&row.recovery===false&&row.ordinaryAttributes===true&&row.lifetimeMatches===true&&JSON.stringify(row.memberships)===JSON.stringify([[ordinaryRole,false,false,true]])&&typeof row.postmasterStart==='string'&&row.postmasterStart.length>0&&Number.isSafeInteger(row.backendPid)&&row.backendPid>0&&(!currentStart||row.postmasterStart===currentStart)&&(!t.syntheticOnly||(row.postmasterStart===t.physical.postmasterStart&&typeof row.observedLoginValidUntil==='string'&&Number.isFinite(Date.parse(row.observedLoginValidUntil))&&Date.parse(row.observedLoginValidUntil)<=t.expiresAt&&Date.parse(row.observedLoginValidUntil)>Date.now()&&(!t.ordinary.runtimeLoginValidUntil||row.observedLoginValidUntil===t.ordinary.runtimeLoginValidUntil))),'ORDINARY_PHYSICAL_OR_LOGIN_DIFFERS');return row;
 }
 /** One startup verification on the original owned pool. No caller record,
  * reference path, catalog observation or capability may replace the fixed record. */
-export async function admitFresh35OrdinaryPoolV2(pool,connection){return admitOrdinaryPool(pool,connection,false)}
+export async function admitFresh35OrdinaryPoolV2(pool,connection,currentServiceInput){return admitOrdinaryPool(pool,connection,false,currentServiceInput)}
 /** Original isolated V1 installation only; never a production purpose or an
  * import authorization. Uses the same private pool-bound lease implementation. */
 export async function admitFresh35SyntheticOrdinaryPoolV1(pool,connection){return admitOrdinaryPool(pool,connection,true)}
-async function admitOrdinaryPool(pool,connection,synthetic){
+async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput){
  need(pool&&typeof pool.connect==='function'&&!ordinaryPendingPools.has(pool)&&!ordinaryUsedPools.has(pool),'ORDINARY_EXCLUSIVE_STARTUP_REQUIRED');
  need(connection&&Object.getPrototypeOf(connection)===Object.prototype&&Object.keys(connection).sort().join(',')==='database,host,port,user','ORDINARY_CONNECTION_KEYS_REQUIRED');
  const fixed=Object.freeze({...connection});ordinaryPendingPools.add(pool);ordinaryUsedPools.add(pool);
@@ -241,30 +391,38 @@ async function admitOrdinaryPool(pool,connection,synthetic){
    t={...bound,syntheticOnly:true,ordinary:{connectHost:bound.proposal.host,connectPort:bound.proposal.port,serverAddress:bound.proposal.host,serverPort:bound.proposal.port,runtimeLoginValidUntil:null,referenceDirectory:resolve(moduleRoot,'reference-inputs')}};
   }else{target=await reconstructFresh35InstalledProductionTargetV2(envelope);t=describeFresh35CombinedTarget(target);}
   need(fixed.database===t.proposal.database&&fixed.user===t.proposal.runtime&&fixed.host===t.ordinary.connectHost&&fixed.port===t.ordinary.connectPort,'ORDINARY_CONNECTION_DIFFERS');
+  const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),recordSha256=snapshot.sha256;
+  const currentService=currentServiceInput===undefined?undefined:
+   await loadOrdinaryCurrentService(currentServiceInput,t,envelope,snapshot);
   await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(t.ordinary.referenceDirectory);
   const paths=await resolveFresh35ReferenceInputPaths(t.ordinary.referenceDirectory),source=await loadFresh35CombinedSource(moduleRoot,{baselineDirectory:paths.baselineDirectory});
   const pins=describeFresh35CombinedSource(source).currentSourcePins;
   for(const pin of pins)await assertTrustedRootPath(resolve(moduleRoot,pin.path));
   for(const [path,digest]of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===digest),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
-  const catalog=await buildFresh35CombinedCatalog(source,target,paths),program=await compileFresh35CombinedProgram({source,target,catalog});
-  const record=validateFresh35CombinedRecord(envelope,program),snapshot=describeFresh35ProtectedRecordSnapshot(envelope),recordSha256=snapshot.sha256;
-  state={pool,active:true,watchers:[],envelope,t,source,target,catalog,record,synthetic};
+  const catalog=await buildFresh35CombinedCatalog(source,target,paths);
+  const history=currentService&&await loadOrdinaryInstalledHistory(snapshot,t.ordinary.referenceDirectory,catalog);
+  const record=history?.record??validateFresh35CombinedRecord(envelope,await compileFresh35CombinedProgram({source,target,catalog}));
+  state={pool,active:true,watchers:[],envelope,t,source,target,catalog,record,synthetic,currentService};
   // Invalidations only: no source hashing/catalog scans on business requests.
   // Watch the finite existing source/reference pin set, not the workspace tree.
-  const watched=new Set([FRESH35_COMBINED_RECORD_PATH,...pins.map(p=>resolve(moduleRoot,p.path)),paths.modelPath,paths.functionsPath,paths.baselineDirectory,resolve(t.ordinary.referenceDirectory,'INDEX.json')].filter(x=>typeof x==='string'));
+  const watched=new Set([FRESH35_COMBINED_RECORD_PATH,...pins.map(p=>resolve(moduleRoot,p.path)),...(history?.watched??[]),
+   paths.modelPath,paths.functionsPath,paths.baselineDirectory,resolve(t.ordinary.referenceDirectory,'INDEX.json')].filter(x=>typeof x==='string'));
   // The synthetic record's root0711 authority parent is not listable. Keep
   // the readable record inode watch and exact generation checks below.
   for(const path of [...watched])if(!synthetic||path!==FRESH35_COMBINED_RECORD_PATH)watched.add(dirname(path));
   watched.add(moduleRoot);
+  if(currentService){watched.add(ordinaryInstalledSourceRoot);watched.add(currentProductionServicePath);}
   // The isolated workspace is root0711: watch the readable fixed inode only,
   // never its non-listable parent. Existing change/rename/error revokes the lease.
   if(synthetic)watched.add(resolve(t.proposal.workspaceDirectory,'bootstrap-network-observation.json'));
   for(const path of watched){const watcher=watch(path,()=>revokeOrdinary(state));watcher.on('error',()=>revokeOrdinary(state));watcher.unref();state.watchers.push(watcher);}
+  await history?.assertCurrent();
   await assertFresh35CombinedSourcesCurrent(source);await assertFresh35CombinedCatalogCurrent(catalog);
   await assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);need(state.active,'ORDINARY_STARTUP_SOURCE_CHANGED');
-  syntheticWindow(state);client=await pool.connect();need(ordinaryStatus(client)==='I','ORDINARY_IDLE_LEASE_REQUIRED');
+  await assertOrdinaryCurrentService(state);
+  ordinaryWindow(state);client=await pool.connect();need(ordinaryStatus(client)==='I','ORDINARY_IDLE_LEASE_REQUIRED');
   const first=await client.query(identityQuery(state),[identityParameter(state)]);need(first.rows?.length===1,'ORDINARY_ONE_PHYSICAL_ROW_REQUIRED');
-  const physical=matchOrdinaryIdentity(first.rows[0],t);if(synthetic)t.ordinary.runtimeLoginValidUntil=physical.observedLoginValidUntil;
+  const physical=matchOrdinaryIdentity(first.rows[0],t,currentService?.postmasterStart);if(synthetic)t.ordinary.runtimeLoginValidUntil=physical.observedLoginValidUntil;
   ack(await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'),'BEGIN');began=true;
   const again=await client.query(identityQuery(state),[identityParameter(state)]);need(again.rows?.length===1,'ORDINARY_ONE_PHYSICAL_ROW_REQUIRED');matchOrdinaryIdentity(again.rows[0],t,physical.postmasterStart);need(again.rows[0].backendPid===physical.backendPid,'ORDINARY_BACKEND_CHANGED');
   ack(await client.query('SET LOCAL ROLE '+ordinaryRole),'SET');
@@ -273,14 +431,26 @@ async function admitOrdinaryPool(pool,connection,synthetic){
   const observed=await client.query(sql.observationSql);need(observed.rows?.length===1,'ORDINARY_CATALOG_PACKET_REQUIRED');(synthetic?module.validateFresh35CombinedSyntheticOrdinaryCatalogObservation:module.validateFresh35CombinedOrdinaryCatalogObservation)(observed.rows[0].catalog_json,catalog,source,target);
   ack(await client.query('ROLLBACK'),'ROLLBACK');began=false;
   need(ordinaryStatus(client)==='I'&&state.active,'ORDINARY_STARTUP_INVALIDATED');
-  const effectiveExpiry=syntheticWindow(state);state.description=Object.freeze({...(synthetic?{purpose:'SYNTHETIC_ISOLATED_ORDINARY_V1',expiresAt:effectiveExpiry}:{}),systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,user:t.proposal.runtime,connectHost:t.ordinary.connectHost,connectPort:t.ordinary.connectPort,serverAddress:t.ordinary.serverAddress,serverPort:t.ordinary.serverPort,postmasterStart:physical.postmasterStart,recordSha256,sourceSetSha256:record.binding.sourceSetSha256});
+  const effectiveExpiry=ordinaryWindow(state);state.description=Object.freeze({...(synthetic?{purpose:'SYNTHETIC_ISOLATED_ORDINARY_V1'}:{}),
+   ...(effectiveExpiry!==undefined?{expiresAt:effectiveExpiry}:{}),systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,user:t.proposal.runtime,connectHost:t.ordinary.connectHost,connectPort:t.ordinary.connectPort,serverAddress:t.ordinary.serverAddress,serverPort:t.ordinary.serverPort,postmasterStart:physical.postmasterStart,recordSha256,sourceSetSha256:record.binding.sourceSetSha256});
   const cap=Object.freeze({profile:'FRESH35_ORDINARY_POOL_ADMISSION_V2'});ordinaryAdmissions.set(cap,state);return cap;
- }catch(error){if(state)revokeOrdinary(state);throw error}finally{try{if(client){try{if(began)await client.query('ROLLBACK')}finally{client.release(true)}}if(state?.description){syntheticWindow(state);await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);syntheticWindow(state);need(state.active,'ORDINARY_STARTUP_INVALIDATED');}}catch(error){if(state)revokeOrdinary(state);throw error}finally{ordinaryPendingPools.delete(pool)}}
+ }catch(error){if(state)revokeOrdinary(state);throw error}finally{
+  try{
+   if(client){try{if(began)await client.query('ROLLBACK')}finally{client.release(true)}}
+   if(state?.description){
+    ordinaryWindow(state);await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);await assertOrdinaryCurrentService(state);
+    ordinaryWindow(state);need(state.active,'ORDINARY_STARTUP_INVALIDATED');
+   }
+  }catch(error){if(state)revokeOrdinary(state);throw error}finally{ordinaryPendingPools.delete(pool)}
+ }
 }
-export function describeFresh35OrdinaryAdmissionV2(cap){const state=ordinaryAdmissions.get(cap);need(state?.active,'ORDINARY_ACTIVE_ADMISSION_REQUIRED');syntheticWindow(state);return state.description;}
+export function describeFresh35OrdinaryAdmissionV2(cap){const state=ordinaryAdmissions.get(cap);need(state?.active,'ORDINARY_ACTIVE_ADMISSION_REQUIRED');ordinaryWindow(state);return state.description;}
 export async function assertFresh35OrdinaryAdmissionCurrentV2(cap,pool){
  const state=ordinaryState(cap,pool);
- try{await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);syntheticWindow(state);need(state.active,'ORDINARY_RECORD_CHANGED');}catch(error){revokeOrdinary(state);throw error}
+ try{
+  await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);await assertOrdinaryCurrentService(state);
+  ordinaryWindow(state);need(state.active,'ORDINARY_RECORD_CHANGED');
+ }catch(error){revokeOrdinary(state);throw error}
 }
 export async function assertFresh35OrdinaryLeaseV2(cap,pool,client){
  const state=ordinaryState(cap,pool);await assertFresh35OrdinaryAdmissionCurrentV2(cap,pool);
