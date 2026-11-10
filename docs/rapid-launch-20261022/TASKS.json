@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T06:38:36+08:00",
-  "stage": "R3_STOPPED_EXACT_RESTORE02_UPGRADE_PREPARATION_DIAGNOSIS",
-  "lastVerifiedRemoteCommit": "3b22dff008c37e9ccbe71f2632a17cf9bc1f757b",
+  "updatedAt": "2026-11-11T06:44:53+08:00",
+  "stage": "R3_STOPPED_EXACT_RESTORED_ORDINARY_IDENTITY_DELTA_IN_PROGRESS",
+  "lastVerifiedRemoteCommit": "b52f0a3123713bc2229b60c59f6563723933196e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,18 +1786,18 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T06:38:36+08:00",
+    "asOf": "2026-11-11T06:44:53+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "6b558219be4c7e7f3ac482ea22d2e339b45c3a1a",
+    "publicStatusCommit": "9e193b71013f43056121484cb61e580311746a3c",
     "currentOwners": {
-      "T45": "Sole server executor; exact stop and restore02 complete. Preserve original operation evidence and stopped R3.",
-      "D1": "Diagnose fixed b0 preparation and deployed material seam read-only; no server, no private input or rebuild.",
-      "QB": "Review only new fixed T45 carrier, delivery and restoration-binding delta.",
+      "T45": "Original carrier writer; retain protected root authority/audit and exact ordinary UID mount and diagnostics seam; no live operation.",
+      "D1": "Original driver/leaf writer; same ordinary runtime identity in DESCRIBE, pre-connect UPGRADE and admin context; synthetic delta checks.",
+      "QB": "Review only the fixed next affected D1/T45 delta, not prior accepted work.",
       "D2": "Fixed 1b8d24b4 build and upload done; reuse without rebuild.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
@@ -44227,7 +44227,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "D1 targeted read-only preparation diagnosis; T45 preserves evidence and stopped target; no replay",
+    "next": "D1/T45 minimal ordinary runtime and protected-root seam, exact synthetic checks then QB; no live replay.",
     "activeWindow": false,
     "sql36Run": false,
     "appStarted": false,
@@ -44253,7 +44253,8 @@
       "resultSha256": "d26cba0c26484c409553d2230dde6364c6cab391da8fd8b74a182702e0b1efdc",
       "stage": "PARAMETER_METADATA_BEFORE_NODE_GRANT",
       "whitelistedCode": "ADMIN154_DRIVER_PREPARATION_METADATA_FAILED",
-      "safeErrorSha256": "5dbe19e56b69dfa03fc79fc602c885bd1c951a73531a768e9661aab224445478"
+      "safeErrorSha256": "5dbe19e56b69dfa03fc79fc602c885bd1c951a73531a768e9661aab224445478",
+      "deterministicOfflineFinding": "Root driver calls original loader that requires non-root real/effective UID. Reproduced on pinned source; actual first internal error remains unconfirmed."
     },
     "restore02": {
       "status": "ACTUAL_EXACT_RESTORATION_DATABASE_STOPPED",

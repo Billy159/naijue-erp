@@ -4187,3 +4187,9 @@ C已核QB1f5f原RESULTd241df8c45545843addbcea872a4a8c1f5985dd1d9bc291da5b8e99aac
 restore02 06:34:44.062921–06:34:51.781671 COMPLETED/退出0，7.688974秒。两角色原认证和原期限私下准确读回，普通运行认证和角色成员属性不变，R3 仍停止，自有容器退出 PID0，无 OOM。终态 `d22436cdc943d2debda0bbb91434c2d741a54610a686a8defb6c797161007191`，结果 `38f60d89d48d3e676c0266be331a897acf72858557fe8a7c5d2923335fe8adcb`。没有在途维护窗口。
 
 原升级脱敏回执 `5dbe19e56b69dfa03fc79fc602c885bd1c951a73531a768e9661aab224445478` 仅见 `ADMIN154_DRIVER_PREPARATION_METADATA_FAILED`。阶段 `PARAMETER_METADATA_BEFORE_NODE_GRANT`；子进程准确退出码、内部首错未记录。原作业保留且不重放。D1 正定向核固定 Node 准备链和载体输入；T45 不再启库，QB 待可复核增量。SQL36、154 发布、管理员、应用和正式切换未执行。GitHub STATUS 提交 `6b558219be4c7e7f3ac482ea22d2e339b45c3a1a` 已读回。
+
+### 2026-11-11 06:44 — D1 离线复现固定身份冲突，后继按原文件归属接续
+
+D1 核原实际 bundle 与 b0a72b6a / 506fc66b / 5348a797 固定字节。实际外层以 UID/GID 0:0 调 Node，固定准备入口也要求 root；其调用的旧安装记录读取器要求真实普通 UID/EUID，在本地用原实现复现 `FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED`，外层只见 `ADMIN154_DRIVER_PREPARATION_METADATA_FAILED`。原日志不足以证明它是实际最早异常。同类调用还在升级首次连接前与管理员 context。真实本机 UID501 对合成受保护路径及伪造 envelope 负例通过；Linux 10001 仅有前版加载证据，不冒充当前全链。
+
+原 T45 现场补读回同 R3、PGDATA、三容器 PID0、管理器无在途、原锁已释及154记录/操作授权均未生成；汇总 `3f6e2463c14590da5dfcf127e3b7811864a88b5e3ebf8595382ce143d7190460`。C 接续用户委托，D1 负责现有 driver/leaf 三处接线；T45 负责原载体身份、只读固定输入与脱敏首错。普通身份复用原读取验证、同进程重读；根载体继续独占原授权、持久审计、发布和恢复。仅确有必要时在原容器短生命周期用有界私有接缝，不新增网络或常驻层。首次连接前核完整 binding；不开放私有目录、旧源码或账号权限，不复制第二套连接流程。先固定增量和合成零 SQL 定向证据，再由原 QB 复核。现在不启库、不改现场权限、不重放、不部署；SQL36、管理员、APP 和正式切换未执行。公开 STATUS `9e193b71013f43056121484cb61e580311746a3c` 已远端读回。
