@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T03:14:00+08:00",
-  "stage": "MOUNT_FIX_ACTUAL_LINUX_PASS_SAME_R3_STOPPED_BACKUP_AND_ADMIN154_MAINTENANCE_SOURCE_PREPARATION",
-  "lastVerifiedRemoteCommit": "6175542787b909d2f37233c51192515a2dbba210",
+  "updatedAt": "2026-11-11T03:36:00+08:00",
+  "stage": "R3_COLD_COPY_VERIFIED_9830_STAGED_POLICY_RESTORED_ADMIN154_UPGRADE_LEAF_PARALLEL",
+  "lastVerifiedRemoteCommit": "97b1172e4f2f149c697b38287a084e87f3344be9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1786,18 +1786,18 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T03:14:00+08:00",
+    "asOf": "2026-11-11T03:36:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "MOUNT_FIX_ACTUAL_LINUX_PASS_SAME_R3_STOPPED_BACKUP_AND_ADMIN154_MAINTENANCE_SOURCE_PREPARATION",
+    "currentPhysicalStage": "R3_COLD_COPY_VERIFIED_9830_STAGED_POLICY_RESTORED_ADMIN154_UPGRADE_LEAF_PARALLEL",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "cbfcb0407bb7f545d3b010825ab06743823df3f6",
+    "publicStatusCommit": "f66a0e9f36b171b33051da43dfa0a636fbfb1a59",
     "currentOwners": {
-      "T45": "Sole server executor: actual mount-load completed and exact container removed; fix cold-copy durability two findings, prepare same-R3 owner/controller finite maintenance and SQL36 actual transaction witness. No new database or old-job replay.",
-      "D1": "Fixed9830 source delivered; precise154 transaction/record/controller-login seams handed toT45, no concurrent writes.",
-      "QB": "Original limited increment reviewer: mount sourcePASS actual runtime ownedT45; cold-copy79e1 two durability findings require fix, no actual copy authorization.",
+      "T45": "Sole server executor/root outer writer; coldcopy actual verified and9830 staged policy restored. Prepare finite existing owner/controller authentication recovery and normal04. PureNode upgrade leaf explicitly handed toD1.",
+      "D1": "Sole writer of new tools/unified-import/fresh35-admin154-upgrade.mjs and necessary focused tests; fixed9830 APP/manifest unchanged. SameDDL receipt, confirmedCOMMIT, independent154catalog, true record assembly.",
+      "QB": "Coldcopy78078 PASS_SOURCE adopted with actualT45 result. Next only D1 upgrade leaf and T45 relevant outer increments, no repeated full review.",
       "D2": "Fixed9830 Node24.21/npm11.9 actual build/loader/pack complete; reuse archive59ed9165, no duplicate build/download.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
@@ -1950,8 +1950,8 @@
         "serverAPP": "NOT_RUN"
       }
     },
-    "controllerRecordsRemote": "6175542787b909d2f37233c51192515a2dbba210",
-    "publicStatusSha256": "d96ba00e3eeeb078c97e707475e74eb5827f7829cd8b813e7f0be6216064b84c",
+    "controllerRecordsRemote": "97b1172e4f2f149c697b38287a084e87f3344be9",
+    "publicStatusSha256": "9f34a04b47ece9c022c514ebad308554af8a2ee831417a251dc93c37badadfd9",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -2269,8 +2269,8 @@
       "appCapacityReadyz": "NOT_TESTED"
     },
     "sameR3ColdCopy": {
-      "status": "NOT_COPIED_SOURCE_79E1_NEED_TWO_DURABILITY_FIXES",
-      "sourceCommit": "79e1cd8a6b161de5093d02aa0cedb0bc2e339623",
+      "status": "ACTUAL_VERIFIED_COPY_NOT_INDEPENDENT_RESTORE",
+      "sourceCommit": "78078cb8ca4558b2c79e50a7f0157e7ee9c0af2b",
       "measurementReportedBy": "OriginalT45 actual read-only job",
       "files": 1491,
       "directories": 28,
@@ -2280,22 +2280,37 @@
       "copyBudgetBytes": 73400320,
       "minimumAvailableAfterBytes": 30064771072,
       "independentRestore": "NOT_RUN",
-      "findings": [
-        "Published complete marker can survive final parent fsync error",
-        "Full target child-directory and final-attribute durability not yet synchronized before marker"
-      ],
+      "findings": [],
       "owner": "T45",
-      "reviewer": "QB"
+      "reviewer": "QB",
+      "job": "t45-r3-admin154-cold-copy-20261111-01",
+      "elapsedSeconds": 102.9346798020415,
+      "exitCode": 0,
+      "aggregateSha256": "f66171b76f40fe2917ff7e9832bf0a708b11aeed5a67cf7ab51ad93392490b01",
+      "jobSha256": "a94f9ec670e4de6339e56ea66ebaf917d9fc4e140f03e11222e2c7cb30ad5777",
+      "resultSha256": "28d7925f5bc5b89805acf8a52e9d88c12c394f41adebc93cbb0a7afe157274e9",
+      "postReadbackSha256": "7f8e89186b4e639f0f0fa8fed157523d51d91bbdbec8c990fac9700dc84ec9c9",
+      "availableAfterBytes": 30945173504,
+      "allocatedBytes": 69226496,
+      "sourcePreserved": true,
+      "postgresStillStopped": true,
+      "controllerCheck": "RAW_AGGREGATE_AND_EVIDENCE_SHA_MATCH"
     },
     "successor154Maintenance": {
-      "status": "SOURCE_PREPARATION_ONLY_NOT_EXECUTED",
+      "status": "D1_NODE_LEAF_AND_T45_ROOT_OUTER_PARALLEL_SOURCE_ONLY",
       "sourceCommit": "9830e54fa82bd36c62f997d8ef859e8488c93512",
       "existingOwnerForDDL": "erp35_owner_20261110_r3",
       "existingControllerLoginForAdminA": "erp35_controller_20261110_r3",
       "missing": "OriginalT45 SQL36 same-transaction witness, confirmedCOMMIT, independent full154catalog readback and protected successor publication",
       "runtimePermissionExpansion": false,
       "newDatabase": false,
-      "oldInstallationImmutable": true
+      "oldInstallationImmutable": true,
+      "nodeLeafOwner": "D1",
+      "nodeLeaf": "tools/unified-import/fresh35-admin154-upgrade.mjs",
+      "rootOuterOwner": "T45",
+      "writerHandoff": "T45 explicitly no file/WIP/in-memory draft; D1 accepted no overlap",
+      "app9830Artifact": "ACTUAL_READY_AND_ORIGINAL_POLICY_RESTORED",
+      "app9830ArtifactReceiptSha256": "e83e57076a1cf76d951c61ec7b0ba7646955a4cf79acc67d088ae6184cefd027"
     }
   },
   "operationalState": {

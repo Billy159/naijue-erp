@@ -4040,3 +4040,14 @@ T45唯一作业 t45-r3-da7-mount-fix-linux-load-20261111-01 于03:09:29.768493�
 D1准确确认9830只有154记录校验/加载，尚缺实际SQL36事务writer。原T45唯一补必要维护子步骤：同一owner事务核152→SQL36→154并采原生receipt，明确COMMIT后新连接完整目录读回，再沿原发布原语独立发布154记录；原4ed安装记录和6c49来源不改。A首次管理员必须原controller LOGIN，不能用owner SET ROLE冒充；原owner与controller有限认证、旧值恢复和新连接核验一起准备，不扩大运行账号权限。未知提交不重放；已提交未发布不报回滚。原154完整构建9830/59ed9165直接复用，无新npm或构建。
 
 用户睡眠期间的自主决策授权继续采用，当前不需要用户操作。T45负责现场，D1接口交接，QB仅受影响增量，C维护原三记录及GitHub STATUS。当前正常04、SQL36真实安装、管理员、APP CLI/capacity/readyz、业务、当前备份恢复、正式切换均未通过；不使用11月2日旧批次。
+
+
+### 2026-11-11 03:36 — 同R3冷副本与9830制品落地实际完成，154接线分到原owner并行
+
+原T45唯一coldcopy键 t45-r3-admin154-cold-copy-20261111-01 于03:31:05.283–03:32:48.290实际COMPLETED0/102.934680秒。78078cb8源码、QB966ca4e5和C准确授权8d3e764c均固定；原79/f428问题记录保留。1491文件/28目录/68501885字节含实际WAL，5安装记录和3份370字节私有材料已复制核验；实际新副本69226496字节<70MiB。目标仅原R3/state/cold-backups/admin154-before-20261111-01，dev66304/inode13522871；原PGDATA inode13502421不变且仍停止。03:33:30独立完成标记root0400/nlink1与原源/无在途读回，可用30945173504字节>原28GiB保留线。job a94f9ec6、typed28d7925f、后读回7f8e8918、aggregate f66171b76f40fe2917ff7e9832bf0a708b11aeed5a67cf7ab51ad93392490b01均由C实际读字节核SHA。这里只是完整冷副本，不称独立恢复通过；0PG/SQL/角色/业务/切换，私有内容及其摘要不导出。
+
+固定9830/59ed9165包已一次READY并精确inode核回；原临时传输策略在03:22:31完成恢复（0.268177秒），03:33独立读回原cd2字节/root0444/nlink1/旧过期期限、无pending/active。restore jobe04d465a/typed6ed317a8、READY81320783、aggregate e83e57076a1cf76d951c61ec7b0ba7646955a4cf79acc67d088ae6184cefd027全由C核SHA。无新npm/构建、不把制品落地记为154安装或应用启动。
+
+避免唯一服务器owner串行等代码，C先核T45无154/upgrade文件或tracked WIP，再取得T45明确“未创建/修改、无内存稿、交还且不双写”。原D1唯一新增其本人checkout的 tools/unified-import/fresh35-admin154-upgrade.mjs 及必要定向测试；T45保持root外层/有限owner+controller认证恢复/normal04/原受保护发布调用唯一writer。接口使用既有owner连接及关闭后独立新连接factory，0新池；同事务SQL36+receipt、明确COMMIT、后提交154目录读回后才返回可发布record，UNKNOWN与COMMITTED_UNPUBLISHED分开。固定9830APP/manifest不回改、不重打包；未新增团队、平台或业务规则。D1已按gpt-6.1-sol/high实际接续，QB之后只验该增量。
+
+STATUS03:35:51已推GitHub f66a0e9f36b171b33051da43dfa0a636fbfb1a59 / 内容SHA9f34a04b47ece9c022c514ebad308554af8a2ee831417a251dc93c37badadfd9；上一C三记录远端97b1172e4f2f149c697b38287a084e87f3344be9已核。当前没有待用户操作。下一步原D1与T45并行完成准确维护源码与窗口材料，C核实后按现有委托直接衔接同R3，未签实际04/SQL36/A，应用CLI/容量/readyz/业务和正式切换仍未验；11.2旧数据继续排除。
