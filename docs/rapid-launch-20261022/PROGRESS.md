@@ -4011,3 +4011,21 @@ D2实际拦住并由D1修复原清单遗漏SQL36。固定9830e54fa82bd36c62f997d
 T45根调用3b9c4fa5交QB增量，尚未放行：发现准备后授权过期仍可生成容量，以及ready跨截止返回成功两处边界。原T45补最小守卫及反例，清理不得因窗口过期被阻断；原helper和其他有效证据保留，不扩大验收。03服务02:38:09.299到期保持，不为赶时放宽检查；实际APP尚未执行。C已核定原公开模板、持久staff请求密钥、新空media、实际同盘statfs别名及有限512MiB/1CPU/pids128非rootAPP资源，真实容量不得假造。
 
 STATUS02:25:07远端8f5f3a35801aaadbb366cc76db56171993756c7f/文件SHAaa3216e5bc3f80f4477fba203e058842f4efd62765cce71d2b3442f0d5a02af4。主控上一三记录7ef9fd0739c502aa53df82112e60d2cae7e462a1远端已核。用户授权C至今日12:00，不需睡眠用户重复操作；同R3备份和154有限维护准备继续，不新建库、不使用11月2日旧数据。应用、业务、当前备份恢复、正式切换未验。
+
+
+### 2026-11-11T02:41:23+08:00 - Actual APP attempt failed before CLI; exact owned APP stopped
+
+C verified fixed03c72454 caller/QB result615f2439 and issued exact external authority a8c0ef62 (starts1794335655140, expires1794335859299, before unchanged03 lease). T45 submitted one original job t45-first-r3-da7-app-cli-20261111-01. Actual 02:35:41.702961-02:35:47.920982 FAILED2/6.184656s; terminaleb684fe2, first failure3c434a58, resultb5e0c41e, cleanup0f953154 all independently read/hash matched. Phase GATE_START_AND_NONROOT_ACCESS, codeCOMMAND_FAILED_1 does not identify which of docker start/facts/nonroot access failed. No CLI/FIFO release/capacity/readyz or business PASS. Exact own APP44b79bf9 stopped in original finally; PG not signaled or renewed, original credentials and stable staff request key preserved. No retry/new key or new database.
+
+Original03 lease02:38:09.299 is now expired; actual PG/container/guardian/bridge/PGDATA and credential metadata closeout still needs independent original-channel readback. T45 proceeds only with original failure and exact metadata/safe-log evidence. Never infer password/DB cause or complete shutdown from generic code/process absence. Full154 archive9830 remains build/pack PASS, not server install/APP acceptance; SQL36/admin/backup recovery/business/formal switch remain NOT_RUN. C delegation through noon continues, no human action required.
+
+
+### 2026-11-11 02:51 — 原挂载首错查明、03独立收尾完成
+
+T45原键只读补查COMPLETED0，C复算job548b0f29/typed1cd00916；03在02:38:47按原期限退出，guardian记录cleanShutdown/cleanupComplete/portAbsent/dataPreserved、errors=[]，准确容器pid0/桥端点空/PGDATA原dev66304 inode13502421/原runtime与pgpass私有材料保留。没有新启库、SQL、信号或秘密内容读取；不把单纯进程消失冒充全部收尾。
+
+随后唯一挂载细读job1a4acbb9/typed64ff3d9bc1e7af98b029b60fe6fa93c4777ba051603964f0e4c49ffa51c8f70e明确原OCI State.Error：只读/app缺/app/node_modules，runc mkdirat报read-only file system。固定payload/node_modules确实不存在，依赖源存在；gate/Node均未执行，不是密码、DB或已证nonroot权限故障。原exec stderr未捕获不补造，原Docker存储错误仍在且已脱敏取得。原失败APP、归档和依赖均保留，不重放或换键盲试。
+
+T45仅补原解包后的空挂载点及分子阶段退出/受控stderr，复用原包和依赖；C选择准备一次最长60秒、无网络/PGDATA/凭据/应用CLI的同镜像UID10001正向挂载加载验证，实际固定对象待T45/QB后绑定，不重做已知负侧。并行准备同一停库R3完整冷副本/空间预算、原owner有限维护和04/SQL36/154链，不新建DB、不另排独立演练、不用11.2旧批。CURRENT备份或恢复及154真实业务仍未验。
+
+STATUS02:49:16已核GitHub cbfcb0407bb7f545d3b010825ab06743823df3f6 / 文件SHAd96ba00e3eeeb078c97e707475e74eb5827f7829cd8b813e7f0be6216064b84c。用户至今日12:00的自主决策委托有效，无待用户操作。当前下一步是准确挂载修复的受影响验证及同库维护准备，不是新的页面全审或旧库采集。

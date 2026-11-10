@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T02:28:00+08:00",
+  "updatedAt": "2026-11-11T02:51:32+08:00",
   "stage": "R3_NORMAL03_ACTUAL_READY_APP_STAGE_COMPLETE_ADMIN154_SOURCE_ACCEPTED_APP_NOT_STARTED",
   "lastVerifiedRemoteCommit": "7ef9fd0739c502aa53df82112e60d2cae7e462a1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,14 +1786,14 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T02:28:00+08:00",
+    "asOf": "2026-11-11T02:51:32+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "SAME_R3_NORMAL03_RUNTIME_READONLY_AUTH_ACTUAL_PASS_FINITE_UNTIL_023809_APP_NOT_STARTED",
+    "currentPhysicalStage": "NORMAL03_CLEAN_EXPIRY_READBACK_CONFIRMED_APP_OCI_MOUNT_ROOT_CAUSE_FIXED_SCOPE_IN_PROGRESS",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "8f5f3a35801aaadbb366cc76db56171993756c7f",
+    "publicStatusCommit": "cbfcb0407bb7f545d3b010825ab06743823df3f6",
     "currentOwners": {
       "T45": "Collect02 first stage and exact exit readonly; preserve unique password and stopped data. APP exact staging/restore may proceed after manager free. No03 replay.",
       "D1": "normal02 source/remote delivered; A+B a53 preserved; implement bounded154 catalog and original host successor source only.",
@@ -1951,7 +1951,7 @@
       }
     },
     "controllerRecordsRemote": "7ef9fd0739c502aa53df82112e60d2cae7e462a1",
-    "publicStatusSha256": "aa3216e5bc3f80f4477fba203e058842f4efd62765cce71d2b3442f0d5a02af4",
+    "publicStatusSha256": "d96ba00e3eeeb078c97e707475e74eb5827f7829cd8b813e7f0be6216064b84c",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -2039,6 +2039,23 @@
         "expiresAt": 1794335031140,
         "state": "CONSUMED_STAGE_COMPLETED_ORIGINAL_POLICY_RESTORED_AND_INDEPENDENTLY_READ_BACK",
         "appOrPgStart": false
+      },
+      "current03Closeout": {
+        "status": "ACTUAL_CLEAN_EXPIRY_AND_INDEPENDENT_READONLY_READBACK_PASS",
+        "readbackJob": "t45-first-r3-da7-app-failure-readonly-20261111-01",
+        "jobSha256": "548b0f296a131a8edb1f6084b0c52d4c8d7a832be489cb366f003ece36162d24",
+        "resultSha256": "1cd00916f03ce5bea019fa0241fc08b38ff9458b50168f91e628d962880db4de",
+        "finishedAt": "2026-11-11T02:38:47.095490+08:00",
+        "containerPid": 0,
+        "bridgeEndpointAbsent": true,
+        "guardianCleanShutdown": true,
+        "guardianErrors": [],
+        "ownedPidAndPortAbsent": true,
+        "pgdataIdentityPreserved": true,
+        "originalRuntimeReferencePreserved": true,
+        "sqlCalls": 0,
+        "newStarts": 0,
+        "signals": 0
       }
     },
     "linuxDependencyPreparation": {
@@ -2196,12 +2213,43 @@
       "sourceReadySha256": "2cb84fa04c78c00d9a7c97169bc6f1a3eca828fc5751cd5b2ca9809fa76d72bf",
       "decision": "Retain original tracked TTL900/login admission/max1 pool; six existing maintenance modules; DA7/R3 exact profile. Persistent32raw-byte staff request key UID10001 mode0600/0710parent once only; new empty media UID10001 mode0700. No real capacity facts invented. Root caller/QB and exact live scope still pending.",
       "parser": "LOCKED24_21_SYNTHETIC_PASSWORD_PARSE_PASS_NOT_CLI_OR_READYZ",
-      "actualSecretsGenerated": false,
-      "appStarted": false,
+      "actualSecretsGenerated": "PRIVATE_RUNTIME_FILE_WRITTEN_STABLE_KEY_PRESERVED_CREATION_FLAG_NOT_EXPORTED",
+      "appStarted": "CONTAINER_CREATED_CLI_NOT_RELEASED_OWN_APP_STOPPED",
       "helperReviewSha256": "9004f316b5bef5a629a08ef5b89419766dad119d9db71346b20497a89fcfc5d6",
-      "callerCommit": "3b9c4fa52e2a721351ae7265e6e5a2a1540a4448",
-      "callerReview": "NEED_TARGETED_TIME_BOUNDARY_FIXES",
-      "liveAuthorityIssued": false
+      "callerCommit": "03c72454c36d1d6883d6e8a0859da20410b54811",
+      "callerReview": "QB_SOURCE_ONLY_PASS_THREE_TIME_BOUNDARY_FINDINGS_CLOSED",
+      "liveAuthorityIssued": true,
+      "callerReviewSha256": "615f2439d88aebdb037c7cf66c17079da73879b38c1cc7d2c53c43d1caeab3f9",
+      "authoritySha256": "a8c0ef62b6c84277e416f00f0d0304ae8b7beebf5afa56094e5c85ba61a5155a",
+      "startsAt": 1794335655140,
+      "expiresAt": 1794335859299
+    },
+    "appActual01": {
+      "job": "t45-first-r3-da7-app-cli-20261111-01",
+      "startedAt": "2026-11-11T02:35:41.702961+08:00",
+      "finishedAt": "2026-11-11T02:35:47.920982+08:00",
+      "status": "FAILED",
+      "exitCode": 2,
+      "seconds": 6.184656214900315,
+      "terminalSha256": "eb684fe2c6a14f66c562af532e7d62d1d3ce60e3bc70c7ab98a814185da664b7",
+      "firstFailureSha256": "3c434a58ef027775a7d581bda0a2de7922a8346f03641841c7fb13515c328269",
+      "resultSha256": "b5e0c41e99a634d42e2be03856875126012eebb2b4176a92fecee2dc641f3365",
+      "cleanupSha256": "0f953154a46f1449ce1d2fc65066980dd6f6366f61c0e8faffe965d677fb7967",
+      "phase": "GATE_START_AND_NONROOT_ACCESS",
+      "safeCode": "COMMAND_FAILED_1",
+      "specificCause": "ORIGINAL_DOCKER_OCI_READONLY_APP_MISSING_NODE_MODULES_MOUNTPOINT_MKDIRAT_EROFS",
+      "ownAppCid": "44b79bf94ded91547f98a1486aec9a56113d181e08c41455c5219aaa8bf98b70",
+      "ownAppStopped": true,
+      "postgresSignals": false,
+      "runtimeAndStableKeyPreserved": true,
+      "actualCli": false,
+      "actualCapacity": false,
+      "readyz": false,
+      "next": "T45 precise mountpoint and substage error capture; one bounded nonroot mount-only positive check prepared independently; same-R3 cold copy/owner/04/154 preparation continues",
+      "mountEvidenceJob": "t45-first-r3-da7-app-mount-error-readonly-20261111-01",
+      "mountEvidenceSha256": "64ff3d9bc1e7af98b029b60fe6fa93c4777ba051603964f0e4c49ffa51c8f70e",
+      "originalExecStderr": "NOT_CAPTURED_NOT_FABRICATED_ORIGINAL_DOCKER_STATE_ERROR_RECOVERED",
+      "nonrootExecuted": false
     }
   },
   "operationalState": {
