@@ -4285,3 +4285,8 @@ R3 normal01/02 FAILED; both clean stopped, original unique authentication materi
 原02实际安全日志为SERVER_STARTING，客户端17.11正常；端口出现早于可接受会话，原工具过早查询。03仅在原20秒内对明确启动中/连接拒绝做只读SELECT1等待，再核原角色权限；不再执行PASSWORD/ALTER或生成新秘密。原01/02提交未知不追认回滚，原PGDATA和唯一01材料保留。T45 b0e91015源码已固定、18项作者定向通过，READY/独立复核尚待，不先签现场窗口。D1 da7c73df含779真实缺失导入修复及03固定配对，QB限定PASS；D2一次合批构建在途，远端推送尚未确认。原3f制品已落地、临时传输策略实读恢复，不能部署缺import版。A+B a53仍仅源码，154宿主/安装后继由原D1并行完成，无实际管理员或SQL。授权至今日12:00由C判断；无需用户操作，未称APP/业务/上线通过。
 
 STATUS 730db69ccb1501f58612af81c0d5f69680a9c825 / SHA256 883e58dcbe231e270be36f06a6e3265e7fdbcf1a24b13a3a5aa33f415a023547。实际诊断job t45-first-r3-client-preflight-20261111-01，result ad7d92b37b93a65c225f69552611f0c2f5c3320e9bd9685fe6cbe117d344e09c。
+
+
+### 2026-11-11T01:35:00+08:00
+
+DA7完整APP在固定Node24.21.0/npm11.9.0一次build/pack退出0，原新增真实catalog模块绑定1/1；C独立复算6制品和包内host，archive0c348a4c/sourceSeta29778cc/RESULT2c86de71匹配。非APP启动或业务证据。QB对normal03 b0e91015复现两项P2：20秒后成功未被拒绝、异常退出携带暂态文字被重试；T45原owner只补两处和反例，原03键未消费，无新窗口。旧密码原材料、PGDATA及旧未知事实保留。D1 154目录/记录及类型定向通过，完整宿主与CLI尚在核；准确后继包会保留779及DA7，不把WIP称已交付。公开STATUS于01:33:53核远端dcb771bffc1a36d496edd6818f23b6bb6ff541dc/SHAe3c251e297741945bc99e79b40dfa1b8dee19548145dc03a8e1030eec9d951b4。C三记录5786dfb2已非强推核实。

@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T01:28:00+08:00",
+  "updatedAt": "2026-11-11T01:35:00+08:00",
   "stage": "R3_INSTALLED_CLEAN_LINUX_ACTUAL_PASS_NORMAL_START_SOURCE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "601afe4ff6e8f3f68452765501ff712fc797d326",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,14 +1786,14 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T01:28:00+08:00",
+    "asOf": "2026-11-11T01:35:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_LINUX_DEPENDENCIES_VERIFIED_NORMAL02_CLEAN_FAILED_SERVER_STARTING_NORMAL03_SOURCE_REVIEW_PENDING",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "730db69ccb1501f58612af81c0d5f69680a9c825",
+    "publicStatusCommit": "dcb771bffc1a36d496edd6818f23b6bb6ff541dc",
     "currentOwners": {
       "T45": "Collect02 first stage and exact exit readonly; preserve unique password and stopped data. APP exact staging/restore may proceed after manager free. No03 replay.",
       "D1": "normal02 source/remote delivered; A+B a53 preserved; implement bounded154 catalog and original host successor source only.",
@@ -1912,14 +1912,17 @@
       "CChecks": "RESULT_READY_FOUR_ARTIFACTS_AND_ACTUAL_PREFIXED_HOST_MEMBER_MATCH",
       "serverApp": "NOT_STARTED",
       "stageAuthoritySha256": "12eb2e28cf8b7ac7a53cb0630826dca06624a9eb902fb0ebf335d807f5827c16",
-      "stageScope": "EXACT_ARCHIVE_ONLY_30MIN_CAS_RESTORE_ORIGINAL_POLICY_NO_APP_OR_PG"
+      "stageScope": "EXACT_ARCHIVE_ONLY_30MIN_CAS_RESTORE_ORIGINAL_POLICY_NO_APP_OR_PG",
+      "normal03": {
+        "commit": "da7c73df2793a37fde65721794da4deaffff2e6f",
+        "archiveSHA256": "0c348a4cdcedef9e900e50f9e5c8d91f2f13ac898d4ecbe8ef7976593b2aa3cc",
+        "sourceSetSHA256": "a29778ccf12bfe4770644ee15a6d468b85648c16c74e05564daa474e9934cc0d",
+        "resultSHA256": "2c86de717a6970c5b29176511302703148ff02c253bdb2654eb5f1417532af88",
+        "status": "D2_BUILD_PACK_LOCKED24_21_PASS_C_ARTIFACT_PINS_MATCH_NOT_SERVER_APP"
+      }
     },
-    "controllerRecordsRemote": {
-      "state": "REMOTE_EXACT_COMMIT_VERIFIED_NO_FORCE",
-      "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "e4aa60d6cde59a1c9c38009be18770138d2863c8"
-    },
-    "publicStatusSha256": "883e58dcbe231e270be36f06a6e3265e7fdbcf1a24b13a3a5aa33f415a023547",
+    "controllerRecordsRemote": "5786dfb2a9dd9961b92bbcf819e66079d3fd0598",
+    "publicStatusSha256": "e3c251e297741945bc99e79b40dfa1b8dee19548145dc03a8e1030eec9d951b4",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -1954,7 +1957,7 @@
       "producerReadySha256": "d3e281f7f058837aea317530cb29a53d4c2691baedd10d74399d1cd02d5b61f7",
       "producerResultSha256": "11807e3be5c00c52df2520f4bf4571df56c2251c0cc4a5b55e142c96f62494ae",
       "producerChecks": "AUTHOR_18_TARGETED_PASS_NOT_ACTUAL_SERVER",
-      "producerReview": "QB_LIMITED_PASS_ACTUAL02_FAILED_NO_PROOF",
+      "producerReview": "QB_NEED_FIX_TWO_OFFLINE_P2_DEADLINE_AFTER_SUCCESS_AND_ABNORMAL_EXIT_TRANSIENT_RETRY",
       "consumerReview": "QB_EXACT_MAPPING_INCREMENT_PASS_SOURCE_ONLY",
       "current03Consumer": {
         "branch": "codex/d1-normal03-consumer-20261111",
@@ -1987,7 +1990,11 @@
         "policyRestorationSHA256": "c30ee79ff754ac41c5ea7817075f71c885c96acf301a8771b8e8f0ee3fad5e29",
         "restoredOriginalPolicy": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530"
       },
-      "next": "T45 fixed03 READY + QB increment, then C new exact external window and one readonly normal03 start; D2 DA7 build and D1 admin154 continue in parallel."
+      "next": "T45 fix two proven P2 on unconsumed03; QB only affected negatives; C fresh exact window only after fixed review. DA7 APP build complete separately.",
+      "source03Findings": [
+        "Success accepted after shared20s deadline without postquery check",
+        "exit127 or signaled process with stale startup stderr could be retried"
+      ]
     },
     "linuxDependencyPreparation": {
       "cacheSha256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
