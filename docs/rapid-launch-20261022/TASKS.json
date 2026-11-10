@@ -42428,7 +42428,7 @@
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
               "firstNativeInstallConfirmation": {
-                "status": "USER_APPROVED_R2_CURRENT_ADMISSION_PASS_FINAL_TOOL_NOT_STAGED",
+                "status": "USER_APPROVED_R2_ADMISSION_PASS_FIXED_TOOL_STAGING_IN_PROGRESS",
                 "owner": "T45",
                 "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
@@ -42440,6 +42440,13 @@
                   "jobSHA256": "cad8cf2c62f1d950c19908c6385ab795ea7ceaa7f6aded42c9c4702b3bb82373",
                   "phaseSHA256": "f2aa6eec3cfd8fbe06195b30f011d0b6ce7dcb1d9ff9f959d9f9f27347eb7b17",
                   "check": "08:10:49 +08, COMPLETED/0, 0.218 s. C recomputed both actual files. 31,330,955,264 B on the exact state volume and 15,243,304,960 B available memory, affinity 4. Exact empty front and alias, target container/56791 absent, all seven planned keys absent, Linux image matches. Original 75144 tool READY leaves present, 1b37415c leaves absent. No network/container mutations or PG connection. Final successor tool READY and compatible STOP window still required."
+                },
+                "finalToolStaging": {
+                  "owner": "T45",
+                  "readOnlyHandoffSHA256": "3527342383f35ebf743ab0964b23746d5b444ac6f2670976641641e0faf69e23",
+                  "stageKey": "f35-94152ed1-first-production-20261109-r1",
+                  "status": "T45_ACTIVE_UNDER_EXISTING_BOUNDED_TOOL_AUTHORIZATION",
+                  "next": "Confirm the original policy prestate, vacant or already-ready exact slot, no conflicting work and sufficient same-volume free space. Stage the verified 94152ed1 archive once through the original CAS and retain actual READY and policy restore receipts. Fix the exact materializer/recovery pin and STOP reserve before opening T0. No APP cache on this slot and no import authority issued."
                 },
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
                 "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
@@ -42807,7 +42814,7 @@
               }
             },
             "firstWriterAuthorityBinding": {
-              "status": "USER_APPROVED_D1_SOURCE_QB_PASS_PRODUCER_AND_TOOL_PENDING",
+              "status": "USER_APPROVED_FIXED_PAIR_QB_OFFLINE_PASS_LOCAL_TOOL_VERIFIED",
               "userDecision": "Direct answer '确认 A 和 B' to request_user_input_async call_1e418198c37e478ba6e7b4908a84a022. B approves only the exact originalImportAuthoritySha256 source/input-contract change. D1 owns Node, T45 owns the original carrier; both requested gpt-6.1-sol/high. No import authority is issued.",
               "nodeCandidate": {
                 "commit": "94152ed1c61e508255e0f20cc35e23d00253f635",
@@ -42816,6 +42823,24 @@
                 "reportSHA256": "815f416a649b45723c78201c4af755b075f1a6e0b80926b99e777bc8bc755bfe",
                 "patchSHA256": "abf38a91ae8d6a682e24335d19014e9343a8fd69e0b41e0a41be34f71ccd5342",
                 "check": "D1 27/27 focused local tests, no skips; original QB independently ran 7/7 affected model tests. Raw-byte equality precedes parsing and use in both host opens; post-commit mismatch keeps original COMMITTED or ALREADY_COMMITTED and independently reports VERIFICATION_UNKNOWN in the original CLI model. C confirmed exact tree and artifact digests. D2 packs one local 361-member successor, T45 retains sole producer owner, QB will verify only the new handoff pair. No Linux load, live writer, authority issuance or database check."
+              },
+              "producerCandidate": {
+                "commit": "132b1dbc188886002eb41864c13288017b681064",
+                "tree": "31a2e825f61b304b964a692d67badc1716e7539e",
+                "carrierSHA256": "b195799ef1c27b04a0cc07a963674d6caad711637c278b5ac179cd0cf9c39be1",
+                "helperSHA256": "49a9d3e2d3ad9814a7543ecb4cdfc190308df84bde19a22a3ec24af5db51c7d1",
+                "testSHA256": "72e8aaeec1e8556e3336e4167027caf324784c604f4e78eb545cba3c79729264",
+                "check": "T45 5/5 focused. Original QB 2/2 producer regression plus actual Python capture/proof_bytes to Node validator passed exact binding and rejected absent/invalid evidence. The other operation FD field sets are unchanged. C recomputed the tree and three file hashes. Actual issuer bytes, container FD, Linux and PostgreSQL are unverified. Existing tool pin must be rebound to 94152ed1 before execution."
+              },
+              "packagedTool": {
+                "owner": "D2",
+                "archiveBytes": 1156487,
+                "archiveSHA256": "ef5c74ebcec9c114e45ba4e3fb88b4b12f4caa4a3d677607c6232a462b071fb8",
+                "manifestSHA256": "7188a1b6bc1fa009a06c0b0ef4ac7800b97292d3624fcc931f522b0bdb9da19a",
+                "descriptorSHA256": "2231ed567873bcdff011aecad1edea5a376d666f2bf603a6b690c68a8b87c153",
+                "localReadySHA256": "07efdb35287f9d79bef522b1362470e4ef65d4868974ccff90adb770c706d535",
+                "resultSHA256": "5942c71429714700846d0f27282b27d496fcc4a133cbeb0f778ec82d4f388f29",
+                "check": "Original archive parser and local loader/CLI/readback loaded. D2 verified 361 files and 52 implied directories, 5,161,482 B expanded. Six members changed relative to 1b37415c. C recomputed the fixed package and metadata digests. Server stage READY and in-container loader evidence are separate."
               },
               "finding": "T45 490a311e and D1 1b37415c show the exact closed execution description and existing 8192 B protected descriptor bind original parameters but have no externally frozen batch-authority raw SHA for V2 EXECUTE. The status path already uses originalImportAuthoritySha256. The current V2 loader validates path, stable bytes, binding fields and window, then records the first bytes' own digest. Those checks cannot establish equality to the issuer's earlier authorized bytes.",
               "proposedDelta": "For the authenticated new R1 V2 EXECUTE only, require originalImportAuthoritySha256 in the existing same-job external execution description. The existing external issuer takes the SHA-256 of the authorized original batch-authority bytes and binds it to the original request and original operation-parameter SHA. T45 verifies the external description and carries that SHA over the same protected descriptor. D1 compares the first read's raw bytes with the pin before accepting write authority, and repeats the match on the separate verification open. Initial missing or different bytes reject before the first write. A post-commit mismatch keeps COMMITTED or ALREADY_COMMITTED and reports VERIFICATION_UNKNOWN for the original-key recovery path.",
