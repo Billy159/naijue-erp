@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T04:13:00+08:00",
+  "updatedAt": "2026-11-11T04:18:00+08:00",
   "stage": "R3_COLD_COPY_VERIFIED_9830_STAGED_POLICY_RESTORED_ADMIN154_UPGRADE_LEAF_PARALLEL",
   "lastVerifiedRemoteCommit": "dd385dacae8f0bee98f5c1d8ba439fdc69e440da",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,7 +1786,7 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T04:13:00+08:00",
+    "asOf": "2026-11-11T04:18:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_COLD_COPY_VERIFIED_FINAL1B8_LOCAL_BUILD_PASS_154_SQL_ADMIN_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
@@ -1950,7 +1950,7 @@
         "serverAPP": "NOT_RUN"
       }
     },
-    "controllerRecordsRemote": "67563dd68df0dc3b9cfa3c06ace23bafb1343e90",
+    "controllerRecordsRemote": "c88eb8506c42deb59d1200a08897140aead9ec1a",
     "publicStatusSha256": "ebd7339ccf993c7b4fff7f05f3b30a6c56989a5e25a26ef22e2f2ab4305e7930",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
@@ -2301,7 +2301,7 @@
       "sourceCommit": "1b8d24b4516760ffc6a2ce8ca1a20e6194644f9a",
       "existingOwnerForDDL": "erp35_owner_20261110_r3",
       "existingControllerLoginForAdminA": "erp35_controller_20261110_r3",
-      "missing": "D1 minimal native Node driver plus QB; normal05 source QB; exact04/154/A/restore current receipts not yet created",
+      "missing": "D1 native Node driver and its exact T45 root two-phase invocation; fixed-source QB and actual window binding. Normal05 source already PASS; actual04/154/A/restore/05 facts not yet created.",
       "runtimePermissionExpansion": false,
       "newDatabase": false,
       "oldInstallationImmutable": true,
@@ -2404,7 +2404,11 @@
         "commit": "7ef828842566a7cb08a3db63c60adc0dfe0ba809",
         "sourceReadySha256": "e0ba7e14b387f0e85f33b526dd9694fe489cf15bac2c435b118da03f2a8e740a",
         "owner": "T45",
-        "status": "SOURCE_FIXED_QB_INCREMENT_PENDING_ACTUAL_DYNAMIC_PINS_NOT_CREATED"
+        "status": "PASS_SOURCE_NORMAL05_DELTA_ONLY_ACTUAL_DYNAMIC_PINS_PENDING",
+        "qbResultSha256": "d67acd523cf1580aa170e785c5d686e811aeac249f035903cee6a7f3512ef19d",
+        "qbReviewSha256": "aea48abe14dbe06e516906a38969b105adcb7398e346ceb050c618960ba23ab5",
+        "modelMethodsPassed": 4,
+        "rootRestoreSeamCasesPassed": 6
       }
     }
   },
