@@ -4273,3 +4273,8 @@ STATUS v20已23:59:33发布并原字节回读，commit bd9e30f8f377ccc7fb4326287
 R3同库正常启动源码已固定ddfdc8b3，原QB正做限定复核；11项本地模型通过不代表现场启动。D1正并行实施首管理员独立配置与后续真实首导A+B配套，不执行会占用首导资格的空整包方案。用户授权主控决策至今日12:00，目前无需用户操作。
 
 STATUS: 87554cb2d510eb72f25064dd08159e4b80652ac8; producer: ddfdc8b3539601f7b6ffb08f90ae0760456c4ee9; READY SHA256: d3e281f7f058837aea317530cb29a53d4c2691baedd10d74399d1cd02d5b61f7; RESULT SHA256: 11807e3be5c00c52df2520f4bf4571df56c2251c0cc4a5b55e142c96f62494ae.
+
+
+### 2026-11-11T00:52:00+08:00
+
+R3 normal01/02 FAILED; both clean stopped, original unique authentication material and PGDATA preserved. 01 exact exit not recorded and password COMMIT UNKNOWN. Fixed PG parameter parse actual PANIC=1 / ERROR=0 and both tool containers removed; this is reproduction, not original log. 02 corrected source independently reviewed but actual failed, so T45 now only collects02 safe phase/exit. No03 blind start. 3f4373e1 APP built/packed once, C exact pins/host verified. a53 A+B source has no PG validation and no154 host admission; D1 continues narrow successor source separately. Human decisions delegated to C until noon; no user action needed.

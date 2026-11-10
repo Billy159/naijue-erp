@@ -1786,20 +1786,20 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T00:20:33+08:00",
+    "asOf": "2026-11-11T00:52:00+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
-    "currentPhysicalStage": "R3_STOPPED_CLEAN_WITH_DURABLE_35_TABLE_INSTALLATION",
+    "currentPhysicalStage": "R3_NORMAL01_AND_02_FAILED_CLEAN_STOPPED_ORIGINAL_MATERIAL_PRESERVED",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "87554cb2d510eb72f25064dd08159e4b80652ac8",
+    "publicStatusCommit": "c7e54f19ed18e8d9ced1f58e131cb4719d1c401a",
     "currentOwners": {
-      "T45": "Normal same-R3 source fixed and QB reviewing. Prepare exact same-key runner and application credential hydration; no new password or APP build.",
-      "D1": "Paired A+B first-admin provisioning and later real first-import adoption source implementation; no live write.",
+      "T45": "Collect02 first stage and exact exit readonly; preserve unique password and stopped data. APP exact staging/restore may proceed after manager free. No03 replay.",
+      "D1": "normal02 source/remote delivered; A+B a53 preserved; implement bounded154 catalog and original host successor source only.",
       "C": "Bind source/actual receipts, autonomous bounded decisions, three original records and status.",
-      "QB": "Dependency fixed source/literal/time/path changes limited PASS; upcoming exact normal/auth increment only.",
-      "D2": "c73 APP single build/pack complete; no duplicate build or dependency download; server validation T45."
+      "QB": "02 producer and consumer limited increments PASS; A+B review active, local PASS is not PG success.",
+      "D2": "3f actual single build/pack delivered; all exact hashes and package host C verified. No duplicate build/install."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
     "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
@@ -1901,23 +1901,25 @@
       "recoveryCredentialsRetained": false
     },
     "applicationArtifact": {
-      "commit": "c73c104e6d9d0d20442b76acb23f87c4a843559d",
-      "tree": "937e6731ee4783627bdca207fd3fcd80cc196536",
-      "buildId": "erp-c73c104e6d9d-r3-normal-service-20261110",
-      "archiveSha256": "0b9182676c734a79bd06b4e5d618865ad1b48871b6744475bd182800d28905d4",
-      "archiveBytes": 3359787,
-      "manifestSha256": "58ff500c581d4e3443c2225d1cbca7ac964a5a0f5c163195ccb6af4674e480a4",
-      "D2ReceiptSha256": "322b50e38115d2858f10521d68e73955567a7994b9b30fd585c133970dd17656",
-      "D2Checks": "Single actual build and pack exit0; prior same Web input business evidence reused; 214 native leaves and archive bytes checked",
-      "CChecks": "RESULT/READY exact bytes; four artifact hashes and exact consumer bytes inside archive match",
-      "serverInstallLoadAndApp": "NOT_VERIFIED"
+      "commit": "3f4373e141556205b9f9fcc728cb532eb6df6fe5",
+      "tree": "544bdb8a03a0fdc12711857fdac8e4ed3ad0ad97",
+      "buildId": "erp-3f4373e14155-r3-normal02-20261111",
+      "sourceSet": "a77f3259b0a4fbe4907587d500370b38b10866cb7e6bc29f7557e61c8fb50f99",
+      "archiveSha256": "ea46e4dca3b83c78c0ca5f30423bea3157919181445110c23535128895d5735d",
+      "archiveBytes": 3362320,
+      "manifestSha256": "f6db3cb7d517c3d91d7c1f4b4fb0ee8a088dcd9a971dbace0f74c168f7dd759e",
+      "D2ReceiptSha256": "d6f1a2bef2a6ba480c16d44ad3e50ed5a0212eca0fe53bd60744de87988eaa24",
+      "CChecks": "RESULT_READY_FOUR_ARTIFACTS_AND_ACTUAL_PREFIXED_HOST_MEMBER_MATCH",
+      "serverApp": "NOT_STARTED",
+      "stageAuthoritySha256": "12eb2e28cf8b7ac7a53cb0630826dca06624a9eb902fb0ebf335d807f5827c16",
+      "stageScope": "EXACT_ARCHIVE_ONLY_30MIN_CAS_RESTORE_ORIGINAL_POLICY_NO_APP_OR_PG"
     },
     "controllerRecordsRemote": {
       "state": "REMOTE_EXACT_COMMIT_VERIFIED_NO_FORCE",
       "branch": "codex/erp-0448z-integration-20261105",
-      "commit": "c8079163722b7a10af9278103c04f51b988b73de"
+      "commit": "e4aa60d6cde59a1c9c38009be18770138d2863c8"
     },
-    "publicStatusSha256": "c9e66110c7d5eac33a02bbc9fa5df5e989e2aad4f7624bddb70eef784bba8df8",
+    "publicStatusSha256": "e6ff539f1518762f5030fa7eddf43645fb532872fb21ceddb0fb29ade5e64fe8",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -1937,8 +1939,8 @@
       "exactScope": "Same installed R3/record/source/PGDATA, authentic later birth; preserve runtime null and finite service/capacity. No old recovery proof fabrication.",
       "D1": "FIXED_C73_AUTHOR_14_AND_QB_LIMITED_PASS",
       "T45": "Normal same-data launcher/proof implementation; credential reference metadata first, exact recovery proposal if absent.",
-      "execution": "NOT_SUBMITTED_NO_PASSWORD_ROTATION_NO_NORMAL_PG_START",
-      "consumerCommit": "c73c104e6d9d0d20442b76acb23f87c4a843559d",
+      "execution": "02_FAILED_CLEAN_INSIDE_STAGE_READBACK_PENDING",
+      "consumerCommit": "3f4373e141556205b9f9fcc728cb532eb6df6fe5",
       "consumerSourceSet": "127efa6cf06a0e9d228e97bfd375ebb7ba6c18fbed109b5fa8f660a5dee2f036",
       "consumerHostSha256": "8152a707b4f2c16642c2b06ef290c93cd72d575cf3e952d053113fad0c85238b",
       "consumerReceiptSha256": "a3cecd49b1cd96271caed73e6b7cda17236658f33f85d626f19d18dfdd7b19f7",
@@ -1948,10 +1950,12 @@
         "secrets": "Per-job private exclusive files/pipe; no argv/output/logs/Git. Exact consumer UID access. Unknown commit uses original key and retained private material; no regeneration/replay.",
         "liveExecution": "NOT_YET_AUTHORIZED_OR_EXECUTED; fixed source and exact target/role/input/window/cleanup first."
       },
-      "producerCommit": "ddfdc8b3539601f7b6ffb08f90ae0760456c4ee9",
+      "producerCommit": "fba457d3b16bef14d8f8f0bc28ba3774b295d364",
       "producerReadySha256": "d3e281f7f058837aea317530cb29a53d4c2691baedd10d74399d1cd02d5b61f7",
       "producerResultSha256": "11807e3be5c00c52df2520f4bf4571df56c2251c0cc4a5b55e142c96f62494ae",
-      "producerChecks": "AUTHOR_11_LOCAL_PASS_QB_REVIEW_IN_PROGRESS"
+      "producerChecks": "AUTHOR_11_LOCAL_PASS_QB_REVIEW_IN_PROGRESS",
+      "producerReview": "QB_LIMITED_PASS_ACTUAL02_FAILED_NO_PROOF",
+      "consumerReview": "QB_INCREMENT_PASS_01_02_EXACT_PAIR"
     },
     "linuxDependencyPreparation": {
       "cacheSha256": "4554097ef04043ea70fddb3b4956bbfebb353cfb46ace42b7cdc6f1ba33b870f",
@@ -2010,7 +2014,12 @@
       "catalog": "Exact SQL function/EXECUTE/current-layout successor required; preserve old 6c49 installation record as predecessor, do not relabel old catalog.",
       "owners": "D1 source+tests; QB exact independent review; T45 sole future SQL/server execution. Normal c73/old installed catalog startup proceeds independently.",
       "liveExecution": "NOT_AUTHORIZED_OR_EXECUTED",
-      "noNewBusinessIdentityInvented": true
+      "noNewBusinessIdentityInvented": true,
+      "sourceCommit": "a53ad386df063c8d27ecad9856ca22883f2aaa45",
+      "sourceRemote": "VERIFIED_PUSH_AND_LS_REMOTE",
+      "sourceChecks": "6_NEW_27_RELATED_LOCAL_NODE24_22_NOT_PG",
+      "currentGap": "154 exact catalog and host/record successor not yet wired; old152 record cannot admit new functions",
+      "next": "D1 original owner narrow154 successor source; QB A+B fixed review; no SQL/live admin yet"
     },
     "currentHumanDelegation": {
       "source": "Latest direct user message: going to sleep, maximum decision authority through tomorrow noon",
@@ -2018,6 +2027,35 @@
       "decisionOwner": "C",
       "serverExecutor": "T45",
       "limits": "Exact bounded source/target/permission/cleanup; no fabricated facts/identities/approvals/test success."
+    },
+    "normalAttempts": {
+      "01": {
+        "authoritySha256": "4edddac41c8a7650a3b243be51ab5408ae495dc3402cf2b48b2c103f6ee0dc69",
+        "terminalSha256": "31e24923ba6829a3ede821b9cac77abfbc1d83c96ad4ce39c0d2c208ec49b527",
+        "resultSha256": "92e1dc29c839c2fff818ff6add7c803867ae16612fc98e3e13cbf79fb1888f79",
+        "cleanupSha256": "c01d737c5404b3fafa43e741e2334a721bee5146a240a3de9c7d57e2ff1cdba9",
+        "inspectSha256": "cbf8e8bf1b5d2d3f169e71caf9e5cd1feb770ef260d49b5731dc8a60aa037a87",
+        "status": "FAILED2_CLEAN_STOPPED",
+        "passwordCommit": "UNKNOWN_PRESERVED_NO_REPLAY",
+        "specificExit": "NOT_RECORDED",
+        "innerSafeCode": "NORMAL_PASSWORD_ROTATION_OUTCOME_UNKNOWN_NO_REPLAY"
+      },
+      "parameterProof": {
+        "job": "t45-first-r3-pg-client-message-parse-20261111-01",
+        "resultSha256": "7c714a86675c0e4ff5f4906bb0e44a4266fed47314a96c3debee21cca7af8b50",
+        "terminalSha256": "8340d59eb11dcbcf9f31db14f192199ff643fe29f7781c15bfb8a795801fc0b4",
+        "actual": "PANIC_EXIT1_ERROR_EXIT0_BOTH_CIDS_REMOVED_0_DATA_MOUNTS_SQL_OR_PG_SERVICE",
+        "notOriginal01Log": true
+      },
+      "02": {
+        "authoritySha256": "ed2876c4bc216602b990453e21d2996d6d14d9811801416af30459565710f8dc",
+        "resultSha256": "0a041797e197fbdb7516835f18790e995e333541f7989412894411246dfe1217",
+        "cleanupSha256": "db02aa5725caae2bf85045cb677b9cfc32e234610433da6c9ae50a9f1c74802e",
+        "status": "FAILED_CLEAN_STOPPED_INSIDE_STAGE_READBACK_PENDING",
+        "action": "C explicit retained identical password repair; 0 new password, never replay01",
+        "newProof": false
+      },
+      "next": "T45 exact02 readonly stage/exit first; no03 or writer replay without cause and fixed review"
     }
   },
   "operationalState": {
