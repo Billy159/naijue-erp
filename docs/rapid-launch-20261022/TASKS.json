@@ -42428,7 +42428,7 @@
                 "next": "T45 pins the final first native35 installation scope to this exact bridge and the reviewed capacity carrier. No provision, entry, install, business import or cutover has executed."
               },
               "firstNativeInstallConfirmation": {
-                "status": "USER_APPROVED_R2_ADMISSION_PASS_SERVER_TOOL_READY_FINAL_STOP_BINDING_PENDING",
+                "status": "USER_APPROVED_R2_SERVER_TOOL_READY_QB_REVIEW_FIXED_STOP_FACT_LEAF_PENDING",
                 "owner": "T45",
                 "scopeFile": "outputs/T45/revisions/20261110-first-r1-native-install-confirmation-01/首装最终确认清单.md",
                 "scopeSHA256": "6686708645d37dd2c8f92b35cb97863efe41312c3c5c3fb5bcd1dc30d20f4153",
@@ -42454,6 +42454,17 @@
                   "restoredPolicySHA256": "cd2e532ba52446c497aeea75063b79a173fe0ee94c6370467ab8afc8af237530",
                   "check": "08:25:08 +08, 31.127 s, one upload; both original policy CAS jobs COMPLETED/0. C recomputed actual READY and all four manager receipt hashes. Exact archive/READY identities survived restore; original policy 0:0/0444, zero active units or consumers, no errors. Server artifact stage is complete. No Linux materialization or PG start.",
                   "next": "T45 fixes the exact materializer/recovery pin and STOP reserve before opening T0. No APP cache on this slot and no import authority issued."
+                },
+                "firstInstallReview": {
+                  "status": "QB_FIXED_R2_AND_09A7_APPROVAL_REFERENCE_VERIFIED",
+                  "reviewPath": "reports/qa-backend/rapid-launch-20261022/QB/FIRST-R1-NATIVE-R2-09A7-SAFETY-20261110/REVIEW.md",
+                  "reviewSHA256": "d112cc4229087801db0dfe24fa04ae21e0fe7869469db8948b9fb15ee34ccac5",
+                  "recoveryCarrierCommit": "09a7f67125622e0dbe56e30c4583c265ba9a985e",
+                  "recoveryCarrierTree": "1881749feb3eeee3cb689d637dd17022d066a418",
+                  "recoveryPlanSHA256": "56d93a5179df6e9351fc20620927ecc8c144d2f25d14854fc44d982f89c7df88",
+                  "fixedInputsSHA256": "5bc9da67e00b34cff565aebc56dacec6a531fcca4f4499b255a5f47d03995dfe",
+                  "stopBudgetSHA256": "d33280deebfef7909ef9f679d202e605abb814b5dde98436d219ff8b75b93be5",
+                  "check": "Original QB verified both exact plan loaders, cross-plan refusal, the final archive and server READY, and two materializer models. STOP source budget 148 s, reserve at least 150 s plus observed signing/queue/readback margin, always E_STOP + 40 s < floor(T1). C recomputed review and input SHA. The original be7 production_facts does not expose service-retained raw SHA needed by STOP. T45 is adding that one bounded read to the existing facts-installed receipt; unchanged r2 write carrier and plan. No T0 or absolute times until the missing receipt binding is ready."
                 },
                 "target": "Empty erp_fresh35_20261109_r1 only. Existing exact internal bridge. 7 GiB memory/3 CPU/256 PID, same state volume admission 28 GiB and stop at 6 GiB. No public database port.",
                 "timing": "Proposed shared installation window at most 20 min, >90 s before start and each handoff, 45 s for installer cleanup. Proposed service lease at most 60 min from T0 and earlier if runtime or the manager limit minus 5 min requires it. This is not a signed runtime deadline.",
@@ -42687,6 +42698,7 @@
             "status": "USER_APPROVED_MERGED_SOURCE_CONTRACT_D1_ASSIGNED_T45_QUEUED_AFTER_NATIVE_INSTALL",
             "mergedDecisionReportSHA256": "75d7d367194487794254e652084711afa857728e116df7013c62c6dd6ac90511",
             "userDecision": "Direct answer '确认这项源码及发布输入合同修订' to request_user_input_async call_93f359d07ec34ebb8c03bdf15496d696. The combined service/config proofs are approved for source and existing release input only. No database, login lease, server permissions, actual approval issuance or deployment authorized by this answer. D1 begins the independent consumer seam; T45 remains sole Python/release/backup owner after priority A. Separate restored-role authentication is outside this decision.",
+            "d1ReadOnlySeam": "Original D1 preserved 94152ed1 and fixed a clean separate branch at APP576 576acc3cca5420146c4eb58b92d20c4de084a592, tree 0a19121b1d2dedf26db24d257548eeaa8ea5c1b5. Actual ordinary identity still requires the historical expiry; current capacity already shares the pool and checks live epoch. The exact historical native sourceSet 8694c5c7 matches 214 pins. A one-comment isolated loader delta changed the sourceSet but not catalog; the real original installation record rejected the recomputed consumer program. Reuse the original verified source root for installation identity. Only the T45 proof fields, protected ingress and exact mounted historical root remain needed for implementation. No active edit or server action.",
             "scope": "New R1 first public deployment and later controlled replacement of its process only. Add one firstInstall.currentProductionService {path,sha256} reference and consume the same original bytes in the private application input. T45 produces exact same installed PGDATA identity, source/catalog pins, fresh SID/OID/epoch/CID/namespace and process facts, ordinary role and measured login expiration, finite service deadline, original approval and predecessor closeout. Require the trusted proof when its branch is selected, verify the live target and retain original installation evidence; no forged production or restore origin.",
             "continuity": "For the same fixed release, the authorized replacement is a new exact launch instance, after the previous application is proven drained and stopped. Reuse existing private final-input and capacity producer with a fresh finite observed process window and unchanged capacity controls, then private readiness and controlled opening. Keep one writer. Reject missing proof, wrong generation/role/source, reused instance or process, and expiry. No automatic renewal, host restart, or extension of import credentials implied. Current ordinary login validity and real later credential changes are independently approved by exact target and cutoff; existing ACL and RLS stay unchanged.",
             "validation": "T45 carrier/release and D1 ordinary and capacity consumers under exact file ownership. QB checks existing scope plus same data/new generation success and wrong target, lifetime, manifest or reused process refusal. Original production and restore branches retain their closed contracts. Only source and input contract decision is requested; do not start any process or issue credentials based on it."
