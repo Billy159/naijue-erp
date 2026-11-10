@@ -42487,7 +42487,7 @@
                   "next": "T45 confirmed the original carrier cannot resume this stopped and uninstalled R1 through its existing entry points. Original startup rejects the expired window and, with a fresh window, the existing container name. Entry and install require the original live carrier. Same-data recovery requires the absent durable service, installation and STOP evidence. Preserve all R1 state and receipts. T45 checks only the proposed empty successor through the existing read-only management route."
                 },
                 "proposedEmptySuccessor": {
-                  "status": "READ_ONLY_ADMISSION_COMPLETE_FIXED_SOURCE_QB_NEED_FIX_NO_CREATION_APPROVAL",
+                  "status": "READ_ONLY_ADMISSION_COMPLETE_FIXED_CARRIER_QB_DELTA_PASS_NEW_TARGET_APPROVAL_PENDING",
                   "database": "erp_fresh35_20261110_r2",
                   "container": "t45-fresh35-first-production-20261110-r2",
                   "root": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r2",
@@ -42510,6 +42510,15 @@
                     "readySHA256": "efffe0ad81709a85a4c470178800e379fa344b6ad8718663ca17876e8cbe9472",
                     "planSHA256": "26db1bfc207366330476fbf7e0eda9fbbc37e7777e1d01a25158e5a288cfcd10",
                     "check": "C verified five exact Git execution leaves and seven local inputs. T45 author 11 capacity and 24 lifecycle tests, budget/no replay checks and native/STOP models. Original QB three local independent scope checks passed. QB reproduced a time-of-check gap: entering 100 ms before T1s minus 270 seconds, the volume read crosses the line by 100 ms and the original consumer-visible install authority is still published. NEED_FIX. T45 to recheck the same limit after blocking validation at the protected publication boundary and prove zero visible writes on overrun. Preserve existing authority and STOP policy. No staging, server run or actual approval."
+                  },
+                  "fixedCutoffCarrier": {
+                    "commit": "deb86dd555ab36ad38eaf32ef2e1172656def983",
+                    "tree": "7729c9f27e4990bfb703423a7daf699c67b9629d",
+                    "parent": "7e06b42d4a4638759f266d47a6c2b76bb791bd0c",
+                    "readySHA256": "86b6861836da3b50ea55edb656d79ddc85f64f2d87c0e55a1aa425c76bc72bd7",
+                    "planSHA256": "5e62cfbe6b04b6391b7cc04005f26d2da40ac5a2f4b4268d2a2bc2fdf1b66172",
+                    "check": "Original QB fixed-source delta PASS 4/4. Volume or staged fsync crossing cutoff leaves no visible authority. Existing destination stays intact. Simulated late atomic publication reports unknown with the original leaf preserved. Fixed native protected read accepts only before the same cutoff. Wrong original launcher SHA refuses before exec. QB verified five execution leaves/seven inputs and references, historical native and original guard preserved. Actual Linux and PostgreSQL not executed.",
+                    "next": "A approved only the former erp_fresh35_20261109_r1. Request a single exact R2 authorization for in-place read-only input binding, new dedicated tree and four roles, one native installation of 35 tables, 20-minute install and 60-minute service limits, and protected clean STOP and readback. Keep old R1 and receipts. No REAL, public service, delete or old state changes. Bind actual target, job and resource facts at execution and fail closed on drift. T45 stages fixed files outside the live window and continues previously approved APP/backup source work. QB resumes only the separate B source review."
                   },
                   "r2ApplicationAndWriterSource": {
                     "ordinaryCommit": "db624feafd98568b16f91e02a0604ab6e57a3528",
