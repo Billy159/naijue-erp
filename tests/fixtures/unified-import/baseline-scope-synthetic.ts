@@ -3,7 +3,7 @@
 import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import {join,dirname} from 'node:path';
 import {createSyntheticFresh35WholePackageInput} from './whole-package-synthetic.ts';
-import {repinSyntheticPackage} from './synthetic-package.ts';
+import {createSyntheticPackage,repinSyntheticPackage} from './synthetic-package.ts';
 import {stableImportId} from '../../../packages/application/src/inventory-cutoff-import.ts';
 import {sha256,registryTargetId} from '../../../packages/application/src/unified-import-contract.ts';
 import type {UnifiedPackage} from '../../../packages/application/src/unified-import-contract.ts';
@@ -51,4 +51,20 @@ export async function buildSyntheticBaselineScopeFixture(target:StandardImportTa
   const native=await buildStreamProgram(plan,index,summary,input.admin),steps:StandardImportStep[]=[];for await(const step of native.steps)steps.push(structuredClone(step));
   return {...input,identity:native.identity,initialize:native.initialize,steps,explicitZeroApproval:scope,counts:summary.counts,totals:plan.totals,packageDirectory,reportDirectory,dispose};
  }catch(error){await dispose();throw error;}
+}
+
+/** Original standard function-level test planner. Actual PG identity is supplied
+ * by the original observer; this creates no host/installation capability. */
+export async function buildSyntheticBaselineScopeSqlProgram(target:StandardImportTarget,workspaceDirectory:string){
+ const pkg=createSyntheticPackage(),namespace=pkg.manifest.source_namespace,w=structuredClone(pkg.records.warehouse![0]!);
+ w.source_key='warehouse:03';w.fields.id=registryTargetId(namespace,'WAREHOUSE',w.source_key);w.fields.name='SYNTHETIC negative baseline warehouse';pkg.records.warehouse!.push(w);
+ pkg.registry.push({entity_type:'WAREHOUSE',source_namespace:namespace,canonical_source_key:w.source_key,target_id:w.fields.id as string,aliases:[],identity_basis:'STABLE_IMPORT_ID_V1',source_refs:structuredClone(w.source_refs)});
+ pkg.records.inventory_baseline=pkg.records.inventory_baseline!.filter(r=>r.fields.quantity!=='0');const negative=structuredClone(pkg.records.inventory_baseline[0]!);negative.source_key='inventory_baseline:03';negative.fields.warehouse_id=w.fields.id;negative.fields.quantity='-7';negative.source_refs=[{...negative.source_refs[0]!,row:3}];pkg.records.inventory_baseline.push(negative);
+ const reconciliation=pkg.reports['reconciliation.json'] as {tables:Record<string,unknown>};for(const table of ['warehouse','inventory_baseline']){const n=pkg.records[table]!.length;reconciliation.tables[table]={source_rows:n,retained_rows:n,rejected_rows:0};}repinSyntheticPackage(pkg);
+ const scratch=await mkdtemp(join(workspaceDirectory,'baseline-scope-pg-fixture-'));let scope:ExplicitZeroApproval|undefined;
+ try{scope=await createSyntheticBaselineScopeApproval(pkg,scratch);const manifestBytes=Buffer.from(JSON.stringify(pkg.manifest,null,2)+'\n');
+  const {compileStandardWholePackageProfile}=await import('../../../packages/application/src/unified-import-whole-package-profile.ts');
+  const program=compileStandardWholePackageProfile({pkg,manifestBytes,expectedManifestSha256:sha256(manifestBytes),target,allowSynthetic:true,explicitZeroApproval:scope,initialization_identity:{staff_id:stableImportId('SYNTHETIC_BASELINE_PG','staff'),account_id:stableImportId('SYNTHETIC_BASELINE_PG','account'),login_name:'synthetic-baseline-admin',staff_name:'SYNTHETIC baseline ADMIN'}});
+  return {pkg,...program,syntheticSkuId:pkg.records.sku![0]!.fields.id as string,expectedBaseline:{nonzeroCount:2,total:'93',missingWarehouseId:pkg.records.warehouse![1]!.fields.id as string,negativeWarehouseId:w.fields.id as string},async dispose(){closeExplicitZeroApproval(scope);await rm(scratch,{recursive:true,force:true});}};
+ }catch(error){closeExplicitZeroApproval(scope);await rm(scratch,{recursive:true,force:true});throw error;}
 }

@@ -14,7 +14,7 @@ import {createSalesActionAuthorization} from '../../packages/application/src/sal
 import {createNativeTransactionSalesBusinessRules} from '../../packages/application/src/sales-native-facts.ts';
 import {createTransferService} from '../../packages/application/src/transfer-service.ts';
 import {createSourceConfirmedTransferAuthorization,createSourceConfirmedTransferReferences} from '../../packages/application/src/transfer-policy.ts';
-export const BASELINE_SCOPE_PG_MODES=Object.freeze(['scope-commit-and-replay','scope-failure-rollback','scope-first-concurrent','scope-sales-transfer-lifecycle']);
+export const BASELINE_SCOPE_PG_MODES=Object.freeze(['baseline-scope-combined']);
 const phases={masterChunk:'MASTER',baselineKeys:'KEYS',documentChunk:'DOCUMENTS',publish:'PUBLISH'};
 const runtimeRole='erp_unified27_runtime_2393dbc6db9581c2';
 async function ack(c,sql,expected){assert.equal((await c.query(sql)).command,expected);}
@@ -65,40 +65,40 @@ async function assertReceipt(f,result,kind,action,ledgerCount){
  (SELECT count(*)::integer FROM naijue_erp.inventory_ledger l WHERE l.operation_id=r.id) effects FROM naijue_erp.operation_receipt r WHERE r.id=$1::uuid`,[result.operationId])).rows;
  assert.equal(r.length,1);assert.equal(r[0].status,'COMMITTED');assert.equal(r[0].target_type,kind);assert.equal(r[0].action,action);assert.equal(r[0].audits,1);assert.equal(r[0].effects,ledgerCount);
 }
-/** setup(mode) returns a distinct disposable target per mode with actual pg
- * writer/observer Clients and runtime Pool, buildSyntheticBaselineScopeFixture
+/** setup(mode) returns the single fresh disposable target with actual pg
+ * writer/observer Clients and runtime Pool, buildSyntheticBaselineScopeSqlProgram
  * output, encodedScrypt, actual database/runtimeUser/port and close(). Optional
- * ordinaryAdmission must be genuine existing Fresh35 host output, never a stub. */
+ * ordinaryAdmission, if present, must be genuine existing Fresh35 host output, never a stub. */
 export function registerBaselineScopeSqlAtomicity(register,setup){
  for(const mode of BASELINE_SCOPE_PG_MODES)register(mode,async()=>{
   const f=await setup(mode);assert.ok(f.writer instanceof pg.Client&&f.observer instanceof pg.Client&&f.writer!==f.observer&&f.runtimePool instanceof pg.Pool);
   assert.match(f.database,/^synthetic_[a-z0-9_]+$/);assert.equal(typeof f.close,'function');
   try{await ordinary(f.writer,f.database);const captured=(await f.observer.query('SELECT current_database() db,pg_backend_pid() pid')).rows[0];assert.equal(captured.db,f.database);
-   const before=await snapshotSyntheticDatabase(f.observer),missing=f.fixture.expectedBaseline.missingWarehouseId,sku=f.fixture.syntheticSkuId;
+   const before=await snapshotSyntheticDatabase(f.observer);assert.ok(Object.entries(before.tables).every(([name,t])=>name==='schema_migration'||t.count==='0'),'one fresh empty synthetic target required');const missing=f.fixture.expectedBaseline.missingWarehouseId,sku=f.fixture.syntheticSkuId;
    assert.equal(f.fixture.initialize.payload.explicit_zero_approval.format_version,'INVENTORY_BASELINE_SCOPE_V1');assert.equal(f.fixture.steps.filter(s=>s.method==='baselineKeys').reduce((n,s)=>n+s.request.payload.rows.length,0),2);
    assert.equal(await proof(f,missing,sku),'UNKNOWN');
-   if(mode==='scope-failure-rollback'){
+   {
     const wrong=structuredClone(f.fixture.initialize);wrong.payload.explicit_zero_approval.warehouse_totals[0].quantity=(BigInt(wrong.payload.explicit_zero_approval.warehouse_totals[0].quantity)+1n).toString();
     await assert.rejects(publish(f,wrong),e=>e.code==='23514'&&e.message.includes('INVENTORY_BASELINE_SCOPE_VALUES_OR_WAREHOUSE_TOTAL_DIFFERS'));
-    assert.deepEqual(await snapshotSyntheticDatabase(f.observer),before);assert.equal(await proof(f,missing,sku),'UNKNOWN');return;
+    assert.deepEqual(await snapshotSyntheticDatabase(f.observer),before);assert.equal(await proof(f,missing,sku),'UNKNOWN');
    }
    await publish(f,undefined,async()=>{assert.deepEqual(await snapshotSyntheticDatabase(f.observer),before,'no committed prefix');assert.equal(await proof(f,missing,sku),'UNKNOWN');});
    let stock=await current(f);assert.equal(stock.length,3);const byId=new Map(stock.map(r=>[r.warehouse_id,r]));assert.equal(byId.get(missing).quantity,null);assert.equal(byId.get(missing).ledger_count,0);assert.equal(byId.get(f.fixture.expectedBaseline.negativeWarehouseId).quantity,'-7');assert.equal(stock.reduce((n,r)=>n+BigInt(r.quantity??'0'),0n),93n);
    assert.equal(await proof(f,missing,sku),'EXPLICIT_ZERO');assert.equal(await proof(f,randomUUID(),sku),'UNKNOWN');assert.equal(await proof(f,missing,randomUUID()),'UNKNOWN');
-   if(mode==='scope-commit-and-replay'){
+   {
     const after=await snapshotSyntheticDatabase(f.observer);await ack(f.writer,'BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY','BEGIN');await ack(f.writer,'SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2','SET');
     try{const replay=await call(f.writer,'SELECT naijue_erp.standard_whole_package_inspect_v2($1::jsonb,$2::text) result',[f.fixture.initialize,f.encodedScrypt]);assert.equal(replay.state,'COMMITTED');}finally{await ack(f.writer,'ROLLBACK','ROLLBACK');}
-    assert.deepEqual(await snapshotSyntheticDatabase(f.observer),after);return;
+    assert.deepEqual(await snapshotSyntheticDatabase(f.observer),after);
    }
    const s=services(f),c=commands(f,s);
-   if(mode==='scope-first-concurrent'){
+   {
     const drafts=await Promise.all([c.saveSale('2'),c.saveSale('3')]);const results=await Promise.all(drafts.map(r=>c.sale('APPROVE',r)));for(const r of results)await assertReceipt(f,r,'SALES','APPROVE',1);
     const r=(await current(f)).find(r=>r.warehouse_id===missing);assert.equal(r.quantity,'-5');assert.equal(r.version,2);assert.equal(r.ledger_count,2);
     const pairs=(await f.observer.query('SELECT quantity_before::text,quantity_after::text,quantity_delta::text FROM naijue_erp.inventory_ledger WHERE warehouse_id=$1::uuid AND sku_id=$2::uuid ORDER BY quantity_before DESC',[missing,sku])).rows;
-    assert.equal(pairs.length,2);assert.equal(pairs.filter(r=>r.quantity_before==='0').length,1);for(const r of pairs)assert.equal(BigInt(r.quantity_after)-BigInt(r.quantity_before),BigInt(r.quantity_delta));return;
+    assert.equal(pairs.length,2);assert.equal(pairs.filter(r=>r.quantity_before==='0').length,1);for(const r of pairs)assert.equal(BigInt(r.quantity_after)-BigInt(r.quantity_before),BigInt(r.quantity_delta));
    }
-   let sale=await c.saveSale('2');sale=await c.sale('APPROVE',sale);await assertReceipt(f,sale,'SALES','APPROVE',1);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-2');
-   sale=await c.sale('UNAPPROVE',sale);await assertReceipt(f,sale,'SALES','UNAPPROVE',1);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'0');sale=await c.sale('APPROVE',sale);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-2');
+   let sale=await c.saveSale('2');sale=await c.sale('APPROVE',sale);await assertReceipt(f,sale,'SALES','APPROVE',1);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-7');
+   sale=await c.sale('UNAPPROVE',sale);await assertReceipt(f,sale,'SALES','UNAPPROVE',1);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-5');sale=await c.sale('APPROVE',sale);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-7');
    let tr=await c.saveTransfer();const total=()=>current(f).then(rows=>rows.reduce((n,r)=>n+BigInt(r.quantity??'0'),0n));const prior=await total();
    for(const action of ['APPROVE','UNAPPROVE','APPROVE']){tr=await c.transfer(action,tr);await assertReceipt(f,tr,'TRANSFER',action,2);assert.equal(await total(),prior);const effects=(await f.observer.query('SELECT endpoint,quantity_delta::text FROM naijue_erp.inventory_ledger WHERE operation_id=$1::uuid',[tr.operationId])).rows;assert.equal(effects.length,2);assert.equal(effects.reduce((n,r)=>n+BigInt(r.quantity_delta),0n),0n);}
    const connection=await f.runtimePool.connect();try{await ordinary(connection,f.database);assert.notEqual((await connection.query('SELECT pg_backend_pid() pid')).rows[0].pid,captured.pid);}finally{connection.release(true);}
