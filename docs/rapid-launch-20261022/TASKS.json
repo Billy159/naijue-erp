@@ -45326,6 +45326,7 @@
           "failure": "SQLSTATE 42601, end of input at character 31166, SQL38 EXECUTE definition line19",
           "function": "naijue_erp.standard_whole_package_verify_v2",
           "functionReadbackSha256": "5061d7e73e26c8d2785d00e315c8caa475847d6b8fd84309684d00e217497c27",
+          "rootCauseReproduced": "PostgreSQL 17.7 parser reproduced three generated bodies failing from five unparenthesized CASE expressions; temporary five-pair equivalent fix parses 9/9, exact source successor pending",
           "business": "NOT_EXECUTED; R3 production untouched",
           "next": "Original D1 reproduces exact generated PL/pgSQL syntax and updates necessary pins; QB scoped review, T45 retains stopped03 and continues applicable R3 offline wiring"
         },
