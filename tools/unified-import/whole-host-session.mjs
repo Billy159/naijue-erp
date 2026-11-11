@@ -1,7 +1,7 @@
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {types} from 'node:util';
-import {explicitZeroApprovalDescriptor,explicitZeroApproved} from '../../packages/application/src/unified-explicit-zero-approval.ts';
+import {explicitZeroApprovalDescriptor,explicitZeroApprovalCount,explicitZeroApproved} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import {parseStrictJson} from '../../packages/application/src/unified-import-contract.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
 /** Shared exclusive wire state machine. Fixed hosts own record and catalog admission. */
@@ -27,9 +27,9 @@ export async function withReviewedWholeSession(client,spec,reviewed,target,work,
 // Trust is granted only by the fixed physical factory below, never by the
 // exported state-machine helper or caller-provided clients/verifiers.
 async function runWholeSession(client,spec,reviewed,target,work,verifyCatalog,profile,trustedPhysical,options={}){
- const fresh35=profile==='FRESH35_RETIRED152_V1'||profile==='FRESH35_A53_ADMIN154_V1';
- if(profile==='FRESH35_A53_ADMIN154_V1'&&(!trustedPhysical||typeof options.authorizedQuery!=='function'))throw Error('ADMIN154_FIXED_PHYSICAL_AUTHORIZED_HOST_REQUIRED');
- const approval=options.explicitZeroApproval;let descriptor;try{descriptor=approval?explicitZeroApprovalDescriptor(approval):null;}catch(error){await closePhysical(client);throw error}
+ const fresh35=['FRESH35_RETIRED152_V1','FRESH35_A53_ADMIN154_V1','FRESH35_COMPACT_ZERO_V2'].includes(profile);
+ if(['FRESH35_A53_ADMIN154_V1','FRESH35_COMPACT_ZERO_V2'].includes(profile)&&(!trustedPhysical||typeof options.authorizedQuery!=='function'))throw Error('ADMIN154_FIXED_PHYSICAL_AUTHORIZED_HOST_REQUIRED');
+ const approval=options.explicitZeroApproval;let descriptor;try{descriptor=approval&&explicitZeroApprovalCount(approval)?explicitZeroApprovalDescriptor(approval):null;if(descriptor?.format_version==='EXPLICIT_ZERO_SCOPE_MERKLE_V2'&&profile!=='FRESH35_COMPACT_ZERO_V2')throw Error('COMPACT_ZERO_EXPLICIT_HOST_PROFILE_REQUIRED');}catch(error){await closePhysical(client);throw error}
  const checkApproval=(sql,values)=>{
   if(/^SELECT naijue_erp\.standard_whole_package_(inspect|prepare|verify)_v2\(/.test(sql)){
    const r=parseStrictJson(values?.[0]);if(requestHash(r?.payload?.explicit_zero_approval??null)!==requestHash(descriptor)||descriptor&&(r.namespace!==descriptor.source_namespace||r.cutoff_at!==descriptor.cutoff_at))throw Error('EXPLICIT_ZERO_APPROVAL_BINDING_INVALID');
@@ -76,7 +76,7 @@ async function runWholeSession(client,spec,reviewed,target,work,verifyCatalog,pr
  * Assumes the trusted Node runtime/dependencies/source required by publication;
  * does not claim protection against runtime tampering or arbitrary code execution. */
 export async function openReviewedWholeSalesHost(config,sourceRoot,target,work,options={}){
- if(options.explicitZeroApproval)explicitZeroApprovalDescriptor(options.explicitZeroApproval);
+ if(options.explicitZeroApproval)explicitZeroApprovalCount(options.explicitZeroApproval);
  const {loadWholeSalesSpecV1,verifyWholeSalesInstalledV1}=await import('../../scripts/release/unified-install/whole-sales-catalog-v1.mjs');
  const {loadWholeSalesRecordV1}=await import('../../scripts/release/unified-install/whole-sales-record-v1.mjs');
  const {withVerifiedWholeSalesAdmissionV1}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
@@ -94,17 +94,19 @@ export async function openReviewedFresh35ProductionPhysicalHost(config,sourceRoo
 }
 /** Fixed 154 entry on the original physical wire coordinator. Installation,
  * setup and REAL import have distinct protected evidence; none is a fallback. */
-export async function openReviewedFresh35Admin154PhysicalHost(config,sourceRoot,target,prepare,work,options){
+export async function openReviewedFresh35Admin154PhysicalHost(config,sourceRoot,target,prepare,work,options){return openFresh35SuccessorPhysicalHost(config,sourceRoot,target,prepare,work,options,false);}
+export async function openReviewedFresh35CompactZeroPhysicalHost(config,sourceRoot,target,prepare,work,options){return openFresh35SuccessorPhysicalHost(config,sourceRoot,target,prepare,work,options,true);}
+async function openFresh35SuccessorPhysicalHost(config,sourceRoot,target,prepare,work,options,compactZero){
  if(typeof prepare!=='function'||typeof work!=='function'||!options
-  ||Object.keys(options).some(k=>!['purpose','currentService','successorSha256','referenceDirectory','sourceProfileSha256','explicitZeroApproval','prepareOnly'].includes(k))
-  ||!['ADMIN_PROVISION_ONLY','FIRST_REAL_BUSINESS_IMPORT'].includes(options.purpose)
+  ||Object.keys(options).some(k=>!['purpose','currentService','successorSha256','referenceDirectory','sourceProfileSha256','explicitZeroApproval','prepareOnly',...(compactZero?['parentPins']:[])].includes(k))
+  ||!(compactZero?['FIRST_REAL_BUSINESS_IMPORT']:['ADMIN_PROVISION_ONLY','FIRST_REAL_BUSINESS_IMPORT']).includes(options.purpose)
   ||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_ADMIN154_OPTIONS_REQUIRED');
  const host=await import('./fresh35-host-session.mjs');
  const recordModule=await import('../../scripts/release/unified-install/fresh35-admin154-record-v1.mjs');
  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
- const context=await host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256,options.purpose);
+ const context=await (compactZero?host.loadFresh35CompactZeroContext(sourceRoot,options.referenceDirectory,options.currentService,options.parentPins,options.successorSha256):host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256,options.purpose));
  const c=host.fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target),successor=recordModule.describeFresh35Admin154Record(c.successor);
  const pins=describeFresh35CombinedSource(c.source).currentSourcePins;
  if(!pins.some(p=>p.path==='tools/unified-import/whole-host-session.mjs'&&p.sha256===loadedPhysicalHostSha256)
@@ -130,16 +132,16 @@ export async function openReviewedFresh35Admin154PhysicalHost(config,sourceRoot,
    const execute=async admission=>{
     const prepared=await prepare(admission);
     const binding=await (setup?host.describeFresh35Admin154SetupBinding:host.describeFresh35ProductionImportBinding)(context,prepared);
-    if(options.prepareOnly)return {state:'ADMIN154_PREPARED',purpose:options.purpose,binding,business_database_writes:false};
+    if(options.prepareOnly)return {state:compactZero?'COMPACT_ZERO_PREPARED':'ADMIN154_PREPARED',purpose:options.purpose,binding,business_database_writes:false};
     const authority=await host.loadFresh35ProductionImportAuthorization(context,binding);
     queryGuard=(setup?host.fresh35Admin154SetupQueryGuard:host.fresh35ProductionImportQueryGuard)(context,authority,prepared);tightenDeadline(queryGuard.expiresAt);
-    hostVerification=Object.freeze({profile:'FRESH35_A53_ADMIN154_SAME_CLIENT_VERIFICATION_V1',predecessor_record_sha256:c.recordFileSha256,
+    hostVerification=Object.freeze({profile:compactZero?'FRESH35_COMPACT_ZERO_SAME_CLIENT_VERIFICATION_V2':'FRESH35_A53_ADMIN154_SAME_CLIENT_VERIFICATION_V1',predecessor_record_sha256:c.recordFileSha256,
      successor_record_sha256:successor.sha256,live_catalog_sha256:verified.live_catalog_sha256,authorization_sha256:queryGuard.authorizationSha256,binding});
     return work(controlled,admission,binding);
    };
    return setup?execute(undefined):withVerifiedFresh35AdmissionV1(verified,gateClient,controlled,target,execute);
   },async gate=>{gateClient=gate;return setup?host.verifyFresh35Admin154SetupInstalled(gate,context):host.verifyFresh35InstalledV1(gate,context,options.sourceProfileSha256)},
-  'FRESH35_A53_ADMIN154_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:c.currentService.expiresAt,async authorizedQuery(sql,values){
+  compactZero?'FRESH35_COMPACT_ZERO_V2':'FRESH35_A53_ADMIN154_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:c.currentService.expiresAt,async authorizedQuery(sql,values){
    if(sql==='ROLLBACK'){if(queryGuard)await queryGuard.check(sql,values);return;}
    if(!queryGuard)throw Error('FRESH35_HOST_ADMIN154_EXACT_AUTHORIZATION_REQUIRED');await queryGuard.check(sql,values);
   }});
@@ -151,7 +153,7 @@ async function openFresh35PhysicalHost(config,sourceRoot,target,work,options={},
  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
  if(!options||Object.keys(options).some(k=>!['explicitZeroApproval','referenceDirectory','sourceProfileSha256',...(productionPrepare?['prepareOnly']:[])].includes(k)))throw Error('FRESH35_HOST_OPTIONS_INVALID');
- if(options.explicitZeroApproval)explicitZeroApprovalDescriptor(options.explicitZeroApproval);
+ if(options.explicitZeroApproval)explicitZeroApprovalCount(options.explicitZeroApproval);
  const context=await (productionPrepare?loadFresh35ProductionImportContext:loadFresh35HostContext)(sourceRoot,options.referenceDirectory),c=fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target);
  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
  const pins=describeFresh35CombinedSource(c.source).currentSourcePins;

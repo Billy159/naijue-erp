@@ -1,3 +1,4 @@
+import {closeExplicitZeroApproval} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import {readHistoricalSettlementRetentionCliApproval} from './historical-settlement-retention-cli-input.mjs';
 import {readHistoricalHallCliApproval} from './historical-hall-cli-input.mjs';
 import {readCurrentEffectiveAlignmentCliEvidence} from './current-effective-alignment-cli-input.mjs';
@@ -15,6 +16,7 @@ export async function runStreamPreflight(args){
  if(Boolean(options['--current-effective-alignment'])!==Boolean(options['--current-effective-alignment-sha256']))throw Error('INVALID_STREAM_ARGUMENTS');
  if(!['--package','--report','--manifest-sha256'].every(k=>options[k])||Boolean(options['--explicit-zero-approval'])!==Boolean(options['--explicit-zero-approval-sha256'])||Boolean(options['--staff-hall-approval'])!==Boolean(options['--staff-hall-approval-sha256']))throw Error('INVALID_STREAM_ARGUMENTS');
  let historicalSettlementRetentionApproval,explicitZeroApproval,historicalStaffHallApproval,historicalSalesHallApproval,currentEffectiveAlignmentEvidence,historicalLineAmountEvidence,sourceOccurrenceEvidence;
+ try{
  if(options['--historical-settlement-retention-approval']||options['--historical-hall-approval']||options['--explicit-zero-approval']||options['--staff-hall-approval']||options['--current-effective-alignment']||options['--historical-line-amount-evidence']||options['--source-occurrence-evidence']){
   const bytes=await readBoundedCliFile(join(options['--package'],'manifest.json'),2*1024*1024);
   if(sha256(bytes)!==options['--manifest-sha256'])throw Error('MANIFEST_HASH_MISMATCH');
@@ -30,4 +32,5 @@ export async function runStreamPreflight(args){
  const result=await streamPreflight(options['--package'],options['--report'],{expectedManifestSha256:options['--manifest-sha256'],allowSynthetic,...(historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval}:{}),...(historicalLineAmountEvidence?{historicalLineAmountEvidence}:{}),...(sourceOccurrenceEvidence?{sourceOccurrenceEvidence}:{}),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(currentEffectiveAlignmentEvidence?{currentEffectiveAlignmentEvidence}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{}),...(historicalStaffHallApproval?{historicalStaffHallApproval}:{})});
  const publicResult={...result,...(historicalSettlementRetentionApproval?{historical_settlement_retention_approval:{sha256:options['--historical-settlement-retention-approval-sha256'],document_count:25,settlement_count:27}}:{}),...(historicalSalesHallApproval?{historical_hall_approval:{sha256:options['--historical-hall-approval-sha256'],record_count:historicalSalesHallApproval.records.length}}:{}),...(historicalStaffHallApproval?{historical_staff_hall_approval:{sha256:options['--staff-hall-approval-sha256'],record_count:historicalStaffHallApproval.staff.length}}:{})};
  process.stdout.write(JSON.stringify(publicResult)+'\n');process.exitCode=result.checks_passed?0:1;
+ }finally{closeExplicitZeroApproval(explicitZeroApproval);}
 }

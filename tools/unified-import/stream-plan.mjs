@@ -3,7 +3,7 @@ import {historicalLineAmountEvidenceWire,assertHistoricalLineAmountExecution} fr
 import {isHistoricalSalesHallSourceProfile,historicalSalesHallEvidenceMatchesProfile} from '../../packages/application/src/unified-import-contract.ts';
 import {validateHistoricalSalesHallEvidence,historicalSalesHallApprovalWire} from '../../packages/application/src/unified-historical-sales-hall-evidence.ts';
 import {currentEffectiveAlignmentDescriptor,currentEffectiveAlignmentMatchesManifest} from '../../packages/application/src/unified-current-effective-alignment.ts';
-import {explicitZeroApprovalDescriptor} from '../../packages/application/src/unified-explicit-zero-approval.ts';
+import {explicitZeroApprovalDescriptor,explicitZeroApprovalCount} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import{assertWholeSalesAdmissionV1}from'../../scripts/release/unified-install/whole-sales-admission-v1.mjs';
 import {historicalStaffHallApprovalWire} from '../../packages/application/src/unified-historical-staff-hall-approval.ts';
 import{DatabaseSync}from'node:sqlite';import{createStandardSourceRegistration,assertStandardSourceRegistration}from'./source-registration.mjs';import{streamSummaryBinding,freezePlain}from'./stream-binding.mjs';import{mkdtemp,rm}from'node:fs/promises';import{tmpdir}from'node:os';import{join}from'node:path';import{buildDiskMasterGraph,diskMasterChunks,diskMasterRows,diskMasterLayouts,diskMasterChunkTokens}from'./stream-master-graph.mjs';import{open,lstat}from'node:fs/promises';import{constants}from'node:fs';import{createHash}from'node:crypto';
@@ -21,7 +21,7 @@ export async function prepareStreamPlan(indexPath,summary,manifestBytes,options)
  if(!summary||summary.state!=='STREAM_PREFLIGHT_COMPLETE'||summary.checks_passed!==true||summary.complete_package_validation!==true||summary.package_stage!=='READY'||summary.index_schema_version!=='UNIFIED_STREAM_FACTS_V3'||!hash(summary.index_sha256)||!hash(summary.manifest_sha256)||!Number.isSafeInteger(summary.index_bytes)||summary.index_bytes<1||sha256(manifestBytes)!==summary.manifest_sha256||!options||!options.target)throw Error('STREAM_PLAN_BINDING_INVALID');
  const settlementApproval=options.historicalSettlementRetentionApproval;const settlementWire=settlementApproval?historicalSettlementRetentionWire(settlementApproval):undefined;
  if(requestHash(settlementWire??null)!==requestHash(summary.historical_settlement_retention_approval??null))throw Error('HISTORICAL_SETTLEMENT_APPROVAL_BINDING_INVALID');
- const zeroApproval=options.explicitZeroApproval?explicitZeroApprovalDescriptor(options.explicitZeroApproval):undefined;
+ const zeroApproval=options.explicitZeroApproval&&explicitZeroApprovalCount(options.explicitZeroApproval)?explicitZeroApprovalDescriptor(options.explicitZeroApproval):undefined;
  if(requestHash(zeroApproval??null)!==requestHash(summary.explicit_zero_approval??null))throw Error('EXPLICIT_ZERO_APPROVAL_BINDING_INVALID');
  const staffApprovalWire=options.historicalStaffHallApproval?historicalStaffHallApprovalWire(options.historicalStaffHallApproval):undefined;
  if(requestHash(staffApprovalWire??null)!==requestHash(summary.historical_staff_hall_approval??null))throw Error("STAFF_HALL_APPROVAL_BINDING_INVALID");

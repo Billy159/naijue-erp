@@ -77,7 +77,9 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
       }); break;
       case "balances": rows = (values[2] as string[]).flatMap(id => {
         const coordinate = Number(id.slice(-12)) - 10000, n = Math.floor(coordinate / 4), index = coordinate % 4;
-        return index < 2 ? [{ warehouse_id: this.scope.warehouses[0]!.id, sku_id: id, quantity: index === 0 ? this.negative : "0", version: 1, last_operation_id: inventoryId("operation", 990 + n) }] : [];
+        const stored = index < 2 ? [{ warehouse_id: this.scope.warehouses[0]!.id, sku_id: id, quantity: index === 0 ? this.negative : "0", version: 1, last_operation_id: inventoryId("operation", 990 + n) }] : [];
+        if(!sql.includes('zero_proof_state'))return stored;
+        return this.scope.warehouses.map(w=>{const b=stored.find(r=>r.warehouse_id===w.id);return b?{...b,balance_present:true,ledger_present:true,zero_proof_state:null}:{warehouse_id:w.id,sku_id:id,quantity:null,version:null,last_operation_id:null,balance_present:false,ledger_present:false,zero_proof_state:'UNKNOWN'};});
       }); break;
       case "candidate-count": rows = [{ exact_total: "1" }]; break;
       case "candidates": rows = Number(values[10]) === 0 ? [{ id: productId(0), label: "NATIVE-000000 Synthetic native product", code: "NATIVE-000000", name: "Synthetic native product", disabled: false, parent_label: null }] : []; break;
@@ -486,10 +488,12 @@ test("SYNTHETIC PG protocol: abort and failures roll back, uncertain COMMIT disc
   assert.ok(rollback.releases[0] instanceof Error);
 });
 
-test("SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconcile, Cartesian zero relation or application-side N+1", () => {
+test("SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconcile, writes or application-side N+1", () => {
   const source = readFileSync(new URL("../adapters/postgres/src/inventory-query-reader.ts", import.meta.url), "utf8");
   assert.ok(!source.includes("readPublishedCutoffScope(")); assert.ok(!source.includes("sparseInventoryQuantity("));
-  assert.ok(!/CROSS JOIN|INSERT INTO|UPDATE naijue_erp|DELETE FROM|inventory_ledger l/i.test(source));
+  assert.ok(!/INSERT INTO|UPDATE naijue_erp|DELETE FROM/i.test(source));
+  assert.ok(source.includes("WHERE w.id=ANY($1::uuid[]) AND w.hall_id=ANY($2::uuid[]) AND s.id=ANY($3::uuid[])"));
+  assert.ok(source.includes("FROM authorized_warehouses w CROSS JOIN filtered_skus s"));
   assert.ok(source.includes("WHERE s.product_id = ANY($1::uuid[])"));
   assert.ok(source.includes("AND b.sku_id = ANY($3::uuid[])"));
   assert.ok(source.includes("FROM filtered_skus s WHERE NOT EXISTS"));
@@ -779,7 +783,7 @@ test('SCRIPTED current 27 inventory keeps missing balance unknown and existing z
  assert.deepEqual(cells[sizes[2]!.id], {state:'unknown',skuId:skuId(0,2)});
  assert.deepEqual(result.data.allMatchesTotal,{knownQuantity:'-2',unknownCells:1,completeness:'incomplete'});
  const sql = pool.calls.map(c=>c.sql).join('\n');
- assert.doesNotMatch(sql,/naijue_erp\.(?:import_record|import_source_row)|standard_inventory_key_proof|inventory_key_admission/i);
+ assert.doesNotMatch(sql,/naijue_erp\.(?:import_record|import_source_row)|inventory_key_admission/i);
  assert.match(sql,/standard_business_ready\(\)/);
 });
 
@@ -790,7 +794,7 @@ test('SCRIPTED current 27 candidates and complete output use native facts withou
   const reader=new PostgresInventoryQueryReader(pool,null,undefined,null,runtime);
   if(mode==='candidates') assert.equal((await reader.readCandidates(candidate(pool))).data.items.length,1);
   else {const frames=[];for await (const frame of reader.readInventoryOutput(read(pool))) frames.push(frame); const last=frames.at(-1);assert.equal(last?.kind,'complete');if(!last||last.kind!=='complete')throw new Error('Complete output required');assert.deepEqual(last.allMatchesTotal,{knownQuantity:'-2',unknownCells:1,completeness:'incomplete'});}
-  assert.doesNotMatch(pool.calls.map(c=>c.sql).join('\n'),/naijue_erp\.(?:import_record|import_source_row)|standard_inventory_key_proof|inventory_key_admission/i);
+  assert.doesNotMatch(pool.calls.map(c=>c.sql).join('\n'),/naijue_erp\.(?:import_record|import_source_row)|inventory_key_admission/i);
  }
 });
 
@@ -832,4 +836,10 @@ test('SCRIPTED end-to-end V27 unknown passes backend DTO, web response, stream, 
  const settings={category:true,supplier:false,fit:false,sizeGroup:true,season:false,subtotal:true,total:true,sizeDescription:true};
  const rows=inventoryWorkbookRows(data,filter,settings),html=createInventoryPrintHtml(data,filter,settings);
  assert.ok(rows.some(row=>row.some(cell=>cell.includes('未知'))));assert.ok(html.includes('未知'));assert.ok(rows.some(row=>row.includes('0')));
+});
+
+test('SCRIPTED V27 exact sparse-zero proof feeds page and all-filter totals without broad dimension admission',async()=>{
+ const pool=new ScriptedPool();pool.transform=(stage,rows)=>stage==='publication'?[{id:batchId,ready:true}]:stage==='catalog-status'?rows.map(r=>({...r,unknown_count:'0'})):stage==='balances'?rows.map(r=>r.balance_present?r:{...r,zero_proof_state:'EXPLICIT_ZERO'}):rows;
+ const runtime={profile:'EXACT27' as const,contract:'UNIFIED_ORDINARY_RUNTIME27_V1' as const,async assertReady(){}};const result=await new PostgresInventoryQueryReader(pool,null,undefined,null,runtime).readInventory(read(pool));assert.deepEqual(result.data.products[0]!.colorFits[0]!.rows[0]!.cells[sizes[2]!.id],{state:'known',skuId:skuId(0,2),quantity:'0'});assert.deepEqual(result.data.allMatchesTotal,{knownQuantity:'-2',unknownCells:0,completeness:'complete'});for(const c of pool.calls.filter(c=>/inventory:catalog-status|inventory:balances/.test(c.sql))){assert.match(c.sql,/standard_inventory_key_proof\(w.id,s.id\)/);assert.doesNotMatch(c.sql,/inventory_key_admission/);}
+ for(const fault of ['NONZERO','BROKEN','ledger']){const bad=new ScriptedPool();bad.transform=(stage,rows)=>stage==='publication'?[{id:batchId,ready:true}]:stage==='catalog-status'?rows.map(r=>({...r,unknown_count:'1'})):stage==='balances'?rows.map(r=>r.balance_present?r:{...r,zero_proof_state:fault==='ledger'?'EXPLICIT_ZERO':fault,ledger_present:fault==='ledger'}):rows;await assert.rejects(new PostgresInventoryQueryReader(bad,null,undefined,null,runtime).readInventory(read(bad)),code('INVENTORY_INTEGRITY_FAILED'));assert.equal(stages(bad).at(-1),'ROLLBACK');}
 });

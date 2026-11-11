@@ -18,10 +18,10 @@ import {resolve,dirname} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {describeFresh35CatalogSpec} from '../../scripts/release/unified-install/fresh35-catalog-contract.mjs';
 import {loadFresh35CombinedRecordEnvelope,validateFresh35CombinedRecord,describeFresh35ProtectedRecordSnapshot,assertFresh35ProtectedRecordSnapshotCurrent,FRESH35_COMBINED_RECORD_PATH,FRESH35_COMBINED_RECORD_MODULE_SHA256} from '../../scripts/release/unified-install/fresh35-combined-record-v1.mjs';
-import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,loadFresh35Admin154Source,describeFresh35CombinedSource,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from '../../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
+import {resolveFresh35ReferenceInputPaths,loadFresh35CombinedSource,loadFresh35Admin154Source,loadFresh35CompactZeroSource,describeFresh35CombinedSource,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from '../../scripts/release/unified-install/fresh35-combined-source-v1.mjs';
 import {bindFresh35CombinedTarget,describeFresh35CombinedTarget,reconstructFresh35InstalledProductionTargetV2} from '../../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
-import {buildFresh35CombinedCatalog,buildFresh35Admin154Catalog,describeFresh35CombinedCatalog,fresh35Admin154ControllerCatalogSql,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
-import {ADMIN154_RECORD_PATH,loadFresh35Admin154Record,describeFresh35Admin154Record,assertFresh35Admin154RecordCurrent,loadFresh35Admin154Authorization,assertFresh35Admin154AuthorizationCurrent} from '../../scripts/release/unified-install/fresh35-admin154-record-v1.mjs';
+import {buildFresh35CombinedCatalog,buildFresh35Admin154Catalog,buildFresh35CompactZeroCatalog,fresh35CompactZeroParentCatalog,describeFresh35CombinedCatalog,fresh35Admin154ControllerCatalogSql,assertFresh35CombinedCatalogCurrent} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
+import {ADMIN154_RECORD_PATH,COMPACT_ZERO_RECORD_PATH,loadFresh35CompactZeroRecord,loadFresh35CompactZeroAuthorization,loadFresh35Admin154Record,describeFresh35Admin154Record,assertFresh35Admin154RecordCurrent,loadFresh35Admin154Authorization,assertFresh35Admin154AuthorizationCurrent} from '../../scripts/release/unified-install/fresh35-admin154-record-v1.mjs';
 import {compileFresh35CombinedProgram} from '../../scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs';
 import {decodeUtf8,parseStrictJson,HISTORICAL_SALES_HALL_SOURCE_SCHEMA_DECLARATIONS_SHA256,isHistoricalSalesHallSourceProfile} from '../../packages/application/src/unified-import-contract.ts';
 import {sameActiveWholeHostSession} from './whole-host-session.mjs';
@@ -59,7 +59,7 @@ export async function assertFresh35HostCurrent(token){
  if(c.admin154){
   await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);await c.history.assertCurrent();
   await assertFresh35CombinedSourcesCurrent(c.source);await assertFresh35CombinedCatalogCurrent(c.catalog);
-  await assertFresh35Admin154RecordCurrent(c.successor);
+  await assertFresh35Admin154RecordCurrent(c.successor);if(c.compactZero)await assertFresh35Admin154RecordCurrent(c.compactParent);
   need(importFileIdentity(await lstat(currentProductionServicePath,{bigint:true}))===c.currentService.identity&&Date.now()>=c.currentService.checkedAt&&Date.now()<c.currentService.expiresAt,'ADMIN154_CURRENT_SERVICE_CHANGED_OR_EXPIRED');
   return c;
  }
@@ -163,6 +163,24 @@ function admin154ExpectedRecord(snapshot,record,t,catalog,currentService){
   successor:{patchSqlSha256:d.patchSqlSha256,sourceSetSha256:d.sourceSetSha256,catalogSpecSha256:d.catalogSpecSha256,modelSha256:d.modelSha256},
   physical:{systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,serverVersionNum:t.physical.serverVersionNum,postmasterStart:currentService.postmasterStart},owner:t.proposal.owner};
 }
+async function compactZeroLineage(snapshot,record,t,catalog,currentService,parentPins,successorSha256){
+ need(exactImportKeys(parentPins,['sha256','sourceSetSha256','catalogSpecSha256'])&&Object.values(parentPins).every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v)),'COMPACT_ZERO_PARENT_PINS_REQUIRED');
+ const parentCatalog=fresh35CompactZeroParentCatalog(catalog),expectedParent=admin154ExpectedRecord(snapshot,record,t,parentCatalog,currentService);
+ // Historical source bytes stay bound to the explicitly pinned old receipt;
+ // only its unchanged native model is reconstructed from this successor source.
+ expectedParent.successor.sourceSetSha256=parentPins.sourceSetSha256;expectedParent.successor.catalogSpecSha256=parentPins.catalogSpecSha256;
+ const parent=await loadFresh35Admin154Record(expectedParent,parentPins.sha256),p=describeFresh35Admin154Record(parent),d=describeFresh35CombinedCatalog(catalog);
+ const successor=await loadFresh35CompactZeroRecord({predecessor:{recordSha256:p.sha256,sourceSetSha256:p.value.successor.sourceSetSha256,catalogSpecSha256:p.value.successor.catalogSpecSha256,modelSha256:p.value.successor.modelSha256,catalogSha256:p.value.successor.catalogSha256},successor:{patchSqlSha256:d.patchSqlSha256,sourceSetSha256:d.sourceSetSha256,catalogSpecSha256:d.catalogSpecSha256,modelSha256:d.modelSha256},physical:expectedParent.physical,owner:t.proposal.owner},successorSha256);return {parent,successor};
+}
+/** Explicit post154 context. Neither an old record nor the old host can select it. */
+export async function loadFresh35CompactZeroContext(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256){
+ need(typeof sourceRoot==='string'&&resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');const envelope=await loadFresh35CombinedRecordEnvelope(),snapshot=describeFresh35ProtectedRecordSnapshot(envelope),target=await reconstructFresh35InstalledProductionTargetV2(envelope),t=describeFresh35CombinedTarget(target);
+ need(referenceDirectory===t.ordinary.referenceDirectory&&currentServiceInput,'COMPACT_ZERO_REFERENCE_AND_SERVICE_REQUIRED');const currentService=await loadOrdinaryCurrentService(currentServiceInput,t,envelope,snapshot,false);
+ await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(referenceDirectory);const paths=await resolveFresh35ReferenceInputPaths(referenceDirectory),source=await loadFresh35CompactZeroSource(sourceRoot,{baselineDirectory:paths.baselineDirectory});
+ const pins=describeFresh35CombinedSource(source).currentSourcePins;for(const pin of pins)await assertTrustedRootPath(resolve(sourceRoot,pin.path));need(pins.some(p=>p.path==='tools/unified-import/fresh35-host-session.mjs'&&p.sha256===loadedHostSha256),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
+ const catalog=await buildFresh35CompactZeroCatalog(source,target,paths),history=await loadOrdinaryInstalledHistory(snapshot,referenceDirectory,fresh35CompactZeroParentCatalog(catalog)),record=history.record,{parent,successor}=await compactZeroLineage(snapshot,record,t,catalog,currentService,parentPins,successorSha256),token=Object.freeze({profile:'FRESH35_COMPACT_ZERO_CONTEXT_V2'});
+ contexts.set(token,Object.freeze({admin154:true,compactZero:true,compactParent:parent,productionImport:true,envelope,source,target,catalog,history,record,successor,currentService,currentServiceInputSha256:currentServiceInput.sha256,recordFileSha256:snapshot.sha256}));await assertFresh35HostCurrent(token);return token;
+}
 export async function describeFresh35ProductionImportBinding(context,prepared){
  const c=fresh35HostContext(context);need(c.productionImport===true,'PRODUCTION_IMPORT_CONTEXT_REQUIRED');
  need(prepared?.packageKind==='REAL'&&isNodeScryptPasswordHash(prepared.encodedScrypt)&&prepared.steps&&typeof prepared.steps[Symbol.asyncIterator]==='function','REAL_PREPARED_PROGRAM_REQUIRED');
@@ -177,7 +195,7 @@ export async function describeFresh35ProductionImportBinding(context,prepared){
  const checked={async *[Symbol.asyncIterator](){for await(const incoming of prepared.steps){const step=structuredClone(incoming);validateStandardImportRequest(step?.request);const r=step.request;need(exactImportKeys(step,['method','request'])&&['masterChunk','baselineKeys','documentChunk','publish'].includes(step.method)&&r.package_manifest_sha256===id.packageSha256&&r.plan_sha256===id.planSha256&&r.namespace===id.namespace&&r.cutoff_at===id.cutoffAt&&[id.batchId,id.documentBatchId].includes(r.batch_id),'REAL_STEP_BINDING_DIFFERS');count++;need(Number.isSafeInteger(count),'REAL_STEP_COUNT_INVALID');yield step}}};
  const stepsSha256=await streamTypedHash(typedHashArray(checked));need(count>0,'REAL_STEPS_REQUIRED');
  await assertFresh35HostCurrent(context);
- const binding=Object.freeze({format:c.admin154?'FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1':'FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1',installationRecordSha256:c.recordFileSha256,installProgramSha256:c.record.programSha256,sourceSetSha256:c.record.binding.sourceSetSha256,targetSha256:c.record.binding.targetSha256,catalogSha256:c.admin154?describeFresh35Admin154Record(c.successor).value.successor.catalogSha256:c.record.catalogSha256,manifestSha256:id.packageSha256,planSha256:id.planSha256,initializerSha256:requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt}),stepsSha256,stepCount:count,sourceNamespace:id.namespace,cutoffAt:id.cutoffAt,baselineBatchId:id.batchId,documentBatchId:id.documentBatchId,initializerOperationId:init.operation_id,initializerRequestKey:init.request_key,...(c.admin154?admin154ExecutionEvidence(c):{})});
+ const binding=Object.freeze({format:c.compactZero?'FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2':c.admin154?'FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1':'FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1',installationRecordSha256:c.recordFileSha256,installProgramSha256:c.record.programSha256,sourceSetSha256:c.record.binding.sourceSetSha256,targetSha256:c.record.binding.targetSha256,catalogSha256:c.admin154?describeFresh35Admin154Record(c.successor).value.successor.catalogSha256:c.record.catalogSha256,manifestSha256:id.packageSha256,planSha256:id.planSha256,initializerSha256:requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt}),stepsSha256,stepCount:count,sourceNamespace:id.namespace,cutoffAt:id.cutoffAt,baselineBatchId:id.batchId,documentBatchId:id.documentBatchId,initializerOperationId:init.operation_id,initializerRequestKey:init.request_key,...(c.admin154?admin154ExecutionEvidence(c):{})});
  productionImportBindings.set(binding,{context,prepared});return binding;
 }
 function admin154ExecutionEvidence(c){return {successorRecordSha256:describeFresh35Admin154Record(c.successor).sha256,successorSourceSetSha256:describeFresh35CombinedCatalog(c.catalog).sourceSetSha256,successorCatalogSpecSha256:describeFresh35CombinedCatalog(c.catalog).catalogSpecSha256,currentServiceSha256:c.currentServiceInputSha256,postmasterStart:c.currentService.postmasterStart};}
@@ -195,7 +213,7 @@ export async function loadFresh35ProductionImportAuthorization(context,binding){
  const c=fresh35HostContext(context);need(c.productionImport===true&&productionImportBindings.get(binding)?.context===context,'GENUINE_PRODUCTION_IMPORT_BINDING_REQUIRED');await assertFresh35HostCurrent(context);
  if(c.admin154){
   const purpose=binding.format==='FRESH35_A53_ADMIN154_SETUP_BINDING_V1'?'ADMIN_PROVISION_ONLY':binding.format==='FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1'?'FIRST_REAL_BUSINESS_IMPORT':null;
-  const authority=await loadFresh35Admin154Authorization(binding,purpose,c.currentService.expiresAt),a=await assertFresh35Admin154AuthorizationCurrent(authority);
+  const authority=await (c.compactZero?loadFresh35CompactZeroAuthorization(binding,c.currentService.expiresAt):loadFresh35Admin154Authorization(binding,purpose,c.currentService.expiresAt)),a=await assertFresh35Admin154AuthorizationCurrent(authority);
   const token=Object.freeze({profile:'FRESH35_A53_ADMIN154_EXECUTION_AUTHORIZATION_V1'});
   productionImportAuthorities.set(token,{context,bindingOriginal:binding,binding:Object.freeze(structuredClone(binding)),...a,admin154Authority:authority});return token;
  }
@@ -219,7 +237,7 @@ async function currentProductionImportAuthority(context,authorization){
  need(c.productionImport===true&&a?.context===context,'GENUINE_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
  if(c.admin154){
   need(a.admin154Authority,'ADMIN154_EXACT_AUTHORIZATION_REQUIRED');await assertFresh35Admin154AuthorizationCurrent(a.admin154Authority);
-  await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);await assertFresh35Admin154RecordCurrent(c.successor);
+  await assertFresh35ProtectedRecordSnapshotCurrent(c.envelope);await assertFresh35Admin154RecordCurrent(c.successor);if(c.compactZero)await assertFresh35Admin154RecordCurrent(c.compactParent);
   need(importFileIdentity(await lstat(currentProductionServicePath,{bigint:true}))===c.currentService.identity&&Date.now()<c.currentService.expiresAt,'ADMIN154_CURRENT_SERVICE_CHANGED_OR_EXPIRED');return a;
  }
  need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt,'PRODUCTION_BATCH_AUTHORIZATION_WINDOW_EXPIRED');
@@ -232,7 +250,7 @@ async function currentProductionImportAuthority(context,authorization){
 export function fresh35ProductionImportQueryGuard(context,authorization,prepared){
  const c=fresh35HostContext(context),a=productionImportAuthorities.get(authorization);
  need(c.productionImport===true&&a?.context===context&&productionImportBindings.get(a.bindingOriginal)?.prepared===prepared,'GENUINE_PRODUCTION_BATCH_AUTHORIZATION_REQUIRED');
- if(c.admin154)need(a.binding.format==='FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1','ADMIN154_FIRST_REAL_MODE_REQUIRED');
+ if(c.admin154)need(a.binding.format===(c.compactZero?'FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2':'FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1'),'ADMIN154_FIRST_REAL_MODE_REQUIRED');
  let iterator,streamHash,ordinal=0,initialized=false,finished=false;
  const close=async()=>{try{if(iterator?.return)await iterator.return()}finally{iterator=undefined}};
  const check=async(sql,values)=>{
@@ -278,6 +296,9 @@ export function fresh35Admin154SetupQueryGuard(context,authorization,prepared){
 export async function openReviewedFresh35Admin154Host(config,sourceRoot,target,prepare,work,options){
  const {openReviewedFresh35Admin154PhysicalHost}=await import('./whole-host-session.mjs');
  return openReviewedFresh35Admin154PhysicalHost(config,sourceRoot,target,prepare,work,options);
+}
+export async function openReviewedFresh35CompactZeroHost(config,sourceRoot,target,prepare,work,options){
+ const {openReviewedFresh35CompactZeroPhysicalHost}=await import('./whole-host-session.mjs');return openReviewedFresh35CompactZeroPhysicalHost(config,sourceRoot,target,prepare,work,options);
 }
 /** Same independent stream cursors used by the existing REAL host: hashing,
  * execution and the SQL query guard never consume each other's iterator. */
@@ -563,7 +584,8 @@ export async function admitFresh35OrdinaryPoolV2(pool,connection,currentServiceI
 /** Original isolated V1 installation only; never a production purpose or an
  * import authorization. Uses the same private pool-bound lease implementation. */
 export async function admitFresh35SyntheticOrdinaryPoolV1(pool,connection){return admitOrdinaryPool(pool,connection,true)}
-async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,admin154SuccessorSha256){
+export async function admitFresh35CompactZeroOrdinaryPoolV2(pool,connection,currentServiceInput,parentPins,successorSha256){need(currentServiceInput&&exactImportKeys(currentServiceInput,['sha256','capacityExpiresAt']),'COMPACT_ZERO_CURRENT_SERVICE_REQUIRED');return admitOrdinaryPool(pool,connection,false,currentServiceInput,parentPins?.sha256,{parentPins,successorSha256});}
+async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,admin154SuccessorSha256,compactZeroInput){
  need(pool&&typeof pool.connect==='function'&&!ordinaryPendingPools.has(pool)&&!ordinaryUsedPools.has(pool),'ORDINARY_EXCLUSIVE_STARTUP_REQUIRED');
  need(connection&&Object.getPrototypeOf(connection)===Object.prototype&&Object.keys(connection).sort().join(',')==='database,host,port,user','ORDINARY_CONNECTION_KEYS_REQUIRED');
  const fixed=Object.freeze({...connection});ordinaryPendingPools.add(pool);ordinaryUsedPools.add(pool);
@@ -585,15 +607,16 @@ async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,a
   await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(t.ordinary.referenceDirectory);
   const admin154=admin154SuccessorSha256!==undefined;
   need(!admin154||(!synthetic&&currentService),'ADMIN154_CURRENT_PRODUCTION_SERVICE_REQUIRED');
-  const paths=await resolveFresh35ReferenceInputPaths(t.ordinary.referenceDirectory),source=await (admin154?loadFresh35Admin154Source:loadFresh35CombinedSource)(moduleRoot,{baselineDirectory:paths.baselineDirectory});
+  const paths=await resolveFresh35ReferenceInputPaths(t.ordinary.referenceDirectory),source=await (compactZeroInput?loadFresh35CompactZeroSource:admin154?loadFresh35Admin154Source:loadFresh35CombinedSource)(moduleRoot,{baselineDirectory:paths.baselineDirectory});
   const pins=describeFresh35CombinedSource(source).currentSourcePins;
   for(const pin of pins)await assertTrustedRootPath(resolve(moduleRoot,pin.path));
   for(const [path,digest]of [['tools/unified-import/fresh35-host-session.mjs',loadedHostSha256],['scripts/release/unified-install/fresh35-combined-record-v1.mjs',FRESH35_COMBINED_RECORD_MODULE_SHA256]])need(pins.some(p=>p.path===path&&p.sha256===digest),'LOADED_IMPLEMENTATION_SOURCE_DIFFERS');
-  const catalog=await (admin154?buildFresh35Admin154Catalog:buildFresh35CombinedCatalog)(source,target,paths);
-  const history=currentService&&await loadOrdinaryInstalledHistory(snapshot,t.ordinary.referenceDirectory,catalog);
+  const catalog=await (compactZeroInput?buildFresh35CompactZeroCatalog:admin154?buildFresh35Admin154Catalog:buildFresh35CombinedCatalog)(source,target,paths);
+  const history=currentService&&await loadOrdinaryInstalledHistory(snapshot,t.ordinary.referenceDirectory,compactZeroInput?fresh35CompactZeroParentCatalog(catalog):catalog);
   const record=history?.record??validateFresh35CombinedRecord(envelope,await compileFresh35CombinedProgram({source,target,catalog}));
-  const successor=admin154?await loadFresh35Admin154Record(admin154ExpectedRecord(snapshot,record,t,catalog,currentService),admin154SuccessorSha256):undefined;
-  state={pool,active:true,watchers:[],envelope,t,source,target,catalog,record,synthetic,currentService,successor};
+  const compact=compactZeroInput?await compactZeroLineage(snapshot,record,t,catalog,currentService,compactZeroInput.parentPins,compactZeroInput.successorSha256):undefined;
+  const successor=compact?.successor??(admin154?await loadFresh35Admin154Record(admin154ExpectedRecord(snapshot,record,t,catalog,currentService),admin154SuccessorSha256):undefined);
+  state={pool,active:true,watchers:[],envelope,t,source,target,catalog,record,synthetic,currentService,successor,compactParent:compact?.parent};
   // Invalidations only: no source hashing/catalog scans on business requests.
   // Watch the finite existing source/reference pin set, not the workspace tree.
   const watched=new Set([FRESH35_COMBINED_RECORD_PATH,...pins.map(p=>resolve(moduleRoot,p.path)),...(history?.watched??[]),
@@ -603,7 +626,7 @@ async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,a
   for(const path of [...watched])if(!synthetic||path!==FRESH35_COMBINED_RECORD_PATH)watched.add(dirname(path));
   watched.add(moduleRoot);
   if(currentService){watched.add(ordinaryInstalledSourceRoot);watched.add(currentProductionServicePath);}
-  if(successor){watched.add(ADMIN154_RECORD_PATH);watched.add(dirname(ADMIN154_RECORD_PATH));}
+  if(successor){watched.add(ADMIN154_RECORD_PATH);watched.add(dirname(ADMIN154_RECORD_PATH));}if(compact){watched.add(COMPACT_ZERO_RECORD_PATH);watched.add(dirname(COMPACT_ZERO_RECORD_PATH));}
   // The isolated workspace is root0711: watch the readable fixed inode only,
   // never its non-listable parent. Existing change/rename/error revokes the lease.
   if(synthetic)watched.add(resolve(t.proposal.workspaceDirectory,'bootstrap-network-observation.json'));
@@ -611,7 +634,7 @@ async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,a
   await history?.assertCurrent();
   await assertFresh35CombinedSourcesCurrent(source);await assertFresh35CombinedCatalogCurrent(catalog);
   await assertFresh35ProtectedRecordSnapshotCurrent(envelope,true);need(state.active,'ORDINARY_STARTUP_SOURCE_CHANGED');
-  if(successor)await assertFresh35Admin154RecordCurrent(successor,true);
+  if(successor)await assertFresh35Admin154RecordCurrent(successor,true);if(compact)await assertFresh35Admin154RecordCurrent(compact.parent,true);
   await assertOrdinaryCurrentService(state);
   ordinaryWindow(state);client=await pool.connect();need(ordinaryStatus(client)==='I','ORDINARY_IDLE_LEASE_REQUIRED');
   const first=await client.query(identityQuery(state),[identityParameter(state)]);need(first.rows?.length===1,'ORDINARY_ONE_PHYSICAL_ROW_REQUIRED');
@@ -625,13 +648,13 @@ async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,a
   ack(await client.query('ROLLBACK'),'ROLLBACK');began=false;
   need(ordinaryStatus(client)==='I'&&state.active,'ORDINARY_STARTUP_INVALIDATED');
   const effectiveExpiry=ordinaryWindow(state);state.description=Object.freeze({...(synthetic?{purpose:'SYNTHETIC_ISOLATED_ORDINARY_V1'}:{}),
-   ...(effectiveExpiry!==undefined?{expiresAt:effectiveExpiry}:{}),...(successor?{admin154Successor:{recordSha256:describeFresh35Admin154Record(successor).sha256,sourceSetSha256:describeFresh35CombinedCatalog(catalog).sourceSetSha256,catalogSpecSha256:describeFresh35CombinedCatalog(catalog).catalogSpecSha256}}:{}),systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,user:t.proposal.runtime,connectHost:t.ordinary.connectHost,connectPort:t.ordinary.connectPort,serverAddress:t.ordinary.serverAddress,serverPort:t.ordinary.serverPort,postmasterStart:physical.postmasterStart,recordSha256,sourceSetSha256:record.binding.sourceSetSha256});
+   ...(effectiveExpiry!==undefined?{expiresAt:effectiveExpiry}:{}),...(successor?{[compact?'compactZeroSuccessor':'admin154Successor']:{recordSha256:describeFresh35Admin154Record(successor).sha256,sourceSetSha256:describeFresh35CombinedCatalog(catalog).sourceSetSha256,catalogSpecSha256:describeFresh35CombinedCatalog(catalog).catalogSpecSha256}}:{}),systemIdentifier:t.physical.systemIdentifier,databaseOid:t.physical.databaseOid,database:t.proposal.database,user:t.proposal.runtime,connectHost:t.ordinary.connectHost,connectPort:t.ordinary.connectPort,serverAddress:t.ordinary.serverAddress,serverPort:t.ordinary.serverPort,postmasterStart:physical.postmasterStart,recordSha256,sourceSetSha256:record.binding.sourceSetSha256});
   const cap=Object.freeze({profile:'FRESH35_ORDINARY_POOL_ADMISSION_V2'});ordinaryAdmissions.set(cap,state);return cap;
  }catch(error){if(state)revokeOrdinary(state);throw error}finally{
   try{
    if(client){try{if(began)await client.query('ROLLBACK')}finally{client.release(true)}}
    if(state?.description){
-    ordinaryWindow(state);await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);await assertOrdinaryCurrentService(state);if(state.successor)await assertFresh35Admin154RecordCurrent(state.successor);
+    ordinaryWindow(state);await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);await assertOrdinaryCurrentService(state);if(state.successor)await assertFresh35Admin154RecordCurrent(state.successor);if(state.compactParent)await assertFresh35Admin154RecordCurrent(state.compactParent);
     ordinaryWindow(state);need(state.active,'ORDINARY_STARTUP_INVALIDATED');
    }
   }catch(error){if(state)revokeOrdinary(state);throw error}finally{ordinaryPendingPools.delete(pool)}
@@ -642,7 +665,7 @@ export async function assertFresh35OrdinaryAdmissionCurrentV2(cap,pool){
  const state=ordinaryState(cap,pool);
  try{
   await assertFresh35ProtectedRecordSnapshotCurrent(state.envelope);await assertOrdinaryCurrentService(state);
-  if(state.successor)await assertFresh35Admin154RecordCurrent(state.successor);
+  if(state.successor)await assertFresh35Admin154RecordCurrent(state.successor);if(state.compactParent)await assertFresh35Admin154RecordCurrent(state.compactParent);
   ordinaryWindow(state);need(state.active,'ORDINARY_RECORD_CHANGED');
  }catch(error){revokeOrdinary(state);throw error}
 }

@@ -1,3 +1,4 @@
+import {isExplicitZeroApprovalDescriptor} from './unified-explicit-zero-approval.ts';
 import {sha256} from './unified-import-contract.ts';
 import {requestHash} from './request-hash.ts';
 import {stableImportId} from './inventory-cutoff-import.ts';
@@ -67,7 +68,7 @@ function buildV2FromValidatedSource(source:UnifiedImportPlan,input:BuildUnifiedI
 }
 function validateAndSchedule(plan:UnifiedImportPlanV2):MasterChunkPlanV2 {
  need(plain(plan)&&keys(Object.fromEntries(Object.entries(plan).filter(([key])=>key!=='historical_settlement_retention_approval'&&key!=='historical_staff_hall_approval'&&key!=='historical_hall_approval'&&key!=='explicit_zero_approval')),'admission_issues,alignment_sha256,baseline_batch_id,baseline_rows,compiler_version,counts,cutoff_at,document_batch_id,document_rows,execution_mode,format_version,identity_registry,initialization_identity,manifest_sha256,master_rows,master_schedule_layout,master_schedule_layout_sha256,max_master_chunk_rows,package_kind,plan_sha256,progress_bounds,protocol,registry_sha256,scheduler_version,source_metadata_sha256,source_namespace,source_plan_sha256,table_files,target'),'V2_PLAN_SHAPE_INVALID');
- if(plan.explicit_zero_approval!==undefined){const a=plan.explicit_zero_approval;need(plain(a)&&keys(a,'cutoff_at,format_version,inventory_file_sha256,merkle_root_sha256,record_count,sha256,source_namespace')&&a.format_version==='EXPLICIT_ZERO_APPROVAL_MERKLE_V1'&&digest(a.sha256)&&digest(a.inventory_file_sha256)&&digest(a.merkle_root_sha256)&&a.cutoff_at===plan.cutoff_at&&a.source_namespace===plan.source_namespace&&Number.isSafeInteger(a.record_count)&&a.record_count>0,'EXPLICIT_ZERO_APPROVAL_BINDING_INVALID');}
+ if(plan.explicit_zero_approval!==undefined)need(isExplicitZeroApprovalDescriptor(plan.explicit_zero_approval,plan.source_namespace,plan.cutoff_at),'EXPLICIT_ZERO_APPROVAL_BINDING_INVALID');
  if(plan.historical_staff_hall_approval!==undefined){const approval=plan.historical_staff_hall_approval;need(plain(approval)&&keys(approval,'sha256,utf8')&&typeof approval.utf8==='string'&&digest(approval.sha256)&&sha256(Buffer.from(approval.utf8,'utf8'))===approval.sha256,'STAFF_HALL_APPROVAL_HASH');}
  if(plan.historical_hall_approval!==undefined){const approval=plan.historical_hall_approval;need(plain(approval)&&keys(approval,'sha256,utf8')&&typeof approval.utf8==='string'&&digest(approval.sha256)&&sha256(Buffer.from(approval.utf8,'utf8'))===approval.sha256,'HISTORICAL_HALL_APPROVAL_HASH');}
  if(plan.historical_settlement_retention_approval!==undefined){const a=plan.historical_settlement_retention_approval;need(plain(a)&&keys(a,'sha256,utf8')&&typeof a.utf8==='string'&&digest(a.sha256)&&sha256(Buffer.from(a.utf8,'utf8'))===a.sha256,'HISTORICAL_SETTLEMENT_APPROVAL_HASH');}

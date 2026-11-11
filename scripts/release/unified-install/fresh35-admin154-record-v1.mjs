@@ -10,6 +10,8 @@ import {assertTrustedRootPath} from './trusted-install-path.mjs';
 const etc=process.platform==='darwin'?'/private/etc':'/etc';
 export const ADMIN154_RECORD_PATH=etc+'/naijue-erp/fresh35-admin154-successor-v1.json';
 export const ADMIN154_AUTHORIZATION_PATH=etc+'/naijue-erp/fresh35-admin154-execution-v1.json';
+export const COMPACT_ZERO_RECORD_PATH=etc+'/naijue-erp/fresh35-compact-zero-successor-v2.json';
+export const COMPACT_ZERO_AUTHORIZATION_PATH=etc+'/naijue-erp/fresh35-compact-zero-execution-v2.json';
 export const ADMIN154_PREDECESSOR_RECORD_SHA256='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e';
 export const ADMIN154_PREDECESSOR_SOURCE_SHA256='6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16';
 export const ADMIN154_PATCH_SHA256='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b';
@@ -76,3 +78,21 @@ export async function loadFresh35Admin154Authorization(binding,purpose,deadline)
  const token=Object.freeze({profile:'FRESH35_A53_ADMIN154_EXECUTION_AUTHORIZATION_V1'});authorities.set(token,captured);return token;
 }
 export async function assertFresh35Admin154AuthorizationCurrent(token){const a=authorities.get(token);need(a,'PROTECTED_AUTHORIZATION_REQUIRED');need(Date.now()>=a.value.startsAt&&Date.now()<a.value.expiresAt,'AUTHORIZATION_EXPIRED');await assertCurrent(a,false);return Object.freeze({sha256:a.sha256,startsAt:a.value.startsAt,expiresAt:a.value.expiresAt});}
+
+/** A distinct finite successor; old admin154 records and authorizations cannot
+ * attest this SQL body, source set or exact import. No file is written here. */
+export function validateFresh35CompactZeroRecord(value,expected){
+ need(closed(value,'appliedAt,authorizationSha256,format,physical,predecessor,successor,transactionReceipt')&&value.format==='FRESH35_COMPACT_ZERO_SUCCESSOR_RECORD_V2','COMPACT_ZERO_RECORD_FORMAT_REQUIRED');
+ need(closed(value.predecessor,'catalogSha256,catalogSpecSha256,modelSha256,recordSha256,sourceSetSha256')&&Object.values(value.predecessor).every(digest)&&isDeepStrictEqual(value.predecessor,expected.predecessor),'COMPACT_ZERO_PARENT_DIFFERS');
+ need(closed(value.successor,'catalogSha256,catalogSpecSha256,modelSha256,patchSqlSha256,sourceSetSha256')&&Object.values(value.successor).every(digest)&&Object.entries(expected.successor).every(([k,v])=>value.successor[k]===v),'COMPACT_ZERO_SOURCE_OR_CATALOG_DIFFERS');
+ need(closed(value.physical,'database,databaseOid,postmasterStart,serverVersionNum,systemIdentifier')&&['database','databaseOid','serverVersionNum','systemIdentifier'].every(k=>value.physical[k]===expected.physical[k])&&pgMicros(value.physical.postmasterStart)<=pgMicros(expected.physical.postmasterStart),'COMPACT_ZERO_PHYSICAL_EPOCH_DIFFERS');
+ const r=value.transactionReceipt;need(closed(r,'actor,backendPid,database,nonce,transactionId')&&typeof r.nonce==='string'&&/^[a-f0-9]{48}$/.test(r.nonce)&&r.actor===expected.owner&&r.database===value.physical.database&&typeof r.transactionId==='string'&&/^[1-9][0-9]*$/.test(r.transactionId)&&Number.isSafeInteger(r.backendPid)&&r.backendPid>0&&validateOffsetInstant(value.appliedAt)&&digest(value.authorizationSha256),'COMPACT_ZERO_NATIVE_RECEIPT_REQUIRED');return freeze(structuredClone(value));
+}
+export async function loadFresh35CompactZeroRecord(expected,expectedSha256){
+ need(digest(expectedSha256),'COMPACT_ZERO_RECORD_SHA_REQUIRED');const captured=await protectedJson(COMPACT_ZERO_RECORD_PATH);need(captured.sha256===expectedSha256,'COMPACT_ZERO_RECORD_SHA_DIFFERS');const value=validateFresh35CompactZeroRecord(captured.value,expected),token=Object.freeze({profile:'FRESH35_COMPACT_ZERO_SUCCESSOR_RECORD_V2'});records.set(token,{...captured,value});return token;
+}
+export async function loadFresh35CompactZeroAuthorization(binding,deadline){
+ need(binding?.format==='FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2'&&Number.isSafeInteger(deadline)&&deadline>Date.now(),'COMPACT_ZERO_EXACT_IMPORT_REQUIRED');const captured=await protectedJson(COMPACT_ZERO_AUTHORIZATION_PATH),a=captured.value;
+ need(closed(a,'authorizationReference,binding,decision,expiresAt,format,independentSafetyReviewSha256,startsAt')&&a.format==='FRESH35_COMPACT_ZERO_EXECUTION_AUTHORIZATION_V2'&&a.decision==='AUTHORIZE_EXACT_FIRST_REAL_BUSINESS_IMPORT_AND_READBACK'&&requestHash(a.binding)===requestHash(binding),'COMPACT_ZERO_EXACT_AUTHORIZATION_REQUIRED');
+ need(Number.isSafeInteger(a.startsAt)&&Number.isSafeInteger(a.expiresAt)&&a.startsAt<a.expiresAt&&a.expiresAt<=deadline&&Date.now()>=a.startsAt&&Date.now()<a.expiresAt&&digest(a.independentSafetyReviewSha256)&&typeof a.authorizationReference==='string'&&a.authorizationReference.trim().length>0,'COMPACT_ZERO_AUTHORIZATION_WINDOW_OR_REFERENCE_REQUIRED');const token=Object.freeze({profile:'FRESH35_COMPACT_ZERO_EXECUTION_AUTHORIZATION_V2'});authorities.set(token,captured);return token;
+}

@@ -190,7 +190,10 @@ async function verifyAdditionalSkus(query: Query, prefix: string, values: unknow
 }
 
 async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean, runtime26?: NativeRuntime26Capability, retainedDelete = false, runtime27 = false): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
-  const row = one(await query(`/* inventory:catalog-status */ ${catalog(seasonArray)}
+  const row = one(await query(`/* inventory:catalog-status */ ${catalog(seasonArray)}${runtime27 ? `, stock_facts AS MATERIALIZED (SELECT w.id warehouse_id,s.id sku_id,b.warehouse_id IS NOT NULL present,b.quantity,b.version,b.last_operation_id,
+      CASE WHEN b.warehouse_id IS NULL THEN naijue_erp.standard_inventory_key_proof(w.id,s.id)->>'state' ELSE NULL END zero_proof_state,
+      EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.warehouse_id=w.id AND l.sku_id=s.id) ledger_present
+      FROM authorized_warehouses w CROSS JOIN filtered_skus s LEFT JOIN naijue_erp.inventory_balance b ON b.warehouse_id=w.id AND b.sku_id=s.id)` : ''}
     SELECT (SELECT count(*)::text FROM matched_products) AS exact_total,
     ${retainedDelete ? `EXISTS (SELECT 1 FROM naijue_erp.product_category child LEFT JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
       WHERE child.parent_id IS NOT NULL AND child.deleted_at IS NULL
@@ -201,11 +204,10 @@ async function catalogStatus(query: Query, values: unknown[], seasonArray: boole
       WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id))`} AS uncovered_sku,
     EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (
       SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = s.size_group_id AND m.size_id = s.size_id)) AS invalid_sku_size,
-    EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b JOIN filtered_skus s ON s.id = b.sku_id
-      JOIN authorized_warehouses w ON w.id = b.warehouse_id WHERE b.version <= 0 OR b.last_operation_id IS NULL) AS invalid_balance,
-    ${runtime27 ? `((SELECT count(*)::numeric FROM authorized_warehouses) * (SELECT count(*)::numeric FROM filtered_skus)
-      - (SELECT count(*)::numeric FROM naijue_erp.inventory_balance b JOIN filtered_skus s ON s.id=b.sku_id
-         JOIN authorized_warehouses w ON w.id=b.warehouse_id))::text` : "'0'::text"} AS unknown_count,
+    ${runtime27 ? `EXISTS(SELECT 1 FROM stock_facts WHERE (present AND (NOT ledger_present OR quantity IS NULL OR version IS NULL OR version<=0 OR last_operation_id IS NULL))
+      OR (NOT present AND (ledger_present OR zero_proof_state IS NULL OR zero_proof_state NOT IN ('UNKNOWN','EXPLICIT_ZERO'))))` : `EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b JOIN filtered_skus s ON s.id = b.sku_id
+      JOIN authorized_warehouses w ON w.id = b.warehouse_id WHERE b.version <= 0 OR b.last_operation_id IS NULL)`} AS invalid_balance,
+    ${runtime27 ? `(SELECT count(*)::text FROM stock_facts WHERE NOT present AND zero_proof_state IS DISTINCT FROM 'EXPLICIT_ZERO')` : "'0'::text"} AS unknown_count,
     (SELECT coalesce(sum(b.quantity), 0)::text FROM naijue_erp.inventory_balance b
       JOIN filtered_skus s ON s.id = b.sku_id JOIN authorized_warehouses w ON w.id = b.warehouse_id) AS quantity`, values));
   // This is over the WHOLE requested filter, never just the visible product IDs.
@@ -271,6 +273,7 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
   for (const row of balanceRows) {
     const warehouseId = id("warehouse", row.warehouse_id); const skuId = id("sku", row.sku_id); const key = `${warehouseId}:${skuId}`;
     integrity(warehouseIds.has(warehouseId) && skuIds.has(skuId) && !balances.has(key), "Page balance is outside its requested formal key");
+    if(runtime27){integrity(typeof row.balance_present==="boolean"&&typeof row.ledger_present==="boolean","Missing exact stock presence evidence");if(!row.balance_present){integrity(row.ledger_present===false&&row.quantity===null&&row.version===null&&row.last_operation_id===null&&["UNKNOWN","EXPLICIT_ZERO"].includes(String(row.zero_proof_state)),"Missing balance conflicts with its native key proof or ledger");if(row.zero_proof_state==="EXPLICIT_ZERO")balances.set(key,"0");continue;}integrity(row.ledger_present===true,"Stored balance has no native ledger");}
     versionFromSql(row.version); id("operation", row.last_operation_id);
     balances.set(key, quantityFromSql(row.quantity).toString());
   }
@@ -297,7 +300,7 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
           const size = product.sizes[sizeIndex]!; const skuId = variant.skus.get(size.id);
           if (skuId === undefined) cells[size.id] = { state: "not-applicable" };
           else {
-            // Legacy complete-scope publication proves absence is zero. Runtime 27 has explicit keys only, so a missing current balance remains unknown.
+            // Runtime 27 adds only individually proven sparse zeros to this map.
             const stored = balances.get(`${warehouse.id}:${skuId}`);
             if (runtime27 && stored === undefined) { cells[size.id] = { state: "unknown", skuId }; unknown++; variantSizeUnknown[sizeIndex] = variantSizeUnknown[sizeIndex]! + 1; }
             else { const quantity = stored ?? "0"; cells[size.id] = { state: "known", skuId, quantity };
@@ -343,7 +346,13 @@ async function productMatrices(query: Query, products: Row[], input: InventoryQu
     bounded(skus, INVENTORY_READ_MAX_PAGE_SKUS);
     // Filter integrity and exact page SKU identities already belong to this RR snapshot. Do not repeat the catalogue scan for
     // sparse balances; retain the authorized warehouse/hall intersection in SQL.
-    balances = (await query(`/* inventory:balances */
+    balances = (await query(runtime27 ? `/* inventory:balances */
+      SELECT w.id warehouse_id,s.id sku_id,b.quantity::text,b.version,b.last_operation_id,b.warehouse_id IS NOT NULL balance_present,
+        CASE WHEN b.warehouse_id IS NULL THEN naijue_erp.standard_inventory_key_proof(w.id,s.id)->>'state' ELSE NULL END zero_proof_state,
+        EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.warehouse_id=w.id AND l.sku_id=s.id) ledger_present
+      FROM naijue_erp.warehouse w CROSS JOIN naijue_erp.sku s LEFT JOIN naijue_erp.inventory_balance b ON b.warehouse_id=w.id AND b.sku_id=s.id
+      WHERE w.id=ANY($1::uuid[]) AND w.hall_id=ANY($2::uuid[]) AND s.id=ANY($3::uuid[])
+      ORDER BY w.id,s.id LIMIT $4` : `/* inventory:balances */
       SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id FROM naijue_erp.inventory_balance b
       JOIN naijue_erp.warehouse w ON w.id = b.warehouse_id
       WHERE w.id = ANY($1::uuid[]) AND w.hall_id = ANY($2::uuid[]) AND b.sku_id = ANY($3::uuid[])

@@ -4,7 +4,7 @@
 import {readFile,realpath} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
-import {describeFresh35CombinedSource,fresh35CombinedSourceData,fresh35Admin154SourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
+import {describeFresh35CombinedSource,fresh35CombinedSourceData,fresh35Admin154SourceData,fresh35CompactZeroSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
 import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverCheck,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation} from './fresh35-combined-target-v1.mjs';
 import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
@@ -159,7 +159,7 @@ function restoreGeneratedExpressionPrefixes(model,declarations,sections){
 }
 export async function buildFresh35CombinedCatalog(source,target,{modelPath,functionsPath}){
  const s=describeFresh35CombinedSource(source),data=fresh35CombinedSourceData(source),t=describeFresh35CombinedTarget(target);
- need(s.format!=='FRESH35_A53_ADMIN154_SOURCE_V1','ADMIN154_EXPLICIT_CATALOG_REQUIRED');
+ need(!['FRESH35_A53_ADMIN154_SOURCE_V1','FRESH35_COMPACT_ZERO_SOURCE_V2'].includes(s.format),'ADMIN154_EXPLICIT_CATALOG_REQUIRED');
  need(hash(await readFile(resolve(data.root,ownPath)))===ownHash,'RUNNING_MODULE_DIFFERS');
  const bootstrapNetworkObservationSha256=await loadFresh35SyntheticBootstrapNetwork(target,s.sourceSetSha256);
  const original=await pinned(modelPath,MODEL_SHA),functions=await pinned(functionsPath,FUNCTIONS_SHA);
@@ -252,10 +252,21 @@ export async function buildFresh35Admin154Catalog(source,target,paths){
   descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
  await assertFresh35CombinedCatalogCurrent(token);return token;
 }
+/** One routine body changes; all table metadata, roles and ACLs are inherited. */
+export async function buildFresh35CompactZeroCatalog(source,target,paths){
+ const {base,candidate}=fresh35CompactZeroSourceData(source),s=describeFresh35CombinedSource(source),baseCatalog=await buildFresh35Admin154Catalog(base,target,paths),prior=catalogs.get(baseCatalog);
+ const model=structuredClone(prior.model),definitions=new Map(prior.definitions),bodies=new Map(prior.bodies);
+ need(candidate.changedBodies.length===1&&candidate.newRoutines.length===0&&candidate.manifest.permissionChanges.length===0,'COMPACT_ZERO_EXACT_DELTA_REQUIRED');
+ for(const change of candidate.manifest.routineChanges){const key=normal(change.signature),before=bodies.get(key),after=candidate.changedBodies.find(r=>normal(r.signature)===key)?.body;need(typeof before==='string'&&typeof after==='string'&&hash(before)===change.before&&hash(after)===change.after,'COMPACT_ZERO_EXACT_PREDECESSOR_REQUIRED');definitions.set(key,replacement(definitions.get(key),before,after));bodies.set(key,after);}
+ model.routines=model.routines.map(r=>({...r,definitionSha256:hash(definitions.get(normal(r.signature))),bodySha256:hash(bodies.get(normal(r.signature)))}));need(model.routines.length===154,'COMPACT_ZERO_EXACT154_REQUIRED');
+ const sql=guardSql(model,prior.lineage,target,{requireEmpty:false}),observation=observationSql(s),descriptor={...prior.descriptor,format:'FRESH35_COMPACT_ZERO_CATALOG_SPEC_V2',sourceSetSha256:s.sourceSetSha256,predecessorModelSha256:prior.descriptor.modelSha256,patchSqlSha256:candidate.manifest.patchSqlSha256,modelSha256:hash(JSON.stringify(model)),changes:candidate.manifest.routineChanges,permissionChanges:[],routineCount:154,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation)};delete descriptor.catalogSpecSha256;
+ const token=Object.freeze({profile:descriptor.format});catalogs.set(token,{...prior,source,model,definitions,bodies,sql,observation,baseCatalog,descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});await assertFresh35CombinedCatalogCurrent(token);return token;
+}
 export function fresh35Admin154PredecessorCatalogSql(catalog){
  describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.baseCatalog,'ADMIN154_CATALOG_REQUIRED');
  const base=catalogs.get(c.baseCatalog);return Object.freeze({guardSql:base.sql,observationSql:base.observation,descriptor:base.descriptor});
 }
+export function fresh35CompactZeroParentCatalog(catalog){describeFresh35CombinedCatalog(catalog);const c=catalogs.get(catalog);need(c.descriptor.format==='FRESH35_COMPACT_ZERO_CATALOG_SPEC_V2'&&c.baseCatalog,'COMPACT_ZERO_CATALOG_REQUIRED');return c.baseCatalog;}
 /** Current controller epoch is supplied only by the fixed protected-service
  * loader. The old installation observer remains unchanged historical metadata. */
 export function fresh35Admin154ControllerCatalogSql(catalog,source,target,postmasterStart,expiresAt){
