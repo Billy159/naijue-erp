@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T17:59:15+08:00",
+  "updatedAt": "2026-11-11T19:41:25+08:00",
   "stage": "R3_STOPPED_RECOVERY08_BOUNDED_TRANSFER_AUTHORIZED_ZERO_V2_WIP",
   "lastVerifiedRemoteCommit": "70a7b79639d64d7a3e9c7b677067b98f62648d60",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -45055,7 +45055,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T17:59:15+08:00",
+    "updatedAt": "2026-11-11T19:41:25+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
     "currentTarget": "SAME_R3_STOPPED;SINGLE_SYNTHETIC_PG_VERIFICATION_PREPARING",
     "owners": {
@@ -45067,7 +45067,7 @@
       "C": "actual receipt adoption, finite originals under standing authorization,existing3docs/public status"
     },
     "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
-    "next": "T45 completes exact single synthetic PG outer/material; C binds first original then actual physical install descriptor. D1/QB finish affected 3phase entry models in parallel; no second APP build or data cleaning.",
+    "next": "T45 original materialize01 terminal+readback; C native20min original;real descriptor then exact install original",
     "inventorySimplification": "760730 proofs canceled;source/offline fullpackage/build/serverarchive PASS;real PG and R3 business untested"
   },
   "inventoryBaselineScopeSimplification20261111": {
@@ -45149,7 +45149,7 @@
       "priorRun01": "exit1/64issues/index2196480000B retained;only29metadata pins and3price scale strings corrected,numeric values unchanged",
       "physicalCommonExportInstantClaimed": false
     },
-    "updatedAt": "2026-11-11T17:59:15+08:00",
+    "updatedAt": "2026-11-11T19:41:25+08:00",
     "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
     "independentReview": {
       "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
@@ -45228,10 +45228,23 @@
     "privatePgCarrier": {
       "sourceCommit": "894e82f83aaa7e30b92ed3cd9c78b79b6752fb6a",
       "resultSha256": "1ec9e9e9ef9c2b4447a25226b37a28a619a2173a179e90c8e9bce309e5795e30",
-      "status": "PASS_SOURCE_PRIVATE_POST_INSTALL_ONLY_NOT_EXECUTION_READY",
+      "status": "SOURCE_OUTER_STATIC_AND_SEAMS_PASS_PRESTAGE_ORIGINAL_ISSUED_NOT_PG_STARTED",
       "tests": 6,
       "newServerActions": 0,
-      "next": "T45 freezes exact outer container/material/authorization closure;C binds reviewed original;then original single synthetic PG execution"
+      "next": "T45 original materialize01 terminal+readback; C native20min original;real descriptor then exact install original",
+      "outerSourceCommit": "c4183329519a8a662e25aa6a98029885edc71def",
+      "outerSourceTree": "6685be362321d5a4150f6d3de0b4efb2712a4167",
+      "outerReadyR2Sha256": "3fe1b7da27dd44b57876a5b9127bc2eda84d8bb640e955551c1dcfbbb14eb129",
+      "outerQASha256": "7193c48a7f723515c924e3bd78845dcd5511e10eacca2f43cbdcbfd287e1304c",
+      "fixedStaticFiles": 21,
+      "allStaticPinsVerifiedByC": true,
+      "prestageOriginalSha256": "9f86b00bc092558d734c465ce4a476b88920a38389aa224bf57faf282e1bcbec",
+      "prestageStartsAt": 1794397113160,
+      "prestageExpiresAt": 1794398913160,
+      "prestageScope": "Only original materialize01 new nonsecret source;no container/PG/roles;then actual readback before20min original",
+      "private152SourceSha256": "ade6b6a24d042cb432425a19d53d75de99bf35a96b63148d69f3959e8db0af6a",
+      "expectedDeploymentSha256": "669fda14e6e9e5df645766ace11b2d9ed80829ca1d65eecbcad69894961887cf",
+      "actualPG": "NOT_EXECUTED"
     },
     "maintenanceSuccessor": {
       "branch": "codex/d1-baseline-scope-maintenance-20261111",
@@ -45241,10 +45254,12 @@
       "F01ResultSha256": "ae94d9b8eaa0953d2bb0040b800bb1f8ce2f1acbaf535d25055fc6275014f586",
       "entryDifferenceResultSha256": "41cd92bc612203e01bb05f05945ce4a4589b6fbcd264aff033e8b2219001d128",
       "entryTestsCommit": "0ec16d304a5579cee3d870cc9608f9f3320da3f5",
-      "entryTestsState": "AUTHOR_MODEL_PASS_PENDING_INDEPENDENT_INCREMENT;no production source changed",
+      "entryTestsState": "QB_TWO_LOCAL_MODEL_GROUPS_PASS_NOT_ACTUAL_MAINTENANCE",
       "minimumThreePhaseBudgetSeconds": 1895,
       "old28MinuteWindowReusable": false,
-      "actualMaintenance": "NOT_EXECUTED"
+      "actualMaintenance": "NOT_EXECUTED",
+      "entryTestsResultSha256": "88a806aaa97a19c10d525a34437b974e94f09f4a517434da31b1d90ba5e295c8",
+      "entryTestsRemoteCommitByOwner": "0ec16d304a5579cee3d870cc9608f9f3320da3f5"
     }
   }
 }
