@@ -130,10 +130,22 @@ async function runUpgrade(p,j,m){
  return result;
 }
 
+const currentReadFailed='ADMIN154_DRIVER_PREPARATION_CURRENT06_READ_FAILED';
+const currentReadErrnos=new Set(['EACCES','EPERM','ENOENT','ENOTDIR','ELOOP','EIO','ESTALE']);
+async function readCurrentStep(step,read){
+ try{return await read();}catch(error){
+  if(safeCode(error,null))throw error;
+  const code=error&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'code')?.value:null;
+  const errno=currentReadErrnos.has(code)?code:'UNCLASSIFIED';
+  throw Error(`${currentReadFailed}_${step}_${errno}`);
+ }
+}
 async function readCurrentService(p,window,m){
- const proof=await protectedBytes(PROOF),alias=await protectedBytes(HOST_PROOF);need(proof.sha256===p.currentService.sha256&&alias.sha256===proof.sha256,'CURRENT06_PROOF_ALIAS_DIFFERS');
+ const proof=await readCurrentStep('PROOF',()=>protectedBytes(PROOF));
+ const alias=await readCurrentStep('ALIAS',()=>protectedBytes(HOST_PROOF));
+ need(proof.sha256===p.currentService.sha256&&alias.sha256===proof.sha256,'CURRENT06_PROOF_ALIAS_DIFFERS');
  const value=freeze(m.parse(proof.bytes.toString('utf8')));validateProof(value,window,m.validateInstant);
- const ns=await stat('/proc/self/ns/net',{bigint:true}),expected=value.sharedPostgresNamespace.container.networkNamespace;
+ const ns=await readCurrentStep('PROC_STAT',()=>stat('/proc/self/ns/net',{bigint:true})),expected=value.sharedPostgresNamespace.container.networkNamespace;
  need(expected&&ns.dev===BigInt(expected.device)&&ns.ino===BigInt(expected.inode),'CURRENT06_NAMESPACE_DIFFERS');return {proof,alias,value};
 }
 async function runtimeModules(uid){
@@ -143,6 +155,23 @@ async function runtimeModules(uid){
  await trust.assertTrustedRootTree(SOURCE);await trust.assertTrustedRootPath(ownPath);await trust.assertTrustedRootPath(process.execPath);
  const {requestHash}=await moduleAt('packages/application/src/request-hash.ts');
  return {trust,parse:contract.parseStrictJson,validateInstant:contract.validateOffsetInstant,requestHash};
+}
+function preparationWindow(window){
+ const value={...window};
+ need(keys(value,['startsAt','expiresAt'])&&Number.isSafeInteger(value.startsAt)&&Number.isSafeInteger(value.expiresAt)&&value.startsAt<value.expiresAt&&Date.now()<value.expiresAt-45000,'EXPLICIT_PREPARATION_WINDOW_REQUIRED');
+ return value;
+}
+
+/** Exercise the ordinary worker's fixed proof read without a private packet. */
+export async function verifyFresh35Admin154CurrentServiceProof(proofSha256,window){
+ let fallback='ADMIN154_DRIVER_PREPARATION_RUNTIME_OR_PACKET_FAILED';
+ try{
+  need(digest(proofSha256),'CURRENT06_PROOF_REQUIRED');
+  window=preparationWindow(window);
+  const m=await runtimeModules(WORKER_ID);
+  fallback=currentReadFailed;
+  await readCurrentService({currentService:{sha256:proofSha256}},window,m);
+ }catch(error){throw Error(safeCode(error,fallback));}
 }
 async function packetModules(rawInput){
  need(Buffer.isBuffer(rawInput)&&rawInput.length>0&&rawInput.length<=65536,'PRIVATE_INPUT_BOUND');
@@ -179,11 +208,10 @@ async function preparationBinding(p,window,proof,m){
 export async function describeFresh35Admin154MaintenancePreparation(rawInput,window){
  let fallback='ADMIN154_DRIVER_PREPARATION_METADATA_FAILED';
  try{
- need(Buffer.isBuffer(rawInput)&&rawInput.length>0&&rawInput.length<=65536,'PRIVATE_INPUT_BOUND');rawInput=Buffer.from(rawInput);window={...window};
- need(keys(window,['startsAt','expiresAt'])&&Number.isSafeInteger(window.startsAt)&&Number.isSafeInteger(window.expiresAt)&&window.startsAt<window.expiresAt&&Date.now()<window.expiresAt-45000,'EXPLICIT_PREPARATION_WINDOW_REQUIRED');
+ need(Buffer.isBuffer(rawInput)&&rawInput.length>0&&rawInput.length<=65536,'PRIVATE_INPUT_BOUND');rawInput=Buffer.from(rawInput);window=preparationWindow(window);
  fallback='ADMIN154_DRIVER_PREPARATION_RUNTIME_OR_PACKET_FAILED';
  const {p,m}=await packetModules(rawInput);
- fallback='ADMIN154_DRIVER_PREPARATION_CURRENT06_READ_FAILED';
+ fallback=currentReadFailed;
  const {value:proof}=await readCurrentService(p,window,m);
  fallback='ADMIN154_DRIVER_PREPARATION_BINDING_FAILED';
  const binding=await preparationBinding(p,window,proof,m);

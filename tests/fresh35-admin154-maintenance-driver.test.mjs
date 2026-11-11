@@ -53,10 +53,14 @@ async function fixture(phase='UPGRADE'){
  const isGroup=p=>p===${JSON.stringify(operation)}||[${JSON.stringify(sidecar)},${JSON.stringify(control)}].some(d=>p===d||p.startsWith(d+'/'));
  const root=(s,p)=>Object.create(s,{uid:{value:0n},gid:{value:isGroup(p)?10001n:0n}});let watched=null,made=false,fail=false;export const order=[];
  export function observe(path,injectFailure){watched=path;made=false;fail=injectFailure;order.length=0;}
- export const realpath=fs.realpath,readdir=fs.readdir,readFile=fs.readFile;
+ let fault;
+ export function failProofRead(path,code){fault=path?{path,code}:undefined;}
+ function checkRead(path){if(fault?.path===path)throw Object.assign(Error('SYNTHETIC_PRIVATE_FS_ERROR'),{code:fault.code,path});}
+ export async function realpath(p){checkRead(p);return fs.realpath(p);}
+ export const readdir=fs.readdir,readFile=fs.readFile;
  export async function mkdir(p,o){await fs.mkdir(p,o);if(p===watched+'/events'){made=true;order.push('EVENTS_MKDIR');}}
  export async function lstat(p,o){return root(await fs.lstat(p,o),p)}
- export async function stat(p,o){if(p==='/proc/self/ns/net')return{dev:4n,ino:5n};return root(await fs.stat(p,o),p)}
+ export async function stat(p,o){checkRead(p);if(p==='/proc/self/ns/net')return{dev:4n,ino:5n};return root(await fs.stat(p,o),p)}
  export async function open(p,f,m){if(watched&&p.startsWith(watched+'/events/'))order.push('EVENT_OPEN');const h=await fs.open(p,f,m);return{stat:async o=>root(await h.stat(o),p),read:(...a)=>h.read(...a),write:(...a)=>h.write(...a),writeFile:(...a)=>h.writeFile(...a),async sync(){if(p===watched){order.push(made?'PARENT_SYNC_AFTER_MKDIR':'PARENT_SYNC_BEFORE_MKDIR');if(made&&fail)throw Error('MODEL_PARENT_SYNC_FAILED');}await h.sync();},close:()=>h.close()}}
  `);const ioAPI=await import(io);
  let source=text.replace("'node:fs/promises'",JSON.stringify(io)).replaceAll('import.meta.url',JSON.stringify(pathToFileURL(own).href));
@@ -78,7 +82,7 @@ async function fixture(phase='UPGRADE'){
   const bytes=Buffer.from(JSON.stringify(a));await fs.writeFile(authPath,bytes,{mode:0o400});return {inputSha:hash(raw),authorizationSha:hash(bytes),a};
  };
  const custody=a=>api.serveCustody(Buffer.from(JSON.stringify({phase,inputSha256:a.inputSha,currentServiceSha256:packet.currentService.sha256,authorizationSha256:a.authorizationSha}))).catch(error=>error);
- return {ctx,api,job,raw,proofPath,alias,authPath,recordPath,recordRaw,authorize,custody,observeParent:fail=>{ioAPI.observe(job,fail);ctx.order=ioAPI.order;return ioAPI.order;},async run(a){const root=custody(a);const result=await api.runMaintenanceDriver(raw,a.inputSha,a.authorizationSha);await root;return result;},close:()=>fs.rm(dir,{recursive:true,force:true})};
+ return {ctx,api,job,raw,proofPath,alias,authPath,recordPath,recordRaw,authorize,custody,failProofRead:ioAPI.failProofRead,observeParent:fail=>{ioAPI.observe(job,fail);ctx.order=ioAPI.order;return ioAPI.order;},async run(a){const root=custody(a);const result=await api.runMaintenanceDriver(raw,a.inputSha,a.authorizationSha);await root;return result;},close:()=>fs.rm(dir,{recursive:true,force:true})};
 }
 test('maintenance preparation reads actual protected model metadata without pg, claim, events, authority or secret output',async()=>{
  for(const phase of ['UPGRADE','ADMIN_PROVISION_ONLY']){const f=await fixture(phase);try{
@@ -86,6 +90,25 @@ test('maintenance preparation reads actual protected model metadata without pg, 
   assert.deepEqual(meta.binding,phase==='UPGRADE'?f.ctx.binding:f.ctx.aBinding);assert.equal(f.ctx.requireCalls,0);assert.equal(f.ctx.clients.length,0);assert.equal(f.ctx.aCalls,0);assert.equal(f.ctx.authorityLoads,0);assert.deepEqual(await fs.readdir(f.job),[]);
   assert(!JSON.stringify(meta).includes(f.ctx.packet.connection.password));assert(!JSON.stringify(meta).includes(f.ctx.packet.encodedScrypt??'UNUSED_PRIVATE_VALUE'));
  }finally{await f.close();}}
+});
+test('maintenance proof probe and DESCRIBE share bounded system diagnostics and preserve validation refusals',async()=>{
+ const f=await fixture();try{
+  const verify=(sha=f.ctx.packet.currentService.sha256)=>f.api.verifyFresh35Admin154CurrentServiceProof(sha,f.ctx.window);
+  const describe=()=>f.api.describeFresh35Admin154MaintenancePreparation(f.raw,f.ctx.window);
+  assert.equal(await verify(),undefined);
+  await assert.rejects(verify('0'.repeat(64)),{message:'ADMIN154_DRIVER_CURRENT06_PROOF_ALIAS_DIFFERS'});
+  for(const [path,errno,suffix] of [[f.proofPath,'ENOENT','PROOF_ENOENT'],[f.alias,'EACCES','ALIAS_EACCES'],
+   ['/proc/self/ns/net','EPERM','PROC_STAT_EPERM'],[f.alias,'SYNTHETIC_PRIVATE_ERRNO','ALIAS_UNCLASSIFIED']]){
+   f.failProofRead(path,errno);
+   const message=`ADMIN154_DRIVER_PREPARATION_CURRENT06_READ_FAILED_${suffix}`;
+   for(const run of [verify,describe])await assert.rejects(run(),error=>{
+    assert.equal(error.message,message);assert.equal(error.cause,undefined);assert.equal(error.path,undefined);return true;
+   });
+  }
+  f.failProofRead();await fs.chmod(f.proofPath,0o664);
+  await assert.rejects(verify(),{message:'ADMIN154_DRIVER_PROTECTED_INPUT_REQUIRED'});
+  assert.equal(f.ctx.requireCalls,0);assert.equal(f.ctx.clients.length,0);assert.deepEqual(await fs.readdir(f.job),[]);
+ }finally{await f.close();}
 });
 test('maintenance upgrade consumes one exact authority, fsyncs readable event chain and never replays the same job',async()=>{
  const f=await fixture();try{const a=await f.authorize(),r=await f.run(a);assert.equal(r.state,'COMMITTED_UNPUBLISHED');assert.equal(r.catalogReadback,'VERIFIED');assert.equal(f.ctx.clients.length,2);assert.equal(f.ctx.closed.length,2);
