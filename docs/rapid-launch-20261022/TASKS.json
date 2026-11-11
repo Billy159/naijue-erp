@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T19:41:25+08:00",
+  "updatedAt": "2026-11-11T20:57:44+08:00",
   "stage": "R3_STOPPED_RECOVERY08_BOUNDED_TRANSFER_AUTHORIZED_ZERO_V2_WIP",
   "lastVerifiedRemoteCommit": "70a7b79639d64d7a3e9c7b677067b98f62648d60",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -45055,9 +45055,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T19:41:25+08:00",
+    "updatedAt": "2026-11-11T20:57:44+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-    "currentTarget": "SAME_R3_STOPPED;SINGLE_SYNTHETIC_PG_VERIFICATION_PREPARING",
+    "currentTarget": "R3_STOPPED;SYNTHETIC_START01_FAILED_BEFORE_INSTALL_AND_CLEAN_STOP",
     "owners": {
       "T45": "transfer/restore complete;exact synthetic PG outer/material and separate3phase consumer;sole server executor",
       "D1": "APP3426 fixed;maintenance6d46 published;entry tests0ec16 fixed pending QB",
@@ -45067,11 +45067,11 @@
       "C": "actual receipt adoption, finite originals under standing authorization,existing3docs/public status"
     },
     "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
-    "next": "T45 original materialize01 terminal+readback; C native20min original;real descriptor then exact install original",
-    "inventorySimplification": "760730 proofs canceled;source/offline fullpackage/build/serverarchive PASS;real PG and R3 business untested"
+    "next": "D1 fixed new cold import/closure -> QB narrow check -> D2 unique replacement build -> T45 affected successor PG validation",
+    "inventorySimplification": "760730 proofs canceled; offline ready-r2 intact; first real PG stopped preinstall due entry loader blocker, not business test completed"
   },
   "inventoryBaselineScopeSimplification20261111": {
-    "status": "SOURCE_INDEPENDENT_PASS_FULL_OFFLINE_PACKAGE_PASS_BUILD_PASS_REAL_PG_PENDING",
+    "status": "SPARSE_SCOPE_SOURCE_AND_DATA_PREFLIGHT_COMPLETE_PREINSTALL_COLD_ENTRY_BLOCKER_UNDER_FIX",
     "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
     "authority": "Direct current user request in controller: simplify inventory traceability; no per-zero warehouse/SKU proof; correct covered absence=zero, outside/unknown not zero.",
     "supersedes": "Pending per-zero V2/Merkle generation and SQL37 rollout for current batch; preserve all fixed source/artifacts/evidence, no table deletion.",
@@ -45110,7 +45110,7 @@
     ],
     "old221Artifact": "PRESERVED_STAGE_ONLY_NOT_UPLOAD_OR_DB_EXECUTION",
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
-    "actualNewSQLOrPGTests": "SOURCE_AND_MODEL_ONLY_NO_SQL_OR_REAL_PG_EXECUTION",
+    "actualNewSQLOrPGTests": "ISOLATED_PG_BOOTED_THEN_PREINSTALL_OBSERVER_DESCRIPTION_FAILED; NO_SQL36_38_IMPORT_OR_BUSINESS_TESTS; CLEANUP_CONFIRMED",
     "rolloutTimeImpact": "Avoids approximately2GB planned zero output and760730 key operations; implementation and real PG time not measured, no completion ETA promised.",
     "next": "T45 completes exact single synthetic PG outer/material; C binds first original then actual physical install descriptor. D1/QB finish affected 3phase entry models in parallel; no second APP build or data cleaning.",
     "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
@@ -45149,7 +45149,7 @@
       "priorRun01": "exit1/64issues/index2196480000B retained;only29metadata pins and3price scale strings corrected,numeric values unchanged",
       "physicalCommonExportInstantClaimed": false
     },
-    "updatedAt": "2026-11-11T19:41:25+08:00",
+    "updatedAt": "2026-11-11T20:57:44+08:00",
     "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
     "independentReview": {
       "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
@@ -45220,7 +45220,7 @@
       "archiveBytes": 3410598,
       "manifestSha256": "380713e3a0f6fb5e01bfcf1c6af26229542a1b5ada8d96525eae0221dac92096",
       "manifestBytes": 509832,
-      "status": "ACTUAL_SERVER_ARCHIVE_READY_461_MEMBERS_VERIFIED_NOT_APP_STARTED",
+      "status": "ACTUAL_ARCHIVE_READY_BUT_BLOCKED_BY_COLD_INSTALL_ENTRY_FAILURE",
       "buildRuns": 1,
       "packRuns": 1,
       "uploaded": true
@@ -45231,7 +45231,7 @@
       "status": "SOURCE_OUTER_STATIC_AND_SEAMS_PASS_PRESTAGE_ORIGINAL_ISSUED_NOT_PG_STARTED",
       "tests": 6,
       "newServerActions": 0,
-      "next": "T45 original materialize01 terminal+readback; C native20min original;real descriptor then exact install original",
+      "next": "D1 fixed new cold import/closure -> QB narrow check -> D2 unique replacement build -> T45 affected successor PG validation",
       "outerSourceCommit": "c4183329519a8a662e25aa6a98029885edc71def",
       "outerSourceTree": "6685be362321d5a4150f6d3de0b4efb2712a4167",
       "outerReadyR2Sha256": "3fe1b7da27dd44b57876a5b9127bc2eda84d8bb640e955551c1dcfbbb14eb129",
@@ -45244,7 +45244,17 @@
       "prestageScope": "Only original materialize01 new nonsecret source;no container/PG/roles;then actual readback before20min original",
       "private152SourceSha256": "ade6b6a24d042cb432425a19d53d75de99bf35a96b63148d69f3959e8db0af6a",
       "expectedDeploymentSha256": "669fda14e6e9e5df645766ace11b2d9ed80829ca1d65eecbcad69894961887cf",
-      "actualPG": "NOT_EXECUTED"
+      "actualPG": "START01_PREINSTALL_FAILED_AND_CLEAN_STOP; not business PG pass",
+      "prestageResultSha256": "934e308b2f4c8ca3ad18d6135a422cbd9a092d3c4346945082442d4344328815",
+      "prestageReadbackSha256": "922045467fdec36ac415ea00e8db6188f65c9193bb433d3bdd10d6dfc9910930",
+      "nativeOriginalSha256": "8d237585e17e6426d84c4c1b63a38ebb6397c54e35bf142641772615db79020e",
+      "nativeResultSha256": "046b0c678f48b5a5b69f6c59418f81e1aa93f51da02395ed1fbea7c2e7eeaaab",
+      "firstError": "FRESH35_ISOLATED_BOOTSTRAP_OBSERVER_DESCRIPTION_FAILED",
+      "nativeChildError": "UNKNOWN_ORIGINAL_STDERR_NOT_RETAINED",
+      "installOriginalIssued": false,
+      "installOrBusinessExecuted": false,
+      "cleanupVerified": true,
+      "originalReplayAllowed": false
     },
     "maintenanceSuccessor": {
       "branch": "codex/d1-baseline-scope-maintenance-20261111",
@@ -45260,6 +45270,17 @@
       "actualMaintenance": "NOT_EXECUTED",
       "entryTestsResultSha256": "88a806aaa97a19c10d525a34437b974e94f09f4a517434da31b1d90ba5e295c8",
       "entryTestsRemoteCommitByOwner": "0ec16d304a5579cee3d870cc9608f9f3320da3f5"
+    },
+    "entryCycleSuccessor": {
+      "branch": "codex/d1-baseline-scope-entry-cycle-20261111",
+      "fixCommit": "76324ee56d042ab55e694f5fc9d91c22782016e6",
+      "parent": "3426eeec34df4bc40c503a5d4d1568ff3aadf954",
+      "reproduced": "same325 material, Node24.21.0, both isolated and production entry import before main ReferenceError STANDARD_IMPORT_PROTOCOL; exact Linux inner cause not retained",
+      "fixedLocalChecks": "D1 104 affected, root types; QB new9 cold+1 Source49 model PASS; no PG",
+      "closureBlocker": "actual old222 count rejects223, Admin154 219->220; C grants original D1 sole3-file release closure ownership on new branch only",
+      "closurePatchTemporary": "author4/4 affected tests pass, fixed successor/QB pending",
+      "dataAndSql": "ready-r2/preflight reused, original SQL36/38/35tables/154functions/9bodies/ACL and business contracts unchanged",
+      "newBuildNeeded": true
     }
   }
 }
