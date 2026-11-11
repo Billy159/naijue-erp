@@ -1,7 +1,7 @@
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {types} from 'node:util';
-import {explicitZeroApprovalDescriptor,explicitZeroApprovalCount,explicitZeroApproved} from '../../packages/application/src/unified-explicit-zero-approval.ts';
+import {hasInventoryApprovalDescriptor,explicitZeroApprovalDescriptor,explicitZeroApprovalCount,explicitZeroApproved} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import {parseStrictJson} from '../../packages/application/src/unified-import-contract.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
 /** Shared exclusive wire state machine. Fixed hosts own record and catalog admission. */
@@ -29,7 +29,7 @@ export async function withReviewedWholeSession(client,spec,reviewed,target,work,
 async function runWholeSession(client,spec,reviewed,target,work,verifyCatalog,profile,trustedPhysical,options={}){
  const fresh35=['FRESH35_RETIRED152_V1','FRESH35_A53_ADMIN154_V1','FRESH35_COMPACT_ZERO_V2'].includes(profile);
  if(['FRESH35_A53_ADMIN154_V1','FRESH35_COMPACT_ZERO_V2'].includes(profile)&&(!trustedPhysical||typeof options.authorizedQuery!=='function'))throw Error('ADMIN154_FIXED_PHYSICAL_AUTHORIZED_HOST_REQUIRED');
- const approval=options.explicitZeroApproval;let descriptor;try{descriptor=approval&&explicitZeroApprovalCount(approval)?explicitZeroApprovalDescriptor(approval):null;if(descriptor?.format_version==='EXPLICIT_ZERO_SCOPE_MERKLE_V2'&&profile!=='FRESH35_COMPACT_ZERO_V2')throw Error('COMPACT_ZERO_EXPLICIT_HOST_PROFILE_REQUIRED');}catch(error){await closePhysical(client);throw error}
+ const approval=options.explicitZeroApproval;let descriptor;try{descriptor=approval&&hasInventoryApprovalDescriptor(approval)?explicitZeroApprovalDescriptor(approval):null;if(['EXPLICIT_ZERO_SCOPE_MERKLE_V2','INVENTORY_BASELINE_SCOPE_V1'].includes(descriptor?.format_version)&&profile!=='FRESH35_COMPACT_ZERO_V2')throw Error('COMPACT_ZERO_EXPLICIT_HOST_PROFILE_REQUIRED');}catch(error){await closePhysical(client);throw error}
  const checkApproval=(sql,values)=>{
   if(/^SELECT naijue_erp\.standard_whole_package_(inspect|prepare|verify)_v2\(/.test(sql)){
    const r=parseStrictJson(values?.[0]);if(requestHash(r?.payload?.explicit_zero_approval??null)!==requestHash(descriptor)||descriptor&&(r.namespace!==descriptor.source_namespace||r.cutoff_at!==descriptor.cutoff_at))throw Error('EXPLICIT_ZERO_APPROVAL_BINDING_INVALID');
