@@ -45312,7 +45312,11 @@
           "remaining": "T45 consumer, R3 proof/epoch, original admin request and role lifetime"
         },
         "appStaging02QA": "afed6f6928dcd3100a44051ad19134485265427a8da7c92a6fd2482ab9bd91ec",
-        "appStaging02": "EXACT_TRANSFER_ONLY_ORIGINAL_ISSUED; terminal and restore pending",
+        "appStaging02": "ACTUAL_READY_462_MEMBERS_ORIGINAL_POLICY_RESTORED_NO_APP_START",
+        "appStaging02ActualSha256": "7e730f2df6ef8496a9e2c889db27904db43fdf59a1fd3d404bc6756b81102d7a",
+        "appStaging02ReadbackSha256": "25758f2f7df3ff51a80b951a66d8766e8f6d373d1e8872207f3c5c0bb5e14c5b",
+        "isolated03ReadySha256": "231342efd745a0ecd6304ebbbefda5b9e21667c0d6853f9d0281649f704a7e3b",
+        "isolated03State": "MINIMUM_PINS_MODE_FIX_PENDING_INDEPENDENT_REVIEW_AND_ACTUAL_PRESTAGE",
         "appStaging02OriginalSha256": "58a97554877ac6319b799d020ac5341bdce72f6979fff36cc6234ac8ac1e83a7",
         "isolated02Terminal": {
           "installation": "ACTUAL_BASE_35_COMMITTED_AND_CATALOG_CHECKED",
