@@ -44634,7 +44634,13 @@
         "independentReadbackAt": "2026-11-11T07:22:17.783787+00:00",
         "activeConsumers": 0,
         "PGOrRoleOrAPPStarted": false,
-        "next": "T45 owns first rejection diagnosis and minimum transport correction; no writer replay."
+        "next": "Original T45 combines narrow guard fix with exact final221 bounded transfer; QB only affected increments; no known-failing full upload replay.",
+        "actual02ResultSHA256": "056a9cbadbdd3d1aec2f56f1ef53fe0760384c74332778f0cc9642cb8de142ab",
+        "readonlyReproductionCode": "RECOVERY08_CONSUMER_STATE_UNREADABLE",
+        "readonlyReproductionCause": "EACCES reading nonmatching same-UID process fd directory; original append stdout unavailable",
+        "source03": "8d865690c55167d6f81c92ae940066ed869d5234",
+        "source03IndependentResult": "NEED_FIX_ROOT_PER_FD_READLINK_EACCES_NOT_FAIL_CLOSED",
+        "old219Recovery03WindowIssued": false
       }
     }
   },
@@ -44948,12 +44954,41 @@
     "baselinePreserved": "eca7dd5 fixed package",
     "databaseEnvironmentActionsAuthorizedByThisConfirmation": false,
     "latestSource": {
-      "commit": "38dc8dcba69db1b00567640cca79aa07918eb218",
-      "tree": "0dbe5b45d57de0b35b8062bf1fa5a755e918d02c",
-      "status": "THREE_FIXES_AND_RELEASE_PROFILE_SOURCE_PASS_ONLY",
+      "commit": "dd1df9aa210990630fa6672e71699bfefeb2f0b0",
+      "tree": "93209672e99de0671459db48632c235e6e50dc37",
+      "status": "ORDINARY_APP_ENTRY_SOURCE_INCREMENT_PASS_LOCAL_BUILD_PACK_PASS",
       "QBResultSHA256": "9919c9460af0f3426769648d2fc538978e5d98a9f1aa3705890f00b938130139",
-      "ordinaryAPPEntry": "ORIGINAL_D1_UNIQUE_WRITER_IN_PROGRESS_NOT_INCLUDED_IN_38dc",
-      "next": "D1 fixes actual production admission entry, QB only affected increment, D2 one final build after fixed candidate."
+      "ordinaryAPPEntry": "SOURCE_PASS_NOT_ACTUAL_PG_ADMISSION",
+      "next": "D1 fixes actual production admission entry, QB only affected increment, D2 one final build after fixed candidate.",
+      "parent": "38dc8dcba69db1b00567640cca79aa07918eb218",
+      "ordinaryEntryQBResultSHA256": "c49c5f219385c7758427c51b1c7ce7b6e7d176b88b80362d7958fb6960353211",
+      "actualPostgreSQLVerified": false
+    },
+    "fixedBuild": {
+      "owner": "original D2",
+      "commit": "dd1df9aa210990630fa6672e71699bfefeb2f0b0",
+      "sourcePins": 221,
+      "sourceSet": "abb08760d92ceb9ec777e2f9378a0bf97eb6c46004e292586f4bfc390f2d7400",
+      "catalogSpec": "680d181d9b8527d493e3eac29ae3faf84c13f3e11cc2cf73487e35be919c5597",
+      "readySHA256": "068af5af8bc9745126cb243762d6ef21faa2857a0a1f54292189c2713e09584b",
+      "archiveBytes": 3400527,
+      "archiveSHA256": "db9941d4f6d8e93b7cfda4403ff3eb4bbd09bc4728867be58b361c02b1a882c8",
+      "manifestBytes": 509247,
+      "manifestSHA256": "518bbcc19b188d1e6de1be3934a47ec0c4f4b8c7bbd8a0aabe885c1940250984",
+      "classification": "LOCAL_BUILD_PACK_AND_ARCHIVE_READBACK_PASS_NOT_SERVER_READY",
+      "controllerConsumedHashes": true,
+      "serverUpload": false
+    },
+    "oneArtifactUpgrade": {
+      "handoffSHA256": "b3428b30a1fdb4e8e75c7b336973380675ca3608db07ae2928d2d87072fd3949",
+      "planSHA256": "3cf138bb64f1b81cae816960f3ac1895a52166748c6f503452c216a1fe606028",
+      "selectedByController": true,
+      "sequence": "ONE_FINAL221_ARTIFACT: SQL36_REAL_COMMIT -> INDEPENDENT154_READBACK_AND_PARENT_RECORD -> ADMIN_A -> SQL37_REAL_COMMIT -> INDEPENDENT_V2_READBACK",
+      "maintenanceAdapter": "original D1 Node driver/leaf in progress; original T45 Python follows receiver fix",
+      "old219ReceiverReadyIsNotArtificialPrerequisite": true,
+      "oldArtifactPartialPreserved": true,
+      "old165SecondBudgetCoversNew37": false,
+      "environmentExecution": false
     }
   },
   "currentHumanDataDirective20261111Barcode": {
@@ -44973,9 +45008,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T15:24:45+08:00",
+    "updatedAt": "2026-11-11T15:46:53+08:00",
     "sourceContractApproval": "RECORDED_NO_REPEAT_APPROVAL",
-    "currentTarget": "SAME_R3_INSTALLED35_LAST_DATABASE_CLEAN_STOP",
+    "currentTarget": "SAME_R3_INSTALLED35_STOPPED; FINAL221_LOCAL_BUILD_FIXED",
     "owners": {
       "T45": "transport diagnosis and actual server receipt",
       "D1": "V2 actual production entry and existing SQL/host fixes",
@@ -44984,6 +45019,7 @@
       "QB": "only affected increment",
       "C": "dependencies, authorization scope, compact current status and evidence index"
     },
-    "release": "NOT_READY_NO_IMPORT_NO_APP_SWITCH"
+    "release": "NOT_READY_NO_IMPORT_NO_APP_SWITCH",
+    "next": "D1 maintenance adapter, T45 final221 transfer and root guard fix, D3 final package in parallel; no PG or transfer window yet."
   }
 }
