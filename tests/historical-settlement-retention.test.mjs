@@ -1,3 +1,4 @@
+import '../tools/unified-import/stream-plan.mjs';
 import {readPinnedPackageForExecution} from '../tools/unified-import/execution-plan.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -57,4 +58,18 @@ test('approved25 initialization survives the original same-client coordinator; r
   assert.equal(result.state,mode==='replay'?'ALREADY_COMMITTED':mode==='normal'?'COMMITTED':'ROLLED_BACK');
   assert.equal(calls.filter(x=>x==='ROLLBACK').length,mode==='migration-rejected'||mode==='conflicting-replay'?1:0);assert.equal(calls.filter(x=>x==='COMMIT').length,mode==='normal'||mode==='replay'?1:0);if(mode.includes('replay'))assert.equal(writes,0);
  }
+});
+
+test('24/26 accepts only the fixed prior economic identity set; locators alone may change (explicit synthetic identity-anchor model)',async()=>{
+ const {value,input}=fixture(),v=structuredClone(value);v.documents.pop();
+ const {canonicalRequestValue}=await import('../packages/application/src/canonical-request-value.ts');
+ const economic=x=>({source_namespace:x.source_namespace,documents:x.documents.map(({source_refs,settlements,...d})=>({...d,settlements:settlements.map(({source_refs,...r})=>r).sort((a,b)=>a.fields.id.localeCompare(b.fields.id))})).sort((a,b)=>a.sales_id.localeCompare(b.sales_id))});
+ const anchor=sha256(canonicalRequestValue(economic(v))),url=new URL('../packages/application/src/unified-historical-settlement-retention.ts',import.meta.url),{stripTypeScriptTypes}=await import('node:module');
+ let source=await readFile(url,'utf8');source=source.replace(/const CURRENT_APPROVED_SUBSET_FACTS_SHA256='[a-f0-9]+';/,`const CURRENT_APPROVED_SUBSET_FACTS_SHA256='${anchor}';`);source=stripTypeScriptTypes(source,{mode:'transform'}).replace(/(['"])(\.\.?\/[^'"\n]+)\1/g,(_,q,path)=>JSON.stringify(new URL(path,url).href));
+ const api=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ const read=x=>{const bytes=Buffer.from(JSON.stringify(x));return api.readHistoricalSettlementRetentionApproval({...input,bytes,trustedSha256:sha256(bytes)});};
+ assert.throws(()=>readHistoricalSettlementRetentionApproval({...input,bytes:Buffer.from(JSON.stringify(v)),trustedSha256:sha256(JSON.stringify(v))}),/EXACT_SET/,'a different 24-fact set cannot self-authorize by recomputing its raw hash');
+ const a=read(v);assert.equal(a.documents.length,24);assert.equal(a.documents.reduce((n,d)=>n+d.settlements.length,0),26);
+ const relocated=structuredClone(v);relocated.documents[0].source_refs[0].row++;assert.equal(read(relocated).documents.length,24);
+ for(const mutate of [x=>x.documents[0].sales_id='11000000-0000-0000-0000-000000000001',x=>x.documents[0].net_due='17.00',x=>x.documents[0].settlements[0].fields.amount='1.01',x=>x.documents[0].settlements[0].fields.id='12000000-0000-0000-0000-000000000001']){const bad=structuredClone(v);mutate(bad);assert.throws(()=>read(bad));}
 });

@@ -29,7 +29,7 @@ function freeze<T>(x:T):T{if(x&&typeof x==='object'){Object.values(x).forEach(fr
 export function readHistoricalSettlementRetentionApproval(input:{bytes:Uint8Array;trustedSha256:string;sourceNamespace:string;sourceHashes:ReadonlySet<string>}):HistoricalSettlementRetentionApproval {
  if(input.bytes.byteLength<1||input.bytes.byteLength>4*1024*1024||!hash(input.trustedSha256)||createHash('sha256').update(input.bytes).digest('hex')!==input.trustedSha256)throw Error('HISTORICAL_SETTLEMENT_APPROVAL_HASH');
  const value=parseStrictJson(decodeUtf8(input.bytes));
- if(!closed(value,['format_version','source_namespace','evidence_sha256','documents'])||value.format_version!=='HISTORICAL_SETTLEMENT_RETENTION_V1'||!text(value.source_namespace)||value.source_namespace!==input.sourceNamespace||!hash(value.evidence_sha256)||!input.sourceHashes.has(value.evidence_sha256)||!Array.isArray(value.documents)||value.documents.length!==25)throw Error('HISTORICAL_SETTLEMENT_APPROVAL_SOURCE');
+ if(!closed(value,['format_version','source_namespace','evidence_sha256','documents'])||value.format_version!=='HISTORICAL_SETTLEMENT_RETENTION_V1'||!text(value.source_namespace)||value.source_namespace!==input.sourceNamespace||!hash(value.evidence_sha256)||!input.sourceHashes.has(value.evidence_sha256)||!Array.isArray(value.documents)||![24,25].includes(value.documents.length))throw Error('HISTORICAL_SETTLEMENT_APPROVAL_SOURCE');
  const documents=new Map<string,HistoricalSettlementRetentionDocument>(),keys=new Set<string>(),settlementIds=new Set<string>(),settlementKeys=new Set<string>();let usedEvidence=false,count=0;
  for(const d of value.documents){
   if(!closed(d,['sales_source_key','sales_id','source_refs','business_type','status','gross_amount','order_discount','net_due','settlements'])||!text(d.sales_source_key)||!uuid(d.sales_id)||!validRefs(d.source_refs,input.sourceHashes)||!['SALE','RETURN'].includes(String(d.business_type))||d.status!=='APPROVED'||!validateMoneyString(d.gross_amount)||!validateMoneyString(d.order_discount)||!validateMoneyString(d.net_due)||!Array.isArray(d.settlements)||d.settlements.length<1||documents.has(d.sales_id)||keys.has(d.sales_source_key))throw Error('HISTORICAL_SETTLEMENT_APPROVAL_DOCUMENT');
@@ -43,7 +43,10 @@ export function readHistoricalSettlementRetentionApproval(input:{bytes:Uint8Arra
   if(total===cents(d.net_due))throw Error('HISTORICAL_SETTLEMENT_DIFFERENCE_REQUIRED');
   keys.add(d.sales_source_key);documents.set(d.sales_id,d as unknown as HistoricalSettlementRetentionDocument);
  }
- if(count!==27||!usedEvidence)throw Error('HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED');
+ // Only the already-approved, still-unsettled subset may use the new shape.
+ // Locators may change with the current export; every economic/identity field
+ // remains the original approved fact. The external raw SHA is still mandatory.
+ if(count!==(value.documents.length===24?26:27)||!usedEvidence||(value.documents.length===24&&retainedSubsetFactsSha(value as unknown as HistoricalSettlementRetentionApproval)!==CURRENT_APPROVED_SUBSET_FACTS_SHA256))throw Error('HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED');
  freeze(value);verified.set(value,{utf8:decodeUtf8(input.bytes),sha256:input.trustedSha256,documents});return value as unknown as HistoricalSettlementRetentionApproval;
 }
 export function historicalSettlementRetentionMatchesSource(approval:HistoricalSettlementRetentionApproval,namespace:string,pins:ReadonlySet<string>):boolean {
@@ -56,4 +59,10 @@ export function historicalSettlementRetentionMatches(approval:HistoricalSettleme
  for(const key of ['business_type','status','gross_amount','order_discount','net_due'] as const)if(h.fields[key]!==d[key])return false;
  const actual=[...input.settlements].sort((a,b)=>Number(a.fields.line_no)-Number(b.fields.line_no));
  return actual.length===d.settlements.length&&actual.every((r,i)=>{const s=d.settlements[i]!;return r.source_key===s.source_key&&canonicalRequestValue(r.fields)===canonicalRequestValue(s.fields)&&refsKey(r.source_refs)===refsKey(s.source_refs)});
+}
+
+const CURRENT_APPROVED_SUBSET_FACTS_SHA256='e35826c61bfa12fb1934125393dd199104ad8d16cd5b6939089e9718edf2a1c0';
+function retainedSubsetFactsSha(value:HistoricalSettlementRetentionApproval):string {
+ const facts={source_namespace:value.source_namespace,documents:value.documents.map(({source_refs,settlements,...d})=>({...d,settlements:settlements.map(({source_refs,...r})=>r).sort((a,b)=>String(a.fields.id).localeCompare(String(b.fields.id)))})).sort((a,b)=>a.sales_id.localeCompare(b.sales_id))};
+ return createHash('sha256').update(canonicalRequestValue(facts)).digest('hex');
 }
