@@ -45,10 +45,10 @@ export async function native35Closure(sourceRoot,referenceDirectory,profile) {
       && p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'), 'NATIVE35_EXACT_ADMIN154_PATCH_REQUIRED');
   if(profile===native35CompactZeroSourceProfile)requireRelease(descriptor.currentSourcePins.length===223
     && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'&&p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b')
-    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql'&&p.sha256==='0170332f73c712073ef96425d4fe62936041df5272bac05d70e2da2b9ea3e89b')
+    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql'&&p.sha256==='b61b31b6116b3f0891dc4cd1f9182aa438d22ad987e29ac2ec73c04f72f5d0ba')
     && !descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0037_compact_zero_scope_successor.sql')
     && descriptor.routineChanges.length===9&&descriptor.routineChanges.some(r=>r.signature.includes('.standard_whole_package_command_v2(')&&r.before==='071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b'
-      &&r.after==='93e955c36f1bf5c15a4bc62dbe25073e78546726f00805c2a9f301e6f30d78b9'), 'NATIVE35_EXACT_BASELINE_SCOPE_PATCH_REQUIRED');
+      &&r.after==='4b31ea7398b4aae5fa6c91a9af2276258493cdccc9f72bfabe4aa12313b62c09'), 'NATIVE35_EXACT_BASELINE_SCOPE_PATCH_REQUIRED');
   for(const pin of descriptor.currentSourcePins){native35SourceName(pin.path);requireRelease(/^[a-f0-9]{64}$/.test(pin.sha256),'NATIVE35_SOURCE_PIN_REQUIRED');
     const fixture=native35Contract.fixturePins.find(p=>p.path===pin.path);if(fixture)requireRelease(fixture.sha256===pin.sha256,'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED');}
   return {...(profile!==native35DefaultSourceProfile?{sourceProfile:profile}:{}),sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};

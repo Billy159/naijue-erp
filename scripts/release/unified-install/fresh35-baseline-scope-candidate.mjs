@@ -94,7 +94,7 @@ ${before}   END IF;
     )
     SELECT (SELECT count(*) FROM actual),(SELECT count(*) FROM actual WHERE f->>'quantity'<>'0'),
      (SELECT encode(sha256(convert_to(coalesce(string_agg(format('{"warehouse_id":"%s","sku_id":"%s","quantity":"%s"}',f->>'warehouse_id',f->>'sku_id',f->>'quantity')||chr(10),'' ORDER BY f->>'warehouse_id' COLLATE "C",f->>'sku_id' COLLATE "C"),''),'UTF8')),'hex') FROM actual),
-     (SELECT jsonb_agg(jsonb_build_object('warehouse_id',target_id,'explicit_count',explicit_count,'nonzero_count',nonzero_count,'quantity',quantity) ORDER BY target_id) FROM totals)
+     (SELECT jsonb_agg(jsonb_build_object('warehouse_id',t.target_id,'explicit_count',t.explicit_count,'nonzero_count',t.nonzero_count,'quantity',t.quantity) ORDER BY t.target_id) FROM totals AS t)
      INTO zero_consumed,zero_unique,zero_hash,actual;
     IF zero_consumed IS DISTINCT FROM (zero_descriptor->'explicit_values'->>'count')::bigint OR zero_unique IS DISTINCT FROM (zero_descriptor->>'nonzero_count')::bigint
      OR zero_hash IS DISTINCT FROM zero_descriptor->'explicit_values'->>'records_sha256' OR actual IS DISTINCT FROM zero_descriptor->'warehouse_totals'

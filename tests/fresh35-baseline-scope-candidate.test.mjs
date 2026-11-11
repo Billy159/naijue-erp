@@ -10,6 +10,7 @@ test('SQL38 is deterministic directly from the SQL36 154-routine predecessor and
 test('complete membership, real explicit values and each warehouse total are checked before baseline publication',()=>{
  const command=c.changedBodies.find(r=>r.signature.includes('.standard_whole_package_command_v2(')).body;
  for(const marker of ['INVENTORY_BASELINE_SCOPE_MEMBERS_DIFFERS','INVENTORY_BASELINE_SCOPE_VALUES_OR_WAREHOUSE_TOTAL_DIFFERS','INVENTORY_SCOPE_REQUIRES_REAL_EXPLICIT_ROWS','FINAL_BASELINE_SCOPE_V1','records_sha256','warehouse_totals'])assert.ok(command.includes(marker));
+ assert.ok(command.includes("'quantity',t.quantity) ORDER BY t.target_id) FROM totals AS t)"));
  assert.ok(command.indexOf('INVENTORY_BASELINE_SCOPE_VALUES_OR_WAREHOUSE_TOTAL_DIFFERS')<command.indexOf("UPDATE naijue_erp.import_batch SET checkpoint=cp,status="));
  const proof=c.changedBodies.find(r=>r.signature.includes('.standard_inventory_key_proof(')).body;
  assert.match(proof,/FINAL_BASELINE_SCOPE_V1/);assert.match(proof,/native_creation_operation_valid/);assert.doesNotMatch(proof,/audit_change|warehouse_totals|explicit_values|merkle/);
