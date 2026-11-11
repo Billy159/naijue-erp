@@ -45294,7 +45294,25 @@
         "actualConfigStartup": "UNVERIFIED",
         "current": "T45 original owner prepares new isolated carrier, diagnostic capture and APP delivery inputs; D1 repins original R3 maintenance in parallel",
         "next": "QB checks changed carrier seams, then C binds T45 prestage and native validation to exact artifacts and target",
-        "newServerRun": "NOT_EXECUTED"
+        "newServerRun": "PRESTAGE02_EXIT_0; native START02 authorized, outcome pending",
+        "prestage02": {
+          "jobSha256": "2324fdd799b0a0c2625bf4f82d865b22f1c51b5500a004aa409efb85ce79504d",
+          "resultSha256": "59193a474e6935abe59662ed65260b6a2eeea130a15af8de2eb7a6ba2d2c6aee",
+          "independentSha256": "e2edf91ce381ae7d6248a71a63e148a6438ca576c7de5e33fb576d8b452f063c",
+          "elapsedSeconds": 16.518360774964094,
+          "deploymentManifestSha256": "4d2baa8189e6f75dce53b695b78bc51c19a8123e69f2acc525b5613838131c47",
+          "installApplied": false
+        },
+        "isolated02QA": "c0127f4083bb434ffc9a9e599251943f7dadc495cc74818558808a9268a3c4e0",
+        "isolated02Provision": "da0b8f4214397f95035b4ec47b269338fc01d6fc312eb1b7e2ade646a10e6f11",
+        "maintenance223": {
+          "commit": "60188b61a4f346a467b575201cd4c082e2067af9",
+          "remoteVerified": true,
+          "qbResult": "65b3626f1b8a10c1addf9bf3e5712e047906f9f900a21f86b9e139e7f0d37a8c",
+          "remaining": "T45 consumer, R3 proof/epoch, original admin request and role lifetime"
+        },
+        "appStaging02QA": "afed6f6928dcd3100a44051ad19134485265427a8da7c92a6fd2482ab9bd91ec",
+        "appStaging02": "READY_FOR_BOUNDED_TRANSFER_ONLY; scheduled after current isolated window"
       }
     }
   }
