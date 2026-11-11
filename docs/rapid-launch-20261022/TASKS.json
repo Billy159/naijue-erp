@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T10:47:30+08:00",
+  "updatedAt": "2026-11-11T11:06:15+08:00",
   "stage": "R3_STOPPED_SUCCESSOR06_SOURCE_AND_05_APP_BINDING_PENDING",
   "lastVerifiedRemoteCommit": "251090b8ff3012837228029bedcaec46a8e8b34a",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,14 +1786,14 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T10:47:30+08:00",
+    "asOf": "2026-11-11T11:04:51+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "916fe88a72b1aa1acd816e500cb9610116c63b25",
+    "publicStatusCommit": "262f0b0cf20abd406974c5963f20bdf8bfc353bb",
     "currentOwners": {
       "T45": "Actual02 proof comparison and cleanup passed; reviewed single-inode traversal repair and APP07 staging in progress, then exact07 bindings.",
       "D1": "Fixed15278 maintenance07 accepted; assist only actual remaining seams, do not repeat tests.",
@@ -1951,7 +1951,7 @@
       }
     },
     "controllerRecordsRemote": "a790e308e0129974edd46db49958630ad3d0dbe6",
-    "publicStatusSha256": "a7b840952f788c02c8af50ce3d8465fcc7521d43ffb8e80ded7921ca1a5ff4c4",
+    "publicStatusSha256": "434bf6539c0f01f07e00b15618893bc145c7e279849f5b804d95984c68ec5bee",
     "nextStartupGaps": {
       "sameDataGeneration": "Initial proof binds old PG birth; existing recovery path requires custody/STOP not established. Preserve original record, require authentic new generation, no source/proof forgery.",
       "linuxDependencies": "CLOSED_ACTUAL_LOCKED_LINUX_CI_AND_THREE_MODULE_LOAD; APP not started.",
@@ -2627,7 +2627,7 @@
       "sha256": "e4a0737a4bc8a457af037b7cb7d0025fcc78edf05c59ee83edc3772055a0a02b",
       "expiresAt": "2026-11-11T11:15:12.049+08:00",
       "scope": "ONE_IMMUTABLE_APP_TRANSFER_AND_ORIGINAL_POLICY_RESTORE_ONLY",
-      "state": "DELIVERED_TO_ORIGINAL_T45_NOT_ACTUAL_UPLOAD_PASS"
+      "state": "ACTUAL_READY_AND_ORIGINAL_POLICY_RESTORED_NOT_APP_STARTED"
     }
   },
   "operationalState": {
@@ -44436,8 +44436,40 @@
       "resultSha256": "25aec54822da1884b00fc4ab05c48525cb14694e85f534e542addf3112ff8cbc",
       "readySha256": "dda4793c386d8f4de4c851822fe818419301e5c7707a46e6f4bc6ef73303ac5f",
       "controllerVerifiedFiles": 6,
-      "uploaded": false,
-      "started": false
+      "uploaded": true,
+      "started": false,
+      "receiverReadySHA256": "c748463e0b95d2c9d976b64d8ba1fa92b9a36aa09c1afeb2fbe23c7688bded11",
+      "serverReceiptSHA256": "44ea943a9f56a21a58f1d6cc82f294f06f84c2bae941639aee8c300fcbf45737",
+      "policyRestored": true,
+      "independentPostReadbackSHA256": "ddca8564850de28ef9842655e1b1977296317b4d66ab4e2070b200ad27c1144e"
     }
+  },
+  "freshDataRefresh20261111": {
+    "authority": "Latest direct user request: compare November11 10:00 export and update upload data package. Stable identity decisions apply only to proven same identity; older batch-specific quantities and zero coverage do not transfer automatically.",
+    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/T+数据2026年11月11日10：00/",
+    "sourceFiles": 6,
+    "ZIPMembers": 46,
+    "ignored": [
+      ".DS_Store"
+    ],
+    "privateSourceInventory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261111-1000/intake/source-inventory.private.json",
+    "oldCompletePackage": "work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/v0448-final-merge-D3-51/r3/package",
+    "oldManifestSHA256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
+    "newPrivateRoot": "work/local-takeover-20261021-private-data/unified-cleaning-20261111-1000",
+    "owners": {
+      "D2": "masters ONLY; original chat01a161d2-6956-7672-9ce0-1c5ca4b52853; gpt-6.1-terra/medium explicitly dispatched",
+      "D3": "intake/documents/inventory/package and sole final manifest; original chat01a161d2-6712-7691-80af-5d2fa6a30fab; gpt-6.1-terra/medium explicitly dispatched",
+      "T45": "R3/APP preparation continues; no real import until exact new verified input",
+      "C": "Existing three records and coordination only"
+    },
+    "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+    "status": "MASTERS_INVENTORY_TRANSFER_CONTINUE_SALES_WAITING_USER_REEXPORT",
+    "confirmedSalesGap": "New sales workbook is single sheet12 header-summary columns, without products, quantities, per-line money or settlement-account fields.46ZIP entries contain no sales-detail/settlement exports. Do not substitute old detail as new facts.",
+    "timeLabel": "2026-11-11 10:00 CST is supplied batch label; complete shared cutoff pending evidence.",
+    "serverWrites": 0,
+    "oldPackageOverwritten": false,
+    "realDataGitUpload": false,
+    "privateSourceInventorySHA256": "2703107d38a8309066815d14fc28e9510c2a08ad95aba800fd9141a00853cde5",
+    "salesState": "USER_PAUSED_WAITING_REPLACEMENT_EXPORT_DO_NOT_READ_MUTATING_FILE"
   }
 }
