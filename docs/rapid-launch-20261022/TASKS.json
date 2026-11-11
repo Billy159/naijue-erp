@@ -45067,10 +45067,11 @@
       "C": "dependencies, authorization scope, compact current status and evidence index"
     },
     "release": "NOT_READY_NO_IMPORT_NO_APP_SWITCH",
-    "next": "D1 implements simplified dependencies; D3 binds materialized standard data; T45 receiver and accurate synthetic PG preparation; no old37 rollout."
+    "next": "D1 implements simplified dependencies; D3 binds materialized standard data; T45 receiver and accurate synthetic PG preparation; no old37 rollout.",
+    "inventorySimplification": "d4f17a04 source fixed;author checks pass;QB/ordinaryPG pending;760730 per-zero proofs canceled;no new tables/privileges"
   },
   "inventoryBaselineScopeSimplification20261111": {
-    "status": "USER_APPROVED_IMPLEMENTATION_EXISTING_D1_IN_PROGRESS",
+    "status": "SOURCE_FIXED_AUTHOR_DIRECTED_CHECKS_PASSED_INDEPENDENT_REVIEW_AND_REAL_PG_PENDING",
     "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
     "authority": "Direct current user request in controller: simplify inventory traceability; no per-zero warehouse/SKU proof; correct covered absence=zero, outside/unknown not zero.",
     "supersedes": "Pending per-zero V2/Merkle generation and SQL37 rollout for current batch; preserve all fixed source/artifacts/evidence, no table deletion.",
@@ -45109,8 +45110,39 @@
     ],
     "old221Artifact": "PRESERVED_STAGE_ONLY_NOT_UPLOAD_OR_DB_EXECUTION",
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
-    "actualNewSQLOrPGTests": "NOT_YET_RUN",
+    "actualNewSQLOrPGTests": "SOURCE_AND_MODEL_ONLY_NO_SQL_OR_REAL_PG_EXECUTION",
     "rolloutTimeImpact": "Avoids approximately2GB planned zero output and760730 key operations; implementation and real PG time not measured, no completion ETA promised.",
-    "next": "D1 gives minimal exact scope DTO to D3 and implements original dependencies; T45 finishes reusable bounded receiver and prepares accurate synthetic PG scope; QB reviews affected fixed successor."
+    "next": "QB reviews fixed d4f17a04 increment;D1 prepares original actual-client PG fixture;T45 exact synthetic scope and bounded receiver;D3 runs one final package preflight once existing24settlement subset reader fixed. No old SQL37 upload/execution.",
+    "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
+    "fixedSource": {
+      "branch": "codex/d1-baseline-scope-20261111",
+      "commit": "d4f17a047dd8b786f05ea6853881a59a364f55de",
+      "parent": "dd1df9aa210990630fa6672e71699bfefeb2f0b0",
+      "remotePushVerified": false,
+      "filesChanged": 25,
+      "scope": "SQL38 directly followsSQL36;35tables/154functions;7existingfunction changes;no tables/columns/privileges added"
+    },
+    "authorChecks": {
+      "scopeAndFirstPostingModel": "24/24",
+      "sqlClosureAndCli": "13/13",
+      "existingAffectedKernel": "61/61",
+      "baselinePreflight": "2/2",
+      "uniqueCaseCount": "NOT_SUMMED_OVERLAP_EXISTS",
+      "types": "tsconfig.json and launch-api passed",
+      "realPostgres": "NOT_RUN"
+    },
+    "inputDto": {
+      "sha256": "caec2056f53910f8e574d16e151974681da437bbf36773365bee52f77467d151",
+      "D1ActualReadback": "54warehouses/14819SKUs/39496nonzero/quantity80546;342096954B registry read;emittedZeroCount0"
+    },
+    "finalReadySource": {
+      "rows": 511234,
+      "manifestSha256": "b514a2eb8869ab42a5ee90dececa8470b0f3598594bbffadd5140875e1da64c4",
+      "status": "FINAL_SHAPE_MANIFEST_BOUND_FULL_PREFLIGHT_PENDING",
+      "alignmentReviewSha256": "98c88621471a17d605c1556b5c434f2d52179bfb97c911eabfb3c91039d0c8ad",
+      "controllerSourcePinsSha256": "daaffdab231dadc7f7ef457375ef5172a5624037a59f4d25c955c74376602f76",
+      "businessCutoffBasis": "Nov11 10:00 batch label; no physical simultaneous export claimed;exported_at null"
+    },
+    "updatedAt": "2026-11-11T16:40:15+08:00"
   }
 }
