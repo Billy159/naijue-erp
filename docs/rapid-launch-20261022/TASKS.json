@@ -45468,6 +45468,20 @@
         "container": "t45-fresh35-first-production-20261110-r3-service-09",
         "state": "LOCAL_RESERVED_CANDIDATE_ONLY; CHECK_ORIGINAL_05_AND_09_LIVE_STATUS_BEFORE_ISSUANCE"
       },
+      "r3RetainedInputStorageBudget": {
+        "profileSha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+        "receiverLogicalBytes": 214349995,
+        "rootAssemblyLogicalBytes": 80853258,
+        "materializedLogicalBytes": 837078759,
+        "sameVolumeIfAllRetainedLogicalBytes": 1132282012,
+        "historicalColdFloorBytes": 30064771072,
+        "sameVolumeBeforeIngestColdFloorPlusInputsLogicalBytes": 31197053084,
+        "historicalAvailableBytes": 30945173504,
+        "conditionalGapBytes": 251879580,
+        "scope": "LOGICAL_PAYLOAD_ONLY; NOT LIVE; EXCLUDES PGDATA, WAL, BACKUP, TEMP, FILESYSTEM OVERHEAD; NO CLEANUP AUTHORIZED"
+      },
+      "r3ExistingGuardianStopReferenceSha256": "131980e37552c7f53173c65e127ee2172864435db32b1cfe5a5b36c38aeaa0c1",
+      "r3ReadbackThenStopExistingCarrierReview": "T45_LOCAL_REVIEW_HOLD; ORIGINAL_07_GUARDIAN_STOP_PROTOCOL_APPLICABLE_AS_REFERENCE_ONLY; NO_APPROVED_EXACT_05_READBACK_STOP_JOB_OR_CONTINUOUS_WRITER_EXCLUSION_PROOF_FOUND; NO_NEW_DB_ROLE_OR_WRITE_REQUIRED_IF_EXISTING_EXCLUSION_CONFIRMED",
       "r3CurrentBatchBackupPrerequisites": "EXACT_154_A_38; ACTUAL_R2_WRITER_AND_VERIFIED_READBACK; LIVE_STOP_AND_STORAGE; CURRENT_APP_CONFIG_NECESSARY_MEDIA; EXISTING_RECOVERY_EVIDENCE_APPLICABILITY",
       "r3IndependentReconcileLocalCommit": "5d2a4280a7c4285a368ce56be97947a3a0df4a0b",
       "r3IndependentReconcileSourceReceiptSha256": "5eac4d2825025a4e8ddf99a64b1ca35a49699a77d323436b3ea9b864721eef1a",
