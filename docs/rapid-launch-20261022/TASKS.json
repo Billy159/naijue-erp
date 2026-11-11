@@ -45071,7 +45071,7 @@
     "inventorySimplification": "d4f17a04 source fixed;author checks pass;QB/ordinaryPG pending;760730 per-zero proofs canceled;no new tables/privileges"
   },
   "inventoryBaselineScopeSimplification20261111": {
-    "status": "SOURCE_FIXED_AUTHOR_DIRECTED_CHECKS_PASSED_INDEPENDENT_REVIEW_AND_REAL_PG_PENDING",
+    "status": "CORE_SOURCE_INDEPENDENT_PASS_REAL_PG_PENDING",
     "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
     "authority": "Direct current user request in controller: simplify inventory traceability; no per-zero warehouse/SKU proof; correct covered absence=zero, outside/unknown not zero.",
     "supersedes": "Pending per-zero V2/Merkle generation and SQL37 rollout for current batch; preserve all fixed source/artifacts/evidence, no table deletion.",
@@ -45112,7 +45112,7 @@
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
     "actualNewSQLOrPGTests": "SOURCE_AND_MODEL_ONLY_NO_SQL_OR_REAL_PG_EXECUTION",
     "rolloutTimeImpact": "Avoids approximately2GB planned zero output and760730 key operations; implementation and real PG time not measured, no completion ETA promised.",
-    "next": "QB reviews fixed d4f17a04 increment;D1 prepares original actual-client PG fixture;T45 exact synthetic scope and bounded receiver;D3 runs one final package preflight once existing24settlement subset reader fixed. No old SQL37 upload/execution.",
+    "next": "D1 fixes exact24 subset SQL and PG first-positive fixture;D3 runs final full preflight;QB only new affected parts;T45 fixes original private install/runner seam and exact scope;D2 one final fixed build. No per-zero files, no second source-traceability redesign.",
     "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
     "fixedSource": {
       "branch": "codex/d1-baseline-scope-20261111",
@@ -45143,6 +45143,42 @@
       "controllerSourcePinsSha256": "daaffdab231dadc7f7ef457375ef5172a5624037a59f4d25c955c74376602f76",
       "businessCutoffBasis": "Nov11 10:00 batch label; no physical simultaneous export claimed;exported_at null"
     },
-    "updatedAt": "2026-11-11T16:40:15+08:00"
+    "updatedAt": "2026-11-11T17:08:37+08:00",
+    "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
+    "independentReview": {
+      "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
+      "resultSha256": "90248b06952b44b4d4e0f579807c5ec9963313eaa5824fc4a999356b1397ec32",
+      "reviewSha256": "6cba70940089630734d9cfb082aace18912ab85fd04982a58979e5f57c5a6543",
+      "passed": 12,
+      "sourceSetSha256": "2cde093bea80d54200cf2cceeb83a7177c75de7ff8256e1dc6ea8a199b56cc33",
+      "catalogSpecSha256": "8323f29324581700d5de3e5b1941b10a87fa3fe1afcdbc78fe02b1dfcea7d488",
+      "closedFinding": "F01_ZERO_ROW_SCOPE_LOST_ON_NATIVE_WIRE",
+      "realPg": "NOT_EXECUTED"
+    },
+    "fullSourcePreflightPrerequisites": {
+      "sourceReaderCommit": "cb5aeeb2130194e7aedcc3575df339b3b93a702b",
+      "settlementSubset": "Original approved25/27 exactly reduced to current24/26;one member now settled by latest source and uses ordinary checks;no new exception",
+      "sourcePinSha256": "dd48af80b691c1685412b6d68600a8a48530a9738eab6de86f448a744367eaab",
+      "currentFullPreflight": "ORIGINAL_D3_CONTINUING_ONE_RUN_NOT_YET_PASS",
+      "SQLForSubset": "D1 exact existing-body successor pending;reader pass does not authorize oldSQL"
+    },
+    "pgTestPreparation": {
+      "sourceCommit": "5277a179c4472a134e118fdf639fa6d76d809160",
+      "status": "P2_FIRST_POSITIVE_POSTING_COVERAGE_BEING_ADDED_BEFORE_EXECUTION",
+      "targetProposal": "one new synthetic container/database;no R3 business writes",
+      "container": "t45-baseline-scope-pg-20261111-01",
+      "database": "synthetic_fresh35_20261111_r1",
+      "limits": "1CPU/1GiB/128PID;1200s overall/900s worker/180s cleanup reserve;network none;no publicport",
+      "actualLiveMetadata": "same fixed PG17.11 image present;ordinary usable disk30837964800B;MemAvailable14833620kB;new targets absent",
+      "targetOrRolesCreated": false,
+      "temporaryPermissionsApplied": false,
+      "approvalState": "Existing human standing authorization covers reviewed similar synthetic execution;C exact source/target original not yet issued;no self-authored runtime approval"
+    },
+    "transmissionSource": {
+      "commit": "6c0c2a0092b5a1aa142150f9c2fb23bc752eec78",
+      "status": "FIXED_OFFLINE_CHECKED_PENDING_QB_AND_FINAL_ARTIFACT_PARAMS",
+      "actualTransfer": "NOT_EXECUTED",
+      "oldHalfArtifact": "PRESERVED_NO_REPLAY"
+    }
   }
 }
