@@ -6,12 +6,18 @@ import {createHash} from 'node:crypto';
 import {validateFresh35Admin154Record,ADMIN154_PREDECESSOR_RECORD_SHA256,ADMIN154_PREDECESSOR_SOURCE_SHA256,ADMIN154_PATCH_SHA256} from '../scripts/release/unified-install/fresh35-admin154-record-v1.mjs';
 const text=await readFile(new URL('../tools/unified-import/fresh35-baseline-scope-upgrade.mjs',import.meta.url),'utf8');
 // Private copy of the real driver, without exporting a model seam in production.
-const model=await import('data:text/javascript;base64,'+Buffer.from(text+'\nexport {driveUpgrade,patchBody,physicalSql,receiptSql,provisionSql};').toString('base64'));
+const model=await import('data:text/javascript;base64,'+Buffer.from(text+'\nexport {driveUpgrade,patchBody,physicalSql,receiptSql,provisionSql,assertSameMaintenanceParentEpoch};').toString('base64'));
 const sql=await readFile(new URL('../adapters/postgres/patches/0036_admin_provision_only_successor.sql',import.meta.url),'utf8');
 const hash=b=>createHash('sha256').update(b).digest('hex');
 test('upgrade production module exposes only its fixed entry and refuses missing operator seams before any connection work',async()=>{
  const actual=await import('../tools/unified-import/fresh35-baseline-scope-upgrade.mjs');assert.deepEqual(Object.keys(actual),['describeFresh35BaselineScopeUpgrade','runFresh35BaselineScopeUpgrade']);
  await assert.rejects(actual.runFresh35BaselineScopeUpgrade({}),/EXACT_PHASE_REQUIRED/);
+});
+test('SQL38 same maintenance parent epoch accepts trailing zeros but rejects a different PostgreSQL microsecond or old epoch',()=>{
+ const check=model.assertSameMaintenanceParentEpoch,stamp=f=>'2026-11-11 01:00:00'+f+'+00';
+ for(const [parent,current] of [['.123450','.12345'],['.12345','.123450'],['','.000000'],['.1','.100000'],['.123456','.123456']])assert.doesNotThrow(()=>check(stamp(parent),stamp(current)));
+ for(const [parent,current] of [['.123449','.12345'],['.123451','.12345'],['.000001',''],['.1234500','.12345'],['.12345','.1234500']])assert.throws(()=>check(stamp(parent),stamp(current)),/SAME_MAINTENANCE_PARENT_EPOCH_REQUIRED/);
+ assert.throws(()=>check('2026-11-10 01:00:00.123450+00',stamp('.12345')),/SAME_MAINTENANCE_PARENT_EPOCH_REQUIRED/);
 });
 function fixture(fault){
  const expected={predecessor:{recordSha256:ADMIN154_PREDECESSOR_RECORD_SHA256,sourceSetSha256:ADMIN154_PREDECESSOR_SOURCE_SHA256,programSha256:'1'.repeat(64),catalogSha256:'2'.repeat(64),targetSha256:'3'.repeat(64)},

@@ -21,6 +21,17 @@ const patchSha='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b
 const moduleAt=(root,name)=>import(pathToFileURL(join(root,'scripts/release/unified-install',name+'.mjs')).href);
 const ack=(r,command)=>need(r?.command===command,'ACK_'+command+'_REQUIRED');
 
+// Both values have already passed their timestamp validators. Preserve all six
+// PostgreSQL fractional digits; optional trailing zeros do not change the epoch.
+function assertSameMaintenanceParentEpoch(parent,current){
+ const canonical=value=>{
+  const m=typeof value==='string'&&/^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d)(?:\.(\d{1,6}))?\+00$/.exec(value);
+  return m?m[1]+'.'+(m[2]||'').padEnd(6,'0')+'+00':null;
+ };
+ const expected=canonical(current);
+ need(expected!==null&&canonical(parent)===expected,'SAME_MAINTENANCE_PARENT_EPOCH_REQUIRED');
+}
+
 function patchBody(sql,phase){
  need(['SQL36','SQL38'].includes(phase),'EXACT_PHASE_REQUIRED');
  need(hash(sql)===(phase==='SQL36'?patchSha:compactPatchSha)&&(sql.match(/^BEGIN;$/gm)||[]).length===1&&(sql.match(/^COMMIT;$/gm)||[]).length===1&&sql.endsWith('COMMIT;\n'),'EXACT_SQL_REQUIRED');
@@ -81,7 +92,7 @@ async function prepareUpgrade(o){
   validateCatalog=raw=>catalogs.validateFresh35CombinedCatalogObservation(raw,adminCatalog,adminSource,target);validateRecord=value=>successors.validateFresh35Admin154Record(value,expected);recordFormat='FRESH35_A53_ADMIN154_SUCCESSOR_RECORD_V1';
  }else{
   parent=await successors.loadFresh35Admin154Record(adminExpected,o.parentRecordSha256);const p=successors.describeFresh35Admin154Record(parent);
-  need(p.value.physical.postmasterStart===o.postmasterStart,'SAME_MAINTENANCE_PARENT_EPOCH_REQUIRED');
+  assertSameMaintenanceParentEpoch(p.value.physical.postmasterStart,o.postmasterStart);
   expected={predecessor:{recordSha256:p.sha256,sourceSetSha256:p.value.successor.sourceSetSha256,catalogSpecSha256:p.value.successor.catalogSpecSha256,modelSha256:p.value.successor.modelSha256,catalogSha256:p.value.successor.catalogSha256},successor:{patchSqlSha256:d.patchSqlSha256,sourceSetSha256:d.sourceSetSha256,catalogSpecSha256:d.catalogSpecSha256,modelSha256:d.modelSha256},physical,owner:t.proposal.owner};
   body=patchBody(sources.fresh35CompactZeroSourceData(source).candidate.patchSql,'SQL38');predecessorSql=catalogs.fresh35CombinedCatalogSql(adminCatalog,adminSource,target);successorSql=catalogs.fresh35CombinedCatalogSql(catalog,source,target);
   validateCatalog=raw=>catalogs.validateFresh35CombinedCatalogObservation(raw,catalog,source,target);validateRecord=value=>successors.validateFresh35CompactZeroRecord(value,expected);recordFormat='FRESH35_COMPACT_ZERO_SUCCESSOR_RECORD_V2';

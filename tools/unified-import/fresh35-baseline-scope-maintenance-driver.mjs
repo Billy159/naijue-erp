@@ -13,7 +13,7 @@ const CONTROL='/run/t45-admin154/control',WORKER_ID=10001;
 const PROOF='/etc/naijue-erp/fresh35-current-production-service-v2-service-08.json',HOST_PROOF='/run/naijue-rewrite/current-production-service.json';
 const OPERATION='/etc/naijue-erp/fresh35-admin154-execution-v1.json';
 const SOURCE_SHA='9a58f932aaa462b7646dff472c2b24e88b0690d84cea1f0d7f846ef93036c781';
-const UPGRADE_SHA='7ca422aed4a44b646afbd48ec968146b244f855b0f6ba6918ca6d862b5590627';
+const UPGRADE_SHA='bbe66598cebf44ce614fe5a51da9138c6259b144668200ec69227ba5bb2da337';
 const RECORD_SHA='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e',OLD_SOURCE='6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16';
 const physical={systemIdentifier:'7706545564479176741',databaseOid:'16393',serverVersionNum:'170011'};
 const ownPath=fileURLToPath(import.meta.url),hash=b=>createHash('sha256').update(b).digest('hex');
