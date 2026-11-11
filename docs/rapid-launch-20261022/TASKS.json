@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T11:57:06+08:00",
-  "stage": "R3_STOPPED_MAINTENANCE07_SOURCE_ACCEPTED_REMOTE_CHANNEL_READBACK_PENDING_NEW_BATCH_CLEANING_ACTIVE",
+  "updatedAt": "2026-11-11T12:26:44+08:00",
+  "stage": "R3_APPLY07_ACTUAL_COMPLETE_SERVICE07_IN_PROGRESS_NEW_SALES_TWO_SOURCE_RECONCILIATION",
   "lastVerifiedRemoteCommit": "13ea42961d3588081fab030a2b3abaf183dd3a15",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -44234,7 +44234,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 performs one bounded current channel check; when reachable, independently read exact original directory job and R3 metadata without replay. Source07, ordinary05 and APP templates accepted within static scope; no active runtime window. D2/D3 generate current batch standard data offline.",
+    "next": "T45 executes original service07 once from C original grant; collect actual runtime proof for separately bound UPGRADE03. Exact restore04 required before role restoration deadline. No SQL36/admin/import/business acceptance claimed.",
     "maintenance06LatestCycle": {
       "apply06": {
         "status": "ACTUAL_COMPLETED_0_TWO_FINITE_ROLES_STOPPED",
@@ -44475,6 +44475,30 @@
         "actualParentReadWatch": "NOT_TESTED"
       },
       "controllerAction": "Existing QB fixed results and matching original hashes adopted; no duplicate technical or PG tests."
+    },
+    "maintenance07Actual": {
+      "apply07": {
+        "status": "ACTUAL_COMPLETED_0_EXACT_TWO_FINITE_ROLE_FIELDS_AND_OWN_CONTAINER_STOPPED",
+        "resultSha256": "0ae3b818b469b88c41e9597506e3de99a34ccd00fa22123c9c755a593a91da3a",
+        "terminalSha256": "a5ae6d9685c50ee714463c7d210af01a77d09b27d1f9e096f8238bf24e80415a",
+        "typedSha256": "8856dae61966f0c0afde4f3a266a617828bd044d454cee8b8500b06c95619a71",
+        "cleanupSha256": "7055a53b33a85f7646081e106340b3b498a0102dbf521a82a122774d09c311cd",
+        "elapsedSeconds": 6.886008067987859,
+        "runtimeAuthenticationChanged": false,
+        "newRoles": 0,
+        "credentialValidUntilEpochMs": 1794371921517,
+        "restorationDeadlineEpochMs": 1794373721517,
+        "restored": false
+      },
+      "service07": {
+        "status": "C_ORIGINAL_GRANTED_T45_CURRENT_EXECUTION_NO_RESULT_YET",
+        "authoritySha256": "39d121f06ebd8c4902d2fff4e8e3277914572f10b688c36004b40b4d48f110ee",
+        "coordinationExpiresAtEpochMs": 1794371434315,
+        "serviceLeaseExpiresAtEpochMs": 1794373234315
+      },
+      "SQL36": "NOT_EXECUTED",
+      "adminA": "NOT_EXECUTED",
+      "APP_CLI": "NOT_EXECUTED"
     }
   },
   "freshDataRefresh20261111": {
@@ -44540,6 +44564,64 @@
       "priorSKUBridgeRows": 14784,
       "skuBridgeBoundary": "CURRENT_BATCH_SKU_IDENTITY_NOT_YET_RECONCILED"
     },
-    "next": "D2 verifies current source SKU tuples against stable approved identities, completes identified new masters and exact exceptions; D3 consumes masters, closes references and settlement gaps, generates all nonblocked standard tables. No import or real-data Git upload."
+    "next": "D2 verifies current source SKU tuples against stable approved identities, completes identified new masters and exact exceptions; D3 consumes masters, closes references and settlement gaps, generates all nonblocked standard tables. No import or real-data Git upload.",
+    "latestSalesInput": {
+      "sha256": "391770ca2f037c5a67daf34497b28b0adb9d2af7bce4be20d3b31f536efc56a8",
+      "bytes": 26371804,
+      "sheets": [
+        "销货单",
+        "现结"
+      ],
+      "detailColumns": 68,
+      "settlementColumns": 6,
+      "scope": "Original line price, warehouse/customer/staff codes and individual settlement source; not audit-state source.",
+      "sourceArithmeticOnly": {
+        "documents": 29081,
+        "detailRows": 84186,
+        "quantity": "75368",
+        "lineAmount": "24947090.13",
+        "settlementRows": 26560,
+        "settlementDocuments": 26027,
+        "orphanSettlementDocuments": 0,
+        "settlementSignedTotal": "23693019.53",
+        "allDocumentsSettlementMatchesPrior": true,
+        "priorAmountDifferenceDocuments": 1,
+        "quantityPriceAmountDifferenceLines": 6,
+        "EOF": true
+      },
+      "auditSource": {
+        "file": "销货单 2.xlsx",
+        "sha256": "a66901a07718195dfdaa06b2df426d598f00f410bf20fd886a26c9ee8c3c5526",
+        "bytes": 7885976,
+        "userConfirmedPurpose": "Previous export retained for audit state verification. Byte-identical to already parsed previous source; reuse valid evidence.",
+        "join": "Original document number, date, ordered lines and actual facts. Difference branch retained; no row-number join or guessed audit state."
+      },
+      "readyForImport": false,
+      "owner": "D3"
+    },
+    "latestDraft": {
+      "state": "DRAFT_NOT_UPLOAD_READY",
+      "version": "draft-r3",
+      "manifestSha256": "af2f969053e61c43c44d53bf22e235c966c043cfdf06a0df83ed3ca397fe95dc",
+      "tables": 19,
+      "rows": 57715,
+      "nonNullReferences": 146818,
+      "missingReferences": 0,
+      "inventoryKnownCells": 36512,
+      "inventoryKnownQuantity": "76887",
+      "unresolvedInventoryCells": 2996,
+      "unresolvedInventoryQuantity": "3659",
+      "sourceInventoryQuantity": "80546",
+      "newSalesSourceNotYetIntegrated": true
+    }
+  },
+  "recoveredChatMessages20261111": {
+    "source": "Original persisted conversation logs; no chat database modified.",
+    "localExport": "reports/controller/rapid-launch-20261022/FIRST-R3-NATIVE-AUTHORITY-20261110/主控7点后聊天记录找回-20261111-1145.txt",
+    "sha256": "7c2393cbb3b0e130451ebaa32821e3e5dfc261da372716d02de22f287a7a3213",
+    "messages": 27,
+    "from": "2026-11-11T07:00:07+08:00",
+    "through": "2026-11-11T11:30:07+08:00",
+    "reasonNotVisibleInUI": "UNKNOWN"
   }
 }
