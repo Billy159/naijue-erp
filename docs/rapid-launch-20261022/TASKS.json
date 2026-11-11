@@ -45294,7 +45294,7 @@
         "actualConfigStartup": "UNVERIFIED",
         "current": "T45 original owner prepares new isolated carrier, diagnostic capture and APP delivery inputs; D1 repins original R3 maintenance in parallel",
         "next": "QB checks changed carrier seams, then C binds T45 prestage and native validation to exact artifacts and target",
-        "newServerRun": "PRESTAGE02_EXIT_0; native START02 authorized, outcome pending",
+        "newServerRun": "PRESTAGE02_EXIT_0; START02 real PG, base installed; postinstall stopped on precise pins mode mismatch",
         "prestage02": {
           "jobSha256": "2324fdd799b0a0c2625bf4f82d865b22f1c51b5500a004aa409efb85ce79504d",
           "resultSha256": "59193a474e6935abe59662ed65260b6a2eeea130a15af8de2eb7a6ba2d2c6aee",
@@ -45312,7 +45312,19 @@
           "remaining": "T45 consumer, R3 proof/epoch, original admin request and role lifetime"
         },
         "appStaging02QA": "afed6f6928dcd3100a44051ad19134485265427a8da7c92a6fd2482ab9bd91ec",
-        "appStaging02": "READY_FOR_BOUNDED_TRANSFER_ONLY; scheduled after current isolated window"
+        "appStaging02": "EXACT_TRANSFER_ONLY_ORIGINAL_ISSUED; terminal and restore pending",
+        "appStaging02OriginalSha256": "58a97554877ac6319b799d020ac5341bdce72f6979fff36cc6234ac8ac1e83a7",
+        "isolated02Terminal": {
+          "installation": "ACTUAL_BASE_35_COMMITTED_AND_CATALOG_CHECKED",
+          "installationRecordSha256": "38407fb1884d08ad89aa0027061e13776bf0f26c585d09762cc3bf6c82700050",
+          "terminalReadback": "584603355be4a10fb12016bd8d9e7803efd863f017233d7d0e9c8d4f73531cee",
+          "residueReadback": "0398142e7e8bd7d9b35396aca9f46408f55cd51901b57f978707b3fcab436d94",
+          "firstError": "FRESH35_ISOLATED_PRIVATE_AUTHORITY_INPUT",
+          "cause": "Post-install fixed pins file materialized root:root 0644 but read_private requires mode & 077 == 0",
+          "cleanup": "CLEAN_SHUTDOWN_LOGIN_REVOKED_CREDENTIALS_REMOVED_CONTAINER_EXIT1_PID0",
+          "patchesOrBusiness": "NOT_EXECUTED",
+          "next": "T45 minimal new03 fixed pins materialization 0400 and profile delta; QB checks only actual affected boundary; preserve02, no app rebuild or data rewash"
+        }
       }
     }
   }
