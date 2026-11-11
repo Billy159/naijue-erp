@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T13:58:46+08:00",
+  "updatedAt": "2026-11-11T14:16:41+08:00",
   "stage": "R3_STOPPED_STAGE08_PARTIAL_RETAINED_POLICY_RESTORED_ZERO_V2_IMPLEMENTATION",
-  "lastVerifiedRemoteCommit": "e926a5972abc55b13ec3625f612e8a7b299b90bc",
+  "lastVerifiedRemoteCommit": "78792a692fd02579db98b99a6b208d0f9c4c592e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -44616,6 +44616,12 @@
         "originalBindingPreserved": true,
         "timeout40SecondsUnchanged": true,
         "next": "Frozen fixed eight segment increment and exact install/restore; C evaluates and issues bounded same-key recovery execution under standing authority"
+      },
+      "transportRecoveryLatest": {
+        "status": "T45_SOURCE_INCREMENT_IN_PROGRESS_OFFLINE16_REPORTED_NOT_QB_CODE_PASS",
+        "currentServerState": "Original staging policy restored; same partial and binding preserved; receiver not READY; no new PG or role window",
+        "next": "Freeze exact source and original-receiver route; original QB reviews only changed recovery scope, then C binds exact bounded execution original",
+        "fixedApplicationCommit": "eca7dd5bc8a0386b9fa0072456b06701130725f5"
       }
     }
   },
@@ -44833,6 +44839,39 @@
       "unauditedSales": 4,
       "unauditedTransfers": 75,
       "zeroSettlementArchives": 22
+    },
+    "inventory13ApprovedReuse": {
+      "status": "C_HASH_VERIFIED_D2_DELTA_D3_CONSUMPTION_IN_PROGRESS",
+      "receiptSHA256": "8e2b94d1cf5fdfaafd183d4683ebe657131a834a81d160352eec542d7b0e6af0",
+      "bridgeSHA256": "1a4c4ce9c1bad37e4c51e069de0c0e4e80174bc73bc5dcdbe0de5496b79c0f9d",
+      "resolvedSourceCells": 13,
+      "stableExistingSKUCount": 4,
+      "newSKUCount": 0,
+      "newRegistryEntries": 0,
+      "currentSignedQuantity": "29",
+      "oldBatchQuantityReused": false,
+      "remainingFitCellsBeforeFurtherReview": 11,
+      "next": "Original D2 checks exact exception evidence against approved blank-fit=A; D3 merges refs and recalculates successor zero partition without overwriting frozen r4."
+    },
+    "zeroScopeFrozenR4": {
+      "inputManifestSHA256": "96471f5e894bb083a8e1e2a822e8170c919139fad33563d9a4aca0ed05295356",
+      "warehouses": 54,
+      "realSKUs": 14818,
+      "pairs": 800172,
+      "confirmedExplicitPairs": 39469,
+      "confirmedZeroPairs": 760626,
+      "unknownPairs": 77,
+      "classification": "INPUT_NOT_APPROVAL_OR_IMPORT_READY; frozen before latest thirteen-cell reuse",
+      "cutoffStatus": "BUSINESS_FOLDER_LABEL_NOT_PROVEN_COMMON_SOURCE_INSTANT"
+    },
+    "latestDirectDecisions": {
+      "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "humanMessageId": "01a1c93b-41a5-70d2-a0c5-65fcebbf4092",
+      "CReadHumanTextAndThreeOriginalImages": true,
+      "scope": "Two exact transfer source rows adopted corrected barcodes, preserving originals; two new products assigned existing down-jacket category.",
+      "privateDetails": "Remain solely in local private cleaning deltas; no business row data uploaded to Git.",
+      "writer": "D2 exact master/registry delta then D3 affected package consumption",
+      "status": "DISPATCHED_IMPLEMENTATION_NOT_YET_ADOPTED"
     }
   },
   "recoveredChatMessages20261111": {
