@@ -170,7 +170,22 @@ async function compactZeroLineage(snapshot,record,t,catalog,currentService,paren
  // only its unchanged native model is reconstructed from this successor source.
  expectedParent.successor.sourceSetSha256=parentPins.sourceSetSha256;expectedParent.successor.catalogSpecSha256=parentPins.catalogSpecSha256;
  const parent=await loadFresh35Admin154Record(expectedParent,parentPins.sha256),p=describeFresh35Admin154Record(parent),d=describeFresh35CombinedCatalog(catalog);
- const successor=await loadFresh35CompactZeroRecord({predecessor:{recordSha256:p.sha256,sourceSetSha256:p.value.successor.sourceSetSha256,catalogSpecSha256:p.value.successor.catalogSpecSha256,modelSha256:p.value.successor.modelSha256,catalogSha256:p.value.successor.catalogSha256},successor:{patchSqlSha256:d.patchSqlSha256,sourceSetSha256:d.sourceSetSha256,catalogSpecSha256:d.catalogSpecSha256,modelSha256:d.modelSha256},physical:expectedParent.physical,owner:t.proposal.owner},successorSha256);return {parent,successor};
+ // Only the exact post-backup ordinary service reads the SQL38 receipt from
+ // 6c6f6b4e. Its patch and model must still match the running catalog.
+ const installed38=currentService.postBackupOrdinary
+  ? {sourceSetSha256:'e11609061181457b7cd012a32d0b44a5d764586ee2d5353e62ce82f297db16bd',
+     catalogSpecSha256:'fa5b53963510566921827476e21122efc2a8ac381769fcc5b22f8c3f4b4c58cf'}
+  : {sourceSetSha256:d.sourceSetSha256,catalogSpecSha256:d.catalogSpecSha256};
+ const successor=await loadFresh35CompactZeroRecord({
+  predecessor:{recordSha256:p.sha256,sourceSetSha256:p.value.successor.sourceSetSha256,catalogSpecSha256:p.value.successor.catalogSpecSha256,
+   modelSha256:p.value.successor.modelSha256,catalogSha256:p.value.successor.catalogSha256},
+  successor:{...installed38,patchSqlSha256:d.patchSqlSha256,modelSha256:d.modelSha256},
+  physical:expectedParent.physical,owner:t.proposal.owner
+ },successorSha256);
+ if(currentService.postBackupOrdinary)need(
+  ordinaryPgMicroseconds(describeFresh35Admin154Record(successor).value.physical.postmasterStart)<ordinaryPgMicroseconds(currentService.postmasterStart),
+  'POST_BACKUP_ORDINARY_EPOCH_REQUIRED');
+ return {parent,successor};
 }
 /** Explicit post154 context. Neither an old record nor the old host can select it. */
 export async function loadFresh35CompactZeroContext(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256){
@@ -420,7 +435,7 @@ function ordinaryPgMicroseconds(value){
  const fraction=value.match(/\.(\d{1,6})\+00$/)?.[1]??'';
  return BigInt(Math.floor(at/1000))*1000000n+BigInt(fraction.padEnd(6,'0'));
 }
-async function loadOrdinaryCurrentService(input,target,record,snapshot,maintenance=false){
+async function loadOrdinaryCurrentService(input,target,record,snapshot,maintenance=false,compactOrdinary=false){
  const positive=value=>Number.isSafeInteger(value)&&value>0;
  const decimal=value=>typeof value==='string'&&/^[1-9][0-9]*$/.test(value);
  const digest=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
@@ -448,8 +463,11 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot,maintenan
   'dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian',
   'runtimeRole','runtimeLoginValidUntil'])&&(service||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
+ const postBackupOrdinary=normal&&compactOrdinary&&!maintenance&&proof.requestKey==='t45-first-r3-native-service-start-20261112-09';
  const normalContainerName=maintenance
   ? (proof.requestKey==='t45-first-r3-native-service-start-20261111-08'?'t45-fresh35-first-production-20261110-r3-service-08':null)
+  : postBackupOrdinary
+  ? 't45-fresh35-first-production-20261110-r3-service-09'
   : proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
   ? 't45-fresh35-first-production-20261110-r3-service-01'
   : proof.requestKey==='t45-first-r3-native-service-start-20261110-02'
@@ -524,7 +542,7 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot,maintenan
    normal?ordinaryPgMicroseconds(physical.postmasterStart)>ordinaryPgMicroseconds(installed.postmasterStart):prior<birth)
   &&carrierBirth<=birth&&birth<=proof.checkedAt&&proof.checkedAt<=now&&now<expiresAt,
   'ORDINARY_CURRENT_SERVICE_WINDOW_REQUIRED');
- return {identity,checkedAt:proof.checkedAt,expiresAt,postmasterStart:physical.postmasterStart,
+ return {identity,checkedAt:proof.checkedAt,expiresAt,postmasterStart:physical.postmasterStart,postBackupOrdinary,
   runtimeLoginValidUntil:proof.runtimeLoginValidUntil};
 }
 const ordinaryIdentitySql=`/* fresh35-ordinary:physical-before-role */ SELECT
@@ -603,7 +621,7 @@ async function admitOrdinaryPool(pool,connection,synthetic,currentServiceInput,a
   need(fixed.database===t.proposal.database&&fixed.user===t.proposal.runtime&&fixed.host===t.ordinary.connectHost&&fixed.port===t.ordinary.connectPort,'ORDINARY_CONNECTION_DIFFERS');
   const snapshot=describeFresh35ProtectedRecordSnapshot(envelope),recordSha256=snapshot.sha256;
   const currentService=currentServiceInput===undefined?undefined:
-   await loadOrdinaryCurrentService(currentServiceInput,t,envelope,snapshot);
+   await loadOrdinaryCurrentService(currentServiceInput,t,envelope,snapshot,false,compactZeroInput!==undefined);
   await assertTrustedRootPath(process.execPath);await assertTrustedRootPath(moduleRoot);await assertTrustedRootTree(t.ordinary.referenceDirectory);
   const admin154=admin154SuccessorSha256!==undefined;
   need(!admin154||(!synthetic&&currentService),'ADMIN154_CURRENT_PRODUCTION_SERVICE_REQUIRED');
