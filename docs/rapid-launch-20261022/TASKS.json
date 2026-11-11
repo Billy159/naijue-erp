@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-12T04:09:59+08:00",
+  "updatedAt": "2026-11-12T04:20:03+08:00",
   "stage": "R3_STOPPED_RECOVERY08_BOUNDED_TRANSFER_AUTHORIZED_ZERO_V2_WIP",
-  "lastVerifiedRemoteCommit": "5573da04925ac92c263bc3a92de85aa0f85bd02d",
+  "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -45055,19 +45055,19 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-12T04:09:59+08:00",
+    "updatedAt": "2026-11-12T04:20:03+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
     "currentTarget": "R3_STOPPED_LAST_READBACK; SYNTHETIC05_PASSED_AND_CLEAN_STOP",
     "owners": {
-      "T45": "same-epoch maintenance boundary confirmed; minimal private administrator input and existing receiver",
+      "T45": "first-admin local candidate fixed; protected r2 receiver binding in preparation",
       "D1": "6c SQL38 and d1a6 R3 maintenance fixed and remotely verified",
       "D2": "exact 6c built and packed once; 462 members and three cold entries checked",
-      "D3": "current 511234-row input and independent reconciliation index verified; local protected delivery closure",
-      "QB": "05 and d1a6 increments accepted; exact 6c APP staging parameters accepted",
+      "D3": "single private 31-member archive verified locally; no upload",
+      "QB": "narrow local first-admin synthetic verification",
       "C": "actual receipt adoption, finite originals under standing authorization,existing3docs/public status"
     },
     "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
-    "next": "T45 prepares the no-echo user entry for the original private admin request receiver; QB checks the delta. D3 and T45 align the exact protected r2 delivery independently. Keep R3 stopped until SQL36, A and SQL38 can complete in one startup.",
+    "next": "QB checks the local no-echo first-admin helper using synthetic input. T45 aligns the original private receiver with the actual D3 archive and separate sidecars. Keep formal R3 stopped.",
     "inventorySimplification": "760730 proofs canceled; full offline preflight and scoped ordinary-role synthetic PostgreSQL pass; real import and checks pending."
   },
   "inventoryBaselineScopeSimplification20261111": {
@@ -45112,7 +45112,7 @@
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
     "actualNewSQLOrPGTests": "05 6c6f6b4e actual PostgreSQL 17.11. SQL36/38 committed and catalog 35 tables/154 routines independently confirmed. Actual synthetic import and ordinary-role targeted runner 1 PASS/0 fail/0 skip; clean stop. Full HTTP host and real data not verified.",
     "rolloutTimeImpact": "760730 records and approximately 2 GB planned output avoided. Continue sparse route; real import and end-to-end duration not measured.",
-    "next": "T45 prepares the no-echo user entry for the original private admin request receiver; QB checks the delta. D3 and T45 align the exact protected r2 delivery independently. Keep R3 stopped until SQL36, A and SQL38 can complete in one startup.",
+    "next": "QB checks the local no-echo first-admin helper using synthetic input. T45 aligns the original private receiver with the actual D3 archive and separate sidecars. Keep formal R3 stopped.",
     "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
     "fixedSource": {
       "branch": "codex/d1-baseline-scope-20261111",
@@ -45149,7 +45149,7 @@
       "priorRun01": "exit1/64issues/index2196480000B retained;only29metadata pins and3price scale strings corrected,numeric values unchanged",
       "physicalCommonExportInstantClaimed": false
     },
-    "updatedAt": "2026-11-12T04:09:59+08:00",
+    "updatedAt": "2026-11-12T04:20:03+08:00",
     "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
     "independentReview": {
       "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
@@ -45412,9 +45412,15 @@
       "maintenanceWindowSha256": "aea0fffaa6ff38d4ed5c1d21c02d4e86350e52391d2485c61fde075918da7f2b",
       "samePostmasterEpochRequired": true,
       "approvedInitialAdministrator": "admin / 系统管理员, new technical identities only",
-      "credentialIntake": "Protected receiver exists; no reviewed user no-echo entry found for current A; exact small delta assigned to original T45",
+      "credentialIntake": "Fixed local no-echo candidate, pending independent verification; protected original reused without second entry on restart; no real secret or admin request created in this turn",
       "dataReconciliationIndexSha256": "fffcc94fc4af3a53b20e5b8d7551e4fd70d9decb7a22a78f97456e4034a8b6bf",
-      "productionDataTransfer": "NOT_EXECUTED; align exact current r2 delivery using existing private channel"
+      "productionDataTransfer": "Local standard archive verified; private receiver binding and actual transfer pending",
+      "adminLocalHelperSha256": "1627e1dee3efebafa7bd7e09283b3d79679d58774c95ce7da1acf87fac448a8a",
+      "adminLocalOperateSha256": "c75a45d048dc57457bba95194a96fce37414ca66f7b73583ba6f95f3258ebf27",
+      "privateArchiveBytes": 80853258,
+      "privateArchiveSha256": "8bb909c7986a35128b207496fa8a0c1451f1c097954754c3ddc9629e18696c4c",
+      "privateArchiveVerificationSha256": "491b985c5a4a09d155b065e4c9fecccb2a6153f1b31443c81e6edc47335da137",
+      "privateMemberIndexSha256": "d2869a0602350f232e27e3e09e4f65a951ac51c569fa17f94d700d545d8b615a"
     }
   }
 }
