@@ -44932,6 +44932,51 @@
       "finalStandardPackage": "ORIGINAL_D3_IN_PROGRESS",
       "alignment": "EXPORTED_AT_NULL_CURRENT_EFFECTIVE_REVIEW_NOT_YET_FIXED",
       "databaseImport": false
+    },
+    "latestMaterializedSource": {
+      "classification": "ACTUAL_LOCAL_SOURCE_READBACK_NOT_FULL_PREFLIGHT_OR_IMPORT",
+      "manifestSHA256": "a24f34ab234d7c45549f8f3f038cf39d5c0b543033d5c19f2943f856da9051f4",
+      "materializationSHA256": "4dba2c925a77ed6fd11c02e00b2d9d057443b15bb81101a309b4b96498cd6aec",
+      "reconciliationSHA256": "0facd320629db8560297cd3f41da7058c11818fbb14157522492ad898a5f64ec",
+      "changedFieldCheckSHA256": "370a64be96fd778cadc435b2df93e6adc08c39d842b0eaf423bee948a9ca93ac",
+      "tables": 26,
+      "rows": 511234,
+      "registryRows": 470718,
+      "registrySHA256": "5ba186b6c4efe67237a3bdd1fac9c2d6ad2ebf7bf62d38092c2055b9e980799f",
+      "nonNullReferenceChecks": 1124991,
+      "missingReferences": 0,
+      "newOrChangedFieldRecords": 879,
+      "newOrChangedFieldChecks": 9654,
+      "fieldErrors": 0,
+      "sales": {
+        "heads": 29081,
+        "lines": 84186,
+        "quantity": "75368",
+        "amount": "24947090.13",
+        "net": "24937979.13",
+        "settlements": 26538,
+        "signedSettlements": "23693019.53",
+        "approved": 29077,
+        "draft": 4
+      },
+      "transfer": {
+        "heads": 15135,
+        "lines": 282947,
+        "quantity": "314289",
+        "approved": 15052,
+        "draft": 83
+      },
+      "inventory": {
+        "sourceCells": 39508,
+        "targetPairs": 39496,
+        "positive": 39057,
+        "negative": 439,
+        "quantity": "80546"
+      },
+      "originalSourceLocalCreatedTimes": "PRESENT_PRESERVED_OFFSET_UNKNOWN; standard instant null, no full duplicate sidecar",
+      "wholePreflight": false,
+      "databaseImport": false,
+      "awaiting": "D1 new baseline/scope DTO and final batch/manifest binding; no per-zero generation"
     }
   },
   "recoveredChatMessages20261111": {
@@ -44988,8 +45033,10 @@
       "old219ReceiverReadyIsNotArtificialPrerequisite": true,
       "oldArtifactPartialPreserved": true,
       "old165SecondBudgetCoversNew37": false,
-      "environmentExecution": false
-    }
+      "environmentExecution": false,
+      "currentStatus": "OLD_PER_ZERO_37_ROUTE_PRESERVED_NOT_EXECUTED; D1 adapting to latest baseline scope"
+    },
+    "currentBatchExecutionStatus": "SUPERSEDED_BY_DIRECT_BASELINE_SCOPE_SIMPLIFICATION; prior source approval and fixed proofs preserved"
   },
   "currentHumanDataDirective20261111Barcode": {
     "sourceThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
@@ -45008,9 +45055,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T15:46:53+08:00",
+    "updatedAt": "2026-11-11T16:10:21+08:00",
     "sourceContractApproval": "RECORDED_NO_REPEAT_APPROVAL",
-    "currentTarget": "SAME_R3_INSTALLED35_STOPPED; FINAL221_LOCAL_BUILD_FIXED",
+    "currentTarget": "SAME_R3_INSTALLED35_STOPPED; USER_APPROVED_BASELINE_SCOPE_SIMPLIFICATION",
     "owners": {
       "T45": "transport diagnosis and actual server receipt",
       "D1": "V2 actual production entry and existing SQL/host fixes",
@@ -45020,6 +45067,50 @@
       "C": "dependencies, authorization scope, compact current status and evidence index"
     },
     "release": "NOT_READY_NO_IMPORT_NO_APP_SWITCH",
-    "next": "D1 maintenance adapter, T45 final221 transfer and root guard fix, D3 final package in parallel; no PG or transfer window yet."
+    "next": "D1 implements simplified dependencies; D3 binds materialized standard data; T45 receiver and accurate synthetic PG preparation; no old37 rollout."
+  },
+  "inventoryBaselineScopeSimplification20261111": {
+    "status": "USER_APPROVED_IMPLEMENTATION_EXISTING_D1_IN_PROGRESS",
+    "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
+    "authority": "Direct current user request in controller: simplify inventory traceability; no per-zero warehouse/SKU proof; correct covered absence=zero, outside/unknown not zero.",
+    "supersedes": "Pending per-zero V2/Merkle generation and SQL37 rollout for current batch; preserve all fixed source/artifacts/evidence, no table deletion.",
+    "sourceOwner": "Original D1, sole application/SQL/contract writer",
+    "dataOwner": "Original D3, sole final package/registry writer; D2 master scope unchanged",
+    "serverOwner": "Original T45 only",
+    "reviewOwner": "Original QB only affected increment; actual ordinary-role PostgreSQL tests required",
+    "selectedApproach": "Reuse existing import_batch/import_record and protected initialization/publish records to bind one exact baseline plus complete warehouse/SKU membership; import actual explicit inventory only. Reuse standard_inventory_key_proof boundary for covered absent zero, preserve UNKNOWN outside/not published. Align first posting and import validation with same fact.",
+    "tables": 35,
+    "newTablesOrColumnsPlanned": false,
+    "newBroadPrivilegesPlanned": false,
+    "warehouseCount": 54,
+    "realSkuCount": 14819,
+    "universePairs": 800226,
+    "explicitInventoryRows": 39496,
+    "unlistedZeroCombinations": 760730,
+    "unresolvedIdentities": 0,
+    "inventorySignedQuantity": "80546",
+    "scopeIsNotAuthorization": true,
+    "normalLedgerDocumentsBatchAndIdempotencyRetained": true,
+    "cancelledOutputs": "No 760730 zero records, per-key Merkle proofs or associated large temporary store; no such file was generated.",
+    "sourceDependencyFindings": [
+      "standard_inventory_key_proof currently requires per-key import_record; absent means UNKNOWN",
+      "inventory-query-reader invokes same function for missing balance",
+      "first-posting and balance/ledger triggers depend on explicit-zero admission",
+      "stream-preflight currently requires explicit+zero partition and every zero approval row"
+    ],
+    "runtimeRequiredChecks": [
+      "published covered absence zero",
+      "unpublished and outside scope UNKNOWN",
+      "exact nonzero positive/negative values",
+      "first posting and concurrent balance creation under original lock",
+      "sales and transfer review/unreview/review, paired effects",
+      "duplicate import no new rows",
+      "failed transaction rollback and independent new-connection readback"
+    ],
+    "old221Artifact": "PRESERVED_STAGE_ONLY_NOT_UPLOAD_OR_DB_EXECUTION",
+    "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
+    "actualNewSQLOrPGTests": "NOT_YET_RUN",
+    "rolloutTimeImpact": "Avoids approximately2GB planned zero output and760730 key operations; implementation and real PG time not measured, no completion ETA promised.",
+    "next": "D1 gives minimal exact scope DTO to D3 and implements original dependencies; T45 finishes reusable bounded receiver and prepares accurate synthetic PG scope; QB reviews affected fixed successor."
   }
 }
