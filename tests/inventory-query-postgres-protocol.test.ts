@@ -75,7 +75,7 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
         const n = Number(id.slice(-12)) - 1000;
         return sizes.slice(0, 3).map((size, index) => ({ id: skuId(n, index), product_id: id, color_id: colorId, fit_id: fitId, size_id: size.id, color_name: "Native color", fit_name: "Y版（修身）" }));
       }); break;
-      case "balances": rows = (values[2] as string[]).flatMap(id => {
+      case "balances": rows = (values[2] as string[]).flatMap((id): Record<string, unknown>[] => {
         const coordinate = Number(id.slice(-12)) - 10000, n = Math.floor(coordinate / 4), index = coordinate % 4;
         const stored = index < 2 ? [{ warehouse_id: this.scope.warehouses[0]!.id, sku_id: id, quantity: index === 0 ? this.negative : "0", version: 1, last_operation_id: inventoryId("operation", 990 + n) }] : [];
         if(!sql.includes('zero_proof_state'))return stored;

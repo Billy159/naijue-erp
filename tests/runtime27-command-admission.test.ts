@@ -10,11 +10,11 @@ test('27 rejects absent,26 and boolean substitutes without pretending to issue h
  for(const value of [undefined,{...capability,profile:'EXACT26'},true]) assert.throws(()=>checkedRuntime27CommandCapability(value as never));
  await assert.rejects(checkedRuntime27CommandCapability({...capability,assertReady:async()=>true} as never).assertReady({},'DOCUMENT_COMMAND'));
 });
-test('27 absent stock remains unknown without looking up a source proof',async()=>{
- const calls:string[]=[];const client={release(){},async query(sql:string){calls.push(sql);if(/standard_inventory_key_proof|inventory_key_admission|import_record/.test(sql))throw Error('SOURCE_ACCESS_FORBIDDEN');return {rows:[],rowCount:0};}};
- const manager=PostgresPostingBalances.forRuntime27(client,capability,()=>{});await manager.lock([{warehouseId,skuId}]);
- await assert.rejects(manager.assertZero(warehouseId,skuId),{code:'INVENTORY_NOT_READY'});
- assert.ok(calls.every(sql=>!/standard_inventory_key_proof|inventory_key_admission|import_record/.test(sql)));
+test('27 absent scope or an out-of-domain key remains unknown after the same-client database check',async()=>{
+ for(const state of ['UNKNOWN',null]){const calls:string[]=[];const client={release(){},async query(sql:string){calls.push(sql);return {rows:sql.includes('runtime27:baseline-scope-zero')?[{state,balance_absent:true,ledger_absent:true}]:[],rowCount:0};}};
+  const manager=PostgresPostingBalances.forRuntime27(client,capability,()=>{});await manager.lock([{warehouseId,skuId}]);await assert.rejects(manager.assertZero(warehouseId,skuId),{code:'INVENTORY_NOT_READY'});
+  assert.equal(calls.filter(sql=>sql.includes('standard_inventory_key_proof')).length,1);assert.ok(calls.every(sql=>!sql.includes('INSERT')));
+ }
 });
 import { PostgresSalesUnitOfWork } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import { PostgresTransferUnitOfWork } from '../adapters/postgres/src/transfer-unit-of-work.ts';
@@ -29,11 +29,10 @@ for(const kind of ['sales','transfers'])test(`27 ${kind} checks original client 
  assert.ok(events.indexOf('DOCUMENT_COMMAND')<events.indexOf('WORK'));
  assert.equal(events.at(-2),'DOCUMENT_COMMAND');assert.equal(events.at(-1),'COMMIT');
 });
-test('27 cannot use stale or forged source proof to materialize missing stock',async()=>{
- const calls:string[]=[];const client={release(){},async query(sql:string){calls.push(sql);if(/standard_inventory_key_proof|inventory_key_admission|import_record/.test(sql))throw Error('SOURCE_ACCESS_FORBIDDEN');return {rows:[],rowCount:0};}};
- const manager=PostgresPostingBalances.forRuntime27(client,capability,()=>{});await manager.lock([{warehouseId,skuId}]);
- await assert.rejects(manager.assertZero(warehouseId,skuId),{code:'INVENTORY_NOT_READY'});
- assert.ok(calls.every(sql=>!/standard_inventory_key_proof|inventory_key_admission|import_record/.test(sql)));
+test('27 a scope zero cannot recreate an already-used or unexpectedly present balance',async()=>{
+ for(const [balance_absent,ledger_absent]of [[false,true],[true,false]]){const client={release(){},async query(sql:string){return {rows:sql.includes('runtime27:baseline-scope-zero')?[{state:'EXPLICIT_ZERO',balance_absent,ledger_absent}]:[],rowCount:0};}};
+  const manager=PostgresPostingBalances.forRuntime27(client,capability,()=>{});await manager.lock([{warehouseId,skuId}]);await assert.rejects(manager.assertZero(warehouseId,skuId),{code:'INVENTORY_NOT_READY'});
+ }
 });
 test('27 missing-stock decision cannot outlive its transaction',async()=>{
  let active=true;const client={release(){},async query(){return {rows:[],rowCount:0};}};

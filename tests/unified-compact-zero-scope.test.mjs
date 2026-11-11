@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,rm,readdir,symlink} from 'node:fs/promises';
 import {join} from 'node:path';import {tmpdir} from 'node:os';import {createHash} from 'node:crypto';
-import {readExplicitZeroScopeApproval,explicitZeroApprovalCount,explicitZeroApprovalDescriptor,explicitZeroApprovalWire,iterateExplicitZeroRecords,explicitZeroApproved,explicitZeroScopeCounts,explicitZeroScopeRecordValid,explicitZeroScopeMembersMatch,closeExplicitZeroApproval,isExplicitZeroApprovalDescriptor} from '../packages/application/src/unified-explicit-zero-approval.ts';
+import {readExplicitZeroScopeApproval,isInventoryBaselineScope,hasInventoryApprovalDescriptor,inventoryBaselineScopeContains,explicitZeroApprovalCount,explicitZeroApprovalDescriptor,explicitZeroApprovalWire,iterateExplicitZeroRecords,explicitZeroApproved,explicitZeroScopeCounts,explicitZeroScopeRecordValid,explicitZeroScopeMembersMatch,closeExplicitZeroApproval,isExplicitZeroApprovalDescriptor} from '../packages/application/src/unified-explicit-zero-approval.ts';
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const id=(kind,n)=>`${kind}0000000-0000-0000-0000-${String(n).padStart(12,'0')}`;
 const ns='SYNTHETIC_COMPACT_ZERO',source='a'.repeat(64),cutoff='2026-11-11T00:00:00+08:00';
@@ -48,4 +48,24 @@ test('empty zero set emits no record or descriptor, and invalid file/member/part
 });
 test('pinned evidence cannot escape its directory or follow a symlink',async()=>{
  const f=await fixture({explicit:[],mask:[]});try{await rm(join(f.dir,'warehouses.jsonl'));await symlink('skus.jsonl',join(f.dir,'warehouses.jsonl'));await assert.rejects(readExplicitZeroScopeApproval(f.input()),/SYMLINK/);f.summary.warehouses.relative_path='../outside.jsonl';await assert.rejects(readExplicitZeroScopeApproval(f.input()));}finally{await f.close();}
+});
+
+test('baseline scope emits no inferred rows or Merkle material and keeps exact signed per-warehouse quantities',async()=>{
+ const f=await fixture({explicit:[{warehouse_id:id(1,1),sku_id:id(2,1),quantity:'9007199254740993'},{warehouse_id:id(1,1),sku_id:id(2,2),quantity:'-3'},{warehouse_id:id(1,2),sku_id:id(2,1),quantity:'0'}],mask:[]});let a;
+ try{f.summary.format_version='INVENTORY_BASELINE_SCOPE_V1';a=await readExplicitZeroScopeApproval(f.input());const d=explicitZeroApprovalDescriptor(a);
+  assert.equal(isInventoryBaselineScope(a),true);assert.equal(hasInventoryApprovalDescriptor(a),true);assert.equal(explicitZeroApprovalCount(a),0);
+  assert.deepEqual([...iterateExplicitZeroRecords(a,new Set(f.w.map(r=>r.id)),new Set(f.s.map(r=>r.id)),new Set())],[]);
+  assert.equal(d.format_version,'INVENTORY_BASELINE_SCOPE_V1');assert.equal(d.nonzero_count,2);assert.equal(d.explicit_values.count,3);assert.equal(d.universe_count,8);
+  assert.deepEqual(d.warehouse_totals,[{warehouse_id:id(1,1),explicit_count:2,nonzero_count:2,quantity:'9007199254740990'},{warehouse_id:id(1,2),explicit_count:1,nonzero_count:0,quantity:'0'}]);
+  assert.equal(Object.hasOwn(d,'merkle_root_sha256'),false);assert.equal(isExplicitZeroApprovalDescriptor(d,ns,cutoff),true);
+  assert.equal(inventoryBaselineScopeContains(a,id(1,2),id(2,4)),true);assert.equal(inventoryBaselineScopeContains(a,id(1,99),id(2,4)),false);
+  assert.equal(explicitZeroScopeRecordValid(a,{fields:{warehouse_id:id(1,1),sku_id:id(2,1),quantity:'9007199254740993'},source_refs:[{file_sha256:source}]}),true);
+  assert.equal(explicitZeroScopeRecordValid(a,{fields:{warehouse_id:id(1,1),sku_id:id(2,1),quantity:'0'},source_refs:[{file_sha256:source}]}),false);
+  assert.equal(isExplicitZeroApprovalDescriptor({...d,nonzero_count:3},ns,cutoff),false);
+  assert.equal(explicitZeroApproved(a,ns,source,cutoff,{explicit_zero_evidence:{approval_row:1}}),false);
+ }finally{closeExplicitZeroApproval(a);await f.close();}
+});
+test('an unresolved baseline scope is rejected, and empty explicit input still carries its complete domain without zero rows',async()=>{
+ const bad=await fixture();try{bad.summary.format_version='INVENTORY_BASELINE_SCOPE_V1';await assert.rejects(readExplicitZeroScopeApproval(bad.input()),/UNRESOLVED/);}finally{await bad.close();}
+ const f=await fixture({explicit:[],mask:[]});let a;try{f.summary.format_version='INVENTORY_BASELINE_SCOPE_V1';a=await readExplicitZeroScopeApproval(f.input());assert.equal(hasInventoryApprovalDescriptor(a),true);const d=explicitZeroApprovalDescriptor(a);assert.equal(d.explicit_values.count,0);assert.equal(d.nonzero_count,0);assert.equal(d.warehouse_totals.length,2);assert.equal(isExplicitZeroApprovalDescriptor(d,ns,cutoff),true);}finally{closeExplicitZeroApproval(a);await f.close();}
 });

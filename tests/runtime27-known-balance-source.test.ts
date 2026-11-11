@@ -11,13 +11,14 @@ for(const quantity of ['0','-9','9007199254740993'] as const)test(`current27 kno
  m.assertCanAppend({warehouseId:w,skuId:s,operationId:o,quantityDelta:1n as never,postedAt:'2026-01-01T00:00:00.000000Z',eventKind:'UNAPPROVE',reversesEntryId:null,baselineAnchorOperationId:o});
  assert.ok(calls.every(sql=>!/import_record|import_source_row|standard_inventory_key_proof|inventory_key_admission|inventory_runtime_key_admitted/i.test(sql)));
 });
-test('current27 absent balance remains unknown and rejects without querying unavailable source proof',async()=>{
- const calls:string[]=[];const client={release(){},async query(sql:string){calls.push(sql);if(/import_record|import_source_row|standard_inventory_key_proof|inventory_key_admission|inventory_runtime_key_admitted/i.test(sql))throw Error('OFFLINE_SOURCE_UNAVAILABLE');return {rows:sql.includes('runtime27:publication')?[{id:o,ready:true}]:[],rowCount:0};}};
- const m=PostgresPostingBalances.forRuntime27(client,capability,()=>{});await m.lock([{warehouseId:w,skuId:s}]);
- await assert.rejects(m.assertZero(w,s),e=>e instanceof Error&&'code' in e&&e.code==='INVENTORY_NOT_READY');
- assert.ok(calls.every(sql=>!/import_record|import_source_row|standard_inventory_key_proof|inventory_key_admission|inventory_runtime_key_admitted/i.test(sql)));
+test('current27 scope zero is only prepared after its original key lock and does not materialize a zero row',async()=>{
+ const calls:string[]=[];const client={release(){},async query(sql:string){calls.push(sql);return {rows:sql.includes('runtime27:baseline-scope-zero')?[{state:'EXPLICIT_ZERO',balance_absent:true,ledger_absent:true}]:[],rowCount:0};}};
+ const m=PostgresPostingBalances.forRuntime27(client,capability,()=>{});await m.lock([{warehouseId:w,skuId:s}]);await m.assertZero(w,s);
+ assert.equal(m.get(w,s),undefined);assert.ok(calls.findIndex(q=>q.includes('inventory_key_lock'))<calls.findIndex(q=>q.includes('runtime27:baseline-scope-zero')));
+ m.assertCanAppend({warehouseId:w,skuId:s,operationId:o,quantityDelta:1n as never,postedAt:'2026-01-01T00:00:00.000000Z',eventKind:'APPROVE',reversesEntryId:null,baselineAnchorOperationId:null});
+ assert.ok(calls.every(q=>!q.includes('INSERT')));
 });
-test('current27 SQL successor uses existing locked balance, never a source proof to post or synthesize a missing key',()=>{
+test('frozen pre-scope SQL successor uses existing locked balance, never a source proof to post or synthesize a missing key',()=>{
  const sql=readFileSync(new URL('../adapters/postgres/patches/0027_standard_known_balance_runtime_v2.sql',import.meta.url),'utf8');
  for(const name of ['guard_cutoff_ledger','guard_recorded_live_balance_pair','validate_sparse_balance_commit','validate_transfer_effect'])assert.match(sql,new RegExp(`CREATE OR REPLACE FUNCTION naijue_erp\\.${name}\\(`));
  for(const name of ['guard_cutoff_ledger','guard_recorded_live_balance_pair','validate_sparse_balance_commit','validate_transfer_effect']){

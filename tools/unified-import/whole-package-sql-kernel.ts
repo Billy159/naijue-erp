@@ -1,4 +1,4 @@
-import {explicitZeroApprovalDescriptor,explicitZeroApprovalCount} from '../../packages/application/src/unified-explicit-zero-approval.ts';
+import {hasInventoryApprovalDescriptor,explicitZeroApprovalDescriptor,explicitZeroApprovalCount} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import type {ExplicitZeroApproval} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import {isNodeScryptPasswordHash} from '../../packages/authentication/src/passwords.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
@@ -20,7 +20,7 @@ async function one<C extends WholePackageClient>(c:C,sqlText:string,values:unkno
 function pending(v:Record<string,unknown>,r:StandardImportRequest){if(!sameKeys(v,'batch_id,cursor,operation_id,protocol,receipt,request_sha256,sequence,state')||v.protocol!=='STANDARD_IMPORT_SQL_V1'||v.state!=='PENDING_TRANSACTION'||v.operation_id!==r.operation_id||v.batch_id!==r.batch_id||typeof v.request_sha256!=='string'||!/^[a-f0-9]{64}$/.test(v.request_sha256)||!Number.isSafeInteger(v.sequence)||!Number.isSafeInteger(v.cursor)||Number(v.sequence)<0||Number(v.cursor)<0||!object(v.receipt))throw Error('KERNEL_REPLY_INVALID')}
 export function createWholePackageSqlKernel<C extends WholePackageClient>(encodedScrypt:string,options:{explicitZeroApproval?:ExplicitZeroApproval}={}):WholePackageKernel<C>{
  if(!isNodeScryptPasswordHash(encodedScrypt))throw TypeError('PRIVATE_CREDENTIAL_FORMAT_INVALID');
- const approved=options.explicitZeroApproval&&explicitZeroApprovalCount(options.explicitZeroApproval)?explicitZeroApprovalDescriptor(options.explicitZeroApproval):null;
+ const approved=options.explicitZeroApproval&&hasInventoryApprovalDescriptor(options.explicitZeroApproval)?explicitZeroApprovalDescriptor(options.explicitZeroApproval):null;
  // Validate the exact serialized public request, not just recognizable field
  // names. Keep an owned snapshot for reply binding across asynchronous SQL.
  const publicRequest=(request:StandardImportRequest)=>{

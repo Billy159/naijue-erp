@@ -196,10 +196,13 @@ export class PostgresPostingBalances {
     requireDomain(this.locked?.has(identity) && !this.balances.has(identity), "TRANSACTION_SCOPE", "Only an absent locked posting key can acquire a zero proof");
     if (this.provenZero.has(identity)) return;
     if (this.runtime27) {
-      // Runtime 27 stores explicit imported zero as an ordinary balance. A missing
-      // balance is UNKNOWN; never recover it from source records or infer a zero.
       await this.runtime27.capability.assertReady(this.runtime27.client, 'INVENTORY_ADMISSION');
-      requireDomain(false, "INVENTORY_NOT_READY", "Missing current stock is unknown and cannot be posted");
+      const rows=(await this.query(`/* runtime27:baseline-scope-zero */ SELECT naijue_erp.standard_inventory_key_proof($1::uuid,$2::uuid)->>'state' AS state,
+        NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_balance WHERE warehouse_id=$1::uuid AND sku_id=$2::uuid) AS balance_absent,
+        NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger WHERE warehouse_id=$1::uuid AND sku_id=$2::uuid) AS ledger_absent`,[warehouseId,skuId])).rows;
+      requireDomain(rows.length===1&&rows[0]!.state==='EXPLICIT_ZERO'&&rows[0]!.balance_absent===true&&rows[0]!.ledger_absent===true,
+        'INVENTORY_NOT_READY','First stock posting requires a published complete baseline scope and an unused locked key');
+      this.provenZero.add(identity);return;
     }
     const batchId = await this.publication();
     if (this.runtime26 !== undefined || this.admissionRuntime !== null) {

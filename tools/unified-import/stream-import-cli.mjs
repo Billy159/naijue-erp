@@ -1,4 +1,4 @@
-import {closeExplicitZeroApproval,explicitZeroApprovalDescriptor,explicitZeroApprovalCount} from '../../packages/application/src/unified-explicit-zero-approval.ts';
+import {isInventoryBaselineScope,closeExplicitZeroApproval,explicitZeroApprovalDescriptor,explicitZeroApprovalCount} from '../../packages/application/src/unified-explicit-zero-approval.ts';
 import {readHistoricalSettlementRetentionCliApproval} from './historical-settlement-retention-cli-input.mjs';
 import{openReviewedFresh35Host,openReviewedFresh35ProductionHost,openReviewedFresh35Admin154Host,openReviewedFresh35CompactZeroHost,prepareFresh35Admin154Import}from'./fresh35-host-session.mjs';
 import{loadFresh35CombinedRecordEnvelope}from'../../scripts/release/unified-install/fresh35-combined-record-v1.mjs';
@@ -95,7 +95,7 @@ async function runStreamOperation(argv,verifyOnly,whole){
   if(v['--explicit-zero-approval']){
    const {readExplicitZeroCliApproval}=await import('./explicit-zero-cli-input.mjs');
    explicitZeroApproval=await readExplicitZeroCliApproval(pkg,manifestObject,v['--explicit-zero-approval'],v['--explicit-zero-approval-sha256']);
-   if(explicitZeroApprovalCount(explicitZeroApproval)&&explicitZeroApprovalDescriptor(explicitZeroApproval).format_version==='EXPLICIT_ZERO_SCOPE_MERKLE_V2'&&!compactZero)throw Error('COMPACT_ZERO_EXPLICIT_HOST_PROFILE_REQUIRED');
+   if((isInventoryBaselineScope(explicitZeroApproval)||explicitZeroApprovalCount(explicitZeroApproval)&&explicitZeroApprovalDescriptor(explicitZeroApproval).format_version==='EXPLICIT_ZERO_SCOPE_MERKLE_V2')&&!compactZero)throw Error('COMPACT_ZERO_EXPLICIT_HOST_PROFILE_REQUIRED');
   }
   let historicalStaffHallApproval;
   if(v['--staff-hall-approval']){

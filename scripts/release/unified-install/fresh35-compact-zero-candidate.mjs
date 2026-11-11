@@ -25,7 +25,7 @@ export function compileFresh35CompactZeroCandidate(predecessors,patchSql,explici
  const reviewSql=patchSql.replace(/^BEGIN;$/m,"BEGIN;\nDO $compact_zero_review_only$ BEGIN RAISE EXCEPTION 'FRESH35_COMPACT_ZERO_REVIEW_ONLY' USING ERRCODE='55000'; END $compact_zero_review_only$;");
  return {patchSql,reviewSql,specs:[spec],changedBodies,newRoutines:[],predecessorBodies:[previous],manifest:{format:'FRESH35_COMPACT_ZERO_SOURCE_CANDIDATE_V2',patchSqlSha256:hash(patchSql),reviewSqlSha256:hash(reviewSql),tableCount:35,newTables:0,newColumns:0,newRoutines:0,routineCount:154,predecessorRoutineCount:154,routineChanges,permissionChanges:[],permissionsChanged:false,tablePrivilegesChanged:false,columnChanges:[],constraintChanges:[],triggerChanges:[],successorRoutinePins:predecessors.map(r=>({signature:r.signature,sha256:normalize(r.signature)===normalize(previous.signature)?hash(body):r.sha256})),sourceOnly:true,engineVerified:false,installationReady:false,targetAdmitted:false,activeProfilesChanged:false,installationRecordHandling:'PRESERVE_ADMIN154_RECORD; REQUIRE_DISTINCT_COMPACT_ZERO_SUCCESSOR_RECORD_AND_AUTHORITY'}};
 }
-export async function loadFresh35CompactZeroCandidate(root){
+export async function loadFrozenFresh35CompactZeroCandidate(root){
  need(hash(await readFile(resolve(root,modulePath)))===loadedModuleSha256,'RUNNING_MODULE_SOURCE_DIFFERS');const base=await loadFresh35RetirementPlan(root),routines=new Map(base.retainedRoutines.map(r=>[normalize(r.signature),r]));let parent;
  for(const load of [loadFresh35SalesHallCandidate,loadFresh35HistoricalAmountCandidate,loadFresh35HistoricalSettlementCandidate,loadFresh35HistoricalSettlementDifferenceCandidate,loadFresh35AdminProvisionCandidate]){parent=await load(root);for(const r of [...parent.changedBodies,...(parent.newRoutines??[])])routines.set(normalize(r.signature),r);}
  const candidate=compileFresh35CompactZeroCandidate([...routines.values()],await readFile(resolve(root,patchPath),'utf8'),await readFile(resolve(root,'adapters/postgres/patches/0027_explicit_zero_evidence_successor.sql'),'utf8')),pins=new Map(parent.manifest.sourcePins.map(p=>[p.path,p]));for(const path of [modulePath,patchPath])pins.set(path,{path,sha256:hash(await readFile(resolve(root,path)))});
@@ -130,3 +130,7 @@ let sql=template.replace(/^--[\s\S]*?BEGIN;/,'-- Compact V2 zero scope, streamed
 const parts=sql.split('$explicit_zero_changes$');sql=parts[0]+'$compact_zero_changes$'+JSON.stringify(spec)+'$compact_zero_changes$'+parts[2];sql=sql.replaceAll('$explicit_zero_profile$','$compact_zero_profile$').replaceAll('EXPLICIT_ZERO_PREDECESSOR_DIFFERS','COMPACT_ZERO_PREDECESSOR_DIFFERS');
  return {patchSql:sql,spec};
 }
+
+/** Current continuation reuses the existing successor host seam. Frozen SQL37
+ * remains available only through its explicit historical source loader. */
+export {loadFresh35BaselineScopeCandidate as loadFresh35CompactZeroCandidate} from './fresh35-baseline-scope-candidate.mjs';

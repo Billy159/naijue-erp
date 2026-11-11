@@ -17,7 +17,7 @@ export async function readExplicitZeroCliApproval(pkg,manifest,path,trustedSha25
  if(!relation||relation!=='..'&&!relation.startsWith('..'+sep)&&!relation.startsWith(sep))throw Error('EXPLICIT_ZERO_APPROVAL_OUTSIDE_PACKAGE_REQUIRED');
  const bytes=await readBoundedCliFile(path,64*1024*1024),first=decodeUtf8(bytes).split('\n',1)[0];
  const input={bytes,trustedSha256,sourceNamespace:manifest.source_namespace,inventoryFileSha256:manifest.inventory_source?.source_file_sha256,cutoffAt:manifest.inventory_source?.cutoff_at};
- if(parseStrictJson(first).format_version==='EXPLICIT_ZERO_SCOPE_APPROVAL_V2')return readExplicitZeroScopeApproval({...input,directory:dirname(await realpath(path))});
+ if(['EXPLICIT_ZERO_SCOPE_APPROVAL_V2','INVENTORY_BASELINE_SCOPE_V1'].includes(parseStrictJson(first).format_version))return readExplicitZeroScopeApproval({...input,directory:dirname(await realpath(path))});
  return readExplicitZeroApproval(input);
 }
 /** Same independent staff approval verifier used by the formal import route. */

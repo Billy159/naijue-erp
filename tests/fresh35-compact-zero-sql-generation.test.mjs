@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
 import {loadFresh35AdminProvisionCandidate} from '../scripts/release/unified-install/fresh35-admin-provision-candidate.mjs';
-import {generateFresh35CompactZeroPatch,compileFresh35CompactZeroCandidate,loadFresh35CompactZeroCandidate} from '../scripts/release/unified-install/fresh35-compact-zero-candidate.mjs';
+import {generateFresh35CompactZeroPatch,compileFresh35CompactZeroCandidate,loadFrozenFresh35CompactZeroCandidate as loadFresh35CompactZeroCandidate} from '../scripts/release/unified-install/fresh35-compact-zero-candidate.mjs';
 const root=new URL('../',import.meta.url).pathname,hash=s=>createHash('sha256').update(s).digest('hex');
 const patch=await readFile(new URL('../adapters/postgres/patches/0037_compact_zero_scope_successor.sql',import.meta.url),'utf8'),v1=await readFile(new URL('../adapters/postgres/patches/0027_explicit_zero_evidence_successor.sql',import.meta.url),'utf8'),parent=await loadFresh35AdminProvisionCandidate(root),routine=parent.changedBodies.find(r=>r.signature.includes('.standard_whole_package_command_v2(')),generated=generateFresh35CompactZeroPatch(routine,v1);
 test('the actual SQL37 bytes equal deterministic callback generation; regex literals never expand original suffixes',()=>{

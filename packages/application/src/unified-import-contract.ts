@@ -6,7 +6,7 @@ import {reconcileSourceOccurrenceEvidence} from "./unified-import-source-reconci
 import type {SourceOccurrenceEvidence} from "./unified-import-source-reconciliation.ts";
 import {currentEffectiveAlignmentMatchesManifest} from "./unified-current-effective-alignment.ts";
 import type {CurrentEffectiveAlignmentEvidence} from "./unified-current-effective-alignment.ts";
-import {explicitZeroApproved,explicitZeroApprovalCount,explicitZeroScopeCounts,explicitZeroScopeRecordValid,explicitZeroScopeMembersMatch} from './unified-explicit-zero-approval.ts';
+import {inventoryBaselineScopeContains,isInventoryBaselineScope,explicitZeroApproved,explicitZeroApprovalCount,explicitZeroScopeCounts,explicitZeroScopeRecordValid,explicitZeroScopeMembersMatch} from './unified-explicit-zero-approval.ts';
 import type {ExplicitZeroApproval, ExplicitZeroEvidence} from './unified-explicit-zero-approval.ts';
 import { historicalStaffNullHallApproved, historicalStaffHallApprovalMatchesSource } from "./unified-historical-staff-hall-approval.ts";
 import type { HistoricalStaffHallApproval } from "./unified-historical-staff-hall-approval.ts";
@@ -1451,7 +1451,7 @@ function validatePackageUnchecked(input:unknown,options:ValidationOptions={}):Pa
   if(!exactKeys(alignment,["scope","evidence_sha256"]) || alignment.scope!=="CURRENT_EFFECTIVE" || !hash(alignment.evidence_sha256) || (!sourceHashes.has(alignment.evidence_sha256 as string)&&!currentEffectiveAlignmentMatchesManifest(options.currentEffectiveAlignmentEvidence,m)) || alignment.evidence_sha256===inventory.source_file_sha256 || (inventory.exported_at===null||options.currentEffectiveAlignmentEvidence!==undefined)&&!currentEffectiveAlignmentMatchesManifest(options.currentEffectiveAlignmentEvidence,m))issue("BASELINE_DOCUMENT_ALIGNMENT_UNPROVEN","manifest.document_cutoff_alignment","Current-effective ordinary documents need separately pinned cutoff-alignment evidence","BLOCK_CUTOVER");
   if(options.explicitZeroApproval){
     const scope=explicitZeroScopeCounts(options.explicitZeroApproval);
-    if(scope){if(!explicitZeroScopeMembersMatch(options.explicitZeroApproval,input.registry as IdentityEntry[]))issue("EXPLICIT_ZERO_SCOPE_REGISTRY_SET","registry","Both final warehouse and SKU sets must equal the full approved domain");if(stage==="READY"&&scope.unknown)issue("EXPLICIT_ZERO_SCOPE_UNKNOWN","inventory_baseline","Unresolved masked pairs prevent READY");if((rowsByTable.get("inventory_baseline")?.length??0)!==scope.explicit_confirmed+scope.zero)issue("EXPLICIT_ZERO_SCOPE_PARTITION_INCOMPLETE","inventory_baseline","All confirmed explicit and zero pairs must appear exactly once");}
+    if(scope){if(!explicitZeroScopeMembersMatch(options.explicitZeroApproval,input.registry as IdentityEntry[]))issue("EXPLICIT_ZERO_SCOPE_REGISTRY_SET","registry","Both final warehouse and SKU sets must equal the full approved domain");if(stage==="READY"&&scope.unknown)issue("EXPLICIT_ZERO_SCOPE_UNKNOWN","inventory_baseline","Unresolved masked pairs prevent READY");if((rowsByTable.get("inventory_baseline")?.length??0)!==scope.explicit_confirmed+(isInventoryBaselineScope(options.explicitZeroApproval)?0:scope.zero))issue("EXPLICIT_ZERO_SCOPE_PARTITION_INCOMPLETE","inventory_baseline","All confirmed explicit and zero pairs must appear exactly once");}
     const approved=rowsByTable.get("inventory_baseline")?.filter(row=>Object.hasOwn(row,"explicit_zero_evidence"))??[];
     if(approved.length!==explicitZeroApprovalCount(options.explicitZeroApproval)||new Set(approved.map(row=>row.explicit_zero_evidence?.approval_row)).size!==approved.length)issue("EXPLICIT_ZERO_APPROVAL_SET_INCOMPLETE","inventory_baseline","Every independently approved key must appear exactly once");
   }
@@ -1519,7 +1519,7 @@ function validateRelations(tables:Map<string,StandardRecord[]>,registry:Map<stri
     .filter(row=>Object.hasOwn(row,"explicit_zero_evidence")?explicitZeroApproved(explicitZeroApproval,sourceNamespace,inventorySourceSha256,inventoryCutoff,row):Array.isArray(row.source_refs)&&row.source_refs.some(ref=>object(ref)&&ref.file_sha256===inventorySourceSha256))
     .map(row=>stockKey(row.fields.warehouse_id,row.fields.sku_id)));
   const requireStockKey=(warehouse:unknown,sku:unknown,path:string)=>{
-    if(stage==="READY"&&!coveredStockKeys.has(stockKey(warehouse,sku)))
+    if(stage==="READY"&&!coveredStockKeys.has(stockKey(warehouse,sku))&&!inventoryBaselineScopeContains(explicitZeroApproval,warehouse,sku))
       issue("BASELINE_KEY_COVERAGE_UNKNOWN",path,"READY approved stock endpoints require explicit designated-snapshot key evidence; missing is unknown, never zero","BLOCK_CUTOVER");
   };
   const categories=byId("product_category");
