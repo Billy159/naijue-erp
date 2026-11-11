@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T13:01:17+08:00",
+  "updatedAt": "2026-11-11T13:07:27+08:00",
   "stage": "R3_CLEAN_STOPPED_MAINTENANCE08_SOURCE_PAIRING_CURRENT_BATCH_DRAFT_R4_22_TABLES",
   "lastVerifiedRemoteCommit": "fdd651e23956eaa1952a407e59e75220b5b481bf",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -44546,7 +44546,8 @@
         "sourceSet": "336fb51de1051803406eb831a0a457362858d12eae2d4d84fa2929ea79331226",
         "selfChecks": 12,
         "independentAcceptance": "PENDING_QB",
-        "serverActions": 0
+        "serverActions": 0,
+        "handoffSha256": "3708961e9d1acfedf7933416e262914417ae5936be903c4f9bae1f3c42baac1e"
       },
       "D2AppArtifactOwnerScope": {
         "owner": "original D2",
@@ -44554,7 +44555,15 @@
         "mode": "Read-only frozen source packaging; no source, lock, database or server writes",
         "status": "DISPATCHED_MEDIUM_UNIQUE_OUTPUT",
         "mastersWriterUnchanged": true
-      }
+      },
+      "budgetSha256": "370298ebf45e0d617e917921d7cc6152afda39d61094ae3f2fcf466ccac4d7a1",
+      "budgetState": "FEASIBLE_ESTIMATE_NOT_E2E_PASS",
+      "fourModulesIndependentReview": {
+        "status": "PASS_SOURCE_MAINTENANCE08_IDENTITY_FOUR_MODULES_ONLY",
+        "resultSha256": "f44a8b31a00189f80d61584f0775d7eae39defa955a869bb247eaf82fb012621"
+      },
+      "pairedT45Commit": "08840a44f49a4fca9e82489dab42b153aeaf183e",
+      "remaining": "D1/5 paired modules independent increment acceptance, D2 real artifact and original receiver readiness, actual full static preplacement then C finite authority. No new server job yet."
     }
   },
   "freshDataRefresh20261111": {
@@ -44725,7 +44734,12 @@
       "priorCount": 53,
       "identityAllocated": true,
       "missingRelation": "Exact hall_id for new warehouse; group affected documents by one relation, do not repeat per-document decisions",
-      "noNameBasedHallGuess": true
+      "noNameBasedHallGuess": true,
+      "hallDecision": "Create corresponding hall named 世贸银泰ST and assign warehouse 91121; verify same entity first, preserve other relations",
+      "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "humanMessageId": "01a1c8fd-9146-7502-a103-74c3fae032fa",
+      "directHumanReadVerified": true,
+      "owner": "D2 masters then D3 registry/relations"
     }
   },
   "recoveredChatMessages20261111": {
