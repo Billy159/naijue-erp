@@ -134,7 +134,7 @@ export function fresh35Admin154SourceData(token){describeFresh35CombinedSource(t
 /** Explicit compact-zero successor. Original profiles never select this branch. */
 export async function loadFresh35CompactZeroSource(root,options){
  root=resolve(root);const base=await loadFresh35Admin154Source(root,options),original=sources.get(base);
- const {loadFresh35CompactZeroCandidate}=await import('./fresh35-compact-zero-candidate.mjs'),candidate=await loadFresh35CompactZeroCandidate(root);
+ const {loadFresh35CompactZeroCandidate}=await import(pathToFileURL(resolve(root,'scripts/release/unified-install/fresh35-compact-zero-candidate.mjs')).href),candidate=await loadFresh35CompactZeroCandidate(root);
  const pins=new Map(original.source.currentSourcePins.map(p=>[p.path,p]));for(const p of candidate.manifest.sourcePins){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'COMPACT_ZERO_SOURCE_CONFLICT');pins.set(p.path,p);}
  const extra=await importClosure(root,['scripts/release/unified-install/fresh35-compact-zero-candidate.mjs','tools/unified-import/fresh35-host-session.mjs','tools/unified-import/whole-host-session.mjs','tools/unified-import/stream-import-cli.mjs']);for(const p of extra){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'COMPACT_ZERO_SOURCE_CONFLICT');pins.set(p.path,p);}
  const binding={format:'FRESH35_COMPACT_ZERO_SOURCE_V2',predecessorSourceSetSha256:original.source.sourceSetSha256,currentSourcePins:[...pins.values()].sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0),patchSqlSha256:candidate.manifest.patchSqlSha256,routineChanges:candidate.manifest.routineChanges,permissionChanges:[]};

@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile,mkdtemp,writeFile,rm} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';import {spawnSync} from 'node:child_process';
+test('actual public CLI exit accepts compact prepared only with no writes and confirmed local/connection cleanup',async()=>{
+ const d=await mkdtemp(join(tmpdir(),'compact-dispatch-model-'));try{await writeFile(join(d,'cli.mjs'),await readFile(new URL('../tools/unified-import/cli.mjs',import.meta.url)));
+ await writeFile(join(d,'stream-import-cli.mjs'),"export async function runStreamImport(a){const r={state:'COMPACT_ZERO_PREPARED',business_database_writes:false,connection_cleanup:'CLOSED'};if(a[0]==='close')r.connection_cleanup='CLOSE_FAILED';if(a[0]==='local')r.local_cleanup='FAILED';if(a[0]==='write')r.business_database_writes=true;if(a[0]==='unknown')r.state='UNKNOWN';if(a[0]==='unrecognized')r.state='COMPACT_UNRECOGNIZED';return r}");
+ for(const [name,exit]of [['ok',0],['close',3],['local',3],['write',3],['unknown',2],['unrecognized',1]]){const p=spawnSync(process.execPath,[join(d,'cli.mjs'),'stream-import',name],{encoding:'utf8'});assert.equal(p.status,exit,name+': '+p.stderr);const v=JSON.parse(p.stdout);if(name==='ok'){assert.equal(v.state,'COMPACT_ZERO_PREPARED');assert.equal(v.business_database_writes,false);}}
+ }finally{await rm(d,{recursive:true,force:true});}
+});

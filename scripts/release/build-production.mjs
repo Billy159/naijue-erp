@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError, native35Closure, native35Contract, native35SourceProfile, native35Admin154SourceProfile } from './manifest.mjs';
+import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError, native35Closure, native35Contract, native35SourceProfile, native35DefaultSourceProfile } from './manifest.mjs';
 
 const FRONTEND_BUILDER = 'apps/web/demo-replica/build-production-host.mjs';
 const FRONTEND_ENTRY = releaseContract.entrypoints.frontend.source;
@@ -179,7 +179,7 @@ export async function buildProduction(options) {
       });
     } }] });
   let native35;
-  requireRelease(sourceProfile!==native35Admin154SourceProfile || native35Needed, 'NATIVE35_PROFILE_REQUIRES_NATIVE_BOUNDARY');
+  requireRelease(sourceProfile===native35DefaultSourceProfile || native35Needed, 'NATIVE35_PROFILE_REQUIRES_NATIVE_BOUNDARY');
   if(native35Needed){
     const closure=await native35Closure(sourceRoot,options.native35ReferenceDirectory,sourceProfile);
     native35={referenceDirectory:options.native35ReferenceDirectory,closure};

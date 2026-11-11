@@ -17,8 +17,9 @@ export const releaseContractSource = Object.freeze({ path: 'config/release-contr
 export const native35Contract = releaseContract.native35;
 export const native35DefaultSourceProfile = 'FRESH35_COMBINED_CURRENT_SOURCE_V1';
 export const native35Admin154SourceProfile = 'FRESH35_A53_ADMIN154_SOURCE_V1';
+export const native35CompactZeroSourceProfile = 'FRESH35_COMPACT_ZERO_SOURCE_V2';
 export function native35SourceProfile(value=native35DefaultSourceProfile) {
-  requireRelease(value===native35DefaultSourceProfile || value===native35Admin154SourceProfile, 'NATIVE35_UNKNOWN_SOURCE_PROFILE');
+  requireRelease(value===native35DefaultSourceProfile || value===native35Admin154SourceProfile || value===native35CompactZeroSourceProfile, 'NATIVE35_UNKNOWN_SOURCE_PROFILE');
   return value;
 }
 export function native35SourceName(name) {
@@ -36,15 +37,20 @@ export async function native35Closure(sourceRoot,referenceDirectory,profile) {
   await canonicalAbsolute(referenceDirectory,'directory');
   const module=await import(pathToFileURL(path.join(sourceRoot,'scripts/release/unified-install/fresh35-combined-source-v1.mjs')).href);
   const references=await module.resolveFresh35ReferenceInputPaths(referenceDirectory);
-  const descriptor=module.describeFresh35CombinedSource(await (profile===native35Admin154SourceProfile?module.loadFresh35Admin154Source:module.loadFresh35CombinedSource)(sourceRoot,references));
+  const descriptor=module.describeFresh35CombinedSource(await (profile===native35CompactZeroSourceProfile?module.loadFresh35CompactZeroSource:profile===native35Admin154SourceProfile?module.loadFresh35Admin154Source:module.loadFresh35CombinedSource)(sourceRoot,references));
   requireRelease(descriptor.format===profile && descriptor.capturedSourcePins.length===180
     && Array.isArray(descriptor.currentSourcePins) && native35Contract.boundaries.every(boundary=>descriptor.currentSourcePins.some(p=>p.path===boundary.entry)), 'NATIVE35_COMPLETE_SOURCE_SET_REQUIRED');
   if(profile===native35Admin154SourceProfile)requireRelease(descriptor.currentSourcePins.length===219
     && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'
       && p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'), 'NATIVE35_EXACT_ADMIN154_PATCH_REQUIRED');
+  if(profile===native35CompactZeroSourceProfile)requireRelease(descriptor.currentSourcePins.length===221
+    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'&&p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b')
+    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0037_compact_zero_scope_successor.sql'&&p.sha256==='2e57e6d1ee8ed81c37bd061b8aa1433a58fd81a108f95b3bbb35f17407e5bcb3')
+    && descriptor.routineChanges.length===1&&descriptor.routineChanges[0].before==='071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b'
+    && descriptor.routineChanges[0].after==='5f4591da444f6386b54f1e5e9a9579903832bcec4f8f0415dd5cb3a0ae4e431b', 'NATIVE35_EXACT_COMPACT_ZERO_PATCH_REQUIRED');
   for(const pin of descriptor.currentSourcePins){native35SourceName(pin.path);requireRelease(/^[a-f0-9]{64}$/.test(pin.sha256),'NATIVE35_SOURCE_PIN_REQUIRED');
     const fixture=native35Contract.fixturePins.find(p=>p.path===pin.path);if(fixture)requireRelease(fixture.sha256===pin.sha256,'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED');}
-  return {...(profile===native35Admin154SourceProfile?{sourceProfile:profile}:{}),sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};
+  return {...(profile!==native35DefaultSourceProfile?{sourceProfile:profile}:{}),sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};
 }
 
 export class ReleaseError extends Error {
