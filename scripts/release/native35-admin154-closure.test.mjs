@@ -13,16 +13,16 @@ const patch='adapters/postgres/patches/0036_admin_provision_only_successor.sql';
 
 test('native35 default closure preserves the exact 152 selection and original runtime migration set',async()=>{
  const original=await native35Closure(root,reference),explicit=await native35Closure(root,reference,native35DefaultSourceProfile);
- assert.deepEqual(explicit,original);assert.equal(original.pins.length,218);
- assert.equal(original.sourceSetSha256,'c5222ea3deaed75fc7e9d051fb2b003fb536de3374d14f4258afe0bbed177963');
+ assert.deepEqual(explicit,original);assert.equal(original.pins.length,219);
+ assert.equal(original.sourceSetSha256,'35d6ffc35ea9171a8c13a81539ecf7fbec40f441322d4dfdee612b6486b82471');
  assert.deepEqual(Object.keys(original),['sourceSetSha256','pins','referenceIndexSha256']);
  assert.equal(original.pins.some(p=>p.path===patch),false);assert.equal(runtimeSqlPatches.has(patch),false);assert.equal(runtimeSqlPatches.size,13);
 });
-test('native35 explicit154 copies all219 same-source members and the relocated native loader can read SQL36',async()=>{
+test('native35 explicit154 copies all 220 same-source members and the relocated native loader can read SQL36',async()=>{
  const closure=await native35Closure(root,reference,native35Admin154SourceProfile);
  const paths=await resolveFresh35ReferenceInputPaths(reference),descriptor=describeFresh35CombinedSource(await loadFresh35Admin154Source(root,paths));
- assert.equal(closure.sourceProfile,native35Admin154SourceProfile);assert.equal(closure.pins.length,219);assert.deepEqual(closure.pins,descriptor.currentSourcePins);
- assert.equal(closure.sourceSetSha256,descriptor.sourceSetSha256);assert.equal(closure.sourceSetSha256,'fdf29cd82bc54110a91d224a970537216417168792bc83b4b8f73c17a559da75');
+ assert.equal(closure.sourceProfile,native35Admin154SourceProfile);assert.equal(closure.pins.length,220);assert.deepEqual(closure.pins,descriptor.currentSourcePins);
+ assert.equal(closure.sourceSetSha256,descriptor.sourceSetSha256);assert.equal(closure.sourceSetSha256,'0ba2beef0446879f02dc8a75678a9a2bbb241d6be5bc501fc25057443c1d8c32');
  assert.equal(closure.pins.find(p=>p.path===patch)?.sha256,'6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b');
  const stage=await realpath(await mkdtemp(path.join(tmpdir(),'native154-members-')));
  try{

@@ -40,10 +40,10 @@ export async function native35Closure(sourceRoot,referenceDirectory,profile) {
   const descriptor=module.describeFresh35CombinedSource(await (profile===native35CompactZeroSourceProfile?module.loadFresh35CompactZeroSource:profile===native35Admin154SourceProfile?module.loadFresh35Admin154Source:module.loadFresh35CombinedSource)(sourceRoot,references));
   requireRelease(descriptor.format===profile && descriptor.capturedSourcePins.length===180
     && Array.isArray(descriptor.currentSourcePins) && native35Contract.boundaries.every(boundary=>descriptor.currentSourcePins.some(p=>p.path===boundary.entry)), 'NATIVE35_COMPLETE_SOURCE_SET_REQUIRED');
-  if(profile===native35Admin154SourceProfile)requireRelease(descriptor.currentSourcePins.length===219
+  if(profile===native35Admin154SourceProfile)requireRelease(descriptor.currentSourcePins.length===220
     && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'
       && p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'), 'NATIVE35_EXACT_ADMIN154_PATCH_REQUIRED');
-  if(profile===native35CompactZeroSourceProfile)requireRelease(descriptor.currentSourcePins.length===222
+  if(profile===native35CompactZeroSourceProfile)requireRelease(descriptor.currentSourcePins.length===223
     && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'&&p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b')
     && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql'&&p.sha256==='d296a2a2fc180f79ff3991e0c52b61d826569711415131680294aa2a65623310')
     && !descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0037_compact_zero_scope_successor.sql')
