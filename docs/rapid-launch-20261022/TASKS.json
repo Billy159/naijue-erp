@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T06:57:43+08:00",
+  "updatedAt": "2026-11-11T10:26:25+08:00",
   "stage": "R3_STOPPED_SUCCESSOR06_SOURCE_AND_05_APP_BINDING_PENDING",
   "lastVerifiedRemoteCommit": "251090b8ff3012837228029bedcaec46a8e8b34a",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1786,20 +1786,20 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T08:19:20+08:00",
+    "asOf": "2026-11-11T10:24:49+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "1d14b77a672a587738adcaeec222712319491963",
+    "publicStatusCommit": "ec9d6bb30c7f9ec310e031dad481d11cb6332df8",
     "currentOwners": {
-      "T45": "Same R3 clean stop and restore03 completed after UPGRADE02 preparation failure. Next prepare exact same-image ordinary read reproduction only. APP05 sources remain prepared.",
-      "D1": "Fixed 4fedefb4 driver stage/errno diagnostics; 10 targeted local tests pass. Preparing same-function Linux ordinary UID verification with T45.",
-      "QB": "Finite-role closeout and ordinary05/APP binding deltas pass source scope. Review next exact proof-read probe only.",
-      "D2": "Exact 4602dd09 APP rebuild and T45 controlled reception complete. Existing 1b8 artifact retained.",
-      "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
+      "T45": "Probe-read-01 failed before reader on missing keeper Tmpfs; same CID closeout and minimal fix, then maintain07 preparations",
+      "D1": "Exact maintenance07 source fixed and QB11 passed, GitHub SHA independently verified",
+      "QB": "F01 and exact 0710 increments passed source-only. Review only changed successor scope.",
+      "D2": "Exact 15278 APP constructed and six fixed artifact hashes verified by C, not uploaded",
+      "C": "Exact synthetic authority delivered under user delegation through noon; verify actual results and bounded continuation."
     },
     "inputScope": "Nov2 batch excluded by latest human directive. Retain historical full-batch evidence, do not restart old cleaning/import. This continuation does not certify real data readiness.",
     "historicalOperationalStateNotice": "The following operationalState is preserved old evidence; this current snapshot and latest nested receipts supersede its runtime claims.",
@@ -44227,7 +44227,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "D1 fixed phase/errno diagnostics. T45 prepares a same-image ordinary UID proof-reader reproduction with actual mount modes and shared synthetic namespace; QB reviews only that delta. No R3 restart until cause and minimal fix are verified.",
+    "next": "T45 exact failed synthetic keeper cleanup, fix only missing keeper Tmpfs with QB delta. Same R3 remains stopped; maintenance07/UPGRADE03/A01 preparation continues.",
     "maintenance06LatestCycle": {
       "apply06": {
         "status": "ACTUAL_COMPLETED_0_TWO_FINITE_ROLES_STOPPED",
@@ -44352,16 +44352,72 @@
       "resultSha256": "38f60d89d48d3e676c0266be331a897acf72858557fe8a7c5d2923335fe8adcb"
     },
     "plannedSuccessor": {
-      "maintenanceRequestKey": "t45-first-r3-native-service-start-20261111-06",
-      "containerName": "t45-fresh35-first-production-20261110-r3-service-06",
-      "predecessorCarrier": "t45-first-r3-native-service-start-20261111-04-02",
-      "predecessorRestore": "t45-r3-admin154-maintenance-auth-restore-20261111-02",
+      "maintenanceRequestKey": "t45-first-r3-native-service-start-20261111-07",
+      "containerName": "t45-fresh35-first-production-20261110-r3-service-07",
+      "upgradeKey": "t45-r3-admin154-upgrade-20261111-03",
+      "adminKey": "t45-r3-admin154-admin-provision-20261111-01",
+      "applyKey": "t45-r3-admin154-maintenance-auth-20261111-07",
+      "restoreKey": "t45-r3-admin154-maintenance-auth-restore-20261111-04",
       "ordinaryRequestKey": "t45-first-r3-native-service-start-20261111-05",
-      "state": "SOURCE_ONLY_NO_LIVE_PROOF"
+      "state": "ALIGNED_SOURCE_PREPARATION_ONLY_NOT_STARTED"
     },
     "appCaller": {
       "currentFixedCaller": "DA7_CURRENT03_DIAGNOSTIC",
       "next": "T45 rebind once to fixed successor APP and real ordinary05 proof"
+    },
+    "proofTraversal": {
+      "sourceCommit": "e4f806b86335b611e2ff4fc7a0b8bfd8d87c9c72",
+      "tree": "6bf0cc154c2ffaff9c36aab7de36a14241adc5a4",
+      "loaderSha256": "0c5b330f4ffded700627e61f54028b13f7caf78df6fc6c001152c23e5c65f49c",
+      "sourceReadySha256": "e29e59ce9377f5fd2c5338b521c5ea9fedb47b6620d597e63b88d97966268b27",
+      "independentReviewSha256": "7b896d57df2f27db6b83460b3ab0eb02b30eaf16fa75dc9b2e0ac870b2254838",
+      "closeoutFixCommit": "5bb0cdd3ecab719debc02fb567036fa83d4a6599",
+      "closeoutReviewSha256": "f322ec5d94583cc2a578d1c80ad38e44e2dd00a9598bca9be4eff46486f69b8c",
+      "requestKey": "t45-r3-admin154-linux-proof-read-20261111-01",
+      "authoritySha256": "9845d39f49d6ab65549a62bcd9a958163d99b38c9e9c7b0a92ef414632fe700c",
+      "state": "ACTUAL_FAILED_DOCKER_INSPECT_BEFORE_PROOF_READER",
+      "actualR3DirectoryChanged": false,
+      "R3Restarted": false,
+      "comparison": "synthetic root:root0700 vs root:10001 0710; UID10001 exact driver plus list/private-file denials and UID10002 denial; no real data mounted",
+      "exitCode": 2,
+      "elapsedSeconds": 3.3767729881219566,
+      "resultSha256": "d33975d17b2235e4f4cc5bbc8e50c5c56e7cf42acf3574628f425d2cd16790c7",
+      "cleanupSha256": "6df038f0ed9c2bb0ac0b6cde726b21a5bc9f3451cf88ca48dc95ba2d27b6cc22",
+      "firstSafeCode": "KeyError",
+      "confirmedMissingField": "HostConfig.Tmpfs for keeper without tmpfs",
+      "keeperCid": "407e8ea4224e0bb5e33a7fef66885f97fd33f5a00b94d5542f65bcd3a4f82c2b",
+      "cleanupIndependent": "ACTUAL_PRECISE_KEEPER_REMOVED_THREE_NAMES_AND_ROOT_ABSENT",
+      "proofReaderStarted": false,
+      "permissionComparison": "NOT_RUN",
+      "authorityTimesCST": [
+        "2026-11-11T10:02:14.314+08:00",
+        "2026-11-11T10:32:14.314+08:00"
+      ],
+      "actualSummarySha256": "b26a449103635d2104763c2cff56148066fdec48a07049d79674e360aa9333c6",
+      "successorCommit": "53eee9b311c68686f57e207c73302b5e562af99e",
+      "successorState": "MINIMAL_TMPFS_FIX_AWAITING_QB"
+    },
+    "maintenance07Source": {
+      "commit": "15278e0fda22e8ee331cec739069d7377cc5382f",
+      "tree": "a1a4705c84981942c3ef6f0a126ff6a43cb7d7f9",
+      "branch": "codex/d1-admin154-maintenance07-20261111",
+      "remoteVerified": true,
+      "reviewResultSha256": "c8f46bfafd973dbec8558a75c553dd7fe191f5ebef251a423dd9ddc8d060805d",
+      "targetedTests": 11,
+      "sourceSet": "76bcc45c0709205d070ba89ae7a796f3329a0f06851b8c71d17e9ab112700cc7",
+      "catalogSpec": "bb7d3f00fb2de6e5c746025dc6c296479a6b13301f7d50acc5de4b3de2f7a343",
+      "observationSql": "a8f1023988bd010d760827f21518cff4c6def7a5d8afc0c6a5f533a74dd69bc3"
+    },
+    "maintenance07App": {
+      "buildId": "erp-15278e0fda22-r3-admin154-maintenance07-20261111",
+      "archiveSha256": "bd28cf9fbc941729555ad19a4fb980dd0aa701914e04595cbb9b69d0873cccbb",
+      "archiveBytes": 3383498,
+      "releaseManifestSha256": "e435356c8668b36c73c67c7bc93b711ff650306e2a94cff394d7bf0565a1d0f2",
+      "resultSha256": "25aec54822da1884b00fc4ab05c48525cb14694e85f534e542addf3112ff8cbc",
+      "readySha256": "dda4793c386d8f4de4c851822fe818419301e5c7707a46e6f4bc6ef73303ac5f",
+      "controllerVerifiedFiles": 6,
+      "uploaded": false,
+      "started": false
     }
   }
 }

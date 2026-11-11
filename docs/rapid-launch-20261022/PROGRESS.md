@@ -4231,3 +4231,21 @@ T45 07:38:15 实际接收固定 4602 APP。READY 原件 `4099c626a76bb5e4477cff8
 D1 用归档 proof、时间窗和命名空间值核原读取验证通过，未能还原现场 UID10001 的首个系统调用错误。冻结后继 `4fedefb4ec96d96b1dcb680cf7c9ca8603a26a6a` 仅增加主证明、别名、命名空间读取阶段和白名单 errno，Node24.21 定向10项通过，未改 APP219。T45 与 D1 已接续同镜像无PG的共享命名空间、准确挂载和正式读取函数实测准备，QB只验相关增量。普通05/APP绑定的源码范围已独立复验，仍无真实05/APP。当前不再启库、重放或换键，本轮未使用11月2日旧数据，未切正式入口。公开 STATUS `1d14b77a672a587738adcaeec222712319491963` 已读回。
 
 08:20:45 T45 独立读回 06、UPGRADE02、restore03 同容器均停/PID0、同 R3 干净停库、无端点/锁/待执行作业，恢复原件与 typed 相同。回执 `fa3c87f7af4551eae3463b829a82cb780b61313318d87672f43f18c055cc5723`。08:21:17 现场读回实际 native 的整个 authority 目录绑定到 /etc，源 root:root/0700；证明 0444，UID10001 无目录穿越权。实际错误未保留 errno，先用相同镜像与挂载方式复现0700和允许穿越的对照。T45 同时查精确最小权限修复的现有消费者。现场权限未改。读回 `5f21f2e2f769c8df1cfa182670fdbf80e69e3d238489da1c2f91f623cf15882f`。
+
+### 2026-11-11 08:47 — 证明目录定向对照已审，单次授权交原T45
+
+QB 在637b004b离线复现create超时后查无CID仍输出已清理的F01。T45最小后继5bb0cdd3保留createAttempted、已知CID和清理首错，4项定向通过，QB结果f322ec5d。再固定e4f806b86335b611e2ff4fc7a0b8bfd8d87c9c72/tree6bf0cc154c2ffaff9c36aab7de36a14241adc5a4，loader0c5b330f4ffded700627e61f54028b13f7caf78df6fc6c001152c23e5c65f49c；SOURCE-READY e29e59ce，QB准确增量7b896d57。仅合成root:root/0700与root:10001/0710，相同镜像、真实10001身份、原双证明读取与共享无PG命名空间；核组内不可列目录或读0400/0600、组外10002不可读证明。原0711未执行版本保留。
+
+主控依据最新用户到北京时间12:00委托与既有同类隔离授权签发原件9845d39f49d6ab65549a62bcd9a958163d99b38c9e9c7b0a92ef414632fe700c，已交T45，原键单次，现场结果尚未取得。150秒整体、90秒工作、余量清理，仅自有合成容器和文件，不挂R3或秘密、不连PG、不修改真实目录。R3仍干净停止，两项认证准确恢复。
+
+同库07/UPGRADE03/A01/apply07/restore04及两个独立slot已由D1、T45与C一致定稿。06实际启动/清停、UPGRADE02零SQL失败和restore03为直接前序，restore02历史证明保留。D1独占driver/leaf及A-only host，T45独占Python和目录载体，普通05未用键保持。并行准备源码和输入，动态值取未来实际证明；SQL36、管理员、APP、切换仍未执行。本轮不使用11月2日旧批。公开STATUS 08:39:09提交dc67083b66aa48a084d29dc642f0cd276557c031已远端读回。
+
+### 2026-11-11 10:25 — 07源码及制品固定，合成探针在元数据检查处失败
+
+D1后继15278e0fda22e8ee331cec739069d7377cc5382f/treea1a4705c84981942c3ef6f0a126ff6a43cb7d7f9，QB固定增量11/11、结果c8f46bfafd973dbec8558a75c553dd7fe191f5ebef251a423dd9ddc8d060805d。主控从GitHub独立读回codex/d1-admin154-maintenance07-20261111准确SHA。APP219唯一host变化，source76bcc45c、catalogbb7d3f00、observationa8f10239真实派生核一致，原SQL36/model/guard保持。D2完成唯一07 APP构建，3383498B、bd28cf9fbc941729555ad19a4fb980dd0aa701914e04595cbb9b69d0873cccbb，458成员核对。主控复算归档及5份清单回执吻合。未上传、未启动。
+
+原合成proof-read-01已投递一次，FAILED/2/3.376772988s；typed d33975d17b2235e4f4cc5bbc8e50c5c56e7cf42acf3574628f425d2cd16790c7，首错KeyError。keeper检查阶段缺HostConfig.Tmpfs字段，实际仅created/PID0/none network/无挂载，读取器未启动，不能给0700/0710结论。原keeper-cleanup为6df038f0、confirmed=false。T45负责补同CID核验和清理，只修无tmpfs keeper字段兼容，真实读取器两侧挂载要求保持，再交原QB单项复验。原键不重放，R3不开。
+
+校正前段授权时间中文换算。原件9845d39f的startsAt1794362534314、expiresAt1794364334314对应北京时间10:02:14.314–10:32:14.314，原件未修改、校验仍按精确毫秒。原聊天08:42/09:12和记录08:47为错误时段描述，不能用作授权判断。本次实际原键投递有效期另由T45原作业核验，主控先前的过期判断已撤销。用户委托仍至12:00。
+
+10:27 T45 原作业01独立收尾回执 b26a449103635d2104763c2cff56148066fdec48a07049d79674e360aa9333c6 已由C复算。实际created/PID0的唯一keeper经同CID/label/image/none网络/无挂载核验后移除，三个准确容器名与测试ROOT均不存在。无PG/R3/真实目录动作。53eee9b3仅修keeper缺Tmpfs，新键02待QB及外部原件。原01不重放，不能登记权限对照通过。
