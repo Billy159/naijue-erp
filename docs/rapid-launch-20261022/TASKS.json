@@ -45055,23 +45055,23 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T16:10:21+08:00",
-    "sourceContractApproval": "RECORDED_NO_REPEAT_APPROVAL",
-    "currentTarget": "SAME_R3_INSTALLED35_STOPPED; USER_APPROVED_BASELINE_SCOPE_SIMPLIFICATION",
+    "updatedAt": "2026-11-11T17:25:19+08:00",
+    "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
+    "currentTarget": "SAME_R3_STOPPED;SINGLE_SYNTHETIC_PG_VERIFICATION_PREPARING",
     "owners": {
-      "T45": "transport diagnosis and actual server receipt",
-      "D1": "V2 actual production entry and existing SQL/host fixes",
-      "D2": "frozen build after successor QB",
-      "D3": "physical final standard package",
-      "QB": "only affected increment",
-      "C": "dependencies, authorization scope, compact current status and evidence index"
+      "T45": "final immutable transfer pins and exact synthetic PG outer carrier;sole server executor",
+      "D1": "fixed3426 source complete;original owner handles real PG failures if any",
+      "D2": "unique3426build complete;no newbuild planned",
+      "D3": "complete offline511234row preflight passed;source artifacts preserved",
+      "QB": "only T45 final parameter/outer increments pending;fixed source reviews adopted",
+      "C": "dependencies,accurate finite authority bindings,compact status/evidence index"
     },
-    "release": "NOT_READY_NO_IMPORT_NO_APP_SWITCH",
-    "next": "D1 implements simplified dependencies; D3 binds materialized standard data; T45 receiver and accurate synthetic PG preparation; no old37 rollout.",
-    "inventorySimplification": "d4f17a04 source fixed;author checks pass;QB/ordinaryPG pending;760730 per-zero proofs canceled;no new tables/privileges"
+    "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
+    "next": "T45 fixes only final bounded transport parameters and exact outer single-PG carrier;QB only parameter/outer increments;C binds actual finite originals after pre-staging. No new build/data cleaning/per-zero output. Actual PG and R3 import remain untested.",
+    "inventorySimplification": "760730 per-zero proofs canceled;complete scope absent zero/outside or partial UNKNOWN;source reviews+offline fullpackage+build pass;real PG pending"
   },
   "inventoryBaselineScopeSimplification20261111": {
-    "status": "CORE_SOURCE_INDEPENDENT_PASS_REAL_PG_PENDING",
+    "status": "SOURCE_INDEPENDENT_PASS_FULL_OFFLINE_PACKAGE_PASS_BUILD_PASS_REAL_PG_PENDING",
     "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
     "authority": "Direct current user request in controller: simplify inventory traceability; no per-zero warehouse/SKU proof; correct covered absence=zero, outside/unknown not zero.",
     "supersedes": "Pending per-zero V2/Merkle generation and SQL37 rollout for current batch; preserve all fixed source/artifacts/evidence, no table deletion.",
@@ -45112,7 +45112,7 @@
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
     "actualNewSQLOrPGTests": "SOURCE_AND_MODEL_ONLY_NO_SQL_OR_REAL_PG_EXECUTION",
     "rolloutTimeImpact": "Avoids approximately2GB planned zero output and760730 key operations; implementation and real PG time not measured, no completion ETA promised.",
-    "next": "D1 fixes exact24 subset SQL and PG first-positive fixture;D3 runs final full preflight;QB only new affected parts;T45 fixes original private install/runner seam and exact scope;D2 one final fixed build. No per-zero files, no second source-traceability redesign.",
+    "next": "T45 fixes only final bounded transport parameters and exact outer single-PG carrier;QB only parameter/outer increments;C binds actual finite originals after pre-staging. No new build/data cleaning/per-zero output. Actual PG and R3 import remain untested.",
     "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
     "fixedSource": {
       "branch": "codex/d1-baseline-scope-20261111",
@@ -45137,13 +45137,19 @@
     },
     "finalReadySource": {
       "rows": 511234,
-      "manifestSha256": "b514a2eb8869ab42a5ee90dececa8470b0f3598594bbffadd5140875e1da64c4",
-      "status": "FINAL_SHAPE_MANIFEST_BOUND_FULL_PREFLIGHT_PENDING",
-      "alignmentReviewSha256": "98c88621471a17d605c1556b5c434f2d52179bfb97c911eabfb3c91039d0c8ad",
-      "controllerSourcePinsSha256": "daaffdab231dadc7f7ef457375ef5172a5624037a59f4d25c955c74376602f76",
-      "businessCutoffBasis": "Nov11 10:00 batch label; no physical simultaneous export claimed;exported_at null"
+      "tables": 26,
+      "manifestSha256": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+      "manifestBytes": 21382,
+      "state": "COMPLETE_OFFLINE_PACKAGE_PREFLIGHT_PASS_NOT_DATABASE_IMPORT",
+      "sourceResultSha256": "820713230b2f5160ba6405f6e7a3c2d03a1a321a1d0ecbcb4b1a9c0cd78cc56d",
+      "exitCode": 0,
+      "issues": 0,
+      "elapsedMilliseconds": 343856.04191699997,
+      "generatedZeroRecords": 0,
+      "priorRun01": "exit1/64issues/index2196480000B retained;only29metadata pins and3price scale strings corrected,numeric values unchanged",
+      "physicalCommonExportInstantClaimed": false
     },
-    "updatedAt": "2026-11-11T17:08:37+08:00",
+    "updatedAt": "2026-11-11T17:25:19+08:00",
     "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
     "independentReview": {
       "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
@@ -45179,6 +45185,49 @@
       "status": "FIXED_OFFLINE_CHECKED_PENDING_QB_AND_FINAL_ARTIFACT_PARAMS",
       "actualTransfer": "NOT_EXECUTED",
       "oldHalfArtifact": "PRESERVED_NO_REPLAY"
+    },
+    "finalSource": {
+      "branch": "codex/d1-baseline-scope-20261111",
+      "commit": "3426eeec34df4bc40c503a5d4d1568ff3aadf954",
+      "tree": "32e86f298780f5e2a8baecea745603465e8a0d46",
+      "remoteExactVerified": true,
+      "nativeSourcePins": 222,
+      "tables": 35,
+      "functions": 154,
+      "changedExistingBodies": 9,
+      "sourceSetSha256": "9a58f932aaa462b7646dff472c2b24e88b0690d84cea1f0d7f846ef93036c781",
+      "catalogSpecSha256": "d12586f7ab82689882ba7bc870bc9afad47b911c289ea80d0305554427b5f500",
+      "SQL38Sha256": "d296a2a2fc180f79ff3991e0c52b61d826569711415131680294aa2a65623310",
+      "newTablesColumnsOrPrivileges": false,
+      "handoffSha256": "4d9fe646ea9352c1e06e85d9a936303982c0a8f45bf40ec46522d9d59aee4cf2"
+    },
+    "finalIncrementReview": {
+      "resultSha256": "9e70524f01351f44b8d03276094e906d875eeff764d27adcc2d01cff316cf6cd",
+      "status": "PASS_SOURCE_CURRENT24_AND_HARNESS_FIX_ONLY",
+      "tests": 10,
+      "priorCore12Reused": true,
+      "pg": "NOT_EXECUTED"
+    },
+    "finalBuild": {
+      "commit": "3426eeec34df4bc40c503a5d4d1568ff3aadf954",
+      "readyR2Sha256": "b6644f46e394b88aa05dbc3040783ea3c7b215db790ee0b98b8973b3c2f9cc18",
+      "readyR2Bytes": 3601,
+      "archiveSha256": "5264f15ed49df382fdb36a1adc859e2e90af0ba101b222c1e5ddb143f49288ef",
+      "archiveBytes": 3410598,
+      "manifestSha256": "380713e3a0f6fb5e01bfcf1c6af26229542a1b5ada8d96525eae0221dac92096",
+      "manifestBytes": 509832,
+      "status": "LOCAL_FIXED_BUILD_AND_PACK_PASS",
+      "buildRuns": 1,
+      "packRuns": 1,
+      "uploaded": false
+    },
+    "privatePgCarrier": {
+      "sourceCommit": "894e82f83aaa7e30b92ed3cd9c78b79b6752fb6a",
+      "resultSha256": "1ec9e9e9ef9c2b4447a25226b37a28a619a2173a179e90c8e9bce309e5795e30",
+      "status": "PASS_SOURCE_PRIVATE_POST_INSTALL_ONLY_NOT_EXECUTION_READY",
+      "tests": 6,
+      "newServerActions": 0,
+      "next": "T45 freezes exact outer container/material/authorization closure;C binds reviewed original;then original single synthetic PG execution"
     }
   }
 }
