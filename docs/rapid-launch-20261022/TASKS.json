@@ -45326,7 +45326,17 @@
           "failure": "SQLSTATE 42601, end of input at character 31166, SQL38 EXECUTE definition line19",
           "function": "naijue_erp.standard_whole_package_verify_v2",
           "functionReadbackSha256": "5061d7e73e26c8d2785d00e315c8caa475847d6b8fd84309684d00e217497c27",
-          "rootCauseReproduced": "PostgreSQL 17.7 parser reproduced three generated bodies failing from five unparenthesized CASE expressions; temporary five-pair equivalent fix parses 9/9, exact source successor pending",
+          "rootCauseReproduced": "PostgreSQL 17.7 parser reproduced three generated bodies failing from five unparenthesized CASE expressions; source fix independently parses 9/9",
+          "sql38SourceFix": {
+            "commit": "af0dfbe0da81433c01f3d27f7f5f20c3fb375a03",
+            "tree": "c9c590fe7d0b8e16c9dc56651d76f3a73d389656",
+            "remoteVerified": true,
+            "sql38Sha256": "0170332f73c712073ef96425d4fe62936041df5272bac05d70e2da2b9ea3e89b",
+            "source223Sha256": "11f326b940e48506c9ad07e3331a884c75232d6ea37433f61597658e2dd03ea7",
+            "qbSha256": "dfea7fc92f8f137ca095aad2651a0d9a99993bd81bc08e1aee8c346f2ab26d1b",
+            "checks": "Independent PostgreSQL17.7 full definitions 9/9; Node affected tests 7/7; no real DB",
+            "current": "D2 one matching artifact, T45 offline isolated04 material, D1 maintenance repin in parallel"
+          },
           "business": "NOT_EXECUTED; R3 production untouched",
           "next": "Original D1 reproduces exact generated PL/pgSQL syntax and updates necessary pins; QB scoped review, T45 retains stopped03 and continues applicable R3 offline wiring"
         },
