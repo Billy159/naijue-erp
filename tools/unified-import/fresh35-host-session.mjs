@@ -428,7 +428,7 @@ async function loadOrdinaryCurrentService(input,target,record,snapshot,maintenan
   'runtimeRole','runtimeLoginValidUntil'])&&(service||proof.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V1'),
   'ORDINARY_CURRENT_SERVICE_FORMAT_REQUIRED');
  const normalContainerName=maintenance
-  ? (proof.requestKey==='t45-first-r3-native-service-start-20261111-07'?'t45-fresh35-first-production-20261110-r3-service-07':null)
+  ? (proof.requestKey==='t45-first-r3-native-service-start-20261111-08'?'t45-fresh35-first-production-20261110-r3-service-08':null)
   : proof.requestKey==='t45-first-r3-native-service-start-20261110-01'
   ? 't45-fresh35-first-production-20261110-r3-service-01'
   : proof.requestKey==='t45-first-r3-native-service-start-20261110-02'

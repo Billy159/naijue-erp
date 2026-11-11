@@ -8,10 +8,10 @@ import {join,dirname,resolve} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 const SOURCE='/app/backend/native35-source',REFERENCE='/opt/naijue-erp/fresh35-combined-v1/reference-inputs',JOB='/run/t45-admin154/job';
 const CONTROL='/run/t45-admin154/control',WORKER_ID=10001;
-const PROOF='/etc/naijue-erp/fresh35-current-production-service-v2-service-07.json',HOST_PROOF='/run/naijue-rewrite/current-production-service.json';
+const PROOF='/etc/naijue-erp/fresh35-current-production-service-v2-service-08.json',HOST_PROOF='/run/naijue-rewrite/current-production-service.json';
 const OPERATION='/etc/naijue-erp/fresh35-admin154-execution-v1.json';
-const SOURCE_SHA='76bcc45c0709205d070ba89ae7a796f3329a0f06851b8c71d17e9ab112700cc7';
-const UPGRADE_SHA='97fe607ed79704c92f56b8573a8242b4fefb8fe79c734fb672e9991e30c0a45d';
+const SOURCE_SHA='336fb51de1051803406eb831a0a457362858d12eae2d4d84fa2929ea79331226';
+const UPGRADE_SHA='0591498c1d930ed24189f271c806a5fbde5f76cb0f608436561e45d49d4620a7';
 const RECORD_SHA='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e',OLD_SOURCE='6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16';
 const physical={systemIdentifier:'7706545564479176741',databaseOid:'16393',serverVersionNum:'170011'};
 const ownPath=fileURLToPath(import.meta.url),hash=b=>createHash('sha256').update(b).digest('hex');
@@ -63,7 +63,7 @@ function validatePacket(p){
 function validateGrant(a,p,inputSha,authorizationSha,ownSha){
  const fields=['format','phase','requestKey','jobDirectory','inputSha256','currentServiceSha256','sourceSetSha256','driverSha256','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference','binding'];
  need(keys(a,[...fields,...(p.phase==='ADMIN_PROVISION_ONLY'?['operationAuthoritySha256']:[])])&&a.format==='T45_R3_ADMIN154_MAINTENANCE_NODE_AUTHORIZATION_V1'
-  &&a.phase===p.phase&&a.jobDirectory===JOB&&a.requestKey===(p.phase==='UPGRADE'?'t45-r3-admin154-upgrade-20261111-03':'t45-r3-admin154-admin-provision-20261111-01')
+  &&a.phase===p.phase&&a.jobDirectory===JOB&&a.requestKey===(p.phase==='UPGRADE'?'t45-r3-admin154-upgrade-20261111-04':'t45-r3-admin154-admin-provision-20261111-01')
   &&a.inputSha256===inputSha&&a.currentServiceSha256===p.currentService.sha256&&a.sourceSetSha256===SOURCE_SHA&&a.driverSha256===ownSha
   &&digest(authorizationSha)&&digest(a.independentSafetyReviewSha256)&&typeof a.authorizationReference==='string'&&a.authorizationReference.trim().length>0
   &&a.binding&&Object.getPrototypeOf(a.binding)===Object.prototype&&(p.phase!=='ADMIN_PROVISION_ONLY'||digest(a.operationAuthoritySha256)),'EXACT_EXTERNAL_AUTHORITY_REQUIRED');
@@ -71,15 +71,15 @@ function validateGrant(a,p,inputSha,authorizationSha,ownSha){
 }
 function validateProof(v,a,validateInstant){
  need(keys(v,['format','requestKey','authorizationSha256','checkedAt','installationRecordSha256','targetSha256','sourceSetSha256','serviceReceiptSha256','dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian','runtimeRole','runtimeLoginValidUntil'])
-  &&v.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V2'&&v.requestKey==='t45-first-r3-native-service-start-20261111-07'
+  &&v.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V2'&&v.requestKey==='t45-first-r3-native-service-start-20261111-08'
   &&v.installationRecordSha256===RECORD_SHA&&v.sourceSetSha256===OLD_SOURCE&&digest(v.targetSha256)&&digest(v.authorizationSha256)&&digest(v.serviceReceiptSha256)
   &&keys(v.physical,[...Object.keys(physical),'postmasterStart'])&&Object.entries(physical).every(([k,x])=>v.physical[k]===x)
   &&typeof v.physical.postmasterStart==='string'&&/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d{1,6})?\+00$/.test(v.physical.postmasterStart)
   &&validateInstant(v.physical.postmasterStart.replace(' ','T').replace(/\+00$/,'Z'))
   &&Date.parse(v.physical.postmasterStart.replace(' ','T').replace(/\+00$/,'Z'))<=v.checkedAt
   &&v.runtimeRole==='erp35_runtime_20261110_r3'&&v.runtimeLoginValidUntil===null&&Number.isSafeInteger(v.checkedAt)&&v.checkedAt<=Date.now()
-  &&v.sharedPostgresNamespace?.creationOperationId===v.requestKey&&v.sharedPostgresNamespace.container?.name==='t45-fresh35-first-production-20261110-r3-service-07'
-  &&Number.isSafeInteger(v.sharedPostgresNamespace.serviceLeaseExpiresAt)&&v.sharedPostgresNamespace.serviceLeaseExpiresAt>=a.expiresAt,'CURRENT07_PROOF_REQUIRED');
+  &&v.sharedPostgresNamespace?.creationOperationId===v.requestKey&&v.sharedPostgresNamespace.container?.name==='t45-fresh35-first-production-20261110-r3-service-08'
+  &&Number.isSafeInteger(v.sharedPostgresNamespace.serviceLeaseExpiresAt)&&v.sharedPostgresNamespace.serviceLeaseExpiresAt>=a.expiresAt,'CURRENT08_PROOF_REQUIRED');
 }
 
 async function openJob(p,inputSha,authorizationSha,m){
@@ -98,7 +98,7 @@ async function openJob(p,inputSha,authorizationSha,m){
  const eventIdentity=await privateDirectory(join(JOB,'events'),m.trust);let index=0,previous=null;
  const fileCurrent=async()=>{need(await privateDirectory(JOB,m.trust)===jobIdentity&&await privateDirectory(join(JOB,'events'),m.trust)===eventIdentity,'JOB_GENERATION_CHANGED');await unchanged(auth);await unchanged(reservation);
   if(operation)await unchanged(operation,false,BigInt(WORKER_ID));
-  const actual=await protectedBytes(PROOF),currentAlias=await protectedBytes(HOST_PROOF);need(actual.identity===proof.identity&&actual.sha256===proof.sha256&&currentAlias.identity===alias.identity&&currentAlias.sha256===alias.sha256,'CURRENT07_PROOF_CHANGED');};
+  const actual=await protectedBytes(PROOF),currentAlias=await protectedBytes(HOST_PROOF);need(actual.identity===proof.identity&&actual.sha256===proof.sha256&&currentAlias.identity===alias.identity&&currentAlias.sha256===alias.sha256,'CURRENT08_PROOF_CHANGED');};
  const emit=async event=>{await fileCurrent();const bytes=Buffer.from(JSON.stringify({format:'T45_R3_ADMIN154_NODE_EVENT_V1',index:++index,previousSha256:previous,at:new Date().toISOString(),event})+'\n');
   const written=await writeDurable(join(JOB,'events',String(index).padStart(6,'0')+'.json'),bytes);previous=written.sha256;};
  const current=async()=>{await fileCurrent();need(Date.now()>=a.startsAt&&Date.now()<a.expiresAt-45000,'AUTHORITY_EXPIRED');};
@@ -130,7 +130,7 @@ async function runUpgrade(p,j,m){
  return result;
 }
 
-const currentReadFailed='ADMIN154_DRIVER_PREPARATION_CURRENT07_READ_FAILED';
+const currentReadFailed='ADMIN154_DRIVER_PREPARATION_CURRENT08_READ_FAILED';
 const currentReadErrnos=new Set(['EACCES','EPERM','ENOENT','ENOTDIR','ELOOP','EIO','ESTALE']);
 async function readCurrentStep(step,read){
  try{return await read();}catch(error){
@@ -143,10 +143,10 @@ async function readCurrentStep(step,read){
 async function readCurrentService(p,window,m){
  const proof=await readCurrentStep('PROOF',()=>protectedBytes(PROOF));
  const alias=await readCurrentStep('ALIAS',()=>protectedBytes(HOST_PROOF));
- need(proof.sha256===p.currentService.sha256&&alias.sha256===proof.sha256,'CURRENT07_PROOF_ALIAS_DIFFERS');
+ need(proof.sha256===p.currentService.sha256&&alias.sha256===proof.sha256,'CURRENT08_PROOF_ALIAS_DIFFERS');
  const value=freeze(m.parse(proof.bytes.toString('utf8')));validateProof(value,window,m.validateInstant);
  const ns=await readCurrentStep('PROC_STAT',()=>stat('/proc/self/ns/net',{bigint:true})),expected=value.sharedPostgresNamespace.container.networkNamespace;
- need(expected&&ns.dev===BigInt(expected.device)&&ns.ino===BigInt(expected.inode),'CURRENT07_NAMESPACE_DIFFERS');return {proof,alias,value};
+ need(expected&&ns.dev===BigInt(expected.device)&&ns.ino===BigInt(expected.inode),'CURRENT08_NAMESPACE_DIFFERS');return {proof,alias,value};
 }
 async function runtimeModules(uid){
  need(process.platform==='linux'&&process.version==='v24.21.0'&&process.getuid?.()===uid&&process.geteuid?.()===uid&&process.getgid?.()===uid&&process.getegid?.()===uid
@@ -166,7 +166,7 @@ function preparationWindow(window){
 export async function verifyFresh35Admin154CurrentServiceProof(proofSha256,window){
  let fallback='ADMIN154_DRIVER_PREPARATION_RUNTIME_OR_PACKET_FAILED';
  try{
-  need(digest(proofSha256),'CURRENT07_PROOF_REQUIRED');
+  need(digest(proofSha256),'CURRENT08_PROOF_REQUIRED');
   window=preparationWindow(window);
   const m=await runtimeModules(WORKER_ID);
   fallback=currentReadFailed;
@@ -216,7 +216,7 @@ export async function describeFresh35Admin154MaintenancePreparation(rawInput,win
  fallback='ADMIN154_DRIVER_PREPARATION_BINDING_FAILED';
  const binding=await preparationBinding(p,window,proof,m);
  fallback='ADMIN154_DRIVER_PREPARATION_SIDECAR_READ_FAILED';
- const self=await sidecarBytes(ownPath),result={state:'READ_ONLY_PREPARATION_NOT_AUTHORIZATION',phase:p.phase,requestKey:p.phase==='UPGRADE'?'t45-r3-admin154-upgrade-20261111-03':'t45-r3-admin154-admin-provision-20261111-01',
+ const self=await sidecarBytes(ownPath),result={state:'READ_ONLY_PREPARATION_NOT_AUTHORIZATION',phase:p.phase,requestKey:p.phase==='UPGRADE'?'t45-r3-admin154-upgrade-20261111-04':'t45-r3-admin154-admin-provision-20261111-01',
   inputSha256:hash(rawInput),currentServiceSha256:p.currentService.sha256,sourceSetSha256:SOURCE_SHA,driverSha256:self.sha256,binding,
   ...(p.phase==='ADMIN_PROVISION_ONLY'?{operationAuthorityBinding:{format:'FRESH35_A53_ADMIN154_EXECUTION_AUTHORIZATION_V1',decision:'AUTHORIZE_EXACT_ADMIN_PROVISION_ONLY',binding,startsAt:window.startsAt,expiresAt:window.expiresAt}}:{})};
  fallback='ADMIN154_DRIVER_PREPARATION_METADATA_FAILED';

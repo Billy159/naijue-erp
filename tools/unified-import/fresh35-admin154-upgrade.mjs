@@ -12,7 +12,7 @@ const need=(ok,code)=>{if(!ok)throw Error('ADMIN154_UPGRADE_'+code);};
 const digest=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
 const oldRoot='/opt/naijue-erp/fresh35-combined-v1';
-const sourceSha='76bcc45c0709205d070ba89ae7a796f3329a0f06851b8c71d17e9ab112700cc7';
+const sourceSha='336fb51de1051803406eb831a0a457362858d12eae2d4d84fa2929ea79331226';
 const patchSha='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b';
 const moduleAt=(root,name)=>import(pathToFileURL(join(root,'scripts/release/unified-install',name+'.mjs')).href);
 const ack=(r,command)=>need(r?.command===command,'ACK_'+command+'_REQUIRED');
