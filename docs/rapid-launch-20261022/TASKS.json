@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T12:43:10+08:00",
-  "stage": "R3_SERVICE07_STOPPED_RESTORE04_EXACT_ACTUAL_PASS_SQL36_NOT_EXECUTED_NEW_SALES_STANDARDIZATION_ACTIVE",
+  "updatedAt": "2026-11-11T12:57:23+08:00",
+  "stage": "R3_CLEAN_STOPPED_MAINTENANCE08_SOURCE_PAIRING_CURRENT_BATCH_DRAFT_R4_22_TABLES",
   "lastVerifiedRemoteCommit": "fdd651e23956eaa1952a407e59e75220b5b481bf",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -44530,6 +44530,16 @@
         "activeGrantUnits": 0,
         "upgrade03Submitted": false
       }
+    },
+    "maintenance08Preparation": {
+      "status": "OFFSITE_SOURCE_PAIRING_AND_TIME_BUDGET_NO_SERVER_JOB",
+      "T45Commit": "846700b7f9b5db053680b2a9491e2e0889f9e6c8",
+      "D1": "original owner adapting five files; real new sourceSet pending",
+      "QB": "original independent targeted source review",
+      "guardsUnchanged": true,
+      "confirmedTimeConstraint": "role.credentialValidUntil <= root.expiresAt <= serviceLease; root span <=30min, entry remains >300sec; work230 leaves >65sec reserve so prepare/grant/native <165sec",
+      "priorControllerParameterError": "Unused root ee045 expiry was before role expiry; never submitted, no SQL",
+      "modelCorrection": "T45 dispatched some 08 followups as xhigh contrary to current medium/high goal. Preserved in-flight evidence, C re-sent same-task high parameters to D1/QB/T45 without duplicate review."
     }
   },
   "freshDataRefresh20261111": {
@@ -44652,18 +44662,24 @@
     },
     "latestDraft": {
       "state": "DRAFT_NOT_UPLOAD_READY",
-      "version": "draft-r3",
-      "manifestSha256": "af2f969053e61c43c44d53bf22e235c966c043cfdf06a0df83ed3ca397fe95dc",
-      "tables": 19,
-      "rows": 57715,
-      "nonNullReferences": 146818,
+      "version": "draft-r4",
+      "manifestSha256": "606c02ef5c3e2bf495d8a0e5389d1ff82bb1ca9cadbdbf71cffaf965570243a5",
+      "tables": 22,
+      "rows": 197047,
+      "nonNullReferences": 510071,
       "missingReferences": 0,
       "inventoryKnownCells": 36512,
       "inventoryKnownQuantity": "76887",
       "unresolvedInventoryCells": 2996,
       "unresolvedInventoryQuantity": "3659",
       "sourceInventoryQuantity": "80546",
-      "newSalesSourceNotYetIntegrated": true
+      "newSalesSourceNotYetIntegrated": false,
+      "acceptedSalesDocuments": 29044,
+      "rejectedSalesDocuments": 37,
+      "acceptedSalesLines": 83779,
+      "acceptedSalesSettlements": 26509,
+      "sourceReconciliationSha256": "84d3dfbccc152b134499d532a0f673089cb7a972746f504b4e03aec8caa77187",
+      "databaseReadbackPerformed": false
     },
     "currentBatchZeroCoverageDecision": {
       "scope": "November11 batch only; blank and unlisted cells are zero within confirmed warehouse and real SKU identities. Explicit signed quantities retained; unresolved identities/collisions not manufactured or zeroed.",
@@ -44673,6 +44689,20 @@
       "directThreadReadVerified": true,
       "consumerOwner": "D3",
       "scopeDoesNotCreateSKUOrResolveConflictingIdentity": true
+    },
+    "additionalMasterBridges": {
+      "additionalSkuCells": 2801,
+      "additionalSkuBridgeSha256": "0169e62b7d71fb7e6691bedd56341849bacc95667118d73071b4570ff19f6df0",
+      "remainingIdentityGaps": 70,
+      "remainingReasonCounts": {
+        "EXISTING_SKU_NOT_UNIQUE": 68,
+        "SIZE_MAPPING_NOT_UNIQUE": 2
+      },
+      "staffSourceCodes": 99,
+      "standardStaffIdentities": 103,
+      "staffBridgeSha256": "1a38ca05cc4c1f71a60fdda05b5db2a7fdf0731b14cbab5344e1708b8118e58e",
+      "noNewLoginAccounts": true,
+      "note": "identity bridges only; final inventory aggregation and warehouse checks remain D3-owned"
     }
   },
   "recoveredChatMessages20261111": {
