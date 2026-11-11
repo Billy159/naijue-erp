@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T23:51:32+08:00",
+  "updatedAt": "2026-11-12T00:05:51+08:00",
   "stage": "R3_STOPPED_RECOVERY08_BOUNDED_TRANSFER_AUTHORIZED_ZERO_V2_WIP",
-  "lastVerifiedRemoteCommit": "7edfbc9a916d12510f65d6bb68c29bf85f23146e",
+  "lastVerifiedRemoteCommit": "c42591e82ccb69987ed87c6172c0c702402955ea",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -45055,23 +45055,23 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T23:51:32+08:00",
+    "updatedAt": "2026-11-12T00:05:51+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
     "currentTarget": "R3_STOPPED_LAST_READBACK; SYNTHETIC04_CLEAN_STOP",
     "owners": {
-      "T45": "sole server executor; isolated04 cleaned; preserved inner error; no af0 transfer; continues applicable R3 prerequisites",
-      "D1": "af0 SQL38 and 96a3 maintenance fixed, scoped QA complete",
-      "D2": "af0 462-member matching artifact built and cold entry checked",
+      "T45": "retains stopped 04; prepares successor05 locally",
+      "D1": "6c6f6b4e fixed and remotely verified; same-version R3 maintenance successor fixed locally",
+      "D2": "builds 6c6f6b4e exact candidate once with unchanged locked dependencies",
       "D3": "complete offline511234row preflight passed;source artifacts preserved",
-      "QB": "af0 SQL38, maintenance and transfer params independently checked",
+      "QB": "6c6f6b4e local PG branch independently passes; maintenance delta reviewing",
       "C": "actual receipt adoption, finite originals under standing authorization,existing3docs/public status"
     },
     "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
-    "next": "D1 qualifies the ambiguous SQL38 totals quantity and verifies the precise case; QB reviews the delta. T45 prepares still-applicable R3 prerequisites and retains the stopped 04 evidence.",
+    "next": "T45 fixes and validates 05 isolation bindings; D2 builds exact successor once; QB reviews maintenance bindings. Then perform isolated business retest.",
     "inventorySimplification": "760730 proofs canceled; offline ready-r2 passed; base35 and SQL36/38 committed on 04; first rollback scenario stopped on an assertion and other business not run."
   },
   "inventoryBaselineScopeSimplification20261111": {
-    "status": "SPARSE_SOURCE_PREFLIGHT_AND_PG_INSTALL_VALIDATED_SYNTHETIC_BUSINESS_STOPPED_AT_FIRST_ASSERTION",
+    "status": "SQL38_QUANTITY_SUCCESSOR_FIXED_LOCAL_PG_INDEPENDENT_PASS_REAL_RETEST_PENDING",
     "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
     "authority": "Direct current user request in controller: simplify inventory traceability; no per-zero warehouse/SKU proof; correct covered absence=zero, outside/unknown not zero.",
     "supersedes": "Pending per-zero V2/Merkle generation and SQL37 rollout for current batch; preserve all fixed source/artifacts/evidence, no table deletion.",
@@ -45112,7 +45112,7 @@
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
     "actualNewSQLOrPGTests": "04 base35 and SQL36/38 committed, 35 tables/154 routines independently read back. Negative case rejected before business commit, with quantity ambiguity in command_v2 rather than intended totals rejection. Clean stop; other business cases not run.",
     "rolloutTimeImpact": "760730 records and approximately 2 GB planned output avoided. Continue sparse route; real import and end-to-end duration not measured.",
-    "next": "D1 qualifies the ambiguous SQL38 totals quantity and verifies the precise case; QB reviews the delta. T45 prepares still-applicable R3 prerequisites and retains the stopped 04 evidence.",
+    "next": "T45 fixes and validates 05 isolation bindings; D2 builds exact successor once; QB reviews maintenance bindings. Then perform isolated business retest.",
     "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
     "fixedSource": {
       "branch": "codex/d1-baseline-scope-20261111",
@@ -45149,7 +45149,7 @@
       "priorRun01": "exit1/64issues/index2196480000B retained;only29metadata pins and3price scale strings corrected,numeric values unchanged",
       "physicalCommonExportInstantClaimed": false
     },
-    "updatedAt": "2026-11-11T23:51:32+08:00",
+    "updatedAt": "2026-11-12T00:05:51+08:00",
     "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
     "independentReview": {
       "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
@@ -45372,6 +45372,18 @@
       "businessState": "EARLY_NEGATIVE_REJECTED_WITH_QUANTITY_AMBIGUITY; EXPECTED_REJECTION_AND_POSITIVE_SCENARIOS_NOT_VERIFIED",
       "firstAssertionSha256": "62885bc354fff014de92e3798b0d0c5d00f189f18bc8f8a5781936caedd8b657",
       "safeErrorContextSha256": "56b4a87e1d5fabf6171eadda989a385a2cca640fb17339d067080b7b17ad13e5"
+    },
+    "sealQuantitySuccessor": {
+      "commit": "6c6f6b4ea968f657bef709efb2330b21b5695c2a",
+      "branch": "codex/d1-baseline-scope-seal-quantity-20261111",
+      "remoteVerified": true,
+      "sql38Sha256": "b61b31b6116b3f0891dc4cd1f9182aa438d22ad987e29ac2ec73c04f72f5d0ba",
+      "source223Sha256": "e11609061181457b7cd012a32d0b44a5d764586ee2d5353e62ce82f297db16bd",
+      "qbResultSha256": "fa0a53ffc1f5b9cc40af67ba6e10a6b8d19f2ef76329a464d1d63843e08a7a50",
+      "localChecks": "PGlite synthetic BASELINE_SEAL red 42702, green mismatched 23514 and valid totals; 3 Node tests pass. Real successor not run.",
+      "maintenanceCommit": "d1a6d214fbb3db50a698c3235b71b87068df6684",
+      "maintenanceReview": "PENDING",
+      "fullBusiness": "NOT_VALIDATED"
     }
   }
 }
