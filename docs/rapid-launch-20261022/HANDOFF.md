@@ -4998,3 +4998,8 @@ T45 与主控核旧 normal_app.py 固定普通 03 和 DA7，现 09 Python 只启
 T45 私有启动 RESULT 2d5f8fb2、normal_app.py 4c4ca10e 由主控复算。沿原 CLI 和同进程容量放行，核同代 09 V2、真实 154/SQL38 及 7e66 固定 D2 包和实际接收 READY。7 项本机检查通过，Node 24.21.0 以合成密码验证固定 D2 实际配置解析。只消费准确动态证据，仅清理本次 APP。原 QB 已接限定增量。当前没有现场接收、真实配置运行、容量、readyz 或业务回执。
 
 私有诊断不产生正式 stage 证据。原首装 helper 9b870ad1 固定旧 R2 和旧应用合同，批准档案未绑定，原 boot helper 仍等准确批准。T45 接续原 stage 到 activate 最小源码工作，复用同版应用和现有容量、配置、备份、写入边界及容器身份核验，旧 helper 保留。不另起正式路径、不重复构建，发布现场继续 HOLD。原受控只读入口没有新回执。
+
+
+### 2026-11-12T07:19:56+08:00 | QB 复现 APP09 共享网络 readyz 归属误判
+
+QB 定向 7/7 与固定材料、真实 154/38 和容量放行接线核对通过，新增 P2，整体 NEED_FIX。原 normal_app.py:266–281 在共享 09 网络中，只查当前 PID 1 已 exec Node 和环回 :3000 的 READY，不能证明监听归本次进程。主控用 `python3 -B -` 加载原 4c4ca10e 并注入本次 Node 未监听、其他进程返回 READY 的替身，实际错误返回 readyz=True 和 REAL_CLI_BEFORE_LISTEN，退出 0。T45 单一 owner 补准确 PID1／监听归属及反例，正式 stage 不继承误判，旧候选保留，不重建应用。无现场读回、配置变更或启动。
