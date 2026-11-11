@@ -45465,7 +45465,29 @@
         "scriptSha256": "faa90fb772ae1bc0c842d206073384ad1cfad5c98396e9bc14e6137de38c36f6",
         "stdoutSha256": "4b5984bf65cff681157ce26e47c79362377b2e83270ecbfacdf63ee859a29f92"
       },
-      "r3PostColdBackupAppHostStage": "QB_NEED_FIX; READY_CAN_BE_FROM_ANOTHER_LISTENER_IN_SHARED_NAMESPACE; T45_LISTENER_OWNERSHIP_FIX_ACTIVE; FORMAL_STAGE_MUST_NOT_INHERIT; NO_SERVER_ACTION",
+      "r3PostColdBackupAppHostStage": "QB_PASS_LOCAL_READY_OWNERSHIP_DELTA_ONLY; FORMAL_STAGE_AND_ACTIVATE_USE_CHECK; LINUX_DOCKER_AND_FORMAL_STAGE_UNVERIFIED",
+      "r3PrivateApp09HostSuccessor": {
+        "resultSha256": "1a375ced97a044847538d990bb998aabf778846c974e4e56a36bc5d50d9a62fc",
+        "sourceSha256": "4629e686830d2422fde5d433d1cc3d1dad524dad898903308bf27c9206f5f047",
+        "probeSha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950",
+        "qbTurn": "01a1cd02-39ab-7e90-adc2-49d00243cca0"
+      },
+      "r3FormalFirstInstallLocalCandidate": {
+        "resultSha256": "ce408161f24d27a12a15064262e0d7c1e856b5910e072251363144cc368124d1",
+        "sourceSha256": "3f71630dc6033907e0a5b423a289f819e62ba70c79273c5901aa10bbf50a923e",
+        "state": "R3_HOLD; EXACT_CSS_MEMBER_AND_CONTRACT_DELTA, BOOT_RELOCATION_FILES, INDEPENDENT_RECOVERY, EXTERNAL_APPROVAL, LIVE_LINUX",
+        "activeOwner": "T45"
+      },
+      "r3App09InitialArtifactAssetBase": {
+        "state": "REPRODUCED_404_ON_ENTRY_AND_FOUR_INITIAL_STYLES; B621D1B8_WITHHELD; D2_SAME_SOURCE_REBUILD_IN_PROGRESS",
+        "checkedArchiveMembers": 6,
+        "handlerNodeVersion": "24.21.0",
+        "indexStatus": 200,
+        "oldPrefixStatus": 404,
+        "configuredPrefixStatus": 200,
+        "commandExit": 0,
+        "scope": "EXACT_SOURCE_REQUEST_HANDLER, PACKED_BYTES, SYNTHETIC_API, NO_LISTENER_OR_DATABASE"
+      },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
       "r3PrivateApp09HostResultSha256": "2d5f8fb273cc6a18c81b83dc5a8af2b0f451e475636a78078145acd878a41e1f",
