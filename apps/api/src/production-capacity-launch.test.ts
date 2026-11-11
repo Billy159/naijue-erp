@@ -232,3 +232,21 @@ test('production35 actual provider refuses absent protected record before PG and
  }};
  await assert.rejects(runProductionCli(['--exact35',filename],deps),/startup refused/);assert.equal(connections,0);assert.equal(h.counts().starts,0);assert.equal(h.resource.snapshot().closed,true);
 });
+
+test('compact ordinary CLI forwards all exact proof pins to the same capacity/API boundary and closes on refused API',async t=>{
+ const f=await fixture(t),h=scriptedHost(),filename=path.join(f.root,'compact-ordinary-model.json');
+ const values={NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256:'a'.repeat(64),NAIJUE_ADMIN154_SUCCESSOR_SHA256:'b'.repeat(64),NAIJUE_ADMIN154_PARENT_SOURCE_SHA256:'c'.repeat(64),NAIJUE_ADMIN154_PARENT_CATALOG_SPEC_SHA256:'d'.repeat(64),NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256:'e'.repeat(64)},before=new Map(Object.keys(values).map(k=>[k,process.env[k]]));
+ t.after(()=>{for(const [k,v]of before){if(v===undefined)delete process.env[k];else process.env[k]=v;}});
+ Object.assign(process.env,values);await writeFile(filename,JSON.stringify({...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity}),{mode:0o600});
+ let captured:Parameters<ProductionMainDependencies['createApi']>|undefined;
+ const deps={...h.deps,async createApi(...args:Parameters<ProductionMainDependencies['createApi']>){captured=args;throw Error('SYNTHETIC_COMPACT_STOP_AT_API_BOUNDARY');}};
+ await assert.rejects(runProductionCli(['--exact35',filename],deps),/startup refused/);assert(captured);assert.deepEqual(captured[5],{sha256:values.NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256,capacityExpiresAt:f.capacity.window.expiresAt,compactZero:{profile:'FRESH35_COMPACT_ZERO_ORDINARY_V2',parentPins:{sha256:values.NAIJUE_ADMIN154_SUCCESSOR_SHA256,sourceSetSha256:values.NAIJUE_ADMIN154_PARENT_SOURCE_SHA256,catalogSpecSha256:values.NAIJUE_ADMIN154_PARENT_CATALOG_SPEC_SHA256},successorSha256:values.NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256}});
+ assert.equal(captured[2],h.resource);assert.equal(h.counts().created,1);assert.equal(h.counts().starts,0);assert.equal(h.resource.snapshot().closed,true);
+});
+test('compact ordinary CLI never falls back on partial or malformed pins and rejects them before capacity creation',async t=>{
+ const f=await fixture(t),filename=path.join(f.root,'compact-ordinary-invalid-model.json'),values={NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256:'a'.repeat(64),NAIJUE_ADMIN154_SUCCESSOR_SHA256:'b'.repeat(64),NAIJUE_ADMIN154_PARENT_SOURCE_SHA256:'c'.repeat(64),NAIJUE_ADMIN154_PARENT_CATALOG_SPEC_SHA256:'d'.repeat(64),NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256:'e'.repeat(64)},before=new Map(Object.keys(values).map(k=>[k,process.env[k]]));
+ t.after(()=>{for(const [k,v]of before){if(v===undefined)delete process.env[k];else process.env[k]=v;}});
+ await writeFile(filename,JSON.stringify({...f.base,profile:'source-confirmed-native-exact35-production-v2',documentCommands:'NATIVE_RUNTIME',productMedia:{root:f.root,rootKey:'synthetic35'},capacityLaunch:f.capacity}),{mode:0o600});
+ for(const key of ['NAIJUE_ADMIN154_PARENT_SOURCE_SHA256','NAIJUE_ADMIN154_PARENT_CATALOG_SPEC_SHA256','NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256']){Object.assign(process.env,values);delete process.env[key];const h=scriptedHost();await assert.rejects(runProductionCli(['--exact35',filename],h.deps),/Compact zero requires/);assert.equal(h.counts().created,0);assert.equal(h.counts().starts,0);}
+ Object.assign(process.env,values);process.env.NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256='bad';const h=scriptedHost();await assert.rejects(runProductionCli(['--exact35',filename],h.deps),/Compact zero requires/);assert.equal(h.counts().created,0);
+});

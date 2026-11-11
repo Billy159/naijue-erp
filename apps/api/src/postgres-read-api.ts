@@ -1,6 +1,6 @@
 import {createAccountMaintenanceHttpPlugin} from './account-maintenance-http.ts';
 import {PostgresAccountMaintenanceUnitOfWork} from '../../../adapters/postgres/src/account-maintenance-store.ts';
-import {admitFresh35SyntheticOrdinaryPoolV1,admitFresh35OrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
+import {admitFresh35SyntheticOrdinaryPoolV1,admitFresh35OrdinaryPoolV2,admitFresh35CompactZeroOrdinaryPoolV2,describeFresh35OrdinaryAdmissionV2,closeFresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {Fresh35CurrentProductionServiceInput,Fresh35OrdinaryAdmissionV2} from '../../../tools/unified-import/fresh35-host-session.mjs';
 import type {CapacityRuntimeTarget} from './capacity-runtime-probe.ts';
 import { Ordinary27ProductWarehouseStockReader } from '../../../adapters/postgres/src/ordinary27-product-warehouse-stock-reader.ts';
@@ -662,12 +662,15 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       ...(runtime26HistoryAuthorization !== undefined ? { requiredObservation: "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8" as const } : requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
     });
     if(productionV2){
-      if(synthetic35&&productionV2.currentService?.admin154SuccessorSha256!==undefined)throw new TypeError('Admin154 successor requires the current production installation');
+      const currentService=productionV2.currentService,compactZero=currentService?.compactZero;
+      if(compactZero!==undefined){exactBag(currentService,['sha256','capacityExpiresAt','compactZero']);exactBag(compactZero,['profile','parentPins','successorSha256']);if(compactZero.profile!=='FRESH35_COMPACT_ZERO_ORDINARY_V2')throw new TypeError('Explicit compact ordinary profile required');}
+      if(synthetic35&&(currentService?.admin154SuccessorSha256!==undefined||compactZero!==undefined))throw new TypeError('Exact successor requires the current production installation');
       if(!ordinaryMaintenance || !host.capacityRuntimePoolBinder || !productionV2.capacityTarget)throw new TypeError('Production V2 requires original owned-pool capacity target');
       const {host:connectHost,port,database,user}=options.postgres.target;
       const connection={host:connectHost,port,database,user};
       admission35=synthetic35 ? await admitFresh35SyntheticOrdinaryPoolV1(ownedPool,connection)
-        : await admitFresh35OrdinaryPoolV2(ownedPool,connection,productionV2.currentService);
+        : compactZero!==undefined ? await admitFresh35CompactZeroOrdinaryPoolV2(ownedPool,connection,{sha256:currentService!.sha256,capacityExpiresAt:currentService!.capacityExpiresAt},compactZero.parentPins,compactZero.successorSha256)
+        : await admitFresh35OrdinaryPoolV2(ownedPool,connection,currentService);
       const actual=describeFresh35OrdinaryAdmissionV2(admission35), expected=productionV2.capacityTarget;
       if(synthetic35 && (actual.purpose!=='SYNTHETIC_ISOLATED_ORDINARY_V1' || !Number.isSafeInteger(actual.expiresAt) || actual.expiresAt! <= Date.now()))
         throw new TypeError('Current genuine synthetic ordinary admission required');

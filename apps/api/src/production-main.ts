@@ -79,6 +79,10 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
   const admin154SuccessorSha=process.env.NAIJUE_ADMIN154_SUCCESSOR_SHA256;
   if(admin154SuccessorSha!==undefined&&(!production35||injected!==undefined||currentServiceSha===undefined||!/^[a-f0-9]{64}$/.test(admin154SuccessorSha)))
     throw new TypeError('Admin154 requires the exact successor digest and current production service');
+  const compactSuccessorSha=process.env.NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256,compactParentSourceSha=process.env.NAIJUE_ADMIN154_PARENT_SOURCE_SHA256,compactParentCatalogSha=process.env.NAIJUE_ADMIN154_PARENT_CATALOG_SPEC_SHA256;
+  const compactSelected=[compactSuccessorSha,compactParentSourceSha,compactParentCatalogSha].some(v=>v!==undefined);
+  if(compactSelected&&(!production35||injected!==undefined||currentServiceSha===undefined||admin154SuccessorSha===undefined||![compactSuccessorSha,compactParentSourceSha,compactParentCatalogSha].every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v))))
+    throw new TypeError('Compact zero requires all exact parent/successor digests and current production service');
   let capacity:CapacityAdmission|undefined=injected,api:PostgresApplicationApi|undefined,host:ProductionApplicationHost|undefined;
   let stopping=false;
   const stop=():void=>{
@@ -95,7 +99,7 @@ async function launch(mode:Mode,args:readonly string[],injected?:CapacityAdmissi
     const tag=mode==='r3'||mode==='full'||mode==='r35'?await readProductionStaffCredentialRequestTag(c as ProductionRuntime26R3Configuration | ProductionRuntime35Configuration):null;
     const parsedCapacity=production35?parseProductionCapacityLaunch(capacityLaunch):undefined;
     const currentService=currentServiceSha!==undefined&&parsedCapacity
-      ? {sha256:currentServiceSha,capacityExpiresAt:parsedCapacity.window.expiresAt,...(admin154SuccessorSha!==undefined?{admin154SuccessorSha256:admin154SuccessorSha}:{})} : undefined;
+      ? {sha256:currentServiceSha,capacityExpiresAt:parsedCapacity.window.expiresAt,...(compactSelected?{compactZero:{profile:'FRESH35_COMPACT_ZERO_ORDINARY_V2' as const,parentPins:{sha256:admin154SuccessorSha!,sourceSetSha256:compactParentSourceSha!,catalogSpecSha256:compactParentCatalogSha!},successorSha256:compactSuccessorSha!}}:admin154SuccessorSha!==undefined?{admin154SuccessorSha256:admin154SuccessorSha}:{})} : undefined;
     api=await dependencies.createApi(mode,c,capacity,tag,parsedCapacity?.target,currentService);
     if(stopping)throw new Error('Production startup was cancelled');
     if(!injected){
