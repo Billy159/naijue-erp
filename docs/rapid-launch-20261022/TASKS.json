@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T13:31:07+08:00",
+  "updatedAt": "2026-11-11T13:44:27+08:00",
   "stage": "R3_STOPPED_MAINTENANCE08_ARTIFACT_AND_SOURCE_INCREMENT_ACCEPTED_PRESTAGING",
-  "lastVerifiedRemoteCommit": "fdd651e23956eaa1952a407e59e75220b5b481bf",
+  "lastVerifiedRemoteCommit": "e926a5972abc55b13ec3625f612e8a7b299b90bc",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -44574,6 +44574,21 @@
       "pairedIndependentReview": {
         "status": "PASS_SOURCE_MAINTENANCE08_CONSUMER_PAIRING_ONLY",
         "resultSha256": "08ec4177cdb4314b9284ffcdd3f3a64c8616f2db5fb29c7a81dc721ef549e4cd"
+      },
+      "stageAuthority": {
+        "path": "FIRST-R3-NATIVE-AUTHORITY-20261110/app-eca7dd5-maintenance08-staging-authorization-01.json",
+        "sha256": "7acd892d412349a543a7cb212cb0dc0a532aeca603a913bcaeb81b6d54da4124",
+        "startsAt": 1794375533101,
+        "expiresAt": 1794377333101,
+        "scope": "Exact fixed application artifact upload, bounded staging policy install and exact restore only; no PG, role, SQL, APP or import execution",
+        "owner": "T45",
+        "state": "DISPATCHED_TO_ORIGINAL_OWNER_STATUS_AND_INSTALL_IN_PROGRESS"
+      },
+      "stageIndependentReviewSha256": "9e6815d118cde2c65d3abbe262387839a38ae81b4b7fe8ca8169dee26bef9af1",
+      "staticCommandIndexSha256": "750edd1ff5b3b27af69d7b3d1790ed6ab2fe336246b967f70b8216ef9231983f",
+      "publicStatus": {
+        "commit": "a7da9f2c0fa6057be971e6f5ea6c5b26acabf4ff",
+        "verifiedReadback": true
       }
     }
   },
