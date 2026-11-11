@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T12:35:57+08:00",
-  "stage": "R3_SERVICE07_READONLY_ACTUAL_PASS_UPGRADE03_NOT_SUBMITTED_CLOSEOUT_IN_PROGRESS_NEW_SALES_SOURCE_CHECKS_CLOSED",
-  "lastVerifiedRemoteCommit": "13ea42961d3588081fab030a2b3abaf183dd3a15",
+  "updatedAt": "2026-11-11T12:43:10+08:00",
+  "stage": "R3_SERVICE07_STOPPED_RESTORE04_EXACT_ACTUAL_PASS_SQL36_NOT_EXECUTED_NEW_SALES_STANDARDIZATION_ACTIVE",
+  "lastVerifiedRemoteCommit": "fdd651e23956eaa1952a407e59e75220b5b481bf",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -44234,7 +44234,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 closes exact service07 and restores exact original two-role authentication through original restore04, retaining PGDATA and evidence. UPGRADE03 not submitted and no SQL36/A/APP; prepare adequate complete-chain time budget before another reviewed window.",
+    "next": "T45 completes last independent closure readback, then prepare all remaining inputs and realistic end-to-end time budget before a fresh reviewed maintenance window. Do not replay stopped service07 or unused UPGRADE03 from expired proof. D3 continues current two-source sales standardization.",
     "maintenance06LatestCycle": {
       "apply06": {
         "status": "ACTUAL_COMPLETED_0_TWO_FINITE_ROLES_STOPPED",
@@ -44488,7 +44488,7 @@
         "newRoles": 0,
         "credentialValidUntilEpochMs": 1794371921517,
         "restorationDeadlineEpochMs": 1794373721517,
-        "restored": false
+        "restored": true
       },
       "service07": {
         "status": "ACTUAL_COMPLETED_0_FOUR_READONLY_CHECKS_AND_INDEPENDENT_BIRTH_READBACK",
@@ -44515,8 +44515,20 @@
         "SQLExecuted": false
       },
       "restore04": {
-        "status": "T45_CURRENT_CLOSEOUT_IN_PROGRESS_NOT_YET_CONFIRMED",
-        "hostAuthoritySha256": "2e78373396d3834b19629725d7943c9e71ab387de3f5a099f98bf742ea01609a"
+        "status": "ACTUAL_COMPLETED_0_EXACT_RESTORE_AND_FINAL_INDEPENDENT_ENVIRONMENT_CLEAN",
+        "hostAuthoritySha256": "2e78373396d3834b19629725d7943c9e71ab387de3f5a099f98bf742ea01609a",
+        "terminalSha256": "7ec94b573d21094066c3bab845e393ebf547a6f2f482d898581604e96d2e7b12",
+        "typedSha256": "cf17a3fbfbf7b4f05be9372b2f2d9ad8c4ac8482bd266601d56ba0348192dc40",
+        "cleanupSha256": "b6afda1c7f847c04ae27f6098ffc1e5eef29c44ec78ba1c6ffd6845ed3f14280",
+        "naturalExpiryIsNotRestoration": true,
+        "finishedAt": "2026-11-11T12:35:34.337904+08:00",
+        "finalResultSha256": "131980e37552c7f53173c65e127ee2172864435db32b1cfe5a5b36c38aeaa0c1",
+        "independentReadbackAt": "2026-11-11T12:37:54.646+08:00",
+        "database": "SHUT_DOWN",
+        "matchingEndpoints": 0,
+        "heldOperationLocks": 0,
+        "activeGrantUnits": 0,
+        "upgrade03Submitted": false
       }
     }
   },
@@ -44652,6 +44664,15 @@
       "unresolvedInventoryQuantity": "3659",
       "sourceInventoryQuantity": "80546",
       "newSalesSourceNotYetIntegrated": true
+    },
+    "currentBatchZeroCoverageDecision": {
+      "scope": "November11 batch only; blank and unlisted cells are zero within confirmed warehouse and real SKU identities. Explicit signed quantities retained; unresolved identities/collisions not manufactured or zeroed.",
+      "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "humanMessageId": "01a1c8e6-a9db-7830-bde0-f3b961ff5ca0",
+      "exactHumanText": "本批空白、未列出的格子是全部代表零",
+      "directThreadReadVerified": true,
+      "consumerOwner": "D3",
+      "scopeDoesNotCreateSKUOrResolveConflictingIdentity": true
     }
   },
   "recoveredChatMessages20261111": {
