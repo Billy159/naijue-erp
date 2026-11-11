@@ -1786,18 +1786,18 @@
     "supersedes": "Prior execution model settings only; historical actual records preserved"
   },
   "currentExecutionSnapshot": {
-    "asOf": "2026-11-11T07:48:53+08:00",
+    "asOf": "2026-11-11T08:19:20+08:00",
     "currentTarget": "erp_fresh35_20261110_r3",
     "currentPhysicalStage": "R3_35_INSTALLED_STOPPED_EXACT_AUTH_RESTORED_UPGRADE_APP_NOT_RUN",
     "initdbAB": "ACTUAL_PASS_BOTH_TEMPORARY_SIDES_CLEANED",
     "directoryPermissionSourceCommit": "57dd0c04fbc895cabd6ef0fad84041b17be6e199",
     "directoryPermissionPhysical": "APPLIED_BY_FIXED_ROOT_EXECUTOR_SUCCESS_GUARD_STATE_0_61035_0710_OUTER_0700",
     "formal35Install": "ACTUAL_COMMITTED_DURABLE_RECORD_READBACK",
-    "publicStatusCommit": "7d3cc2b210a85129decee213d81393ef8ccb8d35",
+    "publicStatusCommit": "1d14b77a672a587738adcaeec222712319491963",
     "currentOwners": {
-      "T45": "Actual APP reception and Linux probe completed. Fix finite role carrier cleanup budget and receipt, then deliver exact same R3 apply06/06/restore03 inputs. APP05 prepares in parallel.",
-      "D1": "Fixed maintenance06 commit 4602dd0965c202016cf89e1be7bab6c9e82e97da, three affected test files serial 55 pass. Await integrated Linux evidence.",
-      "QB": "F01/F02 and isolated probe source independently pass. Reviewed exact dispatcher flag delta. Recheck only finite-role cleanup follow-up when fixed.",
+      "T45": "Same R3 clean stop and restore03 completed after UPGRADE02 preparation failure. Next prepare exact same-image ordinary read reproduction only. APP05 sources remain prepared.",
+      "D1": "Fixed 4fedefb4 driver stage/errno diagnostics; 10 targeted local tests pass. Preparing same-function Linux ordinary UID verification with T45.",
+      "QB": "Finite-role closeout and ordinary05/APP binding deltas pass source scope. Review next exact proof-read probe only.",
       "D2": "Exact 4602dd09 APP rebuild and T45 controlled reception complete. Existing 1b8 artifact retained.",
       "C": "Verify exact actual receipts; decide bounded authorized operations; maintain only original three records and publicSTATUS."
     },
@@ -44227,7 +44227,44 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 fixes finite-role apply/restore carrier cleanup budget and failure receipt. QB checks the exact delta, then C aligns bounded same-R3 authorization inputs. R3 remains cleanly stopped.",
+    "next": "D1 fixed phase/errno diagnostics. T45 prepares a same-image ordinary UID proof-reader reproduction with actual mount modes and shared synthetic namespace; QB reviews only that delta. No R3 restart until cause and minimal fix are verified.",
+    "maintenance06LatestCycle": {
+      "apply06": {
+        "status": "ACTUAL_COMPLETED_0_TWO_FINITE_ROLES_STOPPED",
+        "terminalSha256": "e5d021b4a769eba73eb23cfe1ea12dd4d91c4b711009c2c12ea8b8abbf8d0f83",
+        "typedSha256": "f712ebeebf20f0a1593c83b89e3e86ae09de30cee3deb2cc444899db89eac4dc"
+      },
+      "normal06": {
+        "status": "ACTUAL_COMPLETED_0_FOUR_READONLY_CHECKS_THEN_CLEAN_STOP",
+        "terminalSha256": "c8ad7898c0622d24db56531911988df6327ee6737f54c2fcb50fe5792dc60fea",
+        "typedSha256": "7d609db1e32e31582193abc420eeb4950eac9edabd870f8235c29d519ea030ea",
+        "proofSha256": "ef0156215f62f2bed62294b7240098acf53464d92271ad7f249f3352701757dc",
+        "cleanupSha256": "32136c8a6c3df9da0b513cab92b6c8a3ce5533ba09cc49246b0dce76f266ce1f",
+        "stoppedReadbackSha256": "524699e2eb0b8cbfbfce86a69dcbf7a489f9852d0709567959a3ab5db5bf39a7"
+      },
+      "upgrade02": {
+        "status": "ACTUAL_FAILED_2_PREPARATION_NO_NODE_GRANT_OR_SQL",
+        "terminalSha256": "b6fd088e3d7255ae6b36ffac9c18c0de82ea834b80124b4c9ba32c57a0b3730f",
+        "typedSha256": "8296df224372ff8efa5ee92d08f66c501e8070733375245bbec8621acdd1390d",
+        "cleanupSha256": "b148d57760c21b7dd62e8a55e853ff11f8b2b4af33481201737af34b0b5a94ba",
+        "nodeExitCode": 1,
+        "firstSafeCode": "ADMIN154_DRIVER_PREPARATION_CURRENT06_READ_FAILED",
+        "exactSyscallError": "UNKNOWN_NOT_CAPTURED",
+        "actualMount": "Entire authority bind source root:root/0700, proof 0444. UID10001 has no traverse permission. Runtime errno unrecorded.",
+        "mountReadbackSha256": "5f21f2e2f769c8df1cfa182670fdbf80e69e3d238489da1c2f91f623cf15882f"
+      },
+      "restore03": {
+        "status": "ACTUAL_COMPLETED_0_ORIGINAL_ROLE_AUTH_FIELDS_RESTORED_EXACT",
+        "terminalSha256": "59dea6064026d75b03ee9b1a4ea46210011fa6e57efbc19d3a78d0208349198f",
+        "typedSha256": "9393d479031ebe23404dc052b7fc873cf60793c5e00c81eda836dc6d9f27397b",
+        "cleanupSha256": "07b9830524f7ad9813af97374f4f9661dfbc4f56b6646654ce5f3751b110235e",
+        "postRestoreReadbackSha256": "fa3c87f7af4551eae3463b829a82cb780b61313318d87672f43f18c055cc5723"
+      },
+      "diagnosticCommit": "4fedefb4ec96d96b1dcb680cf7c9ca8603a26a6a",
+      "diagnosticDriverSha256": "4ab17df40e7c2d4777326045ad63e328a77fc023ee761d1771637ae3f6c00536",
+      "diagnosticLocalTests": 10,
+      "APP219Changed": false
+    },
     "maintenance06LinuxActual": {
       "sourceCommit": "e94ae84fa3b0ad28430c853b9120e76826fb35aa",
       "sourceManifestSha256": "e250e4768032373ff693e85801b498276c46a85800e2632f6efd4818bb09a92a",
