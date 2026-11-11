@@ -25,3 +25,17 @@ test('first-use guards retain locks, exact live pairs, reversal checks and defer
 test('current24 settlement support remains a fixed wire pin in command, migration and verification rather than an arbitrary smaller set',()=>{
  for(const name of ['standard_whole_package_command_v2','assert_document_migration','standard_whole_package_verify_v2']){const body=c.changedBodies.find(r=>r.signature.includes('.'+name+'(')).body;assert.match(body,/4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b/);assert.match(body,/jsonb_array_length\(sr_approval->'documents'\)/);}
 });
+
+test('SQL38 keeps CASE branch delimiters inside PL/pgSQL IF conditions', () => {
+ const body = name => c.changedBodies.find(r => r.signature.includes('.' + name + '(')).body;
+ const countRows = "(CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END)";
+ assert.ok(body('standard_whole_package_verify_v2').includes(`IF sr_rows<>${countRows} THEN`));
+
+ const command = body('standard_whole_package_command_v2');
+ assert.ok(command.includes(`IF cardinality(sr_rows)<>${countRows} OR NOT sr_used THEN`));
+ const approval = "cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b'";
+ assert.ok(command.includes(`IF sr_count<>(CASE WHEN ${approval} THEN 24 ELSE 25 END) OR sr_rows<>(CASE WHEN ${approval} THEN 26 ELSE 27 END) THEN`));
+
+ const transfer = body('validate_transfer_effect');
+ assert.ok(transfer.includes("OR (CASE WHEN current_user='erp_unified27_runtime_2393dbc6db9581c2' THEN naijue_erp.standard_inventory_key_proof(NEW.warehouse_id,NEW.sku_id)->>'state' IS DISTINCT FROM 'EXPLICIT_ZERO' ELSE NOT naijue_erp.inventory_runtime_key_admitted(NEW.warehouse_id, NEW.sku_id) END)"));
+});

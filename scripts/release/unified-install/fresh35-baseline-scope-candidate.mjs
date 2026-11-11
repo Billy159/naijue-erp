@@ -27,7 +27,7 @@ export function generateFresh35BaselineScopePatch(predecessors){
    change("jsonb_array_length(sr_approval->'documents')<>25","(jsonb_array_length(sr_approval->'documents')<>25 AND NOT(jsonb_array_length(sr_approval->'documents')=24 AND sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b'))");
    if(name==='standard_whole_package_verify_v2'){
     change('IF sr_count<>25 THEN',"IF sr_count<>jsonb_array_length(sr_approval->'documents') THEN");
-    change('IF sr_rows<>27 THEN',"IF sr_rows<>CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END THEN");
+    change('IF sr_rows<>27 THEN',"IF sr_rows<>(CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END) THEN");
    }
   }else if(name==='validate_import_accounting_final_record_commit'){
    change("THEN 'FINAL_EXPLICIT_KEYS' ELSE 'FINAL_DOCUMENT_CONVERSION' END)","THEN CASE WHEN proof->'fields'->'inventory_baseline_scope'->>'format_version'='INVENTORY_BASELINE_SCOPE_V1' THEN 'FINAL_BASELINE_SCOPE_V1' ELSE 'FINAL_EXPLICIT_KEYS' END ELSE 'FINAL_DOCUMENT_CONVERSION' END)");
@@ -66,8 +66,8 @@ ${before}   END IF;
    // The current24 wire is the externally pinned exact prior economic subset;
    // the original25/27 route and every original per-document check stay intact.
    change("IF jsonb_array_length(sr_approval->'documents')<>25 THEN","IF jsonb_array_length(sr_approval->'documents')<>25 AND NOT(jsonb_array_length(sr_approval->'documents')=24 AND sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b') THEN");
-   change('IF cardinality(sr_rows)<>27 OR NOT sr_used THEN',"IF cardinality(sr_rows)<>CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END OR NOT sr_used THEN");
-   change('IF sr_count<>25 OR sr_rows<>27 THEN',"IF sr_count<>CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 24 ELSE 25 END OR sr_rows<>CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 26 ELSE 27 END THEN");
+   change('IF cardinality(sr_rows)<>27 OR NOT sr_used THEN',"IF cardinality(sr_rows)<>(CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END) OR NOT sr_used THEN");
+   change('IF sr_count<>25 OR sr_rows<>27 THEN',"IF sr_count<>(CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 24 ELSE 25 END) OR sr_rows<>(CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 26 ELSE 27 END) THEN");
    // A scope descriptor never authorizes a fabricated explicit source row.
    change("     IF entry ? 'explicit_zero_evidence' THEN",`     IF cfg->'explicit_zero_approval'->>'format_version'='INVENTORY_BASELINE_SCOPE_V1' AND entry ? 'explicit_zero_evidence' THEN RAISE EXCEPTION 'INVENTORY_SCOPE_REQUIRES_REAL_EXPLICIT_ROWS' USING ERRCODE='23514'; END IF;
      IF entry ? 'explicit_zero_evidence' THEN`);
@@ -135,7 +135,7 @@ ${before}   END IF;
     RETURN NULL;`);
   }else if(name==='validate_transfer_effect'){
    change("      RAISE EXCEPTION 'STANDARD_MISSING_BALANCE_IS_UNKNOWN' USING ERRCODE='23514';",`      IF ${zero} IS DISTINCT FROM 'EXPLICIT_ZERO' THEN RAISE EXCEPTION 'STANDARD_FIRST_SCOPE_BALANCE_REQUIRED' USING ERRCODE='23514'; END IF;`);
-   change('OR NOT naijue_erp.inventory_runtime_key_admitted(NEW.warehouse_id, NEW.sku_id)',`OR CASE WHEN current_user=${role} THEN ${zero} IS DISTINCT FROM 'EXPLICIT_ZERO' ELSE NOT naijue_erp.inventory_runtime_key_admitted(NEW.warehouse_id, NEW.sku_id) END`);
+   change('OR NOT naijue_erp.inventory_runtime_key_admitted(NEW.warehouse_id, NEW.sku_id)',`OR (CASE WHEN current_user=${role} THEN ${zero} IS DISTINCT FROM 'EXPLICIT_ZERO' ELSE NOT naijue_erp.inventory_runtime_key_admitted(NEW.warehouse_id, NEW.sku_id) END)`);
   }
   spec.successor_sha256=hash(body);specs.push(spec);
  }
