@@ -4697,3 +4697,9 @@ T45 私有启动 RESULT 2d5f8fb2、normal_app.py 4c4ca10e 由主控复算。沿�
 ### 2026-11-12T07:19:56+08:00 | QB 复现 APP09 共享网络 readyz 归属误判
 
 QB 定向 7/7 与固定材料、真实 154/38 和容量放行接线核对通过，新增 P2，整体 NEED_FIX。原 normal_app.py:266–281 在共享 09 网络中，只查当前 PID 1 已 exec Node 和环回 :3000 的 READY，不能证明监听归本次进程。主控用 `python3 -B -` 加载原 4c4ca10e 并注入本次 Node 未监听、其他进程返回 READY 的替身，实际错误返回 readyz=True 和 REAL_CLI_BEFORE_LISTEN，退出 0。T45 单一 owner 补准确 PID1／监听归属及反例，正式 stage 不继承误判，旧候选保留，不重建应用。无现场读回、配置变更或启动。
+
+### 2026-11-12T07:29+08:00 | R3 一次只读入口获用户授权，09 沿用原 Linux 依赖
+
+用户确认原管理员可恢复一次 R3 限时只读入口，已投递原 T45。授权限定沿现有 operator-readonly-03、一次最多五分钟，查询原作业、D3 接收、普通 05 和现场容量。接续消息已被 Chat 工具接收。准确入口绑定、实际连接和现场读回待 T45 回执，旧已消费尝试保留。
+
+主控从固定 09 归档 b621d1b8 实取 package 与 lock，比对同版镜像、Node 及原 Linux 实测依赖回执 46518bcb，全部吻合，脚本退出 0，stdout 7b47fae8。原作业 npm 安装、Fastify/pg/sharp 加载与容器退出均为 0，保留 node_modules。沿用此安装证据，正式 stage 只补当前目录、挂载和关键模块的现场核验。未重装，未运行现场应用。
