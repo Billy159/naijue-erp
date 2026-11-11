@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T12:26:44+08:00",
-  "stage": "R3_APPLY07_ACTUAL_COMPLETE_SERVICE07_IN_PROGRESS_NEW_SALES_TWO_SOURCE_RECONCILIATION",
+  "updatedAt": "2026-11-11T12:35:57+08:00",
+  "stage": "R3_SERVICE07_READONLY_ACTUAL_PASS_UPGRADE03_NOT_SUBMITTED_CLOSEOUT_IN_PROGRESS_NEW_SALES_SOURCE_CHECKS_CLOSED",
   "lastVerifiedRemoteCommit": "13ea42961d3588081fab030a2b3abaf183dd3a15",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -44234,7 +44234,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 executes original service07 once from C original grant; collect actual runtime proof for separately bound UPGRADE03. Exact restore04 required before role restoration deadline. No SQL36/admin/import/business acceptance claimed.",
+    "next": "T45 closes exact service07 and restores exact original two-role authentication through original restore04, retaining PGDATA and evidence. UPGRADE03 not submitted and no SQL36/A/APP; prepare adequate complete-chain time budget before another reviewed window.",
     "maintenance06LatestCycle": {
       "apply06": {
         "status": "ACTUAL_COMPLETED_0_TWO_FINITE_ROLES_STOPPED",
@@ -44491,14 +44491,33 @@
         "restored": false
       },
       "service07": {
-        "status": "C_ORIGINAL_GRANTED_T45_CURRENT_EXECUTION_NO_RESULT_YET",
+        "status": "ACTUAL_COMPLETED_0_FOUR_READONLY_CHECKS_AND_INDEPENDENT_BIRTH_READBACK",
         "authoritySha256": "39d121f06ebd8c4902d2fff4e8e3277914572f10b688c36004b40b4d48f110ee",
         "coordinationExpiresAtEpochMs": 1794371434315,
-        "serviceLeaseExpiresAtEpochMs": 1794373234315
+        "serviceLeaseExpiresAtEpochMs": 1794373234315,
+        "resultSha256": "b9c7c5d7eeb0735f709d0f53a73588dfb95ffe5ec6b0f1071b1e2964af3f0e77",
+        "terminalSha256": "d7203eb6674193f855d1a1db5ed9e0ad6dfbb0152fd4e783b14aeed5a61e7749",
+        "proofSha256": "371a043e9032e39301f6c492b362855c96ef9f7d3dfdef79e3caad9f64ee5193",
+        "retainedReceiptSha256": "cf28b608b3959726a223558f3c71370f91a1eda3807cf228e467bf1bb7bfd2e8",
+        "postmasterStart": "2026-11-11 04:24:08.239943+00",
+        "elapsedSeconds": 4.930904478766024
       },
       "SQL36": "NOT_EXECUTED",
       "adminA": "NOT_EXECUTED",
-      "APP_CLI": "NOT_EXECUTED"
+      "APP_CLI": "NOT_EXECUTED",
+      "upgrade03": {
+        "status": "NOT_SUBMITTED_REMAINING_WINDOW_INSUFFICIENT_NO_REPLAY",
+        "lastActualPreflight": "2026-11-11T12:31:48.314+08:00",
+        "remainingSeconds": 338.26,
+        "minimumEntrySeconds": 300,
+        "rootAuthoritySha256": "ee0451170605aedb48af1d81b2c2f8e23dd38b60f4f9dd1dc1ebaf690e5783f8",
+        "nodeGrantIssued": false,
+        "SQLExecuted": false
+      },
+      "restore04": {
+        "status": "T45_CURRENT_CLOSEOUT_IN_PROGRESS_NOT_YET_CONFIRMED",
+        "hostAuthoritySha256": "2e78373396d3834b19629725d7943c9e71ab387de3f5a099f98bf742ea01609a"
+      }
     }
   },
   "freshDataRefresh20261111": {
@@ -44587,17 +44606,37 @@
         "allDocumentsSettlementMatchesPrior": true,
         "priorAmountDifferenceDocuments": 1,
         "quantityPriceAmountDifferenceLines": 6,
-        "EOF": true
+        "EOF": true,
+        "priorAmountDifferenceExplainedByExistingApproval": true,
+        "quantityPriceAmountDifferencesCoveredByPriorExactApproval": true
       },
       "auditSource": {
         "file": "销货单 2.xlsx",
         "sha256": "a66901a07718195dfdaa06b2df426d598f00f410bf20fd886a26c9ee8c3c5526",
         "bytes": 7885976,
         "userConfirmedPurpose": "Previous export retained for audit state verification. Byte-identical to already parsed previous source; reuse valid evidence.",
-        "join": "Original document number, date, ordered lines and actual facts. Difference branch retained; no row-number join or guessed audit state."
+        "join": "Original document number, date, ordered lines and actual facts. Difference branch retained; no row-number join or guessed audit state.",
+        "bridgeDocuments": 29081,
+        "exactOrderedExportedFacts": 29072,
+        "fullMultisetEqualOrderChanged": 8,
+        "approvedAmountSourcePriority": 1
       },
       "readyForImport": false,
-      "owner": "D3"
+      "owner": "D3",
+      "summaryR2Sha256": "aaea3cd3f86a1eb796187207aa82b8cfbce64709a791298cb4e1eeb948de6880",
+      "existingExceptions": {
+        "quantityPriceAmountLines": 6,
+        "exactMatchesPreviouslyApproved": 6,
+        "amountDifferenceDocumentCount": 1,
+        "sourcePriorityAlreadyApproved": true,
+        "newDecisionNeededForTheseDifferences": false
+      },
+      "accountBridge": {
+        "settlementRows": 26560,
+        "uniqueIdentityMatches": 26560,
+        "unresolved": 0,
+        "methodSnapshotDoesNotUseCurrentAccountDefault": true
+      }
     },
     "latestDraft": {
       "state": "DRAFT_NOT_UPLOAD_READY",
