@@ -45316,7 +45316,19 @@
         "appStaging02ActualSha256": "7e730f2df6ef8496a9e2c889db27904db43fdf59a1fd3d404bc6756b81102d7a",
         "appStaging02ReadbackSha256": "25758f2f7df3ff51a80b951a66d8766e8f6d373d1e8872207f3c5c0bb5e14c5b",
         "isolated03ReadySha256": "231342efd745a0ecd6304ebbbefda5b9e21667c0d6853f9d0281649f704a7e3b",
-        "isolated03State": "MINIMUM_PINS_MODE_FIX_PENDING_INDEPENDENT_REVIEW_AND_ACTUAL_PRESTAGE",
+        "isolated03State": "BASE35_AND_SQL36_COMMITTED_SQL38_SYNTAX_REJECTED_CLEAN_STOP",
+        "isolated03": {
+          "prestageJobSha256": "9890a70158d64813572af5df9f15db0a62a231da7316497d8f041bd118e279e7",
+          "privatePinsReadbackSha256": "0a5a0d33d906905957dc885f4269aa71314d11a8c1cfbd2994d3cd07ffb5bc48",
+          "qbModeDeltaSha256": "6ce3832c20edf52c10c1c0a4d09df31f96ac4eb7f2ff7482903d8a232a233e2a",
+          "terminalSha256": "fdf103bb8c3f127706340075ab045d3fa240df8264c77869f3efdf93b05ac1ab",
+          "installRecordSha256": "5db322297a01ceef09505f849d4394d29b2e63a19a171d491dad77f6d0039021",
+          "failure": "SQLSTATE 42601, end of input at character 31166, SQL38 EXECUTE definition line19",
+          "function": "naijue_erp.standard_whole_package_verify_v2",
+          "functionReadbackSha256": "5061d7e73e26c8d2785d00e315c8caa475847d6b8fd84309684d00e217497c27",
+          "business": "NOT_EXECUTED; R3 production untouched",
+          "next": "Original D1 reproduces exact generated PL/pgSQL syntax and updates necessary pins; QB scoped review, T45 retains stopped03 and continues applicable R3 offline wiring"
+        },
         "appStaging02OriginalSha256": "58a97554877ac6319b799d020ac5341bdce72f6979fff36cc6234ac8ac1e83a7",
         "isolated02Terminal": {
           "installation": "ACTUAL_BASE_35_COMMITTED_AND_CATALOG_CHECKED",
