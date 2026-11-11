@@ -148,7 +148,7 @@ test('ordinary startup uses one pool/lease and direct LOGIN identity before inte
  }finally{if(cap)m.api.closeFresh35OrdinaryAdmissionV2(cap,m.pool);await m.dispose();}
 });
 
-test('V2 maintenance 06 proof is exact and cannot admit ordinary or REAL startup',async()=>{
+test('V2 maintenance 07 proof is exact and cannot admit ordinary or REAL startup',async()=>{
  const m=await model({formal:true,normal:true});
  const setPair=suffix=>{
   m.proof.requestKey='t45-first-r3-native-service-start-20261111-'+suffix;
@@ -156,13 +156,14 @@ test('V2 maintenance 06 proof is exact and cannot admit ordinary or REAL startup
   m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-'+suffix;
  };
  try{
-  setPair('06');const maintenance=await m.putProof();
+  setPair('07');const maintenance=await m.putProof();
   assert.equal((await m.api.checkCurrentService(maintenance,true)).postmasterStart,m.proof.physical.postmasterStart);
   await assert.rejects(m.api.checkCurrentService(maintenance,false),/SERVICE_PROVENANCE_DIFFERS/);
   await assert.rejects(m.api.admitFresh35OrdinaryPoolV2(m.pool,m.connection,maintenance),/SERVICE_PROVENANCE_DIFFERS/);
   m.proof.sharedPostgresNamespace.container.name='t45-fresh35-first-production-20261110-r3-service-04';
   await assert.rejects(m.api.checkCurrentService(await m.putProof(),true),/SERVICE_CARRIER_REQUIRED/);
   setPair('04');await assert.rejects(m.api.checkCurrentService(await m.putProof(),true),/SERVICE_PROVENANCE_DIFFERS/);
+  setPair('06');await assert.rejects(m.api.checkCurrentService(await m.putProof(),true),/SERVICE_PROVENANCE_DIFFERS/);
   setPair('05');const ordinary=await m.putProof();
   assert.equal((await m.api.checkCurrentService(ordinary,false)).postmasterStart,m.proof.physical.postmasterStart);
   await assert.rejects(m.api.checkCurrentService(ordinary,true),/SERVICE_PROVENANCE_DIFFERS/);

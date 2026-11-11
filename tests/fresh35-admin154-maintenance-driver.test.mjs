@@ -14,7 +14,7 @@ import {assertPublicValuesExcludePrivateInputs as exclude} from '../tools/unifie
 const url=new URL('../tools/unified-import/fresh35-admin154-maintenance-driver.mjs',import.meta.url),text=await fs.readFile(url,'utf8');
 const leafBytes=await fs.readFile(new URL('../tools/unified-import/fresh35-admin154-upgrade.mjs',import.meta.url));
 const hash=b=>createHash('sha256').update(b).digest('hex'),stub=s=>'data:text/javascript;base64,'+Buffer.from(s).toString('base64');
-const sourceSha='bbab2a72bae46b48f4644df38cf2bb9de4483cb1e57c5f454bfc07cc18d75e66';
+const sourceSha='76bcc45c0709205d070ba89ae7a796f3329a0f06851b8c71d17e9ab112700cc7';
 const oldSha='6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16',recordSha='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e';
 async function fixture(phase='UPGRADE'){
  const dir=await fs.realpath(await fs.mkdtemp(join(tmpdir(),'maintenance-driver-model-'))),job=join(dir,'job'),proofPath=join(dir,'proof.json'),alias=join(dir,'host-proof.json'),recordPath=join(dir,'successor.json');await fs.mkdir(job,{mode:0o700});
@@ -27,9 +27,9 @@ async function fixture(phase='UPGRADE'){
  const operationRaw=Buffer.from('{"syntheticOperation":true}\n');await fs.writeFile(operation,operationRaw,{mode:0o440});
  const window={startsAt:Date.now()-1000,expiresAt:Date.now()+180000};
  const physical={systemIdentifier:'7706545564479176741',databaseOid:'16393',serverVersionNum:'170011',postmasterStart:new Date(Date.now()-2000).toISOString().replace('T',' ').replace('Z','+00')};
- const proof={format:'FRESH35_CURRENT_PRODUCTION_SERVICE_V2',requestKey:'t45-first-r3-native-service-start-20261111-06',authorizationSha256:'a'.repeat(64),checkedAt:Date.now()-100,
+ const proof={format:'FRESH35_CURRENT_PRODUCTION_SERVICE_V2',requestKey:'t45-first-r3-native-service-start-20261111-07',authorizationSha256:'a'.repeat(64),checkedAt:Date.now()-100,
   installationRecordSha256:recordSha,targetSha256:'3'.repeat(64),sourceSetSha256:oldSha,serviceReceiptSha256:'b'.repeat(64),dataDirectory:'/SYNTHETIC_MODEL_ONLY/data',dataDirectoryIdentity:{},physical,
-  sharedPostgresNamespace:{creationOperationId:'t45-first-r3-native-service-start-20261111-06',serviceLeaseExpiresAt:window.expiresAt+300000,container:{name:'t45-fresh35-first-production-20261110-r3-service-06',networkNamespace:{device:4,inode:5}}},postmaster:{},guardian:{},runtimeRole:'erp35_runtime_20261110_r3',runtimeLoginValidUntil:null};
+  sharedPostgresNamespace:{creationOperationId:'t45-first-r3-native-service-start-20261111-07',serviceLeaseExpiresAt:window.expiresAt+300000,container:{name:'t45-fresh35-first-production-20261110-r3-service-07',networkNamespace:{device:4,inode:5}}},postmaster:{},guardian:{},runtimeRole:'erp35_runtime_20261110_r3',runtimeLoginValidUntil:null};
  const proofRaw=JSON.stringify(proof);await fs.writeFile(proofPath,proofRaw,{mode:0o444});await fs.writeFile(alias,proofRaw,{mode:0o444});
  const recordRaw=JSON.stringify({SYNTHETIC_PUBLISHED_RECORD_ONLY:true});await fs.writeFile(recordPath,recordRaw,{mode:0o644});
  const packet={phase,jobDirectory:job,sourceRoot:'/MODEL_SOURCE',referenceDirectory:'/MODEL_REFERENCE',connection:{host:'127.0.0.1',port:56791,database:'erp_fresh35_20261110_r3',user:phase==='UPGRADE'?'erp35_owner_20261110_r3':'erp35_controller_20261110_r3',password:'SYNTHETIC_PRIVATE_PASSWORD_DO_NOT_LOG',ssl:false},currentService:{path:proofPath,sha256:hash(proofRaw)},
@@ -64,7 +64,7 @@ async function fixture(phase='UPGRADE'){
  export async function open(p,f,m){if(watched&&p.startsWith(watched+'/events/'))order.push('EVENT_OPEN');const h=await fs.open(p,f,m);return{stat:async o=>root(await h.stat(o),p),read:(...a)=>h.read(...a),write:(...a)=>h.write(...a),writeFile:(...a)=>h.writeFile(...a),async sync(){if(p===watched){order.push(made?'PARENT_SYNC_AFTER_MKDIR':'PARENT_SYNC_BEFORE_MKDIR');if(made&&fail)throw Error('MODEL_PARENT_SYNC_FAILED');}await h.sync();},close:()=>h.close()}}
  `);const ioAPI=await import(io);
  let source=text.replace("'node:fs/promises'",JSON.stringify(io)).replaceAll('import.meta.url',JSON.stringify(pathToFileURL(own).href));
- for(const [from,to] of [["'/app/backend/native35-source'","'/MODEL_SOURCE'"],["'/opt/naijue-erp/fresh35-combined-v1/reference-inputs'","'/MODEL_REFERENCE'"],["'/run/t45-admin154/job'",JSON.stringify(job)],["'/run/t45-admin154/control'",JSON.stringify(control)],["'/etc/naijue-erp/fresh35-admin154-execution-v1.json'",JSON.stringify(operation)],["'/etc/naijue-erp/fresh35-current-production-service-v2-service-06.json'",JSON.stringify(proofPath)],["'/run/naijue-rewrite/current-production-service.json'",JSON.stringify(alias)]])source=source.replaceAll(from,to);
+ for(const [from,to] of [["'/app/backend/native35-source'","'/MODEL_SOURCE'"],["'/opt/naijue-erp/fresh35-combined-v1/reference-inputs'","'/MODEL_REFERENCE'"],["'/run/t45-admin154/job'",JSON.stringify(job)],["'/run/t45-admin154/control'",JSON.stringify(control)],["'/etc/naijue-erp/fresh35-admin154-execution-v1.json'",JSON.stringify(operation)],["'/etc/naijue-erp/fresh35-current-production-service-v2-service-07.json'",JSON.stringify(proofPath)],["'/run/naijue-rewrite/current-production-service.json'",JSON.stringify(alias)]])source=source.replaceAll(from,to);
  source=source.replace(/const moduleAt=.*?;\n/,'const moduleAt=async name=>modelModule(name);\n');
  source=source.replace(/need\(process.platform==='linux'[\s\S]*?'PINNED_RUNTIME_IDENTITY_REQUIRED'\);/,"need(true,'EXPLICIT_MODEL_RUNTIME_ONLY');");
  source=source.replace("import(pathToFileURL(join(oldRoot,'scripts/release/unified-install/fresh35-combined-'+n+'-v1.mjs')).href)","modelModule('old:'+n)");
@@ -96,11 +96,11 @@ test('maintenance proof probe and DESCRIBE share bounded system diagnostics and 
   const verify=(sha=f.ctx.packet.currentService.sha256)=>f.api.verifyFresh35Admin154CurrentServiceProof(sha,f.ctx.window);
   const describe=()=>f.api.describeFresh35Admin154MaintenancePreparation(f.raw,f.ctx.window);
   assert.equal(await verify(),undefined);
-  await assert.rejects(verify('0'.repeat(64)),{message:'ADMIN154_DRIVER_CURRENT06_PROOF_ALIAS_DIFFERS'});
+  await assert.rejects(verify('0'.repeat(64)),{message:'ADMIN154_DRIVER_CURRENT07_PROOF_ALIAS_DIFFERS'});
   for(const [path,errno,suffix] of [[f.proofPath,'ENOENT','PROOF_ENOENT'],[f.alias,'EACCES','ALIAS_EACCES'],
    ['/proc/self/ns/net','EPERM','PROC_STAT_EPERM'],[f.alias,'SYNTHETIC_PRIVATE_ERRNO','ALIAS_UNCLASSIFIED']]){
    f.failProofRead(path,errno);
-   const message=`ADMIN154_DRIVER_PREPARATION_CURRENT06_READ_FAILED_${suffix}`;
+   const message=`ADMIN154_DRIVER_PREPARATION_CURRENT07_READ_FAILED_${suffix}`;
    for(const run of [verify,describe])await assert.rejects(run(),error=>{
     assert.equal(error.message,message);assert.equal(error.cause,undefined);assert.equal(error.path,undefined);return true;
    });
@@ -123,7 +123,7 @@ test('maintenance refuses wrong raw authority, expired grant and mismatched actu
  }finally{await f.close();}}
 });
 test('maintenance requires the real same-hash host proof alias before opening any client',async()=>{
- const f=await fixture();try{const a=await f.authorize();await fs.chmod(f.alias,0o600);await fs.writeFile(f.alias,'SYNTHETIC_CHANGED_PROOF');const r=await f.run(a);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'ADMIN154_DRIVER_CURRENT06_PROOF_ALIAS_DIFFERS');assert.equal(f.ctx.clients.length,0);
+ const f=await fixture();try{const a=await f.authorize();await fs.chmod(f.alias,0o600);await fs.writeFile(f.alias,'SYNTHETIC_CHANGED_PROOF');const r=await f.run(a);assert.equal(r.state,'NOT_STARTED');assert.equal(r.code,'ADMIN154_DRIVER_CURRENT07_PROOF_ALIAS_DIFFERS');assert.equal(f.ctx.clients.length,0);
  }finally{await f.close();}
 });
 test('custody rejects a non-public audit frame without persisting or echoing it',async()=>{
