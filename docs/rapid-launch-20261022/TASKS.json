@@ -1354,8 +1354,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T13:44:27+08:00",
-  "stage": "R3_STOPPED_MAINTENANCE08_ARTIFACT_AND_SOURCE_INCREMENT_ACCEPTED_PRESTAGING",
+  "updatedAt": "2026-11-11T13:58:46+08:00",
+  "stage": "R3_STOPPED_STAGE08_PARTIAL_RETAINED_POLICY_RESTORED_ZERO_V2_IMPLEMENTATION",
   "lastVerifiedRemoteCommit": "e926a5972abc55b13ec3625f612e8a7b299b90bc",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -44570,7 +44570,7 @@
         "resultSha256": "f44a8b31a00189f80d61584f0775d7eae39defa955a869bb247eaf82fb012621"
       },
       "pairedT45Commit": "08840a44f49a4fca9e82489dab42b153aeaf183e",
-      "remaining": "T45 exact static staging original, actual receiver ready, complete off-window command preparation; then fresh C finite same-R3 original authorization. No new server job or SQL yet.",
+      "remaining": "T45 same-key fixed-offset transfer recovery source proposal and narrow independent review. No existing ordinary resume endpoint. Do not replay, change key, clear partial or open maintenance window. Receiver READY remains missing.",
       "pairedIndependentReview": {
         "status": "PASS_SOURCE_MAINTENANCE08_CONSUMER_PAIRING_ONLY",
         "resultSha256": "08ec4177cdb4314b9284ffcdd3f3a64c8616f2db5fb29c7a81dc721ef549e4cd"
@@ -44582,13 +44582,40 @@
         "expiresAt": 1794377333101,
         "scope": "Exact fixed application artifact upload, bounded staging policy install and exact restore only; no PG, role, SQL, APP or import execution",
         "owner": "T45",
-        "state": "DISPATCHED_TO_ORIGINAL_OWNER_STATUS_AND_INSTALL_IN_PROGRESS"
+        "state": "CONSUMED_INSTALL_UPLOAD_ONCE_AND_EXACT_RESTORE_COMPLETED_NO_RECEIVER_READY"
       },
       "stageIndependentReviewSha256": "9e6815d118cde2c65d3abbe262387839a38ae81b4b7fe8ca8169dee26bef9af1",
       "staticCommandIndexSha256": "750edd1ff5b3b27af69d7b3d1790ed6ab2fe336246b967f70b8216ef9231983f",
       "publicStatus": {
-        "commit": "a7da9f2c0fa6057be971e6f5ea6c5b26acabf4ff",
+        "commit": "9441920847e421f1271ccade36d09475aaded278",
         "verifiedReadback": true
+      },
+      "stagingActual": {
+        "resultSha256": "b60ac38bc3beb5fc4e63495283fec91b88877887285e2f4099e40b6a4df538b9",
+        "status": "PARTIAL_ARTIFACT_NO_READY_OR_REPLAY_EXACT_EXPIRED_POLICY_RESTORED",
+        "partialBytes": 1499648,
+        "expectedBytes": 3381928,
+        "uploadAttempts": 1,
+        "uploadError": "LEASED_CHANNEL_TIMEOUT_DO_NOT_REPLAY",
+        "exactTransportFailurePhase": "UNAVAILABLE_ORIGINAL_ARTIFACT_OBSERVATIONS_NOT_PERSISTED",
+        "originalBindingSha256": "109f17853fb48c923083ae1920433f57cd1a971d7e8edb571b0f21ca628008cf",
+        "receiverReady": false,
+        "partialRetained": true,
+        "exactPolicyRestored": true,
+        "restoreTerminalSha256": "cef631f544d6891a827082e5b453670a7721d3d3c255622faf5a3d6f028a5722",
+        "restoreReadbackSha256": "5fcfe43a1d4505efad6351d0c501abf1fcc7fd9b2a6ec02067dba9fa49dce945",
+        "independentReadbackAt": "2026-11-11T13:48:21.592+08:00",
+        "rolesOrPGOrAPPStarted": false
+      },
+      "transportRecovery": {
+        "proposalSha256": "f52adbf9d6538c5e270c70d1a735b5572dc858d6dba908c5e5f5c57f9ef2c0a2",
+        "state": "C_APPROVED_SOURCE_AND_OFFLINE_IMPLEMENTATION_ONLY_EXACT_EXECUTION_PENDING_FIXED_SOURCE_QB_AND_NEW_C_ORIGINAL",
+        "sourceWriter": "original T45 ssh-control.py",
+        "reviewer": "original QB",
+        "originalKeyPreserved": true,
+        "originalBindingPreserved": true,
+        "timeout40SecondsUnchanged": true,
+        "next": "Frozen fixed eight segment increment and exact install/restore; C evaluates and issues bounded same-key recovery execution under standing authority"
       }
     }
   },
@@ -44766,6 +44793,46 @@
       "humanMessageId": "01a1c8fd-9146-7502-a103-74c3fae032fa",
       "directHumanReadVerified": true,
       "owner": "D2 masters then D3 registry/relations"
+    },
+    "latestControllerAdoptedDraft": {
+      "manifest": "package/draft-r7/manifest.draft.json",
+      "sha256": "ab768c40c431dee08c7ffbcce968ae282dbcaf0e24d404a70abc554b96cdf13d",
+      "tables": 26,
+      "rows": 510358,
+      "bytes": 402201160,
+      "controllerVerifiedAllFileHashes": true,
+      "nonNullReferences": 1123161,
+      "missingReferences": 0,
+      "sourceReconciliationSha256": "3ff75bcc0e17fa9640303dbc260506d7465309afe8bad57d656ed7b8cf4bb35b",
+      "fieldReceiptSha256": "96f4ac5fd409c17adb398644361eaf4d42e1e4f2af2f0d66d30679b31f5e48e3",
+      "state": "DRAFT_NOT_UPLOAD_READY",
+      "actualDatabaseImport": false,
+      "zeroScopeCandidateAdopted": false,
+      "zeroScopeReason": "r7 14800 SKU is complete-product subset; final all real identities currently14818 over54warehouses, accurate source still being frozen by originalD3",
+      "salesIncluded": {
+        "heads": 29078,
+        "lines": 84141,
+        "settlements": 26537
+      },
+      "salesHeld": {
+        "heads": 3,
+        "lines": 45,
+        "quantity": "46",
+        "lineAmount": "17016.00"
+      },
+      "transferIncluded": {
+        "heads": 15101,
+        "lines": 282351,
+        "quantity": "313663"
+      },
+      "transferHeld": {
+        "heads": 34,
+        "lines": 596,
+        "quantity": "626"
+      },
+      "unauditedSales": 4,
+      "unauditedTransfers": 75,
+      "zeroSettlementArchives": 22
     }
   },
   "recoveredChatMessages20261111": {
@@ -44776,5 +44843,23 @@
     "from": "2026-11-11T07:00:07+08:00",
     "through": "2026-11-11T11:30:07+08:00",
     "reasonNotVisibleInUI": "UNKNOWN"
+  },
+  "newBatchZeroV2Approval20261111": {
+    "status": "USER_APPROVED_SOURCE_AND_WRITE_CONTRACT_ONLY_IMPLEMENTATION_D1",
+    "questionCall": "call_ffe864f3d3be4be1aa1a0f1f30a53f0d",
+    "answer": "确认这项源码与合同修订",
+    "proposalPath": "outputs/D1/20261111-zero-scope-v2-contract-review-01/WRITE-CONTRACT.md",
+    "proposalSha256": "30acd2b82b1642c4500dd814c7667dafdad52ea59fc706079d1ea436eb1634f5",
+    "sourceWriter": "original D1",
+    "inputWriter": "original D3",
+    "baselinePreserved": "eca7dd5 fixed package",
+    "databaseEnvironmentActionsAuthorizedByThisConfirmation": false
+  },
+  "currentHumanDataDirective20261111Barcode": {
+    "sourceThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+    "humanMessageId": "01a1c922-7038-7d71-8a54-3c93bf7ca8f7",
+    "CReadActualHumanMessage": true,
+    "rule": "Source blank fit defaults A except retained exact historical A/B exceptions; inspect new product configured scheme and generate approved barcodes before rematching; no name/prefix guess or overwrite old SKU identity.",
+    "writer": "D2 masters and registry; D3 consumes; original plain chat alone writes decision workbook"
   }
 }
