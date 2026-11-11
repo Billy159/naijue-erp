@@ -3,7 +3,7 @@ import test from 'node:test';import assert from 'node:assert/strict';import {rea
 import {loadFresh35BaselineScopePredecessors,generateFresh35BaselineScopePatch,compileFresh35BaselineScopeCandidate,loadFresh35BaselineScopeCandidate} from '../scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs';
 const root=new URL('../',import.meta.url).pathname,hash=s=>createHash('sha256').update(s).digest('hex'),{routines}=await loadFresh35BaselineScopePredecessors(root),patch=await readFile(new URL('../adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql',import.meta.url),'utf8'),c=compileFresh35BaselineScopeCandidate(routines,patch);
 test('SQL38 is deterministic directly from the SQL36 154-routine predecessor and preserves permissions/storage metadata',async()=>{
- assert.equal(generateFresh35BaselineScopePatch(routines).patchSql,patch);assert.equal(c.changedBodies.length,7);assert.equal(c.newRoutines.length,0);assert.equal(c.manifest.tableCount,35);assert.deepEqual(c.manifest.permissionChanges,[]);assert.equal(c.manifest.newColumns,0);
+ assert.equal(generateFresh35BaselineScopePatch(routines).patchSql,patch);assert.equal(c.changedBodies.length,9);assert.equal(c.newRoutines.length,0);assert.equal(c.manifest.tableCount,35);assert.deepEqual(c.manifest.permissionChanges,[]);assert.equal(c.manifest.newColumns,0);
  for(const r of c.changedBodies)assert.equal(hash(r.body),c.manifest.routineChanges.find(x=>x.signature===r.signature).after);
  assert.match(patch,/before_meta IS DISTINCT FROM after_meta/);const live=await loadFresh35BaselineScopeCandidate(root);assert.equal(live.manifest.patchSqlSha256,hash(patch));assert.equal(live.manifest.sourcePins.some(p=>p.path.endsWith('0037_compact_zero_scope_successor.sql')),false);
 });
@@ -20,4 +20,8 @@ test('first-use guards retain locks, exact live pairs, reversal checks and defer
  assert.match(byName('guard_recorded_live_balance_pair'),/NEW.quantity_before<>0/);assert.match(byName('guard_recorded_live_balance_pair'),/NEW.reverses_entry_id IS NOT NULL/);
  assert.match(byName('validate_sparse_balance_commit'),/STANDARD_FIRST_SCOPE_REAL_EFFECT_DIFFERS/);assert.match(byName('validate_transfer_effect'),/invalid exact original transfer reversal/);
  assert.throws(()=>compileFresh35BaselineScopeCandidate(routines,patch+' '),/EXACT_GENERATED_PATCH_REQUIRED/);
+});
+
+test('current24 settlement support remains a fixed wire pin in command, migration and verification rather than an arbitrary smaller set',()=>{
+ for(const name of ['standard_whole_package_command_v2','assert_document_migration','standard_whole_package_verify_v2']){const body=c.changedBodies.find(r=>r.signature.includes('.'+name+'(')).body;assert.match(body,/4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b/);assert.match(body,/jsonb_array_length\(sr_approval->'documents'\)/);}
 });

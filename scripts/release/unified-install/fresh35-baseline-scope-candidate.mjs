@@ -13,7 +13,7 @@ import {applyRetirementSourceReplacement,normalizeRetirementSignature as normali
 const hash=b=>createHash('sha256').update(b).digest('hex'),need=(v,c)=>{if(!v)throw Error('FRESH35_BASELINE_SCOPE_'+c);};
 const modulePath='scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs',patchPath='adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql';
 const loadedHash=hash(await readFile(new URL(import.meta.url)));
-const pins={validate_import_accounting_final_record_commit:'7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c',standard_whole_package_command_v2:'071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b',standard_inventory_key_proof:'687848f69a5ca3e139c35aafc9b9be8c31cd23f9d70a07cb34d4bde9021d7d66',guard_cutoff_ledger:'65cd4ff3d8671651ba21ea9c87e2bbcb8d0d1f9613b50698fae6d953202de939',guard_recorded_live_balance_pair:'891aea0441b73343caf02b249515b757884e760fefc444c644a5f25b74e88d0f',validate_sparse_balance_commit:'b4fcf066b75f334152e997080ce3157c578731bea4fd98366bd93e5e1ff88d64',validate_transfer_effect:'f7296739bc086cc8a7ed293272b1061480ffd3d83c92e40552697fe812f79f1a'};
+const pins={assert_document_migration:'b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5',standard_whole_package_verify_v2:'103dad3f9486c17f315fb627abf0920305ad6c0df7ec23cc8f3f295679f2f5b1',validate_import_accounting_final_record_commit:'7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c',standard_whole_package_command_v2:'071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b',standard_inventory_key_proof:'687848f69a5ca3e139c35aafc9b9be8c31cd23f9d70a07cb34d4bde9021d7d66',guard_cutoff_ledger:'65cd4ff3d8671651ba21ea9c87e2bbcb8d0d1f9613b50698fae6d953202de939',guard_recorded_live_balance_pair:'891aea0441b73343caf02b249515b757884e760fefc444c644a5f25b74e88d0f',validate_sparse_balance_commit:'b4fcf066b75f334152e997080ce3157c578731bea4fd98366bd93e5e1ff88d64',validate_transfer_effect:'f7296739bc086cc8a7ed293272b1061480ffd3d83c92e40552697fe812f79f1a'};
 const role="'erp_unified27_runtime_2393dbc6db9581c2'";
 const zero="naijue_erp.standard_inventory_key_proof(NEW.warehouse_id,NEW.sku_id)->>'state'";
 function add(spec,body,before,after){need(before&&body.split(before).length===2,'EXACT_ANCHOR_'+spec.signature.split('.')[1].split('(')[0]);spec.replacements.push({before,after});return body.replace(before,()=>after);}
@@ -23,7 +23,13 @@ export function generateFresh35BaselineScopePatch(predecessors){
   const r=predecessors.find(r=>r.signature.includes('.'+name+'('));need(r&&hash(r.body)===pin,'EXACT_PREDECESSOR_'+name);
   const spec={signature:r.signature,predecessor_sha256:pin,replacements:[]};let body=r.body;
   const change=(before,after)=>{body=add(spec,body,before,after);};
-  if(name==='validate_import_accounting_final_record_commit'){
+  if(name==='assert_document_migration'||name==='standard_whole_package_verify_v2'){
+   change("jsonb_array_length(sr_approval->'documents')<>25","(jsonb_array_length(sr_approval->'documents')<>25 AND NOT(jsonb_array_length(sr_approval->'documents')=24 AND sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b'))");
+   if(name==='standard_whole_package_verify_v2'){
+    change('IF sr_count<>25 THEN',"IF sr_count<>jsonb_array_length(sr_approval->'documents') THEN");
+    change('IF sr_rows<>27 THEN',"IF sr_rows<>CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END THEN");
+   }
+  }else if(name==='validate_import_accounting_final_record_commit'){
    change("THEN 'FINAL_EXPLICIT_KEYS' ELSE 'FINAL_DOCUMENT_CONVERSION' END)","THEN CASE WHEN proof->'fields'->'inventory_baseline_scope'->>'format_version'='INVENTORY_BASELINE_SCOPE_V1' THEN 'FINAL_BASELINE_SCOPE_V1' ELSE 'FINAL_EXPLICIT_KEYS' END ELSE 'FINAL_DOCUMENT_CONVERSION' END)");
   }else if(name==='standard_whole_package_command_v2'){
    const from=body.indexOf("   IF jsonb_typeof(zero_descriptor) IS DISTINCT FROM 'object'"),to=body.indexOf("  END IF;",from),before=body.slice(from,to);
@@ -57,6 +63,11 @@ ${before}   END IF;
    change("'source_key',CASE phase WHEN 'BASELINE_SEAL' THEN 'FINAL_EXPLICIT_KEYS' ELSE 'FINAL_DOCUMENT_CONVERSION' END","'source_key',CASE phase WHEN 'BASELINE_SEAL' THEN CASE WHEN cfg->'explicit_zero_approval'->>'format_version'='INVENTORY_BASELINE_SCOPE_V1' THEN 'FINAL_BASELINE_SCOPE_V1' ELSE 'FINAL_EXPLICIT_KEYS' END ELSE 'FINAL_DOCUMENT_CONVERSION' END");
    const approvalFields="   fields:=jsonb_build_object('baseline_batch_id',baseline.id,'manifest_sha256',b.source_hash,'cutoff_at',b.cutoff_at,'alignment_sha256',cfg->>'alignment_sha256');";
    change(approvalFields,approvalFields+"\n   IF phase='BASELINE_SEAL' AND cfg->'explicit_zero_approval'->>'format_version'='INVENTORY_BASELINE_SCOPE_V1' THEN fields:=fields||jsonb_build_object('inventory_baseline_scope',cfg->'explicit_zero_approval'); END IF;");
+   // The current24 wire is the externally pinned exact prior economic subset;
+   // the original25/27 route and every original per-document check stay intact.
+   change("IF jsonb_array_length(sr_approval->'documents')<>25 THEN","IF jsonb_array_length(sr_approval->'documents')<>25 AND NOT(jsonb_array_length(sr_approval->'documents')=24 AND sr_wire->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b') THEN");
+   change('IF cardinality(sr_rows)<>27 OR NOT sr_used THEN',"IF cardinality(sr_rows)<>CASE jsonb_array_length(sr_approval->'documents') WHEN 24 THEN 26 ELSE 27 END OR NOT sr_used THEN");
+   change('IF sr_count<>25 OR sr_rows<>27 THEN',"IF sr_count<>CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 24 ELSE 25 END OR sr_rows<>CASE WHEN cfg->'historical_settlement_retention_approval'->>'sha256'='4b7181e4ff37fe02f75154350a0064fd6a4df3d34fc9ee1243bdcaed6dbc7d9b' THEN 26 ELSE 27 END THEN");
    // A scope descriptor never authorizes a fabricated explicit source row.
    change("     IF entry ? 'explicit_zero_evidence' THEN",`     IF cfg->'explicit_zero_approval'->>'format_version'='INVENTORY_BASELINE_SCOPE_V1' AND entry ? 'explicit_zero_evidence' THEN RAISE EXCEPTION 'INVENTORY_SCOPE_REQUIRES_REAL_EXPLICIT_ROWS' USING ERRCODE='23514'; END IF;
      IF entry ? 'explicit_zero_evidence' THEN`);

@@ -252,11 +252,11 @@ export async function buildFresh35Admin154Catalog(source,target,paths){
   descriptor:freeze({...descriptor,catalogSpecSha256:hash(JSON.stringify(descriptor))})});
  await assertFresh35CombinedCatalogCurrent(token);return token;
 }
-/** Baseline/scope replaces seven routine bodies; table metadata, roles and ACLs are inherited. */
+/** Baseline/scope replaces nine routine bodies; table metadata, roles and ACLs are inherited. */
 export async function buildFresh35CompactZeroCatalog(source,target,paths){
  const {base,candidate}=fresh35CompactZeroSourceData(source),s=describeFresh35CombinedSource(source),baseCatalog=await buildFresh35Admin154Catalog(base,target,paths),prior=catalogs.get(baseCatalog);
  const model=structuredClone(prior.model),definitions=new Map(prior.definitions),bodies=new Map(prior.bodies);
- need(candidate.changedBodies.length===7&&candidate.newRoutines.length===0&&candidate.manifest.permissionChanges.length===0,'COMPACT_ZERO_EXACT_DELTA_REQUIRED');
+ need(candidate.changedBodies.length===9&&candidate.newRoutines.length===0&&candidate.manifest.permissionChanges.length===0,'COMPACT_ZERO_EXACT_DELTA_REQUIRED');
  for(const change of candidate.manifest.routineChanges){const key=normal(change.signature),before=bodies.get(key),after=candidate.changedBodies.find(r=>normal(r.signature)===key)?.body;need(typeof before==='string'&&typeof after==='string'&&hash(before)===change.before&&hash(after)===change.after,'COMPACT_ZERO_EXACT_PREDECESSOR_REQUIRED');definitions.set(key,replacement(definitions.get(key),before,after));bodies.set(key,after);}
  model.routines=model.routines.map(r=>({...r,definitionSha256:hash(definitions.get(normal(r.signature))),bodySha256:hash(bodies.get(normal(r.signature)))}));need(model.routines.length===154,'COMPACT_ZERO_EXACT154_REQUIRED');
  const sql=guardSql(model,prior.lineage,target,{requireEmpty:false}),observation=observationSql(s),descriptor={...prior.descriptor,format:'FRESH35_COMPACT_ZERO_CATALOG_SPEC_V2',sourceSetSha256:s.sourceSetSha256,predecessorModelSha256:prior.descriptor.modelSha256,patchSqlSha256:candidate.manifest.patchSqlSha256,modelSha256:hash(JSON.stringify(model)),changes:candidate.manifest.routineChanges,permissionChanges:[],routineCount:154,guardSqlSha256:hash(sql),observationSqlSha256:hash(observation)};delete descriptor.catalogSpecSha256;

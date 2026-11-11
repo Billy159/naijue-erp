@@ -45,10 +45,10 @@ export async function native35Closure(sourceRoot,referenceDirectory,profile) {
       && p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'), 'NATIVE35_EXACT_ADMIN154_PATCH_REQUIRED');
   if(profile===native35CompactZeroSourceProfile)requireRelease(descriptor.currentSourcePins.length===222
     && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0036_admin_provision_only_successor.sql'&&p.sha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b')
-    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql'&&p.sha256==='4d42ed00553f088854ce75a615786da6c91332fe4d9637d9fb0da0fa9f078f25')
+    && descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql'&&p.sha256==='d296a2a2fc180f79ff3991e0c52b61d826569711415131680294aa2a65623310')
     && !descriptor.currentSourcePins.some(p=>p.path==='adapters/postgres/patches/0037_compact_zero_scope_successor.sql')
-    && descriptor.routineChanges.length===7&&descriptor.routineChanges.some(r=>r.signature.includes('.standard_whole_package_command_v2(')&&r.before==='071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b'
-      &&r.after==='c86236e542279136b3498dee189cfa02b2122821e19035f7e83cf1d4fc309802'), 'NATIVE35_EXACT_BASELINE_SCOPE_PATCH_REQUIRED');
+    && descriptor.routineChanges.length===9&&descriptor.routineChanges.some(r=>r.signature.includes('.standard_whole_package_command_v2(')&&r.before==='071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b'
+      &&r.after==='7812f22bac5af756bae8871fae89a075ff407ccb36ba032ad0e366f5313eacc9'), 'NATIVE35_EXACT_BASELINE_SCOPE_PATCH_REQUIRED');
   for(const pin of descriptor.currentSourcePins){native35SourceName(pin.path);requireRelease(/^[a-f0-9]{64}$/.test(pin.sha256),'NATIVE35_SOURCE_PIN_REQUIRED');
     const fixture=native35Contract.fixturePins.find(p=>p.path===pin.path);if(fixture)requireRelease(fixture.sha256===pin.sha256,'NATIVE35_REGISTERED_FIXTURE_BYTES_REQUIRED');}
   return {...(profile!==native35DefaultSourceProfile?{sourceProfile:profile}:{}),sourceSetSha256:descriptor.sourceSetSha256,pins:descriptor.currentSourcePins,referenceIndexSha256:sha256(await boundedFile(referenceDirectory,'INDEX.json'))};

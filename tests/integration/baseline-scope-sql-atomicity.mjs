@@ -48,7 +48,7 @@ async function current(f){return (await f.observer.query(`SELECT w.id warehouse_
 function services(f){
  const issuer=createRuntime27CommandIssuer(f.runtimePool,{database:f.database,user:f.runtimeUser,port:f.port},'WHOLE_V2',f.ordinaryAdmission);
  const now=()=>new Date().toISOString(),newId=()=>randomUUID();
- return {sales:createSalesService({unitOfWork:new PostgresSalesUnitOfWork(issuer.pool,{runtime27:issuer.runtime27}),rules:createNativeTransactionSalesBusinessRules(),authorization:createSalesActionAuthorization(),now,newId}),
+ return {issuer,sales:createSalesService({unitOfWork:new PostgresSalesUnitOfWork(issuer.pool,{runtime27:issuer.runtime27}),rules:createNativeTransactionSalesBusinessRules(),authorization:createSalesActionAuthorization(),now,newId}),
   transfers:createTransferService({unitOfWork:new PostgresTransferUnitOfWork(issuer.pool,{runtime27:issuer.runtime27}),authorization:createSourceConfirmedTransferAuthorization(),references:createSourceConfirmedTransferReferences(),now,newId})};
 }
 function commands(f,s){
@@ -56,7 +56,7 @@ function commands(f,s){
  const missing=f.fixture.expectedBaseline.missingWarehouseId,from=field('warehouse').id;
  const saveSale=quantity=>s.sales.execute({action:'SAVE',actor,requestKey:randomUUID(),expectedVersion:null,proposal:{salesId:null,businessType:'SALE',businessDate:new Date().toISOString().slice(0,10),note:'SYNTHETIC baseline scope',hallId:field('hall').id,customerId:field('customer').id,salespersonId:field('staff').id,warehouseId:missing,orderDiscount:'0.00',lines:[{existingLineId:null,spec,quantity,dealPrice:'1.00',pricingRule:'UNIT_PRICE',discountTenths:null,isGift:false,zeroConfirmed:false}],settlements:[{existingSettlementId:null,paymentAccountId:field('payment_account').id,paymentMethodId:field('payment_method').id,direction:'RECEIVE',amount:quantity+'.00'}]}});
  const sale=(action,r)=>s.sales.execute({action,actor,requestKey:randomUUID(),salesId:r.salesId,expectedVersion:r.version});
- const saveTransfer=()=>s.transfers.execute({action:'SAVE',actor,requestKey:randomUUID(),expectedVersion:null,proposal:{transferId:null,businessDate:new Date().toISOString().slice(0,10),note:'SYNTHETIC baseline scope',fromWarehouseId:from,toWarehouseId:missing,lines:[{existingLineId:null,spec,quantity:'3'}]}});
+ const saveTransfer=()=>s.transfers.execute({action:'SAVE',actor,requestKey:randomUUID(),expectedVersion:null,proposal:{transferId:null,businessDate:new Date().toISOString().slice(0,10),note:'SYNTHETIC baseline scope',fromWarehouseId:from,toWarehouseId:f.fixture.expectedBaseline.positiveWarehouseId,lines:[{existingLineId:null,spec,quantity:'3'}]}});
  const transfer=(action,r)=>s.transfers.execute({action,actor,requestKey:randomUUID(),transferId:r.transferId,expectedVersion:r.version});
  return {saveSale,sale,saveTransfer,transfer,missing,from};
 }
@@ -83,7 +83,7 @@ export function registerBaselineScopeSqlAtomicity(register,setup){
     assert.deepEqual(await snapshotSyntheticDatabase(f.observer),before);assert.equal(await proof(f,missing,sku),'UNKNOWN');
    }
    await publish(f,undefined,async()=>{assert.deepEqual(await snapshotSyntheticDatabase(f.observer),before,'no committed prefix');assert.equal(await proof(f,missing,sku),'UNKNOWN');});
-   let stock=await current(f);assert.equal(stock.length,3);const byId=new Map(stock.map(r=>[r.warehouse_id,r]));assert.equal(byId.get(missing).quantity,null);assert.equal(byId.get(missing).ledger_count,0);assert.equal(byId.get(f.fixture.expectedBaseline.negativeWarehouseId).quantity,'-7');assert.equal(stock.reduce((n,r)=>n+BigInt(r.quantity??'0'),0n),93n);
+   let stock=await current(f);assert.equal(stock.length,4);const byId=new Map(stock.map(r=>[r.warehouse_id,r]));assert.equal(byId.get(missing).quantity,null);assert.equal(byId.get(missing).ledger_count,0);assert.equal(byId.get(f.fixture.expectedBaseline.negativeWarehouseId).quantity,'-7');assert.equal(stock.reduce((n,r)=>n+BigInt(r.quantity??'0'),0n),93n);
    assert.equal(await proof(f,missing,sku),'EXPLICIT_ZERO');assert.equal(await proof(f,randomUUID(),sku),'UNKNOWN');assert.equal(await proof(f,missing,randomUUID()),'UNKNOWN');
    {
     const after=await snapshotSyntheticDatabase(f.observer);await ack(f.writer,'BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY','BEGIN');await ack(f.writer,'SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2','SET');
@@ -99,9 +99,18 @@ export function registerBaselineScopeSqlAtomicity(register,setup){
    }
    let sale=await c.saveSale('2');sale=await c.sale('APPROVE',sale);await assertReceipt(f,sale,'SALES','APPROVE',1);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-7');
    sale=await c.sale('UNAPPROVE',sale);await assertReceipt(f,sale,'SALES','UNAPPROVE',1);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-5');sale=await c.sale('APPROVE',sale);assert.equal((await current(f)).find(r=>r.warehouse_id===missing).quantity,'-7');
+   const positive=f.fixture.expectedBaseline.positiveWarehouseId;assert.equal(await proof(f,positive,sku),'EXPLICIT_ZERO');const absent=(await current(f)).find(r=>r.warehouse_id===positive);assert.equal(absent.quantity,null);assert.equal(absent.ledger_count,0);
    let tr=await c.saveTransfer();const total=()=>current(f).then(rows=>rows.reduce((n,r)=>n+BigInt(r.quantity??'0'),0n));const prior=await total();
-   for(const action of ['APPROVE','UNAPPROVE','APPROVE']){tr=await c.transfer(action,tr);await assertReceipt(f,tr,'TRANSFER',action,2);assert.equal(await total(),prior);const effects=(await f.observer.query('SELECT endpoint,quantity_delta::text FROM naijue_erp.inventory_ledger WHERE operation_id=$1::uuid',[tr.operationId])).rows;assert.equal(effects.length,2);assert.equal(effects.reduce((n,r)=>n+BigInt(r.quantity_delta),0n),0n);}
-   const connection=await f.runtimePool.connect();try{await ordinary(connection,f.database);assert.notEqual((await connection.query('SELECT pg_backend_pid() pid')).rows[0].pid,captured.pid);}finally{connection.release(true);}
+   for(const [index,action]of ['APPROVE','UNAPPROVE','APPROVE'].entries()){tr=await c.transfer(action,tr);if(index===0){const first=(await current(f)).find(r=>r.warehouse_id===positive);assert.equal(first.quantity,'3');assert.equal(first.version,1);assert.equal(first.ledger_count,1);const pair=(await f.observer.query("SELECT quantity_before::text,quantity_after::text,quantity_delta::text FROM naijue_erp.inventory_ledger WHERE operation_id=$1::uuid AND endpoint='TO' AND warehouse_id=$2::uuid",[tr.operationId,positive])).rows;assert.equal(pair.length,1);assert.deepEqual(pair[0],{quantity_before:'0',quantity_after:'3',quantity_delta:'3'});}await assertReceipt(f,tr,'TRANSFER',action,2);assert.equal(await total(),prior);const effects=(await f.observer.query('SELECT endpoint,quantity_delta::text FROM naijue_erp.inventory_ledger WHERE operation_id=$1::uuid',[tr.operationId])).rows;assert.equal(effects.length,2);assert.equal(effects.reduce((n,r)=>n+BigInt(r.quantity_delta),0n),0n);}
+   // New ordinary lease, actual issuer/RLS, and committed business facts. An
+   // owner observer's SELECT cannot stand in for this permission/readback check.
+   const connection=await s.issuer.pool.connect();let reading=false;
+   try{await ack(connection,'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY','BEGIN');reading=true;await s.issuer.ordinaryRead.assertReady(connection,'ORDINARY_DOCUMENT_READ');
+    const identity=(await connection.query('SELECT current_user role,pg_backend_pid() pid')).rows[0];assert.equal(identity.role,runtimeRole);assert.notEqual(identity.pid,captured.pid);
+    const visible=(await connection.query("SELECT w.id warehouse_id,b.quantity::text quantity,b.version,naijue_erp.standard_inventory_key_proof(w.id,$1::uuid)->>'state' baseline_state FROM naijue_erp.warehouse w LEFT JOIN naijue_erp.inventory_balance b ON b.warehouse_id=w.id AND b.sku_id=$1::uuid ORDER BY w.id",[sku])).rows;
+    assert.equal(visible.length,4);const facts=new Map(visible.map(r=>[r.warehouse_id,r]));assert.equal(facts.get(positive).quantity,'3');assert.equal(facts.get(positive).version,3);assert.equal(facts.get(positive).baseline_state,'EXPLICIT_ZERO');assert.equal(facts.get(missing).quantity,'-7');assert.equal(facts.get(missing).version,5);assert.equal(facts.get(f.fixture.expectedBaseline.negativeWarehouseId).quantity,'-7');assert.ok(visible.every(r=>r.quantity!==null));assert.equal(visible.reduce((n,r)=>n+BigInt(r.quantity),0n),86n);
+    await s.issuer.ordinaryRead.assertReady(connection,'ORDINARY_DOCUMENT_READ');await ack(connection,'COMMIT','COMMIT');reading=false;
+   }finally{try{if(reading)await connection.query('ROLLBACK');}finally{connection.release(true);}}
   }finally{await f.close();}
  });
 }
