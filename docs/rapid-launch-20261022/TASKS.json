@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T14:40:58+08:00",
+  "updatedAt": "2026-11-11T17:59:15+08:00",
   "stage": "R3_STOPPED_RECOVERY08_BOUNDED_TRANSFER_AUTHORIZED_ZERO_V2_WIP",
   "lastVerifiedRemoteCommit": "70a7b79639d64d7a3e9c7b677067b98f62648d60",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -45055,20 +45055,20 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-11T17:25:19+08:00",
+    "updatedAt": "2026-11-11T17:59:15+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
     "currentTarget": "SAME_R3_STOPPED;SINGLE_SYNTHETIC_PG_VERIFICATION_PREPARING",
     "owners": {
-      "T45": "final immutable transfer pins and exact synthetic PG outer carrier;sole server executor",
-      "D1": "fixed3426 source complete;original owner handles real PG failures if any",
+      "T45": "transfer/restore complete;exact synthetic PG outer/material and separate3phase consumer;sole server executor",
+      "D1": "APP3426 fixed;maintenance6d46 published;entry tests0ec16 fixed pending QB",
       "D2": "unique3426build complete;no newbuild planned",
       "D3": "complete offline511234row preflight passed;source artifacts preserved",
-      "QB": "only T45 final parameter/outer increments pending;fixed source reviews adopted",
-      "C": "dependencies,accurate finite authority bindings,compact status/evidence index"
+      "QB": "source/transfer/F01 adopted;only affected entry and outer increments",
+      "C": "actual receipt adoption, finite originals under standing authorization,existing3docs/public status"
     },
     "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
-    "next": "T45 fixes only final bounded transport parameters and exact outer single-PG carrier;QB only parameter/outer increments;C binds actual finite originals after pre-staging. No new build/data cleaning/per-zero output. Actual PG and R3 import remain untested.",
-    "inventorySimplification": "760730 per-zero proofs canceled;complete scope absent zero/outside or partial UNKNOWN;source reviews+offline fullpackage+build pass;real PG pending"
+    "next": "T45 completes exact single synthetic PG outer/material; C binds first original then actual physical install descriptor. D1/QB finish affected 3phase entry models in parallel; no second APP build or data cleaning.",
+    "inventorySimplification": "760730 proofs canceled;source/offline fullpackage/build/serverarchive PASS;real PG and R3 business untested"
   },
   "inventoryBaselineScopeSimplification20261111": {
     "status": "SOURCE_INDEPENDENT_PASS_FULL_OFFLINE_PACKAGE_PASS_BUILD_PASS_REAL_PG_PENDING",
@@ -45112,7 +45112,7 @@
     "SQL37Execution": "NOT_AUTHORIZED_FOR_PENDING_REPLACED_PER_ZERO_ROUTE",
     "actualNewSQLOrPGTests": "SOURCE_AND_MODEL_ONLY_NO_SQL_OR_REAL_PG_EXECUTION",
     "rolloutTimeImpact": "Avoids approximately2GB planned zero output and760730 key operations; implementation and real PG time not measured, no completion ETA promised.",
-    "next": "T45 fixes only final bounded transport parameters and exact outer single-PG carrier;QB only parameter/outer increments;C binds actual finite originals after pre-staging. No new build/data cleaning/per-zero output. Actual PG and R3 import remain untested.",
+    "next": "T45 completes exact single synthetic PG outer/material; C binds first original then actual physical install descriptor. D1/QB finish affected 3phase entry models in parallel; no second APP build or data cleaning.",
     "latestDirectHumanDirection": "Rapid release: cancel760730 per-zero proofs and files; preserve existing simple source links; do not start a second traceability removal/refactor. Missing balance is zero only within confirmed complete imported/published scope.",
     "fixedSource": {
       "branch": "codex/d1-baseline-scope-20261111",
@@ -45149,7 +45149,7 @@
       "priorRun01": "exit1/64issues/index2196480000B retained;only29metadata pins and3price scale strings corrected,numeric values unchanged",
       "physicalCommonExportInstantClaimed": false
     },
-    "updatedAt": "2026-11-11T17:25:19+08:00",
+    "updatedAt": "2026-11-11T17:59:15+08:00",
     "wireFixCommit": "c7a68a76c92dd1245dd97c72163f0d00645bb4aa",
     "independentReview": {
       "status": "PASS_SOURCE_BASELINE_SCOPE_AND_WIRE_FIX_ONLY",
@@ -45165,12 +45165,12 @@
       "sourceReaderCommit": "cb5aeeb2130194e7aedcc3575df339b3b93a702b",
       "settlementSubset": "Original approved25/27 exactly reduced to current24/26;one member now settled by latest source and uses ordinary checks;no new exception",
       "sourcePinSha256": "dd48af80b691c1685412b6d68600a8a48530a9738eab6de86f448a744367eaab",
-      "currentFullPreflight": "ORIGINAL_D3_CONTINUING_ONE_RUN_NOT_YET_PASS",
-      "SQLForSubset": "D1 exact existing-body successor pending;reader pass does not authorize oldSQL"
+      "currentFullPreflight": "R2_EXIT0_ISSUES0_511234ROWS; prior run01 retained",
+      "SQLForSubset": "Final3426 SQL38 fixed and source reviewed; actual PG pending"
     },
     "pgTestPreparation": {
-      "sourceCommit": "5277a179c4472a134e118fdf639fa6d76d809160",
-      "status": "P2_FIRST_POSITIVE_POSTING_COVERAGE_BEING_ADDED_BEFORE_EXECUTION",
+      "sourceCommit": "3426eeec34df4bc40c503a5d4d1568ff3aadf954",
+      "status": "FIXED_SINGLE_DATABASE_WITH_POSITIVE_FIRST_POSTING_PENDING_ACTUAL_OUTER",
       "targetProposal": "one new synthetic container/database;no R3 business writes",
       "container": "t45-baseline-scope-pg-20261111-01",
       "database": "synthetic_fresh35_20261111_r1",
@@ -45181,10 +45181,14 @@
       "approvalState": "Existing human standing authorization covers reviewed similar synthetic execution;C exact source/target original not yet issued;no self-authored runtime approval"
     },
     "transmissionSource": {
-      "commit": "6c0c2a0092b5a1aa142150f9c2fb23bc752eec78",
-      "status": "FIXED_OFFLINE_CHECKED_PENDING_QB_AND_FINAL_ARTIFACT_PARAMS",
-      "actualTransfer": "NOT_EXECUTED",
-      "oldHalfArtifact": "PRESERVED_NO_REPLAY"
+      "commit": "fdfea3db7e9cc7e15af52c3abeb7f4cf78475b18",
+      "status": "PASS_ACTUAL_TRANSFER_AND_POLICY_RESTORE",
+      "actualTransfer": "14 segments each once;461 members READY;original policy independently restored17:52:12 CST",
+      "oldHalfArtifact": "PRESERVED_NO_REPLAY",
+      "resultSha256": "8a902018beca2c97d8f3299ab93fa9017e071e94c94006c3ff51d6cf0078e429",
+      "independentReadbackSha256": "d94db6ae640ef83030d200db7f2eda1116514d437ed8f13fe1201c1ea1a4345b",
+      "COriginalSha256": "e2aa99068c7e59c456450cef6c0d8960f609290e9159bd0e0136d4404a9eb9e9",
+      "databaseActions": 0
     },
     "finalSource": {
       "branch": "codex/d1-baseline-scope-20261111",
@@ -45216,10 +45220,10 @@
       "archiveBytes": 3410598,
       "manifestSha256": "380713e3a0f6fb5e01bfcf1c6af26229542a1b5ada8d96525eae0221dac92096",
       "manifestBytes": 509832,
-      "status": "LOCAL_FIXED_BUILD_AND_PACK_PASS",
+      "status": "ACTUAL_SERVER_ARCHIVE_READY_461_MEMBERS_VERIFIED_NOT_APP_STARTED",
       "buildRuns": 1,
       "packRuns": 1,
-      "uploaded": false
+      "uploaded": true
     },
     "privatePgCarrier": {
       "sourceCommit": "894e82f83aaa7e30b92ed3cd9c78b79b6752fb6a",
@@ -45228,6 +45232,19 @@
       "tests": 6,
       "newServerActions": 0,
       "next": "T45 freezes exact outer container/material/authorization closure;C binds reviewed original;then original single synthetic PG execution"
+    },
+    "maintenanceSuccessor": {
+      "branch": "codex/d1-baseline-scope-maintenance-20261111",
+      "sourceCommit": "6d46d0a63dc6be84668c9f8a7432fb40a39a91bf",
+      "sourceRemoteExactVerifiedByOwner": true,
+      "F01": "Equivalent microsecond epoch text accepted;different microsecond rejected;QB source PASS",
+      "F01ResultSha256": "ae94d9b8eaa0953d2bb0040b800bb1f8ce2f1acbaf535d25055fc6275014f586",
+      "entryDifferenceResultSha256": "41cd92bc612203e01bb05f05945ce4a4589b6fbcd264aff033e8b2219001d128",
+      "entryTestsCommit": "0ec16d304a5579cee3d870cc9608f9f3320da3f5",
+      "entryTestsState": "AUTHOR_MODEL_PASS_PENDING_INDEPENDENT_INCREMENT;no production source changed",
+      "minimumThreePhaseBudgetSeconds": 1895,
+      "old28MinuteWindowReusable": false,
+      "actualMaintenance": "NOT_EXECUTED"
     }
   }
 }
