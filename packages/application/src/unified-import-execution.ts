@@ -15,12 +15,10 @@ import { requestHash } from './request-hash.ts';
 import { HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256, TABLE_SCHEMAS, validateUnifiedPackage, sha256, parseStrictJson, decodeUtf8, validateOffsetInstant, validateQuantityString, validateInt32, findCredentialPath } from './unified-import-contract.ts';
 import type { UnifiedPackage, StandardRecord, IdentityEntry, PackageIssue } from './unified-import-contract.ts';
 
-export const STANDARD_IMPORT_PROTOCOL='STANDARD_IMPORT_SQL_V1' as const;
+import { STANDARD_IMPORT_PROTOCOL, UnifiedImportExecutionError } from './unified-import-execution-core.ts';
+export { STANDARD_IMPORT_PROTOCOL, UnifiedImportExecutionError } from './unified-import-execution-core.ts';
+
 export const STANDARD_IMPORT_PLAN_VERSION='UNIFIED_STANDARD_EXECUTION_PLAN_V1' as const;
-export class UnifiedImportExecutionError extends Error {
-  readonly code:string;
-  constructor(code:string){super(code);this.name='UnifiedImportExecutionError';this.code=code;}
-}
 function requireInput(ok:unknown,code:string):asserts ok {if(!ok)throw new UnifiedImportExecutionError(code);}
 export interface StandardImportTarget {system_identifier:string;database_oid:string;database_name:string;catalog_sha256:string;protocol:typeof STANDARD_IMPORT_PROTOCOL;}
 export interface StandardImportInspection extends StandardImportTarget {current_user:string;session_user:string;role_mode:string;proof_scope:'SET_ROLE_ONLY_NOT_NONOWNER_LOGIN';}

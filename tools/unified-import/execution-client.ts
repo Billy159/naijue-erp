@@ -1,6 +1,6 @@
-import{source49ObservationRequest,SOURCE49_SUPPLEMENTAL_SQL}from'./execution-v2-admission.ts';
 import type{Source49ExecutionClient,Source49CatalogObservation}from'../../packages/application/src/unified-import-execution-v2-client.ts';
-import { STANDARD_IMPORT_PROTOCOL, UnifiedImportExecutionError, decodeStandardImportReply, validateStandardImportRequest, validateStandardImportTarget, standardImportTargetIdentity, decodeStandardImportVerification, REVIEWED_STANDARD44_TRANSITION, REVIEWED_STANDARD45_TRANSITION, REVIEWED_STANDARD46_TRANSITION, REVIEWED_STANDARD47_TRANSITION } from '../../packages/application/src/unified-import-execution.ts';
+import { STANDARD_IMPORT_PROTOCOL, UnifiedImportExecutionError } from '../../packages/application/src/unified-import-execution-core.ts';
+import { decodeStandardImportReply, validateStandardImportRequest, validateStandardImportTarget, standardImportTargetIdentity, decodeStandardImportVerification, REVIEWED_STANDARD44_TRANSITION, REVIEWED_STANDARD45_TRANSITION, REVIEWED_STANDARD46_TRANSITION, REVIEWED_STANDARD47_TRANSITION } from '../../packages/application/src/unified-import-execution.ts';
 import type { StandardImportExecutionClient, StandardImportRequest, StandardImportReply, StandardImportTarget, StandardImportInspection, StandardImportSuccessorCapture, StandardImportSuccessorObservation } from '../../packages/application/src/unified-import-execution.ts';
 import { findCredentialPath, parseStrictJson } from '../../packages/application/src/unified-import-contract.ts';
 import { isNodeScryptPasswordHash } from '../../packages/authentication/src/passwords.ts';
@@ -46,10 +46,6 @@ export const REVIEWED_SUCCESSOR_CATALOG_SQL=`WITH input AS (SELECT $1::jsonb AS 
  metadata AS (SELECT ${successorCatalogMetadata('pg_get_functiondef(p.oid)')} AS actual,${successorCatalogMetadata("coalesce((SELECT c.definition FROM captures c WHERE c.oid=p.oid),pg_get_functiondef(p.oid))")} AS prior)
  SELECT jsonb_build_object('current_catalog_sha256',encode(sha256(convert_to(m.actual::text,'UTF8')),'hex'),'counterfactual_catalog_sha256',encode(sha256(convert_to(m.prior::text,'UTF8')),'hex'),
  'routines',(SELECT jsonb_agg(jsonb_build_object('routine_identity',c.identity,'function_oid',p.oid::text,'body_sha256',encode(sha256(convert_to(p.prosrc,'UTF8')),'hex'),'invariant_attributes_sha256',encode(sha256(convert_to((to_jsonb(p)-'prosrc')::text,'UTF8')),'hex')) ORDER BY c.identity) FROM captures c JOIN pg_proc p ON p.oid=c.oid))::text AS result_json FROM metadata m`;
-
-/** Separate49 observer: old47 projection unchanged, plus independently pinned
- * trigger/columnACL/FORCE-RLS/policy-mode supplement; no caller override. */
-const SOURCE49_CATALOG_SQL=`SELECT (observed.result_json::jsonb || jsonb_build_object('supplemental_sha256',encode(sha256(convert_to(supplement.extra,'UTF8')),'hex')))::text AS result_json FROM (${REVIEWED_SUCCESSOR_CATALOG_SQL}) observed CROSS JOIN (${SOURCE49_SUPPLEMENTAL_SQL}) supplement`;
 
 /** Read textual JSONB before pg's default JSON.parse can round a numeric token.
  * Only canonical safe integer JSON numbers are allowed; money/quantity are strings. */
@@ -128,7 +124,13 @@ export function createStandardImportClient(client:StandardImportPgClient,private
         return v as StandardImportSuccessorObservation;
       },null,true);
     },
-    async inspectSource49Catalog(capture:StandardImportSuccessorCapture){const captures=source49ObservationRequest(capture);assertPublicValuesExcludePrivateInputs(captures,[await token()]);return invoke(SOURCE49_CATALOG_SQL,captures,null,v=>v as Source49CatalogObservation,null,true);},
+    async inspectSource49Catalog(capture: StandardImportSuccessorCapture) {
+      const { source49ObservationRequest, SOURCE49_SUPPLEMENTAL_SQL } = await import('./execution-v2-admission.ts');
+      const captures = source49ObservationRequest(capture);
+      assertPublicValuesExcludePrivateInputs(captures, [await token()]);
+      const sql = `SELECT (observed.result_json::jsonb || jsonb_build_object('supplemental_sha256',encode(sha256(convert_to(supplement.extra,'UTF8')),'hex')))::text AS result_json FROM (${REVIEWED_SUCCESSOR_CATALOG_SQL}) observed CROSS JOIN (${SOURCE49_SUPPLEMENTAL_SQL}) supplement`;
+      return invoke(sql, captures, null, value => value as Source49CatalogObservation, null, true);
+    },
     async initialize(request:StandardImportRequest,encodedScryptPrivate:string){validateStandardImportRequest(request);if(!isNodeScryptPasswordHash(encodedScryptPrivate))throw new UnifiedImportExecutionError('PRIVATE_CREDENTIAL_FORMAT_INVALID');return invoke(SQL.initialize,request,encodedScryptPrivate,v=>{const reply=boundWriteReply(v,request);if(reply.state!=='COMMITTED')throw new UnifiedImportExecutionError('WRITE_RESPONSE_NOT_COMMITTED');return reply;},request.operation_id);},
     masterChunk:(r:StandardImportRequest)=>call('masterChunk',r),baselineKeys:(r:StandardImportRequest)=>call('baselineKeys',r),documentChunk:(r:StandardImportRequest)=>call('documentChunk',r),publish:(r:StandardImportRequest)=>call('publish',r),
     async verify(r:StandardImportRequest){validateStandardImportRequest(r);const secret=await token();if(secret===null)throw new UnifiedImportExecutionError('PRIVATE_SESSION_REQUIRED');return invoke(SQL.verify,r,secret,v=>decodeStandardImportVerification(v,r),r.operation_id);},

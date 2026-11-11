@@ -1,7 +1,8 @@
 import{requestHash}from'./request-hash.ts';
 import{sha256,findCredentialPath}from'./unified-import-contract.ts';
 import{isNodeScryptPasswordHash}from'../../authentication/src/passwords.ts';
-import{STANDARD_IMPORT_PROTOCOL,UnifiedImportExecutionError,validateStandardImportTarget,sameStandardImportTarget,decodeStandardImportReply,decodeStandardImportVerification,validateStandardImportVerificationCoverage}from'./unified-import-execution.ts';
+import{STANDARD_IMPORT_PROTOCOL,UnifiedImportExecutionError}from'./unified-import-execution-core.ts';
+import{validateStandardImportTarget,sameStandardImportTarget,decodeStandardImportReply,decodeStandardImportVerification,validateStandardImportVerificationCoverage}from'./unified-import-execution.ts';
 import type{StandardImportExecutionClient,StandardImportTarget,StandardImportReply,StandardImportRequest,StandardImportStep,StandardImportOutcome,StandardImportSuccessorCapture,StandardImportSuccessorObservation}from'./unified-import-execution.ts';
 import{assertUnifiedImportPlanV2,compileStandardImportProgramV2}from'./unified-import-execution-v2.ts';
 import type{UnifiedImportPlanV2,StandardImportProgramV2}from'./unified-import-execution-v2.ts';
