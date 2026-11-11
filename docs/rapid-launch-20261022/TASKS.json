@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-11T11:06:15+08:00",
-  "stage": "R3_STOPPED_SUCCESSOR06_SOURCE_AND_05_APP_BINDING_PENDING",
-  "lastVerifiedRemoteCommit": "251090b8ff3012837228029bedcaec46a8e8b34a",
+  "updatedAt": "2026-11-11T11:57:06+08:00",
+  "stage": "R3_STOPPED_MAINTENANCE07_SOURCE_ACCEPTED_REMOTE_CHANNEL_READBACK_PENDING_NEW_BATCH_CLEANING_ACTIVE",
+  "lastVerifiedRemoteCommit": "13ea42961d3588081fab030a2b3abaf183dd3a15",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -44234,7 +44234,7 @@
       "jobSha256": "068b9db74acbf3eeee48fc249ff9a863ea8c804048bc5c076e0ac0582201e330",
       "resultSha256": "650425198ba00624d7c6192562054f8063bad336fcdc9b80f62682478ec7acfb"
     },
-    "next": "T45 exact failed synthetic keeper cleanup, fix only missing keeper Tmpfs with QB delta. Same R3 remains stopped; maintenance07/UPGRADE03/A01 preparation continues.",
+    "next": "T45 performs one bounded current channel check; when reachable, independently read exact original directory job and R3 metadata without replay. Source07, ordinary05 and APP templates accepted within static scope; no active runtime window. D2/D3 generate current batch standard data offline.",
     "maintenance06LatestCycle": {
       "apply06": {
         "status": "ACTUAL_COMPLETED_0_TWO_FINITE_ROLES_STOPPED",
@@ -44370,7 +44370,8 @@
     },
     "appCaller": {
       "currentFixedCaller": "DA7_CURRENT03_DIAGNOSTIC",
-      "next": "T45 rebind once to fixed successor APP and real ordinary05 proof"
+      "next": "T45 binds final helper and CLI caller only from actual05 proof/CID/lease and actual154 protected record after real maintenance.",
+      "status": "APP15278_AFTER05_SYMBOLIC_TEMPLATE_STATIC_REVIEW_PASS_FINAL_BINDING_PENDING"
     },
     "proofTraversal": {
       "sourceCommit": "e4f806b86335b611e2ff4fc7a0b8bfd8d87c9c72",
@@ -44442,6 +44443,38 @@
       "serverReceiptSHA256": "44ea943a9f56a21a58f1d6cc82f294f06f84c2bae941639aee8c300fcbf45737",
       "policyRestored": true,
       "independentPostReadbackSHA256": "ddca8564850de28ef9842655e1b1977296317b4d66ab4e2070b200ad27c1144e"
+    },
+    "networkCurrent": {
+      "observedAt": "2026-11-11T11:21:36.124+08:00",
+      "localBackendRunning": true,
+      "localSelfOnline": true,
+      "remotePeerOnline": false,
+      "remotePeerActive": false,
+      "serverPower": "UNKNOWN",
+      "sshRetriedInDelayedCheck": false,
+      "newServerWrites": 0,
+      "next": "T45 waits for original controlled channel; independent directory readback remains UNKNOWN. No replay or premature window."
+    },
+    "sourceAcceptanceCurrent": {
+      "maintenance07": {
+        "commit": "febe26208b835bb1cd5dd9cea1c05dbf40a72696",
+        "sourceReadySha256": "473bb86556f736c1e745abbf3c1265f840fa72f72fc0cb21db41f402a6380f54",
+        "QBResultSha256": "e63ce06934df515145abd4003019cc02e166c12533ea9393f8abc398ac8ef8dd",
+        "status": "PASS_SOURCE_MAINTENANCE07_PYTHON_JOINS_ONLY"
+      },
+      "ordinary05After07": {
+        "commit": "d8c10f72617a36afa91e6d01a2dd63daa71d7f47",
+        "QBResultSha256": "12033c3a9c2812bc87541286f18985a674b57ed80fb430e0fb3966012d5be427",
+        "status": "PASS_SOURCE_ORDINARY05_AFTER07_JOINS_ONLY"
+      },
+      "app15278Template": {
+        "preparationSha256": "0bcb59ec6a93a1f494059be74e8fdd267ca9898d4e92f91ea0014c8ce8b9e885",
+        "QBResultSha256": "9ee68a301b6fe91ccc5ed8ac58c5380f8fd6f634ecaf530c3cc36944e9796d4c",
+        "status": "PASS_STATIC_APP15278_AFTER05_TEMPLATE_WIRING_ONLY",
+        "dynamicInputs": "UNBOUND",
+        "actualParentReadWatch": "NOT_TESTED"
+      },
+      "controllerAction": "Existing QB fixed results and matching original hashes adopted; no duplicate technical or PG tests."
     }
   },
   "freshDataRefresh20261111": {
@@ -44457,19 +44490,56 @@
     "oldManifestSHA256": "1e1e495ad7177b64be65620f3e15a632405e738a1d076e9173e77b282fb3eec9",
     "newPrivateRoot": "work/local-takeover-20261021-private-data/unified-cleaning-20261111-1000",
     "owners": {
-      "D2": "masters ONLY; original chat01a161d2-6956-7672-9ce0-1c5ca4b52853; gpt-6.1-terra/medium explicitly dispatched",
-      "D3": "intake/documents/inventory/package and sole final manifest; original chat01a161d2-6712-7691-80af-5d2fa6a30fab; gpt-6.1-terra/medium explicitly dispatched",
+      "D2": "Existing original D2 masters writer; current-batch identity/SKU crosswalk; resumed gpt-6.1-sol/medium under active goal; prior Terra execution preserved.",
+      "D3": "Existing original D3 intake/documents/inventory/package and sole final manifest writer; resumed gpt-6.1-sol/high for amount/inventory/completeness; prior Terra execution preserved.",
       "T45": "R3/APP preparation continues; no real import until exact new verified input",
       "C": "Existing three records and coordination only"
     },
     "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-    "status": "MASTERS_INVENTORY_TRANSFER_CONTINUE_SALES_WAITING_USER_REEXPORT",
-    "confirmedSalesGap": "New sales workbook is single sheet12 header-summary columns, without products, quantities, per-line money or settlement-account fields.46ZIP entries contain no sales-detail/settlement exports. Do not substitute old detail as new facts.",
+    "status": "REPLACEMENT_SALES_FIXED_DETAIL_PARSING_RESUMED_STANDARD_PACKAGE_IN_PROGRESS",
+    "confirmedSalesGap": "Prior 12-column export lacked details and remains historical. Replacement19 columns contains barcode, quantity, line amount, product name, colour, size, discount%, fit. Settlement method/account and hall/warehouse not explicit; proven related-source joins still being checked.",
     "timeLabel": "2026-11-11 10:00 CST is supplied batch label; complete shared cutoff pending evidence.",
     "serverWrites": 0,
     "oldPackageOverwritten": false,
     "realDataGitUpload": false,
     "privateSourceInventorySHA256": "2703107d38a8309066815d14fc28e9510c2a08ad95aba800fd9141a00853cde5",
-    "salesState": "USER_PAUSED_WAITING_REPLACEMENT_EXPORT_DO_NOT_READ_MUTATING_FILE"
+    "salesState": "REPLACEMENT_RECEIVED_19_COLUMNS_DETAILS_PRESENT_D3_RESUMED",
+    "salesReplacement": {
+      "checkedAt": "2026-11-11T11:30:07+08:00",
+      "sha256": "a66901a07718195dfdaa06b2df426d598f00f410bf20fd886a26c9ee8c3c5526",
+      "bytes": 7885976,
+      "sheet": "销货单",
+      "headerRange": "A1:S1",
+      "columns": 19,
+      "mtimeNs": 1794367249568594906,
+      "fileStableDuringRead": true,
+      "priorFileSha256": "6bb2dadff504d8f8f663eec29f5cb70e4a71c00811f0aab5e6ae0e1f2c231d4a",
+      "validation": "HEADERS_AND_REPRESENTATIVE_DETAILS_CONFIRMED_NOT_COMPLETE_EOF_OR_IMPORT_ACCEPTANCE",
+      "owner": "D3 existing chat; Terra6.1/medium dispatched; old projections preserved",
+      "sourceProjection": {
+        "headerOccurrences": 29081,
+        "detailRows": 84186,
+        "effectiveHeaderOccurrences": 29077,
+        "draftHeaderOccurrences": 4,
+        "effectiveDetailRows": 84173,
+        "draftDetailRows": 13,
+        "eof": true,
+        "all29081HeaderAmountsEqualTheirDetailSums": true,
+        "classification": "SOURCE_PROJECTION_ONLY_NOT_DEDUPLICATION_IDENTITY_OR_SETTLEMENT_ACCEPTANCE"
+      }
+    },
+    "nonSalesObserved": {
+      "inventoryExplicitNumericCells": 39508,
+      "inventorySignedQuantity": "80546",
+      "inventoryNumericRowTotalsAgree": true,
+      "inventoryCoverage": "UNCONFIRMED_UNLISTED_NOT_AUTOMATICALLY_ZERO",
+      "newProductCodes": 3,
+      "newWarehouseCodes": 1,
+      "priorProductBridgeRows": 2970,
+      "priorWarehouseBridgeRows": 53,
+      "priorSKUBridgeRows": 14784,
+      "skuBridgeBoundary": "CURRENT_BATCH_SKU_IDENTITY_NOT_YET_RECONCILED"
+    },
+    "next": "D2 verifies current source SKU tuples against stable approved identities, completes identified new masters and exact exceptions; D3 consumes masters, closes references and settlement gaps, generates all nonblocked standard tables. No import or real-data Git upload."
   }
 }
