@@ -2941,13 +2941,32 @@
               "receiverSha256": "d5acfcbc3e6b1d89a088493be8a8ee0c3e7a389763ad37dc30677224fac9d9c2",
               "actualTransferPerformed": false
             }
+          },
+          {
+            "group": "r3-first-admin-original-private-custody-actual-20261113-0514",
+            "status": "ACTUAL_ORIGINAL_PRIVATE_CUSTODY_SEALED_COMPLETED_ZERO_SQL",
+            "owner": "T45 / C",
+            "evidence": {
+              "originalReceiveKey": "t45-r3-first-admin-custody-receive-20261113-01",
+              "receiverWindowSha256": "a8eed70b4197a530f34d95cfb3d9b40d8baaa8dde9dcad9728a7020e831d3406",
+              "startsAtMs": 1794517967074,
+              "expiresAtMs": 1794518147074,
+              "terminalSha256": "b44ef38dd99eb688d585e1edec8edc656ff09a14a2fdec45ddafff6b615a0a08",
+              "statusSha256": "33ddc9512083cac56d668969c2792425a477773bb22656fdbaafee128361a9e3",
+              "finishedAtUTC": "2026-11-12T21:14:44.168429+00:00",
+              "exitCode": 0,
+              "originalExported": false,
+              "privateLogsExported": false,
+              "sqlConnections": 0,
+              "automaticRetry": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "DIRECT_USER_ADMIN_TRANSFER_APPROVED_EXACT_EXISTING_T45_CHANNEL_PREFLIGHT_ACTIVE",
+          "status": "ACTUAL_FIRST_ADMIN_CUSTODY_SEALED_T45_SAME_GENERATION_MAINTENANCE_READONLY_PREFLIGHT_ACTIVE",
           "owner": "T45 / C",
-          "next": "Confirm the same private original and protected receiving key through metadata only. Issue one short actual authority and collect only the original custody status/terminal. Resume existing work serially after terminal. No SQL or provisioning is part of this transfer."
+          "next": "Reuse exact sealed custody and obtain fresh stopped target/role08 admission evidence. Sign same-window maintenance steps from actual original predecessors, serially. No SQL executed during transfer."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
