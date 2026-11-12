@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P06\u2013P09 candidate 03 fixed; QB timing-only review pending, T45 field ready to coordinate after any bounded metadata observation. Three authorized old backup leaves retired; active snapshot 60 is tied to running shared legacy PG.",
+    "next": "P06\u2013P09 first bounded single-lane trial issued after fixed 04 and QB pass. Await exact live prerequisites, per-key receipts and independent withdrawal. Other assets and capacity work remain scoped.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1574,14 +1574,23 @@
           "observedAt": "2026-11-12T18:24:02.291+08:00",
           "rootAvailableBytes": 30437359616,
           "currentReclaimApproval": false,
-          "physicalUsageNotIncludedInSingleDatabaseDrop": true
+          "physicalUsageNotIncludedInSingleDatabaseDrop": true,
+          "allocationCauseProbe": {
+            "jobId": "t45-snapshot60-allocation-readonly-20261112-01",
+            "status": "FAILED",
+            "exitCode": 1,
+            "exports": 0,
+            "observedAt": "2026-11-12T18:30:21.950+08:00",
+            "causeResolved": false,
+            "retryPerformed": false
+          }
         }
       }
     },
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "FROZEN_03_AUTHOR_LOCAL_14_PASS; QB_TIME_DELTA_PENDING; NO_FIELD_REAL_BATCH",
+      "state": "QB_04_WRITABLE_EDGE_PASS; FIRST_BOUNDED_SINGLE_LANE_TRIAL_ISSUED",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1659,6 +1668,32 @@
         "separateCloseoutSeconds": 240,
         "maximumExternalWindowSeconds": 960,
         "serverRealCandidateActions": 0
+      },
+      "qb03": {
+        "state": "THREE_02_TIME_REPRODUCERS_CLOSED; ONLY_OS_WRITE_EDGE_NEED_FIX",
+        "serverOutOfDeadlinePersistenceObserved": false
+      },
+      "successor04": {
+        "localReadySha256": "94a710621aed88fe51d5da0bb21cce1e5ae8e9aee89faf312b1158b7724427c5",
+        "unissuedFieldsSha256": "3e36f70b83b655a493fbdb04c4549c3aefbef6a0b6af507f658f7e054035718a",
+        "transportSha256": "fab1b1a452b01d02825df9a5f59adce84a93ed3210dce1c46d535daabfa21b46",
+        "qbTurn": "01a1cf51-7ff9-7eb1-a379-2ad7a4a5b612",
+        "qbActualPipeCasesPassed": 2,
+        "qbBytesWrittenAfterDeadline": 0
+      },
+      "firstTrial": {
+        "state": "ISSUED_AFTER_QB_AND_T45_READY; LIVE_RECEIPTS_PENDING",
+        "lanes": 1,
+        "startsAt": "2026-11-12T18:35:12.707+08:00",
+        "expiresAt": "2026-11-12T18:51:12.707+08:00",
+        "netUploadSeconds": 600,
+        "closeoutReserveSeconds": 240,
+        "newOriginalKeys": [
+          "P06",
+          "P07",
+          "P08",
+          "P09"
+        ]
       }
     },
     "oldAssetRetirement": {
