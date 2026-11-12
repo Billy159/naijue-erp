@@ -45506,7 +45506,7 @@
       },
       "r3RecoveryCompatibility": {
         "owner": "T45 for backup and recovery jobs, D1 for the isolated restoration application",
-        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; T45_EXECUTABLE_03_QB_TARGETED_PASS; RESTORE_APP_4D9271CB_QB_PASS_D2_PACKED_LOCAL; LIVE_EXECUTION_HOLD",
+        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; T45_EXECUTABLE_03_QB_TARGETED_PASS; RESTORE_APP_4D9271CB_PACKED_BUT_OBSOLETE_154_BINDING; D1_3D2F2308_WITH_QB; RELEASE_EVIDENCE_WIRING_AND_LIVE_ENTRY_PENDING",
         "localPhysicalFileVerifierCommit": "f710215f7f61f3e77d903e41ee98219527078b73",
         "localPhysicalFileVerifierTree": "dbcd1288de78742cee396ae1b1194ddb1f306b31",
         "logicalInputsResultSha256": "7d813da2bcd5b8f93dc6ff6c9073f3b5128863f9b28083eff615913a0108b123",
@@ -45546,6 +45546,28 @@
           "archiveTotal": 423,
           "state": "QB_SOURCE_PASS; SINGLE_LOCAL_BUILD_ARTIFACT_READBACK_PASS; BUILD_WRAPPER_EXIT_1_AFTER_PAYLOAD; NO_BACKEND_METAFILE; NO_LIVE_LINUX_PG_OR_DEPLOYMENT"
         },
+        "maintenance08RecoveryBinding": {
+          "oldExecutorCommit": "4d9271cbe8f630a23af8ebe6bb09d3b4b52d4e92",
+          "maintenanceCatalogSourcePinsSha256": "4f9c93954224a1262f534241816d0d7e57caa71f9600917b7c43a0860757491d",
+          "maintenance08SourceSetSha256": "336fb51de1051803406eb831a0a457362858d12eae2d4d84fa2929ea79331226",
+          "maintenance08CatalogSpecSha256": "fd33a2000ac0f150d409d1cc7c5d78a852aa723b949fd5076f4a1f7a184f8eec",
+          "executorCommit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
+          "executorTree": "54de1ad4dd6d6372b5a68a1962aef3b35d9434ff",
+          "executorSourceSetSha256": "666994c49a96b75dde472d838b3e30eed4abc1877c2843f186031d4b9c628bf1",
+          "executorLeafSha256": "2982e458f6de52c3ddb57e31f78345bebae6c1cb68d0800b168d414dcef78135",
+          "state": "D1_OLD_REPRO_EXIT_1_NEW_FOCUSED_2_OF_2_EXIT_0; QB_DELTA_PENDING; DO_NOT_USE_OLD_RESTORATION_PACK"
+        },
+        "restorationDependencyReuse": {
+          "state": "EXACT_PACKAGE_AND_LOCK_MATCH_PRIOR_REAL_LINUX_RECEIPT; CURRENT_MOUNT_AND_LOAD_PENDING",
+          "linuxReceiptSha256": "46518bcbb6b55b68ed2fdb48f0691d08942da032cd5988598139e63b15493e55",
+          "packageSha256": "df132518fffedcac3dd2842f773de1f191b563a12887788a06c196a4ce753902",
+          "lockSha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+          "localNpmObservation": "11.19.0 was version probe only; actual build invoked Node 24.21.0 directly without npm install; package manager pin remains 11.9.0"
+        },
+        "formalR3RecoveryConsumer": {
+          "helperSha256": "a52622d4c0f5fb0ba2c9d36a9325fc3ad71b0c950ccefe57bb9de87862645579",
+          "state": "EXPLICIT_R3_RECOVERY_HOLD; T45_FINDING_ACTUAL_APP_VERIFICATION_PRODUCER_AND_EXACT_R3_CONSUMPTION"
+        },
         "logicalExecutable02": {
           "resultSha256": "d2a63f3a1f0deab553d18ee063252e93509723fd7a724bec4773e4d3644b64c1",
           "helperSha256": "b255958e7a8b80a53b9ee3e37de5b417166f85fb3ceabd440ec2c483d316f2c6",
@@ -45557,7 +45579,7 @@
           "state": "QB_TARGETED_4_OF_4_EXIT_0_PLUS_PATH_CASES; TWO_P2_CLOSED_LOCAL_ONLY; REAL_R3_EVIDENCE_AND_EXECUTION_HOLD"
         },
         "sequence": "ORIGINAL_WRITER_TERMINAL_THEN_05_READBACK_LOGICAL_CAPTURE_AND_CLEAN_STOP; COLD_COPY_AFTER_STOP; INDEPENDENT_PG_AND_APP_RESTORE_BEFORE_FORMAL_STAGE",
-        "next": "Original administrator confirms a current controlled entry, then T45 reads original jobs, receiver, 05 and storage. Before actual execution, verify continuous write exclusion, clean stop path, backup identity, protected configuration and stage/cleanup windows. Use only the fixed 03 helper and independently packed restoration-only candidate when their live prerequisites are established."
+        "next": "T45 first checks existing authorization and entry, then uses only a valid controlled entry or prepares an exact new private administrator window without replaying 04. In parallel QB verifies the D1 lineage delta before replacement packaging. T45 owns the release consumer and actual application restore receipt; no early clearing of the recovery hold. Before live write phases, check original job and receiver, 05, storage, uninterrupted write exclusion, clean stop, backup identity and time windows."
       },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
