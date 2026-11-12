@@ -45555,15 +45555,33 @@
           "executorTree": "54de1ad4dd6d6372b5a68a1962aef3b35d9434ff",
           "executorSourceSetSha256": "666994c49a96b75dde472d838b3e30eed4abc1877c2843f186031d4b9c628bf1",
           "executorLeafSha256": "2982e458f6de52c3ddb57e31f78345bebae6c1cb68d0800b168d414dcef78135",
-          "state": "OLD_REPRO_EXIT_1; D1_AND_QB_2_OF_2_EXIT_0; REMOTE_SHA_VERIFIED; D2_SUCCESSOR_PACK_IN_PROGRESS; DO_NOT_USE_OLD_RESTORATION_PACK"
+          "state": "OLD_REPRO_EXIT_1; D1_AND_QB_2_OF_2_EXIT_0; REMOTE_SHA_VERIFIED; D2_SUCCESSOR_PACK_LOCALLY_VERIFIED; DO_NOT_USE_OLD_RESTORATION_PACK"
         },
         "controlledEntry05": {
-          "checkedAt": "2026-11-12T11:18+08:00",
-          "resultSha256": "19cfd0ba9996b81d1ac2299c208e5e00cb9d1172ba349c6fc1a9fb29203e0d3b",
-          "runnerSha256": "478ddb317d2b6c2d811b1bd20a56d7bdf0e7c74312636a0c097c05cbf53ee690",
-          "state": "NO_VALID_UNUSED_ENTRY_FOUND; PRIVATE_OPERATOR_WINDOW_STAGED_UNBOUND; WAITING_ADMIN_AVAILABILITY_AND_EXACT_WINDOW; 04_NOT_REPLAYED",
-          "suggestedSlot": "2026-11-12 11:30–11:40 Asia/Shanghai, proposed only; next facts approximately five minutes after actual start",
-          "scope": "Original job, D3 receiver, ordinary 05, disk and mount metadata only"
+          "window": "2026-11-12 11:30–11:40 Asia/Shanghai",
+          "boundRunnerSha256": "ab74772b83f56439b9781aa2e03eb17d6151299717f3935f906f5e5429078542",
+          "resultSha256": "647de3a099a93c37471ecd08f4c2d8c3b69f3aef7866237c45ed783b3d49aabd",
+          "machineReceiptSha256": "5de6019335fd968e8bff525b09cb2911c7cc41a39f3f35c709e16a79c9060296",
+          "stagesSha256": "1ff1874e456988302b3a36c0d53bcf08d8f790480ddd510fe2b308fe2ac9fd70",
+          "finishedAt": "2026-11-12T11:32:23+08:00",
+          "state": "SSH_AND_SUDO_CONFIRMED; READONLY_EXIT_0; ONE_SHOT_CONSUMED; EXISTING_DISPATCH_GRANT_EXPIRED",
+          "receiver": "39 STANDARD + 34 SIDECAR SEGMENTS AND FINAL PACKAGE ABSENT; NO ASSEMBLY OR MATERIALIZATION REQUEST",
+          "ordinary05": "NO EXACT REQUEST, PROOF OR FIXED-NAME CONTAINER",
+          "availableDiskBytes": 30492647424,
+          "availableMemoryBytes": 16069357568,
+          "preservedInputBytes": 1132282012,
+          "remainingAfterInputBytes": 29360365412,
+          "coldFloorOnlyShortfallBytes": 704405660,
+          "next": "T45 prepares the exact receiver locally and checks a viable storage plan. Reuse any valid durable controlled entry or present the smallest revocable proposal for user confirmation. Do not replay consumed entry or change server authentication."
+        },
+        "maintenance08RestorationArchive": {
+          "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
+          "readySha256": "a6341dc7851a60b608614239d65449344ad5153e3ff207f2d621d2e24a937432",
+          "archiveSha256": "19bc067b126c71fc5623efe2a20e8234d704ba17910124953ec955e0de31d2d1",
+          "manifestSha256": "7b667fea8dfd19582df7614d2e050d25b412f26200096f0b2c77bec7cc842612",
+          "archiveMembers": 423,
+          "nativeFiles": 224,
+          "state": "D2_LOCAL_BUILD_PACK_EXTRACT_AND_LOAD_PASS; C_ARCHIVE_MEMBER_READBACK_PASS; NO LIVE EXECUTION"
         },
         "restorationDependencyReuse": {
           "state": "EXACT_PACKAGE_AND_LOCK_MATCH_PRIOR_REAL_LINUX_RECEIPT; CURRENT_MOUNT_AND_LOAD_PENDING",
@@ -45588,7 +45606,7 @@
           "state": "QB_TARGETED_4_OF_4_EXIT_0_PLUS_PATH_CASES; TWO_P2_CLOSED_LOCAL_ONLY; REAL_R3_EVIDENCE_AND_EXECUTION_HOLD"
         },
         "sequence": "ORIGINAL_WRITER_TERMINAL_THEN_05_READBACK_LOGICAL_CAPTURE_AND_CLEAN_STOP; COLD_COPY_AFTER_STOP; INDEPENDENT_PG_AND_APP_RESTORE_BEFORE_FORMAL_STAGE",
-        "next": "T45 first checks existing authorization and entry, then uses only a valid controlled entry or prepares an exact new private administrator window without replaying 04. In parallel QB verifies the D1 lineage delta before replacement packaging. T45 owns the release consumer and actual application restore receipt; no early clearing of the recovery hold. Before live write phases, check original job and receiver, 05, storage, uninterrupted write exclusion, clean stop, backup identity and time windows."
+        "next": "T45 verifies existing durable access and dispatch permissions, prepares D3 receiver and a feasible storage budget locally, and presents any authentication change for user confirmation. Use the verified D2 restoration archive and retain the formal gate until actual application restore evidence. Before live writes, confirm receiver, 05, storage, uninterrupted write exclusion, clean stop, backup identity and time windows."
       },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
