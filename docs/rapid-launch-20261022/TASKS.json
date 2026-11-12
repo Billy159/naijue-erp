@@ -2346,13 +2346,25 @@
             "node": "24.21.0",
             "commandExitCode": 0,
             "scope": "Actual CLI mode selection through capacity factory with synthetic configuration; no listener or PG."
+          },
+          {
+            "group": "r3-faa8-recovery-publication-local-01",
+            "status": "ARTIFACT_PAIRING_FIXED_LOCAL; OLD_05_PROOF_PIN_REPRODUCED; REVIEW_ACTIVE",
+            "resultSha256": "0776299f2c24f0a164370bae7b145efde92430074572d2120b2ada49dd6de4ad",
+            "bindingSha256": "06070113f60891c48df6a94c25f7d636bac3fd22e827783c518d3cdf1ee6b1d4",
+            "deploymentHelperSha256": "c5b6e803689ebe5194bf662e302a0fe08bcc58ce27e5564132d82f6e22b3a4ea",
+            "backupHelperSha256": "df4e276a928e5ce7ba8027df7cabe79ca4822b024fad383269f78398ddd46fef",
+            "reviewed05ProofSha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
+            "actualPinned05ProofSha256": "b9d87d5b1795bbc7bfd87b1f73e0fd148a4ba2d80a886ce6fdab34d746b18f69",
+            "sourcePinsReadBack": 14,
+            "localProofMismatchFixtureExitCode": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_SCOPED_RECEIPT_CONSISTENCY_FIX_ASSIGNED; FAA8_BACKUP_PUBLICATION_PAIR_WIP",
-          "owner": "T45",
-          "next": "Complete the exact FAA8 backup and formal owner binding, retain the existing finite 09 proof scope, and finish the four linked receipt regressions in the existing 05 path."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_SCOPED_RECEIPT_CONSISTENCY_FIX_ACTIVE; FAA8_BINDING_QB_ACTIVE_WITH_EXACT_PROOF_MISMATCH",
+          "owner": "T45 / QB",
+          "next": "Finish the existing 05 receipt cases and pair the reviewed 05 validator with both logical capture and restore. Keep original 09 finite proof and 3d2f restore executor. Actual A transfer awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
