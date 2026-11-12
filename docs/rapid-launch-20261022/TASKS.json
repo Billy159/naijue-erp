@@ -2200,13 +2200,27 @@
             "group": "r3-production-owner-handoff-local-01",
             "status": "EXISTING_OWNER_PRODUCTION_BRANCH_SELECTED; HOST_IMPLEMENTATION_STARTED",
             "resultSha256": "b10d20057585f4d62811a3aa5125a508e5771d83b095ca2d1719d1442bbf4f8d"
+          },
+          {
+            "group": "r3-production-generation-host-interface-01",
+            "status": "HOST_NODE_INTERFACE_FIXED; IMPLEMENTATION_IN_PROGRESS",
+            "interfaceSha256": "21de7e14b23942224be0a415f243b25e1836dde8c9042f70945eabc014c4cf41",
+            "nodeBase": "7e6626deb7cce6f24fe33f9eda7de6400787de8b",
+            "nodeBranch": "codex/d1-r3-production-generation-20261113"
+          },
+          {
+            "group": "r3-05-compact-input-access-scope",
+            "status": "FIXED_METADATA_SCOPE_CALCULATED_LOCAL_ONLY",
+            "openFilePaths": 38,
+            "uniqueFileInodes": 37,
+            "readableDirectoryPaths": 4
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; PERSISTENT_OWNER_HOST_SOURCE_IN_PROGRESS",
-          "owner": "T45",
-          "next": "Fix the exact host generation and live capacity producer fields, then bind D1's actual consumer. Continue original private handoff if the pending direct authorization arrives."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; R3_PERSISTENT_HOST_AND_NODE_SOURCE_ACTIVE",
+          "owner": "T45 host / D1 Node",
+          "next": "Implement generation, owner liveness and durable capacity against the exact same fields; integrate and test when both sources are fixed. Do not open the R3 maintenance or receiver window without current actual inputs."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
