@@ -1483,6 +1483,22 @@
       "remainingFreeAfterKnownBytes": 24588939592,
       "rootKnownShortfallWithCurrent28GiBFloorBytes": 5475831480,
       "additionalCoResidentPeakCapacityAfterProposed7GiBMarginBytes": 17072746824,
+      "refreshAt05Install": {
+        "observedAt": "2026-11-12T20:10:00+08:00",
+        "volume": "/dev/md0p1",
+        "receiptSha256": "a84be9964aa03fbc069892af3009f041ca049f47f88b6aab20b1f46f001db936",
+        "availableBytes": 30435856384,
+        "alreadyReceivedFragments": 5,
+        "remainingMaterialsAndAppBytes": 1138708152,
+        "twoReportsAllocatedBytes": 4495400960,
+        "availableAfterKnownBytes": 24801747272,
+        "knownShortfallUnderOld28GiBBytes": 5263023800,
+        "candidateOperatingAndDriftMarginBytes": 7516192768,
+        "capacityForAdditionalStagePeakBytes": 17285554504,
+        "afterKnownEmptyColdCopyOnlyBytes": 17212830024,
+        "minimumAdditionalRootBytesRule": "max(0, maximum additional coincident stage allocation - 17285554504); refresh with observed free before execution",
+        "status": "CONDITIONAL; ACTUAL_IMPORT_COLD_BACKUP_AND_INDEPENDENT_RESTORE_PEAKS_UNMEASURED; NO_RUNTIME_THRESHOLD_CHANGE"
+      },
       "original28GiB": {
         "oldEstimatedConcurrentGiB": 21,
         "operatingStopGiB": 6,
@@ -1728,7 +1744,16 @@
         "exactActualInstallMinimumRemainingExclusiveSeconds": 840
       },
       "successorTrial": {
-        "state": "ISSUED_LIVE_RESULT_PENDING",
+        "state": "INSTALL_COMPLETED_FULL_RECEIPT_AFTER_SEND_DEADLINE; ZERO_DATA_SENT; ORIGINAL_RESTORE_PENDING",
+        "installTerminal": "COMPLETED/0",
+        "installStartedAt": "2026-11-12T20:10:00.099+08:00",
+        "installFinishedAt": "2026-11-12T20:10:00.467+08:00",
+        "installJobSha256": "07336a47096afae0eb532dd8783c0d06481fdd9fee89f9ac207064593f853702",
+        "installJobReceiptLocalAt": "2026-11-12T20:10:05.879+08:00",
+        "completeInstallReceiptLocalAt": "2026-11-12T20:10:14.422+08:00",
+        "completeInstallReceiptSha256": "a84be9964aa03fbc069892af3009f041ca049f47f88b6aab20b1f46f001db936",
+        "sendAdmissionDeadline": "2026-11-12T20:10:09.218+08:00",
+        "realDataSent": false,
         "lanes": 1,
         "originals": [
           "P06",
