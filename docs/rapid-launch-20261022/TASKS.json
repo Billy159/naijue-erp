@@ -3114,13 +3114,32 @@
               "ownedRestoreContainerStopped": true,
               "sql36OrBusinessImport": false
             }
+          },
+          {
+            "group": "r3-maintenance-08-window-final-readonly-closeout-20261113-0552",
+            "status": "ACTUAL_CLOSED_ORIGINAL_FOOTPRINT_NEXT_LOCAL_TRANSPORT_PREPARATION",
+            "owner": "T45 / C",
+            "evidence": {
+              "readbackSha256": "942992e80c4e43c77864971a5112444214593db8475ac38099280375a817f961",
+              "t45ResultSha256": "2f81814856a0bec1872da9a5a9b6579c064b5c5bdc9889d15b8744be8d05a07c",
+              "observedAtUTC": "2026-11-12T21:52:00.643260+00:00",
+              "ordinaryQueue": {
+                "completed": 87,
+                "historicalFailed": 6,
+                "unresolved": 0,
+                "activeUnits": 0
+              },
+              "originalNativeRequestFootprintsAbsent": true,
+              "maintenanceListenerAbsent": true,
+              "exactRestoreTerminalSha256": "79b5745d7c12f71e9532b71bebce2e4ca36c7081fcdb88537700934ba3073607"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_SERVICE08_STOPPED_ORIGINAL_TWO_ROLES_RESTORED_NEXT_IN_JOB_AUTHORIZATION_TRANSPORT_REQUIRED",
+          "status": "ACTUAL_FIRST_WINDOW_CLOSED_NEXT_IN_JOB_AUTHORIZATION_TRANSPORT_IN_LOCAL_PREPARATION",
           "owner": "T45 / C",
-          "next": "Verify final current read-only footprint of original keys and 152. Prepare allowed exact per-phase delivery in the original bounded operation and next window shell without replay. Then continue exact SQL36/A/SQL38 in one fresh real startup."
+          "next": "Validate the existing permitted bounded in-job authorization endpoint and bind fresh outer maintenance keys to the actual original stopped and restored predecessor. Refresh exact native keys and target state before first submission."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
