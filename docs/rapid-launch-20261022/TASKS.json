@@ -1497,7 +1497,10 @@
         "capacityForAdditionalStagePeakBytes": 17285554504,
         "afterKnownEmptyColdCopyOnlyBytes": 17212830024,
         "minimumAdditionalRootBytesRule": "max(0, maximum additional coincident stage allocation - 17285554504); refresh with observed free before execution",
-        "status": "CONDITIONAL; ACTUAL_IMPORT_COLD_BACKUP_AND_INDEPENDENT_RESTORE_PEAKS_UNMEASURED; NO_RUNTIME_THRESHOLD_CHANGE"
+        "status": "CONDITIONAL; ACTUAL_IMPORT_COLD_BACKUP_AND_INDEPENDENT_RESTORE_PEAKS_UNMEASURED; NO_RUNTIME_THRESHOLD_CHANGE",
+        "t45StageSamplingPlanSha256": "b1f271636451d4beced4fbdb5c246e27a3d08861355de4424b1dcfe90c9c2880",
+        "historicalR3EmptyColdCopyActuallyAllocatedBytes": 69226496,
+        "equivalentFullScalePgWalTempRestoreMeasurementFound": false
       },
       "original28GiB": {
         "oldEstimatedConcurrentGiB": 21,
@@ -1606,7 +1609,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "05_SAME_ORIGINAL_KEYS_SINGLE_LANE_TRIAL_ISSUED_AFTER_QUIET_READBACK",
+      "state": "05_FIRST_WINDOW_CLOSED_NO_DATA; SAME_KEYS_PREARMED_SECOND_WINDOW_ISSUED",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1744,7 +1747,15 @@
         "exactActualInstallMinimumRemainingExclusiveSeconds": 840
       },
       "successorTrial": {
-        "state": "INSTALL_COMPLETED_FULL_RECEIPT_AFTER_SEND_DEADLINE; ZERO_DATA_SENT; ORIGINAL_RESTORE_PENDING",
+        "state": "INSTALL_COMPLETED_FULL_RECEIPT_AFTER_SEND_DEADLINE; ZERO_DATA_SENT; ORIGINAL_RESTORE_COMPLETED_FOUR_ORIGINALS_ABSENT",
+        "restoreTerminal": "COMPLETED/0",
+        "restoreFinishedAt": "2026-11-12T20:24:20.130+08:00",
+        "restoreJobSha256": "d3fd4a533bf1a752e6d4ece71baa993baa93a92333aa8272b871d4155aee1f32",
+        "restorePolicySha256": "7b08c3679caf0417bdf7a0e25de79d9c042e6a71685dc9a520813b15a3acfced",
+        "finalResultSha256": "1dc503def90c3950ce3868daa04cd0fa06dc70739392d3de9be038f766a34fbd",
+        "policyReadback": "ENOENT",
+        "fourDataKeysReadback": "ABSENT",
+        "matchingReceiverProcesses": 0,
         "installTerminal": "COMPLETED/0",
         "installStartedAt": "2026-11-12T20:10:00.099+08:00",
         "installFinishedAt": "2026-11-12T20:10:00.467+08:00",
@@ -1768,6 +1779,18 @@
         "closeoutReserveSeconds": 240,
         "noNewDataConfirmedAtIssuance": true,
         "quietReadback": "34/34 current queue terminal; four originals absent; policy absent; old installation terminal; no matching receive process"
+      },
+      "prearmedSuccessorTrial": {
+        "state": "ISSUED_AFTER_T45_WAITING_AND_FOUR_ORIGINALS_ABSENT; LIVE_RESULT_PENDING",
+        "launcherSha256": "918e35e62cfb538495baa4f99da17629af9a4e9b771e81a26a6e774a4f8a2b38",
+        "localLaunchReadyBeforeIssue": true,
+        "lanes": 1,
+        "startsAt": "2026-11-12T20:26:33.448+08:00",
+        "expiresAt": "2026-11-12T20:44:33.448+08:00",
+        "admissionBefore": "2026-11-12T20:30:33.448+08:00",
+        "netUploadSeconds": 600,
+        "closeoutReserveSeconds": 240,
+        "originals": ["P06", "P07", "P08", "P09"]
       }
     },
     "oldAssetRetirement": {
