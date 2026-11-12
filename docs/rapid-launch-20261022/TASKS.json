@@ -2841,13 +2841,33 @@
               "originalCredentialRead": false,
               "actualCommitConfirmed": null
             }
+          },
+          {
+            "group": "r3-t45-continuity-static-five-drafts-20261113-0452",
+            "status": "OFFLINE_FIVE_DRAFTS_SOURCE_FIXED_CROSS_REFERENCE_QB_DELTA_ACTIVE_LIVE_UNBOUND",
+            "owner": "T45 / C / QB",
+            "evidence": {
+              "readySha256": "e0e9c10b6a08f7a70a9ff222b62537f65b11e84ad6e082c98f8a06f601060316",
+              "fixedFiles": 16,
+              "resultSha256": "b9d70f411f06e4dce46126385865e3275bf5dbbc9483051fb79abe0c13f88ac4",
+              "registrationSha256": "adfff65438809cf9aa842d90eb3a102888567d974db61ec855acff45f200815c",
+              "holdSha256": "fff51a0383ca87976fd03dfe4fa9abfcc71ac3a1c7a49110953529bcb9237a40",
+              "focusedCases": 3,
+              "affectedCases": 3,
+              "plannedSteps": 5,
+              "actualTemplatesBound": 0,
+              "actualRegistration": false,
+              "capacitySha256": "056e2565ccd9be7dc26e22358b6300062f6e55ccd0ad37ff27e2e943c334901a",
+              "knownBackupApplicationLogicalBytes": 4251148,
+              "updatedEstimatedHeadroomAbove28Bytes": 5528912856
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_ACTUAL_READY_D1_SHORT_STATUS_DUAL_FINGERPRINT_CONTRACT_FROZEN_T45_PREBIND_ACTIVE_A_APPROVAL_PENDING",
-          "owner": "T45",
-          "next": "Finish exact static successor prebinding and bind a narrowly authorized same-original-key recovery with unchanged application archives. Actual A authorization and private same-build browser target still pending."
+          "status": "FIVE_STATIC_CONTINUATION_DRAFTS_FIXED_QB_SCOPED_DELTA_T45_NORMAL_05_STOP_CANDIDATE_A_APPROVAL_PENDING",
+          "owner": "T45 / QB",
+          "next": "Close the exact cold authorization hash-reference review and original same-generation normal 05 stop carrier. Continue the short recovery host using the fixed D1 proof, with live-only values unbound. Actual A authorization and private same-build browser target still pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
