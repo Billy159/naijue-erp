@@ -202,7 +202,7 @@ async function actualDump(ref,deadline){
  },()=>f.close());
 }
 
-async function observeRestorationPublication({path,text}){
+async function observeRestorationPublication({path,text,privateFile=false}){
  try{
   const parent=dirname(path);
   await assertTrustedRootPath(parent);
@@ -210,25 +210,27 @@ async function observeRestorationPublication({path,text}){
    if(error.code!=='ENOENT')throw error;
    await assertTrustedRootPath(parent);return 'ABSENT';
   }
-  if(text!==undefined&&(await protectedBytes(path)).bytes.equals(Buffer.from(text)))return 'MATCHED';
+  if(text!==undefined&&(await protectedBytes(path,{privateFile})).bytes.equals(Buffer.from(text)))return 'MATCHED';
  }catch{/* Unreadable or changed protected output does not establish absence. */}
  return 'UNKNOWN';
 }
 
-export function describeFresh35RestorationFailure(error,phase,DatabaseError,observed=[],confirmed=0){
+function restorationFailureDetail(error,phase,DatabaseError,readback,confirmed){
  let category,sqlState;
  switch(phase){
  case 'CONNECT':
  case 'VERIFY':
   category=phase==='CONNECT'?'CONNECTION_NOT_ESTABLISHED':'RESTORE_VERIFICATION_FAILED';
-  if(typeof DatabaseError==='function'&&error instanceof DatabaseError&&typeof error.code==='string'&&/^[0-9A-Z]{5}$/.test(error.code))sqlState=error.code;
   break;
+ case 'ROLLBACK': category='READ_ONLY_ROLLBACK_FAILED';break;
+ case 'CLOSE': category='CONNECTION_CLOSE_FAILED';break;
  case 'PUBLISH_PROGRAM':
  case 'PUBLISH_CATALOG':
  case 'PUBLISH_RECORD':
   // Matching bytes establish visibility, not directory durability after a failed publication.
   if(error?.installState==='PUBLISHED_DURABILITY_UNKNOWN'||error?.message==='INSTALL_RECORD_PUBLISHED_DURABILITY_UNKNOWN'||
-     observed.length!==3||confirmed>2||!observed.every((result,i)=>result===(i<confirmed?'MATCHED':'ABSENT'))){
+     readback?.consumed!=='MATCHED'||confirmed>2||
+     ![readback.program,readback.catalog,readback.record].every((result,i)=>result===(i<confirmed?'MATCHED':'ABSENT'))){
    category='PUBLICATION_OUTCOME_UNKNOWN';
   }else{
    category=confirmed===0?'PUBLICATION_NOT_WRITTEN':'PUBLICATION_PARTIAL';
@@ -236,7 +238,18 @@ export function describeFresh35RestorationFailure(error,phase,DatabaseError,obse
   break;
  default: phase='PREPARATION';category='PREPARATION_FAILED';
  }
- return {phase,category,...(sqlState!==undefined?{sqlState}:{}),automaticRetry:false,applicationVerified:false};
+ if(['CONNECT','VERIFY','ROLLBACK','CLOSE'].includes(phase)&&typeof DatabaseError==='function'&&error instanceof DatabaseError&&
+    typeof error.code==='string'&&/^[0-9A-Z]{5}$/.test(error.code))sqlState=error.code;
+ return {phase,category,...(sqlState!==undefined?{sqlState}:{})};
+}
+
+export function describeFresh35RestorationFailure(error,phase,DatabaseError,{observed,confirmed=0,cleanup=[]}={}){
+ const readback=observed&&Object.fromEntries(['consumed','program','catalog','record'].map(key=>[
+  key,['MATCHED','ABSENT'].includes(observed[key])?observed[key]:'UNKNOWN'
+ ]));
+ return {...restorationFailureDetail(error,phase,DatabaseError,readback,confirmed),
+  ...(cleanup.length?{cleanup:cleanup.map(step=>restorationFailureDetail(step.error,step.phase,DatabaseError))}:{}),
+  ...(readback?{readback}:{}),automaticRetry:false,applicationVerified:false};
 }
 
 // The first package's normalized, password-free ACL observation, reused verbatim
@@ -347,13 +360,18 @@ async function executeFresh35Restoration(progress){
  need(describeFresh35CombinedSource(source).currentSourcePins.some(p=>p.path==='scripts/release/unified-install/fresh35-combined-record-v1.mjs'&&p.sha256===FRESH35_COMBINED_RECORD_MODULE_SHA256),'LOADED_PUBLISHER_SOURCE_DIFFERS');
  try{await lstat(FRESH35_COMBINED_RECORD_PATH);throw Error('FRESH35_RESTORATION_RECORD_ALREADY_EXISTS')}catch(e){if(e.code!=='ENOENT')throw e}
  const current=async()=>{validateAuthority(a,Date.now());need((await protectedBytes(FRESH35_RESTORATION_AUTHORIZATION_PATH,{privateFile:true,max:65536})).identity===loaded.identity,'AUTHORIZATION_CHANGED');await assertFresh35CombinedSourcesCurrent(source);await assertFresh35CombinedCatalogCurrent(catalog)};
- await current();const used=await open(FRESH35_RESTORATION_AUTHORIZATION_PATH+'.consumed',constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY|constants.O_NOFOLLOW,0o600);
- await withRestorationCleanup(async()=>{await used.writeFile(hash(loaded.bytes)+'\n');await used.sync()},()=>used.close());
+ const consumption={path:FRESH35_RESTORATION_AUTHORIZATION_PATH+'.consumed',text:hash(loaded.bytes)+'\n',privateFile:true};
+ await current();const used=await open(consumption.path,constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY|constants.O_NOFOLLOW,0o600);
+ await withRestorationCleanup(async()=>{await used.writeFile(consumption.text);await used.sync()},()=>used.close());
  const {Client,DatabaseError}=await import('pg'),client=new Client({...connection,password:()=>connection.password,ssl:false,application_name:'fresh35-restored-record',connectionTimeoutMillis:5000,query_timeout:45000,statement_timeout:40000,lock_timeout:5000,options:'-c search_path=pg_catalog -c TimeZone=UTC'});
  progress.DatabaseError=DatabaseError;
- let began=false,closeAttempted=false,raw,rolesAclSha256;
+ let began=false,rollbackAttempted=false,closeAttempted=false,raw,rolesAclSha256;
  const close=()=>{closeAttempted=true;return closePhysical(client)};
- const query=async sql=>{await current();assertInstallClientProtocolState(client);const result=await client.query(sql);assertInstallClientProtocolState(client);return result};
+ const query=async sql=>{
+  await current();assertInstallClientProtocolState(client);
+  if(sql==='ROLLBACK')rollbackAttempted=true;
+  const result=await client.query(sql);assertInstallClientProtocolState(client);return result;
+ };
  const ack=(result,tag)=>need(result?.command===tag,'NATIVE_'+tag+'_ACK_REQUIRED');
  const one=result=>{ack(result,'SELECT');need(result.rows?.length===1&&typeof result.rows[0].restoration_json==='string','ONE_NATIVE_OBSERVATION_REQUIRED');return parseStrictJson(result.rows[0].restoration_json)};
  return withRestorationCleanup(async()=>{
@@ -367,16 +385,19 @@ async function executeFresh35Restoration(progress){
   const imported=one(await query(importSql));
   need(imported.batchCount===2&&imported.originalReceipt===true&&imported.originalPublish===true,'ORIGINAL_RESTORED_IMPORT_CLOSURE_DIFFERS');
   const guarded=await query(p.sql.guardSql);need(Array.isArray(guarded)&&guarded.length===2&&guarded.every(r=>r?.command==='DO'),'COMPLETE_TARGET_AND_CATALOG_GUARD_ACK_REQUIRED');const observed=await query(p.sql.observationSql);ack(observed,'SELECT');need(observed.rows?.length===1,'ONE_COMPLETE_CATALOG_REQUIRED');raw=observed.rows[0].catalog_json;
-  validateFresh35CombinedRestorationCatalogObservation(raw,catalog,source,target);ack(await query('ROLLBACK'),'ROLLBACK');began=false;
-  await close();await current();
+  validateFresh35CombinedRestorationCatalogObservation(raw,catalog,source,target);
+  progress.phase='ROLLBACK';
+  ack(await query('ROLLBACK'),'ROLLBACK');began=false;
+  progress.phase='CLOSE';await close();
+  progress.phase='PUBLISH_PROGRAM';
   const descriptor=describeFresh35RestorationProgram(program);
   const files=[
    {path:join(t.proposal.workspaceDirectory,'restoration-program.json'),text:JSON.stringify(descriptor)},
    {path:join(t.proposal.workspaceDirectory,'restoration-catalog.json'),text:raw},
    {path:FRESH35_COMBINED_RECORD_PATH}
   ];
-  progress.publication={files,confirmed:0};
-  progress.phase='PUBLISH_PROGRAM';
+  progress.publication={consumption,files,confirmed:0};
+  await current();
   const {publishInstallationRecord}=await import('./publish-installation-record.mjs');
   await publishInstallationRecord(files[0].path,files[0].text);progress.publication.confirmed=1;
   progress.phase='PUBLISH_CATALOG';
@@ -387,8 +408,14 @@ async function executeFresh35Restoration(progress){
   validateFresh35RestoredRecord(record,program);files[2].text=JSON.stringify(record)+'\n';
   completions.set(token,{record,sourceRoot,recordModuleSha256:FRESH35_COMBINED_RECORD_MODULE_SHA256,current});return token;
  },async()=>{
-  try{if(began)await client.query('ROLLBACK')}
-  finally{if(!closeAttempted)await close()}
+  if(began&&!rollbackAttempted){
+   try{ack(await client.query('ROLLBACK'),'ROLLBACK')}
+   catch(error){(progress.cleanup??=[]).push({phase:'ROLLBACK',error})}
+  }
+  if(!closeAttempted){
+   try{await close()}
+   catch(error){(progress.cleanup??=[]).push({phase:'CLOSE',error})}
+  }
  });
 }
 
@@ -407,8 +434,14 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).hr
   process.stdout.write(JSON.stringify({state:result.state,recordSha256:result.recordSha256,recordKind:'RESTORED_FROM_VERIFIED_INSTALLATION',applicationVerified:false,automaticRetry:false})+'\n');
  }catch(error){
   const publication=progress.publication;
-  const observed=publication?await Promise.all(publication.files.map(observeRestorationPublication)):[];
-  const diagnostic=describeFresh35RestorationFailure(error,progress.phase,progress.DatabaseError,observed,publication?.confirmed);
+  let observed;
+  if(publication){
+   const consumed=await observeRestorationPublication(publication.consumption);
+   const [program,catalog,record]=await Promise.all(publication.files.map(observeRestorationPublication));
+   observed={consumed,program,catalog,record};
+  }
+  const diagnostic=describeFresh35RestorationFailure(error,progress.phase,progress.DatabaseError,
+   {observed,confirmed:publication?.confirmed,cleanup:progress.cleanup});
   process.stderr.write(JSON.stringify(diagnostic)+'\n');process.exitCode=2;
  }
 }

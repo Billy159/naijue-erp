@@ -147,9 +147,30 @@ test('restoration publication diagnostics preserve known sidecars and publisher 
   [Object.assign(new Error('synthetic-protected-path'),{installState:'PUBLISHED_DURABILITY_UNKNOWN'}),
    'PUBLISH_RECORD',['MATCHED','MATCHED','MATCHED'],2,'PUBLICATION_OUTCOME_UNKNOWN']
  ];
- for(const [error,phase,observed,confirmed,category] of cases){
-  assert.deepEqual(describeFresh35RestorationFailure(error,phase,DatabaseError,observed,confirmed),{
-   phase,category,automaticRetry:false,applicationVerified:false
+ for(const [error,phase,[program,catalog,record],confirmed,category] of cases){
+  const observed={consumed:'MATCHED',program,catalog,record};
+  assert.deepEqual(describeFresh35RestorationFailure(error,phase,DatabaseError,{observed,confirmed}),{
+   phase,category,readback:observed,automaticRetry:false,applicationVerified:false
   });
  }
+ for(const consumed of ['ABSENT','synthetic-private-marker-value']){
+  const observed={consumed,program:'MATCHED',catalog:'ABSENT',record:'ABSENT'};
+  assert.deepEqual(describeFresh35RestorationFailure(failure,'PUBLISH_CATALOG',DatabaseError,{observed,confirmed:1}),{
+   phase:'PUBLISH_CATALOG',category:'PUBLICATION_OUTCOME_UNKNOWN',
+   readback:{...observed,consumed:consumed==='ABSENT'?'ABSENT':'UNKNOWN'},automaticRetry:false,applicationVerified:false
+  });
+ }
+});
+
+test('restoration reports the verification failure and both cleanup failures separately',()=>{
+ const pgError=code=>Object.assign(new DatabaseError('synthetic-private-message',0,'error'),{code});
+ const original=pgError('55000'), rollback=pgError('25P02'), close=Object.assign(new Error('synthetic-private-socket'),{code:'EPIPE'});
+ const flags={automaticRetry:false,applicationVerified:false};
+ const rollbackDetail={phase:'ROLLBACK',category:'READ_ONLY_ROLLBACK_FAILED',sqlState:'25P02'};
+ const closeDetail={phase:'CLOSE',category:'CONNECTION_CLOSE_FAILED'};
+ assert.deepEqual(describeFresh35RestorationFailure(original,'VERIFY',DatabaseError,{cleanup:[
+  {phase:'ROLLBACK',error:rollback},{phase:'CLOSE',error:close}
+ ]}),{phase:'VERIFY',category:'RESTORE_VERIFICATION_FAILED',sqlState:'55000',cleanup:[rollbackDetail,closeDetail],...flags});
+ assert.deepEqual(describeFresh35RestorationFailure(rollback,'ROLLBACK',DatabaseError),{...rollbackDetail,...flags});
+ assert.deepEqual(describeFresh35RestorationFailure(close,'CLOSE',DatabaseError),{...closeDetail,...flags});
 });
