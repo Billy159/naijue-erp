@@ -2292,13 +2292,30 @@
             "status": "EXACT_SCOPE_CHECKED; TWO_LOCAL_PARENT_RESTORE_FINDINGS",
             "resultSha256": "ead455bd6167ba77af38b342edee7a3b7e1324a3b33e6d8b935be2e3225e781d",
             "bindingSha256": "efc20dfab1025323ec9338566b339983d6cd700049ff90e9bb2eb982c2cf7fdc"
+          },
+          {
+            "group": "r3-formal-faa8-archive-and-backup-compatibility-local",
+            "status": "EXISTING_VALIDATORS_PASS_WITH_IN_MEMORY_EXACT_PINS",
+            "archiveFiles": 462,
+            "nativeFiles": 223,
+            "localFixtureExitCode": 0,
+            "sourceDescriptorSet": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+            "scope": "Archive and build-graph validators, logical artifact receipts, synthetic configuration shape only."
+          },
+          {
+            "group": "r3-current-root-staged-headroom",
+            "status": "POST_REMOVAL_BASELINE_AND_REPORT_BUDGET_ONLY",
+            "availableBytes": 40125149184,
+            "estimatedTwoReportBytes": 4495400960,
+            "estimatedAdditionalImportAppExpansionBytes": 16911900,
+            "remainingAbove28GiBAfterKnownEstimatesBytes": 5548065252
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FORMAL_FAA8_ARTIFACT_FIXED_LOCAL; 05_TRANSPORT_AND_SCOPED_PARENT_FIXES_ACTIVE",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_LOCAL_TRANSPORT_WIP_RESUMED; FORMAL_APP_ARCHIVE_VERIFIER_PAIR_LOCAL_PASS",
           "owner": "T45",
-          "next": "Close controller transport and two parent boundaries, then consume the fixed formal APP pins in the same planned backup/restore and formal deployment closure. No server transfer or action without the applicable existing exact scope."
+          "next": "Complete the already started 05 transport and focused cleanup tests. Then freeze the FAA8 backup and formal consumer pins without replacing the 6c import app or 3d2f restore runner. Actual A transfer waits for direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
