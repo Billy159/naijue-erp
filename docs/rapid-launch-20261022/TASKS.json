@@ -45475,11 +45475,13 @@
       "r3FormalFirstInstallLocalCandidate": {
         "resultSha256": "ce408161f24d27a12a15064262e0d7c1e856b5910e072251363144cc368124d1",
         "sourceSha256": "3f71630dc6033907e0a5b423a289f819e62ba70c79273c5901aa10bbf50a923e",
-        "state": "R3_HOLD; EXACT_CSS_MEMBER_AND_CONTRACT_DELTA, BOOT_RELOCATION_FILES, INDEPENDENT_RECOVERY, EXTERNAL_APPROVAL, LIVE_LINUX",
+        "localSuccessorResultSha256": "c2f1edb9b3626ef57bac6c80dc9713c24100dda7c014a33c069e0608a7cc71e8",
+        "localSuccessorSourceSha256": "d4bf76f08d2a127ce87fee388be598ae271a5c5ef411eb94b11c1a2e3511c79e",
+        "state": "LOCAL_EXACT_MEMBER_CONTRACT_AND_BOOT_RELOCATION_TESTS_PASS; T45_BINDING_NEW_ARCHIVE; RECOVERY_APPROVAL_LINUX_AND_FORMAL_STAGE_PENDING",
         "activeOwner": "T45"
       },
       "r3App09InitialArtifactAssetBase": {
-        "state": "REPRODUCED_404_ON_ENTRY_AND_FOUR_INITIAL_STYLES; B621D1B8_WITHHELD; D2_SAME_SOURCE_REBUILD_IN_PROGRESS",
+        "state": "REPRODUCED_404_ON_ENTRY_AND_FOUR_INITIAL_STYLES; B621D1B8_WITHHELD; SAME_SOURCE_SUCCESSOR_PACKED_AND_LOCAL_HTTP_HANDLER_VERIFIED",
         "checkedArchiveMembers": 6,
         "handlerNodeVersion": "24.21.0",
         "indexStatus": 200,
@@ -45488,13 +45490,21 @@
         "commandExit": 0,
         "scope": "EXACT_SOURCE_REQUEST_HANDLER, PACKED_BYTES, SYNTHETIC_API, NO_LISTENER_OR_DATABASE"
       },
+      "r3App09AssetBaseSuccessor": {
+        "buildId": "erp-7e6626deb7cc-post-backup-ordinary09-20261112-assets-r2",
+        "artifactBytes": 3406831,
+        "checkedArchiveMembers": 462,
+        "localHttpSmokeSha256": "4c9e3a27fa004a943efa888f735dfd40f6723584fc434c316b28fdf74dba386c",
+        "runtimeTemplateBindingSha256": "8734c4f4212c70f842b93f58ad27b6f6aacd46d10fd3495b7f1b6e0d0a72dba9",
+        "state": "LOCAL_REAL_HANDLER_ASSET_REQUESTS_PASS; T45_FORMAL_BINDING_ACTIVE; NO_BROWSER_PG_OR_SERVER_ACTION"
+      },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
       "r3PrivateApp09HostResultSha256": "2d5f8fb273cc6a18c81b83dc5a8af2b0f451e475636a78078145acd878a41e1f",
       "r3PrivateApp09HostSourceSha256": "4c4ca10edbdd0b1d7268f9f4f734ec91b275fa9738068285483acb249db076fb",
-      "r3PostColdBackupAppReadySha256": "ff295d8b3931c47f6c9532a46fcd040973b13dfdcb55e4195b7ea727d276bbfd",
-      "r3PostColdBackupAppArchiveSha256": "b621d1b8f0e0c7be3c47e84c94855e96b2544b5ca05c3c3a5bf86b826b2ebaf6",
-      "r3PostColdBackupAppManifestSha256": "935e6ae46302bf447e26dd8b66e00b891a3695946763c0c80ae4266c485865d2",
+      "r3PostColdBackupAppReadySha256": "4789a0e7ff31bf0197fc2809edbdbd2b91b4a059d7ad514efe3808c5a0c54250",
+      "r3PostColdBackupAppArchiveSha256": "a8382341c90924a69c98d32a0bff4af42ea61b83b218432e58958b119e46d30a",
+      "r3PostColdBackupAppManifestSha256": "6f74c3da9ccbccfce3ea311a8dc08ee81a5708a1ee8d4f1ed74e64e17fe5e982",
       "r3Normal05And09ProducerCatalogFixQbSha256": "9be2802fc3f641767dede6df859b3d93a9dbd4a60280423a4bda21bca7916830",
       "r3Normal05And09ProducerCatalogFixResultSha256": "01881f01c0c1745288d5e5553ddcdd6880420136cfec56a3380fd67dc35c42a1",
       "r3Normal05And09ProducerCatalogFixDiffSha256": "9a7b407a4293ae081ca039ed7dd62dea8c21e986e5f38b4998af3da6d5a605ef",
