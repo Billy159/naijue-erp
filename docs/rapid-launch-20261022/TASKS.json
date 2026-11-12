@@ -45506,7 +45506,7 @@
       },
       "r3RecoveryCompatibility": {
         "owner": "T45 for backup and recovery jobs, D1 for the isolated restoration application",
-        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; QB_PASS_R3_INPUT_BINDING_ONLY; T45_EXECUTABLE_WIRING_IN_PROGRESS; RESTORE_APP_TWO_QB_P2_WITH_D1; LIVE_EXECUTION_HOLD",
+        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; T45_EXECUTABLE_DELIVERED_LOCAL_QB_REVIEW; RESTORE_APP_TWO_OLD_P2_CLOSED_EARLY_READBACK_FIX_WITH_D1; LIVE_EXECUTION_HOLD",
         "localPhysicalFileVerifierCommit": "f710215f7f61f3e77d903e41ee98219527078b73",
         "localPhysicalFileVerifierTree": "dbcd1288de78742cee396ae1b1194ddb1f306b31",
         "logicalInputsResultSha256": "7d813da2bcd5b8f93dc6ff6c9073f3b5128863f9b28083eff615913a0108b123",
@@ -45523,8 +45523,22 @@
         "restoreExecutorRemoteVerified": true,
         "restoreExecutorQbTurn": "01a1cd81-336b-7531-a523-0a9a79fab491",
         "restoreExecutorQbFindings": ["Outer HTTP still serves index and assets in restore-only mode", "Restored database capability acquires the pool before expiry check and can deliver a query result after expiry"],
+        "restoreExecutorFixCandidate": {
+          "commit": "f6824a4f3b501656b787d2005f29959629f2fbc7",
+          "tree": "c5016c20b94e28c535d4f3a7e2b6f42bb5c2f4fd",
+          "sourceSetSha256": "e4041dbfc66710c53459dce24a81e9021435146429b3a0af936a4fe0f8a56463",
+          "restorationLeafSha256": "990a793d4f2e6239672eb461d29b7307a3e9a6aaa153105b60cc79002d972b2b",
+          "qbTurn": "01a1cd96-3e76-7240-83ac-eb466af1504c",
+          "qbChecks": "Node 24.21.0, 7/7 exit 0, real HTTP handler and database substitutes, no real PostgreSQL",
+          "state": "OLD_P2_FIXED; EARLY_CONSUMED_AND_OUTPUT_READBACK_NEED_FIX; LOCAL_ONLY; NO_D2_BUILD"
+        },
+        "logicalExecutable02": {
+          "resultSha256": "d2a63f3a1f0deab553d18ee063252e93509723fd7a724bec4773e4d3644b64c1",
+          "helperSha256": "b255958e7a8b80a53b9ee3e37de5b417166f85fb3ceabd440ec2c483d316f2c6",
+          "state": "T45_LOCAL_8_OF_8_EXIT_0; QB_TARGETED_REVIEW_IN_PROGRESS; NO_ACTUAL_CAPTURE_OR_RESTORE"
+        },
         "sequence": "ORIGINAL_WRITER_TERMINAL_THEN_05_READBACK_LOGICAL_CAPTURE_AND_CLEAN_STOP; COLD_COPY_AFTER_STOP; INDEPENDENT_PG_AND_APP_RESTORE_BEFORE_FORMAL_STAGE",
-        "next": "T45 wires the original executable recovery path. D1 closes the two independently reproduced P2 findings, QB verifies only those changes, then D2 packs the restore executor separately. Confirm existing continuous write exclusion across the writer and follow-up jobs, successful 05 stop path, backup role, protected configuration and live resource budget before actual execution."
+        "next": "D1 fixes only the early-failure readback gap. QB reviews that delta and, in parallel with D1, the fixed T45 executable 02. D2 packs the restore executor separately after QB clears its source. Original administrator confirms a current controlled entry, then T45 reads original jobs, receiver, 05 and storage. Before actual execution, verify continuous write exclusion, clean stop path, backup identity, configuration and resource windows."
       },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
