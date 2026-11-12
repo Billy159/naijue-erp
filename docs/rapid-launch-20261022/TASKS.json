@@ -2508,13 +2508,26 @@
               "authoritativeLiveAReceipt": null,
               "productionExecution": false
             }
+          },
+          {
+            "group": "r3-faa8-formal-initial-business-acceptance-20261113-0330",
+            "status": "FORMAL_FIRST_OPEN_MISSING_SAME_BUILD_ACCEPTANCE_CONSUMER_REPRODUCED",
+            "owner": "C / T45",
+            "evidence": {
+              "bootSourceSha256": "75e3a87b01f1a2bc3f9577552260f00449e3e45507eea726780759bab5a81893",
+              "ownerSourceSha256": "cfa103b2998a2dccfeaa3098f30e947df81ca66154e162e2d44d9532087ccec1",
+              "hostSourceSha256": "da7ac6636e6e1a5ecfb67bc83032de9bd69e89e92fc55534ed793899aac0d2fc",
+              "syntheticComponentAndForegroundProbesPassed": true,
+              "actualFormalAcceptance": null,
+              "actualPublicAction": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "LOCAL_PRIVATE_A_CONSUMERS_AND_CAPACITY_REPAIR_ASSIGNED",
+          "status": "CONTINUITY_REPAIR_ACTIVE_FORMAL_INITIAL_ACCEPTANCE_CONSUMER_ASSIGNED",
           "owner": "T45 / QB",
-          "next": "Finish the original continuity writer/backup/cold evidence, align exact protected A digest in all consumers and record actual stage low water when authorized. Actual A transfer remains pending direct authorization."
+          "next": "Finish and freeze active same-lock continuity and A/capacity repairs. Reuse the exact FAA8 business acceptance gate before public entry. Actual A transfer still awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
