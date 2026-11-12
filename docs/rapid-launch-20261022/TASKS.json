@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P04 first window closed with exact full fragment; finalize-only window issued on original key. Root capacity remains insufficient for formal import and backup; available storage routes being confirmed.",
+    "next": "P04 READY and cleaned, total 4/73; P05 window issued. Continue receipt while D1 and D3 recalculate current-batch import, backup and restore peaks. No approved volume expansion in place.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1425,11 +1425,19 @@
       "finalPolicyReadbackSha256": "190ee54dff4a2db24ec4e1733e03506fa920f9eacb0ac6356f3e97a09bad69a7"
     },
     "p04FinalizeWindow": {
-      "state": "ISSUED_AFTER_CLEANUP; FINALIZE_ONLY_NO_SEGMENT_SEND",
+      "state": "CLOSED_READY_AND_ORIGINAL_POLICY_ABSENCE_RESTORED",
       "preparedSha256": "27e42d2df70675d9d403a5709f63827ab34c3dcf8b7cabb111b88162457b81df",
       "windowDefinitionSha256": "3a1c6ec303886a77d180ec190bb444034b24a845fdcf8475018705b5334e217d",
       "startsAt": "2026-11-12T17:12:46.915+08:00",
-      "expiresAt": "2026-11-12T17:22:46.915+08:00"
+      "expiresAt": "2026-11-12T17:22:46.915+08:00",
+      "bytes": 2097152,
+      "segmentSends": 0,
+      "restoreExitCode": 0,
+      "receiverProcesses": 0,
+      "policyAbsentAt": "2026-11-12T17:17:10.330+08:00",
+      "resultSha256": "fe9ef976b9dcb9ac63dce63b5eb6098405fc7801bb240e062becd993a69b2564",
+      "finalOriginalReadbackSha256": "faa9bcb02fcaff616969a3173e327189dd5ca8eec4b634b0736712da797412a0",
+      "finalPolicyReadbackSha256": "297db40f5614efb40d03366952723490db2ad9e92fb9da9e47aec37772a4a939"
     },
     "capacityPathSourceReview": {
       "state": "STATIC_D1_REVIEW; NO_RUNTIME_ADMISSION",
@@ -1441,6 +1449,25 @@
       "physicalColdBackupDestination": "same original root volume enforced",
       "logicalBackupAndIndependentRestore": "fixed entry supports separately approved protected paths; no current mounted approved target",
       "pending": "Root expansion or approved storage route; exact runtime binding, PG and cold-copy peaks, working-volume scratch, backup and restore budgets."
+    },
+    "p05FirstWindow": {
+      "state": "ISSUED_AFTER_T45_READY; LIVE_RESULT_PENDING",
+      "originalKey": "t45-r3-r2-data-p05-20261112-01",
+      "preparedSha256": "fdf9d2867de939a037a18193bde22743bd754814d34a101a3bae3551a91a75b1",
+      "windowDefinitionSha256": "5d89cc710c3ac9b8b6e3448cfa32c595d612b63e88f1877eb45ab460f98bd9cb",
+      "startsAt": "2026-11-12T17:19:39.658+08:00",
+      "expiresAt": "2026-11-12T17:29:39.658+08:00"
+    },
+    "capacityRecalculation": {
+      "sourceMessageId": "01a1cf0b-c703-7aa0-ac0b-6ebed32bb982",
+      "state": "USER_CONFIRMED_NO_AVAILABLE_ROOT_EXPANSION_OR_INDEPENDENT_VOLUME; RECOMPUTATION_IN_PROGRESS",
+      "batch": "2026-11-11 10:00 D3 r2, manifest f4b86de7, 26 tables, 511234 rows",
+      "owners": {
+        "D1": "stage peak and reserve source audit",
+        "D3": "exact existing data, index and report aggregates",
+        "T45": "server receipt continues"
+      },
+      "writesAuthorizedByRecalculation": false
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
@@ -45701,7 +45728,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TO_P03_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; THREE_OF_73_FRAGMENTS; P04_PREPARATION_AND_CAPACITY_READONLY; NO IMPORT",
+          "state": "P01_TO_P04_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; FOUR_OF_73_FRAGMENTS; P05_FIRST_WINDOW_ISSUED; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
