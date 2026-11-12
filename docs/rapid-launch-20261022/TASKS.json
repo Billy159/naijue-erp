@@ -1609,7 +1609,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_FOUR_GROUPS_PASS; TWENTY_FIVE_OF_73; NEXT_IN_FLIGHT",
+      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_SIX_GROUPS_PASS; THIRTY_THREE_OF_73; NEXT_IN_FLIGHT",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1809,7 +1809,7 @@
       },
       "reusableFourFragmentSuccessor": {
         "owner": "T45",
-        "state": "QB_PASS_AND_FOUR_GROUPS_ACTUALLY_RECEIVED_AND_INDEPENDENTLY_READ_BACK; TWELVE_GROUPS_REMAIN",
+        "state": "QB_PASS_AND_SIX_GROUPS_ACTUALLY_RECEIVED_AND_INDEPENDENTLY_READ_BACK; TEN_GROUPS_REMAIN",
         "readySha256": "4fc54e389b257bfe705da3856dcf6edf9461ef8814ff9dd2b2a022a3dfffbea7",
         "runtimeDiffSha256": "db9f0f9419b77fb1fe2cfbb8daf146ac621da69f55b40392d92d4a3461dd2139",
         "firstManifestSha256": "12509bc108830c7fc9df9b8531c25e5bb5e4b76a7863256de1e1d2d79bad07f7",
@@ -1889,13 +1889,49 @@
               "typedSha256": "9a88c9fe8c2cbafe59d66d41edc9b92f5bcfa82d622ea90acad11248cd284369",
               "finishedAtUTC": "2026-11-12T13:15:43.241535+00:00"
             }
+          },
+          {
+            "group": "p26-p29",
+            "resultSha256": "01cecad96c64517890a20001d7aae968903cd0e5baf26a60edd4336806fffc5f",
+            "observedAt": "2026-11-12T21:22:22.515+08:00",
+            "bytes": 8388608,
+            "durableSegments": 32,
+            "install": {
+              "jobSha256": "3b4891dc92e13696c12f483f0b0591b5551971f3ebf148ef577cba17ab109550",
+              "typedSha256": "62015c11563157af5623f39ed90bcfa1e6438dee9c9700a3531d82eada9a9a84",
+              "finishedAtUTC": "2026-11-12T13:19:05.097670+00:00"
+            },
+            "freeAtInstallBytes": 30380449792,
+            "restore": {
+              "jobSha256": "5a061f0bf3f02e0bbd7330cfca11d0d353e8b7c2cd8132065a5d269ac12b698b",
+              "typedSha256": "2fbd5ea96f9a7481707acacc62544be144d5b39afded6bd98e4a466a0f9474ac",
+              "finishedAtUTC": "2026-11-12T13:21:39.439753+00:00"
+            }
+          },
+          {
+            "group": "p30-p33",
+            "resultSha256": "5282ec7374ebd79ce5b9a71e1b4d2186918ae5eab985ad65fb23cc340e7ac02f",
+            "observedAt": "2026-11-12T21:28:09.396+08:00",
+            "bytes": 8388608,
+            "durableSegments": 32,
+            "install": {
+              "jobSha256": "e1cbf86ec9fa90d93696b1ac6b9ecf03c5a03fb163f210d91d41e577b32af025",
+              "typedSha256": "e0a4d344c0092133c44af44f415288f04ec3061b861fd64e6c4f2b7189cbfba9",
+              "finishedAtUTC": "2026-11-12T13:25:03.188848+00:00"
+            },
+            "freeAtInstallBytes": 30371278848,
+            "restore": {
+              "jobSha256": "1fecaefbd711f37f56e6c2631bd0729fd081769b384e7d8bd23666e13c189fe9",
+              "typedSha256": "925e00277b9fcbd0f0889bb585fa4724fca1f20bfd79244524ed37d0b4b10a27",
+              "finishedAtUTC": "2026-11-12T13:27:28.291393+00:00"
+            }
           }
         ],
         "currentInFlight": {
-          "group": "p26-p29",
-          "startsAt": "2026-11-12T21:17:41.408+08:00",
-          "sendAdmissionBefore": "2026-11-12T21:21:41.408+08:00",
-          "expiresAt": "2026-11-12T21:35:41.408+08:00",
+          "group": "p34-p37",
+          "startsAt": "2026-11-12T21:29:26.342+08:00",
+          "sendAdmissionBefore": "2026-11-12T21:33:26.342+08:00",
+          "expiresAt": "2026-11-12T21:47:26.342+08:00",
           "status": "EXACT_WINDOW_ISSUED_AFTER_PREARM"
         },
         "independentDeltaReviewer": "QB",
@@ -46195,7 +46231,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TO_P25_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; TWENTY_FIVE_OF_73_FRAGMENTS; P26_P29_IN_FLIGHT; NO_IMPORT",
+          "state": "P01_TO_P33_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; THIRTY_THREE_OF_73_FRAGMENTS; P34_P37_IN_FLIGHT; NO_IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
