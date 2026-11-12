@@ -2426,13 +2426,20 @@
             "focusedTests": 5,
             "focusedFailures": 0,
             "actualServerActions": 0
+          },
+          {
+            "group": "r3-current-grant-receipt-and-launch-mismatch",
+            "status": "EXACT_05_09_AND_BACKUP_REFUSE_CURRENT_GRANT_LAYOUT_LOCAL",
+            "localBackupPathProbeExitCode": 0,
+            "local05And09EntryProbeExitCode": 0,
+            "scope": "Original source consumers exercised with synthetic current-grant paths. No live host read."
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FAA8_03_TWO_CROSS_BINDING_FIXES_ASSIGNED; ORIGINAL_DISPATCHER_CONTINUITY_IMPLEMENTATION_ACTIVE",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CONTINUITY_SOURCE_ACTIVE; ACTIVE_GRANT_ENTRY_AND_RECEIPT_BINDINGS_ASSIGNED; TWO_FORMAL_FIXES_PENDING",
           "owner": "T45",
-          "next": "Continue the minimum original-dispatcher continuity source. Then bind the three underlying recovery receipts across plans and the approved dependency tree/identity at each formal startup. Retain existing artifact and successful tests. Actual A still needs direct authorization."
+          "next": "Align new 05/09 jobs and new A/writer receipt paths with current grant using exact source pins. Preserve historical receipt roots. Continue the two scoped formal binding changes."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
