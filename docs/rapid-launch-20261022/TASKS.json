@@ -2134,13 +2134,22 @@
             "terminalExitCode": 0,
             "observedDatabaseCount": 8,
             "observedClients": 0
+          },
+          {
+            "group": "legacy-postgres-timer-and-restart-followup",
+            "status": "EXACT_LEGACY_TIMER_AND_CONTAINER_METADATA_OBSERVED",
+            "requestKey": "t45-legacy-timer-root-supplement-20261113-01",
+            "jobSha256": "41ceb072aeac828a5a2dd0bde214432604bbf8d681fbf3a4f18042662008a0c9",
+            "resultSha256": "be119c839e3492612503724693ebf2c1a90a520731c631bfc26e02c7585c4544",
+            "terminalExitCode": 0,
+            "restartPolicy": "unless-stopped"
           }
         ],
         "currentInFlight": {
-          "group": "r3-maintenance-private-input-and-legacy-followup",
-          "status": "LOCAL_ORIGINAL_CONFIRMED; PROTECTED_DELIVERY_CANDIDATE_IN_PREPARATION; LEGACY_TIMER_METADATA_PENDING",
+          "group": "r3-maintenance-private-input-and-window",
+          "status": "LEGACY_DEPENDENCY_OBSERVATION_COMPLETE; R3_PROTECTED_DELIVERY_CANDIDATE_IN_PREPARATION",
           "owner": "T45",
-          "next": "Resolve focused old boot/timer metadata. Complete private transfer candidate and grant/role/service timing before opening the real R3 maintenance window."
+          "next": "Complete the narrow private delivery and same-start maintenance candidate. No old retirement operation approved or scheduled."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
