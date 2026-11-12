@@ -2330,13 +2330,29 @@
             "bindingSha256": "2bfb838c2f12fcac39363661868e6e3d21f23b3316ec1b8ca1e54ed064de2519",
             "controllerSha256": "b9eff51cf0292c7ca60fa002f23af88cb7ec6ba8aa31b66c1768a85c952a86d5",
             "parentSha256": "c461787e3595f2e02272b47634a34c50b863a3fe5cc8dec6ccceef18375a686d"
+          },
+          {
+            "group": "r3-05-compact-controller-local-01-qb",
+            "status": "TWO_ORIGINAL_REPRODUCTIONS_FIXED; FOUR_REMAINING_CONTRADICTORY_RECEIPT_CASES",
+            "candidateSha256": "add067339ed6acbd048165a7f6172cc3e93c76254816febb36d2f493b34c6f96",
+            "focusedTests": 5,
+            "focusedFailures": 0,
+            "actualServerActions": 0
+          },
+          {
+            "group": "r3-faa8-distinct-archive-finite-and-formal-runtime-modes",
+            "status": "EXACT_NODE_DISPATCH_LOCAL_PASS",
+            "sourceCommit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
+            "node": "24.21.0",
+            "commandExitCode": 0,
+            "scope": "Actual CLI mode selection through capacity factory with synthetic configuration; no listener or PG."
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_CONTROLLER_CANDIDATE_FIXED_QB_ACTIVE; FORMAL_BACKUP_BINDING_WIP",
-          "owner": "T45 / QB",
-          "next": "Review the two original scoped 05 findings and same-generation transport. Continue the same artifact backup/restore and publication binding. Actual A transfer still requires direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_SCOPED_RECEIPT_CONSISTENCY_FIX_ASSIGNED; FAA8_BACKUP_PUBLICATION_PAIR_WIP",
+          "owner": "T45",
+          "next": "Complete the exact FAA8 backup and formal owner binding, retain the existing finite 09 proof scope, and finish the four linked receipt regressions in the existing 05 path."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
