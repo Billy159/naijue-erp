@@ -45615,14 +45615,20 @@
             "fixedScopeSha256": "58adfb04fce218b66b7aba9afa9fc770c34ab5431d7ee6509a93610850b3f16d",
             "qbThread": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
             "qbTurn": "01a1ce1f-eafd-7831-a498-c252c57e7e71",
-            "state": "NEED_FIX; FIVE TARGETED CASES PASS; SHORT_READ_REAUTH, CROSS_WINDOW_INSTALL AND OLD_READY_TMP FAIL; NO ONSITE RETRY"
+            "state": "ORIGINAL_NEED_FIX; SUCCESSOR_10_OF_10_LOCAL_EXIT_0; QB_DELTA_REVIEW_DISPATCHED; NO ONSITE ACTION",
+            "successorResultSha256": "be7899b113039a5bf8c1d62ef95e33e52ca5e611b69cb51915f8c8535b4d84bf",
+            "successorInitialWindowSha256": "b61c45a5f63e1415e31a9e474a33da129e86d1d6d153fcc104c30189f259b873"
           },
           "capacityInterpretation": {
             "materializedBalanceUpperBoundBytes": 29318672228,
             "compressedOnlyMarginAbove28GiBBytes": 90979915,
-            "state": "28_GIB_IS_EXISTING_POLICY_FLOOR; FULL_BATCH_IMPORT_AND_BACKUP_PEAK_UNMEASURED; NO_THRESHOLD_CHANGE"
+            "reviewSha256": "f5d2d2c9fdae92f4c1cee1c125e4fd097be4165c899b8607f7e8eb5c9a9318aa",
+            "sameBatchLocalIndexBytes": 2196459520,
+            "sameBatchLocalSummaryBytes": 51222687,
+            "sameVolumeOneReportMarginBelow28GiBBytes": 2993781051,
+            "state": "28_GIB_ORIGIN_21_GIB_PHASE_PEAK_PLUS_6_GIB_STOP_PLUS_1_GIB_DRIFT; CURRENT_STAGE_GUARDS_REMAIN; ACTUAL_WRITER_MOUNTS_AND_PEAK_UNVERIFIED"
           },
-          "next": "T45 fixes the three reproduced recovery blockers while preserving the original data key and inode, then QB reviews only the delta. In parallel T45 resolves full per-volume import, cold-copy and recovery budgets. No new onsite action issued."
+          "next": "QB reviews the fixed P01 successor. T45 prepares the exact initial window and final receipt closeout, and freezes 6c real writer bindings for D3 r2 including report and temporary devices and retained PREPARE report count. No new onsite action issued."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
