@@ -242,7 +242,7 @@ export async function startProductionApplicationHost(options: ProductionApplicat
     await new Promise<void>((resolve, reject) => {
       const fail = (error: Error) => { listener.off("listening", ready); reject(error); };
       const ready = () => { listener.off("error", fail); resolve(); };
-      listener.once("error", fail); listener.once("listening", ready); listener.listen(config.http.port, config.http.host);
+      listener.once("error", fail); listener.once("listening", ready); listener.listen(config.http.port, options.api.restoreOnly?'127.0.0.1':config.http.host);
     });
     return Object.freeze({ publicOrigin: config.publicOrigin, close });
   } catch (error) {

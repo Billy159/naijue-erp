@@ -183,7 +183,7 @@ export interface PostgresReadApi {
   /** Fresh original-issuer admission; false for legacy/unverified dependencies and closing APIs. */
   readiness?(signal?: AbortSignal): Promise<boolean>;
 }
-export interface PostgresApplicationApi extends PostgresReadApi { readonly trustedOrigin: string }
+export interface PostgresApplicationApi extends PostgresReadApi { readonly trustedOrigin: string; readonly restoreOnly?: true }
 export interface PostgresDocumentCommandsCapability {
   readonly sales: Omit<SalesDependencies, "unitOfWork" | "now">;
   readonly transfers: Omit<TransferDependencies, "unitOfWork" | "now">;
@@ -654,6 +654,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   let app: FastifyInstance | undefined;
   let closing = false;
   let admission35: Fresh35OrdinaryAdmissionV2 | undefined;
+  let restored35 = false;
   const revoke35=():void=>{if(admission35)closeFresh35OrdinaryAdmissionV2(admission35,ownedPool);};
   try {
     if(!productionV2)host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
@@ -672,6 +673,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         : compactZero!==undefined ? await admitFresh35CompactZeroOrdinaryPoolV2(ownedPool,connection,{sha256:currentService!.sha256,capacityExpiresAt:currentService!.capacityExpiresAt},compactZero.parentPins,compactZero.successorSha256)
         : await admitFresh35OrdinaryPoolV2(ownedPool,connection,currentService);
       const actual=describeFresh35OrdinaryAdmissionV2(admission35), expected=productionV2.capacityTarget;
+      restored35=actual.purpose==='RESTORED_FROM_VERIFIED_INSTALLATION';
       if(synthetic35 && (actual.purpose!=='SYNTHETIC_ISOLATED_ORDINARY_V1' || !Number.isSafeInteger(actual.expiresAt) || actual.expiresAt! <= Date.now()))
         throw new TypeError('Current genuine synthetic ordinary admission required');
       if(actual.connectHost!==expected.host || actual.connectPort!==expected.port || actual.database!==expected.database || actual.user!==expected.role
@@ -687,7 +689,11 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       const admission = await pool.connect();
       if (issuer27 !== null) {
         let began=false,rollbackAttempted=false;
-        try { await admission.query('BEGIN ISOLATION LEVEL READ COMMITTED'); began=true; await issuer27.runtime27.assertReady(admission,'DOCUMENT_COMMAND');
+        try {
+          await admission.query(restored35?'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY':'BEGIN ISOLATION LEVEL READ COMMITTED');
+          began=true;
+          if(restored35)await issuer27.ordinaryRead.assertReady(admission,'ORDINARY_DOCUMENT_READ');
+          else await issuer27.runtime27.assertReady(admission,'DOCUMENT_COMMAND');
           rollbackAttempted=true; await admission.query('ROLLBACK'); began=false; return !closing && !signal?.aborted;
         } finally { try { if(began&&!rollbackAttempted) { rollbackAttempted=true; await admission.query('ROLLBACK'); } } finally { admission.release(true); } }
       }
@@ -735,6 +741,21 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         {supports: migrated ? isNodeMigratedPasswordHash : isNodeScryptPasswordHash, dummyHash: NODE_SCRYPT_DUMMY_HASH}) });
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin, loginAdmission: host.authenticationWork.loginAdmission });
     const authenticate = createSalesSessionAuthenticator(authentication);
+    if(restored35 && issuer27) {
+      app.addHook('onRequest', async (request, reply) => {
+        const route=`${request.method} ${request.url}`;
+        if(!['POST /auth/login','GET /auth/session','POST /inventory/query'].includes(route))
+          return reply.code(404).send();
+      });
+      app.register(createAuthenticationHttpPlugin(authentication));
+      app.register(createInventoryHttpPlugin({authenticate,dependencies:{
+        authorization:policies.inventory,reader:new PostgresInventoryQueryReader(pool,null,undefined,null,issuer27.ordinaryRead)
+      }}));
+      await app.ready();
+      const restoredApp=app;
+      return Object.freeze({app:restoredApp,readiness,close:()=>restoredApp.close(),trustedOrigin:host.trustedOrigin,
+        restoreOnly:true as const,get postgresBackgroundFailureCount(){return ownedPool.backgroundFailureCount;}});
+    }
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
     if ((issuer || (ordinaryMaintenance && issuer27)) && (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || issuer?.categoryOrderWrite)) {
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);

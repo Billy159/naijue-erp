@@ -66,14 +66,14 @@ function checkBootstrapNetwork(target,observation,sourceSetSha256){
 /** This consumes only the original root/admin observation. JSON supplied by a
  * caller cannot establish the network fact or change a loaded baseline. */
 export async function loadFresh35SyntheticBootstrapNetwork(target,sourceSetSha256){
- const t=describeFresh35CombinedTarget(target);if(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')return null;
+ const t=describeFresh35CombinedTarget(target);if(['PRODUCTION_NEW_EMPTY_EXACT35','RESTORED_FROM_VERIFIED_INSTALLATION'].includes(t.purpose))return null;
  const observation=await readBootstrapNetwork(target);checkBootstrapNetwork(target,observation,sourceSetSha256);
  const original=bootstrapNetworks.get(target);if(original)need(original.sha256===observation.sha256&&original.identity===observation.identity,'BOOTSTRAP_NETWORK_FILE_CHANGED');
  else bootstrapNetworks.set(target,Object.freeze({...observation,value:freeze(observation.value)}));
  return observation.sha256;
 }
 export async function assertFresh35SyntheticBootstrapNetworkCurrent(target,sourceSetSha256){
- const t=describeFresh35CombinedTarget(target);if(t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')return null;
+ const t=describeFresh35CombinedTarget(target);if(['PRODUCTION_NEW_EMPTY_EXACT35','RESTORED_FROM_VERIFIED_INSTALLATION'].includes(t.purpose))return null;
  need(bootstrapNetworks.has(target),'BOOTSTRAP_NETWORK_REQUIRED');return loadFresh35SyntheticBootstrapNetwork(target,sourceSetSha256);
 }
 export const FRESH35_COMBINED_PHYSICAL_FAILURE_CODES=Object.freeze(['FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS',...['DATABASE', 'CURRENT_ACTOR', 'SESSION_ACTOR', 'DATABASE_OID', 'SYSTEM_IDENTIFIER', 'SERVER_VERSION', 'POSTMASTER_BIRTH', 'SERVER_ADDRESS', 'SERVER_PORT', 'LISTEN_ADDRESSES', 'BOOTSTRAP_SOCKET', 'REPLICATION_ROLE', 'RECOVERY', 'TRANSACTION_ISOLATION', 'TRANSACTION_READ_ONLY', 'WINDOW_START', 'WINDOW_END', 'DATABASE_OWNER', 'EXCLUSIVE_BACKENDS', 'DATABASE_SET', 'NAMESPACE_SET', 'ROLE_SET', 'EVENT_TRIGGER_SET', 'EXTENSION_SET', 'PREPARED_XACT_SET'].map(label=>'FRESH35_COMBINED_PHYSICAL_TARGET_DIFFERS_'+label)]);
@@ -301,4 +301,76 @@ export async function reconstructFresh35InstalledProductionTargetV2(envelope){
 }
 export function assertFresh35InstallationTargetCurrent(target,now=Date.now()){
  const t=describeFresh35CombinedTarget(target);need(!reconstructedProductionTargets.has(target)&&Number.isSafeInteger(now)&&now>=t.startsAt&&now<t.expiresAt,'CURRENT_INSTALL_TARGET_REQUIRED');return t;
+}
+
+// Restored binding is neither an empty-install authorization nor an import target.
+const restoredTargets=new WeakSet();
+function restoredTarget(input,now,installed=false){
+ const a=snapshot(input,['proposal','physical','startsAt','expiresAt','purpose','ordinary','restoration']);
+ need(a.purpose==='RESTORED_FROM_VERIFIED_INSTALLATION','RESTORED_PURPOSE_REQUIRED');
+ const {proposal,physical,ordinary}=a;
+ // Reuse the exact production identities/network/lifetime checks, with the
+ // physical birth's own bounded provenance interval. Restore authorization has
+ // its independent fresh window; the actual restore may have taken longer.
+ need(typeof physical?.postmasterStart==='string','RESTORED_PHYSICAL_REQUIRED');
+ const birth=Date.parse(physical.postmasterStart.replace(' ','T').replace(/\+00$/,'Z'));
+ need(Number.isFinite(birth),'RESTORED_PHYSICAL_REQUIRED');
+ const base=productionTarget({proposal,physical,ordinary,purpose:'PRODUCTION_NEW_EMPTY_EXACT35',startsAt:birth-1,expiresAt:birth+1199999},undefined,true);
+ need(proposal.host==='127.0.0.1'&&ordinary.connectHost===proposal.host&&ordinary.serverAddress===proposal.host&&ordinary.connectPort===proposal.port&&ordinary.serverPort===proposal.port,'RESTORED_LOOPBACK_ORDINARY_TARGET_REQUIRED');
+ const b=describeFresh35CombinedTarget(base),r=snapshot(a.restoration,['sourceInstallationRecordSha256','sourceTargetSha256','sourceSystemIdentifier','sourceAdmin','databaseDumpSha256','databaseRestoreReceiptSha256']);
+ need(['sourceInstallationRecordSha256','sourceTargetSha256','databaseDumpSha256','databaseRestoreReceiptSha256'].every(k=>typeof r[k]==='string'&&/^[a-f0-9]{64}$/.test(r[k]))&&decimal(r.sourceSystemIdentifier,18446744073709551615n)&&r.sourceSystemIdentifier!==b.physical.systemIdentifier&&identifier(r.sourceAdmin)&&r.sourceAdmin!==b.proposal.admin,'RESTORED_SOURCE_BINDING_REQUIRED');
+ need([a.startsAt,a.expiresAt].every(Number.isSafeInteger)&&a.startsAt<a.expiresAt&&a.expiresAt-a.startsAt<=1200000&&birth<a.expiresAt,'RESTORATION_WINDOW_REQUIRED');
+ if(!installed)need(Number.isSafeInteger(now)&&now>=a.startsAt&&now<a.expiresAt,'RESTORATION_WINDOW_EXPIRED');
+ const token=Object.freeze({profile:'FRESH35_RESTORED_TARGET_V1'});
+ targets.set(token,freeze({format:'FRESH35_RESTORED_TARGET_BINDING_V1',proposal:b.proposal,physical:b.physical,ordinary:b.ordinary,startsAt:a.startsAt,expiresAt:a.expiresAt,purpose:a.purpose,restoration:r,authority:'BINDING_ONLY_NOT_CREATION_OR_EXECUTION_PERMISSION'}));
+ restoredTargets.add(token);reconstructedProductionTargets.add(token);return token;
+}
+export function bindFresh35RestoredTarget(input,now=Date.now()){return restoredTarget(input,now)}
+export async function reconstructFresh35RestoredTarget(envelope){
+ const {assertFresh35ProtectedRecordEnvelope}=await import('./fresh35-combined-record-v1.mjs');assertFresh35ProtectedRecordEnvelope(envelope);
+ need(envelope.format==='FRESH35_RESTORED_INSTALLATION_RECORD_V1'&&envelope.state==='RESTORED_FROM_VERIFIED_INSTALLATION','RESTORED_PROTECTED_RECORD_REQUIRED');
+ const {proposal,physical,ordinary,startsAt,expiresAt,purpose,restoration}=envelope.target;
+ const token=restoredTarget({proposal,physical,ordinary,startsAt,expiresAt,purpose,restoration},undefined,true);
+ need(JSON.stringify(describeFresh35CombinedTarget(token))===JSON.stringify(envelope.target),'RESTORED_TARGET_RECONSTRUCTION_DIFFERS');return token;
+}
+export function assertFresh35RestoredTarget(target){need(restoredTargets.has(target),'GENUINE_RESTORED_TARGET_REQUIRED');return describeFresh35CombinedTarget(target)}
+
+/** Restore minting keeps the original physical/security/public-schema envelope.
+ * Only the actor and the explicitly retained original admin differ; exact role
+ * attributes/ACLs are compared separately on the same read-only transaction. */
+export function fresh35RestoredTargetGuard(target){
+ const t=assertFresh35RestoredTarget(target),p=t.proposal,b=t.physical,q=quote;
+ const roles=[p.admin,p.owner,p.controller,p.runtime,t.restoration.sourceAdmin,...Object.values(FRESH35_COMBINED_INTERFACE_ROLES)];
+ return `DO $fresh35_restored_target$ BEGIN
+ IF (current_database()=${q(p.database)} AND current_user=${q(p.admin)} AND session_user=${q(p.admin)}
+  AND (SELECT oid::text FROM pg_database WHERE datname=current_database())=${q(b.databaseOid)}
+  AND (SELECT system_identifier::text FROM pg_control_system())=${q(b.systemIdentifier)}
+  AND current_setting('server_version_num')=${q(b.serverVersionNum)} AND pg_postmaster_start_time()::text=${q(b.postmasterStart)}
+  AND host(inet_server_addr())=${q(p.host)} AND inet_server_port()=${p.port}
+  AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery()
+  AND current_setting('transaction_isolation')='repeatable read' AND current_setting('transaction_read_only')='on'
+  AND EXISTS(SELECT 1 FROM pg_roles WHERE oid=10 AND rolname=${q(p.admin)} AND rolsuper)
+  AND (SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname=current_database())=${q(p.owner)}
+  AND extract(epoch FROM clock_timestamp())*1000>=${t.startsAt} AND extract(epoch FROM clock_timestamp())*1000<${t.expiresAt}) IS DISTINCT FROM true
+ THEN RAISE EXCEPTION 'FRESH35_RESTORED_PHYSICAL_TARGET_DIFFERS'; END IF;
+ PERFORM pg_stat_clear_snapshot();
+ IF EXISTS(SELECT 1 FROM pg_stat_activity a WHERE a.pid IS DISTINCT FROM pg_backend_pid() AND NOT (${observerAllowedBackend}))
+ OR EXISTS(SELECT 1 FROM pg_database WHERE datname NOT IN('postgres','template0','template1',${q(p.database)}))
+ OR EXISTS(SELECT 1 FROM pg_namespace WHERE nspname NOT IN('public','pg_catalog','information_schema','pg_toast','naijue_erp'))
+ OR EXISTS(SELECT 1 FROM pg_roles WHERE left(rolname,3)<>'pg_' AND rolname NOT IN(${roles.map(q).join(',')}))
+ OR EXISTS(SELECT 1 FROM pg_event_trigger) OR EXISTS(SELECT 1 FROM pg_extension WHERE extname<>'plpgsql')
+ OR EXISTS(SELECT 1 FROM pg_prepared_xacts)
+ THEN RAISE EXCEPTION 'FRESH35_RESTORED_DATABASE_ROLE_NAMESPACE_BOUNDARY_DIFFERS'; END IF;
+ IF NOT EXISTS(SELECT 1 FROM pg_namespace n WHERE n.nspname='public' AND n.nspowner='pg_database_owner'::regrole::oid
+  AND (SELECT array_agg(a::text ORDER BY a::text COLLATE "C") FROM unnest(n.nspacl) a)=ARRAY['=U/pg_database_owner','pg_database_owner=UC/pg_database_owner'])
+ OR EXISTS(SELECT 1 FROM pg_class WHERE relnamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_proc WHERE pronamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_type WHERE typnamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_operator WHERE oprnamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_collation WHERE collnamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_conversion WHERE connamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_opclass WHERE opcnamespace='public'::regnamespace)
+ OR EXISTS(SELECT 1 FROM pg_opfamily WHERE opfnamespace='public'::regnamespace)
+ THEN RAISE EXCEPTION 'FRESH35_RESTORED_PUBLIC_SCHEMA_BOUNDARY_DIFFERS'; END IF;
+ END $fresh35_restored_target$;`;
 }
