@@ -2636,13 +2636,26 @@
               "authorLocalTests": 5,
               "actualPrivateHttps": null
             }
+          },
+          {
+            "group": "r3-qb-private09-sampler05-delta-20261113-0404",
+            "status": "INDEPENDENT_LOCAL_PASS_REAL_PRIVATE_HTTPS_UNBOUND",
+            "owner": "QB / T45",
+            "evidence": {
+              "sampler05BindingSha256": "c403b459adb99a9ae18304f9692d246c60d0a874cf29d4e0dad62e07a3e3c847",
+              "faa8Private09BindingSha256": "55499ff29030f39a2a1e73f98868f1209ea2de0a07b7348d83f775c29d80ca2b",
+              "scopedIndependentTestsPassed": 6,
+              "freshRuntimeAccepted": true,
+              "oldRuntimeRejected": true,
+              "actualBrowserAcceptance": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FIXED_PRIVATE_DIAGNOSTIC_AND_SAMPLER_IN_REVIEW_ACTUAL_BROWSER_ROUTE_UNBOUND",
-          "owner": "T45 / QB",
-          "next": "Adopt focused independent review, resolve exact existing private HTTPS, identity and isolated browser authorization conditions. Actual A original transfer still awaits direct authorization."
+          "status": "PRIVATE_AND_SAMPLER_LOCAL_PASS_T45_EXISTING_ROUTE_READONLY_CHECK",
+          "owner": "T45 / QF / QB",
+          "next": "Resolve actual already-authorized private same-origin transport by a scoped metadata read, then bind actual role and test scope. Actual A original transfer still awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
