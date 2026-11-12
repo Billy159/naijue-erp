@@ -3403,13 +3403,32 @@
               "actualResult": false,
               "realDbActionAuthorized": false
             }
+          },
+          {
+            "group": "r3-service10-exact-protected-readback-actual-20261113-0638",
+            "status": "ACTUAL_PROTECTED_STOPPED_BASELINE_AND_EXACT_FOOTPRINT_PASS",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "f05220c1edf9630bd9ad6fd18f209f1b78ce56cf54a4d39681b9b11a3556d13f",
+              "terminalSha256": "606f5798aefd22c829ed27bbac1fab6f10840d7857e673edfe895c327d97c4d2",
+              "typedReadbackSha256": "960a11756d9b62dd27ecd9178fd254192ed3c9089250cec3a0c11ddc81532068",
+              "checkedAtUTC": "2026-11-12T22:38:52.254618+00:00",
+              "exitCode": 0,
+              "newAndOriginalNativeFootprintsAbsent": true,
+              "exactOldStopAndRestoreMatch": true,
+              "maintainedASeal": true,
+              "databaseConnections": 0,
+              "targetWrites": 0,
+              "credentialBodiesRead": 0,
+              "containersStarted": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_PROTECTED_READBACK_ACTIVE_PENDING_ORIGINAL_TERMINAL",
+          "status": "ACTUAL_PROTECTED_PREFLIGHT_PASS_ROLE09_SERVICE10_WINDOW_READINESS_NEXT",
           "owner": "T45 / C",
-          "next": "Verify original protected readback terminal and typed result. Then sign the next maintenance window only after exact eligible source and proved remaining stage/restore budget."
+          "next": "Complete focused outer and native source review, precise timing and recovery preparation, then issue exact next real role and start with old restoration protected."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
