@@ -3008,13 +3008,41 @@
               "restoreDeadlineMs": 1794524365248,
               "applyTerminal": null
             }
+          },
+          {
+            "group": "r3-role08-actual-finite-auth-readback-20261113-0531",
+            "status": "ORIGINAL_ROLE08_COMPLETED_TWO_ROLE_FINITE_READBACK_CONTAINER_STOPPED",
+            "owner": "T45 / C",
+            "evidence": {
+              "terminalSha256": "cc854496666ca03f546ed42cd26d290e415c6c4e4ca6cf48324ecab6b1357219",
+              "resultSha256": "3034b70dbabc62033b3dc579a68806e3bc7fc0399cdc5cf4b208770a8590f838",
+              "cleanupSha256": "65521ae3c86b9172d30a867b94656f8430a34e4f3ff75cedeb40493d516d8441",
+              "exitCode": 0,
+              "elapsedSeconds": 11.062345209997147,
+              "actualOriginalRecoveryBasisRetained": true,
+              "originalRuntimeAuthChanged": false,
+              "roleContainerStopped": true
+            }
+          },
+          {
+            "group": "r3-service08-actual-current-authorization-20261113-0533",
+            "status": "ACTUAL_SAME_WINDOW_SERVICE08_AUTHORITY_ISSUED_ORIGINAL_RESULT_PENDING",
+            "owner": "T45 / C",
+            "evidence": {
+              "templateSha256": "cad4c35d5660aa17f528d56787a5d0ccce0cd1424089e30223bf7191750811af",
+              "authoritySha256": "ccffba826d07b70c5b30dd88131e3258be0fc8543f38a77c0626296d744e04ce",
+              "startsAtMs": 1794519211554,
+              "startDeadlineMs": 1794520345248,
+              "serviceAndCapacityDeadlineMs": 1794522745248,
+              "actualService08Terminal": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_R3_FINITE_MAINTENANCE_WINDOW_ROLE08_APPLY_ISSUED_ORIGINAL_T45_PENDING",
+          "status": "ROLE08_ACTUAL_FINITE_AUTH_READBACK_COMPLETE_SERVICE08_ORIGINAL_START_ISSUED_SQL36_PENDING",
           "owner": "T45 / C",
-          "next": "Observe role08 original outcome. On exact two-role finite readback and stopped apply container, sign current service08 from original raw receipts. On uncertainty preserve same-key outcome and restoration path."
+          "next": "Observe actual service08 original key and exact live proof. Bind SQL36 only to this actual same epoch and remaining temporary role/service/capacity deadlines. Unknown stops further writes."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
