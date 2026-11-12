@@ -2521,13 +2521,34 @@
               "actualFormalAcceptance": null,
               "actualPublicAction": false
             }
+          },
+          {
+            "group": "r3-faa8-private-acceptance-producer-20261113-0334",
+            "status": "FIXED_PRIVATE_STAGE_REJECTS_FAA8_EVEN_WITH_ARCHIVE_PIN",
+            "owner": "C / T45",
+            "evidence": {
+              "fixedDeployHelperSha256": "9ab7b0e44146dacb797d7f72e29315bb1d8f7e7846a86175cac97badb75e86a1",
+              "actualPrivateCandidate": null,
+              "liveBusinessAcceptance": null
+            }
+          },
+          {
+            "group": "r3-current-original-short-recovery-source-20261113-0334",
+            "status": "ORIGINAL_D1_SOURCE_OWNER_ACTIVE",
+            "owner": "D1 / T45",
+            "evidence": {
+              "fixedProfile": "D3-r2-26-tables-511234-records",
+              "originalCarrier": "R1-V1-only",
+              "sourceReviewOnly": true,
+              "realStatus": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "CONTINUITY_REPAIR_ACTIVE_FORMAL_INITIAL_ACCEPTANCE_CONSUMER_ASSIGNED",
-          "owner": "T45 / QB",
-          "next": "Finish and freeze active same-lock continuity and A/capacity repairs. Reuse the exact FAA8 business acceptance gate before public entry. Actual A transfer still awaits direct authorization."
+          "status": "CONTINUITY_AND_FAA8_PRIVATE_ACCEPTANCE_IN_PROGRESS_D1_SHORT_RECOVERY_SOURCE",
+          "owner": "T45 / QB / D1",
+          "next": "Freeze the continuity delta for the existing independent review. Identify the actual same-build private acceptance producer, preserve original key and formal opening checks, and align the existing short read-only status contract. Actual A private transfer remains pending direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
