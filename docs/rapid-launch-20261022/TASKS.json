@@ -3454,13 +3454,28 @@
               "independentCloseoutOffsetSeconds": 4550,
               "actualMaintenanceAuthorityIssued": false
             }
+          },
+          {
+            "group": "r3-service10-native-root02-qb-incremental-hold-20261113",
+            "status": "INDEPENDENT_EXACT_DRAFT_CLOSURE_VERIFIED_EXECUTABLE_DELTA_AND_TERMINAL_PROVENANCE_PENDING",
+            "owner": "QB / T45 / C",
+            "evidence": {
+              "nativeRoot02ResultSha256": "1890ef49bd8a46d8c032512f996e78e99104aab987a91674141294c2d3952d6a",
+              "nativeRoot02SourceSha256": "2061d574c60e90add3b4863747db1c48c5aa694ec96b5d22b049b90d2ab7b0f3",
+              "exactSourceLeaves": 10,
+              "exactUnissuedTemplates": 3,
+              "maintenanceServerReadySha256": "04782dedcb3b5055421495de0ab3b7d3410b553c84d83ae350b582e3a8a65ccc",
+              "actualProtectedReadbackReused": true,
+              "actualSyntheticTransportReused": true,
+              "actualMaintenanceAuthorized": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_WINDOW_PLAN_PREPARED_PARTIAL_START_RESTORATION_AND_NATIVE_ENTRY_REVIEW_PENDING",
+          "status": "QB_DRAFT_SOURCE_CLOSURE_VERIFIED_FINAL_EXECUTABLE_AND_START_FAILURE_RESTORATION_PENDING",
           "owner": "T45 / QB / C",
-          "next": "Verify exact recovery on boot-without-create and failed-start-with-published-proof, and the final executable native root delta. Refresh field timing and source pin closure before signing any new role window."
+          "next": "Complete both exact partial startup recovery branches, then verify the executable root entry and direct original terminal provenance for SQL36 and A. Keep the last actual stopped baseline until the scoped review is complete."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
