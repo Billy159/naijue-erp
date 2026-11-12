@@ -3388,13 +3388,28 @@
               "appStarted": false,
               "databaseActions": 0
             }
+          },
+          {
+            "group": "r3-service10-exact-protected-readback-issued-20261113",
+            "status": "PROTECTED_READONLY_SCOPE_ISSUED_ORIGINAL_ACTUAL_RESULT_PENDING",
+            "owner": "T45 / C",
+            "evidence": {
+              "localReadySha256": "5372acca92bcbfe52d6de8581384407b5b385e61477b099f66785fe80f04bb49",
+              "readbackSourceSha256": "b832689424408ba14c0638b24f6e6124b8c15cc0cbd87db15c2a71748c42702e",
+              "authoritySha256": "1e4f2ba4690542e405b5f010fbfdd9ce6830201c4e7ae3f993f29727dba382cd",
+              "startsAtUTC": "2026-11-12T22:38:03.477Z",
+              "expiresAtUTC": "2026-11-12T22:43:03.477Z",
+              "maximumJobSeconds": 45,
+              "actualResult": false,
+              "realDbActionAuthorized": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_MAINTENANCE_AND_APP_READY_SYNTHETIC_TRANSPORT_PASS_PROTECTED_NATIVE_PREFLIGHT_NEXT",
+          "status": "EXACT_PROTECTED_READBACK_ACTIVE_PENDING_ORIGINAL_TERMINAL",
           "owner": "T45 / C",
-          "next": "Refresh exact protected stopped predecessor, role restoration and absent original native keys for service10. Review eligible assembled source and bind fresh real role/start/stop/restore authorizations."
+          "next": "Verify original protected readback terminal and typed result. Then sign the next maintenance window only after exact eligible source and proved remaining stage/restore budget."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
