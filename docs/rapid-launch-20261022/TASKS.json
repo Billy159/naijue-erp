@@ -1609,7 +1609,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_ALL_SIXTEEN_GROUPS_PASS; SEVENTY_THREE_OF_73; FINAL_ASSEMBLY_IN_FLIGHT",
+      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_ALL_SIXTEEN_GROUPS_PASS; SEVENTY_THREE_OF_73; FINAL_ASSEMBLY_AND_RESTORE_COMPLETED",
       "batchCandidates": [
         "P06",
         "P07",
@@ -2108,12 +2108,21 @@
           }
         ],
         "currentInFlight": {
-          "group": "final-standard-assembly",
-          "startsAt": "2026-11-12T22:27:11.054+08:00",
-          "expiresAt": "2026-11-12T22:37:11.054+08:00",
-          "authoritySha256": "1dadc7870a0c273c61b52126deeefa1e7361625bfe1e506e0319ec56619e7445",
-          "assemblyBindingSha256": "f0219a0f0c90165561060aeded479791acc1f936be1d1f1f469a3cc24773c83d",
-          "status": "EXACT_ORIGINAL_ASSEMBLY_WINDOW_ISSUED_AFTER_ALL_73_AND_PREARM"
+          "group": "original-r3-r2-materialization",
+          "status": "ASSEMBLY_AND_RESTORE_TERMINAL; FINAL_INDEPENDENT_READBACK_AND_MATERIALIZATION_PREFLIGHT_PENDING",
+          "originalAssembly": {
+            "jobSha256": "f65fe96f89e7a2442dec448400724c125170a94b8accfae28769cf3f52b15e71",
+            "typedSha256": "508df5398f67f38ac4e3eecddf6bb106b7ff019c27d7c8693efe449b988e084e",
+            "finishedAtUTC": "2026-11-12T14:30:42.579682+00:00"
+          },
+          "originalRestore": {
+            "jobSha256": "58381dbc586b92f6c371bbe258590653d906c187149e3ab9bb81b9819eddfea0",
+            "typedSha256": "18e4370f785ed53d2b58d9889955331895f37464a6dd093e149ebbfa32517371",
+            "finishedAtUTC": "2026-11-12T14:34:21.623207+00:00"
+          },
+          "archiveBytes": 80853258,
+          "archiveSha256": "8bb909c7986a35128b207496fa8a0c1451f1c097954754c3ddc9629e18696c4c",
+          "readySha256": "af426de64adaf3a54f68494aaf683fb86e7d8061da7ad19da4451aa980f05bc7"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
@@ -46412,7 +46421,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "ALL_73_FRAGMENTS_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; ORIGINAL_FINAL_ASSEMBLY_IN_FLIGHT; NO_IMPORT",
+          "state": "ALL_73_FRAGMENTS_AND_FINAL_ARCHIVE_READY; FINAL_POLICY_RESTORE_TERMINAL; MATERIALIZATION_PREFLIGHT_PENDING; NO_IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,

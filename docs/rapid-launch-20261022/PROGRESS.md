@@ -5097,3 +5097,9 @@ T45 场外 05 compact worker 01 回执 `53a93cbbc92ea17d459fd6d2a0c4185f5224d4c7
 整批 39 标准片、34 旁件片共 133,496,737 B。T45 汇总 `77d8cea7ca09fec0c3d39b77a158245118ed81e76c3f4c7094781fcacc97c008`。主控从逐组原终态和首五原回执独立验证 73 个原键、实际长度/偏移/完整 SHA 及 READY 三字段，列表摘要 `6612eb129e2cfd96cca175af3a33a108d175b0ee1c1a0a29fadceaae2caa580f`。标准 39 份输入共 80,853,258 B，规范列表摘要 1144afe0…，旁件 34 份三字段与 T45 汇总逐项相同。接收阶段结束，组装和物化尚待各自现场证据。
 
 22:26:21.376 现场 72 作业终态、无在途、两 grant 目标及相关原请求/临时/作业/结果确证缺席、策略 ENOENT，同设备 66304 普通可用 30,290,386,944 B、29,578,668 inode。T45 原本机等待器就绪，主控沿已审策略 02 和原组装器原子交四文件。最终原件摘要 `1dadc7870a0c273c61b52126deeefa1e7361625bfe1e506e0319ec56619e7445`，组装绑定摘要 `f0219a0f0c90165561060aeded479791acc1f936be1d1f1f469a3cc24773c83d`，22:27:11.054 至 22:37:11.054。T45 独占原 install、assemble、restore 键，未知不重提。物化仍单独等原组装终态、最终 READY/策略缺席及实际 state 验真；未签。
+
+### 2026-11-12T22:34:21+08:00 | 原标准包已组装，原策略已撤回
+
+T45 沿同一 600 秒授权分别一次执行固定 install、assemble、restore，三原作业均 COMPLETED/0。install 22:28:24.203 终态，原 job `f77880bed754030928d01ffd5edb9c0b580682680c5af3946568f2699a0c72bf`、typed `adbefcad493fb876a7a8ec3714ccf3f97a84e28714dfe3c5f35e5cf5ffb2c95b`。assemble 22:30:42.579 终态，原 job `f65fe96f89e7a2442dec448400724c125170a94b8accfae28769cf3f52b15e71`、原结果 `508df5398f67f38ac4e3eecddf6bb106b7ff019c27d7c8693efe449b988e084e`。现场按原 39 片组装 80,853,258 B，完整 SHA `8bb909c7986a35128b207496fa8a0c1451f1c097954754c3ddc9629e18696c4c`，原普通 UID1000 接收器生成 READY，原件未解包，PG 连接 0。
+
+restore 22:34:21.623 终态，原 job `58381dbc586b92f6c371bbe258590653d906c187149e3ab9bb81b9819eddfea0`、typed `18e4370f785ed53d2b58d9889955331895f37464a6dd093e149ebbfa32517371`。原结果 FINAL_ORIGINAL_POLICY_ABSENCE_RESTORED，未改原资料字节。主控独立复算三组现场原回执，同最终授权、同文件身份及原 READY 文件摘要 `af426de64adaf3a54f68494aaf683fb86e7d8061da7ad19da4451aa980f05bc7` 一致。34 份原旁件三字段已经逐项复核。下一动作是等待 T45 完成撤回后的独立读回和原物化目标/安装/state/空间预检，然后签发原 materialize；目前未签未执行。正式数据库动作仍待。
