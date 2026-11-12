@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P04 READY and cleaned, total 4/73; P05 window issued. Continue receipt while D1 and D3 recalculate current-batch import, backup and restore peaks. No approved volume expansion in place.",
+    "next": "P01\u2013P05 READY and cleaned, 5/73. T45 implements requested scoped batch receive acceleration locally; QB checks only the changed scope. P06\u2013P09 reserved for first fixed batch candidate; no field batch submission. Actual writer/cold/restore peaks and production remain pending.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1451,23 +1451,70 @@
       "pending": "Root expansion or approved storage route; exact runtime binding, PG and cold-copy peaks, working-volume scratch, backup and restore budgets."
     },
     "p05FirstWindow": {
-      "state": "ISSUED_AFTER_T45_READY; LIVE_RESULT_PENDING",
+      "state": "CLOSED_READY_AND_ORIGINAL_POLICY_ABSENCE_RESTORED",
       "originalKey": "t45-r3-r2-data-p05-20261112-01",
       "preparedSha256": "fdf9d2867de939a037a18193bde22743bd754814d34a101a3bae3551a91a75b1",
       "windowDefinitionSha256": "5d89cc710c3ac9b8b6e3448cfa32c595d612b63e88f1877eb45ab460f98bd9cb",
       "startsAt": "2026-11-12T17:19:39.658+08:00",
-      "expiresAt": "2026-11-12T17:29:39.658+08:00"
+      "expiresAt": "2026-11-12T17:29:39.658+08:00",
+      "bytes": 2097152,
+      "restoreExitCode": 0,
+      "receiverProcesses": 0,
+      "policyAbsentAt": "2026-11-12T17:28:04.125+08:00",
+      "resultSha256": "5f28ac25cd581eeccfccbbc15169a6f8d4d9818d756bc0a47490c07bc942ae90",
+      "finalOriginalReadbackSha256": "29956eed125e3e8af11b4ddab07007025ca0f3ca2bc3bfa260a4e6de0503ae2c",
+      "finalPolicyReadbackSha256": "c8e8047ff98d446319c7484202bc2523c51287fe21bd8243b14ea36298b1bda6"
     },
     "capacityRecalculation": {
       "sourceMessageId": "01a1cf0b-c703-7aa0-ac0b-6ebed32bb982",
-      "state": "USER_CONFIRMED_NO_AVAILABLE_ROOT_EXPANSION_OR_INDEPENDENT_VOLUME; RECOMPUTATION_IN_PROGRESS",
+      "state": "CURRENT_BATCH_INPUT_AND_REPORT_ALLOCATION_RECONCILED; PG_BACKUP_RESTORE_ACTUAL_PEAKS_UNMEASURED; NO_THRESHOLD_CHANGE",
       "batch": "2026-11-11 10:00 D3 r2, manifest f4b86de7, 26 tables, 511234 rows",
       "owners": {
         "D1": "stage peak and reserve source audit",
         "D3": "exact existing data, index and report aggregates",
         "T45": "server receipt continues"
       },
-      "writesAuthorizedByRecalculation": false
+      "writesAuthorizedByRecalculation": false,
+      "baseFreeBytes": 30227243008,
+      "baseAfterFragments": 3,
+      "incrementThroughInputAndAppBytes": 1142902456,
+      "perReportObservedAllocationBytes": 2247700480,
+      "incrementThroughTwoReportsBytes": 5638303416,
+      "remainingFreeAfterKnownBytes": 24588939592,
+      "rootKnownShortfallWithCurrent28GiBFloorBytes": 5475831480,
+      "additionalCoResidentPeakCapacityAfterProposed7GiBMarginBytes": 17072746824,
+      "original28GiB": {
+        "oldEstimatedConcurrentGiB": 21,
+        "operatingStopGiB": 6,
+        "driftGiB": 1
+      },
+      "phaseMeasurementsStillNeeded": [
+        "runtime report/journal/SQLite scratch high water",
+        "PG heap/index/WAL and server temporary peak",
+        "same-generation cold inventory and allocated copy",
+        "logical dump and retained output",
+        "independent recovery including simultaneous copy and source"
+      ],
+      "changedRuntimeThreshold": false
+    },
+    "receiveAcceleration": {
+      "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
+      "state": "T45_LOCAL_IMPLEMENTATION_IN_PROGRESS; QB_SCOPED_VALIDATION_PREPARING; NO_FIELD_BATCH",
+      "batchCandidates": [
+        "P06",
+        "P07",
+        "P08",
+        "P09"
+      ],
+      "scope": [
+        "shared window, preflight, manifest, SSH session and cleanup; original per-fragment key",
+        "progress-aware bounded upload and dedicated finalization margin",
+        "durable segment receipts and original-key status on exceptions",
+        "equivalent one-vs-two-lane trial with stability and actual benefit"
+      ],
+      "serverOwner": "T45",
+      "reasoningRequested": "gpt-6.1-sol/xhigh"
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
@@ -45728,7 +45775,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TO_P04_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; FOUR_OF_73_FRAGMENTS; P05_FIRST_WINDOW_ISSUED; NO IMPORT",
+          "state": "P01_TO_P05_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; FIVE_OF_73_FRAGMENTS; RECEIVER_BATCH_OPTIMIZATION_LOCAL; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
