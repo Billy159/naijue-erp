@@ -2453,13 +2453,44 @@
             "node": "24.21.0",
             "localProbeExitCode": 0,
             "scope": "Original CLI mode parsing and source call graph only; no PostgreSQL or actual receipt."
+          },
+          {
+            "group": "r3-post-cleanup-stage-capacity-20261113-0317",
+            "status": "STARTUP_HEADROOM_CONFIRMED_FULL_RUN_PEAK_UNMEASURED",
+            "owner": "C / T45",
+            "evidence": {
+              "actualRemovedBytes": 10844631040,
+              "stoppedRootAvailableBytes": 40125149184,
+              "reportEstimationBytesPerRun": 2247700480,
+              "stagedUnpackEstimateBytes": 16911900,
+              "remainderAfterTwoReportsBytes": 35612836324,
+              "additionalHeadroomAt28GiBBytes": 5548065252,
+              "additionalHeadroomAtCandidate7GiBBytes": 28096643556,
+              "actualFullRunPeakBytes": null
+            }
+          },
+          {
+            "group": "r3-current-hold-and-recovery-candidates-20261113-0317",
+            "status": "LOCAL_HASHES_VERIFIED_QB_BACKUP_RESULT_RECHECK_REQUIRED_DYNAMIC_BINDING_UNAVAILABLE",
+            "owner": "T45 / QB",
+            "evidence": {
+              "continuity03ResultSha256": "a07c0a6fef58fe3bbb3e0cfaf72ca4975f1c0776e3644b066324f68d37a7ce48",
+              "controller05_03ResultSha256": "dd34855674e7c0e6ffff50a5fcc3f4b98d69130aabc81127b755d8aed8c166e6",
+              "faa8_04ResultSha256": "7c200f4299e177a265752bb7eed5231c651efbc2e69247e650e4566586897487",
+              "localSourceLeavesChecked": [
+                6,
+                9,
+                19
+              ],
+              "actualRegistration": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CONTINUITY_SOURCE_ACTIVE; ORIGINAL_NONWRITING_VERIFY_FALLBACK_IDENTIFIED",
-          "owner": "T45",
-          "next": "Close the original-dispatcher local work, keep short original-key recovery preferred, and retain the exact stream verifier fallback only under its proven live generation, original authority, and capacity."
+          "status": "A_PRIVATE_TRANSFER_PENDING_CURRENT_BINDING_AND_STAGE_CAPACITY_IN_PROGRESS",
+          "owner": "T45 / QB",
+          "next": "Preserve original request keys. Finish the authorized same-lock next-phase binding producer, stage-specific capacity inputs, and focused candidate review. A direct private-transfer authorization still pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
