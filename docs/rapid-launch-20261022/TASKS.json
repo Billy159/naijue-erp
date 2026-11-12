@@ -2960,13 +2960,29 @@
               "sqlConnections": 0,
               "automaticRetry": false
             }
+          },
+          {
+            "group": "r3-role08-ordinary-preflight-and-grant-delta-20261113-0525",
+            "status": "CURRENT_ORDINARY_PREFLIGHT_REVIEW_COMPLETE_PROTECTED_EXACT_TARGET_PRECHECK_ACTIVE",
+            "owner": "T45 / C",
+            "evidence": {
+              "ordinaryPreflightSha256": "2b25312fbdc55d5f8b8da900a0bbeb69cf0a7e1e348b34f543438d3ca1837713",
+              "unsignedRoleSha256": "e0de5c74120027cf77f0b4f1e3d88e5961d56ade358839b108301f64a05f48f3",
+              "unsignedHostSha256": "01c86b8044be854666d990a6bfe7f401237550bcdf8576343daf1f36b878c0d2",
+              "currentGrantDeltaReviewSha256": "c9f663b6e6221e38db6ea65f9449fad26eef7a883875f54b38b33a6bad5958ff",
+              "originalQbScopeSha256": "f44a8b31a00189f80d61584f0775d7eae39defa955a869bb247eaf82fb012621",
+              "rootAvailableBytes": 40109797376,
+              "currentOrdinaryPending": 0,
+              "actualRootStopReadback": null,
+              "actualRole08Signed": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_FIRST_ADMIN_CUSTODY_SEALED_T45_SAME_GENERATION_MAINTENANCE_READONLY_PREFLIGHT_ACTIVE",
+          "status": "ACTUAL_A_CUSTODY_VERIFIED_ROLE08_UNSIGNED_PREP_AND_GRANT_DELTA_VERIFIED_PROTECTED_PREFLIGHT_ACTIVE",
           "owner": "T45 / C",
-          "next": "Reuse exact sealed custody and obtain fresh stopped target/role08 admission evidence. Sign same-window maintenance steps from actual original predecessors, serially. No SQL executed during transfer."
+          "next": "Receive exact root protected current stopped PGDATA, original 152 and root original worker absence evidence. Then sign exact same-window role08 authority using actual T0 and reviewed pins. No stale time or original key replay."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
