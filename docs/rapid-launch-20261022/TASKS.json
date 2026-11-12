@@ -3183,13 +3183,28 @@
               "originalFaa8Retained": true,
               "actualNativeStagesStarted": false
             }
+          },
+          {
+            "group": "r3-service10-local-outer-workers-and-phase-control02-review-20261113",
+            "status": "FOUR_OUTER_SHELLS_LOCAL_READY_TRANSPORT_NEEDS_NARROW_FIX",
+            "owner": "T45 / QB / C",
+            "evidence": {
+              "outerShellResultSha256": "a1e6ee3feb0ec10d439641da5d9301ac53b54e98c696aa01ba933ea85ac57032",
+              "phaseControlReviewedSha256": "f52dbe47c4a5e3badfed7246a4d76bfac6d538c92c38e85a76b0d1212d95f4e6",
+              "phaseControlIndependentStatus": "NEED_FIX",
+              "requiredNarrowChanges": [
+                "pin and verify the two actual local helper imports before execution",
+                "bind exact independently issued Node and A operation bytes to the trusted issuer-to-holder handoff and accurately document verification scope"
+              ],
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE10_BINDINGS_AND_DOWNSTREAM_SQL38_LINEAGE_IN_PREPARATION",
+          "status": "NEXT_OUTER_WORKERS_LOCAL_AUTH_TRANSPORT_NEEDS_TARGETED_FIX_MAINTENANCE_PINS_PENDING",
           "owner": "T45 / D1 / D2 / QB / C",
-          "next": "Bind the exact new maintenance source, catalog and proof while preserving the original artifacts. Validate the downstream ordinary and formal consumer's exact new SQL38 lineage with patch/model constraints before promoting a successor. Site and native phases are unissued."
+          "next": "Finish narrow local sender closure and exact issuance handoff binding, then ask QB to review just the changed paths. Verify D1 shared source and derive D2 pins, refresh protected server facts before real work."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
