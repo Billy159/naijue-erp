@@ -3036,13 +3036,45 @@
               "serviceAndCapacityDeadlineMs": 1794522745248,
               "actualService08Terminal": null
             }
+          },
+          {
+            "group": "r3-service08-actual-retained-ready-20261113-0535",
+            "status": "ACTUAL_SERVICE08_STARTED_SAME_R3_ORDINARY_READONLY_RUNTIME_ACK",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "a021d86efa154b06db4d0b56909f5ae25bdc245dbd744b8b8fda0f6362278c60",
+              "terminalSha256": "f7f8ed12670859f120e907110210b2b368ce470986fc090714d8315d2f0ba4be",
+              "typedSha256": "485adba4cea9e61ead801e22f6582b3144bfd3b48eb93b0f4fcec19861af2fdd",
+              "proofSha256": "2eb720461640f11ed9a4a505f1f9d962fe5bae4e5c7fd53717f098ef8e970f50",
+              "retainedSha256": "f75f2921395e75b4235498e5688c844e5d24b0e63a6481ab8138ddeff68c5d7d",
+              "postmasterStart": "2026-11-12 21:34:57.096626+00",
+              "sameTargetSid": "7706545564479176741",
+              "databaseOid": "16393",
+              "runtimeReadonlyPassed": true,
+              "sql36Submitted": false,
+              "appStarted": false
+            }
+          },
+          {
+            "group": "r3-maintenance-root-entry-and-live-envelope-gap-20261113-0540",
+            "status": "EXACT_LOCAL_ROOT_CLOSURES_FIXED_LIVE_IN_WINDOW_APPROVAL_TRANSPORT_UNBOUND",
+            "owner": "T45 / C",
+            "evidence": {
+              "localReadinessSha256": "d1638527aadda58057ee921bf1838a806844041fc016ab4a4d36e5f20dc4ea2a",
+              "sql36RootSha256": "2bb54c56a59930c241b679fe7ee90bbf21dec02a138d395ff4adec5e3a81e6d8",
+              "adminSql38RootSha256": "c20f5465cc9dc038472b706e3e12fc4773afaa1959178bc068fb8c1a25093317",
+              "singleOfflineBlockRemoved": true,
+              "sql36InWindowRootTransportEstablished": false,
+              "existingB164SudoScopeRetained": true,
+              "actualNativeSubmitted": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ROLE08_ACTUAL_FINITE_AUTH_READBACK_COMPLETE_SERVICE08_ORIGINAL_START_ISSUED_SQL36_PENDING",
+          "status": "ACTUAL_SERVICE08_RUNNING_SAME_R3_NATIVE_PHASE_LIVE_ENVELOPE_DELIVERY_NOT_ESTABLISHED",
           "owner": "T45 / C",
-          "next": "Observe actual service08 original key and exact live proof. Bind SQL36 only to this actual same epoch and remaining temporary role/service/capacity deadlines. Unknown stops further writes."
+          "next": "Confirm an allowed finite in-job transport for SQL36 and A/38 and actual remaining time before any native write. If it does not fit, cleanly stop exact service08 and restore the two temporary roles by the actual deadline; retain all unsubmitted original keys."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
