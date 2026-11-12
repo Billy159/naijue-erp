@@ -3469,13 +3469,26 @@
               "actualSyntheticTransportReused": true,
               "actualMaintenanceAuthorized": false
             }
+          },
+          {
+            "group": "r3-service10-native-root-final-source-local-predecessor-20261113",
+            "status": "INDEPENDENT_SOURCE_DELTA_PASS_FINAL_SCOPE_FIELD_AND_UNISSUED_TEMPLATES_VERIFIED_LOCALLY",
+            "owner": "QB / T45 / C",
+            "evidence": {
+              "qbReviewedSourceSha256": "74378ea6f68f65b81622b07aec572e3651d8971f8d9bc2985c0a7e541a403523",
+              "laterExactSourceSha256": "52297fb4a164914295dae74187b0a8f34be9ffae06299e848bc79bf5f89c72fc",
+              "exactLatestDelta": "Require original dispatcher scope in existing prior terminal predicate.",
+              "controllerTargetedExit": 0,
+              "finalResultSealed": false,
+              "actualAuthorityIssued": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "QB_DRAFT_SOURCE_CLOSURE_VERIFIED_FINAL_EXECUTABLE_AND_START_FAILURE_RESTORATION_PENDING",
+          "status": "NATIVE_ENTRY_PREDECESSOR_GUARDS_LOCAL_PASS_START_FAILURE_RESTORE_CANDIDATE_PENDING",
           "owner": "T45 / QB / C",
-          "next": "Complete both exact partial startup recovery branches, then verify the executable root entry and direct original terminal provenance for SQL36 and A. Keep the last actual stopped baseline until the scoped review is complete."
+          "next": "Receive the final sealed native and failed-start recovery candidates. Verify scoped tests and exact live values before the next maintenance authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
