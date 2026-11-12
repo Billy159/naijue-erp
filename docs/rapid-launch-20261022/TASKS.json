@@ -45610,7 +45610,19 @@
             "finalReadbackAt": "2026-11-12T12:50:09+08:00",
             "finalReadbackSha256": "b439260a762c6d756cce559a9ea916fd8ab5ac873f75871b53a0e31d37148610"
           },
-          "next": "T45 prepares same-key continuation from the verified 941056-byte prefix using the existing receiver seam. QB checks only the fixed delta before any onsite continuation. Keep the 40-second SSH limit and preserve full verification. Import stays held for actual joint capacity and maintenance prerequisites."
+          "sameKeyRecoveryReview": {
+            "candidateSha256": "8a0022d578e093cf04b289ce6b842315be1074c6a05d8db448d863805a98fe2b",
+            "fixedScopeSha256": "58adfb04fce218b66b7aba9afa9fc770c34ab5431d7ee6509a93610850b3f16d",
+            "qbThread": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+            "qbTurn": "01a1ce1f-eafd-7831-a498-c252c57e7e71",
+            "state": "NEED_FIX; FIVE TARGETED CASES PASS; SHORT_READ_REAUTH, CROSS_WINDOW_INSTALL AND OLD_READY_TMP FAIL; NO ONSITE RETRY"
+          },
+          "capacityInterpretation": {
+            "materializedBalanceUpperBoundBytes": 29318672228,
+            "compressedOnlyMarginAbove28GiBBytes": 90979915,
+            "state": "28_GIB_IS_EXISTING_POLICY_FLOOR; FULL_BATCH_IMPORT_AND_BACKUP_PEAK_UNMEASURED; NO_THRESHOLD_CHANGE"
+          },
+          "next": "T45 fixes the three reproduced recovery blockers while preserving the original data key and inode, then QB reviews only the delta. In parallel T45 resolves full per-volume import, cold-copy and recovery budgets. No new onsite action issued."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
