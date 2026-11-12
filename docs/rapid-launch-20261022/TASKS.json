@@ -45599,7 +45599,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_READY_ON_ORIGINAL_KEY; SECOND_POLICY_WITHDRAWAL_CONFIRMED; ONE_OF_73_FRAGMENTS; P02_PREPARATION_DISPATCHED; NO IMPORT",
+          "state": "P01_READY_ON_ORIGINAL_KEY; ONE_OF_73_FRAGMENTS; P02_STANDARD_UPLOAD_TIMED_OUT_AND_POLICY_WITHDRAWN; SAME_KEY_RECOVERY_IN_PREPARATION; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
@@ -45640,6 +45640,20 @@
             "policyAbsenceObservedAt": "2026-11-12T14:11:32.383+08:00",
             "scope": "Same original key and original inode; segments 2 through 5; finalize only after exact full readback and with sufficient time; independent policy withdrawal readback."
           },
+          "p02StandardTransfer": {
+            "requestKey": "t45-r3-r2-data-p02-20261112-01",
+            "state": "ONE_STANDARD_ATTEMPT_TIMED_OUT; ORIGINAL_643584_BYTE_PREFIX_VERIFIED; POLICY_ABSENT; NO_READY",
+            "bytesReceived": 643584,
+            "bytesExpected": 2097152,
+            "transportTimeoutSeconds": 40,
+            "clientElapsedSeconds": 52.596301,
+            "clientExitCode": 1,
+            "attemptSha256": "7620bf4ea722fd377df29b913768de0c02c155cbe56bc02f0ae03335397f8a98",
+            "policyWithdrawalJobSha256": "b86d7187ddc79d0c409a0f773673abf95e5c21f23857a73cf8b522c5a7dc3e6a",
+            "afterWithdrawalReadbackSha256": "254303bc74d8146547fd6a1425b21f36cca64a8169145cc85d5b237155f777d6",
+            "afterWithdrawalReadbackAt": "2026-11-12T14:32:53.617930+08:00",
+            "remaining71SourceReferencesSha256": "ab082697ef2144835250944a128c449a5b476faf837aaa6805273f789db5bc3b"
+          },
           "capacityInterpretation": {
             "materializedBalanceUpperBoundBytes": 29318672228,
             "compressedOnlyMarginAbove28GiBBytes": 90979915,
@@ -45651,10 +45665,13 @@
             "sameVolumeTwoReportsMarginBelow28GiBBytes": 5241463258,
             "sameVolumeTwoReportsAnd6cExtractMarginBelow28GiBBytes": 5258375158,
             "candidateArchiveReuseAndWriterCapacitySha256": "4787e5e82f96ec655a1053d172fed594b986c17de83b5260b1a8fbfb86f1038e",
+            "latestLiveArchiveAndVolumeSha256": "9ce06adfdcf0c35c00a742eb19ef711bcbb8defe075d81bdd1e81a10a8c8460f",
+            "latestLiveRootAvailableBytes": 30446690304,
+            "latestProjectedShortfallTwoReportsAnd6cExtractBytes": 5260541942,
             "twoReportReviewSha256": "497c51127619fa5da0e8c475d598f139261da07c3808db7af3c78eb63533d3d2",
             "state": "CURRENT_CLI_PREPARE_AND_EXECUTE_REQUIRE_DISTINCT_REPORT_DIRECTORIES; 28_GIB_GUARD_RETAINED; ACTUAL_WRITER_MOUNTS_AND_PG_WAL_BACKUP_RESTORE_PEAK_UNVERIFIED"
           },
-          "next": "Reuse the original P01 READY. T45 prepares the next original standard fragment P02 for a single measured stock-channel upload, and prepares remaining original fragments offsite. In parallel, verify the retained 6c archive and feasible report, temporary and backup volume budgets before the real writer."
+          "next": "Reuse original P01 READY. T45 prepares P02 same-key resume from the exact verified 643584-byte boundary. Evaluate a fixed-manifest bounded segment path offsite for the remaining 71 original fragments. Bind the verified 6c archive and establish feasible report, temporary and backup volume budgets before the real writer."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
