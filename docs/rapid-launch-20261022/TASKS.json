@@ -2976,13 +2976,45 @@
               "actualRootStopReadback": null,
               "actualRole08Signed": false
             }
+          },
+          {
+            "group": "r3-role08-exact-protected-preflight-actual-20261113-0527",
+            "status": "ROOT_EXACT_152_STOPPED_R3_WAL_SAME_DEVICE_AND_ORIGINAL_KEYS_ABSENT",
+            "owner": "T45 / C",
+            "evidence": {
+              "originalReadOnlyKey": "t45-r3-role08-protected-readback-20261113-01",
+              "terminalSha256": "84af7577add58d5e236d5178d48d8f975ad96b71f29fd8a522835547098df736",
+              "readbackSha256": "358cc22904ca601c27d9145f003c26658e85d8dfc7591299756f696d55c49fa9",
+              "root152Sha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+              "rootDevice": 66304,
+              "pgdataInode": 13502421,
+              "walInode": 13502422,
+              "exactOld07Stopped": true,
+              "role08AndService08OriginalKeysAbsent": true,
+              "sqlConnections": 0,
+              "serverTargetWrites": 0
+            }
+          },
+          {
+            "group": "r3-role08-actual-apply-authority-issued-20261113-0529",
+            "status": "ACTUAL_FINITE_MAINTENANCE_T0_ISSUED_EXACT_ORIGINAL_APPLY_RESULT_PENDING",
+            "owner": "C / T45",
+            "evidence": {
+              "roleAuthoritySha256": "92a741a70e3371987cc3be0be23bba82c2281228cc236731bd1d317000b23a57",
+              "hostAuthoritySha256": "ad765db7b4099fb0416770a703fb24d596b6dd386de6982d26e36d3318404472",
+              "startsAtMs": 1794518965248,
+              "applyExpiresMs": 1794520165248,
+              "credentialsExpireMs": 1794522265248,
+              "restoreDeadlineMs": 1794524365248,
+              "applyTerminal": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_A_CUSTODY_VERIFIED_ROLE08_UNSIGNED_PREP_AND_GRANT_DELTA_VERIFIED_PROTECTED_PREFLIGHT_ACTIVE",
+          "status": "ACTUAL_R3_FINITE_MAINTENANCE_WINDOW_ROLE08_APPLY_ISSUED_ORIGINAL_T45_PENDING",
           "owner": "T45 / C",
-          "next": "Receive exact root protected current stopped PGDATA, original 152 and root original worker absence evidence. Then sign exact same-window role08 authority using actual T0 and reviewed pins. No stale time or original key replay."
+          "next": "Observe role08 original outcome. On exact two-role finite readback and stopped apply container, sign current service08 from original raw receipts. On uncertainty preserve same-key outcome and restoration path."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
