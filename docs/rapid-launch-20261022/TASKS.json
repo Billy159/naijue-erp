@@ -45599,7 +45599,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_READY_ON_ORIGINAL_KEY; ONE_OF_73_FRAGMENTS; P02_STANDARD_UPLOAD_TIMED_OUT_AND_POLICY_WITHDRAWN; SAME_KEY_RECOVERY_IN_PREPARATION; NO IMPORT",
+          "state": "P01_READY_ON_ORIGINAL_KEY; ONE_OF_73_FRAGMENTS; P02_STANDARD_UPLOAD_TIMED_OUT_AND_POLICY_WITHDRAWN; P02_RECOVERY_QB_PASS_AND_FIRST_WINDOW_DISPATCHED; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
@@ -45652,7 +45652,18 @@
             "policyWithdrawalJobSha256": "b86d7187ddc79d0c409a0f773673abf95e5c21f23857a73cf8b522c5a7dc3e6a",
             "afterWithdrawalReadbackSha256": "254303bc74d8146547fd6a1425b21f36cca64a8169145cc85d5b237155f777d6",
             "afterWithdrawalReadbackAt": "2026-11-12T14:32:53.617930+08:00",
-            "remaining71SourceReferencesSha256": "ab082697ef2144835250944a128c449a5b476faf837aaa6805273f789db5bc3b"
+            "remaining71SourceReferencesSha256": "ab082697ef2144835250944a128c449a5b476faf837aaa6805273f789db5bc3b",
+            "sameKeyRecovery": {
+              "state": "EXACT_QB_DELTA_PASS_LOCAL; T45_FIRST_RECOVERY_WINDOW_DISPATCHED; ACTUAL_RECEIPT_PENDING",
+              "reviewedResultSha256": "ed6b26090cec7d2975e15af42a9c041c37ae5119796f6c37fcc55c41c2eee8b5",
+              "reviewedScopeSha256": "64583970692715e8943788311661d59e46bd7132d5fb7828a3b12fc27aafb98a",
+              "firstRecoveryWindowInputSha256": "f982347bedba90995c731cfadb268007a6fc0dc77a6ae346176da82697f6550a",
+              "preissueReadbackSha256": "9e7f8e94e2a39f593f5dbd43361b033a33c19d5382fe26ff5bdce492dd37674b",
+              "startsAt": "2026-11-12T14:46:55.584+08:00",
+              "expiresAt": "2026-11-12T14:56:55.584+08:00",
+              "initialBytes": 643584,
+              "firstNewBoundaryBytes": 905728
+            }
           },
           "capacityInterpretation": {
             "materializedBalanceUpperBoundBytes": 29318672228,
@@ -45671,7 +45682,7 @@
             "twoReportReviewSha256": "497c51127619fa5da0e8c475d598f139261da07c3808db7af3c78eb63533d3d2",
             "state": "CURRENT_CLI_PREPARE_AND_EXECUTE_REQUIRE_DISTINCT_REPORT_DIRECTORIES; 28_GIB_GUARD_RETAINED; ACTUAL_WRITER_MOUNTS_AND_PG_WAL_BACKUP_RESTORE_PEAK_UNVERIFIED"
           },
-          "next": "Reuse original P01 READY. T45 prepares P02 same-key resume from the exact verified 643584-byte boundary. Evaluate a fixed-manifest bounded segment path offsite for the remaining 71 original fragments. Bind the verified 6c archive and establish feasible report, temporary and backup volume budgets before the real writer."
+          "next": "Reuse original P01 READY. T45 executes the exact P02 same-key recovery window starting at the verified 643584-byte boundary. Independently review the fixed-manifest segment creation delta for the remaining 71 original fragments before use. Bind the verified 6c archive and establish feasible report, temporary and backup volume budgets before the real writer."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
