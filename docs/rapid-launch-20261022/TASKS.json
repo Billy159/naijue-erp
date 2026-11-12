@@ -2542,13 +2542,48 @@
               "sourceReviewOnly": true,
               "realStatus": null
             }
+          },
+          {
+            "group": "r3-local-continuity-capacity-faa8-successors-20261113-0342",
+            "status": "FIXED_AUTHOR_TESTS_PASS_QB_IN_PROGRESS_PRIVATE_ACCEPTANCE_ROUTE_UNBOUND",
+            "owner": "T45 / QB",
+            "evidence": {
+              "continuity04BindingSha256": "d314cfc70e91b4a2d1a4de6e3d4d6c4c9df90c67a605c39aebcd431b6c109527",
+              "controller05_04BindingSha256": "3c3dcdf1dfb6d6cb2153bb93ce16c175d858e5e4b1be37c153bc4b49d3d11c08",
+              "faa8_05BindingSha256": "f4285ee88d8b66948069448fc1893982b2cbe9ec1c6a2291b5d0c4080f60cd27",
+              "verifiedLeaves": [
+                6,
+                10,
+                19
+              ],
+              "authorLocalTests": [
+                13,
+                10,
+                11
+              ],
+              "actualPrivateAcceptance": null,
+              "actualRegistration": null
+            }
+          },
+          {
+            "group": "r3-compact-zero-original-status-contract-20261113-0342",
+            "status": "LOCAL_SQL_AND_PROTOCOL_PINS_VERIFIED_ACTUAL_ORIGINAL_COMMIT_UNKNOWN",
+            "owner": "D1 / C / T45",
+            "evidence": {
+              "contractSha256": "b44d25c953a2a6519ba1ca2fc3950ce40d17738da6852cba0c91912c986dca9b",
+              "querySha256": "86de7883b273424c428d3916694da984f122a3910f9b96ce478ec97aa38314f1",
+              "localCheckSha256": "781097b5bfb17fa5583e004ae7ebc30255a4de5316e1b2a6f599a5e1cff55717",
+              "verifierHostSha256": "c04e709de46a61bc6026a06f60bdd917e5b132644542f69e3d2d2eeae3de3ad1",
+              "rootHashExpectedActual": null,
+              "actualPgConnection": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "CONTINUITY_AND_FAA8_PRIVATE_ACCEPTANCE_IN_PROGRESS_D1_SHORT_RECOVERY_SOURCE",
-          "owner": "T45 / QB / D1",
-          "next": "Freeze the continuity delta for the existing independent review. Identify the actual same-build private acceptance producer, preserve original key and formal opening checks, and align the existing short read-only status contract. Actual A private transfer remains pending direct authorization."
+          "status": "FIXED_CONTINUITY_AND_FAA8_QB_ACTIVE_PRIVATE_ACCEPTANCE_AND_ACTUAL_INPUT_PENDING",
+          "owner": "T45 / QB",
+          "next": "Finish focused three-delta review and the same-build private FAA8 acceptance host. Bind true R3 same-key short status only with the original independent DB hash. Actual A private transfer remains pending direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
