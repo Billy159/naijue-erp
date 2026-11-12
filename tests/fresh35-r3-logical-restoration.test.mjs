@@ -34,8 +34,8 @@ function fixture() {
   transactionReceipt:{actor:owner,database,nonce:'a'.repeat(48),backendPid:123,transactionId:'100'},
   predecessor:{recordSha256:ADMIN154_PREDECESSOR_RECORD_SHA256,...record.binding,programSha256:record.programSha256,catalogSha256:record.catalogSha256},
   successor:{patchSqlSha256:ADMIN154_PATCH_SHA256,catalogSha256:sha('5'),
-   sourceSetSha256:'0ba2beef0446879f02dc8a75678a9a2bbb241d6be5bc501fc25057443c1d8c32',
-   catalogSpecSha256:'8f03acec34ddbc2c5c58b3b177d264932c248d5f193da39ba60ae580b95706cd',
+   sourceSetSha256:'336fb51de1051803406eb831a0a457362858d12eae2d4d84fa2929ea79331226',
+   catalogSpecSha256:'fd33a2000ac0f150d409d1cc7c5d78a852aa723b949fd5076f4a1f7a184f8eec',
    modelSha256:'0d80600b46c95f11bf2ddcb8101bce66e292735e4543a6a383039b32feda2d20'}
  };
  const {patchSqlSha256:_,...predecessor}=parent.successor;
@@ -56,7 +56,7 @@ function fixture() {
  return {record,parent,setup,final};
 }
 
-test('R3 recovery consumes the historical 154/A/38 chain without minting authority',()=>{
+test('R3 recovery consumes the maintenance08 154/A/38 chain without minting authority',()=>{
  const f=fixture();
  const result=validateR3RestorationLineage(f.record,f.parent,sha('6'),f.setup,f.final,sha('a'));
  assert.deepEqual(result,f.setup.provisionOrigin);
@@ -65,6 +65,15 @@ test('R3 recovery consumes the historical 154/A/38 chain without minting authori
 
 test('R3 recovery refuses crossed lineage, other epochs and an unconfirmed A',()=>{
  for(const [change,error] of [
+  [f=>{
+   const oldSource='0ba2beef0446879f02dc8a75678a9a2bbb241d6be5bc501fc25057443c1d8c32';
+   f.parent.successor.sourceSetSha256=f.final.predecessor.sourceSetSha256=oldSource;
+  },/SUCCESSOR_SOURCE_OR_CATALOG_DIFFERS/],
+  [f=>{
+   const oldSpec='8f03acec34ddbc2c5c58b3b177d264932c248d5f193da39ba60ae580b95706cd';
+   f.parent.successor.catalogSpecSha256=f.final.predecessor.catalogSpecSha256=oldSpec;
+  },/SUCCESSOR_SOURCE_OR_CATALOG_DIFFERS/],
+  [f=>{f.final.predecessor.catalogSha256=sha('e')},/PARENT_DIFFERS/],
   [f=>{f.final.successor.sourceSetSha256=sha('e')},/SOURCE_OR_CATALOG_DIFFERS/],
   [f=>{f.final.predecessor.recordSha256=sha('e')},/PARENT_DIFFERS/],
   [f=>{f.final.physical.postmasterStart='2026-11-11 21:33:07.105003+00'},/MAINTENANCE_GENERATION_REQUIRED/],

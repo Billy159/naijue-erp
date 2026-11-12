@@ -133,10 +133,11 @@ export function validateR3RestorationLineage(sourceRecord,parent,parentSha256,se
   Date.parse(physical.postmasterStart)>Date.parse(target.physical.postmasterStart)&&isDeepStrictEqual(parent.physical,final.physical),
   'R3_MAINTENANCE_GENERATION_REQUIRED');
  const owner=target.proposal.owner;
+ // Fixed SQL36 catalog pins from the maintenance08 artifact (eca7dd5).
  validateFresh35Admin154Record(parent,{
   predecessor:{recordSha256:ADMIN154_PREDECESSOR_RECORD_SHA256,...binding,programSha256,catalogSha256},
-  successor:{patchSqlSha256:ADMIN154_PATCH_SHA256,sourceSetSha256:'0ba2beef0446879f02dc8a75678a9a2bbb241d6be5bc501fc25057443c1d8c32',
-   catalogSpecSha256:'8f03acec34ddbc2c5c58b3b177d264932c248d5f193da39ba60ae580b95706cd',modelSha256:'0d80600b46c95f11bf2ddcb8101bce66e292735e4543a6a383039b32feda2d20'},
+  successor:{patchSqlSha256:ADMIN154_PATCH_SHA256,sourceSetSha256:'336fb51de1051803406eb831a0a457362858d12eae2d4d84fa2929ea79331226',
+   catalogSpecSha256:'fd33a2000ac0f150d409d1cc7c5d78a852aa723b949fd5076f4a1f7a184f8eec',modelSha256:'0d80600b46c95f11bf2ddcb8101bce66e292735e4543a6a383039b32feda2d20'},
   physical,owner
  });
  const {patchSqlSha256:_,...predecessor}=parent.successor;
