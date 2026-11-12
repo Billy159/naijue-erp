@@ -3068,13 +3068,40 @@
               "existingB164SudoScopeRetained": true,
               "actualNativeSubmitted": false
             }
+          },
+          {
+            "group": "r3-service08-exact-clean-stop-actual-20261113-0546",
+            "status": "ORIGINAL_08_GUARDIAN_CLEAN_DATABASE_AND_SAME_CID_STOP_VERIFIED",
+            "owner": "T45 / C",
+            "evidence": {
+              "stopAuthoritySha256": "0df6e5b065e4bcb9378bdf197047ed3e3e946240692e01b7f4a5e7b1b1dca8a9",
+              "terminalSha256": "490f026b4704ea5f133b1748dfd26399f536792ee83894cc976307c15f29ccf7",
+              "typedSha256": "a4e9215da732eeaeea38c7ee21efb64a03f6d307bf093417e9de89d8ad1c2a63",
+              "protectedCleanupSha256": "fce1ef15507ab365f0c2a85e510e6fc34b17ea32687f35773cfccd659a24643f",
+              "sameCidStopped": true,
+              "pidAbsent": true,
+              "pgdataPreserved": true,
+              "nativeStagesSubmitted": false
+            }
+          },
+          {
+            "group": "r3-restore05-actual-original-window-issued-20261113-0548",
+            "status": "ACTUAL_RESTORE05_AUTHORITY_ISSUED_SAME_ORIGINAL_ROLES_RESULT_PENDING",
+            "owner": "C / T45",
+            "evidence": {
+              "authoritySha256": "359a604f9e78803e6740504b13c9fe263d29c714d5732ca10178f023136a8bc1",
+              "startsAtMs": 1794520122021,
+              "expiresAtMs": 1794521922021,
+              "originalRolesAuthoritySha256": "92a741a70e3371987cc3be0be23bba82c2281228cc236731bd1d317000b23a57",
+              "actualRestoreResult": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_SERVICE08_RUNNING_SAME_R3_NATIVE_PHASE_LIVE_ENVELOPE_DELIVERY_NOT_ESTABLISHED",
+          "status": "ACTUAL_08_CLEAN_STOP_ORIGINAL_TWO_ROLE_RESTORE05_ISSUED_PENDING",
           "owner": "T45 / C",
-          "next": "Confirm an allowed finite in-job transport for SQL36 and A/38 and actual remaining time before any native write. If it does not fit, cleanly stop exact service08 and restore the two temporary roles by the actual deadline; retain all unsubmitted original keys."
+          "next": "Observe same-key original two-role restore05 and independent cleanup/readback before allowing any next field operation. Native phase keys remain absent. Then fix permitted in-job authorization transport ahead of the next bounded epoch."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
