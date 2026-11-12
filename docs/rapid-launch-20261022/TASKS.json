@@ -45505,11 +45505,18 @@
         "state": "LOCAL_REAL_HANDLER_ASSET_REQUESTS_AND_QB_EXACT_FORMAL_PRIVATE_BINDINGS_PASS; SERVER_KEY_UNISSUED; NO_BROWSER_PG_OR_SERVER_ACTION"
       },
       "r3RecoveryCompatibility": {
-        "owner": "D1",
-        "state": "D1_LOCAL_SOURCE_AND_5_DEVELOPER_TESTS_PASS; PHYSICAL_PRESTART_FILE_READBACK_ONLY; ORIGINAL_LOGICAL_RESTORE_GATE_REMAINS",
+        "owner": "T45 for backup and recovery jobs, D1 for the isolated restoration application",
+        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; QB_PASS_R3_INPUT_BINDING_ONLY; T45_EXECUTABLE_WIRING_AND_D1_RESTORE_APP_IN_PROGRESS; LIVE_EXECUTION_HOLD",
         "localPhysicalFileVerifierCommit": "f710215f7f61f3e77d903e41ee98219527078b73",
         "localPhysicalFileVerifierTree": "dbcd1288de78742cee396ae1b1194ddb1f306b31",
-        "next": "Bind the independent recovery route to actual current R3 import, catalog, application and restored instance evidence before T45 release integration. The file verifier alone cannot satisfy the formal logical restore gate."
+        "logicalInputsResultSha256": "7d813da2bcd5b8f93dc6ff6c9073f3b5128863f9b28083eff615913a0108b123",
+        "logicalInputsSourceSha256": "9078bce7d9b2b3877248e36b76eb670e7b4eeaa240cfd5d3b4c7153daf3fd3d8",
+        "originalInitializerInputReadbackSha256": "d663d17f7b0c4c506db6d10c4cca511f2b7c601fa9b355b7e9c93163e2f53ba0",
+        "executionLockReadbackSha256": "7cb17e8a2637c256b0de44ef8fc9053d89eb1eddea59c1549f099192cb309aa5",
+        "logicalInputsQbTurn": "01a1cd78-6615-7a32-901a-d3235258791d",
+        "logicalInputsQbChecks": "4/4 original plus one positive and six negative pure readback checks; both exits 0",
+        "sequence": "ORIGINAL_WRITER_TERMINAL_THEN_05_READBACK_LOGICAL_CAPTURE_AND_CLEAN_STOP; COLD_COPY_AFTER_STOP; INDEPENDENT_PG_AND_APP_RESTORE_BEFORE_FORMAL_STAGE",
+        "next": "T45 wires the original executable recovery path and D1 finishes the separate restoration application. Confirm existing continuous write exclusion across the writer and follow-up jobs, successful 05 stop path, backup role, protected configuration and live resource budget before actual execution."
       },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
