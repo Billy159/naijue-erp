@@ -3133,13 +3133,29 @@
               "maintenanceListenerAbsent": true,
               "exactRestoreTerminalSha256": "79b5745d7c12f71e9532b71bebce2e4ca36c7081fcdb88537700934ba3073607"
             }
+          },
+          {
+            "group": "r3-in-job-authorization-local-synthetic-20261113-01",
+            "status": "LOCAL_EIGHT_SYNTHETIC_CASES_PASS_NEW_MAINTENANCE_GENERATION_AND_INDEPENDENT_REVIEW_PENDING",
+            "owner": "T45 / D1 / D2 / QB / C",
+            "evidence": {
+              "resultSha256": "14091d247b6b191af0a3db36c93e5d9ecc48a8e9099b6a4e6761e338b78a9c18",
+              "testReceiptSha256": "3001a9bc6b09fdec2e3e485ba52fbbcdcfb6722506202c38334b76d81b8ae8bd",
+              "phaseControlSha256": "02e477c3d3eab9d582e4a1c64be660556a1e75b9585e3545486cd6382077a58f",
+              "deliverySha256": "ef90be387b454df45a99c317ae9ed5f0c27378a5169e7e626f759b23abf97287",
+              "rootSha256": "693a50c9e8d07a0f660bce24a9050c2c27e01072b4df8e164f5cb6155a7f7a65",
+              "localClientSha256": "453c175196dedac5a03bcae2f2c6903ae20566b6af169f7332ddb584511aff52",
+              "syntheticChecks": 8,
+              "actualTransportVerified": false,
+              "newServerWrites": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_FIRST_WINDOW_CLOSED_NEXT_IN_JOB_AUTHORIZATION_TRANSPORT_IN_LOCAL_PREPARATION",
-          "owner": "T45 / C",
-          "next": "Validate the existing permitted bounded in-job authorization endpoint and bind fresh outer maintenance keys to the actual original stopped and restored predecessor. Refresh exact native keys and target state before first submission."
+          "status": "ACTUAL_FIRST_WINDOW_CLOSED_IN_JOB_AUTHORIZATION_LOCAL_TESTS_PASSED_NEW_GENERATION_ADAPTATION_IN_FLIGHT",
+          "owner": "T45 / D1 / D2 / QB / C",
+          "next": "T45 provides exact next role, service, stop and restore identities. D1 and D2 adapt their exact maintenance consumers after the binding is known. QB checks new phase delivery delta. Then verify authorized Linux/SSH transport and exact target before a new real window."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
