@@ -2445,13 +2445,21 @@
             "status": "ACTIVE_HOLD_REFUSES_UNREGISTERED_READONLY_OBSERVATION; EXACT_RECOVERY_SCOPE_ASSIGNED",
             "observedWipSha256": "917b9c4cc015120b67dfdf298101698bd550f3f1babfd12a40fe9a2e042389e0",
             "fixtureExitCode": 0
+          },
+          {
+            "group": "r3-existing-compact-zero-stream-verify-entry",
+            "status": "FIXED_CLI_READBACK_MODE_PROVEN_TO_PROTECTED_RECORD_BOUNDARY; NO_ACTUAL_RECOVERY_CARRIER",
+            "streamCliSha256": "82eba0e8cdc5a2f61746d79a153894973b64c41cd2c651560dbda213858e264e",
+            "node": "24.21.0",
+            "localProbeExitCode": 0,
+            "scope": "Original CLI mode parsing and source call graph only; no PostgreSQL or actual receipt."
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CONTINUITY_SOURCE_ACTIVE; ACTIVE_GRANT_COLD_AND_ORIGINAL_KEY_RECOVERY_SCOPE_CONFIRMED",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CONTINUITY_SOURCE_ACTIVE; ORIGINAL_NONWRITING_VERIFY_FALLBACK_IDENTIFIED",
           "owner": "T45",
-          "next": "Freeze the dispatcher and actual receipt consumers with explicit current-grant paths and historical preservation. Keep exact read-only original-key recovery available or document the actual missing same-generation carrier; no writer replay."
+          "next": "Close the original-dispatcher local work, keep short original-key recovery preferred, and retain the exact stream verifier fallback only under its proven live generation, original authority, and capacity."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
