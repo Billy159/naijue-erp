@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "T45 fixed local P06\u2013P09 batch candidate, QB independent delta check and T45 equivalent synthetic channel A/B in progress. Current verified received count 5/73. No P06\u2013P09 submission.",
+    "next": "Real same-channel synthetic A/B complete. Frozen four-piece receiver 01 NEED_FIX; T45 prepares 02 and scoped root inventory, QB to check only exact successor. P06\u2013P09 remain unsent.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1495,12 +1495,34 @@
         "logical dump and retained output",
         "independent recovery including simultaneous copy and source"
       ],
-      "changedRuntimeThreshold": false
+      "changedRuntimeThreshold": false,
+      "rootInventory": {
+        "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+        "sourceMessageId": "01a1cf1c-2f13-7853-aee8-8a552448d53e",
+        "state": "OLDER_CAPACITY_AND_RETIREMENT_EVIDENCE_RECONCILED; T45_SCOPED_LIVE_INVENTORY_PENDING",
+        "root": "/dev/md0p1",
+        "partitionBytes": 498841157632,
+        "filesystemTotalObserved20261111Bytes": 489861931008,
+        "occupiedObserved20261111Bytes": 434063912960,
+        "freeIncludingReservedObserved20261111Bytes": 55798018048,
+        "reservedGapObserved20261111Bytes": 24958832640,
+        "ordinaryAvailableObservedAfterP03Bytes": 30227243008,
+        "historicallyReclaimedByFourRestoreCopiesBytes": 20897763328,
+        "historicallyReclaimedByThreeDumpLeavesBytes": 3273232384,
+        "retirementNotReclaimed": [
+          "erp_prod and other databases in shared old PG",
+          "old backup directories and retained leaves",
+          "R4 exact data leaf with unresolved original key",
+          "unverified old app/source and historical artifacts"
+        ],
+        "changedRuntimeThreshold": false,
+        "deletionAuthorizedByInventory": false
+      }
     },
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "FIXED_LOCAL_AUTHOR_PASS_7; QB_DELTA_AND_FIELD_SYNTHETIC_AB_PENDING; NO_FIELD_REAL_BATCH",
+      "state": "FROZEN_01_NEED_FIX; SYNTHETIC_FIELD_AB_COMPLETED; SUCCESSOR_02_IN_PROGRESS; NO_FIELD_REAL_BATCH",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1527,8 +1549,39 @@
       "oldP05EightSendInvocationsSeconds": 116.235,
       "oldP04TwoWindowToVerifiedCleanupSeconds": 1060.48,
       "realReceiverLanes": 1,
-      "serverSyntheticAB": "T45 preparing on same controlled route and isolated synthetic input",
-      "serverRealBatchSubmitted": false
+      "serverSyntheticAB": {
+        "state": "ABBA_SAME_CONTROLLED_ROUTE_DIRECT; FOUR_ROUNDS_PASS",
+        "resultSha256": "1650cd8e28d5ef00147056e1b9d2684cd06023071368b2d9efc4e55245357310",
+        "eachBytes": 8388608,
+        "oneLaneSeconds": [
+          4.255,
+          3.759
+        ],
+        "twoLanesSeconds": [
+          3.24,
+          3.188
+        ],
+        "realOriginalsWritten": 0
+      },
+      "serverRealBatchSubmitted": false,
+      "qb01": {
+        "state": "NEED_FIX",
+        "turn": "01a1cf11-c72a-76e2-b80b-a878505d5338",
+        "actualReproduced": [
+          "batch original-key resume and cross-window ready.tmp proof not wired",
+          "waiting batch receiver process absent from withdrawal guard",
+          "child after stream EOF escapes shorter stall bound"
+        ]
+      },
+      "successor02Timing": {
+        "sourceUserThread": "01a100d0-cad5-71c1-8042-dc594311d3be",
+        "sourceMessageId": "01a1cf25-228a-78d1-88ba-0618ce228706",
+        "requiredUploadSecondsAfterCloseoutReserve": 600,
+        "candidateCloseoutSeconds": 240,
+        "candidateInstallationSeconds": 120,
+        "candidateMaximumWindowSeconds": 960,
+        "candidateIssued": false
+      }
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
