@@ -2267,13 +2267,20 @@
             "sourceCommit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
             "tree": "0794b6462b3e9648c2a438a8e667d3cd4e7ab341",
             "parent": "d4fe7adb7672912ad9be19d53a0f04ec129131c3"
+          },
+          {
+            "group": "r3-production-generation-paired-local",
+            "status": "QB_SCOPED_REVIEW_PASS_BOTH; CONTROLLER_LOCAL_WIRE_PAIR_PASS",
+            "nodeCommit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
+            "hostResultSha256": "4d803a3cb02761be84c5d0b71565131ed16d5801eb541ca038b3c2b50a3bcd39",
+            "localFixtureExitCode": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; HOST_02_AND_NODE_FAA8_FOCUSED_QB_REVIEW; 05_ACCESS_PREP",
-          "owner": "T45 host / D1 Node / QB",
-          "next": "Collect focused QA on the fixed host and Node successor; prepare paired source/pack only after closure. No assumption of approval or live deployment."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FORMAL_SOURCE_PAIR_LOCAL_PASS; D2_FIXED_LOCAL_ARTIFACT_REQUESTED; 05_ACCESS_PREP",
+          "owner": "D2 local build / T45 05 host",
+          "next": "Take the exact D2 final artifact identity when available, pair it with the fixed formal owner without replacing the maintenance/restore artifacts. Actual A original transfer waits for direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
