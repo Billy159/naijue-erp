@@ -2878,13 +2878,31 @@
               "computedBootSha256": "0136b8765a78fa26185d1bd5b09b801b3cc2b4343919aa7b501af5af3d738017",
               "actualTemplateRegistration": false
             }
+          },
+          {
+            "group": "r3-original-normal05-stop-timewait-boundary-20261113-0458",
+            "status": "EXACT_PINNED_STOP_FACTORY_REPRODUCES_TIME_WAIT_REFUSAL_BEFORE_COLD_T45_DELTA_ACTIVE",
+            "owner": "C / T45",
+            "evidence": {
+              "originalCoreSha256": "a56afc4a5fcd965f00306d4493586b27d4465896d4973e8535fe151975504d75",
+              "originalFactorySha256": "b72a0e5aeeb156a27488e32dbd5275f70de76887679f80c5803e8d44b2a8ee59",
+              "syntheticProcTcpRows": 1,
+              "localPort": 56791,
+              "tcpState": "06_TIME_WAIT",
+              "syntheticPgControlCleanShutdown": true,
+              "ownedPidAbsent": true,
+              "dataPreserved": true,
+              "portAbsent": false,
+              "cleanupComplete": false,
+              "liveNormal05Stopped": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "QB_COLD_REFERENCE_SCOPED_PASS_T45_ORIGINAL_05_NORMAL_STOP_CANDIDATE_ACTIVE_A_APPROVAL_PENDING",
+          "status": "T45_NORMAL_05_STOP_CANDIDATE_ACTIVE_EXACT_TIME_WAIT_EDGE_REPRODUCED_A_APPROVAL_PENDING",
           "owner": "T45",
-          "next": "Bind the normal same-generation 05 clean stop. Preserve the exact short recovery candidate, recomputed downstream pins and all current live-only fields until real 05 and originals exist."
+          "next": "Close exact same-generation normal stop via the original guardian, including the verified TCP tail constraint under the existing strict cold consumer. Original A and actual same-build private browser route still pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
