@@ -2861,13 +2861,30 @@
               "knownBackupApplicationLogicalBytes": 4251148,
               "updatedEstimatedHeadroomAbove28Bytes": 5528912856
             }
+          },
+          {
+            "group": "r3-qb-continuity05-cold-reference-20261113-0454",
+            "status": "INDEPENDENT_LOCAL_DELTA_PASS_DOWNSTREAM_PINS_RECOMPUTED_NOT_INSTALLED",
+            "owner": "QB / C / T45",
+            "evidence": {
+              "readySha256": "e0e9c10b6a08f7a70a9ff222b62537f65b11e84ad6e082c98f8a06f601060316",
+              "holdSha256": "fff51a0383ca87976fd03dfe4fa9abfcc71ac3a1c7a49110953529bcb9237a40",
+              "scopedCases": 3,
+              "exactMeasureAndCopyBoundUnderLock": true,
+              "rehashedChangedEvidenceAndAuthorityRefused": true,
+              "ordinaryJobHeld": true,
+              "computed09Sha256": "a50a9748d2e459e40b47681e01895942066384408c7794f413522ce4ab2960a4",
+              "computedProductionPgSha256": "dd3546ba2ec7b513051b06b2f33841c3989830e31902ea7314bc2e38eeb2eb4f",
+              "computedBootSha256": "0136b8765a78fa26185d1bd5b09b801b3cc2b4343919aa7b501af5af3d738017",
+              "actualTemplateRegistration": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FIVE_STATIC_CONTINUATION_DRAFTS_FIXED_QB_SCOPED_DELTA_T45_NORMAL_05_STOP_CANDIDATE_A_APPROVAL_PENDING",
-          "owner": "T45 / QB",
-          "next": "Close the exact cold authorization hash-reference review and original same-generation normal 05 stop carrier. Continue the short recovery host using the fixed D1 proof, with live-only values unbound. Actual A authorization and private same-build browser target still pending."
+          "status": "QB_COLD_REFERENCE_SCOPED_PASS_T45_ORIGINAL_05_NORMAL_STOP_CANDIDATE_ACTIVE_A_APPROVAL_PENDING",
+          "owner": "T45",
+          "next": "Bind the normal same-generation 05 clean stop. Preserve the exact short recovery candidate, recomputed downstream pins and all current live-only fields until real 05 and originals exist."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
