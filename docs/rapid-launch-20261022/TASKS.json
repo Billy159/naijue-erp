@@ -2358,13 +2358,30 @@
             "actualPinned05ProofSha256": "b9d87d5b1795bbc7bfd87b1f73e0fd148a4ba2d80a886ce6fdab34d746b18f69",
             "sourcePinsReadBack": 14,
             "localProofMismatchFixtureExitCode": 0
+          },
+          {
+            "group": "r3-05-compact-controller-local-02-qb",
+            "status": "FOUR_ORIGINAL_RECEIPT_REGRESSIONS_AND_TWO_UNKNOWN_CLEANUP_CASES_PASS_LOCAL",
+            "resultSha256": "46a0f3864599ba40604fd965bb527434749de98421d65d90d3d9cf40394cf5fe",
+            "bindingSha256": "66cc267f7eed7d0976fa42d48e0ef50be4f838dd301d4a07aa6a28104a47e366",
+            "parentSha256": "9394f9f7fd862f55f0802c6415b11456ea0f613e81f5ac627b8fac49d4f4aeae",
+            "controllerSha256": "90eb6bb7ac9a14e14085f71f88b964fef21c2bec932c57b0e4ad2ddeccd92bce"
+          },
+          {
+            "group": "r3-faa8-recovery-publication-local-02-qb",
+            "status": "05_PIN_PASS_LOCAL; TWO_FORMAL_CONSUMER_GAPS_REPRODUCED",
+            "resultSha256": "fdbb8afc50578c6652b55d047a4a67a1111b4c3c79436e66143cdc5271f53b65",
+            "bindingSha256": "a76e2dc150a386647d5dcc681611c8e91972e399d697a45e384957fa257336b8",
+            "backupHelperSha256": "3ecee6d341daf006a2b3ba1e808fc4c4d0fb0434b842d6b7310555542e81548a",
+            "proof05Sha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
+            "proof09Sha256": "6718b539a73b49b063b3db8cb5a44da22fd0b97c41d264ba1b74704a8cb8ecda"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_SCOPED_RECEIPT_CONSISTENCY_FIX_ACTIVE; FAA8_BINDING_QB_ACTIVE_WITH_EXACT_PROOF_MISMATCH",
-          "owner": "T45 / QB",
-          "next": "Finish the existing 05 receipt cases and pair the reviewed 05 validator with both logical capture and restore. Keep original 09 finite proof and 3d2f restore executor. Actual A transfer awaits direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_RECEIPT_AND_RECOVERY_PIN_QB_LOCAL_PASS; CONTINUOUS_CLOSURE_AND_TWO_FORMAL_CONSUMER_FIXES_WITH_T45",
+          "owner": "T45",
+          "next": "Reuse the existing protection path for closure across writer terminal, independent readback, capture and clean stop. Bind the finite 09 and formal FAA8 recovery consumers and actual Linux dependency-install result without a second backup. Actual A transfer awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
