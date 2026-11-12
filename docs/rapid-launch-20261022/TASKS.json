@@ -2251,13 +2251,29 @@
             "group": "r3-d4fe-node-combination-review",
             "status": "TWO_FINDINGS_CLOSED; ACTUAL_BOUNDED_POOL_FAILED_RELEASE_PROPAGATION_NEED_FIX",
             "sourceCommit": "d4fe7adb7672912ad9be19d53a0f04ec129131c3"
+          },
+          {
+            "group": "r3-production-generation-host-source-02",
+            "status": "THREE_LOCAL_FIXES_AUTHOR_TESTED; QB_REVIEW_IN_PROGRESS",
+            "resultSha256": "4d803a3cb02761be84c5d0b71565131ed16d5801eb541ca038b3c2b50a3bcd39",
+            "bootSha256": "9a8471446047b93422f3bb18fe17ebed1a699746d67742e157d341a745e8e2dc",
+            "ownerSha256": "cfa103b2998a2dccfeaa3098f30e947df81ca66154e162e2d44d9532087ccec1",
+            "pgSha256": "7a0cf6b6b8924bf72fa2a3702d496a5a50b881b63b9aa49b4c3dd958d6208a63",
+            "hostSha256": "6ce307e7ce299a7ff81e0baa88ac6d3ef15ca8aabdcc86eb8b9dd22412cc00ca"
+          },
+          {
+            "group": "r3-production-generation-node-faa8",
+            "status": "ACTUAL_POOL_COMBINATION_AUTHOR_TESTED; QB_REVIEW_IN_PROGRESS",
+            "sourceCommit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
+            "tree": "0794b6462b3e9648c2a438a8e667d3cd4e7ab341",
+            "parent": "d4fe7adb7672912ad9be19d53a0f04ec129131c3"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; NODE_BOUNDED_POOL_CLEANUP_REPAIR; HOST_THREE_REPAIRS_ACTIVE",
-          "owner": "T45 host / D1 Node",
-          "next": "Fix the exact missed-discard result without retrying the driver; review the small successor. T45 closes formal host findings and preserves the separate 05 access work."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; HOST_02_AND_NODE_FAA8_FOCUSED_QB_REVIEW; 05_ACCESS_PREP",
+          "owner": "T45 host / D1 Node / QB",
+          "next": "Collect focused QA on the fixed host and Node successor; prepare paired source/pack only after closure. No assumption of approval or live deployment."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
