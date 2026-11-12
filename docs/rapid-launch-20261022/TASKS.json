@@ -2237,13 +2237,22 @@
             "ownerSha256": "c1f0f41db6478182b42e9553c79677926c72cc80fd215e78d5780de7035bd32e",
             "pgSha256": "c96599dd7948dca5628893009de94039c52efe30194efa9e1d8da560e4b78864",
             "hostSha256": "7ebf1973d9dc7b5d6ed40ca5c4f67b6a5800d3ac4898c769b4fb8493bfb93370"
+          },
+          {
+            "group": "r3-production-generation-node-d4fe",
+            "status": "THREE_LOCAL_FIXES_AUTHOR_TESTED; QB_REGRESSION_IN_PROGRESS",
+            "sourceCommit": "d4fe7adb7672912ad9be19d53a0f04ec129131c3",
+            "tree": "109271666022781bc944841e0ab4fa173db299dc",
+            "parent": "6db7cfeb47cefeee96c2cce30c2beef6065c2ed6",
+            "targetedTests": 10,
+            "skipped": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; NODE_6DB7_NEED_FIX; HOST_LOCAL_01_QB_REVIEW; 05_ACCESS_PREP_ACTIVE",
-          "owner": "T45 host / D1 Node / QB focused reviews",
-          "next": "Close three focused Node findings, review the fixed local host and then pair them. T45 prepares exact existing access ledger while waiting on user authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; D1_D4FE_QB_REGRESSION; T45_HOST_01_NEED_FIX_AND_05_ACCESS_PREP",
+          "owner": "T45 host / D1 Node / QB",
+          "next": "Resolve three host-specific regressions. Close the changed Node scope independently before building a matched candidate. Keep the transfer waiting for direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
