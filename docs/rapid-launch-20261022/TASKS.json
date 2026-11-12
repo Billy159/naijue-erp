@@ -3284,13 +3284,46 @@
               "actualStagingReceipt": false,
               "syntheticTransportIssued": false
             }
+          },
+          {
+            "group": "r3-service10-maintenance-actual-ready-20261113-0624",
+            "status": "ACTUAL_MAINTENANCE_ARTIFACT_READY_AFTER_EXACT_POLICY_WITHDRAWAL",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "01ccf832bc16aa06cfff339b54fd1eb8ff1a19b0b671f9f867bb76501d7f98a6",
+              "independentReadbackSha256": "2163ee7a88ce10ee257807d3236816e6c6302d677fc3a34b67490ded16746bdc",
+              "serverReadySha256": "04782dedcb3b5055421495de0ab3b7d3410b553c84d83ae350b582e3a8a65ccc",
+              "actualSegments": 14,
+              "archiveBytes": 3410732,
+              "archiveSha256": "cdea04fe76d081efcd6580280a2f2ec8e5be7c2b3d33520a71017d07f742c468",
+              "installTerminalSha256": "ac37ffceb8d3ca7f6b94fcc0bf4ef7acae265d79bdb173bf1e9de9dd422d4e3a",
+              "withdrawalTerminalSha256": "2462f0dd12c4482ce9815ce4609d375cbd42e0964401460d3461e57d588d5e53",
+              "observedAtUTC": "2026-11-12T22:24:17.817710+00:00",
+              "policyAbsent": true,
+              "databaseActions": 0
+            }
+          },
+          {
+            "group": "r3-service10-independent-restore-archive-local-20261113",
+            "status": "RESTORATION_ONLY_224_ARCHIVE_BUILT_PACKED_READBACK_LOCAL",
+            "owner": "D1 / D2 / T45",
+            "evidence": {
+              "sourceCommit": "43811b3cf377a7c5259199f6526ba41ac0ac631a",
+              "readySha256": "fcad35cb15592886b10d11570c34758ff5598a3697c16dc52227382c402cd634",
+              "consumerPinsSha256": "da8ffb99b5bf3cd577d5c936c133e6cf02986fc94f5e13dcf0f4035e42b8832b",
+              "archiveSha256": "eeceee8808acc02a44bf862857c04240c09477a91f27f9b3562711253079f4de",
+              "archiveBytes": 3065930,
+              "members": 423,
+              "sourceMembers": 224,
+              "actualRestore": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_MAINTENANCE_STAGING_WINDOW_ACTIVE_T45_SUBMITTING",
+          "status": "ACTUAL_MAINTENANCE_ARTIFACT_READY_SYNTHETIC_LINUX_TRANSPORT_PREFLIGHT_NEXT",
           "owner": "T45 / C",
-          "next": "Verify original maintenance policy install, 14 exact artifact segments, FINALIZE, and original policy withdrawal. Then independently read retained READY. App staging and synthetic Linux probe have separate unissued next windows."
+          "next": "Read back current isolated synthetic transport key and socket absence, issue its exact five-minute scope, verify actual SSH/Linux transport and cleanup. Separately stage 0a389 after that window, and prepare protected native and role preflight."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
