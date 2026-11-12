@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P06\u2013P09 unsent. Original three QB receiver findings closed in 02; real upload/reserve boundary still NEED_FIX, T45 03 local in progress. Exact authorized old assets follow scoped dependency preflight, snapshot 60 attribution read-only.",
+    "next": "P06\u2013P09 candidate 03 fixed; QB timing-only review pending, T45 field ready to coordinate after any bounded metadata observation. Three authorized old backup leaves retired; active snapshot 60 is tied to running shared legacy PG.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1563,20 +1563,25 @@
           "containerdMetadata": 12922880
         },
         "snapshotMapping": {
-          "state": "ONLY_PHYSICAL_ID_AND_SIZE_CONFIRMED; OWNER_AND_EXCLUSIVITY_UNKNOWN",
+          "state": "ACTIVE_RUNNING_LEGACY_PG_CONTAINER_WRITABLE_UPPERDIR_AND_WORKDIR",
           "readbackSha256": "3926ceaff62908058f716c1fc3ee20c885a2c708a341d024bf94f9dc70bbd5f6",
           "measuredCount": 437,
           "largestPhysicalDirectory": "60",
           "largestAllocatedBytes": 255473274880,
           "dockerDirectPathReferenceCount": 0,
-          "possibleReclaimBytesEstablished": 0
+          "possibleReclaimBytesEstablished": 0,
+          "independentReadbackSha256": "a94d6e46cadd08d9015dcfefdbcdd9b653411876050b3200b530e86d12a0443e",
+          "observedAt": "2026-11-12T18:24:02.291+08:00",
+          "rootAvailableBytes": 30437359616,
+          "currentReclaimApproval": false,
+          "physicalUsageNotIncludedInSingleDatabaseDrop": true
         }
       }
     },
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "QB_02_THREE_ORIGINAL_FIXES_CLOSED; NET_UPLOAD_BOUNDARY_NEED_FIX; SUCCESSOR_03_IN_PROGRESS",
+      "state": "FROZEN_03_AUTHOR_LOCAL_14_PASS; QB_TIME_DELTA_PENDING; NO_FIELD_REAL_BATCH",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1645,10 +1650,19 @@
         "resultSha256": "ed1626c3b95d37566cf5fad60543eaa868c384bb42ec633434c40f1a37654d0b",
         "closedOriginalFindings": 3,
         "newFinding": "Relative timeout recalculated before attempt fsync; remote did not consume the shared upload deadline and full 240s reserve before segment persistence."
+      },
+      "successor03": {
+        "localReadySha256": "6067b5100f43d0d41e075293577a48eb5f46366505aacd18a83e7ec3a66b0415",
+        "unissuedFieldsSha256": "9474069596250b797654eec8b976e30e1890f92bed0b26d7c7bfdc3dc1c5d6b7",
+        "localTestsPassed": 14,
+        "userUploadSeconds": 600,
+        "separateCloseoutSeconds": 240,
+        "maximumExternalWindowSeconds": 960,
+        "serverRealCandidateActions": 0
       }
     },
     "oldAssetRetirement": {
-      "state": "SCOPED_METADATA_PREFLIGHT_COMPLETED; ACTUAL_DEPENDENCIES_AND_ELIGIBLE_LEAVES_BEING_RESOLVED; NO_NEW_DELETION",
+      "state": "THREE_EXACT_APPROVED_LEGACY_ARCHIVES_DELETED_AND_READ_BACK; OTHER_NAMED_LEAVES_OR_SHARED_DB_PENDING_DEPENDENCY",
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf33-bb56-7af3-b97e-bcec236b844a",
       "scope": [
@@ -1668,7 +1682,18 @@
       "preflightReadbackSha256": "3926ceaff62908058f716c1fc3ee20c885a2c708a341d024bf94f9dc70bbd5f6",
       "preflightExitCode": 0,
       "legacyT48ObservedEnabledInactive": true,
-      "beforeActualRetirementFreeBytes": 30220759040
+      "beforeActualRetirementFreeBytes": 30220759040,
+      "exactLeafJobId": "t45-legacy-backup-exact-leaf-retirement-20261112-01",
+      "exactLeafJobExitCode": 0,
+      "exactLeafResultSha256": "a962f9a2bc4172a5d43f558f3d4a51cf81c1e9b6a322543466d3fc4053a66370",
+      "exactLeafNetRootFreeGainBytes": 217006080,
+      "exactLeafDeletionCount": 3,
+      "rootFreeBeforeBytes": 30220472320,
+      "rootFreeAfterBytes": 30437478400,
+      "independentExactLeafReadbackSha256": "a94d6e46cadd08d9015dcfefdbcdd9b653411876050b3200b530e86d12a0443e",
+      "independentRootFreeBytes": 30437359616,
+      "pgConnections": 0,
+      "r3AndVerifiedFragmentsUnchanged": true
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
