@@ -2151,13 +2151,20 @@
             "receiverSha256": "d5acfcbc3e6b1d89a088493be8a8ee0c3e7a389763ad37dc30677224fac9d9c2",
             "requestKey": "t45-r3-first-admin-custody-receive-20261113-01",
             "actualSubmission": false
+          },
+          {
+            "group": "r3-maintenance-same-window-local-01",
+            "status": "LOCAL_PINS_AND_TIMING_CHECKED; PRIVATE_PHASE_GRANT_CARRIER_OPEN",
+            "resultSha256": "04db5d5f5cf0065c5dafd53435633dfc0fdf084c8d9f4a58218e22168fbf513b",
+            "custodyOperationSha256": "2e86757ecc12f072c881e9466be86b6c60dddc671930f76f32e4e5ff3bf4cf2d",
+            "actualSubmission": false
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "RECEIVER_02_LOCAL_REGRESSION_PASS; WAITING_EXACT_PRIVATE_TRANSFER_AUTHORIZATION; SAME_WINDOW_CANDIDATE_IN_PREPARATION",
+          "status": "RECEIVER_02_READY_WAITING_EXACT_TRANSFER_AUTHORIZATION; PRIVATE_PHASE_GRANT_CARRIER_PREPARATION",
           "owner": "T45",
-          "next": "Prepare and validate exact same-window grant, service and maintenance pins. Submit protected delivery only after the separately requested direct authorization."
+          "next": "Complete existing private two-envelope handoff and exact maintenance window pins. The prepared 180s private original transfer requires the pending direct user answer."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
