@@ -3166,13 +3166,30 @@
               "liveNewGeneration": false,
               "newServerActions": 0
             }
+          },
+          {
+            "group": "r3-service10-maintenance-source-lineage-postbackup-impact-20261113",
+            "status": "SOURCE_IMPACT_CONFIRMED_MAINTENANCE_AND_DOWNSTREAM_SUCCESSORS_IN_PREPARATION",
+            "owner": "D2 / T45 / C",
+            "evidence": {
+              "oldFaa8PinnedCompactZeroSourceSha256": "e11609061181457b7cd012a32d0b44a5d764586ee2d5353e62ce82f297db16bd",
+              "oldFaa8PinnedCompactZeroCatalogSha256": "fa5b53963510566921827476e21122efc2a8ac381769fcc5b22f8c3f4b4c58cf",
+              "sourceClosuresAffected": [
+                219,
+                220,
+                223
+              ],
+              "original6cRetained": true,
+              "originalFaa8Retained": true,
+              "actualNativeStagesStarted": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "NEW_MAINTENANCE_GENERATION_CONTRACT_PINNED_OWNERS_ADAPTING_EXACT_SOURCE",
+          "status": "SERVICE10_BINDINGS_AND_DOWNSTREAM_SQL38_LINEAGE_IN_PREPARATION",
           "owner": "T45 / D1 / D2 / QB / C",
-          "next": "Prepare fresh outer worker closure and exact D1 and D2 maintenance source pins. Review phase-control-local-02 only. The next real CID, postmaster epoch, proof, original recovery readback and Linux SSH handoff are pending."
+          "next": "Bind the exact new maintenance source, catalog and proof while preserving the original artifacts. Validate the downstream ordinary and formal consumer's exact new SQL38 lineage with patch/model constraints before promoting a successor. Site and native phases are unissued."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
