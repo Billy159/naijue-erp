@@ -45574,6 +45574,15 @@
           "coldFloorOnlyShortfallBytes": 704405660,
           "next": "T45 prepares the exact receiver locally and checks a viable storage plan. Reuse any valid durable controlled entry or present the smallest revocable proposal for user confirmation. Do not replay consumed entry or change server authentication."
         },
+        "dispatchGrantReissue": {
+          "checkedAt": "2026-11-12T11:59+08:00",
+          "readbackSha256": "1b2a5f40d45745e44fddfb05bb69ec4420c2e8d5423974cf1105ce3b1f30f9fe",
+          "originalIssuerSha256": "00c294b0dcf2e6f2177fa9e1bb5a554893d924b0c87bdc3f5da1ef749df9ed41",
+          "lifetimeDays": 30,
+          "state": "HISTORICAL_REISSUE_CONFIRMED; USER_CONFIRMED_ORIGINAL_ERP_SCOPE; NOT_ISSUED",
+          "owner": "T45",
+          "next": "Keep old expiry and historical receipts, verify D0 terminal interlock and no replay across grants, prepare one verified operator handoff. Destructive operations remain separately authorized."
+        },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
           "readySha256": "a6341dc7851a60b608614239d65449344ad5153e3ff207f2d621d2e24a937432",
