@@ -2375,13 +2375,26 @@
             "backupHelperSha256": "3ecee6d341daf006a2b3ba1e808fc4c4d0fb0434b842d6b7310555542e81548a",
             "proof05Sha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
             "proof09Sha256": "6718b539a73b49b063b3db8cb5a44da22fd0b97c41d264ba1b74704a8cb8ecda"
+          },
+          {
+            "group": "r3-write-continuity-local-02",
+            "status": "DISPATCHER_CROSS_JOB_GAP_REPRODUCED; ACTUAL_WRITE_GATE_SOURCE_UNBOUND",
+            "resultSha256": "87382a3cc4ec5ee11c8e2c1efb05f1d0a3a02109f68f9dc67224cf83fcc969f5",
+            "testSha256": "1ee7381ef7579429f26006cd5046f7bc1070d46f96aec1e67e89afe75f4d6f78",
+            "originalDispatcherSha256": "5bf72fc20dfa597c81a9eb5ae8956c497a980b1497e2cfbfe8d469932b27ad49"
+          },
+          {
+            "group": "r3-05-original-loopback-boundary",
+            "status": "FIXED_PRODUCTION_FACTORY_AND_HBA_SOURCE_CHECK_LOCAL_PASS",
+            "commandExitCode": 0,
+            "scope": "Loopback-only PostgreSQL inside the owned carrier network namespace, no Unix socket. Four loopback SCRAM roles in source. No live state asserted."
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_RECEIPT_AND_RECOVERY_PIN_QB_LOCAL_PASS; CONTINUOUS_CLOSURE_AND_TWO_FORMAL_CONSUMER_FIXES_WITH_T45",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CROSS_JOB_CLOSURE_SOURCE_GAP_REPRODUCED; TWO_FORMAL_CONSUMER_FIXES_ACTIVE",
           "owner": "T45",
-          "next": "Reuse the existing protection path for closure across writer terminal, independent readback, capture and clean stop. Bind the finite 09 and formal FAA8 recovery consumers and actual Linux dependency-install result without a second backup. Actual A transfer awaits direct authorization."
+          "next": "Complete the two formal FAA8 source consumer fixes. Reuse the narrow R3 namespace and existing dispatcher/entry protections for continuous write exclusion when independently proven. Actual A transfer awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
