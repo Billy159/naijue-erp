@@ -3317,13 +3317,30 @@
               "sourceMembers": 224,
               "actualRestore": false
             }
+          },
+          {
+            "group": "r3-synthetic-transport-window-actual-preflight-and-issued-20261113",
+            "status": "ACTUAL_PREFLIGHT_PASSED_EXACT_SYNTHETIC_LINUX_TRANSPORT_AUTHORIZED",
+            "owner": "T45 / C",
+            "evidence": {
+              "preflightSha256": "71d4fa0a7b599255830f339749eec7852c7a72df494d06f12c53d471dac074cc",
+              "preflightAtUTC": "2026-11-12T22:26:13.065670+00:00",
+              "authoritySha256": "0d22f06c93bb94bfb6991c142a74080a64644145283e0f3187232a3f58aabd46",
+              "startsAtUTC": "2026-11-12T22:27:18.083Z",
+              "expiresAtUTC": "2026-11-12T22:32:18.083Z",
+              "fixtureSha256": "4fcc0e8dc92e59ec48f9784ebaa56784d276517e67612a8a71f5c8e6f58a7719",
+              "actualProbeReceipt": false,
+              "nativeRoot02ResultSha256": "1890ef49bd8a46d8c032512f996e78e99104aab987a91674141294c2d3952d6a",
+              "nativeRoot02BoundActualMaintenanceReady": true,
+              "realMaintenanceAuthorized": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_MAINTENANCE_ARTIFACT_READY_SYNTHETIC_LINUX_TRANSPORT_PREFLIGHT_NEXT",
+          "status": "EXACT_SYNTHETIC_LINUX_TRANSPORT_WINDOW_ACTIVE",
           "owner": "T45 / C",
-          "next": "Read back current isolated synthetic transport key and socket absence, issue its exact five-minute scope, verify actual SSH/Linux transport and cleanup. Separately stage 0a389 after that window, and prepare protected native and role preflight."
+          "next": "Collect one original isolated synthetic Linux/SSH result, separate ACK and cleanup. Stage exact application next only after the synthetic job and owned socket are closed."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
