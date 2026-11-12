@@ -3422,13 +3422,25 @@
               "credentialBodiesRead": 0,
               "containersStarted": 0
             }
+          },
+          {
+            "group": "r3-role09-filename-guard-local-delta-20261113",
+            "status": "OLD_ROLE09_CANDIDATE_HELD_FIXED_FILENAME_GUARD_LOCALLY_VERIFIED",
+            "owner": "T45 / C",
+            "evidence": {
+              "previousRoleSourceSha256": "d61912cfe9b90c161f9d58dc209531681e017e534d81f2c0f9d4f8f371438b2b",
+              "correctedRoleSourceSha256": "de4c401290abdd11b2941cfeb933e08628ea28a6ac8b00f12b4d5cdf7e04906b",
+              "scope": "Fixed script basename guard for apply and restore and unsigned template source pins.",
+              "localTargetedExitCode": 0,
+              "actualAuthorityIssued": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_PROTECTED_PREFLIGHT_PASS_ROLE09_SERVICE10_WINDOW_READINESS_NEXT",
+          "status": "OLD_ROLE09_TEMPLATE_HELD_CORRECTED_GUARD_LOCAL_PASS_WINDOW_SCHEDULE_PENDING",
           "owner": "T45 / C",
-          "next": "Complete focused outer and native source review, precise timing and recovery preparation, then issue exact next real role and start with old restoration protected."
+          "next": "Finish exact updated role and host source review, startup-failure recovery and adjacent execution budget before authorizing the new role window."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
