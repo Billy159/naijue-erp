@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "QB accepted 05 installation-time-only delta. T45 checks final shared policy, original four keys, writer/job quiet status and old job-local pending provenance. No new batch submitted.",
+    "next": "05 P06\u2013P09 same-key bounded trial signed after T45 quiet readiness and QB pass. Await current live install, net budget, original key receipts and independent withdrawal.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1590,7 +1590,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "QB_05_INSTALL_ALLOWANCE_PASS; FIELD_QUIET_READBACK_PENDING",
+      "state": "05_SAME_ORIGINAL_KEYS_SINGLE_LANE_TRIAL_ISSUED_AFTER_QUIET_READBACK",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1710,10 +1710,11 @@
         "oldInstallTerminal": "FAILED/1",
         "originalRestoreStatus": "NO_REQUEST_STAGING_OR_RECEIPTS_VISIBLE",
         "privateInstallPending": "UNKNOWN_EACCES; JOB_LOCAL",
-        "retryPerformed": false
+        "retryPerformed": false,
+        "privateInstallPendingDisposition": "UNKNOWN_EACCES; expired terminal prior job-local leaf; evidence preserved; unrelated to distinct new install/restore private paths; shared policy and original keys checked"
       },
       "setupBudgetSuccessor": {
-        "state": "QB_PASS_INSTALL_ALLOWANCE_ONLY; NO_FIELD_SUBMISSION",
+        "state": "QB_PASS_AND_T45_READY; SAME_KEYS_05_TRIAL_ISSUED",
         "proposedSetupSeconds": 240,
         "netUploadSeconds": 600,
         "separateCloseoutSeconds": 240,
@@ -1725,6 +1726,23 @@
         "localFixturesPassed": 3,
         "oldSingleFragmentSeconds": 600,
         "exactActualInstallMinimumRemainingExclusiveSeconds": 840
+      },
+      "successorTrial": {
+        "state": "ISSUED_LIVE_RESULT_PENDING",
+        "lanes": 1,
+        "originals": [
+          "P06",
+          "P07",
+          "P08",
+          "P09"
+        ],
+        "startsAt": "2026-11-12T20:06:09.218+08:00",
+        "expiresAt": "2026-11-12T20:24:09.218+08:00",
+        "installBudgetSeconds": 240,
+        "netUploadSeconds": 600,
+        "closeoutReserveSeconds": 240,
+        "noNewDataConfirmedAtIssuance": true,
+        "quietReadback": "34/34 current queue terminal; four originals absent; policy absent; old installation terminal; no matching receive process"
       }
     },
     "oldAssetRetirement": {
