@@ -2195,13 +2195,18 @@
             "launcherSha256": "3e0b88eb81240dd11cc7db117f77df741bac34323b3b00bb7f33e20e0841cf73",
             "proofSha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
             "patchedBackupScriptSha256": "b31a3d10d3dbc04b9c58204a8e399791ee9d285ac71680bf08850ab96c81298c"
+          },
+          {
+            "group": "r3-production-owner-handoff-local-01",
+            "status": "EXISTING_OWNER_PRODUCTION_BRANCH_SELECTED; HOST_IMPLEMENTATION_STARTED",
+            "resultSha256": "b10d20057585f4d62811a3aa5125a508e5771d83b095ca2d1719d1442bbf4f8d"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; PRIVATE_PHASE_EXCHANGE_03_AND_ORDINARY05_04_LOCAL_REGRESSIONS_PASS; PERSISTENT_OWNER_CONTRACT_IN_PROGRESS",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; PERSISTENT_OWNER_HOST_SOURCE_IN_PROGRESS",
           "owner": "T45",
-          "next": "Complete actual signature and maintenance carrier bindings after the original handoff; finish formal persistent owner and D1 consumer contract independently. Keep 05 finite until real same-generation timing/authorization."
+          "next": "Fix the exact host generation and live capacity producer fields, then bind D1's actual consumer. Continue original private handoff if the pending direct authorization arrives."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
