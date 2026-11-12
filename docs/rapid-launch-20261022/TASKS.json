@@ -3095,13 +3095,32 @@
               "originalRolesAuthoritySha256": "92a741a70e3371987cc3be0be23bba82c2281228cc236731bd1d317000b23a57",
               "actualRestoreResult": null
             }
+          },
+          {
+            "group": "r3-restore05-actual-original-two-role-readback-20261113-0550",
+            "status": "ACTUAL_RESTORE05_COMPLETED_ORIGINAL_TWO_ROLE_FIELDS_RESTORED_R3_STOPPED",
+            "owner": "T45 / C",
+            "evidence": {
+              "originalRestoreKey": "t45-r3-admin154-maintenance-auth-restore-20261111-05",
+              "terminalSha256": "79b5745d7c12f71e9532b71bebce2e4ca36c7081fcdb88537700934ba3073607",
+              "resultSha256": "b6b3e8d47965ec250a9008b4b9aac9cccd4efcd1af26da1bf301d6b9f851a3bf",
+              "finishedAtUTC": "2026-11-12T21:50:51.466251+00:00",
+              "elapsedSeconds": 6.599387467998895,
+              "exitCode": 0,
+              "originalRecoveryBasisRetained": true,
+              "exactTwoRoleAuthRestored": true,
+              "ordinaryRuntimeUnchanged": true,
+              "sourceDataPreserved": true,
+              "ownedRestoreContainerStopped": true,
+              "sql36OrBusinessImport": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_08_CLEAN_STOP_ORIGINAL_TWO_ROLE_RESTORE05_ISSUED_PENDING",
+          "status": "ACTUAL_SERVICE08_STOPPED_ORIGINAL_TWO_ROLES_RESTORED_NEXT_IN_JOB_AUTHORIZATION_TRANSPORT_REQUIRED",
           "owner": "T45 / C",
-          "next": "Observe same-key original two-role restore05 and independent cleanup/readback before allowing any next field operation. Native phase keys remain absent. Then fix permitted in-job authorization transport ahead of the next bounded epoch."
+          "next": "Verify final current read-only footprint of original keys and 152. Prepare allowed exact per-phase delivery in the original bounded operation and next window shell without replay. Then continue exact SQL36/A/SQL38 in one fresh real startup."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
