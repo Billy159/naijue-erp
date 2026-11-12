@@ -3496,13 +3496,29 @@
               "actualAuthorityIssued": false,
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-service10-final-native-and-start-recovery-qb-pass-20261113",
+            "status": "EXACT_NATIVE_AND_FAILED_START_RECOVERY_LOCAL_INDEPENDENT_PASS",
+            "owner": "QB / T45 / C",
+            "evidence": {
+              "nativeResultSha256": "9244980b95ec54ce1880c16df0d4ffa6bd37cd74d103b2c13eb2053c4e25a422",
+              "nativeRootSha256": "0fc42dd6f59db7aad60f41b05c3863aed482041e62108db631425325553a0451",
+              "failedStartRecoveryResultSha256": "b067ef9ca12cae36a45c84e63d2aeee82458d38cb0430edd615a835d68ef2ca5",
+              "nativeSourceLeaves": 10,
+              "recoverySourceLeaves": 9,
+              "nativeUnissuedTemplates": 3,
+              "recoveryUnissuedTemplates": 5,
+              "actualHostValidationOfNewBranches": false,
+              "actualAuthorityIssued": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FINAL_NATIVE_AND_PARTIAL_START_RECOVERY_SOURCE_SEALED_PENDING_QB_SCOPED_REVIEW",
-          "owner": "T45 / QB / C",
-          "next": "Obtain the scoped independent result on the two exact packages. Confirm the actual stopped and restored state and source pins are fresh before the next maintenance issue."
+          "status": "EXACT_LOCAL_NATIVE_AND_FAILED_START_RECOVERY_REVIEW_PASSED_NEXT_FRESH_WINDOW_PREFLIGHT",
+          "owner": "T45 / C",
+          "next": "Refresh stopped target, stopped/restore originals, exact source closure and signer readiness when the new execution window can be opened. Record actual service and stage receipts from original jobs."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
