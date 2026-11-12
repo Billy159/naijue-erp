@@ -45477,7 +45477,10 @@
         "sourceSha256": "3f71630dc6033907e0a5b423a289f819e62ba70c79273c5901aa10bbf50a923e",
         "localSuccessorResultSha256": "c2f1edb9b3626ef57bac6c80dc9713c24100dda7c014a33c069e0608a7cc71e8",
         "localSuccessorSourceSha256": "d4bf76f08d2a127ce87fee388be598ae271a5c5ef411eb94b11c1a2e3511c79e",
-        "state": "LOCAL_EXACT_MEMBER_CONTRACT_AND_BOOT_RELOCATION_TESTS_PASS; T45_BINDING_NEW_ARCHIVE; RECOVERY_APPROVAL_LINUX_AND_FORMAL_STAGE_PENDING",
+        "archiveBindingResultSha256": "ea3888487c810534ba781036ea6869bbdfe04da59199f6a9471f1d539819f1bf",
+        "archiveBindingHelperSha256": "a52622d4c0f5fb0ba2c9d36a9325fc3ad71b0c950ccefe57bb9de87862645579",
+        "archiveBindingQbTurn": "01a1cd16-8341-7543-9cc4-c212dfb36152",
+        "state": "QB_PASS_LOCAL_EXACT_ARCHIVE_AND_BOOT_BINDING; EXTERNAL_APPROVAL_ACTUAL_RECEIPT_RECOVERY_LINUX_AND_FORMAL_STAGE_PENDING",
         "activeOwner": "T45"
       },
       "r3App09InitialArtifactAssetBase": {
@@ -45496,7 +45499,17 @@
         "checkedArchiveMembers": 462,
         "localHttpSmokeSha256": "4c9e3a27fa004a943efa888f735dfd40f6723584fc434c316b28fdf74dba386c",
         "runtimeTemplateBindingSha256": "8734c4f4212c70f842b93f58ad27b6f6aacd46d10fd3495b7f1b6e0d0a72dba9",
-        "state": "LOCAL_REAL_HANDLER_ASSET_REQUESTS_PASS; T45_FORMAL_BINDING_ACTIVE; NO_BROWSER_PG_OR_SERVER_ACTION"
+        "proposedReceiveKey": "r3-post-backup-ordinary09-app7e6626de-20261112-02",
+        "privateHostBindingResultSha256": "8133104e3f5e15c13bc5cde4f443fbe73768b52ff1f36441d0ffc024783a0f23",
+        "privateHostBindingSourceSha256": "a7d8527a6821e3891382d45ca7f781802c2cde779e34414b5459caf072f83b94",
+        "state": "LOCAL_REAL_HANDLER_ASSET_REQUESTS_AND_QB_EXACT_FORMAL_PRIVATE_BINDINGS_PASS; SERVER_KEY_UNISSUED; NO_BROWSER_PG_OR_SERVER_ACTION"
+      },
+      "r3RecoveryCompatibility": {
+        "owner": "D1",
+        "state": "D1_LOCAL_SOURCE_AND_5_DEVELOPER_TESTS_PASS; PHYSICAL_PRESTART_FILE_READBACK_ONLY; ORIGINAL_LOGICAL_RESTORE_GATE_REMAINS",
+        "localPhysicalFileVerifierCommit": "f710215f7f61f3e77d903e41ee98219527078b73",
+        "localPhysicalFileVerifierTree": "dbcd1288de78742cee396ae1b1194ddb1f306b31",
+        "next": "Bind the independent recovery route to actual current R3 import, catalog, application and restored instance evidence before T45 release integration. The file verifier alone cannot satisfy the formal logical restore gate."
       },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
