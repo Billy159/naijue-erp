@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "Real same-channel synthetic A/B complete. Frozen four-piece receiver 01 NEED_FIX; T45 prepares 02 and scoped root inventory, QB to check only exact successor. P06\u2013P09 remain unsent.",
+    "next": "Root device and /srv measured; focused remaining categories in progress. T45 repairs four-piece receiver 02 and 600s net upload; P06\u2013P09 unsent.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1499,7 +1499,7 @@
       "rootInventory": {
         "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
         "sourceMessageId": "01a1cf1c-2f13-7853-aee8-8a552448d53e",
-        "state": "OLDER_CAPACITY_AND_RETIREMENT_EVIDENCE_RECONCILED; T45_SCOPED_LIVE_INVENTORY_PENDING",
+        "state": "LIVE_ROOT_STAT_AND_SRV_COMPLETE; CONTAINERD_LOWER_BOUND; OTHER_GROUPS_PENDING",
         "root": "/dev/md0p1",
         "partitionBytes": 498841157632,
         "filesystemTotalObserved20261111Bytes": 489861931008,
@@ -1516,7 +1516,44 @@
           "unverified old app/source and historical artifacts"
         ],
         "changedRuntimeThreshold": false,
-        "deletionAuthorizedByInventory": false
+        "deletionAuthorizedByInventory": false,
+        "jobId": "t45-root-volume-readonly-20261112-01",
+        "exitCode": 0,
+        "observedAt": "2026-11-12T17:56:44.755+08:00",
+        "readbackSha256": "7c21f6cbc3bd4972971f51aa8b973c1e8d4dc4528b21ead54e0816e2ac988a1a",
+        "rootFilesystemBytes": 489861931008,
+        "rootOccupiedBytes": 434681929728,
+        "freeIncludingReservedBytes": 55180001280,
+        "ordinaryAvailableBytes": 30221168640,
+        "unavailableToOrdinaryBytes": 24958832640,
+        "srvAllocatedBytes": 128627400704,
+        "containerdObservedLowerBoundBytes": 256919105536,
+        "remainingUnattributedBytesUpperBound": 49135423488,
+        "legacyActual": {
+          "sharedPGBytes": 13446369280,
+          "erpProdOidLeafBytesIncluded": 9368203264,
+          "runningMounts": 1,
+          "applicationBytes": 8398745600,
+          "appSourceBytesIncluded": 2533302272,
+          "applicationStoppedMounts": 2,
+          "remainingBackupRootBytes": 1992957952,
+          "R4StateBytes": 7074037760,
+          "R4DataBytesIncluded": 68702208,
+          "R4DataParentStoppedMounts": 2
+        },
+        "knownRemovedLeavesAbsent": 7,
+        "coldStoppedEmptyPgAllocatedBytes": 68173824,
+        "coldStoppedEmptyPgRoundedCopyBytes": 69312512,
+        "coldWalIncludedBytes": 33566720,
+        "sameVersionAppArchiveRoundedAndEmptyPgCopyKnownBytes": 72724480,
+        "remainingFocus": [
+          "Docker",
+          "containerd subgroups and references",
+          "root",
+          "home",
+          "logs"
+        ],
+        "deletePerformed": false
       }
     },
     "receiveAcceleration": {
