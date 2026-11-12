@@ -3149,13 +3149,30 @@
               "actualTransportVerified": false,
               "newServerWrites": 0
             }
+          },
+          {
+            "group": "r3-maintenance-service10-contract-and-phase-control02-20261113",
+            "status": "LOCAL_EXACT_NEXT_WINDOW_IDENTITY_AND_REVISED_AUTH_TRANSPORT_PINNED_UNISSUED",
+            "owner": "T45 / D1 / D2 / QB / C",
+            "evidence": {
+              "identitySha256": "a873fb99510da26a8de2af5bf03d8c0b918e8fffef4b6b4b5c6d77646916a755",
+              "phaseControlResultSha256": "f52dbe47c4a5e3badfed7246a4d76bfac6d538c92c38e85a76b0d1212d95f4e6",
+              "localChecksReceiptSha256": "c3ee7be92b75dab7cc042ab42e797a6d84be1407bf02b15818ef604103dbd950",
+              "syntheticChecks": 9,
+              "plannedServiceKey": "t45-first-r3-native-service-start-20261113-10",
+              "plannedRoleApplyKey": "t45-r3-admin154-maintenance-auth-20261113-09",
+              "plannedStopKey": "t45-r3-service10-retained-stop-20261113-01",
+              "plannedRestoreKey": "t45-r3-admin154-maintenance-auth-restore-20261113-06",
+              "liveNewGeneration": false,
+              "newServerActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_FIRST_WINDOW_CLOSED_IN_JOB_AUTHORIZATION_LOCAL_TESTS_PASSED_NEW_GENERATION_ADAPTATION_IN_FLIGHT",
+          "status": "NEW_MAINTENANCE_GENERATION_CONTRACT_PINNED_OWNERS_ADAPTING_EXACT_SOURCE",
           "owner": "T45 / D1 / D2 / QB / C",
-          "next": "T45 provides exact next role, service, stop and restore identities. D1 and D2 adapt their exact maintenance consumers after the binding is known. QB checks new phase delivery delta. Then verify authorized Linux/SSH transport and exact target before a new real window."
+          "next": "Prepare fresh outer worker closure and exact D1 and D2 maintenance source pins. Review phase-control-local-02 only. The next real CID, postmaster epoch, proof, original recovery readback and Linux SSH handoff are pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
