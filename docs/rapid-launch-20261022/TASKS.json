@@ -2722,13 +2722,32 @@
               "archiveRegularBytes": 16934860,
               "actualRemoteReady": null
             }
+          },
+          {
+            "group": "r3-faa8-one-exact-receiver-window-20261113-0422",
+            "status": "CONTROLLER_SCOPE_ISSUED_T45_RECEIVING_LIVE_RESULT_PENDING",
+            "owner": "C / T45",
+            "evidence": {
+              "candidateSha256": "bd56f23b5928944af4659dd7e22c0425b013effe83918e687e718b7e10a4b5e9",
+              "jobScopeSha256": "cb6df4dd0866a5de37393814e21a2740d26a7953b009f1c223683f26efa01f7a",
+              "authoritySha256": "c8a6de2e4809df717bcc2d89136b39c569e6b2fb93d99d3427366b1f8244d7fb",
+              "startsAtMs": 1794514958870,
+              "expiresAtMs": 1794516758870,
+              "payloadCutoffMs": 1794516518870,
+              "authorFocusedTestsPassed": 5,
+              "independentFixtureExactSegments": 14,
+              "independentFixtureMembers": 462,
+              "liveInstallReceipt": null,
+              "liveReady": null,
+              "liveWithdrawal": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_EXACT_SINGLE_PAYLOAD_PROFILE_LOCAL_MATCH_T45_PREPARING_FINITE_RECEIVER_PRIVATE_BROWSER_ROUTE_UNBOUND",
+          "status": "EXACT_FAA8_APPLICATION_ONLY_WINDOW_ISSUED_ORIGINAL_T45_ACTIVE_LIVE_READBACK_PENDING",
           "owner": "T45",
-          "next": "Finish the finite exact application-only receiver candidate, then obtain original staging and policy withdrawal readbacks. Measure actual same-root peak before any reserve change. Actual A transfer still awaits direct authorization."
+          "next": "Watch original install, 14 fixed segments and FINALIZE. Withdraw the same temporary policy, then obtain independent remote original READY readback. Actual private route and A remain pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
