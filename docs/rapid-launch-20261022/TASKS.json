@@ -3215,13 +3215,29 @@
               "compactZeroCatalogSpecSha256": "5df8fb17a050e1e449e6dd6827ea0e28d08a0b8cf3b734e0f8b6ae52cfce607f",
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-service10-d1-closure-and-sender03-20261113",
+            "status": "LOCAL_D1_D2_PINS_ALIGNED_SENDER_FIX_PENDING_INDEPENDENT_RETEST",
+            "owner": "T45 / D1 / D2 / QB / C",
+            "evidence": {
+              "d1ClosureResultSha256": "161ec27972af2b27715c0b3b688c32eb951e44b989db591158b6be605e9d370e",
+              "d1DriverSha256": "959a63c1e5b327dc287444ff43d2781a0750737b4be59dcc1077709b43ae9001",
+              "d1UpgradeSha256": "f924b2c5d3b89f5e1a582a9a9e17cfe2eaba53ac56c4517cd28d21f865cf5713",
+              "d1Cases": 4,
+              "phaseControl03ResultSha256": "8005b087704ff49b3ce8b3bb6b18b4dd08dff00ede8c8b1858b1a32f0f6f440b",
+              "phaseControl03ClientSha256": "3601f566153cd92e3c183a4a56012758c60ef542017d49fbd2a30123c8854ade",
+              "phaseControlCases": 11,
+              "consumerStagingPlanSha256": "99d3d4e631fde3ab0d68d6c8022e60c777ad3ed1d00a569c183f31f394cd83f8",
+              "liveServerActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "D2_MAINTENANCE_SOURCE_LINEAGE_FIXED_T45_AND_D1_PINNING_NEW_HOST_CLOSURE",
-          "owner": "T45 / D1 / D2 / QB / C",
-          "next": "D1 rebinds driver and upgrade to exact 219/220/223 pins. T45 prepares independent maintenance material, exact receiver and host checks, 05 and restore lineage updates. D2 builds narrow application successor. QB targeted sender fix review remains pending."
+          "status": "LOCAL_D1_D2_MAINTENANCE_PINS_ALIGNED_T45_ASSEMBLY_AND_QB_FIX_RETEST_IN_FLIGHT",
+          "owner": "T45 / D2 / QB / C",
+          "next": "Assemble exact next window maintenance source and approved protected transport. Verify QB's narrow sender findings, prepare and validate the allowed live synthetic probe and fresh protected preflight, then issue only the bound next action."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
