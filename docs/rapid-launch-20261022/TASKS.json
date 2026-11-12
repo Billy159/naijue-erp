@@ -2108,11 +2108,13 @@
           }
         ],
         "currentInFlight": {
-          "group": "legacy-snapshot60-readonly-03",
-          "jobId": "t45-legacy-pg-snapshot60-split-readonly-20261112-03",
-          "status": "READONLY_EVIDENCE_IN_FLIGHT_AFTER_ORIGINAL_MATERIALIZATION",
-          "materializationJobSha256": "5265570f396555503ce95ab171569a85486e12effb77ff8744f99e2d259baf2a",
-          "materializationReadbackSha256": "84a79cc5194666f44f2282282857ca3c2c7b298be1e61acd16633bbb5911c283",
+          "group": "r3-05-launcher-and-storage-admission",
+          "status": "MATERIALIZED; LEGACY_READONLY_03_TERMINAL_WITH_TWO_VALID_BRANCHES; EXACT_RAW_COPY_AND_05_IN_PREPARATION",
+          "legacyOriginalJobId": "t45-legacy-pg-snapshot60-split-readonly-20261112-03",
+          "legacyExitCode": 2,
+          "legacyAllocationBytes": 255473258496,
+          "legacyContainerTmpBytes": 255473238016,
+          "legacyVerifiedReclaimBytes": 0,
           "freeAfterMaterializationBytes": 29289738240,
           "currentStartupDeficitBytes": 775032832
         },
