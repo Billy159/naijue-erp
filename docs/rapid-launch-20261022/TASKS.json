@@ -2388,13 +2388,26 @@
             "status": "FIXED_PRODUCTION_FACTORY_AND_HBA_SOURCE_CHECK_LOCAL_PASS",
             "commandExitCode": 0,
             "scope": "Loopback-only PostgreSQL inside the owned carrier network namespace, no Unix socket. Four loopback SCRAM roles in source. No live state asserted."
+          },
+          {
+            "group": "r3-faa8-linux-dependencies-original-install-reuse",
+            "status": "EXACT_FAA8_PACKAGE_AND_LOCK_MATCH_EXISTING_REAL_LINUX_INSTALL_RECEIPT",
+            "packageSha256": "df132518fffedcac3dd2842f773de1f191b563a12887788a06c196a4ce753902",
+            "lockSha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+            "originalResultSha256": "46518bcbb6b55b68ed2fdb48f0691d08942da032cd5988598139e63b15493e55",
+            "node": "24.21.0",
+            "npm": "11.9.0",
+            "originalActualInstallExitCode": 0,
+            "originalActualModuleLoadExitCode": 0,
+            "originalActualContainerExitCode": 0,
+            "localComparisonExitCode": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CROSS_JOB_CLOSURE_SOURCE_GAP_REPRODUCED; TWO_FORMAL_CONSUMER_FIXES_ACTIVE",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FAA8_03_FORMAL_FIX_WIP; ORIGINAL_LINUX_INSTALL_EVIDENCE_ELIGIBLE_FOR_REUSE",
           "owner": "T45",
-          "next": "Complete the two formal FAA8 source consumer fixes. Reuse the narrow R3 namespace and existing dispatcher/entry protections for continuous write exclusion when independently proven. Actual A transfer awaits direct authorization."
+          "next": "Finish finite-stage/formal-owner recovery binding and current exact host dependency readback using the original successful Linux install. Review changed paths only. Actual A transfer awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
