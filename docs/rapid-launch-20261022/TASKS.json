@@ -2246,13 +2246,18 @@
             "parent": "6db7cfeb47cefeee96c2cce30c2beef6065c2ed6",
             "targetedTests": 10,
             "skipped": 0
+          },
+          {
+            "group": "r3-d4fe-node-combination-review",
+            "status": "TWO_FINDINGS_CLOSED; ACTUAL_BOUNDED_POOL_FAILED_RELEASE_PROPAGATION_NEED_FIX",
+            "sourceCommit": "d4fe7adb7672912ad9be19d53a0f04ec129131c3"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; D1_D4FE_QB_REGRESSION; T45_HOST_01_NEED_FIX_AND_05_ACCESS_PREP",
-          "owner": "T45 host / D1 Node / QB",
-          "next": "Resolve three host-specific regressions. Close the changed Node scope independently before building a matched candidate. Keep the transfer waiting for direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; NODE_BOUNDED_POOL_CLEANUP_REPAIR; HOST_THREE_REPAIRS_ACTIVE",
+          "owner": "T45 host / D1 Node",
+          "next": "Fix the exact missed-discard result without retrying the driver; review the small successor. T45 closes formal host findings and preserves the separate 05 access work."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
