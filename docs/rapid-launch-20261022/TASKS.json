@@ -3482,13 +3482,27 @@
               "finalResultSealed": false,
               "actualAuthorityIssued": false
             }
+          },
+          {
+            "group": "r3-service10-final-native-and-start-recovery-local-20261113",
+            "status": "TWO_EXACT_LOCAL_CANDIDATES_SEALED_QB_SCOPED_REVIEW_PENDING",
+            "owner": "T45 / QB / C",
+            "evidence": {
+              "nativeResultSha256": "9244980b95ec54ce1880c16df0d4ffa6bd37cd74d103b2c13eb2053c4e25a422",
+              "nativeRootSha256": "0fc42dd6f59db7aad60f41b05c3863aed482041e62108db631425325553a0451",
+              "failedStartRecoveryResultSha256": "b067ef9ca12cae36a45c84e63d2aeee82458d38cb0430edd615a835d68ef2ca5",
+              "recoveryAcceptedLocalCases": 5,
+              "recoveryRefusedLocalCases": 22,
+              "actualAuthorityIssued": false,
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "NATIVE_ENTRY_PREDECESSOR_GUARDS_LOCAL_PASS_START_FAILURE_RESTORE_CANDIDATE_PENDING",
+          "status": "FINAL_NATIVE_AND_PARTIAL_START_RECOVERY_SOURCE_SEALED_PENDING_QB_SCOPED_REVIEW",
           "owner": "T45 / QB / C",
-          "next": "Receive the final sealed native and failed-start recovery candidates. Verify scoped tests and exact live values before the next maintenance authorization."
+          "next": "Obtain the scoped independent result on the two exact packages. Confirm the actual stopped and restored state and source pins are fresh before the next maintenance issue."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
