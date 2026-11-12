@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "Root device and /srv measured; focused remaining categories in progress. T45 repairs four-piece receiver 02 and 600s net upload; P06\u2013P09 unsent.",
+    "next": "Receiver 02 fixed and QB delta in progress. T45 scoped old-asset dependency preflight and snapshot mapping in the field gap. P06\u2013P09 remain unsent until QB and T45 quiet readiness.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1499,7 +1499,7 @@
       "rootInventory": {
         "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
         "sourceMessageId": "01a1cf1c-2f13-7853-aee8-8a552448d53e",
-        "state": "LIVE_ROOT_STAT_AND_SRV_COMPLETE; CONTAINERD_LOWER_BOUND; OTHER_GROUPS_PENDING",
+        "state": "FOCUSED_SUPPLEMENT_DONE; SNAPSHOT_EXCLUSIVE_REFERENCES_UNVERIFIED",
         "root": "/dev/md0p1",
         "partitionBytes": 498841157632,
         "filesystemTotalObserved20261111Bytes": 489861931008,
@@ -1547,19 +1547,27 @@
         "coldWalIncludedBytes": 33566720,
         "sameVersionAppArchiveRoundedAndEmptyPgCopyKnownBytes": 72724480,
         "remainingFocus": [
-          "Docker",
-          "containerd subgroups and references",
-          "root",
-          "home",
-          "logs"
+          "mapping largest containerd snapshots and existing consumers; no deletion scope for shared snapshots"
         ],
-        "deletePerformed": false
+        "deletePerformed": false,
+        "supplementAt": "2026-11-12T18:03:55.575+08:00",
+        "supplementReadbackSha256": "c909233cbf0884e7b345be2d7f9986ab093957d5f03df28f7edb41bc9c342dd5",
+        "supplementExitCode": 0,
+        "supplementCategoriesBytes": {
+          "rootLowerBound": 26171711488,
+          "homeLowerBound": 6796275712,
+          "logs": 1063100416,
+          "dockerSameVolume": 24551424,
+          "containerdContent": 1100345344,
+          "containerdOverlaySnapshots": 259317755904,
+          "containerdMetadata": 12922880
+        }
       }
     },
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "FROZEN_01_NEED_FIX; SYNTHETIC_FIELD_AB_COMPLETED; SUCCESSOR_02_IN_PROGRESS; NO_FIELD_REAL_BATCH",
+      "state": "FROZEN_02_AUTHOR_LOCAL_12_PASS; QB_DELTA_PENDING; NO_FIELD_REAL_BATCH",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1617,8 +1625,30 @@
         "candidateCloseoutSeconds": 240,
         "candidateInstallationSeconds": 120,
         "candidateMaximumWindowSeconds": 960,
-        "candidateIssued": false
+        "candidateIssued": false,
+        "localReadySha256": "cafe3757082a9f0e7016c737cf4c86579955ce29a7c8ffe8c4949edf4dd329bb",
+        "unissuedFieldsSha256": "fd0b4057c1c74891e5d45d655a592139945d56051a0f43d158b57eecac583ce7",
+        "localTestsPassed": 12
       }
+    },
+    "oldAssetRetirement": {
+      "state": "USER_CONFIRMED_NAMED_OLD_ASSETS; T45_SCOPED_READONLY_PREFLIGHT; NO_NEW_DELETION_YET",
+      "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+      "sourceUserMessageId": "01a1cf33-bb56-7af3-b97e-bcec236b844a",
+      "scope": [
+        "erp_prod single database in the shared legacy cluster",
+        "remaining exact old backups 20261021/20261101/20261106",
+        "the identified old application source current-r27",
+        "exact previously enumerated old application and retired restore items"
+      ],
+      "alreadyAbsentItemsReused": true,
+      "excluded": [
+        "other databases and shared PostgreSQL container",
+        "R3/R4 and current dependencies",
+        "unknown or shared snapshot layers",
+        "unlisted paths"
+      ],
+      "owner": "T45"
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
