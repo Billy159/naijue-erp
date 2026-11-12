@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P03 third window issued after second cleanup and immediate readiness. Await segments 6\u20138, READY, and independent post-restore readback. Capacity field work follows in the next idle slot.",
+    "next": "P01\u2013P03 READY, 3/73. T45 running the capacity read-only job in the gap. P04 is in local preparation; no new transfer window until capacity closeout and immediate readiness.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1381,7 +1381,7 @@
       "verifiedAt": "2026-11-12T16:42:35.802+08:00"
     },
     "p03ThirdWindow": {
-      "state": "ISSUED_AFTER_PREVIOUS_CLEANUP_AND_T45_READY; LIVE_RESULT_PENDING",
+      "state": "CLOSED_READY_AND_ORIGINAL_POLICY_ABSENCE_RESTORED",
       "preparedSha256": "05401abb8ac23065f3764c744b22bde12dc816fe78b2c2f98e13961b8b043d52",
       "windowDefinitionSha256": "50229485e356a477e74b6389ec18f381ef7be624482142c9ee9e332ca30f9ab2",
       "startsAt": "2026-11-12T16:44:56.234+08:00",
@@ -1390,7 +1390,15 @@
         6,
         7,
         8
-      ]
+      ],
+      "bytes": 2097152,
+      "verifySha256": "17c64597f8df978a6467c745a35b21e8a74959022aa6f6bf2312c2e94f1c5623",
+      "finalResultSha256": "0246d5dd94fdddc0a65ccb421aa6aeae61428c16e0507b7ded90177285910841",
+      "finalReadbackSha256": "43d7f4b6b0fa09a14dc1183368706ff2be7d75f40e67ebfd9d30a37f44db44d3",
+      "policyReadbackSha256": "a0a2e4a84f566e7ecb5bbbc5b23694b8167e853ac4ad987a1fba04a6e0eab29d",
+      "restoreExitCode": 0,
+      "receiverProcesses": 0,
+      "policyAbsentAt": "2026-11-12T16:52:42.822+08:00"
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
@@ -45651,7 +45659,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_AND_P02_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; TWO_OF_73_FRAGMENTS; P03_FIXED_AND_FIRST_WINDOW_EXPIRED_WITHOUT_SUBMISSION; NO IMPORT",
+          "state": "P01_TO_P03_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; THREE_OF_73_FRAGMENTS; P04_PREPARATION_AND_CAPACITY_READONLY; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
