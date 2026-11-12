@@ -2762,13 +2762,34 @@
               "privateAppJobAbsent": true,
               "actualAppStarted": false
             }
+          },
+          {
+            "group": "r3-faa8-existing-maintenance-route-facts-20261113-0433",
+            "status": "ACTUAL_STAGE_CONFIG_HEALTH_ONLY_SAME_BUILD_BROWSER_ROUTE_UNBOUND",
+            "owner": "T45 / C",
+            "evidence": {
+              "actualResultSha256": "86437d5bb67552389e6ddd1fe79ffea780b76b53683b19e9d6e9f16a80386b45",
+              "probeSha256": "4c6da1a18e93cfe7d0b2b000fcdeb1b01a18ebea084049779d9700bb18d2ab6d",
+              "composeSha256": "f52a142cdfeecef1e46aef86db59a1eb022c449effb442e86e9660ae6636932e",
+              "nginxSha256": "476fb996df97f8ceb3245fad32fe8b1ce5287f7e07cabe76e99cc334d3fd5203",
+              "b164Ready": true,
+              "queueInFlight": 0,
+              "rootAvailableBytes": 40110247936,
+              "configuredHostLoopbackPort": 18081,
+              "configuredContainerPort": 8443,
+              "configuredFrontendRoute": "HEALTH_ONLY_OTHER_PATHS_MAINTENANCE_503",
+              "actualDockerBinding": null,
+              "actualPublicCertificateRead": "EACCES",
+              "actualTlsTested": false,
+              "serverWrites": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_ACTUAL_ORIGINAL_READY_RECEIPT_CLOSED_PRIVATE_BROWSER_ROUTE_UNBOUND_A_WAITING_DIRECT_APPROVAL",
+          "status": "FAA8_ACTUAL_READY_OLD_T15_HEALTH_ONLY_T45_EXACT_BROWSER_ROUTE_CONTINUATION_A_WAITING_DIRECT_APPROVAL",
           "owner": "T45",
-          "next": "Reuse the actual FAA8 artifact. Verify exact viable private ingress scope without mutation where possible. Actual A handoff remains a separate direct user approval."
+          "next": "Determine the smallest viable authorized same-build private route and actual three-role acceptance prerequisites. Reuse the received FAA8 archive. A original remains pending direct approval."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
