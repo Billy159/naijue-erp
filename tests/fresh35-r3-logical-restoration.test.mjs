@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DatabaseError } from 'pg';
 import { bindFresh35RestoredTarget, fresh35RestoredTargetGuard } from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
@@ -114,6 +117,58 @@ test('restoration CLI exits 2 with one redacted preparation receipt',()=>{
  assert.equal(result.stderr,JSON.stringify({
   phase:'PREPARATION',category:'PREPARATION_FAILED',automaticRetry:false,applicationVerified:false
  })+'\n');
+});
+
+test('restoration CLI reads the marker and all output paths after a prepublication connection failure',async()=>{
+ const workspace=await realpath(await mkdtemp(join(tmpdir(),'r3-restore-cli-')));
+ try{
+  const runner=new URL('../scripts/release/unified-install/fresh35-restoration-v1.mjs',import.meta.url);
+  const entry=join(workspace,'runner.mjs'),authority=join(workspace,'authorization.json');
+  const authorization='synthetic-private-authorization',marker=createHash('sha256').update(authorization).digest('hex')+'\n';
+  await writeFile(join(workspace,'restoration-program.json'),'synthetic-private-unverified-sidecar');
+  const moduleUrl=source=>'data:text/javascript,'+encodeURIComponent(source);
+  const trust=moduleUrl('export async function assertTrustedRootPath(){} export async function assertTrustedRootTree(){}');
+  const pg=moduleUrl(`
+   import {readFile} from 'node:fs/promises';
+   import {DatabaseError} from ${JSON.stringify(import.meta.resolve('pg'))};
+   export {DatabaseError};
+   export class Client{
+    async connect(){
+     const marker=await readFile(${JSON.stringify(authority+'.consumed')},'utf8');
+     if(marker!==${JSON.stringify(marker)})throw Error('fixture marker missing');
+     throw Object.assign(new DatabaseError('synthetic-private-authentication-error',0,'error'),{code:'28P01'});
+    }
+    async end(){}
+   }
+  `);
+  const source=await readFile(runner,'utf8');
+  const begin=source.indexOf('async function executeFresh35Restoration(progress){');
+  const afterPreparation=source.indexOf(' const consumption=',begin);
+  assert.ok(begin>=0&&afterPreparation>begin);
+  // Replace only trusted preparation and transport in the test copy. Marker
+  // creation, failure handling, protected file readback and stderr are the runner's.
+  const fixture=source.slice(0,begin)+`async function executeFresh35Restoration(progress){
+   const current=async()=>{},loaded={bytes:Buffer.from(${JSON.stringify(authorization)})},connection={};
+   const t={proposal:{workspaceDirectory:${JSON.stringify(workspace)}}};
+   const FRESH35_COMBINED_RECORD_PATH=${JSON.stringify(join(workspace,'final-record.json'))};
+  `+source.slice(afterPreparation);
+  await writeFile(entry,fixture
+   .replace("etc+'/naijue-erp/fresh35-restoration-v1.json'",JSON.stringify(authority))
+   .replace('before.uid===0n','before.uid===BigInt(process.getuid())')
+   .replace("import('pg')",`import(${JSON.stringify(pg)})`)
+   .replace(/(from\s+|import\()(['"])(\.{1,2}\/[^'"]+)\2/g,(_match,prefix,_quote,specifier)=>
+    prefix+JSON.stringify(specifier==='./trusted-install-path.mjs'?trust:new URL(specifier,runner).href)));
+  const result=spawnSync(process.execPath,[entry,'--execute-restored-record'],{encoding:'utf8'});
+  assert.equal(result.status,2,result.stderr);
+  assert.equal(result.stdout,'');
+  assert.deepEqual(JSON.parse(result.stderr),{
+   phase:'CONNECT',category:'CONNECTION_NOT_ESTABLISHED',sqlState:'28P01',
+   readback:{consumed:'MATCHED',program:'UNKNOWN',catalog:'ABSENT',record:'ABSENT'},
+   automaticRetry:false,applicationVerified:false
+  });
+  assert.equal(await readFile(authority+'.consumed','utf8'),marker);
+  assert.equal(await readFile(join(workspace,'restoration-program.json'),'utf8'),'synthetic-private-unverified-sidecar');
+ }finally{await rm(workspace,{recursive:true,force:true})}
 });
 
 test('restoration diagnostics only report a valid SQLSTATE from a genuine PostgreSQL error',()=>{

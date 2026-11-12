@@ -361,6 +361,12 @@ async function executeFresh35Restoration(progress){
  try{await lstat(FRESH35_COMBINED_RECORD_PATH);throw Error('FRESH35_RESTORATION_RECORD_ALREADY_EXISTS')}catch(e){if(e.code!=='ENOENT')throw e}
  const current=async()=>{validateAuthority(a,Date.now());need((await protectedBytes(FRESH35_RESTORATION_AUTHORIZATION_PATH,{privateFile:true,max:65536})).identity===loaded.identity,'AUTHORIZATION_CHANGED');await assertFresh35CombinedSourcesCurrent(source);await assertFresh35CombinedCatalogCurrent(catalog)};
  const consumption={path:FRESH35_RESTORATION_AUTHORIZATION_PATH+'.consumed',text:hash(loaded.bytes)+'\n',privateFile:true};
+ const files=[
+  {path:join(t.proposal.workspaceDirectory,'restoration-program.json')},
+  {path:join(t.proposal.workspaceDirectory,'restoration-catalog.json')},
+  {path:FRESH35_COMBINED_RECORD_PATH}
+ ];
+ progress.publication={consumption,files,confirmed:0};
  await current();const used=await open(consumption.path,constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY|constants.O_NOFOLLOW,0o600);
  await withRestorationCleanup(async()=>{await used.writeFile(consumption.text);await used.sync()},()=>used.close());
  const {Client,DatabaseError}=await import('pg'),client=new Client({...connection,password:()=>connection.password,ssl:false,application_name:'fresh35-restored-record',connectionTimeoutMillis:5000,query_timeout:45000,statement_timeout:40000,lock_timeout:5000,options:'-c search_path=pg_catalog -c TimeZone=UTC'});
@@ -391,12 +397,7 @@ async function executeFresh35Restoration(progress){
   progress.phase='CLOSE';await close();
   progress.phase='PUBLISH_PROGRAM';
   const descriptor=describeFresh35RestorationProgram(program);
-  const files=[
-   {path:join(t.proposal.workspaceDirectory,'restoration-program.json'),text:JSON.stringify(descriptor)},
-   {path:join(t.proposal.workspaceDirectory,'restoration-catalog.json'),text:raw},
-   {path:FRESH35_COMBINED_RECORD_PATH}
-  ];
-  progress.publication={consumption,files,confirmed:0};
+  files[0].text=JSON.stringify(descriptor);files[1].text=raw;
   await current();
   const {publishInstallationRecord}=await import('./publish-installation-record.mjs');
   await publishInstallationRecord(files[0].path,files[0].text);progress.publication.confirmed=1;
