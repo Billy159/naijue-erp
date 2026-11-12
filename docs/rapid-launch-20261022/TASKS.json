@@ -1609,7 +1609,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "05_PREARMED_REAL_FOUR_FRAGMENT_TRIAL_PASS; NINE_OF_73; REUSABLE_FOUR_FRAGMENT_MANIFEST_DISPATCHED",
+      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_FIRST_GROUP_PASS; THIRTEEN_OF_73",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1809,7 +1809,30 @@
       },
       "reusableFourFragmentSuccessor": {
         "owner": "T45",
-        "state": "DISPATCHED; P10_P13_FIRST; NO_NEW_SERVER_RECEIVE",
+        "state": "QB_PASS_AND_P10_P13_ACTUALLY_RECEIVED_AND_INDEPENDENTLY_READ_BACK; FIFTEEN_GROUPS_REMAIN",
+        "readySha256": "4fc54e389b257bfe705da3856dcf6edf9461ef8814ff9dd2b2a022a3dfffbea7",
+        "runtimeDiffSha256": "db9f0f9419b77fb1fe2cfbb8daf146ac621da69f55b40392d92d4a3461dd2139",
+        "firstManifestSha256": "12509bc108830c7fc9df9b8531c25e5bb5e4b76a7863256de1e1d2d79bad07f7",
+        "qbVerifiedOriginalLeafCount": 64,
+        "qbVerifiedGroups": 16,
+        "actualFirstGroup": {
+          "startsAt": "2026-11-12T20:47:57.991+08:00",
+          "localStart": "2026-11-12T20:47:58.044+08:00",
+          "sendAdmissionBefore": "2026-11-12T20:51:57.991+08:00",
+          "expiresAt": "2026-11-12T21:05:57.991+08:00",
+          "installTerminal": "COMPLETED/0",
+          "installJobSha256": "8585162b94178633ed3891df70c3ab557a655eb64e2ec165154fef5831381964",
+          "installPolicySha256": "a020cc62209e5de884be811634a4db90c9cd523a29cae53b0479a337d34598a9",
+          "durableSegments": 32,
+          "readyBytes": 8388608,
+          "restoreTerminal": "COMPLETED/0",
+          "restoreJobSha256": "dca34c7bb14a4c9359756d8a9dafed0782b8878138a997f82d9f117ccb9bd350",
+          "restorePolicySha256": "454082fa4a01c7b4a01a6a56b6dc2bbb1c3237a99fc11938a2d5864334640017",
+          "observedAt": "2026-11-12T20:54:22.436+08:00",
+          "resultSha256": "ed4b60d943311b003841110289ea2c2089575d5e70e884809c300e4e912a11ab",
+          "readback": "FOUR ORIGINAL KEYS READY; EXACT HASHES AND LENGTHS; POLICY ABSENT",
+          "totalReadyFragments": 13
+        },
         "candidateExtent": "remaining P10-P73 from original whole-package manifest; fixed validated four-key subset; final fragment actual size",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
@@ -46108,7 +46131,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TO_P09_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; NINE_OF_73_FRAGMENTS; REUSABLE_FOUR_FRAGMENT_SUCCESSOR_IN_PREPARATION; NO_IMPORT",
+          "state": "P01_TO_P13_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; THIRTEEN_OF_73_FRAGMENTS; SAME_PROGRAM_FOR_NEXT_FIFTEEN_GROUPS; NO_IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
