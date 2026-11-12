@@ -2109,13 +2109,16 @@
         ],
         "currentInFlight": {
           "group": "r3-05-launcher-and-storage-admission",
-          "status": "EXACT_LEGACY_COPY_METADATA_CONFIRMED; NARROW_USER_DECISION_PENDING; 05_OFFSITE_CONTINUES",
+          "status": "EXACT_SINGLE_RAW_COPY_USER_AUTHORIZED; EXECUTION_PENDING; 05_LOCAL_03_QB_REVIEW_IN_FLIGHT",
+          "userApprovalQuestion": "call_351e486c4b78450ba114f3d88451c03b",
           "backupCandidateReadbackSha256": "d7d79884e600319218fc14c8016e3a5ebb6fb4c25dbc201e0fad6ff21179066c",
           "backupCandidatePotentialBytes": 10844405760,
           "verifiedReclaimedBytes": 0,
           "availableBytes": 29280972800,
           "currentStartupDeficitBytes": 783798272,
-          "ordinaryServiceMaximumSeconds": 3600
+          "launcher03Sha256": "290bf7d03bf003a92afdfc70317a9aebf62cdd84f2c3a7a7d6101b6f6f49a64a",
+          "launcher03ProofSha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
+          "knownSameGenerationBudgetSeconds": 6635
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
