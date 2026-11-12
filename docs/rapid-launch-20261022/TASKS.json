@@ -79,7 +79,7 @@
       "nextReadyPackage": "Adopt actual private/start/helper HTTP; QF2 only affected dynamic consumers; integrate existing-owner next leaves",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
       "fastToolVerified": false,
-      "latestModelAuthority": "2026-11-05 launch plan and current goal: gpt-6.1-sol medium or high; R3 controller currently high"
+      "latestModelAuthority": "2026-11-12 direct user instruction: gpt-6.1-sol with no fixed reasoning effort; R3 controller currently high"
     },
     "F1": {
       "title": "前端单据与公共界面",
@@ -1362,14 +1362,35 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "T45 confirmed immediate readiness; P03 second window issued. Await live submission, per-segment readbacks and policy cleanup before capacity field work.",
-    "networkDiagnosticExitCodes": [0, 0],
+    "next": "P03 third window issued after second cleanup and immediate readiness. Await segments 6\u20138, READY, and independent post-restore readback. Capacity field work follows in the next idle slot.",
+    "networkDiagnosticExitCodes": [
+      0,
+      0
+    ],
     "networkFinalReadbackSha256": "26b7014d01fbabefb6b5169d5b7bd7475f8eec58676507770e9adffbbedb7162",
     "p03SecondWindow": {
       "startsAt": "2026-11-12T16:31:11.011+08:00",
       "expiresAt": "2026-11-12T16:41:11.011+08:00",
-      "state": "ISSUED_AFTER_T45_READY; LIVE_RESULT_PENDING",
-      "windowDefinitionSha256": "a5ff62db9f9e65c7d6cba019a67b99a5e8fbb2c0698f16b6f8a29bdc4c8f242a"
+      "state": "CLOSED_PARTIAL; ORIGINAL_POLICY_ABSENCE_RESTORED",
+      "windowDefinitionSha256": "a5ff62db9f9e65c7d6cba019a67b99a5e8fbb2c0698f16b6f8a29bdc4c8f242a",
+      "observedEffort": "xhigh",
+      "readbackBytes": 1310720,
+      "nextSegment": 6,
+      "finalResultSha256": "09d099bb42553311c0078483dac42d921451bb1fc66eb5aa004bf45924ba27c7",
+      "finalReadbackSha256": "056d67f742a04360ecc6c5ba1836e1c8217e0aafc0a51d5b4982549d27a160a9",
+      "verifiedAt": "2026-11-12T16:42:35.802+08:00"
+    },
+    "p03ThirdWindow": {
+      "state": "ISSUED_AFTER_PREVIOUS_CLEANUP_AND_T45_READY; LIVE_RESULT_PENDING",
+      "preparedSha256": "05401abb8ac23065f3764c744b22bde12dc816fe78b2c2f98e13961b8b043d52",
+      "windowDefinitionSha256": "50229485e356a477e74b6389ec18f381ef7be624482142c9ee9e332ca30f9ab2",
+      "startsAt": "2026-11-12T16:44:56.234+08:00",
+      "expiresAt": "2026-11-12T16:54:56.234+08:00",
+      "remainingSegments": [
+        6,
+        7,
+        8
+      ]
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
@@ -1799,10 +1820,22 @@
     "model": "gpt-6.1-sol",
     "efforts": [
       "medium",
-      "high"
+      "high",
+      "xhigh"
     ],
-    "sourceThread": "01a1aa63-3402-70e3-83af-cd393446504b",
-    "supersedes": "Prior execution model settings only; historical actual records preserved"
+    "effortPolicy": "The user requires Sol 6.1 and does not require a specific reasoning effort.",
+    "sourceThread": "01a1cec6-7547-7d82-a867-00ea53f13031",
+    "sourceMessageId": "01a1cee9-ef55-70c1-bf6e-23a845810ef4",
+    "supersedes": "The previous medium/high-only restriction. Historical actual settings and outcomes are preserved.",
+    "previousDirective": {
+      "model": "gpt-6.1-sol",
+      "efforts": [
+        "medium",
+        "high"
+      ],
+      "sourceThread": "01a1aa63-3402-70e3-83af-cd393446504b",
+      "supersedes": "Prior execution model settings only; historical actual records preserved"
+    }
   },
   "currentExecutionSnapshot": {
     "asOf": "2026-11-11T11:04:51+08:00",
