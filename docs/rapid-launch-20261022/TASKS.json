@@ -1609,7 +1609,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "05_FIRST_WINDOW_CLOSED_NO_DATA; SAME_KEYS_PREARMED_SECOND_WINDOW_ISSUED",
+      "state": "05_PREARMED_REAL_FOUR_FRAGMENT_TRIAL_PASS; NINE_OF_73; REUSABLE_FOUR_FRAGMENT_MANIFEST_DISPATCHED",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1650,7 +1650,7 @@
         ],
         "realOriginalsWritten": 0
       },
-      "serverRealBatchSubmitted": false,
+      "serverRealBatchSubmitted": true,
       "qb01": {
         "state": "NEED_FIX",
         "turn": "01a1cf11-c72a-76e2-b80b-a878505d5338",
@@ -1781,7 +1781,22 @@
         "quietReadback": "34/34 current queue terminal; four originals absent; policy absent; old installation terminal; no matching receive process"
       },
       "prearmedSuccessorTrial": {
-        "state": "ISSUED_AFTER_T45_WAITING_AND_FOUR_ORIGINALS_ABSENT; LIVE_RESULT_PENDING",
+        "state": "FOUR_ORIGINALS_READY_WITH_POST_WITHDRAWAL_EXACT_READBACK; CLIENT_EXIT_0",
+        "localClientStart": "2026-11-12T20:26:33.546+08:00",
+        "installComplete": "2026-11-12T20:26:39.554+08:00",
+        "installFullReceiptLocal": "2026-11-12T20:26:42.010+08:00",
+        "fourFragmentsReadyAt": "2026-11-12T20:26:47.222+08:00",
+        "restoreComplete": "2026-11-12T20:26:52.176+08:00",
+        "resultLocalAt": "2026-11-12T20:26:54.148+08:00",
+        "bytesReady": 8388608,
+        "finalResultSha256": "57fa79a30a3a970d5e0692b6488bb7fdb3c7ac098a85867f6c0e7b1901c30bfc",
+        "installJobSha256": "92908f3c50733ae5fb53b85235efba0656116c1f4027f722e039f4ccd905cf3b",
+        "installPolicySha256": "dfb13370e8dc847d41d5297b61011611b252f211337dab9b2dade09927c83b9e",
+        "restoreJobSha256": "e16afff68741754d597549abde4e75f8eca05ec89dbc2773eb72ee6c43239b9f",
+        "restorePolicySha256": "615ddd869721eb7ddcba1238876306ec4906cb76a80c0d14d4db7114093c584a",
+        "postWithdrawalPolicy": "ENOENT",
+        "postWithdrawalFourOriginals": "READY; ALL MATCH ACTUAL LENGTHS AND FIXED WHOLE_FRAGMENT_HASHES",
+        "matchingReceiverProcesses": 0,
         "launcherSha256": "918e35e62cfb538495baa4f99da17629af9a4e9b771e81a26a6e774a4f8a2b38",
         "localLaunchReadyBeforeIssue": true,
         "lanes": 1,
@@ -1791,6 +1806,13 @@
         "netUploadSeconds": 600,
         "closeoutReserveSeconds": 240,
         "originals": ["P06", "P07", "P08", "P09"]
+      },
+      "reusableFourFragmentSuccessor": {
+        "owner": "T45",
+        "state": "DISPATCHED; P10_P13_FIRST; NO_NEW_SERVER_RECEIVE",
+        "candidateExtent": "remaining P10-P73 from original whole-package manifest; fixed validated four-key subset; final fragment actual size",
+        "independentDeltaReviewer": "QB",
+        "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
     },
     "oldAssetRetirement": {
@@ -46086,7 +46108,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TO_P05_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; FIVE_OF_73_FRAGMENTS; RECEIVER_BATCH_OPTIMIZATION_LOCAL; NO IMPORT",
+          "state": "P01_TO_P09_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; NINE_OF_73_FRAGMENTS; REUSABLE_FOUR_FRAGMENT_SUCCESSOR_IN_PREPARATION; NO_IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
