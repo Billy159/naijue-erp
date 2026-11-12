@@ -45599,8 +45599,18 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "FIRST_REAL_NONINTERACTIVE_READONLY_JOB_COMPLETED; ORIGINAL_KEYS_ABSENT_BOTH_GRANTS; QB_RECEIVER_DELTA_PASS; P01_PREPARATION_IN_PROGRESS; NO TRANSFER OR IMPORT",
-          "next": "T45 prepares first fragment strategy from observed absence with exact recovery. C issues when the exact inputs are ready; measure actual turnaround before grouping. Keep import held for actual joint capacity and protected preconditions."
+          "state": "P01_TIMED_OUT_PARTIAL_PREFIX_CONFIRMED; ORIGINAL_POLICY_ABSENCE_RESTORED_AND_INDEPENDENTLY_READ_BACK; NO READY, NO OTHER FRAGMENTS, NO IMPORT",
+          "p01": {
+            "requestKey": "t45-r3-r2-data-p01-20261112-01",
+            "bytesReceived": 941056,
+            "bytesExpected": 2097152,
+            "transferSeconds": 46.316,
+            "transferResultSha256": "e8a02428a0fe85142520c72241dd1aa79e45c3fcb211e2c95fa89ae2596822d9",
+            "restoreJobSha256": "5fd83d00bcc0ce01d67aa194e030d1a3fd0099bb3d7f1843bf12bc9df61f76aa",
+            "finalReadbackAt": "2026-11-12T12:50:09+08:00",
+            "finalReadbackSha256": "b439260a762c6d756cce559a9ea916fd8ab5ac873f75871b53a0e31d37148610"
+          },
+          "next": "T45 prepares same-key continuation from the verified 941056-byte prefix using the existing receiver seam. QB checks only the fixed delta before any onsite continuation. Keep the 40-second SSH limit and preserve full verification. Import stays held for actual joint capacity and maintenance prerequisites."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
