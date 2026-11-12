@@ -1,12 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { DatabaseError } from 'pg';
 import { bindFresh35RestoredTarget, fresh35RestoredTargetGuard } from '../scripts/release/unified-install/fresh35-combined-target-v1.mjs';
 import {
  ADMIN154_PREDECESSOR_RECORD_SHA256, ADMIN154_PREDECESSOR_SOURCE_SHA256, ADMIN154_PATCH_SHA256
 } from '../scripts/release/unified-install/fresh35-admin154-record-v1.mjs';
 import {
- validateR3RestorationLineage, r3RestoredImportSql, isFresh35RestorationCompletion
+ validateR3RestorationLineage, r3RestoredImportSql, isFresh35RestorationCompletion, describeFresh35RestorationFailure
 } from '../scripts/release/unified-install/fresh35-restoration-v1.mjs';
 
 const sha = digit => digit.repeat(64);
@@ -101,4 +104,52 @@ test('restored target uses the existing distinct bootstrap and checks backend ex
  assert.doesNotMatch(guard,/fresh35_exclusive_backends/);
  const runner=await readFile(new URL('../scripts/release/unified-install/fresh35-restoration-v1.mjs',import.meta.url),'utf8');
  assert.doesNotMatch(runner,/fresh35CombinedBootstrapObserverSql|GRANT EXECUTE/);
+});
+
+test('restoration CLI exits 2 with one redacted preparation receipt',()=>{
+ const entry=fileURLToPath(new URL('../scripts/release/unified-install/fresh35-restoration-v1.mjs',import.meta.url));
+ const result=spawnSync(process.execPath,[entry,'synthetic-secret-argument'],{encoding:'utf8'});
+ assert.equal(result.status,2);
+ assert.equal(result.stdout,'');
+ assert.equal(result.stderr,JSON.stringify({
+  phase:'PREPARATION',category:'PREPARATION_FAILED',automaticRetry:false,applicationVerified:false
+ })+'\n');
+});
+
+test('restoration diagnostics only report a valid SQLSTATE from a genuine PostgreSQL error',()=>{
+ const secret='synthetic-private-connection-data';
+ const pgError=Object.assign(new DatabaseError(secret,0,'error'),{code:'28P01',detail:secret,where:secret});
+ const socketError=Object.assign(new Error(secret),{code:'EPIPE'});
+ const flags={automaticRetry:false,applicationVerified:false};
+ assert.deepEqual(describeFresh35RestorationFailure(pgError,'CONNECT',DatabaseError),{
+  phase:'CONNECT',category:'CONNECTION_NOT_ESTABLISHED',sqlState:'28P01',...flags
+ });
+ for(const error of [socketError,Object.assign(new Error(secret),{code:'23505'}),
+  Object.assign(new DatabaseError(secret,0,'error'),{code:'ab123'})]){
+  assert.deepEqual(describeFresh35RestorationFailure(error,'VERIFY',DatabaseError),{
+   phase:'VERIFY',category:'RESTORE_VERIFICATION_FAILED',...flags
+  });
+ }
+ assert.deepEqual(describeFresh35RestorationFailure(pgError,'VERIFY',DatabaseError),{
+  phase:'VERIFY',category:'RESTORE_VERIFICATION_FAILED',sqlState:'28P01',...flags
+ });
+});
+
+test('restoration publication diagnostics preserve known sidecars and publisher uncertainty',()=>{
+ const failure=Object.assign(new Error('synthetic-protected-file-path'),{installState:'COMMITTED_UNPUBLISHED'});
+ const cases=[
+  [failure,'PUBLISH_PROGRAM',['ABSENT','ABSENT','ABSENT'],0,'PUBLICATION_NOT_WRITTEN'],
+  [failure,'PUBLISH_CATALOG',['MATCHED','ABSENT','ABSENT'],1,'PUBLICATION_PARTIAL'],
+  [failure,'PUBLISH_RECORD',['MATCHED','MATCHED','ABSENT'],2,'PUBLICATION_PARTIAL'],
+  [failure,'PUBLISH_RECORD',['MATCHED','MATCHED','UNKNOWN'],2,'PUBLICATION_OUTCOME_UNKNOWN'],
+  [failure,'PUBLISH_PROGRAM',['MATCHED','ABSENT','ABSENT'],0,'PUBLICATION_OUTCOME_UNKNOWN'],
+  [new Error('INSTALL_RECORD_PUBLISHED_DURABILITY_UNKNOWN'),'PUBLISH_CATALOG',['MATCHED','MATCHED','ABSENT'],1,'PUBLICATION_OUTCOME_UNKNOWN'],
+  [Object.assign(new Error('synthetic-protected-path'),{installState:'PUBLISHED_DURABILITY_UNKNOWN'}),
+   'PUBLISH_RECORD',['MATCHED','MATCHED','MATCHED'],2,'PUBLICATION_OUTCOME_UNKNOWN']
+ ];
+ for(const [error,phase,observed,confirmed,category] of cases){
+  assert.deepEqual(describeFresh35RestorationFailure(error,phase,DatabaseError,observed,confirmed),{
+   phase,category,automaticRetry:false,applicationVerified:false
+  });
+ }
 });

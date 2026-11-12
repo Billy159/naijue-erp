@@ -3,7 +3,7 @@
 import {readFile,open,lstat} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {resolve,join} from 'node:path';
+import {resolve,join,dirname} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {isDeepStrictEqual} from 'node:util';
 import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
@@ -182,19 +182,61 @@ export function validateFresh35RestorationOrdinaryProof(raw,record){
 }
 
 const fileIdentity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
+async function withRestorationCleanup(work,cleanup){
+ let failed=false;
+ try{return await work()}catch(error){failed=true;throw error}
+ finally{try{await cleanup()}catch(error){if(!failed)throw error}}
+}
 async function protectedBytes(path,{privateFile=false,max=16*1024*1024}={}){
  await assertTrustedRootPath(path);const file=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
- try{const before=await file.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&(!privateFile||(before.mode&0o077n)===0n)&&before.size>0n&&before.size<=BigInt(max),'PROTECTED_FILE_REQUIRED');
+ return withRestorationCleanup(async()=>{const before=await file.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&(!privateFile||(before.mode&0o077n)===0n)&&before.size>0n&&before.size<=BigInt(max),'PROTECTED_FILE_REQUIRED');
   const bytes=await file.readFile(),after=await file.stat({bigint:true}),current=await lstat(path,{bigint:true});need(BigInt(bytes.length)===before.size&&fileIdentity(before)===fileIdentity(after)&&fileIdentity(before)===fileIdentity(current),'PROTECTED_FILE_CHANGED');return {bytes,identity:fileIdentity(before)};
- }finally{await file.close()}
+ },()=>file.close());
 }
 async function pinnedJson(ref){need(own(ref,['path','sha256'])&&typeof ref.path==='string'&&resolve(ref.path)===ref.path&&hex(ref.sha256),'PINNED_SOURCE_REFERENCE_REQUIRED');const loaded=await protectedBytes(ref.path);need(hash(loaded.bytes)===ref.sha256,'SOURCE_REFERENCE_CHANGED');return parseStrictJson(loaded.bytes.toString('utf8'))}
 async function actualDump(ref,deadline){
  need(own(ref,['path','sha256'])&&hex(ref.sha256),'PINNED_DUMP_REQUIRED');await assertTrustedRootPath(ref.path);const f=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);
- try{const before=await f.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o077n)===0n&&before.size>5n,'PRIVATE_DUMP_REQUIRED');const h=createHash('sha256'),buffer=Buffer.alloc(1024*1024);let position=0;
+ await withRestorationCleanup(async()=>{const before=await f.stat({bigint:true});need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o077n)===0n&&before.size>5n,'PRIVATE_DUMP_REQUIRED');const h=createHash('sha256'),buffer=Buffer.alloc(1024*1024);let position=0;
   for(;;){need(Date.now()<deadline,'AUTHORIZATION_WINDOW_EXPIRED');const {bytesRead}=await f.read(buffer,0,buffer.length,position);if(!bytesRead)break;if(position===0)need(buffer.subarray(0,5).toString()==='PGDMP','CUSTOM_DUMP_REQUIRED');h.update(buffer.subarray(0,bytesRead));position+=bytesRead;}
   need(h.digest('hex')===ref.sha256&&BigInt(position)===before.size&&fileIdentity(await f.stat({bigint:true}))===fileIdentity(before)&&fileIdentity(await lstat(ref.path,{bigint:true}))===fileIdentity(before),'ACTUAL_DUMP_CHANGED');
- }finally{await f.close()}
+ },()=>f.close());
+}
+
+async function observeRestorationPublication({path,text}){
+ try{
+  const parent=dirname(path);
+  await assertTrustedRootPath(parent);
+  try{await lstat(path)}catch(error){
+   if(error.code!=='ENOENT')throw error;
+   await assertTrustedRootPath(parent);return 'ABSENT';
+  }
+  if(text!==undefined&&(await protectedBytes(path)).bytes.equals(Buffer.from(text)))return 'MATCHED';
+ }catch{/* Unreadable or changed protected output does not establish absence. */}
+ return 'UNKNOWN';
+}
+
+export function describeFresh35RestorationFailure(error,phase,DatabaseError,observed=[],confirmed=0){
+ let category,sqlState;
+ switch(phase){
+ case 'CONNECT':
+ case 'VERIFY':
+  category=phase==='CONNECT'?'CONNECTION_NOT_ESTABLISHED':'RESTORE_VERIFICATION_FAILED';
+  if(typeof DatabaseError==='function'&&error instanceof DatabaseError&&typeof error.code==='string'&&/^[0-9A-Z]{5}$/.test(error.code))sqlState=error.code;
+  break;
+ case 'PUBLISH_PROGRAM':
+ case 'PUBLISH_CATALOG':
+ case 'PUBLISH_RECORD':
+  // Matching bytes establish visibility, not directory durability after a failed publication.
+  if(error?.installState==='PUBLISHED_DURABILITY_UNKNOWN'||error?.message==='INSTALL_RECORD_PUBLISHED_DURABILITY_UNKNOWN'||
+     observed.length!==3||confirmed>2||!observed.every((result,i)=>result===(i<confirmed?'MATCHED':'ABSENT'))){
+   category='PUBLICATION_OUTCOME_UNKNOWN';
+  }else{
+   category=confirmed===0?'PUBLICATION_NOT_WRITTEN':'PUBLICATION_PARTIAL';
+  }
+  break;
+ default: phase='PREPARATION';category='PREPARATION_FAILED';
+ }
+ return {phase,category,...(sqlState!==undefined?{sqlState}:{}),automaticRetry:false,applicationVerified:false};
 }
 
 // The first package's normalized, password-free ACL observation, reused verbatim
@@ -282,6 +324,9 @@ export function r3RestoredImportSql(i,provision){
 /** Only this fixed, root, native-client factory can issue a completion. Neither
  * client, I/O implementation, proof callback nor parsed completion is accepted. */
 export async function runFresh35Restoration(){
+ return executeFresh35Restoration({phase:'PREPARATION'});
+}
+async function executeFresh35Restoration(progress){
  need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0&&process.version==='v24.21.0','TRUSTED_NATIVE_ROOT_RUNTIME_REQUIRED');
  need(!Object.keys(process.env).some(k=>k==='NODE_OPTIONS'||k==='NODE_PATH'||k==='DATABASE_URL'||k.startsWith('PG')||k.startsWith('LD_')||k.startsWith('DYLD_')),'CLEAN_RUNTIME_REQUIRED');
  await assertTrustedRootTree(sourceRoot);await assertTrustedRootPath(process.execPath);
@@ -302,14 +347,20 @@ export async function runFresh35Restoration(){
  need(describeFresh35CombinedSource(source).currentSourcePins.some(p=>p.path==='scripts/release/unified-install/fresh35-combined-record-v1.mjs'&&p.sha256===FRESH35_COMBINED_RECORD_MODULE_SHA256),'LOADED_PUBLISHER_SOURCE_DIFFERS');
  try{await lstat(FRESH35_COMBINED_RECORD_PATH);throw Error('FRESH35_RESTORATION_RECORD_ALREADY_EXISTS')}catch(e){if(e.code!=='ENOENT')throw e}
  const current=async()=>{validateAuthority(a,Date.now());need((await protectedBytes(FRESH35_RESTORATION_AUTHORIZATION_PATH,{privateFile:true,max:65536})).identity===loaded.identity,'AUTHORIZATION_CHANGED');await assertFresh35CombinedSourcesCurrent(source);await assertFresh35CombinedCatalogCurrent(catalog)};
- await current();const used=await open(FRESH35_RESTORATION_AUTHORIZATION_PATH+'.consumed',constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY|constants.O_NOFOLLOW,0o600);try{await used.writeFile(hash(loaded.bytes)+'\n');await used.sync()}finally{await used.close()}
- const {Client}=await import('pg'),client=new Client({...connection,password:()=>connection.password,ssl:false,application_name:'fresh35-restored-record',connectionTimeoutMillis:5000,query_timeout:45000,statement_timeout:40000,lock_timeout:5000,options:'-c search_path=pg_catalog -c TimeZone=UTC'});
- let began=false,closed=false,raw,rolesAclSha256;
+ await current();const used=await open(FRESH35_RESTORATION_AUTHORIZATION_PATH+'.consumed',constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY|constants.O_NOFOLLOW,0o600);
+ await withRestorationCleanup(async()=>{await used.writeFile(hash(loaded.bytes)+'\n');await used.sync()},()=>used.close());
+ const {Client,DatabaseError}=await import('pg'),client=new Client({...connection,password:()=>connection.password,ssl:false,application_name:'fresh35-restored-record',connectionTimeoutMillis:5000,query_timeout:45000,statement_timeout:40000,lock_timeout:5000,options:'-c search_path=pg_catalog -c TimeZone=UTC'});
+ progress.DatabaseError=DatabaseError;
+ let began=false,closeAttempted=false,raw,rolesAclSha256;
+ const close=()=>{closeAttempted=true;return closePhysical(client)};
  const query=async sql=>{await current();assertInstallClientProtocolState(client);const result=await client.query(sql);assertInstallClientProtocolState(client);return result};
  const ack=(result,tag)=>need(result?.command===tag,'NATIVE_'+tag+'_ACK_REQUIRED');
  const one=result=>{ack(result,'SELECT');need(result.rows?.length===1&&typeof result.rows[0].restoration_json==='string','ONE_NATIVE_OBSERVATION_REQUIRED');return parseStrictJson(result.rows[0].restoration_json)};
- try{
-  await client.connect();need(client instanceof Client&&Object.getPrototypeOf(client)===Client.prototype&&client.query===Client.prototype.query&&client._connected===true,'ORIGINAL_NATIVE_CLIENT_REQUIRED');assertInstallClientProtocolState(client,{idle:true});
+ return withRestorationCleanup(async()=>{
+  progress.phase='CONNECT';
+  await client.connect();
+  progress.phase='VERIFY';
+  need(client instanceof Client&&Object.getPrototypeOf(client)===Client.prototype&&client.query===Client.prototype.query&&client._connected===true,'ORIGINAL_NATIVE_CLIENT_REQUIRED');assertInstallClientProtocolState(client,{idle:true});
   ack(await query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'),'BEGIN');began=true;
   validateFresh35RestorationPhysical(one(await query(identitySql)),target);
   const roleRows=one(await query(roleAclSql));rolesAclSha256=validateFresh35RestorationRoleAcl(roleRows,sourceRoles,a.restoreBootstrapRole);
@@ -317,15 +368,28 @@ export async function runFresh35Restoration(){
   need(imported.batchCount===2&&imported.originalReceipt===true&&imported.originalPublish===true,'ORIGINAL_RESTORED_IMPORT_CLOSURE_DIFFERS');
   const guarded=await query(p.sql.guardSql);need(Array.isArray(guarded)&&guarded.length===2&&guarded.every(r=>r?.command==='DO'),'COMPLETE_TARGET_AND_CATALOG_GUARD_ACK_REQUIRED');const observed=await query(p.sql.observationSql);ack(observed,'SELECT');need(observed.rows?.length===1,'ONE_COMPLETE_CATALOG_REQUIRED');raw=observed.rows[0].catalog_json;
   validateFresh35CombinedRestorationCatalogObservation(raw,catalog,source,target);ack(await query('ROLLBACK'),'ROLLBACK');began=false;
-  await closePhysical(client);closed=true;await current();
-  const {publishInstallationRecord}=await import('./publish-installation-record.mjs');
-  await publishInstallationRecord(join(t.proposal.workspaceDirectory,'restoration-program.json'),JSON.stringify(describeFresh35RestorationProgram(program)));
-  await publishInstallationRecord(join(t.proposal.workspaceDirectory,'restoration-catalog.json'),raw);
-  const token=Object.freeze({profile:'FRESH35_RESTORATION_COMPLETION_V1'});
+  await close();await current();
   const descriptor=describeFresh35RestorationProgram(program);
+  const files=[
+   {path:join(t.proposal.workspaceDirectory,'restoration-program.json'),text:JSON.stringify(descriptor)},
+   {path:join(t.proposal.workspaceDirectory,'restoration-catalog.json'),text:raw},
+   {path:FRESH35_COMBINED_RECORD_PATH}
+  ];
+  progress.publication={files,confirmed:0};
+  progress.phase='PUBLISH_PROGRAM';
+  const {publishInstallationRecord}=await import('./publish-installation-record.mjs');
+  await publishInstallationRecord(files[0].path,files[0].text);progress.publication.confirmed=1;
+  progress.phase='PUBLISH_CATALOG';
+  await publishInstallationRecord(files[1].path,files[1].text);progress.publication.confirmed=2;
+  progress.phase='PUBLISH_RECORD';
+  const token=Object.freeze({profile:'FRESH35_RESTORATION_COMPLETION_V1'});
   const record=freeze({format:'FRESH35_RESTORED_INSTALLATION_RECORD_V1',restoredAt:new Date().toISOString(),binding:{sourceSetSha256:descriptor.sourceSetSha256,targetSha256:descriptor.targetSha256},target:t,origin:descriptor.origin,programSha256:descriptor.programSha256,catalogSpecSha256:descriptor.catalogSpecSha256,catalogSha256:hash(raw),rolesAclSha256,authorizationSha256:hash(loaded.bytes),state:'RESTORED_FROM_VERIFIED_INSTALLATION'});
-  validateFresh35RestoredRecord(record,program);completions.set(token,{record,sourceRoot,recordModuleSha256:FRESH35_COMBINED_RECORD_MODULE_SHA256,current});return token;
- }finally{try{if(began)try{await client.query('ROLLBACK')}catch{}}finally{if(!closed)await closePhysical(client)}}
+  validateFresh35RestoredRecord(record,program);files[2].text=JSON.stringify(record)+'\n';
+  completions.set(token,{record,sourceRoot,recordModuleSha256:FRESH35_COMBINED_RECORD_MODULE_SHA256,current});return token;
+ },async()=>{
+  try{if(began)await client.query('ROLLBACK')}
+  finally{if(!closeAttempted)await close()}
+ });
 }
 
 export function isFresh35RestorationCompletion(value){return completions.has(value)}
@@ -333,6 +397,18 @@ export function describeFresh35RestorationCompletion(value){need(completions.has
 export async function assertFresh35RestorationCompletionCurrent(value){need(completions.has(value),'GENUINE_PHYSICAL_RESTORATION_COMPLETION_REQUIRED');await completions.get(value).current()}
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- try{need(process.argv.length===3&&process.argv[2]==='--execute-restored-record','FIXED_RESTORATION_ENTRY_REQUIRED');const completion=await runFresh35Restoration();const {publishFresh35CombinedRecord}=await import('./fresh35-combined-record-v1.mjs');const result=await publishFresh35CombinedRecord(completion);process.stdout.write(JSON.stringify({state:result.state,recordSha256:result.recordSha256,recordKind:'RESTORED_FROM_VERIFIED_INSTALLATION',applicationVerified:false,automaticRetry:false})+'\n')}
- catch{process.stderr.write('{"state":"RESTORATION_FAILED_OR_PUBLICATION_UNKNOWN","automaticRetry":false,"applicationVerified":false}\n');process.exitCode=2}
+ const progress={phase:'PREPARATION'};
+ try{
+  need(process.argv.length===3&&process.argv[2]==='--execute-restored-record','FIXED_RESTORATION_ENTRY_REQUIRED');
+  const completion=await executeFresh35Restoration(progress);
+  const {publishFresh35CombinedRecord}=await import('./fresh35-combined-record-v1.mjs');
+  const result=await publishFresh35CombinedRecord(completion);
+  progress.publication.confirmed=3;
+  process.stdout.write(JSON.stringify({state:result.state,recordSha256:result.recordSha256,recordKind:'RESTORED_FROM_VERIFIED_INSTALLATION',applicationVerified:false,automaticRetry:false})+'\n');
+ }catch(error){
+  const publication=progress.publication;
+  const observed=publication?await Promise.all(publication.files.map(observeRestorationPublication)):[];
+  const diagnostic=describeFresh35RestorationFailure(error,progress.phase,progress.DatabaseError,observed,publication?.confirmed);
+  process.stderr.write(JSON.stringify(diagnostic)+'\n');process.exitCode=2;
+ }
 }
