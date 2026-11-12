@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P04 first window issued after capacity job closed. Await live receipts; full import and backup capacity not established.",
+    "next": "P04 first window closed with exact full fragment; finalize-only window issued on original key. Root capacity remains insufficient for formal import and backup; available storage routes being confirmed.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1410,12 +1410,37 @@
       "postgresStartup": false
     },
     "p04FirstWindow": {
-      "state": "ISSUED_AFTER_T45_READY; LIVE_RESULT_PENDING",
+      "state": "CLOSED_FULL_FRAGMENT_AWAITING_FINALIZE; ORIGINAL_POLICY_ABSENCE_RESTORED",
       "originalKey": "t45-r3-r2-data-p04-20261112-01",
       "preparedSha256": "8adfa688902e9c65075b90f4c7a2ee10c971a95a487f70a4b0b26b707db92673",
       "windowDefinitionSha256": "580e7458964c371030b50a3eb6421c7a3e7b63c49595cf61919cf2b03679e754",
       "startsAt": "2026-11-12T16:59:29.850+08:00",
-      "expiresAt": "2026-11-12T17:09:29.850+08:00"
+      "expiresAt": "2026-11-12T17:09:29.850+08:00",
+      "bytes": 2097152,
+      "lastReadbackAt": "2026-11-12T17:10:54.727+08:00",
+      "restoreExitCode": 0,
+      "receiverProcesses": 0,
+      "finalResultSha256": "160c889d2f26277739b3c56ccc77f3555ab06ae2e901c4cfb8de3a8041810a97",
+      "finalOriginalReadbackSha256": "ee55ae97c010cf5be24605e05ba21b03b540a441d66728820b674326b25ec6ee",
+      "finalPolicyReadbackSha256": "190ee54dff4a2db24ec4e1733e03506fa920f9eacb0ac6356f3e97a09bad69a7"
+    },
+    "p04FinalizeWindow": {
+      "state": "ISSUED_AFTER_CLEANUP; FINALIZE_ONLY_NO_SEGMENT_SEND",
+      "preparedSha256": "27e42d2df70675d9d403a5709f63827ab34c3dcf8b7cabb111b88162457b81df",
+      "windowDefinitionSha256": "3a1c6ec303886a77d180ec190bb444034b24a845fdcf8475018705b5334e217d",
+      "startsAt": "2026-11-12T17:12:46.915+08:00",
+      "expiresAt": "2026-11-12T17:22:46.915+08:00"
+    },
+    "capacityPathSourceReview": {
+      "state": "STATIC_D1_REVIEW; NO_RUNTIME_ADMISSION",
+      "reviewThread": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "reviewTurn": "01a1ceff-571e-7120-a79a-1d299c5edce2",
+      "rootKnownShortfallWithReportScratchExternalBytes": 980430520,
+      "rootKnownShortfallWithReportsInternalBytes": 5475794934,
+      "reportAndScratchExternalKnownUsableBaselineBytes": 10937815358,
+      "physicalColdBackupDestination": "same original root volume enforced",
+      "logicalBackupAndIndependentRestore": "fixed entry supports separately approved protected paths; no current mounted approved target",
+      "pending": "Root expansion or approved storage route; exact runtime binding, PG and cold-copy peaks, working-volume scratch, backup and restore budgets."
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
