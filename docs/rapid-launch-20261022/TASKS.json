@@ -1609,7 +1609,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_TWO_GROUPS_PASS; SEVENTEEN_OF_73; NEXT_IN_FLIGHT",
+      "state": "06_REUSABLE_FOUR_FRAGMENT_RECEIVE_THREE_GROUPS_PASS; TWENTY_ONE_OF_73; NEXT_IN_FLIGHT",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1809,7 +1809,7 @@
       },
       "reusableFourFragmentSuccessor": {
         "owner": "T45",
-        "state": "QB_PASS_AND_TWO_GROUPS_ACTUALLY_RECEIVED_AND_INDEPENDENTLY_READ_BACK; FOURTEEN_GROUPS_REMAIN",
+        "state": "QB_PASS_AND_THREE_GROUPS_ACTUALLY_RECEIVED_AND_INDEPENDENTLY_READ_BACK; THIRTEEN_GROUPS_REMAIN",
         "readySha256": "4fc54e389b257bfe705da3856dcf6edf9461ef8814ff9dd2b2a022a3dfffbea7",
         "runtimeDiffSha256": "db9f0f9419b77fb1fe2cfbb8daf146ac621da69f55b40392d92d4a3461dd2139",
         "firstManifestSha256": "12509bc108830c7fc9df9b8531c25e5bb5e4b76a7863256de1e1d2d79bad07f7",
@@ -1853,12 +1853,30 @@
               "typedSha256": "73df6591053aa37ba707b30ec9df84350fa4ef2f73d9f48140f2d3344197f00d",
               "finishedAtUTC": "2026-11-12T13:04:11.592875+00:00"
             }
+          },
+          {
+            "group": "p18-p21",
+            "resultSha256": "be463c106909acb3d51163aae784eb8077ccfae10189ea4d3e863ec0ce8b559a",
+            "observedAt": "2026-11-12T21:10:50.983+08:00",
+            "bytes": 8388608,
+            "durableSegments": 32,
+            "install": {
+              "jobSha256": "2cd2dee0ce213251ddbaa2743c28a54dac94e4cd6582b86e3e645e3432f1c7f5",
+              "typedSha256": "e76c89ef284107f1a607849bea0e7edd3cfbe53ba334e19dbbffa77c44ebb176",
+              "finishedAtUTC": "2026-11-12T13:07:39.816365+00:00"
+            },
+            "freeAtInstallBytes": 30398771200,
+            "restore": {
+              "jobSha256": "dc512ad7ab316e917b8283b0c5f799655d47bc6bb6541986b448655785c284a4",
+              "typedSha256": "7149d1ceda739f5cfd94769ca12fc3086dd7df5e3e6e26e496d08cae7dc77df3",
+              "finishedAtUTC": "2026-11-12T13:10:11.123256+00:00"
+            }
           }
         ],
         "currentInFlight": {
-          "group": "p18-p21",
-          "startsAt": "2026-11-12T21:06:14.273+08:00",
-          "expiresAt": "2026-11-12T21:24:14.273+08:00",
+          "group": "p22-p25",
+          "startsAt": "2026-11-12T21:11:51.661+08:00",
+          "expiresAt": "2026-11-12T21:29:51.661+08:00",
           "status": "EXACT_WINDOW_ISSUED_AFTER_PREARM"
         },
         "independentDeltaReviewer": "QB",
@@ -46158,7 +46176,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TO_P17_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; SEVENTEEN_OF_73_FRAGMENTS; P18_P21_IN_FLIGHT; NO_IMPORT",
+          "state": "P01_TO_P21_READY_ON_ORIGINAL_KEYS_AND_POLICY_WITHDRAWN; TWENTY_ONE_OF_73_FRAGMENTS; P22_P25_IN_FLIGHT; NO_IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
