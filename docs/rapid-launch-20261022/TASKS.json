@@ -3248,13 +3248,29 @@
               "phase03FourthLegacyHelperSameByteLoadFollowup": true,
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-service10-local-maintenance-archive-and-client04-20261113",
+            "status": "EXACT_LOCAL_ARCHIVE_AND_FINAL_CLIENT_DELTA_VERIFIED_STAGING_PENDING",
+            "owner": "T45 / C",
+            "evidence": {
+              "maintenanceReadySha256": "09b1de52c1209daac6347576d406f0b6fc77315730a2923499f3e44a380a45d6",
+              "maintenanceCommit": "b2efa8ee529e67148f0825f903eabd37ef894414",
+              "maintenanceArchiveSha256": "cdea04fe76d081efcd6580280a2f2ec8e5be7c2b3d33520a71017d07f742c468",
+              "maintenanceBytes": 3410732,
+              "releaseManifestSha256": "325c99aa835fc070d5541697ae2e13048cf0f41844f5fef5b3f6089e5f6bf93a",
+              "client04ResultSha256": "5287a37e14da579de3c68aa8319ebcffa91e72c9cb2a3b8cadfc6423d78749d3",
+              "client04Sha256": "54794c99df440e77c1467c85d190ec89b9243d6e5047db0583e3d44eaa658a56",
+              "client04ControllerTargetedExit": 0,
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "APP_SUCCESSOR_LOCAL_BUILT_SENDER_TARGETED_FIX_RETEST_PASSED_LIVE_MAINTENANCE_PREPARING",
-          "owner": "T45 / D1 / D2 / QB / C",
-          "next": "Prepare allowed synthetic/readonly host step and exact maintenance carrier; complete fourth legacy local helper same-byte execution. Bind new application for finite and formal consumers and adapt the independent restore app. Original source and data are retained."
+          "status": "LOCAL_MAINTENANCE_AND_APP_ARTIFACTS_BUILT_LIVE_STAGING_AND_SYNTHETIC_PROBE_PREPARING",
+          "owner": "T45 / C",
+          "next": "Bind separate exact receiving versions, use approved staged transport and bounded protected read-only/synthetic validation. Obtain actual receipts before new maintenance work. Recovery-source lineage work continues separately."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
