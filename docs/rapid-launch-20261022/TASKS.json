@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "Receiver 02 fixed and QB delta in progress. T45 scoped old-asset dependency preflight and snapshot mapping in the field gap. P06\u2013P09 remain unsent until QB and T45 quiet readiness.",
+    "next": "P06\u2013P09 unsent. Original three QB receiver findings closed in 02; real upload/reserve boundary still NEED_FIX, T45 03 local in progress. Exact authorized old assets follow scoped dependency preflight, snapshot 60 attribution read-only.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1561,13 +1561,22 @@
           "containerdContent": 1100345344,
           "containerdOverlaySnapshots": 259317755904,
           "containerdMetadata": 12922880
+        },
+        "snapshotMapping": {
+          "state": "ONLY_PHYSICAL_ID_AND_SIZE_CONFIRMED; OWNER_AND_EXCLUSIVITY_UNKNOWN",
+          "readbackSha256": "3926ceaff62908058f716c1fc3ee20c885a2c708a341d024bf94f9dc70bbd5f6",
+          "measuredCount": 437,
+          "largestPhysicalDirectory": "60",
+          "largestAllocatedBytes": 255473274880,
+          "dockerDirectPathReferenceCount": 0,
+          "possibleReclaimBytesEstablished": 0
         }
       }
     },
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "FROZEN_02_AUTHOR_LOCAL_12_PASS; QB_DELTA_PENDING; NO_FIELD_REAL_BATCH",
+      "state": "QB_02_THREE_ORIGINAL_FIXES_CLOSED; NET_UPLOAD_BOUNDARY_NEED_FIX; SUCCESSOR_03_IN_PROGRESS",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1629,10 +1638,17 @@
         "localReadySha256": "cafe3757082a9f0e7016c737cf4c86579955ce29a7c8ffe8c4949edf4dd329bb",
         "unissuedFieldsSha256": "fd0b4057c1c74891e5d45d655a592139945d56051a0f43d158b57eecac583ce7",
         "localTestsPassed": 12
+      },
+      "qb02": {
+        "state": "NEED_FIX_TIMING_ONLY",
+        "turn": "01a1cf2a-d8c2-7882-892e-ab67971f392c",
+        "resultSha256": "ed1626c3b95d37566cf5fad60543eaa868c384bb42ec633434c40f1a37654d0b",
+        "closedOriginalFindings": 3,
+        "newFinding": "Relative timeout recalculated before attempt fsync; remote did not consume the shared upload deadline and full 240s reserve before segment persistence."
       }
     },
     "oldAssetRetirement": {
-      "state": "USER_CONFIRMED_NAMED_OLD_ASSETS; T45_SCOPED_READONLY_PREFLIGHT; NO_NEW_DELETION_YET",
+      "state": "SCOPED_METADATA_PREFLIGHT_COMPLETED; ACTUAL_DEPENDENCIES_AND_ELIGIBLE_LEAVES_BEING_RESOLVED; NO_NEW_DELETION",
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf33-bb56-7af3-b97e-bcec236b844a",
       "scope": [
@@ -1648,7 +1664,11 @@
         "unknown or shared snapshot layers",
         "unlisted paths"
       ],
-      "owner": "T45"
+      "owner": "T45",
+      "preflightReadbackSha256": "3926ceaff62908058f716c1fc3ee20c885a2c708a341d024bf94f9dc70bbd5f6",
+      "preflightExitCode": 0,
+      "legacyT48ObservedEnabledInactive": true,
+      "beforeActualRetirementFreeBytes": 30220759040
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
