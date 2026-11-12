@@ -45599,7 +45599,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_FIRST_RECOVERY_WINDOW_CLOSED_WITH_SEGMENT1_DURABLE; SECOND_WINDOW_DISPATCHED; NO READY, NO OTHER FRAGMENTS, NO IMPORT",
+          "state": "P01_READY_ON_ORIGINAL_KEY; SECOND_POLICY_WITHDRAWAL_CONFIRMED; ONE_OF_73_FRAGMENTS; P02_PREPARATION_DISPATCHED; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
@@ -45629,10 +45629,15 @@
             "policyAbsenceObservedAt": "2026-11-12T13:55:24.378+08:00"
           },
           "p01SecondRecoveryWindow": {
-            "state": "DISPATCHED_TO_ORIGINAL_T45; ACTUAL_RECEIPT_PENDING",
+            "state": "SEGMENTS_2_TO_5_VERIFIED; READY_PUBLISHED; POLICY_WITHDRAWN_AND_INDEPENDENTLY_READ_BACK",
             "windowInputSha256": "5670fb5045b5f1d12b32bea78889cd4d3f176095b269208b1fa191cea3588ae6",
             "startsAt": "2026-11-12T14:01:39.933+08:00",
             "expiresAt": "2026-11-12T14:11:39.933+08:00",
+            "completeBytes": 2097152,
+            "closeoutSummarySha256": "71941d638606873ece21db99f7ef6ef7c0378899cf26dc1303a2446414500015",
+            "afterWithdrawalReadySha256": "b981a4bdec24ef7d6c79b49eb4cf087d44b78e2b0496f68466658486f5eb964f",
+            "policyAbsenceSha256": "878ce2ce538d670728857559e868049d26ba42544c57a4fac9364ded667e6296",
+            "policyAbsenceObservedAt": "2026-11-12T14:11:32.383+08:00",
             "scope": "Same original key and original inode; segments 2 through 5; finalize only after exact full readback and with sufficient time; independent policy withdrawal readback."
           },
           "capacityInterpretation": {
@@ -45644,10 +45649,12 @@
             "sameVolumeOneReportMarginBelow28GiBBytes": 2993781051,
             "sameVolumeTwoReportsProjectedBalanceBytes": 24823307814,
             "sameVolumeTwoReportsMarginBelow28GiBBytes": 5241463258,
+            "sameVolumeTwoReportsAnd6cExtractMarginBelow28GiBBytes": 5258375158,
+            "candidateArchiveReuseAndWriterCapacitySha256": "4787e5e82f96ec655a1053d172fed594b986c17de83b5260b1a8fbfb86f1038e",
             "twoReportReviewSha256": "497c51127619fa5da0e8c475d598f139261da07c3808db7af3c78eb63533d3d2",
             "state": "CURRENT_CLI_PREPARE_AND_EXECUTE_REQUIRE_DISTINCT_REPORT_DIRECTORIES; 28_GIB_GUARD_RETAINED; ACTUAL_WRITER_MOUNTS_AND_PG_WAL_BACKUP_RESTORE_PEAK_UNVERIFIED"
           },
-          "next": "T45 continues the original P01 key from segment 2, then verifies the transfer and policy closeout. In parallel, freeze the current 6c/r2 writer and establish feasible report, temporary and backup volume budgets before the real writer."
+          "next": "Reuse the original P01 READY. T45 prepares the next original standard fragment P02 for a single measured stock-channel upload, and prepares remaining original fragments offsite. In parallel, verify the retained 6c archive and feasible report, temporary and backup volume budgets before the real writer."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
