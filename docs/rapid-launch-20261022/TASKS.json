@@ -3352,13 +3352,30 @@
               "databaseConnections": 0,
               "nativeJobsStarted": 0
             }
+          },
+          {
+            "group": "r3-0a389-application-staging-actual-preflight-and-issued-20261113",
+            "status": "ACTUAL_APP_STAGING_PREFLIGHT_PASS_EXACT_SCOPED_RECEIVE_AUTHORIZED",
+            "owner": "T45 / C",
+            "evidence": {
+              "preflightSha256": "90a8248dad36867c01a7ed6ee8492041dc3de07b4b37c6742ac3cc89a1ad1be1",
+              "preflightAtUTC": "2026-11-12T22:30:09.664853+00:00",
+              "availableBytes": 40101330944,
+              "availableInodes": 29582230,
+              "authoritySha256": "e811ec0caef5c2ff3026dbbb8c7b60a65ecc45270add66f9b87960801a2191e6",
+              "startsAtUTC": "2026-11-12T22:31:05.175Z",
+              "expiresAtUTC": "2026-11-12T23:01:05.175Z",
+              "payloadCutoffUTC": "2026-11-12T22:57:05.175Z",
+              "actualAppReceipt": false,
+              "appStartupAuthorized": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_SYNTHETIC_AUTH_TRANSPORT_PASS_APP_ARTIFACT_STAGING_PREFLIGHT_NEXT",
+          "status": "EXACT_APPLICATION_ARTIFACT_STAGING_WINDOW_ACTIVE",
           "owner": "T45 / C",
-          "next": "Use fresh exact read-only application staging preflight for 0a389, then issue only its scoped receiver. Finish exact next-generation protected preflight and review in parallel before live database work."
+          "next": "Collect actual 0a389 app artifact READY and exact temporary policy withdrawal. Prepare narrow live protected readback for native and service10 predecessor eligibility."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
