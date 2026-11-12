@@ -3369,13 +3369,32 @@
               "actualAppReceipt": false,
               "appStartupAuthorized": false
             }
+          },
+          {
+            "group": "r3-0a389-app-actual-ready-20261113-0634",
+            "status": "ACTUAL_APP_ARTIFACT_READY_AFTER_EXACT_POLICY_WITHDRAWAL",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "2a616a9d1f5e9539f0b00e33fa8bdde983f4972122fb37e08ccbf31e705c0b2f",
+              "independentReadbackSha256": "71f8497395fd03af6968c1aa384346f1ac83af36fc8adefb326a3c909efcf42a",
+              "serverReadySha256": "b3034326100d7f2f6e9e76638edc9934f2a4037e78d72b9ea1e789bab71e21eb",
+              "actualSegments": 14,
+              "archiveBytes": 3415269,
+              "archiveSha256": "4e460b006eaa51697b984c4d612f6dc9c9e1a1f1fd2f42cf8cd5dcf556fc7b45",
+              "installTerminalSha256": "2d2b3d9618e69809092bb7d1037e930069dc1e2f190216dbd12498a7e08822bb",
+              "withdrawalTerminalSha256": "4b1cc5a90e4e4cbf02666f7e7c74c5b4d7185d02a22ee821e4d9569784b85fbc",
+              "observedAtUTC": "2026-11-12T22:34:04.671926+00:00",
+              "policyAbsent": true,
+              "appStarted": false,
+              "databaseActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_APPLICATION_ARTIFACT_STAGING_WINDOW_ACTIVE",
+          "status": "ACTUAL_MAINTENANCE_AND_APP_READY_SYNTHETIC_TRANSPORT_PASS_PROTECTED_NATIVE_PREFLIGHT_NEXT",
           "owner": "T45 / C",
-          "next": "Collect actual 0a389 app artifact READY and exact temporary policy withdrawal. Prepare narrow live protected readback for native and service10 predecessor eligibility."
+          "next": "Refresh exact protected stopped predecessor, role restoration and absent original native keys for service10. Review eligible assembled source and bind fresh real role/start/stop/restore authorizations."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
