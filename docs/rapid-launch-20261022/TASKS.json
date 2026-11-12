@@ -45587,6 +45587,21 @@
           "owner": "T45",
           "next": "T45 reads exact original keys and rebinds D3 reception and ordinary 05 in the current grant. Keep original business request identities, joint capacity, backup and release gates. Destructive operations remain separately authorized."
         },
+        "newGrantD3Readback": {
+          "checkedAt": "2026-11-12T12:29+08:00",
+          "liveResultSha256": "380ca0fbb160b3470e6cfca20593a6e5845398b27ed7c80c5873d4a706cc5406",
+          "liveJobSha256": "fbf5bb0e925f0443790d21b2439383e427eabcb3ed0ebf81b77a97ec9875449a",
+          "liveFactsSha256": "32c24a18eb2a4f9a3264ffafd1b06ac1be3d0001e05c078b12d15586fd264093",
+          "receiverResultSha256": "d19112fa06b81dad596219e9ef97faf0e7da7ee1836ca1124e6412031e134370",
+          "receiverUnissuedScopeSha256": "1807ed9dc03e1e082690e6f1b5a7df907bdc0d38776ee2878f1a5fc5c1d5bbac",
+          "maintenanceDraftSha256": "0da274c73a17f9cb29d4840c4f2e902399f63d1cdef10614d97fb03739e1e9c5",
+          "storageReadbackSha256": "72f4a83a741fd54dfa2c6d93e24b4393a12ca25e470089a325343b855ba75b31",
+          "availableDiskBytes": 30450954240,
+          "coldFloorOnlyShortfallBytes": 746098844,
+          "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
+          "state": "FIRST_REAL_NONINTERACTIVE_READONLY_JOB_COMPLETED; ORIGINAL_KEYS_ABSENT_BOTH_GRANTS; QB_RECEIVER_DELTA_PASS; P01_PREPARATION_IN_PROGRESS; NO TRANSFER OR IMPORT",
+          "next": "T45 prepares first fragment strategy from observed absence with exact recovery. C issues when the exact inputs are ready; measure actual turnaround before grouping. Keep import held for actual joint capacity and protected preconditions."
+        },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
           "readySha256": "a6341dc7851a60b608614239d65449344ad5153e3ff207f2d621d2e24a937432",
