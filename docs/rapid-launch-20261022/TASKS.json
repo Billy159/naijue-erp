@@ -2577,13 +2577,37 @@
               "rootHashExpectedActual": null,
               "actualPgConnection": false
             }
+          },
+          {
+            "group": "r3-qb-continuity04-controller04-faa805-20261113-0347",
+            "status": "CONTINUITY_AND_FORMAL_SCOPED_PASS_CAPACITY_OPTIONAL_SAMPLE_FIX_REQUIRED",
+            "owner": "QB / T45",
+            "evidence": {
+              "independentSelectedTestsPassed": 12,
+              "independentFixtures": 4,
+              "backupResultAndPrefixRechecked": true,
+              "validFloorSampleRetained": true,
+              "missingWorkTreeZeroBugReproduced": true,
+              "actualAcceptance": null
+            }
+          },
+          {
+            "group": "r3-faa8-private-browser-origin-contract-20261113-0347",
+            "status": "FIXED_LOGIN_ORIGIN_AND_PRIVATE_STAGE_INVARIANTS_VERIFIED_LOCALLY",
+            "owner": "C / T45",
+            "evidence": {
+              "authenticationSourceSha256": "8a935682af1c523ceac6849939bb30f6311c064924f63bff2d7aae51b43574f3",
+              "deploymentHelperSha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+              "browserTransportActual": null,
+              "actualApplicationAccess": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FIXED_CONTINUITY_AND_FAA8_QB_ACTIVE_PRIVATE_ACCEPTANCE_AND_ACTUAL_INPUT_PENDING",
+          "status": "QB_CORE_LOCAL_PASS_FAA8_PRIVATE_ROUTE_AND_MINOR_SAMPLER_FIX_IN_PROGRESS",
           "owner": "T45 / QB",
-          "next": "Finish focused three-delta review and the same-build private FAA8 acceptance host. Bind true R3 same-key short status only with the original independent DB hash. Actual A private transfer remains pending direct authorization."
+          "next": "Complete same-build private acceptance with the real protected HTTPS Origin/Host, repair missing work-tree sample classification, and retain actual-only authority. Actual A private transfer remains pending direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
