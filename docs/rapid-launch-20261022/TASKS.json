@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "First batch install failed before any data on DERP because actual setup elapsed 155.170s, exceeding 120s. T45 closes original window at expiry. Only outer setup time is being revised with net upload and closeout unchanged.",
+    "next": "QB accepted 05 installation-time-only delta. T45 checks final shared policy, original four keys, writer/job quiet status and old job-local pending provenance. No new batch submitted.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1590,7 +1590,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "FIRST_BOUNDED_INSTALL_FAILED_NO_DATA; ORIGINAL_WINDOW_CLOSEOUT_PENDING; SETUP_BUDGET_SUCCESSOR_PREPARING",
+      "state": "QB_05_INSTALL_ALLOWANCE_PASS; FIELD_QUIET_READBACK_PENDING",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1682,7 +1682,7 @@
         "qbBytesWrittenAfterDeadline": 0
       },
       "firstTrial": {
-        "state": "INSTALL_FAILED_NO_DATA; POLICY_ABSENT_INDEPENDENTLY; ORIGINAL_CLEANUP_PENDING",
+        "state": "FOUR_ORIGINALS_ABSENT_AND_POLICY_ENOENT; ORIGINAL_RESTORE_NOT_OBSERVED; PRIVATE_PENDING_UNKNOWN",
         "lanes": 1,
         "startsAt": "2026-11-12T18:35:12.707+08:00",
         "expiresAt": "2026-11-12T18:51:12.707+08:00",
@@ -1703,15 +1703,28 @@
         "installExportCount": 0,
         "installReceiptSha256": "1e5e688206b6c22132a5e1044e0b841c20048b9d036ce9db8f96b31fec61245c",
         "policyAbsentAt": "2026-11-12T18:38:08.443+08:00",
-        "realDataSent": false
+        "realDataSent": false,
+        "originalResultSha256": "e29ab5acc85294005024ac505c8544d22bca109f0246b115968e31337dfd0e55",
+        "independentReadbackSha256": "8361332b1e54f25acb5a1c140c4945fa2f8651e3bebe681f86f1cd758024f108",
+        "independentReadbackAt": "2026-11-12T19:57:57.411+08:00",
+        "oldInstallTerminal": "FAILED/1",
+        "originalRestoreStatus": "NO_REQUEST_STAGING_OR_RECEIPTS_VISIBLE",
+        "privateInstallPending": "UNKNOWN_EACCES; JOB_LOCAL",
+        "retryPerformed": false
       },
       "setupBudgetSuccessor": {
-        "state": "T45_LOCAL_NARROW_PREPARATION",
+        "state": "QB_PASS_INSTALL_ALLOWANCE_ONLY; NO_FIELD_SUBMISSION",
         "proposedSetupSeconds": 240,
         "netUploadSeconds": 600,
         "separateCloseoutSeconds": 240,
         "proposedMaxWindowSeconds": 1080,
-        "trialIssuancePendingOriginalCleanupAndDelta": true
+        "trialIssuancePendingOriginalCleanupAndDelta": true,
+        "readySha256": "088b794ab91b6bbc893b90670a2a56de0795318ebe5433f5c8817d2274c643bf",
+        "unissuedFieldsSha256": "a9f592fc892344dfe42b6297927b6581e7300360c05c65bc805e6de0d7eadda3",
+        "protocolSha256": "1bd9ebd43f006e7020bfef6e15ca441489d988bbb3f009b9b7842be7010b7b71",
+        "localFixturesPassed": 3,
+        "oldSingleFragmentSeconds": 600,
+        "exactActualInstallMinimumRemainingExclusiveSeconds": 840
       }
     },
     "oldAssetRetirement": {
