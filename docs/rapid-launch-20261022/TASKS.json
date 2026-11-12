@@ -2143,13 +2143,21 @@
             "resultSha256": "be119c839e3492612503724693ebf2c1a90a520731c631bfc26e02c7585c4544",
             "terminalExitCode": 0,
             "restartPolicy": "unless-stopped"
+          },
+          {
+            "group": "r3-first-admin-private-receiver-local-02",
+            "status": "QB_FOCUSED_REGRESSION_PASS_LOCAL_ONLY",
+            "resultSha256": "b7948c0af1d7d548ef29bab576516d9c3afb782629b0ece27cd4b4cd7c0e872f",
+            "receiverSha256": "d5acfcbc3e6b1d89a088493be8a8ee0c3e7a389763ad37dc30677224fac9d9c2",
+            "requestKey": "t45-r3-first-admin-custody-receive-20261113-01",
+            "actualSubmission": false
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "LEGACY_DEPENDENCY_OBSERVATION_COMPLETE; R3_PROTECTED_DELIVERY_CANDIDATE_IN_PREPARATION",
+          "status": "RECEIVER_02_LOCAL_REGRESSION_PASS; WAITING_EXACT_PRIVATE_TRANSFER_AUTHORIZATION; SAME_WINDOW_CANDIDATE_IN_PREPARATION",
           "owner": "T45",
-          "next": "Complete the narrow private delivery and same-start maintenance candidate. No old retirement operation approved or scheduled."
+          "next": "Prepare and validate exact same-window grant, service and maintenance pins. Submit protected delivery only after the separately requested direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
