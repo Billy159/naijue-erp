@@ -45579,9 +45579,13 @@
           "readbackSha256": "1b2a5f40d45745e44fddfb05bb69ec4420c2e8d5423974cf1105ce3b1f30f9fe",
           "originalIssuerSha256": "00c294b0dcf2e6f2177fa9e1bb5a554893d924b0c87bdc3f5da1ef749df9ed41",
           "lifetimeDays": 30,
-          "state": "HISTORICAL_REISSUE_CONFIRMED; USER_CONFIRMED_ORIGINAL_ERP_SCOPE; NOT_ISSUED",
+          "state": "SERVER_ISSUED_EXIT_0; NONINTERACTIVE_STATUS_READY; OLD_GRANT_AND_RECEIPTS_PRESERVED; NO_WORKLOAD_STARTED",
+          "issuedAt": "2026-11-12T12:08:53+08:00",
+          "expiresAt": "2026-12-12T12:08:53+08:00",
+          "issuanceReportSha256": "0daa5ba070c50199016c0649bf7ad0db2f8f70c0e4bad9645f0a5316496149a9",
+          "publicReceiptSha256": "03ae72de3f6688bc28801195fbbaebc4022cb4c28bffe5b81a713681f20d69f8",
           "owner": "T45",
-          "next": "Keep old expiry and historical receipts, verify D0 terminal interlock and no replay across grants, prepare one verified operator handoff. Destructive operations remain separately authorized."
+          "next": "T45 reads exact original keys and rebinds D3 reception and ordinary 05 in the current grant. Keep original business request identities, joint capacity, backup and release gates. Destructive operations remain separately authorized."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
