@@ -3334,13 +3334,31 @@
               "nativeRoot02BoundActualMaintenanceReady": true,
               "realMaintenanceAuthorized": false
             }
+          },
+          {
+            "group": "r3-synthetic-linux-transport-actual-20261113-0628",
+            "status": "ACTUAL_SYNTHETIC_LINUX_SSH_HANDSHAKE_AND_CLEANUP_VERIFIED",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "54e2fb7076ba7dcfbcf372a0465577825b88de3c49ec0fcf6559475d45313b41",
+              "terminalSha256": "dd45bc85b3fb1f7c5220d3b39be0572ee6e98dae7578af01373ce83528c256b0",
+              "transportReceiptSha256": "c45da9e10b87fdcb6c2b20b179000ea7103662f6118280b3f9f00adce93b6058",
+              "fixtureReceiptSha256": "4a297f1684c6cf245f8326ee8a2d8eea0ea2055e2cec7d40aa290995a02b6ff4",
+              "finalReadbackSha256": "90e342c4b5e39116e945969b30bf871e93c6e1dccd20f556328db39fbf710b26",
+              "finishedAtUTC": "2026-11-12T22:28:45.595755+00:00",
+              "exitCode": 0,
+              "clientAck": true,
+              "socketAndParentAbsent": true,
+              "databaseConnections": 0,
+              "nativeJobsStarted": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_SYNTHETIC_LINUX_TRANSPORT_WINDOW_ACTIVE",
+          "status": "ACTUAL_SYNTHETIC_AUTH_TRANSPORT_PASS_APP_ARTIFACT_STAGING_PREFLIGHT_NEXT",
           "owner": "T45 / C",
-          "next": "Collect one original isolated synthetic Linux/SSH result, separate ACK and cleanup. Stage exact application next only after the synthetic job and owned socket are closed."
+          "next": "Use fresh exact read-only application staging preflight for 0a389, then issue only its scoped receiver. Finish exact next-generation protected preflight and review in parallel before live database work."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
