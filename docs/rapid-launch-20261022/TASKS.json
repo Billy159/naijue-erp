@@ -2214,13 +2214,27 @@
             "openFilePaths": 38,
             "uniqueFileInodes": 37,
             "readableDirectoryPaths": 4
+          },
+          {
+            "group": "r3-production-generation-node-6db7",
+            "status": "D1_LOCAL_SOURCE_AND_EXISTING_RELEASE_CLOSURE_PASS; QB_FOCUSED_REVIEW_IN_PROGRESS",
+            "sourceCommit": "6db7cfeb47cefeee96c2cce30c2beef6065c2ed6",
+            "tree": "9742c9c8b6c4468c7e4ebea5a4962df75ad01c97",
+            "nativeSourceSet": "5638415b67a8621c815216b6a217f7094f89fd7b7e081c435c58b76f32130929",
+            "targetedTests": 150,
+            "skipped": 0
+          },
+          {
+            "group": "r3-exact-six-amount-readback-boundary",
+            "status": "AGGREGATE_OUTPUT_DOES_NOT_EXPOSE_EXACT_ROW_DIAGNOSTICS; USE_EXISTING_NATIVE_DETAIL_AFTER_IMPORT",
+            "localFixtureExitCode": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; R3_PERSISTENT_HOST_AND_NODE_SOURCE_ACTIVE",
-          "owner": "T45 host / D1 Node",
-          "next": "Implement generation, owner liveness and durable capacity against the exact same fields; integrate and test when both sources are fixed. Do not open the R3 maintenance or receiver window without current actual inputs."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FORMAL_NODE_LOCAL_6DB7_QB_REVIEW; T45_HOST_IMPLEMENTATION_ACTIVE",
+          "owner": "T45 host / D1 Node / QB scoped review",
+          "next": "Resolve Node review if needed, integrate exact host source when ready, and keep receiver waiting on direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
