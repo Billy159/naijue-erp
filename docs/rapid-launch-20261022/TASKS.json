@@ -2601,13 +2601,25 @@
               "browserTransportActual": null,
               "actualApplicationAccess": false
             }
+          },
+          {
+            "group": "r3-faa8-existing-qf-core-readiness-20261113-0352",
+            "status": "EXACT_14_CONSUMERS_REUSABLE_REAL_BROWSER_HOST_AND_TEST_IDENTITIES_UNBOUND",
+            "owner": "C / QF / T45",
+            "evidence": {
+              "qfReportSha256": "4b7af254ac044c04488682e832166ae69ff9a447c497e52a537f80456dd0192a",
+              "qfBaseCommit": "47f1c4b0af84c2d8cf1cd2cf816d380f05e9adf0",
+              "faa8Commit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
+              "exactSourceFilesUnchanged": 14,
+              "actualBrowserEvidence": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "QB_CORE_LOCAL_PASS_FAA8_PRIVATE_ROUTE_AND_MINOR_SAMPLER_FIX_IN_PROGRESS",
-          "owner": "T45 / QB",
-          "next": "Complete same-build private acceptance with the real protected HTTPS Origin/Host, repair missing work-tree sample classification, and retain actual-only authority. Actual A private transfer remains pending direct authorization."
+          "status": "FAA8_FINITE_DIAGNOSTIC_AND_SAMPLER_PATCH_IN_PROGRESS_REAL_PRIVATE_BROWSER_UNBOUND",
+          "owner": "T45 / QF / QB",
+          "next": "Freeze actual finite FAA8 diagnostic and the sampler patch. Reuse QF existing scope when the protected same-origin host and test roles are available. Actual A private transfer still awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
