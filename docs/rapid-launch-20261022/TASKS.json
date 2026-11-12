@@ -2649,13 +2649,26 @@
               "oldRuntimeRejected": true,
               "actualBrowserAcceptance": null
             }
+          },
+          {
+            "group": "r3-exact-faa8-artifact-staging-scope-20261113-0406",
+            "status": "FIXED_APPLICATION_ONLY_ARCHIVE_CHECKED_T45_PREPARATION_ASSIGNED",
+            "owner": "C / T45",
+            "evidence": {
+              "readySha256": "ceffc2618a087d155dd52aa5f2c46ae40ec120fa95256802e888090a0d6fb8c4",
+              "archiveSha256": "78b4a8cbf3da2dc6de511a504fc1ff67c3f5cd9e08c80bb156d1585ffe4a21be",
+              "archiveBytes": 3414171,
+              "archiveMembers": 462,
+              "artifactKey": "r3-private-ordinary09-faa845e6-20261113-01",
+              "actualRemoteReady": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "PRIVATE_AND_SAMPLER_LOCAL_PASS_T45_EXISTING_ROUTE_READONLY_CHECK",
-          "owner": "T45 / QF / QB",
-          "next": "Resolve actual already-authorized private same-origin transport by a scoped metadata read, then bind actual role and test scope. Actual A original transfer still awaits direct authorization."
+          "status": "T45_PRIVATE_ROUTE_READONLY_ACTIVE_EXACT_FAA8_ARTIFACT_PREPARE_QUEUED",
+          "owner": "T45",
+          "next": "Finish the active existing-route read-only check before any independent application artifact staging. Read the exact original FAA8 READY/key first; no duplicate transfer. Actual A transfer awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
