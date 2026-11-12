@@ -3434,13 +3434,33 @@
               "localTargetedExitCode": 0,
               "actualAuthorityIssued": false
             }
+          },
+          {
+            "group": "r3-role09-reviewed-window-plan-and-partial-start-gaps-20261113",
+            "status": "LOCAL_SCHEDULE_VERIFIED_REAL_WINDOW_HELD_FOR_TWO_RESTORE_BRANCHES_AND_NATIVE_ENTRY",
+            "owner": "T45 / QB / C",
+            "evidence": {
+              "preparationResultSha256": "0c92b6664217749b18622a3711fba2f182309dc0104ff6a796183f77f17a4f14",
+              "scheduleSha256": "0f7fee1edf5d9bababfe12e2d4747149b53ac6854ee6f29bab8fea18cf96f1a5",
+              "phaseWorkerSeconds": [
+                900,
+                665,
+                945
+              ],
+              "phaseAndHandoffEstimateSeconds": 2870,
+              "rolesExpireOffsetSeconds": 3810,
+              "serviceLeaseOffsetSeconds": 4080,
+              "restoreDeadlineOffsetSeconds": 4740,
+              "independentCloseoutOffsetSeconds": 4550,
+              "actualMaintenanceAuthorityIssued": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "OLD_ROLE09_TEMPLATE_HELD_CORRECTED_GUARD_LOCAL_PASS_WINDOW_SCHEDULE_PENDING",
-          "owner": "T45 / C",
-          "next": "Finish exact updated role and host source review, startup-failure recovery and adjacent execution budget before authorizing the new role window."
+          "status": "EXACT_WINDOW_PLAN_PREPARED_PARTIAL_START_RESTORATION_AND_NATIVE_ENTRY_REVIEW_PENDING",
+          "owner": "T45 / QB / C",
+          "next": "Verify exact recovery on boot-without-create and failed-start-with-published-proof, and the final executable native root delta. Refresh field timing and source pin closure before signing any new role window."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
