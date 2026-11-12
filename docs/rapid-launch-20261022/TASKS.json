@@ -2896,13 +2896,28 @@
               "cleanupComplete": false,
               "liveNormal05Stopped": false
             }
+          },
+          {
+            "group": "r3-normal05-exact-guardian-clean-stop-candidate-20261113-0503",
+            "status": "FIVE_LOCAL_FILES_FIXED_AUTHOR_13_SCOPE_QB_ACTIVE_LINUX_AND_ACTUAL_STOP_UNVERIFIED",
+            "owner": "T45 / C / QB",
+            "evidence": {
+              "readySha256": "4e689b9c9f5051f4ac0e5dbe21ea8514121394e2948d06ca3ca05eb7b6123a2c",
+              "fixedFiles": 5,
+              "resultSha256": "27039c29a7ffb0add5acacbd7625ff3a96f403bb5075c542345fcc3a9779dcb0",
+              "stopSourceSha256": "6758c12137bc24b432afa599a54f54a0d11836861a504d40471c604e2bae0b54",
+              "stopTemplateSha256": "13a93f2da0c6cd5f74cb2954112bf91b28d4513e34f4afbb219453eae55e5652",
+              "authorFocusedCases": 13,
+              "actualLinuxPidfdAndProcChecked": false,
+              "actualStopIssued": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "T45_NORMAL_05_STOP_CANDIDATE_ACTIVE_EXACT_TIME_WAIT_EDGE_REPRODUCED_A_APPROVAL_PENDING",
-          "owner": "T45",
-          "next": "Close exact same-generation normal stop via the original guardian, including the verified TCP tail constraint under the existing strict cold consumer. Original A and actual same-build private browser route still pending."
+          "status": "NORMAL05_CLEAN_STOP_CANDIDATE_FROZEN_QB_SCOPED_CHECK_T45_SHORT_ORIGINAL_STATUS_CANDIDATE_ACTIVE_A_APPROVAL_PENDING",
+          "owner": "T45 / QB",
+          "next": "Independently verify only normal 05 stop. Establish the exact original-key short read-only observation with preserved HOLD and 6c/D1 pins. Actual A and live generation, authorization, browser route and other field bindings remain unbound."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
