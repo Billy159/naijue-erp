@@ -2105,20 +2105,23 @@
               "typedSha256": "b77fbe85dbb9bf888448bf07a7e56b2f14e24e5db04acdc51794b20868c53f2c",
               "finishedAtUTC": "2026-11-12T14:25:33.766425+00:00"
             }
+          },
+          {
+            "group": "r3-legacy-backup83-exact-removal",
+            "status": "EXACT_CONTAINER_COPY_REMOVED_AND_HOST_PAIR_RETAINED",
+            "requestKey": "t45-legacy-backup83-exact-removal-20261112-01",
+            "jobSha256": "066af962fa9c36058a27828e295a072c7b24409dcecf1a5f9f8a3f0179d8e7b3",
+            "resultSha256": "81fb1b6e500099b3ae724d8fa1c97e70bb9bef850529d198a36a3a24b1e8803d",
+            "terminalExitCode": 0,
+            "rootAvailableBytesBefore": 29280727040,
+            "rootAvailableBytesAfter": 40125358080
           }
         ],
         "currentInFlight": {
-          "group": "r3-05-launcher-and-storage-admission",
-          "status": "EXACT_SINGLE_RAW_COPY_USER_AUTHORIZED; EXECUTION_PENDING; 05_LOCAL_03_QB_REVIEW_IN_FLIGHT",
-          "userApprovalQuestion": "call_351e486c4b78450ba114f3d88451c03b",
-          "backupCandidateReadbackSha256": "d7d79884e600319218fc14c8016e3a5ebb6fb4c25dbc201e0fad6ff21179066c",
-          "backupCandidatePotentialBytes": 10844405760,
-          "verifiedReclaimedBytes": 0,
-          "availableBytes": 29280972800,
-          "currentStartupDeficitBytes": 783798272,
-          "launcher03Sha256": "290bf7d03bf003a92afdfc70317a9aebf62cdd84f2c3a7a7d6101b6f6f49a64a",
-          "launcher03ProofSha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
-          "knownSameGenerationBudgetSeconds": 6635
+          "group": "r3-original-maintenance-preflight",
+          "status": "28_GIB_START_ADMISSION_SATISFIED; ORIGINAL_MAINTENANCE_KEYS_READBACK_IN_PROGRESS; NORMAL_05_LOCAL_03_NEED_FIX",
+          "owner": "T45",
+          "next": "Read original R3/152/6c/08/SQL36/A/SQL38/auth-restore/stop receipts and protected bindings. Continue earliest missing real step. 05 stays local."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
