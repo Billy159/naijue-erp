@@ -2824,13 +2824,30 @@
               "original05PrivateScryptProjectionConfirmedInSource": true,
               "actualShortReadback": null
             }
+          },
+          {
+            "group": "r3-d1-original-init-dual-fingerprint-candidate-20261113-0450",
+            "status": "FIXED_6C_CONDITIONAL_SHORT_RECOVERY_PATH_11_SYNTHETIC_CASES_ACTUAL_CARRIER_PENDING",
+            "owner": "D1 / C / T45",
+            "evidence": {
+              "contractSha256": "9d2bc0d66e5a8bc021160f9b09ecabb8acee29886921963da52ba703b650f9a2",
+              "fixtureSha256": "edd9c5380cd59d93f3f4602966b9398f9373a5d2aa8d483ced06b430977d33d2",
+              "localResultSha256": "822d3b5ff240960974fafd1aa8e0bb99daecf061d747698b2a6ecb2032480f19",
+              "syntheticCases": 11,
+              "numericPrecisionAliasReproduced": true,
+              "sql36Sha256": "6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b",
+              "sql38Sha256": "b61b31b6116b3f0891dc4cd1f9182aa438d22ad987e29ac2ec73c04f72f5d0ba",
+              "productionPgConnected": false,
+              "originalCredentialRead": false,
+              "actualCommitConfirmed": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_ACTUAL_READY_T45_STATIC_CONTINUITY_PREP_AND_D1_SHORT_STATUS_BINDING_ACTIVE_A_APPROVAL_PENDING",
-          "owner": "T45 / D1",
-          "next": "Prebind only reproducible frozen template inputs. Validate the narrow original-key recovery path under retained HOLD and its independent INIT comparison without changing the immutable application/archive. Actual A authorization and same-build private browser route remain pending."
+          "status": "FAA8_ACTUAL_READY_D1_SHORT_STATUS_DUAL_FINGERPRINT_CONTRACT_FROZEN_T45_PREBIND_ACTIVE_A_APPROVAL_PENDING",
+          "owner": "T45",
+          "next": "Finish exact static successor prebinding and bind a narrowly authorized same-original-key recovery with unchanged application archives. Actual A authorization and private same-build browser target still pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
