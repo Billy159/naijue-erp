@@ -1362,9 +1362,15 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "Network diagnostic closed. P03 immediate readiness requested; no window issued. T45 checks complete capacity after the window is closed.",
+    "next": "T45 confirmed immediate readiness; P03 second window issued. Await live submission, per-segment readbacks and policy cleanup before capacity field work.",
     "networkDiagnosticExitCodes": [0, 0],
-    "networkFinalReadbackSha256": "26b7014d01fbabefb6b5169d5b7bd7475f8eec58676507770e9adffbbedb7162"
+    "networkFinalReadbackSha256": "26b7014d01fbabefb6b5169d5b7bd7475f8eec58676507770e9adffbbedb7162",
+    "p03SecondWindow": {
+      "startsAt": "2026-11-12T16:31:11.011+08:00",
+      "expiresAt": "2026-11-12T16:41:11.011+08:00",
+      "state": "ISSUED_AFTER_T45_READY; LIVE_RESULT_PENDING",
+      "windowDefinitionSha256": "a5ff62db9f9e65c7d6cba019a67b99a5e8fbb2c0698f16b6f8a29bdc4c8f242a"
+    }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-11-12T04:20:03+08:00",
