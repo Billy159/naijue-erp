@@ -2109,14 +2109,13 @@
         ],
         "currentInFlight": {
           "group": "r3-05-launcher-and-storage-admission",
-          "status": "MATERIALIZED; LEGACY_READONLY_03_TERMINAL_WITH_TWO_VALID_BRANCHES; EXACT_RAW_COPY_AND_05_IN_PREPARATION",
-          "legacyOriginalJobId": "t45-legacy-pg-snapshot60-split-readonly-20261112-03",
-          "legacyExitCode": 2,
-          "legacyAllocationBytes": 255473258496,
-          "legacyContainerTmpBytes": 255473238016,
-          "legacyVerifiedReclaimBytes": 0,
-          "freeAfterMaterializationBytes": 29289738240,
-          "currentStartupDeficitBytes": 775032832
+          "status": "EXACT_LEGACY_COPY_METADATA_CONFIRMED; NARROW_USER_DECISION_PENDING; 05_OFFSITE_CONTINUES",
+          "backupCandidateReadbackSha256": "d7d79884e600319218fc14c8016e3a5ebb6fb4c25dbc201e0fad6ff21179066c",
+          "backupCandidatePotentialBytes": 10844405760,
+          "verifiedReclaimedBytes": 0,
+          "availableBytes": 29280972800,
+          "currentStartupDeficitBytes": 783798272,
+          "ordinaryServiceMaximumSeconds": 3600
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
