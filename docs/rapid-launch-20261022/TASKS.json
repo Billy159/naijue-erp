@@ -2484,13 +2484,37 @@
               ],
               "actualRegistration": null
             }
+          },
+          {
+            "group": "r3-current-05-capacity-evidence-20261113-0323",
+            "status": "LOCAL_LOW_WATER_OMISSION_REPRODUCED_FIX_ASSIGNED",
+            "owner": "C / T45",
+            "evidence": {
+              "sourceSha256": "3b7472aa6a3cfd26c268313ebc4bda09d6b3b23f9a201398c422d001e6005e36",
+              "fixtureReadingBytes": 6442446848,
+              "recordedPreviousBytes": 6442455040,
+              "runtimeFloorBytes": 6442450944,
+              "actualPhysicalMeasurement": false
+            }
+          },
+          {
+            "group": "r3-qb-controller05-faa8-private-a-consumer-20261113-0323",
+            "status": "ACTIVE_GRANT_AND_FAA8_SCOPED_PASS_PRIVATE_A_EVIDENCE_BLOCKS",
+            "owner": "QB / T45",
+            "evidence": {
+              "controller05BindingSha256": "72e0af1912b6e0ac8c4b158b8c18ebe82ca328d83c82953bcfc9f8c4484054db",
+              "faa8BindingSha256": "27b33be78fbe2dd3733b76c4d77a4cf11e6e6551def5bc6a197e4eff3500e21f",
+              "maintenanceProducerSha256": "124c615b738cc57fc8daa1ce2bfaa02c98e0f18775dd9505dc4ccd291c772ee8",
+              "authoritativeLiveAReceipt": null,
+              "productionExecution": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "A_PRIVATE_TRANSFER_PENDING_CURRENT_BINDING_AND_STAGE_CAPACITY_IN_PROGRESS",
+          "status": "LOCAL_PRIVATE_A_CONSUMERS_AND_CAPACITY_REPAIR_ASSIGNED",
           "owner": "T45 / QB",
-          "next": "Preserve original request keys. Finish the authorized same-lock next-phase binding producer, stage-specific capacity inputs, and focused candidate review. A direct private-transfer authorization still pending."
+          "next": "Finish the original continuity writer/backup/cold evidence, align exact protected A digest in all consumers and record actual stage low water when authorized. Actual A transfer remains pending direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
