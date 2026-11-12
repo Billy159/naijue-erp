@@ -2124,13 +2124,23 @@
             "resultSha256": "947eb3db08dbc74b6f35f0203fa0e7182442cada30cdce298acc4ca811ea1a30",
             "terminalExitCode": 0,
             "rootAvailableBytes": 40125149184
+          },
+          {
+            "group": "legacy-postgres-dependencies-readonly",
+            "status": "DEPENDENCIES_PARTIALLY_PROVEN; FOCUSED_TIMER_FOLLOWUP_PENDING",
+            "requestKey": "t45-legacy-current-pg-dependencies-readonly-20261112-02",
+            "jobSha256": "c1357a1642c7fffb65b4d5d5d71fd0e8430a612312ea3507dc9416c19a6fcaf0",
+            "resultSha256": "02e133a21320f6060ffff6ac687845bd1b09e68df1cb8f48a53e84fccb24046f",
+            "terminalExitCode": 0,
+            "observedDatabaseCount": 8,
+            "observedClients": 0
           }
         ],
         "currentInFlight": {
-          "group": "r3-maintenance-private-input-and-window",
-          "status": "ORIGINAL_KEYS_CONFIRMED_UNCONSUMED; PRIVATE_INPUT_HANDOFF_PENDING",
+          "group": "r3-maintenance-private-input-and-legacy-followup",
+          "status": "LOCAL_ORIGINAL_CONFIRMED; PROTECTED_DELIVERY_CANDIDATE_IN_PREPARATION; LEGACY_TIMER_METADATA_PENDING",
           "owner": "T45",
-          "next": "Resolve protected handoff and fix real same-start role08/service08/SQL36/A/SQL38/auth restore/stop bindings before opening the window. Keep the 05 fix local."
+          "next": "Resolve focused old boot/timer metadata. Complete private transfer candidate and grant/role/service timing before opening the real R3 maintenance window."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
