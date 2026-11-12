@@ -1362,7 +1362,7 @@
     "handoverCheckpoint": "9f1a14bbe377679fefb0ba22fb58c5516bf61830",
     "serverOwner": "T45",
     "originalP03Key": "t45-r3-r2-data-p03-20261112-01",
-    "next": "P06\u2013P09 first bounded single-lane trial issued after fixed 04 and QB pass. Await exact live prerequisites, per-key receipts and independent withdrawal. Other assets and capacity work remain scoped.",
+    "next": "First batch install failed before any data on DERP because actual setup elapsed 155.170s, exceeding 120s. T45 closes original window at expiry. Only outer setup time is being revised with net upload and closeout unchanged.",
     "networkDiagnosticExitCodes": [
       0,
       0
@@ -1590,7 +1590,7 @@
     "receiveAcceleration": {
       "sourceUserThread": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
       "sourceUserMessageId": "01a1cf0e-8d95-7c53-a8dd-819d1197d787",
-      "state": "QB_04_WRITABLE_EDGE_PASS; FIRST_BOUNDED_SINGLE_LANE_TRIAL_ISSUED",
+      "state": "FIRST_BOUNDED_INSTALL_FAILED_NO_DATA; ORIGINAL_WINDOW_CLOSEOUT_PENDING; SETUP_BUDGET_SUCCESSOR_PREPARING",
       "batchCandidates": [
         "P06",
         "P07",
@@ -1682,7 +1682,7 @@
         "qbBytesWrittenAfterDeadline": 0
       },
       "firstTrial": {
-        "state": "ISSUED_AFTER_QB_AND_T45_READY; LIVE_RECEIPTS_PENDING",
+        "state": "INSTALL_FAILED_NO_DATA; POLICY_ABSENT_INDEPENDENTLY; ORIGINAL_CLEANUP_PENDING",
         "lanes": 1,
         "startsAt": "2026-11-12T18:35:12.707+08:00",
         "expiresAt": "2026-11-12T18:51:12.707+08:00",
@@ -1693,7 +1693,25 @@
           "P07",
           "P08",
           "P09"
-        ]
+        ],
+        "routeAtStart": "DERP",
+        "clientStartedAt": "2026-11-12T18:35:51.605+08:00",
+        "installStartedAt": "2026-11-12T18:37:47.876+08:00",
+        "installElapsedFromWindowStartSeconds": 155.17,
+        "remainingAtInstallSeconds": 804.831,
+        "installExitCode": 1,
+        "installExportCount": 0,
+        "installReceiptSha256": "1e5e688206b6c22132a5e1044e0b841c20048b9d036ce9db8f96b31fec61245c",
+        "policyAbsentAt": "2026-11-12T18:38:08.443+08:00",
+        "realDataSent": false
+      },
+      "setupBudgetSuccessor": {
+        "state": "T45_LOCAL_NARROW_PREPARATION",
+        "proposedSetupSeconds": 240,
+        "netUploadSeconds": 600,
+        "separateCloseoutSeconds": 240,
+        "proposedMaxWindowSeconds": 1080,
+        "trialIssuancePendingOriginalCleanupAndDelta": true
       }
     },
     "oldAssetRetirement": {
