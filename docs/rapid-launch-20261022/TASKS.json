@@ -2783,13 +2783,27 @@
               "actualTlsTested": false,
               "serverWrites": 0
             }
+          },
+          {
+            "group": "r3-faa8-private-browser-minimum-continuation-20261113-0435",
+            "status": "EXISTING_T15_ROUTE_INAPPLICABLE_CURRENT_PRIVATE_ROUTE_AND_RUNNING_UPSTREAM_UNBOUND",
+            "owner": "T45 / C",
+            "evidence": {
+              "reportSha256": "e0fe15c659ca0639371b3af1aff6d978edb2569b6f6d64ea75b26393776c3232",
+              "existingConfigVerifiedHealthOnly": true,
+              "local443ListenerVisible": false,
+              "additionalAdministratorJobSubmitted": false,
+              "privateTlsTested": false,
+              "qualifiedUpstream": null,
+              "actualRoleAcceptance": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_ACTUAL_READY_OLD_T15_HEALTH_ONLY_T45_EXACT_BROWSER_ROUTE_CONTINUATION_A_WAITING_DIRECT_APPROVAL",
-          "owner": "T45",
-          "next": "Determine the smallest viable authorized same-build private route and actual three-role acceptance prerequisites. Reuse the received FAA8 archive. A original remains pending direct approval."
+          "status": "FAA8_ACTUAL_READY_A_PRIVATE_TRANSFER_WAITING_DIRECT_APPROVAL_SAME_BUILD_BROWSER_ROUTE_UNBOUND",
+          "owner": "C / T45",
+          "next": "Reuse staged FAA8 and all original typed receipts. Resume A only on direct user approval. Identify a qualified existing or explicitly scoped private HTTPS route and isolated credentials before invoking QF/QB. Keep 28 GiB until actual phase peaks measured."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
