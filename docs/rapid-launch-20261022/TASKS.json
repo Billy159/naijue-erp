@@ -2613,13 +2613,36 @@
               "exactSourceFilesUnchanged": 14,
               "actualBrowserEvidence": null
             }
+          },
+          {
+            "group": "r3-fixed-sampler-05-20261113-0400",
+            "status": "LOCAL_MISSING_ROOT_AND_TRANSITIVE_CONSUMERS_VERIFIED_QB_REVIEW_ACTIVE",
+            "owner": "C / T45 / QB",
+            "evidence": {
+              "bindingSha256": "c403b459adb99a9ae18304f9692d246c60d0a874cf29d4e0dad62e07a3e3c847",
+              "reportSha256": "f2222c6844cd7c2035a78b99be47dc5643429d725ad31e832c95325344407f57",
+              "runtimeSha256": "18e46ae9c2cdd9bcd2026569cf13e43b1ae1f8c13db32c8b917f607cc685d9be",
+              "actualMeasurements": null
+            }
+          },
+          {
+            "group": "r3-faa8-finite-private-09-20261113-0400",
+            "status": "FIXED_FINITE_DIAGNOSTIC_AND_PREAUTH_TLS_LOCAL_ONLY_PRIVATE_BROWSER_UNBOUND",
+            "owner": "T45 / QB",
+            "evidence": {
+              "bindingSha256": "55499ff29030f39a2a1e73f98868f1209ea2de0a07b7348d83f775c29d80ca2b",
+              "reportSha256": "11aa48d9516789637a66a65e411734d378b16050757a7db56eba39509ad830e0",
+              "exactLeaves": 7,
+              "authorLocalTests": 5,
+              "actualPrivateHttps": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_FINITE_DIAGNOSTIC_AND_SAMPLER_PATCH_IN_PROGRESS_REAL_PRIVATE_BROWSER_UNBOUND",
-          "owner": "T45 / QF / QB",
-          "next": "Freeze actual finite FAA8 diagnostic and the sampler patch. Reuse QF existing scope when the protected same-origin host and test roles are available. Actual A private transfer still awaits direct authorization."
+          "status": "FIXED_PRIVATE_DIAGNOSTIC_AND_SAMPLER_IN_REVIEW_ACTUAL_BROWSER_ROUTE_UNBOUND",
+          "owner": "T45 / QB",
+          "next": "Adopt focused independent review, resolve exact existing private HTTPS, identity and isolated browser authorization conditions. Actual A original transfer still awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
