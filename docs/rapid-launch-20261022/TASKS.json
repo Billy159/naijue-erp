@@ -45599,7 +45599,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_READY_ON_ORIGINAL_KEY; ONE_OF_73_FRAGMENTS; P02_STANDARD_UPLOAD_TIMED_OUT_AND_POLICY_WITHDRAWN; P02_RECOVERY_QB_PASS_AND_FIRST_WINDOW_DISPATCHED; NO IMPORT",
+          "state": "P01_READY_ON_ORIGINAL_KEY; ONE_OF_73_FRAGMENTS; P02_RECOVERY_SEGMENTS_1_TO_4_DURABLE_AND_POLICY_WITHDRAWN; SECOND_WINDOW_DISPATCHED; NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
@@ -45654,7 +45654,7 @@
             "afterWithdrawalReadbackAt": "2026-11-12T14:32:53.617930+08:00",
             "remaining71SourceReferencesSha256": "ab082697ef2144835250944a128c449a5b476faf837aaa6805273f789db5bc3b",
             "sameKeyRecovery": {
-              "state": "EXACT_QB_DELTA_PASS_LOCAL; T45_FIRST_RECOVERY_WINDOW_DISPATCHED; ACTUAL_RECEIPT_PENDING",
+              "state": "EXACT_QB_DELTA_PASS_LOCAL; T45_FIRST_RECOVERY_WINDOW_CLOSED; FOUR_SEGMENTS_VERIFIED; NEXT_SEGMENT_5",
               "reviewedResultSha256": "ed6b26090cec7d2975e15af42a9c041c37ae5119796f6c37fcc55c41c2eee8b5",
               "reviewedScopeSha256": "64583970692715e8943788311661d59e46bd7132d5fb7828a3b12fc27aafb98a",
               "firstRecoveryWindowInputSha256": "f982347bedba90995c731cfadb268007a6fc0dc77a6ae346176da82697f6550a",
@@ -45662,8 +45662,29 @@
               "startsAt": "2026-11-12T14:46:55.584+08:00",
               "expiresAt": "2026-11-12T14:56:55.584+08:00",
               "initialBytes": 643584,
-              "firstNewBoundaryBytes": 905728
+              "firstNewBoundaryBytes": 905728,
+              "afterFirstWindowBytes": 1692160,
+              "nextSegment": 5,
+              "readyPublished": false,
+              "firstRecoveryCloseoutSha256": "6002e285f82ec8e3f4da4f64ec6b08b0c063ee85cf67ad370eb7110c22b01939",
+              "firstRecoveryPolicyWithdrawalSha256": "f70df5eac2e4bccbae5fad7efc9dec265debff43c41fcd71d01ee6d2e49fe39b",
+              "firstRecoveryFinalReadbackSha256": "10b8bd7f2bf93d8cb1c8cf3dae3528fde3dc4fc694320406f6e6217695cd13d1",
+              "firstRecoveryPolicyAbsenceSha256": "d1b02df10a58c3f074b497dbc22d85f0f826d42b27ee6c42345dc6141a51b6f2",
+              "secondRecoveryWindow": {
+                "state": "DISPATCHED_TO_T45; ACTUAL_RECEIPT_PENDING",
+                "windowInputSha256": "2e2e7da118f8b78c0ede071dbb76153461d65b60b08592cd85f97c374a035171",
+                "preissueReadbackSha256": "0e756ea73d050b1e3259a9f11237c22cb656cbb725fda983110489790ea73151",
+                "startsAt": "2026-11-12T15:11:49.394+08:00",
+                "expiresAt": "2026-11-12T15:21:49.394+08:00",
+                "segments": [5, 6]
+              }
             }
+          },
+          "remaining71FirstSegmentReview": {
+            "state": "T45_LOCAL_REPRESENTATIVE_PASS; QB_DELTA_REVIEW_DISPATCHED; NO FIELD_WRITE",
+            "candidateResultSha256": "cfb7addb3485482af18b679aa850c3f6a95198a601a7fa02324eae70ddaa7fba",
+            "timingReviewSha256": "0e704b916f9a3d9f5e081778f63dc6d278457d809efd9c034993599f6c74b3ea",
+            "transport": "C verified offline that the existing recovery wrapper does not start stock ControlMaster. Existing per-call 40s and original checks apply. Any reuse change requires independent delta verification."
           },
           "capacityInterpretation": {
             "materializedBalanceUpperBoundBytes": 29318672228,
@@ -45682,7 +45703,7 @@
             "twoReportReviewSha256": "497c51127619fa5da0e8c475d598f139261da07c3808db7af3c78eb63533d3d2",
             "state": "CURRENT_CLI_PREPARE_AND_EXECUTE_REQUIRE_DISTINCT_REPORT_DIRECTORIES; 28_GIB_GUARD_RETAINED; ACTUAL_WRITER_MOUNTS_AND_PG_WAL_BACKUP_RESTORE_PEAK_UNVERIFIED"
           },
-          "next": "Reuse original P01 READY. T45 executes the exact P02 same-key recovery window starting at the verified 643584-byte boundary. Independently review the fixed-manifest segment creation delta for the remaining 71 original fragments before use. Bind the verified 6c archive and establish feasible report, temporary and backup volume budgets before the real writer."
+          "next": "Reuse original P01 READY. T45 executes the exact P02 second recovery window, then finalize only on complete readback. QB independently reviews the fixed-manifest segment creation delta for the remaining 71 original fragments. Bind the verified 6c archive and establish feasible report, temporary and backup volume budgets before the real writer."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
