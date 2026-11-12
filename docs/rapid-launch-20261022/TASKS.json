@@ -2797,13 +2797,40 @@
               "qualifiedUpstream": null,
               "actualRoleAcceptance": null
             }
+          },
+          {
+            "group": "r3-original-unknown-writer-recovery-admission-gap-20261113-0442",
+            "status": "ACTUAL_FROZEN_DISPATCHER_REPRODUCED_EXACT_READONLY_OBSERVATION_REFUSAL_UNDER_HOLD",
+            "owner": "C / T45",
+            "evidence": {
+              "dispatcherSha256": "e769d65fd2da7ab2031856cd81b0fb7f3568fc962d94e003473e7134ea76b756",
+              "holdSha256": "9469764938dcb029da57fb04f1467fb617208699aeac11414b384957c05095e6",
+              "syntheticWriterOuterStatus": "FAILED",
+              "syntheticWriterExitCode": 124,
+              "originalTerminalRetained": true,
+              "holdRetained": true,
+              "observationError": "R3_CONTINUITY_OTHER_JOB_BLOCKED",
+              "observationChildStarted": false,
+              "liveWriterExecuted": false
+            }
+          },
+          {
+            "group": "r3-original-init-fingerprint-short-status-projection-20261113-0442",
+            "status": "FIXED_6C_PREPARE_AND_WRITER_INIT_GUARD_INDEPENDENT_BINDING_CONFIRMED_D1_DELTA_ACTIVE",
+            "owner": "C / D1 / T45",
+            "evidence": {
+              "prepareInitializerPin": "requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt})",
+              "executeInitializerGuardRechecksOriginalPin": true,
+              "original05PrivateScryptProjectionConfirmedInSource": true,
+              "actualShortReadback": null
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAA8_ACTUAL_READY_A_PRIVATE_TRANSFER_WAITING_DIRECT_APPROVAL_SAME_BUILD_BROWSER_ROUTE_UNBOUND",
-          "owner": "C / T45",
-          "next": "Reuse staged FAA8 and all original typed receipts. Resume A only on direct user approval. Identify a qualified existing or explicitly scoped private HTTPS route and isolated credentials before invoking QF/QB. Keep 28 GiB until actual phase peaks measured."
+          "status": "FAA8_ACTUAL_READY_T45_STATIC_CONTINUITY_PREP_AND_D1_SHORT_STATUS_BINDING_ACTIVE_A_APPROVAL_PENDING",
+          "owner": "T45 / D1",
+          "next": "Prebind only reproducible frozen template inputs. Validate the narrow original-key recovery path under retained HOLD and its independent INIT comparison without changing the immutable application/archive. Actual A authorization and same-build private browser route remain pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
