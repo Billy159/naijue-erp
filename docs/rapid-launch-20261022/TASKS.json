@@ -45599,7 +45599,7 @@
           "availableDiskBytes": 30450954240,
           "coldFloorOnlyShortfallBytes": 746098844,
           "coldFloorShortfallWithoutIntermediatesBytes": 450895591,
-          "state": "P01_TIMED_OUT_PARTIAL_PREFIX_CONFIRMED; ORIGINAL_POLICY_ABSENCE_RESTORED_AND_INDEPENDENTLY_READ_BACK; NO READY, NO OTHER FRAGMENTS, NO IMPORT",
+          "state": "P01_FIRST_RECOVERY_WINDOW_CLOSED_WITH_SEGMENT1_DURABLE; SECOND_WINDOW_DISPATCHED; NO READY, NO OTHER FRAGMENTS, NO IMPORT",
           "p01": {
             "requestKey": "t45-r3-r2-data-p01-20261112-01",
             "bytesReceived": 941056,
@@ -45615,9 +45615,25 @@
             "fixedScopeSha256": "58adfb04fce218b66b7aba9afa9fc770c34ab5431d7ee6509a93610850b3f16d",
             "qbThread": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
             "qbTurn": "01a1ce1f-eafd-7831-a498-c252c57e7e71",
-            "state": "ORIGINAL_NEED_FIX; SUCCESSOR_10_OF_10_LOCAL_EXIT_0; QB_DELTA_REVIEW_DISPATCHED; NO ONSITE ACTION",
+            "state": "QB_DELTA_10_OF_10_PASS_AND_THREE_EARLIER_BLOCKERS_RESOLVED; FIRST_SERVER_SEGMENT_AND_POLICY_CLOSEOUT_PASS",
             "successorResultSha256": "be7899b113039a5bf8c1d62ef95e33e52ca5e611b69cb51915f8c8535b4d84bf",
             "successorInitialWindowSha256": "b61c45a5f63e1415e31a9e474a33da129e86d1d6d153fcc104c30189f259b873"
+          },
+          "p01FirstRecoveryWindow": {
+            "bytesReceived": 1203200,
+            "nextSegment": 2,
+            "readyPublished": false,
+            "closeoutSummarySha256": "e5d350b70b2ce5ea481d13bf73a70398a350a13604e2e3c7385278ed89c4e1b6",
+            "finalOriginalKeyReadbackSha256": "95a70739e7cc5a50e4c72920cbe8240770c06cd1d9d85b6c5c2d14805d3fbba9",
+            "policyAbsenceSha256": "dcae4ab5bb2a7dd9f06353941d3522796432b3efa3022f0a81a3e56c28b8cf4a",
+            "policyAbsenceObservedAt": "2026-11-12T13:55:24.378+08:00"
+          },
+          "p01SecondRecoveryWindow": {
+            "state": "DISPATCHED_TO_ORIGINAL_T45; ACTUAL_RECEIPT_PENDING",
+            "windowInputSha256": "5670fb5045b5f1d12b32bea78889cd4d3f176095b269208b1fa191cea3588ae6",
+            "startsAt": "2026-11-12T14:01:39.933+08:00",
+            "expiresAt": "2026-11-12T14:11:39.933+08:00",
+            "scope": "Same original key and original inode; segments 2 through 5; finalize only after exact full readback and with sufficient time; independent policy withdrawal readback."
           },
           "capacityInterpretation": {
             "materializedBalanceUpperBoundBytes": 29318672228,
@@ -45626,9 +45642,12 @@
             "sameBatchLocalIndexBytes": 2196459520,
             "sameBatchLocalSummaryBytes": 51222687,
             "sameVolumeOneReportMarginBelow28GiBBytes": 2993781051,
-            "state": "28_GIB_ORIGIN_21_GIB_PHASE_PEAK_PLUS_6_GIB_STOP_PLUS_1_GIB_DRIFT; CURRENT_STAGE_GUARDS_REMAIN; ACTUAL_WRITER_MOUNTS_AND_PEAK_UNVERIFIED"
+            "sameVolumeTwoReportsProjectedBalanceBytes": 24823307814,
+            "sameVolumeTwoReportsMarginBelow28GiBBytes": 5241463258,
+            "twoReportReviewSha256": "497c51127619fa5da0e8c475d598f139261da07c3808db7af3c78eb63533d3d2",
+            "state": "CURRENT_CLI_PREPARE_AND_EXECUTE_REQUIRE_DISTINCT_REPORT_DIRECTORIES; 28_GIB_GUARD_RETAINED; ACTUAL_WRITER_MOUNTS_AND_PG_WAL_BACKUP_RESTORE_PEAK_UNVERIFIED"
           },
-          "next": "QB reviews the fixed P01 successor. T45 prepares the exact initial window and final receipt closeout, and freezes 6c real writer bindings for D3 r2 including report and temporary devices and retained PREPARE report count. No new onsite action issued."
+          "next": "T45 continues the original P01 key from segment 2, then verifies the transfer and policy closeout. In parallel, freeze the current 6c/r2 writer and establish feasible report, temporary and backup volume budgets before the real writer."
         },
         "maintenance08RestorationArchive": {
           "commit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
