@@ -2228,13 +2228,22 @@
             "group": "r3-exact-six-amount-readback-boundary",
             "status": "AGGREGATE_OUTPUT_DOES_NOT_EXPOSE_EXACT_ROW_DIAGNOSTICS; USE_EXISTING_NATIVE_DETAIL_AFTER_IMPORT",
             "localFixtureExitCode": 0
+          },
+          {
+            "group": "r3-production-generation-host-source-01",
+            "status": "HOST_LOCAL_SOURCE_AND_SEVEN_TARGETED_TESTS; QB_REVIEW_IN_PROGRESS",
+            "resultSha256": "86ef3aca2d76acb6c64dda73f1950b9b17846bb34e461305e798fc2b5f3c5d83",
+            "bootSha256": "4a06eb318b88db14a82183d7f52f4337d450e7ee1edf705093f9c11fa267eb26",
+            "ownerSha256": "c1f0f41db6478182b42e9553c79677926c72cc80fd215e78d5780de7035bd32e",
+            "pgSha256": "c96599dd7948dca5628893009de94039c52efe30194efa9e1d8da560e4b78864",
+            "hostSha256": "7ebf1973d9dc7b5d6ed40ca5c4f67b6a5800d3ac4898c769b4fb8493bfb93370"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FORMAL_NODE_LOCAL_6DB7_QB_REVIEW; T45_HOST_IMPLEMENTATION_ACTIVE",
-          "owner": "T45 host / D1 Node / QB scoped review",
-          "next": "Resolve Node review if needed, integrate exact host source when ready, and keep receiver waiting on direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; NODE_6DB7_NEED_FIX; HOST_LOCAL_01_QB_REVIEW; 05_ACCESS_PREP_ACTIVE",
+          "owner": "T45 host / D1 Node / QB focused reviews",
+          "next": "Close three focused Node findings, review the fixed local host and then pair them. T45 prepares exact existing access ledger while waiting on user authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
