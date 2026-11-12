@@ -2662,13 +2662,39 @@
               "artifactKey": "r3-private-ordinary09-faa845e6-20261113-01",
               "actualRemoteReady": null
             }
+          },
+          {
+            "group": "r3-faa8-private-route-live-readonly-20261113-0410",
+            "status": "ACTUAL_B164_READY_HOST_PORTS_CLOSED_CONTAINER_ROUTE_UNKNOWN",
+            "owner": "T45 / C",
+            "evidence": {
+              "actualReadbackSha256": "e67b4965f66826b0050e42d2797b1a10d59830be29bf0e804b6f66390b21eca2",
+              "confirmedAtUtc": "2026-11-12T20:06:31.007072+00:00",
+              "liveOpenPort18080": false,
+              "liveOpenPort18081": false,
+              "dockerEvidence": "ORDINARY_PERMISSION_DENIED",
+              "databaseConnections": 0
+            }
+          },
+          {
+            "group": "r3-faa8-artifact-live-readonly-20261113-0410",
+            "status": "EXACT_ORIGINAL_ARTIFACT_READY_AND_CURRENT_POLICY_ABSENT",
+            "owner": "T45 / C",
+            "evidence": {
+              "actualReadbackSha256": "1734bc1cbaaf858505b66491688a973dacf4d27eef274a176b937533f80d8731",
+              "confirmedAtUtc": "2026-11-12T20:09:14.092746+00:00",
+              "rootAvailableBytes": 40122892288,
+              "rootDevice": 66304,
+              "retainedLinuxTerminalSha256": "760149917095ed2460bf5774a1ef761184fe122de2d944ae6d92211a20080b14",
+              "transferPerformed": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "T45_PRIVATE_ROUTE_READONLY_ACTIVE_EXACT_FAA8_ARTIFACT_PREPARE_QUEUED",
+          "status": "FAA8_ARTIFACT_ABSENT_ACTUAL_SINGLE_RECEIVER_PREPARATION_ACTIVE_PRIVATE_BROWSER_ROUTE_UNBOUND",
           "owner": "T45",
-          "next": "Finish the active existing-route read-only check before any independent application artifact staging. Read the exact original FAA8 READY/key first; no duplicate transfer. Actual A transfer awaits direct authorization."
+          "next": "Finalize one exact FAA8 application-only staging scope and observed ready/restore. Keep existing public and private boundaries; actual A transfer still awaits direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
