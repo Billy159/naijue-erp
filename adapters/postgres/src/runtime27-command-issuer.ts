@@ -108,10 +108,12 @@ export function createRuntime27CommandIssuer(pool:PgSalesPool,target:{readonly d
  const identitySql=policyProfile==='WHOLE_V2'?IDENTITY.replace("ARRAY['search_path=pg_catalog, naijue_erp']","ARRAY['search_path=pg_catalog, naijue_erp, pg_temp']"):IDENTITY;
  const physical35=admission35?describeFresh35OrdinaryAdmissionV2(admission35):undefined;
  if(physical35 && (policyProfile!=='WHOLE_V2'||physical35.database!==target.database||physical35.user!==target.user||physical35.connectPort!==target.port))throw TypeError('Exact production admission target required');
+ const restoredAdmission=physical35?.purpose==='RESTORED_FROM_VERIFIED_INSTALLATION'?admission35:undefined;
  const fixed=Object.freeze({...target,port:physical35?.serverPort??target.port});
  const status=(client:PgSalesClient):string|null=>{const f=(client as PgSalesClient & {getTransactionStatus?:()=>string|null}).getTransactionStatus;return typeof f==='function'?f.call(client):null;};
  const leases=new WeakMap<object,{raw:PgSalesClient;active:boolean;busy:boolean;failed:boolean;roleSet:boolean;transaction:'none'|'readonly'|'other'}>();
  const wrapped:PgSalesPool=Object.freeze({async connect(){
+  if(restoredAdmission)describeFresh35OrdinaryAdmissionV2(restoredAdmission);
   const raw=await pool.connect(),state={raw,active:true,busy:false,failed:false,roleSet:false,transaction:'none' as 'none'|'readonly'|'other'};
   try { requireDomain(status(raw)==='I','NATIVE_RUNTIME27_NOT_READY','Idle physical connection required');
    if(admission35)await assertFresh35OrdinaryLeaseV2(admission35,pool,raw);
@@ -122,9 +124,13 @@ export function createRuntime27CommandIssuer(pool:PgSalesPool,target:{readonly d
    requireDomain(status(raw)==='I'&&result.rows.length===1&&x?.database===fixed.database&&x.role===RUNTIME_ROLE&&x.session_user===fixed.user&&x.server_port===fixed.port
      &&x.row_security==='on'&&x.search_path==='pg_catalog'&&x.replication_role==='origin'&&x.superuser===false&&x.bypass===false&&x.session_superuser===false&&x.session_bypass===false&&x.runtime_inherit===false&&x.runtime_membership===false
      &&x.can_create===false&&x.version_ok===true&&x.gate_ok===true&&x.policies_ok===true,'NATIVE_RUNTIME27_NOT_READY','Authorized runtime target and RLS required');
+   if(restoredAdmission)describeFresh35OrdinaryAdmissionV2(restoredAdmission);
   } catch(error) { raw.release(true); throw error; }
   const lease:PgSalesClient={async query(sql,values){if(state.active&&state.busy)state.failed=true;const control=sql.trim().toUpperCase(),cleanup=control==='ROLLBACK';requireDomain(state.active&&!state.busy&&(!state.failed||cleanup),'NATIVE_RUNTIME27_NOT_READY','Original idle lease required');state.busy=true;try{if(admission35&&!cleanup){await assertFresh35OrdinaryAdmissionCurrentV2(admission35,pool);requireDomain(state.active&&!state.failed,'NATIVE_RUNTIME27_NOT_READY','Original active lease required after admission check');}const result=await raw.query(sql,values);requireDomain(state.active&&(!state.failed||cleanup),'NATIVE_RUNTIME27_NOT_READY','Lease closed or poisoned during query');const command=(result as {command?:unknown}).command;
-    if(/^(BEGIN|COMMIT|ROLLBACK)(?:\s|$)/.test(control)){const expected=control.split(/\s+/)[0];requireDomain(command===expected&&status(raw)===(expected==='BEGIN'?'T':'I'),'NATIVE_RUNTIME27_NOT_READY','Unexpected transaction acknowledgement or native state');state.roleSet=false;state.transaction=control==='BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'?'readonly':control==='BEGIN ISOLATION LEVEL READ COMMITTED'?'other':'none';}return result;}catch(error){state.failed=true;throw error;}finally{state.busy=false;}},release(error){if(!state.active)return;state.active=false;raw.release(true);}};
+    if(/^(BEGIN|COMMIT|ROLLBACK)(?:\s|$)/.test(control)){const expected=control.split(/\s+/)[0];requireDomain(command===expected&&status(raw)===(expected==='BEGIN'?'T':'I'),'NATIVE_RUNTIME27_NOT_READY','Unexpected transaction acknowledgement or native state');state.roleSet=false;state.transaction=control==='BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'?'readonly':control==='BEGIN ISOLATION LEVEL READ COMMITTED'?'other':'none';}
+    if(restoredAdmission&&!cleanup)describeFresh35OrdinaryAdmissionV2(restoredAdmission);
+    return result;
+   }catch(error){state.failed=true;throw error;}finally{state.busy=false;}},release(error){if(!state.active)return;state.active=false;raw.release(true);}};
   leases.set(lease,state);return lease;
  }});
  const runtime27:Runtime27CommandCapability=Object.freeze({profile:'EXACT27',contract:'STANDARD_RUNTIME27_COMMAND_V1',async assertReady(client:object,purpose:Parameters<Runtime27CommandCapability['assertReady']>[1]){
@@ -139,6 +145,7 @@ export function createRuntime27CommandIssuer(pool:PgSalesPool,target:{readonly d
   const state=leases.get(client);if(state?.active&&state.busy)state.failed=true;requireDomain(state&&state.active&&!state.busy&&!state.failed&&state.transaction==='readonly'&&status(state.raw)==='T'&&purpose==='ORDINARY_DOCUMENT_READ','NATIVE_RUNTIME27_NOT_READY','Original authorized read lease required');
   state.busy=true;try{if(admission35){await assertFresh35OrdinaryAdmissionCurrentV2(admission35,pool);requireDomain(state.active&&!state.failed&&status(state.raw)==='T','NATIVE_RUNTIME27_NOT_READY','Original active lease required after admission check');}if(!state.roleSet){const switched=await state.raw.query('SET LOCAL ROLE erp_unified27_runtime_2393dbc6db9581c2');requireDomain(state.active&&!state.failed&&status(state.raw)==='T'&&(switched as {command?:unknown}).command==='SET','NATIVE_RUNTIME27_NOT_READY','Exact active runtime role required');state.roleSet=true;}const result=await state.raw.query(identitySql);const x=result.rows[0];
    requireDomain(state.active&&!state.failed&&status(state.raw)==='T'&&result.rows.length===1&&x?.database===fixed.database&&x.role===RUNTIME_ROLE&&x.session_user===fixed.user&&x.server_port===fixed.port&&x.row_security==='on'&&x.search_path==='pg_catalog'&&x.replication_role==='origin'&&x.superuser===false&&x.bypass===false&&x.session_superuser===false&&x.session_bypass===false&&x.runtime_inherit===false&&x.runtime_membership===false&&x.can_create===false&&x.version_ok===true&&x.gate_ok===true&&x.read_only==='on'&&x.isolation==='repeatable read'&&x.policies_ok===true,'NATIVE_RUNTIME27_NOT_READY','Runtime target, role and read-only snapshot required');
+   if(restoredAdmission)describeFresh35OrdinaryAdmissionV2(restoredAdmission);
   }catch(error){state.failed=true;throw error;}finally{state.busy=false;}
  }});
  issued.set(runtime27, wrapped);

@@ -11,6 +11,7 @@ import path from "node:path";
 import { promisify } from "node:util";
 import { gzip, brotliCompress, constants } from "node:zlib";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
+import { isRestorationApiRoute } from "./postgres-read-api.ts";
 import { parseProductionRuntimeConfiguration } from "./production-provider-composition.ts";
 import { productionRuntime26HostConfiguration } from "./production-provider-composition.ts";
 import { productionRuntime26R3HostConfiguration, productionRuntime26R2HostConfiguration } from "./production-provider-composition.ts";
@@ -130,6 +131,7 @@ export async function createProductionRequestHandler(options: ProductionApplicat
   if (typeof api?.close !== "function" || typeof api?.app?.routing !== "function" || api.app.server.listening
     || api.trustedOrigin !== config.publicOrigin) throw new TypeError("Explicit non-listening application with the exact public origin required");
   const routing = api.app.routing.bind(api.app), hosts = new Set(config.http.acceptedHosts), entry = config.assets.entry;
+  const restoreOnly = api.restoreOnly === true;
   const assets = await captureBuild(config.assets.root, entry);
   const health = Buffer.from(JSON.stringify({ status: "HOST_ALIVE", databaseChecked: false, apiBase: "/api", ...config.build }));
   const log=hostLog(options.writeLog);
@@ -151,13 +153,15 @@ export async function createProductionRequestHandler(options: ProductionApplicat
 
     if (typeof raw !== "string" || !raw.startsWith("/") || raw.startsWith("//") || /[\\\x00-\x1f\x7f]/.test(raw)
       || !hosts.has(request.headers.host ?? "")) return failure(response, 400);
-    if (isClosing() && raw.split("?",1)[0] !== "/healthz") return failure(response, 503);
+    const pathname = raw.split("?", 1)[0]!;
+    if (restoreOnly && pathname !== "/healthz" && pathname !== "/readyz"
+      && !(raw.startsWith("/api/") && isRestorationApiRoute(request.method, raw.slice(4)))) return failure(response, 404);
+    if (isClosing() && pathname !== "/healthz") return failure(response, 503);
     if (raw === "/api" || raw.startsWith("/api/") || raw.startsWith("/api?")) {
       request.url = raw.slice(4) || "/"; if (request.url.startsWith("?")) request.url = "/" + request.url;
       withRequestDiagnostic(diagnostic,()=>routing(request, response)); return;
     }
     if (request.method !== "GET" && request.method !== "HEAD") return failure(response, 405);
-    const pathname = raw.split("?", 1)[0]!;
     if (pathname === "/healthz") {
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "content-length": health.byteLength, "cache-control": "no-store", "x-content-type-options": "nosniff" });
       response.end(request.method === "HEAD" ? undefined : health); return;

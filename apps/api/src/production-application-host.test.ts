@@ -63,6 +63,31 @@ test("production handler strips only /api and captures actual emitted assets wit
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test("restore-only production handler serves probes and forwards only the three restoration routes", async () => {
+  const root = await build(), p = apiDouble();
+  try {
+    const handle = await createProductionRequestHandler({
+      api: { ...p.api, restoreOnly: true, async readiness() { return true; } }, configuration: config(root)
+    });
+    for (const [method, url] of [["GET", "/"], ["GET", "/assets/app.js"], ["HEAD", "/assets/app.js"],
+      ["POST", "/api/auth/password"], ["POST", "/api/auth/logout"], ["GET", "/api/auth/login"],
+      ["POST", "/api/inventory/candidates/query"], ["POST", "/api/inventory/query?extra=1"]]) {
+      assert.equal(invoke(handle, url!, method).status, 404, `${method} ${url}`);
+    }
+    assert.deepEqual(p.routed, []);
+    for (const [method, url] of [["POST", "/api/auth/login"], ["GET", "/api/auth/session"], ["POST", "/api/inventory/query"]]) {
+      assert.equal(invoke(handle, url!, method).body, "API404");
+    }
+    assert.deepEqual(p.routed, ["/auth/login", "/auth/session", "/inventory/query"]);
+    assert.equal(invoke(handle, "/healthz").status, 200);
+    assert.equal(await new Promise<number>(resolve => {
+      let status = 0;
+      handle({ url: "/readyz", method: "GET", headers: { host: "web:8080" } } as IncomingMessage,
+        { writeHead(code: number) { status = code; }, end() { resolve(status); } } as unknown as ServerResponse);
+    }), 200);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test("host rejects traversal, source/private files and spoofed forwarded Host", async () => {
   const root = await build(), p = apiDouble();
   try {

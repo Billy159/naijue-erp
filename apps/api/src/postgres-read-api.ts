@@ -184,6 +184,10 @@ export interface PostgresReadApi {
   readiness?(signal?: AbortSignal): Promise<boolean>;
 }
 export interface PostgresApplicationApi extends PostgresReadApi { readonly trustedOrigin: string; readonly restoreOnly?: true }
+export function isRestorationApiRoute(method: string | undefined, url: string): boolean {
+  return (method === "POST" && (url === "/auth/login" || url === "/inventory/query"))
+    || (method === "GET" && url === "/auth/session");
+}
 export interface PostgresDocumentCommandsCapability {
   readonly sales: Omit<SalesDependencies, "unitOfWork" | "now">;
   readonly transfers: Omit<TransferDependencies, "unitOfWork" | "now">;
@@ -743,8 +747,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authenticate = createSalesSessionAuthenticator(authentication);
     if(restored35 && issuer27) {
       app.addHook('onRequest', async (request, reply) => {
-        const route=`${request.method} ${request.url}`;
-        if(!['POST /auth/login','GET /auth/session','POST /inventory/query'].includes(route))
+        if(!isRestorationApiRoute(request.method,request.url))
           return reply.code(404).send();
       });
       app.register(createAuthenticationHttpPlugin(authentication));
