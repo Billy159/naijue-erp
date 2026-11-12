@@ -2158,13 +2158,28 @@
             "resultSha256": "04db5d5f5cf0065c5dafd53435633dfc0fdf084c8d9f4a58218e22168fbf513b",
             "custodyOperationSha256": "2e86757ecc12f072c881e9466be86b6c60dddc671930f76f32e4e5ff3bf4cf2d",
             "actualSubmission": false
+          },
+          {
+            "group": "r3-restoration-app-producer-contract-readback",
+            "status": "FIXED_NODE_ENTRYPOINTS_AND_CONSUMER_MATCH; T45_HOST_PRODUCER_PENDING",
+            "sourceCommit": "3d2f230829e9223faede7a32ac24ce8a9b84825c",
+            "archiveSha256": "19bc067b126c71fc5623efe2a20e8234d704ba17910124953ec955e0de31d2d1",
+            "manifestSha256": "7b667fea8dfd19582df7614d2e050d25b412f26200096f0b2c77bec7cc842612"
+          },
+          {
+            "group": "r3-current-activation-and-persistent-service-check",
+            "status": "CURRENT_LEGACY_BOOT_METADATA_REJECTED; FINITE_09_ONLY",
+            "deploymentHelperSha256": "ee0319e10a0303ab29bd348d1ea97d562cb18d4a87d7edd33b63f103297b504b",
+            "bootHelperSha256": "a1e5a73bbc4f3302b5283368ce6afd954692da95345da4377010e18eea2a2214",
+            "service09Sha256": "8951e8aeab3cf0bc28e2a3f534afef37870c02e4431d4fcb20c833b377ec1e09",
+            "localTestExitCode": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "RECEIVER_02_READY_WAITING_EXACT_TRANSFER_AUTHORIZATION; PRIVATE_PHASE_GRANT_CARRIER_PREPARATION",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; PRIVATE_PHASE_EXCHANGE_02_QB_REVIEW; POST_RECOVERY_HOST_INPUT_FIXED",
           "owner": "T45",
-          "next": "Complete existing private two-envelope handoff and exact maintenance window pins. The prepared 180s private original transfer requires the pending direct user answer."
+          "next": "Wait for exact direct original-transfer authorization and the scoped QB review. Continue existing downstream closure without changing the staged artifacts."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
