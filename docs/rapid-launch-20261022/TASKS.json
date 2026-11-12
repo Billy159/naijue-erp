@@ -45506,7 +45506,7 @@
       },
       "r3RecoveryCompatibility": {
         "owner": "T45 for backup and recovery jobs, D1 for the isolated restoration application",
-        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; QB_PASS_R3_INPUT_BINDING_ONLY; T45_EXECUTABLE_WIRING_IN_PROGRESS; D1_RESTORE_APP_SOURCE_FIXED_QB_PENDING; LIVE_EXECUTION_HOLD",
+        "state": "ORIGINAL_LOGICAL_RESTORE_PATH_SELECTED; QB_PASS_R3_INPUT_BINDING_ONLY; T45_EXECUTABLE_WIRING_IN_PROGRESS; RESTORE_APP_TWO_QB_P2_WITH_D1; LIVE_EXECUTION_HOLD",
         "localPhysicalFileVerifierCommit": "f710215f7f61f3e77d903e41ee98219527078b73",
         "localPhysicalFileVerifierTree": "dbcd1288de78742cee396ae1b1194ddb1f306b31",
         "logicalInputsResultSha256": "7d813da2bcd5b8f93dc6ff6c9073f3b5128863f9b28083eff615913a0108b123",
@@ -45520,8 +45520,11 @@
         "restoreExecutorTree": "c3a6ed7aafd76e9ce0110a3bff9b43f96dbd4fed",
         "restoreExecutorSourceSetSha256": "7836efb88d51409aa5dae788f84425650e8f163064563617f8715e1827d7d880",
         "restoreExecutorSourceFiles": 224,
+        "restoreExecutorRemoteVerified": true,
+        "restoreExecutorQbTurn": "01a1cd81-336b-7531-a523-0a9a79fab491",
+        "restoreExecutorQbFindings": ["Outer HTTP still serves index and assets in restore-only mode", "Restored database capability acquires the pool before expiry check and can deliver a query result after expiry"],
         "sequence": "ORIGINAL_WRITER_TERMINAL_THEN_05_READBACK_LOGICAL_CAPTURE_AND_CLEAN_STOP; COLD_COPY_AFTER_STOP; INDEPENDENT_PG_AND_APP_RESTORE_BEFORE_FORMAL_STAGE",
-        "next": "T45 wires the original executable recovery path. QB reviews the separate restoration application before D2 packs it independently of the 223-file formal artifact. Confirm existing continuous write exclusion across the writer and follow-up jobs, successful 05 stop path, backup role, protected configuration and live resource budget before actual execution."
+        "next": "T45 wires the original executable recovery path. D1 closes the two independently reproduced P2 findings, QB verifies only those changes, then D2 packs the restore executor separately. Confirm existing continuous write exclusion across the writer and follow-up jobs, successful 05 stop path, backup role, protected configuration and live resource budget before actual execution."
       },
       "r3PrivateApp09HostQbTurn": "01a1cce3-2723-79b0-882a-6badb2822e26",
       "r3PrivateApp09ReadyOwnershipReproduction": "QB_AND_C_PURE_LOCAL_MOCK: CURRENT_NODE_PID1_MATCHES_BEFORE_AND_AFTER, OTHER_NETNS_LISTENER_RETURNS_READY, OLD_HOST_MARKS_REAL_CLI_BEFORE_LISTEN; C_PYTHON3_B_EXIT_0",
