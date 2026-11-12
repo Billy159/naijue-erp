@@ -2115,13 +2115,22 @@
             "terminalExitCode": 0,
             "rootAvailableBytesBefore": 29280727040,
             "rootAvailableBytesAfter": 40125358080
+          },
+          {
+            "group": "r3-original-maintenance-preflight",
+            "status": "EXACT_R3_MAINTENANCE_ORIGINAL_STATE_READ",
+            "requestKey": "t45-r3-maintenance-original-state-20261112-01",
+            "jobSha256": "2f5d6418d315b3c40ac736292a756df255478cd7219e8beea87c5790881f15f7",
+            "resultSha256": "947eb3db08dbc74b6f35f0203fa0e7182442cada30cdce298acc4ca811ea1a30",
+            "terminalExitCode": 0,
+            "rootAvailableBytes": 40125149184
           }
         ],
         "currentInFlight": {
-          "group": "r3-original-maintenance-preflight",
-          "status": "28_GIB_START_ADMISSION_SATISFIED; ORIGINAL_MAINTENANCE_KEYS_READBACK_IN_PROGRESS; NORMAL_05_LOCAL_03_NEED_FIX",
+          "group": "r3-maintenance-private-input-and-window",
+          "status": "ORIGINAL_KEYS_CONFIRMED_UNCONSUMED; PRIVATE_INPUT_HANDOFF_PENDING",
           "owner": "T45",
-          "next": "Read original R3/152/6c/08/SQL36/A/SQL38/auth-restore/stop receipts and protected bindings. Continue earliest missing real step. 05 stays local."
+          "next": "Resolve protected handoff and fix real same-start role08/service08/SQL36/A/SQL38/auth restore/stop bindings before opening the window. Keep the 05 fix local."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
