@@ -2417,13 +2417,22 @@
             "group": "r3-write-continuity-local-02-final-handoff",
             "status": "NAMESPACE_SCOPE_EXPLICIT; MINIMUM_SOURCE_INTEGRATION_ACTIVE",
             "resultSha256": "2f55aa361c263c83b4d04f0895865e20468aa08358a4358a9b450871f4e739b8"
+          },
+          {
+            "group": "r3-faa8-recovery-publication-local-03-qb",
+            "status": "TWO_PRIOR_FINDINGS_CLOSED; SAME_RECEIPTS_AND_RESTART_MOUNT_DRIFT_GAPS",
+            "resultSha256": "f7114b2fda2560ada086f9c92b4e2c55ca1933f1f08104ff4e0e3e9dc7cfd3d7",
+            "bindingSha256": "abccd37668b2e4b0a5a62844b87ef347c8e3874de1264c3aec7a7e4a41da8170",
+            "focusedTests": 5,
+            "focusedFailures": 0,
+            "actualServerActions": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FAA8_03_QB_DELTA_ACTIVE; CONTINUOUS_CLOSURE_MINIMUM_DISPATCHER_SOURCE_ACTIVE",
-          "owner": "T45 / QB",
-          "next": "Close scoped FAA8 consumer review and implement the bounded admission/terminal linkage in the original dispatcher. Actual source, Linux paths, A, PG, backup and release remain unissued."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FAA8_03_TWO_CROSS_BINDING_FIXES_ASSIGNED; ORIGINAL_DISPATCHER_CONTINUITY_IMPLEMENTATION_ACTIVE",
+          "owner": "T45",
+          "next": "Continue the minimum original-dispatcher continuity source. Then bind the three underlying recovery receipts across plans and the approved dependency tree/identity at each formal startup. Retain existing artifact and successful tests. Actual A still needs direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
