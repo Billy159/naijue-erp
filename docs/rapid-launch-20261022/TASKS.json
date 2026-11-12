@@ -2911,13 +2911,29 @@
               "actualLinuxPidfdAndProcChecked": false,
               "actualStopIssued": false
             }
+          },
+          {
+            "group": "r3-qb-normal05-stop-cleanup-handoff-20261113-0508",
+            "status": "INDEPENDENT_NORMAL_LOCAL_PATH_PASS_FINAL_STOP_HANDOFF_NEEDS_EXACT_CLEANUP_BINDING",
+            "owner": "QB / C / T45",
+            "evidence": {
+              "readySha256": "4e689b9c9f5051f4ac0e5dbe21ea8514121394e2948d06ca3ca05eb7b6123a2c",
+              "holdSha256": "fff51a0383ca87976fd03dfe4fa9abfcc71ac3a1c7a49110953529bcb9237a40",
+              "scopedUnittests": 10,
+              "independentFixtures": 3,
+              "exactBindingPass": true,
+              "wrongCapturePrefixRefused": true,
+              "strictPostStopPortPass": true,
+              "driftBetweenStopResultAndFinalStopAcceptedByOriginalHold": true,
+              "actualLiveDriftObserved": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "NORMAL05_CLEAN_STOP_CANDIDATE_FROZEN_QB_SCOPED_CHECK_T45_SHORT_ORIGINAL_STATUS_CANDIDATE_ACTIVE_A_APPROVAL_PENDING",
-          "owner": "T45 / QB",
-          "next": "Independently verify only normal 05 stop. Establish the exact original-key short read-only observation with preserved HOLD and 6c/D1 pins. Actual A and live generation, authorization, browser route and other field bindings remain unbound."
+          "status": "NORMAL05_SCOPED_LOCAL_PASS_WITH_FINAL_STOP_HANDOFF_NEED_FIX_T45_SERIAL_STOP_AND_SHORT_STATUS_WORK_A_APPROVAL_PENDING",
+          "owner": "T45",
+          "next": "Bind protected stop child result and its original cleanup digest before publishing final-stop. Preserve one source owner and exact current pin chain while completing the separate original-key short read-only carrier. Actual A and live test route pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
