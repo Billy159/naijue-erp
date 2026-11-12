@@ -2274,13 +2274,31 @@
             "nodeCommit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
             "hostResultSha256": "4d803a3cb02761be84c5d0b71565131ed16d5801eb541ca038b3c2b50a3bcd39",
             "localFixtureExitCode": 0
+          },
+          {
+            "group": "r3-formal-faa8-d2-local-artifact",
+            "status": "EXACT_LOCAL_ARTIFACT_FIXED_AND_CONTROLLER_DIGEST_READBACK",
+            "sourceCommit": "faa845e65b744e6930a2a61a673b1c4d74365b51",
+            "tree": "0794b6462b3e9648c2a438a8e667d3cd4e7ab341",
+            "buildId": "erp-faa845e65b74-r3-production-generation-20261113",
+            "readySha256": "ceffc2618a087d155dd52aa5f2c46ae40ec120fa95256802e888090a0d6fb8c4",
+            "archiveSha256": "78b4a8cbf3da2dc6de511a504fc1ff67c3f5cd9e08c80bb156d1585ffe4a21be",
+            "archiveBytes": 3414171,
+            "manifestSha256": "b50f0a315f400d7f930d0f65955a015dba9f4501d922ab4395a8acdb76b97506",
+            "nativeSourceSet": "e2e9f4b7fe6cb53d300b025ef802ff527440e41f3179523cddb53deb139dc7ee"
+          },
+          {
+            "group": "r3-05-compact-access-01",
+            "status": "EXACT_SCOPE_CHECKED; TWO_LOCAL_PARENT_RESTORE_FINDINGS",
+            "resultSha256": "ead455bd6167ba77af38b342edee7a3b7e1324a3b33e6d8b935be2e3225e781d",
+            "bindingSha256": "efc20dfab1025323ec9338566b339983d6cd700049ff90e9bb2eb982c2cf7fdc"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FORMAL_SOURCE_PAIR_LOCAL_PASS; D2_FIXED_LOCAL_ARTIFACT_REQUESTED; 05_ACCESS_PREP",
-          "owner": "D2 local build / T45 05 host",
-          "next": "Take the exact D2 final artifact identity when available, pair it with the fixed formal owner without replacing the maintenance/restore artifacts. Actual A original transfer waits for direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FORMAL_FAA8_ARTIFACT_FIXED_LOCAL; 05_TRANSPORT_AND_SCOPED_PARENT_FIXES_ACTIVE",
+          "owner": "T45",
+          "next": "Close controller transport and two parent boundaries, then consume the fixed formal APP pins in the same planned backup/restore and formal deployment closure. No server transfer or action without the applicable existing exact scope."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
