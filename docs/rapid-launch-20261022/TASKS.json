@@ -3198,13 +3198,30 @@
               ],
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-service10-d1-local-driver-and-d2-maintenance-source-pins-20261113",
+            "status": "D1_IDENTITY_DELTA_AND_D2_EXACT_THREE_LAYER_SOURCE_LOCAL_VERIFIED_FINAL_HOST_PINNING_IN_PROGRESS",
+            "owner": "D1 / D2 / T45 / C",
+            "evidence": {
+              "d1ResultSha256": "fb7f48e8cc602283b7a910d286ef910daeb1190253961cadc54362db2ffdf788",
+              "d1InitialDriverSha256": "3df4a394ff82a5538d5019c9efb988e6bf0975cfc9cdbbc9dce0474e76c2aa52",
+              "d1Checks": 3,
+              "d2ResultSha256": "30fb0c28c0dffd288a67c0d0915959974051fb1390cb5fbcb186ecb3ca3a9827",
+              "d2PinsSha256": "47be47250452b3494c1f3d16060c850ad3007665a121d81e45777dc0ec3cd6e6",
+              "d2HostSessionSha256": "5c91d8a60326a1a4131a28bd2731c4566c9d397fce25e3a70ef7555fddfefad3",
+              "d2Checks": 4,
+              "compactZeroSourceSetSha256": "ceaa79f578eb7ba033daad64d9ae0e54af9a612c102b40dd6e810c3f5eb27c2c",
+              "compactZeroCatalogSpecSha256": "5df8fb17a050e1e449e6dd6827ea0e28d08a0b8cf3b734e0f8b6ae52cfce607f",
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "NEXT_OUTER_WORKERS_LOCAL_AUTH_TRANSPORT_NEEDS_TARGETED_FIX_MAINTENANCE_PINS_PENDING",
+          "status": "D2_MAINTENANCE_SOURCE_LINEAGE_FIXED_T45_AND_D1_PINNING_NEW_HOST_CLOSURE",
           "owner": "T45 / D1 / D2 / QB / C",
-          "next": "Finish narrow local sender closure and exact issuance handoff binding, then ask QB to review just the changed paths. Verify D1 shared source and derive D2 pins, refresh protected server facts before real work."
+          "next": "D1 rebinds driver and upgrade to exact 219/220/223 pins. T45 prepares independent maintenance material, exact receiver and host checks, 05 and restore lineage updates. D2 builds narrow application successor. QB targeted sender fix review remains pending."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
