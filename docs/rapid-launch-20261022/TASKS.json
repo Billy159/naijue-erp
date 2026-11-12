@@ -2309,13 +2309,34 @@
             "estimatedTwoReportBytes": 4495400960,
             "estimatedAdditionalImportAppExpansionBytes": 16911900,
             "remainingAbove28GiBAfterKnownEstimatesBytes": 5548065252
+          },
+          {
+            "group": "r3-d3-r2-hall-and-six-source-acceptance-baseline",
+            "status": "EXACT_SOURCE_INPUT_BASELINE_VERIFIED; ACTUAL_TARGET_READBACK_PENDING",
+            "manifestSha256": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+            "hallInputRows": 29081,
+            "hallResolutions": 39,
+            "sourceRowsAcceptedAsActualTargetCapture": 0,
+            "amountEvidenceRows": 6,
+            "affectedSalesDocuments": 6,
+            "currentAmountRows": 6,
+            "localSourceJoinExitCode": 0,
+            "localParserExitCode": 0
+          },
+          {
+            "group": "r3-05-compact-controller-local-01",
+            "status": "AUTHOR_SIX_LOCAL_CHECKS_PASS; INDEPENDENT_DELTA_REVIEW_ACTIVE",
+            "resultSha256": "add067339ed6acbd048165a7f6172cc3e93c76254816febb36d2f493b34c6f96",
+            "bindingSha256": "2bfb838c2f12fcac39363661868e6e3d21f23b3316ec1b8ca1e54ed064de2519",
+            "controllerSha256": "b9eff51cf0292c7ca60fa002f23af88cb7ec6ba8aa31b66c1768a85c952a86d5",
+            "parentSha256": "c461787e3595f2e02272b47634a34c50b863a3fe5cc8dec6ccceef18375a686d"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_LOCAL_TRANSPORT_WIP_RESUMED; FORMAL_APP_ARCHIVE_VERIFIER_PAIR_LOCAL_PASS",
-          "owner": "T45",
-          "next": "Complete the already started 05 transport and focused cleanup tests. Then freeze the FAA8 backup and formal consumer pins without replacing the 6c import app or 3d2f restore runner. Actual A transfer waits for direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; 05_CONTROLLER_CANDIDATE_FIXED_QB_ACTIVE; FORMAL_BACKUP_BINDING_WIP",
+          "owner": "T45 / QB",
+          "next": "Review the two original scoped 05 findings and same-generation transport. Continue the same artifact backup/restore and publication binding. Actual A transfer still requires direct authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
