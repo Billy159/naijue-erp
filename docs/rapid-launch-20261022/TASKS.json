@@ -2401,13 +2401,29 @@
             "originalActualModuleLoadExitCode": 0,
             "originalActualContainerExitCode": 0,
             "localComparisonExitCode": 0
+          },
+          {
+            "group": "r3-faa8-recovery-publication-local-03",
+            "status": "AUTHOR_FIVE_TARGETED_CHECKS_PASS; ORIGINAL_QB_DELTA_REVIEW_ACTIVE",
+            "resultSha256": "f7114b2fda2560ada086f9c92b4e2c55ca1933f1f08104ff4e0e3e9dc7cfd3d7",
+            "bindingSha256": "abccd37668b2e4b0a5a62844b87ef347c8e3874de1264c3aec7a7e4a41da8170",
+            "bootSha256": "a4a0086f4c8ba6363d1da057707fe9af27d051dc247b4337d5e5a0b1cad8c302",
+            "deploySha256": "00402a2070f864f8affa71989674030f68ee198df8ea38f8149b3ae3fba45a9d",
+            "hostSha256": "c319b707902c653b5109a3e2a66a1594b3cc057d4863df776f6eaac4b9ea8f92",
+            "controllerExactSourcePins": 16,
+            "unissuedActualFields": 18
+          },
+          {
+            "group": "r3-write-continuity-local-02-final-handoff",
+            "status": "NAMESPACE_SCOPE_EXPLICIT; MINIMUM_SOURCE_INTEGRATION_ACTIVE",
+            "resultSha256": "2f55aa361c263c83b4d04f0895865e20468aa08358a4358a9b450871f4e739b8"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FAA8_03_FORMAL_FIX_WIP; ORIGINAL_LINUX_INSTALL_EVIDENCE_ELIGIBLE_FOR_REUSE",
-          "owner": "T45",
-          "next": "Finish finite-stage/formal-owner recovery binding and current exact host dependency readback using the original successful Linux install. Review changed paths only. Actual A transfer awaits direct authorization."
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; FAA8_03_QB_DELTA_ACTIVE; CONTINUOUS_CLOSURE_MINIMUM_DISPATCHER_SOURCE_ACTIVE",
+          "owner": "T45 / QB",
+          "next": "Close scoped FAA8 consumer review and implement the bounded admission/terminal linkage in the original dispatcher. Actual source, Linux paths, A, PG, backup and release remain unissued."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
