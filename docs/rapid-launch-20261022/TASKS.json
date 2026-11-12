@@ -2433,13 +2433,25 @@
             "localBackupPathProbeExitCode": 0,
             "local05And09EntryProbeExitCode": 0,
             "scope": "Original source consumers exercised with synthetic current-grant paths. No live host read."
+          },
+          {
+            "group": "r3-cold-copy-active-grant-original-entry",
+            "status": "TWO_ORIGINAL_ENTRY_PHASES_REFUSE_CURRENT_GRANT_LAYOUT_LOCAL; SUCCESSOR_WIP",
+            "originalSha256": "6d5fd7fa6394f6d7b04e5f2e34e1a14045fbf736b2b589b902b9d364981a9f83",
+            "fixtureExitCode": 0
+          },
+          {
+            "group": "r3-continuity-local-wip-original-key-observation",
+            "status": "ACTIVE_HOLD_REFUSES_UNREGISTERED_READONLY_OBSERVATION; EXACT_RECOVERY_SCOPE_ASSIGNED",
+            "observedWipSha256": "917b9c4cc015120b67dfdf298101698bd550f3f1babfd12a40fe9a2e042389e0",
+            "fixtureExitCode": 0
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CONTINUITY_SOURCE_ACTIVE; ACTIVE_GRANT_ENTRY_AND_RECEIPT_BINDINGS_ASSIGNED; TWO_FORMAL_FIXES_PENDING",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; CONTINUITY_SOURCE_ACTIVE; ACTIVE_GRANT_COLD_AND_ORIGINAL_KEY_RECOVERY_SCOPE_CONFIRMED",
           "owner": "T45",
-          "next": "Align new 05/09 jobs and new A/writer receipt paths with current grant using exact source pins. Preserve historical receipt roots. Continue the two scoped formal binding changes."
+          "next": "Freeze the dispatcher and actual receipt consumers with explicit current-grant paths and historical preservation. Keep exact read-only original-key recovery available or document the actual missing same-generation carrier; no writer replay."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
