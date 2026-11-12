@@ -2179,13 +2179,29 @@
             "status": "LIVE_POOL_AND_CAPACITY_BOTH_EXPIRE; NO_EXISTING_PERSISTENT_R3_MODE",
             "sourceCommit": "7e6626deb7cce6f24fe33f9eda7de6400787de8b",
             "tree": "42435e0701dfa799cf6f5428f60458f936deb902"
+          },
+          {
+            "group": "r3-private-phase-exchange-03",
+            "status": "QB_TARGETED_REGRESSION_PASS_LOCAL_ONLY",
+            "resultSha256": "856bd0d7efe322515cc62b1238a71c598a594e5f0610cfba8e1435b4d9bfcc7a",
+            "jobSourceSha256": "aa2ddd189cdf6bd165accde6f4f9afb829ef6f86814dce89ecbcbfe0d44c42b4",
+            "exchangeSha256": "e6ac32f8f837aec1ba30dffe1e43343667982f450b92225833c798762814dcb4",
+            "deliverySha256": "4980c814d991ad7114a7268b9dcc796890bd3f02a8536013100bd05ada01efb4"
+          },
+          {
+            "group": "r3-ordinary05-launcher-04-backup-pin",
+            "status": "QB_TARGETED_REGRESSION_PASS_LOCAL_ONLY",
+            "resultSha256": "c939f29423bf6e238bbc173949360d9bbe1056b88ab498e46ec88110be53fa60",
+            "launcherSha256": "3e0b88eb81240dd11cc7db117f77df741bac34323b3b00bb7f33e20e0841cf73",
+            "proofSha256": "9715ceac5527df665302edd52491bcd9bd8247f99b01696a87ad6810738d76f1",
+            "patchedBackupScriptSha256": "b31a3d10d3dbc04b9c58204a8e399791ee9d285ac71680bf08850ab96c81298c"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; PRIVATE_PHASE_EXCHANGE_02_NEED_FIX; T45_LOCAL_SUCCESSOR_IN_PROGRESS",
+          "status": "EXACT_TRANSFER_AUTHORIZATION_PENDING; PRIVATE_PHASE_EXCHANGE_03_AND_ORDINARY05_04_LOCAL_REGRESSIONS_PASS; PERSISTENT_OWNER_CONTRACT_IN_PROGRESS",
           "owner": "T45",
-          "next": "Finish the two focused delivery changes. Prepare the approved persistent service proof/APP consumer as a separate source handoff. No production actions authorized by these results."
+          "next": "Complete actual signature and maintenance carrier bindings after the original handoff; finish formal persistent owner and D1 consumer contract independently. Keep 05 finite until real same-generation timing/authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
