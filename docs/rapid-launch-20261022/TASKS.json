@@ -3976,13 +3976,27 @@
               "modeMetadataAuthoritySha256": "8dc7c929e150b67c84fa315877e6d686aee669c5bb471b75259376d1f96a7112",
               "service13LocalIdentitySha256": "4bb689aa2df2898ef529c8d58386ca4e7923c139123033f4efec7a308597c6ff"
             }
+          },
+          {
+            "group": "r3-service12-a02-exact-mode-readback-20261113",
+            "status": "ACTUAL_FIXED_NONSECRET_RECEIPT_MODE_CONFIRMED_A_AND_SQL38_UNWRITTEN",
+            "owner": "T45 / C",
+            "evidence": {
+              "terminalSha256": "ea696716f17f7849f8b6edb78d3094b714f8302bc69cbd714f4f9f8cde9450fe",
+              "typedSha256": "7df81293cb508ee8c7b82373d83b9070b2b8777f11b5f1c394b59bd0c5c53f5a",
+              "resultSha256": "7898d1f0cdecce4f1b037c0a1c15c77008e6ebb9717267c9975855104aef8149",
+              "nonsecretEvidenceRootMode": "0644",
+              "bothPriorAFootprintsAbsent": true,
+              "sql38FootprintsAbsent": true,
+              "adminMaterialRead": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE12_FINAL_QUIET_MODE_METADATA_ISSUED_SERVICE13_LOCAL_SPLIT_ARTIFACT_PREPARATION",
+          "status": "A02_CAUSE_ACTUALLY_VERIFIED_SERVICE13_NARROW_LOCAL_CONTINUATION",
           "owner": "T45 / D1 / D2 / C",
-          "next": "Collect exact protected metadata and no-write footprints. Prepare new service13 A-only source and reuse current exact SQL38/05 archive and business APP. No live service13 authorization."
+          "next": "Complete bounded original evidence read and the exact A-only new artifact, keeping original full SQL38/05 and business artifacts. Independently review and recheck stopped state before service13."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
