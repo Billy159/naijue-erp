@@ -4063,13 +4063,22 @@
             "restoreTerminalSha256": "ff9855f1f076d67c109ba0e2804985376328b1085467635a23f568eae652ff9f",
             "restoreTypedSha256": "a25fa1a1927c3167f568f399fdbd0a67b5088deca1c7dc32892152085ca43613",
             "restoreCleanupSha256": "3d3c02646e0702949a07810ba3b1a8ea938d4b6988a4671821f3c23846fdc9bc"
+          },
+          {
+            "group": "r3-service14-local-identity-and-quiet-footprint-20261113",
+            "status": "SERVICE13_QUIET_ACTUAL_SERVICE14_IDENTITIES_FROZEN_LOCAL_ONLY",
+            "quietReadbackSha256": "175d8b7aafb92b418491536988aad072e599c51c0f49da33891c69fd2346f519",
+            "rootAvailableBytes": 40169558016,
+            "service14IdentitiesSha256": "fc7e2850d1d98b23337c7529f7a314a0c134874b01ee379962526ee9ce2023d1",
+            "rootReserveBytes": 30064771072,
+            "partialHeadroomWithEstimatedNewArchiveBytes": 5584810033
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE13_STOPPED_RESTORED_NEXT_MAINTENANCE_LOCAL_BINDING",
-          "owner": "T45 / C / D1",
-          "next": "Recheck quiet field state and fixed original authorization alias metadata. Freeze successor exact identities and local artifacts against corrected aligned credential and phase expiry schedule. Original business operation and data retained."
+          "status": "SERVICE13_QUIET_SERVICE14_LOCAL_HANDOFF_ALIAS_PRESERVING_MOVE_PENDING",
+          "owner": "T45 / C / D1 / D2",
+          "next": "Verify the existing expired A-03 active alias and preserve the inode and job original in a same-volume no-replace move. Close the exact service14 local source and fixed window, then proceed on actual evidence."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
