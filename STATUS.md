@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 07:25。数据库已有限启动，实际锁容量设置通过；正在核实原导入请求结果，尚未重导或上线。
+更新时间：北京时间 2026-11-14 07:58。原导入请求已确认未提交，连接和临时权限已清理；正在准备沿原标识接续导入，尚未上线。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/a4eaff54f28aab346a2e624db13c06336c46fdc8) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/517195ea854725047c539fc72ca7f3feea8eb0e2) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -636,4 +636,13 @@ C拟签start01在交付前发现lease早于两role期限，已保留NOT-DISPATCH
 C已签原UUID只读inspect authority1af842b9dfc25d889fe68ed79846fa36e954fb936d6f25a6ec5f888fc5da045b/51533B，outputs/主控/20261114-r3-original02-readonly-inspect-window-01/；07:23:04.388–07:53:04.388，仅原新inspect固定键一次、8静态+d203host/03dbNode+本authority、timeout1200。按实际caller绑定root742和rootb017，不混用上一阶段public76ef/7feb；原49Plan92a/summary2f68/helper664复用，必须一次offline恢复原09 UUID/plan8a99/组合c6d精确后才连一个RO client，SQL15s，仅原inspect/ROLLBACK，无COMMIT/importer。确认全child回收后原权限还原，未知保留原ledger/原key不重放。此记录时原请求实际结果尚待，不能以CLI失败/无COMMIT/权限还原推断ABSENT。
 
 D2并行只核现有source的下一步复用事实：实际ABSENT时原223+09报告能否在同库new20代际沿原nativeUUID继续；COMMITTED则走原键读回。当前仅路线准备、不读private/不执行、不预确认ABSENT、不改223/09或造新writer接口。后续仍按实际inspect决定，未授权业务重执行/正式APP/公网开放；真实整批导入/核账/备份独立恢复/核心浏览器验收尚未完成。
+
+
+### 2026-11-14 07:58 — 原02实际ABSENT与new20接续入口准备
+
+原inspect一次COMPLETED0/148.722416093s，结束UTC2026-11-13T23:28:46.366237Z；原INIT离线恢复119641ms/1次，原09 UUID/plan8a99/组合c6d均匹配，同client实际READ ONLY/BEGIN+ROLLBACK确认，SQL3551ms且SQLSTATE全null。原请求状态ABSENT。root/public terminal33af79a05da4659e18febe940629f264bc1b3ffcdeede110aa1aac10af29a5c0；root result433d6ec22852aecdf6c3f1626b7a43648439839e80c1bae015589f03de4b96c1/public67089d704b994d1e98d6532a1e6e78c982d40d1d90e8e39e0b76d8bda6cb35a4。连接CLOSED、child及descendants回收、原49metadata还原、scratch空；root processcleanup5daf2a828935ff91d33333c81af8e576372fb1f295f46065c1bae349f574647e/childf82e9cef4af19aec31212139f9b661c5038986de8d9953cef13916b71955980f。immutable restoredframec2e519a38ce67472a27eb6b94f0b92d74e5f6b23e71a0d7c64aa57ec2790f222。旧Plan92消耗，不作未来ctime依据；mutable current指针及固定算法通用receipt不冒充immutable唯一ledger身份。安全证据outputs/T45/revisions/20261114-r3-original02-readonly-inspect-actual-01/RESULT.json+INSPECT-READBACK.json，C不读私密原件/源行，不执行server/PG。
+
+D2确认旧223硬绑19，不能只换authority冒称20；正在独立准确new20source，正常同client live admission→原09保留index一次prepareStreamPlan（无preflight/重新清洗）→原程序及describe核原09全business字段/8a99/c6d/c6c51/44682/四nativeUUID→新20完整binding authority→原单事务execute。原223/09/helper95保留，原SQL/金额算法不改。新同闭包9导出、完整reader沿原verify_v2普通BEGIN+ROLLBACK且不重建graph；私密INIT只由T45现有渠道保管。T45准备准确host/既有Linux pg driver，C最小writer03/readback20 guard保留readonly338及旧Hold。当前source准备，尚未授权/执行业务重导。
+
+原20仍有限：controller10:03:38.825/admin10:05:38.825，work10:15:04.321/lease10:15:39.321；原认证还原硬截止10:33:38.825，当前未还原。准备不足以留足执行清理时间即先原stop/restore，不静默延时。整批导入、完整数量金额关系核账、冷备独立恢复、正式APP/网址核心浏览器验收仍未完成。
 
