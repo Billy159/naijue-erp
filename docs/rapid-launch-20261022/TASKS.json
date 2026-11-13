@@ -4904,9 +4904,20 @@
               "inspectHost-d203b8e4",
               "fivephase-static-dd3d9af4"
             ]
+          },
+          {
+            "group": "r3-helper-actual-and-issued-bindings-20261114-0710",
+            "status": "HELPER_INSTALLED_AND_BINDINGS_PASS_CAS_APPLY_AUTHORIZED_ACTUAL_PENDING",
+            "evidence": [
+              "helper-ready66409034",
+              "stage-ready418634e0/policy-ABSENT",
+              "QB0c7ac534/ef42f787",
+              "QB204d66f9",
+              "Croles1aa8/policy338d/CASad93/applyea488"
+            ]
           }
         ],
-        "currentInFlight": "All finite-recovery source subranges conditionally reviewed. Await exact existing ordinary helper artifact scope, then helper installation before dispatcher CAS. Real original writer02 outcome unknown; no business replay authorized.",
+        "currentInFlight": "Helper installed once; exact issued recovery bindings passed QB204d. T45 authorized one ce689 registration CAS then conditional one apply20. Await actual receipts before start20/settings/original UUID inspect; no business replay authorized.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
