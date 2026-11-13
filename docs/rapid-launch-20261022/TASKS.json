@@ -3950,13 +3950,27 @@
               "nodeAuthorityDelivered": false,
               "stopAuthoritySha256": "891926c2582dd25999b87b7f7a83cac366ec39effff01f63ce71af7c97ce6c25"
             }
+          },
+          {
+            "group": "r3-service12-actual-stop12-restore08-20261113",
+            "status": "EXACT_SERVICE12_CLEAN_STOP_AND_ROLE_RESTORE_ACTUAL_COMPLETED",
+            "owner": "T45 / C",
+            "evidence": {
+              "stopTerminalSha256": "8fb9f8ef41826ba17c7f1e5ca5a5d75bc720593b2f13d797198da8c90e90337f",
+              "stopTypedSha256": "8c04e1cfce560a36aa3aa2070ed97ea3ef23a6cd0a61917a53a8e678b7d8c190",
+              "stopProtectedCleanupSha256": "b78b676d0c14dce2112e43973f94469061f0f8a56e20f786f4afe2cd48c50d6b",
+              "restoreAuthoritySha256": "66e63d755959c66cc031107723a0faa1da9f06c454ff695f9e70d1cb5c468f0a",
+              "restoreTerminalSha256": "12b3144fccfbcebe8f517f42bc7a46ede7e3522ac6ce814003af2ac8832e62b2",
+              "restoreTypedSha256": "a601ad2311bb3665e9bc76f7328147fe0615b2cbb19abe649bff0b1acbd09560",
+              "restoreCleanupSha256": "9a9d3f8605a9cb6a1f472f05b794e86e17d338172a2d2962e8c2c533ac730603"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "A02_FAILED_PREPARATION_STOP12_ISSUED_RESTORE08_NEXT",
-          "owner": "T45 / C",
-          "next": "Complete original stop12 and exact role restore08, then verify fixed candidate proof metadata and absence of A phase writes. Preserve original 154 and the A business operation."
+          "status": "SERVICE12_CLEAN_STOP_ROLE_RESTORE_ACTUAL_READBACK_LOCAL_CAUSE_NARROWED",
+          "owner": "T45 / D1 / C",
+          "next": "Confirm final ordinary footprint and perform scoped protected mode readback. Determine exact separate A host and reusable SQL38 artifact closure without changing historical 154 or downstream app."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
