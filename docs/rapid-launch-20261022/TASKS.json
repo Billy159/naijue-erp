@@ -3937,13 +3937,26 @@
               "aRootSha256": "8ef91468dac16f855e9cf7f481b0312271a09c84f8f41d2820bf5117a0537430",
               "appStarted": false
             }
+          },
+          {
+            "group": "r3-service12-a02-original-private-mode-stop-20261113",
+            "status": "A_SUCCESSOR_FAILED_PREPARATION_SQL38_UNSUBMITTED_STOP12_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "terminalSha256": "7165580fd8ae3c0bf1d872b40809963e47b0508b2605f30674b39daceb041b18",
+              "typedSha256": "9c13254e8fa2d2b727c746d0d865647359427d31d042d95be42137c10120c093",
+              "safeCode": "PRIVATE_INPUT_REQUIRED",
+              "socketObserved": false,
+              "nodeAuthorityDelivered": false,
+              "stopAuthoritySha256": "891926c2582dd25999b87b7f7a83cac366ec39effff01f63ce71af7c97ce6c25"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE12_ACTUAL_RETAINED_A_NEW_OUTER_ROOT_ISSUED",
+          "status": "A02_FAILED_PREPARATION_STOP12_ISSUED_RESTORE08_NEXT",
           "owner": "T45 / C",
-          "next": "Wait exact A private preparation, then independently issue Node and operation digests. After confirmed original commit and actual root public digest receipt, authorize original unused SQL38."
+          "next": "Complete original stop12 and exact role restore08, then verify fixed candidate proof metadata and absence of A phase writes. Preserve original 154 and the A business operation."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
