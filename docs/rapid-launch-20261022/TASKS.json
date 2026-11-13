@@ -4425,9 +4425,26 @@
             "terminalSha256": "4396e64c13d01348352ed74ed243720d6fe970ed93a4be395a162ff77b4b0330",
             "resultSha256": "08eb584435ad6ef84d7abe86ec4bc16260d0ea8189c5b5878f1cd9f55b456bcd",
             "rootReceiptSha256": "eae44f6ef2e6217f9110ab47056e517d046477afe908a904e4635af426f6f5e1"
+          },
+          {
+            "group": "R3-05-missing-workroots-and-same-namespace",
+            "status": "ACTUAL_THREE_EMPTY_ROOTS_AND_FIVE_PATH_CAPACITY",
+            "terminalSha256": "3a9e11aca51557df450231461c51c59594980de47d68750adb8ff5000ecd534f",
+            "metadataSha256": "01e814940300f13289da7b9bbaa9a2b260c6dc7b7220348e1cce10dd4b1ce22f",
+            "availableBytes": 40074276864,
+            "availableInodes": 29574612
+          },
+          {
+            "group": "R3-05-original-prepare-01-refused-before-connection",
+            "status": "ACTUAL_FAILED_FIXED_FILE_LIMIT_ORIGINAL_LEDGER_AND_WORK_ABSENT",
+            "terminalSha256": "e5eabedc808a306e3c8018af95ae765943dbf661496c8c8b3a9d4d7de471d04c",
+            "resultSha256": "2d04431a95e655fc3b7dd865dbc9717a0b77dfa93315cd2c13ab3733164f4a5f",
+            "exactCauseSha256": "0c391582ac0010dcd0dd8cbd44e7af00b2796e4215d007d38045c236742fd05f",
+            "fileBytes": 70575,
+            "oldReadLimit": 65536
           }
         ],
-        "currentInFlight": "Original 05 running under finite work lease and original runtime/controller read-only checks completed. T45 measuring same 05 mount namespace and making exact PREPARE access plan. PREPARE and EXECUTE remain unsubmitted.",
+        "currentInFlight": "Same 05 retained. Original PREPARE 01 failed before connection or access mutation at the fixed E537 read bound. Corrected PREPARE 02 is in local narrow review; original EXECUTE 01 remains unsubmitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
