@@ -6089,3 +6089,13 @@ T45实测report高水2247729152B/tmp226811904B/scratch4096B；whole-root start28
 C容量重算 CAPACITY-AFTER-PREPARE09.json SHA4ea908dca7c9f1e09608f65ad00d44328833319889d8c586077b5494d2c7a651：可用258.677GiB，28GiB底线后230.677GiB；扣本轮whole-root实际准备增量2483236864B作ESTIMATED repeat，以及原logical artifact33GiB admission cap，余195.365GiB供额外数据库/WAL/冷备/独立恢复等。不是完整峰值或最终容量PASS，不下调28GiB，尚无当前扩容缺口实证。后续逐段读真实低水及停库inventory分配。
 
 C绑定已审readback/logical/stop/cold后继和有限窗口；T45仅准备原未提交writer/CAS的本地草稿及09-restored后的freshaccess/volume/namespace。PREPARE09不重跑；当前writer/CAS尚未授权或提交。真实导入、全覆盖来源金额库存关系核账、logical/cold/独立恢复、正式APP/网址/核心业务实际验收仍待执行。
+
+### 2026-11-14 03:23 — 原正式writer准确授权及控制链已真实发布，最终一次提交指令已交T45
+
+QB首个writer绑定审查904da3045e7a12274ba5c2c0e0fbc76c0e412f4474e65bf931c0913405973765通过，绑定实际PREPARE09原plan8a99/44682steps、worker1f46/CLIstdout04fc及同19代。C签operation-parameters b8d8a50c…、original-import-authority78696a23…、real-execution5d917367…，保留原03:12–03:57有限窗口，45分钟仅ESTIMATED。原16leaf/request b0447a88…/manifestff1ee405…冻结；未重新运行PREPARE09或更改审批/业务数据。
+
+固定root authority在19:14:34Z按原O_EXCL/fsync primitive一次准确发布并读回：2447B、SHA78696a2382158dc163fee3f147457d65dfca1198b25c4135e6969593a0890415、root:root0600、dev66304/inode13504016，原parent身份保持；回执dd452a346abbdd8c9a0ac68ff4b68b91ca4446c7448e544ac87c464084ff210c。C不读两D3私密见证正文，只定位原件目录；T45核准确27833B/347B及原SHA。
+
+原CAS已一次实际安装，CAS-RESULT cca457c486be5a15936c60106b2a4e96fe4274e105534adf0134298e69654a49、19:19:10Z独立读回76a00f4b4f46b312028bbe9a055e5fc7de9af1afa49761742519d3546bc88d57：dispatcher455e46bc8aaa2d1378ad6879a0c6dfd6cb0c67df817f1c18e11a3867cc2ae694、policy7af04098ffbeab30cf6e3d094eb473c835ce26451b160361e70f9bdd4b5a486e、module1fe482…，原backup5bf72…/原lock身份保持，hold无、writer尚未提交、0PG/APP。C据真实回执于03:20后给原键t45-first-20261110-r3-real-execute-20261113-01最终唯一提交指令；实际上传/提交/运行状态仍待T45回执，不把指令当已导入。原截止03:57不延长、不换键，未知结果按原键核实。
+
+已冻后继readback03:47–04:02/logical03:47–04:17/stop04:12–04:17/coldmeasure04:12–04:42/copy04:22–04:52，早完成等待各原startsAt；原28GiB底线与有限role/service期限不变。D2仅接续原恢复候选的19代输入映射，actual closure/restore/APP事实待现场，不新增平台或重复构建。真实全批导入、全覆盖核账、备份恢复、正式APP及网址核心业务仍未完成。

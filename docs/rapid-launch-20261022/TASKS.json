@@ -4732,9 +4732,27 @@
               "outputs/T45/revisions/20261114-r3-ordinary19-prepare09-actual-01/COMPLETION-READBACK.json",
               "outputs/\u4e3b\u63a7/20261114-r3-19-continuity-recovery-local-01/CAPACITY-AFTER-PREPARE09.json"
             ]
+          },
+          {
+            "group": "R3-SERVICE19-WRITER-EXACT-BINDING-AND-FINITE-AUTHORITY-20261114-01",
+            "status": "QB_LOCAL_BINDING_PASS_C_AUTHORITY_ISSUED_ORIGINAL_WRITER_SUBMIT_INSTRUCTED_ACTUAL_PENDING",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary19-writer-prearm-local-01/REVIEW-FIRST-WRITER-BINDING.json sha904da3045e7a12274ba5c2c0e0fbc76c0e412f4474e65bf931c0913405973765",
+              "outputs/\u4e3b\u63a7/20261114-r3-ordinary19-writer-window-01 exact b8d8/78696/5d917;03:12\u201303:57CST ESTIMATED;single original key only"
+            ]
+          },
+          {
+            "group": "R3-SERVICE19-ROOT-AUTHORITY-AND-CAS-ACTUAL-20261114-01",
+            "status": "ACTUAL_EXACT_ROOT_AUTHORITY_AND_ORIGINAL_CAS_INSTALLED_READ_BACK_NO_BUSINESS_WRITE_BY_CAS",
+            "evidence": [
+              "ROOT-AUTHORITY-PUBLICATION.json dd452a346abbdd8c9a0ac68ff4b68b91ca4446c7448e544ac87c464084ff210c",
+              "CAS-RESULT.json cca457c486be5a15936c60106b2a4e96fe4274e105534adf0134298e69654a49",
+              "CAS-READBACK.json 76a00f4b4f46b312028bbe9a055e5fc7de9af1afa49761742519d3546bc88d57",
+              "original lock/dispatcher backup preserved;policy7af040/core1fe482;hold and writer absent at readback"
+            ]
           }
         ],
-        "currentInFlight": "\u771f\u5b9ePREPARE09\u5df2\u6210\u529f\u4e1449\u9879metadata\u6062\u590d\uff0c\u5b9e\u9645511234\u6e90\u884c/44682\u6b65\uff1bC\u7ed1\u5b9a\u540c19\u540e\u7ee7\u6709\u9650\u7a97\u53e3\uff0cT45\u51c6\u5907\u539f\u672a\u63d0\u4ea4writer/CAS\u8349\u7a3f\u548c09-restored\u540efreshaccess/namespace\u3002\u672a\u6388\u6743/\u63d0\u4ea4writer/CAS\uff1b\u7ee7\u7eed\u771f\u5bfc\u5165\u6838\u8d26/\u5907\u4efd\u6062\u590d/\u6b63\u5f0f\u7f51\u5740\u4e1a\u52a1\u9a8c\u6536\u3002",
+        "currentInFlight": "T45 original sole writer key final submit instructed under exact 03:12\u201303:57 window; actual submit/transaction status pending. Original scheduled readback/logical/stop/cold chain frozen. D2 local service19 restore input continuity only. No formal APP/URL acceptance yet.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
