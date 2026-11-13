@@ -4100,13 +4100,23 @@
             "finalReadbackSha256": "1f2276e16126ee52288accc0b82c77f13990b76e785f0218f62e26bfd0412352",
             "restorationReadySha256": "c577fa27120041bcb1a3746d363f0ae8416c765e85337fceb6e53251a09466f1",
             "restorationArchiveSha256": "6bbff8dd6a7845fe5e89d56eb146299ec74f242bafd4b0d3c99987ce20fbf564"
+          },
+          {
+            "group": "r3-service14-actual-receive02-and-final-stage-review-20261113",
+            "status": "A04_ARCHIVE_ACTUALLY_READY_AFTER_WITHDRAWAL_QB_EXACT_CLOSURE_PASS",
+            "resultSha256": "f8182aa7ec68d98466a7cd4973870a47a6a430079106c8ac578ae6053cd6126e",
+            "serverReadySha256": "5c786b019576d2b26bca5449e972eaa308490713112a4f8a2cce8f7e9e3ab208",
+            "withdrawalTerminalSha256": "ec59455e3d099a6a505ea24ec320a5721aaa4e4cd5fe89dda8e8feaa374df66b",
+            "finalReadbackSha256": "1f7d147e2df46c416190088d3c28b8bf99a5e74e531bcec47a3e50424bc86e60",
+            "closureSha256": "db0c03aa45fc36204ce15c253542a470a77393eb7c82c66f19dbf93a95697232",
+            "protectedPreflightAuthoritySha256": "f898abd4a17a4703c0ec08b4f9c10328eb5643e2ef86b73f12d1e4db05218578"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE14_RECEIVE01_WITHDRAWN_NO_UPLOAD_RECEIVE02_PREARMING",
-          "owner": "T45 / C / QB",
-          "next": "Prearm exact install and original transfer before opening the bounded new window, then verify actual READY, withdrawal, and full service14 closure."
+          "status": "SERVICE14_ACTUAL_A04_READY_EXACT_QB_PASS_PROTECTED_PREFLIGHT_SUBMITTED",
+          "owner": "T45 / C",
+          "next": "Consume actual stopped preflight, then exact role13 apply, service14 read-only start with lease after role deadline by 270s, A-04 and original SQL38 with exact same role cutoff."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
