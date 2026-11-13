@@ -4546,9 +4546,28 @@
               "Exact same-generation service17 readonly module c85c2ecf\u2026; 6 actual protected hashes matched their authority. Writer original key absent across both grants; no evidence of import or writes.",
               "Root /dev/md0p1 ordinary available 40,055,930,880 B before PREPARE04. No peak measurement from failed PREPARE04; 28 GiB floor remains."
             ]
+          },
+          {
+            "group": "20261113-R3-PREPARE05-FILE-PREFLIGHT-ACTUAL",
+            "status": "FAILED_AFTER_STREAM_PREFLIGHT_NO_BUSINESS_WRITER",
+            "evidence": [
+              "original terminal a047e1dfb296f4636a257212f109c97082e5856f0e3c7eb46973c82840d7dea0 and typed 9525ed3145c9e58070583eea9a09a5c64993a1ab823f24add8b39e390f0d5953",
+              "2026-11-13 21:46:11.109372 CST FAILED/2 after 237.209 s, original read-only CLI exit 1 with generic NOT_STARTED/IMPORT_FAILED, all children reaped, original file permissions restored",
+              "report peak 2,247,733,248 B, tmp peak 5,169,152 B, SQLite scratch 4,096 B. Job start ordinary available 40,052,908,032 B, sampled minimum 37,805,133,824 B /dev/md0p1, 2,237 guard samples. Post-exit point 37,804,589,056 B; no full write/copy/restore peak.",
+              "Exact installed operation Node ordinary service allowlist stops at service05; actual service17 proof must reject before PG connect when reached. Same-key logs and summary scope being verified. No original replay; the successor source and binding need local exact proof."
+            ]
+          },
+          {
+            "group": "20261113-LEGACY-POSTGRES-OVERLAY60-RETIREMENT-ORDER",
+            "status": "USER_AUTHORIZED_EXACT_LEGACY_CONTAINER_RETIREMENT_BEFORE_R3",
+            "evidence": [
+              "Human message 01a1d535-ef27-7322-8deb-66f38441ed61 directly verified in existing project progress chat, \u5148\u9000\u5f79\u540e\u7ee7\u7eed",
+              "Earlier 255,473,274,880 B snapshot60 mapped to old running PostgreSQL writable layer, distinct from the host-bound PGDATA. One approved staging copy already deleted and excluded from any next recovery estimate.",
+              "T45 sole operator, complete original R3-17 preserved clean stop and exact temporary role restoration. Confirm old identity, consumers, recreating definitions and protected retained material, retire exact old Docker object and read actual root free delta before new R3 server work."
+            ]
           }
         ],
-        "currentInFlight": "T45 same service17 R3 read-only PREPARE05 local exact narrow pin and new request binding pending; independent review and actual receipt, no original replay. Formal backup staging local only. CAS, writer, readback, cold copy, restore and formal release remain unsubmitted.",
+        "currentInFlight": "T45 service17 original preservation stop and role restoration preflight, then user-authorized exact legacy PostgreSQL container retirement and root capacity readback. D2/D1 source diagnosis local only. No new R3 PREPARE, CAS, writer, staging, backup or switch before legacy retirement.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
