@@ -3512,13 +3512,31 @@
               "actualHostValidationOfNewBranches": false,
               "actualAuthorityIssued": false
             }
+          },
+          {
+            "group": "r3-service10-protected-readback-actual-02-after-resume-20261113",
+            "status": "ACTUAL_FRESH_PROTECTED_READBACK_COMPLETED_ZERO_WRITES",
+            "owner": "T45 / C",
+            "evidence": {
+              "authoritySha256": "e63bd8c527c5a958723218713470ee5b8c55900490a470ce080178b62105bd4a",
+              "ordinaryPreflightSha256": "600e123dee582b7fc888fac290920d6f1f8a3f335ee633aaeff7a6bb67e419d2",
+              "resultSha256": "797658d6da89bd0aaa11f488821972b2f8f37f9b0dca17f54f5fadbb1abfe287",
+              "terminalSha256": "43116ab4ec90a2b115c1dea26a390e9342e5ffc32f24051603767c4cf6134574",
+              "typedReadbackSha256": "279570d47a4c943ced72b1259712a121ecaee0b1b35ebcc8a1f8d927acd4d81f",
+              "checkedAtUTC": "2026-11-13T01:37:57.387937+00:00",
+              "databaseConnections": 0,
+              "targetWrites": 0,
+              "credentialBodiesRead": 0,
+              "containersStarted": 0,
+              "stageClosureSha256": "2ebfed87eea4c1fb2b6783001e426a506fe3c0d9d5a8a535c8330df7629dc4ef"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXACT_LOCAL_NATIVE_AND_FAILED_START_RECOVERY_REVIEW_PASSED_NEXT_FRESH_WINDOW_PREFLIGHT",
+          "status": "RESUMED_FRESH_PROTECTED_READBACK_PASSED_ROLE_WINDOW_READINESS",
           "owner": "T45 / C",
-          "next": "Refresh stopped target, stopped/restore originals, exact source closure and signer readiness when the new execution window can be opened. Record actual service and stage receipts from original jobs."
+          "next": "Confirm live issuer and private holder readiness, issue exact role09 and apply only, then advance according to actual original receipts."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
