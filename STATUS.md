@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 01:59。R3 原服务已停稳并恢复临时角色，正在准备新一轮正式导入。
+更新时间：北京时间 2026-11-14 02:30。R3 导入程序修正已安装并核验，正在启用新一轮有限权限。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/889e4b461b8bda9e24f98212f37b270b9c13703c) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/a81182a2f886c63246beb4cc1d25c06204f70faf) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -487,4 +487,15 @@ T45实证18剩余role约39分钟不足以可靠完成整批writer/核账/logical
 D2交付19候选517245532e3e2a5a3df8a2a4f7762e70a3fee6b2，223 source63eb1d9bd4e62bfdba6a344b494351165e411096b5c95e365a5538395562f14e，host7c88c0fa…/72238B。相对已验预算修复仅19固定key/name/18真实epoch三常量，新增4项窄模型通过，预算7项/full-size直接复用，原SQL36/38/A05及身份不改。包bfdad686…/970139B；授权T45原机制独立安装，但未据本记录宣称安装完成或19已起。
 
 C19后继本机目录 outputs/主控/20261114-r3-19-continuity-recovery-local-01 已派生，core1fe48201…、cold d0858761…、stop f26e904b…、backup d4c0710a…，proof19最终ef97846f…绑定真实恢复carrier02，内部restore01保留。QB首轮只核generation及传递pins，算法/guard无新增分支；最终T45readback/指数/issuer仍待冻结再一次窄核。19未apply/start，PREPARE09/CAS/writer均未提交。真实导入、全覆盖核账、备份恢复及正式网址/业务实际验收仍未完成。
+
+
+### 2026-11-14 02:30 — service19最终窄审和独立程序物化完成，角色阶段已签发
+
+QB最终19准备审查36918794b31e6ec1edd0a86691cc5fb0e0ec4adb5d150edc7b83b20658ff1bb4绑定LOCAL-PINS-02索引94df373aa77b6e21877829a3189f88fff6bab5e4392c360ce0cc67879f8ddadc/66pins。发现并关闭retained-stop旧readonly/normal05两个boot源pin：现stop2d83665ae892ed4bd6f8777a9f587f2583915730842f4ce0a195a375b796fdbb，函数AST不变；四copy/8依赖及C五模板闭包一致。原三个issuer改用真实原validator/phase parser的dry-run通过，未以stub冒称最终验收。冷备窄审d464e491ef4ad3e2708ae26796af8a9c412e35d953b8c980e9d3407e14a72d4b，原分配算法/28GiB底线/未提交原action keys保留，仍无实际冷备。
+
+T45独立物化原未用key t45-r3-ordinary19-operation-materialize-20261114-01实际COMPLETED/0/10.415535344s，terminal b48bf642b3a4d625f75dcc6e17809e4a33a1acedf43b3be7fb96c77c9643f3da，root/public typed同2eafec0103c1ef5293f4c4d88ce9f6f524c2b27c8f74de14f12980ce3214a1d9。新operator51724553/source63eb的223文件closure验证通过，实际ready d16944aa32c22cb00c2b040a14b8ff59b8497d0b181d582b1e4a451e09bf6bde；仅host/program/CLI三叶，原SQL38 archive/manifest/220源码/10refs及依赖保留。02:28:46原root读回18仍停、PGDATA身份保留、pidfile absent，0PG/APP。
+
+C用真实18stop和restore02回执原issuer签19角色阶段：role authority f98adc4f548885a434daa1af18340abec3a600208f4bb8a6cf9bba55b105ab4b、host a31932d30bc49f32a42c5d6fa1d721435f10fb6e36bb4edc50c7dfc202fac536。starts1794594588550/apply expiry1794595488550，角色expiry1794605388550/restore deadline1794607188550，保持原3h/3.5h。T45已提交，实际角色终态待收；尚无19启动授权、PREPARE09、CAS或writer提交。
+
+后续EF807 APP容量新独立窄审81915c5e5493cbd7f8e257fd9f7d66016d4b7feaaa2959a63d5db96783422674仅本机same-PID1/OWNER_FIXED_STATFS_V1/同物理卷/pool1writer1/有限窗，原collector明确外置SOURCE挂载而非runtime manifest成员。C只把normal_app REVIEW=None绑定该审查，最终caller da7f3118f87601c4f9e980f4202cff651471b0e2aae01481b99eb264cb53e3c0；无APP/PG/网址实测。真实整批导入、来源金额库存关系核账、logical/cold/独立恢复及正式业务验收仍待执行，当前511234条本批按最新停用11月2旧包裁决，不恢复608916旧批。
 
