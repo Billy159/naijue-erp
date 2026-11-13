@@ -4504,9 +4504,20 @@
               "c0a5b4d44c26a7955062641196da84147a87c96fd090a5d56c5f59d6e08e7813",
               "3bd510083661e6a665f8bf82ec3ef989410678fa3ce452004dafe6882653a4f0"
             ]
+          },
+          {
+            "group": "R3_SERVICE16_EXACT_ORIGINAL_AUTH_RESTORATION",
+            "status": "COMPLETED_0_R3_STOPPED_WITH_ORIGINAL_AUTH",
+            "evidence": [
+              "2df13f2a19da7d8290706a8d407da8b5577b14b5808ef3641701dbcd51a3e9c2",
+              "1317a205b54a37a0896ef58698b9d83cbbd69334b1464e12ada9e1003e7c4ea2",
+              "44bcebf4c10391bf3e52a8799c0c1626e726c78ce04568e692d1feb0404399e2",
+              "bcc5db20038c07a30b842240f701089f3a074af5daf0be4292bb3f785ea88beb",
+              "52d80d3099f72229d80460c53af9429a927dc98fba9013888e72f5956b59817c"
+            ]
           }
         ],
-        "currentInFlight": "Exact service16 pre-writer stop completed. Temporary authentication restoration next. Five baseline-scope file and parent access gap isolated; preserve original failed jobs and verify a narrow local repair. No business import or backups of this batch.",
+        "currentInFlight": "R3 stopped. Exact original two roles restored. Next local correction limited to approved baseline-scope access and five-file/one-directory diagnostic; same preserved R3 target. No business import, backup or restore of this batch.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
