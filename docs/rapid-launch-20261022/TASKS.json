@@ -4760,9 +4760,18 @@
               "BEFORE-PHASE-EXIT.json 01fca0f680e94ad9b883925c8a842818b8b71d3912568d9cc874f985e07a6e59",
               "control923B b044 vs worker996B fd81;strict equal JSON;CAS pinned control while guard checks frozen worker;original failure preserved;QB narrow repair/recovery review pending"
             ]
+          },
+          {
+            "group": "r3-ordinary19-prephase-successor-cas-actual-and-writer02-running-20261114",
+            "status": "ACTUAL_CAS_INSTALLED_WRITER02_RUNNING_NOT_COMPLETED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary19-after-refusal-cas-actual-01/CAS-RESULT.json#sha256=271dd779a27975ef56288762f2d9b17c10136d3655c10fa420ab0a72d4bd6bb5",
+              "outputs/T45/revisions/20261114-r3-ordinary19-after-refusal-cas-actual-01/CAS-READBACK.json#sha256=9ec2aad1f6f4b431f0adfb13704ca4883caa61abbd7ca9a2ab96f4c18178f6c9",
+              "outputs/T45/revisions/20261114-r3-ordinary19-writer-actual-02/FIRST-RUNTIME-READBACK.json"
+            ]
           }
         ],
-        "currentInFlight": "QB narrowly assesses verified CAS writer raw serialization mismatch and safe original NO_REPLAY recovery. T45 preserves original refused key, actual no-phase/no-hold evidence and same service19; no successful-writer successor rendered. D2 completed existing19 restore input continuation only. Real import and launch incomplete.",
+        "currentInFlight": "T45 sole server owner follows unique writer02 running at04:19 same511234 native batch; original01 prephase refusal preserved, no replay. Same19 hold active; actual commit/reconcile/logical/cold/independent restore/formal APP+URL pending. Frozen windows writer04:14\u201304:59/readback+backup04:49/stop+measure05:14/copy05:24; restore original source role auth by05:59:48.550. Retain28GiB; independent restore gets separate finite lease.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
