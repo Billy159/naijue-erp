@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 04:22。提交链定向修复已安装，同一批真实导入已启动，正在等待实际完成与核账。
+更新时间：北京时间 2026-11-14 04:46。同一批真实导入仍在运行，后续发布入口的最小接缝已通过本地审核。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/c971a6179d5b8aae9187209bf92dbbae2b84fda1) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/44458b90678f2de03f4dba5159624f4ba8189c24) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -533,4 +533,15 @@ QB独立本地审70775d85419f8af20e8dc8a244851b1ed7ac6f59fc041169a5c6ed28bac2bee
 T45在既有私密root入口执行已签有限CAS授权51723546aa0edd20b914ccb4731816fdd414eddf01286faee76f27048fdff135/source364c，按dispatcher先、policy最后发布。实际CAS-RESULT 271dd779a27975ef56288762f2d9b17c10136d3655c10fa420ab0a72d4bd6bb5，CAS-READBACK 9ec2aad1f6f4b431f0adfb13704ca4883caa61abbd7ca9a2ab96f4c18178f6c9，root receipt26bc737afdf792492136ecbe9ea7362ff3b859a13e22fc450d24afa0e96fc0c2：commit实际发布并读回；dispatcher bbbc501b84313bcb1b052764cac76cd161aeec01e68b40dfd3ae22e571e50f88/policy20acd/authority67cea，core1fe/原backup5bf/lock保持。五后继模板已准确安装，新writer冻结request ecb2与原dispatcher编码预测一致；same19/09权限restored、旧失败保留、新02双grant未用、hold不存在都已实读。
 
 C核对后仅授权正常入口提交 t45-first-20261110-r3-real-execute-20261114-02 一次，request7cc81/manifest9f0b/16叶不变。T45回报ACK QUEUED/autoRetry false；04:20实时原键RUNNING（04:19:37.786启动），Holdactive和phase/stream实际出现，root frozen request准确ecb2，workerResult/commit/outerTerminal仍未出现，不能写成导入PASS。窗口04:14–04:59不延长。后继readback/backup04:49起，stop/measure05:14起，copy05:24起，均等待原有限窗。角色原认证恢复硬截止05:59:48.550；独立PG恢复有自身有限窗口，此截止不能误套为独立恢复或APP截止。28GiB规划保留线不降；真实整批核账、logical/cold/独立恢复、正式APP及公网核心业务均待实际完成。
+
+
+### 2026-11-14 04:46 — 正式入口实际分层已核，后续有限stage最小接缝源码通过；真实导入仍在途
+
+QB边界只读review048e6af6ad19eb81c74597638f6f3b45d139584ca9feab6256540ac7732b293a确认 normal_app da7f 实际只消费原ef807-private-09 helper e6dbc 的verify_formal_linux_payload，未经过generic临时HOLD，已验闭包不改。T45 IDENTIFICATION列复用原faa8-local05 formal owner：boot4ab4/host6288/owner de148/pg604e；production_components直接核same三恢复收据，但其实际前置finite stage经过generic read_plan/validate_runtime35，故此接缝需在本批恢复后使用。current formal09与source import19分层保持，不能把09替换成19。
+
+C在新outputs/主控/20261114-r3-formal-stage-source-local-02准备helper3477b3c2c7b399f2169d55562c860514d175202225a1e8074168c7e7d2a12ab4，原36341/d1a874/e6dbc及server已安装链不动。只给有限R3选原7e66准确archive，取消两处临时无条件HOLD并继续原protected真实三恢复consumer，R3 APP223 pins由原完整manifest/member绑定验证后使用；其余first-install保留旧转换。实际冻结APP要求/private/media与staff-credential-request-key.bin，旧b00fc在原validator准确拒绝两项，保留NEED_FIX；3477将现有媒体wrapper扩至有限R3，并把精确R3 staff容器路径投影给原元数据检查、返回实际.bin路径，原host规范、UID/0600/32B/父目录和媒体/spool隔离检查不减，不读/哈希密钥内容。四个恢复consumer AST与原36341完全相同，原base0f2a不变。
+
+QB REVIEW564ee9b16265076082bc91f15465c2c13752131daba87afb2f7787135ab06b1a为PASS_SCOPED_SOURCE_SUCCESSOR_NOT_ACTUAL_STAGE_OR_RECOVERY：复用既验APP223/27migration/13patch/恢复链，只补23项精确资源与拒绝边界；远端canonical/stat仅内存模拟，未server/DB/stage。C仅允许T45本机形成新boot候选常量绑定3477及原support闭包；尚未server登记、stage、boot或正式发布。实际三恢复回执、new02提交/读回、19 stop/cold、实际finite stage与formal新generation/capacity/acceptance等原合同保留未完成。
+
+同一new02仍在原04:14–04:59窗口RUNNING，T45只沿原键观察，无重提/延时；已实见Node及PostgreSQL处理进程，不能据stream字节或单个资源值猜成功/卡死。readback/backup最早04:49且须真实成功前驱。28GiB规划保留线不降，完整导入及恢复实际峰值尚待闭合。
 
