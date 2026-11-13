@@ -4750,9 +4750,19 @@
               "CAS-READBACK.json 76a00f4b4f46b312028bbe9a055e5fc7de9af1afa49761742519d3546bc88d57",
               "original lock/dispatcher backup preserved;policy7af040/core1fe482;hold and writer absent at readback"
             ]
+          },
+          {
+            "group": "R3-SERVICE19-FIRST-WRITER-BEFORE-PHASE-REFUSAL-20261114-01",
+            "status": "ACTUAL_REFUSED_BEFORE_PHASE_NO_BUSINESS_IMPORT_OR_DATABASE_WRITE_OR_REPLAY_ROOT_CAUSE_EXACT_RAW_SERIALIZATION",
+            "evidence": [
+              "terminal3c37324ed46152a69f369afe789ecf428de6e313a69b2d4e666427ce9bcf581f",
+              "REFUSAL-READBACK.json 0fd6182b383c7b5fb87977824405d6862a35b53c3730f67b105ef8e6c9b0068c",
+              "BEFORE-PHASE-EXIT.json 01fca0f680e94ad9b883925c8a842818b8b71d3912568d9cc874f985e07a6e59",
+              "control923B b044 vs worker996B fd81;strict equal JSON;CAS pinned control while guard checks frozen worker;original failure preserved;QB narrow repair/recovery review pending"
+            ]
           }
         ],
-        "currentInFlight": "T45 original sole writer key final submit instructed under exact 03:12\u201303:57 window; actual submit/transaction status pending. Original scheduled readback/logical/stop/cold chain frozen. D2 local service19 restore input continuity only. No formal APP/URL acceptance yet.",
+        "currentInFlight": "QB narrowly assesses verified CAS writer raw serialization mismatch and safe original NO_REPLAY recovery. T45 preserves original refused key, actual no-phase/no-hold evidence and same service19; no successful-writer successor rendered. D2 completed existing19 restore input continuation only. Real import and launch incomplete.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

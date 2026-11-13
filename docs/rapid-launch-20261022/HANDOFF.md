@@ -6405,3 +6405,13 @@ QB首个writer绑定审查904da3045e7a12274ba5c2c0e0fbc76c0e412f4474e65bf931c091
 原CAS已一次实际安装，CAS-RESULT cca457c486be5a15936c60106b2a4e96fe4274e105534adf0134298e69654a49、19:19:10Z独立读回76a00f4b4f46b312028bbe9a055e5fc7de9af1afa49761742519d3546bc88d57：dispatcher455e46bc8aaa2d1378ad6879a0c6dfd6cb0c67df817f1c18e11a3867cc2ae694、policy7af04098ffbeab30cf6e3d094eb473c835ce26451b160361e70f9bdd4b5a486e、module1fe482…，原backup5bf72…/原lock身份保持，hold无、writer尚未提交、0PG/APP。C据真实回执于03:20后给原键t45-first-20261110-r3-real-execute-20261113-01最终唯一提交指令；实际上传/提交/运行状态仍待T45回执，不把指令当已导入。原截止03:57不延长、不换键，未知结果按原键核实。
 
 已冻后继readback03:47–04:02/logical03:47–04:17/stop04:12–04:17/coldmeasure04:12–04:42/copy04:22–04:52，早完成等待各原startsAt；原28GiB底线与有限role/service期限不变。D2仅接续原恢复候选的19代输入映射，actual closure/restore/APP事实待现场，不新增平台或重复构建。真实全批导入、全覆盖核账、备份恢复、正式APP及网址核心业务仍未完成。
+
+### 2026-11-14 03:29 — 原首个writer明确在phase前拒绝，唯一序列化差异已证；原失败不重放
+
+原key t45-first-20261110-r3-real-execute-20261113-01在19:22:41.742154Z提交，19:22:41.819089Z终态REFUSED_R3_CONTINUITY_BEFORE_PHASE/exit2/0.032317625s，terminal SHA3c37324ed46152a69f369afe789ecf428de6e313a69b2d4e666427ce9bcf581f、exports[]。原dispatcher unit自身exit0仅表示收据发布，绝不作导入成功。C已停止成功后继渲染，旧key/记录/guard保留，不自动重放、不重置状态。
+
+T45原键root只读REFUSAL-READBACK SHA0fd6182b383c7b5fb87977824405d6862a35b53c3730f67b105ef8e6c9b0068c：control上传原request b044/923B；dispatcher原save(json.dumps ensure_ascii=False,indent=2)+newline将worker冻结为fd81bfd531dbdcd0233d97a5ab348e2d3a85ad429624935079b42ddcdeabca32/996B。严格JSON对象相同、原manifestff1e/script efa37、policy/job及首个frozen guard都匹配。CAS错误将control raw SHA登记writer绑定，后续guard按worker frozen raw比较，唯一此字段不同；C本地原save准确重现fd81/996B。此为提交链接线缺陷，不是业务数据或导入程序执行失败。
+
+BEFORE-PHASE-EXIT SHA01fca0f680e94ad9b883925c8a842818b8b71d3912568d9cc874f985e07a6e59：phase日志、r3 outer terminal、continuity failure、worker result/commit、writer access ledger/report、activehold均无，unit inactive/dead；guard binding失败在active写入/phase日志/Popen之前。permission pointer仍09/restored、19proof434470同代无cleanup。源码及实际联合证明业务phase未启动，无业务导入/PG写入。原preparation与同代保留，不因本失败重跑。
+
+QB只窄审此新差异及既有NO_REPLAY下的最小修复/受控新outer载体；若需要新transport key，保持相同baseline/document/initializer operation与request UUID、plan及steps，不换业务批次，不把未知提交当可重导。原03:57有限窗不暗改。当前原preserve-stop尚不接受此明确REFUSED-before-phase状态，须准确补接而不得伪写NEVER_SUBMITTED/FAILED/activehold；服务器只读保全。真实writer、核账、备份恢复和正式网址业务仍待完成。
