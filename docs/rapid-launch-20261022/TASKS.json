@@ -4309,9 +4309,18 @@
             "status": "D1_LOCAL_FIXED_UNISSUED_AWAITING_INCREMENTAL_REVIEW_AND_ACTUAL_PROBE",
             "resultSha256": "56af52fe47c16ac19e6c348369a0cd28b49b7683c43aa182166fb775bae3d292",
             "stopTemplateSha256": "761f33bf08f60e1bb9266c51b3012e46d19465d327db606f1a9ab25f834e2fdb"
+          },
+          {
+            "group": "R3-service15-actual-stopped-digest-lineage",
+            "status": "ACTUAL_FIXED_PRIVATE_DIGESTS_READ_WITH_NO_BODY_EXPORT",
+            "finishedAtCST": "2026-11-13T17:20:17.576454+08:00",
+            "terminalSha256": "b5bba673e5c023f5fbc83a9f7c1c74a9b962285ca541cf5f42efe8cd57977806",
+            "typedSha256": "a5f5b4ebf32a56f61569d24ac48506c05cdb825078670693ba59af7f55d07fe5",
+            "resultSha256": "f228ef96f627b375b3be955fe75fc02f5711f551345229133ed27bf1f6b2c9bc",
+            "storageStopped": true
           }
         ],
-        "currentInFlight": "R3 cleanly stopped and both temporary roles restored after A-05 and SQL38 committed. T45 handling exact digest-only stopped readback and preparing 05 preflight. D1 61035/e537 candidate pending independent incremental review and actual probe.",
+        "currentInFlight": "Stopped lineage actual pass. R3 stopped with roles restored. T45 preparing 05 original-key/resource metadata and duration plan. D1/QB checking the 05 access candidate and exact unknown-result projection cleanup.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
