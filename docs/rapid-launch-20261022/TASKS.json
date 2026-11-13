@@ -4079,13 +4079,25 @@
             "terminalSha256": "932460c8fe16333162e9a249990a98d5f8e5c198fd1c67446111c4b3844706bb",
             "typedSha256": "86ea653ed0ec2f8d7edabf3edcc99dd17f70ebfcc59f962a504bf34f9606e5fe",
             "resultSha256": "61227db5ccc88bb0789c3a087d4125165fb939422b4532e55409c1390f4fce05"
+          },
+          {
+            "group": "r3-service14-a-local-build-and-exact-receive-issued-20261113",
+            "status": "A04_LOCAL_BUILD_AND_EXACT_ORDINARY_RECEIVE_ISSUED",
+            "d1PhaseResultSha256": "2fcf71676d6e780936e7339edd284bd7cb9d47c5e1d54855916dc9213716665f",
+            "d2AReadySha256": "d9b5716b2e557b385d17c746436a1eba9ba5ec6064adf4975f56c6b43235e26e",
+            "d2AArchiveSha256": "4c44535b84c7ea8c32f053fe452fba93ba3c757526d9b8c6f47a1d1f7576fe57",
+            "d2AArchiveBytes": 3409426,
+            "receiveAuthorizationSha256": "3db4aa3a4ae1656caeec9d29072476151684d15099baae20e59e4bf5af34a870",
+            "next05ResultSha256": "1d0850cf2803326d5b19de574fc8bce9617ba69f7e85a566391615ff45809165",
+            "nextRestoreSourceResultSha256": "9d5c6b71cd11a24e08542a7e33f514e4ae61cb563e692386c28d8b5b308e3530",
+            "localLogicalBackupSha256": "1e839d34ae3e889c6a3e201477644d1d175f3442e68dbdc046b450462c91bae9"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "EXPIRED_A03_ALIAS_ACTUALLY_ARCHIVED_SERVICE14_A_ARCHIVE_AND_ROOT_CLOSURE_IN_PREPARATION",
-          "owner": "T45 / C / D1 / D2",
-          "next": "Finish exact A-04 package and T45 service14 closure, verify on the existing restricted lane, then execute with actual role equality and enough remaining cleanup time."
+          "status": "SERVICE14_A04_ARCHIVE_RECEIVING_R3_REMAINS_STOPPED",
+          "owner": "T45 / C / D1 / D2 / QB",
+          "next": "Retain verified service14 A READY and withdraw exact receiver authority. Review actual-READY-bound stage closure and issue protected preflight, then finite role and service start."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
