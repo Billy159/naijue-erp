@@ -4473,9 +4473,18 @@
             "resultSha256": "7bf75c7a10e945f834c6e14f7f10fbb80987b41ca79a615cde16ac30bdef5274",
             "rootResultSha256": "b228f1b65f8f0ceca701783e98d3563f4a61755e85638c98fa375ecc906d6a28",
             "rootCleanupSha256": "426cef12370e74ee416296d308464b07a9d31ab98fc5e575e72a9ded50027cc5"
+          },
+          {
+            "group": "R3_SERVICE16_STOPPED_CAPACITY_AND_LOCAL_LINEAGE",
+            "status": "STOPPED_READONLY_CAPACITY_REFRESH_AND_LOCAL_ONLY",
+            "evidence": [
+              "a364d08dcc89c185a60d7abee7f4bdee4198457bd805bc9bf9a54930f25da055",
+              "c96c2ad7158763cfd00a4213058c29165adab13bc8af45fa5aed9d79990be6e5",
+              "16d3a8a6d708510e9e5a56b161beaa3b57fdeec2a6c4f3c97c58477c982b11b9"
+            ]
           }
         ],
-        "currentInFlight": "R3 stopped cleanly, exact original two role auth restored. Both PREPARE attempts remain original terminal; no business writer. T45 and D1 narrowing the pre-CLI probe and next same-PGDATA retained generation, local backup/recovery binding in progress.",
+        "currentInFlight": "R3 stopped and original role restoration verified. Service16 local exact authority, scoped preflight diagnosis and DDL/stop independent recheck. D3 remains materialized. No formal writer, recovery or public opening.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
