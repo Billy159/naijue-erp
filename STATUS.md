@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 06:18。原请求恢复工具及只读入口源码通过定向复核，正在核对有限启动与收尾脚本，数据库保持停止，尚未上线。
+更新时间：北京时间 2026-11-14 06:42。有限启动与收尾源码已通过定向复核，原请求只读核实入口两处修复待复核，数据库保持停止，尚未上线。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/691a39f083b2daef954815fbfbe1470e97180afe) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/216968bf117cd4e5f1ca13298f84af83f5051a87) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -592,4 +592,15 @@ failed-start准确条件是authority.service=None/stopRequestKey=start20、root/
 T45已冻结四phase候选outputs/T45/revisions/20261114-r3-ordinary20-readonly-recovery-source-local-02，SOURCE-PINS/LOCAL-CHECKS9项/PHASE-CONTRACTS.PARTIAL齐，start62160372/proof26965ad4/runtime d60b7f0a/readonly726c2b29；rolehost8478e4c7/rolesbb30745e；retainedstop4f440c13/preservee4769dd8。仅20独立worker/current-service投影路径、65536参数及一次READONLY settings/cgroup核验、精确历史19/原角色恢复前置；原223复用既有ready d16944而不materialize/全量重验。QB现仅核这四phase新增source，与T45最后inspect有限host、helper stage、登记CAS准备并行；五phase未齐、roles-authorization.json未签，不能作可执行rootpolicy或实际启动结果。五phase最终expiresAt字段，旧submissionDeadline拟设未使用。
 
 C已授权inspect源复用原49项nonroot_input_access临时group读取→child完全回收→原权限/身份元数据还原算法，限定新inspect原键/独立ledger及原49项，不扩大world-readable、不改原内容/哈希/旧writer ledger，不以root跑业务SQL；必须先准确source复核/C有限窗再运行。C仍不读A/custody和两D3见证body。原19停、原两角色05:23已exact还原，历史Hold保留，0新服务/PG连接/参数实际写/业务重执行/APP开放。独立恢复及上线核心验收仍未完成，尚未上线。
+
+
+### 2026-11-14 06:42 — 四phase源码修复收口及只读准备取证
+
+QB四phase定向复核5b0f2efb870428ad2cdc7383338e92aa55ea436d2733143b41042b6cbc2affb4条件源码通过，T45 local03 SOURCE-PINS75ae7905a700d04c25baeb4b4a21406917dae5f179ad0e871a3d87e029842324、contract90a7112b3a25ef63cd99b2f176d5983265d421dfc57f98fef72dfe4d83f8372b。QB20-F01改为准确原19 ACTIVE_HOLD/holdRetained=true/ef30历史；F02 stop输入叶对齐normal05-preserve-stop-input.json。start消费者读取public旧stop result daeca76c794878f7d0bd1bcfb768681ddc5b35c9b0051c16c5a2cd1d9d7ae8d7，root历史3203ee保持各自原SHA，不能混用。18静态叶/10本地check不是实际PG结果。
+
+C授权原a570准备reader一次已执行，T45实际receipt29ec6cdb0484fbedf41e5f6ffa0e3e1bbf625b42f365bbcf92eacaeabb99c8e7（UTC2026-11-13T22:30:08.640122）。accessPlan92a451d298820e25ec578a97825ebf2412b5396a48d639b4b7af70a915331b25：49项/48需临时group读取；原09 summary SHA2f688ba6a10d4fe3902ba2fe1e0786aebc947dcbb6c108d540cd2301050d9559（51222678B/inode13638208），index2196459520B/inode13638206；未开SQLite、未读私密体/源行、0PG/0权限写。另按CAS实际所需仅lstat10basis+lock一次，b48a8ffffa4c1bcc7f76c7339fbf2317eeed0ed1af5e66e0a8c397683007e195，0body/0write；用时重校验，不能预断实际安装成功。
+
+新增inspect local01被QB6a55f9e00e81c815f0be06d8451f63d07058f88a369bebb4441f752e5cdb5256复现两运行阻断：OPS_SHA错指40f970而实际carrier efa37e；A consumer缺原pinned依赖。T45冻结local02仅统一准确efa37e并原样补pinned，hostd203b8e42af38f11619f4c74ee713da6f0679a11d68ff2b5234f9f471ee48e63，index65834fd459a67590a16cbbed5c91b9eb475d1d665de3c10814688700a66251f3，五phase未签contractdd3d9af4abdd89fced14c0356596223ef311e2e1b7bd00190d58b0092c42301a。实际carrier加载与安全合成A原pinned拒绝2caller检查过，正在只补独立delta复核，原NEED_FIX保留。原49/Node/helper/source223不重验。
+
+QB已将helper installer5ebc041d及准备reader源分项限定为未见独立阻断；新增三file登记CAS ce68962892c75f55c5f23ed6a703dc5ebaebcbd77762843bb5d2ee355269dc76正窄审。顺序必须helper独立95叶安装先于新dispatcher登记；CAS仅O_EXCL新wrapper4c35及新rootpolicy，dispatcher最后，原Hold/core1fe/policy25/active0e/bindingf6b/lock不改。C非零时间authority/rootpolicy尚未签，helper安装/CAS/roles20/start20/原UUID inspect均未提交，原19停止且原两角色05:23已准确恢复，0业务重执行。管理员材料已交付并A05落库，不再索取/读密；真实原请求结果与上线仍未确认。
 
