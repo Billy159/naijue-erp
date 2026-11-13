@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 04:57。真实导入返回失败，正在保全现场并核实事务结果及原因，尚未上线。
+更新时间：北京时间 2026-11-14 05:26。失败现场已停稳、原临时认证已准确恢复，正在核实原事务结果并处理共享内存错误，尚未上线。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/644674572486d4156b4bdca19e3d65bff443cc05) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/951727d40d2e012b053bc379b551700a8cd68b8f) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -555,4 +555,15 @@ C签发独立于成功链的原preserve-stop19-01有限5min授权d9a2de1bcc3db29
 已观测本次共享root最低275098583040B（guard18834样本、最大间隔0.1312s），仍远高28GiB；这不是成功导入或完整备份恢复峰值。保留线不降，无当前扩容缺口证明。
 
 后续发布准备独立保留：helper3477通过QB564ee局部source审核；T45 local-owner01发现同basename proof旧6718与新eeaa冲突，未登记。local02只更新pg NORMAL_SHA/PROOF_SHA为原已审5785/eeaa，再boot传新pg摘要；owner/host/OPS算法不改。QB REVIEW24102996224b8860e5e5ed06fa0aa38f9236e37e3b27bf87a8b461563f1dcd1f确认10文件闭包与API，index93fb034bd1573f2790d52eb84a8fef21c6670e77320e0fcd5d4a56edecb25c2f、bootec423d3b6a62d89890711159841add44e6865cef4a8aba9415c1e1a31280beff、pg73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf。原01冲突保留，未server登记/finite stage/formal boot/恢复收据绑定，不记实际上线通过。
+
+
+### 2026-11-14 05:26 — 失败现场已停稳，原两角色认证准确恢复；定向处理共享内存错误
+
+原preserve-stop19-01已COMPLETED0/3.909022281s，root/public terminal1d0df8161cf7aa2177cdf20fa8a8938f568abf93ea0a8137b4430f0376331e63；root result3203ee7eb2477b860ced65c413808269ae91df066c3f0533564ae4fad639fe15，cleanup a4634bb2a15ed67accb202d7f3a56b7ece9fc187d375d43a753c37b510283d00确认cleanShutdown/cleanupComplete/dataPreserved/ownedPidAbsent/portAbsent。same19保全，业务成功链未提交。
+
+原role-restore19-01的唯一阻断为原host两处service18 proof路径字面值，修为准确19，历史PRIOR18与其余算法不动。QB REVIEW f3b2b2a023fded52b34b77fe29e2c871d5f2863a6313caef3b6f5eeb17f63981通过；source a57691f66388278a214bde942397952ac04e633b4e368786f86f35436b701e6b按精确3文件CAS正常登记成功，CAS result7ca63e37ca11ad2a7c6594ce1127ed855126b1f84493c018ba22c7d8e8c92596、registration readback de01be5f760f8bfa090f8f3bca143fb6402d77460da40f0b3c124fbf423137e5。新policy25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757、active0e164d5f/dispatcher6a89268d，原writerbinding f6b60、core1fe、execution.lock及历史失败/停机收据均保持。
+
+C按实际登记签15min原scope授权6d202576a83a351ddf39fa50128c7e6e10de2fda0df2b81d70d15e428c7d88c5，05:22:03.715–05:37:03.715；T45原restore19-01唯一正常提交COMPLETED0，05:23:21.790374–05:23:28.884120/7.081346677s，root/public terminal c4b2c12d626712ed4eb9409560539d2bed6ce42e77922990d7f033ce60aab24a，root result2dce7c2a3b0315c9291f7f8c9076879dcadb2d2427ef71c1883653cf254e994d/publicf67c679a解码相同；rootcleanup61b30a3bec3239c283faff791e876989e3bc4544e25f2611109cc24e603d1919/publica22a44ec解码相同。RESULT316925107fec2a2159c653aca3e303a71bd1593d19c0e921480eabe701bb6364，05:25:09 RESTORE-READBACK977caec1c7c0d113ed2664cc2e1a787251de086b5d51ad9e184118bb25e54f7a：EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK，原两verifier/expiry由T45私密准确核验，非自然到期代替；runtime认证/角色属性/成员关系未改变，维护容器退出0/pid0，sourcePG仍停止、ops为空、Hold保留。C不读custody或两D3见证body。
+
+原writer02 ERROR18的安全投影已从实际same19私有log判明OUT_OF_SHARED_MEMORY，20:51:10.255Z/backend505；静态CONTEXT guard_import_record line8 PERFORM→standard_whole_package_command_v2 line832 SQL STATEMENT→standard_whole_package_step_v2 line4 RETURN。PG-ONE-ERROR-FINAL SHA f2a73bca8ed29144134194effa96d7b29c46a9a67cba2e15be0901bba58e9c7a，原log86a38…保持；SQLSTATE日志未显式记录，不推断。D2定向源码核资源增长与最小修复，T45仅查原HINT/现有配置来源，并准备原UUID只读inspect受控路由。尚未独立确认原事务结果，不将CLI ROLLED_BACK当数据库证明；不把共享内存错误直接认作物理RAM不足，不重放原批次、不换native UUID/plan。正式stage/APP/恢复链和实际业务仍未运行，尚未上线。
 
