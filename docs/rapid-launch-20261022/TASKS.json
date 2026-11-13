@@ -3756,13 +3756,29 @@
               "bothHistoricalAndNewSql36ActiveRejected": true,
               "actualNewMaintenanceIssued": false
             }
+          },
+          {
+            "group": "r3-service11-actual-protected-readback-role10-20261113",
+            "status": "PROTECTED_PREFLIGHT_AND_ROLE10_APPLY_ACTUAL_COMPLETED_SERVICE11_START_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "protectedResultSha256": "09e5e542b0d63caabaf8292e1d9b5105446b66d4f0a6aad2b73b7d4582a9a4bd",
+              "protectedTypedSha256": "6b39186e1ee34869eeceb8b23f0e3fa8e3630d39fc072dffd507708408734b6a",
+              "availableRootBytes": 40057126912,
+              "roleApplyTerminalSha256": "7784d802ccf9cb408a9d66846609270ad191fcb29b42dc690464b90aa51a2667",
+              "roleApplyTypedSha256": "d9fef1b19092cf601ee6a8ffcd52b19991eb49f3ffd4ca666fc41d8e4855d76e",
+              "roleApplyCleanupSha256": "58427276c9f72ba5f145ffb882eb01acb334bac9861e32aad33bd9b02c329bd9",
+              "startAuthoritySha256": "e7cc84f654e07a3e2dc89a9a8fc83c719a39bc47f1825c6e408653aac80d4e87",
+              "startEarliest": 1794540987356,
+              "roleRestoreDeadline": 1794545247356
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE11_FINAL_LOCAL_QB_PASS_BOTH_PACKAGES_READY_FRESH_PROTECTED_PREFLIGHT_PREPARING",
+          "status": "ROLE10_ACTUAL_APPLIED_SERVICE11_START_ISSUED",
           "owner": "T45 / C",
-          "next": "Verify new protected stopped-target preflight, original seven operation states and private local operator readiness, then issue role and start sequentially under the exact new closure."
+          "next": "Complete original service11 retained start, check fresh actual proof and remaining budget, then authorize exact SQL36-02 private preparation. Always close the original service and restore exact roles."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
