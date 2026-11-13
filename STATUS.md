@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 01:36。R3 审批材料大小限制修复通过完整规模本机检查，正式导入尚未提交。
+更新时间：北京时间 2026-11-14 01:59。R3 原服务已停稳并恢复临时角色，正在准备新一轮正式导入。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/8209adeedca884227163500571cb3a4eb16566dc) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/889e4b461b8bda9e24f98212f37b270b9c13703c) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -474,4 +474,17 @@ D2交付独立诊断工具，原223运行源码未修改，4项本机检查通�
 独立清理键 t45-r3-ordinary18-diagnostic02-cleanup-20261114-01 实际COMPLETED/0；terminal a3907aa9de8c5dda6a148faf3d663bb3b2dda9527e2db494ce301d26735e0815，typed 2395ff9c51a4c139abb0c1afab54a772852ba7b72e359586e31f5090dd1e18e6。精确5份私密投影及2份诊断代码退役，49项原metadata恢复，diag02 pointer记录restored，原stdout/stderr与失败记录保留。无PG操作、无信号、无活动诊断进程。缺失原收据仍为MISSING_NOT_CREATED。
 
 D2完整规模合成审批53,708,972B/28,894条通过原reader；原版同错、修复后ordinary及provisioned编译一致，全1,294步迭代，行数及数量金额逐项与plan一致。INIT实际57,006,785B，非审批envelope2,505B，最大业务step838,659B。7项针对检查通过；6项旧夹具在原基线同样失败，未计PASS。合成进程RSS最高约2.06GB，含原新版差分和重复编译，不冒称生产峰值。当前新223源码闭包尚在冻结，T45 PREPARE09本机UNISSUED结构已就绪、exact restored diag02接受而active拒；未签发09、未提交CAS或writer。保持原service18/角色有限截止并重算真实可行余窗，不机械沿用C旧调度预留。
+
+
+### 2026-11-14 01:59 — 18实际停稳及角色恢复完成，转19原生新有限窗口
+
+T45实证18剩余role约39分钟不足以可靠完成整批writer/核账/logical/stop；原整批尚无真实运行耗时，C拒把估算35–37分钟当已证可行，决定18不再安装候选或执行PREPARE09，避免到期后重复。19从最后实际apply起role3h、restore3.5h，service10920秒并保持原35s收尾；原roles恢复3.5h hard cap不改。先收齐源码/后继/窄核再开始19时钟。
+
+18原preserve-stop键 t45-r3-ordinary18-preserve-stop-20261113-01 实际COMPLETED/0/3.693s，terminal d7d5c4c8f169da134af88769c8738cd05927166e55eb9978a6e6f651c241e494、展示typed bac60bd0aad79582eba2bd10dc3ad151c3cde3781322ff114af44536958dfb90，原root紧凑typed 65f044860dc7b2ce4d398109fc8548a6a03359dc0e95edd6dc350fe32dbfde05/819B。cleanup db2055dc7a49fb7b885dab75667059cf36df20fac393ce31efc151a5e0e66317：五flag全true、errors[]、原PGDATA与runtime保留、56791/pidfile缺失；PRE_WRITER/holdfalse/writernever/businessAdvancedfalse。
+
+18恢复外层01因误把展示bac60摘要用于源要求的原root摘要而前置FAILED/2（terminal5dd88d5e…、typed66160793…）；现场证明无intent/container/inside/角色restore-attempt。C/T45保留失败，原守卫不降，换仅外层新carrier t45-r3-ordinary18-auth-restore-20261114-02：host PHASES两字符串delta，原c628角色叶/b2e6 authority/内部逻辑restore01/custody全部不变，绑定真实root65f。新02实际COMPLETED/0/6.751s：terminal0cb0a83e931de04fcc921186a3db5e6c1728d0139cee2c0af9301b0eec750690、展示typed073a3429e1f5cc5c8d65e86a94c06ba27c1621150a3e3016b869c7529bf2f3e3。原两role验证与expiry私域读回吻合，非自然到期替代，DB仍停止，owncontainer exit0/pidabsent/cleanupconfirmed；原01不重放。
+
+D2交付19候选517245532e3e2a5a3df8a2a4f7762e70a3fee6b2，223 source63eb1d9bd4e62bfdba6a344b494351165e411096b5c95e365a5538395562f14e，host7c88c0fa…/72238B。相对已验预算修复仅19固定key/name/18真实epoch三常量，新增4项窄模型通过，预算7项/full-size直接复用，原SQL36/38/A05及身份不改。包bfdad686…/970139B；授权T45原机制独立安装，但未据本记录宣称安装完成或19已起。
+
+C19后继本机目录 outputs/主控/20261114-r3-19-continuity-recovery-local-01 已派生，core1fe48201…、cold d0858761…、stop f26e904b…、backup d4c0710a…，proof19最终ef97846f…绑定真实恢复carrier02，内部restore01保留。QB首轮只核generation及传递pins，算法/guard无新增分支；最终T45readback/指数/issuer仍待冻结再一次窄核。19未apply/start，PREPARE09/CAS/writer均未提交。真实导入、全覆盖核账、备份恢复及正式网址/业务实际验收仍未完成。
 
