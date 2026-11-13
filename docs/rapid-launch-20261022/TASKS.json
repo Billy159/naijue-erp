@@ -3707,13 +3707,31 @@
               "restoreArchiveSha256": "13a7c70579205123d3c1f7ad4664441a7017341dd6738ec46e2c8905c602bfd8",
               "service11Started": false
             }
+          },
+          {
+            "group": "r3-service11-maintenance-archive-actual-ready-20261113",
+            "status": "ACTUAL_SERVICE11_MAINTENANCE_ARTIFACT_READY_AND_ORIGINAL_POLICY_WITHDRAWN",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "1e0db17022ca4108ed832897ffe39483c0ff677a807120ebe6d0061a173c7289",
+              "serverReadySha256": "dbc98fae102bb2e93399175da07e76eae92bcc0435995c88a51429c941ae2cee",
+              "independentReadbackSha256": "6b72285feaa89c861dda5683caff177ba0efed680ffaf5c4d8c8645f8ecf2817",
+              "installTerminalSha256": "c2c38a2a81eef1f60fa109a826f3e06a341e8bd1b07f6c8aeac7109bc7a9bc40",
+              "withdrawalTerminalSha256": "5c8c7a3f07ca63f95ccaf024caf5c899e2e30c6f939c6426bc73e9d23af0c559",
+              "observedAtUTC": "2026-11-13T03:09:40.612108Z",
+              "durableSegments": 14,
+              "archiveBytes": 3408687,
+              "archiveSha256": "ab8fa5312432a73c6b34e4e5a47a873caa285a99e9b415a3141a4a37e8e396a8",
+              "policyAbsent": true,
+              "sqlActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE11_MAINTENANCE_ARTIFACT_STAGING_ACTIVE_PENDING_ORIGINAL_READY_AND_WITHDRAWAL",
+          "status": "NEW_SERVICE11_MAINTENANCE_ARTIFACT_ACTUAL_READY_FINAL_SOURCE_CLOSURE_IN_PREPARATION",
           "owner": "T45 / C",
-          "next": "Obtain original maintenance receipt and independently verified READY after withdrawal. Then stage required application in its separate window and bind the service11 exact source closure."
+          "next": "Verify service11 final host and private stage source pinned to actual READY. Prepare separate business app staging and then fresh protected preflight, preserving old failed job and stopped state."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
