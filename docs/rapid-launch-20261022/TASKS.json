@@ -3640,13 +3640,29 @@
               "exact152LeafOpenProven": false,
               "sourceOrDatabaseChanged": false
             }
+          },
+          {
+            "group": "r3-service11-corrected-outer-and-sql36-successor-planning-20261113",
+            "status": "EXACT_NEXT_GENERATION_IDENTITY_LOCAL_CONFIRMED_OWNERS_BUILDING_NARROW_SUCCESSOR",
+            "owner": "T45 / D1 / D2 / C",
+            "evidence": {
+              "proposalSha256": "1aea8e8fa88357f269bcf1789f869d2fc44bd832e5cc726bd9db0bb046b16007",
+              "nextRoleApplyKey": "t45-r3-admin154-maintenance-auth-20261113-10",
+              "nextServiceKey": "t45-first-r3-native-service-start-20261113-11",
+              "nextSql36Key": "t45-r3-baseline-scope-sql36-20261111-02",
+              "nextStopKey": "t45-r3-service11-retained-stop-20261113-01",
+              "nextRestoreKey": "t45-r3-admin154-maintenance-auth-restore-20261113-07",
+              "serviceProofLeaf": "fresh35-current-production-service-v2-service-11.json",
+              "predecessorEpoch": "2026-11-13 01:57:26.710622+00",
+              "newRuntimeAuthorized": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_OVERLAY_SOURCES_MATCH_BASE_DRIFT_DOCUMENTED_SUCCESSOR_BINDING_IN_PROGRESS",
-          "owner": "T45 / D1 / C",
-          "next": "Confirm the 152 loader's exact access and how the fixed overlay masks the base drift. Pin the corrected successor key chain and original extracted payload reuse. Keep the database stopped until exact independent and runtime preflight."
+          "status": "CORRECTED_SERVICE11_LOCAL_OWNER_IMPLEMENTATION_AND_PIN_DERIVATION_ACTIVE",
+          "owner": "T45 / D1 / D2 / C",
+          "next": "Bind exact 219/220/223 service11-compatible source pins, outer and private stage mapping, and the two exact RO overlays. Preserve current frozen packages and verify the corrected candidate before another live window."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
