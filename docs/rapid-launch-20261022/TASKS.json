@@ -4032,13 +4032,23 @@
             "aOuterSha256": "6c633feb87f32e5f0fc9b48dec6cd473b6e0f87d9509a0f607e2d99d1bc4eb54",
             "sql38Issued": false,
             "updatedLocalLogicalBackupSha256": "751b3872cba804899fc385983385646ca87d9015f85da4465ba1b55afee7990f"
+          },
+          {
+            "group": "r3-service13-a03-actual-unknown-20261113",
+            "status": "ORIGINAL_A03_FAILED_NATIVE_OUTCOME_UNKNOWN_NO_REPLAY",
+            "jobId": "t45-r3-baseline-scope-admin-provision-20261113-03",
+            "terminalSha256": "7adf42eb0411fa7cf8bdf79b03dff75f6e6dc58eb9ab8fddd4de3919575633e4",
+            "typedSha256": "d216dfeae2bd731fb6fe4b6c69b968d1974e065a281e87962f99e3140c586bb8",
+            "nativeOutcomeSha256": "497d6a64b76d01a5c108a03bfcc29c738c6f8055e5ff7b59a3936e6b70cdeb95",
+            "cleanupSha256": "a1d02028c7a579c1c5fff68c92f870f5065a0ec3126479c9d9e0fb478c5b7308",
+            "sql38Issued": false
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE13_ACTUALLY_RETAINED_A03_EXACT_OUTER_ISSUED_WAIT_ACTUAL_PREPARATION",
+          "status": "A03_NATIVE_UNKNOWN_ORIGINAL_READBACK_ONLY_THEN_STOP_RESTORE",
           "owner": "T45 / C",
-          "next": "Bind A-03 private grants to actual read-only preparation, verify original A completion and raw public digest, then exact same service13 SQL38; stop13 and restore09 remain required."
+          "next": "Read original journal and fixed same-epoch read-only operation, audit, staff and account footprint; no replay and no SQL38. Then exact stop13 and restore09."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
