@@ -3772,13 +3772,29 @@
               "startEarliest": 1794540987356,
               "roleRestoreDeadline": 1794545247356
             }
+          },
+          {
+            "group": "r3-service11-actual-retained-start-20261113",
+            "status": "ACTUAL_EXACT_READ_ONLY_SERVICE_RETAINED_SQL36_SUCCESSOR_AUTHORIZED",
+            "owner": "T45 / C",
+            "evidence": {
+              "serviceResultSha256": "ba769fb7504d8cde4de77f0f7869122690ce56235819ec595724b1a6d22e3c2b",
+              "serviceTerminalSha256": "0e90b2808282d5e2790be2d41b806b0f32a49e92f8688e6a6130cf1c9a9000e1",
+              "serviceTypedSha256": "77ea5f96f9f08eef1621208c87dda1c6104eec4f08f2007e4a6cf4544539cc75",
+              "serviceProofSha256": "a6716e5bbc2fccbd5c98ca9474b479652ad1ddbd2f9844d0b9f437f4e22e8dad",
+              "retainedSha256": "7755e715f2172cd6121962f54689a2a18f7f513dd0850c2a3b44b69b629dfdee",
+              "sql36RootSha256": "74b3dbf2b962152d5dd11e1284b6edc7b1b8b4753811237ced4aca9637cea214",
+              "actualEpoch": "2026-11-13 03:37:40.014546+00",
+              "appStarted": false,
+              "businessWrites": 0
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ROLE10_ACTUAL_APPLIED_SERVICE11_START_ISSUED",
+          "status": "SERVICE11_ACTUAL_RETAINED_SQL36_02_ROOT_ISSUED",
           "owner": "T45 / C",
-          "next": "Complete original service11 retained start, check fresh actual proof and remaining budget, then authorize exact SQL36-02 private preparation. Always close the original service and restore exact roles."
+          "next": "Wait exact private SQL36 preparation and independently authorize Node. If actual commit and protected record publication pass, bind first-use A and then SQL38. Clean stop and exact role restoration are required on every outcome."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
