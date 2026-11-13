@@ -4665,9 +4665,18 @@
               "outputs/T45/revisions/20261114-r3-ordinary18-prepare08-actual-01/release-receipts/t45-first-20261110-r3-real-prepare-20261114-08/fresh35-production-real-05-result.json#sha256=262cd87b5aec7ca88239015d97a9aef41908d2511cab60254003ec0c5116869e",
               "outputs/\u4e3b\u63a7/20261113-r3-18-continuity-recovery-local-01/service18-prewriter-backup-caps.json#sha256=a25c03007ca3f1c411ccb6b8d9e7e1451c068ce547d9836ee22afa0683d5f1ee"
             ]
+          },
+          {
+            "group": "r3-service18-postpreflight-diagnostic01-actual-failed-host-binding-20261114-01",
+            "status": "FAILED_PRESERVED_PRE_NODE_PERMISSION_RESTORED_LOCAL_CAUSE_REPRODUCED",
+            "evidence": [
+              "outputs/D2/20261114-r3-prepare08-diagnostic-local-01/RESULT.json",
+              "outputs/T45/revisions/20261114-r3-ordinary18-postpreflight-diagnostic-local-01/FAILED-LEDGER-READBACK.json",
+              "outputs/T45/revisions/20261114-r3-ordinary18-postpreflight-diagnostic-local-01/release-receipts/t45-r3-ordinary18-prepare08-postpreflight-diagnostic-20261114-01/job.json#sha256=2cf9991f81f4683247f9153ab674205352d33041823a3eb341c70f921f785dd5"
+            ]
           }
         ],
-        "currentInFlight": "D2\u672c\u673a\u5b9a\u4f4dPREPARE08\u88abCLI\u9690\u53bb\u7684\u5177\u4f53\u5f02\u5e38\uff1bT45\u4fdd\u7559service18\u53ca\u539f\u5931\u8d25\u952e\uff0cC\u7b49\u5f85\u5177\u4f53\u4fee\u590d/\u8bca\u65ad\u540e\u7ee7\u7eed\u3002\u539fwriter/CAS\u672a\u63d0\u4ea4\uff0c\u771f\u5b9e\u6574\u6279\u5bfc\u5165\u4e0e\u6838\u8d26\u3001\u5907\u4efd\u6062\u590d\u3001APP/\u7f51\u5740\u9a8c\u6536\u5c1a\u672a\u5b8c\u6210\u3002",
+        "currentInFlight": "T45\u4fee\u590d\u65b0\u8bca\u65ad\u5bbf\u4e3b\u95ed\u5305\u53d8\u91cf\u8986\u76d6\uff0c\u751f\u6210\u65b002\u7cbe\u786e\u5019\u9009\uff1b\u539f01\u6743\u9650\u5df2\u6062\u590d\u4e14\u672a\u542f\u52a8Node\uff0c\u539f08\u672a\u786e\u8ba4\u3001CAS/writer\u672a\u63d0\u4ea4\u3002\u7ee7\u7eed\u5b9a\u4f4d\u539f08\u540e\u518d\u771f\u5b9e\u6574\u6279\u5bfc\u5165\u3001\u6838\u8d26\u3001\u5907\u4efd\u6062\u590d\u53caAPP/\u7f51\u5740\u5b9e\u9645\u9a8c\u8bc1\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
