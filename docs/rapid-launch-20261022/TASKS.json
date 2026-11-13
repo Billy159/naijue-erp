@@ -3742,13 +3742,27 @@
               "qbFinding": "Failed-start restore07 check did not exclude active SQL36-02.",
               "liveService11Issued": false
             }
+          },
+          {
+            "group": "r3-service11-closure-independent-local-pass-20261113",
+            "status": "EXACT_SERVICE11_FINAL_CLOSURE_INDEPENDENT_LOCAL_PASS_FRESH_PROTECTED_PREFLIGHT_NEXT",
+            "owner": "T45 / QB / C",
+            "evidence": {
+              "finalClosureSha256": "8ada2dadd90a8023cf60abe1569f2afb88dddab0b207056164e71a47194cdf6a",
+              "rolesHostSha256": "0188ca3158491b8f2aca4c0d3efadf7f905624b9f86f0575b9bbc53b18fe3ca4",
+              "applyTemplateSha256": "e634ffefcb708ae8e8611e56e8b23643eaa6852c7183d1ced4812c3b8b595267",
+              "restoreTemplateSha256": "ac7afe31bb2a713c7b14a2cf59e14a63235a82b4127be8920e22614cc6e25dfa",
+              "targetedTestsSha256": "3c23fa22893ef83bf0806205b9515ae2f57c9c9b0eac77f660864970767cbe84",
+              "bothHistoricalAndNewSql36ActiveRejected": true,
+              "actualNewMaintenanceIssued": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "TWO_NEW_ARTIFACTS_ACTUAL_READY_ONE_LOCAL_RESTORE_GUARD_FIX_PENDING",
-          "owner": "T45 / QB / C",
-          "next": "Patch only the failed-start restore guard missing SQL36-02 and verify its pins independently, then protected fresh preflight before any role/service action."
+          "status": "SERVICE11_FINAL_LOCAL_QB_PASS_BOTH_PACKAGES_READY_FRESH_PROTECTED_PREFLIGHT_PREPARING",
+          "owner": "T45 / C",
+          "next": "Verify new protected stopped-target preflight, original seven operation states and private local operator readiness, then issue role and start sequentially under the exact new closure."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
