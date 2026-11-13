@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 01:08。R3 定向诊断接线问题已定位并修复中，正式导入尚未提交。
+更新时间：北京时间 2026-11-14 01:36。R3 审批材料大小限制修复通过完整规模本机检查，正式导入尚未提交。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/34034cb5f13ba06b941fe4cec2b07ba8a5d28e80) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/8209adeedca884227163500571cb3a4eb16566dc) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -465,4 +465,13 @@ D2交付独立诊断工具，原223运行源码未修改，4项本机检查通�
 新诊断原键 `t45-r3-ordinary18-prepare08-postpreflight-diagnostic-20261114-01` 真实运行10.762秒后FAILED/2；terminal SHA `2cf9991f81f4683247f9153ab674205352d33041823a3eb341c70f921f785dd5`，typed SHA `df6a5bcb592125fd425ae8fb269af008b5107f9d2db64106fdb276a725e099d4`。宿主变量plan先为production-plan dict、后被access-plan bytes覆写，before_launch闭包第二次校代向原dict构造传bytes而TypeError。C静态定位与T45本机闭包调用复现一致，属于新宿主接线错误，不称已定位原08业务失败。
 
 现场只读证明原diag01 pointer已restored且childReaped=true，worker目录、5个projection intent、worker-result和transport-terminal均不存在，Node进程空。原01保留FAILED、不重放。T45仅本机修复变量名称和异常安全位置投影，准备新02及恢复后精确access metadata。原service18/角色截止保持；CAS和正式writer均未提交。原08具体异常仍待定向诊断，真实导入、核账、备份恢复和正式网址实际验证仍未完成。
+
+
+### 2026-11-14 01:36 — 原08实际错误定位，诊断现场恢复，完整规模源码修复通过本机检查
+
+原诊断02实际安全输出定位到 STREAM_PROGRAM / STREAM_REQUEST_TOO_LARGE：合法历史厅审批47,209,508B被通用8MiB请求限制拒绝。原SQL/intake厅审批合同允许64MiB，故D2仅按原四审批字段各自64/4/4/1MiB预算校验UTF8、SHA和完整wire，非审批envelope及所有业务step继续8MiB；不改SQL、不删减审批、不跳过两次编译。原08和诊断01/02失败均保留，02因宿主投影权限导致worker/transport原收据未生成，不推断数据库事务结果。
+
+独立清理键 t45-r3-ordinary18-diagnostic02-cleanup-20261114-01 实际COMPLETED/0；terminal a3907aa9de8c5dda6a148faf3d663bb3b2dda9527e2db494ce301d26735e0815，typed 2395ff9c51a4c139abb0c1afab54a772852ba7b72e359586e31f5090dd1e18e6。精确5份私密投影及2份诊断代码退役，49项原metadata恢复，diag02 pointer记录restored，原stdout/stderr与失败记录保留。无PG操作、无信号、无活动诊断进程。缺失原收据仍为MISSING_NOT_CREATED。
+
+D2完整规模合成审批53,708,972B/28,894条通过原reader；原版同错、修复后ordinary及provisioned编译一致，全1,294步迭代，行数及数量金额逐项与plan一致。INIT实际57,006,785B，非审批envelope2,505B，最大业务step838,659B。7项针对检查通过；6项旧夹具在原基线同样失败，未计PASS。合成进程RSS最高约2.06GB，含原新版差分和重复编译，不冒称生产峰值。当前新223源码闭包尚在冻结，T45 PREPARE09本机UNISSUED结构已就绪、exact restored diag02接受而active拒；未签发09、未提交CAS或writer。保持原service18/角色有限截止并重算真实可行余窗，不机械沿用C旧调度预留。
 
