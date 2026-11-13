@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-13 23:31。旧容器已退役，根卷实余 262.91 GiB，R3 继续。
+更新时间：北京时间 2026-11-13 23:44。R3 已实际启动，整批导入预检继续。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/5171e5b67776022961a19c11d78bb891f3076a69) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/15deecc7bdb8829918ca3d21d884187e790d89d2) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -436,3 +436,10 @@ R3 原运行账号和导入控制账号已在同一数据库实例通过只读�
 依用户指令停止归档，直接办理旧容器退役。
 
 旧容器已退役，根卷实余 262.91 GiB，R3 继续。
+
+
+
+## 2026-11-13T23:44:00+08:00 — R3 service18 已真实启动，接续原批预检
+原角色准备 t45-r3-ordinary18-auth-apply-20261113-01 在 23:31:59 COMPLETED/0，RESULT 3b71337c…，原terminal80a4e3c5…，两维护载体退出、认证期限 1794593750440。C签启动 a05f31d2… 后，T45在提交前发现本地误用carrier入口并核实原键尚无request/result/root作业；只清理本轮未提交上传，纠正为 normal_service05_after08.py，原键仅一次实际提交。t45-first-r3-native-service-start-20261113-18 在 23:42:43 COMPLETED/0，terminal9ec06d95…、RESULT7b8ade1d…、exportedf402d2e0…/root673e9de1…，CIDccf5e0b2…，epoch15:42:42.019976+00，proof90dd8b5f…，原SID/OID/SQL38不变。实际runtime普通只读认证成功；0业务写、APP未启。
+23:43:49 LIVE18-PREFLIGHT b00bbbce… 完成0连接/0写，5目录同根卷dev66304，missing[]，实余282,286,551,040B。PREPARE06与probe18各自原键access计划已分开，注册null。C已发5分钟controller5d33fc58…及probe84eba3b4…，只读实测在途；真实整批writer、核账、备份/冷备及恢复和公网业务均尚未完成。
+
