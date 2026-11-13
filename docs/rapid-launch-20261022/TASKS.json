@@ -4515,9 +4515,20 @@
               "bcc5db20038c07a30b842240f701089f3a074af5daf0be4292bb3f785ea88beb",
               "52d80d3099f72229d80460c53af9429a927dc98fba9013888e72f5956b59817c"
             ]
+          },
+          {
+            "group": "R3_SERVICE17_BASELINE_ACCESS_NARROW_REPAIR_AND_FINITE_ROLE_APPLY",
+            "status": "EXACT_ROLE_APPLY_COMPLETED_LOCAL_ACCESS_REPAIR_ONLY",
+            "evidence": [
+              "29912611aa822a290ce4a5255066e8efa42b3945ad1242ac32dbe8b71f322a91",
+              "91bee2d4068ba3cef09e1ea263cc6da508e0a3ddfd800582b1ea27e2aa6a795b",
+              "50770791920b09f04e919a4d70d83fbff8e8910b800421a886316ec6dd19680f",
+              "421372913e7adfdc09b74c1b896aab0f61dfeec5a35b4105758cf31042928f72",
+              "d80a6f7b4deb8d1413f5470d34575691658b7ce5aa89cc5dc4a32d7c0f000a8d"
+            ]
           }
         ],
-        "currentInFlight": "R3 stopped. Exact original two roles restored. Next local correction limited to approved baseline-scope access and five-file/one-directory diagnostic; same preserved R3 target. No business import, backup or restore of this batch.",
+        "currentInFlight": "Service17 exact finite role apply complete. Separately authorized original same-PGDATA read-only startup, then fresh access probe and controller readback. PREPARE04, writer and backup/restore of this batch not started.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
