@@ -4442,9 +4442,25 @@
             "exactCauseSha256": "0c391582ac0010dcd0dd8cbd44e7af00b2796e4215d007d38045c236742fd05f",
             "fileBytes": 70575,
             "oldReadLimit": 65536
+          },
+          {
+            "group": "R3-05-prepare-02-corrected-source-and-failure",
+            "status": "ACTUAL_PRE_CLI_PROBE_TIMEOUT_ORIGINAL_ACCESS_RESTORED",
+            "controllerSha256": "f60898511a95ea120c2c540c01c3f44d1f868e10a4f79fa20aae36b68dd9c21b",
+            "terminalSha256": "0938e539292e5739a1888a0a9945d890617a1a8861adfd52f3b942232c4b2fc1",
+            "resultSha256": "8f8b18a3d1bd56779585513b66528ddc6a8ac04441c87c82d3269f16606703f9",
+            "rootWorkerSha256": "9e67a0a9a3526fbc2259bfc745d04adb9e99b3682d4f57c4fe27d7bcc141ce8c",
+            "closedMetadataSha256": "09a8c72d57a981e87f80951eaf67e74c2392cd96f72cae7ffc6a21263c9b6e3a",
+            "noNodeSha256": "d5930d60739bd8ca82a85d7a5bff31bfb3c73bfad7843689b6f11d42698f3df9",
+            "availableBytesBefore": 40073191424
+          },
+          {
+            "group": "R3-05-pre-writer-preservation-stop-authority",
+            "status": "EXACT_ORIGINAL_STOP_AUTHORIZED_TERMINAL_PENDING",
+            "authoritySha256": "6564fde1974452c9994ad0397998da81dbbd44fd7589b725cdaa9d4ddc572afc"
           }
         ],
-        "currentInFlight": "Same 05 retained. Original PREPARE 01 failed before connection or access mutation at the fixed E537 read bound. Corrected PREPARE 02 is in local narrow review; original EXECUTE 01 remains unsubmitted.",
+        "currentInFlight": "Corrected PREPARE02 timed out before the import CLI. Original input access is restored and no Node/orphans or writer footprints remain. Pre-writer preservation stop is authorized. T45 collecting stop, then exact original role restore02. D1 checking scoped probe timeout.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
