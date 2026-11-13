@@ -4372,9 +4372,25 @@
             "status": "LOCAL_TESTED_EXACT_SOURCE_AND_ACTUAL_LINUX_DEPENDENCY_PINS",
             "loaderSha256": "876e292172c21c1cc7d987d2609e34f67108a17c2b3c3e99627e54e766ecd2fd",
             "bundleSha256": "b653b817acb7658dc27f72484fb93c4898e9ade76cccec5f1310032af416ba5a"
+          },
+          {
+            "group": "R3-05-local-preservation-and-backup-auth",
+            "status": "LOCAL_SCOPE_REVIEWED_NOT_REGISTERED",
+            "moduleSha256": "7f3cd43543a6559adb35dddf020059107f637cfe98d665bef621b9e029e43aff",
+            "dispatcherCandidateSha256": "3bbceadd718476cd863a275ab2b4e386cb11abe0d1292db0c40f06c374c02916",
+            "preserveStopSha256": "75f55dde1430cf52db3efe0aa20c04be6fe8c570e3c76f2eac059c795b30eb14",
+            "backupSourceSha256": "6a02aaf5deea1e5e8cf29316d8fd7ba82e374e2542b49e6b0b656667622da295"
+          },
+          {
+            "group": "R3-05-ordinary-role-apply-01",
+            "status": "ACTUAL_FAILED_BEFORE_ROLE_WRITE_STOPPED_CLEAN",
+            "terminalSha256": "77138af283b67ca35fc1c79a2fe5759ae51dd9d3e2cc9e92fd1e4bd55f1b9e59",
+            "resultSha256": "eb856d54bb417660e359bf98e2f39b7a5b0fdab73df57314551610d2b196c6a6",
+            "cleanupSha256": "234722742eefe6e935052ad5e4c94faa9e51ca44f8b0cdbb20c1f829de880be7",
+            "rootAvailableBytes": 40084602880
           }
         ],
-        "currentInFlight": "R3 stopped. Actual Linux dependency comparison passed. New 05 local keys/pins and e537 readback leaf fixed. T45 finishing finite controller/backup roles and exact dispatcher/stop integration. No PREPARE or EXECUTE submitted.",
+        "currentInFlight": "R3 remains stopped. Original role apply failed before ALTER at the typed backup admin OID check; exact original artifacts retained. T45 correcting that leaf and aligning the same-role custody, controller and backup. 05/PREPARE/EXECUTE remain unsubmitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
