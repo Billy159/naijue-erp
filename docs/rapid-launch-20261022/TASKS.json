@@ -4656,9 +4656,18 @@
               "outputs/T45/revisions/20261114-r3-ordinary18-prepare07-actual-01/release-receipts/t45-first-20261110-r3-real-prepare-20261114-07/fresh35-production-real-05-result.json",
               "outputs/T45/revisions/20261114-r3-ordinary18-backup-staging-actual-01/release-receipts/t45-r3-ordinary18-backup-input-staging-20261113-01/backup-staging-result.json"
             ]
+          },
+          {
+            "group": "r3-service18-prepare08-actual-failed-cli-not-started-20261114-01",
+            "status": "FAILED_PRESERVED_DIAGNOSIS_PENDING_NO_WRITER",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary18-prepare08-actual-01/release-receipts/t45-first-20261110-r3-real-prepare-20261114-08/job.json#sha256=1ea2f86a9430a2db0d563a2534fcd8c5894619b2ada9ffb88fd4f0163f180d4c",
+              "outputs/T45/revisions/20261114-r3-ordinary18-prepare08-actual-01/release-receipts/t45-first-20261110-r3-real-prepare-20261114-08/fresh35-production-real-05-result.json#sha256=262cd87b5aec7ca88239015d97a9aef41908d2511cab60254003ec0c5116869e",
+              "outputs/\u4e3b\u63a7/20261113-r3-18-continuity-recovery-local-01/service18-prewriter-backup-caps.json#sha256=a25c03007ca3f1c411ccb6b8d9e7e1451c068ce547d9836ee22afa0683d5f1ee"
+            ]
           }
         ],
-        "currentInFlight": "T45 fixes only the actual run_node packet/service parameter omission, tests affected boundary, stages PREPARE08 with fresh post-restoration access metadata. Original writer/CAS not submitted; actual R3 retained.",
+        "currentInFlight": "D2\u672c\u673a\u5b9a\u4f4dPREPARE08\u88abCLI\u9690\u53bb\u7684\u5177\u4f53\u5f02\u5e38\uff1bT45\u4fdd\u7559service18\u53ca\u539f\u5931\u8d25\u952e\uff0cC\u7b49\u5f85\u5177\u4f53\u4fee\u590d/\u8bca\u65ad\u540e\u7ee7\u7eed\u3002\u539fwriter/CAS\u672a\u63d0\u4ea4\uff0c\u771f\u5b9e\u6574\u6279\u5bfc\u5165\u4e0e\u6838\u8d26\u3001\u5907\u4efd\u6062\u590d\u3001APP/\u7f51\u5740\u9a8c\u6536\u5c1a\u672a\u5b8c\u6210\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

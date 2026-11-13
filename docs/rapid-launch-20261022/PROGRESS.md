@@ -6025,3 +6025,9 @@ QB 复核旧库退役 local-04 及 service18 的 startup operator、223 路径�
 原probe18 b3dbe7f8…/4d778ff5… FAILED/2，前五阶段全部COMPLETED/0，最后COMPACT_HOST_CONTEXT在35s超时，临时权限恢复。一次诊断01自身Node组断言写错，在import前40ms拒绝，未进入原失败点；同UID实测Node groups=[61035]、OS supplementary为空后，诊断02仅修该断言并纳入捕获，原导入源不改。diag02 原键7e5772bc…/18590b9f… COMPLETED/0，HOST_IMPORTED196ms、CONTEXT_RETURNED40156ms、子进程回收、stderr0，CPU热点routinesIn，0数据库/源码/权限改动。此结果只补原第六段，保留原失败历史，前五不重跑。
 PREPARE06 在0.284s因ACCESS_EXACT_C_BOUND_PLAN_REQUIRED拒绝，c64de79d…/ade3d5ac… FAILED/2，未建访问ledger。当前安全差异029730a1…证明42文件仅ctimeNs因probe权限恢复变化，7项全同，原身份/大小/mtime/UID/GID/mode未变、无业务数据改变。PREPARE07按probe后当前metadata89990941…重新绑定，carrier只改原key为07；同18角色/服务实截止不变，C将本机排程尾窗从90min重排75min。原07 5ef999dc…/d3a5a787…在13.323s FAILED/2，43/5 FD及223源投影检查通过，Node业务子进程neverStarted，原权限恢复；精确发现run_node独立函数漏收inside的packet/service两个参数，T45正在最小修正并定向本机检查。不得重放06/07，EXECUTE尚未提交。
 原staging18 40d630bb…/380b4e14…在00:15:38 COMPLETED/0，仅依据已审原输入与真实18启动，将1698B 0600 runtime配置和空media目录落位（inode13636889，10001:10001/0700），staff key不变，0PG、不启APP、不改公网。该步骤不依赖导入完成，已独立推进；后继备份/核账/冷备/恢复/正式公网业务仍未完成。当前接续原08候选，保持原writer键和实际同代权限边界。
+
+### 2026-11-14 00:38 — service18 PREPARE08 真实失败保留，定位原 CLI 异常
+
+PREPARE08 原键 `t45-first-20261110-r3-real-prepare-20261114-08` 运行 437.649 秒后 FAILED/2。Node exit1，原进程与后代已回收、输入权限恢复；预检 issues0，但输出只有 NOT_STARTED/IMPORT_FAILED，不能确认准备成功、连接清理或真实导入。终态SHA `1ea2f86a9430a2db0d563a2534fcd8c5894619b2ada9ffb88fd4f0163f180d4c`，typedSHA `262cd87b5aec7ca88239015d97a9aef41908d2511cab60254003ec0c5116869e`。原writer和CAS均未提交，原08不重放。D2仅本机定位预检后 compact host/plan/admin preparation 路径及 catch 隐去的安全异常位置；T45保留现场状态，不重复此前已通过的投影与probe。
+
+本轮报告峰值2,247,729,152B，普通临时峰值226,811,904B，根卷低点279,785,590,784B。28GiB保留线不变。C固定后继逻辑备份有限上界dump32GiB/单归档256MiB/整套33GiB，明确为准入上界而非实测峰值；冷备和独立恢复继续按实际分配核算。首位管理员私密交付和A05已完成，未重复办理。正式整批导入、核账、恢复、APP及网址实际验证仍未完成。
