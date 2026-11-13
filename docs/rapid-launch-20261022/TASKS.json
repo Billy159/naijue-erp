@@ -3621,13 +3621,32 @@
               "overlayLocalQbPassResultSha256": "3aface67f2d913d6f89ad67ca87724537acb873b1608d8ecfd2246b631292236",
               "oldSql36Replayed": false
             }
+          },
+          {
+            "group": "r3-original-sql36-mount-readback02-actual-20261113",
+            "status": "ACTUAL_FIXED_LAUNCHER_OVERLAYS_VERIFIED_AND_BASE_DRIFT_IDENTIFIED",
+            "owner": "T45 / D1 / C",
+            "evidence": {
+              "resultSha256": "ff12b0b923144e234ba136e5d51704fbc77735c664b76e9cfe57e0ea57c20a63",
+              "terminalSha256": "eda4ab371e10a2582dd71bbfdbedbc2e7f7b46aed1cfb455bc396b9bd323a65d",
+              "typedSha256": "252ec0ca9dda06a47da6665d8cd9683bd7df60bf47e3afb7c9804e08f4ab3470",
+              "finishedAtUTC": "2026-11-13T02:43:00.886222Z",
+              "terminalExitCode": 0,
+              "originalOverlaysShaMatch": 2,
+              "originalMissingOverlayMounts": 2,
+              "oldProductionBaseLauncherShaMismatch": true,
+              "uid10001OldDeployAndRefsOpen": true,
+              "uid10001OriginalOverlaysDenied": true,
+              "exact152LeafOpenProven": false,
+              "sourceOrDatabaseChanged": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_MOUNTS_MISSING_OVERLAY_FIX_LOCAL_PASS_PER_LEAF_READBACK_AND_SUCCESSOR_BINDING_PENDING",
+          "status": "ACTUAL_OVERLAY_SOURCES_MATCH_BASE_DRIFT_DOCUMENTED_SUCCESSOR_BINDING_IN_PROGRESS",
           "owner": "T45 / D1 / C",
-          "next": "Identify exact launcher byte or identity mismatch and UID10001 access with a narrow new read-only successor, then complete the corrected operation lineage. Preserve all failed originals."
+          "next": "Confirm the 152 loader's exact access and how the fixed overlay masks the base drift. Pin the corrected successor key chain and original extracted payload reuse. Keep the database stopped until exact independent and runtime preflight."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
