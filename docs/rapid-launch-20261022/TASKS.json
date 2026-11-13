@@ -3788,13 +3788,27 @@
               "appStarted": false,
               "businessWrites": 0
             }
+          },
+          {
+            "group": "r3-service11-actual-sql36-02-20261113",
+            "status": "ACTUAL_SQL36_COMMITTED_PROTECTED_154_PUBLISHED_AND_READ_BACK_FIRST_USE_A_PREPARATION_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "terminalSha256": "362329cd68913d9ea4cde447a9dc7bbb833df6127dc831a23387b1079f5a1115",
+              "typedSha256": "8753cbf24a485f969f8a417bfec9ffbcda63a241c0f06c282737852fc1602add",
+              "cleanupSha256": "4170eb077c7ac794fa12fd1da992482fcead7a31dcbc8ca63620554bfc02200d",
+              "protectedRecordSha256": "96d35d3b4c7b356b334849373611068d07bb12b3fcf6c6f47dacce3d570a3e3e",
+              "actualNodeAuthorizationSha256": "ba441adee102b3e1b854df10ef0d7f696638bf582743f4de99c5c33411b53146",
+              "aRootSha256": "6b4a652893fe1a263f22f600095f18a2960ed52a0aab5028b8bc0b6822401cfc",
+              "formalBusinessAccepted": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE11_ACTUAL_RETAINED_SQL36_02_ROOT_ISSUED",
+          "status": "SQL36_ACTUAL_COMMITTED_AND_PUBLISHED_A_FIRST_USE_PREPARATION_ISSUED",
           "owner": "T45 / C",
-          "next": "Wait exact private SQL36 preparation and independently authorize Node. If actual commit and protected record publication pass, bind first-use A and then SQL38. Clean stop and exact role restoration are required on every outcome."
+          "next": "Verify first-use A preparation and separately issue two exact private authorities. Require original A commit and closed worker before SQL38. Then stop and restore exact roles."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
