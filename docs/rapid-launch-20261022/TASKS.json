@@ -4482,9 +4482,19 @@
               "c96c2ad7158763cfd00a4213058c29165adab13bc8af45fa5aed9d79990be6e5",
               "16d3a8a6d708510e9e5a56b161beaa3b57fdeec2a6c4f3c97c58477c982b11b9"
             ]
+          },
+          {
+            "group": "R3_SERVICE16_ACTUAL_ROLE_APPLY_AND_RETAINED_START",
+            "status": "COMPLETED_0_READONLY_DATABASE_GENERATION",
+            "evidence": [
+              "2bcaff5bec431a3b364a9d174287d6e3039079991aeabcf951733765a6b0bb3b",
+              "0f7164c2c9da4e3adb521398a92fbf256097385695021bd5fd9cd9e0bb50b579",
+              "7418b8a8b277e1df5202d49257a0026cbde3d36d731aa1d7852fc88746b0d88b",
+              "d2d15556775f62300b276ffa6ba9f33618171871bc7d17b3179f5e72951d4164"
+            ]
           }
         ],
-        "currentInFlight": "R3 stopped and original role restoration verified. Service16 local exact authority, scoped preflight diagnosis and DDL/stop independent recheck. D3 remains materialized. No formal writer, recovery or public opening.",
+        "currentInFlight": "R3 service16 retained read-only. Exact separate preflight access plan and controller metadata pending. PREPARE03, writer, backup/restore and application not started.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
