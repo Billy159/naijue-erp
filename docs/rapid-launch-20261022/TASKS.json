@@ -3863,13 +3863,31 @@
               "sql38FootprintsAbsent": true,
               "adminMaterialRead": false
             }
+          },
+          {
+            "group": "r3-service12-maintenance-223-actual-ready-20261113",
+            "status": "SERVICE12_MAINTENANCE_EXACT_ARTIFACT_ACTUALLY_READY_POLICY_WITHDRAWN",
+            "owner": "T45 / D1 / D2 / C",
+            "evidence": {
+              "maintenanceCommit": "e5376516c744c47d56f97e4a90d056c94251c786",
+              "sourceSetSha256": "e43584e931791601974440955dfe3464cd0f3d9220141acfe5a9172212841d15",
+              "archiveSha256": "909963c477f3501cc58fac788a3baef5ee5bb27e41411360934ce121b2fc07be",
+              "archiveBytes": 3411472,
+              "authoritySha256": "9562e14afdbc2f3c66c2a1d2b9314ea34577a62a39ae1420fa5673dce999e0ac",
+              "actualResultSha256": "22408e24f8c982c34a9ec37d2f45bbb034038185abb291f3943ab9e984dfeff4",
+              "actualReadySha256": "824e58bdc639c71b085c8d13d159c1f7207bbb935fe65f88903e98b6539bde06",
+              "policyAbsent": true,
+              "durableSegments": 14,
+              "businessAppCommit": "ef807b39b5ac8c483e9350dc72108d57716bf291",
+              "businessAppArchiveSha256": "7fb9323db5270951c66fe6bf8b62f95d3ba2520bdbc1fc66cd6035e85cf0f018"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ROOT_RECEIPT_DIGESTS_ACTUAL_VERIFIED_SERVICE12_SUCCESSOR_LOCAL_ASSEMBLY",
-          "owner": "T45 / D1 / D2 / C",
-          "next": "Complete and independently review service12 exact continuation. Bind actual protected digests, original 154, original sealed A and new A outer key. Establish source artifact ready and fresh stopped-state evidence before actual role or service."
+          "status": "SERVICE12_MAINTENANCE_ARTIFACT_ACTUAL_READY_CLOSURE_AND_INDEPENDENT_REVIEW_IN_FLIGHT",
+          "owner": "T45 / D1 / D2 / QB / C",
+          "next": "Complete exact service12 bound closure, independent targeted review and protected stopped-state preflight. Separately stage the matching 09 business artifact when the receive scope is ready. Issue no new role or service until live prerequisites."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
