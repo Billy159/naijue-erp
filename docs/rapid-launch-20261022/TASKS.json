@@ -4282,9 +4282,36 @@
             "group": "R3-service15-stop15-authority",
             "status": "SIGNED_ON_ORIGINAL_TERMINAL_AND_CONFIRMED_WORKER_CLEANUP",
             "authoritySha256": "e45a16e2b82ef636a607f3b25c3e21c4f4a1ad557d245482a53419ff22fc28c8"
+          },
+          {
+            "group": "R3-service15-exact-stop15",
+            "status": "ACTUAL_CLEAN_STOP_PRESERVED_DATABASE",
+            "finishedAtCST": "2026-11-13T17:12:25.285122+08:00",
+            "terminalSha256": "60dd67745095ebda3afa9bd5d4ab5e6b535366c9b7f16f9561a0abc5d5593ce0",
+            "typedSha256": "d892bceb4ba147bf214c4c69e34bbddef30eadaad7703267e6b132e636cf9393",
+            "cleanupSha256": "63487104fea77c994c44591265dfe211f04e02bb9cd23a95b98197e102cb38fa"
+          },
+          {
+            "group": "R3-service15-role14-restore11",
+            "status": "ACTUAL_BOTH_ORIGINAL_ROLES_RESTORED_R3_STOPPED",
+            "finishedAtCST": "2026-11-13T17:16:59.581499+08:00",
+            "terminalSha256": "96f6b5ec9345f5c80629db2a48e3dc78f6eaa664b5620f3bd29d8b86e37b5bf4",
+            "typedSha256": "9989d8328df41edacc38e20d7b09a240f073b85673793ad6ffd49e02b9682ca1",
+            "resultSha256": "36c74996c36d8576e7662acf01d17b975185ba1d268b9c6a4eb4b34048ed8b65"
+          },
+          {
+            "group": "R3-service15-original-lineage-digest-readback-authority",
+            "status": "ISSUED_EXACT_READ_ONLY_NO_BODY_EXPORT",
+            "authoritySha256": "18e3966fbe7c29beadc3cf425e5094cb516515a4fd32a0345b68a7a5b97e6994"
+          },
+          {
+            "group": "R3-05-e537-worker-readonly-local-candidate",
+            "status": "D1_LOCAL_FIXED_UNISSUED_AWAITING_INCREMENTAL_REVIEW_AND_ACTUAL_PROBE",
+            "resultSha256": "56af52fe47c16ac19e6c348369a0cd28b49b7683c43aa182166fb775bae3d292",
+            "stopTemplateSha256": "761f33bf08f60e1bb9266c51b3012e46d19465d327db606f1a9ab25f834e2fdb"
           }
         ],
-        "currentInFlight": "A-05 and SQL38 committed on the same service15 generation. SQL38 original root publication confirmed. T45 closing exact stop15 then restore11 and preparing downstream ordinary 05 and root-only lineage.",
+        "currentInFlight": "R3 cleanly stopped and both temporary roles restored after A-05 and SQL38 committed. T45 handling exact digest-only stopped readback and preparing 05 preflight. D1 61035/e537 candidate pending independent incremental review and actual probe.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

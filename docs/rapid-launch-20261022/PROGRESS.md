@@ -5871,3 +5871,9 @@ The real private PTY matched both independently issued A-05 digests and returned
 ### 2026-11-13 17:10 CST · Original SQL38 committed and published
 
 The SQL38 original key received the independent Node digest over the private PTY and completed at 17:08:15. PostgreSQL commit and the root publication and readback of `d18f80ce…` were confirmed. Connection closed. The SQL38 isolated container, PID and FIFO were cleaned and the retained PG container was untouched. The A-05 and SQL38 stages used the same service15 generation. Stop15 authority was issued against the actual terminal and cleanup. Restore11 and final stopped lineage await original stop evidence. No business import or public opening was authorized in these phase windows.
+
+### 2026-11-13 17:19 CST · R3 maintenance closed and ordinary import inputs prepared
+
+Stop15 completed at 17:12:25 and proved clean original same-CID shutdown, preserved data and runtime references, and no residual PG PID or endpoint. Restore11 completed at 17:16:59. Both roles were restored to their original fields with runtime authentication unchanged. R3 remains stopped. C signed a bounded digest-only source readback for the exact A/SQL38 lineage, no PG connection or private receipt body export.
+
+D1 verified a local candidate for the exact 05 start, PREPARE/EXECUTE and stop mounts. It reuses the e537 223 source members and locked Linux dependencies, preserves original authority permissions and root-owned launcher files, and builds an exact 05 read-only authority projection to permit the UID 61035 source watcher. Existing 05 proof and the independent restoration 224 artifact remain pinned. C repinned the unissued stop template to the same launcher/helper and reran eight focused checks. QB review, Linux mounts, worker access, actual windows and import remain pending.
