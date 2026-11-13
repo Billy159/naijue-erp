@@ -4122,13 +4122,23 @@
             "actualServiceLease": 1794558880263,
             "actualServiceProofSha256": "154c7b1dfd900d5562e96e7b252440fb63c25d7d44a1c9d4dee02ea25f875acb",
             "aOuterSha256": "58e2afd316ac278ab1e772ce7293c78aaab436be8374d3c58b09762f51abaac3"
+          },
+          {
+            "group": "r3-service14-a04-private-transport-timeout-20261113",
+            "status": "A04_FAILED_BEFORE_CONFIRMED_AUTHORIZATION_DELIVERY_READ_ORIGINAL_ONLY",
+            "terminalSha256": "63fa03de827e54ebf5d5f5306d5fe0b09cabb828c57f0e50e3a29b830472dadc",
+            "typedSha256": "897504719aac2a7596af87205a2ce7544bc3e9886e07ef6b7e2bd28a11a8e5f8",
+            "preparationSha256": "74cea4af4cfa1fe47590a165ff7360a8b02774d7a93750303089b34b2a0cfc60",
+            "cleanupSha256": "9658ba4947c6d861b0793e6fd07fc1762cf7ae6c23b8b84462da7e32725781b3",
+            "sql38Issued": false,
+            "stopAuthoritySha256": "816514ebe8e391625050972af6a34cd381824662e4baa263e4e74711e63b0de0"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE14_ACTUALLY_RETAINED_A04_EXACT_OUTER_ISSUED",
+          "status": "A04_PRIVATE_APPROVAL_TIMED_OUT_STOP14_ISSUED",
           "owner": "T45 / C",
-          "next": "Wait actual private preparation and bind same-window A-04 grant, then validate actual commit before original SQL38."
+          "next": "Exact stop14 then restore10. Read protected original A-04 permission and native footprint metadata. No A-04 replay or SQL38."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
