@@ -4526,9 +4526,29 @@
               "421372913e7adfdc09b74c1b896aab0f61dfeec5a35b4105758cf31042928f72",
               "d80a6f7b4deb8d1413f5470d34575691658b7ce5aa89cc5dc4a32d7c0f000a8d"
             ]
+          },
+          {
+            "group": "20261113-R3-ORDINARY17-PROBE-CONTROLLER-ACTUAL",
+            "status": "EXACT_GENERATION_RUNNING_READ_ONLY_CONTROLLER02_PASSED",
+            "evidence": [
+              "role apply COMPLETED/0 50770791\u2026 roles valid until 23:45:45.850 CST; original runtime preserved",
+              "service17 start COMPLETED/0 9f128c53\u2026 original PGDATA/cluster/OID, proof 39ec797c\u2026; no APP",
+              "probe17 COMPLETED/0 efe507ad\u2026/936ae950\u2026; 43 files/5 directories, all children reaped and ACL restored",
+              "controller01 FAILED/1 before connection, finite authority expired; new exact controller02 COMPLETED/0 8986fffc\u2026/ffb6a73c\u2026, private receipt b415148b\u2026; zero writes"
+            ]
+          },
+          {
+            "group": "20261113-R3-PREPARE04-ORIGINAL-FAILURE",
+            "status": "FAILED_BEFORE_LEDGER_CLI_AND_IMPORT_NO_REPLAY",
+            "evidence": [
+              "terminal 4e73deb760f3f0605d564d1e31f885fedb7928ccb052e349118a42d7a24b6b4a; typed 522624435d61c899f1616b3eb0c36fa1c3f1e576d6d4b64c938226f974a8be11",
+              "2026-11-13 21:26:51.895996 CST FAILED/2 0.331s R3_05_PROTECTED_RECEIPT_BYTES_DIFFER; same-key observation 68245e5276ee7e79252b11a0ce2a23399f43a17e8a588b8d99c2cf4e643fb45d confirmed stale service16 readonly module pin before ledger, report, scratch or CLI",
+              "Exact same-generation service17 readonly module c85c2ecf\u2026; 6 actual protected hashes matched their authority. Writer original key absent across both grants; no evidence of import or writes.",
+              "Root /dev/md0p1 ordinary available 40,055,930,880 B before PREPARE04. No peak measurement from failed PREPARE04; 28 GiB floor remains."
+            ]
           }
         ],
-        "currentInFlight": "Service17 exact finite role apply complete. Separately authorized original same-PGDATA read-only startup, then fresh access probe and controller readback. PREPARE04, writer and backup/restore of this batch not started.",
+        "currentInFlight": "T45 same service17 R3 read-only PREPARE05 local exact narrow pin and new request binding pending; independent review and actual receipt, no original replay. Formal backup staging local only. CAS, writer, readback, cold copy, restore and formal release remain unsubmitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
