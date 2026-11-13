@@ -3881,13 +3881,28 @@
               "businessAppCommit": "ef807b39b5ac8c483e9350dc72108d57716bf291",
               "businessAppArchiveSha256": "7fb9323db5270951c66fe6bf8b62f95d3ba2520bdbc1fc66cd6035e85cf0f018"
             }
+          },
+          {
+            "group": "r3-service12-final-local-and-business-app-staged-20261113",
+            "status": "FINAL_SERVICE12_INDEPENDENT_LOCAL_PASS_BOTH_ARTIFACTS_STAGED",
+            "owner": "T45 / QB / D1 / D2 / C",
+            "evidence": {
+              "exactClosureSha256": "7211afbc3517420bf883014177f8caec2db34ad39d2f944893d75a3331e27074",
+              "workerSha256": "99f8d64a4cccdfabf4499b27cd9b17f8120c633a0d0fc08303ce8e2713fb60cb",
+              "aTemplateSha256": "0f554aaf1ce1d664a22a9d6a046d3d935945f22e8d1610e92ec1c1a25b7c0f32",
+              "sql38TemplateSha256": "8b27d4efbf8b025b59db179b021fee72b6d4e812544d0e7fcebb6171089bd5e3",
+              "localTestsSha256": "2ae205f525281c8292e8828234b73bd612aac3b2072c8d1e21cc9c2938c709d4",
+              "businessAppActualResultSha256": "daf96b728fe54aed3cdfa2b5b1bab026d96549f2ff762943584881d5e6339601",
+              "businessAppActualReadySha256": "57690457d8dd5a748f655f8d16d65adcb9d87dbd19deb69788d617e17411387d",
+              "restoreLocalArtifactSha256": "a4402b78a37b8e80507dfd84b84dfeb3a1183c1294848abeb9ad58390ac43bde"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE12_MAINTENANCE_ARTIFACT_ACTUAL_READY_CLOSURE_AND_INDEPENDENT_REVIEW_IN_FLIGHT",
-          "owner": "T45 / D1 / D2 / QB / C",
-          "next": "Complete exact service12 bound closure, independent targeted review and protected stopped-state preflight. Separately stage the matching 09 business artifact when the receive scope is ready. Issue no new role or service until live prerequisites."
+          "status": "SERVICE12_CLOSURE_INDEPENDENT_LOCAL_PASS_AND_BOTH_ACTUAL_ARTIFACTS_READY",
+          "owner": "T45 / C",
+          "next": "Finish exact service12 protected stopped-state preflight and two local terminal checks. Then authorize finite role apply and service startup sequentially using real receipts."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
