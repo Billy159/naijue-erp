@@ -4318,9 +4318,39 @@
             "typedSha256": "a5f5b4ebf32a56f61569d24ac48506c05cdb825078670693ba59af7f55d07fe5",
             "resultSha256": "f228ef96f627b375b3be955fe75fc02f5711f551345229133ed27bf1f6b2c9bc",
             "storageStopped": true
+          },
+          {
+            "group": "R3-05-stopped-ordinary-preflight",
+            "status": "ACTUAL_ORIGINAL_KEYS_CLEAR_AND_VOLUME_MEASURED",
+            "checkedAtCST": "2026-11-13T17:24:07.164330+08:00",
+            "availableBytes": 40085663744,
+            "availableInodes": 29575391,
+            "originalReadbackSha256": "793f44da5f909d5c4dd06066c4d77435472a9488b5e365fe8efca8bfe9742b0a"
+          },
+          {
+            "group": "R3-05-two-key-registration-local",
+            "status": "EXACT_LOCAL_REGISTRATION_UNISSUED",
+            "resultSha256": "fbba3632fac4f125ccf52b76a6e5d911cf1878eabc2cf3ac7711e9dcefe29646",
+            "carrierSha256": "269317af35a7ec4277db8a26ffdb117ea53ade87dae8e557dd7fd40a0697bbac",
+            "planSha256": "0d8878f5e3b316408c5303c27b1c0ddba00d0ed339c82cf7a132244237cf3712",
+            "prepareKey": "t45-first-20261110-r3-real-prepare-20261113-01",
+            "executeKey": "t45-first-20261110-r3-real-execute-20261113-01"
+          },
+          {
+            "group": "R3-05-worker-projection-incremental-QB",
+            "status": "OFFLINE_NARROW_REVIEW_PASS_ACTUAL_MOUNTS_PENDING",
+            "resultSha256": "701eac6da8b67c566c75c7c52d72c5d353f0cb03462c1fcc03d9b8c655d40829",
+            "handoffSha256": "acb2df449067263277aa9e1899c7506aaca1daa47f8518c6c01759e62b26c654"
+          },
+          {
+            "group": "R3-05-protected-preflight-01-and-02",
+            "status": "ORIGINAL_FAILED_ON_MISSING_GETFACL_EXACT_READ_ONLY_SUCCESSOR_ISSUED",
+            "failedTerminalSha256": "b7736c3f012d2c1b75b419794c9e8d02893c6782be173e638d5d176954347fda",
+            "failedTypedSha256": "dda4c03f55b557816ab6ba15e992092c7a1b8314053952be4397b84a7d7a25ba",
+            "successorAuthorizationSha256": "5c8b798eea4f163d05637ebf474b362b6aa9f850cc7041c728af9eca2d511e10"
           }
         ],
-        "currentInFlight": "Stopped lineage actual pass. R3 stopped with roles restored. T45 preparing 05 original-key/resource metadata and duration plan. D1/QB checking the 05 access candidate and exact unknown-result projection cleanup.",
+        "currentInFlight": "R3 stopped. Exact 05 PREPARE/EXECUTE keys fixed locally; 61035 projection offline pass. 05 protected preflight 02 pending. T45 developing exact controller/admin custody and restoration; D1 repins independent ordinary readback to e537. Keep 28 GiB.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
