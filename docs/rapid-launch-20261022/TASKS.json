@@ -4216,9 +4216,39 @@
             "temporary": false,
             "job": false,
             "terminal": false
+          },
+          {
+            "group": "R3-service15-stopped-preflight-02",
+            "status": "ACTUAL_STOPPED_PROTECTED_READBACK_PASS",
+            "terminalSha256": "2db76ca07be8a461527c77b673ff76537088bf459d27f4adf9c88ea36184ecfd",
+            "typedSha256": "61977e8ed3aa474fb4aa442dd4aa97be2f6e8dd34373a5fef8f002a63ff6d355",
+            "rootAvailableBytes": 40136818688
+          },
+          {
+            "group": "R3-service15-role14-apply",
+            "status": "ACTUAL_BOTH_FINITE_ROLE_VALUES_VERIFIED",
+            "terminalSha256": "5b5a27a2a7c46ba764c376bb904490ec40ad1e79f125e01daf7d453d894d406c",
+            "typedSha256": "4803405e092eb74f8efa57edd11f3cb44e354505bc06022b0103ae4383fc1723",
+            "roleExpiry": 1794562950385,
+            "restoreBy": 1794564150385
+          },
+          {
+            "group": "R3-service15-read-only-start",
+            "status": "ACTUAL_RETAINED_RUNTIME_READ_ONLY",
+            "terminalSha256": "f4f4fb792414763b7b2e1db38fdd79f8000ba9501c2aeb2000dc109914b52a0d",
+            "typedSha256": "f7a5e7bf300c8f57e565dff63ca7d58a88244af11949f98fb36b15acdb718246",
+            "proofSha256": "76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727",
+            "postmasterStart": "2026-11-13 08:53:20.527136+00",
+            "serviceExpiry": 1794563220385
+          },
+          {
+            "group": "R3-service15-A05-outer-and-local-signer",
+            "status": "EXACT_OUTER_ISSUED_INDEPENDENT_SIGNER_WAITING_FOR_ACTUAL_PREPARATION",
+            "authoritySha256": "ba759293ef35b851594fe58eb8364fc35c6192623936880aa1bb8623ce80379b",
+            "cutoff": 1794562950385
           }
         ],
-        "currentInFlight": "R3 stopped. A-05 and original SQL38 exact local scopes and both PTY handoffs reviewed. First stopped read-only call confirmed absent after channel failure. T45 preparing exact replacement read-only probe before finite role apply.",
+        "currentInFlight": "R3 service15 started read-only. Role apply14 exact equal cutoff verified. A-05 outer issued and independent signer prearmed. Original SQL38 waits for actual A-05 commit and matching same-generation receipts.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
