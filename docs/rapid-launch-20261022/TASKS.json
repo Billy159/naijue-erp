@@ -4602,9 +4602,26 @@
               "Original verified host copies for 10/22-04, 10/23-43, 10/23-82, 10/24-112 preserved. Original four container temp directories absent. Root /dev/md0p1 before 36,170,162,176 B after 73,934,405,632 B, net 37,764,243,456 B, ~35.17 GiB. Original PGDATA/R3/old container retained.",
               "18 remaining archive in three fixed batches of six. Batch01 authorized 15282b2d\u2026 then queued original key only, no actual archive success claim."
             ]
+          },
+          {
+            "group": "legacy-snapshot60-archive-batch01-actual",
+            "status": "COMPLETED_SIX_PHYSICAL_ARCHIVES_AND_READBACKS_SOURCES_RETAINED",
+            "evidence": [
+              "efdbdac140e0220d92f658659311f36ee9795eb30550ea3960854b78fdef3e53",
+              "45988b213002e42c1782bd192dcf4feeb8cbe60f45c95c1ce9404439e2c558cd",
+              "3edd6057fa71940558670df93cf1e09ae42f59f777f52f299f78c9ccecf864b5"
+            ]
+          },
+          {
+            "group": "legacy-retirement-and-r3-service18-local-review",
+            "status": "PASS_LOCAL_REVIEW_ON_EXACT_CANDIDATES_LIVE_EXECUTION_PENDING",
+            "evidence": [
+              "a8b716edadbba84a47381f5350838862b177379383c1c08965ead6afb867c429",
+              "2aea7743b726c80bd55c2e76d525f1798d098fa6edcbd4d00fd71ab7a9bd1375"
+            ]
           }
         ],
-        "currentInFlight": "T45 old PostgreSQL exact archival batch01 (first six of 18 remaining) submitted once; retain sources and capture complete receipt. Then batch02 and batch03, exact old service retirement and root delta. R3 stopped; service18 local exact D2 successor review PASS only; no new R3 on-site tasks until retirement.",
+        "currentInFlight": "T45 old PostgreSQL archive batch02 submitted once after batch01 completed with all six archived and read back; cumulative 7/19. Then batch03, exact old container retirement and root delta. R3 remains stopped until retirement; service18 local candidates reviewed only.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
