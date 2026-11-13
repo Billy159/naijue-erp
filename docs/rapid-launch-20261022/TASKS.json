@@ -4646,9 +4646,19 @@
               "outputs/T45/revisions/20261113-r3-ordinary18-start-actual-01/RESULT.json",
               "outputs/T45/revisions/20261113-r3-ordinary18-live-readonly-01/LIVE18-PREFLIGHT.json"
             ]
+          },
+          {
+            "group": "R3-SERVICE18-FAILED-SCOPE-CONTEXT-AND-STAGING-20261114-0021",
+            "status": "CONTEXT_SUPPLEMENT_AND_STAGING_COMPLETED_PREPARE_CONTROLLER_FIX_PENDING",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary18-context-diagnostic-02/release-receipts/t45-r3-ordinary18-compact-context-diagnostic-20261114-02/context-diagnostic.json",
+              "outputs/T45/revisions/20261113-r3-ordinary18-prepare06-actual-01/ACCESS-PLAN-DIFF-READBACK.json",
+              "outputs/T45/revisions/20261114-r3-ordinary18-prepare07-actual-01/release-receipts/t45-first-20261110-r3-real-prepare-20261114-07/fresh35-production-real-05-result.json",
+              "outputs/T45/revisions/20261114-r3-ordinary18-backup-staging-actual-01/release-receipts/t45-r3-ordinary18-backup-input-staging-20261113-01/backup-staging-result.json"
+            ]
           }
         ],
-        "currentInFlight": "T45 executes original service18 probe/controller keys; C binds PREPARE06 from actual same-generation receipts, then original writer/readback/backup/stop/cold/restore and formal APP.",
+        "currentInFlight": "T45 fixes only the actual run_node packet/service parameter omission, tests affected boundary, stages PREPARE08 with fresh post-restoration access metadata. Original writer/CAS not submitted; actual R3 retained.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

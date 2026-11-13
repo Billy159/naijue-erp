@@ -6019,3 +6019,9 @@ QB 复核旧库退役 local-04 及 service18 的 startup operator、223 路径�
 ## 2026-11-13T23:44:00+08:00 — R3 service18 已真实启动，接续原批预检
 原角色准备 t45-r3-ordinary18-auth-apply-20261113-01 在 23:31:59 COMPLETED/0，RESULT 3b71337c…，原terminal80a4e3c5…，两维护载体退出、认证期限 1794593750440。C签启动 a05f31d2… 后，T45在提交前发现本地误用carrier入口并核实原键尚无request/result/root作业；只清理本轮未提交上传，纠正为 normal_service05_after08.py，原键仅一次实际提交。t45-first-r3-native-service-start-20261113-18 在 23:42:43 COMPLETED/0，terminal9ec06d95…、RESULT7b8ade1d…、exportedf402d2e0…/root673e9de1…，CIDccf5e0b2…，epoch15:42:42.019976+00，proof90dd8b5f…，原SID/OID/SQL38不变。实际runtime普通只读认证成功；0业务写、APP未启。
 23:43:49 LIVE18-PREFLIGHT b00bbbce… 完成0连接/0写，5目录同根卷dev66304，missing[]，实余282,286,551,040B。PREPARE06与probe18各自原键access计划已分开，注册null。C已发5分钟controller5d33fc58…及probe84eba3b4…，只读实测在途；真实整批writer、核账、备份/冷备及恢复和公网业务均尚未完成。
+
+
+## 2026-11-14T00:21:00+08:00 — service18失败项定向闭环与备份输入实际落位
+原probe18 b3dbe7f8…/4d778ff5… FAILED/2，前五阶段全部COMPLETED/0，最后COMPACT_HOST_CONTEXT在35s超时，临时权限恢复。一次诊断01自身Node组断言写错，在import前40ms拒绝，未进入原失败点；同UID实测Node groups=[61035]、OS supplementary为空后，诊断02仅修该断言并纳入捕获，原导入源不改。diag02 原键7e5772bc…/18590b9f… COMPLETED/0，HOST_IMPORTED196ms、CONTEXT_RETURNED40156ms、子进程回收、stderr0，CPU热点routinesIn，0数据库/源码/权限改动。此结果只补原第六段，保留原失败历史，前五不重跑。
+PREPARE06 在0.284s因ACCESS_EXACT_C_BOUND_PLAN_REQUIRED拒绝，c64de79d…/ade3d5ac… FAILED/2，未建访问ledger。当前安全差异029730a1…证明42文件仅ctimeNs因probe权限恢复变化，7项全同，原身份/大小/mtime/UID/GID/mode未变、无业务数据改变。PREPARE07按probe后当前metadata89990941…重新绑定，carrier只改原key为07；同18角色/服务实截止不变，C将本机排程尾窗从90min重排75min。原07 5ef999dc…/d3a5a787…在13.323s FAILED/2，43/5 FD及223源投影检查通过，Node业务子进程neverStarted，原权限恢复；精确发现run_node独立函数漏收inside的packet/service两个参数，T45正在最小修正并定向本机检查。不得重放06/07，EXECUTE尚未提交。
+原staging18 40d630bb…/380b4e14…在00:15:38 COMPLETED/0，仅依据已审原输入与真实18启动，将1698B 0600 runtime配置和空media目录落位（inode13636889，10001:10001/0700），staff key不变，0PG、不启APP、不改公网。该步骤不依赖导入完成，已独立推进；后继备份/核账/冷备/恢复/正式公网业务仍未完成。当前接续原08候选，保持原writer键和实际同代权限边界。
