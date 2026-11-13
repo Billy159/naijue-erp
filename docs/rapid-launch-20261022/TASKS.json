@@ -4143,14 +4143,17 @@
             "restoreTypedSha256": "a5f5f243b83b34d7b3c47ad7d75c85455695323747fe56c09085779bc4a14eeb",
             "quietReadbackSha256": "451cba8d08be7f1604f9bab26e468f751a4a5ee790fe8b48fc2b749cceb4cb66",
             "rootAvailableBytes": 40141451264
+          },
+          {
+            "group": "R3-service14-A04-terminal-metadata-readback",
+            "status": "ACTUAL_READBACK_CONFIRMED_PREPARATION_ONLY",
+            "finishedAtCST": "2026-11-13T15:56:08.350896+08:00",
+            "terminalSha256": "c85fa4637f11ff50d458467cbcfbdaaca0c742fc6f3c93d68125c0aaf800d947",
+            "typedSha256": "d08d8ecef1deb05ae3d9a8e84a4e9cff763a420bf8ce84df29a92dbfec61cd4a",
+            "resultSha256": "069e36daae3e5210cac83333bb37ca2b460566a84a62d2dbf0b0e7e6777f5303"
           }
         ],
-        "currentInFlight": {
-          "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE14_STOPPED_ROLES_RESTORED_A04_METADATA_READBACK_ISSUED",
-          "owner": "T45 / C",
-          "next": "Validate exact original A-04 no-delivery footprints, then prearm private timed handoff before preparing a new execution generation."
-        },
+        "currentInFlight": "R3 stopped with prior finite roles restored. A-04 metadata proved preparation only. T45 verifies a timed local handoff of two independently supplied approval digests using the existing PTY before a new start. Original SQL38 remains unused.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
