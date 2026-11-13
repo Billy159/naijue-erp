@@ -4769,9 +4769,19 @@
               "outputs/T45/revisions/20261114-r3-ordinary19-after-refusal-cas-actual-01/CAS-READBACK.json#sha256=9ec2aad1f6f4b431f0adfb13704ca4883caa61abbd7ca9a2ab96f4c18178f6c9",
               "outputs/T45/revisions/20261114-r3-ordinary19-writer-actual-02/FIRST-RUNTIME-READBACK.json"
             ]
+          },
+          {
+            "group": "r3-formal-stage-minimum-source-successor-reviewed-20261114-3477",
+            "status": "PASS_SCOPED_LOCAL_SOURCE_ACTUAL_RECOVERY_STAGE_AND_FORMAL_PENDING",
+            "evidence": [
+              "outputs/QB/20261114-r3-formal-recovery-entry-boundary-01/REVIEW.json#sha256=048e6af6ad19eb81c74597638f6f3b45d139584ca9feab6256540ac7732b293a",
+              "outputs/\u4e3b\u63a7/20261114-r3-formal-stage-source-local-02/deploy-first-install.py#sha256=3477b3c2c7b399f2169d55562c860514d175202225a1e8074168c7e7d2a12ab4",
+              "outputs/QB/20261114-r3-formal-stage-source-review-01/REVIEW.json#sha256=564ee9b16265076082bc91f15465c2c13752131daba87afb2f7787135ab06b1a",
+              "outputs/T45/revisions/20261114-r3-formal-entry-local-identification-01/IDENTIFICATION.json"
+            ]
           }
         ],
-        "currentInFlight": "T45 sole server owner follows unique writer02 running at04:19 same511234 native batch; original01 prephase refusal preserved, no replay. Same19 hold active; actual commit/reconcile/logical/cold/independent restore/formal APP+URL pending. Frozen windows writer04:14\u201304:59/readback+backup04:49/stop+measure05:14/copy05:24; restore original source role auth by05:59:48.550. Retain28GiB; independent restore gets separate finite lease.",
+        "currentInFlight": "T45 unique writer02 still running within original04:59 expiry; actual commit/readback/backup/cold/independent224 restore/formal09+APP+URL pending. Source candidate3477 has QB scoped local PASS564e, actual server registration/stage/boot not performed. T45 may prepare only original local05 boot helper hash binding3477; da7f/e6dbc private APP unchanged. Source role restoration05:59:48.550; retain28GiB.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
