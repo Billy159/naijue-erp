@@ -3548,13 +3548,33 @@
               "serviceLeaseUTC": "2026-11-13T02:57:18.077Z",
               "nativeSubmitted": false
             }
+          },
+          {
+            "group": "r3-service10-actual-start-sql36-metadata-failure-20261113",
+            "status": "SERVICE10_STARTED_READONLY_SQL36_ORIGINAL_FAILED_BEFORE_SQL_CLEANUP_ISSUED",
+            "owner": "T45 / D1 / C",
+            "evidence": {
+              "serviceResultSha256": "54a5635e2d9dd6c3f91b63e347d573b2990909c1ef671f92bd195ae3a7d6f9a6",
+              "serviceTerminalSha256": "e4f4a89c8b62a8751132ddb0a797e591dd26a6fdfbea2cb820bb847cd8e10bc9",
+              "serviceProofSha256": "54edecae9a70fab0e432a67eae2aa4f523c0e4226a9321dac14615b74df2b8c4",
+              "serviceRetainedSha256": "4c77eaf06d6015b94cdf878a1ef72d45df70a7be8263ab0ec123a7ba4a3bd347",
+              "serviceLeaseUTC": "2026-11-13T02:57:18.077Z",
+              "sql36AuthoritySha256": "999894f46d5d10f0c5711ddda8f06f1a3308c47be03f0dd1149a9977765a4341",
+              "sql36ResultSha256": "c10b2b005acb3dde1324f98a233744b862071270637e8c15ba409123e151749b",
+              "sql36TerminalSha256": "ce418e80c0b52b7374087353ebb150637068a6c3613b70c9424046ef9599686a",
+              "sql36SafeCode": "BASELINE_DRIVER_PREPARATION_BINDING_FAILED",
+              "sql36NodeEnvelopeDelivered": false,
+              "sql36NativeSqlRan": false,
+              "AorSQL38Submitted": false,
+              "stopAuthoritySha256": "4b38435f82d279b50e7776c5b759d1eea979277982cce64e82108ff9998279e5"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "LIVE_ROLE09_APPLIED_SERVICE10_EXACT_START_ISSUED",
-          "owner": "T45 / C",
-          "next": "Observe actual service10 start under original key. Only after COMPLETED/0 and the exact generation proofs issue SQL36 separately, then preserve the phase and recovery deadlines."
+          "status": "SQL36_ORIGINAL_FAILED_BEFORE_SQL_EXACT_STOP_AND_ROLE_RESTORE_IN_FLIGHT",
+          "owner": "T45 / D1 / C",
+          "next": "Confirm exact clean stop then restore original two roles. D1 diagnoses original parameter metadata failure locally. No replay of the consumed SQL36 key."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
