@@ -3922,13 +3922,28 @@
               "startEarliest": 1794545058335,
               "serviceCapacityLease": 1794548658335
             }
+          },
+          {
+            "group": "r3-service12-actual-retained-start-and-a-issued-20261113",
+            "status": "ACTUAL_EXACT_SERVICE12_RETAINED_FIRST_USE_A_SUCCESSOR_ROOT_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "serviceResultSha256": "0086f806916e8282465af4c6229c581890ef7e2221ef512d666a1c04a3afd266",
+              "serviceTerminalSha256": "db547148eb5480f5e10ca7099722218716b5ab33dc8c12ce786abe829e74a32b",
+              "serviceTypedSha256": "7c475d25710a26c32b94fdb1cbf2f4315246c2a88409d315a5fec8704ce7f51d",
+              "proofSha256": "8f5696608cbb32c4bfe3354a4e800b071f183a90acd66a239185ed1b6ce5f5e5",
+              "retainedSha256": "169cf28e794a96253ca14dac00a29f131f40d3b393414dc3fc27a817c3ddfb83",
+              "actualEpoch": "2026-11-13 04:45:27.724513+00",
+              "aRootSha256": "8ef91468dac16f855e9cf7f481b0312271a09c84f8f41d2820bf5117a0537430",
+              "appStarted": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ROLE11_APPLIED_SERVICE12_START_WINDOW_ISSUED",
+          "status": "SERVICE12_ACTUAL_RETAINED_A_NEW_OUTER_ROOT_ISSUED",
           "owner": "T45 / C",
-          "next": "Verify actual service12 retained proof. Authorize the new A outer key with original sealed custody and SQL36 raw result. If A commits, use the exact root public digest receipt for SQL38."
+          "next": "Wait exact A private preparation, then independently issue Node and operation digests. After confirmed original commit and actual root public digest receipt, authorize original unused SQL38."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
