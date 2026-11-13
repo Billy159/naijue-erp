@@ -4151,9 +4151,32 @@
             "terminalSha256": "c85fa4637f11ff50d458467cbcfbdaaca0c742fc6f3c93d68125c0aaf800d947",
             "typedSha256": "d08d8ecef1deb05ae3d9a8e84a4e9cff763a420bf8ce84df29a92dbfec61cd4a",
             "resultSha256": "069e36daae3e5210cac83333bb37ca2b460566a84a62d2dbf0b0e7e6777f5303"
+          },
+          {
+            "group": "R3-service15-local-private-A05-handoff",
+            "status": "LOCAL_EXACT_TTY_AND_INDEPENDENT_ISSUER_SYNTHETIC_PASS",
+            "testedAtCST": "2026-11-13T16:06:28.486727+08:00",
+            "handoffResultSha256": "4ee79d811448c88bc6664fb50cfe2d76c93e33c7eb39cbdbc85015fd57800485",
+            "identitiesSha256": "f007656c999b93462ac48deb82e125151f1b640a09c875794806c80f6c5e1a4b",
+            "cSignerSha256": "14f26a4b9adab0b63582995f943573b6562228c3d3273124ec33bd6f988ce90a",
+            "simulatedPreparationToAckSeconds": 26.06,
+            "realServerConnections": 0,
+            "realAuthorizationsCreated": 0
+          },
+          {
+            "group": "R3-materialized-511234-root-capacity-1608",
+            "status": "POST_REMOVAL_ACTUAL_BASELINE_AND_BOUNDED_STATIC_ESTIMATE",
+            "rootDevice": 66304,
+            "availableBytes": 40141451264,
+            "reportBytesEstimate": 4495400960,
+            "e537UnpackFileBytesRounded4KiB": 17952768,
+            "ef807FixedLogicalFileBytesRounded4KiB": 4259840,
+            "headroomAbove28GiBBytes": 5559066624,
+            "actualFullPeakBytes": null,
+            "minimumNetExpansionBytes": null
           }
         ],
-        "currentInFlight": "R3 stopped with prior finite roles restored. A-04 metadata proved preparation only. T45 verifies a timed local handoff of two independently supplied approval digests using the existing PTY before a new start. Original SQL38 remains unused.",
+        "currentInFlight": "R3 stopped. Service15 A-05 local identities and exact private digest handoff verified. D1 and T45 are preparing the minimum pinned successor, then one D2 package and independent review. Original SQL38 unused. Root still retains 28 GiB.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
