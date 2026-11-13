@@ -3530,13 +3530,31 @@
               "containersStarted": 0,
               "stageClosureSha256": "2ebfed87eea4c1fb2b6783001e426a506fe3c0d9d5a8a535c8330df7629dc4ef"
             }
+          },
+          {
+            "group": "r3-role09-actual-and-service10-authority-20261113",
+            "status": "ACTUAL_ROLE09_APPLY_COMPLETED_EXACT_SERVICE10_START_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "2f335a2f5ff853ac6e8d4d9d00fd43bb6a8f6bbf1a89c869a9ace684ee9acd5c",
+              "terminalSha256": "b82eaf70770e96248270bc37b8c2bf2025a53bd573ee18325843124a7508e10b",
+              "roleResultSha256": "e01c2cb91372df71d37ef7cdc008777a306435345cb80cf7fc3aa870130d8cd9",
+              "cleanupSha256": "f2da1f2a18e1c791f7e73183549a74bc55ca670c0a948b2380b01d6357d72f7b",
+              "roleAuthoritySha256": "e501e5dd73db5f1a29f84bb7da67c9fed2ffb4e05dfc85fae53f078cb537da0f",
+              "roleUntilUTC": "2026-11-13T02:52:48.077Z",
+              "restoreByUTC": "2026-11-13T03:08:18.077Z",
+              "serviceAuthoritySha256": "5e9f80e4d7ac6c46fdeafbfac0cbf88b375b598b5f2bb5b0f934579a54d48fcd",
+              "serviceAdmissionUTC": "2026-11-13T01:57:18.077Z",
+              "serviceLeaseUTC": "2026-11-13T02:57:18.077Z",
+              "nativeSubmitted": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "RESUMED_FRESH_PROTECTED_READBACK_PASSED_ROLE_WINDOW_READINESS",
+          "status": "LIVE_ROLE09_APPLIED_SERVICE10_EXACT_START_ISSUED",
           "owner": "T45 / C",
-          "next": "Confirm live issuer and private holder readiness, issue exact role09 and apply only, then advance according to actual original receipts."
+          "next": "Observe actual service10 start under original key. Only after COMPLETED/0 and the exact generation proofs issue SQL36 separately, then preserve the phase and recovery deadlines."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
