@@ -4246,9 +4246,28 @@
             "status": "EXACT_OUTER_ISSUED_INDEPENDENT_SIGNER_WAITING_FOR_ACTUAL_PREPARATION",
             "authoritySha256": "ba759293ef35b851594fe58eb8364fc35c6192623936880aa1bb8623ce80379b",
             "cutoff": 1794562950385
+          },
+          {
+            "group": "R3-service15-A05-original-admin-actual",
+            "status": "COMMITTED_CLEANUP_AND_ROOT_PROJECTION_VERIFIED",
+            "finishedAtCST": "2026-11-13T17:00:11.367894+08:00",
+            "terminalSha256": "a7b53e26c2946ca282572431f58f0ac3c06567280f705c34063190eee1265ecf",
+            "dispatcherPublicExportSha256": "e89acba5478f0407ad540ac6b5af92ae1a9bc2e310b28cd3a052e699d28263d1",
+            "publicOriginalSha256": "bed29f644452e5180ce076ef1014d39b706b498ee113f6d8406cdf86165fc34f",
+            "protectedDigestReceiptSha256": "579f29260e77c8dadf457d005ca08f11c7c9a1a75aa70cc1a89ef918534d771c",
+            "cleanupSha256": "b5804e97d50939db5ae813900926e51bbdaa18f7b17c8a6ccf80bc2d8f4695c7",
+            "summarySha256": "07c2963008826a45f014a5eacfbc3d4d1ea6af4dc7ca4d836bd2461a6bdb3d5d",
+            "businessAccepted": false
+          },
+          {
+            "group": "R3-service15-original-SQL38-outer-and-independent-signer",
+            "status": "ISSUED_ON_ACTUAL_COMMITTED_A_SAME_GENERATION_PENDING_PHASE",
+            "authoritySha256": "c662532614dd8935fe1b6b5546d7e132b161dc15e9d0e42e3455705b48bc7fe9",
+            "cutoff": 1794562950385,
+            "postmasterStart": "2026-11-13 08:53:20.527136+00"
           }
         ],
-        "currentInFlight": "R3 service15 started read-only. Role apply14 exact equal cutoff verified. A-05 outer issued and independent signer prearmed. Original SQL38 waits for actual A-05 commit and matching same-generation receipts.",
+        "currentInFlight": "A-05 actual first admin committed and connection closed. Original SQL38 same service15 proof/epoch authority and independent signer ready. T45 operating exact original SQL38 only.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
