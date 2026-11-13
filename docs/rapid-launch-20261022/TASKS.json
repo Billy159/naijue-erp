@@ -4584,9 +4584,27 @@
               "RETAINED-BACKUP-AND-MONITOR-LIVE.json bf7f5db4\u2026 confirms all 7 original physical verification, protected archive sizes and receipt hashes. Other archive payloads not read. Preserve 842 B setting rollback and necessary C03 originals.",
               "PRESERVATION-OPTIONS-LIVE.json ba9b1b20\u2026 observed only ext4 root, zstd/tar available; CRC32C existing manifests, four limited 16 MiB samples insufficient for full archive sizing; T45 preparing one exact private full archive with no removal."
             ]
+          },
+          {
+            "group": "20261113-LEGACY-OVERLAY60-FIRST-PRESERVED",
+            "status": "FIRST_BACKUP_AND_SMALL_EVIDENCE_VERIFIED_SOURCE_PRESERVED",
+            "evidence": [
+              "t45-legacy-snapshot60-preserve-first-20261113-01 COMPLETED/0 22:27:03.109 CST, 228.405s. terminal 318f6a4c6ac2f7807468b07e3c95e76ef0cb89751b6145e9110f16f7e0acda52 typed 9984b9f164be2c9c332c95579fa9e8f6afc7d7eba1ea9f8de419a347d9665771",
+              "PG17 verify0 including WAL. Entire decoded tar stream digest and 2216 members metadata verified, original retained. 9,363,640,320 B to 1,633,067,138 B, SHA 6038b4ad\u2026 including exact 842B rollback and C03 two files.",
+              "Root low 36,170,346,496 B; remaining 18 estimated ~29.25 GB from first sample."
+            ]
+          },
+          {
+            "group": "20261113-LEGACY-OVERLAY60-FOUR-VERIFIED-DUPLICATES-RELEASED",
+            "status": "EXACT_FOUR_CONTAINER_DUPLICATES_REMOVED_HOST_BACKUPS_PRESERVED",
+            "evidence": [
+              "t45-legacy-snapshot60-release-duplicates-20261113-01 COMPLETED/0 22:33:32.039 CST, 5.242s. terminal 7f847f9a6b5c0c1611649b5b34db70682814cc16ad8fa89389846ce25b0f5f7a typed 91342e7897fe34a236a1146c7e46b58b6b136d993ab58eea5474d26be45fef19",
+              "Original verified host copies for 10/22-04, 10/23-43, 10/23-82, 10/24-112 preserved. Original four container temp directories absent. Root /dev/md0p1 before 36,170,162,176 B after 73,934,405,632 B, net 37,764,243,456 B, ~35.17 GiB. Original PGDATA/R3/old container retained.",
+              "18 remaining archive in three fixed batches of six. Batch01 authorized 15282b2d\u2026 then queued original key only, no actual archive success claim."
+            ]
           }
         ],
-        "currentInFlight": "T45 old PostgreSQL snapshot60 preservation. R3-17 shut down with original temporary roles restored. Fixed one full original cold archive pilot pending; follow with verified preserve and exact container retirement, actual root delta. D2 ordinary18 operator validation local only. No new R3 on-site tasks until retirement.",
+        "currentInFlight": "T45 old PostgreSQL exact archival batch01 (first six of 18 remaining) submitted once; retain sources and capture complete receipt. Then batch02 and batch03, exact old service retirement and root delta. R3 stopped; service18 local exact D2 successor review PASS only; no new R3 on-site tasks until retirement.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
