@@ -3568,13 +3568,32 @@
               "AorSQL38Submitted": false,
               "stopAuthoritySha256": "4b38435f82d279b50e7776c5b759d1eea979277982cce64e82108ff9998279e5"
             }
+          },
+          {
+            "group": "r3-service10-actual-stop-and-restore06-20261113",
+            "status": "ACTUAL_SERVICE10_CLEAN_STOP_AND_EXACT_TWO_ROLE_ORIGINAL_RESTORATION_COMPLETED",
+            "owner": "T45 / D1 / C",
+            "evidence": {
+              "stopResultSha256": "62606ffcb04d83b256558dadbef5d23b62a4434aaf5d0c19e68f1329b16c4381",
+              "stopTerminalSha256": "1f7ca05826fc7b87a6b6f7f5f54fa92f580f53e17f1a4674f82e0cefebd0cf95",
+              "stopGuardianCleanupSha256": "4fc1cc1dff2c073a467cde6ad0b2d754a0fc7cca97b22f555d845beb5f01ec62",
+              "stopFinishedUTC": "2026-11-13T02:05:58.962901Z",
+              "restoreResultSha256": "d3e2ec999d747383fa8afecc33532ce8623bbdbbff17eb3221fb6c71fe2388e7",
+              "restoreTerminalSha256": "9e195b8ece58a9bb94d3379695f08d701d1c056c8205ee02f54bd5cfd9618249",
+              "restoreTypedSha256": "6172d626294f2343000727e83c05be248e3c26eb1dc6cf981630295745c1de25",
+              "restoreFinishedUTC": "2026-11-13T02:08:53.848695Z",
+              "originalRolesVerified": true,
+              "databaseStillStopped": true,
+              "failedOriginalSql36Replayed": false,
+              "AorSQL38Submitted": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SQL36_ORIGINAL_FAILED_BEFORE_SQL_EXACT_STOP_AND_ROLE_RESTORE_IN_FLIGHT",
+          "status": "STOP_AND_ROLE_RESTORATION_VERIFIED_SQL36_PARAMETER_METADATA_CAUSE_ISOLATION",
           "owner": "T45 / D1 / C",
-          "next": "Confirm exact clean stop then restore original two roles. D1 diagnoses original parameter metadata failure locally. No replay of the consumed SQL36 key."
+          "next": "Obtain final ordinary closeout and isolate the exact SQL36 binding failure from original evidence or a narrow read-only probe. Preserve consumed originals, then bind a corrected successor only after the failure boundary is proven."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
