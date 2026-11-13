@@ -3802,13 +3802,27 @@
               "aRootSha256": "6b4a652893fe1a263f22f600095f18a2960ed52a0aab5028b8bc0b6822401cfc",
               "formalBusinessAccepted": false
             }
+          },
+          {
+            "group": "r3-service11-admin-original-prior-digest-stop-20261113",
+            "status": "A_ORIGINAL_KEY_FAILED_BEFORE_PREPARATION_SQL38_UNSUBMITTED_EXACT_STOP_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "aTerminalSha256": "607f3966599df76f8cc3cb233eeed1dc037145e6482dd63f50e7cde013302f86",
+              "aTypedSha256": "5c558c9952f3ce393f175b91d5f9e64a8c1d6971ddf23d079b40921e54a09f47",
+              "error": "BASELINE_ROOT_PRIOR_ORIGINAL_RESULT_DIFFERS",
+              "exportedSql36TypedSha256": "8753cbf24a485f969f8a417bfec9ffbcda63a241c0f06c282737852fc1602add",
+              "rawFormatModelSha256": "c02a30ddb237435a5e8a21bfb5a309fb572b0c0061a928c519fc25ec35f85120",
+              "rawOriginalVerified": false,
+              "stopAuthoritySha256": "92c94b4a52931169a7c7de8415c4d55edeffc870a4c6f67f7f1763bbbbe9b554"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SQL36_ACTUAL_COMMITTED_AND_PUBLISHED_A_FIRST_USE_PREPARATION_ISSUED",
+          "status": "A_ORIGINAL_KEY_FAILED_PREPARATION_STOP11_ISSUED_RESTORE07_NEXT",
           "owner": "T45 / C",
-          "next": "Verify first-use A preparation and separately issue two exact private authorities. Require original A commit and closed worker before SQL38. Then stop and restore exact roles."
+          "next": "Execute exact stop11 then restore07. Read actual SQL36 protected original SHA and absence of A execution through scoped readback. Preserve committed SQL36, original A key and unconsumed SQL38."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
