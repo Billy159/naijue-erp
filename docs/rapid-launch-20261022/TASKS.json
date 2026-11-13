@@ -4174,9 +4174,32 @@
             "headroomAbove28GiBBytes": 5559066624,
             "actualFullPeakBytes": null,
             "minimumNetExpansionBytes": null
+          },
+          {
+            "group": "R3-service15-A05-actual-artifact-reception",
+            "status": "ACTUAL_READY_VERIFIED_AFTER_POLICY_WITHDRAWAL",
+            "finishedAtCST": "2026-11-13T16:27:57.176345+08:00",
+            "artifactResultSha256": "c39346a666723b486fe462660bae4a3dab65d8731408565f54f837d7bd9c1706",
+            "archiveSha256": "b86ade0553c072f7dd38dc3631e0fa3bc9934e0ce6dcedcccf64d33f9085c84b",
+            "serverReadySha256": "252d9d08147804d85d2461c4c812809f9070d147b633e0da32cebead015f43dd",
+            "readbackSha256": "5330649104f9c2db599ed69a6235a94b403bb0c7cb3dcdf9ed685245e4ca3e27",
+            "durableSegments": 14
+          },
+          {
+            "group": "R3-service15-A05-scope-local-QB",
+            "status": "BOUNDED_A_ONLY_OFFLINE_INCREMENTAL_PASS",
+            "closureSha256": "7d53a4eb21ee1b11ad1011a883888a186cfc1fe1dc7bdcf7356cbe835831b8fd",
+            "realAdminExecution": false
+          },
+          {
+            "group": "R3-service15-local-05-backup-restore-bindings",
+            "status": "LOCAL_PINNED_FIXTURE_PASS_UNISSUED",
+            "d1ResultSha256": "c89a3622476dea2f90d15ce67f35fbe5ada2f66712e475071b6efe7471a49465",
+            "d2RestoreReadySha256": "7c6dd145efeb7fa174eabdaf3a7f83adac37ba452dc2563caa02ee624f8f6132",
+            "controlHandoffSha256": "7b78e62c30ad60804762ee35479b0d9e7a69a382f496b9e6b735ef3fa996d85a"
           }
         ],
-        "currentInFlight": "R3 stopped. Service15 A-05 local identities and exact private digest handoff verified. D1 and T45 are preparing the minimum pinned successor, then one D2 package and independent review. Original SQL38 unused. Root still retains 28 GiB.",
+        "currentInFlight": "R3 stopped. A-05 archive received and independently read back after policy withdrawal. Exact A-only closure has QB local approval. D1 and T45 closing separate same-epoch original SQL38 root and sidecar before service15.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
