@@ -3602,13 +3602,32 @@
               "firstRuntimeThrowProven": false,
               "originalSql36Replayed": false
             }
+          },
+          {
+            "group": "r3-original-sql36-real-mount-readback-partial-20261113",
+            "status": "ACTUAL_EXITED_CONTAINER_CONFIRMS_BOTH_OVERLAYS_ABSENT_LAUNCHER_GUARD_STOPPED_PROBE",
+            "owner": "T45 / D1 / C",
+            "evidence": {
+              "actualResultSha256": "a87318c7525e3888dcaaee8362584f7c03d66590f08004f56b48e84e6a492d4d",
+              "actualTerminalSha256": "1a99254fd0c683ee35d9e46b4e7e96e6d82af4647ff8ae15d089f30118ebd3d8",
+              "actualTypedSha256": "7542c53814d8dbcbb3de505cb856876d1d82b5b546fa7bfc986d9558a1fb82c6",
+              "checkedAtUTC": "2026-11-13T02:31:11.911574Z",
+              "actualMissingOverlays": 2,
+              "actual152Mode": "0644",
+              "safeCode": "FIXED_LAUNCHER_BYTES_OR_IDENTITY_DIFFERS",
+              "uid10001ProbeRan": false,
+              "databaseConnections": 0,
+              "targetWrites": 0,
+              "overlayLocalQbPassResultSha256": "3aface67f2d913d6f89ad67ca87724537acb873b1608d8ecfd2246b631292236",
+              "oldSql36Replayed": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "FAILED_SQL36_ORIGINAL_RETAINED_ROLE_RESTORE_CLOSED_TWO_HISTORICAL_MOUNTS_MISSING_IN_CANDIDATE",
+          "status": "ACTUAL_MOUNTS_MISSING_OVERLAY_FIX_LOCAL_PASS_PER_LEAF_READBACK_AND_SUCCESSOR_BINDING_PENDING",
           "owner": "T45 / D1 / C",
-          "next": "Confirm exact exited mount and UID10001 access via bounded read-only evidence, fix the two original read-only overlays and review consumed-key successor lineage before any further live window."
+          "next": "Identify exact launcher byte or identity mismatch and UID10001 access with a narrow new read-only successor, then complete the corrected operation lineage. Preserve all failed originals."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
