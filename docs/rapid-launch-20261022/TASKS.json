@@ -4409,9 +4409,25 @@
             "authoritySha256": "ae7fa5253ef560837df6ce911634d3f5797743f1e63f4e4a64cb04956384b892",
             "workDeadline": 1794576970998,
             "roleDeadline": 1794576785266
+          },
+          {
+            "group": "R3-05-original-service-actual",
+            "status": "ACTUAL_RETAINED_EXISTING_RUNTIME_READ_ONLY_NOT_APP",
+            "terminalSha256": "368d624d185cc0d525ec49f56dfbea12492ab3181d10d26552eba8ce0facea2c",
+            "resultSha256": "6f9662f30461b37e8292ae3487397b692d8ade1aac392e4607c99b49f4336116",
+            "proofSha256": "7f224e55d516347d5a72aa009a2ff68469cd507e9ef4a4442b42ff3959f31d05",
+            "cid": "77751f36d423b9cc968ed30032510e8e949867133a0214cae3bb87354bebdf04",
+            "postgresEpoch": "2026-11-13 10:54:10.832844+00"
+          },
+          {
+            "group": "R3-05-original-controller-probe-actual",
+            "status": "ACTUAL_READ_ONLY_SAME_GENERATION_CONNECTION_CLOSED",
+            "terminalSha256": "4396e64c13d01348352ed74ed243720d6fe970ed93a4be395a162ff77b4b0330",
+            "resultSha256": "08eb584435ad6ef84d7abe86ec4bc16260d0ea8189c5b5878f1cd9f55b456bcd",
+            "rootReceiptSha256": "eae44f6ef2e6217f9110ab47056e517d046477afe908a904e4635af426f6f5e1"
           }
         ],
-        "currentInFlight": "Role apply02 completed. Original 05 start authorized solely for same PGDATA and existing runtime read-only readiness. T45 checks actual start, then exact controller readback and PREPARE. No actual writer or backups yet.",
+        "currentInFlight": "Original 05 running under finite work lease and original runtime/controller read-only checks completed. T45 measuring same 05 mount namespace and making exact PREPARE access plan. PREPARE and EXECUTE remain unsubmitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
