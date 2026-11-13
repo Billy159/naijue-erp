@@ -6320,3 +6320,8 @@ QB 复核旧库退役 local-04 及 service18 的 startup operator、223 路径�
 ## 2026-11-13T23:31:00+08:00 — 原旧容器实际退役，R3 恢复接续
 第二批归档按用户裁决于 23:24:28 结束，原作业 `INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY`，子进程退出回执 dc05d646…，批03未提交。直接退役原作业已执行 12 份本轮压缩件清理，原 PG 正常停止，Docker 已执行准确容器移除。原作业即时缺席检查报错并保留 FAILED/2（a124cb15…/52b890c6…）。23:29:46 独立同键只读回执 560138fa… 确认旧全 CID/原名/inspect 均无、snapshot60/旧 PG PID/本轮专属归档目录均无；旧 PGDATA、原备份、R3 同 inode，独立3份材料保留。原退役键不重放。
 根卷从 57,434,644,480 B 至 282,295,676,928 B，直接步骤净 224,861,032,448 B（209.42 GiB），清理 12 份本轮归档后的中间读数 75,431,047,168 B。根卷实余 262.91 GiB，高于 28 GiB 保留线 234.91 GiB。此前四个重复件回收不重计。已按同 R3 现场原键恢复第18代角色准备，尚未正式导入、核账、备份/恢复或开放。
+
+
+## 2026-11-13T23:44:00+08:00 — R3 service18 已真实启动，接续原批预检
+原角色准备 t45-r3-ordinary18-auth-apply-20261113-01 在 23:31:59 COMPLETED/0，RESULT 3b71337c…，原terminal80a4e3c5…，两维护载体退出、认证期限 1794593750440。C签启动 a05f31d2… 后，T45在提交前发现本地误用carrier入口并核实原键尚无request/result/root作业；只清理本轮未提交上传，纠正为 normal_service05_after08.py，原键仅一次实际提交。t45-first-r3-native-service-start-20261113-18 在 23:42:43 COMPLETED/0，terminal9ec06d95…、RESULT7b8ade1d…、exportedf402d2e0…/root673e9de1…，CIDccf5e0b2…，epoch15:42:42.019976+00，proof90dd8b5f…，原SID/OID/SQL38不变。实际runtime普通只读认证成功；0业务写、APP未启。
+23:43:49 LIVE18-PREFLIGHT b00bbbce… 完成0连接/0写，5目录同根卷dev66304，missing[]，实余282,286,551,040B。PREPARE06与probe18各自原键access计划已分开，注册null。C已发5分钟controller5d33fc58…及probe84eba3b4…，只读实测在途；真实整批writer、核账、备份/冷备及恢复和公网业务均尚未完成。

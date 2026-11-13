@@ -4637,9 +4637,18 @@
               "52b890c66ebc101717dbb9d28f0300327893c82b58766c018160904b59850fcc",
               "560138fad3ca16df02825cd3ed9b78aeaca124bcecbe5f95506b3f773c0f21a4"
             ]
+          },
+          {
+            "group": "R3-SERVICE18-ACTUAL-START-AND-LIVE-METADATA-20261113-2344",
+            "status": "ACTUAL_COMPLETED_READONLY_NOT_IMPORT_OR_APP",
+            "evidence": [
+              "outputs/T45/revisions/20261113-r3-ordinary18-role-apply-actual-01/RESULT.json",
+              "outputs/T45/revisions/20261113-r3-ordinary18-start-actual-01/RESULT.json",
+              "outputs/T45/revisions/20261113-r3-ordinary18-live-readonly-01/LIVE18-PREFLIGHT.json"
+            ]
           }
         ],
-        "currentInFlight": "Exact old container and snapshot60 independently confirmed absent; protected roots retained, root free 282295676928 B. T45 R3 service18 exact role apply issued; start, read-only checks and PREPARE next. Original real writer not submitted.",
+        "currentInFlight": "T45 executes original service18 probe/controller keys; C binds PREPARE06 from actual same-generation receipts, then original writer/readback/backup/stop/cold/restore and formal APP.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
