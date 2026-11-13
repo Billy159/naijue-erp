@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 03:29。首次提交在导入前被拦截，已查明请求序列化接线差异，正在定向修复。
+更新时间：北京时间 2026-11-14 04:22。提交链定向修复已安装，同一批真实导入已启动，正在等待实际完成与核账。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/3fa33f5e3ade5a4feccb616db2f8857f110d829f) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/c971a6179d5b8aae9187209bf92dbbae2b84fda1) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -524,3 +524,13 @@ C绑定已审readback/logical/stop/cold后继和有限窗口；T45仅准备原�
 实际提交和导入结果待服务器回执，核账、备份恢复及正式网址验证尚未完成。
 
 原失败请求保留且不重放；导入程序尚未启动，真实核账、备份恢复及正式网址验证仍待完成。
+
+
+### 2026-11-14 04:22 — 定向修复已审并实际安装，新outer02唯一正常提交正在执行
+
+QB独立本地审70775d85419f8af20e8dc8a244851b1ed7ac6f59fc041169a5c6ed28bac2bee7覆盖精确拒绝恢复源码及生成绑定，三处backup writer路径增量d01d0b8d07dcf5a8710d0bb9e982be2cc36e03cdac116bc96b7303f789214cbb。新outer02仅替换transport外层载体，保持本批511234条、同一baseline/document/initializer/request UUID、business plan8a99/stepsc6c5及已完成PREPARE09；旧01终态3c373完整保留，禁止重放。
+
+T45在既有私密root入口执行已签有限CAS授权51723546aa0edd20b914ccb4731816fdd414eddf01286faee76f27048fdff135/source364c，按dispatcher先、policy最后发布。实际CAS-RESULT 271dd779a27975ef56288762f2d9b17c10136d3655c10fa420ab0a72d4bd6bb5，CAS-READBACK 9ec2aad1f6f4b431f0adfb13704ca4883caa61abbd7ca9a2ab96f4c18178f6c9，root receipt26bc737afdf792492136ecbe9ea7362ff3b859a13e22fc450d24afa0e96fc0c2：commit实际发布并读回；dispatcher bbbc501b84313bcb1b052764cac76cd161aeec01e68b40dfd3ae22e571e50f88/policy20acd/authority67cea，core1fe/原backup5bf/lock保持。五后继模板已准确安装，新writer冻结request ecb2与原dispatcher编码预测一致；same19/09权限restored、旧失败保留、新02双grant未用、hold不存在都已实读。
+
+C核对后仅授权正常入口提交 t45-first-20261110-r3-real-execute-20261114-02 一次，request7cc81/manifest9f0b/16叶不变。T45回报ACK QUEUED/autoRetry false；04:20实时原键RUNNING（04:19:37.786启动），Holdactive和phase/stream实际出现，root frozen request准确ecb2，workerResult/commit/outerTerminal仍未出现，不能写成导入PASS。窗口04:14–04:59不延长。后继readback/backup04:49起，stop/measure05:14起，copy05:24起，均等待原有限窗。角色原认证恢复硬截止05:59:48.550；独立PG恢复有自身有限窗口，此截止不能误套为独立恢复或APP截止。28GiB规划保留线不降；真实整批核账、logical/cold/独立恢复、正式APP及公网核心业务均待实际完成。
+
