@@ -4788,9 +4788,45 @@
               "outputs/\u4e3b\u63a7/20261114-r3-ordinary19-failed02-preserve-stop-window-01/normal05-preserve-stop-input.json#sha256=d9a2de1bcc3db292c5beef335cc5ab5971e4b8d8fbe6634b22c8e246de056efe",
               "outputs/QB/20261114-r3-formal-owner-pair-closure-review-01/REVIEW.json#sha256=24102996224b8860e5e5ed06fa0aa38f9236e37e3b27bf87a8b461563f1dcd1f"
             ]
+          },
+          {
+            "group": "R3_FAILED02_STOP19_ACTUAL_ORIGINAL_DATA_PRESERVED_20261114",
+            "status": "PASS_SCOPED_PRESERVATION_NOT_IMPORT_SUCCESS",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary19-failed02-preserve-stop-actual-01/STOP-READBACK.json",
+              "1d0df8161cf7aa2177cdf20fa8a8938f568abf93ea0a8137b4430f0376331e63",
+              "a4634bb2a15ed67accb202d7f3a56b7ece9fc187d375d43a753c37b510283d00"
+            ]
+          },
+          {
+            "group": "R3_STOPPED19_ROLE_RESTORE_REGISTRATION_CAS_ACTUAL_20261114",
+            "status": "PASS_EXACT_REGISTRATION_THREE_FILES_OLD_HISTORY_RETAINED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-stopped19-role-restore-registration-actual-01/REGISTRATION-READBACK.json",
+              "7ca63e37ca11ad2a7c6594ce1127ed855126b1f84493c018ba22c7d8e8c92596",
+              "f3b2b2a023fded52b34b77fe29e2c871d5f2863a6313caef3b6f5eeb17f63981"
+            ]
+          },
+          {
+            "group": "R3_ORIGINAL_TWO_ROLE_AUTH_RESTORE19_01_ACTUAL_20261114",
+            "status": "PASS_EXACT_ORIGINAL_AUTH_RESTORED_SOURCE_PG_STOPPED_NOT_IMPORT_ACCEPTANCE",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary19-auth-restore-actual-01/RESULT.json",
+              "316925107fec2a2159c653aca3e303a71bd1593d19c0e921480eabe701bb6364",
+              "977caec1c7c0d113ed2664cc2e1a787251de086b5d51ad9e184118bb25e54f7a",
+              "c4b2c12d626712ed4eb9409560539d2bed6ce42e77922990d7f033ce60aab24a"
+            ]
+          },
+          {
+            "group": "R3_FAILED02_ACTUAL_OUT_OF_SHARED_MEMORY_STATIC_CONTEXT_20261114",
+            "status": "ACTUAL_ERROR_CLASSIFIED_ROOT_RESOURCE_MECHANISM_AND_NATIVE_OUTCOME_PENDING",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary19-writer-actual-02/PG-ONE-ERROR-FINAL.json",
+              "f2a73bca8ed29144134194effa96d7b29c46a9a67cba2e15be0901bba58e9c7a"
+            ]
           }
         ],
-        "currentInFlight": "Writer02 actual FAILED ef30/exit2 at04:51; CLI IMPORT_FAILED/ROLLED_BACK/CLOSED not independent DB outcome proof. No replay or success successors. T45 preserve-stop19-01 accepted under d9a2de five-minute authority, actual clean-stop receipt pending; then original f98 two-role restore by05:59:48.550. D2 source-only diagnosis/T45 sole server diagnosis and exact original UUID outcome verification next. Hold/evidence retained; retain28GiB. Formal helper3477 and owner local02 index93fb source-only QA pass remain unregistered/unexecuted.",
+        "currentInFlight": "\u539fwriter02\u5931\u8d25\u73b0\u573a\u5df2\u505c\u7a33\u3001\u539f\u4e24\u89d2\u8272\u8ba4\u8bc1\u4e8e05:23\u51c6\u786e\u6062\u590d\uff1bT45\u6838\u539fHINT/\u65e2\u5b58\u914d\u7f6e\u5e76\u51c6\u5907\u539fUUID\u53ea\u8bfb\u4e8b\u52a1\u6838\u5b9e\u8def\u7531\uff0cD2\u5b9a\u5411\u5206\u6790guard_import_record\u5171\u4eab\u5185\u5b58\u589e\u957f\u4e0e\u6700\u5c0f\u4fee\u590d\u3002PG\u4fdd\u6301\u505c\u6b62\u3001Hold25f2\u4fdd\u7559\uff1b\u65e0\u91cd\u653e/\u65e0\u6210\u529f\u6062\u590d\u94fe/\u672a\u4e0a\u7ebf\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
