@@ -3846,13 +3846,30 @@
               "additionalRoomAbove28GiB": 5443350887,
               "actualStagePeakKnown": false
             }
+          },
+          {
+            "group": "r3-service11-three-root-receipts-actual-20261113",
+            "status": "ACTUAL_ROOT_AND_CONTROL_BYTE_DIFFERENCE_CONFIRMED_NO_ADMIN_OR_SQL38_STAGE",
+            "owner": "T45 / C",
+            "evidence": {
+              "terminalSha256": "c1375ef452a7323262b2f76d35b95623be53f671313dd773950e70709d8f5838",
+              "typedSha256": "ebfccd220a07278c7cf8d1cc70b73e22f6a5f1683b3b89324d6ed152efc07949",
+              "sql36OriginalRootSha256": "c02a30ddb237435a5e8a21bfb5a309fb572b0c0061a928c519fc25ec35f85120",
+              "adminFailureOriginalRootSha256": "cd464ec221a4affb2bf872cb3bcfba4a83bd8b7c5f2a6717825b0a4916adb617",
+              "custodyStatusOriginalRootSha256": "ddecb7a33bad8a166e410a80ab152b29a35b2f86483bccb93412092d63232f87",
+              "allThreeJsonMatch": true,
+              "allThreeBytesDiffer": true,
+              "adminStageFootprintsAbsent": true,
+              "sql38FootprintsAbsent": true,
+              "adminMaterialRead": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE11_FINAL_STOPPED_FOOTPRINT_VERIFIED_ROOT_READBACK_ISSUED_SERVICE12_LOCAL_PREPARATION",
+          "status": "ROOT_RECEIPT_DIGESTS_ACTUAL_VERIFIED_SERVICE12_SUCCESSOR_LOCAL_ASSEMBLY",
           "owner": "T45 / D1 / D2 / C",
-          "next": "Collect exact three protected receipt digests and no-write footprints. Finish narrow service12 continuation and independently validate. Retain 28 GiB and collect actual staged peak costs as downstream work becomes admissible."
+          "next": "Complete and independently review service12 exact continuation. Bind actual protected digests, original 154, original sealed A and new A outer key. Establish source artifact ready and fresh stopped-state evidence before actual role or service."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
