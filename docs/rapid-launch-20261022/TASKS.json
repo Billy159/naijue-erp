@@ -4091,13 +4091,22 @@
             "next05ResultSha256": "1d0850cf2803326d5b19de574fc8bce9617ba69f7e85a566391615ff45809165",
             "nextRestoreSourceResultSha256": "9d5c6b71cd11a24e08542a7e33f514e4ae61cb563e692386c28d8b5b308e3530",
             "localLogicalBackupSha256": "1e839d34ae3e889c6a3e201477644d1d175f3442e68dbdc046b450462c91bae9"
+          },
+          {
+            "group": "r3-service14-first-receive-no-upload-withdrawn-20261113",
+            "status": "FIRST_RECEIVE_WINDOW_WITHDRAWN_NO_BEGIN_NO_TARGET",
+            "resultSha256": "5c139d0b3a7b4bd48cfb420da2dec243f213a2ae217ac55fbbf1570faad571ab",
+            "terminalSha256": "b49dd0870572c12976ee382ed56ffde2b4e49abf7e701228e58ed6f383b2797c",
+            "finalReadbackSha256": "1f2276e16126ee52288accc0b82c77f13990b76e785f0218f62e26bfd0412352",
+            "restorationReadySha256": "c577fa27120041bcb1a3746d363f0ae8416c765e85337fceb6e53251a09466f1",
+            "restorationArchiveSha256": "6bbff8dd6a7845fe5e89d56eb146299ec74f242bafd4b0d3c99987ce20fbf564"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE14_A04_ARCHIVE_RECEIVING_R3_REMAINS_STOPPED",
-          "owner": "T45 / C / D1 / D2 / QB",
-          "next": "Retain verified service14 A READY and withdraw exact receiver authority. Review actual-READY-bound stage closure and issue protected preflight, then finite role and service start."
+          "status": "SERVICE14_RECEIVE01_WITHDRAWN_NO_UPLOAD_RECEIVE02_PREARMING",
+          "owner": "T45 / C / QB",
+          "next": "Prearm exact install and original transfer before opening the bounded new window, then verify actual READY, withdrawal, and full service14 closure."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
