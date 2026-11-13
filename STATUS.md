@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 06:42。有限启动与收尾源码已通过定向复核，原请求只读核实入口两处修复待复核，数据库保持停止，尚未上线。
+更新时间：北京时间 2026-11-14 06:42。原请求只读核实入口及登记脚本源码已通过定向复核，准备安装核实工具，数据库保持停止，尚未上线。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/216968bf117cd4e5f1ca13298f84af83f5051a87) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/8fa118970ce6480373cd5b66f8e53315beb5a9e2) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -603,4 +603,13 @@ C授权原a570准备reader一次已执行，T45实际receipt29ec6cdb0484fbedf41e
 新增inspect local01被QB6a55f9e00e81c815f0be06d8451f63d07058f88a369bebb4441f752e5cdb5256复现两运行阻断：OPS_SHA错指40f970而实际carrier efa37e；A consumer缺原pinned依赖。T45冻结local02仅统一准确efa37e并原样补pinned，hostd203b8e42af38f11619f4c74ee713da6f0679a11d68ff2b5234f9f471ee48e63，index65834fd459a67590a16cbbed5c91b9eb475d1d665de3c10814688700a66251f3，五phase未签contractdd3d9af4abdd89fced14c0356596223ef311e2e1b7bd00190d58b0092c42301a。实际carrier加载与安全合成A原pinned拒绝2caller检查过，正在只补独立delta复核，原NEED_FIX保留。原49/Node/helper/source223不重验。
 
 QB已将helper installer5ebc041d及准备reader源分项限定为未见独立阻断；新增三file登记CAS ce68962892c75f55c5f23ed6a703dc5ebaebcbd77762843bb5d2ee355269dc76正窄审。顺序必须helper独立95叶安装先于新dispatcher登记；CAS仅O_EXCL新wrapper4c35及新rootpolicy，dispatcher最后，原Hold/core1fe/policy25/active0e/bindingf6b/lock不改。C非零时间authority/rootpolicy尚未签，helper安装/CAS/roles20/start20/原UUID inspect均未提交，原19停止且原两角色05:23已准确恢复，0业务重执行。管理员材料已交付并A05落库，不再索取/读密；真实原请求结果与上线仍未确认。
+
+
+### 2026-11-14 06:42 — 新inspect与登记CAS源码收口
+
+QB inspect local02 delta报告2aae1e38dd0708180b9ad3c912e9d9bd0aed08141a7661b4a813fcb96c614ef4条件通过：两处F01/F02闭合，8叶仅host d203b8e4变；准确载体加载及安全合成A到原receipt guard各1次通过，原其余7叶/49算法/Node03db/installer5ebc/prep a570/95helper/223/四phase已验范围复用，旧local01 NEED_FIX保留。
+
+新增三file CAS ce68962892c75f55c5f23ed6a703dc5ebaebcbd77762843bb5d2ee355269dc76由QB b84bfcc8e9f06c38840e45ba9a15fb22ea5b9dd0eb4b8b5851677077d0bbdf05条件源码通过。仅补4实际register临时文件模型（成功顺序、module后失败、wrapper/policy拒绝前缀、rename后readback失败），原4检查及guard03/f842的17models复用；非实际root/Linux/锁/identity/登记证据。最后仍须签非零有限C roles/rootpolicy/CAS authority并核5jobs静态完整pins与真实identity；原Hold持续保留，0新job提交。helper先沿原ordinary receiver upload/status、无bounded/recovery context、独立新root安装，再CAS，不能套旧APP release-manifest或改旧verifier。此前06:42准备记录标题已校正为实际06:40，正文事实与证据不变。
+
+当前等待T45既有artifact通道唯一helper未签scope与必要policy安装/原位恢复材料。管理员材料A05已完成，不重交；原请求实际DB状态、成功导入/读回/备份/独立恢复/正式APP/URL核心验证仍未完成，尚未上线。
 
