@@ -4682,9 +4682,25 @@
               "outputs/T45/revisions/20261114-r3-ordinary18-diagnostic02-cleanup-local-01",
               "outputs/D2/20261114-r3-initializer-evidence-budget-source-01/FULL-SIZE-RESULT.json"
             ]
+          },
+          {
+            "group": "R3_SERVICE18_ACTUAL_STOP_AND_RESTORE02_20261114",
+            "status": "PREWRITER_CLEAN_STOP_AND_ORIGINAL_TWO_ROLE_AUTH_RESTORED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary18-preserve-stop-local-01",
+              "outputs/T45/revisions/20261114-r3-ordinary18-role-restore-local-02"
+            ]
+          },
+          {
+            "group": "R3_SERVICE19_SOURCE_DELIVERED_LOCAL_CONTINUATION_20261114",
+            "status": "LOCAL_SOURCE_AND_GENERATION_CHECKS_ONLY_NO_ROLE_APPLY_OR_SERVICE_START",
+            "evidence": [
+              "outputs/D2/20261114-r3-service19-initializer-budget-source-01/HANDOFF.md",
+              "outputs/\u4e3b\u63a7/20261114-r3-19-continuity-recovery-local-01/SOURCE-DELTA.LOCAL.json"
+            ]
           }
         ],
-        "currentInFlight": "D2\u6b63\u5728\u51bb\u7ed3\u5ba1\u6279\u9884\u7b97\u4fee\u590d223\u6e90\u7801\u95ed\u5305\uff1bT45 PREPARE09\u672c\u673a\u7ed3\u6784\u672a\u7b7e\u53d1\u3002\u539fservice18/role\u622a\u6b62\u4fdd\u7559\uff0cCAS/writer\u5747\u672a\u63d0\u4ea4\u3002\u771f\u5b9e\u5bfc\u5165/\u6838\u8d26/\u5907\u4efd\u6062\u590d/\u6b63\u5f0fAPP\u4ecd\u5f85\u6267\u884c\u3002",
+        "currentInFlight": "18\u505c\u7a33\u4e14\u539f\u4e24\u89d2\u8272\u5df2\u771f\u5b9e\u6062\u590d\u3002T45\u63a519\u5305\u5b89\u88c5/\u7cbe\u786eprearm\uff1bC19\u540e\u7ee7\u4e0eissuer\u672c\u673a\u63a5\u7ebf\u5f85\u6700\u7ec8\u6307\u6570\u53caQB\u7a84\u6838\uff0c\u5c1a\u672a19apply/start/PREPARE09/CAS/writer\u3002\u771f\u5b9e\u5bfc\u5165\u6838\u8d26/\u5907\u4efd\u6062\u590d/\u6b63\u5f0f\u4e1a\u52a1\u7ee7\u7eed\u5f85\u6267\u884c\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
