@@ -4265,9 +4265,26 @@
             "authoritySha256": "c662532614dd8935fe1b6b5546d7e132b161dc15e9d0e42e3455705b48bc7fe9",
             "cutoff": 1794562950385,
             "postmasterStart": "2026-11-13 08:53:20.527136+00"
+          },
+          {
+            "group": "R3-service15-SQL38-original-commit",
+            "status": "ACTUAL_ORIGINAL_COMMIT_AND_ROOT_PUBLICATION_VERIFIED",
+            "finishedAtCST": "2026-11-13T17:08:15.706221+08:00",
+            "terminalSha256": "d207de320d29c4e08f292778277152225d68a96ad1a238e1f20e87dac15799f1",
+            "dispatcherTypedSha256": "47a2d609372497cc36fea1ff884a6060c589a05cd4641b1d4eed72a643c65130",
+            "cleanupSha256": "889237df0565317bd2a4d883f51d4e62d0a33c49419a520b0cc96594e10ed8be",
+            "rootRecordSha256": "d18f80cec591b3740f7aeceb14f1148bdea4ce867feba4e5ff3465dbdb8d231e",
+            "nodeEnvelopeSha256": "3cf2ca2c78d80a94dcc982d7b3b20211adf92f142c5e6535c06e5013c82e14fc",
+            "resultSha256": "2c061d3b579b5bda1ecbdac97b4b70c9bbf0c0cb76c9bd1e1aa0b68bdc5f9361",
+            "businessAccepted": false
+          },
+          {
+            "group": "R3-service15-stop15-authority",
+            "status": "SIGNED_ON_ORIGINAL_TERMINAL_AND_CONFIRMED_WORKER_CLEANUP",
+            "authoritySha256": "e45a16e2b82ef636a607f3b25c3e21c4f4a1ad557d245482a53419ff22fc28c8"
           }
         ],
-        "currentInFlight": "A-05 actual first admin committed and connection closed. Original SQL38 same service15 proof/epoch authority and independent signer ready. T45 operating exact original SQL38 only.",
+        "currentInFlight": "A-05 and SQL38 committed on the same service15 generation. SQL38 original root publication confirmed. T45 closing exact stop15 then restore11 and preparing downstream ordinary 05 and root-only lineage.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
