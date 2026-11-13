@@ -3896,13 +3896,26 @@
               "businessAppActualReadySha256": "57690457d8dd5a748f655f8d16d65adcb9d87dbd19deb69788d617e17411387d",
               "restoreLocalArtifactSha256": "a4402b78a37b8e80507dfd84b84dfeb3a1183c1294848abeb9ad58390ac43bde"
             }
+          },
+          {
+            "group": "r3-service12-actual-protected-readback-role11-issuance-20261113",
+            "status": "PROTECTED_READBACK_ACTUAL_COMPLETED_ROLE11_APPLY_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "protectedResultSha256": "83684eb8e1d2cae316998c5011f870ebd8cb8b29fbf4c99b1302a4d79d13238a",
+              "protectedTypedSha256": "6a3d6f7b27b33d1aec2cc1c66fbbdbaa4742714b1702e4c163842a69d5727155",
+              "availableRootBytes": 40016252928,
+              "roleSharedSha256": "295497e13d75b3e61e92fdd3c632563fc77f90c489301f00ba1dcd6af94346a2",
+              "roleApplyAuthoritySha256": "9479aef09d535ca01d6c3cc4c6f844d4f2245f13d1170bdfa306d233e3224646",
+              "roleRestoreDeadline": 1794549318335
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE12_CLOSURE_INDEPENDENT_LOCAL_PASS_AND_BOTH_ACTUAL_ARTIFACTS_READY",
+          "status": "SERVICE12_ACTUAL_PROTECTED_PREFLIGHT_PASS_ROLE11_APPLY_ISSUED",
           "owner": "T45 / C",
-          "next": "Finish exact service12 protected stopped-state preflight and two local terminal checks. Then authorize finite role apply and service startup sequentially using real receipts."
+          "next": "Verify original role11 actual apply, then independently issue exact service12 start. Require actual retained proof and same R3 before A and SQL38."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
