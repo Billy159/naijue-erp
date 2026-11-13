@@ -4492,9 +4492,21 @@
               "7418b8a8b277e1df5202d49257a0026cbde3d36d731aa1d7852fc88746b0d88b",
               "d2d15556775f62300b276ffa6ba9f33618171871bc7d17b3179f5e72951d4164"
             ]
+          },
+          {
+            "group": "R3_SERVICE16_PREPARE03_FAILED_AND_CLEAN_PREWRITER_STOP",
+            "status": "PROBE_AND_CONTROLLER_COMPLETED_PREPARE_FAILED_CLEAN_STOP",
+            "evidence": [
+              "9e46a3c8591d0caf4de1c907c752863cca094ebe7f45575d19474339e8228b6b",
+              "fa02cb8f6ee8a2dd9f43123b453cec1617d856ead7305a4548d5d0bad5180723",
+              "9dcd89d794dc5b10edc6c8abf9bbe97439ec16eae82f122d852532ace3a8268b",
+              "68b3f10ec09b2831e1e206e341841df50ada2d0a5cada0f90d9df1b51323973b",
+              "c0a5b4d44c26a7955062641196da84147a87c96fd090a5d56c5f59d6e08e7813",
+              "3bd510083661e6a665f8bf82ec3ef989410678fa3ce452004dafe6882653a4f0"
+            ]
           }
         ],
-        "currentInFlight": "R3 service16 retained read-only. Exact separate preflight access plan and controller metadata pending. PREPARE03, writer, backup/restore and application not started.",
+        "currentInFlight": "Exact service16 pre-writer stop completed. Temporary authentication restoration next. Five baseline-scope file and parent access gap isolated; preserve original failed jobs and verify a narrow local repair. No business import or backups of this batch.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
