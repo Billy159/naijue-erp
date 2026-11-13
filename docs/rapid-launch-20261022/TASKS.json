@@ -4197,9 +4197,28 @@
             "d1ResultSha256": "c89a3622476dea2f90d15ce67f35fbe5ada2f66712e475071b6efe7471a49465",
             "d2RestoreReadySha256": "7c6dd145efeb7fa174eabdaf3a7f83adac37ba452dc2563caa02ee624f8f6132",
             "controlHandoffSha256": "7b78e62c30ad60804762ee35479b0d9e7a69a382f496b9e6b735ef3fa996d85a"
+          },
+          {
+            "group": "R3-service15-SQL38-local-original-lane",
+            "status": "EXACT_INCREMENTAL_QB_AND_PTY_FIXTURES_PASS_UNISSUED",
+            "closureSha256": "e9ac723b53c7c537da1c89af446e0f8de11f7493839f479aae63c5ee6f7f79ff",
+            "handoffResultSha256": "ddbce574c887fc40f31be1e5c2d9a11ac56848b531d9e3676f5f830631dfb51c",
+            "controllerSignerSha256": "1b5cfe133c1a696a15661250072265e6ff96860908a60feccf5b55e7221a117e",
+            "syntheticPreparationToAckSeconds": 23.197,
+            "actualSQL38Submitted": false
+          },
+          {
+            "group": "R3-service15-stopped-preflight-01-original-key",
+            "status": "SSH_TIMEOUT_ORIGINAL_KEY_ABSENT_READ_ONLY_AUTHORIZATION_EXPIRED",
+            "checkedAtCST": "2026-11-13T16:40:41.342583+08:00",
+            "readbackSha256": "c7e6418018ee750b512f33adf0fdd468e61e2aa7057b4d2fdc0558691a3e9639",
+            "request": false,
+            "temporary": false,
+            "job": false,
+            "terminal": false
           }
         ],
-        "currentInFlight": "R3 stopped. A-05 archive received and independently read back after policy withdrawal. Exact A-only closure has QB local approval. D1 and T45 closing separate same-epoch original SQL38 root and sidecar before service15.",
+        "currentInFlight": "R3 stopped. A-05 and original SQL38 exact local scopes and both PTY handoffs reviewed. First stopped read-only call confirmed absent after channel failure. T45 preparing exact replacement read-only probe before finite role apply.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
