@@ -4053,13 +4053,23 @@
             "outerExpiry": 1794551150979,
             "serverCatalogGuardMarker": true,
             "sql38Issued": false
+          },
+          {
+            "group": "r3-service13-exact-stop13-and-restore09-20261113",
+            "status": "EXACT_DATABASE_STOPPED_AND_ORIGINAL_TWO_ROLE_AUTH_RESTORED",
+            "stopTerminalSha256": "48b54291a30983b1742eed6c2cbfe59652ddefab31319c06a6f05f66eccb708c",
+            "stopTypedSha256": "4fb86345d881d8627aeaeda129106a4cb38718637ad7b76f144a706a5143e9ba",
+            "protectedCleanupSha256": "2c70cb7749a1959dff3cde9e901c6b3c52caf9ce78f67b61a1867817f02ea461",
+            "restoreTerminalSha256": "ff9855f1f076d67c109ba0e2804985376328b1085467635a23f568eae652ff9f",
+            "restoreTypedSha256": "a25fa1a1927c3167f568f399fdbd0a67b5088deca1c7dc32892152085ca43613",
+            "restoreCleanupSha256": "3d3c02646e0702949a07810ba3b1a8ea938d4b6988a4671821f3c23846fdc9bc"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "A03_REAL_NO_WRITE_EXACT_STOP13_ISSUED_RESTORE09_NEXT",
+          "status": "SERVICE13_STOPPED_RESTORED_NEXT_MAINTENANCE_LOCAL_BINDING",
           "owner": "T45 / C / D1",
-          "next": "Complete actual stop13 and restore09, then the next exact epoch and aligned role/phase window, reusing the original A business request without replaying consumed outer jobs."
+          "next": "Recheck quiet field state and fixed original authorization alias metadata. Freeze successor exact identities and local artifacts against corrected aligned credential and phase expiry schedule. Original business operation and data retained."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
