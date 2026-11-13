@@ -3656,13 +3656,29 @@
               "predecessorEpoch": "2026-11-13 01:57:26.710622+00",
               "newRuntimeAuthorized": false
             }
+          },
+          {
+            "group": "r3-service11-exact-local-artifact-and-sidecars-20261113",
+            "status": "NEW_MAINTENANCE_ARCHIVE_AND_EXACT_SIDECARS_LOCALLY_VERIFIED_OLD_PAYLOAD_READBACK_ISSUED",
+            "owner": "D1 / D2 / T45 / C",
+            "evidence": {
+              "maintenanceCommit": "bd7f6cc3efe8c99d8d4a453bf2162d075ba5fcb2",
+              "maintenanceArchiveSha256": "ab8fa5312432a73c6b34e4e5a47a873caa285a99e9b415a3141a4a37e8e396a8",
+              "maintenanceArchiveBytes": 3408687,
+              "localReadySha256": "3cb01223fdd5849ca0a520a64ce877e3e28b9f630609b8753a6528a4e1f1ded1",
+              "d2SourcePinDeltaSha256": "3b23d331f55f7c5d3a737234246c78a13fde4e2669d397aa52acbd605044c2b1",
+              "d1ResultSha256": "1c9f93a43c467e572ec177b545fee40c93c81f52fbb89165bed8104231523044",
+              "oldPayloadReadbackAuthoritySha256": "20dc652b80ae2d075d8f0a03f271621085995aab129757fb3854e238bde3308d",
+              "appCandidateBuilding": true,
+              "artifactUploaded": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "CORRECTED_SERVICE11_LOCAL_OWNER_IMPLEMENTATION_AND_PIN_DERIVATION_ACTIVE",
+          "status": "SERVICE11_ARCHIVE_AND_SIDECARS_LOCAL_READY_OLD_PAYLOAD_READBACK_IN_FLIGHT_NEW_STAGING_PREPARING",
           "owner": "T45 / D1 / D2 / C",
-          "next": "Bind exact 219/220/223 service11-compatible source pins, outer and private stage mapping, and the two exact RO overlays. Preserve current frozen packages and verify the corrected candidate before another live window."
+          "next": "Verify old payload metadata and exact 152 open result, then stage only the exact new maintenance archive via original T45 receive. Prepare reviewed service11 closure and downstream app independently."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
