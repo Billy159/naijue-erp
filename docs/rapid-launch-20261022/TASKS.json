@@ -3909,13 +3909,26 @@
               "roleApplyAuthoritySha256": "9479aef09d535ca01d6c3cc4c6f844d4f2245f13d1170bdfa306d233e3224646",
               "roleRestoreDeadline": 1794549318335
             }
+          },
+          {
+            "group": "r3-service12-role11-actual-and-start-authority-20261113",
+            "status": "ROLE11_ACTUAL_COMPLETED_SERVICE12_START_SEPARATELY_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "roleApplyTerminalSha256": "50840ea228c8b61fe9f51220881d3a2def571d0a8addc810969cc9a192831412",
+              "roleApplyTypedSha256": "60dc74e970fe42100905f41dea32110160b03cd9100521f0d1b3bbd8dd8add2a",
+              "roleApplyCleanupSha256": "04cccce7a10239bc203ce41f7926d31770272dee70646177b3be9a9a2638d6d3",
+              "startAuthoritySha256": "3693019bd6e2f1d5b0afa0e9ba545ac8b85bcb099794a90d9f535007060082de",
+              "startEarliest": 1794545058335,
+              "serviceCapacityLease": 1794548658335
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE12_ACTUAL_PROTECTED_PREFLIGHT_PASS_ROLE11_APPLY_ISSUED",
+          "status": "ROLE11_APPLIED_SERVICE12_START_WINDOW_ISSUED",
           "owner": "T45 / C",
-          "next": "Verify original role11 actual apply, then independently issue exact service12 start. Require actual retained proof and same R3 before A and SQL38."
+          "next": "Verify actual service12 retained proof. Authorize the new A outer key with original sealed custody and SQL36 raw result. If A commits, use the exact root public digest receipt for SQL38."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
