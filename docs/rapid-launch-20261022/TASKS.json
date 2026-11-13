@@ -3964,13 +3964,25 @@
               "restoreTypedSha256": "a601ad2311bb3665e9bc76f7328147fe0615b2cbb19abe649bff0b1acbd09560",
               "restoreCleanupSha256": "9a9d3f8605a9cb6a1f472f05b794e86e17d338172a2d2962e8c2c533ac730603"
             }
+          },
+          {
+            "group": "r3-service12-final-quiet-and-mode-metadata-issuance-20261113",
+            "status": "FINAL_ACTUAL_QUIET_STEADY_MODE_METADATA_READBACK_ISSUED",
+            "owner": "T45 / C",
+            "evidence": {
+              "finalReadbackSha256": "4a39440440805bf5f096eb47d69e9c7d0b5c15e525503bcf3ce519d456894450",
+              "restoreSummarySha256": "ffcda4c32360ccd0967a56e4773cd0024af466aaaf9d2722520e469e07846561",
+              "availableRootBytes": 40011730944,
+              "modeMetadataAuthoritySha256": "8dc7c929e150b67c84fa315877e6d686aee669c5bb471b75259376d1f96a7112",
+              "service13LocalIdentitySha256": "4bb689aa2df2898ef529c8d58386ca4e7923c139123033f4efec7a308597c6ff"
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE12_CLEAN_STOP_ROLE_RESTORE_ACTUAL_READBACK_LOCAL_CAUSE_NARROWED",
-          "owner": "T45 / D1 / C",
-          "next": "Confirm final ordinary footprint and perform scoped protected mode readback. Determine exact separate A host and reusable SQL38 artifact closure without changing historical 154 or downstream app."
+          "status": "SERVICE12_FINAL_QUIET_MODE_METADATA_ISSUED_SERVICE13_LOCAL_SPLIT_ARTIFACT_PREPARATION",
+          "owner": "T45 / D1 / D2 / C",
+          "next": "Collect exact protected metadata and no-write footprints. Prepare new service13 A-only source and reuse current exact SQL38/05 archive and business APP. No live service13 authorization."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
