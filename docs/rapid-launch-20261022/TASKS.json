@@ -4012,13 +4012,33 @@
             "logicalBackupSha256": "b9ae80c434bd46eedd108131117a7d6ba47659b7e25aa3c1ab42405e14b22eeb",
             "coldCopySha256": "940f5153140e4b9a4b30721b45abfa68f275547b53307577b4de7e7a2f30dabf",
             "existingAndRegressionCases": 24
+          },
+          {
+            "group": "r3-service13-actual-preflight-role-and-readonly-start-20261113",
+            "status": "ACTUAL_PROTECTED_PREFLIGHT_ROLE12_AND_READONLY_SERVICE13_COMPLETED",
+            "preflightTerminalSha256": "15b7bff910efb082cf0e7ed38338776f9874d49a2f698a99b1a4f05cd0370c51",
+            "preflightTypedSha256": "d118e8f79b2dcc6fc877de9fa39dffbef0a7d72970d17019694854313f05bfc6",
+            "roleTerminalSha256": "79f1b94bbb0044c1247585c77cf44e4b86196a2876fa065023ebb1dc1b9ea71d",
+            "roleTypedSha256": "9c4290064f2b746c7dc8d98d714d654304025bb05217693da9cbff6deb41547a",
+            "startTerminalSha256": "39dbb06a99d7b06329def8985133d5d71802bd9daa22479df27c3f6beda6e993",
+            "startTypedSha256": "d877fdc8708aa2fdfb408275a1bed117ca070610fc9fbd7fda7065a166855d8c",
+            "currentProofSha256": "8052dd6e77dc0d63225aba921d6b27e641043fbcbbeefa1d93ae416e1c12f35a",
+            "currentEpoch": "2026-11-13 05:58:47.96317+00"
+          },
+          {
+            "group": "r3-service13-phase-deadline-and-a-outer-20261113",
+            "status": "NARROW_DEADLINE_ORDER_QB_OFFLINE_PASS_A03_OUTER_ISSUED",
+            "closureSha256": "47b09ce4ea27e062cb1791b70f895339e12c333a95268e9e6307c47f04830b0f",
+            "aOuterSha256": "6c633feb87f32e5f0fc9b48dec6cd473b6e0f87d9509a0f607e2d99d1bc4eb54",
+            "sql38Issued": false,
+            "updatedLocalLogicalBackupSha256": "751b3872cba804899fc385983385646ca87d9015f85da4465ba1b55afee7990f"
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE13_A_READY_RETAINED_QB_PASS_ROLE12_PREFLIGHT_REQUESTED",
+          "status": "SERVICE13_ACTUALLY_RETAINED_A03_EXACT_OUTER_ISSUED_WAIT_ACTUAL_PREPARATION",
           "owner": "T45 / C",
-          "next": "Recheck exact stopped generation, current free root and all unused keys. Then exact role12 apply, new read-only service13, A-03 and original SQL38 with actual same-epoch proofs, then exact stop13 and restore09."
+          "next": "Bind A-03 private grants to actual read-only preparation, verify original A completion and raw public digest, then exact same service13 SQL38; stop13 and restore09 remain required."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
