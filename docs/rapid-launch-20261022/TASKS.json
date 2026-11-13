@@ -4565,9 +4565,28 @@
               "Earlier 255,473,274,880 B snapshot60 mapped to old running PostgreSQL writable layer, distinct from the host-bound PGDATA. One approved staging copy already deleted and excluded from any next recovery estimate.",
               "T45 sole operator, complete original R3-17 preserved clean stop and exact temporary role restoration. Confirm old identity, consumers, recreating definitions and protected retained material, retire exact old Docker object and read actual root free delta before new R3 server work."
             ]
+          },
+          {
+            "group": "20261113-R3-ORDINARY17-EXACT-PRESERVATION-AND-ROLE-RESTORE",
+            "status": "ORIGINAL_R3_PG_STOPPED_AND_TEMPORARY_ROLE_AUTH_RESTORED",
+            "evidence": [
+              "PREPARE05 original diagnostic 14cb489e434651b86fd581266ea70979ab78dba0e8d1017dba444117a44902a4 verified stream preflight complete, READY, 0 issues, original access restored and original writer keys absent",
+              "same mounted proof and installed host b43e1beb\u2026 prove finite ordinary service list excludes service17 before database connect; server connection logging off; keep no inference from empty logs",
+              "17 preservation clean stop COMPLETED/0 at 22:08:37.173 CST, summary 993d03db9c912f150cf8c5df41429c936f5624129011b766ec28275e33685f7a",
+              "17 two-role exact restore COMPLETED/0 at 22:13:35.974 CST, summary 17d7d547bcb96710c5e5c808de52dd8153483100d2e7a16e6dda955dde05cabd; original runtime unchanged, own PG and PID stopped"
+            ]
+          },
+          {
+            "group": "20261113-LEGACY-OVERLAY60-PRESERVATION-SIZING",
+            "status": "7_VERIFIED_HOST_BACKUP_PAIRS_19_UNMATCHED_PHYSICAL_BACKUPS_PRESERVATION_RUNNING",
+            "evidence": [
+              "HOST-MANIFEST-COMPARISON-LIVE.json 26c5815ecf37a24a7ba415431a5e2848cce24e66f0587b2f326c23cc8d68555a: 7 host same manifests and all member sizes, 67,550,392,320 B container allocation; 19 no exact match in 4 named host roots, 176,951,279,616 B",
+              "RETAINED-BACKUP-AND-MONITOR-LIVE.json bf7f5db4\u2026 confirms all 7 original physical verification, protected archive sizes and receipt hashes. Other archive payloads not read. Preserve 842 B setting rollback and necessary C03 originals.",
+              "PRESERVATION-OPTIONS-LIVE.json ba9b1b20\u2026 observed only ext4 root, zstd/tar available; CRC32C existing manifests, four limited 16 MiB samples insufficient for full archive sizing; T45 preparing one exact private full archive with no removal."
+            ]
           }
         ],
-        "currentInFlight": "T45 service17 original preservation stop and role restoration preflight, then user-authorized exact legacy PostgreSQL container retirement and root capacity readback. D2/D1 source diagnosis local only. No new R3 PREPARE, CAS, writer, staging, backup or switch before legacy retirement.",
+        "currentInFlight": "T45 old PostgreSQL snapshot60 preservation. R3-17 shut down with original temporary roles restored. Fixed one full original cold archive pilot pending; follow with verified preserve and exact container retirement, actual root delta. D2 ordinary18 operator validation local only. No new R3 on-site tasks until retirement.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
