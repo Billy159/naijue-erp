@@ -4779,9 +4779,18 @@
               "outputs/QB/20261114-r3-formal-stage-source-review-01/REVIEW.json#sha256=564ee9b16265076082bc91f15465c2c13752131daba87afb2f7787135ab06b1a",
               "outputs/T45/revisions/20261114-r3-formal-entry-local-identification-01/IDENTIFICATION.json"
             ]
+          },
+          {
+            "group": "r3-ordinary19-writer02-failed-actual-and-preserve-issued-20261114",
+            "status": "ACTUAL_FAILED_CLI_ROLLED_BACK_INDEPENDENT_DB_OUTCOME_NOT_PROVEN_PRESERVATION_IN_FLIGHT",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary19-writer-actual-02/FAILURE-READBACK.json#sha256=721192bf6195ec529b29bdd1ecbb66630a7c75b8d45ce46c9ab8933db4ff246f",
+              "outputs/\u4e3b\u63a7/20261114-r3-ordinary19-failed02-preserve-stop-window-01/normal05-preserve-stop-input.json#sha256=d9a2de1bcc3db292c5beef335cc5ab5971e4b8d8fbe6634b22c8e246de056efe",
+              "outputs/QB/20261114-r3-formal-owner-pair-closure-review-01/REVIEW.json#sha256=24102996224b8860e5e5ed06fa0aa38f9236e37e3b27bf87a8b461563f1dcd1f"
+            ]
           }
         ],
-        "currentInFlight": "T45 unique writer02 still running within original04:59 expiry; actual commit/readback/backup/cold/independent224 restore/formal09+APP+URL pending. Source candidate3477 has QB scoped local PASS564e, actual server registration/stage/boot not performed. T45 may prepare only original local05 boot helper hash binding3477; da7f/e6dbc private APP unchanged. Source role restoration05:59:48.550; retain28GiB.",
+        "currentInFlight": "Writer02 actual FAILED ef30/exit2 at04:51; CLI IMPORT_FAILED/ROLLED_BACK/CLOSED not independent DB outcome proof. No replay or success successors. T45 preserve-stop19-01 accepted under d9a2de five-minute authority, actual clean-stop receipt pending; then original f98 two-role restore by05:59:48.550. D2 source-only diagnosis/T45 sole server diagnosis and exact original UUID outcome verification next. Hold/evidence retained; retain28GiB. Formal helper3477 and owner local02 index93fb source-only QA pass remain unregistered/unexecuted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
