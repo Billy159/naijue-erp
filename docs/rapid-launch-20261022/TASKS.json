@@ -4348,9 +4348,33 @@
             "failedTerminalSha256": "b7736c3f012d2c1b75b419794c9e8d02893c6782be173e638d5d176954347fda",
             "failedTypedSha256": "dda4c03f55b557816ab6ba15e992092c7a1b8314053952be4397b84a7d7a25ba",
             "successorAuthorizationSha256": "5c8b798eea4f163d05637ebf474b362b6aa9f850cc7041c728af9eca2d511e10"
+          },
+          {
+            "group": "R3-05-retained-Linux-PG-dependency-comparison",
+            "status": "ACTUAL_ORIGINAL_INPUT_AND_LINUX_MODULES_VERIFIED",
+            "finishedAtCST": "2026-11-13T18:01:25.733860+08:00",
+            "terminalSha256": "23808bc87559a8233e540a7eb83619a9257b57fb2b40ac096c215508b64d165d",
+            "typedSha256": "a4219d481df05ad878906e84f1d56e138b5bc15c6d3906abb401ff9deafa27cf",
+            "resultSha256": "138d03270d671b08a372e2794f3bf14102784e464319dc8a04a39443b6d58cc2",
+            "pgEsmSha256": "5ef4d06556eeb775987759c2c09229dca2139421ee40e819b566612db2b4a8dc"
+          },
+          {
+            "group": "R3-05-active-dispatcher-and-preservation-local",
+            "status": "ACTUAL_DISPATCHER_NO_HOLD_LOCAL_SUCCESSOR_AND_PRESERVATION_UNISSUED",
+            "activeDispatcherSha256": "5bf72fc20dfa597c81a9eb5ae8956c497a980b1497e2cfbfe8d469932b27ad49",
+            "activeDispatcherReadbackSha256": "79fefd20aa81e37414b7403dd245bf9c8088d09d01d206afbd48e0822b202d31",
+            "localRegistrationSha256": "41472f7b27623c61b94b1c9564c908ef5444126c1b081fed868371a2680d33d3",
+            "localContinuityModuleSha256": "7273e4c95e63a9ab468fb1e0ba5630bf9c55690e24e6f2d973f84fedad0c67f2",
+            "localContinuityPinsSha256": "c4771b53af978313917c501c7da5fd9b6a5117dbdbe279e1994b86f73ce07c5c"
+          },
+          {
+            "group": "R3-05-independent-e537-readback-relink",
+            "status": "LOCAL_TESTED_EXACT_SOURCE_AND_ACTUAL_LINUX_DEPENDENCY_PINS",
+            "loaderSha256": "876e292172c21c1cc7d987d2609e34f67108a17c2b3c3e99627e54e766ecd2fd",
+            "bundleSha256": "b653b817acb7658dc27f72484fb93c4898e9ade76cccec5f1310032af416ba5a"
           }
         ],
-        "currentInFlight": "R3 stopped. Exact 05 PREPARE/EXECUTE keys fixed locally; 61035 projection offline pass. 05 protected preflight 02 pending. T45 developing exact controller/admin custody and restoration; D1 repins independent ordinary readback to e537. Keep 28 GiB.",
+        "currentInFlight": "R3 stopped. Actual Linux dependency comparison passed. New 05 local keys/pins and e537 readback leaf fixed. T45 finishing finite controller/backup roles and exact dispatcher/stop integration. No PREPARE or EXECUTE submitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
