@@ -4619,9 +4619,17 @@
               "a8b716edadbba84a47381f5350838862b177379383c1c08965ead6afb867c429",
               "2aea7743b726c80bd55c2e76d525f1798d098fa6edcbd4d00fd71ab7a9bd1375"
             ]
+          },
+          {
+            "group": "legacy-snapshot60-user-cancel-archive-and-retire",
+            "status": "DIRECT_USER_CANCELLED_BACKUP_VALIDATION_AND_COMPRESSION_EXACT_RETIREMENT_IN_FLIGHT",
+            "evidence": [
+              "01a1d57f-79f9-71b0-b5a6-eb794954beef",
+              "01a1d535-ef27-7322-8deb-66f38441ed61"
+            ]
           }
         ],
-        "currentInFlight": "T45 old PostgreSQL archive batch02 submitted once after batch01 completed with all six archived and read back; cumulative 7/19. Then batch03, exact old container retirement and root delta. R3 remains stopped until retirement; service18 local candidates reviewed only.",
+        "currentInFlight": "T45 ending original archive batch02 per user's direct cancellation; batch03 will not be issued. Retire exact old container with preserved host PGDATA, R3, volumes and unrelated host backups. R3 only after actual retirement and measured root free.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
