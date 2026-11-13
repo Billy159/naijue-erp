@@ -4627,9 +4627,19 @@
               "01a1d57f-79f9-71b0-b5a6-eb794954beef",
               "01a1d535-ef27-7322-8deb-66f38441ed61"
             ]
+          },
+          {
+            "group": "legacy-snapshot60-direct-retirement-actual",
+            "status": "ACTUAL_CID_AND_SNAPSHOT_ABSENCE_VERIFIED_AFTER_FAILED_IMMEDIATE_READBACK_PROTECTED_ROOTS_RETAINED",
+            "evidence": [
+              "dc05d6463c64a5fd1b90682a2aefbc6d534f28840137e1c3fe38a235800dfd8e",
+              "a124cb154a221ea6b1998e5e2c40a386a5b3a9ce6bce28e700493cffdf9562a4",
+              "52b890c66ebc101717dbb9d28f0300327893c82b58766c018160904b59850fcc",
+              "560138fad3ca16df02825cd3ed9b78aeaca124bcecbe5f95506b3f773c0f21a4"
+            ]
           }
         ],
-        "currentInFlight": "T45 ending original archive batch02 per user's direct cancellation; batch03 will not be issued. Retire exact old container with preserved host PGDATA, R3, volumes and unrelated host backups. R3 only after actual retirement and measured root free.",
+        "currentInFlight": "Exact old container and snapshot60 independently confirmed absent; protected roots retained, root free 282295676928 B. T45 R3 service18 exact role apply issued; start, read-only checks and PREPARE next. Original real writer not submitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
