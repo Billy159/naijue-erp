@@ -3672,13 +3672,29 @@
               "appCandidateBuilding": true,
               "artifactUploaded": false
             }
+          },
+          {
+            "group": "r3-original-payload-and-152-host-exact-leaf-actual-20261113",
+            "status": "ACTUAL_OLD_PAYLOAD_METADATA_AND_UID10001_EXACT_152_OPEN_VERIFIED",
+            "owner": "T45 / C",
+            "evidence": {
+              "resultSha256": "7022bb39ae698124ad90281335ff3661df689cc964c64c033c1008cf8bf0b51a",
+              "terminalSha256": "1e4b690c58d4673e6e50b58140d1b6ac57b1041332108cc8fa8da1f8bd530130",
+              "typedSha256": "be230bab001964f4bf20216e807af810f34b8a42d2f73c91e77d7db107d1aa89",
+              "finishedAtUTC": "2026-11-13T02:56:59.272078Z",
+              "oldPayloadReadySha256": "d11c8091dfac7b7b90ecb14c95cb235e6ac08bcb67f257d1e8ca5d54e633cddd",
+              "oldPayloadEligibleAsNewSource": false,
+              "exact152HostLeafOpen": true,
+              "originalNamespaceEntered": false,
+              "service11Staged": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "SERVICE11_ARCHIVE_AND_SIDECARS_LOCAL_READY_OLD_PAYLOAD_READBACK_IN_FLIGHT_NEW_STAGING_PREPARING",
+          "status": "ACTUAL_152_HOST_EXACT_LEAF_OPEN_AND_OLD_PAYLOAD_PROVEN_NEW_ARTIFACT_STAGING_PREPARING",
           "owner": "T45 / D1 / D2 / C",
-          "next": "Verify old payload metadata and exact 152 open result, then stage only the exact new maintenance archive via original T45 receive. Prepare reviewed service11 closure and downstream app independently."
+          "next": "Stage exact bd7f6cc3 new maintenance archive via existing short bounded receiver, then verify new generation source and host closure before signing runtime."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
