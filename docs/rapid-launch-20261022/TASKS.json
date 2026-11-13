@@ -4388,9 +4388,30 @@
             "resultSha256": "eb856d54bb417660e359bf98e2f39b7a5b0fdab73df57314551610d2b196c6a6",
             "cleanupSha256": "234722742eefe6e935052ad5e4c94faa9e51ca44f8b0cdbb20c1f829de880be7",
             "rootAvailableBytes": 40084602880
+          },
+          {
+            "group": "R3-05-original-role-01-metadata",
+            "status": "ACTUAL_METADATA_CONFIRMED_OID_STRING_BOTH_EXPIRIES_FINITE_NO_ALTER",
+            "terminalSha256": "a86d05d63a7a060764d3ffb677362f276029364fe0a01b9462f5c34bdba532a6",
+            "resultSha256": "04ab8237cbb892074fcbabcc398de1c4d1925635bebd3f83db17e7824f74323d"
+          },
+          {
+            "group": "R3-05-ordinary-role-apply-02",
+            "status": "ACTUAL_FINITE_AUTH_FIELDS_READ_BACK_OWN_CONTAINER_STOPPED",
+            "terminalSha256": "7cc8532f84a6d41fa187cbf636990a0165fbb7466d2b3548a8f44850ed3fb6fe",
+            "resultSha256": "d59b7efac62d48fbe68972004883fa86d46568f506613008258273d869425e51",
+            "rootResultSha256": "e778b6b8db444b98c4ece740b649994ec950e5a05c8f2519f4e72b4cea9be770",
+            "rootCleanupSha256": "185be16e21028d8aac76fd28b4911f3a5946fbe1227b59ac321d00650ea51994"
+          },
+          {
+            "group": "R3-05-original-service-start-authority",
+            "status": "EXACT_SAME_RUNTIME_READONLY_START_AUTHORIZED_OUTCOME_PENDING",
+            "authoritySha256": "ae7fa5253ef560837df6ce911634d3f5797743f1e63f4e4a64cb04956384b892",
+            "workDeadline": 1794576970998,
+            "roleDeadline": 1794576785266
           }
         ],
-        "currentInFlight": "R3 remains stopped. Original role apply failed before ALTER at the typed backup admin OID check; exact original artifacts retained. T45 correcting that leaf and aligning the same-role custody, controller and backup. 05/PREPARE/EXECUTE remain unsubmitted.",
+        "currentInFlight": "Role apply02 completed. Original 05 start authorized solely for same PGDATA and existing runtime read-only readiness. T45 checks actual start, then exact controller readback and PREPARE. No actual writer or backups yet.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
