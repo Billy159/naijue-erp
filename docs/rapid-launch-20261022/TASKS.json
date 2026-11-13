@@ -4132,13 +4132,24 @@
             "cleanupSha256": "9658ba4947c6d861b0793e6fd07fc1762cf7ae6c23b8b84462da7e32725781b3",
             "sql38Issued": false,
             "stopAuthoritySha256": "816514ebe8e391625050972af6a34cd381824662e4baa263e4e74711e63b0de0"
+          },
+          {
+            "group": "r3-service14-stop14-restore10-real-20261113",
+            "status": "EXACT_STOP_AND_ORIGINAL_ROLES_RESTORED_QUIET_READBACK",
+            "stopTerminalSha256": "d575eaa9f06d9b4c7213eaf1cb8230544440d0b53f7f3223967559dc83df6d76",
+            "stopTypedSha256": "fe2a19c2376c217ba43b6ba8f9db3117f76bf0beecfb863eb769cf7c966f4114",
+            "cleanupSha256": "1a955c4e187f9d186742573b055e6e8541ab0945b3c4b0b5d7dabad0bfa63dda",
+            "restoreTerminalSha256": "32e1b022bb121275fc50e2c5511f864cb572268ff210c892b4e27bfc40ac1c6b",
+            "restoreTypedSha256": "a5f5f243b83b34d7b3c47ad7d75c85455695323747fe56c09085779bc4a14eeb",
+            "quietReadbackSha256": "451cba8d08be7f1604f9bab26e468f751a4a5ee790fe8b48fc2b749cceb4cb66",
+            "rootAvailableBytes": 40141451264
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "A04_PRIVATE_APPROVAL_TIMED_OUT_STOP14_ISSUED",
+          "status": "SERVICE14_STOPPED_ROLES_RESTORED_A04_METADATA_READBACK_ISSUED",
           "owner": "T45 / C",
-          "next": "Exact stop14 then restore10. Read protected original A-04 permission and native footprint metadata. No A-04 replay or SQL38."
+          "next": "Validate exact original A-04 no-delivery footprints, then prearm private timed handoff before preparing a new execution generation."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
