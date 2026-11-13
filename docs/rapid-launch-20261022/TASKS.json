@@ -4915,9 +4915,20 @@
               "QB204d66f9",
               "Croles1aa8/policy338d/CASad93/applyea488"
             ]
+          },
+          {
+            "group": "r3-service20-settings-actual-and-inspect-window-20261114-0724",
+            "status": "REAL_START_AND_SETTINGS_PASS_ORIGINAL_UUID_INSPECT_AUTHORIZED_PENDING_NO_BUSINESS_REPLAY",
+            "evidence": [
+              "CASactual3d9/338d",
+              "applye75/b017/7feb",
+              "start1c478/742/76ef/prooffdae",
+              "actualsettingsf2e5/M65536/B31/2031616",
+              "inspect-authority1af842b9"
+            ]
           }
         ],
-        "currentInFlight": "Helper installed once; exact issued recovery bindings passed QB204d. T45 authorized one ce689 registration CAS then conditional one apply20. Await actual receipts before start20/settings/original UUID inspect; no business replay authorized.",
+        "currentInFlight": "Service20 and exact finite auth active; actual settings M65536/B31/2031616 passed. Original UUID readonly inspect1af authorized07:23-07:53, result pending. Original20 role restore due10:33:38; service work ends10:15:04. No business replay. D2 source-only original223/09 reuse route in parallel.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
