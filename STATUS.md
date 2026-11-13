@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 02:55。R3 全批导入前准备已通过，正在绑定正式写入及备份恢复链。
+更新时间：北京时间 2026-11-14 03:23。R3 正式导入授权和控制链已落位，唯一写入请求已交 T45 提交。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b13b2f52b8c66a5933b86451585289066fa0639a) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/d7333009be69d8a3af6fe3b0b5121a4b4d25c415) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -521,3 +521,4 @@ C容量重算 CAPACITY-AFTER-PREPARE09.json SHA4ea908dca7c9f1e09608f65ad00d44328
 
 C绑定已审readback/logical/stop/cold后继和有限窗口；T45仅准备原未提交writer/CAS的本地草稿及09-restored后的freshaccess/volume/namespace。PREPARE09不重跑；当前writer/CAS尚未授权或提交。真实导入、全覆盖来源金额库存关系核账、logical/cold/独立恢复、正式APP/网址/核心业务实际验收仍待执行。
 
+实际提交和导入结果待服务器回执，核账、备份恢复及正式网址验证尚未完成。
