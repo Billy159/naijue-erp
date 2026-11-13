@@ -4042,13 +4042,24 @@
             "nativeOutcomeSha256": "497d6a64b76d01a5c108a03bfcc29c738c6f8055e5ff7b59a3936e6b70cdeb95",
             "cleanupSha256": "a1d02028c7a579c1c5fff68c92f870f5065a0ec3126479c9d9e0fb478c5b7308",
             "sql38Issued": false
+          },
+          {
+            "group": "r3-service13-a03-real-readonly-no-write-20261113",
+            "status": "EXACT_ORIGINAL_BUSINESS_KEY_ALL_FOUR_FOOTPRINTS_ABSENT",
+            "terminalSha256": "107488bd1eadaa8dfb47418a7af9b1ad274031505aedad9cd585ccfb370eb4fb",
+            "typedSha256": "129bbbbc6a8e3a010c5f1a55fb5ce3af77ee02962ceceff60abc0b8100cfdd14",
+            "classification": "ALL_EMPTY",
+            "actualControllerExpiry": 1794553007731,
+            "outerExpiry": 1794551150979,
+            "serverCatalogGuardMarker": true,
+            "sql38Issued": false
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "A03_NATIVE_UNKNOWN_ORIGINAL_READBACK_ONLY_THEN_STOP_RESTORE",
-          "owner": "T45 / C",
-          "next": "Read original journal and fixed same-epoch read-only operation, audit, staff and account footprint; no replay and no SQL38. Then exact stop13 and restore09."
+          "status": "A03_REAL_NO_WRITE_EXACT_STOP13_ISSUED_RESTORE09_NEXT",
+          "owner": "T45 / C / D1",
+          "next": "Complete actual stop13 and restore09, then the next exact epoch and aligned role/phase window, reusing the original A business request without replaying consumed outer jobs."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
