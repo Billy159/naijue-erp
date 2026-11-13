@@ -3990,13 +3990,35 @@
               "sql38FootprintsAbsent": true,
               "adminMaterialRead": false
             }
+          },
+          {
+            "group": "r3-service13-a-artifact-actual-and-local-stage-review-20261113",
+            "status": "A_ARTIFACT_ACTUALLY_RETAINED_POLICY_WITHDRAWN_AND_EXACT_STAGE_CLOSURE_QB_OFFLINE_PASS",
+            "artifactResultSha256": "232e75743bfb6ad1cecb34e29bcb033d22468ef00f8e78088a79eb94f79844e2",
+            "originalReadbackSha256": "55ac4d4b32516640182a8629aa9a1cd396fd965de3cbf673455bb1f08ca910f0",
+            "serverReadySha256": "f9c711b8fdb7ac62f3e55d305953e54a194ad1d953cdc32e20255584668f8945",
+            "closureSha256": "835a67e8bde92d966e191f3c523b2a7bd782003a340190757ad897321961f5ca",
+            "qbMessageId": "msg_0a07ee903347bb2e016af6a44e70c08191b64b224e34c785c5",
+            "restoreOnlyReadySha256": "c6e6ab7024dadd44492a962ec736978a6ba2b5d587cd802deb22b5f750884ec5",
+            "liveRoleApply": false,
+            "liveStart": false,
+            "liveA": false,
+            "liveSql38": false
+          },
+          {
+            "group": "r3-05-cold-stop-logical-original-receipt-local-delta-20261113",
+            "status": "LOCAL_FOCUSED_REGRESSION_PASS_UNISSUED",
+            "continuitySha256": "4eb4889c869e42c15e1dfdef20456cdb3b0fb3283347d06f03cc7c09a5ab111b",
+            "logicalBackupSha256": "b9ae80c434bd46eedd108131117a7d6ba47659b7e25aa3c1ab42405e14b22eeb",
+            "coldCopySha256": "940f5153140e4b9a4b30721b45abfa68f275547b53307577b4de7e7a2f30dabf",
+            "existingAndRegressionCases": 24
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "A02_CAUSE_ACTUALLY_VERIFIED_SERVICE13_NARROW_LOCAL_CONTINUATION",
-          "owner": "T45 / D1 / D2 / C",
-          "next": "Complete bounded original evidence read and the exact A-only new artifact, keeping original full SQL38/05 and business artifacts. Independently review and recheck stopped state before service13."
+          "status": "SERVICE13_A_READY_RETAINED_QB_PASS_ROLE12_PREFLIGHT_REQUESTED",
+          "owner": "T45 / C",
+          "next": "Recheck exact stopped generation, current free root and all unused keys. Then exact role12 apply, new read-only service13, A-03 and original SQL38 with actual same-epoch proofs, then exact stop13 and restore09."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
