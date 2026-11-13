@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 00:38。R3 整批准备退出，正在定位具体错误；正式导入尚未提交。
+更新时间：北京时间 2026-11-14 01:08。R3 定向诊断接线问题已定位并修复中，正式导入尚未提交。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b4150ea35d241bb00535e3f876f973383ea96ec8) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/34034cb5f13ba06b941fe4cec2b07ba8a5d28e80) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -456,4 +456,13 @@ PREPARE06 在0.284s因ACCESS_EXACT_C_BOUND_PLAN_REQUIRED拒绝，c64de79d…/ade
 PREPARE08 原键 `t45-first-20261110-r3-real-prepare-20261114-08` 运行 437.649 秒后 FAILED/2。Node exit1，原进程与后代已回收、输入权限恢复；预检 issues0，但输出只有 NOT_STARTED/IMPORT_FAILED，不能确认准备成功、连接清理或真实导入。终态SHA `1ea2f86a9430a2db0d563a2534fcd8c5894619b2ada9ffb88fd4f0163f180d4c`，typedSHA `262cd87b5aec7ca88239015d97a9aef41908d2511cab60254003ec0c5116869e`。原writer和CAS均未提交，原08不重放。D2仅本机定位预检后 compact host/plan/admin preparation 路径及 catch 隐去的安全异常位置；T45保留现场状态，不重复此前已通过的投影与probe。
 
 本轮报告峰值2,247,729,152B，普通临时峰值226,811,904B，根卷低点279,785,590,784B。28GiB保留线不变。C固定后继逻辑备份有限上界dump32GiB/单归档256MiB/整套33GiB，明确为准入上界而非实测峰值；冷备和独立恢复继续按实际分配核算。首位管理员私密交付和A05已完成，未重复办理。正式整批导入、核账、恢复、APP及网址实际验证仍未完成。
+
+
+### 2026-11-14 01:08 — 原预检留盘复用，定向诊断宿主变量问题已本机复现
+
+D2交付独立诊断工具，原223运行源码未修改，4项本机检查通过；只复用08 summary SHA `c664d135c22f9fe7d3911555b9201339152c3f1dfc36ef4d7355429db6e5068d`/51,222,677B与其原index绑定，原planner完整性检查继续保留。强制prepareOnly、writer回调拒绝，诊断不能代替正式准备或触发CAS。T45本机接线核对和仅新自有目录umask问题修正后，C一次签发20分钟有限窗。
+
+新诊断原键 `t45-r3-ordinary18-prepare08-postpreflight-diagnostic-20261114-01` 真实运行10.762秒后FAILED/2；terminal SHA `2cf9991f81f4683247f9153ab674205352d33041823a3eb341c70f921f785dd5`，typed SHA `df6a5bcb592125fd425ae8fb269af008b5107f9d2db64106fdb276a725e099d4`。宿主变量plan先为production-plan dict、后被access-plan bytes覆写，before_launch闭包第二次校代向原dict构造传bytes而TypeError。C静态定位与T45本机闭包调用复现一致，属于新宿主接线错误，不称已定位原08业务失败。
+
+现场只读证明原diag01 pointer已restored且childReaped=true，worker目录、5个projection intent、worker-result和transport-terminal均不存在，Node进程空。原01保留FAILED、不重放。T45仅本机修复变量名称和异常安全位置投影，准备新02及恢复后精确access metadata。原service18/角色截止保持；CAS和正式writer均未提交。原08具体异常仍待定向诊断，真实导入、核账、备份恢复和正式网址实际验证仍未完成。
 
