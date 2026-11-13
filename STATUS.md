@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 02:38。R3 新一轮服务已启动并通过只读就绪检查，正在绑定导入前准备。
+更新时间：北京时间 2026-11-14 02:55。R3 全批导入前准备已通过，正在绑定正式写入及备份恢复链。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/a0245506d1b72500136cb6e88208fd1f29313747) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b13b2f52b8c66a5933b86451585289066fa0639a) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -507,4 +507,17 @@ T45原19角色apply实际COMPLETED/0/7.050586853s，terminal c2f5b26345754aa4c96
 19原key t45-first-r3-native-service-start-20261114-19一次实际COMPLETED/0/5.945815311s，18:33:03.707571Z；terminal2f23a45f23e453e2c2eab36142bfa4139e2e974fe9ab8a327a0606d29cce0d94，publictyped24ed23f2f5152e62c22c01e88df5164764122366d13c94342b3fcf2ebaa32bfd，roottypedfaf5eb3a6d3d9f814fa29cff4536179923b8283dff15717883daaf9d36a9464f。实际CID d29eba1189eb492a18b25bb73c0267c1fbe71262c0a5a347dcaf3f02f74b5d6a，birth2026-11-13T18:33:01.566482207Z，PGepoch2026-11-13 18:33:02.751343+00，proof43447056642fd45e8d7e73ebe058999a9134b55f1a25a03fa7217e74fc205b0b；原目标OID/SID/PG17.11/runtime权限及只读readiness通过，0APP/0businesswrites。lease/workdeadline1794605612481，未延长原role期限。
 
 Fresh LIVE09 at18:34:51Z SHA7e1610508a5634243a9790f6c0b2b013dad65edb26581d34edb530d8f0119938，49原input metadata/diag02-restored predecessor、missing[]、registration null、0PG/0serverwrites，同/dev/md0p1 device66304 available280003080192B。28GiB底线不变，实际writer/DB/WAL/备份和恢复峰值仍待测。C据真实root typed区别签原controller5min authority84694d5d277c3b6f9688aae4e864f4c6b37a0132eeaf5f9a6ac397b95b273d93；只读controller实际回执/PREPARE09 prearm待到达，尚未签PREPARE09或提交writer。收到actual controller/freshaccess后继续20min准备，成功后再绑定原从未提交writer和后继链。
+
+
+### 2026-11-14 02:55 — 真整批PREPARE09成功，实际44682步和空间水位已核
+
+原key t45-first-20261110-r3-real-prepare-20261114-09一次实际COMPLETED/0/472.566770232s，finished2026-11-13T18:48:36.209165Z；terminal fab6f3e8ca99eb5d58eae14850e257f2ab775bc3c66d0d7ed1e83ceda72244a7，typed2c4342138182a40c1bb02e271c379a599bf03587fef84fd7c31b9ed6637ce497，stdout04fcf408d9b9ae066f7c30f42e64421721626707450c925361bdd82c23887f79。状态REAL_PREPARED_EXACT_BINDING_ONLY/COMPACT_ZERO_PREPARED；businessDatabaseWrites=false/connectionCleanup=CLOSED/verification NOT_RUN，guard child/parent/descendants全部reaped/exit0，原49项metadata恢复逐项属主组mode/identity和restore-done ctime一致。当前pointer为09/restored，不能给writer复用原prepare前ctime。
+
+本批manifest f4b86de7…和26表source counts合计511234相符；actual stepCount44682，绝不使用先前D2合成1294步替代。plan8a99c0acb2170dabb1001da3f3daf0b4b6cbce2c99baabc708a6d6694f418fbd，initializer c6daca9c353957b3d74e48d5bdbf379992d02cd6362a06106c1ba93b1abae580，steps c6c51b2efc76ed0634243bd7e5342ee17903548194989fde8510aba3cb70e2ee。原baseline/document UUID、SQL36/38/A05以及同19的CID/proof/epoch绑定保留。数量金额源汇总已在COMPLETION-READBACK.json保全；这只是准备，真实目标核账/verification尚未运行。
+
+T45实测report高水2247729152B/tmp226811904B/scratch4096B；whole-root start280001150976B，minimum277517914112B，918worktree样本；未单独捕获DB目录峰值，保持null，不拿共享物理卷水位冒充DB。18:51:19Z原root补读COMPLETION-READBACK SHA3415cb40b3e77b8d8bf89923ce6c071330be8ad43f939878fedc7f08812d12f0，root可用277752827904B，同19仍活且无cleanup，原writer和activehold两grant均absent。
+
+C容量重算 CAPACITY-AFTER-PREPARE09.json SHA4ea908dca7c9f1e09608f65ad00d44328833319889d8c586077b5494d2c7a651：可用258.677GiB，28GiB底线后230.677GiB；扣本轮whole-root实际准备增量2483236864B作ESTIMATED repeat，以及原logical artifact33GiB admission cap，余195.365GiB供额外数据库/WAL/冷备/独立恢复等。不是完整峰值或最终容量PASS，不下调28GiB，尚无当前扩容缺口实证。后续逐段读真实低水及停库inventory分配。
+
+C绑定已审readback/logical/stop/cold后继和有限窗口；T45仅准备原未提交writer/CAS的本地草稿及09-restored后的freshaccess/volume/namespace。PREPARE09不重跑；当前writer/CAS尚未授权或提交。真实导入、全覆盖来源金额库存关系核账、logical/cold/独立恢复、正式APP/网址/核心业务实际验收仍待执行。
 
