@@ -3587,13 +3587,28 @@
               "failedOriginalSql36Replayed": false,
               "AorSQL38Submitted": false
             }
+          },
+          {
+            "group": "r3-service10-final-readback-and-sql36-mount-divergence-20261113",
+            "status": "ACTUAL_WINDOW_CLOSED_EXACT_SOURCE_MOUNT_DIVERGENCE_FOUND_OFFLINE",
+            "owner": "T45 / D1 / C",
+            "evidence": {
+              "finalReadbackSha256": "d8bfbc29ce4766f803d9e54c205dbcbd3eeb99d461016fb373e4400935bf30ea",
+              "failureHandoffSha256": "105ed0a34ad2ec2321a8dc1ca04b57d9c73095486613ae5365886613c0878293",
+              "observedAtUTC": "2026-11-13T02:11:02.781274Z",
+              "originalASealed": true,
+              "activeJobs": 0,
+              "missingNestedReadOnlyHistoricalMounts": 2,
+              "firstRuntimeThrowProven": false,
+              "originalSql36Replayed": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "STOP_AND_ROLE_RESTORATION_VERIFIED_SQL36_PARAMETER_METADATA_CAUSE_ISOLATION",
+          "status": "FAILED_SQL36_ORIGINAL_RETAINED_ROLE_RESTORE_CLOSED_TWO_HISTORICAL_MOUNTS_MISSING_IN_CANDIDATE",
           "owner": "T45 / D1 / C",
-          "next": "Obtain final ordinary closeout and isolate the exact SQL36 binding failure from original evidence or a narrow read-only probe. Preserve consumed originals, then bind a corrected successor only after the failure boundary is proven."
+          "next": "Confirm exact exited mount and UID10001 access via bounded read-only evidence, fix the two original read-only overlays and review consumed-key successor lineage before any further live window."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
