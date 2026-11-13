@@ -3688,13 +3688,32 @@
               "originalNamespaceEntered": false,
               "service11Staged": false
             }
+          },
+          {
+            "group": "r3-service11-maintenance-staging-issued-and-downstream-local-20261113",
+            "status": "EXACT_SERVICE11_MAINTENANCE_STAGING_AUTHORIZED_APP_AND_RESTORE_ARCHIVES_LOCAL",
+            "owner": "T45 / D1 / D2 / C",
+            "evidence": {
+              "preflightSha256": "8e3f2cb6c91067de1de3096bf385826162c86dd6d3093567d39bcc5be112be7d",
+              "maintenanceStageScopeSha256": "d219fceed9ceb37972e6f7952bb83dfb9968ef0132cf3373fa25e9ce19840925",
+              "maintenanceStageAuthoritySha256": "23c9ec1cda6ae87858f2a798a27e483ad1b8705e72c1b9fe7d8ad19d10ed7d87",
+              "stageStartsUTC": "2026-11-13T03:05:58.483Z",
+              "stageExpiresUTC": "2026-11-13T03:23:58.483Z",
+              "netUploadSeconds": 600,
+              "withdrawalReserveSeconds": 240,
+              "appReadySha256": "e65d9a06467ab20b8f90575328bb76d7b733734e18f4976c0b6288f9ed09c7cf",
+              "appArchiveSha256": "e7b01c74e1a5e29757e934350739fc41de6e4cbb8484db39184902ced4a115d6",
+              "restoreReadySha256": "1de1660e57f92c9acc0e3d06de3c631e905596fbafdf68f1597a5a670a08c14f",
+              "restoreArchiveSha256": "13a7c70579205123d3c1f7ad4664441a7017341dd6738ec46e2c8905c602bfd8",
+              "service11Started": false
+            }
           }
         ],
         "currentInFlight": {
           "group": "r3-maintenance-private-input-and-window",
-          "status": "ACTUAL_152_HOST_EXACT_LEAF_OPEN_AND_OLD_PAYLOAD_PROVEN_NEW_ARTIFACT_STAGING_PREPARING",
-          "owner": "T45 / D1 / D2 / C",
-          "next": "Stage exact bd7f6cc3 new maintenance archive via existing short bounded receiver, then verify new generation source and host closure before signing runtime."
+          "status": "SERVICE11_MAINTENANCE_ARTIFACT_STAGING_ACTIVE_PENDING_ORIGINAL_READY_AND_WITHDRAWAL",
+          "owner": "T45 / C",
+          "next": "Obtain original maintenance receipt and independently verified READY after withdrawal. Then stage required application in its separate window and bind the service11 exact source closure."
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
