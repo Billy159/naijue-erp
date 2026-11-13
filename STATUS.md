@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 04:46。同一批真实导入仍在运行，后续发布入口的最小接缝已通过本地审核。
+更新时间：北京时间 2026-11-14 04:57。真实导入返回失败，正在保全现场并核实事务结果及原因，尚未上线。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/44458b90678f2de03f4dba5159624f4ba8189c24) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/644674572486d4156b4bdca19e3d65bff443cc05) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -544,4 +544,15 @@ C在新outputs/主控/20261114-r3-formal-stage-source-local-02准备helper3477b3
 QB REVIEW564ee9b16265076082bc91f15465c2c13752131daba87afb2f7787135ab06b1a为PASS_SCOPED_SOURCE_SUCCESSOR_NOT_ACTUAL_STAGE_OR_RECOVERY：复用既验APP223/27migration/13patch/恢复链，只补23项精确资源与拒绝边界；远端canonical/stat仅内存模拟，未server/DB/stage。C仅允许T45本机形成新boot候选常量绑定3477及原support闭包；尚未server登记、stage、boot或正式发布。实际三恢复回执、new02提交/读回、19 stop/cold、实际finite stage与formal新generation/capacity/acceptance等原合同保留未完成。
 
 同一new02仍在原04:14–04:59窗口RUNNING，T45只沿原键观察，无重提/延时；已实见Node及PostgreSQL处理进程，不能据stream字节或单个资源值猜成功/卡死。readback/backup最早04:49且须真实成功前驱。28GiB规划保留线不降，完整导入及恢复实际峰值尚待闭合。
+
+
+### 2026-11-14 04:57 — new02实际失败，成功链停止，先保全同19及恢复临时角色
+
+原new02只提交一次：04:19:37.786757启动、04:51:15.714487终态FAILED/exit2、1897.8909005969763s；root/public terminal字节相同ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e。FAILURE-READBACK SHA721192bf6195ec529b29bdd1ecbb66630a7c75b8d45ce46c9ab8933db4ff246f，root worker e030535a23bb43ceda3cdb57269e397f8c1fd83afae94c380ca03e6b2a1743c6/public35f9966a解码相同。CLI仅IMPORT_FAILED/ROLLED_BACK/CLOSED/verification NOT_RUN，无具体安全SQLSTATE；此为CLI结果，不作为独立数据库回滚/未提交证明。guard childexit1、全部child/Node parent/descendants已reaped，transactionRollbackProven=false。49输入元数据已复原ce2a54edad59eeaf7aa9d6a61a6a737df8c2bc454423a7b315036ca016ebc631，current pointer5112a7d430f4f455e9830e066897cfc57b379d173b04ec0ebacf41ba4327f383；hold active保留，writerCommit无，unit inactive/dead。无重提/无延窗，成功readback/backup/stop/copy未提交。
+
+C签发独立于成功链的原preserve-stop19-01有限5min授权d9a2de1bcc3db292c5beef335cc5ab5971e4b8d8fbe6634b22c8e246de056efe（04:54:32.895–04:59:32.895），绑定same19 proof434/CIDd29/实际epoch、新02失败terminal ef30、policy20acd、已审source3b71及原stop2d83。T45已正常入口受理；尚待实际停机回执，随后C据真实cleanup签原两角色restore19-01/f98。原角色恢复硬截止05:59:48.550不变。先保全，再核原UUID事务结果和准确失败原因；不把无commit文件、unit exit0或元数据复原当未提交证明。D2仅源码侧定位IMPORT_FAILED/rollback与既有诊断，T45唯一server诊断，未新PG/未重放。
+
+已观测本次共享root最低275098583040B（guard18834样本、最大间隔0.1312s），仍远高28GiB；这不是成功导入或完整备份恢复峰值。保留线不降，无当前扩容缺口证明。
+
+后续发布准备独立保留：helper3477通过QB564ee局部source审核；T45 local-owner01发现同basename proof旧6718与新eeaa冲突，未登记。local02只更新pg NORMAL_SHA/PROOF_SHA为原已审5785/eeaa，再boot传新pg摘要；owner/host/OPS算法不改。QB REVIEW24102996224b8860e5e5ed06fa0aa38f9236e37e3b27bf87a8b461563f1dcd1f确认10文件闭包与API，index93fb034bd1573f2790d52eb84a8fef21c6670e77320e0fcd5d4a56edecb25c2f、bootec423d3b6a62d89890711159841add44e6865cef4a8aba9415c1e1a31280beff、pg73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf。原01冲突保留，未server登记/finite stage/formal boot/恢复收据绑定，不记实际上线通过。
 
