@@ -5506,9 +5506,27 @@
             "evidence": [
               "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/SMOKE-A-ROOT-READONLY-PREFLIGHT.json"
             ]
+          },
+          {
+            "group": "r3-sql39-local-paired-capacity",
+            "status": "LOCAL_PG_TWO_SYNTHETIC_SAMPLES_COMMITTED",
+            "evidence": [
+              "3473b7cec99d0ccbdff20ab6a16f2982355a818a630b763a78a362b990cea801",
+              "5c58b086506dcbf89bd64523190f5871d6c7e9640f7a39073ce99c0c5fa5d459",
+              "2cbe33112bd827a379753379861750d764472ca6f4ae5c435091c14c1e96031d"
+            ]
+          },
+          {
+            "group": "r3-smoke-a-root-cas-first-source-review",
+            "status": "QB_NEED_FIX_SOURCE_ONLY",
+            "evidence": [
+              "1476ad4a230224ecdbae2ca25a2b5a96aaf68aeb0ce0db0b77b468c199ba35e0",
+              "a70607a32d058a82917699febdc7e7f27a2f0f46ab7319151fa63f949d9c1977",
+              "495305e7abbcd7bc79113ff93e0f36da42756acf4efd2c67ed72ae8d187c7aef"
+            ]
           }
         ],
-        "currentInFlight": "R3 stays stopped. Keep original continuity hold in effect. Preparing a scoped candidate for review only.",
+        "currentInFlight": "T45 \u4fee\u8ba2\u7cbe\u786e\u9694\u79bb\u51c6\u5165\uff0cD1 \u672c\u673a\u5408\u6210\u89c4\u6a21\u843d\u76d8\uff1bR3 \u505c\u6b62\uff0c\u539f\u6b63\u5f0f\u4e1a\u52a1\u952e ABSENT\uff0c\u672a\u63d0\u4ea4\u65b0\u73b0\u573a\u4f5c\u4e1a\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
