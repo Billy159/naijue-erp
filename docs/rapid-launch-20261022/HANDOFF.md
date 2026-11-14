@@ -6633,3 +6633,11 @@ T45对941c outer/a902 inner与actual21 service/start/apply/capacity/readyc29/49p
 cleanup bcc4883b1af5052acec0e770944a834412d4880e5bbd83b5295efed3dab65158：child与descendantsReaped/originalInputMetadataRestored/scratchEmpty true，restoreReceipt ce2a54edad59eeaf7aa9d6a61a6a737df8c2bc454423a7b315036ca016ebc631；connectionCleanup=REAPED_EXCLUSIVE_PROCESS仅物理进程回收，不是native关闭ACK，scratchRetainedPrivately=false；未提供retainedInitializerFileSha256，正常reader21尚不能签。10:47:11 service21仍Running，cgrouppeak1459568640/max7516192768，oom/max/high计数0；fsavailable275460435968仅单点，均为本次失败运行证据，非整批成功峰值。原监控证据outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/monitor/SAMPLE-001.json。
 
 C已令T45只从原保全收据/原私密stderr提取最早cause的safeCode/class/sqlstate/connect/BEGIN/rollback前缀，不读取或外发私密正文，不新PG查询、不停21/不恢复roles、不重放03或新Prepare。原D2已按gpt-6.1-sol/high接新增真实失败有界源诊断：定位fc6该code产生点，先缺项/最小原4UUID只读恢复方案，复用原02原INIT重构及native recovery判COMMITTED/ABSENT算法，不先扩大工具。实际事务仍UNKNOWN，任何后继业务写入均等原事务查清；所有备份/恢复/APP/公网业务完成条件仍未满足，goal active。
+
+### 2026-11-14 10:56 — 原03原因证据边界已核；复用既有只读恢复算法，未新查PG
+
+T45 SAFE-FAILURE-READBACK已确认原native仅11顶层/sql=[]、最早gate/cause/SQLSTATE/BEGIN/open/rollback前后ready等未持久化；private phase.log0B、Node/dockerexec stderr DEVNULL，原cause不可恢复，不继续找日志。privateINIT retained/callback metadata均ABSENT；原49恢复frame72fdca6841d9e64251e5ab3ba2c8690cdccc30aec59b581b5558ab3982718842，既有before/restored原算法字段相等，42ctime操作变化明确排除，未新stat49。
+
+D2只源码诊断收口于outputs/D2/20261114-r3-writer03-catalog-diagnosis-01/REPORT.md：fc6 whole-host-session70-71在catalog BEGIN RR RO/两DO/SELECT校验后的finally一旦rollback检查不确定就遮住原gateError；connect131已先返回，原prepare/admission135-148及retained-import27 INIT callback未到。路径前后可定位，不冒充真实首因；null SQLSTATE/无INIT不作为全库无写入证明。
+
+C已授权T45仅本地复用已安装helper95 recoverOriginalR3Writer02Initializer+inspectOriginalR3Writer02与旧original02有限RO host，适配actual21/03及真实安全收据。原09 prepareStreamPlanInputs(...false)仅必要graph重构并校同c6d/dispose，不streamPreflight/44682枚举/PREPARE/SQL36；新鲜独立RO客户端 BEGIN RC RO/SET LOCAL原INIT/原inspect_v2/ROLLBACK/close，源码不进入此次writer catalog guard。原4UUID/plan保留，原native ABSENT无publish UUID独立SELECT，按实际原义报告、不暗加SQL。因现6policy reader21 e74正常读回缺INIT不可硬用，T45先冻结RO机械适配与必要仅reader21注册delta，另5phase/03历史/旧a85/db548/原锁全保留；后由既有QB只复核新增小范围、C准确签发，未授权绕过guard或直接查询。当前0新PGquery/0stop21/0rolesrestore/0重放，事务仍UNKNOWN，goal active。
