@@ -5524,9 +5524,26 @@
               "a70607a32d058a82917699febdc7e7f27a2f0f46ab7319151fa63f949d9c1977",
               "495305e7abbcd7bc79113ff93e0f36da42756acf4efd2c67ed72ae8d187c7aef"
             ]
+          },
+          {
+            "group": "r3-mixed-full-synthetic-local-preflight",
+            "status": "LOCAL_511234_ROWS_PREFLIGHT_PASS_PG_PENDING",
+            "evidence": [
+              "0621f1283f3212af95988ccc5680f406ca48d64f1eb17e1d6efa474443797dc5",
+              "c105451b1154a473b089231f7d3a178e61cf3ec7df7a663ddb626a7b8ce67373"
+            ]
+          },
+          {
+            "group": "r3-smoke-a-admission-second-review",
+            "status": "LOCAL_QB_NEED_FIX_CONTAINER_GENERATION",
+            "evidence": [
+              "f27586f6d6190131a4061a371ddcfafc16f81bd3281096c70627da4d7f451dc1",
+              "4492fc69a8534f47772a24dc9617072845013e23e3e537acd23f37e8a95bf5ad",
+              "4275fb12eb1516660630d66bd341b285188f4fca6565eb3d2f9dce508723eadf"
+            ]
           }
         ],
-        "currentInFlight": "T45 \u4fee\u8ba2\u7cbe\u786e\u9694\u79bb\u51c6\u5165\uff0cD1 \u672c\u673a\u5408\u6210\u89c4\u6a21\u843d\u76d8\uff1bR3 \u505c\u6b62\uff0c\u539f\u6b63\u5f0f\u4e1a\u52a1\u952e ABSENT\uff0c\u672a\u63d0\u4ea4\u65b0\u73b0\u573a\u4f5c\u4e1a\u3002",
+        "currentInFlight": "\u5168\u91cf\u5408\u6210\u9884\u68c0\u5b8c\u6210\u3002T45 \u8865\u5bb9\u5668\u542f\u52a8\u4ee3\u6b21\u7ed1\u5b9a\u53ca\u79c1\u5bc6\u7b7e\u5165\u6a21\u677f\uff0c\u539f R3 \u505c\u5e93\uff0c\u6b63\u5f0f\u6570\u636e\u672a\u63d0\u4ea4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
