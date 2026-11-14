@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 13:18。已按原键确认首批业务未提交，修复包通过独立复核，正在准备安全接续。
+更新时间：北京时间 2026-11-14 13:27。发布编号修复已装入独立目录，等候同一批导入的最后入口复核。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/f6a24f9635e13598b5749b71c33c84aba5d04b18) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/48fdde724f71e74b20028584ac1376cc7e91c9b8) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -911,4 +911,9 @@ D2唯一运行源叶1372e236、225闭包e7036e已本地生成，四个局部模�
 T45原22-03实际CAS audit a27911a4bfa1be476bd73376978b72934e29dc57d3bd1212d28cf764dbdb796d，13:16:08原锁释放，22-03仅提交一次，manifest 5624d2d9；读取退出 COMPLETED/0/29.519s，双面终态 e46d4d059a6551e878dfafdd8b17244843fa35fb4350e6dfd2416e0425da3443。原c6d与51,225,175 B/SHA47a8核试，原explicit-zero仍走已核源检查，无需图重建。原数据库的原请求/根op及两目标批次未见提交或冲突，独立发布UUID未查询。SQL 3.507s，ROLLBACK ACK、CLOSED，未写业务；49字段恢复，frame562fe9/pointer f97c20。原05失败不改、不复用。
 
 QB 1372e候选独审 a8e0fa106236201effcc4fda1b05e5c656fe1abcb51b918e154b0c40d5871fbf，真实算法合成回归、旧225与新225闭包核通过，224叶复用。C签一次原私密通道暂存新候选（stage 38153e7750acceaf5b7cd39289fa1ed3bf8625bd27f5841535daeb0be800cd11，policy 1c776578e8d08d7287db92defc6723f0e5a4a5947638ed6ca87b1e5ece1f59da）。只用不同目录及原接收器，暂存结束恢复临时policy缺席。安装、续接及全批提交仍待各自实际回执。
+
+
+### 2026-11-14 13:27 — 发布修正已实际独立安装
+
+T45一次真实暂存 1372e，raw READY 0e72a52a7abe301355221adc49daad71af5433fc97ed243566fc939c1f3e0b83，原临时接收策略已复原缺席。QB独立安装差分6ddb8da87e25c3b6307283f51fbc86699a1c5c09245a4b9c62f2562a4e2a078b，C准确安装授权 c224b22ee56c030c120ac91f9a010704b19e1c321a6d3f6c2c53c26b6ca36659。T45 13:27:02 实际读回新目录operator-ready 5a44419ac645633ce06b199df383948b89bd19c3c0d34a52da407068cd5b5516，225/4361007，一叶实际校验、224复用；旧c86e保留，现行service22同一代、未提交业务。writer06及最终reader22-04只改两规则。QB发现新键外层缺phaseStarted字段，C更新模板包含新06/22-04及已存22-03，原事实保留；同一候选实际提交仍待独审和授权。原业务身份、c6d、c6c5及独立核账原则不变。
 
