@@ -7117,3 +7117,9 @@ D2完整冻结七层顺序e90d14cc…（ten/single-read/on-demand/inventory-read
 handoff-local02只改最终submit完成等待从90秒预算线改原L，原发起线/服务器900与180等保持。QB独立只跑新增一个跨90原L内提交场景及原run_once模型，旧124/新0、一次调用；旧13结果复用。已闭合04原件不改。
 
 下一测量首窗口上限512，原465步为68MASTER/395KEYS/期初发布/文档暂存，之后47销货。首调拨29547，不承诺小前缀覆盖调拨。复用原executeWholePackage及SQLkernel，前缀迭代结束而无最终发布时按原PUBLISH_INCOMPLETE路径显式ROLLBACK，然后新独立原键ABSENT/无残留核实。T45按实际900秒预算剩余和取消/清理接口本机接新准确测量host，原compile-only拒SQL保护保留。当前无新签发、登记或现场执行。
+
+### 2026-11-15 02:58 — 纯prefix模块准确后继通过，155规范模型采集中
+
+T45固定纯prefix初稿5f00503d…由原executeWholePackage/原kernel执行，截≤512原序迭代，自然结束无最终发布走原PUBLISH_INCOMPLETE→ROLLBACK，已存在root挡住快捷COMMIT、取消57014原样、丢回滚ACK UNKNOWN/discard。主控按T45明确转交的模块归属仅修SOURCE_EXHAUSTED也误标expected的具体一处，现只PREFIX_LIMIT/TIME_BUDGET符合预期，加两步提前EOF回归。固定measure d574bade…/test7755704e…，Node24.21本机9/9，QB同runtime独立9/9 scoped PASS。模块只消费已准入same-client/fullprogram，不持连接/授权/目录能力。T45已stage确切后继，主控释放模块。
+
+T45基于335原source及7层固定SQL搭建新155/113隔离测量载体，保留原compile-only拒SQL分支。发现旧目录回执仅有bodySHA与机器OID，缺原builder需用的normalized定义文本；D2已按冻结七层只在空库采集155 definition/body和稳定类型/owner/ACL，正在按原builder格式适配，未重复96或业务测试。新真实测量host对INIT/在途SQL的原超时、回滚ACK与独立ABSENT尚在接线，未签发或登记下一轮。

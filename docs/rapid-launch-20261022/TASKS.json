@@ -6026,9 +6026,18 @@
               "CATALOG19e187b0\u2026",
               "handoff02 fb275ebf\u2026 /14 targeted tests"
             ]
+          },
+          {
+            "group": "\u7eaf\u524d\u7f00\u6a21\u5757\u539f\u534f\u8c03\u5668\u56de\u6eda\u53caEOF\u4fee\u6b63",
+            "status": "\u539fsame-client/coordinator\u2264512\u6b65\u81ea\u7136\u7ed3\u675f\u81ea\u52a8rollback\uff0cNode24.21 9/9\u4e0e\u72ec\u7acbscope PASS\uff0c\u771f\u5b9ehost\u4ecd\u63a5\u7ebf\u4e2d\u3002",
+            "evidence": [
+              "measure-prefix d574bade\u2026",
+              "test-prefix7755704e\u2026",
+              "QB independent Node24.21 9/9"
+            ]
           }
         ],
-        "currentInFlight": "T45\u6309155/113\u65b0\u6d4b\u91cfhost\u51c6\u5907\u6700\u591a512\u539f\u5e8f\u524d\u7f00\u4e0e\u539fcoordinator\u56de\u6eda/\u72ec\u7acbABSENT\u3002\u6b63\u5f0fR3\u505c\u5e93\uff0c04\u6210\u529f\u6210\u679c\u590d\u7528\u3002",
+        "currentInFlight": "D2\u91c7\u96c6\u51c6\u786e155\u89c4\u8303\u6a21\u578b\uff0cT45\u63a5155/113\u6d4b\u91cfprofile/native/\u539fdeadline\u4e0e\u72ec\u7acbABSENT\u3002\u539f04\u5b8c\u6574\u7f16\u8bd1\u590d\u7528\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
