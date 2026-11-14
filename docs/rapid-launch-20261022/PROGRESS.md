@@ -6803,3 +6803,11 @@ T45沿既有dispatcher对已上传未启动的原INSTALL请求第一次start，�
 原TERMINAL typed0770aa89…实际COMPILED_AND_CLEAN_STOP，cleanupVerified=true、businessWriterInvoked=false。Node guardian78c9531c… NODE_EXITED/0/reaped，369463ms；原native安装40673ms。主控读取原typed核六阶段总和：MASTER68/33851行，KEYS395/39496行，DOCUMENT_CHUNK44216/437887行，另期初发布/文档暂存/文档发布各一步，合计44682步和511234行。INIT wire51940047B、最大单步349171B、总步wire479517525B。prepare241163.153ms、measure58811.583ms、生成14897.284ms、host340590.558ms，SQLite index1273589760B、scratch峰2258677760B、Node RSS高水1939087360B，容器实际cgroup峰4398260224B。
 
 同代容器02:35:56.904停止exit0/nonOOM，原Node/连接关闭、原八项清理true，正式R3继续停。预测44682步与本次真实合成相配。该编译版本同范围已完成，后续复用。后继先按369秒编译/40秒安装和900秒容器/180秒清理余量，测真实完整合成INIT与原program前缀、明确整笔ROLLBACK。D2冻结已审性能组合的准确目录供T45新承载，未采纳原型不混入。正式整批提交、核账、冷备与独立恢复及公开业务仍待完成。
+
+### 2026-11-15 02:50 — 精确155/113组合独立通过，原事务512前缀接线中
+
+D2完整冻结七层顺序e90d14cc…（ten/single-read/on-demand/inventory-readiness/prior/root-single-scan/EXECUTE），目录19e187b0…独立QB PASS，SQL38基线154→155函数、111→113索引，35表351列保持，19既有body变化及新增owner私有helper1；已装ten后续17既有body变化，原元数据/ACL/RLS/触发器等保持。04完整program仍是旧154/111，新隔离测量必须同原编译器重取新binding。未并入后续MATERIALIZED/fullsales/compact原型。
+
+handoff-local02只改最终submit完成等待从90秒预算线改原L，原发起线/服务器900与180等保持。QB独立只跑新增一个跨90原L内提交场景及原run_once模型，旧124/新0、一次调用；旧13结果复用。已闭合04原件不改。
+
+下一测量首窗口上限512，原465步为68MASTER/395KEYS/期初发布/文档暂存，之后47销货。首调拨29547，不承诺小前缀覆盖调拨。复用原executeWholePackage及SQLkernel，前缀迭代结束而无最终发布时按原PUBLISH_INCOMPLETE路径显式ROLLBACK，然后新独立原键ABSENT/无残留核实。T45按实际900秒预算剩余和取消/清理接口本机接新准确测量host，原compile-only拒SQL保护保留。当前无新签发、登记或现场执行。
