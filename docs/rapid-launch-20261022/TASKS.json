@@ -5139,9 +5139,25 @@
               "outputs/T45/revisions/20261114-r3-service22-catalog-route-local-01/CLOSED21-LOG-CATALOG-MATCH.json",
               "outputs/T45/revisions/20261114-r3-retained22-business-source-local-01/WRITER04-ACCESS-PLAN.FROM-READER21-RESTORED-FRAME.json"
             ]
+          },
+          {
+            "group": "R3-22-CATALOG-FIX-AND-CONTINUATION-SOURCE",
+            "status": "EXACT_SOURCE_DELTA_AND_SIX_PHASE_LOCAL_REVIEWS_PASSED",
+            "evidence": [
+              "outputs/QB/20261114-r3-catalog-gate-rollback-source-review-01/REVIEW.json",
+              "outputs/QB/20261114-r3-absent22-continuation-source-review-01/REVIEW.json"
+            ]
+          },
+          {
+            "group": "R3-22-C86E-ARTIFACT-STAGE-AUTHORITY",
+            "status": "EXACT_REVIEWED_STAGE_AUTHORITY_ISSUED_PENDING_ACTUAL_READY",
+            "evidence": [
+              "outputs/QB/20261114-r3-retained22-stage-install-source-review-01/REVIEW.json",
+              "outputs/\u4e3b\u63a7/20261114-r3-retained22-operator-artifact-window-01/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "\u6309\u540c\u503c\u671f\u9650\u4fee\u6b63\u548c\u5c40\u90e8\u56de\u6eda\u4fee\u590d\u51c6\u5907\u771f\u5b9e\u6279\u540e\u7ee7\u6e90\u3001\u672c\u5730\u7ef4\u62a4\u4e0e\u4e1a\u52a1\u63a5\u7ebf\uff1bservice21\u4fdd\u6301\u6b63\u5e38\u5173\u95ed\uff0c22\u672a\u7b7e/\u672a\u542f\u3002",
+        "currentInFlight": "T45\u552f\u4e00\u63a5\u6536c86e\u5236\u54c1\u5e76\u64a4\u56de\u4e34\u65f6\u5165\u53e3\uff0c\u5b9e\u9645READY\u540e\u72ec\u7acb\u5b89\u88c5\uff1b\u5f85\u5b89\u88c5\u53ca\u516d\u89c4\u5219\u5b9e\u9645\u767b\u8bb0\u624d\u5f00\u59cb\u65b0\u89d2\u8272\u65f6\u9650\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
