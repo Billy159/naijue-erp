@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 12:51。按实测初始化大小修正后的入口已复核获授权，继续同一实例和原批次导入。
+更新时间：北京时间 2026-11-14 12:58。同一实例与原批次的导入作业已运行，按原键等候提交状态。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b28a7b1e9ac3f0481f9bd9116807916ed3e56d2d) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/87187485810628ce3f7f1e92c70c71179fd96d7a) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -887,4 +887,9 @@ C/T45准备继续同一service22和已设置的T1794640192413，不新增启停/
 QB窄审 ce7eda4f09d530399d7e82a91287c5b4996516befdc364dea876f9859475d389，无发现。C保留原04 e5612、原只读22 b6de/ABSENT及同c6d、三对root/public结果及51225175准确测量；24+1原锁metadata e535。真实原service22保持。最终T45 a681/f1da/8cf983、d83a规则和8a7c提交预核。四处同一文件准确长度51225175 B，N±1及错SHA拒，原保护与D2 c86e/manifest不改；新访问规则只允许原reader22/restored，before/active拒；49/48计划2bbfb完整顺序经原生成器重建。
 
 C准确登记63e1c8beb3245f659ec62483d48a43c18828b86d4a3a2be8328a30d676c92795/carrier661bc3，策略d269/dispatcherfef22，另四维护规则和原policy期限保留。准确后继原writer05外84a5b4004aef34b9fb7e90c962304be0ed9336074f5197e4328653c193f2abe5、内19a75b，实际controller T1794640192413内外同值；尚未收实际入场。见outputs/主控/20261114-r3-absent04-retained22-continuation-window-01/ISSUED.json。最迟实际入场1794634672413前，完整4500+420+600s余量。只新外层05/最终reader22-02，源09、原数据库4UUID/c6d和44682步不改。T45按唯一CAS读回/释放锁及真实CLI动态SHA预核后执行，不重复原03/04或新PREPARE。业务、全批核账/备份/恢复和上线仍待实际证实。
+
+
+### 2026-11-14 12:58 — 同一 R3 实例导入作业已实际运行
+
+T45 12:51:51 完成唯一授权 CAS、原锁释放，audit 3a042d83c0f549843fe54cf44d8c07574369011420cd86db63173fa7dfbeefe9。原04及reader22终态不变，新05/22-02原先双面不存在。真服务22保持ea7f同代，T45按准确动态文件摘要预核并仅提交一次，unit naijue-erp-op-b16447fb-8c9e40ba9a5a，清单6bb1d61ff2993de8fd0660dd2ff7b46677d172ae0689358d6846c8bd1ac72147。T45 RESOURCE-SAMPLE-03于12:56:52观察RUNNING，根卷普通可用275198074880 B；该点是运行采样，非全程峰值或业务收据。原键继续观察；真实独立读回、备份/恢复和正式启用仍须对应回执。
 
