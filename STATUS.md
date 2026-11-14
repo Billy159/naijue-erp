@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 09:27。三组新增源码复核通过，正在备齐新包安装与执行入口；新实例和导入均未启动。
+更新时间：北京时间 2026-11-14 09:50。六阶段新源码已复核，新包接收完成且临时上传入口已撤回；隔离安装进行中，尚未启动新实例或导入。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/e26c97b21f20ef43ee205d827dd88305c7f23f26) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/3a45663c2924b803ca9e51c2a5ae17b3b9e43b61) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -705,4 +705,15 @@ D2独立新commitfc6ee9fe7f957fb967edc08e40442a5a47bf6634/tree814ea6693a5e572bfb
 T45四维护phase静态18pins（8变10复用）于outputs/T45/revisions/20261114-r3-ordinary21-sixphase-source-local-01/FOUR-PHASE-STATIC-PINS.json冻结；QB报告outputs/QB/20261114-r3-ordinary21-four-phase-source-review-01/REVIEW.json SHA119fcf1403f9540c3e5a847ac8bff17f7336921557dcdf38954bc9c2752128a7 source-only通过，无新发现。真实20前代stop/restore/CID/epoch与必要21 key/name/传递pins及3新source模型通过，原role/guardian算法AST复用。rolesauthority C叶尚未最后签，partial不可登记；不会在源准备期间提前消耗其有限期限。
 
 剩余T45新业务host/CAS/纯制品stage+install必要delta在本地制作：host.scope/authority恢复纯校验，rootregistered_policy静态pin/expiry校验在main私密/连接前，C builder可直接用真实函数，无servermock；actual21proof/CID/epoch不写源码literal。fc6制品在已closed20状态先安装独立root，旧773不覆盖；stage/installer沿原机制只需新archive/source/root及已实证20closed账本，不要求旧20 live。C/T45约定六准确phase一次预登记，实际21产生后只填原C保护data/7key，完整4500+420与收尾余量留足。当前仍未注册21、未改roles/启动PG、未提交原03，整批真实导入/核账/冷备/独立恢复/APP/公网实测均未完成。
+
+
+### 2026-11-14 09:50 — 六阶段新源全部复核通过；fc6制品已实际接收并撤回临时入口
+
+QB新增业务host/CAS复核 outputs/QB/20261114-r3-ordinary21-business-host-cas-source-review-01/REVIEW.json SHA17b6fb131292ed0a06e1e7bdc6623adba8c4e697c2068f595593a43a73019e94通过；host e74c/Node287d/CAS9d3保留原09身份、原事务与清理界线。QB制品stage/install及原private carrier机械21接续复核 outputs/QB/20261114-r3-retained21-stage-install-carrier-source-review-01/REVIEW.json SHAb4bd9d8f6f8f73b745a7fa31514d09fbfb7fc1d0cbebe6d5b2815a0255539754通过。原receiver6936/600+240与已验生命周期复用，非新实际导入验证。
+
+实际fc6制品 key t45-r3-retained21-operator-source-20261114-01 唯一上传1次，rawREADY d3dc451e60d7491dc8e5f4f3cc4e1775b2451a533a3dd4857955f80d119e7231；archive1f889/959147B，dev66304/inode28837480，stageauthority554e，policywindow970。T4509:44:35 safe读回原policy已owninode精确撤回至ABSENT，安装/撤回consumercheck通过。证据 outputs/T45/revisions/20261114-r3-retained21-operator-artifact-actual-01/RESULT.json / STAGE-READBACK.json。无DB连接/roleapply/21启动/业务提交。
+
+C已签新fc6独立安装授权17bdd9a667a13c6d6f354f29a3c6e82907a781c9facbbae9bff74521133153ab，outputs/主控/20261114-r3-retained21-operator-install-window-01/install-authorization.json，09:47:07至10:02:07，沿6bac/f1b9精确installer一次安装，3新bodyhash、222复用，旧773保留。尚待实际operator-ready，不能记安装成功。CAS原14basis及lock09:42:08一次metadata帧 daad79889f449a2fe58d4674b8d603fb6424446f48bf850ecaf7eb77292bc199已收齐，0body/0DB/0writes，后续复用，不重复root探测。
+
+六phase本地静态bundle已T45预置；角色叶与6policy尚未签，新21尚未登记/运行，原writer03仍未提交。真实整批导入、读回核账、备份及独立恢复、正式APP及公网业务验证仍待完成。
 
