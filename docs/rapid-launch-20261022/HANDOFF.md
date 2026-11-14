@@ -6719,3 +6719,11 @@ T45真实原键t45-first-20261110-r3-real-execute-20261114-04完成原前序及0
 原writer04真实FAILED/exit2/177.3945s，12:23:36.748605CST，root/public terminal e5612d1a32287ee5923f4906634e68ee9ddda69e33b8aefa33e073b57825d083，root result00860e000fe569b38926ccb5d7f0206d29c1c643acb28f394efe5faac32999f1、native71621d、root cleanupc89481c。native UNKNOWN、SQLSTATE null、safeCode RETAINED20_INITIALIZER_BOUND；业务回滚未确认。已确认子进程及后代回收、独占进程退出、49原权限恢复、scratch empty，原INIT callback和retained两个文件均无。实际恢复frame3daf524eb7786bffe12c1f35feb31baf0acf2f1af7f2071cb2635173232d47fd/pointercd0a04dd170806850c601bcef390918480c1f35a684bf57e15a6d4a56649e685；ctime变更按原算法边界。证据outputs/T45/revisions/20261114-r3-retained22-writer04-actual-01/WRITER-OUTCOME-READBACK.json。失败运行cgroup peak3737600000/7516192768、0 OOM，未代表完整写入。
 
 冻结源码中安全码只有一处：retained22-run.mjs序列化 INIT JSON+LF 超过2097152即返回，尚未open文件，原executeWholePackage位于 callback成功返回之后。原目录期限窗口已穿过该阶段；不将源码先后代替数据库实际结果。禁止重放原04/新prepare。T45正复用既有helper95/原核查路径用reader22尚未用外层键，绑定actual22/04及同原c6d；仅另返回同INIT实际序列化字节数。复用父420/子360/离线300/RO SQL15，C仅局部draft reader policy和原CAS，尚无新签发/查询，保留仍实际运行22用于当前只读核查。D2只核精确同数据量上界链，按实际重构字节后修正，不猜临时阈值。原09两公开聚合的26 count字段与数值完全一致，stdout六金额/数量字段符合整单位字符串合同，准备后续核账继续保持。正式导入/备份恢复/上线待完。
+
+### 2026-11-14 12:37 — 原04只读核查及原INIT字节计数已准确授权
+
+D2已定位原2 MiB硬编码涉及同一私文件四处（Node写、Python保护留存与读回、Node受保护读取），另后继取证工具也同界限；现有stdin小帧不含INIT，原PG Bind/inspect对同组合已实测，未证实正式写入承载。报告outputs/D2/20261114-r3-writer04-initializer-bound-diagnosis-01/REPORT.md SHA10c5efab4934714fa3ae0292191e8b767e6eb71f917183ebf7550c6911644e5a。待实际同c6d的准确序列化大小再给文件边界，不用理论任意大上限，也不动原业务事务和PHP/PG源。
+
+T45原04机械RO源268e/a870/ff059（固定八叶）和原访问生成器从实际3daf/49/48产生的1fbcb6复算一致；独立验证Unicode与>2MiB纯fixture，只有组合已核时测 JSON+LF UTF8字节数，原helper95/原09/同c6d/保护与清理复用，保持420/360/300/15预算。C登记初稿全局替换误动旧inspect03 pin，已修并与旧20基础逐项比对，现CAS67be/carriera656/module d39a/templatef6dc、22+锁metadataed2c，实际f0a1/322a真实保全。策略a3b5仅reader三字段变化。QB final 3050ffdbb7cf8cadb173b82d91801ad1fb2be2a5565e5d54bf418bd908a47be6，源窄核通过。
+
+C签登记f85d06498ad1ca21125323ecca068a7b001f868165d54be0553c517383439cc3、只读原reader22 f0925292d1ec9a2a07f68ef12326a7558ccbb821d51695b93d91dd8bdf9670d7，截止1794632473700。见outputs/主控/20261114-r3-unknown04-readback-registration-window-01/ISSUED.json。T45准确一次根登记并释放锁后预检真实动态SHA和最终请求才提交，只原键和真实原事务/清理/字节数，不重放04。当前未收实际提交、事务结果或大小，真实全批导入/核账/备份恢复/上线未完成。

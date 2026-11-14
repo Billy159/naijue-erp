@@ -5203,9 +5203,17 @@
               "outputs/T45/revisions/20261114-r3-retained22-writer04-actual-01/WRITER-OUTCOME-READBACK.json",
               "outputs/T45/revisions/20261114-r3-retained22-writer04-actual-01/READER-SOURCE-AGGREGATE-CHECK.json"
             ]
+          },
+          {
+            "group": "R3-WRITER04-ORIGINAL-READONLY-AUTHORITY",
+            "status": "ACTUAL_FAILURE_SAFE_SOURCE_REVIEWED_READONLY_OUTCOME_PLUS_EXACT_SIZE_ISSUED",
+            "evidence": [
+              "outputs/QB/20261114-r3-original04-readonly-inspect-source-review-01/REVIEW.json",
+              "outputs/\u4e3b\u63a7/20261114-r3-unknown04-readback-registration-window-01/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45/C\u9002\u914d\u65e2\u6709\u53ea\u8bfb\u539f\u952e\u6838\u67e5\u5e76\u5b89\u5168\u6d4b\u91cf\u540cINIT\u5927\u5c0f\uff0cD2\u6838\u539f\u660e\u786e\u8fb9\u754c\uff1b\u539f04\u4e0d\u91cd\u653e\uff0c\u6570\u636e\u5e93\u5c1a\u672a\u7b7e\u65b0\u64cd\u4f5c\u3002",
+        "currentInFlight": "T45\u552f\u4e00\u767b\u8bb0\u5e76\u539freader22\u53ea\u8bfb\u6838\u771f\u5b9e\u539f\u4e8b\u52a1\u548c\u540cINIT\u5e8f\u5217\u5316\u5927\u5c0f\uff1b\u4fdd\u7559\u539f04\uff0c\u65e0\u65b0\u4e1a\u52a1\u5199\u5165\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
