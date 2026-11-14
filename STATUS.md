@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 12:10。已核实拒绝发生在认证执行前，提交参数预检已复核，正在登记并接续准确认证请求。
+更新时间：北京时间 2026-11-14 12:18。新实例及临时认证读回通过，导入授权与角色截止完全一致，正在接续同批整批导入。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/359e2e67a407c7439475e0a67fa6d913fc72a3d9) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/8bcff7c414fb9e8209051d94566397320586cf6e) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -841,4 +841,13 @@ T45原制品唯一上传 READY6f9535fb5f46a9492fb19dec3b397cdaa5ccb9a860015e244c
 T45最少传播更换唯一外层apply02及对应6源7叶，business host实际新独立policy路径已修（88a417），六未签规则e9a1、真实提交预检02d61。在任何上传前从实际policy和bundle重新算manifest/request，保证args唯一[实际授权SHA]，QB以原客户端本地替身实际构造结果一致及拒不匹配。C 20basis+锁，实际旧a113/9f24/982e、拒绝3979、closed21及原03ABSENT维持，模块720e/CAS51a5。QB 窄增量报告15804cc3759b26f0ffccf56bcb78c6cae55f6eaffdff1ad072454f418d52d527，精确源通过。
 
 C签新后继根登记54891e/原private carrier d8dc/策略322a/dispatcherf0a1，roles a59af9/外层apply c37f2，controller T1794640192413（后继writer内外同值）、backup1794640312413、恢复1794641992413。文件outputs/主控/20261114-r3-absent22-apply02-registration-window-01/ISSUED.json。T45单次登记并实读然后以新wrapper准确预检和递交apply02；尚未实际收到完成，不启库或写业务。c86e实装保留、原业务身份保持，同批511234目标及真实核账/备份/上线未完成。
+
+
+### 2026-11-14 12:18 — 修正后临时认证和service22启动实际完成，原批writer04已签
+
+原apply02实际登记CAS 973914072865ebc1014cd3d16681ca87ef0366a79e2164edbc0c173a060da911，dispatcherf0a1/module720e/policy322a，原锁释放。原提交预检写实args=[c37f2]，manifestdcfe7056；唯一apply02 COMPLETED0/6.901s，terminal0d249f78e280eccb2fe634cc13922d8b21af7e2aa859278335b4557db6f646df，root9c946c240520b97e6593ecf7905d8ba4938596d645f3ab11fefc5f5de713b276/public44e32e，cleanup e52ed6。实际controller T1794640192413/admin1794640312413，原权限属性/runtime未改，维护结束时PG仍停。证据outputs/T45/revisions/20261114-r3-ordinary22-role-apply-actual-02/APPLY-READBACK.json。
+
+原start22唯一提交，COMPLETED0/7.211s，12:17:36.950318CST读回。terminal9ceab21e49c61a16217683547e0e8c4e2f08713818a964d31d49433b37ac1956，root1bb47fe0b91bcd60de608a1c365324e1b76834ada7585e5ddf923b670b05053f，proofea7f29a555c0672d11457a1ae45788f7ce2495ecc25683a748a6e9b8dd9ded9b，CID036e8221eaafb4fb473b5f9a5e7a61142d57e8dcd8ea76374916cbbe80f2ded8/birth04:17:02.413303865Z/epoch04:17:03.806731+00。同SID/OID、原只读runtime、retained ack，容量092cacf7f22b98a2e6dfedb64ae883078b1775d3afc4188cf4d568247ebed414，2,031,616锁槽>=1,677,658，7 GiB；work1794641356999 > T，实际启动非正式导入峰值。证据outputs/T45/revisions/20261114-r3-ordinary22-start-actual-01/START-READBACK.json。
+
+C用真实返回及实际roles签原批后继writer04，内16e3b3a31632fc4a64e7397cb124eb8b0282ef8ee1ed50d90ff8a4b1cf0e9538/外cc4e1d121cf4d8d7920140e99c392f5aca075df99199623c49857ae55b854366，有效到同一T1794640192413，4500+420+600留足；原09/4UUID/INITc6d/44682等保留，仅实际proof+epoch变。准确输出outputs/主控/20261114-r3-retained22-writer04-window-01/ISSUED.json。T45已获唯一执行授权，待提交及真实事务/连接/49/容量原结果，不重放03或重开PREPARE。真实全批核账、备份恢复和上线仍待。
 
