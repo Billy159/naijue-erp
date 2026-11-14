@@ -5616,9 +5616,27 @@
               "656c2dc9c92fefaf0b815ba2e6b93af338180c19e442455cb21cf3584244954a",
               "a12b5e6845db47bc1eb9d8d2f558d44ed0b6cbecc51f9c578ead2b8521b121dd"
             ]
+          },
+          {
+            "group": "r3-inventory-proof-readiness-role-first-local",
+            "status": "LOCAL_POSTGRES_EQUIVALENCE_AND_ONE_PAIRED_WORKLOAD_OFFLINE_ONLY",
+            "evidence": [
+              "70e37a3e8fadad49f0f8a208d7251602f730cb125faeb7cae54aaeb1cc18a9ec",
+              "b430f9241bf294cad071417fc9e2a540d5cdf215e5f17c990b3b75b98152ba64",
+              "c6b5fa3f1e459f23f91b7b274618db6b66358e9caee7ceb48e2902b2a43ff0fa"
+            ]
+          },
+          {
+            "group": "r3-mixed-full-transfer-tail-preflight",
+            "status": "LOCAL_511234_SYNTHETIC_ROWS_CALIBRATED_PREFLIGHT_PASS_PG_PENDING",
+            "evidence": [
+              "193a1e80d76182d61130c1f0b81193b602e8c64bfe0039fb513fe0d79fa11076",
+              "3153906b4acd5f9efae52a0f488e1323a2d7634b5e234fe9c2fdfc6038bbebca",
+              "2d31b1ba89154ff44a5ce13d9a34885f9e2c28dd945482a017c22a9a673e5e36"
+            ]
           }
         ],
-        "currentInFlight": "\u6b63\u5f0f\u8c03\u62e8\u533f\u540d\u805a\u5408\u5df2\u53d6\u5f97\uff0c\u505c\u6b62\u5355\u5185\u53bb\u91cd\uff0c\u5c40\u90e8\u5c31\u7eea\u5224\u65ad\u6309\u672c\u673a\u7b49\u4ef7\u5b9e\u8bc1\u3002\u9996\u6b21 247 \u884c\u73b0\u573a\u6f14\u7ec3\u5f85\u539f\u786e\u8ba4\u5361\uff0c\u6b63\u5f0f\u6570\u636e\u7ee7\u7eed\u4fdd\u5168\u3002",
+        "currentInFlight": "\u672c\u673a\u5355\u53f6\u5c31\u7eea\u5019\u9009\u548c\u66f4\u8d34\u6b63\u5f0f\u5206\u5e03\u7684\u5168\u91cf\u5408\u6210\u9884\u68c0\u5df2\u9a8c\u3002\u9996\u8f6e247\u884c\u73b0\u573a\u4ecd\u5f85\u539f\u6388\u6743\uff0cR3\u505c\u5e93\uff0c\u65e0\u6b63\u5f0f\u4e1a\u52a1\u63d0\u4ea4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
