@@ -5968,9 +5968,17 @@
               "D2 REPORT 01c7c089\u2026",
               "INTEGRATION a344d0fc\u2026"
             ]
+          },
+          {
+            "group": "20261115\u540c\u7c7b\u9694\u79bb\u6d4b\u91cf\u7528\u6237\u6301\u7eed\u6388\u6743",
+            "status": "\u7528\u6237\u660e\u786e\u6388\u6743\u540e\u7eed\u540c\u7c7b\u9694\u79bb\u6d4b\u91cf\u53ca\u5fc5\u8981\u767b\u8bb0\u7b7e\u5165\uff0c\u7531\u4e3b\u63a7\u5224\u65ad\u63a5\u7eed\u3002T45\u552f\u4e00\u73b0\u573a\u6267\u884c\uff0c2CPU/6GiB/900\u79d2/180\u6e05\u7406/28GiB\u6cbf\u7528\u3002",
+            "evidence": [
+              "user current exact statement and third-compile screenshot",
+              "authorization note SHA256 0c25f2a54db7eb37d7dd0b668df1793b73c7f9f85ea19228e6ceb7447ac9c591"
+            ]
           }
         ],
-        "currentInFlight": "T45 \u672c\u673a\u8865\u6587\u4ef6\u4f20\u9012\u548c\u539f\u547d\u4ee4\u63a5\u7ebf\u3002\u7b2c\u4e09\u4ee3\u5df2\u6536\u53e3\uff0c\u6b63\u5f0fR3\u505c\u5e93\uff0c\u6682\u65e0\u65b0\u73b0\u573a\u6388\u6743\u3002",
+        "currentInFlight": "\u7528\u6237\u5df2\u6388\u540c\u7c7b\u6301\u7eed\u6388\u6743\u3002T45\u51bb\u7ed3\u7b2c\u56db\u4ee3\u53ca\u4e24\u7aef\u6587\u4ef6\u63a5\u7eed\uff0cQB\u4ec5\u6838\u5dee\u5206\uff0c\u968f\u540e\u539f\u901a\u9053\u53ea\u8bfb\u73b0\u573a\u6838\u5bf9\u5e76\u63a8\u8fdb\u3002\u7b2c\u4e09\u4ee3\u5df2\u7ec8\u6001\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
