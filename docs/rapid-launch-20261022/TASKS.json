@@ -5685,9 +5685,16 @@
               "T45 final local report 57d311c3a75ea5e7f3ab5dcc1709d217d4347444aa72d697ccb1e8cf2da31cc5",
               "QB narrow two-finding delta review original chat 01a161d2-73f1-7381-ab03-65a1c3b52aa2"
             ]
+          },
+          {
+            "group": "FULL-511234-V2-COMPILE-ONLY-LIVE-PREFLIGHT-20261114",
+            "status": "READY_BASIS_VERIFIED_READ_ONLY_PENDING_AUTHORIZATION",
+            "evidence": [
+              "T45 LIVE-PREFLIGHT.json d2f5d8200e9661d96b32eca6b3cded12548c311c06c18189fc16628e98a9ed0b"
+            ]
           }
         ],
-        "currentInFlight": "Await separate human approval for one reviewed 511,234-row synthetic V2 compile-only on a distinct PostgreSQL 17.11 target. Formal R3 remains stopped and real 511,234-row package uncommitted.",
+        "currentInFlight": "Existing user card pending for one isolated compile-only measurement. Fixed candidate live preflight is read-only and successful. D1 independent local physical restore V2 sales evidence in progress. Formal R3 stopped.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
