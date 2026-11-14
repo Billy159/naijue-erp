@@ -6163,9 +6163,19 @@
               "resourcef8d01472 / blocked2c7dc158",
               "recovered same route26fab1cde2b9f58be6cf807a4a60f4f7abbbbdccfcd4258a13126705e4a64df1"
             ]
+          },
+          {
+            "group": "REG02\u6700\u5c0f\u884c\u653f\u63a5\u7eed\u53ca\u65b0R0\u771f\u5b9e\u767b\u8bb0\u6210\u529f\uff0c\u539fM\u4e0a\u4f20\u5728\u9014",
+            "status": "\u540cleased\u901a\u9053\u6062\u590d+\u8d44\u6e90\u5b9e\u6838\uff0cREG02\u4ec5\u884c\u653fguard/4\u4e3b\u63a7\u7ed1\u5b9a\u83b7QB25cee\uff0c\u5b9e\u9645pref3976 UTC23:52\u901a\u8fc7\u3002\u552f\u4e00\u65b0ISSUE255b\u4e8e23:55:40.718\uff0cwaiter86529exit0/ENTRY\u771f\uff1baudit2a00/dispatcher ae53/policy4655\u5df2\u539f\u952econfirm\u3002\u539fM26member\u4e00\u6b21\u4e0a\u4f20\u53capostbirth\u7b49\u5f85\u5728\u9014\uff0c\u672a\u5ba3\u79f0\u5b9e\u9645\u6d4b\u91cfPASS\u3002",
+            "evidence": [
+              "new4pins5bb8f737/256b001e/9fb06a90/2da82117",
+              "main02 e0bb003b / QB25cee551 / pref39762579",
+              "ISSUED255b1dff / registrar bound26def96b",
+              "reg audit2a00fdebb37ee6016af976ed53c2443b060426693b5b610901723255a6a786c6 / dispatcher ae53bc3d"
+            ]
           }
         ],
-        "currentInFlight": "T45\u4ec5\u672c\u673a\u51c6\u5907\u884c\u653fREG02\uff08\u4fdd\u6301\u672a\u63d0\u4ea45workload01/r90855568/357source22parts/10\u5c42/POST01\uff09\uff0c\u5e76\u53ea\u8bfb\u6838\u7ba1\u7406\u901a\u9053/\u539f\u952e/\u73b0\u573a\u8d44\u6e90\u3002\u539fREG01\u53caR0\u7a97\u53e3\u51bb\u7ed3\u4fdd\u7559\uff0c\u539flistener78294\u5df223:47:40.205\u81ea\u7136\u622a\u6b62124\u3001\u65e0postbirth/INSTALL\u3002\u65b0\u7b7e\u5165\u987b\u6062\u590d\u53ef\u8bfb\u6027\u3001\u51c6\u786e\u539f\u952eABSENT\u4e0e\u73b0\u573a\u8d44\u6e90\u6838\u53ca\u65b0scope\u7a84\u5ba1\uff0c\u4e0d\u6539\u539fP0\u4e0d\u673a\u68b0\u91cd\u8bd5\u3002formal\u6700\u8fd1\u6210\u529f\u505c\u5e93\u5b9e\u6838UTC23:34:23\uff0c\u8d44\u6e90\u6700\u65b0\u5b9e\u6838\u672a\u5b8c\u6210\u3002",
+        "currentInFlight": "REG02\u5b9e\u9645\u6210\u529f/current ae53\uff1br908\u539fM\u5ba2\u6237\u7aef48657\u552f\u4e0026members\u4e0a\u4f20\u81f300:06:20.718\u65e7limiter\u5185\uff1bmain02\u6b63\u786eENTRY listener18048\u8fd0\u884c\u81f300:06:50.718\uff0cT45 postbirth4710\u7b49\u539fpost-birth\u3002P0 2026-11-15T00:00:40.718Z\uff0cprovision00:20:40.718/policy00:25:40.718\uff1bC0\u672a\u5b9e\u751f\uff0c\u4e0d\u9020\u5b9e\u9645cgroup/\u5b89\u88c5/\u7f16\u8bd1/STEP\u7ed3\u679c\u3002\u65e7REG01/live01/\u65e7R0\u51bb\u7ed3\uff0cformal\u6700\u8fd1\u5b9e\u6838\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
