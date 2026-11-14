@@ -6785,3 +6785,9 @@ QB 文件交接13项及70秒本机发起 scoped通过，先前认为90秒为服�
 QB冻结第四代r905/55565 RESULT da8aa155…、route38785959…/phase84f65f97…/carrier e3e5c28a…及原文件交接受限PASS。T45现场原前缀0ca4c2fb…直接运行registrar6b9d53cf…成功，18原保护文件/19实际身份含锁、前三代终态、11卷、原R3同代停、队列空闲、新七键/目标缺席和资源通过。主控实际ISSUED eb8a7833…在02:19:35.174生成，P0 02:24:35.174，provision到02:44:35.174、policy到02:49:35.174。一次原登记根3e4adb40…、dispatcher c681d68f…、policy7069c2f8…准确读回。
 
 主控issuer真实子进程已在P0前运行，session42293，已收到本代实际登记文件，等待本代真实BIRTH双读回；经原same-byte检查后一次签入post-birth完成文件。T45原文件交接相应准备，MATERIALIZE在途。until02:30:45.174仅限本机等待，原基于真实C0的发起和编译/清理边界继续，90秒仅排程目标。真实安装、编译及最终停库待回执。正式R3未写。
+
+### 2026-11-15 02:29 — 第四代自动签入通过，定位到排程超时留下已上传未启动原请求
+
+实际C0 02:25:17.229939229，BIRTH原双读回02:26:03.896，主控提前运行的issuer自动在02:26:04.033签入，post-birth ISSUED62def032…，T45等待器无聊天干预读到、私密存储EXACT_INSTALL_ORIGINAL_STORED_NO_PHASE_SUBMITTED。原客户端上送INSTALL时，本地90秒排程退出线02:26:47.229使它未返回QUEUED。T45原键只读02:28:11回执确认control请求完整367B和manifest cd5b87a6…，tmp缺、root workerJob/workerRequest/terminal/public结果均缺，原执行锁释放且无活动、INSTALL未消费。原admin_client实际顺序为历史PREPARED→请求mv→dispatcher start。本次已证明原dispatcher尚未freeze/启动，主控授权T45沿既有防重freeze只对这个已上传原请求首次start，无第二次upload或换键。90秒此前即认定预算，不能将它误作原服务端硬限。原容器900/guardian编译截点180清理和授权expiry保持，当前可用实际编译时间须按其较早值报告。
+
+D2固定EXECUTE候选0c7d80d2…获QB源与既有真实计划/异常独立PASS，96合成组合94.945→45.325秒、26类/六项独立VERIFY闭合，112→113索引和原数据/xmin保持，仍仅本机证据。后续只定位已见checkpoint重复大INIT读取，原本轮Linux SQL不改。
