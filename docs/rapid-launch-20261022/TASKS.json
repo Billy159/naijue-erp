@@ -5709,9 +5709,18 @@
               "outputs/\u4e3b\u63a7/20261114-r3-full-compile-local-01/HALL-RESTORE-SAMPLES.json 119001c940a380ae19c66bf129d1978ff8d0ebb241ee13725fda680f380e813e",
               "Protected local sample artifact SHA 8f45f644b76e7d7404279dbfc8369291e484952aaeedfa9884d426a30cf6047c"
             ]
+          },
+          {
+            "group": "R3-FORMAL-HALL-SAMPLE-READBACK-ADAPTER-20261114",
+            "status": "LOCAL_MODEL_AND_REAL_PROTECTED_EXPECTATION_BINDING_VERIFIED_NO_FORMAL_DATABASE",
+            "evidence": [
+              "Formal protected sample adapter cb3d7a64b47ec4001bc93762cbf3c1e26a7c4ff2d5449ced932ba13f1e05de7e",
+              "D1 normal readback e7d02dc2fa6b6020da90c5323718b8c3c8469b69430a9b54704bb39040f6b527",
+              "D1 physical readback 6c4ee06d294e4305928d8beade2ff2d326a0e1944d90957dcfdee4da8ff6f4b1"
+            ]
           }
         ],
-        "currentInFlight": "Existing user card pending for the single isolated compile-only action. Formal V2 sample input fixed privately from exact real data; D1 adapting original ordinary/physical readback checker. Formal R3 remains stopped.",
+        "currentInFlight": "Existing user card pending before the one reviewed full-size isolated compile-only operation. D1 and C have an offline verified protected formal V2 sample and normal physical-pair readback adapter. Real writer, reconciliation, backups, restoration and business opening remain pending. R3 stopped.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
