@@ -5482,9 +5482,18 @@
               "outputs/D1/20261114-r3-mixed-scale-design-01/SMOKE-AB.json",
               "outputs/\u4e3b\u63a7/20261114-r3-physical-xmin-probe-local-01/RESULT.json"
             ]
+          },
+          {
+            "group": "R3 isolated SQL39 catalog independent source review and root capacity",
+            "status": "CATALOG_MODEL_REVIEWED_PROTECTED_HOST_WIRING_IN_FLIGHT",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/SMOKE-A-CARRIER.UNISSUED.md",
+              "outputs/D1/20261114-r3-coalesce-base-offline-01/RESULT.json",
+              "outputs/\u4e3b\u63a7/20261113-r3-17-continuity-recovery-local-01/\u5bb9\u91cf\u6838\u7b97.md"
+            ]
           }
         ],
-        "currentInFlight": "R3 safely stopped. Reuse existing isolated carrier after exact mixed scope validation. No real import, replay or public release.",
+        "currentInFlight": "R3 stopped. Small synthetic controller same-connection wiring is under local completion. No launch or rerun.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
