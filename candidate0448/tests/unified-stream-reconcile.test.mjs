@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { STANDARD_MASTER_TABLES } from '../packages/application/src/unified-import-execution.ts';
+import { sha256 } from '../packages/application/src/unified-import-contract.ts';
+import { readHistoricalLineAmountEvidence } from '../packages/application/src/unified-historical-line-amount-evidence.ts';
 import { compareWholePackageSource, reconcileWholePackage } from '../tools/unified-import/whole-package-reconcile.mjs';
 const secret='naijue:scrypt:1:32768:8:1:'+'c'.repeat(32)+':'+'d'.repeat(128);
 const init={plan_sha256:'a'.repeat(64),batch_id:'00000000-0000-4000-8000-000000000001',payload:{document_batch_id:'00000000-0000-4000-8000-000000000002'}};
@@ -89,16 +91,20 @@ test('inventory verification rejects genuinely rounded aggregate equality',async
  assert.equal(c.calls.at(-1),'ROLLBACK');
 });
 
-function approvedAmountReadback() {
+function approvedAmountReadback(expanded=false) {
  const refs=[{file_sha256:'e'.repeat(64),sheet:'Synthetic',row:12},{file_sha256:'f'.repeat(64),sheet:null,row:41}];
- const namespace='SYNTHETIC_AMOUNT_READBACK';
+ const namespace='synthetic_amount_readback';
  const fact={sales_id:'00000000-0000-4000-8000-000000000003',line_id:'00000000-0000-4000-8000-000000000004',
   sales_source_key:'synthetic-header',line_source_key:'synthetic-line',sales_source_refs:[refs[0]],
   source_refs:refs,quantity:'-3',deal_price:'4.00',line_amount:'-11.99'};
  const second={...fact,line_id:'00000000-0000-4000-8000-000000000005',line_source_key:'synthetic-line-2',
   source_refs:[{...refs[0],row:43}],quantity:'2',deal_price:'10.00',line_amount:'19.99'};
- const approval={format_version:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',source_namespace:namespace,evidence_sha256:'b'.repeat(64),lines:[fact,second]};
- const descriptor={utf8:JSON.stringify(approval),sha256:'a'.repeat(64)};
+ const lines=expanded?Array.from({length:6},(_,index)=>({
+  ...fact,line_id:`00000000-0000-4000-8000-${String(index+10).padStart(12,'0')}`,line_source_key:`synthetic-line-${index}`,
+  source_refs:refs.map(ref=>({...ref,sheet:'合'.repeat(15_000),row:ref.row+index})),
+ })):[fact,second];
+ const approval={format_version:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',source_namespace:namespace,evidence_sha256:'b'.repeat(64),lines};
+ const utf8=JSON.stringify(approval),descriptor={utf8,sha256:sha256(utf8)};
  const request={...init,namespace,payload:{...init.payload,historical_line_amount_approval:descriptor}};
  function resultRow(item,calculated,difference,changed){
   return {sales_id:item.sales_id,line_id:item.line_id,source_key:item.line_source_key,source_namespace:namespace,
@@ -108,7 +114,9 @@ function approvedAmountReadback() {
    evidence:{format_version:'HISTORICAL_LINE_AMOUNT_BOUND_V1',attestation_sha256:descriptor.sha256,
     evidence_sha256:approval.evidence_sha256,fact:structuredClone(item)},disposition:'PRESERVED_SOURCE_DIFFERENCE'};
  }
- const value={...response(),historical_line_amount_differences:[resultRow(second,'20.00','-0.01',true),resultRow(fact,'-12.00','0.01',false)]};
+ const differences=expanded?lines.map(item=>resultRow(item,'-12.00','0.01',false)):
+  [resultRow(second,'20.00','-0.01',true),resultRow(fact,'-12.00','0.01',false)];
+ const value={...response(),historical_line_amount_differences:differences};
  return {request,value};
 }
 
@@ -142,4 +150,22 @@ test('rejects missing, duplicate or altered historical amount evidence even with
  const {request,value}=approvedAmountReadback();
  assert.throws(()=>compareWholePackageSource(value,init,counts,totals),/VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH/);
  assert.throws(()=>compareWholePackageSource(response(),request,counts,totals),/VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH/);
+});
+
+test('accepts the larger bounded SQL projection for real approved input bytes',async()=>{
+ const {request,value}=approvedAmountReadback(true);
+ const descriptor=request.payload.historical_line_amount_approval;
+ const approval=readHistoricalLineAmountEvidence({bytes:Buffer.from(descriptor.utf8),trustedSha256:descriptor.sha256,
+  sourceNamespace:request.namespace,sourceHashes:new Set(['b','e','f'].map(ch=>ch.repeat(64)))});
+ assert.equal(approval.lines.length,6);
+ assert.ok(Buffer.byteLength(JSON.stringify(value))>1024*1024);
+ const valid=await reconcileWholePackage(client(value),request,secret,counts,totals);
+ assert.equal(valid.state,'VERIFIED');
+ assert.equal(valid.summary.historical_line_amount_summary.verified_count,6);
+ const oversizedWithoutApproval=await reconcileWholePackage(client(value),init,secret,counts,totals);
+ assert.equal(oversizedWithoutApproval.code,'VERIFY_REPLY_INVALID');
+ descriptor.sha256='0'.repeat(64);
+ const noQueryClient=client(value);
+ await assert.rejects(reconcileWholePackage(noQueryClient,request,secret,counts,totals),/VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH/);
+ assert.equal(noQueryClient.calls.length,0);
 });

@@ -1,5 +1,5 @@
 import { isDeepStrictEqual } from 'node:util';
-import { parseStrictJson } from '../../packages/application/src/unified-import-contract.ts';
+import { parseStrictJson, sha256 } from '../../packages/application/src/unified-import-contract.ts';
 import { isNodeScryptPasswordHash } from '../../packages/authentication/src/passwords.ts';
 import { STANDARD_MASTER_TABLES } from '../../packages/application/src/unified-import-execution.ts';
 
@@ -14,6 +14,7 @@ const exactKeys = (x, keys) => object(x) && Object.keys(x).sort().join(',') === 
 const count = x => Number.isSafeInteger(x) && x >= 0;
 const uuid = x => typeof x === 'string' && /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(x);
 const sourceCountFields = [...STANDARD_MASTER_TABLES, ...documentTables, 'inventory_baseline'];
+const defaultReplyBytes = 1024 * 1024;
 const activeClients = new WeakSet(), quarantinedClients = new WeakSet();
 const safeCodes = new Set(['VERIFY_REPLY_INVALID','VERIFY_COUNTS_INVALID','VERIFY_SOURCE_COUNT_MISMATCH','VERIFY_TOTALS_INVALID','VERIFY_TOTAL_INVALID','VERIFY_TOTAL_PRECISION_INVALID','VERIFY_SOURCE_TOTAL_MISMATCH','VERIFY_COVERAGE_INVALID','VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH','VERIFY_BEGIN_ACK_INVALID','VERIFY_ROLE_ACK_INVALID','VERIFY_ROLLBACK_ACK_INVALID']);
 const safeFields = new Set([...STANDARD_MASTER_TABLES,...documentTables].map(t=>t.toUpperCase()).concat(['INVENTORY_KEY','IMPORT_BATCH',...Object.keys(totalFields)]));
@@ -48,21 +49,36 @@ function validateSourceInputs(initialize, sourceCounts, sourceTotals) {
   }
 }
 
-function compareHistoricalLineAmounts(initialize, differences) {
+function historicalLineAmountApproval(initialize) {
   const descriptor = initialize.payload.historical_line_amount_approval;
-  if (descriptor === undefined && differences === undefined) return undefined;
-  const mismatch = () => { throw Error('VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH'); };
-  if (!Array.isArray(differences)) mismatch();
-  if (descriptor === undefined) {
-    if (differences.length !== 0) mismatch();
-    return undefined;
-  }
-  if (!object(descriptor) || typeof descriptor.utf8 !== 'string') mismatch();
+  if (descriptor === undefined) return undefined;
+  if (!object(descriptor) || typeof descriptor.utf8 !== 'string' ||
+      Buffer.byteLength(descriptor.utf8) > 4 * defaultReplyBytes || sha256(descriptor.utf8) !== descriptor.sha256)
+    throw Error('VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH');
   const approval = parseStrictJson(descriptor.utf8);
   if (approval?.format_version !== 'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1' ||
-      approval.source_namespace !== initialize.namespace ||
-      !Array.isArray(approval.lines) || approval.lines.length === 0 ||
-      differences.length !== approval.lines.length) mismatch();
+      typeof approval.source_namespace !== 'string' || approval.source_namespace !== initialize.namespace ||
+      !Array.isArray(approval.lines) || approval.lines.length === 0 || approval.lines.length > 10_000)
+    throw Error('VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH');
+  return {approval, attestationSha256: descriptor.sha256};
+}
+
+function amountReplyLimit(evidence) {
+  if (!evidence) return defaultReplyBytes;
+  const {approval} = evidence;
+  // SQL projects each source fact and repeats the line's refs and key. It also
+  // repeats the namespace per line and adds a fixed set of numeric/marker fields.
+  const factBytes = Buffer.byteLength(JSON.stringify(approval.lines));
+  const namespaceBytes = Buffer.byteLength(JSON.stringify(approval.source_namespace));
+  return defaultReplyBytes + 3 * factBytes + approval.lines.length * (namespaceBytes + 1024);
+}
+
+function compareHistoricalLineAmounts(evidence, differences) {
+  if (!evidence && (differences === undefined || (Array.isArray(differences) && differences.length === 0))) return undefined;
+  const mismatch = () => { throw Error('VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH'); };
+  if (!evidence || !Array.isArray(differences)) mismatch();
+  const {approval, attestationSha256} = evidence;
+  if (differences.length !== approval.lines.length) mismatch();
   const expected = new Map(approval.lines.map(fact => [fact.line_id, fact]));
   let changed = 0;
   for (const row of differences) {
@@ -74,7 +90,7 @@ function compareHistoricalLineAmounts(initialize, differences) {
         !Array.isArray(row.source_refs) || row.source_refs.length !== fact.source_refs.length ||
         !fact.source_refs.every(ref => row.source_refs.some(other => isDeepStrictEqual(ref, other))) ||
         !isDeepStrictEqual(row.evidence, {format_version: 'HISTORICAL_LINE_AMOUNT_BOUND_V1',
-          attestation_sha256: descriptor.sha256, evidence_sha256: approval.evidence_sha256, fact})) mismatch();
+          attestation_sha256: attestationSha256, evidence_sha256: approval.evidence_sha256, fact})) mismatch();
     const quantity = units(fact.quantity, 0), price = units(fact.deal_price, 2), amount = units(fact.line_amount, 2);
     const calculated = quantity * price;
     if (units(row.calculated_line_amount, 2) !== calculated ||
@@ -93,6 +109,10 @@ function compareHistoricalLineAmounts(initialize, differences) {
 
 export function compareWholePackageSource(value, initialize, sourceCounts, sourceTotals) {
   validateSourceInputs(initialize, sourceCounts, sourceTotals);
+  return compareSourceReply(value, initialize, sourceCounts, sourceTotals, historicalLineAmountApproval(initialize));
+}
+
+function compareSourceReply(value, initialize, sourceCounts, sourceTotals, amountApproval) {
   if (!object(value) || value.verified !== true || value.verification_profile !== 'STANDARD_WHOLE_PACKAGE_VERIFY_V2' ||
       value.protocol !== 'STANDARD_IMPORT_SQL_V1' || value.plan_sha256 !== initialize.plan_sha256 ||
       value.baseline_batch_id !== initialize.batch_id || value.batch_id !== initialize.payload.document_batch_id ||
@@ -115,7 +135,7 @@ export function compareWholePackageSource(value, initialize, sourceCounts, sourc
       !count(c.post_cutoff_effect_keys) || c.unknown_combinations_not_enumerated !== true || c.complete_total_inventory !== false ||
       !object(inv) || !count(inv.verified_key_count) || inv.verified_key_count !== c.explicit_source_keys + c.post_cutoff_effect_keys)
     throw Error('VERIFY_COVERAGE_INVALID');
-  const lineAmounts = compareHistoricalLineAmounts(initialize, value.historical_line_amount_differences);
+  const lineAmounts = compareHistoricalLineAmounts(amountApproval, value.historical_line_amount_differences);
   return { source_counts: value.source_counts, source_totals: value.source_totals, current_totals: value.current_totals,
     document_summary: d, inventory_coverage: c, inventory_summary: inv,
     ...(lineAmounts ? {historical_line_amount_summary: lineAmounts} : {}) };
@@ -133,6 +153,8 @@ export async function reconcileWholePackage(client, initialize, encodedScrypt, s
   sourceCounts = structuredClone(sourceCounts);
   sourceTotals = structuredClone(sourceTotals);
   validateSourceInputs(initialize, sourceCounts, sourceTotals);
+  const amountApproval = historicalLineAmountApproval(initialize);
+  const replyLimit = amountReplyLimit(amountApproval);
   // structuredClone invokes enumerable getters, which can synchronously enter
   // this function again. Recheck after snapshotting, immediately before locking.
   if (activeClients.has(client) || quarantinedClients.has(client)) throw Error('VERIFY_CLIENT_UNAVAILABLE');
@@ -144,8 +166,8 @@ export async function reconcileWholePackage(client, initialize, encodedScrypt, s
     const role = await client.query('SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2');
     if (role.command !== 'SET') throw Error('VERIFY_ROLE_ACK_INVALID');
     const r = await client.query('SELECT naijue_erp.standard_whole_package_verify_v2($1::jsonb,$2::text)::text AS result_json', [JSON.stringify(initialize), encodedScrypt]);
-    if (r.command !== 'SELECT' || !Array.isArray(r.rows) || r.rows.length !== 1 || typeof r.rows[0]?.result_json !== 'string' || Buffer.byteLength(r.rows[0].result_json) > 1024*1024) throw Error('VERIFY_REPLY_INVALID');
-    const summary = compareWholePackageSource(parseStrictJson(r.rows[0].result_json), initialize, sourceCounts, sourceTotals);
+    if (r.command !== 'SELECT' || !Array.isArray(r.rows) || r.rows.length !== 1 || typeof r.rows[0]?.result_json !== 'string' || Buffer.byteLength(r.rows[0].result_json) > replyLimit) throw Error('VERIFY_REPLY_INVALID');
+    const summary = compareSourceReply(parseStrictJson(r.rows[0].result_json), initialize, sourceCounts, sourceTotals, amountApproval);
     rollbackAttempted = true;
     const rollback = await client.query('ROLLBACK');
     if (rollback.command !== 'ROLLBACK') throw Error('VERIFY_ROLLBACK_ACK_INVALID');
