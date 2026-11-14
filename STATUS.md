@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 10:56。已定位失败前缀和日志缺口；正在复用现有只读助手核查原事务，尚未开始新的数据库查询。
+更新时间：北京时间 2026-11-14 11:14。原事务只读核查已完成复核并签发，正在接续唯一登记和原请求；整批导入结果待核实。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/21acde6fedb844b66619f18dbf3cdad950f82326) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/69f966befdc29792fa3957461057bac0114d4e8f) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -775,4 +775,11 @@ T45 SAFE-FAILURE-READBACK已确认原native仅11顶层/sql=[]、最早gate/cause
 D2只源码诊断收口于outputs/D2/20261114-r3-writer03-catalog-diagnosis-01/REPORT.md：fc6 whole-host-session70-71在catalog BEGIN RR RO/两DO/SELECT校验后的finally一旦rollback检查不确定就遮住原gateError；connect131已先返回，原prepare/admission135-148及retained-import27 INIT callback未到。路径前后可定位，不冒充真实首因；null SQLSTATE/无INIT不作为全库无写入证明。
 
 C已授权T45仅本地复用已安装helper95 recoverOriginalR3Writer02Initializer+inspectOriginalR3Writer02与旧original02有限RO host，适配actual21/03及真实安全收据。原09 prepareStreamPlanInputs(...false)仅必要graph重构并校同c6d/dispose，不streamPreflight/44682枚举/PREPARE/SQL36；新鲜独立RO客户端 BEGIN RC RO/SET LOCAL原INIT/原inspect_v2/ROLLBACK/close，源码不进入此次writer catalog guard。原4UUID/plan保留，原native ABSENT无publish UUID独立SELECT，按实际原义报告、不暗加SQL。因现6policy reader21 e74正常读回缺INIT不可硬用，T45先冻结RO机械适配与必要仅reader21注册delta，另5phase/03历史/旧a85/db548/原锁全保留；后由既有QB只复核新增小范围、C准确签发，未授权绕过guard或直接查询。当前0新PGquery/0stop21/0rolesrestore/0重放，事务仍UNKNOWN，goal active。
+
+
+### 2026-11-14 11:14 — 原03只读核查适配通过，唯一reader21授权已签
+
+原helper95与原09重构/原native inspect SQL复用，actual21/原03真实收据及原49恢复帧绑定。原reader21未提交，使用相同420s父预算/360s子预算/300s重构/15s只读SQL。复核发现并修正两处本地缺口：host2c57在前置失败且可证未开DB/已清理时缺兼容的cleanup；最终14d只在固定入口且已证未打开或已安全回收/权限恢复时写真实清理结果，未证保持UNKNOWN。旧37db访问清单48变化顺序错误；以原observe_scope/make_plan对公开frame72fd重生成9ce321，完整对象及顺序独立复算一致，权限仍在线核验。最终8叶、策略cbed4b、旧a85另外5规则及总期限一致，原锁16basis+lock保留。QB报告outputs/QB/20261114-r3-original03-readonly-inspect-source-review-01/REVIEW.json SHA1eb31c5130b0768ff8f0e961ba984e04c5aec76276a82d553db021f249018624，PASS_CONDITIONAL_SOURCE_ONLY。
+
+C以实际21/03与最终ordered plan签发：outputs/主控/20261114-r3-unknown03-readback-registration-window-01/ISSUED.json，登记13faa7/原载体4eab，独立modulefd84/策略cbed/渲染dispatcher898a；reader4a2921/35440B，截止1794627493034，至少450s入场时间。T45唯一登记实际成功并释放锁后才按原reader21键唯一递交，当前未收到实际登记或查询结果。原事务仍UNKNOWN，导入、全批核账、备份恢复和上线待完成。
 
