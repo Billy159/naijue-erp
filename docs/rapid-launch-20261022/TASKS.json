@@ -5976,9 +5976,20 @@
               "user current exact statement and third-compile screenshot",
               "authorization note SHA256 0c25f2a54db7eb37d7dd0b668df1793b73c7f9f85ea19228e6ceb7447ac9c591"
             ]
+          },
+          {
+            "group": "\u7b2c\u56db\u4ee3\u6301\u7eed\u6388\u6743\u771f\u5b9e\u767b\u8bb0\u53ca\u4e3b\u63a7\u76d1\u542c",
+            "status": "\u72ec\u7acb\u5dee\u5206\u548c\u771f\u5b9e\u524d\u63d0\u901a\u8fc7\uff0c\u4e3b\u63a7\u7b7e\u5165\u5e76\u4e00\u6b21\u767b\u8bb0\uff0c\u4e3b\u63a7\u76d1\u542c\u5df2\u5728P0\u524d\u8fd0\u884c\u3002",
+            "evidence": [
+              "candidate RESULT da8aa155\u2026",
+              "live preflight 0ca4c2fb\u2026",
+              "issued eb8a7833\u2026",
+              "root audit 3e4adb40\u2026",
+              "issuer session 42293"
+            ]
           }
         ],
-        "currentInFlight": "\u7528\u6237\u5df2\u6388\u540c\u7c7b\u6301\u7eed\u6388\u6743\u3002T45\u51bb\u7ed3\u7b2c\u56db\u4ee3\u53ca\u4e24\u7aef\u6587\u4ef6\u63a5\u7eed\uff0cQB\u4ec5\u6838\u5dee\u5206\uff0c\u968f\u540e\u539f\u901a\u9053\u53ea\u8bfb\u73b0\u573a\u6838\u5bf9\u5e76\u63a8\u8fdb\u3002\u7b2c\u4e09\u4ee3\u5df2\u7ec8\u6001\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "\u7b2c\u56db\u4ee3\u6309\u6301\u7eed\u6388\u6743\u5df2\u767b\u8bb0\u3002T45\u539f\u952e\u9884\u7f6e\u548cSTART/BIRTH\uff0c\u53cc\u7aef\u6587\u4ef6\u63a5\u7eed\u76d1\u542c\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
