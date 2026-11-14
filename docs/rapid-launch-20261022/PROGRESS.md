@@ -6797,3 +6797,9 @@ D2固定EXECUTE候选0c7d80d2…获QB源与既有真实计划/异常独立PASS�
 T45沿既有dispatcher对已上传未启动的原INSTALL请求第一次start，返回QUEUED，原请求和bundle未改。原INSTALL root/public job55202e20… COMPLETED/0/0.394秒，typed实际EXTERNAL_INSTALL_ORIGINAL_PUBLISHED_NATIVE_OUTCOME_PENDING。原容器同代d05c…2CPU/6GiB/无网络。02:30:45原native只读90780fd2…核安装guardian NODE_EXITED/exit0/nodeReaped，elapsed40673ms、原mtime02:29:46.276；编译guardian/最终result尚未落盘。正式R3仍同代停、原执行锁可读。继续实际owned Node/guardian状态和原截止，完成后TERMINAL。
 
 完整第四代编译步骤、INIT/最大步请求大小和峰值仍待现场。已证明自动BIRTH→主控签入→T45私密存储可运行，安装客户端较90秒预算迟仍按原现场事实留存，不伪称按时。后续已核具体阻断的本机预算实现应改原处，避免将排程目标当新业务/授权硬限。
+
+### 2026-11-15 02:40 — 第四代完整511234行合成编译成功且干净停止
+
+原TERMINAL typed0770aa89…实际COMPILED_AND_CLEAN_STOP，cleanupVerified=true、businessWriterInvoked=false。Node guardian78c9531c… NODE_EXITED/0/reaped，369463ms；原native安装40673ms。主控读取原typed核六阶段总和：MASTER68/33851行，KEYS395/39496行，DOCUMENT_CHUNK44216/437887行，另期初发布/文档暂存/文档发布各一步，合计44682步和511234行。INIT wire51940047B、最大单步349171B、总步wire479517525B。prepare241163.153ms、measure58811.583ms、生成14897.284ms、host340590.558ms，SQLite index1273589760B、scratch峰2258677760B、Node RSS高水1939087360B，容器实际cgroup峰4398260224B。
+
+同代容器02:35:56.904停止exit0/nonOOM，原Node/连接关闭、原八项清理true，正式R3继续停。预测44682步与本次真实合成相配。该编译版本同范围已完成，后续复用。后继先按369秒编译/40秒安装和900秒容器/180秒清理余量，测真实完整合成INIT与原program前缀、明确整笔ROLLBACK。D2冻结已审性能组合的准确目录供T45新承载，未采纳原型不混入。正式整批提交、核账、冷备与独立恢复及公开业务仍待完成。
