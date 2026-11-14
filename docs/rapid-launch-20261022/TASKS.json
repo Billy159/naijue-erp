@@ -5235,9 +5235,17 @@
               "T45/revisions/20261114-r3-retained22-writer05-actual-01/RESOURCE-SAMPLE-03.json",
               "T45/revisions/20261114-r3-retained22-writer05-actual-01/SUBMISSION-PREFLIGHT.json"
             ]
+          },
+          {
+            "group": "R3 service22 writer05 settled unknown native outcome",
+            "status": "ACTUAL_WRITER05_FAILED_NATIVE_UNKNOWN_NO_REPLAY",
+            "evidence": [
+              "T45/revisions/20261114-r3-retained22-writer05-actual-01/WRITER-OUTCOME-READBACK.json",
+              "T45/revisions/20261114-r3-retained22-writer05-actual-01/WRITER05-RESTORED-FRAME.json"
+            ]
           }
         ],
-        "currentInFlight": "R3 service22 writer05 \u5b9e\u9645\u8fd0\u884c\uff0cT45\u6309\u540c\u4e00\u6b21\u65b0\u5916\u5c42\u952e\u8ffd\u8e2a\uff0c\u51c6\u5907\u72ec\u7acb\u9a8c\u8bc1\u53ca\u540e\u7eed\u771f\u5b9e\u7a7a\u95f4\u590d\u6d4b\u3002",
+        "currentInFlight": "R3 service22 \u540c\u4ee3\uff0cT45\u72ec\u7acb\u539f\u952e\u53ea\u8bfb\u6838\u5b9e\uff1bD2\u539f\u53d1\u5e03\u5b88\u536b\u4e0e\u5b8c\u6574\u6b65\u9aa4\u7ea6\u675f\u4fee\u590d\uff0c\u672a\u53d1\u751f\u65b0\u4e1a\u52a1\u63d0\u4ea4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
