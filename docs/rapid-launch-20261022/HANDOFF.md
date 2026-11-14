@@ -7217,3 +7217,13 @@ query诊断local01客户端TimeoutExpired无阶段/PG码，不称query执行40s�
 实际PLAN2487a0de、sizes071bd1f7、nodes24c64775、RUNd2612a3f：member501×1，未用audit152112B+receipt20472B+batch475B随成员物化，duplicate-ID消费者temp written10618blocks；顶层temp读写各11346blocks各88.64MiB，Hash1024buckets/2batches/8202KiB；估计width392不是实际392B。source为一次Seq501+Right Hash Join，不是501次扫。aa走audit_import_checkpoint_version无IndexCond扫2IMPORT/removed1/shared13152，根after102447736B，这是另一热点暂不混入。Boolean未单独返回，plan反例/重复数0仅可推充分条件，不造独立同值PASS。
 
 仅record_members改为receipt.id/completed_at、batch.id/source_name、xid与member字段，checks改读同typed标量，body0825/query6e67/diff2803。QB逐字映射STATIC scoped PASS：不经过JSON/文本重编码、新cast/coalesce/NULL替值，别名无冲突；live_context/status/CASE/shape/全部谓词、原loop/prefix/suffix/声明/权限与s.id文本JOIN不变。D2可直接完成新query plan/Boolean后唯一new50040s，失败parent/qualified不重复；成功才新边界与规范/derive。T45仍只有父事实准备，无新服务器作业。34e3cfda已实际推送（441e02b2..34e3cfda）。
+
+### 2026-11-15 07:23 — party真实500与最终十层交付已获独立限定PASS
+
+新scalar query probe local04实际Boolean=true，plan21.044ms（old单次79.817，仅query探针）、temp0/0（old11346各）、Hash1batch/322KiB（old2/8202）。仅member typed标量投影，未混audit定位或UUID连接第二热点。真实scalar-pg-local03 SQL91dd39e9/body0825，PREPARE2312.565ms、MASTER19931.620ms完整PENDING_TRANSACTION ACK，500payload=474party+26其他、namespace1共501来源ID逐项相同无重。源包/INIT51225135/全部sourceIds与targetIds/种类/40s同原parent；parent40s取消不能推精确收益率。原qualified/42702/seed失败全保留。
+
+原STATS：party474/setquery474，set6706.866707ms/6305541shared hits/0read/0temp，proof486次254.896ms（含其他行原证明），旧loop pointer0，QB还核原parent过滤能采到旧pointer。公开writer未越权，observer未提交0；随后原ROLLBACK、新公开连接ABSENT，audit/receipt/batch/source/customer/supplier各0/cleanup。20 TEMP owner-side新旧accepted/SQLSTATE/message一致、4positive实际命中，保存点真实child xmin/回退/同语句before及oldxmin覆盖其关系/标量范围；bad-root-scope-only未执行完整root前缀，不冒充root/ACL/native trigger整入口验收。JSONL9fd717a6、BOUNDARY33750ba2、FINALf3de8644、CLEANUPc2316f8b。
+
+同次实际目录155/114/35/351仅party body/definition变，其余metadata/ACL不变。MODEL202b69ed、DEFS086bc4c6、BODIES2aa1656c、INSTALL-ORDER e1c5ae03（前九层原字节+第10 SQL91dd）。四准确父态154/冻结155/f4e155/九层155到新core逐项相同、extras/sourceSet/inputs/maps/owner-controller映射通过。QB发现新114直入分支允许155行却154唯一，保旧85a及可复现反例；只加3行normalized signature唯一/完整断言，新derive827674e5。唯一新负例拒绝+九层正例不变，原其他有效范围复用，未重跑PG。最终DELIVERYc7222cff/DERIVATION3107da59/HANDOFF7b7e2dcd，QB合并scope回执1c6a0d26。
+
+T45可冻结本机r908/55568新目标闭包，初装357source/22parts只是阶段计算，最终由827新源重算。原derive真实依赖root114父module/FINAL capture一并入闭包，不单拷薄层。保b324/r907真实INSTALL消费/九层已装/STEP失败但恢复清理通过父事实、e083尝试元数据、正确ENTRY listener a386。尚无服务器新前检/R0/登记，下一只做新绑定/精确闭包窄核。未COMMIT全包、未实服新版本或正式导入/核账/备份恢复/公网业务。Gitba423a1b已实际推送。

@@ -6133,9 +6133,19 @@
               "body0825eeca6eadb145f05c07fe1c420289261b5e56a3ed64e5832d8c8e90fe346b",
               "query6e67b43a / diff280305e0 / BODY-DIFFaa6fadb7"
             ]
+          },
+          {
+            "group": "party\u6807\u91cf\u6700\u7ec8\u5341\u5c42actual500\u4e0e\u65b0\u8fb9\u754c/derive\u4fee\u590d\u72ec\u7acb\u7a84\u9a8c\u901a\u8fc7",
+            "status": "\u552f\u4e00new500 MASTER19.931620s\u5b8c\u6574ACK\u3001501sourceIDs\u4e00\u81f4\u3001474party/setquery/0\u65e7pointer\uff0c20 TEMP\u8fb9\u754c\u9650\u5b9a\u901a\u8fc7\uff1bROLLBACK/\u65b0\u8fde\u63a5ABSENT/\u516d\u6b8b\u75590\u3002\u540c\u6b21155114\u89c4\u8303/\u56db\u7236derive\u901a\u8fc7\uff0c\u53d1\u73b0\u5e76\u4ec5\u8865\u91cd\u590d\u7f3a\u5931signature\u8d1f\u4f8b\uff0cQB\u6700\u7ec8scoped PASS\u3002T45\u6b63\u672c\u673a\u51bb\u7ed3r908\u5341\u5c42/\u65b0consumer\uff0c\u672a\u767b\u8bb0\u3002",
+            "evidence": [
+              "QB actual500/derive final1c6a0d26711ad838fd1491f8359e142c3d03a4b81505a633a8922407633e5887",
+              "JSONL9fd717a6 / boundary33750ba2 / finalf3de8644 / cleanupc2316f8b",
+              "SQL91dd39e9/body0825 / MODEL202b69ed / DEFS086bc4c6 / BODIES2aa1656c",
+              "derive827674e5 / DELIVERYc7222cff / ORDER e1c5ae03"
+            ]
           }
         ],
-        "currentInFlight": "D2\u540cshape\u65b0query plan/Boolean\u53ca\u552f\u4e00scalar new500/40s\u5b9e\u9645MASTER\uff0cparent/qualified\u7ed3\u679c\u590d\u7528\uff1b\u6210\u529f\u624d\u8865\u65b0\u8fb9\u754c\u548c\u540c\u5b89\u88c5155114 model/definitions/bodies/derive\u3002T45\u5f85\u771f\u5b9eSQL\u4e0e\u5b9e\u9645\u901a\u8fc7\uff0c\u4e0d\u5148\u6784\u5efa\u6216\u7b7e\u670d\u52a1\u5668\u3002",
+        "currentInFlight": "T45\u4ec5\u672c\u673a\u88c5\u914dr908/55568 successor\uff0c\u91c7\u7528\u5b9e\u9645b324/r907\u7236facts\u3001\u539f\u4e5d\u5c42+party\u7b2c10\u5c42/derive827674\u53ca\u7236\u4f9d\u8d56\u95ed\u5305/e083 consumer\uff0c\u51c6\u786e\u8ba1\u6570/parts\u4ee5\u6700\u7ec8\u5b9e\u9645\u51bb\u7ed3\u4e3a\u51c6\u3002\u7b49\u5f85phase\u56dbpin\u540e\u4e3b\u63a7\u65b0issuer\u7ed1\u5b9a/QB\u65b0\u5dee\u5206\u7a84\u6838\u53ca\u4e00\u6b21\u771f\u5b9e\u53ea\u8bfb\u524d\u68c0\uff0c\u65e0\u65b0R0/server\u5199\u3002formal R3\u7ee7\u7eed\u505c\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
