@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 10:46。整批导入已按原请求唯一排队，正在跟踪实际事务与清理结果；尚不能认定导入或上线成功。
+更新时间：北京时间 2026-11-14 10:49。整批导入作业已结束，事务状态不确定；进程和临时访问已收尾，正在查原事务，禁止重复导入。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/cdb73542f5825bfe6f834162a56427ee2f391d09) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/365196420dce262dc798cd8a376c2224737020c8) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -757,4 +757,13 @@ C原builder真实纯调用成功，actual binding只改proof+epoch，原09/4UUID
 T45对941c outer/a902 inner与actual21 service/start/apply/capacity/readyc29/49planf815小绑定完成；inner仅嵌单dynamic leaf，8静态source复用。10:44:51CST原writer03/reader21的request/tmp/publicjob/rootjob/rootpublicterminal均ABSENT（outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/ORIGINAL-QUEUE-BEFORE-SUBMIT.json）。本地绑定脚本曾误取EXPECTED21 wrapper外层，在任何复制/提交前断言终止，改用.binding后outer/inner/原binding三者匹配，源未改，无服务器失败重试。
 
 随后准确原t45-first-20261110-r3-real-execute-20261114-03唯一提交已返回QUEUED，unit naijue-erp-op-b16447fb-d28f34180a52，autoRetry=false。完整parent4500/child4200不缩，outer expires1794631270506（12:41:10.506 CST），controller1794631870506。未重放02/09、未新PREPARE/身份/清洗。当前仅排队已证，native COMMITTED/ALREADY_COMMITTED/ROLLED_BACK/UNKNOWN及完整结果尚未回，不能把排队/PG ready/childcleanup写成导入成功。T45继续原键跟终态、native outcome、privateINIT文件SHA、49metadata恢复、scratch保留、连接与后代进程清理和真实资源峰值；任何未知仅原键/原4UUID核实，不重导。C待actual privateINIT hash签reader21；真实整批核账、冷备及独立恢复、APP/公网验证仍未完成，goal保持active。
+
+
+### 2026-11-14 10:49 — 原writer03真实FAILED/事务UNKNOWN；保全原键，进入原因与原事务只读恢复诊断
+
+原writer03唯一执行终态FAILED2/63.200606406s，finished2026-11-14T02:46:11.494347Z；root/publicterminal03e4eabb9cbf2ef9a9f6558219625a13c2412c45f31fafc65dfab0d7c8d0c3cf。rootresult154f02ddc76cac92f86df974c6dab8d44b8b9272e70c058404ce6e46cdb8bd36/native-resultfd31ef2017d64ad8fe0731b50a3cb71e21835fd6baf72b098a42992b2f23582e，native stateUNKNOWN/safeCodeWHOLE_CATALOG_ROLLBACK_UNCERTAIN/sqlstate null/rollbackAcknowledged false/actualControllerRole null/nativeConnectionCleanup UNKNOWN。nativeResultBindingMatched/lifecycleConfirmed true，不代表原事务成功或失败已知。
+
+cleanup bcc4883b1af5052acec0e770944a834412d4880e5bbd83b5295efed3dab65158：child与descendantsReaped/originalInputMetadataRestored/scratchEmpty true，restoreReceipt ce2a54edad59eeaf7aa9d6a61a6a737df8c2bc454423a7b315036ca016ebc631；connectionCleanup=REAPED_EXCLUSIVE_PROCESS仅物理进程回收，不是native关闭ACK，scratchRetainedPrivately=false；未提供retainedInitializerFileSha256，正常reader21尚不能签。10:47:11 service21仍Running，cgrouppeak1459568640/max7516192768，oom/max/high计数0；fsavailable275460435968仅单点，均为本次失败运行证据，非整批成功峰值。原监控证据outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/monitor/SAMPLE-001.json。
+
+C已令T45只从原保全收据/原私密stderr提取最早cause的safeCode/class/sqlstate/connect/BEGIN/rollback前缀，不读取或外发私密正文，不新PG查询、不停21/不恢复roles、不重放03或新Prepare。原D2已按gpt-6.1-sol/high接新增真实失败有界源诊断：定位fc6该code产生点，先缺项/最小原4UUID只读恢复方案，复用原02原INIT重构及native recovery判COMMITTED/ABSENT算法，不先扩大工具。实际事务仍UNKNOWN，任何后继业务写入均等原事务查清；所有备份/恢复/APP/公网业务完成条件仍未满足，goal active。
 
