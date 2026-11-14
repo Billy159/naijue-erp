@@ -6124,9 +6124,18 @@
               "set-MASTER22b7f567 / FAILUREbaf6fc21 / catalog8ee16aee",
               "COMPARISONddc4fec9 / PARTIAL-STATSb17f219a / CLEANUPa25c0f8c"
             ]
+          },
+          {
+            "group": "party\u96c6\u5408query\u8ba1\u5212\u8bc1\u5b9e\u5bbd\u590d\u5408\u91cd\u590d\u7269\u5316\uff0c\u5fc5\u8981\u6807\u91cf\u7a84\u6539\u9759\u6001\u901a\u8fc7",
+            "status": "\u7b2c\u4e09\u6b21\u8bca\u65addriver\u4fee\u8ba2\u8865seed SRF FROM/LATERAL\u540e\uff0cseed2.940s/\u552f\u4e00query plan79.817ms\uff0cmember501/\u4e34\u65f6\u8bfb\u5199\u540411346\u5757\u3001\u65e0\u7528audit/receipt/batch\u590d\u5408\u91cd\u590d\u3002\u4ec5member typed\u6807\u91cf0825\u7a84\u7a3f\u83b7QB STATIC scoped PASS\uff0c\u4ecd\u672a\u771f\u5b9e500\u901a\u8fc7\uff1b\u76f4\u63a5\u65b0query+Boolean\u4e0e\u552f\u4e00new MASTER40s\u63a5\u7eed\u3002",
+            "evidence": [
+              "PLAN2487a0de / sizes071bd1f7 / nodes24c64775 / RUNd2612a3f",
+              "body0825eeca6eadb145f05c07fe1c420289261b5e56a3ed64e5832d8c8e90fe346b",
+              "query6e67b43a / diff280305e0 / BODY-DIFFaa6fadb7"
+            ]
           }
         ],
-        "currentInFlight": "\u4ec5D2\u83b7\u51c6\u72ec\u7acb\u4e34\u65f6probe\u5173\u7cfb\u4e0a\u4e00\u6761500shape\u67e5\u8be2\u7684\u6709\u754cEXPLAIN ANALYZE/BUFFERS/VERBOSE\u8bca\u65ad\uff0c\u4e0d\u91cd\u653e\u4e1a\u52a1\u6216\u5ef6\u65f6\uff1b\u5148\u8bc1\u5b9eMATERIALIZED\u5927\u590d\u5408\u503c\u6295\u5f71/\u8fde\u63a5\u8282\u70b9\uff0c\u518d\u6700\u7a84\u7a3f\u3002T45\u540e\u7ee7\u672a\u51bb\u7ed3\u65b0SQL/\u76ee\u5f55/parts\uff0c\u65e0\u65b0\u670d\u52a1\u5668\u5728\u9014\uff0cformal R3\u505c\u3002",
+        "currentInFlight": "D2\u540cshape\u65b0query plan/Boolean\u53ca\u552f\u4e00scalar new500/40s\u5b9e\u9645MASTER\uff0cparent/qualified\u7ed3\u679c\u590d\u7528\uff1b\u6210\u529f\u624d\u8865\u65b0\u8fb9\u754c\u548c\u540c\u5b89\u88c5155114 model/definitions/bodies/derive\u3002T45\u5f85\u771f\u5b9eSQL\u4e0e\u5b9e\u9645\u901a\u8fc7\uff0c\u4e0d\u5148\u6784\u5efa\u6216\u7b7e\u670d\u52a1\u5668\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

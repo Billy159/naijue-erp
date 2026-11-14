@@ -7209,3 +7209,11 @@ D2仅v.item/refs.ref/final CTE列限定的新body29b04421和SQLc60ea92c获得QB�
 D2另存原STATS派生b17f219a：147次完成集合SQL33036.709788ms/1955460shared hits/0reads，party147/proof147约80.582ms，原loop pointer SQL没有entry。仅支持已完成调用部分跳过原P*M循环，不称全474次命中/已落147行；未保存节点plan/temp/width，不能把13k hits每次归因特定TOAST或SeqScan。boundary及最终规范/derive因失败未生成。
 
 主控按具体新失败授权一次同500shape、明确临时probe关系/局部typed值的query层EXPLAIN ANALYZE/BUFFERS/VERBOSE，单query40s失败停，原qualified仅一次；不重放MASTER/parent、不增加grant/缓存。优先证实MATERIALIZED是否携带未用大audit复合值，若证实只窄改必要标量投影，文本UUID连接不同时改；新稿和真实新MASTER分层验，不追加用户卡。T45当前仅本机父facts a3b6b9c5/RESULTd6d0c6ec准备，服务器无新作业。Git441e02b2已实际推送（096d080a..441e02b2）。
+
+### 2026-11-15 07:10 — query诊断有效计划与必要标量窄改静态通过
+
+query诊断local01客户端TimeoutExpired无阶段/PG码，不称query执行40s；local02已证seed等待READY40s，EXPLAIN执行0。明确driver缺口是巨大jsonb_populate_record(...).*按27/28列展开重复函数求值风险。local03仅改FROM/LATERAL及每条大INSERT前后持久ACK，seed2.940s/READY501，driver4.230s、唯一EXPLAIN墙钟93.878ms，Planning3.224/Execution79.817ms，仍40/40/90。原qualified条件/文本JOIN未改，四probe关系/40相关索引、target omitted离线源非native或业务实测。原两失败保留未重放业务。
+
+实际PLAN2487a0de、sizes071bd1f7、nodes24c64775、RUNd2612a3f：member501×1，未用audit152112B+receipt20472B+batch475B随成员物化，duplicate-ID消费者temp written10618blocks；顶层temp读写各11346blocks各88.64MiB，Hash1024buckets/2batches/8202KiB；估计width392不是实际392B。source为一次Seq501+Right Hash Join，不是501次扫。aa走audit_import_checkpoint_version无IndexCond扫2IMPORT/removed1/shared13152，根after102447736B，这是另一热点暂不混入。Boolean未单独返回，plan反例/重复数0仅可推充分条件，不造独立同值PASS。
+
+仅record_members改为receipt.id/completed_at、batch.id/source_name、xid与member字段，checks改读同typed标量，body0825/query6e67/diff2803。QB逐字映射STATIC scoped PASS：不经过JSON/文本重编码、新cast/coalesce/NULL替值，别名无冲突；live_context/status/CASE/shape/全部谓词、原loop/prefix/suffix/声明/权限与s.id文本JOIN不变。D2可直接完成新query plan/Boolean后唯一new50040s，失败parent/qualified不重复；成功才新边界与规范/derive。T45仍只有父事实准备，无新服务器作业。34e3cfda已实际推送（441e02b2..34e3cfda）。
