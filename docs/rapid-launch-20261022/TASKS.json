@@ -5651,9 +5651,17 @@
               "20374922028ffeb6803fb31e3ab9427670e45ece1eca272a01aa6e917ba49a86",
               "67341ed7e42733170c64ed084cd049c380d9b5cc32c457f4c007f87e0f616472"
             ]
+          },
+          {
+            "group": "SMOKE-A-REGISTERED-LIVE-20261114",
+            "status": "REGISTERED_ORIGINAL_SCOPE_ONLY",
+            "evidence": [
+              "T45 original registration audit bf68d50563a864fdacbede195efdac583b09ac5065a3dc8817f925d1b366ab82",
+              "T45 live preflight 7feba82c711a87ed47e35a775a2acafaad3f36ac30db476c7740894ddc8ae4e8"
+            ]
           }
         ],
-        "currentInFlight": "\u73b0\u6709\u4e94\u6bb5\u542f\u52a8\u4e0e\u7ec8\u6001\u6750\u6599\u3001\u4e24\u6837\u672c\u5386\u53f2\u5385\u8bfb\u56de\u53ca\u9a8c\u6536\u5de5\u5177\u5747\u5c31\u7eea\uff0c\u5f85\u539f247\u884c\u73b0\u573a\u51c6\u5165\u6388\u6743\u3002\u6b63\u5f0fR3\u4ecd\u505c\u3002",
+        "currentInFlight": "T45 is advancing the five fixed synthetic Smoke A jobs. Exact post-BIRTH issuance and original terminal verification pending. R3 remains stopped.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
