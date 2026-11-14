@@ -5410,9 +5410,19 @@
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_checkpoint-2500-9-bounded-closure.jsonl",
               "T45/revisions/20261114-r3-sql39-carrier-preparation-local-01/draft-1f3deac1/MANIFEST.json"
             ]
+          },
+          {
+            "group": "R3 bounded audit index probes complete without a production budget",
+            "status": "SYNTHETIC_INDEX_PROBES_INCONCLUSIVE_FOR_FULL_IMPORT_NO_FIELD_CHANGE",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_bounded-2500-9-bounded-root-probe.jsonl",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_prior-2500-9-prior-only-probe.jsonl",
+              "D2/20261114-r3-writer06-performance-offline-01/INIT-51MB-PROJECTIONS-PG.json",
+              "T45/revisions/20261114-r3-sql39-carrier-preparation-local-01/ROOT-AND-VERIFY-DRAFT.md"
+            ]
           }
         ],
-        "currentInFlight": "D2\u5b8c\u6210\u5269\u4f59\u5ba1\u8ba1\u67e5\u627e\u6027\u80fd\u548c\u9884\u7b97\uff0cT45\u5b8c\u6210\u672c\u5730\u56fa\u5b9a\u5165\u53e3\uff0cD1\u6838\u5df2\u6210\u540c\u5e93\u8bfb\u56de\u8303\u56f4\u3002",
+        "currentInFlight": "\u4fdd\u7559\u7ecf\u6838\u67e5\u7684SQL39\u5341\u51fd\u6570\u672c\u5730\u5019\u9009\u3002D2\u6bd4\u8f83\u73b0\u6709SQL\u66f4\u7a84\u8def\u5f84\u4e0e\u6ee1\u8db3\u539f\u5f02\u5e38\u7684\u8ba1\u6570\u6a21\u578b\uff0c\u771f\u5b9eR3\u4fdd\u6301\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
