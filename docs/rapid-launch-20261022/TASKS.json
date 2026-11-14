@@ -5941,9 +5941,26 @@
               "local post-birth 7fe457a0\u2026",
               "STATE-174218-454801.json"
             ]
+          },
+          {
+            "group": "\u7b2c\u4e09\u4ee3\u539f\u952e\u5e72\u51c0\u505c\u5e93\u7ec8\u6001",
+            "status": "\u9694\u79bb\u53ca\u6b63\u5f0fR3\u505c\u5e93\uff0c\u6e05\u7406\u786e\u8ba4\uff0c\u672a\u53d1\u751f\u7f16\u8bd1\u548c\u4e1a\u52a1\u5199\uff0c\u4fdd\u7559\u539f\u8bc1\u636e\u3002",
+            "evidence": [
+              "job 5191d728\u2026",
+              "typed cf8eda73\u2026 / bcf1416f\u2026",
+              "STATE 2c845860\u2026"
+            ]
+          },
+          {
+            "group": "\u540e\u7f6e\u9650\u65f6\u6587\u4ef6\u4ea4\u63a5\u672c\u673a\u6a21\u578b",
+            "status": "\u7528\u539f BIRTH \u5f62\u72b6\u9a8c\u8bc1\u5b8c\u6574/\u534a\u5199/\u8fc7\u671f/\u7f3a\u6587\u4ef6\uff0cT45 \u539f\u547d\u4ee4\u63a5\u7ebf\u4ecd\u672c\u673a\u5b9e\u65bd\u3002",
+            "evidence": [
+              "TIMING 435798f1\u2026",
+              "wait_for_handoff 536969e1\u2026"
+            ]
           }
         ],
-        "currentInFlight": "\u7b2c\u4e09\u4ee3\u9694\u79bb\u5b9e\u4f8b\u5df2\u771f\u5b9e\u51fa\u751f\uff0c\u540e\u7f6e\u5b58\u50a8\u8d85\u8ba1\u5212\u672a\u542f\u52a8\uff1bT45\u539f\u952e\u7b49\u771f\u5b9e\u505c\u5e93\u3001\u6309\u9700TERMINAL\u3002\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "\u7b2c\u4e09\u4ee3\u5df2\u5e72\u51c0\u505c\u5e93\uff0c\u539f INSTALL\u672a\u63d0\u4ea4\u3002\u4ec5\u672c\u673a\u4fee\u590d\u540e\u7f6e\u4ea4\u63a5\u548cD2\u6027\u80fd\uff0c\u6b63\u5f0f R3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
