@@ -5043,9 +5043,23 @@
             "evidence": [
               "outputs/T45/revisions/20261114-r3-ordinary21-role-apply-actual-01/APPLY-READBACK.json"
             ]
+          },
+          {
+            "group": "R3-21-START",
+            "status": "OLD_ADMISSION_EXPIRED_REQUEST_RETAINED_ROOT_NOT_FROZEN_NO_TERMINAL_OR_NATIVE_PROOF",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary21-start-actual-01/START-OBSERVE-AFTER-EXPIRY.json"
+            ]
+          },
+          {
+            "group": "R3-21-PENDING-INPUT-RECOVERY",
+            "status": "LOCAL_SOURCE_ONLY_PREPARING_EXACT_THREE_DATA_CAS_NO_SERVER_WRITE",
+            "evidence": [
+              "outputs/\u4e3b\u63a7/20261114-r3-ordinary21-start-window-01/service-start-authorization.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u51c6\u786efd041 start21\u5df2\u83b7\u6388\u6743\uff0c\u5f85\u5b9e\u9645\u5bb9\u91cf/proof/epoch/retained ack\uff1b\u539fwriter03\u5c1a\u672a\u63d0\u4ea4\u3002",
+        "currentInFlight": "T45\u4ec5\u672c\u5730\u5236\u5907\u539f21\u672afreeze\u4e09\u5f85\u5165\u573a\u6570\u636eCAS\u53ca\u4fdd\u5168\uff1b\u65e7fd041\u5df2\u5230\u671f\uff0c\u4e0d\u542f\u52a8\u3001\u4e0d\u5bfc\u5165\uff0c\u5f85\u65b0\u589e\u5de5\u5177\u4e00\u6b21\u5fc5\u8981QB\u590d\u6838\u53ca\u51c6\u786e\u65b0\u6570\u636e\u6388\u6743\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
