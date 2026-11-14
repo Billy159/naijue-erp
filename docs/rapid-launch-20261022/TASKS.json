@@ -5227,9 +5227,17 @@
               "outputs/QB/20261114-r3-absent04-retained22-source-review-01/REVIEW.json",
               "outputs/\u4e3b\u63a7/20261114-r3-absent04-retained22-continuation-window-01/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3 service22 writer05 actual admission",
+            "status": "RUNNING",
+            "evidence": [
+              "T45/revisions/20261114-r3-retained22-writer05-actual-01/RESOURCE-SAMPLE-03.json",
+              "T45/revisions/20261114-r3-retained22-writer05-actual-01/SUBMISSION-PREFLIGHT.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u539f\u540c\u4e00service22\uff0c\u51c6\u786e\u4e24\u4e1a\u52a1\u89c4\u5219\u767b\u8bb0\u548c\u5355\u6b21writer05\u63d0\u4ea4\uff1b\u5f85\u771f\u5b9e\u539f\u6279\u4e8b\u52a1\u3002",
+        "currentInFlight": "R3 service22 writer05 \u5b9e\u9645\u8fd0\u884c\uff0cT45\u6309\u540c\u4e00\u6b21\u65b0\u5916\u5c42\u952e\u8ffd\u8e2a\uff0c\u51c6\u5907\u72ec\u7acb\u9a8c\u8bc1\u53ca\u540e\u7eed\u771f\u5b9e\u7a7a\u95f4\u590d\u6d4b\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
