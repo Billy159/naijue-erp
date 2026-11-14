@@ -5029,9 +5029,23 @@
               "outputs/\u4e3b\u63a7/20261114-r3-original02-absent21-registration-window-01/ISSUED.json",
               "outputs/\u4e3b\u63a7/20261114-r3-ordinary21-role-apply-window-01/roles-authorization.json"
             ]
+          },
+          {
+            "group": "R3-21-REGISTRATION",
+            "status": "ACTUAL_REGISTERED_DB548_A85_162_OLD_HISTORY_AND_LOCK_PRESERVED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-original02-absent21-registration-actual-01/REGISTRATION-READBACK.json"
+            ]
+          },
+          {
+            "group": "R3-21-FINITE-AUTH",
+            "status": "ACTUAL_APPLY_COMPLETED_TWO_EXISTING_ROLES_MAINTENANCE_EXITED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary21-role-apply-actual-01/APPLY-READBACK.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u6700\u540e\u516dphase\u7cbe\u786e\u7ed1\u5b9a\u4e0e\u552f\u4e00CAS\uff1b\u5b9e\u9645\u6210\u529f\u540e\u6309\u5df2\u7b7eca52/a868\u4e00\u6b21apply21\uff0cstart21\u53ca\u4e1a\u52a1\u5c1a\u672a\u542f\u52a8\u3002",
+        "currentInFlight": "T45\u51c6\u786efd041 start21\u5df2\u83b7\u6388\u6743\uff0c\u5f85\u5b9e\u9645\u5bb9\u91cf/proof/epoch/retained ack\uff1b\u539fwriter03\u5c1a\u672a\u63d0\u4ea4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
