@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 12:23。整批导入作业已按准确授权唯一提交并运行，正在等待原事务和相关实测结果。
+更新时间：北京时间 2026-11-14 12:30。整批导入碰到初始化文件大小上限，正在准备只读确认原事务并测量实际大小。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/209ebea8791264c4e2f515d2e8d3490d0a6f1ae8) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/a750b122b84ec47a35b0723e347f5a911a8fd1d3) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -857,4 +857,11 @@ C用真实返回及实际roles签原批后继writer04，内16e3b3a31632fc4a64e73
 T45真实原键t45-first-20261110-r3-real-execute-20261114-04完成原前序及04/reader22 queue absence，按02d61实际policy和动态leaf preflight后唯一提交。manifest db0ecd85f991c895f688aa9a4dabf7529fa85041c10da19bbc1e07ee0d76e210，args唯一cc4e1d121cf4d8d7920140e99c392f5aca075df99199623c49857ae55b854366，QUEUED unit naijue-erp-op-b16447fb-bde820c9be24，样本确认RUNNING。证据outputs/T45/revisions/20261114-r3-retained22-writer04-actual-01/{SUBMISSION-PREFLIGHT,RESOURCE-SAMPLE-03}.json。原native事务结果待核，旧03历史、原09与业务身份不变。
 
 12:22:12抽样根卷可用275208839168 B，服务cgroup峰值1959571456/7516192768且oom/max/high计数0；运行尚未结束，不报最终峰值或导入通过。T45只原键跟最终receipt/目录安全诊断字段/连接、原权限和privateINIT摘要。并行仅以原已冻聚合核实readback的原26 counts/6 totals齐全，无新增数据库操作。正式核账、冷备/恢复、发布及公网业务验收仍待完成。
+
+
+### 2026-11-14 12:30 — 原writer04触发初始化私有文件2 MiB上限，开始原键只读确认
+
+原writer04真实FAILED/exit2/177.3945s，12:23:36.748605CST，root/public terminal e5612d1a32287ee5923f4906634e68ee9ddda69e33b8aefa33e073b57825d083，root result00860e000fe569b38926ccb5d7f0206d29c1c643acb28f394efe5faac32999f1、native71621d、root cleanupc89481c。native UNKNOWN、SQLSTATE null、safeCode RETAINED20_INITIALIZER_BOUND；业务回滚未确认。已确认子进程及后代回收、独占进程退出、49原权限恢复、scratch empty，原INIT callback和retained两个文件均无。实际恢复frame3daf524eb7786bffe12c1f35feb31baf0acf2f1af7f2071cb2635173232d47fd/pointercd0a04dd170806850c601bcef390918480c1f35a684bf57e15a6d4a56649e685；ctime变更按原算法边界。证据outputs/T45/revisions/20261114-r3-retained22-writer04-actual-01/WRITER-OUTCOME-READBACK.json。失败运行cgroup peak3737600000/7516192768、0 OOM，未代表完整写入。
+
+冻结源码中安全码只有一处：retained22-run.mjs序列化 INIT JSON+LF 超过2097152即返回，尚未open文件，原executeWholePackage位于 callback成功返回之后。原目录期限窗口已穿过该阶段；不将源码先后代替数据库实际结果。禁止重放原04/新prepare。T45正复用既有helper95/原核查路径用reader22尚未用外层键，绑定actual22/04及同原c6d；仅另返回同INIT实际序列化字节数。复用父420/子360/离线300/RO SQL15，C仅局部draft reader policy和原CAS，尚无新签发/查询，保留仍实际运行22用于当前只读核查。D2只核精确同数据量上界链，按实际重构字节后修正，不猜临时阈值。原09两公开聚合的26 count字段与数值完全一致，stdout六金额/数量字段符合整单位字符串合同，准备后续核账继续保持。正式导入/备份恢复/上线待完。
 
