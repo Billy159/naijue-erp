@@ -5155,9 +5155,17 @@
               "outputs/QB/20261114-r3-retained22-stage-install-source-review-01/REVIEW.json",
               "outputs/\u4e3b\u63a7/20261114-r3-retained22-operator-artifact-window-01/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3-C86E-INSTALLED-22-APPLY01-REFUSED",
+            "status": "ACTUAL_INSTALLED_AND_REGISTERED_APPLY01_REFUSED_BEFORE_PHASE",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-retained22-business-source-local-01/staging/INSTALL-READBACK.json",
+              "outputs/\u4e3b\u63a7/20261114-r3-original03-absent22-registration-window-01/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u552f\u4e00\u63a5\u6536c86e\u5236\u54c1\u5e76\u64a4\u56de\u4e34\u65f6\u5165\u53e3\uff0c\u5b9e\u9645READY\u540e\u72ec\u7acb\u5b89\u88c5\uff1b\u5f85\u5b89\u88c5\u53ca\u516d\u89c4\u5219\u5b9e\u9645\u767b\u8bb0\u624d\u5f00\u59cb\u65b0\u89d2\u8272\u65f6\u9650\u3002",
+        "currentInFlight": "T45\u4fdd\u5168apply01\u771f\u5b9e\u62d2\u7edd\u53ca\u65e0\u8ba4\u8bc1\u5199\u5165\uff0cC/T45\u4ec5\u672c\u5730\u9002\u914d\u7ef4\u62a4\u5916\u5c4202\u53ca\u4e0a\u4f20\u524d\u5b9e\u53c2\u6838\u9a8c\uff0c\u6570\u636e\u5e93\u505c\u6b62\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

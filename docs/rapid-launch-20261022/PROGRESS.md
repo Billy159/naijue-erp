@@ -6377,3 +6377,11 @@ D2 c86ef9c70eab39518166e6241c7c6747f4f7e82d独立窄核 a5d86b04178c6feec40a9c28
 C/T45后继六phase独立报告 a76b320f53210e9d23bed8835826bd2997d94d2b2fd59db44c3192efea413e3e，module982e/templatee5ec/CASeb10/carrier60b8与18basis+原锁，旧03实查ABSENT及closed21终态，四维护机械后继和业务host1fc/Node d876/ordered49 dc0752精确通过。模拟上下偏差1ms拒、同值通过，原4UUID/09/INIT及原单事务逻辑不变，未发新roles/policy。
 
 c86e独立上传和安装源增量报告 c5f9351be3e5f4cad4715ea8c2e54bc99ef21c5ec6756b65a13bcc43b963af51，复用原receiver及600+240、closed21、10正确定点基线、1新叶/224复用。C已签唯一制品接收 d0902b225de14ee7fc03546a63b38b78337fef07ec970a160c1004348fc654ec / temp policy933a54e4e19b3e92c24ee15a9c64e7a51f348336bf7a9e103407647abd328fae，见 outputs/主控/20261114-r3-retained22-operator-artifact-window-01/ISSUED.json，T45沿原私通道上传后回归原policy ABSENT。实际READY、撤回及安装回执未收；service22及新角色未启，真实511234条导入、核账、冷备恢复及上线待完。
+
+### 2026-11-14 12:01 — c86e已装及22已登记，apply01因漏传校验值在执行前被拒
+
+T45原制品唯一上传 READY6f9535fb5f46a9492fb19dec3b397cdaa5ccb9a860015e244c115c668e314ca0，45a080/960313B，临时政策已撤回ABSENT。独立安装授权f25f，actual ready853c8bf0166ad365279234f0e80a264bc287eae9585fe3cb6552b1789863c818，225/4360190B，1新叶/224复用，整包校验及旧fc6保护通过。证据outputs/T45/revisions/20261114-r3-retained22-business-source-local-01/staging/{STAGE-READBACK,INSTALL-READBACK}.json。
+
+22准确登记真实成功，rootaudit08a15a2e62e05f29a32752dbfd5637eecee66a19ff548e4b521196697a7b03e3，dispatcher a113a8dbbb5f01b5eec23c53ae4726f8bcc8f9edd7b2a4d2fb959811956b8b2b/module982e/policy9f24，原锁历史保留。T45首次apply22提交命令漏传 --phase-arg c93f，已提交请求 args=[]；phaseStarted=false/REFUSED_R3_CONTINUITY_BEFORE_PHASE/exit2/exports=[]，12:00:38终态，原guard按合同拒绝。尚待历史root/public与停库/无认证写入完整读回，22未启动。
+
+修正沿同一22及原数据库批次，旧apply01所耗原键历史保全。下一步本地只换外层维护键02及最少绑定，未来所有此类提交在上传前检查最终args逐项等[真实动态授权sha]。保留新c86e实际安装、21闭合、原03失败与ABSENT、备份与私密材料。未再次签发或改温数据库。
