@@ -6829,3 +6829,11 @@ derive155接口从T45原154 model/definitions/bodies派生，验证全部154前�
 QB以Node24纯内存核原builder category SQL/normal规则一致，全154前定义/body/ownerACL逐项拒绝不符，155/113比较多重集与实际最终capture一致、原source额外字段与原数组序保持，稳定角色映射通过。新helper jsonb(uuid,bool)、固定path/UTC及owner私有ACL相配；没有PG重跑。T45已接准确派生接口、七层SQL、独立prefix record、原40秒statement机制、提前55秒停止发新步及独立host ABSENT读取，尚在本机闭包/terminal投影核对，没有新签发登记或现场连接。待实际冻结后只复核新host/native和期限/回滚/独立查询接线。
 
 D2按现有96统计和七个checkpoint守卫只读定位32.615秒外层UPDATE热点，聚焦真实子审计证明根后能否保留原STRICT/异常/savepoint语义消除重复INIT展开，禁止改当前冻结7层、加新状态或重跑PG；其原shared-presence无收益和根单扫1.5%结果直接复用。
+
+### 2026-11-15 03:31 — 新测量源接线独立通过，登记前抓到准确身份与计数残留
+
+QB对prefix155冻结source子集32859f82/174e414c scoped PASS，350源/15parts/5221闭包，新155/113、旧compile-only拒SQL、新profile禁FINISH/COMMIT、原ROLLBACK后writer CLOSED再独立host inspect ABSENT及CLOSED均相配。真实较早deadline=min(sent+540秒,容器/原件较早线-180秒)，writeUntil再减55秒；55为收尾预算不是所有连接/读回耗时保证，guardian截断如实未证，实际PG尚待。
+
+主控新controller在未签发状态核出outer ROOT多sql39-；QB补全NAME与PRESTAGE/START/INSTALL三键同类残留，以及phase_receipt.materialize仍sourceFiles335而准确新源350会被拒。T45已获同一次原生成处修复和仅受影响模型/pins传播任务，未新登记或现场写。主控同根检查保留并补同名/三键逐项对照。QB已核未变dispatcher只增本轮5keys/helper/elif，c681原父重建逐字相等，20保护文件及原04真实COMPILED_AND_CLEAN_STOP前提保持；仅这些实际残留待闭合，未扩大报告或重复350源码验收。
+
+D2 witness+局部request候选f4e56d34/BODY-PINS02a961a7获得QB静态PASS，新增原位完整request局部值供四原比较、profile仍原外层、原STRICT及错误顺序保持。新件实际51.2MB/8步7.550秒、独立26类/六项VERIFY闭合；自动/泛型新matching均四比较入IndexCond且原E/NOT E未执行，28次238hits/0.522ms，81片段及STRICT/坏pointer/保存点新分支核同原。约2.07GiB PG RSS只是50ms采样观察，不是峰值。父8步7.801底座缺三层，不能把净差归因本件。为核新增7body未解决的成本，仅授权一次沿原composed96同字节/分布的新96，旧96=45.325及旧8/96/2500不重跑。候选不混当前Linux冻结7SQL。

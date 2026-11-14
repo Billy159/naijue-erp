@@ -6055,9 +6055,19 @@
               "QB thread 01a161d2-73f1-7381-ab03-65a1c3b52aa2",
               "pure prefix d574bade\u2026"
             ]
+          },
+          {
+            "group": "prefix155\u6e90\u7801\u5b50\u96c6\u72ec\u7acb\u901a\u8fc7\u4e0e\u65b0registry\u51c6\u786e\u6b8b\u7559\u5b9a\u4f4d",
+            "status": "QB\u901a\u8fc7350\u6e90/15parts\u7684\u65b0host/native/typed\u63a5\u7ebf\uff1b\u4e3b\u63a7\u53caQB\u5728\u672a\u7b7e\u53d1registry\u4e2d\u5b9a\u4f4douter\u8eab\u4efdsql39-prefix\u6b8b\u7559\u53camaterialize335\u65e7\u8ba1\u6570\uff0c\u5f85T45\u539f\u751f\u6210\u5904\u4fee\u3002",
+            "evidence": [
+              "source READY32859f82 / REVIEW174e414c",
+              "profile92a1b587 / deployment253c1f14 / sourceSet4a365d42",
+              "D2 f4e56d34\u7a84\u6d4bNATIVE-PG5e10a033",
+              "\u672a\u7b7e\u53d1\u56dbpin c295/1ced/2c254/502da"
+            ]
           }
         ],
-        "currentInFlight": "T45\u51bb\u7ed3\u65b0155/113 prefix\u6d4b\u91cf\u8f7d\u4f53\u53ca\u539f\u8d85\u65f6/\u56de\u6eda/\u72ec\u7acbABSENT\uff0c\u5f85QB\u4ec5\u6838\u65b0\u63a5\u7ebf\u540e\u6309\u6301\u7eed\u6388\u6743\u53ea\u8bfb\u9884\u68c0\u548c\u7b7e\u53d1\u3002D2\u53ea\u8bfb\u5b9a\u4f4d\u65e2\u6709checkpoint\u5927INIT\u91cd\u590d\u8bfb\uff0c\u4e0d\u6539\u51bb\u7ed3\u4e03SQL\u3001\u4e0d\u65b0PG\u6d4b\u8bd5\u3002\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "T45\u4fee\u65b0outer ROOT/NAME/3phase keys\u53caphase_receipt350\uff0c\u518d\u4ec5\u6838\u4f20\u64adpins/\u5b9e\u9645\u53ea\u8bfb\u9884\u68c0\u540e\u6301\u7eed\u6388\u6743\u7b7e\u53d1\u3002QB\u672a\u53d8registry\u5dee\u5f02\u5df2\u8fc7\uff0c\u5f85\u5c0f\u4fee\u3002D2\u65b0\u4ef68\u6b65\u5df2\u63d0\u4ea4\u4e14\u72ec\u7acb\u6838\u8d26\uff0c\u51c0\u6536\u76ca\u672a\u5b9a\uff0c\u6b63\u5728\u552f\u4e00\u540c\u5206\u5e03\u65b096\u6d4b\u91cf\u3002\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
