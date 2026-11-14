@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 13:30。同一批次的新导入入口通过复核，已授权在原实例接续。
+更新时间：北京时间 2026-11-14 13:36。修复后的导入已在原实例提交一次，按原键等数据库回执。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/a44f548b3f3cf582c38381f8a0cfe513a7d0a03c) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/90c44c823819b94639ec943c9f450bf274295f85) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -921,4 +921,9 @@ T45一次真实暂存 1372e，raw READY 0e72a52a7abe301355221adc49daad71af5433fc
 ### 2026-11-14 13:30 — 同一service22的原批次后继06已准确签发
 
 独审1843de1153d2de955023e19f52535480d30f1d615c10d21a477164f9a358c472通过，补齐真正执行06/22-04外层状态标记，原22-03已存终态字段保持真实。四维护/a59a原样，原Business c6d和c6c5/44682不改。host 5af67d、Node d83658、access8a41f只加已见22-03/restored；计划c67e7b/49+48；入口规则d91f、CLI预核4776ef。C准确CAS 726b390f8030b9d4b4f70fb167586f35520552ed6a2e9ff232b317d124b04034 / carrier 4ebbb5615de185813adc9a80f3b97ff5ade1dc77465e6ccdad843b0db15f6e8d，policy 27c9b661d7ade353bb42be2b23f104879462749c117779d971d3c4d5b9cd6282 / dispatcher a052d98701668d97e81ce47379987226b830223bcd57f22e6527b108e8897baf。writer单动态 601deaf30be9468ad05b45a1c675f2667ffbe446ef033944b25458e3afb615d2 /39976 B，内部e368a6嵌入；内外同实际controller T1794640192413，原4500/4200秒和最终420/240秒保持，必须实际入场1794634672413之前。T45原锁读回及原键一次送后继续观察，未到真正提交，最后读回、备份/独立恢复/正式业务均待实证。
+
+
+### 2026-11-14 13:36 — 修正后导入在原实例实际入场
+
+T45唯一CAS在13:34:15独立读回audit58f990d45a3f9c9d2dcf30f5ce5c5aba45273311c121837e405f7fd85dad92d1后释放共享原锁，旧记录和维护规则保持。两个新键提交前双面缺席。同一service22下，06单次入场原CLI exit0/QUEUED，unit naijue-erp-op-b16447fb-9f4173e21106，manifest 9f33b90571c19dcf8ca1d4c69bd6ac0fd029547a276ae9fac116119c9a1ae6a7。13:35:37观察原service active、无OOM；初始根卷275261489152 B。原业务提交、最后只读核账均等实际回执，继续按原键观察，不重放。若逻辑备份半小时原窗口余量不足，须原实例安全收尾并沿同PGDATA重接真实备份窗口。保留28 GiB，峰值跟踪继续。
 
