@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 17:14。继续核对加速方案对历史证据和恢复的影响，R3 保持干净停库。
+更新时间：北京时间 2026-11-14 17:21。已验证存量审计表重写会改变历史事务证据，保留现有现场。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/0d134045ee77c6b05fa215b93e9c338969cce8cc) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/961fee34d1eb489b04342dd4568f969ded708dab) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -1022,4 +1022,11 @@ D2同逻辑合成2500步已COMMITTED 289.396s，末发布1.463s、FINISH108.921s
 现有 INIT receipt 的实际目录约束拒绝额外属性23514，首条audit before_values必须SQL NULL，after_values同列衍生仍取大对象。原批次/回执短列不能推导所有真实full_xid/backend/controller及原请求身份。隔离生成列UUID/ordinal微测不含个人数据。51.2MB单根查询块命中从6,487降为3，2,500行精确COUNT仍逐条验证可见元组；同表新增STORED改变relfilenode、整行JSON和原表级授权可见列。真实目录/逻辑恢复/历史xmin链需独立核，尚无正式生成列。
 
 Owner私有单行精确计数的微测17/17覆盖同根追加、非IMPORT、历史回原、错/重复ordinal、保存点和全回滚，仍随本事务反复更新造成元组版本链，本方案不采用。128/256分段累计只在报告提案，新增私有表将影响现行35表完整目录、权限及备份；不把该设计写现场。保留SQL39十函数签核候选。明确后续实证为同版本历史audit/receipt xmin的重写及恢复语义，以及普通角色生成列合同；真实R3仍停库且不签新写入。
+
+
+### 2026-11-14 17:21 — 存量审计表重写改变 xmin，弃用该接续做法
+
+冻结SQL38的本机PG17.11，通过原writer、原RLS和受限角色写入并COMMIT八对实际audit/receipt。新增STORED生成UUID令audit物理文件16507→17917，8/8 audit xmin750→751，receipt和原marker full_xid仍750。不可变原payload/ID/静态hash及一般inspect仍读回COMMITTED，但历史厅使用的原物理等值谓词已不成立。此最小合成批没有真实捕获厅见证，不能算端到端历史厅验证。已有证据足以淘汰对存量正式表直接改STORED。另以同一小样本115,023B data-only逻辑复制到两个测试目标的audit/receipt xmin756/757而marker仍750，原逻辑恢复的历史厅语义待查真实恢复实现，不将合成COPY冒充独立正式恢复。
+
+D1确认普通业务API使用固定投影，现有额外派生列依表级ACL能读；目录、备份/恢复和历史厅物理校验需要后继合同。D2定向准备保留35表且不重写原audit的窄载体方案，仅设计复核，未修改真实PG或运行文件。R3原06 ABSENT、收尾角色已还原，仍未上线。
 
