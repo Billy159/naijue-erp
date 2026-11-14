@@ -5277,9 +5277,17 @@
               "QB/20261114-r3-absent05-retained22-source-review-01/REVIEW.json",
               "\u4e3b\u63a7/20261114-r3-absent05-retained22-continuation-window-01/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3 original-batch writer06 actual once-only admission",
+            "status": "ACTUAL_ENQUEUED_NO_NATIVE_OUTCOME_YET",
+            "evidence": [
+              "T45/revisions/20261114-r3-retained22-writer06-actual-01/SUBMISSION-PREFLIGHT.json",
+              "T45/revisions/20261114-r3-retained22-writer06-actual-01/RESOURCE-SAMPLE-01.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u6309\u540c\u4ee3\u6267\u884c\u5df2\u590d\u683806\uff0c\u7cbe\u786e\u771f\u5b9e\u4f59\u91cf\u51c6\u5165\uff0c\u539f\u952e\u89c2\u5bdf\u3002",
+        "currentInFlight": "\u540c\u4e00service22\u4e0awriter06\u5df2\u771f\u5b9e\u5165\u573a\u3002\u72ec\u7acb\u5168\u6279\u8bfb\u56de22-04\u4fdd\u7559\u5f85\u4ea4\u7ed1\u5b9a\uff0c\u5907\u4efd/\u6062\u590d\u7ee7\u7eed\u51c6\u5907\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
