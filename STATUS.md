@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 10:43。新实例已实际启动并确认身份、认证及容量；原整批导入作业已准确授权，正在唯一提交。
+更新时间：北京时间 2026-11-14 10:46。整批导入已按原请求唯一排队，正在跟踪实际事务与清理结果；尚不能认定导入或上线成功。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/c77b5cfceb4176ebeab180b591305cba93f2cb7c) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/cdb73542f5825bfe6f834162a56427ee2f391d09) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -750,4 +750,11 @@ QB新pending-input CAS窄核PASS_CONDITIONAL_SOURCE_ONLY，outputs/QB/20261114-r
 START21实际COMPLETED0/6.62979116s，10:40:29安全读回：terminal ec9f503b60e586495407a30dcec63e72fd9f452c72ff39ba96f99c512ff93f54/rootresult3d4b1c8a7da37d9845ec464745b097791de937035dda3423ca849b8ebcfd71c1/publicresulta90099b91fc771cb356b54ca13a31cba3d823e8509eba26a55a1bece730cabdc；proofe043c4af0f207d822d5987f350398d2cfbb53e29df4b8ceb72a9ea5228c95f36，CID5dd1eabedc8c77f52ae8ea5aa490951edcf42faa24e7e2791ab0afab475f2496/birth2026-11-14T02:39:33.427440676Z/epoch2026-11-14 02:39:34.790828+00。retainedack/readOnlyReadiness true/sqlstate null，同SID/OID/170011；actual65536/conn8/B31 slots2031616>=1677658/sharedmmap827326464/cgroup7GiB，wholeExecutionPeakProven=false，仅启动不是全导入峰值。工作截止1794633035030/原lease1794633070030保留。证据outputs/T45/revisions/20261114-r3-ordinary21-start-actual-01/START-READBACK.json。
 
 C原builder真实纯调用成功，actual binding只改proof+epoch，原09/4UUID/INITc6d/44682steps/业务source等保留；8静态源/49planf815/actualapply52c9/operatorReadyc29复用。原writer03精确outer941c9ebf8f866374f83eca2e07d9d7ea94952406c48ef2eba7b3ab6724ffbb7b/40184B，inner原7key a902aa94a7aa6c3e4cd78b6518bd6838c515af53e2900fc7993819629c223310/2209B已嵌outer，不另作bundle leaf；outputs/主控/20261114-r3-retained21-writer03-window-02/ISSUED.json，starts1794624073076/expires1794631270506，完整4500+420和controller前10min保留。T45已获唯一原03提交指令，尚未收到实际提交/native成功；未知只原键不重导。整批真实导入、reader核账、冷备恢复、APP/公网仍未完成。
+
+
+### 2026-11-14 10:46 — 原writer03唯一实际提交已QUEUED，继续跟原键终态
+
+T45对941c outer/a902 inner与actual21 service/start/apply/capacity/readyc29/49planf815小绑定完成；inner仅嵌单dynamic leaf，8静态source复用。10:44:51CST原writer03/reader21的request/tmp/publicjob/rootjob/rootpublicterminal均ABSENT（outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/ORIGINAL-QUEUE-BEFORE-SUBMIT.json）。本地绑定脚本曾误取EXPECTED21 wrapper外层，在任何复制/提交前断言终止，改用.binding后outer/inner/原binding三者匹配，源未改，无服务器失败重试。
+
+随后准确原t45-first-20261110-r3-real-execute-20261114-03唯一提交已返回QUEUED，unit naijue-erp-op-b16447fb-d28f34180a52，autoRetry=false。完整parent4500/child4200不缩，outer expires1794631270506（12:41:10.506 CST），controller1794631870506。未重放02/09、未新PREPARE/身份/清洗。当前仅排队已证，native COMMITTED/ALREADY_COMMITTED/ROLLED_BACK/UNKNOWN及完整结果尚未回，不能把排队/PG ready/childcleanup写成导入成功。T45继续原键跟终态、native outcome、privateINIT文件SHA、49metadata恢复、scratch保留、连接与后代进程清理和真实资源峰值；任何未知仅原键/原4UUID核实，不重导。C待actual privateINIT hash签reader21；真实整批核账、冷备及独立恢复、APP/公网验证仍未完成，goal保持active。
 
