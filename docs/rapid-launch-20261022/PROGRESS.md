@@ -6723,3 +6723,7 @@ T45 00:33:32.647 北京完成只读现场证据 b766a99d…，14 个 active 原 
 ### 2026-11-15 00:54 — 第二代单次隔离测量授权并原键登记
 
 T45 最终本机04 e765aab3…、RESULT 17d8de66…由 QB 增量 PASS。全五相实际 staging 模型、附件中断不误用、BIRTH 同代、旧 START 失败但实停时 TERMINAL 可读且不能进入 BIRTH 已复验。用户在本次卡明确批准第二代单次纯合成测量。fresh 30c9e3f8…（00:51:29.755北京）14原护栏及锁、11卷、资源（根255.81GiB、主机RAM14.75GiB）、两容器停、无在途。主控实际原件 f1cfecd6…，00:52:30.805签发、P0 00:57:30.805、provision 到01:17:30.805，登记和 policy 同起点。T45按原通道一次登记，root审计7cccadca…可读。原键物料化在途，正式R3继续停止，零业务写入，尚无新 BIRTH/安装/编译结论。
+
+### 2026-11-15 01:00 — 第二代原 START 守卫拒绝并定位主控原件字段
+
+MATERIALIZE 已提交一次并成功，15.298s，00:56:08.108 根终态与公开相同，早于 00:57:30.805 P0。START 原键一次 00:58:30.025 北京 REFUSED_R3_CONTINUITY_BEFORE_PHASE/2/0.104s，原公开 job 53a8b59d…，码 EXACT_PROVISION_AUTHORITY_REQUIRED。主控生成器核当前 routes/outer 目标后，误将复用的首代 closure 目标写到序列化 provision，导致 r902/55562 与当前 r903/55563 冲突，原守卫在创建容器前正确拒绝。01前现场状态 38061d30… 无 candidate 容器、PID/端口、BIRTH/INSTALL/TERMINAL 请求或监听，R3停库、原锁可用、无活跃作业。独立根记录形式由 T45 尾收口。原签字节与现场材料保留，原键不重放。本机修 issuer 17add0c1… 读取当代 outer，落盘前交叉检查序列化 proposal 及 source/deploy 与实际 adapter；用确切旧拒绝字节的 proposal 注入，确认拒绝，真实正形状只在内存输出，无新签发。下一代现场操作须独立确认，正式库继续停、零业务写入。

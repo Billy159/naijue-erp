@@ -5849,9 +5849,18 @@
               "fresh preflight 30c9e3f8\u2026",
               "original registration 7cccadca\u2026"
             ]
+          },
+          {
+            "group": "\u7b2c\u4e8c\u4ee3\u9694\u79bb\u6d4b\u91cf\u539f START \u62d2\u7edd\u53ca\u4e3b\u63a7\u4fee\u6b63",
+            "status": "\u539f\u6ce8\u518c\u4e0e\u7269\u6599\u5b8c\u6210\uff0cSTART \u76ee\u6807\u5b57\u6bb5\u9519\u8bef\u88ab\u62e6\uff0c\u5bb9\u5668\u672a\u5efa\u3001\u7f16\u8bd1\u672a\u8fd0\u884c\u3002\u4e3b\u63a7\u7b7e\u5165\u4ee3\u7801\u5df2\u672c\u673a\u4fee\u6b63\uff0c\u4fdd\u7559\u539f\u8bc1\u636e\u3002",
+            "evidence": [
+              "START original 53a8b59d\u2026",
+              "stopped original 38061d30\u2026",
+              "issuer fix 17add0c1\u2026 (2 local cases)"
+            ]
           }
         ],
-        "currentInFlight": "T45 \u6309\u539f\u952e\u7269\u6599\u5316\uff0cP0 \u5f00\u59cb\u540e\u542f\u52a8\u3001BIRTH \u53cc\u8bfb\u56de\u53ca\u4e3b\u63a7\u7acb\u5373\u7b7e\u5165\uff1b\u539f540\u79d2\u7f16\u8bd1\u548c180\u79d2\u6e05\u7406\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "T45 \u53ea\u8bfb\u6838\u7b2c\u4e8c\u4ee3\u6d88\u8017\u53ca\u73b0\u573a\u505c\u6b62\u5c3e\u8bc1\uff0c\u540e\u7eed\u53ea\u505a\u53ef\u590d\u7528\u7f16\u8bd1\u5019\u9009\u68c0\u67e5\u3002\u539f\u952e\u4e0d\u53ef\u91cd\u6295\u3002D2 \u5408\u6210\u6027\u80fd\u7ee7\u7eed\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
