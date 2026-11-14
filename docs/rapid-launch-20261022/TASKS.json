@@ -5491,9 +5491,17 @@
               "outputs/D1/20261114-r3-coalesce-base-offline-01/RESULT.json",
               "outputs/\u4e3b\u63a7/20261113-r3-17-continuity-recovery-local-01/\u5bb9\u91cf\u6838\u7b97.md"
             ]
+          },
+          {
+            "group": "R3 Smoke A protected installation and terminal source review",
+            "status": "LOCAL_REVIEW_PASS_ACTUAL_READONLY_ADMISSION_IN_FLIGHT",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/OUTER-AND-QB-DELTA.UNISSUED.md",
+              "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/READBACK-AND-ADMISSION.UNISSUED.md"
+            ]
           }
         ],
-        "currentInFlight": "R3 stopped. Small synthetic controller same-connection wiring is under local completion. No launch or rerun.",
+        "currentInFlight": "T45 only is checking current read-only admission for a fresh synthetic target. Retain stopped original R3.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
