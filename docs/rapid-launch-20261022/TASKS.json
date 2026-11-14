@@ -5269,9 +5269,17 @@
               "T45/revisions/20261114-r3-retained22-publish-lineage-operator-source-local-01/staging/INSTALL-READBACK.json",
               "QB/20261114-r3-retained-publish-lineage-source-review-01/INSTALL-REVIEW.json"
             ]
+          },
+          {
+            "group": "R3 service22 original-batch writer06 exact authorization",
+            "status": "AUTHORIZED_REVIEWED_SAME_GENERATION_NO_ACTUAL_ADMISSION_YET",
+            "evidence": [
+              "QB/20261114-r3-absent05-retained22-source-review-01/REVIEW.json",
+              "\u4e3b\u63a7/20261114-r3-absent05-retained22-continuation-window-01/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u5df2\u6838\u5b9e\u9645\u9694\u79bb\u4fee\u590d\u5305\uff0cC/QB\u6838\u6700\u540e\u4e24\u4e2a\u65b0\u5165\u53e3\uff0c\u540c\u4e00\u539f\u8d44\u6599\u6279\u6b21\u3002",
+        "currentInFlight": "T45\u6309\u540c\u4ee3\u6267\u884c\u5df2\u590d\u683806\uff0c\u7cbe\u786e\u771f\u5b9e\u4f59\u91cf\u51c6\u5165\uff0c\u539f\u952e\u89c2\u5bdf\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
