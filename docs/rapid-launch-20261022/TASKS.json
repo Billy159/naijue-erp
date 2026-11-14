@@ -5876,9 +5876,27 @@
               "EQUIVALENCE a7f42287\u2026",
               "REPORT 0023a41a\u2026"
             ]
+          },
+          {
+            "group": "\u7b2c\u4e09\u4ee3\u73b0\u573a\u53ea\u8bfb\u53ca\u9884\u767b\u8bb0\u7f3a\u9677",
+            "status": "\u53ea\u8bfb\u786e\u8ba4\u5b9e\u9645\u57fa\u7ebf\uff0c\u53d1\u73b0 registrar \u6a21\u5757\u5c5e\u6027\u53ca\u524d\u7f6e\u539f\u4ef6\u5339\u914d\u8fb9\u754c\uff0c\u5f53\u524d\u51bb\u7ed3\u5019\u9009\u4e0d\u53ef\u7b7e\u5165\uff0c\u672c\u673a\u4fee\u6b63\u4e2d\u3002",
+            "evidence": [
+              "initial review 3665ac71\u2026",
+              "read-only preflight 1171b9ec\u2026",
+              "QB old target closed, other predicate gaps open"
+            ]
+          },
+          {
+            "group": "\u5bb9\u91cf\u5237\u65b0\u53ca FINISH \u7d22\u5f15\u5bf9\u7167",
+            "status": "\u5f53\u524d\u6269\u5bb90\uff0c28GiB\u7ef4\u6301\uff0c\u6b63\u5f0f\u5168\u9636\u6bb5\u5cf0\u503c\u5f85\u6d4b\u3002\u5168\u9500\u8d27\u660e\u7ec6\u7d22\u5f15\u4e0d\u8db3\u4ee5\u4f5c\u5199\u7a97\u4f9d\u636e\uff0c\u4e0d\u90e8\u7f72\u3002",
+            "evidence": [
+              "capacity REPORT 6f006398\u2026",
+              "D2 96-step REPORT 66d5a52a\u2026",
+              "index diff 0c6016d8\u2026"
+            ]
           }
         ],
-        "currentInFlight": "T45 \u672c\u673a\u53ea\u51c6\u5907\u7b2c\u4e09\u4ee3\u672a\u7b7e\u53d1\u9694\u79bb\u5019\u9009\u3002QB \u6838\u5b9e\u9645\u7b7e\u5165\u4fee\u590d\u4e0e D2 \u6839\u626b\u63cf\uff1bD2 \u7ee7\u7eed\u627e 4200 \u79d2\u5185\u4fdd\u6301\u539f\u8bed\u4e49\u7684\u6027\u80fd\u8def\u5f84\u3002\u7b2c\u4e8c\u4ee3\u505c\u6b62\u3001\u9501\u91ca\u653e\u3002",
+        "currentInFlight": "T45\u4fee\u7b2c\u4e09\u4ee3 registrar/\u524d\u7f6e\u6821\u9a8c\uff0cQB\u53ea\u6838\u5dee\u5206\uff0c\u7b2c\u4e09\u4ee3\u5c1a\u672a\u6388\u6743\u3001\u7b7e\u5165\u6216\u767b\u8bb0\u3002D2 \u7a84\u67e5\u5927INIT\u6743\u9650\u6821\u9a8c\u3002\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
