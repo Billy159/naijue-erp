@@ -4998,9 +4998,25 @@
               "outputs/QB/20261114-r3-retained-authority-generation-source-review-01/REVIEW.json",
               "outputs/QB/20261114-r3-ordinary21-four-phase-source-review-01/REVIEW.json"
             ]
+          },
+          {
+            "group": "R3-21-SOURCE-ALL",
+            "status": "PASS_SOURCE_ONLY_NOT_REGISTERED_OR_EXECUTED",
+            "evidence": [
+              "outputs/QB/20261114-r3-ordinary21-business-host-cas-source-review-01/REVIEW.json",
+              "outputs/QB/20261114-r3-retained21-stage-install-carrier-source-review-01/REVIEW.json"
+            ]
+          },
+          {
+            "group": "R3-FC6-ARTIFACT",
+            "status": "ACTUAL_READY_ONE_UPLOAD_POLICY_WITHDRAWN_ABSENT",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-retained21-operator-artifact-actual-01/RESULT.json",
+              "outputs/T45/revisions/20261114-r3-retained21-operator-artifact-actual-01/STAGE-READBACK.json"
+            ]
           }
         ],
-        "currentInFlight": "C six-phase guard, D2 fc6 three-leaf closure and T45 four maintenance phase source passed independent delta review. T45 final business host/CAS and offline fc6 stage/install preparation underway. No new role/live21 window, original03 unused, business import not executed.",
+        "currentInFlight": "T45\u552f\u4e00\u6267\u884cfc6\u72ec\u7acb\u5b89\u88c5\uff1b\u5f85\u5b9e\u9645operator-ready\u540e\u7b7eroles21\u4e0e\u516dphase policy/CAS\uff1b\u65b021\u53cawriter03\u672a\u63d0\u4ea4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
