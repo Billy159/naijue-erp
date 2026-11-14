@@ -7097,3 +7097,9 @@ QB冻结第四代r905/55565 RESULT da8aa155…、route38785959…/phase84f65f97�
 实际C0 02:25:17.229939229，BIRTH原双读回02:26:03.896，主控提前运行的issuer自动在02:26:04.033签入，post-birth ISSUED62def032…，T45等待器无聊天干预读到、私密存储EXACT_INSTALL_ORIGINAL_STORED_NO_PHASE_SUBMITTED。原客户端上送INSTALL时，本地90秒排程退出线02:26:47.229使它未返回QUEUED。T45原键只读02:28:11回执确认control请求完整367B和manifest cd5b87a6…，tmp缺、root workerJob/workerRequest/terminal/public结果均缺，原执行锁释放且无活动、INSTALL未消费。原admin_client实际顺序为历史PREPARED→请求mv→dispatcher start。本次已证明原dispatcher尚未freeze/启动，主控授权T45沿既有防重freeze只对这个已上传原请求首次start，无第二次upload或换键。90秒此前即认定预算，不能将它误作原服务端硬限。原容器900/guardian编译截点180清理和授权expiry保持，当前可用实际编译时间须按其较早值报告。
 
 D2固定EXECUTE候选0c7d80d2…获QB源与既有真实计划/异常独立PASS，96合成组合94.945→45.325秒、26类/六项独立VERIFY闭合，112→113索引和原数据/xmin保持，仍仅本机证据。后续只定位已见checkpoint重复大INIT读取，原本轮Linux SQL不改。
+
+### 2026-11-15 02:32 — 原INSTALL首次启动后真实发布，native安装成功
+
+T45沿既有dispatcher对已上传未启动的原INSTALL请求第一次start，返回QUEUED，原请求和bundle未改。原INSTALL root/public job55202e20… COMPLETED/0/0.394秒，typed实际EXTERNAL_INSTALL_ORIGINAL_PUBLISHED_NATIVE_OUTCOME_PENDING。原容器同代d05c…2CPU/6GiB/无网络。02:30:45原native只读90780fd2…核安装guardian NODE_EXITED/exit0/nodeReaped，elapsed40673ms、原mtime02:29:46.276；编译guardian/最终result尚未落盘。正式R3仍同代停、原执行锁可读。继续实际owned Node/guardian状态和原截止，完成后TERMINAL。
+
+完整第四代编译步骤、INIT/最大步请求大小和峰值仍待现场。已证明自动BIRTH→主控签入→T45私密存储可运行，安装客户端较90秒预算迟仍按原现场事实留存，不伪称按时。后续已核具体阻断的本机预算实现应改原处，避免将排程目标当新业务/授权硬限。

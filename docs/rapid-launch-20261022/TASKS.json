@@ -5997,9 +5997,18 @@
               "private stored exact result",
               "original readback 18:28:11 worker absent"
             ]
+          },
+          {
+            "group": "\u7b2c\u56db\u4ee3INSTALL\u539f\u952e\u53d1\u5e03\u53canative\u5b89\u88c5\u6210\u529f",
+            "status": "\u539f\u8bf7\u6c42\u9996\u6b21dispatch\u8fd4\u56deQUEUED\uff0c\u539fINSTALL\u5b8c\u62100\uff0cnative\u5b89\u88c540.673\u79d2\u6210\u529f\u3002\u5b9e\u9645\u7f16\u8bd1\u7ed3\u679c\u4e0e\u6e05\u573a\u5f85\u56de\u3002",
+            "evidence": [
+              "INSTALL job 55202e20\u2026",
+              "native install guardian c975c67b\u2026",
+              "NATIVE-STATE 90780fd2\u2026"
+            ]
           }
         ],
-        "currentInFlight": "\u7b2c\u56db\u4ee3\u81ea\u52a8\u540e\u7f6e\u7b7e\u5165\u5df2\u901a\u8fc7\uff0cT45\u5bf9\u5df2\u6838\u672a\u542f\u52a8\u7684\u539fINSTALL\u8bf7\u6c42\u9996\u6b21dispatch\u63a5\u7eed\uff0c\u539fguardian\u622a\u6b62\u4ecd\u4fdd\u6301\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "\u7b2c\u56db\u4ee3native\u7ed3\u6784\u5b89\u88c5\u5b8c\u6210\uff0cT45\u539f\u952e\u6838\u7f16\u8bd1\u8fdb\u7a0b/guardian\u53ca\u6700\u7ec8\u6e05\u7406\u3002\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
