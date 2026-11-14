@@ -6045,9 +6045,19 @@
               "BODIES1553e7ae358\u2026",
               "DERIVATION-RESULT"
             ]
+          },
+          {
+            "group": "155\u6d3e\u751f\u63a5\u53e3\u72ec\u7acb\u590d\u6838\u901a\u8fc7\u4e0e\u5b9e\u9645\u6d4b\u91cf\u8f7d\u4f53\u63a5\u7eed",
+            "status": "QB\u72ec\u7acbNode24\u5185\u5b58\u590d\u6838\u901a\u8fc7\u7a33\u5b9a\u5b9a\u4e49\u3001\u5168category\u3001\u524d\u6001\u62d2\u7edd\u548c\u89d2\u8272\u6620\u5c04\uff1bT45\u65b0512\u524d\u7f00\u8f7d\u4f53\u4ecd\u4ec5\u672c\u673aWIP\uff0c\u5c1a\u672a\u767b\u8bb0\u3002",
+            "evidence": [
+              "D2 derive155 3589e491\u2026",
+              "MODEL155 ecb73d4a\u2026",
+              "QB thread 01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+              "pure prefix d574bade\u2026"
+            ]
           }
         ],
-        "currentInFlight": "D2\u4ea4\u89c4\u8303155\u6a21\u578b\u4e0e\u6d3e\u751f\u63a5\u53e3\uff0cQB\u4ec5\u6838\u8be5\u65b0\u589e\u8f93\u5165\uff1bT45\u63a5\u65b0prefix host/native/\u56de\u6eda\u7a97\u53e3\u53ca\u72ec\u7acbABSENT\u300204\u540c\u8303\u56f4\u4e0d\u590d\u8dd1\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "T45\u51bb\u7ed3\u65b0155/113 prefix\u6d4b\u91cf\u8f7d\u4f53\u53ca\u539f\u8d85\u65f6/\u56de\u6eda/\u72ec\u7acbABSENT\uff0c\u5f85QB\u4ec5\u6838\u65b0\u63a5\u7ebf\u540e\u6309\u6301\u7eed\u6388\u6743\u53ea\u8bfb\u9884\u68c0\u548c\u7b7e\u53d1\u3002D2\u53ea\u8bfb\u5b9a\u4f4d\u65e2\u6709checkpoint\u5927INIT\u91cd\u590d\u8bfb\uff0c\u4e0d\u6539\u51bb\u7ed3\u4e03SQL\u3001\u4e0d\u65b0PG\u6d4b\u8bd5\u3002\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

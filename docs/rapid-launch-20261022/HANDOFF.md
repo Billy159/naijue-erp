@@ -7129,3 +7129,9 @@ T45基于335原source及7层固定SQL搭建新155/113隔离测量载体，保留
 D2 outputs/D2/20261115-r3-performance155-model-local-01完成空库目录采集和派生校验，MODEL155 ecb73d4a…/DEFINITIONS1557e98deb1…/BODIES1553e7ae358…提供全155稳定函数名→pg_get_functiondef/body映射、113索引及原builder同归一的比较core。新helper以jsonb返回、uuid/boolean输入、固定search_path/UTC和owner-onlyACL的稳定名称表达，无本机OID。
 
 derive155接口从T45原154 model/definitions/bodies派生，验证全部154前态并保留模型额外来源字段，不变输入，只应用17原体+1helper及2索引/对应关系行。MODEL155本身只作比较core，不能替代既有sourceSet描述。D2纯空库采集、未业务写或重跑96。T45已获准确路径和固定指纹，QB仅核这个新增输入与角色映射。原完整04编译和纯prefix9测试证据复用，下一实际155隔离测量载体尚在本机连接，不宣称已安装或可用。
+
+### 2026-11-15 03:11 — 新155派生输入独立复核通过，载体本机接线继续
+
+QB以Node24纯内存核原builder category SQL/normal规则一致，全154前定义/body/ownerACL逐项拒绝不符，155/113比较多重集与实际最终capture一致、原source额外字段与原数组序保持，稳定角色映射通过。新helper jsonb(uuid,bool)、固定path/UTC及owner私有ACL相配；没有PG重跑。T45已接准确派生接口、七层SQL、独立prefix record、原40秒statement机制、提前55秒停止发新步及独立host ABSENT读取，尚在本机闭包/terminal投影核对，没有新签发登记或现场连接。待实际冻结后只复核新host/native和期限/回滚/独立查询接线。
+
+D2按现有96统计和七个checkpoint守卫只读定位32.615秒外层UPDATE热点，聚焦真实子审计证明根后能否保留原STRICT/异常/savepoint语义消除重复INIT展开，禁止改当前冻结7层、加新状态或重跑PG；其原shared-presence无收益和根单扫1.5%结果直接复用。
