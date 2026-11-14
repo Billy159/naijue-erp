@@ -5401,9 +5401,18 @@
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_checkpoint-1000-9-checkpoint.jsonl",
               "D1/20261114-r3-full-verify-offline-01/measure-verify.mjs"
             ]
+          },
+          {
+            "group": "R3 2500 synthetic import and complete verification on the same database",
+            "status": "ACTUAL_SYNTHETIC_COMMIT_AND_VERIFY_FULL_PRODUCTION_PENDING",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-TEN-ROUTINE.sql",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_checkpoint-2500-9-bounded-closure.jsonl",
+              "T45/revisions/20261114-r3-sql39-carrier-preparation-local-01/draft-1f3deac1/MANIFEST.json"
+            ]
           }
         ],
-        "currentInFlight": "D2\u91cf2,500\u6b65\u4f59\u6bb5\u5e76\u540c\u5408\u6210\u5e93\u7ed9D1\u6838\u8d26\uff1bT45\u672c\u5730\u9a8c\u8bc1SQL39\u5b89\u88c5\u95ed\u5305\uff0c\u771f\u5b9eR3\u505c\u6b62\u4fdd\u5168\u3002",
+        "currentInFlight": "D2\u5b8c\u6210\u5269\u4f59\u5ba1\u8ba1\u67e5\u627e\u6027\u80fd\u548c\u9884\u7b97\uff0cT45\u5b8c\u6210\u672c\u5730\u56fa\u5b9a\u5165\u53e3\uff0cD1\u6838\u5df2\u6210\u540c\u5e93\u8bfb\u56de\u8303\u56f4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
