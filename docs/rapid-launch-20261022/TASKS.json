@@ -5363,9 +5363,18 @@
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_prefix-250-9.jsonl",
               "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/FINAL-STOPPED-RESOURCES.json"
             ]
+          },
+          {
+            "group": "R3 guarded publication candidate proves source equivalence and synthetic 1000 commit",
+            "status": "SYNTHETIC_AND_INDEPENDENT_DELTA_PASS_REMAINING_FINISH_COST",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-PREFIX-PLAN.sql",
+              "D2/20261114-r3-writer06-performance-offline-01/PREFIX-EQUIVALENCE-PG.json",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_prefix-1000-9-guarded.jsonl"
+            ]
           }
         ],
-        "currentInFlight": "D2\u5b9e\u6d4b\u53d1\u5e03\u7cbe\u786e\u8ba1\u6570\u5019\u9009\u548cFINISH\uff1bQB\u53ea\u6838\u5dee\u5206\uff1b\u771f\u5b9e\u5e93\u505c\u5e76\u4fdd\u62a4\uff0cT45\u9759\u6001\u51c6\u5907\u4e0b\u4e00\u8f7d\u4f53\u3002",
+        "currentInFlight": "D2\u6355\u83b7\u5b9e\u9645\u672a\u63d0\u4ea4FINISH\u660e\u7ec6\u53cd\u8bc1\u89c4\u5212\u5e76\u4fee\u5c40\u90e8\u653e\u5927\uff1bT45\u51c6\u5907\u6709\u754c\u8f7d\u4f53\uff0cR3\u4ecd\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
