@@ -5701,9 +5701,17 @@
               "outputs/D1/20261114-r3-v2-physical-readback-local-01/REPORT.md b44d911c5fedd9d954acd3d7f76af65ecc96cc5681d8a5d39fb2f9a5019f87e3",
               "outputs/\u4e3b\u63a7/20261114-r3-full-compile-local-01/REGISTRATION-BASIS.json d37227558e1463811487808223ab878be5509b168a68713f5ed2918a6c3ae27a"
             ]
+          },
+          {
+            "group": "R3-PHYSICAL-RESTORE-FORMAL-HALL-SAMPLE-SOURCE-BINDING-20261114",
+            "status": "ACTUAL_FROZEN_BATCH_SAMPLE_INPUTS_BOUND_FORMAL_COMMIT_AND_READBACK_PENDING",
+            "evidence": [
+              "outputs/\u4e3b\u63a7/20261114-r3-full-compile-local-01/HALL-RESTORE-SAMPLES.json 119001c940a380ae19c66bf129d1978ff8d0ebb241ee13725fda680f380e813e",
+              "Protected local sample artifact SHA 8f45f644b76e7d7404279dbfc8369291e484952aaeedfa9884d426a30cf6047c"
+            ]
           }
         ],
-        "currentInFlight": "Existing user card remains pending for the one bounded fully synthetic compiler operation. D1 completed actual base physical restore with ordinary SQL. Exact V2 positive source and formal read/HTTP remain pending. R3 remains stopped.",
+        "currentInFlight": "Existing user card pending for the single isolated compile-only action. Formal V2 sample input fixed privately from exact real data; D1 adapting original ordinary/physical readback checker. Formal R3 remains stopped.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
