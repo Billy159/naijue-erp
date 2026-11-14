@@ -5447,9 +5447,26 @@
               "D2/20261114-r3-writer06-performance-offline-01/GENERATED-REWRITE-RETAINED-PG.json",
               "D1/20261114-r3-audit-generated-compatibility-01/REPORT.md"
             ]
+          },
+          {
+            "group": "R3 local compact receipt and audit accounting probes",
+            "status": "LOCAL_PG_EVIDENCE_NEEDS_FIX_NO_SERVER_CHANGE",
+            "evidence": [
+              "outputs/D2/20261114-r3-writer06-performance-offline-01/SCALE-REPORT.md",
+              "outputs/D2/20261114-r3-writer06-performance-offline-01/ROOT-APPEND-MICRO-PG.json"
+            ]
+          },
+          {
+            "group": "R3 independent physical and equivalent scale carriers",
+            "status": "EXISTING_ISOLATED_AND_COLD_COPY_ROUTES_IDENTIFIED_LOCAL_ONLY",
+            "evidence": [
+              "outputs/D1/20261114-r3-historical-hall-restore-compatibility-01/REPORT.md",
+              "outputs/T45/revisions/20261114-r3-physical-cold-restore-design-local-01/HANDOFF.md",
+              "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/HANDOFF.md"
+            ]
           }
         ],
-        "currentInFlight": "D1\u6838\u903b\u8f91/\u7269\u7406\u6062\u590d\u7684\u539f\u7248\u672c\u8bc1\u636e\uff1bD2\u51c6\u5907\u4e0d\u6539\u5199\u5b58\u91cf\u5ba1\u8ba1\u7684\u6388\u6743\u5143\u6570\u636e\u65b9\u6848\u3002\u771f\u5b9eR3\u4fdd\u6301\u505c\u5e93\u3002",
+        "currentInFlight": "R3 SQL38 stopped and original authentication restored. Continue equal-shape synthetic fixture and targeted safe optimization.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
