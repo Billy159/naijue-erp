@@ -6859,3 +6859,15 @@ D2完整冻7层+f4e56d34同分布新96唯一业务成功，新连接26类/六项
 D2新7body实际8/96证据获QB scoped PASS，44.033%本机同分布收益成立，仍未并入Linux。本机root范围新互斥query片段通过仅静态限定审查，准许新查询层有界计划/同快照探针，保全部对象COUNT及真实xmin/foreign集合，拟114索引只补NULL根；不重跑旧2500或96业务、不删检查/新计数状态，不把可达索引或小样本当完整时限PASS。
 
 Git最近三次推送因HTTP2/接收超时及HTTP1.1低速45秒失败；本机checkpoint均已提交并保留，远端成功点仍为8fa05ccf，不宣称新提交已推送，后续必要checkpoint继续沿同远端常规补推。
+
+### 2026-11-15 04:25 — REG02实际登记及M/S/B成功，主控误传诊断对象使INSTALL未签
+
+02准确新前检f210e48a04:03:34.359核原stage只有register_cas.py df18及entry-result cd7两个静态文件，审计/登记产物缺席，五workload/目标仍缺席，20原文件21组metadata/锁/资源通过。QB02最终delta和主控实际policy原谓词落盘前调用PASS，回执88986646。主控04:05:30.445真正新R0 ISSUEDe4255207，P004:10:30.445、provision到04:30:30.445、policy到04:35:30.445，源1e40615a/policy0c6c25cf；listener15476在P0前运行。原01不重放不改期。此前网络推送已恢复，51ec7820实际推送成功（输出8fa05ccf..51ec7820）。
+
+T45实际收到R0时04:10:44，晚于P0约14秒仍在真实窗口。REG02一次真实成功，root audit2dd0505d、当前dispatcher85084f53、policy0c6c25cf。正确entry5d707419含registrarResult/status及canonicalSHA；聚合readback2bcbbe93只有audit/dispatcher/entry/policy。原MATERIALIZE/START/BIRTH全部COMPLETED/0，C004:12:28.747774071、container582af01a…/PID630982、r906 OID16393/systemID7708122632694308894；真实BIRTH及C签入读回两份同字节fc394672于04:12:57落。
+
+主控listener把聚合REGISTRATION-READBACK对象交原install_bytes而非正确REGISTRATION-ENTRY-RESULT，04:12:57自动进入build后KeyError status并exit1，未写post-birth/未签INSTALL。T45等待35639按原时限124，原POST/INSTALL标记和请求均缺，真实PG无测量Node、正式R3停。这是主控输入合同错误，前次只审路径/一次委派没有用真实producer/consumer记录闭合，不能将旧该点PASS继续作实际接续通过。未迟交/改guard/重放/伪造。原guardian等外部INSTALL到C0+840约04:26:28进入cleanup；T45原观察器27913确认真实停后一次TERMINAL，未启动后继。
+
+主控独立fix-local01固定等待正确ENTRY后原helper一次委派；install_bytes只加原对象/status明确拒绝，原wrapper SHA归一/identity/时限不放宽。用实际e425/ENTRY5d707/BIRTHfc394/诊断2bcb完成8项纯内存合同：旧错复现、正确entry与canonical registrar同字节绑定真实BIRTH、诊断/错key/真实当前过时钟拒绝、实际helper单次参数选正确文件、无postbirth写。受控回放clock只做测试、不把过期授权实际签发。install589bc9ef/listenera38690c8/test513acd5f/RESULTbd522f6a，待QB只核此新差分。T45可复用原有界filewait预置新R0读取/原register_once一次，减少聊天到达延迟，不改server协议/自签/重试。
+
+D2查询层root新索引分支45边界及96/2500专用relation探针通过，原/新标量同快照相等，COUNT用prior K=root、foreign三支用IMPORT保NULL新索引，真实heap xmin仍逐项检查，无JSON残余Filter/recheck，不称heap0或O(1)。新可执行第9层dc03d84e仅command body3bb18f4a→60860e4c及IMPORT根索引，按冻7层→f4e→新root114顺序；D2一次最小真实8链并同次采155规范目录/maps在途，不重跑旧96/2500业务，不动当前r906源。下一实际载体用通过的最终组合和正确回调合同，仍仅合成/原资源边界；真实全批/正式核账/备份恢复/公网业务未完成。

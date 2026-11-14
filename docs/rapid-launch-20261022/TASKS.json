@@ -6085,9 +6085,19 @@
               "02\u56dbpin74bcee8b/b38ce5bc/76b05fbc/7692527f",
               "main controller02 actual validate_policy before originals"
             ]
+          },
+          {
+            "group": "REG02\u771f\u5b9e\u6210\u529f\u4e0e\u539fM/S/B\u95ed\u5408\uff0c\u4e3b\u63a7\u539f\u767b\u8bb0\u8f93\u5165\u5408\u540c\u4fee\u590d",
+            "status": "e425\u65b0R0\u53caf210\u524d\u68c0\u5df2\u91c7\u7eb3\uff0cREG02\u771f\u5b9e\u767b\u8bb0audit2dd/dispatcher8508/policy0c6c\uff0cMATERIALIZE/START/BIRTH\u57470\uff1b\u4e3b\u63a7\u76d1\u542c\u8bef\u4f20\u8bca\u65adREADBACK\u5bfc\u81f4KeyError\u672a\u7b7eINSTALL\uff0cT45\u539fguardian\u6536\u5c3e\u3002\u6b63\u786eENTRY\u771f\u5b9e\u5408\u540c8\u9879\u672c\u673a\u95ed\u73af\u901a\u8fc7\u5f85QB\u3002",
+            "evidence": [
+              "REG02 audit2dd0505d45e8e9a5ef0ea156fee1f197d94f49677fadafebfa4d90f995bfddd2",
+              "ENTRY5d707419 / BIRTHfc394672",
+              "C0 2026-11-14T20:12:28.747774071Z",
+              "fix install589bc9ef/listenera38690c8/RESULTbd522f6a"
+            ]
           }
         ],
-        "currentInFlight": "T45\u4e00\u6b21\u65b0\u539f\u53ea\u8bfb\u524d\u68c0\u6838\u65e7stage\u9759\u6001/\u4ecd\u672a\u53d1\u5e03\u53ca\u65b0\u79c1\u5bc6\u767b\u8bb002\u7f3a\u5e2d\uff1bQB\u53ea\u886502\u6700\u7ec8pins\u3002\u4e3b\u63a7controller02\u65b0\u56dbpin\u9759\u6001PASS\uff0c\u771f\u5b9epolicy\u540cadapter\u8c13\u8bcd\u4e8e\u7b7e\u53d1\u524d\u8fd0\u884c\uff0c\u5f85\u65b0actual\u56de\u6267\u540e\u53e6\u51fa\u65b0R0/P0\uff0c\u4e0d\u91cd\u653e\u539f01\u3002\u6b63\u5f0fR3\u505c\uff0c\u4e1a\u52a1\u672a\u5199\u3002",
+        "currentInFlight": "T45\u539fr906 C0+840\u7ea604:26:28 cleanup\uff0c\u771f\u5b9e\u505c\u540e\u4e00\u6b21TERMINAL\uff1b0POST/INSTALL\uff0c\u6b63\u5f0fR3\u505c\u3002QB\u4ec5\u6838\u6b63\u786eENTRY\u56de\u8c038\u9879\u53caD2root114\u5b8c\u6574body\u690d\u5165\uff1bD2\u4e00\u6b21\u6700\u7ec8155/114\u771f\u5b9e8\u94fe\u5e76\u540c\u6b21\u91c7\u89c4\u8303model/maps\u3002\u4e0b\u4e00\u8f7d\u4f53\u5f85\u771f\u5b9e\u65e7\u7ec8\u6001\u4e0e\u51c6\u786e\u8f93\u5165\uff0c\u4e0d\u6539\u5f53\u524d\u5df2\u7b7e\u539f\u4ef6\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
