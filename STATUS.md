@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 11:18。原请求提交状态已只读核实为未发现提交记录，正在保全停库和恢复临时认证；整批导入仍待完成。
+更新时间：北京时间 2026-11-14 11:22。数据库已正常停库，两项原认证已恢复；正在修正目录核验的错误处理，整批数据仍待导入。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/f5230a124d2529d288f9a407c2e7a2c5ee851edc) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/91e78b81b3f87420e129e827e49654a276700c01) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -789,4 +789,13 @@ C以实际21/03与最终ordered plan签发：outputs/主控/20261114-r3-unknown0
 T45唯一登记实际完成，rootaudit0fac91c66af3332e53cfb52cbd12d20f3f2f715f3f1b3e6baa93bb1a11eb7d41；dispatcher898a/policycbed/modulefd84，旧a85/module162与原锁/历史保留，只改reader规则。原reader21唯一入场，COMPLETED0/138.928787s，11:17:39.179435CST终态。actual same c6d、离线重构一次110703ms，原native SQL3569ms，明确ABSENT：原请求无提交票据及根、两批冲突检查；无独立第四publish UUID查询，不作全批对账。原controller转原initializer，同库只读BEGIN/ROLLBACK ACK，连接CLOSED与SQLSTATE null，后代回收、scratch empty、49输入原权限恢复。root/publicterminal3e53c1c63dc3a863fe1d62f75c7f6a6122f944773b871f59075b5564a0a2a79e；rootresult61345639bd63317a936e19609271159d579b4e5b3c9037599e41d02181aba8b7，rootsettledcleanup5d1ec298eefa4ae826922e82d288c29bb1a7ce1793b0fd307ca84156ea12b97d。完整安全证据 outputs/T45/revisions/20261114-r3-original03-readonly-inspect-actual-01/INSPECT-READBACK.json。原03失败历史/报告不覆写。
 
 C已按实际cleanup签保全停21独立授权0cf1e086e419247e0a32e1e7a9cfd6801a8e243c9929cb80143728dd969c97c9，复用2静态叶/120s，保留原02历史及oldhold；准确实际停库后再绑定原两角色恢复。原失败首因无日志，已交原D2仅修确有的目录回滚客户端处理缺口，同wire等ReadyForQuery及有限一次回滚，保留安全静态阶段/SQLSTATE用于诊断；此为源缺口而非已证事件根因，不提交原03重放或新业务写入。整批511234行实际导入、核账、恢复与上线仍待完成。
+
+
+### 2026-11-14 11:22 — service21正常停库，两项原认证已精确恢复
+
+原stop21 COMPLETED0/3.954371s，11:19:12.705216CST，root/publicterminal b70020b04b0dbe67de8f3871b1950d8ecc20130363ec074b2291d35c9f69ee2a，root result9ffdfb46e0bb028e0f4862c5b8006f51de4a17125a4135d5c5cf56366a07476f，bootcleanup2cbc2471f7acfc46fbf387ca19127e362579632b6328183e969ddbaf9bfa0066；原CID5dd1 stopped PID0、exit143，PGDATA.pid及端口不存在，cleanShutdown/dataPreserved/cleanupComplete true，errors[]、ACTIVE_HOLD保留。证据outputs/T45/revisions/20261114-r3-ordinary21-preserve-stop-actual-01/STOP-READBACK.json。
+
+原restore21唯一执行 COMPLETED0/7.363794s，11:20:45.135852CST，11:21:22读回。root/publicterminal34ea2e745715b7757ba0aefd0706524419af90f46d1de736808b7d169569bc25，rootresult293da43c2535f31eeaa091a10fbaa2f7c7da4c86aa16b1330b247a5f2226356b，rootcleanupf373d8e7fe600adfab16568adf37935ebde4dd98fada888f7135eaf89d5d9942；私下离线准确比较两个既有角色原verifier/到期一致，角色属性、成员关系、runtime认证保留，非自然到期近似。维护容器b2d942 stopped/PID0/exit0/noOOM、PGDATA.pid absent，数据库继续停止。SQL36/业务/新DB或角色均无。证据outputs/T45/revisions/20261114-r3-ordinary21-role-restore-actual-01/RESTORE-READBACK.json。
+
+窗口已完成收尾，原03业务结果以实际原native ABSENT语义保留，原失败初因无法从旧日志恢复。D2已开始局部目录核验回滚与安全诊断修正及新定向测试；等有具体源和诊断回执再决定实际后继。保持511234全批目标、原身份及09，正式写入、逐项核账、备份恢复和应用/公网验收未完成。
 
