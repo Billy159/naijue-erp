@@ -5382,9 +5382,18 @@
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_finish-1000-9-detail.jsonl",
               "T45/revisions/20261114-r3-sql39-carrier-preparation-local-01/SQL39-TWO-ROUTINE-PLAN.md"
             ]
+          },
+          {
+            "group": "R3 append target operation point candidate and preserved guard behavior",
+            "status": "LOCAL_1000_COMMIT_AND_INDEPENDENT_TRIGGER_EQUIVALENCE_PASS",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-APPEND-POINT.sql",
+              "D2/20261114-r3-writer06-performance-offline-01/SQL39-APPEND-LOCAL-PG.json",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_append-1000-9-append-only-supplement.jsonl"
+            ]
           }
         ],
-        "currentInFlight": "T45\u672c\u5730\u6784\u5efa\u4e00\u4e2aSQL39\u7ef4\u62a4\u8f7d\u4f53\uff1bD2\u9a8c\u8bc1\u5bfc\u5165\u9010\u6b65\u7684\u70b9\u67e5\u6210\u672c\u3002\u4fdd\u6301\u539fR3\u505c\u6b62\uff0c\u672a\u7b7e\u73b0\u573a\u52a8\u4f5c\u3002",
+        "currentInFlight": "D2\u7ee7\u7eed\u4f18\u5316\u53ef\u8bc1\u7684checkpoint\u8ba1\u5212\uff1bT45\u51c6\u5907\u6700\u7ec8\u5019\u9009\u8f7d\u4f53\uff1bD1\u5b9a\u5411\u6838\u6b63\u5f0f\u5168\u6279\u6838\u8d26\u8d85\u65f6\uff0c\u771f\u5b9e\u5e93\u4fdd\u6301\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
