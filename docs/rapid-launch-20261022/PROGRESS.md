@@ -6837,3 +6837,13 @@ QB对prefix155冻结source子集32859f82/174e414c scoped PASS，350源/15parts/5
 主控新controller在未签发状态核出outer ROOT多sql39-；QB补全NAME与PRESTAGE/START/INSTALL三键同类残留，以及phase_receipt.materialize仍sourceFiles335而准确新源350会被拒。T45已获同一次原生成处修复和仅受影响模型/pins传播任务，未新登记或现场写。主控同根检查保留并补同名/三键逐项对照。QB已核未变dispatcher只增本轮5keys/helper/elif，c681原父重建逐字相等，20保护文件及原04真实COMPILED_AND_CLEAN_STOP前提保持；仅这些实际残留待闭合，未扩大报告或重复350源码验收。
 
 D2 witness+局部request候选f4e56d34/BODY-PINS02a961a7获得QB静态PASS，新增原位完整request局部值供四原比较、profile仍原外层、原STRICT及错误顺序保持。新件实际51.2MB/8步7.550秒、独立26类/六项VERIFY闭合；自动/泛型新matching均四比较入IndexCond且原E/NOT E未执行，28次238hits/0.522ms，81片段及STRICT/坏pointer/保存点新分支核同原。约2.07GiB PG RSS只是50ms采样观察，不是峰值。父8步7.801底座缺三层，不能把净差归因本件。为核新增7body未解决的成本，仅授权一次沿原composed96同字节/分布的新96，旧96=45.325及旧8/96/2500不重跑。候选不混当前Linux冻结7SQL。
+
+### 2026-11-15 03:45 — 修订四pin与真实前检闭合，唯一新R0和提前监听已运行
+
+T45根/同名/三jobkeys与350计数一次修复，source350/profile92a/archive15parts均未变，旧前态保留。最终四pin RESULTc6794232/routeaa8c0594/phase9b9e6148/client2123f210、sourceREADYf48c7704由QB实际窄核PASS。T45原通道03:34:25.568真实只读1f437c24：20原文件/21组物理元数据、04真实COMPILED_AND_CLEAN_STOP双typed及同代停、正式R3停/端口无/锁释放/无活跃单元/新7键和目标缺席，资源约255.66GiB，0DB/写/提交。首个通道失败无有效收据，保留失败，不算PASS。
+
+主控初次CLI本机装配把原保留11基线卷误与未上传新15卷比较，build阶段拒绝、issued未创建，无R0或服务器动作。按实际capture原packet.profileRaw固定a470e7/b421保存RETAINED-BASELINE-PROFILE，准确比较旧11名各hash/bytes/decodedBytes；新15卷仍由candidate全phase members pin/size与MATERIALIZE350约束。QB独立核原字节、现前检PASS及缺/多/错hash/bytes/decoded五破坏拒绝，checker08464724，新补审回执846fc8aa。没有降低同根/资源/授权等检查，没有重做现场前检。
+
+真正唯一签入ISSUED4a470275在03:42:23.551生成，prestage283428ee/provision17dfab21/policyd7e19090，P003:47:23.551、provision到04:07:23.551、policy到04:12:23.551。实际用户持续授权0c25f2a5绑定，T45正沿原键登记/预置。主控listen_once08d3f662提前启动session66879，依原helper等待本代REGISTRATION和BIRTH再一次委派已审issuer，无聊天发起/自签/重试；等待截止03:53:33.551，不改变原真实C0/较早native期限。实际安装/写/ROLLBACK/独立ABSENT及停库待原回执。
+
+D2完整冻7层+f4e56d34同分布新96唯一业务成功，新连接26类/六项VERIFY一致，原51,225,133B/96ACK/90销810行+1调1行/1025source/97root相配；write45.325→25.367秒，checkpointUPDATE32.615→12.606，matching7.564秒/16.7Mhits→15.829ms/6370hits。root扫描未变，PG采样约1.803GiB非瞬时/cgroup峰值。文档块均值条件外推8603.6秒已超旧4200且未计其他，不把小样本当正式时限或调拨密度PASS。原8/96/2500不重跑，候选仍未并入本轮Linux7层。
