@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 11:39。原服务端日志命中角色核验，已核对授权与角色期限冲突；正在准备同批次后继执行，数据库仍停止。
+更新时间：北京时间 2026-11-14 11:56。修复包和后继执行入口已通过源码复核，正在接收修复包；待安装后开启数据库窗口。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/114405ac0f69f64ee1be85442eb1f33e15bdf6ee) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/f06e08314eb9a43c89ac5f526e69a8c983d8781f) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -814,4 +814,13 @@ T45只读关闭21的原PostgreSQL server-private.log，原03实际运行时间02
 D2/T45/C复核确定性冲突：host要求outer<=controller，inner保护授权<=outer；fc6 retained min取proof实际窗口、runtime login、cap、inner，目录guard要求controller<=上述有效期限。原inner与outer 1794631270506，controller实际1794631870506，相差600000ms，故必拒该目录条件。被Python提前80s约束的是子进程回收，未传Node或改变SQL期限；writer queryGuard同token在目录之后收束，不再缩短同值；reader独立有限窗<=controller。最小业务后继设inner=outer=controller=T，service workdeadline和capacity>=T；入场前留完整4500+420+至少600s，服务、backup/admin、恢复各有后置余量且不改原角色权限/SQL安全条件。保留修复目录失败后同连接有界回滚及安全错误字段。暂停无必要的诊断专用API/代次，直接依确有冲突修正，不把此证据推为核过全目录或其他检查。
 
 原03失败与实际原键native ABSENT、原21切实关闭保留；后继仅外层worker新04/独立reader22候选，数据库4UUID、原09、原INITc6d、44682步、来源量511234及业务范围保持原值。D2实施局部回滚修正及定向模型，T45在本地准备4维护与2业务机械后继，计划dc075由原reader21 49恢复帧1c7a按真生成器重建。C新六phase源码及旧18basis+锁已本地备妥，未复核、安装、登记或签新角色；待实际操作包及最终pin后继续。整批导入/核账/备份/上线仍未完成。
+
+
+### 2026-11-14 11:56 — 修复包和22后继源独立通过，开始唯一制品接收
+
+D2 c86ef9c70eab39518166e6241c7c6747f4f7e82d独立窄核 a5d86b04178c6feec40a9c28538a060a196b044162c6ab5f0cbe78ebe6bf05a0，原fc6仅1/225运行叶变化362a，b681源闭包、archive45a080/960313B、manifest07a630/49898B，5新增协议模型通过、复用5原受影响模型证据。固定同连接等待ReadyForQuery后一次有界目录回滚，安全首因与回滚/关闭回执分开；不含暂缓诊断API。
+
+C/T45后继六phase独立报告 a76b320f53210e9d23bed8835826bd2997d94d2b2fd59db44c3192efea413e3e，module982e/templatee5ec/CASeb10/carrier60b8与18basis+原锁，旧03实查ABSENT及closed21终态，四维护机械后继和业务host1fc/Node d876/ordered49 dc0752精确通过。模拟上下偏差1ms拒、同值通过，原4UUID/09/INIT及原单事务逻辑不变，未发新roles/policy。
+
+c86e独立上传和安装源增量报告 c5f9351be3e5f4cad4715ea8c2e54bc99ef21c5ec6756b65a13bcc43b963af51，复用原receiver及600+240、closed21、10正确定点基线、1新叶/224复用。C已签唯一制品接收 d0902b225de14ee7fc03546a63b38b78337fef07ec970a160c1004348fc654ec / temp policy933a54e4e19b3e92c24ee15a9c64e7a51f348336bf7a9e103407647abd328fae，见 outputs/主控/20261114-r3-retained22-operator-artifact-window-01/ISSUED.json，T45沿原私通道上传后回归原policy ABSENT。实际READY、撤回及安装回执未收；service22及新角色未启，真实511234条导入、核账、冷备恢复及上线待完。
 
