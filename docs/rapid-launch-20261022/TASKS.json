@@ -5163,9 +5163,18 @@
               "outputs/T45/revisions/20261114-r3-retained22-business-source-local-01/staging/INSTALL-READBACK.json",
               "outputs/\u4e3b\u63a7/20261114-r3-original03-absent22-registration-window-01/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3-22-APPLY02-ADMISSION-FIX",
+            "status": "EXACT_SOURCE_AND_CLI_PREFLIGHT_REVIEWED_SUCCESSOR_AUTHORITY_ISSUED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-ordinary22-role-apply-actual-01/REFUSAL-READBACK.json",
+              "outputs/QB/20261114-r3-absent22-apply02-source-review-01/REVIEW.json",
+              "outputs/\u4e3b\u63a7/20261114-r3-absent22-apply02-registration-window-01/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u4fdd\u5168apply01\u771f\u5b9e\u62d2\u7edd\u53ca\u65e0\u8ba4\u8bc1\u5199\u5165\uff0cC/T45\u4ec5\u672c\u5730\u9002\u914d\u7ef4\u62a4\u5916\u5c4202\u53ca\u4e0a\u4f20\u524d\u5b9e\u53c2\u6838\u9a8c\uff0c\u6570\u636e\u5e93\u505c\u6b62\u3002",
+        "currentInFlight": "T45\u51c6\u786e\u767b\u8bb0\u53ca\u539fCLI\u9884\u68c0\u540e\u552f\u4e00apply02\uff0c\u6570\u636e\u5e93\u4fdd\u6301\u505c\u6b62\u76f4\u81f3\u5b9e\u9645\u8ba4\u8bc1\u5b8c\u6210\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

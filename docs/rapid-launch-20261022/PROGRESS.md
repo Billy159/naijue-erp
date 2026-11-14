@@ -6385,3 +6385,11 @@ T45原制品唯一上传 READY6f9535fb5f46a9492fb19dec3b397cdaa5ccb9a860015e244c
 22准确登记真实成功，rootaudit08a15a2e62e05f29a32752dbfd5637eecee66a19ff548e4b521196697a7b03e3，dispatcher a113a8dbbb5f01b5eec23c53ae4726f8bcc8f9edd7b2a4d2fb959811956b8b2b/module982e/policy9f24，原锁历史保留。T45首次apply22提交命令漏传 --phase-arg c93f，已提交请求 args=[]；phaseStarted=false/REFUSED_R3_CONTINUITY_BEFORE_PHASE/exit2/exports=[]，12:00:38终态，原guard按合同拒绝。尚待历史root/public与停库/无认证写入完整读回，22未启动。
 
 修正沿同一22及原数据库批次，旧apply01所耗原键历史保全。下一步本地只换外层维护键02及最少绑定，未来所有此类提交在上传前检查最终args逐项等[真实动态授权sha]。保留新c86e实际安装、21闭合、原03失败与ABSENT、备份与私密材料。未再次签发或改温数据库。
+
+### 2026-11-14 12:10 — apply01拒绝现场已核，预检及后继apply02授权
+
+原apply22-01终态3979e7ea63308f11cc60afe4cb67eb3fc9a5c287b310888b65276639d8591234 root/public一致，root request 9d6d81f83f4718d3591a5922187c3fc503d8f9b1e110cb89421c3bc8190e38fc，实际args=[]、phaseStarted=false/exit2/exports=[]，无进程log/维护容器/custody/capture/service22/PGDATA.pid，21原停止，原inode13502421。证据outputs/T45/revisions/20261114-r3-ordinary22-role-apply-actual-01/REFUSAL-READBACK.json。保留原终态，处理漏参来源。
+
+T45最少传播更换唯一外层apply02及对应6源7叶，business host实际新独立policy路径已修（88a417），六未签规则e9a1、真实提交预检02d61。在任何上传前从实际policy和bundle重新算manifest/request，保证args唯一[实际授权SHA]，QB以原客户端本地替身实际构造结果一致及拒不匹配。C 20basis+锁，实际旧a113/9f24/982e、拒绝3979、closed21及原03ABSENT维持，模块720e/CAS51a5。QB 窄增量报告15804cc3759b26f0ffccf56bcb78c6cae55f6eaffdff1ad072454f418d52d527，精确源通过。
+
+C签新后继根登记54891e/原private carrier d8dc/策略322a/dispatcherf0a1，roles a59af9/外层apply c37f2，controller T1794640192413（后继writer内外同值）、backup1794640312413、恢复1794641992413。文件outputs/主控/20261114-r3-absent22-apply02-registration-window-01/ISSUED.json。T45单次登记并实读然后以新wrapper准确预检和递交apply02；尚未实际收到完成，不启库或写业务。c86e实装保留、原业务身份保持，同批511234目标及真实核账/备份/上线未完成。
