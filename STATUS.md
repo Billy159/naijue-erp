@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 10:05。六阶段登记及临时认证已实际完成，正在启动新实例；整批导入尚未提交。
+更新时间：北京时间 2026-11-14 10:22。原启动请求因连接中断停在执行登记前，旧窗口已结束；正在准备保留原件的同请求接续，数据库与整批导入尚未启动。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b32d43982eb596ca12e7dcfae8e2f582efaabf65) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/4764b4c3a2de1228ae8197331401bdce23cb7351) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -734,4 +734,11 @@ T45唯一CAS exit0，10:02:13 protected安全读回audit48c58a524b233ba32a7fea99
 apply21原键唯一提交已COMPLETED0/7.435759693s，finished2026-11-14T02:02:13.440672Z，10:03:24 safe readback：root/publicterminal e7d4cde6b55ce552a48d96aecfd12ec5b63785d297fdd4b5d95605112759ff08，rootresult52c9a9eb8a1a90e599b88ca036aeec72d35cc912b3c59e5220deb76f761a1d10/publicresultdb8acf0e694512a2fadaaffda79bce7f82986e2cfed392898ce3dfb6e715dc02，rootcleanup13e9fb951c8297fd93b6e99a9d71519fedd087c0f460293f694e09d4f6713549。两既有role有限认证字段已读回，非nativeCOMMIT ACK；controller1794631870506/admin1794631990506，runtimeAuthChanged=false、membershipsOrRoleAttributesChanged=false、newRoles0。维护CID f6fab389da8a91295faf7b5cfaafef56c1981e8517e3be7b988f6001bf59cd9c stopped/PID0/exit0/noOOM，PGDATA.pid absent，未业务导入。证据outputs/T45/revisions/20261114-r3-ordinary21-role-apply-actual-01/APPLY-READBACK.json。
 
 C已据实际safe projection及公开原receipt归一化apply-safe，不读custody/A/credential。新start21授权fd041f2f404c7d35c49a4d4461598b0fb8c6c5e6f15b1ae0252271b5dfd02da2/4917B，outputs/主控/20261114-r3-ordinary21-start-window-01/service-start-authorization.json，原proof.scope/validate纯检查通过；starts1794621847030/expires1794622747030，lease1794633070030/11223s，保留roles恢复deadline前10min并仍受controller更早业务期限。previous20实际closed及原三phase证据精确复用，新applypublicdb8/root52c未混淆。T45按准确start21唯一提交，待actual proof/CID/birth/epoch/capacity/ack后C只更换binding中actualproof+epoch并签原writer03。writer03尚未提交，整批导入、核账、冷备、独立恢复、APP/公网实际验证未完成。
+
+
+### 2026-11-14 10:22 — 原21启动卡在rootfreeze前，旧入场窗口已结束；最小原键接续工具source-only
+
+fd041原start21 request/bundle实际上传，原dispatch等待40s超时，曾仅能记UNKNOWN，未重提或换键。10:10:16原100.91.40.86:22连接Operation timed out/SSH255；10:12:15原通道恢复，精确原dispatch进程为空、rootjob/terminal无，未据无boot单独断言未执行。10:16:55补明固定21name docker no such object；10:19:36.770501CST到期后只读再次确认原dispatchProcesses=[]、rootjob/rootPublicterminal/result/准确native-services boot/PGDATA.pid均不存在、精确21name recognizedAbsent=true，旧request SHA272ebd3a4713fd3e7a6fa6233cfbcc1ac11222e3f468adcbdbec63fd26156b9b未变。证据outputs/T45/revisions/20261114-r3-ordinary21-start-actual-01/START-OBSERVE-AFTER-EXPIRY.json及原timeout/连接证据。无启动终态，不编造FAILED或SUCCESS；没有实际21证明/CID/epoch或业务提交，fd041不再执行。
+
+现有admin_client拒已提交history/已有controljob，bounded_upload_client拒已存在request及不同bytes bundle，无已上传未freeze输入更新API；--rewrite只本地文本替换。C据真实前缀缺口授权T45仅本地制备一次性准确pending-input CAS：仅原21公开authority/manifest/request三数据，同原key/源/6policy/已apply roles不变；锁内全链静止+无rootjob/终态/boot/固定容器/PGDATA.pid及准确旧bytes/metadata，先O_EXCL保全旧三原件，manifest只改authority行/request只改manifestSHA+authorityargs，新request最后原子发布，部分未知只原audit不回滚或重放。完成释放execution.lock后再走原admin_exec.start/private.mkdir唯一闸门。现阶段source-only，无新authority/服务器CAS写入/启动授权；将由既有QB仅复核此新增小工具，原11source/225包/业务/6规则不重验。原controller/admin仍按12:51/12:53有限字段待后续实际精确恢复，不能将自然到期作恢复。整批511234真实导入、核账、冷备恢复、APP/公网仍未完成。
 
