@@ -5285,9 +5285,18 @@
               "T45/revisions/20261114-r3-retained22-writer06-actual-01/SUBMISSION-PREFLIGHT.json",
               "T45/revisions/20261114-r3-retained22-writer06-actual-01/RESOURCE-SAMPLE-01.json"
             ]
+          },
+          {
+            "group": "R3 writer06 live monitoring with reviewed backup and restoration wiring",
+            "status": "RUNNING_WITH_BACKUP_RECOVERY_CANDIDATES_ONLY",
+            "evidence": [
+              "T45/revisions/20261114-r3-retained22-writer06-actual-01/RESOURCE-SAMPLE-26.json",
+              "QB/20261114-r3-retained22-logical-capture-source-review-01/REGISTRATION-REVIEW.json",
+              "D2/20261114-r3-restored-d3-readback-local-01/RESULT.json"
+            ]
           }
         ],
-        "currentInFlight": "\u540c\u4e00service22\u4e0awriter06\u5df2\u771f\u5b9e\u5165\u573a\u3002\u72ec\u7acb\u5168\u6279\u8bfb\u56de22-04\u4fdd\u7559\u5f85\u4ea4\u7ed1\u5b9a\uff0c\u5907\u4efd/\u6062\u590d\u7ee7\u7eed\u51c6\u5907\u3002",
+        "currentInFlight": "T45\u72ec\u5360\u670d\u52a1\u5668\u76d1\u63a7writer06\uff0c\u5f85\u6570\u636e\u5e93\u539f\u751f\u7ec8\u6001\u540e\u72ec\u7acb\u8bfb\u56de\u3002\u5df2\u5907\u771f\u5b9e\u903b\u8f91\u6355\u83b7\u4e0e\u4fdd\u5168\u4e24\u6761\u63a5\u7eed\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
