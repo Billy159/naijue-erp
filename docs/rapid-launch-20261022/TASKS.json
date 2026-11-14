@@ -5294,9 +5294,17 @@
               "QB/20261114-r3-retained22-logical-capture-source-review-01/REGISTRATION-REVIEW.json",
               "D2/20261114-r3-restored-d3-readback-local-01/RESULT.json"
             ]
+          },
+          {
+            "group": "R3 writer06 exhausted child budget with no native outcome",
+            "status": "ACTUAL_TIMEOUT_UNKNOWN_NATIVE_NO_REPLAY",
+            "evidence": [
+              "T45/revisions/20261114-r3-retained22-writer06-actual-01/WRITER-OUTCOME-READBACK.json",
+              "T45/revisions/20261114-r3-retained22-writer06-actual-01/RESOURCE-SAMPLE-61.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u72ec\u5360\u670d\u52a1\u5668\u76d1\u63a7writer06\uff0c\u5f85\u6570\u636e\u5e93\u539f\u751f\u7ec8\u6001\u540e\u72ec\u7acb\u8bfb\u56de\u3002\u5df2\u5907\u771f\u5b9e\u903b\u8f91\u6355\u83b7\u4e0e\u4fdd\u5168\u4e24\u6761\u63a5\u7eed\u3002",
+        "currentInFlight": "T45\u53ea\u8bfb\u63a5\u7eed\u539f06\u7ed3\u679c\u6838\u9a8c\uff1bD2\u79bb\u7ebf\u5b9a\u5411\u67e5PostgreSQL\u539f\u5bfc\u5165\u8017\u65f6\uff1b\u672a\u518d\u5199\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
