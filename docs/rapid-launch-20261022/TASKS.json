@@ -5252,9 +5252,18 @@
               "\u4e3b\u63a7/20261114-r3-unknown05-readback-registration-window-01/ISSUED.json",
               "D2/20261114-r3-retained-publish-lineage-source-01/RESULT.json"
             ]
+          },
+          {
+            "group": "R3 service22 original writer05 independently observed absent",
+            "status": "ACTUAL_NATIVE_ABSENT_ORIGINAL_THREE_KEY_GROUPS_NO_REPLAY",
+            "evidence": [
+              "T45/revisions/20261114-r3-original05-readonly-inspect-actual-01/INSPECT-READBACK.json",
+              "QB/20261114-r3-retained-publish-lineage-source-review-01/REVIEW.json",
+              "\u4e3b\u63a7/20261114-r3-retained22-publish-lineage-operator-artifact-window-01/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u5df2\u6536\u5230\u539f05\u51c6\u786e\u53ea\u8bfb\u6388\u6743\uff0c\u6309\u540c\u670d\u52a122\u6838\u539f\u8bf7\u6c42\u3002D2\u65b0\u53d1\u5e03\u5b88\u536b\u672c\u5730\u5019\u9009\u72ec\u5ba1\uff1b\u539f\u62a5\u4ef7\u53ca\u540e\u7ee7\u8303\u56f4\u4e0d\u53d8\u3002",
+        "currentInFlight": "\u539f05\u539f\u952e\u5b9e\u9645ABSENT\u3002T45\u6682\u5b58\u5df2\u590d\u68381372e\uff0c\u4e0d\u89e6\u5f53\u524dPG\u6216\u4e1a\u52a1\u3002\u6309\u771f\u5c31\u7eea\u53ca\u539f\u6709\u9650\u65f6\u4f59\u91cf\u63a5\u7eed\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
