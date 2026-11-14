@@ -1,3 +1,4 @@
+import { isDeepStrictEqual } from 'node:util';
 import { parseStrictJson } from '../../packages/application/src/unified-import-contract.ts';
 import { isNodeScryptPasswordHash } from '../../packages/authentication/src/passwords.ts';
 import { STANDARD_MASTER_TABLES } from '../../packages/application/src/unified-import-execution.ts';
@@ -14,7 +15,7 @@ const count = x => Number.isSafeInteger(x) && x >= 0;
 const uuid = x => typeof x === 'string' && /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(x);
 const sourceCountFields = [...STANDARD_MASTER_TABLES, ...documentTables, 'inventory_baseline'];
 const activeClients = new WeakSet(), quarantinedClients = new WeakSet();
-const safeCodes = new Set(['VERIFY_REPLY_INVALID','VERIFY_COUNTS_INVALID','VERIFY_SOURCE_COUNT_MISMATCH','VERIFY_TOTALS_INVALID','VERIFY_TOTAL_INVALID','VERIFY_TOTAL_PRECISION_INVALID','VERIFY_SOURCE_TOTAL_MISMATCH','VERIFY_COVERAGE_INVALID','VERIFY_BEGIN_ACK_INVALID','VERIFY_ROLE_ACK_INVALID','VERIFY_ROLLBACK_ACK_INVALID']);
+const safeCodes = new Set(['VERIFY_REPLY_INVALID','VERIFY_COUNTS_INVALID','VERIFY_SOURCE_COUNT_MISMATCH','VERIFY_TOTALS_INVALID','VERIFY_TOTAL_INVALID','VERIFY_TOTAL_PRECISION_INVALID','VERIFY_SOURCE_TOTAL_MISMATCH','VERIFY_COVERAGE_INVALID','VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH','VERIFY_BEGIN_ACK_INVALID','VERIFY_ROLE_ACK_INVALID','VERIFY_ROLLBACK_ACK_INVALID']);
 const safeFields = new Set([...STANDARD_MASTER_TABLES,...documentTables].map(t=>t.toUpperCase()).concat(['INVENTORY_KEY','IMPORT_BATCH',...Object.keys(totalFields)]));
 function safeFailure(error) {
   const code = safeCodes.has(error?.message) ? error.message : 'VERIFY_DATABASE_OR_PROTOCOL_FAILED';
@@ -46,6 +47,50 @@ function validateSourceInputs(initialize, sourceCounts, sourceTotals) {
     try { units(sourceTotals[key], 0); } catch { throw Error('VERIFY_SOURCE_INPUT_INVALID'); }
   }
 }
+
+function compareHistoricalLineAmounts(initialize, differences) {
+  const descriptor = initialize.payload.historical_line_amount_approval;
+  if (descriptor === undefined && differences === undefined) return undefined;
+  const mismatch = () => { throw Error('VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH'); };
+  if (!Array.isArray(differences)) mismatch();
+  if (descriptor === undefined) {
+    if (differences.length !== 0) mismatch();
+    return undefined;
+  }
+  if (!object(descriptor) || typeof descriptor.utf8 !== 'string') mismatch();
+  const approval = parseStrictJson(descriptor.utf8);
+  if (approval?.format_version !== 'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1' ||
+      approval.source_namespace !== initialize.namespace ||
+      !Array.isArray(approval.lines) || approval.lines.length === 0 ||
+      differences.length !== approval.lines.length) mismatch();
+  const expected = new Map(approval.lines.map(fact => [fact.line_id, fact]));
+  let changed = 0;
+  for (const row of differences) {
+    const fact = expected.get(row?.line_id);
+    if (!fact || row.sales_id !== fact.sales_id || row.source_key !== fact.line_source_key ||
+        row.source_namespace !== approval.source_namespace || row.disposition !== 'PRESERVED_SOURCE_DIFFERENCE' ||
+        row.original_quantity !== fact.quantity || row.original_deal_price !== fact.deal_price ||
+        row.original_line_amount !== fact.line_amount ||
+        !Array.isArray(row.source_refs) || row.source_refs.length !== fact.source_refs.length ||
+        !fact.source_refs.every(ref => row.source_refs.some(other => isDeepStrictEqual(ref, other))) ||
+        !isDeepStrictEqual(row.evidence, {format_version: 'HISTORICAL_LINE_AMOUNT_BOUND_V1',
+          attestation_sha256: descriptor.sha256, evidence_sha256: approval.evidence_sha256, fact})) mismatch();
+    const quantity = units(fact.quantity, 0), price = units(fact.deal_price, 2), amount = units(fact.line_amount, 2);
+    const calculated = quantity * price;
+    if (units(row.calculated_line_amount, 2) !== calculated ||
+        units(row.difference, 2) !== amount - calculated) mismatch();
+    const currentQuantity = units(row.current_quantity, 0);
+    const currentPrice = units(row.current_deal_price, 2);
+    const currentAmount = units(row.current_line_amount, 2);
+    const currentMatches = currentQuantity === quantity && currentPrice === price && currentAmount === amount;
+    if (row.current_matches_original !== currentMatches) mismatch();
+    if (!currentMatches) changed++;
+    expected.delete(row.line_id);
+  }
+  if (expected.size !== 0) mismatch();
+  return {verified_count: differences.length, current_value_difference_count: changed};
+}
+
 export function compareWholePackageSource(value, initialize, sourceCounts, sourceTotals) {
   validateSourceInputs(initialize, sourceCounts, sourceTotals);
   if (!object(value) || value.verified !== true || value.verification_profile !== 'STANDARD_WHOLE_PACKAGE_VERIFY_V2' ||
@@ -70,8 +115,10 @@ export function compareWholePackageSource(value, initialize, sourceCounts, sourc
       !count(c.post_cutoff_effect_keys) || c.unknown_combinations_not_enumerated !== true || c.complete_total_inventory !== false ||
       !object(inv) || !count(inv.verified_key_count) || inv.verified_key_count !== c.explicit_source_keys + c.post_cutoff_effect_keys)
     throw Error('VERIFY_COVERAGE_INVALID');
+  const lineAmounts = compareHistoricalLineAmounts(initialize, value.historical_line_amount_differences);
   return { source_counts: value.source_counts, source_totals: value.source_totals, current_totals: value.current_totals,
-    document_summary: d, inventory_coverage: c, inventory_summary: inv };
+    document_summary: d, inventory_coverage: c, inventory_summary: inv,
+    ...(lineAmounts ? {historical_line_amount_summary: lineAmounts} : {}) };
 }
 /** Independent readback using the pinned verifier. It takes row/advisory locks,
  * so PostgreSQL READ ONLY is not suitable. No import/publish or COMMIT is issued;

@@ -88,3 +88,58 @@ test('inventory verification rejects genuinely rounded aggregate equality',async
  assert.equal(r.state,'VERIFICATION_FAILED');assert.equal(r.code,'VERIFY_COVERAGE_INVALID');
  assert.equal(c.calls.at(-1),'ROLLBACK');
 });
+
+function approvedAmountReadback() {
+ const refs=[{file_sha256:'e'.repeat(64),sheet:'Synthetic',row:12},{file_sha256:'f'.repeat(64),sheet:null,row:41}];
+ const namespace='SYNTHETIC_AMOUNT_READBACK';
+ const fact={sales_id:'00000000-0000-4000-8000-000000000003',line_id:'00000000-0000-4000-8000-000000000004',
+  sales_source_key:'synthetic-header',line_source_key:'synthetic-line',sales_source_refs:[refs[0]],
+  source_refs:refs,quantity:'-3',deal_price:'4.00',line_amount:'-11.99'};
+ const second={...fact,line_id:'00000000-0000-4000-8000-000000000005',line_source_key:'synthetic-line-2',
+  source_refs:[{...refs[0],row:43}],quantity:'2',deal_price:'10.00',line_amount:'19.99'};
+ const approval={format_version:'HISTORICAL_LINE_AMOUNT_EVIDENCE_V1',source_namespace:namespace,evidence_sha256:'b'.repeat(64),lines:[fact,second]};
+ const descriptor={utf8:JSON.stringify(approval),sha256:'a'.repeat(64)};
+ const request={...init,namespace,payload:{...init.payload,historical_line_amount_approval:descriptor}};
+ function resultRow(item,calculated,difference,changed){
+  return {sales_id:item.sales_id,line_id:item.line_id,source_key:item.line_source_key,source_namespace:namespace,
+   source_refs:[...item.source_refs].reverse(),original_quantity:item.quantity,original_deal_price:item.deal_price,
+   original_line_amount:item.line_amount,calculated_line_amount:calculated,difference,current_quantity:item.quantity,
+   current_deal_price:item.deal_price,current_line_amount:changed?calculated:item.line_amount,current_matches_original:!changed,
+   evidence:{format_version:'HISTORICAL_LINE_AMOUNT_BOUND_V1',attestation_sha256:descriptor.sha256,
+    evidence_sha256:approval.evidence_sha256,fact:structuredClone(item)},disposition:'PRESERVED_SOURCE_DIFFERENCE'};
+ }
+ const value={...response(),historical_line_amount_differences:[resultRow(second,'20.00','-0.01',true),resultRow(fact,'-12.00','0.01',false)]};
+ return {request,value};
+}
+
+test('reconciles each historical amount from original approval and exports only counts',async()=>{
+ const {request,value}=approvedAmountReadback();
+ const c=client(value);
+ const result=await reconcileWholePackage(c,request,secret,counts,totals);
+ assert.equal(result.state,'VERIFIED');
+ assert.deepEqual(result.summary.historical_line_amount_summary,{verified_count:2,current_value_difference_count:1});
+ assert.equal(JSON.stringify(result).includes('synthetic-line'),false);
+ assert.equal(c.calls.at(-1),'ROLLBACK');
+ assert.equal(Object.hasOwn(compareWholePackageSource(response(),init,counts,totals),'historical_line_amount_summary'),false);
+});
+
+test('rejects missing, duplicate or altered historical amount evidence even with identical totals',async()=>{
+ const changes=[
+  rows=>rows.pop(),rows=>{rows[1]=rows[0]},rows=>{rows[1].original_line_amount='-12.00'},
+  rows=>{rows[0].difference='0.01'},rows=>{rows[0].current_matches_original=true},
+  rows=>{rows[1].source_refs[0]={...rows[1].source_refs[0],row:99}},
+  rows=>{rows[0].evidence.fact.sales_source_key='different-header'},
+  rows=>{rows[0].evidence.attestation_sha256='9'.repeat(64)},
+ ];
+ for(const change of changes){
+  const {request,value}=approvedAmountReadback();
+  change(value.historical_line_amount_differences);
+  const c=client(value),result=await reconcileWholePackage(c,request,secret,counts,totals);
+  assert.equal(result.state,'VERIFICATION_FAILED');
+  assert.equal(result.code,'VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH');
+  assert.equal(c.calls.at(-1),'ROLLBACK');
+ }
+ const {request,value}=approvedAmountReadback();
+ assert.throws(()=>compareWholePackageSource(value,init,counts,totals),/VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH/);
+ assert.throws(()=>compareWholePackageSource(response(),request,counts,totals),/VERIFY_HISTORICAL_LINE_AMOUNT_MISMATCH/);
+});
