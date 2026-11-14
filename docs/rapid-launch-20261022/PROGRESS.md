@@ -6817,3 +6817,9 @@ handoff-local02只改最终submit完成等待从90秒预算线改原L，原发�
 T45固定纯prefix初稿5f00503d…由原executeWholePackage/原kernel执行，截≤512原序迭代，自然结束无最终发布走原PUBLISH_INCOMPLETE→ROLLBACK，已存在root挡住快捷COMMIT、取消57014原样、丢回滚ACK UNKNOWN/discard。主控按T45明确转交的模块归属仅修SOURCE_EXHAUSTED也误标expected的具体一处，现只PREFIX_LIMIT/TIME_BUDGET符合预期，加两步提前EOF回归。固定measure d574bade…/test7755704e…，Node24.21本机9/9，QB同runtime独立9/9 scoped PASS。模块只消费已准入same-client/fullprogram，不持连接/授权/目录能力。T45已stage确切后继，主控释放模块。
 
 T45基于335原source及7层固定SQL搭建新155/113隔离测量载体，保留原compile-only拒SQL分支。发现旧目录回执仅有bodySHA与机器OID，缺原builder需用的normalized定义文本；D2已按冻结七层只在空库采集155 definition/body和稳定类型/owner/ACL，正在按原builder格式适配，未重复96或业务测试。新真实测量host对INIT/在途SQL的原超时、回滚ACK与独立ABSENT尚在接线，未签发或登记下一轮。
+
+### 2026-11-15 03:00 — 准确155规范定义与原154派生接口已交付
+
+D2 outputs/D2/20261115-r3-performance155-model-local-01完成空库目录采集和派生校验，MODEL155 ecb73d4a…/DEFINITIONS1557e98deb1…/BODIES1553e7ae358…提供全155稳定函数名→pg_get_functiondef/body映射、113索引及原builder同归一的比较core。新helper以jsonb返回、uuid/boolean输入、固定search_path/UTC和owner-onlyACL的稳定名称表达，无本机OID。
+
+derive155接口从T45原154 model/definitions/bodies派生，验证全部154前态并保留模型额外来源字段，不变输入，只应用17原体+1helper及2索引/对应关系行。MODEL155本身只作比较core，不能替代既有sourceSet描述。D2纯空库采集、未业务写或重跑96。T45已获准确路径和固定指纹，QB仅核这个新增输入与角色映射。原完整04编译和纯prefix9测试证据复用，下一实际155隔离测量载体尚在本机连接，不宣称已安装或可用。

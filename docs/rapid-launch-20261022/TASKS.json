@@ -6035,9 +6035,19 @@
               "test-prefix7755704e\u2026",
               "QB independent Node24.21 9/9"
             ]
+          },
+          {
+            "group": "155\u89c4\u8303definition/body\u6a21\u578b\u51c6\u786e\u8865\u9f50",
+            "status": "\u4ec5\u7a7a\u5e93\u76ee\u5f55\u91c7\u96c6\u5df2\u5b8c\u6210\uff0c\u7a33\u5b9a\u7c7b\u578b/owner/ACL\u6a21\u578b\u4e0e154\u2192155\u6d3e\u751f\u9010\u9879\u76f8\u914d\uff0cT45\u627f\u63a5\u4e2d\u3002",
+            "evidence": [
+              "MODEL155 ecb73d4a\u2026",
+              "DEFINITIONS1557e98deb1\u2026",
+              "BODIES1553e7ae358\u2026",
+              "DERIVATION-RESULT"
+            ]
           }
         ],
-        "currentInFlight": "D2\u91c7\u96c6\u51c6\u786e155\u89c4\u8303\u6a21\u578b\uff0cT45\u63a5155/113\u6d4b\u91cfprofile/native/\u539fdeadline\u4e0e\u72ec\u7acbABSENT\u3002\u539f04\u5b8c\u6574\u7f16\u8bd1\u590d\u7528\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
+        "currentInFlight": "D2\u4ea4\u89c4\u8303155\u6a21\u578b\u4e0e\u6d3e\u751f\u63a5\u53e3\uff0cQB\u4ec5\u6838\u8be5\u65b0\u589e\u8f93\u5165\uff1bT45\u63a5\u65b0prefix host/native/\u56de\u6eda\u7a97\u53e3\u53ca\u72ec\u7acbABSENT\u300204\u540c\u8303\u56f4\u4e0d\u590d\u8dd1\uff0c\u6b63\u5f0fR3\u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
