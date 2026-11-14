@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 15:23。原请求只读核查窗口已登记，临时认证已验证，等同盘启动。
+更新时间：北京时间 2026-11-14 15:30。数据库只读实查确认原批次无提交，继续停库保全和合成验证。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b7dca993d1852616d0f3f7f54a1e2b3170bfee87) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/5f64d2e20d650e81c56b8c91c5836aeec1cdb9c7) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -955,4 +955,11 @@ restore22-01 实际COMPLETED/0，15:03:57.545 CST。root终态9e668ec5999ca8e6e4
 QB独立复核ffa81008…通过五阶段规则 e36f8ec…、原06仍UNKNOWN、原49项及48变更准确。实际登记 15:19:09.371，audit55235a05…、dispatcher bdfe5863…、policy3846cf13…；共同串行锁和历史保留，登记时尚未提交任何动作。真实apply 15:20:33.428 COMPLETED/0，root/public终态7a123f99…，root结果b7c5b6c4…，同盘PGDATA未启动，维护容器PID0，无业务写。主控按原22真实停止/认证恢复和实际23 apply签发start23 7fdcea3b…；真正23启动/readback/清停/恢复仍以回执为准。
 
 D2在PG17.11合成隔离环境复现原每步审计根count、外根否定、前序定位的近二次增长。44,682个合成marker上，组合索引令前序7.933→0.010ms，外根等价拆分配合索引6.034→0.014ms，根count仍扫整链；已核不能省略原失效链检测。最小候选0d6a11c6…仅局部改变checkpoint读取和已认证INIT复用，原baseline-scope合成端到端SQL38原版与候选各1/1通过。候选未发布，现场具体语句/完整批耗时无实测。原事务未证实前暂停正式SQL修改和写入。
+
+
+### 2026-11-14 15:30 — 原事务只读证实 ABSENT，23维护准备按原路径停止
+
+真实23启动 COMPLETED/0，root/public终态29f00d64…，同根盘设备66304/inode13502421、SID7706545564479176741/OID16393/170011，CID d16814…、Postmaster 07:25:28.193494Z、proof0e7303ad…。只读23-01 完成于15:29:26.891953 CST，COMPLETED/0/29.788s，root/public终态7ed2e4ac060832c92da712c2dfd84351ad9c488cc8822d676fbdac2c2b8c6d28，root结果3836f401…、cleanupaaae244a…。原06留存INIT准确51,225,175B/c6d并匹配原A05与explicit-zero批准。同一物理库上原 native inspect 返回ABSENT，BEGIN/SET/INSPECT/ROLLBACK都有ACK，SQL3.520s/无SQLSTATE/连接CLOSED、子进程回收、同49输入元数据恢复、0业务写。采用数据库的原操作缺席证明，原06超时历史保留，未将只读事务ROLLBACK冒充06写事务接收过回滚ACK。
+
+D2的本地精简同体例SQL39因为精确原锚点分发，最终两函数 patch1dc2421e…，索引备选e795bfd5…分开，三路baseline-scope合成端到端均pass。全批仍需验证可达的有界时间并据此选择，暂未部署或写业务。T45继续按已登记23 stop与restore，保留旧发布及A05。首批真实入库、核账、备份/恢复和正式入口仍未完成。
 
