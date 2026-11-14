@@ -6361,3 +6361,11 @@ C已按实际cleanup签保全停21独立授权0cf1e086e419247e0a32e1e7a9cfd6801a
 原21已停及原两角色认证已恢复。T45于11:25:27.502767CST以同一真实dev66304量测，根卷可用275457441792 B（256.54 GiB）、PGDATA实配71479296 B（68.17 MiB，其中WAL33566720 B），无独立WAL挂载、无外部tablespace。仅停库du/statvfs，无数据库会话/材料正文读取/服务器写入。证据outputs/T45/revisions/20261114-r3-service22-catalog-route-local-01/STOPPED-CAPACITY-READBACK.json。28 GiB保留后余228.54 GiB，扣同批2.313 GiB准备量和33 GiB逻辑备份上限后余193.23 GiB用于正式增长、冷备和独立恢复等。现未测得扩容缺口，不降低保留线；导入后实际冷备与独立恢复峰值待测，若不足在/dev/md0p1按差额增加。容量核算原报告已补新读数。
 
 T45查明现fc6只有真实writer API，helper95只查原票据，均无独立同驱动目录诊断。下一段只走同一controller/固定Linux pg Client，原BEGIN RR READ ONLY/双DO guards/observation SELECT/validator/ROLLBACK/close，无业务PREPARE/execute或新身份。D2负责修复同wire ReadyForQuery回滚缺口并提供共享原目录函数的独立只读入口和安全阶段/SQLSTATE。T45只在本地准备复用现有4维护构件的22机械后继，前序为actual闭合21，拟五键仅覆盖apply/start/catalog诊断/stop/restore，与原业务授权分离。未签发或执行22，待D2接口及实际源精确后再经必要增量复核。原03失败及ABSENT不重写，整批导入、备份恢复、正式应用与公网验证仍待。
+
+### 2026-11-14 11:39 — 服务端原日志找到控制角色校验标记，确定两限时冲突
+
+T45只读关闭21的原PostgreSQL server-private.log，原03实际运行时间02:45:08.285741Z至02:46:11.494347Z内唯一ERROR于02:46:06.281Z精确匹配冻结first DO静态标记FRESH35_ADMIN154_CONTROLLER_DIFFERS。原日志无显式SQLSTATE/app名，不能凭时间宣称唯一进程归因。证据outputs/T45/revisions/20261114-r3-service22-catalog-route-local-01/CLOSED21-LOG-CATALOG-MATCH.json。该权威证据与原作业空stderr不同；无新PG连接/启动，未外发日志正文。
+
+D2/T45/C复核确定性冲突：host要求outer<=controller，inner保护授权<=outer；fc6 retained min取proof实际窗口、runtime login、cap、inner，目录guard要求controller<=上述有效期限。原inner与outer 1794631270506，controller实际1794631870506，相差600000ms，故必拒该目录条件。被Python提前80s约束的是子进程回收，未传Node或改变SQL期限；writer queryGuard同token在目录之后收束，不再缩短同值；reader独立有限窗<=controller。最小业务后继设inner=outer=controller=T，service workdeadline和capacity>=T；入场前留完整4500+420+至少600s，服务、backup/admin、恢复各有后置余量且不改原角色权限/SQL安全条件。保留修复目录失败后同连接有界回滚及安全错误字段。暂停无必要的诊断专用API/代次，直接依确有冲突修正，不把此证据推为核过全目录或其他检查。
+
+原03失败与实际原键native ABSENT、原21切实关闭保留；后继仅外层worker新04/独立reader22候选，数据库4UUID、原09、原INITc6d、44682步、来源量511234及业务范围保持原值。D2实施局部回滚修正及定向模型，T45在本地准备4维护与2业务机械后继，计划dc075由原reader21 49恢复帧1c7a按真生成器重建。C新六phase源码及旧18basis+锁已本地备妥，未复核、安装、登记或签新角色；待实际操作包及最终pin后继续。整批导入/核账/备份/上线仍未完成。
