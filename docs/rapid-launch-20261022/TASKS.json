@@ -5474,9 +5474,17 @@
               "outputs/D2/20261114-r3-writer06-performance-offline-01/FINISH-HOTSPOT-REPORT.md",
               "outputs/\u4e3b\u63a7/20261114-r3-readiness-point-probe-local-01/REPORT.md"
             ]
+          },
+          {
+            "group": "R3 bounded mixed synthetic fixture and physical xmin recovery proof",
+            "status": "LOCAL_INPUT_FROZEN_MIXED_EXECUTION_AND_FORMAL_RESTORE_PENDING",
+            "evidence": [
+              "outputs/D1/20261114-r3-mixed-scale-design-01/SMOKE-AB.json",
+              "outputs/\u4e3b\u63a7/20261114-r3-physical-xmin-probe-local-01/RESULT.json"
+            ]
           }
         ],
-        "currentInFlight": "R3 stopped. D1 small mixed synthetic preflight and T45 isolated carrier preparation ongoing. No original replay.",
+        "currentInFlight": "R3 safely stopped. Reuse existing isolated carrier after exact mixed scope validation. No real import, replay or public release.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
