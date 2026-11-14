@@ -5692,9 +5692,18 @@
             "evidence": [
               "T45 LIVE-PREFLIGHT.json d2f5d8200e9661d96b32eca6b3cded12548c311c06c18189fc16628e98a9ed0b"
             ]
+          },
+          {
+            "group": "R3-PHYSICAL-RESTORE-BASE-PG-ORDINARY-CONTROL-20261114",
+            "status": "ACTUAL_PG17_11_ORDINARY_SQL_PHYSICAL_CONTROL_VERIFIED_V2_POSITIVE_HTTP_PENDING",
+            "evidence": [
+              "outputs/D1/20261114-r3-v2-physical-readback-local-01/PG-BASE-CONTROL.json b07dc6b1bea52e25243279dbd08f37bf6fe463b7f2c84c1187badcc04e81b501",
+              "outputs/D1/20261114-r3-v2-physical-readback-local-01/REPORT.md b44d911c5fedd9d954acd3d7f76af65ecc96cc5681d8a5d39fb2f9a5019f87e3",
+              "outputs/\u4e3b\u63a7/20261114-r3-full-compile-local-01/REGISTRATION-BASIS.json d37227558e1463811487808223ab878be5509b168a68713f5ed2918a6c3ae27a"
+            ]
           }
         ],
-        "currentInFlight": "Existing user card pending for one isolated compile-only measurement. Fixed candidate live preflight is read-only and successful. D1 independent local physical restore V2 sales evidence in progress. Formal R3 stopped.",
+        "currentInFlight": "Existing user card remains pending for the one bounded fully synthetic compiler operation. D1 completed actual base physical restore with ordinary SQL. Exact V2 positive source and formal read/HTTP remain pending. R3 remains stopped.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
