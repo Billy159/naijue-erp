@@ -6749,3 +6749,9 @@ QB 根单扫 fc63b9c2… 最小差分独立 PASS，2,500 步实测和约 4,531 �
 T45 03a RESULT f156dc80…、route 173e764a…、carrier b4fc662c…、registrar 0efbfb04…、前置 a91e5795…；五相 dcaf4d8d…、adapter、原 11 卷及编译闭包保持。QB 对先前两项作精确独立增量 PASS：实际登记入口复用冻结 native adapter 的 PRESTAGE/START 完整原件校验，五个故意损坏样本在客户端/once/SSH 前拒绝；实际适配器 SmokeBasis / SmokeAdmission 路径本机通过，旧实例属性错误保留、旧预置根缺或部署变化拒绝。T45 01:24:48.143 从原私密通道对固定新 registrar 只读直接运行 phase_local_basis 成功，无回退。回执 34fc2d29…，原 dispatcher dae6f750…、16 原保护文件与 17 个身份、11 原卷、锁与两个 grant、R3 同代停、r904 空、RAM14.73 GiB、同盘255.80GiB。主控以同一实际字节通过 in-memory 配方及真实 T45 check，旧 1171b9ec… 原失败回执拒绝。模拟容器实有九位小数启动时间时，按原 540/180/900 和 15 秒余量处理，正例与超时拒绝通过。第三代确认卡已发，待用户本次独立批准。未签入、登记、提交或写入。
 
 D2 紧凑回执仅本机，REPORT 367e75dd…。9/9 PostgreSQL17.11 实测，规范形状保留，旧的非规范 UUID PREPARE pending／首 MASTER 42501 的错误顺序用精确按文本分支恢复，销毁隔离事务后原键均 ABSENT。此改动会更换 existing receipt CHECK、增 CHECK/触发器和两个私有函数，兼容恢复及含坏键的强制原路尚无资格；不进入现场候选。关于 4200 秒正式写窗，目前仍无规模实测覆盖。
+
+### 2026-11-15 01:35 — 用户单次授权，第三代按实际固定原件登记
+
+用户卡 call_23cfc745b114441f953cbcd340c42f38 明确批准本次 511,234 合成行隔离编译。T45 实际前置只读 5881fa09…（01:33:30.041）核 03a 原 registrar、锁、已停 R3、七键和资源。主控签入 ISSUED b8cbbd94…、registrar 1d41cdec…，R0 01:34:05.302、P0 01:39:05.302、登记到01:49:05.302、provision 到01:59:05.302、policy 到02:04:05.302。T45 真正入口一次登记，根审计 43e3b0c9…，实际 policy 5c483a37… 和新 dispatcher 00663f23… 与保护收据一致，主控独立核实际 policy 匹配原件。继续由 T45 单次预置、P0 后 START 和真实 BIRTH，当前无后置主控签入或编译结果。正式 R3 停库。
+
+D2 部分表达式索引仅本机探针 770f95ef…，51,227,730 B INIT 同一真实未提交行。精确 marker/两字符串均入 Index Cond、堆取实际 xmin，无 after_values 重展开时读块 12,977→2，单次 6.631–6.988ms→0.005–0.006ms；正向同原检查、错误 marker零行和原私有入口拒绝，实际旧 receipt/heap/TOAST 未改。直接投影 JSON 仍 38,927 hits。没有接入原权限读取、没有整包、写入或历史建索引耗时，不改变正式写窗结论。
