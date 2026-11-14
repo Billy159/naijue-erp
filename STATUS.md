@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 08:40。独立运行包已安装并校验，执行脚本两处修正正在定向复验；尚未再次导入或上线。
+更新时间：北京时间 2026-11-14 08:51。执行入口已登记，导入未提交；正在关闭本轮临时实例并恢复账号权限。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/d33ad35e7e05d173d7c5ef9afa2d20b97be7f29e) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/bec98dbae1fb0052840f84b7a656d825c8fbfa94) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -676,4 +676,11 @@ QB stage/install source799f0158be9406261c8f09eaa7e0d13ea8804d40ca438470bcdd6e662
 C已准备未签准确policy candidate74dea44d2b88283b1946aea35baee9c216dee6c2e2f1b19f440446e8390c377a/2335B+dispatcher49c8151afb4a265cc2b4b5cc1f20da8792e601a1337f9681e0ef08bbdb713b98，outputs/主控/20261114-r3-retained20-exact-binding-candidate-01/；starts1794616477000/expiry原controller1794621818825，直接精确28b0两rules4500/420，纯909构造结构及0d737渲染通过，已并同轮送QB小binding核对，非实际授权/登记。12旧basis+原锁元数据帧T45仅stat一次08:23可复用，安装不动基底；CAS载体模板b4f2d1e47d3caaba0f9fe0ed3dba0dfcd7a00d7b9b4bb960585512df855f3727由原actual1d536机械换路径/source0d737/三个授权占位/status，算法未改，已送QB必要小delta。T45两本地静态bundle已备，无authorityleaf/无freeze/未占新key。
 
 此刻仍无新CAS、无再次业务写入，原20controller10:03/admin10:05/work10:15/认证恢复10:33硬截止不变；4500父budget严格最晚08:48准入，须留实际reader及收尾时间，不暗改期限或压缩必要校验。DB初始化、整批导入/核账、备份独立恢复、正式APP/公网业务验收仍未完成。
+
+
+### 2026-11-14 08:51 — 精确CAS实际完成，本轮writer未提交；原20保留性收尾
+
+QB准确host/binding 1cf0a82fb3592c0efabbe0cc75f1dc7f2ae5f4b2254c4707ba2b99f422cd35b4及机械carrier527f440e416b5aeede2ff8f2ccacc384a41e0d0cfb1396d86f4ea5be3e0c3b03通过。T45沿e034唯一CAS实际08:44:09 exit0，new dispatcher49c815/policy74dea/module909，audit a781842340a6bf20369cafaa8d44aaa8b683a41850135b98a9e1077f7309f7e4读回；旧12basis/原锁/live20/ABSENT在CAS前后通过，phaseSubmitted=false/业务写0。实际证据outputs/T45/revisions/20261114-r3-original02-absent20-registration-actual-01/RESULT.json（1a340df83ff6066c237100310bcfc09c93c9f46b23dbe19d04924c0dfcb1bf55）。
+
+C精确writer7key/outer本地生成未完成：nonroot_input_access纯校验runpy导入r3_05_cli缺路径，未写出签发文件；不是数据库或输入数据失败。固定4500父预算08:48:38.825准入已过，writer03/reader20未提交，未私自缩预算/延长旧授权。C通知原T45按现有已验source先stop20、再恢复两role原认证，source PASS/入口登记不能写成整批或初始化已完成。C准确stop20输入47e637151aebeedaa52eae9f801c2ffe3be90def666edc5f0475959084affca8已签并交T45，待真实收据签restoreouter；当前停止/恢复未完成。原511234行、09/index/INIT/4原nativeIDs、225安装43c及已有审查保留，下一轮先场外备齐后才启动有限窗口，不新PREPARE/重清洗/重225。
 
