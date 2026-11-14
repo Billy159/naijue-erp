@@ -7193,3 +7193,11 @@ INITIALIZE实际ACK22606.532ms，requestSHA bb21c4ce；measurement共64967.043ms
 新的原日志只读补证ff19ff4a：冻结bootstrap已将PG stderr写本代server-private.log，实际2783B/24行/root0600，SHAfc1ec219。原9行05:11:50.930 statement timeout；10–16行context为SELECT→standard_import_record_proof(uuid) body14→is_native_party_import_insert(text,jsonb) body62→keep_party_native_identity body3→INSERT→whole_package_command_v2 body906→step_v2 body4。仅原日志既存有界读取，0PG/重启/新job，不导出SQL/参数。确认取消发生在party全chunk proof循环内的record_proof SELECT，不据此量化全部耗时或断真实P/M。
 
 D2只读确认七guard大INIT五项只在DOCUMENT_CONVERSION，不可归因为MASTER每行七次。party函数每新party对全部M records做proof，proof又STRICT扫M records，可能P*M*M；普通false context索引成功不展开fullINIT，当前request hash每party一次而非每proof一次。proof实际STABLE/SECDEF仅SELECT/局部/递归，loop变量后续不依赖；拟足够全记录正向集合证明，未证明仍原loop，保完整当前源/xmin/receipt/actor/namespace/hash及旧STRICT错误顺序，不改权限/缓存/格式，不删全batch验证。单独fullpath TOAST探针34小值相同/一次大值34.725→24.855ms但持有52.4→103.7MB，仅DOC后续候选证据，未混九层或声称解当前timeout。当前无新server任务，不重放旧代。T45可只本机补失败STEP的ATTEMPT元数据，非ACK，不填推断。Git b385e7c7已实际补推，当前checkpoint沿同分支常规续推。
+
+### 2026-11-15 06:45 — party集合证明静态通过，实际列名歧义仅补失败项
+
+QB对body8525/queryb782新正向充分条件及原loop/prefix/suffix逐字保留出STATIC scoped PASS；同快照/PG执行/性能仍未测。独立消息原文由主控保存回执32558a45。T45 currentAttempt e083/patchf6c5新增六模型独立通过，保ACK/rollback/截止规则，只作后继候选，不改r907 canonical与typed协议。
+
+D2唯一500payload对照实际P474=237customer+237supplier，其他26、namespace1→M501，与r907未保存的实际P/M分开。parent PREPARE3.033s、MASTER40.002s 57014，准确ROLLBACK、新连接ABSENT及六类残留0。new首MASTER448.791ms报42702，item SQL列与PLPGSQL局部变量冲突，未测得提速；失败回执与旧8525/f48原件保存，finally回滚但未输出独立new ABSENT，临时集群已停删除，不虚称恢复全链通过。仅另目录修v.item限定，不改variable_conflict/GUC，不重测parent，不增权限/COMMIT或旧8/96。修后new及必要新CASE直接沿持续授权，不增加同类询问。
+
+T45仅完成本机r907真实父事实准备：保b324dispatcher，九层已装与INSTALL consumed存在、STEP57014/ROLLBACK/ABSENT/清理真；新SQL/三规范/derive/source/parts/target/keys未到位全部留null，不猜或签入。当前0新服务器任务、formal R3同代停。Git096d080a已实际推送成功（b385e7c7..096d080a），本检查点沿原分支持续保存。

@@ -6105,9 +6105,19 @@
               "PG logfc1ec219 / safe readbackff19ff4a",
               "context standard_import_record_proof body14 / is_native_party line62"
             ]
+          },
+          {
+            "group": "party\u96c6\u5408\u8bc1\u660e\u9759\u6001\u7a84\u5ba1\u901a\u8fc7\u53ca\u9996\u5b9e\u9645\u89e3\u6790\u5931\u8d25\u7559\u6863",
+            "status": "QB STATIC scoped PASS\u4e0ecurrentAttempt\u516d\u65b0case\u901a\u8fc7\uff0c\u5b9e\u9645500payload/P474/M501 parent40s57014\u5df2ROLLBACK\u548c\u72ec\u7acbABSENT\uff1bnew\u9996\u6b2142702\u4e3aitem\u5217/\u5c40\u90e8\u53d8\u91cf\u51b2\u7a81\uff0c\u672a\u6709\u6027\u80fdPASS\u3002D2\u4ec5\u53e6\u5b58\u9650\u5b9aalias\u4fee\u8ba2\u5e76\u53ea\u8865new\uff0c\u65e7parent\u4e0d\u91cd\u8dd1\u3002T45\u540e\u7ee7\u7236\u4e8b\u5b9e\u672c\u673a\u51c6\u5907\u5b8c\uff0c\u6682\u65e0\u65b0server\u4efb\u52a1\u3002",
+            "evidence": [
+              "static review receipt32558a454fca10ae379c42c6ae66d66ce73412486d18abd7410a6ce622d7bff9",
+              "D2 party-set-proof-pg-local-01 parent/set MASTER logs and FAILURE",
+              "currentAttempt e0835957 / 6 new model PASS",
+              "r907 actual parent dispatcher b324ffc1 retained"
+            ]
           }
         ],
-        "currentInFlight": "\u670d\u52a1\u5668\u65e0\u65b0\u5728\u9014\uff0cr907\u7ec8\u6001/\u56de\u6eda/\u72ec\u7acbABSENT\u4fdd\u7559\u3002D2\u4ec5\u8bfbparty\u5168chunk proof\u5d4c\u5957\u5e76\u62df\u8db3\u591f\u7684\u96c6\u5408\u6b63\u5411\u8bc1\u660e+\u65e7loop\u56de\u9000\uff0c\u4e0d\u6539\u4e5d\u5c42/timeout/\u6743\u9650\uff1bT45\u4ec5\u672c\u673a\u62dffirst attempted STEP\u5143\u6570\u636e\u5c0f\u5dee\u5206\uff0c\u5f85\u5177\u4f53\u6e90\u7801/\u72ec\u7acb\u590d\u6838\u540e\u518d\u51b3\u5b9a\u5fc5\u8981\u540e\u7ee7\uff0c\u65e7\u4ee3\u4e0d\u91cd\u653e\u3002",
+        "currentInFlight": "D2\u4ec5\u4fee\u65b0query alias\u6b67\u4e49\u5e76\u7ee7\u7eed\u83b7\u51c6500payload\u65b0\u4ef6\u53ca\u65b0\u8fb9\u754c\uff1b\u4fdd40s/\u6743\u9650/\u539floop\uff0cparent\u5df2\u6d4b\u4e0d\u91cd\u590d\u3002T45\u672c\u673a\u540e\u7ee7\u8f93\u5165\u7559\u7a7a\u7b49\u5f85\u771f\u5b9eSQL/\u76ee\u5f55/derive\uff0c\u4e0d\u9884\u731cparts\u3001\u4e0d\u64cd\u4f5c\u670d\u52a1\u5668\u3002\u6b63\u5e38prefix/\u6b63\u5f0f\u5168\u6279/\u6838\u8d26/\u5907\u4efd\u6062\u590d/\u516c\u7f51\u4e1a\u52a1\u672a\u5b8c\u6210\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
