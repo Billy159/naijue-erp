@@ -5261,9 +5261,17 @@
               "QB/20261114-r3-retained-publish-lineage-source-review-01/REVIEW.json",
               "\u4e3b\u63a7/20261114-r3-retained22-publish-lineage-operator-artifact-window-01/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3 service22 reviewed publication repair installed",
+            "status": "ACTUAL_ISOLATED_OPERATOR_INSTALLED_NO_BUSINESS_SUBMITTED",
+            "evidence": [
+              "T45/revisions/20261114-r3-retained22-publish-lineage-operator-source-local-01/staging/INSTALL-READBACK.json",
+              "QB/20261114-r3-retained-publish-lineage-source-review-01/INSTALL-REVIEW.json"
+            ]
           }
         ],
-        "currentInFlight": "\u539f05\u539f\u952e\u5b9e\u9645ABSENT\u3002T45\u6682\u5b58\u5df2\u590d\u68381372e\uff0c\u4e0d\u89e6\u5f53\u524dPG\u6216\u4e1a\u52a1\u3002\u6309\u771f\u5c31\u7eea\u53ca\u539f\u6709\u9650\u65f6\u4f59\u91cf\u63a5\u7eed\u3002",
+        "currentInFlight": "T45\u5df2\u6838\u5b9e\u9645\u9694\u79bb\u4fee\u590d\u5305\uff0cC/QB\u6838\u6700\u540e\u4e24\u4e2a\u65b0\u5165\u53e3\uff0c\u540c\u4e00\u539f\u8d44\u6599\u6279\u6b21\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
