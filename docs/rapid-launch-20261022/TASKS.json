@@ -4951,9 +4951,18 @@
               "outputs/QB/20261114-r3-original02-absent-guard-source-review-02/REVIEW.json",
               "outputs/T45/revisions/20261114-r3-retained20-writer-readback-source-local-01/staging/SOURCE-PINS.json"
             ]
+          },
+          {
+            "group": "R3-RETAINED773-STAGE-INSTALL-ACTUAL-COMPLETE",
+            "status": "PASS_EXACT225_SOURCE_INSTALL_NOT_BUSINESS_OR_CAS",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-retained20-operator-artifact-actual-01/RESULT.json",
+              "outputs/T45/revisions/20261114-r3-retained20-operator-install-actual-01/RESULT.json",
+              "outputs/T45/revisions/20261114-r3-retained20-operator-install-actual-01/INSTALL-READBACK.json"
+            ]
           }
         ],
-        "currentInFlight": "QB\u7a84\u5ba1\u65b0773 stage/install\u6e90\uff1bT45\u5b8c\u5584writer/readbackhost\u53ca909/008\u51c6\u786eCAS\uff1bC\u5f85source\u7ed3\u8bba\u540e\u7b7e\u6709\u9650stage\u4e0e\u5b89\u88c5authority\u3002\u65b0\u4e1a\u52a1\u672a\u6267\u884c\uff0c\u539f20\u8ba4\u8bc1\u6062\u590d\u786c\u622a\u6b6210:33\u3002",
+        "currentInFlight": "773\u5b9e\u9645225\u5b89\u88c5\u5b8c\u6210\uff1bQB\u5b9a\u5411\u6536\u53e3host02\u4e24fix+\u51c6\u786e74dea/49c8\u7ed1\u5b9a\u53ca\u673a\u68b0CAScarrier\uff1bC\u51c6\u5907\u6709\u9650CAS/\u7cbe\u786ewriterauthority\u3002\u65b0key\u672afreeze/\u65e0\u518d\u6b21\u5199\u5165\uff0c\u539f20\u6062\u590d\u671f\u9650\u4e0d\u53d8\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
