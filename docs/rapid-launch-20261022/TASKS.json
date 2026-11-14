@@ -5336,9 +5336,17 @@
               "D2/20261114-r3-writer06-performance-offline-01/REPORT.md",
               "D2/20261114-r3-writer06-performance-offline-01/MEASUREMENTS.json"
             ]
+          },
+          {
+            "group": "R3 original writer06 independently absent on same PostgreSQL data directory",
+            "status": "ACTUAL_NATIVE_ORIGINAL_TRANSACTION_ABSENT_READONLY_CLOSED",
+            "evidence": [
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/start/START-READBACK.json",
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/readback/INSPECT-READBACK.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u6309\u539f\u6570\u636e\u76ee\u5f55\u542f\u52a823\u5e76\u5728\u65b0\u6709\u9650\u7a97\u53e3\u53ea\u8bfb\u539f06\uff1bD2\u8fdb\u884c\u9694\u79bb\u5408\u6210\u6027\u80fd\u5019\u9009\u9a8c\u8bc1\u3002",
+        "currentInFlight": "T45\u4fdd\u5168\u505c\u6b6223\u53ca\u6062\u590d\u539f\u8ba4\u8bc1\uff1bD2\u51bb\u7ed3\u5408\u6210\u5019\u9009\u5e76\u5b9e\u6d4b\u6700\u63a5\u8fd1\u5b8c\u6574\u89c4\u6a21\uff0c\u4e0b\u4e00\u6b63\u5f0f\u5199\u5165\u672a\u5f00\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
