@@ -5464,9 +5464,19 @@
               "outputs/T45/revisions/20261114-r3-physical-cold-restore-design-local-01/HANDOFF.md",
               "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/HANDOFF.md"
             ]
+          },
+          {
+            "group": "R3 exact phase distribution and representative synthetic work",
+            "status": "LOCAL_DIAGNOSIS_AND_SMALL_SOURCE_IN_FLIGHT",
+            "evidence": [
+              "outputs/D1/20261114-r3-mixed-scale-design-01/REPORT.md",
+              "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/ISOLATED-PROFILE-DELTA.UNISSUED.md",
+              "outputs/D2/20261114-r3-writer06-performance-offline-01/FINISH-HOTSPOT-REPORT.md",
+              "outputs/\u4e3b\u63a7/20261114-r3-readiness-point-probe-local-01/REPORT.md"
+            ]
           }
         ],
-        "currentInFlight": "R3 SQL38 stopped and original authentication restored. Continue equal-shape synthetic fixture and targeted safe optimization.",
+        "currentInFlight": "R3 stopped. D1 small mixed synthetic preflight and T45 isolated carrier preparation ongoing. No original replay.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
