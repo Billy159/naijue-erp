@@ -6895,3 +6895,11 @@ QB对body8525/queryb782新正向充分条件及原loop/prefix/suffix逐字保留
 D2唯一500payload对照实际P474=237customer+237supplier，其他26、namespace1→M501，与r907未保存的实际P/M分开。parent PREPARE3.033s、MASTER40.002s 57014，准确ROLLBACK、新连接ABSENT及六类残留0。new首MASTER448.791ms报42702，item SQL列与PLPGSQL局部变量冲突，未测得提速；失败回执与旧8525/f48原件保存，finally回滚但未输出独立new ABSENT，临时集群已停删除，不虚称恢复全链通过。仅另目录修v.item限定，不改variable_conflict/GUC，不重测parent，不增权限/COMMIT或旧8/96。修后new及必要新CASE直接沿持续授权，不增加同类询问。
 
 T45仅完成本机r907真实父事实准备：保b324dispatcher，九层已装与INSTALL consumed存在、STEP57014/ROLLBACK/ABSENT/清理真；新SQL/三规范/derive/source/parts/target/keys未到位全部留null，不猜或签入。当前0新服务器任务、formal R3同代停。Git096d080a已实际推送成功（b385e7c7..096d080a），本检查点沿原分支持续保存。
+
+### 2026-11-15 06:54 — qualified真实500仍超时，部分快分支有效但全块未过
+
+D2仅v.item/refs.ref/final CTE列限定的新body29b04421和SQLc60ea92c获得QB可逆词法差分PASS，回执1009ecca；catalog8ee16aee确认155/114/35/351及其他metadata/ACL不变。唯一new同500/P474/M501，PREPARE2.998440s、MASTER40.005653s57014在新集合IF取消，已无42702；无MASTER ACK/COMMIT。准确ROLLBACK、新公开capability连接ABSENT，observer六类残留全0，OUTCOME ROLLED_BACK_NEW_FAILURE。旧parent40.002389s超时及旧42702留存不重复。COMPARISONddc4fec9、CLEANUPa25c0f8c。
+
+D2另存原STATS派生b17f219a：147次完成集合SQL33036.709788ms/1955460shared hits/0reads，party147/proof147约80.582ms，原loop pointer SQL没有entry。仅支持已完成调用部分跳过原P*M循环，不称全474次命中/已落147行；未保存节点plan/temp/width，不能把13k hits每次归因特定TOAST或SeqScan。boundary及最终规范/derive因失败未生成。
+
+主控按具体新失败授权一次同500shape、明确临时probe关系/局部typed值的query层EXPLAIN ANALYZE/BUFFERS/VERBOSE，单query40s失败停，原qualified仅一次；不重放MASTER/parent、不增加grant/缓存。优先证实MATERIALIZED是否携带未用大audit复合值，若证实只窄改必要标量投影，文本UUID连接不同时改；新稿和真实新MASTER分层验，不追加用户卡。T45当前仅本机父facts a3b6b9c5/RESULTd6d0c6ec准备，服务器无新作业。Git441e02b2已实际推送（096d080a..441e02b2）。

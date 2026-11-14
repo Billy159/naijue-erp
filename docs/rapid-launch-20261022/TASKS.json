@@ -6115,9 +6115,18 @@
               "currentAttempt e0835957 / 6 new model PASS",
               "r907 actual parent dispatcher b324ffc1 retained"
             ]
+          },
+          {
+            "group": "qualified\u96c6\u5408\u5b9e\u9645\u8d85\u65f6\u4e0e\u56de\u6eda\u5df2\u5b9e\u8bc1\uff0c\u5f85query\u8282\u70b9\u8bca\u65ad",
+            "status": "\u4ec5\u9650\u5b9aalias\u7684body29b0/SQLc60e\u83b7QB\u8bcd\u6cd5PASS\u5e76\u5b9e\u9645\u5b89\u88c5\uff1b\u552f\u4e00new500\u4ecd40.005653s57014\uff0c\u65e0MASTER ACK\u3002ROLLBACK\u3001\u65b0\u8fde\u63a5ABSENT\u53ca\u516d\u7c7b\u96f6\u6b8b\u7559\u95ed\u5408\u3002147\u6b21\u5b8c\u6210\u96c6\u5408/record_proof147\u548c\u65e7loop pointer\u65e0entry\u662f\u90e8\u5206\u7edf\u8ba1\uff0c\u4e0d\u4ee3\u8868\u5168474party\u901a\u8fc7\uff1b\u6682\u65e0\u8282\u70b9\u8ba1\u5212\uff0c\u4e0d\u80fd\u5f52\u56e0\u3002",
+            "evidence": [
+              "QB alias receipt1009eccaed6779154f1a1bf301cca20a975e947f3698cd03c12492acc8da7580",
+              "set-MASTER22b7f567 / FAILUREbaf6fc21 / catalog8ee16aee",
+              "COMPARISONddc4fec9 / PARTIAL-STATSb17f219a / CLEANUPa25c0f8c"
+            ]
           }
         ],
-        "currentInFlight": "D2\u4ec5\u4fee\u65b0query alias\u6b67\u4e49\u5e76\u7ee7\u7eed\u83b7\u51c6500payload\u65b0\u4ef6\u53ca\u65b0\u8fb9\u754c\uff1b\u4fdd40s/\u6743\u9650/\u539floop\uff0cparent\u5df2\u6d4b\u4e0d\u91cd\u590d\u3002T45\u672c\u673a\u540e\u7ee7\u8f93\u5165\u7559\u7a7a\u7b49\u5f85\u771f\u5b9eSQL/\u76ee\u5f55/derive\uff0c\u4e0d\u9884\u731cparts\u3001\u4e0d\u64cd\u4f5c\u670d\u52a1\u5668\u3002\u6b63\u5e38prefix/\u6b63\u5f0f\u5168\u6279/\u6838\u8d26/\u5907\u4efd\u6062\u590d/\u516c\u7f51\u4e1a\u52a1\u672a\u5b8c\u6210\u3002",
+        "currentInFlight": "\u4ec5D2\u83b7\u51c6\u72ec\u7acb\u4e34\u65f6probe\u5173\u7cfb\u4e0a\u4e00\u6761500shape\u67e5\u8be2\u7684\u6709\u754cEXPLAIN ANALYZE/BUFFERS/VERBOSE\u8bca\u65ad\uff0c\u4e0d\u91cd\u653e\u4e1a\u52a1\u6216\u5ef6\u65f6\uff1b\u5148\u8bc1\u5b9eMATERIALIZED\u5927\u590d\u5408\u503c\u6295\u5f71/\u8fde\u63a5\u8282\u70b9\uff0c\u518d\u6700\u7a84\u7a3f\u3002T45\u540e\u7ee7\u672a\u51bb\u7ed3\u65b0SQL/\u76ee\u5f55/parts\uff0c\u65e0\u65b0\u670d\u52a1\u5668\u5728\u9014\uff0cformal R3\u505c\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
