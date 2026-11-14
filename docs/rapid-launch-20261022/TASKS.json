@@ -5302,9 +5302,18 @@
               "T45/revisions/20261114-r3-retained22-writer06-actual-01/WRITER-OUTCOME-READBACK.json",
               "T45/revisions/20261114-r3-retained22-writer06-actual-01/RESOURCE-SAMPLE-61.json"
             ]
+          },
+          {
+            "group": "R3 stopped after writer06 without spending another writer or reader key",
+            "status": "ACTUAL_CLEAN_STOP_ORIGINAL_06_STILL_UNKNOWN",
+            "evidence": [
+              "T45/revisions/20261114-r3-ordinary22-preserve-stop-actual-01/STOP-READBACK.json",
+              "T45/revisions/20261114-r3-ordinary22-preserve-stop-actual-01/PRESERVATION-HANDOFF-FINAL.json",
+              "QB/20261114-r3-original06-readonly-inspect-source-review-01/REVIEW.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u53ea\u8bfb\u63a5\u7eed\u539f06\u7ed3\u679c\u6838\u9a8c\uff1bD2\u79bb\u7ebf\u5b9a\u5411\u67e5PostgreSQL\u539f\u5bfc\u5165\u8017\u65f6\uff1b\u672a\u518d\u5199\u3002",
+        "currentInFlight": "T45\u5b8c\u6210\u540c\u8f6e\u539f\u8ba4\u8bc1\u6062\u590d\u5e76\u51c6\u5907\u4e0b\u4e00\u6709\u9650\u539f\u952e\u53ea\u8bfb\u7a97\u53e3\uff1bD2\u5728\u5408\u6210\u9694\u79bb\u6570\u636e\u5e93\u9a8c\u8bc1SQL38\u8017\u65f6\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
