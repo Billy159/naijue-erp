@@ -5078,9 +5078,17 @@
             "evidence": [
               "outputs/\u4e3b\u63a7/20261114-r3-retained21-writer03-window-02/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3-ORIGINAL-WRITER03-QUEUED-ACTUAL21",
+            "status": "ACTUAL_UNIQUE_QUEUED_NATIVE_OUTCOME_PENDING",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/ORIGINAL-QUEUE-BEFORE-SUBMIT.json",
+              "outputs/\u4e3b\u63a7/20261114-r3-retained21-writer03-window-02/ISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u552f\u4e00\u63d0\u4ea4actual21\u7ed1\u5b9a\u7684\u539fwriter03\uff0c\u5b8c\u65744500+420\u7559\u8db3\uff1b\u672a\u77e5\u53ea\u539f\u952e\u4e0d\u91cd\u5bfc\u3002",
+        "currentInFlight": "T45\u8ddf\u539fwriter03\u552f\u4e00QUEUED unit d28f34180a52\u5230native\u7ec8\u6001\u53ca\u6e05\u7406\uff1bC\u5f85privateINIT hash\u7b7ereader21\uff0c\u4e0d\u91cd\u5bfc\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
