@@ -5675,9 +5675,19 @@
               "T45 original compile probe 08bc45bc8830216eb26388243a393c47c119ca9de78f28dda9c87b4b256d153d",
               "T45 review delta pins 96dee26f134796dfa1f37f130025ca6d760cac270873c79bc26f69b5da25fdf0"
             ]
+          },
+          {
+            "group": "FULL-511234-V2-COMPILE-ONLY-CLOSURE-REVIEWED-20261114",
+            "status": "INDEPENDENT_LOCAL_DELTA_PASS_PENDING_ACTUAL_SINGLE_COMPILE_AUTHORITY",
+            "evidence": [
+              "T45 closure a5c31d17a12bd2462eddd8d7881e91306211ab51e364f7e094a54b0ef3988e93",
+              "T45 five-phase manifest 43b2efda5460ddbf45d7dbf28cd7e976699115f656ed8691f26da42a248f8089",
+              "T45 final local report 57d311c3a75ea5e7f3ab5dcc1709d217d4347444aa72d697ccb1e8cf2da31cc5",
+              "QB narrow two-finding delta review original chat 01a161d2-73f1-7381-ab03-65a1c3b52aa2"
+            ]
           }
         ],
-        "currentInFlight": "T45 prepares local isolated compile-only closure for the fixed full V2 candidate. A new actual isolated measurement requires separate authorization. 247-row test closed, formal R3 remains stopped.",
+        "currentInFlight": "Await separate human approval for one reviewed 511,234-row synthetic V2 compile-only on a distinct PostgreSQL 17.11 target. Formal R3 remains stopped and real 511,234-row package uncommitted.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
