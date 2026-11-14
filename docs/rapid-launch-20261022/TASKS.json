@@ -5372,9 +5372,19 @@
               "D2/20261114-r3-writer06-performance-offline-01/PREFIX-EQUIVALENCE-PG.json",
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_prefix-1000-9-guarded.jsonl"
             ]
+          },
+          {
+            "group": "R3 exact publication and finish plans combined into an atomic SQL39 candidate",
+            "status": "LOCAL_ATOMIC_AND_REACHABLE_EQUIVALENCE_PASS_FULL_IMPORT_BUDGET_PENDING",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-PREFIX-AND-FINISH.sql",
+              "D2/20261114-r3-writer06-performance-offline-01/SQL39-ATOMIC-LOCAL-PG.json",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_finish-1000-9-detail.jsonl",
+              "T45/revisions/20261114-r3-sql39-carrier-preparation-local-01/SQL39-TWO-ROUTINE-PLAN.md"
+            ]
           }
         ],
-        "currentInFlight": "D2\u6355\u83b7\u5b9e\u9645\u672a\u63d0\u4ea4FINISH\u660e\u7ec6\u53cd\u8bc1\u89c4\u5212\u5e76\u4fee\u5c40\u90e8\u653e\u5927\uff1bT45\u51c6\u5907\u6709\u754c\u8f7d\u4f53\uff0cR3\u4ecd\u505c\u5e93\u3002",
+        "currentInFlight": "T45\u672c\u5730\u6784\u5efa\u4e00\u4e2aSQL39\u7ef4\u62a4\u8f7d\u4f53\uff1bD2\u9a8c\u8bc1\u5bfc\u5165\u9010\u6b65\u7684\u70b9\u67e5\u6210\u672c\u3002\u4fdd\u6301\u539fR3\u505c\u6b62\uff0c\u672a\u7b7e\u73b0\u573a\u52a8\u4f5c\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
