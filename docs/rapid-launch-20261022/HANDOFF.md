@@ -7153,3 +7153,15 @@ T45根/同名/三jobkeys与350计数一次修复，source350/profile92a/archive1
 真正唯一签入ISSUED4a470275在03:42:23.551生成，prestage283428ee/provision17dfab21/policyd7e19090，P003:47:23.551、provision到04:07:23.551、policy到04:12:23.551。实际用户持续授权0c25f2a5绑定，T45正沿原键登记/预置。主控listen_once08d3f662提前启动session66879，依原helper等待本代REGISTRATION和BIRTH再一次委派已审issuer，无聊天发起/自签/重试；等待截止03:53:33.551，不改变原真实C0/较早native期限。实际安装/写/ROLLBACK/独立ABSENT及停库待原回执。
 
 D2完整冻7层+f4e56d34同分布新96唯一业务成功，新连接26类/六项VERIFY一致，原51,225,133B/96ACK/90销810行+1调1行/1025source/97root相配；write45.325→25.367秒，checkpointUPDATE32.615→12.606，matching7.564秒/16.7Mhits→15.829ms/6370hits。root扫描未变，PG采样约1.803GiB非瞬时/cgroup峰值。文档块均值条件外推8603.6秒已超旧4200且未计其他，不把小样本当正式时限或调拨密度PASS。原8/96/2500不重跑，候选仍未并入本轮Linux7层。
+
+### 2026-11-15 04:06 — 原登记01真实未发布，准确15卷谓词及私密登记02接续
+
+本代第一次原登记exit2/UNKNOWN_READ_ORIGINAL_AUDIT_ONLY，未据此重放。T4503:49:22原键实际只读5bfa5e82：仅source/entry/entry-result存在，audit/result/adapter/policy/pending/install全缺，dispatcher仍c681、活动空、0DB/写/阶段。实际serialized policy原谓词复现EXACT_JOB_RULE_REQUIRED：adapter.bundle_names仍range1,12，误按11卷检查本次19成员含15卷。此前六入口模型/phase freeze没有覆盖这个实际policy谓词，不能作为登记成功。原main listener66879到03:53:33.551退出124，未观察成功REGISTRATION、未调用postbirth或假造READBACK。
+
+主控依原持续授权明确最小后继：独立measure-local-02，修原生成处range1,16，新私密登记operator02；原01stage/UNKNOWN/回执/实际签入前态字节保留，重绑REG01源df18精确。五workload01真实未提交仍保留、postbirth01未消费、r906/55566/350源/profile/archive/七SQL不变，旧R0 4a470275不改期不覆写。QB核实际旧serialized19成员policy+实际grant：旧11拒绝，新15五相set/pins相等，缺15/多16/坏digest拒绝。新四pin74bcee8b/b38ce5bc/76b05fbc/7692527f待最后摘要传播采纳，实际新前检在途。
+
+主控新controller02未签，新增逐五相调用实际bundle_names对照全members；实际policy encode后调用相同adapter.validate_policy和严格require/digest、actual grant，任何write_originals之前执行原服务端必要谓词，不增加协议或放宽检查。新四pin静态通过，原11基线a470/b421与新15卷仍准确区分。待真实新前检和QB该delta后出真正新R0/P0。原业务/正式目标继续停。
+
+D2新7body实际8/96证据获QB scoped PASS，44.033%本机同分布收益成立，仍未并入Linux。本机root范围新互斥query片段通过仅静态限定审查，准许新查询层有界计划/同快照探针，保全部对象COUNT及真实xmin/foreign集合，拟114索引只补NULL根；不重跑旧2500或96业务、不删检查/新计数状态，不把可达索引或小样本当完整时限PASS。
+
+Git最近三次推送因HTTP2/接收超时及HTTP1.1低速45秒失败；本机checkpoint均已提交并保留，远端成功点仍为8fa05ccf，不宣称新提交已推送，后续必要checkpoint继续沿同远端常规补推。

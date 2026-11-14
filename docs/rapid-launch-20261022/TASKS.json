@@ -6075,9 +6075,19 @@
               "source READYf48c7704 / final c679/aa8c/9b9e/2123",
               "D2 same96 dccf42f7 / raw960bf172"
             ]
+          },
+          {
+            "group": "prefix\u767b\u8bb001\u771f\u5b9e\u672a\u53d1\u5e03\u6536\u6e05\u53ca15\u5377\u7cbe\u786e\u540e\u7ee702",
+            "status": "\u5b9e\u9645UNKNOWN\u7ecf\u539f\u952e5bfa5e82\u8bc1\u5b9epre-audit\u62d2\u7edd\uff0c0\u767b\u8bb0/\u9636\u6bb5/DB\uff1badapter\u6f0f\u755911\u5377\uff0c\u4ec5\u4fee15\u5e76\u65b0\u79c1\u5bc6\u767b\u8bb002\uff0c\u4e94\u672a\u63d0\u4ea4workload01/source/r906\u4fdd\u6301\u3002\u65e7listener124\u4e14\u65e0postbirth\u3002",
+            "evidence": [
+              "\u539f\u5165\u53e3UNKNOWN / original registrar df18a7c6",
+              "\u539f\u952ereadback5bfa5e82591e55a48e4d96a1141ef1408b7c56552ca784bbb8d51e7bf9570eee",
+              "02\u56dbpin74bcee8b/b38ce5bc/76b05fbc/7692527f",
+              "main controller02 actual validate_policy before originals"
+            ]
           }
         ],
-        "currentInFlight": "T45\u672c\u8f6e\u539f\u952e\u767b\u8bb0/MATERIALIZE\u2192P003:47:23.551 START/BIRTH\uff0c\u4e3b\u63a766879\u76d1\u542c\u771f\u5b9eREGISTRATION-READBACK/BIRTH-HANDOFF\u540e\u4e00\u6b21postbirth\uff0cT45local02\u539fL\u63a5\u7eed\u5b89\u88c5\u548cprefix\u3002\u5f53\u524d\u6b63\u5f0fR3\u505c\uff0c\u4e1a\u52a1\u672a\u5bfc\u3002QB\u53ea\u6838D2\u65b07body\u5b9e\u9645\u8bc1\u636e\uff0c\u65e2\u6709\u540c\u8303\u56f4\u4e0d\u91cd\u8dd1\u3002",
+        "currentInFlight": "T45\u4e00\u6b21\u65b0\u539f\u53ea\u8bfb\u524d\u68c0\u6838\u65e7stage\u9759\u6001/\u4ecd\u672a\u53d1\u5e03\u53ca\u65b0\u79c1\u5bc6\u767b\u8bb002\u7f3a\u5e2d\uff1bQB\u53ea\u886502\u6700\u7ec8pins\u3002\u4e3b\u63a7controller02\u65b0\u56dbpin\u9759\u6001PASS\uff0c\u771f\u5b9epolicy\u540cadapter\u8c13\u8bcd\u4e8e\u7b7e\u53d1\u524d\u8fd0\u884c\uff0c\u5f85\u65b0actual\u56de\u6267\u540e\u53e6\u51fa\u65b0R0/P0\uff0c\u4e0d\u91cd\u653e\u539f01\u3002\u6b63\u5f0fR3\u505c\uff0c\u4e1a\u52a1\u672a\u5199\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
