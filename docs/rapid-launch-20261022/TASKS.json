@@ -5086,9 +5086,16 @@
               "outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/ORIGINAL-QUEUE-BEFORE-SUBMIT.json",
               "outputs/\u4e3b\u63a7/20261114-r3-retained21-writer03-window-02/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3-ORIGINAL-WRITER03-UNKNOWN-FAILURE",
+            "status": "ACTUAL_FAILED2_NATIVE_UNKNOWN_NO_REPLAY_CLEANUP_PHYSICAL_ONLY",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-retained21-writer03-actual-01/monitor/SAMPLE-001.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u8ddf\u539fwriter03\u552f\u4e00QUEUED unit d28f34180a52\u5230native\u7ec8\u6001\u53ca\u6e05\u7406\uff1bC\u5f85privateINIT hash\u7b7ereader21\uff0c\u4e0d\u91cd\u5bfc\u3002",
+        "currentInFlight": "T45\u4ec5\u539f\u6536\u636esafe cause\uff1bD2\u5b9a\u4f4dWHOLE_CATALOG_ROLLBACK_UNCERTAIN\u53ca\u7f3aINIT\u7684\u539f4UUID\u53ea\u8bfb\u6062\u590d\u65b9\u6848\u3002\u539f03\u7981\u6b62\u91cd\u653e\uff0c\u6b63\u5e38reader\u672a\u7b7e\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
