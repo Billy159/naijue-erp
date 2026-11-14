@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 12:46。原请求未发现提交记录，初始化数据已实测为 51,225,175 字节；正在复核按实测大小修正后的后继入口。
+更新时间：北京时间 2026-11-14 12:51。按实测初始化大小修正后的入口已复核获授权，继续同一实例和原批次导入。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/f5918736f34953707953c4c5b4ffc05d92590433) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/b28a7b1e9ac3f0481f9bd9116807916ed3e56d2d) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -880,4 +880,11 @@ C签登记f85d06498ad1ca21125323ecca068a7b001f868165d54be0553c517383439cc3、只
 只读CAS actual e0a6c4cada4f73fd38bf7762e237cf976b6e549253510225becd9e49dfd16f17/b760/d39a/a3b5，只改reader。原reader22唯一提交并结束，12:40:53.608081CST实证原请求ABSENT（原票据无、根及双批冲突检查）；同c6d原INIT重构一次112.458s，JSON+LF UTF8精确51225175 B（实际重构，非writer阶段日志），RO SQL3.481s/ROLLBACK ACK/CLOSED，49权限恢复、scratch empty，0业务写。终态b6de0dd2a2078768ffba3b0d75ee7964946ba50cab6bf8a8b21b77228d4d9068，结果c8bc01/公开1cfba3，恢复frame e34dd5f323eb6152e943ed934aa1440aa941b9bfb0e7ef13c5803a93d78edbf5/pointer49b230663b3791b56ee921b0162a361c85120d055beacc3441ec0c12ac56e5d6。证据outputs/T45/revisions/20261114-r3-original04-readonly-inspect-actual-01/INSPECT-READBACK.json。
 
 C/T45准备继续同一service22和已设置的T1794640192413，不新增启停/角色；若入场不足4500+420+600则保全停库。原04及reader22存证不重放，只新外层05和最终reader22-02，原生产UUID/09/原INITc6d/44682及原c86e运行包保持。新host/Node四处同一准确51225175，原manifest 2MiB等其他上限不改，N±1拒；按真原生成器以reader22恢复49重建计划2bbf，访问允许原readback-22/restored并拒错误阶段，CLI预检。C同一原锁的24+1 metadata，root source87c5/ebaf/4ca1/00ae保留旧证据和维护4规则/期限，仅更换两业务规则。仍在独立窄复核，未签该后继或执行新业务；全量核账/备份/上线待完成。
+
+
+### 2026-11-14 12:51 — 同一service22、实测INIT边界的后继writer05已签
+
+QB窄审 ce7eda4f09d530399d7e82a91287c5b4996516befdc364dea876f9859475d389，无发现。C保留原04 e5612、原只读22 b6de/ABSENT及同c6d、三对root/public结果及51225175准确测量；24+1原锁metadata e535。真实原service22保持。最终T45 a681/f1da/8cf983、d83a规则和8a7c提交预核。四处同一文件准确长度51225175 B，N±1及错SHA拒，原保护与D2 c86e/manifest不改；新访问规则只允许原reader22/restored，before/active拒；49/48计划2bbfb完整顺序经原生成器重建。
+
+C准确登记63e1c8beb3245f659ec62483d48a43c18828b86d4a3a2be8328a30d676c92795/carrier661bc3，策略d269/dispatcherfef22，另四维护规则和原policy期限保留。准确后继原writer05外84a5b4004aef34b9fb7e90c962304be0ed9336074f5197e4328653c193f2abe5、内19a75b，实际controller T1794640192413内外同值；尚未收实际入场。见outputs/主控/20261114-r3-absent04-retained22-continuation-window-01/ISSUED.json。最迟实际入场1794634672413前，完整4500+420+600s余量。只新外层05/最终reader22-02，源09、原数据库4UUID/c6d和44682步不改。T45按唯一CAS读回/释放锁及真实CLI动态SHA预核后执行，不重复原03/04或新PREPARE。业务、全批核账/备份/恢复和上线仍待实际证实。
 
