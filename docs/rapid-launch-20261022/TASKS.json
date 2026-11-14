@@ -5211,9 +5211,17 @@
               "outputs/QB/20261114-r3-original04-readonly-inspect-source-review-01/REVIEW.json",
               "outputs/\u4e3b\u63a7/20261114-r3-unknown04-readback-registration-window-01/ISSUED.json"
             ]
+          },
+          {
+            "group": "R3-04-ACTUAL-ABSENT-AND-EXACT-INITIALIZER-BYTES",
+            "status": "ACTUAL_ABSENT_ORIGINAL_OUTCOME_AND_51225175_MEASURED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-original04-readonly-inspect-actual-01/INSPECT-READBACK.json",
+              "outputs/T45/revisions/20261114-r3-retained22-writer05-exact-initializer-source-local-01/SIX-PHASE-RULES.UNISSUED.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u552f\u4e00\u767b\u8bb0\u5e76\u539freader22\u53ea\u8bfb\u6838\u771f\u5b9e\u539f\u4e8b\u52a1\u548c\u540cINIT\u5e8f\u5217\u5316\u5927\u5c0f\uff1b\u4fdd\u7559\u539f04\uff0c\u65e0\u65b0\u4e1a\u52a1\u5199\u5165\u3002",
+        "currentInFlight": "\u540c\u4e00service22\u540e\u7ee7\u7cbe\u786e51225175\u4e0e\u6709\u5e8f\u8bbf\u95ee\u6e05\u5355\u5df2\u51fa\uff0c\u5f85\u72ec\u7acb\u7a84\u6838\u548c\u51c6\u786e\u6388\u6743\uff0c\u539f04\u4e0d\u91cd\u653e\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

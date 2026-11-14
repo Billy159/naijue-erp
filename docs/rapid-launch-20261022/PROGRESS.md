@@ -6421,3 +6421,9 @@ D2已定位原2 MiB硬编码涉及同一私文件四处（Node写、Python保护
 T45原04机械RO源268e/a870/ff059（固定八叶）和原访问生成器从实际3daf/49/48产生的1fbcb6复算一致；独立验证Unicode与>2MiB纯fixture，只有组合已核时测 JSON+LF UTF8字节数，原helper95/原09/同c6d/保护与清理复用，保持420/360/300/15预算。C登记初稿全局替换误动旧inspect03 pin，已修并与旧20基础逐项比对，现CAS67be/carriera656/module d39a/templatef6dc、22+锁metadataed2c，实际f0a1/322a真实保全。策略a3b5仅reader三字段变化。QB final 3050ffdbb7cf8cadb173b82d91801ad1fb2be2a5565e5d54bf418bd908a47be6，源窄核通过。
 
 C签登记f85d06498ad1ca21125323ecca068a7b001f868165d54be0553c517383439cc3、只读原reader22 f0925292d1ec9a2a07f68ef12326a7558ccbb821d51695b93d91dd8bdf9670d7，截止1794632473700。见outputs/主控/20261114-r3-unknown04-readback-registration-window-01/ISSUED.json。T45准确一次根登记并释放锁后预检真实动态SHA和最终请求才提交，只原键和真实原事务/清理/字节数，不重放04。当前未收实际提交、事务结果或大小，真实全批导入/核账/备份恢复/上线未完成。
+
+### 2026-11-14 12:46 — 原04实时核查ABSENT及精确INIT大小；准备同一实例后继业务入口
+
+只读CAS actual e0a6c4cada4f73fd38bf7762e237cf976b6e549253510225becd9e49dfd16f17/b760/d39a/a3b5，只改reader。原reader22唯一提交并结束，12:40:53.608081CST实证原请求ABSENT（原票据无、根及双批冲突检查）；同c6d原INIT重构一次112.458s，JSON+LF UTF8精确51225175 B（实际重构，非writer阶段日志），RO SQL3.481s/ROLLBACK ACK/CLOSED，49权限恢复、scratch empty，0业务写。终态b6de0dd2a2078768ffba3b0d75ee7964946ba50cab6bf8a8b21b77228d4d9068，结果c8bc01/公开1cfba3，恢复frame e34dd5f323eb6152e943ed934aa1440aa941b9bfb0e7ef13c5803a93d78edbf5/pointer49b230663b3791b56ee921b0162a361c85120d055beacc3441ec0c12ac56e5d6。证据outputs/T45/revisions/20261114-r3-original04-readonly-inspect-actual-01/INSPECT-READBACK.json。
+
+C/T45准备继续同一service22和已设置的T1794640192413，不新增启停/角色；若入场不足4500+420+600则保全停库。原04及reader22存证不重放，只新外层05和最终reader22-02，原生产UUID/09/原INITc6d/44682及原c86e运行包保持。新host/Node四处同一准确51225175，原manifest 2MiB等其他上限不改，N±1拒；按真原生成器以reader22恢复49重建计划2bbf，访问允许原readback-22/restored并拒错误阶段，CLI预检。C同一原锁的24+1 metadata，root source87c5/ebaf/4ca1/00ae保留旧证据和维护4规则/期限，仅更换两业务规则。仍在独立窄复核，未签该后继或执行新业务；全量核账/备份/上线待完成。
