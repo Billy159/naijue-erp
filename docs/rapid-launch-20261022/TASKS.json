@@ -5667,9 +5667,17 @@
               "T45 original terminal projection 517c5f42d11aa80cb2b131a2038b74778767e43d687b623c528e0454476bbebe",
               "T45 original phases and final stop readback 81bc7ad3956ff464efaf86235f5744103209df97d60937db81c5b370ce3366d5"
             ]
+          },
+          {
+            "group": "FULL-511234-SYNTHETIC-ORIGINAL-COMPILE-BOUNDARY-20261114",
+            "status": "EXACT_LOCAL_PREFLIGHT_PASS_ADMISSION_REQUIRED_BEFORE_PLAN",
+            "evidence": [
+              "T45 original compile probe 08bc45bc8830216eb26388243a393c47c119ca9de78f28dda9c87b4b256d153d",
+              "T45 review delta pins 96dee26f134796dfa1f37f130025ca6d760cac270873c79bc26f69b5da25fdf0"
+            ]
           }
         ],
-        "currentInFlight": "Smoke A completed. Next: bounded full-shape isolated compile/transaction resource validation and ordinary historical hall evidence. Formal 511,234-row import, backup, restoration and business opening remain pending. R3 stopped.",
+        "currentInFlight": "T45 prepares local isolated compile-only closure for the fixed full V2 candidate. A new actual isolated measurement requires separate authorization. 247-row test closed, formal R3 remains stopped.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
