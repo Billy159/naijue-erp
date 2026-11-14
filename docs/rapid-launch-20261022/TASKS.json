@@ -5574,9 +5574,18 @@
               "adc9829fe35aaf83c6eeac2a38360c072fa2246805f7334dcf24885a1ff23fac",
               "f127e248f1c3729e36a9d8275fb8c3f33e0fb27f8962a00fd6398586a0d4dca2"
             ]
+          },
+          {
+            "group": "r3-transfer-density-coalescing-postgres-comparison",
+            "status": "LOCAL_PAIRED_SAME_FIXTURE_VERIFIED_RETAIN_PER_DOCUMENT_MODE",
+            "evidence": [
+              "6869a0850e24b0099e9d1a751aff97aea012aaf6e6068a93a44bae479913b675",
+              "98d5007838cfb5cb7607a79084851b1477d079fe5e4fa28edf8db34ecfd65878",
+              "a2e3053adc1fe7bb51694d8c1888718204f5246719499d8f6c01d44ea25999d1"
+            ]
           }
         ],
-        "currentInFlight": "\u672c\u673a\u5c0f\u6837\u6062\u590d/\u5408\u6279\u4e8b\u52a1\u4e0e\u76ee\u5f55\u8f6c\u4ee3\u7ea6\u675f\u5df2\u9a8c\u8bc1\u3002\u7b49\u5f85 T45 247 \u884c\u7684\u9650\u65f6\u9694\u79bb\u767b\u8bb0\u6388\u6743\uff1bR3 \u6b63\u5f0f\u5e93\u53ca\u539f\u4e1a\u52a1\u952e\u672a\u6539\u3002",
+        "currentInFlight": "\u5408\u6279\u5728\u8c03\u62e8\u5bc6\u5ea6\u6837\u672c\u6bd4\u9010\u5355\u66f4\u6162\uff0c\u7ef4\u6301 247 \u884c\u9694\u79bb\u6f14\u7ec3\u7684\u539f\u9010\u5355\u65b9\u6848\u3002\u5f85\u79c1\u5bc6\u8fd0\u7ef4\u767b\u8bb0\u6388\u6743\uff0c\u6b63\u5f0f R3 \u4ecd\u505c\u3001\u539f\u952e\u672a\u63d0\u4ea4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
