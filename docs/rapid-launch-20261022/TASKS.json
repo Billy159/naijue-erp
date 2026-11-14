@@ -5319,9 +5319,26 @@
               "T45/revisions/20261114-r3-ordinary22-role-restore-actual-01/RESTORE-READBACK.json",
               "T45/revisions/20261114-r3-ordinary22-role-restore-actual-01/CURRENT-GRANT-AND-PHASE-DEADLINES.json"
             ]
+          },
+          {
+            "group": "R3 five-phase read-only maintenance registered and original-auth finite apply",
+            "status": "ACTUAL_REGISTERED_AND_ROLE_APPLY_CONFIRMED_SAME_PGDATA_START_PENDING",
+            "evidence": [
+              "QB/20261114-r3-unknown06-service23-source-review-01/REVIEW.json",
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/registration/REGISTRATION-READBACK.json",
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/apply/APPLY-READBACK.json"
+            ]
+          },
+          {
+            "group": "R3 writer06 SQL38 performance reproduction on PostgreSQL17 synthetic fixture",
+            "status": "SYNTHETIC_SCALE_REPRODUCED_AND_MINIMUM_CANDIDATE_SMOKE_PASS",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/REPORT.md",
+              "D2/20261114-r3-writer06-performance-offline-01/MEASUREMENTS.json"
+            ]
           }
         ],
-        "currentInFlight": "T45\u4e0eC\u51c6\u5907\u540cPGDATA\u768423\u6709\u9650\u4e16\u754c\uff0c\u53ea\u6838\u539f06\u63d0\u4ea4\uff1bD2\u672c\u673a\u9694\u79bb\u9a8c\u8bc1\u8d85\u65f6\u5f52\u56e0\u3002",
+        "currentInFlight": "T45\u6309\u539f\u6570\u636e\u76ee\u5f55\u542f\u52a823\u5e76\u5728\u65b0\u6709\u9650\u7a97\u53e3\u53ea\u8bfb\u539f06\uff1bD2\u8fdb\u884c\u9694\u79bb\u5408\u6210\u6027\u80fd\u5019\u9009\u9a8c\u8bc1\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
