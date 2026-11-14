@@ -5123,9 +5123,17 @@
               "outputs/T45/revisions/20261114-r3-ordinary21-preserve-stop-actual-01/STOP-READBACK.json",
               "outputs/T45/revisions/20261114-r3-ordinary21-role-restore-actual-01/RESTORE-READBACK.json"
             ]
+          },
+          {
+            "group": "R3-STOPPED-CAPACITY-CATALOG-DIAGNOSIS-ROUTE",
+            "status": "ACTUAL_ROOT_AND_STOPPED_PGDATA_MEASURED_NEXT_RO_SOURCE_IN_PROGRESS",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-service22-catalog-route-local-01/STOPPED-CAPACITY-READBACK.json",
+              "outputs/T45/revisions/20261114-r3-service22-catalog-route-local-01/ROUTE.md"
+            ]
           }
         ],
-        "currentInFlight": "service21\u5df2\u5b89\u5168\u6536\u5c3e\uff1bD2\u5c40\u90e8\u4fee\u6b63\u76ee\u5f55\u53ea\u8bfb\u6838\u9a8c\u7684\u9519\u8bef\u5904\u7406\u53ca\u5b89\u5168\u8bca\u65ad\uff0c\u67e5\u660e\u786e\u5207\u539f\u56e0\u540e\u63a5\u7eed511234\u884c\u5168\u6279\u3002",
+        "currentInFlight": "D2\u5c40\u90e8\u4fee\u6b63\u76ee\u5f55\u9519\u8bef\u63a9\u76d6\u5e76\u63d0\u4f9b\u540c\u8fde\u63a5\u53ea\u8bfb\u5165\u53e3\uff1bT45\u672c\u5730\u590d\u7528\u505c\u7a3321\u540e\u7684\u7ef4\u62a4\u6784\u4ef6\uff0c22\u4ecd\u672a\u542f\u52a8\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

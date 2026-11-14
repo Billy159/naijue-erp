@@ -6661,3 +6661,9 @@ C已按实际cleanup签保全停21独立授权0cf1e086e419247e0a32e1e7a9cfd6801a
 原restore21唯一执行 COMPLETED0/7.363794s，11:20:45.135852CST，11:21:22读回。root/publicterminal34ea2e745715b7757ba0aefd0706524419af90f46d1de736808b7d169569bc25，rootresult293da43c2535f31eeaa091a10fbaa2f7c7da4c86aa16b1330b247a5f2226356b，rootcleanupf373d8e7fe600adfab16568adf37935ebde4dd98fada888f7135eaf89d5d9942；私下离线准确比较两个既有角色原verifier/到期一致，角色属性、成员关系、runtime认证保留，非自然到期近似。维护容器b2d942 stopped/PID0/exit0/noOOM、PGDATA.pid absent，数据库继续停止。SQL36/业务/新DB或角色均无。证据outputs/T45/revisions/20261114-r3-ordinary21-role-restore-actual-01/RESTORE-READBACK.json。
 
 窗口已完成收尾，原03业务结果以实际原native ABSENT语义保留，原失败初因无法从旧日志恢复。D2已开始局部目录核验回滚与安全诊断修正及新定向测试；等有具体源和诊断回执再决定实际后继。保持511234全批目标、原身份及09，正式写入、逐项核账、备份恢复和应用/公网验收未完成。
+
+### 2026-11-14 11:27 — 停库容量实测与下一次独立目录只读诊断范围
+
+原21已停及原两角色认证已恢复。T45于11:25:27.502767CST以同一真实dev66304量测，根卷可用275457441792 B（256.54 GiB）、PGDATA实配71479296 B（68.17 MiB，其中WAL33566720 B），无独立WAL挂载、无外部tablespace。仅停库du/statvfs，无数据库会话/材料正文读取/服务器写入。证据outputs/T45/revisions/20261114-r3-service22-catalog-route-local-01/STOPPED-CAPACITY-READBACK.json。28 GiB保留后余228.54 GiB，扣同批2.313 GiB准备量和33 GiB逻辑备份上限后余193.23 GiB用于正式增长、冷备和独立恢复等。现未测得扩容缺口，不降低保留线；导入后实际冷备与独立恢复峰值待测，若不足在/dev/md0p1按差额增加。容量核算原报告已补新读数。
+
+T45查明现fc6只有真实writer API，helper95只查原票据，均无独立同驱动目录诊断。下一段只走同一controller/固定Linux pg Client，原BEGIN RR READ ONLY/双DO guards/observation SELECT/validator/ROLLBACK/close，无业务PREPARE/execute或新身份。D2负责修复同wire ReadyForQuery回滚缺口并提供共享原目录函数的独立只读入口和安全阶段/SQLSTATE。T45只在本地准备复用现有4维护构件的22机械后继，前序为actual闭合21，拟五键仅覆盖apply/start/catalog诊断/stop/restore，与原业务授权分离。未签发或执行22，待D2接口及实际源精确后再经必要增量复核。原03失败及ABSENT不重写，整批导入、备份恢复、正式应用与公网验证仍待。
