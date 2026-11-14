@@ -5353,9 +5353,19 @@
               "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/restore/RESTORE-READBACK.json",
               "D2/20261114-r3-writer06-performance-offline-01/FROZEN-DDL.md"
             ]
+          },
+          {
+            "group": "R3 exact document publication count isolated and local plan candidate",
+            "status": "SYNTHETIC_PUBLICATION_BOTTLENECK_ISOLATED_FINISH_AND_EQUIVALENCE_PENDING",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-38-1000-9.jsonl",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_ordinal-250-9.jsonl",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_prefix-250-9.jsonl",
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/FINAL-STOPPED-RESOURCES.json"
+            ]
           }
         ],
-        "currentInFlight": "D2\u5408\u6210\u5c3a\u5ea6\u5b9e\u6d4b\u3001QB\u72ec\u7acb\u6838\u903b\u8f91\u5dee\u5206\u3001T45\u51c6\u5907\u5df2\u6709SQL\u5b89\u88c5\u548c\u540c\u76d8\u63a5\u7eed\uff1b\u771f\u5b9e\u5e93\u505c\u6b62\u4fdd\u62a4\u3002",
+        "currentInFlight": "D2\u5b9e\u6d4b\u53d1\u5e03\u7cbe\u786e\u8ba1\u6570\u5019\u9009\u548cFINISH\uff1bQB\u53ea\u6838\u5dee\u5206\uff1b\u771f\u5b9e\u5e93\u505c\u5e76\u4fdd\u62a4\uff0cT45\u9759\u6001\u51c6\u5907\u4e0b\u4e00\u8f7d\u4f53\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
