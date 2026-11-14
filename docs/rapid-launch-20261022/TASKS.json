@@ -5499,9 +5499,16 @@
               "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/OUTER-AND-QB-DELTA.UNISSUED.md",
               "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/READBACK-AND-ADMISSION.UNISSUED.md"
             ]
+          },
+          {
+            "group": "R3 isolated Smoke A actual host preflight and active continuity hold",
+            "status": "LIVE_RESOURCE_READY_ORDINARY_JOB_HOLD_BLOCKED",
+            "evidence": [
+              "outputs/T45/revisions/20261114-r3-full-scale-synthetic-carrier-route-local-01/SMOKE-A-ROOT-READONLY-PREFLIGHT.json"
+            ]
           }
         ],
-        "currentInFlight": "T45 only is checking current read-only admission for a fresh synthetic target. Retain stopped original R3.",
+        "currentInFlight": "R3 stays stopped. Keep original continuity hold in effect. Preparing a scoped candidate for review only.",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
