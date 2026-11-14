@@ -1,6 +1,6 @@
 # 奈爵 ERP 上线进度（脱敏）
 
-更新时间：北京时间 2026-11-14 16:14。两处优化已在本机组合验证，继续核对正式规模的导入预算。
+更新时间：北京时间 2026-11-14 16:21。导入行的查询优化已通过隔离验证，继续按完整批量核时间。
 
 ## 当前阶段
 
@@ -43,7 +43,7 @@ SQL38 的合计列修复已固定为 6c6f6b4e。QB 在本机合成 PostgreSQL �
 
 T45 是唯一服务器执行者。首位管理员本机输入已通过独立复验，异常中断后可复用原件。本机已出现受保护原件文件，当前只核了文件权限与属主，待本人确认录入成功。QB 已独立验证受保护接收和同一原件的维护绑定。T45 正核现有保管方及可复用私有交付安排。正式维护完成后仍须核普通服务的实际运行证明。资料交付准备并行，正式维护、真实导入和新连接核账尚未执行。真实导入尚无可用耗时基线，当前不能确定切换时间。
 
-[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/32777352afd204196d1526b4ba8627df7d64a1d2) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
+[本轮主控进度检查点](https://github.com/Billy159/naijue-erp/commit/da26f522afe612d8902cb5bf346072644c1f61c1) · [R3 同版维护源码](https://github.com/Billy159/naijue-erp/commit/d1a6d214fbb3db50a698c3235b71b87068df6684)
 
 [恢复诊断及准入修复](https://github.com/Billy159/naijue-erp/commit/3d2f230829e9223faede7a32ac24ce8a9b84825c)
 
@@ -986,4 +986,9 @@ D2的本地精简同体例SQL39因为精确原锚点分发，最终两函数 pat
 未提交400步PG17.11同backend中，原完整单据明细NOT EXISTS generic 3.254ms、重复物化批量取数；保持原反证条件，改既有type+id索引点查为0.033ms、27 cache hits。独立FINISH候选ba88c8c8…只改两个NOT EXISTS计划，坏/缺失/NULL UUID回原查询。D2的33/33正反例和原端到端1/1通过；QB独立核目录元数据、RLS可见范围和各实际数组路径。强造非数组假snapshot错误码有差异，实际固定typed snapshot以数组/[]生成，caller/audit无法注入此形状。
 
 原子组合91e44e8a…只替两函数、无索引/trigger/ACL变化。D2实装合成库通过，QB第二旧体变更一字节的安装负例证55000且第一项同事务回滚，正常两个目标哈希及目录元数据对齐。合成250步15.168s/FINISH6.067s；合成1000步139.457s/文档发布0.666s/FINISH31.302s；原第999步仍约107.5s，生产44,682步和51.2MB INIT尚无可证预算。D2查精确operation/receipt PK与触发器路径；T45按一个SQL38实际父目录做可安装但未签发的统一载体。R3仍停库保全。
+
+
+### 2026-11-14 16:21 — 导入行审计点查的独立改动通过，规模路径仍在测
+
+原合成1000步真实 nested trigger 多次按批次审计索引扫前缀再按 operation_id 过滤。独立 APPEND 点查 f9f4d41e…原同一 SQL 保留同一 tuple xmin、批次和角色锁、receipt/actor/time、JSON每条来源记录，不改变正式业务版本。QB 对准确 PostgreSQL 17.11 的52个跨计划对照及 OID/ACL/pg_proc 原属性给局部PASS。与前两项组合的1000步本机 COMMITTED 95.769s，较两项合成约139–141s进一步减少；原10,969条插入及触发器累计45.302→1.849s，shared hits 23.90M→1.97M。250步本机COMMITTED12.771s。500→999步段仍约90ms/步，没有44,682步/51MB INIT的真实可达依据。继续对有实测成本的文档checkpoint多个护栏查出等价且最小的缩减，并准备核账45秒上限的同合成试件测量。真实R3原06 ABSENT且关闭，未部署SQL39。
 
