@@ -4942,9 +4942,18 @@
               "outputs/D2/20261114-r3-service20-retained-writer-source-01/candidate.json",
               "outputs/\u4e3b\u63a7/20261114-r3-original02-absent-continuation-local-01/LOCAL-PINS.json"
             ]
+          },
+          {
+            "group": "R3-RETAINED773-AND-ABSENT20-909-SOURCE-REVIEW-CLOSED",
+            "status": "PASS_SCOPED_SOURCE_ONLY_NOT_STAGE_INSTALL_POLICY_CAS_OR_BUSINESS",
+            "evidence": [
+              "outputs/QB/20261114-r3-service20-retained-writer-source-review-01/REVIEW.json",
+              "outputs/QB/20261114-r3-original02-absent-guard-source-review-02/REVIEW.json",
+              "outputs/T45/revisions/20261114-r3-retained20-writer-readback-source-local-01/staging/SOURCE-PINS.json"
+            ]
           }
         ],
-        "currentInFlight": "QB\u7a84\u5ba1773\u65b0\u5165\u53e3\u53caC\u4e24key guard\uff1bT45\u6309API\u63a5host/CAS\u6e90\uff1b\u539f20\u6709\u9650service\u4e0e\u8ba4\u8bc1\u6062\u590d\u671f\u9650\u4fdd\u6301\uff0c\u672a\u518d\u6b21\u5199\u5165\u3002",
+        "currentInFlight": "QB\u7a84\u5ba1\u65b0773 stage/install\u6e90\uff1bT45\u5b8c\u5584writer/readbackhost\u53ca909/008\u51c6\u786eCAS\uff1bC\u5f85source\u7ed3\u8bba\u540e\u7b7e\u6709\u9650stage\u4e0e\u5b89\u88c5authority\u3002\u65b0\u4e1a\u52a1\u672a\u6267\u884c\uff0c\u539f20\u8ba4\u8bc1\u6062\u590d\u786c\u622a\u6b6210:33\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
