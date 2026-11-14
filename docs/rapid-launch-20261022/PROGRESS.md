@@ -6931,3 +6931,13 @@ T45最终carrier-local02 READY39c50871，357source/22parts/5228deploy，sourceSe
 T45独占0700新live01并存真实前检/原client后，R0 filewaiter79193提前运行，固定等新主控issued/ISSUED.json、截至UTC23:55，50e08ace复用536969e1并仅一次委派。主控真正唯一R0 ISSUED79d503bf于UTC23:36:30.205写出，P023:41:30.205、provision到次日00:01:30.205、policy到00:06:30.205；source3eea614e、authority16bbe920、prestage5a3d383a/provision63ac7f49/policye799911a。actual用户持续授权0c25与独立review3b5绑定，实际adapter.validate_policy及check_envelope均在write_originals前调用通过。
 
 正确ENTRY listener78294已实际运行a386，等新live REGISTRATION-ENTRY-RESULT和BIRTH后委派一次issuer，截止UTC23:47:40.205；不是诊断READBACK，不需聊天启动、不可再开重复listener。T45原键跟随，未知只读原键不换键。此时尚未收到新登记/安装/编译/前缀回执，不提前PASS；formal R3停、全批/核账/备份恢复/公网业务仍未完成。Git5f76b9cf已实际推送。
+
+### 2026-11-15 07:49 — 原登记01传输超时未落地，连接恢复只读证据与最小REG02准备
+
+原R0 watcher实际于UTC23:36:30.283196发现79d503bf（约78ms），留下唯一REGISTRATION-ONCE-ATTEMPT；没有依赖聊天。原工具receipt ec12ae确认run_registration_once.py38的SSH40s subprocess.TimeoutExpired/exit1（UTC23:38:14.240 poll），79193句柄后续Unknown不是未触发。没有本地ENTRY。confirm_registration原键只读先报LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK，不能据此判密码/权限问题或重登记。
+
+UTC23:42:41成功只读27d098f2确认REG source/audit/entry/policy全ABSENT、dispatcher原b324，新root及五相request/tmp/privateJob/controlJob/receipt全ABSENT。UTC23:44:13.668资源读SSH255，准确stderr banner exchange timeout/目标22连接超时（f8d01472），不能填当前资源/正式停库PASS。blocked2c7dc158完整保留attempt/原终态/原键ABSENT/超时。原数据/PG/五phase均未提交，非数据库测量失败。
+
+UTC23:47:02–06同leased route有界只读握手3.942s/exit0，TCP/banner/authenticated/command/exit全true、0failure，仍REG全ABSENT/dispatcher原b324/新root及五phase无。证据26fab1cd，说明间歇通道握手故障且暂时恢复，未证guard拒绝。仍待一次资源/前置实核，不能把单次连接恢复当所有现场已核。T45获准目标限定本机网络诊断，不改VPN/路由/密钥/端口/公网管理。
+
+主控原正确ENTRY listener78294于UTC23:47:40.205自然截止exit124，无成功ENTRY/BIRTH/postbirth，不延长旧签入。原R0/P0/attempt/超时全部保留，REG01绝不重放。最小后继只本机REG02、新main controller02/live02，原五workload01/r908/55568/source357/22parts/10SQL/POST01实际未提交可保留；必须准确新guard/四pin/真实只读前检和新窄审后才新R0，不把换键当未知结果重导。现没有新签入或服务器作业。已过D2/实际500/目录成果复用，不因SSH错误重跑。Gitefbe87f7已实际推送。
