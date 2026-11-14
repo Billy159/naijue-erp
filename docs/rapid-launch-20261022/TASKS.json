@@ -5429,9 +5429,19 @@
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_ten-32-9-large-init-probe.jsonl",
               "D2/20261114-r3-writer06-performance-offline-01/SCALE-39_authority-32-9-large-init-probe.jsonl"
             ]
+          },
+          {
+            "group": "R3 measured compact authority, generated columns and exact counter constraints",
+            "status": "LOCAL_STRUCTURE_PROBES_COMPLETE_NO_PRODUCTION_SCHEMA_CHANGE",
+            "evidence": [
+              "D2/20261114-r3-writer06-performance-offline-01/RECEIPT-ROOT-AUTHORITY-MICRO-PG.json",
+              "D2/20261114-r3-writer06-performance-offline-01/GENERATED-ROOT-MICRO-PG.json",
+              "D2/20261114-r3-writer06-performance-offline-01/ROOT-COUNTER-MICRO-PG.json",
+              "D2/20261114-r3-writer06-performance-offline-01/SCALE-REPORT.md"
+            ]
           }
         ],
-        "currentInFlight": "\u7ee7\u7eed\u786e\u8ba4\u4fdd\u7559\u539f\u5b8c\u6574INIT\u4e0e\u4e8b\u52a1\u68c0\u6838\u7684\u8f7b\u91cf\u4e0a\u4e0b\u6587\u8def\u5f84\uff1b\u771f\u5b9eR3\u5e72\u51c0\u505c\u5e93\uff0c\u672a\u5f00\u59cb\u4e0b\u4e00\u6b21\u5199\u5165\u3002",
+        "currentInFlight": "\u7528\u51bb\u7ed3SQL38\u5408\u6210\u63a2\u9488\u786e\u8ba4\u6d3e\u751f\u5217\u91cd\u5199\u5bf9\u539f\u5386\u53f2\u8bc1\u636e\u7684\u5f71\u54cd\uff1b\u6b63\u5f0fR3\u505c\u6b62\u3001\u5c1a\u672a\u5b8c\u6210\u4e0a\u7ebf\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
