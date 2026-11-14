@@ -5802,9 +5802,29 @@
               "RETAINED-AND-REJECTIONS ef502a0b\u2026",
               "D2 REPORT 6fdb7c55\u2026"
             ]
+          },
+          {
+            "group": "\u9010\u884c\u91d1\u989d\u6838\u8d26\u5927\u56de\u6267\u517c\u5bb9\u4fee\u6b63",
+            "status": "\u4fee\u590d\u65e7 1MiB \u4e0a\u9650\u62d2\u7edd\u5408\u6cd5\u6e90\u4e8b\u5b9e\u56de\u6267\uff0c81\u9879\u548c225\u8fd0\u884c\u6210\u5458\u5c40\u90e8\u91cd\u5efa\u901a\u8fc7\uff0c\u7b49\u5f85\u6b63\u5f0f\u5b9e\u9645\u8bfb\u56de\u3002",
+            "evidence": [
+              "source d07196ca\u2026",
+              "sourceSet 2ac483ab\u2026",
+              "spec 5d9fbf63\u2026",
+              "Node24.21.0 81/81"
+            ]
+          },
+          {
+            "group": "T45 \u7b2c\u4e8c\u4ee3\u53ea\u7f16\u8bd1\u56fa\u5b9a\u5019\u9009\u6750\u6599",
+            "status": "\u672c\u673a\u5173\u8054\u4e94\u76f8\u5df2\u51bb\u7ed3\uff0c\u73b0\u5904\u539fQB\u589e\u91cf\u590d\u6838\uff0c\u6682\u65e0\u65b0\u73b0\u573a\u6388\u6743\u6216\u4f5c\u4e1a\u3002",
+            "evidence": [
+              "REVIEW 5ad672ed\u2026",
+              "routes 4abe6f67\u2026",
+              "phase index b8f19756\u2026",
+              "local carrier ab03f40b\u2026"
+            ]
           }
         ],
-        "currentInFlight": "T45 \u672c\u673a\u51c6\u5907\u540c\u5019\u9009\u65b0\u4ee3\u4e0e\u539f\u952e\u56de\u6267\u4fee\u590d\u3002D2 \u5e76\u884c\u5728\u672c\u673a\u5904\u7406\u672a\u89e3\u51b3\u7684 44,682 \u6b65\u5199\u5165\u9884\u7b97\u3002R3 \u505c\u5e93\u3002",
+        "currentInFlight": "\u539f QB \u590d\u6838\u7b2c\u4e8c\u4ee3\u4ea4\u63a5\u548c\u672c\u673a\u65f6\u5e8f\u3002C \u8854\u63a5\u5f53\u8f6e\u7cbe\u786e\u672a\u7b7e\u6750\u6599\uff0cD2 \u539f\u4e8b\u52a1\u6027\u80fd\u5b9e\u9645\u540e\u7ee7\u5f85\u91c7\u7528\u3002\u6b63\u5f0f R3 \u505c\u5e93\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
