@@ -5550,9 +5550,33 @@
               "e2519c5f5981cb3f6f528b406403b49340d1390a1ad722d46f0105e09b773ad4",
               "e08c0086b4aa67ce1cdd684baa0da5c22734f81ead02f21b6b91f3743c41ebcf"
             ]
+          },
+          {
+            "group": "r3-sql39-local-full-dump-restore-250",
+            "status": "LOCAL_SYNTHETIC_POSTGRES_NEW_SID_RESTORE_VERIFIED",
+            "evidence": [
+              "98ce2fe5e1ebb35e08f35e958e381e737b453fd8de44e44ef0a83270e901234b",
+              "ba674242456e2234420933d52eb6091cf7ea8c3ab6eba8adfde1626b7bfc739f"
+            ]
+          },
+          {
+            "group": "r3-original-planner-local-catalog-fingerprint",
+            "status": "LOCAL_SYNTHETIC_TARGET_CATALOG_CHANGE_REKEYS_PLAN_NO_SERVER",
+            "evidence": [
+              "7d97521c04949729523ad5a0185f916153a2c9382b56b06dbe4ec9faac563a38",
+              "ea15eec5cda8b7666b4350f9a9eea58764c0978c552cebbcf8ab8be814b189c7"
+            ]
+          },
+          {
+            "group": "r3-coalesced-base-postgres-compare",
+            "status": "LOCAL_SYNTHETIC_BASE_TWO_ORIGINAL_TRANSACTIONS_VERIFIED",
+            "evidence": [
+              "adc9829fe35aaf83c6eeac2a38360c072fa2246805f7334dcf24885a1ff23fac",
+              "f127e248f1c3729e36a9d8275fb8c3f33e0fb27f8962a00fd6398586a0d4dca2"
+            ]
           }
         ],
-        "currentInFlight": "\u7b49\u5f85 T45 \u5355\u6b21 247 \u884c\u9694\u79bb\u6f14\u7ec3\u7684\u79c1\u5bc6\u767b\u8bb0\u548c\u6709\u9650\u5b89\u88c5\u6388\u6743\u3002\u6b63\u5f0f R3 \u505c\u5e93\u3001\u539f\u4e1a\u52a1\u8bf7\u6c42\u786e\u8ba4\u672a\u63d0\u4ea4\u3002",
+        "currentInFlight": "\u672c\u673a\u5c0f\u6837\u6062\u590d/\u5408\u6279\u4e8b\u52a1\u4e0e\u76ee\u5f55\u8f6c\u4ee3\u7ea6\u675f\u5df2\u9a8c\u8bc1\u3002\u7b49\u5f85 T45 247 \u884c\u7684\u9650\u65f6\u9694\u79bb\u767b\u8bb0\u6388\u6743\uff1bR3 \u6b63\u5f0f\u5e93\u53ca\u539f\u4e1a\u52a1\u952e\u672a\u6539\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
