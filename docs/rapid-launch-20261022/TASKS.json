@@ -5344,9 +5344,18 @@
               "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/start/START-READBACK.json",
               "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/readback/INSPECT-READBACK.json"
             ]
+          },
+          {
+            "group": "R3 generation 23 cleanly preserved after native original06 absence",
+            "status": "ACTUAL_CLEAN_STOP_AND_ORIGINAL_AUTH_RESTORED",
+            "evidence": [
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/stop/STOP-READBACK.json",
+              "T45/revisions/20261114-r3-service23-original06-readonly-actual-01/restore/RESTORE-READBACK.json",
+              "D2/20261114-r3-writer06-performance-offline-01/FROZEN-DDL.md"
+            ]
           }
         ],
-        "currentInFlight": "T45\u4fdd\u5168\u505c\u6b6223\u53ca\u6062\u590d\u539f\u8ba4\u8bc1\uff1bD2\u51bb\u7ed3\u5408\u6210\u5019\u9009\u5e76\u5b9e\u6d4b\u6700\u63a5\u8fd1\u5b8c\u6574\u89c4\u6a21\uff0c\u4e0b\u4e00\u6b63\u5f0f\u5199\u5165\u672a\u5f00\u3002",
+        "currentInFlight": "D2\u5408\u6210\u5c3a\u5ea6\u5b9e\u6d4b\u3001QB\u72ec\u7acb\u6838\u903b\u8f91\u5dee\u5206\u3001T45\u51c6\u5907\u5df2\u6709SQL\u5b89\u88c5\u548c\u540c\u76d8\u63a5\u7eed\uff1b\u771f\u5b9e\u5e93\u505c\u6b62\u4fdd\u62a4\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

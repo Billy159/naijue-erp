@@ -6495,3 +6495,7 @@ D2在PG17.11合成隔离环境复现原每步审计根count、外根否定、前
 真实23启动 COMPLETED/0，root/public终态29f00d64…，同根盘设备66304/inode13502421、SID7706545564479176741/OID16393/170011，CID d16814…、Postmaster 07:25:28.193494Z、proof0e7303ad…。只读23-01 完成于15:29:26.891953 CST，COMPLETED/0/29.788s，root/public终态7ed2e4ac060832c92da712c2dfd84351ad9c488cc8822d676fbdac2c2b8c6d28，root结果3836f401…、cleanupaaae244a…。原06留存INIT准确51,225,175B/c6d并匹配原A05与explicit-zero批准。同一物理库上原 native inspect 返回ABSENT，BEGIN/SET/INSPECT/ROLLBACK都有ACK，SQL3.520s/无SQLSTATE/连接CLOSED、子进程回收、同49输入元数据恢复、0业务写。采用数据库的原操作缺席证明，原06超时历史保留，未将只读事务ROLLBACK冒充06写事务接收过回滚ACK。
 
 D2的本地精简同体例SQL39因为精确原锚点分发，最终两函数 patch1dc2421e…，索引备选e795bfd5…分开，三路baseline-scope合成端到端均pass。全批仍需验证可达的有界时间并据此选择，暂未部署或写业务。T45继续按已登记23 stop与restore，保留旧发布及A05。首批真实入库、核账、备份/恢复和正式入口仍未完成。
+
+### 2026-11-14 15:37 — 23只读现场已收尾，待实测优化的整批成本
+
+23 stop实际COMPLETED/0，15:33:50.738772 CST，root/public终态a4ec77706cb5f4768971f4ccd0e9f8fe5cda1d3ff59dff9bd06c7617f478678c，root结果08b1341f…、cleanupd52169a6…，同CID stopped/PID0，PGDATA和原hold保留。23 restore实际COMPLETED/0，15:36:51.187591，终态29a6293fca781fd95859644cc2b818f81b1485d701ca1201dc7d17c68cc067db、root结果37be662f…、cleanupea9414e0…。两原角色认证及期限经本机离线字段比对恢复；原应用runtime认证、角色属性和成员无变更，PGDATA仍停止。原06 ABSENT保持真实；已冻结两版本地逻辑并给QB检查异常和原子安装，D2沿原fixture扩展端到端规模数据，T45同一角色负责拟定最少复用的SQL后继和运行方案。真实库DDL、正式写入、备份及开放均未开始。
