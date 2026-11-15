@@ -1,0 +1,21 @@
+{
+  "sourceThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "verifiedBy": "read_thread actual source items",
+  "reviews": [
+    {
+      "turnId": "01a1df7f-ecf5-7ad3-883e-5048bb5d8b9e",
+      "messages": [
+        {
+          "messageCallId": "exec-793a4a95-9ad9-4bcc-84e2-d6993d5ce4fd",
+          "text": "QB D1 installer02唯一身份adapter差分窄核：SCOPED SOURCE DELTA PASS，Standards/Spec无明确新增缺陷；01其余范围复用，未重13SQL/模型/旧guard/PG/演练。PINS e982bb063d56033d7844a92d7c36a08455c6de0727dc8564ad3104a01ac5e6bf及8成员匹配，单runtime SHA769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e、closure9bfb68a816c796177835881fcf67b825b3ca680ec5086cfa1d7e1555dd5fa14a准确，冻结diff与01→02实际差分一致。\n\ncompile新增backupAdminValidUntil要求安全整数且>=当前target.expiresAt，描述明确authenticationMode EXISTING_FINITE_ADMIN_SESSION_SET_ROLE_OWNER / sessionUser=原admin / effectiveUser=原owner / ownerLoginRequired=false /该deadline；这些进入program hash，原9field外部authority继续精确绑定program/source/target/window，没有新owner LOGIN/password/成员授予或原private读取。调用者须传现有ordinary24实际已批准的公开deadline，不能用旧owner登录或伪造期限。\n\n初始native真实query要求session_user=current_user=原admin且role=none、idle；helper自己发送正确标识符转义的SET ROLE owner，只有真实SET ACK+idle才标roleSwitchAcknowledged。三个snapshot ownerGuard均保current物理/C/时窗/writable/origin/独占/无prepared检查，并明确session_user=原admin、current_user和role=owner；admin须OID10/LOGIN/SUPERUSER，原有限rolvaliduntil精确等于新绑定deadline且未过期，有效owner仍非super/createrole/createdb/replication/bypassrls。旧observer/元数据target仍按01历史链，不伪称native owner session。首154另实际采双身份、role、pid、deadline，准确核对后持久化connection-identity。\n\n原13层SQL/154→155→161对照/COMMITACK循环没有差分；成功161capture及current检查后才RESET ROLE，实际SET ACK+idle才能记roleRestoreAcknowledged及completion。失败路径保留既有ACK/rollback/COMMIT unknown字段，role switch/reset各自attempted/acknowledged独立：只在实际idle且尚未reset时最多一次RESET尝试，失败不补造ACK/close，仍抛原错误与保留失败记录。helper不关闭借入admin连接，T45仍必须独占最终close及ordinary24原有限auth恢复，不能将该admin session复用为business controller host。\n\n新离线facts与01的278 pin路径完全相同，唯一变row是此installer；其他两D1源/D3 d083 wrapper/原13SQL与161maps未变。offline base2a2f0e3be19e03f57cbf5dfa22f05d26166ac241fb140abd39762ea2245dc347 / compact20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d与已有source-descriptor记录相符，仅源事实，非live值；只读已有syntax/module record，未重跑。\n\nQB全程0PG/server/issuer/源修改。T45可按此有限接口消费现有admin私参通道、实际currentC/epoch/deadline和新同树program供main issuer；实际SET/RESET/native安装/capture/close仍由真实运行证据确认，不增加审批或合成前置。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9bac36c748191925637664c3310b9",
+          "text": "身份适配差分的源码检查通过：真实会话与有效 owner 身份分开记录，有限期限进入绑定，SET／RESET ROLE 都要求实际确认。\n\n结论已发主控。本轮未运行数据库或修改权限；实际安装与收尾结果仍待 T45 确认。"
+        }
+      ]
+    }
+  ]
+}

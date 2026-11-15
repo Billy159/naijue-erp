@@ -1,0 +1,13 @@
+{
+  "OFFLINE-SOURCE-FACTS.json": "e55c1ca2069769cf474f6c7bee859c1488ffa8d03d810ea19c34999a004ad711",
+  "OWNER-INTERFACES.md": "27e28733768cd4e8e2fd544b6ea8f5625c676da9058b54302b790b8f5f30bc62",
+  "README.md": "3ca4e7ef091e5a536b3bf899b3491b35ef5dded645184f0c6eb99fb5b9ef8927",
+  "SOURCE-CLOSURE.json": "dff357272f7db8e6bbeb6c302c5397305038163540dbc805285612501be59e2a",
+  "VALIDATION.json": "e604e0b39b6bd94b11d5d84ef0a172f4a5cc3b2d6f08787c06cc7f6b0e3b1271",
+  "fresh35-batched161-upgrade-v1.mjs.diff": "a6c957e9485f0ddd33bba54098ba2c945c5d39133b1c600b4a811d3aae664ae3",
+  "fresh35-combined-catalog-v1.mjs.diff": "1ccf56422f88826dcec2b9d41b5ab71e6dd5d215fe5af67528981d36c2761e47",
+  "fresh35-combined-source-v1.mjs.diff": "7b38aa9ab15c2bf66d78d1b95c1d80990c96c930a5ad5415d947d44b567e7d60",
+  "source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs": "c68830c46bf827b46c9ebe39f4a4b42cca6030f29abadc685c83c3e7f018ace7",
+  "source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs": "f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48",
+  "source/scripts/release/unified-install/fresh35-combined-source-v1.mjs": "c393b5608d0dc95294e77fbf94cd6b393ee43dee41aaa75167215ae96b98741c"
+}

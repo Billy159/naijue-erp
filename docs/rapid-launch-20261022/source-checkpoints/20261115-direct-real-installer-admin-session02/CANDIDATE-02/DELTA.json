@@ -1,0 +1,22 @@
+{
+  "finding": "CURRENT_ORDINARY24_HAS_NO_CURRENT_NATIVE_OWNER_AUTHORITY",
+  "parentCandidatePinsSha256": "9f658e289533310994584479f0f0c495316d3e8fcac043334ef49d2989c76024",
+  "changedRuntimeFiles": 1,
+  "file": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+  "sourceSha256": "769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e",
+  "oldOwnerLoginAssumptionRemoved": true,
+  "fixedAuthenticationMode": "EXISTING_FINITE_ADMIN_SESSION_SET_ROLE_OWNER",
+  "newCompileBinding": "backupAdminValidUntil",
+  "actualSessionUserRequired": "target.proposal.admin",
+  "actualEffectiveUserRequired": "target.proposal.owner",
+  "roleChangeKind": "session SET ROLE and RESET ROLE only, actual ACKs",
+  "roleAttributesOrMembershipChanges": 0,
+  "otherTwoD1FilesUnchanged": true,
+  "d3WrapperUnchanged": true,
+  "original13SqlAnd161ModelsUnchanged": true,
+  "externalAuthorizationFieldsUnchanged": 9,
+  "newExactProgramAuthorizationRequired": true,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "nativeRuntimeValidated": false
+}

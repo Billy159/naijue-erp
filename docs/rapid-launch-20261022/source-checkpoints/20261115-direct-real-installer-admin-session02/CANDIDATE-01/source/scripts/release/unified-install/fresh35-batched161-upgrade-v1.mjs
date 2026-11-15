@@ -1,0 +1,140 @@
+/** Finite existing154 -> accepted12 layers -> DB05 installer. No service/issuer. */
+import {readFile,open,lstat,realpath} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {resolve,join} from 'node:path';
+import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
+import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
+import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
+import {describeFresh35CombinedTarget,assertFresh35InstallationTargetCurrent,reconstructFresh35InstalledProductionTargetV2} from './fresh35-combined-target-v1.mjs';
+import {buildFresh35CompactZeroCatalog,buildFresh35ProductionPrefix155Catalog,buildFresh35BatchedCatalogV1,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,assertFresh35CombinedCatalogCurrent} from './fresh35-combined-catalog-v1.mjs';
+import {loadFresh35CombinedRecordEnvelope,describeFresh35ProtectedRecordSnapshot,assertFresh35ProtectedRecordSnapshotCurrent} from './fresh35-combined-record-v1.mjs';
+import {publishInstallationRecord} from './publish-installation-record.mjs';
+
+export const BATCHED161_UPGRADE_AUTHORIZATION_PATH='/etc/naijue-erp/fresh35-batched161-upgrade-v1.json';
+const servicePath='/run/naijue-rewrite/current-production-service.json';
+const modulePath='scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs';
+const loadedHash=hash(await readFile(new URL(import.meta.url)));
+const dbSqlPath='adapters/postgres/patches/0027_standard_batched_import_v1.sql';
+const dbSqlHash='332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3';
+const dbCandidatePin='dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9';
+const orderPath='adapters/postgres/patches/prefix155/INSTALL-ORDER.json';
+const orderHash='db217adcc8e87a0b5b70471d18b85b852d158e3f73b165f65dd6a93229a3a3c2';
+const programs=new WeakMap(),authorities=new WeakMap(),used=new WeakSet();
+const need=(ok,code)=>{if(!ok)throw Error('BATCHED161_UPGRADE_'+code)};
+const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v)}return v};
+const identity=s=>[s.dev,s.ino,s.uid,s.mode,s.nlink,s.size,s.mtimeNs,s.ctimeNs].map(String).join(':');
+const digest=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
+const closed=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Object.keys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
+async function protectedJson(path,privateMode=false){
+ await assertTrustedRootPath(path);const f=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{const a=await f.stat({bigint:true});need(a.isFile()&&a.uid===0n&&a.nlink===1n&&(a.mode&0o022n)===0n&&(!privateMode||(a.mode&0o077n)===0n)&&a.size>0n&&a.size<=65536n,'PROTECTED_INPUT_REQUIRED');
+  const bytes=await f.readFile(),b=await f.stat({bigint:true}),c=await lstat(path,{bigint:true});need(BigInt(bytes.length)===a.size&&identity(a)===identity(b)&&identity(a)===identity(c),'PROTECTED_INPUT_CHANGED');
+  return {value:parseStrictJson(bytes.toString('utf8')),sha256:hash(bytes),identity:identity(a)};
+ }finally{await f.close()}
+}
+async function sourceSql(root,path,pin){
+ const absolute=resolve(root,path);need(await realpath(absolute)===absolute,'CANONICAL_SQL_REQUIRED');
+ const bytes=await readFile(absolute);need(hash(bytes)===pin,'FIXED_SQL_DIFFERS');return bytes.toString('utf8');
+}
+/** Requires genuine current V2 target/source. Describing this token grants no SQL. */
+export async function compileFresh35Batched161Upgrade({source,target,paths,currentServiceSha256}){
+ const t=assertFresh35InstallationTargetCurrent(target),s=describeFresh35CombinedSource(source),{root}=fresh35CombinedSourceData(source);
+ need(t.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&t.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'&&digest(currentServiceSha256),'CURRENT_PRODUCTION_TARGET_REQUIRED');
+ need(s.currentSourcePins.some(p=>p.path===modulePath&&p.sha256===loadedHash),'LOADED_SOURCE_DIFFERS');
+ const envelope=await loadFresh35CombinedRecordEnvelope(),snapshot=describeFresh35ProtectedRecordSnapshot(envelope),old=envelope.target;
+ need(old?.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&['systemIdentifier','databaseOid','serverVersionNum'].every(k=>old.physical[k]===t.physical[k])&&['database','owner','controller','host','port','workspaceDirectory'].every(k=>old.proposal[k]===t.proposal[k]),'ORIGINAL_INSTALLED_TARGET_DIFFERS');
+ const service=await protectedJson(servicePath);
+ need(service.sha256===currentServiceSha256&&service.value.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V2'&&service.value.installationRecordSha256===snapshot.sha256&&service.value.physical?.postmasterStart===t.physical.postmasterStart,'CURRENT_SERVICE_BINDING_DIFFERS');
+ const metadataTarget=await reconstructFresh35InstalledProductionTargetV2(envelope);
+ const predecessor=await buildFresh35CompactZeroCatalog(source,metadataTarget,paths);
+ const prefix=await buildFresh35ProductionPrefix155Catalog(source,metadataTarget,paths);
+ const successor=await buildFresh35BatchedCatalogV1(source,metadataTarget,predecessor);
+ const manifest=await sourceSql(root,orderPath,orderHash),order=parseStrictJson(manifest),layers=[];
+ need(Array.isArray(order)&&order.length===12,'EXACT_TWELVE_LAYERS_REQUIRED');
+ for(const [index,row]of order.entries()){
+  need(row.order===index+1&&typeof row.file==='string'&&row.file.startsWith('sql/'+String(index+1).padStart(2,'0')+'-')&&/^sql\/[a-z0-9-]+\.sql$/.test(row.file)&&digest(row.sha256),'LAYER_IDENTITY_DIFFERS');
+  const path='adapters/postgres/patches/prefix155/'+row.file.slice(4),sql=await sourceSql(root,path,row.sha256);
+  need(Buffer.byteLength(sql)===row.bytes&&sql.includes('\nBEGIN;\n')&&sql.endsWith('COMMIT;\n'),'LAYER_TRANSACTION_DIFFERS');layers.push({name:row.file,sha256:row.sha256,sql});
+ }
+ const sql=await sourceSql(root,dbSqlPath,dbSqlHash);need(sql.includes('\nBEGIN;\n')&&sql.endsWith('COMMIT;\n'),'DB05_TRANSACTION_REQUIRED');
+ const d=freeze({format:'FRESH35_BATCHED161_UPGRADE_PROGRAM_V1',sourceSetSha256:s.sourceSetSha256,targetSha256:hash(JSON.stringify(t)),historicalMetadataTargetSha256:hash(JSON.stringify(describeFresh35CombinedTarget(metadataTarget))),currentServiceSha256,postmasterStart:t.physical.postmasterStart,predecessorRecordSha256:snapshot.sha256,
+  predecessorCatalogSpecSha256:describeFresh35CombinedCatalog(predecessor).catalogSpecSha256,prefixCatalogSpecSha256:describeFresh35CombinedCatalog(prefix).catalogSpecSha256,
+  successorCatalogSpecSha256:describeFresh35CombinedCatalog(successor).catalogSpecSha256,successorModelSha256:describeFresh35CombinedCatalog(successor).modelSha256,
+  dbCandidatePinsSha256:dbCandidatePin,installOrderSha256:orderHash,steps:[...layers.map(({name,sha256})=>({name,sha256})),{name:dbSqlPath,sha256:dbSqlHash}],startsAt:t.startsAt,expiresAt:t.expiresAt,
+  businessRowsWritten:false,rolesCreated:false,serviceCreated:false,changesOriginalInputTarget:false});
+ const token=Object.freeze({profile:d.format});programs.set(token,{source,target,metadataTarget,envelope,snapshot,service,predecessor,prefix,successor,layers,sql,descriptor:freeze({...d,programSha256:hash(JSON.stringify(d))})});return token;
+}
+export function describeFresh35Batched161Upgrade(program){need(programs.has(program),'GENUINE_PROGRAM_REQUIRED');return programs.get(program).descriptor}
+/** External main issuer owns this fixed root file; this module never creates it. */
+export async function loadFresh35Batched161UpgradeAuthorization(program){
+ const d=describeFresh35Batched161Upgrade(program),p=programs.get(program);need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0,'ROOT_INSTALL_CONTROLLER_REQUIRED');
+ await assertTrustedRootPath(process.execPath);await assertTrustedRootTree(fresh35CombinedSourceData(p.source).root);
+ const a=await protectedJson(BATCHED161_UPGRADE_AUTHORIZATION_PATH,true),v=a.value;
+ need(closed(v,['format','decision','programSha256','sourceSetSha256','targetSha256','startsAt','expiresAt','independentSafetyReviewSha256','authorizationReference'])&&v.format==='FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1'&&v.decision==='AUTHORIZE_EXACT_154_TO161_CATALOG_UPGRADE_ONLY','EXACT_UPGRADE_AUTHORIZATION_REQUIRED');
+ need(['programSha256','sourceSetSha256','targetSha256','startsAt','expiresAt'].every(k=>v[k]===d[k])&&digest(v.independentSafetyReviewSha256)&&typeof v.authorizationReference==='string'&&v.authorizationReference.trim().length>0&&v.authorizationReference.length<=512,'AUTHORIZATION_BINDING_DIFFERS');
+ const token=Object.freeze({profile:'FRESH35_BATCHED161_ROOT_AUTHORIZATION_V1'});authorities.set(token,{program,...a});return token;
+}
+// Installed metadata/old bootstrap observer stay historical. This owner-only
+// live guard binds the actual current C epoch/window on this same connection.
+function ownerGuard(p){
+ const t=describeFresh35CombinedTarget(p.target),q=v=>"'"+String(v).replaceAll("'","''")+"'";
+ return `DO $batched161_current_owner$ BEGIN
+ IF (current_database()=${q(t.proposal.database)} AND current_user=${q(t.proposal.owner)} AND session_user=${q(t.proposal.owner)}
+ AND (SELECT system_identifier::text FROM pg_catalog.pg_control_system())=${q(t.physical.systemIdentifier)}
+ AND (SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database())=${q(t.physical.databaseOid)}
+ AND current_setting('server_version_num')=${q(t.physical.serverVersionNum)}
+ AND pg_postmaster_start_time() AT TIME ZONE 'UTC'=TIMESTAMP ${q(t.physical.postmasterStart.replace(/\+00$/,''))}
+ AND host(inet_server_addr())=${q(t.proposal.host)} AND inet_server_port()=${t.proposal.port}
+ AND current_setting('transaction_isolation')='read committed' AND current_setting('transaction_read_only')='off'
+ AND current_setting('session_replication_role')='origin' AND NOT pg_is_in_recovery()
+ AND extract(epoch FROM clock_timestamp())*1000>=${t.startsAt} AND extract(epoch FROM clock_timestamp())*1000<${t.expiresAt}
+ AND (SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname=current_database())=${q(t.proposal.owner)}
+ AND EXISTS(SELECT 1 FROM pg_roles WHERE rolname=session_user AND rolcanlogin AND NOT rolsuper AND NOT rolinherit
+   AND NOT rolcreatedb AND NOT rolcreaterole AND NOT rolreplication AND NOT rolbypassrls AND rolconnlimit=2
+   AND rolvaliduntil>clock_timestamp() AND extract(epoch FROM rolvaliduntil)*1000<=${t.expiresAt})
+ AND (SELECT count(*) FROM pg_stat_activity WHERE datid=(SELECT oid FROM pg_database WHERE datname=current_database()))=1
+ AND NOT EXISTS(SELECT 1 FROM pg_prepared_xacts)) IS DISTINCT FROM true THEN
+ RAISE EXCEPTION 'BATCHED161_CURRENT_OWNER_DIFFERS' USING ERRCODE='42501'; END IF;
+ END $batched161_current_owner$;`;
+}
+
+/** Caller provides its exclusive native owner connection; caller retains close ownership.
+ * Every original layer keeps its original transaction. Unknown COMMIT never retries. */
+export async function runFresh35Batched161Upgrade({program,authorization,client,recordDirectory}){
+ const d=describeFresh35Batched161Upgrade(program),p=programs.get(program),a=authorities.get(authorization),t=describeFresh35CombinedTarget(p.target);
+ need(a?.program===program&&!used.has(authorization),'GENUINE_UNUSED_AUTHORITY_REQUIRED');
+ need(recordDirectory===join(t.proposal.workspaceDirectory,'batched161-upgrade'),'FIXED_CAPTURE_DIRECTORY_REQUIRED');
+ await assertTrustedRootPath(recordDirectory);const st=await lstat(recordDirectory);need(st.isDirectory()&&!st.isSymbolicLink()&&st.uid===0&&(st.mode&0o077)===0&&await realpath(recordDirectory)===recordDirectory,'PROTECTED_CAPTURE_DIRECTORY_REQUIRED');
+ const current=async()=>{assertFresh35InstallationTargetCurrent(p.target);await assertFresh35CombinedSourcesCurrent(p.source);await assertFresh35ProtectedRecordSnapshotCurrent(p.envelope);need((await protectedJson(servicePath)).sha256===d.currentServiceSha256&&(await protectedJson(BATCHED161_UPGRADE_AUTHORIZATION_PATH,true)).sha256===a.sha256,'AUTHORITY_OR_SERVICE_CHANGED');};
+ const status=()=>typeof client.getTransactionStatus==='function'?client.getTransactionStatus():Object.getOwnPropertyDescriptor(client,'_txStatus')?.value;
+ const send=async(sql,command)=>{const r=await client.query(sql);need(!Array.isArray(r)&&r?.command===command&&status()===(['COMMIT','ROLLBACK'].includes(command)?'I':'T'),'NATIVE_ACK_REQUIRED');return r;};
+ const observe=async(catalog,label)=>{
+  await current();await send('BEGIN ISOLATION LEVEL READ COMMITTED','BEGIN');
+  await send(ownerGuard(p),'DO');
+  const statements=fresh35CombinedCatalogSql(catalog,p.source,p.metadataTarget);await send(statements.guardSql,'DO');
+  const reply=await send(statements.observationSql,'SELECT');need(reply.rows?.length===1&&typeof reply.rows[0].catalog_json==='string','NATIVE_CATALOG_REQUIRED');
+  const raw=reply.rows[0].catalog_json,result=validateFresh35CombinedCatalogObservation(raw,catalog,p.source,p.metadataTarget);
+  await send('ROLLBACK','ROLLBACK');await publishInstallationRecord(join(recordDirectory,'catalog-'+label+'.json'),raw+'\n');return result;
+ };
+ let stage='NOT_STARTED',commitUnknown=false;const commits=[];
+ await current();need(status()==='I','EXCLUSIVE_IDLE_OWNER_REQUIRED');used.add(authorization);
+ await publishInstallationRecord(join(recordDirectory,'attempt.json'),JSON.stringify({program:d,authorizationSha256:a.sha256})+'\n');
+ try{
+  stage='PREDECESSOR154';const before=await observe(p.predecessor,'154');
+  for(const [index,layer]of [...p.layers,{name:dbSqlPath,sha256:dbSqlHash,sql:p.sql}].entries()){
+   if(index===12){stage='PREFIX155';await observe(p.prefix,'155');}
+   stage=layer.name;await current();need(status()==='I','IDLE_BETWEEN_ORIGINAL_TRANSACTIONS_REQUIRED');commitUnknown=true;
+   const response=await client.query(layer.sql),replies=Array.isArray(response)?response:[response];
+   need(replies[0]?.command==='BEGIN'&&replies.at(-1)?.command==='COMMIT'&&status()==='I','LAYER_COMMIT_UNCONFIRMED');commitUnknown=false;
+   const receipt={order:index+1,name:layer.name,sqlSha256:layer.sha256,commitAcknowledged:true};commits.push(receipt);await publishInstallationRecord(join(recordDirectory,'commit-'+String(index+1).padStart(2,'0')+'.json'),JSON.stringify(receipt)+'\n');
+  }
+  stage='SUCCESSOR161';const after=await observe(p.successor,'161');await current();await assertFresh35CombinedCatalogCurrent(p.successor);
+  const receipt={format:'FRESH35_BATCHED161_COMMITTED_CATALOG_CAPTURE_V1',program:d,authorizationSha256:a.sha256,physical:t.physical,owner:t.proposal.owner,commits,predecessorCatalogSha256:before.catalogSha256,successorCatalogSha256:after.catalogSha256,businessImported:false,hostEnabled:false};
+  await publishInstallationRecord(join(recordDirectory,'completion.json'),JSON.stringify(receipt)+'\n');return Object.freeze({state:'DB05_CATALOG_INSTALLED_AND_CAPTURED',catalogSha256:after.catalogSha256,programSha256:d.programSha256,businessImported:false,hostEnabled:false});
+ }catch(error){
+  let rollbackAcknowledged=false;if(['T','E'].includes(status()))try{await send('ROLLBACK','ROLLBACK');rollbackAcknowledged=true;commitUnknown=false;}catch{}
+  const value={state:commitUnknown?'COMMIT_OUTCOME_UNKNOWN':commits.length===13?'INSTALLED_CAPTURE_INCOMPLETE':'STOPPED_NOT_COMPLETE',stage,sqlState:typeof error?.code==='string'&&/^[A-Z0-9]{5}$/.test(error.code)?error.code:null,acknowledgedLayers:commits.length,rollbackAcknowledged,automaticRetry:false};
+  try{await publishInstallationRecord(join(recordDirectory,'failure.json'),JSON.stringify(value)+'\n');}catch{}
+  Object.defineProperty(error,'batched161UpgradeFailure',{value:Object.freeze(value)});throw error;
+ }
+}

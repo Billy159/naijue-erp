@@ -1,0 +1,13 @@
+{
+  "scope": "CHANGED_INSTALLER_SYNTAX_AND_SAME_TREE_MODULE_SOURCE_DESCRIPTOR_ONLY",
+  "node": "24.21.0",
+  "syntaxExitCode": 0,
+  "moduleAndDescriptorExitCode": 0,
+  "stdout": "{\"baseSourceSetSha256\":\"2a2f0e3be19e03f57cbf5dfa22f05d26166ac241fb140abd39762ea2245dc347\",\"compactSourceSetSha256\":\"20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d\",\"currentSourcePins\":278,\"installerExport\":\"function\",\"wrapperExport\":\"function\"}",
+  "stderr": "",
+  "postgresExecuted": false,
+  "installerInvoked": false,
+  "hostInvoked": false,
+  "sourceRewriteCount": 0,
+  "oldSuiteRerun": false
+}

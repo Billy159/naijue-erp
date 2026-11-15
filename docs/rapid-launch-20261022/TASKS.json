@@ -7265,6 +7265,21 @@
             "closedFinding": "DIRECT24-CURRENT-UNIT-01",
             "formalRealImport": "NOT_STARTED",
             "rehearsal": "CANCELLED_NOT_GATE"
+          },
+          {
+            "group": "R3_DIRECT_REAL_FINITE_ADMIN_SESSION02_SOURCE_20261115",
+            "state": "SCOPED_SOURCE_PASS_NOT_NATIVE",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-direct-real-installer-admin-session02",
+              "files": 22,
+              "bytes": 293417,
+              "manifestSha256": "7c420fafe70260896ec3d0a0bddb1c1a672ff96d69a14fb70b66b693c294cd68",
+              "reviewSha256": "b359dc6f459bf1c97f8ce3ca9fb976a0b084bd399d3f606956e1d834335292de"
+            },
+            "original13SqlAnd161ModelsUnchanged": true,
+            "ownerLoginAdded": false,
+            "authoritiesIssued": false,
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7276,9 +7291,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "SOURCE01_REVIEWED_SESSION_ADAPTER_DELTA_IN_PROGRESS",
+            "state": "FINITE_ADMIN_SESSION_ADAPTER02_SCOPED_SOURCE_PASS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Actual SQL38 historical native owner verified; current two-role finite channel provides backupAdmin/controller only. D1 adapting only installer to truthful finite admin session plus explicit SET ROLE owner, no new owner LOGIN/credential/grant, exact backupAdminValidUntil in program binding; 13 SQL/model unchanged."
+            "work": "Exact current dependency resolved with existing finite admin session plus explicit SET ROLE owner/RESET ROLE ACKs and truthful dual identity. No new owner login, credentials, roles, grants or SQL/model changes. Candidate02 1file769382ea, pins e982bb06, QB narrow source PASS; native execution pending T45."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7293,8 +7308,8 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "NORMAL_SOURCE_PASSES_CAS02_UNIT_FIX_CLOSED",
-            "work": "D3 wrapper/service24/start-role-stop and D1 initial source reviewed; CAS01 only wrong current-unit query fixed in02 by exact dispatcher hash formula, scoped source PASS. New D1 session delta and T45 finite consumers/phase issuer only when frozen; no rehearsal or old-suite recheck."
+            "state": "CAS02_AND_D1_SESSION02_SCOPED_SOURCE_PASS_AWAIT_FINAL_CONSUMERS",
+            "work": "CAS02 unit-name fix CLOSED; D1 session02 new deadline/identity/reset delta SOURCE PASS. Existing D3/service24 scopes reused. Final T45 finite consumers and root phase issuer/window delta only when frozen; no PG/harness/old-suite replay."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
@@ -7321,17 +7336,17 @@
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
           "nextCheckpointScope": "normalcode/issuer exacthandoff\u2192service24/materialization/install/currentbinding\u2192actual approvedREALfirstbatch originalkeyreadback",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-direct-real-normal-sources-and-cas02",
-            "files": 56,
-            "bytes": 1251406,
-            "manifestSha256": "f0e573e6e09ae6a6af6f1634d863da1c1b012ed8c917e640593f8613760227b2",
-            "reviewSha256": "9d8726b709ee8bf728003b32356bcaeb36ce42570d8d51ba7393288a04b4ade2"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-direct-real-installer-admin-session02",
+            "files": 22,
+            "bytes": 293417,
+            "manifestSha256": "7c420fafe70260896ec3d0a0bddb1c1a672ff96d69a14fb70b66b693c294cd68",
+            "reviewSha256": "b359dc6f459bf1c97f8ce3ca9fb976a0b084bd399d3f606956e1d834335292de"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "CAS02_SCOPED_SOURCE_PASS_PHASE_ISSUERS_WIP_NO_AUTHORITY_ISSUED",
-            "work": "New five-source CAS02 frozen pins78aa2eb5, actual4a2 dispatcher preserved except exact7 direct keys/module binding, current-unit fix QB CLOSED. External issue_registration ready source-only; materialize/start/stop/restore phase issuer and install nine-field issuer WIP waiting exact final T45 normal consumers; actual C/epoch not fabricated."
+            "state": "CAS02_PASS_NEW_ROLE_WINDOW_AND_PHASE_ISSUER_DELTA_WIP_UNISSUED",
+            "work": "Original five CAS/carrier/module sources passed; new planned issuer windows controller90/admin92/restore115/policy120min fit T45 install780/writer3000s with cleanup, within original finite validators; no server guard/privilege change. Exact phase APIs still waiting T45 final freeze. All authority issuance remains absent."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7347,9 +7362,8 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "D1 finite existing-admin session+explicit owner role adapter delta",
-            "T45 final sameversion source/finite install and REAL consumers/PHASES",
-            "main exact finite phase issuance after actual source/target/C/epoch facts"
+            "T45 final sameversion source/materialize and finite normal install/REAL consumers/PHASES",
+            "main final phase issuer and finite-window delta source review, then fresh actual basis/C/epoch precise issuance"
           ],
           "normalSource": {
             "db05": {
@@ -7373,7 +7387,15 @@
               "state": "SIX_SOURCE_OVERLAY_ONLY_BODY_MODEL_PINS_PENDING_QB"
             },
             "d3SameTree9Pins": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
-            "retainedWrapperPins": "0bb0fd731913c6f67dff5d1788e0a75014b23e0f4b8102937d86fd1e48c09104"
+            "retainedWrapperPins": "0bb0fd731913c6f67dff5d1788e0a75014b23e0f4b8102937d86fd1e48c09104",
+            "real154InstallerSession02": {
+              "pinsSha256": "e982bb063d56033d7844a92d7c36a08455c6de0727dc8564ad3104a01ac5e6bf",
+              "sourceSha256": "769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e",
+              "sourceClosureSha256": "9bfb68a816c796177835881fcf67b825b3ca680ec5086cfa1d7e1555dd5fa14a",
+              "offlineBaseSourceSetSha256": "2a2f0e3be19e03f57cbf5dfa22f05d26166ac241fb140abd39762ea2245dc347",
+              "offlineCompactSourceSetSha256": "20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d",
+              "nativeValidated": false
+            }
           },
           "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear"
         },

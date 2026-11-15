@@ -1,0 +1,62 @@
+{
+  "scope": "JOINT_REAL_SOURCE_MODULE_LINK_ONLY",
+  "node": "24.21.0",
+  "exitCode": 0,
+  "stdout": "Joint source modules imported; no installer or host called.\n",
+  "stderr": "",
+  "postgresExecuted": false,
+  "installerInvoked": false,
+  "hostInvoked": false,
+  "sourceRewriteCount": 0,
+  "finalD3WrapperIntegration": {
+    "scope": "D1_THREE_FILES_AND_D3_RETAINED_WRAPPER_SAME_TREE_MODULE_LINK_ONLY",
+    "exitCode": 0,
+    "stdout": "Final D1 installer/source-loader plus exact D3 retained wrapper imported in one tree.\n",
+    "stderr": "",
+    "sourceRewriteCount": 0,
+    "postgresExecuted": false,
+    "installerInvoked": false,
+    "hostInvoked": false
+  },
+  "finalSeparatedTargetInstallerSyntaxExitCode": 0,
+  "sourceDescriptorAttempts": [
+    {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "file:///private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/d1-real154-final-source-6tbk154s/source/scripts/release/unified-install/fresh35-combined-source-v1.mjs:11\nconst hash=combinedSha256,need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};\n                                                        ^\n\nError: FRESH35_COMBINED_RUNNING_SOURCE_MODULE_DIFFERS\n    at need (file:///private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/d1-real154-final-source-6tbk154s/source/scripts/release/unified-install/fresh35-combined-source-v1.mjs:11:57)\n    at Module.loadFresh35CombinedSource (file:///private/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/d1-real154-final-source-6tbk154s/source/scripts/release/unified-install/fresh35-combined-source-v1.mjs:78:21)\n    at async file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/naijue-erp-v0.0.1/[eval1]:1:784\n\nNode.js v24.21.0\n",
+      "scope": "SOURCE_DESCRIPTOR_AND_MODULE_LINK_ONLY",
+      "postgresExecuted": false,
+      "installerInvoked": false,
+      "hostInvoked": false,
+      "classification": "LOCAL_TEMP_PATH_WAS_VAR_SYMLINK_NOT_CANONICAL; loader correctly refused; no source change"
+    },
+    {
+      "exitCode": 0,
+      "stdout": "{\"baseSourceSetSha256\":\"5defee0db9b13da7ef5dbec5671dd23d76d46ab9e1f48904d3c99881ba97c1e4\",\"compactSourceSetSha256\":\"d9e705b3660ab94480b8bd98992678609c7afdccf4404f447aa442bf87875126\",\"currentSourcePins\":278,\"installerExport\":\"function\",\"wrapperExport\":\"function\"}",
+      "stderr": "",
+      "canonicalRootUsed": true,
+      "scope": "SOURCE_DESCRIPTOR_AND_MODULE_LINK_ONLY",
+      "postgresExecuted": false,
+      "installerInvoked": false,
+      "hostInvoked": false
+    }
+  ],
+  "syntaxChecks": [
+    {
+      "file": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "nodeVersion": "24.21.0",
+      "exitCode": 0
+    },
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "nodeVersion": "24.21.0",
+      "exitCode": 0
+    },
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "nodeVersion": "24.21.0",
+      "exitCode": 0
+    }
+  ],
+  "notes": "Installer final syntax rechecked after historical/current target separation; other two sources unchanged since their actual syntax checks."
+}

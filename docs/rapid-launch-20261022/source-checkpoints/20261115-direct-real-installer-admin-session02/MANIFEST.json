@@ -1,0 +1,134 @@
+[
+  {
+    "path": "CANDIDATE-01/OFFLINE-SOURCE-FACTS.json",
+    "bytes": 49287,
+    "sha256": "e55c1ca2069769cf474f6c7bee859c1488ffa8d03d810ea19c34999a004ad711",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/OFFLINE-SOURCE-FACTS.json"
+  },
+  {
+    "path": "CANDIDATE-01/OWNER-INTERFACES.md",
+    "bytes": 4245,
+    "sha256": "27e28733768cd4e8e2fd544b6ea8f5625c676da9058b54302b790b8f5f30bc62",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/OWNER-INTERFACES.md"
+  },
+  {
+    "path": "CANDIDATE-01/README.md",
+    "bytes": 3710,
+    "sha256": "3ca4e7ef091e5a536b3bf899b3491b35ef5dded645184f0c6eb99fb5b9ef8927",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/README.md"
+  },
+  {
+    "path": "CANDIDATE-01/SOURCE-CLOSURE.json",
+    "bytes": 2087,
+    "sha256": "dff357272f7db8e6bbeb6c302c5397305038163540dbc805285612501be59e2a",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/SOURCE-CLOSURE.json"
+  },
+  {
+    "path": "CANDIDATE-01/VALIDATION.json",
+    "bytes": 3205,
+    "sha256": "e604e0b39b6bd94b11d5d84ef0a172f4a5cc3b2d6f08787c06cc7f6b0e3b1271",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/VALIDATION.json"
+  },
+  {
+    "path": "CANDIDATE-01/fresh35-batched161-upgrade-v1.mjs.diff",
+    "bytes": 16068,
+    "sha256": "a6c957e9485f0ddd33bba54098ba2c945c5d39133b1c600b4a811d3aae664ae3",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/fresh35-batched161-upgrade-v1.mjs.diff"
+  },
+  {
+    "path": "CANDIDATE-01/fresh35-combined-catalog-v1.mjs.diff",
+    "bytes": 4845,
+    "sha256": "1ccf56422f88826dcec2b9d41b5ab71e6dd5d215fe5af67528981d36c2761e47",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/fresh35-combined-catalog-v1.mjs.diff"
+  },
+  {
+    "path": "CANDIDATE-01/fresh35-combined-source-v1.mjs.diff",
+    "bytes": 10575,
+    "sha256": "7b38aa9ab15c2bf66d78d1b95c1d80990c96c930a5ad5415d947d44b567e7d60",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/fresh35-combined-source-v1.mjs.diff"
+  },
+  {
+    "path": "CANDIDATE-01/source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+    "bytes": 15737,
+    "sha256": "c68830c46bf827b46c9ebe39f4a4b42cca6030f29abadc685c83c3e7f018ace7",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs"
+  },
+  {
+    "path": "CANDIDATE-01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "bytes": 65028,
+    "sha256": "f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+  },
+  {
+    "path": "CANDIDATE-01/source/scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+    "bytes": 21273,
+    "sha256": "c393b5608d0dc95294e77fbf94cd6b393ee43dee41aaa75167215ae96b98741c",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/source/scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+  },
+  {
+    "path": "CANDIDATE-01/PINS.json",
+    "bytes": 1224,
+    "sha256": "9f658e289533310994584479f0f0c495316d3e8fcac043334ef49d2989c76024",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-01/PINS.json"
+  },
+  {
+    "path": "CANDIDATE-02/DELTA.json",
+    "bytes": 1047,
+    "sha256": "411c330bd135b805adc58ded5026bdc26de40109d2ed53e12ee91f173260800d",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/DELTA.json"
+  },
+  {
+    "path": "CANDIDATE-02/FINITE-ADMIN-SESSION-ADAPTER.diff",
+    "bytes": 13761,
+    "sha256": "6aa00ab0a241d60c16da77ecb6ee4b1458a00b44271279fa21701d347b7ad044",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/FINITE-ADMIN-SESSION-ADAPTER.diff"
+  },
+  {
+    "path": "CANDIDATE-02/OFFLINE-SOURCE-FACTS-02.json",
+    "bytes": 49281,
+    "sha256": "8b64cdacfb9ccfb9b5e0518cdab6923b90ab1a23d7f21cca1aee52b1539a2fca",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/OFFLINE-SOURCE-FACTS-02.json"
+  },
+  {
+    "path": "CANDIDATE-02/OWNER-INTERFACE-02.md",
+    "bytes": 1873,
+    "sha256": "4a08b9360c9365611118a94cc2773e18b87ec62153e14bb5d1b29b5cfc789734",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/OWNER-INTERFACE-02.md"
+  },
+  {
+    "path": "CANDIDATE-02/README.md",
+    "bytes": 3858,
+    "sha256": "975c28a913c96f61c48bd7cdb6c1bf6051662758f224bb27f6269717542cf3ab",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/README.md"
+  },
+  {
+    "path": "CANDIDATE-02/SOURCE-CLOSURE.json",
+    "bytes": 2467,
+    "sha256": "9bfb68a816c796177835881fcf67b825b3ca680ec5086cfa1d7e1555dd5fa14a",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/SOURCE-CLOSURE.json"
+  },
+  {
+    "path": "CANDIDATE-02/VALIDATION-02.json",
+    "bytes": 613,
+    "sha256": "b8f8075aec76c76fe5757bdeed72ae7671642a2de388e00ebad491374a2cd379",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/VALIDATION-02.json"
+  },
+  {
+    "path": "CANDIDATE-02/source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+    "bytes": 18704,
+    "sha256": "769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs"
+  },
+  {
+    "path": "CANDIDATE-02/PINS.json",
+    "bytes": 805,
+    "sha256": "e982bb063d56033d7844a92d7c36a08455c6de0727dc8564ad3104a01ac5e6bf",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-02/PINS.json"
+  },
+  {
+    "path": "QB-D1-INSTALLER-02-RECEIPT.json",
+    "bytes": 3724,
+    "sha256": "b359dc6f459bf1c97f8ce3ca9fb976a0b084bd399d3f606956e1d834335292de",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/QB-D1-INSTALLER-02-RECEIPT.json"
+  }
+]

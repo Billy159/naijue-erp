@@ -1,0 +1,9 @@
+# Consumer changes from01
+
+Keep all01 compile/run APIs and fixed authorization/capture paths. Change compile call to `compileFresh35Batched161Upgrade({source,target,paths,currentServiceSha256,backupAdminValidUntil})`. The new scalar comes from existing ordinary24 authority.backupAdminValidUntil, whose original validation/restoration bounds remain T45-owned. Pass the actual existing public value; never invent a deadline or read/export credential bodies for D1.
+
+Open the native client through existing protected backupAdmin material as target.proposal.admin. Do not use an old SQL38 owner reference, create an owner password or enable LOGIN. Do not pre-SET ROLE in the consumer; the adapter starts with native session/current admin and role=none, issues and acknowledges its own SET ROLE owner, and captures both true identities. It does not rewrite session_user or use SET SESSION AUTHORIZATION.
+
+Program descriptor now binds the fixed session mode, explicit session/effective identities, ownerLoginRequired=false and backupAdminValidUntil. The unchanged external9-field authorization binds those through its actual new programSha256 plus sourceSetSha256/targetSha256/window. Main remains the only issuer; old candidate hashes/authorization are invalid for the new source. The same native currentC/epoch target and historical catalog/input anchors are preserved.
+
+After run success, require completion's actual connectionIdentity and roleRestoreAcknowledged; close the borrowed admin client through the existing actual cleanup. On failure retain attempted/acknowledged role switch/reset and COMMIT/rollback state separately, including unknown; caller close and ordinary24 original finite-auth restoration remain mandatory and must be reported from actual facts. Never present this session as a native owner login or reuse it as the business controller host connection.

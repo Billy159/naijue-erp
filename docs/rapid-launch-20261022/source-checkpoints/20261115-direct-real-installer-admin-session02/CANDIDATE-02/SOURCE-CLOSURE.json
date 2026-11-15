@@ -1,0 +1,45 @@
+{
+  "scope": "SOURCE_ONLY_EXISTING_FINITE_ADMIN_SESSION_ADAPTER_DELTA",
+  "parentTree": "outputs/T45/revisions/20261115-r3-batched-real-first-source-local-01/source",
+  "parentBaseSourceSetSha256": "ef3b94d7587cbb39594950f77ce89266c965f86e7765b4ac09330c0add5b5e1e",
+  "parentCompactSourceSetSha256": "175a13bbf78bda3639d43afade79bf82faf55396ddb8efcd12a764521b8ecef0",
+  "newOfflineBaseSourceSetSha256": "2a2f0e3be19e03f57cbf5dfa22f05d26166ac241fb140abd39762ea2245dc347",
+  "newOfflineCompactSourceSetSha256": "20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d",
+  "currentSourcePins": 278,
+  "D1Files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "sha256": "769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "c393b5608d0dc95294e77fbf94cd6b393ee43dee41aaa75167215ae96b98741c"
+    }
+  ],
+  "D3WrapperPath": "outputs/D3/20261115-r3-retained-real-batch-plan-01/source/tools/unified-import/r3-service20-retained-import.mjs",
+  "D3WrapperSha256": "d08326e8fb0d16d3eb207ccc1ce89b728b16085f7fe1b1947f640d8775a69cc1",
+  "D3WrapperOwner": "D3",
+  "sameTreeD3NinePinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+  "dbCandidate05PinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+  "dbSqlSha256": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+  "historicalInputCatalogSha256": "7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88",
+  "normalHostFactoryChanged": false,
+  "preparedObjectMustRemainOriginal": true,
+  "runtimeServiceOrIssuerCreated": false,
+  "modelBodyConstraintAclChanges": 0,
+  "genuineInstallerInvocations": 0,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "liveCurrentServiceEpochTargetAuthorityNotInvented": true,
+  "parentCandidatePinsSha256": "9f658e289533310994584479f0f0c495316d3e8fcac043334ef49d2989c76024",
+  "changedRuntimeFiles": 1,
+  "authenticationMode": "EXISTING_FINITE_ADMIN_SESSION_SET_ROLE_OWNER",
+  "newPublicCompileParameter": "backupAdminValidUntil",
+  "ownerLoginRequired": false,
+  "roleAttributesOrMembershipChanged": false,
+  "original13SqlAnd161ModelsUnchanged": true
+}

@@ -7450,3 +7450,8 @@ Verified originalhuman origin01a19f9f/turn01a1df2e-2928-7320-805d-08d49c034825/m
 ## 2026-11-15T21:51:00+08:00 — 正常真实导入接线与CAS02已冻结；不恢复演练
 原真实索引→持久批计划→同对象host桥d08326e8、service24启停/有限角色差分均已独立SOURCE PASS；主控原CAS适配02的服务单元查询修成与实际dispatcher相同hash公式，唯一P2关闭。其余旧路由逐字保留，未签发授权、未登记或启动服务器。56文件/1251406B的准确源快照与QB原消息回执已保存，manifest f0e573e6…，不把SOURCE通过写成实际准入或导入完成。
 已确认历史SQL38使用当年有限native owner；当前通道仅可证明既有backupAdmin/controller材料。D1正将新增安装器改接现有有限管理员真实session并显式SET ROLE owner，分别保存真实身份，不新开owner LOGIN/凭据、不改13个已批SQL或161模型。T45继续同树物化、有限安装及真实writer consumer；主控phase issuer按准确接口签入。162演练/08/故障注入继续取消，真实首批尚无提交回执。业务保持关闭，原件/备份/已提交历史及28GiB保留要求保留。
+
+
+## 2026-11-15T22:06:00+08:00 — 安装身份适配02独立源码通过；实际阶段窗口尚未签
+D1仅1个安装文件769382ea…改接现有有限backupAdmin真实session，helper自己SET ROLE原owner，并据实记录两个身份、SET/RESET ACK及失败unknown。compile将现有backupAdminValidUntil纳入程序精确hash；不新开owner LOGIN/密码/角色授权，原13SQL和161模型逐字不变。QB只核新差分SOURCE PASS，01其余范围复用，0PG/演练。准确22文件293417B已封入源码检查点，manifest7c420faf…，原QB回执b359dc6f…。
+T45已核21:55七新key两grant全部ABSENT、无activeunit、PG停库、49输入指针已恢复。最终381/278源按D1准确offline base2a2f/compact20d4装配，正常install/writer consumer与PHASES闭合中。主控按install780s/writer3000s及收尾余量拟有限controller90/admin92/restoration115/policy120分钟，仍在原有限验证器上限内，下一冻结只核窗口标量和phase接口；无新权限或服务器guard更改，尚未签发窗口/作业/数据库动作。真实首批仍无回执，不冒充导入完成。
