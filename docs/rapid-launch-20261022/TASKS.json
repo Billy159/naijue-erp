@@ -6194,9 +6194,20 @@
               "Mjob e2db3207 / typed5b20f7f0 / BIRTH4e582fc4 / postbirth6e0cc9c2 / AUTH551e411c",
               "ACTUAL-TEN-LAYER-INSTALLATION481a611b / guardian df5e0129"
             ]
+          },
+          {
+            "group": "r908\u7ec8\u6001NEED_FIX\u6062\u590d\u95ed\u5408\uff1baudit UUID\u9884\u5b9a\u4f4d\u7b2c11\u5c42\u672c\u673a\u53ca\u72ec\u7acb\u7a84\u5ba1\u901a\u8fc7",
+            "status": "\u5b9e\u9645\u5168compile511234/44682\u6210\u529f\u3001INIT23.672s ACK\uff0c\u9996499/masterChunk57014/0STEP ACK\uff0c\u771f\u5b9eROLLBACK-\u65b0\u8fde\u63a5ABSENT/8cleanup/R3\u505c\uff0cPGlog\u4ec5newIF57\u3002\u65b0d895\u67e5\u8be2\u4ec5\u771f\u5b9eUUID\u9884\u53d6audit+heapxmin\uff0c\u6e90\u7801source\u8868500\u63a8\u5bfc\u3001\u65e0511k\u9884\u5199\u3002local\u65b0public50016.3206s/501IDs/474fast/loop0/rollback0\u53ca10\u65b0key\u8fb9\u754c\uff0cderive\u4e09\u5165\u53e3\u72ec\u7acbPASS\u3002T45\u672c\u673a\u627f\u63a5fresh r909\uff0c\u672a\u65b0\u7b7e\u3002",
+            "evidence": [
+              "r908 FINAL16d0f91d / aggregatec268a4e4 / guardian75690831 / logrefined47ea09df",
+              "preservation706bbb88 / inventory6b0ee8ee / peak5716733952 / finald4cff457",
+              "layer11 SQL807b1bd4/bodyd89543f7 / ORDER2171cbcc / derive501e14f0",
+              "MODEL4535c626/DEFS49ac50a6/BODIESbbbf2d5d / delivery1dbfd1a5",
+              "QB new layer110d9a38b7e1b6afe3510472994bb9379056e05ae1b52b16cc550ff4a279b27653"
+            ]
           }
         ],
-        "currentInFlight": "T45 soleowner\u539fINSTALL02/native\u8fd0\u884c\uff0cr908 CID3f95.../PID652032/C000:43:54.669118467Z\uff0cnative900\u81f300:58:54.669\uff1brootlimits2CPU6GiB\u5df2\u5b9e\u89c1\uff0c10\u5c42\u5b89\u88c544.894s\u540eNode61035\u7f16\u8bd1/\u524d\u7f00\u6d4b\u91cf\u3002stop/terminal\u552f\u4e0090135\u6bcf45s\u53ea\u8bfb\u3002main03 listener31849\u5df20/postbirth6e0\uff0cpostconsumer84111\u548cS/B10519\u5df20\uff0c\u4e0d\u518d\u542f\u52a8\u3002\u5f53\u524dparentbe61/policy3564\uff1b\u7b49\u7f16\u8bd1\u5168511234/44682\u3001actualACK/attempt\u3001ROLLBACK-ABSENT\u53ca\u6e05\u7406\uff0cformal\u672a\u5199\u3002",
+        "currentInFlight": "T45\u83b7\u51c6\u53ea\u672c\u673a\u65b0operation-locator fresh r909/55569/\u65b0ROOT/\u65b0REG POST\u4e94keys\u51c6\u5907\uff1bcurrent\u7236be61/3564+r908\u5b9e\u9645\u88c510/compile\u5168/\u9996499IF57\u5931\u8d25\u6062\u590d/\u65e725+rootcache20\u4fdd\u5168\u3002\u6309D2\u7b2c11\u5c42\u548c501e derive\u771f\u5b9e\u76f8\u5bf9\u95ed\u5305\u751f\u6210source/profile/archive\uff1b\u771f\u5b9eSHA\u4ea4\u96c6/\u7f3a\u7247\u96c6\u5408\u53ca\u4f20\u8f93\u5927\u5c0f\u4ee5\u5b9e\u9645\u7ed3\u679c\u4e3a\u51c6\uff0c\u4e0d\u595720/7/1MiB\u65e7\u5e38\u91cf\uff1b\u65b0\u56dbpin\u53ca\u6700\u5c0f\u6a21\u578b\u9f50\u4ea4QB\u518d\u771f\u5b9e\u65b0pref/R0\uff0c\u5f53\u524d0serverjob\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
