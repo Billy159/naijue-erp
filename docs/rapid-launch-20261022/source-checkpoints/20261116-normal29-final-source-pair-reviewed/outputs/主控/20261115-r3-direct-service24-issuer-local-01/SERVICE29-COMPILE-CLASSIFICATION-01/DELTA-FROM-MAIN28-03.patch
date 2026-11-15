@@ -1,0 +1,432 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/admin_exec.DIRECT28-UNREGISTERED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/admin_exec.DIRECT29-UNREGISTERED.py
+@@ -13,8 +13,8 @@
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+ R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
+-R3_ORIGINAL02_ABSENT_SOURCE_SHA256='0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261'
+-R3_ORIGINAL02_ABSENT_KEYS=['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01']
++R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8'
++R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-first-r3-native-service-start-20261116-29', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01', 't45-r3-ordinary29-auth-apply-20261116-01', 't45-r3-ordinary29-auth-restore-20261116-01', 't45-r3-ordinary29-preserve-stop-20261116-01']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+ R3_READONLY_RECOVERY_SOURCE_SHA256 = '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e'
+ R3_CONTINUITY_POLICY_SHA256 = '25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757'
+@@ -174,7 +174,7 @@
+     if R3_ORIGINAL02_ABSENT_POLICY_SHA256 is None:
+         return readonly
+     from types import ModuleType
+-    path=canonical(PUBLIC/'r3_direct28_batched.py')
++    path=canonical(PUBLIC/'r3_direct29_batched.py')
+     check(PUBLIC.lstat().st_uid==0 and not PUBLIC.lstat().st_mode&0o022
+           and path.is_file() and path.lstat().st_uid==0 and not path.lstat().st_mode&0o022
+           and path.lstat().st_size<=131072,'R3_CONTINUITY_ABSENT20_PROTECTED_SOURCE_REQUIRED')
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/issue_phase.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_phase.py
+@@ -1,4 +1,4 @@
+-"""Issue finite direct28 phases from actual predecessor receipts; no server execution."""
++"""Issue finite direct29 phases from actual predecessor receipts; no server execution."""
+ from pathlib import Path
+ import base64
+ import hashlib
+@@ -56,6 +56,9 @@
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+     previous_base = CONTROL / '20261115-r3-direct-service24-start-window-01'
+     a = read(previous_base / 'service-start-authorization.json')
++    # Actual28 failed after C/ACK; there is no standalone stop28 terminal.
++    for key in ('previousStopRequestKey', 'previousStopTerminalSha256', 'previousStopResultSha256'):
++        a.pop(key, None)
+     a.update(proof['scope']())
+     seconds = min(6000, (roles['restorationDeadline'] - 600_000 - now) // 1000)
+     assert seconds > 3600
+@@ -65,15 +68,15 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service28 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service29 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+              previousResultSha256=witness['priorStartPublicResultSha256'],
+-             previousCleanupSha256=witness['priorStopCleanupSha256'],
++             previousCleanupSha256=witness['priorStartCleanupSha256'],
+              previousCurrentProofSha256=witness['priorService']['proofSha256'],
+-             previousStopTerminalSha256=witness['priorStopTerminalSha256'],
+-             previousStopResultSha256=witness['priorStopPublicResultSha256'],
++             previousIncompleteRootSha256=witness['priorStartIncompleteRootSha256'],
++             previousRetainedAckSha256=witness['priorRetainedAckSha256'],
+              restoreTerminalSha256=witness['priorRestoreTerminalSha256'],
+              restoreResultSha256=witness['priorRestorePublicResultSha256'],
+              applyTerminalSha256=apply['rootPins']['terminal'],
+@@ -344,7 +347,7 @@
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct28-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct29-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -374,7 +377,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261116-r3-direct-service28-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service29-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/issue_registration.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_registration.py
+@@ -100,19 +100,19 @@
+     for phase in ('apply', 'restore'):
+         assert 'roles-authorization.json' not in rules[phase]['bundlePins']
+         rules[phase]['bundlePins']['roles-authorization.json'] = sha(role_raw)
+-    policy = dict(format='T45_R3_DIRECT28_BATCHED_REAL_V1', grantId=cas['GRANT'],
++    policy = dict(format='T45_R3_DIRECT29_BATCHED_REAL_V1', grantId=cas['GRANT'],
+                   startsAt=now, expiresAt=now + 7_200_000, jobs=rules)
+     cas['validate_policy_delta'](policy, {'grantId': cas['GRANT']})
+-    files = {'module': (HERE / 'r3_direct28_batched.py').read_bytes(),
++    files = {'module': (HERE / 'r3_direct29_batched.py').read_bytes(),
+              'policy': encode(policy),
+-             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT28-UNREGISTERED.py').read_bytes()}
++             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT29-UNREGISTERED.py').read_bytes()}
+     dispatcher = cas['render_dispatcher'](files)
+     registration = dict(cas['scope'](), sourceSha256=sha(cas_path.read_bytes()),
+                         sourcePins={key: sha(data) for key, data in files.items()},
+                         oldIdentities=basis['oldIdentities'], startsAt=now, expiresAt=now + 900_000,
+                         authorizationReference=REFERENCE, independentReviewSha256=review_pin)
+     registration_raw = encode(registration)
+-    carrier = (HERE / 'original-cas-direct28-carrier.UNISSUED.py').read_bytes()
++    carrier = (HERE / 'original-cas-direct29-carrier.UNISSUED.py').read_bytes()
+     assert ("SOURCE='" + registration['sourceSha256'] + "'").encode() in carrier
+     for name, value in (('AUTH_SHA_LITERAL', repr(sha(registration_raw))),
+                         ('AUTH_START_LITERAL', str(now)),
+@@ -144,8 +144,8 @@
+         ('roles-authorization.json', role_raw), ('host-authorization.json', encode(host_authority)),
+         ('registration-authorization.json', registration_raw),
+         ('registration-envelope.json', encode(packet)),
+-        ('original-cas-direct28-carrier.ISSUED.py', carrier),
+-        ('direct28-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
++        ('original-cas-direct29-carrier.ISSUED.py', carrier),
++        ('direct29-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
+         ('ISSUED.json', encode(report))):
+         with (output / name).open('xb') as stream:
+             stream.write(data)
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/issue_upgrade_authority.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_upgrade_authority.py
+@@ -44,7 +44,7 @@
+     assert all(d[k] is False for k in ('businessRowsWritten', 'rolesCreated',
+                                       'serviceCreated', 'changesOriginalInputTarget'))
+     assert live['requestKey'] == 't45-r3-batched-install-20261115-01'
+-    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-28'
++    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-29'
+     assert live['physical']['systemIdentifier'] == '7706545564479176741'
+     assert live['physical']['databaseOid'] == '16393'
+     assert live['physical']['serverVersionNum'] == '170011'
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/original-cas-direct28-carrier.UNISSUED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/original-cas-direct29-carrier.UNISSUED.py
+@@ -1,9 +1,9 @@
+ """Fixed private stdin adapter for the reviewed refusal-successor entry."""
+ from pathlib import Path
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+-STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct28-start-describe-registration-source-20261116-01')
+-AUDIT=STAGE.parent/'r3-direct28-start-describe-registration-cas-20261116-01'
+-SOURCE='e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae'
++STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct29-start-describe-registration-source-20261116-01')
++AUDIT=STAGE.parent/'r3-direct29-start-describe-registration-cas-20261116-01'
++SOURCE='bac630e409c7efcc71c51dcdda5b5d73872116e6d31529f84274e302a7cc00e5'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000
+@@ -24,7 +24,7 @@
+   assert f.write(raw)==len(raw);f.flush();os.fsync(f.fileno())
+  sync(p.parent)
+ STAGE.mkdir(mode=0o700);put(STAGE/'register_cas.py',source);sync(STAGE.parent)
+-result={'status':'DIRECT28_START_DESCRIBE_REGISTRATION_ENTRY_UNCONFIRMED_READ_ORIGINAL_AUDIT_ONLY','automaticReplay':False}
++result={'status':'DIRECT29_START_DESCRIBE_REGISTRATION_ENTRY_UNCONFIRMED_READ_ORIGINAL_AUDIT_ONLY','automaticReplay':False}
+ captured=io.StringIO()
+ try:
+  sys.argv=[str(STAGE/'register_cas.py'),AUTH]
+@@ -35,7 +35,7 @@
+    if e.code not in (0,2):raise
+  result=json.loads(captured.getvalue())
+ except BaseException as error:
+- result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT28_START_DESCRIBE_REGISTRATION_[A-Z0-9_]{1,140}',str(error))else None)
++ result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT29_START_DESCRIBE_REGISTRATION_[A-Z0-9_]{1,140}',str(error))else None)
+ put(STAGE/'entry-result.json',(json.dumps(result,sort_keys=True)+'\n').encode())
+ print(json.dumps(result,sort_keys=True))
+-raise SystemExit(0 if result['status']=='EXACT_DIRECT28_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)
++raise SystemExit(0 if result['status']=='EXACT_DIRECT29_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/r3_direct28_batched.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/r3_direct29_batched.py
+@@ -5,10 +5,10 @@
+ import time
+ 
+ 
+-FORMAT = 'T45_R3_DIRECT28_BATCHED_REAL_V1'
+-POLICY_NAME = 'direct28-batched-real.json'
++FORMAT = 'T45_R3_DIRECT29_BATCHED_REAL_V1'
++POLICY_NAME = 'direct29-batched-real.json'
+ READONLY_POLICY = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+-JOBS = {'apply': 't45-r3-ordinary28-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary28-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-28', 'stop': 't45-r3-ordinary28-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
++JOBS = {'apply': 't45-r3-ordinary29-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary29-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-29', 'stop': 't45-r3-ordinary29-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ ORIGINAL_WRITER = 't45-first-20261110-r3-real-execute-20261114-06'
+ INSPECT = 't45-r3-original-transaction-inspect-20261114-01'
+ INSPECT_TERMINAL = '33af79a05da4659e18febe940629f264bc1b3ffcdeede110aa1aac10af29a5c0'
+@@ -27,7 +27,7 @@
+ PREVIOUS22_READER_RESULTS = {'original04-readonly-inspect-process-cleanup.json': ('fb6580eb9fc66d8eb6314534e3c90608c4898f8f30a6a1de91249d9c49e47d48', 'de54e6bd915e751f380c1619ef2c6f5766d09d0c62e4517efa628c660199522c'), 'original04-readonly-inspect-result.json': ('c8bc01f1710444f3caf7b1b65265feb5ded0130635150ab44b754e59ac9179a3', '1cfba32fd2971ab40dbe8bc35417a3eeb9d960a425a38bf8c90260faa0d66895'), 'retained22-readback-child-cleanup.json': ('3fd5410e5936c1e7c85fc6404f49e740812fb04fd5ec81a5dd1186dc71d0851b', '5397ba062d5ee85e7d00d13f8b01124da2961cb8c4196a229a9cb1f12651fda2')}
+ SERVICE_KEY = JOBS['start']
+ HOST = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+-PROOF = HOST / 'authority/fresh35-current-production-service-v2-service-28.json'
++PROOF = HOST / 'authority/fresh35-current-production-service-v2-service-29.json'
+ PREVIOUS_SERVICE = {'containerId': '036e8221eaafb4fb473b5f9a5e7a61142d57e8dcd8ea76374916cbbe80f2ded8', 'containerStartedAt': '2026-11-14T04:17:02.413303865Z', 'postmasterStart': '2026-11-14 04:17:03.806731+00', 'proofSha256': 'ea7f29a555c0672d11457a1ae45788f7ce2495ecc25683a748a6e9b8dd9ded9b', 'serviceKey': 't45-first-r3-native-service-start-20261114-22'}
+ 
+ 
+@@ -71,7 +71,7 @@
+                 'EXACT_JOB_RULE_REQUIRED')
+ 
+     def need(self, ok, code):
+-        self.core.need(ok, 'R3_CONTINUITY_DIRECT28_' + code)
++        self.core.need(ok, 'R3_CONTINUITY_DIRECT29_' + code)
+ 
+     def private(self, key):
+         return Path(self.cfg['private']) / 'jobs' / key
+@@ -82,6 +82,7 @@
+         self.previous25_closed()
+         self.previous26_closed()
+         self.previous27_closed()
++        self.previous28_closed()
+         self.previous20()
+         self.previous21()
+         self.previous21_outcome()
+@@ -533,6 +534,87 @@
+             'running': False, 'pid': 0, 'operation': service['serviceKey']},
+             'PREVIOUS27_CONTAINER_NOT_STOPPED')
+ 
++
++    def previous28_closed(self):
++        c = self.core
++        start = 't45-first-r3-native-service-start-20261116-28'
++        restore = 't45-r3-ordinary28-auth-restore-20261116-01'
++        terminal_pin, terminal = self.old.preservation_terminal(start, {'FAILED'})
++        self.need(terminal_pin == '89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408'
++                  and terminal.get('exitCode') == 2 and terminal.get('phaseStarted') is True,
++                  'PREVIOUS28_FAILED_TERMINAL_REQUIRED')
++        def result(key, leaf, root_pin, public_pin):
++            raw = c.read(self.private(key) / 'results' / leaf)
++            public = c.read(Path(self.cfg['control']) / 'jobs' / key / 'results' / leaf, root=False)
++            value = c.strict(raw)
++            self.need(c.sha(raw) == root_pin and c.sha(public) == public_pin
++                      and value == c.strict(public) and value.get('requestKey') == key,
++                      'PREVIOUS28_RESULT_CHANGED')
++            return value
++        normal = result(start, 'normal-service-result.json',
++            '94cdae517c242cc904c7f68d1b43f31ce01aa87f7f0089fc1de93fb77c2cc29f',
++            '334e43befe79babb40626da0313fcc3370eb1f603895b6e0ba790661299cba46')
++        incomplete = result(start, 'normal-service-incomplete.json',
++            'd3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d',
++            '73de51b472b7b8c910d0939c2bbbaabcfa4e54e450625a58894f433d0771bd7c')
++        self.need(normal.get('status') == 'NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY'
++                  and normal.get('automaticRetry') is False
++                  and all(incomplete.get(k) is True for k in
++                      ('confirmed', 'containerStopped', 'createAttempted', 'originalKeyOnly',
++                       'runtimeMaterialPreserved', 'currentProofPresent', 'retainedAckValidated'))
++                  and incomplete.get('automaticRetry') is False
++                  and incomplete.get('successfulResultHandoff') is False
++                  and incomplete.get('pid') == 0
++                  and incomplete.get('cid') == '0fe68379c491aa5d7cdbdf83eed54d7bb0eae8d3f714d72d5a3ffe1d8efcdcb9',
++                  'PREVIOUS28_TYPED_AFTER_FAILURE_REQUIRED')
++        cleanup_pin = '395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8'
++        raw = c.read(HOST / 'state/native-services' / start / 'failed-start-cleanup.json')
++        cleanup = c.strict(raw)
++        self.need(c.sha(raw) == cleanup_pin and incomplete['cleanStop']['cleanupLeaf'] == 'failed-start-cleanup.json'
++                  and incomplete['cleanStop']['cleanupSha256'] == cleanup_pin
++                  and incomplete['cleanStop'] == cleanup
++                  and cleanup.get('status') == 'NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED'
++                  and cleanup.get('originalPGDATAAndCleanStateVerified') is True
++                  and cleanup.get('runtimeMaterialPreserved') is True
++                  and cleanup.get('requestKey') == start
++                  and cleanup.get('dataDirectoryIdentity') == {
++                      'device': 66304, 'inode': 13502421, 'uid': 61035, 'gid': 61035, 'mode': 0o700},
++                  'PREVIOUS28_ORIGINAL_PGDATA_CLEAN_STOP_REQUIRED')
++        raw = c.read(HOST / 'authority/fresh35-current-production-service-v2-service-28.json')
++        proof_pin = 'd57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae'
++        self.need(c.sha(raw) == proof_pin and incomplete.get('currentProofSha256') == proof_pin,
++                  'PREVIOUS28_PUBLISHED_PROOF_CHANGED')
++        raw = c.read(HOST / 'state/native-services' / start / 'retained-ack.json')
++        ack_pin = '7296e03b9865a67718c0e938058dd7990000a72535e3b00a5a94e7b5be7b1b83'
++        self.need(c.sha(raw) == ack_pin and incomplete.get('retainedAckSha256') == ack_pin,
++                  'PREVIOUS28_PUBLISHED_ACK_CHANGED')
++        terminal_pin, terminal = self.old.preservation_terminal(restore, {'COMPLETED'})
++        self.need(terminal_pin == '496966e4b649819a641dc72eab3a3a2ca65f3507f59f27d5d04144617d553db6'
++                  and terminal.get('exitCode') == 0 and terminal.get('phaseStarted') is True,
++                  'PREVIOUS28_RESTORE_TERMINAL_REQUIRED')
++        restored = result(restore, 'maintenance-auth-result.json',
++            'b8da5c9281edc26cc20c17702f0257fa1c95016a8744ae5a6eae7cf0c41ce5cc',
++            '00813a0504f7fffe54e2614554e4a3489a2bcd5a9f3c69921717e781a7a1e98e')
++        raw = c.read(self.private(restore) / 'results/maintenance-auth-cleanup.json')
++        inside = restored['result']
++        self.need(c.sha(raw) == '91477439a305528bf3a71041ab6db699cd8ae62869a3fd35c01c38249e648949'
++                  and inside.get('status') == 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK'
++                  and inside.get('exactOriginalVerifierAndExpiryVerifiedPrivately') is True
++                  and inside.get('naturalExpiryCountedAsRestoration') is False
++                  and inside.get('runtimeAuthChanged') is False
++                  and inside.get('membershipsOrRoleAttributesChanged') is False
++                  and restored['cleanup'].get('ownContainerStopped') is True
++                  and restored['cleanup'].get('ownedPidAbsent') is True,
++                  'PREVIOUS28_ORIGINAL_AUTH_RESTORATION_REQUIRED')
++        # This is the old28 CID only; a future29 install/writer must not require all PG stopped.
++        q = subprocess.run(['/usr/bin/docker', 'inspect', '--format',
++            '{"id":{{json .Id}},"running":{{json .State.Running}},"pid":{{json .State.Pid}},'
++            '"operation":{{json (index .Config.Labels "t45.operation")}}}',
++            incomplete['cid']], capture_output=True, timeout=5, check=True)
++        self.need(not q.stderr and 0 < len(q.stdout) <= 4096 and c.strict(q.stdout) == {
++            'id': incomplete['cid'], 'running': False, 'pid': 0, 'operation': start},
++            'PREVIOUS28_CONTAINER_NOT_STOPPED')
++
+     def current_service(self, service):
+         c = self.core
+         self.need(type(service) is dict and set(service) == {
+@@ -737,9 +819,9 @@
+                     self.successful('stop')
+             else:
+                 self.core.stopped_generation(self.old.service)
+-        return 'direct28-batched-' + phase
++        return 'direct29-batched-' + phase
+ 
+     def finish(self, phase):
+-        if phase in {'direct28-batched-' + name for name in JOBS}:
++        if phase in {'direct29-batched-' + name for name in JOBS}:
+             return None
+         return self.readonly.finish(phase)
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/register_cas.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/register_cas.py
+@@ -8,13 +8,13 @@
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-'+GRANT)
+ H=B/'r3-05-write-continuity'
+ LOCK=B.with_name('grant-5cc58239751e4e2a')/'execution.lock'
+-ENTRY=B/'r3-direct28-start-describe-registration-source-20261116-01/register_cas.py'
+-AUDIT=B/'r3-direct28-start-describe-registration-cas-20261116-01'
+-OLD_DISPATCHER='f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec'
++ENTRY=B/'r3-direct29-start-describe-registration-source-20261116-01/register_cas.py'
++AUDIT=B/'r3-direct29-start-describe-registration-cas-20261116-01'
++OLD_DISPATCHER = '6b6b0d0aee71e95e989431bb6df822ab77cfa925fdeab1a12077b4feb1205842'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+-HELPER='0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261'
+-TEMPLATE='0bddc43f5aa8f48d0b23024c8e290c090f4a738be5d3d97d5954a68f159813e6'
+-JOBS={'apply': 't45-r3-ordinary28-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary28-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-28', 'stop': 't45-r3-ordinary28-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
++HELPER = '90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8'
++TEMPLATE = '7c67d9debdd713df97bb55e5b9305a0daea7ea4142799bcc714dffe014b1e4a7'
++JOBS={'apply': 't45-r3-ordinary29-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary29-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-29', 'stop': 't45-r3-ordinary29-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ BASIS={
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original05_absent22_continuation.py'):'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/original05-absent22-continuation.json'):'27c9b661d7ade353bb42be2b23f104879462749c117779d971d3c4d5b9cd6282',
+@@ -36,7 +36,7 @@
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/original02-absent-continuation.json'):'74dea44d2b88283b1946aea35baee9c216dee6c2e2f1b19f440446e8390c377a',
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_failed19_readonly.py'):'4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/failed19-readonly-recovery.json'):'338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd',
+- Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py'):'f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec',
++ Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py'):'6b6b0d0aee71e95e989431bb6df822ab77cfa925fdeab1a12077b4feb1205842',
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_write_continuity.py'):'1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d',
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.before-r3-05-continuity.py'):'5bf72fc20dfa597c81a9eb5ae8956c497a980b1497e2cfbfe8d469932b27ad49',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/policy.json'):'25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757',
+@@ -93,12 +93,28 @@
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01/results/maintenance-auth-result.json'):'90e8fc47b7df781cb325dc9e653510c2080da0e336748146e25d8751a4cc9fc7',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01/results/maintenance-auth-cleanup.json'):'b8286a2e7449b7b9e165975fd5492fc6084eea1d1b9322e1b5f57e40c4c57339',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct27-fullchain-registration-cas-20261116-01/old-dispatcher.bin'):'4474fc511ed22a1e9c1a405ef81f35ddba2bdff2e0ba45c42e6ff18c0cf49cfb',
++ Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct28_batched.py'):'0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct28-batched-real.json'):'56bb27580cf88df1c61491366da765a501dd84f9dce70033bf1c2a601cb84858',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct28-start-describe-registration-cas-20261116-01/old-dispatcher.bin'):'f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec',
++ Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-28.json'):'d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae',
++ Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-28/failed-start-cleanup.json'):'395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8',
++ Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-28/retained-ack.json'):'7296e03b9865a67718c0e938058dd7990000a72535e3b00a5a94e7b5be7b1b83',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary28-auth-apply-20261116-01/r3-outer-terminal.json'):'163a6252ea1ca699392c5955be78077e86e0a7d7ba75991044ada741bb1c409d',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary28-auth-apply-20261116-01/results/maintenance-auth-result.json'):'7d2dff965ccae19fc835bb669a622b9555dfc5532f4426bab5c6443e05657abc',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary28-auth-apply-20261116-01/results/maintenance-auth-cleanup.json'):'c455111cf4de0d73782c9bf04c0dbc2aedd6df2a92c2a2d5914a736942cd6b87',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-28/r3-outer-terminal.json'):'89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-28/results/normal-service-result.json'):'94cdae517c242cc904c7f68d1b43f31ce01aa87f7f0089fc1de93fb77c2cc29f',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary28-auth-restore-20261116-01/r3-outer-terminal.json'):'496966e4b649819a641dc72eab3a3a2ca65f3507f59f27d5d04144617d553db6',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary28-auth-restore-20261116-01/results/maintenance-auth-result.json'):'b8da5c9281edc26cc20c17702f0257fa1c95016a8744ae5a6eae7cf0c41ce5cc',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary28-auth-restore-20261116-01/results/maintenance-auth-cleanup.json'):'91477439a305528bf3a71041ab6db699cd8ae62869a3fd35c01c38249e648949',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-28/results/normal-service-incomplete.json'):'d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-28/results/genuine-describe-process.json'):'fe03bd630a02acfc63a14369f23bed5620f7f89cd0f9484c83a80c4828d72ae4',
+ }
+-NEW_MODULE=P/'r3_direct28_batched.py';NEW_POLICY=H/'direct28-batched-real.json'
++NEW_MODULE=P/'r3_direct29_batched.py';NEW_POLICY=H/'direct29-batched-real.json'
+ FILES={'module','policy','dispatcherTemplate'}
+ LOCK_ID=[66304,12224849,0,0,420,1,0,1791828307183940015,1791828307183940015]
+ def need(v,c):
+- if not v:raise ValueError('DIRECT28_START_DESCRIBE_REGISTRATION_'+c)
++ if not v:raise ValueError('DIRECT29_START_DESCRIBE_REGISTRATION_'+c)
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def now():return time.time_ns()//1000000
+ def pack(v):return(json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode()
+@@ -118,7 +134,7 @@
+   need(f.write(raw)==len(raw),'SHORT_WRITE');f.flush();os.fchown(f.fileno(),0,0);os.fchmod(f.fileno(),mode);os.fsync(f.fileno())
+  sync(path.parent)
+ def scope():
+- return dict(format='T45_DIRECT28_START_DESCRIBE_REGISTRATION_CAS_V1',grantId=GRANT,
++ return dict(format='T45_DIRECT29_START_DESCRIBE_REGISTRATION_CAS_V1',grantId=GRANT,
+   oldDispatcherSha256=OLD_DISPATCHER,originalCoreSha256=CORE,newModuleSha256=HELPER,dispatcherTemplateSha256=TEMPLATE,
+   newModulePath=str(NEW_MODULE),newPolicyPath=str(NEW_POLICY),publishOrder=['module','policy','dispatcher'],
+   jobKeys=JOBS,sourceRegistrationOnly=True,businessDatabaseWrites=0,oldHistoryChanged=False)
+@@ -158,6 +174,12 @@
+  restored27=json.loads(raw27)['result'];need(restored27.get('exactOriginalVerifierAndExpiryVerifiedPrivately')is True and restored27.get('naturalExpiryCountedAsRestoration')is False,'ACTUAL_ORIGINAL_AUTH27_RESTORATION_REQUIRED')
+  for cid27 in ('6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448','9337b8bfe7415343a5acd6b96ef619bcb02fcd2d6c1d019d5246c901d9f05310','9a5daf9489fbd15d9e341e5fe2f765eed880e08866ca267d29693d1b2ad90820'):
+   q27=subprocess.run(['/usr/bin/docker','inspect','--format','{"running":{{json .State.Running}},"pid":{{json .State.Pid}}}',cid27],capture_output=True,timeout=5);need(q27.returncode==0 and not q27.stderr and json.loads(q27.stdout)=={'running':False,'pid':0},'PREVIOUS27_CONTAINER_ACTIVE_OR_UNKNOWN')
++ restore28='t45-r3-ordinary28-auth-restore-20261116-01'
++ raw28=read(B/'jobs'/restore28/'results/maintenance-auth-result.json')[0];public28=read(C/'jobs'/restore28/'results/maintenance-auth-result.json',1000)[0]
++ need(sha(raw28)=='b8da5c9281edc26cc20c17702f0257fa1c95016a8744ae5a6eae7cf0c41ce5cc' and sha(public28)=='00813a0504f7fffe54e2614554e4a3489a2bcd5a9f3c69921717e781a7a1e98e' and json.loads(raw28)==json.loads(public28),'EXACT_RESTORED28_RESULT_REQUIRED')
++ restored28=json.loads(raw28)['result'];need(restored28.get('exactOriginalVerifierAndExpiryVerifiedPrivately')is True and restored28.get('naturalExpiryCountedAsRestoration')is False,'ACTUAL_ORIGINAL_AUTH28_RESTORATION_REQUIRED')
++ for cid28 in ('0fe68379c491aa5d7cdbdf83eed54d7bb0eae8d3f714d72d5a3ffe1d8efcdcb9','b9020f198b8dafed8c79b6fdffb33766d5912abad40ae45b24b1cb8f5fd28b50','0cbf0e2fa1350650a13dcd1e150359a774fcc566637943ee250936e3aa57ca89'):
++  q28=subprocess.run(['/usr/bin/docker','inspect','--format','{"running":{{json .State.Running}},"pid":{{json .State.Pid}}}',cid28],capture_output=True,timeout=5);need(q28.returncode==0 and not q28.stderr and json.loads(q28.stdout)=={'running':False,'pid':0},'PREVIOUS28_CONTAINER_ACTIVE_OR_UNKNOWN')
+  for grant in(GRANT,'5cc58239751e4e2a'):
+   control=C.with_name('grant-'+grant);worker=B.with_name('grant-'+grant)
+   for phase,key in JOBS.items():
+@@ -174,7 +196,7 @@
+  wrapper=load(raw,P/'admin_exec.py','original_absent20_wrapper')
+  _,prior=wrapper.r3_continuity(cfg)
+  need(prior.__class__.__name__=='Original02AbsentContinuation'
+-  and prior.policy_sha256=='89f49225c19c1043e4a4a59c876876972b49abb9d5e0b29bcb699d5d069b2094',
++  and prior.policy_sha256=='56bb27580cf88df1c61491366da765a501dd84f9dce70033bf1c2a601cb84858',
+   'EXACT_EXISTING_ABSENT21_WRAPPER_REQUIRED')
+  readonly=prior.readonly
+  need(readonly.__class__.__name__=='ReadOnlyRecovery'
+@@ -194,7 +216,7 @@
+ 
+ def validate_policy_delta(policy, previous):
+  need(set(policy)=={'format','grantId','startsAt','expiresAt','jobs'}
+-  and policy['format']=='T45_R3_DIRECT28_BATCHED_REAL_V1'
++  and policy['format']=='T45_R3_DIRECT29_BATCHED_REAL_V1'
+   and policy['grantId']==previous['grantId']==GRANT
+   and type(policy['startsAt']) is type(policy['expiresAt']) is int
+   and 0 < policy['startsAt'] < policy['expiresAt'] <= policy['startsAt']+7200000
+@@ -244,7 +266,7 @@
+   dispatcher=render_dispatcher(files)
+   need(now()+30000<a['expiresAt'],'REGISTRATION_WINDOW_TOO_SHORT')
+   AUDIT.mkdir(mode=0o700);sync(AUDIT.parent)
+-  put(AUDIT/'authorization.json',authority);put(AUDIT/'old-dispatcher.bin',old[P/'admin_exec.py'][0]);put(AUDIT/'old-policy.bin',old[H/'direct27-batched-real.json'][0]);put(AUDIT/'old-identities.json',pack(a['oldIdentities']))
++  put(AUDIT/'authorization.json',authority);put(AUDIT/'old-dispatcher.bin',old[P/'admin_exec.py'][0]);put(AUDIT/'old-policy.bin',old[H/'direct28-batched-real.json'][0]);put(AUDIT/'old-identities.json',pack(a['oldIdentities']))
+   result={'status':'REGISTRATION_UNKNOWN_READ_ORIGINAL_AUDIT_ONLY','published':[],'businessDatabaseWrites':0,'automaticReplay':False};pending=P/'.direct27-fullchain-dispatcher.pending'
+   try:
+    put(NEW_MODULE,files['module'],0o644);result['published'].append('module')
+@@ -261,10 +283,10 @@
+    need(read(P/'admin_exec.py')[0]==dispatcher,'PUBLISHED_DISPATCHER_READBACK_DIFFERS')
+    snapshot(a,sha(dispatcher));quiet_unused();installed_wrapper(read(P/'admin_exec.py')[0],cfg)
+    need(identity(os.fstat(lock.fileno()))==LOCK_ID,'ORIGINAL_LOCK_CHANGED_AFTER_PUBLICATION')
+-   result.update(status='EXACT_DIRECT28_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED',
++   result.update(status='EXACT_DIRECT29_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED',
+     moduleSha256=HELPER,policySha256=sha(files['policy']),dispatcherSha256=sha(dispatcher),oldHistoryPreserved=True,originalLockPreserved=True,phaseSubmitted=False,rolesExecuted=False,postgresStarted=False)
+   except BaseException as error:
+-   result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT28_START_DESCRIBE_REGISTRATION_[A-Z0-9_]+',str(error))else None)
++   result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT29_START_DESCRIBE_REGISTRATION_[A-Z0-9_]+',str(error))else None)
+    try:result['observedDispatcherSha256']=sha(read(P/'admin_exec.py')[0])
+    except Exception:result['observedDispatcherSha256']=None
+   put(AUDIT/'result.json',pack(result));return result
+@@ -274,4 +296,4 @@
+   and re.fullmatch('[a-f0-9]{64}',sys.argv[1]),'FIXED_ROOT_ENTRY_REQUIRED')
+  os.umask(0o077);packet=sys.stdin.buffer.read(16*1024**2+1);need(len(packet)<=16*1024**2,'BOUNDED_PACKET_REQUIRED')
+  a,files,authority=decode(json.loads(packet),sys.argv[1]);result=register(a,files,authority)
+- print(json.dumps(result,sort_keys=True));raise SystemExit(0 if result['status']=='EXACT_DIRECT28_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)
++ print(json.dumps(result,sort_keys=True));raise SystemExit(0 if result['status']=='EXACT_DIRECT29_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)

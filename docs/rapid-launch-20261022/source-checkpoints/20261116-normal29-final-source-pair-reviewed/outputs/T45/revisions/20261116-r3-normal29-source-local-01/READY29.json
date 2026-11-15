@@ -1,0 +1,66 @@
+{
+  "authoritiesIssued": false,
+  "authorityBindings": {
+    "previousCleanupSha256": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+    "previousCurrentProofSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+    "previousIncompleteRootSha256": "d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d",
+    "previousResultSha256": "334e43befe79babb40626da0313fcc3370eb1f603895b6e0ba790661299cba46",
+    "previousRetainedAckSha256": "7296e03b9865a67718c0e938058dd7990000a72535e3b00a5a94e7b5be7b1b83",
+    "previousTerminalSha256": "89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408",
+    "restoreResultSha256": "00813a0504f7fffe54e2614554e4a3489a2bcd5a9f3c69921717e781a7a1e98e",
+    "restoreTerminalSha256": "496966e4b649819a641dc72eab3a3a2ca65f3507f59f27d5d04144617d553db6"
+  },
+  "baselineC28ReadSha256": "f7dba70076f837526e34e572d62f0b8b57d043e3308c84b22a34f91e16cc5984",
+  "budgetsPreserved": [
+    "start300",
+    "early190+cleanup110",
+    "entry>170",
+    "child150+TERM2+KILL2",
+    "bridge158+publish12",
+    "controller90/admin92/restore115/policy120min",
+    "4320completebudget",
+    "strict900install",
+    "writer3000"
+  ],
+  "callerSha256": "8dedecf39f0edc4591e4305a32f6d1866783d3e12db3c6b2ef972e9d6d54d1da",
+  "candidateDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01",
+  "checksPassed": 41,
+  "checksSha256": "e18efd6b1d9382644b762efbf9d993f821acfce81fb26a3af52f52f7f307011e",
+  "describeHelperSha256": "d4fd1374c44a578e32bfb788ac527d37ba2d8bf9c7b4bd8fa8b3767ce6df76b6",
+  "errorFields": [
+    "safeCode",
+    "sqlstate",
+    "errorType",
+    "systemCode",
+    "guardCode",
+    "sourceFrame"
+  ],
+  "errorRoute": "caller failure -> safe_native_failure -> genuine-describe-process.json -> existing reader describeProcess",
+  "formalBusinessAccepted": false,
+  "mainBytes": 56800,
+  "mainSha256": "bc6cfc8e4b2b73bd3991de470a1d68e6d82c9ce06066d86e9f60e6d6f959ce28",
+  "originalT45Chat": "01a100d0-cad5-71c1-8042-dc594311d3be",
+  "parentDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02",
+  "phasesSha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6",
+  "pinsSha256": "efb889be9e5b5e31ec4d1fd26c4a74a73cc86c79d3dcbeff47991b12daf25ce2",
+  "postgresConnections": 0,
+  "predecessorClosureKind": "FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED",
+  "priorFailed28HelperSha256": "cca85ee11f22f8c695cc13e2a7b31e8eda357fea95a89e6d92b476848a541940",
+  "proofSha256": "1c82b45a4bb1f235bdd83459b10e67e1922f183e837db640d4153a6da32aa0a7",
+  "readerSha256": "e2de6b15f84afbab0d9682a0c56c642a72fcd3094da953a23ccdeb13564171b6",
+  "removedAuthorityFields": [
+    "previousStopRequestKey",
+    "previousStopTerminalSha256",
+    "previousStopResultSha256"
+  ],
+  "serverActionsThisSourcePreparation": 0,
+  "sourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "startupHeld": true,
+  "state": "FROZEN_NORMAL29_LOCAL_SOURCE_ONLY_REQUIRES_SAME_VERSION_QB_PAIR_REVIEW",
+  "unknowns": [
+    "new predecessor runtime host IO and actual source map classification not executed",
+    "full JavaScript AST parser unavailable: actual Node24 --check used",
+    "same-version QB final pair review pending",
+    "no fresh93 CAS or clock issuance performed"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "T45FrozenPhasesSha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6",
+  "authorityFilesIssued": false,
+  "closedFinding": "PREVIOUS28-CLEANSTOP-SHAPE-01",
+  "missing": [
+    "QB02 exact fix/cascade review and frozen T45 full pair closure",
+    "all execution adapters exact Main02 pins ready",
+    "only then fresh actual93 CAS basis and once real issuer API dryrun/actualfinite issuance"
+  ],
+  "newRootBasisFilesAdded": 16,
+  "noFurtherEditsWithoutSuccessorOrDeclaredDelta": true,
+  "oldBasisFilesPreserved": 77,
+  "parentPinsSha256": "f407efab93e4b9aa171d1122d949371bf257808f8a40ccad06c33f5c989e2d37",
+  "serverActions": 0,
+  "stablePublishSentinel": ".direct27-fullchain-dispatcher.pending",
+  "state": "MAIN29_02_CORE_FROZEN_REVIEW_PENDING_T45_FINAL_PAIR",
+  "wordingCorrection": "inner authorization reference current28 to current29; validation already29"
+}

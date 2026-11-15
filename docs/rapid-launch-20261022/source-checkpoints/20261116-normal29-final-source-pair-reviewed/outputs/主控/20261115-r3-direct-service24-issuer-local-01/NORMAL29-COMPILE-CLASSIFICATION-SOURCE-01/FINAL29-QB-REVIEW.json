@@ -1,0 +1,47 @@
+{
+  "T45CandidateDirectory": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01",
+  "T45PinsSha256": "efb889be9e5b5e31ec4d1fd26c4a74a73cc86c79d3dcbeff47991b12daf25ce2",
+  "actualPredecessor": {
+    "closedResultSha256": "3e82da741b4b82b4151ecd74e3962504459881e24a037b8942ed05cd67430fce",
+    "closureKind": "FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED",
+    "restoreReadbackSha256": "b1674643574054427ecbc3c1b0174ea2218187f4b70910b69d07478822eb063d",
+    "startReadbackSha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683"
+  },
+  "adapterSha256": "2b0fed476adf0206e33f3ffdc38746b133aa203b601631aec7bc24d12d192017",
+  "authorityFilesIssued": false,
+  "businessGate": "CLOSED",
+  "closedFinding": "PREVIOUS28-CLEANSTOP-SHAPE-01",
+  "formalInstallOrRealStarted": false,
+  "format": "R3_NORMAL29_FINAL_SAME_VERSION_SOURCE_REVIEW_V1",
+  "freshBasisReaderSha256": "c8948c0a0ac904d20e21fb7258b2db82e5513a56310d839f584f903da459135b",
+  "independentReview": {
+    "itemId": "exec-234ad9cc-307e-4b57-8659-27932bafee04",
+    "prompt": "QB29本轮最终同版源码配对闭合：FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS，rulesSha256=c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6，normalStartupHoldClosed=true（仅源码hold，不代替fresh/clock/API真实dryrun）。绑定 Main SERVICE29-COMPILE-CLASSIFICATION-02 PINS bbfc0ac54975b69efd204aceb53812c60aaee1cfc277fd4e19cf348764936ec3；module096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799 / reg75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab / templateccb298e7d26bbbc6144adb02c074e423b9d09cd9998cfcd2ccce56173fb7c8ad / carrierd01e241010281f70c13ec137ebce9ea7fde78671e0e55dd87db700346c9b915f；phase2ae/regissuerfb01不变。PREVIOUS28-CLEANSTOP-SHAPE-01 CLOSED：独立leaf/hash验证保留，仅去两个引用后与真实395dd正文精确全等，实核本地5b895对象形状；Main02其余准确级联/inner措辞已核。\nT45绑定 normal29-source-local-01/CANDIDATE-01 PHASESc0d676 / 父PINS efb889be9e5b5e31ec4d1fd26c4a74a73cc86c79d3dcbeff47991b12daf25ce2，mainbc6c/proof1c82/priorhelpercca85/caller8ded/describehelperd4fd/readere2de。新增caller固定errorType/systemCode/2guardCodes/单个白名单sourceFrame→safe_native_failure→原process→原reader闭合，无原message/stack/path公开；成功descriptor/liveFacts逻辑不变。新priorhelper用固定真实old28 main/proof重新build C/ACK并核FAILED2/typedAFTER/cleanup/真实restore/三旧CID停稳；不造stop28。Main start2ae先去3旧stop键，scope+动态8绑定与已冻proof/witness逐字段一致。全部选中PINS、实际bundlepins、PythonAST、原capture/phase_trace AST不变已核，原测试复用不重跑，未重审D1/SQL/703/data。\n最终adapter/basis02绑定也已补核：adapter 2b0fed476adf0206e33f3ffdc38746b133aa203b601631aec7bc24d12d192017 / READY83369bff8620d234bc06a2d149c78239fd6750b89ccf4abb9deca5fc652580f4；basis c8948c0a0ac904d20e21fb7258b2db82e5513a56310d839f584f903da459135b / READY90c5c1a4b124a1981c96ded0790f1b676c3ab88c565ca058e68d865aaafd1f9f；原readback73baf复用。01→02仅Main目录/SOURCE/TEMPLATE准确改绑，实际diff/AST/嵌入reader核过；93BASIS保77+16实际root/current6b6b，历史keys全保+4生命周期29，原material/install/writer与lock/pending不变；carrier状态/needle字面/两级sourcepin/实例封套一致。未来fresh93/实际原issuerAPI dryrun及原owner受控执行仍须按现有合同顺序。QB无fresh读取/clock签发/issuer或runpy候选/native/服务器/PG/Nodefactory执行；LinuxIO/实际150/170/110/900余量、genuine真实异常分类、安装REAL未测，不记运行PASS。",
+    "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+    "turnId": "01a1e134-f506-77f3-9278-272360f6cdd8"
+  },
+  "mainDirectory": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02",
+  "mainPinsSha256": "bbfc0ac54975b69efd204aceb53812c60aaee1cfc277fd4e19cf348764936ec3",
+  "mainSources": {
+    "admin_exec.DIRECT29-UNREGISTERED.py": "ccb298e7d26bbbc6144adb02c074e423b9d09cd9998cfcd2ccce56173fb7c8ad",
+    "issue_phase.py": "2ae7bdf1ea63fc40448a4a74e012817cd327a6b272814ca4c5d1774398599def",
+    "issue_registration.py": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda",
+    "issue_upgrade_authority.py": "ac19adb442b3f751889ef698ada2daa8d8ff57a08574dacf793086285f2bdfdb",
+    "original-cas-direct29-carrier.UNISSUED.py": "d01e241010281f70c13ec137ebce9ea7fde78671e0e55dd87db700346c9b915f",
+    "r3_direct29_batched.py": "096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799",
+    "register_cas.py": "75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab"
+  },
+  "normalStartupHoldClosed": true,
+  "registrationReadbackReaderSha256": "73baf23e51d649400cf9097be01f2bd5f6c45035b94ffca540d711e62222eb40",
+  "rulesSha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6",
+  "serverActionsByReview": 0,
+  "sourceEvidenceOnly": true,
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "stillRequired": [
+    "fresh actual93 CAS basis and original grant/clock",
+    "actual issuer API no-file dryrun then finite registration/apply/start",
+    "actual genuine descriptor and 900s signing margin",
+    "actual DB05 13ACK/catalog and original511234REAL/reconciliation",
+    "backup corebrowser roles formalURL fullgoal"
+  ]
+}

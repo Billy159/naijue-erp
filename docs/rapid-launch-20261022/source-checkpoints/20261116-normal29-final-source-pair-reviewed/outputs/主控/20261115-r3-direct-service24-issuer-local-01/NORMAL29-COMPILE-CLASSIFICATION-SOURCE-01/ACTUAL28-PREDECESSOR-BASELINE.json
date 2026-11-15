@@ -1,0 +1,390 @@
+{
+  "apply": {
+    "activeOperationUnits": [],
+    "checkedAtUTC": "2026-11-15T21:09:17.750298+00:00",
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "b9020f198b8dafed8c79b6fdffb33766d5912abad40ae45b24b1cb8f5fd28b50",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "databaseConnections": 0,
+    "mutations": 0,
+    "noOtherOperationUnits": true,
+    "operationUnit": {
+      "name": "naijue-erp-op-b16447fb-952601c6ecda.service",
+      "returncode": 0,
+      "state": [
+        "ActiveState=inactive",
+        "SubState=dead"
+      ]
+    },
+    "ownOperationUnitInactive": true,
+    "pgdataPidAbsent": true,
+    "phase": "apply",
+    "privateBodiesRead": false,
+    "publicResultSha256": "4a3fd196e0a3ecff12d61ff912220981f757ceffc6b32e8a6b559176cd7672de",
+    "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+    "requestPresent": true,
+    "result": {
+      "SQL36OrBusinessImport": false,
+      "automaticReplay": false,
+      "cleanup": {
+        "automaticReplay": false,
+        "cid": "b9020f198b8dafed8c79b6fdffb33766d5912abad40ae45b24b1cb8f5fd28b50",
+        "confirmed": true,
+        "createAttempted": true,
+        "exitCode": 0,
+        "oomKilled": false,
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+        "sourceDataPreserved": true,
+        "stage": "READ_BACK_OWN_CONTAINER_STOP"
+      },
+      "newDatabaseOrRole": false,
+      "normal08Or05Started": false,
+      "phase": "apply",
+      "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+      "result": {
+        "authenticationAttempted": false,
+        "automaticReplay": false,
+        "credentialValidUntilByRole": {
+          "erp35_admin_20261110_r3": 1794782283042,
+          "erp35_controller_20261110_r3": 1794782163042
+        },
+        "membershipsOrRoleAttributesChanged": false,
+        "newRoles": 0,
+        "privateRecoveryBasisRetained": true,
+        "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+        "roles": [
+          "erp35_controller_20261110_r3",
+          "erp35_admin_20261110_r3"
+        ],
+        "runtimeAuthChanged": false,
+        "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+      },
+      "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+    },
+    "resultObjectsEqual": true,
+    "rootJobPresent": true,
+    "rootPins": {
+      "cleanup": "c455111cf4de0d73782c9bf04c0dbc2aedd6df2a92c2a2d5914a736942cd6b87",
+      "result": "7d2dff965ccae19fc835bb669a622b9555dfc5532f4426bab5c6443e05657abc",
+      "terminal": "163a6252ea1ca699392c5955be78077e86e0a7d7ba75991044ada741bb1c409d"
+    },
+    "terminal": {
+      "atUTC": "2026-11-15T21:08:42.599538+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 7.879951742012054,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-15T21:08:50.562851+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary28-auth-apply-20261116-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-952601c6ecda"
+    },
+    "terminalRootPublicSha256": "163a6252ea1ca699392c5955be78077e86e0a7d7ba75991044ada741bb1c409d"
+  },
+  "restore": {
+    "activeOperationUnits": [],
+    "checkedAtUTC": "2026-11-15T21:19:54.015048+00:00",
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "0cbf0e2fa1350650a13dcd1e150359a774fcc566637943ee250936e3aa57ca89",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "databaseConnections": 0,
+    "mutations": 0,
+    "noOtherOperationUnits": true,
+    "operationUnit": {
+      "name": "naijue-erp-op-b16447fb-60f9a561d75c.service",
+      "returncode": 0,
+      "state": [
+        "ActiveState=inactive",
+        "SubState=dead"
+      ]
+    },
+    "ownOperationUnitInactive": true,
+    "pgdataPidAbsent": true,
+    "phase": "restore",
+    "privateBodiesRead": false,
+    "publicResultSha256": "00813a0504f7fffe54e2614554e4a3489a2bcd5a9f3c69921717e781a7a1e98e",
+    "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+    "requestPresent": true,
+    "result": {
+      "SQL36OrBusinessImport": false,
+      "automaticReplay": false,
+      "cleanup": {
+        "automaticReplay": false,
+        "cid": "0cbf0e2fa1350650a13dcd1e150359a774fcc566637943ee250936e3aa57ca89",
+        "confirmed": true,
+        "createAttempted": true,
+        "exitCode": 0,
+        "oomKilled": false,
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+        "sourceDataPreserved": true,
+        "stage": "READ_BACK_OWN_CONTAINER_STOP"
+      },
+      "newDatabaseOrRole": false,
+      "normal08Or05Started": false,
+      "phase": "restore",
+      "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "result": {
+        "automaticReplay": false,
+        "databaseStillStopped": true,
+        "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+        "membershipsOrRoleAttributesChanged": false,
+        "naturalExpiryCountedAsRestoration": false,
+        "privateRecoveryBasisRetained": true,
+        "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+        "roles": [
+          "erp35_controller_20261110_r3",
+          "erp35_admin_20261110_r3"
+        ],
+        "runtimeAuthChanged": false,
+        "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+      },
+      "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+    },
+    "resultObjectsEqual": true,
+    "rootJobPresent": true,
+    "rootPins": {
+      "cleanup": "91477439a305528bf3a71041ab6db699cd8ae62869a3fd35c01c38249e648949",
+      "result": "b8da5c9281edc26cc20c17702f0257fa1c95016a8744ae5a6eae7cf0c41ce5cc",
+      "terminal": "496966e4b649819a641dc72eab3a3a2ca65f3507f59f27d5d04144617d553db6"
+    },
+    "terminal": {
+      "atUTC": "2026-11-15T21:18:20.782737+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 7.825161983026192,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-15T21:18:28.680840+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-60f9a561d75c"
+    },
+    "terminalRootPublicSha256": "496966e4b649819a641dc72eab3a3a2ca65f3507f59f27d5d04144617d553db6"
+  },
+  "safeFailureProjectionSha256": "c88a629c0a4fa55976c905ba20ca45d32885e1bed8e44300cfd72bfdf6b296db",
+  "source": "ACTUAL_IMMUTABLE28_RECEIPTS_NOT_SIMULATION",
+  "start": {
+    "activeOperationUnits": [],
+    "checkedAtUTC": "2026-11-15T21:14:21.479009+00:00",
+    "cleanup": {
+      "checkedAt": 1794777248897,
+      "dataDirectoryIdentity": {
+        "device": 66304,
+        "gid": 61035,
+        "inode": 13502421,
+        "mode": 448,
+        "uid": 61035
+      },
+      "originalPGDATAAndCleanStateVerified": true,
+      "requestKey": "t45-first-r3-native-service-start-20261116-28",
+      "runtimeMaterialPreserved": true,
+      "status": "NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED"
+    },
+    "cleanupEvidenceSource": "HOST_BOOT",
+    "cleanupLeaf": "failed-start-cleanup.json",
+    "cleanupRootSha256": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+    "currentProofPresent": true,
+    "currentProofSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+    "databaseConnections": 0,
+    "describeProcess": {
+      "captureErrorType": null,
+      "childReaped": true,
+      "descendantsReaped": true,
+      "describeTrace": [
+        {
+          "elapsedMilliseconds": 0.002,
+          "stage": "IMPORT_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 330.383,
+          "stage": "IMPORT_END"
+        },
+        {
+          "elapsedMilliseconds": 330.443,
+          "stage": "TRUST_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 346.157,
+          "stage": "TRUST_END"
+        },
+        {
+          "elapsedMilliseconds": 346.423,
+          "stage": "SOURCE_LOAD_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 30778.963,
+          "stage": "SOURCE_LOAD_END"
+        },
+        {
+          "elapsedMilliseconds": 30779.609,
+          "stage": "TARGET_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 30983.956,
+          "stage": "TARGET_END"
+        },
+        {
+          "elapsedMilliseconds": 30984.048,
+          "stage": "COMPILE_BEGIN"
+        }
+      ],
+      "exitCode": 2,
+      "killSeconds": 2,
+      "lastReachedStage": "COMPILE_BEGIN",
+      "maximumChildSeconds": 150,
+      "nativeReplyKind": "OBJECT",
+      "ownedProcessGroupReaped": true,
+      "pidNamespace": "pid:[4026532393]",
+      "reason": null,
+      "requestKey": "t45-first-r3-native-service-start-20261116-28",
+      "sqlstate": null,
+      "stderrBytesObserved": 673,
+      "stderrLimit": 65536,
+      "stdoutBytesObserved": 190,
+      "stdoutLimit": 131072,
+      "termSeconds": 2,
+      "traceSource": "BOUNDED_PRIVATE_STDERR_FIXED_STAGE_MARKERS"
+    },
+    "describeProcessPublicSha256": "d4b670b8c90f0485820b96388f5daa62b71253e19e4e19b911759f3be840e96d",
+    "describeProcessRootSha256": "fe03bd630a02acfc63a14369f23bed5620f7f89cd0f9484c83a80c4828d72ae4",
+    "incomplete": {
+      "automaticRetry": false,
+      "cid": "0fe68379c491aa5d7cdbdf83eed54d7bb0eae8d3f714d72d5a3ffe1d8efcdcb9",
+      "cleanStop": {
+        "checkedAt": 1794777248897,
+        "cleanupLeaf": "failed-start-cleanup.json",
+        "cleanupSha256": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+        "dataDirectoryIdentity": {
+          "device": 66304,
+          "gid": 61035,
+          "inode": 13502421,
+          "mode": 448,
+          "uid": 61035
+        },
+        "originalPGDATAAndCleanStateVerified": true,
+        "requestKey": "t45-first-r3-native-service-start-20261116-28",
+        "runtimeMaterialPreserved": true,
+        "status": "NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED"
+      },
+      "confirmed": true,
+      "containerStopped": true,
+      "createAttempted": true,
+      "currentProofPresent": true,
+      "currentProofSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+      "originalKeyOnly": true,
+      "pid": 0,
+      "requestKey": "t45-first-r3-native-service-start-20261116-28",
+      "retainedAckObserved": true,
+      "retainedAckPresent": true,
+      "retainedAckSha256": "7296e03b9865a67718c0e938058dd7990000a72535e3b00a5a94e7b5be7b1b83",
+      "retainedAckValidated": true,
+      "runtimeMaterialPreserved": true,
+      "successfulResultHandoff": false
+    },
+    "incompleteObjectsEqual": true,
+    "incompletePublicSha256": "73de51b472b7b8c910d0939c2bbbaabcfa4e54e450625a58894f433d0771bd7c",
+    "incompleteRootSha256": "d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d",
+    "mutations": 0,
+    "noOtherOperationUnits": true,
+    "normalResultPublicSha256": "334e43befe79babb40626da0313fcc3370eb1f603895b6e0ba790661299cba46",
+    "normalResultRootSha256": "94cdae517c242cc904c7f68d1b43f31ce01aa87f7f0089fc1de93fb77c2cc29f",
+    "operationUnit": {
+      "name": "naijue-erp-op-b16447fb-2761c04a088d.service",
+      "returncode": 0,
+      "state": [
+        "ActiveState=inactive",
+        "SubState=dead"
+      ]
+    },
+    "ownOperationUnitInactive": true,
+    "pgdataPidAbsent": true,
+    "phase": "start",
+    "portAbsent": true,
+    "privateBodiesRead": false,
+    "publicResultSha256": "334e43befe79babb40626da0313fcc3370eb1f603895b6e0ba790661299cba46",
+    "requestKey": "t45-first-r3-native-service-start-20261116-28",
+    "requestPresent": true,
+    "result": {
+      "automaticRetry": false,
+      "requestKey": "t45-first-r3-native-service-start-20261116-28",
+      "safeCode": "DESCRIBE_NATIVE_FAILED_READ_PRIVATE_PROCESS_RECEIPT",
+      "status": "NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY"
+    },
+    "resultObjectsEqual": true,
+    "retainedAckAbsent": false,
+    "retainedAckValidated": true,
+    "rootJobPresent": true,
+    "rootPins": {
+      "cleanup": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+      "incomplete": "d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d",
+      "result": "94cdae517c242cc904c7f68d1b43f31ce01aa87f7f0089fc1de93fb77c2cc29f",
+      "terminal": "89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408"
+    },
+    "terminal": {
+      "atUTC": "2026-11-15T21:13:26.127141+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 44.746723852003925,
+      "exitCode": 2,
+      "exports": [
+        "genuine-describe-process.json",
+        "normal-service-create-attempt.json",
+        "normal-service-incomplete.json",
+        "normal-service-intent.json",
+        "normal-service-result.json"
+      ],
+      "finishedAtUTC": "2026-11-15T21:14:10.923648+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-first-r3-native-service-start-20261116-28",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "FAILED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-2761c04a088d"
+    },
+    "terminalRootPublicSha256": "89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408"
+  }
+}

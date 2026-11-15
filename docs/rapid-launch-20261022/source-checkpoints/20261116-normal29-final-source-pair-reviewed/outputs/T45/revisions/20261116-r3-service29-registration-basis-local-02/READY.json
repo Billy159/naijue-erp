@@ -1,0 +1,19 @@
+{
+  "authoritiesIssued": false,
+  "basisFiles": 93,
+  "carrierTemplateSha256": "d01e241010281f70c13ec137ebce9ea7fde78671e0e55dd87db700346c9b915f",
+  "deltaSha256": "e3f90b30ca31cd2b00ce039f45f897b10600efe1aaf9c2e539d16f0250df9c23",
+  "freshCasReadPerformed": false,
+  "mainDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02",
+  "mainPinsSha256": "bbfc0ac54975b69efd204aceb53812c60aaee1cfc277fd4e19cf348764936ec3",
+  "readbackReusedPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-01/read-registration29-original.py",
+  "readbackReusedSha256": "73baf23e51d649400cf9097be01f2bd5f6c45035b94ffca540d711e62222eb40",
+  "registrarSourceSha256": "75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab",
+  "remoteInvocations": 0,
+  "rulesSha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6",
+  "serverActions": 0,
+  "sourceFile": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service29-registration-basis-local-02/read-registration-basis29.py",
+  "sourceSha256": "c8948c0a0ac904d20e21fb7258b2db82e5513a56310d839f584f903da459135b",
+  "state": "LOCAL_SOURCE_PREPARED_NOT_EXECUTED",
+  "syntax": "PASS_PYTHON_AND_BASIS_EMBEDDED_AST"
+}

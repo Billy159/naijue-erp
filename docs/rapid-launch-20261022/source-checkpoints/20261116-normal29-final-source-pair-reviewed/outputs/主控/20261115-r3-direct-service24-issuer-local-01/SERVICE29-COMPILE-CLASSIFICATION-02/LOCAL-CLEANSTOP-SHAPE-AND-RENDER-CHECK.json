@@ -1,0 +1,32 @@
+{
+  "actualOriginalBodyMatchesAfterOnlyTwoReferencesRemoved": true,
+  "actualStartReadbackSha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683",
+  "authorityFilesIssued": 0,
+  "exactCarrierSourceLiteralMatched": true,
+  "extendedReferenceKeys": [
+    "cleanupLeaf",
+    "cleanupSha256"
+  ],
+  "finding": "PREVIOUS28-CLEANSTOP-SHAPE-01",
+  "genuineFactoryRuns": 0,
+  "issuerCalls": 0,
+  "moduleBytes": 60886,
+  "original01ComparisonWouldRefuseActualReceipt": true,
+  "realRegistrarPureBytesRenderAndCompilePassed": true,
+  "referenceLeafAndHashIndependentlyRetained": true,
+  "renderUses": "ACTUAL_EXPIRED_HISTORICAL28_POLICY_SHAPE_NOT_NEW_EXECUTION_POLICY",
+  "rootBasisFiles": 93,
+  "serverActions": 0,
+  "sourceChanges": [
+    "admin_exec.DIRECT29-UNREGISTERED.py",
+    "issue_upgrade_authority.py",
+    "original-cas-direct29-carrier.UNISSUED.py",
+    "r3_direct29_batched.py",
+    "register_cas.py"
+  ],
+  "state": "EXACT_SAVED_RECEIPT_SHAPE_AND_PURE_TEMPLATE_SOURCE_CHECK_PASS_NOT_RUNTIME",
+  "unchangedSources": [
+    "issue_phase.py",
+    "issue_registration.py"
+  ]
+}

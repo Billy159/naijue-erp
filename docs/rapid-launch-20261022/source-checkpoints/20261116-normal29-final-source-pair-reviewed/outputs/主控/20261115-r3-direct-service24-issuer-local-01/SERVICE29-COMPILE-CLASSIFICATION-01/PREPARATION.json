@@ -1,0 +1,14 @@
+{
+  "authorityFilesIssued": false,
+  "missing": [
+    "T45 frozen29 witness and actual proof.validate_authority matching planned typedAFTER fields",
+    "existing QB Main changed-scope review plus T45 final changed-scope review and full pair closure",
+    "fresh actual93 CAS basis and actual API dryrun/finite issuance only after full same-version review"
+  ],
+  "newRootBasisFilesAdded": 16,
+  "noFurtherEditsWithoutSuccessorOrDeclaredDelta": true,
+  "oldBasisFilesPreserved": 77,
+  "serverActions": 0,
+  "stablePublishSentinel": ".direct27-fullchain-dispatcher.pending",
+  "state": "MAIN29_CORE_FROZEN_SCOPED_REVIEW_PENDING_T45_FINAL_INTERFACE_MATCH"
+}

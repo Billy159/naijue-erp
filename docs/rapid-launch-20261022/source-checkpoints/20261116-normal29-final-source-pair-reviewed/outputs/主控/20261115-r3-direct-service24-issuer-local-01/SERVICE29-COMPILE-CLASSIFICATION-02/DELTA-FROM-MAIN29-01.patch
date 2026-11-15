@@ -1,0 +1,58 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/admin_exec.DIRECT29-UNREGISTERED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/admin_exec.DIRECT29-UNREGISTERED.py
+@@ -13,7 +13,7 @@
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+ R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
+-R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8'
++R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799'
+ R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-first-r3-native-service-start-20261116-29', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01', 't45-r3-ordinary29-auth-apply-20261116-01', 't45-r3-ordinary29-auth-restore-20261116-01', 't45-r3-ordinary29-preserve-stop-20261116-01']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+ R3_READONLY_RECOVERY_SOURCE_SHA256 = '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e'
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_upgrade_authority.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/issue_upgrade_authority.py
+@@ -69,7 +69,7 @@
+                      programSha256=d['programSha256'], sourceSetSha256=d['sourceSetSha256'],
+                      targetSha256=d['targetSha256'], startsAt=d['startsAt'], expiresAt=d['expiresAt'],
+                      independentSafetyReviewSha256=review_pin,
+-                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current28 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
++                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current29 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
+     raw = (json.dumps(authority, sort_keys=True, indent=2) + '\n').encode()
+     output = Path(output_directory)
+     assert output.parent.resolve() == CONTROL.resolve() and not output.exists()
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/original-cas-direct29-carrier.UNISSUED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/original-cas-direct29-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct29-start-describe-registration-source-20261116-01')
+ AUDIT=STAGE.parent/'r3-direct29-start-describe-registration-cas-20261116-01'
+-SOURCE='bac630e409c7efcc71c51dcdda5b5d73872116e6d31529f84274e302a7cc00e5'
++SOURCE='75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/r3_direct29_batched.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/r3_direct29_batched.py
+@@ -572,7 +572,8 @@
+         cleanup = c.strict(raw)
+         self.need(c.sha(raw) == cleanup_pin and incomplete['cleanStop']['cleanupLeaf'] == 'failed-start-cleanup.json'
+                   and incomplete['cleanStop']['cleanupSha256'] == cleanup_pin
+-                  and incomplete['cleanStop'] == cleanup
++                  and {k: v for k, v in incomplete['cleanStop'].items()
++                       if k not in ('cleanupLeaf', 'cleanupSha256')} == cleanup
+                   and cleanup.get('status') == 'NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED'
+                   and cleanup.get('originalPGDATAAndCleanStateVerified') is True
+                   and cleanup.get('runtimeMaterialPreserved') is True
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/register_cas.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/register_cas.py
+@@ -12,8 +12,8 @@
+ AUDIT=B/'r3-direct29-start-describe-registration-cas-20261116-01'
+ OLD_DISPATCHER = '6b6b0d0aee71e95e989431bb6df822ab77cfa925fdeab1a12077b4feb1205842'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+-HELPER = '90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8'
+-TEMPLATE = '7c67d9debdd713df97bb55e5b9305a0daea7ea4142799bcc714dffe014b1e4a7'
++HELPER = '096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799'
++TEMPLATE = 'ccb298e7d26bbbc6144adb02c074e423b9d09cd9998cfcd2ccce56173fb7c8ad'
+ JOBS={'apply': 't45-r3-ordinary29-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary29-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-29', 'stop': 't45-r3-ordinary29-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ BASIS={
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original05_absent22_continuation.py'):'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',

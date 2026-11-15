@@ -1,0 +1,312 @@
+[
+  {
+    "bytes": 1280,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/BASELINE-C28-READONLY.json",
+    "sha256": "f7dba70076f837526e34e572d62f0b8b57d043e3308c84b22a34f91e16cc5984"
+  },
+  {
+    "bytes": 12608,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/PHASES29.UNISSUED.json",
+    "sha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6"
+  },
+  {
+    "bytes": 21656,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/apply/bundle/ordinary05_roles.py",
+    "sha256": "0e11175e76f85eb2b6c2d8f53d200383b134560e2c859f7230ef3aa464aef99c"
+  },
+  {
+    "bytes": 32254,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/apply/bundle/ordinary05_roles_job.py",
+    "sha256": "4f0fc01506115fdd2d695a1704ace843bf1a3c60426b093b5c6334706868de7c"
+  },
+  {
+    "bytes": 7543,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/apply/bundle/prior_failed28.py",
+    "sha256": "cca85ee11f22f8c695cc13e2a7b31e8eda357fea95a89e6d92b476848a541940"
+  },
+  {
+    "bytes": 3509,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/freeze-local29.py",
+    "sha256": "8f55cd9efa1d4f075b43605cab4d4c2764409de7ffe0a95977923a000c1e5d96"
+  },
+  {
+    "bytes": 13502,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/install/bundle/batched161-run.mjs",
+    "sha256": "8dedecf39f0edc4591e4305a32f6d1866783d3e12db3c6b2ef972e9d6d54d1da"
+  },
+  {
+    "bytes": 12985,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/install/bundle/batched_install_host.py",
+    "sha256": "4b19821ca40f22f78ae01be3395eaa5308a40266291ad152235767c687b19bb5"
+  },
+  {
+    "bytes": 20709,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/install/bundle/normal05_retained_stop.py",
+    "sha256": "c7ee82062402fb7bd48f902d224d9365bb69016a4476f18a7c1f42d89fc67b9a"
+  },
+  {
+    "bytes": 12283,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/install/bundle/private_transport.py",
+    "sha256": "0be320fb8dc269f048f0fb9cbfda741a2663fdb7b3582399cfd3039d38e9b007"
+  },
+  {
+    "bytes": 12935,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/read-current-phase29.py",
+    "sha256": "e2de6b15f84afbab0d9682a0c56c642a72fcd3094da953a23ccdeb13564171b6"
+  },
+  {
+    "bytes": 21656,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/restore/bundle/ordinary05_roles.py",
+    "sha256": "0e11175e76f85eb2b6c2d8f53d200383b134560e2c859f7230ef3aa464aef99c"
+  },
+  {
+    "bytes": 32254,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/restore/bundle/ordinary05_roles_job.py",
+    "sha256": "4f0fc01506115fdd2d695a1704ace843bf1a3c60426b093b5c6334706868de7c"
+  },
+  {
+    "bytes": 7543,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/restore/bundle/prior_failed28.py",
+    "sha256": "cca85ee11f22f8c695cc13e2a7b31e8eda357fea95a89e6d92b476848a541940"
+  },
+  {
+    "bytes": 5060,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/run_frozen_phase29.py",
+    "sha256": "7bd06eb4ac3354d0efcae3be447c074702c24e183ff33322c1ae88e0ca7c59ef"
+  },
+  {
+    "bytes": 13502,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/batched161-run.mjs",
+    "sha256": "8dedecf39f0edc4591e4305a32f6d1866783d3e12db3c6b2ef972e9d6d54d1da"
+  },
+  {
+    "bytes": 56800,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/normal_service05_after08.py",
+    "sha256": "bc6cfc8e4b2b73bd3991de470a1d68e6d82c9ce06066d86e9f60e6d6f959ce28"
+  },
+  {
+    "bytes": 18249,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/normal_service05_after08_proof.py",
+    "sha256": "1c82b45a4bb1f235bdd83459b10e67e1922f183e837db640d4153a6da32aa0a7"
+  },
+  {
+    "bytes": 7543,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/prior_failed28.py",
+    "sha256": "cca85ee11f22f8c695cc13e2a7b31e8eda357fea95a89e6d92b476848a541940"
+  },
+  {
+    "bytes": 21212,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/r3_05_readonly.py",
+    "sha256": "23954ab506a3dc3a5881878d48595b049008daf5e68a55e05b508e949eebfa2b"
+  },
+  {
+    "bytes": 9394,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/r3_05_runtime.py",
+    "sha256": "460a95b2a24d7832b560994dfb6476bfd5d6ca8314acd0b27be6462e116619e0"
+  },
+  {
+    "bytes": 15056,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/start/bundle/start_owned_describe.py",
+    "sha256": "d4fd1374c44a578e32bfb788ac527d37ba2d8bf9c7b4bd8fa8b3767ce6df76b6"
+  },
+  {
+    "bytes": 19581,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/stop/bundle/normal05_preserve_stop.py",
+    "sha256": "ad209b01b1db63af8abf424bd01c8fea768e3844c0513a8ff94923c4db03c308"
+  },
+  {
+    "bytes": 20709,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/stop/bundle/normal05_retained_stop.py",
+    "sha256": "c7ee82062402fb7bd48f902d224d9365bb69016a4476f18a7c1f42d89fc67b9a"
+  },
+  {
+    "bytes": 37233,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/writer/bundle/batched_real_host.py",
+    "sha256": "4e0247e3a9e2cf8b0b18503f59d25ebf8ab0f55f973aa4187c0f871a3d64d010"
+  },
+  {
+    "bytes": 20709,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/writer/bundle/normal05_retained_stop.py",
+    "sha256": "c7ee82062402fb7bd48f902d224d9365bb69016a4476f18a7c1f42d89fc67b9a"
+  },
+  {
+    "bytes": 9394,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/writer/bundle/r3_05_runtime.py",
+    "sha256": "460a95b2a24d7832b560994dfb6476bfd5d6ca8314acd0b27be6462e116619e0"
+  },
+  {
+    "bytes": 20087,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/CANDIDATE-01/writer/bundle/retained24-run.mjs",
+    "sha256": "cb1183707d745652a9c4f413c5ca529359d0c612d871dcc76f0ca18ace106ea0"
+  },
+  {
+    "bytes": 3551,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/READY29.json",
+    "sha256": "ac0788e3410643eb36a7464002e2bd1f3475c3d56d21abc73d1b8b5c55682d80"
+  },
+  {
+    "bytes": 1323,
+    "path": "outputs/T45/revisions/20261116-r3-normal29-source-local-01/REPORT29.md",
+    "sha256": "ce8e23eae582d75bde3cb8312fd9a70d3af8dc4ae1d15ed0b9afd63864ee9975"
+  },
+  {
+    "bytes": 3136,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-01/read-registration29-original.py",
+    "sha256": "73baf23e51d649400cf9097be01f2bd5f6c45035b94ffca540d711e62222eb40"
+  },
+  {
+    "bytes": 1026,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-02/DELTA-FROM-01.patch",
+    "sha256": "189cf3c8575e04ca72d20c93241c069cefb3443e0f1e7b87e3207f2d69f82ae3"
+  },
+  {
+    "bytes": 1532,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-02/READY.json",
+    "sha256": "83369bff8620d234bc06a2d149c78239fd6750b89ccf4abb9deca5fc652580f4"
+  },
+  {
+    "bytes": 5259,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-02/register_issued29_once.py",
+    "sha256": "2b0fed476adf0206e33f3ffdc38746b133aa203b601631aec7bc24d12d192017"
+  },
+  {
+    "bytes": 968,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-basis-local-02/DELTA-FROM-01.patch",
+    "sha256": "e3f90b30ca31cd2b00ce039f45f897b10600efe1aaf9c2e539d16f0250df9c23"
+  },
+  {
+    "bytes": 1533,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-basis-local-02/READY.json",
+    "sha256": "90c5c1a4b124a1981c96ded0790f1b676c3ab88c565ca058e68d865aaafd1f9f"
+  },
+  {
+    "bytes": 14011,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-basis-local-02/read-registration-basis29.py",
+    "sha256": "c8948c0a0ac904d20e21fb7258b2db82e5513a56310d839f584f903da459135b"
+  },
+  {
+    "bytes": 14441,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/ACTUAL28-PREDECESSOR-BASELINE.json",
+    "sha256": "37afcb618c6949b56500220170be7fcf656c639b73ccc808cd4e7e8cfd8ebb12"
+  },
+  {
+    "bytes": 5434,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/FINAL29-QB-REVIEW.json",
+    "sha256": "2c8c38f276a3722b28d9d3ec2ca0162de138e220007b0cd1f9bfd18cb3cd10ce"
+  },
+  {
+    "bytes": 2075,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/TASK.json",
+    "sha256": "47e699c8f6d697a7c51260029a5e1bd99001769b756b671d9a54af14329e6221"
+  },
+  {
+    "bytes": 41389,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/DELTA-FROM-MAIN28-03.patch",
+    "sha256": "d9d359debbf0cf905b070cd7428da0af2fc85e5bfb19897194283950ff264ea9"
+  },
+  {
+    "bytes": 719,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/LOCAL-STATIC-PREP-CHECK.json",
+    "sha256": "551a59ce1d449b9e119c92680508c4ea9bbc31d65494b81c3e72a098906dbdd0"
+  },
+  {
+    "bytes": 987,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/PINS.json",
+    "sha256": "f407efab93e4b9aa171d1122d949371bf257808f8a40ccad06c33f5c989e2d37"
+  },
+  {
+    "bytes": 656,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/PREPARATION.json",
+    "sha256": "954123f4a0579bf3b9ec8d29b7206b8745575d52c8f3284d8e6dd456407f1c5c"
+  },
+  {
+    "bytes": 41134,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/admin_exec.DIRECT29-UNREGISTERED.py",
+    "sha256": "7c67d9debdd713df97bb55e5b9305a0daea7ea4142799bcc714dffe014b1e4a7"
+  },
+  {
+    "bytes": 24958,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_phase.py",
+    "sha256": "2ae7bdf1ea63fc40448a4a74e012817cd327a6b272814ca4c5d1774398599def"
+  },
+  {
+    "bytes": 9161,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_registration.py",
+    "sha256": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda"
+  },
+  {
+    "bytes": 5143,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_upgrade_authority.py",
+    "sha256": "44d4e78bf9db1cca64622490fea57f04b9a08e636f64a0b53205cfd523712272"
+  },
+  {
+    "bytes": 2663,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/original-cas-direct29-carrier.UNISSUED.py",
+    "sha256": "18bc189e4dab05b4c80abaf935956c4f8292cdaded2fb08e07598c7a5a531e01"
+  },
+  {
+    "bytes": 60791,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/r3_direct29_batched.py",
+    "sha256": "90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8"
+  },
+  {
+    "bytes": 36843,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/register_cas.py",
+    "sha256": "bac630e409c7efcc71c51dcdda5b5d73872116e6d31529f84274e302a7cc00e5"
+  },
+  {
+    "bytes": 7890,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/DELTA-FROM-MAIN29-01.patch",
+    "sha256": "2ed2cf849c5062186a3e9791633bcf1fee40120056796bd65f7fe3aef87423da"
+  },
+  {
+    "bytes": 1098,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/LOCAL-CLEANSTOP-SHAPE-AND-RENDER-CHECK.json",
+    "sha256": "e97f55457c1585e4277d46649cae636a19ecf9ff3c951c944b9ec8fee562b4ab"
+  },
+  {
+    "bytes": 1002,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/PINS.json",
+    "sha256": "bbfc0ac54975b69efd204aceb53812c60aaee1cfc277fd4e19cf348764936ec3"
+  },
+  {
+    "bytes": 891,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/PREPARATION.json",
+    "sha256": "4a2bd103c3c50f42eb9dc79a4fa131e83ff241bd0910f54cb073030813288909"
+  },
+  {
+    "bytes": 41134,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/admin_exec.DIRECT29-UNREGISTERED.py",
+    "sha256": "ccb298e7d26bbbc6144adb02c074e423b9d09cd9998cfcd2ccce56173fb7c8ad"
+  },
+  {
+    "bytes": 24958,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/issue_phase.py",
+    "sha256": "2ae7bdf1ea63fc40448a4a74e012817cd327a6b272814ca4c5d1774398599def"
+  },
+  {
+    "bytes": 9161,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/issue_registration.py",
+    "sha256": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda"
+  },
+  {
+    "bytes": 5143,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/issue_upgrade_authority.py",
+    "sha256": "ac19adb442b3f751889ef698ada2daa8d8ff57a08574dacf793086285f2bdfdb"
+  },
+  {
+    "bytes": 2663,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/original-cas-direct29-carrier.UNISSUED.py",
+    "sha256": "d01e241010281f70c13ec137ebce9ea7fde78671e0e55dd87db700346c9b915f"
+  },
+  {
+    "bytes": 60886,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/r3_direct29_batched.py",
+    "sha256": "096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799"
+  },
+  {
+    "bytes": 36843,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02/register_cas.py",
+    "sha256": "75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "DELTA-FROM-MAIN29-01.patch": "2ed2cf849c5062186a3e9791633bcf1fee40120056796bd65f7fe3aef87423da",
+  "LOCAL-CLEANSTOP-SHAPE-AND-RENDER-CHECK.json": "e97f55457c1585e4277d46649cae636a19ecf9ff3c951c944b9ec8fee562b4ab",
+  "PREPARATION.json": "4a2bd103c3c50f42eb9dc79a4fa131e83ff241bd0910f54cb073030813288909",
+  "admin_exec.DIRECT29-UNREGISTERED.py": "ccb298e7d26bbbc6144adb02c074e423b9d09cd9998cfcd2ccce56173fb7c8ad",
+  "issue_phase.py": "2ae7bdf1ea63fc40448a4a74e012817cd327a6b272814ca4c5d1774398599def",
+  "issue_registration.py": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda",
+  "issue_upgrade_authority.py": "ac19adb442b3f751889ef698ada2daa8d8ff57a08574dacf793086285f2bdfdb",
+  "original-cas-direct29-carrier.UNISSUED.py": "d01e241010281f70c13ec137ebce9ea7fde78671e0e55dd87db700346c9b915f",
+  "r3_direct29_batched.py": "096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799",
+  "register_cas.py": "75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab"
+}

@@ -1,0 +1,15 @@
+--- outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-01/register_issued29_once.py
++++ outputs/T45/revisions/20261116-r3-service29-registration-adapter-local-02/register_issued29_once.py
+@@ -5,9 +5,9 @@
+ 
+ H=Path(__file__).resolve().parent
+ REPO=H.parents[3]
+-MAIN=REPO/'outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01'
+-SOURCE='bac630e409c7efcc71c51dcdda5b5d73872116e6d31529f84274e302a7cc00e5'
+-TEMPLATE='18bc189e4dab05b4c80abaf935956c4f8292cdaded2fb08e07598c7a5a531e01'
++MAIN=REPO/'outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-02'
++SOURCE='75df85f9bb7da65da15f8b8d02b2c2089ed774429c924a8f26e963be851619ab'
++TEMPLATE='d01e241010281f70c13ec137ebce9ea7fde78671e0e55dd87db700346c9b915f'
+ SUCCESS='EXACT_DIRECT29_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'
+ RULES='c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6'
+ CLIENT=REPO.parent/'monitor/normal-admission-20261112-01/admin_client.py'
