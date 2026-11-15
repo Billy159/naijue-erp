@@ -1,0 +1,13 @@
+{
+  "actualPreflightSha256": "e8614b14596bde5fd33a2bb79aba5719a84cb25763ad4869c1c02a98c1e82091",
+  "actualSevenBundleMemberRowsMatched": true,
+  "currentCopySourceIdentityKnown": false,
+  "helperSha256": "62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1",
+  "manifestSha256": "45a65e4c6cab43f144cd1a6d7731a1f534ab156ac4c64564ab32e7ebd760bbed",
+  "nativeOrDatabaseExecuted": false,
+  "originalClientRequestWireIdentical": true,
+  "requestFieldsIdentical": true,
+  "rootUidOrClockMocked": false,
+  "serverActions": 0,
+  "state": "LOCAL_ORIGINAL_PROTOCOL_MATCH_ONLY"
+}

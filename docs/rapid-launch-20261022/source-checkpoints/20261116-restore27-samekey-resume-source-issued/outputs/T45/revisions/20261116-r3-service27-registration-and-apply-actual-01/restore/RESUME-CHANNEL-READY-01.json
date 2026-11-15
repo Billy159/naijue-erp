@@ -1,0 +1,106 @@
+{
+  "actualReadback": {
+    "actualCopySourceIdentityQueried": false,
+    "checkedAtUTC": "2026-11-15T19:43:34.113911+00:00",
+    "dispatcherReturnCode": 0,
+    "dispatcherStatus": {
+      "allowedTasks": [
+        "T10",
+        "T15",
+        "T16",
+        "T17",
+        "T18",
+        "T19",
+        "T36",
+        "T37",
+        "T38",
+        "T39",
+        "T40",
+        "T41",
+        "T42",
+        "T43",
+        "T44",
+        "T45",
+        "T46",
+        "T47",
+        "T48",
+        "T49",
+        "T50",
+        "T51"
+      ],
+      "expiresAtEpoch": 1797048533.1645546,
+      "gateConditionsRetained": true,
+      "grantId": "b16447fbc81f4d64",
+      "passwordStored": false,
+      "permanentPasswordlessSudo": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "READY"
+    },
+    "dispatcherStderrBytes": 0,
+    "noAcceptedRequestOrResumeAttempt": true,
+    "paths": {
+      "5cc58239751e4e2a:request": {
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary27-auth-restore-20261116-01.json",
+        "present": false
+      },
+      "5cc58239751e4e2a:requestTmp": {
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary27-auth-restore-20261116-01.tmp",
+        "present": false
+      },
+      "5cc58239751e4e2a:rootJob": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary27-auth-restore-20261116-01",
+        "present": false
+      },
+      "5cc58239751e4e2a:terminal": {
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary27-auth-restore-20261116-01.json",
+        "present": false
+      },
+      "audit": {
+        "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/restore27-samekey-resume-audit-20261116-01",
+        "present": false
+      },
+      "b16447fbc81f4d64:request": {
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary27-auth-restore-20261116-01.json",
+        "present": false
+      },
+      "b16447fbc81f4d64:requestTmp": {
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary27-auth-restore-20261116-01.tmp",
+        "present": false
+      },
+      "b16447fbc81f4d64:rootJob": {
+        "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01",
+        "present": false
+      },
+      "b16447fbc81f4d64:terminal": {
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary27-auth-restore-20261116-01.json",
+        "present": false
+      },
+      "controlHost": {
+        "bytes": 1989,
+        "device": 66304,
+        "directory": false,
+        "gid": 1000,
+        "inode": 28838636,
+        "mode": 384,
+        "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01/bundle/host-authorization.json",
+        "present": true,
+        "symlink": false,
+        "uid": 1000
+      },
+      "sourceStage": {
+        "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/restore27-samekey-resume-source-20261116-01",
+        "present": false
+      }
+    },
+    "postgresConnections": 0,
+    "readyForExactPrepIssuance": true,
+    "requestKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+    "serverMutations": 0
+  },
+  "localCheckedAtUTC": "2026-11-15T19:43:34.312601+00:00",
+  "originalKeyResubmitted": false,
+  "serverMutationAttempted": false,
+  "sshReturnCode": 0,
+  "stderr": "",
+  "stdoutBytes": 2819
+}

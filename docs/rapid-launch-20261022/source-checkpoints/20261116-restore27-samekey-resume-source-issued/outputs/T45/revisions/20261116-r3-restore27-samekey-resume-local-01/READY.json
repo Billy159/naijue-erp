@@ -1,0 +1,13 @@
+{
+  "conditionalActualIdentityCaptureAtExecutionAuthorizedByMain": true,
+  "currentNetworkEvidence": "SSH255 banner exchange timeout; no current copy inode invented",
+  "expectedSourceSha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+  "helperSha256": "62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1",
+  "pinsSha256": "b50a6c35af49e8d214dd147559056d6872c40234aa22b281330db73ecffedadf",
+  "restoreActuallyCompleted": false,
+  "roleDeadlinesExtended": false,
+  "serverActions": 0,
+  "sourceIdentityKnownBeforeExecution": false,
+  "state": "SOURCE_READY_UNISSUED_NOT_EXECUTED_PENDING_INCREMENTAL_REVIEW",
+  "staticSourceOrDatabaseChanges": false
+}

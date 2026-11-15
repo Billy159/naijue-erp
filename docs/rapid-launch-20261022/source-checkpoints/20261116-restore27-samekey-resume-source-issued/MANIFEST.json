@@ -1,0 +1,106 @@
+{
+  "state": "SAMEKEY_RESTORE27_RESUME_SOURCE_NARROW_PASS_FINITE_PACKET_ISSUED_ACTUAL_OUTCOME_PENDING",
+  "scope": "selected frozen source/public review/bounded public metadata only; no live authority, envelope, issued carrier, credentials or businessdata",
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/CARRIER-DIFF.txt",
+      "bytes": 4879,
+      "sha256": "5bc6a968d4a737b08763b813fd833f8118672fe13287c252d256076d1d8492b6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/HELPER-ADDITION.diff",
+      "bytes": 14677,
+      "sha256": "ee98b9a45e9e71b5cd076de5def331baca4654cdaa95c01afdd0df3806eb6162"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/LOCAL-PROTOCOL-CHECK.json",
+      "bytes": 582,
+      "sha256": "b2c18076a6a75f2a823d981ac4a51c3e9b0852edca1e3a15c54a743ca747c2c2"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/PINS.json",
+      "bytes": 736,
+      "sha256": "b50a6c35af49e8d214dd147559056d6872c40234aa22b281330db73ecffedadf"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/PLAN.md",
+      "bytes": 7320,
+      "sha256": "719c9b378a03be6ed221aaef5e32fe27e66a2efc9de6b1eb25a01ec2328d1e37"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/READY.json",
+      "bytes": 690,
+      "sha256": "4310b0168451d3a2b422263cf819d76acd9c21166840fc0e3a6f9629175e5595"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/carrier.UNISSUED.py",
+      "bytes": 2539,
+      "sha256": "1048974f5390c3739af5d8289722ced4c42c30d3f0cba450a12d896ca689204c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/check_protocol.py",
+      "bytes": 1642,
+      "sha256": "76570252940bc217616e20a863a686f530ae5b0e8d40ddf951ebfba1b4d30567"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/resume_restore27.py",
+      "bytes": 14442,
+      "sha256": "62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/run_resume_once.py",
+      "bytes": 2398,
+      "sha256": "79fe001086b460e4c9fc102689dc1787a4e1c5d2a1f8f7284882eb22341c3103"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/APPLY-REUSE-SOURCE-READ-02.json",
+      "bytes": 155,
+      "sha256": "0b2010c5dd8cbcb80000ccd3469d784a09e9adbcd021973468593a3dc324a401"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/RESUME-CHANNEL-READY-01.json",
+      "bytes": 3720,
+      "sha256": "8682189b12f5f343ed56492df31fc00ed59c6465332c37a5b99d521a15433134"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/STAGING-READBACK-01.json",
+      "bytes": 2017,
+      "sha256": "fd64e55b2f1b3afde3ba2bc8455144ce276297e921873fedeb7b3ff86594efbc"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE27-SAMEKEY-REISSUE-LOCAL-01/PINS-WITH-PACKET.json",
+      "bytes": 191,
+      "sha256": "5a9073af5745525c03b0db37f67db5235019cfcde0bd843f7de37cbe4455f346"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE27-SAMEKEY-REISSUE-LOCAL-01/PINS.json",
+      "bytes": 95,
+      "sha256": "8121b9d98f2112557c55bf1bb20c38626336fe514b1e8bfc3b96dfe348b1e092"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE27-SAMEKEY-REISSUE-LOCAL-01/RESTORE27-SAMEKEY-QB-REVIEW.json",
+      "bytes": 5938,
+      "sha256": "07466a38db5d0d48e11bf61c0a430be6a144782939048e69c65c5d99ef90091e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE27-SAMEKEY-REISSUE-LOCAL-01/issue_restore02.py",
+      "bytes": 4545,
+      "sha256": "b0eac931cd818d25b16c55399bf2706a0593359fb79aa126459a2db81d6ac848"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE27-SAMEKEY-REISSUE-LOCAL-01/issue_resume_packet.py",
+      "bytes": 6365,
+      "sha256": "6f76a8fb81fc32f1a28583e9bee00b5afa03fbcc8c8ea0886b3269378968dfae"
+    },
+    {
+      "path": "outputs/主控/20261116-r3-direct-service27-restore-window-02/ISSUED.json",
+      "bytes": 856,
+      "sha256": "9e06f36c73f8d4870528af7ce792606d39647bef1c7237c821118557d6532970"
+    },
+    {
+      "path": "outputs/主控/20261116-r3-restore27-samekey-resume-window-01/ISSUED.json",
+      "bytes": 1398,
+      "sha256": "707a5019290ae03319c85a1b42602cf22497382eeb6811cd04bf0d3c0524d4e2"
+    }
+  ]
+}

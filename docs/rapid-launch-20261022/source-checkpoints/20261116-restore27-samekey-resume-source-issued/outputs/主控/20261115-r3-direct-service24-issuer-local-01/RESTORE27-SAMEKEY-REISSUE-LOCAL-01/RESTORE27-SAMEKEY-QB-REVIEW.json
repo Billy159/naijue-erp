@@ -1,0 +1,46 @@
+{
+  "format": "R3_RESTORE27_SAME_KEY_RESUME_SOURCE_REVIEW_V1",
+  "state": "RESTORE27_SAMEKEY_RESUME_SOURCE_PASS",
+  "requestKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+  "mainReissuerSha256": "b0eac931cd818d25b16c55399bf2706a0593359fb79aa126459a2db81d6ac848",
+  "mainPacketIssuerSha256": "6f76a8fb81fc32f1a28583e9bee00b5afa03fbcc8c8ea0886b3269378968dfae",
+  "mainPinsWithPacketSha256": "5a9073af5745525c03b0db37f67db5235019cfcde0bd843f7de37cbe4455f346",
+  "resumeHelperSha256": "62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1",
+  "resumeSourcePinsSha256": "b50a6c35af49e8d214dd147559056d6872c40234aa22b281330db73ecffedadf",
+  "carrierTemplateSha256": "1048974f5390c3739af5d8289722ced4c42c30d3f0cba450a12d896ca689204c",
+  "runnerSha256": "79fe001086b460e4c9fc102689dc1787a4e1c5d2a1f8f7284882eb22341c3103",
+  "basisSha256": "8a22b99a3c1aa6dcaaf7e30d7f10edbc83b55c208f5c59d491fa4d44c6957cda",
+  "originalExpiredHostSha256": "2853199786b4b436055dd679077d093afa4cfce5bbce2949d461154e28dee223",
+  "originalPreflightSha256": "e8614b14596bde5fd33a2bb79aba5719a84cb25763ad4869c1c02a98c1e82091",
+  "stoppedReadbackSha256": "c5ff8d7b0ac6494f401df6fdea0158636c50ce7cbea8438dbfc0f2a6459d7552",
+  "observedGapSha256": "fd64e55b2f1b3afde3ba2bc8455144ce276297e921873fedeb7b3ff86594efbc",
+  "sourceIdentityKnownBeforeExecution": false,
+  "conditionalActualProtectedSourceIdentityCaptureApproved": true,
+  "originalRoleAndRestorationDeadlinesExtended": false,
+  "originalReceiverAdmissionRequired": true,
+  "evidenceType": "SOURCE_STATIC_AND_EXISTING_LOCAL_PROTOCOL_CHECKS_NOT_SERVER_EXECUTION",
+  "independentReviews": [
+    {
+      "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+      "turnId": "01a1e0ab-64b2-77f0-a16a-f3a792b6a2be",
+      "itemId": "exec-7667f665-93f6-42e8-be44-75cf8d0d1138",
+      "prompt": "QB 本轮最终窄结论：RESTORE27_SAMEKEY_RESUME_SOURCE_PASS。requestKey=t45-r3-ordinary27-auth-restore-20261116-01；mainReissuerSha256=b0eac931cd818d25b16c55399bf2706a0593359fb79aa126459a2db81d6ac848（Main PINS8121b9d98f2112557c55bf1bb20c38626336fe514b1e8bfc3b96dfe348b1e092）。绑定T45 outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01 当前已冻结PINS b50a6c35af49e8d214dd147559056d6872c40234aa22b281330db73ecffedadf、READY4310b0168451d3a2b422263cf819d76acd9c21166840fc0e3a6f9629175e5595；helper62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1(14442B)、carrier1048974f5390c3739af5d8289722ced4c42c30d3f0cba450a12d896ca689204c、run79fe001086b460e4c9fc102689dc1787a4e1c5d2a1f8f7284882eb22341c3103。全部PINS成员、4源AST、本机协议证据绑定相同helper已核。未发现本增量新增缺陷。Main固定原件/API与除时间外body完全相同、截止不延；T45原6files inode/uid/gid/mode/hash+fullidentity/CAS/独占审计，双grant原key request/tmp/rootJob/terminal与另一grantcontrolJob拒绝，results空/unknown拒绝；原apply固定60059复制源root祖先/NOFOLLOW/nlink/34276B/完整读前后身份在真实执行捕获并入intent/result，不伪造当前inode。read262144覆盖185047carrier。原45a65 manifest/原preflight e8614逐字段及wire配对，重建新hostSHA/manifest/request签名绑定；原serial lock核inode身份并释放后仅原f411 dispatcher.start一次，freeze/d0/admit/execute未跳过。carrier/本地runner只小helper+新host+原preflight，经原54019 remote；QUEUED/丢回执都不算恢复，禁止自动重投。60s准备alarm/20s start/40s外层允许未知回读，边界在PLAN明示。可据本结论落新review对象并按原有限授权生成封套；执行时仍由helper重核真实环境/期限/原键未被接收，失败只读原记录。QB未执行issuer/build/helper/carrier/服务器/PG；网络可达、真实source inode、接收和原账号恢复实际读回仍未验证。本轮未重核旧整链/SQL/D1/703/权限源。"
+    },
+    {
+      "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+      "turnId": "01a1e0ba-7512-7143-9824-a4844b388aa9",
+      "itemId": "exec-e15b6b96-5133-40a7-ab97-333489fd0b61",
+      "prompt": "QB 新Main prep生成器补核完成，RESTORE27_SAMEKEY_RESUME_SOURCE_PASS 保持，可在同一review加入 mainPacketIssuerSha256=6f76a8fb81fc32f1a28583e9bee00b5afa03fbcc8c8ea0886b3269378968dfae；既有 mainReissuerSha256=b0eac931cd818d25b16c55399bf2706a0593359fb79aa126459a2db81d6ac848、requestKey=t45-r3-ordinary27-auth-restore-20261116-01、resumeHelperSha256=62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1 不变。新PINS-WITH-PACKET 5a9073af5745525c03b0db37f67db5235019cfcde0bd843f7de37cbe4455f346确为两源且哈希/AST实核通过，旧PINS8121原字节保持；仅核新增源，helper/旧链无重验。配对无新增问题：scope固定字段+decode全部额外键精确；protocol(manifest)/request_wire编码与三digest一致；原e861 preflight/8a22 basis中的原9字段lock身份精确；host02报告固定path/外部SHA→hostSHA→原285319除时间外深等；prep截止min(now+600s,hostexpiry-301s,原restorationDeadline)且签发留>120s，helper仍复核host剩余>300s/真实deadline，不延角色。4处carrier替换/编译与32768源、262144封套上限匹配；report供runner的carrier/envelope/helper/prep/host字段齐全且外部ISSUED pin闭合；独占0700目录/0600 O_EXCL文件，无server调用。此为生成器SOURCE STATIC PASS，QB未执行inputs/build/issue/载体或服务器；实际clock签发、网络、source当前身份、接收及恢复仍由原任务执行读回确认，未标运行PASS。"
+    }
+  ],
+  "runtimeUnverified": [
+    "current network reachability",
+    "actual protected source file identity captured by execution",
+    "one preparation and original dispatcher acceptance",
+    "actual original verifier and expiry restoration",
+    "actual final resource closure"
+  ],
+  "serverOrNativeExecutionByReview": false,
+  "restoreActuallyCompleted": false
+}
+

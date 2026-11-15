@@ -7438,6 +7438,20 @@
             "resourcesClosedSha256": "64cdd5f4de760d5847263b778994ca8740f75d33125871d300edfcd04cc23c4f",
             "restoreLastPointReadbackSha256": "9af1e78818e7931a741a4294c435c60f5f63b555ea278c6aa6a511d5244e9aad",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_RESTORE27_SAMEKEY_RESUME_NARROW_SOURCE_PASS_AND_FINITE_PACKET_ISSUED_20261116",
+            "state": "SOURCE_PASS_FINITE_ISSUED_ACTUAL_PREP_AND_AUTH_RESTORE_PENDING",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-restore27-samekey-resume-source-issued",
+              "files": 20,
+              "bytes": 75185,
+              "manifestSha256": "85d3df2626fa9e7c43ed10b0b19161ae6155e4b6e9d0e46119b5a440b3d2d721"
+            },
+            "reviewSha256": "07466a38db5d0d48e11bf61c0a430be6a144782939048e69c65c5d99ef90091e",
+            "freshReadySha256": "8682189b12f5f343ed56492df31fc00ed59c6465332c37a5b99d521a15433134",
+            "issuedMetadataSha256": "707a5019290ae03319c85a1b42602cf22497382eeb6811cd04bf0d3c0524d4e2",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7449,9 +7463,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "INSTALLER_AND_FINAL27_INTERFACE_STATIC_PASS_NATIVE_PENDING",
+            "state": "NEW_NORMAL_DESCRIBE_BUDGET_INTERFACE_READONLY_FEASIBILITY_ANALYSIS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Frozen CANDIDATE03 b394/source8f53 retained; interface final27 MATRIX37323/EVIDENCE4b05 same calleradb0 source PASS reused. Actual descriptor/catalog/session/13ACK/install/native pending. No root/UID/clock mocks or rehearsal."
+            "work": "Onlynewactual20sdescribeTimeoutconsequence sourceanalysis. Existingstart300/host190/nominalreserve110,150+4+Fmustfittruehostremaining; descriptor20min/remaining900handoffconstraint andsamewindowinstallrecompile identified, reportpending. No changesT45/D1source/DB/test; no newfuturewindow."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7466,20 +7480,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
-            "work": "Same original review round combined T45 CANDIDATE02 b85ed, reader-r1 2a1541, describe dee8, D1 interface37323/4b05 and Main02 PINS4bc723. Final review e109a51d; C-F01..06/bytebound/C-ACK and empty-normal/handoff specific source findings closed. Runtime unexecuted; no new test gate."
+            "state": "RESTORE27_SAMEKEY_RESUME_SOURCE_PASS_WITH_MAIN_PACKET_ISSUER_INCREMENT",
+            "work": "Actualsameoriginalreviewround final07466 bindsMainb0e+packet6f76(newPINSWITH5a90,old8121preserved),T45b50/helper62fa/carrier1048/runner79fe. Actualoriginalpreflighte861/wire/manifest45a65/fullstaticSHA/locksemantics/partialCAS/privateidentitycapture/timebounds matched. Onlynewgeneratorincrementchecked, oldchain/SQL/D1/703notrepeated. No native/serveractions, actualruntimeunverified."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "STOP27_ACTUAL_COMPLETED_ORIGINAL_RESTORE27_NOT_ACCEPTED_AT_LAST_READ_CURRENT_STAGING_UNKNOWN",
+            "state": "EXACT_RESTORE27_CONTROL_GAP_RESUME_SOURCE_PASS_FRESH_READY_FINITE_PACKET_ONCE_EXECUTION_PENDING",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Originalstop27 COMPLETED0/3.782143s finish19:02:17Z c5ff/root2dc418/a5aa/public62ca/cleanupfda7 alltrue. RO64cdd19:02:54 actualCID6c8f stoppedPID0/noPGpid/56791/globalops, originaldata/C/ACK retained. Mainrestore285319 signed19:03:43\u219219:18:43Z, rule300s fulladmissionbudget passed19:13:43; no moreold authority submits. Clienttransportfailedtwice, neverQUEUED. Actualoriginalkeydf22 at19:07:17 allrequest/tmp/root/control/terminalABSENT/localindexnull; status114e at19:08:34 READY. Onlybecauseknownneveraccepted onecontinue-firstsubmit wasattempted, timedoutagain. Realreader9af1 at19:12:59 requestfalse/rootJobfalse/noterminal/noPG/globalunits, localindexnull. LaterstagingROSSH40sTimeout, exactpartialfilesUNKNOWN. No loop/replay/delete/historyclear/guardbypass. Currently source/receiver assessment and oneaccurategap only; originalrestore key/role4332 unchanged."
+            "work": "Actualfd64 at19:16:34 originalbothgrantkeysABSENT/control6memberscomplete/only60059static34276B+manifestmissing; carrier185KBneverretransmit. ProtectedcopytargetRO0b201 SSHbanner255, no currentinodeinvented; Mainconditionalruntimefullowner/ancestor/nlink/bytes/hash/beforeafteridentity requiredandrecorded. Helper62fa/PINSb50/carrier1048/runner79fe finalnarrowSOURCE_PASS07466, originalreceiverfreeze/admit unchanged, originalsharedlockreleasedbeforestart. ActualfreshREADY868218 at19:43:34 channelSSH0/statusREADY/samegrant/keybothABSENT/newSTAGEAUDITABSENT/controloldhostidentitysame. Main19:45:19 host02c762+prepe538/envelopee88f/carrierb34f/ISSUED707a boundsameoriginalrestorekey androles4332. Onlyonecarrierexecutionauthorized, unknownreadoriginalSTAGE/AUDIT/key, QUEUEDnotrestorePASS. No new28/PG/businessauthority."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "PG27_ACTUALLY_STOPPED_ORIGINAL_AUTH_RESTORE27_NOT_CONFIRMED_TRANSPORT_AND_PARTIAL_STAGING_UNKNOWN",
+          "formalR3": "PG27_ACTUALLY_STOPPED_EXACT_SAMEKEY_RESUME_PACKET_ISSUED_AUTH_RESTORATION_OUTCOME_PENDING",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7503,8 +7517,8 @@
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "ACTUAL_STOP27_PASS_AUTH_RESTORE_NOT_CONFIRMED_NEEDS_EXACT_CHANNEL_STAGING_METHOD_AND_FRESH_RESTORE_ONLY_AUTH",
-            "work": "Mainrestore285319 original15min filepreserved, no reissue untilneveraccepted/currentpartial facts andmatureexactresume method; controller/admin/restorationDeadline neverextended. PreferexistingAPI missingleaves or protectedcachedapply27statics thenoriginaldispatcheradmit/originalrestorekey, onlyifsupportedbyactualreceiver; no rawPG/directrestore/forcedexecution. No newfuturewindow28 orinstallation/REALauth."
+            "state": "RESTORE27_SAMEKEY_HOST02_AND_EXACT_PREP_PACKET_ISSUED_WAITING_ACTUAL_T45",
+            "work": "Mainthinb0e usesexistingd755restoreAPI samec5ff/11ae/89f492/4332, allnonwindowhostfieldsidentical285319. Packet6f76actualinputscheckedafterQB07466, originalbasis8a22lock9 andpreflighte861; no fakeUID/clock/approval/sourceinode. Host02c762 at19:45:19.724 until20:00:19.724; prep e538 until19:55:18.724, report707a. T45onlyoneprivatecarrier originalreceiverstart. No new authdeadline orregistry/guard, no standaloneSSHrepeatloop, no futurestart/install/REAL."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7520,10 +7534,10 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "resolveintermittentmanagementchannel andexactoriginalrestore27partialcontrol/source state; no replay/currentacceptanceguess",
-            "actualoriginaltwoauthfieldsrestore withprotectedreadback, no naturalexpiry-as-PASS",
-            "source-only integrateboundedgenuine describe intoexistingregisteredstart aftersafeclosure; no new8thjob/platform/clock",
-            "then actual13ACK/install/REAL511234 reconciliation andbackup/corebrowser/finalpublication"
+            "actualexactprep/originaldispatcheracceptanceandoriginalrestore27result, unknownreadsameaudit/keynorelaunch",
+            "actualoriginalverifier/expiryrestoreandfinalresourceclosure",
+            "source-onlyfinalnormaldescribe150integration/timewindowbudgetnewinterfaceanalysis,nofutureclockyet",
+            "actual16113ACKinstall/REAL511234reconciliation/backup/corebrowser/finalpublication"
           ],
           "normalSource": {
             "db05": {
@@ -7607,14 +7621,41 @@
             "actualStartConfirmed": true,
             "actualStopConfirmed": true,
             "restoreAuthority": {
-              "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service27-restore-window-01/host-authorization.json",
-              "sha256": "2853199786b4b436055dd679077d093afa4cfce5bbce2949d461154e28dee223",
+              "state": "RESTORE_ONLY_SAME_KEY_HOST_REISSUED_NO_SERVER_ACTION",
+              "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service27-restore-window-02/host-authorization.json",
+              "sha256": "c762f7fc8289e99b8dd0e0e67794fa91740fa8682d14044716908985be9c4af3",
               "bytes": 1989,
               "key": "t45-r3-ordinary27-auth-restore-20261116-01",
-              "expiresAt": 1794770323600,
-              "startsAt": 1794769423600
+              "startsAt": 1794771919724,
+              "expiresAt": 1794772819724,
+              "originalExpiredAuthoritySha256": "2853199786b4b436055dd679077d093afa4cfce5bbce2949d461154e28dee223",
+              "rolesAuthoritySha256": "4332d0e4a868fc52f7e5a78c49505aaac4021ab8e48c4ff96251391b9d32c2f6",
+              "resumeReviewSha256": "07466a38db5d0d48e11bf61c0a430be6a144782939048e69c65c5d99ef90091e",
+              "roleDeadlinesExtended": false,
+              "sameKeyFreshReceiverPrecheckRequired": true
             },
-            "restoreSubmissionOutcome": "NOT_ACCEPTED_AT_191259_READ_CURRENT_PARTIAL_STAGING_UNKNOWN_CHANNEL_TIMEOUT"
+            "restoreSubmissionOutcome": "EXACT_SAMEKEY_RESUME_ONCE_AUTHORIZED_ACTUAL_OUTCOME_PENDING",
+            "restorePreparation": {
+              "state": "ISSUED_RESTORE27_SAMEKEY_RESUME_NO_SERVER_ACTION",
+              "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-restore27-samekey-resume-window-01",
+              "key": "t45-r3-ordinary27-auth-restore-20261116-01",
+              "startsAt": 1794771919736,
+              "expiresAt": 1794772518724,
+              "helperSha256": "62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1",
+              "carrierSha256": "b34f06b45c1af13eac635d55ec30062aac258d2e790d27aa7b6fdb626d7203f8",
+              "envelopeSha256": "e88f9423791f9f5231b0bc6bed1a38bf5321c2f56907d22ab9746ea3f2cd17d9",
+              "preparationAuthoritySha256": "e5384dc0c5eb244c78ec979897654594421a11064567065995a66243f8acd691",
+              "hostAuthoritySha256": "c762f7fc8289e99b8dd0e0e67794fa91740fa8682d14044716908985be9c4af3",
+              "manifestSha256": "8c59b7d1ef557a2c4f226a9bd55597e5185219fd224b0d946c65b4746738bcb7",
+              "requestSha256": "dffc0cebec2267207cc767fb094af8364823c7ae3d1d54310776f424650c1181",
+              "oldPreflightSha256": "e8614b14596bde5fd33a2bb79aba5719a84cb25763ad4869c1c02a98c1e82091",
+              "independentReviewSha256": "07466a38db5d0d48e11bf61c0a430be6a144782939048e69c65c5d99ef90091e",
+              "hostReportSha256": "9e06f36c73f8d4870528af7ce792606d39647bef1c7237c821118557d6532970",
+              "sourceIdentityKnownBeforeExecution": false,
+              "roleDeadlinesExtended": false,
+              "originalReceiverAdmissionRequired": true,
+              "issuedMetadataSha256": "707a5019290ae03319c85a1b42602cf22497382eeb6811cd04bf0d3c0524d4e2"
+            }
           },
           "sourceAudit": {
             "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
@@ -7629,10 +7670,10 @@
           },
           "latestModuleSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
           "latestEvidenceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service27-stopped-auth-restore-pending",
-            "files": 12,
-            "bytes": 25382,
-            "manifestSha256": "fa01af2d65b32b01960de5313990b360143c2470601c692b917f532c57f9d71e"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-restore27-samekey-resume-source-issued",
+            "files": 20,
+            "bytes": 75185,
+            "manifestSha256": "85d3df2626fa9e7c43ed10b0b19161ae6155e4b6e9d0e46119b5a440b3d2d721"
           },
           "currentService": {
             "serviceKey": "t45-first-r3-native-service-start-20261116-27",
@@ -7642,7 +7683,8 @@
             "postmasterStart": "2026-11-15 18:38:29.737044+00",
             "stopped": true,
             "retainedProofAndAck": true
-          }
+          },
+          "additionalEvidencePendingCheckpoint": {}
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

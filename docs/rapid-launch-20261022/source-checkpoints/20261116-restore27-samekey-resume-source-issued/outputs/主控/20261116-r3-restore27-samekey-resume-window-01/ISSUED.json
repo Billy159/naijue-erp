@@ -1,0 +1,20 @@
+{
+  "carrierSha256": "b34f06b45c1af13eac635d55ec30062aac258d2e790d27aa7b6fdb626d7203f8",
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-restore27-samekey-resume-window-01",
+  "envelopeSha256": "e88f9423791f9f5231b0bc6bed1a38bf5321c2f56907d22ab9746ea3f2cd17d9",
+  "expiresAt": 1794772518724,
+  "helperSha256": "62fa918b4415653d6765e1862a067419e250d8b03ad42959b5a628c6a1b14eb1",
+  "hostAuthoritySha256": "c762f7fc8289e99b8dd0e0e67794fa91740fa8682d14044716908985be9c4af3",
+  "hostReportSha256": "9e06f36c73f8d4870528af7ce792606d39647bef1c7237c821118557d6532970",
+  "independentReviewSha256": "07466a38db5d0d48e11bf61c0a430be6a144782939048e69c65c5d99ef90091e",
+  "key": "t45-r3-ordinary27-auth-restore-20261116-01",
+  "manifestSha256": "8c59b7d1ef557a2c4f226a9bd55597e5185219fd224b0d946c65b4746738bcb7",
+  "oldPreflightSha256": "e8614b14596bde5fd33a2bb79aba5719a84cb25763ad4869c1c02a98c1e82091",
+  "originalReceiverAdmissionRequired": true,
+  "preparationAuthoritySha256": "e5384dc0c5eb244c78ec979897654594421a11064567065995a66243f8acd691",
+  "requestSha256": "dffc0cebec2267207cc767fb094af8364823c7ae3d1d54310776f424650c1181",
+  "roleDeadlinesExtended": false,
+  "sourceIdentityKnownBeforeExecution": false,
+  "startsAt": 1794771919736,
+  "state": "ISSUED_RESTORE27_SAMEKEY_RESUME_NO_SERVER_ACTION"
+}
