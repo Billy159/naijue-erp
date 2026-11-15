@@ -1,4 +1,4 @@
-【当前最高优先级 2026-11-16】最终同版完整正常链源码排查已独立PASS（review e109a51d，Main02 PINS4bc72323/T45 b85ed+reader2a1541/D1准确）；27实际CAS登记652863b7及限时认证apply8a1300f9均COMPLETED，原锁/旧源保留。Main已签start27 b6c1611f交唯一T45，等待实际start/C/ACK及genuine描述；没有安装或REAL提交。controller20:01:29.953Z/admin20:03:29.953Z、restore20:26:29.953Z固定不延。goal ACTIVE、业务CLOSED；已完成物化703/cdcaf不重提，原511234行/26类、INIT与业务key保留。若失败只按真实typed收尾/原键核实，不机械换代。
+【当前最高优先级 2026-11-16】27实际登记/有限认证及start均已COMPLETED；实际C2640ef4d/CID6c8f4003、ACK和privatePID namespace活性42e66c5d已核，启动不重放。genuine只读describe实际失败7c79b648，原工具丢失stderr只留字节数，根因UNKNOWN，未产descriptor/livefacts、未签安装/REAL。T45正在一次限定错误取证；不得假称整链运行PASS，原SOURCE reviewe109仅源码结论。controller20:01:29.953Z/admin20:03:29.953Z、restore20:26:29.953Z固定；有限服务失败/到期按原键真实stop/restore收尾。goal ACTIVE、业务CLOSED，原511234行/26类、INIT/业务keys和703/cdcaf不变。
 
 > 当前路线（2026-11-15）：分批独立提交/成功跳过/失败续未完成批。先读 BATCHED-IMPORT-DECISION-20261115.md 与 TASKS.currentInFlight；旧整包单事务路线不再续办。
 
@@ -7497,3 +7497,8 @@ D1准确03 b394bdd9仅3运行源码：root固定元数据factory+独立installed
 ## 2026-11-16T02:37:00+08:00 — 27准确登记与有限认证已实际完成；start已签，等真实运行身份
 T45一次fresh真实basis8a22（18:30:28Z）核62项准确且原grant至12/12，无扩权或延原grant。Main18:31:29.953Z签单一有限27包72d59/envelope424c/authc924/carrier7550/roles4332/applyc495；T45原锁CAS实际COMPLETED，readback652863（18:33:19Z），新dispatcherf411/policy89f492/module45ee准确，旧4474/ae952/1656/锁保留。实际apply27 COMPLETED0/7.493478s，18:35:06.770884Z完成，readback8a1300；rootterminal94933/result396f/publice86d对象一致，cleanup9a241。仅原两role限时字段已readback，不冒native登录或COMMIT验收；runtimeAuth和membership/attributes未变，维护CID9337退出PID0exit0无OOM、unitinactive/无PGpid。
 Main按实际apply签start27 b6c161，18:36:26.097Z至18:51:26.097Z，交T45原成熟runner只提交一次并条件实际C/ACK后用已冻结dee8描述。controller20:01:29.953Z/admin20:03:29.953Z/restore20:26:29.953Z/policy20:31:29.953Z固定不延。没有start完成结论、没有安装/REAL提交。5份公开只读基线/登记/apply及ISSUED元数据共37532B检查点c47a4f，不含授权/凭据正文。原完整源码排查reviewe109不重复，511234行/26类/INIT/原业务key及已完成703/cdcaf物化保留。上一1d662333已实际push exit0。
+
+
+## 2026-11-16T02:47:00+08:00 — 27真实启动与活性已核；只读安装描述失败，未提交安装或REAL
+原start27一次实际COMPLETED0，6.1380483s，于18:38:30.805070Z完成。readback11aeae69/rootterminalba1caa32/rootresult808c633e/public4446a667对象一致；实际C2640ef4d/CID6c8f4003，容器18:38:28.428863507Z，PGepoch18:38:29.737044+00，SID/OID/PG170011准确，真实ACK已核。额外只读活性42e66c5d于18:41:45核privatePID namespace内guardian0与PG61035真实exe/starttime/parent/netns/PGDATA。首个自有observer按hostPID误检的失败保留LIVENESS01，不重启、不改生产guard、不覆盖实际启动PASS。
+冻结dee8 genuine describe恰一次实际READONLY_DESCRIPTOR_FAILED_NO_INSTALL_SUBMITTED，7c79b648，18:42:45.680877Z，returncode1/nativeReplynull/stderr1072B；原wrapper未持久化stderr正文，所以准确根因UNKNOWN，不按长度猜测，不伪造descriptor/livefacts。Main据原授权限定T45一次额外只读错误复现，保持genuine路径/UID/clock/目标/source/20+4/26s不变，仅有界捕获原来丢弃的stderr到0700/0600私域，回安全异常及source位置；三假设明确未证，不机械重试或扩大guard/权限。此为实际缺陷必要诊断，不恢复数据演练，不新增运行平台。安装/REAL授权及提交仍为零，业务CLOSED，原运行deadline固定，结束/失败/到期按真事实stop/restore。四公开回执9173B检查点，前87c2dd本地提交push exit128 HTTP2 framing，远端最后确认1d662333；本次真实新阶段再正常push一次，不改网络、不强推。

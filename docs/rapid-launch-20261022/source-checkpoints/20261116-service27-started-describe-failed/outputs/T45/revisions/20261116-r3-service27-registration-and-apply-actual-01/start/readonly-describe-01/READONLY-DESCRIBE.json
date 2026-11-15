@@ -1,0 +1,9 @@
+{
+  "checkedAtUTC": "2026-11-15T18:42:45.680877+00:00",
+  "databaseConnections": 0,
+  "mutations": 0,
+  "nativeReply": null,
+  "returncode": 1,
+  "state": "READONLY_DESCRIPTOR_FAILED_NO_INSTALL_SUBMITTED",
+  "stderrBytes": 1072
+}

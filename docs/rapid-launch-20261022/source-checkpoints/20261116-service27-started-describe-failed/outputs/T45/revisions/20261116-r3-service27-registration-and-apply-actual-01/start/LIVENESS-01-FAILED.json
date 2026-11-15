@@ -1,0 +1,12 @@
+{
+  "state": "READONLY_CHECK_SCRIPT_FAILED_NO_SERVER_MUTATION",
+  "requestKey": "t45-first-r3-native-service-start-20261116-27",
+  "error": "LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK",
+  "localizedCause": "Local check incorrectly asserted HostConfig.PidMode=host, but frozen production isolation requires empty private PID mode",
+  "startNotReplayed": true,
+  "productionSourceChanged": false,
+  "correction": "Use fixed docker-exec readonly process metadata check inside actual container namespace",
+  "postgresQueries": 0,
+  "mutations": 0,
+  "failedOperation": "READONLY_LIVENESS_CHECK_NOT_STARTUP"
+}

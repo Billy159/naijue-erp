@@ -1,0 +1,26 @@
+{
+  "state": "ACTUAL_START27_COMPLETED_PROOF_ACK_LIVENESS_CONFIRMED_GENUINE_READONLY_DESCRIBE_FAILED_CAUSE_UNKNOWN",
+  "scope": "public runtime receipts only, no credential/auth bodies; native install and REAL absent",
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/start/READBACK-01.json",
+      "bytes": 7144,
+      "sha256": "11aeae69a8455cfbe5757ed674a99adc2c15431f10fb239a6d02822a9be132da"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/start/LIVENESS-01-FAILED.json",
+      "bytes": 619,
+      "sha256": "4100b231e3b2faeaab1b25a34d25cea1dbbb9f5a033170f8655362db65ee59dd"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/start/LIVENESS-02.json",
+      "bytes": 1380,
+      "sha256": "42e66c5d7f92c98de3bebd4ea0f152dbffbe210191f3f7b7bf6593584ee620e6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/start/readonly-describe-01/READONLY-DESCRIBE.json",
+      "bytes": 230,
+      "sha256": "7c79b648852c1af59212e69a70c092923e097e1ee4dcbf610b238cd2cdfddd35"
+    }
+  ]
+}
