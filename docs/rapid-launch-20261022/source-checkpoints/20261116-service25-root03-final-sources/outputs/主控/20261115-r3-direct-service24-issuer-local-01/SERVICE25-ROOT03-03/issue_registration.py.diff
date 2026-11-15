@@ -1,0 +1,58 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/issue_registration.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_registration.py
+@@ -59,9 +59,9 @@
+             assert Path(leaf).name == leaf
+             checked(folder / leaf, pin)
+ 
+-    assert basis['historicalBasisValidatedExceptExplicitCurrentDispatcher'] is True
++    assert basis['basisMismatches'] == [] and basis['executionLockMatches'] is True
+     assert basis['activeOperationUnits'] == basis['presentCandidateKeys'] == []
+-    assert set(basis['candidateKeys']) >= set(jobs.values()) - {jobs['materialize']}
++    assert set(basis['candidateKeys']) >= set(jobs.values())
+     assert basis['actualPins'][str(cas['P'] / 'admin_exec.py')] == cas['OLD_DISPATCHER']
+     now = time.time_ns() // 1_000_000
+     captured = int(datetime.fromisoformat(basis['checkedAtUTC']).timestamp() * 1000)
+@@ -90,19 +90,19 @@
+     for phase in ('apply', 'restore'):
+         assert 'roles-authorization.json' not in rules[phase]['bundlePins']
+         rules[phase]['bundlePins']['roles-authorization.json'] = sha(role_raw)
+-    policy = dict(format='T45_R3_DIRECT24_BATCHED_REAL_V1', grantId=cas['GRANT'],
++    policy = dict(format='T45_R3_DIRECT25_BATCHED_REAL_V1', grantId=cas['GRANT'],
+                   startsAt=now, expiresAt=now + 7_200_000, jobs=rules)
+     cas['validate_policy_delta'](policy, {'grantId': cas['GRANT']})
+-    files = {'module': (HERE / 'r3_direct24_batched_apply02.py').read_bytes(),
++    files = {'module': (HERE / 'r3_direct25_batched.py').read_bytes(),
+              'policy': encode(policy),
+-             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT24-UNREGISTERED.py').read_bytes()}
++             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT25-UNREGISTERED.py').read_bytes()}
+     dispatcher = cas['render_dispatcher'](files)
+     registration = dict(cas['scope'](), sourceSha256=sha(cas_path.read_bytes()),
+                         sourcePins={key: sha(data) for key, data in files.items()},
+                         oldIdentities=basis['oldIdentities'], startsAt=now, expiresAt=now + 900_000,
+                         authorizationReference=REFERENCE, independentReviewSha256=review_pin)
+     registration_raw = encode(registration)
+-    carrier = (HERE / 'original-cas-direct24-carrier.UNISSUED.py').read_bytes()
++    carrier = (HERE / 'original-cas-direct25-carrier.UNISSUED.py').read_bytes()
+     assert ("SOURCE='" + registration['sourceSha256'] + "'").encode() in carrier
+     for name, value in (('AUTH_SHA_LITERAL', repr(sha(registration_raw))),
+                         ('AUTH_START_LITERAL', str(now)),
+@@ -114,7 +114,7 @@
+     packet = {'source': b64(cas_path.read_bytes()),
+               'packet': {'authorization': b64(registration_raw),
+                          'files': {name: b64(data) for name, data in files.items()}}}
+-    report = dict(state='ISSUED_EXACT_APPLY02_POLICY_REPAIR_NO_SERVER_ACTION',
++    report = dict(state='ISSUED_EXACT_ROOT03_SUCCESSOR_REGISTRATION_NO_SERVER_ACTION',
+                   directory=str(Path(output_directory).resolve()), startsAt=now,
+                   registrationExpiresAt=registration['expiresAt'], roleApplyExpiresAt=roles['expiresAt'],
+                   controllerValidUntil=roles['controllerValidUntil'],
+@@ -134,8 +134,8 @@
+         ('roles-authorization.json', role_raw), ('host-authorization.json', encode(host_authority)),
+         ('registration-authorization.json', registration_raw),
+         ('registration-envelope.json', encode(packet)),
+-        ('original-cas-direct24-carrier.ISSUED.py', carrier),
+-        ('direct24-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
++        ('original-cas-direct25-carrier.ISSUED.py', carrier),
++        ('direct25-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
+         ('ISSUED.json', encode(report))):
+         with (output / name).open('xb') as stream:
+             stream.write(data)

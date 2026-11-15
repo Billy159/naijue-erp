@@ -1,0 +1,115 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/r3_direct24_batched_apply02.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-01/r3_direct25_batched.py
+@@ -5,10 +5,10 @@
+ import time
+ 
+ 
+-FORMAT = 'T45_R3_DIRECT24_BATCHED_REAL_V1'
+-POLICY_NAME = 'direct24-batched-real.json'
++FORMAT = 'T45_R3_DIRECT25_BATCHED_REAL_V1'
++POLICY_NAME = 'direct25-batched-real.json'
+ READONLY_POLICY = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+-JOBS = {'materialize': 't45-r3-batched-source-materialize-20261115-01', 'apply': 't45-r3-ordinary24-auth-apply-20261115-02', 'start': 't45-first-r3-native-service-start-20261115-24', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary24-preserve-stop-20261115-01', 'restore': 't45-r3-ordinary24-auth-restore-20261115-01'}
++JOBS = {'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'apply': 't45-r3-ordinary25-auth-apply-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-25', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary25-preserve-stop-20261116-01', 'restore': 't45-r3-ordinary25-auth-restore-20261116-01'}
+ ORIGINAL_WRITER = 't45-first-20261110-r3-real-execute-20261114-06'
+ INSPECT = 't45-r3-original-transaction-inspect-20261114-01'
+ INSPECT_TERMINAL = '33af79a05da4659e18febe940629f264bc1b3ffcdeede110aa1aac10af29a5c0'
+@@ -27,7 +27,7 @@
+ PREVIOUS22_READER_RESULTS = {'original04-readonly-inspect-process-cleanup.json': ('fb6580eb9fc66d8eb6314534e3c90608c4898f8f30a6a1de91249d9c49e47d48', 'de54e6bd915e751f380c1619ef2c6f5766d09d0c62e4517efa628c660199522c'), 'original04-readonly-inspect-result.json': ('c8bc01f1710444f3caf7b1b65265feb5ded0130635150ab44b754e59ac9179a3', '1cfba32fd2971ab40dbe8bc35417a3eeb9d960a425a38bf8c90260faa0d66895'), 'retained22-readback-child-cleanup.json': ('3fd5410e5936c1e7c85fc6404f49e740812fb04fd5ec81a5dd1186dc71d0851b', '5397ba062d5ee85e7d00d13f8b01124da2961cb8c4196a229a9cb1f12651fda2')}
+ SERVICE_KEY = JOBS['start']
+ HOST = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+-PROOF = HOST / 'authority/fresh35-current-production-service-v2-service-24.json'
++PROOF = HOST / 'authority/fresh35-current-production-service-v2-service-25.json'
+ PREVIOUS_SERVICE = {'containerId': '036e8221eaafb4fb473b5f9a5e7a61142d57e8dcd8ea76374916cbbe80f2ded8', 'containerStartedAt': '2026-11-14T04:17:02.413303865Z', 'postmasterStart': '2026-11-14 04:17:03.806731+00', 'proofSha256': 'ea7f29a555c0672d11457a1ae45788f7ce2495ecc25683a748a6e9b8dd9ded9b', 'serviceKey': 't45-first-r3-native-service-start-20261114-22'}
+ 
+ 
+@@ -71,13 +71,14 @@
+                 'EXACT_JOB_RULE_REQUIRED')
+ 
+     def need(self, ok, code):
+-        self.core.need(ok, 'R3_CONTINUITY_DIRECT24_' + code)
++        self.core.need(ok, 'R3_CONTINUITY_DIRECT25_' + code)
+ 
+     def private(self, key):
+         return Path(self.cfg['private']) / 'jobs' / key
+ 
+     def original_basis(self):
+         self.readonly.original_basis()
++        self.previous24_closed()
+         self.previous20()
+         self.previous21()
+         self.previous21_outcome()
+@@ -386,6 +387,28 @@
+             'running': False, 'pid': 0, 'operation': PREVIOUS_SERVICE['serviceKey']},
+             'PREVIOUS22_CONTAINER_NOT_STOPPED')
+ 
++    def previous24_closed(self):
++        c = self.core
++        rows = (
++            ('t45-r3-ordinary24-preserve-stop-20261115-01', '0a9ea80f2c52494c584e2dc7999766e725e604c9ec7d12c92af7424d1eb83a39', 'normal05-preserve-stop-result.json', '24c937badca67b63d07d13a7e976dc6433c0468dc7de50cf100f20a6e5f096a0', '69a6c160c867b4049555a91313a6e4b42cdc10f2584aaa0d221fed3b4ede7a88'),
++            ('t45-r3-ordinary24-auth-restore-20261115-01', '977a2d3ff1bb03e9bb8304a541dbc8b3e250df2c26aa0efe17b917c504947825', 'maintenance-auth-result.json', 'b275e1369531bb303ed0587a59a37af9215553afbedc782101ce2325ee8186ac', '47c6e57b0b1cbcfa95e019e37b082d96989aa77c09aec76a64e983601b8a9dff'))
++        values = []
++        for key, terminal_pin, leaf, root_pin, public_pin in rows:
++            pin, terminal = self.old.preservation_terminal(key, {'COMPLETED'})
++            self.need(pin == terminal_pin and terminal.get('exitCode') == 0, 'PREVIOUS24_EXACT_TERMINAL_REQUIRED')
++            raw = c.read(self.private(key) / 'results' / leaf)
++            public = c.read(Path(self.cfg['control']) / 'jobs' / key / 'results' / leaf, root=False)
++            result = c.strict(raw)
++            self.need(c.sha(raw) == root_pin and c.sha(public) == public_pin and result == c.strict(public) and result.get('requestKey') == key, 'PREVIOUS24_EXACT_RESULT_REQUIRED')
++            values.append(result)
++        stop, restore = values
++        self.need(stop.get('pgStopped') is True and stop.get('holdRetained') is True and stop.get('businessAdvanced') is False and stop.get('originalKeyReplayed') is False, 'PREVIOUS24_STOP_REQUIRED')
++        inside = restore.get('result', {})
++        self.need(inside.get('status') == 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK' and inside.get('exactOriginalVerifierAndExpiryVerifiedPrivately') is True and inside.get('naturalExpiryCountedAsRestoration') is False and inside.get('runtimeAuthChanged') is False and inside.get('membershipsOrRoleAttributesChanged') is False and restore.get('cleanup', {}).get('ownContainerStopped') is True and restore.get('cleanup', {}).get('ownedPidAbsent') is True, 'PREVIOUS24_ORIGINAL_AUTH_RESTORATION_REQUIRED')
++        service = stop['service']
++        raw = subprocess.run(['/usr/bin/docker', 'inspect', '--format', '{"id":{{json .Id}},"startedAt":{{json .State.StartedAt}},"running":{{json .State.Running}},"pid":{{json .State.Pid}},"operation":{{json (index .Config.Labels "t45.operation")}}}', service['containerId']], capture_output=True, timeout=5, check=True).stdout
++        self.need(0 < len(raw) <= 4096 and c.strict(raw) == {'id': service['containerId'], 'startedAt': service['containerStartedAt'], 'running': False, 'pid': 0, 'operation': service['serviceKey']}, 'PREVIOUS24_CONTAINER_NOT_STOPPED')
++
+     def current_service(self, service):
+         c = self.core
+         self.need(type(service) is dict and set(service) == {
+@@ -408,14 +431,14 @@
+                   and physical['serverVersionNum'] == '170011'
+                   and shared['serviceLeaseExpiresAt'] <= self.policy['expiresAt']
+                   and time.time_ns() // 1000000 < shared['serviceLeaseExpiresAt'],
+-                  'EXACT_LIVE24_PROOF_REQUIRED')
++                  'EXACT_LIVE25_PROOF_REQUIRED')
+         boot = HOST / 'state/native-services' / service['serviceKey']
+         self.need(c.strict(c.read(boot / 'carrier-birth.json')) == birth
+                   and c.strict(c.read(boot / 'retained-ack.json')) == {
+                       'requestKey': service['serviceKey'],
+                       'proofSha256': service['proofSha256'],
+                       'serviceLeaseExpiresAt': shared['serviceLeaseExpiresAt']},
+-                  'EXACT_LIVE24_RETAINED_ACK_REQUIRED')
++                  'EXACT_LIVE25_RETAINED_ACK_REQUIRED')
+         try:
+             raw = subprocess.run(['/usr/bin/docker', 'inspect', '--format',
+                 '{"id":{{json .Id}},"startedAt":{{json .State.StartedAt}},'
+@@ -423,13 +446,13 @@
+                 '"operation":{{json (index .Config.Labels "t45.operation")}}}',
+                 service['containerId']], capture_output=True, timeout=5, check=True).stdout
+         except (OSError, subprocess.SubprocessError):
+-            self.need(False, 'LIVE24_CONTAINER_EVIDENCE_UNAVAILABLE')
++            self.need(False, 'LIVE25_CONTAINER_EVIDENCE_UNAVAILABLE')
+         v = c.strict(raw)
+         self.need(0 < len(raw) <= 4096 and set(v) == {
+             'id', 'startedAt', 'running', 'pid', 'operation'}
+             and v['id'] == service['containerId'] and v['startedAt'] == service['containerStartedAt']
+             and v['running'] is True and type(v['pid']) is int and v['pid'] > 0
+-            and v['operation'] == service['serviceKey'], 'LIVE24_CONTAINER_DIFFERS')
++            and v['operation'] == service['serviceKey'], 'LIVE25_CONTAINER_DIFFERS')
+         return p
+ 
+     def settled(self, phase):
+@@ -590,9 +613,9 @@
+                     self.successful('stop')
+             else:
+                 self.core.stopped_generation(self.old.service)
+-        return 'direct24-batched-' + phase
++        return 'direct25-batched-' + phase
+ 
+     def finish(self, phase):
+-        if phase in {'direct24-batched-' + name for name in JOBS}:
++        if phase in {'direct25-batched-' + name for name in JOBS}:
+             return None
+         return self.readonly.finish(phase)

@@ -1,0 +1,26 @@
+{
+  "finding": "ROOT_DESCRIBE_USED_ORDINARY_READER_AND_FRESH_BIRTH_WINDOW",
+  "parentCandidate02PinsSha256": "e982bb063d56033d7844a92d7c36a08455c6de0727dc8564ad3104a01ac5e6bf",
+  "actualFailedDescribeSha256": "95388a1a27a871e4cab606e78cf847cac4fc8b260c25bcc422f11b2f2bbfe7d3",
+  "changedRuntimeFiles": [
+    "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+    "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+    "scripts/release/unified-install/fresh35-combined-target-v1.mjs"
+  ],
+  "rootFactoryScope": "same fixed protected original R3 record SHA4ed and actual protected currentC/source, no caller raw envelope",
+  "ordinaryUidGuardUnchanged": true,
+  "underlyingProtectedFileReaderBytesUnchanged": true,
+  "originalFreshTargetCodePrefixUnchanged": true,
+  "newTargetPrivateMapSeparateFromFreshTargets": true,
+  "rootCompilerHasNoOrdinaryEnvelopeLoadOrFreshTargetGuard": true,
+  "callerReferencesSameProgramSuccessorTriple": true,
+  "callerPatchReferenceOnlyNoT45FileChanged": true,
+  "thirteenSqlAnd161ModelsUnchanged": true,
+  "otherD1CatalogAndLoaderFilesUnchanged": true,
+  "d3WrapperUnchanged": true,
+  "roleOrAclChanges": 0,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "rootApiRuntimeValidated": false,
+  "externalIssuerAndRegistrationOwner": "main and T45, unchanged"
+}

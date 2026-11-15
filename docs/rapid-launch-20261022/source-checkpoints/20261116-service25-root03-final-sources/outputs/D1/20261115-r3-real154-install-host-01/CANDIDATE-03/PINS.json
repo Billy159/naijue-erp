@@ -1,0 +1,15 @@
+{
+  "DELTA.json": "14d61118cb7d7d1477324c31613163155632f6e6f1df586e26b85e6e2a47200f",
+  "OFFLINE-SOURCE-FACTS.json": "5c9fc7862d748ae4ffbf2a3874287c2f9eb6cd2a74067f5d447c331ba6905b5e",
+  "README.md": "9e33abefcfa9d150e19dfd22bf2b6a9a7fc40a275b47f911c44142d0fa4c8cbb",
+  "ROOT-UPGRADE-INTERFACE-03.md": "57d72c41b990e473916099b3761806508b41e8ed673739cf6bf727e38e5d75a1",
+  "SOURCE-CLOSURE.json": "d16f52997943b275cf05dd3e0ac43d2a90edecf5facb27c9508f4de3bdf89ab8",
+  "T45-CALLER-ROOT-PATH-FINAL.diff": "9958b1f7e731ee4284d86b9f6fd7ec77384539c805a081f968efc8a99e6066b3",
+  "VALIDATION.json": "769128aebd76d9b6b6c167e7b1868307ab06e413d7f91a2055b423d0d90643bf",
+  "fresh35-batched161-upgrade-v1.mjs.diff": "63bd1b4b8c09589c4f87da8f3f0bfe6488287cc3c12d32b46c67882d253eba3d",
+  "fresh35-combined-record-v1.mjs.diff": "73599e5a4251c94d53c3d4e8582b35178d7419dab8ee97d76e23e5ab1dea4550",
+  "fresh35-combined-target-v1.mjs.diff": "a1b606a3f4fe7518f2504e378746e4e9b6959a22533c14aef7a2c0648af70dca",
+  "source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f",
+  "source/scripts/release/unified-install/fresh35-combined-record-v1.mjs": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a",
+  "source/scripts/release/unified-install/fresh35-combined-target-v1.mjs": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+}

@@ -1,0 +1,34 @@
+{
+  "changes": [
+    {
+      "beforeSha256": "769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e",
+      "bytes": 18627,
+      "path": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "payloadLeaf": "fresh35-batched161-upgrade-v1.mjs",
+      "sha256": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f"
+    },
+    {
+      "beforeSha256": "afcd0af1beafecd35a6eb6d8dd6a7689a7733d857ca80819023d38c84d20e7b6",
+      "bytes": 13317,
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "payloadLeaf": "fresh35-combined-record-v1.mjs",
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a"
+    },
+    {
+      "beforeSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b",
+      "bytes": 35020,
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "payloadLeaf": "fresh35-combined-target-v1.mjs",
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+    }
+  ],
+  "format": "T45_R3_EXACT_THREE_FILE_SOURCE_DELTA_V1",
+  "installerRunnerSha256": "7109fe8fd2a2229dc5893dab71a0920d599b839373e2167ce55be4269bc45d39",
+  "originalFullArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "predecessorMaterializationSha256": "7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3",
+  "predecessorSourceRowsSha256": "3a91211700deef7fa0857a70fad3dee0ccdae560b20a09e52ad9549790db024e",
+  "predecessorSourceSetSha256": "20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d",
+  "sourceFiles": 381,
+  "sourceRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+  "sourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e"
+}

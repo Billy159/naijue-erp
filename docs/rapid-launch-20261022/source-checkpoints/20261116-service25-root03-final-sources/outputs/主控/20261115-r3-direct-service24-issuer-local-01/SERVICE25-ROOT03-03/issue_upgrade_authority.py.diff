@@ -1,0 +1,46 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/issue_upgrade_authority.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-01/issue_upgrade_authority.py
+@@ -7,7 +7,7 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-CONTROL = HERE.parent
++CONTROL = HERE.parent.parent
+ HEX = re.compile('[a-f0-9]{64}')
+ 
+ 
+@@ -35,7 +35,7 @@
+         'programSha256', 'sourceSetSha256', 'targetSha256', 'currentServiceSha256',
+         'historicalMetadataTargetSha256', 'predecessorRecordSha256',
+         'predecessorCatalogSpecSha256', 'prefixCatalogSpecSha256',
+-        'successorCatalogSpecSha256', 'successorModelSha256',
++        'successorSourceSetSha256', 'successorCatalogSpecSha256', 'successorModelSha256',
+         'dbCandidatePinsSha256', 'installOrderSha256'))
+     assert d['predecessorRecordSha256'] == '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+     assert d['dbCandidatePinsSha256'] == 'dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9'
+@@ -44,7 +44,7 @@
+     assert all(d[k] is False for k in ('businessRowsWritten', 'rolesCreated',
+                                       'serviceCreated', 'changesOriginalInputTarget'))
+     assert live['requestKey'] == 't45-r3-batched-install-20261115-01'
+-    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261115-24'
++    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-25'
+     assert live['physical']['systemIdentifier'] == '7706545564479176741'
+     assert live['physical']['databaseOid'] == '16393'
+     assert live['physical']['serverVersionNum'] == '170011'
+@@ -55,6 +55,7 @@
+     assert d['successorCatalogSpecSha256'] == live['successorCatalogSpecSha256']
+     assert d['successorModelSha256'] == live['successorModelSha256']
+     assert set(live['batchedCatalog']) == {'sourceSetSha256', 'catalogSpecSha256', 'modelSha256'}
++    assert d['successorSourceSetSha256'] == live['batchedCatalog']['sourceSetSha256']
+     assert d['successorCatalogSpecSha256'] == live['batchedCatalog']['catalogSpecSha256']
+     assert d['successorModelSha256'] == live['batchedCatalog']['modelSha256']
+     now = time.time_ns() // 1_000_000
+@@ -68,7 +69,7 @@
+                      programSha256=d['programSha256'], sourceSetSha256=d['sourceSetSha256'],
+                      targetSha256=d['targetSha256'], startsAt=d['startsAt'], expiresAt=d['expiresAt'],
+                      independentSafetyReviewSha256=review_pin,
+-                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current24 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
++                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current25 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
+     raw = (json.dumps(authority, sort_keys=True, indent=2) + '\n').encode()
+     output = Path(output_directory)
+     assert output.parent.resolve() == CONTROL.resolve() and not output.exists()

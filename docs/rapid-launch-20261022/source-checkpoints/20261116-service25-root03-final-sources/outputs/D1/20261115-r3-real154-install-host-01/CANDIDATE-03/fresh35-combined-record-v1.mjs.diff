@@ -1,0 +1,68 @@
+--- SOURCE20d4/source/scripts/release/unified-install/fresh35-combined-record-v1.mjs
++++ CANDIDATE-03/source/scripts/release/unified-install/fresh35-combined-record-v1.mjs
+@@ -6,7 +6,7 @@
+ import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
+ import {publishInstallationRecord} from './publish-installation-record.mjs';
+ import {describeFresh35CombinedCompletion,describeFresh35CombinedProgram} from './fresh35-combined-lifecycle-v1.mjs';
+-import {combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
++import {combinedSha256 as hash,describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent} from './fresh35-combined-source-v1.mjs';
+ const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_RECORD_'+code)};
+ const etc=process.platform==='darwin'?'/private/etc':'/etc';
+ export const FRESH35_COMBINED_RECORD_PATH=etc+'/naijue-erp/fresh35-combined-installation-v1.json';
+@@ -43,6 +43,9 @@
+  * runtime capability remain mandatory before any future import-host admission. */
+ export async function loadFresh35CombinedRecordEnvelope(){
+  need(Number.isInteger(process.getuid?.())&&process.getuid()!==0&&process.geteuid?.()!==0,'ORDINARY_RUNTIME_REQUIRED');
++ return readFixedProtectedRecordEnvelope();
++}
++async function readFixedProtectedRecordEnvelope(){
+  try{await assertTrustedRootPath(FRESH35_COMBINED_RECORD_PATH)}catch{throw Error('FRESH35_PROTECTED_RECORD_REQUIRED')}
+  const f=await open(FRESH35_COMBINED_RECORD_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);
+  try{
+@@ -77,3 +80,46 @@
+  if(checkBytes){const bytes=await readFile(FRESH35_COMBINED_RECORD_PATH),after=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});need(recordIdentity(after)===snapshot.identity&&hash(bytes)===snapshot.sha256,'PROTECTED_RECORD_BYTES_CHANGED');}
+  return snapshot;
+ }
++
++// Narrow root metadata factory for this already-installed R3 catalog upgrade.
++// It shares the real fixed-file reader, not the ordinary UID permission.
++const rootUpgradeRecords=new WeakMap();
++const rootUpgradeServicePath='/run/naijue-rewrite/current-production-service.json';
++const rootUpgradeOriginalRecordSha256='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e';
++const rootMetadataFreeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(rootMetadataFreeze);Object.freeze(x)}return x};
++const rootUpgradeRuntime=()=>need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0,'ROOT_UPGRADE_METADATA_RUNTIME_REQUIRED');
++async function rootUpgradeService(expectedSha256){
++ need(typeof expectedSha256==='string'&&/^[a-f0-9]{64}$/.test(expectedSha256),'ROOT_UPGRADE_CURRENT_C_SHA_REQUIRED');
++ await assertTrustedRootPath(rootUpgradeServicePath);const f=await open(rootUpgradeServicePath,constants.O_RDONLY|constants.O_NOFOLLOW);
++ try{const before=await f.stat({bigint:true});
++  need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&before.size>0n&&before.size<=65536n,'ROOT_UPGRADE_CURRENT_C_PROTECTED_REQUIRED');
++  const bytes=await f.readFile(),after=await f.stat({bigint:true}),actual=await lstat(rootUpgradeServicePath,{bigint:true});
++  need(BigInt(bytes.length)===before.size&&recordIdentity(before)===recordIdentity(after)&&recordIdentity(before)===recordIdentity(actual)&&hash(bytes)===expectedSha256,'ROOT_UPGRADE_CURRENT_C_CHANGED');
++  const value=parseStrictJson(bytes.toString('utf8'));
++  closed(value,['format','requestKey','authorizationSha256','checkedAt','installationRecordSha256','targetSha256','sourceSetSha256','serviceReceiptSha256','dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian','runtimeRole','runtimeLoginValidUntil']);
++  need(value.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V2','ROOT_UPGRADE_CURRENT_C_FORMAT_REQUIRED');
++  return {value:rootMetadataFreeze(value),identity:recordIdentity(before)};
++ }finally{await f.close()}
++}
++export async function loadFresh35RootUpgradeRecordEnvelope({source,currentServiceSha256}){
++ rootUpgradeRuntime();const s=describeFresh35CombinedSource(source),{root}=fresh35CombinedSourceData(source);
++ need(s.currentSourcePins.some(p=>p.path==='scripts/release/unified-install/fresh35-combined-record-v1.mjs'&&p.sha256===loadedModuleSha256),'ROOT_UPGRADE_LOADED_SOURCE_DIFFERS');
++ await assertTrustedRootPath(process.execPath);await assertTrustedRootTree(root);await assertFresh35CombinedSourcesCurrent(source);
++ const service=await rootUpgradeService(currentServiceSha256),envelope=await readFixedProtectedRecordEnvelope(),snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
++ need(snapshot.sha256===rootUpgradeOriginalRecordSha256&&service.value.installationRecordSha256===snapshot.sha256
++  &&envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&envelope.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'
++  &&service.value.targetSha256===envelope.binding.targetSha256&&service.value.sourceSetSha256===envelope.binding.sourceSetSha256
++  &&hash(JSON.stringify(envelope.target))===envelope.binding.targetSha256,'ROOT_UPGRADE_ORIGINAL_INSTALLED_RECORD_DIFFERS');
++ rootUpgradeRecords.set(envelope,Object.freeze({source,sourceSetSha256:s.sourceSetSha256,currentServiceSha256,service}));return envelope;
++}
++export function describeFresh35RootUpgradeRecordSnapshot(envelope,source,currentServiceSha256){
++ rootUpgradeRuntime();const r=rootUpgradeRecords.get(envelope);
++ need(r&&r.source===source&&r.currentServiceSha256===currentServiceSha256,'ROOT_UPGRADE_FIXED_METADATA_REQUIRED');
++ const snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
++ return Object.freeze({recordSha256:snapshot.sha256,sourceSetSha256:r.sourceSetSha256,currentServiceSha256:r.currentServiceSha256,currentService:r.service.value});
++}
++export async function assertFresh35RootUpgradeRecordCurrent(envelope,source,currentServiceSha256){
++ const snapshot=describeFresh35RootUpgradeRecordSnapshot(envelope,source,currentServiceSha256),r=rootUpgradeRecords.get(envelope);
++ await assertFresh35ProtectedRecordSnapshotCurrent(envelope);await assertFresh35CombinedSourcesCurrent(source);
++ const service=await rootUpgradeService(currentServiceSha256);need(service.identity===r.service.identity,'ROOT_UPGRADE_CURRENT_C_GENERATION_CHANGED');return snapshot;
++}

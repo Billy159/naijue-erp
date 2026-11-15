@@ -1,0 +1,11 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-02/issue_registration.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_registration.py
+@@ -59,7 +59,7 @@
+             assert Path(leaf).name == leaf
+             checked(folder / leaf, pin)
+ 
+-    assert basis['historicalBasisValidatedExceptExplicitCurrentDispatcher'] is True
++    assert basis['basisMismatches'] == [] and basis['executionLockMatches'] is True
+     assert basis['activeOperationUnits'] == basis['presentCandidateKeys'] == []
+     assert set(basis['candidateKeys']) >= set(jobs.values())
+     assert basis['actualPins'][str(cas['P'] / 'admin_exec.py')] == cas['OLD_DISPATCHER']

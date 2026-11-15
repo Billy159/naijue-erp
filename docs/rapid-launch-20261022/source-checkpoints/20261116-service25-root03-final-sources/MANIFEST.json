@@ -1,0 +1,422 @@
+{
+  "format": "SOURCE_CHECKPOINT_V1",
+  "scope": "Final independently reviewed D1 root03, T45 selected PHASES02 and main issuer03 exact sources; live external authority packet excluded",
+  "files": [
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/DELTA.json",
+      "bytes": 1319,
+      "sha256": "14d61118cb7d7d1477324c31613163155632f6e6f1df586e26b85e6e2a47200f"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/OFFLINE-SOURCE-FACTS.json",
+      "bytes": 49291,
+      "sha256": "5c9fc7862d748ae4ffbf2a3874287c2f9eb6cd2a74067f5d447c331ba6905b5e"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/PINS.json",
+      "bytes": 1420,
+      "sha256": "b394bdd961c95f26df6c2f73e69b930c5e9b735a033f45d15c23ca4902d4c094"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/README.md",
+      "bytes": 3944,
+      "sha256": "9e33abefcfa9d150e19dfd22bf2b6a9a7fc40a275b47f911c44142d0fa4c8cbb"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/ROOT-UPGRADE-INTERFACE-03.md",
+      "bytes": 4715,
+      "sha256": "57d72c41b990e473916099b3761806508b41e8ed673739cf6bf727e38e5d75a1"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/SOURCE-CLOSURE.json",
+      "bytes": 3179,
+      "sha256": "d16f52997943b275cf05dd3e0ac43d2a90edecf5facb27c9508f4de3bdf89ab8"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/T45-CALLER-ROOT-PATH-FINAL.diff",
+      "bytes": 3666,
+      "sha256": "9958b1f7e731ee4284d86b9f6fd7ec77384539c805a081f968efc8a99e6066b3"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/VALIDATION.json",
+      "bytes": 1340,
+      "sha256": "769128aebd76d9b6b6c167e7b1868307ab06e413d7f91a2055b423d0d90643bf"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/fresh35-batched161-upgrade-v1.mjs.diff",
+      "bytes": 9134,
+      "sha256": "63bd1b4b8c09589c4f87da8f3f0bfe6488287cc3c12d32b46c67882d253eba3d"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/fresh35-combined-record-v1.mjs.diff",
+      "bytes": 6302,
+      "sha256": "73599e5a4251c94d53c3d4e8582b35178d7419dab8ee97d76e23e5ab1dea4550"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/fresh35-combined-target-v1.mjs.diff",
+      "bytes": 4086,
+      "sha256": "a1b606a3f4fe7518f2504e378746e4e9b6959a22533c14aef7a2c0648af70dca"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "bytes": 18627,
+      "sha256": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/source/scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "bytes": 13317,
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a"
+    },
+    {
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/source/scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "bytes": 35020,
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/apply/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/apply/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/apply/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/apply/bundle/ordinary05_roles.py",
+      "bytes": 21656,
+      "sha256": "61271c2e99811a61dcb1a79a92827374c60bfbd9fcef1c3014339c85a8175dcb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/apply/bundle/ordinary05_roles_job.py",
+      "bytes": 28550,
+      "sha256": "3d14ec4143d535b47f50b01828d53f9f24e636161dbfb3422228cec531eb43c0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/install/bundle/batched161-run.mjs",
+      "bytes": 9888,
+      "sha256": "7109fe8fd2a2229dc5893dab71a0920d599b839373e2167ce55be4269bc45d39"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/install/bundle/batched_install_host.py",
+      "bytes": 12985,
+      "sha256": "40673d3fc99615ce4fa6d47ea254e9ba7ab4ea7cadd30a3fe606ecffa394a31c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/install/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/install/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/install/bundle/private_transport.py",
+      "bytes": 12283,
+      "sha256": "a0e66a16ca3c6389b49e828eb47d7d5c026324f5f5b5261e3d0ba00021227b19"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/batched161-run.mjs",
+      "bytes": 9888,
+      "sha256": "7109fe8fd2a2229dc5893dab71a0920d599b839373e2167ce55be4269bc45d39"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/fresh35-batched161-upgrade-v1.mjs",
+      "bytes": 18627,
+      "sha256": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/fresh35-combined-record-v1.mjs",
+      "bytes": 13317,
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/fresh35-combined-target-v1.mjs",
+      "bytes": 35020,
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/materialize-batched-source.py",
+      "bytes": 8512,
+      "sha256": "76088c97f4f3053eb88d84c0c767724ba4612187b41ba2e86a6a78a73f044615"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/source-description.json",
+      "bytes": 1814,
+      "sha256": "c488d1c187cc0342dd4a699f2656cf5d359c0f61c1c39f137729cd6b8f7e87fa"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/source-rows.json",
+      "bytes": 70330,
+      "sha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/restore/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/restore/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/restore/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/restore/bundle/ordinary05_roles.py",
+      "bytes": 21656,
+      "sha256": "61271c2e99811a61dcb1a79a92827374c60bfbd9fcef1c3014339c85a8175dcb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/restore/bundle/ordinary05_roles_job.py",
+      "bytes": 28550,
+      "sha256": "3d14ec4143d535b47f50b01828d53f9f24e636161dbfb3422228cec531eb43c0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/normal_service05_after08.py",
+      "bytes": 53944,
+      "sha256": "3ea7979bd8e7a6ad69247331dad49b9c348c281df70733f0f64bd03b169df1dc"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/normal_service05_after08_proof.py",
+      "bytes": 19408,
+      "sha256": "f2cd59a11222656b8697367abd20e790dbbc1ddd4edbadf838fe6584ceec446b"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/operator-host.mjs",
+      "bytes": 72238,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/operator-manifest.json",
+      "bytes": 48490,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/operator-stream-import-cli.mjs",
+      "bytes": 26499,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/operator-stream-program.mjs",
+      "bytes": 10302,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/production-plan.json",
+      "bytes": 747,
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/r3_05_cli.py",
+      "bytes": 7052,
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/r3_05_readonly.py",
+      "bytes": 21212,
+      "sha256": "521af9e82cdde7cc878986dd8181dc7c2b14debad18aad1af79bf3bc334e0445"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/start/bundle/r3_05_runtime.py",
+      "bytes": 9394,
+      "sha256": "2f2b78e973de362ed14c0a79991ab47feb66bdf6a69e10feb63d3ebdd3108b26"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/stop/bundle/normal05_preserve_stop.py",
+      "bytes": 19581,
+      "sha256": "a9d0116c76be266590ff51087e56eacfb9aec730ee634babce254f7aeff7cc05"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/stop/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "eb914a880232c86f54b42988de60f0e75e855ac9aa7f6fb79a449d2b65925434"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/batched_real_host.py",
+      "bytes": 37233,
+      "sha256": "9395fdc17557848f9ba3b5c49351e774069c0ffbefa94057c78243c1cc04330d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/materialized-profile.json",
+      "bytes": 27834,
+      "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/nonroot_input_access.py",
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/r3_05_cli.py",
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/r3_05_runtime.py",
+      "bytes": 9394,
+      "sha256": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/writer/bundle/retained24-run.mjs",
+      "bytes": 20091,
+      "sha256": "af080ed6f6b46a5c24adc6ddb06972a258f0f9dc132e8e11eb7d35c6a5ddb8cf"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/OPERATIONAL-DELTA02.json",
+      "bytes": 73826,
+      "sha256": "80bd5d9edac91a1e025c97cb1230e002ea1b264272061ed117aa67c40b39e466"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/PHASES02.UNISSUED.json",
+      "bytes": 10581,
+      "sha256": "76a7d2bffc41af371fb686a8e7fd7a4236b40ddcf5b60ccfa8482a34dac942b3"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/READY25-SOURCE-PREPARATION.json",
+      "bytes": 1336,
+      "sha256": "61a0f278b9e8808013a0979a65bbbe9582d5cb8f9382d5024decb27fbc8b1db6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/REGISTRATION-BASIS25-20261115T160834Z.json",
+      "bytes": 15106,
+      "sha256": "ca2652745e63b298c20955326bd336a42b9d1aaccb03d1210714f1f0154e9848"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/REGISTRATION-BASIS25-MERGED02.json",
+      "bytes": 21309,
+      "sha256": "88096ff533c30f1e5fe8f0d52e6fd63c2afa5f01c7a6afc63a8c17b6585c81c7"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/VALIDATION02.json",
+      "bytes": 322,
+      "sha256": "b88d97d8b39c4c623433715899c2c7d20b1561e84a842df31964bda4379d341a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/CANDIDATE01-TO02.diff",
+      "bytes": 720,
+      "sha256": "8621452175f1993b0347f0a034ec06dfbb33c07852b9d6974f5c18fdafd8dca4"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/CANDIDATE02-TO03.diff",
+      "bytes": 720,
+      "sha256": "ff6f31826569c3ebe303d27abc140d5c64519bba3c6df9e7839f49051de1dbbd"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/PINS.json",
+      "bytes": 1702,
+      "sha256": "d6b0470f931a451486c84bebb98fe9ea802db63036c43567e7aa84f2456025fe"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/PREPARATION.json",
+      "bytes": 3868,
+      "sha256": "e69fdc43e90b38d54f2b2913ceb172f6f500d1637df99d39b5d89b653cdd1eaa"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/admin_exec.DIRECT25-UNREGISTERED.py",
+      "bytes": 40390,
+      "sha256": "f6f3ada9b014530a49bae2431c684b66ca0c3059237e94d20ab5675205ef670e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/admin_exec.DIRECT25-UNREGISTERED.py.diff",
+      "bytes": 4870,
+      "sha256": "c29ddfe76bcd316dbf911f6a25860027ebbc0d38b2f25fa1b2ba00166f8601d0"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_phase.py",
+      "bytes": 18484,
+      "sha256": "f33753122cf47571bdbfeffe88aaea0d26d54572bb06e23d60f9a0f92eb99f35"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_phase.py.diff",
+      "bytes": 5946,
+      "sha256": "9feae44672d04caaee5a4c74a1912279d374649daa492e78b9d99387eec56f9a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_registration.py",
+      "bytes": 8300,
+      "sha256": "17a4b3bb3e947a363bf02d89464859146258f57f6e9f1aff899ac839d275d91e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_registration.py.diff",
+      "bytes": 4025,
+      "sha256": "faa45defde91de04eb84fed699a94791227631e03fbab6716c7c6716c3990ee9"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_upgrade_authority.py",
+      "bytes": 5143,
+      "sha256": "e76c125b40a067228acbf67fe011268fd45b823a304ee5a83780952d2b8a5850"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_upgrade_authority.py.diff",
+      "bytes": 3250,
+      "sha256": "5848e6cc5085d2252091ffd66e55faae58b0394a30961b09d82dfed9119917e9"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/original-cas-direct25-carrier.UNISSUED.py",
+      "bytes": 2623,
+      "sha256": "4dd6e30f00b05d447a590607c7064159508cf9dd5c5948cff62cbc3c4904783d"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/original-cas-direct25-carrier.UNISSUED.py.diff",
+      "bytes": 2497,
+      "sha256": "985558af3d74b7a501b87253c3ebc930a2543a7a991278d4d0fcb3c27c5bfd72"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/r3_direct25_batched.py",
+      "bytes": 43545,
+      "sha256": "57d8ea9c363f4c4db743b99bfacafdafecdb644d8e65894a416ec2a418aa2810"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/r3_direct25_batched.py.diff",
+      "bytes": 8843,
+      "sha256": "c4e9e05097097c86fe476f079a4f42ee12e605a94e2a1ed2f452bd1078386b4b"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/register_cas.py",
+      "bytes": 20170,
+      "sha256": "89de040661e6a2a6b81a651bc0e2a808ca016d7abadceccee3020315b2df01af"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/register_cas.py.diff",
+      "bytes": 16491,
+      "sha256": "0e3cf1a6a81aa114161e14fdba9ae3e2a77a8e7646521019737ca6fd94735e3a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-QB-FINAL-REVIEW03.json",
+      "bytes": 3528,
+      "sha256": "96ab259bb19849b74822e042f1b47ff81818ec4e5a5680127b6c1453990674ff"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-QB-PARTIAL-REVIEW02.json",
+      "bytes": 5230,
+      "sha256": "f586cd0149efa3a330d799651a727ab0c0072be4d0fe63dd799b8d2ab1c675e3"
+    }
+  ],
+  "runtimeValidated": false
+}

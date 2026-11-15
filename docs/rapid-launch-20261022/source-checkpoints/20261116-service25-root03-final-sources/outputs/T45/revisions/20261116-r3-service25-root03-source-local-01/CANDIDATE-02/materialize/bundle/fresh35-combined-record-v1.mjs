@@ -1,0 +1,125 @@
+/** Distinct fixed record for the combined 35-table installation. An ordinary
+ * JSON receipt cannot mint this completion, publish a record, or open a host. */
+import {open,lstat,readFile} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
+import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
+import {publishInstallationRecord} from './publish-installation-record.mjs';
+import {describeFresh35CombinedCompletion,describeFresh35CombinedProgram} from './fresh35-combined-lifecycle-v1.mjs';
+import {combinedSha256 as hash,describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent} from './fresh35-combined-source-v1.mjs';
+const need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_RECORD_'+code)};
+const etc=process.platform==='darwin'?'/private/etc':'/etc';
+export const FRESH35_COMBINED_RECORD_PATH=etc+'/naijue-erp/fresh35-combined-installation-v1.json';
+const issued=new WeakSet(),protectedEnvelopes=new WeakMap();
+const loadedModuleSha256=hash(await readFile(new URL(import.meta.url)));
+export const FRESH35_COMBINED_RECORD_MODULE_SHA256=loadedModuleSha256;
+function closed(object,keys){need(object&&Object.getPrototypeOf(object)===Object.prototype,'CLOSED_DATA_REQUIRED');const d=Object.getOwnPropertyDescriptors(object);need(Reflect.ownKeys(d).length===keys.length&&keys.every(k=>d[k]?.enumerable&&Object.hasOwn(d[k],'value')),'CLOSED_DATA_REQUIRED')}
+export function validateFresh35CombinedRecord(value,program){
+ const expected=describeFresh35CombinedProgram(program);
+ closed(value,['format','installedAt','binding','target','transactionReceipt','programSha256','catalogSpecSha256','catalogSha256','authorizationSha256','state']);
+ need((value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V1'||value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&value.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')&&value.state==='COMMITTED_AND_CATALOG_CHECKED'&&typeof value.installedAt==='string'&&Number.isFinite(Date.parse(value.installedAt)),'FORMAT_REQUIRED');
+ closed(value.binding,['sourceSetSha256','targetSha256']);
+ need(value.binding.sourceSetSha256===expected.sourceSetSha256&&value.binding.targetSha256===expected.targetSha256&&value.programSha256===expected.programSha256&&value.catalogSpecSha256===expected.catalogSha256,'EXACT_PROGRAM_BINDING_REQUIRED');
+ need(hash(JSON.stringify(value.target))===expected.targetSha256,'PHYSICAL_TARGET_BINDING_REQUIRED');
+ closed(value.transactionReceipt,['nonce','database','actor','transactionId','backendPid']);
+ need(/^[a-f0-9]{48}$/.test(value.transactionReceipt.nonce)&&value.transactionReceipt.database===value.target.proposal.database&&value.transactionReceipt.actor===value.target.proposal.owner&&/^[1-9][0-9]*$/.test(value.transactionReceipt.transactionId)&&Number.isSafeInteger(value.transactionReceipt.backendPid)&&value.transactionReceipt.backendPid>0,'SAME_TRANSACTION_RECEIPT_REQUIRED');
+ need(['catalogSha256','authorizationSha256'].every(k=>typeof value[k]==='string'&&/^[a-f0-9]{64}$/.test(value[k])),'CATALOG_AND_AUTHORIZATION_DIGEST_REQUIRED');
+ return Object.freeze({...value,binding:Object.freeze({...value.binding})});
+}
+/** Durable publication is separate from SQL COMMIT. On failure never claim SQL
+ * rollback, overwrite an existing record, or replay the consumed installation. */
+export async function publishFresh35CombinedRecord(completion){
+ const c=describeFresh35CombinedCompletion(completion);need(!issued.has(completion),'COMPLETION_ALREADY_CONSUMED');
+ need(c.recordModuleSha256===loadedModuleSha256,'LOADED_PUBLISHER_SOURCE_DIFFERS');
+ need(process.getuid?.()===0&&process.geteuid?.()===0,'TRUSTED_PUBLISHER_REQUIRED');
+ await assertTrustedRootPath(process.execPath);await assertTrustedRootTree(c.sourceRoot);await assertTrustedRootPath(etc+'/naijue-erp');
+ try{await lstat(FRESH35_COMBINED_RECORD_PATH);throw Error('FRESH35_COMBINED_RECORD_ALREADY_EXISTS')}catch(e){if(e.code!=='ENOENT')throw e}
+ const record={format:c.target.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'?'FRESH35_COMBINED_INSTALLATION_RECORD_V2':'FRESH35_COMBINED_INSTALLATION_RECORD_V1',installedAt:c.installedAt,binding:{sourceSetSha256:c.program.sourceSetSha256,targetSha256:c.program.targetSha256},target:c.target,transactionReceipt:c.transactionReceipt,programSha256:c.program.programSha256,catalogSpecSha256:c.program.catalogSha256,catalogSha256:c.catalogSha256,authorizationSha256:c.authorizationSha256,state:'COMMITTED_AND_CATALOG_CHECKED'};
+ issued.add(completion);const bytes=JSON.stringify(record)+'\n';
+ try{await publishInstallationRecord(FRESH35_COMBINED_RECORD_PATH,bytes)}catch(error){error.installState=error.message==='INSTALL_RECORD_PUBLISHED_DURABILITY_UNKNOWN'?'PUBLISHED_DURABILITY_UNKNOWN':'COMMITTED_UNPUBLISHED';throw error}
+ return Object.freeze({format:'FRESH35_COMBINED_PUBLICATION_RECEIPT_V1',state:'RECORD_DURABLY_PUBLISHED',recordPath:FRESH35_COMBINED_RECORD_PATH,recordSha256:hash(bytes),programSha256:c.program.programSha256,credentialsRevoked:c.credentialsRevoked,clusterStopped:c.clusterStopped,hostEnabled:false,businessImportVerified:false});
+}
+/** Read-only fixed-path loading. Source/current-client verification and a distinct
+ * runtime capability remain mandatory before any future import-host admission. */
+export async function loadFresh35CombinedRecordEnvelope(){
+ need(Number.isInteger(process.getuid?.())&&process.getuid()!==0&&process.geteuid?.()!==0,'ORDINARY_RUNTIME_REQUIRED');
+ return readFixedProtectedRecordEnvelope();
+}
+async function readFixedProtectedRecordEnvelope(){
+ try{await assertTrustedRootPath(FRESH35_COMBINED_RECORD_PATH)}catch{throw Error('FRESH35_PROTECTED_RECORD_REQUIRED')}
+ const f=await open(FRESH35_COMBINED_RECORD_PATH,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{
+  const before=await f.stat({bigint:true});
+  need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&before.size>0n&&before.size<=65536n,'OS_PROTECTED_RECORD_REQUIRED');
+  const bytes=await f.readFile(),after=await f.stat({bigint:true}),pathStat=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});
+  need(BigInt(bytes.length)===before.size&&recordIdentity(after)===recordIdentity(before)&&recordIdentity(pathStat)===recordIdentity(before),'RECORD_CHANGED');
+  const value=parseStrictJson(bytes.toString('utf8'));
+  closed(value,['format','installedAt','binding','target','transactionReceipt','programSha256','catalogSpecSha256','catalogSha256','authorizationSha256','state']);
+  need((value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V1'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V1'||value.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&value.target?.format==='FRESH35_COMBINED_TARGET_BINDING_V2'&&value.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35')&&value.state==='COMMITTED_AND_CATALOG_CHECKED','FORMAT_REQUIRED');
+  // This protected envelope is only input to exact program reconstruction.
+  // No execution capability is issued by loading or validating JSON.
+  const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x)}return x};
+  protectedEnvelopes.set(value,Object.freeze({sha256:hash(bytes),identity:recordIdentity(before)}));return freeze(value);
+ }finally{await f.close()}
+}
+export async function loadFresh35CombinedRecord(program){
+ describeFresh35CombinedProgram(program);
+ return validateFresh35CombinedRecord(await loadFresh35CombinedRecordEnvelope(),program);
+}
+
+export function assertFresh35ProtectedRecordEnvelope(value){need(protectedEnvelopes.has(value),'FIXED_PROTECTED_ENVELOPE_REQUIRED');return value;}
+
+function recordIdentity(stat){return [stat.dev,stat.ino,stat.uid,stat.mode,stat.nlink,stat.size,stat.mtimeNs,stat.ctimeNs].map(String).join(':')}
+export function describeFresh35ProtectedRecordSnapshot(envelope){assertFresh35ProtectedRecordEnvelope(envelope);return protectedEnvelopes.get(envelope)}
+/** Startup may recheck bytes once; normal use only checks this loader's exact
+ * nanosecond file identity. A later file can never supply a new baseline. */
+export async function assertFresh35ProtectedRecordSnapshotCurrent(envelope,checkBytes=false){
+ const snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
+ const before=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});
+ need(before.isFile()&&!before.isSymbolicLink()&&recordIdentity(before)===snapshot.identity,'PROTECTED_RECORD_GENERATION_CHANGED');
+ if(checkBytes){const bytes=await readFile(FRESH35_COMBINED_RECORD_PATH),after=await lstat(FRESH35_COMBINED_RECORD_PATH,{bigint:true});need(recordIdentity(after)===snapshot.identity&&hash(bytes)===snapshot.sha256,'PROTECTED_RECORD_BYTES_CHANGED');}
+ return snapshot;
+}
+
+// Narrow root metadata factory for this already-installed R3 catalog upgrade.
+// It shares the real fixed-file reader, not the ordinary UID permission.
+const rootUpgradeRecords=new WeakMap();
+const rootUpgradeServicePath='/run/naijue-rewrite/current-production-service.json';
+const rootUpgradeOriginalRecordSha256='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e';
+const rootMetadataFreeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(rootMetadataFreeze);Object.freeze(x)}return x};
+const rootUpgradeRuntime=()=>need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0,'ROOT_UPGRADE_METADATA_RUNTIME_REQUIRED');
+async function rootUpgradeService(expectedSha256){
+ need(typeof expectedSha256==='string'&&/^[a-f0-9]{64}$/.test(expectedSha256),'ROOT_UPGRADE_CURRENT_C_SHA_REQUIRED');
+ await assertTrustedRootPath(rootUpgradeServicePath);const f=await open(rootUpgradeServicePath,constants.O_RDONLY|constants.O_NOFOLLOW);
+ try{const before=await f.stat({bigint:true});
+  need(before.isFile()&&before.uid===0n&&before.nlink===1n&&(before.mode&0o022n)===0n&&before.size>0n&&before.size<=65536n,'ROOT_UPGRADE_CURRENT_C_PROTECTED_REQUIRED');
+  const bytes=await f.readFile(),after=await f.stat({bigint:true}),actual=await lstat(rootUpgradeServicePath,{bigint:true});
+  need(BigInt(bytes.length)===before.size&&recordIdentity(before)===recordIdentity(after)&&recordIdentity(before)===recordIdentity(actual)&&hash(bytes)===expectedSha256,'ROOT_UPGRADE_CURRENT_C_CHANGED');
+  const value=parseStrictJson(bytes.toString('utf8'));
+  closed(value,['format','requestKey','authorizationSha256','checkedAt','installationRecordSha256','targetSha256','sourceSetSha256','serviceReceiptSha256','dataDirectory','dataDirectoryIdentity','physical','sharedPostgresNamespace','postmaster','guardian','runtimeRole','runtimeLoginValidUntil']);
+  need(value.format==='FRESH35_CURRENT_PRODUCTION_SERVICE_V2','ROOT_UPGRADE_CURRENT_C_FORMAT_REQUIRED');
+  return {value:rootMetadataFreeze(value),identity:recordIdentity(before)};
+ }finally{await f.close()}
+}
+export async function loadFresh35RootUpgradeRecordEnvelope({source,currentServiceSha256}){
+ rootUpgradeRuntime();const s=describeFresh35CombinedSource(source),{root}=fresh35CombinedSourceData(source);
+ need(s.currentSourcePins.some(p=>p.path==='scripts/release/unified-install/fresh35-combined-record-v1.mjs'&&p.sha256===loadedModuleSha256),'ROOT_UPGRADE_LOADED_SOURCE_DIFFERS');
+ await assertTrustedRootPath(process.execPath);await assertTrustedRootTree(root);await assertFresh35CombinedSourcesCurrent(source);
+ const service=await rootUpgradeService(currentServiceSha256),envelope=await readFixedProtectedRecordEnvelope(),snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
+ need(snapshot.sha256===rootUpgradeOriginalRecordSha256&&service.value.installationRecordSha256===snapshot.sha256
+  &&envelope.format==='FRESH35_COMBINED_INSTALLATION_RECORD_V2'&&envelope.target?.purpose==='PRODUCTION_NEW_EMPTY_EXACT35'
+  &&service.value.targetSha256===envelope.binding.targetSha256&&service.value.sourceSetSha256===envelope.binding.sourceSetSha256
+  &&hash(JSON.stringify(envelope.target))===envelope.binding.targetSha256,'ROOT_UPGRADE_ORIGINAL_INSTALLED_RECORD_DIFFERS');
+ rootUpgradeRecords.set(envelope,Object.freeze({source,sourceSetSha256:s.sourceSetSha256,currentServiceSha256,service}));return envelope;
+}
+export function describeFresh35RootUpgradeRecordSnapshot(envelope,source,currentServiceSha256){
+ rootUpgradeRuntime();const r=rootUpgradeRecords.get(envelope);
+ need(r&&r.source===source&&r.currentServiceSha256===currentServiceSha256,'ROOT_UPGRADE_FIXED_METADATA_REQUIRED');
+ const snapshot=describeFresh35ProtectedRecordSnapshot(envelope);
+ return Object.freeze({recordSha256:snapshot.sha256,sourceSetSha256:r.sourceSetSha256,currentServiceSha256:r.currentServiceSha256,currentService:r.service.value});
+}
+export async function assertFresh35RootUpgradeRecordCurrent(envelope,source,currentServiceSha256){
+ const snapshot=describeFresh35RootUpgradeRecordSnapshot(envelope,source,currentServiceSha256),r=rootUpgradeRecords.get(envelope);
+ await assertFresh35ProtectedRecordSnapshotCurrent(envelope);await assertFresh35CombinedSourcesCurrent(source);
+ const service=await rootUpgradeService(currentServiceSha256);need(service.identity===r.service.identity,'ROOT_UPGRADE_CURRENT_C_GENERATION_CHANGED');return snapshot;
+}

@@ -1,0 +1,58 @@
+{
+  "scope": "SOURCE_ONLY_NARROW_ROOT_METADATA_AND_INSTALLED154_UPGRADE_TARGET",
+  "parentTree": "outputs/T45/revisions/20261115-r3-batched-real-first-source-local-01/source",
+  "parentBaseSourceSetSha256": "ef3b94d7587cbb39594950f77ce89266c965f86e7765b4ac09330c0add5b5e1e",
+  "parentCompactSourceSetSha256": "175a13bbf78bda3639d43afade79bf82faf55396ddb8efcd12a764521b8ecef0",
+  "newOfflineBaseSourceSetSha256": "f91c3728cc56aa199b82f4e487db8dd46b1e1c91edb8f1c89cf23f4cde8771bc",
+  "newOfflineCompactSourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "currentSourcePins": 278,
+  "D1Files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "sha256": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "c393b5608d0dc95294e77fbf94cd6b393ee43dee41aaa75167215ae96b98741c"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+    }
+  ],
+  "D3WrapperPath": "outputs/D3/20261115-r3-retained-real-batch-plan-01/source/tools/unified-import/r3-service20-retained-import.mjs",
+  "D3WrapperSha256": "d08326e8fb0d16d3eb207ccc1ce89b728b16085f7fe1b1947f640d8775a69cc1",
+  "D3WrapperOwner": "D3",
+  "sameTreeD3NinePinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+  "dbCandidate05PinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+  "dbSqlSha256": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+  "historicalInputCatalogSha256": "7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88",
+  "normalHostFactoryChanged": false,
+  "preparedObjectMustRemainOriginal": true,
+  "runtimeServiceOrIssuerCreated": false,
+  "modelBodyConstraintAclChanges": 0,
+  "genuineInstallerInvocations": 0,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "liveCurrentServiceEpochTargetAuthorityNotInvented": true,
+  "parentCandidatePinsSha256": "e982bb063d56033d7844a92d7c36a08455c6de0727dc8564ad3104a01ac5e6bf",
+  "changedRuntimeFiles": 3,
+  "authenticationMode": "EXISTING_FINITE_ADMIN_SESSION_SET_ROLE_OWNER",
+  "newPublicCompileParameter": "backupAdminValidUntil",
+  "ownerLoginRequired": false,
+  "roleAttributesOrMembershipChanged": false,
+  "original13SqlAnd161ModelsUnchanged": true,
+  "rootOrdinaryReaderPermissionBroadened": false,
+  "originalFreshTargetRuleChanged": false,
+  "uidOrClockMocked": false,
+  "newUpgradeWindow": "actual current time within <=20min operation window, capped by protected C serviceLease and existing finite admin deadline; no birth-in-window claim",
+  "successorDescriptorTripleSameGenuineProgram": true
+}

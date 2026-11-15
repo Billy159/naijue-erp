@@ -1,0 +1,90 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/issue_phase.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-02/issue_phase.py
+@@ -9,8 +9,8 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-CONTROL = HERE.parent
+-ROOT = HERE.parents[2]
++CONTROL = HERE.parent.parent
++ROOT = HERE.parents[3]
+ T45 = ROOT / 'outputs/T45/revisions'
+ OLD_WRITER = 'ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e'
+ OLD_HOLD = '25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757'
+@@ -52,7 +52,7 @@
+     normalize_apply(apply, policy, roles)
+     folder = Path(witness['phaseDirectories']['start'])
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+-    previous_base = CONTROL / '20261114-r3-original06-service23-start-window-01'
++    previous_base = CONTROL / '20261115-r3-direct-service24-start-window-01'
+     a = read(previous_base / 'service-start-authorization.json')
+     a.update(proof['scope']())
+     seconds = min(6000, (roles['restorationDeadline'] - 600_000 - now) // 1000)
+@@ -63,7 +63,7 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service24 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service25 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+@@ -109,7 +109,7 @@
+         authority = dict(host['scope'](), service=service, startsAt=now, expiresAt=expiry,
+                          writerTerminalSha256=OLD_WRITER, policySha256=OLD_HOLD, sourceSha256=sha(src.read_bytes()),
+                          currentBatchTerminals=evidence['currentBatchTerminals'],
+-                         authorizationReference='Cleanly stop exact generation 24 and preserve its data directory.')
++                         authorizationReference='Cleanly stop exact generation 25 and preserve its data directory.')
+         host['validate'](authority, now)
+         return authority
+     service = observation(start, policy, witness) if start is not None else None
+@@ -155,18 +155,19 @@
+ def materialize_authority(witness, rule, policy, manifest, now):
+     folder = Path(witness['phaseDirectories']['materialize'])
+     description_pin = rule['bundlePins']['source-description.json']
+-    read(folder / 'source-description.json', description_pin)
+-    return dict(format='T45_R3_BATCHED_SOURCE_MATERIALIZATION_V1',
+-                requestKey=rule['jobId'], grantId=policy['grantId'],
+-                decision='MATERIALIZE_EXACT_FROZEN_SOURCE_ONLY_NO_DATABASE_OR_SERVICE',
+-                outputDirectory='/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-20261115-01',
+-                sourceDescriptionSha256=description_pin,
+-                dataIdentity=[66304,13502421,61035,61035,448],
+-                minimumAvailableAfterBytes=28*1024**3, maximumOperationSeconds=300,
+-                startsAt=now, expiresAt=min(now+900_000,policy['expiresAt']),
+-                authorizationReference='Exact approved final normal source only; no database or service action.',
+-                independentReviewSha256=manifest['independentReviewSha256'],
+-                sourceSha256=rule['bundlePins'][rule['script']])
++    description = read(folder / 'source-description.json', description_pin)
++    assert description['format'] == 'T45_R3_EXACT_THREE_FILE_SOURCE_DELTA_V1'
++    assert description['predecessorMaterializationSha256'] == '7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3'
++    host = api(folder / rule['script'], rule)
++    fixed = host['scope']()
++    assert fixed['outputDirectory'] == '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root03-20261116-01'
++    assert fixed['sourceDescriptionSha256'] == description_pin
++    authority = dict(fixed, startsAt=now, expiresAt=min(now+900_000,policy['expiresAt']),
++                     authorizationReference='Exact approved three-file source delta; original materialization preserved; no database or service action.',
++                     independentReviewSha256=manifest['independentReviewSha256'],
++                     sourceSha256=rule['bundlePins'][rule['script']])
++    host['validate'](authority, now)
++    return authority
+ 
+ 
+ def normal_common(phase, witness, rule, context, roles, policy, manifest, now):
+@@ -265,7 +266,7 @@
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct24-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct25-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -295,7 +296,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261115-r3-direct-service24-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service25-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),

@@ -1,0 +1,45 @@
+--- SOURCE20d4/source/scripts/release/unified-install/fresh35-combined-target-v1.mjs
++++ CANDIDATE-03/source/scripts/release/unified-install/fresh35-combined-target-v1.mjs
+@@ -302,3 +302,42 @@
+ export function assertFresh35InstallationTargetCurrent(target,now=Date.now()){
+  const t=describeFresh35CombinedTarget(target);need(!reconstructedProductionTargets.has(target)&&Number.isSafeInteger(now)&&now>=t.startsAt&&now<t.expiresAt,'CURRENT_INSTALL_TARGET_REQUIRED');return t;
+ }
++
++// Separate current binding for the one already-installed154 catalog upgrade.
++// Original fresh/bootstrap target factories and birth/window checks are unchanged.
++const installed154UpgradeTargets=new WeakMap();
++const requireRootUpgradeTarget=()=>need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0,'ROOT_INSTALLED154_UPGRADE_RUNTIME_REQUIRED');
++export async function loadFresh35Installed154UpgradeTargetV1({source,currentServiceSha256,startsAt,expiresAt,backupAdminValidUntil}){
++ requireRootUpgradeTarget();
++ const records=await import('./fresh35-combined-record-v1.mjs');
++ const envelope=await records.loadFresh35RootUpgradeRecordEnvelope({source,currentServiceSha256});
++ const proof=records.describeFresh35RootUpgradeRecordSnapshot(envelope,source,currentServiceSha256);
++ const metadataTarget=await reconstructFresh35InstalledProductionTargetV2(envelope),historical=describeFresh35CombinedTarget(metadataTarget);
++ const service=proof.currentService,b=snapshot(service.physical,['systemIdentifier','databaseOid','serverVersionNum','postmasterStart']);
++ need(['systemIdentifier','databaseOid','serverVersionNum'].every(k=>b[k]===historical.physical[k])&&b.serverVersionNum==='170011','INSTALLED154_UPGRADE_SAME_PHYSICAL_REQUIRED');
++ need(typeof b.postmasterStart==='string'&&/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00$/.test(b.postmasterStart),'INSTALLED154_UPGRADE_REAL_EPOCH_REQUIRED');
++ const birth=Date.parse(b.postmasterStart.replace(' ','T').replace(/\+00$/,'Z')),now=Date.now(),lease=service.sharedPostgresNamespace?.serviceLeaseExpiresAt;
++ need([startsAt,expiresAt,backupAdminValidUntil,now,lease,service.checkedAt].every(Number.isSafeInteger)
++  &&Number.isFinite(birth)&&birth<=service.checkedAt&&service.checkedAt<=now&&startsAt<=now&&now<expiresAt
++  &&startsAt<expiresAt&&expiresAt-startsAt<=1200000&&expiresAt<=lease&&expiresAt<=backupAdminValidUntil,
++  'INSTALLED154_UPGRADE_FINITE_CURRENT_WINDOW_REQUIRED');
++ const descriptor=freeze({format:'FRESH35_INSTALLED154_UPGRADE_TARGET_BINDING_V1',purpose:'EXISTING154_TO161_CATALOG_UPGRADE_ONLY',
++  proposal:historical.proposal,physical:b,ordinary:historical.ordinary,startsAt,expiresAt,backupAdminValidUntil,
++  currentServiceSha256,serviceLeaseExpiresAt:lease,predecessorRecordSha256:proof.recordSha256,sourceSetSha256:proof.sourceSetSha256,
++  authority:'BINDING_ONLY_NOT_EXECUTION_OR_LIVE_PROOF'});
++ const token=Object.freeze({profile:descriptor.format});
++ installed154UpgradeTargets.set(token,Object.freeze({descriptor,source,envelope,metadataTarget}));return token;
++}
++export function describeFresh35Installed154UpgradeTarget(target){
++ requireRootUpgradeTarget();const data=installed154UpgradeTargets.get(target);need(data,'GENUINE_INSTALLED154_UPGRADE_TARGET_REQUIRED');return data.descriptor;
++}
++/** Genuinely loaded historical metadata for this root-upgrade token only. */
++export function fresh35Installed154UpgradeTargetData(target){
++ describeFresh35Installed154UpgradeTarget(target);return installed154UpgradeTargets.get(target);
++}
++export async function assertFresh35Installed154UpgradeTargetCurrent(target){
++ const data=fresh35Installed154UpgradeTargetData(target),t=data.descriptor,now=Date.now();
++ need(Number.isSafeInteger(now)&&now>=t.startsAt&&now<t.expiresAt&&t.expiresAt<=t.serviceLeaseExpiresAt&&t.expiresAt<=t.backupAdminValidUntil,'INSTALLED154_UPGRADE_WINDOW_EXPIRED');
++ const records=await import('./fresh35-combined-record-v1.mjs');
++ await records.assertFresh35RootUpgradeRecordCurrent(data.envelope,data.source,t.currentServiceSha256);return t;
++}

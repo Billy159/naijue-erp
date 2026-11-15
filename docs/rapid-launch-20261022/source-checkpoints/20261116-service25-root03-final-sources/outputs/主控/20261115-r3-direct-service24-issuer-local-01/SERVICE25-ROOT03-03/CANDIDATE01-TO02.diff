@@ -1,0 +1,11 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-01/issue_phase.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-02/issue_phase.py
+@@ -52,7 +52,7 @@
+     normalize_apply(apply, policy, roles)
+     folder = Path(witness['phaseDirectories']['start'])
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+-    previous_base = CONTROL / '20261116-r3-direct-service25-start-window-01'
++    previous_base = CONTROL / '20261115-r3-direct-service24-start-window-01'
+     a = read(previous_base / 'service-start-authorization.json')
+     a.update(proof['scope']())
+     seconds = min(6000, (roles['restorationDeadline'] - 600_000 - now) // 1000)

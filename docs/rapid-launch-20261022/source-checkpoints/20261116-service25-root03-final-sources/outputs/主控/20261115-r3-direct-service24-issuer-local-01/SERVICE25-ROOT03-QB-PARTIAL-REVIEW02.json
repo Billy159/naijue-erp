@@ -1,0 +1,21 @@
+{
+  "format": "EXACT_INDEPENDENT_SOURCE_REVIEW_RECEIPT_V1",
+  "reviewerThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "state": "ROOT02_D1_03_STOP02_SOURCE_STATIC_PASS_ACTUAL_CALLER_PENDING",
+  "sourceCandidatePins": "05e7cb7878a74d85a9de101ea9e81eea1b37fb75dd81a3f6fbdfc770b25ba2f5",
+  "messages": [
+    {
+      "turnId": "01a1dff7-adca-76d0-82c3-4ca575bdc1cb",
+      "text": "QB同一轮已核T45 PHASES02 SHA76a7d2bffc41af371fb686a8e7fd7a4236b40ddcf5b60ccfa8482a34dac942b3 /OPERATIONAL-DELTA02 SHA80bd5d9edac91a1e025c97cb1230e002ea1b264272061ed117aa67c40b39e466本次01→02额外差分，SCOPED STOP SOURCE DELTA PASS。逐目录比较7 phaseDirs独立冻结副本：实际仅stop两文件改，helper PROOF_SHA→f2cd59a11222656b8697367abd20e790dbbc1ddd4edbadf838fe6584ceec446b、NORMAL05_SHA→3ea7979bd8e7a6ad69247331dad49b9c348c281df70733f0f64bd03b169df1dc，均与02真实start源字节hash及rules pin一致；helper实SHAeb914a880232c86f54b42988de60f0e75e855ac9aa7f6fb79a449d2b65925434，preserve_STOP_REFERENCE唯一改为此pin，自身SHAa9d0116c76be266590ff51087e56eacfb9aec730ee634babce254f7aeff7cc05。两AST通过，其余6phase源字节全同01；jobs除stop两pins外无变，phaseDirs仅指新冻结副本，权限/停止条件/INIT业务键无变。未重审全closure/PG/输入或执行旧项。主控P1 start模板自依赖仍待同轮02唯一修正后收口，不能据此放行旧6e94主控候选。"
+    },
+    {
+      "turnId": "01a1dff7-adca-76d0-82c3-4ca575bdc1cb",
+      "text": "QB同轮唯一P1复核已关闭：SERVICE25-START-ISSUER-01 CLOSED。当前独立SERVICE25-ROOT03-02准确PINS05e7cb7878a74d85a9de101ea9e81eea1b37fb75dd81a3f6fbdfc770b25ba2f5（16成员全实hash一致）；phaseissuerf33753122cf47571bdbfeffe88aaea0d26d54572bb06e23d60f9a0f92eb99f35 AST通过；01→02执行源实际只一行previous_base改为实际存在24 start历史模板，其原文件实sha bf90fa60f69519b27c9da11d1133d3544850a72218ac26029bb8574aea30130c；新25独占输出目录/mkdir和原窗口/pins刷新不变。其他6执行源逐字等于已核01，原01保留，PREPARATION准确同步PHASES02实际SHA76a7d2bffc41af371fb686a8e7fd7a4236b40ddcf5b60ccfa8482a34dac942b3及新phase sourcepin。\n复用本轮其余6源/必要旧范围结论，主控registry/issuer窄范围最终为SCOPED SOURCE STATIC PASS，无剩余已确认阻断；T45 PHASES01→02的stop实际source/proof pins及helper STOP_REFERENCE额外差分此前已PASS。该结论仍0PG/0server/未调用issuer、rootAPI、未写改文件，不代表真实新登记/服务/升级已成功；fresh actual basis与当前有限窗口及后续实际回执由你/T45原职责配对，不延旧时钟。"
+    },
+    {
+      "turnId": "01a1dff4-a3ec-7152-a5cb-eab98fee46fe",
+      "text": "QB完成D1同一次 CANDIDATE-03 准确冻结版窄核：SCOPED SOURCE STATIC PASS，无新增已确认阻断。本轮仅root编译/有限installed154升级binding/必要caller参考闭包；0PG/0server/未执行root API、installer或mock，未重13SQL/160/326/旧套件，未改文件。\nPINS实SHA b394bdd961c95f26df6c2f73e69b930c5e9b735a033f45d15c23ca4902d4c094，13成员实hash全吻合；closure d16f52997943b275cf05dd3e0ac43d2a90edecf5facb27c9508f4de3bdf89ab8。三runtime 8f53a4ad…/b411833e…/5329f80c…的实际diff独立对C02准确installer769382…及T45原recordafcd0…/target51ad…重建逐字一致。原普通UID guard保持原句、底层受保护fixed reader整个原bytes保持，旧target模块整个原前缀保持。278pins对象比较仅这3项变，无增删；非变更source/SQL/模型/ACL成果复用。\nroot metadata专用LinuxrootUID/EUID，genuine source/loaded record pin、可信exec/root tree及source-current核验后才读固定真实C和固定原R3 record4ed；NOFOLLOW/regular/root/nlink/bounds/读前后及pathidentity/fullCsha保留，C安装/target/source与原record相关联；不收caller raw envelope造brand。rootUpgradeRecords私有WeakMap绑定同一source对象/Csha/identity，current再次核原record/source/C代际。\ninstalled154UpgradeTargets另私有map；历史proposal/ordinary/metadataTarget由真实protected envelope原重建，当前physical/epoch仅来自实际C，同SID/OID/PG170011；actual Date.now、C.checkedAt与真实birth次序、当前operation<=20min且end<=Clease及backupAdmin。不是旧fresh token，原fresh出生/20min逻辑与普通业务reader未放宽。compile/run current不再走ordinary loader/fresh验期，metadata不冒live154证明，原native ownerGuard/154完整capture仍挡首DDL。\ninstaller compile把同一genuine successor catalog的sourceSet/spec/model三元组写进descriptor及programSHA；精确external9-field authority、admin+SET ROLE owner/RESET ACK、13事务/161capture及caller-close原逻辑不变。caller参考diff9958b1…准确删除普通env读取/新鲜target伪重建和重复catalog，只用root loader+同program三元组+新target固定workspace。此仅参考补丁，尚不是T45新caller/source/C/service/issuer配对通过；T45和主控冻结实际后继后只核其必要差分。D1离线70339…/f91c…及syntax/import报告仅离线，未标真实root/PG PASS。"
+    }
+  ],
+  "serverExecutionProven": false
+}

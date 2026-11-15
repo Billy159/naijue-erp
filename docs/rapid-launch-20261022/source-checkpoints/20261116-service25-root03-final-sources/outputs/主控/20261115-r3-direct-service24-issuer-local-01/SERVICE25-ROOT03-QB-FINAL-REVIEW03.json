@@ -1,0 +1,17 @@
+{
+  "format": "EXACT_INDEPENDENT_SOURCE_REVIEW_RECEIPT_V1",
+  "reviewerThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "state": "SCOPED_SOURCE_STATIC_PASS",
+  "rootSourcePinsSha256": "d6b0470f931a451486c84bebb98fe9ea802db63036c43567e7aa84f2456025fe",
+  "t45PhasesSha256": "76a7d2bffc41af371fb686a8e7fd7a4236b40ddcf5b60ccfa8482a34dac942b3",
+  "d1SourcePinsSha256": "b394bdd961c95f26df6c2f73e69b930c5e9b735a033f45d15c23ca4902d4c094",
+  "parentReview": "SERVICE25-ROOT03-QB-PARTIAL-REVIEW02.json",
+  "messages": [
+    {
+      "turnId": "01a1dffb-cf91-7520-a41f-925c401e414c",
+      "text": "补核完成，本次不是引用D1参考补丁：T45 PHASES02实际新增root caller+三文件materializer/必要host-transport接线，SCOPED ACTUAL CONSUMER SOURCE STATIC PASS，无新增已确认阻断。0PG/0server/未运行rootAPI/issuer/未改文件，未重旧SQL/模型/权限/全closure/harness。\n准确PHASES76a7d2bf…下materialize7+install5共12个实际bundlepins全实hash一致，相关PY AST通过。实际caller7109fe8fd2a2229dc5893dab71a0920d599b839373e2167ce55be4269bc45d39在两bundle逐字相同；独立对已核实际24 consumer重建caller/materializer/host/transport5处diff，beforeSHA/newSHA及OPERATIONAL-DELTA02对应记录全部吻合。\ncaller实际执行链source→loadFresh35Installed154UpgradeTargetV1(真实Csha/当前install窗口/backupAdmin)→compile→同一descriptor successorSourceSet/spec/model；没有ordinary envelope/fresh-bind/重复catalog残留。精确service25/C/container generation、root03 OP固定路径、主控outer完整object+descriptor相等/inner9字段、实际admin原生连接及caller-close原保护仍保留；describe在PGclient/mkdir之前return。原native driver/13ACK/SET-RESET/DB05/161不重验，仅逐差分确认未变。\nmaterializer76088c97…/descriptionc488d1c1…/rows399d3ac7…准确；三payload逐字等于D1 b394准确3源8f53/b411/5329，bytes/hash/newrows吻合。仅比较381行元数据：旧rows原sha3a912…准确，新旧路径集合全同，恰3项bytes+SHA变，其余378项元数据全同；没有读源tar/parts或全旧源码重哈希。固定原proof7306+旧rows3a912+sourceRoot/state保证前驱，3旧源beforeSHA CAS；新payload/hash与runnerhash读取核验、root可信parent/NOFOLLOW/regular/root/nlink/identity保持；固定PGDATA identity+pidabsent/28GiB预留/有限窗口、独占新OUTPUT与所有O_EXCL、3新件回读及新proof保留。旧目录/source/凭据不覆盖；继承378件依赖原受保护proof、只复核size并复制，不能说成378件本轮重新全hash验证。host40673…与transporta0e66…准确接root03、rows399d/source7033/service25/policy25/credential25和私有projection25，原保护及inner清理范围不变。\n另主控SERVICE25-ROOT03-03唯一字段适配已核PASS：PINS实d6b0470f931a451486c84bebb98fe9ea802db63036c43567e7aa84f2456025fe，17成员全匹配；issuer17a4b3bb…唯一改basisMismatches==[]且executionLockMatches is True，真实88096ff5…实际有这两字段。其后逐项actualPins==BASIS、完整identityset/原LOCKID/freshness/candidatekeys/noactive等字节不变，其他6执行源全同02，fullparentdiff/01→02→03 manifest闭合准确。复用其余已核范围，当前主控03+T45 PHASES02本轮新增SOURCE范围无未关闭发现。没有将dryrun/源码PASS冒现场登记/运行通过；后续freshness及实际有限窗口/回执由原主控/T45核。"
+    }
+  ],
+  "databaseExecutionProven": false,
+  "serverExecutionProven": false
+}

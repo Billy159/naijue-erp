@@ -1,0 +1,34 @@
+{
+  "scope": "THREE_FINAL_CHANGED_MODULE_SYNTAX_AND_SAME_TREE_SOURCE_DESCRIPTOR_ONLY",
+  "node": "24.21.0",
+  "syntaxChecks": [
+    {
+      "file": "fresh35-batched161-upgrade-v1.mjs",
+      "exitCode": 0
+    },
+    {
+      "file": "fresh35-combined-record-v1.mjs",
+      "exitCode": 0
+    },
+    {
+      "file": "fresh35-combined-target-v1.mjs",
+      "exitCode": 0
+    }
+  ],
+  "moduleAndDescriptorExitCode": 0,
+  "stdout": "{\"baseSourceSetSha256\":\"f91c3728cc56aa199b82f4e487db8dd46b1e1c91edb8f1c89cf23f4cde8771bc\",\"compactSourceSetSha256\":\"70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e\",\"currentSourcePins\":278,\"rootUpgradeApiExportsVerified\":true}",
+  "stderr": "",
+  "postgresExecuted": false,
+  "installerInvoked": false,
+  "hostInvoked": false,
+  "rootMetadataApiInvoked": false,
+  "uidOrClockMocked": false,
+  "sourceRewriteCount": 0,
+  "oldSuiteRerun": false,
+  "ordinaryUidGuardUnchanged": true,
+  "underlyingProtectedReaderBytesUnchanged": true,
+  "originalFreshTargetCodePrefixUnchanged": true,
+  "lastTargetSyntaxExitCode": 0,
+  "finalSourceFacts": "SOURCE-FACTS-CANDIDATE03.json",
+  "note": "Actual current C must predate actual now; operation starts may be earlier than observation while still within its real current bounded window. No postmaster-birth-in-window requirement or fake clock."
+}

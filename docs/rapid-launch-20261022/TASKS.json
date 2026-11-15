@@ -7330,6 +7330,23 @@
             "actualRestoreSha256": "6d34548caa2d95b9f418659e387027ee5beb6a197480808a9331a4347f734c81",
             "finalClosedReadbackSha256": "19fdf99815616bfcefa17de3363c577ca4fe4225333cf74ebc1a9ce542b8f665",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_ROOT03_T45_CONSUMER02_MAIN03_SCOPED_SOURCE_PASS_AND_SERVICE25_REGISTRATION_20261116",
+            "state": "SOURCE_STATIC_PASS_REGISTRATION_PACKET_ISSUED_NOT_RUNTIME_PASS",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service25-root03-final-sources",
+              "files": 83,
+              "bytes": 2259360,
+              "manifestSha256": "71a335e71a9f856b14cf52a4ac35119d369f8f9947431e77ca71475048f354b0",
+              "reviewSha256": "96ab259bb19849b74822e042f1b47ff81818ec4e5a5680127b6c1453990674ff"
+            },
+            "rootSourcePinsSha256": "d6b0470f931a451486c84bebb98fe9ea802db63036c43567e7aa84f2456025fe",
+            "d1SourcePinsSha256": "b394bdd961c95f26df6c2f73e69b930c5e9b735a033f45d15c23ca4902d4c094",
+            "phasesSha256": "76a7d2bffc41af371fb686a8e7fd7a4236b40ddcf5b60ccfa8482a34dac942b3",
+            "actualBasisSha256": "88096ff533c30f1e5fe8f0d52e6fd63c2afa5f01c7a6afc63a8c17b6585c81c7",
+            "issuedManifestSha256": "92a8766884ae76a480de8a590ae9a6268a4497268afce2289920834acba90a08",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7341,9 +7358,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "ROOT_METADATA_AND_INSTALLED154_UPGRADE_TARGET03_IN_PROGRESS",
+            "state": "ROOT03_INSTALLED154_UPGRADE_TARGET_SCOPED_SOURCE_PASS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Fix actual root/nonroot metadata loader and installed154 upgrade window incompatibility only; retain protected reader/identity/private capability factories, ordinary runtime guard, original fresh target rule and SQL13/model161. T45 caller integration in progress; no new PG/harness."
+            "work": "CANDIDATE03 pinsb394bdd9/source8f53+b411+5329 frozen and independently source PASS. Fixed root metadata factory and distinct installed154 upgrade target; ordinary guard/original fresh rule/SQL13/models161 unchanged. Runtime actual validation pending, no new harness."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7358,20 +7375,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "APPLY02_CALLERS_AND_EXACT_POLICY_CAS_SCOPED_SOURCE_PASS",
-            "work": "Actual two-public-receipt pin correction, failed01 pre-auth boundary/strict oldproof, sole operational key02 and necessary source-pin references all SOURCE PASS. New registrar exact old d60/dc119/9b267 identity CAS plus accepted7306 materialization reuse SOURCE PASS. No new PG/harness/driver rerun; actual operational receipts recorded separately."
+            "state": "D1_ROOT03_MAIN03_T45_ACTUAL_CONSUMER02_SCOPED_SOURCE_STATIC_PASS",
+            "work": "Main first candidate start issuer output-as-input P1 fixed one historical-template line in02; actual basis field consumer one-line03. Other6 sources reused. New T45 actual caller/materializer/host-transport closed against D1 exact3source and original381metadata without rehashing inherited378. Source PASS only,0PG/rootAPI/runtime."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "SERVICE24_ACTUAL_CLEAN_STOP_AND_ORIGINAL_AUTH_RESTORED",
+            "state": "PHASES02_ACTUAL_CALLER_AND_SMALL_DELTA_SOURCE_PASS_REGISTRATION_PACKET_ISSUED",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Service24 started15:21:20; readonly describe15:24:55 rejected FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED before DB connection/install. Stop originalkey completed15:45:38; restore originalkey completed15:50:39, exact original two-role verifier/expiry privately verified, no natural expiry substitution. FinalRO15:52:57 containersStopped/PGpidabsent/portabsent/unitinactive/sourceDataPreserved; no install/REAL keys submitted. Never repeat completed operational jobs."
+            "work": "Final PHASES02 76a7d2bf/OPDELTA80bd5d9e actual root caller/materializer/necessary transport and source/service25/credential25 references independently source PASS; full381 archive retained and only3payloads157508B sent next, 378inherit original7306 proof. Real install/writer keys unchanged and proved absent. Fresh basis16:08:33 +exact5receipt supplement16:12:07, merged88096. Actual registration pending; server stays stopped until prepared phases advance."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "STOPPED_ORIGINAL_AUTH_RESTORED_PENDING_NECESSARY_INSTALL_INTERFACE_FIX",
+          "formalR3": "STOPPED_ORIGINAL_AUTH_RESTORED_SERVICE25_REGISTRATION_ISSUED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7384,18 +7401,19 @@
           "latestPolicySha256": "cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "freeze/review actual install interface delta/caller before next controlled service",
+          "nextCheckpointScope": "actual registry then small source delta\u2192finite auth/service25\u2192actual descriptor and install; no new rehearsal",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-service24-closed-original-auth-restored",
-            "files": 8,
-            "bytes": 23959,
-            "manifestSha256": "63f2e7be2381226df17938a8dda646d13ae2d4b447be4eadeb4881c40c587285"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service25-root03-final-sources",
+            "files": 83,
+            "bytes": 2259360,
+            "manifestSha256": "71a335e71a9f856b14cf52a4ac35119d369f8f9947431e77ca71475048f354b0",
+            "reviewSha256": "96ab259bb19849b74822e042f1b47ff81818ec4e5a5680127b6c1453990674ff"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "SERVICE24_PRESERVATION_ACTUALLY_COMPLETE_NEXT_SOURCE_PENDING",
-            "work": "Actual stopcdb604d1/restore6d34548c/finalRO19fdf998 confirm stopped and original auth restored. No install authorization/real writer submit. Next service/version/finite windows only after exact D1/T45 small delta and narrow source review."
+            "state": "NEW_FINITE_SERVICE25_REGISTRATION_PACKET_ISSUED_AWAITING_ACTUAL_CAS",
+            "work": "Source03 PINSd6b0470f/phasef337/registrar89de reviewed. Exact policy25/module new O_EXCL and dispatcher actuald23CAS; old24cb384/da430/source7306 preserved. Genuine human authority836d unchanged. Issued16:16:33.232Z registration92a87668/envelope3e6db87c/carrierd64227b0, policyab15005a/dispatcher67c82615; T45 sole submission, UNKNOWN inspect original audit/no replay. No install/writer authority issued."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7411,9 +7429,9 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "D1 root-loader/installed154-upgrade target03 and matching T45 caller freeze/review",
-            "exact small source version and legitimate next service/finite maintenance authority",
-            "actual readonly descriptor then exact9field/install authorization and actual13ACK/catalog capture",
+            "actual service25 registry CAS then exact source delta materialization",
+            "actual finite auth maintenance/start and new currentC/epoch/readonly descriptor",
+            "exact9field/outer install authority then actual13ACK/catalog capture",
             "actual approved REAL BATCHED writer/verify/reconciliation and backup/core business gates"
           ],
           "normalSource": {
@@ -7446,19 +7464,24 @@
               "offlineBaseSourceSetSha256": "2a2f0e3be19e03f57cbf5dfa22f05d26166ac241fb140abd39762ea2245dc347",
               "offlineCompactSourceSetSha256": "20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d",
               "nativeValidated": false
+            },
+            "real154Root03": {
+              "pinsSha256": "b394bdd961c95f26df6c2f73e69b930c5e9b735a033f45d15c23ca4902d4c094",
+              "offlineCompactSourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+              "offlineBaseSourceSetSha256": "f91c3728cc56aa199b82f4e487db8dd46b1e1c91edb8f1c89cf23f4cde8771bc",
+              "nativeValidated": false
             }
           },
           "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear",
           "finiteWindows": {
-            "issuedAt": "2026-11-15T15:09:43.153Z",
-            "applyExpiresAt": "2026-11-15T15:39:43.153Z",
-            "controllerUntil": "2026-11-15T16:39:43.153Z",
-            "backupAdminUntil": "2026-11-15T16:41:43.153Z",
-            "restorationDeadline": "2026-11-15T17:04:43.153Z",
-            "policyExpiresAt": "2026-11-15T17:09:43.153Z",
-            "roleAuthoritySha256": "87b03e56eaaebd524d4fb17955fee4c77de2ee68ba000e978ff0dfc8a80c6496",
-            "startAuthoritySha256": "bf90fa60f69519b27c9da11d1133d3544850a72218ac26029bb8574aea30130c",
-            "previous24Closed": true
+            "issuedAt": "2026-11-15T16:16:33.232Z",
+            "registrationExpiresAt": "2026-11-15T16:31:33.232Z",
+            "applyExpiresAt": "2026-11-15T16:46:33.232Z",
+            "controllerUntil": "2026-11-15T17:46:33.232Z",
+            "backupAdminUntil": "2026-11-15T17:48:33.232Z",
+            "restorationDeadline": "2026-11-15T18:11:33.232Z",
+            "policyExpiresAt": "2026-11-15T18:16:33.232Z",
+            "roleAuthoritySha256": "12189dffbce7859f698b4d914beca7133459d74b841e344623388ff184a00b6b"
           }
         },
         "independentDeltaReviewer": "QB",

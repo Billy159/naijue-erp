@@ -1,0 +1,24 @@
+--- outputs/主控/20261115-r3-direct24-apply02-registration-window-01/admin_exec.ISSUED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-01/admin_exec.DIRECT25-UNREGISTERED.py
+@@ -12,9 +12,9 @@
+ GATES = {'T47':['G4'],'T49':['G5'],'T50':['G5'],'T51':['G6']}
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+-R3_ORIGINAL02_ABSENT_POLICY_SHA256 = 'cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898'
+-R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = 'da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef'
+-R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01']
++R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
++R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '57d8ea9c363f4c4db743b99bfacafdafecdb644d8e65894a416ec2a418aa2810'
++R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+ R3_READONLY_RECOVERY_SOURCE_SHA256 = '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e'
+ R3_CONTINUITY_POLICY_SHA256 = '25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757'
+@@ -174,7 +174,7 @@
+     if R3_ORIGINAL02_ABSENT_POLICY_SHA256 is None:
+         return readonly
+     from types import ModuleType
+-    path=canonical(PUBLIC/'r3_direct24_batched_apply02.py')
++    path=canonical(PUBLIC/'r3_direct25_batched.py')
+     check(PUBLIC.lstat().st_uid==0 and not PUBLIC.lstat().st_mode&0o022
+           and path.is_file() and path.lstat().st_uid==0 and not path.lstat().st_mode&0o022
+           and path.lstat().st_size<=131072,'R3_CONTINUITY_ABSENT20_PROTECTED_SOURCE_REQUIRED')

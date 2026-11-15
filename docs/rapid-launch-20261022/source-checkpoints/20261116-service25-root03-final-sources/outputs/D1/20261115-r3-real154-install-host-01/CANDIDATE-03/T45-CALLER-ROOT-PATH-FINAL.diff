@@ -1,0 +1,46 @@
+--- T45-install24/batched161-run.mjs
++++ T45-next-service/batched161-run.mjs
+@@ -26,7 +26,6 @@
+  NEED(mode==='describe'||digest(mode),'FIXED_ENTRY_REQUIRED');
+  const src=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-source-v1.mjs'));
+  const tm=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-target-v1.mjs'));
+- const rm=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-record-v1.mjs'));
+  const up=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs'));
+  const trust=await import(pathToFileURL(OP+'/scripts/release/unified-install/trusted-install-path.mjs'));
+  await trust.assertTrustedRootPath(process.execPath);await trust.assertTrustedRootTree(OP);
+@@ -37,22 +36,15 @@
+   &&c.physical.postmasterStart===p.service.postmasterStart
+   &&c.sharedPostgresNamespace.container.id===p.service.containerId
+   &&c.sharedPostgresNamespace.container.startedAt===p.service.containerStartedAt,'CURRENT_SERVICE_DIFFERS');
+- const env=await rm.loadFresh35CombinedRecordEnvelope();
+- const prior=env.target;
+- const target=tm.bindFresh35CombinedProductionTargetV2({purpose:prior.purpose,proposal:prior.proposal,
+-  ordinary:prior.ordinary,physical:c.physical,startsAt:p.installStartsAt,expiresAt:p.installExpiresAt});
+  const paths=await src.resolveFresh35ReferenceInputPaths('/opt/naijue-erp/fresh35-combined-v1/reference-inputs');
+  const source=await src.loadFresh35CompactZeroSource(OP,paths);
++ const target=await tm.loadFresh35Installed154UpgradeTargetV1({source,currentServiceSha256:p.service.proofSha256,
++  startsAt:p.installStartsAt,expiresAt:p.installExpiresAt,backupAdminValidUntil:p.backupAdminValidUntil});
+  const program=await up.compileFresh35Batched161Upgrade({source,target,paths,
+   currentServiceSha256:p.service.proofSha256,backupAdminValidUntil:p.backupAdminValidUntil});
+  const d=up.describeFresh35Batched161Upgrade(program);
+- const catalogApi=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs'));
+- const historicalTarget=await tm.reconstructFresh35InstalledProductionTargetV2(env);
+- const predecessor=await catalogApi.buildFresh35CompactZeroCatalog(source,historicalTarget,paths);
+- const batched=await catalogApi.buildFresh35BatchedCatalogV1(source,historicalTarget,predecessor);
+- const bd=catalogApi.describeFresh35CombinedCatalog(batched);
+- const batchedCatalog={sourceSetSha256:bd.sourceSetSha256,catalogSpecSha256:bd.catalogSpecSha256,modelSha256:bd.modelSha256};
+- NEED(bd.catalogSpecSha256===d.successorCatalogSpecSha256&&bd.modelSha256===d.successorModelSha256,'BATCHED_CATALOG_DESCRIPTOR_DIFFERS');
++ const batchedCatalog={sourceSetSha256:d.successorSourceSetSha256,
++  catalogSpecSha256:d.successorCatalogSpecSha256,modelSha256:d.successorModelSha256};
+ 
+  const facts={batchedCatalog,requestKey:'t45-r3-batched-install-20261115-01',service:p.service,physical:c.physical,
+   currentServiceSha256:p.service.proofSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,
+@@ -75,7 +67,7 @@
+  client.on('error',()=>{connectionError=true});
+  try{
+   await client.connect();opened=true;evidence.connectionCleanup='UNKNOWN';NEED(!connectionError,'CONNECTION_UNCONFIRMED');
+-  const dir=prior.proposal.workspaceDirectory+'/batched161-upgrade';
++  const dir=tm.describeFresh35Installed154UpgradeTarget(target).proposal.workspaceDirectory+'/batched161-upgrade';
+   await mkdir(dir,{mode:0o700});
+   const result=await up.runFresh35Batched161Upgrade({program,authorization:a,client,recordDirectory:dir});
+   Object.assign(evidence,result);

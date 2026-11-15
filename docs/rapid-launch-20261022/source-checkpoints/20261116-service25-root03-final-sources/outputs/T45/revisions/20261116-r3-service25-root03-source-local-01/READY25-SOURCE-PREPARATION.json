@@ -1,0 +1,24 @@
+{
+  "changedRuntimeSourceFiles": 3,
+  "databaseConnections": 0,
+  "formalBusinessAccepted": false,
+  "fullInputOrClosureRepeated": false,
+  "inheritedFiles": 378,
+  "installSubmitted": false,
+  "lastLiveBasis": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/REGISTRATION-BASIS25-MERGED02.json",
+    "sha256": "88096ff533c30f1e5fe8f0d52e6fd63c2afa5f01c7a6afc63a8c17b6585c81c7"
+  },
+  "newBuild": false,
+  "ordinaryBusinessOpened": false,
+  "realWriterSubmitted": false,
+  "remaining": "Main/QB exact actual source-pair review and new external finite packet; old24 stopped and authentication restored.",
+  "selectedRules": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/PHASES02.UNISSUED.json",
+    "sha256": "76a7d2bffc41af371fb686a8e7fd7a4236b40ddcf5b60ccfa8482a34dac942b3"
+  },
+  "serverMutations": 0,
+  "sourceRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+  "sourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "state": "LOCAL_SOURCE_PAIR_FROZEN_PENDING_EXACT_EXTERNAL_REVIEW_AND_ISSUED_PACKET"
+}

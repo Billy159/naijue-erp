@@ -1,0 +1,12 @@
+{
+  "d1ExactThreePinSourceEvidenceReused": true,
+  "formalBusinessAccepted": false,
+  "fullInputPreflightRerun": false,
+  "localBundlePinsMatch": true,
+  "newBuild": false,
+  "node24CallerSyntaxChecks": 2,
+  "oldChecksReplayed": false,
+  "pythonSyntaxFiles": 29,
+  "rootApiRuntimeInvoked": false,
+  "serverMutations": 0
+}
