@@ -6475,14 +6475,34 @@
               "originalPayloadAndIndex": "not present at disposed original paths; only two step scalar receipts verified; no reconstruction claimed",
               "formalLaunch": "NOT_COMPLETE"
             }
+          },
+          {
+            "group": "r910-payment-hall-relation-source-narrowing-20261115-0601",
+            "status": "ACTUAL_LOG_RELATION_CONFIRMED_SOURCE_DIAGNOSTIC_NARROWED",
+            "evidence": {
+              "relationSupplementSha256": "0bc8cab0f4e93e0b368a2de30fc7517ac776cea28ced0060ef69be31e9bf69b4",
+              "sameRawLogSha256": "e74f7234a1e7ad8608fa39303fb23a4cd75267563e2c4553aea5a715ea97908b",
+              "rawLogBytes": 2608,
+              "rawLogLines": 22,
+              "relation": "naijue_erp.payment_account_hall",
+              "textMatches": 1,
+              "textMatchesAreExecutionCount": false,
+              "sourceDiagnosticPinsSha256": "8605200a1ac8212006f11800f69d5ebfa7720bf9f1c19dbc9e7a2802d4c7d89b",
+              "nativeHasId": false,
+              "idLookupExecutedForThisCall": false,
+              "wholeSecondChunkDistribution": "UNOBSERVED",
+              "newPgRuns": 0,
+              "newServerJobs": 0
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "source-only diagnosis of standard_import_row_intent body28 FOR over SELECT \u2192 guard_maintenance_child_write5 \u2192 command906 \u2192 step4; no new SQL execution or carrier",
-          "sourceHypotheses": "first and second cumulative sources500\u21921000/audit2\u21923 are source-path inference only; actual kind/P/scan counts remain unknown; cannot name composite payment hall from stack alone",
-          "prefixContract": "max512 steps or writeUntil; expected PREFIX_LIMIT/TIME_BUDGET plus PUBLISH_INCOMPLETE, rollback ABSENT/CLOSED; first ACK not endpoint",
-          "T45": "r910 task NEED_FIX fully closed, all sessions terminal, no new reads/writes/jobs authorized; original materials retained",
+          "work": "prepare exact source of two-context shared fallback diagnostic; each context one complete original helper call and separately scoped sanitized query plans; awaiting QB new-delta review before local PG permission",
+          "scope": "controlled synthetic ROOT+current versus same ROOT+previous+current using fixed current payment_account_hall; no id probe, no474/500 performance loops, no whole compile or candidate layer",
+          "labWrapper": "proposed restricted owner instrumentation in isolated harness schema only; original helper body/STABLE/security/config/ACL unchanged; exact diff must be reviewed",
+          "limits": "170s work/180s total,3GiB scratch,2MiB log,40s statement; cleanup required",
+          "T45": "r910 closed NEED_FIX, one exact same-log relation metadata supplement completed; no further server operation authorized",
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "formalR3": "STOPPED_NOT_IMPORTED",
