@@ -6401,30 +6401,45 @@
               "nativeInstall": "PENDING",
               "formalLaunch": "NOT_COMPLETE"
             }
+          },
+          {
+            "group": "r910-actual-twelve-install-20261115-0529",
+            "status": "ACTUAL_TWELVE_COMMITS_MEASUREMENT_PENDING",
+            "evidence": {
+              "postBirthIssuedSha256": "25cad1e99263e55ecd9c4e62a6f735f299e4f892bfa5ed602f547ceb7dc0737c",
+              "containerId": "1d4886b0df07301209b6f5c7bc8d42eca75874ff09d094b178308f1fa12c7e71",
+              "startedAt": "2026-11-15T05:18:53.324922436Z",
+              "pid": 669169,
+              "databaseOid": 16393,
+              "clusterSystemId": "7708263442518278174",
+              "actualInstallationSha256": "171048206d6f3a7fa7e496b89bfe2813d4d70a014f882749c2fa7e879f9e54e3",
+              "nativeInstallElapsedMs": 47114,
+              "installGuardianSha256": "dff08da294ca26c327eca4a70ddf1814e2a3da226f7a5ff0d1568679aea051b6",
+              "layersCommitted": 12,
+              "twelfthSqlSha256": "d5ffad0eecc1e05b72eba107502c41a091bf0fe25c0b521030967739a6e80d90",
+              "twelfthReceiptSha256": "71e3286f962705b98602309142e24b617d3636f9407f1a7b76bd763870fde9d7",
+              "ownerInstallationSha256": "3fbb19801cacc6ab84b6cd90ea9541d0a4dc2b5cb442c7dd5cb40138ff6d0c3b",
+              "protectedRecordSha256": "6690faf833ff30be72373b111eba2ee52f3d5c495ddaac8beb478b6eac07dee1",
+              "readerFixReviewSha256": "171a9689b731de6391a0843e46956e6569dcbfa433bf57582dd82da671b1792d",
+              "wholeCompile": "PENDING",
+              "firstMaster": "PENDING",
+              "rollbackReadback": "PENDING",
+              "cleanup": "PENDING"
+            }
           }
         ],
         "currentInFlight": {
           "owner": "T45",
-          "work": "r910 original M key submitted once; collect original receipt then P0-gated S/B, actual birth and native 12 layers, full compile/first master/rollback/cleanup",
-          "R0": "2026-11-15T05:13:46.038Z",
-          "P0": "2026-11-15T05:18:46.038Z",
-          "provisionExpiry": "2026-11-15T05:38:46.038Z",
-          "policyExpiry": "2026-11-15T05:43:46.038Z",
-          "listener": {
-            "session": 5353,
-            "until": "2026-11-15T05:24:56.038Z",
-            "kind": "original REGISTRATION-ENTRY-RESULT plus real BIRTH"
+          "work": "r910 native measurement live; await actual full compile/first499 ACK or failure, independent rollback ABSENT, final stop and cleanup; no replay",
+          "finishWatcher": {
+            "session": 70354,
+            "expiry": "2026-11-15T05:43:46.038Z"
           },
-          "registrationWaiter": {
-            "session": 20442,
-            "state": "EXIT_0_USED_ONCE"
-          },
-          "postConsumer": {
-            "session": 48395,
-            "state": "PREARMED_NEW_MAIN_ONLY"
-          },
+          "nativeHardEnd": "2026-11-15T05:33:53.324922436Z",
+          "resourceBounds": "unchanged 2CPU6GiB/child540/container900/cleanup180/root28GiB",
           "formalR3": "STOPPED_NOT_IMPORTED",
-          "remoteCheckpoint": "push pending; Github HTTP/public diagnostics failing, local commits retained; no force or config changes"
+          "formalLaunch": "NOT_COMPLETE",
+          "remoteSync": "pending while GitHub diagnostics time out; local checkpoint retained"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
