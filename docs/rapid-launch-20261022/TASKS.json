@@ -6590,17 +6590,39 @@
                 "copy/lifetime resource effect and actual benefit"
               ]
             }
+          },
+          {
+            "group": "row-intent-projection-eval-harness-20261115-0720",
+            "status": "EXACT_HARNESS_PREPARED_PENDING_DELTA_REVIEW_ZERO_PG",
+            "evidence": {
+              "sourcePinsSha256": "a0a1ac4bfdf29113e04a2e7deb1138fb7f1e522215be065a84dc64110f3c4547",
+              "harnessPinsSha256": "a0c94423c294013137e271cc931b9bed8c362392883e66218f3f61cc626353db",
+              "runnerSha256": "222f114550ac387236c06d8eadcf55119db820a53e693c0f1d96166b75e0ea66",
+              "harnessDiffSha256": "9ed5f552aeaf6a5ac5186fc805d7ae1fad98cee190b21d4a1efd1be2eb060512",
+              "inputPinsSha256": "7094f1162266a4f5266a47316707b3cca91ce218cf188c1531d2379ecdce6f18",
+              "candidateOuterSha256": "6d1e39d38a176148fff7ebe10f51d7a4b2c3a798d07465153d89211110bcc6aa",
+              "candidateFullHelperCallsPlanned": 2,
+              "independentPlansPlanned": 7,
+              "semanticFixtures": 13,
+              "semanticCheckpoints": 14,
+              "originalSemanticReadsPlanned": 14,
+              "candidateSemanticReadsPlanned": 14,
+              "performanceLoopsPlanned": 0,
+              "executed": false,
+              "adopted": false
+            }
           }
         ],
         "currentInFlight": {
-          "owner": "D2",
-          "work": "D2 source-only exact bounded evaluation harness for shared row_intent single projection; source reviewa693 passed evaluation direction only",
-          "boundary": "two candidate full-helper contexts, affected same-heap old/new semantic fixtures and new outer plans; exact harness delta review and main once-decision required before PG; no new server or formal source change",
+          "owner": "QB",
+          "work": "one new harness-delta static review of a0c94423/runner222f1145; exact source and04 diagnostics reused",
+          "boundary": "zero new PG/SQL execution/server/carrier; original metadata/ACL, same-heap old/new semantic boundaries, guarded single local attempt; no candidate adoption",
           "T45": "r910 closed NEED_FIX; no new server scope",
           "formalR3": "STOPPED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
-          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417"
+          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
+          "D2": "frozen exact harness awaiting actual review and main once-decision; no PG"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

@@ -7061,3 +7061,8 @@ native现仍按原540秒测量/180清理及C0+900硬截止05:33:53.324922436运�
 
 
 2026-11-15 06:57 UTC：D2单共享row_intent读取复用草案sourcePINSa0a1ac4b…/bodyd3d309b8…/definitionbe16b06b…，仅fallback LATERAL真实after_values#>空path/OFFSET0一次投影供profile/records复用，原role/id/STRICT/proof前缀与typed EXECUTE/全值比较/早RETURN suffix逐字原样，真实xmin与候选多重度保持，无op缩窄/GUC/cache/index/schema/ACL/新家族入口。QB只新source SCOPED PASS原文a693f348…，可进入有界评价准备，未采纳/未编号13层/未实际SQL或PG。原无ORDER不新加静态复刻任意脏状态的物理路径合同，但同heap旧新混合坏records/typed与match两排列必须实际boolean/SQLSTATE对照；另NULL after/缺records/nullrecords/objectrecords/同数组前后/previous-only/no-match/真childxmin等原受影响边界落实，不吞错排序迎合。候选2context各1完整调用/新outer计划与04历史单次比较仍不证明稳定净收益/RSS，scratch非内存验收。D2并行仅准备准确harness新差分，0新PG/载体/server；下一步精确实现与pins交QB仅新增范围后由主控按持续授权实际一次判断。正式R3停，目标未完成。
+
+
+2026-11-15 07:20 UTC：D2评价harness已冻结a0c94423…/runner222f1145…/diff9ed5f552…/INPUT7094f116…（798项），source草案d3d及原已审wrapper824d字节不变，尚0PG/无attempt。候选2context完整helper各1/先冻结计数后7plans，新的outer6d1e39d3…被COUNTERS/plan绑定，旧04性能实证不重跑。新增13小fixture/14checkpoint（旧/新各14小语义读、非性能循环），同heap同事务只切两已pinprosrc并逐次核pg_proc-minus-prosrc及id/xmin/ctid，捕实际boolean或SQLSTATE，差异先存后停；SQL NULL/缺records/null及objectrecords/数组坏typed前后/跨audit两坏类型各双插入序/previous-only/no-match/真childxmin与回滚均有明确断言。observe仅lab invoker/限EXECUTE，setter仅owner，原helper不扩权；每fixtureROLLBACK恢复D3。04的170/180/40/42/3GiB/2MiB、加载/角色/可选统计/guard-signal/独立五表0/真实PGchildexit与保根协议复用，不新加RSS框架或冒内存PASS。
+
+准确新harness已交原QB只核新增差分，无旧source/04实证/原idproof家族套件重验；等待scope结论后由主控按持续授权实际决定一次运行。正式R3停，T45无新server scope；候选未采纳/未编号13层，目标未完成。远端前次a5abd79a推送已知超时，最后确认remote a9bd2883，本次本机先保全，实际push结果另核，不将本地commit当remote成功。
