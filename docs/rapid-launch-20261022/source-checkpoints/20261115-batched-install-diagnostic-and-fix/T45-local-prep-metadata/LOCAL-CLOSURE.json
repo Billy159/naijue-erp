@@ -1,0 +1,182 @@
+{
+  "actual161Installation": null,
+  "applicationModulesExecuted": false,
+  "liveCatalogSha256": null,
+  "overlays": [
+    {
+      "beforeSha256": null,
+      "bytes": 1574,
+      "owner": "D3",
+      "path": "tools/unified-import/batched-stream-cli-state.mjs",
+      "sha256": "e94791c912f74458dd5689201135c7d5ca03fe090cf42a7b47c389129c66dc43"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 4753,
+      "owner": "D3",
+      "path": "tools/unified-import/batched-stream-client.mjs",
+      "sha256": "6f11842e84374fb6ec847b1cd466cbebc4efa42a5902712b5bf5c6fb5eb3955c"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 1296,
+      "owner": "D3",
+      "path": "tools/unified-import/batched-stream-operation.mjs",
+      "sha256": "5c0d2fd7e99c4ed351e64e001ae9a8b5131ef9ea8dbfb1cecad1eb78488d7a7d"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 9607,
+      "owner": "D3",
+      "path": "tools/unified-import/batched-stream-plan.mjs",
+      "sha256": "0bf181628d33ee8312c0cae3028fab3e9a2e04822556a763e0a12bd6bf6b474f"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 4267,
+      "owner": "D3",
+      "path": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "sha256": "6cb420903d980521f32d7d2493471a3998628c45032c8621327bec123d85af92"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 2825,
+      "owner": "D3",
+      "path": "tools/unified-import/batched-stream-sql-reply.mjs",
+      "sha256": "091bb6223acaeeb27f85ce9e8fc883905179861b664fe00ad29e12c6c713f806"
+    },
+    {
+      "beforeSha256": "c8ebe66b671fa0b7903d744f7567f9c0fb1230ce5d7ff654ef7ab312e03c889b",
+      "bytes": 4552,
+      "owner": "D3",
+      "path": "tools/unified-import/cli.mjs",
+      "sha256": "e84144a5254a04c753f835b05b3d22769854ac94ef899abaa4cde0c79d8b8de5"
+    },
+    {
+      "beforeSha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "bytes": 29002,
+      "owner": "D3",
+      "path": "tools/unified-import/stream-import-cli.mjs",
+      "sha256": "13bc180126128f61c55c7a280dc3aaf018febae772a7e9314d31b3563ad050fd"
+    },
+    {
+      "beforeSha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "bytes": 10480,
+      "owner": "D3",
+      "path": "tools/unified-import/stream-program.mjs",
+      "sha256": "dae5a13547e645316859f58b5d0fed031ae1e4f1935694a00589106a6f64c0f9"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 391441,
+      "owner": "D1",
+      "path": "adapters/postgres/patches/0027_standard_batched_import_v1.sql",
+      "sha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 930265,
+      "owner": "D1",
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+      "sha256": "5c7d1506b4203ceaf62ab37229a4c840e03859af4856fcce7e45ba1c9ac28437"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 966121,
+      "owner": "D1",
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+      "sha256": "bb7d7bb7bbb6e13e5f52fdb74940287c723e22691b364f4e9e8bcadef637738b"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 1366941,
+      "owner": "D1",
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+      "sha256": "d50ed7228912055f375153263905605ac6205021462849948744a5af0fc2aa38"
+    },
+    {
+      "beforeSha256": "837574880881c3dc37bc4cb3e6a2319cd2b20646052caf681219ae2fd1fe6e0b",
+      "bytes": 63208,
+      "owner": "D1",
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "6ff50279922013cf2d832b902f855495bf7687c9d4b409f51d19cde8eab844fb"
+    },
+    {
+      "beforeSha256": "426cb98cec20ea91db1cfb8b8864d9c6c814813105ca34abe200b49907665fd3",
+      "bytes": 21149,
+      "owner": "D1",
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "d740a09fa6a87d1d0447239c0a20a991ce66361390b3423f311a8b11b046b00e"
+    },
+    {
+      "beforeSha256": "e2ae675821b88c459b0ad7f669faba39272aaa46b376dd7ff486c1be7fcdb9d4",
+      "bytes": 98132,
+      "owner": "D1",
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "bd57c5c4f545d9f674aa16aa16611144a95fe87f9e08a3a614446dba707ff934"
+    },
+    {
+      "beforeSha256": "6b2f2bc74f203b99a7cf98d4deade46b61cf894c0d17c7bcb41471b0b69518a7",
+      "bytes": 42673,
+      "owner": "D1",
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "sha256": "e764eb1de1335aff331d7976039ba9519d16bab16b685fe05e2a565bc58fee29"
+    }
+  ],
+  "parentSourceRowsSha256": "671153a592c4c753789e81fa9147ebc80b24bb882fbdd3ca16093e71f03a1854",
+  "parentUnchangedFiles": 363,
+  "references": [
+    {
+      "bytes": 334,
+      "path": "fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql",
+      "sha256": "0741b94139b125637f5f81b784b5229ec4537904ef93639aced8129f2a38ea0c"
+    },
+    {
+      "bytes": 851652,
+      "path": "fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql",
+      "sha256": "5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931"
+    },
+    {
+      "bytes": 4747,
+      "path": "fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql",
+      "sha256": "8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9"
+    },
+    {
+      "bytes": 29726,
+      "path": "fresh35-install-review-plan-20261105-r2/candidate-source-pins.json",
+      "sha256": "0d018a1dff6f26e81be64892f5af596fa2a3ad9f15be654acf44acb463dc4d51"
+    },
+    {
+      "bytes": 934749,
+      "path": "fresh35-install-review-plan-20261105-r2/expected-core-metadata.json",
+      "sha256": "2e2af3c2b8fa7460e2842e08d906bfee1114dd6c8d7d907ed5c3ed1e1c5ae480"
+    },
+    {
+      "bytes": 247508,
+      "path": "fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json",
+      "sha256": "3056cd7d6a36c6d08b712d2084d435807f448d9a7af2149ea723b40659efa47e"
+    },
+    {
+      "bytes": 8567,
+      "path": "fresh35-install-review-plan-20261105-r2/migration-lineage.json",
+      "sha256": "11290c3de0b9f1711f748643091e1c14f44f83006b6b8991fa5fd12daf61abad"
+    },
+    {
+      "bytes": 1344801,
+      "path": "fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json",
+      "sha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f"
+    },
+    {
+      "bytes": 1901706,
+      "path": "cloud-pg-schema178v2-20261105-r2/evidence/functions.json",
+      "sha256": "9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f"
+    }
+  ],
+  "relativeModuleLiteralsChecked": 1311,
+  "scope": "LOCAL_FILES_ONLY_NOT_RUNTIME_SOURCESET_OR_LIVE_CATALOG",
+  "sourceBytes": 47388356,
+  "sourceFiles": 380,
+  "sourceRowsSha256": "80ed00c35a05b8adf3ef8ec030d994dfd703b06036e2880ff111b2394c4db218",
+  "sourceSetSha256": null,
+  "unresolvedLiteralModuleReferences": []
+}

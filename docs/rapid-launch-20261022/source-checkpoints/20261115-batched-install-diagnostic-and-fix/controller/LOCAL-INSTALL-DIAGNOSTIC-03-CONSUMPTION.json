@@ -1,0 +1,15 @@
+{
+  "decisionId": "r3-batched-install-diagnostic-20261115-03-once",
+  "state": "CONSUMED_STOPPED_NO_RETRY",
+  "executionReceiptSha256": "28fdac4e1af11d5da0e8783be1f3d4fc7dbbcfde0548203a2c784d4ccb69501c",
+  "diagnosticSha256": "8ecbd49fbb5efa6e1b8a5ef9d23fa375e4a54f6624cec6eef6b1692f99ebd28b",
+  "actualFirstSqlState": "42601",
+  "actualSourceLine": 3126,
+  "actualMessage": "syntax error at or near \"REVOKE\"",
+  "actualParent155Verified": true,
+  "actual161Verified": false,
+  "scenarioCasesExecuted": 0,
+  "pgStopConfirmed": true,
+  "all20ChildrenReaped": true,
+  "rootPreserved": "/tmp/d3-install-diag-20261115-03"
+}

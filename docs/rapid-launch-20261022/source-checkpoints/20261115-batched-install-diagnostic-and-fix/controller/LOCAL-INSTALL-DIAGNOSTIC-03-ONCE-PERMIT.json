@@ -1,0 +1,50 @@
+{
+  "decisionId": "r3-batched-install-diagnostic-20261115-03-once",
+  "issuedAt": "2026-11-15 10:59 UTC",
+  "decisionMaker": "current controller under actual human standing authorization; not a new human click",
+  "userAuthority": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-同类隔离测量持续授权.md",
+    "sha256": "0c25f2a54db7eb37d7dd0b668df1793b73c7f9f85ea19228e6ceb7447ac9c591",
+    "quote": "类似这样的授权 后续都同意 我要睡觉了 你自己判断同意就好了"
+  },
+  "state": "APPROVED_ONE_INSTALL_ONLY_DIAGNOSTIC_NOT_EXECUTED",
+  "executor": "D3 existing owner",
+  "harness": {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-03",
+    "pinsSha256": "ede29e08ac674a6c95a9bb55351b9e63f36bfd56c02ddd67d6ec13f6959d3977",
+    "diffSha256": "21430e39a1a72d1a18561c48141d89d6371ef1a39d062c1493b1c8e707b946eb",
+    "runnerSha256": "1e3b693e445cc59dd951bcebd1fddde4144861ba30915fbc0ca4277d6d7c81a0",
+    "inputPinsSha256": "f654ab5e466aeef41111b95c38af43caf3013ec03a61b697ff2ab653fddfb72f",
+    "sqlSha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4",
+    "state": "INSTALL_ONLY_OLD_DB02_BOUNDED_FIRST_ERROR_SOURCE_FROZEN_NOT_RUN"
+  },
+  "readinessReview": "PG-DIAGNOSTIC03-REVIEW.json",
+  "scope": "Fresh isolated base35/12/actual155 then exact old DB02 installation only; capture bounded real first error; no161capture,fixture compilation,scenario,productionHost or server",
+  "limits": {
+    "workSeconds": 170,
+    "totalSeconds": 180,
+    "statementMs": 40000,
+    "responseMs": 42000,
+    "scratchAllocatedBytes": 3221225472,
+    "earlyScratchMarginBytes": 536870912,
+    "combinedLogReceiptBytes": 2097152,
+    "cleanupReceiptReservedBytes": 16384
+  },
+  "target": {
+    "database": "demo_8877_d3_install_diag_20261115_03",
+    "root": "/tmp/d3-install-diag-20261115-03",
+    "unixPort": 55493,
+    "tcp": false
+  },
+  "constraints": [
+    "exact03 pins and unused ATTEMPT before start",
+    "exact old DB02 SQL fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4; no repair mixed in",
+    "only one README03 command with original3 args",
+    "first install failure stops; successful install also stops before161/scenario",
+    "first-error diagnostic JSON <=4096B; no SQL/query/general stderr/credentials export",
+    "reuse02 final success-before-delete, all failures preserve only own root, actual stop/reap proof",
+    "do not restart or modify preserved old root",
+    "no retry under this decision, no server/R3/real data/genuine host"
+  ],
+  "latestStartBefore": "2026-11-15 11:09:00 UTC"
+}

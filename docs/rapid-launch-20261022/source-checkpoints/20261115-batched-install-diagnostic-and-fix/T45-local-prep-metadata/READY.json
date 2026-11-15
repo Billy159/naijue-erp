@@ -1,0 +1,18 @@
+{
+  "actual161Installation": null,
+  "authorityIssued": false,
+  "fullCompileRuns": 0,
+  "genuineHostInvoked": false,
+  "jobsSubmitted": 0,
+  "liveCatalogSha256": null,
+  "overlays": 17,
+  "planSha256": "f7ea06e3767cb806a3f4b7318206b97f43f1309d3b9ec35a585e0c3f767aec8b",
+  "postgresActions": 0,
+  "resultSha256": "6b879f687b16c14c5d4de78e8770c9aa20e9fee3dc64bdf6b1c3a9dad1472b63",
+  "serverReads": 0,
+  "sourceFiles": 380,
+  "sourceRowsSha256": "80ed00c35a05b8adf3ef8ec030d994dfd703b06036e2880ff111b2394c4db218",
+  "staticRelativeModuleReferences": "ALL_LITERAL_RELATIVE_IMPORTS_RESOLVE; no application module execution",
+  "status": "LOCAL_MATERIALS_PREPARED_SERVER_EXECUTION_NOT_AUTHORIZED",
+  "task": "R3-BATCHED-CARRIER-PREP-01"
+}

@@ -6824,6 +6824,80 @@
               "serverActions": 0,
               "formalLaunch": false
             }
+          },
+          {
+            "group": "r3-batched-install-diagnostic-firsterror-and-separator-fix-20261115-1106",
+            "status": "ACTUAL_42601_3126_PROVEN_FIX_SOURCE_PASS_04_RUNTIME_PENDING",
+            "evidence": {
+              "snapshot": {
+                "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-install-diagnostic-and-fix",
+                "files": 50,
+                "bytes": 3399644,
+                "manifestSha256": "2301762266dbd18a7e8c80afdfbe62c742558237dc7b5b3e831f0c17786ebf9b"
+              },
+              "diagnostic03": {
+                "state": "STOPPED_ONCE_CONSUMED",
+                "sqlState": "42601",
+                "sourceLine": 3126,
+                "message": "syntax error at or near \"REVOKE\"",
+                "diagnosticSha256": "8ecbd49fbb5efa6e1b8a5ef9d23fa375e4a54f6624cec6eef6b1692f99ebd28b",
+                "executionReceiptSha256": "28fdac4e1af11d5da0e8783be1f3d4fc7dbbcfde0548203a2c784d4ccb69501c",
+                "resultPinsSha256": "3ad810650503beac5288f773c6f95a7ce50ff6fd43cf558e916d2597d9c97912",
+                "parent155Verified": true,
+                "cases": 0,
+                "rowsImported": 0,
+                "pgStopped": true,
+                "all20ChildrenReaped": true,
+                "rootPreserved": "/tmp/d3-install-diag-20261115-03",
+                "elapsedSeconds": 1.9675485,
+                "peakAllocatedBytes": 47480832,
+                "serverActions": 0
+              },
+              "diagnostic03PermitSha256": "9080ad271c3321f35582ed8ce8855449a6c46791e5e6d0ff3fe09fbfab7571de",
+              "diagnostic03ReviewSha256": "998e7c363157433ebb57f304c20cfa8b28acc60cd313db4bbbad59994c78f67b",
+              "dbFix03": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
+                "pinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+                "sqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+                "change": "single statement semicolon at source3124 and renderer separator emission;161 model/body/definition unchanged",
+                "pgExecuted": false
+              },
+              "hostDelta02": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/HOST-INSTALL-DELTA-02",
+                "pinsSha256": "53b32bf5d9580b7d8b869aa36968f5909ec0e6576630a3015f00fddb3f023cf1",
+                "sourceClosureSha256": "3dec5df95ef8296d0cd3a53044d3f10c52a25731ec1ea8cf737db829b6f9dd49",
+                "hostSha256": "fffa534bbc7e0918f42a473b70272af008be39c63d0bf7805cba47fad9c2d490",
+                "change": "only corrected SQL and DB candidate binding pin",
+                "pgExecuted": false
+              },
+              "fixReviewSha256": "d32e787fcba75eb58d6973ad4ebe110646946589dd90dea77b0a0f6d54463319",
+              "harness04": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04",
+                "pinsSha256": "e165b92a3e74c0c919dd8e810bb4a8f8d6837456cbf54bedeae56c1661224f14",
+                "runnerSha256": "13b2e845ed7016ba58be55c79c9ed5de7e62de1d1b1d70fc659b4db2bc855996",
+                "delta02Sha256": "20e52e8d7956c0b57879b35cef727abe474f7ba8f7bc4a87b6b2dce03bbc78cd",
+                "delta03Sha256": "08b8faf4eae2dd409e235f25c7bdefdf48ac1e7175fbbeb799c37b1ed71cc105",
+                "inputPinsSha256": "54529c9ef1d2ab7ca8b85a1a653778ac70254558542864381a246bf175f1bae5",
+                "state": "FROZEN_162_FIXED_INSTALL_04_PENDING_QB_0NEW_PG"
+              },
+              "t45LocalPrep": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-carrier-prep-local-01",
+                "pinsSha256": "dfea5a903c8925060e0837007a6c6fc9ee4a64a373d5f65cda4aeeb5e1822a58",
+                "sourceRowsSha256": "80ed00c35a05b8adf3ef8ec030d994dfd703b06036e2880ff111b2394c4db218",
+                "planSha256": "f7ea06e3767cb806a3f4b7318206b97f43f1309d3b9ec35a585e0c3f767aec8b",
+                "files": 380,
+                "bytes": 47388356,
+                "sourceState": "LOCAL_ASSEMBLED_NOT_RUNTIME_SOURCESET_OR_ACTUAL_CATALOG",
+                "genuineSyntheticGap": "FIRST_REAL requires REAL and production target;162/247 SYNTHETIC not admissible",
+                "serverActions": 0
+              },
+              "actualPgExecutions": 2,
+              "actual161Verified": false,
+              "scenarioCasesExecuted": 0,
+              "businessRowsImported": 0,
+              "serverActions": 0,
+              "formalLaunch": false
+            }
           }
         ],
         "currentInFlight": {
@@ -6836,16 +6910,16 @@
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
             "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "ACTUAL_DB02_INSTALL_FAILED_STATIC_SEPARATOR_FIX_DB03_PREPARING",
+            "state": "DB_FIX03_AND_HOST_DELTA02_SCOPED_SOURCE_PASS_RUNTIME_PENDING",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
-            "work": "PG17.11 base35/12/155 matched; DB02 psql exit3, exact first SQLSTATE missing. Found definite missing statement semicolon at source-slices3124 before REVOKE3126; cannot yet label actual first error. Prepare immutable minimal DB03+HOST pin delta, noPG."
+            "work": "Independent SQL+1byte at3124 and renderer separator fixed;161expected bytes unchanged. Host only candidate binding pin4589\u2192FIX035ad8 plus corrected SQL; SOURCE-CLOSURE3dec5df9. Await actual corrected161 install/scene evidence."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
             "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "FIRST_PG_ONCE_CONSUMED_STOPPED_INSTALL_ONLY_DIAGNOSTIC03_PREPARING",
+            "state": "DIAG03_ONCE_CONSUMED_42601_3126_PROVEN_04_FULL162_FROZEN",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
-            "work": "02 actual2.31s47.5MB/155 verified then DB02 install failure; cases0/rows0/161notverified. PGexit0,20children reaped, failed root preserved. New03 source-only install diagnostic keeps oldDB02 exact bytes, bounded first-error export; no next permit yet."
+            "work": "03 actual oldDB02 firsterror42601/source3126 REVOKE;155again verified,PGexit0/all20reaped,newfailedrootpreserved. 04 fixedSQL07dc+originalDB02 model explicit, original162sixscenes restored/02finally; no04attempt. QBdelta readiness then mainonce."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -6854,13 +6928,13 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "HOST01_SOURCE_PASS_RUNNER02_READINESS_PASS_RUNTIME_FAILURE_EVIDENCE_PENDING",
-            "work": "Scoped source reviews remain historical source-only; actual install fail not passed. Next exact diagnostic03 delta/then only DB03 affected separator/pins review, no repeat old source chain."
+            "state": "REVIEWING_04_MINIMAL_INSTALL_BINDING_AND_RESTORED_SCENE_DELTA",
+            "work": "FIX03/HOST02 exact source deltaPASS d32e787f;03diag sourcePASS998e7c36 actualfirsterror recorded. 04 only install binding/newtarget/oldscene restored/diagpath/finally check, no re-audit."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "LOCAL_BATCHED_CARRIER_PREP_ONLY_GENUINE_SYNTHETIC_APPLICABILITY_GAP",
-            "work": "Assembling fixed17overlay source locally,0server. FIRST_REAL genuine path only original real inputs,162/247 SYNTHETIC cannot be relabeled; gap identified, no bypass/newprofile implementation. Hold runtime until actual161 fix."
+            "state": "LOCAL_380_SOURCE_ASSEMBLY_COMPLETE_NO_SERVER_HOLD_RUNTIME",
+            "work": "Prepared original370+D3nine+D1eight=380 locally, exact9 reference inputs located; oldSQL stage01 not yet corrected/runtime. FIRST_REAL accepts REAL production input only; SYNTHETIC162/247 not genuinehost-admissible. No newprofile/bypass/server."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
@@ -6879,12 +6953,12 @@
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "NO_UNVERIFIED_ETA",
-          "nextCheckpointScope": "Get real first DB02 installation error under separately frozen install-only03 diagnostic, then exact renderer separator fix and corrected161 installation; preserve all failed roots and once decisions",
+          "nextCheckpointScope": "04scoped readiness \u2192 mainonce \u2192 corrected155\u2192161 actual install and original162six real-PG cases; then genuinehost legality/currentLinux materialization",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-first-pg-result",
-            "files": 28,
-            "bytes": 1613055,
-            "manifestSha256": "b0005b0f8f23840c9871d51e69497a5e3dbdc4fa9030b191feff784ea623e967"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-install-diagnostic-and-fix",
+            "files": 50,
+            "bytes": 3399644,
+            "manifestSha256": "2301762266dbd18a7e8c80afdfbe62c742558237dc7b5b3e831f0c17786ebf9b"
           }
         },
         "independentDeltaReviewer": "QB",

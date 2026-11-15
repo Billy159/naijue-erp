@@ -1,0 +1,17 @@
+{
+  "scope": "FIXED_DB02_STATIC_INSTALL_ONLY",
+  "sourceSqlPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/sql/source-slices.sql",
+  "sourceSqlSha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4",
+  "exitCode": 3,
+  "firstError": {
+    "sqlState": "42601",
+    "message": "syntax error at or near \"REVOKE\""
+  },
+  "sourceLineNumber": 3126,
+  "contextFrames": [],
+  "serverLocation": "scanner_yyerror, scan.l:1248",
+  "diagnosticParsed": true,
+  "maxExportBytes": 4096,
+  "fullSqlExported": false,
+  "genericLogsExported": false
+}

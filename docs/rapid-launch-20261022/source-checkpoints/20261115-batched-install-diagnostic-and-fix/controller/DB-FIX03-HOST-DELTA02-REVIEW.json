@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_DELTA_PASS_DB_FIX03_HOST_DELTA02",
+  "messages": [
+    {
+      "turnId": "01a1dedd-3906-7ff1-917d-76cc51f86682",
+      "id": "exec-052f8529-3b2a-4ae7-aa49-e7033c0a32a6",
+      "status": "completed",
+      "prompt": "QB 最小分号+绑定修正版差分结论：SCOPED SOURCE DELTA PASS；Standards/Spec未见新增明确缺陷，未运行PG/host/旧模块或测试套件。DB-INSTALL-FIX-03 PINS 5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a 与 HOST-INSTALL-DELTA-02 PINS 53b32bf5d9580b7d8b869aa36968f5909ec0e6576630a3015f00fddb3f023cf1 均准确。\n\n直接比较冻结DB02 SQL与FIX03/source-slices.sql：长度只增1字节，唯一差分为3124行 END $function$ → END $function$;，分号位于六参command CREATE语句结尾、随后REVOKE之前，在函数body/规范definition之外。新SQL SHA 07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef；宿主overlay的SQL与其逐字相同。renderer59行只在append安装文本时追加分号+真实LF（AST常量字节[59,10]，rstrip的是LF），不改command_definition对象；未执行renderer。161原模型/正文/规范definition仍指DB02原件，SQL的单字节差分也独立证明没有改函数body/签名/owner/ACL/顺序，不重读161语义。\n\n直接比较HOST01→HOST-INSTALL-DELTA-02 fresh35-host-session：唯一差分989行 batchedDbCandidatePinsSha256 从4589…切到准确FIX03 5ad8…；新host SHA fffa534bbc7e0918f42a473b70272af008be39c63d0bf7805cba47fad9c2d490。SOURCE-CLOSURE SHA 3dec5df95ef8296d0cd3a53044d3f10c52a25731ec1ea8cf737db829b6f9dd49 的8源项仅host与SQL两项变化，其他6源项及D3exact9 overlay pin保留，明确DB02 parent4589…与新安装delta5ad8…各自身份。既有loader已把两变路径纳入currentSourcePins，当前sourceSet及依赖catalogSpec由最终同树实算；新精确授权因此需新的DBbundle/source/spec绑定，没有伪造live值或授权，也没把未改HOST01称为新修正版。\n\n原字节DB02诊断03与FIX03安装是两个不同输入，不可互换旧许可或覆盖历史。当前仍只是修复源文本及绑定准确通过；静态缺分号不等于实际首错，安装/实际161/canonical+ACL/genuine host/当前C与有限时窗/新root-owned授权及业务运行仍待各自真实证据。"
+    }
+  ]
+}

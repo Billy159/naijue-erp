@@ -1,0 +1,215 @@
+{
+  "compiled": false,
+  "files": [
+    {
+      "bytes": 1575,
+      "path": "approvals/scope/approval.json",
+      "sha256": "453b8d7c41b5dfb5f9d2b0cbc7265af4ecaf31d5fa5f34aedf0a4bf2e2988637"
+    },
+    {
+      "bytes": 2265,
+      "path": "approvals/scope/explicit.jsonl",
+      "sha256": "11a069cd86d25a73d1ad6bece0dc7e06103179d7a58e6518059fff3e6bd4a574"
+    },
+    {
+      "bytes": 1300,
+      "path": "approvals/scope/input-manifest.json",
+      "sha256": "2b8bf31be53e2d787cc26d8e56fddf0599c267c3ffd84375bda606a08452502a"
+    },
+    {
+      "bytes": 44107,
+      "path": "approvals/scope/registry.jsonl",
+      "sha256": "efba198881e7604c343355c115bf69c4e77aa52206770ce71e461f4c0aa9e192"
+    },
+    {
+      "bytes": 782,
+      "path": "approvals/scope/skus.jsonl",
+      "sha256": "5ca7c18ee6b6d229aa99c01d9f99fa089b73d3b1de19f9bf13a171a742140fdf"
+    },
+    {
+      "bytes": 0,
+      "path": "approvals/scope/unknown.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 184,
+      "path": "approvals/scope/warehouses.jsonl",
+      "sha256": "314aa843ac1583c78ed487fe0a7afe1a18af650e74823c2a17ad6e08d5cc17b5"
+    },
+    {
+      "bytes": 1053,
+      "path": "fixture.json",
+      "sha256": "bd50d502eb8157212811612e0d237bf88ed0fa0b39ae33d017052af0ef7206db"
+    },
+    {
+      "bytes": 3405,
+      "path": "package/barcode_scheme.jsonl",
+      "sha256": "c91f3eb818c4fe2c4a67e88aa30d3605d9547ec9dc064f92a028812935370da4"
+    },
+    {
+      "bytes": 903,
+      "path": "package/color.jsonl",
+      "sha256": "2872e5f580220586b7f8dd4628844b9e7154ef207b99b93baf462835c557f5ce"
+    },
+    {
+      "bytes": 1316,
+      "path": "package/customer.jsonl",
+      "sha256": "b8454943b3c1e4a766db37b54eadeac93f0c30e1cf8d5833117eda15f0cb46f6"
+    },
+    {
+      "bytes": 719,
+      "path": "package/decisions.json",
+      "sha256": "24bc91cd6261f6001910518f59205bd48fc38412fa0177c7bbe604305ad6a091"
+    },
+    {
+      "bytes": 0,
+      "path": "package/exceptions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 582,
+      "path": "package/fit.jsonl",
+      "sha256": "4a3d1b3b425e24edfc72dfd94a25a003481c1813b429d84a98cc00e363402f21"
+    },
+    {
+      "bytes": 1182,
+      "path": "package/hall.jsonl",
+      "sha256": "1d8c37ac19eddb93cd9e682ac78f02bbccb849c1657197219a7b015504d04bf1"
+    },
+    {
+      "bytes": 44107,
+      "path": "package/identity-registry.jsonl",
+      "sha256": "efba198881e7604c343355c115bf69c4e77aa52206770ce71e461f4c0aa9e192"
+    },
+    {
+      "bytes": 5961,
+      "path": "package/inventory_baseline.jsonl",
+      "sha256": "39eb99b9bbf368ebbe1921ba842ec860a2bbd6ded147e9673b3cc99ee61164ad"
+    },
+    {
+      "bytes": 7330,
+      "path": "package/manifest.json",
+      "sha256": "d0ec7f649304d9f0e069f1e9d0f527e72c1d4bd4cff85f9cfc26c156377e254e"
+    },
+    {
+      "bytes": 1428,
+      "path": "package/payment_account.jsonl",
+      "sha256": "52ffb4487fdfc1f213bc2fcafd0a4a61d774fa9fac9f96209290794d8d58fd2c"
+    },
+    {
+      "bytes": 2472,
+      "path": "package/payment_account_hall.jsonl",
+      "sha256": "68d0ea9454f605f8cbc8da916f43af7dbe55cd420c8b53b976f4cf8e4d61d646"
+    },
+    {
+      "bytes": 590,
+      "path": "package/payment_method.jsonl",
+      "sha256": "9546b0181362f3eeb19ddedda2f3d63d67648410a3048a2d7685151e14c18667"
+    },
+    {
+      "bytes": 4460,
+      "path": "package/product.jsonl",
+      "sha256": "d8f7e03f93b9b707a87e27da01c3776ffc4dcf79ccba3829957eb678dc0a2ff9"
+    },
+    {
+      "bytes": 678,
+      "path": "package/product_category.jsonl",
+      "sha256": "9450a1b35c59df06ef96ae1cde555beda2bdbc6b1ec5fbf6de56ad89199de8f8"
+    },
+    {
+      "bytes": 0,
+      "path": "package/product_image.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1895,
+      "path": "package/reconciliation.json",
+      "sha256": "eedaaf2f24afb95a974a6f0a7fe6618dbf7710feb5b09a213d32630d09344381"
+    },
+    {
+      "bytes": 7208,
+      "path": "package/sales_header.jsonl",
+      "sha256": "c9b0d1470c428c766a7ae0e4a261cf546b0c2e18f056cbf15540ba39503ace43"
+    },
+    {
+      "bytes": 13951,
+      "path": "package/sales_line.jsonl",
+      "sha256": "56237f9108a82c5c96da55f3a827603fe9d42f254d511731ecc4fda9339ef33b"
+    },
+    {
+      "bytes": 3126,
+      "path": "package/sales_settlement.jsonl",
+      "sha256": "db4f07cdd9d92eb7f2dfb282a173751e3ad7710f2bf85db0b0841e9b402bf9bf"
+    },
+    {
+      "bytes": 0,
+      "path": "package/season.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2008,
+      "path": "package/size.jsonl",
+      "sha256": "9bd621affc5a0522f32d8b85299ccddc7fae1a3900425f459ed10482a1fef2da"
+    },
+    {
+      "bytes": 544,
+      "path": "package/size_group.jsonl",
+      "sha256": "677afca7ad3f61494628367faea4afc21d92b62597e25e5b0fb3b8fc0ccc4dd6"
+    },
+    {
+      "bytes": 2528,
+      "path": "package/size_group_member.jsonl",
+      "sha256": "c949658fcb0800d58ee8db0aa2071308e1f87d444fb4c8daa149eddce6356b35"
+    },
+    {
+      "bytes": 8397,
+      "path": "package/sku.jsonl",
+      "sha256": "c2bb783339ad6dc6c22ed286d9c5f7a62aaf8f4c145c0c045ef6b1e71f1fdbbc"
+    },
+    {
+      "bytes": 4683,
+      "path": "package/sku_barcode.jsonl",
+      "sha256": "50888d956359aff6964840c4da75aa454a4f7c4a018236837a57222818e8cd56"
+    },
+    {
+      "bytes": 1835,
+      "path": "package/staff.jsonl",
+      "sha256": "8fa372406028a41297c8eac4c82a2c5bcc2df4c8b700c8530cfd219ef0ce032a"
+    },
+    {
+      "bytes": 987,
+      "path": "package/supplier.jsonl",
+      "sha256": "7b3e920d588111b82f417a0808b321eb13f43a26a7e3d6d79dcb6eb86993e5c9"
+    },
+    {
+      "bytes": 2349,
+      "path": "package/transfer_header.jsonl",
+      "sha256": "94ae1f681a89d2c845217fcd07ac8a0cfadce588b7999103cf6e838a64a09dc7"
+    },
+    {
+      "bytes": 4288,
+      "path": "package/transfer_line.jsonl",
+      "sha256": "6c5943520e202be383d432001d1ff77802300a9986e65e2f84774406ef1d29a1"
+    },
+    {
+      "bytes": 1428,
+      "path": "package/warehouse.jsonl",
+      "sha256": "a18c35d81016818145ef6e2ed940f04a834b2e93cec41d123fea7c7e2708cd0e"
+    },
+    {
+      "bytes": 40,
+      "path": "synthetic-sources/SYNTHETIC-alignment-evidence.txt",
+      "sha256": "4529024c8320a15aaaa18e59cd2263c0f97f637c23c945960963536b5e035ff1"
+    },
+    {
+      "bytes": 56,
+      "path": "synthetic-sources/SYNTHETIC-source-description.txt",
+      "sha256": "69f6c2d98e293f2d6d071d88a717d66151928efc59497cc0c9e99a73e4dd00e7"
+    }
+  ],
+  "manifestSha256": "d0ec7f649304d9f0e069f1e9d0f527e72c1d4bd4cff85f9cfc26c156377e254e",
+  "origin": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261114-r3-mixed-scale-design-01/smoke-base",
+  "postgresExecuted": false,
+  "rows": 162,
+  "scope": "FROZEN_162_ROW_SQL_CORE_INPUT_ONLY_NOT_FIRST_REAL_HOST_AUTHORITY"
+}

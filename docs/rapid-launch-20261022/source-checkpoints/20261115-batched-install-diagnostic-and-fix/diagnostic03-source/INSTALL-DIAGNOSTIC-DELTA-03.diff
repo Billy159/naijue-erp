@@ -1,0 +1,150 @@
+--- 02/run-local.py
++++ 03/run-local.py
+@@ -1,4 +1,4 @@
+-"""One disposable 162-row real SQL-core chain. Source preparation only until QB/main authorization."""
++"""One disposable DB02 install-only diagnostic. Source preparation only until QB/main authorization."""
+ import hashlib,json,os,re,shutil,signal,subprocess,sys,threading,time
+ from pathlib import Path
+ class SafetyError(Exception):
+@@ -80,13 +80,40 @@
+   if lines is not None:lines.put(None)
+ def reader(*args,**kw):
+  t=threading.Thread(target=drain,args=args,kwargs=kw,daemon=True);t.start();threads.append(t);return t
+-def run(args,input_bytes=None,timeout=40,allow_failure=False):
++def save_install_diagnostic(stderr,exit_code,sql_path):
++ # Only the fixed static DB02 install is eligible. Never export LINE/QUERY,
++ # statement echoes, bootstrap output, generic stderr, or connection arguments.
++ require(sql_path==Path(config['candidate02'])/'sql/source-slices.sql','diagnostic_source_scope')
++ text=stderr.decode('utf-8','replace');lines=text.splitlines()
++ error=None;source_line=None;context=[];location=None
++ for index,line in enumerate(lines):
++  match=re.fullmatch(r'psql:'+re.escape(str(sql_path))+r':(\d+): (?:ERROR|FATAL|PANIC):\s+([0-9A-Z]{5}): (.*)',line)
++  if match:
++   source_line=int(match[1]);error={'sqlState':match[2],'message':match[3].encode()[:1500].decode('utf-8','ignore')}
++   # Keep stack frames only; quoted SQL statement contexts are not exported.
++   for following in lines[index+1:]:
++    if re.match(r'(?:psql:.*: )?(?:ERROR|FATAL|PANIC):',following):break
++    frame=re.fullmatch(r'(?:CONTEXT:  )?(PL/pgSQL function [a-zA-Z0-9_.,()\[\] ]+ line \d+ at [a-zA-Z ]+)',following)
++    if frame and len(context)<3:context.append(frame[1][:220])
++    place=re.fullmatch(r'LOCATION:  ([a-zA-Z0-9_., :/+-]+)',following)
++    if place:location=place[1][:250]
++   break
++ value={'scope':'FIXED_DB02_STATIC_INSTALL_ONLY','sourceSqlPath':str(sql_path),
++  'sourceSqlSha256':hashlib.sha256(sql_path.read_bytes()).hexdigest(),'exitCode':exit_code,
++  'firstError':error,'sourceLineNumber':source_line,'contextFrames':context,'serverLocation':location,
++  'diagnosticParsed':error is not None,'maxExportBytes':4096,'fullSqlExported':False,'genericLogsExported':False}
++ require(len((json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode())<=4096,'diagnostic_export_cap')
++ save('DB02-INSTALL-DIAGNOSTIC.json',value)
++def run(args,input_bytes=None,timeout=40,allow_failure=False,diagnostic_sql=None):
+  p=spawn(args,stdin=subprocess.PIPE if input_bytes is not None else subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+- out=bytearray();a=reader(p.stdout,destination=out);b=reader(p.stderr)
++ out=bytearray();install_stderr=bytearray() if diagnostic_sql is not None else None
++ a=reader(p.stdout,destination=out);b=reader(p.stderr,destination=install_stderr)
+  if input_bytes is not None:p.stdin.write(input_bytes);p.stdin.close()
+  try:p.wait(timeout=min(timeout,max(.1,deadline-time.monotonic())))
+  except subprocess.TimeoutExpired:fail('child_timeout');raise SafetyError('child_timeout')
+- a.join(2);b.join(2);check();require(allow_failure or p.returncode==0,'child_exit_failure');return bytes(out)
++ a.join(2);b.join(2)
++ if diagnostic_sql is not None:save_install_diagnostic(bytes(install_stderr),p.returncode,diagnostic_sql)
++ check();require(allow_failure or p.returncode==0,'child_exit_failure');return bytes(out)
+ def allocated(root):
+  total=0;stack=[root]
+  while stack:
+@@ -115,8 +142,8 @@
+  for item in json.loads((base/'INPUT-PINS.json').read_text()):
+   require(hashlib.sha256(Path(item['path']).read_bytes()).hexdigest()==item['sha256'],'input_pin_mismatch')
+  require(not any((base/n).exists() for n in ['ATTEMPT.json','RUN.json','FAILURE.json']),'single_attempt_already_used')
+- require(config['database']=='demo_8877_d3_batched_20261115_01','fixed_database_required')
+- save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY'})
++ require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_install_diag_20261115_03','/tmp/d3-install-diag-20261115-03',55493),'fixed_diagnostic_identity_required')
++ save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_DB02_INSTALL_ONLY'})
+  candidate_root=Path(config['workRoot'])
+  candidate_root.mkdir(mode=0o700)
+  work=candidate_root
+@@ -167,22 +194,17 @@
+  candidate=Path(config['candidate02'])
+  require(hashlib.sha256((candidate/'PINS.json').read_bytes()).hexdigest()==config['candidatePinsSha256'],'candidate02_pin_mismatch')
+  phase='install_db02_161'
+- sql(f'SET ROLE {owner};\n'+(candidate/'sql/source-slices.sql').read_text(),database)
+- # DB02 source-slices already contains its exact minimal group ACL. Do not
+- # execute separate group-access or older candidate01 after this installation.
+- phase='real_restricted_engine_scenario'
+- result=json.loads(run([node,base/'scenario.mjs'],timeout=170,allow_failure=True))
+- if result.get('state')!='COMPLETED' and (result.get('code') in ('42501','28000','28P01') or (result.get('lastSqlFailure') or {}).get('sqlState') in ('42501','28000','28P01')):permission_fault=True
+- save('SQL-CORE-OBSERVATIONS.json',result)
+- require(result.get('stage')=='SQL_CORE' and result.get('state')=='COMPLETED','sql_core_scenario_failed')
+- require(result.get('fixtureRows')==162 and len(result.get('events',[]))==6,'sql_core_scope_changed')
++ sql_path=candidate/'sql/source-slices.sql'
++ run([pg/'psql','-XqAt','-h',work,'-p',str(config['socketPort']),'-U',config['bootstrap'],'-d',database,
++  '-v','ON_ERROR_STOP=1','-v','VERBOSITY=verbose','-c',f'SET ROLE {owner};','-f',sql_path],timeout=42,diagnostic_sql=sql_path)
++ # Stop after this fixed installer. No 161 admission/readback, fixture or scenario.
+  phase='clean_shutdown'
+  os.kill(server.pid,signal.SIGINT);server.wait(timeout=5)
+  pg_stop_confirmed=server.returncode==0 and not (cluster/'postmaster.pid').exists()
+  for thread in threads:thread.join(timeout=1)
+- check();save('RUN.json',{'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY','state':'CORE_FINISHED_PENDING_FINAL_CLEANUP','fixtureRows':162,
+-  'expectedFunctions':161,'businessTables':35,'scenarioCases':6,'serverActions':0,'realSourceRowsRead':0,
+-  'productionHostTested':False,'v2HallAmountRetentionNewPgProof':False,'rawOutputExported':False})
++ check();save('RUN.json',{'scope':'LOCAL_DB02_INSTALL_ONLY','state':'INSTALL_FINISHED_PENDING_FINAL_CLEANUP',
++  'fixtureRowsImported':0,'scenarioCases':0,'actual161Verified':False,'serverActions':0,'realSourceRowsRead':0,
++  'productionHostTested':False,'rawOutputExported':False,'boundedDb02DiagnosticExported':True})
+  success=True
+ except Exception as error:
+  permission_fault=isinstance(error,PermissionError)
+@@ -232,7 +254,7 @@
+   'rawPostgresLogBytesHeldInMemory':len(raw_log),'rawOtherBytes':raw_other,'rawOutputExported':False,
+   'guardFault':fault,'successful':success})
+  except Exception:success=False
+-try:save('RESULT.json',{'state':'COMPLETED' if success else 'STOPPED','cleanupConfirmed':pg_stop_confirmed and all_reaped and removed and not signal_errors and not permission_fault,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY','productionHostTested':False,'rawOutputExported':False})
++try:save('RESULT.json',{'state':'COMPLETED' if success else 'STOPPED','cleanupConfirmed':pg_stop_confirmed and all_reaped and removed and not signal_errors and not permission_fault,'scope':'LOCAL_DB02_INSTALL_ONLY','productionHostTested':False,'rawOutputExported':False})
+ except Exception:success=False
+ print(json.dumps({'state':'COMPLETED' if success else 'STOPPED','rawOutputExported':False}))
+ sys.exit(0 if success else 1)
+--- 02/TARGET.json
++++ 03/TARGET.json
+@@ -1,7 +1,7 @@
+ {
+-  "database": "demo_8877_d3_batched_20261115_01",
+-  "workRoot": "/tmp/d3-batched-core-20261115-01",
+-  "socketPort": 55491,
++  "database": "demo_8877_d3_install_diag_20261115_03",
++  "workRoot": "/tmp/d3-install-diag-20261115-03",
++  "socketPort": 55493,
+   "bootstrap": "d3_bootstrap",
+   "owner": "fresh35_owner_20261105_r1",
+   "controller": "fresh35_controller_20261105_r1",
+@@ -27,6 +27,6 @@
+     "scratchBytes": 3221225472,
+     "logBytes": 2097152
+   },
+-  "scope": "LOCAL_RESTRICTED_SQL_CORE_ONLY_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
++  "scope": "LOCAL_DB02_INSTALL_ONLY_NO_SCENARIOS_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
+   "executionAuthorizationAtPreparation": "NOT_GRANTED_SOURCE_PREPARATION_ONLY"
+ }
+--- 02/INSTALL-ORDER.json
++++ 03/INSTALL-ORDER.json
+@@ -8,7 +8,7 @@
+   {
+     "order": 2,
+     "phase": "full 35-table base, patchBodies, admin provision, SQL38",
+-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-02/base-install.sql",
++    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-03/base-install.sql",
+     "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+   },
+   {
+@@ -91,14 +91,8 @@
+   },
+   {
+     "order": 16,
+-    "phase": "DB02 includes minimal group ACL, do not apply group-access separately",
++    "phase": "Original DB02 static SQL, verbose first-error diagnostic <=4KiB; stop after installer; no 161 readback or scenarios",
+     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/sql/source-slices.sql",
+     "sha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4"
+-  },
+-  {
+-    "order": 17,
+-    "phase": "actual 161 model readback, current stream compilation and six-case real SQL-core chain",
+-    "command": "node scenario.mjs",
+-    "expectedModel": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-MODEL.json"
+   }
+ ]

@@ -1,0 +1,11 @@
+--- DB-CANDIDATE-02/sql/source-slices.sql
++++ DB-INSTALL-FIX-03/source-slices.sql
+@@ -3121,7 +3121,7 @@
+  -- before returning to the execute-only role. No trigger or constraint is skipped.
+  -- Whole package: deferred constraints fire only after both final publications.
+  RETURN jsonb_build_object('protocol','STANDARD_IMPORT_SQL_V1','operation_id',operation,'batch_id',batch,'request_sha256',fingerprint,'state','PENDING_TRANSACTION','sequence',cp->'sequence','cursor',cp->'cursor','receipt',result);
+-END $function$
++END $function$;
+ 
+ REVOKE ALL ON FUNCTION naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer,jsonb) FROM PUBLIC;
+ -- Source candidate. Install only with the matching command and commit guards.

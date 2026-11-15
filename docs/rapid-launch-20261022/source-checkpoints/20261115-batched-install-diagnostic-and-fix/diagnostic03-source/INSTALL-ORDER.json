@@ -1,0 +1,98 @@
+[
+  {
+    "order": 1,
+    "phase": "fixed fixture roles and new demo_8877 database",
+    "source": "run-local.py literal recipe",
+    "sourceRecipe": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/LOCAL-SQL-CORE-RECIPE.md"
+  },
+  {
+    "order": 2,
+    "phase": "full 35-table base, patchBodies, admin provision, SQL38",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-03/base-install.sql",
+    "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+  },
+  {
+    "order": 3,
+    "phase": "parent12 layer 1",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/01-ten-routines.sql",
+    "sha256": "1f3deac19334fc58b5ace7a9d69fc727110eb64252208b784112dc9f88c37951"
+  },
+  {
+    "order": 4,
+    "phase": "parent12 layer 2",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/02-single-read.sql",
+    "sha256": "c0ed3f987a097a58c950c9bc015c909a563ac3e1e01aeb7ef355b1e4cb968427"
+  },
+  {
+    "order": 5,
+    "phase": "parent12 layer 3",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/03-on-demand-context.sql",
+    "sha256": "3c2b3caaaeef1766b9ec435704863a43e87de3d54445762b8a6b43e037f438d8"
+  },
+  {
+    "order": 6,
+    "phase": "parent12 layer 4",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/04-inventory-readiness.sql",
+    "sha256": "151f739e1427fd32fd0c7edd00253de8715442d5e4fa431e24bc8f1182d6cedf"
+  },
+  {
+    "order": 7,
+    "phase": "parent12 layer 5",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/05-prior-lookup.sql",
+    "sha256": "60c4d1af0ba99380d64eaef853451db6188f8414cf749dd4fe45898b557a6787"
+  },
+  {
+    "order": 8,
+    "phase": "parent12 layer 6",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/06-root-single-scan.sql",
+    "sha256": "fc63b9c28a6113f1f242305c3a06aeb110b9d79a5f58505e06ce330552ccab09"
+  },
+  {
+    "order": 9,
+    "phase": "parent12 layer 7",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/07-execute-authority.sql",
+    "sha256": "0c7d80d25fcbd078151226326cedd96e3ecfd8b90ce3014129f971af85fe020f"
+  },
+  {
+    "order": 10,
+    "phase": "parent12 layer 8",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/08-witness-request.sql",
+    "sha256": "f4e56d34846049f7a43319da6d6b1f3f32e8b31be9b48ffc2173f473968e1dd9"
+  },
+  {
+    "order": 11,
+    "phase": "parent12 layer 9",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/09-root-branches-import-index.sql",
+    "sha256": "dc03d84e9da6f4abaeb073395ff608624781dd8c5fd30db5921c13393941bff4"
+  },
+  {
+    "order": 12,
+    "phase": "parent12 layer 10",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/10-party-set-proof.sql",
+    "sha256": "91dd39e9eb0b84b632623438e772383266c287aaeac4230a204140ad85c625a6"
+  },
+  {
+    "order": 13,
+    "phase": "parent12 layer 11",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/11-party-audit-key.sql",
+    "sha256": "807b1bd4a5901f8013ab5b84c4d6db138d224221bebe00be4edcc6b044734d59"
+  },
+  {
+    "order": 14,
+    "phase": "parent12 layer 12",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/sql/12-party-prefix-single-projection.sql",
+    "sha256": "d5ffad0eecc1e05b72eba107502c41a091bf0fe25c0b521030967739a6e80d90"
+  },
+  {
+    "order": 15,
+    "phase": "actual 155 definitions/body/owner/ACL plus 35-table inventory readback",
+    "command": "node catalog-fixture.mjs parent155",
+    "expectedModel": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01/MODEL155.json"
+  },
+  {
+    "order": 16,
+    "phase": "Original DB02 static SQL, verbose first-error diagnostic <=4KiB; stop after installer; no 161 readback or scenarios",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/sql/source-slices.sql",
+    "sha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "state": "STOPPED",
+  "cleanupConfirmed": false,
+  "scope": "LOCAL_DB02_INSTALL_ONLY",
+  "productionHostTested": false,
+  "rawOutputExported": false
+}

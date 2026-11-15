@@ -1,0 +1,9 @@
+# Host installation delta02
+
+Apply over HOST-CANDIDATE-01, which itself is over its named complete T45 parent plus D3 INTEGRATION-OVERLAY-06. This packet replaces exactly two source files: the database installation SQL gains one statement semicolon; fresh35-host-session.mjs changes only batchedDbCandidatePinsSha256 to the exact DB-INSTALL-FIX-03 PINS identity. FIX03 pins its DB02 parent and unchanged EXPECTED161 references. SOURCE-CLOSURE describes the resulting full8 D1 overlay. The other6 host files and all D3 files are reused unchanged.
+
+The current source loader already includes both changed paths. Its computed currentSourceSet and dependent catalog spec must come from the resulting same tree. The unchanged161 expected model/body/canonical definitions are reused; installation statement punctuation is outside pg_get_functiondef. No fixed or fabricated resulting source-set/catalog digest is supplied here.
+
+The exact extended authorization must bind the new database bundle pin and actual resulting source-set/catalog spec/model fields. Old HOST01/DB02 extension values fail the existing exact binding. Historical original_input_catalog_sha256 and operation keys stay unchanged. No new authorization has been materialized and no genuine current authority is claimed. Existing physical/service/epoch/window and actual161 checks remain required.
+
+This is a narrow source delta; no host semantic or module suite was repeated. Original HOST01 source-review PASS remains scoped to its exact version, with this new SQL/pin delta requiring its own narrow review. The first failed SQL-core attempt has no retained error or SQLSTATE; original-byte DB02 diagnostic input remains separate. D1 performed0 PG and0 server actions. This packet does not authorize a run or mark161 installation, genuine host, import or publication complete.

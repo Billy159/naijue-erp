@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_FIRST_RUN_READINESS_PASS_DIAGNOSTIC03",
+  "messages": [
+    {
+      "turnId": "01a1dedb-4e89-7dc3-94ca-d2e92d93c5f2",
+      "id": "exec-2a3dbc22-c389-41d4-9fb7-591a7c69c99b",
+      "status": "completed",
+      "prompt": "QB 对03安装诊断最小delta窄核完成：SCOPED SOURCE FIRST-RUN READINESS PASS，Standards/Spec均无新增明确阻点；不构成执行许可。对象 outputs/D3/20261115-r3-batched-pg-local-03，核 PINS ede29e08ac674a6c95a9bb55351b9e63f36bfd56c02ddd67d6ec13f6959d3977、runner 1e3b693e445cc59dd951bcebd1fddde4144861ba30915fbc0ca4277d6d7c81a0、INPUT f654ab5e466aeef41111b95c38af43caf3013ec03a61b697ff2ab653fddfb72f、准确diff 21430e39a1a72d1a18561c48141d89d6371ef1a39d062c1493b1c8e707b946eb 均匹配。\n\n只核02→03 runner变化、新TARGET/停止点和诊断函数/既有六项内存结果，未重10件/650摘要、SQL语义或原guard。诊断仅在固定原DB02 source-slices.sql的psql已退出后收集；同session先-c SET ROLE再-f原文件，ON_ERROR_STOP与VERBOSITY=verbose，首错匹配必须包含准确原路径+源行+SQLSTATE；只取第一条消息、<=3个可识别PLpgSQL frame、LOCATION，不导出LINE/QUERY/SQL statement context/第二条错误或一般stderr。消息截1500 UTF8字节、整JSON在save前硬限4096，仍计入原2MiB总输出预算。无法解析明确null/diagnosticParsed=false；timeout抛出发生在诊断收集前，不造错误。安装非0直接沿原失败链停止；安装成功立即正常停机，确实移除了161读回与scenario入口，没有fixture执行。\n\n实核新三元隔离身份固定数据库demo_8877_d3_install_diag_20261115_03、/tmp/d3-install-diag-20261115-03、Unix55493；新root和ATTEMPT当前均不存在。03 finally与已关闭P2的02逐字一致，删除前最终成功判定/失败保根保持。仅比较INPUT清单的路径和既有摘要：645条外部字典完全相等、5条自身重定位，共650，没有对旧外部文件重哈希；原DB02仍指定4589…及fd3d…，未混入D1新修订。已读六项既有诊断内存检查源码与结果，未重跑；QB全程0PG/子进程测试/服务器/文件修改。实际首错/安装返回/资源和停机事实须由这次另行获准执行产生，静态3124缺分号不冒充实际首错，旧02 STOPPED和失败根保持。"
+    }
+  ]
+}

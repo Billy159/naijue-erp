@@ -1,0 +1,8 @@
+{
+  "DELTA.json": "4e2a9c0183d51d96ff265146d0bc9c786d8dd373ee9fe386323579a38d961ea9",
+  "README.md": "5cc11629ba3a6b167f9e596e782bde40b7f21ba09bcf42572290d723011e72a1",
+  "SOURCE-CLOSURE.json": "3dec5df95ef8296d0cd3a53044d3f10c52a25731ec1ea8cf737db829b6f9dd49",
+  "fresh35-host-session.mjs.diff": "86bf6bd1c6abe8d0727c939803c448006cb341365a4fb25357010b950985a3d3",
+  "source/adapters/postgres/patches/0027_standard_batched_import_v1.sql": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "source/tools/unified-import/fresh35-host-session.mjs": "fffa534bbc7e0918f42a473b70272af008be39c63d0bf7805cba47fad9c2d490"
+}

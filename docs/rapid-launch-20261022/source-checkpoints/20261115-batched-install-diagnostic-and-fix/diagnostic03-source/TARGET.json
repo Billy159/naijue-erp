@@ -1,0 +1,32 @@
+{
+  "database": "demo_8877_d3_install_diag_20261115_03",
+  "workRoot": "/tmp/d3-install-diag-20261115-03",
+  "socketPort": 55493,
+  "bootstrap": "d3_bootstrap",
+  "owner": "fresh35_owner_20261105_r1",
+  "controller": "fresh35_controller_20261105_r1",
+  "initializer": "erp_unified27_initializer_2393dbc6db9581c2",
+  "importer": "erp_unified27_importer_2393dbc6db9581c2",
+  "runtimeRole": "erp_unified27_runtime_2393dbc6db9581c2",
+  "ordinary": "d3_fixture_runtime",
+  "pgBin": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/e5c5a762-cleaning-intake-20261102/complete-source-20261103-typecheck-20261104-01/actual-pg-browser-20261104-01/vendor-input/pgsql/bin",
+  "node": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
+  "modules": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/node_modules",
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-party-single-projection-carrier-local-01/source",
+  "d3Source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import",
+  "fixtureRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261114-r3-mixed-scale-design-01/smoke-base",
+  "fixtureManifestSha256": "d0ec7f649304d9f0e069f1e9d0f527e72c1d4bd4cff85f9cfc26c156377e254e",
+  "parent12": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01",
+  "candidate02": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
+  "candidatePinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+  "limits": {
+    "workSeconds": 170,
+    "totalSeconds": 180,
+    "statementMs": 40000,
+    "responseMs": 42000,
+    "scratchBytes": 3221225472,
+    "logBytes": 2097152
+  },
+  "scope": "LOCAL_DB02_INSTALL_ONLY_NO_SCENARIOS_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
+  "executionAuthorizationAtPreparation": "NOT_GRANTED_SOURCE_PREPARATION_ONLY"
+}

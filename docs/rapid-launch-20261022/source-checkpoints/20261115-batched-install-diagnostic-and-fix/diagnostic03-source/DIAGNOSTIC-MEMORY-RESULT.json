@@ -1,0 +1,16 @@
+{
+  "state": "SCOPED_MEMORY_CHECK_PASS",
+  "cases": [
+    "verbose-first-error-and-source-line",
+    "omit-SQL-echo-and-second-error",
+    "UTF8-4KiB-bound",
+    "unparsed-client-error-no-fabricated-SQLSTATE",
+    "successful-installer-no-fabricated-error",
+    "reject-other-source"
+  ],
+  "cleanupFinallyByteUnchanged": true,
+  "scenarioEntrypointAbsent": true,
+  "pgExecutions": 0,
+  "harnessExecuted": false,
+  "oldSuitesRerun": false
+}

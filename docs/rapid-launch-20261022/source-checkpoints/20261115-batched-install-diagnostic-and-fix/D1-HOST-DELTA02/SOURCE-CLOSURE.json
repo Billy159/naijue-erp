@@ -1,0 +1,61 @@
+{
+  "status": "SOURCE_INSTALLATION_TERMINATOR_AND_AUTH_PIN_DELTA_NOT_RUNTIME_VALIDATED",
+  "baseSource": "outputs/T45/revisions/20261115-r3-party-single-projection-carrier-local-01/source",
+  "baseSourceSetSha256": "b4665a72a01ba4c0c973ee86aa18271cb40c6bf09276d667c1331cca3dd7044c",
+  "compactSourceSetSha256": "925ad39403debb1a9a7fe84748232475d72e67393ed376e05c9999b9358b64e0",
+  "D3overlay": "outputs/D3/20261115-r3-batched-import-01/INTEGRATION-OVERLAY-06",
+  "D3overlayPinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+  "D1overlayFiles": [
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "bytes": 42673,
+      "sha256": "e764eb1de1335aff331d7976039ba9519d16bab16b685fe05e2a565bc58fee29"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 98132,
+      "sha256": "fffa534bbc7e0918f42a473b70272af008be39c63d0bf7805cba47fad9c2d490"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 63208,
+      "sha256": "6ff50279922013cf2d832b902f855495bf7687c9d4b409f51d19cde8eab844fb"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "bytes": 21149,
+      "sha256": "d740a09fa6a87d1d0447239c0a20a991ce66361390b3423f311a8b11b046b00e"
+    },
+    {
+      "path": "adapters/postgres/patches/0027_standard_batched_import_v1.sql",
+      "bytes": 391442,
+      "sha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+      "bytes": 1366941,
+      "sha256": "d50ed7228912055f375153263905605ac6205021462849948744a5af0fc2aa38"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+      "bytes": 966121,
+      "sha256": "bb7d7bb7bbb6e13e5f52fdb74940287c723e22691b364f4e9e8bcadef637738b"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+      "bytes": 930265,
+      "sha256": "5c7d1506b4203ceaf62ab37229a4c840e03859af4856fcce7e45ba1c9ac28437"
+    }
+  ],
+  "databaseCandidate": "DB-CANDIDATE-02 + DB-INSTALL-FIX-03",
+  "databaseCandidatePinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+  "expectedRoutines": 161,
+  "actualPgCapture": false,
+  "genuineHostExecutions": 0,
+  "postgresExecutions": 0,
+  "serverActions": 0,
+  "baseHostCandidate": "HOST-CANDIDATE-01",
+  "baseHostCandidatePinsSha256": "12aa444b4482c26062af155cc409b046c26c7a7500ed0f6715e7170f47fc6937",
+  "databaseParentCandidatePinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+  "databaseInstallationDelta": "DB-INSTALL-FIX-03"
+}

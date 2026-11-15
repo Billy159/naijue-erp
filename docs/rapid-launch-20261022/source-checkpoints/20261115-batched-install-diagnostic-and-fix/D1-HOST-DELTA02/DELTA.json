@@ -1,0 +1,18 @@
+{
+  "scope": "DB_INSTALL_TEXT_AND_PRECISE_AUTHORITY_PIN_ONLY",
+  "baseHostCandidatePinsSha256": "12aa444b4482c26062af155cc409b046c26c7a7500ed0f6715e7170f47fc6937",
+  "dbInstallationDeltaPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+  "overlayFiles": [
+    "tools/unified-import/fresh35-host-session.mjs",
+    "adapters/postgres/patches/0027_standard_batched_import_v1.sql"
+  ],
+  "sqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "hostCodeChange": "replace only batchedDbCandidatePinsSha256 literal; exact extended authority now requires the fix03 bundle identity",
+  "unchangedHostSourceFiles": 6,
+  "expected161ModelsReused": true,
+  "sourceLoaderAlreadyTracksBothChangedFiles": true,
+  "repeatHostSemanticOrModuleChecks": false,
+  "actualNewAuthorizationMaterialized": false,
+  "pgExecutions": 0,
+  "serverActions": 0
+}

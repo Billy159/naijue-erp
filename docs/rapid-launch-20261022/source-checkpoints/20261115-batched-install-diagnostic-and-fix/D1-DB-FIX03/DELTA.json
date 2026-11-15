@@ -1,0 +1,23 @@
+{
+  "scope": "SQL_STATEMENT_TERMINATOR_ONLY_SOURCE_FIX_NOT_PG_VALIDATED",
+  "parentCandidate": "DB-CANDIDATE-02",
+  "parentPinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+  "beforeSqlSha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4",
+  "afterSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "beforeLine": 3124,
+  "afterLine": 3124,
+  "byteDelta": 1,
+  "exactChange": "END $function$\\n -> END $function$;\\n immediately before six-argument command REVOKE",
+  "functionBodyChanges": 0,
+  "functionCanonicalDefinitionChanges": 0,
+  "expected161ModelChanges": 0,
+  "ownerAclChanges": 0,
+  "signatureChanges": 0,
+  "declarationOrderChanges": 0,
+  "actualFirstFailureUnknown": true,
+  "actualSqlstateUnknown": true,
+  "d1PgExecutions": 0,
+  "serverActions": 0,
+  "expectedModelReference": "../DB-CANDIDATE-02/EXPECTED161-{MODEL,DEFINITIONS,BODIES}.json",
+  "frozenHost01ContainsOldSql": true
+}

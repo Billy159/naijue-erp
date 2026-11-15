@@ -1,0 +1,38 @@
+{
+  "actual161Installation": null,
+  "authorityIssued": false,
+  "formalBusinessAccepted": false,
+  "fullCompileRuns": 0,
+  "genuineHostInvoked": false,
+  "jobsSubmitted": 0,
+  "liveCatalogSha256": null,
+  "localPreparationComplete": true,
+  "mainReportedDependency": {
+    "actual161Installed": false,
+    "childrenReapedAndFailureRootRetained": "REPORTED",
+    "db02InstallPsqlExit": 3,
+    "firstError": null,
+    "genuineHostExecuted": false,
+    "local162PgStopped": true,
+    "nextOwner": "D1 source analysis and D3 bounded install-only diagnostic; no server permission",
+    "parent155FullMetadata": "PASS_REPORTED",
+    "scenarioExecuted": false,
+    "source": "main Chat 01a1cec6-7547-7d82-a867-00ea53f13031 current task update; not a new T45 PG/host check"
+  },
+  "newFiles": 10,
+  "overlays": {
+    "D1": 8,
+    "D3": 9
+  },
+  "postgresActions": 0,
+  "preparedAtUTC": "2026-11-15T10:51:55.441378+00:00",
+  "readyForServerExecution": false,
+  "registryWrites": 0,
+  "reuseSameVersionStaticReview": true,
+  "serverReads": 0,
+  "sourceFiles": 380,
+  "sourceRowsSha256": "80ed00c35a05b8adf3ef8ec030d994dfd703b06036e2880ff111b2394c4db218",
+  "state": "LOCAL_SOURCE_AND_SYNTHETIC_MATERIALS_PREPARED_RUNTIME_NOT_RUN",
+  "staticLiteralUnresolved": 0,
+  "task": "R3-BATCHED-CARRIER-PREP-01"
+}

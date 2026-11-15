@@ -1,0 +1,5 @@
+{
+  "singleAttempt": 1,
+  "postgresStartedYet": false,
+  "scope": "LOCAL_DB02_INSTALL_ONLY"
+}

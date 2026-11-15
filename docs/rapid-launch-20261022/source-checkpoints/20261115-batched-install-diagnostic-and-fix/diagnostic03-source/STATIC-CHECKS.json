@@ -1,0 +1,21 @@
+{
+  "status": "SOURCE_PREPARATION_ONLY",
+  "pythonSyntax": "PARSED_NOT_EXECUTED",
+  "cleanupFinallyByteUnchanged": true,
+  "baseAndCatalogBytesUnchanged": true,
+  "externalInputPinsReusedWithoutRehash": 645,
+  "selfInputPinsRebased": 5,
+  "removedInactiveSelfPins": [
+    "scenario.mjs",
+    "builder/build-sql39.mjs"
+  ],
+  "inputPins": 650,
+  "newRootAbsentAtPreparation": true,
+  "newAttemptAbsent": true,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "oldSuitesRerun": false,
+  "actual161Verified": false,
+  "scenarioCasesExecuted": 0,
+  "diagnosticExportCapBytes": 4096
+}

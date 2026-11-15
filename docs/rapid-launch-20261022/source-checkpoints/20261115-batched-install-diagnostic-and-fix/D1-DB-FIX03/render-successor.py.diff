@@ -1,0 +1,11 @@
+--- render-successor.py.before
++++ render-successor.py.after
+@@ -56,7 +56,7 @@
+ assert command_definition.count('child_ordinal integer)') == 1
+ command_definition = command_definition.replace('child_ordinal integer)', 'child_ordinal integer, work_batch jsonb)')
+ command_definition = command_definition.replace(command_body, (task / 'batched-command.body.sql').read_text())
+-parts.append(command_definition)
++parts.append(command_definition.rstrip('\n') + ';\n')
+ parts.append('REVOKE ALL ON FUNCTION naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer,jsonb) FROM PUBLIC;')
+ parts.append((task / 'sql/group-entrypoints.sql').read_text())
+ parts.append((task / 'sql/group-access.sql').read_text())
