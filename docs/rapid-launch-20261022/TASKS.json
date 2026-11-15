@@ -6173,9 +6173,19 @@
               "ISSUED255b1dff / registrar bound26def96b",
               "reg audit2a00fdebb37ee6016af976ed53c2443b060426693b5b610901723255a6a786c6 / dispatcher ae53bc3d"
             ]
+          },
+          {
+            "group": "r908 M\u4e0a\u4f20\u9636\u6bb5\u5931\u8d25\u4e14\u7a97\u53e3\u786c\u5230\u671f\uff0c\u4fdd\u755925\u6587\u4ef6\u540e\u4ec5\u65b0\u7a97\u672c\u673a\u51c6\u5907",
+            "status": "REG02\u5b9e\u9645\u6210\u529f\u4fdd\u6301ae53/4655\uff1bM\u552f\u4e00upload48657 exit1\uff0c25/27\u5df2\u5b58\u4ec5size\u6838\u3001\u7f3a05/09\uff0cmanifest/request/tmp/job/receipt\u53caroot\u5168\u65e0\u30020PG/\u5b89\u88c5/\u7f16\u8bd1\u3002main18048/T454710\u81ea\u7136124\uff0c\u65e0post/INSTALL\uff1b\u771f\u5b9eprovisionExpiry-830\u786c\u754c\u5df2\u8fc7\uff0c\u4e0d\u5ef6\u65e7\u7a97\u53e3\u3002\u65b0REG03/keys02\u53ca20\u65e7archive\u590d\u7528seam\u4ec5\u672c\u673a\u51c6\u5907\u3002",
+            "evidence": [
+              "M original readback0e413974d37232d33e2ba1228bd10fb9b453d4fe89b7ba15ca7dd73137566cf0",
+              "UPLOAD-FAILURE-STATEc849d41ce78bf5665c35b8b8f40cccd3b01d52dc67eccb3a40bed59f19f0a187",
+              "STATE4328f14f3ab16f2501eb18421e2e9c6c8d22798081c3133abc39aef311f3019d",
+              "old missing-only candidate64c35e39 NOT_EXECUTED expired-scope"
+            ]
           }
         ],
-        "currentInFlight": "REG02\u5b9e\u9645\u6210\u529f/current ae53\uff1br908\u539fM\u5ba2\u6237\u7aef48657\u552f\u4e0026members\u4e0a\u4f20\u81f300:06:20.718\u65e7limiter\u5185\uff1bmain02\u6b63\u786eENTRY listener18048\u8fd0\u884c\u81f300:06:50.718\uff0cT45 postbirth4710\u7b49\u539fpost-birth\u3002P0 2026-11-15T00:00:40.718Z\uff0cprovision00:20:40.718/policy00:25:40.718\uff1bC0\u672a\u5b9e\u751f\uff0c\u4e0d\u9020\u5b9e\u9645cgroup/\u5b89\u88c5/\u7f16\u8bd1/STEP\u7ed3\u679c\u3002\u65e7REG01/live01/\u65e7R0\u51bb\u7ed3\uff0cformal\u6700\u8fd1\u5b9e\u6838\u505c\u5e93\u3002",
+        "currentInFlight": "T45\u4ec5\u672c\u673a\u4e0b\u4e00REG03/\u65b0\u4e94workload02\u51c6\u5907\uff1a\u4f18\u5148\u6b63\u5e38MATERIALIZE job\u4ee5\u56fa\u5b9aSHA/bytes/regular/no-symlink\u8bfb\u53d6\u65e720archive\uff0c\u65b0bundle\u53ea\u5e26\u7f3a2\u548c\u5fc5\u8981\u5c0f\u6587\u4ef6\uff0c\u5b8c\u657422/sourcehash\u4e0d\u53d8\uff1b\u65e725/AUTH\u4e0d\u52a8\u3001\u65e7M01\u4e0ddispatch\u3002\u539fwindow\u4e24\u4e2areceiver\u5df2124\u7edd\u4e0d\u91cd\u542f\uff0c\u539f\u7b7e\u540d/P0/native900/cleanup180\u4e0d\u53d8\uff1b\u5148\u4ee3\u7801\u53ca\u7a84\u5ba1/\u771f\u5b9e\u65b0pref\u518d\u65b0R0\uff0ccurrent parent ae53/4655\uff0cformal\u6700\u8fd1\u771f\u5b9e\u505c\u4e8e00:06\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }

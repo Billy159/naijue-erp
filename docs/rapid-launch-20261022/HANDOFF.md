@@ -7257,3 +7257,15 @@ UTC23:47:02–06同leased route有界只读握手3.942s/exit0，TCP/banner/authe
 真正唯一新ISSUE255b1dff于UTC23:55:40.718落，P0次日00:00:40.718、provision到00:20:40.718、policy00:25:40.718；source26def96b/authority2e3fbc9a/prestagea50a/provisioneadb/policy4655e647，standing0c25+QB25cee+pref3976真实绑定。正确ENTRY listener18048实际运行a386到00:06:50.718；旧78294已自然124不消费。原waiter86529实际exit0，REG02成功ENTRY：audit2a00fdeb、current dispatcher ae53bc3d、policy4655，原键confirm一致。这不是旧REG01重放或旧尝试PASS。
 
 原M26members客户端48657正在唯一上传，绝对limiter00:06:20.718；T45原postbirth consumer4710至00:06:50.718等main02/post-birth，真实C0+70启动guard保留。当前尚无实际C0/cgroup/十层安装/编译/STEP/回滚清理新结论，不宣称本轮测量PASS。旧REG01/live01/超时/P0原件保全，D2实际500等继续复用，formal仍按原任务维护停库。cddd3305推送已实际超时，旧远端最后确认efbe87f7；本机检查点已全提交，此次按原分支常规补推并仅用每命令low-speed45s界限，不改全局Git配置、不force。
+
+### 2026-11-15 08:16 — M唯一上传失败未发布请求，原硬启动窗到期只做下一窗本机修复
+
+原M48657在admin_client69上传remote阶段exit1/LEASED_CHANNEL_OR_DISPATCHER_FAILED，limiter COMMAND_FAILED_READ_ORIGINAL_KEY_NO_REPLAY；未走localhistory PREPARED/原atomic request/dispatch。原wrapper未保存失败文件名和SSHstderr，因此不能用先前banner255代填本次原因。只读reader75891曾40s超时也无rawstderr，不当guard拒绝或进度事实。
+
+UTC00:02:48.569原键8s只读0e413974：含AUTH共27应有25已存且bytes相同，缺source-part05/09，bundle-manifest/request/tmp/privatejob/receipt、新ROOT及S/B/I/T全ABSENT，dispatcher仍ae53。仅size不代表SHA，后继必须现场逐SHA与regular/no-symlink精确集合核。UPLOAD-FAILURE-STATEc849d41c保REG02成功/M预备传输失败分层，无setup/PG/SQL/compile/currentAttempt/ACK/rollback运行。UTC00:06:01.054现场STATE4328f14f确认candidate null、active空/lockfree/scratch absent/R3同CID停止/Pid0/两port无/无新phase请求。
+
+main ENTRY18048和T45 postconsumer4710实际各自然124，均无BIRTH/postbirth/INSTALL attempt。原真实guard private launch<=min(provisionExpiry,C0+900)-720-110，绝对<=00:06:50.718已过；延本机until无法解决，明确撤回该条件不成立的分支，不重receiver、不补片或dispatch旧M01，不改旧签名/P0/limiter/guardian。登记02PASS不升级为测量PASS。
+
+仅本机missing-only旧scope候选64c35e39已留，两个新正反模型，但它绑定过期旧REG02/硬界，未执行且未连首次发布client，不当后继已验。QB查原CLIENT54019fb上传是cat >而非O_EXCL，主控已校正‘既有uploader O_EXCL’只是新要求、不是原有事实；新保护须准确实现/独立审，不能重old submit。
+
+下一同类15分钟窗口沿standing授权本机准备REG03/新五keys02，POST01和r908等若确未用才可复用。优先最窄现有MATERIALIZE seam：由正常获准job读固定旧M01已传20archive路径+SHA/bytes/no-symlink，新bundle仅缺05/09及必要脚本/profile新AUTH，完整22重组/sourcehash保持，不在source-only登记复制、不新增通用root-copy API。旧25/旧AUTH/原失败全保留，旧M01执行路径强absent，新actual parent ae53/4655；无法现有权能实现则先报确切不兼容。新代码/pins/窄审及真实新pref齐后才新R0，不赶旧窗，不复跑D2或PG/业务。36614f0e补推因low-speed45s失败；本机全提交，远端最后确认仍efbe87f7。
