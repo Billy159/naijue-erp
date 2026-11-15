@@ -6426,20 +6426,67 @@
               "rollbackReadback": "PENDING",
               "cleanup": "PENDING"
             }
+          },
+          {
+            "group": "r910-terminal-first-ack-second-timeout-20261115-0543",
+            "status": "NEED_FIX_SECOND_MASTER_TIMEOUT_ROLLBACK_AND_CLEANUP_VERIFIED",
+            "evidence": {
+              "resultSha256": "7ecd5c4c94a5f7856530444dfd182b3970c51e16fa54209e05c21fd0b25f7e1c",
+              "measurementSha256": "32b02c1100212b13090cdc9e9357dc50ec07e267e4e8ce0473b4e0223309b70e",
+              "preservationSha256": "a75f0f11d7803953cc00dbc8c5331f8a1b5fece5e6b0945b4c391bfda2952c82",
+              "pgContextSha256": "d2a5f6198fe2221f044e9f419e6597a5834a88b9a4bbe4331552148a234af04f",
+              "originalPgLogSha256": "e74f7234a1e7ad8608fa39303fb23a4cd75267563e2c4553aea5a715ea97908b",
+              "fullCompiledRows": 511234,
+              "compiledSteps": 44682,
+              "forecastMatches": true,
+              "firstMaster": {
+                "ordinal": 1,
+                "rowCount": 499,
+                "wireBytes": 261183,
+                "elapsedMs": 35741.94978300005,
+                "requestSha256": "cf64ba58ab7ad70a928d424342e3bebd8e8e9e9c574067430aad43b5b30ae969",
+                "acknowledged": true,
+                "durable": false
+              },
+              "secondMaster": {
+                "ordinal": 2,
+                "rowCount": 500,
+                "wireBytes": 269189,
+                "requestSha256": "8a19e3053297ae849f2bf4443df6a73cb50de07eca1e11abd9a889dcd088e45f",
+                "sqlState": "57014",
+                "acknowledged": false
+              },
+              "expectedPrefixRollback": false,
+              "outcome": "IMPORT_FAILED_ROLLED_BACK",
+              "independentReadback": "ABSENT",
+              "connections": "CLOSED",
+              "guardian": {
+                "elapsedMs": 527247,
+                "exitCode": 0,
+                "nodeReaped": true,
+                "businessAcceptance": false
+              },
+              "nativeFinishedAt": "2026-11-15T05:29:29.891990946Z",
+              "nativeExitCode": 1,
+              "oomKilled": false,
+              "cleanupAll8": true,
+              "memoryPeakBytes": 5631627264,
+              "rootAvailableBytes": 274001911808,
+              "originalPayloadAndIndex": "not present at disposed original paths; only two step scalar receipts verified; no reconstruction claimed",
+              "formalLaunch": "NOT_COMPLETE"
+            }
           }
         ],
         "currentInFlight": {
-          "owner": "T45",
-          "work": "r910 native measurement live; await actual full compile/first499 ACK or failure, independent rollback ABSENT, final stop and cleanup; no replay",
-          "finishWatcher": {
-            "session": 70354,
-            "expiry": "2026-11-15T05:43:46.038Z"
-          },
-          "nativeHardEnd": "2026-11-15T05:33:53.324922436Z",
-          "resourceBounds": "unchanged 2CPU6GiB/child540/container900/cleanup180/root28GiB",
+          "owner": "D2",
+          "work": "source-only diagnosis of standard_import_row_intent body28 FOR over SELECT \u2192 guard_maintenance_child_write5 \u2192 command906 \u2192 step4; no new SQL execution or carrier",
+          "sourceHypotheses": "first and second cumulative sources500\u21921000/audit2\u21923 are source-path inference only; actual kind/P/scan counts remain unknown; cannot name composite payment hall from stack alone",
+          "prefixContract": "max512 steps or writeUntil; expected PREFIX_LIMIT/TIME_BUDGET plus PUBLISH_INCOMPLETE, rollback ABSENT/CLOSED; first ACK not endpoint",
+          "T45": "r910 task NEED_FIX fully closed, all sessions terminal, no new reads/writes/jobs authorized; original materials retained",
+          "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
+          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "formalR3": "STOPPED_NOT_IMPORTED",
-          "formalLaunch": "NOT_COMPLETE",
-          "remoteSync": "pending while GitHub diagnostics time out; local checkpoint retained"
+          "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
