@@ -1,0 +1,61 @@
+{
+  "state": "ORIGINAL_AUTH27_ACTUALLY_RESTORED_AND_TARGET_STOPPED_NORMAL28_LOCAL_SOURCE_TASK_AUTHORIZED_NO_FUTURE_WINDOW",
+  "scope": "actual bounded public closure/source-task evidence only; no credentials, live authority, private authfield bodies or businessdata",
+  "files": [
+    {
+      "path": "outputs/D1/20261116-r3-start-owned-describe-feasibility-01/REPORT.md",
+      "bytes": 12903,
+      "sha256": "5865c3161882dca1a72943d4dc10a461439ac99c60755296ae41a81b2f691e79"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/actual-resume-01/ENTRY-RESULT.json",
+      "bytes": 790,
+      "sha256": "87660767d1fe1d6f242ec4a37c1c9f5cab7fa95954c2946f37f3a613069eda86"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-restore27-samekey-resume-local-01/actual-resume-01/EXECUTION-ATTEMPT.json",
+      "bytes": 313,
+      "sha256": "d61533f7c0b1042710c77cd6d8a9ef8b21a979a1ab5663b37f9c02e77aa24788"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/RESULT27-CLOSED.json",
+      "bytes": 9379,
+      "sha256": "a0cb009ca38714237460682f3870320273d8d6462c27907eb724ef30e3f5542b"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/RESULT27-CLOSED.md",
+      "bytes": 1169,
+      "sha256": "cc8b3b94b7ba1f8100b656a2579b319f258ff1996819a78c8821774b3b6b88f3"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/FINAL-CLOSED-01.json",
+      "bytes": 2354,
+      "sha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/READBACK-02.json",
+      "bytes": 3119,
+      "sha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-describe150-proposal-local-01/BASIS.json",
+      "bytes": 2447,
+      "sha256": "6c54b13c1613ae12331f41f04d2a6a7b7260c330f4dc4b595051dd2f0f8817ec"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-describe150-proposal-local-01/PROPOSAL.md",
+      "bytes": 5035,
+      "sha256": "82d457e32a7dcc574734367551fe16e89f477723a9ac85613b7f5a5fefad46c5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-describe150-proposal-local-01/READY.json",
+      "bytes": 385,
+      "sha256": "8edd4d2d5eec59446e0fa9781f3ca299e9764297f2cba5e6cbee2c8d17d22fcf"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/TASK.json",
+      "bytes": 4721,
+      "sha256": "778e65501b2986893759dd56059dd8492ffd161d713d4947cabc20fb14984173"
+    }
+  ]
+}

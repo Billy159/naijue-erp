@@ -1,0 +1,59 @@
+{
+  "state": "LOCAL_PROPOSAL_ONLY_NOT_IMPLEMENTED_NOT_ISSUED_NOT_EXECUTED",
+  "recordedAtUTC": "2026-11-15T19:55:12.593727+00:00",
+  "prerequisiteActualClosureResult": {
+    "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/RESULT27-CLOSED.json",
+    "sha256": "a0cb009ca38714237460682f3870320273d8d6462c27907eb724ef30e3f5542b"
+  },
+  "sourceBasis": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/normal_service05_after08.py",
+      "bytes": 60345,
+      "sha256": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/batched161-run.mjs",
+      "bytes": 9888,
+      "sha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/describe-install27-readonly.py",
+      "bytes": 6760,
+      "sha256": "dee8b87953b7cab34827867fdfd7386e9c40307d106ab9d055648ad821ef9201"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/read-current-phase27-r1.py",
+      "bytes": 9269,
+      "sha256": "2a1541f00bd8d8cb05a1d7cef965e325a01fcd0e5e02df1b90469271c5345548"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/PHASES27.UNISSUED.json",
+      "bytes": 11507,
+      "sha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/issue_phase.py",
+      "bytes": 23737,
+      "sha256": "d755b54b6ed6f26c5d40545c2477d9e72955a570986daad5b63104b9e4d6bc8d"
+    }
+  ],
+  "budget": {
+    "existingStartJobSeconds": 300,
+    "existingHostWorkSeconds": 190,
+    "existingCleanupReserveSeconds": 110,
+    "proposedNodeDescribeSeconds": 150,
+    "proposedChildReapSeconds": 4,
+    "proposedPostDescribeReadbackAndPersistMarginSeconds": 10,
+    "proposedRequiredRemainingWorkSeconds": 164,
+    "proposedInnerBridgeUpperBoundSeconds": 158,
+    "mainCurrentBytes": 60345,
+    "mainReadLimitBytes": 65536,
+    "mainRemainingBytes": 5191
+  },
+  "serverActions": 0,
+  "databaseActions": 0,
+  "authorityFilesCreated": 0,
+  "builds": 0,
+  "installOrWriterSubmissions": 0,
+  "oldKeysToReplay": []
+}

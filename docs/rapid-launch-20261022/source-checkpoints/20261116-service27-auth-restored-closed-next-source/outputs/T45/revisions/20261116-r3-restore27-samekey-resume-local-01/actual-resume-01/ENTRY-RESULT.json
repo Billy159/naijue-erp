@@ -1,0 +1,29 @@
+{
+  "result": {
+    "actualCopySourceIdentity": [
+      66304,
+      12584246,
+      0,
+      0,
+      384,
+      1,
+      34276,
+      1794767699178795109,
+      1794767699178795109
+    ],
+    "automaticReplay": false,
+    "copySourceSha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+    "dispatcherReturnCode": 0,
+    "originalDispatcherReply": {
+      "autoRetry": false,
+      "jobId": "t45-r3-ordinary27-auth-restore-20261116-01",
+      "status": "QUEUED",
+      "unit": "naijue-erp-op-b16447fb-7230f064a93e"
+    },
+    "phaseOutcomeInferred": false,
+    "requestKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+    "sourceIdentityKnownBeforeExecution": false,
+    "state": "ORIGINAL_DISPATCHER_RETURNED_QUEUED"
+  },
+  "state": "ORIGINAL_CARRIER_REPLY"
+}

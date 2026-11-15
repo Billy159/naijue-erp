@@ -1,0 +1,15 @@
+{
+  "state": "LOCAL_PROPOSAL_ONLY_NOT_IMPLEMENTED_NOT_ISSUED_NOT_EXECUTED",
+  "files": [
+    {
+      "name": "BASIS.json",
+      "bytes": 2447,
+      "sha256": "6c54b13c1613ae12331f41f04d2a6a7b7260c330f4dc4b595051dd2f0f8817ec"
+    },
+    {
+      "name": "PROPOSAL.md",
+      "bytes": 5035,
+      "sha256": "82d457e32a7dcc574734367551fe16e89f477723a9ac85613b7f5a5fefad46c5"
+    }
+  ]
+}

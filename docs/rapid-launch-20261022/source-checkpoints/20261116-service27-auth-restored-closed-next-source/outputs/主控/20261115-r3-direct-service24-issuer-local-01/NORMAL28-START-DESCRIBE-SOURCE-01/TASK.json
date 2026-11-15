@@ -1,0 +1,56 @@
+{
+  "format": "R3_NORMAL28_START_OWNED_GENUINE_DESCRIBE_SOURCE_TASK_V1",
+  "state": "AUTHORIZED_LOCAL_SOURCE_IMPLEMENTATION_ONLY_NO_SERVER_WINDOW",
+  "owner": "T45",
+  "model": "gpt-6.1-sol",
+  "thinking": "high",
+  "base": {
+    "phases27Sha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+    "normalMainSha256": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17",
+    "operationSourceSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+    "operatorReadySha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec"
+  },
+  "actualPredecessor": {
+    "serviceKey": "t45-first-r3-native-service-start-20261116-27",
+    "proofSha256": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
+    "startReadbackSha256": "11aeae69a8455cfbe5757ed674a99adc2c15431f10fb239a6d02822a9be132da",
+    "stopReadbackSha256": "c5ff8d7b0ac6494f401df6fdea0158636c50ce7cbea8438dbfc0f2a6459d7552",
+    "restoreReadbackSha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
+    "finalClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
+    "restoreTerminalSha256": "957f0f26d7ed9272ea675c855a7726e9627af7946774b9b8827fb720d47aafe0",
+    "restoreRootResultSha256": "90e8fc47b7df781cb325dc9e653510c2080da0e336748146e25d8751a4cc9fc7",
+    "restorePublicResultSha256": "9e2a41c47eeb23745dae3558266f3b01b9776594f95a766e8a4f742ee30a2be2"
+  },
+  "causeBoundary": "Actual one diagnostic establishes no output and TimeoutExpired at20s, not exact slow stage or sufficiency of150s.",
+  "interfaceReport": {
+    "path": "outputs/D1/20261116-r3-start-owned-describe-feasibility-01/REPORT.md",
+    "sha256": "5865c3161882dca1a72943d4dc10a461439ac99c60755296ae41a81b2f691e79"
+  },
+  "implementation": [
+    "Run same genuine root describe inside the existing registered start300s job after actual C/ACK and before successful result/handoff; no eighth job, detached runner or40s admin-client change.",
+    "Keep actual host work limit190s and cleanup reservation110s; account entry/preload time rather than reset a later deadline. Before launch require actual remaining work to cover150s child+TERM2+KILL2+bounded transport/publication/final checks. Refuse insufficient budget through existing truthful closure.",
+    "Use a small pinned helper if needed to keep main<=65536B; process group must be inside actual container PID namespace and reaped, with bounded captured output/errors and real child outcome.",
+    "Describe branch may choose its one real Date.now installation window after loading the same genuine source token and before genuine target/compile; expiry=min(t0+1200000, verified actual admin deadline, exact current C shared namespace lease). Installation branch uses the signed preserved original window unchanged.",
+    "Persist independent protected O_EXCL payload/descriptor/livefacts outputs and exact leaf/hash/bytes refs before successful handoff. C bytes/hash/checkedAt remain original. Failed description, malformed output or publication must retain handed_off=False and execute existing actual cleanup; unknown remains UNKNOWN.",
+    "Reader exports stored actual protected outputs with explicit bounds and root/public checks, preserving original descriptor/body shape and both raw runner conservative deadline and normalized actual C deadline. Do not rerun Node from a synchronous SSH describe helper.",
+    "Only necessary service28 namespace, dependency pin, manifest, stop/restore reference and reader increments; all final actual bundle bytes and production consumer bounds must match."
+  ],
+  "preserve": [
+    "D1 C03/genuine factories and DB05 SQL/models",
+    "OP703/cdcaf and materialization original key never resubmitted",
+    "original26classes511234rows/f4b86 scope and originalINIT/businesskeys",
+    "original install/writer keys still never submitted",
+    "existing typed PRE/AFTER closure and actual C/ACK validation",
+    "all old27/26/25/history files and evidence"
+  ],
+  "mainOwnedBoundary": "Main alone changes its new registry/module/templates/issuers after final PHASES28 arrives; T45 does not edit Main source.",
+  "delivery": [
+    "PHASES28.UNISSUED plus selected-source PINS and precise parent diff",
+    "actual input/output creator-consumer/window/error matrix only for this increment",
+    "bounded local syntax/metadata checks without PG, fake UID/clock or genuine factory mocks",
+    "explicit runtime unknowns; no future window or source execution"
+  ],
+  "independentReview": "Reuse original QB for exact affected same-version increment. No repeat old SQL/D1/full data hashing or cancelled rehearsal.",
+  "serverActionsAuthorizedByThisTask": 0
+}
+

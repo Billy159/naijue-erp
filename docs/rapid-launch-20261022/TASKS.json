@@ -7452,6 +7452,21 @@
             "freshReadySha256": "8682189b12f5f343ed56492df31fc00ed59c6465332c37a5b99d521a15433134",
             "issuedMetadataSha256": "707a5019290ae03319c85a1b42602cf22497382eeb6811cd04bf0d3c0524d4e2",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_ORIGINAL_AUTH27_ACTUALLY_RESTORED_SERVICE_CLOSED_NEXT28_LOCAL_SOURCE_ONLY_20261116",
+            "state": "ACTUAL_ORIGINAL_AUTH_RESTORE_PASS_FORMAL_IMPORT_AND_LAUNCH_INCOMPLETE",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service27-auth-restored-closed-next-source",
+              "files": 11,
+              "bytes": 42615,
+              "manifestSha256": "61785ecba1f7e9a653debe849e6d8248abe47b430a6c4e7211bbb70852b8511b"
+            },
+            "restoreReadbackSha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
+            "finalClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
+            "closedResultSha256": "a0cb009ca38714237460682f3870320273d8d6462c27907eb724ef30e3f5542b",
+            "normal28SourceTaskSha256": "778e65501b2986893759dd56059dd8492ffd161d713d4947cabc20fb14984173",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7463,9 +7478,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "NEW_NORMAL_DESCRIBE_BUDGET_INTERFACE_READONLY_FEASIBILITY_ANALYSIS",
+            "state": "NEW_NORMAL_START_OWNED_DESCRIBE_READONLY_INTERFACE_REPORT_DELIVERED",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Onlynewactual20sdescribeTimeoutconsequence sourceanalysis. Existingstart300/host190/nominalreserve110,150+4+Fmustfittruehostremaining; descriptor20min/remaining900handoffconstraint andsamewindowinstallrecompile identified, reportpending. No changesT45/D1source/DB/test; no newfuturewindow."
+            "work": "REPORT5865 exactcodeonlyanalysis:150+4+publication/transportmustfittruehost190remaining, notoutercleanup110; accountpreloadsfromearlyentry; source-load thenrealDate.now onlydescribe allowsgenuinetarget20m, installreusesexactreturnedwindow/ddeepmatch;900sissuerstrictremaininghastimecost. Actual150sufficiency/slowstage/runtimecleanup remainsUNKNOWN. No D1/T45source/DB/test/factory/clockmock changes."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7480,20 +7495,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "RESTORE27_SAMEKEY_RESUME_SOURCE_PASS_WITH_MAIN_PACKET_ISSUER_INCREMENT",
-            "work": "Actualsameoriginalreviewround final07466 bindsMainb0e+packet6f76(newPINSWITH5a90,old8121preserved),T45b50/helper62fa/carrier1048/runner79fe. Actualoriginalpreflighte861/wire/manifest45a65/fullstaticSHA/locksemantics/partialCAS/privateidentitycapture/timebounds matched. Onlynewgeneratorincrementchecked, oldchain/SQL/D1/703notrepeated. No native/serveractions, actualruntimeunverified."
+            "state": "RESTORE27_SAMEKEY_RESUME_SOURCE_REVIEW_CLOSED_REUSED_NO_ADDITIONAL_NATIVE_REVIEW",
+            "work": "Review07466 acceptedsourceincrement; actualservertaskT45originalownercompleted, Mainadoptedactual5fec/a271 withoutrepeattechnicalPGtest. NextQBonlynecessarysameversion28sourceincrementwhenfrozen; oldSQL/D1/703/27reviewreused."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "EXACT_RESTORE27_CONTROL_GAP_RESUME_SOURCE_PASS_FRESH_READY_FINITE_PACKET_ONCE_EXECUTION_PENDING",
+            "state": "ACTUAL27_AUTH_RESTORE_COMPLETED_FINAL_CLOSED_LOCAL28_START_OWNED_DESCRIBE_SOURCE_IMPLEMENTATION_AUTHORIZED",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Actualfd64 at19:16:34 originalbothgrantkeysABSENT/control6memberscomplete/only60059static34276B+manifestmissing; carrier185KBneverretransmit. ProtectedcopytargetRO0b201 SSHbanner255, no currentinodeinvented; Mainconditionalruntimefullowner/ancestor/nlink/bytes/hash/beforeafteridentity requiredandrecorded. Helper62fa/PINSb50/carrier1048/runner79fe finalnarrowSOURCE_PASS07466, originalreceiverfreeze/admit unchanged, originalsharedlockreleasedbeforestart. ActualfreshREADY868218 at19:43:34 channelSSH0/statusREADY/samegrant/keybothABSENT/newSTAGEAUDITABSENT/controloldhostidentitysame. Main19:45:19 host02c762+prepe538/envelopee88f/carrierb34f/ISSUED707a boundsameoriginalrestorekey androles4332. Onlyonecarrierexecutionauthorized, unknownreadoriginalSTAGE/AUDIT/key, QUEUEDnotrestorePASS. No new28/PG/businessauthority."
+            "work": "Originalrestore27 viareviewedoneprep thenoriginaldispatcher onceCOMPLETED0/7.22520494s finish19:47:04.985407Z; readback5fec(root957f/90e8/public9e2a/cleanupb828), actualexactOriginalVerifierAndExpiryVerifiedPrivatelytrue; naturalexpiryNOTcounted, runtime/membership/roleattributes unchanged. RestoremaintenanceCID9a5daf94 stoppedPID0exit0/noOOM. FinalROa271 at19:52:16 noPGpid/56791/globalops, originalservice27CID6c8f andapply/restoremaintenanceCIDs allclosed, C2640/ACK/dataidentity/703/cdcaf/index retained, install/writerbothgrantsABSENT. Closedresulta0cb/MDcc8b delivered. Priorpendingstatesremainhistorical. Newsource-onlyTask778e inMainNORMAL28-START-DESCRIBE-SOURCE-01 allowsactualgenuinedescribe insideexistingstart300 beforehandoff, true190/110/latewindow/persistedoutputs/reader increment, no futureclock/server/PG/install/REAL. T45exactproposal82d4 sourceimplnext, Mainregistry/issuer notT45owned."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "PG27_ACTUALLY_STOPPED_EXACT_SAMEKEY_RESUME_PACKET_ISSUED_AUTH_RESTORATION_OUTCOME_PENDING",
+          "formalR3": "STOPPED_ORIGINAL_AUTH27_ACTUALLY_RESTORED_NORMAL28_SOURCE_IMPLEMENTATION_ONLY",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7506,7 +7521,7 @@
           "latestPolicySha256": "89f49225c19c1043e4a4a59c876876972b49abb9d5e0b29bcb699d5d069b2094",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "actualrestore27 withoriginalkey afterexactgap/maturechannel method; thenminimum normaldescribe sourceincrement; keepgoalACTIVE",
+          "nextCheckpointScope": "freezeactual28sourceincrementwithsameversionmetadataandremainingbudgetthenMainregistry/issuerpairing; no serverwindowbeforeallready",
           "latestSourceSnapshot": {
             "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-auth26-restored-and-full-normal-chain27-audit",
             "files": 138,
@@ -7517,8 +7532,8 @@
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "RESTORE27_SAMEKEY_HOST02_AND_EXACT_PREP_PACKET_ISSUED_WAITING_ACTUAL_T45",
-            "work": "Mainthinb0e usesexistingd755restoreAPI samec5ff/11ae/89f492/4332, allnonwindowhostfieldsidentical285319. Packet6f76actualinputscheckedafterQB07466, originalbasis8a22lock9 andpreflighte861; no fakeUID/clock/approval/sourceinode. Host02c762 at19:45:19.724 until20:00:19.724; prep e538 until19:55:18.724, report707a. T45onlyoneprivatecarrier originalreceiverstart. No new authdeadline orregistry/guard, no standaloneSSHrepeatloop, no futurestart/install/REAL."
+            "state": "ACTUAL27_RECOVERY_COMPLETE_NEXT28_SOURCE_CONTRACT_ONLY_NO_NEW_AUTHORITY",
+            "work": "Finitehostc762/prepe538 originalrestorekey actualcompleted, do not reuse/relaunch evenformerclocknotexpired. MainTask778e bindsphysicalpredecessor27/C2640 andactualstopc5ff/restore5fec/closeda271, protectsoriginalsource703/cdcaf/installwriterkeys. Mainalonepreparesfuture28newregistry/templates/issuers afterT45PHASES28frozen; no currentnewwindow or install/REAL authority."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7534,10 +7549,10 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "actualexactprep/originaldispatcheracceptanceandoriginalrestore27result, unknownreadsameaudit/keynorelaunch",
-            "actualoriginalverifier/expiryrestoreandfinalresourceclosure",
-            "source-onlyfinalnormaldescribe150integration/timewindowbudgetnewinterfaceanalysis,nofutureclockyet",
-            "actual16113ACKinstall/REAL511234reconciliation/backup/corebrowser/finalpublication"
+            "T45exact28localstartowned150descriptor/clock/output/reader/pinclosure sourceimplementation andnecessarysameversionQBreview",
+            "Mainfuture28registry/issuer sourcepairedwithPHASES28beforeanynewclock",
+            "actualnormalgenuine descriptor then161install13ACK/REAL511234reconciliation",
+            "backupapplicability/corebrowserroles/formalURLpublication andcompletegoalrequirements"
           ],
           "normalSource": {
             "db05": {
@@ -7599,7 +7614,7 @@
           "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear",
           "finiteWindows": {
             "generation": 27,
-            "state": "ACTUALLY_APPLIED_NOT_RESTORED_YET",
+            "state": "HISTORICAL_27_ORIGINAL_AUTH_FIELDS_ACTUALLY_RESTORED_NOT_ACTIVE_OR_REPLAYABLE",
             "issuedAtUTC": "2026-11-15T18:31:29.953000+00:00",
             "registrationExpiresAtUTC": "2026-11-15T18:46:29.953000+00:00",
             "applyExpiresAtUTC": "2026-11-15T19:01:29.953000+00:00",
@@ -7609,7 +7624,7 @@
             "policyExpiresAtUTC": "2026-11-15T20:31:29.953000+00:00",
             "roleAuthoritySha256": "4332d0e4a868fc52f7e5a78c49505aaac4021ab8e48c4ff96251391b9d32c2f6",
             "actualApplyConfirmed": true,
-            "actualRestoreConfirmed": false,
+            "actualRestoreConfirmed": true,
             "startAuthority": {
               "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service27-start-window-01/service-start-authorization.json",
               "sha256": "b6c1611f3c15c2e094937a07f577c62771f0013e2a82b9bb04584ebfea634785",
@@ -7634,7 +7649,7 @@
               "roleDeadlinesExtended": false,
               "sameKeyFreshReceiverPrecheckRequired": true
             },
-            "restoreSubmissionOutcome": "EXACT_SAMEKEY_RESUME_ONCE_AUTHORIZED_ACTUAL_OUTCOME_PENDING",
+            "restoreSubmissionOutcome": "ORIGINAL_KEY_ACTUALLY_COMPLETED0_NO_REPLAY",
             "restorePreparation": {
               "state": "ISSUED_RESTORE27_SAMEKEY_RESUME_NO_SERVER_ACTION",
               "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-restore27-samekey-resume-window-01",
@@ -7655,7 +7670,10 @@
               "roleDeadlinesExtended": false,
               "originalReceiverAdmissionRequired": true,
               "issuedMetadataSha256": "707a5019290ae03319c85a1b42602cf22497382eeb6811cd04bf0d3c0524d4e2"
-            }
+            },
+            "actualRestoreReadbackSha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
+            "finalClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
+            "restoredBeforeOriginalControllerDeadline": true
           },
           "sourceAudit": {
             "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
@@ -7670,10 +7688,10 @@
           },
           "latestModuleSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
           "latestEvidenceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-restore27-samekey-resume-source-issued",
-            "files": 20,
-            "bytes": 75185,
-            "manifestSha256": "85d3df2626fa9e7c43ed10b0b19161ae6155e4b6e9d0e46119b5a440b3d2d721"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service27-auth-restored-closed-next-source",
+            "files": 11,
+            "bytes": 42615,
+            "manifestSha256": "61785ecba1f7e9a653debe849e6d8248abe47b430a6c4e7211bbb70852b8511b"
           },
           "currentService": {
             "serviceKey": "t45-first-r3-native-service-start-20261116-27",
@@ -7684,7 +7702,14 @@
             "stopped": true,
             "retainedProofAndAck": true
           },
-          "additionalEvidencePendingCheckpoint": {}
+          "additionalEvidencePendingCheckpoint": {},
+          "normal28SourceTask": {
+            "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/TASK.json",
+            "sha256": "778e65501b2986893759dd56059dd8492ffd161d713d4947cabc20fb14984173",
+            "state": "AUTHORIZED_LOCAL_ONLY_NO_WINDOW",
+            "owner": "T45",
+            "D1InterfaceReportSha256": "5865c3161882dca1a72943d4dc10a461439ac99c60755296ae41a81b2f691e79"
+          }
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
