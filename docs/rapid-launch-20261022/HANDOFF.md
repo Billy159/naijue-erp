@@ -7295,3 +7295,6 @@ retained inventory6b0ee8ee仅metadata，fixture/scratch/manifest/summary/index�
 唯一new公开MASTER仍受控500/P474/M501，INIT51225135、PREPARE3570.803ms、MASTER16320.609ms完整501唯一sourceIDs ACK，party/set474、oldloop0，set3576.715ms/hits51585/read0/temp0；新连接inspect ABSENT与六表0/cleanup。10新TEMP key/xmin边界旧新值/fast/消息/SQLSTATE一致、保存点实child xmin/回退/same-statement/跨commit分层，不复跑旧20或0825public。SQL807b1bd4/order2171cbcc前10原字节，capture6feafa76目录35/351/155/114只party body/def变；MODEL4535c626/DEFS49ac50a6/BODIESbbbf2d5d/derive501e14f0/DELIVERY1dbfd1a5，原154/九层/十层三入口+roles/extras/input/maps保留和duplicate/missingmap拒绝独立Node24验证通过；新derive→原10827→9父相对闭包必须全带。
 
 T45parent/index准备3c55cd33、facts4a7922f3、retained5361f1fd只本机，真实父be61/3564/r908已装10与恢复事实不退ae53/未装。C已授权新fresh r909/55569/operation-locator新ROOT/REG/POST/五keys本机承接，实际源未冻前counts/parts/可复用交集保持null；需以新旧SHA/bytes算交集，不硬套旧20/7file/1MiB。新source/pkg与authority未发、0新serverjob、不重启r908。当前新SQL在本机PG通过仍不是现场499或正式全批通过。aef158fe推送low-speed45s失败，本机全提交，远端最后确认c7b54421。
+
+
+2026-11-15 10:30 CST：r909 的本机候选与只读预检已独立复核，沿用户同类隔离作业持续授权签入 issued SHA 9bda668993aa6d966ae3d2b875ea1f79d8ee45e9eba1593010e6b8d549dbde09。T45 唯一 waiter 91882 仅登记一次，entry 5bc971ce…、准确 policy 原键读回 6e5c4b7d… 一致；本机 confirm 继承旧路径导致第一次只读 assert，修正证据保留，QB 仅核该新增差分。新物料作业原键已 QUEUED，26 member upload 完成；尚未记录 native 安装/测量通过。2 CPU、6 GiB、900秒、根卷28 GiB保留不变，正式R3停库。旧 r908 失败及清理证据保留，正式上线未完成。
