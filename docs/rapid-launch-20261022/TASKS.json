@@ -6570,12 +6570,32 @@
               "previous02and03": "FAILED_AND_RETAINED_CLEANUP_FALSE_NOT_CHANGED",
               "scopeConclusion": "controlled old PAH block increases typed work500 to1000; sequential single measurements cannot attribute Linux40s timeout or show net gain; no product source change"
             }
+          },
+          {
+            "group": "row-intent-projection-source-review-20261115-0657",
+            "status": "SCOPED_SOURCE_PASS_EVALUATION_ONLY_NOT_ADOPTED",
+            "evidence": {
+              "sourcePinsSha256": "a0a1ac4bfdf29113e04a2e7deb1138fb7f1e522215be065a84dc64110f3c4547",
+              "sourceReviewSha256": "a693f348ac09d950c8139400a6a7dd2ecef755c9cb027ccdf1eb9baab3701afa",
+              "bodySha256": "d3d309b8323321520aaa746a98a57ed6b922c020dd533fdfca746e4ec8cef39f",
+              "definitionSha256": "be16b06bab740e5aae80316d4260cb6eb4c62875ad42a317e08898f111ee2692",
+              "scope": "one shared helper fallback JSONB single projection reused for profile/records; original role/id/STRICT/proof prefix and typed/early-return suffix unchanged",
+              "sqlExecuted": false,
+              "pgExecuted": false,
+              "adopted": false,
+              "newMigrationLayer": false,
+              "outstanding": [
+                "actual return/SQLSTATE on affected invalid-data and early-return boundaries",
+                "new outer plan and candidate full-helper calls",
+                "copy/lifetime resource effect and actual benefit"
+              ]
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "source-only minimal shared row_intent read-path candidate preparation based on accepted04 actuals; exact diff/equivalence boundary/necessary bounded validation entry pending",
-          "boundary": "no new PG/SQL execution/carrier/server; prioritize single shared helper read/materialization reuse, no family authorization layer/GUC/cache/schema/index/ACL changes",
+          "work": "D2 source-only exact bounded evaluation harness for shared row_intent single projection; source reviewa693 passed evaluation direction only",
+          "boundary": "two candidate full-helper contexts, affected same-heap old/new semantic fixtures and new outer plans; exact harness delta review and main once-decision required before PG; no new server or formal source change",
           "T45": "r910 closed NEED_FIX; no new server scope",
           "formalR3": "STOPPED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
