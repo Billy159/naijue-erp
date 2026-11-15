@@ -6238,12 +6238,38 @@
               "rollback": "PENDING",
               "cleanup": "PENDING"
             }
+          },
+          {
+            "group": "r909-terminal-failure-20261115-0248",
+            "status": "NEED_FIX_PREFIX_TIMEOUT_RECOVERY_VERIFIED",
+            "evidence": {
+              "resultSha256": "a529ab40c7b7502380ff6ecbd646de63abf70bda5978549ec6692bc0707b880d",
+              "measurementSha256": "9b01c9dcd664ed27e36179d625f130496c5cc01c79d5b69a91568683121a3260",
+              "preservationSha256": "f0cd71a676197dcdd6ee0a063f2b23dfb864eca8afaee460f270a829dd8d99d6",
+              "pgContextSha256": "db3f702a933e3ab4b68299a9eea356c0c1490849f3631ff9c03c6b3baaca37e5",
+              "fullCompiledRows": 511234,
+              "compiledSteps": 44682,
+              "firstAttempt": {
+                "ordinal": 1,
+                "rowCount": 499,
+                "wireBytes": 261183,
+                "requestSha256": "28635fb24556dfc027efe6338e3344c913b23ef99a509843d0c3c27e8fcd37e2",
+                "sqlState": "57014",
+                "acknowledgedSteps": 0
+              },
+              "independentReadback": "ABSENT",
+              "connections": "CLOSED",
+              "nativeCleanupAll8": true,
+              "memoryPeakBytes": 5633609728,
+              "rootAvailableBytes": 274135728128,
+              "formalR3": "STOPPED_NOT_IMPORTED"
+            }
           }
         ],
         "currentInFlight": {
-          "owner": "T45",
-          "work": "r909 actual 11 layers committed; whole 511234-row compile, first-master ACK, independent rollback absence and stop/cleanup pending; finish watcher14073 original keys only",
-          "formalR3": "STOPPED_NOT_IMPORTED",
+          "owner": "D2",
+          "work": "source-only diagnosis of r909 actual party body line12 prefix SELECT timeout; identify minimum evidence to distinguish cause before any new SQL or server carrier",
+          "T45": "stopped and cleaned; no new server job queued or authority issued",
           "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",

@@ -7301,3 +7301,8 @@ T45parent/index准备3c55cd33、facts4a7922f3、retained5361f1fd只本机，真�
 
 
 2026-11-15 10:37 CST：r909 物料一次完成16.356秒，360源与本轮26件摘要一致；S/B均原键完成。实际CID5f405612…/C0 UTC02:32:03.365334584，PG17.11/OID16393/systemid7708220449284452382；正确ENTRY+BIRTH listener85140自动0，postbirth原件d9f4b747…，原consumer63824单次POST储存及INSTALL原键发布，外相0.291秒仅发布事实。现场actual11 b9c4680a…确认11层逐层COMMIT，guardian1fc85325… NODE_EXITED0/reaped44878ms，最终SQL807b1bd4…、owner1e94a903…/protected847162a7…、model25108354/catalog6767ec6e/specb9e5064e。QB已仅核confirm路径差分PASS，原文回执14080bd0…；原48095只读失败保留。当前2CPU/6GiB/cgroup已实核，但全511234编译、首499 STEP、回滚独立ABSENT、实际停库清理仍待本轮终态，均未先记PASS。watcher14073只按原键收尾，正式R3停库且上线未完成。
+
+
+2026-11-15 10:48 CST：r909 RESULT a529ab40…明确NEED_FIX。11层已COMMIT，但全511234/44682编译后，仅INIT 51940047B/22.471秒ACK；首master499/261183B/ordinal1/request28635fb2…触发57014、0STEP ACK，IMPORT_FAILED/ROLLED_BACK。independent新连接ABSENT且三连接CLOSED；guardian67545027…492004ms exit0/reaped不是业务PASS。新真实PGlog8d6cd7ca…/3191B/25行，UTC02:42:21.441取消在party body12原prefix SELECT，经trigger3/command906/step4，不是r908 IF57；新key集合body58以后未是本次取消点。不能据此推累计耗时/已完成party数或CPU根因，无现场执行计划。
+
+本轮CID5f4056…于02:43:07.975330236实际exit1/nonOOM/PID0，原TERMINAL一次0.245秒。保留与清理f0cd71a6… UTC02:44:35.134：8cleanup全true/active空/lockfree/scratchabsent/两port与PID无/正式R3同代停，memory.peak5633609728B，root274135728128B。old25+AUTH、原选3准确身份及新复制3均保留。typed STOPPED_PREFIX_UNCONFIRMED/cleanupVerifiedtrue/prefixRollbackVerifiedfalse。原compiled scratch/index/fixture原路径已dispose，仅首499标量收据未核完整payload，不重建冒称原件。C改诊断方法，已交D2仅source/现存metadata分析最小可区分方案，不再机械第12层加全编译，不新增server作业或R0。正式导入/核账/备份恢复/公网业务仍未完成。
