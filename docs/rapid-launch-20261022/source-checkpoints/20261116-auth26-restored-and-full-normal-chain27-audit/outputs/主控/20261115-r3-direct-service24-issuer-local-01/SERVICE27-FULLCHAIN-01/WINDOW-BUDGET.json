@@ -1,0 +1,25 @@
+{
+  "format": "R3_FULL_NORMAL_CHAIN_WINDOW_BUDGET_V1",
+  "classification": "CODE_LIMITS_AND_PLANNED_RESERVE_NOT_MEASURED_NEXT_NATIVE_DURATION",
+  "roleWindowMinutes": {
+    "controller": 90,
+    "backupAdmin": 92,
+    "restoration": 115,
+    "policy": 120
+  },
+  "minimumControllerBudgetBeforeStartMs": 4320000,
+  "componentsSeconds": {
+    "startJob": 300,
+    "describeAndSubmitReserve": 120,
+    "installJob": 780,
+    "writerJob": 3000,
+    "handoffReserve": 120
+  },
+  "installed154TargetMaxMs": 1200000,
+  "minimumInstallRemainingAtInnerIssueMs": 900000,
+  "minimumInstallRationale": "actual job780s plus submit/guard120s; outer and server recheck remaining time",
+  "writerRule": "expiry equals actual controllerUntil; now+3000000 strictly before expiry",
+  "grantRule": "fresh actual original grant expiresAtEpoch must cover complete7200000ms policy; no extension",
+  "clockRule": "do not issue real role/service windows until final same-version review and all helpers ready",
+  "authorityIssued": false
+}

@@ -1,0 +1,101 @@
+{
+  "addendumSha256": "37323e63dad35ff97756514c2e016d219594898176bea7de3640d2a7f3dce577",
+  "assertions": {
+    "applyProducerCustodyAndRequestKeyMatchHostConsumer": true,
+    "bootCopySourcePinMatches": true,
+    "callerOnlyCurrentServiceKeyChanged": true,
+    "declared4InstallDiffHashesMatchActual": true,
+    "hostNestedPinsMatchActual4Dependencies": true,
+    "hostOnlyAllowedOperationalReferencesAndPinsChanged": true,
+    "install5ActualPinsMatchWitness": true,
+    "oldMatrixAndEvidencePreserved": true,
+    "originalInstallKeyRetained": true,
+    "startInstallCallerBytesIdentical": true,
+    "staticPythonParseOnlyNoModuleExecution": true,
+    "supportOnly3StartDependencyPinsChangedAndActualMatch": true,
+    "transportOnly3GenerationReferencesChanged": true
+  },
+  "baselineEvidenceSha256": "d7dafcfa088ed2a1898d9625403feb9df5881b377715a4065c83b6f3a2875783",
+  "baselineMatrixSha256": "0619dda53d94e75bc650a2d91b66f3cfe846d118821e69e6afadf1b703227c2b",
+  "databaseConnections": 0,
+  "files": [
+    {
+      "bytes": 11417,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/PHASES27.UNISSUED.json",
+      "sha256": "494be6fee14f1062c817a2311c9b96dcdf75467433a9d4579f1aed205f398afe"
+    },
+    {
+      "bytes": 68971,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/OPERATIONAL-DELTA27.json",
+      "sha256": "84f44fa87cac72678273f997234dcf049232b6dd87970945358e9dcc99cf1052"
+    },
+    {
+      "bytes": 9888,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/start/bundle/batched161-run.mjs",
+      "sha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1"
+    },
+    {
+      "bytes": 9888,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/install/bundle/batched161-run.mjs",
+      "sha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1"
+    },
+    {
+      "bytes": 12985,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/install/bundle/batched_install_host.py",
+      "sha256": "3346cc684a5fdda483f00329a165908fcd3bada123aca122e49b4f6f661bef37"
+    },
+    {
+      "bytes": 187609,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/install/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "bytes": 20709,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/install/bundle/normal05_retained_stop.py",
+      "sha256": "87809e51bd8f0e1f1edc8c81c571d2114822eb18d2d93bf72bb656467a39eef7"
+    },
+    {
+      "bytes": 12283,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/install/bundle/private_transport.py",
+      "sha256": "8bb5a667b9a107d20c21d3c6e8bd3e2c0fc5692c49017fe27ea5c27a1548f895"
+    },
+    {
+      "bytes": 58041,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/start/bundle/normal_service05_after08.py",
+      "sha256": "b6f999dbd03f99e85b71e9401689dc4c93158469f92ac1ca9f79ab463af24021"
+    },
+    {
+      "bytes": 19408,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9"
+    },
+    {
+      "bytes": 21212,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/start/bundle/r3_05_readonly.py",
+      "sha256": "708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9"
+    },
+    {
+      "bytes": 21656,
+      "path": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/apply/bundle/ordinary05_roles.py",
+      "sha256": "d1fa8d926cfd2b4d6cb93b92dad95dc83942f67936870ed18bf43be87374966e"
+    }
+  ],
+  "issuerInvocations": 0,
+  "mockedUidOrClock": false,
+  "nativeFactoryInvocations": 0,
+  "remaining": {
+    "describeInstall27Wrapper": "NOT_PRESENT_IN_THIS_FROZEN_ROOT_OLD26_WRAPPER_NOT_REUSABLE",
+    "mainFinalRegistryIssuerAndDescriptorPairing": "PENDING_OWNER",
+    "nativeAndOperational27": "NOT_EXECUTED_BY_D1"
+  },
+  "runtimeChanges": 0,
+  "runtimePassClaimed": false,
+  "serverActions": 0,
+  "source703TreeRehashed": false,
+  "sqlOrModelSuiteRerun": false,
+  "state": "SCOPED_SOURCE_INCREMENTAL_PASS",
+  "unreviewedOtherOwners": [
+    "writer filename repair",
+    "start failure and auth restore repair"
+  ]
+}

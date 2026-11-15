@@ -1,0 +1,59 @@
+{
+  "describeSha256": "dee8b87953b7cab34827867fdfd7386e9c40307d106ab9d055648ad821ef9201",
+  "formalBusinessAccepted": false,
+  "format": "T45_R3_NORMAL_CHAIN27_PREPARATION_RESULT_V1",
+  "independentD1": {
+    "evidenceSha256": "4b05de414be974c25cb58ec1887cf6c84ba41f531d9d5d84e87ebd386dec2b0c",
+    "matrixSha256": "37323e63dad35ff97756514c2e016d219594898176bea7de3640d2a7f3dce577",
+    "status": "INSTALL_INTERFACE_INCREMENTAL_SOURCE_PASS_ONLY"
+  },
+  "independentQB": {
+    "status": "REPORTED_T45_SOURCE_FINDINGS_CLOSED_SCOPE_ONLY",
+    "thread": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+    "turn": "01a1e066-7ecf-77f3-83b4-28f9d566d572",
+    "wholeChainPass": false
+  },
+  "latestLiveCheck": {
+    "activeUnits": [],
+    "checkedAtUTC": "2026-11-15T17:50:42.753632+00:00",
+    "newGeneration27Containers": [],
+    "originalInstallAndWriterKeys": "ABSENT_IN_BOTH_GRANTS",
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/PATH-BASIS27-20261115T175042Z.json",
+    "postmasterPidAbsent": true,
+    "sha256": "2a6f730764a2a608c94bcc08e4ffb97500c10f33974b349990a55f9d71725a1a",
+    "targetListenerAbsent": true
+  },
+  "mainSourceSha256": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17",
+  "materializationRepeated": false,
+  "newGrantIssued": false,
+  "newInstallSubmitted": false,
+  "newServiceStarted": false,
+  "newWriterSubmitted": false,
+  "normalStartupAuthorization": "HELD",
+  "originalBusinessKeysChanged": false,
+  "pending": [
+    "Main final27 same-version registry/issuer package and exact reader schema pairing",
+    "QB final combined source-chain conclusion on that exact package",
+    "Fresh original-key/CAS/target facts before any later separately admitted execution"
+  ],
+  "postgresConnections": 0,
+  "readBoundsEvidenceSha256": "4ffc2d996ce4f375d15b40a7915545d684a6f8014bcb753d387a3bc7b858e3e9",
+  "readerReadySha256": "39c8d582fe488a337f47a87eb24607ecd2a347157dd95f2ccce8475ab9393593",
+  "readerSha256": "2a1541f00bd8d8cb05a1d7cef965e325a01fcd0e5e02df1b90469271c5345548",
+  "readySourceSha256": "d722152b31d665d68fda19ce538305fd3fa240a68797466669a8aaf2e124a71d",
+  "recordedAtUTC": "2026-11-15T18:11:52.568463+00:00",
+  "rulesSha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+  "serverMutations": 0,
+  "source7033OrSQLOrModelChanged": false,
+  "sourceFindingsClosed": [
+    "existing24 output-directory collision",
+    "writer authority filename mismatch",
+    "typed preparation failure restoration evidence",
+    "direct clean receipt leaf/hash mismatch",
+    "ACK versus successful-result handoff",
+    "normalized normal/incomplete/cleanup evidence fields",
+    "empty normal result preserves actual hash and continues cleanup read"
+  ],
+  "state": "T45_REPORTED_SOURCE_FINDINGS_CLOSED_WAIT_MAIN_FINAL_PAIRING",
+  "unknownCommitOrSubmissionReplayAllowed": false
+}

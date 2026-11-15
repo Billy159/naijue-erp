@@ -1,0 +1,14 @@
+{
+  "bundleSourcesChanged": false,
+  "finding": "READ27-EMPTY-NORMAL-RESULT-01",
+  "localEvidenceSha256": "5063cace7813f2ca1cb80ba24897909184774c5beb52c40513081ff0250a560c",
+  "normalStartupAuthorization": "HELD",
+  "postgresConnections": 0,
+  "previousReadySha256": "d722152b31d665d68fda19ce538305fd3fa240a68797466669a8aaf2e124a71d",
+  "readerPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/read-current-phase27-r1.py",
+  "readerSha256": "2a1541f00bd8d8cb05a1d7cef965e325a01fcd0e5e02df1b90469271c5345548",
+  "rulesSha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+  "serverActions": 0,
+  "state": "READER_ONLY_SUCCESSOR_FROZEN_REVIEW_PENDING",
+  "supersedesReaderSha256": "ca07a6fb6fe19fcbd5f5508dfb5e6b5200a002b155a4f04d4933467cf1fb1576"
+}

@@ -1,0 +1,128 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_phase.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-01/issue_phase.py
+@@ -50,6 +50,8 @@
+ 
+ def start_authority(witness, rule, apply, roles, policy, now):
+     normalize_apply(apply, policy, roles)
++    # Planned maxima: start300 + describe/submit120 + install780 + writer3000 + handoff120.
++    assert now + 4_320_000 < roles['controllerValidUntil'], 'Insufficient complete normal-chain budget before controller expiry'
+     folder = Path(witness['phaseDirectories']['start'])
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+     previous_base = CONTROL / '20261115-r3-direct-service24-start-window-01'
+@@ -63,7 +65,7 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service26 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service27 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+@@ -109,7 +111,7 @@
+         authority = dict(host['scope'](), service=service, startsAt=now, expiresAt=expiry,
+                          writerTerminalSha256=OLD_WRITER, policySha256=OLD_HOLD, sourceSha256=sha(src.read_bytes()),
+                          currentBatchTerminals=evidence['currentBatchTerminals'],
+-                         authorizationReference='Cleanly stop exact generation 26 and preserve its data directory.')
++                         authorizationReference='Cleanly stop exact generation 27 and preserve its data directory.')
+         host['validate'](authority, now)
+         return authority
+     service = observation(start, policy, witness) if start is not None else None
+@@ -125,14 +127,73 @@
+             stop_fields = dict(stopRequestKey=None, stopTerminalSha256=None,
+                                stopResultSha256=None, stopCleanupSha256=None)
+         else:
+-            terminal, result = evidence['terminal'], evidence['incomplete']
+-            assert terminal['jobId'] == result['requestKey'] == policy['jobs']['start']['jobId']
++            terminal, incomplete = evidence['terminal'], evidence['incomplete']
++            key = policy['jobs']['start']['jobId']
++            assert terminal['jobId'] == incomplete['requestKey'] == key
+             assert (terminal['status'], terminal['exitCode'], terminal['phaseStarted']) == ('FAILED', 2, True)
+-            assert result['confirmed'] and result['containerStopped'] and result['pid'] == 0
+-            assert result['runtimeMaterialPreserved'] and evidence['retainedAckAbsent'] and evidence['portAbsent']
+-            assert result['cleanStop']['cleanupSha256'] == evidence['rootPins']['cleanup']
+-            stop_fields = dict(stopRequestKey=terminal['jobId'], stopTerminalSha256=evidence['rootPins']['terminal'],
+-                               stopResultSha256=evidence['rootPins']['result'], stopCleanupSha256=evidence['rootPins']['cleanup'])
++            assert evidence['ownOperationUnitInactive'] and evidence['portAbsent']
++            incomplete_pin = evidence['incompleteRootSha256']
++            assert incomplete_pin == evidence['rootPins']['incomplete']
++            assert evidence['incompleteObjectsEqual'] is True
++            assert all(type(evidence[k]) is str and len(evidence[k]) == 64 for k in
++                       ('incompleteRootSha256', 'incompletePublicSha256'))
++            assert incomplete['confirmed'] is True and incomplete['runtimeMaterialPreserved'] is True
++            assert incomplete['originalKeyOnly'] is True and incomplete['automaticRetry'] is False
++            if incomplete.get('format') == 'T45_R3_PRECONTAINER_FAILURE_V1':
++                # This consumer verifies the distinct normal result for a genuine pre-create failure.
++                assert all(type(evidence[k]) is str and len(evidence[k]) == 64 for k in
++                           ('normalResultRootSha256', 'normalResultPublicSha256'))
++                assert evidence['normalResultRootSha256'] == evidence['rootPins']['result']
++                assert evidence['normalResultPublicSha256'] == evidence['publicResultSha256']
++                assert evidence['resultObjectsEqual'] is True
++                assert incomplete['state'] == 'PRE_CONTAINER_FAILURE_RESOURCES_ABSENT'
++                assert incomplete['createAttempted'] is False and incomplete['cid'] is None
++                assert 'containerStopped' not in incomplete
++                expected = dict(device=66304, inode=13502421, uid=61035, gid=61035, mode=0o700)
++                observed = incomplete['observation']
++                assert observed['dataDirectoryIdentity'] == expected
++                assert type(observed['checkedAt']) is int and observed['checkedAt'] <= now
++                assert all(observed[k] is True for k in ('ownedContainerAbsent', 'postmasterPidAbsent',
++                                                         'listenerAbsent', 'lifecycleOutputsAbsent'))
++                assert evidence['retainedAckAbsent'] is True
++                binding = incomplete['binding']
++                start_rule = policy['jobs']['start']
++                assert binding['normalServiceSha256'] == start_rule['bundlePins']['normal_service05_after08.py']
++                assert binding['proofSourceSha256'] == start_rule['bundlePins']['normal_service05_after08_proof.py']
++                assert all(type(binding[k]) is str and len(binding[k]) == 64 for k in
++                           ('rootManifestSha256', 'rootRequestSha256', 'authoritySha256'))
++                assert evidence['result']['requestKey'] == key
++                assert evidence['result']['status'] == 'NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY'
++                assert evidence['result']['automaticRetry'] is False
++                # This field binds the real normal result for this typed case, not guardian cleanup.
++                cleanup_pin = evidence['normalResultRootSha256']
++            else:
++                # A post-ACK failed handoff may leave an empty/malformed/missing normal result.
++                # Its independent native incomplete and actual cleanup records remain authoritative.
++                assert incomplete['containerStopped'] is True and incomplete['pid'] == 0
++                assert incomplete['createAttempted'] is True and incomplete['successfulResultHandoff'] is False
++                assert type(incomplete['cid']) is str and len(incomplete['cid']) == 64
++                leaf = incomplete['cleanStop']['cleanupLeaf']
++                assert leaf in ('cleanup.json', 'failed-start-cleanup.json') and evidence['cleanupLeaf'] == leaf
++                cleanup_pin = evidence['cleanupRootSha256']
++                assert cleanup_pin == evidence['rootPins']['cleanup'] == incomplete['cleanStop']['cleanupSha256']
++                assert evidence['cleanup']['requestKey'] == key
++                if leaf == 'cleanup.json':
++                    assert all(evidence['cleanup']['cleanup'][k] is True for k in
++                               ('cleanupComplete', 'cleanShutdown', 'dataPreserved', 'ownedPidAbsent', 'portAbsent'))
++                else:
++                    assert evidence['cleanup']['status'] == 'NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED'
++                    assert evidence['cleanup']['originalPGDATAAndCleanStateVerified'] is True
++                    assert evidence['cleanup']['dataDirectoryIdentity'] == dict(
++                        device=66304, inode=13502421, uid=61035, gid=61035, mode=0o700)
++                # Published C/ACK may exist on a failed handoff. Only real validated publication is accepted.
++                assert evidence['retainedAckAbsent'] is True or evidence['retainedAckValidated'] is True
++                if evidence['retainedAckValidated'] is True:
++                    assert incomplete['retainedAckObserved'] is True and incomplete['retainedAckValidated'] is True
++                    assert evidence['currentProofPresent'] is True
++                    assert type(evidence['currentProofSha256']) is str and len(evidence['currentProofSha256']) == 64
++            stop_fields = dict(stopRequestKey=key, stopTerminalSha256=evidence['rootPins']['terminal'],
++                               stopResultSha256=incomplete_pin, stopCleanupSha256=cleanup_pin)
+     else:
+         result = evidence['result']
+         assert result['requestKey'] == evidence['terminal']['jobId'] == policy['jobs']['stop']['jobId']
+@@ -267,7 +328,7 @@
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct26-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct27-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -297,7 +358,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261116-r3-direct-service26-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service27-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),

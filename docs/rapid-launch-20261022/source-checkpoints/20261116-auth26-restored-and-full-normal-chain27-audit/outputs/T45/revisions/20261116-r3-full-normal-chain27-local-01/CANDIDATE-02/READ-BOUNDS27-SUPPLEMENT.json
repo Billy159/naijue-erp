@@ -1,0 +1,63 @@
+{
+  "authorityBodiesReadThisCheck": false,
+  "mainSha256": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17",
+  "newSourceScan": false,
+  "postgresConnections": 0,
+  "rows": [
+    {
+      "actualBytes": 1084429,
+      "consumer": "start/r3_05_readonly.py:authority_inputs",
+      "input": "existing deployment authority",
+      "limitBytes": 2097152,
+      "line": 241
+    },
+    {
+      "actualBytes": 1084429,
+      "consumer": "start/r3_05_readonly.py:verify_projection",
+      "input": "staged deployment authority",
+      "limitBytes": 2097152,
+      "line": 281
+    },
+    {
+      "actualBytes": 1084429,
+      "consumer": "start/fresh35-production-carrier.py:inside_production_factory",
+      "input": "read-only /etc/naijue-erp deployment authority",
+      "limitBytes": 2097152,
+      "line": 1967
+    },
+    {
+      "actualBytes": 185047,
+      "consumer": "start host copy loop",
+      "input": "fresh35-production-carrier.py",
+      "limitBytes": 262144
+    },
+    {
+      "actualBytes": 187609,
+      "consumer": "install/writer protected loader",
+      "input": "fresh35-production-carrier.py specialized retained version",
+      "limitBytes": 262144
+    },
+    {
+      "actualBytes": 60345,
+      "consumer": "main self-pin and restore current source",
+      "input": "normal_service05_after08.py",
+      "limitBytes": 65536
+    },
+    {
+      "actualBytes": 109344,
+      "consumer": "inside_production_factory launcher load",
+      "input": "isolated launcher",
+      "limitBytes": 262144
+    },
+    {
+      "actualBytes": 109344,
+      "consumer": "readonly copy/protected metadata readback",
+      "input": "group0440 staged launcher",
+      "limitBytes": 262144,
+      "privateFlag": false
+    }
+  ],
+  "rulesSha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+  "scope": "STATIC_SELECTED_CONSUMER_BOUNDS_WITH_REUSED_ACTUAL_METADATA_ONLY",
+  "serverActions": 0
+}

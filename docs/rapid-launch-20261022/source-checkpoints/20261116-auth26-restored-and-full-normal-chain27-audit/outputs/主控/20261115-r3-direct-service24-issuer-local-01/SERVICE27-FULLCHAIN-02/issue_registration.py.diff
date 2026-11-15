@@ -1,0 +1,59 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_registration.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/issue_registration.py
+@@ -35,7 +35,11 @@
+ 
+ def issue(rule_file, rules_pin, review_file, review_pin, basis_file, basis_pin,
+           output_directory, dry_run=False):
+-    checked(review_file, review_pin)
++    review = json.loads(checked(review_file, review_pin))
++    assert review['rulesSha256'] == rules_pin
++    if not dry_run:
++        assert review['state'] == 'FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS'
++        assert review['normalStartupHoldClosed'] is True
+     human = json.loads(checked(AUTHORITY, AUTHORITY_SHA))
+     assert human['messageId'] == '01a1df2e-293d-7061-ab16-5b0cc2e0e753'
+     assert human['originThreadId'] == '01a19f9f-97b5-7f81-b1ea-5479df73b469'
+@@ -68,6 +72,8 @@
+     assert set(basis['candidateKeys']) >= set(jobs.values()) - {jobs['materialize']}
+     assert basis['actualPins'][str(cas['P'] / 'admin_exec.py')] == cas['OLD_DISPATCHER']
+     now = time.time_ns() // 1_000_000
++    grant_limit = int(basis['grantExpiresAtEpoch'] * 1000)
++    assert now + 7_200_000 <= grant_limit, 'Original grant does not cover the complete finite operation window'
+     captured = int(datetime.fromisoformat(basis['checkedAtUTC']).timestamp() * 1000)
+     assert 0 <= now - captured <= 900_000, 'fresh real CAS basis required'
+     assert set(basis['oldIdentities']) == {str(p) for p in cas['BASIS']} | {'executionLock'}
+@@ -94,19 +100,19 @@
+     for phase in ('apply', 'restore'):
+         assert 'roles-authorization.json' not in rules[phase]['bundlePins']
+         rules[phase]['bundlePins']['roles-authorization.json'] = sha(role_raw)
+-    policy = dict(format='T45_R3_DIRECT26_BATCHED_REAL_V1', grantId=cas['GRANT'],
++    policy = dict(format='T45_R3_DIRECT27_BATCHED_REAL_V1', grantId=cas['GRANT'],
+                   startsAt=now, expiresAt=now + 7_200_000, jobs=rules)
+     cas['validate_policy_delta'](policy, {'grantId': cas['GRANT']})
+-    files = {'module': (HERE / 'r3_direct26_batched.py').read_bytes(),
++    files = {'module': (HERE / 'r3_direct27_batched.py').read_bytes(),
+              'policy': encode(policy),
+-             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT26-UNREGISTERED.py').read_bytes()}
++             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT27-UNREGISTERED.py').read_bytes()}
+     dispatcher = cas['render_dispatcher'](files)
+     registration = dict(cas['scope'](), sourceSha256=sha(cas_path.read_bytes()),
+                         sourcePins={key: sha(data) for key, data in files.items()},
+                         oldIdentities=basis['oldIdentities'], startsAt=now, expiresAt=now + 900_000,
+                         authorizationReference=REFERENCE, independentReviewSha256=review_pin)
+     registration_raw = encode(registration)
+-    carrier = (HERE / 'original-cas-direct26-carrier.UNISSUED.py').read_bytes()
++    carrier = (HERE / 'original-cas-direct27-carrier.UNISSUED.py').read_bytes()
+     assert ("SOURCE='" + registration['sourceSha256'] + "'").encode() in carrier
+     for name, value in (('AUTH_SHA_LITERAL', repr(sha(registration_raw))),
+                         ('AUTH_START_LITERAL', str(now)),
+@@ -138,8 +144,8 @@
+         ('roles-authorization.json', role_raw), ('host-authorization.json', encode(host_authority)),
+         ('registration-authorization.json', registration_raw),
+         ('registration-envelope.json', encode(packet)),
+-        ('original-cas-direct26-carrier.ISSUED.py', carrier),
+-        ('direct26-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
++        ('original-cas-direct27-carrier.ISSUED.py', carrier),
++        ('direct27-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
+         ('ISSUED.json', encode(report))):
+         with (output / name).open('xb') as stream:
+             stream.write(data)

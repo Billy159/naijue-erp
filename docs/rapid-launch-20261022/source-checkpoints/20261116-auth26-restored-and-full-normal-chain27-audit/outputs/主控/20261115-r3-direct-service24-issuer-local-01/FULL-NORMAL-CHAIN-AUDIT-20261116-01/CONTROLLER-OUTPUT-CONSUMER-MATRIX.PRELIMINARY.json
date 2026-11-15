@@ -1,0 +1,243 @@
+{
+  "format": "R3_MAIN_CONTROLLER_OUTPUT_CONSUMER_MATRIX_V1",
+  "state": "PRELIMINARY_BASELINE26_NOT_FINAL_READY",
+  "evidenceBoundary": "Actual current files/previous native facts. Final27 source and complete runtime chain are not yet validated.",
+  "rows": [
+    {
+      "id": "C-OUT-01",
+      "phase": "local registration issuance",
+      "producer": "SERVICE26-REUSE703-02/issue_registration.py:issue",
+      "newOutputs": [
+        "CONTROL/<new-registration-window>",
+        "roles-authorization.json",
+        "host-authorization.json",
+        "registration-authorization.json",
+        "registration-envelope.json",
+        "original-cas-*.ISSUED.py",
+        "new-policy.json",
+        "admin_exec.ISSUED.py",
+        "ISSUED.json"
+      ],
+      "ownership": "main only, own new window directory",
+      "existingInputs": [
+        "exact final PHASES bundle",
+        "verified human authority",
+        "independent review",
+        "fresh CAS basis"
+      ],
+      "collisionRule": "parent fixed to CONTROL; new directory required; each leaf exclusive create",
+      "consumers": [
+        "T45 carrier once",
+        "finite apply/restore",
+        "subsequent phase issuers"
+      ],
+      "evidence": "STATIC_SOURCE plus actual prior26 issuance; final next-source pending"
+    },
+    {
+      "id": "C-OUT-02",
+      "phase": "root registration entry",
+      "producer": "original-cas-*-carrier.UNISSUED.py",
+      "newOutputs": [
+        "unique private registration STAGE",
+        "STAGE/register_cas.py",
+        "STAGE/entry-result.json"
+      ],
+      "ownership": "existing T45 private root channel; same source envelope",
+      "collisionRule": "STAGE and AUDIT must not exist; O_EXCL+fsync; failure/unknown inspect original without replay",
+      "consumers": [
+        "root register_cas",
+        "original-audit readonly reader"
+      ],
+      "evidence": "STATIC_SOURCE and actual26 normal/recovery registration; final next-source pending"
+    },
+    {
+      "id": "C-OUT-03",
+      "phase": "root registration publication",
+      "producer": "register_cas.py:register/put",
+      "newOutputs": [
+        "unique AUDIT",
+        "AUDIT/authorization.json",
+        "AUDIT/old-dispatcher.bin",
+        "AUDIT/old-policy.bin",
+        "AUDIT/old-identities.json",
+        "AUDIT/publish-intent.json",
+        "AUDIT/result.json",
+        "new public module",
+        "normal new policy",
+        "unique dispatcher pending file"
+      ],
+      "existingInputs": [
+        "original execution.lock",
+        "full exact old BASIS identities and SHA",
+        "accepted prior materialization",
+        "original failed/restored receipts"
+      ],
+      "ownership": "root source-only publisher under original nonblocking lock",
+      "collisionRule": "new module/policy/stage/audit O_EXCL; normal policy is a new generation; pending dispatcher finally replaces only exact old dispatcher identity; preserve all old policy/module bytes",
+      "consumers": [
+        "actual protected dispatcher",
+        "T45 registered fixed phase jobs",
+        "readonly original audit"
+      ],
+      "evidence": "STATIC_SOURCE plus actual26 CAS; recovery policy replacement remains limited to sole unsubmitted restore rule"
+    },
+    {
+      "id": "C-OUT-04",
+      "phase": "phase issuance",
+      "producer": "issue_phase.py:issue",
+      "newOutputs": [
+        "CONTROL/<new-service>-<phase>-window-01",
+        "exact authorityLeaf",
+        "ISSUED.json"
+      ],
+      "existingInputs": [
+        "actual predecessor native/root-public readback",
+        "same registry policy and role authority",
+        "frozen phase script and every static member"
+      ],
+      "collisionRule": "new local directory, exclusive authority/result file; completed materialize explicitly disallowed",
+      "consumers": [
+        "T45 run_frozen_phase once",
+        "registered root host validate"
+      ],
+      "evidence": "STATIC_SOURCE plus actual26 start authority; no next normal authority issued"
+    },
+    {
+      "id": "C-OUT-05",
+      "phase": "installed154 bounded upgrade authority",
+      "producer": "issue_upgrade_authority.py:issue",
+      "newOutputs": [
+        "unique local inner window",
+        "fresh35-batched161-upgrade-v1.json",
+        "ISSUED.json"
+      ],
+      "existingInputs": [
+        "actual genuine descriptor/program hash",
+        "actual C/epoch/liveFacts",
+        "finite actual backupAdmin deadline",
+        "DB05 pins and 13-step order"
+      ],
+      "ownership": "main external signer; producer does not write container paths",
+      "consumers": [
+        "outer install authority",
+        "T45 exact protected projection",
+        "D1 fixed authorization loader"
+      ],
+      "collisionRule": "new local directory, exact9-field body; protected destination and transport filename must be identical to D1 loader, currently under D1/T45 concrete audit",
+      "evidence": "STATIC_SOURCE; actual describe/install has not occurred"
+    },
+    {
+      "id": "C-OUT-06",
+      "phase": "real batch writer authority",
+      "producer": "issue_phase.py:writer_authority",
+      "newOutputs": [
+        "inner compactV2 authority bytes embedded into exact outer authority",
+        "single new writer window authority file"
+      ],
+      "existingInputs": [
+        "actual DB05 installed/captured result",
+        "genuine catalog source/spec/model triple",
+        "original20-field prepared binding",
+        "actual C and role controller expiry"
+      ],
+      "collisionRule": "reuse original business INIT/request keys; expiry exactly role controller deadline and leaves full3000s; no materialize or full data recompile",
+      "consumers": [
+        "T45 real host",
+        "ordinary retained wrapper",
+        "DB batched host and original-key readback"
+      ],
+      "evidence": "STATIC_SOURCE; no actual install or REAL writer submission"
+    },
+    {
+      "id": "C-OUT-07",
+      "phase": "stop and original auth restore",
+      "producer": "issue_phase.py:preservation_authority and exact rescue issuer",
+      "newOutputs": [
+        "one stop authority",
+        "one original-auth restore authority"
+      ],
+      "existingInputs": [
+        "actual current C service identity",
+        "real install/writer terminal or absence map",
+        "real stop/incomplete cleanup facts",
+        "original private auth recovery basis"
+      ],
+      "collisionRule": "never invent cleanup/C or treat natural expiry as restoration; exact current generation and fixed data identity; preserve failed job and partial boot",
+      "consumers": [
+        "normal preserve stop",
+        "offline role restore leaf"
+      ],
+      "evidence": "actual24 stop and actual25/26 auth restoration; routine next pre-container cleanup consumer contract remains OPEN until final source repaired"
+    }
+  ],
+  "openItems": [
+    {
+      "id": "C-F01",
+      "state": "OPEN_FOR_FINAL_NEXT_VERSION",
+      "owner": "T45 producer plus main issuer",
+      "finding": "Routine start before-container preparation currently lacks a truthful cleanup shape accepted by the already-registered restore; exact post-failure rescue exceptions were needed25/26.",
+      "requiredClosure": "same final start/restore/issuer contract must support real pre-container no-creation evidence and preserve after-container behavior without fake containerStopped or cleanup"
+    },
+    {
+      "id": "C-F02",
+      "state": "BUDGET_ALIGNMENT_REQUIRED_IN_FINAL_REVIEW",
+      "owner": "main plus T45",
+      "finding": "Inner target window max20min; install outer timeout780s and writer3000s need real remaining budget after transport and preparation.",
+      "requiredClosure": "finish all helpers and source before role clock; bind actual descriptor window; enforce install remaining timeout/cleanup, writer latest start controllerUntil-3000s; keep actual durations separate from estimates"
+    },
+    {
+      "id": "C-F03",
+      "state": "ACTUAL_GRANT_LIMIT_METADATA_REQUIRED_NEXT_BASIS",
+      "owner": "T45 read-only basis plus main signer",
+      "finding": "Current basis omits grant.expiresAtEpoch although remote CAS enforces it. Current26 policy passed, but next finite window should be checked against actual original grant limit before issuing unusable packets.",
+      "requiredClosure": "include expiry-only metadata in next fresh basis; no extension of original grant or privileges"
+    },
+    {
+      "id": "C-F04",
+      "state": "CONFIRMED_WRITER_FILENAME_MISMATCH_T45_FIX_PENDING",
+      "owner": "T45 consumer/pins; main only final source-pin pairing",
+      "finding": "writer host batched_real_host.py:437 writes writer-authorization.json but retained24-run.mjs:197 reads retained24-authorization.json; D1 exact26 source report confirms no change required to nine-field protectedDestination.",
+      "requiredClosure": "Fix the actual writer producer/consumer name in final source and update its dependent pins; reuse D1 MATRIX0619/EVIDENCEd7da."
+    },
+    {
+      "id": "C-F05",
+      "state": "CONFIRMED_FACT_PROJECTION_MISMATCH_FINAL_CONTRACT_PENDING",
+      "owner": "T45 reader and main issuer",
+      "finding": "read-current-phase26.py maps rootPins.result to normal-service-result.json and puts normal-service-incomplete under its literal leaf; main generic failed-start issuer expects evidence.incomplete and signs rootPins.result for a consumer that actually reads normal-service-incomplete.json. Required all-unit/ack/port facts are not in the current reader either.",
+      "requiredClosure": "Final typed normal/precontainer/direct-clean facts must have explicit true normalResult/incomplete/cleanup root and public hashes, and actual negative liveness fields. Pair producer, metadata reader, main issuer, and restore consumer once; never hand-fill false aliases.",
+      "evidenceType": "STATIC_SOURCE",
+      "sourceLines": [
+        "read-current-phase26.py:35,45,58-63",
+        "issue_phase.py:129-140",
+        "ordinary05_roles_job.py:432-438"
+      ],
+      "runtimeClaim": "No after-container failure executed in this audit; this is a deterministic contract mismatch from actual current sources."
+    },
+    {
+      "id": "C-F06",
+      "state": "CONFIRMED_MISSING_FINAL27_DESCRIBE_WRAPPER",
+      "owner": "T45 operational helper",
+      "finding": "D1 verified final27 first frozen directory lacks describe-install27-readonly.py; old26 helper still binds PHASES2963/service26/BOOT26.",
+      "requiredClosure": "Freeze a real27 same-version readonly describe helper before opening role/service clocks; match actual boot27/start/install caller bytes and actual future C, no fake C or temporary live-window code edits.",
+      "evidenceType": "STATIC_SOURCE_REVIEW_BY_D1"
+    },
+    {
+      "id": "C-V07",
+      "state": "INPUT_BYTE_BOUND_VERIFICATION_PENDING_NOT_A_CONFIRMED_DEFECT",
+      "owner": "T45 normal input consumers",
+      "finding": "Actual protected deployment authority metadata reports1084429 bytes; restore correctly onlystats it. Normal consumers must use compatible actual bounds.",
+      "requiredClosure": "Record actual normal reader and byte bound in final input/consumer matrix; no secret body exported, no full source rehash.",
+      "evidenceType": "ACTUAL_SERVER_READ_ONLY_METADATA_WITH_STATIC_CONSUMER_TRACE_PENDING"
+    }
+  ],
+  "nativeInstallExecuted": false,
+  "realWriterSubmitted": false,
+  "normalStartAuthorizationHeld": true,
+  "databaseConnectionsByAudit": 0,
+  "nextSourceCandidate": {
+    "T45FirstPhasesSha256": "494be6fee14f1062c817a2311c9b96dcdf75467433a9d4579f1aed205f398afe",
+    "matrixSha256": "ab1f9a713173c0e4322fd593ea1323cf05f73d3f621f46f9b5e97286b47b04c0",
+    "state": "FIRST_FROZEN_UNISSUED_PENDING_COMPLETION_AND_FINAL_PAIRING",
+    "postAckAndDescribeEntryFollowupPending": true
+  }
+}

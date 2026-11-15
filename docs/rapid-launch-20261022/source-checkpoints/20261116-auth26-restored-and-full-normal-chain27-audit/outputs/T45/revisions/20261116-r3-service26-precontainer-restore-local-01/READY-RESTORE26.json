@@ -1,0 +1,16 @@
+{
+  "authorityBodiesRead": false,
+  "bootPreserved": true,
+  "diffSha256": "9a5bc2d0ed8c4f4cb1aaeda4e7ec0d4a33eb46249c13dd6fe0c64077d2be4850",
+  "noFakeCleanup": true,
+  "otherSixPhaseRulesChanged": false,
+  "pythonSyntaxExitCode": 0,
+  "roleDeadlinesExtended": false,
+  "rolesAuthorityUnchanged": "ded926b105af374beec177489926c49a0fe3778565516926a63fb317f3037ee6",
+  "rolesLeafSha256": "f47b2e8029436161e8c8bcdeca17da21141029174cbd7dc9f3112b9ea1d8616f",
+  "rulesSha256": "27d983c0ec04b6159c9be7caf51e12aeebaf052a4c1f8b0f0db5c96b4e866494",
+  "serverActions": 0,
+  "sourceSha256": "9ef93b861c969b885cec346aaacb58b662794e736ebcc6c55c33655939791063",
+  "stagedGroupReadableFilesUseProtectedRootOwnerRead": true,
+  "state": "LOCAL_EXACT_FAILED26_PRECONTAINER_RESTORE_ONLY_UNISSUED"
+}

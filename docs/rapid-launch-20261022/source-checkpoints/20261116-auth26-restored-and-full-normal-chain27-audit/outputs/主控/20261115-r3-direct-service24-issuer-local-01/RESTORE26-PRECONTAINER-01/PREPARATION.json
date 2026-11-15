@@ -1,0 +1,57 @@
+{
+  "state": "FROZEN_LOCAL_RESTORE26_PRECONTAINER_SOURCE_PENDING_REVIEW",
+  "moduleSha256": "165c5c4c2c1f6d3f6b6ba9f555aee42d112b6881740b61384aed45d7669ace0b",
+  "registrarSha256": "000696a08cf6f3427b8041400481e85d9289a678305008bd3155bdd72b6ee62c",
+  "actualFailureSha256": "e5aada413c95f0e40292fe0e3c4307b441c2d4ebde414faf89b16334332944d4",
+  "boundarySha256": "f42993ffe0f58325d627831b6462649df70a7c3c5aff432ee88850538d4a7340",
+  "oldProjectionPreserved": true,
+  "rolesLifetimeExtended": false,
+  "serverActions": 0,
+  "authorityIssued": false,
+  "remaining": [
+    "QB precise source pairing",
+    "fresh CAS basis"
+  ],
+  "selectedPhasesPath": "outputs/T45/revisions/20261116-r3-service26-precontainer-restore-local-01/PHASES-RESTORE26.UNISSUED.json",
+  "selectedPhasesSha256": "27d983c0ec04b6159c9be7caf51e12aeebaf052a4c1f8b0f0db5c96b4e866494",
+  "changes": [
+    {
+      "file": "r3_direct26_restore_precontainer.py",
+      "sha256": "165c5c4c2c1f6d3f6b6ba9f555aee42d112b6881740b61384aed45d7669ace0b",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/r3_direct26_batched.py",
+      "parentSha256": "a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d"
+    },
+    {
+      "file": "register_cas.py",
+      "sha256": "000696a08cf6f3427b8041400481e85d9289a678305008bd3155bdd72b6ee62c",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/register_cas.py",
+      "parentSha256": "3e1e4428ab9a3eb7b3ee142db8142fad93432da4d99bcc75de642ef345e1c0df"
+    },
+    {
+      "file": "issue_registration.py",
+      "sha256": "ca515e2e82713df295cd4d71bf8bb8438d9e51f71b2382fcc0df85381253ff6c",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/issue_registration.py",
+      "parentSha256": "b4e662d7f36a65521858b601ee40073fb64cdf49deb06ea039a56530e7d1bac0"
+    },
+    {
+      "file": "issue_restore.py",
+      "sha256": "9c17b9e427872441d0111d91a6584f47df81b174f6e713402835dabfd29ca41e",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/issue_restore.py",
+      "parentSha256": "9df18bfc7cb7ac9c1d3dd9a397526c76f201e5f083a5e4bdcaf7e96efd0f07ed"
+    },
+    {
+      "file": "admin_exec.RESTORE26-UNREGISTERED.py",
+      "sha256": "f769d21db10f432ef074888a235cbb0d7b6f58e6d4c4355186041095bf2ebc1d",
+      "parent": "outputs/主控/20261116-r3-direct26-registration-window-01/admin_exec.ISSUED.py",
+      "parentSha256": "8dc501d8125789b9b9fdab34a123647098f712f71637389ef9f0872119c97c14"
+    },
+    {
+      "file": "original-cas-restore26-carrier.UNISSUED.py",
+      "sha256": "c2baa7b097f101fbe59ed53f8cf6bc3c8f18328e130e8dc0c02e09a9c41c719f",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/original-cas-restore25-carrier.UNISSUED.py",
+      "parentSha256": "c6102b9eeda36ddb161b2aa6df57921f65895afd2468a4408348c736c5c0d1de"
+    }
+  ],
+  "otherSixRulesAndOriginalPolicyClockUnchanged": true,
+  "originalRolesSha256": "ded926b105af374beec177489926c49a0fe3778565516926a63fb317f3037ee6"
+}

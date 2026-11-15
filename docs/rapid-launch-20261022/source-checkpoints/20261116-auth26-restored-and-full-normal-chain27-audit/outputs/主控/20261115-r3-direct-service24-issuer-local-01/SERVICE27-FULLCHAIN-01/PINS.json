@@ -1,0 +1,19 @@
+{
+  "FAILED-START-FACT-CONTRACT.json": "7e9e17287adb0064902dc26cd9b20e63e533d46a59975b6ce257873c9a892963",
+  "PREPARATION.json": "3b29f8623e4a5a9584d006d2ca634bf4239fe6cf3f5e7e5839f29acbea1d6b26",
+  "WINDOW-BUDGET.json": "b3a40e3a8d604d308500aed7fcc755116cbfa028be6636a6b46539256606ee31",
+  "admin_exec.DIRECT27-UNREGISTERED.py": "90b49498da3f489e4e1122be946b6ea558b10208c852df10ac1de3ab1c34092c",
+  "admin_exec.DIRECT27-UNREGISTERED.py.diff": "10c74277567b4f6bfdf8caa23dd70d1ba22ddc8ea246b3a5dc6bb6d8d34ff0f2",
+  "issue_phase.py": "5e11bfc6f3090979950e7f5e033d47af15db225817a541bc94bfaf052fa13287",
+  "issue_phase.py.diff": "97636dc8a08de535a5d3332c9cea3726b4133109ae63f77c0b6cdfd1b38d8b27",
+  "issue_registration.py": "824131c7742fd9fd4b4a3f15af12369b364725c1f2e743aea18ffdb26f1c8ec5",
+  "issue_registration.py.diff": "22e63c60af23415646c0efdcefb3030affd18dca1403de5707377a9391b6255e",
+  "issue_upgrade_authority.py": "a3c5d9b362e7be154b787ce54b9b218c763592de78014f732d6ed38390648402",
+  "issue_upgrade_authority.py.diff": "2b4c2aef1d7e6cd0588a8e3b3ae7d6748013557129dac82719a5e5399fce16a9",
+  "original-cas-direct27-carrier.UNISSUED.py": "6df5e2915f5a334a107183568dd0b1d48ffff0338726dd381e7900cd5504f61f",
+  "original-cas-direct27-carrier.UNISSUED.py.diff": "238558c4a89c162f0a5f276c3a5428d4bd7b414fe5f8f9bd007abfbfbb4a3217",
+  "r3_direct27_batched.py": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
+  "r3_direct27_batched.py.diff": "fbaf89b2b11932cb464730765f82c83403bf4d445b1ee8f9a6b4a7a8dbdb4120",
+  "register_cas.py": "e868374a7de44e592195c85cc26cd1ac1d4d1fd6cb02b532d8ff8787b3df9337",
+  "register_cas.py.diff": "26b8361738befb9ed825496044bdd5dc3ddbafa151d2301b79ac187679bf4d8d"
+}

@@ -1,0 +1,28 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_upgrade_authority.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-01/issue_upgrade_authority.py
+@@ -44,7 +44,7 @@
+     assert all(d[k] is False for k in ('businessRowsWritten', 'rolesCreated',
+                                       'serviceCreated', 'changesOriginalInputTarget'))
+     assert live['requestKey'] == 't45-r3-batched-install-20261115-01'
+-    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-26'
++    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-27'
+     assert live['physical']['systemIdentifier'] == '7706545564479176741'
+     assert live['physical']['databaseOid'] == '16393'
+     assert live['physical']['serverVersionNum'] == '170011'
+@@ -62,14 +62,14 @@
+     assert type(d['startsAt']) is type(d['expiresAt']) is int
+     assert type(d['backupAdminValidUntil']) is int
+     assert d['backupAdminValidUntil'] == live['backupAdminValidUntil']
+-    assert d['startsAt'] <= now < now + 120_000 < d['expiresAt'] <= d['backupAdminValidUntil']
++    assert d['startsAt'] <= now < now + 900_000 < d['expiresAt'] <= d['backupAdminValidUntil']
+     assert d['expiresAt'] <= live['actualSharedServiceWorkDeadline']
+     authority = dict(format='FRESH35_COMBINED_EXECUTION_AUTHORIZATION_V1',
+                      decision='AUTHORIZE_EXACT_154_TO161_CATALOG_UPGRADE_ONLY',
+                      programSha256=d['programSha256'], sourceSetSha256=d['sourceSetSha256'],
+                      targetSha256=d['targetSha256'], startsAt=d['startsAt'], expiresAt=d['expiresAt'],
+                      independentSafetyReviewSha256=review_pin,
+-                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current26 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
++                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current27 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
+     raw = (json.dumps(authority, sort_keys=True, indent=2) + '\n').encode()
+     output = Path(output_directory)
+     assert output.parent.resolve() == CONTROL.resolve() and not output.exists()

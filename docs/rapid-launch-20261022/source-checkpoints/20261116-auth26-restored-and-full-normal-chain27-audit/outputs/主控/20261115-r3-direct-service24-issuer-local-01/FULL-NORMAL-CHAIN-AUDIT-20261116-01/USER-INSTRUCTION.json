@@ -1,0 +1,11 @@
+{
+  "format": "VERIFIED_HUMAN_CONTINUATION_INSTRUCTION_V1",
+  "originThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+  "turnId": "01a1e034-d331-7d40-a5d4-411a028356ca",
+  "messageId": "01a1e034-d343-7f32-9383-72f091e306b4",
+  "exactUserText": "你这上线前不能完整先做个排查吗 为什么老是这么多问题",
+  "verifiedBy": "main read_thread actual userMessage content",
+  "taskInterpretation": "Complete the final same-version normal launch chain inspection before issuing the next normal startup; finish the current exact auth restoration first. Continue the existing formal launch goal afterwards.",
+  "noRehearsalGateRevival": true,
+  "newTeamCreated": false
+}

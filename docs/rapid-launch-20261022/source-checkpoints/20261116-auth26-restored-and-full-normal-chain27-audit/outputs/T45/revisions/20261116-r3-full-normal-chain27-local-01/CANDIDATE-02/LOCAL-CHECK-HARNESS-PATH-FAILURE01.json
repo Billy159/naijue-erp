@@ -1,0 +1,1 @@
+{"state":"LOCAL_HARNESS_FAILED_BEFORE_FILESYSTEM_CHECK","error":"FileNotFoundError","cause":"Nested candidate helper still used parent instead of revisions parent for retained26 source","serverActions":0,"sourceRuntimeExecuted":false,"corrected":"Fixed only local reference path"}

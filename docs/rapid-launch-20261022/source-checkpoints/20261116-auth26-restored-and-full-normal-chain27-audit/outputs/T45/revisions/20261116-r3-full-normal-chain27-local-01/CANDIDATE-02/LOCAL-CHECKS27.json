@@ -1,0 +1,165 @@
+{
+  "applyRestoreWrapperIdentical": true,
+  "dependencyPairs": [
+    {
+      "consumer": "apply/bundle/ordinary05_roles_job.py",
+      "input": "fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "consumer": "apply/bundle/ordinary05_roles_job.py",
+      "input": "normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "consumer": "apply/bundle/ordinary05_roles_job.py",
+      "input": "normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "consumer": "install/bundle/batched_install_host.py",
+      "input": "normal05_retained_stop.py",
+      "sha256": "df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8"
+    },
+    {
+      "consumer": "install/bundle/batched_install_host.py",
+      "input": "fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "consumer": "install/bundle/batched_install_host.py",
+      "input": "batched161-run.mjs",
+      "sha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1"
+    },
+    {
+      "consumer": "install/bundle/batched_install_host.py",
+      "input": "private_transport.py",
+      "sha256": "8bb5a667b9a107d20c21d3c6e8bd3e2c0fc5692c49017fe27ea5c27a1548f895"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "normal05_retained_stop.py",
+      "sha256": "df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "nonroot_input_access.py",
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "materialized-profile.json",
+      "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "r3_05_cli.py",
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "r3_05_runtime.py",
+      "sha256": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb"
+    },
+    {
+      "consumer": "writer/bundle/batched_real_host.py",
+      "input": "retained24-run.mjs",
+      "sha256": "c98b897209f94ddb22fcfc6948bcb78aea5d71f2d2ce7baf101b4da5aaaee651"
+    },
+    {
+      "consumer": "restore/bundle/ordinary05_roles_job.py",
+      "input": "fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "consumer": "restore/bundle/ordinary05_roles_job.py",
+      "input": "normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "consumer": "restore/bundle/ordinary05_roles_job.py",
+      "input": "normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    }
+  ],
+  "duplicateCurrentCreationRefused": true,
+  "embeddedChildSourcesParsed": true,
+  "formalBusinessAccepted": false,
+  "nativeFactoryExecuted": false,
+  "new27ProjectionCreated": true,
+  "notCovered": [
+    "actual Linux UID/mounts",
+    "real container cleanup and PG state",
+    "registry/issuer final pairing",
+    "real install/writer acceptance"
+  ],
+  "oldProjectionInodeAndSentinelPreserved": true,
+  "original26ProjectionCollisionReproduced": true,
+  "postgresConnections": 0,
+  "pythonFilesParsed": 28,
+  "scope": "LOCAL_FILESYSTEM_AND_STATIC_OPERATIONAL_BINDINGS_ONLY",
+  "serverActions": 0,
+  "startStagedInputs": [
+    {
+      "bytes": 60345,
+      "input": "normal_service05_after08.py",
+      "readBound": 262144,
+      "sha256": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17"
+    },
+    {
+      "bytes": 19408,
+      "input": "normal_service05_after08_proof.py",
+      "readBound": 262144,
+      "sha256": "4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9"
+    },
+    {
+      "bytes": 185047,
+      "input": "fresh35-production-carrier.py",
+      "readBound": 262144,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "bytes": 21212,
+      "input": "r3_05_readonly.py",
+      "readBound": 262144,
+      "sha256": "708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9"
+    },
+    {
+      "bytes": 72238,
+      "input": "operator-host.mjs",
+      "readBound": 262144,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    {
+      "bytes": 10302,
+      "input": "operator-stream-program.mjs",
+      "readBound": 262144,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    {
+      "bytes": 26499,
+      "input": "operator-stream-import-cli.mjs",
+      "readBound": 262144,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    {
+      "bytes": 48490,
+      "input": "operator-manifest.json",
+      "readBound": 262144,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    {
+      "bytes": 9888,
+      "input": "batched161-run.mjs",
+      "readBound": 262144,
+      "sha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1"
+    }
+  ],
+  "startupAndInstallRootCallerIdentical": true,
+  "writerAuthorityProducerConsumerAligned": true
+}

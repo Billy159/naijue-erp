@@ -1,0 +1,14 @@
+{
+  "actualGrantExpiresAtEpochIncluded": true,
+  "checks": "Python outer and embedded read-only program syntax only; no import of registrar/client or remote invocation during this preparation",
+  "newServerReadExecuted": false,
+  "postgresConnections": 0,
+  "readerPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service27-registration-basis-local-01/read-registration-basis27.py",
+  "readerSha256": "cd477a133e0eff13b80733f1d8d1c8c96caf46cac61a2363eac1eb777312b71b",
+  "registrarPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-01/register_cas.py",
+  "registrarSha256": "e868374a7de44e592195c85cc26cd1ac1d4d1fd6cb02b532d8ff8787b3df9337",
+  "serverMutations": 0,
+  "source7033MaterializationWillBeReused": true,
+  "state": "PREPARED_NOT_EXECUTED_WAIT_FINAL_WHOLE_SOURCE_REVIEW",
+  "wholeSourceReviewClosed": false
+}

@@ -1,0 +1,15 @@
+{
+  "actualLocalFileOwnerUsed": 501,
+  "defaultEmptyRecordRefused": true,
+  "emptyJsonUnconfirmed": true,
+  "emptySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "finding": "READ27-EMPTY-NORMAL-RESULT-01",
+  "firstLocalAttempt": "TEMP_PATH_WAS_MACOS_SYMLINK_CANONICAL_GUARD_CORRECTLY_REFUSED_FIXED_ONLY_TEST_PATH",
+  "postgresConnections": 0,
+  "readerSha256": "2a1541f00bd8d8cb05a1d7cef965e325a01fcd0e5e02df1b90469271c5345548",
+  "rootAndPublicNormalOnlyEmptyAllowed": true,
+  "runtimeAccepted": false,
+  "scope": "LOCAL_PROTECTED_FILE_READER_ONLY_NO_NATIVE_FACTORY",
+  "serverActions": 0,
+  "uidOrRootFactoriesMocked": false
+}

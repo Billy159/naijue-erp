@@ -1,0 +1,104 @@
+{
+  "databaseConnections": 0,
+  "describeBeforeAuthorityDriverClientOrMkdir": true,
+  "files": [
+    {
+      "bytes": 11382,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/PHASES26.UNISSUED.json",
+      "sha256": "2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3"
+    },
+    {
+      "bytes": 9888,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/batched161-run.mjs",
+      "sha256": "f69e4d748c0c1dd3e808f05f24cfa20eca16590d8e8f81423d107d88d10a2357"
+    },
+    {
+      "bytes": 9888,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/batched161-run.mjs",
+      "sha256": "f69e4d748c0c1dd3e808f05f24cfa20eca16590d8e8f81423d107d88d10a2357"
+    },
+    {
+      "bytes": 9888,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/actual26/start/bundle/batched161-run.mjs",
+      "sha256": "f69e4d748c0c1dd3e808f05f24cfa20eca16590d8e8f81423d107d88d10a2357"
+    },
+    {
+      "bytes": 12985,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/batched_install_host.py",
+      "sha256": "394115e1f580dfcf057fb6b75f25c2e6b3ce58cc289d9af6d2ad6dafa55b3025"
+    },
+    {
+      "bytes": 12283,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/private_transport.py",
+      "sha256": "92d382abdf24fecb175ad5720f8d1049e476d33a7485b70e71c60f4a3c7f3423"
+    },
+    {
+      "bytes": 6762,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/describe-install26-readonly.py",
+      "sha256": "e4831c365decf90f122dec5468b2f2673f915cc8c3a41d812dee250fc49d819a"
+    },
+    {
+      "bytes": 18627,
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/source/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "sha256": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f"
+    },
+    {
+      "bytes": 13317,
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/source/scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a"
+    },
+    {
+      "bytes": 35020,
+      "path": "outputs/D1/20261115-r3-real154-install-host-01/CANDIDATE-03/source/scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+    },
+    {
+      "bytes": 5143,
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-01/issue_upgrade_authority.py",
+      "sha256": "7c7d8cca9f2dfe6c0fe693bc3aa46f1afd46dd4a47c0df906c60bd3679645e31"
+    },
+    {
+      "bytes": 37233,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/batched_real_host.py",
+      "sha256": "107f884c7ad20a7e0df27077c042352206ca0d7e3dac64c7063de132d400f20f"
+    },
+    {
+      "bytes": 20091,
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/retained24-run.mjs",
+      "sha256": "89a8eba0bc1cd3245d0b31407b9e2b4437a9b71fff49ea54a8618e3688677f86"
+    }
+  ],
+  "finiteCallerFunctionsMatched": [
+    "loadFresh35Installed154UpgradeTargetV1",
+    "describeFresh35Installed154UpgradeTarget",
+    "compileFresh35Batched161Upgrade",
+    "describeFresh35Batched161Upgrade",
+    "loadFresh35Batched161UpgradeAuthorization",
+    "runFresh35Batched161Upgrade"
+  ],
+  "issuerInvocations": 0,
+  "knownBlockingReferences": [
+    "T45 runtime PROOF_PROJECTION old24 mkdir",
+    "T45 writer authorization projection filename mismatch"
+  ],
+  "matrixSha256": "0619dda53d94e75bc650a2d91b66f3cfe846d118821e69e6afadf1b703227c2b",
+  "mockedUidOrClock": false,
+  "newD1RuntimeChanges": 0,
+  "nextVersion": "T45 final27 exact diff pending",
+  "oldSqlOrModelSuitesRerun": false,
+  "rootFactoryInvocations": 0,
+  "runtimeSuccessClaimed": false,
+  "serverActions": 0,
+  "siteFactsUnverified": [
+    "capture directory absent",
+    "native driver transaction status API",
+    "current27 physical/epoch/admin",
+    "13 native commits and three catalog captures",
+    "RESET ROLE and close",
+    "child reap and authority removal",
+    "outer stop and auth restoration"
+  ],
+  "source703TreeRehashed": false,
+  "startInstallActualBootCallerBytesIdentical": true,
+  "state": "READ_ONLY_SOURCE_INSTALL_INTERFACE26_MATCHED_OPERATIONAL27_NOT_REVIEWED"
+}

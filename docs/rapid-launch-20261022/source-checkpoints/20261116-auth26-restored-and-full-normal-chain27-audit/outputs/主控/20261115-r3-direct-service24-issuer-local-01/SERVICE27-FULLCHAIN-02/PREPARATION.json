@@ -1,0 +1,82 @@
+{
+  "state": "FROZEN_LOCAL_FULLCHAIN27_CONTROLLER_SOURCE_PENDING_WHOLE_REVIEW",
+  "selectedPhasesPath": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/PHASES27.UNISSUED.json",
+  "selectedPhasesSha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+  "normalStartupHeld": true,
+  "actualAuth26RestoredSha256": "3f6255ecdb52051f6a0681b02537a8faf294eecb2f4dc5692e24b7373a76f55e",
+  "moduleSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
+  "registrarSha256": "e868374a7de44e592195c85cc26cd1ac1d4d1fd6cb02b532d8ff8787b3df9337",
+  "semanticChanges": [
+    "actual failed26/auth26 closure before new27",
+    "typed precontainer: incomplete root result plus separate normal-result root companion digest",
+    "aftercontainer guardian/direct-clean actual cleanup digest and validated C/ACK possible",
+    "complete start-to-writer budget4320s and inner install remaining900s",
+    "actual grant expiry checked before issue",
+    "final whole-chain review object required before any normal packet",
+    "accept actual validated ACK/C/cleanup after await failure even when retainedAckObserved return flag is false; unknown publication remains refused"
+  ],
+  "serverActions": 0,
+  "authorityIssued": false,
+  "remaining": [
+    "QB same-version controller+reader+restore+window+publication pairing",
+    "final whole-chain conclusion",
+    "fresh actual CAS basis with original grant expiry"
+  ],
+  "selectedReaderPath": "outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/read-current-phase27-r1.py",
+  "selectedReaderSha256": "2a1541f00bd8d8cb05a1d7cef965e325a01fcd0e5e02df1b90469271c5345548",
+  "afterContainerNormalResultRequired": false,
+  "preContainerNormalResultCompanionRequired": true,
+  "dryRunDoesNotCloseStartupHold": true,
+  "changes": [
+    {
+      "file": "r3_direct27_batched.py",
+      "sha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/r3_direct26_batched.py",
+      "parentSha256": "a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d"
+    },
+    {
+      "file": "register_cas.py",
+      "sha256": "e868374a7de44e592195c85cc26cd1ac1d4d1fd6cb02b532d8ff8787b3df9337",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/register_cas.py",
+      "parentSha256": "b14940614761a7f596ab960fb4a62498c5dff44286f87d2d84046cf4004d5f73"
+    },
+    {
+      "file": "issue_registration.py",
+      "sha256": "824131c7742fd9fd4b4a3f15af12369b364725c1f2e743aea18ffdb26f1c8ec5",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_registration.py",
+      "parentSha256": "1666006b42cce439e3fb3bd357439ddee22b98fd439b6cae147bde39ff1ab47e"
+    },
+    {
+      "file": "issue_phase.py",
+      "sha256": "d755b54b6ed6f26c5d40545c2477d9e72955a570986daad5b63104b9e4d6bc8d",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_phase.py",
+      "parentSha256": "0e99d48ca0e1ad447d8dc9a5587da599af3e8fa5151a57298b1336dfd5385371"
+    },
+    {
+      "file": "issue_upgrade_authority.py",
+      "sha256": "a3c5d9b362e7be154b787ce54b9b218c763592de78014f732d6ed38390648402",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_upgrade_authority.py",
+      "parentSha256": "7c7d8cca9f2dfe6c0fe693bc3aa46f1afd46dd4a47c0df906c60bd3679645e31"
+    },
+    {
+      "file": "admin_exec.DIRECT27-UNREGISTERED.py",
+      "sha256": "90b49498da3f489e4e1122be946b6ea558b10208c852df10ac1de3ab1c34092c",
+      "parent": "outputs/主控/20261116-r3-restore26-precontainer-registration-window-01/admin_exec.ISSUED.py",
+      "parentSha256": "4474fc511ed22a1e9c1a405ef81f35ddba2bdff2e0ba45c42e6ff18c0cf49cfb"
+    },
+    {
+      "file": "original-cas-direct27-carrier.UNISSUED.py",
+      "sha256": "6df5e2915f5a334a107183568dd0b1d48ffff0338726dd381e7900cd5504f61f",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/original-cas-direct26-carrier.UNISSUED.py",
+      "parentSha256": "33d478290d538ca2926846668e470e62164c682ebc149fc4552b688121f10d09"
+    }
+  ],
+  "selectedDescribeWrapperSha256": "dee8b87953b7cab34827867fdfd7386e9c40307d106ab9d055648ad821ef9201",
+  "selectedReaderReadySha256": "39c8d582fe488a337f47a87eb24607ecd2a347157dd95f2ccce8475ab9393593",
+  "wholeChainReviewRequired": true,
+  "supersedes": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-01",
+    "pinsSha256": "4b0bb1228b76325007b8f94366b28786c6e5a321bd33087d736fe8f7d7fefba3",
+    "finding": "ISSUER27-ACK-OBSERVED-01"
+  }
+}

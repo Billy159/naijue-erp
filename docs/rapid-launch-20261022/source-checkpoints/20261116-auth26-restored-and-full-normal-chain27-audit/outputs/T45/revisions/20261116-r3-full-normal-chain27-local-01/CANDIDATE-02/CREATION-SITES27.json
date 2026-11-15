@@ -1,0 +1,1067 @@
+[
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 202,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / 'state/capacity').mkdir(mode=448)",
+    "line": 228,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 868,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 1076,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=448)",
+    "line": 1647,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=457)",
+    "line": 2171,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "runtime.mkdir(mode=448)",
+    "line": 2171,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "q.mkdir(mode=493)",
+    "line": 189,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / name).mkdir(mode=mode)",
+    "line": 222,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "directory.mkdir(mode=448)",
+    "line": 1080,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_tmp.mkdir(mode=448)",
+    "line": 2182,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_scratch.mkdir(mode=448)",
+    "line": 2182,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=mode)",
+    "line": 269,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "staged.unlink()",
+    "line": 1313,
+    "source": "apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "boot.mkdir(mode=448)",
+    "line": 296,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(boot / 'service-start-authorization.json', authraw, 256)",
+    "line": 299,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-result.json', result)",
+    "line": 377,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'guardian-process.json', core.process_identity(os.getpid()))",
+    "line": 160,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'runtime-authenticated.json', {'requestKey': JOB, 'checkedAt': now(), 'runtimeRole': ROLE, 'currentRuntimeReferenceUsable': True, 'originalRuntimeRequestKey': ORIGINAL_REQUEST, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED', 'qExitCode': 0, 'readOnly': True, 'sqlstate': None})",
+    "line": 178,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'runtime-role-observation.json', {'requestKey': JOB, 'physical': physical, 'queryStages': query_stages, 'currentRuntimeReferenceUsable': True, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED'})",
+    "line": 195,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(BOOT / 'service-retained.json', receipt)",
+    "line": 201,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'cleanup.json', {'requestKey': JOB, 'retained': retained, 'reason': stop_reason, 'phase': phase, 'qExitCode': q_exit, 'sqlstate': sqlstate, 'errorCategory': error_category, 'queryStages': query_stages, 'cleanup': cleanup, 'runtimeMaterialPreserved': True, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED'})",
+    "line": 216,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "parent.mkdir(mode=448)",
+    "line": 294,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(boot / name, raw, 256)",
+    "line": 298,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(boot / 'carrier-birth.json', birth)",
+    "line": 306,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-intent.json', {'requestKey': JOB, 'cid': cid, 'authoritySha256': sha(authraw), 'attemptOnce': True})",
+    "line": 307,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(ROOT / 'authority' / PROOF_NAME, raw, 292)",
+    "line": 326,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-incomplete.json', cleanup)",
+    "line": 353,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'retained-ack.json', {'requestKey': JOB, 'proofSha256': sha(current), 'serviceLeaseExpiresAt': lease})",
+    "line": 207,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-native-stage.json', stage)",
+    "line": 314,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-native-stage.json', {k: stage.get(k) for k in ('requestKey', 'phase', 'reason', 'qExitCode', 'sqlstate', 'errorCategory', 'queryStages', 'previousRuntimeOutcome')})",
+    "line": 317,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'early-failure.json', {'requestKey': JOB, 'phase': 'BEFORE_GUARDIAN_LOOP', 'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED', 'automaticRetry': False})",
+    "line": 371,
+    "source": "apply/bundle/normal_service04.py"
+  },
+  {
+    "expression": "CUSTODY.mkdir(mode=448)",
+    "line": 333,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "CAPTURE.mkdir(mode=448)",
+    "line": 334,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'authority.json', authority_raw)",
+    "line": 338,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'original-auth.json', encode(before))",
+    "line": 346,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'finite-auth.json', encode(after))",
+    "line": 359,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'apply-attempt.json', encode({'requestKey': authority['requestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))",
+    "line": 361,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'applied.json', encode(receipt))",
+    "line": 370,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'restore-attempt.json', encode({'requestKey': authority['restoreRequestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))",
+    "line": 384,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'restored.json', encode(receipt))",
+    "line": 395,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / (role + '.json'), encode({'host': '127.0.0.1', 'port': 56791, 'database': DATABASE, 'user': role, 'password': password, 'ssl': False}))",
+    "line": 354,
+    "source": "apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "write(job / 'results/maintenance-auth-intent.json', {'requestKey': a['requestKey'], 'phase': a['phase'], 'containerName': a['containerName'], 'rolesAuthoritySha256': a['rolesAuthoritySha256'], 'automaticReplay': False})",
+    "line": 257,
+    "source": "apply/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(job / 'results/maintenance-auth-result.json', result)",
+    "line": 577,
+    "source": "apply/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(RESULTS / 'maintenance-auth-inside.json', {'phase': a['phase'], 'requestKey': a['requestKey'], 'result': result})",
+    "line": 225,
+    "source": "apply/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(job / 'results/maintenance-auth-cleanup.json', cleanup)",
+    "line": 317,
+    "source": "apply/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(RESULTS / 'maintenance-auth-inside.json', {'phase': phase, 'requestKey': key, 'result': {'status': 'MAINTENANCE_AUTH_INSIDE_UNCONFIRMED_ORIGINAL_KEY_ONLY', 'progress': progress, 'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__, 'sqlstate': None, 'sqlstateEvidence': 'NOT_CAPTURED_PRIVATE_SINGLE_USER_CHANNEL', 'automaticReplay': False}})",
+    "line": 561,
+    "source": "apply/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 202,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / 'state/capacity').mkdir(mode=448)",
+    "line": 228,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 868,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 1076,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=448)",
+    "line": 1647,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=457)",
+    "line": 2171,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "runtime.mkdir(mode=448)",
+    "line": 2171,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "q.mkdir(mode=493)",
+    "line": 189,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / name).mkdir(mode=mode)",
+    "line": 222,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "directory.mkdir(mode=448)",
+    "line": 1080,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_tmp.mkdir(mode=448)",
+    "line": 2182,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_scratch.mkdir(mode=448)",
+    "line": 2182,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=mode)",
+    "line": 269,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "staged.unlink()",
+    "line": 1313,
+    "source": "start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "ops.new_file(boot / materializer.name, source, 256)",
+    "line": 77,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_file(boot / 'materialized-profile.json', profile_raw, 256)",
+    "line": 78,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'failed-start-cleanup.json', result)",
+    "line": 342,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_file(r3.PROOF_PROJECTION / r3.SERVICE.name, raw, 292)",
+    "line": 442,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_file(ROOT / 'authority' / PROOF_NAME, raw, 292)",
+    "line": 450,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "boot.mkdir(mode=448)",
+    "line": 575,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_file(boot / 'service-start-authorization.json', authraw, 256)",
+    "line": 579,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(boot / 'readonly-mount-plan.json', readonly.host_mount_evidence(ops, a))",
+    "line": 585,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-incomplete.json', result)",
+    "line": 684,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-incomplete.json', cleanup)",
+    "line": 732,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'guardian-process.json', core.process_identity(os.getpid()))",
+    "line": 249,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'runtime-authenticated.json', {'requestKey': JOB, 'checkedAt': now(), 'runtimeRole': ROLE, 'currentRuntimeReferenceUsable': True, 'originalRuntimeRequestKey': ORIGINAL_REQUEST, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED', 'qExitCode': 0, 'readOnly': True, 'sqlstate': None})",
+    "line": 267,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'lock-capacity-settings.json', projection)",
+    "line": 285,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'runtime-role-observation.json', {'requestKey': JOB, 'physical': physical, 'queryStages': query_stages, 'currentRuntimeReferenceUsable': True, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED'})",
+    "line": 289,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_file(BOOT / 'service-retained.json', receipt)",
+    "line": 296,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'cleanup.json', {'requestKey': JOB, 'retained': retained, 'reason': stop_reason, 'phase': phase, 'qExitCode': q_exit, 'sqlstate': sqlstate, 'errorCategory': error_category, 'queryStages': query_stages, 'cleanup': cleanup, 'runtimeMaterialPreserved': True, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED'})",
+    "line": 311,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "parent.mkdir(mode=448)",
+    "line": 573,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_file(boot / name, raw, 256)",
+    "line": 578,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-create-attempt.json', {'requestKey': JOB, 'authoritySha256': sha(authraw), 'attemptOnce': True})",
+    "line": 600,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(boot / 'carrier-birth.json', birth)",
+    "line": 605,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-intent.json', {'requestKey': JOB, 'cid': cid, 'authoritySha256': sha(authraw), 'attemptOnce': True})",
+    "line": 606,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-result.json', result)",
+    "line": 633,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-result.json', result)",
+    "line": 766,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'retained-ack.json', {'requestKey': JOB, 'proofSha256': sha(current), 'serviceLeaseExpiresAt': lease})",
+    "line": 302,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-native-stage.json', stage)",
+    "line": 613,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-native-stage.json', {k: stage.get(k) for k in ('requestKey', 'phase', 'reason', 'qExitCode', 'sqlstate', 'errorCategory', 'queryStages', 'previousRuntimeOutcome')})",
+    "line": 616,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'early-failure.json', {'requestKey': JOB, 'phase': 'BEFORE_GUARDIAN_LOOP', 'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED', 'automaticRetry': False})",
+    "line": 751,
+    "source": "start/bundle/normal_service05_after08.py"
+  },
+  {
+    "expression": "launchers.mkdir(mode=448)",
+    "line": 251,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "authority.mkdir(mode=448)",
+    "line": 253,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "copy_once(ops, boot_host(ops.ROOT) / 'authority-61035' / PROOF, raw, 288, WORKER)",
+    "line": 292,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "target.unlink()",
+    "line": 311,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "dest.parent.mkdir(mode=493)",
+    "line": 180,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "dest.mkdir(mode=493)",
+    "line": 181,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "(dest / 'node_modules').mkdir(mode=493)",
+    "line": 194,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "ops.new_json(dest.parent / 'operation-ready.json', final_receipt)",
+    "line": 199,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "copy_once(ops, launchers / name, raw, 288, WORKER)",
+    "line": 261,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "copy_once(ops, authority / name, raw, mode, group)",
+    "line": 264,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "copy_once(ops, target, raw, 288, WORKER)",
+    "line": 300,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "path.parent.mkdir(mode=493, parents=True, exist_ok=True)",
+    "line": 189,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "ops.new_file(path, body, 292)",
+    "line": 193,
+    "source": "start/bundle/r3_05_readonly.py"
+  },
+  {
+    "expression": "PROOF_PROJECTION.mkdir(mode=493)",
+    "line": 129,
+    "source": "start/bundle/r3_05_runtime.py"
+  },
+  {
+    "expression": "capacity.mkdir(mode=493)",
+    "line": 132,
+    "source": "start/bundle/r3_05_runtime.py"
+  },
+  {
+    "expression": "root.mkdir(mode=448, exist_ok=True)",
+    "line": 116,
+    "source": "install/bundle/batched_install_host.py"
+  },
+  {
+    "expression": "projection.mkdir(mode=448)",
+    "line": 118,
+    "source": "install/bundle/batched_install_host.py"
+  },
+  {
+    "expression": "(projection / 'scratch').mkdir(mode=448)",
+    "line": 118,
+    "source": "install/bundle/batched_install_host.py"
+  },
+  {
+    "expression": "private.mkdir(mode=448)",
+    "line": 122,
+    "source": "install/bundle/batched_install_host.py"
+  },
+  {
+    "expression": "leaf.unlink()",
+    "line": 139,
+    "source": "install/bundle/batched_install_host.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 205,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / 'state/capacity').mkdir(mode=448)",
+    "line": 231,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 871,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 1103,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=448)",
+    "line": 1674,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=457)",
+    "line": 2211,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "runtime.mkdir(mode=448)",
+    "line": 2211,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "q.mkdir(mode=493)",
+    "line": 192,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / name).mkdir(mode=mode)",
+    "line": 225,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "directory.mkdir(mode=448)",
+    "line": 1107,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_tmp.mkdir(mode=448)",
+    "line": 2222,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_scratch.mkdir(mode=448)",
+    "line": 2222,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=mode)",
+    "line": 272,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "staged.unlink()",
+    "line": 1340,
+    "source": "install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "put(JOB / ('native-private/' + PHASE + '-process-cleanup.json'), encode(dict(requestKey=KEY, childReaped=True, descendantsReaped=True, remoteExitCode=receipt['exitCode'], resultReceiptSha256=sha(bytes(raw)))))",
+    "line": 130,
+    "source": "install/bundle/private_transport.py"
+  },
+  {
+    "expression": "path.unlink()",
+    "line": 379,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(JOB / 'native-private/original-initializer.json', raw, 256)",
+    "line": 400,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "retained.mkdir(mode=448)",
+    "line": 411,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "os.rename(scratch, retained / 'scratch-after-child')",
+    "line": 414,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "scratch.mkdir(mode=448)",
+    "line": 415,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "private.mkdir(mode=448)",
+    "line": 436,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "plan_dir.mkdir(mode=448)",
+    "line": 444,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(JOB / 'native-private/native-result.json', encode(result), 256)",
+    "line": 497,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(JOB / ('results/batched24-' + PHASE + '-result.json'), encode(public))",
+    "line": 512,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 70,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(JOB / ('native-private/' + PHASE + '-process-cleanup.json'), encode(dict(requestKey=KEY, childReaped=True, descendantsReaped=True, remoteExitCode=receipt['exitCode'], resultReceiptSha256=sha(bytes(raw)))))",
+    "line": 362,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(path, raw, 288, 61035)",
+    "line": 376,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(projection / name, body, 288, 61035)",
+    "line": 439,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 441,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(JOB / ('results/batched24-' + PHASE + '-incomplete.json'), encode(public))",
+    "line": 513,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(projection / 'original-initializer.private.json', init, 288, 61035)",
+    "line": 464,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(JOB / ('results/batched24-' + PHASE + '-child-cleanup.json'), encode(cleanup))",
+    "line": 493,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(leaf, encode({'requestKey': KEY, 'state': 'UNKNOWN', 'safeCode': safe, 'automaticReplay': False}))",
+    "line": 536,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "put(cleanup, encode({'requestKey': KEY, 'childReaped': True, 'descendantsReaped': True, 'connectionCleanup': 'NOT_OPENED', 'originalInputMetadataRestored': True, 'scratchEmpty': empty, 'childStarted': False, 'originalInputMetadataChanges': 0}))",
+    "line": 541,
+    "source": "writer/bundle/batched_real_host.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 205,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / 'state/capacity').mkdir(mode=448)",
+    "line": 231,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 871,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 1103,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=448)",
+    "line": 1674,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=457)",
+    "line": 2211,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "runtime.mkdir(mode=448)",
+    "line": 2211,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "q.mkdir(mode=493)",
+    "line": 192,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / name).mkdir(mode=mode)",
+    "line": 225,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "directory.mkdir(mode=448)",
+    "line": 1107,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_tmp.mkdir(mode=448)",
+    "line": 2222,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_scratch.mkdir(mode=448)",
+    "line": 2222,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=mode)",
+    "line": 272,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "staged.unlink()",
+    "line": 1340,
+    "source": "writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "write_new(path, encode(value))",
+    "line": 85,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "write_new(ledger / (phase + '-metadata.json'), frame_raw)",
+    "line": 181,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "write_new(ledger / (phase + '-reference-receipt.json'), raw)",
+    "line": 185,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "write_new(temp, raw)",
+    "line": 188,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "ledger.mkdir(mode=457)",
+    "line": 272,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "write_new(ledger / 'description.json', description_raw)",
+    "line": 276,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "write_new(ledger / 'access-plan.original.json', access_raw)",
+    "line": 277,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "ledger.parent.mkdir(mode=457)",
+    "line": 267,
+    "source": "writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "expression": "PROOF_PROJECTION.mkdir(mode=493)",
+    "line": 129,
+    "source": "writer/bundle/r3_05_runtime.py"
+  },
+  {
+    "expression": "capacity.mkdir(mode=493)",
+    "line": 132,
+    "source": "writer/bundle/r3_05_runtime.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 202,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / 'state/capacity').mkdir(mode=448)",
+    "line": 228,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=448)",
+    "line": 868,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "ROOT.mkdir(mode=448)",
+    "line": 1076,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=448)",
+    "line": 1647,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "operation.mkdir(mode=457)",
+    "line": 2171,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "runtime.mkdir(mode=448)",
+    "line": 2171,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "q.mkdir(mode=493)",
+    "line": 189,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "(ROOT / name).mkdir(mode=mode)",
+    "line": 222,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "directory.mkdir(mode=448)",
+    "line": 1080,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_tmp.mkdir(mode=448)",
+    "line": 2182,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "worker_scratch.mkdir(mode=448)",
+    "line": 2182,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "path.mkdir(mode=mode)",
+    "line": 269,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "staged.unlink()",
+    "line": 1313,
+    "source": "restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "expression": "boot.mkdir(mode=448)",
+    "line": 296,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(boot / 'service-start-authorization.json', authraw, 256)",
+    "line": 299,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-result.json', result)",
+    "line": 377,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'guardian-process.json', core.process_identity(os.getpid()))",
+    "line": 160,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'runtime-authenticated.json', {'requestKey': JOB, 'checkedAt': now(), 'runtimeRole': ROLE, 'currentRuntimeReferenceUsable': True, 'originalRuntimeRequestKey': ORIGINAL_REQUEST, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED', 'qExitCode': 0, 'readOnly': True, 'sqlstate': None})",
+    "line": 178,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'runtime-role-observation.json', {'requestKey': JOB, 'physical': physical, 'queryStages': query_stages, 'currentRuntimeReferenceUsable': True, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED'})",
+    "line": 195,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(BOOT / 'service-retained.json', receipt)",
+    "line": 201,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'cleanup.json', {'requestKey': JOB, 'retained': retained, 'reason': stop_reason, 'phase': phase, 'qExitCode': q_exit, 'sqlstate': sqlstate, 'errorCategory': error_category, 'queryStages': query_stages, 'cleanup': cleanup, 'runtimeMaterialPreserved': True, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED'})",
+    "line": 216,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "parent.mkdir(mode=448)",
+    "line": 294,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(boot / name, raw, 256)",
+    "line": 298,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(boot / 'carrier-birth.json', birth)",
+    "line": 306,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-intent.json', {'requestKey': JOB, 'cid': cid, 'authoritySha256': sha(authraw), 'attemptOnce': True})",
+    "line": 307,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_file(ROOT / 'authority' / PROOF_NAME, raw, 292)",
+    "line": 326,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-service-incomplete.json', cleanup)",
+    "line": 353,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'retained-ack.json', {'requestKey': JOB, 'proofSha256': sha(current), 'serviceLeaseExpiresAt': lease})",
+    "line": 207,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-native-stage.json', stage)",
+    "line": 314,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(WORKER / 'results/normal-native-stage.json', {k: stage.get(k) for k in ('requestKey', 'phase', 'reason', 'qExitCode', 'sqlstate', 'errorCategory', 'queryStages', 'previousRuntimeOutcome')})",
+    "line": 317,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "ops.new_json(BOOT / 'early-failure.json', {'requestKey': JOB, 'phase': 'BEFORE_GUARDIAN_LOOP', 'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__, 'previousRuntimeOutcome': 'UNKNOWN_PRESERVED', 'automaticRetry': False})",
+    "line": 371,
+    "source": "restore/bundle/normal_service04.py"
+  },
+  {
+    "expression": "CUSTODY.mkdir(mode=448)",
+    "line": 333,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "CAPTURE.mkdir(mode=448)",
+    "line": 334,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'authority.json', authority_raw)",
+    "line": 338,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'original-auth.json', encode(before))",
+    "line": 346,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'finite-auth.json', encode(after))",
+    "line": 359,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'apply-attempt.json', encode({'requestKey': authority['requestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))",
+    "line": 361,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'applied.json', encode(receipt))",
+    "line": 370,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'restore-attempt.json', encode({'requestKey': authority['restoreRequestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))",
+    "line": 384,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / 'restored.json', encode(receipt))",
+    "line": 395,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "private_file(CUSTODY / (role + '.json'), encode({'host': '127.0.0.1', 'port': 56791, 'database': DATABASE, 'user': role, 'password': password, 'ssl': False}))",
+    "line": 354,
+    "source": "restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "expression": "write(job / 'results/maintenance-auth-intent.json', {'requestKey': a['requestKey'], 'phase': a['phase'], 'containerName': a['containerName'], 'rolesAuthoritySha256': a['rolesAuthoritySha256'], 'automaticReplay': False})",
+    "line": 257,
+    "source": "restore/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(job / 'results/maintenance-auth-result.json', result)",
+    "line": 577,
+    "source": "restore/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(RESULTS / 'maintenance-auth-inside.json', {'phase': a['phase'], 'requestKey': a['requestKey'], 'result': result})",
+    "line": 225,
+    "source": "restore/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(job / 'results/maintenance-auth-cleanup.json', cleanup)",
+    "line": 317,
+    "source": "restore/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "expression": "write(RESULTS / 'maintenance-auth-inside.json', {'phase': phase, 'requestKey': key, 'result': {'status': 'MAINTENANCE_AUTH_INSIDE_UNCONFIRMED_ORIGINAL_KEY_ONLY', 'progress': progress, 'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__, 'sqlstate': None, 'sqlstateEvidence': 'NOT_CAPTURED_PRIVATE_SINGLE_USER_CHANNEL', 'automaticReplay': False}})",
+    "line": 561,
+    "source": "restore/bundle/ordinary05_roles_job.py"
+  }
+]

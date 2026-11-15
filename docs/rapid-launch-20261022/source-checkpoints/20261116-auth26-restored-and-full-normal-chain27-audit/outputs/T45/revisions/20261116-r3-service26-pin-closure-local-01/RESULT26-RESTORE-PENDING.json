@@ -1,0 +1,41 @@
+{
+  "actualProjectionCollision": "new mkdir targets existing authority/r3-service-24-worker-proof",
+  "evidence": {
+    "apply": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/actual26/apply/READBACK-01.json",
+      "sha256": "ed501cb804c33c05fa67b3a618b3e92c779ac06e635452a04ef7e700c13e1b41"
+    },
+    "failedStart": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/actual26/start/READBACK-01.json",
+      "sha256": "e5aada413c95f0e40292fe0e3c4307b441c2d4ebde414faf89b16334332944d4"
+    },
+    "failureBoundary": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/START26-BOUNDARY-20261115T170723Z.json",
+      "sha256": "f42993ffe0f58325d627831b6462649df70a7c3c5aff432ee88850538d4a7340"
+    },
+    "registration": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/REGISTRATION26-READBACK-20261115T165834Z.json",
+      "sha256": "864cbd5cd7bf171d3ad44911000a6e9160c0c53c72e13c8ecf053e1149ae6094"
+    },
+    "stagingMetadata": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/START26-STAGING-SHAPE.json",
+      "sha256": "3be2694b12c1d0387677e9bff4b338fc35559a3551ad4272bb1ab2d5d1927c42"
+    }
+  },
+  "failedStartKey": "t45-first-r3-native-service-start-20261116-26",
+  "formalBusinessAccepted": false,
+  "installSubmitted": false,
+  "lastSuccessfulPhysicalService": "24",
+  "nextAction": "Exact restore26 source/registry/issuer pairing; no new start and no replay",
+  "oldProjectionAndFailed26BootPreserved": true,
+  "ordinaryBusinessOpened": false,
+  "originalAuthRestored": false,
+  "postgresStarted": false,
+  "realWriterSubmitted": false,
+  "rolesFiniteAuthApplied": true,
+  "safeCode": "FileExistsError",
+  "service26ContainerCreated": false,
+  "service26ProofCreated": false,
+  "source7033AndMaterializationCdcafPreserved": true,
+  "state": "SERVICE26_FAILED_BEFORE_CONTAINER_ORIGINAL_AUTH_RESTORATION_PENDING"
+}

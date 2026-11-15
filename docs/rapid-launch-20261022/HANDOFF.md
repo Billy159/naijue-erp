@@ -1,4 +1,4 @@
-【当前最高优先级 2026-11-15】用户已取消完整分批演练作为首批前置，转直接正式REAL分批导入。停止08/harness/故障注入；T45当前现场准备service24+同版安装/真实绑定后直接首批、原键读回，成功续后批。只解决真实运行缺件，不等待演练。原人类消息见USER-DECISION-DIRECT-REAL-IMPORT-20261115.json；方案已更新。业务仍待全批核账与必要备份/核心业务实证，未测故障场景不标PASS。
+【当前最高优先级 2026-11-16】真人要求上线前完整排查已直接核验（USER-INSTRUCTION d58d62f9）。26原认证已实际恢复3f6255ec，最终现场79ac044c停稳。最终同版正常链已由原QB完整SOURCE STATIC PASS，review e109a51d，Main02 PINS4bc72323/T45 C02 b85ed与reader-r1 2a1541/D1同版准确；仅关闭源码排查hold，下一步T45取fresh实际CAS基线及原grant过期元数据，再由Main签单个有限27窗口。现有goal继续ACTIVE；复用703/cdcaf及原数据/INIT/业务key，不恢复已取消的演练或故障注入，不新建团队。T45唯一serverowner；正式安装、REAL与整体上线均未完成。
 
 > 当前路线（2026-11-15）：分批独立提交/成功跳过/失败续未完成批。先读 BATCHED-IMPORT-DECISION-20261115.md 与 TASKS.currentInFlight；旧整包单事务路线不再续办。
 
@@ -7486,3 +7486,9 @@ D1准确03 b394bdd9仅3运行源码：root固定元数据factory+独立installed
 上一goal turn已有实际登记/物化/有限认证/FAILED25容器前精确边界/原认证实际恢复，属实质进展，不是无进展重述。现在T45 PHASES26 2963/PINCHAINfa17/DELTA5a20准确冻结并独立源码窄核PASS：实际start9件（原8+必要bootcaller26）逐件与bundle字节hash相等，READONLY_SHA和随服务变化的R3_RUNTIME_SHA均实际更新，runtime/CLI/plan与main/proof/readonly→stophelper→STOP_REFERENCE准确；callerf69e在start/install字节同一件。原source703/cdcaf/399d/381已完成物化只复用，companion25不改，新caller26沿原root0400 bootcopy和mount不扩权，不重物化/大包/旧D1、SQL、业务检查。
 主控26源01被自行实际API核出新history读185047B carrier超过CORE1fe482默认131072；QB原01 PASS撤回。独立02仅给3固定前序源码显式maximum262144并刷新必要4源pin，CORE/固定集合/SHA/root/O_NOFOLLOW/nlink/identity全保；PINSda315/QB29366最终SOURCE STATIC PASS。真实basis07077于16:53:31，当前3b309/8c6/ec89/锁/fullBASIS准确、6未提交项两grantABSENT、mat旧db91/cdcaf唯一已完成例外、PGpid/active无；01→02 BASIS/JOBS/LOCK逐字同一而复用现场，不重读。
 16:57:00.438Z真实发新完整90/92/115/120min窗口，登记manifest729b/envelope3ee8/carrierce58，roleauthded926/apply62e95；只交T45准确CAS与实际成功后条件apply26，未知读原audit不重放，物化不重签，尚无start/install/REAL。物理前驱24/c8f与stop24不变，认证前驱为实际restore25 1b82/ecf/86b，FAILED25/partialboot仍保护，不造25C。60文件1927901B源码检查点manifestaaa05782（live有限授权包不入源快照）。正式目标继续ACTIVE，真实整批及正式上线均未完成。上次5c0a7e09已实际push exit0确认，原三个未跟踪本机目录保留。
+
+
+## 2026-11-16T02:31:00+08:00 — 26实际恢复停稳；最终同版正常链排查完整收口
+26 start实际FAILED2发生在容器前（e5aada/3be269），没有C26；没有安装或REAL提交。原认证随后由T45实际restore26 COMPLETED0（3f6255ec，根944dfa9b/d521106c，cleanup6bfcdbe6，public57aff184），最终只读79ac044c确认无PGpid/56791/active/C26，原数据、旧投影、partialboot及703/cdcaf/index均保留。原26窗口是历史已恢复，不作当前可用凭据。
+真人要求“上线前完整先做个排查”的原消息已直接核验并落d58d62f9。原T45、D1、QB与主控完成最终同版整条正常链源排查，未新建团队或恢复已取消的演练。核输出创建者/既存输入/排他路径、挂载UID模式、字节界限、13事务接口、预算、注册和签发、失败前后实际事实消费者。真实ACK已校验但await返回赋值未完成时恢复会被误拦的具体P1由Main02单文件修复；空正常结果读取、postACK失败handoff、PRE/AFTER恢复形状、writer文件名、新proof27空间等一并最终闭合。QB原轮最终SOURCE STATIC PASS，reviewe109a51d，Main02 PINS4bc72323/T45 PHASESb85ed/reader-r1 2a1541/describe dee8/D1 37323+4b05准确。只关闭源码审查hold，真实27运行、安装/13ACK、整批及上线仍未测不标PASS。
+136初选+2最终报告共138文件源码/回执检查点，未包含有限授权包、凭据或业务大数据。下一步T45一次fresh实际registrar e868基线及原grantExpiry检查，再由Main单个有限窗口推进，原material db91/cdcaf绝不重签，原INIT和业务key继续。已有goal ACTIVE，正式业务CLOSED、正式安装和REAL尚未开始。远端上次确认5c0a7e09，8a6本地checkpoint的push曾网络低速失败；本次正常提交后仅试一次push，按真实结果记录，不强制或改网络。

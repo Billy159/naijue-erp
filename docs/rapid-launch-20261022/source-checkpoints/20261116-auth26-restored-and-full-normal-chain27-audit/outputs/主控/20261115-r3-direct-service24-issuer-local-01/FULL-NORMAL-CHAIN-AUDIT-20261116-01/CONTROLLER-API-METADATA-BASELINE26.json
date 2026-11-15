@@ -1,0 +1,202 @@
+{
+  "format": "R3_CONTROLLER_PYTHON_API_METADATA_CHECK_V1",
+  "scope": "Main issuer actual positional calls versus baseline26 final operational receiver definitions; no invocation or environment/UID simulation. Final next-version interface changes remain pending.",
+  "evidenceType": "STATIC_SOURCE_METADATA",
+  "baselinePhasesSha256": "2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3",
+  "rows": [
+    {
+      "phase": "start",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "ea83a051a87261c04a244918507fb46e5b8a53b7b02f51e4ebf42c1ad6198efe",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 0,
+          "actualRequiredArgs": 0,
+          "actualMaxArgs": 0,
+          "line": 57
+        },
+        {
+          "function": "validate_authority",
+          "consumerPositionalArgs": 2,
+          "actualRequiredArgs": 2,
+          "actualMaxArgs": 2,
+          "line": 79
+        }
+      ]
+    },
+    {
+      "phase": "apply",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/ordinary05_roles.py",
+      "sha256": "f47b2e8029436161e8c8bcdeca17da21141029174cbd7dc9f3112b9ea1d8616f",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 0,
+          "actualRequiredArgs": 0,
+          "actualMaxArgs": 0,
+          "line": 58
+        },
+        {
+          "function": "validate",
+          "consumerPositionalArgs": 2,
+          "actualRequiredArgs": 2,
+          "actualMaxArgs": 3,
+          "line": 71
+        }
+      ]
+    },
+    {
+      "phase": "apply",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "a4d18e91a8030b6e71a3563fd1caa5132a74ae82e0444d50130a4e97e1f17d86",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 1,
+          "actualRequiredArgs": 1,
+          "actualMaxArgs": 1,
+          "line": 94
+        },
+        {
+          "function": "validate",
+          "consumerPositionalArgs": 3,
+          "actualRequiredArgs": 3,
+          "actualMaxArgs": 3,
+          "line": 104
+        }
+      ]
+    },
+    {
+      "phase": "restore",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "a4d18e91a8030b6e71a3563fd1caa5132a74ae82e0444d50130a4e97e1f17d86",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 1,
+          "actualRequiredArgs": 1,
+          "actualMaxArgs": 1,
+          "line": 94
+        },
+        {
+          "function": "validate",
+          "consumerPositionalArgs": 3,
+          "actualRequiredArgs": 3,
+          "actualMaxArgs": 3,
+          "line": 104
+        }
+      ]
+    },
+    {
+      "phase": "stop",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "eeb6b4c12b8cd38426ff67420600c132373c4c1387f1bb14f0c29e7734858b65",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 0,
+          "actualRequiredArgs": 0,
+          "actualMaxArgs": 0,
+          "line": 71
+        },
+        {
+          "function": "validate",
+          "consumerPositionalArgs": 2,
+          "actualRequiredArgs": 2,
+          "actualMaxArgs": 2,
+          "line": 75
+        }
+      ]
+    },
+    {
+      "phase": "install",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/batched_install_host.py",
+      "sha256": "394115e1f580dfcf057fb6b75f25c2e6b3ce58cc289d9af6d2ad6dafa55b3025",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 0,
+          "actualRequiredArgs": 0,
+          "actualMaxArgs": 0,
+          "line": 25
+        },
+        {
+          "function": "validate",
+          "consumerPositionalArgs": 2,
+          "actualRequiredArgs": 2,
+          "actualMaxArgs": 2,
+          "line": 30
+        },
+        {
+          "function": "encode",
+          "consumerPositionalArgs": 1,
+          "actualRequiredArgs": 1,
+          "actualMaxArgs": 1,
+          "line": 24
+        }
+      ]
+    },
+    {
+      "phase": "writer",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/batched_real_host.py",
+      "sha256": "107f884c7ad20a7e0df27077c042352206ca0d7e3dac64c7063de132d400f20f",
+      "functions": [
+        {
+          "function": "scope",
+          "consumerPositionalArgs": 0,
+          "actualRequiredArgs": 0,
+          "actualMaxArgs": 0,
+          "line": 72
+        },
+        {
+          "function": "validate",
+          "consumerPositionalArgs": 2,
+          "actualRequiredArgs": 2,
+          "actualMaxArgs": 2,
+          "line": 83
+        },
+        {
+          "function": "encode",
+          "consumerPositionalArgs": 1,
+          "actualRequiredArgs": 1,
+          "actualMaxArgs": 1,
+          "line": 44
+        }
+      ]
+    },
+    {
+      "phase": "writer",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/r3_05_cli.py",
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+      "functions": [
+        {
+          "function": "require_execute_authority",
+          "consumerPositionalArgs": 6,
+          "actualRequiredArgs": 6,
+          "actualMaxArgs": 6,
+          "line": 64
+        }
+      ]
+    },
+    {
+      "phase": "writer",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/nonroot_input_access.py",
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+      "functions": [
+        {
+          "function": "encode",
+          "consumerPositionalArgs": 1,
+          "actualRequiredArgs": 1,
+          "actualMaxArgs": 1,
+          "line": 33
+        }
+      ]
+    }
+  ],
+  "result": "PASS_FOR_BASELINE26_ONLY",
+  "databaseConnections": 0,
+  "serverActions": 0,
+  "factoryInvocation": false,
+  "finalNextVersionValidated": false
+}

@@ -1,0 +1,70 @@
+{
+  "format": "R3_COMPLETE_NORMAL_CHAIN_AUDIT_SCOPE_V1",
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS_FRESH_CAS_BASIS_NEXT",
+  "humanInstructionSha256": "d58d62f964e004b3c849193c4d4ad637d3ef167c4feb2d88abd7afa4d6a65140",
+  "normalStartupAuthorization": "HELD_UNTIL_FINAL_SAME_VERSION_FULL_CHAIN_REVIEW",
+  "goalStatus": "ACTIVE",
+  "codeAndDataBasis": {
+    "operatorSourceSet": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+    "materialization": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+    "rows": 511234,
+    "classes": 26,
+    "businessManifest": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+    "lastRealPhysicalService": "24/c8f0; no C25 or C26"
+  },
+  "owners": {
+    "main": "existing registry/issuers and integrated evidence",
+    "T45": "existing sole server owner and final operational consumers",
+    "QB": "existing independent source review; no new chat/team",
+    "D1": "existing original installer/source owner, focused read-only interface matrix; no new team"
+  },
+  "chain": [
+    "registration",
+    "finite auth apply",
+    "start and readonly.stage",
+    "prepare_r3_mounts and proof projection outputs",
+    "container guardian and mounts",
+    "actual C and catalog descriptor",
+    "13SQL bounded install",
+    "real writer and batch COMMIT/original-key readback",
+    "stop",
+    "original auth restoration"
+  ],
+  "inspectionDimensions": [
+    "final actual bundle references/hashes/imports/caller members and method/phase/key existence",
+    "each mkdir/O_EXCL/new_file/new_json/copy/link: creator, actual path, prior existence, exclusive output versus preserved input, duplicate producers",
+    "host/container mount path, UID/GID/mode/read-only boundaries and consumers",
+    "root and ordinary genuine factories, exact154-to161 catalog/install contract",
+    "time windows aligned to preparation/native phases/submit transport/cleanup and writer minimum remaining budget",
+    "both before-container and after-container failures produce and consume truthful existing stop/restore evidence without post-failure source exceptions"
+  ],
+  "evidenceClasses": [
+    "STATIC_SOURCE",
+    "LOCAL_NO_DB_PATH_OR_METADATA_CHECK",
+    "ACTUAL_SERVER_READ_ONLY",
+    "ACTUAL_EXECUTION"
+  ],
+  "reuseRules": [
+    "reuse exact-version valid D1/SQL/model/703 source/input checks",
+    "no full source business reacceptance or 162-row data rehearsal/fault injection revival",
+    "no global replacement of historical24 references",
+    "no new normal start to discover the next predictable wiring error",
+    "no credential bodies or authority-secret bodies in audit report"
+  ],
+  "knownConcreteFindings": [
+    "start25 missed READONLY_SHA; subsequent runtime pin sync completed26",
+    "main26 previous25 carrier read exceeded CORE131072 bound; fixed explicit262144",
+    "start26 runtime new proof projection still pointed to existing service24 directory",
+    "normal start preparation failures before container try lack a routine truthful cleanup shape consumable by the pre-registered restore; current25/26 used exact rescue exceptions"
+  ],
+  "remaining": "Final same-version sources and complete output/consumer matrix; repair concrete omissions, independent closure, then actual approved REAL batch. Unexecuted runtime checks must remain unverified.",
+  "actualRestoration": {
+    "readbackSha256": "3f6255ecdb52051f6a0681b02537a8faf294eecb2f4dc5692e24b7373a76f55e",
+    "finalClosedSha256": "79ac044c42319fff49283922d9370e0eae6fc1bd32659e564030ed8a4ca3213a",
+    "nativeFinishedAtUTC": "2026-11-15T17:28:24.537864+00:00",
+    "formalInstallAndRealWriterSubmitted": false
+  },
+  "normalStartupHoldClosed": true,
+  "finalReviewSha256": "e109a51ddb21297dd90e78a161a6a7a4d8f19e13b34abaa1adf7bf5632efb882",
+  "runtimeUnverified": true
+}

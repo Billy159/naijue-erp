@@ -1,0 +1,75 @@
+{
+  "actualModelAndEffort": "NOT_FRESHLY_VERIFIED_DO_NOT_INFER_FROM_SETTINGS",
+  "createdAtUTC": "2026-11-15T18:04:57.822819+00:00",
+  "evidence": {
+    "CREATION-SITES27.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/CREATION-SITES27.json",
+      "sha256": "9d51e87cca80c1154c6385d089119f0e7eb22c9e280708bd6a2007d30f901ad4"
+    },
+    "LOCAL-CHECK-HARNESS-PATH-FAILURE01.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/LOCAL-CHECK-HARNESS-PATH-FAILURE01.json",
+      "sha256": "8295a97e20517a0db104f93cffe62e794c6d1c3be4fee48d068776192bb06506"
+    },
+    "LOCAL-CHECKS27.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/LOCAL-CHECKS27.json",
+      "sha256": "826edbb71807b856166a9ad80ea42990d3d1560a52a8de8a5423f43a4ef01fd4"
+    },
+    "NORMAL-CHAIN-MATRIX27.md": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/NORMAL-CHAIN-MATRIX27.md",
+      "sha256": "c13dc22a401a4d76972ef341dece00627e4d64d44d0782f32b2328de62f1813a"
+    },
+    "OPERATIONAL-DELTA27-02.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/OPERATIONAL-DELTA27-02.json",
+      "sha256": "2c210b311ad42cd0872710459caecbb4f0f5d1b185fb089d2d57d6def55e4a3e"
+    },
+    "PHASES27.UNISSUED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/PHASES27.UNISSUED.json",
+      "sha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234"
+    },
+    "describe-install27-readonly.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/describe-install27-readonly.py",
+      "sha256": "dee8b87953b7cab34827867fdfd7386e9c40307d106ab9d055648ad821ef9201"
+    },
+    "read-current-phase27.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/read-current-phase27.py",
+      "sha256": "ca07a6fb6fe19fcbd5f5508dfb5e6b5200a002b155a4f04d4933467cf1fb1576"
+    },
+    "run_frozen_phase27.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/run_frozen_phase27.py",
+      "sha256": "4f18c5cb5042fd9d1b161f863b95892a66802117f2b3df7db78d32ed680edf5f"
+    }
+  },
+  "formalBusinessAccepted": false,
+  "format": "T45_R3_NORMAL_CHAIN27_SOURCE_READY_V1",
+  "materializationRepeated": false,
+  "materializationSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+  "nativeFactoriesExecuted": false,
+  "newServiceStarted": false,
+  "normalStartupAuthorization": "HELD",
+  "originalBusinessKeysChanged": false,
+  "pending": [
+    "QB final operational source review",
+    "Main final same-version registry/issuer pairing including post-ACK receipt fields",
+    "fresh CAS basis before later separately admitted execution"
+  ],
+  "postgresConnections": 0,
+  "previousFrozenCandidatePreserved": true,
+  "previousReadySha256": "fbf7b660ad844a70f3f6248a4e74ec13f532e37279dc46aec37647e4d1a2bfe8",
+  "reusedD1InstallIncremental": {
+    "evidenceSha256": "4b05de414be974c25cb58ec1887cf6c84ba41f531d9d5d84e87ebd386dec2b0c",
+    "matrixSha256": "37323e63dad35ff97756514c2e016d219594898176bea7de3640d2a7f3dce577",
+    "scope": "first frozen27 installer API; unchanged adb0 caller/host interface, successor only support-dependency pins"
+  },
+  "reusedLiveReadOnly": {
+    "checkedAtUTC": "2026-11-15T17:50:42.753632+00:00",
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/PATH-BASIS27-20261115T175042Z.json",
+    "sha256": "2a6f730764a2a608c94bcc08e4ffb97500c10f33974b349990a55f9d71725a1a"
+  },
+  "rootCaller27Sha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1",
+  "serverMutations": 0,
+  "source7033Changed": false,
+  "sourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "state": "LOCAL_COMPLETE_NORMAL_CHAIN27_CANDIDATE02_FROZEN_UNISSUED_REVIEW_PENDING",
+  "targetSession": "01a100d0-cad5-71c1-8042-dc594311d3be",
+  "writerCaller27Sha256": "c98b897209f94ddb22fcfc6948bcb78aea5d71f2d2ce7baf101b4da5aaaee651"
+}
