@@ -1,0 +1,49 @@
+{
+  "D1ScopedReviewSha256": "6796008dd47cfe6c1598e8a46d95dcd4ff3dae4fe93b2e2c56b2cd78944e57f2",
+  "T45CandidateDirectory": "outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01",
+  "T45PinsSha256": "763769926cb92fad274a9c0ea510ca9eb38023151368a222077d52af0d51ec85",
+  "actualNewSource04Materialized": false,
+  "adapterSha256": "09be9322151b77ee7efc07a6fc670ded104e3b20b1a3fdffcee51cbfa8bea251",
+  "authorityFilesIssued": false,
+  "businessGate": "CLOSED",
+  "closedFinding": "TYPED-CLOSURE30-PROOF-PATH-01",
+  "expectedMaterializationEvidence": "PLANNED_EXPECTED_OUTPUT_NOT_EXECUTED",
+  "expectedMaterializationSha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+  "formalInstallOrRealStarted": false,
+  "format": "R3_NORMAL30_FINAL_SAME_VERSION_SOURCE_REVIEW_V1",
+  "freshBasisReaderSha256": "5c2fbd015479acda7c3053e6c106cbab0b4eadfb05a05a5d44058567e08da7d1",
+  "independentReview": {
+    "itemId": "exec-0a404081-55d1-4a6c-a06e-3cbabb3ac157",
+    "prompt": "QB30本轮最终同版源码结论：FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS；rulesSha256=79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794；normalStartupHoldClosed=true（仅源码审查hold，实际fresh109/API nofile dryrun/有限签发仍按合同）。精确选择 Main SERVICE30-PREFIX155-REPAIR-02 PINS04acfb22992ba24cbea460ad4c7aab4e41bcc6679a0f0b141652fdfd1f303d20 / module95b2054ea4c7c95ebcfbe6c1fc1a1ab893c1255c8e52cd91424e5fd3c0dc28ed / template6bb6374dec14c7b313d68bb2727f88002af747662e87adacfd4b643c1b367513 / reg44b4a0ac22d44ca5f22927bec789e6dfb834335514b97fc371b0690396092a7d / carrierae1831baf8ad4fd128683bfda049b0f68a9d43c413547df20696be6dd0d37012；其余3issuer原字节复用。TYPED-CLOSURE30-PROOF-PATH-01 CLOSED：两固定内部spec准确proofLeaf28/29→各自109BASIS d579/e50a映射，实际29已存2a135失败/typedcleanup/CACK/恢复root/public元数据一致；其他判定未放宽。01历史不可执行。\nT45选择normal30-source-local-01/CANDIDATE-01 PHASES79b327/父READYae9095734d4602ab894ccbbf1b8262f9c24cad7fbfce6c3deceadacdefb44cbd/PINS763769926cb92fad274a9c0ea510ca9eb38023151368a222077d52af0d51ec85，root04-source-local-01 READY93b9a437eee4cecde9fc8e6685df5a4435edb7fea0e207ab98fb6d3c4ad22912/PINSf4b5cf7b60e00bba0f753ee5dbf5864af6b0b95fde38f2e1d6e4c8fb28b367f9；main9f1888/proof3f3b/prior383ffa/root04guardaf6586/caller3b870/helper242b/readera08f。已过D1 a490/0fd7语义直接复用。选中PINS/实际bundlepins/AST、旧381→新382行metadata（380不变/1改/1增/0删）、BA/CC66实际源描述279compact pins（含两D1字节）、EA377 rows及计划8bb的同pack确定性、精确descriptor b16ba均核。8bb严格标PLANNED_NOT_EXECUTED，非物化实证；新material3989只O_EXCL复制到独立04、before f35d/newhelper旧路径不存在、28GiB/原预算保持；apply/start新guard必须实际04 COMPLETED0/phaseStarted/root-public终态/根结果hash/独立marker精确一致，restore不依赖04。Main七键含新04全部两grant ABSENT，旧03/db91/cdcaf/399d/703另作完成父基线不重投，无第8任务，业务install/writer/INIT键不变。全部新OP/root04/ba/ea377/382/8bb与描述、安装、writer及reader消费配对；旧runtime/历史基准未盲改。\n最终adapter02 09be9322151b77ee7efc07a6fc670ded104e3b20b1a3fdffcee51cbfa8bea251 / READY57ea2fbbf6ca3c68ce68b50f10d014d1b8fc45a4d688bc8b4ff714724f67803e；basis02 5c2fbd015479acda7c3053e6c106cbab0b4eadfb05a05a5d44058567e08da7d1 / READY75cf9c55d73f928ca3a66b55b4040b57bc34520ae97e2b07c4442fa78834cc5f；readback7192复用。Main02仅目录/SOURCE/TEMPLATE改绑、原109真实读取/全7keys与第7新root04输出ABSENT/旧03单独严验、once/未知不重放流程已核；无新测试/旧不变源重审。Main109保93只currentdispatcher更e15c，新增16真实29根项、旧keys全保+5新，锁/pending保留，字面needle与carrier状态/哈希级联闭合。\nQB无服务器/PG/fresh/clock/issuer或candidate runpy、genuine/Nodefactory执行。实际source04落地、genuine编译/150/170/110/900、13ACK、REAL及业务验收仍UNKNOWN，不可将本结论写运行PASS。请落此最终source review后按既有授权与唯一T45 owner执行真实准入和有限窗口。",
+    "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+    "turnId": "01a1e164-04fb-7740-8559-4f2862365009"
+  },
+  "mainDirectory": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02",
+  "mainPinsSha256": "04acfb22992ba24cbea460ad4c7aab4e41bcc6679a0f0b141652fdfd1f303d20",
+  "mainSources": {
+    "admin_exec.DIRECT30-UNREGISTERED.py": "6bb6374dec14c7b313d68bb2727f88002af747662e87adacfd4b643c1b367513",
+    "issue_phase.py": "e0f99ac5bf87cee115dbb921b47b6c8c018eb5d605b89dc50c60552d1532337e",
+    "issue_registration.py": "f2eb793ffe5f70761fd70a900bebdbce70878d22c67be6165781127681bc7a51",
+    "issue_upgrade_authority.py": "678c550bc7154fd70f1e84b3ddaad5c74de55d2e612de9d1660c95c1305dc59c",
+    "original-cas-direct30-carrier.UNISSUED.py": "ae1831baf8ad4fd128683bfda049b0f68a9d43c413547df20696be6dd0d37012",
+    "r3_direct30_batched.py": "95b2054ea4c7c95ebcfbe6c1fc1a1ab893c1255c8e52cd91424e5fd3c0dc28ed",
+    "register_cas.py": "44b4a0ac22d44ca5f22927bec789e6dfb834335514b97fc371b0690396092a7d"
+  },
+  "newSourceFiles": 382,
+  "newSourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "normalStartupHoldClosed": true,
+  "registrationReadbackReaderSha256": "7192cfa7e49f321908039f5016fd2d2bad4b35171883db5ecf707034f9f13957",
+  "root04PinsSha256": "f4b5cf7b60e00bba0f753ee5dbf5864af6b0b95fde38f2e1d6e4c8fb28b367f9",
+  "root04ReadySha256": "93b9a437eee4cecde9fc8e6685df5a4435edb7fea0e207ab98fb6d3c4ad22912",
+  "rulesSha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794",
+  "serverActionsByReview": 0,
+  "sourceEvidenceOnly": true,
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "stillRequired": [
+    "actual fresh109/all7currentkeys/newroot04output absence/originalgrant",
+    "realissuerAPI nofiledryrun thenfinite registration and actualnew04material0PG",
+    "actual04rootpublicterminalreceiptandindependentmarker beforeapply/start",
+    "actualgenuineprogram/strict900/DB0513ACK/catalog",
+    "original511234REAL/reconciliation backup corebrowser roles formalURL fullgoal"
+  ]
+}

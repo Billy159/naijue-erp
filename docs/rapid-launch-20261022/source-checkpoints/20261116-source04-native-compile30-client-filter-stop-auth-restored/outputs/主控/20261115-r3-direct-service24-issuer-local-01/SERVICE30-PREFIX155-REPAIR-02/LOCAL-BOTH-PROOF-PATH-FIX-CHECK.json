@@ -1,0 +1,38 @@
+{
+  "authorityFilesIssued": 0,
+  "changedSources": [
+    "admin_exec.DIRECT30-UNREGISTERED.py",
+    "original-cas-direct30-carrier.UNISSUED.py",
+    "r3_direct30_batched.py",
+    "register_cas.py"
+  ],
+  "finding": "TYPED-CLOSURE30-PROOF-PATH-01",
+  "issuerCalls": 0,
+  "moduleBytes": 63063,
+  "noExternalPathOrGenerationInput": true,
+  "onlyTwoInternalGenerations": true,
+  "otherHashCleanupRestorationAndOldCIDGuardsUnchanged": true,
+  "proofs": [
+    {
+      "basisSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+      "generation": 28,
+      "proofLeaf": "fresh35-current-production-service-v2-service-28.json"
+    },
+    {
+      "basisSha256": "e50a7112cb48fc987b220a514e62e2e370b08bc3322bfa0ed42babc50d379568",
+      "generation": 29,
+      "proofLeaf": "fresh35-current-production-service-v2-service-29.json"
+    }
+  ],
+  "realRegistrarPureRenderAndCompilePassed": true,
+  "renderPolicy": "ACTUAL_HISTORICAL29_SHAPE_NOT30_EXECUTION_POLICY",
+  "rootBasisFiles": 109,
+  "serverActions": 0,
+  "sourceLimit65536Preserved": true,
+  "state": "LOCAL_STATIC_BOTH_FIXED_PROOF_PATHS_AND_PURE_RENDER_PASS_NOT_RUNTIME",
+  "unchangedIssuers": [
+    "issue_phase.py",
+    "issue_registration.py",
+    "issue_upgrade_authority.py"
+  ]
+}

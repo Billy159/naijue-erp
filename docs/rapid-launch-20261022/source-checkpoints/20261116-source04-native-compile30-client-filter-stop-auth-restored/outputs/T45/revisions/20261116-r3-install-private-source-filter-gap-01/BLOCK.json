@@ -1,0 +1,17 @@
+{
+  "boundary": "Need reviewed local transport successor admitting only the already approved exact code member; do not rename/change frozen server bundle or weaken server guard; preserve original key and window.",
+  "clientLine": 52,
+  "clientPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client.py",
+  "clientSha256": "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6",
+  "frozenInstallKey": "t45-r3-batched-install-20261115-01",
+  "frozenInstallRuleSha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794",
+  "installSubmitted": false,
+  "newSQLExecuted": false,
+  "newServerActions": 0,
+  "noAlternativeExecutorUsed": true,
+  "originalSourceUnchanged": true,
+  "requiredByHostAtLine": 109,
+  "skippedFrozenMember": "private_transport.py",
+  "skippedMemberSha256": "57c0615c21db1100b2e457fd4442752c0d38c9706d6eba15c3a07567326ec6e5",
+  "state": "LOCAL_PRE_SUBMISSION_TRANSPORT_MEMBER_FILTER_BLOCK_NO_INSTALL_SUBMITTED"
+}

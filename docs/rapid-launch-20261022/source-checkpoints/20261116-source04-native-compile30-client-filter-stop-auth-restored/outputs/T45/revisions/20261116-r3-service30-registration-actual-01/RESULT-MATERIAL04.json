@@ -1,0 +1,62 @@
+{
+  "addedFiles": 1,
+  "checkedAtUTC": "2026-11-15T23:08:41.718924+00:00",
+  "formalBusinessAccepted": false,
+  "genuineProgramCompiled": false,
+  "independentFullOldInodeScanPerformed": false,
+  "inheritedUnchangedFiles": 380,
+  "modifiedFiles": 1,
+  "old03Replayed": false,
+  "operatorReadySha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+  "originalSourcePreservedByControlledJob": true,
+  "postgresConnections": 0,
+  "publicReceiptsCollectedMatched": true,
+  "publicResultSha256": "c2d8962828b43efa37fcf6490c0874a4ebabb995e6dc9ad54ab7527f1d44150a",
+  "readbackSha256": "d951bfac51d0074c379eb1e899635cdda9029d0179aff02bd9461001f356df5c",
+  "result": {
+    "automaticReplay": false,
+    "changedFiles": 2,
+    "databaseConnections": 0,
+    "databaseWrites": 0,
+    "inheritedUnchangedFiles": 380,
+    "installerRunnerSha256": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e",
+    "liveCatalogVerified": false,
+    "nodeModulesChanged": false,
+    "originalSourcePreserved": true,
+    "predecessorMaterializationSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+    "requestKey": "t45-r3-batched-root04-source-delta-20261116-01",
+    "serviceStarted": false,
+    "sourceDescriptionSha256": "b16ba1888b177fef243363b004ad6674017eccf6a21a286fa798ecd3cd90c147",
+    "sourceFiles": 382,
+    "sourceRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root04-20261116-01/operation",
+    "sourceRowsSha256": "ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7",
+    "sourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+    "state": "EXACT_FROZEN_SOURCE_MATERIALIZED_NO_INSTALL_OR_EXECUTION"
+  },
+  "rootPins": {
+    "result": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+    "terminal": "f9281d9e721000d0957da09fde525661ffb94005e3e82e809a39c35c9da85585"
+  },
+  "serviceStarted": false,
+  "sourceFiles": 382,
+  "state": "MATERIAL04_ACTUAL_COMPLETED_WITH_ROOT_PUBLIC_AND_INDEPENDENT_OUTPUT_CONFIRMED",
+  "terminal": {
+    "atUTC": "2026-11-15T23:07:54.845339+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 19.451031465025153,
+    "exitCode": 0,
+    "exports": [
+      "batched-source-materialization-intent.json",
+      "batched-source-materialization.json"
+    ],
+    "finishedAtUTC": "2026-11-15T23:08:14.345402+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-batched-root04-source-delta-20261116-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-1dbc05ccca2f"
+  }
+}

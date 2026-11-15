@@ -1,0 +1,73 @@
+{
+  "activeOperationUnits": [],
+  "applyCleanup": {
+    "automaticReplay": false,
+    "cid": "b3d228b01df1ce1505f7bd8c94d6a3a65cc694e2e8e08a6b719053cef0be745c",
+    "confirmed": true,
+    "createAttempted": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "requestKey": "t45-r3-ordinary30-auth-apply-20261116-01",
+    "sourceDataPreserved": true,
+    "stage": "READ_BACK_OWN_CONTAINER_STOP"
+  },
+  "applyPublicResultSha256": "ef2796be8dbf55aa6882b26e3ec18e69ca7f58256425c6bba9704016d63e0b2d",
+  "applyReadbackSha256": "17cdd5feca5bd8dc293d0c635f171cc523d55db57ebcb1a4cff739f8fbbfbc72",
+  "applyResult": {
+    "authenticationAttempted": false,
+    "automaticReplay": false,
+    "credentialValidUntilByRole": {
+      "erp35_admin_20261110_r3": 1794789262643,
+      "erp35_controller_20261110_r3": 1794789142643
+    },
+    "membershipsOrRoleAttributesChanged": false,
+    "newRoles": 0,
+    "privateRecoveryBasisRetained": true,
+    "requestKey": "t45-r3-ordinary30-auth-apply-20261116-01",
+    "roles": [
+      "erp35_controller_20261110_r3",
+      "erp35_admin_20261110_r3"
+    ],
+    "runtimeAuthChanged": false,
+    "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+  },
+  "applyRootPins": {
+    "cleanup": "947170d2ba5da0c54931f3be2bd9a9ea55ffd2069aee0efacc9f86f600ec3d24",
+    "result": "5aacd4b10b4c4c914fcfc00db9f6dc57c3a61751f60e60668609822b165afabf",
+    "terminal": "2ef5d7101bf7b05d9b7d7d969c61571a265ca702c94e6e14dbd24d58cddc65ae"
+  },
+  "applyTerminal": {
+    "atUTC": "2026-11-15T23:09:30.264645+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 7.410988461051602,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-15T23:09:37.717712+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary30-auth-apply-20261116-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-c167d839606f"
+  },
+  "businessAcceptanceClaimed": false,
+  "current30OriginalAuthRestored": false,
+  "installationOrRealExecuted": false,
+  "lastCheckedAtUTC": "2026-11-15T23:09:49.287272+00:00",
+  "materialResultSha256": "198b11559569961320e4ccadac3931e3533ed432da93ab6a7b9ac4452c822786",
+  "next": "Main signs start from actual apply and same finite clock; restore30 remains required later",
+  "pgdataPidAbsent": true,
+  "privateRecoveryBasisRetained": true,
+  "runtimeAuthChanged": false,
+  "startSubmitted": false,
+  "state": "MATERIAL04_AND_APPLY30_ACTUAL_COMPLETED_NO_START_INSTALL_REAL"
+}

@@ -1,0 +1,156 @@
+{
+  "actualProgramSha256": "b35eaed0a68e23292b23c2b2cec6544caff5314843ce0bc8dbe4ad544c9a4abe",
+  "businessAcceptanceClaimed": false,
+  "checkedAtUTC": "2026-11-15T23:14:47.369396+00:00",
+  "current30OriginalAuthRestored": false,
+  "describeOutputPins": {
+    "descriptor": {
+      "bytes": 3209,
+      "publicSha256": "a57382cbf528be7534e09089a1c9852f89ec7b6cdded166d1fa55b7970470068",
+      "rootSha256": "81d3a9a1ab9d70f0b8e267829654261f084cdd60bbb1f42178e17929c508f5b9"
+    },
+    "liveFacts": {
+      "bytes": 1346,
+      "publicSha256": "850c972e0acdbc257c0a43cdeee94f42b74bfc922d3a8b9b773877267ee7f1f5",
+      "rootSha256": "6a81563a829dad1bd1d634321e5d2c1968a8b8938f748521e33a3cd53c03bc66"
+    },
+    "payload": {
+      "bytes": 444,
+      "publicSha256": "7df7d894f00bcda94a2eead1cdc98c6e53c3d42fe7a1e75be829ce01e7197d28",
+      "rootSha256": "6a3ddcb59b19aed32f7c23f9096a1b1083d21bad6a5c4f6b466e196cc4790872"
+    },
+    "process": {
+      "bytes": 1084,
+      "publicSha256": "1d9c3c6d4663ad2d25eafed31b10f68f7bda14415f72a65f3aaeb0d4b28ddbfa",
+      "rootSha256": "8d57b0052484c4edff925f69d71da3c82c035152d559838214261db29c6ab165"
+    }
+  },
+  "describeProcess": {
+    "captureErrorType": null,
+    "childReaped": true,
+    "descendantsReaped": true,
+    "describeTrace": [
+      {
+        "elapsedMilliseconds": 0.002,
+        "stage": "IMPORT_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 326.483,
+        "stage": "IMPORT_END"
+      },
+      {
+        "elapsedMilliseconds": 326.55,
+        "stage": "TRUST_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 341.847,
+        "stage": "TRUST_END"
+      },
+      {
+        "elapsedMilliseconds": 342.126,
+        "stage": "SOURCE_LOAD_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 30692.735,
+        "stage": "SOURCE_LOAD_END"
+      },
+      {
+        "elapsedMilliseconds": 30693.37,
+        "stage": "TARGET_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 30904.859,
+        "stage": "TARGET_END"
+      },
+      {
+        "elapsedMilliseconds": 30904.953,
+        "stage": "COMPILE_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 36191.917,
+        "stage": "COMPILE_END"
+      }
+    ],
+    "exitCode": 0,
+    "killSeconds": 2,
+    "lastReachedStage": "COMPILE_END",
+    "maximumChildSeconds": 150,
+    "nativeReplyKind": "OBJECT",
+    "ownedProcessGroupReaped": true,
+    "pidNamespace": "pid:[4026532393]",
+    "reason": null,
+    "requestKey": "t45-first-r3-native-service-start-20261116-30",
+    "sqlstate": null,
+    "stderrBytesObserved": 746,
+    "stderrLimit": 65536,
+    "stdoutBytesObserved": 5117,
+    "stdoutLimit": 131072,
+    "termSeconds": 2,
+    "traceSource": "BOUNDED_PRIVATE_STDERR_FIXED_STAGE_MARKERS"
+  },
+  "descriptorPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02-describe/DESCRIPTOR.json",
+  "descriptorSha256": "81d3a9a1ab9d70f0b8e267829654261f084cdd60bbb1f42178e17929c508f5b9",
+  "genuineDescribeDatabaseConnections": 0,
+  "genuineDescribeMutations": 0,
+  "genuineDescribeState": "PROGRAM_DESCRIBED_NO_PG_OR_WRITE",
+  "genuineFactoriesRerun": false,
+  "installationSubmitted": false,
+  "material04Replayed": false,
+  "normalizedLiveFactsPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02-describe/LIVE-FACTS.json",
+  "normalizedLiveFactsSha256": "b5aee023164c273d213d681ad8dfb09d904a827c4cecc96436c4f11f8ff760d9",
+  "payloadPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02-describe/PAYLOAD.json",
+  "payloadSha256": "6a3ddcb59b19aed32f7c23f9096a1b1083d21bad6a5c4f6b466e196cc4790872",
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-15 23:13:28.123147+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7706545564479176741"
+  },
+  "publicReceiptsCollectedMatched": true,
+  "publicResultSha256": "161b4c3cb53b057746f8fd246ea79aff8b030eb0a45e4743158f3a110f0f4fe6",
+  "readbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02.json",
+  "readbackSha256": "102bb03b1ccb533601c088d2bfea7c58a6c748043cec1a7bf9e4fa957d12d56e",
+  "realImportSubmitted": false,
+  "retainedAckConfirmed": true,
+  "rootPins": {
+    "result": "bcb378acfa698c2bc8f7018bb713acc61318e66bf4f14bc2830cdec51790730d",
+    "terminal": "34d2f5e0f7cf2fabf8192a340eda31dac53e8ab16cda8cc14fe6acba33b93ed4"
+  },
+  "service": {
+    "containerId": "4ef547cb7a3acdf82b8c85a32c75e46f71dbf1ea850c205a1f0d755ab00922aa",
+    "containerStartedAt": "2026-11-15T23:13:26.882383571Z",
+    "postmasterStart": "2026-11-15 23:13:28.123147+00",
+    "proofSha256": "abf3b3251289ebb5f40218f51991c1a3bafea4854097543be175ed400d9ce06c",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-30"
+  },
+  "serviceCurrentlyRetainedAtCheckedTime": true,
+  "sourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "state": "START30_ACTUAL_COMPLETED_GENUINE_DESCRIBE_SUCCESS_NO_INSTALL_OR_REAL",
+  "terminal": {
+    "atUTC": "2026-11-15T23:13:22.633143+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 43.481288089999,
+    "exitCode": 0,
+    "exports": [
+      "genuine-describe-payload.json",
+      "genuine-describe-process.json",
+      "genuine-descriptor.json",
+      "genuine-live-facts.json",
+      "normal-service-create-attempt.json",
+      "normal-service-intent.json",
+      "normal-service-result.json"
+    ],
+    "finishedAtUTC": "2026-11-15T23:14:06.143623+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-first-r3-native-service-start-20261116-30",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-619b2bf550a9"
+  },
+  "timeoutTermKillBranchExercised": false,
+  "windowExpiresAt": 1794785640041,
+  "windowStartsAt": 1794784440041
+}

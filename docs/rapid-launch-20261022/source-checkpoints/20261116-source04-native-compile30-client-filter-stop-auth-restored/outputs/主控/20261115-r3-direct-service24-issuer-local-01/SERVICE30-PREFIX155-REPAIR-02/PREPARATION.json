@@ -1,0 +1,28 @@
+{
+  "T45PhasesSha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794",
+  "authorityFilesIssued": false,
+  "closedFinding": "TYPED-CLOSURE30-PROOF-PATH-01",
+  "currentSevenKeysAllMustBeAbsent": true,
+  "fullNewSourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "materializeIssuerMode": "NEW_EXACT_ROOT04_DELTA_ONCE",
+  "materializeKey": "t45-r3-batched-root04-source-delta-20261116-01",
+  "materializeParentHistorical03Preserved": true,
+  "moduleBytes": 63063,
+  "newBaseSourceSetSha256": "cc66e37d81bebf11b6325ccaf1ddcf72d829ab51d1b4c59b97246a1adc850c41",
+  "newRootBasisFiles": 109,
+  "noFurtherEditsWithoutDeclaredDelta": true,
+  "old03CompletedBaselinePreserved": true,
+  "parentPinsSha256": "f63ab478fb71299ecbf8326f86351b18f53fa61152b79dd291302755601a29c9",
+  "pending": [
+    "QB exactfour-source fix/cascade andfinaladapter109pair",
+    "thenonly actualfresh109/realAPI dryrun andfiniteissuance"
+  ],
+  "previousRootBasisFiles": 93,
+  "root04ExpectedReceiptEvidence": "PLANNED_EXPECTED_OUTPUT_NOT_EXECUTED",
+  "scope": "Main30 exact previous29 closure and registry initial preparation only",
+  "serverActions": 0,
+  "sourceOnlyPhaseNoServerActions": true,
+  "state": "FROZEN_MAIN30_02_PENDING_EXACT_FIX_AND_FINAL_ADAPTER_PAIR_REVIEW",
+  "typedFailure28And29StrictSharedImplementation": true,
+  "whySmallReuse": "Keep unchanged65536 source limit; identical typed failure semantics with two explicit internal immutable records, no external generation capability"
+}

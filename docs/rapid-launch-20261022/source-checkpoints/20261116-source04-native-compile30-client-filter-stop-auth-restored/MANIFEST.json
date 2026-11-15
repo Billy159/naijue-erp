@@ -1,0 +1,177 @@
+[
+  {
+    "bytes": 1042,
+    "path": "outputs/T45/revisions/20261116-r3-install-private-source-filter-gap-01/BLOCK.json",
+    "sha256": "b2fc496b1406a943e8917d4498da2f2081b0dcc1df7fc2296a4839d1972cba32"
+  },
+  {
+    "bytes": 4549,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/REGISTRATION30-READBACK-01.json",
+    "sha256": "ed3824302fabc90e4ca69e0962396b9d4719d109ec3248b90e87f9502d7946c1"
+  },
+  {
+    "bytes": 2821,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/RESULT-MATERIAL04-APPLY30.json",
+    "sha256": "25fc4294e2a2bad6a801f077c499194fe6049eaf75bcd3976ac993a383da4d7b"
+  },
+  {
+    "bytes": 2754,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/RESULT-MATERIAL04.json",
+    "sha256": "198b11559569961320e4ccadac3931e3533ed432da93ab6a7b9ac4452c822786"
+  },
+  {
+    "bytes": 6322,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/RESULT-START30-ACTUAL.json",
+    "sha256": "1a35d40b005021d68fe08a65f0581f62a4a9b91af4f26ae8fcb9672c1d16bb33"
+  },
+  {
+    "bytes": 3135,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/apply/READBACK-01.json",
+    "sha256": "17cdd5feca5bd8dc293d0c635f171cc523d55db57ebcb1a4cff739f8fbbfbc72"
+  },
+  {
+    "bytes": 3960,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/materialize/READBACK-02.json",
+    "sha256": "d951bfac51d0074c379eb1e899635cdda9029d0179aff02bd9461001f356df5c"
+  },
+  {
+    "bytes": 3119,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/restore/READBACK-01.json",
+    "sha256": "c1dd8076fb999f362cc69221fa1a70dea5c0222a5d6dfedcbb9840996e9bfdd8"
+  },
+  {
+    "bytes": 3209,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02-describe/DESCRIPTOR.json",
+    "sha256": "81d3a9a1ab9d70f0b8e267829654261f084cdd60bbb1f42178e17929c508f5b9"
+  },
+  {
+    "bytes": 1414,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02-describe/LIVE-FACTS.json",
+    "sha256": "b5aee023164c273d213d681ad8dfb09d904a827c4cecc96436c4f11f8ff760d9"
+  },
+  {
+    "bytes": 444,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02-describe/PAYLOAD.json",
+    "sha256": "6a3ddcb59b19aed32f7c23f9096a1b1083d21bad6a5c4f6b466e196cc4790872"
+  },
+  {
+    "bytes": 23867,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/start/READBACK-02.json",
+    "sha256": "102bb03b1ccb533601c088d2bfea7c58a6c748043cec1a7bf9e4fa957d12d56e"
+  },
+  {
+    "bytes": 4883,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/stop/FACTS-01.json",
+    "sha256": "27b0d9059cf1df075f85808224077413c5e75dd776634a7f6091ccb2436bc6be"
+  },
+  {
+    "bytes": 5427,
+    "path": "outputs/T45/revisions/20261116-r3-service30-registration-actual-01/stop/READBACK-01.json",
+    "sha256": "c6bc5b99e1340766305ee87e63ad042fcabcd16369cbc120d4145e45731c854c"
+  },
+  {
+    "bytes": 2273,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL30-PREFIX155-REPAIR-SOURCE-01/ACTUAL-ISSUER-API-DRYRUN30-01.json",
+    "sha256": "3b140f0d99f1e713bb0cbc0d4354fa5da86a269ccfdadf510c89f7172e3ea9fb"
+  },
+  {
+    "bytes": 6343,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL30-PREFIX155-REPAIR-SOURCE-01/FINAL30-QB-REVIEW.json",
+    "sha256": "c0ce2c58a0e61182c6bd2a2964c4cfbdd9878bff4616b67417667cba0bd562b6"
+  },
+  {
+    "bytes": 3342,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/TASK.json",
+    "sha256": "020246e833570b5a720a46e4d0be301b0e0b1ef7e3db455b27eb23d9596795eb"
+  },
+  {
+    "bytes": 11935,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/DELTA-FROM-MAIN30-01.patch",
+    "sha256": "5a4ff3b32dd7888681c4886e88f55af6cc65cea477e115c7d25d9ea7d7770a91"
+  },
+  {
+    "bytes": 1258,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/LOCAL-BOTH-PROOF-PATH-FIX-CHECK.json",
+    "sha256": "023aff736289446ddf27a2a8a03ee7069a6e20e955ccee4d1aefc1c082340719"
+  },
+  {
+    "bytes": 995,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/PINS.json",
+    "sha256": "04acfb22992ba24cbea460ad4c7aab4e41bcc6679a0f0b141652fdfd1f303d20"
+  },
+  {
+    "bytes": 1527,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/PREPARATION.json",
+    "sha256": "068a5791a6ec5cbef7bb70225b818366dda3349b4dcc0f152130ceacf0e4e280"
+  },
+  {
+    "bytes": 41370,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/admin_exec.DIRECT30-UNREGISTERED.py",
+    "sha256": "6bb6374dec14c7b313d68bb2727f88002af747662e87adacfd4b643c1b367513"
+  },
+  {
+    "bytes": 26058,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/issue_phase.py",
+    "sha256": "e0f99ac5bf87cee115dbb921b47b6c8c018eb5d605b89dc50c60552d1532337e"
+  },
+  {
+    "bytes": 9931,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/issue_registration.py",
+    "sha256": "f2eb793ffe5f70761fd70a900bebdbce70878d22c67be6165781127681bc7a51"
+  },
+  {
+    "bytes": 5143,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/issue_upgrade_authority.py",
+    "sha256": "678c550bc7154fd70f1e84b3ddaad5c74de55d2e612de9d1660c95c1305dc59c"
+  },
+  {
+    "bytes": 2663,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/original-cas-direct30-carrier.UNISSUED.py",
+    "sha256": "ae1831baf8ad4fd128683bfda049b0f68a9d43c413547df20696be6dd0d37012"
+  },
+  {
+    "bytes": 63063,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/r3_direct30_batched.py",
+    "sha256": "95b2054ea4c7c95ebcfbe6c1fc1a1ab893c1255c8e52cd91424e5fd3c0dc28ed"
+  },
+  {
+    "bytes": 41788,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02/register_cas.py",
+    "sha256": "44b4a0ac22d44ca5f22927bec789e6dfb834335514b97fc371b0690396092a7d"
+  },
+  {
+    "bytes": 727,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service30-inner-install-window-01/ISSUED.json",
+    "sha256": "0e87bc362b67a99e6d17899d83ddce3cdad123bcb4697b2f4f3fb4b9ab159f99"
+  },
+  {
+    "bytes": 397,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service30-install-window-01/ISSUED.json",
+    "sha256": "86c282b007bdf3ff0231543d749e43b2452922d08ef95d29acb8ea22eb32f16b"
+  },
+  {
+    "bytes": 417,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service30-materialize-window-01/ISSUED.json",
+    "sha256": "c0a755f4d7980c52e00cc1cb082a091899579ee3792bf96b9d238c9d9974735c"
+  },
+  {
+    "bytes": 402,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service30-restore-window-01/ISSUED.json",
+    "sha256": "8d5304abed0797958bae9abfb193ea9874a86c0c8ccabf3f432273ab3578de36"
+  },
+  {
+    "bytes": 412,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service30-start-window-01/ISSUED.json",
+    "sha256": "06f7efa7bb13bbc516d2f2bc624c71e306f39bc918d171a0089e98692f285722"
+  },
+  {
+    "bytes": 410,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service30-stop-window-01/ISSUED.json",
+    "sha256": "8a081efbcef295ac539f18e54130bc8ec1bb11fe5e0479159dcc3d521f8b3b13"
+  },
+  {
+    "bytes": 1879,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct30-registration-window-01/ISSUED.json",
+    "sha256": "1d2305d4ed927908dd4a79cc049accc80f620b3dd28054622fc1c93856512980"
+  }
+]
