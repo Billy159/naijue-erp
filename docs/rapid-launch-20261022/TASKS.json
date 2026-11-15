@@ -7424,6 +7424,20 @@
             "livenessSha256": "42e66c5d7f92c98de3bebd4ea0f152dbffbe210191f3f7b7bf6593584ee620e6",
             "describeFailureSha256": "7c79b648852c1af59212e69a70c092923e097e1ee4dcbf610b238cd2cdfddd35",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_SERVICE27_ACTUALLY_STOPPED_AUTH_RESTORE_PENDING_CHANNEL_AND_PARTIAL_CONTROL_UNKNOWN_20261116",
+            "state": "ACTUAL_STOP_COMPLETED_AUTH_RESTORE_NOT_CONFIRMED_NO_INSTALL_OR_REAL",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service27-stopped-auth-restore-pending",
+              "files": 12,
+              "bytes": 25382,
+              "manifestSha256": "fa01af2d65b32b01960de5313990b360143c2470601c692b917f532c57f9d71e"
+            },
+            "stopReadbackSha256": "c5ff8d7b0ac6494f401df6fdea0158636c50ce7cbea8438dbfc0f2a6459d7552",
+            "resourcesClosedSha256": "64cdd5f4de760d5847263b778994ca8740f75d33125871d300edfcd04cc23c4f",
+            "restoreLastPointReadbackSha256": "9af1e78818e7931a741a4294c435c60f5f63b555ea278c6aa6a511d5244e9aad",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7457,15 +7471,15 @@
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "START27_ACTUAL_COMPLETED_GENUINE_DESCRIBE_FAILED_TARGETED_RO_DIAGNOSTIC_ONCE",
+            "state": "STOP27_ACTUAL_COMPLETED_ORIGINAL_RESTORE27_NOT_ACCEPTED_AT_LAST_READ_CURRENT_STAGING_UNKNOWN",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Start27 originalkey COMPLETED0/6.1380483s finish18:38:30Z, readback11ae/rootba1caa/result808c/public4446 objects equal; actualC2640/CID6c8f new PGepoch/identity correct. ActualROliveness42e66 at18:41:45 confirms trueprivatePID namespace exactguardian0/postmaster61035/exe/starttime/parent/netns/PGDATA andC/ACK. Firstobserver wrong hostPID assumption failed and preserved619B, no productionguard change/restart. Frozen dee8 describe once actualfailure7c79 at18:42:45 returncode1/nativeReplynull/stderr1072B; originalerrortext lost, causeUNKNOWN, no descriptor/livefacts. Main authorizes one additional exactgenuine describe only for boundedprivate errorcapture, unchanged caller/UID/clock/source/timeouts; no guesses/relaunch/install/REAL. Awaitactualdiagnosis."
+            "work": "Originalstop27 COMPLETED0/3.782143s finish19:02:17Z c5ff/root2dc418/a5aa/public62ca/cleanupfda7 alltrue. RO64cdd19:02:54 actualCID6c8f stoppedPID0/noPGpid/56791/globalops, originaldata/C/ACK retained. Mainrestore285319 signed19:03:43\u219219:18:43Z, rule300s fulladmissionbudget passed19:13:43; no moreold authority submits. Clienttransportfailedtwice, neverQUEUED. Actualoriginalkeydf22 at19:07:17 allrequest/tmp/root/control/terminalABSENT/localindexnull; status114e at19:08:34 READY. Onlybecauseknownneveraccepted onecontinue-firstsubmit wasattempted, timedoutagain. Realreader9af1 at19:12:59 requestfalse/rootJobfalse/noterminal/noPG/globalunits, localindexnull. LaterstagingROSSH40sTimeout, exactpartialfilesUNKNOWN. No loop/replay/delete/historyclear/guardbypass. Currently source/receiver assessment and oneaccurategap only; originalrestore key/role4332 unchanged."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "PG27_RUNNING_FINITE_AUTH_START_ACTUAL_PASS_GENUINE_DESCRIBE_FAILED_DIAGNOSTIC_ONCE_AUTHORIZED",
+          "formalR3": "PG27_ACTUALLY_STOPPED_ORIGINAL_AUTH_RESTORE27_NOT_CONFIRMED_TRANSPORT_AND_PARTIAL_STAGING_UNKNOWN",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7478,7 +7492,7 @@
           "latestPolicySha256": "89f49225c19c1043e4a4a59c876876972b49abb9d5e0b29bcb699d5d069b2094",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "fresh basis and finite27 actual handoff; no completed materialize or failed25/26 replay",
+          "nextCheckpointScope": "actualrestore27 withoriginalkey afterexactgap/maturechannel method; thenminimum normaldescribe sourceincrement; keepgoalACTIVE",
           "latestSourceSnapshot": {
             "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-auth26-restored-and-full-normal-chain27-audit",
             "files": 138,
@@ -7489,8 +7503,8 @@
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "INSTALL_AND_REAL_HELD_NO_GENUINE_DESCRIPTOR_FAILURE_CAUSE_UNKNOWN",
-            "work": "Startauthorityb6c161 yieldedactualC2640/ACK/startCOMPLETED. Noinner9/outerinstall/writer issued becauseactualdescribe7c79 failed. One boundedROdiagnostic requested, no newclock/role/source/materialization. Current27clock fixed; normalstop/restore originalkeys available afterrealclosureevidence."
+            "state": "ACTUAL_STOP27_PASS_AUTH_RESTORE_NOT_CONFIRMED_NEEDS_EXACT_CHANNEL_STAGING_METHOD_AND_FRESH_RESTORE_ONLY_AUTH",
+            "work": "Mainrestore285319 original15min filepreserved, no reissue untilneveraccepted/currentpartial facts andmatureexactresume method; controller/admin/restorationDeadline neverextended. PreferexistingAPI missingleaves or protectedcachedapply27statics thenoriginaldispatcheradmit/originalrestorekey, onlyifsupportedbyactualreceiver; no rawPG/directrestore/forcedexecution. No newfuturewindow28 orinstallation/REALauth."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7506,10 +7520,10 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "actual exact-genuine describe failure cause and minimally affected fix/validation",
-            "usable genuine installed154 descriptor andlivefacts then exactinner9+outerinstall",
-            "actual13ACK/catalogcapture and511234-row REAL BATCHED writer/reconciliation",
-            "backup/core-browser/finalpublication andpreserve-stop/originalauth27restoration"
+            "resolveintermittentmanagementchannel andexactoriginalrestore27partialcontrol/source state; no replay/currentacceptanceguess",
+            "actualoriginaltwoauthfieldsrestore withprotectedreadback, no naturalexpiry-as-PASS",
+            "source-only integrateboundedgenuine describe intoexistingregisteredstart aftersafeclosure; no new8thjob/platform/clock",
+            "then actual13ACK/install/REAL511234 reconciliation andbackup/corebrowser/finalpublication"
           ],
           "normalSource": {
             "db05": {
@@ -7590,7 +7604,17 @@
               "expiresAt": 1794768686097,
               "startsAt": 1794767786097
             },
-            "actualStartConfirmed": true
+            "actualStartConfirmed": true,
+            "actualStopConfirmed": true,
+            "restoreAuthority": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service27-restore-window-01/host-authorization.json",
+              "sha256": "2853199786b4b436055dd679077d093afa4cfce5bbce2949d461154e28dee223",
+              "bytes": 1989,
+              "key": "t45-r3-ordinary27-auth-restore-20261116-01",
+              "expiresAt": 1794770323600,
+              "startsAt": 1794769423600
+            },
+            "restoreSubmissionOutcome": "NOT_ACCEPTED_AT_191259_READ_CURRENT_PARTIAL_STAGING_UNKNOWN_CHANNEL_TIMEOUT"
           },
           "sourceAudit": {
             "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
@@ -7605,17 +7629,19 @@
           },
           "latestModuleSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
           "latestEvidenceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service27-started-describe-failed",
-            "files": 4,
-            "bytes": 9373,
-            "manifestSha256": "bef2d3b885519541290a949c19b7bbcff6f1b74da4418813a0c7fde69306a93c"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service27-stopped-auth-restore-pending",
+            "files": 12,
+            "bytes": 25382,
+            "manifestSha256": "fa01af2d65b32b01960de5313990b360143c2470601c692b917f532c57f9d71e"
           },
           "currentService": {
             "serviceKey": "t45-first-r3-native-service-start-20261116-27",
             "proofSha256": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
             "containerId": "6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448",
             "containerStartedAt": "2026-11-15T18:38:28.428863507Z",
-            "postmasterStart": "2026-11-15 18:38:29.737044+00"
+            "postmasterStart": "2026-11-15 18:38:29.737044+00",
+            "stopped": true,
+            "retainedProofAndAck": true
           }
         },
         "independentDeltaReviewer": "QB",

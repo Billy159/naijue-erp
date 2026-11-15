@@ -1,0 +1,23 @@
+{
+  "checkedAtUTC": "2026-11-15T19:09:34.819431+00:00",
+  "jobKeyChanged": false,
+  "localHistoryCleared": false,
+  "originalPreflightPreserved": true,
+  "request": {
+    "args": [
+      "2853199786b4b436055dd679077d093afa4cfce5bbce2949d461154e28dee223"
+    ],
+    "businessCutoverConfirmed": false,
+    "gateEvidence": {},
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary27-auth-restore-20261116-01",
+    "manifestSha256": "45a65e4c6cab43f144cd1a6d7731a1f534ab156ac4c64564ab32e7ebd760bbed",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "script": "ordinary05_roles_job.py",
+    "taskEvidence": {},
+    "taskId": "T45",
+    "timeoutSeconds": 300
+  },
+  "serverGuardChanged": false,
+  "state": "CONTINUE_NEVER_SUBMITTED_REQUEST_AFTER_PROVEN_ABSENCE"
+}

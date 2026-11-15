@@ -1,0 +1,20 @@
+{
+  "state": "NORMAL27_INCOMPLETE_STOP_AND_ORIGINAL_AUTH_RESTORE_REQUIRED",
+  "checkedAtUTC": "2026-11-15T18:58:20.230223+00:00",
+  "actualStart": "COMPLETED0, actual C/ACK/liveness verified; do not replay",
+  "actualStartReadbackSha256": "11aeae69a8455cfbe5757ed674a99adc2c15431f10fb239a6d02822a9be132da",
+  "actualDescribeFailureSha256": "7c79b648852c1af59212e69a70c092923e097e1ee4dcbf610b238cd2cdfddd35",
+  "originalFailureCause": "UNKNOWN_ORIGINAL_STDERR_NOT_RETAINED",
+  "singleDiagnosticSha256": "faff249531f3f15125a5f63014d85705cc30c6ab878a359cf9cbda84fcb250f0",
+  "diagnosticObserved": "same genuine describe no stdout/stderr within20seconds; TimeoutExpired thenSIGTERM/reaped; no exact slow stage established",
+  "entryGapSha256": "0939ca066cbf639df5c231b3b1246d5f8cd9edd1cabce60490fb23a6bfb77841",
+  "entryGap": "current task dispatcher has no demonstrated admitted150second describe key; generic background support is not admission; no bypass attempted",
+  "fixedControllerUntil": 1794772889953,
+  "remainingControllerMsAtDecision": 3789723,
+  "conservativeFutureBudgetMs": 4050000,
+  "budgetSufficient": false,
+  "installationAuthorityIssued": false,
+  "realWriterAuthorityIssued": false,
+  "stopRestore": "fresh actual same-service stop basis, existing original stop27 key then actual stop readback and existing originalauth restore27; deadlines fixed",
+  "nextSourceOnly": "evaluate existing registered300second start operation for genuine describe and protected descriptor outputs; no new background platform, guard bypass, data rehearsal, source rematerialization or future window yet"
+}

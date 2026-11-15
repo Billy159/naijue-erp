@@ -1,0 +1,66 @@
+{
+  "state": "SERVICE27_ACTUALLY_STOPPED_AUTH_RESTORE_NOT_CONFIRMED_TRANSPORT_INTERMITTENT_NO_INSTALL_OR_REAL",
+  "scope": "public bounded receipts and decisions only; no live authority or credential bodies; original loststderr cause remainsUNKNOWN, later diagnostic20s timeout only",
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/stop/FACTS-01.json",
+      "bytes": 4100,
+      "sha256": "1058185271c91ffea58a0fc5b79aa17b60d7d70f017a36c314186356c3b9d359"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/stop/READBACK-01.json",
+      "bytes": 5428,
+      "sha256": "c5ff8d7b0ac6494f401df6fdea0158636c50ce7cbea8438dbfc0f2a6459d7552"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/stop/RESOURCES-CLOSED-01.json",
+      "bytes": 4006,
+      "sha256": "64cdd5f4de760d5847263b778994ca8740f75d33125871d300edfcd04cc23c4f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/DISPATCH-STATUS-01.json",
+      "bytes": 782,
+      "sha256": "114ecc895c91bfd56106d97e85cfacc74c18fe7f3c7d89ed0f57b5c8bef82140"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/ORIGINAL-KEY-CHANNEL-READ-01.json",
+      "bytes": 843,
+      "sha256": "df22ad9d6dfb81fc91a54633dc57e1f93741fb75f25c4161462fedfea5547cbb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/READBACK-01.json",
+      "bytes": 514,
+      "sha256": "9af1e78818e7931a741a4294c435c60f5f63b555ea278c6aa6a511d5244e9aad"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/RESUME-NEVER-SUBMITTED-PREFLIGHT.json",
+      "bytes": 772,
+      "sha256": "a2c836662cc862683300bebb9212a384a98b67a16a198f421a094285b8389a35"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/STAGING-READ-TIMEOUT-01.json",
+      "bytes": 667,
+      "sha256": "cac038ebf0691b390464295ea264e75940192728914cfb433e05aa471221da45"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-describe-error-local-01/actual-diagnostic-01/DIAGNOSTIC.json",
+      "bytes": 1780,
+      "sha256": "faff249531f3f15125a5f63014d85705cc30c6ab878a359cf9cbda84fcb250f0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-describe-error-local-01/RESULT-DIAGNOSTIC27.json",
+      "bytes": 1700,
+      "sha256": "f9324a87661bd53be2351d9c4a5f610e054e7ec02f8701553d5becb6f9e3698d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-describe150-entry-assessment-01/ENTRY-GAP.json",
+      "bytes": 3186,
+      "sha256": "0939ca066cbf639df5c231b3b1246d5f8cd9edd1cabce60490fb23a6bfb77841"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/FULL-NORMAL-CHAIN-AUDIT-20261116-01/NORMAL27-DESCRIBE-FAILURE-AND-CLOSE-DECISION.json",
+      "bytes": 1604,
+      "sha256": "7f02788d5fbbb3cd56b016976bcf635d9d305c29df11ce60f7f214677ec5e4c8"
+    }
+  ]
+}

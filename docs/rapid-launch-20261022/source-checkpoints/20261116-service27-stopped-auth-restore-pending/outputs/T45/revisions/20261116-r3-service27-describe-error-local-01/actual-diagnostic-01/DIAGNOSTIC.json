@@ -1,0 +1,49 @@
+{
+  "checkedAtUTC": "2026-11-15T18:49:48.864523+00:00",
+  "databaseConnections": 0,
+  "databaseMutations": 0,
+  "format": "T45_SERVICE27_GENUINE_DESCRIBE_ERROR_OBSERVER_V1",
+  "genuineCallerChanged": false,
+  "installSubmitted": false,
+  "nativePath": "describe",
+  "nativeSafeCode": null,
+  "nativeState": null,
+  "nodeExceptionClass": "TimeoutExpired",
+  "nodeExitCode": -15,
+  "nodeReapSeconds": 4,
+  "nodeSeconds": 20,
+  "nodeStderr": {
+    "capturedBytes": 0,
+    "exceptionTypes": [],
+    "frames": [],
+    "safeCodes": [],
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "nodeStderrObservedBytes": 0,
+  "nodeStdoutObservedBytes": 0,
+  "outerExceptionClass": null,
+  "outerReplyParseError": null,
+  "outerReturnCode": 0,
+  "outerSeconds": 26,
+  "outerStderr": {
+    "capturedBytes": 0,
+    "exceptionTypes": [],
+    "frames": [],
+    "safeCodes": [],
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "privateDirectoryMode": "0700",
+  "privateErrorFilesMode": "0600",
+  "privateEvidenceDirectory": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/describe-diagnostics/t45-r3-service27-describe-error-diagnostic-20261116-01",
+  "requestKey": "t45-r3-service27-describe-error-diagnostic-20261116-01",
+  "service": {
+    "containerId": "6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448",
+    "containerStartedAt": "2026-11-15T18:38:28.428863507Z",
+    "postmasterStart": "2026-11-15 18:38:29.737044+00",
+    "proofSha256": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-27"
+  },
+  "sqlstate": null,
+  "state": "GENUINE_READONLY_DESCRIBE_DIAGNOSTIC_RECORDED",
+  "writerSubmitted": false
+}

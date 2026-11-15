@@ -1,0 +1,65 @@
+{
+  "blockingCondition": "Mature bounded background primitive exists, but no evidenced existing admitted describe job; cannot claim it usable or launch around release guard",
+  "evidence": [
+    {
+      "lines": [
+        453,
+        497
+      ],
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct27-registration-window-01/admin_exec.ISSUED.py",
+      "sha256": "f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec"
+    },
+    {
+      "lines": [
+        625
+      ],
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/r3_direct27_batched.py",
+      "sha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba"
+    },
+    {
+      "lines": [
+        145
+      ],
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261114-r3-failed19-readonly-recovery-local-03/r3_failed19_readonly.py",
+      "sha256": "4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e"
+    },
+    {
+      "lines": [
+        591
+      ],
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261114-r3-ordinary19-prearm-local-01/continuity-stop/r3_write_continuity.py",
+      "sha256": "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+    },
+    {
+      "lines": [
+        25,
+        42
+      ],
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client.py",
+      "sha256": "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6"
+    }
+  ],
+  "facts": [
+    "Existing dispatcher start uses bounded systemd-run and original-key terminal readback",
+    "Every execute calls hold.admit before starting child",
+    "Current direct27 admits seven exact keys; no describe key and unknown keys delegate readonly recovery",
+    "Selected readonly recovery delegates unknown keys to original hold",
+    "Selected inherited active hold requires a registered preservation key or matching cold-complete; no such approved describe admission evidenced"
+  ],
+  "installSubmitted": false,
+  "next": "Main identify an already admissible exact readonly entry or take controlled stop/restore; no bypass or speculative submission",
+  "notPerformed": [
+    "No new systemd unit or nohup/fork launcher",
+    "No registry/guard/source/permission/materialization changes",
+    "No remote probes, describe calls, PG or data rehearsal"
+  ],
+  "postgresConnections": 0,
+  "roleDeadlinesExtended": false,
+  "serverActions": 0,
+  "state": "LOCAL_BACKGROUND_ENTRY_ASSESSMENT_NO_NEW_RUNNER_OR_LAUNCH",
+  "unknown": [
+    "Whether original cold-complete currently exists and validates; no new server probe allowed in this preparation",
+    "An already-approved one-shot readonly describe150 background entry under current active hold"
+  ],
+  "writerSubmitted": false
+}

@@ -1,0 +1,35 @@
+{
+  "checkedAtUTC": "2026-11-15T19:07:17.310655+00:00",
+  "exceptionClass": null,
+  "localSubmissionIndex": null,
+  "originalKeyReadback": {
+    "controlJob": {
+      "present": false
+    },
+    "mutations": 0,
+    "originalKeyResubmitted": false,
+    "request": {
+      "present": false
+    },
+    "requestKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+    "rootJob": {
+      "present": false
+    },
+    "rootTerminal": {
+      "present": false
+    },
+    "temporaryRequest": {
+      "present": false
+    },
+    "terminal": {
+      "present": false
+    }
+  },
+  "originalKeyResubmitted": false,
+  "requestKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+  "returncode": 0,
+  "serverMutationAttempted": false,
+  "stderr": "",
+  "stdoutBytes": 314,
+  "stdoutSha256": "6b96fb089998197a391ea18ef9e03ca682f7e0989ab98551e5fb5a6f344f4391"
+}

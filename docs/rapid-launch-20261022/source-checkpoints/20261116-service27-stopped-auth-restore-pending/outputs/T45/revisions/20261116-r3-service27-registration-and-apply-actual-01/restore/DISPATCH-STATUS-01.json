@@ -1,0 +1,41 @@
+{
+  "action": "READ_ONLY_ORIGINAL_DISPATCHER_STATUS",
+  "checkedAtUTC": "2026-11-15T19:08:34.564271+00:00",
+  "phaseSubmitted": false,
+  "returncode": 0,
+  "statusReply": {
+    "allowedTasks": [
+      "T10",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T36",
+      "T37",
+      "T38",
+      "T39",
+      "T40",
+      "T41",
+      "T42",
+      "T43",
+      "T44",
+      "T45",
+      "T46",
+      "T47",
+      "T48",
+      "T49",
+      "T50",
+      "T51"
+    ],
+    "expiresAtEpoch": 1797048533.1645546,
+    "gateConditionsRetained": true,
+    "grantId": "b16447fbc81f4d64",
+    "passwordStored": false,
+    "permanentPasswordlessSudo": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "READY"
+  },
+  "stderr": "",
+  "stdoutBytes": 397
+}

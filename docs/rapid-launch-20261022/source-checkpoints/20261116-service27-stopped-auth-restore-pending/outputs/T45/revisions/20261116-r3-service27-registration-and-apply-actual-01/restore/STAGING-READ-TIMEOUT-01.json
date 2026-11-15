@@ -1,0 +1,14 @@
+{
+  "authRestorationVerified": false,
+  "exceptionClass": "subprocess.TimeoutExpired",
+  "lastSuccessfulOriginalReadback": "restore/READBACK-01.json",
+  "lastSuccessfulReadbackSha256": "9af1e78818e7931a741a4294c435c60f5f63b555ea278c6aa6a511d5244e9aad",
+  "originalKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+  "originalKeyResubmitted": false,
+  "readerSha256": "4aad939be676ec29d92d288dca77084866a74544dfbfe4b388e38678f9b3211b",
+  "recordedAtUTC": "2026-11-15T19:15:35.350470+00:00",
+  "serverMutationAttempted": false,
+  "stagingState": "UNKNOWN_NO_RETURNED_RESULT",
+  "state": "READ_ONLY_STAGING_QUERY_TRANSPORT_TIMEOUT_NO_RESULT",
+  "timeoutSeconds": 40
+}

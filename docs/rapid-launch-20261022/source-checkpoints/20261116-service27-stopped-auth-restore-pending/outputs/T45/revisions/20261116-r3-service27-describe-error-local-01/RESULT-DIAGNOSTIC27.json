@@ -1,0 +1,35 @@
+{
+  "actualFacts": {
+    "checkedAtUTC": "2026-11-15T18:49:48.864523+00:00",
+    "nodeExceptionClass": "TimeoutExpired",
+    "nodeExitCode": -15,
+    "nodeStderrObservedBytes": 0,
+    "nodeStdoutObservedBytes": 0,
+    "outerExceptionClass": null,
+    "outerReplyParseError": null,
+    "outerReturnCode": 0
+  },
+  "additionalDescribeAttempts": 1,
+  "databaseMutations": 0,
+  "databaseQueries": 0,
+  "diagnosticIsNotOriginalStderr": true,
+  "diagnosticReceipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service27-describe-error-local-01/actual-diagnostic-01/DIAGNOSTIC.json",
+  "diagnosticSha256": "faff249531f3f15125a5f63014d85705cc30c6ab878a359cf9cbda84fcb250f0",
+  "formalBusinessAccepted": false,
+  "furtherProbeAuthorized": false,
+  "genuineCallerChanged": false,
+  "installSubmitted": false,
+  "originalFailureSha256": "7c79b648852c1af59212e69a70c092923e097e1ee4dcbf610b238cd2cdfddd35",
+  "originalStderrWasDiscarded": true,
+  "privateEvidenceDirectory": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/describe-diagnostics/t45-r3-service27-describe-error-diagnostic-20261116-01",
+  "privateMetadataNote": "Private raw metadata retains serializer literal backslash-n suffix; valid local DIAGNOSTIC.json is the parsed transport receipt; raw private file is not rewritten",
+  "productionGuardChanged": false,
+  "startReplay": false,
+  "state": "ONE_TARGETED_DIAGNOSTIC_RECORDED_NO_INSTALL_OR_REPLAY",
+  "unknown": [
+    "exact import or factory stage when deadline hit",
+    "whether larger budget would complete",
+    "original first failure exception text"
+  ],
+  "writerSubmitted": false
+}
