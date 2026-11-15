@@ -7056,6 +7056,107 @@
               "newPgExecutions": 0,
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-batched-actual-check-and-sde-completion-fix-20261115-1218",
+            "status": "ACTUAL_CHECK_AND10_SAMPLES_PASS_CORE42501_SDE_SOURCE_FIX_PASS_07_ONCE_ISSUED",
+            "evidence": {
+              "snapshot": {
+                "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-actual-check-and-sde-complete-fix",
+                "files": 76,
+                "bytes": 12185133,
+                "manifestSha256": "93f274cf611dc713fa7bd3e118d8a8ce68510195747d5e4da278065f017e9eba",
+                "reviewSha256": "10bd0337e2c3c7c54894a326618cc4a3d83a7bf348de1a592390ed0257393493"
+              },
+              "runtime06": {
+                "state": "STOPPED_ONCE_CONSUMED",
+                "actualDb04Installed": true,
+                "actual161RoutinesMatched": true,
+                "actualReceiptConstraint": {
+                  "definitionSha256": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5",
+                  "kind": "c",
+                  "validated": true,
+                  "deferrable": false,
+                  "initiallyDeferred": false
+                },
+                "checkSamples": {
+                  "scope": "ONE_ACTUAL_CHECK_ONLY_TEMP_PROJECTION",
+                  "total": 10,
+                  "accepted": 2,
+                  "rejected23514": 8,
+                  "rollbackConfirmed": true,
+                  "businessRowsInserted": false,
+                  "otherGuardsDisabled": false
+                },
+                "firstFailure": {
+                  "phase": "CORE",
+                  "groupPhase": "CORE",
+                  "ordinal": 0,
+                  "queryKind": "SET",
+                  "sqlState": "42501",
+                  "message": "permission denied for table import_batch",
+                  "frames": [
+                    {
+                      "function": "validate_available_administrator_commit()",
+                      "line": 3,
+                      "at": "IF"
+                    }
+                  ]
+                },
+                "setConstraintsStage": "inferred from unchanged coordinator path, not new query trace",
+                "coreRollbackAckExported": false,
+                "committedFixtureRows": null,
+                "successCommitProven": false,
+                "historyInjectionProven": false,
+                "unknownReplyTested": false,
+                "resumeTested": false,
+                "finalVerifyTested": false,
+                "pgStopped": true,
+                "all21ChildrenReaped": true,
+                "rootPreserved": "/tmp/d3-batched-core-20261115-06",
+                "elapsedSeconds": 2.267462959,
+                "peakAllocatedBytes": 48459776,
+                "observationsSha256": "14ab9b41b1a972b6e9aa12d2f47c47258345b8b4d40954fff9755877a743f95b",
+                "executionReceiptSha256": "4caceca1fc31adb5d805ad0ba921f7ba593cbef18cd42e6687fb458d137e5a64",
+                "resultPinsSha256": "83dcf00648b6a1c798c6c9eae2abb1aa2a494b5bde479f34b162244a07c9ce26",
+                "serverActions": 0
+              },
+              "dbCandidate05": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-05",
+                "pinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+                "sqlSha256": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+                "modelSha256": "4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51",
+                "definitionsSha256": "b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216",
+                "bodiesSha256": "a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942",
+                "changedRoutine": "naijue_erp.standard_batched_import_complete_v1(jsonb,jsonb)",
+                "bodySha256": "20b676b0da8b22335b62f3ec14fa744922fe87ebed8ab9e16f9fc2c66a3e3464",
+                "definitionSha256": "a85fee7929293a06b9def5c00af637831890394225c95fd95803bbb1437d1d38",
+                "state": "ONE_SDE_COMPLETION_CONSTRAINT_FLUSH_BODY_PENDING_QB"
+              },
+              "hostFinalizeDelta04": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/HOST-FINALIZE-DELTA-04",
+                "pinsSha256": "fc76b75a2e48f73f35b2ef896a9a315b90d9a282e031f7618396b177c00dbe72",
+                "sourceClosureSha256": "5cb520339e6f0e55994659ac19f6dcc49955a40776f6807e4eac624da19da2d8",
+                "catalogSourceSha256": "ed9e93342630cef2a9e063393d3e02c9464daae3a52f1e62c188d6a2c8f4f544",
+                "hostSourceSha256": "a75d570011954da8c324774dd3bb674dbc9a9b7b2438f0cb322f27ff8b7ac632",
+                "state": "SIX_SOURCE_OVERLAY_ONLY_BODY_MODEL_PINS_PENDING_QB"
+              },
+              "dbSourceReviewSha256": "10bd0337e2c3c7c54894a326618cc4a3d83a7bf348de1a592390ed0257393493",
+              "harness07": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-07",
+                "pinsSha256": "ce7fb351a1f139c263f1662a8ac40254d38d68e5ec24e16c94e83db73564c1e2",
+                "runnerSha256": "3e799eeda08eaa8d77765152eb9a6fb7e2bd13ba3fc207d07cdc66422e2ccd70",
+                "diffSha256": "ce67ec02f02f5756c18a60a18f6691f375f52445a6781f994a366f7e17fa2866",
+                "inputPinsSha256": "29735dc00a1d3968327c531163289c35a904ab95dfb2d383c6ba9b8c2d48c96a",
+                "state": "ONE_SDE_FIX_NEW_DB05_AND_SCOPED06_CHECK_REUSE_PENDING_QB"
+              },
+              "readiness07Sha256": "eac965e5280fd26c9874d9742d71a6cc8971490eb35a7008e676733047932604",
+              "once07PermitSha256": "71fc22bc11e1b804bbc20d01a01465774b9d04fe31c3fdca4c89b617814ce7d0",
+              "actualPgExecutionsThrough06": 5,
+              "new07ActualNotYetReported": true,
+              "realBusinessWrites": 0,
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
@@ -7068,16 +7169,16 @@
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
             "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "DB04_RECEIPT_CHECK_AND_HOST03_SOURCE_DELTA_PASS_RUNTIME_PENDING",
+            "state": "DB05_ONE_PROTECTED_COMPLETE_FLUSH_HOST04_SOURCE_DELTA_PASS",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
-            "work": "FrozenDB04/PINS3067+HOSTreceipt03/8ed5 sourcePASS03b79e62. Only operation_receipt.receipt_result_by_kind definition changed; original13required/allotherkinds/325constraints/161routine bodies unchanged. Newclosedtypedoptionalmarker exactsource/spec/binding, newCHECKnotactualcaptured."
+            "work": "ExactoneSETCONSTRAINTS within existingSDE complete afterfullgroup/FINALIZEvalidation beforePENDING; no newSELECT/triggersecurity/role/COMMIT.160otherfunctions/all326constraints unchanged; onebody/model/hash and6sourcehostbinding currentcandidate only."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
             "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "06_ORIGINAL162_AND_ONE_CHECK_SHORT_SAMPLES_PREPARING_NO_NEW_PG",
+            "state": "07_READINESS_PASS_ONCE_ISSUED_AWAITING_ACTUAL_RESULT",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
-            "work": "Fulloriginalsixscenes restored with05safe firstPGerror/accurate phase separatefromAssertion; actualoneCHECKdefinition+metadata andCHECK-onlysmallaccept/reject samples. SourceDB04PASSreused; awaiting frozen06delta/readiness/mainonce."
+            "work": "06actualDB04/CHECKb58f/10CHECK-onlysamples passed; CORE SET42501 import_batch permission under originalinvokertrigger, no successCOMMIT.07freshDB05+actualnewcompletebody/originalsixcases;06tenCHECKsamplesreusedonlyscopedFAILEDsource, no rerun. Mainonce71fc22bc issued, wait actualrun."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -7086,8 +7187,8 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "DB04_HOST03_SOURCE_DELTA_PASS_WAITING_06_RUNNER_READINESS",
-            "work": "Closedmarker/null/oldpredicates/atomicoldspec\u2192newCHECK/model+4sourcehostbinding reviewed; newcondefsourcepredictedonly. Do notreopen161/325/sourcechain. Next06newchecks/logger/restoreflowdelta."
+            "state": "DB05_HOST04_SOURCE_PASS_07_RUNNER_READINESS_PASS_NO_RUNTIME_CLAIM",
+            "work": "Source10bd0337 and07readiness eac965e5 completed only affected scopes. ActualnewSDEcomplete/CORECOMMIT andsixscene outcomes pendingD3 realPG; no repeat06CHECKsamples."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
@@ -7111,13 +7212,13 @@
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "NO_UNVERIFIED_ETA",
-          "nextCheckpointScope": "Freeze06delta \u2192 QB narrow runnerreadiness \u2192 mainonce \u2192 actualDB04 oneCHECKreadback and original162sixtransactioncases",
+          "nextCheckpointScope": "Follow07 unique once toactual DB05/COREcommit/halfgroup/UNKNOWN/resume/finalverify/stopreap; fix only concrete new failures",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-receipt-check04-source",
-            "files": 44,
-            "bytes": 8708235,
-            "manifestSha256": "8921584d4d478a4255314033f5ae68b7aca0eb4e37eb0798b4b7b7521a24edd8",
-            "reviewSha256": "03b79e62758b983e2908c374ea3db4be63abe2f4539768b0ee7ee5d358e583a8"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-actual-check-and-sde-complete-fix",
+            "files": 76,
+            "bytes": 12185133,
+            "manifestSha256": "93f274cf611dc713fa7bd3e118d8a8ce68510195747d5e4da278065f017e9eba",
+            "reviewSha256": "10bd0337e2c3c7c54894a326618cc4a3d83a7bf348de1a592390ed0257393493"
           }
         },
         "independentDeltaReviewer": "QB",

@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_FIRST_RUN_READINESS_PASS_06",
+  "messages": [
+    {
+      "turnId": "01a1df0b-42d7-7451-baf8-75e16acb5b79",
+      "id": "exec-91b7e278-65b7-4bb0-a3ed-8c3f87a30e8f",
+      "status": "completed",
+      "prompt": "QB 对06本轮最小delta首次执行前窄核完成：SCOPED SOURCE FIRST-RUN READINESS PASS，Standards/Spec无新增明确阻点。DB04/HOST03刚过源码结论复用；QB 0PG/host/服务器/文件修改/旧套件，未重161/325旧约束/653外部哈希。\n\n实核目录 outputs/D3/20261115-r3-batched-pg-local-06：PINS 513a3944e595613f2bf606522bc561be2bb414f1688593683bcb9609b7c52b34、runner 7396594da8bec496dde16e38b0c1c2245c14fc12caa514a7f307a2d35761caba、delta04→06 bea461547ea8a1f0353391a2a3152a0da1bbedf31cd12b9058078ea160544aca、INPUT cfc1a8d7293534c9c449034e0f047e35e592764276b00b2b829390af8fba68ac准确。运行顺序实际代码为base35+12→actual155→DB04/3067完整SQL4cfa一次；MODEL明确DB04 b169，不先装FIX03。新固定db demo_8877_d3_batched_20261115_06、root /tmp/d3-batched-core-20261115-06、Unix55496；当前ATTEMPT/root均不存在。\n\ncatalog只对161阶段新增单项receipt_result_by_kind实际pg_get_constraintdef(false)摘要和kind/validated/deferrable/initiallyDeferred逐项核对源预期b58f…，parent155阶段不误用新模型。receipt-check-samples.mjs先从实际DB取定义并核同摘要，再从实际5引用列WITH NO DATA复制临时投影并直接加该原CHECK，未重写predicate。10样本在SAVEPOINT内观测accept/23514或22类reject，按预期才清该error，意外码原样抛出；整段最终必须ROLLBACK确认。只写pg_temp，不写业务表、不禁既有guard；scope明确ONE_ACTUAL_CHECK_ONLY_TEMP_PROJECTION_NO_TRANSACTION_OR_PERMISSION_PROOF，不能替代原请求/权限/提交证明。\n\n原04六场景业务步骤/162请求和全部原断言保留；新增owned-query catch当场保留firstFailure，STEP ordinal取实际实参、group来自实际inspect/step descriptor，COMMIT等沿该事务最近上下文，queryKind按实际SQL分类。首次PG错误不被rollback/outerassert覆盖；clearExpected必须同一error引用且原allowed SQLSTATE命中。原半组23514只有整套原约束/前缀/新连接inspect断言通过后，才记入expectedPgFailure并清暂存，后续阶段可留新首错；预期拒绝不会一直遮住后续未知错误。05安全filter逐字相同，首错字段4096上限保留。已读5项纯内存firstfailure检查源码/既有结果，没有重跑。\n\n实比04→06 runner除安装诊断允许路径/标签外，所有guardian函数不变；02沿用finally与04逐字相同，base不变，170/180/40/42/space/log/真实stop/reap/失败保根复用。只比较INPUT字典：640原外部摘要原样、5候选runtime依赖准确替换、8自身=653；18旧说明保留为来源归档不作为新SQL/model。新增scenario/catalog/samples/filter及检查结果局部pin均匹配，未重哈希旧外部文件。\n\n本结论不是执行许可或actual CHECK/CORE/事务/最终核账/资源PASS。由main另签一次准确执行；实际单约束读回及10样本、原六场景、新首错与停机资源事实仍留该运行产出，不预判结果。"
+    }
+  ]
+}

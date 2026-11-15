@@ -1,0 +1,15 @@
+{
+  "status": "SOURCE_ONLY_PROTECTED_COMPLETE_FINALIZATION_FIX",
+  "expectedRoutines": 161,
+  "changedFromDb04": {
+    "routineBodies": 1,
+    "routineCanonicalDefinitions": 1,
+    "routineOwnerAcl": 0,
+    "otherRoutines": 0,
+    "nonRoutineCategories": 0
+  },
+  "interfaceSha256": "5a43dbd7acb0d4dd77686e73243b3f28b79458079c2b7cb5707836a4f52dbc12",
+  "d1PgExecutions": 0,
+  "serverActions": 0,
+  "actualNewBodyCapture": false
+}

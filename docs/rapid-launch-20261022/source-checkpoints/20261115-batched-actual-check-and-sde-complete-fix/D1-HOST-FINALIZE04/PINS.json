@@ -1,0 +1,13 @@
+{
+  "DELTA.json": "21bc064cacdf9d527edc020f1220d2fbef655b85e7571541e46208edca8ec598",
+  "README.md": "3cfe5f07fef193f0625845a0992945c628f65ccbaaa92530f6fdb4d8865018b9",
+  "SOURCE-CLOSURE.json": "5cb520339e6f0e55994659ac19f6dcc49955a40776f6807e4eac624da19da2d8",
+  "fresh35-combined-catalog-v1.mjs.diff": "bffa92135f4116c4024e4bc935174894fb9ee6883a60c27a1b64223035246cbd",
+  "fresh35-host-session.mjs.diff": "3c441a8e2b4f2f27a95104a5b8df762bdce9e26ae4a81517f3cfe9f8d20dd1b9",
+  "source/adapters/postgres/patches/0027_standard_batched_import_v1.sql": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+  "source/scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json": "a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942",
+  "source/scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json": "b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216",
+  "source/scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json": "4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51",
+  "source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs": "ed9e93342630cef2a9e063393d3e02c9464daae3a52f1e62c188d6a2c8f4f544",
+  "source/tools/unified-import/fresh35-host-session.mjs": "a75d570011954da8c324774dd3bb674dbc9a9b7b2438f0cb322f27ff8b7ac632"
+}

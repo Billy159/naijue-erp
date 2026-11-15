@@ -1,0 +1,38 @@
+[
+  {
+    "file": "ATTEMPT.json",
+    "sha256": "51736573530b1fb608c1b6cc1683a1a6fc888f42131027425b91563ec5b3a87d"
+  },
+  {
+    "file": "PHYSICAL-IDENTITY.json",
+    "sha256": "23b8ed81ed77835e4cb59c3a0c4120c804ecbe2897545dbca5cc0a74f088c283"
+  },
+  {
+    "file": "PARENT155-INSTALL-READBACK.json",
+    "sha256": "e2e7930c1ccdab9cb78f40f1dbd06b5d8951758fe28663d98766eb70a7997311"
+  },
+  {
+    "file": "DB02-INSTALL-DIAGNOSTIC.json",
+    "sha256": "3dc3d9f8c58d01a2693b2370858e18f32f25a28308c3e0b223caa0a0dba8fc3b"
+  },
+  {
+    "file": "SQL-CORE-OBSERVATIONS.json",
+    "sha256": "14ab9b41b1a972b6e9aa12d2f47c47258345b8b4d40954fff9755877a743f95b"
+  },
+  {
+    "file": "FAILURE.json",
+    "sha256": "04ece2962788e5ad8738274d672b7d638d5b9505a888a81fd21c5b744e2ba7ab"
+  },
+  {
+    "file": "CLEANUP.json",
+    "sha256": "bd7857a4ebcd328e5e55862ed330f57fcc847bd9700062ba7c21bcb05f677409"
+  },
+  {
+    "file": "RESULT.json",
+    "sha256": "0ead301088d39c134615f2dfc1722c7b3371aeee87c3ee17a51f16031df7f469"
+  },
+  {
+    "file": "EXECUTION-RECEIPT.json",
+    "sha256": "4caceca1fc31adb5d805ad0ba921f7ba593cbef18cd42e6687fb458d137e5a64"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "kind": "TWELVE_LAYER_SYNTHETIC_MEASUREMENT_SOURCE_CANDIDATE",
+  "functions": 155,
+  "indexes": 114,
+  "tables": 35,
+  "columns": 351,
+  "installOrder": "INSTALL-ORDER.json",
+  "deriveEntry": "derive155.mjs",
+  "runtimeParentDependencyManifest": "PARENT-DEPENDENCIES.json",
+  "derivedCaptureProvenance": "CAPTURE-PROVENANCE.json",
+  "sourceSetHandling": "preserve caller-owned existing source/sourceSet/extras; no added wrapper or prefilled successor hash",
+  "partyBodySha256": "dfd1e1ca585e405b6314051578f4cc6218344e9dcdd599f188368165e41a4ffa",
+  "partyDefinitionSha256": "c46f68dfab23f61a7992b9be8c9b126d176dab3c245daf1c030a2735df46ee56",
+  "layer12SqlSha256": "d5ffad0eecc1e05b72eba107502c41a091bf0fe25c0b521030967739a6e80d90",
+  "firstElevenLayersByteIdentical": true,
+  "newPgExecutions": 0,
+  "newMasterExecutions": 0,
+  "full511234Compiles": 0,
+  "serverActions": 0,
+  "reviewStatus": "PENDING_QB_NEW_SOURCE_DELTA"
+}

@@ -1,0 +1,14 @@
+{
+  "state": "SCOPED_FIRST_FAILURE_MEMORY_PASS",
+  "checks": [
+    "first-CORE0-kept-over-rollback-and-assertion",
+    "actual-group-ordinal-kind",
+    "clear-only-matching-expected-error",
+    "later-phase-gets-new-record",
+    "bounded-safe-record"
+  ],
+  "pgExecutions": 0,
+  "fixtureCompiled": false,
+  "harnessExecuted": false,
+  "oldSuitesRerun": false
+}

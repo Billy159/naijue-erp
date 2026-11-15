@@ -1,0 +1,26 @@
+{
+  "scope": "SINGLE_COMPLETE_BODY_AND_DEPENDENT_SOURCE_MODEL_BINDINGS",
+  "baseHostCandidatePinsSha256": "12aa444b4482c26062af155cc409b046c26c7a7500ed0f6715e7170f47fc6937",
+  "previousHostDeltaPinsSha256": "8ed53c10e9a70139799854cee8b5b23eaba815d8d9c53efe120d662bdf63fc96",
+  "databaseCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+  "changedSourceFiles": [
+    "adapters/postgres/patches/0027_standard_batched_import_v1.sql",
+    "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+    "scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+    "scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+    "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "tools/unified-import/fresh35-host-session.mjs"
+  ],
+  "hostLogicChanges": 0,
+  "hostLiteralPinChanges": 4,
+  "d3Changes": 0,
+  "newGrants": 0,
+  "changedRuntimeFunctionBodyCount": 1,
+  "unchangedRuntimeFunctions": 160,
+  "nonRoutineModelCategoriesUnchangedFromDb04": true,
+  "actualNewBodyCapture": false,
+  "actualAuthorizationMaterialized": false,
+  "fullHostSuiteRepeated": false,
+  "pgExecutions": 0,
+  "serverActions": 0
+}

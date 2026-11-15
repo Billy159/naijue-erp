@@ -1,0 +1,29 @@
+{
+  "frozenLeafContractInputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/INTERFACE-V1.md",
+      "sha256": "d6a7942143c9e5562aa1d0349a43fce871a38c77a0b0cbbee874c54660c47a49"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/durable-context.body.sql",
+      "sha256": "1921cdcda04b78f6bb37a30565a2b0798c4f575594af5df145e55df3c7648003"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/current-operation.body.sql",
+      "sha256": "94eb15996fa9090fb8b5cc2cc38e3574c45b3c67acedb1c1d47302687d20a21d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/record-proof.body.sql",
+      "sha256": "35d2bc55ad8c8f48d5e0d3bf41f20b0cb1c3a98537468a4ab3075e8662abdfc4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/D2-CONTRACT.md",
+      "sha256": "d7b94b3c0993cb0d6e3b5cbfead428ae8d333e58aa0bea38c01050c6d9f18b58"
+    }
+  ],
+  "sourcePinsObservedSha256": "f8181dc7ce521532c7e8a71f2b8ea80d3982bb0304b0c73713550611b836c9e7",
+  "controllerEarlierSourcePinsPrefix": "8d142189",
+  "sourcePinsWholeManifestClaimedFrozenForD2": false,
+  "wholeManifestNote": "Current aggregate manifest changed; all five exact consumed files and their entries remain matched. No other D1 source consumed.",
+  "controllerDecisionThread": "01a1cec6-7547-7d82-a867-00ea53f13031"
+}

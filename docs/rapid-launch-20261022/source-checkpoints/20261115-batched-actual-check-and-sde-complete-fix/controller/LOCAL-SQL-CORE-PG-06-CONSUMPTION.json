@@ -1,0 +1,29 @@
+{
+  "decisionId": "r3-batched-local-sql-core-20261115-06-once",
+  "state": "CONSUMED_STOPPED_CORE_SET_42501_NO_RETRY",
+  "executionReceiptSha256": "4caceca1fc31adb5d805ad0ba921f7ba593cbef18cd42e6687fb458d137e5a64",
+  "actualDb04Installed": true,
+  "actualReceiptConstraintHash": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5",
+  "checkOnlySamples": {
+    "accept": 2,
+    "reject23514": 8,
+    "rollbackConfirmed": true,
+    "notBusinessPermissionProof": true
+  },
+  "firstFailure": {
+    "phase": "CORE",
+    "ordinal": 0,
+    "queryKind": "SET",
+    "sqlState": "42501",
+    "message": "permission denied for table import_batch",
+    "function": "validate_available_administrator_commit",
+    "line": 3
+  },
+  "setConstraintsStage": "source-path inference, not new query trace",
+  "coreRollbackAckExported": false,
+  "committedFixtureRows": null,
+  "successCommitProven": false,
+  "pgStopConfirmed": true,
+  "all21ChildrenReaped": true,
+  "rootPreserved": "/tmp/d3-batched-core-20261115-06"
+}

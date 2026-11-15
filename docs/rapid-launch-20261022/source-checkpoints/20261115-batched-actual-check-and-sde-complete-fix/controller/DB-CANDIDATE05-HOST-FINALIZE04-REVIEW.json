@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_DELTA_PASS_SDE_COMPLETE05_HOST_FINALIZE04",
+  "messages": [
+    {
+      "turnId": "01a1df1b-f0cb-75c2-b706-f81f6762f7cc",
+      "id": "exec-ba4fb82a-c1fe-47fa-b166-1773ce5235c1",
+      "status": "completed",
+      "prompt": "QB DB-CANDIDATE-05及HOST-FINALIZE-DELTA-04必要绑定窄核：SCOPED SOURCE DELTA PASS，Standards/Spec无新增明确缺陷。QB 0PG/host/server/文件修改/旧套件，未重160函数、326约束或原host语义。\n\nDB05 PINS dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9、SQL 332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3实核准确。与DB04安装SQL直接diff唯一增加3157行 SET CONSTRAINTS ALL IMMEDIATE；BODIES/DEFINITIONS两map的key集合不变且只有standard_batched_import_complete_v1(jsonb,jsonb)一个值变化，MODEL只有同routine的body/definition两个hash变化，其余160routine和全部nonroutine/326constraints完整相等。新body 20b676b0da8b22335b62f3ec14fa744922fe87ebed8ab9e16f9fc2c66a3e3464、canonical def a85fee7929293a06b9def5c00af637831890394225c95fd95803bbb1437d1d38；三文件MODEL4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51 / DEFSb3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216 / BODIESa57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942均匹配。\n\n新SET位置明确在原assert_group(原root identity+work_batch完整组/两端点检查)之后，FINALIZE还先通过原whole_package_closed；随后在原SECURITY DEFINER、固定search_path pg_catalog/naijue_erp/pg_temp与UTC边界内强制约束，之后只有构造PENDING_TRANSACTION返回，没有任何新增DML/COMMIT/异常吞掉路径。约束失败直接抛出，无法先返回PENDING。public签名/响应/owner/ACL/角色/表权限/trigger invoker/D3仍原样；后续coordinator独立SET仍存在，complete后到该SET没有新增业务写入，真正成功仍须唯一COMMIT ACK，下一BEGIN约束模式按原事务重新取得。INTERFACE只作上述澄清，无新API。\n\nHOST04 PINS fc76b75a2e48f73f35b2ef896a9a315b90d9a282e031f7618396b177c00dbe72、SOURCE-CLOSURE 5cb520339e6f0e55994659ac19f6dcc49955a40776f6807e4eac624da19da2d8匹配。与HOST03相比两JS确实只有4个hex literal替换：catalog三model pin→准确DB05三文件、host DBcandidate→dc08…；JS SHA分别ed9e93342630cef2a9e063393d3e02c9464daae3a52f1e62c188d6a2c8f4f544 / a75d570011954da8c324774dd3bb674dbc9a9b7b2438f0cb322f27ff8b7ac632。新SQL及三模型与DB05逐字相同。完整overlay覆HOST01为这6源，其他2D1及D3exact9 closure pin不变。源loader既有覆盖，最终sourceSet/catalogSpec/model仍同树实算；新DB05/current绑定不会自动匹配旧authority，无假live值/授权/运行结果，历史target/opkeys不改。\n\n06实际已过的CHECK b58f和10样本范围可复用，不为本改动重跑。DB05源修复通过不等于新protected complete实际通过，也不改06失败事实；新完整安装仍fresh35→12→actual155→DB05一次，不重放161。实际CORE提交、尚未到达的原六场景/最终核账及资源收尾留待07准确载体readiness和main另签一次。"
+    }
+  ]
+}

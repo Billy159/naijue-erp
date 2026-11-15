@@ -1,0 +1,111 @@
+{
+  "stage": "SQL_CORE",
+  "state": "FAILED",
+  "phase": "half-group-real-commit-failure",
+  "firstFailure": {
+    "phase": "CORE",
+    "ordinal": 0,
+    "queryKind": "SET",
+    "sqlState": "42501",
+    "message": "permission denied for table import_batch",
+    "messageRedacted": false,
+    "constraint": null,
+    "table": null,
+    "column": null,
+    "contextFrames": [
+      "PL/pgSQL function validate_available_administrator_commit() line 3 at IF"
+    ],
+    "groupPhase": "CORE",
+    "scenarioPhase": "half-group-real-commit-failure"
+  },
+  "checkSamples": {
+    "scope": "ONE_ACTUAL_CHECK_ONLY_TEMP_PROJECTION_NO_TRANSACTION_OR_PERMISSION_PROOF",
+    "definitionSha256": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5",
+    "samples": [
+      {
+        "name": "old_standard_valid",
+        "accepted": true,
+        "sqlState": null
+      },
+      {
+        "name": "closed_marker_valid",
+        "accepted": true,
+        "sqlState": null
+      },
+      {
+        "name": "extra_marker_key",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "missing_original_required",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "json_null_marker",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "scalar_marker",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "null_identity_value",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "descriptor_number_as_string",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "numeric_full_xid",
+        "accepted": false,
+        "sqlState": "23514"
+      },
+      {
+        "name": "sql_null_result",
+        "accepted": false,
+        "sqlState": "23514"
+      }
+    ],
+    "rollbackConfirmed": true,
+    "businessRowsInserted": false,
+    "otherGuardsDisabled": false
+  },
+  "code": "ERR_ASSERTION",
+  "errorType": "AssertionError",
+  "lastSqlFailure": {
+    "sqlState": "42501",
+    "groupPhase": "CORE",
+    "ordinal": null,
+    "queryKind": "SET"
+  },
+  "events": [
+    {
+      "case": "INSTALLED161",
+      "receiptConstraint": {
+        "relation": "operation_receipt",
+        "name": "receipt_result_by_kind",
+        "definitionSha256": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5",
+        "kind": "c",
+        "validated": true,
+        "deferrable": false,
+        "initiallyDeferred": false
+      },
+      "functions": 161,
+      "tables": 35,
+      "columns": 351,
+      "indexes": 114,
+      "constraints": 326,
+      "triggers": 570,
+      "routineDefinitionsAndOwnerAclMatched": true,
+      "fullPhysicalProductionAdmission": false
+    }
+  ],
+  "productionHostTested": false
+}

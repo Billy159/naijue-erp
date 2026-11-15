@@ -1,0 +1,34 @@
+{
+  "finding": "BATCH_COMPLETE_DEFERRED_CHECKS_OUTSIDE_DEFINER",
+  "parentPinsSha256": "3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31",
+  "signature": "naijue_erp.standard_batched_import_complete_v1(jsonb,jsonb)",
+  "before": {
+    "acl": [
+      "erp_unified27_importer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ],
+    "owner": "fresh35_owner_20261105_r1",
+    "signature": "naijue_erp.standard_batched_import_complete_v1(jsonb,jsonb)",
+    "bodySha256": "58d0acaad8afd43f39f35180de6df0c7620448105076cd251fcd49d1dcb1dc92",
+    "definitionSha256": "e6b04fd01fb713284356900eb6e445c0442b7b8f28a3427325544af9d2742af6"
+  },
+  "after": {
+    "acl": [
+      "erp_unified27_importer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ],
+    "owner": "fresh35_owner_20261105_r1",
+    "signature": "naijue_erp.standard_batched_import_complete_v1(jsonb,jsonb)",
+    "bodySha256": "20b676b0da8b22335b62f3ec14fa744922fe87ebed8ab9e16f9fc2c66a3e3464",
+    "definitionSha256": "a85fee7929293a06b9def5c00af637831890394225c95fd95803bbb1437d1d38"
+  },
+  "sqlSingleInsertion": " SET CONSTRAINTS ALL IMMEDIATE;\\n inside complete SECURITY DEFINER before PENDING return",
+  "other160RoutinesUnchanged": true,
+  "allNonRoutineCategoriesUnchanged": true,
+  "triggerFunctionSecurityInvokerUnchanged": true,
+  "tableAclUnchanged": true,
+  "controllerAndD3CoordinatorUnchanged": true,
+  "newGrantCount": 0,
+  "actualPreviousConstraintFixRetained": true,
+  "noGenuineHostOrPgExecuted": true
+}

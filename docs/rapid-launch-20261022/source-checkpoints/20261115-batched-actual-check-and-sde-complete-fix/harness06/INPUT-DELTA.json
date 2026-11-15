@@ -1,0 +1,37 @@
+{
+  "reusedExternalPinsWithoutRehash": 640,
+  "replacedCandidateRuntimePins": [
+    {
+      "before": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/PINS.json",
+      "after": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/PINS.json",
+      "sha256": "3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31"
+    },
+    {
+      "before": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-BODIES.json",
+      "after": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/EXPECTED161-BODIES.json",
+      "sha256": "5c7d1506b4203ceaf62ab37229a4c840e03859af4856fcce7e45ba1c9ac28437"
+    },
+    {
+      "before": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-DEFINITIONS.json",
+      "after": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/EXPECTED161-DEFINITIONS.json",
+      "sha256": "bb7d7bb7bbb6e13e5f52fdb74940287c723e22691b364f4e9e8bcadef637738b"
+    },
+    {
+      "before": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-MODEL.json",
+      "after": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/EXPECTED161-MODEL.json",
+      "sha256": "b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8"
+    },
+    {
+      "before": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/sql/source-slices.sql",
+      "after": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/sql/source-slices.sql",
+      "sha256": "4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85"
+    }
+  ],
+  "removedSeparateFix03InstallPins": [
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03/PINS.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03/source-slices.sql"
+  ],
+  "ownRuntimePins": 8,
+  "total": 653,
+  "unusedOldCandidateMetadata": "18 prior source provenance entries retained only; no old SQL/model/body/definition runtime path"
+}

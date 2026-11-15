@@ -1,0 +1,363 @@
+--- 04/run-local.py
++++ 06/run-local.py
+@@ -1,4 +1,4 @@
+-"""One disposable 162-row SQL-core chain with fixed DB02+FIX03 install diagnostics. Source preparation only until QB/main authorization."""
++"""One disposable 162-row SQL-core chain with full DB04 installation, one CHECK projection and retained safe PG failures. Source preparation only until QB/main authorization."""
+ import hashlib,json,os,re,shutil,signal,subprocess,sys,threading,time
+ from pathlib import Path
+ class SafetyError(Exception):
+@@ -83,7 +83,7 @@
+ def save_install_diagnostic(stderr,exit_code,sql_path):
+  # Only the fixed static DB02 install is eligible. Never export LINE/QUERY,
+  # statement echoes, bootstrap output, generic stderr, or connection arguments.
+- require(sql_path==Path(config['installFix03'])/'source-slices.sql','diagnostic_source_scope')
++ require(sql_path==Path(config['candidate04'])/'sql/source-slices.sql','diagnostic_source_scope')
+  text=stderr.decode('utf-8','replace');lines=text.splitlines()
+  error=None;source_line=None;context=[];location=None
+  for index,line in enumerate(lines):
+@@ -98,7 +98,7 @@
+     place=re.fullmatch(r'LOCATION:  ([a-zA-Z0-9_., :/+-]+)',following)
+     if place:location=place[1][:250]
+    break
+- value={'scope':'FIXED_DB02_PLUS_FIX03_STATIC_INSTALL_ONLY','sourceSqlPath':str(sql_path),
++ value={'scope':'FIXED_DB04_STATIC_INSTALL_ONLY','sourceSqlPath':str(sql_path),
+   'sourceSqlSha256':hashlib.sha256(sql_path.read_bytes()).hexdigest(),'exitCode':exit_code,
+   'firstError':error,'sourceLineNumber':source_line,'contextFrames':context,'serverLocation':location,
+   'diagnosticParsed':error is not None,'maxExportBytes':4096,'fullSqlExported':False,'genericLogsExported':False}
+@@ -142,7 +142,7 @@
+  for item in json.loads((base/'INPUT-PINS.json').read_text()):
+   require(hashlib.sha256(Path(item['path']).read_bytes()).hexdigest()==item['sha256'],'input_pin_mismatch')
+  require(not any((base/n).exists() for n in ['ATTEMPT.json','RUN.json','FAILURE.json']),'single_attempt_already_used')
+- require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_batched_20261115_04','/tmp/d3-batched-core-20261115-04',55494),'fixed_sql_core_identity_required')
++ require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_batched_20261115_06','/tmp/d3-batched-core-20261115-06',55496),'fixed_sql_core_identity_required')
+  save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY'})
+  candidate_root=Path(config['workRoot'])
+  candidate_root.mkdir(mode=0o700)
+@@ -191,16 +191,15 @@
+  parent_packet=json.loads(run([node,base/'catalog-fixture.mjs','parent155'],timeout=42,allow_failure=True))
+  if parent_packet.get('code') in ('42501','28000','28P01'):permission_fault=True
+  save('PARENT155-INSTALL-READBACK.json',parent_packet);require(parent_packet.get('functions')==155,'parent155_mismatch')
+- candidate=Path(config['candidate02'])
+- require(hashlib.sha256((candidate/'PINS.json').read_bytes()).hexdigest()==config['candidatePinsSha256'],'candidate02_pin_mismatch')
+- install_fix=Path(config['installFix03'])
+- require(hashlib.sha256((install_fix/'PINS.json').read_bytes()).hexdigest()==config['installFixPinsSha256'],'install_fix03_pin_mismatch')
+- phase='install_db02_fix03_161'
+- sql_path=install_fix/'source-slices.sql'
++ candidate=Path(config['candidate04'])
++ require(hashlib.sha256((candidate/'PINS.json').read_bytes()).hexdigest()==config['candidatePinsSha256'],'candidate04_pin_mismatch')
++ require(hashlib.sha256((candidate/'EXPECTED161-MODEL.json').read_bytes()).hexdigest()==config['expectedModelSha256'],'candidate04_model_pin_mismatch')
++ phase='install_db04_161'
++ sql_path=candidate/'sql/source-slices.sql'
+  require(hashlib.sha256(sql_path.read_bytes()).hexdigest()==config['installSqlSha256'],'install_sql_pin_mismatch')
+  run([pg/'psql','-XqAt','-h',work,'-p',str(config['socketPort']),'-U',config['bootstrap'],'-d',database,
+   '-v','ON_ERROR_STOP=1','-v','VERBOSITY=verbose','-c',f'SET ROLE {owner};','-f',sql_path],timeout=42,diagnostic_sql=sql_path)
+- # Install FIX03; canonical 161 expectations remain explicitly in parent DB02.
++ # Install full DB04 exactly once, directly after155; no separate FIX03 replay.
+  phase='real_restricted_engine_scenario'
+  result=json.loads(run([node,base/'scenario.mjs'],timeout=170,allow_failure=True))
+  if result.get('state')!='COMPLETED' and (result.get('code') in ('42501','28000','28P01') or (result.get('lastSqlFailure') or {}).get('sqlState') in ('42501','28000','28P01')):permission_fault=True
+--- 04/TARGET.json
++++ 06/TARGET.json
+@@ -1,7 +1,7 @@
+ {
+-  "database": "demo_8877_d3_batched_20261115_04",
+-  "workRoot": "/tmp/d3-batched-core-20261115-04",
+-  "socketPort": 55494,
++  "database": "demo_8877_d3_batched_20261115_06",
++  "workRoot": "/tmp/d3-batched-core-20261115-06",
++  "socketPort": 55496,
+   "bootstrap": "d3_bootstrap",
+   "owner": "fresh35_owner_20261105_r1",
+   "controller": "fresh35_controller_20261105_r1",
+@@ -17,8 +17,7 @@
+   "fixtureRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261114-r3-mixed-scale-design-01/smoke-base",
+   "fixtureManifestSha256": "d0ec7f649304d9f0e069f1e9d0f527e72c1d4bd4cff85f9cfc26c156377e254e",
+   "parent12": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-twelve-source-combination-local-01",
+-  "candidate02": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
+-  "candidatePinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
++  "candidatePinsSha256": "3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31",
+   "limits": {
+     "workSeconds": 170,
+     "totalSeconds": 180,
+@@ -29,7 +28,8 @@
+   },
+   "scope": "LOCAL_RESTRICTED_SQL_CORE_ONLY_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
+   "executionAuthorizationAtPreparation": "NOT_GRANTED_SOURCE_PREPARATION_ONLY",
+-  "installFix03": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
+-  "installFixPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+-  "installSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef"
++  "installSqlSha256": "4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85",
++  "candidate04": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04",
++  "expectedModelSha256": "b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8",
++  "receiptConstraintSha256": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5"
+ }
+--- 04/INSTALL-ORDER.json
++++ 06/INSTALL-ORDER.json
+@@ -8,7 +8,7 @@
+   {
+     "order": 2,
+     "phase": "full 35-table base, patchBodies, admin provision, SQL38",
+-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/base-install.sql",
++    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-06/base-install.sql",
+     "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+   },
+   {
+@@ -91,16 +91,15 @@
+   },
+   {
+     "order": 16,
+-    "phase": "Parent DB02 + exact FIX03 statement terminator; bounded verbose install diagnostic",
+-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03/source-slices.sql",
+-    "sha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+-    "parentCandidate": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
+-    "fixPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a"
++    "phase": "Full DB04 once directly after actual155, includes FIX03 and exactly one receipt CHECK successor; no separate FIX03 installation",
++    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/sql/source-slices.sql",
++    "sha256": "4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85",
++    "candidatePinsSha256": "3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31"
+   },
+   {
+     "order": 17,
+-    "phase": "actual 161 model readback, current stream compilation and six-case real SQL-core chain",
++    "phase": "actual161 with one changed CHECK metadata/hash, original162 fixture, CHECK-only samples, existing six-scene SQL-core chain",
+     "command": "node scenario.mjs",
+-    "expectedModel": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-MODEL.json"
++    "expectedModel": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04/EXPECTED161-MODEL.json"
+   }
+ ]
+--- 04/catalog-fixture.mjs
++++ 06/catalog-fixture.mjs
+@@ -64,10 +64,29 @@
+       (SELECT count(*)::integer FROM pg_constraint WHERE connamespace='naijue_erp'::regnamespace) AS constraints,
+       (SELECT count(*)::integer FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid WHERE c.relnamespace='naijue_erp'::regnamespace) AS triggers`)).rows[0];
+     for (const key of ['columns', 'indexes', 'constraints', 'triggers']) assert.equal(inventory[key], model[key].length, 'installed inventory ' + key);
++    const receiptConstraint = expectedCount === 161 ? await checkChangedReceiptConstraint(client, model) : undefined;
+     await client.query('ROLLBACK');
+-    return {functions: actual.length, tables: tables.length, ...inventory,
++    return {receiptConstraint, functions: actual.length, tables: tables.length, ...inventory,
+       routineDefinitionsAndOwnerAclMatched: true, fullPhysicalProductionAdmission: false};
+   } catch (error) { try { await client.query('ROLLBACK'); } catch {} throw error; }
++}
++
++
++async function checkChangedReceiptConstraint(client, model) {
++  const expected = model.constraints.find(row => row.relation === 'operation_receipt' && row.name === 'receipt_result_by_kind');
++  if (!expected || sha(expected.definition) !== cfg.receiptConstraintSha256) throw Error('RECEIPT_CHECK_SOURCE_EXPECTATION_MISMATCH');
++  const rows = (await client.query(`SELECT pg_get_constraintdef(oid,false) AS definition,contype AS kind,
++    convalidated AS validated,condeferrable AS deferrable,condeferred AS "initiallyDeferred"
++    FROM pg_constraint WHERE conrelid='naijue_erp.operation_receipt'::regclass AND conname='receipt_result_by_kind'`)).rows;
++  const row = rows[0];
++  const observed = row ? {definitionSha256:sha(row.definition),kind:row.kind,validated:row.validated,
++    deferrable:row.deferrable,initiallyDeferred:row.initiallyDeferred} : null;
++  if (rows.length !== 1 || observed.definitionSha256 !== cfg.receiptConstraintSha256
++    || row.kind !== expected.kind || row.validated !== expected.validated
++    || row.deferrable !== expected.deferrable || row.initiallyDeferred !== expected.initiallyDeferred) {
++    throw Object.assign(Error('RECEIPT_CHECK_METADATA_MISMATCH'),{code:'RECEIPT_CHECK_METADATA_MISMATCH',receiptConstraintObserved:observed});
++  }
++  return {relation:'operation_receipt',name:'receipt_result_by_kind',...observed};
+ }
+ 
+ export async function compileFixture(observer, work) {
+@@ -117,7 +136,7 @@
+   const client = await connect(cfg.bootstrap);
+   try {
+     const result = await checkCatalog(client, parent ? join(cfg.parent12,'MODEL155.json')
+-      : join(cfg.candidate02,'EXPECTED161-MODEL.json'), parent ? 155 : 161);
++      : join(cfg.candidate04,'EXPECTED161-MODEL.json'), parent ? 155 : 161);
+     process.stdout.write(JSON.stringify({stage: parent ? 'PARENT155' : 'INSTALLED161', ...result})+'\n');
+   } catch (error) { process.stdout.write(JSON.stringify({stage:'CATALOG_FAILURE', errorType:error.name, code:error.code??null,catalogSignature:error.catalogSignature,catalogField:error.catalogField})+'\n');process.exitCode=1; }
+   finally { await client.discard(); }
+--- 04/scenario.mjs
++++ 06/scenario.mjs
+@@ -1,5 +1,7 @@
+ import assert from 'node:assert/strict';
+ import {join} from 'node:path';
++import {corePgErrorFields} from './core-error-fields.mjs';
++import {receiptCheckSamples} from './receipt-check-samples.mjs';
+ import {cfg, connect, compileFixture, checkCatalog, encodedScrypt,
+   createBatchedStreamSqlKernel, executeBatchedStreamImport, reconcileWholePackage} from './catalog-fixture.mjs';
+ 
+@@ -9,10 +11,37 @@
+ let packet;
+ let lastSqlFailure;
+ let lastVerification;
++let firstFailure = null, firstErrorRef = null, checkSamples = null;
++const privateTokens = [encodedScrypt];
++function tokens(value) {
++  if(typeof value==='string')privateTokens.push(value);
++  else if(Array.isArray(value))value.forEach(tokens);
++  else if(value && typeof value==='object')Object.values(value).forEach(tokens);
++}
++function clearExpected(error) {
++  if(firstErrorRef===error){firstFailure=null;firstErrorRef=null;}
++}
++function retainPgFailure(error, group, ordinal, queryKind) {
++  if(firstFailure!==null || !/^[0-9A-Z]{5}$/.test(error?.code??''))return;
++  firstErrorRef=error;
++  firstFailure={...corePgErrorFields(error,{phase:group?.phase??phase,ordinal,queryKind},privateTokens),
++    groupPhase:group?.phase??null,scenarioPhase:phase};
++  if(Buffer.byteLength(JSON.stringify(firstFailure,null,2)+'\n')>4096)throw Error('SAFE_PG_FAILURE_CAP');
++}
+ const clients = new Set();
+ const controllerIds = [];
+ async function owned(user) {
+   const client = await connect(user);
++  const originalQuery=client.query.bind(client);
++  let activeGroup=null,activeOrdinal=null;
++  client.query=async(sql,values)=>{
++    const step=sql.includes('standard_batched_import_step_v1'),inspection=sql.includes('standard_batched_import_inspect_v1');
++    if(step||inspection)try{activeGroup=JSON.parse(values[1]);}catch{}
++    if(step){activeOrdinal=Number.isSafeInteger(values?.[2])?values[2]:null;try{tokens(JSON.parse(values[4]));}catch{}}
++    const kind=step?'STEP':inspection?'INSPECT':sql.startsWith('SET LOCAL ROLE ')?'ROLE':
++      sql.startsWith('INSERT INTO pg_temp.d3_receipt_check_probe')?'CHECK_SAMPLE':sql.split(' ')[0];
++    try{return await originalQuery(sql,values);}catch(error){retainPgFailure(error,activeGroup,activeOrdinal,kind);throw error;}
++  };
+   clients.add(client);
+   if (!user || user === cfg.controller) controllerIds.push(client.raw.processID);
+   return client;
+@@ -28,7 +57,7 @@
+ }
+ async function rejected(work, allowed) {
+   let code;
+-  try { await work(); } catch (error) { code = error.code; }
++  try { await work(); } catch (error) { code = error.code;if(allowed.includes(code))clearExpected(error); }
+   assert.ok(allowed.includes(code), 'expected precise PostgreSQL rejection');
+   return code;
+ }
+@@ -90,10 +119,13 @@
+ 
+ try {
+   const observer = await owned(cfg.bootstrap);
+-  const installed = await checkCatalog(observer, join(cfg.candidate02, 'EXPECTED161-MODEL.json'), 161);
++  const installed = await checkCatalog(observer, join(cfg.candidate04, 'EXPECTED161-MODEL.json'), 161);
+   events.push({case: 'INSTALLED161', ...installed});
+   phase = 'current-stream-fixture';
+   fixture = await compileFixture(observer, cfg.workRoot);
++  tokens(fixture.identity);tokens(fixture.initialize);
++  phase='receipt-check-only-samples';
++  checkSamples=await receiptCheckSamples(observer,fixture,cfg,clearExpected);
+   const groups = [...fixture.plan.batches()];
+   const history = groups.find(group => group.phase === 'HISTORY' && group.last > group.first);
+   assert.ok(history, 'one real group must contain multiple original document requests');
+@@ -133,7 +165,10 @@
+     committedPrefixGroups: first.result.completedBatches, constraintSqlState: first.constraintSqlState,
+     freshCoreInspect: coreRead.state, freshFailedGroupInspect: absentRead.state,
+     originalHistoryRequests: history.last-history.first+1, priorSnapshotPreserved: true,
+-    finalPublishAbsent: true, failedGroupSubBatchId: history.subBatchId});
++    finalPublishAbsent: true, failedGroupSubBatchId: history.subBatchId,expectedPgFailure:firstFailure});
++  // This original injected failure is now proven expected; later unexpected
++  // SQL errors get their own earliest retained record, never an old23514 label.
++  firstFailure=null;firstErrorRef=null;
+ 
+   phase = 'real-commit-reply-suppression';
+   const second = await attempt('SUPPRESS_COMMIT_REPLY', history);
+@@ -215,12 +250,13 @@
+   events.push({case:'FINAL_ORIGINAL_QUANTITY_MONEY_STOCK_RELATION_RECONCILIATION',state:verified.state,
+     summary:verified.summary,finalPublishPresent:true,businessReady:false,
+     productionHostTested:false, v2HallAmountRetentionNewPgProof:false});
+-  packet={stage:'SQL_CORE',state:'COMPLETED',events,
++  packet={stage:'SQL_CORE',state:'COMPLETED',events,checkSamples,
+     controllerBackendPids:controllerIds,fixtureRows:162, sourceManifestSha256:cfg.fixtureManifestSha256,
+     batchCount:groups.length,stepCount:fixture.plan.metadata.stepCount,
+     sourceScope:'LOCAL_RESTRICTED_SQL_CORE_ONLY',productionHostTested:false};
+ } catch(error) {
+-  packet={stage:'SQL_CORE',state:'FAILED',phase,
++  retainPgFailure(error,null,null,'SCENARIO');
++  packet={stage:'SQL_CORE',state:'FAILED',phase,firstFailure,checkSamples,checkSample:error.checkSample,receiptConstraintObserved:error.receiptConstraintObserved,
+     code:typeof error.code==='string'&&/^[A-Z0-9_]{1,80}$/.test(error.code)?error.code:null,
+     errorType:error.name,lastSqlFailure,lastVerification,catalogSignature:error.catalogSignature,catalogField:error.catalogField,events,productionHostTested:false};
+   process.exitCode=1;
+--- /dev/null
++++ 06/core-error-fields.mjs
+@@ -0,0 +1,24 @@
++// Fixed CORE0 diagnostic projection. Never copy a PostgreSQL error object.
++export function corePgErrorFields(error, context, privateTokens = []) {
++  let message = typeof error?.message === 'string' ? error.message : null;
++  let messageRedacted = false;
++  if (message !== null) {
++    for (const token of privateTokens) if (typeof token === 'string' && token.length >= 3 && message.includes(token)) {
++      message = message.split(token).join('[redacted]'); messageRedacted = true;
++    }
++    const quoted = message.replace(/'(?:[^']|'')*'|"(?:[^"]|"")*"/g, '[redacted]');
++    messageRedacted ||= quoted !== message; message = quoted;
++    if (/[\r\n]|\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|COPY|VALUES|PASSWORD)\b|\$\d|scrypt\$/i.test(message)) {
++      message = null; messageRedacted = true;
++    } else message = Buffer.from(message).subarray(0, 1024).toString('utf8').replace(/\uFFFD$/, '');
++  }
++  const metadata = key => typeof error?.[key] === 'string' && /^[A-Za-z_][A-Za-z0-9_]{0,127}$/.test(error[key]) ? error[key] : null;
++  const frames = [];
++  if (typeof error?.where === 'string') for (const line of error.where.split(/\r?\n/)) {
++    if (/^PL\/pgSQL function [A-Za-z0-9_.]+\([A-Za-z0-9_.,[\] ]*\) line [0-9]+ at [A-Za-z ]+$/.test(line)) frames.push(line.slice(0, 180));
++    if (frames.length === 3) break;
++  }
++  return {phase: context.phase, ordinal: context.ordinal, queryKind: context.queryKind,
++    sqlState: typeof error?.code === 'string' && /^[0-9A-Z]{5}$/.test(error.code) ? error.code : null,
++    message, messageRedacted, constraint: metadata('constraint'), table: metadata('table'), column: metadata('column'), contextFrames: frames};
++}
+--- /dev/null
++++ 06/receipt-check-samples.mjs
+@@ -0,0 +1,64 @@
++import {createHash} from 'node:crypto';
++const sha = value => createHash('sha256').update(value).digest('hex');
++// Only the one actual CHECK on an isolated temporary five-column projection.
++// No business row is inserted and no existing guard is disabled or replaced.
++export async function receiptCheckSamples(client, fixture, cfg, onExpectedError) {
++  const row = (await client.query(`SELECT pg_get_constraintdef(oid,false) AS definition
++    FROM pg_constraint WHERE conrelid='naijue_erp.operation_receipt'::regclass AND conname='receipt_result_by_kind'`)).rows[0];
++  if (!row || sha(row.definition) !== cfg.receiptConstraintSha256) throw Error('CHECK_SAMPLE_ACTUAL_DEFINITION_MISMATCH');
++  let began = false, firstError = null, rollbackConfirmed = false;
++  const results = [];
++  try {
++    if ((await client.query('BEGIN')).command !== 'BEGIN') throw Error('CHECK_SAMPLE_BEGIN_ACK_INVALID');
++    began = true;
++    await client.query(`CREATE TEMP TABLE d3_receipt_check_probe ON COMMIT DROP AS
++      SELECT id,target_type,action,target_id,result_data FROM naijue_erp.operation_receipt WITH NO DATA`);
++    await client.query('ALTER TABLE pg_temp.d3_receipt_check_probe ADD CONSTRAINT receipt_result_by_kind '+row.definition);
++    const xid = (await client.query('SELECT pg_current_xact_id()::text AS value')).rows[0].value;
++    const core = fixture.plan.batches().next().value;
++    const identity = {...structuredClone(fixture.plan.metadata.identity),rootOperationId:fixture.plan.metadata.rootOperationId};
++    const id = fixture.initialize.operation_id, target = identity.batchId;
++    const old = {profile:'STANDARD_IMPORT_SQL_V1',operationId:id,batchId:target,sequence:0,cursor:0,status:'STAGED',
++      ledgerEntryIds:[],sourceRecordIds:[],phase:'INITIALIZE',planSha256:identity.planSha256,
++      packageManifestSha256:identity.packageSha256,baselineBatchId:identity.batchId,documentBatchId:identity.documentBatchId};
++    const closed = {...structuredClone(old),batched_import_v1:{identity,descriptor:structuredClone(core),full_xid:xid,controller:cfg.controller}};
++    const mutate = fn => {const value=structuredClone(closed);fn(value);return value;};
++    const samples = [
++      ['old_standard_valid',true,old],['closed_marker_valid',true,closed],
++      ['extra_marker_key',false,mutate(v=>v.batched_import_v1.extra=true)],
++      ['missing_original_required',false,mutate(v=>delete v.ledgerEntryIds)],
++      ['json_null_marker',false,mutate(v=>v.batched_import_v1=null)],
++      ['scalar_marker',false,mutate(v=>v.batched_import_v1='invalid')],
++      ['null_identity_value',false,mutate(v=>v.batched_import_v1.identity.rootOperationId=null)],
++      ['descriptor_number_as_string',false,mutate(v=>v.batched_import_v1.descriptor.first='0')],
++      ['numeric_full_xid',false,mutate(v=>v.batched_import_v1.full_xid=1)],
++      ['sql_null_result',false,null],
++    ];
++    for (const [name, expectedAccepted, result] of samples) {
++      await client.query('SAVEPOINT receipt_check_sample');
++      let accepted = false, sqlState = null;
++      try {
++        await client.query('INSERT INTO pg_temp.d3_receipt_check_probe(id,target_type,action,target_id,result_data) VALUES($1::uuid,$2::text,$3::text,$4::uuid,$5::jsonb)',
++          [id,'IMPORT','IMPORT_INITIALIZE_CURRENT_ADMIN',target,result===null?null:JSON.stringify(result)]);
++        accepted = true;
++      } catch (error) {
++        sqlState = error.code ?? null;
++        if (expectedAccepted || !(sqlState==='23514' || /^22[0-9A-Z]{3}$/.test(sqlState))) throw error;
++        onExpectedError(error);
++      }
++      if (accepted !== expectedAccepted) throw Object.assign(Error('CHECK_SAMPLE_UNEXPECTED_ACCEPTANCE'),{code:'CHECK_SAMPLE_UNEXPECTED_ACCEPTANCE',checkSample:name});
++      await client.query('ROLLBACK TO SAVEPOINT receipt_check_sample');
++      await client.query('RELEASE SAVEPOINT receipt_check_sample');
++      results.push({name,accepted,sqlState});
++    }
++  } catch (error) { firstError = error; }
++  finally {
++    if (began) try {rollbackConfirmed=(await client.query('ROLLBACK')).command==='ROLLBACK';}
++    catch (error) { if (firstError===null) firstError=error; }
++  }
++  if (firstError) throw firstError;
++  if (!rollbackConfirmed) throw Error('CHECK_SAMPLE_ROLLBACK_UNCONFIRMED');
++  return {scope:'ONE_ACTUAL_CHECK_ONLY_TEMP_PROJECTION_NO_TRANSACTION_OR_PERMISSION_PROOF',
++    definitionSha256:cfg.receiptConstraintSha256,samples:results,rollbackConfirmed,
++    businessRowsInserted:false,otherGuardsDisabled:false};
++}

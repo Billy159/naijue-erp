@@ -1,0 +1,10 @@
+--- DB04/complete.body
++++ DB05/complete.body
+@@ -10,6 +10,7 @@
+     'batchId',identity->>'batchId','documentBatchId',identity->>'documentBatchId',
+     'packageSha256',identity->>'packageSha256','planSha256',identity->>'planSha256','status','IMPORTED');
+  END IF;
++ SET CONSTRAINTS ALL IMMEDIATE;
+  RETURN jsonb_build_object('state','PENDING_TRANSACTION','subBatchId',group_descriptor->>'subBatchId',
+    'descriptorSha256',group_descriptor->>'descriptorSha256','summary',final_summary);
+ END 
