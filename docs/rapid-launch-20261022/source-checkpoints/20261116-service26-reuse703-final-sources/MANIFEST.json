@@ -1,0 +1,307 @@
+{
+  "format": "SOURCE_CHECKPOINT_V1",
+  "scope": "Service26 final reviewed operational pin closure, root issuer02 fixed explicit protected-source bound, source703 materialization reused; live timed authority packets excluded",
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/OPERATIONAL-DELTA26.json",
+      "bytes": 54354,
+      "sha256": "5a20ea8a4dd1878fe387a7318d43ff8bbc5ab1cbe893c76344bffcd64a32d918"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/PHASES26.UNISSUED.json",
+      "bytes": 11382,
+      "sha256": "2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/PIN-CHAIN26.json",
+      "bytes": 3779,
+      "sha256": "fa17a2860561304b1b772c8abe164fba15d8e71d43bb4bdd4aac2da2026d496c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/READY26.json",
+      "bytes": 710,
+      "sha256": "60c017a0288df20a3708226adf669d4ad822f9220c384d425aeb29821590ef99"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/REGISTRATION-BASIS26-20261115T165331Z.json",
+      "bytes": 20318,
+      "sha256": "07077b5ddd319c8fbd140075041b7563ccc75da63189e04f19bd804de02aba69"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/ordinary05_roles.py",
+      "bytes": 21656,
+      "sha256": "f47b2e8029436161e8c8bcdeca17da21141029174cbd7dc9f3112b9ea1d8616f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/apply/bundle/ordinary05_roles_job.py",
+      "bytes": 28550,
+      "sha256": "a4d18e91a8030b6e71a3563fd1caa5132a74ae82e0444d50130a4e97e1f17d86"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/batched161-run.mjs",
+      "bytes": 9888,
+      "sha256": "f69e4d748c0c1dd3e808f05f24cfa20eca16590d8e8f81423d107d88d10a2357"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/batched_install_host.py",
+      "bytes": 12985,
+      "sha256": "394115e1f580dfcf057fb6b75f25c2e6b3ce58cc289d9af6d2ad6dafa55b3025"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/install/bundle/private_transport.py",
+      "bytes": 12283,
+      "sha256": "92d382abdf24fecb175ad5720f8d1049e476d33a7485b70e71c60f4a3c7f3423"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/restore/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/restore/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/restore/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/restore/bundle/ordinary05_roles.py",
+      "bytes": 21656,
+      "sha256": "f47b2e8029436161e8c8bcdeca17da21141029174cbd7dc9f3112b9ea1d8616f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/restore/bundle/ordinary05_roles_job.py",
+      "bytes": 28550,
+      "sha256": "a4d18e91a8030b6e71a3563fd1caa5132a74ae82e0444d50130a4e97e1f17d86"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/batched161-run.mjs",
+      "bytes": 9888,
+      "sha256": "f69e4d748c0c1dd3e808f05f24cfa20eca16590d8e8f81423d107d88d10a2357"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/normal_service05_after08.py",
+      "bytes": 54032,
+      "sha256": "1d63fc62b01ac9611e3a583757ac84e42f37a04f82c68a90bbb43a905cceb84c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/normal_service05_after08_proof.py",
+      "bytes": 19408,
+      "sha256": "ea83a051a87261c04a244918507fb46e5b8a53b7b02f51e4ebf42c1ad6198efe"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/operator-host.mjs",
+      "bytes": 72238,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/operator-manifest.json",
+      "bytes": 48490,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/operator-stream-import-cli.mjs",
+      "bytes": 26499,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/operator-stream-program.mjs",
+      "bytes": 10302,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/production-plan.json",
+      "bytes": 747,
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/r3_05_cli.py",
+      "bytes": 7052,
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/r3_05_readonly.py",
+      "bytes": 21212,
+      "sha256": "57caa6841a04a86f5994c98ca4ae5213e3b44e1c9b6b6497f97fc3a2e053d971"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/start/bundle/r3_05_runtime.py",
+      "bytes": 9394,
+      "sha256": "2be2924e1ca79a9ebaa0e6eea3991f205e3c39e01590a78cf7cadd7bd061ad7a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/stop/bundle/normal05_preserve_stop.py",
+      "bytes": 19581,
+      "sha256": "eeb6b4c12b8cd38426ff67420600c132373c4c1387f1bb14f0c29e7734858b65"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/stop/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "aa5941ecda89a37b2aa865de520bff8f82db6711c8bc85646a4d5dbff357a8fc"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/batched_real_host.py",
+      "bytes": 37233,
+      "sha256": "107f884c7ad20a7e0df27077c042352206ca0d7e3dac64c7063de132d400f20f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/materialized-profile.json",
+      "bytes": 27834,
+      "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/nonroot_input_access.py",
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/r3_05_cli.py",
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/r3_05_runtime.py",
+      "bytes": 9394,
+      "sha256": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/writer/bundle/retained24-run.mjs",
+      "bytes": 20091,
+      "sha256": "89a8eba0bc1cd3245d0b31407b9e2b4437a9b71fff49ea54a8618e3688677f86"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-QB-FINAL-REVIEW02.json",
+      "bytes": 7445,
+      "sha256": "29366f5a677e30412d78d5c11de8ea83afd4d3abe8a29c4e7fe9a7d4e716d654"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/CANDIDATE01-TO02.diff",
+      "bytes": 7012,
+      "sha256": "f8617df229ef2d3cf721ca2226192bd85c01e8b0c7c9751305160863be3f753b"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/PINS.json",
+      "bytes": 1607,
+      "sha256": "da3157f9f2feeed8d923e1398c4dda53e7056f94e1701d33f86ed898a3943fb5"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/PREPARATION.json",
+      "bytes": 3559,
+      "sha256": "e9cfdbae2dec8327016ac62454a2d7412aee4fb47cbbcca9090a18274448e1f4"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/admin_exec.DIRECT26-UNREGISTERED.py",
+      "bytes": 40576,
+      "sha256": "8600303370096c5360a22ac36fc7c47611ac88374e6b0ce4d3d5a1be2374989e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/admin_exec.DIRECT26-UNREGISTERED.py.diff",
+      "bytes": 5305,
+      "sha256": "e06c25781f6673b042a16e3c96dd72c091f8f83cbdf2f772bb54148d754be58c"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_phase.py",
+      "bytes": 18606,
+      "sha256": "0e99d48ca0e1ad447d8dc9a5587da599af3e8fa5151a57298b1336dfd5385371"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_phase.py.diff",
+      "bytes": 3101,
+      "sha256": "c2180d9551e2957483b79993b4821e46c194d0680a3066473d9917da8d724192"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_registration.py",
+      "bytes": 8766,
+      "sha256": "1666006b42cce439e3fb3bd357439ddee22b98fd439b6cae147bde39ff1ab47e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_registration.py.diff",
+      "bytes": 3723,
+      "sha256": "cfca621bc29ffd2a2281c2a6bc587d31122a789431417b7883738a4a65195e33"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_upgrade_authority.py",
+      "bytes": 5143,
+      "sha256": "7c7d8cca9f2dfe6c0fe693bc3aa46f1afd46dd4a47c0df906c60bd3679645e31"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_upgrade_authority.py.diff",
+      "bytes": 1873,
+      "sha256": "e98d4703168ac5e2045c14bf06d5d6eac84ce1e7be1aaf42361bf04d30566351"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/original-cas-direct26-carrier.UNISSUED.py",
+      "bytes": 2633,
+      "sha256": "33d478290d538ca2926846668e470e62164c682ebc149fc4552b688121f10d09"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/original-cas-direct26-carrier.UNISSUED.py.diff",
+      "bytes": 2500,
+      "sha256": "d9b8f1509d759169904e14844e752249ab76db84180a7b63bdcc515e158e5fcd"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/r3_direct26_batched.py",
+      "bytes": 46755,
+      "sha256": "a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/r3_direct26_batched.py.diff",
+      "bytes": 9713,
+      "sha256": "373b8aa9ba8c0b9ef9cc323e9b9becad45491b8d4035534479dfbd9dc802e0cf"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/register_cas.py",
+      "bytes": 21604,
+      "sha256": "b14940614761a7f596ab960fb4a62498c5dff44286f87d2d84046cf4004d5f73"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/register_cas.py.diff",
+      "bytes": 13794,
+      "sha256": "83dbbc40679d4886c8309460ea73190292bd96506e6c83d7573b1421758a6e35"
+    }
+  ],
+  "runtimeValidated": false
+}

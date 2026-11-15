@@ -1,0 +1,26 @@
+{
+  "format": "EXACT_INDEPENDENT_SOURCE_REVIEW_RECEIPT_V1",
+  "state": "SCOPED_SOURCE_STATIC_PASS",
+  "reviewerThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "rootSourcePinsSha256": "da3157f9f2feeed8d923e1398c4dda53e7056f94e1701d33f86ed898a3943fb5",
+  "t45PhasesSha256": "2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3",
+  "supersededSourceCandidate": {
+    "pinsSha256": "0e9793481417cdb5fd78b1a3f2170a1013fbd2c5c012883e775f18b94861afe2",
+    "state": "PASS_RETRACTED_DUE_TO_VERIFIED_CORE_READ_CAP_DEFECT_FIXED_IN_02"
+  },
+  "messages": [
+    {
+      "turnId": "01a1e021-d894-7de0-9910-98f16017aa1f",
+      "text": "确认原01 SOURCE PASS撤回并由本轮修正版替代；上一轮我漏核了CORE.read默认上限与185047B载体的实际匹配。已独立读真实1fe482 CORE read(path,*,root=True,maximum=131072)接口及完整保护条件，问题成立。\n已完成独立SERVICE26-REUSE703-02唯一修正与pin级联复核：SCOPED SOURCE STATIC PASS，PREVIOUS25_BOOT_CARRIER_EXCEEDS_DEFAULT_CORE_READ_BOUND CLOSED。准确当前PINS实SHA da3157f9f2feeed8d923e1398c4dda53e7056f94e1701d33f86ed898a3943fb5，16成员实hash全一致，7py AST过。actual diff严格验证：module只一行 c.read(boot/name, maximum=262144)；template只modulepin、registrar只HELPER/TEMPLATE、carrier只registrarSOURCE，三issuer逐字原01不变，全部完整parentdiff/parentSHA/metadata闭合。\nmodule a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d；template8600303370096c5360a22ac36fc7c47611ac88374e6b0ce4d3d5a1be2374989e；registrarb14940614761a7f596ab960fb4a62498c5dff44286f87d2d84046cf4004d5f73；carrier33d478290d538ca2926846668e470e62164c682ebc149fc4552b688121f10d09。真实CORE的keyword maximum可直接接此参数，3固定源实际53944/19408/185047 B均落在262144之内；固定path集合+每件原SHA/O_NOFOLLOW/root/nlink/identity/父目录保护仍由原reader执行，未改CORE或扩通用API。\n其余已核范围仅复用；旧01完整保留但不得签发。0PG/0server/未运行issuer或载体/未修改文件。本次02通过仍仅源码，不冒实际注册成功。"
+    },
+    {
+      "turnId": "01a1e020-41f8-7ba0-a8b5-4c3c14520339",
+      "text": "QB完成 SERVICE26-REUSE703-01 对准确T45 2963的registry/issuer必要源增量：SCOPED SOURCE STATIC PASS，无新增已确认阻断。0PG/0server/未运行issuer/未改文件；T45刚过引用链与D1/DB/7033/旧suite均未重审。\n当前PINS实SHA0e9793481417cdb5fd78b1a3f2170a1013fbd2c5c012883e775f18b94861afe2；15成员实hash全匹配，7py AST通过；PREPARATION7个actual parentSHA及7份独立actualdiff全准确。module414cbb…/registrar48f5d5…/templatea45d…/carrier7b204…精确互绑，实际parent dispatcher3b309fadb99f436754dbaacaf63e2ab9612b235f09b4622f0af82398b90dd87a准确。dispatcher历史key一个未删，仅新增26 apply/start/stop/restore四键；module/registrar/T45 witness2963的7JOB逐对象相等。\n新26module/policy/stage/audit独立O_EXCL，原lock/fullBASIS identity/旧25 policy8c6+ec89/57d、原24历史均保留。previous25_closed只核原FAILED25 79c/c2a/10afe与actualrestore25 1b82/ecf/86b原认证恢复+cleanup、partialboot原3件/noC25/no25container；没有要求26运行时全局PG保持停止，因此不把26后续活服务当旧25未收尾。previous24原停止代际核验保持。\nregistrar在锁内要求PGpid无/实际restore25 container已停/旧25无container、两grant无active；唯一物化例外仅本grant db91 COMPLETED0/root-public相等+protected cdcaf proof，另一grant仍absent；其余6phase两grant全未提交。新module→新policy→exact3b309 identity CAS dispatcher最后，原policy/dispatcher审计及UNKNOWN只读不重放保持，旧文件不覆盖。原fullidentity快照不变。\nregistration issuer166600…明确绑定witness AlreadyCompleted/neverResubmit/cdcaf/原materialkey及freshbasis acceptedMaterializationSha；原完整BASIS/identity/lock/fresh15min/noactive/新6candidate条件保持，再用T45新leaf/host namespace26正常有限窗口签发，尚未提前造时间。phase issuer0e99…开头明确拒绝phase=materialize，不会重签成功物化；start模板仍真实24历史输入、输出新26独占目录，原修复不回退，physical24/认证restore25沿witness新pins配对。新upgrade issuer7c7d…仅livekey26和说明相应变，原同program successor三元组/实际C/9字段/窗口上限不变，install/writer原未提交业务keys不变。\n源码与2963配对本轮无未关闭发现；实际fresh BASIS字段/身份/时效及新时钟仍须真实生成核验，SOURCE PASS不代表已登记/启动/安装或导入成功。"
+    },
+    {
+      "turnId": "01a1e01c-5bdd-7863-a8c8-ffb9bd2d06f1",
+      "text": "QB完成T45准确26版这一次必要故障引用链/操作caller增量：SCOPED SOURCE STATIC PASS，无新增已确认阻断。PHASES26实SHA2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3、PIN-CHAIN26 fa17a2860561304b1b772c8abe164fba15d8e71d43bb4bdd4aac2da2026d496c、OPERATIONAL-DELTA26 5a20ea8a4dd1878fe387a7318d43ff8bbc5ab1cbe893c76344bffcd64a32d918均实hash吻合。0PG/0server/未运行候选/未改文件，未重D1/SQL/模型/原输入/7033大closure或旧suite。\n以准确25 PHASES02实际phaseDirs为parent：6目录37个bundlepins全实hash一致；实际只有OPDELTA记录的16个新/变文件，所有before/new SHA及16份独立actualdiff逐字匹配；变更PY AST通过。实际start主程序AST复制循环9项逐项与真实startbundle字节hash相等（含main1d63/proofea83/readonly57ca/newcallerf69e）；另main R3_RUNTIME_SHA=实际2be292…、CLI b3f9/PLAN7a416均准确，未沿用旧affd/旧runtime9b7。stophelper的NORMAL05/PROOF/READONLY三pin准确指真实start1d63/ea83/57ca，STOP_REFERENCE准确指helperaa594；apply/restore CURRENT_SOURCE/PROOF准确、leaf及wrapper两份字节相同，install4项/writer7项内部PINS全对实际依赖字节。\n实际新callerf69e4d748c0c1dd3e808f05f24cfa20eca16590d8e8f81423d107d88d10a2357在start/install字节完全相同，相对已核7109只有service25→26一行；原root installed154API/同program successor三元组/describe无PG与mkdir前return/权限窗口/13ACK/close未变。新start将它作为第9件沿原copyloop校验后root0400复制到boot26；没有新增mount或权限变化，readonly源仅服务/证明名26变。旧cdcaf物化内companion25未改，故本次新26实际describe必须用boot26这件，不能回用旧companion；这是接线SOURCE PASS，不冒实际boot或describe已运行。\n前驱配对：physical24/c8f与stop24原0a9/69a/676保持，认证前驱改为实际已完成restore25 terminal1b82/public86b；该次只读回执22f55d08…实SHA读回，COMPLETED0/root-public相同对象、原verifier+expiry真实恢复且非自然到期/无runtime或membership改动，与新host pins吻合。新roleleaf只改独占26 namespace/运维key和前驱original-auth25，恢复动作及原权限/数据identity不变；旧FAILED25与实际restore25记录均保留。\nmaterialize规则/目录逐对象等于25原值，显式AlreadyCompleted/neverResubmit，cdcaf/7033/399d只复用，无新source/archive或业务INIT/install/writerkey变化。当前只完成T45本次增量；主控26registry/issuer尚未送冻结源，不据此认为其新时钟/授权闭包或真实启动已通过。"
+    }
+  ],
+  "serverExecutionProven": false
+}

@@ -1,0 +1,46 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-01/r3_direct26_batched.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/r3_direct26_batched.py
+@@ -429,7 +429,7 @@
+         self.need(inside.get('status') == 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK' and inside.get('exactOriginalVerifierAndExpiryVerifiedPrivately') is True and inside.get('naturalExpiryCountedAsRestoration') is False and inside.get('runtimeAuthChanged') is False and inside.get('membershipsOrRoleAttributesChanged') is False and value['cleanup'].get('ownContainerStopped') is True and value['cleanup'].get('ownedPidAbsent') is True, 'EXACT_ORIGINAL_AUTH25_RESTORATION_REQUIRED')
+         boot = HOST / 'state/native-services' / start
+         expected = {'normal_service05_after08.py':'3ea7979bd8e7a6ad69247331dad49b9c348c281df70733f0f64bd03b169df1dc','normal_service05_after08_proof.py':'f2cd59a11222656b8697367abd20e790dbbc1ddd4edbadf838fe6584ceec446b','fresh35-production-carrier.py':'40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360'}
+-        self.need(set(p.name for p in boot.iterdir()) == set(expected) and all(c.sha(c.read(boot/name)) == pin for name,pin in expected.items()) and not os.path.lexists(HOST/'authority/fresh35-current-production-service-v2-service-25.json'), 'FAILED25_PARTIAL_BOOT_OR_NO_C_CHANGED')
++        self.need(set(p.name for p in boot.iterdir()) == set(expected) and all(c.sha(c.read(boot/name, maximum=262144)) == pin for name,pin in expected.items()) and not os.path.lexists(HOST/'authority/fresh35-current-production-service-v2-service-25.json'), 'FAILED25_PARTIAL_BOOT_OR_NO_C_CHANGED')
+         q = subprocess.run(['/usr/bin/docker','ps','-aq','--filter','label=t45.operation='+start],capture_output=True,timeout=5)
+         self.need(q.returncode == 0 and not q.stdout.strip() and not q.stderr, 'FAILED25_CONTAINER_PRESENT_OR_UNKNOWN')
+ 
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-01/admin_exec.DIRECT26-UNREGISTERED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/admin_exec.DIRECT26-UNREGISTERED.py
+@@ -13,7 +13,7 @@
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+ R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
+-R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '414cbbecac3c9440c4c3b954fe5c53454b56604ab53dc474795d58fb384853cf'
++R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = 'a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d'
+ R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+ R3_READONLY_RECOVERY_SOURCE_SHA256 = '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e'
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-01/register_cas.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/register_cas.py
+@@ -12,8 +12,8 @@
+ AUDIT=B/'r3-direct26-reuse703-registration-cas-20261116-01'
+ OLD_DISPATCHER='3b309fadb99f436754dbaacaf63e2ab9612b235f09b4622f0af82398b90dd87a'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+-HELPER='414cbbecac3c9440c4c3b954fe5c53454b56604ab53dc474795d58fb384853cf'
+-TEMPLATE='a45dcb6fc79665addff8038d4ecaaabe653ddffaf9bb834cdbf34c74a5b05f1b'
++HELPER='a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d'
++TEMPLATE='8600303370096c5360a22ac36fc7c47611ac88374e6b0ce4d3d5a1be2374989e'
+ JOBS={'apply': 't45-r3-ordinary26-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary26-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-26', 'stop': 't45-r3-ordinary26-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ BASIS={P/'r3_original05_absent22_continuation.py':'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',
+  H/'original05-absent22-continuation.json':'27c9b661d7ade353bb42be2b23f104879462749c117779d971d3c4d5b9cd6282',
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-01/original-cas-direct26-carrier.UNISSUED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/original-cas-direct26-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct26-reuse703-registration-source-20261116-01')
+ AUDIT=STAGE.parent/'r3-direct26-reuse703-registration-cas-20261116-01'
+-SOURCE='48f5d516e0da2b98f9f10f09524ae7d3131092c2a0e7fbf0263ca7739f5bf2d0'
++SOURCE='b14940614761a7f596ab960fb4a62498c5dff44286f87d2d84046cf4004d5f73'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000

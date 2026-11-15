@@ -1,0 +1,16 @@
+{
+  "callerSyntaxChecks": 2,
+  "changedOperationalPythonSyntaxFiles": 28,
+  "deltaSha256": "5a20ea8a4dd1878fe387a7318d43ff8bbc5ab1cbe893c76344bffcd64a32d918",
+  "nativeOrPostgresExecuted": false,
+  "nodeVersion": "24.21.0",
+  "oldSuiteOrD1TestsRerun": false,
+  "pinChainSha256": "fa17a2860561304b1b772c8abe164fba15d8e71d43bb4bdd4aac2da2026d496c",
+  "rootReadonlyRuntimeNotVerified": true,
+  "rulesSha256": "2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3",
+  "sameCallerBytesStartDescribeInstall": true,
+  "serverActions": 0,
+  "source7033AndMaterializationCdcafReused": true,
+  "state": "FROZEN_LOCAL_26_PIN_CHAIN_ONLY_NO_SERVER_ACTION",
+  "unchangedMaterializerSyntaxEvidenceReused": true
+}

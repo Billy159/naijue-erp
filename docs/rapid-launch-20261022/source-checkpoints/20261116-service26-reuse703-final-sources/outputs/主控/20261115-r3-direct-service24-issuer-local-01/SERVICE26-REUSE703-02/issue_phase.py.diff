@@ -1,0 +1,43 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_phase.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE26-REUSE703-02/issue_phase.py
+@@ -63,7 +63,7 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service25 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service26 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+@@ -109,7 +109,7 @@
+         authority = dict(host['scope'](), service=service, startsAt=now, expiresAt=expiry,
+                          writerTerminalSha256=OLD_WRITER, policySha256=OLD_HOLD, sourceSha256=sha(src.read_bytes()),
+                          currentBatchTerminals=evidence['currentBatchTerminals'],
+-                         authorizationReference='Cleanly stop exact generation 25 and preserve its data directory.')
++                         authorizationReference='Cleanly stop exact generation 26 and preserve its data directory.')
+         host['validate'](authority, now)
+         return authority
+     service = observation(start, policy, witness) if start is not None else None
+@@ -262,11 +262,12 @@
+ def issue(phase, rules_file, rules_pin, registration_directory,
+           evidence_path=None, evidence_pin=None, predecessor_path=None, predecessor_pin=None):
+     witness = read(rules_file, rules_pin)
++    assert phase != 'materialize' and witness['materializeNeverResubmit'] is True, 'Reuse completed materialization only'
+     issued = Path(registration_directory).resolve()
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct25-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct26-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -296,7 +297,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261116-r3-direct-service25-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service26-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),

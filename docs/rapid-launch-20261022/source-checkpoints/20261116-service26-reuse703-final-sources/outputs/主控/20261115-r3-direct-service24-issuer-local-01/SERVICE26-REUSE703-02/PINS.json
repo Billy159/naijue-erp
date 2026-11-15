@@ -1,0 +1,18 @@
+{
+  "CANDIDATE01-TO02.diff": "f8617df229ef2d3cf721ca2226192bd85c01e8b0c7c9751305160863be3f753b",
+  "PREPARATION.json": "e9cfdbae2dec8327016ac62454a2d7412aee4fb47cbbcca9090a18274448e1f4",
+  "admin_exec.DIRECT26-UNREGISTERED.py": "8600303370096c5360a22ac36fc7c47611ac88374e6b0ce4d3d5a1be2374989e",
+  "admin_exec.DIRECT26-UNREGISTERED.py.diff": "e06c25781f6673b042a16e3c96dd72c091f8f83cbdf2f772bb54148d754be58c",
+  "issue_phase.py": "0e99d48ca0e1ad447d8dc9a5587da599af3e8fa5151a57298b1336dfd5385371",
+  "issue_phase.py.diff": "c2180d9551e2957483b79993b4821e46c194d0680a3066473d9917da8d724192",
+  "issue_registration.py": "1666006b42cce439e3fb3bd357439ddee22b98fd439b6cae147bde39ff1ab47e",
+  "issue_registration.py.diff": "cfca621bc29ffd2a2281c2a6bc587d31122a789431417b7883738a4a65195e33",
+  "issue_upgrade_authority.py": "7c7d8cca9f2dfe6c0fe693bc3aa46f1afd46dd4a47c0df906c60bd3679645e31",
+  "issue_upgrade_authority.py.diff": "e98d4703168ac5e2045c14bf06d5d6eac84ce1e7be1aaf42361bf04d30566351",
+  "original-cas-direct26-carrier.UNISSUED.py": "33d478290d538ca2926846668e470e62164c682ebc149fc4552b688121f10d09",
+  "original-cas-direct26-carrier.UNISSUED.py.diff": "d9b8f1509d759169904e14844e752249ab76db84180a7b63bdcc515e158e5fcd",
+  "r3_direct26_batched.py": "a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d",
+  "r3_direct26_batched.py.diff": "373b8aa9ba8c0b9ef9cc323e9b9becad45491b8d4035534479dfbd9dc802e0cf",
+  "register_cas.py": "b14940614761a7f596ab960fb4a62498c5dff44286f87d2d84046cf4004d5f73",
+  "register_cas.py.diff": "83dbbc40679d4886c8309460ea73190292bd96506e6c83d7573b1421758a6e35"
+}

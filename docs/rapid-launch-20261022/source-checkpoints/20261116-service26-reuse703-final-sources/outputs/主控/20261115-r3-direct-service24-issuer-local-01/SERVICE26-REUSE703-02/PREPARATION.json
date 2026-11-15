@@ -1,0 +1,65 @@
+{
+  "state": "FROZEN_LOCAL_SERVICE26_REUSE703_PENDING_REVIEW_AND_FRESH_BASIS",
+  "selectedPhasesPath": "outputs/T45/revisions/20261116-r3-service26-pin-closure-local-01/PHASES26.UNISSUED.json",
+  "selectedPhasesSha256": "2963a542d6d5532d3ab46a82be0c73b8039c047d402d981b7282c649ea4d13b3",
+  "changes": [
+    {
+      "file": "r3_direct26_batched.py",
+      "sha256": "a4b5ef7bd42bad85089021095080785225c3efa7c6c7eef5b18029ada468e78d",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/r3_direct25_batched.py",
+      "parentSha256": "57d8ea9c363f4c4db743b99bfacafdafecdb644d8e65894a416ec2a418aa2810"
+    },
+    {
+      "file": "register_cas.py",
+      "sha256": "b14940614761a7f596ab960fb4a62498c5dff44286f87d2d84046cf4004d5f73",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/register_cas.py",
+      "parentSha256": "89de040661e6a2a6b81a651bc0e2a808ca016d7abadceccee3020315b2df01af"
+    },
+    {
+      "file": "issue_registration.py",
+      "sha256": "1666006b42cce439e3fb3bd357439ddee22b98fd439b6cae147bde39ff1ab47e",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_registration.py",
+      "parentSha256": "17a4b3bb3e947a363bf02d89464859146258f57f6e9f1aff899ac839d275d91e"
+    },
+    {
+      "file": "issue_phase.py",
+      "sha256": "0e99d48ca0e1ad447d8dc9a5587da599af3e8fa5151a57298b1336dfd5385371",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_phase.py",
+      "parentSha256": "f33753122cf47571bdbfeffe88aaea0d26d54572bb06e23d60f9a0f92eb99f35"
+    },
+    {
+      "file": "issue_upgrade_authority.py",
+      "sha256": "7c7d8cca9f2dfe6c0fe693bc3aa46f1afd46dd4a47c0df906c60bd3679645e31",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/issue_upgrade_authority.py",
+      "parentSha256": "e76c125b40a067228acbf67fe011268fd45b823a304ee5a83780952d2b8a5850"
+    },
+    {
+      "file": "admin_exec.DIRECT26-UNREGISTERED.py",
+      "sha256": "8600303370096c5360a22ac36fc7c47611ac88374e6b0ce4d3d5a1be2374989e",
+      "parent": "outputs/主控/20261116-r3-restore25-precontainer-registration-window-01/admin_exec.ISSUED.py",
+      "parentSha256": "3b309fadb99f436754dbaacaf63e2ab9612b235f09b4622f0af82398b90dd87a"
+    },
+    {
+      "file": "original-cas-direct26-carrier.UNISSUED.py",
+      "sha256": "33d478290d538ca2926846668e470e62164c682ebc149fc4552b688121f10d09",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/original-cas-direct25-carrier.UNISSUED.py",
+      "parentSha256": "4dd6e30f00b05d447a590607c7064159508cf9dd5c5948cff62cbc3c4904783d"
+    }
+  ],
+  "source703Changed": false,
+  "materializationReusedSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+  "materializationNeverResubmit": true,
+  "lastRealPhysicalService": "24/c8f0ac90",
+  "actualAuthPredecessor": "restore25/22f55",
+  "failed25Preserved": true,
+  "allBusinessKeysUnchanged": true,
+  "sourceOnlySyntax": "7PY_PARSE_PASS",
+  "serverActions": 0,
+  "authorityIssued": false,
+  "parentCandidatePinsSha256": "0e9793481417cdb5fd78b1a3f2170a1013fbd2c5c012883e775f18b94861afe2",
+  "fixedFinding": "PREVIOUS25_BOOT_CARRIER_EXCEEDS_DEFAULT_CORE_READ_BOUND",
+  "coreSha256": "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d",
+  "coreReadDefaultBytes": 131072,
+  "actualProtectedCarrierBytes": 185047,
+  "explicitFixedSourceReadBoundBytes": 262144
+}
