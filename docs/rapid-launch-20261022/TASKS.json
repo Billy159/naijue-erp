@@ -6372,15 +6372,59 @@
               "newServerWorkload": false,
               "formalLaunch": "NOT_COMPLETE"
             }
+          },
+          {
+            "group": "r910-registration-20261115-0517",
+            "status": "ACTUAL_REGISTRATION_SUCCESS_MATERIALIZE_SUBMITTED_ONCE",
+            "evidence": {
+              "sourceCombinationReviewSha256": "d252b66c0a636540303011abb661174c23b6040d3e51d4ff31caf59808c4e354",
+              "twelveSourceDeliverySha256": "a42d1cd56cd1da68dbdd6c877daa731d0fd91d2dc41b3f6fbdda2d2fac44d103",
+              "sourceFiles": 370,
+              "parts": 36,
+              "deploymentMembers": 5241,
+              "sourceSetSha256": "b4665a72a01ba4c0c973ee86aa18271cb40c6bf09276d667c1331cca3dd7044c",
+              "profileSha256": "eee0193b2c5db54e0da3a5a70ab7a75fdcc18ed40ffad01bf364980de8d91d72",
+              "deploymentSha256": "e6c58429704e9d5a022c2b194e6951085ddcf01dddb5743c2644793f2ca44aca",
+              "reuseParts": 3,
+              "missingParts": 33,
+              "missingPartBytes": 5677899,
+              "materializeWithActualAuthorityMembers": 38,
+              "issuerSha256": "0fc594af318b8742f644c016696b2a56a9e99422f3a4b7db16fcfc9f55b01abc",
+              "independentReviewSha256": "6623aa6b4f6f3713cbe43d3e590c9236dcf678b9137a30fd2c8ac5b6fabee937",
+              "freshPreflightSha256": "9bea1bce688b5c32accc3ddb9d037b832541324b91b0841701fe34b34977baf9",
+              "issuedSha256": "34e607fb2ba288835d1a7e4b4abc9c5a83498318cd9bcd6bb2a2a1eb3eccde45",
+              "registrationEntrySha256": "db8b106d531fe95b9939a9505c83252de7fa0b89112f523a3b679fd64c1d4268",
+              "registrationAuditSha256": "13fd86b3200c5218ffbc26f9e4f74a075b6cd0ba247baac75967f95f64a785ef",
+              "dispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
+              "policySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
+              "materializeManifestSha256": "13882dbf8f28faa89d64110dde43fbf8735d6801ca965cf8e7fe726d2fb02a33",
+              "nativeInstall": "PENDING",
+              "formalLaunch": "NOT_COMPLETE"
+            }
           }
         ],
         "currentInFlight": {
-          "D2": "prepare exact twelve-layer candidate; previous eleven original bytes plus same-tested party wrapper/body dfd; derive only from actual metadata evidence and parent artifacts, no new PG",
-          "QB": "new result scopes passed; review only next new source composition delta",
-          "T45": "local-only fresh r910/55570 ROOT/REG/POST/five keys preparation active; previous startup Bad Request terminal before tool, same-chat Sol6.1/high continuation resumed; no server connection",
-          "sourceCountsAndPartIntersection": "pending exact D2 delivery; not inherited from old 360/24/3",
-          "serverBounds": "2CPU/6GiB/900s container/540s child/180s cleanup/28GiB retained/40s SQL/45s query/40s SSH unchanged",
-          "formalLaunch": "NOT_COMPLETE"
+          "owner": "T45",
+          "work": "r910 original M key submitted once; collect original receipt then P0-gated S/B, actual birth and native 12 layers, full compile/first master/rollback/cleanup",
+          "R0": "2026-11-15T05:13:46.038Z",
+          "P0": "2026-11-15T05:18:46.038Z",
+          "provisionExpiry": "2026-11-15T05:38:46.038Z",
+          "policyExpiry": "2026-11-15T05:43:46.038Z",
+          "listener": {
+            "session": 5353,
+            "until": "2026-11-15T05:24:56.038Z",
+            "kind": "original REGISTRATION-ENTRY-RESULT plus real BIRTH"
+          },
+          "registrationWaiter": {
+            "session": 20442,
+            "state": "EXIT_0_USED_ONCE"
+          },
+          "postConsumer": {
+            "session": 48395,
+            "state": "PREARMED_NEW_MAIN_ONLY"
+          },
+          "formalR3": "STOPPED_NOT_IMPORTED",
+          "remoteCheckpoint": "push pending; Github HTTP/public diagnostics failing, local commits retained; no force or config changes"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
