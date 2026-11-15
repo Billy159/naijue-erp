@@ -6335,15 +6335,51 @@
               "netBenefit": "PENDING",
               "installedNewSqlLayer": false
             }
+          },
+          {
+            "group": "prefix-projection-native-evidence-20261115-0435",
+            "status": "LOCAL_NATIVE_SCOPED_PASS_ADOPTED_FOR_NEXT_SYNTHETIC_CANDIDATE",
+            "evidence": {
+              "projectionHarnessReviewSha256": "fc021044b2197fc12a41a7a820d1953dd409b96e32b7fa228d4fb641083187a3",
+              "aggregateFixReviewSha256": "e291c0b4d75348d1f43bde8c91591730b7ca1d0f330706f845c8030370737219",
+              "prefixResultPinsSha256": "ed4ed83274dc2ac1a972490e4d5c01cceae44def8bef59897987d99af4433ba3",
+              "prefixResultReviewSha256": "afd9019c4a1f8e8c21800054dcb6dbe07d438e4f849f54d417dfa763cff43306",
+              "semanticBoundaryCases": 23,
+              "prefixSqlMs": 5052.123286999998,
+              "prefixSharedHits": 12311202,
+              "wrapperWallComparability": "different wrappers and added RSS; not product regression or net proof",
+              "nativeHarnessPinsSha256": "a09809c41b30766c497f1e4b5f00350bf37a78d63060188146a024e54152c044",
+              "nativeHarnessReviewSha256": "8dad6ee87fa426ac3569796265064802ed8b3c950122f9fa82642332d6ae44af",
+              "nativeResultPinsSha256": "f0526d268453f91eddf9fe996974eb3bdf61152b214a70c40dd22940cf324016",
+              "nativeResultReviewSha256": "8b97635f89d738dea15eeaa6553ce060517472967758327b7c57ed98f753e9fb",
+              "oldNativeMasterMs": 16320.609291,
+              "newNativeMasterMs": 13284.736125,
+              "observedReductionPercent": 18.60146954,
+              "controlledSourceIds": 501,
+              "rollbackIndependentReadback": "ABSENT",
+              "sixTableResiduals": 0,
+              "catalog": [
+                35,
+                351,
+                155,
+                114
+              ],
+              "nativeAllocatedPeakBytes": 383565824,
+              "nativeTotalSeconds": 30.959564,
+              "adoptionSha256": "959da468cd05bb55038596ed37995e304d434adf200d1abae58f22a99cab8e0b",
+              "newServerPreflight": false,
+              "newServerR0": false,
+              "newServerWorkload": false,
+              "formalLaunch": "NOT_COMPLETE"
+            }
           }
         ],
         "currentInFlight": {
-          "owner": "D2",
-          "work": "implement one targeted prefix-only PG validation of dfd1e1ca, original/new selection and rejection matrix; only new prefix 474 targets with 1/6/474 plans; reuse original prefix baseline",
-          "authority": "standing0c25; exact new harness QB review PASS then one execution authorized; no additional user/main PG approval",
-          "bounds": "same 02 lifecycle/driver/sanitizer; 170s work/180s total/40s statement/2MiB logs/3GiB scratch; no old set/old20/MASTER/fullcompile/server",
-          "QB": "review only new harness delta when frozen; source-only candidate already accepted",
-          "T45": "idle; formal R3 stopped; no new carrier or issued server authority",
+          "D2": "prepare exact twelve-layer candidate; previous eleven original bytes plus same-tested party wrapper/body dfd; derive only from actual metadata evidence and parent artifacts, no new PG",
+          "QB": "new result scopes passed; review only next new source composition delta",
+          "T45": "local-only fresh r910/55570 ROOT/REG/POST/five keys preparation active; previous startup Bad Request terminal before tool, same-chat Sol6.1/high continuation resumed; no server connection",
+          "sourceCountsAndPartIntersection": "pending exact D2 delivery; not inherited from old 360/24/3",
+          "serverBounds": "2CPU/6GiB/900s container/540s child/180s cleanup/28GiB retained/40s SQL/45s query/40s SSH unchanged",
           "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",
