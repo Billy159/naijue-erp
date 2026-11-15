@@ -1,0 +1,15 @@
+{
+  "checkedAtUTC": "2026-11-15T15:24:55.404257+00:00",
+  "databaseConnections": 0,
+  "mutations": 0,
+  "nativeExitCode": 2,
+  "nativeReply": {
+    "automaticReplay": false,
+    "connectionCleanup": "NOT_OPENED",
+    "requestKey": "t45-r3-batched-install-20261115-01",
+    "safeCode": "FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED",
+    "sqlstate": null,
+    "state": "UNKNOWN"
+  },
+  "state": "READONLY_DESCRIPTOR_FAILED_NO_INSTALL_SUBMITTED"
+}

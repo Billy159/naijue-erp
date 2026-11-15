@@ -1,0 +1,22 @@
+{
+  "authorizationReference": "Cleanly stop exact generation 24 and preserve its data directory.",
+  "currentBatchTerminals": {
+    "t45-r3-batched-install-20261115-01": null,
+    "t45-r3-batched-real-execute-20261115-01": null
+  },
+  "expiresAt": 1794757816774,
+  "format": "T45_R3_FAILED19_READONLY20_SERVICE_STOP_V1",
+  "policySha256": "25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757",
+  "requestKey": "t45-r3-ordinary24-preserve-stop-20261115-01",
+  "service": {
+    "containerId": "f855a86b0eab87bc6ec273386e566c3b93c67f560d90392318edaa15b3a74187",
+    "containerStartedAt": "2026-11-15T15:21:17.835078029Z",
+    "postmasterStart": "2026-11-15 15:21:19.205528+00",
+    "proofSha256": "c8f0ac90edac8b9113fa721f89af62ae487722c87820503205bbee1e23e1d96a",
+    "serviceKey": "t45-first-r3-native-service-start-20261115-24"
+  },
+  "sourceSha256": "566042ce33e24fbf7e57474734e292ade10997cf462383aba9710910539bf8fd",
+  "startsAt": 1794757516774,
+  "writerJobId": "t45-first-20261110-r3-real-execute-20261114-02",
+  "writerTerminalSha256": "ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e"
+}

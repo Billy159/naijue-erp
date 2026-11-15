@@ -7314,6 +7314,22 @@
             "actualPolicyAuditSha256": "4c100da7a400d2f568d07aa855b7075ae0daf54b75f2235a6e7fba5bbc14c11a",
             "actualApply02ReadbackSha256": "edea955b0a19ef305b8b227ae5cb35864046d1a6c4b69ad8f4e4e03778181447",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_SERVICE24_ACTUAL_CLOSED_ORIGINAL_AUTH_RESTORED_20261115",
+            "state": "ACTUAL_PRESERVATION_COMPLETE_INSTALL_AND_REAL_NOT_STARTED",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-service24-closed-original-auth-restored",
+              "files": 8,
+              "bytes": 23959,
+              "manifestSha256": "63f2e7be2381226df17938a8dda646d13ae2d4b447be4eadeb4881c40c587285"
+            },
+            "actualStartSha256": "ecba5fe34fbb92e59fc6e15fbb0926dbdd91eea9d389bd5cb4a8228351a2d448",
+            "actualDescribeFailureSha256": "95388a1a27a871e4cab606e78cf847cac4fc8b260c25bcc422f11b2f2bbfe7d3",
+            "actualStopSha256": "cdb604d134c271ff1d284ce64fc6419c898c9ea1513ab49176a994df3beb1c74",
+            "actualRestoreSha256": "6d34548caa2d95b9f418659e387027ee5beb6a197480808a9331a4347f734c81",
+            "finalClosedReadbackSha256": "19fdf99815616bfcefa17de3363c577ca4fe4225333cf74ebc1a9ce542b8f665",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7325,9 +7341,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "FINITE_ADMIN_SESSION_ADAPTER02_SCOPED_SOURCE_PASS",
+            "state": "ROOT_METADATA_AND_INSTALLED154_UPGRADE_TARGET03_IN_PROGRESS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Exact current dependency resolved with existing finite admin session plus explicit SET ROLE owner/RESET ROLE ACKs and truthful dual identity. No new owner login, credentials, roles, grants or SQL/model changes. Candidate02 1file769382ea, pins e982bb06, QB narrow source PASS; native execution pending T45."
+            "work": "Fix actual root/nonroot metadata loader and installed154 upgrade window incompatibility only; retain protected reader/identity/private capability factories, ordinary runtime guard, original fresh target rule and SQL13/model161. T45 caller integration in progress; no new PG/harness."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7347,15 +7363,15 @@
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "ACTUAL_APPLY02_COMPLETED_START24_ISSUED",
+            "state": "SERVICE24_ACTUAL_CLEAN_STOP_AND_ORIGINAL_AUTH_RESTORED",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Materialize original key COMPLETED0/18.59s/7306 at14:44:55. apply01 FAILED pre-auth; no intent/custody/capture/container/boot proved actual14:55. apply02 actual15:14:29 COMPLETED0/8.4398s, finite auth fields readback/container exited/PGpidabsent at readback. Source driver native8.23.1getTransactionStatus verified RO, no patch. Start24 authorizedbf90, awaiting actualstart+sameROdescribe; no install/REALwrite."
+            "work": "Service24 started15:21:20; readonly describe15:24:55 rejected FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED before DB connection/install. Stop originalkey completed15:45:38; restore originalkey completed15:50:39, exact original two-role verifier/expiry privately verified, no natural expiry substitution. FinalRO15:52:57 containersStopped/PGpidabsent/portabsent/unitinactive/sourceDataPreserved; no install/REAL keys submitted. Never repeat completed operational jobs."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "CONTROLLED_SERVICE24_START_ISSUED_NOT_IMPORTED",
+          "formalR3": "STOPPED_ORIGINAL_AUTH_RESTORED_PENDING_NECESSARY_INSTALL_INTERFACE_FIX",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7368,19 +7384,18 @@
           "latestPolicySha256": "cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "normalcode/issuer exacthandoff\u2192service24/materialization/install/currentbinding\u2192actual approvedREALfirstbatch originalkeyreadback",
+          "nextCheckpointScope": "freeze/review actual install interface delta/caller before next controlled service",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-apply02-maintenance-successor",
-            "files": 58,
-            "bytes": 1785454,
-            "manifestSha256": "c73d1f2eefb588bb0b3ad51285cc7f4bc90c40da69b43b56388d561087b707e7",
-            "reviewSha256": "dd7c958825f6b0a11944aa6403331901e6f4f3e8990988f4a434e4ca5e3be17d"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-service24-closed-original-auth-restored",
+            "files": 8,
+            "bytes": 23959,
+            "manifestSha256": "63f2e7be2381226df17938a8dda646d13ae2d4b447be4eadeb4881c40c587285"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "APPLY02_POLICY_ACTUAL_REGISTERED_AND_AUTH_FIELDS_CONFIRMED_START_ISSUED",
-            "work": "Original apply01 failed before intent/container/auth due wrong public SHA literals; two root/public object-equal actual receipts corrected, original FAILED preserved. New apply02 exact-source policy CAS independently passed and actually published d23dbb59/cb384d21/da4303 at15:11:10; original policy/dispatcher audited. New finite window issued15:09:43; actual apply02 readback confirmed. Start24 authoritybf90fa60 issued15:19:14, actual currentC/install/writer still pending."
+            "state": "SERVICE24_PRESERVATION_ACTUALLY_COMPLETE_NEXT_SOURCE_PENDING",
+            "work": "Actual stopcdb604d1/restore6d34548c/finalRO19fdf998 confirm stopped and original auth restored. No install authorization/real writer submit. Next service/version/finite windows only after exact D1/T45 small delta and narrow source review."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7396,9 +7411,10 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "actual service24 C/current epoch and same-source RO install descriptor",
-            "exact nine-field and outer install authority then actual13ACK/catalog capture",
-            "actual approved REAL BATCHED full writer/verify and quantity-money-stock-relationship reconciliation plus backup/core business gate"
+            "D1 root-loader/installed154-upgrade target03 and matching T45 caller freeze/review",
+            "exact small source version and legitimate next service/finite maintenance authority",
+            "actual readonly descriptor then exact9field/install authorization and actual13ACK/catalog capture",
+            "actual approved REAL BATCHED writer/verify/reconciliation and backup/core business gates"
           ],
           "normalSource": {
             "db05": {
@@ -7441,7 +7457,8 @@
             "restorationDeadline": "2026-11-15T17:04:43.153Z",
             "policyExpiresAt": "2026-11-15T17:09:43.153Z",
             "roleAuthoritySha256": "87b03e56eaaebd524d4fb17955fee4c77de2ee68ba000e978ff0dfc8a80c6496",
-            "startAuthoritySha256": "bf90fa60f69519b27c9da11d1133d3544850a72218ac26029bb8574aea30130c"
+            "startAuthoritySha256": "bf90fa60f69519b27c9da11d1133d3544850a72218ac26029bb8574aea30130c",
+            "previous24Closed": true
           }
         },
         "independentDeltaReviewer": "QB",

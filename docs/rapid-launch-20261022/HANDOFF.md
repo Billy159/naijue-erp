@@ -7465,3 +7465,7 @@ T45 actual14:37:54.887Z原audit读回REGISTERED_NO_PHASE_SUBMITTED，dispatcher9
 ## 2026-11-15T23:22:00+08:00 — 源码物化与维护认证实际完成；service24启动授权已交唯一T45
 物化原key实际14:44:55 COMPLETED0/18.59s、operatorReady7306；原apply01因两处public路径错绑root字节SHA在intent/容器/认证变更前失败，实际boundary e601f3…确认无intent/custody/capture/boot/旧label容器，PGpid无。旧FAILED完整保留。仅以新运维apply02及准确两publicSHA与必要引用后继，真实业务INIT/批key、381源码/archivef361、物化均不改/不重跑。实际Linux pg8.23.1原生getTransactionStatus/_txStatus已按受保护源码核清，不新增桥接或driver变更。
 新有限90/92/115/120窗口15:09:43.153Z实发；15:11:10原audit确认d23dbb59/cb384d21/da4303准确发布，旧policydc1197与旧dispatcher9b267各保存审计原字节。apply02实际15:14:29.671Z COMPLETED0/8.4398s，有限认证字段读回确认、维护容器退出、正式PG仍停于该读回；证据edea955b…（不冒native COMMIT ACK）。app短暂BadRequest后仅按原回执续办，CAS未重放。23:19已据实际apply签start24/bf90fa60，随后需实际C/epoch/同版ROdescribe再签13层安装和真实批，未提前签或宣称业务写入。58文件1785454B检查点manifestc73d1f2e…，本轮无新演练/旧范围复验。此前fff29本地检查点push因网络慢失败，远端上次确认514359；本次合并后再尝试准确push，未报远端已更新。
+
+
+## 2026-11-15T23:57:00+08:00 — service24实际停稳并恢复原认证；仅修必要安装接口
+服务24实际15:21:20启动成功；只读安装描述15:24:55在连接数据库前报FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED，正式安装/真实writer均未提交。原20分钟新装目标窗口亦不足完整安装预算，未伪造时间或强行放行。保全stop原key实际15:45:38 COMPLETED0/3.9616s；restore原key实际15:50:39 COMPLETED0/7.3704s，两角色原verifier与expiry在私下实际核对恢复，不以自然过期冒充。最终15:52:57只读确认3容器停、PGpid/56791端口无、activeunits空、原数据身份/index/source7306保持；原两业务key两grant均ABSENT，根卷273929068544B可用。D1只修3文件root元数据/已安装154目标及compile，普通运行guard、原新装时间规则与13SQL/161模型不变；T45协作准确caller和小版本，不新演练。源码/调用准备完成后才起下一合法受控服务。此前4076c52推送本轮已实际exit0确认，未称本轮已导入。

@@ -1,0 +1,46 @@
+{
+  "format": "SOURCE_CHECKPOINT_V1",
+  "scope": "Actual service24 start then read-only installation refusal, clean stop and original auth restoration; no install/REAL writes",
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/start24/READBACK-01.json",
+      "bytes": 6688,
+      "sha256": "ecba5fe34fbb92e59fc6e15fbb0926dbdd91eea9d389bd5cb4a8228351a2d448"
+    },
+    {
+      "path": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/stop24/READBACK-01.json",
+      "bytes": 5245,
+      "sha256": "cdb604d134c271ff1d284ce64fc6419c898c9ea1513ab49176a994df3beb1c74"
+    },
+    {
+      "path": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/restore24/READBACK-01.json",
+      "bytes": 3026,
+      "sha256": "6d34548caa2d95b9f418659e387027ee5beb6a197480808a9331a4347f734c81"
+    },
+    {
+      "path": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/SERVICE24-FINAL-CLOSED-155257.json",
+      "bytes": 1367,
+      "sha256": "19fdf99815616bfcefa17de3363c577ca4fe4225333cf74ebc1a9ce542b8f665"
+    },
+    {
+      "path": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/RESULT-SERVICE24.json",
+      "bytes": 4070,
+      "sha256": "ff9aa5713836ccd0a25713f84d1bd3ca3d58b23e06683a1ebac1ed7339ed35ca"
+    },
+    {
+      "path": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/install24/describe-diagnostic02/READONLY-DESCRIBE.json",
+      "bytes": 451,
+      "sha256": "95388a1a27a871e4cab606e78cf847cac4fc8b260c25bcc422f11b2f2bbfe7d3"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-stop-window-02/normal05-preserve-stop-input.json",
+      "bytes": 1123,
+      "sha256": "bf05e3ef3f55f93cba708def6b463a7072835f17f2cc770280c64d96805469be"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-restore-window-01/host-authorization.json",
+      "bytes": 1989,
+      "sha256": "0079eeac5409bec8712c5988383dc0aa118161dbf86d8cb05e3dbfc90d075b10"
+    }
+  ]
+}

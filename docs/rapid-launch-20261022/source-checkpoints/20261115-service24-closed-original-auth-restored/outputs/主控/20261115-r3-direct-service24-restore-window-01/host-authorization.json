@@ -1,0 +1,33 @@
+{
+  "authorizationReference": "Restore the original two database role authentication fields on the stopped data directory.",
+  "containerName": "t45-r3-ordinary24-auth-restore-20261115-01",
+  "dataDirectoryDevice": 66304,
+  "dataDirectoryInode": 13502421,
+  "expiresAt": 1794758638935,
+  "format": "T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1",
+  "hostPorts": [],
+  "hostSourceSha256": "de6e0a05755b226287c40182b26f7e68704bbd2d31b5aa820636a23fe3194531",
+  "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+  "independentReviewSha256": "dd7c958825f6b0a11944aa6403331901e6f4f3e8990988f4a434e4ca5e3be17d",
+  "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+  "maximumOperationSeconds": 300,
+  "networkMode": "none",
+  "phase": "restore",
+  "policySha256": "25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757",
+  "requestKey": "t45-r3-ordinary24-auth-restore-20261115-01",
+  "rolesAuthoritySha256": "87b03e56eaaebd524d4fb17955fee4c77de2ee68ba000e978ff0dfc8a80c6496",
+  "rolesSourceSha256": "cfbbf358e714d98f21125e15cad56ffc29092a912e751c7da3f1fe4ce6351229",
+  "service": {
+    "containerId": "f855a86b0eab87bc6ec273386e566c3b93c67f560d90392318edaa15b3a74187",
+    "containerStartedAt": "2026-11-15T15:21:17.835078029Z",
+    "postmasterStart": "2026-11-15 15:21:19.205528+00",
+    "proofSha256": "c8f0ac90edac8b9113fa721f89af62ae487722c87820503205bbee1e23e1d96a",
+    "serviceKey": "t45-first-r3-native-service-start-20261115-24"
+  },
+  "startsAt": 1794757738935,
+  "stopCleanupSha256": "6762749b456f83beecad3d318da73d037715bb6cf9a59c1f45f0a307a8fa801e",
+  "stopRequestKey": "t45-r3-ordinary24-preserve-stop-20261115-01",
+  "stopResultSha256": "24c937badca67b63d07d13a7e976dc6433c0468dc7de50cf100f20a6e5f096a0",
+  "stopTerminalSha256": "0a9ea80f2c52494c584e2dc7999766e725e604c9ec7d12c92af7424d1eb83a39",
+  "writerTerminalSha256": "ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e"
+}

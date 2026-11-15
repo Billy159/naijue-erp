@@ -1,0 +1,65 @@
+{
+  "activeOperationUnits": [],
+  "allOwnedServiceAndAuthContainersStopped": true,
+  "blockingCode": "FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED",
+  "businessImportExecuted": false,
+  "checkedAtUTC": "2026-11-15T15:52:57.471264+00:00",
+  "evidence": {
+    "apply02": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/apply24-02/READBACK-01.json",
+      "sha256": "edea955b0a19ef305b8b227ae5cb35864046d1a6c4b69ad8f4e4e03778181447"
+    },
+    "failedApply01": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/apply24/READBACK-01.json",
+      "sha256": "21dc200cb51f754b16f70bd02f66a8b0a43368082321498f5df086c6ac27142d"
+    },
+    "finalClosed": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/SERVICE24-FINAL-CLOSED-155257.json",
+      "sha256": "19fdf99815616bfcefa17de3363c577ca4fe4225333cf74ebc1a9ce542b8f665"
+    },
+    "materialize": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/materialize24/READBACK-02.json",
+      "sha256": "60db4f1978edad869045269a9199aaf879a78b0a209395e25d8bdddc0ae91a23"
+    },
+    "restore": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/restore24/READBACK-01.json",
+      "sha256": "6d34548caa2d95b9f418659e387027ee5beb6a197480808a9331a4347f734c81"
+    },
+    "rootMetadataFailure": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/install24/describe-diagnostic02/READONLY-DESCRIBE.json",
+      "sha256": "95388a1a27a871e4cab606e78cf847cac4fc8b260c25bcc422f11b2f2bbfe7d3"
+    },
+    "start": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/start24/READBACK-01.json",
+      "sha256": "ecba5fe34fbb92e59fc6e15fbb0926dbdd91eea9d389bd5cb4a8228351a2d448"
+    },
+    "stop": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/stop24/READBACK-01.json",
+      "sha256": "cdb604d134c271ff1d284ce64fc6419c898c9ea1513ab49176a994df3beb1c74"
+    }
+  },
+  "exactTarget": {
+    "database": "erp_fresh35_20261110_r3",
+    "databaseOid": "16393",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7706545564479176741"
+  },
+  "formalBusinessAccepted": false,
+  "installSubmitted": false,
+  "materializationSha256": "7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3",
+  "membershipsOrRoleAttributesChanged": false,
+  "naturalExpiryCountedAsRestoration": false,
+  "operatorSourceSetSha256": "20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d",
+  "ordinaryBusinessOpened": false,
+  "originalAuthRestoredByActualOfflineReadback": true,
+  "pending": "D1 exact root metadata/installed154 target delta and matching fixed caller; original source/data/INIT preserved",
+  "pgdataPidAbsent": true,
+  "realWriterSubmitted": false,
+  "runtimeAuthChanged": false,
+  "schemaUpgradeExecuted": false,
+  "selectedRulesSha256": "7d73a49d87581328209a375710f1dda3eda7cc7d98cd94f574d10db00ab7fa8f",
+  "sourceArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "sourceRowsSha256": "3a91211700deef7fa0857a70fad3dee0ccdae560b20a09e52ad9549790db024e",
+  "state": "SERVICE24_CLOSED_AND_ORIGINAL_AUTH_RESTORED_INSTALL_BLOCKED_BY_ROOT_METADATA_INTERFACE",
+  "targetPortAbsent": true
+}
