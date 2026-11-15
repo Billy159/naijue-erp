@@ -1,0 +1,14 @@
+{
+  "alreadyAppliedLifetimeExtended": false,
+  "diffSha256": "140d36191b6a3af8b3af94557b6867a5e01a0b3dbad9bc1734729a56aeab3590",
+  "noFakeCleanup": true,
+  "oldRolesAuthorityUnchanged": true,
+  "otherSixPhaseRulesUnchanged": true,
+  "pythonSyntaxExitCode": 0,
+  "restoreKeyUnchanged": true,
+  "rolesLeafSha256": "61271c2e99811a61dcb1a79a92827374c60bfbd9fcef1c3014339c85a8175dcb",
+  "rulesSha256": "595c84ac318d41caea5ef405b2a5af0ab8043cb9665bfab0dc0e56fe296a361a",
+  "serverActions": 0,
+  "sourceSha256": "1ec970993a2f899f186a54b6f9552a3a3301825e39feb7e101335444c687ea03",
+  "state": "SOURCE_ONLY_EXACT_FAILED25_BEFORE_CONTAINER_RESTORE_UNISSUED"
+}

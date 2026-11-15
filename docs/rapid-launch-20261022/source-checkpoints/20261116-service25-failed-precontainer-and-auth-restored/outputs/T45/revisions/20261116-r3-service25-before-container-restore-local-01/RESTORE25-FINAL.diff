@@ -1,0 +1,77 @@
+--- registered25/ordinary05_roles_job.py
++++ exact-precontainer-restore25/ordinary05_roles_job.py
+@@ -412,7 +412,74 @@
+     for path,pin in fixed:
+         need(sha(ops.read_file(path,65536,True))==pin,'ORDINARY20_ORIGINAL_FAILED19_HISTORY_CHANGED')
+ 
++def verify_exact_failed25_before_container(ops, control, a):
++    need(a['service'] is None and a['stopRequestKey']==CURRENT_KEY
++         and a['writerTerminalSha256'] is None and a['policySha256'] is None
++         and a['stopCleanupSha256'] is None
++         and a['stopTerminalSha256']=='79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738'
++         and a['stopResultSha256']=='c2a5ee898726e66ebb53e309cb39d803069fa1336f19fd5c50b016187f5e90be',
++         'ORDINARY25_EXACT_BEFORE_CONTAINER_RESTORE_SCOPE_REQUIRED')
++    require_failed19_history(ops,control)
++    terminal=ops.read_file(WORKER/CURRENT_KEY/'r3-outer-terminal.json',65536,True)
++    public=ops.read_file(control/'results'/(CURRENT_KEY+'.json'),65536,False,False)
++    t=ops.strict(terminal)
++    need(sha(terminal)==a['stopTerminalSha256'] and terminal==public
++         and (t['jobId'],t['taskId'],t['grantId'],t['status'],t['exitCode'])==
++         (CURRENT_KEY,'T45','b16447fbc81f4d64','FAILED',2), 'ORDINARY25_BEFORE_CONTAINER_TERMINAL_DIFFERS')
++    job=WORKER/CURRENT_KEY
++    need(sha(ops.read_file(job/'manifest.json',65536,True))=='90c2b1759ec3f7255b2ec763884654f07e9f545a278d145a1e7734fc612f4187'
++         and sha(ops.read_file(job/'bundle/service-start-authorization.json',65536,True))==
++             '33fd1f33f42fa4cbb8a3724fb4bedae65c1ce646404e56997db9c69a6d1a41d3',
++         'ORDINARY25_FAILED_START_MANIFEST_OR_AUTHORITY_DIFFERS')
++    request=ops.strict(ops.read_file(control/'requests'/(CURRENT_KEY+'.json'),65536,False,False))
++    need(request['jobId']==CURRENT_KEY and request['taskId']=='T45' and request['grantId']=='b16447fbc81f4d64'
++         and request['script']=='normal_service05_after08.py'
++         and request['args']==['33fd1f33f42fa4cbb8a3724fb4bedae65c1ce646404e56997db9c69a6d1a41d3']
++         and request['manifestSha256']=='6dd9be96cd577b12fe660ccbf6e80435dce71ca63ba9b947f1d2e6c2fa220b18',
++         'ORDINARY25_FAILED_START_ORIGINAL_REQUEST_DIFFERS')
++    raw=ops.read_file(job/'results/normal-service-result.json',65536,True)
++    published=ops.read_file(control/'jobs'/CURRENT_KEY/'results/normal-service-result.json',65536,False,False)
++    need(sha(raw)==a['stopResultSha256']
++         and sha(published)=='10afe3a1ffe08b295773a9277fd3949b4752159a682c05e63f92f466ca66a896'
++         and ops.strict(raw)==ops.strict(published)=={'automaticRetry':False,'requestKey':CURRENT_KEY,
++             'safeCode':'NORMAL_NEW_PRIVATE_SOURCE_DIFFERS','status':'NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY'},
++         'ORDINARY25_BEFORE_CONTAINER_RESULT_DIFFERS')
++    pins={'normal_service05_after08.py':'3ea7979bd8e7a6ad69247331dad49b9c348c281df70733f0f64bd03b169df1dc',
++          'normal_service05_after08_proof.py':'f2cd59a11222656b8697367abd20e790dbbc1ddd4edbadf838fe6584ceec446b',
++          'fresh35-production-carrier.py':'40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
++          'r3_05_readonly.py':'521af9e82cdde7cc878986dd8181dc7c2b14debad18aad1af79bf3bc334e0445'}
++    for name,pin in pins.items():
++        need(sha(ops.read_file(job/'bundle'/name,262144,True))==pin,'ORDINARY25_BEFORE_CONTAINER_SOURCE_DIFFERS')
++    boot=ROOT/'state/native-services'/CURRENT_KEY
++    st=boot.lstat()
++    need(stat.S_ISDIR(st.st_mode) and (st.st_uid,st.st_gid,stat.S_IMODE(st.st_mode))==(0,0,0o700)
++         and boot.resolve()==boot and set(x.name for x in boot.iterdir())==set(pins)-{'r3_05_readonly.py'},
++         'ORDINARY25_BEFORE_CONTAINER_BOOT_DIFFERS')
++    for name in set(pins)-{'r3_05_readonly.py'}:
++        need(sha(ops.read_file(boot/name,262144,True))==pins[name],'ORDINARY25_PARTIAL_BOOT_SOURCE_DIFFERS')
++    need(not any(present(p) for p in (job/'results/normal-service-intent.json',
++         job/'results/normal-service-incomplete.json',ROOT/'authority/fresh35-current-production-service-v2-service-25.json',
++         ROOT/'state/fresh35-first-production-20261110-r3/data/postmaster.pid')),
++         'ORDINARY25_BEFORE_CONTAINER_START_EVIDENCE_PRESENT')
++    need(not command(['docker','ps','-a','--no-trunc','--filter','label=t45.operation='+CURRENT_KEY,'--format','{{.ID}}'],5).strip()
++         and not command(['docker','ps','-a','--no-trunc','--filter','name=^/'+CURRENT_NAME+'$','--format','{{.ID}}'],5).strip()
++         and not command(['/usr/bin/ss','-H','-ltn','sport = :56791'],5).strip(),
++         'ORDINARY25_BEFORE_CONTAINER_PROCESS_OR_PORT_PRESENT')
++    need(not command(['/usr/bin/systemctl','list-units','--no-legend','--plain',
++         '--state=active,activating,deactivating','naijue-erp-op-b16447fb-9ef232981f33.service'],5).strip(),
++         'ORDINARY25_FAILED_START_UNIT_STILL_ACTIVE')
++    own_unit='naijue-erp-op-b16447fb-'+sha(a['requestKey'].encode())[:12]+'.service'
++    active=command(['/usr/bin/systemctl','list-units','--no-legend','--plain',
++         '--state=active,activating,deactivating','naijue-erp-op-b16447fb-*.service',
++         'naijue-erp-op-5cc58239-*.service'],5).decode().splitlines()
++    need(all(line.split()[0]==own_unit for line in active if line.strip()),
++         'ORDINARY25_OTHER_OPERATION_ACTIVE')
++
++
+ def verify_failed_start_closed(ops, control, a):
++    if a['stopCleanupSha256'] is None:
++        verify_exact_failed25_before_container(ops,control,a)
++        return
+     need(a['writerTerminalSha256'] is None and a['policySha256'] is None
+          and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+                  ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),

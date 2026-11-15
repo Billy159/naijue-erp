@@ -1,0 +1,38 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/r3_direct25_batched.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/r3_direct25_restore_precontainer.py
+@@ -605,8 +605,9 @@
+                     pin, terminal = self.old.preservation_terminal(JOBS['start'], {'FAILED'})
+                     self.need(terminal.get('exitCode') == 2
+                               and authority.get('stopTerminalSha256') == pin
+-                              and all(self.core.digest(authority.get(k)) for k in
+-                                      ('stopResultSha256', 'stopCleanupSha256')),
++                              and (all(self.core.digest(authority.get(k)) for k in
++                                      ('stopResultSha256', 'stopCleanupSha256'))
++                                   or self.exact_failed25_precontainer_authority(authority, pin)),
+                               'EXACT_FAILED_START_CLEANUP_BINDING_REQUIRED')
+                     self.core.stopped_generation(self.old.service)
+                 else:
+@@ -615,6 +616,23 @@
+                 self.core.stopped_generation(self.old.service)
+         return 'direct25-batched-' + phase
+ 
++    def exact_failed25_precontainer_authority(self, authority, terminal_pin):
++        c = self.core
++        key = 't45-first-r3-native-service-start-20261116-25'
++        if not (JOBS['start'] == key and terminal_pin == '79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738'
++                and authority.get('stopTerminalSha256') == terminal_pin
++                and authority.get('stopResultSha256') == 'c2a5ee898726e66ebb53e309cb39d803069fa1336f19fd5c50b016187f5e90be'
++                and authority.get('stopCleanupSha256') is None):
++            return False
++        root = c.read(self.private(key) / 'results/normal-service-result.json')
++        public = c.read(Path(self.cfg['control']) / 'jobs' / key / 'results/normal-service-result.json', root=False)
++        value = c.strict(root)
++        return (c.sha(root) == authority['stopResultSha256']
++                and c.sha(public) == '10afe3a1ffe08b295773a9277fd3949b4752159a682c05e63f92f466ca66a896'
++                and value == c.strict(public)
++                and value == {'requestKey': key, 'safeCode': 'NORMAL_NEW_PRIVATE_SOURCE_DIFFERS',
++                              'status': 'NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY', 'automaticRetry': False})
++
+     def finish(self, phase):
+         if phase in {'direct25-batched-' + name for name in JOBS}:
+             return None

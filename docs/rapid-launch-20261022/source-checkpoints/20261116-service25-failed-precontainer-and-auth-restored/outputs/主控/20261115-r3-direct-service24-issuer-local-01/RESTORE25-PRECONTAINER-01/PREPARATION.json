@@ -1,0 +1,43 @@
+{
+  "state": "FROZEN_LOCAL_RESTORE25_PRECONTAINER_SOURCE_PENDING_REVIEW",
+  "exactFailedStartTerminal": "79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738",
+  "boundarySha256": "a58dd1912b5b92ea84dba41934d8f96ca586037c2b4b209323f334bd796740cb",
+  "remaining": [
+    "QB exact narrow review",
+    "fresh T45 CAS basis"
+  ],
+  "serverActions": 0,
+  "authorityIssued": false,
+  "roleLifetimeExtended": false,
+  "selectedPhasesPath": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/PHASES-RESTORE25-FINAL.UNISSUED.json",
+  "selectedPhasesSha256": "595c84ac318d41caea5ef405b2a5af0ab8043cb9665bfab0dc0e56fe296a361a",
+  "changes": [
+    {
+      "file": "r3_direct25_restore_precontainer.py",
+      "sha256": "ec89f4f472f559e621974b8f8187308b1de0d4049ddb568c9a1aa5cd545aadea",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE25-ROOT03-03/r3_direct25_batched.py",
+      "parentSha256": "57d8ea9c363f4c4db743b99bfacafdafecdb644d8e65894a416ec2a418aa2810"
+    },
+    {
+      "file": "register_cas.py",
+      "sha256": "3e1e4428ab9a3eb7b3ee142db8142fad93432da4d99bcc75de642ef345e1c0df",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/register_cas.py",
+      "parentSha256": "27f6f760d3484fd02d155de05129c9f56f3a438fb5fc46de46cac2358c89a45e"
+    },
+    {
+      "file": "admin_exec.RESTORE25-UNREGISTERED.py",
+      "sha256": "494cdc8042dd225ef89cc075fbc632536a05b7fc3ffb5f87b5a382e1afbb95ae",
+      "parent": "outputs/主控/20261116-r3-direct25-registration-window-01/admin_exec.ISSUED.py",
+      "parentSha256": "67c8261575cc36f73098934a9715899ae6cfbe27dc4e064fe2ab2dbe21815f4d"
+    },
+    {
+      "file": "original-cas-restore25-carrier.UNISSUED.py",
+      "sha256": "c6102b9eeda36ddb161b2aa6df57921f65895afd2468a4408348c736c5c0d1de",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/original-cas-direct24-carrier.UNISSUED.py",
+      "parentSha256": "4e1a72ec46857ba535a2d00b6372f58c4303f99d201a8d2a696334bccd9abfd8"
+    }
+  ],
+  "policyClockUnchanged": true,
+  "otherSixRulesUnchanged": true,
+  "restoreJobKeyUnchanged": true
+}

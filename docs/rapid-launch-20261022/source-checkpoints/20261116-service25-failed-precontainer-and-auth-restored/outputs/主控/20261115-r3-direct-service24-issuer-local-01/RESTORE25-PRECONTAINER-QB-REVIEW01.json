@@ -1,0 +1,15 @@
+{
+  "format": "EXACT_INDEPENDENT_SOURCE_REVIEW_RECEIPT_V1",
+  "reviewerThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "state": "SCOPED_SOURCE_STATIC_PASS",
+  "sourcePinsSha256": "239a89347f79ec12849024c8dfa001c791a7f6af01f1fdaf92a288abdc0b0ca8",
+  "t45RulesSha256": "595c84ac318d41caea5ef405b2a5af0ab8043cb9665bfab0dc0e56fe296a361a",
+  "messages": [
+    {
+      "turnId": "01a1e00f-213d-76e3-9718-71965e219b0a",
+      "text": "QB完成 RESTORE25-PRECONTAINER-01 与已PASS T45最终595c的本次必要恢复配对窄核：SCOPED SOURCE STATIC PASS，无新增已确认阻断。0PG/0server/未调用issuer或恢复脚本/未改文件，不重旧源/SQL/业务测试。\n准确PINS239a89347f79ec12849024c8dfa001c791a7f6af01f1fdaf92a288abdc0b0ca8；11成员全实hash吻合，6py均AST通过；PREPARATION4个actual parent SHA准确且4份diff独立重建逐字一致。registrar3e1e4428…/moduleec89f4f4…/template494cdc…/carrier c6102…绑定互合，原67c826…实际dispatcher父源准确，key集合整个未变。\nmodule只在现有restore+serviceNone+stopKey为已提交25FAILED2的分支中增加精确terminal79c365/rootc2a5/public10afe/safeCode与cleanupNone替代条件；旧有container失败digest/cleanup路径保持。真实无container/boot/source/manifest/request/PG/端口/unit条件继续由已核T45host1ec在实际恢复前复核，不造cleanup或伪旧成功。\nregistrar保原锁及完整BASIS/identity，当前old policyab150/module57d/dispatcher67c固定，新独占module后pending policy精确identity CAS、最终dispatcher精确identity CAS，oldpolicy/dispatcher/identities/authority/publishintent/result审计保留；UNKNOWN无回滚/重放。已完成mat/apply与startFAILED分别固定terminal/root-public，精确三文件boot及hash/mode、无创建证据/PGpid/label、无active；其余install/writer/stop/restore及另一grant全部absent。policy validate_restore_only逐项保证原format/grant/startsAt/expiresAt/其余6rule/restorekey与limits不变，唯一变restore wrapper pin。\n独立用实际old policyab150与T45 witness595c重建元数据配对，仅restore普通host pin3d14→1ec变化；实际old roles12189dff…SHA吻合，未新造角色或期限。registration issuerb4e662…只沿原policy/原role字节签有限登记，截止<=原restorationDeadline；restoreissuer9df18…只据原f9af/a58dd元数据签同一restore25 serviceNone/79c/c2a/cleanupNone，expiry<=原restorationDeadline和原policyexpiry，并由host.validate及实际host复核边界。无新apply/start、无延90/92/115期限。basis53a58598…字段确有basisMismatches[]/executionLockMatchesTrue/presentUnsubmittedKeys[]/noactive；后续完整actualPins/identity/lock/fresh15min校验保持。该只读快照非我实时server观察，实际签发仍须freshness有效。\n本轮本现实恢复分支及registry/issuer配对无未关闭源码发现；SOURCE PASS不代表已登记或已恢复原认证，后续实际回执由你/T45出具。"
+    }
+  ],
+  "serverExecutionProven": false,
+  "authenticationRestorationProven": false
+}

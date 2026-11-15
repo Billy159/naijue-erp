@@ -1,0 +1,136 @@
+{
+  "format": "SOURCE_CHECKPOINT_V1",
+  "scope": "Actual service25 precontainer startup failure, exact preservation-only restore sources and completed original auth restoration; no install/REAL writes; active authority packet excluded",
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/FINAL-SOURCE-RESULT.json",
+      "bytes": 649,
+      "sha256": "86cc577cd72b95295cf6e4d61c2b56c04510d5d12134317c0145224ff34fb16a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/PHASES-RESTORE25-FINAL.UNISSUED.json",
+      "bytes": 10631,
+      "sha256": "595c84ac318d41caea5ef405b2a5af0ab8043cb9665bfab0dc0e56fe296a361a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/RESTORE-PRECONTAINER-CANDIDATE-01/bundle/ordinary05_roles_job.py",
+      "bytes": 33729,
+      "sha256": "1ec970993a2f899f186a54b6f9552a3a3301825e39feb7e101335444c687ea03"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/RESTORE25-FINAL.diff",
+      "bytes": 5765,
+      "sha256": "140d36191b6a3af8b3af94557b6867a5e01a0b3dbad9bc1734729a56aeab3590"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/RESTORE25-REGISTRATION-BASIS-20261115T163458Z.json",
+      "bytes": 19556,
+      "sha256": "53a58598f05a69c24ba87a7eb3ecbff3f2e522276d78d0b06f7e221e6a264ae5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/RESTORE25-REGISTRATION-READBACK-20261115T163745Z.json",
+      "bytes": 4562,
+      "sha256": "eed7c86541e66d01fdd977b02103125a4184557319b03ba7ce316af16cc1a8b5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/SERVICE25-FINAL-CLOSED-164313.json",
+      "bytes": 1316,
+      "sha256": "5c95158571c7bcd86caa226179032df54a871dda7a35d07dd249c843113ab553"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-before-container-restore-local-01/actual-restore25/READBACK-01.json",
+      "bytes": 3026,
+      "sha256": "22f55d081284630711dd625978a7bd1adccc5c212db2886781f9e4e8e5376d8d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/REGISTRATION25-READBACK-20261115T161818Z.json",
+      "bytes": 4515,
+      "sha256": "e5728eeec41c5f769f298311db94c37c4437f016262d17c6cdff35e09005a243"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/START25-BOUNDARY-20261115T162527Z.json",
+      "bytes": 3457,
+      "sha256": "a58dd1912b5b92ea84dba41934d8f96ca586037c2b4b209323f334bd796740cb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/actual25/apply/READBACK-01.json",
+      "bytes": 3043,
+      "sha256": "8be16a99c83c7695a305eadcd8e20bbb77cec63dd56d77e1f6db811528a7b7c4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/actual25/materialize/READBACK-02.json",
+      "bytes": 3867,
+      "sha256": "57f5c56f1398feb28905a16ca62cf72ef8517374f7ce0cbdbdf19d171f4af9f9"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/actual25/start/READBACK-01.json",
+      "bytes": 1525,
+      "sha256": "f9af8e019506eb9964089a030a528de13ae133af5a4b9b281fe056d9345239c4"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/PINS.json",
+      "bytes": 1146,
+      "sha256": "239a89347f79ec12849024c8dfa001c791a7f6af01f1fdaf92a288abdc0b0ca8"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/PREPARATION.json",
+      "bytes": 2206,
+      "sha256": "c1a29c203b487a11908e83ea798849ac29a189970094fcaf7299de76ddd907ba"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/admin_exec.RESTORE25-UNREGISTERED.py",
+      "bytes": 40403,
+      "sha256": "494cdc8042dd225ef89cc075fbc632536a05b7fc3ffb5f87b5a382e1afbb95ae"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/admin_exec.RESTORE25-UNREGISTERED.py.diff",
+      "bytes": 3266,
+      "sha256": "596fd0b97826a671ce024e95e2acbf5004bce3046d0e42dfafbbc226ab610876"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/issue_registration.py",
+      "bytes": 6484,
+      "sha256": "b4e662d7f36a65521858b601ee40073fb64cdf49deb06ea039a56530e7d1bac0"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/issue_restore.py",
+      "bytes": 5471,
+      "sha256": "9df18bfc7cb7ac9c1d3dd9a397526c76f201e5f083a5e4bdcaf7e96efd0f07ed"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/original-cas-restore25-carrier.UNISSUED.py",
+      "bytes": 2658,
+      "sha256": "c6102b9eeda36ddb161b2aa6df57921f65895afd2468a4408348c736c5c0d1de"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/original-cas-restore25-carrier.UNISSUED.py.diff",
+      "bytes": 2539,
+      "sha256": "8aabdbd672b4563a280a8a583e524c070416ce39c4abdde62854f6418ffa7981"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/r3_direct25_restore_precontainer.py",
+      "bytes": 44868,
+      "sha256": "ec89f4f472f559e621974b8f8187308b1de0d4049ddb568c9a1aa5cd545aadea"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/r3_direct25_restore_precontainer.py.diff",
+      "bytes": 2583,
+      "sha256": "73ef53b1cb77f6755dead4094b8b334de5f0bb89b16d1c93420c28725446aa6a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/register_cas.py",
+      "bytes": 22725,
+      "sha256": "3e1e4428ab9a3eb7b3ee142db8142fad93432da4d99bcc75de642ef345e1c0df"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/register_cas.py.diff",
+      "bytes": 18599,
+      "sha256": "02ffa5ec927c8c8ea4ef9c18bfa9abd5ae2252063a82652be50b74b6562a074c"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-QB-REVIEW01.json",
+      "bytes": 3081,
+      "sha256": "3e8b3adf53b80c5db0fcf8b477f2d0272d01572100df40bb1fd8bf73dcfec655"
+    }
+  ]
+}

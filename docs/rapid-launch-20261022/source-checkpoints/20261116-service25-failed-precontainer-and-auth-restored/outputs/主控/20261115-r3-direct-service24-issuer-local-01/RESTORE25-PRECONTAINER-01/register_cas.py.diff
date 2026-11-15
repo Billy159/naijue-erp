@@ -1,0 +1,170 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/register_cas.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/RESTORE25-PRECONTAINER-01/register_cas.py
+@@ -8,13 +8,13 @@
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-'+GRANT)
+ H=B/'r3-05-write-continuity'
+ LOCK=B.with_name('grant-5cc58239751e4e2a')/'execution.lock'
+-ENTRY=B/'r3-direct24-apply02-registration-source-20261115-01/register_cas.py'
+-AUDIT=B/'r3-direct24-apply02-registration-cas-20261115-01'
+-OLD_DISPATCHER='9b267171846867b645363e1735271154c3f26dab35c7ab3ae16e07fde43a72de'
++ENTRY=B/'r3-restore25-precontainer-registration-source-20261116-01/register_cas.py'
++AUDIT=B/'r3-restore25-precontainer-registration-cas-20261116-01'
++OLD_DISPATCHER='67c8261575cc36f73098934a9715899ae6cfbe27dc4e064fe2ab2dbe21815f4d'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+-HELPER='da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef'
+-TEMPLATE='ff0aa0c64fcd504b368a06ea7869d262676f9934e8eb903310c492004942a317'
+-JOBS={'materialize': 't45-r3-batched-source-materialize-20261115-01', 'apply': 't45-r3-ordinary24-auth-apply-20261115-02', 'start': 't45-first-r3-native-service-start-20261115-24', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary24-preserve-stop-20261115-01', 'restore': 't45-r3-ordinary24-auth-restore-20261115-01'}
++HELPER='ec89f4f472f559e621974b8f8187308b1de0d4049ddb568c9a1aa5cd545aadea'
++TEMPLATE='494cdc8042dd225ef89cc075fbc632536a05b7fc3ffb5f87b5a382e1afbb95ae'
++JOBS={'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'apply': 't45-r3-ordinary25-auth-apply-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-25', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary25-preserve-stop-20261116-01', 'restore': 't45-r3-ordinary25-auth-restore-20261116-01'}
+ BASIS={P/'r3_original05_absent22_continuation.py':'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',
+  H/'original05-absent22-continuation.json':'27c9b661d7ade353bb42be2b23f104879462749c117779d971d3c4d5b9cd6282',
+  P/'r3_original05_unknown22_inspect.py':'32aecd9f5ee7079f243b78f89d5a58e051610e16e10490cb8a12538a74a9863f',
+@@ -42,12 +42,20 @@
+  B/'jobs/t45-r3-ordinary19-auth-restore-20261114-01/r3-outer-terminal.json':'c4b2c12d626712ed4eb9409560539d2bed6ce42e77922990d7f033ce60aab24a',
+  B/'jobs/t45-r3-ordinary19-auth-restore-20261114-01/results/maintenance-auth-result.json':'2dce7c2a3b0315c9291f7f8c9076879dcadb2d2427ef71c1883653cf254e994d',
+  B/'jobs/t45-r3-ordinary19-auth-restore-20261114-01/results/maintenance-auth-cleanup.json':'61b30a3bec3239c283faff791e876989e3bc4544e25f2611109cc24e603d1919'}
+-BASIS.update({P/'r3_direct24_batched.py':'d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef',H/'direct24-batched-real.json':'dc11974510ceaed5038ed9adbceed9fe7dfc43f810ef96442955cccc264f6c3c',B/'jobs/t45-r3-ordinary24-auth-apply-20261115-01/r3-outer-terminal.json':'6d2005bfd5cc61e34fa5e25eb0e5ef58b7addfa0490306ef634221c591e63461',B/'jobs/t45-r3-ordinary24-auth-apply-20261115-01/results/maintenance-auth-result.json':'77f6c66f5252fb5238e4f3cc1ed8dff030efd00413c09876d09d8fa63f217b21',B/'jobs/t45-r3-ordinary24-auth-apply-20261115-01/bundle/ordinary05_roles_job.py':'0d677daf02c1d567295efab3965dd8b90ce755188bb78b9b75cc8c56dea27451'})
+-NEW_MODULE=P/'r3_direct24_batched_apply02.py';NEW_POLICY=H/'direct24-batched-real.json'
++BASIS.update({P/'r3_direct24_batched.py':'d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef',H/'direct24-batched-real.json':'cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898',B/'jobs/t45-r3-ordinary24-auth-apply-20261115-01/r3-outer-terminal.json':'6d2005bfd5cc61e34fa5e25eb0e5ef58b7addfa0490306ef634221c591e63461',B/'jobs/t45-r3-ordinary24-auth-apply-20261115-01/results/maintenance-auth-result.json':'77f6c66f5252fb5238e4f3cc1ed8dff030efd00413c09876d09d8fa63f217b21',B/'jobs/t45-r3-ordinary24-auth-apply-20261115-01/bundle/ordinary05_roles_job.py':'0d677daf02c1d567295efab3965dd8b90ce755188bb78b9b75cc8c56dea27451'})
++BASIS.update({P/'r3_direct24_batched_apply02.py':'da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef',P/'r3_direct25_batched.py':'57d8ea9c363f4c4db743b99bfacafdafecdb644d8e65894a416ec2a418aa2810',H/'direct25-batched-real.json':'ab15005aa29548fa85bce41b989295d50f94900595c43b4dee794006c55f24bf'})
++BASIS.update({B/'jobs/t45-r3-batched-root03-source-delta-20261116-01/r3-outer-terminal.json':'db91c1ea3f1553308937748844d74a40dae1debd13747ef7d9ccb08e44aa08f8',
++ B/'jobs/t45-r3-batched-root03-source-delta-20261116-01/results/batched-source-materialization.json':'cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec',
++ B/'jobs/t45-r3-ordinary25-auth-apply-20261116-01/r3-outer-terminal.json':'4ebe484ccbe9af4784f950bd361b54b432946339703c9d363ccbd27c51daee3b',
++ B/'jobs/t45-r3-ordinary25-auth-apply-20261116-01/results/maintenance-auth-result.json':'6ea0bd1c0bd6631e20c4ef462181ffc7f489ad038ab68abe0c8ce32cd0c735e9',
++ B/'jobs/t45-r3-ordinary25-auth-apply-20261116-01/results/maintenance-auth-cleanup.json':'383bc999c1f7f05d017517f541c7d7a86f0fec3f3b0b2533c5ed6334eeb8395c',
++ B/'jobs/t45-first-r3-native-service-start-20261116-25/r3-outer-terminal.json':'79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738',
++ B/'jobs/t45-first-r3-native-service-start-20261116-25/results/normal-service-result.json':'c2a5ee898726e66ebb53e309cb39d803069fa1336f19fd5c50b016187f5e90be'})
++NEW_MODULE=P/'r3_direct25_restore_precontainer.py';NEW_POLICY=H/'direct25-batched-real.json'
+ FILES={'module','policy','dispatcherTemplate'}
+ LOCK_ID=[66304,12224849,0,0,420,1,0,1791828307183940015,1791828307183940015]
+ def need(v,c):
+- if not v:raise ValueError('DIRECT24_APPLY02_REGISTRATION_'+c)
++ if not v:raise ValueError('RESTORE25_PRECONTAINER_REGISTRATION_'+c)
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def now():return time.time_ns()//1000000
+ def pack(v):return(json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode()
+@@ -67,7 +75,7 @@
+   need(f.write(raw)==len(raw),'SHORT_WRITE');f.flush();os.fchown(f.fileno(),0,0);os.fchmod(f.fileno(),mode);os.fsync(f.fileno())
+  sync(path.parent)
+ def scope():
+- return dict(format='T45_DIRECT24_APPLY02_REGISTRATION_CAS_V1',grantId=GRANT,
++ return dict(format='T45_RESTORE25_PRECONTAINER_REGISTRATION_CAS_V1',grantId=GRANT,
+   oldDispatcherSha256=OLD_DISPATCHER,originalCoreSha256=CORE,newModuleSha256=HELPER,dispatcherTemplateSha256=TEMPLATE,
+   newModulePath=str(NEW_MODULE),newPolicyPath=str(NEW_POLICY),publishOrder=['module','policy','dispatcher'],
+   jobKeys=JOBS,sourceRegistrationOnly=True,businessDatabaseWrites=0,oldHistoryChanged=False)
+@@ -94,33 +102,33 @@
+  return result
+ 
+ def quiet_unused():
+- oldkey='t45-r3-ordinary24-auth-apply-20261115-01'
+- t=json.loads(read(B/'jobs'/oldkey/'r3-outer-terminal.json')[0]);r=json.loads(read(B/'jobs'/oldkey/'results/maintenance-auth-result.json')[0])
+- need(t.get('jobId')==oldkey and t.get('status')=='FAILED' and t.get('exitCode')==2 and t.get('phaseStarted') is True and r.get('requestKey')==oldkey and r.get('safeCode')=='MAINT_JOB_PREDECESSOR_STOP_OR_RESTORE_EVIDENCE_DIFFERS','EXACT_FAILED_APPLY_PREFLIGHT_REQUIRED')
+- need(json.loads(read(C/'jobs'/oldkey/'results/maintenance-auth-result.json',1000)[0])==r,'FAILED_APPLY_PUBLIC_OBJECT_DIFFERS')
+  host=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+- need(not any(os.path.lexists(p) for p in (B/'jobs'/oldkey/'results/maintenance-auth-intent.json',host/'state/native-services/ordinary24-auth-20261115-01',host/'state/fresh35-first-production-20261110-r3/ordinary24-auth-capture-20261115-01',host/'state/native-services/t45-first-r3-native-service-start-20261115-24',host/'state/fresh35-first-production-20261110-r3/data/postmaster.pid')),'PRE_AUTHENTICATION_BOUNDARY_CHANGED')
+- q=subprocess.run(['/usr/bin/docker','ps','-aq','--filter','label=t45.operation='+oldkey],capture_output=True,timeout=5)
+- need(q.returncode==0 and not q.stdout.strip() and not q.stderr,'OLD_AUTH_CONTAINER_PRESENT_OR_UNKNOWN')
++ need(not os.path.lexists(host/'state/fresh35-first-production-20261110-r3/data/postmaster.pid'),'PG_PID_PRESENT')
+  for grant in(GRANT,'5cc58239751e4e2a'):
+   control=C.with_name('grant-'+grant);worker=B.with_name('grant-'+grant)
+   for phase,key in JOBS.items():
+-   if phase=='materialize' and grant==GRANT:
+-    root=read(B/'jobs'/key/'r3-outer-terminal.json')[0];public=read(C/'results'/(key+'.json'),1000)[0];v=json.loads(root)
+-    need(root==public and v.get('jobId')==key and v.get('status')=='COMPLETED' and v.get('exitCode')==0,'ACCEPTED_MATERIALIZATION_TERMINAL_REQUIRED')
+-    proof=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-20261115-01/source-materialization.json')
+-    need(sha(read(proof)[0])=='7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3','ACCEPTED_MATERIALIZATION_PROOF_REQUIRED')
+-    continue
++   if grant==GRANT and phase in ('materialize','apply','start'):
++    pin,status={'materialize':('db91c1ea3f1553308937748844d74a40dae1debd13747ef7d9ccb08e44aa08f8','COMPLETED'),'apply':('4ebe484ccbe9af4784f950bd361b54b432946339703c9d363ccbd27c51daee3b','COMPLETED'),'start':('79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738','FAILED')}[phase]
++    raw=read(worker/'jobs'/key/'r3-outer-terminal.json')[0];public=read(control/'results'/(key+'.json'),1000)[0];v=json.loads(raw)
++    need(sha(raw)==pin and raw==public and v.get('jobId')==key and v.get('status')==status and v.get('exitCode')==(2 if phase=='start'else 0) and v.get('phaseStarted') is True,'EXACT_COMPLETED_OR_FAILED25_PREDECESSOR_REQUIRED');continue
+    need(not any(os.path.lexists(p)for p in(control/'requests'/(key+'.json'),control/'requests'/(key+'.tmp'),control/'jobs'/key,control/'results'/(key+'.json'),worker/'jobs'/key)),'KEY_ALREADY_PRESENT_READ_ORIGINAL_ONLY')
+- q=subprocess.run(['/usr/bin/systemctl','list-units','--no-legend','--plain','--state=active,activating,deactivating','naijue-erp-op-b16447fb-*.service','naijue-erp-op-5cc58239-*.service'],capture_output=True,timeout=5)
+- need(q.returncode==0 and not q.stdout.strip()and not q.stderr,'OPERATION_UNIT_ACTIVE_OR_UNKNOWN')
++ key=JOBS['start'];result=read(B/'jobs'/key/'results/normal-service-result.json')[0];public=read(C/'jobs'/key/'results/normal-service-result.json',1000)[0]
++ need(sha(result)=='c2a5ee898726e66ebb53e309cb39d803069fa1336f19fd5c50b016187f5e90be' and sha(public)=='10afe3a1ffe08b295773a9277fd3949b4752159a682c05e63f92f466ca66a896' and json.loads(result)==json.loads(public),'EXACT_FAILED_START25_RESULT_REQUIRED')
++ boot=host/'state/native-services'/key
++ expected={'normal_service05_after08.py':'3ea7979bd8e7a6ad69247331dad49b9c348c281df70733f0f64bd03b169df1dc','normal_service05_after08_proof.py':'f2cd59a11222656b8697367abd20e790dbbc1ddd4edbadf838fe6584ceec446b','fresh35-production-carrier.py':'40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360'}
++ st=boot.lstat();need(stat.S_ISDIR(st.st_mode)and st.st_uid==0 and stat.S_IMODE(st.st_mode)==0o700 and set(p.name for p in boot.iterdir())==set(expected),'EXACT_BEFORE_CONTAINER_BOOT_REQUIRED')
++ for name,pin in expected.items():
++  raw,meta=read(boot/name);need(sha(raw)==pin and meta[4]==0o400,'EXACT_BEFORE_CONTAINER_SOURCE_REQUIRED')
++ need(not any(os.path.lexists(p)for p in(B/'jobs'/key/'results/normal-service-intent.json',B/'jobs'/key/'results/normal-service-incomplete.json',host/'authority/fresh35-current-production-service-v2-service-25.json')),'UNEXPECTED_START25_CREATION_EVIDENCE')
++ q=subprocess.run(['/usr/bin/docker','ps','-aq','--filter','label=t45.operation='+key],capture_output=True,timeout=5);need(q.returncode==0 and not q.stdout.strip()and not q.stderr,'START25_CONTAINER_PRESENT_OR_UNKNOWN')
++ q=subprocess.run(['/usr/bin/systemctl','list-units','--no-legend','--plain','--state=active,activating,deactivating','naijue-erp-op-b16447fb-*.service','naijue-erp-op-5cc58239-*.service'],capture_output=True,timeout=5);need(q.returncode==0 and not q.stdout.strip()and not q.stderr,'OPERATION_UNIT_ACTIVE_OR_UNKNOWN')
+ def load(raw,path,name):
+  m=ModuleType(name);m.__file__=str(path);exec(compile(raw,str(path),'exec'),m.__dict__);return m
+ def original_wrapper_basis(raw,cfg):
+  wrapper=load(raw,P/'admin_exec.py','original_absent20_wrapper')
+  _,prior=wrapper.r3_continuity(cfg)
+  need(prior.__class__.__name__=='Original02AbsentContinuation'
+-  and prior.policy_sha256=='dc11974510ceaed5038ed9adbceed9fe7dfc43f810ef96442955cccc264f6c3c',
++  and prior.policy_sha256=='ab15005aa29548fa85bce41b989295d50f94900595c43b4dee794006c55f24bf',
+   'EXACT_EXISTING_ABSENT21_WRAPPER_REQUIRED')
+  readonly=prior.readonly
+  need(readonly.__class__.__name__=='ReadOnlyRecovery'
+@@ -140,7 +148,7 @@
+ 
+ def validate_policy_delta(policy, previous):
+  need(set(policy)=={'format','grantId','startsAt','expiresAt','jobs'}
+-  and policy['format']=='T45_R3_DIRECT24_BATCHED_REAL_V1'
++  and policy['format']=='T45_R3_DIRECT25_BATCHED_REAL_V1'
+   and policy['grantId']==previous['grantId']==GRANT
+   and type(policy['startsAt']) is type(policy['expiresAt']) is int
+   and 0 < policy['startsAt'] < policy['expiresAt'] <= policy['startsAt']+7200000
+@@ -164,6 +172,13 @@
+            and type(v)is str and re.fullmatch('[a-f0-9]{64}',v) for k,v in rule['bundlePins'].items()),
+    'EXACT_DIRECT_REAL_RULE_REQUIRED')
+ 
++def validate_restore_only(policy,previous):
++ need(all(policy[k]==previous[k] for k in ('format','grantId','startsAt','expiresAt')) and set(policy['jobs'])==set(previous['jobs'])==set(JOBS),'ORIGINAL_FINITE_POLICY_CHANGED')
++ need(all(policy['jobs'][p]==previous['jobs'][p] for p in JOBS if p!='restore'),'OTHER_PHASE_RULE_CHANGED')
++ need(all(policy['jobs']['restore'][k]==previous['jobs']['restore'][k] for k in ('jobId','script','authorityLeaf','timeoutSeconds','deadlineField')),'RESTORE_JOB_ID_OR_LIMIT_CHANGED')
++ before=previous['jobs']['restore']['bundlePins'];after=policy['jobs']['restore']['bundlePins']
++ need(set(before)==set(after) and all(after[k]==before[k] for k in before if k!='ordinary05_roles_job.py') and after['ordinary05_roles_job.py']!=before['ordinary05_roles_job.py'],'ONLY_RESTORE_WRAPPER_PIN_MAY_CHANGE')
++
+ def render_dispatcher(files):
+  need(sha(files['module'])==HELPER and sha(files['dispatcherTemplate'])==TEMPLATE,'EXACT_WRAPPER_SOURCE_REQUIRED')
+  policy=json.loads(files['policy']);need(set(policy)=={'format','grantId','startsAt','expiresAt','jobs'}and set(policy['jobs'])==set(JOBS),'EXACT_NEW_POLICY_KEYS_REQUIRED')
+@@ -184,17 +199,18 @@
+   cfg=core.strict(core.read(P/'grant.json'))
+   original_wrapper_basis(old[P/'admin_exec.py'][0],cfg)
+   policy=core.strict(files['policy'])
+-  validate_policy_delta(policy,core.strict(old[H/'original05-absent22-continuation.json'][0]))
+-  need(policy['startsAt']==a['startsAt'] and now()<policy['expiresAt']<=int(cfg['expiresAtEpoch']*1000),
++  validate_policy_delta(policy,core.strict(old[NEW_POLICY][0]))
++  validate_restore_only(policy,core.strict(old[NEW_POLICY][0]))
++  need(policy['startsAt']==core.strict(old[NEW_POLICY][0])['startsAt'] and now()<policy['expiresAt']<=int(cfg['expiresAtEpoch']*1000),
+        'EXACT_REGISTRATION_POLICY_WINDOW_REQUIRED')
+   dispatcher=render_dispatcher(files)
+   need(now()+30000<a['expiresAt'],'REGISTRATION_WINDOW_TOO_SHORT')
+   AUDIT.mkdir(mode=0o700);sync(AUDIT.parent)
+   put(AUDIT/'authorization.json',authority);put(AUDIT/'old-dispatcher.bin',old[P/'admin_exec.py'][0]);put(AUDIT/'old-policy.bin',old[NEW_POLICY][0]);put(AUDIT/'old-identities.json',pack(a['oldIdentities']))
+-  result={'status':'REGISTRATION_UNKNOWN_READ_ORIGINAL_AUDIT_ONLY','published':[],'businessDatabaseWrites':0,'automaticReplay':False};pending=P/'.direct24-apply02-dispatcher.pending'
++  result={'status':'REGISTRATION_UNKNOWN_READ_ORIGINAL_AUDIT_ONLY','published':[],'businessDatabaseWrites':0,'automaticReplay':False};pending=P/'.restore25-precontainer-dispatcher.pending'
+   try:
+    put(NEW_MODULE,files['module'],0o644);result['published'].append('module')
+-   policy_pending=H/'.direct24-apply02-policy.pending'
++   policy_pending=H/'.restore25-precontainer-policy.pending'
+    put(policy_pending,files['policy'],old[NEW_POLICY][1][4]);snapshot(a);quiet_unused()
+    need(now()<a['expiresAt'] and read(NEW_POLICY)==old[NEW_POLICY],'EXACT_POLICY_IDENTITY_CAS_FAILED')
+    os.replace(policy_pending,NEW_POLICY);sync(H);result['published'].append('policy')
+@@ -208,10 +224,10 @@
+    need(read(P/'admin_exec.py')[0]==dispatcher,'PUBLISHED_DISPATCHER_READBACK_DIFFERS')
+    snapshot(a,sha(dispatcher),sha(files['policy']));quiet_unused();installed_wrapper(read(P/'admin_exec.py')[0],cfg)
+    need(identity(os.fstat(lock.fileno()))==LOCK_ID,'ORIGINAL_LOCK_CHANGED_AFTER_PUBLICATION')
+-   result.update(status='EXACT_DIRECT24_APPLY02_REGISTERED_NO_NEW_PHASE_SUBMITTED',
++   result.update(status='EXACT_RESTORE25_PRECONTAINER_REGISTERED_NO_NEW_PHASE_SUBMITTED',
+     moduleSha256=HELPER,policySha256=sha(files['policy']),dispatcherSha256=sha(dispatcher),oldHistoryPreserved=True,originalLockPreserved=True,phaseSubmitted=False,rolesExecuted=False,postgresStarted=False)
+   except BaseException as error:
+-   result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT24_APPLY02_REGISTRATION_[A-Z0-9_]+',str(error))else None)
++   result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('RESTORE25_PRECONTAINER_REGISTRATION_[A-Z0-9_]+',str(error))else None)
+    try:result['observedDispatcherSha256']=sha(read(P/'admin_exec.py')[0])
+    except Exception:result['observedDispatcherSha256']=None
+   put(AUDIT/'result.json',pack(result));return result
+@@ -221,4 +237,4 @@
+   and re.fullmatch('[a-f0-9]{64}',sys.argv[1]),'FIXED_ROOT_ENTRY_REQUIRED')
+  os.umask(0o077);packet=sys.stdin.buffer.read(16*1024**2+1);need(len(packet)<=16*1024**2,'BOUNDED_PACKET_REQUIRED')
+  a,files,authority=decode(json.loads(packet),sys.argv[1]);result=register(a,files,authority)
+- print(json.dumps(result,sort_keys=True));raise SystemExit(0 if result['status']=='EXACT_DIRECT24_APPLY02_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)
++ print(json.dumps(result,sort_keys=True));raise SystemExit(0 if result['status']=='EXACT_RESTORE25_PRECONTAINER_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)

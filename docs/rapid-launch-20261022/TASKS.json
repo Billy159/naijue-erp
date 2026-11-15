@@ -7347,6 +7347,22 @@
             "actualBasisSha256": "88096ff533c30f1e5fe8f0d52e6fd63c2afa5f01c7a6afc63a8c17b6585c81c7",
             "issuedManifestSha256": "92a8766884ae76a480de8a590ae9a6268a4497268afce2289920834acba90a08",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_SERVICE25_PRECONTAINER_FAILURE_AND_ORIGINAL_AUTH_ACTUAL_RESTORED_20261116",
+            "state": "PRESERVATION_ACTUALLY_COMPLETE_NO_INSTALL_OR_REAL",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service25-failed-precontainer-and-auth-restored",
+              "files": 26,
+              "bytes": 251670,
+              "manifestSha256": "35f54aadc41fb379f622fd17a24121c5dd6fb700f9f19a505493c673fec46126"
+            },
+            "actualStartFailureSha256": "f9af8e019506eb9964089a030a528de13ae133af5a4b9b281fe056d9345239c4",
+            "actualBoundarySha256": "a58dd1912b5b92ea84dba41934d8f96ca586037c2b4b209323f334bd796740cb",
+            "restoreSourcePinsSha256": "239a89347f79ec12849024c8dfa001c791a7f6af01f1fdaf92a288abdc0b0ca8",
+            "actualRestoreSha256": "22f55d081284630711dd625978a7bd1adccc5c212db2886781f9e4e8e5376d8d",
+            "finalClosedSha256": "5c95158571c7bcd86caa226179032df54a871dda7a35d07dd249c843113ab553",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7375,20 +7391,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "D1_ROOT03_MAIN03_T45_ACTUAL_CONSUMER02_SCOPED_SOURCE_STATIC_PASS",
-            "work": "Main first candidate start issuer output-as-input P1 fixed one historical-template line in02; actual basis field consumer one-line03. Other6 sources reused. New T45 actual caller/materializer/host-transport closed against D1 exact3source and original381metadata without rehashing inherited378. Source PASS only,0PG/rootAPI/runtime."
+            "state": "EXACT_PRECONTAINER_RESTORE_SOURCE_AND_REGISTRY_ISSUER_SCOPED_SOURCE_PASS",
+            "work": "595c/1ec host and main239a registry/module/registration+restore issuer exact small deltas SOURCE STATIC PASS; preserved all6 other rules/original policy clock/roles12189. Actual restoration receipts separately supplied by sole T45; no business/PG installation acceptance claimed."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "PHASES02_ACTUAL_CALLER_AND_SMALL_DELTA_SOURCE_PASS_REGISTRATION_PACKET_ISSUED",
+            "state": "SERVICE25_PRECONTAINER_FAILED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NEXT_SOURCE_ONLY",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Final PHASES02 76a7d2bf/OPDELTA80bd5d9e actual root caller/materializer/necessary transport and source/service25/credential25 references independently source PASS; full381 archive retained and only3payloads157508B sent next, 378inherit original7306 proof. Real install/writer keys unchanged and proved absent. Fresh basis16:08:33 +exact5receipt supplement16:12:07, merged88096. Actual registration pending; server stays stopped until prepared phases advance."
+            "work": "Actual registry e572 then delta57f5/cdcaf COMPLETED0/19.636s and apply8be16 COMPLETED0/6.597s. Actual start25 FAILED2/0.6307s due stale READONLY_SHA before container create; f9af/a58dd prove partialboot3files/no C/no container/no PG. Exact restore-only host1ec/PHASES595c/main239a source PASS and actual registryeed7. Original restore25 actual16:41:36 COMPLETED0/6.497s 22f55, original verifier/expiry privately restored, no natural expiry substitution. FinalRO16:43:12 5c951 confirms ownauthcontainersstopped, noactive/PGpid/port, partialboot3/sourcecdcaf+7306/originalindexidentity held, realkeysabsent. Next only local legitimate service preparation/affected8-sourcepin-chain; no replay/no new rehearsal."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "STOPPED_ORIGINAL_AUTH_RESTORED_SERVICE25_REGISTRATION_ISSUED_NOT_IMPORTED",
+          "formalR3": "STOPPED_ORIGINAL_AUTH_RESTORED_START25_FAILED_BEFORE_CONTAINER_NO_INSTALL_OR_REAL",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7397,23 +7413,22 @@
             "guard deletion",
             "unknown outcome replay with changed keys"
           ],
-          "latestDispatcherSha256": "d23dbb5932b749d232fe32aa514fabc77f250a0197506df321ebe89b2ad9effa",
-          "latestPolicySha256": "cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898",
+          "latestDispatcherSha256": "3b309fadb99f436754dbaacaf63e2ab9612b235f09b4622f0af82398b90dd87a",
+          "latestPolicySha256": "8c6a2a9fa827da4fd8a81cdfce37c379d743886a02170724cc6ca221129a3afa",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "actual registry then small source delta\u2192finite auth/service25\u2192actual descriptor and install; no new rehearsal",
+          "nextCheckpointScope": "prepare/freeze necessary legitimate successor service/caller after actual restore; source703 and original data/keys reused; no failed25 replay",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service25-root03-final-sources",
-            "files": 83,
-            "bytes": 2259360,
-            "manifestSha256": "71a335e71a9f856b14cf52a4ac35119d369f8f9947431e77ca71475048f354b0",
-            "reviewSha256": "96ab259bb19849b74822e042f1b47ff81818ec4e5a5680127b6c1453990674ff"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-service25-failed-precontainer-and-auth-restored",
+            "files": 26,
+            "bytes": 251670,
+            "manifestSha256": "35f54aadc41fb379f622fd17a24121c5dd6fb700f9f19a505493c673fec46126"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "NEW_FINITE_SERVICE25_REGISTRATION_PACKET_ISSUED_AWAITING_ACTUAL_CAS",
-            "work": "Source03 PINSd6b0470f/phasef337/registrar89de reviewed. Exact policy25/module new O_EXCL and dispatcher actuald23CAS; old24cb384/da430/source7306 preserved. Genuine human authority836d unchanged. Issued16:16:33.232Z registration92a87668/envelope3e6db87c/carrierd64227b0, policyab15005a/dispatcher67c82615; T45 sole submission, UNKNOWN inspect original audit/no replay. No install/writer authority issued."
+            "state": "RESTORE25_ACTUALLY_COMPLETE_NEXT_LEGITIMATE_SERVICE_SOURCE_PENDING",
+            "work": "Restore-only packet855cb/1559 issued16:36:56 preserving original finite clocks. Actual registrationeed7 matched3b309/8c6/ec89; actual restoreauthority2581 serviceNone/failed25terminal79c/rootc2a/cleanupNone, no fabricated stopped-container receipt. Actual22f55/final5c951 restore original auth, preserve failed25 and partialboot. Next actual service must retain last real successful physical generation24/c8f0, no fake25C; reuse source703/cdcaf and INIT/original businesskeys."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7429,8 +7444,8 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "actual service25 registry CAS then exact source delta materialization",
-            "actual finite auth maintenance/start and new currentC/epoch/readonly descriptor",
+            "T45 next legitimate operational source/service with affected8-source hash-reference chain fixed and original703/cdcaf reused",
+            "actual finite maintenance/start/currentC and readonly installed154 descriptor",
             "exact9field/outer install authority then actual13ACK/catalog capture",
             "actual approved REAL BATCHED writer/verify/reconciliation and backup/core business gates"
           ],
@@ -7481,7 +7496,8 @@
             "backupAdminUntil": "2026-11-15T17:48:33.232Z",
             "restorationDeadline": "2026-11-15T18:11:33.232Z",
             "policyExpiresAt": "2026-11-15T18:16:33.232Z",
-            "roleAuthoritySha256": "12189dffbce7859f698b4d914beca7133459d74b841e344623388ff184a00b6b"
+            "roleAuthoritySha256": "12189dffbce7859f698b4d914beca7133459d74b841e344623388ff184a00b6b",
+            "closedAndOriginalAuthRestored": true
           }
         },
         "independentDeltaReviewer": "QB",
