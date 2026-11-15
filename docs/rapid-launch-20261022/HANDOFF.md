@@ -7298,3 +7298,6 @@ T45parent/index准备3c55cd33、facts4a7922f3、retained5361f1fd只本机，真�
 
 
 2026-11-15 10:30 CST：r909 的本机候选与只读预检已独立复核，沿用户同类隔离作业持续授权签入 issued SHA 9bda668993aa6d966ae3d2b875ea1f79d8ee45e9eba1593010e6b8d549dbde09。T45 唯一 waiter 91882 仅登记一次，entry 5bc971ce…、准确 policy 原键读回 6e5c4b7d… 一致；本机 confirm 继承旧路径导致第一次只读 assert，修正证据保留，QB 仅核该新增差分。新物料作业原键已 QUEUED，26 member upload 完成；尚未记录 native 安装/测量通过。2 CPU、6 GiB、900秒、根卷28 GiB保留不变，正式R3停库。旧 r908 失败及清理证据保留，正式上线未完成。
+
+
+2026-11-15 10:37 CST：r909 物料一次完成16.356秒，360源与本轮26件摘要一致；S/B均原键完成。实际CID5f405612…/C0 UTC02:32:03.365334584，PG17.11/OID16393/systemid7708220449284452382；正确ENTRY+BIRTH listener85140自动0，postbirth原件d9f4b747…，原consumer63824单次POST储存及INSTALL原键发布，外相0.291秒仅发布事实。现场actual11 b9c4680a…确认11层逐层COMMIT，guardian1fc85325… NODE_EXITED0/reaped44878ms，最终SQL807b1bd4…、owner1e94a903…/protected847162a7…、model25108354/catalog6767ec6e/specb9e5064e。QB已仅核confirm路径差分PASS，原文回执14080bd0…；原48095只读失败保留。当前2CPU/6GiB/cgroup已实核，但全511234编译、首499 STEP、回滚独立ABSENT、实际停库清理仍待本轮终态，均未先记PASS。watcher14073只按原键收尾，正式R3停库且上线未完成。

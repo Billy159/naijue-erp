@@ -6220,12 +6220,30 @@
               "materialize": "QUEUED_ONCE_ORIGINAL_KEY",
               "formalR3": "STOPPED_NOT_IMPORTED"
             }
+          },
+          {
+            "group": "r909-eleven-install-20261115-0237",
+            "status": "ACTUAL_ELEVEN_COMMITS_MEASUREMENT_PENDING",
+            "evidence": {
+              "actualInstallationSha256": "b9c4680a2c080f12ad2e44553f7a42dd3baf5aa9429a70da3833a79004e47545",
+              "postBirthIssuedSha256": "d9f4b747e4896ebcb3220c8e2270f7bb7698cc601e5df4baa4b3960af08e0bed",
+              "confirmPathReviewSha256": "14080bd0aaf24e4e2f442594b82960e003e2f7e6362ac5f19a8e8bb2b65a9cd2",
+              "containerId": "5f40561217ade322ce7bb2e5bafbc8a85212ea7395f04a890ca013bb21f05249",
+              "containerStartedAt": "2026-11-15T02:32:03.365334584Z",
+              "installElapsedMs": 44878,
+              "layersCommitted": 11,
+              "finalLayerSqlSha256": "807b1bd4a5901f8013ab5b84c4d6db138d224221bebe00be4edcc6b044734d59",
+              "fullCompile": "PENDING",
+              "firstMaster": "PENDING",
+              "rollback": "PENDING",
+              "cleanup": "PENDING"
+            }
           }
         ],
         "currentInFlight": {
           "owner": "T45",
-          "work": "r909 11-layer party-operation-locator synthetic measurement; materialize submitted once, original-key collection only; fresh native install/measurement/rollback/cleanup pending",
-          "independentReview": "QB reviewing only readonly confirm policy-path correction",
+          "work": "r909 actual 11 layers committed; whole 511234-row compile, first-master ACK, independent rollback absence and stop/cleanup pending; finish watcher14073 original keys only",
+          "formalR3": "STOPPED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",
