@@ -1,0 +1,31 @@
+{
+  "state": "ACTUAL_REGISTRATION27_AND_AUTH_APPLY_COMPLETED_START_AUTHORITY_ISSUED_NO_START_RECEIPT_YET",
+  "noCredentialOrAuthorityBodies": true,
+  "files": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-basis-local-01/REGISTRATION-BASIS27-20261115T183028Z.json",
+      "bytes": 26255,
+      "sha256": "8a22b99a3c1aa6dcaaf7e30d7f10edbc83b55c208f5c59d491fa4d44c6957cda"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-basis-local-01/RESULT-FRESH-BASIS27.json",
+      "bytes": 1726,
+      "sha256": "91f786c113e6e161a4bd46a616092d2efa9bf7c8a00993e7f3cce5bcb9481a99"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/REGISTRATION27-READBACK-20261115T183319Z.json",
+      "bytes": 4537,
+      "sha256": "652863b72af3604268c5f283857cd36e0457f8ead3c57c09e213efd145a47d78"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/apply/READBACK-01.json",
+      "bytes": 3135,
+      "sha256": "8a1300f9857565cf9fb7274c9eebaf4a1aad35fedcadcecaa31fe3e612d20d7b"
+    },
+    {
+      "path": "outputs/主控/20261116-r3-direct27-registration-window-01/ISSUED.json",
+      "bytes": 1879,
+      "sha256": "72d59045657758442b43ba0fe67a975a77b450a7bb84ff429dd2e529a2f80be4"
+    }
+  ]
+}

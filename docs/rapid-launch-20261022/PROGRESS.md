@@ -1,4 +1,4 @@
-【当前最高优先级 2026-11-16】真人要求上线前完整排查已直接核验（USER-INSTRUCTION d58d62f9）。26原认证已实际恢复3f6255ec，最终现场79ac044c停稳。最终同版正常链已由原QB完整SOURCE STATIC PASS，review e109a51d，Main02 PINS4bc72323/T45 C02 b85ed与reader-r1 2a1541/D1同版准确；仅关闭源码排查hold，下一步T45取fresh实际CAS基线及原grant过期元数据，再由Main签单个有限27窗口。现有goal继续ACTIVE；复用703/cdcaf及原数据/INIT/业务key，不恢复已取消的演练或故障注入，不新建团队。T45唯一serverowner；正式安装、REAL与整体上线均未完成。
+【当前最高优先级 2026-11-16】最终同版完整正常链源码排查已独立PASS（review e109a51d，Main02 PINS4bc72323/T45 b85ed+reader2a1541/D1准确）；27实际CAS登记652863b7及限时认证apply8a1300f9均COMPLETED，原锁/旧源保留。Main已签start27 b6c1611f交唯一T45，等待实际start/C/ACK及genuine描述；没有安装或REAL提交。controller20:01:29.953Z/admin20:03:29.953Z、restore20:26:29.953Z固定不延。goal ACTIVE、业务CLOSED；已完成物化703/cdcaf不重提，原511234行/26类、INIT与业务key保留。若失败只按真实typed收尾/原键核实，不机械换代。
 
 > 当前路线（2026-11-15）：分批独立提交/成功跳过/失败续未完成批。先读 BATCHED-IMPORT-DECISION-20261115.md 与 TASKS.currentInFlight；旧整包单事务路线不再续办。
 
@@ -7186,3 +7186,8 @@ D1准确03 b394bdd9仅3运行源码：root固定元数据factory+独立installed
 26 start实际FAILED2发生在容器前（e5aada/3be269），没有C26；没有安装或REAL提交。原认证随后由T45实际restore26 COMPLETED0（3f6255ec，根944dfa9b/d521106c，cleanup6bfcdbe6，public57aff184），最终只读79ac044c确认无PGpid/56791/active/C26，原数据、旧投影、partialboot及703/cdcaf/index均保留。原26窗口是历史已恢复，不作当前可用凭据。
 真人要求“上线前完整先做个排查”的原消息已直接核验并落d58d62f9。原T45、D1、QB与主控完成最终同版整条正常链源排查，未新建团队或恢复已取消的演练。核输出创建者/既存输入/排他路径、挂载UID模式、字节界限、13事务接口、预算、注册和签发、失败前后实际事实消费者。真实ACK已校验但await返回赋值未完成时恢复会被误拦的具体P1由Main02单文件修复；空正常结果读取、postACK失败handoff、PRE/AFTER恢复形状、writer文件名、新proof27空间等一并最终闭合。QB原轮最终SOURCE STATIC PASS，reviewe109a51d，Main02 PINS4bc72323/T45 PHASESb85ed/reader-r1 2a1541/describe dee8/D1 37323+4b05准确。只关闭源码审查hold，真实27运行、安装/13ACK、整批及上线仍未测不标PASS。
 136初选+2最终报告共138文件源码/回执检查点，未包含有限授权包、凭据或业务大数据。下一步T45一次fresh实际registrar e868基线及原grantExpiry检查，再由Main单个有限窗口推进，原material db91/cdcaf绝不重签，原INIT和业务key继续。已有goal ACTIVE，正式业务CLOSED、正式安装和REAL尚未开始。远端上次确认5c0a7e09，8a6本地checkpoint的push曾网络低速失败；本次正常提交后仅试一次push，按真实结果记录，不强制或改网络。
+
+
+## 2026-11-16T02:37:00+08:00 — 27准确登记与有限认证已实际完成；start已签，等真实运行身份
+T45一次fresh真实basis8a22（18:30:28Z）核62项准确且原grant至12/12，无扩权或延原grant。Main18:31:29.953Z签单一有限27包72d59/envelope424c/authc924/carrier7550/roles4332/applyc495；T45原锁CAS实际COMPLETED，readback652863（18:33:19Z），新dispatcherf411/policy89f492/module45ee准确，旧4474/ae952/1656/锁保留。实际apply27 COMPLETED0/7.493478s，18:35:06.770884Z完成，readback8a1300；rootterminal94933/result396f/publice86d对象一致，cleanup9a241。仅原两role限时字段已readback，不冒native登录或COMMIT验收；runtimeAuth和membership/attributes未变，维护CID9337退出PID0exit0无OOM、unitinactive/无PGpid。
+Main按实际apply签start27 b6c161，18:36:26.097Z至18:51:26.097Z，交T45原成熟runner只提交一次并条件实际C/ACK后用已冻结dee8描述。controller20:01:29.953Z/admin20:03:29.953Z/restore20:26:29.953Z/policy20:31:29.953Z固定不延。没有start完成结论、没有安装/REAL提交。5份公开只读基线/登记/apply及ISSUED元数据共37532B检查点c47a4f，不含授权/凭据正文。原完整源码排查reviewe109不重复，511234行/26类/INIT/原业务key及已完成703/cdcaf物化保留。上一1d662333已实际push exit0。
