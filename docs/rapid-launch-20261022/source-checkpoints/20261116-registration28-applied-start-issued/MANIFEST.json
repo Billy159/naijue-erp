@@ -1,0 +1,17 @@
+[
+  {
+    "bytes": 4549,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/REGISTRATION28-READBACK-01.json",
+    "sha256": "4003a484dc7f9263067a44a48811d8ca0d3df7ff52e61ddf3a5b514d5241e3d3"
+  },
+  {
+    "bytes": 3135,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/apply/READBACK-01.json",
+    "sha256": "d80ab7aad1430ec8a639b09375e0f10096f5e39801528dc7b5127e68da7135cd"
+  },
+  {
+    "bytes": 412,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service28-start-window-01/ISSUED.json",
+    "sha256": "127ab82c418f53102bc481f51a2f59214bd3fb5ba44863e53fb4d18e5d09814b"
+  }
+]

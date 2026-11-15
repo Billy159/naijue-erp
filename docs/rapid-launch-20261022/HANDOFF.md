@@ -7534,3 +7534,7 @@ Main02PINS2e7/module0fa/registrar717/template979/phase1c79/载体af668。77rootB
 
 ## 2026-11-16T05:06:03+08:00 — 28真实本机生成03修复闭合并签发有限包
 Main02实际本机issue因模板字面缺空格失败，未创建目录/authority/服务器动作。Main03只修占位符空格和两级pin；QB按真实消费字面核新差分，最终reviewdef1，旧402a执行适用撤回、历史保留。真实API dryrunb076通过且无文件/服务器。实际新issue21:06:03.042Z通过fresh0755原900s守卫，ISSUED6357。窗口registration21:21/apply21:36/controller22:36/admin22:38/restore23:01/policy23:06Z。T45唯一执行，adapter1dfde三字面已核，先原CAS真实三hash读回，再条件提交apply28一次；当前实际回执待回，无start/install/REAL。检查点仅未签源/差分/真实review/非秘密fresh与ISSUED元数据，无live authority/envelope/已签carrier。原27真恢复停稳，旧完成键不重放，511234行26类/703材料保留，业务CLOSED，goal ACTIVE。
+
+
+## 2026-11-16T05:10:25+08:00 — 28登记及有限角色设置真完成，start已签待回
+原CAS恰一次carrier0、真实4003读回dispatcher6b6b/policy56bb/module0fa，原历史/锁保留、pending absent。apply28原键一次真COMPLETED0/7.87995s at21:08:50.562Z，d80ab7在21:09:17.750Z实读，controller/admin期限与2873原件一致；runtimeAuth/membership/roleattr未变。此为offline认证字段实读，不冒native登录或业务COMMIT。维护CIDb902真停/PIDabsent/exit0/noOOM，原数据保留，无otherops。当前28有限字段已应用而未真还原，旧27还原marker不可替代。Main03据actualapply核4320全链余量，start原件b563于21:10:25.157Z签发并交唯一T45，一次原start28内采集genuine describe，reader4c3e只读已存输出；无旧同步Node重跑、无703重物化、无install/REAL权限。普通启动/150/170/110/900实际结果待回，业务CLOSED，goal ACTIVE。
