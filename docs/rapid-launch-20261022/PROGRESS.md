@@ -7000,3 +7000,8 @@ T45parent/index准备3c55cd33、facts4a7922f3、retained5361f1fd只本机，真�
 2026-11-15 10:48 CST：r909 RESULT a529ab40…明确NEED_FIX。11层已COMMIT，但全511234/44682编译后，仅INIT 51940047B/22.471秒ACK；首master499/261183B/ordinal1/request28635fb2…触发57014、0STEP ACK，IMPORT_FAILED/ROLLED_BACK。independent新连接ABSENT且三连接CLOSED；guardian67545027…492004ms exit0/reaped不是业务PASS。新真实PGlog8d6cd7ca…/3191B/25行，UTC02:42:21.441取消在party body12原prefix SELECT，经trigger3/command906/step4，不是r908 IF57；新key集合body58以后未是本次取消点。不能据此推累计耗时/已完成party数或CPU根因，无现场执行计划。
 
 本轮CID5f4056…于02:43:07.975330236实际exit1/nonOOM/PID0，原TERMINAL一次0.245秒。保留与清理f0cd71a6… UTC02:44:35.134：8cleanup全true/active空/lockfree/scratchabsent/两port与PID无/正式R3同代停，memory.peak5633609728B，root274135728128B。old25+AUTH、原选3准确身份及新复制3均保留。typed STOPPED_PREFIX_UNCONFIRMED/cleanupVerifiedtrue/prefixRollbackVerifiedfalse。原compiled scratch/index/fixture原路径已dispose，仅首499标量收据未核完整payload，不重建冒称原件。C改诊断方法，已交D2仅source/现存metadata分析最小可区分方案，不再机械第12层加全编译，不新增server作业或R0。正式导入/核账/备份恢复/公网业务仍未完成。
+
+
+2026-11-15 11:06 CST：D2 source-only报告c8cd6174…核准本轮party body12原prefix取消；旧同版controlled500/P474记录已保留prefix474次8.711769秒/hit18471306、set474次3.576715秒/hit51585，0新PG复跑，仍不能据此认定r909根因/CPU比例。主控已收敛并按standing0c25授权唯一最小本机诊断：同11层原SQL与原4关系rowtype/index、受控500/P474/M501，只运行原prefix与set各474次以观察缓存计划/聚合开销，0MASTER/0全编译/0server；D2正在实现精确probe，QB仅核新增delta，实际准确字节PASS后可一次执行，不再等用户或主控另一张卡。1会话、3GiB scratch、句40秒、总180秒、日志2MiB硬限及计划去值/组件缺失停/回滚清理。此时尚无实现PASS或新PG结果。
+
+已在原容量核算续记本轮实际数据，文件SHA3cd49cf7…：完整编译scratch峰2258677760B（2.10GiB）；12样本可用最低271864639488B（253.19GiB），不是连续精确峰值。收尾后274135728128B（255.31GiB），扣28GiB保留+33GiB逻辑预算余194.31GiB，再做一次已知同批prepare则余192.00GiB。已测阶段最低净增0GiB，28GiB不下调；正式写入/冷备/恢复完整同驻峰值尚待，不记正式容量PASS。超过对应预算的净差额应加/dev/md0p1根卷，开始前刷新值复算。正式上线仍未完成。

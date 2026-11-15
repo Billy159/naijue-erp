@@ -6264,12 +6264,31 @@
               "rootAvailableBytes": 274135728128,
               "formalR3": "STOPPED_NOT_IMPORTED"
             }
+          },
+          {
+            "group": "r909-diagnosis-and-capacity-20261115-0306",
+            "status": "LOCAL_PROBE_IMPLEMENTATION_IN_PROGRESS_NO_NEW_PG",
+            "evidence": {
+              "sourceDiagnosis": "outputs/D2/20261115-r3-r909-source-diagnostic-01",
+              "reportSha256": "c8cd61746b39f02bf6a922c06e8c860b28edab639b22f3547bbfa6e82a19a6c3",
+              "singleDiagnosticPlanSha256": "d8cabe414f9414bb4ce25a13f7116e65f26df61c608de0cf78bddfb780bd01c8",
+              "existingStatsSha256": "dee6b2218aea41424b70fd019a85ff9446d4a0056cffc9b7bb61d624e4640fec",
+              "capacityReportSha256": "3cd49cf733078489992aa2d264acc8fc7dd543e0aff431035422abadf22d2e2c",
+              "rootAvailableBytes": 274135728128,
+              "minimumSampleAvailableBytes": 271864639488,
+              "compileScratchPeakBytes": 2258677760,
+              "retainFreeGiB": 28,
+              "logicalBackupBudgetGiB": 33,
+              "additionalSpaceRequiredForMeasuredStagesGiB": 0
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "source-only diagnosis of r909 actual party body line12 prefix SELECT timeout; identify minimum evidence to distinguish cause before any new SQL or server carrier",
-          "T45": "stopped and cleaned; no new server job queued or authority issued",
+          "work": "implement one local PG17.11 controlled500/P474 diagnostic of unchanged party prefix SELECT and set SELECT; precise frozen probe pending QB delta review",
+          "executionAuthority": "standing0c25; after actual QB PASS for precise implementation, D2 may execute once without another main/user approval; no new PG yet",
+          "bounds": "1session/3GiB scratch/40s statement/180s total/2MiB logs; plan values scrubbed; no new components/no MASTER/no full compile/no server",
+          "T45": "r909 fully stopped/cleaned; no server task queued",
           "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",
