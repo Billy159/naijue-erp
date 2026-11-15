@@ -10566,5 +10566,44 @@
     "C": "Own exact fixture pin, protected purpose/permission binding and integration. New shared files require explicit registration.",
     "QB": "Independent exact delta only.",
     "boundary": "No new DB role, grant, object, migration, business contract, real write, or production change. Both original and successor materials kept."
+  },
+  "r3BatchedImport20261115": {
+    "activatedAt": "2026-11-15 08:07:15 UTC",
+    "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/USER-AUTHORITY.json",
+    "route": "BATCHED_DURABLE_COMMIT_RESUME",
+    "supersedesActiveRoute": "WHOLE_PACKAGE_SINGLE_TRANSACTION",
+    "roles": {
+      "D1": {
+        "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
+        "title": "奈爵快速上线 D1｜后端宿主事务与公共迁移",
+        "scope": "durable batch DB contract, current write guard, receipt and final publication; central SQL sole integrator",
+        "output": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01"
+      },
+      "D2": {
+        "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
+        "title": "奈爵快速上线 D2｜后端商品与基础资料维护",
+        "scope": "shared row_intent read/intent leaf under D1 durable contract, no double write of central SQL",
+        "output": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-batched-intent-01"
+      },
+      "D3": {
+        "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
+        "title": "奈爵快速上线 D3｜后端库存历史与导入",
+        "scope": "dependency batch closure, stable batch plan, stream coordinator, inspect/skip/resume",
+        "output": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01"
+      },
+      "QB": {
+        "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+        "title": "奈爵快速上线 QB｜后端独立验收",
+        "scope": "independent new batch protocol and PG contract review only"
+      },
+      "T45": {
+        "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
+        "title": "奈爵快速上线 T45｜服务器与数据库执行",
+        "scope": "sole server owner; no new old-route jobs; execute only later exact batched scope"
+      }
+    },
+    "sharedWrites": "Only new isolated role directories initially; D1 sole central SQL integrator, D3 coordinator, D2 leaf diff; exact shared file matrix to follow",
+    "oldFrozenAndProduction": "preserved, no old-route replay",
+    "pgOrServerPermission": "none from this registry; later exact scope required"
   }
 }

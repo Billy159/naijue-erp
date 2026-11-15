@@ -6654,19 +6654,76 @@
               "newLayer13": false,
               "newServerRun": false
             }
+          },
+          {
+            "group": "r3-user-batched-commit-route-20261115-0807",
+            "status": "USER_IMPLEMENTATION_DECISION_ACTIVE_NOT_TECHNICAL_PASS",
+            "evidence": {
+              "originThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+              "humanMessageId": "01a1de30-6592-7b53-9753-60b3cb4a36f0",
+              "authoritySha256": "06b5d0b8b72ac517178606f306281fbf97e751562512ceee8db3a3eee056d8f1",
+              "decisionSha256": "9d4ee0b69c26bf705804e881d23556662ba6798e55a9cba2a499a30c987aef8f",
+              "planBeforeSha256": "0cbdda0e703aa9dfd4191f5f1f646c1bb5e9bde79ceb6ab3be5934ab3679a324",
+              "planAfterSha256": "8aeb1af7a3befffcf14ff5418dba08aa34c09b7520a15d3b8a700f69781b91e6",
+              "route": "BATCHED_INDEPENDENT_COMMIT_SUCCESS_SKIP_FAILED_RESUME",
+              "replacesActiveRoute": "WHOLE_PACKAGE_SINGLE_TRANSACTION",
+              "oldRemoteJobsInFlight": 0,
+              "oldLocalEvaluation": "COMPLETED_EXIT0_CLEANED",
+              "sourceModel": "gpt-6.1-sol/high",
+              "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
+              "firstCheckpointMeaning": "source/interface/ownership first slice; not verified total duration"
+            }
           }
         ],
         "currentInFlight": {
-          "owner": "D2",
-          "work": "source-only adjacent records-output variant plus exact reused evaluation-harness delta; original d3d retired, no repeated same-shape evaluation",
-          "boundary": "return original records across SQL/PL boundary without full ROOT variable; preserve null/object/error/order/xmin/profile/role/id/proof semantics, no new operators/schema/index/ACL/cache/framework; new PG only after exact reviewed pins and actual main once-decision",
-          "T45": "r910 closed NEED_FIX; no new server scope",
+          "owner": "C",
+          "executionRoute": "BATCHED_DURABLE_COMMIT_RESUME",
+          "routeAuthority": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-batched-import-route-01/ROUTE-DECISION.md",
+          "humanAuthoritySha256": "06b5d0b8b72ac517178606f306281fbf97e751562512ceee8db3a3eee056d8f1",
+          "supersededRoute": "WHOLE_PACKAGE_SINGLE_TRANSACTION_DO_NOT_RESUME",
+          "objective": "formal ERP launch, full accepted input/reconciliation/backup/core actual business unchanged",
+          "D1": {
+            "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
+            "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
+            "state": "ACKNOWLEDGED_FIRST_SLICE_ESTIMATE20MIN",
+            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01"
+          },
+          "D3": {
+            "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
+            "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
+            "state": "DISPATCHED_BOUNDARY_AND_FIRST_SLICE_REQUESTED",
+            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01"
+          },
+          "D2": {
+            "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
+            "state": "LIGHT_SOURCE_INVENTORY_FOR_BATCHED_INTENT",
+            "work": "751 records evidence preserved; adapt shared caller leaves only after D1 durable contract, no central SQL double write"
+          },
+          "QB": {
+            "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+            "state": "RECORDS_RESULT_REVIEW_CLOSED_REUSE_IN_NEW_ROUTE",
+            "work": "new batch contract/candidate only once fixed; no old single-transaction new runs"
+          },
+          "T45": {
+            "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
+            "state": "CONFIRMED_ZERO_OLD_IN_FLIGHT_FROM_EXISTING_LOCAL_ENDED_RECORDS",
+            "work": "sole server owner; no new server read/job/old-route fullcompile or13carrier until exact batched scope"
+          },
+          "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
+          "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
+          "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
+          "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
           "formalR3": "STOPPED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
+          "oldRouteForbidden": [
+            "new single-transaction full-package compile/measure loop",
+            "751 as old13-layer server carrier",
+            "mechanical COMMIT per44682 step",
+            "guard deletion",
+            "unknown outcome replay with changed keys"
+          ],
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
-          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
-          "D2": "prepare exact source and harness together for one combined new-delta review; no new PG",
-          "QB": "d3d new-result scope review closed PASS for evidence and NOT_ADOPTED, excludes new variant"
+          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

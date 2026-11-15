@@ -1,3 +1,5 @@
+> 当前路线（2026-11-15）：分批独立提交/成功跳过/失败续未完成批。先读 BATCHED-IMPORT-DECISION-20261115.md 与 TASKS.currentInFlight；旧整包单事务路线不再续办。
+
 ## 2026-11-11T14:40:58+08:00 — 恢复08修复链已复核；准确限时原件已交唯一T45
 C实际核50d3d950/5f90908f READY及7a703c46 scope、5源码pins、QB c381ec69原件，缺need与恢复consumer/原inode锁两项均关闭。原20+安装器3复用，QB仅新跑5受影响例。C依据用户持续限时传输授权固定a982d57c…：14:39:15.254—15:09:15.254，准确同artifactKey、原binding/半包、8段及完整成员核验，成功/失败/到期精确恢复cd2e。已交原T45，实际执行与恢复回执仍待，不以本地READY冒服务器READY；本次无PG/role/APP/导入/切换。
 C实际核D2两更正/两分类回执c7733fb7…、11默认A回执3049c163…及8delta原字节。11格使用9既有A、2格补1A210，B保留；量9仅取本批。D3只读终核39508原格逐ref完整无重复，映射39496库存target/80546，54×14819=800226域，显式39496+已批缺列零760730+未知0守恒。此为stdout实核，r5文件和最终manifest尚未落盘，不是假称真实导入/PG对账。
@@ -7071,3 +7073,10 @@ native现仍按原540秒测量/180清理及C0+900硬截止05:33:53.324922436运�
 2026-11-15 07:38:52 UTC：d3d评价真实exit0/RESULT-PINS6994532c…（35项）/comparisone51fbaef…/semantic25bd4257…/safeplans24f17821…/cleanup64b5d2fc…已冻结。候选完整helper42.652/36.791792ms，旧04历史25.376292/17.364875ms；两候选各1/true、固定输入/nativeSHA与04一致、typed500/1000不变，statementhits下降但整helper无净收益证据，records统计null非0。14同heap旧/新返回与SQLSTATE完全一致，id/xmin/ctid及每次激活metadata均保留，真childxmin与rollback恢复有实录；7手工候选LATERAL计划与完整计数分列，不能差额归copy/RSS或推Linux根因。新连接五表0/PGexit0/6children各0 reaped/noEPERM/guardnull，34.143506s/allocated640028672B，新root已删stat absent，旧02/03保根和失败原样。
 
 主控实际退役决策8accb135…=NOT_ADOPTED_NET_BENEFIT_NOT_ESTABLISHED，不编号13层/不上server；这不是稳定性能回归证明或已证ROOT解压主因。QB只新结果scope PASS原文cef9579811254cd8c6b40bfc51788b47fb6dd178ecad8338833d31d0e961ec4f，未重复旧source/harness/798输入/旧套件，并认可不采纳范围。D2下一仅source-only紧邻records输出变体，避免把整ROOT JSONB传PL/pgSQL局部变量，源与刚跑通的准确harness合包一次新差分审查，不再拆两次交接；仍0新PG/载体/server/正式源码，无新框架/索引/权限。新语义/性能与内存均未通过，正式目标未完成。前7c5ad0fc远端push已知超时，最后确认remote仍a9bd2883；本机先保全、本次push结果按实际另核。
+
+
+2026-11-15 08:07 UTC｜用户新主线决定已在原聊天01a19f9f… human01a1de30-6592…独立读原文“那按照分批改造这样开始弄吧 你跟主控说”。原方案已保留副本SHA0cbdda0e…，当前主计划加最高优先分批路线并覆盖旧C/E全包同事务/末阶段全回滚，afterSHA8aeb1af7…；authority06b5d0b8…/decision9d4ee0b6…，Git内BATCHED-IMPORT-DECISION-20261115.md、USER-DECISION-BATCHED-20261115.json及WRITE-OWNERSHIP新r3BatchedImport20261115同向登记，PROGRESS/HANDOFF顶部明确旧路线不再续办。目标仍正式上线，目标引用主计划现已是新路线；未缩小真实整批/核账/权限/备份/core业务范围。
+
+D1 BATCH-D1-01公共DB持久批绑定/当前写守卫/receipt/read/finalize唯一集成，已接单并确认现import_batch checkpoint/hash/name/cutoff和不可变receipt/audit JSON可承载，无需新表列，首片source+接口估本轮20分钟；D3 BATCH-D3-01依赖闭包/stream协调/原键inspect-skip-resume已派工；D2盘点row_intent及9caller，先叶diff待D1合同，三者只写新独占outputs不改旧冻结。QB原751结果scope PASS已收到可复用，后核新批语义；T45明确0在途，仅现有ENDED记录，无新server读取/PG/登记，全旧路线收口保留，继续唯一serverowner。首个源码/接口/owner检查点目标北京时间16:30，并非整项工期；待边界实核更新估算，不沿用2–4天。
+
+新路线按依赖分批且单据/必要明细原子，不把44682步骤当44682事务；成功批保留跳过，失败只续未完，COMMIT未知先原批原键读状态，不可见不等于回滚。全包full_xid/pid/xmin/time假设须改持久输入/根批绑定加必要当前写校验，不删guard或循环插COMMIT；优先现有记录，不复用旧synthetic-only接口冒当前已用。部分已提交仍关闭业务，最终全量数量/金额/库存/关系对账才publish。最小新PG验真实多批commit、中间故障保前批、断线未知原键判定无重复续跑、关联/延迟约束及最终核账；不重洗、不新平台/追溯、不全面回归。旧751本地改善/14语义仅局部输入，不签跨批PASS或13层/server。

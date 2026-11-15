@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-11-15 08:07:15 UTC",
+  "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+  "sourceTurnId": "01a1de30-6548-7cc2-b02f-b4708ebf9116",
+  "humanMessageId": "01a1de30-6592-7b53-9753-60b3cb4a36f0",
+  "humanQuote": "那按照分批改造这样开始弄吧 你跟主控说",
+  "adoptedProposalContextTurnId": "01a1de2e-cc6e-7b12-911f-fc77a893cb5b",
+  "decision": "IMPLEMENT_BATCHED_INDEPENDENT_COMMIT_SUCCESS_SKIP_FAILED_RESUME",
+  "actor": "main controller; direct human quote independently read in original chat",
+  "goal": "formal ERP launch unchanged",
+  "executionModel": "gpt-6.1-sol/high under current20261105 execution rule",
+  "firstCheckpointTargetUtc": "2026-11-15T08:30:00Z",
+  "firstCheckpointTargetLocal": "2026-11-15 16:30 Asia/Shanghai",
+  "targetMeaning": "first source/interface and ownership checkpoint, not verified whole-project delivery date",
+  "wholeProjectEstimate": "NOT_VERIFIED_DO_NOT_REUSE_2_TO_4_DAYS",
+  "planBeforeSha256": "0cbdda0e703aa9dfd4191f5f1f646c1bb5e9bde79ceb6ab3be5934ab3679a324",
+  "planAfterSha256": "8aeb1af7a3befffcf14ff5418dba08aa34c09b7520a15d3b8a700f69781b91e6"
+}
