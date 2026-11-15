@@ -1,0 +1,157 @@
+/** Additive current-source layer over the immutable r2 35-table projection.
+ * Captured source and later source deltas are deliberately separate. No old
+ * reviewed loader, fixed refusal, installation record or source pin is edited. */
+import {readFile,lstat,realpath} from 'node:fs/promises';
+import {resolve,dirname,relative,sep} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {createHash} from 'node:crypto';
+import {mapFresh35RetirementIdentities,mapFresh35ProductionIdentitiesV2} from './fresh35-retirement-identity.mjs';
+const sources=new WeakMap();
+export const combinedSha256=value=>createHash('sha256').update(value).digest('hex');
+const hash=combinedSha256,need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_'+code)};
+const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value)}return value};
+const ownPath='scripts/release/unified-install/fresh35-combined-source-v1.mjs',ownHash=hash(await readFile(new URL(import.meta.url)));
+export const FRESH35_COMBINED_BASE_ARTIFACTS=Object.freeze({
+ '00-BLOCKED-entry.sql':'0741b94139b125637f5f81b784b5229ec4537904ef93639aced8129f2a38ea0c',
+ '01-schema-REVIEW-ONLY.sql':'5fc8508ea96062898a42dc4c03c3a6ebe166158037cc6c7c3130a13d3ee14931',
+ '02-lineage-REVIEW-ONLY.sql':'8785f1e225335caaf5777e477c761889b290d8543a4952cd897afff920df51d9',
+ 'candidate-source-pins.json':'0d018a1dff6f26e81be64892f5af596fa2a3ad9f15be654acf44acb463dc4d51',
+ 'expected-core-metadata.json':'2e2af3c2b8fa7460e2842e08d906bfee1114dd6c8d7d907ed5c3ed1e1c5ae480',
+ 'expected-declared-metadata.json':'3056cd7d6a36c6d08b712d2084d435807f448d9a7af2149ea723b40659efa47e',
+ 'migration-lineage.json':'11290c3de0b9f1711f748643091e1c14f44f83006b6b8991fa5fd12daf61abad',
+});
+/** Resolve the nine existing, independently pinned package inputs explicitly.
+ * Original cloud paths are provenance only, never local execution fallbacks. */
+export async function resolveFresh35ReferenceInputPaths(directory){
+ need(typeof directory==='string'&&resolve(directory)===directory&&await realpath(directory)===directory,'CANONICAL_REFERENCE_DIRECTORY_REQUIRED');
+ const baseline='fresh35-install-review-plan-20261105-r2';
+ const expected={...Object.fromEntries(Object.entries(FRESH35_COMBINED_BASE_ARTIFACTS).map(([name,sha])=>[baseline+'/'+name,sha])),
+  'fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json':'2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f',
+  'cloud-pg-schema178v2-20261105-r2/evidence/functions.json':'9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f'};
+ const index=JSON.parse((await regularFile(directory,'INDEX.json')).toString('utf8'));
+ need(Array.isArray(index)&&index.length===Object.keys(expected).length,'EXACT_REFERENCE_INDEX_REQUIRED');
+ const seen=new Set();
+ for(const item of index){
+  const prefix='delivery/reference-inputs/';
+  need(typeof item?.package_path==='string'&&item.package_path.startsWith(prefix),'REFERENCE_PACKAGE_PATH_REQUIRED');
+  const path=item.package_path.slice(prefix.length);
+  need(Object.hasOwn(expected,path)&&!seen.has(path)&&item.sha256===expected[path],'REFERENCE_INDEX_BINDING_DIFFERS');
+  seen.add(path);const bytes=await regularFile(directory,path);
+  need(bytes.length===item.bytes&&hash(bytes)===expected[path],'REFERENCE_INPUT_DIFFERS:'+path);
+ }
+ return Object.freeze({baselineDirectory:resolve(directory,baseline),modelPath:resolve(directory,'fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json'),functionsPath:resolve(directory,'cloud-pg-schema178v2-20261105-r2/evidence/functions.json')});
+}
+async function regularFile(root,path){
+ const full=resolve(root,path);need(full.startsWith(root+sep)&&await realpath(full)===full,'REGULAR_SOURCE_PATH_REQUIRED');
+ const stat=await lstat(full);need(stat.isFile()&&!stat.isSymbolicLink()&&stat.size>0&&stat.size<=16*1024*1024,'BOUNDED_SOURCE_FILE_REQUIRED');
+ return readFile(full);
+}
+/** The two pg_dump restrict markers are client state, not SQL. No SQL gate or
+ * condition is removed. Unknown client commands are refused. */
+export function fresh35DumpSqlForNativeClient(dump){
+ need(typeof dump==='string','DUMP_TEXT_REQUIRED');
+ const commands=dump.split('\n').filter(line=>line.startsWith('\\'));
+ need(commands.length===2&&/^\\restrict [A-Za-z0-9]+$/.test(commands[0])&&commands[1]===commands[0].replace('\\restrict','\\unrestrict'),'EXACT_DUMP_RESTRICT_PAIR_REQUIRED');
+ return dump.replace(/^\\(?:un)?restrict [A-Za-z0-9]+\n/gm,'');
+}
+/** Patches are independently pinned sources. Only their outer transaction is
+ * absorbed into the combination; inner DO blocks and every guard remain. */
+export function fresh35PatchTransactionBody(sql){
+ need(typeof sql==='string'&&(sql.match(/^BEGIN(?: ISOLATION LEVEL READ COMMITTED)?;$/gm)||[]).length===1&&(sql.match(/^COMMIT;$/gm)||[]).length===1&&sql.endsWith('COMMIT;\n')&&!/^\s*\\/m.test(sql),'EXACT_PATCH_TRANSACTION_REQUIRED');
+ return sql.replace(/^BEGIN(?: ISOLATION LEVEL READ COMMITTED)?;\n/m,'').slice(0,-'COMMIT;\n'.length);
+}
+async function importClosure(root,paths){
+ const queue=[...paths],seen=new Set(),pins=[];
+ while(queue.length){
+  const path=queue.shift();if(seen.has(path))continue;seen.add(path);
+  const bytes=await regularFile(root,path);pins.push({path,sha256:hash(bytes)});
+  if(!/\.(?:mjs|js|ts|mts)$/.test(path))continue;
+  const text=bytes.toString('utf8');
+  for(const m of text.matchAll(/(?:\b(?:import|export)\s+(?:[^;\n]*?\s+from\s*)?|\bimport\s*\()\s*['"](\.[^'"]+)['"]/g)){
+   const dependency=resolve(root,dirname(path),m[1]);need(dependency.startsWith(root+sep),'LOCAL_IMPORT_ESCAPES_SOURCE_ROOT');
+   queue.push(relative(root,dependency).split(sep).join('/'));
+  }
+ }
+ return pins.sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0);
+}
+export async function loadFresh35CombinedSource(root,{baselineDirectory}){
+ root=resolve(root);need(await realpath(root)===root&&hash(await regularFile(root,ownPath))===ownHash,'RUNNING_SOURCE_MODULE_DIFFERS');
+ need(typeof baselineDirectory==='string'&&resolve(baselineDirectory)===baselineDirectory&&await realpath(baselineDirectory)===baselineDirectory,'CANONICAL_BASE_DIRECTORY_REQUIRED');
+ const artifacts={};for(const [name,sha] of Object.entries(FRESH35_COMBINED_BASE_ARTIFACTS)){
+  const bytes=await regularFile(baselineDirectory,name);need(hash(bytes)===sha,'IMMUTABLE_BASE_ARTIFACT_DIFFERS:'+name);artifacts[name]=bytes.toString('utf8');
+ }
+ const oldPins=JSON.parse(artifacts['candidate-source-pins.json']);need(oldPins.length===180&&new Set(oldPins.map(p=>p.path)).size===180,'EXACT_BASE_SOURCE_PINS_REQUIRED');
+ const hallPath='scripts/release/unified-install/fresh35-sales-hall-candidate.mjs';
+ const amountPath='scripts/release/unified-install/fresh35-historical-amount-candidate.mjs';
+ const settlementPath='scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs';
+ const settlementDifferencePath='scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs';
+ const hallModule=await import(pathToFileURL(resolve(root,hallPath)).href),amountModule=await import(pathToFileURL(resolve(root,amountPath)).href);
+ need(typeof hallModule.loadFresh35SalesHallCandidate==='function'&&typeof amountModule.loadFresh35HistoricalAmountCandidate==='function','CURRENT_SUCCESSOR_MODULES_REQUIRED');
+ const hall=await hallModule.loadFresh35SalesHallCandidate(root),amount=await amountModule.loadFresh35HistoricalAmountCandidate(root);
+ const settlementModule=await import(pathToFileURL(resolve(root,settlementPath)).href);
+ need(typeof settlementModule.loadFresh35HistoricalSettlementCandidate==='function','CURRENT_SETTLEMENT_SUCCESSOR_REQUIRED');
+ const settlement=await settlementModule.loadFresh35HistoricalSettlementCandidate(root);
+ const settlementDifferenceModule=await import(pathToFileURL(resolve(root,settlementDifferencePath)).href);
+ const settlementDifference=await settlementDifferenceModule.loadFresh35HistoricalSettlementDifferenceCandidate(root);
+ const patches=[{name:'historical-sales-hall',...hall},{name:'historical-line-amount',...amount},{name:'historical-missing-settlement-types',...settlement},{name:'historical-settlement-difference',...settlementDifference}];
+ for(const patch of patches)need(typeof patch.patchSql==='string'&&Array.isArray(patch.manifest?.sourcePins)&&Array.isArray(patch.manifest?.routineChanges),'EXACT_SUCCESSOR_DESCRIPTOR_REQUIRED');
+ const entryPaths=['tools/unified-import/batched-stream-cli-state.mjs','tools/unified-import/batched-stream-client.mjs','tools/unified-import/batched-stream-operation.mjs','tools/unified-import/batched-stream-plan.mjs','tools/unified-import/batched-stream-sql-kernel.mjs','tools/unified-import/batched-stream-sql-reply.mjs','scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json','scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json','scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json','adapters/postgres/patches/0027_standard_batched_import_v1.sql','scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/derive155.mjs','scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/FINAL155-CAPTURE.json','scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs','scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/FINAL155-CAPTURE.json','scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/derive155.mjs','scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/PARENT154-CAPTURE.json','scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/FROZEN155-CAPTURE.json','scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/WITNESS155-CAPTURE.json','scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/FINAL155-CAPTURE.json','adapters/postgres/patches/prefix155/12-party-prefix-single-projection.sql','scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs','scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03/FINAL155-CAPTURE.json','adapters/postgres/patches/prefix155/11-party-audit-key.sql','scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/derive155.mjs','scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/FINAL155-CAPTURE.json','adapters/postgres/patches/prefix155/10-party-set-proof.sql','scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/FROZEN155-CAPTURE.json','scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/WITNESS155-CAPTURE.json','adapters/postgres/patches/prefix155/08-witness-request.sql','adapters/postgres/patches/prefix155/09-root-branches-import-index.sql','scripts/release/unified-install/synthetic-prefix155-install.mjs','scripts/release/unified-install/synthetic-prefix155.mjs','scripts/release/unified-install/performance155/derive155.mjs','scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/PARENT154-CAPTURE.json','scripts/release/unified-install/performance155/FINAL155-CAPTURE.json','adapters/postgres/patches/prefix155/01-ten-routines.sql','adapters/postgres/patches/prefix155/02-single-read.sql','adapters/postgres/patches/prefix155/03-on-demand-context.sql','adapters/postgres/patches/prefix155/04-inventory-readiness.sql','adapters/postgres/patches/prefix155/05-prior-lookup.sql','adapters/postgres/patches/prefix155/06-root-single-scan.sql','adapters/postgres/patches/prefix155/07-execute-authority.sql','adapters/postgres/patches/prefix155/INSTALL-ORDER.json','scripts/release/unified-install/synthetic-prefix155-record.mjs','scripts/release/unified-install/measure-prefix.mjs',ownPath,'scripts/release/unified-install/synthetic-sql39-record.mjs','scripts/release/unified-install/synthetic-sql39-install.mjs','scripts/release/unified-install/synthetic-sql39-compile-only.mjs','tools/unified-import/full-size-carrier.mjs','tools/unified-import/mixed-transfer-profile-generator.mjs','tools/unified-import/transfer-profile.mjs','adapters/postgres/patches/0036_admin_provision_only_successor.sql','adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql','adapters/postgres/patches/0039_synthetic_ten_routine_successor.sql',hallPath,amountPath,settlementPath,settlementDifferencePath,'tools/unified-import/r3-service20-entry.mjs','package.json','package-lock.json','scripts/release/unified-install/launch-fresh35-isolated-v1.py','scripts/release/unified-install/fresh35-isolated-entry-v1.mjs','scripts/release/unified-install/fresh35-production-entry-v2.mjs','scripts/release/unified-install/launch-fresh35-production-v2.py',...['target','lifecycle','record','catalog'].map(n=>'scripts/release/unified-install/fresh35-combined-'+n+'-v1.mjs')];
+ const pins=await importClosure(root,[...oldPins.map(p=>p.path),...entryPaths,...patches.flatMap(p=>p.manifest.sourcePins.map(pin=>pin.path))]);
+ for(const patch of patches)for(const pin of patch.manifest.sourcePins)need(pins.some(p=>p.path===pin.path&&p.sha256===pin.sha256),'SUCCESSOR_SOURCE_PIN_DIFFERS:'+pin.path);
+ const oldMap=new Map(oldPins.map(p=>[p.path,p.sha256]));
+ const delta=pins.filter(p=>oldMap.get(p.path)!==p.sha256).map(p=>({path:p.path,predecessorSha256:oldMap.get(p.path)??null,currentSha256:p.sha256}));
+ const schema=artifacts['01-schema-REVIEW-ONLY.sql'],core=JSON.parse(artifacts['expected-core-metadata.json']),declarations=JSON.parse(artifacts['expected-declared-metadata.json']);
+ need(declarations.tables.length===35&&core.routines.length===152&&!declarations.tables.some(t=>t.name==='history_sales_header'),'EXACT_BASE35_REQUIRED');
+ const binding={format:'FRESH35_COMBINED_CURRENT_SOURCE_V1',baseArtifacts:FRESH35_COMBINED_BASE_ARTIFACTS,capturedSourcePins:oldPins,currentSourcePins:pins,currentSourceDelta:delta,patches:patches.map(p=>({name:p.name,sqlSha256:hash(p.patchSql),manifest:p.manifest}))};
+ const source=freeze({...binding,sourceSetSha256:hash(JSON.stringify(binding)),capturedEvidenceAppliesToCurrentChanges:false,engineVerified:false,installationReady:false});
+ const token=Object.freeze({profile:'FRESH35_COMBINED_CURRENT_SOURCE_V1'});
+ sources.set(token,{root,baselineDirectory,source,artifacts,schema,core,declarations,patches});
+ await assertFresh35CombinedSourcesCurrent(token);return token;
+}
+export function describeFresh35CombinedSource(token){need(sources.has(token),'GENUINE_SOURCE_REQUIRED');return sources.get(token).source}
+export function fresh35CombinedSourceData(token){describeFresh35CombinedSource(token);const s=sources.get(token);return freeze({root:s.root,baselineDirectory:s.baselineDirectory,schema:s.schema,core:s.core,declarations:s.declarations,lineageSql:s.artifacts['02-lineage-REVIEW-ONLY.sql'],lineage:JSON.parse(s.artifacts['migration-lineage.json']),patches:s.patches})}
+/** One explicit successor of a53. Never selected by the original installer. */
+export async function loadFresh35Admin154Source(root,options){
+ root=resolve(root);
+ const base=await loadFresh35CombinedSource(root,options),original=sources.get(base);
+ const {loadFresh35AdminProvisionCandidate}=await import('./fresh35-admin-provision-candidate.mjs');
+ const candidate=await loadFresh35AdminProvisionCandidate(root);
+ need(candidate.manifest.patchSqlSha256==='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b'
+  &&candidate.manifest.tableCount===35&&candidate.manifest.predecessorRoutineCount===152&&candidate.manifest.routineCount===154
+  &&candidate.newRoutines.length===2&&candidate.changedBodies.length===4,'EXACT_A53_ADMIN154_REQUIRED');
+ const pins=new Map(original.source.currentSourcePins.map(p=>[p.path,p]));
+ for(const p of candidate.manifest.sourcePins){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'ADMIN154_SOURCE_CONFLICT');pins.set(p.path,p);}
+ const extra=await importClosure(root,['scripts/release/unified-install/fresh35-admin154-record-v1.mjs','tools/unified-import/first-admin-setup.mjs','tools/unified-import/admin154-setup-cli.mjs','tools/unified-import/cli.mjs']);
+ for(const p of extra){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'ADMIN154_SOURCE_CONFLICT');pins.set(p.path,p);}
+ const binding={format:'FRESH35_A53_ADMIN154_SOURCE_V1',predecessorSourceSetSha256:original.source.sourceSetSha256,
+  currentSourcePins:[...pins.values()].sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0),patchSqlSha256:candidate.manifest.patchSqlSha256,
+  routineChanges:candidate.manifest.routineChanges,permissionChanges:candidate.manifest.permissionChanges};
+ const source=freeze({...original.source,...binding,sourceSetSha256:hash(JSON.stringify(binding))});
+ const token=Object.freeze({profile:binding.format});sources.set(token,{...original,source,admin154:freeze({base,candidate})});
+ await assertFresh35CombinedSourcesCurrent(token);return token;
+}
+export function fresh35Admin154SourceData(token){describeFresh35CombinedSource(token);const s=sources.get(token);need(s.admin154&&s.source.format==='FRESH35_A53_ADMIN154_SOURCE_V1','GENUINE_ADMIN154_SOURCE_REQUIRED');return s.admin154;}
+/** Explicit compact-zero successor. Original profiles never select this branch. */
+export async function loadFresh35CompactZeroSource(root,options){
+ root=resolve(root);const base=await loadFresh35Admin154Source(root,options),original=sources.get(base);
+ const {loadFresh35CompactZeroCandidate}=await import(pathToFileURL(resolve(root,'scripts/release/unified-install/fresh35-compact-zero-candidate.mjs')).href),candidate=await loadFresh35CompactZeroCandidate(root);
+ const pins=new Map(original.source.currentSourcePins.map(p=>[p.path,p]));for(const p of candidate.manifest.sourcePins){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'COMPACT_ZERO_SOURCE_CONFLICT');pins.set(p.path,p);}
+ const extra=await importClosure(root,['scripts/release/unified-install/fresh35-compact-zero-candidate.mjs','tools/unified-import/fresh35-host-session.mjs','tools/unified-import/whole-host-session.mjs','tools/unified-import/stream-import-cli.mjs']);for(const p of extra){const before=pins.get(p.path);need(!before||before.sha256===p.sha256,'COMPACT_ZERO_SOURCE_CONFLICT');pins.set(p.path,p);}
+ const binding={format:'FRESH35_COMPACT_ZERO_SOURCE_V2',predecessorSourceSetSha256:original.source.sourceSetSha256,currentSourcePins:[...pins.values()].sort((a,b)=>a.path<b.path?-1:a.path>b.path?1:0),patchSqlSha256:candidate.manifest.patchSqlSha256,routineChanges:candidate.manifest.routineChanges,permissionChanges:[]};
+ const source=freeze({...original.source,...binding,sourceSetSha256:hash(JSON.stringify(binding))}),token=Object.freeze({profile:binding.format});sources.set(token,{...original,source,compactZero:freeze({base,candidate})});await assertFresh35CombinedSourcesCurrent(token);return token;
+}
+export function fresh35CompactZeroSourceData(token){describeFresh35CombinedSource(token);const s=sources.get(token);need(s.compactZero&&s.source.format==='FRESH35_COMPACT_ZERO_SOURCE_V2','GENUINE_COMPACT_ZERO_SOURCE_REQUIRED');return s.compactZero;}
+export async function assertFresh35CombinedSourcesCurrent(token){
+ const descriptor=describeFresh35CombinedSource(token),s=sources.get(token);
+ for(const pin of descriptor.currentSourcePins)need(hash(await regularFile(s.root,pin.path))===pin.sha256,'CURRENT_SOURCE_CHANGED:'+pin.path);
+ for(const [name,sha] of Object.entries(FRESH35_COMBINED_BASE_ARTIFACTS))need(hash(await regularFile(s.baselineDirectory,name))===sha,'IMMUTABLE_BASE_ARTIFACT_DIFFERS:'+name);
+ return descriptor;
+}
+export function renderFresh35CombinedSchema(token,target,options){
+ need(!sources.get(token)?.admin154,'ADMIN154_REQUIRES_SEPARATE_SUCCESSOR_NOT_REINSTALL');
+ need(options===undefined||options&&Object.keys(options).join(',')==='profile'&&options.profile==='PRODUCTION_NEW_EMPTY_EXACT35','EXPLICIT_PRODUCTION_MAPPING_PROFILE_REQUIRED');
+ const s=fresh35CombinedSourceData(token);need(target&&typeof target.owner==='string'&&typeof target.controller==='string','EXPLICIT_TARGET_ROLES_REQUIRED');
+ const unchanged=target.owner==='fresh35_owner_20261105_r1'&&target.controller==='fresh35_controller_20261105_r1';
+ const mapped=unchanged?{sql:s.schema,sha256:hash(s.schema),mapping:{owner:{source:target.owner,target:target.owner},controller:{source:target.controller,target:target.controller}}}:(options?.profile==='PRODUCTION_NEW_EMPTY_EXACT35'?mapFresh35ProductionIdentitiesV2:mapFresh35RetirementIdentities)(s.schema,{owner:{source:'fresh35_owner_20261105_r1',target:target.owner},controller:{source:'fresh35_controller_20261105_r1',target:target.controller}});
+ return freeze({schemaSql:fresh35DumpSqlForNativeClient(mapped.sql),lineageSql:s.lineageSql,patchBodies:s.patches.map(p=>({name:p.name,sql:fresh35PatchTransactionBody(p.patchSql)})),identityMapping:mapped.mapping,schemaSha256:mapped.sha256});
+}

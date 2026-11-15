@@ -1,0 +1,18 @@
+{
+  "status": "SOURCE_PREPARATION_ONLY",
+  "baseSqlGenerated": true,
+  "pythonSyntax": "PARSED_WITH_COMPILE_NOT_EXECUTED",
+  "nodeSyntax": [
+    "catalog-fixture.mjs",
+    "scenario.mjs"
+  ],
+  "staticModuleImport": "catalog-fixture imported; no client connected",
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "attemptConsumed": false,
+  "full511234Compiled": false,
+  "oldSuitesRerun": false,
+  "expectedFunctions": 161,
+  "actualInstalledFunctions": null,
+  "fixtureRows": 162
+}

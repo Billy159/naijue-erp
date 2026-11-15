@@ -1,0 +1,9 @@
+{
+  "scope": "STATIC_SAME_TREE_IMPORTS_ONLY",
+  "fresh35Host": "./fresh35-host-session.mjs",
+  "packageHelpers": "../../packages/...",
+  "newLeafs": 9,
+  "oldT45HostReferences": 0,
+  "runtimeWeakMapAuthorityTested": false,
+  "D1HostOverlayRequired": true
+}

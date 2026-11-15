@@ -6750,6 +6750,44 @@
               "db02Cli05LocalCommit": "57f60a86ecab8318225a1fda0372f2f4786e8ba8",
               "previousPush": "TWO_45S_LOW_SPEED_TIMEOUTS_NOT_CONFIRMED"
             }
+          },
+          {
+            "group": "r3-batched-host01-harness01-source-checkpoint-20261115-1039",
+            "status": "SOURCE_CLOSED_HARNESS_FROZEN_QB_READINESS_PENDING_0PG",
+            "evidence": {
+              "host": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/HOST-CANDIDATE-01",
+                "pinsSha256": "12aa444b4482c26062af155cc409b046c26c7a7500ed0f6715e7170f47fc6937",
+                "sourceClosureSha256": "61330486764d86ec9acd7f3a3963f57cab5e84a27ebc11f3c3c4714b82d7938e",
+                "d3IntegrationPinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+                "state": "FROZEN_SOURCE_LINK_VALIDATED_GENUINE_RUNTIME_NOT_RUN",
+                "pgActions": 0,
+                "serverActions": 0
+              },
+              "overlay": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/INTEGRATION-OVERLAY-06",
+                "pinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+                "diffSha256": "02ed3f25bbea5b1cff53585386facaf4101619ca5616dd876dbada051bdd3960",
+                "state": "SAME_TREE_9_SOURCE_STATIC_MODULE_CHECK_NOT_RUNTIME"
+              },
+              "harness": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-01",
+                "pinsSha256": "42103eb99dabd1fb1dda5b8249700e5db81cf0f631cf74ce0336bbeeb45d6059",
+                "runnerSha256": "90804ea2e3b6fcf0f5e2dc0c71bb78ed579335d2552a8ad967e27981cc96a624",
+                "catalogSha256": "5827c784a4437b4a91c66a76f9927b86028d38cb9c4386118d5d95ad5f86b89e",
+                "scenarioSha256": "c690b6aaa9932b71aff1ab1c55475db824544ae29c189bea0a8c6d53736df01b",
+                "inputPinsSha256": "57277bb12417022b3e17212ee27b97f32ee5d3acafadcc593c64a583e2163b3f",
+                "state": "FROZEN_0PG_AWAITING_QB_RUN_READINESS"
+              },
+              "snapshot": {
+                "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-host01-harness01",
+                "files": 38,
+                "bytes": 5558262,
+                "manifestSha256": "4b02f4d12809722cf068df6317b0c00d78b622f300ac44a94ac0c1d3761a80e7"
+              },
+              "newPgActions": 0,
+              "newServerActions": 0
+            }
           }
         ],
         "currentInFlight": {
@@ -6762,16 +6800,16 @@
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
             "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "DB02_CORE_ROLE_STATIC_PASS_GENUINE_HOST_WIP",
+            "state": "HOST_CANDIDATE01_FROZEN_PRIVATE_FACTORY_SOURCE_COMPLETE_PENDING_QB_RUNTIME",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
-            "work": "Genuine host source in progress: preserve original catalog field only as historical input anchor; require distinct current161 live catalog/source/physical exact binding and new matching authority. Do not relabel old successor; no actual host validation."
+            "work": "Exact8overlay completed source current catalog161 bridge/exact new authority/locked CORE resume/new-connection verify; same-tree full import with D3exact9 exit0. Only syntax/link, no genuine host/PG. CandidatePINS12aa444b, sourceclosure61330486."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
             "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "CLI06_CLEANUP_SOURCE_PASS_SQL_CORE_HARNESS_RESOURCE_FINALIZING",
+            "state": "SAME_TREE_OVERLAY06_AND_162_SQL_CORE_RUNNER01_FROZEN_0PG",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
-            "work": "QB P2 close exception fixed; COMPLETED/UNKNOWN and verification preserved, all cleanup attempted, mock SQLite launcher branch tests pass. Current actual162 SQL-core runner draft source exists; no PG/ATTEMPT."
+            "work": "Final same-tree9overlay PINS1e213e81; runner01 PINS42103eb9,652 bounded input pins, exact base35/12/DB02 install and6 scenario chain. No ATTEMPT consumed; waiting QB readiness and main once decision."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -6780,8 +6818,8 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "D3_EXECUTION_CHAIN_READ_CLEANUP06_P2_CLOSED_SOURCE_ONLY_WAITING_HARNESS",
-            "work": "DB02 narrow source PASS; D3 chain read with sole P2 from05 closed by06 exact delta/source+mock result-record PASS. No PG/real host claim; awaiting frozen actual162 harness readiness."
+            "state": "REVIEWING_FROZEN_162_SQL_CORE_HARNESS_FIRST_RUN_READINESS",
+            "work": "Exact runner/input/install/real-state scenario/guardian cleanup boundary review, no PG. After readiness mainonce+D3run, next narrow HOST01 new private-factory/actual161 historical-anchor/genuine resume/verify boundary."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
@@ -6805,12 +6843,12 @@
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "NO_UNVERIFIED_ETA",
-          "nextCheckpointScope": "Freeze existing162 synthetic SQL-core harness then QB specific run-readiness review and one actual local attempt; D1 genuine host closure in parallel",
+          "nextCheckpointScope": "QB runner readiness \u2192 main once \u2192 actual local162 SQL-core; HOST01 independent new-boundary source review and later T45 genuine Linux materialization",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-cleanup06",
-            "files": 8,
-            "bytes": 51976,
-            "manifestSha256": "6c740943b78666938e31a87ba6aa3c97b29e7c988bad895a007b9eeb10efdd9e"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-host01-harness01",
+            "files": 38,
+            "bytes": 5558262,
+            "manifestSha256": "4b02f4d12809722cf068df6317b0c00d78b622f300ac44a94ac0c1d3761a80e7"
           }
         },
         "independentDeltaReviewer": "QB",

@@ -1,0 +1,50 @@
+{
+  "cleanupPinsSha256": "2e620098b365634cf8d1ddfb24f7a6d02a80c4fbd581e9a50c89016bb5679bf7",
+  "files": [
+    {
+      "path": "tools/unified-import/batched-stream-cli-state.mjs",
+      "bytes": 1574,
+      "sha256": "e94791c912f74458dd5689201135c7d5ca03fe090cf42a7b47c389129c66dc43"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-client.mjs",
+      "bytes": 4753,
+      "sha256": "6f11842e84374fb6ec847b1cd466cbebc4efa42a5902712b5bf5c6fb5eb3955c"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-operation.mjs",
+      "bytes": 1296,
+      "sha256": "5c0d2fd7e99c4ed351e64e001ae9a8b5131ef9ea8dbfb1cecad1eb78488d7a7d"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-plan.mjs",
+      "bytes": 9607,
+      "sha256": "0bf181628d33ee8312c0cae3028fab3e9a2e04822556a763e0a12bd6bf6b474f"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "bytes": 4267,
+      "sha256": "6cb420903d980521f32d7d2493471a3998628c45032c8621327bec123d85af92"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-sql-reply.mjs",
+      "bytes": 2825,
+      "sha256": "091bb6223acaeeb27f85ce9e8fc883905179861b664fe00ad29e12c6c713f806"
+    },
+    {
+      "path": "tools/unified-import/cli.mjs",
+      "bytes": 4552,
+      "sha256": "e84144a5254a04c753f835b05b3d22769854ac94ef899abaa4cde0c79d8b8de5"
+    },
+    {
+      "path": "tools/unified-import/stream-import-cli.mjs",
+      "bytes": 29002,
+      "sha256": "13bc180126128f61c55c7a280dc3aaf018febae772a7e9314d31b3563ad050fd"
+    },
+    {
+      "path": "tools/unified-import/stream-program.mjs",
+      "bytes": 10480,
+      "sha256": "dae5a13547e645316859f58b5d0fed031ae1e4f1935694a00589106a6f64c0f9"
+    }
+  ]
+}

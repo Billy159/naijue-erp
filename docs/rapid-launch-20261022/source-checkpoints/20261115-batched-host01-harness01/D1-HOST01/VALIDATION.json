@@ -1,0 +1,81 @@
+{
+  "scope": "SYNTAX_AND_FULL_TREE_MODULE_LINKING_ONLY",
+  "node": "24.21.0",
+  "checks": [
+    {
+      "command": [
+        "node24.21.0",
+        "--check",
+        "source/tools/unified-import/whole-host-session.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "node24.21.0",
+        "--check",
+        "source/tools/unified-import/fresh35-host-session.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "node24.21.0",
+        "--check",
+        "source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "node24.21.0",
+        "--check",
+        "source/scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "node24.21.0",
+        "--input-type=module",
+        "-e",
+        "import four host modules from full parent + D3snapshot05 + D1 overlay; assert four new entry exports"
+      ],
+      "exitCode": 0,
+      "stdout": "Four joint-tree host module imports and new entry exports verified.\n"
+    },
+    {
+      "command": [
+        "node24.21.0",
+        "--input-type=module",
+        "-e",
+        "import four host modules and stream-import-cli from parent + D3route04 + D3snapshot05 + exact8 D1 overlay; verify six batch dependency paths"
+      ],
+      "exitCode": 0,
+      "stdout": "Joint host and CLI module graph imported; six batch dependencies present.\n",
+      "stderr": "",
+      "temporaryD3ImportPrefixNormalizations": 77
+    },
+    {
+      "command": [
+        "node24.21.0",
+        "--input-type=module",
+        "-e",
+        "import host four modules + stream-import-cli from complete T45 parent + exact D3 INTEGRATION06 nine files + exact D1 eight files; assert exports and six batch dependencies"
+      ],
+      "exitCode": 0,
+      "stdout": "Final D3overlay06 + exact8 host overlay imported without path rewrites.\n",
+      "stderr": "",
+      "sourceRewriteCount": 0
+    }
+  ],
+  "genuineHostInvoked": false,
+  "postgresExecuted": false,
+  "serverActions": 0,
+  "sourceBase": "T45/20261115-r3-party-single-projection-carrier-local-01/source",
+  "D3snapshot": "snapshots/host-snapshot-05",
+  "D3snapshotPinsSha256": "6c83ecc9aa4dc53e8a5ae28b1c53f73da4961340ca5964f26b6af7367339dc6f",
+  "integrationNote": "D3 route04 full overlay plus snapshot05 delta; scratch-only old frozen-source import prefix rewritten to normal same-tree relative roots. D3 source originals unchanged.",
+  "finalD3OverlayPinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+  "finalIntegrationNote": "Final check uses immutable INTEGRATION-OVERLAY-06 with normal same-tree imports, no transformation or D3 source modification."
+}

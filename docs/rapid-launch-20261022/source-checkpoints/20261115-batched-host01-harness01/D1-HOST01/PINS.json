@@ -1,0 +1,15 @@
+{
+  "BOUNDARIES.md": "2cc016348538e7cd21f59aae4af254f1bbc43848ba5840b0b34c830309c1c706",
+  "CLIENT-LIFECYCLE.md": "f4bd1d3ffec4a86b399aa3e7f08958d02a4c4e7c7f941d10a9281d125fc32236",
+  "README.md": "015d94d373550d220bae3382cb6955fe5a3a65218650931fde40b3d072ef9862",
+  "SOURCE-CLOSURE.json": "61330486764d86ec9acd7f3a3963f57cab5e84a27ebc11f3c3c4714b82d7938e",
+  "VALIDATION.json": "58480de68c5ddd0a334984ba0c98bc023b77539f589b8c828b9706a9f108ed40",
+  "source/adapters/postgres/patches/0027_standard_batched_import_v1.sql": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4",
+  "source/scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json": "5c7d1506b4203ceaf62ab37229a4c840e03859af4856fcce7e45ba1c9ac28437",
+  "source/scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json": "bb7d7bb7bbb6e13e5f52fdb74940287c723e22691b364f4e9e8bcadef637738b",
+  "source/scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json": "d50ed7228912055f375153263905605ac6205021462849948744a5af0fc2aa38",
+  "source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs": "6ff50279922013cf2d832b902f855495bf7687c9d4b409f51d19cde8eab844fb",
+  "source/scripts/release/unified-install/fresh35-combined-source-v1.mjs": "d740a09fa6a87d1d0447239c0a20a991ce66361390b3423f311a8b11b046b00e",
+  "source/tools/unified-import/fresh35-host-session.mjs": "bd57c5c4f545d9f674aa16aa16611144a95fe87f9e08a3a614446dba707ff934",
+  "source/tools/unified-import/whole-host-session.mjs": "e764eb1de1335aff331d7976039ba9519d16bab16b685fe05e2a565bc58fee29"
+}
