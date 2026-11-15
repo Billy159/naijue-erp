@@ -1,0 +1,1446 @@
+--- 27/apply/bundle/ordinary05_roles.py
++++ 28/apply/bundle/ordinary05_roles.py
+@@ -21,8 +21,8 @@
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ WORK = STATE / 'fresh35-first-production-20261110-r3'
+ DATA = WORK / 'data'
+-CUSTODY = STATE / 'native-services/ordinary27-auth-20261116-01'
+-CAPTURE = WORK / 'ordinary27-auth-capture-20261116-01'
++CUSTODY = STATE / 'native-services/ordinary28-auth-20261116-01'
++CAPTURE = WORK / 'ordinary28-auth-capture-20261116-01'
+ DATABASE = 'erp_fresh35_20261110_r3'
+ CONTROLLER = 'erp35_controller_20261110_r3'
+ BACKUP_ADMIN = 'erp35_admin_20261110_r3'
+@@ -58,10 +58,10 @@
+ def scope():
+     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',
+             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',
+-            'requestKey': 't45-r3-ordinary27-auth-apply-20261116-01',
+-            'restoreRequestKey': 't45-r3-ordinary27-auth-restore-20261116-01',
+-            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261115-24',
+-            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-27',
++            'requestKey': 't45-r3-ordinary28-auth-apply-20261116-01',
++            'restoreRequestKey': 't45-r3-ordinary28-auth-restore-20261116-01',
++            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-27',
++            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-28',
+             'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),
+             'physical': PHYSICAL, 'roles': list(ROLES), 'maximumOfflineStepSeconds': 30,
+             'coldCopyCompleteSha256': 'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',
+@@ -337,7 +337,7 @@
+     sync_directory(CAPTURE.parent)
+     private_file(CUSTODY / 'authority.json', authority_raw)
+     before = capture(core, 'before')
+-    prior_path = STATE / 'native-services/ordinary26-auth-20261116-01/original-auth.json'
++    prior_path = STATE / 'native-services/ordinary27-auth-20261116-01/original-auth.json'
+     prior = read_private(prior_path)
+     need(set(prior) == set(before) and all(prior[k] == before[k] for k in (
+          'physical', 'boundary', 'memberships', 'settings')),
+--- 27/apply/bundle/ordinary05_roles_job.py
++++ 28/apply/bundle/ordinary05_roles_job.py
+@@ -20,18 +20,18 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01')}
++PHASES = {'apply': ('t45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01')}
+ STATIC_PINS = {
+     'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+     'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+     'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+ }
+-PRIOR_CID = 'f855a86b0eab87bc6ec273386e566c3b93c67f560d90392318edaa15b3a74187'
+-PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-24'
+-CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
+-CURRENT_KEY = 't45-first-r3-native-service-start-20261116-27'
+-CURRENT_SOURCE = '34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17'
+-CURRENT_PROOF_SOURCE = '4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9'
++PRIOR_CID = '6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448'
++PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-28'
++CURRENT_KEY = 't45-first-r3-native-service-start-20261116-28'
++CURRENT_SOURCE = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
++CURRENT_PROOF_SOURCE = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -165,9 +165,9 @@
+ def original_stopped(phase):
+     prior = inspect(PRIOR_CID)
+     need(prior['Id'] == PRIOR_CID and prior['Name'] == '/' + PRIOR_NAME and prior['Image'] == IMAGE
+-         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261115-24'
++         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261116-27'
+          and not prior['State']['Running'] and prior['State']['Pid'] == 0
+-         and prior['State']['StartedAt']=='2026-11-15T15:21:17.835078029Z',
++         and prior['State']['StartedAt']=='2026-11-15T18:38:28.428863507Z',
+          'MAINT_JOB_ORIGINAL_08_NOT_STOPPED')
+     for name in (CURRENT_NAME, APP09_NAME):
+         ids = command(['docker', 'ps', '-a', '--no-trunc', '--filter', 'name=^/' + name + '$', '--format', '{{.ID}}'], 5).decode().splitlines()
+@@ -236,16 +236,16 @@
+     deadline = time.monotonic() + HOST_WORK_SECONDS
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+-    prior_restore = 't45-r3-ordinary26-auth-restore-20261116-01'
+-    prior_boot = ROOT / 'state/native-services/t45-first-r3-native-service-start-20261115-24'
+-    stop_key = 't45-r3-ordinary24-preserve-stop-20261115-01'
++    prior_restore = 't45-r3-ordinary27-auth-restore-20261116-01'
++    prior_boot = ROOT / 'state/native-services/t45-first-r3-native-service-start-20261116-27'
++    stop_key = 't45-r3-ordinary27-preserve-stop-20261116-01'
+     for path, pin in (
+-        (control / 'results' / (stop_key + '.json'), '0a9ea80f2c52494c584e2dc7999766e725e604c9ec7d12c92af7424d1eb83a39'),
+-        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '69a6c160c867b4049555a91313a6e4b42cdc10f2584aaa0d221fed3b4ede7a88'),
+-        (prior_boot / 'cleanup.json', '6762749b456f83beecad3d318da73d037715bb6cf9a59c1f45f0a307a8fa801e'),
+-        (control / 'results' / (prior_restore + '.json'), '944dfa9b110fd836ee9e99a8944446111b1e68808d92280a5d220e91cd67fc63'),
++        (control / 'results' / (stop_key + '.json'), '2dc418392380fe9313facee2b85cf06d79ad2b1e8fcac1faedd6c0263d1fd04f'),
++        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '62ca4c34ae9313a1d5c9de745878ef9f8567e2d6f98af11d283c16e64d0c9502'),
++        (prior_boot / 'cleanup.json', 'fda7c05908d7b94223901638b83a417d2d7f1c624d6d195abae6ede6fc0702e8'),
++        (control / 'results' / (prior_restore + '.json'), '957f0f26d7ed9272ea675c855a7726e9627af7946774b9b8827fb720d47aafe0'),
+         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',
+-         '57aff18487f294415830404abaf18f8a970b04b779d22e2d226018539c5879cb'),
++         '9e2a41c47eeb23745dae3558266f3b01b9776594f95a766e8a4f742ee30a2be2'),
+     ):
+         need(sha(ops.read_file(path, 65536, False, False)) == pin,
+              'MAINT_JOB_PREDECESSOR_STOP_OR_RESTORE_EVIDENCE_DIFFERS')
+@@ -338,7 +338,7 @@
+                 control/'requests'/(CURRENT_KEY+'.tmp'), control/'jobs'/CURRENT_KEY,
+                 control/'results'/(CURRENT_KEY+'.json'), WORKER/CURRENT_KEY,
+                 ROOT/'state/native-services'/CURRENT_KEY,
+-                ROOT/'authority/fresh35-current-production-service-v2-service-27.json')),
++                ROOT/'authority/fresh35-current-production-service-v2-service-28.json')),
+              'ORDINARY05_EARLY_RESTORE_ONLY_BEFORE_START')
+         return
+     s = a['service']
+@@ -347,7 +347,7 @@
+          and all(re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId')),
+          'ORDINARY05_RESTORE_SERVICE_SCOPE_REQUIRED')
+     stop = a['stopRequestKey']
+-    is_preserve = stop == 't45-r3-ordinary27-preserve-stop-20261116-01'
++    is_preserve = stop == 't45-r3-ordinary28-preserve-stop-20261116-01'
+     need(type(stop) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,70}',stop)
+          and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+                  ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+@@ -381,7 +381,7 @@
+              and all(r[k]==s[k] for k in ('serviceKey','containerId','containerStartedAt','postmasterStart')),
+              'ORDINARY05_RESTORE_NORMAL_STOP_REQUIRED')
+     auth = ROOT/'authority'
+-    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-27.json',65536)
++    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-28.json',65536)
+     p = ops.strict(proof_raw)
+     boot = ROOT/'state/native-services'/CURRENT_KEY
+     clean_raw = ops.read_file(boot/'cleanup.json',65536,True)
+--- 27/start/bundle/batched161-run.mjs
++++ 28/start/bundle/batched161-run.mjs
+@@ -23,27 +23,48 @@
+  NEED(!Object.keys(process.env).some(k=>/^PG/.test(k)||['DATABASE_URL','NODE_PATH','NODE_OPTIONS'].includes(k)
+   ||k.startsWith('LD_')||k.startsWith('DYLD_')),'AMBIENT_CONFIG_REFUSED');
+  const mode=process.argv[2],p=await input();
++ let traceStart;
++ const trace=stage=>{
++  if(mode!=='describe')return;
++  traceStart??=process.hrtime.bigint();
++  const elapsedMilliseconds=Math.round(Number(process.hrtime.bigint()-traceStart)/1000)/1000;
++  process.stderr.write('T45_DESCRIBE_STAGE '+JSON.stringify({stage,elapsedMilliseconds})+'\n');
++ };
++ trace('IMPORT_BEGIN');
+  NEED(mode==='describe'||digest(mode),'FIXED_ENTRY_REQUIRED');
+  const src=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-source-v1.mjs'));
+  const tm=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-target-v1.mjs'));
+  const up=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs'));
+  const trust=await import(pathToFileURL(OP+'/scripts/release/unified-install/trusted-install-path.mjs'));
++ trace('IMPORT_END');trace('TRUST_BEGIN');
+  await trust.assertTrustedRootPath(process.execPath);await trust.assertTrustedRootTree(OP);
++ trace('TRUST_END');
+  const proofBytes=await readFile('/run/naijue-rewrite/current-production-service.json');
+  const c=JSON.parse(proofBytes);
+  NEED(sha(proofBytes)===p.service.proofSha256&&c.requestKey===p.service.serviceKey
+-  &&c.requestKey==='t45-first-r3-native-service-start-20261116-27'
++  &&c.requestKey==='t45-first-r3-native-service-start-20261116-28'
+   &&c.physical.postmasterStart===p.service.postmasterStart
+   &&c.sharedPostgresNamespace.container.id===p.service.containerId
+   &&c.sharedPostgresNamespace.container.startedAt===p.service.containerStartedAt,'CURRENT_SERVICE_DIFFERS');
++ trace('SOURCE_LOAD_BEGIN');
+  const paths=await src.resolveFresh35ReferenceInputPaths('/opt/naijue-erp/fresh35-combined-v1/reference-inputs');
+  const source=await src.loadFresh35CompactZeroSource(OP,paths);
++ trace('SOURCE_LOAD_END');
++ if(mode==='describe'){
++  const t0=Date.now();
++  p.installStartsAt=t0;
++  p.installExpiresAt=Math.min(t0+1200000,p.backupAdminValidUntil,c.sharedPostgresNamespace.serviceLeaseExpiresAt);
++ }
++ trace('TARGET_BEGIN');
+  const target=await tm.loadFresh35Installed154UpgradeTargetV1({source,
+   currentServiceSha256:p.service.proofSha256,startsAt:p.installStartsAt,
+   expiresAt:p.installExpiresAt,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('TARGET_END');
+  const installedTarget=tm.describeFresh35Installed154UpgradeTarget(target);
++ trace('COMPILE_BEGIN');
+  const program=await up.compileFresh35Batched161Upgrade({source,target,paths,
+   currentServiceSha256:p.service.proofSha256,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('COMPILE_END');
+  const d=up.describeFresh35Batched161Upgrade(program);
+  const batchedCatalog={sourceSetSha256:d.successorSourceSetSha256,
+   catalogSpecSha256:d.successorCatalogSpecSha256,modelSha256:d.successorModelSha256};
+@@ -52,7 +73,9 @@
+   currentServiceSha256:p.service.proofSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,
+   successorCatalogSpecSha256:d.successorCatalogSpecSha256,successorModelSha256:d.successorModelSha256,
+   backupAdminValidUntil:p.backupAdminValidUntil,actualSharedServiceWorkDeadline:c.sharedPostgresNamespace.serviceLeaseExpiresAt-35000};
+- if(mode==='describe')return {state:'PROGRAM_DESCRIBED_NO_PG_OR_WRITE',descriptor:d,liveFacts:facts,databaseConnections:0,mutations:0};
++ if(mode==='describe')return {state:'PROGRAM_DESCRIBED_NO_PG_OR_WRITE',descriptor:d,liveFacts:facts,
++  payload:{service:p.service,backupAdminValidUntil:d.backupAdminValidUntil,installStartsAt:d.startsAt,installExpiresAt:d.expiresAt},
++  databaseConnections:0,mutations:0};
+  const outer=await readFile(new URL('./install-authorization.json',import.meta.url));
+  NEED(sha(outer)===mode&&isDeepStrictEqual(JSON.parse(outer),p.authority),'OUTER_AUTHORITY_DIFFERS');
+  NEED(isDeepStrictEqual(d,p.authority.upgradeDescriptor),'PROGRAM_DESCRIPTION_CHANGED');
+--- 27/start/bundle/normal_service05_after08.py
++++ 28/start/bundle/normal_service05_after08.py
+@@ -4,12 +4,14 @@
+ finite externally configured service. Retained runtime material is root-only for this guardian;
+ it is NOT an APP mount or a claim that an unselected APP UID can read it.
+ """
+-import fcntl,hashlib,json,os,re,signal,stat,subprocess,sys,time
++import time
++ENTRY_MONOTONIC=time.monotonic()
++import fcntl,hashlib,json,os,re,signal,stat,subprocess,sys
+ from pathlib import Path
+ from types import ModuleType
+ 
+-JOB = 't45-first-r3-native-service-start-20261116-27'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++JOB = 't45-first-r3-native-service-start-20261116-28'
++NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ WORKER=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')/JOB
+ ACTIVE_CONTROL=Path('/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64')
+ ROOT=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+@@ -17,17 +19,17 @@
+ WORK=STATE/'fresh35-first-production-20261110-r3'
+ REL=Path('native-services')/JOB
+ BOOT=STATE/REL
+-PREVIOUS_JOB = 't45-first-r3-native-service-start-20261115-24'
++PREVIOUS_JOB = 't45-first-r3-native-service-start-20261116-27'
+ PREVIOUS_CARRIER_JOB=PREVIOUS_JOB
+-PREVIOUS_NAME = 't45-fresh35-first-production-20261110-r3-service-24'
+-PREVIOUS_PROOF = 'fresh35-current-production-service-v2-service-24.json'
++PREVIOUS_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++PREVIOUS_PROOF = 'fresh35-current-production-service-v2-service-27.json'
+ ORIGINAL_REQUEST='t45-first-r3-native-service-start-20261110-01'
+ ORIGINAL_BOOT=STATE/'native-services'/ORIGINAL_REQUEST
+ OPS_SHA='40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360'
+ PLAN_SHA='7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ OLD_CID='ae4d582c1d4abddc8794b577412904452ea29b234308aad9b5685af7383d6900'
+ OLD_PHYSICAL={'systemIdentifier':'7706545564479176741','databaseOid':'16393','serverVersionNum':'170011','postmasterStart':'2026-11-10 14:12:48.798294+00'}
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-27.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-28.json'
+ ROLE='erp35_runtime_20261110_r3'
+ DATABASE='erp_fresh35_20261110_r3'
+ HOST_WORK_SECONDS=190
+@@ -35,9 +37,9 @@
+ MATERIALIZED_RECEIPT='88c4a8dff9a092f50479733d88593ffcb5ebbcc16ab6ffbfc6e0c9ec4cbfb157'
+ MATERIALIZER_SHA='1f8a8cc826d153455de7c8f93af3402032dc82fd4f498c1912d50c79185e41b8'
+ MATERIALIZED_PROFILE_SHA='ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+-R3_RUNTIME_SHA = 'cae97e8a25bea466ceeaaf3f0972c332cf749cc27bb248f44184abdf26bad24b'
++R3_RUNTIME_SHA = '08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8'
+ R3_CLI_SHA = 'b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0'
+-READONLY_SHA = '708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9'
++READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
+ BASELINE_RUNTIME_SHA='4da4cd69a818800e82cf14d1ca409863c3ed6904b5980955cea299fcf9c14278'
+ CONTAINER_DEADLINE_PROGRAM="""import os,sys,time
+ seconds=(int(sys.argv[1])-time.time_ns()//1000000)//1000-3
+@@ -464,7 +466,7 @@
+ 
+ 
+ def host(ops,proof,a,authraw,lifecycle):
+-    lease=proof.validate_authority(a,now());deadline=time.monotonic()+HOST_WORK_SECONDS;need(now()+300000<a['expiresAt'],'NORMAL_COORDINATION_BUDGET_TOO_SHORT')
++    lease=proof.validate_authority(a,now());deadline=ENTRY_MONOTONIC+HOST_WORK_SECONDS;need(now()+300000<a['expiresAt'],'NORMAL_COORDINATION_BUDGET_TOO_SHORT')
+     plan=ops.load_production_plan(str(WORKER/'bundle/production-plan.json'),PLAN_SHA);ops.materialized_root_identity(plan)
+     original=carrier_info(ops,OLD_CID);oldreceipt=ops.strict(ops.read_file(ROOT/'production-container-receipt.json',65536,True))
+     ops.owned_production(original,oldreceipt,plan,capacity_stopped=True)
+@@ -574,7 +576,7 @@
+     need(identity(parent)['uid']==0 and identity(parent)['mode']==0o700,'NORMAL_PRIVATE_PARENT_REQUIRED')
+     boot=ROOT/'state'/REL;need(not os.path.lexists(boot),'NORMAL_OPERATION_PRESENT_NO_REPLAY');boot.mkdir(mode=0o700)
+     lifecycle['phase']='STAGE_PRIVATE_SOURCES'
+-    for name,pin in (('normal_service05_after08.py',a['normalServiceSha256']),('normal_service05_after08_proof.py',a['proofSourceSha256']),('fresh35-production-carrier.py',OPS_SHA),('r3_05_readonly.py',READONLY_SHA),('operator-host.mjs','7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae'),('operator-stream-program.mjs','fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6'),('operator-stream-import-cli.mjs','6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e'),('operator-manifest.json','c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184'),('batched161-run.mjs','adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1')):
++    for name,pin in (('normal_service05_after08.py',a['normalServiceSha256']),('normal_service05_after08_proof.py',a['proofSourceSha256']),('fresh35-production-carrier.py',OPS_SHA),('r3_05_readonly.py',READONLY_SHA),('operator-host.mjs','7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae'),('operator-stream-program.mjs','fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6'),('operator-stream-import-cli.mjs','6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e'),('operator-manifest.json','c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184'),('batched161-run.mjs','ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f'),('start_owned_describe.py','98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0')):
+         raw=ops.read_file(WORKER/'bundle'/name,262144,True);need(sha(raw)==pin,'NORMAL_NEW_PRIVATE_SOURCE_DIFFERS');ops.new_file(boot/name,raw,0o400)
+     ops.new_file(boot/'service-start-authorization.json',authraw,0o400)
+     lifecycle['phase']='STAGE_READONLY_PROJECTIONS'
+@@ -626,11 +628,22 @@
+         publish_worker_proof(ops,r3,raw,deadline,a['expiresAt'],cid,plan,lease,birth)
+         ack=await_retained_ack(ops,boot,deadline,a['expiresAt'],cid,plan,lease,birth,sha(raw))
+         need(ack,'NORMAL_RETAINED_ACK_UNCONFIRMED')
+-        result={'status':'NORMAL_SAME_R3_SERVICE_AND_RUNTIME_AUTHENTICATED_NOT_APP_ACCEPTANCE','requestKey':JOB,'cid':cid,
++        describe_path=boot/'start_owned_describe.py'
++        describe=module(pinned(ops,describe_path,'98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0'),describe_path,'start_owned_describe')
++        service={'serviceKey':JOB,'proofSha256':sha(raw),'containerId':birth['id'],
++                 'containerStartedAt':birth['startedAt'],'postmasterStart':ops.strict(raw)['physical']['postmasterStart']}
++        lifecycle['phase']='GENUINE_READONLY_DESCRIBE'
++        described=describe.run(ops,boot,WORKER,service,raw,deadlines['erp35_admin_20261110_r3'],deadline,a['expiresAt'],start_work_left)
++        need(carrier(ops,cid,plan,lease)==birth and ops.read_file(ROOT/'authority'/PROOF_NAME,65536)==raw
++             and ops.strict(ops.read_file(boot/'retained-ack.json',65536,True))=={'requestKey':JOB,'proofSha256':sha(raw),'serviceLeaseExpiresAt':lease},
++             'NORMAL_DESCRIBE_FINAL_C_ACK_OR_BIRTH_CHANGED')
++        need(start_work_left(deadline,a['expiresAt'])>5,'NORMAL_DESCRIBE_HANDOFF_BUDGET_EXHAUSTED')
++        result={'describe':described,'status':'NORMAL_SAME_R3_SERVICE_AND_RUNTIME_AUTHENTICATED_NOT_APP_ACCEPTANCE','requestKey':JOB,'cid':cid,
+                 'proofSha256':sha(raw),'serviceReceiptSha256':sha(r),'installationRecordSha256':proof.RECORD,'targetSha256':proof.TARGET,
+                 'sourceSetSha256':proof.SOURCE,'record38Sha256':a['record38Sha256'],'runtimeRole':ROLE,'runtimeLoginValidUntil':None,'serviceLeaseExpiresAt':lease,
+                 'currentRuntimeReferenceUsable':True,'databaseRoleChanges':0,'lockCapacitySettingsSha256':sha(ops.read_file(boot/'lock-capacity-settings.json',65536,True)),'lockCapacitySettings':ops.strict(ops.read_file(boot/'lock-capacity-settings.json',65536,True)),'queryStages':ops.strict(ops.read_file(boot/'runtime-role-observation.json',65536,True))['queryStages'],'originalRuntimeRequestKey':ORIGINAL_REQUEST,'previousRuntimeOutcome':'UNKNOWN_PRESERVED','readOnlyReadiness':True,'sqlstate':None,'appStarted':False,'businessWrites':0,'automaticRetry':False}
+         ops.new_json(WORKER/'results/normal-service-result.json',result)
++        need(start_work_left(deadline,a['expiresAt'])>0,'NORMAL_DESCRIBE_PERSISTENCE_BUDGET_EXHAUSTED')
+         handed_off=True
+         return result
+     finally:
+@@ -737,6 +750,11 @@
+     need(sys.platform=='linux' and os.getuid()==os.geteuid()==0 and (not internal or (sys.flags.isolated and sys.flags.no_site)),'NORMAL_ROOT_ISOLATED_ENTRY_REQUIRED')
+     need(Path(__file__)==base/'normal_service05_after08.py','NORMAL_FIXED_ENTRY_REQUIRED')
+     os.umask(0o077)
++    global ENTRY_MONOTONIC
++    if not internal:
++        ticks=int(Path('/proc/self/stat').read_text().rsplit(')',1)[1].split()[19])
++        elapsed=max(0,time.clock_gettime(time.CLOCK_BOOTTIME)-ticks/os.sysconf('SC_CLK_TCK'))
++        ENTRY_MONOTONIC=min(ENTRY_MONOTONIC,time.monotonic()-elapsed)
+     opraw=(base/'fresh35-production-carrier.py').read_bytes();need(sha(opraw)==OPS_SHA,'NORMAL_ORIGINAL_OPS_SOURCE_DIFFERS');ops=module(opraw,base/'fresh35-production-carrier.py','normal_fixed_ops')
+     authpath=BOOT/'service-start-authorization.json' if internal else WORKER/'bundle/service-start-authorization.json'
+     authraw=ops.read_file(authpath,65536,True);a=ops.strict(authraw)
+--- 27/start/bundle/normal_service05_after08_proof.py
++++ 28/start/bundle/normal_service05_after08_proof.py
+@@ -2,8 +2,8 @@
+ import hashlib,json,re
+ from datetime import datetime,timezone
+ 
+-JOB = 't45-first-r3-native-service-start-20261116-27'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++JOB = 't45-first-r3-native-service-start-20261116-28'
++NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ FORMAT='FRESH35_CURRENT_PRODUCTION_SERVICE_V2'
+ RECEIPT_FORMAT='FRESH35_NORMAL_SERVICE_RETAINED_V1'
+ RECEIPT_STATE='NORMAL_SERVICE_RETAINED_CURRENT_EPOCH_NOT_BUSINESS_ACCEPTANCE'
+@@ -24,9 +24,9 @@
+ SERVICE14_EPOCH='2026-11-13 07:35:39.511422+00'
+ DDL_SERVICE_PROOF='76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727'
+ DDL_EPOCH='2026-11-13 08:53:20.527136+00'
+-PREVIOUS_JOB = 't45-first-r3-native-service-start-20261115-24'
+-PREVIOUS_EPOCH = '2026-11-15 15:21:19.205528+00'
+-PREVIOUS_STOP = 't45-r3-ordinary24-preserve-stop-20261115-01'
++PREVIOUS_JOB = 't45-first-r3-native-service-start-20261116-27'
++PREVIOUS_EPOCH = '2026-11-15 18:38:29.737044+00'
++PREVIOUS_STOP = 't45-r3-ordinary27-preserve-stop-20261116-01'
+ PHYSICAL={'systemIdentifier':'7706545564479176741','databaseOid':'16393','serverVersionNum':'170011'}
+ SQL36_ROOT_RESULT='c02a30ddb237435a5e8a21bfb5a309fb572b0c0061a928c519fc25ec35f85120'
+ SQL36_TERMINAL='362329cd68913d9ea4cde447a9dc7bbb833df6127dc831a23387b1079f5a1115'
+@@ -62,8 +62,8 @@
+             'authenticationAction':'AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY','previousRuntimeOutcome':'UNKNOWN_PRESERVED',
+             'previousRequestKey':PREVIOUS_JOB,'previousStopRequestKey':PREVIOUS_STOP,
+             'runtimeReadinessMaxSeconds':20,'databaseRoleChanges':0,
+-            'restoreRequestKey':'t45-r3-ordinary26-auth-restore-20261116-01',
+-            'applyRequestKey':'t45-r3-ordinary27-auth-apply-20261116-01',
++            'restoreRequestKey':'t45-r3-ordinary27-auth-restore-20261116-01',
++            'applyRequestKey':'t45-r3-ordinary28-auth-apply-20261116-01',
+             'ddlServiceProofSha256':DDL_SERVICE_PROOF,'ddlPostmasterStart':DDL_EPOCH,
+             'admin154RecordSha256':ADMIN154_RECORD_SHA,'admin154PostmasterStart':ADMIN154_EPOCH,
+             'admin154SourceSetSha256':'d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe',
+--- 27/start/bundle/r3_05_readonly.py
++++ 28/start/bundle/r3_05_readonly.py
+@@ -5,7 +5,7 @@
+ import stat
+ 
+ WORKER = 61035
+-SERVICE = 't45-first-r3-native-service-start-20261116-27'
++SERVICE = 't45-first-r3-native-service-start-20261116-28'
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ AUTHORITY = Path('/etc/naijue-erp')
+ OPERATION = STATE/'installed-real-operation-51724553-20261114-01/operation'
+@@ -27,7 +27,7 @@
+ MANIFEST = 'd661fa09be2ded0a4a3f0a6b6cb1c371e48796a8eb2d0ff89186ac4d0535e27e'
+ DEPS_LOCK = '7e2bc5e96f2b95c7404479d2785372696323d8ec9b49ce6e642de2bedf120f7d'
+ DEPS_INPUT_LOCK = 'c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048'
+-PROOF = 'fresh35-current-production-service-v2-service-27.json'
++PROOF = 'fresh35-current-production-service-v2-service-28.json'
+ EXECUTION = 'fresh35-compact-zero-execution-v2.json'
+ PROVISION = 'fresh35-production-provision-v2.json'
+ DEPLOYMENT = 'fresh35-isolated-deployment-v1.json'
+@@ -394,7 +394,7 @@
+  assert.equal(createHash('sha256').update(await readFile(path)).digest('hex'),pin);
+ }
+ const records=['fresh35-combined-installation-v1.json','fresh35-admin154-successor-v1.json',
+-               'fresh35-compact-zero-successor-v2.json','fresh35-current-production-service-v2-service-27.json'];
++               'fresh35-compact-zero-successor-v2.json','fresh35-current-production-service-v2-service-28.json'];
+ if(phase==='EXECUTE')records.push('fresh35-compact-zero-execution-v2.json');
+ for(const path of [...records.map(name=>authority+'/'+name),'/run/naijue-rewrite/current-production-service.json']){
+  const fd=await open(path,'r');
+--- 27/start/bundle/r3_05_runtime.py
++++ 28/start/bundle/r3_05_runtime.py
+@@ -10,13 +10,13 @@
+ 
+ HOST_ROOT = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ MATERIALIZED = HOST_ROOT/'state/r3-r2-private-import-input-20261112-01'
+-PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-27-worker-proof'
++PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-28-worker-proof'
+ PROFILE_SHA = 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+ INSTALLATION = '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+ SOURCE = '6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16'
+ TARGET = 'fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261116-27'
+-SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-28'
++SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ STATE_DEVICE = 66304
+ START_RESERVE = 28 * 1024**3
+ BASELINE_SCOPE_DIRECTORY = 'approvals/baseline-scope-input-r1'
+--- /dev/null
++++ 28/start/bundle/start_owned_describe.py
+@@ -0,0 +1,208 @@
++"""One genuine describe inside the original start job, before its handoff."""
++from pathlib import Path
++import ctypes,hashlib,json,os,re,selectors,signal,stat,subprocess,sys,time
++
++SERVICE='t45-first-r3-native-service-start-20261116-28'
++ROOT=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
++STATE=Path('/var/lib/naijue-erp/fresh35-production')
++BOOT=STATE/'native-services'/SERVICE
++NODE='/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node'
++RUNNER_SHA = 'ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f'
++MATERIAL_SHA='cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec'
++SOURCE_SHA='70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e'
++STDOUT_LIMIT=131072
++STDERR_LIMIT=65536
++BRIDGE_SECONDS=158
++PUBLISH_SECONDS=12
++OUTPUTS={'payload':'genuine-describe-payload.json','descriptor':'genuine-descriptor.json',
++         'liveFacts':'genuine-live-facts.json','process':'genuine-describe-process.json'}
++STAGES=('IMPORT_BEGIN','IMPORT_END','TRUST_BEGIN','TRUST_END','SOURCE_LOAD_BEGIN',
++        'SOURCE_LOAD_END','TARGET_BEGIN','TARGET_END','COMPILE_BEGIN','COMPILE_END')
++
++def need(v,code):
++    if not v:raise ValueError(code)
++def sha(b):return hashlib.sha256(b).hexdigest()
++def encode(v):return (json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode()
++
++def phase_trace(stderr):
++    trace=[]
++    for line in stderr.decode('utf8',errors='replace').splitlines():
++        if not line.startswith('T45_DESCRIBE_STAGE '):continue
++        try:value=json.loads(line[len('T45_DESCRIBE_STAGE '):])
++        except ValueError:continue
++        if type(value) is not dict or set(value)!={'stage','elapsedMilliseconds'}:continue
++        stage=value['stage'];elapsed=value['elapsedMilliseconds']
++        if len(trace)<len(STAGES) and stage==STAGES[len(trace)] and type(elapsed) in (int,float) \
++                and 0<=elapsed<=2**53 and (not trace or elapsed>=trace[-1]['elapsedMilliseconds']):
++            trace.append(value)
++    return trace
++
++def capture(argv,body,seconds,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_LIMIT,*,descendants=False):
++    """Capture at most the given bytes; TERM2/KILL2 in this process namespace."""
++    child=subprocess.Popen(argv,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
++        env={'PATH':'/usr/bin:/bin','HOME':'/','LC_ALL':'C','TZ':'UTC'},start_new_session=True)
++    streams=selectors.DefaultSelector();buffers={'stdout':bytearray(),'stderr':bytearray()}
++    limits={'stdout':stdout_limit,'stderr':stderr_limit};seen={'stdout':0,'stderr':0}
++    reason=None;problem=None;cutoff=time.monotonic()+seconds
++    for name,pipe in (('stdout',child.stdout),('stderr',child.stderr)):
++        os.set_blocking(pipe.fileno(),False);streams.register(pipe,selectors.EVENT_READ,name)
++    def drain(wait):
++        nonlocal reason
++        for key,_ in streams.select(wait):
++            block=os.read(key.fileobj.fileno(),8192)
++            if not block:streams.unregister(key.fileobj);continue
++            name=key.data;seen[name]+=len(block)
++            room=limits[name]-len(buffers[name]);buffers[name].extend(block[:max(0,room)])
++            if seen[name]>limits[name] and reason is None:reason=name.upper()+'_LIMIT'
++    def children():
++        if not descendants:return []
++        return [int(p) for p in (Path('/proc/self/task')/str(os.getpid())/'children').read_text().split()]
++    def settled():
++        child.poll()
++        for pid in children():
++            if pid!=child.pid:
++                try:os.waitpid(pid,os.WNOHANG)
++                except ChildProcessError:pass
++        # Inside, the real Linux subreaper owns every surviving descendant.
++        # The Docker client being reaped on the host proves only that client.
++        return child.poll() is not None and not children()
++    def stop(sig,wait):
++        until=time.monotonic()+wait
++        try:os.killpg(child.pid,sig)
++        except ProcessLookupError:pass
++        for pid in children():
++            if pid!=child.pid:
++                try:os.kill(pid,sig)
++                except ProcessLookupError:pass
++        while not settled() and time.monotonic()<until:
++            drain(min(.05,max(0,until-time.monotonic())))
++    try:
++        child.stdin.write(body);child.stdin.close()
++        while streams.get_map() or child.poll() is None:
++            if reason is not None:break
++            left=cutoff-time.monotonic()
++            if left<=0:reason='TIMEOUT';break
++            drain(min(.1,left))
++    except BaseException as error:
++        problem=type(error).__name__;reason=reason or 'INTERRUPTED_OR_CAPTURE_FAILED'
++    finally:
++        try:
++            if not settled():stop(signal.SIGTERM,2)
++            if not settled():stop(signal.SIGKILL,2)
++            reaped=settled()
++            if streams.get_map():drain(0)
++        finally:
++            streams.close()
++            for pipe in (child.stdin,child.stdout,child.stderr):
++                if not pipe.closed:pipe.close()
++    return dict(exitCode=child.returncode,childReaped=child.returncode is not None,
++        ownedProcessGroupReaped=reaped if descendants else None,descendantsReaped=reaped if descendants else None,
++        reason=reason,captureErrorType=problem,stdout=bytes(buffers['stdout']),stderr=bytes(buffers['stderr']),
++        stdoutBytesObserved=seen['stdout'],stderrBytesObserved=seen['stderr'])
++
++def put(path,body):
++    with os.fdopen(os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600),'wb') as f:
++        need(f.write(body)==len(body),'DESCRIBE_SHORT_WRITE');f.flush();os.fsync(f.fileno())
++    fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++    try:os.fsync(fd)
++    finally:os.close(fd)
++
++def inside():
++    need(sys.platform=='linux' and os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0
++         and sys.flags.isolated and sys.flags.no_site and Path(__file__)==BOOT/'start_owned_describe.py'
++         and sys.argv[1:]==['--inside'],'DESCRIBE_FIXED_ROOT_ENTRY_REQUIRED')
++    os.umask(0o077)
++    need(ctypes.CDLL(None,use_errno=True).prctl(36,1,0,0,0)==0,'DESCRIBE_SUBREAPER_REQUIRED')
++    def interrupted(*_):raise ValueError('DESCRIBE_INTERRUPTED')
++    for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(sig,interrupted)
++    body=sys.stdin.buffer.read(65537);need(0<len(body)<=65536,'DESCRIBE_INPUT_BOUND')
++    need(sha((BOOT/'batched161-run.mjs').read_bytes())==RUNNER_SHA,'DESCRIBE_EXACT_RUNNER_REQUIRED')
++    value=capture([NODE,'--no-global-search-paths',str(BOOT/'batched161-run.mjs'),'describe'],body,150,descendants=True)
++    try:
++        native=json.loads(value['stdout'])
++        value['nativeReplyKind']='OBJECT' if isinstance(native,dict) else 'NON_OBJECT'
++    except (ValueError,UnicodeError):
++        native=None;value['nativeReplyKind']='BAD_JSON' if value['stdout'] else 'EMPTY'
++    code=native.get('sqlstate') if isinstance(native,dict) else None
++    value['sqlstate']=code if type(code) is str and re.fullmatch('[0-9A-Z]{5}',code) else None
++    value['describeTrace']=phase_trace(value['stderr'])
++    value['lastReachedStage']=value['describeTrace'][-1]['stage'] if value['describeTrace'] else None
++    value['traceSource']='BOUNDED_PRIVATE_STDERR_FIXED_STAGE_MARKERS'
++    put(BOOT/'genuine-describe-stdout.bin',value.pop('stdout'))
++    put(BOOT/'genuine-describe-stderr.bin',value.pop('stderr'))
++    value.update(requestKey=SERVICE,maximumChildSeconds=150,termSeconds=2,killSeconds=2,
++        stdoutLimit=STDOUT_LIMIT,stderrLimit=STDERR_LIMIT,pidNamespace=os.readlink('/proc/self/ns/pid'))
++    put(BOOT/OUTPUTS['process'],encode(value))
++    print(json.dumps({'processReceiptWritten':True,'childReaped':value['childReaped'],
++        'ownedProcessGroupReaped':value['ownedProcessGroupReaped']}))
++    return 0 if value['reason'] is None and value['exitCode']==0 and value['ownedProcessGroupReaped'] else 2
++
++def stored(ops,boot,name,maximum,*,empty=False):
++    path=boot/name
++    if not empty:return ops.read_file(path,maximum,True)
++    need(path.resolve()==path,'DESCRIBE_CANONICAL_OUTPUT_REQUIRED')
++    with os.fdopen(os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK),'rb') as f:
++        s=os.fstat(f.fileno())
++        need(stat.S_ISREG(s.st_mode) and s.st_uid==s.st_gid==0 and s.st_nlink==1
++             and stat.S_IMODE(s.st_mode)==0o600 and 0<=s.st_size<=maximum,'DESCRIBE_OUTPUT_METADATA_REQUIRED')
++        body=f.read(maximum+1)
++        ident=lambda z:(z.st_dev,z.st_ino,z.st_uid,z.st_gid,z.st_mode,z.st_nlink,z.st_size,z.st_mtime_ns,z.st_ctime_ns)
++        need(len(body)==s.st_size and ident(s)==ident(os.fstat(f.fileno()))==ident(path.lstat()),'DESCRIBE_OUTPUT_CHANGED')
++    return body
++
++def run(ops,boot,worker,service,current_raw,admin_until,deadline,expires_at,work_left):
++    need(work_left(deadline,expires_at)>BRIDGE_SECONDS+PUBLISH_SECONDS,'DESCRIBE_FULL_WORK_BUDGET_REQUIRED')
++    material=ROOT/'state/installed-real-operation-batched-root03-20261116-01/source-materialization.json'
++    need(sha(ops.read_file(material,65536))==MATERIAL_SHA,'DESCRIBE_EXISTING_SOURCE_RECEIPT_DIFFERS')
++    request={'service':service,'backupAdminValidUntil':admin_until}
++    need(type(admin_until) is int,'DESCRIBE_VERIFIED_ADMIN_DEADLINE_REQUIRED')
++    ops.new_file(boot/'genuine-describe-request.json',encode(request),0o600)
++    need(work_left(deadline,expires_at)>BRIDGE_SECONDS+PUBLISH_SECONDS,'DESCRIBE_FULL_WORK_BUDGET_REQUIRED')
++    bridge=capture(['/usr/bin/docker','exec','-i','--user','0:0',service['containerId'],
++        '/usr/bin/python3','-I','-S',str(BOOT/'start_owned_describe.py'),'--inside'],encode(request),BRIDGE_SECONDS,
++        stdout_limit=65536,stderr_limit=65536)
++    ops.new_file(boot/'genuine-describe-bridge-stdout.bin',bridge.pop('stdout'))
++    ops.new_file(boot/'genuine-describe-bridge-stderr.bin',bridge.pop('stderr'))
++    ops.new_json(boot/'genuine-describe-bridge.json',bridge)
++    need(bridge['reason'] is None and bridge['exitCode'] in (0,2) and bridge['childReaped'],
++         'DESCRIBE_BRIDGE_UNCONFIRMED_ORIGINAL_KEY_ONLY')
++    process_raw=stored(ops,boot,OUTPUTS['process'],65536);process=ops.strict(process_raw)
++    ops.new_file(worker/'results'/OUTPUTS['process'],process_raw)
++    need(process['requestKey']==SERVICE and process['childReaped'] and process['ownedProcessGroupReaped']
++         and process['descendantsReaped'] and process['reason'] is None and process['exitCode']==0,
++         'DESCRIBE_NATIVE_FAILED_READ_PRIVATE_PROCESS_RECEIPT')
++    native_raw=stored(ops,boot,'genuine-describe-stdout.bin',STDOUT_LIMIT,empty=True)
++    need(bool(native_raw),'DESCRIBE_NATIVE_EMPTY_REPLY')
++    try:value=ops.strict(native_raw)
++    except ValueError:raise ValueError('DESCRIBE_NATIVE_JSON_REQUIRED') from None
++    need(type(value) is dict and value.get('state')=='PROGRAM_DESCRIBED_NO_PG_OR_WRITE'
++         and value.get('databaseConnections')==value.get('mutations')==0,'DESCRIBE_GENUINE_REPLY_REQUIRED')
++    d=value['descriptor'];facts=value['liveFacts'];payload=value['payload'];c=ops.strict(current_raw)
++    need(type(payload) is dict and set(payload)=={'service','backupAdminValidUntil','installStartsAt','installExpiresAt'}
++         and payload['service']==service and payload['backupAdminValidUntil']==admin_until
++         and all(type(payload[k]) is int for k in ('installStartsAt','installExpiresAt'))
++         and d['startsAt']==payload['installStartsAt'] and d['expiresAt']==payload['installExpiresAt']
++         and d['backupAdminValidUntil']==admin_until
++         and d['expiresAt']==min(d['startsAt']+1200000,admin_until,c['sharedPostgresNamespace']['serviceLeaseExpiresAt'])
++         and d['startsAt']<=time.time_ns()//1000000<d['expiresAt'],'DESCRIBE_PRESERVED_REAL_WINDOW_REQUIRED')
++    need(d['format']=='FRESH35_BATCHED161_UPGRADE_PROGRAM_V1' and d['sourceSetSha256']==SOURCE_SHA
++         and d['currentServiceSha256']==service['proofSha256'] and d['postmasterStart']==service['postmasterStart']
++         and facts['service']==service and facts['currentServiceSha256']==service['proofSha256']
++         and facts['sourceSetSha256']==d['sourceSetSha256'] and facts['targetSha256']==d['targetSha256']
++         and facts['backupAdminValidUntil']==admin_until and facts['physical']==c['physical']
++         and facts['actualSharedServiceWorkDeadline']==c['sharedPostgresNamespace']['serviceLeaseExpiresAt']-35000,
++         'DESCRIBE_CURRENT_PROGRAM_BINDING_DIFFERS')
++    refs={}
++    for kind,body in (('payload',encode(payload)),('descriptor',encode(d)),('liveFacts',encode(facts)),('process',process_raw)):
++        maximum=65536 if kind in ('payload','process') else STDOUT_LIMIT
++        need(0<len(body)<=maximum and len((json.dumps(json.loads(body),ensure_ascii=False,indent=2)+'\n').encode())<=maximum,
++             'DESCRIBE_PUBLICATION_BOUND')
++        if kind!='process':
++            ops.new_file(boot/OUTPUTS[kind],body,0o600);ops.new_file(worker/'results'/OUTPUTS[kind],body)
++        need(stored(ops,boot,OUTPUTS[kind],STDOUT_LIMIT)==body
++             and ops.read_file(worker/'results'/OUTPUTS[kind],STDOUT_LIMIT,True)==body,'DESCRIBE_PUBLICATION_READBACK_DIFFERS')
++        refs[kind]={'leaf':OUTPUTS[kind],'bytes':len(body),'sha256':sha(body)}
++    need(work_left(deadline,expires_at)>5,'DESCRIBE_PUBLICATION_WORK_BUDGET_EXHAUSTED')
++    return {'state':'PROGRAM_DESCRIBED_NO_PG_OR_WRITE','outputs':refs,'databaseConnections':0,'mutations':0}
++
++if __name__=='__main__':raise SystemExit(inside())
+--- 27/install/bundle/batched161-run.mjs
++++ 28/install/bundle/batched161-run.mjs
+@@ -23,27 +23,48 @@
+  NEED(!Object.keys(process.env).some(k=>/^PG/.test(k)||['DATABASE_URL','NODE_PATH','NODE_OPTIONS'].includes(k)
+   ||k.startsWith('LD_')||k.startsWith('DYLD_')),'AMBIENT_CONFIG_REFUSED');
+  const mode=process.argv[2],p=await input();
++ let traceStart;
++ const trace=stage=>{
++  if(mode!=='describe')return;
++  traceStart??=process.hrtime.bigint();
++  const elapsedMilliseconds=Math.round(Number(process.hrtime.bigint()-traceStart)/1000)/1000;
++  process.stderr.write('T45_DESCRIBE_STAGE '+JSON.stringify({stage,elapsedMilliseconds})+'\n');
++ };
++ trace('IMPORT_BEGIN');
+  NEED(mode==='describe'||digest(mode),'FIXED_ENTRY_REQUIRED');
+  const src=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-source-v1.mjs'));
+  const tm=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-target-v1.mjs'));
+  const up=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs'));
+  const trust=await import(pathToFileURL(OP+'/scripts/release/unified-install/trusted-install-path.mjs'));
++ trace('IMPORT_END');trace('TRUST_BEGIN');
+  await trust.assertTrustedRootPath(process.execPath);await trust.assertTrustedRootTree(OP);
++ trace('TRUST_END');
+  const proofBytes=await readFile('/run/naijue-rewrite/current-production-service.json');
+  const c=JSON.parse(proofBytes);
+  NEED(sha(proofBytes)===p.service.proofSha256&&c.requestKey===p.service.serviceKey
+-  &&c.requestKey==='t45-first-r3-native-service-start-20261116-27'
++  &&c.requestKey==='t45-first-r3-native-service-start-20261116-28'
+   &&c.physical.postmasterStart===p.service.postmasterStart
+   &&c.sharedPostgresNamespace.container.id===p.service.containerId
+   &&c.sharedPostgresNamespace.container.startedAt===p.service.containerStartedAt,'CURRENT_SERVICE_DIFFERS');
++ trace('SOURCE_LOAD_BEGIN');
+  const paths=await src.resolveFresh35ReferenceInputPaths('/opt/naijue-erp/fresh35-combined-v1/reference-inputs');
+  const source=await src.loadFresh35CompactZeroSource(OP,paths);
++ trace('SOURCE_LOAD_END');
++ if(mode==='describe'){
++  const t0=Date.now();
++  p.installStartsAt=t0;
++  p.installExpiresAt=Math.min(t0+1200000,p.backupAdminValidUntil,c.sharedPostgresNamespace.serviceLeaseExpiresAt);
++ }
++ trace('TARGET_BEGIN');
+  const target=await tm.loadFresh35Installed154UpgradeTargetV1({source,
+   currentServiceSha256:p.service.proofSha256,startsAt:p.installStartsAt,
+   expiresAt:p.installExpiresAt,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('TARGET_END');
+  const installedTarget=tm.describeFresh35Installed154UpgradeTarget(target);
++ trace('COMPILE_BEGIN');
+  const program=await up.compileFresh35Batched161Upgrade({source,target,paths,
+   currentServiceSha256:p.service.proofSha256,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('COMPILE_END');
+  const d=up.describeFresh35Batched161Upgrade(program);
+  const batchedCatalog={sourceSetSha256:d.successorSourceSetSha256,
+   catalogSpecSha256:d.successorCatalogSpecSha256,modelSha256:d.successorModelSha256};
+@@ -52,7 +73,9 @@
+   currentServiceSha256:p.service.proofSha256,sourceSetSha256:d.sourceSetSha256,targetSha256:d.targetSha256,
+   successorCatalogSpecSha256:d.successorCatalogSpecSha256,successorModelSha256:d.successorModelSha256,
+   backupAdminValidUntil:p.backupAdminValidUntil,actualSharedServiceWorkDeadline:c.sharedPostgresNamespace.serviceLeaseExpiresAt-35000};
+- if(mode==='describe')return {state:'PROGRAM_DESCRIBED_NO_PG_OR_WRITE',descriptor:d,liveFacts:facts,databaseConnections:0,mutations:0};
++ if(mode==='describe')return {state:'PROGRAM_DESCRIBED_NO_PG_OR_WRITE',descriptor:d,liveFacts:facts,
++  payload:{service:p.service,backupAdminValidUntil:d.backupAdminValidUntil,installStartsAt:d.startsAt,installExpiresAt:d.expiresAt},
++  databaseConnections:0,mutations:0};
+  const outer=await readFile(new URL('./install-authorization.json',import.meta.url));
+  NEED(sha(outer)===mode&&isDeepStrictEqual(JSON.parse(outer),p.authority),'OUTER_AUTHORITY_DIFFERS');
+  NEED(isDeepStrictEqual(d,p.authority.upgradeDescriptor),'PROGRAM_DESCRIPTION_CHANGED');
+--- 27/install/bundle/batched_install_host.py
++++ 28/install/bundle/batched_install_host.py
+@@ -9,13 +9,13 @@
+ JOB=BASE/'jobs'/KEY
+ CONTROL=Path('/home/naijue/erp-release-20261006-01-control')/('grant-'+GRANT)
+ HOST=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+-START='t45-first-r3-native-service-start-20261116-27'
++START='t45-first-r3-native-service-start-20261116-28'
+ ADMIN='erp35_admin_20261110_r3'
+ STATE=Path('/var/lib/naijue-erp/fresh35-production')
+ OPERATOR='installed-real-operation-batched-root03-20261116-01'
+ SOURCE_SET_SHA256='70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e'
+ SOURCE_ROWS_SHA256='399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109'
+-PINS={'normal05_retained_stop.py': 'df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'batched161-run.mjs': 'adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1', 'private_transport.py': '8bb5a667b9a107d20c21d3c6e8bd3e2c0fc5692c49017fe27ea5c27a1548f895'}
++PINS={'normal05_retained_stop.py': '4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'batched161-run.mjs': 'ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f', 'private_transport.py': '64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251'}
+ 
+ def need(v,c):
+     if not v:raise ValueError(c)
+@@ -76,7 +76,7 @@
+     m=ModuleType(name[:-3]);m.__file__=str(path);sys.modules[m.__name__]=m;exec(compile(raw,str(path),'exec'),m.__dict__);return m
+ 
+ def private_admin(h,a):
+-    key='t45-r3-ordinary27-auth-apply-20261116-01'
++    key='t45-r3-ordinary28-auth-apply-20261116-01'
+     raw=read(BASE/'jobs'/key/'r3-outer-terminal.json');t=json.loads(raw)
+     need(sha(raw)==a['applyTerminalSha256'] and raw==read(CONTROL/'results'/(key+'.json'),owner=1000)
+         and (t['jobId'],t['status'],t['exitCode'])==(key,'COMPLETED',0),'BATCHED_INSTALL_ROLE_APPLY_REQUIRED')
+@@ -85,7 +85,7 @@
+         and r['result']['credentialValidUntilByRole'][ADMIN]==a['backupAdminValidUntil']
+         and r['result']['runtimeAuthChanged'] is False and r['result']['membershipsOrRoleAttributesChanged'] is False
+         and r['cleanup']['ownContainerStopped'] and r['cleanup']['ownedPidAbsent'],'BATCHED_INSTALL_FINITE_ADMIN_REQUIRED')
+-    p=HOST/'state/native-services/ordinary27-auth-20261116-01'/(ADMIN+'.json')
++    p=HOST/'state/native-services/ordinary28-auth-20261116-01'/(ADMIN+'.json')
+     s=p.lstat();need((s.st_uid,s.st_gid,stat.S_IMODE(s.st_mode))==(0,0,0o400),'BATCHED_INSTALL_PRIVATE_CUSTODY_REQUIRED')
+     cfg=json.loads(read(p));fixed={'host':'127.0.0.1','port':56791,'database':'erp_fresh35_20261110_r3','user':ADMIN,'ssl':False}
+     need(set(cfg)==set(fixed)|{'password'} and all(cfg[k]==v for k,v in fixed.items()) and re.fullmatch('[a-f0-9]{64}',cfg['password']),
+@@ -101,7 +101,7 @@
+     for sig in (signal.SIGTERM,signal.SIGINT):signal.signal(sig,interrupted)
+     raw=read(JOB/'bundle/install-authorization.json');need(sha(raw)==sys.argv[1],'BATCHED_INSTALL_OUTER_HASH_REQUIRED')
+     a=validate(json.loads(raw),now());need(a['sourceSha256']==sha(read(Path(__file__))),'BATCHED_INSTALL_SELF_DIFFERS')
+-    policy=json.loads(read(BASE/'r3-05-write-continuity/direct27-batched-real.json'))
++    policy=json.loads(read(BASE/'r3-05-write-continuity/direct28-batched-real.json'))
+     need(policy['grantId']==GRANT and policy['jobs']['install']['jobId']==KEY
+         and policy['jobs']['install']['script']=='batched_install_host.py'
+         and policy['jobs']['install']['bundlePins']['batched_install_host.py']==a['sourceSha256']
+@@ -113,7 +113,7 @@
+     need(sha(material)==a['operatorReadySha256'] and m['state']=='EXACT_FROZEN_SOURCE_MATERIALIZED_NO_INSTALL_OR_EXECUTION'
+         and m['sourceRowsSha256']==SOURCE_ROWS_SHA256,'BATCHED_INSTALL_MATERIALIZATION_REQUIRED')
+     pg=private_admin(h,a)
+-    root=HOST/'state/batched-install27-private';root.mkdir(mode=0o700,exist_ok=True)
++    root=HOST/'state/batched-install28-private';root.mkdir(mode=0o700,exist_ok=True)
+     s=root.lstat();need(root.resolve()==root and (s.st_uid,s.st_gid,stat.S_IMODE(s.st_mode))==(0,0,0o700),'BATCHED_INSTALL_PRIVATE_PARENT_REQUIRED')
+     projection=root/KEY;projection.mkdir(mode=0o700);(projection/'scratch').mkdir(mode=0o700)
+     runner=read(JOB/'bundle/batched161-run.mjs');need(sha(runner)==PINS['batched161-run.mjs'],'BATCHED_INSTALL_RUNNER_DIFFERS')
+--- 27/install/bundle/normal05_retained_stop.py
++++ 28/install/bundle/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261114-22'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-22'
++SERVICE = 't45-first-r3-native-service-start-20261116-28'
++NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-22.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-28.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9'
++PROOF_SHA = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9'
+-NORMAL05_SHA = '34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17'
++READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
++NORMAL05_SHA = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- 27/install/bundle/private_transport.py
++++ 28/install/bundle/private_transport.py
+@@ -9,7 +9,7 @@
+ CONTROL=Path('/home/naijue/erp-release-20261006-01-control/grant-'+GRANT)
+ HOST=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ HOST_STATE=HOST/'state';STATE=Path('/var/lib/naijue-erp/fresh35-production')
+-START='t45-first-r3-native-service-start-20261116-27'
++START='t45-first-r3-native-service-start-20261116-28'
+ FAILED='t45-first-20261110-r3-real-execute-20261114-02'
+ NODE='/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node'
+ PHASE='install'
+@@ -75,7 +75,7 @@
+ 
+ def current(ops,support,a):
+  fixed_history();boot=HOST_STATE/'native-services'/START
+- raw=read(HOST/'authority/fresh35-current-production-service-v2-service-27.json');p=json.loads(raw);s=a['service'];b=p['sharedPostgresNamespace']['container']
++ raw=read(HOST/'authority/fresh35-current-production-service-v2-service-28.json');p=json.loads(raw);s=a['service'];b=p['sharedPostgresNamespace']['container']
+  need(sha(raw)==s['proofSha256']and p['requestKey']==START and p['physical']['postmasterStart']==s['postmasterStart']
+   and p['physical']['systemIdentifier']=='7706545564479176741'and p['physical']['databaseOid']=='16393'
+   and b['id']==s['containerId']and b['startedAt']==s['containerStartedAt']
+@@ -98,7 +98,7 @@
+ 
+ def child_run(proof,a,payload):
+  birth=proof['sharedPostgresNamespace']['container'];cutoff=min(a['expiresAt']-80000,now()+a['maximumChildSeconds']*1000)
+- packet=(NODE,str(STATE/'batched-install27-private'/KEY),sha(read(JOB/'bundle/install-authorization.json',131072)),cutoff,birth['networkNamespace'],proof['guardian'],proof['postmaster'],NODE_SHA)
++ packet=(NODE,str(STATE/'batched-install28-private'/KEY),sha(read(JOB/'bundle/install-authorization.json',131072)),cutoff,birth['networkNamespace'],proof['guardian'],proof['postmaster'],NODE_SHA)
+  source='PACKET='+repr(packet)+'\n'+CHILD
+  argv=['/usr/bin/docker','exec','-i','--user','0:0',birth['id'],'/usr/bin/python3','-I','-S','-c',source]
+  child=subprocess.Popen(argv,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
+--- 27/writer/bundle/batched_real_host.py
++++ 28/writer/bundle/batched_real_host.py
+@@ -9,7 +9,7 @@
+ if not KEY:KEY=Path(os.environ.get('ERP_SHARED_JOB_DIR','/')).name
+ PHASE='writer'if KEY==WRITER else 'readback'
+ 
+-START='t45-first-r3-native-service-start-20261116-27'
++START='t45-first-r3-native-service-start-20261116-28'
+ FAILED='t45-first-20261110-r3-real-execute-20261114-02'
+ GRANT='b16447fbc81f4d64'
+ BASE=Path('/root/erp-release-20261006-01-worker/grant-'+GRANT)
+@@ -17,7 +17,7 @@
+ CONTROL=Path('/home/naijue/erp-release-20261006-01-control/grant-'+GRANT)
+ HOST=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ HOST_STATE=HOST/'state';STATE=Path('/var/lib/naijue-erp/fresh35-production')
+-PROJECTION='retained27-private'
++PROJECTION='retained28-private'
+ OPERATOR='installed-real-operation-batched-root03-20261116-01'
+ NODE='/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node'
+ INITIALIZER_BYTES=51225175
+@@ -31,7 +31,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS={'normal05_retained_stop.py': 'df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'materialized-profile.json': 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb', 'retained24-run.mjs': 'c98b897209f94ddb22fcfc6948bcb78aea5d71f2d2ce7baf101b4da5aaaee651'}
++PINS={'normal05_retained_stop.py': '4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'materialized-profile.json': 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8', 'retained24-run.mjs': '7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950'}
+ 
+ SOURCE_ROWS_SHA256='399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109'
+ SOURCE_SET_SHA256='70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e'
+@@ -111,7 +111,7 @@
+ def authority(raw):return validate(json.loads(raw),now())
+ 
+ def registered_authority(a):
+- policy=json.loads(read(BASE/'r3-05-write-continuity/direct27-batched-real.json',262144))
++ policy=json.loads(read(BASE/'r3-05-write-continuity/direct28-batched-real.json',262144))
+  need(policy['grantId']==GRANT and policy['jobs']['start']['jobId']==START
+   and policy['jobs']['writer']['jobId']==KEY and policy['jobs']['writer']['script']=='batched_real_host.py'
+   and policy['jobs']['writer']['bundlePins']['batched_real_host.py']==a['sourceSha256']
+@@ -153,7 +153,7 @@
+ 
+ def current(ops,support,a):
+  fixed_history();boot=HOST_STATE/'native-services'/START
+- raw=read(HOST/'authority/fresh35-current-production-service-v2-service-27.json');p=json.loads(raw);s=a['service'];b=p['sharedPostgresNamespace']['container']
++ raw=read(HOST/'authority/fresh35-current-production-service-v2-service-28.json');p=json.loads(raw);s=a['service'];b=p['sharedPostgresNamespace']['container']
+  need(sha(raw)==s['proofSha256']and p['requestKey']==START and p['physical']['postmasterStart']==s['postmasterStart']
+   and p['physical']['systemIdentifier']=='7706545564479176741'and p['physical']['databaseOid']=='16393'
+   and b['id']==s['containerId']and b['startedAt']==s['containerStartedAt']
+@@ -175,7 +175,7 @@
+  return p,json.loads(read(boot/'service-start-authorization.json'))
+ 
+ def controller(a):
+- key='t45-r3-ordinary27-auth-apply-20261116-01'
++ key='t45-r3-ordinary28-auth-apply-20261116-01'
+  terminal=read(JOBS/key/'r3-outer-terminal.json');t=json.loads(terminal)
+  need(sha(terminal)==a['applyTerminalSha256']and terminal==read(CONTROL/'results'/(key+'.json'),owner=1000)
+   and(t['jobId'],t['status'],t['exitCode'])==(key,'COMPLETED',0),'ORIGINAL_INSPECT_ROLE_APPLY_TERMINAL_REQUIRED')
+@@ -187,7 +187,7 @@
+   and (a['expiresAt']==r['result']['credentialValidUntilByRole'][ROLE] if KEY==WRITER
+    else a['expiresAt']<=r['result']['credentialValidUntilByRole'][ROLE])
+   and r['cleanup']['ownContainerStopped']is True and r['cleanup']['ownedPidAbsent']is True,'ORIGINAL_INSPECT_FINITE_ROLE_READBACK_REQUIRED')
+- path=HOST_STATE/'native-services/ordinary27-auth-20261116-01'/(ROLE+'.json');s=path.lstat()
++ path=HOST_STATE/'native-services/ordinary28-auth-20261116-01'/(ROLE+'.json');s=path.lstat()
+  need((s.st_uid,s.st_gid,stat.S_IMODE(s.st_mode))==(0,0,0o400),'ORIGINAL_INSPECT_CONTROLLER_CUSTODY_REQUIRED')
+  cfg=json.loads(read(path));fixed={'host':'127.0.0.1','port':56791,'database':DB,'user':ROLE,'ssl':False}
+  need(set(cfg)==set(fixed)|{'password'}and all(cfg[k]==v for k,v in fixed.items())and re.fullmatch('[a-f0-9]{64}',cfg['password']),'ORIGINAL_INSPECT_EXACT_CONTROLLER_REQUIRED')
+--- 27/writer/bundle/normal05_retained_stop.py
++++ 28/writer/bundle/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261114-22'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-22'
++SERVICE = 't45-first-r3-native-service-start-20261116-28'
++NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-22.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-28.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9'
++PROOF_SHA = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9'
+-NORMAL05_SHA = '34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17'
++READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
++NORMAL05_SHA = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- 27/writer/bundle/r3_05_runtime.py
++++ 28/writer/bundle/r3_05_runtime.py
+@@ -10,13 +10,13 @@
+ 
+ HOST_ROOT = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ MATERIALIZED = HOST_ROOT/'state/r3-r2-private-import-input-20261112-01'
+-PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-22-worker-proof'
++PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-28-worker-proof'
+ PROFILE_SHA = 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+ INSTALLATION = '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+ SOURCE = '6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16'
+ TARGET = 'fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261114-22'
+-SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-22'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-28'
++SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ STATE_DEVICE = 66304
+ START_RESERVE = 28 * 1024**3
+ BASELINE_SCOPE_DIRECTORY = 'approvals/baseline-scope-input-r1'
+--- 27/writer/bundle/retained24-run.mjs
++++ 28/writer/bundle/retained24-run.mjs
+@@ -9,9 +9,9 @@
+ const KEY=mount.split('/').at(-1);
+ const writing=KEY===WRITER;
+ const INITIALIZER_BYTES=51225175;
+-const START='t45-first-r3-native-service-start-20261116-27';
++const START='t45-first-r3-native-service-start-20261116-28';
+ const STATE='/var/lib/naijue-erp/fresh35-production';
+-const WORK=STATE+'/retained27-private/'+KEY;
++const WORK=STATE+'/retained28-private/'+KEY;
+ const OPERATOR=STATE+'/installed-real-operation-batched-root03-20261116-01/operation';
+ const REAL=STATE+'/real-first-20261110-r3';
+ const REPORT=REAL+'/reports/t45-first-20261110-r3-real-prepare-20261114-09/runtime/stream';
+--- 27/stop/bundle/normal05_preserve_stop.py
++++ 28/stop/bundle/normal05_preserve_stop.py
+@@ -12,15 +12,15 @@
+ import time
+ 
+ 
+-KEY = 't45-r3-ordinary27-preserve-stop-20261116-01'
++KEY = 't45-r3-ordinary28-preserve-stop-20261116-01'
+ WRITER = 't45-first-20261110-r3-real-execute-20261114-02'
+ GRANT = 'b16447fbc81f4d64'
+ ROOT = Path('/root/erp-release-20261006-01-worker/grant-' + GRANT)
+ CONTROL = Path('/home/naijue/erp-release-20261006-01-control/grant-' + GRANT)
+ JOB = ROOT / 'jobs' / KEY
+ HOLD = ROOT / 'r3-05-write-continuity'
+-STOP_REFERENCE = '9c0a617bb75a5c8ce12d78c09ad312094e19ee006489f207be3bf1ab7229e213'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261116-27'
++STOP_REFERENCE = '4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-28'
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}
+ CURRENT_BATCH_OPERATIONS = ('t45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01')
+--- 27/stop/bundle/normal05_retained_stop.py
++++ 28/stop/bundle/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261116-27'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++SERVICE = 't45-first-r3-native-service-start-20261116-28'
++NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-27.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-28.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9'
++PROOF_SHA = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9'
+-NORMAL05_SHA = '34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17'
++READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
++NORMAL05_SHA = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- 27/restore/bundle/ordinary05_roles.py
++++ 28/restore/bundle/ordinary05_roles.py
+@@ -21,8 +21,8 @@
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ WORK = STATE / 'fresh35-first-production-20261110-r3'
+ DATA = WORK / 'data'
+-CUSTODY = STATE / 'native-services/ordinary27-auth-20261116-01'
+-CAPTURE = WORK / 'ordinary27-auth-capture-20261116-01'
++CUSTODY = STATE / 'native-services/ordinary28-auth-20261116-01'
++CAPTURE = WORK / 'ordinary28-auth-capture-20261116-01'
+ DATABASE = 'erp_fresh35_20261110_r3'
+ CONTROLLER = 'erp35_controller_20261110_r3'
+ BACKUP_ADMIN = 'erp35_admin_20261110_r3'
+@@ -58,10 +58,10 @@
+ def scope():
+     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',
+             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',
+-            'requestKey': 't45-r3-ordinary27-auth-apply-20261116-01',
+-            'restoreRequestKey': 't45-r3-ordinary27-auth-restore-20261116-01',
+-            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261115-24',
+-            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-27',
++            'requestKey': 't45-r3-ordinary28-auth-apply-20261116-01',
++            'restoreRequestKey': 't45-r3-ordinary28-auth-restore-20261116-01',
++            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-27',
++            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-28',
+             'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),
+             'physical': PHYSICAL, 'roles': list(ROLES), 'maximumOfflineStepSeconds': 30,
+             'coldCopyCompleteSha256': 'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',
+@@ -337,7 +337,7 @@
+     sync_directory(CAPTURE.parent)
+     private_file(CUSTODY / 'authority.json', authority_raw)
+     before = capture(core, 'before')
+-    prior_path = STATE / 'native-services/ordinary26-auth-20261116-01/original-auth.json'
++    prior_path = STATE / 'native-services/ordinary27-auth-20261116-01/original-auth.json'
+     prior = read_private(prior_path)
+     need(set(prior) == set(before) and all(prior[k] == before[k] for k in (
+          'physical', 'boundary', 'memberships', 'settings')),
+--- 27/restore/bundle/ordinary05_roles_job.py
++++ 28/restore/bundle/ordinary05_roles_job.py
+@@ -20,18 +20,18 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01')}
++PHASES = {'apply': ('t45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01')}
+ STATIC_PINS = {
+     'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+     'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+     'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+ }
+-PRIOR_CID = 'f855a86b0eab87bc6ec273386e566c3b93c67f560d90392318edaa15b3a74187'
+-PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-24'
+-CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
+-CURRENT_KEY = 't45-first-r3-native-service-start-20261116-27'
+-CURRENT_SOURCE = '34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17'
+-CURRENT_PROOF_SOURCE = '4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9'
++PRIOR_CID = '6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448'
++PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
++CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-28'
++CURRENT_KEY = 't45-first-r3-native-service-start-20261116-28'
++CURRENT_SOURCE = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
++CURRENT_PROOF_SOURCE = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -165,9 +165,9 @@
+ def original_stopped(phase):
+     prior = inspect(PRIOR_CID)
+     need(prior['Id'] == PRIOR_CID and prior['Name'] == '/' + PRIOR_NAME and prior['Image'] == IMAGE
+-         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261115-24'
++         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261116-27'
+          and not prior['State']['Running'] and prior['State']['Pid'] == 0
+-         and prior['State']['StartedAt']=='2026-11-15T15:21:17.835078029Z',
++         and prior['State']['StartedAt']=='2026-11-15T18:38:28.428863507Z',
+          'MAINT_JOB_ORIGINAL_08_NOT_STOPPED')
+     for name in (CURRENT_NAME, APP09_NAME):
+         ids = command(['docker', 'ps', '-a', '--no-trunc', '--filter', 'name=^/' + name + '$', '--format', '{{.ID}}'], 5).decode().splitlines()
+@@ -236,16 +236,16 @@
+     deadline = time.monotonic() + HOST_WORK_SECONDS
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+-    prior_restore = 't45-r3-ordinary26-auth-restore-20261116-01'
+-    prior_boot = ROOT / 'state/native-services/t45-first-r3-native-service-start-20261115-24'
+-    stop_key = 't45-r3-ordinary24-preserve-stop-20261115-01'
++    prior_restore = 't45-r3-ordinary27-auth-restore-20261116-01'
++    prior_boot = ROOT / 'state/native-services/t45-first-r3-native-service-start-20261116-27'
++    stop_key = 't45-r3-ordinary27-preserve-stop-20261116-01'
+     for path, pin in (
+-        (control / 'results' / (stop_key + '.json'), '0a9ea80f2c52494c584e2dc7999766e725e604c9ec7d12c92af7424d1eb83a39'),
+-        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '69a6c160c867b4049555a91313a6e4b42cdc10f2584aaa0d221fed3b4ede7a88'),
+-        (prior_boot / 'cleanup.json', '6762749b456f83beecad3d318da73d037715bb6cf9a59c1f45f0a307a8fa801e'),
+-        (control / 'results' / (prior_restore + '.json'), '944dfa9b110fd836ee9e99a8944446111b1e68808d92280a5d220e91cd67fc63'),
++        (control / 'results' / (stop_key + '.json'), '2dc418392380fe9313facee2b85cf06d79ad2b1e8fcac1faedd6c0263d1fd04f'),
++        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '62ca4c34ae9313a1d5c9de745878ef9f8567e2d6f98af11d283c16e64d0c9502'),
++        (prior_boot / 'cleanup.json', 'fda7c05908d7b94223901638b83a417d2d7f1c624d6d195abae6ede6fc0702e8'),
++        (control / 'results' / (prior_restore + '.json'), '957f0f26d7ed9272ea675c855a7726e9627af7946774b9b8827fb720d47aafe0'),
+         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',
+-         '57aff18487f294415830404abaf18f8a970b04b779d22e2d226018539c5879cb'),
++         '9e2a41c47eeb23745dae3558266f3b01b9776594f95a766e8a4f742ee30a2be2'),
+     ):
+         need(sha(ops.read_file(path, 65536, False, False)) == pin,
+              'MAINT_JOB_PREDECESSOR_STOP_OR_RESTORE_EVIDENCE_DIFFERS')
+@@ -338,7 +338,7 @@
+                 control/'requests'/(CURRENT_KEY+'.tmp'), control/'jobs'/CURRENT_KEY,
+                 control/'results'/(CURRENT_KEY+'.json'), WORKER/CURRENT_KEY,
+                 ROOT/'state/native-services'/CURRENT_KEY,
+-                ROOT/'authority/fresh35-current-production-service-v2-service-27.json')),
++                ROOT/'authority/fresh35-current-production-service-v2-service-28.json')),
+              'ORDINARY05_EARLY_RESTORE_ONLY_BEFORE_START')
+         return
+     s = a['service']
+@@ -347,7 +347,7 @@
+          and all(re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId')),
+          'ORDINARY05_RESTORE_SERVICE_SCOPE_REQUIRED')
+     stop = a['stopRequestKey']
+-    is_preserve = stop == 't45-r3-ordinary27-preserve-stop-20261116-01'
++    is_preserve = stop == 't45-r3-ordinary28-preserve-stop-20261116-01'
+     need(type(stop) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,70}',stop)
+          and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+                  ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+@@ -381,7 +381,7 @@
+              and all(r[k]==s[k] for k in ('serviceKey','containerId','containerStartedAt','postmasterStart')),
+              'ORDINARY05_RESTORE_NORMAL_STOP_REQUIRED')
+     auth = ROOT/'authority'
+-    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-27.json',65536)
++    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-28.json',65536)
+     p = ops.strict(proof_raw)
+     boot = ROOT/'state/native-services'/CURRENT_KEY
+     clean_raw = ops.read_file(boot/'cleanup.json',65536,True)
+--- 27/PHASES27.UNISSUED.json
++++ 28/PHASES28.UNISSUED.json
+@@ -1,6 +1,7 @@
+ {
+   "accessPlanPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-final02-source-local-01/WRITER24-ACCESS-PLAN.CANONICAL.json",
+   "accessPlanSha256": "2a8d039a80f69276eccc606036917584fa23b3297b62182fe435e32f6d04cbb5",
++  "actualPriorClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
+   "authoritiesIssued": false,
+   "externallyIssuedStaticLeaves": {
+     "apply": [
+@@ -19,22 +20,22 @@
+         "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+         "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+         "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+-        "ordinary05_roles.py": "d1fa8d926cfd2b4d6cb93b92dad95dc83942f67936870ed18bf43be87374966e",
+-        "ordinary05_roles_job.py": "e5b26381f382e469986dcbf37e877a5c26425050370c7aea10f8d85d0e1abb47"
++        "ordinary05_roles.py": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
++        "ordinary05_roles_job.py": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+       },
+       "deadlineField": "expiresAt",
+-      "jobId": "t45-r3-ordinary27-auth-apply-20261116-01",
++      "jobId": "t45-r3-ordinary28-auth-apply-20261116-01",
+       "script": "ordinary05_roles_job.py",
+       "timeoutSeconds": 300
+     },
+     "install": {
+       "authorityLeaf": "install-authorization.json",
+       "bundlePins": {
+-        "batched161-run.mjs": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1",
+-        "batched_install_host.py": "f7d61b6f9ae8e7039675fc04f84b17b9b700ac7e22d94290ab7698d77bb0febb",
++        "batched161-run.mjs": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
++        "batched_install_host.py": "49d659859ad5872afdf9ddb1aadae656102fea521f3df090485986e93c8cc0d7",
+         "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+-        "normal05_retained_stop.py": "df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8",
+-        "private_transport.py": "8bb5a667b9a107d20c21d3c6e8bd3e2c0fc5692c49017fe27ea5c27a1548f895"
++        "normal05_retained_stop.py": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
++        "private_transport.py": "64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-batched-install-20261115-01",
+@@ -63,57 +64,58 @@
+         "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+         "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+         "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+-        "ordinary05_roles.py": "d1fa8d926cfd2b4d6cb93b92dad95dc83942f67936870ed18bf43be87374966e",
+-        "ordinary05_roles_job.py": "e5b26381f382e469986dcbf37e877a5c26425050370c7aea10f8d85d0e1abb47"
++        "ordinary05_roles.py": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
++        "ordinary05_roles_job.py": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+       },
+       "deadlineField": "expiresAt",
+-      "jobId": "t45-r3-ordinary27-auth-restore-20261116-01",
++      "jobId": "t45-r3-ordinary28-auth-restore-20261116-01",
+       "script": "ordinary05_roles_job.py",
+       "timeoutSeconds": 300
+     },
+     "start": {
+       "authorityLeaf": "service-start-authorization.json",
+       "bundlePins": {
+-        "batched161-run.mjs": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1",
++        "batched161-run.mjs": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
+         "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+-        "normal_service05_after08.py": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17",
+-        "normal_service05_after08_proof.py": "4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9",
++        "normal_service05_after08.py": "31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e",
++        "normal_service05_after08_proof.py": "6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c",
+         "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+         "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+         "operator-stream-import-cli.mjs": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+         "operator-stream-program.mjs": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+         "production-plan.json": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+         "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+-        "r3_05_readonly.py": "708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9",
+-        "r3_05_runtime.py": "cae97e8a25bea466ceeaaf3f0972c332cf749cc27bb248f44184abdf26bad24b"
++        "r3_05_readonly.py": "febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8",
++        "r3_05_runtime.py": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8",
++        "start_owned_describe.py": "98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0"
+       },
+       "deadlineField": "expiresAt",
+-      "jobId": "t45-first-r3-native-service-start-20261116-27",
++      "jobId": "t45-first-r3-native-service-start-20261116-28",
+       "script": "normal_service05_after08.py",
+       "timeoutSeconds": 300
+     },
+     "stop": {
+       "authorityLeaf": "normal05-preserve-stop-input.json",
+       "bundlePins": {
+-        "normal05_preserve_stop.py": "e940115908fb65bda4e6307276c5c74f6cb0e8f85bb9d3417d1efa18f4f7e285",
+-        "normal05_retained_stop.py": "9c0a617bb75a5c8ce12d78c09ad312094e19ee006489f207be3bf1ab7229e213"
++        "normal05_preserve_stop.py": "213522bf870b372b2c4b69dc51aeff3b110fa68a982481ceac30c1113cfce8db",
++        "normal05_retained_stop.py": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a"
+       },
+       "deadlineField": "expiresAt",
+-      "jobId": "t45-r3-ordinary27-preserve-stop-20261116-01",
++      "jobId": "t45-r3-ordinary28-preserve-stop-20261116-01",
+       "script": "normal05_preserve_stop.py",
+       "timeoutSeconds": 120
+     },
+     "writer": {
+       "authorityLeaf": "writer-authorization.json",
+       "bundlePins": {
+-        "batched_real_host.py": "f055a145d542ef8d9d9e72a284f1fbcd23b4e25391cc907710fedf34701cebe3",
++        "batched_real_host.py": "18ab1bf52c51da4503645cdfd6ae1407464306f958fc12abd7443c1b5375d1f8",
+         "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+         "materialized-profile.json": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+         "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+-        "normal05_retained_stop.py": "df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8",
++        "normal05_retained_stop.py": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
+         "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+-        "r3_05_runtime.py": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb",
+-        "retained24-run.mjs": "c98b897209f94ddb22fcfc6948bcb78aea5d71f2d2ce7baf101b4da5aaaee651"
++        "r3_05_runtime.py": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8",
++        "retained24-run.mjs": "7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-batched-real-execute-20261115-01",
+@@ -127,35 +129,34 @@
+   "materializeNeverResubmit": true,
+   "original06AbsenceReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261114-r3-service23-original06-readonly-actual-01/readback/INSPECT-READBACK.json",
+   "phaseDirectories": {
+-    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/apply/bundle",
+-    "install": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/install/bundle",
++    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle",
++    "install": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle",
+     "materialize": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle",
+-    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/restore/bundle",
+-    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle",
+-    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/stop/bundle",
+-    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/writer/bundle"
++    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle",
++    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle",
++    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/stop/bundle",
++    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle"
+   },
+   "postgresConnections": 0,
+   "predecessorMaterializationSha256": "7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3",
+-  "previousFailedStartKey": "t45-first-r3-native-service-start-20261116-26",
+-  "previousFailedStartResultSha256": "5aa3c60a23da88f369f89868556bf95470eae3cb407a3c8dbd6f5562e1eb6dca",
+-  "previousFailedStartTerminalSha256": "853a201e55ebc282d2d5a736423ab3bf6a9ff82af6d03500f5d67e0964a3bb39",
+-  "priorRestorePublicResultSha256": "57aff18487f294415830404abaf18f8a970b04b779d22e2d226018539c5879cb",
+-  "priorRestoreRootResultSha256": "d521106c1c1a5a20601f7ad125dd2c254ff1879a78d25c5a299c0464ed527bd8",
+-  "priorRestoreTerminalSha256": "944dfa9b110fd836ee9e99a8944446111b1e68808d92280a5d220e91cd67fc63",
++  "previousStartKind": "ACTUAL_COMPLETED_NORMAL_SERVICE27",
++  "priorRestorePublicResultSha256": "9e2a41c47eeb23745dae3558266f3b01b9776594f95a766e8a4f742ee30a2be2",
++  "priorRestoreRootResultSha256": "90e8fc47b7df781cb325dc9e653510c2080da0e336748146e25d8751a4cc9fc7",
++  "priorRestoreTerminalSha256": "957f0f26d7ed9272ea675c855a7726e9627af7946774b9b8827fb720d47aafe0",
+   "priorService": {
+-    "containerId": "f855a86b0eab87bc6ec273386e566c3b93c67f560d90392318edaa15b3a74187",
+-    "containerStartedAt": "2026-11-15T15:21:17.835078029Z",
+-    "postmasterStart": "2026-11-15 15:21:19.205528+00",
+-    "proofSha256": "c8f0ac90edac8b9113fa721f89af62ae487722c87820503205bbee1e23e1d96a",
+-    "serviceKey": "t45-first-r3-native-service-start-20261115-24"
++    "containerId": "6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448",
++    "containerStartedAt": "2026-11-15T18:38:28.428863507Z",
++    "postmasterStart": "2026-11-15 18:38:29.737044+00",
++    "proofSha256": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
++    "serviceKey": "t45-first-r3-native-service-start-20261116-27"
+   },
+-  "priorStartPublicResultSha256": "9b6c8756d6bfdcad697c6a8d1d5d63c3e3cc04c900cf0726278f4f3770f941c8",
+-  "priorStartTerminalSha256": "6fb313c37ed8257ea41756daf1c1863dbbc20f3d4efb4ad672d76d564543fb66",
+-  "priorStopCleanupSha256": "6762749b456f83beecad3d318da73d037715bb6cf9a59c1f45f0a307a8fa801e",
+-  "priorStopPublicResultSha256": "69a6c160c867b4049555a91313a6e4b42cdc10f2584aaa0d221fed3b4ede7a88",
+-  "priorStopTerminalSha256": "0a9ea80f2c52494c584e2dc7999766e725e604c9ec7d12c92af7424d1eb83a39",
+-  "rootDescribeCallerPreparation": "Stage exact caller27 from new start bundle only; completed materialized companion25 remains unchanged",
++  "priorStartPublicResultSha256": "4446a6673b6684ecf26c9d5da4982cd27d75fd68dca578c65072330921b6b5d7",
++  "priorStartRootResultSha256": "808c633e8d7f11bac5e09efa21cbb3b40f39272a103b89af191624915b869609",
++  "priorStartTerminalSha256": "ba1caa324ceba9a191479d45bd6e1b497e78b5adc7946d21589c296a2e300cd4",
++  "priorStopCleanupSha256": "fda7c05908d7b94223901638b83a417d2d7f1c624d6d195abae6ede6fc0702e8",
++  "priorStopPublicResultSha256": "62ca4c34ae9313a1d5c9de745878ef9f8567e2d6f98af11d283c16e64d0c9502",
++  "priorStopTerminalSha256": "2dc418392380fe9313facee2b85cf06d79ad2b1e8fcac1faedd6c0263d1fd04f",
++  "rootDescribeCallerPreparation": "Only start28-owned pinned helper invokes genuine describe inside existing start300; reader consumes stored protected outputs and never reruns Node",
+   "serverActions": 0,
+   "sourceArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+   "sourceDelta": true,
+@@ -164,7 +165,19 @@
+   "sourcePins": 278,
+   "sourceRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+   "sourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
++  "startDescriptionMaximumBytes": {
++    "genuine-describe-payload.json": 65536,
++    "genuine-describe-process.json": 65536,
++    "genuine-descriptor.json": 131072,
++    "genuine-live-facts.json": 131072
++  },
++  "startDescriptionOutputLeaves": [
++    "genuine-describe-payload.json",
++    "genuine-descriptor.json",
++    "genuine-live-facts.json",
++    "genuine-describe-process.json"
++  ],
+   "startupHeldUntilFinalSameVersionFullChainReview": true,
+-  "status": "LOCAL_COMPLETE_NORMAL_CHAIN27_CANDIDATE02_FROZEN_UNISSUED_REVIEW_PENDING",
++  "status": "LOCAL_SOURCE_NORMAL28_START_OWNED_DESCRIBE_TRACE_CANDIDATE02_UNISSUED_REVIEW_PENDING",
+   "writerRestoredPointerSha256": "8c2f65e76ded8df610359435e90b5eb68783ffb108379a11d66a2f273e2ae98d"
+ }
+--- 27/read-current-phase27-r1.py
++++ 28/read-current-phase28.py
+@@ -3,8 +3,8 @@
+ from datetime import datetime,timezone
+ import hashlib,json,runpy,shlex,sys
+ HERE=Path(__file__).resolve().parent
+-RULES=HERE/'PHASES27.UNISSUED.json'
+-RULES_SHA='b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234'
++RULES=HERE/'PHASES28.UNISSUED.json'
++RULES_SHA = 'b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1'
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ phase,destination=sys.argv[1:]
+ assert sha(RULES.read_bytes())==RULES_SHA
+@@ -18,16 +18,16 @@
+ import hashlib,json,os,stat,subprocess
+ PHASE=PHASE_LITERAL
+ KEY=KEY_LITERAL
+-START='t45-first-r3-native-service-start-20261116-27'
++START='t45-first-r3-native-service-start-20261116-28'
+ B=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64')
+ R=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+-def take(p,uid=0,*,allow_empty=False):
++def take(p,uid=0,*,allow_empty=False,maximum=65536):
+  assert p.resolve()==p
+  with os.fdopen(os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK),'rb') as f:
+-  s=os.fstat(f.fileno());assert stat.S_ISREG(s.st_mode) and s.st_uid==uid and s.st_nlink==1 and not s.st_mode&0o022 and (0 if allow_empty else 1)<=s.st_size<=262144
+-  raw=f.read(262145);assert len(raw)==s.st_size
++  s=os.fstat(f.fileno());assert stat.S_ISREG(s.st_mode) and s.st_uid==uid and s.st_nlink==1 and not s.st_mode&0o022 and (0 if allow_empty else 1)<=s.st_size<=maximum
++  raw=f.read(maximum+1);assert len(raw)==s.st_size
+   ident=lambda z:(z.st_dev,z.st_ino,z.st_uid,z.st_gid,z.st_mode,z.st_nlink,z.st_size,z.st_mtime_ns,z.st_ctime_ns)
+   assert ident(s)==ident(os.fstat(f.fileno()))==ident(p.lstat())
+  return raw
+@@ -73,18 +73,46 @@
+     out.update(incomplete=json.loads(raw),incompleteRootSha256=sha(raw),incompletePublicSha256=sha(pub),incompleteObjectsEqual=True)
+     out['rootPins']['incomplete']=sha(raw)
+    else:out[leaf]=dict(rootSha256=sha(raw),publicSha256=sha(pub),objectsEqual=True,value=json.loads(raw))
++ if PHASE=='start' and (B/KEY/'results/genuine-describe-process.json').is_file():
++  process_raw=take(B/KEY/'results/genuine-describe-process.json');process_public=take(C/'jobs'/KEY/'results/genuine-describe-process.json',1000)
++  assert json.loads(process_raw)==json.loads(process_public)
++  out.update(describeProcess=json.loads(process_raw),describeProcessRootSha256=sha(process_raw),describeProcessPublicSha256=sha(process_public))
+  if PHASE=='start' and out['terminal']['status']=='COMPLETED' and out['terminal']['exitCode']==0:
+-  raw=take(R/'authority/fresh35-current-production-service-v2-service-27.json');p=json.loads(raw);birth=p['sharedPostgresNamespace']['container']
++  raw=take(R/'authority/fresh35-current-production-service-v2-service-28.json');p=json.loads(raw);birth=p['sharedPostgresNamespace']['container']
+   a=json.loads(take(R/'state/native-services'/START/'service-start-authorization.json'))
+   assert sha(raw)==out['result']['proofSha256'] and p['requestKey']==KEY
+   out.update(service={'serviceKey':KEY,'proofSha256':sha(raw),'containerId':birth['id'],'containerStartedAt':birth['startedAt'],'postmasterStart':p['physical']['postmasterStart']},
+    physical=p['physical'],outerAuthorityLeaseExpiresAt=a['serviceLeaseExpiresAt'],actualSharedServiceWorkDeadline=p['sharedPostgresNamespace']['serviceLeaseExpiresAt'],
+-   retainedAckConfirmed=True,readOnlyReadiness=out['result']['readOnlyReadiness'],installStartsAt=a['startsAt'],
++   retainedAckConfirmed=True,readOnlyReadiness=out['result']['readOnlyReadiness'],startAuthorityStartsAt=a['startsAt'],
+    lockCapacitySettingsSha256=out['result']['lockCapacitySettingsSha256'])
+   out['rootResultSha256']=out['rootPins']['result']
+   out['rawCapacitySettingsSha256']=out['lockCapacitySettingsSha256']
+   ack=json.loads(take(R/'state/native-services'/START/'retained-ack.json'))
+   assert ack=={'requestKey':KEY,'proofSha256':sha(raw),'serviceLeaseExpiresAt':p['sharedPostgresNamespace']['serviceLeaseExpiresAt']}
++  described=out['result']['describe']
++  assert described['state']=='PROGRAM_DESCRIBED_NO_PG_OR_WRITE' and described['databaseConnections']==described['mutations']==0
++  refs=described['outputs'];expected={'payload':'genuine-describe-payload.json','descriptor':'genuine-descriptor.json','liveFacts':'genuine-live-facts.json','process':'genuine-describe-process.json'}
++  assert set(refs)==set(expected)
++  bodies={};values={}
++  for kind,leaf in expected.items():
++   ref=refs[kind];limit=65536 if kind in ('payload','process') else 131072
++   assert set(ref)=={'leaf','bytes','sha256'} and ref['leaf']==leaf and type(ref['bytes']) is int and 0<ref['bytes']<=limit
++   body=take(R/'state/native-services'/START/leaf,maximum=limit)
++   assert len(body)==ref['bytes'] and sha(body)==ref['sha256']
++   assert body==take(B/KEY/'results'/leaf,maximum=limit)
++   public=take(C/'jobs'/KEY/'results'/leaf,1000,maximum=limit);assert json.loads(body)==json.loads(public)
++   bodies[kind]={**ref,'text':body.decode('utf8'),'publicSha256':sha(public),'publicBytes':len(public)};values[kind]=json.loads(body)
++  assert sum(ref['bytes'] for ref in refs.values())<=262144
++  d=values['descriptor'];facts=values['liveFacts'];payload=values['payload'];process=values['process']
++  assert payload=={'service':out['service'],'backupAdminValidUntil':d['backupAdminValidUntil'],'installStartsAt':d['startsAt'],'installExpiresAt':d['expiresAt']}
++  assert facts['service']==out['service'] and d['currentServiceSha256']==sha(raw) and d['postmasterStart']==p['physical']['postmasterStart']
++  assert facts['actualSharedServiceWorkDeadline']==p['sharedPostgresNamespace']['serviceLeaseExpiresAt']-35000
++  assert process['requestKey']==KEY and process['exitCode']==0 and process['reason'] is None and process['childReaped'] and process['ownedProcessGroupReaped'] and process['descendantsReaped']
++  normalized={**facts,'actualSharedServiceWorkDeadline':p['sharedPostgresNamespace']['serviceLeaseExpiresAt'],'workDeadlineBasis':'PROTECTED_CURRENT28_SHARED_POSTGRES_NAMESPACE'}
++  out.update(describeStoredOutputs=bodies,descriptor=d,rawLiveFacts=facts,liveFacts=normalized,describePayload=payload,describeProcess=process,
++   installStartsAt=d['startsAt'],installExpiresAt=d['expiresAt'],backupAdminValidUntil=d['backupAdminValidUntil'],
++   runnerConservativeWorkDeadline=facts['actualSharedServiceWorkDeadline'],descriptionSource='STORED_START_JOB_OUTPUTS_NO_NODE_RERUN',descriptionRootPublicObjectsMatched=True)
++
+  if PHASE=='stop' and (R/'state/native-services'/START/'cleanup.json').is_file():
+   raw=take(R/'state/native-services'/START/'cleanup.json');out['cleanup']=json.loads(raw);out['rootPins']['cleanup']=sha(raw);out['cleanupRootSha256']=sha(raw)
+ if PHASE=='start':
+@@ -125,3 +153,13 @@
+ print(json.dumps({'receipt':str(p),'sha256':sha(raw),'checkedAtUTC':v['checkedAtUTC'],'requestKey':key,
+  'terminal':v.get('terminal'),'state':v.get('result',{}).get('state',v.get('result',{}).get('status')),
+  'pgdataPidAbsent':v['pgdataPidAbsent'],'operationUnit':v['operationUnit']},sort_keys=True))
++
++if phase=='start' and v.get('descriptionRootPublicObjectsMatched') is True:
++ folder=p.with_name(p.stem+'-describe');folder.mkdir(mode=0o700)
++ for kind,ref in v['describeStoredOutputs'].items():
++  body=ref['text'].encode('utf8');assert len(body)==ref['bytes'] and sha(body)==ref['sha256']
++  with (folder/ref['leaf']).open('xb') as f:f.write(body)
++ for leaf,value in [('DESCRIPTOR.json',v['descriptor']),('LIVE-FACTS.json',v['liveFacts']),('PAYLOAD.json',v['describePayload'])]:
++  body=(json.dumps(value,sort_keys=True,separators=(',',':'))+'\n').encode()
++  with (folder/leaf).open('xb') as f:f.write(body)
++  print(json.dumps({'receipt':str(folder/leaf),'sha256':sha(body),'bytes':len(body),'source':'STORED_START_OUTPUT_NO_NODE_RERUN'}))
+--- 27/run_frozen_phase27.py
++++ 28/run_frozen_phase28.py
+@@ -11,7 +11,7 @@
+ REPO = HERE.parents[4]
+ CLIENT = REPO.parent / "monitor/normal-admission-20261112-01/admin_client.py"
+ CLIENT_SHA256 = "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6"
+-RULES_SHA256 = "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234"
++RULES_SHA256 = 'b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1'
+ 
+ 
+ def digest(raw):
+@@ -73,7 +73,7 @@
+     parser.add_argument("--execute", action="store_true")
+     params = parser.parse_args()
+     policy = params.policy.read_bytes()
+-    prepared = (HERE / "PHASES27.UNISSUED.json").read_bytes()
++    prepared = (HERE / "PHASES28.UNISSUED.json").read_bytes()
+     need(digest(policy) == params.policy_sha256 and digest(prepared) == RULES_SHA256
+          and digest(CLIENT.read_bytes()) == CLIENT_SHA256, "EXACT_LOCAL_INPUT_PINS_REQUIRED")
+     policy = json.loads(policy)
+--- /dev/null
++++ 28/freeze-local28.py
+@@ -0,0 +1,46 @@
++"""Update this local candidate's existing pins. Never issues or executes a job."""
++from pathlib import Path
++import ast,hashlib,json,re
++H=Path(__file__).resolve().parent
++sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++def const(path,key,value):
++    text=path.read_text()
++    text,n=re.subn(r'^'+key+r'''\s*=\s*['"][a-f0-9]{64}['"]$''',key+" = '"+value+"'",text,flags=re.M)
++    assert n==1,(path,key,n);path.write_text(text)
++
++start=H/'start/bundle';main=start/'normal_service05_after08.py'
++const(start/'start_owned_describe.py','RUNNER_SHA',sha(start/'batched161-run.mjs'))
++for key,name in [('R3_RUNTIME_SHA','r3_05_runtime.py'),('R3_CLI_SHA','r3_05_cli.py'),('READONLY_SHA','r3_05_readonly.py')]:
++    const(main,key,sha(start/name))
++text=main.read_text()
++for name in ('start_owned_describe.py','batched161-run.mjs'):
++    text,n=re.subn(r"\('"+re.escape(name)+r"','[a-f0-9]{64}'\)","('"+name+"','"+sha(start/name)+"')",text)
++    assert n==1,(name,n)
++text,n=re.subn(r"pinned\(ops,describe_path,'[a-f0-9]{64}'\)","pinned(ops,describe_path,'"+sha(start/'start_owned_describe.py')+"')",text)
++assert n==1;main.write_text(text)
++assert main.stat().st_size<=65536
++assert (start/'batched161-run.mjs').read_bytes()==(H/'install/bundle/batched161-run.mjs').read_bytes()
++for phase in ('install','writer','stop'):
++    path=H/phase/'bundle/normal05_retained_stop.py'
++    for key,name in [('NORMAL05_SHA','normal_service05_after08.py'),('PROOF_SHA','normal_service05_after08_proof.py'),('READONLY_SHA','r3_05_readonly.py')]:
++        const(path,key,sha(start/name))
++const(H/'stop/bundle/normal05_preserve_stop.py','STOP_REFERENCE',sha(H/'stop/bundle/normal05_retained_stop.py'))
++for phase in ('apply','restore'):
++    path=H/phase/'bundle/ordinary05_roles_job.py'
++    const(path,'CURRENT_SOURCE',sha(main));const(path,'CURRENT_PROOF_SOURCE',sha(start/'normal_service05_after08_proof.py'))
++for phase in ('install','writer'):
++    directory=H/phase/'bundle';path=directory/('batched_install_host.py' if phase=='install' else 'batched_real_host.py')
++    text=path.read_text();tree=ast.parse(text)
++    node=next(n for n in tree.body if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) and n.targets[0].id=='PINS')
++    pins={name:sha(directory/name) for name in ast.literal_eval(node.value)}
++    lines=text.splitlines(True);lines[node.lineno-1:node.end_lineno]=['PINS='+repr(pins)+'\n'];path.write_text(''.join(lines))
++rules=H/'PHASES28.UNISSUED.json';value=json.loads(rules.read_bytes())
++for phase in ('apply','start','install','writer','stop','restore'):
++    directory=H/phase/'bundle'
++    value['jobs'][phase]['bundlePins']={p.name:sha(p) for p in sorted(directory.iterdir()) if p.is_file()}
++rules.write_text(json.dumps(value,sort_keys=True,indent=2)+'\n')
++for name,key in [('run_frozen_phase28.py','RULES_SHA256'),('read-current-phase28.py','RULES_SHA')]:
++    const(H/name,key,sha(rules))
++print(json.dumps({'phasesSha256':sha(rules),'mainSha256':sha(main),'mainBytes':main.stat().st_size,
++    'helperSha256':sha(start/'start_owned_describe.py'),'runnerSha256':sha(start/'batched161-run.mjs'),
++    'readerSha256':sha(H/'read-current-phase28.py'),'serverActions':0}))

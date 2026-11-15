@@ -1,0 +1,398 @@
+--- C01/apply/bundle/ordinary05_roles_job.py
++++ C02/apply/bundle/ordinary05_roles_job.py
+@@ -30,7 +30,7 @@
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
+ CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ CURRENT_KEY = 't45-first-r3-native-service-start-20261116-28'
+-CURRENT_SOURCE = '77ee4fba374fc62751d40f4198f8cdc6a477cf1a2eff3684cf2f761bce565569'
++CURRENT_SOURCE = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ CURRENT_PROOF_SOURCE = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+--- C01/start/bundle/batched161-run.mjs
++++ C02/start/bundle/batched161-run.mjs
+@@ -23,12 +23,22 @@
+  NEED(!Object.keys(process.env).some(k=>/^PG/.test(k)||['DATABASE_URL','NODE_PATH','NODE_OPTIONS'].includes(k)
+   ||k.startsWith('LD_')||k.startsWith('DYLD_')),'AMBIENT_CONFIG_REFUSED');
+  const mode=process.argv[2],p=await input();
++ let traceStart;
++ const trace=stage=>{
++  if(mode!=='describe')return;
++  traceStart??=process.hrtime.bigint();
++  const elapsedMilliseconds=Math.round(Number(process.hrtime.bigint()-traceStart)/1000)/1000;
++  process.stderr.write('T45_DESCRIBE_STAGE '+JSON.stringify({stage,elapsedMilliseconds})+'\n');
++ };
++ trace('IMPORT_BEGIN');
+  NEED(mode==='describe'||digest(mode),'FIXED_ENTRY_REQUIRED');
+  const src=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-source-v1.mjs'));
+  const tm=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-target-v1.mjs'));
+  const up=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs'));
+  const trust=await import(pathToFileURL(OP+'/scripts/release/unified-install/trusted-install-path.mjs'));
++ trace('IMPORT_END');trace('TRUST_BEGIN');
+  await trust.assertTrustedRootPath(process.execPath);await trust.assertTrustedRootTree(OP);
++ trace('TRUST_END');
+  const proofBytes=await readFile('/run/naijue-rewrite/current-production-service.json');
+  const c=JSON.parse(proofBytes);
+  NEED(sha(proofBytes)===p.service.proofSha256&&c.requestKey===p.service.serviceKey
+@@ -36,19 +46,25 @@
+   &&c.physical.postmasterStart===p.service.postmasterStart
+   &&c.sharedPostgresNamespace.container.id===p.service.containerId
+   &&c.sharedPostgresNamespace.container.startedAt===p.service.containerStartedAt,'CURRENT_SERVICE_DIFFERS');
++ trace('SOURCE_LOAD_BEGIN');
+  const paths=await src.resolveFresh35ReferenceInputPaths('/opt/naijue-erp/fresh35-combined-v1/reference-inputs');
+  const source=await src.loadFresh35CompactZeroSource(OP,paths);
++ trace('SOURCE_LOAD_END');
+  if(mode==='describe'){
+   const t0=Date.now();
+   p.installStartsAt=t0;
+   p.installExpiresAt=Math.min(t0+1200000,p.backupAdminValidUntil,c.sharedPostgresNamespace.serviceLeaseExpiresAt);
+  }
++ trace('TARGET_BEGIN');
+  const target=await tm.loadFresh35Installed154UpgradeTargetV1({source,
+   currentServiceSha256:p.service.proofSha256,startsAt:p.installStartsAt,
+   expiresAt:p.installExpiresAt,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('TARGET_END');
+  const installedTarget=tm.describeFresh35Installed154UpgradeTarget(target);
++ trace('COMPILE_BEGIN');
+  const program=await up.compileFresh35Batched161Upgrade({source,target,paths,
+   currentServiceSha256:p.service.proofSha256,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('COMPILE_END');
+  const d=up.describeFresh35Batched161Upgrade(program);
+  const batchedCatalog={sourceSetSha256:d.successorSourceSetSha256,
+   catalogSpecSha256:d.successorCatalogSpecSha256,modelSha256:d.successorModelSha256};
+--- C01/start/bundle/normal_service05_after08.py
++++ C02/start/bundle/normal_service05_after08.py
+@@ -576,7 +576,7 @@
+     need(identity(parent)['uid']==0 and identity(parent)['mode']==0o700,'NORMAL_PRIVATE_PARENT_REQUIRED')
+     boot=ROOT/'state'/REL;need(not os.path.lexists(boot),'NORMAL_OPERATION_PRESENT_NO_REPLAY');boot.mkdir(mode=0o700)
+     lifecycle['phase']='STAGE_PRIVATE_SOURCES'
+-    for name,pin in (('normal_service05_after08.py',a['normalServiceSha256']),('normal_service05_after08_proof.py',a['proofSourceSha256']),('fresh35-production-carrier.py',OPS_SHA),('r3_05_readonly.py',READONLY_SHA),('operator-host.mjs','7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae'),('operator-stream-program.mjs','fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6'),('operator-stream-import-cli.mjs','6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e'),('operator-manifest.json','c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184'),('batched161-run.mjs','74d7f446512b66bef56640a88e4c69df720021d59637a40f27b71db6c0eedfdd'),('start_owned_describe.py','8dda4a60de580a816f75859803a19b821022c68c67f700a2cca2645b3a072949')):
++    for name,pin in (('normal_service05_after08.py',a['normalServiceSha256']),('normal_service05_after08_proof.py',a['proofSourceSha256']),('fresh35-production-carrier.py',OPS_SHA),('r3_05_readonly.py',READONLY_SHA),('operator-host.mjs','7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae'),('operator-stream-program.mjs','fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6'),('operator-stream-import-cli.mjs','6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e'),('operator-manifest.json','c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184'),('batched161-run.mjs','ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f'),('start_owned_describe.py','98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0')):
+         raw=ops.read_file(WORKER/'bundle'/name,262144,True);need(sha(raw)==pin,'NORMAL_NEW_PRIVATE_SOURCE_DIFFERS');ops.new_file(boot/name,raw,0o400)
+     ops.new_file(boot/'service-start-authorization.json',authraw,0o400)
+     lifecycle['phase']='STAGE_READONLY_PROJECTIONS'
+@@ -629,7 +629,7 @@
+         ack=await_retained_ack(ops,boot,deadline,a['expiresAt'],cid,plan,lease,birth,sha(raw))
+         need(ack,'NORMAL_RETAINED_ACK_UNCONFIRMED')
+         describe_path=boot/'start_owned_describe.py'
+-        describe=module(pinned(ops,describe_path,'8dda4a60de580a816f75859803a19b821022c68c67f700a2cca2645b3a072949'),describe_path,'start_owned_describe')
++        describe=module(pinned(ops,describe_path,'98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0'),describe_path,'start_owned_describe')
+         service={'serviceKey':JOB,'proofSha256':sha(raw),'containerId':birth['id'],
+                  'containerStartedAt':birth['startedAt'],'postmasterStart':ops.strict(raw)['physical']['postmasterStart']}
+         lifecycle['phase']='GENUINE_READONLY_DESCRIBE'
+--- C01/start/bundle/start_owned_describe.py
++++ C02/start/bundle/start_owned_describe.py
+@@ -7,7 +7,7 @@
+ STATE=Path('/var/lib/naijue-erp/fresh35-production')
+ BOOT=STATE/'native-services'/SERVICE
+ NODE='/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node'
+-RUNNER_SHA='74d7f446512b66bef56640a88e4c69df720021d59637a40f27b71db6c0eedfdd'
++RUNNER_SHA = 'ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f'
+ MATERIAL_SHA='cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec'
+ SOURCE_SHA='70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e'
+ STDOUT_LIMIT=131072
+@@ -16,11 +16,26 @@
+ PUBLISH_SECONDS=12
+ OUTPUTS={'payload':'genuine-describe-payload.json','descriptor':'genuine-descriptor.json',
+          'liveFacts':'genuine-live-facts.json','process':'genuine-describe-process.json'}
++STAGES=('IMPORT_BEGIN','IMPORT_END','TRUST_BEGIN','TRUST_END','SOURCE_LOAD_BEGIN',
++        'SOURCE_LOAD_END','TARGET_BEGIN','TARGET_END','COMPILE_BEGIN','COMPILE_END')
+ 
+ def need(v,code):
+     if not v:raise ValueError(code)
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def encode(v):return (json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode()
++
++def phase_trace(stderr):
++    trace=[]
++    for line in stderr.decode('utf8',errors='replace').splitlines():
++        if not line.startswith('T45_DESCRIBE_STAGE '):continue
++        try:value=json.loads(line[len('T45_DESCRIBE_STAGE '):])
++        except ValueError:continue
++        if type(value) is not dict or set(value)!={'stage','elapsedMilliseconds'}:continue
++        stage=value['stage'];elapsed=value['elapsedMilliseconds']
++        if len(trace)<len(STAGES) and stage==STAGES[len(trace)] and type(elapsed) in (int,float) \
++                and 0<=elapsed<=2**53 and (not trace or elapsed>=trace[-1]['elapsedMilliseconds']):
++            trace.append(value)
++    return trace
+ 
+ def capture(argv,body,seconds,stdout_limit=STDOUT_LIMIT,stderr_limit=STDERR_LIMIT,*,descendants=False):
+     """Capture at most the given bytes; TERM2/KILL2 in this process namespace."""
+@@ -110,6 +125,9 @@
+         native=None;value['nativeReplyKind']='BAD_JSON' if value['stdout'] else 'EMPTY'
+     code=native.get('sqlstate') if isinstance(native,dict) else None
+     value['sqlstate']=code if type(code) is str and re.fullmatch('[0-9A-Z]{5}',code) else None
++    value['describeTrace']=phase_trace(value['stderr'])
++    value['lastReachedStage']=value['describeTrace'][-1]['stage'] if value['describeTrace'] else None
++    value['traceSource']='BOUNDED_PRIVATE_STDERR_FIXED_STAGE_MARKERS'
+     put(BOOT/'genuine-describe-stdout.bin',value.pop('stdout'))
+     put(BOOT/'genuine-describe-stderr.bin',value.pop('stderr'))
+     value.update(requestKey=SERVICE,maximumChildSeconds=150,termSeconds=2,killSeconds=2,
+--- C01/install/bundle/batched161-run.mjs
++++ C02/install/bundle/batched161-run.mjs
+@@ -23,12 +23,22 @@
+  NEED(!Object.keys(process.env).some(k=>/^PG/.test(k)||['DATABASE_URL','NODE_PATH','NODE_OPTIONS'].includes(k)
+   ||k.startsWith('LD_')||k.startsWith('DYLD_')),'AMBIENT_CONFIG_REFUSED');
+  const mode=process.argv[2],p=await input();
++ let traceStart;
++ const trace=stage=>{
++  if(mode!=='describe')return;
++  traceStart??=process.hrtime.bigint();
++  const elapsedMilliseconds=Math.round(Number(process.hrtime.bigint()-traceStart)/1000)/1000;
++  process.stderr.write('T45_DESCRIBE_STAGE '+JSON.stringify({stage,elapsedMilliseconds})+'\n');
++ };
++ trace('IMPORT_BEGIN');
+  NEED(mode==='describe'||digest(mode),'FIXED_ENTRY_REQUIRED');
+  const src=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-source-v1.mjs'));
+  const tm=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-combined-target-v1.mjs'));
+  const up=await import(pathToFileURL(OP+'/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs'));
+  const trust=await import(pathToFileURL(OP+'/scripts/release/unified-install/trusted-install-path.mjs'));
++ trace('IMPORT_END');trace('TRUST_BEGIN');
+  await trust.assertTrustedRootPath(process.execPath);await trust.assertTrustedRootTree(OP);
++ trace('TRUST_END');
+  const proofBytes=await readFile('/run/naijue-rewrite/current-production-service.json');
+  const c=JSON.parse(proofBytes);
+  NEED(sha(proofBytes)===p.service.proofSha256&&c.requestKey===p.service.serviceKey
+@@ -36,19 +46,25 @@
+   &&c.physical.postmasterStart===p.service.postmasterStart
+   &&c.sharedPostgresNamespace.container.id===p.service.containerId
+   &&c.sharedPostgresNamespace.container.startedAt===p.service.containerStartedAt,'CURRENT_SERVICE_DIFFERS');
++ trace('SOURCE_LOAD_BEGIN');
+  const paths=await src.resolveFresh35ReferenceInputPaths('/opt/naijue-erp/fresh35-combined-v1/reference-inputs');
+  const source=await src.loadFresh35CompactZeroSource(OP,paths);
++ trace('SOURCE_LOAD_END');
+  if(mode==='describe'){
+   const t0=Date.now();
+   p.installStartsAt=t0;
+   p.installExpiresAt=Math.min(t0+1200000,p.backupAdminValidUntil,c.sharedPostgresNamespace.serviceLeaseExpiresAt);
+  }
++ trace('TARGET_BEGIN');
+  const target=await tm.loadFresh35Installed154UpgradeTargetV1({source,
+   currentServiceSha256:p.service.proofSha256,startsAt:p.installStartsAt,
+   expiresAt:p.installExpiresAt,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('TARGET_END');
+  const installedTarget=tm.describeFresh35Installed154UpgradeTarget(target);
++ trace('COMPILE_BEGIN');
+  const program=await up.compileFresh35Batched161Upgrade({source,target,paths,
+   currentServiceSha256:p.service.proofSha256,backupAdminValidUntil:p.backupAdminValidUntil});
++ trace('COMPILE_END');
+  const d=up.describeFresh35Batched161Upgrade(program);
+  const batchedCatalog={sourceSetSha256:d.successorSourceSetSha256,
+   catalogSpecSha256:d.successorCatalogSpecSha256,modelSha256:d.successorModelSha256};
+--- C01/install/bundle/batched_install_host.py
++++ C02/install/bundle/batched_install_host.py
+@@ -15,7 +15,7 @@
+ OPERATOR='installed-real-operation-batched-root03-20261116-01'
+ SOURCE_SET_SHA256='70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e'
+ SOURCE_ROWS_SHA256='399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109'
+-PINS={'normal05_retained_stop.py': 'e1ada1d3b1c31040274f8ca8714d76d627ffc709d67418e95a87384031470c96', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'batched161-run.mjs': '74d7f446512b66bef56640a88e4c69df720021d59637a40f27b71db6c0eedfdd', 'private_transport.py': '64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251'}
++PINS={'normal05_retained_stop.py': '4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'batched161-run.mjs': 'ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f', 'private_transport.py': '64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251'}
+ 
+ def need(v,c):
+     if not v:raise ValueError(c)
+--- C01/install/bundle/normal05_retained_stop.py
++++ C02/install/bundle/normal05_retained_stop.py
+@@ -28,7 +28,7 @@
+ PROOF_SHA = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
+-NORMAL05_SHA = '77ee4fba374fc62751d40f4198f8cdc6a477cf1a2eff3684cf2f761bce565569'
++NORMAL05_SHA = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- C01/writer/bundle/batched_real_host.py
++++ C02/writer/bundle/batched_real_host.py
+@@ -31,7 +31,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS={'normal05_retained_stop.py': 'e1ada1d3b1c31040274f8ca8714d76d627ffc709d67418e95a87384031470c96', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'materialized-profile.json': 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8', 'retained24-run.mjs': '7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950'}
++PINS={'normal05_retained_stop.py': '4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'materialized-profile.json': 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8', 'retained24-run.mjs': '7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950'}
+ 
+ SOURCE_ROWS_SHA256='399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109'
+ SOURCE_SET_SHA256='70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e'
+--- C01/writer/bundle/normal05_retained_stop.py
++++ C02/writer/bundle/normal05_retained_stop.py
+@@ -28,7 +28,7 @@
+ PROOF_SHA = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
+-NORMAL05_SHA = '77ee4fba374fc62751d40f4198f8cdc6a477cf1a2eff3684cf2f761bce565569'
++NORMAL05_SHA = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- C01/stop/bundle/normal05_preserve_stop.py
++++ C02/stop/bundle/normal05_preserve_stop.py
+@@ -19,7 +19,7 @@
+ CONTROL = Path('/home/naijue/erp-release-20261006-01-control/grant-' + GRANT)
+ JOB = ROOT / 'jobs' / KEY
+ HOLD = ROOT / 'r3-05-write-continuity'
+-STOP_REFERENCE = 'e1ada1d3b1c31040274f8ca8714d76d627ffc709d67418e95a87384031470c96'
++STOP_REFERENCE = '4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a'
+ SERVICE_KEY = 't45-first-r3-native-service-start-20261116-28'
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}
+--- C01/stop/bundle/normal05_retained_stop.py
++++ C02/stop/bundle/normal05_retained_stop.py
+@@ -28,7 +28,7 @@
+ PROOF_SHA = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8'
+-NORMAL05_SHA = '77ee4fba374fc62751d40f4198f8cdc6a477cf1a2eff3684cf2f761bce565569'
++NORMAL05_SHA = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- C01/restore/bundle/ordinary05_roles_job.py
++++ C02/restore/bundle/ordinary05_roles_job.py
+@@ -30,7 +30,7 @@
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-27'
+ CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-28'
+ CURRENT_KEY = 't45-first-r3-native-service-start-20261116-28'
+-CURRENT_SOURCE = '77ee4fba374fc62751d40f4198f8cdc6a477cf1a2eff3684cf2f761bce565569'
++CURRENT_SOURCE = '31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e'
+ CURRENT_PROOF_SOURCE = '6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+--- C01/PHASES28.UNISSUED.json
++++ C02/PHASES28.UNISSUED.json
+@@ -21,7 +21,7 @@
+         "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+         "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+         "ordinary05_roles.py": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
+-        "ordinary05_roles_job.py": "3c2901435a74790f3d7ea66eeb7fba76eae4ec9ccf3b41e4a68fad139872d4c0"
++        "ordinary05_roles_job.py": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-ordinary28-auth-apply-20261116-01",
+@@ -31,10 +31,10 @@
+     "install": {
+       "authorityLeaf": "install-authorization.json",
+       "bundlePins": {
+-        "batched161-run.mjs": "74d7f446512b66bef56640a88e4c69df720021d59637a40f27b71db6c0eedfdd",
+-        "batched_install_host.py": "1c051bacbb1802e5e2dc7ad94a1f0e17237d2c169728bd5c0bea4131132eee79",
++        "batched161-run.mjs": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
++        "batched_install_host.py": "49d659859ad5872afdf9ddb1aadae656102fea521f3df090485986e93c8cc0d7",
+         "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+-        "normal05_retained_stop.py": "e1ada1d3b1c31040274f8ca8714d76d627ffc709d67418e95a87384031470c96",
++        "normal05_retained_stop.py": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
+         "private_transport.py": "64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251"
+       },
+       "deadlineField": "expiresAt",
+@@ -65,7 +65,7 @@
+         "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+         "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+         "ordinary05_roles.py": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
+-        "ordinary05_roles_job.py": "3c2901435a74790f3d7ea66eeb7fba76eae4ec9ccf3b41e4a68fad139872d4c0"
++        "ordinary05_roles_job.py": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-ordinary28-auth-restore-20261116-01",
+@@ -75,9 +75,9 @@
+     "start": {
+       "authorityLeaf": "service-start-authorization.json",
+       "bundlePins": {
+-        "batched161-run.mjs": "74d7f446512b66bef56640a88e4c69df720021d59637a40f27b71db6c0eedfdd",
++        "batched161-run.mjs": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
+         "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+-        "normal_service05_after08.py": "77ee4fba374fc62751d40f4198f8cdc6a477cf1a2eff3684cf2f761bce565569",
++        "normal_service05_after08.py": "31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e",
+         "normal_service05_after08_proof.py": "6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c",
+         "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+         "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+@@ -87,7 +87,7 @@
+         "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+         "r3_05_readonly.py": "febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8",
+         "r3_05_runtime.py": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8",
+-        "start_owned_describe.py": "8dda4a60de580a816f75859803a19b821022c68c67f700a2cca2645b3a072949"
++        "start_owned_describe.py": "98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-first-r3-native-service-start-20261116-28",
+@@ -97,8 +97,8 @@
+     "stop": {
+       "authorityLeaf": "normal05-preserve-stop-input.json",
+       "bundlePins": {
+-        "normal05_preserve_stop.py": "c15f6a4d897f3448ed1bbada9ad9cb0d7216e8c5f0eead32e336c9a8cc9b9ed1",
+-        "normal05_retained_stop.py": "e1ada1d3b1c31040274f8ca8714d76d627ffc709d67418e95a87384031470c96"
++        "normal05_preserve_stop.py": "213522bf870b372b2c4b69dc51aeff3b110fa68a982481ceac30c1113cfce8db",
++        "normal05_retained_stop.py": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-ordinary28-preserve-stop-20261116-01",
+@@ -108,11 +108,11 @@
+     "writer": {
+       "authorityLeaf": "writer-authorization.json",
+       "bundlePins": {
+-        "batched_real_host.py": "28aa2fb0bb74dab1610d81ca7c1f5e6c249e8559d01f6bd4a52e147c7ef2805c",
++        "batched_real_host.py": "18ab1bf52c51da4503645cdfd6ae1407464306f958fc12abd7443c1b5375d1f8",
+         "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+         "materialized-profile.json": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+         "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+-        "normal05_retained_stop.py": "e1ada1d3b1c31040274f8ca8714d76d627ffc709d67418e95a87384031470c96",
++        "normal05_retained_stop.py": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
+         "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+         "r3_05_runtime.py": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8",
+         "retained24-run.mjs": "7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950"
+@@ -129,13 +129,13 @@
+   "materializeNeverResubmit": true,
+   "original06AbsenceReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261114-r3-service23-original06-readonly-actual-01/readback/INSPECT-READBACK.json",
+   "phaseDirectories": {
+-    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/apply/bundle",
+-    "install": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/install/bundle",
++    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle",
++    "install": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle",
+     "materialize": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle",
+-    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/restore/bundle",
+-    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/start/bundle",
+-    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/stop/bundle",
+-    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/writer/bundle"
++    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle",
++    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle",
++    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/stop/bundle",
++    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle"
+   },
+   "postgresConnections": 0,
+   "predecessorMaterializationSha256": "7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3",
+@@ -178,6 +178,6 @@
+     "genuine-describe-process.json"
+   ],
+   "startupHeldUntilFinalSameVersionFullChainReview": true,
+-  "status": "LOCAL_SOURCE_NORMAL28_START_OWNED_DESCRIBE_CANDIDATE01_UNISSUED_REVIEW_PENDING",
++  "status": "LOCAL_SOURCE_NORMAL28_START_OWNED_DESCRIBE_TRACE_CANDIDATE02_UNISSUED_REVIEW_PENDING",
+   "writerRestoredPointerSha256": "8c2f65e76ded8df610359435e90b5eb68783ffb108379a11d66a2f273e2ae98d"
+ }
+--- C01/read-current-phase28.py
++++ C02/read-current-phase28.py
+@@ -4,7 +4,7 @@
+ import hashlib,json,runpy,shlex,sys
+ HERE=Path(__file__).resolve().parent
+ RULES=HERE/'PHASES28.UNISSUED.json'
+-RULES_SHA = 'f9055637505be15e02c143b3059dfb99ab1cc154c8723d05fd61660b34ad3361'
++RULES_SHA = 'b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1'
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ phase,destination=sys.argv[1:]
+ assert sha(RULES.read_bytes())==RULES_SHA
+--- C01/run_frozen_phase28.py
++++ C02/run_frozen_phase28.py
+@@ -11,7 +11,7 @@
+ REPO = HERE.parents[4]
+ CLIENT = REPO.parent / "monitor/normal-admission-20261112-01/admin_client.py"
+ CLIENT_SHA256 = "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6"
+-RULES_SHA256 = 'f9055637505be15e02c143b3059dfb99ab1cc154c8723d05fd61660b34ad3361'
++RULES_SHA256 = 'b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1'
+ 
+ 
+ def digest(raw):
+--- C01/freeze-local28.py
++++ C02/freeze-local28.py
+@@ -9,6 +9,7 @@
+     assert n==1,(path,key,n);path.write_text(text)
+ 
+ start=H/'start/bundle';main=start/'normal_service05_after08.py'
++const(start/'start_owned_describe.py','RUNNER_SHA',sha(start/'batched161-run.mjs'))
+ for key,name in [('R3_RUNTIME_SHA','r3_05_runtime.py'),('R3_CLI_SHA','r3_05_cli.py'),('READONLY_SHA','r3_05_readonly.py')]:
+     const(main,key,sha(start/name))
+ text=main.read_text()

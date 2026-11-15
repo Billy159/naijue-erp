@@ -1,0 +1,43 @@
+{
+  "format": "R3_NORMAL28_ACTUAL27_PREDECESSOR_SOURCE_BASELINE_V1",
+  "state": "LOCAL_SOURCE_REFERENCE_NOT_REGISTRATION_AUTHORITY_FRESH_SERVER_BASIS_STILL_REQUIRED",
+  "evidencePins": {
+    "start/READBACK-01.json": "11aeae69a8455cfbe5757ed674a99adc2c15431f10fb239a6d02822a9be132da",
+    "stop/READBACK-01.json": "c5ff8d7b0ac6494f401df6fdea0158636c50ce7cbea8438dbfc0f2a6459d7552",
+    "restore/READBACK-02.json": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
+    "restore/FINAL-CLOSED-01.json": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae"
+  },
+  "priorService": {
+    "containerId": "6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448",
+    "containerStartedAt": "2026-11-15T18:38:28.428863507Z",
+    "postmasterStart": "2026-11-15 18:38:29.737044+00",
+    "proofSha256": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-27"
+  },
+  "priorStartRootPins": {
+    "result": "808c633e8d7f11bac5e09efa21cbb3b40f39272a103b89af191624915b869609",
+    "terminal": "ba1caa324ceba9a191479d45bd6e1b497e78b5adc7946d21589c296a2e300cd4"
+  },
+  "priorStartPublicResultSha256": "4446a6673b6684ecf26c9d5da4982cd27d75fd68dca578c65072330921b6b5d7",
+  "priorRawCapacitySettingsSha256": "edeaacea8b3fe819f2fdeb34de622af017e6bcb7f876f0b741caf7d3a8aa627b",
+  "priorStopRootPins": {
+    "cleanup": "fda7c05908d7b94223901638b83a417d2d7f1c624d6d195abae6ede6fc0702e8",
+    "result": "a5aa0eecb1cfa711b922a1cbbd227a25b7316c93bcfc83dc4ab4c60f5a56d24a",
+    "terminal": "2dc418392380fe9313facee2b85cf06d79ad2b1e8fcac1faedd6c0263d1fd04f"
+  },
+  "priorStopPublicResultSha256": "62ca4c34ae9313a1d5c9de745878ef9f8567e2d6f98af11d283c16e64d0c9502",
+  "priorRestoreRootPins": {
+    "cleanup": "b8286a2e7449b7b9e165975fd5492fc6084eea1d1b9322e1b5f57e40c4c57339",
+    "result": "90e8fc47b7df781cb325dc9e653510c2080da0e336748146e25d8751a4cc9fc7",
+    "terminal": "957f0f26d7ed9272ea675c855a7726e9627af7946774b9b8827fb720d47aafe0"
+  },
+  "priorRestorePublicResultSha256": "9e2a41c47eeb23745dae3558266f3b01b9776594f95a766e8a4f742ee30a2be2",
+  "expectedReceiverBaseline": {
+    "dispatcher": "f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec",
+    "policy": "89f49225c19c1043e4a4a59c876876972b49abb9d5e0b29bcb699d5d069b2094",
+    "module": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba"
+  },
+  "installAndWriterKeys": "original never-submitted keys retained; fresh existence must be checked before next actual issuance",
+  "materialization": "703/cdcaf complete original key reused; never resubmit",
+  "serverActions": 0
+}

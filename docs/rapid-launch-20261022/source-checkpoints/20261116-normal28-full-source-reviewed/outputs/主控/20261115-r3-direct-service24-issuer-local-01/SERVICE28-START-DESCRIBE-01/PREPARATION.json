@@ -1,0 +1,67 @@
+{
+  "state": "FROZEN_SOURCE_PENDING_SAME_VERSION_QB_PAIRING_NO_WINDOW",
+  "selectedPhasesPath": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/PHASES28.UNISSUED.json",
+  "selectedPhasesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "readerSha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
+  "actualPredecessorService": {
+    "containerId": "6c8f40034cd8f1940648d7bc9d9614fa660cfac1fa3844aae6847516902f8448",
+    "containerStartedAt": "2026-11-15T18:38:28.428863507Z",
+    "postmasterStart": "2026-11-15 18:38:29.737044+00",
+    "proofSha256": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-27"
+  },
+  "moduleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+  "registrarSha256": "71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe",
+  "expectedCurrentDispatcherSha256": "f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec",
+  "expectedCurrentPolicySha256": "89f49225c19c1043e4a4a59c876876972b49abb9d5e0b29bcb699d5d069b2094",
+  "expectedCurrentModuleSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
+  "basisFiles": 77,
+  "serverActions": 0,
+  "authorityFilesCreated": false,
+  "changes": [
+    {
+      "file": "r3_direct28_batched.py",
+      "sha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/r3_direct27_batched.py",
+      "parentSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba"
+    },
+    {
+      "file": "register_cas.py",
+      "sha256": "71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/register_cas.py",
+      "parentSha256": "e868374a7de44e592195c85cc26cd1ac1d4d1fd6cb02b532d8ff8787b3df9337"
+    },
+    {
+      "file": "admin_exec.DIRECT28-UNREGISTERED.py",
+      "sha256": "9799c1ae2b883b693abfcbe690d29291f7d5c00f1620a6f9fd6023f234abbbd2",
+      "parent": "outputs/主控/20261116-r3-direct27-registration-window-01/admin_exec.ISSUED.py",
+      "parentSha256": "f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec"
+    },
+    {
+      "file": "original-cas-direct28-carrier.UNISSUED.py",
+      "sha256": "15320b7cb7dcb3e3b9310ce3c7dd0d272657cf804deb98c827b942a6f7e6a758",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/original-cas-direct27-carrier.UNISSUED.py",
+      "parentSha256": "6df5e2915f5a334a107183568dd0b1d48ffff0338726dd381e7900cd5504f61f"
+    },
+    {
+      "file": "issue_registration.py",
+      "sha256": "1b6b7caf1bd912b6959193dea2f457565e91b2bf8f6bcc052fc4b7d78a2c8abe",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/issue_registration.py",
+      "parentSha256": "824131c7742fd9fd4b4a3f15af12369b364725c1f2e743aea18ffdb26f1c8ec5"
+    },
+    {
+      "file": "issue_phase.py",
+      "sha256": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/issue_phase.py",
+      "parentSha256": "d755b54b6ed6f26c5d40545c2477d9e72955a570986daad5b63104b9e4d6bc8d"
+    },
+    {
+      "file": "issue_upgrade_authority.py",
+      "sha256": "9f9b813c6e722f1eaa5f283742c6e762d0218e16089d6eff6cf9a12b48a4d2f6",
+      "parent": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/issue_upgrade_authority.py",
+      "parentSha256": "a3c5d9b362e7be154b787ce54b9b218c763592de78014f732d6ed38390648402"
+    }
+  ],
+  "storedDescriptionOnly": true,
+  "realWindowAfterFinalReviewAndFreshActualBasisOnly": true
+}

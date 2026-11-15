@@ -1,0 +1,15 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/original-cas-direct27-carrier.UNISSUED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/original-cas-direct28-carrier.UNISSUED.py
+@@ -1,9 +1,9 @@
+ """Fixed private stdin adapter for the reviewed refusal-successor entry."""
+ from pathlib import Path
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+-STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct27-fullchain-registration-source-20261116-01')
+-AUDIT=STAGE.parent/'r3-direct27-fullchain-registration-cas-20261116-01'
+-SOURCE='e868374a7de44e592195c85cc26cd1ac1d4d1fd6cb02b532d8ff8787b3df9337'
++STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct28-start-describe-registration-source-20261116-01')
++AUDIT=STAGE.parent/'r3-direct28-start-describe-registration-cas-20261116-01'
++SOURCE='71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000

@@ -1,0 +1,512 @@
+{
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE28_PASS_NO_FINITE_WINDOW_OR_SERVER_ACTION",
+  "reviewSha256": "402a3d0c8096707e940dfd42ac62a10adcee172e63f335f4764fabfbdb21d222",
+  "scope": "selected local source, source review and actual27 predecessor metadata; no live credentials/authority envelope/businessdata or source703 rematerialization",
+  "files": [
+    {
+      "path": "outputs/D1/20261116-r3-start-owned-describe-feasibility-01/REPORT.md",
+      "bytes": 12903,
+      "sha256": "5865c3161882dca1a72943d4dc10a461439ac99c60755296ae41a81b2f691e79"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/LOCAL-CHECKS28.json",
+      "bytes": 2560,
+      "sha256": "5c200d7845eb0100d4271fd8fdda253e4d5e1bc025e49e0a5af3eab681bbbef7"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/MATRIX28.md",
+      "bytes": 2415,
+      "sha256": "650b93f4f6638ee348a5bcf38eda1f3fb28fae2740b37c363484a4f636fa530d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/PARENT-CANDIDATE01-READY28.json",
+      "bytes": 1576,
+      "sha256": "4e45d91d3561bd712782ad6a2a4c828cd58986b320e8867267aff86b7753cc4d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/PARENT-DIFF.json",
+      "bytes": 12095,
+      "sha256": "c1044c36a8abc8f568770f66edd3e15c9b1821f26a75b6eda75612fdb8988c49"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/PARENT-DIFF.patch",
+      "bytes": 103822,
+      "sha256": "a9486e660b8ffc21f9b53f34d78877e45536e2bc89679aa04c91e5338e3e7040"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/PHASES28.UNISSUED.json",
+      "bytes": 12077,
+      "sha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/PINS28.json",
+      "bytes": 7039,
+      "sha256": "fc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/READY28.json",
+      "bytes": 1856,
+      "sha256": "b91f885662630ec8f0504d9deac2f2cafa69f4103fe1484d5c87f19f33c636ca"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/SOURCE-DELTA28.md",
+      "bytes": 7362,
+      "sha256": "41b730031f45eaba2eb601f0f98d08f2d59ed8baaba98b7533cd0ea0e060bc61"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/TRACE-DELTA-FROM-CANDIDATE01.patch",
+      "bytes": 29868,
+      "sha256": "e573f47a6f29f9a0b3b1aacb7b08fc38c8ca5fce9917ae7aac75e288a6dc36a5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle/ordinary05_roles.py",
+      "bytes": 21656,
+      "sha256": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/apply/bundle/ordinary05_roles_job.py",
+      "bytes": 33152,
+      "sha256": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/freeze-local28.py",
+      "bytes": 3167,
+      "sha256": "6ab5becd62637772a204f2762924e367cc1b8eb18830bfcb164787dab4db116b"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle/batched161-run.mjs",
+      "bytes": 10755,
+      "sha256": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle/batched_install_host.py",
+      "bytes": 12985,
+      "sha256": "49d659859ad5872afdf9ddb1aadae656102fea521f3df090485986e93c8cc0d7"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/install/bundle/private_transport.py",
+      "bytes": 12283,
+      "sha256": "64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/read-current-phase28.py",
+      "bytes": 12935,
+      "sha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle/ordinary05_roles.py",
+      "bytes": 21656,
+      "sha256": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/restore/bundle/ordinary05_roles_job.py",
+      "bytes": 33152,
+      "sha256": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/run_frozen_phase28.py",
+      "bytes": 5060,
+      "sha256": "0820f6b279be1e4d7291b79a8818da7d8f32d5af04f161c1bd5a2a23aa413e7c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/batched161-run.mjs",
+      "bytes": 10755,
+      "sha256": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/normal_service05_after08.py",
+      "bytes": 61928,
+      "sha256": "31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/normal_service05_after08_proof.py",
+      "bytes": 19408,
+      "sha256": "6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/operator-host.mjs",
+      "bytes": 72238,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/operator-manifest.json",
+      "bytes": 48490,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/operator-stream-import-cli.mjs",
+      "bytes": 26499,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/operator-stream-program.mjs",
+      "bytes": 10302,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/production-plan.json",
+      "bytes": 747,
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/r3_05_cli.py",
+      "bytes": 7052,
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/r3_05_readonly.py",
+      "bytes": 21212,
+      "sha256": "febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/r3_05_runtime.py",
+      "bytes": 9394,
+      "sha256": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/start/bundle/start_owned_describe.py",
+      "bytes": 13378,
+      "sha256": "98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/stop/bundle/normal05_preserve_stop.py",
+      "bytes": 19581,
+      "sha256": "213522bf870b372b2c4b69dc51aeff3b110fa68a982481ceac30c1113cfce8db"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/stop/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/batched_real_host.py",
+      "bytes": 37233,
+      "sha256": "18ab1bf52c51da4503645cdfd6ae1407464306f958fc12abd7443c1b5375d1f8"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/materialized-profile.json",
+      "bytes": 27834,
+      "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/nonroot_input_access.py",
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/r3_05_cli.py",
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/r3_05_runtime.py",
+      "bytes": 9394,
+      "sha256": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/writer/bundle/retained24-run.mjs",
+      "bytes": 20087,
+      "sha256": "7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/QB-SCOPED-SOURCE-REPLY.json",
+      "bytes": 1183,
+      "sha256": "5f3c58add4e9ed01ddc2444f48c01f5eb0408d8437496e8be81c07d87d8bedac"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/RESULT28-SOURCE.json",
+      "bytes": 3391,
+      "sha256": "5be45f00c6ac9396f638eb9eb2d9cdb7e4d2e95cb0ae5b711d6013922eb2c1a5"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/RESULT28-SOURCE.md",
+      "bytes": 957,
+      "sha256": "66fcb08962d9e0badd9e562fe19abc4358191a9eac95794e42c5642d3c465d75"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/ACTUAL27-PREDECESSOR-BASELINE.json",
+      "bytes": 2654,
+      "sha256": "9a70cb07c1195505e390a64f9f04bbde5c2352d31b09af94a1a78869ac7a299c"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/FINAL28-QB-REVIEW.json",
+      "bytes": 4190,
+      "sha256": "402a3d0c8096707e940dfd42ac62a10adcee172e63f335f4764fabfbdb21d222"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/REGISTRATION28-ACTUAL27-ADDITIONAL-BASIS.json",
+      "bytes": 4809,
+      "sha256": "cd1e945a8dc803508463d6788b9c6ef2f9d84460445aa386b15365b0a2ea2706"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/TASK.json",
+      "bytes": 4721,
+      "sha256": "778e65501b2986893759dd56059dd8492ffd161d713d4947cabc20fb14984173"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/previous27_closed.fragment.py",
+      "bytes": 5161,
+      "sha256": "e41a51bc6503b56ddd607952c8787eb423ed4c600b5e64835cfd8c0a613da4de"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-MAIN-DRAFT-01/DRAFT.json",
+      "bytes": 1226,
+      "sha256": "18180e303bcce0f07249645c97a7866b9ddc998014cf006163ad0be93794c36c"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-MAIN-DRAFT-01/r3_direct28_batched.py",
+      "bytes": 54808,
+      "sha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-MAIN-DRAFT-01/r3_direct28_batched.py.diff",
+      "bytes": 11653,
+      "sha256": "211446bfd4ccffdc6ba445203075da944ed770f61b6d2d63de412b33caa71a7b"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/PINS.INITIAL.json",
+      "bytes": 1512,
+      "sha256": "be2eae24edf88782b1949e477f0313f0750804c074ddc7569059b1735b4108a6"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/PINS.json",
+      "bytes": 1808,
+      "sha256": "962bdc78743642081637799a5d2338a7557e99a56dba31212108907e8ecbef47"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/PREPARATION.json",
+      "bytes": 3911,
+      "sha256": "addb9537bc4a54b7e3d0b6720f65e4275385aedb0561ef1658794d6dd88b4808"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/STORED-DESCRIPTION-CONSUMER-MATRIX.json",
+      "bytes": 1776,
+      "sha256": "8654af1803f52775ad8308227e1072a9ba4c01d952a43963f5bb37a87085aa7a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/WINDOW-BUDGET.json",
+      "bytes": 1234,
+      "sha256": "bea599dff50b7a349c5622847d18f20bf969b138ad9c756c7fa92115c9021d44"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/admin_exec.DIRECT28-UNREGISTERED.py",
+      "bytes": 40942,
+      "sha256": "9799c1ae2b883b693abfcbe690d29291f7d5c00f1620a6f9fd6023f234abbbd2"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/admin_exec.DIRECT28-UNREGISTERED.py.diff",
+      "bytes": 6022,
+      "sha256": "9d27bebb0dc40a3213d23a3cc96332f4b52c23fee53990fc39ba6fec23c8b3c5"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_phase.py",
+      "bytes": 24751,
+      "sha256": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_phase.py.diff",
+      "bytes": 5334,
+      "sha256": "fa27fc61d71b83e8ec586a8e0f4963380ea659024ef39d97235715a391444ec6"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_registration.py",
+      "bytes": 9161,
+      "sha256": "1b6b7caf1bd912b6959193dea2f457565e91b2bf8f6bcc052fc4b7d78a2c8abe"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_registration.py.diff",
+      "bytes": 2653,
+      "sha256": "b66e361040b9412724f44091267d13ad2356adccd733fbfd29b23687ac636c0a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_upgrade_authority.py",
+      "bytes": 5143,
+      "sha256": "9f9b813c6e722f1eaa5f283742c6e762d0218e16089d6eff6cf9a12b48a4d2f6"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_upgrade_authority.py.diff",
+      "bytes": 1882,
+      "sha256": "8491bceb080bc495eac9bbe3a214cc2089929d5f2d57989b50cfc389f6a2439b"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/original-cas-direct28-carrier.UNISSUED.py",
+      "bytes": 2648,
+      "sha256": "15320b7cb7dcb3e3b9310ce3c7dd0d272657cf804deb98c827b942a6f7e6a758"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/original-cas-direct28-carrier.UNISSUED.py.diff",
+      "bytes": 1193,
+      "sha256": "dd23aa51a14f9783c6762d60c2e791248c4fbd4ac5c3aa4917f07e7d00c42846"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/r3_direct28_batched.py",
+      "bytes": 54808,
+      "sha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/r3_direct28_batched.py.diff",
+      "bytes": 11657,
+      "sha256": "44bfd25710a4b00d68489bbe13a59dd6e77448d5a0d25210dece8f8f054259e2"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/register_cas.py",
+      "bytes": 32201,
+      "sha256": "71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/register_cas.py.diff",
+      "bytes": 14934,
+      "sha256": "5c82cb16a472933698030b26b8a5db5c898bc373c35acde47ffe9e0a5c96c5ee"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/PINS.INITIAL.json",
+      "bytes": 1512,
+      "sha256": "be2eae24edf88782b1949e477f0313f0750804c074ddc7569059b1735b4108a6"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/PINS.json",
+      "bytes": 1808,
+      "sha256": "2e7e7a471e70001e3759d3b89ce1cd6bf6e584b1633bde88be7ee465d3527f21"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/PREPARATION.json",
+      "bytes": 4204,
+      "sha256": "1ba4213d28d057935929e67968324c6307ee88493e672b7fea91f758e0c128e9"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/STORED-DESCRIPTION-CONSUMER-MATRIX.json",
+      "bytes": 1776,
+      "sha256": "8654af1803f52775ad8308227e1072a9ba4c01d952a43963f5bb37a87085aa7a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/WINDOW-BUDGET.json",
+      "bytes": 1234,
+      "sha256": "bea599dff50b7a349c5622847d18f20bf969b138ad9c756c7fa92115c9021d44"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/admin_exec.DIRECT28-UNREGISTERED.py",
+      "bytes": 40942,
+      "sha256": "9799c1ae2b883b693abfcbe690d29291f7d5c00f1620a6f9fd6023f234abbbd2"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/admin_exec.DIRECT28-UNREGISTERED.py.diff",
+      "bytes": 6022,
+      "sha256": "a25262af7327c7138263dcb6ce53159fc20e0bbaffe72ac1d1943536e12db69e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/issue_phase.py",
+      "bytes": 24751,
+      "sha256": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/issue_phase.py.diff",
+      "bytes": 5334,
+      "sha256": "fd3b1458d852baa21c023d5f76830a1f457b3eb69cc13f8df501204c56aa6d2a"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/issue_registration.py",
+      "bytes": 9161,
+      "sha256": "1b6b7caf1bd912b6959193dea2f457565e91b2bf8f6bcc052fc4b7d78a2c8abe"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/issue_registration.py.diff",
+      "bytes": 2653,
+      "sha256": "5a11b593eaaa2c0872c349a0a89304bd00d3bdd342b00df8839f2734ea8a5037"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/issue_upgrade_authority.py",
+      "bytes": 5143,
+      "sha256": "9f9b813c6e722f1eaa5f283742c6e762d0218e16089d6eff6cf9a12b48a4d2f6"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/issue_upgrade_authority.py.diff",
+      "bytes": 1882,
+      "sha256": "b8aa7e2cf37c9aa3eae388906e767ee352adf0cdb510d1a4608688ddd0032d63"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/original-cas-direct28-carrier.UNISSUED.py",
+      "bytes": 2663,
+      "sha256": "af668139237ad88ea81e0f6afd00d80f8f2cfa74bf343a7cdf7d07e2def4d28e"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/original-cas-direct28-carrier.UNISSUED.py.diff",
+      "bytes": 2554,
+      "sha256": "fac12261f47e059066c3900911dd96999fc6c3c2d5fb6a25706e3ea5e435aa99"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/r3_direct28_batched.py",
+      "bytes": 54808,
+      "sha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/r3_direct28_batched.py.diff",
+      "bytes": 11657,
+      "sha256": "cadb233464498da1280d98c92be1f404faf50dc15985612ddfd81cdf0026f805"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/register_cas.py",
+      "bytes": 32201,
+      "sha256": "71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe"
+    },
+    {
+      "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/register_cas.py.diff",
+      "bytes": 14934,
+      "sha256": "a24f13bf136875c45492cde0c3bdc6518216d86abcad0fb4877c78ddfcbf699d"
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "parentPhasesSha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+  "newPhasesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "changes": [
+    {
+      "path": "apply/bundle/ordinary05_roles.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/apply/bundle/ordinary05_roles.py",
+      "parentSha256": "d1fa8d926cfd2b4d6cb93b92dad95dc83942f67936870ed18bf43be87374966e",
+      "parentBytes": 21656,
+      "sha256": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
+      "bytes": 21656
+    },
+    {
+      "path": "apply/bundle/ordinary05_roles_job.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/apply/bundle/ordinary05_roles_job.py",
+      "parentSha256": "e5b26381f382e469986dcbf37e877a5c26425050370c7aea10f8d85d0e1abb47",
+      "parentBytes": 33152,
+      "sha256": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52",
+      "bytes": 33152
+    },
+    {
+      "path": "start/bundle/batched161-run.mjs",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/batched161-run.mjs",
+      "parentSha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1",
+      "parentBytes": 9888,
+      "sha256": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
+      "bytes": 10755
+    },
+    {
+      "path": "start/bundle/normal_service05_after08.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/normal_service05_after08.py",
+      "parentSha256": "34ca7fa5ae0f58cf7f8a5fe1e11f6af0ae076b33760c9281703def7f847f4a17",
+      "parentBytes": 60345,
+      "sha256": "31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e",
+      "bytes": 61928
+    },
+    {
+      "path": "start/bundle/normal_service05_after08_proof.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/normal_service05_after08_proof.py",
+      "parentSha256": "4387620d182264735563f999001de80d570ca53b8a23e45efdbaf16a4fb73ff9",
+      "parentBytes": 19408,
+      "sha256": "6d9d2c9d72cd355c8feb94762fe08f38668cc4b8f5f0075dc04809cdafe8aa0c",
+      "bytes": 19408
+    },
+    {
+      "path": "start/bundle/r3_05_readonly.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/r3_05_readonly.py",
+      "parentSha256": "708f8a2233e17a6fc34bea1422ac7eb704c1145ae20bbe526cd8d3a81fc4f4f9",
+      "parentBytes": 21212,
+      "sha256": "febdf53124d39c5934c6ce33d120aa82b76a566edd8921b1927b294b8856bfe8",
+      "bytes": 21212
+    },
+    {
+      "path": "start/bundle/r3_05_runtime.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/start/bundle/r3_05_runtime.py",
+      "parentSha256": "cae97e8a25bea466ceeaaf3f0972c332cf749cc27bb248f44184abdf26bad24b",
+      "parentBytes": 9394,
+      "sha256": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8",
+      "bytes": 9394
+    },
+    {
+      "path": "start/bundle/start_owned_describe.py",
+      "parentPath": null,
+      "parentSha256": null,
+      "parentBytes": 0,
+      "sha256": "98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0",
+      "bytes": 13378
+    },
+    {
+      "path": "install/bundle/batched161-run.mjs",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/install/bundle/batched161-run.mjs",
+      "parentSha256": "adb0a63cb3d681d8702a737185648b9afbe9738ac9721dde55ecc92beada7ad1",
+      "parentBytes": 9888,
+      "sha256": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
+      "bytes": 10755
+    },
+    {
+      "path": "install/bundle/batched_install_host.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/install/bundle/batched_install_host.py",
+      "parentSha256": "f7d61b6f9ae8e7039675fc04f84b17b9b700ac7e22d94290ab7698d77bb0febb",
+      "parentBytes": 12985,
+      "sha256": "49d659859ad5872afdf9ddb1aadae656102fea521f3df090485986e93c8cc0d7",
+      "bytes": 12985
+    },
+    {
+      "path": "install/bundle/normal05_retained_stop.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/install/bundle/normal05_retained_stop.py",
+      "parentSha256": "df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8",
+      "parentBytes": 20709,
+      "sha256": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
+      "bytes": 20709
+    },
+    {
+      "path": "install/bundle/private_transport.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/install/bundle/private_transport.py",
+      "parentSha256": "8bb5a667b9a107d20c21d3c6e8bd3e2c0fc5692c49017fe27ea5c27a1548f895",
+      "parentBytes": 12283,
+      "sha256": "64e0f7d306f33218ff929a3e87dbb6dfce0a9ec8770bfe0c1a8ecead28579251",
+      "bytes": 12283
+    },
+    {
+      "path": "writer/bundle/batched_real_host.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/writer/bundle/batched_real_host.py",
+      "parentSha256": "f055a145d542ef8d9d9e72a284f1fbcd23b4e25391cc907710fedf34701cebe3",
+      "parentBytes": 37233,
+      "sha256": "18ab1bf52c51da4503645cdfd6ae1407464306f958fc12abd7443c1b5375d1f8",
+      "bytes": 37233
+    },
+    {
+      "path": "writer/bundle/normal05_retained_stop.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/writer/bundle/normal05_retained_stop.py",
+      "parentSha256": "df8f10feccf1bc09dac4f0ef357fd3b0abf005cae28960727a169d85506226a8",
+      "parentBytes": 20709,
+      "sha256": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
+      "bytes": 20709
+    },
+    {
+      "path": "writer/bundle/r3_05_runtime.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/writer/bundle/r3_05_runtime.py",
+      "parentSha256": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb",
+      "parentBytes": 9394,
+      "sha256": "08fa48fd18853fd2eec2e5bb3995bf73a588de9242d4c7c8076d0db6289871c8",
+      "bytes": 9394
+    },
+    {
+      "path": "writer/bundle/retained24-run.mjs",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/writer/bundle/retained24-run.mjs",
+      "parentSha256": "c98b897209f94ddb22fcfc6948bcb78aea5d71f2d2ce7baf101b4da5aaaee651",
+      "parentBytes": 20087,
+      "sha256": "7840760788a9a74b1823e0a69d795baa09ad4ed5045a4f2a6a6388856c2f0950",
+      "bytes": 20087
+    },
+    {
+      "path": "stop/bundle/normal05_preserve_stop.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/stop/bundle/normal05_preserve_stop.py",
+      "parentSha256": "e940115908fb65bda4e6307276c5c74f6cb0e8f85bb9d3417d1efa18f4f7e285",
+      "parentBytes": 19581,
+      "sha256": "213522bf870b372b2c4b69dc51aeff3b110fa68a982481ceac30c1113cfce8db",
+      "bytes": 19581
+    },
+    {
+      "path": "stop/bundle/normal05_retained_stop.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/stop/bundle/normal05_retained_stop.py",
+      "parentSha256": "9c0a617bb75a5c8ce12d78c09ad312094e19ee006489f207be3bf1ab7229e213",
+      "parentBytes": 20709,
+      "sha256": "4437335e83ec9ce81c552dff2943b0e3fa1ed7b15165fb3244af56047465032a",
+      "bytes": 20709
+    },
+    {
+      "path": "restore/bundle/ordinary05_roles.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/restore/bundle/ordinary05_roles.py",
+      "parentSha256": "d1fa8d926cfd2b4d6cb93b92dad95dc83942f67936870ed18bf43be87374966e",
+      "parentBytes": 21656,
+      "sha256": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
+      "bytes": 21656
+    },
+    {
+      "path": "restore/bundle/ordinary05_roles_job.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/restore/bundle/ordinary05_roles_job.py",
+      "parentSha256": "e5b26381f382e469986dcbf37e877a5c26425050370c7aea10f8d85d0e1abb47",
+      "parentBytes": 33152,
+      "sha256": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52",
+      "bytes": 33152
+    },
+    {
+      "path": "PHASES28.UNISSUED.json",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/PHASES27.UNISSUED.json",
+      "parentSha256": "b85ed78aeadb85b29d71d5cfdd45e6483e5079371695c96dbc66e4e26b1a8234",
+      "parentBytes": 11507,
+      "sha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+      "bytes": 12077
+    },
+    {
+      "path": "read-current-phase28.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/read-current-phase27-r1.py",
+      "parentSha256": "2a1541f00bd8d8cb05a1d7cef965e325a01fcd0e5e02df1b90469271c5345548",
+      "parentBytes": 9269,
+      "sha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
+      "bytes": 12935
+    },
+    {
+      "path": "run_frozen_phase28.py",
+      "parentPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-full-normal-chain27-local-01/CANDIDATE-02/run_frozen_phase27.py",
+      "parentSha256": "4f18c5cb5042fd9d1b161f863b95892a66802117f2b3df7db78d32ed680edf5f",
+      "parentBytes": 5060,
+      "sha256": "0820f6b279be1e4d7291b79a8818da7d8f32d5af04f161c1bd5a2a23aa413e7c",
+      "bytes": 5060
+    },
+    {
+      "path": "freeze-local28.py",
+      "parentPath": null,
+      "parentSha256": null,
+      "parentBytes": 0,
+      "sha256": "6ab5becd62637772a204f2762924e367cc1b8eb18830bfcb164787dab4db116b",
+      "bytes": 3167
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "pythonSyntaxFiles": 32,
+  "embeddedReadonlyProgramSyntax": true,
+  "nodeSyntaxRuntime": "v24.21.0",
+  "genuineFactoriesExecuted": false,
+  "localPosixRealChildren": [
+    {
+      "name": "exit0",
+      "reason": null,
+      "exitCode": 0,
+      "childReaped": true,
+      "nativeGroupClaimed": false,
+      "stdoutCapturedBytes": 2,
+      "stderrCapturedBytes": 0
+    },
+    {
+      "name": "nonzero",
+      "reason": null,
+      "exitCode": 7,
+      "childReaped": true,
+      "nativeGroupClaimed": false,
+      "stdoutCapturedBytes": 0,
+      "stderrCapturedBytes": 13
+    },
+    {
+      "name": "stdout-limit",
+      "reason": "STDOUT_LIMIT",
+      "exitCode": -15,
+      "childReaped": true,
+      "nativeGroupClaimed": false,
+      "stdoutCapturedBytes": 131072,
+      "stderrCapturedBytes": 0
+    },
+    {
+      "name": "stderr-limit",
+      "reason": "STDERR_LIMIT",
+      "exitCode": -15,
+      "childReaped": true,
+      "nativeGroupClaimed": false,
+      "stdoutCapturedBytes": 0,
+      "stderrCapturedBytes": 65536
+    },
+    {
+      "name": "timeout",
+      "reason": "TIMEOUT",
+      "exitCode": -15,
+      "childReaped": true,
+      "nativeGroupClaimed": false,
+      "stdoutCapturedBytes": 0,
+      "stderrCapturedBytes": 0
+    }
+  ],
+  "platform": "darwin",
+  "linuxSubreaperAndDockerNamespace": "NOT_EXECUTED_NOT_CLAIMED",
+  "uidOrClockMocks": false,
+  "serverActions": 0,
+  "databaseConnections": 0,
+  "newAuthorityFiles": 0,
+  "developmentCorrection": "Initial local signal0 group probe returned EPERM. Removed unnecessary global group probe: Linux subreaper now verifies its actual owned children; host Docker-client reaping no longer claims native group cleanup.",
+  "finalDependencyPinsChecked": 38,
+  "finalPythonSyntaxRefreshed": true,
+  "writerOperationalNamespaceSyntaxValid": true,
+  "checkedHelperSha256": "98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0",
+  "mainBytes": 61928,
+  "captureTestsReusedFrom": {
+    "path": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-01/LOCAL-CHECKS28.json",
+    "sha256": "1c213c09fd6899c502d2998a6c7d0904502975c29d392a763fb499856d082944",
+    "captureFunctionAstUnchanged": true
+  },
+  "traceParserTextFixtureChecks": "PASS_FIXED_NAMES_ORDER_FINITE_NONDECREASING_TIMES_ONLY",
+  "nativeStageTraceExecuted": false,
+  "stderrNonEmptyCausesFailure": false,
+  "successfulNonemptyBoundedStderrTransport": {
+    "exitCode": 0,
+    "reason": null,
+    "stderrCapturedBytes": 20,
+    "childReaped": true,
+    "nativeFactoryExecuted": false
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "state": "DRAFT_CURRENT_NAMESPACE_AND_ACTUAL27_CLOSURE_ONLY_PENDING_FINAL_T45_PHASING_AND_MAIN_PAIRING",
+  "parentSha256": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
+  "moduleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+  "draftJobs": {
+    "apply": "t45-r3-ordinary28-auth-apply-20261116-01",
+    "install": "t45-r3-batched-install-20261115-01",
+    "materialize": "t45-r3-batched-root03-source-delta-20261116-01",
+    "restore": "t45-r3-ordinary28-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-28",
+    "stop": "t45-r3-ordinary28-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "actual27ClosureFragmentSha256": "e41a51bc6503b56ddd607952c8787eb423ed4c600b5e64835cfd8c0a613da4de",
+  "historicalPreviousService22Preserved": true,
+  "authorityFilesCreated": false,
+  "serverActions": 0,
+  "remaining": [
+    "compare exact T45 PHASES28 keys and final added-output protocol",
+    "assemble current dispatcher template/registrar/issuer with exact final source pins",
+    "independent same-version source review",
+    "fresh actual server CAS basis before issuing any finite window"
+  ]
+}

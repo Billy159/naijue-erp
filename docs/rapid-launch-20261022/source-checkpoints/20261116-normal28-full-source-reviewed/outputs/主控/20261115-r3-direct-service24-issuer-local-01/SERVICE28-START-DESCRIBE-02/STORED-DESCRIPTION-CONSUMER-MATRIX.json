@@ -1,0 +1,23 @@
+{
+  "format": "R3_NORMAL28_STORED_DESCRIPTION_CONSUMER_MATRIX_V1",
+  "state": "SOURCE_ONLY_PENDING_FINAL_QB_NO_WINDOW",
+  "producer": "T45 start28 actual C/ACK before handoff; pinned helper98a8/callerebe6",
+  "selectedPhasesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "readerSha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
+  "storedLeaves": {
+    "payload": "genuine-describe-payload.json",
+    "descriptor": "genuine-descriptor.json",
+    "liveFacts": "genuine-live-facts.json",
+    "process": "genuine-describe-process.json"
+  },
+  "reader": "verify normal result refs leaf/bytes/SHA, boot/result byte equality and public decoded equality; export local actual DESCRIPTOR/LIVE-FACTS/PAYLOAD",
+  "innerIssuer": "uses exact local DESCRIPTOR and normalized LIVE-FACTS external SHA from stored-output reader; original nine-field authorization",
+  "outerInstallIssuer": "evidence is actual complete start READBACK, equal context.start; source STORED_START_JOB_OUTPUTS_NO_NODE_RERUN, completeRootPublicMatched, root normal describe0queries/0mutations, all4refs/textSHA and same descriptor/payload window validated",
+  "legacySynchronousDescribeConsumerAccepted": false,
+  "CContentOrCheckedAtRefreshed": false,
+  "window": "describe chooses real window after same source load, install copies returned d.starts/expires/admin; recompile whole d deep-equal",
+  "deadline": "raw runner conservatively subtracts35000 from C lease; normalized actual C lease kept distinct and unchanged",
+  "failure": "existing typedPRE/AFTER root/public incomplete+actualcleanup, validated C/ACK and original key only; empty normal allowed only in trueAFTER recovery",
+  "authorityIssued": false,
+  "nativeInstallOrRealSubmitted": false
+}

@@ -1,0 +1,39 @@
+{
+  "format": "R3_NORMAL28_CODE_BUDGET_V1",
+  "evidenceType": "SOURCE_LIMITS_AND_PLANNED_RESERVES_NOT_ACTUAL150_OR_CLEANUP_PERFORMANCE",
+  "roleMinutes": {
+    "controller": 90,
+    "backupAdmin": 92,
+    "restoration": 115,
+    "policy": 120
+  },
+  "minimumControllerBudgetBeforeStartMs": 4320000,
+  "componentsSeconds": {
+    "startIncludingDescribe": 300,
+    "storedOutputSignSubmitReserve": 120,
+    "install": 780,
+    "writer": 3000,
+    "handoffReserve": 120
+  },
+  "startHostWorkSeconds": 190,
+  "originalCleanupReservationSeconds": 110,
+  "describeChildSeconds": 150,
+  "termSeconds": 2,
+  "killSeconds": 2,
+  "T45BridgeSeconds": 158,
+  "T45PublishReserveSeconds": 12,
+  "strictRemainingBeforeDescribeSeconds": 170,
+  "mainByteLimit": 65536,
+  "descriptorByteLimit": 131072,
+  "installTargetMaxMs": 1200000,
+  "innerIssueStrictRemainingMs": 900000,
+  "writerExpiry": "exact actual controller deadline, full3000s still required",
+  "grantCoverage": "actual fresh original grant expiry must cover policy, no grant extension",
+  "remainingUnknown": [
+    "actual150 sufficient",
+    "actual170 entry margin",
+    "actual Linux child tree cleanup",
+    "actual110 worst cleanup",
+    "actual descriptor900 signing margin"
+  ]
+}

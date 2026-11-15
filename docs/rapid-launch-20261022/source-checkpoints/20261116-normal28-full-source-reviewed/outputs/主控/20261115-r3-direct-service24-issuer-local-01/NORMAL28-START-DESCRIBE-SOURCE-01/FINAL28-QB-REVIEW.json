@@ -1,0 +1,42 @@
+{
+  "format": "R3_NORMAL28_FINAL_SAME_VERSION_SOURCE_REVIEW_V1",
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "rulesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "normalStartupHoldClosed": true,
+  "mainDirectory": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02",
+  "mainPinsSha256": "2e7e7a471e70001e3759d3b89ce1cd6bf6e584b1633bde88be7ee465d3527f21",
+  "mainModuleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+  "registrarSha256": "71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe",
+  "registrationCarrierTemplateSha256": "af668139237ad88ea81e0f6afd00d80f8f2cfa74bf343a7cdf7d07e2def4d28e",
+  "phaseIssuerSha256": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d",
+  "T45CandidateDirectory": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02",
+  "T45PinsSha256": "fc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab",
+  "T45ReadySha256": "b91f885662630ec8f0504d9deac2f2cafa69f4103fe1484d5c87f19f33c636ca",
+  "readerSha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
+  "closedFinding": "CARRIER28-STATUS-01",
+  "actualPredecessorClosure": {
+    "serviceKey": "t45-first-r3-native-service-start-20261116-27",
+    "restoreReadbackSha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
+    "finalClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae"
+  },
+  "independentReview": {
+    "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+    "turnId": "01a1e0ec-0af0-7dc3-9e5d-b82a0090873e",
+    "itemId": "exec-1dfbbe31-3c45-4e19-83f3-3902192a55d4",
+    "prompt": "QB 本轮28最终同版整链源码结论：FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS；rulesSha256=b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1；normalStartupHoldClosed=true（仅源码审查hold）。绑定 Main SERVICE28-START-DESCRIBE-02 PINS2e7e7a471e70001e3759d3b89ce1cd6bf6e584b1633bde88be7ee465d3527f21 / carrier af668139237ad88ea81e0f6afd00d80f8f2cfa74bf343a7cdf7d07e2def4d28e，module0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261 / registrar71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe / phase1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d；T45 C02 READYb91f885662630ec8f0504d9deac2f2cafa69f4103fe1484d5c87f19f33c636ca / PINSfc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab / reader4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508。CARRIER28-STATUS-01 CLOSED：后继仅载体三处状态/安全码前缀改正，成功exit与registrar28一致；新全成员PINS/精确父diff/载体AST核过，其余6源字节不变直接复用。原已闭27/D1/SQL/703/data不重审。Main配对77BASIS保全+27真实收尾、七键、material不重交、已存4refs/descriptor/payload/normalized liveFacts、原9字段及严格900余量、4320/role90/92/115/120/writer3000/freshCAS-grant门槛闭合。T45新真实起点/190+110/170准入/150进程+回收/输出发布/trace范围scopedPASS复用。可据此落最终review对象并按原授权与唯一T45 owner继续真实准入；不取消fresh实际CAS/clock/环境守卫。QB从未执行issuer/carrier/服务器/PG/native/genuine工厂，Linux回收/实际150够否/170可用/110最坏清理/900真实余量、安装/REAL仍未实测，不记运行或业务PASS。"
+  },
+  "evidenceType": "SOURCE_STATIC_AND_SELECTED_LOCAL_CAPTURE_TESTS_NOT_NATIVE_OR_BUSINESS_PASS",
+  "stillRequired": [
+    "fresh actual77-file CAS basis and original grant expiry",
+    "actual finite registration/apply/start28 and stored genuine descriptor",
+    "actual Linux child-tree cleanup and150s adequacy/170s available entry margin/110s worst cleanup",
+    "actual900s installation signing margin",
+    "actual DB05 installation13ACK/catalog and original511234-row REAL import/reconciliation",
+    "backup/core browser roles/formal deployment and full goal completion"
+  ],
+  "authorityFilesIssued": false,
+  "serverActionsByReview": 0,
+  "formalInstallOrRealStarted": false,
+  "businessGate": "CLOSED"
+}
+

@@ -1,0 +1,20 @@
+{
+  "PINS.INITIAL.json": "be2eae24edf88782b1949e477f0313f0750804c074ddc7569059b1735b4108a6",
+  "PREPARATION.json": "addb9537bc4a54b7e3d0b6720f65e4275385aedb0561ef1658794d6dd88b4808",
+  "STORED-DESCRIPTION-CONSUMER-MATRIX.json": "8654af1803f52775ad8308227e1072a9ba4c01d952a43963f5bb37a87085aa7a",
+  "WINDOW-BUDGET.json": "bea599dff50b7a349c5622847d18f20bf969b138ad9c756c7fa92115c9021d44",
+  "admin_exec.DIRECT28-UNREGISTERED.py": "9799c1ae2b883b693abfcbe690d29291f7d5c00f1620a6f9fd6023f234abbbd2",
+  "admin_exec.DIRECT28-UNREGISTERED.py.diff": "9d27bebb0dc40a3213d23a3cc96332f4b52c23fee53990fc39ba6fec23c8b3c5",
+  "issue_phase.py": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d",
+  "issue_phase.py.diff": "fa27fc61d71b83e8ec586a8e0f4963380ea659024ef39d97235715a391444ec6",
+  "issue_registration.py": "1b6b7caf1bd912b6959193dea2f457565e91b2bf8f6bcc052fc4b7d78a2c8abe",
+  "issue_registration.py.diff": "b66e361040b9412724f44091267d13ad2356adccd733fbfd29b23687ac636c0a",
+  "issue_upgrade_authority.py": "9f9b813c6e722f1eaa5f283742c6e762d0218e16089d6eff6cf9a12b48a4d2f6",
+  "issue_upgrade_authority.py.diff": "8491bceb080bc495eac9bbe3a214cc2089929d5f2d57989b50cfc389f6a2439b",
+  "original-cas-direct28-carrier.UNISSUED.py": "15320b7cb7dcb3e3b9310ce3c7dd0d272657cf804deb98c827b942a6f7e6a758",
+  "original-cas-direct28-carrier.UNISSUED.py.diff": "dd23aa51a14f9783c6762d60c2e791248c4fbd4ac5c3aa4917f07e7d00c42846",
+  "r3_direct28_batched.py": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+  "r3_direct28_batched.py.diff": "44bfd25710a4b00d68489bbe13a59dd6e77448d5a0d25210dece8f8f054259e2",
+  "register_cas.py": "71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe",
+  "register_cas.py.diff": "5c82cb16a472933698030b26b8a5db5c898bc373c35acde47ffe9e0a5c96c5ee"
+}

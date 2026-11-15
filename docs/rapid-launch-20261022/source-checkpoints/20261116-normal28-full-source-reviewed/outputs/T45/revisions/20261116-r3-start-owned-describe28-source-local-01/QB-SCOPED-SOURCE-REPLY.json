@@ -1,0 +1,27 @@
+{
+  "evidenceType": "RECEIVED_ORIGINAL_QB_CHAT_MESSAGE_NOT_SIGNATURE_OR_SERVER_RECEIPT",
+  "sourceThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "reviewTurnId": "01a1e0e0-dc44-77a0-8446-2b3002adbfb4",
+  "state": "SCOPED_SOURCE_PASS_START_OWNED_DESCRIBE28",
+  "confirmedNewFindings": 0,
+  "readySha256": "b91f885662630ec8f0504d9deac2f2cafa69f4103fe1484d5c87f19f33c636ca",
+  "phasesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "pinsSha256": "fc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab",
+  "reviewedScope": [
+    "T45 C02 exact source/pins and actual27 predecessor",
+    "start-owned describe process and budget",
+    "bounded outputs/root-public object equivalence",
+    "describe-only real window and saved installation inputs",
+    "same-job safe private stage trace and original typed cleanup"
+  ],
+  "excludedFromPass": [
+    "Main final registry/issuer/module pairing",
+    "Linux native process cleanup or PG execution",
+    "actual150s sufficiency",
+    "actual170s admission margin",
+    "110s worst-case cleanup",
+    "900s issuance margin",
+    "installation/REAL/business acceptance"
+  ],
+  "serverActions": 0
+}

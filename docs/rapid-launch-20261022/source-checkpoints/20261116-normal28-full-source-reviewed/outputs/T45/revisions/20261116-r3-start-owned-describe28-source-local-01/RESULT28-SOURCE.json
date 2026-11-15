@@ -1,0 +1,51 @@
+{
+  "state": "T45_LOCAL_SOURCE28_INCREMENT_COMPLETED_QB_SCOPED_SOURCE_PASS_MAIN_FINAL_PAIRING_PENDING",
+  "recordedAtUTC": "2026-11-15T20:30:54.898000+00:00",
+  "candidate": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02",
+  "readySha256": "b91f885662630ec8f0504d9deac2f2cafa69f4103fe1484d5c87f19f33c636ca",
+  "phasesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "pinsSha256": "fc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab",
+  "mainSha256": "31a3faa3370038cf0b3284527dc154124a824447a7d1a6f0a2f32d26f98a6c8e",
+  "mainBytes": 61928,
+  "helperSha256": "98a87b0394acd192e0d8e719d1be8e733edcc055010e1da883ea15fed38ee2d0",
+  "runnerSha256": "ebe67655c91d5cbc1cd9196192bde3c7ed0b3541113c66ac87ed127a06a2112f",
+  "readerSha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
+  "reviewReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/QB-SCOPED-SOURCE-REPLY.json",
+    "sha256": "5f3c58add4e9ed01ddc2444f48c01f5eb0408d8437496e8be81c07d87d8bedac"
+  },
+  "localChecks": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02/LOCAL-CHECKS28.json",
+    "sha256": "5c200d7845eb0100d4271fd8fdda253e4d5e1bc025e49e0a5af3eab681bbbef7",
+    "claims": "source syntax/pins, real local POSIX children, trace parser text fixtures only; no genuine factory or Linux runtime proof"
+  },
+  "implementation": "Existing start300 executes genuine describe after actual C/ACK and before result/handoff; actual process entry accounts for preload in190/110; fixed helper150+TERM2/KILL2, bridge158, launch only workleft>170; independent protected saved outputs plus safe fixed-stage trace and stored-output reader. Installation preserves the original signed window/descriptor.",
+  "actualPredecessor": "COMPLETED_AND_CLOSED_SERVICE27_C2640",
+  "materializationReplay": false,
+  "installAndWriterBusinessKeysChanged": false,
+  "serverActionsThisSourceTask": 0,
+  "postgresConnections": 0,
+  "newAuthoritiesIssued": false,
+  "newRegistryChanges": false,
+  "newBuilds": 0,
+  "newDeployments": 0,
+  "mainSourceModified": false,
+  "oldCandidatesModified": false,
+  "lastServerResourceEvidenceReused": {
+    "path": "outputs/T45/revisions/20261116-r3-service27-registration-and-apply-actual-01/restore/FINAL-CLOSED-01.json",
+    "checkedAtUTC": "2026-11-15T19:52:16.353633+00:00",
+    "sha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
+    "refreshedInThisSourceTask": false
+  },
+  "pending": "Main final same-version registry/issuer/source pins and original QB same-round interface completion; no future server window or execution authorized by this source task.",
+  "runtimeUnverified": [
+    "Main final registry/issuer/module pairing",
+    "Linux native process cleanup or PG execution",
+    "actual150s sufficiency",
+    "actual170s admission margin",
+    "110s worst-case cleanup",
+    "900s issuance margin",
+    "installation/REAL/business acceptance"
+  ],
+  "formalBusinessAccepted": false
+}

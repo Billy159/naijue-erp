@@ -1,0 +1,51 @@
+{
+  "state": "LOCAL_EXPECTED_ROOT_ONLY_ADDITIONS_FRESH_SERVER_BASIS_REQUIRED",
+  "expectedRootFiles": {
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py": "f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct27_batched.py": "45ee118981ebddd278240dc5bcd1ff0e05769092668e8021f8070c6ce0c04eba",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct27-batched-real.json": "89f49225c19c1043e4a4a59c876876972b49abb9d5e0b29bcb699d5d069b2094",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-apply-20261116-01/r3-outer-terminal.json": "94933ecd1885265d8e84e1f7e3de72f0a73879f85ec490e5f3a0e0016761ad3e",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-apply-20261116-01/results/maintenance-auth-result.json": "396f58878c782fc2f598ea637469c2f499a1ee88f2a902561628e3e95b13ee5d",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-apply-20261116-01/results/maintenance-auth-cleanup.json": "9a241d91ebc2e1a69a2c3a0f144e6dbda09019a619ec8b3632ba2787fe04db9c",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-27/r3-outer-terminal.json": "ba1caa324ceba9a191479d45bd6e1b497e78b5adc7946d21589c296a2e300cd4",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-27/results/normal-service-result.json": "808c633e8d7f11bac5e09efa21cbb3b40f39272a103b89af191624915b869609",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-27.json": "2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-preserve-stop-20261116-01/r3-outer-terminal.json": "2dc418392380fe9313facee2b85cf06d79ad2b1e8fcac1faedd6c0263d1fd04f",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-preserve-stop-20261116-01/results/normal05-preserve-stop-result.json": "a5aa0eecb1cfa711b922a1cbbd227a25b7316c93bcfc83dc4ab4c60f5a56d24a",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-27/cleanup.json": "fda7c05908d7b94223901638b83a417d2d7f1c624d6d195abae6ede6fc0702e8",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01/r3-outer-terminal.json": "957f0f26d7ed9272ea675c855a7726e9627af7946774b9b8827fb720d47aafe0",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01/results/maintenance-auth-result.json": "90e8fc47b7df781cb325dc9e653510c2080da0e336748146e25d8751a4cc9fc7",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary27-auth-restore-20261116-01/results/maintenance-auth-cleanup.json": "b8286a2e7449b7b9e165975fd5492fc6084eea1d1b9322e1b5f57e40c4c57339"
+  },
+  "publicClosurePairsForExplicitUid1000ReadNotRootBasis": {
+    "apply": {
+      "requestKey": "t45-r3-ordinary27-auth-apply-20261116-01",
+      "resultLeaf": "maintenance-auth-result.json",
+      "rootSha256": "396f58878c782fc2f598ea637469c2f499a1ee88f2a902561628e3e95b13ee5d",
+      "publicSha256": "e86d668c9e75bc452856e6cfa68846e1b42edea4826b0957cd979823cf9756c5"
+    },
+    "start": {
+      "requestKey": "t45-first-r3-native-service-start-20261116-27",
+      "resultLeaf": "normal-service-result.json",
+      "rootSha256": "808c633e8d7f11bac5e09efa21cbb3b40f39272a103b89af191624915b869609",
+      "publicSha256": "4446a6673b6684ecf26c9d5da4982cd27d75fd68dca578c65072330921b6b5d7"
+    },
+    "stop": {
+      "requestKey": "t45-r3-ordinary27-preserve-stop-20261116-01",
+      "resultLeaf": "normal05-preserve-stop-result.json",
+      "rootSha256": "a5aa0eecb1cfa711b922a1cbbd227a25b7316c93bcfc83dc4ab4c60f5a56d24a",
+      "publicSha256": "62ca4c34ae9313a1d5c9de745878ef9f8567e2d6f98af11d283c16e64d0c9502"
+    },
+    "restore": {
+      "requestKey": "t45-r3-ordinary27-auth-restore-20261116-01",
+      "resultLeaf": "maintenance-auth-result.json",
+      "rootSha256": "90e8fc47b7df781cb325dc9e653510c2080da0e336748146e25d8751a4cc9fc7",
+      "publicSha256": "9e2a41c47eeb23745dae3558266f3b01b9776594f95a766e8a4f742ee30a2be2"
+    }
+  },
+  "currentDispatcherOld4474Archive": {
+    "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct27-fullchain-registration-cas-20261116-01/old-dispatcher.bin",
+    "sha256": "4474fc511ed22a1e9c1a405ef81f35ddba2bdff2e0ba45c42e6ff18c0cf49cfb"
+  },
+  "serverActions": 0
+}

@@ -1,0 +1,79 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE27-FULLCHAIN-02/issue_phase.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-01/issue_phase.py
+@@ -1,4 +1,4 @@
+-"""Issue finite direct24 phases from actual predecessor receipts; no server execution."""
++"""Issue finite direct28 phases from actual predecessor receipts; no server execution."""
+ from pathlib import Path
+ import base64
+ import hashlib
+@@ -50,7 +50,7 @@
+ 
+ def start_authority(witness, rule, apply, roles, policy, now):
+     normalize_apply(apply, policy, roles)
+-    # Planned maxima: start300 + describe/submit120 + install780 + writer3000 + handoff120.
++    # Planned maxima: start300 including describe + stored-output/sign/submit120 + install780 + writer3000 + handoff120.
+     assert now + 4_320_000 < roles['controllerValidUntil'], 'Insufficient complete normal-chain budget before controller expiry'
+     folder = Path(witness['phaseDirectories']['start'])
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+@@ -65,7 +65,7 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service27 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service28 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+@@ -111,7 +111,7 @@
+         authority = dict(host['scope'](), service=service, startsAt=now, expiresAt=expiry,
+                          writerTerminalSha256=OLD_WRITER, policySha256=OLD_HOLD, sourceSha256=sha(src.read_bytes()),
+                          currentBatchTerminals=evidence['currentBatchTerminals'],
+-                         authorizationReference='Cleanly stop exact generation 27 and preserve its data directory.')
++                         authorizationReference='Cleanly stop exact generation 28 and preserve its data directory.')
+         host['validate'](authority, now)
+         return authority
+     service = observation(start, policy, witness) if start is not None else None
+@@ -255,9 +255,23 @@
+ 
+ def install_authority(witness, rule, described, context, roles, policy, manifest, now):
+     host, fields = normal_common('install', witness, rule, context, roles, policy, manifest, now)
++    assert described == context['start']
++    assert described['descriptionSource'] == 'STORED_START_JOB_OUTPUTS_NO_NODE_RERUN'
++    assert described['descriptionRootPublicObjectsMatched'] is True
++    captured = described['result']['describe']
++    assert captured['state'] == 'PROGRAM_DESCRIBED_NO_PG_OR_WRITE'
++    assert captured['databaseConnections'] == captured['mutations'] == 0
++    assert set(captured['outputs']) == {'payload', 'descriptor', 'liveFacts', 'process'}
++    assert set(described['describeStoredOutputs']) == set(captured['outputs'])
++    for kind, ref in captured['outputs'].items():
++        stored = described['describeStoredOutputs'][kind]
++        raw = stored['text'].encode('utf8')
++        assert {k: stored[k] for k in ('leaf', 'bytes', 'sha256')} == ref
++        assert len(raw) == ref['bytes'] and sha(raw) == ref['sha256']
+     d = described['descriptor']
+-    assert described['state'] == 'PROGRAM_DESCRIBED_NO_PG_OR_WRITE'
+-    assert described['databaseConnections'] == described['mutations'] == 0
++    assert json.loads(described['describeStoredOutputs']['descriptor']['text']) == d
++    assert described['describePayload'] == dict(service=fields['service'],
++        backupAdminValidUntil=d['backupAdminValidUntil'], installStartsAt=d['startsAt'], installExpiresAt=d['expiresAt'])
+     assert d['backupAdminValidUntil'] == roles['backupAdminValidUntil']
+     assert d['currentServiceSha256'] == fields['service']['proofSha256']
+     assert d['postmasterStart'] == fields['service']['postmasterStart']
+@@ -330,7 +344,7 @@
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct27-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct28-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -360,7 +374,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261116-r3-direct-service27-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service28-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),
