@@ -1,0 +1,98 @@
+{
+  "state": "ACTUAL_CAS28_REGISTERED_AND_APPLY28_COMPLETED_NO_START_INSTALL_OR_REAL",
+  "recordedAtUTC": "2026-11-15T21:11:48.430121+00:00",
+  "registration": {
+    "status": "EXACT_DIRECT28_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED",
+    "readbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/REGISTRATION28-READBACK-01.json",
+    "readbackSha256": "4003a484dc7f9263067a44a48811d8ca0d3df7ff52e61ddf3a5b514d5241e3d3",
+    "checkedAtUTC": "2026-11-15T21:07:41.593779+00:00",
+    "auditResultSha256": "0b87b570f3e0d816d49b447ca6b56df0ccebfd31189b6efcade8d30f3c664e6f",
+    "entryResultSha256": "dff9ab393d8559824c9b7ebaee484d82279062ebc05320f30effb6cc54270af9",
+    "dispatcherSha256": "6b6b0d0aee71e95e989431bb6df822ab77cfa925fdeab1a12077b4feb1205842",
+    "policySha256": "56bb27580cf88df1c61491366da765a501dd84f9dce70033bf1c2a601cb84858",
+    "moduleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+    "originalLockPreserved": true,
+    "oldHistoryPreserved": true,
+    "originalPendingAbsent": true,
+    "onceAdapterSourceSha256": "1dfde54bc6c7ecef3f34a2cf5eb5ac901c7d19856bae2fbe67a6312cbf5f75e0"
+  },
+  "apply": {
+    "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 7.879951742012054,
+    "finishedAtUTC": "2026-11-15T21:08:50.562851+00:00",
+    "readbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/apply/READBACK-01.json",
+    "readbackSha256": "d80ab7aad1430ec8a639b09375e0f10096f5e39801528dc7b5127e68da7135cd",
+    "rootPins": {
+      "cleanup": "c455111cf4de0d73782c9bf04c0dbc2aedd6df2a92c2a2d5914a736942cd6b87",
+      "result": "7d2dff965ccae19fc835bb669a622b9555dfc5532f4426bab5c6443e05657abc",
+      "terminal": "163a6252ea1ca699392c5955be78077e86e0a7d7ba75991044ada741bb1c409d"
+    },
+    "publicResultSha256": "4a3fd196e0a3ecff12d61ff912220981f757ceffc6b32e8a6b559176cd7672de",
+    "rootPublicObjectsEqual": true,
+    "insideResult": {
+      "authenticationAttempted": false,
+      "automaticReplay": false,
+      "credentialValidUntilByRole": {
+        "erp35_admin_20261110_r3": 1794782283042,
+        "erp35_controller_20261110_r3": 1794782163042
+      },
+      "membershipsOrRoleAttributesChanged": false,
+      "newRoles": 0,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ],
+      "runtimeAuthChanged": false,
+      "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+    },
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "b9020f198b8dafed8c79b6fdffb33766d5912abad40ae45b24b1cb8f5fd28b50",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary28-auth-apply-20261116-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "publicReceiptsCollectedAndHashesMatched": true,
+    "sourcePins": {
+      "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "ordinary05_roles.py": "4737dc109dd15910cf1579fa1af5e9094c29afc8d91e29601d6f5df2974c5c1c",
+      "ordinary05_roles_job.py": "d80bfee091a037123aca9d9b1cae57e971d0557f9af034b720131149fdc01d52"
+    },
+    "privateLogsExported": false
+  },
+  "currentAuthorizationState": "TWO_ORIGINAL_MAINTENANCE_ROLE_FINITE_FIELDS_APPLIED_NOT_YET_RESTORED_FOR28",
+  "roleDeadlines": {
+    "erp35_admin_20261110_r3": 1794782283042,
+    "erp35_controller_20261110_r3": 1794782163042
+  },
+  "restorationDeadline": 1794783663042,
+  "originalRecoveryBasisRetained": true,
+  "naturalExpiryIsNotRestoration": true,
+  "ordinaryServiceStart28Submitted": false,
+  "installationSubmitted": false,
+  "realWriterSubmitted": false,
+  "oldMaterializationReplayed": false,
+  "old27JobsReplayed": false,
+  "businessWrites": 0,
+  "businessAcceptanceClaimed": false,
+  "applicationSwitched": false,
+  "noAutomaticReplay": true,
+  "noUnknownSubmittedResult": true,
+  "noOtherOperationUnitsAtReadback": true,
+  "ownOperationUnitInactive": true,
+  "pgdataPidAbsentAtReadback": true,
+  "credentialsOrPrivateAuthBodiesExported": false,
+  "next": "Wait for Main exact start28 finite input and scope. Preserve applied finite-role state and later restore original28 fields by original key; never count natural expiry as restoration."
+}

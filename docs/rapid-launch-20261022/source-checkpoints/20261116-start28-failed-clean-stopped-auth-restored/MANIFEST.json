@@ -1,0 +1,27 @@
+[
+  {
+    "bytes": 5489,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/start/READBACK-01.json",
+    "sha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683"
+  },
+  {
+    "bytes": 3119,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/restore/READBACK-01.json",
+    "sha256": "b1674643574054427ecbc3c1b0174ea2218187f4b70910b69d07478822eb063d"
+  },
+  {
+    "bytes": 6562,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/RESULT-START28-FAILED.json",
+    "sha256": "20acc56f6bd8fa6f227f32ac369521cacde8d91da0415cbc4479e583aeea7aa0"
+  },
+  {
+    "bytes": 4975,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/RESULT-REGISTRATION-APPLY28.json",
+    "sha256": "d98649b8bf3754bdabf5da960fe9a3481636e02f199538d60dd6d54e40e887a6"
+  },
+  {
+    "bytes": 402,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service28-restore-window-01/ISSUED.json",
+    "sha256": "a464bc80df4f8e722e4cf7ff11716df19bebe8594a391b2011577eb957ea5b2c"
+  }
+]

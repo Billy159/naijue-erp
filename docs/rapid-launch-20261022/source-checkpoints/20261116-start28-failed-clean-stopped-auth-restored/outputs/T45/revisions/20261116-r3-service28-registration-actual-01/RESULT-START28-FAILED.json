@@ -1,0 +1,171 @@
+{
+  "state": "START28_ACTUALLY_FAILED_IN_GENUINE_COMPILE_NODE_EXIT2_TYPED_AFTER_C_ACK_CLEANED_AUTH28_RESTORATION_PENDING",
+  "recordedAtUTC": "2026-11-15T21:17:37.325272+00:00",
+  "readbackSha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683",
+  "readbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/start/READBACK-01.json",
+  "requestKey": "t45-first-r3-native-service-start-20261116-28",
+  "terminal": {
+    "atUTC": "2026-11-15T21:13:26.127141+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 44.746723852003925,
+    "exitCode": 2,
+    "exports": [
+      "genuine-describe-process.json",
+      "normal-service-create-attempt.json",
+      "normal-service-incomplete.json",
+      "normal-service-intent.json",
+      "normal-service-result.json"
+    ],
+    "finishedAtUTC": "2026-11-15T21:14:10.923648+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-first-r3-native-service-start-20261116-28",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-2761c04a088d"
+  },
+  "result": {
+    "automaticRetry": false,
+    "requestKey": "t45-first-r3-native-service-start-20261116-28",
+    "safeCode": "DESCRIBE_NATIVE_FAILED_READ_PRIVATE_PROCESS_RECEIPT",
+    "status": "NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY"
+  },
+  "rootPins": {
+    "cleanup": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+    "incomplete": "d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d",
+    "result": "94cdae517c242cc904c7f68d1b43f31ce01aa87f7f0089fc1de93fb77c2cc29f",
+    "terminal": "89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408"
+  },
+  "publicResultSha256": "334e43befe79babb40626da0313fcc3370eb1f603895b6e0ba790661299cba46",
+  "actualDescribeProcess": {
+    "captureErrorType": null,
+    "childReaped": true,
+    "descendantsReaped": true,
+    "describeTrace": [
+      {
+        "elapsedMilliseconds": 0.002,
+        "stage": "IMPORT_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 330.383,
+        "stage": "IMPORT_END"
+      },
+      {
+        "elapsedMilliseconds": 330.443,
+        "stage": "TRUST_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 346.157,
+        "stage": "TRUST_END"
+      },
+      {
+        "elapsedMilliseconds": 346.423,
+        "stage": "SOURCE_LOAD_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 30778.963,
+        "stage": "SOURCE_LOAD_END"
+      },
+      {
+        "elapsedMilliseconds": 30779.609,
+        "stage": "TARGET_BEGIN"
+      },
+      {
+        "elapsedMilliseconds": 30983.956,
+        "stage": "TARGET_END"
+      },
+      {
+        "elapsedMilliseconds": 30984.048,
+        "stage": "COMPILE_BEGIN"
+      }
+    ],
+    "exitCode": 2,
+    "killSeconds": 2,
+    "lastReachedStage": "COMPILE_BEGIN",
+    "maximumChildSeconds": 150,
+    "nativeReplyKind": "OBJECT",
+    "ownedProcessGroupReaped": true,
+    "pidNamespace": "pid:[4026532393]",
+    "reason": null,
+    "requestKey": "t45-first-r3-native-service-start-20261116-28",
+    "sqlstate": null,
+    "stderrBytesObserved": 673,
+    "stderrLimit": 65536,
+    "stdoutBytesObserved": 190,
+    "stdoutLimit": 131072,
+    "termSeconds": 2,
+    "traceSource": "BOUNDED_PRIVATE_STDERR_FIXED_STAGE_MARKERS"
+  },
+  "processRootSha256": "fe03bd630a02acfc63a14369f23bed5620f7f89cd0f9484c83a80c4828d72ae4",
+  "processPublicSha256": "d4b670b8c90f0485820b96388f5daa62b71253e19e4e19b911759f3be840e96d",
+  "incomplete": {
+    "automaticRetry": false,
+    "cid": "0fe68379c491aa5d7cdbdf83eed54d7bb0eae8d3f714d72d5a3ffe1d8efcdcb9",
+    "cleanStop": {
+      "checkedAt": 1794777248897,
+      "cleanupLeaf": "failed-start-cleanup.json",
+      "cleanupSha256": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+      "dataDirectoryIdentity": {
+        "device": 66304,
+        "gid": 61035,
+        "inode": 13502421,
+        "mode": 448,
+        "uid": 61035
+      },
+      "originalPGDATAAndCleanStateVerified": true,
+      "requestKey": "t45-first-r3-native-service-start-20261116-28",
+      "runtimeMaterialPreserved": true,
+      "status": "NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED"
+    },
+    "confirmed": true,
+    "containerStopped": true,
+    "createAttempted": true,
+    "currentProofPresent": true,
+    "currentProofSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+    "originalKeyOnly": true,
+    "pid": 0,
+    "requestKey": "t45-first-r3-native-service-start-20261116-28",
+    "retainedAckObserved": true,
+    "retainedAckPresent": true,
+    "retainedAckSha256": "7296e03b9865a67718c0e938058dd7990000a72535e3b00a5a94e7b5be7b1b83",
+    "retainedAckValidated": true,
+    "runtimeMaterialPreserved": true,
+    "successfulResultHandoff": false
+  },
+  "incompleteRootSha256": "d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d",
+  "incompletePublicSha256": "73de51b472b7b8c910d0939c2bbbaabcfa4e54e450625a58894f433d0771bd7c",
+  "cleanup": {
+    "checkedAt": 1794777248897,
+    "dataDirectoryIdentity": {
+      "device": 66304,
+      "gid": 61035,
+      "inode": 13502421,
+      "mode": 448,
+      "uid": 61035
+    },
+    "originalPGDATAAndCleanStateVerified": true,
+    "requestKey": "t45-first-r3-native-service-start-20261116-28",
+    "runtimeMaterialPreserved": true,
+    "status": "NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED"
+  },
+  "actualPortAbsentAtReadback": true,
+  "actualPgdataPidAbsentAtReadback": true,
+  "activeOperationUnits": [],
+  "publicReceiptsCollectedAndHashesMatched": true,
+  "descriptorSuccessfulOutputProduced": false,
+  "node150SecondTimeoutOccurred": false,
+  "fullNativeFailureSafeCode": "NOT_EXPORTED_BY_FROZEN_READER_STORED_PRIVATE_STDOUT190B_NOT_READ",
+  "sourceLoadObservedElapsedMilliseconds": 30432.54,
+  "lastReachedStage": "COMPILE_BEGIN",
+  "actualLinuxNodeProcessGroupCleanupConfirmed": true,
+  "finiteAuthFieldsRestoredFor28": false,
+  "finiteAuthRestorationRequiredByOriginalKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+  "naturalExpiryIsNotRestoration": true,
+  "oldNodeProbeOrFactoryRerun": false,
+  "originalKeysReplayed": false,
+  "installationOrRealSubmitted": false,
+  "businessAcceptanceClaimed": false,
+  "next": "Original restore28 with Main exact typed-AFTER finite authority; only if separately authorized, project safe fields from already stored190B native reply without rerunning Node."
+}

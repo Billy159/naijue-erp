@@ -1,4 +1,4 @@
-【当前最高优先级 2026-11-16】实际27认证已恢复/库停稳，28尚无授权文件或server操作。本机真实issue02在模板占位字面不匹配处终止（写目录前），旧402a源码结论保留历史、当前执行资格由Main03待补核。03仅template空格0bdd→regTEMPLATEpine367→carrierSOURCEpin2030；PINS ee1e，真实API不写文件dry_run b076已通过，无fake批准/UID/clock。BASIS/JOBS/LOCK/newpaths与02逐字同，20:51:13Z fresh0755可按原900s准入余量复用不重探；QB只核该3源增量/T45只改adapter绑定，T45其余fc4/b5a源码已验复用。未签clock/登记/apply/start/安装/REAL，业务CLOSED，goal ACTIVE。
+【当前最高优先级 2026-11-16】start28真实FAILED2于compile阶段，非150超时；C/ACK实际发布、process回收、原PGDATA清停已核5b895/395dd。restore28原键真COMPLETED0并于21:19:54Z实读b167，原两角色认证及expiry真实还原，非自然到期；维护CID0cbf停稳，无PGpid/ops。无descriptor/install/REAL。现仅读已存190B/673B错误安全字段定位，不重跑Node/工厂、不新clock/start、不重交旧完成键。原511234行26类全量/703保留，业务CLOSED，goal ACTIVE。
 
 > 当前路线（2026-11-15）：分批独立提交/成功跳过/失败续未完成批。先读 BATCHED-IMPORT-DECISION-20261115.md 与 TASKS.currentInFlight；旧整包单事务路线不再续办。
 
@@ -7538,3 +7538,7 @@ Main02实际本机issue因模板字面缺空格失败，未创建目录/authorit
 
 ## 2026-11-16T05:10:25+08:00 — 28登记及有限角色设置真完成，start已签待回
 原CAS恰一次carrier0、真实4003读回dispatcher6b6b/policy56bb/module0fa，原历史/锁保留、pending absent。apply28原键一次真COMPLETED0/7.87995s at21:08:50.562Z，d80ab7在21:09:17.750Z实读，controller/admin期限与2873原件一致；runtimeAuth/membership/roleattr未变。此为offline认证字段实读，不冒native登录或业务COMMIT。维护CIDb902真停/PIDabsent/exit0/noOOM，原数据保留，无otherops。当前28有限字段已应用而未真还原，旧27还原marker不可替代。Main03据actualapply核4320全链余量，start原件b563于21:10:25.157Z签发并交唯一T45，一次原start28内采集genuine describe，reader4c3e只读已存输出；无旧同步Node重跑、无703重物化、无install/REAL权限。普通启动/150/170/110/900实际结果待回，业务CLOSED，goal ACTIVE。
+
+
+## 2026-11-16T05:19:54+08:00 — start28编译错误已真清停，原认证28已真恢复
+start28原键唯一实际执行FAILED2/44.7467s于21:14:10.923Z，真实5b895；源码加载30.43s/target0.205s后COMPILE_BEGIN返回exit2，未超150；无COMPILE_END/descriptor/install/REAL。进程组/child/descendants实际回收，C d579/ACK7296已真发布验证，不能冒称未启动；typedAFTER/rootd3d32与failedcleanup395dd证明CID0fe6停PID0、原PGDATA13502421和清洁状态保留、端口/PID absent。Main据实际typedAFTER签restore1411，原restore28键一次COMPLETED0/7.82516s于21:18:28.680Z，b167于21:19:54Z实读，原verifier和expiry私域逐项真还原、naturalExpiryCountedAsRestoration=false；runtimeAuth/角色权限未变，维护CID0cbf停PIDabs/exit0/noOOM，无PGpid/otherops。当前28认证已真实还原，不再仅待恢复。只授权读原保护190B stdout/673B stderr的safeenum和hash定位，原文留保护处，禁止Node/工厂/PG重跑。150能否完成全编译/170实际余量/110最坏分支/900签发/安装REAL仍未测，不伪称通过。上轮1cd1本地commit后push低速exit128；本新实际收尾检查点正常push一次，不机械重试。业务CLOSED，goal ACTIVE。
