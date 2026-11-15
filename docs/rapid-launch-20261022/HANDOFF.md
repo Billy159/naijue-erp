@@ -7311,3 +7311,10 @@ T45parent/index准备3c55cd33、facts4a7922f3、retained5361f1fd只本机，真�
 2026-11-15 11:06 CST：D2 source-only报告c8cd6174…核准本轮party body12原prefix取消；旧同版controlled500/P474记录已保留prefix474次8.711769秒/hit18471306、set474次3.576715秒/hit51585，0新PG复跑，仍不能据此认定r909根因/CPU比例。主控已收敛并按standing0c25授权唯一最小本机诊断：同11层原SQL与原4关系rowtype/index、受控500/P474/M501，只运行原prefix与set各474次以观察缓存计划/聚合开销，0MASTER/0全编译/0server；D2正在实现精确probe，QB仅核新增delta，实际准确字节PASS后可一次执行，不再等用户或主控另一张卡。1会话、3GiB scratch、句40秒、总180秒、日志2MiB硬限及计划去值/组件缺失停/回滚清理。此时尚无实现PASS或新PG结果。
 
 已在原容量核算续记本轮实际数据，文件SHA3cd49cf7…：完整编译scratch峰2258677760B（2.10GiB）；12样本可用最低271864639488B（253.19GiB），不是连续精确峰值。收尾后274135728128B（255.31GiB），扣28GiB保留+33GiB逻辑预算余194.31GiB，再做一次已知同批prepare则余192.00GiB。已测阶段最低净增0GiB，28GiB不下调；正式写入/冷备/恢复完整同驻峰值尚待，不记正式容量PASS。超过对应预算的净差额应加/dev/md0p1根卷，开始前刷新值复算。正式上线仍未完成。
+
+
+2026-11-15 11:30 CST：唯一最小SELECT诊断已取得真实新证据，QB三段原文回执 implementation be49900c… / driver02 5559c1dd… / results0c2edc3c… 保存在原r909主控目录。初版实现的事务、失败PG停机、尺寸保存、故障成功判定四缺口在PG前定向关闭。首次实际在postgres-start失败0pairs/1.461秒/92MB，旧ATTEMPT/FAILURE/CLEANUP及/tmp/d2-prefix-set-62muqz17保留，因未确认正常shutdown不称清理完；原FATAL仅RAM未留，不伪填。新02仅修直接Popen两个shell引号，runner202a933b…/PINS8bd72929…准确独立窄审后新独占执行一次，SQL/seed/schema/仪表等12项原字节，未重旧attempt。
+
+02结果RESULT-PINS59e8764a…/RESULT dee0ef7d…/SAFEf9536223…实际PG170011 LOAD/CREATE通过，受控四关系/40原索引/500输入P474M501，只prefix与set各474次，1/6/474各2份实际去值计划共6。prefix三次主IndexScan无operation_id IndexCond、1row/1loop/removed1/总hit38969，root SeqScan InitPlan1x1/hit12975、records FunctionScan loops2/hit12996；set三次current_audit均opid等值+InitPlan索引1row1loop/hit24，整体155/109/109。prefix累计7685.030ms/hit18471306，set3603.220ms/hit51608，read/temp0，不能与含子节点buffer再相加。受控ROOT102447738B/current151974B而非r909尺寸；本机sharedbuffers128MB/auto/pglz/jit等已实际记录，不冒充Linux配置或generic/custom切换证明。
+
+02总18.120秒/pair11.618秒/采样peak510885888B、raw202594B仅RAM未导出，ROLLBACK后probe关系0、PG受控exit0/PID消失/直接child收束/新rootremoved，guardFaultnull。QB仅核这些新实证scope PASS，0PG复跑/0MASTER/0fullcompile/0server。它证明受控prefix仍有完整大扫描、集合三采样key限制没丢，尚不证明r909唯一根因/P/CPU。主控已让D2先做原12–14最小等价源级修正研究，保STRICT/物理xmin/全部root与成员/receipt权限条件，不硬缩合法集合，不立即堆新SQL层或起server。原formal导入/核账/备份恢复/公网业务仍未完成。

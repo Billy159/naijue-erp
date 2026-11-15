@@ -6281,14 +6281,49 @@
               "logicalBackupBudgetGiB": 33,
               "additionalSpaceRequiredForMeasuredStagesGiB": 0
             }
+          },
+          {
+            "group": "prefix-set-local-diagnostic-20261115-0330",
+            "status": "CONTROLLED_PROBE_VERIFIED_NEXT_PREFIX_SOURCE_ANALYSIS",
+            "evidence": {
+              "implementationReviewSha256": "be49900cf9bbd8761812f64a54d6b63327d0bbeae1609501bf9e5e5bb4d690e6",
+              "driver02ReviewSha256": "5559c1dd2bb29b2f1c60143b9ef23548c1b49450cc3b5446b1b78fcc88d5b1a9",
+              "resultReviewSha256": "0c2edc3c06b7e1c7b5bff70c03a5edebb7d380bafb7ec692fb19b8c472766ed4",
+              "resultPinsSha256": "59e8764a1c95bb5a897a60561bc4411836a8f34f230b1c4169c9b7f810ce4093",
+              "resultSha256": "dee0ef7d89c3f2d2f14a8204d60a8900affa936425f70ef5c4031dc334d9492c",
+              "safePlansSha256": "f95362235a469e4a89dd9203fb245e070b7b527d681b7d701c73e84384ab7edf",
+              "callsEach": 474,
+              "actualSamples": [
+                1,
+                6,
+                474
+              ],
+              "prefix": {
+                "elapsedMs": 7685.030066999996,
+                "sharedHit": 18471306,
+                "operationIdIndexCondition": false
+              },
+              "set": {
+                "elapsedMs": 3603.2202469999993,
+                "sharedHit": 51608,
+                "currentAuditOperationIdInitPlanCondition": true
+              },
+              "elapsedSeconds": 18.120481042,
+              "peakAllocatedBytesSampled": 510885888,
+              "newProbeRootRemoved": true,
+              "oldStartupFailureRootRetained": "/tmp/d2-prefix-set-62muqz17",
+              "actualR909RootCause": "NOT_PROVEN",
+              "nativeMasterRuns": 0,
+              "fullCompiles": 0,
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "implement one local PG17.11 controlled500/P474 diagnostic of unchanged party prefix SELECT and set SELECT; precise frozen probe pending QB delta review",
-          "executionAuthority": "standing0c25; after actual QB PASS for precise implementation, D2 may execute once without another main/user approval; no new PG yet",
-          "bounds": "1session/3GiB scratch/40s statement/180s total/2MiB logs; plan values scrubbed; no new components/no MASTER/no full compile/no server",
-          "T45": "r909 fully stopped/cleaned; no server task queued",
+          "work": "source-only minimal equivalent change to old party body12-14 prefix discovery, preserving STRICT absence/multiple-row errors, physical xmin and all identity/receipt/root/member predicates; no new PG or server run before source review",
+          "QB": "new controlled diagnostic results accepted only; prior same-scope tests reused",
+          "T45": "idle; r909 stopped/cleaned; formal R3 stopped",
           "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",
