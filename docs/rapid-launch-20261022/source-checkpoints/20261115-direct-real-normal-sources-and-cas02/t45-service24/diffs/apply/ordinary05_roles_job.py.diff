@@ -1,0 +1,92 @@
+--- service23/ordinary05_roles_job.py
++++ service24/ordinary05_roles_job.py
+@@ -20,18 +20,18 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01'), 'restore': ('t45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01')}
++PHASES = {'apply': ('t45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-01'), 'restore': ('t45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-auth-restore-20261115-01')}
+ STATIC_PINS = {
+     'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+     'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+     'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+ }
+-PRIOR_CID = '036e8221eaafb4fb473b5f9a5e7a61142d57e8dcd8ea76374916cbbe80f2ded8'
+-PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-22'
+-CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-23'
+-CURRENT_KEY = 't45-first-r3-native-service-start-20261114-23'
+-CURRENT_SOURCE = '1d11e87d6183f298413069b58cc259531277130dfbf514f382a6621cdd83d1b7'
+-CURRENT_PROOF_SOURCE = 'b412a27ab94db67733b44cb06afb7537192a334fec5ad9a7eec801a17aa13dc0'
++PRIOR_CID = 'd1681401ab5a303734bd2e2c991e1ffc6f8ca51faf2475723d8b03259afbac6f'
++PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-23'
++CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-24'
++CURRENT_KEY = 't45-first-r3-native-service-start-20261115-24'
++CURRENT_SOURCE = '1446e1322afc2f7ee3541f9f4a8494f3d1a0fbeeed8bc598a04883e1d58f597d'
++CURRENT_PROOF_SOURCE = '9534d5b3a7283b167fa6c326fe795b83f296a8e114f663e06064abeab0ccbfd1'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -165,9 +165,9 @@
+ def original_stopped(phase):
+     prior = inspect(PRIOR_CID)
+     need(prior['Id'] == PRIOR_CID and prior['Name'] == '/' + PRIOR_NAME and prior['Image'] == IMAGE
+-         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261114-22'
++         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261114-23'
+          and not prior['State']['Running'] and prior['State']['Pid'] == 0
+-         and prior['State']['StartedAt']=='2026-11-14T04:17:02.413303865Z',
++         and prior['State']['StartedAt']=='2026-11-14T07:25:26.863753801Z',
+          'MAINT_JOB_ORIGINAL_08_NOT_STOPPED')
+     for name in (CURRENT_NAME, APP09_NAME):
+         ids = command(['docker', 'ps', '-a', '--no-trunc', '--filter', 'name=^/' + name + '$', '--format', '{{.ID}}'], 5).decode().splitlines()
+@@ -236,16 +236,16 @@
+     deadline = time.monotonic() + HOST_WORK_SECONDS
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+-    prior_restore = 't45-r3-ordinary22-auth-restore-20261114-01'
+-    prior_boot = ROOT / 'state/native-services/t45-first-r3-native-service-start-20261114-22'
+-    stop_key = 't45-r3-ordinary22-preserve-stop-20261114-01'
++    prior_restore = 't45-r3-ordinary23-auth-restore-20261114-01'
++    prior_boot = ROOT / 'state/native-services/t45-first-r3-native-service-start-20261114-23'
++    stop_key = 't45-r3-ordinary23-preserve-stop-20261114-01'
+     for path, pin in (
+-        (control / 'results' / (stop_key + '.json'), '78d2922382cedce0d840003e8b6967b24d64c638c9fb3dbc4c5f494b5fb6101c'),
+-        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', 'a70d218148c8cbd791619633a4d58f4c452e6b4ae1a315d5a470435cb4dbb80e'),
+-        (prior_boot / 'cleanup.json', '5dfcffc05a1b77b9aace7f481266ff01de014b34c511e96459a922a3c9078d5d'),
+-        (control / 'results' / (prior_restore + '.json'), '9e668ec5999ca8e6e4fd8558a0de1cb5b8f4cb56487b0237a2a61c825bf705ce'),
++        (control / 'results' / (stop_key + '.json'), 'a4ec77706cb5f4768971f4ccd0e9f8fe5cda1d3ff59dff9bd06c7617f478678c'),
++        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '08b1341f3c82e4d37a2103dbb8a48773fccdf2b7e6557b50ca3995ceaf0f96de'),
++        (prior_boot / 'cleanup.json', 'd52169a605d803fd7a82d94c6f64ab22db88d80a1f600fecd9b2d8da59f4f997'),
++        (control / 'results' / (prior_restore + '.json'), '29a6293fca781fd95859644cc2b818f81b1485d701ca1201dc7d17c68cc067db'),
+         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',
+-         '2b35fcb2dadbf1858aec46c58dad65b5dd891434e0475e68d030ebba18d4e609'),
++         '37be662f5d42a7def840b86e5f6d271b91a2473a05b15d5929fb3531cfaa5606'),
+     ):
+         need(sha(ops.read_file(path, 65536, False, False)) == pin,
+              'MAINT_JOB_PREDECESSOR_STOP_OR_RESTORE_EVIDENCE_DIFFERS')
+@@ -338,7 +338,7 @@
+                 control/'requests'/(CURRENT_KEY+'.tmp'), control/'jobs'/CURRENT_KEY,
+                 control/'results'/(CURRENT_KEY+'.json'), WORKER/CURRENT_KEY,
+                 ROOT/'state/native-services'/CURRENT_KEY,
+-                ROOT/'authority/fresh35-current-production-service-v2-service-23.json')),
++                ROOT/'authority/fresh35-current-production-service-v2-service-24.json')),
+              'ORDINARY05_EARLY_RESTORE_ONLY_BEFORE_START')
+         return
+     s = a['service']
+@@ -347,7 +347,7 @@
+          and all(re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId')),
+          'ORDINARY05_RESTORE_SERVICE_SCOPE_REQUIRED')
+     stop = a['stopRequestKey']
+-    is_preserve = stop == 't45-r3-ordinary23-preserve-stop-20261114-01'
++    is_preserve = stop == 't45-r3-ordinary24-preserve-stop-20261115-01'
+     need(type(stop) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,70}',stop)
+          and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+                  ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+@@ -381,7 +381,7 @@
+              and all(r[k]==s[k] for k in ('serviceKey','containerId','containerStartedAt','postmasterStart')),
+              'ORDINARY05_RESTORE_NORMAL_STOP_REQUIRED')
+     auth = ROOT/'authority'
+-    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-23.json',65536)
++    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-24.json',65536)
+     p = ops.strict(proof_raw)
+     boot = ROOT/'state/native-services'/CURRENT_KEY
+     clean_raw = ops.read_file(boot/'cleanup.json',65536,True)

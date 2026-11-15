@@ -1,0 +1,11 @@
+--- CANDIDATE-01/original-cas-direct24-carrier.UNISSUED.py
++++ CANDIDATE-02/original-cas-direct24-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct24-batched-registration-source-20261115-01')
+ AUDIT=STAGE.parent/'r3-direct24-batched-registration-cas-20261115-01'
+-SOURCE='1b5e0c3e8f189a4bdb722d8e514f894146289d560a36b469fedc88886c7ab3d9'
++SOURCE='1ed3132ec702fdf80c9f742ac98b0d3f6b95726cb84625642f7d543c20c7bc03'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000

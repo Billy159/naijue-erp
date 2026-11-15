@@ -1,0 +1,32 @@
+--- service23/normal05_retained_stop.py
++++ service24/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261114-23'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-23'
++SERVICE = 't45-first-r3-native-service-start-20261115-24'
++NAME = 't45-fresh35-first-production-20261110-r3-service-24'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-23.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-24.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = 'b412a27ab94db67733b44cb06afb7537192a334fec5ad9a7eec801a17aa13dc0'
++PROOF_SHA = '9534d5b3a7283b167fa6c326fe795b83f296a8e114f663e06064abeab0ccbfd1'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '573b0f201e3179fd6c039588bd9f0496a04dbfff1ef5833577adcd9a7c7be1a0'
+-NORMAL05_SHA = '1d11e87d6183f298413069b58cc259531277130dfbf514f382a6621cdd83d1b7'
++READONLY_SHA = 'affd6d7fde33daf27d8cf2430326276699acad94acbee7a1276cb6d630993ffe'
++NORMAL05_SHA = '1446e1322afc2f7ee3541f9f4a8494f3d1a0fbeeed8bc598a04883e1d58f597d'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"

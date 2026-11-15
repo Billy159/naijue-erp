@@ -1,0 +1,29 @@
+--- service23/r3_05_readonly.py
++++ service24/r3_05_readonly.py
+@@ -5,7 +5,7 @@
+ import stat
+ 
+ WORKER = 61035
+-SERVICE = 't45-first-r3-native-service-start-20261114-23'
++SERVICE = 't45-first-r3-native-service-start-20261115-24'
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ AUTHORITY = Path('/etc/naijue-erp')
+ OPERATION = STATE/'installed-real-operation-51724553-20261114-01/operation'
+@@ -27,7 +27,7 @@
+ MANIFEST = 'd661fa09be2ded0a4a3f0a6b6cb1c371e48796a8eb2d0ff89186ac4d0535e27e'
+ DEPS_LOCK = '7e2bc5e96f2b95c7404479d2785372696323d8ec9b49ce6e642de2bedf120f7d'
+ DEPS_INPUT_LOCK = 'c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048'
+-PROOF = 'fresh35-current-production-service-v2-service-23.json'
++PROOF = 'fresh35-current-production-service-v2-service-24.json'
+ EXECUTION = 'fresh35-compact-zero-execution-v2.json'
+ PROVISION = 'fresh35-production-provision-v2.json'
+ DEPLOYMENT = 'fresh35-isolated-deployment-v1.json'
+@@ -394,7 +394,7 @@
+  assert.equal(createHash('sha256').update(await readFile(path)).digest('hex'),pin);
+ }
+ const records=['fresh35-combined-installation-v1.json','fresh35-admin154-successor-v1.json',
+-               'fresh35-compact-zero-successor-v2.json','fresh35-current-production-service-v2-service-23.json'];
++               'fresh35-compact-zero-successor-v2.json','fresh35-current-production-service-v2-service-24.json'];
+ if(phase==='EXECUTE')records.push('fresh35-compact-zero-execution-v2.json');
+ for(const path of [...records.map(name=>authority+'/'+name),'/run/naijue-rewrite/current-production-service.json']){
+  const fd=await open(path,'r');

@@ -1,0 +1,55 @@
+{
+  "sourceThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "verifiedBy": "read_thread actual source items",
+  "reviews": [
+    {
+      "turnId": "01a1df76-a046-72e3-bf67-ae08b8cffe46",
+      "messages": [
+        {
+          "messageCallId": "exec-41492129-89a4-401f-9c5f-9cf76c4ba327",
+          "text": "QB 02准确小复核完成：DIRECT24-CURRENT-UNIT-01 CLOSED；CANDIDATE-02 为 SCOPED SOURCE PASS，01/NEED_FIX历史保留，01其余已过范围全部复用。仅读01→02实际差分及6成员局部hash/工作root一致性，未运行代码/systemd/PG/issuer/server，也未触未冻phaseissuer。\n\n02 PINS SHA78aa2eb55fb9c05b9d1d1126edd90ac497b44eb13dbada33be7d1c43a226c236；全部6成员匹配，工作root与02六件逐字一致。r3_direct24_batched.py:551唯一逻辑变化为 'naijue-erp-op-'+c.GRANT[:8]+'-'+c.sha(key.encode())[:12]+'.service'，与同dispatcher实际submit单元名公式相同，修正了查不存在原key unit而误收unknown的问题。\n\n必要级联准确：helper d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef→template e6a40719397dc47fd47b77985c60d2ea0f23208956f8603c05317ba1893d09f8→CAS 1ed3132ec702fdf80c9f742ac98b0d3f6b95726cb84625642f7d543c20c7bc03→carrier 4bd13d308c431349b2362e48f3cc72a44960c7d40af5f6ab385cf038644521e5，只有对应hex常量改变，SOURCE-STATUS对应更新。issue_registration.py逐字未变（4cc279072033fd58ff33c2f86dbdf5411bc3a17abe13d479a2195f1f7d9c1468）。没有新逻辑/扩权限/改历史路由。\n\n此结论仍为SOURCE-only UNISSUED，不代表server登记/准入或任何真实phase完成；既有真人持续授权和执行归属不因本复核增加同类审批或演练前置。后续只等具体真实新差分。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9b81e41688191953917e871694a48",
+          "text": "修复复核通过，唯一问题已关闭：现在查询的服务单元名与实际调度器一致，关联摘要更新也准确。\n\n结论已发主控。本轮仅做源码检查，未签发授权或操作服务器。"
+        }
+      ]
+    },
+    {
+      "turnId": "01a1df71-f86d-7352-8cf6-ffa33c002a72",
+      "messages": [
+        {
+          "messageCallId": "exec-80229658-4280-47b3-8dee-ca87d4e39829",
+          "text": "QB先报具体新增缺陷 DIRECT24-CURRENT-UNIT-01（P2）：CANDIDATE-01/r3_direct24_batched.py:550-553 current_batch_settled_or_absent 用 'naijue-erp-op-b16447fb-'+key+'.service' 查询systemd，但同候选admin_exec.DIRECT24-UNREGISTERED.py:494实际submit创建的是 'naijue-erp-op-'+grant[:8]+'-'+sha256(job_id.encode()).hexdigest()[:12]，并非原key。实际两current unit活跃时，该错误名称仍可返回unknown/4，当前need会接受，不能证明actual install/writer unit已结束。T45 stop consumer虽另有正确hash单元检查，不能把此错误查询本身称作current terminal准入证明。最小修复仅按同dispatcher公式查准确hash unit（沿现有c.sha(key.encode())[:12]即可），不用扩权限/改历史guard/新演练。其余差分仍在窄核，稍后合并结论；未改文件/未执行systemd或server。"
+        },
+        {
+          "messageCallId": "exec-430cad93-7844-4c9e-a8d6-f90cb99c169e",
+          "text": "QB CANDIDATE-01剩余实际差分已核完，合并结论：NEED_FIX仅DIRECT24-CURRENT-UNIT-01一条P2；Standards 0、Spec 1，没有另一个明确新增发现。你已在工作root修的hash unit公式方向正确，但本QB尚未把未冻结工作树计为02通过；等02仅核该行与必要pin级联，不重本轮已过部分。\n\n实核CANDIDATE-01 PINS eefe0af964f5a772a9ddf92d04f18d93cb1806412a991a2810ce665d109cd66e及6成员全部匹配，5执行源仅AST解析，未执行runpy/issuer/CAS/systemd/PG/server。对admin_exec的实际diff在内存反向还原before，SHA恰为4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5；原23个allowlist key完整保留，只union准确7个direct24新key。原非本路route正文保留，变动仅本original02模块路径/sourcepin/policy None占位和7key union，不把UNREGISTERED模板当现役dispatcher。\n\nr3_direct24沿原历史basis/readonly/failed19保护，新增固定7phase：materialize/apply/start核原代已停，apply要求materialize成功，start要求materialize+apply成功；install/writer核service24真实proof/birth/current epoch+lease/实际container，writer须install成功；stop须已提交start、原writer已settled及本轮install/writer terminal或严格两grant全路径absent；restore沿原failed-start或成功stop分支。authority requestKey/service/window、私有manifest/bundlePins、原job身份与phase script/leaf/timeout匹配保留。仅该新增current unit查询的01名称错误，已报，不建议改其他旧guard。\n\nregister_cas保原三file O_EXCL及exact身份/旧4a2 CAS、原execution.lock完整身份+flock，先module/policy核读回和wrapper加载，dispatcher最后原子replace；发布前后再次snapshot/quiet-unused，UNKNOWN留audit且不自动回滚重放。newmodule/policy/audit任何存在即拒重用。7key两grant请求/tmp/job/result都必须尚不存在，登记本身不提交phase。新entries/limits只收准确7 script+authorityLeaf（install batched_install_host.py/install-authorization.json，writer batched_real_host.py/writer-authorization.json）；所有bundle leaf单级名称、准确sha，主authority排除bundlePins，时窗有限。旧pending叶名只为原内部临时路径沿用，不改变CAS或任务语义。\n\nissue_registration仅外部issuer：真实human USER-AUTHORITY本QB核SHA836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0及originThreadId/messageId准确；review/rules/basis输入各按调用者准确pin读取。phaseDirectories canonical后仅T45 outputs/revisions下bundle，全部source bytes逐pin核；basis需15分钟内、4a2及完整历史BASIS/lock身份、无active/present候选key（materialize是否新出现仍由server登记quiet-unused全部7key锁内复核）。原两角色有限授权/restore同源、有限policy/registration窗口、role validate+host validate及外部ReviewRef保留；不伪当前C/epoch。carrier闭packet、exact source/auth window/O_EXCL stage、UNKNOWN no replay保持。\n\n本地issuer应沿原工作root同层运行，CANDIDATE是冻结快照；已核工作root issue_registration.py与快照逐字相等，原HERE.parents[2]在工作root准确解析repo，未把snapshot目录当独立可搬动runner。此源核不产生授权/不代表server准入或结果。D1/D3/service24已过SOURCE不重验，也不增加真实首批演练/审批前置。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9b7dc095481919b4ab1ac196eebd1",
+          "text": "本轮差分核完，仅发现一处：停止准入查询用了错误的服务单元名。主控已修正工作稿，待冻结后只复核这一行及关联摘要。\n\n其余新增差分未发现明确问题。本轮未签发授权、未操作服务器或数据库。"
+        }
+      ]
+    },
+    {
+      "turnId": "01a1df6b-5a7f-7511-9bce-65a44f5b0b12",
+      "messages": [
+        {
+          "messageCallId": "exec-3560e7e1-4048-4173-8dbb-ec7b6ada18ab",
+          "text": "QB D1 normal installer三源新增接口窄核完成：SCOPED SOURCE DELTA PASS，Standards/Spec无明确新增源码缺陷或接口参数不合；不需要合成演练前置。D3 d08326e8桥/service24此前SOURCE PASS复用，QB0PG/fixture/server/旧suite/文件修改。\n\nCANDIDATE-01 PINS9f658e289533310994584479f0f0c495316d3e8fcac043334ef49d2989c76024及11成员匹配，SOURCE-CLOSURE dff357272f7db8e6bbeb6c302c5397305038163540dbc805285612501be59e2a准确。3 runtime SHA installer c68830c46bf827b46c9ebe39f4a4b42cca6030f29abadc685c83c3e7f018ace7 / catalog f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48 / source c393b5608d0dc95294e77fbf94cd6b393ee43dee41aaa75167215ae96b98741c；后两diff与命名T45父树实际两文件吻合。旧DB05函数/CHECK/ACL/12层SQL未改。\n\n新增compileFresh35Batched161Upgrade({source,target,paths,currentServiceSha256})确需真实current V2 target，不能使用reconstructed historical target过current检查；protected old envelope匹配SID/OID/version及db/owner/controller/address/port/workspace，currentC准确sha/format/原recordsha/当前epoch另绑定。154/155/161 catalog对照则使用从protected envelope恢复的metadataTarget：原bootstrap observer的源/owner/ACL保持历史原样，fresh35CombinedObserverCheck仅核其metadata而不执行旧epoch observer；实际current连接另经ownerGuard核session_user=current_user=owner、SID/OID/版本/address/port/epoch、当前writable READ COMMITTED/origin/非recovery、有限安全owner、单DB连接/无prepared事务及当前时窗。没有拿历史epoch当当前，也未刷新历史observer。\n\n新productionPrefix155入口使用genuine production154+现有derivePerformance155全model/maps/类别前驱比较，保固定12层bytes/顺序。程序描述绑定source/current target/historical metadata target/currentC/原record/154-155-161 spec/model/13 SQL步及window。loadAuthorization仅Linux root，固定root-owned单链private文件闭9键，program/source/target/start/end完全匹配，不自签。runFresh35Batched161Upgrade({program,authorization,client,recordDirectory})的明确调用条件：真实exclusive native owner client，session_user必须owner（admin+SET ROLE不满足）；真实getTransactionStatus或native _txStatus；capture目录准确workspace/batched161-upgrade、新root0700；T45保留最终close/ReadyForQuery事实所有权。\n\n运行代码先exclusive idle/一次authority+no-overwrite attempt，然后actual154完整guard/raw catalog capture→12原事务各原COMMIT ACK→actual155 capture→DB05 SQL332c一次→actual161完整guard/raw capture→source/C/authority复查→completion。13步ACK各独立落盘，失败不自动重试；捕获失败区分commits=13的INSTALLED_CAPTURE_INCOMPLETE、未确认提交UNKNOWN与未完成，原已ACK步不抹去。异常收尾只记录实际ROLLBACK ACK，原caller仍须提供真实连接结束/待ReadyForQuery事实；不能把installer结果当host或业务完成。未加base重装、角色创建、原输入重编译或业务写入入口。\n\nsource loader只新增installer+retained wrapper入口到既有闭包，offline facts准确278 pins，3 D1+D3 d083…四row一致；base5defee0db9b13da7ef5dbec5671dd23d76d46ab9e1f48904d3c99881ba97c1e4 / compactd9e705b3660ab94480b8bd98992678609c7afdccf4404f447aa442bf87875126与已记录canonical source-descriptor运行相符，仅离线源组合，非actual catalog/current authority。只读既有syntax/module-link记录不重跑。T45下一步按真实C/epoch/同树descriptor/owner client供原main issuer，实际154/155/161 capture和真实批提交仍由原授权路径产出，不另设首批试验。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9b6264c74819184a9db64ed1a7c93",
+          "text": "三个新增安装接口文件的限定源码检查通过，结论已发主控。安装顺序、当前实例检查和源码闭包绑定未发现明确阻点。\n\n本轮未操作数据库；实际安装读回与正式批次结果仍由 T45 执行确认，不新增演练前置。"
+        }
+      ]
+    }
+  ]
+}

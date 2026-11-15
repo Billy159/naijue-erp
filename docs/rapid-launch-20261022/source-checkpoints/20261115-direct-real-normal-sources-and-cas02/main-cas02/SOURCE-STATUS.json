@@ -1,0 +1,20 @@
+{
+  "state": "SOURCE_ONLY_UNISSUED_NO_PHASE_SUBMITTED",
+  "jobs": {
+    "materialize": "t45-r3-batched-source-materialize-20261115-01",
+    "apply": "t45-r3-ordinary24-auth-apply-20261115-01",
+    "start": "t45-first-r3-native-service-start-20261115-24",
+    "install": "t45-r3-batched-install-20261115-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01",
+    "stop": "t45-r3-ordinary24-preserve-stop-20261115-01",
+    "restore": "t45-r3-ordinary24-auth-restore-20261115-01"
+  },
+  "sourcePins": {
+    "r3_direct24_batched.py": "d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef",
+    "admin_exec.DIRECT24-UNREGISTERED.py": "e6a40719397dc47fd47b77985c60d2ea0f23208956f8603c05317ba1893d09f8",
+    "register_cas.py": "1ed3132ec702fdf80c9f742ac98b0d3f6b95726cb84625642f7d543c20c7bc03",
+    "original-cas-direct24-carrier.UNISSUED.py": "4bd13d308c431349b2362e48f3cc72a44960c7d40af5f6ab385cf038644521e5"
+  },
+  "currentDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
+  "validation": "AST parse only; no execution, authorization, PG or service"
+}

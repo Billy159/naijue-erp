@@ -1,0 +1,84 @@
+--- service23/normal05_preserve_stop.py
++++ service24/normal05_preserve_stop.py
+@@ -12,17 +12,18 @@
+ import time
+ 
+ 
+-KEY = 't45-r3-ordinary23-preserve-stop-20261114-01'
++KEY = 't45-r3-ordinary24-preserve-stop-20261115-01'
+ WRITER = 't45-first-20261110-r3-real-execute-20261114-02'
+ GRANT = 'b16447fbc81f4d64'
+ ROOT = Path('/root/erp-release-20261006-01-worker/grant-' + GRANT)
+ CONTROL = Path('/home/naijue/erp-release-20261006-01-control/grant-' + GRANT)
+ JOB = ROOT / 'jobs' / KEY
+ HOLD = ROOT / 'r3-05-write-continuity'
+-STOP_REFERENCE = '3db7c20b09f069b8188607e4241e59b764a86e3e316b72c4adc677f53fac2b4b'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261114-23'
++STOP_REFERENCE = '2d66d5c8b35deb81bf814abed1d8f949752b19d5501adb33bdf8efbd097832b1'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261115-24'
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}
++CURRENT_BATCH_OPERATIONS = ('t45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01')
+ DIGEST = re.compile('[0-9a-f]{64}')
+ 
+ 
+@@ -74,8 +75,12 @@
+ def validate(a, now):
+     fixed = scope()
+     need(type(a) is dict and set(a) == set(fixed) | {'service', 'writerTerminalSha256',
+-         'policySha256', 'startsAt', 'expiresAt', 'authorizationReference', 'sourceSha256'}
++         'policySha256', 'startsAt', 'expiresAt', 'authorizationReference', 'sourceSha256', 'currentBatchTerminals'}
+          and all(a[k] == v for k,v in fixed.items()), 'PRESERVE_EXACT_AUTHORITY_REQUIRED')
++    need(type(a['currentBatchTerminals']) is dict
++         and set(a['currentBatchTerminals']) == set(CURRENT_BATCH_OPERATIONS)
++         and all(v is None or type(v) is str and DIGEST.fullmatch(v)
++                 for v in a['currentBatchTerminals'].values()), 'PRESERVE_CURRENT_BATCH_SCOPE_REQUIRED')
+     service = a['service']
+     need(type(service) is dict and service.keys() == SERVICE_FIELDS and service['serviceKey'] == SERVICE_KEY
+          and all(DIGEST.fullmatch(service[k]) for k in ('proofSha256', 'containerId'))
+@@ -154,9 +159,36 @@
+     return value, active
+ 
+ 
++def current_batch_terminals(a):
++    observed = {}
++    for key in CURRENT_BATCH_OPERATIONS:
++        expected = a['currentBatchTerminals'][key]
++        if expected is None:
++            for grant in (GRANT, '5cc58239751e4e2a'):
++                c, w = CONTROL.with_name('grant-' + grant), ROOT.with_name('grant-' + grant)
++                need(not any(os.path.lexists(p) for p in (c/'requests'/(key+'.json'), c/'requests'/(key+'.tmp'),
++                     c/'jobs'/key, c/'results'/(key+'.json'), w/'jobs'/key)),
++                     'PRESERVE_CURRENT_OPERATION_ALREADY_PRESENT_OR_UNKNOWN')
++            observed[key] = {'state': 'NOT_SUBMITTED'}
++            continue
++        raw = read(ROOT/'jobs'/key/'r3-outer-terminal.json', expected=expected)
++        public = read(CONTROL/'results'/(key+'.json'), 1000, expected=expected)
++        value = json.loads(raw)
++        need(raw == public and value.get('jobId') == key and value.get('taskId') == 'T45'
++             and value.get('grantId') == GRANT and value.get('status') in TERMINALS
++             and value.get('finishedAtUTC'), 'PRESERVE_CURRENT_OPERATION_TERMINAL_REQUIRED')
++        unit = 'naijue-erp-op-' + GRANT[:8] + '-' + pin(key.encode())[:12] + '.service'
++        q = subprocess.run(['/usr/bin/systemctl', 'list-units', '--no-legend', '--plain',
++                            '--state=active,activating,deactivating', unit], capture_output=True, timeout=5)
++        need(q.returncode == 0 and not q.stdout.strip(), 'PRESERVE_CURRENT_OPERATION_UNIT_STILL_ACTIVE')
++        observed[key] = {'state': value['status'], 'terminalSha256': expected}
++    return observed
++
++
+ def preservation_stop(a):
+     need(a['writerTerminalSha256']=='ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e'
+          and a['policySha256']=='25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757','PRESERVE_ORIGINAL_FAILED19_BINDING_REQUIRED')
++    current = current_batch_terminals(a)
+     terminal, active = terminal_and_hold(a)
+     source = JOB / 'bundle/normal05_retained_stop.py'
+     raw = read(source, expected=STOP_REFERENCE)
+@@ -275,7 +307,7 @@
+                 writerTerminalSha256=a['writerTerminalSha256'], writerTerminalStatus=terminal['status'],
+                 cleanupSha256=pin(read(cleanup_path)), pgStopped=True, holdRetained=active is not None,
+                 preserveMode='PRE_WRITER' if active is None else 'ACTIVE_HOLD',
+-                businessAdvanced=False, originalKeyReplayed=False)
++                businessAdvanced=False, originalKeyReplayed=False, currentBatchTerminals=current)
+     if terminal.get('refusedOriginal'):
+         result.update(refusedOriginal=terminal['refusedOriginal'],newOuterRequestKey=WRITER,newOuterSubmitted=False)
+     return result

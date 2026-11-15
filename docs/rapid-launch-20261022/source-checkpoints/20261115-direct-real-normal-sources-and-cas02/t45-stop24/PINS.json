@@ -1,0 +1,8 @@
+{
+  "PREPARED.json": "3138c99d14367cad37e32fbb451ee852d5d77f5a846dd095d9e067836cb4865c",
+  "bundle/normal05_preserve_stop.py": "566042ce33e24fbf7e57474734e292ade10997cf462383aba9710910539bf8fd",
+  "bundle/normal05_retained_stop.py": "2d66d5c8b35deb81bf814abed1d8f949752b19d5501adb33bdf8efbd097832b1",
+  "normal05_preserve_stop.py.diff": "ca0d686974c64263d931d93f5090947c242d6b542010806f9094e423c2652de0",
+  "normal05_retained_stop.py.diff": "bb5d0a48bee85de41b8a48803a129aa5cffe2828dabd3c581d99e5ba42ff02c7",
+  "prepare-stop.py": "d622cee0b9696341692de98b2df5cf9937a7cfb65c9a45a807a0a8add86ee2f5"
+}

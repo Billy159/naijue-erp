@@ -1,0 +1,19 @@
+--- service23/r3_05_runtime.py
++++ service24/r3_05_runtime.py
+@@ -10,13 +10,13 @@
+ 
+ HOST_ROOT = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ MATERIALIZED = HOST_ROOT/'state/r3-r2-private-import-input-20261112-01'
+-PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-23-worker-proof'
++PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-24-worker-proof'
+ PROFILE_SHA = 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+ INSTALLATION = '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+ SOURCE = '6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16'
+ TARGET = 'fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261114-23'
+-SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-23'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261115-24'
++SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-24'
+ STATE_DEVICE = 66304
+ START_RESERVE = 28 * 1024**3
+ BASELINE_SCOPE_DIRECTORY = 'approvals/baseline-scope-input-r1'

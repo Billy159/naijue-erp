@@ -1,0 +1,8 @@
+{
+  "SOURCE-STATUS.json": "7618acc2b56ceb4cf24290ccdd7e14d3867ded222e48438db44151b5ea10be03",
+  "admin_exec.DIRECT24-UNREGISTERED.py": "e6a40719397dc47fd47b77985c60d2ea0f23208956f8603c05317ba1893d09f8",
+  "issue_registration.py": "4cc279072033fd58ff33c2f86dbdf5411bc3a17abe13d479a2195f1f7d9c1468",
+  "original-cas-direct24-carrier.UNISSUED.py": "4bd13d308c431349b2362e48f3cc72a44960c7d40af5f6ab385cf038644521e5",
+  "r3_direct24_batched.py": "d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef",
+  "register_cas.py": "1ed3132ec702fdf80c9f742ac98b0d3f6b95726cb84625642f7d543c20c7bc03"
+}

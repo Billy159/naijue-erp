@@ -1,0 +1,13 @@
+--- CANDIDATE-01/register_cas.py
++++ CANDIDATE-02/register_cas.py
+@@ -12,8 +12,8 @@
+ AUDIT=B/'r3-direct24-batched-registration-cas-20261115-01'
+ OLD_DISPATCHER='4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+-HELPER='f8824f130b13e08d5e44e410627e29c4a9333d25cc41039952611d2739aa6d10'
+-TEMPLATE='9c3d6411ed9688f29614d2c30de7cfb01673edc472f1357d687154a67f3e17c1'
++HELPER='d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef'
++TEMPLATE='e6a40719397dc47fd47b77985c60d2ea0f23208956f8603c05317ba1893d09f8'
+ JOBS={'materialize': 't45-r3-batched-source-materialize-20261115-01', 'apply': 't45-r3-ordinary24-auth-apply-20261115-01', 'start': 't45-first-r3-native-service-start-20261115-24', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary24-preserve-stop-20261115-01', 'restore': 't45-r3-ordinary24-auth-restore-20261115-01'}
+ BASIS={P/'r3_original05_absent22_continuation.py':'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',
+  H/'original05-absent22-continuation.json':'27c9b661d7ade353bb42be2b23f104879462749c117779d971d3c4d5b9cd6282',

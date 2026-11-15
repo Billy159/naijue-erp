@@ -1,0 +1,11 @@
+--- CANDIDATE-01/r3_direct24_batched.py
++++ CANDIDATE-02/r3_direct24_batched.py
+@@ -548,7 +548,7 @@
+                     control / 'jobs' / key, control / 'results' / (key + '.json'), worker / 'jobs' / key)),
+                     'CURRENT_BATCH_NOT_PROVEN_UNSUBMITTED')
+         q = subprocess.run(['/usr/bin/systemctl', 'is-active',
+-                            'naijue-erp-op-b16447fb-' + key + '.service'],
++                            'naijue-erp-op-' + c.GRANT[:8] + '-' + c.sha(key.encode())[:12] + '.service'],
+                            capture_output=True, timeout=5)
+         self.need(q.returncode in (3, 4) and q.stdout.strip() in (b'inactive', b'unknown')
+                   and not q.stderr, 'CURRENT_BATCH_UNIT_ACTIVE_OR_UNKNOWN')

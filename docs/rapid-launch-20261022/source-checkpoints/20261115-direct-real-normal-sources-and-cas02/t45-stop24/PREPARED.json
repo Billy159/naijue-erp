@@ -1,0 +1,26 @@
+{
+  "authorityIssued": false,
+  "currentBatchOperations": [
+    "t45-r3-batched-install-20261115-01",
+    "t45-r3-batched-real-execute-20261115-01"
+  ],
+  "currentTerminalOrAbsenceProofRequiredBeforeStop": true,
+  "files": [
+    {
+      "beforeSha256": "3db7c20b09f069b8188607e4241e59b764a86e3e316b72c4adc677f53fac2b4b",
+      "bytes": 20709,
+      "name": "normal05_retained_stop.py",
+      "sha256": "2d66d5c8b35deb81bf814abed1d8f949752b19d5501adb33bdf8efbd097832b1"
+    },
+    {
+      "beforeSha256": "4e53e07cb1d9943bc19d39f2cca3ed2e6c5322f41c31a49b2cac4b2f18685ac9",
+      "bytes": 19581,
+      "name": "normal05_preserve_stop.py",
+      "sha256": "566042ce33e24fbf7e57474734e292ade10997cf462383aba9710910539bf8fd"
+    }
+  ],
+  "historicalFailed19AndActiveHoldGuardsPreserved": true,
+  "pythonSyntax": "PASS_AST_ONLY",
+  "scope": "UNISSUED_EXACT_SERVICE24_STOP_SOURCE",
+  "serverCalls": 0
+}

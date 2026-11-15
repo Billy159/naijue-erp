@@ -1,0 +1,38 @@
+{
+  "task": "D3-RETAINED-REAL-BATCH-PLAN-01",
+  "state": "SOURCE_READY_FOR_SCOPED_REVIEW_NO_RUNTIME",
+  "parentWrapperPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-carrier-prep-local-01/source/tools/unified-import/r3-service20-retained-import.mjs",
+  "parentWrapperSha256": "a07d8ebbafc29794186d2278161f4ac3bc8349f5dd824377f88191a7101fd6ca",
+  "sameTreeD3NinePinsSha256": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+  "changedRuntimeFiles": 1,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "oldTestsRerun": false,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-retained-real-batch-plan-01/README.md",
+      "bytes": 4620,
+      "sha256": "6fa1309fb2c336ac7466276c58151878625ee7b507e4a26406fb48af5a811e35"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-retained-real-batch-plan-01/RETAINED-WRAPPER.diff",
+      "bytes": 5571,
+      "sha256": "68b915d492c2b04de474b495df1906180d27a11be198b049f61d312796aa5666"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-retained-real-batch-plan-01/SOURCE-BOUNDARY.md",
+      "bytes": 3146,
+      "sha256": "8426d2dbb01dcb6e0bafb41e68b02ea2a8cfc7fb37a7ff8872aa76a32512f60b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-retained-real-batch-plan-01/STATIC-CHECKS.json",
+      "bytes": 1397,
+      "sha256": "f2c084865a03bd8104b8865a735783795afe85573ad15675701cfd4f35e1cea4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-retained-real-batch-plan-01/source/tools/unified-import/r3-service20-retained-import.mjs",
+      "bytes": 5803,
+      "sha256": "d08326e8fb0d16d3eb207ccc1ce89b728b16085f7fe1b1947f640d8775a69cc1"
+    }
+  ]
+}

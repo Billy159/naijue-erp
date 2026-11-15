@@ -1,0 +1,37 @@
+--- service23/ordinary05_roles.py
++++ service24/ordinary05_roles.py
+@@ -21,8 +21,8 @@
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ WORK = STATE / 'fresh35-first-production-20261110-r3'
+ DATA = WORK / 'data'
+-CUSTODY = STATE / 'native-services/ordinary23-auth-20261114-01'
+-CAPTURE = WORK / 'ordinary23-auth-capture-20261114-01'
++CUSTODY = STATE / 'native-services/ordinary24-auth-20261115-01'
++CAPTURE = WORK / 'ordinary24-auth-capture-20261115-01'
+ DATABASE = 'erp_fresh35_20261110_r3'
+ CONTROLLER = 'erp35_controller_20261110_r3'
+ BACKUP_ADMIN = 'erp35_admin_20261110_r3'
+@@ -58,10 +58,10 @@
+ def scope():
+     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',
+             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',
+-            'requestKey': 't45-r3-ordinary23-auth-apply-20261114-01',
+-            'restoreRequestKey': 't45-r3-ordinary23-auth-restore-20261114-01',
+-            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261114-22',
+-            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261114-23',
++            'requestKey': 't45-r3-ordinary24-auth-apply-20261115-01',
++            'restoreRequestKey': 't45-r3-ordinary24-auth-restore-20261115-01',
++            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261114-23',
++            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261115-24',
+             'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),
+             'physical': PHYSICAL, 'roles': list(ROLES), 'maximumOfflineStepSeconds': 30,
+             'coldCopyCompleteSha256': 'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',
+@@ -337,7 +337,7 @@
+     sync_directory(CAPTURE.parent)
+     private_file(CUSTODY / 'authority.json', authority_raw)
+     before = capture(core, 'before')
+-    prior_path = STATE / 'native-services/ordinary22-auth-20261114-01/original-auth.json'
++    prior_path = STATE / 'native-services/ordinary23-auth-20261114-01/original-auth.json'
+     prior = read_private(prior_path)
+     need(set(prior) == set(before) and all(prior[k] == before[k] for k in (
+          'physical', 'boundary', 'memberships', 'settings')),

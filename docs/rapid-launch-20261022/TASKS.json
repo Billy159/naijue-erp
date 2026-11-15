@@ -7250,6 +7250,21 @@
               "firstRealStarted": false,
               "newServerMutationJobsSubmitted": 0
             }
+          },
+          {
+            "group": "R3_DIRECT_REAL_NORMAL_SOURCE_AND_CAS02_20261115",
+            "state": "SOURCE_CHECKPOINT_NOT_LIVE",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-direct-real-normal-sources-and-cas02",
+              "files": 56,
+              "bytes": 1251406,
+              "manifestSha256": "f0e573e6e09ae6a6af6f1634d863da1c1b012ed8c917e640593f8613760227b2",
+              "reviewSha256": "9d8726b709ee8bf728003b32356bcaeb36ce42570d8d51ba7393288a04b4ade2"
+            },
+            "cas02PinsSha256": "78aa2eb55fb9c05b9d1d1126edd90ac497b44eb13dbada33be7d1c43a226c236",
+            "closedFinding": "DIRECT24-CURRENT-UNIT-01",
+            "formalRealImport": "NOT_STARTED",
+            "rehearsal": "CANCELLED_NOT_GATE"
           }
         ],
         "currentInFlight": {
@@ -7261,15 +7276,15 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "NORMAL_PRODUCTION154_INSTALL_CAPTURE_SOURCE_CLOSING",
+            "state": "SOURCE01_REVIEWED_SESSION_ADAPTER_DELTA_IN_PROGRESS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Historical154 catalog7e107 input bridge alreadyvalid; no newfirstbrandneeded. Production V2 exact154\u219212/155\u2192DB05 finiteinstaller/capture/currentepoch target only;3sourcefilessyntax/same-treeimport done,freezepending."
+            "work": "Actual SQL38 historical native owner verified; current two-role finite channel provides backupAdmin/controller only. D1 adapting only installer to truthful finite admin session plus explicit SET ROLE owner, no new owner LOGIN/credential/grant, exact backupAdminValidUntil in program binding; 13 SQL/model unchanged."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
-            "state": "NORMAL_RETAINED_REAL_WRAPPER_FROZEN_PENDING_SOURCE_REVIEW",
+            "state": "NORMAL_RETAINED_REAL_WRAPPER_SCOPED_SOURCE_PASS",
             "writeScope": "outputs/D3/20261115-r3-retained-real-batch-plan-01",
-            "work": "RetainedREAL index2.196GB/summary51MB/INIT51MB exist,no batchedplan. Existinggenuine Admin154prepared sameobject\u2192oncepersistent batchplan\u2192BATCHED borrowedclient; no preflight/reclean/recompile or speculativeABSENTrecovery."
+            "work": "Frozen original real index/summary/INIT same-object bridge d08326e8, pins0bb0fd73, independently SOURCE PASS; normal Linux host/actual binding pending, no recompile or future recovery harness."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -7278,14 +7293,14 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "REHEARSAL_STOPPED_REVIEW_ONLY_NEW_NORMAL_DIFFS",
-            "work": "07 halfrawCOMMIT42501 is expected private boundary,23514onlyharnessP2,notproductprivilegefault;08cancelled/noexecution. Review only actualnormalwrapper/installer/service/issuerdiffs,notfullrehearsal."
+            "state": "NORMAL_SOURCE_PASSES_CAS02_UNIT_FIX_CLOSED",
+            "work": "D3 wrapper/service24/start-role-stop and D1 initial source reviewed; CAS01 only wrong current-unit query fixed in02 by exact dispatcher hash formula, scoped source PASS. New D1 session delta and T45 finite consumers/phase issuer only when frozen; no rehearsal or old-suite recheck."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
             "state": "SOLE_SERVER_OWNER_DIRECT_REAL_SERVICE24_PREPARATION_ACTUAL_RO_COMPLETE",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "ActualRO noactiveunits/oldallterminal/R3stopped/255.18GiB,REALf4/index/summary/INITpreserved,coldbackupmetadata1491files68.5MB/WAL. Newservice24consumer/stop/materialize source prepared, no mutationjob yet. Complete sameversion runtime/install/actualCepoch/exactauthority then directREALCORE andcontinue via originalkeypredecessorinspect."
+            "work": "Sole server executor. Original retained REAL input/index/INIT and stopped original R3 preserved; no actual business write yet. Integrating final same-tree source/materialize and finite install/writer consumers; root CAS02 source ready. Use existing backupAdmin private channel, no owner LOGIN assumption."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
@@ -7306,17 +7321,17 @@
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
           "nextCheckpointScope": "normalcode/issuer exacthandoff\u2192service24/materialization/install/currentbinding\u2192actual approvedREALfirstbatch originalkeyreadback",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-actual-check-and-sde-complete-fix",
-            "files": 76,
-            "bytes": 12185133,
-            "manifestSha256": "93f274cf611dc713fa7bd3e118d8a8ce68510195747d5e4da278065f017e9eba",
-            "reviewSha256": "10bd0337e2c3c7c54894a326618cc4a3d83a7bf348de1a592390ed0257393493"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-direct-real-normal-sources-and-cas02",
+            "files": 56,
+            "bytes": 1251406,
+            "manifestSha256": "f0e573e6e09ae6a6af6f1634d863da1c1b012ed8c917e640593f8613760227b2",
+            "reviewSha256": "9d8726b709ee8bf728003b32356bcaeb36ce42570d8d51ba7393288a04b4ade2"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "REUSE_ORIGINAL_SOURCE23_ISSUER_REGISTRAR_TEMPLATES_ADAPT_EXACT_SERVICE24",
-            "work": "No duplicateT45consumer; originalissuer61fc/phase4168/CAS7dc2; currentbasisded0766 anddispatcher4a2b,notoldf79/a052. Awaitfinalsource andactualdynamicfactsigning."
+            "state": "CAS02_SCOPED_SOURCE_PASS_PHASE_ISSUERS_WIP_NO_AUTHORITY_ISSUED",
+            "work": "New five-source CAS02 frozen pins78aa2eb5, actual4a2 dispatcher preserved except exact7 direct keys/module binding, current-unit fix QB CLOSED. External issue_registration ready source-only; materialize/start/stop/restore phase issuer and install nine-field issuer WIP waiting exact final T45 normal consumers; actual C/epoch not fabricated."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7332,9 +7347,9 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "T45 sameversion materialize/service24/currentCepoch+preciseissuer",
-            "D1 production154\u2192155\u2192DB05 finiteinstall/capture",
-            "D3 existingretainedREALindex/INIT\u2192durablebatchplan actualnormalwrapper"
+            "D1 finite existing-admin session+explicit owner role adapter delta",
+            "T45 final sameversion source/finite install and REAL consumers/PHASES",
+            "main exact finite phase issuance after actual source/target/C/epoch facts"
           ],
           "normalSource": {
             "db05": {

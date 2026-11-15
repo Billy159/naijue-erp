@@ -1,0 +1,37 @@
+--- service23/normal_service05_after08_proof.py
++++ service24/normal_service05_after08_proof.py
+@@ -2,8 +2,8 @@
+ import hashlib,json,re
+ from datetime import datetime,timezone
+ 
+-JOB = 't45-first-r3-native-service-start-20261114-23'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-23'
++JOB = 't45-first-r3-native-service-start-20261115-24'
++NAME = 't45-fresh35-first-production-20261110-r3-service-24'
+ FORMAT='FRESH35_CURRENT_PRODUCTION_SERVICE_V2'
+ RECEIPT_FORMAT='FRESH35_NORMAL_SERVICE_RETAINED_V1'
+ RECEIPT_STATE='NORMAL_SERVICE_RETAINED_CURRENT_EPOCH_NOT_BUSINESS_ACCEPTANCE'
+@@ -24,9 +24,9 @@
+ SERVICE14_EPOCH='2026-11-13 07:35:39.511422+00'
+ DDL_SERVICE_PROOF='76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727'
+ DDL_EPOCH='2026-11-13 08:53:20.527136+00'
+-PREVIOUS_JOB = 't45-first-r3-native-service-start-20261114-22'
+-PREVIOUS_EPOCH = '2026-11-14 04:17:03.806731+00'
+-PREVIOUS_STOP = 't45-r3-ordinary22-preserve-stop-20261114-01'
++PREVIOUS_JOB = 't45-first-r3-native-service-start-20261114-23'
++PREVIOUS_EPOCH = '2026-11-14 07:25:28.193494+00'
++PREVIOUS_STOP = 't45-r3-ordinary23-preserve-stop-20261114-01'
+ PHYSICAL={'systemIdentifier':'7706545564479176741','databaseOid':'16393','serverVersionNum':'170011'}
+ SQL36_ROOT_RESULT='c02a30ddb237435a5e8a21bfb5a309fb572b0c0061a928c519fc25ec35f85120'
+ SQL36_TERMINAL='362329cd68913d9ea4cde447a9dc7bbb833df6127dc831a23387b1079f5a1115'
+@@ -62,8 +62,8 @@
+             'authenticationAction':'AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY','previousRuntimeOutcome':'UNKNOWN_PRESERVED',
+             'previousRequestKey':PREVIOUS_JOB,'previousStopRequestKey':PREVIOUS_STOP,
+             'runtimeReadinessMaxSeconds':20,'databaseRoleChanges':0,
+-            'restoreRequestKey':'t45-r3-ordinary22-auth-restore-20261114-01',
+-            'applyRequestKey':'t45-r3-ordinary23-auth-apply-20261114-01',
++            'restoreRequestKey':'t45-r3-ordinary23-auth-restore-20261114-01',
++            'applyRequestKey':'t45-r3-ordinary24-auth-apply-20261115-01',
+             'ddlServiceProofSha256':DDL_SERVICE_PROOF,'ddlPostmasterStart':DDL_EPOCH,
+             'admin154RecordSha256':ADMIN154_RECORD_SHA,'admin154PostmasterStart':ADMIN154_EPOCH,
+             'admin154SourceSetSha256':'d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe',
