@@ -1,0 +1,37 @@
+{
+  "task": "D3-BATCH-CLOSE-01",
+  "slice": "cleanup-exception-06",
+  "state": "LOCAL_REGRESSION_PASS_AWAITING_QB_DELTA_REVIEW",
+  "parentPinsSha256": "6c83ecc9aa4dc53e8a5ae28b1c53f73da4961340ca5964f26b6af7367339dc6f",
+  "newTestsPassed": 1,
+  "branches": [
+    "COMPLETED",
+    "UNKNOWN"
+  ],
+  "runtime": "Node24.21.0",
+  "oldSuitesRerun": false,
+  "pgActions": 0,
+  "serverActions": 0,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/stream-import-cli.mjs",
+      "bytes": 31660,
+      "sha256": "ab45a54b6e76c4e0acbe5bc6203b6ef6037f75d4224b6eeb65977824249ba853"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/batched-stream-cleanup-failure.test.mjs",
+      "bytes": 9029,
+      "sha256": "1b7e79fd24619f804215bb6d2f92ef1ef2e7b19e87c8b8fa63f0c8b6f07f4626"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLEANUP-DELTA-06.diff",
+      "bytes": 1124,
+      "sha256": "88ae04aaa67b799da069b8bf3190d22559e4d3718b5747f4b2964517343bf3d1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLEANUP-CHECKPOINT-06.md",
+      "bytes": 1494,
+      "sha256": "6a09190c9cc7b4d54ea365f562483301417db05cd560e243a6d1401235d9b3c0"
+    }
+  ]
+}

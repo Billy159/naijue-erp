@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_RESULT_RECORD_PASS_D3_BATCH_CLOSE_01",
+  "messages": [
+    {
+      "turnId": "01a1deaa-445c-7b62-8710-ff8c86116588",
+      "id": "exec-8596e3e0-5659-4cc1-93f5-f52f95997831",
+      "status": "completed",
+      "prompt": "QB对06局部关闭异常修正出 SCOPED SOURCE/RESULT-RECORD PASS，D3-BATCH-CLOSE-01在源码异常路径上闭合；0PG/0server/未改文件，未重其余源链/旧套件，也未重复新测试。CLEANUP-PINS-06 2e620098b365634cf8d1ddfb24f7a6d02a80c4fbd581e9a50c89016bb5679bf7及4项文件实hash/bytes一致；当前stream-import-cli ab45a54b6e76c4e0acbe5bc6203b6ef6037f75d4224b6eeb65977824249ba853；diff88ae04aaa67b799da069b8bf3190d22559e4d3718b5747f4b2964517343bf3d1与05→06完整实际diff相等，唯一finally三项各自try/catch，发生任一清理错误只标既有output.local_cleanup FAILED且后项仍继续；原state/verification/commit事实不被异常覆盖，不再因该close异常落到launcher NOT_STARTED。事务/角色/authority/批次计划及其他源码分支未改。\n新test1b7e79fd24619f804215bb6d2f92ef1ef2e7b19e87c8b8fa63f0c8b6f07f4626已读：合成host/SQL替身、实际SQLite close后主动抛错，两状态COMPLETED+VERIFIED及UNKNOWN+NOT_RUN保持，后续approvalClose/planDispose与batchClose各一次、local_cleanup FAILED，launcher子进程分别要求exit3/2且保持原state。固定checkpoint实际Node24.21单项1PASS记录与这些断言范围一致；这是mock/SQLite层，未当真实PG/宿主证据。\n05原6c83…manifest及其6件文件在snapshots/host-snapshot-05逐字/hash保全，原问题历史不改写。本PASS只闭合P2差分，之前其余已读静态链路复用；D1 genuine factory/DB02及真实批次COMMIT/unknown/最终核账联调仍未实测。162SQL-core harness尚待准确冻结后下一次执行前窄审，不由本PASS签发PG/服务器许可。"
+    }
+  ]
+}

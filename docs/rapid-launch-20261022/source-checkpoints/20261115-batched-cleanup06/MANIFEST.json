@@ -1,0 +1,52 @@
+{
+  "state": "SOURCE_ONLY_CLEANUP_P2_CLOSED_NOT_PG",
+  "files": [
+    {
+      "path": "source/tools/unified-import/stream-import-cli.mjs",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/stream-import-cli.mjs",
+      "bytes": 31660,
+      "sha256": "ab45a54b6e76c4e0acbe5bc6203b6ef6037f75d4224b6eeb65977824249ba853"
+    },
+    {
+      "path": "batched-stream-cleanup-failure.test.mjs",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/batched-stream-cleanup-failure.test.mjs",
+      "bytes": 9029,
+      "sha256": "1b7e79fd24619f804215bb6d2f92ef1ef2e7b19e87c8b8fa63f0c8b6f07f4626"
+    },
+    {
+      "path": "CLEANUP-DELTA-06.diff",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLEANUP-DELTA-06.diff",
+      "bytes": 1124,
+      "sha256": "88ae04aaa67b799da069b8bf3190d22559e4d3718b5747f4b2964517343bf3d1"
+    },
+    {
+      "path": "CLEANUP-CHECKPOINT-06.md",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLEANUP-CHECKPOINT-06.md",
+      "bytes": 1494,
+      "sha256": "6a09190c9cc7b4d54ea365f562483301417db05cd560e243a6d1401235d9b3c0"
+    },
+    {
+      "path": "CLEANUP-PINS-06.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLEANUP-PINS-06.json",
+      "bytes": 1565,
+      "sha256": "2e620098b365634cf8d1ddfb24f7a6d02a80c4fbd581e9a50c89016bb5679bf7"
+    },
+    {
+      "path": "reviews/D3-SOURCE-05-REVIEW.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/D3-SOURCE-05-REVIEW.json",
+      "bytes": 4806,
+      "sha256": "9fc4df4468afeab8e6417ce2c7d15dc350dab9b56620222e56172d61edf83885"
+    },
+    {
+      "path": "reviews/D3-CLEANUP-06-REVIEW.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/D3-CLEANUP-06-REVIEW.json",
+      "bytes": 1988,
+      "sha256": "39a0703d9825f0a62bff404f395e5af7678bd14a7d2601039a90bb9b0170e865"
+    },
+    {
+      "path": "README.md",
+      "bytes": 310,
+      "sha256": "4665d42fed9908b22ac22987776cf5b7baeae9a80d4e6616f8ec9625405ff9a7"
+    }
+  ]
+}

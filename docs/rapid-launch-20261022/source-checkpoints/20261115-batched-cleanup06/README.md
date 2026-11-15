@@ -1,0 +1,1 @@
+Source-only successor06: closes QB P2 D3-BATCH-CLOSE-01. Original05 NEED_FIX and new06 scoped source/result-record PASS both retained. Two mock/SQLite exception branches, no PG/real host. DB02 expected161 static PASS, genuine host and162 SQL-core harness still pending. Not runnable/deployable formal release.

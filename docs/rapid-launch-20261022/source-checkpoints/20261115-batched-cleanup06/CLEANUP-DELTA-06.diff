@@ -1,0 +1,13 @@
+--- a/tools/unified-import/stream-import-cli.mjs
++++ b/tools/unified-import/stream-import-cli.mjs
+@@ -196,5 +196,9 @@
+   if(acknowledgedRollback)return output={state:'ROLLED_BACK',code:'POST_ROLLBACK_HOST_FAILURE',verification:{state:'NOT_RUN'},connection_cleanup:'FAILED'};
+   if(acknowledgedImport)return output={state:acknowledgedImport,code:'POST_COMMIT_HOST_FAILURE',verification:{state:'VERIFICATION_UNKNOWN'},connection_cleanup:'FAILED'};
+   return output={state:executionStarted?(verifyOnly?'VERIFICATION_UNKNOWN':'UNKNOWN'):'NOT_STARTED',code:typeof error?.message==='string'&&SAFE_CODES.has(error.message)?error.message:(verifyOnly?'VERIFY_FAILED':'IMPORT_FAILED'),verification:'NOT_RUN'};
+- }finally{batchState?.close();closeExplicitZeroApproval(explicitZeroApproval);try{await plan?.dispose()}catch{if(output)output.local_cleanup='FAILED'}}
++ }finally{
++  try{batchState?.close()}catch{if(output)output.local_cleanup='FAILED'}
++  try{closeExplicitZeroApproval(explicitZeroApproval)}catch{if(output)output.local_cleanup='FAILED'}
++  try{await plan?.dispose()}catch{if(output)output.local_cleanup='FAILED'}
++ }
+ }

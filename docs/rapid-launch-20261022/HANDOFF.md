@@ -7398,3 +7398,8 @@ QB对DB01静态NEED_FIX唯一P1 BATCH-CORE-ROLE-01：CORE INITIALIZER每组first
 ## 2026-11-15 17:53 CST — DB02 static closure / CLI05 source saved
 
 DB01 P1 remains historical NEED_FIX. DB02 CORE role/kernel/ACL delta independently passed source review (PINS4589d081, actual QB receipt99880564), expected161 functions still not installed/captured. D3 CLI05 shares the same readonly plan snapshot between host and operation, mock checks only; independent new execution-chain review is in progress. Saved43 exact source/review files (6742479B), manifest563212d8499c4430c095583795e0c598e6d0d5097444ee4c6f673d456a6d2f0f. D1 genuine physical/catalog/resume host remains WIP. D3 preparing existing162-row actual SQL-core harness; old247/155 admission cannot be relabeled161. 0 newPG/server actions, formalR3 stopped/not imported; formal goal not complete.
+
+
+## 2026-11-15 18:12 CST — D3 close exception fixed, real SQL-core runner preparing
+
+QB found one P2 in05: unhandled batch SQLite close could skip private/plan cleanup and misreport known commit as NOT_STARTED. Frozen06 fixes only three independent cleanup catches, preserves commit/UNKNOWN/verification facts, marks local_cleanup FAILED. Two affected mock/SQLite branches pass; actual launcher exits3/2. QB narrow source/result-record PASS39a0703d; original05 NEED_FIX9fc4df44 retained. Saved8 source/review files51976B, manifest6c740943b78666938e31a87ba6aa3c97b29e7c988bad895a007b9eeb10efdd9e. Genuine161 host and162 actual SQL-core harness remain WIP;0PG/0server. DB02/CLI05 commit57f60a86 is local; two remote pushes failed low-speed45s, so last confirmed remote9c0133f3 until a later actual push succeeds. Continue goal, not formal launch PASS.
