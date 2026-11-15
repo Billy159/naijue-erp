@@ -1,0 +1,128 @@
+{
+  "temporaryRoot": "/tmp/d3-batched-core-20261115-01",
+  "removed": false,
+  "allDirectChildrenReaped": true,
+  "postmasterShutdownConfirmed": true,
+  "postmasterExitCode": 0,
+  "directChildExitCodes": [
+    {
+      "pid": 41189,
+      "kind": "initdb",
+      "exitCode": 0
+    },
+    {
+      "pid": 41199,
+      "kind": "postgres",
+      "exitCode": 0
+    },
+    {
+      "pid": 41206,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41208,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41210,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41212,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41214,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41216,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41218,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41220,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41222,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41224,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41226,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41228,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41230,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41232,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41234,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41236,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 41238,
+      "kind": "node",
+      "exitCode": 0
+    },
+    {
+      "pid": 41240,
+      "kind": "psql",
+      "exitCode": 3
+    }
+  ],
+  "signalErrors": [],
+  "permissionFault": false,
+  "rootPreserved": true,
+  "unconfirmedRootPreserved": false,
+  "shutdownPolicy": "SIGINT success / SIGQUIT failure; never SIGKILL postmaster",
+  "peakAllocatedBytesSampled": 47480832,
+  "scratchCapBytes": 3221225472,
+  "scratchEarlyStopBytes": 2684354560,
+  "watchdogPollMs": 50,
+  "elapsedSeconds": 2.3115027919999998,
+  "workElapsedSeconds": 2.3060439169999998,
+  "totalLimitSeconds": 180,
+  "workLimitSeconds": 170,
+  "withinMeasuredLimits": true,
+  "rawPostgresLogBytesHeldInMemory": 717,
+  "rawOtherBytes": 1512,
+  "rawOutputExported": false,
+  "guardFault": null,
+  "successful": false
+}

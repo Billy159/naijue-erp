@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "NEED_FIX_BATCH_PG_CLEANUP_01",
+  "messages": [
+    {
+      "turnId": "01a1dec7-9a9b-7780-9c0b-864be16c4e6c",
+      "id": "exec-cf238acd-0155-4f08-90c2-53a07b1c6f44",
+      "status": "completed",
+      "prompt": "QB 首次运行载体只读审查结论：NEED_FIX，仅 1 个具体收尾缺陷 BATCH-PG-CLEANUP-01（P2）。核验对象 outputs/D3/20261115-r3-batched-pg-local-01，PINS SHA256 42103eb99dabd1fb1dda5b8249700e5db81cf0f631cf74ce0336bbeeb45d6059；10 个交付文件及 652 个 INPUT-PINS 全部哈希匹配，Python AST/两个 mjs --check 通过，ATTEMPT/RUN/RESULT/FAILURE/CLEANUP 均尚不存在，QB 未启动 PG、未改冻结文件、未删除任何文件。\n\n具体缺陷：run-local.py:194-216 的 finally 先在 195 行设 fault='work_deadline'，但 212-214 行删除临时根的条件只检查 success/停库/回收/信号与权限，未检查 fault、时间和空间限制；到 216 行才把这些条件折算为 success=False。于是已触及上限的失败运行仍会删除必须保留的现场。已对原文件 AST 的 finally 单独做纯内存检查（假的进程/时钟/目录/rmtree，无文件访问、无 PG）：success=True、实际停库/回收确认、elapsed=171 秒时，输出 fault=work_deadline、rmtree 调用一次、successful=false、rootPreserved=false。与 README 的 ALL failures preserve root 合同不符。最小修复是在删除前先合并全部已知失败/上限条件，只有最终成功且停库确认才允许删除；不要求新增 PG 场景或重跑旧测试。\n\n其余本次范围已读：35 基础→12 层→实际 155 逐签名/正文/定义/owner/ACL 读回→DB02→实际 161 读回的顺序正确；162 原合成输入走当前 preflight/prepare/program/planner/coordinator/三 SQL kernel；六个既定场景覆盖半组真实 COMMIT 约束失败与前缀保留、真实提交后客户端 ACK 抑制→UNKNOWN→新连接原键锁定 inspect、冲突拒绝、原键续跑跳过成功批次/同组真实 xmin、最终原数量金额库存关联读回。未见另一个阻止这次首次运行的明确源码缺陷。ACK 抑制明确是 pg.Client 收到真实 ACK 后再拦截，不冒充真实断网；外会话为特权外会话、不冒充同权限兄弟 actor；生产 host/V2 厅与金额保留仍明确未验。实际安装/事务/约束/读回/资源与停库事实均留待一次获准执行，当前结论不构成执行许可。请仅修这条删除前判定并重冻差异，QB 只复核受影响收尾，不重审既过源码链。"
+    }
+  ]
+}

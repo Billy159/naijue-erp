@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_PASS_HOST01_RUNTIME_UNTESTED",
+  "messages": [
+    {
+      "turnId": "01a1decd-1b75-73e1-af40-51f4d60658cc",
+      "id": "exec-7126d0c8-5029-4df8-b8e6-7664c9b775c7",
+      "status": "completed",
+      "prompt": "QB 对 HOST-CANDIDATE-01 新增真实宿主边界的窄审完成：SCOPED SOURCE PASS。Standards 0 条明确违规；本次 Spec 0 条明确源码缺陷。未运行 host、PG、服务器或旧测试，未改交付。已核 HOST PINS 12aa444b4482c26062af155cc409b046c26c7a7500ed0f6715e7170f47fc6937 的 13 成员，以及 D3 INTEGRATION-OVERLAY-06 PINS 1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81 全部匹配；DB02 三模型+SQL准确复用已核版本，SOURCE-CLOSURE 61330486764d86ec9acd7f3a3963f57cab5e84a27ebc11f3c3c4714b82d7938e。\n\n具体核得：whole-host-session:228-295 只在 compactZero/FIRST_REAL 的显式 BATCHED_V1 分支选择新 context/profile，private physical factory 仍拥有真实 Client；同一物理连接先经过原完整 catalog guard/真实 observation/ROLLBACK，再由原 private issuer 把 verified gate 与 controlled client 绑定后传 admission。旧 target.catalog_sha256 继续只作原输入身份，当前 161 由新 model/source/spec 和 actual live observation 分别绑定，未把 expected 冒充 actual。\n\ncombined-source:98/135-148 将 D3 六依赖、DB02 SQL、三份 EXPECTED161 及四宿主实现纳入当前 source 闭包；combined-catalog:421-470 固定 DB02 模型/定义/正文 pins、真实角色映射、161 全 signature 唯一及 body/definition 配对，再继续原 owner/ACL/非routine完整 guard。390-392 的 overload 原始 observation 按名称+完整 definition 摘要匹配，85-87 的 to_regprocedure(signature) 逐项 metadata/owner/ACL 检查保留。\n\nfresh35-host-session:988-1027 从受保护安装/当前 C 身份及 epoch/原 compact lineage 构造新 context；扩展 binding 增加 transactionMode、DB02 pins、当前 batchedSourceSet/catalogSpec/model 五字段，由原 root-owned authorization 的完整 requestHash/文件身份/有效期检查消费，旧155材料不能授权。1032-1084 的首次 genuine prepared 保留原 WeakMap 对象；重建续跑对象在精确扩展 authority 与原 initializer/完整 steps 摘要匹配后，必须经真实同连接锁后 CORE COMMITTED 并确认 ROLLBACK 才登记 WeakMap。ABSENT 不能登记续跑，未知会真实 discard。\n\n889-984 的新 query guard 每 run 核整份原 plan 一次，原 initializer/steps/descriptor/连续范围及各组摘要绑定后，逐 BEGIN 重置状态并限定该组原请求序号；完成完整组才允许写事务 COMMIT，无写入已成功组可以结束；verify 单独匹配准确 initialize+私参，之后只允许 ROLLBACK。D3 同树接线借用同一 controlled client，UNKNOWN 实际 discard 并终止 run；全部提交后 CLI 在新 productionHost 上重新构造真实 context/catalog/authority并调用原 reconcileWholePackage→ROLLBACK。最终连接清理/核账未知不会变成 VERIFIED。VALIDATION 最后一项是 exact parent+9 D3+8 D1 正常同树 import，无改写，仅 syntax/link 证据，复用不重跑。\n\n未测依赖仍是 T45 同版可信 Linux 物料、实际161安装及准确 canonical/ACL、当前真实 C/epoch/有限时窗、新精确 root-owned authorization 和一次获准的 genuine host/最终核账。以上不是实际数据库、生产宿主或开放业务 PASS，也不构成执行许可。BATCH-PG-CLEANUP-01 仍单独等02修复，只需插入 finally 差异复核；不重开本已过 host/source 范围。"
+    }
+  ]
+}

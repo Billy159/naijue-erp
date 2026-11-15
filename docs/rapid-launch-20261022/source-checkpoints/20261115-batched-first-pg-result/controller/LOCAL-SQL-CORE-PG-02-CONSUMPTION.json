@@ -1,0 +1,16 @@
+{
+  "decisionId": "r3-batched-local-sql-core-20261115-02-once",
+  "state": "CONSUMED_STOPPED_FAILURE_NO_RETRY",
+  "executionReceiptSha256": "7d5c6a237f16b314f012e0931e3f10bf8390eb021a4016d8070ef1d6280a8bfb",
+  "resultPinsSha256": "0dd43302db9a185b291cf9d924ba3be300853c0736515b81e35be0aadd46017b",
+  "actualParent155Verified": true,
+  "actual161Verified": false,
+  "scenarioCasesExecuted": 0,
+  "fixtureRowsImported": 0,
+  "originalSqlState": null,
+  "failurePhase": "install_db02_161",
+  "failedPsqlExitCode": 3,
+  "allDirectChildrenReaped": true,
+  "pgStopConfirmed": true,
+  "failedRootPreserved": "/tmp/d3-batched-core-20261115-01"
+}

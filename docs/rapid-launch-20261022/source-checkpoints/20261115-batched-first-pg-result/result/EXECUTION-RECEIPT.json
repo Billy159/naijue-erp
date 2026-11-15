@@ -1,0 +1,32 @@
+{
+  "permitPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/LOCAL-SQL-CORE-PG-02-ONCE-PERMIT.json",
+  "permitSha256": "5c7be7733520df20e664ba694389573487a3b750b80307f1f70b662210712f6a",
+  "pinsSha256": "d200b1736c35396fc2f6a55cd34ed2aaaafa5048d7e5d0533907354bd61da5a0",
+  "processExitCode": 1,
+  "result": "STOPPED",
+  "failurePhase": "install_db02_161",
+  "failureCode": "child_exit_failure",
+  "failedPsqlExitCode": 3,
+  "originalSqlState": null,
+  "originalErrorTextExported": false,
+  "actualParent": {
+    "functions": 155,
+    "tables": 35,
+    "columns": 351,
+    "indexes": 114,
+    "constraints": 326,
+    "triggers": 570,
+    "definitionsOwnerAclMatched": true
+  },
+  "actual161Verified": false,
+  "sqlCoreCasesExecuted": 0,
+  "fixtureRowsImported": 0,
+  "pgStopConfirmed": true,
+  "allDirectChildrenReaped": true,
+  "signalErrors": [],
+  "preservedRoot": "/tmp/d3-batched-core-20261115-01",
+  "preservedRootExists": true,
+  "postmasterPidFileAbsent": true,
+  "retry": false,
+  "productionHostTested": false
+}

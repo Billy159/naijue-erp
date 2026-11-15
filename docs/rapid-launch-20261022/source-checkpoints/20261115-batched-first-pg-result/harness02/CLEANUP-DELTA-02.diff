@@ -1,0 +1,18 @@
+--- a/run-local.py
++++ b/run-local.py
+@@ -209,9 +209,12 @@
+  if work is not None:
+   try:peak=max(peak,allocated(work))
+   except FileNotFoundError:pass
+-  if success and pg_stop_confirmed and all_reaped and not signal_errors and not permission_fault:
+-   try:shutil.rmtree(work)
+-   except OSError:success=False
++ # Resolve every known failure before a destructive cleanup decision.
++ if signal_errors or permission_fault or fault is not None or not pg_stop_confirmed or not all_reaped or peak>SCRATCH_CAP or work_elapsed>=WORK_SECONDS or time.monotonic()-started>TOTAL_SECONDS:
++  success=False
++ if work is not None and success:
++  try:shutil.rmtree(work)
++  except OSError:success=False
+  removed=work is None or not work.exists()
+  if signal_errors or permission_fault or fault is not None or not pg_stop_confirmed or not removed or peak>SCRATCH_CAP or time.monotonic()-started>TOTAL_SECONDS or not all_reaped:success=False
+  if not success and not (base/'FAILURE.json').exists():

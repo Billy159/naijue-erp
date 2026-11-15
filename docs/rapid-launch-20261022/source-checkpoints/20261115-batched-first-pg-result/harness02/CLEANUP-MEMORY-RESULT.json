@@ -1,0 +1,9 @@
+{
+  "scope": "finally-only pure-memory AST",
+  "oldP2Reproduced": true,
+  "failedCasesPreserved": 9,
+  "healthyCleanupRemoved": true,
+  "filesystemMutation": false,
+  "pgExecutions": 0,
+  "oldSuitesRerun": false
+}

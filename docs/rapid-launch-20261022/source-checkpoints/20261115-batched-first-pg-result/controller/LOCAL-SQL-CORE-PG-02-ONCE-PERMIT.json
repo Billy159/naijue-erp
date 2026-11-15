@@ -1,0 +1,47 @@
+{
+  "decisionId": "r3-batched-local-sql-core-20261115-02-once",
+  "issuedAt": "2026-11-15 10:48 UTC",
+  "decisionMaker": "current controller under actual human standing authorization; not a new human click",
+  "userAuthority": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-同类隔离测量持续授权.md",
+    "sha256": "0c25f2a54db7eb37d7dd0b668df1793b73c7f9f85ea19228e6ceb7447ac9c591",
+    "quote": "类似这样的授权 后续都同意 我要睡觉了 你自己判断同意就好了"
+  },
+  "state": "APPROVED_ONE_LOCAL_ATTEMPT_NOT_EXECUTED",
+  "executor": "D3 existing owner",
+  "harness": {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-02",
+    "pinsSha256": "d200b1736c35396fc2f6a55cd34ed2aaaafa5048d7e5d0533907354bd61da5a0",
+    "runnerSha256": "3cffd66f537d80e6e9f17695cee76fd528232d2952e3c91b2ae0bb46b260eed8",
+    "diffSha256": "af82934ffe688c1d6f7dbc7fd2f4edd780173d4b09ec907d7503f2094e27f66c",
+    "state": "FROZEN_CLEANUP_DELTA02_PENDING_QB_0PG"
+  },
+  "readinessReview": "PG-HARNESS02-REVIEW.json",
+  "scope": "162-row existing pure synthetic SQL-core, actual35/155/161 installation reads, fixed6 scenes; no genuine production host or V2/new full-scale/server/business data",
+  "limits": {
+    "workSeconds": 170,
+    "totalSeconds": 180,
+    "statementMs": 40000,
+    "responseMs": 42000,
+    "scratchAllocatedBytes": 3221225472,
+    "earlyScratchMarginBytes": 536870912,
+    "combinedLogReceiptBytes": 2097152,
+    "cleanupReceiptReservedBytes": 16384
+  },
+  "target": {
+    "database": "demo_8877_d3_batched_20261115_01",
+    "root": "/tmp/d3-batched-core-20261115-01",
+    "unixPort": 55491,
+    "tcp": false
+  },
+  "constraints": [
+    "verify exact02 pins and unconsumed ATTEMPT before start",
+    "only one original README command, no parameters changed",
+    "first failure stops; no retry under this decision",
+    "preserve root for all failures, uncertainty, signal errors or unconfirmed stop/reap",
+    "delete only this exclusive new root after final success plus actual clean stop/reap within budgets",
+    "record actual outcome/PIDs/exits/reap/space/time/cleanup; expected161 is not actual until captured",
+    "formalR3 remains stopped; no server read/job/real-source write"
+  ],
+  "latestStartBefore": "2026-11-15 10:58:00 UTC"
+}

@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_FIRST_RUN_READINESS_SOURCE_PASS_P2_CLOSED",
+  "messages": [
+    {
+      "turnId": "01a1ded0-abd7-7132-8612-9e8d30d0ae9e",
+      "id": "exec-e744757b-8277-43e8-a957-1054adea6811",
+      "status": "completed",
+      "prompt": "QB 已完成02准确 finally 小复核：BATCH-PG-CLEANUP-01 CLOSED；02 的 scoped first-run readiness 为 SOURCE PASS，原01/NEED_FIX历史保留。核对 outputs/D3/20261115-r3-batched-pg-local-02 PINS d200b1736c35396fc2f6a55cd34ed2aaaafa5048d7e5d0533907354bd61da5a0、runner 3cffd66f537d80e6e9f17695cee76fd528232d2952e3c91b2ae0bb46b260eed8、最小diff af82934ffe688c1d6f7dbc7fd2f4edd780173d4b09ec907d7503f2094e27f66c 均准确。仅检查01→02 runner实际差分、该diff、内存检查源码和已冻定向结果；未重10件/652全清单，未运行PG或新场景。\n\n修复把最终 allocated 读取之后的已知失败、fault、信号/权限、实际停库确认、子进程回收、170s工作/180s总/3GiB限制全部合并到删除前；只有最终 success 才能 rmtree，后置确认保留。与已报告的171秒原P2触发直接相符。已读 check-cleanup-memory.py（881cd3cf3860b73ea2ef4d09d400766e5daf138a9903446f47f8297c0556e2b2）及其冻结结果：提取原finally、纯内存时钟/进程/目录/rmtree，旧171s确实删后失败，02九种已知失败删0保根，正常成功删1；没有运行任何真实清理入口。该四份变动/结果的 PINS 成员摘要与字节均匹配。02 ATTEMPT不存在，交付记录pgExecutions/serverActions=0、attemptConsumed=false。\n\n原01其余首次运行已读范围原样复用；可由主控据此另行决定唯一一次162行 SQL-core执行，当前不是执行许可/实际安装/事务/资源/读回PASS。HOST01新增范围在这次插入前已完整窄审并已发上一条 SCOPED SOURCE PASS；没有剩余未读的本次host边界，不重审已过范围。其实际161安装、同版Linux/C/新授权/真实host及最终核账依赖仍未测。"
+    }
+  ]
+}
