@@ -6692,6 +6692,38 @@
               "newServerActions": 0,
               "firstSourceCheckpointMet": true
             }
+          },
+          {
+            "group": "r3-batched-db02-cli05-source-checkpoint-20261115-0953",
+            "status": "SOURCE_SAVED_DB02_STATIC_PASS_CLI05_PG_PENDING",
+            "evidence": {
+              "recordedAt": "2026-11-15 09:53 UTC",
+              "state": "SOURCE_SAVED_DB02_STATIC_PASS_CLI05_PG_PENDING",
+              "db02": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
+                "pinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+                "review": "SCOPED_SOURCE_PASS_CORE_ROLE_DELTA",
+                "expectedFunctions": 161,
+                "pgExecuted": false
+              },
+              "db02ReviewSha256": "99880564e3f2e639f21c6fcddd098112c9841c2796896f76a06226bbe196806e",
+              "d3": {
+                "pinsSha256": "6c83ecc9aa4dc53e8a5ae28b1c53f73da4961340ca5964f26b6af7367339dc6f",
+                "diffSha256": "50e734aff7c7c0f97bcc20d722b3d8b81815c0ac8f72c02974510e6525ad0622",
+                "state": "SOURCE_SHARED_PLAN_BOUND_MOCK_TESTED_NOT_PG"
+              },
+              "snapshot": {
+                "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-db02-cli05",
+                "files": 43,
+                "bytes": 6742479,
+                "manifestSha256": "563212d8499c4430c095583795e0c598e6d0d5097444ee4c6f673d456a6d2f0f"
+              },
+              "actualHost": "WIP_NOT_GENUINE_HOST_VALIDATED",
+              "nextFixture": "existing162 smoke-base, actual target161 SQL-core only; V2 newPG deferred",
+              "newPgActions": 0,
+              "newServerActions": 0,
+              "formalReady": false
+            }
           }
         ],
         "currentInFlight": {
@@ -6704,16 +6736,16 @@
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
             "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "DB01_CORE_ROLE_FIX_TO_DB02_AND_HOST_SOURCE_IN_PROGRESS",
+            "state": "DB02_CORE_ROLE_STATIC_PASS_GENUINE_HOST_WIP",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
-            "work": "DB01 immutable21-file8changes5new EXPECTED160 source; QB found initializer/importer internal inspect conflict. Fix narrowly preserve public importer gate. Outside frozenDB continue genuine physical/catalog/resume/borrowed-client host."
+            "work": "DB02 immutable22-file+PINS EXPECTED161; QB exact CORE role/ACL/kernel delta source PASS. Host4 syntax-only WIP: actual physical factory/catalog161/retained resume and exact verify route, no runtime admission."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
             "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "CLI04_SOURCE_MOCK_TESTED_PENDING_D1_HOST",
+            "state": "CLI05_SAME_PLAN_SOURCE_MOCK_TESTED_REAL_SQL_CORE_HARNESS_PREPARING",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
-            "work": "actualR3 stream-import batched route/default and explicit same-report resume, borrowed client, launcher source landed; genuine host not yet connected."
+            "work": "Same readonly batchState object to host and coordinator, explicit same-report resume source. Preparing actual35/12layer/DB02 SQL-core on existing162 pure synthetic fixture; QB reviewing frozen D3 execution-chain source; 0PG."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -6722,13 +6754,13 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "DB01_REVIEW_CLOSED_NEED_FIX_ONLY_CORE_ROLE",
-            "work": "static existing147/nonroutine metadata and othernewlogic reused; next only exact CORE/internalcheck delta+model/ACL, no repeatedfullreview"
+            "state": "DB02_CORE_ROLE_DELTA_SOURCE_PASS_D3_NEW_EXECUTION_CHAIN_REVIEWING",
+            "work": "DB01 P1 preserved, DB02 exact narrow role/kernel/ACL static closure; D3 frozen05 new planner/CLI/coordinator review in progress; no PG launch permission yet."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "CONFIRMED_ZERO_OLD_IN_FLIGHT_FROM_EXISTING_LOCAL_ENDED_RECORDS",
-            "work": "sole server owner; no new server read/job/old-route fullcompile or13carrier until exact batched scope"
+            "state": "LOCAL247_POINTER_LOOKUP_CLOSED_ZERO_SERVER_ACTIONS",
+            "work": "Sole server owner; old247/155 admission cannot be reused as161; local lookup finished, old in-flight status from prior ENDED only, no new reads/jobs."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
@@ -6746,8 +6778,14 @@
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
-          "nextCheckpointTarget": "2026-11-15 17:40 Asia/Shanghai",
-          "nextCheckpointScope": "D1 host source/physical160/resume dependency facts; actualfullPGcandidate requires correctedDB and exact fixture"
+          "nextCheckpointTarget": "NO_UNVERIFIED_ETA",
+          "nextCheckpointScope": "Freeze existing162 synthetic SQL-core harness then QB specific run-readiness review and one actual local attempt; D1 genuine host closure in parallel",
+          "latestSourceSnapshot": {
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-db02-cli05",
+            "files": 43,
+            "bytes": 6742479,
+            "manifestSha256": "563212d8499c4430c095583795e0c598e6d0d5097444ee4c6f673d456a6d2f0f"
+          }
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

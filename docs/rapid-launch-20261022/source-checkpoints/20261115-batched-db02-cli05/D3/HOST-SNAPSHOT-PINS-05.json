@@ -1,0 +1,48 @@
+{
+  "task": "BATCH-D3-01",
+  "slice": "same-host-snapshot-05",
+  "state": "SOURCE_SNAPSHOT_SHARED_HOST_AUTHORITY_PG_PENDING",
+  "previousCliPinsSha256": "6f27573f5426e552f9bfbbf6fb003ce83c76843f5cbdb25d892b1b02b0de9b81",
+  "hostContract": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/HOST-CONTRACT-V1.md",
+    "bytes": 2672,
+    "sha256": "1cf376404a62a06de379f2022707ed6f3963ea9f569d0e326079bcbfd330b0bb"
+  },
+  "newTestsPassed": 2,
+  "oldSuitesRerun": false,
+  "pgActions": 0,
+  "serverActions": 0,
+  "fullBatchCompilation": false,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-plan.mjs",
+      "bytes": 9773,
+      "sha256": "c61aab0bf82573f82cfd50f98f380f86df56f3ace7a600a68cac21bd50f1f406"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-operation.mjs",
+      "bytes": 1379,
+      "sha256": "9075a9257002b6b5c22e187ee1cc153e8175cf5f6861dd93dfdcc5387250d04e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/stream-import-cli.mjs",
+      "bytes": 31549,
+      "sha256": "cef067d5ed7f388ca803e7ddf5c3af4810470a5ef5eb28174d45c7ba4181736a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/batched-stream-host-snapshot.test.mjs",
+      "bytes": 3580,
+      "sha256": "475c63cdb5fa38ea8ec0514e0514b1606618835242fe3e1603788c95375c4e22"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLI-INTEGRATION-05.diff",
+      "bytes": 52835,
+      "sha256": "50e734aff7c7c0f97bcc20d722b3d8b81815c0ac8f72c02974510e6525ad0622"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/HOST-SNAPSHOT-CHECKPOINT-05.md",
+      "bytes": 2672,
+      "sha256": "6edef00e50ccb6ec435b7cfff2056e35745d0ce457fad2e40b7cf5166cca3caf"
+    }
+  ]
+}

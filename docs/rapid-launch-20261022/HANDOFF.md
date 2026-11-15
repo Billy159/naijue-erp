@@ -7393,3 +7393,8 @@ D1 BATCH-D1-01公共DB持久批绑定/当前写守卫/receipt/read/finalize唯�
 原16:30首片节点已凭08:20:11UTC实际读到的D1/D3源码提前达成；17:10节点实际DB包已冻、D3 CLI17:08源码+3新模拟检查已交。D3原6+descriptor2+reply3+adapter3+normaladapter1与新CLI/borrowed/launcher3仅离线模拟/SQLite，不冒真实commit。D1 host contract1cf37640…定义同一reviewed借入client多组tx，UNKNOWN真实discard停run/下一显式resume重验，host finallyclose；每run一次stepsSha完整性扫描不是全源重编，也非零磁盘读，逐组不重扫成功前缀。真实160 physical/catalog/retained prepared授权仍WIP，prefix155-only/flag不当准入。
 
 QB对DB01静态NEED_FIX唯一P1 BATCH-CORE-ROLE-01：CORE INITIALIZER每组first内部调用IMPORTER-only public inspect，换caller无法满足后续INITIALIZER校验，必42501。原文b8166a337e0dc8008cc70f0d4f4a32b1671cf00f3ed806623ff9b57a5414f967；主控已交D1仅拆公开IMPORTER门与内部CORE严格INITIALIZER锁后同identity/ABSENT检查，另02冻结、不SETROLE/GUC/扩权限绕过。其余已核147不变函数/非routine类别/metadata及组marker/真实currentproof/前驱锁/halfgroup/closed等静态范围复用，PG均未跑，不因host未完加泛门槛。D1继续source，下一host源码/实际record依赖检查节点17:40，非整体工期。T45仍0新动作，业务关闭/真实全批/核账/备份/核心使用完成条件未缩小。上一904cb864实际push成功，含此前待补检查点；本次push按实际另核。
+
+
+## 2026-11-15 17:53 CST — DB02 static closure / CLI05 source saved
+
+DB01 P1 remains historical NEED_FIX. DB02 CORE role/kernel/ACL delta independently passed source review (PINS4589d081, actual QB receipt99880564), expected161 functions still not installed/captured. D3 CLI05 shares the same readonly plan snapshot between host and operation, mock checks only; independent new execution-chain review is in progress. Saved43 exact source/review files (6742479B), manifest563212d8499c4430c095583795e0c598e6d0d5097444ee4c6f673d456a6d2f0f. D1 genuine physical/catalog/resume host remains WIP. D3 preparing existing162-row actual SQL-core harness; old247/155 admission cannot be relabeled161. 0 newPG/server actions, formalR3 stopped/not imported; formal goal not complete.

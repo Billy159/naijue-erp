@@ -1,0 +1,11 @@
+{
+  "status": "SOURCE_CANDIDATE_FOR_BOUNDED_ROLE_FIX_REVIEW",
+  "expectedRoutines": 161,
+  "changedFromParent155": 8,
+  "newFromParent155": 6,
+  "differenceFrom01": "two changed bodies and one owner-only inspection kernel",
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "actualPgCapture": false,
+  "interfaceSha256": "d6a7942143c9e5562aa1d0349a43fce871a38c77a0b0cbbee874c54660c47a49"
+}

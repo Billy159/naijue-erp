@@ -1,0 +1,13 @@
+# HOST-CONTRACT-V1的同快照对齐
+
+已实际读取D1 HOST-CONTRACT-V1.md并核SHA256为1cf376404a62a06de379f2022707ed6f3963ea9f569d0e326079bcbfd330b0bb。借入controlled对象的COMMIT/已知ROLLBACK/UNKNOWN discard处理与CLI04实现相符，本轮未改这些分支，也未重其旧测试。DB01 CORE公开inspect角色P1仍归D1新02修复，D3继续调用侧INITIALIZER后切IMPORTER complete，不加SDE内SET ROLE或两角色兼容。
+
+本轮只补实际同SQLite快照差异。openBatchedStreamPlan返回原path，CLI program.batchedPlan直接传真实batchState对象，其metadata、batches()、steps()、initialize()和close()均保留。execute把同一对象作为preparedPlan传runBatchedStreamOperation。operation先核原identity，借用该对象时不另开SQLite连接或快照，也不自行关闭；CLI现有finally统一关闭这个计划对象。D1宿主仍独占PG创建、controlled.discard及最终幂等physical close。
+
+宿主每run仍需按原initializerSha256/stepsSha256完整读一次磁盘计划、保存各组摘要，之后检查每组exact流。D3成功skip不读对应steps，不能表述成整个run没有磁盘读，也不能表述成原源数据重新清洗或重新编译。新run显式resume仍需宿主重新授权并拿新reviewed controlled对象，batchedPlan和transactionMode只是数据与选路，均不构成授权。
+
+新增两个受影响检查实际通过，Node24.21.0，仅执行batched-stream-host-snapshot.test.mjs。第一项先在实际SQLite对象做一次模拟宿主完整读取，再把同对象借给operation，提供不存在的planPath确保没有重开；全部成功组skip不再steps，SQLite对象在返回后仍可读，最后仅由调用方关闭一次，借入controlled也未discard。第二项核不同原plan identity在连接前拒绝，计划对象仍归调用方。以上是SQLite/客户端替身验证，不是D1真实authority或PG证据。原6+2+3+3+1和CLI04三个检查均未重跑。
+
+已将同对象传递形状和现CLI最终独立新连接reconcileWholePackage的读回调用序列发主控/D1。D1仍需把160-model、prepared/resume authority、精确允许集与最终读回SQL纳入其完整宿主候选，本片不改宿主文件，不把旧guard拒绝当放开理由。PG/服务器/全511234编译均0。
+
+CLI-INTEGRATION-05.diff为当前9源码文件的同源整合差分，正常相对import已恢复，在D3专属基线副本git apply --check通过。原CLI04/6f27573f…各件准确字节及清单保存在snapshots/cli-route-04，历史证据不改。本轮HOST-SNAPSHOT-PINS-05.json覆盖三件新增源码字节，其余当前源码与CLI04清单逐项复用。

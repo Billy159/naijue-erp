@@ -1,0 +1,29 @@
+{
+  "finding": "BATCH-CORE-ROLE-01",
+  "parentPinsSha256": "1a41b474b8da6aafe72a0d9f5da5a25cf2c990a4ed0a6cdae32e7a971c5c95c5",
+  "changedBodies": [
+    {
+      "signature": "naijue_erp.standard_batched_import_inspect_v1(jsonb,jsonb)",
+      "before": "b1e2605e1a7582ac95ec959cdd548ec5748fec710b7a691203162f38be06cfbc",
+      "after": "7d32f68a9ca8da595334cddbd18b09538163e6b2879bbd7f7bca8aa21fd2b0a8"
+    },
+    {
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+      "before": "caf7f0ef0c383e26cea98ae0f694d9da0389a09d9d0bea170853851b56ee96ab",
+      "after": "a9e432e35c39edcd2b6fd43530fb3e0a72e0d2d8cc710f49f2bf6674bb7b3e00"
+    }
+  ],
+  "newPrivateHelper": [
+    {
+      "signature": "naijue_erp.standard_batched_import_inspect_kernel_v1(jsonb,jsonb,text)",
+      "bodySha256": "f72f28bbdf1b445fe51e2b82e201a07c066b63ae6c913c9cd6f595d646965908",
+      "acl": [
+        "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+      ]
+    }
+  ],
+  "previousOther158RoutinesUnchanged": true,
+  "nonRoutineModelCategoriesUnchanged": true,
+  "publicSignaturesAndAclUnchanged": true,
+  "sqlParsedOrExecuted": false
+}

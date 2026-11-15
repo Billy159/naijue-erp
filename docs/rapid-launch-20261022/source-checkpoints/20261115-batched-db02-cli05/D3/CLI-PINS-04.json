@@ -1,0 +1,98 @@
+{
+  "task": "BATCH-D3-01",
+  "slice": "cli-route-borrowed-resume-04",
+  "state": "CLI_SOURCE_ROUTE_SIMULATED_HOST_MODEL_PG_PENDING",
+  "previousSqlAdapterPinsSha256": "653e1b16bf5f32ed3396a4ce89e611f7cfa72fd1412e1c31a0650add11a41b2b",
+  "runtime": "Node24.21.0",
+  "newTestsPassed": {
+    "actualCliRouteAndResume": 1,
+    "borrowedClientOutcomes": 1,
+    "launcherExitStatus": 1
+  },
+  "oldSuitesRerun": false,
+  "pgActions": 0,
+  "serverActions": 0,
+  "fullBatchCompilation": false,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-cli-state.mjs",
+      "bytes": 1657,
+      "sha256": "98ebd8af2c814ee9993e93bdf11e39f4e57e5ca10bc893b4165f48d6ee131d14"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-client.mjs",
+      "bytes": 4836,
+      "sha256": "c42cb707deb9cbe5f5950ba9548f5ce10cf766937299c50e4c2d78698ee5cac6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-operation.mjs",
+      "bytes": 1010,
+      "sha256": "eb887a4e1d7df4ec3c31a7ec168dc0668321420728aab5ac7415f1bb857fc2bf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-plan.mjs",
+      "bytes": 9761,
+      "sha256": "d6b1468683f6a3741ac1aa502b7458d0e80076bc726c75f76b1964c3d7f432ed"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-sql-kernel.mjs",
+      "bytes": 4541,
+      "sha256": "52afd5b8e29dc707913e35762e3dac10e8f6d94fc8dd56d9421505b8e710f6ca"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/batched-stream-sql-reply.mjs",
+      "bytes": 2908,
+      "sha256": "73e3e4f29c774f6ff23801f6b3cd3d54b7af0c6445d6994dd4da1ab15adc620a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/cli.mjs",
+      "bytes": 5092,
+      "sha256": "deae43592fa0cbc1b4941b9fa41a4fbbf3aaef83b08ee35f251f9e28360e5900"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/stream-import-cli.mjs",
+      "bytes": 31642,
+      "sha256": "d6d59a7406a5a746674e4378290cef675c88f20bde8261ace7d463e1b5217305"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/source/tools/unified-import/stream-program.mjs",
+      "bytes": 11352,
+      "sha256": "9c1502a270c2e2d9ac8cab81970753bf038b049f960dbac67c5b142e5c237ad7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/batched-stream-cli-route.test.mjs",
+      "bytes": 9171,
+      "sha256": "a40156a11d21ef5c1e1872ab87c02b5cd0a9deab15d11fcde575854d5947acc8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/batched-stream-borrowed-client.test.mjs",
+      "bytes": 2402,
+      "sha256": "f59bca0141b3020a8e38eeb2d8694e794705cefd9149c8f4225ecbc65139ea0d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/batched-stream-launcher.test.mjs",
+      "bytes": 1335,
+      "sha256": "9c94021d5415fdf1d9c8ae13a044fd4b6e0de798314744ca5be54ed5079be4a9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLI-INTEGRATION-04.diff",
+      "bytes": 52625,
+      "sha256": "475e04a72ffca90a186b6b8e9ac0f67ee764ebe2d19f4cb6d13b11e8b8e9c809"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLI-SCOPE-04.json",
+      "bytes": 1867,
+      "sha256": "638362378e029ca66cccb03c2b2b72a0d13e3a0edc91b69537e1882ecad74a62"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CLI-CHECKPOINT-04.md",
+      "bytes": 4212,
+      "sha256": "bbda5e641e9008054e8a97e79e785b7032ffa4c923d517c2d37b5ae34349b849"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01/CHECKPOINT.md",
+      "bytes": 6544,
+      "sha256": "7e65050eb7f28abdfa08fcbc22ead7a2ba78b9efb2f8141e3a542c3fff0b4887"
+    }
+  ]
+}

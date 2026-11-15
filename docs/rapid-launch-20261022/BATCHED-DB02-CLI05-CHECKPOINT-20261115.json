@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-11-15 09:53 UTC",
+  "state": "SOURCE_SAVED_DB02_STATIC_PASS_CLI05_PG_PENDING",
+  "db02": {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
+    "pinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+    "review": "SCOPED_SOURCE_PASS_CORE_ROLE_DELTA",
+    "expectedFunctions": 161,
+    "pgExecuted": false
+  },
+  "db02ReviewSha256": "99880564e3f2e639f21c6fcddd098112c9841c2796896f76a06226bbe196806e",
+  "d3": {
+    "pinsSha256": "6c83ecc9aa4dc53e8a5ae28b1c53f73da4961340ca5964f26b6af7367339dc6f",
+    "diffSha256": "50e734aff7c7c0f97bcc20d722b3d8b81815c0ac8f72c02974510e6525ad0622",
+    "state": "SOURCE_SHARED_PLAN_BOUND_MOCK_TESTED_NOT_PG"
+  },
+  "snapshot": {
+    "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-db02-cli05",
+    "files": 43,
+    "bytes": 6742479,
+    "manifestSha256": "563212d8499c4430c095583795e0c598e6d0d5097444ee4c6f673d456a6d2f0f"
+  },
+  "actualHost": "WIP_NOT_GENUINE_HOST_VALIDATED",
+  "nextFixture": "existing162 smoke-base, actual target161 SQL-core only; V2 newPG deferred",
+  "newPgActions": 0,
+  "newServerActions": 0,
+  "formalReady": false
+}
