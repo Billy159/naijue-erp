@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-11-15 09:23:58 UTC",
+  "goal": "formal launch unchanged; batching implementation",
+  "firstCheckpoint": {
+    "targetLocal": "2026-11-15 16:30 Asia/Shanghai",
+    "met": true,
+    "basis": "D1 first source slices and D3 planner/coordinator existed and were read by controller at08:20:11UTC; source-only, not PG"
+  },
+  "db": {
+    "candidate": {
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-01",
+      "pinsSha256": "1a41b474b8da6aafe72a0d9f5da5a25cf2c990a4ed0a6cdae32e7a971c5c95c5",
+      "sourceSlicesSha256": "8f26a88406b408f8c52b1a6ddb301bc1ee8d6e7dc2518b84a9bc834a34d2ee13",
+      "review": "NEED_FIX_BATCH_CORE_ROLE_01",
+      "pgExecuted": false
+    },
+    "reviewSha256": "b8166a337e0dc8008cc70f0d4f4a32b1671cf00f3ed806623ff9b57a5414f967",
+    "finding": "P1 BATCH-CORE-ROLE-01: CORE INITIALIZER calls IMPORTER-only public inspect, no valid caller role",
+    "next": "D1 internal CORE role-path minimal fix in immutable successor02, public inspect importer protocol unchanged",
+    "model": "EXPECTED160 not installed/capture"
+  },
+  "d2": {
+    "leaf05PinsSha256": "0588b7272052c11a14860aec401560b4e41d38114f9e95e73f494eca3dd70968",
+    "bodySha256": "5933c1461819a212de6cfd9a4f6437506bce9d7eb4bf38243c0e3a8e12461baa",
+    "state": "source contract accepted for D1 integration; new proof not PG tested"
+  },
+  "d3": {
+    "cliPinsSha256": "6f27573f5426e552f9bfbbf6fb003ce83c76843f5cbdb25d892b1b02b0de9b81",
+    "adapterPinsSha256": "653e1b16bf5f32ed3396a4ce89e611f7cfa72fd1412e1c31a0650add11a41b2b",
+    "descriptorPinsSha256": "6e459e02fafb704c2caed58eaed5fee5cc4ff4e5d0ff9aa1354d6672aa158623",
+    "newChecks": "planner/client6,descriptor2,reply3,SQLadapter3,normal operation adapter1,CLI/resume-borrowed-launcher3; each scope reported separately, mocks/SQLite not PG"
+  },
+  "technicalProtocolV2Sha256": "b6f1a64950d72a22c74a0547bdfa20c069e2f2be8e6e8dd9c54b850e622961c7",
+  "interfaceV1Sha256": "d6a7942143c9e5562aa1d0349a43fce871a38c77a0b0cbbee874c54660c47a49",
+  "hostContractV1Sha256": "1cf376404a62a06de379f2022707ed6f3963ea9f569d0e326079bcbfd330b0bb",
+  "sourceSnapshot": {
+    "files": 50,
+    "bytes": 6766825,
+    "manifestSha256": "91f5f80605a06fadbc325844dfb50ee5430decb63086194ed95311e92676d245",
+    "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-first-source"
+  },
+  "newPgActions": 0,
+  "newServerActions": 0,
+  "formalReady": false,
+  "nextCheckpoint": {
+    "targetLocal": "2026-11-15 17:40 Asia/Shanghai",
+    "scope": "D1 host source candidate and actual160/physical/resume dependencies, not whole-project delivery estimate"
+  }
+}

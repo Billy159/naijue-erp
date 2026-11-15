@@ -1,0 +1,666 @@
+--- /dev/null
++++ b/tools/unified-import/batched-stream-cli-state.mjs
+@@ -0,0 +1,37 @@
++import {requestHash} from '../../packages/application/src/request-hash.ts';
++import {openBatchedStreamPlan, prepareBatchedStreamPlan} from './batched-stream-plan.mjs';
++
++// No success state is stored here. These are the original public source and
++// target bindings needed to resume the retained requests without recompiling.
++export async function prepareCliBatchedState(path, program, binding, summary, totals) {
++  await prepareBatchedStreamPlan(path, program, {
++    bindingSha256: requestHash(binding), summary: {
++      counts: summary.counts, manifest_sha256: summary.manifest_sha256,
++      schema_declarations_sha256: summary.schema_declarations_sha256,
++    }, totals,
++  });
++  return openCliBatchedState(path, binding);
++}
++
++export async function openCliBatchedState(path, binding) {
++  const plan = await openBatchedStreamPlan(path);
++  try {
++    if (plan.metadata.context?.bindingSha256 !== requestHash(binding)
++      || plan.metadata.identity.packageSha256 !== binding.manifestSha256) throw Error('BATCH_RESUME_BINDING_INVALID');
++    return plan;
++  } catch (error) { plan.close(); throw error; }
++}
++
++export function retainedCliBatchedProgram(state, encodedScrypt) {
++  return {
++    identity: structuredClone(state.metadata.identity), initialize: state.initialize(),
++    purpose: 'FIRST_REAL_BUSINESS_IMPORT', packageKind: 'REAL', encodedScrypt,
++    transactionMode: 'BATCHED_V1',
++    steps: {async *[Symbol.asyncIterator]() {
++      for (const batch of state.batches()) {
++        if (batch.phase === 'CORE') continue;
++        yield* state.steps(batch);
++      }
++    }},
++  };
++}
+--- /dev/null
++++ b/tools/unified-import/batched-stream-client.mjs
+@@ -0,0 +1,102 @@
++import {requestHash} from '../../packages/application/src/request-hash.ts';
++
++function committed(found, batch) {
++  if (found.state !== 'COMMITTED') return false;
++  if (found.subBatchId !== batch.subBatchId || found.descriptorSha256 !== batch.descriptorSha256) {
++    throw Error('BATCH_COMMITTED_IDENTITY_CONFLICT');
++  }
++  return true;
++}
++
++async function acknowledge(client, sql, command) {
++  const reply = await client.query(sql);
++  if (reply?.command !== command) throw Error('BATCH_TRANSACTION_ACK_INVALID');
++}
++
++// D1 owns these concrete kernel methods and their SQL. lockAndInspect must
++// serialize competing writers, verify root/version/predecessor, and read the
++// durable receipt. complete writes that receipt in this business transaction.
++// No local flag or old whole-package pending receipt is used as commit proof.
++export async function executeBatchedStreamImport(plan, openClient, createKernel, {borrowedClient = false} = {}) {
++  const identity = Object.freeze({...structuredClone(plan.metadata.identity), rootOperationId: plan.metadata.rootOperationId});
++  let completedBatches = 0;
++  let skippedBatches = 0;
++  let finalSummary = null;
++  for (const incoming of plan.batches()) {
++    const batch = Object.freeze(structuredClone(incoming));
++    const {descriptorSha256, ...descriptor} = batch;
++    if (requestHash({identity, descriptor}) !== descriptorSha256) throw Error('BATCH_DESCRIPTOR_CHANGED');
++    let client;
++    let began = false;
++    let commitAttempted = false;
++    let inspectedAbsent = false;
++    let reusable = false;
++    let existing = false;
++    let stage = 'OPEN';
++    try {
++      client = await openClient();
++      const kernel = createKernel();
++      stage = 'BEGIN';
++      await acknowledge(client, 'BEGIN ISOLATION LEVEL READ COMMITTED', 'BEGIN');
++      began = true;
++      stage = 'INSPECT';
++      const found = await kernel.lockAndInspect(client, identity, batch);
++      existing = committed(found, batch);
++      if (!existing) {
++        if (found.state !== 'ABSENT') throw Error('BATCH_STATE_UNRESOLVED');
++        inspectedAbsent = true;
++        stage = 'APPLY';
++        let ordinal = batch.first;
++        for await (const step of plan.steps(batch)) {
++          await kernel.applyStep(client, identity, batch, step, ordinal++);
++        }
++        if (ordinal !== batch.last + 1) throw Error('BATCH_PLAN_RANGE_INCOMPLETE');
++        // D1 performs phase-specific verification and writes both business
++        // changes and this batch's success receipt before the single COMMIT.
++        stage = 'COMPLETE';
++        const finished = await kernel.complete(client, identity, batch);
++        if (finished.subBatchId !== batch.subBatchId || finished.descriptorSha256 !== batch.descriptorSha256) {
++          throw Error('BATCH_COMPLETE_IDENTITY_CONFLICT');
++        }
++        if (batch.phase === 'FINALIZE') {
++          if (finished.summary === null || typeof finished.summary !== 'object') throw Error('BATCH_FINAL_SUMMARY_MISSING');
++          finalSummary = finished.summary;
++        }
++        stage = 'CONSTRAINTS';
++        await acknowledge(client, 'SET CONSTRAINTS ALL IMMEDIATE', 'SET');
++      } else if (batch.phase === 'FINALIZE') {
++        if (found.summary === null || typeof found.summary !== 'object') throw Error('BATCH_FINAL_SUMMARY_MISSING');
++        finalSummary = found.summary;
++      }
++      stage = 'COMMIT';
++      commitAttempted = true;
++      await acknowledge(client, 'COMMIT', 'COMMIT');
++      began = false;
++      reusable = true;
++      if (existing) skippedBatches++;
++      else completedBatches++;
++    } catch (error) {
++      if (began && !commitAttempted) {
++        try {
++          await acknowledge(client, 'ROLLBACK', 'ROLLBACK');
++          reusable = inspectedAbsent;
++          // Rolling back this read transaction says nothing about a previous
++          // writer's uncertain COMMIT. Only a locked ABSENT permits ROLLED_BACK.
++          return {state: inspectedAbsent ? 'ROLLED_BACK' : 'UNKNOWN', subBatchId: batch.subBatchId, stage,
++            completedBatches, skippedBatches, businessReady: false};
++        } catch {}
++      }
++      // End this invocation. Resumption opens a new connection and asks D1's
++      // lockAndInspect with this same immutable key before reading its steps.
++      return {state: 'UNKNOWN', subBatchId: batch.subBatchId, stage,
++        completedBatches, skippedBatches, businessReady: false};
++    } finally {
++      if (client && (!borrowedClient || !reusable)) try { await client.discard(); } catch {}
++    }
++  }
++  if (completedBatches + skippedBatches !== plan.metadata.batchCount || finalSummary === null) {
++    throw Error('BATCH_ROOT_INCOMPLETE');
++  }
++  return {state: 'COMPLETED', completedBatches, skippedBatches, summary: finalSummary,
++    businessReady: false};
++}
+--- /dev/null
++++ b/tools/unified-import/batched-stream-operation.mjs
+@@ -0,0 +1,15 @@
++import {prepareBatchedStreamPlan, openBatchedStreamPlan} from './batched-stream-plan.mjs';
++import {executeBatchedStreamImport} from './batched-stream-client.mjs';
++import {createBatchedStreamSqlKernel} from './batched-stream-sql-kernel.mjs';
++
++// CLI seam after the existing pinned plan/program preparation. A caller
++// resumes the retained planPath with the original identity and no program.
++// D1 supplies the durable kernel and reviewed connection host. This leaf does
++// not import the old whole-package kernel or authorize a database connection.
++export async function runBatchedStreamOperation({planPath, identity, program, openClient, encodedScrypt, borrowedClient = false,
++  createKernel = () => createBatchedStreamSqlKernel(encodedScrypt)}) {
++  if (program) await prepareBatchedStreamPlan(planPath, program);
++  const plan = await openBatchedStreamPlan(planPath, identity);
++  try { return await executeBatchedStreamImport(plan, openClient, createKernel, {borrowedClient}); }
++  finally { plan.close(); }
++}
+--- /dev/null
++++ b/tools/unified-import/batched-stream-plan.mjs
+@@ -0,0 +1,185 @@
++import {DatabaseSync} from 'node:sqlite';
++import {open, lstat} from 'node:fs/promises';
++import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
++import {requestHash} from '../../packages/application/src/request-hash.ts';
++
++const MAX_ROWS = 500;
++const MAX_BYTES = 7 * 1024 * 1024;
++const FORMAT = 'STANDARD_BATCHED_STREAM_PLAN_V2';
++
++// The input is the existing, bound non-coalesced program. Only transaction
++// boundaries change. Original requests, sequences and operation keys survive.
++export async function prepareBatchedStreamPlan(path, program, context) {
++  const reservation = await open(path, 'wx', 0o600);
++  await reservation.close();
++  const db = new DatabaseSync(path);
++  try {
++    db.exec(`PRAGMA journal_mode=DELETE; PRAGMA cache_size=-4096; PRAGMA temp_store=FILE;
++      CREATE TABLE meta (name TEXT PRIMARY KEY, value TEXT NOT NULL);
++      CREATE TABLE step (ordinal INTEGER PRIMARY KEY, value TEXT NOT NULL);
++      CREATE TABLE batch (ordinal INTEGER PRIMARY KEY, value TEXT NOT NULL);
++      BEGIN`);
++    const identity = structuredClone(program.identity);
++    const rootOperationId = program.initialize.operation_id;
++    const batchIdentity = {...identity, rootOperationId};
++    const insertStep = db.prepare('INSERT INTO step VALUES (?,?)');
++    const insertBatch = db.prepare('INSERT INTO batch VALUES (?,?)');
++    let ordinal = 0;
++    let batchOrdinal = 0;
++    let predecessor = null;
++    let previousLastOperationId = null;
++    let previousDescriptorSha256 = null;
++    let pending = null;
++    let document = null;
++    let phaseRank = 0;
++    let baselineClosed = false;
++    let documentsOpened = false;
++    let finalized = false;
++    let oversizedGroups = 0;
++    let maxGroupRows = 0;
++    let maxGroupBytes = 0;
++
++    function bind(request, batchId) {
++      if (request.batch_id !== batchId || request.plan_sha256 !== identity.planSha256
++        || request.package_manifest_sha256 !== identity.packageSha256
++        || request.namespace !== identity.namespace || request.cutoff_at !== identity.cutoffAt) {
++        throw Error('BATCH_REQUEST_BINDING_INVALID');
++      }
++    }
++    function flush() {
++      if (!pending) return;
++      const subBatchId = stableImportId('standard-import-sub-batch-v1',
++        rootOperationId, identity.batchId, identity.packageSha256, identity.planSha256,
++        pending.phase, String(pending.first), String(pending.last));
++      const descriptor = {...pending, ordinal: batchOrdinal, subBatchId, predecessor,
++        previousLastOperationId, previousDescriptorSha256};
++      descriptor.descriptorSha256 = requestHash({identity: batchIdentity, descriptor});
++      insertBatch.run(batchOrdinal++, JSON.stringify(descriptor));
++      if (pending.rows > MAX_ROWS || pending.bytes > MAX_BYTES) oversizedGroups++;
++      maxGroupRows = Math.max(maxGroupRows, pending.rows);
++      maxGroupBytes = Math.max(maxGroupBytes, pending.bytes);
++      predecessor = subBatchId;
++      previousLastOperationId = descriptor.lastOperationId;
++      previousDescriptorSha256 = descriptor.descriptorSha256;
++      pending = null;
++    }
++    function unit(phase, first, last, rows, bytes, firstOperationId, lastOperationId) {
++      if (pending && (pending.phase !== phase || pending.rows + rows > MAX_ROWS
++        || pending.bytes + bytes > MAX_BYTES)) flush();
++      if (!pending) pending = {phase, first, last, rows: 0, bytes: 0, firstOperationId, lastOperationId};
++      pending.last = last;
++      pending.lastOperationId = lastOperationId;
++      pending.rows += rows;
++      pending.bytes += bytes;
++      // One oversized document remains atomic across bounded requests.
++      if (pending.rows >= MAX_ROWS || pending.bytes >= MAX_BYTES) flush();
++    }
++    bind(program.initialize, identity.batchId);
++    if (program.initialize.payload.document_batch_id !== identity.documentBatchId) {
++      throw Error('BATCH_DOCUMENT_ID_INVALID');
++    }
++    const initializer = JSON.stringify({method: 'initialize', request: program.initialize});
++    insertStep.run(ordinal, initializer);
++    unit('CORE', ordinal, ordinal, 0, Buffer.byteLength(initializer), rootOperationId, rootOperationId);
++    ordinal++;
++    flush();
++
++    for await (const step of program.steps) {
++      if (finalized) throw Error('BATCH_STEP_AFTER_FINALIZE');
++      const payload = step.request.payload;
++      let phase;
++      let rank;
++      if (step.method === 'masterChunk') { phase = 'MASTER'; rank = 0; }
++      else if (step.method === 'baselineKeys') { phase = 'KEYS'; rank = 1; }
++      else if (step.method === 'publish' && payload.phase === 'BASELINE') {
++        if (baselineClosed) throw Error('BATCH_BASELINE_DUPLICATE');
++        phase = 'BASELINE_CLOSE'; rank = 2; baselineClosed = true;
++      } else if (step.method === 'documentChunk' && payload.mode === 'STAGE') {
++        if (!baselineClosed || documentsOpened) throw Error('BATCH_DOCUMENT_OPEN_ORDER');
++        phase = 'DOCUMENT_OPEN'; rank = 3; documentsOpened = true;
++      } else if (step.method === 'documentChunk' && payload.mode === 'CHUNK') {
++        if (!documentsOpened) throw Error('BATCH_DOCUMENT_OPEN_REQUIRED');
++        phase = 'HISTORY'; rank = 4;
++      } else if (step.method === 'publish' && payload.phase === 'DOCUMENTS') {
++        if (!documentsOpened || document) throw Error('BATCH_DOCUMENT_INCOMPLETE');
++        phase = 'FINALIZE'; rank = 5; finalized = true;
++      } else throw Error('BATCH_STEP_INVALID');
++      if (rank < phaseRank) throw Error('BATCH_STEP_ORDER_INVALID');
++      phaseRank = rank;
++      bind(step.request, rank >= 3 ? identity.documentBatchId : identity.batchId);
++      const serialized = JSON.stringify(step);
++      const rows = payload.rows ?? [];
++      const bytes = Buffer.byteLength(serialized);
++      if (!Array.isArray(rows) || rows.length > MAX_ROWS) throw Error('BATCH_REQUEST_ROWS_INVALID');
++      insertStep.run(ordinal, serialized);
++      if (phase === 'HISTORY') {
++        const completed = payload.documents;
++        if (!Array.isArray(completed) || completed.length > 1) {
++          throw Error('BATCH_NON_COALESCED_DOCUMENT_STREAM_REQUIRED');
++        }
++        const headers = rows.filter(row => ['SALES_HEADER', 'TRANSFER_HEADER'].includes(row.entity_type));
++        if (!document) {
++          if (headers.length !== 1 || rows[0] !== headers[0]) throw Error('BATCH_DOCUMENT_HEADER_REQUIRED');
++          document = {id: headers[0].target_id, kind: headers[0].entity_type === 'SALES_HEADER' ? 'SALES' : 'TRANSFER',
++            first: ordinal, rows: 0, bytes: 0, firstOperationId: step.request.operation_id};
++        } else if (headers.length) throw Error('BATCH_DOCUMENT_INTERLEAVED');
++        for (const row of rows) {
++          if (row.entity_type.endsWith('_HEADER')) continue;
++          const parent = document.kind === 'SALES' ? row.fields.sales_id : row.fields.transfer_id;
++          const allowed = document.kind === 'SALES' ? ['SALES_LINE', 'SALES_SETTLEMENT'] : ['TRANSFER_LINE'];
++          if (!allowed.includes(row.entity_type) || parent !== document.id) throw Error('BATCH_DOCUMENT_PARENT_INVALID');
++        }
++        document.rows += rows.length;
++        document.bytes += bytes;
++        if (completed.length) {
++          if (completed[0].id !== document.id || completed[0].kind !== document.kind) {
++            throw Error('BATCH_DOCUMENT_CLOSE_MISMATCH');
++          }
++          unit(phase, document.first, ordinal, document.rows, document.bytes,
++            document.firstOperationId, step.request.operation_id);
++          document = null;
++        }
++      } else {
++        if (document) throw Error('BATCH_DOCUMENT_INCOMPLETE');
++        unit(phase, ordinal, ordinal, rows.length, bytes, step.request.operation_id, step.request.operation_id);
++        if (['BASELINE_CLOSE', 'DOCUMENT_OPEN', 'FINALIZE'].includes(phase)) flush();
++      }
++      ordinal++;
++    }
++    if (!finalized || document) throw Error('BATCH_PROGRAM_INCOMPLETE');
++    flush();
++    const metadata = {format: FORMAT, identity, rootOperationId, batchCount: batchOrdinal, stepCount: ordinal,
++      oversizedGroups, maxGroupRows, maxGroupBytes, ...(context === undefined ? {} : {context})};
++    db.prepare('INSERT INTO meta VALUES (?,?)').run('plan', JSON.stringify(metadata));
++    db.exec('COMMIT');
++    return metadata;
++  } catch (error) {
++    try { db.exec('ROLLBACK'); } catch {}
++    throw error;
++  } finally { db.close(); }
++}
++
++export async function openBatchedStreamPlan(path, expectedIdentity) {
++  const stat = await lstat(path);
++  if (!stat.isFile() || stat.isSymbolicLink()) throw Error('BATCH_PLAN_FILE_INVALID');
++  const db = new DatabaseSync(path, {readOnly: true});
++  try {
++    db.exec('PRAGMA query_only=ON; PRAGMA cache_size=-4096; BEGIN');
++    const metadata = JSON.parse(db.prepare("SELECT value FROM meta WHERE name='plan'").get()?.value ?? 'null');
++    if (metadata?.format !== FORMAT || (expectedIdentity !== undefined && requestHash(metadata.identity) !== requestHash(expectedIdentity))) {
++      throw Error('BATCH_PLAN_IDENTITY_MISMATCH');
++    }
++    const steps = db.prepare('SELECT value FROM step WHERE ordinal BETWEEN ? AND ? ORDER BY ordinal');
++    return {
++      metadata,
++      initialize() { return JSON.parse(db.prepare('SELECT value FROM step WHERE ordinal=0').get().value).request; },
++      *batches() {
++        for (const row of db.prepare('SELECT value FROM batch ORDER BY ordinal').iterate()) yield JSON.parse(row.value);
++      },
++      async *steps(batch) {
++        for (const row of steps.iterate(batch.first, batch.last)) yield JSON.parse(row.value);
++      },
++      close() { db.close(); },
++    };
++  } catch (error) { db.close(); throw error; }
++}
+--- /dev/null
++++ b/tools/unified-import/batched-stream-sql-kernel.mjs
+@@ -0,0 +1,76 @@
++import {isNodeScryptPasswordHash} from '../../packages/authentication/src/passwords.ts';
++import {assertPublicValuesExcludePrivateInputs} from './execution-client.ts';
++import {requestHash} from '../../packages/application/src/request-hash.ts';
++import {decodeBatchedInspectReply, decodeBatchedStepReply, decodeBatchedCompleteReply,
++  batchedStepPhase} from './batched-stream-sql-reply.mjs';
++
++const IMPORTER = 'SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2';
++const INITIALIZER = 'SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2';
++const INSPECT = 'SELECT naijue_erp.standard_batched_import_inspect_v1($1::jsonb,$2::jsonb)::text AS result_json';
++const STEP = 'SELECT naijue_erp.standard_batched_import_step_v1($1::jsonb,$2::jsonb,$3::integer,$4::text,$5::jsonb,$6::text)::text AS result_json';
++const COMPLETE = 'SELECT naijue_erp.standard_batched_import_complete_v1($1::jsonb,$2::jsonb)::text AS result_json';
++
++// Source adapter for the registered D1 signatures. The reviewed host owns
++// connection authorization/allowed SQL. This module opens no connection and
++// installs no SQL. A fresh adapter belongs to one client's one work group.
++export function createBatchedStreamSqlKernel(encodedScrypt) {
++  if (!isNodeScryptPasswordHash(encodedScrypt)) throw Error('PRIVATE_CREDENTIAL_FORMAT_INVALID');
++  let boundClient = null;
++  let identityJson;
++  let batchJson;
++  let identityHash;
++  let batchHash;
++  let nextOrdinal;
++  let stage = 'NEW';
++
++  function bound(client, identity, batch) {
++    if (boundClient !== client || requestHash(identity) !== identityHash || requestHash(batch) !== batchHash) {
++      throw Error('BATCH_KERNEL_BINDING_INVALID');
++    }
++  }
++  async function role(client, sql) {
++    if ((await client.query(sql))?.command !== 'SET') throw Error('ROLE_ACK_INVALID');
++  }
++  return Object.freeze({
++    async lockAndInspect(client, identity, batch) {
++      if (stage !== 'NEW') throw Error('BATCH_KERNEL_ORDER_INVALID');
++      boundClient = client;
++      identityJson = JSON.stringify(identity);
++      batchJson = JSON.stringify(batch);
++      assertPublicValuesExcludePrivateInputs(identity, [encodedScrypt]);
++      assertPublicValuesExcludePrivateInputs(batch, [encodedScrypt]);
++      identityHash = requestHash(identity);
++      batchHash = requestHash(batch);
++      await role(client, IMPORTER);
++      const result = decodeBatchedInspectReply(await client.query(INSPECT, [identityJson, batchJson]), identity, batch);
++      nextOrdinal = batch.first;
++      stage = result.state === 'ABSENT' ? 'ABSENT' : 'COMMITTED';
++      return result;
++    },
++    async applyStep(client, identity, batch, step, ordinal) {
++      bound(client, identity, batch);
++      if (stage !== 'ABSENT' || ordinal !== nextOrdinal || ordinal > batch.last) throw Error('BATCH_KERNEL_ORDER_INVALID');
++      const owned = JSON.parse(JSON.stringify(step));
++      const phase = batchedStepPhase(owned);
++      if ((ordinal === 0) !== (phase === 'INITIALIZE')) throw Error('BATCH_KERNEL_ORDER_INVALID');
++      const request = owned.request;
++      assertPublicValuesExcludePrivateInputs(request, [encodedScrypt]);
++      if (request.package_manifest_sha256 !== identity.packageSha256 || request.plan_sha256 !== identity.planSha256
++        || request.namespace !== identity.namespace || request.cutoff_at !== identity.cutoffAt
++        || (ordinal === batch.first && request.operation_id !== batch.firstOperationId)
++        || (ordinal === batch.last && request.operation_id !== batch.lastOperationId)) throw Error('BATCH_REQUEST_BINDING_INVALID');
++      if (phase === 'INITIALIZE') await role(client, INITIALIZER);
++      decodeBatchedStepReply(await client.query(STEP, [identityJson, batchJson, ordinal, phase,
++        JSON.stringify(request), phase === 'INITIALIZE' ? encodedScrypt : null]), batch, owned, ordinal);
++      if (phase === 'INITIALIZE') await role(client, IMPORTER);
++      nextOrdinal++;
++    },
++    async complete(client, identity, batch) {
++      bound(client, identity, batch);
++      if (stage !== 'ABSENT' || nextOrdinal !== batch.last + 1) throw Error('BATCH_KERNEL_ORDER_INVALID');
++      const result = decodeBatchedCompleteReply(await client.query(COMPLETE, [identityJson, batchJson]), identity, batch);
++      stage = 'DONE';
++      return result;
++    },
++  });
++}
+--- /dev/null
++++ b/tools/unified-import/batched-stream-sql-reply.mjs
+@@ -0,0 +1,65 @@
++import {parseStrictJson} from '../../packages/application/src/unified-import-contract.ts';
++
++function resultObject(reply) {
++  if (reply?.command !== 'SELECT' || !Array.isArray(reply.rows) || reply.rows.length !== 1
++    || typeof reply.rows[0]?.result_json !== 'string'
++    || Buffer.byteLength(reply.rows[0].result_json) > 65536) throw Error('BATCH_SQL_REPLY_INVALID');
++  const result = parseStrictJson(reply.rows[0].result_json);
++  if (!result || typeof result !== 'object' || Array.isArray(result)) throw Error('BATCH_SQL_REPLY_INVALID');
++  return result;
++}
++
++function bind(result, batch, names) {
++  if (Object.keys(result).sort().join(',') !== names
++    || result.subBatchId !== batch.subBatchId || result.descriptorSha256 !== batch.descriptorSha256) {
++    throw Error('BATCH_SQL_REPLY_BINDING_INVALID');
++  }
++}
++
++function summary(result, identity, batch) {
++  if (result.state === 'ABSENT' || batch.phase !== 'FINALIZE') {
++    if (result.summary !== null) throw Error('BATCH_SQL_SUMMARY_INVALID');
++    return;
++  }
++  const value = result.summary;
++  if (!value || typeof value !== 'object' || Array.isArray(value)
++    || Object.keys(value).sort().join(',') !== 'batchId,documentBatchId,packageSha256,planSha256,rootOperationId,status'
++    || value.status !== 'IMPORTED'
++    || !['rootOperationId', 'batchId', 'documentBatchId', 'packageSha256', 'planSha256']
++      .every(key => value[key] === identity[key])) throw Error('BATCH_SQL_SUMMARY_INVALID');
++}
++
++export function decodeBatchedInspectReply(reply, identity, batch) {
++  const result = resultObject(reply);
++  bind(result, batch, 'descriptorSha256,state,subBatchId,summary');
++  if (!['ABSENT', 'COMMITTED'].includes(result.state)) throw Error('BATCH_SQL_INSPECT_STATE_INVALID');
++  summary(result, identity, batch);
++  return result;
++}
++
++export function decodeBatchedStepReply(reply, batch, step, ordinal) {
++  const result = resultObject(reply);
++  bind(result, batch, 'descriptorSha256,operationId,ordinal,state,subBatchId');
++  if (result.state !== 'PENDING_TRANSACTION' || result.operationId !== step.request.operation_id
++    || result.ordinal !== ordinal) throw Error('BATCH_SQL_STEP_STATE_INVALID');
++  return result;
++}
++
++export function decodeBatchedCompleteReply(reply, identity, batch) {
++  const result = resultObject(reply);
++  bind(result, batch, 'descriptorSha256,state,subBatchId,summary');
++  if (result.state !== 'PENDING_TRANSACTION') throw Error('BATCH_SQL_COMPLETE_STATE_INVALID');
++  summary(result, identity, batch);
++  return result;
++}
++
++export function batchedStepPhase(step) {
++  switch (step.method) {
++    case 'initialize': return 'INITIALIZE';
++    case 'masterChunk': return 'MASTER';
++    case 'baselineKeys': return 'KEYS';
++    case 'documentChunk': return 'DOCUMENTS';
++    case 'publish': return 'PUBLISH';
++    default: throw Error('BATCH_STEP_INVALID');
++  }
++}
+--- a/tools/unified-import/cli.mjs
++++ b/tools/unified-import/cli.mjs
+@@ -7,7 +7,7 @@
+   try { const result=await (await import('./stream-import-cli.mjs')).runStreamVerify(process.argv.slice(3)); process.stdout.write(JSON.stringify(result)+'\n'); if(result.state==='VERIFICATION_UNKNOWN')process.exitCode=2; else if(result.state==='VERIFIED')process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'?0:3; else if(result.state)process.exitCode=1; }
+   catch { process.stdout.write(JSON.stringify({state:'NOT_STARTED',code:'VERIFY_SETUP_FAILED'})+'\n'); process.exitCode=1; }
+ } else if (process.argv[2] === 'stream-import' || process.argv[2] === 'whole-import') {
+-  try { const result=await (await import('./stream-import-cli.mjs'))[process.argv[2] === 'whole-import' ? 'runWholeImport' : 'runStreamImport'](process.argv.slice(3)); process.stdout.write(JSON.stringify(result)+'\n'); if(['ADMIN154_PREPARED','COMPACT_ZERO_PREPARED'].includes(result.state))process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'&&result.business_database_writes===false?0:3; else if(result.state==='PRODUCTION_REAL_IMPORT_PREPARED')process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'&&result.business_database_writes===false&&result.verification?.state==='NOT_RUN'?0:3; else if(result.state==='UNKNOWN')process.exitCode=2; else if(result.state==='ABSENT'||result.state==='COMMITTED_RECEIPT_FOUND')process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'?0:3; else if(result.state==='COMMITTED'||result.state==='ALREADY_COMMITTED'){if(result.verification?.state!=='VERIFIED'||result.connection_cleanup!=='CLOSED'||result.local_cleanup==='FAILED')process.exitCode=3;} else if(result.state)process.exitCode=1; }
++  try { const result=await (await import('./stream-import-cli.mjs'))[process.argv[2] === 'whole-import' ? 'runWholeImport' : 'runStreamImport'](process.argv.slice(3)); process.stdout.write(JSON.stringify(result)+'\n'); if(['ADMIN154_PREPARED','COMPACT_ZERO_PREPARED'].includes(result.state))process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'&&result.business_database_writes===false?0:3; else if(result.state==='PRODUCTION_REAL_IMPORT_PREPARED')process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'&&result.business_database_writes===false&&result.verification?.state==='NOT_RUN'?0:3; else if(result.state==='UNKNOWN')process.exitCode=2; else if(result.state==='ABSENT'||result.state==='COMMITTED_RECEIPT_FOUND')process.exitCode=result.connection_cleanup==='CLOSED'&&result.local_cleanup!=='FAILED'?0:3; else if(result.state==='COMPLETED'||result.state==='COMMITTED'||result.state==='ALREADY_COMMITTED'){if(result.verification?.state!=='VERIFIED'||result.connection_cleanup!=='CLOSED'||result.local_cleanup==='FAILED')process.exitCode=3;} else if(result.state)process.exitCode=1; }
+   catch(error) { const safe=new Set(['OPTION_REQUIRED','OPTION_INVALID','OPTION_DUPLICATE','EXCLUSIVE_DDL_WINDOW_ACK_REQUIRED','MANIFEST_HASH_INVALID','INPUT_FILE_INVALID','INPUT_FILE_CHANGED','INPUT_FILE_TOO_LARGE']); const code=typeof error?.message==='string'&&safe.has(error.message)?error.message:'IMPORT_SETUP_FAILED'; process.stdout.write(JSON.stringify({state:'NOT_STARTED',code,postgresql_acceptance:'NOT_RUN'})+'\n'); process.exitCode=1; }
+ } else if (process.argv[2] === 'source-registration') {
+   try { const result=await (await import('./stream-prepare-cli.mjs')).runSourceRegistration(process.argv.slice(3)); process.stdout.write(JSON.stringify(result)+'\n'); }
+--- a/tools/unified-import/stream-import-cli.mjs
++++ b/tools/unified-import/stream-import-cli.mjs
+@@ -1,3 +1,5 @@
++import {runBatchedStreamOperation} from './batched-stream-operation.mjs';
++import {prepareCliBatchedState,openCliBatchedState,retainedCliBatchedProgram} from './batched-stream-cli-state.mjs';
+ import {isInventoryBaselineScope,closeExplicitZeroApproval,explicitZeroApprovalDescriptor,explicitZeroApprovalCount} from '../../packages/application/src/unified-explicit-zero-approval.ts';
+ import {readHistoricalSettlementRetentionCliApproval} from './historical-settlement-retention-cli-input.mjs';
+ import{openReviewedFresh35Host,openReviewedFresh35ProductionHost,openReviewedFresh35Admin154Host,openReviewedFresh35CompactZeroHost,prepareFresh35Admin154Import}from'./fresh35-host-session.mjs';
+@@ -31,11 +33,11 @@
+ export const runWholeImport=argv=>runStreamOperation(argv,false,true);
+ async function runStreamOperation(argv,verifyOnly,whole){
+  const command=whole?'whole-import':verifyOnly?'stream-verify':'stream-import';
+- if(argv.length===1&&argv[0]==='--help')return{fresh35_execution:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_RECEIVER_CAPABILITY,fresh35_production_real_import:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_PRODUCTION_REAL_IMPORT_CAPABILITY,usage:command+' --package DIR --report DIR --manifest-sha256 SHA --target JSON --admin JSON --connection PRIVATE_JSON --scrypt-file PRIVATE_FILE [--registration JSON] [--allow-synthetic] '+(whole?'':'[--coalesce] ')+'[--explicit-zero-approval FILE --explicit-zero-approval-sha256 SHA] [--staff-hall-approval FILE --staff-hall-approval-sha256 SHA] [--historical-hall-approval FILE --historical-hall-approval-sha256 SHA] [--current-effective-alignment FILE --current-effective-alignment-sha256 SHA] '+(verifyOnly?'':'[--inspect-only] ')+'[--historical-settlement-retention-approval FILE --historical-settlement-retention-approval-sha256 SHA] [--historical-line-amount-evidence FILE --historical-line-amount-evidence-sha256 SHA] [--target-profile FRESH35_RETIRED152_V1|FRESH35_PRODUCTION_REAL_IMPORT_V1|FRESH35_A53_ADMIN154_FIRST_IMPORT_V1|FRESH35_COMPACT_ZERO_FIRST_IMPORT_V2 --fresh35-reference-inputs DIR] [--admin154-successor-sha256 SHA --current-service-sha256 SHA --capacity-expires-at MS --provision-receipt PRIVATE_JSON] [--compact-zero-successor-sha256 SHA --admin154-parent-source-sha256 SHA --admin154-parent-catalog-spec-sha256 SHA] [--prepare-only (production REAL stream-import only; no writer)] --ack-exclusive-ddl-window',postgresql_acceptance:'NOT_RUN',scope:'LOCAL_OPERATOR_CONTROLLED',package_loading:whole?'MATERIALIZED_SMALL_PACKAGE':'STREAMED_INDEX_AND_REQUESTS',large_package_command:'stream-import',small_package_limits:{file_bytes:64*1024*1024,package_bytes:256*1024*1024},stream_scope:'One whole-package transaction; bounded index/request iteration, not a claim of unlimited size or live acceptance'};
++ if(argv.length===1&&argv[0]==='--help')return{fresh35_execution:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_RECEIVER_CAPABILITY,fresh35_production_real_import:(await import('./fresh35-receiver-diagnostics.ts')).FRESH35_PRODUCTION_REAL_IMPORT_CAPABILITY,usage:command+' --package DIR --report DIR --manifest-sha256 SHA --target JSON --admin JSON --connection PRIVATE_JSON --scrypt-file PRIVATE_FILE [--registration JSON] [--allow-synthetic] '+(whole?'':'[--coalesce] [--resume (R3 batched stream-import, same report and inputs)] ')+'[--explicit-zero-approval FILE --explicit-zero-approval-sha256 SHA] [--staff-hall-approval FILE --staff-hall-approval-sha256 SHA] [--historical-hall-approval FILE --historical-hall-approval-sha256 SHA] [--current-effective-alignment FILE --current-effective-alignment-sha256 SHA] '+(verifyOnly?'':'[--inspect-only] ')+'[--historical-settlement-retention-approval FILE --historical-settlement-retention-approval-sha256 SHA] [--historical-line-amount-evidence FILE --historical-line-amount-evidence-sha256 SHA] [--target-profile FRESH35_RETIRED152_V1|FRESH35_PRODUCTION_REAL_IMPORT_V1|FRESH35_A53_ADMIN154_FIRST_IMPORT_V1|FRESH35_COMPACT_ZERO_FIRST_IMPORT_V2 --fresh35-reference-inputs DIR] [--admin154-successor-sha256 SHA --current-service-sha256 SHA --capacity-expires-at MS --provision-receipt PRIVATE_JSON] [--compact-zero-successor-sha256 SHA --admin154-parent-source-sha256 SHA --admin154-parent-catalog-spec-sha256 SHA] [--prepare-only (production REAL stream-import only; no writer)] --ack-exclusive-ddl-window',postgresql_acceptance:'NOT_RUN',scope:'LOCAL_OPERATOR_CONTROLLED',package_loading:whole?'MATERIALIZED_SMALL_PACKAGE':'STREAMED_INDEX_AND_REQUESTS',large_package_command:'stream-import',small_package_limits:{file_bytes:64*1024*1024,package_bytes:256*1024*1024},stream_scope:'R3 production stream-import uses durable atomic work groups; --resume reuses the same report plan. Legacy profiles retain their existing transaction scope'};
+  const v={},flags=new Set();
+  for(let i=0;i<argv.length;i++){
+   const k=argv[i];
+-  if(['--allow-synthetic','--coalesce','--inspect-only','--prepare-only','--ack-exclusive-ddl-window'].includes(k)){if(flags.has(k))throw Error('OPTION_DUPLICATE');flags.add(k);continue}
++  if(['--allow-synthetic','--coalesce','--resume','--inspect-only','--prepare-only','--ack-exclusive-ddl-window'].includes(k)){if(flags.has(k))throw Error('OPTION_DUPLICATE');flags.add(k);continue}
+   if(!['--package','--report','--manifest-sha256','--target','--admin','--registration','--connection','--scrypt-file','--staff-hall-approval','--staff-hall-approval-sha256','--historical-hall-approval','--historical-hall-approval-sha256','--current-effective-alignment','--current-effective-alignment-sha256','--explicit-zero-approval','--explicit-zero-approval-sha256','--target-profile','--compact-zero-successor-sha256','--admin154-parent-source-sha256','--admin154-parent-catalog-spec-sha256','--admin154-successor-sha256','--current-service-sha256','--capacity-expires-at','--provision-receipt','--fresh35-reference-inputs','--historical-settlement-retention-approval','--historical-settlement-retention-approval-sha256','--historical-line-amount-evidence','--historical-line-amount-evidence-sha256'].includes(k)||Object.hasOwn(v,k)||i+1>=argv.length)throw Error('OPTION_INVALID');v[k]=argv[++i];
+  }
+  if(verifyOnly&&flags.has('--inspect-only')||whole&&flags.has('--coalesce'))throw Error('OPTION_INVALID');
+@@ -45,6 +47,8 @@
+  if(compactZero?compactKeys.some(k=>!/^[a-f0-9]{64}$/.test(v[k]??'')):compactKeys.some(k=>Object.hasOwn(v,k)))throw Error('OPTION_INVALID');
+  const admin154=compactZero||v['--target-profile']==='FRESH35_A53_ADMIN154_FIRST_IMPORT_V1';
+  const fresh35=Object.hasOwn(v,'--target-profile'),productionReal=admin154||v['--target-profile']==='FRESH35_PRODUCTION_REAL_IMPORT_V1';
++ const batched=productionReal&&!whole&&!verifyOnly&&!flags.has('--inspect-only');
++ if(flags.has('--resume')&&(!batched||flags.has('--prepare-only')))throw Error('OPTION_INVALID');
+  const admin154Keys=['--admin154-successor-sha256','--current-service-sha256','--capacity-expires-at','--provision-receipt'];
+  if(admin154){
+   if(admin154Keys.some(k=>!v[k]))throw Error('OPTION_REQUIRED');
+@@ -68,7 +72,10 @@
+  if(!flags.has('--ack-exclusive-ddl-window'))throw Error('EXCLUSIVE_DDL_WINDOW_ACK_REQUIRED');
+  if(!/^[a-f0-9]{64}$/.test(v['--manifest-sha256']))throw Error('MANIFEST_HASH_INVALID');
+  const pkg=resolve(v['--package']),report=resolve(v['--report']),manifest=await readBounded(join(pkg,'manifest.json'),2*1024*1024),manifestObject=parseStrictJson(decodeUtf8(manifest)),target=await json(v['--target']),admin=await json(v['--admin']),registration=v['--registration']?await json(v['--registration']):undefined;
+- let plan,program,output,explicitZeroApproval,executionStarted=false,acknowledgedImport=null,acknowledgedRollback=false;
++ let plan,program,output,explicitZeroApproval,batchState,executionStarted=false,acknowledgedImport=null,acknowledgedRollback=false;
++ const batchPlanPath=join(report,'batched-plan.sqlite');
++ const batchBinding={manifestSha256:v['--manifest-sha256'],target,admin,registration:registration??null,
++  sourceOptions:Object.fromEntries(Object.entries(v).filter(([key])=>key==='--target-profile'||key.endsWith('-approval-sha256')||key==='--historical-line-amount-evidence-sha256'||key==='--current-effective-alignment-sha256'))};
+  try{
+   const hallProfile=isHistoricalSalesHallSourceProfile(manifestObject.schema_contract?.source_declarations_sha256);
+   if(hallProfile&&!fresh35)throw Error('FRESH35_TARGET_PROFILE_REQUIRED');
+@@ -102,8 +109,9 @@
+    const {readStaffHallCliApproval}=await import('./explicit-zero-cli-input.mjs');
+    historicalStaffHallApproval=await readStaffHallCliApproval(pkg,manifestObject,v['--staff-hall-approval'],v['--staff-hall-approval-sha256']);
+   }
+-  const summary=await streamPreflight(pkg,report,{expectedManifestSha256:v['--manifest-sha256'],allowSynthetic:flags.has('--allow-synthetic'),...(historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval}:{}),...(historicalLineAmountEvidence?{historicalLineAmountEvidence}:{}),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(currentEffectiveAlignmentEvidence?{currentEffectiveAlignmentEvidence}:{}),...(historicalStaffHallApproval?{historicalStaffHallApproval}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{})});
+-  if(!summary.checks_passed||!summary.complete_package_validation)return output={state:'PREFLIGHT_REJECTED',issue_count:summary.issue_count,issues_file:join(report,'issues.jsonl'),business_database_writes:false};
++  if(batched&&flags.has('--resume'))batchState=await openCliBatchedState(batchPlanPath,batchBinding);
++  const summary=batchState?batchState.metadata.context.summary:await streamPreflight(pkg,report,{expectedManifestSha256:v['--manifest-sha256'],allowSynthetic:flags.has('--allow-synthetic'),...(historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval}:{}),...(historicalLineAmountEvidence?{historicalLineAmountEvidence}:{}),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(currentEffectiveAlignmentEvidence?{currentEffectiveAlignmentEvidence}:{}),...(historicalStaffHallApproval?{historicalStaffHallApproval}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{})});
++  if(!batchState&&(!summary.checks_passed||!summary.complete_package_validation))return output={state:'PREFLIGHT_REJECTED',issue_count:summary.issue_count,issues_file:join(report,'issues.jsonl'),business_database_writes:false};
+   const options={target,initialization_identity:admin,allowSynthetic:flags.has('--allow-synthetic'),...(historicalSettlementRetentionApproval?{historicalSettlementRetentionApproval}:{}),...(historicalLineAmountEvidence?{historicalLineAmountEvidence}:{}),...(historicalSalesHallApproval?{historicalSalesHallApproval}:{}),...(currentEffectiveAlignmentEvidence?{currentEffectiveAlignmentEvidence}:{}),...(registration?{registration}:{}),...(historicalStaffHallApproval?{historicalStaffHallApproval}:{}),...(explicitZeroApproval?{explicitZeroApproval}:{})};
+   const prepare=async historicalSalesAdmission=>{
+    const admitted={...options,...(historicalSalesAdmission?{historicalSalesAdmission}:{})};
+@@ -114,7 +122,7 @@
+     const compiled=compileStandardWholePackageProfile({...await readPinnedPackageForExecution(pkg,{...admitted,expectedManifestSha256:summary.manifest_sha256}),initialization_identity:admin});
+     if(compiled.plan_sha256!==plan.planHash)throw Error('STREAM_PLAN_BINDING_INVALID');
+     program={initialize:compiled.initialize,identity:{batchId:compiled.initialize.batch_id,documentBatchId:compiled.initialize.payload.document_batch_id,packageSha256:summary.manifest_sha256,planSha256:compiled.plan_sha256,namespace:compiled.initialize.namespace,cutoffAt:compiled.initialize.cutoff_at},steps:(async function*(){yield* compiled.steps})()};
+-   }else program=await buildStreamProgram(plan,join(report,'index.sqlite'),summary,admin,{coalesce:flags.has('--coalesce')});
++   }else program=await buildStreamProgram(plan,join(report,'index.sqlite'),summary,admin,{coalesce:flags.has('--coalesce')&&!batched,batched});
+   };
+   const historical=fresh35||manifestObject.schema_contract?.source_declarations_sha256===HISTORICAL_SALES_SOURCE_SCHEMA_DECLARATIONS_SHA256;
+   if(!historical)await prepare();
+@@ -124,37 +132,63 @@
+   const execute=async(client,admission)=>{
+    if(historical&&!productionReal)await prepare(admission);
+    executionStarted=true;
+-   if(verifyOnly)return reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals);
++   if(verifyOnly)return reconcileWholePackage(client,program.initialize,encoded,summary.counts,batchState?.metadata.context.totals??plan.totals);
++   if(batched){
++    const imported=await runBatchedStreamOperation({planPath:batchPlanPath,identity:program.identity,
++     openClient:async()=>client,encodedScrypt:encoded,borrowedClient:true});
++    if(imported.state==='ROLLED_BACK')acknowledgedRollback=true;
++    if(imported.state==='COMPLETED')acknowledgedImport='COMPLETED';
++    return {...imported,transaction_mode:'BATCHED_V1',verification:{state:'NOT_RUN'}};
++   }
+    const kernel=createWholePackageSqlKernel(encoded,{explicitZeroApproval});
+    if(flags.has('--inspect-only'))return{...await inspectWholePackage(client,program.identity,program.initialize,kernel),verification:{state:'NOT_RUN'}};
+    const imported=await executeWholePackage(client,program.identity,program.initialize,program.steps,kernel);
+    if(imported.state==='ROLLED_BACK')acknowledgedRollback=true;
+-   if(imported.state==='COMMITTED'||imported.state==='ALREADY_COMMITTED'){acknowledgedImport=imported.state;if(productionReal)return{...imported,verification:{state:'NOT_RUN'}};const verification=await reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals);return{...imported,verification}}
++   if(imported.state==='COMMITTED'||imported.state==='ALREADY_COMMITTED'){acknowledgedImport=imported.state;if(productionReal)return{...imported,verification:{state:'NOT_RUN'}};const verification=await reconcileWholePackage(client,program.initialize,encoded,summary.counts,batchState?.metadata.context.totals??plan.totals);return{...imported,verification}}
+    return{...imported,verification:{state:'NOT_RUN'}};
+   };
+   const hostOptions={explicitZeroApproval,...(fresh35?{referenceDirectory:resolve(v['--fresh35-reference-inputs']),sourceProfileSha256:manifestObject.schema_contract.source_declarations_sha256}:{})};
+   const provisionOrigin=admin154?await json(v['--provision-receipt'],true):undefined;
+   const prepareProduction=async admission=>{
++   if(batchState){
++    if(!program)program=retainedCliBatchedProgram(batchState,encoded);
++    program.batchedPlan={path:batchPlanPath,metadata:batchState.metadata};
++    return program;
++   }
+    if(plan)await plan.dispose();await prepare(admission);
+-   if(admin154){program=await prepareFresh35Admin154Import(plan,join(report,'index.sqlite'),summary,admin,provisionOrigin,encoded,{coalesce:flags.has('--coalesce')});return program;}
++   if(admin154){
++    program=await prepareFresh35Admin154Import(plan,join(report,'index.sqlite'),summary,admin,provisionOrigin,encoded,{coalesce:flags.has('--coalesce')&&!batched,batched});
++    if(batched){
++     batchState=await prepareCliBatchedState(batchPlanPath,program,batchBinding,summary,plan.totals);
++     program.transactionMode='BATCHED_V1';
++     program.batchedPlan={path:batchPlanPath,metadata:batchState.metadata};
++    }
++    return program;
++   }
+    // Independent cursors use the same pinned plan and original request keys.
+    // No production stream is materialized or reused after it is exhausted.
+-   program={...program,steps:{async *[Symbol.asyncIterator](){const original=await buildStreamProgram(plan,join(report,'index.sqlite'),summary,admin,{coalesce:flags.has('--coalesce')});yield* original.steps;}}};
++   program={...program,steps:{async *[Symbol.asyncIterator](){const original=await buildStreamProgram(plan,join(report,'index.sqlite'),summary,admin,{coalesce:flags.has('--coalesce')&&!batched,batched});yield* original.steps;}}};
++   if(batched){
++    batchState=await prepareCliBatchedState(batchPlanPath,program,batchBinding,summary,plan.totals);
++    program=retainedCliBatchedProgram(batchState,encoded);
++    program.batchedPlan={path:batchPlanPath,metadata:batchState.metadata};
++    return program;
++   }
+    return {packageKind:manifestObject.package_kind,initialize:program.initialize,identity:program.identity,steps:program.steps,encodedScrypt:encoded};
+   };
+   const productionHost=compactZero?openReviewedFresh35CompactZeroHost:admin154?openReviewedFresh35Admin154Host:openReviewedFresh35ProductionHost;
+-  const productionOptions={...hostOptions,prepareOnly:flags.has('--prepare-only'),...(admin154?{purpose:'FIRST_REAL_BUSINESS_IMPORT',successorSha256:compactZero?v['--compact-zero-successor-sha256']:v['--admin154-successor-sha256'],...(compactZero?{parentPins:{sha256:v['--admin154-successor-sha256'],sourceSetSha256:v['--admin154-parent-source-sha256'],catalogSpecSha256:v['--admin154-parent-catalog-spec-sha256']}}:{}),currentService:{sha256:v['--current-service-sha256'],capacityExpiresAt:Number(v['--capacity-expires-at'])}}:{})};
++  const productionOptions={...hostOptions,...(batched?{transactionMode:'BATCHED_V1'}:{}),prepareOnly:flags.has('--prepare-only'),...(admin154?{purpose:'FIRST_REAL_BUSINESS_IMPORT',successorSha256:compactZero?v['--compact-zero-successor-sha256']:v['--admin154-successor-sha256'],...(compactZero?{parentPins:{sha256:v['--admin154-successor-sha256'],sourceSetSha256:v['--admin154-parent-source-sha256'],catalogSpecSha256:v['--admin154-parent-catalog-spec-sha256']}}:{}),currentService:{sha256:v['--current-service-sha256'],capacityExpiresAt:Number(v['--capacity-expires-at'])}}:{})};
+   let result=productionReal?await productionHost(config,root,target,prepareProduction,execute,productionOptions):await openHost(config,root,target,execute,hostOptions);
+   if(productionReal&&acknowledgedImport){
+    if(result.cleanup!=='CLOSED')return output={state:acknowledgedImport,connection_cleanup:result.cleanup,verification:{state:'VERIFICATION_UNKNOWN'}};
+-   const readback=await productionHost(config,root,target,prepareProduction,client=>reconcileWholePackage(client,program.initialize,encoded,summary.counts,plan.totals),{...productionOptions,prepareOnly:false});
++   const readback=await productionHost(config,root,target,prepareProduction,client=>reconcileWholePackage(client,program.initialize,encoded,summary.counts,batchState?.metadata.context.totals??plan.totals),{...productionOptions,prepareOnly:false});
+    result={...result,result:{...result.result,verification:readback.cleanup==='CLOSED'?readback.result:{state:'VERIFICATION_UNKNOWN'},readback_connection_cleanup:readback.cleanup,readback_host_verification:readback.host_verification}};
+   }
+-  const candidate={...result.result,...(productionReal?{target_profile:v['--target-profile']}:{}),...(fresh35?{host_verification:result.host_verification}:{}),connection_cleanup:result.cleanup,manifest_sha256:summary.manifest_sha256,plan_sha256:program.identity.planSha256,...(!verifyOnly||result.result?.state==='VERIFIED'?{source_counts:summary.counts,source_totals:plan.totals}:{})};
++  const candidate={...result.result,...(productionReal?{target_profile:v['--target-profile']}:{}),...(fresh35?{host_verification:result.host_verification}:{}),connection_cleanup:result.cleanup,manifest_sha256:summary.manifest_sha256,plan_sha256:program.identity.planSha256,...(!verifyOnly||result.result?.state==='VERIFIED'?{source_counts:summary.counts,source_totals:batchState?.metadata.context.totals??plan.totals}:{})};
+   try{assertPublicValuesExcludePrivateInputs(candidate,[config.password,encoded])}catch{
+    const state=result.result?.state;
+    if(acknowledgedRollback)return output={state:'ROLLED_BACK',code:'PUBLIC_OUTPUT_REDACTED',summary_redacted:true,connection_cleanup:result.cleanup,verification:{state:'NOT_RUN'}};
+-   if(state==='COMMITTED'||state==='ALREADY_COMMITTED')return output={state,summary_redacted:true,connection_cleanup:result.cleanup,verification:{state:'REDACTED'}};
++   if(state==='COMPLETED'||state==='COMMITTED'||state==='ALREADY_COMMITTED')return output={state,summary_redacted:true,connection_cleanup:result.cleanup,verification:{state:'REDACTED'}};
+    return output={state:verifyOnly?'VERIFICATION_UNKNOWN':'UNKNOWN',code:'PUBLIC_OUTPUT_REDACTED',connection_cleanup:result.cleanup,verification:{state:'REDACTED'}};
+   }
+   return output=candidate;
+@@ -162,5 +196,5 @@
+   if(acknowledgedRollback)return output={state:'ROLLED_BACK',code:'POST_ROLLBACK_HOST_FAILURE',verification:{state:'NOT_RUN'},connection_cleanup:'FAILED'};
+   if(acknowledgedImport)return output={state:acknowledgedImport,code:'POST_COMMIT_HOST_FAILURE',verification:{state:'VERIFICATION_UNKNOWN'},connection_cleanup:'FAILED'};
+   return output={state:executionStarted?(verifyOnly?'VERIFICATION_UNKNOWN':'UNKNOWN'):'NOT_STARTED',code:typeof error?.message==='string'&&SAFE_CODES.has(error.message)?error.message:(verifyOnly?'VERIFY_FAILED':'IMPORT_FAILED'),verification:'NOT_RUN'};
+- }finally{closeExplicitZeroApproval(explicitZeroApproval);try{await plan?.dispose()}catch{if(output)output.local_cleanup='FAILED'}}
++ }finally{batchState?.close();closeExplicitZeroApproval(explicitZeroApproval);try{await plan?.dispose()}catch{if(output)output.local_cleanup='FAILED'}}
+ }
+--- a/tools/unified-import/stream-program.mjs
++++ b/tools/unified-import/stream-program.mjs
+@@ -26,7 +26,10 @@
+ }
+ /** Offline request construction only; callers must own validated preflight,
+  * source immutability, target admission, one transaction and graph disposal. */
+-export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=false,metrics=null}={}){
++export async function buildStreamProgram(plan,indexPath,summary,admin,{coalesce=false,metrics=null,batched=false}={}){
++ // Batched transactions consume original non-cross-document requests.
++ // Packing complete closures belongs to the disk batch planner.
++ if(batched)coalesce=false;
+  assertActiveStreamPlan(plan);summary=structuredClone(summary);admin=structuredClone(admin);if(!plan||requestHash(admin)!==plan.initializationIdentityHash)throw Error('STREAM_INITIALIZATION_IDENTITY_MISMATCH');if(streamSummaryBinding(summary)!==plan.summaryBindingHash)throw Error('STREAM_PLAN_SUMMARY_MISMATCH');const p=plan.common,c=p.counts,basePlan=plan.planHash,planHash=coalesce?coalescedPlanHash(basePlan):basePlan;const descriptor={...plan.schedule,execution_plan_sha256:planHash};delete descriptor.chunk_plan_sha256;const chunkHash=coalesce?await streamTypedHash({...descriptor,chunks:preparedMasterChunkTokens(plan,'coalesced')}):plan.schedule.chunk_plan_sha256;
+  const effectiveLayoutHash=coalesce?await streamTypedHash(preparedMasterLayout(plan,'coalesced')):plan.layoutHash;const docs={SALES_HEADER:c.sales_headers,SALES_LINE:c.sales_lines,SALES_SETTLEMENT:c.sales_settlements,TRANSFER_HEADER:c.transfer_headers,TRANSFER_LINE:c.transfer_lines,IMPORT_BATCH:1},effects=plan.sourceV2Progress.baseline_cursor-c.master_occurrences-c.explicit_keys-2;let sequence=0;
+  function request(kind,index,payload,batch=p.baseline_batch_id,operation){if(payload.expected_sequence!==null&&payload.expected_sequence!==undefined&&(!Number.isSafeInteger(payload.expected_sequence)||payload.expected_sequence<0||payload.expected_sequence>2147483646))throw Error('STREAM_SEQUENCE_OVERFLOW');const op=operation??stableImportId('standard-whole-package-operation-v2',batch,planHash,kind,String(index));const r={protocol:'STANDARD_IMPORT_SQL_V1',operation_id:op,request_key:op,batch_id:batch,plan_sha256:planHash,package_manifest_sha256:p.manifest_sha256,namespace:p.source_namespace,cutoff_at:p.cutoff_at,payload};assertStreamProgramRequestSize(r,kind);return r}

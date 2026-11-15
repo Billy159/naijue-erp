@@ -1,0 +1,17 @@
+# R3实际stream-import分批选路源码检查点
+
+2026-11-15北京时间17:08。D3仅在本新目录写入，旧冻结源码、正式集成树及D1宿主文件均未修改。PG、服务器及全511234编译均0。
+
+改动的原入口为stream-import-cli.mjs/runStreamOperation及prepare/prepareProduction/execute、stream-program.mjs/buildStreamProgram、cli.mjs的stream-import退出状态映射。上游准确三文件摘要见CLI-SCOPE-04.json。新增batched-stream-cli-state.mjs复用SQLite计划，既有planner/client/operation配套增加公开源绑定及借入连接所有权选项。三个CLI本地副本直接引用指定上游未改模块，可独立做受控源码检查。CLI-INTEGRATION-04.diff把这些引用恢复为正式同源树普通路径，包含当前9个源码文件；仅在本目录独立基线副本上做git apply --check已通过。
+
+R3 productionReal stream-import默认且必须使用batched选路，whole-import的productionReal禁止条件保留，没有失败后旧单事务兜底。verify/inspect原只读选路保留。批编译沿原非跨单请求流，batched模式固定coalesce=false，不改行转换、原编号、证据payload或该原请求流的operation/request键和序号；500行/7MiB合并在完整闭包规划层完成。旧--coalesce在R3分批选路下由该完整闭包合并承担，旧适用profile的编译行为不变。
+
+首次在原预检report下独占新建batched-plan.sqlite；预检完整结束后使用实际初始化转换（含provisioned-admin原模式、私参处理和证据），再固化原请求流及小context。文件/目录冲突会报错，不覆盖，也不自动切换新根。--resume明确复用同report，读取同SQLite及原来源小summary/totals，保manifest/target/admin/registration/来源审批SHA绑定，跳过streamPreflight与prepareStreamPlan/全源编译。新输入、目标或管理员绑定不同在写入前拒绝。来源旁车仍沿原读取与封装，敏感连接配置和scrypt不进入context。
+
+D1主控确认采用同一个reviewed client承载多个独立组事务。D3 borrowedClient=true时仅在COMMIT准确应答或原锁证明ABSENT且本批ROLLBACK准确应答后保留client，UNKNOWN实际discard并结束run，下次显式resume必须由宿主重校验新连接。宿主最终统一close，D3不新建pool或伪每组host factory。原组提交成功不代表业务开放，businessReady始终false，全部完成后仍调用既有独立数量/金额/库存读回；launcher只在COMPLETED且VERIFIED及清理成功时成功退出。
+
+传D1的新增宿主形状为productionOptions.transactionMode=BATCHED_V1，prepared.transactionMode=BATCHED_V1及prepared.batchedPlan={path,metadata}。初次admin154 prepared保留现WeakMap来源实例。resume prepared来自同SQLite，包含原initialize/identity、独立磁盘steps迭代器、purpose、packageKind及调用私参。该描述是数据，不提供独立授权。D1仍负责prepared/target/原根承认、准确SQL允许集、多COMMIT/query guard、源码及160-model完整闭包和最终物理close/discard。当前旧宿主尚不支持该形状，故本片不代表正式CLI已可运行。
+
+新增三项受影响检查分别实际通过。第一项从修改后的真实runStreamImport入口执行，在合成宿主/源编译/SQL客户端替身下调用真实planner/coordinator/SQLadapter，确认R3不走executeWholePackage、同client多组后未每组discard，same-report resume不再预检/规划/编译或重写成功组，管理员/目标/manifest冲突拒绝，R3 whole-import拒绝。第二项分别核借入client的COMMIT、rollback、UNKNOWN物理discard分支。第三项通过真实cli.mjs子进程核COMPLETED+VERIFIED exit0、COMPLETED+NOT_RUN exit3。Node24.21.0；CLI替身检查使用--experimental-test-module-mocks。三个CLI文件语法检查也通过。旧6+2+3+3+1、04/751均未重跑。所有结果只证明本地源码和模拟选路，真实PG锁/COMMIT/约束/故障/UNKNOWN/host仍待完整候选实证。
+
+历史三个片的准确字节保存在snapshots各对应目录。CLI-PINS-04.json是当前源码清单，覆盖前片同名planner/client/operation的新摘要，历史回执不改判。

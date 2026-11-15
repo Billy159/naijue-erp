@@ -7080,3 +7080,10 @@ native现仍按原540秒测量/180清理及C0+900硬截止05:33:53.324922436运�
 D1 BATCH-D1-01公共DB持久批绑定/当前写守卫/receipt/read/finalize唯一集成，已接单并确认现import_batch checkpoint/hash/name/cutoff和不可变receipt/audit JSON可承载，无需新表列，首片source+接口估本轮20分钟；D3 BATCH-D3-01依赖闭包/stream协调/原键inspect-skip-resume已派工；D2盘点row_intent及9caller，先叶diff待D1合同，三者只写新独占outputs不改旧冻结。QB原751结果scope PASS已收到可复用，后核新批语义；T45明确0在途，仅现有ENDED记录，无新server读取/PG/登记，全旧路线收口保留，继续唯一serverowner。首个源码/接口/owner检查点目标北京时间16:30，并非整项工期；待边界实核更新估算，不沿用2–4天。
 
 新路线按依赖分批且单据/必要明细原子，不把44682步骤当44682事务；成功批保留跳过，失败只续未完，COMMIT未知先原批原键读状态，不可见不等于回滚。全包full_xid/pid/xmin/time假设须改持久输入/根批绑定加必要当前写校验，不删guard或循环插COMMIT；优先现有记录，不复用旧synthetic-only接口冒当前已用。部分已提交仍关闭业务，最终全量数量/金额/库存/关系对账才publish。最小新PG验真实多批commit、中间故障保前批、断线未知原键判定无重复续跑、关联/延迟约束及最终核账；不重洗、不新平台/追溯、不全面回归。旧751本地改善/14语义仅局部输入，不签跨批PASS或13层/server。
+
+
+2026-11-15 09:23:58 UTC｜分批首批源码检查点保全：50个精确owner-pinned源码/模型/测试文件6,766,825B已复制只读Git WIP快照 docs/rapid-launch-20261022/source-checkpoints/20261115-batched-first-source，manifest91f5f806…；不是新开发底座/可运行闭包/发布包，原role目录未改，未含真实数据包/凭据。D1 DB-CANDIDATE01 PINS1a41b474…/8现改+5新EXPECTED160、D2叶05 PINS0588b727…/body5933、D3 CLI04 PINS6f27573f…全部精确校验后复制。snapshot另附当前技术登记v2b6f1a649…及独立NEED_FIX原文，明确禁止执行已知阻断的01。
+
+原16:30首片节点已凭08:20:11UTC实际读到的D1/D3源码提前达成；17:10节点实际DB包已冻、D3 CLI17:08源码+3新模拟检查已交。D3原6+descriptor2+reply3+adapter3+normaladapter1与新CLI/borrowed/launcher3仅离线模拟/SQLite，不冒真实commit。D1 host contract1cf37640…定义同一reviewed借入client多组tx，UNKNOWN真实discard停run/下一显式resume重验，host finallyclose；每run一次stepsSha完整性扫描不是全源重编，也非零磁盘读，逐组不重扫成功前缀。真实160 physical/catalog/retained prepared授权仍WIP，prefix155-only/flag不当准入。
+
+QB对DB01静态NEED_FIX唯一P1 BATCH-CORE-ROLE-01：CORE INITIALIZER每组first内部调用IMPORTER-only public inspect，换caller无法满足后续INITIALIZER校验，必42501。原文b8166a337e0dc8008cc70f0d4f4a32b1671cf00f3ed806623ff9b57a5414f967；主控已交D1仅拆公开IMPORTER门与内部CORE严格INITIALIZER锁后同identity/ABSENT检查，另02冻结、不SETROLE/GUC/扩权限绕过。其余已核147不变函数/非routine类别/metadata及组marker/真实currentproof/前驱锁/halfgroup/closed等静态范围复用，PG均未跑，不因host未完加泛门槛。D1继续source，下一host源码/实际record依赖检查节点17:40，非整体工期。T45仍0新动作，业务关闭/真实全批/核账/备份/核心使用完成条件未缩小。上一904cb864实际push成功，含此前待补检查点；本次push按实际另核。

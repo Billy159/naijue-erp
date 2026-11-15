@@ -1,0 +1,43 @@
+{
+  "scope": "BATCH-D3-01 CLI source extension",
+  "upstream": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-party-single-projection-carrier-local-01/source/tools/unified-import/stream-import-cli.mjs",
+      "function": [
+        "runStreamOperation",
+        "prepare",
+        "prepareProduction",
+        "execute"
+      ],
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "bytes": 26499
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-party-single-projection-carrier-local-01/source/tools/unified-import/stream-program.mjs",
+      "function": [
+        "buildStreamProgram"
+      ],
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "bytes": 10302
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-party-single-projection-carrier-local-01/source/tools/unified-import/cli.mjs",
+      "function": [
+        "stream-import exit mapping"
+      ],
+      "sha256": "c8ebe66b671fa0b7903d744f7567f9c0fb1230ce5d7ff654ef7ab312e03c889b",
+      "bytes": 4524
+    }
+  ],
+  "writeOnlyUnder": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
+  "hostOwner": "D1",
+  "hostFilesNotWritten": [
+    "fresh35-host-session.mjs",
+    "whole-host-session.mjs",
+    "whole-package-host.mjs",
+    "whole-sales-host.mjs"
+  ],
+  "pendingHostBoundary": "D1 to confirm one reviewed connection with multiple batch transactions versus reviewed per-batch client factory; existing driver discards each client after group",
+  "pgActions": 0,
+  "serverActions": 0
+}

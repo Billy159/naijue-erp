@@ -6673,6 +6673,25 @@
               "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
               "firstCheckpointMeaning": "source/interface/ownership first slice; not verified total duration"
             }
+          },
+          {
+            "group": "r3-batched-first-source-checkpoint-20261115-0921",
+            "status": "SOURCE_WIP_SAVED_DB01_NEED_FIX_NO_PG",
+            "evidence": {
+              "sourceSnapshotManifestSha256": "91f5f80605a06fadbc325844dfb50ee5430decb63086194ed95311e92676d245",
+              "snapshotFiles": 50,
+              "snapshotBytes": 6766825,
+              "dbCandidatePinsSha256": "1a41b474b8da6aafe72a0d9f5da5a25cf2c990a4ed0a6cdae32e7a971c5c95c5",
+              "dbStaticReview": "NEED_FIX_BATCH_CORE_ROLE_01",
+              "dbReviewSha256": "b8166a337e0dc8008cc70f0d4f4a32b1671cf00f3ed806623ff9b57a5414f967",
+              "interfaceV1Sha256": "d6a7942143c9e5562aa1d0349a43fce871a38c77a0b0cbbee874c54660c47a49",
+              "technicalRegistrationV2Sha256": "b6f1a64950d72a22c74a0547bdfa20c069e2f2be8e6e8dd9c54b850e622961c7",
+              "d2Leaf05PinsSha256": "0588b7272052c11a14860aec401560b4e41d38114f9e95e73f494eca3dd70968",
+              "d3Cli04PinsSha256": "6f27573f5426e552f9bfbbf6fb003ce83c76843f5cbdb25d892b1b02b0de9b81",
+              "newPgActions": 0,
+              "newServerActions": 0,
+              "firstSourceCheckpointMet": true
+            }
           }
         ],
         "currentInFlight": {
@@ -6685,24 +6704,26 @@
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
             "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "ACKNOWLEDGED_FIRST_SLICE_ESTIMATE20MIN",
-            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01"
+            "state": "DB01_CORE_ROLE_FIX_TO_DB02_AND_HOST_SOURCE_IN_PROGRESS",
+            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
+            "work": "DB01 immutable21-file8changes5new EXPECTED160 source; QB found initializer/importer internal inspect conflict. Fix narrowly preserve public importer gate. Outside frozenDB continue genuine physical/catalog/resume/borrowed-client host."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
             "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "DISPATCHED_BOUNDARY_AND_FIRST_SLICE_REQUESTED",
-            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01"
+            "state": "CLI04_SOURCE_MOCK_TESTED_PENDING_D1_HOST",
+            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
+            "work": "actualR3 stream-import batched route/default and explicit same-report resume, borrowed client, launcher source landed; genuine host not yet connected."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
-            "state": "LIGHT_SOURCE_INVENTORY_FOR_BATCHED_INTENT",
-            "work": "751 records evidence preserved; adapt shared caller leaves only after D1 durable contract, no central SQL double write"
+            "state": "LEAF05_ACCEPTED_FOR_D1_SOURCE_INTEGRATION_NOT_PG",
+            "work": "5933 body same as historical03 bytes but now frozen contract accepted, exact matched source proof, no ordinary fallthrough; old source/cost not new PG proof."
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "RECORDS_RESULT_REVIEW_CLOSED_REUSE_IN_NEW_ROUTE",
-            "work": "new batch contract/candidate only once fixed; no old single-transaction new runs"
+            "state": "DB01_REVIEW_CLOSED_NEED_FIX_ONLY_CORE_ROLE",
+            "work": "static existing147/nonroutine metadata and othernewlogic reused; next only exact CORE/internalcheck delta+model/ACL, no repeatedfullreview"
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
@@ -6723,7 +6744,10 @@
             "unknown outcome replay with changed keys"
           ],
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
-          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417"
+          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
+          "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
+          "nextCheckpointTarget": "2026-11-15 17:40 Asia/Shanghai",
+          "nextCheckpointScope": "D1 host source/physical160/resume dependency facts; actualfullPGcandidate requires correctedDB and exact fixture"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

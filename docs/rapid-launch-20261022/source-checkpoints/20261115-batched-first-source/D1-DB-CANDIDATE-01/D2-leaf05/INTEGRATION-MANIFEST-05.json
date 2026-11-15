@@ -1,0 +1,43 @@
+{
+  "status": "SOURCE_READY_FOR_D1_INTEGRATION_NOT_SQL_TESTED",
+  "integrationOwner": "D1",
+  "signature": "naijue_erp.standard_import_row_intent(text,jsonb)",
+  "acceptedPredecessorBodySha256": "2f5e59f30d3b4c36c80840e226cbcbdf4d15c23a1cb9f0f18ee842d7b5184ed7",
+  "evaluatedReadShape751Sha256": "7510551baaa8a2f9bbcd928a93f269b7dca8e0b8d55ca4ccad0d235da3510257",
+  "afterBodySha256": "5933c1461819a212de6cfd9a4f6437506bce9d7eb4bf38243c0e3a8e12461baa",
+  "afterDefinitionSha256": "3e34ff7a47193dccd7ace35419ff4fdbcd0b79880a88bec22e573f653d6b3227",
+  "bodyBytesIdenticalToHistoricalDraft03": true,
+  "resolvedContract": "controller confirmed existing whole_package_v2 selects proof-enforced protocol; new six-arg command preserves root/ordinal; marker never authorizes row; mismatch23514; proof/context/STRICT errors propagate; legacy nonwhole unchanged",
+  "newTechnicalMarkerFieldsRead": false,
+  "trustedProtocolSelectionResolved": true,
+  "failurePolicyResolved": "23514 for exact-proof predicate mismatch; preserve original proof/context/STRICT errors",
+  "activeWholeFunctionCandidate": "ROW-INTENT-BATCH-AFTER-05.body.sql.review",
+  "old03And04StatusesKeptHistorical": true,
+  "sqlParsedOrExecuted": false,
+  "newPgExecutions": 0,
+  "serverActions": 0,
+  "productSourceChanged": false,
+  "retainedLeaves": [
+    {
+      "signature": "naijue_erp.is_native_party_import_insert(text,jsonb)",
+      "acceptedBaselineBodySha256": "dfd1e1ca585e405b6314051578f4cc6218344e9dcdd599f188368165e41a4ffa",
+      "proposedBodySha256": "dfd1e1ca585e405b6314051578f4cc6218344e9dcdd599f188368165e41a4ffa",
+      "disposition": "RETAIN_EXACT_BASELINE_BODY_NO_DIFF",
+      "baselineCatalogMetadataChange": false
+    },
+    {
+      "signature": "naijue_erp.guard_retained_settlement_identity()",
+      "acceptedBaselineBodySha256": "73bde63d2dd84da3c5ad491f2b073344c2c6639e667f443f622c5b8d5ed006f6",
+      "proposedBodySha256": "73bde63d2dd84da3c5ad491f2b073344c2c6639e667f443f622c5b8d5ed006f6",
+      "disposition": "RETAIN_EXACT_BASELINE_BODY_NO_DIFF",
+      "baselineCatalogMetadataChange": false
+    },
+    {
+      "signature": "naijue_erp.guard_unified_document()",
+      "acceptedBaselineBodySha256": "ff462d6a8a30eadea0d98991818cf15c9fd907db0d00956b3be51193846d3e83",
+      "proposedBodySha256": "ff462d6a8a30eadea0d98991818cf15c9fd907db0d00956b3be51193846d3e83",
+      "disposition": "RETAIN_EXACT_BASELINE_BODY_NO_DIFF",
+      "baselineCatalogMetadataChange": false
+    }
+  ]
+}

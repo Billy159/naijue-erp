@@ -1,0 +1,20 @@
+{
+  "offlineSourceChecksPassed": true,
+  "fiveExactFrozenD1InputPinsMatched": true,
+  "bodySha256": "5933c1461819a212de6cfd9a4f6437506bce9d7eb4bf38243c0e3a8e12461baa",
+  "definitionSha256": "3e34ff7a47193dccd7ace35419ff4fdbcd0b79880a88bec22e573f653d6b3227",
+  "bodyIdenticalToCheckedHistorical03": true,
+  "newContractResolvesProtocolAndMismatchPolicy": true,
+  "roleIdFastBranchTypedOrderAndDefinitionHeaderPreserved": true,
+  "wholeMarkerOnlySelectsProtocolNotRowPermission": true,
+  "matchedWholeRequiresExactProofAndSameRootContext": true,
+  "mismatch23514OriginalExceptionsPropagate": true,
+  "threeAffectedCallerBodiesRetained": true,
+  "scenarioGroups": 6,
+  "requirementsCoveredOnce": 16,
+  "sqlParsedOrExecuted": false,
+  "newPgExecutions": 0,
+  "serverActions": 0,
+  "productSourceChanged": false,
+  "installedOrAdopted": false
+}

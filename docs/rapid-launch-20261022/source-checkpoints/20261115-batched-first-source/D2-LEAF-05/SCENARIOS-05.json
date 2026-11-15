@@ -1,0 +1,44 @@
+{
+  "status": "FINITE_SCENARIO_SPEC_ONLY_NOT_IMPLEMENTED_OR_EXECUTED",
+  "scope": "D2 fallback exact matched proof plus only affected caller integration",
+  "scenarios": [
+    {
+      "id": "S1_current_exact_no_id",
+      "coversRequirements04": ["valid_current_no_id"],
+      "required": "Real PAH typed native match and exact current source/pointer/operation/target/fields in valid whole protocol returns true; no marker-only permission."
+    },
+    {
+      "id": "S2_committed_provenance_and_sibling",
+      "coversRequirements04": ["historical_source", "unrelated_current_sibling", "cross_commit_master_document"],
+      "required": "Earlier committed ROOT/warehouse MASTER remains valid provenance for a later document group; historical source current_operation=false cannot authorize a new native row even if another current sibling satisfies context. A matched proof predicate failure is23514."
+    },
+    {
+      "id": "S3_exact_proof_negative_variants",
+      "coversRequirements04": ["wrong_operation", "wrong_target_or_fields", "broken_pointer", "proof_current_null", "all_three_xmin_times"],
+      "required": "Use a finite set of changes within the same small real fixture: wrong operation/target/fields/current proof fails23514; original pointer/proof/STRICT errors propagate. Source/receipt/audit must each satisfy exact D1 xmin/time conditions. Do not mock proof or create independent environments."
+    },
+    {
+      "id": "S4_typed_order_and_empty_shapes",
+      "coversRequirements04": ["typed_invalid_before_match", "match_before_later_bad", "no_typed_match", "missing_null_object_records", "same_heap_orders"],
+      "required": "Preserve typed conversion before matched proof, early true before later bad items, no proof on nonmatch, distinct SQLNULL/missing/JSONnull/object behavior and same-heap layout evidence. Reuse existing bounded comparison mechanisms, not old PASS."
+    },
+    {
+      "id": "S5_frozen_protocol_dispatch",
+      "coversRequirements04": ["trusted_gate_three_states"],
+      "required": "Existing whole shape selects proof-enforced import protocol; actual typed+exact proof authorizes. A bad whole claim fails through proof/context and does not fall back to ordinary maintenance. Genuine nonwhole legacy typed behavior remains. D1 command/commit guard integration must prove new batch cannot omit whole shape."
+    },
+    {
+      "id": "S6_retained_current_callers",
+      "coversRequirements04": ["retained_callers"],
+      "required": "Only affected party set/loop and complete document/settlement paths verify their unchanged current xmin/proof requirements using actual D1 successors; no unrelated family or id-proof suite rerun."
+    }
+  ],
+  "scenarioGroups": 6,
+  "separateEnvironmentsRequired": false,
+  "old751FourteenPassTransferred": false,
+  "old751PerformanceTransferred": false,
+  "reuseExistingBoundedHarnessMechanisms": true,
+  "newPgExecutions": 0,
+  "newSqlExecutions": 0,
+  "serverActions": 0
+}

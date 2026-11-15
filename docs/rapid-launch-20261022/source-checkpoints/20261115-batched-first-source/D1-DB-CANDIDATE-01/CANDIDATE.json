@@ -1,0 +1,27 @@
+{
+  "status": "SOURCE_CANDIDATE_FOR_ONE_STATIC_DB_REVIEW",
+  "actualPgCapture": false,
+  "sqlParsedOrExecuted": false,
+  "pgExecutions": 0,
+  "serverActions": 0,
+  "parentRoutines": 155,
+  "expectedRoutines": 160,
+  "changedRoutines": 8,
+  "newRoutines": 5,
+  "newTables": 0,
+  "newColumns": 0,
+  "parent": "accepted twelve-layer D2 model and T45 baseSourceSet b466/compactSourceSet925a",
+  "D2leaf": "05 frozen contract, body5933; byte identical to03 without transferring historical adoption",
+  "checks": [
+    "all155 predecessor body/definition pins verified",
+    "160 normalized signatures unique",
+    "all non-routine model categories unchanged",
+    "D2check-leaf-05 offline source checks passed"
+  ],
+  "remaining": [
+    "QB static review",
+    "authorized PostgreSQL parse/install and required batch/unknown/replay/atomicity fixtures",
+    "compare expected new canonical definitions and ACL against live PG",
+    "physical production host/catal og/newroute wiring and closure"
+  ]
+}

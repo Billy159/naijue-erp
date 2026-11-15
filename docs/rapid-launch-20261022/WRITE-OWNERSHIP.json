@@ -10604,6 +10604,101 @@
     },
     "sharedWrites": "Only new isolated role directories initially; D1 sole central SQL integrator, D3 coordinator, D2 leaf diff; exact shared file matrix to follow",
     "oldFrozenAndProduction": "preserved, no old-route replay",
-    "pgOrServerPermission": "none from this registry; later exact scope required"
+    "pgOrServerPermission": "none from this registry; later exact scope required",
+    "technicalProtocolRegistration": {
+      "registeredAt": "2026-11-15 08:35:25 UTC",
+      "authority": "verified human batched implementation decision plus controller exact technical ownership; not a new human approval claim",
+      "scope": "SOURCE_IMPLEMENTATION_ONLY_NO_PG_OR_SERVER",
+      "technicalJsonField": {
+        "paths": [
+          "audit_change.after_values.batched_import_v1",
+          "operation_receipt.result_data.batched_import_v1"
+        ],
+        "contents": "same small bounded work-group descriptor/identity, first-last operation IDs/ordinals, predecessor linkage, opaque descriptor digest and current-group facts",
+        "placement": "each existing operation's original immutable audit and receipt, inserted together; CORE/INIT carries root identity too; no added trace rows or table/column",
+        "immutability": "never update already committed audit/receipt; validate receipt/audit marker equality",
+        "atomicity": "deferred commit guards require complete declared group range and all operations same actual current transaction; last-only marker v1 proposal superseded",
+        "readEfficiency": "bounded inspect can use compact last receipt PK instead of reloading51MiB INIT audit"
+      },
+      "commandOverload": {
+        "owner": "D1",
+        "function": "standard_whole_package_command_v2",
+        "parentSignature": "(jsonb,text,text,uuid,int4)",
+        "newSignature": "(jsonb,text,text,uuid,int4,jsonb)",
+        "newArgument": "work_batch jsonb",
+        "oldSignature": "retain existing signature/ACL; prevent accidental old single-transaction route for new batched mode, do not broaden legacy/runtime authority"
+      },
+      "boundedRead": {
+        "owner": "D1",
+        "input": "identity existing six fields plus rootOperationId, exact bounded descriptor plus firstOperationId/lastOperationId/previousLastOperationId/previousDescriptorSha256",
+        "output": "fixed state/subBatchId/descriptorSha256/summary below64KiB; summary only final reconciliation where applicable",
+        "state": "inspect locked ABSENT or COMMITTED; complete only PENDING_TRANSACTION, durable success only COMMIT ACK or new locked inspect",
+        "locks": "existing cutoff then stable subBatchId lock and original actor/request lock consistent order; pending prior COMMIT waits or UNKNOWN timeout",
+        "comparison": "exact JSONB descriptor/original request; opaque JS hash only binding, PG verifies own hash; predecessor PK/root/input binding required"
+      },
+      "semanticConstraints": [
+        "marker/hash alone never grants current business write",
+        "immutable root/actor/namespace/manifest/plan/cutoff plus exact current record membership remain",
+        "current xid/time/connection validate current operation, committed root/group xid stays historical",
+        "single document and required lines/settlements/effects one transaction",
+        "success skip verified only by database committed marker/receipts and exact original descriptor",
+        "no new table/column/business field; no new role/general grant/platform"
+      ],
+      "owners": {
+        "D1": [
+          "central SQL command/context/assert/commit/proof/closed/verify/inspect functions and exact install renderer/access/model pins"
+        ],
+        "D3": [
+          "source/tools/unified-import/batched-stream-plan.mjs",
+          "source/tools/unified-import/batched-stream-client.mjs",
+          "source/tools/unified-import/batched-stream-operation.mjs",
+          "proposed stream-program.mjs/buildStreamProgram and stream-import-cli.mjs/runStreamOperation/prepareProduction source patches only after exact API"
+        ],
+        "D2": [
+          "row_intent, party, retained settlement, unified document leaf diffs to D1, no direct central SQL writer"
+        ]
+      },
+      "baseline": {
+        "directory": "outputs/T45/revisions/20261115-r3-party-single-projection-carrier-local-01/source",
+        "baseSourceSetSha256": "b4665a72a01ba4c0c973ee86aa18271cb40c6bf09276d667c1331cca3dd7044c",
+        "compactSourceSetSha256": "925ad39403debb1a9a7fe84748232475d72e67393ed376e05c9999b9358b64e0",
+        "dbFinal": "D2 twelve-source DEFINITIONS155/BODIES155 exact parent; never overwrite12 layers with base0027"
+      },
+      "version": 2,
+      "supersedesVersion1Sha256": "b3459bb6e9f89b5a2925b81b081fba4f841171541592909afb919d9ea70bfa1e",
+      "publicEntrypoints": [
+        {
+          "name": "naijue_erp.standard_batched_import_inspect_v1",
+          "signature": "(jsonb,jsonb)",
+          "args": [
+            "identity",
+            "work_batch"
+          ]
+        },
+        {
+          "name": "naijue_erp.standard_batched_import_step_v1",
+          "signature": "(jsonb,jsonb,integer,text,jsonb,text)",
+          "args": [
+            "identity",
+            "work_batch",
+            "step_ordinal",
+            "command_phase",
+            "request",
+            "private_parameter"
+          ]
+        },
+        {
+          "name": "naijue_erp.standard_batched_import_complete_v1",
+          "signature": "(jsonb,jsonb)",
+          "args": [
+            "identity",
+            "work_batch"
+          ]
+        }
+      ],
+      "entrypointAcl": "public entry means callable API only, never GRANT TO PUBLIC. Follow existing authorized initializer/importer/controller phase pattern, same owner/SDE/config. No ordinary runtime/LOGIN/new membership/general grant. Exact access/model review before install.",
+      "identityRules": "marker alone never grants business write; committed root/input/actor immutable proof plus current exact source/receipt/audit xmin/time remain; root old xid/pid historical only",
+      "implementationRequirements": "D1 freezes exact identity/descriptor JSON keys, nullability, hashing exclusion rules and no-secret sample in INTERFACE-V1 immediately for D3/D2, not wait all SQL implementation"
+    }
   }
 }

@@ -1,0 +1,152 @@
+[
+  {
+    "signature": "naijue_erp.assert_standard_import_operation(uuid)",
+    "kind": "REPLACED",
+    "parentBodySha256": "f34d6d25c260bb3ddbeb4e66707f7bd68df9a52a2a4d1b8f784ca048aa2677bb",
+    "bodySha256": "94eb15996fa9090fb8b5cc2cc38e3574c45b3c67acedb1c1d47302687d20a21d",
+    "expectedDefinitionSha256": "331cb648832769c2c3c48afe8dd73ef02a8263faea5d509964d1f2c78a34c320",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_import_record_proof(uuid)",
+    "kind": "REPLACED",
+    "parentBodySha256": "02c67d1131ce27141fc0d86eeaafdcd2f0766735dab5b23627cb41ac37b8c282",
+    "bodySha256": "35d2bc55ad8c8f48d5e0d3bf41f20b0cb1c3a98537468a4ab3075e8662abdfc4",
+    "expectedDefinitionSha256": "afcfe2ebaae186bb6e304118a7c4101fce46d01ebe1f4d289e0bc0a8fed67336",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_import_row_intent(text,jsonb)",
+    "kind": "REPLACED",
+    "parentBodySha256": "2f5e59f30d3b4c36c80840e226cbcbdf4d15c23a1cb9f0f18ee842d7b5184ed7",
+    "bodySha256": "5933c1461819a212de6cfd9a4f6437506bce9d7eb4bf38243c0e3a8e12461baa",
+    "expectedDefinitionSha256": "3e34ff7a47193dccd7ace35419ff4fdbcd0b79880a88bec22e573f653d6b3227",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "erp_unified27_runtime_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_whole_package_closed_v2(uuid)",
+    "kind": "REPLACED",
+    "parentBodySha256": "01e39386859cbb3e0617b9c89d1d7670a6b9db97af0a4e02b1d9a74460e30d5f",
+    "bodySha256": "68466068bb35b64ea72645fbce8086153bcd9c52c8c64ceb2ecc642b9106b9ea",
+    "expectedDefinitionSha256": "f987f9482748644391e6576fd9182e6145daa2e1691b1a2b62548fd882a10678",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4)",
+    "kind": "REPLACED",
+    "parentBodySha256": "60860e4c0dc6dd58bf0382e8c40b383b6c7a581104ec9d5e1ca96919b1fc62f5",
+    "bodySha256": "691ffc7ed56d358d840fcbe3d07398985581445875e75e243b439bf4730919b3",
+    "expectedDefinitionSha256": "96928fad2da0372b934cf3556dab3419cb3c37cd5684f6f4845c0829a1d3f1f6",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_whole_package_inspect_v2(jsonb,text)",
+    "kind": "REPLACED",
+    "parentBodySha256": "e17c1236b6fca4fc1fe1e6ad91c1ffa0913bee33e8893dd96829101d53e8ae75",
+    "bodySha256": "9f6a685206405c0e5b3275d9a14621a88d6815c790dde422fa7803d889d93fd5",
+    "expectedDefinitionSha256": "35d16b4c33c029b59db184868abe2a1facea7c8d3517638c06f7768719fb4708",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "erp_unified27_initializer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_whole_package_step_v2(uuid,int4,text,jsonb)",
+    "kind": "REPLACED",
+    "parentBodySha256": "178d956433f015e739cf60530afc6006ff267471e8d98edb6decbeed4d87d1e4",
+    "bodySha256": "3586857822aa74df1ce60cf1de0fd660263919b4944379f337e3352b6603069c",
+    "expectedDefinitionSha256": "812ec38e92fe458475628a3cd3f5a41e01d8917cf913bacfb8a2ce9613bef865",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "erp_unified27_importer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_whole_package_validate_context_v2(uuid,bool)",
+    "kind": "REPLACED",
+    "parentBodySha256": "9ff5c301c61390f0eb762ccc1b336995b7c2dc9426278c1a9f8f7495ac371f6f",
+    "bodySha256": "1921cdcda04b78f6bb37a30565a2b0798c4f575594af5df145e55df3c7648003",
+    "expectedDefinitionSha256": "1152bfe1caf3e6366406f80af2ada9f27f80fcf8a282d45210f0ad47a860d94d",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_batched_import_inspect_v1(jsonb,jsonb)",
+    "kind": "NEW",
+    "parentBodySha256": null,
+    "bodySha256": "b1e2605e1a7582ac95ec959cdd548ec5748fec710b7a691203162f38be06cfbc",
+    "expectedDefinitionSha256": "cea90cacdf6f1081d5fc9acb82a846ca11c47d11b08ae06e0641a018a6b1b5b8",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "erp_unified27_importer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_batched_import_assert_group_v1(uuid,jsonb)",
+    "kind": "NEW",
+    "parentBodySha256": null,
+    "bodySha256": "85cf4b9ceb0ea0f0615955336981a3fca3eac832d9cd0e5534824e6ee8d928be",
+    "expectedDefinitionSha256": "198fafdd341534a24b4b06eaee0f97aeda8720b46780dd5e2f03850975a285c0",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_batched_import_step_v1(jsonb,jsonb,int4,text,jsonb,text)",
+    "kind": "NEW",
+    "parentBodySha256": null,
+    "bodySha256": "4f0fdf5c6c9876bd294250d010dbfcacda1af2002f43b7997ed6f4f0555bae76",
+    "expectedDefinitionSha256": "2ae9e852840a2590e9fb50c3399a35ef71aedbea940822748da7a03b5c42d15c",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "erp_unified27_importer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "erp_unified27_initializer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_batched_import_complete_v1(jsonb,jsonb)",
+    "kind": "NEW",
+    "parentBodySha256": null,
+    "bodySha256": "58d0acaad8afd43f39f35180de6df0c7620448105076cd251fcd49d1dcb1dc92",
+    "expectedDefinitionSha256": "e6b04fd01fb713284356900eb6e445c0442b7b8f28a3427325544af9d2742af6",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "erp_unified27_importer_2393dbc6db9581c2=X/fresh35_owner_20261105_r1",
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  },
+  {
+    "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+    "kind": "NEW",
+    "parentBodySha256": null,
+    "bodySha256": "caf7f0ef0c383e26cea98ae0f694d9da0389a09d9d0bea170853851b56ee96ab",
+    "expectedDefinitionSha256": "207929aa437e57dc140b3d6c2b88e3081b6ac3d597cb2cd6b67538375d218c24",
+    "owner": "fresh35_owner_20261105_r1",
+    "acl": [
+      "fresh35_owner_20261105_r1=X/fresh35_owner_20261105_r1"
+    ]
+  }
+]
