@@ -7546,6 +7546,18 @@
             },
             "reviewSha256": "2c8c38f276a3722b28d9d3ec2ca0162de138e220007b0cd1f9bfd18cb3cd10ce",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_ACTUAL_REGISTRY29_APPLY29_COMPLETE_START29_ISSUED_20261116",
+            "state": "ACTUAL_REGISTRY_APPLY_COMPLETE_START_IN_FLIGHT",
+            "evidenceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-registration29-applied-start-issued",
+              "files": 6,
+              "bytes": 57821,
+              "manifestSha256": "9b509aee450a8098de43a14362e73cf6fbe210fd63243cd1e8027751fe4436dc"
+            },
+            "actualApplyReadbackSha256": "ac1b548c11c4cb576a244ac2bc89e0cc5a39fc4d17e7a3104e243885ce6f1b0f",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7579,15 +7591,15 @@
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "FINAL29_SOURCE_FROZEN_ONCE_FRESH93_RO_DISPATCHED_NO_SERVER_WRITE",
+            "state": "ACTUAL29_REGISTRY_AND_APPLY_COMPLETE_START29_ONCE_DISPATCHED",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "C01PHASESc0d676/PINSefb/READY frozen andfinalQBsourcepairPASS. mainbc6c56800B/proof1c82/priorhelpercca85/caller8ded/helperd4fd/readere2de. 41new localtargetchecks/35PythonAST/6Node24syntax; nofullJSASTavailable nofakeclaim. ActualC28tupleoncef7db from21:36:10Z notliveness. Main02adapter2b0+basisreader c894/readback73baf ready; nowonlyauthorized once actualfresh93 viaoriginalprivatechannel. Noauthbody/PG/Node/registration yet; source/adaptersdonebeforefresh, noapprovalcardunderstandingconsent."
+            "work": "ActualCAS once success e15c/faed/096f andbf048 at22:08:11Z, oldhistory/lock/pending preserved. apply29 originalkey COMPLETED0/7.83698s finished22:09:11.808Z, ac1b548 checked22:09:15.816Z; originalfinite controller/admin exact. RuntimeAuth/membership/attrs unchanged, native auth notattempted. MaintenanceCIDff06 stoppedPIDabsentexit0noOOM/noPGpidops. Current29auth applied NOTrestored, old28restoredhistorical. Onlystart29 ca9f afteractualapply now onceoriginalkey, integrateddescribe readstoredoutputs reader e2de, no extra Node/recompile/material/install/REAL."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "STOPPED_AUTH28_RESTORED_FINAL29_SAME_VERSION_SOURCE_PASS_ONCE_FRESH93_IN_FLIGHT_NO_CLOCK",
+          "formalR3": "REGISTRATION29_AND_APPLY29_ACTUALLY_COMPLETED_START29_ISSUED_IN_FLIGHT",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7596,8 +7608,8 @@
             "guard deletion",
             "unknown outcome replay with changed keys"
           ],
-          "latestDispatcherSha256": "6b6b0d0aee71e95e989431bb6df822ab77cfa925fdeab1a12077b4feb1205842",
-          "latestPolicySha256": "56bb27580cf88df1c61491366da765a501dd84f9dce70033bf1c2a601cb84858",
+          "latestDispatcherSha256": "e15c47bb947a402f87de40e9972161b577df78611dd7a8f87019ad2f48ea54ed",
+          "latestPolicySha256": "faed7dec0ccd88d74745e47bbdca94bbb8a9095f550d8016945f38d76ead827e",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
           "nextCheckpointScope": "freshactual77basis,onefinite28clockthenactualregistry/apply/startstoredoutputs;noapprovedsameclasspermissioncard",
@@ -7612,8 +7624,8 @@
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "FINAL29_MAIN02_SOURCE_PASS_ACTUAL_FRESH93_THEN_REAL_API_DRYRUN_REQUIRED",
-            "work": "ActualFINALreview2c8c bindsMain02bbfc/module096f60700+bytes/reg75df/templateccb/carrierd01e andT45c0d676, scopedP1fixedbeforeexecution. Main01retainedineligible. No29authority/clock yet; actualfresh93 pending, then real issue_registration dry_run nofiles beforeactualfiniteissue, original900fresh/4320role90-92-115-120/strict900install/writer3000 preserved."
+            "state": "ACTUAL_APPLY29_VERIFIED_START29_AUTHORITY_ISSUED",
+            "work": "ActualMainphase2ae normalized ac1b548 and exactroles095c/clock4320 budget; typed28failed prior scope successfullyvalidated withfrozensource. Startca9f4747B starts22:10:48.939Z expires22:25:48.939Z. No innerinstall/outerinstall/REALauthority yet. Await actualstart terminal saveddescriptor/facts/process andstrict900 margin."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7629,10 +7641,9 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "onceactualfresh93/originalgrant/absence/lock andsource unchanged",
-            "realAPI nofiledryrun thenfinite29registry/apply/start",
-            "actual genuine descriptor/signing margin andDB05 13ACK/catalog",
-            "original511234REAL/reconciliation/backup/browser/roles/formalURL fullgoal"
+            "actual start29 originalterminal CACK storedgenuine descriptor andstrict900signing",
+            "actual DB05 13ACK/catalog then original511234REAL/reconciliation",
+            "actual auth29 restore aftersettled operation, backup corebrowser roles formalURL fullgoal"
           ],
           "normalSource": {
             "db05": {
@@ -7694,11 +7705,23 @@
           "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear",
           "finiteWindows": {
             "generation": 29,
-            "state": "NOT_ISSUED_FRESH93_RO_IN_FLIGHT",
-            "actualApplyConfirmed": false,
+            "state": "REGISTRY29_AND_APPLY29_ACTUALLY_COMPLETED_START29_ISSUED",
+            "issuedMetadataSha256": "966b6dabc79d2b4e1a27682c9b304dbcaa91f507a1b6a24cbcc27456f07068f6",
+            "startsAt": 1794780418224,
+            "registrationExpiresAt": 1794781318224,
+            "roleApplyExpiresAt": 1794782218224,
+            "controllerValidUntil": 1794785818224,
+            "backupAdminValidUntil": 1794785938224,
+            "restorationDeadline": 1794787318224,
+            "policyExpiresAt": 1794787618224,
+            "actualApplyConfirmed": true,
             "actualStartConfirmed": false,
             "actualInstallConfirmed": false,
-            "actualRealImportConfirmed": false
+            "actualRealImportConfirmed": false,
+            "actualRegistryReadbackSha256": "bf0484f8d19a2ff3cb7748fa1c0f50fd0c1c9d7d137c0f058f92e7f2c5c08b6f",
+            "actualApplyReadbackSha256": "ac1b548c11c4cb576a244ac2bc89e0cc5a39fc4d17e7a3104e243885ce6f1b0f",
+            "actualRestoreConfirmed": false,
+            "startAuthoritySha256": "ca9f919a3f8d4ca0a423e1e3d80de661fdbc2db022f6887cc6e680e034cd6c55"
           },
           "sourceAudit": {
             "generation": 29,
@@ -7708,16 +7731,16 @@
             "mainPinsSha256": "bbfc0ac54975b69efd204aceb53812c60aaee1cfc277fd4e19cf348764936ec3",
             "phasesSha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6",
             "T45PinsSha256": "efb889be9e5b5e31ec4d1fd26c4a74a73cc86c79d3dcbeff47991b12daf25ce2",
-            "actual29WindowIssued": false,
+            "actual29WindowIssued": true,
             "nativePass": false,
             "closedFinding": "PREVIOUS28-CLEANSTOP-SHAPE-01"
           },
-          "latestModuleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+          "latestModuleSha256": "096f8ebca3ec5aee1f3091a18842e533e42932fb7b26d3da689e7a4d7a1de799",
           "latestEvidenceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-start28-failed-clean-stopped-auth-restored",
-            "files": 5,
-            "bytes": 20547,
-            "manifestSha256": "d6c30c18c480972b5a1f9c836a386dd84a32f69bb61d9431b71621270c28adf8"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-registration29-applied-start-issued",
+            "files": 6,
+            "bytes": 57821,
+            "manifestSha256": "9b509aee450a8098de43a14362e73cf6fbe210fd63243cd1e8027751fe4436dc"
           },
           "currentService": {
             "serviceKey": "t45-first-r3-native-service-start-20261116-28",

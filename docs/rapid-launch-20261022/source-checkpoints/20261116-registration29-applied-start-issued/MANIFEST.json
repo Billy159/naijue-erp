@@ -1,0 +1,32 @@
+[
+  {
+    "bytes": 45609,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-basis-local-02/REGISTRATION-BASIS29-20261115T220513Z.json",
+    "sha256": "d149e944dafc341a9d2a0200a3348bf69bc0a3d4852181b77c7e05e1002a8520"
+  },
+  {
+    "bytes": 2237,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/ACTUAL-ISSUER-API-DRYRUN29-01.json",
+    "sha256": "af1102e83e51a7fad58d23f8873cd179fdbeeb2a36177dbaa1ab0ba0998fbcd8"
+  },
+  {
+    "bytes": 1879,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct29-registration-window-01/ISSUED.json",
+    "sha256": "966b6dabc79d2b4e1a27682c9b304dbcaa91f507a1b6a24cbcc27456f07068f6"
+  },
+  {
+    "bytes": 4549,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-actual-01/REGISTRATION29-READBACK-01.json",
+    "sha256": "bf0484f8d19a2ff3cb7748fa1c0f50fd0c1c9d7d137c0f058f92e7f2c5c08b6f"
+  },
+  {
+    "bytes": 3135,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-actual-01/apply/READBACK-01.json",
+    "sha256": "ac1b548c11c4cb576a244ac2bc89e0cc5a39fc4d17e7a3104e243885ce6f1b0f"
+  },
+  {
+    "bytes": 412,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service29-start-window-01/ISSUED.json",
+    "sha256": "c0f745fb5bfbb6925612ddedebfe9f584761df63f8c4e8e14bdd6ef4f26432a2"
+  }
+]

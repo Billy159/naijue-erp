@@ -1,0 +1,39 @@
+{
+  "actualOutputDirectoryAbsentAfterDryRun": true,
+  "actualRealAPIReturn": {
+    "applyHostSha256": "1df0581c01eaa9979d8cfd8aaecaae608ac5d561dfe8955157505aca3e4b4614",
+    "backupAdminValidUntil": 1794785938203,
+    "basisSha256": "d149e944dafc341a9d2a0200a3348bf69bc0a3d4852181b77c7e05e1002a8520",
+    "carrierSha256": "82139d6371c4374511db7a1b1987e735a5925c3ef9966819b778aea0cdca03cd",
+    "controllerValidUntil": 1794785818203,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct29-registration-window-01",
+    "dispatcherSha256": "77b00b9c0cbdddcb9ac0f14c278a0c633e4f29a761ec12fc859b539171dcaf43",
+    "dryRun": true,
+    "independentReviewSha256": "2c8c38f276a3722b28d9d3ec2ca0162de138e220007b0cd1f9bfd18cb3cd10ce",
+    "jobs": {
+      "apply": "t45-r3-ordinary29-auth-apply-20261116-01",
+      "install": "t45-r3-batched-install-20261115-01",
+      "materialize": "t45-r3-batched-root03-source-delta-20261116-01",
+      "restore": "t45-r3-ordinary29-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-29",
+      "stop": "t45-r3-ordinary29-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false,
+    "policyExpiresAt": 1794787618203,
+    "policySha256": "4262a4c3aba9712f25ddbc03e400de839b7ff19637c842237d15da173da24ca6",
+    "registrationExpiresAt": 1794781318203,
+    "registrationSha256": "43bd7c6b42a8d54c16cf3c35cc969c684a7b32f9c92f4fe73b92806f98720390",
+    "restorationDeadline": 1794787318203,
+    "roleApplyExpiresAt": 1794782218203,
+    "rolesSha256": "c1707a599b4687831652f0fb550feafc483736a5293d3729537ad2cd617f4671",
+    "rulesSha256": "c0d6763389998c439b4ee1e611f131ce3709a519d13ee5f6dd897591216411e6",
+    "sourceAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+    "startsAt": 1794780418203,
+    "state": "DRY_RUN_NO_AUTHORITY_FILE_CREATED"
+  },
+  "apiSha256": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda",
+  "newAuthorityFiles": 0,
+  "serverActions": 0,
+  "sourceMainPinsSha256": "bbfc0ac54975b69efd204aceb53812c60aaee1cfc277fd4e19cf348764936ec3"
+}
