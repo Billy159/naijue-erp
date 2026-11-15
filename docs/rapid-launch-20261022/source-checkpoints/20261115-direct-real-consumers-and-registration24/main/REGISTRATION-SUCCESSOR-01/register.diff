@@ -1,0 +1,20 @@
+--- CANDIDATE-04/register_cas.py
++++ REGISTRATION-SUCCESSOR-01/register_cas-successor01.py
+@@ -8,7 +8,7 @@
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-'+GRANT)
+ H=B/'r3-05-write-continuity'
+ LOCK=B.with_name('grant-5cc58239751e4e2a')/'execution.lock'
+-ENTRY=B/'r3-direct24-batched-registration-source-20261115-01/register_cas.py'
++ENTRY=B/'r3-direct24-batched-registration-source-20261115-01/register_cas-successor01.py'
+ AUDIT=B/'r3-direct24-batched-registration-cas-20261115-01'
+ OLD_DISPATCHER='4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+@@ -113,7 +113,7 @@
+   'EXACT_EXISTING_READONLY_WRAPPER_REQUIRED')
+  prior.original_basis()
+  prior.core.stopped_generation(prior.old.service)
+- need(prior.settled('writer'),'EXACT_ORIGINAL_WRITER_PROCESS_NOT_SETTLED')
++ need(prior.child_settled('t45-first-20261110-r3-real-execute-20261114-06','writer'),'EXACT_ORIGINAL_WRITER_PROCESS_NOT_SETTLED')
+  return readonly
+ 
+ def installed_wrapper(raw,cfg):

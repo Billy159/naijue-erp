@@ -1,0 +1,10 @@
+{
+  "VALIDATION.json": "22e2056d54b2588b38be3e285fcf389195366321ccf1d6361504803e043710db",
+  "admin_exec.DIRECT24-UNREGISTERED.py": "e6a40719397dc47fd47b77985c60d2ea0f23208956f8603c05317ba1893d09f8",
+  "issue_phase.py": "0f6770c658c054e5c5df2351f1a6ebcd939cc3be7867b2ba29a2f1bf0dce6c9b",
+  "issue_registration.py": "7125d7bcae27e088913d6deee016714b18bd6208a036daf680dc1ff5e2898fa5",
+  "issue_upgrade_authority.py": "e6f0e75c716e5c0a3712ac8f6cc1bf772ffd80a4215833606fd8218202047e6c",
+  "original-cas-direct24-carrier.UNISSUED.py": "4bd13d308c431349b2362e48f3cc72a44960c7d40af5f6ab385cf038644521e5",
+  "r3_direct24_batched.py": "d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef",
+  "register_cas.py": "1ed3132ec702fdf80c9f742ac98b0d3f6b95726cb84625642f7d543c20c7bc03"
+}

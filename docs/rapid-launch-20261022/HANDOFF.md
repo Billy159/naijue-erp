@@ -7455,3 +7455,8 @@ Verified originalhuman origin01a19f9f/turn01a1df2e-2928-7320-805d-08d49c034825/m
 ## 2026-11-15T22:06:00+08:00 — 安装身份适配02独立源码通过；实际阶段窗口尚未签
 D1仅1个安装文件769382ea…改接现有有限backupAdmin真实session，helper自己SET ROLE原owner，并据实记录两个身份、SET/RESET ACK及失败unknown。compile将现有backupAdminValidUntil纳入程序精确hash；不新开owner LOGIN/密码/角色授权，原13SQL和161模型逐字不变。QB只核新差分SOURCE PASS，01其余范围复用，0PG/演练。准确22文件293417B已封入源码检查点，manifest7c420faf…，原QB回执b359dc6f…。
 T45已核21:55七新key两grant全部ABSENT、无activeunit、PG停库、49输入指针已恢复。最终381/278源按D1准确offline base2a2f/compact20d4装配，正常install/writer consumer与PHASES闭合中。主控按install780s/writer3000s及收尾余量拟有限controller90/admin92/restoration115/policy120分钟，仍在原有限验证器上限内，下一冻结只核窗口标量和phase接口；无新权限或服务器guard更改，尚未签发窗口/作业/数据库动作。真实首批仍无回执，不冒充导入完成。
+
+
+## 2026-11-15T22:40:00+08:00 — 登记后继实际成功；同版源码物化进行中，真实写入未开始
+T45 actual14:37:54.887Z原audit读回REGISTERED_NO_PHASE_SUBMITTED，dispatcher9b267171/module d60c6863/policy dc119745准确，原history/lock保留；证据4f5792de…、root result8f0a95e2…。初次入口因主控保留旧prior.settled(writer)而KeyError；实际前驱23没有该phase。14:27原audit证明未进入AUDIT/模块/策略发布，只有原stage两件。仅改准确original06 child_settled，并以原inode/旧源/失败回执全SHA证明后O_EXCL追加修正源和新回执；QB窄核SOURCE PASS，不盲重放、不覆盖原件。
+源码最终consumer02及主控04已过必要独立SOURCE复核：operator compact20d4与batched catalog三证据分开，49entries/48changes canonical access及restored23指针准确，inner/outer期限等真实controller截止、不改原host/consumer guard。原角色/policy窗口未延，物化另用同scope/原key完整预算window02；目前仅登记已实成，PG在audit时仍停，真实数据未写入。45文件907407B快照manifest6dfef80f…保code/metadata/actual receipts，381源码5.114MB归档f361…及40part原件复用，不重复打包。下一步只按实际物化/apply/start/currentC/describe/安装/批提交回执继续，不恢复演练。

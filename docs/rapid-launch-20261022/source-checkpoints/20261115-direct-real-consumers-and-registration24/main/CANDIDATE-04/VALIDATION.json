@@ -1,0 +1,17 @@
+{
+  "state": "SOURCE_ONLY_UNISSUED",
+  "reuse": "CANDIDATE03 all other scopes reused; only DIRECT24-WRITER-EXPIRY-01 fixed",
+  "plannedWindowsMinutes": {
+    "controller": 90,
+    "backupAdmin": 92,
+    "restoration": 115,
+    "policy": 120,
+    "serviceMaximum": 100
+  },
+  "rulesFile": "outputs/T45/revisions/20261115-r3-batched-real-final02-source-local-01/PHASES-02.UNISSUED.json",
+  "rulesSha256": "106728b14a56a1519a607a22462a98fd9c73d5b932afa2fd53c11b9d41d94431",
+  "syntax": "all7 AST parse success; no issuance/runpy/PG/server",
+  "serverMutations": 0,
+  "authorityFilesCreated": 0,
+  "writerAuthorityExpiry": "exact actual roles.controllerValidUntil; actual job3000s plus service2min/policy checks, no consumer or PG safety change"
+}

@@ -1,0 +1,85 @@
+{
+  "state": "SCOPED_SOURCE_PASSES_NOT_SERVER_RESULT",
+  "sourceThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "verifiedBy": "read_thread actual source items",
+  "selectedControllerCandidate": {
+    "directory": "CANDIDATE-04",
+    "pinsSha256": "23dd17971865340417dca5dd5e5b88991e46c22d8d13e14072811899b06794b0"
+  },
+  "selectedT45RulesSha256": "106728b14a56a1519a607a22462a98fd9c73d5b932afa2fd53c11b9d41d94431",
+  "parentReviewReceiptSha256s": [
+    "9d8726b709ee8bf728003b32356bcaeb36ce42570d8d51ba7393288a04b4ade2",
+    "b359dc6f459bf1c97f8ce3ca9fb976a0b084bd399d3f606956e1d834335292de"
+  ],
+  "reviews": [
+    {
+      "turnId": "01a1df96-12f2-78c0-abea-2d537b2ada36",
+      "messages": [
+        {
+          "messageCallId": "exec-31dee866-e456-4e2d-87be-e8070d46a21c",
+          "text": "QB 04准确期限小复核完成：DIRECT24-WRITER-EXPIRY-01 CLOSED；CANDIDATE-04 为SCOPED SOURCE PASS，03/NEED_FIX历史保留。仅核03→04实际执行源差分/8成员pins/工作root一致性；03其余范围直接复用，0issuer执行/授权生成/systemd/PG/server/演练/改件。\n\n04 PINS SHA23dd17971865340417dca5dd5e5b88991e46c22d8d13e14072811899b06794b0，8成员全部匹配，工作root七执行源逐字相同。唯一逻辑差分issue_phase.py:225-229：expiry=roles.controllerValidUntil，明确assert expiry+120000<=actual start servicework、expiry<=policy，保now+rule.timeoutSeconds*1000<expiry。后续inner和outer仍使用同一expiry，准确符合consumer02的真实apply-role deadline==outer以及原genuine context/controller safety合同，job3000/child2780不变。\n\n新issue_phase SHA0f6770c658c054e5c5df2351f1a6ebcd939cc3be7867b2ba29a2f1bf0dce6c9b；其他6执行源逐字与03相同，VALIDATION只更新修复说明，rules固定准确PHASES02 SHA106728b14a56a1519a607a22462a98fd9c73d5b932afa2fd53c11b9d41d94431。没有选择T45另造的consumer03，也没放松现有consumer/host/角色期限guard。\n\n以上仍SOURCE-only UNISSUED，不代表CAS已经登记或任何phase成功。main可依既有真人授权消费实际新freshbasis/准确源规则，T45保持唯一serverowner；实际C/describe/登记及安装/提交/核账事实由后续真实流程记录，不新加审批或演练前置。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9c02b5b208191b243c22c98bb781f",
+          "text": "期限修复复核通过，问题已关闭：内外层授权现与真实 controller 截止时间一致，并保留执行、服务和策略余量检查。\n\n结论已发主控。本轮未生成授权或操作服务器；实际登记、安装和导入结果尚待确认。"
+        }
+      ]
+    },
+    {
+      "turnId": "01a1df88-e5de-77e2-8b27-c29fa04feb1a",
+      "messages": [
+        {
+          "messageCallId": "exec-6311a892-bbd6-4337-b1d2-cd319af74b76",
+          "text": "QB先报明确接口不合 BATCHED24-SOURCE-BINDING-01（P1）：final02 PHASES指定writer bundle/batched_real_host.py:100-104要求 expectedBinding.batchedSourceSetSha256 == SOURCE_SET_SHA256（20d4…完整compact source descriptor）。但已核D1 fresh35-host-session.mjs 的batchedEvidence.batchedSourceSetSha256取 describeFresh35CombinedCatalog(currentBatchedCatalog).sourceSetSha256；buildFresh35BatchedCatalogV1明确计算 hash(JSON.stringify({parent:prior.descriptor.sourceSetSha256,pins:batchedImportPins}))，不是完整compact descriptor的20d4…。准确actual catalog binding会在root validate被BATCHED24_BINDING_REQUIRED拒；若强填20d4满足root，则原genuine host完整exact authority匹配会拒绝。请分清operatorSourceSetSha256（完整代码闭包20d4）和batchedSourceSetSha256（实际batched catalog descriptor）；前者原scope/materialization已绑定，后者应与实际对应descriptor事实核，或仅保hex+由原host精确核，不能强等20d4。不改DB05/host、不加演练。其余materialize/install/writer实际差分仍继续核，稍后一次列齐；未读任何私密内容/业务行/完整archive，0PG/server/改件。"
+        },
+        {
+          "messageCallId": "exec-5ecd7f1f-4cd2-469c-8807-430a051d885c",
+          "text": "QB final02三个新增normal consumer剩余差分已核完，一次合并：materialize/install为SCOPED SOURCE PASS；writer本版NEED_FIX仅BATCHED24-SOURCE-BINDING-01（P1），无另一个明确新发现。Standards0，Spec1。该问题与你独立定位相同；未将SOURCE-only冒充整链ready，等T45新冻结仅复核受影响facts/绑定差分。QB0PG/server/fixture/旧suite/业务行/私密内容/源改动，没有读取或解压40 archive parts。\n\n当前审查点PHASES SHA3585810df6f0c89f3ca9b33327b23125c157c3d06916f05834d27a74f2603242准确，按其中实际绝对phaseDirectories核，未假设final02子目录。新增非archive bundle成员pin均匹配：materialize hostd27a6fbb… / install host808117e2… / writer hosta07e2d77…，同launcher523e8191…两包逐字pin一致。source-description75e28d82…与rows3a912117…匹配，381行包含D1 installer769382/catalogf35d/sourcec393+D3 wrapperd083准确4row；描述5114025 bytes/archivef3616f7d…/40parts与PHASES的part摘要字典一致，仅核元数据不展开整包。\n\nmaterialize固定新OUTPUT，root/no-follow/单链输入、冻结description→rows/runner/parts/归档总sha，禁止绝对/..、node_modules/reference-inputs路径，仅regular member、逐size/hash、exclusive写且整体读回，原PGDATA identity且postmaster.pid absent、保28GiB；不覆盖旧输出，不碰DB/依赖/业务资料。companion runner准确同版写OUTPUT/batched161-run.mjs，source-materialization单独记录，无假live。RO describe同launcher在真实C/old envelope+当前target/期限下compile真实program及公开facts，describe分支在任何PG Client加载/创建或mkdir前return，不创建第二launcher/假program。\n\ninstall rootconsumer精确注册job/policy/source/root私参custody/ordinary24 apply实际terminal+期限、当前service24出生/ACK/容量、source-ready记录；有限inner9字段与实际完整upgradeDescriptor一致，原私密stdin→同namespace rootnativeadmin adapter、13原事务actual capture由D1helper承担。只在绑定native result、child exit0/lifecycle/reap、state installed/captured、connection CLOSED、实际roleRestoreACK成立时root exit0；launcher在设置roleACK前先核13ACK及completion，失败不借outer状态推断native成功。inner authority仅本次独占创建，确认自身identity且child/descendants reaped才移除，连接关闭/失败/unknown保持实际字段。原D1接口与13SQL/模型未重验。\n\nwriter原49输入access.make_plan/prepare/restore机制与原8c2f pointer前提保持；nonroot access只为唯一新key补原execute模式，不扩其他key；admin_material、execution_projection、原source facts、INIT私留、scratch保留、基本私密I/O函数逐字不变，runtime/底层carrier/support/profile逐字复用old22。controller只改ordinary24 custody/真实apply引用；历史链精确改为原06在service23 ABSENT的3份root/public匹配receipt+原hold。真实独立新plan目录独占创建，原index/summary+6批准hash组装normal batchBinding，无重清洗/wholefallback/伪brand。D3原prepared同对象+borrowed reviewed client正常全groups后，只有COMPLETED+CLOSED才经新genuine host把persisted重建对象锁后CORE COMMITTED/ROLLBACK注册，再原verify→ROLLBACK；final exit0还要求VERIFIED及readback CLOSED，不把原提交抹成没提交。私参只在原通道/本轮projection，reap确认后恢复原49metadata并保失败scratch，结果大体私有保留，public不重发INIT/来源金额。\n\n唯一现存接口阻点仍是writer100-104把catalog-specific batchedSourceSet当full compact20d4；保20d4作operatorSourceSet，下一冻结请用同source/historical metadata target真实构建的batched catalog descriptor公开事实与实际install/capture/public pin传递，原host精确授权继续最终比对，勿猜hash。其他已核源范围复用，不加演练/审批，不等待不存在的futureplan恢复。"
+        },
+        {
+          "messageCallId": "exec-f7655b8b-ae64-42ff-aaf8-4e76a25f5f91",
+          "text": "QB consumer02差分复核完成：BATCHED24-SOURCE-BINDING-01 CLOSED，准确PHASES-02可记SCOPED SOURCE PASS；01原件/NEED_FIX保留。01剩余明确发现已在上一条一次列齐，仅这一处；不增加其他阻点。QB0PG/server/演练/旧suite/业务行/私密内容/改件，未读解40 archive parts。\n\n实核PHASES-02 SHA106728b14a56a1519a607a22462a98fd9c73d5b932afa2fd53c11b9d41d94431，以其中3个实际CANDIDATE-02/bundle为准；所有非archive bundle成员pin匹配。新同版launcher10c0c04f3e3353209ef0263acd223a4deecd1d556c542a9a8f2dcc5d197be254两处逐字一致。其新增RO描述沿同source+protected envelope恢复历史target，buildCompact→buildBatched→原describe，得到batchedCatalog闭三字段sourceSet/catalogSpec/model，且spec/model先准确比upgrade program描述。describe仍在PG/mkdir前return；exec只有13ACK/capture/roleRestore确认后将这三字段带入实际安装result，root消费者公开传出，与sourceOnly预期区分。\n\nwriter新host6040d685363f7b76a43d8c0c4b2f3aa7b4f75f6c02d2ddfce1d624f673de2dc4已去掉batchedSourceSet==20d4的错误等式，改为外层闭三字段batchedCatalog、三值hex、与expectedBinding三证据逐项相等，并在真实COMPLETED0 install terminal/result准确pin/service/CLOSED/roleRestore之上再比install public.batchedCatalog完全相等。20d4继续只绑定operator全代码闭包，D1原host真实current catalog+exact authority最终核验不变；未伪造hash/live/catalog或改D1/DB05/原identity。\n\nnonroot_input_access02 SHA0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385，相对01唯一逻辑变化是旧reference allowlist增加准确t45-first-20261110-r3-real-readback-20261114-23-01且phase必须restored，原active/metadata/ledger/恢复规则未动。49条access plan JSON语义与01相同；仅按既有access.encode=(json.dumps(sort_keys=True)+'\\n').encode规范字节，实核canonical file完全匹配该编码，SHA2a8d039a80f69276eccc606036917584fa23b3297b62182fe435e32f6d04cbb5准确、requestKey为本轮新唯一writer，49entries/49changes保持。原8c2f现场指针前提未放宽。\n\nmaterialize02仅SOURCE_DESCRIPTION pin级联为e63395c7…；description仅installerRunnerSha256变化，source-rows逐字相同、381/278源码/archivef361…5114025B/40part元数据完全相同，未重建整包。install02 root只launcher pin+public batchedCatalog传递变化；writer其余链路/新genuine verify、借用连接/清理及已过D3/D1/service24都复用，不重审。\n\n本结论仍SOURCE-only UNISSUED，非真实安装/授权/准入/业务结果。main phaseissuer应消费actual batchedCatalog对象及当前C/期限，不从flat compact sourceSet推算；实际13ACK/capture/ROLE恢复、首批/全批COMMIT与最终核账仍由T45既有授权执行，未加审批或演练前置。"
+        },
+        {
+          "messageCallId": "exec-1ee8f142-3c5f-492a-a92c-54e7c7855736",
+          "text": "更正上一条access plan计数笔误：实际输出是49 entries、48 changes（与01 JSON语义相同），不是49 changes。canonical SHA/编码一致性及SOURCE PASS结论不变；未执行prepare/restore。"
+        },
+        {
+          "messageCallId": "exec-acdac9fe-e757-46e9-bc54-7135cfd40a31",
+          "text": "QB先报明确期限接口不合 DIRECT24-WRITER-EXPIRY-01（P1）：CANDIDATE-03/issue_phase.py:225-227把writer expiry=min(now+55min,controllerValidUntil-2min,servicework-2min,policy)，因此永远严格小于controller实际期限；但已过consumer02/batched_real_host.py:187-189真实controller(a)仍明确要求writer a.expiresAt == 实际apply receipt.credentialValidUntilByRole[ROLE]，会恒拒ORIGINAL_INSPECT_FINITE_ROLE_READBACK_REQUIRED。\n\n这也不是只改root == 为 <=即可：原genuine loadOrdinaryCurrentService:711-712把context expiry夹到retained authority.expiresAt，而原fresh35Admin154ControllerCatalogSql要求实际controller.rolvaliduntil <= context expiry（catalog代码safety），所以短于controller的inner authority仍会被当前controller guard拒。原root相等关系是在保此既有合同，不应为过新issuer而放松安全guard。最小对齐方向是issuer按实际controller截止签发inner/outer（另核不超过service/lease/policy，并保实际3000s+工作余量/子进程上限）；若坚持更短授权须明确调整此整体既有合同，不建议在本轮扩大。其余03新增issuer差分继续核完，稍后一次列齐；未执行issuer或PG/改件。"
+        },
+        {
+          "messageCallId": "exec-29bf1051-eb3a-452c-a43e-2a63f92eee94",
+          "text": "QB CANDIDATE-03剩余新增issuer差分已核完，一次列齐：NEED_FIX仅DIRECT24-WRITER-EXPIRY-01一条P1；Standards0/Spec1，无另一个明确字段不合。你已选择的工作root修复（inner/outer=真实controller截止，另核3000s+service/policy余量，不改consumer/host guard）方向正确；03冻结原样、待04只核该差分。QB未执行issuer/runpy/PG/server/演练、未生成授权或改源。\n\n03 PINS1dfc6d76e1a324b25b75f3bf5da1755b2ad50ce9162a6c6ca3ca90fbdee6aa98及8成员匹配；原CAS02的module/template/registrar/carrier四runtime逐字相同。7源码只做AST读取确认，无执行。issue_registration仅controller90min/admin92min/restore115min三个标量，原apply30min/policy120min、主机role.validate约束和源权限guard不变，90<92<115<=210且仍留恢复边界。\n\nissue_phase新增normal接口按准确PHASES02固定source bytes构造：api确先加该bundle到sys.path再runpy scope/validate，能解析同bundle原r3_05_cli（没当缺陷）；所有phase source/bundlePins、实际证据/前驱各准确输入hash，当前注册rules pin与ISSUED/policy绑定。保留原start/stop/restore实际收据函数；start用原service24 scope并替换真实前驱23/apply pins，lease min100min/restore-10min及backupAdmin/服务work/policy关系明确，未猜实际epoch。materialize只固定source-only scope+当前description，无DB授权。输出目录独占创建不覆盖，全部server消费仍按原注册固定key/source/authority bytes/window再核。\n\ninstall_authority准确消费actual ROdescribe原descriptor/state=NO_PG_OR_WRITE/0 connections+mutations，与真实apply admin deadline/currentC/epoch匹配；仅接独立9field issuer已签文件的准确path/hash，outer program/start/end/admin字段逐项送现有host.validate，host encoder保持一致，没有代签业务或造program。issue_upgrade_authority只按实际descriptor/liveFacts的原mode/session/effective/ownerLoginRequired/SID-OID-version/currentC/epoch/source/target/spec/model/13步DB05/有限window签固定9字段；independentReviewRef/有限输出保存，不调用server、不创建角色或host能力。\n\nwriter_authority除已报期限错误之外，其余接口正确：actual install terminal COMPLETED0/result CLOSED+roleRestore、exact service、batchedCatalog三字段及spec/model匹配，rootPins提供实际install结果字节；原公开facts SHAe6a76d0a1753ddd90d74b240d807e082e7bc2c6b5e36ce68f1228582ffaf4eb7实核准确，其20个原binding字段通过dict保留，只覆盖currentC/epoch并新增BATCHED/DB05/三catalog证据，没有伪brand或改原keys。inner经原cli.require_execute_authority，accessPlan按现有access.encode+canonicalSHA2a8d…，outer含batchedCatalog并调用已过consumer02.validate，非把compact20d4当batched catalog。全套不读secret/业务行。\n\n因此只修issuer期限与原root==/genuine rolvaliduntil<=contextExpiry合同的确定性冲突，不扩大到consumer deadline放宽、历史source复验或新演练/审批。actualC/实际describe/当前start与apply/install结果待T45真实流程供入，SOURCE-only不能冒充登记或执行完成。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9be838cf0819188e957d99c1d5b79",
+          "text": "02 修复复核通过，摘要混用问题已关闭；恢复记录白名单和计划编码也已准确核对。结论已发主控。\n\n本轮仅做源码检查，未签发授权或操作服务器；正式安装与导入结果仍待实际确认。"
+        },
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9bfd886e881918e8d35fb9e70a5bd",
+          "text": "本轮核完，仅发现一处：新写入授权期限与现有入口要求冲突，会在写入前被拒绝。主控已确定只修签发器，保留消费者和权限校验。\n\n其余新增字段未发现明确问题。待新版本冻结后只复核期限差分；本轮未生成授权或操作服务器。"
+        }
+      ]
+    },
+    {
+      "turnId": "01a1df7f-ecf5-7ad3-883e-5048bb5d8b9e",
+      "messages": [
+        {
+          "messageCallId": "exec-793a4a95-9ad9-4bcc-84e2-d6993d5ce4fd",
+          "text": "QB D1 installer02唯一身份adapter差分窄核：SCOPED SOURCE DELTA PASS，Standards/Spec无明确新增缺陷；01其余范围复用，未重13SQL/模型/旧guard/PG/演练。PINS e982bb063d56033d7844a92d7c36a08455c6de0727dc8564ad3104a01ac5e6bf及8成员匹配，单runtime SHA769382ea3e55b5034b8465b461474dad425e3d59ced188efc3aea63594eb480e、closure9bfb68a816c796177835881fcf67b825b3ca680ec5086cfa1d7e1555dd5fa14a准确，冻结diff与01→02实际差分一致。\n\ncompile新增backupAdminValidUntil要求安全整数且>=当前target.expiresAt，描述明确authenticationMode EXISTING_FINITE_ADMIN_SESSION_SET_ROLE_OWNER / sessionUser=原admin / effectiveUser=原owner / ownerLoginRequired=false /该deadline；这些进入program hash，原9field外部authority继续精确绑定program/source/target/window，没有新owner LOGIN/password/成员授予或原private读取。调用者须传现有ordinary24实际已批准的公开deadline，不能用旧owner登录或伪造期限。\n\n初始native真实query要求session_user=current_user=原admin且role=none、idle；helper自己发送正确标识符转义的SET ROLE owner，只有真实SET ACK+idle才标roleSwitchAcknowledged。三个snapshot ownerGuard均保current物理/C/时窗/writable/origin/独占/无prepared检查，并明确session_user=原admin、current_user和role=owner；admin须OID10/LOGIN/SUPERUSER，原有限rolvaliduntil精确等于新绑定deadline且未过期，有效owner仍非super/createrole/createdb/replication/bypassrls。旧observer/元数据target仍按01历史链，不伪称native owner session。首154另实际采双身份、role、pid、deadline，准确核对后持久化connection-identity。\n\n原13层SQL/154→155→161对照/COMMITACK循环没有差分；成功161capture及current检查后才RESET ROLE，实际SET ACK+idle才能记roleRestoreAcknowledged及completion。失败路径保留既有ACK/rollback/COMMIT unknown字段，role switch/reset各自attempted/acknowledged独立：只在实际idle且尚未reset时最多一次RESET尝试，失败不补造ACK/close，仍抛原错误与保留失败记录。helper不关闭借入admin连接，T45仍必须独占最终close及ordinary24原有限auth恢复，不能将该admin session复用为business controller host。\n\n新离线facts与01的278 pin路径完全相同，唯一变row是此installer；其他两D1源/D3 d083 wrapper/原13SQL与161maps未变。offline base2a2f0e3be19e03f57cbf5dfa22f05d26166ac241fb140abd39762ea2245dc347 / compact20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d与已有source-descriptor记录相符，仅源事实，非live值；只读已有syntax/module record，未重跑。\n\nQB全程0PG/server/issuer/源修改。T45可按此有限接口消费现有admin私参通道、实际currentC/epoch/deadline和新同树program供main issuer；实际SET/RESET/native安装/capture/close仍由真实运行证据确认，不增加审批或合成前置。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9bac36c748191925637664c3310b9",
+          "text": "身份适配差分的源码检查通过：真实会话与有效 owner 身份分开记录，有限期限进入绑定，SET／RESET ROLE 都要求实际确认。\n\n结论已发主控。本轮未运行数据库或修改权限；实际安装与收尾结果仍待 T45 确认。"
+        }
+      ]
+    }
+  ]
+}

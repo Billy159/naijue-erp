@@ -1,0 +1,12 @@
+{
+  "sourceArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "sourceRowsSha256": "3a91211700deef7fa0857a70fad3dee0ccdae560b20a09e52ad9549790db024e",
+  "sourceFiles": 381,
+  "sourcePins": 278,
+  "sourceSetSha256": "20d4ead1380e06195461f934258206316c899b88210e5087375a84ca9ea3022d",
+  "archiveBytes": 5114025,
+  "parts": 40,
+  "sourcePayloadsNotDuplicated": true,
+  "actualRegistrationResult": "REGISTERED_NO_PHASE_SUBMITTED",
+  "firstAttempt": "KeyError before AUDIT publication; original preserved"
+}

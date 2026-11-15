@@ -1,0 +1,11 @@
+{
+  "returncode": 2,
+  "result": {
+    "automaticReplay": false,
+    "exceptionClass": "KeyError",
+    "safeCode": null,
+    "status": "DIRECT24_BATCHED_REGISTRATION_ENTRY_UNCONFIRMED_READ_ORIGINAL_AUDIT_ONLY"
+  },
+  "stderrBytes": 0,
+  "safeError": null
+}

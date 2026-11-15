@@ -1,0 +1,14 @@
+--- CANDIDATE-03/issue_phase.py
++++ CANDIDATE-04/issue_phase.py
+@@ -222,8 +222,9 @@
+     assert set(catalog) == {'sourceSetSha256', 'catalogSpecSha256', 'modelSha256'}
+     assert catalog['catalogSpecSha256'] == result['successorCatalogSpecSha256']
+     assert catalog['modelSha256'] == result['successorModelSha256']
+-    expiry = min(now + 3_300_000, roles['controllerValidUntil'] - 120_000,
+-                 context['start']['actualSharedServiceWorkDeadline'] - 120_000, policy['expiresAt'])
++    expiry = roles['controllerValidUntil']
++    assert expiry + 120_000 <= context['start']['actualSharedServiceWorkDeadline']
++    assert expiry <= policy['expiresAt']
+     assert now + rule['timeoutSeconds'] * 1000 < expiry
+     facts_path = ROOT / 'outputs/T45/revisions/20261115-r3-batched-real-first-live-01/NORMAL-PRODUCER-PUBLIC-FACTS.json'
+     facts = read(facts_path, 'e6a76d0a1753ddd90d74b240d807e082e7bc2c6b5e36ce68f1228582ffaf4eb7')

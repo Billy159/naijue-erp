@@ -1,0 +1,272 @@
+[
+  {
+    "path": "main/CANDIDATE-04/issue_registration.py",
+    "bytes": 8295,
+    "sha256": "7125d7bcae27e088913d6deee016714b18bd6208a036daf680dc1ff5e2898fa5",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/issue_registration.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/admin_exec.DIRECT24-UNREGISTERED.py",
+    "bytes": 40110,
+    "sha256": "e6a40719397dc47fd47b77985c60d2ea0f23208956f8603c05317ba1893d09f8",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/admin_exec.DIRECT24-UNREGISTERED.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/admin_exec.DIRECT24-UNREGISTERED.py.diff",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/admin_exec.DIRECT24-UNREGISTERED.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/original-cas-direct24-carrier.UNISSUED.py.diff",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/original-cas-direct24-carrier.UNISSUED.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/issue_phase.py.diff",
+    "bytes": 943,
+    "sha256": "8ab72032df3e96f18b61be58b78c9d9c59cd794d03d7e7f788710b3b098c172f",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/issue_phase.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/r3_direct24_batched.py.diff",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/r3_direct24_batched.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/register_cas.py.diff",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/register_cas.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/r3_direct24_batched.py",
+    "bytes": 40733,
+    "sha256": "d60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/r3_direct24_batched.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/original-cas-direct24-carrier.UNISSUED.py",
+    "bytes": 2624,
+    "sha256": "4bd13d308c431349b2362e48f3cc72a44960c7d40af5f6ab385cf038644521e5",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/original-cas-direct24-carrier.UNISSUED.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/VALIDATION.json",
+    "bytes": 744,
+    "sha256": "22e2056d54b2588b38be3e285fcf389195366321ccf1d6361504803e043710db",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/VALIDATION.json"
+  },
+  {
+    "path": "main/CANDIDATE-04/issue_upgrade_authority.py",
+    "bytes": 5022,
+    "sha256": "e6f0e75c716e5c0a3712ac8f6cc1bf772ffd80a4215833606fd8218202047e6c",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/issue_upgrade_authority.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/register_cas.py",
+    "bytes": 16703,
+    "sha256": "1ed3132ec702fdf80c9f742ac98b0d3f6b95726cb84625642f7d543c20c7bc03",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/register_cas.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/issue_registration.py.diff",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/issue_registration.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/issue_phase.py",
+    "bytes": 18418,
+    "sha256": "0f6770c658c054e5c5df2351f1a6ebcd939cc3be7867b2ba29a2f1bf0dce6c9b",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/issue_phase.py"
+  },
+  {
+    "path": "main/CANDIDATE-04/issue_upgrade_authority.py.diff",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/issue_upgrade_authority.py.diff"
+  },
+  {
+    "path": "main/CANDIDATE-04/PINS.json",
+    "bytes": 784,
+    "sha256": "23dd17971865340417dca5dd5e5b88991e46c22d8d13e14072811899b06794b0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/CANDIDATE-04/PINS.json"
+  },
+  {
+    "path": "main/REGISTRATION-SUCCESSOR-01/QB-REVIEW.json",
+    "bytes": 2665,
+    "sha256": "7ece51befe673f5613e7a231fb40aa5194da240b1577f01fc44bf1bc69b283da",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/REGISTRATION-SUCCESSOR-01/QB-REVIEW.json"
+  },
+  {
+    "path": "main/REGISTRATION-SUCCESSOR-01/register.diff",
+    "bytes": 1056,
+    "sha256": "e423e6a30231ae3942c5a0bb6327246e4fd145ebc13b6c6d48a576ddc99821b0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/REGISTRATION-SUCCESSOR-01/register.diff"
+  },
+  {
+    "path": "main/REGISTRATION-SUCCESSOR-01/register_cas-successor01.py",
+    "bytes": 16770,
+    "sha256": "977343c0ddc3dd0219a81d0b5600c4b59a779ba2c5848d64e63c23375df4f664",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/REGISTRATION-SUCCESSOR-01/register_cas-successor01.py"
+  },
+  {
+    "path": "main/REGISTRATION-SUCCESSOR-01/carrier-successor01.UNISSUED.py",
+    "bytes": 3786,
+    "sha256": "6da342fca7de728ec4e09bd6dc27a665b206f5e234d0932b340074541f908f11",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/REGISTRATION-SUCCESSOR-01/carrier-successor01.UNISSUED.py"
+  },
+  {
+    "path": "main/REGISTRATION-SUCCESSOR-01/carrier.diff",
+    "bytes": 3877,
+    "sha256": "66c0caf83c7764908c8b235f3d536cdc968a23344532743dc80b922625451d0f",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/REGISTRATION-SUCCESSOR-01/carrier.diff"
+  },
+  {
+    "path": "main/REGISTRATION-SUCCESSOR-01/PINS.json",
+    "bytes": 382,
+    "sha256": "5b7dba7f9bfabd9d411856cb077e4a9f80c6d9a0e038b71e89fa53eb1a0b587a",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/REGISTRATION-SUCCESSOR-01/PINS.json"
+  },
+  {
+    "path": "main/FINAL-INDEPENDENT-SOURCE-REVIEW.json",
+    "bytes": 20527,
+    "sha256": "48a2ae9502c22c646c1e995d4962b4615e4aae34ae98abcf4ad2621a27cb2794",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL-INDEPENDENT-SOURCE-REVIEW.json"
+  },
+  {
+    "path": "T45/PHASES-02.UNISSUED.json",
+    "bytes": 13932,
+    "sha256": "106728b14a56a1519a607a22462a98fd9c73d5b932afa2fd53c11b9d41d94431",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-final02-source-local-01/PHASES-02.UNISSUED.json"
+  },
+  {
+    "path": "T45/materialize/batched161-run.mjs",
+    "bytes": 10449,
+    "sha256": "10c0c04f3e3353209ef0263acd223a4deecd1d556c542a9a8f2dcc5d197be254",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-materialize-source-local-01/CANDIDATE-02/bundle/batched161-run.mjs"
+  },
+  {
+    "path": "T45/materialize/materialize-batched-source.py",
+    "bytes": 8465,
+    "sha256": "9eeef03d6f683a9cdcb54f6cbebc243b043be0c8c896ca0c90403361e51c3dc0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-materialize-source-local-01/CANDIDATE-02/bundle/materialize-batched-source.py"
+  },
+  {
+    "path": "T45/materialize/source-description.json",
+    "bytes": 7789,
+    "sha256": "e63395c7fca3d3cf84fa37d251c8b7e6eb1ddb3caf5a96857f65a30d36561c0f",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-materialize-source-local-01/CANDIDATE-02/bundle/source-description.json"
+  },
+  {
+    "path": "T45/materialize/source-rows.json",
+    "bytes": 70329,
+    "sha256": "3a91211700deef7fa0857a70fad3dee0ccdae560b20a09e52ad9549790db024e",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-materialize-source-local-01/CANDIDATE-02/bundle/source-rows.json"
+  },
+  {
+    "path": "T45/install/batched161-run.mjs",
+    "bytes": 10449,
+    "sha256": "10c0c04f3e3353209ef0263acd223a4deecd1d556c542a9a8f2dcc5d197be254",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-install-source-local-01/CANDIDATE-02/bundle/batched161-run.mjs"
+  },
+  {
+    "path": "T45/install/batched_install_host.py",
+    "bytes": 12978,
+    "sha256": "32e3045e211aeb99cd2a5c113cb03a468b17e364e34e28a7580b02055c964091",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-install-source-local-01/CANDIDATE-02/bundle/batched_install_host.py"
+  },
+  {
+    "path": "T45/install/fresh35-production-carrier.py",
+    "bytes": 187609,
+    "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-install-source-local-01/CANDIDATE-02/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/install/normal05_retained_stop.py",
+    "bytes": 20709,
+    "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-install-source-local-01/CANDIDATE-02/bundle/normal05_retained_stop.py"
+  },
+  {
+    "path": "T45/install/private_transport.py",
+    "bytes": 12283,
+    "sha256": "5ad569200fba7991df7b10dc810e45a0bfef3a252005c9d0cd9839474742f7fb",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-install-source-local-01/CANDIDATE-02/bundle/private_transport.py"
+  },
+  {
+    "path": "T45/writer/batched_real_host.py",
+    "bytes": 37226,
+    "sha256": "6040d685363f7b76a43d8c0c4b2f3aa7b4f75f6c02d2ddfce1d624f673de2dc4",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/batched_real_host.py"
+  },
+  {
+    "path": "T45/writer/fresh35-production-carrier.py",
+    "bytes": 187609,
+    "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/writer/materialized-profile.json",
+    "bytes": 27834,
+    "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/materialized-profile.json"
+  },
+  {
+    "path": "T45/writer/nonroot_input_access.py",
+    "bytes": 17738,
+    "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/nonroot_input_access.py"
+  },
+  {
+    "path": "T45/writer/normal05_retained_stop.py",
+    "bytes": 20709,
+    "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/normal05_retained_stop.py"
+  },
+  {
+    "path": "T45/writer/r3_05_cli.py",
+    "bytes": 7098,
+    "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/r3_05_cli.py"
+  },
+  {
+    "path": "T45/writer/r3_05_runtime.py",
+    "bytes": 9394,
+    "sha256": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/r3_05_runtime.py"
+  },
+  {
+    "path": "T45/writer/retained24-run.mjs",
+    "bytes": 20070,
+    "sha256": "c3fc22bd861fdc116ad4a4bfb1a0c4f61dc812d6d814fbc44107d138fe441270",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-retained24-source-local-01/CANDIDATE-02/bundle/retained24-run.mjs"
+  },
+  {
+    "path": "T45/WRITER24-ACCESS-PLAN.json",
+    "bytes": 35542,
+    "sha256": "2a8d039a80f69276eccc606036917584fa23b3297b62182fe435e32f6d04cbb5",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-final02-source-local-01/WRITER24-ACCESS-PLAN.CANONICAL.json"
+  },
+  {
+    "path": "T45/actual-registration/ROOT-ENTRY-RESULT.json",
+    "bytes": 257,
+    "sha256": "c3d1941d7376bd9097785d805533b256e25a192755e1c12b3b3fc5d03d965078",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/registration24/ROOT-ENTRY-RESULT.json"
+  },
+  {
+    "path": "T45/actual-registration/ORIGINAL-AUDIT-READBACK-142742.json",
+    "bytes": 1563,
+    "sha256": "a88bb7148989add70a0ecaef332aa7e90d20fa568e4983b732bb5c3f3d316768",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/registration24/ORIGINAL-AUDIT-READBACK-142742.json"
+  },
+  {
+    "path": "T45/actual-registration/ORIGINAL-AUDIT-READBACK-143755.json",
+    "bytes": 3936,
+    "sha256": "4f5792de900b79cee825e5ebd43fbf77c0ab885a0f529651e78aceb810e24019",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/registration24/ORIGINAL-AUDIT-READBACK-143755.json"
+  }
+]
