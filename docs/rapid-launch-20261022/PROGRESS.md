@@ -7048,3 +7048,8 @@ native现仍按原540秒测量/180清理及C0+900硬截止05:33:53.324922436运�
 
 
 2026-11-15 06:01 UTC：T45同停止CID/同e74f原log先核SHA/2608B/22行，再限白名单提取INSERT关系，RELATION补证0bc8cab0…仅payment_account_hall=1；1为文本匹配不是调用/成功行数。D2新增source03 PINS8605200a…准确二UUID列无id，故这个失败调用不进入id/source target查找，必走原跨审计records/typed回退；第二块构成、已完成行数、扫描/typed次数与主耗时仍未观测。旧d2a5/74a9/9c4d保留。下一项仅准备两受控合成上下文ROOT+current与ROOT+previous+current、固定当前PAH，每context一次原helper和另列原查询去值计划，不重474/500循环或511234全编译。准确脚本及隔离harness受限owner仪表入口权限差分待QB新窄审，当前新增PG0/候选层0/server job0；原helper body/ACL/角色/xmin/typed异常/跨audit语义不改。r910所有运行与清理均终态，T45不作新增读取。远端HTTPS已恢复，4fa08f10f95317d9bdd87c2a5cef715f3a9f4f7a推送exit0确认，先前仅本地检查点均已同步；不force或改网络。目标未完成，正式R3继续停库。
+
+
+2026-11-15 06:23 UTC：PAH公共fallback探针01 PINSb70051cf…被QB源静态审查拦在受限owner读pg_read_file，原文b00d6f57…，0PG。D2新02 ca987935…只改同事务加载顺序：probe_admin读input临时表→移owner→owner种子→原importer测量；无文件扩权/COMMIT/换session，QB仅新差分STATIC PASS原文0e5a3b81…，原helper/ACL/资源/计数范围复用。主控按用户持续授权实际决策6f95b0d0…许可02一次本地运行，未造用户click/新审批卡。
+
+02准确runner a4e1b749…实际exit1，第一context原helper完成1调用后counter_labels分类断言失败（6d1e3037…），未保存case原始计数、未采7plans、未执行第二context；丢RAM数据不重建，不作性能/候选结论。finally的kill_all遇PermissionError，未生成CLEANUP，不能记clean PASS。实际physical21ecc7d7…为PG17.11/systemid7708278979365336232/PID25772、root/tmp/d2-row-intent-yhp1l14r；失败后只核本次专属根/进程，b8e461b7…确认该PID/任务ps/PIDfile/socket均无，根保留。准确PG退出码/全部direct-child reap/独立五表0未取得，保持null，未将当前进程消失冒充完整清理验收。一次许可已消耗，无自动重试/加时或server动作；交D2只做两具体仪表/收尾问题source-only最小修正，需新03准确差分/PINS并QB仅受影响复核后才另由主控实际判断。原r910/正式R3状态不变，目标未完成。

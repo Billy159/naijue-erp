@@ -6494,19 +6494,50 @@
               "newPgRuns": 0,
               "newServerJobs": 0
             }
+          },
+          {
+            "group": "row-intent-local-probe02-instrumentation-failure-20261115-0623",
+            "status": "FAILED_COUNTER_LABELS_PG_ABSENT_CLEANUP_NOT_VERIFIED",
+            "evidence": {
+              "pinsSha256": "ca987935bb333224c35ae17c49c31a60812806beefcb544e56286c95d57f6336",
+              "review01Sha256": "b00d6f5704cb7f318a81a27f03ed012738762c6f4389256828fdab7d5190ba05",
+              "review02Sha256": "0e5a3b8133adbef976491980a8b87c1469c863c31278aa2c5a6bff2837b27b2d",
+              "oneRunDecisionSha256": "6f95b0d0c8a030d1bc029e92bd78ae9f908e0aac657bd42fe5d1a6ac135d1e25",
+              "actualRunnerExit": 1,
+              "failureSha256": "6d1e303764de826fc9a307b10cc9e024a3d72ad6ed3d1374d65c6e5f4a255871",
+              "phase": "single_full_helper_root_current",
+              "code": "counter_labels",
+              "completedFullHelperCalls": 1,
+              "savedFullCallCases": 0,
+              "secondContextExecuted": false,
+              "plansCollected": 0,
+              "helperCatalogMatched": true,
+              "physicalIdentitySha256": "21ecc7d76ad557e23d959dec6e84136fee08e6df57386a2b8badbd9984c00f9a",
+              "postmasterPid": 25772,
+              "postFailureCheckSha256": "b8e461b759aa328786feb47ffaee9f9ebdca9a7a952b24cbe47609ce9122ed96",
+              "recordedPgPidObserved": false,
+              "pidFilePresent": false,
+              "socketPresent": false,
+              "matchingTaskProcesses": 0,
+              "rootPreserved": "/tmp/d2-row-intent-yhp1l14r",
+              "cleanupVerified": false,
+              "pgExitCode": null,
+              "allDirectChildrenReaped": null,
+              "independentFiveTableReadback": null
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "prepare exact source of two-context shared fallback diagnostic; each context one complete original helper call and separately scoped sanitized query plans; awaiting QB new-delta review before local PG permission",
-          "scope": "controlled synthetic ROOT+current versus same ROOT+previous+current using fixed current payment_account_hall; no id probe, no474/500 performance loops, no whole compile or candidate layer",
-          "labWrapper": "proposed restricted owner instrumentation in isolated harness schema only; original helper body/STABLE/security/config/ACL unchanged; exact diff must be reviewed",
-          "limits": "170s work/180s total,3GiB scratch,2MiB log,40s statement; cleanup required",
-          "T45": "r910 closed NEED_FIX, one exact same-log relation metadata supplement completed; no further server operation authorized",
-          "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
-          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
+          "work": "freeze probe02 failed terminal evidence; source-only minimal diagnosis/fix for counter_labels and kill_all PermissionError",
+          "consumedAttempt": "probe02 exact once exit1; no retry or extension authorized",
+          "boundary": "do not modify02 or delete preserved root; new03 only if needed, exact diff/pins then QB affected-scope review before any new run",
+          "measurement": "two fixed PAH contexts,one full original helper each; no474/500 performance loop/fullcompile/candidate layer",
+          "T45": "no new server scope, r910 closed NEED_FIX",
           "formalR3": "STOPPED_NOT_IMPORTED",
-          "formalLaunch": "NOT_COMPLETE"
+          "formalLaunch": "NOT_COMPLETE",
+          "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
+          "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
