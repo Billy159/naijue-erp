@@ -7012,3 +7012,8 @@ T45parent/index准备3c55cd33、facts4a7922f3、retained5361f1fd只本机，真�
 02结果RESULT-PINS59e8764a…/RESULT dee0ef7d…/SAFEf9536223…实际PG170011 LOAD/CREATE通过，受控四关系/40原索引/500输入P474M501，只prefix与set各474次，1/6/474各2份实际去值计划共6。prefix三次主IndexScan无operation_id IndexCond、1row/1loop/removed1/总hit38969，root SeqScan InitPlan1x1/hit12975、records FunctionScan loops2/hit12996；set三次current_audit均opid等值+InitPlan索引1row1loop/hit24，整体155/109/109。prefix累计7685.030ms/hit18471306，set3603.220ms/hit51608，read/temp0，不能与含子节点buffer再相加。受控ROOT102447738B/current151974B而非r909尺寸；本机sharedbuffers128MB/auto/pglz/jit等已实际记录，不冒充Linux配置或generic/custom切换证明。
 
 02总18.120秒/pair11.618秒/采样peak510885888B、raw202594B仅RAM未导出，ROLLBACK后probe关系0、PG受控exit0/PID消失/直接child收束/新rootremoved，guardFaultnull。QB仅核这些新实证scope PASS，0PG复跑/0MASTER/0fullcompile/0server。它证明受控prefix仍有完整大扫描、集合三采样key限制没丢，尚不证明r909唯一根因/P/CPU。主控已让D2先做原12–14最小等价源级修正研究，保STRICT/物理xmin/全部root与成员/receipt权限条件，不硬缩合法集合，不立即堆新SQL层或起server。原formal导入/核账/备份恢复/公网业务仍未完成。
+
+
+2026-11-15 11:44 CST：D2原prefix最小单值投影草案已源级scoped PASS。candidate dfd1e1ca…/diff3898503b…/PINS7f395cea…，QB原文b2d92061…保存在原r909主控目录。仅原12–14给同一真实audit.after_values增加一对一LATERAL空路径等值投影与OFFSET0屏障，让profile/records复用值；返回真实a.*与heap xmin，ROOT子查询/STRICT/非whole/后续root/receipt/batch/hash/set/proof/suffix均原样。没有硬缩operation key/GUC授权、元数据/ACL/schema/index/cacheflag变化。静态只支持等值与展开屏障，实际计划复用/索引/temp/内存/净收益和混合非法状态顺序未测；未安装/命名SQL12，也不保证r90940秒。
+
+主控已按standing授权一个最少本机验证实现：原/新prefix新增候选0/1/多行、whole/nonwhole/ROOT非IMPORTscope、NULL/scalar/records/kind/id/profile/physicalxmin与子事务回滚等必要拒绝边界；只新prefix474次采样1/6/474，对比02已存旧prefix统计，不重旧474/set/旧20/MASTER/fullcompile/server。多非法状态双方拒绝且无固定优先级合同则诚实记录，不改产品迎合测试。准确新增harness获QB窄核PASS后D2可直接执行一次，不再问用户/main；无净收益先不采用，不转server试错。当前0新PG/正式写入，T45无新在途作业，正式上线仍未完成。

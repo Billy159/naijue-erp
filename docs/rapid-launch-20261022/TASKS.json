@@ -6317,13 +6317,33 @@
               "fullCompiles": 0,
               "serverActions": 0
             }
+          },
+          {
+            "group": "party-prefix-single-projection-source-20261115-0344",
+            "status": "SOURCE_SCOPED_PASS_TARGETED_PG_PENDING",
+            "evidence": {
+              "sourceDirectory": "outputs/D2/20261115-r3-party-prefix-single-projection-readonly-01",
+              "sourcePinsSha256": "7f395cea54af15dbd94749f871e3468a448d6997208deac75ed7c84e46ce6143",
+              "parentBodySha256": "d89543f7875e02c1ef202a0b63012ee6f490c0960837345394e5355f17890fbb",
+              "candidateBodySha256": "dfd1e1ca585e405b6314051578f4cc6218344e9dcdd599f188368165e41a4ffa",
+              "diffSha256": "3898503b96570a86f22792697ce201d07c0fe1d7340c96b9c3f615de561ba609",
+              "equivalenceSha256": "4ca03775d27eaf052facd1cc616481e3b2a9b3fd6c66a550ff7e35af816e9b88",
+              "independentSourceReviewSha256": "b2d9206102760bbb893cedc6c85a9243db595fc9a7d93c90631d6151a9939d69",
+              "databaseActions": 0,
+              "metadataAclSchemaIndexChanges": 0,
+              "actualPlanReuse": "PENDING",
+              "netBenefit": "PENDING",
+              "installedNewSqlLayer": false
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "source-only minimal equivalent change to old party body12-14 prefix discovery, preserving STRICT absence/multiple-row errors, physical xmin and all identity/receipt/root/member predicates; no new PG or server run before source review",
-          "QB": "new controlled diagnostic results accepted only; prior same-scope tests reused",
-          "T45": "idle; r909 stopped/cleaned; formal R3 stopped",
+          "work": "implement one targeted prefix-only PG validation of dfd1e1ca, original/new selection and rejection matrix; only new prefix 474 targets with 1/6/474 plans; reuse original prefix baseline",
+          "authority": "standing0c25; exact new harness QB review PASS then one execution authorized; no additional user/main PG approval",
+          "bounds": "same 02 lifecycle/driver/sanitizer; 170s work/180s total/40s statement/2MiB logs/3GiB scratch; no old set/old20/MASTER/fullcompile/server",
+          "QB": "review only new harness delta when frozen; source-only candidate already accepted",
+          "T45": "idle; formal R3 stopped; no new carrier or issued server authority",
           "formalLaunch": "NOT_COMPLETE"
         },
         "independentDeltaReviewer": "QB",
