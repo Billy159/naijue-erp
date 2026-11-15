@@ -1,0 +1,11 @@
+--- HOST01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs
++++ HOST-RECEIPT-DELTA-03/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs
+@@ -421,7 +421,7 @@
+ // Additive source/model bridge. Root/empty admission remains a separate live
+ // check on the same physical client before any batch writer is exposed.
+ const batchedImportPins={
+- 'EXPECTED161-MODEL.json':'d50ed7228912055f375153263905605ac6205021462849948744a5af0fc2aa38',
++ 'EXPECTED161-MODEL.json':'b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8',
+  'EXPECTED161-DEFINITIONS.json':'bb7d7bb7bbb6e13e5f52fdb74940287c723e22691b364f4e9e8bcadef637738b',
+  'EXPECTED161-BODIES.json':'5c7d1506b4203ceaf62ab37229a4c840e03859af4856fcce7e45ba1c9ac28437',
+ };

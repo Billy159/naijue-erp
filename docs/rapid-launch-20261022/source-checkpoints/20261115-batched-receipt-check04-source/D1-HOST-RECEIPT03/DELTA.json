@@ -1,0 +1,23 @@
+{
+  "scope": "ONE_RECEIPT_CHECK_MODEL_SQL_AND_DEPENDENT_EXACT_BINDING",
+  "baseHostCandidatePinsSha256": "12aa444b4482c26062af155cc409b046c26c7a7500ed0f6715e7170f47fc6937",
+  "databaseCandidatePinsSha256": "3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31",
+  "newModelInputSha256": "b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8",
+  "newSqlSha256": "4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85",
+  "changedSourceFiles": [
+    "tools/unified-import/fresh35-host-session.mjs",
+    "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+    "adapters/postgres/patches/0027_standard_batched_import_v1.sql"
+  ],
+  "hostCodeChanges": "two literal pins only; no host authorization/transaction behavior change",
+  "unchangedD1SourceFiles": 4,
+  "allD3FilesUnchanged": true,
+  "all161RoutineBodyDefinitionAclUnchanged": true,
+  "onlyExistingConstraintDefinitionChanged": "operation_receipt.receipt_result_by_kind",
+  "originalInputTargetAndOperationKeysUnchanged": true,
+  "actualAuthorizationMaterialized": false,
+  "newConstraintNativeCapture": false,
+  "postgresExecutions": 0,
+  "serverActions": 0
+}

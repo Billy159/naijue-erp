@@ -7021,6 +7021,41 @@
               "realBusinessWrites": 0,
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-batched-receipt-check04-host03-source-pass-20261115-1147",
+            "status": "ONE_CHECK_SOURCE_DELTA_PASS_NEW_CONSTRAINT_RUNTIME_PENDING",
+            "evidence": {
+              "snapshot": {
+                "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-receipt-check04-source",
+                "files": 44,
+                "bytes": 8708235,
+                "manifestSha256": "8921584d4d478a4255314033f5ae68b7aca0eb4e37eb0798b4b7b7521a24edd8",
+                "reviewSha256": "03b79e62758b983e2908c374ea3db4be63abe2f4539768b0ee7ee5d358e583a8"
+              },
+              "dbCandidate04": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-04",
+                "pinsSha256": "3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31",
+                "sqlSha256": "4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85",
+                "modelSha256": "b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8",
+                "expectedConstraintSha256": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5",
+                "state": "ONE_EXISTING_RECEIPT_CHECK_SOURCE_FIX_FROZEN_PENDING_QB"
+              },
+              "hostReceiptDelta03": {
+                "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/HOST-RECEIPT-DELTA-03",
+                "pinsSha256": "8ed53c10e9a70139799854cee8b5b23eaba815d8d9c53efe120d662bdf63fc96",
+                "sourceClosureSha256": "f48486cb0579a6356d139fac5917297742dc24d255188d64c2cfcb204a732859",
+                "catalogSourceSha256": "6613eb4ca995ae6f36eedc8048ed6833506b8f9921383fe8f41ba88b8f178564",
+                "hostSourceSha256": "2f0508640031100cbd3c4c6f48bf089b9865ede10cb4dd255fdb8f0813a658f7",
+                "state": "FOUR_SOURCE_OVERLAY_MODEL_CHECK_BINDING_PENDING_QB_NOT_RUNTIME"
+              },
+              "sourceReviewSha256": "03b79e62758b983e2908c374ea3db4be63abe2f4539768b0ee7ee5d358e583a8",
+              "old161RoutineEvidenceReused": true,
+              "newReceiptConstraintActuallyVerified": false,
+              "actualDb04Installed": false,
+              "newPgExecutions": 0,
+              "serverActions": 0
+            }
           }
         ],
         "currentInFlight": {
@@ -7033,16 +7068,16 @@
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
             "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "EXACT_RECEIPT_CHECK_CAUSE_PROVEN_CLOSED_TECHNICAL_MARKER_FIX_PREPARING",
+            "state": "DB04_RECEIPT_CHECK_AND_HOST03_SOURCE_DELTA_PASS_RUNTIME_PENDING",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
-            "work": "Actual05 operation_receipt.receipt_result_by_kind at command6line925. STANDARD old13required+historicalHallTargetCapturesSha256 soleoptional rejects added batched_import_v1. Preserve originalallpredicates/otherkinds, add only closedtyped optionaltechnicalmarker; functionbodies unchanged, oneconstraint MODEL/source/hostbinding exactupdate sourcepreparing."
+            "work": "FrozenDB04/PINS3067+HOSTreceipt03/8ed5 sourcePASS03b79e62. Only operation_receipt.receipt_result_by_kind definition changed; original13required/allotherkinds/325constraints/161routine bodies unchanged. Newclosedtypedoptionalmarker exactsource/spec/binding, newCHECKnotactualcaptured."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
             "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "05_CORE0_ONLY_CONSUMED_FIRST_PG_CONSTRAINT_PROVEN_WAIT_SOURCE",
+            "state": "06_ORIGINAL162_AND_ONE_CHECK_SHORT_SAMPLES_PREPARING_NO_NEW_PG",
             "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
-            "work": "05 inspectABSENT thenSTEP23514 receipt_result_by_kind/operation_receipt; stepAckfalse/ROLLBACKconfirmed/noCOMMIT/latergroups. PGexit0/21childreap/root05preserved. Stop newprobe; next06 originalsixscenes retains05 safe firsterrorfields after ownerfix."
+            "work": "Fulloriginalsixscenes restored with05safe firstPGerror/accurate phase separatefromAssertion; actualoneCHECKdefinition+metadata andCHECK-onlysmallaccept/reject samples. SourceDB04PASSreused; awaiting frozen06delta/readiness/mainonce."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -7051,8 +7086,8 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "05_DIAG_READINESS_CLOSED_WAITING_EXACT_RECEIPT_CHECK_SOURCE_DELTA",
-            "work": "05 source readinessPASS f6df8273, actualPGnotpass. Next onlyclosedCHECK+oneconstraint expectedmodel/currentbinding and needed PGspecificconstraintreadback/shortvalid-invalid checks; source161unchangedfunctions reused."
+            "state": "DB04_HOST03_SOURCE_DELTA_PASS_WAITING_06_RUNNER_READINESS",
+            "work": "Closedmarker/null/oldpredicates/atomicoldspec\u2192newCHECK/model+4sourcehostbinding reviewed; newcondefsourcepredictedonly. Do notreopen161/325/sourcechain. Next06newchecks/logger/restoreflowdelta."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
@@ -7076,12 +7111,13 @@
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "NO_UNVERIFIED_ETA",
-          "nextCheckpointScope": "D1 exact existingCHECK technicalmarker fix \u2192 QB narrow constraint/model/binding review \u2192 D3 original162sixscenes with safe firsterror and affectedconstraint actualreadback",
+          "nextCheckpointScope": "Freeze06delta \u2192 QB narrow runnerreadiness \u2192 mainonce \u2192 actualDB04 oneCHECKreadback and original162sixtransactioncases",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-core0-receipt-check-diagnostic",
-            "files": 30,
-            "bytes": 1585639,
-            "manifestSha256": "43282c9ba7ea1499be0ec0734334bfd35f78ec72bf0a605f57e11a5487d9c31d"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-receipt-check04-source",
+            "files": 44,
+            "bytes": 8708235,
+            "manifestSha256": "8921584d4d478a4255314033f5ae68b7aca0eb4e37eb0798b4b7b7521a24edd8",
+            "reviewSha256": "03b79e62758b983e2908c374ea3db4be63abe2f4539768b0ee7ee5d358e583a8"
           }
         },
         "independentDeltaReviewer": "QB",

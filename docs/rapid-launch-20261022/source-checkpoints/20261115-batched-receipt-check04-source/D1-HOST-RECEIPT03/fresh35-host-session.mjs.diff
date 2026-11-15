@@ -1,0 +1,11 @@
+--- HOST01/source/tools/unified-import/fresh35-host-session.mjs
++++ HOST-RECEIPT-DELTA-03/source/tools/unified-import/fresh35-host-session.mjs
+@@ -987,7 +987,7 @@
+ }
+ 
+ 
+-const batchedDbCandidatePinsSha256='4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531';
++const batchedDbCandidatePinsSha256='3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31';
+ export async function loadFresh35BatchedImportContext(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256){
+  need(resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');
+  requireService18ImportLineage(parentPins,successorSha256);

@@ -1,0 +1,116 @@
+[
+  {
+    "order": 1,
+    "file": "sql/01-ten-routines.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-TEN-ROUTINE.sql",
+    "sha256": "1f3deac19334fc58b5ace7a9d69fc727110eb64252208b784112dc9f88c37951",
+    "bytes": 29135,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/01-ten-routines.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/01-ten-routines.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/01-ten-routines.sql"
+  },
+  {
+    "order": 2,
+    "file": "sql/02-single-read.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261114-r3-init-context-single-read-local-01/CONTEXT-SINGLE-READ.sql",
+    "sha256": "c0ed3f987a097a58c950c9bc015c909a563ac3e1e01aeb7ef355b1e4cb968427",
+    "bytes": 1564,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/02-single-read.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/02-single-read.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/02-single-read.sql"
+  },
+  {
+    "order": 3,
+    "file": "sql/03-on-demand-context.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-authority-void-composed-local-01/CONTEXT-VALIDATE-ONLY.sql",
+    "sha256": "3c2b3caaaeef1766b9ec435704863a43e87de3d54445762b8a6b43e037f438d8",
+    "bytes": 8289,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/03-on-demand-context.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/03-on-demand-context.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/03-on-demand-context.sql"
+  },
+  {
+    "order": 4,
+    "file": "sql/04-inventory-readiness.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-INVENTORY-READINESS-PROBE.sql",
+    "sha256": "151f739e1427fd32fd0c7edd00253de8715442d5e4fa431e24bc8f1182d6cedf",
+    "bytes": 1502,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/04-inventory-readiness.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/04-inventory-readiness.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/04-inventory-readiness.sql"
+  },
+  {
+    "order": 5,
+    "file": "sql/05-prior-lookup.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261114-r3-writer06-performance-offline-01/SQL39-LOCAL-PRIOR-ONLY-PROBE.sql",
+    "sha256": "60c4d1af0ba99380d64eaef853451db6188f8414cf749dd4fe45898b557a6787",
+    "bytes": 6128,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/05-prior-lookup.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/05-prior-lookup.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/05-prior-lookup.sql"
+  },
+  {
+    "order": 6,
+    "file": "sql/06-root-single-scan.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root-single-scan-local-01/ROOT-SINGLE-SCAN.sql",
+    "sha256": "fc63b9c28a6113f1f242305c3a06aeb110b9d79a5f58505e06ce330552ccab09",
+    "bytes": 2521,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/06-root-single-scan.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/06-root-single-scan.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/06-root-single-scan.sql"
+  },
+  {
+    "order": 7,
+    "file": "sql/07-execute-authority.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-indexed-execute-authority-local-01/INDEXED-AUTHORITY-LOCAL.sql",
+    "sha256": "0c7d80d25fcbd078151226326cedd96e3ecfd8b90ce3014129f971af85fe020f",
+    "bytes": 3959,
+    "originalFrozenCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-performance-combination-freeze-local-01/sql/07-execute-authority.sql",
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/07-execute-authority.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/07-execute-authority.sql"
+  },
+  {
+    "order": 8,
+    "file": "sql/08-witness-request.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-checkpoint-witness-request-local-01/WITNESS-REQUEST-LOCAL.sql",
+    "sha256": "f4e56d34846049f7a43319da6d6b1f3f32e8b31be9b48ffc2173f473968e1dd9",
+    "bytes": 92541,
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/08-witness-request.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/08-witness-request.sql"
+  },
+  {
+    "order": 9,
+    "file": "sql/09-root-branches-import-index.sql",
+    "original": null,
+    "sha256": "dc03d84e9da6f4abaeb073395ff608624781dd8c5fd30db5921c13393941bff4",
+    "bytes": 151498,
+    "frozenNineSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-root114-final-combination-local-01/sql/09-root-branches-import-index.sql",
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/09-root-branches-import-index.sql"
+  },
+  {
+    "order": 10,
+    "file": "sql/10-party-set-proof.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/PARTY-SET-PROOF.sql",
+    "sha256": "91dd39e9eb0b84b632623438e772383266c287aaeac4230a204140ad85c625a6",
+    "bytes": 17506,
+    "frozenTenSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-set-scalar-pg-local-03/sql/10-party-set-proof.sql"
+  },
+  {
+    "order": 11,
+    "file": "sql/11-party-audit-key.sql",
+    "sha256": "807b1bd4a5901f8013ab5b84c4d6db138d224221bebe00be4edcc6b044734d59",
+    "bytes": 18124,
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-party-audit-key-pg-local-01/PARTY-SET-PROOF.sql"
+  },
+  {
+    "order": 12,
+    "file": "sql/12-party-prefix-single-projection.sql",
+    "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261115-r3-prefix-native-master-pg-local-01/EVALUATION-REPLACE.sql",
+    "sha256": "d5ffad0eecc1e05b72eba107502c41a091bf0fe25c0b521030967739a6e80d90",
+    "bytes": 18331,
+    "testedBytesReusedWithoutEdits": true,
+    "beforeBodySha256": "d89543f7875e02c1ef202a0b63012ee6f490c0960837345394e5355f17890fbb",
+    "afterBodySha256": "dfd1e1ca585e405b6314051578f4cc6218344e9dcdd599f188368165e41a4ffa",
+    "authority": "CANDIDATE-DECISION.json"
+  }
+]

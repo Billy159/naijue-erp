@@ -1,0 +1,20 @@
+{
+  "scope": "ONLY_TWO_CHANGED_JS_MODULE_SYNTAX",
+  "nodeVersion": "24.21.0",
+  "checks": [
+    {
+      "file": "source/tools/unified-import/fresh35-host-session.mjs",
+      "command": "node24.21.0 --check",
+      "exitCode": 0
+    },
+    {
+      "file": "source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "command": "node24.21.0 --check",
+      "exitCode": 0
+    }
+  ],
+  "fullHostModuleOrSemanticSuiteRepeated": false,
+  "postgresExecuted": false,
+  "serverActions": 0,
+  "newConstraintActualCapture": false
+}

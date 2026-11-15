@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_DELTA_PASS_RECEIPT_CHECK04_HOST_RECEIPT03",
+  "messages": [
+    {
+      "turnId": "01a1df00-0924-7b22-9ef5-aa8c638d2f95",
+      "id": "exec-ceb37e4e-d441-49bc-8d39-bf67cd7272a6",
+      "status": "completed",
+      "prompt": "QB DB-CANDIDATE-04及必要HOST-RECEIPT-DELTA-03一次窄核结论：SCOPED SOURCE DELTA PASS，Standards/Spec无新增明确源码缺陷。QB 0PG/host/服务器/文件修改/旧套件；未重161函数语义、325其他约束或已过host。\n\nDB04 PINS 3067e7f192766a86ad2ebf1b2ad50bbcf5e065845da6026384e67d613afeca31、SQL 4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85、MODEL b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8准确。独立对比模型：只有constraints中operation_receipt.receipt_result_by_kind一行definition变，其他字段/分类/161routine项不变；BODIES/DEFINITIONS与DB02逐字相等。安装新DO内embedded spec与RECEIPT-CONSTRAINT-CHANGE准确一致；从DB04 SQL删除仅新增block可逐字还原FIX03 SQL，保留分号修复。\n\n只STANDARD分支增加batched_import_v1可选key及严格shape。实核marker闭4键，identity闭7键且各string，descriptor闭13键，其中5string/5number/3 string或JSON null；full_xid仅digitstring，controller非空string。每层object type+?&必备+减键后{}，额外/缺失/非nullable JSONnull均不能通过；允许CORE三个前驱字段JSON null。原13 required和历史capture限制完整保留，移除恰好新增optional与allow-key两段后，整个原STANDARD谓词逐字还原；其余所有kind从ELSE起逐字不变。外层CASE...IS TRUE保留，所以缺键产生SQLNULL不放行。scalar/array可能在JSON操作处报错也是拒绝，不承诺一律23514；shape自身不是actor/descriptor/xid或提交许可，原双侧marker与deferred整组函数不变。\n\n安装seam先ACCESS EXCLUSIVE锁，逐字段精确比旧condef+metadata，原子DROP/ADD同名CHECK后准确回读新spec，并比pg_constraint全部metadata（去oid/conbin）不变，不以NOT VALID或放宽metadata绕过。整脚本仍同事务最后COMMIT，fresh35→12层→实际155→DB04完整SQL一次；不能先FIX03/161再重放。old condef 5fdd40b5fbb91274b469d196ed344a2c3141f2f7bed390cd2fc8cc469354c7be →新源码预期 b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5，后者不是actual capture。\n\nHOST03 PINS 8ed53c10e9a70139799854cee8b5b23eaba815d8d9c53efe120d662bdf63fc96、SOURCE-CLOSURE f48486cb0579a6356d139fac5917297742dc24d255188d64c2cfcb204a732859准确。与HOST01比，确为4源变化：SQL/MODEL分别与DB04逐字相同；catalog(JS SHA6613eb4ca995ae6f36eedc8048ed6833506b8f9921383fe8f41ba88b8f178564)仅固定model pin→b169…；host(JS SHA2f0508640031100cbd3c4c6f48bf089b9865ede10cb4dd255fdb8f0813a658f7)仅DBcandidate pin→3067…；其余4D1 closure项与D3exact9 pin不变。loader原已覆盖4路径，最终currentSourceSet/catalogSpec需同树实算，旧授权不自动满足新DB/model/source绑定，未造current/live值或改历史target/opkeys。只读已有两项Node --check exit0记录，没有重复模块检查。\n\n必要未测范围按CHECK-VALIDATION-SCOPE保留：单项实际pg_get_constraintdef/validated与nondeferrable读回、真实原结果的旧/新marker与空值闭shape短样本、真实CORE成功及尚未到达的原六场景/提交不确定/最终核账。以上源码结论不授权执行、不等于实际CHECK或业务PASS；06载体就绪可另给准确readiness。"
+    }
+  ]
+}

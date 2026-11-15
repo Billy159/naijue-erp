@@ -1,0 +1,17 @@
+{
+  "status": "SOURCE_ONLY_RECEIPT_CHECK_SUCCESSOR_NOT_PG_VALIDATED",
+  "expectedRoutines": 161,
+  "changedRoutineBodiesFromDb02": 0,
+  "changedRoutineDefinitionsFromDb02": 0,
+  "changedExistingConstraints": 1,
+  "newConstraints": 0,
+  "changedConstraint": "operation_receipt.receipt_result_by_kind",
+  "constraintValidated": true,
+  "constraintDeferrable": false,
+  "changedBusinessTablesOrColumns": 0,
+  "basePinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+  "installFix03PinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+  "d1PgExecutions": 0,
+  "serverActions": 0,
+  "actualNewConstraintCapture": false
+}

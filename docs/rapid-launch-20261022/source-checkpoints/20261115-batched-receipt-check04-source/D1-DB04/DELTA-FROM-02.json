@@ -1,0 +1,24 @@
+{
+  "finding": "RECEIPT_RESULT_BOUNDED_BATCH_MARKER_NOT_ALLOWED",
+  "actualDiagnostic": "D3/20261115-r3-batched-pg-local-05/CORE-STEP0-DIAGNOSTIC.json",
+  "actualDiagnosticSha256": "714036866b0aa7a10711f23ae51b5eba252618286e07d68fbb8094c190fdefcf",
+  "parentSqlSha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4",
+  "fixedInstallationSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "newSqlSha256": "4cfa22c3b55bd9742583a9da5a284dbe663f7f9a8698420801a764dbe8b01e85",
+  "newModelSha256": "b169ef5be7170bbebc90bcb778b0b9bb94f0449e3ca78b732c866d4e4324caa8",
+  "unchangedModels": [
+    "EXPECTED161-DEFINITIONS.json",
+    "EXPECTED161-BODIES.json"
+  ],
+  "constraintBefore": "5fdd40b5fbb91274b469d196ed344a2c3141f2f7bed390cd2fc8cc469354c7be",
+  "constraintAfterSourceDerived": "b58f2364e39d2fe34f987c15e970aa005030aeb4ca0202bdaa6fbc8731ac32d5",
+  "otherConstraintRowsUnchanged": 325,
+  "otherModelCategoriesUnchanged": true,
+  "all161RoutineMetadataUnchanged": true,
+  "originalRequiredResultKeysUnchanged": true,
+  "historicalCaptureOptionalSemanticsUnchanged": true,
+  "allOtherKindBranchesUnchanged": true,
+  "newOptionalKey": "batched_import_v1",
+  "markerShape": "closed4, identity closed7/string values, descriptor closed13/declared number-string-null types, full_xid digit string/controller nonempty string",
+  "noActualPgNewConstraint": true
+}
