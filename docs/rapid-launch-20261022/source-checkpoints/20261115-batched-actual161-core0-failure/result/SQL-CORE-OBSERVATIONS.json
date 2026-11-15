@@ -1,0 +1,27 @@
+{
+  "stage": "SQL_CORE",
+  "state": "FAILED",
+  "phase": "half-group-real-commit-failure",
+  "code": "ERR_ASSERTION",
+  "errorType": "AssertionError",
+  "lastSqlFailure": {
+    "sqlState": "23514",
+    "groupPhase": "CORE",
+    "ordinal": 0,
+    "queryKind": "STEP"
+  },
+  "events": [
+    {
+      "case": "INSTALLED161",
+      "functions": 161,
+      "tables": 35,
+      "columns": 351,
+      "indexes": 114,
+      "constraints": 326,
+      "triggers": 570,
+      "routineDefinitionsAndOwnerAclMatched": true,
+      "fullPhysicalProductionAdmission": false
+    }
+  ],
+  "productionHostTested": false
+}

@@ -1,0 +1,62 @@
+{
+  "permitPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/LOCAL-SQL-CORE-PG-04-ONCE-PERMIT.json",
+  "permitSha256": "e894b48bd783473d9ae72e9a0028ea8286df1bcce8a08b8c4217d5f3d7dc8558",
+  "pinsSha256": "e165b92a3e74c0c919dd8e810bb4a8f8d6837456cbf54bedeae56c1661224f14",
+  "attemptConsumed": true,
+  "processExitCode": 1,
+  "result": "STOPPED",
+  "installation": {
+    "sourceSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+    "psqlExitCode": 0,
+    "firstError": null,
+    "diagnosticBytes": 558,
+    "actual155Readback": true,
+    "actual161Readback": {
+      "case": "INSTALLED161",
+      "functions": 161,
+      "tables": 35,
+      "columns": 351,
+      "indexes": 114,
+      "constraints": 326,
+      "triggers": 570,
+      "routineDefinitionsAndOwnerAclMatched": true,
+      "fullPhysicalProductionAdmission": false
+    }
+  },
+  "scenario": {
+    "state": "FAILED",
+    "phase": "half-group-real-commit-failure",
+    "code": "ERR_ASSERTION",
+    "lastSqlFailure": {
+      "sqlState": "23514",
+      "groupPhase": "CORE",
+      "ordinal": 0,
+      "queryKind": "STEP"
+    },
+    "recordedCompletedEvents": 1,
+    "fixtureCompiled": true,
+    "sourceForFixtureCompiled": "phase reached after compileFixture and original-key/privilege prechecks; inferred from unchanged scenario control flow",
+    "committedFixtureRows": null,
+    "commitProven": false,
+    "historyHalfCommitInjectionProven": false,
+    "unknownReplySuppressionTested": false,
+    "originalKeyResumeInspectTested": false,
+    "finalVerifyTested": false,
+    "nativeSnapshotObservationsExported": false,
+    "coreSqlErrorMessageExported": false
+  },
+  "pgSystemIdentifier": "7708353626709481099",
+  "pgStopConfirmed": true,
+  "postmasterExitCode": 0,
+  "allDirectChildrenReaped": true,
+  "directChildren": 21,
+  "signalErrors": [],
+  "preservedRoot": "/tmp/d3-batched-core-20261115-04",
+  "preservedRootExists": true,
+  "postmasterPidFileAbsent": true,
+  "withinMeasuredLimits": true,
+  "elapsedSeconds": 2.102668917,
+  "peakAllocatedBytesSampled": 48304128,
+  "retry": false,
+  "productionHostTested": false
+}

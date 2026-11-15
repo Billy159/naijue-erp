@@ -1,0 +1,7 @@
+{
+  "state": "STOPPED",
+  "cleanupConfirmed": false,
+  "scope": "LOCAL_RESTRICTED_SQL_CORE_ONLY",
+  "productionHostTested": false,
+  "rawOutputExported": false
+}

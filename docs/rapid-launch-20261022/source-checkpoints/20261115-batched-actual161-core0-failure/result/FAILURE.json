@@ -1,0 +1,6 @@
+{
+  "phase": "real_restricted_engine_scenario",
+  "code": "sql_core_scenario_failed",
+  "rawOutputExported": false,
+  "retry": false
+}

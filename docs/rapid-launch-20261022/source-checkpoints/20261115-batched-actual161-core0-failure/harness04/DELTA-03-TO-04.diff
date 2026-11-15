@@ -1,0 +1,136 @@
+--- 03/run-local.py
++++ 04/run-local.py
+@@ -1,4 +1,4 @@
+-"""One disposable DB02 install-only diagnostic. Source preparation only until QB/main authorization."""
++"""One disposable 162-row SQL-core chain with fixed DB02+FIX03 install diagnostics. Source preparation only until QB/main authorization."""
+ import hashlib,json,os,re,shutil,signal,subprocess,sys,threading,time
+ from pathlib import Path
+ class SafetyError(Exception):
+@@ -83,7 +83,7 @@
+ def save_install_diagnostic(stderr,exit_code,sql_path):
+  # Only the fixed static DB02 install is eligible. Never export LINE/QUERY,
+  # statement echoes, bootstrap output, generic stderr, or connection arguments.
+- require(sql_path==Path(config['candidate02'])/'sql/source-slices.sql','diagnostic_source_scope')
++ require(sql_path==Path(config['installFix03'])/'source-slices.sql','diagnostic_source_scope')
+  text=stderr.decode('utf-8','replace');lines=text.splitlines()
+  error=None;source_line=None;context=[];location=None
+  for index,line in enumerate(lines):
+@@ -98,7 +98,7 @@
+     place=re.fullmatch(r'LOCATION:  ([a-zA-Z0-9_., :/+-]+)',following)
+     if place:location=place[1][:250]
+    break
+- value={'scope':'FIXED_DB02_STATIC_INSTALL_ONLY','sourceSqlPath':str(sql_path),
++ value={'scope':'FIXED_DB02_PLUS_FIX03_STATIC_INSTALL_ONLY','sourceSqlPath':str(sql_path),
+   'sourceSqlSha256':hashlib.sha256(sql_path.read_bytes()).hexdigest(),'exitCode':exit_code,
+   'firstError':error,'sourceLineNumber':source_line,'contextFrames':context,'serverLocation':location,
+   'diagnosticParsed':error is not None,'maxExportBytes':4096,'fullSqlExported':False,'genericLogsExported':False}
+@@ -142,8 +142,8 @@
+  for item in json.loads((base/'INPUT-PINS.json').read_text()):
+   require(hashlib.sha256(Path(item['path']).read_bytes()).hexdigest()==item['sha256'],'input_pin_mismatch')
+  require(not any((base/n).exists() for n in ['ATTEMPT.json','RUN.json','FAILURE.json']),'single_attempt_already_used')
+- require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_install_diag_20261115_03','/tmp/d3-install-diag-20261115-03',55493),'fixed_diagnostic_identity_required')
+- save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_DB02_INSTALL_ONLY'})
++ require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_batched_20261115_04','/tmp/d3-batched-core-20261115-04',55494),'fixed_sql_core_identity_required')
++ save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY'})
+  candidate_root=Path(config['workRoot'])
+  candidate_root.mkdir(mode=0o700)
+  work=candidate_root
+@@ -193,18 +193,27 @@
+  save('PARENT155-INSTALL-READBACK.json',parent_packet);require(parent_packet.get('functions')==155,'parent155_mismatch')
+  candidate=Path(config['candidate02'])
+  require(hashlib.sha256((candidate/'PINS.json').read_bytes()).hexdigest()==config['candidatePinsSha256'],'candidate02_pin_mismatch')
+- phase='install_db02_161'
+- sql_path=candidate/'sql/source-slices.sql'
++ install_fix=Path(config['installFix03'])
++ require(hashlib.sha256((install_fix/'PINS.json').read_bytes()).hexdigest()==config['installFixPinsSha256'],'install_fix03_pin_mismatch')
++ phase='install_db02_fix03_161'
++ sql_path=install_fix/'source-slices.sql'
++ require(hashlib.sha256(sql_path.read_bytes()).hexdigest()==config['installSqlSha256'],'install_sql_pin_mismatch')
+  run([pg/'psql','-XqAt','-h',work,'-p',str(config['socketPort']),'-U',config['bootstrap'],'-d',database,
+   '-v','ON_ERROR_STOP=1','-v','VERBOSITY=verbose','-c',f'SET ROLE {owner};','-f',sql_path],timeout=42,diagnostic_sql=sql_path)
+- # Stop after this fixed installer. No 161 admission/readback, fixture or scenario.
++ # Install FIX03; canonical 161 expectations remain explicitly in parent DB02.
++ phase='real_restricted_engine_scenario'
++ result=json.loads(run([node,base/'scenario.mjs'],timeout=170,allow_failure=True))
++ if result.get('state')!='COMPLETED' and (result.get('code') in ('42501','28000','28P01') or (result.get('lastSqlFailure') or {}).get('sqlState') in ('42501','28000','28P01')):permission_fault=True
++ save('SQL-CORE-OBSERVATIONS.json',result)
++ require(result.get('stage')=='SQL_CORE' and result.get('state')=='COMPLETED','sql_core_scenario_failed')
++ require(result.get('fixtureRows')==162 and len(result.get('events',[]))==6,'sql_core_scope_changed')
+  phase='clean_shutdown'
+  os.kill(server.pid,signal.SIGINT);server.wait(timeout=5)
+  pg_stop_confirmed=server.returncode==0 and not (cluster/'postmaster.pid').exists()
+  for thread in threads:thread.join(timeout=1)
+- check();save('RUN.json',{'scope':'LOCAL_DB02_INSTALL_ONLY','state':'INSTALL_FINISHED_PENDING_FINAL_CLEANUP',
+-  'fixtureRowsImported':0,'scenarioCases':0,'actual161Verified':False,'serverActions':0,'realSourceRowsRead':0,
+-  'productionHostTested':False,'rawOutputExported':False,'boundedDb02DiagnosticExported':True})
++ check();save('RUN.json',{'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY','state':'CORE_FINISHED_PENDING_FINAL_CLEANUP','fixtureRows':162,
++  'expectedFunctions':161,'businessTables':35,'scenarioCases':6,'serverActions':0,'realSourceRowsRead':0,
++  'productionHostTested':False,'v2HallAmountRetentionNewPgProof':False,'rawOutputExported':False})
+  success=True
+ except Exception as error:
+  permission_fault=isinstance(error,PermissionError)
+@@ -254,7 +263,7 @@
+   'rawPostgresLogBytesHeldInMemory':len(raw_log),'rawOtherBytes':raw_other,'rawOutputExported':False,
+   'guardFault':fault,'successful':success})
+  except Exception:success=False
+-try:save('RESULT.json',{'state':'COMPLETED' if success else 'STOPPED','cleanupConfirmed':pg_stop_confirmed and all_reaped and removed and not signal_errors and not permission_fault,'scope':'LOCAL_DB02_INSTALL_ONLY','productionHostTested':False,'rawOutputExported':False})
++try:save('RESULT.json',{'state':'COMPLETED' if success else 'STOPPED','cleanupConfirmed':pg_stop_confirmed and all_reaped and removed and not signal_errors and not permission_fault,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY','productionHostTested':False,'rawOutputExported':False})
+ except Exception:success=False
+ print(json.dumps({'state':'COMPLETED' if success else 'STOPPED','rawOutputExported':False}))
+ sys.exit(0 if success else 1)
+--- 03/TARGET.json
++++ 04/TARGET.json
+@@ -1,7 +1,7 @@
+ {
+-  "database": "demo_8877_d3_install_diag_20261115_03",
+-  "workRoot": "/tmp/d3-install-diag-20261115-03",
+-  "socketPort": 55493,
++  "database": "demo_8877_d3_batched_20261115_04",
++  "workRoot": "/tmp/d3-batched-core-20261115-04",
++  "socketPort": 55494,
+   "bootstrap": "d3_bootstrap",
+   "owner": "fresh35_owner_20261105_r1",
+   "controller": "fresh35_controller_20261105_r1",
+@@ -27,6 +27,9 @@
+     "scratchBytes": 3221225472,
+     "logBytes": 2097152
+   },
+-  "scope": "LOCAL_DB02_INSTALL_ONLY_NO_SCENARIOS_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
+-  "executionAuthorizationAtPreparation": "NOT_GRANTED_SOURCE_PREPARATION_ONLY"
++  "scope": "LOCAL_RESTRICTED_SQL_CORE_ONLY_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
++  "executionAuthorizationAtPreparation": "NOT_GRANTED_SOURCE_PREPARATION_ONLY",
++  "installFix03": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
++  "installFixPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
++  "installSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef"
+ }
+--- 03/INSTALL-ORDER.json
++++ 04/INSTALL-ORDER.json
+@@ -8,7 +8,7 @@
+   {
+     "order": 2,
+     "phase": "full 35-table base, patchBodies, admin provision, SQL38",
+-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-03/base-install.sql",
++    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/base-install.sql",
+     "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+   },
+   {
+@@ -91,8 +91,16 @@
+   },
+   {
+     "order": 16,
+-    "phase": "Original DB02 static SQL, verbose first-error diagnostic <=4KiB; stop after installer; no 161 readback or scenarios",
+-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/sql/source-slices.sql",
+-    "sha256": "fd3d3edf05dbde10a26015858757d7985791202b0022500688504f68f64f86a4"
++    "phase": "Parent DB02 + exact FIX03 statement terminator; bounded verbose install diagnostic",
++    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03/source-slices.sql",
++    "sha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
++    "parentCandidate": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
++    "fixPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a"
++  },
++  {
++    "order": 17,
++    "phase": "actual 161 model readback, current stream compilation and six-case real SQL-core chain",
++    "command": "node scenario.mjs",
++    "expectedModel": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-MODEL.json"
+   }
+ ]

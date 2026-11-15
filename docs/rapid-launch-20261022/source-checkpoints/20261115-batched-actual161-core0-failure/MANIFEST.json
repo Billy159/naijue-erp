@@ -1,0 +1,172 @@
+{
+  "state": "ACTUAL161_MATCHED_CORE0_23514_STOPPED",
+  "files": [
+    {
+      "path": "harness04/DELTA-02-TO-04.diff",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/DELTA-02-TO-04.diff",
+      "bytes": 8587,
+      "sha256": "20e52e8d7956c0b57879b35cef727abe474f7ba8f7bc4a87b6b2dce03bbc78cd"
+    },
+    {
+      "path": "harness04/DELTA-03-TO-04.diff",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/DELTA-03-TO-04.diff",
+      "bytes": 9453,
+      "sha256": "08b8faf4eae2dd409e235f25c7bdefdf48ac1e7175fbbeb799c37b1ed71cc105"
+    },
+    {
+      "path": "harness04/EXECUTION-COMMAND.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/EXECUTION-COMMAND.json",
+      "bytes": 690,
+      "sha256": "78e689dc901db8e8c11d674ce8e10967b0f75bbd727d4e23cf5a28216e20a00b"
+    },
+    {
+      "path": "harness04/INPUT-PINS.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/INPUT-PINS.json",
+      "bytes": 194533,
+      "sha256": "54529c9ef1d2ab7ca8b85a1a653778ac70254558542864381a246bf175f1bae5"
+    },
+    {
+      "path": "harness04/INSTALL-BINDING.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/INSTALL-BINDING.json",
+      "bytes": 1965,
+      "sha256": "6de11365ee8eb23dd6f22dee9e8ff6587d579dea72cbd2900901204e983333d4"
+    },
+    {
+      "path": "harness04/INSTALL-ORDER.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/INSTALL-ORDER.json",
+      "bytes": 5908,
+      "sha256": "fdb2ff77512b61999f1a71926204e7da374358ddc6a044c1136e000e512d9938"
+    },
+    {
+      "path": "harness04/README.md",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/README.md",
+      "bytes": 5841,
+      "sha256": "e6579c127fa44b14b82047f285c980f1252f5f8293b046a4d892999d3fbfb0d4"
+    },
+    {
+      "path": "harness04/STATIC-CHECKS.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/STATIC-CHECKS.json",
+      "bytes": 755,
+      "sha256": "81af35e82223d2540e8e1fdfba8cc91d05d2133ebcc209c434bb16ed41a0ce7a"
+    },
+    {
+      "path": "harness04/TARGET.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/TARGET.json",
+      "bytes": 2640,
+      "sha256": "4005e05343858c498f5f46cbc9fd6d991619aa1e4b08d1fd11d531231ee4058f"
+    },
+    {
+      "path": "harness04/base-install.sql",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/base-install.sql",
+      "bytes": 1301344,
+      "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+    },
+    {
+      "path": "harness04/catalog-fixture.mjs",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/catalog-fixture.mjs",
+      "bytes": 8816,
+      "sha256": "5827c784a4437b4a91c66a76f9927b86028d38cb9c4386118d5d95ad5f86b89e"
+    },
+    {
+      "path": "harness04/run-local.py",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/run-local.py",
+      "bytes": 17161,
+      "sha256": "13b2e845ed7016ba58be55c79c9ed5de7e62de1d1b1d70fc659b4db2bc855996"
+    },
+    {
+      "path": "harness04/scenario.mjs",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/scenario.mjs",
+      "bytes": 14265,
+      "sha256": "c690b6aaa9932b71aff1ab1c55475db824544ae29c189bea0a8c6d53736df01b"
+    },
+    {
+      "path": "harness04/PINS.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/PINS.json",
+      "bytes": 4406,
+      "sha256": "e165b92a3e74c0c919dd8e810bb4a8f8d6837456cbf54bedeae56c1661224f14"
+    },
+    {
+      "path": "result/ATTEMPT.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/ATTEMPT.json",
+      "bytes": 101,
+      "sha256": "51736573530b1fb608c1b6cc1683a1a6fc888f42131027425b91563ec5b3a87d"
+    },
+    {
+      "path": "result/PHYSICAL-IDENTITY.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/PHYSICAL-IDENTITY.json",
+      "bytes": 189,
+      "sha256": "3fb3793e70a5f662192af97f0c2515108e5cd94733c959487fa884518a33263c"
+    },
+    {
+      "path": "result/PARENT155-INSTALL-READBACK.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/PARENT155-INSTALL-READBACK.json",
+      "bytes": 232,
+      "sha256": "e2e7930c1ccdab9cb78f40f1dbd06b5d8951758fe28663d98766eb70a7997311"
+    },
+    {
+      "path": "result/DB02-INSTALL-DIAGNOSTIC.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/DB02-INSTALL-DIAGNOSTIC.json",
+      "bytes": 558,
+      "sha256": "8a340ff4209837523b7b2fa935425fb65da0b93bbfae7a3b99c960e61ca2245b"
+    },
+    {
+      "path": "result/SQL-CORE-OBSERVATIONS.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/SQL-CORE-OBSERVATIONS.json",
+      "bytes": 602,
+      "sha256": "0dea9cf47274eb239d9fe2a93175743bc9971aa1515233a68b051fdfd2e7e498"
+    },
+    {
+      "path": "result/FAILURE.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/FAILURE.json",
+      "bytes": 135,
+      "sha256": "04ece2962788e5ad8738274d672b7d638d5b9505a888a81fd21c5b744e2ba7ab"
+    },
+    {
+      "path": "result/CLEANUP.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/CLEANUP.json",
+      "bytes": 2423,
+      "sha256": "93b8c7f4da380b7fab5417fa4d9b3f383a62c19372d3398aad6c74d42a52c3ea"
+    },
+    {
+      "path": "result/RESULT.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/RESULT.json",
+      "bytes": 162,
+      "sha256": "0ead301088d39c134615f2dfc1722c7b3371aeee87c3ee17a51f16031df7f469"
+    },
+    {
+      "path": "result/EXECUTION-RECEIPT.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/EXECUTION-RECEIPT.json",
+      "bytes": 2204,
+      "sha256": "55c736cca64d2bc22f31090c1f1eb762ae60943d97873e216077bd843005f86a"
+    },
+    {
+      "path": "result/RESULT-PINS.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/RESULT-PINS.json",
+      "bytes": 1133,
+      "sha256": "dfd71f71956ad3b28db8d8309e60df42eea150716e2476f3c0989dfbf41d122b"
+    },
+    {
+      "path": "controller/PG-HARNESS04-REVIEW.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/PG-HARNESS04-REVIEW.json",
+      "bytes": 2252,
+      "sha256": "869bfc9b4c7d0b80d93c8919660f5d7ed6385089185a23aa573375b3582d0130"
+    },
+    {
+      "path": "controller/LOCAL-SQL-CORE-PG-04-ONCE-PERMIT.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/LOCAL-SQL-CORE-PG-04-ONCE-PERMIT.json",
+      "bytes": 3442,
+      "sha256": "e894b48bd783473d9ae72e9a0028ea8286df1bcce8a08b8c4217d5f3d7dc8558"
+    },
+    {
+      "path": "controller/LOCAL-SQL-CORE-PG-04-CONSUMPTION.json",
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-batched-import-route-01/LOCAL-SQL-CORE-PG-04-CONSUMPTION.json",
+      "bytes": 715,
+      "sha256": "cf8ec48e8f8ac42534498c8b6df241cc661416bbabd2ded7d973da0e99d01f94"
+    },
+    {
+      "path": "README.md",
+      "bytes": 583,
+      "sha256": "11c89407f1168913b8882b6adce06f1e15243fa5f58a7e4d9991252db1bac12b"
+    }
+  ]
+}

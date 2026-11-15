@@ -1,0 +1,23 @@
+{
+  "status": "SOURCE_PREPARATION_ONLY",
+  "pythonSyntax": "AST_PARSED_NOT_EXECUTED",
+  "cleanupFinally02And03ByteUnchanged": true,
+  "allOtherFunctions03ByteUnchanged": true,
+  "diagnostic03OnlySourceGuardAndScopeRebound": true,
+  "original02ScenarioBlockByteUnchanged": true,
+  "baseCatalogScenario02BytesUnchanged": true,
+  "expected161ExplicitParentReference": true,
+  "externalInputPinsReusedWithoutRehash": 645,
+  "ownInputPinsRebasedOrRestored": 6,
+  "newFixInputPins": 2,
+  "inputPins": 653,
+  "newRootAbsentAtPreparation": true,
+  "attemptConsumed": false,
+  "pgExecutions": 0,
+  "fixtureCompiled": false,
+  "scenarioCasesExecuted": 0,
+  "serverActions": 0,
+  "genuineHostTested": false,
+  "oldSuitesRerun": false,
+  "actual161Verified": false
+}

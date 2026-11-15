@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_FIRST_RUN_READINESS_PASS_04",
+  "messages": [
+    {
+      "turnId": "01a1dee2-c2d7-77c0-a8a7-a0b147b42291",
+      "id": "exec-cc0ff763-ce9a-42f0-8c47-a657a6c55a68",
+      "status": "completed",
+      "prompt": "QB 04最小差分首次运行材料窄核：SCOPED SOURCE FIRST-RUN READINESS PASS，Standards/Spec无新增明确阻点。PINS e165b92a3e74c0c919dd8e810bb4a8f8d6837456cbf54bedeae56c1661224f14、runner 13b2e845ed7016ba58be55c79c9ed5de7e62de1d1b1d70fc659b4db2bc855996、两delta 20e52e8d7956c0b57879b35cef727abe474f7ba8f7bc4a87b6b2dce03bbc78cd / 08b8faf4eae2dd409e235f25c7bdefdf48ac1e7175fbbeb799c37b1ed71cc105、INPUT 54529c9ef1d2ab7ca8b85a1a653778ac70254558542864381a246bf175f1bae5 均实核匹配。\n\n实核04明确拆开旧DB02/4589…的EXPECTED161读路径与FIX03/5ad8…的安装SQL路径，安装前另验新包PINS及SQL07dc…，INSTALL-BINDING准确列两者原路径，不假定FIX03目录有模型。诊断函数对比03只有允许源路径切到FIX03/source-slices.sql及scope标签两处改变；过滤/4096字节/首错处理沿用03已过结论，其余函数逐字不变。\n\nbase-install.sql/catalog-fixture.mjs/scenario.mjs 与02逐字相同，恢复的real_restricted_engine_scenario控制块与02逐字相同，故只恢复原162六场景，没有新场景或production host。02/03/04的finally逐字相同，170/180/40/42与原资源/真实停库/reap/失败保根边界复用。新固定三元身份为demo_8877_d3_batched_20261115_04、/tmp/d3-batched-core-20261115-04、Unix55494，当前新root及ATTEMPT均不存在。只比较输入清单字典，原645外部路径+摘要全部保持，新增外部仅FIX03 PINS/SQL准确两条；恢复scenario和5自身后共653，未对外部文件重哈希或重审SQL/guard。STATIC仅准备事实，与实际文件相符。\n\nFIX03刚过的单分号/绑定源结论直接复用。QB本轮0PG/host/服务器/旧测试/文件修改。此结论仅首次运行源码就绪，执行仍由主控另签一次；actual161安装/事务/六场景/最终核账/实际资源与清理均待真实执行，03原DB02诊断及所有旧失败根不改。"
+    }
+  ]
+}

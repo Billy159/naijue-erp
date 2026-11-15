@@ -1,0 +1,21 @@
+{
+  "decisionId": "r3-batched-local-sql-core-20261115-04-once",
+  "state": "CONSUMED_STOPPED_CORE0_NO_RETRY",
+  "executionReceiptSha256": "55c736cca64d2bc22f31090c1f1eb762ae60943d97873e216077bd843005f86a",
+  "actual155Verified": true,
+  "actual161Verified": true,
+  "actualPhysicalProductionAdmission": false,
+  "actualSqlFailure": {
+    "groupPhase": "CORE",
+    "ordinal": 0,
+    "queryKind": "STEP",
+    "sqlState": "23514",
+    "message": null
+  },
+  "scenarioLabelOnlyNotObservedHistoryInjection": "half-group-real-commit-failure",
+  "committedFixtureRows": null,
+  "successCommitProven": false,
+  "pgStopConfirmed": true,
+  "all21ChildrenReaped": true,
+  "rootPreserved": "/tmp/d3-batched-core-20261115-04"
+}

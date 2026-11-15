@@ -1,0 +1,61 @@
+{
+  "decisionId": "r3-batched-local-sql-core-20261115-04-once",
+  "issuedAt": "2026-11-15 11:08 UTC",
+  "decisionMaker": "current controller under actual human standing authorization; not a new human click",
+  "userAuthority": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-同类隔离测量持续授权.md",
+    "sha256": "0c25f2a54db7eb37d7dd0b668df1793b73c7f9f85ea19228e6ceb7447ac9c591",
+    "quote": "类似这样的授权 后续都同意 我要睡觉了 你自己判断同意就好了"
+  },
+  "state": "APPROVED_ONE_CORRECTED_LOCAL_ATTEMPT_NOT_EXECUTED",
+  "executor": "D3 existing owner",
+  "harness": {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04",
+    "pinsSha256": "e165b92a3e74c0c919dd8e810bb4a8f8d6837456cbf54bedeae56c1661224f14",
+    "runnerSha256": "13b2e845ed7016ba58be55c79c9ed5de7e62de1d1b1d70fc659b4db2bc855996",
+    "delta02Sha256": "20e52e8d7956c0b57879b35cef727abe474f7ba8f7bc4a87b6b2dce03bbc78cd",
+    "delta03Sha256": "08b8faf4eae2dd409e235f25c7bdefdf48ac1e7175fbbeb799c37b1ed71cc105",
+    "inputPinsSha256": "54529c9ef1d2ab7ca8b85a1a653778ac70254558542864381a246bf175f1bae5",
+    "state": "FROZEN_162_FIXED_INSTALL_04_PENDING_QB_0NEW_PG"
+  },
+  "readinessReview": "PG-HARNESS04-REVIEW.json",
+  "scope": "162-row existing pure synthetic SQL-core, actual35/155/161 installation reads, fixed6 scenes; no genuine production host or V2/new full-scale/server/business data",
+  "limits": {
+    "workSeconds": 170,
+    "totalSeconds": 180,
+    "statementMs": 40000,
+    "responseMs": 42000,
+    "scratchAllocatedBytes": 3221225472,
+    "earlyScratchMarginBytes": 536870912,
+    "combinedLogReceiptBytes": 2097152,
+    "cleanupReceiptReservedBytes": 16384
+  },
+  "target": {
+    "database": "demo_8877_d3_batched_20261115_04",
+    "root": "/tmp/d3-batched-core-20261115-04",
+    "unixPort": 55494,
+    "tcp": false
+  },
+  "constraints": [
+    "verify exact04 pins unused ATTEMPT/freshroot and correctFIX03 SQL07dc separate from oldDB02 expected161",
+    "only one04 README command original3 args",
+    "original162sixscenes only; no genuinehost/V2/fullscale/server/real business",
+    "first failure stops; no retry under this decision",
+    "bounded actual install diagnostic; retain prescribed safe first failure facts, no raw SQL/parameters/credentials export",
+    "all failures/unknown/signals/unconfirmed stop preserve this newroot; oldroots untouched",
+    "delete only this root after final actualsuccess+stop/reap within budgets",
+    "report actual161/COMMIT/unknown/newconnection/finalverify/resources/cleanup, no expected-as-actual"
+  ],
+  "latestStartBefore": "2026-11-15 11:18:00 UTC",
+  "install": {
+    "parent": "base35+exact12layers→actual155",
+    "fix": {
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
+      "pinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+      "sqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+      "change": "single statement semicolon at source3124 and renderer separator emission;161 model/body/definition unchanged",
+      "pgExecuted": false
+    },
+    "expected161": "immutable original DB02 model/body/definition unchanged"
+  }
+}
