@@ -1,0 +1,13 @@
+{
+  "ACTUAL-28-29-CLOSURE-SPECS.json": "6ceda37433072bbf8862da3daf29eec20e5200a0315c557d9e296840fb8a7951",
+  "DELTA-FROM-MAIN29-02.patch": "9b7f521f248ce76594014dabb1856059888eea08165c95d0592e1b2c9e490735",
+  "LOCAL-STATIC-TYPED-PAIR-CHECK.json": "a4e2f1150861bdee1073d185000ab3efe4cc3d045e0811381a4cee8c236bec1f",
+  "PREPARATION.json": "f2e85aad07e05ebeeec03d81f6c565e30b8e41e1bb9f44191e6a3b35c6d01e46",
+  "admin_exec.DIRECT30-UNREGISTERED.py": "c1477b97792894458af19dffffa23b4e1ba0d1e4e0d8451cdcc1b8991a49ec21",
+  "issue_phase.py": "e0f99ac5bf87cee115dbb921b47b6c8c018eb5d605b89dc50c60552d1532337e",
+  "issue_registration.py": "f2eb793ffe5f70761fd70a900bebdbce70878d22c67be6165781127681bc7a51",
+  "issue_upgrade_authority.py": "678c550bc7154fd70f1e84b3ddaad5c74de55d2e612de9d1660c95c1305dc59c",
+  "original-cas-direct30-carrier.UNISSUED.py": "b4d31052fa27895274c33b4443da76f6f65a5e52f84aa8439cb49e4b72878879",
+  "r3_direct30_batched.py": "3c8835c7d0a151260a4c17f56f60253aeb1a52eddac5861001d26bf7820a9220",
+  "register_cas.py": "d2ce4c241e7c3ba7fa5d7dd21454e2b6fb6c4397678e7c4c5a35653ea8e97368"
+}

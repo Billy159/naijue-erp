@@ -1,0 +1,84 @@
+{
+  "acceptedMaterializeScriptPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service25-root03-source-local-01/CANDIDATE-02/materialize/bundle/materialize-batched-source.py",
+  "acceptedMaterializeScriptSha256": "76088c97f4f3053eb88d84c0c767724ba4612187b41ba2e86a6a78a73f044615",
+  "acceptedSourceDescriptionSha256": "c488d1c187cc0342dd4a699f2656cf5d359c0f61c1c39f137729cd6b8f7e87fa",
+  "acceptedSourceRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+  "ackMetadata": {
+    "bytes": 187,
+    "identity": [
+      66304,
+      13664531,
+      0,
+      0,
+      384,
+      1,
+      187,
+      1794780697575376583,
+      1794780697575376583
+    ],
+    "sha256": "ba6a0699b5b37a7b5e81bbd86ad5e8f9735e85f842da6449387c4ab91592a781"
+  },
+  "c29CheckedAtUTC": "2026-11-15T22:20:51.420909+00:00",
+  "c29Metadata": {
+    "bytes": 2164,
+    "identity": [
+      66304,
+      13536321,
+      0,
+      0,
+      292,
+      1,
+      2164,
+      1794780697409378356,
+      1794780697409378356
+    ],
+    "sha256": "e50a7112cb48fc987b220a514e62e2e370b08bc3322bfa0ed42babc50d379568"
+  },
+  "c29ReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-post29-materialization-readonly-assessment-01/BASELINE-C29-READONLY.json",
+  "c29ReadbackSha256": "3da2a9e91faabaf528a587c30b2362ab239efe84555e48cc5a5f7460a8026490",
+  "minimumBoundariesBeforeImplementation": [
+    "D1 final exact changed/added paths, before/after bytes and hashes, immutable freeze and updated closure rows/pins",
+    "Main exact new materialize key and independent output path with old703/cdcaf preserved; original install/writer/INIT/business keys unchanged",
+    "materializer successor hardcoded path/count/file-set and predecessor cdcaf+399d+703, not generic CLI paths",
+    "Main registrar/policy/issuer exact seven-phase materialize key and source binding; current issue_phase deliberately refuses materializeNeverResubmit old key",
+    "callers/describe/install/writer/readers source directory and operator source pins/material receipt/count updated together; retain installed catalog/target/history pins separately",
+    "actual new material terminal and receipt readback before apply/start admission; no relabel of old completed material key"
+  ],
+  "newClockIssued": false,
+  "newMaterializeKey": "UNDEFINED_MAIN_OWNER",
+  "newOutputPath": "UNDEFINED_MAIN_OWNER",
+  "newServerPathsCreated": 0,
+  "newSourceFreeze": "UNKNOWN_WAIT_D1_FREEZE",
+  "noNewMaterializationAlternative": "Not demonstrated: both real compiler and real writer import from fixed old OP; retaining these imports executes old source, replacing them requires a new reviewed entry/source binding. No in-place changes, aliases or hardlinks authorized.",
+  "nodeOrFactoryRuns": 0,
+  "oldMaterializationReplayed": false,
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-15 22:11:36.66744+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7706545564479176741"
+  },
+  "postgresConnections": 0,
+  "reusableMechanism": [
+    "existing seven-phase materialize position and registered root entry",
+    "external finite authority/self source/review pins",
+    "trusted root parents, NOFOLLOW, regular uid0/nlink1/stable file identity reads",
+    "predecessor receipt and exact changed-member beforeHash CAS",
+    "O_EXCL independent files, no hardlink or old-path overwrite",
+    "changed bytes only transfer with unchanged predecessor files copied",
+    "same stopped PGDATA identity/no PGpid and existing space/time reserve",
+    "original-key intent/terminal/receipt and no replay"
+  ],
+  "serverMutations": 0,
+  "service": {
+    "containerId": "8debce1e870690f3d27172d3f7a8161df3333b8f7016815a26f28efa9718c7b0",
+    "containerStartedAt": "2026-11-15T22:11:35.317775899Z",
+    "postmasterStart": "2026-11-15 22:11:36.66744+00",
+    "proofSha256": "e50a7112cb48fc987b220a514e62e2e370b08bc3322bfa0ed42babc50d379568",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-29"
+  },
+  "sourceFilesAfterFix": "UNKNOWN_WAIT_D1_FREEZE",
+  "sourceImplementationModified": false,
+  "sourceIsHistoricalNotLiveness": true,
+  "state": "READONLY_ASSESSMENT_COMPLETE_WAIT_EXACT_D1_FREEZE_AND_MAIN_BOUNDARIES"
+}

@@ -1,0 +1,225 @@
+{
+  "actual04AdmissionSha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df",
+  "actualMaterializationCompleted": false,
+  "actualNodeSourceOnlyLoader": "v24.21.0",
+  "addedFiles": 1,
+  "authorityBindings": {
+    "previousCleanupSha256": "4bc125537c15b9593e663b07fc95ea96f07e170e809c9b4a58d106bef8ae06cf",
+    "previousCurrentProofSha256": "e50a7112cb48fc987b220a514e62e2e370b08bc3322bfa0ed42babc50d379568",
+    "previousIncompleteRootSha256": "70c903267ecca60c8b0de9e9dfb6a044d3060516690d30f3997e4c89bcb153ab",
+    "previousResultSha256": "cfa0c252b4fe4ebb1a732b369c9ff41095bfa9f8e78da80a57669b501648b5d2",
+    "previousRetainedAckSha256": "ba6a0699b5b37a7b5e81bbd86ad5e8f9735e85f842da6449387c4ab91592a781",
+    "previousTerminalSha256": "30e747021f4775edb001b3ce1d7463b813b3240b99819ac1cd5236e4c22c8990",
+    "restoreResultSha256": "dd4e900aed60490397f99a14f6a275f8cf16239b764ab95799e569ca41aa0aed",
+    "restoreTerminalSha256": "536e3726f2a4f0785e2ffc64fa8f89c82830652dd78ae29a773cf4c77a218004"
+  },
+  "baseSourceSetSha256": "cc66e37d81bebf11b6325ccaf1ddcf72d829ab51d1b4c59b97246a1adc850c41",
+  "candidateDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01",
+  "changedSources": [
+    {
+      "bytes": 13291,
+      "path": "PHASES30.UNISSUED.json",
+      "sha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794"
+    },
+    {
+      "bytes": 21656,
+      "path": "apply/bundle/ordinary05_roles.py",
+      "sha256": "45dab70e9063a5fd44d9e670dba9fabcc221441c702f1d9c829aea25d1416501"
+    },
+    {
+      "bytes": 32447,
+      "path": "apply/bundle/ordinary05_roles_job.py",
+      "sha256": "14fd8cd89cf2c55c7d723fcc6235325c8c78c3b53056ddc3e2f20322ac83a34c"
+    },
+    {
+      "bytes": 7591,
+      "path": "apply/bundle/prior_failed29.py",
+      "sha256": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48"
+    },
+    {
+      "bytes": 1834,
+      "path": "apply/bundle/root04_material.py",
+      "sha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+    },
+    {
+      "bytes": 3742,
+      "path": "freeze-local30.py",
+      "sha256": "a7856829b84e2496da84c97f38b9f43c4fe2d6dca8c607d20d0374566311e00b"
+    },
+    {
+      "bytes": 13594,
+      "path": "install/bundle/batched161-run.mjs",
+      "sha256": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e"
+    },
+    {
+      "bytes": 12985,
+      "path": "install/bundle/batched_install_host.py",
+      "sha256": "36832413a2211e9aae14645d01e694dac77ba3423cf6a78c29502a8621be23b2"
+    },
+    {
+      "bytes": 20709,
+      "path": "install/bundle/normal05_retained_stop.py",
+      "sha256": "687a9229992a8efa846980481a1049cfda4ec83303b2edb74013ac88de7e2b29"
+    },
+    {
+      "bytes": 12283,
+      "path": "install/bundle/private_transport.py",
+      "sha256": "57c0615c21db1100b2e457fd4442752c0d38c9706d6eba15c3a07567326ec6e5"
+    },
+    {
+      "bytes": 13003,
+      "path": "read-current-phase30.py",
+      "sha256": "a08fa65666468b067a444526e59d41ec0aa63add52d06c0d540ec181b60e2a64"
+    },
+    {
+      "bytes": 21656,
+      "path": "restore/bundle/ordinary05_roles.py",
+      "sha256": "45dab70e9063a5fd44d9e670dba9fabcc221441c702f1d9c829aea25d1416501"
+    },
+    {
+      "bytes": 32447,
+      "path": "restore/bundle/ordinary05_roles_job.py",
+      "sha256": "14fd8cd89cf2c55c7d723fcc6235325c8c78c3b53056ddc3e2f20322ac83a34c"
+    },
+    {
+      "bytes": 7591,
+      "path": "restore/bundle/prior_failed29.py",
+      "sha256": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48"
+    },
+    {
+      "bytes": 1834,
+      "path": "restore/bundle/root04_material.py",
+      "sha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+    },
+    {
+      "bytes": 5075,
+      "path": "run_frozen_phase30.py",
+      "sha256": "cc2e7a03e57ddc94f7b638d7907940cf5030f2991d0163d3be0362a7e89c7d15"
+    },
+    {
+      "bytes": 13594,
+      "path": "start/bundle/batched161-run.mjs",
+      "sha256": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e"
+    },
+    {
+      "bytes": 57073,
+      "path": "start/bundle/normal_service05_after08.py",
+      "sha256": "9f1888e1446f5233307f33522ef67b8af6f3c363bfb5bde7eb7d9575a51f4192"
+    },
+    {
+      "bytes": 18248,
+      "path": "start/bundle/normal_service05_after08_proof.py",
+      "sha256": "3f3ba44243a14a088814b04f1e19c98113bfff4fc4d4112961dc185dfc26de19"
+    },
+    {
+      "bytes": 7591,
+      "path": "start/bundle/prior_failed29.py",
+      "sha256": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48"
+    },
+    {
+      "bytes": 21212,
+      "path": "start/bundle/r3_05_readonly.py",
+      "sha256": "a348086750acfdd02cf60d801cbfdca3bd0cfde5121e1a2cdfabe546de330e97"
+    },
+    {
+      "bytes": 9394,
+      "path": "start/bundle/r3_05_runtime.py",
+      "sha256": "385e94f8e21d78d5152512ace0da3f36bf2f0767170fd99acc61285bd5bdd062"
+    },
+    {
+      "bytes": 1834,
+      "path": "start/bundle/root04_material.py",
+      "sha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+    },
+    {
+      "bytes": 15078,
+      "path": "start/bundle/start_owned_describe.py",
+      "sha256": "242b00ae332734ad5057bc6a75d00281b133f1380601d86952d2a7b8883a7bb0"
+    },
+    {
+      "bytes": 19581,
+      "path": "stop/bundle/normal05_preserve_stop.py",
+      "sha256": "bec9a454767ce74fa7ad7d7ca32577cd1e90cf4deb1c94fc88a9016320e3b36f"
+    },
+    {
+      "bytes": 20709,
+      "path": "stop/bundle/normal05_retained_stop.py",
+      "sha256": "687a9229992a8efa846980481a1049cfda4ec83303b2edb74013ac88de7e2b29"
+    },
+    {
+      "bytes": 37233,
+      "path": "writer/bundle/batched_real_host.py",
+      "sha256": "c84d5820e9147e2c8c7cc086299f4326059458cf7efa55c561563b9ef135cf25"
+    },
+    {
+      "bytes": 20709,
+      "path": "writer/bundle/normal05_retained_stop.py",
+      "sha256": "687a9229992a8efa846980481a1049cfda4ec83303b2edb74013ac88de7e2b29"
+    },
+    {
+      "bytes": 9394,
+      "path": "writer/bundle/r3_05_runtime.py",
+      "sha256": "385e94f8e21d78d5152512ace0da3f36bf2f0767170fd99acc61285bd5bdd062"
+    },
+    {
+      "bytes": 20087,
+      "path": "writer/bundle/retained24-run.mjs",
+      "sha256": "a3082eef1eed789609b06be8fe292dbaad0397f1a9125e5f707e0a5ce7e1c240"
+    }
+  ],
+  "checksSha256": "5b050fc99be74243a17c5d4acbf7603dca625a6b7a68c018a09267b38517ca84",
+  "currentSourcePins": 279,
+  "dependencyOrder": [
+    "actual local source-only loader / rows",
+    "fixed Node caller SHA without material marker hash",
+    "exact source description SHA containing caller SHA",
+    "planned deterministic material receipt SHA without Python consumer hashes",
+    "Python consumers and bundle pins / witness / fixed runner and reader"
+  ],
+  "describeHelperSha256": "242b00ae332734ad5057bc6a75d00281b133f1380601d86952d2a7b8883a7bb0",
+  "expectedMaterializationSha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+  "expectedReceiptEvidence": "PLANNED_EXPECTED_OUTPUT_NOT_EXECUTED",
+  "formalBusinessAccepted": false,
+  "freshCasReads": 0,
+  "inheritedUnchangedFiles": 380,
+  "localChecksPassed": 37,
+  "mainBytes": 57073,
+  "mainSha256": "9f1888e1446f5233307f33522ef67b8af6f3c363bfb5bde7eb7d9575a51f4192",
+  "materializationKey": "t45-r3-batched-root04-source-delta-20261116-01",
+  "materializationMode": "NEW_EXACT_ROOT04_DELTA_ONCE",
+  "materializeNeverResubmit": true,
+  "materializeScriptSha256": "3989f1e54b5f147415bf8d69fdf7e755a91a5b7675ebd7a8aa97d7afcd0df9d8",
+  "modifiedFiles": 1,
+  "newActualAdmission": "root04_material.validate() called before apply host write and start host creation; exact completed terminal plus real root/public bytes plus independent output marker required",
+  "newAuthorityFieldInterface": false,
+  "newAuthorityIssued": false,
+  "nodeCallerSha256": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e",
+  "nodeProgramOrTargetOrInstallFactories": 0,
+  "normalStartupHoldClosed": false,
+  "originalT45Chat": "01a100d0-cad5-71c1-8042-dc594311d3be",
+  "parentMaterializationRequestKey": "t45-r3-batched-root03-source-delta-20261116-01",
+  "parentMaterializationSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+  "parentSourceRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+  "parentSourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "phasesSha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794",
+  "postgresConnections": 0,
+  "preservedBudgets": [
+    "materialize300/28GiB reserve",
+    "start300/early190+cleanup110/entry>170/child150+TERM2+KILL2",
+    "bridge158+publish12",
+    "strict900install/780",
+    "4320completebudget/90-92-115-120min",
+    "writer3000"
+  ],
+  "priorFailed29Sha256": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48",
+  "proofSha256": "3f3ba44243a14a088814b04f1e19c98113bfff4fc4d4112961dc185dfc26de19",
+  "readerSha256": "a08fa65666468b067a444526e59d41ec0aa63add52d06c0d540ec181b60e2a64",
+  "root04Directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-root04-source-local-01",
+  "serverActions": 0,
+  "sourceDescriptionSha256": "b16ba1888b177fef243363b004ad6674017eccf6a21a286fa798ecd3cd90c147",
+  "sourceFiles": 382,
+  "sourceRowsSha256": "ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7",
+  "sourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "state": "FROZEN_LOCAL_NORMAL30_ROOT04_SOURCE_ONLY_AWAITING_FINAL_PAIR_REVIEW",
+  "uidOrClockMocks": false
+}

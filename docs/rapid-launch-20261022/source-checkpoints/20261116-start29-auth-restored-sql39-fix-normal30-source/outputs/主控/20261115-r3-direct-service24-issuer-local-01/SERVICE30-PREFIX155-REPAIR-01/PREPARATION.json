@@ -1,0 +1,27 @@
+{
+  "T45PhasesSha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794",
+  "authorityFilesIssued": false,
+  "currentSevenKeysAllMustBeAbsent": true,
+  "fullNewSourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "materializeIssuerMode": "NEW_EXACT_ROOT04_DELTA_ONCE",
+  "materializeKey": "t45-r3-batched-root04-source-delta-20261116-01",
+  "materializeParentHistorical03Preserved": true,
+  "moduleBytes": 62960,
+  "newBaseSourceSetSha256": "cc66e37d81bebf11b6325ccaf1ddcf72d829ab51d1b4c59b97246a1adc850c41",
+  "newRootBasisFiles": 109,
+  "noFurtherEditsWithoutDeclaredDelta": true,
+  "old03CompletedBaselinePreserved": true,
+  "pending": [
+    "independent changed-scope Main30/root04/normal30 final same-version review",
+    "all exact execution adapters and new7key fresh109 reader ready before any actual fresh",
+    "actual fresh109 and nofile API dryrun before finite issuance"
+  ],
+  "previousRootBasisFiles": 93,
+  "root04ExpectedReceiptEvidence": "PLANNED_EXPECTED_OUTPUT_NOT_EXECUTED",
+  "scope": "Main30 exact previous29 closure and registry initial preparation only",
+  "serverActions": 0,
+  "sourceOnlyPhaseNoServerActions": true,
+  "state": "FROZEN_MAIN30_SOURCE_PENDING_INDEPENDENT_FINAL_PAIR",
+  "typedFailure28And29StrictSharedImplementation": true,
+  "whySmallReuse": "Keep unchanged65536 source limit; identical typed failure semantics with two explicit internal immutable records, no external generation capability"
+}

@@ -1,0 +1,48 @@
+--- base703/fresh35-combined-catalog-v1.mjs
++++ successor/fresh35-combined-catalog-v1.mjs
+@@ -1,4 +1,5 @@
+ import {derivePerformance155} from './performance155/derive155.mjs';
++import {applyFresh35Sql39CatalogDelta} from './fresh35-sql39-catalog-delta.mjs';
+ /** Independent additive successor catalog compiler. Existing blocked review SQL
+  * remains unchanged. This module only generates checks; native installation
+  * separately requires the fixed protected authorization and exact target. */
+@@ -282,26 +283,10 @@
+  const t=describeFresh35CombinedTarget(target);
+  need(t.format==='FRESH35_COMBINED_TARGET_BINDING_V1'&&!t.purpose,'SYNTHETIC_V1_TARGET_REQUIRED');
+  const baseCatalog=await buildFresh35CompactZeroCatalog(source,target,paths),prior=catalogs.get(baseCatalog);
+- const {model,definitions,bodies,lineage}=prior;
++ const {lineage}=prior;
+  const sql=await readSyntheticSql39(source);
+  const specs=parseStrictJson(sql.split('$body_specs$')[1]);
+- need(specs.length===10&&new Set(specs.map(spec=>normal(spec.signature))).size===10,'SYNTHETIC_SQL39_EXACT_TEN_REQUIRED');
+- const nextDefinitions=new Map(definitions),nextBodies=new Map(bodies);
+- for(const spec of specs){
+-  const key=normal(spec.signature),before=bodies.get(key),definition=definitions.get(key);
+-  need(typeof before==='string'&&typeof definition==='string'&&hash(before)===spec.beforeSha256,'SYNTHETIC_SQL39_PREDECESSOR_DIFFERS');
+-  const after=spec.replacements.reduce((value,[oldText,newText,occurrences=1])=>{
+-   need(occurrences===1,'SYNTHETIC_SQL39_REPLACEMENT_COUNT_DIFFERS');
+-   return replacement(value,oldText,newText);
+-  },before);
+-  need(hash(after)===spec.afterSha256,'SYNTHETIC_SQL39_ROUTINE_DIFFERS');
+-  nextBodies.set(key,after);nextDefinitions.set(key,replacement(definition,before,after));
+- }
+- const nextModel={...model,routines:model.routines.map(r=>{
+-  const key=normal(r.signature);
+-  return {...r,definitionSha256:hash(nextDefinitions.get(key)),bodySha256:hash(nextBodies.get(key))};
+- })};
+- need(nextModel.routines.length===154,'SYNTHETIC_SQL39_EXACT154_REQUIRED');
++ const {model:nextModel,definitions:nextDefinitions,bodies:nextBodies}=applyFresh35Sql39CatalogDelta(prior,specs);
+  const sourceSetSha256=hash(JSON.stringify({parent:prior.descriptor.sourceSetSha256,patch:syntheticSql39Sha}));
+  const successorGuard=guardSql(nextModel,lineage,target,{requireEmpty:false});
+  const observation=observationSql({sourceSetSha256});
+@@ -361,7 +346,9 @@
+  const baseCatalog=await buildFresh35CompactZeroCatalog(source,target,paths),prior=catalogs.get(baseCatalog);
+  need(prior.model.routines.length===154,'PREFIX155_EXACT154_PREDECESSOR_REQUIRED');
+  const manifest=await readPrefix155Inputs(source);
+- const {model,definitions,bodies}=derivePerformance155(prior,{
++ const sql39=await readSyntheticSql39(source);
++ const sql39Prior=applyFresh35Sql39CatalogDelta(prior,parseStrictJson(sql39.split('$body_specs$')[1]));
++ const {model,definitions,bodies}=derivePerformance155(sql39Prior,{
+   fresh35_owner_20261105_r1:t.proposal.owner,fresh35_controller_20261105_r1:t.proposal.controller,
+  });
+  need(model.routines.length===155&&model.indexes.length===114,'PREFIX155_EXACT_SUCCESSOR_REQUIRED');

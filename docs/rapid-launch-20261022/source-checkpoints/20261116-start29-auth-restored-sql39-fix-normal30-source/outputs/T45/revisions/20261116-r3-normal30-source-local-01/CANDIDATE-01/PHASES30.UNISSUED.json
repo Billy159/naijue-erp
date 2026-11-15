@@ -1,0 +1,199 @@
+{
+  "accessPlanPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-final02-source-local-01/WRITER24-ACCESS-PLAN.CANONICAL.json",
+  "accessPlanSha256": "2a8d039a80f69276eccc606036917584fa23b3297b62182fe435e32f6d04cbb5",
+  "actualNewMaterializationTerminalAndOutputRequiredBeforeApplyStart": true,
+  "actualPriorClosedSha256": "f94353f184950a2324a098c241f9f6a9db00f4ab2c9e7f65e1101fb6174ae880",
+  "authoritiesIssued": false,
+  "errorClassificationPreparation": "Failure only: fixed errorType/systemCode/guardCode and one controlled sourceFrame; no original message, stack or path",
+  "expectedMaterializationEvidence": "PLANNED_EXPECTED_OUTPUT_NOT_EXECUTED",
+  "expectedMaterializationSha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+  "externallyIssuedStaticLeaves": {
+    "apply": [
+      "roles-authorization.json"
+    ],
+    "restore": [
+      "roles-authorization.json"
+    ]
+  },
+  "formalBusinessAccepted": false,
+  "fullArchiveRetransmitted": false,
+  "jobs": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "45dab70e9063a5fd44d9e670dba9fabcc221441c702f1d9c829aea25d1416501",
+        "ordinary05_roles_job.py": "14fd8cd89cf2c55c7d723fcc6235325c8c78c3b53056ddc3e2f20322ac83a34c",
+        "prior_failed29.py": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48",
+        "root04_material.py": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary30-auth-apply-20261116-01",
+      "script": "ordinary05_roles_job.py",
+      "timeoutSeconds": 300
+    },
+    "install": {
+      "authorityLeaf": "install-authorization.json",
+      "bundlePins": {
+        "batched161-run.mjs": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e",
+        "batched_install_host.py": "36832413a2211e9aae14645d01e694dac77ba3423cf6a78c29502a8621be23b2",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "normal05_retained_stop.py": "687a9229992a8efa846980481a1049cfda4ec83303b2edb74013ac88de7e2b29",
+        "private_transport.py": "57c0615c21db1100b2e457fd4442752c0d38c9706d6eba15c3a07567326ec6e5"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-install-20261115-01",
+      "script": "batched_install_host.py",
+      "timeoutSeconds": 780
+    },
+    "materialize": {
+      "authorityLeaf": "materialize-authorization.json",
+      "bundlePins": {
+        "batched161-run.mjs": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e",
+        "fresh35-combined-catalog-v1.mjs": "a49048834d6050d7e759733d7a3c7ec3f1726b6fabf0baa6512954e0cda75048",
+        "fresh35-sql39-catalog-delta.mjs": "0fd734488724fa0f62906693f6a8d7f7211d534fb8145db12e99894ef7743084",
+        "materialize-batched-source.py": "3989f1e54b5f147415bf8d69fdf7e755a91a5b7675ebd7a8aa97d7afcd0df9d8",
+        "source-description.json": "b16ba1888b177fef243363b004ad6674017eccf6a21a286fa798ecd3cd90c147",
+        "source-rows.json": "ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-root04-source-delta-20261116-01",
+      "script": "materialize-batched-source.py",
+      "timeoutSeconds": 300
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "45dab70e9063a5fd44d9e670dba9fabcc221441c702f1d9c829aea25d1416501",
+        "ordinary05_roles_job.py": "14fd8cd89cf2c55c7d723fcc6235325c8c78c3b53056ddc3e2f20322ac83a34c",
+        "prior_failed29.py": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48",
+        "root04_material.py": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary30-auth-restore-20261116-01",
+      "script": "ordinary05_roles_job.py",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "bundlePins": {
+        "batched161-run.mjs": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e",
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service05_after08.py": "9f1888e1446f5233307f33522ef67b8af6f3c363bfb5bde7eb7d9575a51f4192",
+        "normal_service05_after08_proof.py": "3f3ba44243a14a088814b04f1e19c98113bfff4fc4d4112961dc185dfc26de19",
+        "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+        "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+        "operator-stream-import-cli.mjs": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+        "operator-stream-program.mjs": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+        "prior_failed29.py": "383ffa3d57992a538519a26939566f1c4b4d1042e824067d994cd62ce4c09c48",
+        "production-plan.json": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+        "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+        "r3_05_readonly.py": "a348086750acfdd02cf60d801cbfdca3bd0cfde5121e1a2cdfabe546de330e97",
+        "r3_05_runtime.py": "385e94f8e21d78d5152512ace0da3f36bf2f0767170fd99acc61285bd5bdd062",
+        "root04_material.py": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df",
+        "start_owned_describe.py": "242b00ae332734ad5057bc6a75d00281b133f1380601d86952d2a7b8883a7bb0"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-first-r3-native-service-start-20261116-30",
+      "script": "normal_service05_after08.py",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "bundlePins": {
+        "normal05_preserve_stop.py": "bec9a454767ce74fa7ad7d7ca32577cd1e90cf4deb1c94fc88a9016320e3b36f",
+        "normal05_retained_stop.py": "687a9229992a8efa846980481a1049cfda4ec83303b2edb74013ac88de7e2b29"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary30-preserve-stop-20261116-01",
+      "script": "normal05_preserve_stop.py",
+      "timeoutSeconds": 120
+    },
+    "writer": {
+      "authorityLeaf": "writer-authorization.json",
+      "bundlePins": {
+        "batched_real_host.py": "c84d5820e9147e2c8c7cc086299f4326059458cf7efa55c561563b9ef135cf25",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "materialized-profile.json": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+        "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+        "normal05_retained_stop.py": "687a9229992a8efa846980481a1049cfda4ec83303b2edb74013ac88de7e2b29",
+        "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+        "r3_05_runtime.py": "385e94f8e21d78d5152512ace0da3f36bf2f0767170fd99acc61285bd5bdd062",
+        "retained24-run.mjs": "a3082eef1eed789609b06be8fe292dbaad0397f1a9125e5f707e0a5ce7e1c240"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-real-execute-20261115-01",
+      "script": "batched_real_host.py",
+      "timeoutSeconds": 3000
+    }
+  },
+  "materializationAlreadyCompleted": false,
+  "materializationMode": "NEW_EXACT_ROOT04_DELTA_ONCE",
+  "materializeNeverResubmit": true,
+  "original06AbsenceReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261114-r3-service23-original06-readonly-actual-01/readback/INSPECT-READBACK.json",
+  "parentMaterializationNeverResubmit": true,
+  "parentMaterializationRequestKey": "t45-r3-batched-root03-source-delta-20261116-01",
+  "parentMaterializationSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+  "parentMaterializationTerminalSha256": "db91c1ea3f1553308937748844d74a40dae1debd13747ef7d9ccb08e44aa08f8",
+  "parentSourceRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+  "parentSourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "phaseDirectories": {
+    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/apply/bundle",
+    "install": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/install/bundle",
+    "materialize": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-root04-source-local-01/materialize/bundle",
+    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/restore/bundle",
+    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/start/bundle",
+    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/stop/bundle",
+    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/writer/bundle"
+  },
+  "postgresConnections": 0,
+  "previousStartKind": "FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED",
+  "priorRestorePublicResultSha256": "dd4e900aed60490397f99a14f6a275f8cf16239b764ab95799e569ca41aa0aed",
+  "priorRestoreRootResultSha256": "f0cb72700e78fd5097911e0169054272c66b570fad2dcf0b2572cc2f66c34039",
+  "priorRestoreTerminalSha256": "536e3726f2a4f0785e2ffc64fa8f89c82830652dd78ae29a773cf4c77a218004",
+  "priorRetainedAckSha256": "ba6a0699b5b37a7b5e81bbd86ad5e8f9735e85f842da6449387c4ab91592a781",
+  "priorService": {
+    "containerId": "8debce1e870690f3d27172d3f7a8161df3333b8f7016815a26f28efa9718c7b0",
+    "containerStartedAt": "2026-11-15T22:11:35.317775899Z",
+    "postmasterStart": "2026-11-15 22:11:36.66744+00",
+    "proofSha256": "e50a7112cb48fc987b220a514e62e2e370b08bc3322bfa0ed42babc50d379568",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-29"
+  },
+  "priorStartCleanupSha256": "4bc125537c15b9593e663b07fc95ea96f07e170e809c9b4a58d106bef8ae06cf",
+  "priorStartExitCode": 2,
+  "priorStartIncompletePublicSha256": "a3b82949618b7f7aa95b723bfda4c4615cf3b150c9e2369eff5209182e1c830f",
+  "priorStartIncompleteRootSha256": "70c903267ecca60c8b0de9e9dfb6a044d3060516690d30f3997e4c89bcb153ab",
+  "priorStartPublicResultSha256": "cfa0c252b4fe4ebb1a732b369c9ff41095bfa9f8e78da80a57669b501648b5d2",
+  "priorStartRootResultSha256": "769ca923a3e9f15eb4a010d4e23a991ab06ce8bed759bd22f6d5580ae1a9c426",
+  "priorStartStatus": "FAILED",
+  "priorStartTerminalSha256": "30e747021f4775edb001b3ce1d7463b813b3240b99819ac1cd5236e4c22c8990",
+  "rootDescribeCallerPreparation": "Only start30-owned pinned helper invokes genuine describe from root04 inside start300; reader consumes stored outputs without rerunning Node",
+  "serverActions": 0,
+  "sourceArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "sourceDelta": true,
+  "sourceDescriptionSha256": "b16ba1888b177fef243363b004ad6674017eccf6a21a286fa798ecd3cd90c147",
+  "sourceFiles": 382,
+  "sourcePins": 279,
+  "sourceRowsSha256": "ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7",
+  "sourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "startDescriptionMaximumBytes": {
+    "genuine-describe-payload.json": 65536,
+    "genuine-describe-process.json": 65536,
+    "genuine-descriptor.json": 131072,
+    "genuine-live-facts.json": 131072
+  },
+  "startDescriptionOutputLeaves": [
+    "genuine-describe-payload.json",
+    "genuine-descriptor.json",
+    "genuine-live-facts.json",
+    "genuine-describe-process.json"
+  ],
+  "startupHeldUntilFinalSameVersionFullChainReview": true,
+  "status": "LOCAL_SOURCE_NORMAL30_ROOT04_PREFIX155_REPAIR_UNISSUED_REVIEW_PENDING",
+  "writerRestoredPointerSha256": "8c2f65e76ded8df610359435e90b5eb68783ffb108379a11d66a2f273e2ae98d"
+}

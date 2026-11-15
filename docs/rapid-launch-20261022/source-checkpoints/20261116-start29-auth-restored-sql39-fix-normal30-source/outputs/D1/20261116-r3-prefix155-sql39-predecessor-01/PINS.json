@@ -1,0 +1,20 @@
+{
+  "scope": "TWO_FILE_SOURCE_DELTA_NOT_FULL_MATERIALIZED_CLOSURE",
+  "baseSourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "a49048834d6050d7e759733d7a3c7ec3f1726b6fabf0baa6512954e0cda75048",
+      "bytes": 64250,
+      "previousSha256": "f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs",
+      "sha256": "0fd734488724fa0f62906693f6a8d7f7211d534fb8145db12e99894ef7743084",
+      "bytes": 1923,
+      "previousSha256": null
+    }
+  ],
+  "fullSuccessorSourceSetSha256": "NOT_COMPUTED_OR_MATERIALIZED",
+  "serverActions": 0
+}

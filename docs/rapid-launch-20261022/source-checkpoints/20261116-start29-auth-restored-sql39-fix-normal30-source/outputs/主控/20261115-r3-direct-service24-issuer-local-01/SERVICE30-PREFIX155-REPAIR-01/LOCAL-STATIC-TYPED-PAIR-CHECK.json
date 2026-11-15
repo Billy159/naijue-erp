@@ -1,0 +1,20 @@
+{
+  "actualSaved28And29CleanupShapesAndReferencesMatched": true,
+  "allHistoricalKeysPreserved": true,
+  "authorityFilesIssued": 0,
+  "commonTypedFailureBodyASTEqualToReviewed28AfterOnlyImmutableSpecSubstitution": true,
+  "currentRootBasisFiles": 109,
+  "frozenT45WitnessExactFieldsMatch": true,
+  "issuerCalls": 0,
+  "newCurrentKeys": 5,
+  "newModuleBytes": 62960,
+  "old93PreservedExceptCurrentDispatcher": true,
+  "original03HistoricalCompletionSeparatedFromNew04Absence": true,
+  "originalBusinessInstallWriterKeysPreserved": true,
+  "plannedMaterializationReceiptNotActualEvidence": true,
+  "pureRendererPassedUsing": "ACTUAL_HISTORICAL29_POLICY_SHAPE_ONLY_NOT30_EXECUTION_POLICY",
+  "serverActions": 0,
+  "sourceSizeLimit65536Preserved": true,
+  "state": "LOCAL_STATIC_ACTUAL_SAVED_RECEIPT_SHAPE_INTERFACE_AND_PURE_RENDER_CHECK_NOT_RUNTIME",
+  "targetOrProgramFactoryCalls": 0
+}

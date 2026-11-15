@@ -1,0 +1,87 @@
+{
+  "D1Directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261116-r3-prefix155-sql39-predecessor-01",
+  "D1PinsSha256": "782b2e507aac5de9bda86a691fafcfc5ec3cd92ce38965e9bc050de93c634969",
+  "D1ReportSha256": "338eeeef96114ba5dd176ea1e929d529b972791ac1404c91acf3b46ecac04714",
+  "actual29ClosedResultSha256": "f94353f184950a2324a098c241f9f6a9db00f4ab2c9e7f65e1101fb6174ae880",
+  "actualC29TupleSha256": "3da2a9e91faabaf528a587c30b2362ab239efe84555e48cc5a5f7460a8026490",
+  "actualFailureReadbackSha256": "2a13502f16249a9012cc7e57287a8ea5b532917f1f31ecbf28da3ac23026bb35",
+  "actualNewMaterializationTerminalAndRootPublicProofRequiredBeforeApplyStart": true,
+  "actualOriginalAuth29RestoreSha256": "c37900fa81d1e930db624d510eef4ddaf680dc70c1b92c75b2e86fa00a4fc595",
+  "authoritiesIssued": false,
+  "formalBusiness": {
+    "classes": 26,
+    "initializerAndInputIndexSummaryPreserved": true,
+    "installKey": "t45-r3-batched-install-20261115-01",
+    "manifestSha256": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+    "noRecleaning": true,
+    "rows": 511234,
+    "writerKey": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "freshCasReadsAuthorized": false,
+  "fullNormalChainAuditInstructionSha256": "d58d62f964e004b3c849193c4d4ad637d3ef167c4feb2d88abd7afa4d6a65140",
+  "generation": 30,
+  "keepLimits": [
+    "original28GiB disk reserve",
+    "materialize300",
+    "start300",
+    "early190+cleanup110",
+    "entry>170",
+    "child150+TERM2+KILL2",
+    "strict900install",
+    "4320completebudget",
+    "controller90/admin92/restore115/policy120min",
+    "writer3000",
+    "original file-size bounds"
+  ],
+  "localSourceClosureAPIAuthorized": "Actual Node24 source-only loader over actual canonical local frozen tree; no platform/UID/time spoofing, target/install factory or PG",
+  "model": "gpt-6.1-sol",
+  "noAdditionalDiagnosticJob": true,
+  "owners": {
+    "D1": "frozen two-file source fix",
+    "QB": "existing independent review chat",
+    "T45": "sole server executor and T45 source assembler",
+    "main": "current controller"
+  },
+  "plannedExpectedReceiptIsNotActualEvidence": true,
+  "rootCause": "Production prefix155 omitted existing SQL39 ten-body offline model transform before original derive155; real AssertionError DERIVE_ROOT11441:10",
+  "serverActionsAuthorizedByThisSourceTask": 0,
+  "sevenPhasesOnly": true,
+  "sourceDelta": {
+    "containerOperationDirectory": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-batched-root04-20261116-01/operation",
+    "countsRequireActualMeasurement": true,
+    "exactChanges": [
+      {
+        "bytes": 64250,
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "previousSha256": "f35d9088e43b1fd78293e985f61d7924ed2e2da437a54047b3dc85fbd8ddaa48",
+        "sha256": "a49048834d6050d7e759733d7a3c7ec3f1726b6fabf0baa6512954e0cda75048"
+      },
+      {
+        "bytes": 1923,
+        "path": "scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs",
+        "previousSha256": null,
+        "sha256": "0fd734488724fa0f62906693f6a8d7f7211d534fb8145db12e99894ef7743084"
+      }
+    ],
+    "expectedInheritedUnchangedFiles": 380,
+    "expectedSourceFiles": 382,
+    "fullNewSourceSetSha256": "TO_BE_COMPUTED_FROM_ACTUAL_COMPLETE_LOCAL_SOURCE_CLOSURE",
+    "materializationKey": "t45-r3-batched-root04-source-delta-20261116-01",
+    "newHelperMustBelongToImportClosure": true,
+    "noHardlinksOrAliases": true,
+    "outputDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root04-20261116-01",
+    "parentMaterializationKey": "t45-r3-batched-root03-source-delta-20261116-01",
+    "parentMaterializationSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+    "parentRowsSha256": "399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109",
+    "parentSourceSetSha256": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+    "priorSourceOriginalsUntouched": true
+  },
+  "sourceWriteScopes": [
+    "outputs/T45/revisions/20261116-r3-root04-source-local-01",
+    "outputs/T45/revisions/20261116-r3-normal30-source-local-01",
+    "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-*"
+  ],
+  "standingConsent": "outputs/\u4e3b\u63a7/20261115-\u540c\u7c7b\u9694\u79bb\u6d4b\u91cf\u6301\u7eed\u6388\u6743.md",
+  "state": "AUTHORIZED_LOCAL_SOURCE_PREPARATION_ONLY_NO_CLOCK_OR_SERVER_MUTATION",
+  "thinking": "high"
+}

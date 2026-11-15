@@ -1,0 +1,75 @@
+{
+  "state": "OFFLINE_REAL_CAPTURE_RED_THEN_CORRECT_COMBINATION_PASS",
+  "node": "v24.21.0",
+  "unfixedFailure": {
+    "type": "AssertionError",
+    "code": "ERR_ASSERTION",
+    "source": "DERIVE_ROOT114",
+    "line": 41,
+    "column": 10
+  },
+  "retained154IsAfterSql39": 10,
+  "restoredInputBeforePinsMatched": 10,
+  "changed": [
+    {
+      "signature": "naijue_erp.assert_document_conversion_batch(naijue_erp.import_batch,jsonb,text,bool)",
+      "beforeSha256": "19ed4a99727ed212defe14c80257dd9f3da254b84a6f93c7e7257eeee5ec6706",
+      "afterSha256": "f72c7138e67e5d1460f6ad704a809fff981bb553de5c8f0c29600b234ef5e887"
+    },
+    {
+      "signature": "naijue_erp.assert_document_migration(uuid)",
+      "beforeSha256": "0bd06d8d4d0163c5772233b72af9048c802387052aa18aa57ae21020b950130a",
+      "afterSha256": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4"
+    },
+    {
+      "signature": "naijue_erp.guard_import_record()",
+      "beforeSha256": "11342296be2355918e0b305801db0c3506c436d0c95600a6c86ab2da2465c4eb",
+      "afterSha256": "da69cd96c48c1caf1c6afffca1ed267da2a2943b2e06d4d68a650a5a53b413e4"
+    },
+    {
+      "signature": "naijue_erp.guard_header_native_reference_publication()",
+      "beforeSha256": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "afterSha256": "e61e07b05d2e3b1695abc81ec9cc6b3407d6c3675f7458b2c92bc93a10cc3184"
+    },
+    {
+      "signature": "naijue_erp.guard_history_publication()",
+      "beforeSha256": "06d8c74d5571d3e7093e0845b7dccd17184b5a302a196c0d4af7bb654c538ea6",
+      "afterSha256": "deb5e8506e8d8afa0ed02a3d7a04d84c990b938774b251ccc932b0c79d8017fe"
+    },
+    {
+      "signature": "naijue_erp.guard_history_typed_publication()",
+      "beforeSha256": "6907bdc9cbe683e5a3f839a5ab7a6456824bc04ec3d2f5fb84768f1cd9f6ce38",
+      "afterSha256": "ccc5be6db8f4101b2fbd151d13c3aa0feacdc44fd07d04b8bfcf673d3cf10f47"
+    },
+    {
+      "signature": "naijue_erp.guard_import_accounting_publication()",
+      "beforeSha256": "06d8c74d5571d3e7093e0845b7dccd17184b5a302a196c0d4af7bb654c538ea6",
+      "afterSha256": "deb5e8506e8d8afa0ed02a3d7a04d84c990b938774b251ccc932b0c79d8017fe"
+    },
+    {
+      "signature": "naijue_erp.guard_native_catalogue_publication()",
+      "beforeSha256": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "afterSha256": "e61e07b05d2e3b1695abc81ec9cc6b3407d6c3675f7458b2c92bc93a10cc3184"
+    },
+    {
+      "signature": "naijue_erp.guard_native_payment_publication()",
+      "beforeSha256": "917f5a7fcc48a0da093da9cc36ea7fa3d58bb6d0524c1da2373c6d69f7ed5fbf",
+      "afterSha256": "e61e07b05d2e3b1695abc81ec9cc6b3407d6c3675f7458b2c92bc93a10cc3184"
+    },
+    {
+      "signature": "naijue_erp.guard_successor_publication26()",
+      "beforeSha256": "f14a1b571542a6d13e31b8b86fee4bc1a4a1988cdf08cb91b1ba0a59e96d23d0",
+      "afterSha256": "e6a14deae57f6f63e203566f8cd3acb6944f6ae6415a1660f180175e4b7378d5"
+    }
+  ],
+  "sql39ResultEqualsRetainedParent154": true,
+  "corrected155EqualsFixedFinalModelByCanonicalRows": true,
+  "preservedInputModelOrderRatherThanNativeCaptureRowOrder": true,
+  "corrected155DefinitionsAndBodiesExact": 155,
+  "productionRoleMappingMatchesFixedFinal": true,
+  "inputUnmodified": true,
+  "nonRoutineCategoriesUnmodifiedBySql39": true,
+  "genuineFactoryCalls": 0,
+  "postgresConnections": 0,
+  "serverActions": 0
+}

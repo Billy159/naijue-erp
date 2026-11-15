@@ -1,0 +1,162 @@
+[
+  {
+    "bytes": 3209,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/DELTA.patch",
+    "sha256": "3360efc3f0a3d0051f763728f2408a6b520cb50dd8c92aced6256966d7bb363c"
+  },
+  {
+    "bytes": 3378,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/OFFLINE-RESULT.json",
+    "sha256": "b57c0ac5054b3d696348ec10e9428f7e73c21606bab3be9e37b252c95c76b7ad"
+  },
+  {
+    "bytes": 786,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/PINS.json",
+    "sha256": "782b2e507aac5de9bda86a691fafcfc5ec3cd92ce38965e9bc050de93c634969"
+  },
+  {
+    "bytes": 5908,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/REPORT.md",
+    "sha256": "338eeeef96114ba5dd176ea1e929d529b972791ac1404c91acf3b46ecac04714"
+  },
+  {
+    "bytes": 5879,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/offline-input-regression.mjs",
+    "sha256": "05f698f7e06428dd1aee2af6f9169cd3091b6ea1bb6e1ef53d213a585346d6c9"
+  },
+  {
+    "bytes": 64250,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "sha256": "a49048834d6050d7e759733d7a3c7ec3f1726b6fabf0baa6512954e0cda75048"
+  },
+  {
+    "bytes": 1923,
+    "path": "outputs/D1/20261116-r3-prefix155-sql39-predecessor-01/source/scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs",
+    "sha256": "0fd734488724fa0f62906693f6a8d7f7211d534fb8145db12e99894ef7743084"
+  },
+  {
+    "bytes": 13291,
+    "path": "outputs/T45/revisions/20261116-r3-normal30-source-local-01/CANDIDATE-01/PHASES30.UNISSUED.json",
+    "sha256": "79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794"
+  },
+  {
+    "bytes": 9742,
+    "path": "outputs/T45/revisions/20261116-r3-normal30-source-local-01/READY30.json",
+    "sha256": "ae9095734d4602ab894ccbbf1b8262f9c24cad7fbfce6c3deceadacdefb44cbd"
+  },
+  {
+    "bytes": 4380,
+    "path": "outputs/T45/revisions/20261116-r3-post29-materialization-readonly-assessment-01/ASSESSMENT.json",
+    "sha256": "81cfcfb6ca26e88044d86db900a0e11ec9618f2d057331c38da0639e63ac5027"
+  },
+  {
+    "bytes": 1278,
+    "path": "outputs/T45/revisions/20261116-r3-post29-materialization-readonly-assessment-01/BASELINE-C29-READONLY.json",
+    "sha256": "3da2a9e91faabaf528a587c30b2362ab239efe84555e48cc5a5f7460a8026490"
+  },
+  {
+    "bytes": 1657,
+    "path": "outputs/T45/revisions/20261116-r3-root04-source-local-01/READY04.json",
+    "sha256": "93b9a437eee4cecde9fc8e6685df5a4435edb7fea0e207ab98fb6d3c4ad22912"
+  },
+  {
+    "bytes": 789485,
+    "path": "outputs/T45/revisions/20261116-r3-root04-source-local-01/SOURCE-FACTS.json",
+    "sha256": "a6d17f96de3170b0d74f6a53c715d13f0f81be000c8d088a0c0be95ea64f75a2"
+  },
+  {
+    "bytes": 9643,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-actual-01/RESULT29-CLOSED.json",
+    "sha256": "f94353f184950a2324a098c241f9f6a9db00f4ab2c9e7f65e1101fb6174ae880"
+  },
+  {
+    "bytes": 935,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-actual-01/RESULT29-CLOSED.md",
+    "sha256": "28945caf539767f3e2be487d3828c817a68cd3a2003a2e40d9999cc38e83944b"
+  },
+  {
+    "bytes": 3119,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-actual-01/restore/READBACK-01.json",
+    "sha256": "c37900fa81d1e930db624d510eef4ddaf680dc70c1b92c75b2e86fa00a4fc595"
+  },
+  {
+    "bytes": 5686,
+    "path": "outputs/T45/revisions/20261116-r3-service29-registration-actual-01/start/READBACK-02.json",
+    "sha256": "2a13502f16249a9012cc7e57287a8ea5b532917f1f31ecbf28da3ac23026bb35"
+  },
+  {
+    "bytes": 2777,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL30-PREFIX155-REPAIR-SOURCE-01/D1-SCOPED-REVIEW.json",
+    "sha256": "6796008dd47cfe6c1598e8a46d95dcd4ff3dae4fe93b2e2c56b2cd78944e57f2"
+  },
+  {
+    "bytes": 4568,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL30-PREFIX155-REPAIR-SOURCE-01/TASK.json",
+    "sha256": "5f60ce31875dfbffe82cd22aa70009ebcb1e7f3c9f44a998cf5522138c088738"
+  },
+  {
+    "bytes": 2525,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/ACTUAL-28-29-CLOSURE-SPECS.json",
+    "sha256": "6ceda37433072bbf8862da3daf29eec20e5200a0315c557d9e296840fb8a7951"
+  },
+  {
+    "bytes": 53674,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/DELTA-FROM-MAIN29-02.patch",
+    "sha256": "9b7f521f248ce76594014dabb1856059888eea08165c95d0592e1b2c9e490735"
+  },
+  {
+    "bytes": 885,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/LOCAL-STATIC-TYPED-PAIR-CHECK.json",
+    "sha256": "a4e2f1150861bdee1073d185000ab3efe4cc3d045e0811381a4cee8c236bec1f"
+  },
+  {
+    "bytes": 1098,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/PINS.json",
+    "sha256": "f63ab478fb71299ecbf8326f86351b18f53fa61152b79dd291302755601a29c9"
+  },
+  {
+    "bytes": 1490,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/PREPARATION.json",
+    "sha256": "f2e85aad07e05ebeeec03d81f6c565e30b8e41e1bb9f44191e6a3b35c6d01e46"
+  },
+  {
+    "bytes": 41370,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/admin_exec.DIRECT30-UNREGISTERED.py",
+    "sha256": "c1477b97792894458af19dffffa23b4e1ba0d1e4e0d8451cdcc1b8991a49ec21"
+  },
+  {
+    "bytes": 26058,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/issue_phase.py",
+    "sha256": "e0f99ac5bf87cee115dbb921b47b6c8c018eb5d605b89dc50c60552d1532337e"
+  },
+  {
+    "bytes": 9931,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/issue_registration.py",
+    "sha256": "f2eb793ffe5f70761fd70a900bebdbce70878d22c67be6165781127681bc7a51"
+  },
+  {
+    "bytes": 5143,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/issue_upgrade_authority.py",
+    "sha256": "678c550bc7154fd70f1e84b3ddaad5c74de55d2e612de9d1660c95c1305dc59c"
+  },
+  {
+    "bytes": 2663,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/original-cas-direct30-carrier.UNISSUED.py",
+    "sha256": "b4d31052fa27895274c33b4443da76f6f65a5e52f84aa8439cb49e4b72878879"
+  },
+  {
+    "bytes": 62960,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/r3_direct30_batched.py",
+    "sha256": "3c8835c7d0a151260a4c17f56f60253aeb1a52eddac5861001d26bf7820a9220"
+  },
+  {
+    "bytes": 41788,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-01/register_cas.py",
+    "sha256": "d2ce4c241e7c3ba7fa5d7dd21454e2b6fb6c4397678e7c4c5a35653ea8e97368"
+  },
+  {
+    "bytes": 402,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct-service29-restore-window-01/ISSUED.json",
+    "sha256": "e44de85022d6f1266411ac5b2fdc9a96fbcbecd62ace91683b58602cbfc7a1ed"
+  }
+]
