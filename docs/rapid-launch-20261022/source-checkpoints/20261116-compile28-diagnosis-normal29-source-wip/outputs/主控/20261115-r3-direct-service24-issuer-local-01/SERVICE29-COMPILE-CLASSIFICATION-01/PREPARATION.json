@@ -1,0 +1,14 @@
+{
+  "authorityFilesIssued": false,
+  "missing": [
+    "T45 exact29 witness and typedAFTER prior-start authority contract",
+    "final source freeze, once actual original-API render check without fake review",
+    "existing QB changed-scope review",
+    "only then fresh actual CAS basis and finite issuance"
+  ],
+  "newRootBasisFilesAdded": 16,
+  "oldBasisFilesPreserved": 77,
+  "serverActions": 0,
+  "stablePublishSentinel": ".direct27-fullchain-dispatcher.pending",
+  "state": "UNFINISHED_LOCAL_SOURCE_NOT_EXECUTION_ELIGIBLE"
+}

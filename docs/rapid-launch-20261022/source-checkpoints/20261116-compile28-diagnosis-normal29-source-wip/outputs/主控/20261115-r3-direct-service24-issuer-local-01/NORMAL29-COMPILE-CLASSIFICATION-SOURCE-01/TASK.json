@@ -1,0 +1,39 @@
+{
+  "D1DiagnosisSha256": "677f34bc3f045927e959023cc704153fc099140954848ac871f277bb76e8cf69",
+  "actualPredecessor": "START28_FAILED_AFTER_C_ACK_CLEAN_STOPPED_AUTH28_ACTUALLY_RESTORED",
+  "classes": 26,
+  "formalBusinessKeysPreserved": {
+    "install": "t45-r3-batched-install-20261115-01",
+    "materialize": "t45-r3-batched-root03-source-delta-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "fullNormalChainAuditInstructionSha256": "d58d62f964e004b3c849193c4d4ad637d3ef167c4feb2d88abd7afa4d6a65140",
+  "genuineSourceReused": "70339b80d4c2261094c5d794530406d3fc58ef78af3a90953d07502d9a21f61e",
+  "independentReviewer": "existing QB",
+  "limitsPreserved": [
+    "early190+cleanup110",
+    "entry>170",
+    "child150+2+2",
+    "start300",
+    "strict900install signing",
+    "controller90/admin92/restore115/policy120min",
+    "4320completebudget",
+    "writer3000"
+  ],
+  "mainOwner": "current controller",
+  "manifestSha256": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+  "materializeNeverResubmit": true,
+  "model": "gpt-6.1-sol",
+  "noAuthorityIssued": true,
+  "noServerAction": true,
+  "onlyNewBehavior": "finite caller exception classification through existing process receipt and reader; no additional diagnostic job/source rematerialization",
+  "parentMain": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03",
+  "parentT45": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02",
+  "priorServiceProofSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+  "realRows": 511234,
+  "serverAndT45SourceOwner": "T45",
+  "standingConsent": "outputs/\u4e3b\u63a7/20261115-\u540c\u7c7b\u9694\u79bb\u6d4b\u91cf\u6301\u7eed\u6388\u6743.md",
+  "state": "LOCAL_SOURCE_PREPARATION_NOT_REVIEWED_NO_WINDOW",
+  "thinking": "high",
+  "userDirectAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0"
+}

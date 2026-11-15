@@ -1,4 +1,4 @@
-【当前最高优先级 2026-11-16】start28真实FAILED2于compile阶段，非150超时；C/ACK实际发布、process回收、原PGDATA清停已核5b895/395dd。restore28原键真COMPLETED0并于21:19:54Z实读b167，原两角色认证及expiry真实还原，非自然到期；维护CID0cbf停稳，无PGpid/ops。无descriptor/install/REAL。现仅读已存190B/673B错误安全字段定位，不重跑Node/工厂、不新clock/start、不重交旧完成键。原511234行26类全量/703保留，业务CLOSED，goal ACTIVE。
+【当前最高优先级 2026-11-16】28已真实清停且原认证恢复b167/RESULT3e82。既存190B安全投影c88a只有通用fallback，原异常细节不可恢复；D1准确源码诊断677f未发现可证明功能根因，仅确认caller丢错误分类/code/位置，不能补猜TypeError或放宽guard。原T45制作normal29有限错误分类caller→既有process→reader窄链及真实28 typedAFTER前驱；Main29初稿93BASIS/旧CID闭合已备但UNFINISHED未审，phase接口待T45。无新clock/freshCAS/server写/安装/REAL，不重物化703/不重用已终态28键。原511234全量保留，业务CLOSED，goal ACTIVE。
 
 > 当前路线（2026-11-15）：分批独立提交/成功跳过/失败续未完成批。先读 BATCHED-IMPORT-DECISION-20261115.md 与 TASKS.currentInFlight；旧整包单事务路线不再续办。
 
@@ -7236,3 +7236,8 @@ Main02实际本机issue因模板字面缺空格失败，未创建目录/authorit
 
 ## 2026-11-16T05:19:54+08:00 — start28编译错误已真清停，原认证28已真恢复
 start28原键唯一实际执行FAILED2/44.7467s于21:14:10.923Z，真实5b895；源码加载30.43s/target0.205s后COMPILE_BEGIN返回exit2，未超150；无COMPILE_END/descriptor/install/REAL。进程组/child/descendants实际回收，C d579/ACK7296已真发布验证，不能冒称未启动；typedAFTER/rootd3d32与failedcleanup395dd证明CID0fe6停PID0、原PGDATA13502421和清洁状态保留、端口/PID absent。Main据实际typedAFTER签restore1411，原restore28键一次COMPLETED0/7.82516s于21:18:28.680Z，b167于21:19:54Z实读，原verifier和expiry私域逐项真还原、naturalExpiryCountedAsRestoration=false；runtimeAuth/角色权限未变，维护CID0cbf停PIDabs/exit0/noOOM，无PGpid/otherops。当前28认证已真实还原，不再仅待恢复。只授权读原保护190B stdout/673B stderr的safeenum和hash定位，原文留保护处，禁止Node/工厂/PG重跑。150能否完成全编译/170实际余量/110最坏分支/900签发/安装REAL仍未测，不伪称通过。上轮1cd1本地commit后push低速exit128；本新实际收尾检查点正常push一次，不机械重试。业务CLOSED，goal ACTIVE。
+
+
+## 2026-11-16T05:36:54+08:00 — 原错误分类丢失已证实，29仅准备最小观测正常后继
+T45既存190B/673B只读投影c88a，真实fallback+sqlstate null；无原error.name/code/message可事后恢复，不能臆断根因。D1报告677f沿准确compile39-66及全部直接依赖核export/return/Map/metadataTarget/路径正常合同，未找必然功能缺陷；带冒号guard和原生/Assertion异常均可能被外catch合并，唯一确证缺陷是分类/位置丢失。只让原T45准备caller有限枚举/受控frame及existingprocess投影，既有reader原样读process，成功d/livefacts/预算/原9不变，703/D1/SQL不改不重物化，非额外诊断作业。
+下一正常代29避免重放失败28，material/install/writer原业务key保留；必须精确消费28实际FAILED2→已发布C/ACK→395dd cleanstop→真实restoreb167，不能硬当成功start或虚构stop28。T45如接口必需仅一次保护既存C28 expectedd579五元tuple读获准，不先freshCAS或启动。Main同目录SERVICE29-COMPILE-CLASSIFICATION-01初稿module60791B、保原77BASIS加16实际root为93/current6b6b/56bb/0fa/旧f411archive/stable27pending；template全旧keys保留新增29四键、精确render字面，carrierSOURCE消费者字面已核。当前UNFINISHED尚待T45failed28 authority接口/冻结/原QB窄核，0新authority/clock/server。当前sourceAudit下一startup hold已打开，不以旧03PASS放行29。此检查点仅源码WIP及非秘密诊断/收尾，明确不记PASS。前1cd1/433a push均低速exit128，最后确认远端5cf；本机保存本阶段Git，等下一个同版冻结再正常push，不机械重试。goal ACTIVE。

@@ -1,0 +1,237 @@
+{
+  "state": "VERSION28_CLOSED_GENUINE_DESCRIBE_FAILED_ORIGINAL_AUTH_RESTORED_NO_INSTALL_OR_REAL",
+  "recordedAtUTC": "2026-11-15T21:29:57.670945+00:00",
+  "originalT45Chat": "01a100d0-cad5-71c1-8042-dc594311d3be",
+  "stageResults": {
+    "registration": "ACTUAL_COMPLETED_SOURCE_REGISTRY_ONLY",
+    "apply28": "ACTUAL_COMPLETED_FINITE_FIELDS_READ_BACK",
+    "start28": "ACTUAL_FAILED_EXIT2_AFTER_REAL_C_ACK_DURING_COMPILE",
+    "describe28": "NO_SUCCESSFUL_DESCRIPTOR_NATIVE_FALLBACK_UNKNOWN",
+    "automaticServiceCleanup": "ACTUAL_TYPED_AFTER_CONFIRMED_CONTAINER_STOPPED_DATA_PRESERVED",
+    "restore28": "ACTUAL_COMPLETED_EXACT_ORIGINAL_AUTH_AND_EXPIRY_PRIVATELY_VERIFIED",
+    "safeStoredFailureProjection": "ACTUAL_READONLY_COMPLETED_ENUMS_AND_METADATA_ONLY",
+    "installation": "NOT_SUBMITTED",
+    "realImport": "NOT_SUBMITTED",
+    "applicationSwitch": "NOT_DONE",
+    "businessAcceptance": "NOT_CLAIMED"
+  },
+  "start": {
+    "key": "t45-first-r3-native-service-start-20261116-28",
+    "terminal": {
+      "atUTC": "2026-11-15T21:13:26.127141+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 44.746723852003925,
+      "exitCode": 2,
+      "exports": [
+        "genuine-describe-process.json",
+        "normal-service-create-attempt.json",
+        "normal-service-incomplete.json",
+        "normal-service-intent.json",
+        "normal-service-result.json"
+      ],
+      "finishedAtUTC": "2026-11-15T21:14:10.923648+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-first-r3-native-service-start-20261116-28",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "FAILED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-2761c04a088d"
+    },
+    "rootPins": {
+      "cleanup": "395dd08471c95dda1f56f4959ae315d135fbec582ff97f489167a6033cc840b8",
+      "incomplete": "d3d32bee8c9792f5cfe8354e050cfec3a07977af7e3b324826b2d84b4330526d",
+      "result": "94cdae517c242cc904c7f68d1b43f31ce01aa87f7f0089fc1de93fb77c2cc29f",
+      "terminal": "89afe4cb6651db43fe530961e62040ded2ee8ed8ead9bb720ca079776ffe1408"
+    },
+    "publicResultSha256": "334e43befe79babb40626da0313fcc3370eb1f603895b6e0ba790661299cba46",
+    "currentProofSha256": "d57946c9ff13ee5715787ee1d1f0a13fe1ffd2a2898fa76ecc82545a5d3d18ae",
+    "retainedAckSha256": "7296e03b9865a67718c0e938058dd7990000a72535e3b00a5a94e7b5be7b1b83",
+    "lastReachedStage": "COMPILE_BEGIN",
+    "nativeExitCode": 2,
+    "nativeReason": null,
+    "nativeTimedOut": false,
+    "nativeChildAndDescendantsReaped": true,
+    "pidNamespace": "pid:[4026532393]",
+    "sourceLoadObservedMilliseconds": 30432.54,
+    "fullOriginalFailureCause": "UNKNOWN_ERROR_CLASS_OR_SYSTEM_CODE_NOT_RETAINED_BY_CALLER",
+    "typedCleanup": {
+      "checkedAt": 1794777248897,
+      "dataDirectoryIdentity": {
+        "device": 66304,
+        "gid": 61035,
+        "inode": 13502421,
+        "mode": 448,
+        "uid": 61035
+      },
+      "originalPGDATAAndCleanStateVerified": true,
+      "requestKey": "t45-first-r3-native-service-start-20261116-28",
+      "runtimeMaterialPreserved": true,
+      "status": "NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED"
+    },
+    "portAbsentAtStartReadback": true,
+    "portLastCheckedAtUTC": "2026-11-15T21:14:21.479009+00:00",
+    "timeoutTermKillBranchExercised": false
+  },
+  "restore": {
+    "key": "t45-r3-ordinary28-auth-restore-20261116-01",
+    "terminal": {
+      "atUTC": "2026-11-15T21:18:20.782737+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 7.825161983026192,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-15T21:18:28.680840+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-60f9a561d75c"
+    },
+    "rootPins": {
+      "cleanup": "91477439a305528bf3a71041ab6db699cd8ae62869a3fd35c01c38249e648949",
+      "result": "b8da5c9281edc26cc20c17702f0257fa1c95016a8744ae5a6eae7cf0c41ce5cc",
+      "terminal": "496966e4b649819a641dc72eab3a3a2ca65f3507f59f27d5d04144617d553db6"
+    },
+    "publicResultSha256": "00813a0504f7fffe54e2614554e4a3489a2bcd5a9f3c69921717e781a7a1e98e",
+    "result": {
+      "automaticReplay": false,
+      "databaseStillStopped": true,
+      "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+      "membershipsOrRoleAttributesChanged": false,
+      "naturalExpiryCountedAsRestoration": false,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ],
+      "runtimeAuthChanged": false,
+      "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+    },
+    "maintenanceCleanup": {
+      "automaticReplay": false,
+      "cid": "0cbf0e2fa1350650a13dcd1e150359a774fcc566637943ee250936e3aa57ca89",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "lastOperationReadbackAtUTC": "2026-11-15T21:19:54.015048+00:00",
+    "activeOperationUnits": [],
+    "ownOperationUnitInactive": true,
+    "pgdataPidAbsent": true,
+    "publicReceiptsCollectedHashesMatched": true
+  },
+  "diagnostic": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-stored-failure-projection-local-01/SAFE-FAILURE-PROJECTION.json",
+    "sha256": "c88a629c0a4fa55976c905ba20ca45d32885e1bed8e44300cfd72bfdf6b296db",
+    "checkedAtUTC": "2026-11-15T21:23:17.750657+00:00",
+    "safeFields": {
+      "safeCode": "BATCHED_INSTALL_PREFLIGHT_REFUSED",
+      "sqlstate": null,
+      "state": "UNKNOWN"
+    },
+    "stdoutMetadata": {
+      "bytes": 190,
+      "identity": [
+        66304,
+        13664472,
+        0,
+        0,
+        384,
+        1,
+        190,
+        1794777247218489708,
+        1794777247218489708
+      ],
+      "leaf": "genuine-describe-stdout.bin",
+      "readOnlyNoFollow": true,
+      "sha256": "0fcb832f6332a64facafa79e250b0fd68e29ac614c87601035a5bd98ac255a69"
+    },
+    "stderrMetadata": {
+      "bytes": 673,
+      "identity": [
+        66304,
+        13664473,
+        0,
+        0,
+        384,
+        1,
+        673,
+        1794777247674482264,
+        1794777247674482264
+      ],
+      "leaf": "genuine-describe-stderr.bin",
+      "readOnlyNoFollow": true,
+      "sha256": "3ac5abcd04270fa45922aa9998148899eb7860159cb461c9c811500ce722afb9"
+    },
+    "nodeOrFactoryRuns": 0,
+    "postgresConnections": 0,
+    "serverMutations": 0,
+    "readAttempts": 1,
+    "freeMessagesStacksOrPrivateAuthExported": false
+  },
+  "allOriginalJobKeysExecutedAtMostOnce": true,
+  "materialization7033Replayed": false,
+  "older27JobsReplayed": false,
+  "originalTwoRoleAuthRestoredFor28": true,
+  "runtimeAuthOrRoleAttributesChanged": false,
+  "naturalExpiryCountedAsRestoration": false,
+  "dataOrSqlCleanupPerformed": false,
+  "newDatabaseOrRoleCreated": false,
+  "source703OrD1Modified": false,
+  "newServiceClockAuthorizedAfterClose": false,
+  "nextScope": "Main assigns D1 readonly fault trace; T45 only local outer-catch safe-classification draft after this closure metadata. No new native/server execution.",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/REGISTRATION28-READBACK-01.json",
+      "sha256": "4003a484dc7f9263067a44a48811d8ca0d3df7ff52e61ddf3a5b514d5241e3d3",
+      "bytes": 4549
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/apply/READBACK-01.json",
+      "sha256": "d80ab7aad1430ec8a639b09375e0f10096f5e39801528dc7b5127e68da7135cd",
+      "bytes": 3135
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/start/READBACK-01.json",
+      "sha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683",
+      "bytes": 5489
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/restore/READBACK-01.json",
+      "sha256": "b1674643574054427ecbc3c1b0174ea2218187f4b70910b69d07478822eb063d",
+      "bytes": 3119
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/RESULT-REGISTRATION-APPLY28.json",
+      "sha256": "d98649b8bf3754bdabf5da960fe9a3481636e02f199538d60dd6d54e40e887a6",
+      "bytes": 4975
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-actual-01/RESULT-START28-FAILED.json",
+      "sha256": "20acc56f6bd8fa6f227f32ac369521cacde8d91da0415cbc4479e583aeea7aa0",
+      "bytes": 6562
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-stored-failure-projection-local-01/SAFE-FAILURE-PROJECTION.json",
+      "sha256": "c88a629c0a4fa55976c905ba20ca45d32885e1bed8e44300cfd72bfdf6b296db",
+      "bytes": 1659
+    }
+  ]
+}

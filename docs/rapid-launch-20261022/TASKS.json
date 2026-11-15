@@ -7520,6 +7520,18 @@
             "startReadbackSha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683",
             "restoreReadbackSha256": "b1674643574054427ecbc3c1b0174ea2218187f4b70910b69d07478822eb063d",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_COMPILE28_UNKNOWN_CAUSE_DIAGNOSTIC_LOSS_PROVED_NORMAL29_SOURCE_WIP_20261116",
+            "state": "ROOT_CAUSE_UNKNOWN_CAPTURE_DEFECT_CONFIRMED_SOURCE29_WIP_NO_WINDOW",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-compile28-diagnosis-normal29-source-wip",
+              "files": 16,
+              "bytes": 262337,
+              "manifestSha256": "50380a053bff12139d6c3ef0c9e96630cf707ee8cec2125f8f5a9f769f4d41e4"
+            },
+            "D1DiagnosisSha256": "677f34bc3f045927e959023cc704153fc099140954848ac871f277bb76e8cf69",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7531,9 +7543,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "NEW_NORMAL_START_OWNED_DESCRIBE_READONLY_INTERFACE_REPORT_DELIVERED",
+            "state": "READONLY_ACTUAL_COMPILE28_DIAGNOSIS_DELIVERED",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "REPORT5865 exactcodeonlyanalysis:150+4+publication/transportmustfittruehost190remaining, notoutercleanup110; accountpreloadsfromearlyentry; source-load thenrealDate.now onlydescribe allowsgenuinetarget20m, installreusesexactreturnedwindow/ddeepmatch;900sissuerstrictremaininghastimecost. Actual150sufficiency/slowstage/runtimecleanup remainsUNKNOWN. No D1/T45source/DB/test/factory/clockmock changes."
+            "work": "REPORT677f exactchainchecks found no proven export/return/WeakMap/metadataTarget defect. Existingfallback can conceal Error withcolon guard, AssertionError, nativeFS/type classes. ActualrootcauseUNKNOWN; onlycertainerrorcaptureloss. NoD1/703/SQL edits/tests/factory/PG. Scopednewfaultreportcomplete, no re-review oldSQL/model."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7553,15 +7565,15 @@
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "ORIGINAL_RESTORE28_ACTUALLY_COMPLETED_EXISTING_ERROR_SAFE_PROJECTION_ONLY",
+            "state": "NORMAL29_UNISSUED_CALLER_PROCESS_ERROR_CLASSIFICATION_AND_TYPED28_PREDECESSOR_SOURCE_PREPARATION",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Originalrestore28 COMPLETED0/7.82516s at21:18:28.680Z, actualb167 at21:19:54Z; exactOriginalVerifierAndExpiryVerifiedPrivately true, naturalExpiryCountedAsRestoration false, databaseStillStopped true; runtimeAuth/membership/roleattrs unchanged. MaintenanceCID0cbf stoppedPIDabsentexit0noOOM, noPGpid/activeops. Start28 FAILED2 afterCOMPILE_BEGIN/C-ACK, cleanstop395dd processreaped, no descriptor/install/REAL. Onlyauthorized oneexisting190Bstdout+673Bstderr safeenumprojection pending; no new Node/PG/service."
+            "work": "Actual28closed RESULT3e82 andc88a safeprojection complete; auth28trulyrestored, DBstopped. Prepare existingnormal29 predecessor28 typedAFTER+CACK/cleanstop/restore (notfakeCOMPLETED28/stop28), current29lifecycle and finiteclassification caller->existingprocess->reader narrowchain. Optionalonce existingC28 service tuple RO authorized expectedd579; notfreshCAS/serverwrite/Node. No703rematerialization/material/install/writerkeychange."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "START28_FAILED_AFTER_C_ACK_CLEAN_STOPPED_ORIGINAL_AUTH28_ACTUALLY_RESTORED_EXISTING_ERROR_PROJECTION_PENDING",
+          "formalR3": "STOPPED_AUTH28_RESTORED_REAL_COMPILE_ROOT_CAUSE_UNKNOWN_DIAGNOSTIC29_SOURCE_PREPARATION_NO_CLOCK",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7576,16 +7588,16 @@
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
           "nextCheckpointScope": "freshactual77basis,onefinite28clockthenactualregistry/apply/startstoredoutputs;noapprovedsameclasspermissioncard",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal28-render03-fixed-finite-issued",
-            "files": 18,
-            "bytes": 235035,
-            "manifestSha256": "c8e5da6f605e3d7534d496a36add442a9fcb191bed7537c276af70eb46303d90"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-compile28-diagnosis-normal29-source-wip",
+            "files": 16,
+            "bytes": 262337,
+            "manifestSha256": "50380a053bff12139d6c3ef0c9e96630cf707ee8cec2125f8f5a9f769f4d41e4"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "ACTUAL_RESTORE28_VERIFIED_NO_NEW_CLOCK_OR_INSTALL_WRITER_AUTHORITY",
-            "work": "Originalrestore1411 consumed actualtypedAFTER and ran once tocompletion; b167 actualoriginalauth restoration verified. Await exact safecompile error fromexisting files before source correction; no install/REAL issuer ran."
+            "state": "MAIN29_LOCAL_UNFINISHED_SOURCE_PREP_NO_NEW_CLOCK",
+            "work": "SERVICE29-COMPILE-CLASSIFICATION-01 initialmodule90da60791B<65536 adds actual28typedfailure/cleanstop/CACK/restore/oldCIDstopped only guard; old77rootbasis preserved/currentdispatcher6b6b then16rootactual28items=93, archivedf411 andstable27pendingretained. Template keepsallhistoricalkeys plusfour29lifecycle, exactspacedrenderneedle maintained; carrierSOURCEliteral checked. Mainphaseissuerstillneeds T45 exactfailed28 prior authorityinterface. NOreview/finalfreeze/newauthority/fresh/server actions."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7601,9 +7613,9 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "one existing private190B failure safeCode projection; exact compile source diagnosis",
-            "only actual fault source correction/review before any future startup",
-            "actual DB05 install and original511234REAL reconciliation then fullgoal"
+            "D1 readonly exactcompile diagnosis or strictlyneeded minimumsafe classification",
+            "only actual fault fix and complete new normal-chain changed scope review before new startup",
+            "actual DB05 install original511234REAL reconciliation and completegoal"
           ],
           "normalSource": {
             "db05": {
@@ -7692,16 +7704,18 @@
             "naturalExpiryCountedAsRestoration": false
           },
           "sourceAudit": {
-            "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS_03",
+            "state": "SOURCE03_REVIEW_HISTORICAL_RUNTIME_COMPILE_FAULT_NEXT_STARTUP_HOLD_OPEN",
             "generation": 28,
-            "normalStartupHoldClosed": true,
+            "normalStartupHoldClosed": false,
             "reviewSha256": "def1bcf985dbcbed45d1d1c29108d62aea334f0504a662d7879b23a7419b5b5a",
             "mainPinsSha256": "ee1ea4ae10a49bc398ae70a5d8556b40d5686b7f423f7c1539b9cb213cb71b24",
             "phasesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
             "T45PinsSha256": "fc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab",
             "readerSha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
             "actual28WindowIssued": true,
-            "nativePass": false
+            "nativePass": false,
+            "actualRuntimeFaultObserved": true,
+            "actualFailureReadbackSha256": "5b895400397af84db93229b95b3d5b1e70d7147ec2c0b8d2cf408a70b3ec6683"
           },
           "latestModuleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
           "latestEvidenceSnapshot": {
@@ -7788,6 +7802,13 @@
             "actualRestoreReadbackSha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
             "finalClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
             "restoredBeforeOriginalControllerDeadline": true
+          },
+          "normal29SourceTask": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/TASK.json",
+            "sha256": "47e699c8f6d697a7c51260029a5e1bd99001769b756b671d9a54af14329e6221",
+            "state": "UNFINISHED_LOCAL_SOURCE_NOT_EXECUTION_ELIGIBLE",
+            "rootBasisFiles": 93,
+            "actual28BaselineSha256": "37afcb618c6949b56500220170be7fcf656c639b73ccc808cd4e7e8cfd8ebb12"
           }
         },
         "independentDeltaReviewer": "QB",

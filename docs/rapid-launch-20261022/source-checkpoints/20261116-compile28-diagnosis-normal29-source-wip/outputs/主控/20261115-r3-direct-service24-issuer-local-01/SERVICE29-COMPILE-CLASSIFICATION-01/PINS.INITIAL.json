@@ -1,0 +1,10 @@
+{
+  "PREPARATION.json": "23d82c1a178b7fad096f59bf3c9e36d1ea3bafd27c52c5a67a80cd8d88f98523",
+  "admin_exec.DIRECT29-UNREGISTERED.py": "7c67d9debdd713df97bb55e5b9305a0daea7ea4142799bcc714dffe014b1e4a7",
+  "issue_phase.py": "3ce9152c8a439f5b2739a280592d6e6f7d625be4a4cfcdc7092beb152c2d66e1",
+  "issue_registration.py": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda",
+  "issue_upgrade_authority.py": "44d4e78bf9db1cca64622490fea57f04b9a08e636f64a0b53205cfd523712272",
+  "original-cas-direct29-carrier.UNISSUED.py": "18bc189e4dab05b4c80abaf935956c4f8292cdaded2fb08e07598c7a5a531e01",
+  "r3_direct29_batched.py": "90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8",
+  "register_cas.py": "bac630e409c7efcc71c51dcdda5b5d73872116e6d31529f84274e302a7cc00e5"
+}

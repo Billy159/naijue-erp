@@ -1,0 +1,82 @@
+[
+  {
+    "bytes": 9161,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_registration.py",
+    "sha256": "fb01c9d2d4bc8f0f86b17856da4a130e327ef32360dbf38d04ee7b86788a8eda"
+  },
+  {
+    "bytes": 60791,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/r3_direct29_batched.py",
+    "sha256": "90da8fedc04e06cd8974ee8a276124a388a151058e5668bdd75a961b4ef684f8"
+  },
+  {
+    "bytes": 5143,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_upgrade_authority.py",
+    "sha256": "44d4e78bf9db1cca64622490fea57f04b9a08e636f64a0b53205cfd523712272"
+  },
+  {
+    "bytes": 36843,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/register_cas.py",
+    "sha256": "bac630e409c7efcc71c51dcdda5b5d73872116e6d31529f84274e302a7cc00e5"
+  },
+  {
+    "bytes": 41134,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/admin_exec.DIRECT29-UNREGISTERED.py",
+    "sha256": "7c67d9debdd713df97bb55e5b9305a0daea7ea4142799bcc714dffe014b1e4a7"
+  },
+  {
+    "bytes": 2663,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/original-cas-direct29-carrier.UNISSUED.py",
+    "sha256": "18bc189e4dab05b4c80abaf935956c4f8292cdaded2fb08e07598c7a5a531e01"
+  },
+  {
+    "bytes": 24751,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/issue_phase.py",
+    "sha256": "3ce9152c8a439f5b2739a280592d6e6f7d625be4a4cfcdc7092beb152c2d66e1"
+  },
+  {
+    "bytes": 785,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/PINS.INITIAL.json",
+    "sha256": "951b2b309ed176ca4581259eb0f08ce55ea0408799efa616aa609579e9f003f8"
+  },
+  {
+    "bytes": 530,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/PREPARATION.json",
+    "sha256": "23d82c1a178b7fad096f59bf3c9e36d1ea3bafd27c52c5a67a80cd8d88f98523"
+  },
+  {
+    "bytes": 41098,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE29-COMPILE-CLASSIFICATION-01/DELTA-FROM-MAIN28-03.patch",
+    "sha256": "df47fb9f7c3b5a0a34377767a56f4fc3fdfe839cdbb6497e9579aff7af041b9f"
+  },
+  {
+    "bytes": 2075,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/TASK.json",
+    "sha256": "47e699c8f6d697a7c51260029a5e1bd99001769b756b671d9a54af14329e6221"
+  },
+  {
+    "bytes": 14441,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL29-COMPILE-CLASSIFICATION-SOURCE-01/ACTUAL28-PREDECESSOR-BASELINE.json",
+    "sha256": "37afcb618c6949b56500220170be7fcf656c639b73ccc808cd4e7e8cfd8ebb12"
+  },
+  {
+    "bytes": 9988,
+    "path": "outputs/D1/20261116-r3-service28-compile-readonly-diagnosis-01/REPORT.md",
+    "sha256": "677f34bc3f045927e959023cc704153fc099140954848ac871f277bb76e8cf69"
+  },
+  {
+    "bytes": 1659,
+    "path": "outputs/T45/revisions/20261116-r3-service28-stored-failure-projection-local-01/SAFE-FAILURE-PROJECTION.json",
+    "sha256": "c88a629c0a4fa55976c905ba20ca45d32885e1bed8e44300cfd72bfdf6b296db"
+  },
+  {
+    "bytes": 10044,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/RESULT28-CLOSED.json",
+    "sha256": "3e82da741b4b82b4151ecd74e3962504459881e24a037b8942ed05cd67430fce"
+  },
+  {
+    "bytes": 1231,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-actual-01/RESULT28-CLOSED.md",
+    "sha256": "a5db6e7b6f0d901fc387fa3c29f1b368013269a7c9e07bd9f78fb70752c08bf2"
+  }
+]
