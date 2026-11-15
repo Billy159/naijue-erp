@@ -6183,9 +6183,20 @@
               "STATE4328f14f3ab16f2501eb18421e2e9c6c8d22798081c3133abc39aef311f3019d",
               "old missing-only candidate64c35e39 NOT_EXECUTED expired-scope"
             ]
+          },
+          {
+            "group": "GEN03\u65b0\u4f20\u8f93\u7f13\u5b58\u7a84\u5ba1\u53ca\u771f\u5b9e25\u6587\u4ef6\u6838\u9a8c\u901a\u8fc7\uff0cREG/M/S/B/INSTALL\u5b9e\u94fe\u5df2\u95ed\u5408",
+            "status": "QB20a4/cache20-\u72ec\u53607-\u9996\u6b21request\u53camain03/capture\u901a\u8fc7\uff1b\u5b9e\u9645pref f703\u65e725 SHA/\u6743\u9650\u771f\u3002\u552f\u4e00R0 7737\u4e8e00:38:48.336\uff0c\u65b0REG03audit92b1/currentbe61\uff1bM02 COMMITTED16.359s/357source\uff0c\u65b0C000:43:54.669\u3002main31849\u81ea\u52a8postbirth6e0cc\u9000\u51fa0\u3001POST01\u771f\u5b9e\u5b58551e\u3001INSTALL02\u63d0\u4ea4\uff1b\u5341\u5c42\u5404COMMIT ACK\u5b9e\u8bc1481a611b/owner44.894s\u3002\u5168\u91cf\u5408\u6210\u7f16\u8bd1\u53ca\u524d\u7f00\u4ecd\u5f85\u6d4b\uff0c\u4e0d\u5f53\u6b63\u5f0fPASS\u3002",
+            "evidence": [
+              "fourpinsf894bbbc/ac08611c/551e28e0/2c281ee5 / mainff87119f",
+              "QB20a4a290 / capturee1e6b87f / actualpreff703e275",
+              "ISSUED7737da59 / REGaudit92b1a576 / dispatcherbe61d821",
+              "Mjob e2db3207 / typed5b20f7f0 / BIRTH4e582fc4 / postbirth6e0cc9c2 / AUTH551e411c",
+              "ACTUAL-TEN-LAYER-INSTALLATION481a611b / guardian df5e0129"
+            ]
           }
         ],
-        "currentInFlight": "T45\u4ec5\u672c\u673a\u4e0b\u4e00REG03/\u65b0\u4e94workload02\u51c6\u5907\uff1a\u4f18\u5148\u6b63\u5e38MATERIALIZE job\u4ee5\u56fa\u5b9aSHA/bytes/regular/no-symlink\u8bfb\u53d6\u65e720archive\uff0c\u65b0bundle\u53ea\u5e26\u7f3a2\u548c\u5fc5\u8981\u5c0f\u6587\u4ef6\uff0c\u5b8c\u657422/sourcehash\u4e0d\u53d8\uff1b\u65e725/AUTH\u4e0d\u52a8\u3001\u65e7M01\u4e0ddispatch\u3002\u539fwindow\u4e24\u4e2areceiver\u5df2124\u7edd\u4e0d\u91cd\u542f\uff0c\u539f\u7b7e\u540d/P0/native900/cleanup180\u4e0d\u53d8\uff1b\u5148\u4ee3\u7801\u53ca\u7a84\u5ba1/\u771f\u5b9e\u65b0pref\u518d\u65b0R0\uff0ccurrent parent ae53/4655\uff0cformal\u6700\u8fd1\u771f\u5b9e\u505c\u4e8e00:06\u3002",
+        "currentInFlight": "T45 soleowner\u539fINSTALL02/native\u8fd0\u884c\uff0cr908 CID3f95.../PID652032/C000:43:54.669118467Z\uff0cnative900\u81f300:58:54.669\uff1brootlimits2CPU6GiB\u5df2\u5b9e\u89c1\uff0c10\u5c42\u5b89\u88c544.894s\u540eNode61035\u7f16\u8bd1/\u524d\u7f00\u6d4b\u91cf\u3002stop/terminal\u552f\u4e0090135\u6bcf45s\u53ea\u8bfb\u3002main03 listener31849\u5df20/postbirth6e0\uff0cpostconsumer84111\u548cS/B10519\u5df20\uff0c\u4e0d\u518d\u542f\u52a8\u3002\u5f53\u524dparentbe61/policy3564\uff1b\u7b49\u7f16\u8bd1\u5168511234/44682\u3001actualACK/attempt\u3001ROLLBACK-ABSENT\u53ca\u6e05\u7406\uff0cformal\u672a\u5199\u3002",
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
       }
