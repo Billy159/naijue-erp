@@ -1,0 +1,20 @@
+{
+  "recordedAtUTC": "2026-11-15T21:01:11.519364+00:00",
+  "state": "LOCAL_ISSUER_RENDER_FAILED_BEFORE_OUTPUT_DIRECTORY_NO_SERVER",
+  "failedSourceDirectory": "SERVICE28-START-DESCRIBE-02",
+  "failedSourcePinsSha256": "2e7e7a471e70001e3759d3b89ce1cd6bf6e584b1633bde88be7ee465d3527f21",
+  "observedError": "ValueError: DIRECT28_START_DESCRIBE_REGISTRATION_EXACT_TEMPLATE_PLACEHOLDER_REQUIRED",
+  "actualSourceLocations": [
+    "register_cas.py:224 render_dispatcher",
+    "issue_registration.py:109 issue"
+  ],
+  "cause": "template assignment omitted spaces required by original renderer byte needle",
+  "originalFailedInvocationTime": "not persisted in failed report; do not invent",
+  "authorityOutputDirectoryAbsentVerified": true,
+  "serverActions": 0,
+  "roleFieldsChanged": 0,
+  "successor": "SERVICE28-START-DESCRIBE-03",
+  "successorPinsSha256": "ee1ea4ae10a49bc398ae70a5d8556b40d5686b7f423f7c1539b9cb213cb71b24",
+  "realNoFileDryRunSha256": "b07637b85bf79d4d76fa4d965466eb6cc0d828919704257eb34938cc5ff28e5f",
+  "prior02ReviewRetainedAsHistoryNotCurrentExecutionApproval": true
+}

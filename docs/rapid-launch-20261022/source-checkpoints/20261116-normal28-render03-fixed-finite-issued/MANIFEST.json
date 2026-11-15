@@ -1,0 +1,92 @@
+[
+  {
+    "bytes": 9161,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/issue_registration.py",
+    "sha256": "1b6b7caf1bd912b6959193dea2f457565e91b2bf8f6bcc052fc4b7d78a2c8abe"
+  },
+  {
+    "bytes": 54808,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/r3_direct28_batched.py",
+    "sha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261"
+  },
+  {
+    "bytes": 40944,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/admin_exec.DIRECT28-UNREGISTERED.py",
+    "sha256": "0bddc43f5aa8f48d0b23024c8e290c090f4a738be5d3d97d5954a68f159813e6"
+  },
+  {
+    "bytes": 5143,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/issue_upgrade_authority.py",
+    "sha256": "9f9b813c6e722f1eaa5f283742c6e762d0218e16089d6eff6cf9a12b48a4d2f6"
+  },
+  {
+    "bytes": 32201,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/register_cas.py",
+    "sha256": "e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae"
+  },
+  {
+    "bytes": 2663,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/original-cas-direct28-carrier.UNISSUED.py",
+    "sha256": "20304e73a2068067b9e67031b9bdec0b88839c16b953473fcbb3a06ac0cf8a13"
+  },
+  {
+    "bytes": 24751,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/issue_phase.py",
+    "sha256": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d"
+  },
+  {
+    "bytes": 2005,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/PINS.json",
+    "sha256": "ee1ea4ae10a49bc398ae70a5d8556b40d5686b7f423f7c1539b9cb213cb71b24"
+  },
+  {
+    "bytes": 5170,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/DELTA-FROM-02.patch",
+    "sha256": "6e47d8f4c3767933cd81af59f279b787f1370b656c4389e9541a45bf6a9a9dbd"
+  },
+  {
+    "bytes": 2465,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/LOCAL-ISSUER-RENDER-CHECK.json",
+    "sha256": "b07637b85bf79d4d76fa4d965466eb6cc0d828919704257eb34938cc5ff28e5f"
+  },
+  {
+    "bytes": 4205,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/FINAL28-QB-REVIEW-03.json",
+    "sha256": "def1bcf985dbcbed45d1d1c29108d62aea334f0504a662d7879b23a7419b5b5a"
+  },
+  {
+    "bytes": 1087,
+    "path": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL28-START-DESCRIBE-SOURCE-01/MAIN28-LOCAL-ISSUANCE-FAILURE01.json",
+    "sha256": "bc4d89908ecbea2b02b21e9335f46a44b3841591f788c996a2660cea3d15f184"
+  },
+  {
+    "bytes": 5251,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-adapter-local-01/register_issued28_once_r3.py",
+    "sha256": "1dfde54bc6c7ecef3f34a2cf5eb5ac901c7d19856bae2fbe67a6312cbf5f75e0"
+  },
+  {
+    "bytes": 865,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-adapter-local-01/register_issued28_once_r3.diff",
+    "sha256": "ac7fbdff3ecb828c06cb7b1f813835beb9a6335b865108a4b767b2267070eb9d"
+  },
+  {
+    "bytes": 1255,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-adapter-local-01/READY-ADAPTER28-R3.json",
+    "sha256": "066b33b915d40f97f2350512609e7c8921dcd9ec3504845168808754f62360e8"
+  },
+  {
+    "bytes": 3136,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-adapter-local-01/read-registration28-original.py",
+    "sha256": "2055d7209cd9afee462c439e8a5140408ab38da74a11f08639b99f7459aa0125"
+  },
+  {
+    "bytes": 38046,
+    "path": "outputs/T45/revisions/20261116-r3-service28-registration-basis-local-01/REGISTRATION-BASIS28-20261115T205114Z.json",
+    "sha256": "0755f748efa34e5abc89dcdf2f6e325e7fd689641c915c8f87caac26a2a9c43c"
+  },
+  {
+    "bytes": 1879,
+    "path": "outputs/\u4e3b\u63a7/20261116-r3-direct28-registration-window-01/ISSUED.json",
+    "sha256": "63579456b219077b3edde32c09eb7146ada3d1270cdd45a2277a7d961ea33e4f"
+  }
+]

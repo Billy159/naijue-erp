@@ -1,0 +1,44 @@
+{
+  "T45CandidateDirectory": "outputs/T45/revisions/20261116-r3-start-owned-describe28-source-local-01/CANDIDATE-02",
+  "T45PinsSha256": "fc4ee6125e969129475a28978be9db632075ed999334c537bde3e84f2e525eab",
+  "T45ReadySha256": "b91f885662630ec8f0504d9deac2f2cafa69f4103fe1484d5c87f19f33c636ca",
+  "actualLocalRenderCheckSha256": "b07637b85bf79d4d76fa4d965466eb6cc0d828919704257eb34938cc5ff28e5f",
+  "actualPredecessorClosure": {
+    "finalClosedSha256": "a27170803e8aba47b66b6751144464e44a8127f264193cadff36e31fefc1a1ae",
+    "restoreReadbackSha256": "5fec654319e3e2aa72232ca9533403a87b43e905fdbe580c37f87f4fe781c88b",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-27"
+  },
+  "authorityFilesIssued": false,
+  "businessGate": "CLOSED",
+  "closedFinding": "TEMPLATE28-LITERAL-01",
+  "dispatcherTemplateSha256": "0bddc43f5aa8f48d0b23024c8e290c090f4a738be5d3d97d5954a68f159813e6",
+  "evidenceType": "SOURCE_STATIC_AND_SELECTED_LOCAL_CAPTURE_TESTS_NOT_NATIVE_OR_BUSINESS_PASS",
+  "formalInstallOrRealStarted": false,
+  "format": "R3_NORMAL28_FINAL_SAME_VERSION_SOURCE_REVIEW_V1",
+  "independentReview": {
+    "itemId": "exec-a087483a-f869-4ee1-805e-c6451d67733a",
+    "prompt": "QB TEMPLATE28-LITERAL-01 增量复核闭合；02的执行适用结论撤回并由03取代，历史保留。03 FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS，rulesSha256=b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1，normalStartupHoldClosed=true（仅源码hold）。准确绑定SERVICE28-START-DESCRIBE-03 PINS ee1ea4ae10a49bc398ae70a5d8556b40d5686b7f423f7c1539b9cb213cb71b24；template0bddc43f5aa8f48d0b23024c8e290c090f4a738be5d3d97d5954a68f159813e6 / registrar e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae / carrier20304e73a2068067b9e67031b9bdec0b88839c16b953473fcbb3a06ac0cf8a13。实际三源差异只该字面空格+TEMPLATE pin+SOURCE pin，另四源字节相同；所有新PINS/差异/3源AST核过，模板前后AST相同。逐读真实render_dispatcher消费needle确为带空格bytes，新模板该字面count=1；两处级联与真实文件SHA一致，载体28成功/未知/安全码匹配保持。主控LOCAL-ISSUER-RENDER-CHECK b07637...已读且指纹实核，它记录真实API dry_run全通过、无输出目录/authority/server；QB未再次执行issuer/runpy/dryrun或造时钟/授权，只作字面与源配对。承认02静态审查漏此字面消费边界，不能以AST等价代替协议字节等价；本次已按真实消费字面核实。T45 C02 scopedPASS和其余旧链结论复用不重验。真实freshCAS/grant/clock及运行/150/170/110/900余量仍原边界，未标实际PASS。",
+    "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+    "turnId": "01a1e101-fe1d-7401-a758-bc97055bed88"
+  },
+  "mainDirectory": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03",
+  "mainModuleSha256": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+  "mainPinsSha256": "ee1ea4ae10a49bc398ae70a5d8556b40d5686b7f423f7c1539b9cb213cb71b24",
+  "normalStartupHoldClosed": true,
+  "phaseIssuerSha256": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d",
+  "previousReviewSha256": "402a3d0c8096707e940dfd42ac62a10adcee172e63f335f4764fabfbdb21d222",
+  "readerSha256": "4c3e36f06290c611959c5e00a31a92e5ae079748ceb3563078b47bddf7084508",
+  "registrarSha256": "e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae",
+  "registrationCarrierTemplateSha256": "20304e73a2068067b9e67031b9bdec0b88839c16b953473fcbb3a06ac0cf8a13",
+  "rulesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+  "serverActionsByReview": 0,
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "stillRequired": [
+    "fresh actual77-file CAS basis and original grant expiry",
+    "actual finite registration/apply/start28 and stored genuine descriptor",
+    "actual Linux child-tree cleanup and150s adequacy/170s available entry margin/110s worst cleanup",
+    "actual900s installation signing margin",
+    "actual DB05 installation13ACK/catalog and original511234-row REAL import/reconciliation",
+    "backup/core browser roles/formal deployment and full goal completion"
+  ]
+}

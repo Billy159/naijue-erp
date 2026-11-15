@@ -1,0 +1,33 @@
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/admin_exec.DIRECT28-UNREGISTERED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/admin_exec.DIRECT28-UNREGISTERED.py
+@@ -12,7 +12,7 @@
+ GATES = {'T47':['G4'],'T49':['G5'],'T50':['G5'],'T51':['G6']}
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+-R3_ORIGINAL02_ABSENT_POLICY_SHA256=None
++R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
+ R3_ORIGINAL02_ABSENT_SOURCE_SHA256='0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261'
+ R3_ORIGINAL02_ABSENT_KEYS=['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-r3-batched-install-20261115-01', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/register_cas.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/register_cas.py
+@@ -13,7 +13,7 @@
+ OLD_DISPATCHER='f411beed0cd78307742f59aa6668a6e693ce8c6bae4b24e26182820a27869fec'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+ HELPER='0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261'
+-TEMPLATE='9799c1ae2b883b693abfcbe690d29291f7d5c00f1620a6f9fd6023f234abbbd2'
++TEMPLATE='0bddc43f5aa8f48d0b23024c8e290c090f4a738be5d3d97d5954a68f159813e6'
+ JOBS={'apply': 't45-r3-ordinary28-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root03-source-delta-20261116-01', 'restore': 't45-r3-ordinary28-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-28', 'stop': 't45-r3-ordinary28-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ BASIS={
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original05_absent22_continuation.py'):'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',
+--- outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02/original-cas-direct28-carrier.UNISSUED.py
++++ outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03/original-cas-direct28-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct28-start-describe-registration-source-20261116-01')
+ AUDIT=STAGE.parent/'r3-direct28-start-describe-registration-cas-20261116-01'
+-SOURCE='71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe'
++SOURCE='e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000

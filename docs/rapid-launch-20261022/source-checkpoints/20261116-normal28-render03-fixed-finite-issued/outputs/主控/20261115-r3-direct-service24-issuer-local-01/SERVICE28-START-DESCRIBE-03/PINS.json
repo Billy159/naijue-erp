@@ -1,0 +1,22 @@
+{
+  "DELTA-FROM-02.patch": "6e47d8f4c3767933cd81af59f279b787f1370b656c4389e9541a45bf6a9a9dbd",
+  "LOCAL-ISSUER-RENDER-CHECK.json": "b07637b85bf79d4d76fa4d965466eb6cc0d828919704257eb34938cc5ff28e5f",
+  "PINS.INITIAL.json": "be2eae24edf88782b1949e477f0313f0750804c074ddc7569059b1735b4108a6",
+  "PREPARATION.json": "6596244c1456cd9b5a2a51d7e09eea4aad5911bad58970de3dca7c324f5e4ee5",
+  "STORED-DESCRIPTION-CONSUMER-MATRIX.json": "8654af1803f52775ad8308227e1072a9ba4c01d952a43963f5bb37a87085aa7a",
+  "WINDOW-BUDGET.json": "bea599dff50b7a349c5622847d18f20bf969b138ad9c756c7fa92115c9021d44",
+  "admin_exec.DIRECT28-UNREGISTERED.py": "0bddc43f5aa8f48d0b23024c8e290c090f4a738be5d3d97d5954a68f159813e6",
+  "admin_exec.DIRECT28-UNREGISTERED.py.diff": "266468418c001c2f9a935abbc8207225fdfb1a2aaa4e6c0db074ed3e1270e00b",
+  "issue_phase.py": "1c797fa93194759134add21e2499f46ffb14ee234d0b91abfc4d508435696b9d",
+  "issue_phase.py.diff": "cf0f54bfb11c1fc8a0b8d81b8323bb794aab4179168b11e0ddb5f5a2fa27932f",
+  "issue_registration.py": "1b6b7caf1bd912b6959193dea2f457565e91b2bf8f6bcc052fc4b7d78a2c8abe",
+  "issue_registration.py.diff": "70cab8a8272257a90eacc9ac8a7699b0270ded827ca8d6094e39a16993b6d334",
+  "issue_upgrade_authority.py": "9f9b813c6e722f1eaa5f283742c6e762d0218e16089d6eff6cf9a12b48a4d2f6",
+  "issue_upgrade_authority.py.diff": "a6b1d7176b87ce8b0360669f8b9d6f39eacb10430b017b99914b4938e12f15a4",
+  "original-cas-direct28-carrier.UNISSUED.py": "20304e73a2068067b9e67031b9bdec0b88839c16b953473fcbb3a06ac0cf8a13",
+  "original-cas-direct28-carrier.UNISSUED.py.diff": "63292a39aac1a5f5733110d1fb9f093ce34f2f67bcc954e24b48c3eb13c8a41a",
+  "r3_direct28_batched.py": "0fa08870dbf5fec3daf5a2c4d2300e3719666091252cff9ac12ec8fcfacc3261",
+  "r3_direct28_batched.py.diff": "7ff5225df9ac9329419efaeb023c42dbffda1ea2640de21ad9b7dbce86cac796",
+  "register_cas.py": "e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae",
+  "register_cas.py.diff": "4818f6b934c96aaf9f29146faa787767b62291c1db4c1d5808bb2208338628de"
+}

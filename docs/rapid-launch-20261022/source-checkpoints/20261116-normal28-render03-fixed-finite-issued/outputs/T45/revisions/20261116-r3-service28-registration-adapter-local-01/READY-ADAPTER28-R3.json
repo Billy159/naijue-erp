@@ -1,0 +1,21 @@
+{
+  "state": "LOCAL_LITERAL_SUCCESSOR_READY_NOT_EXECUTED",
+  "sourceSha256": "1dfde54bc6c7ecef3f34a2cf5eb5ac901c7d19856bae2fbe67a6312cbf5f75e0",
+  "parentSourceSha256": "b6fba23899f6810d4f0ccc7421fb8e594d9396f1717036201b937282a93c1711",
+  "mainSourcePinsSha256": "ee1ea4ae10a49bc398ae70a5d8556b40d5686b7f423f7c1539b9cb213cb71b24",
+  "registrarSha256": "e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae",
+  "unissuedCarrierSha256": "20304e73a2068067b9e67031b9bdec0b88839c16b953473fcbb3a06ac0cf8a13",
+  "exactChangedBindings": [
+    "MAIN",
+    "SOURCE",
+    "TEMPLATE"
+  ],
+  "allOtherAstUnchanged": true,
+  "diffSha256": "ac7fbdff3ecb828c06cb7b1f813835beb9a6335b865108a4b767b2267070eb9d",
+  "freshBasisReusedSha256": "0755f748efa34e5abc89dcdf2f6e325e7fd689641c915c8f87caac26a2a9c43c",
+  "freshServerReadRepeated": false,
+  "serverActions": 0,
+  "issuerCalls": 0,
+  "existingReadback2055Reused": true,
+  "futureInvocation": "python3 /Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service28-registration-adapter-local-01/register_issued28_once_r3.py <MAIN03_ACTUAL_ISSUED_DIRECTORY> <EXTERNAL_ISSUED_JSON_SHA256> <NEW_EXCLUSIVE_ACTUAL_OUTPUT_DIRECTORY>"
+}

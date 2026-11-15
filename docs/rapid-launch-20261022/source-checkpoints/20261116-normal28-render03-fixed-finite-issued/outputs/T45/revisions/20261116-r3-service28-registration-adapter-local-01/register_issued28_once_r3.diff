@@ -1,0 +1,15 @@
+--- register_issued28_once.py
++++ register_issued28_once_r3.py
+@@ -5,9 +5,9 @@
+ 
+ H=Path(__file__).resolve().parent
+ REPO=H.parents[3]
+-MAIN=REPO/'outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-02'
+-SOURCE='71731cda8626724eab663ef0365664d74810c7747fdc5b4ae6962b1a7baa1ffe'
+-TEMPLATE='af668139237ad88ea81e0f6afd00d80f8f2cfa74bf343a7cdf7d07e2def4d28e'
++MAIN=REPO/'outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE28-START-DESCRIBE-03'
++SOURCE='e3678d979df4a316c186f24f8f1824f1cf213dbf414ea767ef2d802a155f96ae'
++TEMPLATE='20304e73a2068067b9e67031b9bdec0b88839c16b953473fcbb3a06ac0cf8a13'
+ SUCCESS='EXACT_DIRECT28_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'
+ RULES='b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1'
+ CLIENT=REPO.parent/'monitor/normal-admission-20261112-01/admin_client.py'

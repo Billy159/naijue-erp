@@ -1,0 +1,47 @@
+{
+  "state": "LOCAL_NO_DATABASE_REAL_ISSUER_RENDER_DRY_RUN_PASS_NOT_SOURCE_APPROVAL",
+  "actualApi": "issue_registration.issue(dry_run=True)",
+  "report": {
+    "state": "DRY_RUN_NO_AUTHORITY_FILE_CREATED",
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261116-r3-direct28-registration-window-01",
+    "startsAt": 1794776259506,
+    "registrationExpiresAt": 1794777159506,
+    "roleApplyExpiresAt": 1794778059506,
+    "controllerValidUntil": 1794781659506,
+    "backupAdminValidUntil": 1794781779506,
+    "restorationDeadline": 1794783159506,
+    "policyExpiresAt": 1794783459506,
+    "sourceAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+    "rulesSha256": "b5a7635c13949b0b3b0d82f44557cbc6bc9f627472d418b8149fc2f54420cdc1",
+    "basisSha256": "0755f748efa34e5abc89dcdf2f6e325e7fd689641c915c8f87caac26a2a9c43c",
+    "independentReviewSha256": "a8ce7d6f2289a2e018d3f44edbba2be257f30134f372e976cf953483b11763af",
+    "rolesSha256": "a0bd20fc1972cb391bb1402d4e2f4cb68ac66e612e05f182c29bd9eaca821377",
+    "applyHostSha256": "9211828220f630c9d0a1eaf33ac47612ebea9529015da4a3cc24e2c5a694b7cb",
+    "policySha256": "a82fee65eabe2501472959c936676a3e05fd082b5e9e64a18ae82ed48be6d0f7",
+    "dispatcherSha256": "02aa3848ac7c05effa42aee1c4d86f68e283e69d8257d5d7ace4a7d3b66db444",
+    "registrationSha256": "e88f3cb7d13f613725e75bb19fba07228b2e95f973705f7d7b1e67c23c96d74d",
+    "carrierSha256": "905e7a308b23c678a1881f89143b7529cb3499ed73aafc28bc96065e1b916b5f",
+    "jobs": {
+      "apply": "t45-r3-ordinary28-auth-apply-20261116-01",
+      "install": "t45-r3-batched-install-20261115-01",
+      "materialize": "t45-r3-batched-root03-source-delta-20261116-01",
+      "restore": "t45-r3-ordinary28-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-28",
+      "stop": "t45-r3-ordinary28-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false,
+    "dryRun": true
+  },
+  "originalFailure": "EXACT_TEMPLATE_PLACEHOLDER_REQUIRED before output mkdir",
+  "sourceChanged": [
+    "admin_exec.DIRECT28-UNREGISTERED.py",
+    "register_cas.py",
+    "original-cas-direct28-carrier.UNISSUED.py"
+  ],
+  "basisJobsLockAndNewPathsIdenticalToParent": true,
+  "serverActions": 0,
+  "authorityFilesCreated": false,
+  "realClockUsed": true,
+  "newSourceIndependentReviewPending": true
+}
