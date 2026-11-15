@@ -6525,15 +6525,58 @@
               "allDirectChildrenReaped": null,
               "independentFiveTableReadback": null
             }
+          },
+          {
+            "group": "row-intent-local-probe04-result-20261115-0646",
+            "status": "SCOPED_DIAGNOSTIC_RESULT_PASS_NOT_CANDIDATE_OR_LINUX_PASS",
+            "evidence": {
+              "implementationPinsSha256": "0072e57bd0cdf83093abd03e08c501ae28d68a5f8144c90a92a79fd1a6258f1c",
+              "resultPinsSha256": "ecc821e11a37cf113bb71bb35ed5706431a7cbe5b1319b35b5edaa6d5f7c9225",
+              "resultReviewSha256": "f69ed1cfd552d17f1bd85cf658a212a11d8e05d885d07534da5107af12749667",
+              "comparisonSha256": "d3e331a85fd34f376983cc176245a84836801ca35ab5212482d299d21bfe485b",
+              "cleanupSha256": "a640098cc306a0c0cb4737f6500ed3032f311fe75bdbbdcadeb5c3f0719ae822",
+              "finalSha256": "790fcd956771df2485ebaa6c4a1c1d4c645f4370cf6ecf33dbd15a21a1f35dba",
+              "actualExit": 0,
+              "contexts": 2,
+              "fullOriginalHelperCalls": 2,
+              "eachAccepted": true,
+              "manualPlanQueries": 7,
+              "helperMs": [
+                25.376292,
+                17.364875
+              ],
+              "outerAuditCalls": [
+                1,
+                1
+              ],
+              "outerAuditRows": [
+                2,
+                3
+              ],
+              "typedCalls": [
+                500,
+                1000
+              ],
+              "recordsArrayStatistics": null,
+              "recordsArrayStatus": "UNOBSERVED",
+              "independentFiveTables": "ZERO",
+              "postmasterExit": 0,
+              "directChildren": 6,
+              "allChildrenExit0AndReaped": true,
+              "signalErrors": [],
+              "elapsedSeconds": 35.973236875,
+              "peakAllocatedBytes": 640012288,
+              "newTemporaryRoot": "REMOVED_CONFIRMED_ABSENT",
+              "previous02and03": "FAILED_AND_RETAINED_CLEANUP_FALSE_NOT_CHANGED",
+              "scopeConclusion": "controlled old PAH block increases typed work500 to1000; sequential single measurements cannot attribute Linux40s timeout or show net gain; no product source change"
+            }
           }
         ],
         "currentInFlight": {
           "owner": "D2",
-          "work": "freeze probe02 failed terminal evidence; source-only minimal diagnosis/fix for counter_labels and kill_all PermissionError",
-          "consumedAttempt": "probe02 exact once exit1; no retry or extension authorized",
-          "boundary": "do not modify02 or delete preserved root; new03 only if needed, exact diff/pins then QB affected-scope review before any new run",
-          "measurement": "two fixed PAH contexts,one full original helper each; no474/500 performance loop/fullcompile/candidate layer",
-          "T45": "no new server scope, r910 closed NEED_FIX",
+          "work": "source-only minimal shared row_intent read-path candidate preparation based on accepted04 actuals; exact diff/equivalence boundary/necessary bounded validation entry pending",
+          "boundary": "no new PG/SQL execution/carrier/server; prioritize single shared helper read/materialization reuse, no family authorization layer/GUC/cache/schema/index/ACL changes",
+          "T45": "r910 closed NEED_FIX; no new server scope",
           "formalR3": "STOPPED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
