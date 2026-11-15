@@ -6319,7 +6319,7 @@
             }
           },
           {
-            "group": "party-prefix-single-projection-source-20261115-0344",
+            "group": "party-prefix-single-projection-source-20261115-0342",
             "status": "SOURCE_SCOPED_PASS_TARGETED_PG_PENDING",
             "evidence": {
               "sourceDirectory": "outputs/D2/20261115-r3-party-prefix-single-projection-readonly-01",
