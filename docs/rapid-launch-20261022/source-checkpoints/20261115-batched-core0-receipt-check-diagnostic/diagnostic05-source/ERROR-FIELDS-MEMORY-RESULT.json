@@ -1,0 +1,17 @@
+{
+  "state": "SCOPED_MEMORY_FILTER_PASS",
+  "checks": [
+    "scalar-whitelist-and-exact-context",
+    "omit-detail-hint-query-and-SQL-context",
+    "three-function-frame-bound",
+    "private-and-quoted-value-redaction",
+    "SQL-or-multiline-message-omitted",
+    "metadata-identifier-validation",
+    "UTF8-message-bound",
+    "no-assertion-as-SQLSTATE"
+  ],
+  "pgExecutions": 0,
+  "harnessExecuted": false,
+  "fixtureCompiled": false,
+  "oldSuitesRerun": false
+}

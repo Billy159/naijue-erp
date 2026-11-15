@@ -1,0 +1,62 @@
+{
+  "decisionId": "r3-batched-core0-diagnostic-20261115-05-once",
+  "issuedAt": "2026-11-15 11:22:23 UTC",
+  "decisionMaker": "current controller under actual human standing authorization; not a new human click",
+  "userAuthority": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-同类隔离测量持续授权.md",
+    "sha256": "0c25f2a54db7eb37d7dd0b668df1793b73c7f9f85ea19228e6ceb7447ac9c591",
+    "quote": "类似这样的授权 后续都同意 我要睡觉了 你自己判断同意就好了"
+  },
+  "state": "APPROVED_ONE_CORE0_ONLY_DIAGNOSTIC_NOT_EXECUTED",
+  "executor": "D3 existing owner",
+  "harness": {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05",
+    "pinsSha256": "b3a1ebabe2c284855e72924f4a6c1c83422b4a4994d7c8280fe9514f3f12cbe9",
+    "runnerSha256": "6ed8d7d1c3689d5b5f7431ce7ca5671f16aaa89c0a3d4f84e4215a3c44e14d5b",
+    "diffSha256": "9eea1565b42706de2e1b022b0fd17c0cd2e3a7d06af143fac4c7bb203b70f7cc",
+    "inputPinsSha256": "286d64571b547a5d188dd79b86eab531018ae2d611686f63e00e45412e43be4e",
+    "probeSha256": "eb0c72220abd4460656e3a8e1efad3ed6b2858fb0e8ae2b4035e11e28da85598",
+    "filterSha256": "34531d3f88e9e83716461d9ab594b27dcd53d95ee061e5591ef7e8866b2effb4",
+    "state": "CORE0_ONLY_BOUNDED_DIAG_FROZEN_NOT_RUN_PENDING_QB"
+  },
+  "readinessReview": "CORE0-DIAGNOSTIC05-REVIEW.json",
+  "scope": "Fresh local restricted pure-synthetic CORE0 single-step safe-error diagnosis only; preserve original162 pipeline/descriptor/request, no complete/COMMIT/later batch; success only STEP_ACK plus confirmed ROLLBACK",
+  "limits": {
+    "workSeconds": 170,
+    "totalSeconds": 180,
+    "statementMs": 40000,
+    "responseMs": 42000,
+    "scratchAllocatedBytes": 3221225472,
+    "earlyScratchMarginBytes": 536870912,
+    "combinedLogReceiptBytes": 2097152,
+    "cleanupReceiptReservedBytes": 16384
+  },
+  "target": {
+    "database": "demo_8877_d3_core0_diag_20261115_05",
+    "root": "/tmp/d3-core0-diag-20261115-05",
+    "unixPort": 55495,
+    "tcp": false
+  },
+  "constraints": [
+    "exact05 pins unusedATTEMPT/freshroot; preserve all prior failedroots",
+    "one05 README command original3args",
+    "sameFIX03 SQL07dc and immutable originalDB02 EXPECTED161",
+    "only actual CORE0 via real kernel, early failures classified by actualkind; no complete/COMMIT/laterbatch/extra scenarios",
+    "first original PG scalar error<=4KiB, message<=1024UTF8, filtered whitelist only; no SQL/DETAIL/params/credentials/rawstderr",
+    "ROLLBACK confirmed on STEP_ACK; rollback failure separate from firstSTEPerror",
+    "all failures/unknown/signals/unconfirmed stop preserve thisroot, only finalsuccess+actualstopreap within budgets may remove ownroot",
+    "no retry under thisdecision; no server/R3/realbusiness/genuinehost/V2/fullscale"
+  ],
+  "latestStartBefore": "2026-11-15 11:32:00 UTC",
+  "install": {
+    "parent": "base35+exact12layers→actual155",
+    "fix": {
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
+      "pinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+      "sqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+      "change": "single statement semicolon at source3124 and renderer separator emission;161 model/body/definition unchanged",
+      "pgExecuted": false
+    },
+    "expected161": "immutable original DB02 model/body/definition unchanged"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "temporaryRoot": "/tmp/d3-core0-diag-20261115-05",
+  "removed": false,
+  "allDirectChildrenReaped": true,
+  "postmasterShutdownConfirmed": true,
+  "postmasterExitCode": 0,
+  "directChildExitCodes": [
+    {
+      "pid": 43604,
+      "kind": "initdb",
+      "exitCode": 0
+    },
+    {
+      "pid": 43614,
+      "kind": "postgres",
+      "exitCode": 0
+    },
+    {
+      "pid": 43621,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43623,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43625,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43627,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43629,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43631,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43633,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43635,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43638,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43640,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43642,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43644,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43647,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43649,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43651,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43653,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43655,
+      "kind": "node",
+      "exitCode": 0
+    },
+    {
+      "pid": 43657,
+      "kind": "psql",
+      "exitCode": 0
+    },
+    {
+      "pid": 43659,
+      "kind": "node",
+      "exitCode": 1
+    }
+  ],
+  "signalErrors": [],
+  "permissionFault": false,
+  "rootPreserved": true,
+  "unconfirmedRootPreserved": false,
+  "shutdownPolicy": "SIGINT success / SIGQUIT failure; never SIGKILL postmaster",
+  "peakAllocatedBytesSampled": 48304128,
+  "scratchCapBytes": 3221225472,
+  "scratchEarlyStopBytes": 2684354560,
+  "watchdogPollMs": 50,
+  "elapsedSeconds": 2.368316208,
+  "workElapsedSeconds": 2.3592061660000003,
+  "totalLimitSeconds": 180,
+  "workLimitSeconds": 170,
+  "withinMeasuredLimits": true,
+  "rawPostgresLogBytesHeldInMemory": 1886,
+  "rawOtherBytes": 2463,
+  "rawOutputExported": false,
+  "guardFault": null,
+  "successful": false
+}

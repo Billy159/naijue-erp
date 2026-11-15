@@ -1,0 +1,44 @@
+{
+  "stage": "CORE_STEP0_DIAGNOSTIC",
+  "state": "FAILED",
+  "phase": "CORE",
+  "ordinal": 0,
+  "installed161": {
+    "functions": 161,
+    "tables": 35,
+    "columns": 351,
+    "indexes": 114,
+    "constraints": 326,
+    "triggers": 570,
+    "routineDefinitionsAndOwnerAclMatched": true,
+    "fullPhysicalProductionAdmission": false
+  },
+  "fixtureCompiled": true,
+  "fixtureRows": 162,
+  "inspectState": "ABSENT",
+  "stepAck": false,
+  "rollbackConfirmed": true,
+  "rollbackFailure": null,
+  "firstFailure": {
+    "phase": "CORE",
+    "ordinal": 0,
+    "queryKind": "STEP",
+    "sqlState": "23514",
+    "message": "new row for relation [redacted] violates check constraint [redacted]",
+    "messageRedacted": true,
+    "constraint": "receipt_result_by_kind",
+    "table": "operation_receipt",
+    "column": null,
+    "contextFrames": [
+      "PL/pgSQL function standard_whole_package_command_v2(jsonb,text,text,uuid,integer,jsonb) line 925 at SQL statement",
+      "PL/pgSQL function standard_batched_import_step_v1(jsonb,jsonb,integer,text,jsonb,text) line 4 at assignment"
+    ]
+  },
+  "applicationError": null,
+  "closeFailure": false,
+  "commitAttempted": false,
+  "laterGroupsAttempted": false,
+  "productionHostTested": false,
+  "fullSqlExported": false,
+  "genericLogsExported": false
+}

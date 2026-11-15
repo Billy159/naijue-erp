@@ -1,0 +1,28 @@
+{
+  "parentCandidate": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02",
+  "parentPinsSha256": "4589d0816e3ab24317a47263ac4c45a23fc13ee9b3bfd6795080affa6bcc6531",
+  "installFix": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
+  "installFixPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+  "installSqlPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03/source-slices.sql",
+  "installSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "expected161References": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-MODEL.json",
+      "sha256": "d50ed7228912055f375153263905605ac6205021462849948744a5af0fc2aa38",
+      "hashSource": "REUSED_PARENT_INPUT_PINS_NOT_REHASHED"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-DEFINITIONS.json",
+      "sha256": "bb7d7bb7bbb6e13e5f52fdb74940287c723e22691b364f4e9e8bcadef637738b",
+      "hashSource": "REUSED_PARENT_INPUT_PINS_NOT_REHASHED"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-BODIES.json",
+      "sha256": "5c7d1506b4203ceaf62ab37229a4c840e03859af4856fcce7e45ba1c9ac28437",
+      "hashSource": "REUSED_PARENT_INPUT_PINS_NOT_REHASHED"
+    }
+  ],
+  "modelReadPath": "catalog-fixture.mjs/scenario.mjs use cfg.candidate02",
+  "fixDirectoryAssumedToContainModels": false,
+  "hostIncluded": false
+}

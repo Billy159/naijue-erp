@@ -1,0 +1,92 @@
+{
+  "task": "BATCH-D3-CORE-STEP0-DIAGNOSTIC-05",
+  "state": "FROZEN_SOURCE_PREPARATION_ONLY_WAIT_QB05_AND_NEW_MAIN_DECISION",
+  "parentHarness04PinsSha256": "e165b92a3e74c0c919dd8e810bb4a8f8d6837456cbf54bedeae56c1661224f14",
+  "previousFailuresAndRootsPreserved": true,
+  "installFix03PinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+  "installSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "canonical161Expectations": "UNCHANGED_PARENT_DB02",
+  "inputPins": 654,
+  "pgExecutions": 0,
+  "fixtureCompiled": false,
+  "serverActions": 0,
+  "attemptConsumed": false,
+  "scenarioCasesExecuted": 0,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/DELTA-04-TO-05.diff",
+      "bytes": 14318,
+      "sha256": "9eea1565b42706de2e1b022b0fd17c0cd2e3a7d06af143fac4c7bb203b70f7cc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/ERROR-FIELDS-MEMORY-RESULT.json",
+      "bytes": 465,
+      "sha256": "e943d54c5e8ef3c7ce8d6380ba87765ad114e3490006a3946ad95290abd89511"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/EXECUTION-COMMAND.json",
+      "bytes": 699,
+      "sha256": "6b5dd5119fac6dee6afe5a7831a83b25a5dc0286c9cc717254510aef6890b135"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/INPUT-PINS.json",
+      "bytes": 194796,
+      "sha256": "286d64571b547a5d188dd79b86eab531018ae2d611686f63e00e45412e43be4e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/INSTALL-BINDING.json",
+      "bytes": 1965,
+      "sha256": "6de11365ee8eb23dd6f22dee9e8ff6587d579dea72cbd2900901204e983333d4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/INSTALL-ORDER.json",
+      "bytes": 5970,
+      "sha256": "8a1b80057a7bd9984eb4a57922e06aab3c566342c8b9b3ac01671a3df8426d6c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/README.md",
+      "bytes": 5440,
+      "sha256": "610be7db676ee5f17720a0a188230235f8912bf21de615804f87208ab680d76d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/STATIC-CHECKS.json",
+      "bytes": 1270,
+      "sha256": "2beb3f7730f5c5fbc7cc957474e783351892ad09f7a8fb7dc2c953e08386d944"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/TARGET.json",
+      "bytes": 2653,
+      "sha256": "9cf72284adcf2ea4e40021b3c40cd043160171e2a4250fd8bb310f05df0a4bcd"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/base-install.sql",
+      "bytes": 1301344,
+      "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/catalog-fixture.mjs",
+      "bytes": 8816,
+      "sha256": "5827c784a4437b4a91c66a76f9927b86028d38cb9c4386118d5d95ad5f86b89e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/check-error-fields-memory.mjs",
+      "bytes": 2463,
+      "sha256": "7db604a0a7c3b743fe21bfe5ebbf46f1bcc542bb82be3c1e07a9ebf0939b94b4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/core-error-fields.mjs",
+      "bytes": 1681,
+      "sha256": "34531d3f88e9e83716461d9ab594b27dcd53d95ee061e5591ef7e8866b2effb4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/core-step0-diagnostic.mjs",
+      "bytes": 5245,
+      "sha256": "eb0c72220abd4460656e3a8e1efad3ed6b2858fb0e8ae2b4035e11e28da85598"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/run-local.py",
+      "bytes": 17260,
+      "sha256": "6ed8d7d1c3689d5b5f7431ce7ca5671f16aaa89c0a3d4f84e4215a3c44e14d5b"
+    }
+  ]
+}

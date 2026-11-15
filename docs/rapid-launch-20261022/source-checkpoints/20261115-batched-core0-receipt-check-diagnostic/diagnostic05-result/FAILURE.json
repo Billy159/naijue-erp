@@ -1,0 +1,6 @@
+{
+  "phase": "CORE_STEP0_DIAGNOSTIC",
+  "code": "SafetyError",
+  "rawOutputExported": false,
+  "retry": false
+}

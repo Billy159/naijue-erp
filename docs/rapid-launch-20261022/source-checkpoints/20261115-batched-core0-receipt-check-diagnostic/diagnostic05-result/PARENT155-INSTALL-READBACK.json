@@ -1,0 +1,11 @@
+{
+  "stage": "PARENT155",
+  "functions": 155,
+  "tables": 35,
+  "columns": 351,
+  "indexes": 114,
+  "constraints": 326,
+  "triggers": 570,
+  "routineDefinitionsAndOwnerAclMatched": true,
+  "fullPhysicalProductionAdmission": false
+}

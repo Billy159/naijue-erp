@@ -1,0 +1,7 @@
+{
+  "state": "STOPPED",
+  "cleanupConfirmed": false,
+  "scope": "LOCAL_CORE_STEP0_DIAGNOSTIC_ONLY",
+  "productionHostTested": false,
+  "rawOutputExported": false
+}

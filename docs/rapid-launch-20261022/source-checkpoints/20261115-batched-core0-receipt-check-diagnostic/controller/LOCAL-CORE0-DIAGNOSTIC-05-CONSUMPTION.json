@@ -1,0 +1,24 @@
+{
+  "decisionId": "r3-batched-core0-diagnostic-20261115-05-once",
+  "state": "CONSUMED_STOPPED_RECEIPT_CHECK_NO_RETRY",
+  "executionReceiptSha256": "490a13bf3e76aff5d21eac8e34c926d97e5483efb129c9d471defd127a60403a",
+  "diagnosticSha256": "714036866b0aa7a10711f23ae51b5eba252618286e07d68fbb8094c190fdefcf",
+  "firstPgFailure": {
+    "phase": "CORE",
+    "ordinal": 0,
+    "queryKind": "STEP",
+    "sqlState": "23514",
+    "constraint": "receipt_result_by_kind",
+    "table": "operation_receipt",
+    "command6Line": 925,
+    "batchedStepLine": 4
+  },
+  "actual161Verified": true,
+  "stepAck": false,
+  "rollbackConfirmed": true,
+  "commitAttempted": false,
+  "laterGroupsAttempted": false,
+  "pgStopConfirmed": true,
+  "all21ChildrenReaped": true,
+  "rootPreserved": "/tmp/d3-core0-diag-20261115-05"
+}

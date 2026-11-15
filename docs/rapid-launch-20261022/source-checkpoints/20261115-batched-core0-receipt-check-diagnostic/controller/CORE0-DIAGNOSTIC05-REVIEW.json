@@ -1,0 +1,13 @@
+{
+  "source": "QB existing chat",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "result": "SCOPED_SOURCE_FIRST_RUN_READINESS_PASS_CORE0_DIAGNOSTIC05",
+  "messages": [
+    {
+      "turnId": "01a1deef-b529-7952-a546-8d9c6c480dc8",
+      "id": "exec-ac1066f4-1152-49e6-80da-d69a852a3069",
+      "status": "completed",
+      "prompt": "QB 05 CORE0单点诊断窄核：SCOPED SOURCE FIRST-RUN READINESS PASS，Standards/Spec无新增明确阻点。PINS b3a1ebabe2c284855e72924f4a6c1c83422b4a4994d7c8280fe9514f3f12cbe9、runner 6ed8d7d1c3689d5b5f7431ce7ca5671f16aaa89c0a3d4f84e4215a3c44e14d5b、delta 9eea1565b42706de2e1b022b0fd17c0cd2e3a7d06af143fac4c7bb203b70f7cc、INPUT 286d64571b547a5d188dd79b86eab531018ae2d611686f63e00e45412e43be4e，以及probe eb0c72220abd4460656e3a8e1efad3ed6b2858fb0e8ae2b4035e11e28da85598、filter 34531d3f88e9e83716461d9ab594b27dcd53d95ee061e5591ef7e8866b2effb4 均实核准确。\n\ncore-step0-diagnostic.mjs:27-56 沿原checkCatalog/compileFixture，从实际磁盘plan取首CORE 0..0与原operation端点，保原identity/descriptor/request/私参；真实受限controller flags后BEGIN，再调用原kernel.lockAndInspect要求ABSENT，然后原kernel.applyStep ordinal0，角色切换仍由真实adapter发出。没有complete/COMMIT/后批执行入口，意外STEP_ACK也仅经finally真实ROLLBACK确认后结束，不称提交。16-25在实际query错误当场保存首次过滤结果，外catch不覆盖；finally63-64直接ROLLBACK，单独记录rollbackFailure，不把回滚错误变成原STEP错误。早期ROLE/INSPECT会按实际queryKind保存，不硬称STEP。\n\ncore-error-fields.mjs只投影SQLSTATE/message/constraint/table/column/3个识别函数帧及固定phase/ordinal/kind；私参、原request/identity/descriptor字符串叶子、引号值被替换，可疑SQL/多行message置null，message最多1024UTF8字节，不复制DETAIL/HINT/query/参数/行/rawWhere/stderr。非5位code（包括ERR_ASSERTION）不伪造SQLSTATE。输出packet在probe与runner两层限整个4096字节。已读既有8项纯函数过滤检查源码/结果，未重跑，也未运行probe。\n\n实比04→05所有runner函数逐字一致，finally逐字一致，base/catalog逐字一致；原FIX03/DB02EXPECTED161与170/180/40/42/空间日志/真实停机reap/失败保根直接复用，不重审安装或旧场景。仅比较INPUT摘要字典，647条外部完全相等，加7自身=654，未重哈希外部。新固定身份demo_8877_d3_core0_diag_20261115_05、/tmp/d3-core0-diag-20261115-05、Unix55495；当前ATTEMPT/newroot不存在。\n\nQB全程0PG/host/服务器/旧测试/文件修改。此结论仅单点诊断源就绪，执行须主控另签；新实际首消息/真实ROLE/INSPECT/STEP失败位置、ROLLBACK与停机资源事实仍待一次真实运行，不扩展为CORE其他分支或六场景PASS。04实际161已过事实可由原有效证据复用，QB本轮未重新验它。"
+    }
+  ]
+}

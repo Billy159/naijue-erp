@@ -1,0 +1,14 @@
+{
+  "scope": "FIXED_DB02_PLUS_FIX03_STATIC_INSTALL_ONLY",
+  "sourceSqlPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03/source-slices.sql",
+  "sourceSqlSha256": "07dc375787429ea70ed86c038aec1b3d2fbda38925bc4a97785bf68d834979ef",
+  "exitCode": 0,
+  "firstError": null,
+  "sourceLineNumber": null,
+  "contextFrames": [],
+  "serverLocation": null,
+  "diagnosticParsed": false,
+  "maxExportBytes": 4096,
+  "fullSqlExported": false,
+  "genericLogsExported": false
+}

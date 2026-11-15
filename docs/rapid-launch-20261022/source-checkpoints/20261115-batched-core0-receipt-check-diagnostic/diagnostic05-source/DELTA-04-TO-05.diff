@@ -1,0 +1,214 @@
+--- 04/run-local.py
++++ 05/run-local.py
+@@ -1,4 +1,4 @@
+-"""One disposable 162-row SQL-core chain with fixed DB02+FIX03 install diagnostics. Source preparation only until QB/main authorization."""
++"""One disposable CORE-step0-only diagnostic with confirmed rollback and no commit. Source preparation only until QB/main authorization."""
+ import hashlib,json,os,re,shutil,signal,subprocess,sys,threading,time
+ from pathlib import Path
+ class SafetyError(Exception):
+@@ -142,8 +142,8 @@
+  for item in json.loads((base/'INPUT-PINS.json').read_text()):
+   require(hashlib.sha256(Path(item['path']).read_bytes()).hexdigest()==item['sha256'],'input_pin_mismatch')
+  require(not any((base/n).exists() for n in ['ATTEMPT.json','RUN.json','FAILURE.json']),'single_attempt_already_used')
+- require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_batched_20261115_04','/tmp/d3-batched-core-20261115-04',55494),'fixed_sql_core_identity_required')
+- save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY'})
++ require((config['database'],config['workRoot'],config['socketPort'])==('demo_8877_d3_core0_diag_20261115_05','/tmp/d3-core0-diag-20261115-05',55495),'fixed_sql_core_identity_required')
++ save('ATTEMPT.json',{'singleAttempt':1,'postgresStartedYet':False,'scope':'LOCAL_CORE_STEP0_DIAGNOSTIC_ONLY'})
+  candidate_root=Path(config['workRoot'])
+  candidate_root.mkdir(mode=0o700)
+  work=candidate_root
+@@ -201,19 +201,21 @@
+  run([pg/'psql','-XqAt','-h',work,'-p',str(config['socketPort']),'-U',config['bootstrap'],'-d',database,
+   '-v','ON_ERROR_STOP=1','-v','VERBOSITY=verbose','-c',f'SET ROLE {owner};','-f',sql_path],timeout=42,diagnostic_sql=sql_path)
+  # Install FIX03; canonical 161 expectations remain explicitly in parent DB02.
+- phase='real_restricted_engine_scenario'
+- result=json.loads(run([node,base/'scenario.mjs'],timeout=170,allow_failure=True))
+- if result.get('state')!='COMPLETED' and (result.get('code') in ('42501','28000','28P01') or (result.get('lastSqlFailure') or {}).get('sqlState') in ('42501','28000','28P01')):permission_fault=True
+- save('SQL-CORE-OBSERVATIONS.json',result)
+- require(result.get('stage')=='SQL_CORE' and result.get('state')=='COMPLETED','sql_core_scenario_failed')
+- require(result.get('fixtureRows')==162 and len(result.get('events',[]))==6,'sql_core_scope_changed')
++ phase='CORE_STEP0_DIAGNOSTIC'
++ result=json.loads(run([node,base/'core-step0-diagnostic.mjs'],timeout=170,allow_failure=True))
++ failure=result.get('firstFailure') or {}
++ if failure.get('sqlState') in ('42501','28000','28P01'):permission_fault=True
++ require(len((json.dumps(result,ensure_ascii=False,indent=2)+'\n').encode())<=4096,'core_diagnostic_export_cap')
++ save('CORE-STEP0-DIAGNOSTIC.json',result)
++ require(result.get('stage')=='CORE_STEP0_DIAGNOSTIC' and result.get('state')=='COMPLETED','core_step0_diagnostic_failed')
++ require(result.get('stepAck') is True and result.get('rollbackConfirmed') is True and result.get('commitAttempted') is False,'core_step0_rollback_unconfirmed')
+  phase='clean_shutdown'
+  os.kill(server.pid,signal.SIGINT);server.wait(timeout=5)
+  pg_stop_confirmed=server.returncode==0 and not (cluster/'postmaster.pid').exists()
+  for thread in threads:thread.join(timeout=1)
+- check();save('RUN.json',{'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY','state':'CORE_FINISHED_PENDING_FINAL_CLEANUP','fixtureRows':162,
+-  'expectedFunctions':161,'businessTables':35,'scenarioCases':6,'serverActions':0,'realSourceRowsRead':0,
+-  'productionHostTested':False,'v2HallAmountRetentionNewPgProof':False,'rawOutputExported':False})
++ check();save('RUN.json',{'scope':'LOCAL_CORE_STEP0_DIAGNOSTIC_ONLY','state':'STEP_ACK_ROLLBACK_PENDING_FINAL_CLEANUP',
++  'fixtureCompiledRows':162,'commitAttempted':False,'scenarioCases':0,'actual161Verified':True,'serverActions':0,
++  'realSourceRowsRead':0,'productionHostTested':False,'rawOutputExported':False})
+  success=True
+ except Exception as error:
+  permission_fault=isinstance(error,PermissionError)
+@@ -263,7 +265,7 @@
+   'rawPostgresLogBytesHeldInMemory':len(raw_log),'rawOtherBytes':raw_other,'rawOutputExported':False,
+   'guardFault':fault,'successful':success})
+  except Exception:success=False
+-try:save('RESULT.json',{'state':'COMPLETED' if success else 'STOPPED','cleanupConfirmed':pg_stop_confirmed and all_reaped and removed and not signal_errors and not permission_fault,'scope':'LOCAL_RESTRICTED_SQL_CORE_ONLY','productionHostTested':False,'rawOutputExported':False})
++try:save('RESULT.json',{'state':'COMPLETED' if success else 'STOPPED','cleanupConfirmed':pg_stop_confirmed and all_reaped and removed and not signal_errors and not permission_fault,'scope':'LOCAL_CORE_STEP0_DIAGNOSTIC_ONLY','productionHostTested':False,'rawOutputExported':False})
+ except Exception:success=False
+ print(json.dumps({'state':'COMPLETED' if success else 'STOPPED','rawOutputExported':False}))
+ sys.exit(0 if success else 1)
+--- 04/TARGET.json
++++ 05/TARGET.json
+@@ -1,7 +1,7 @@
+ {
+-  "database": "demo_8877_d3_batched_20261115_04",
+-  "workRoot": "/tmp/d3-batched-core-20261115-04",
+-  "socketPort": 55494,
++  "database": "demo_8877_d3_core0_diag_20261115_05",
++  "workRoot": "/tmp/d3-core0-diag-20261115-05",
++  "socketPort": 55495,
+   "bootstrap": "d3_bootstrap",
+   "owner": "fresh35_owner_20261105_r1",
+   "controller": "fresh35_controller_20261105_r1",
+@@ -27,7 +27,7 @@
+     "scratchBytes": 3221225472,
+     "logBytes": 2097152
+   },
+-  "scope": "LOCAL_RESTRICTED_SQL_CORE_ONLY_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
++  "scope": "LOCAL_CORE_STEP0_DIAGNOSTIC_ONLY_NO_COMMIT_NO_PRODUCTION_HOST_NO_REAL_SOURCE_DATA",
+   "executionAuthorizationAtPreparation": "NOT_GRANTED_SOURCE_PREPARATION_ONLY",
+   "installFix03": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-INSTALL-FIX-03",
+   "installFixPinsSha256": "5ad8de721794d1135554b01fb2481e530c74b4398b035e320d00fad8c620431a",
+--- 04/INSTALL-ORDER.json
++++ 05/INSTALL-ORDER.json
+@@ -8,7 +8,7 @@
+   {
+     "order": 2,
+     "phase": "full 35-table base, patchBodies, admin provision, SQL38",
+-    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-04/base-install.sql",
++    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-pg-local-05/base-install.sql",
+     "sha256": "2cdcce56a0a04996a025e67fe52ad54c227dde9c755845170ea6a8359701f038"
+   },
+   {
+@@ -99,8 +99,8 @@
+   },
+   {
+     "order": 17,
+-    "phase": "actual 161 model readback, current stream compilation and six-case real SQL-core chain",
+-    "command": "node scenario.mjs",
++    "phase": "actual161 + original162 compile + original CORE descriptor/step0 via genuine D3 kernel; no complete/COMMIT; confirmed ROLLBACK and stop",
++    "command": "node core-step0-diagnostic.mjs",
+     "expectedModel": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-02/EXPECTED161-MODEL.json"
+   }
+ ]
+--- /dev/null
++++ 05/core-step0-diagnostic.mjs
+@@ -0,0 +1,81 @@
++import {join} from 'node:path';
++import {cfg, connect, compileFixture, checkCatalog, encodedScrypt, createBatchedStreamSqlKernel} from './catalog-fixture.mjs';
++import {corePgErrorFields} from './core-error-fields.mjs';
++
++let phase = 'INSTALLED161', queryKind = 'CATALOG', ordinal = null;
++let fixture, observer, writer, transactionBegan = false, firstFailure = null;
++let installed161 = null, fixtureCompiled = false, inspectState = null, stepAck = false;
++let rollbackConfirmed = false, rollbackFailure = null, closeFailure = false;
++let applicationError = null;
++const privateTokens = [encodedScrypt];
++function tokens(value) {
++  if (typeof value === 'string') privateTokens.push(value);
++  else if (Array.isArray(value)) value.forEach(tokens);
++  else if (value && typeof value === 'object') Object.values(value).forEach(tokens);
++}
++async function query(sql, values) {
++  const kind = sql.includes('standard_batched_import_step_v1') ? 'STEP'
++    : sql.includes('standard_batched_import_inspect_v1') ? 'INSPECT'
++    : sql.startsWith('SET LOCAL ROLE ') ? 'ROLE' : sql === 'ROLLBACK' ? 'ROLLBACK' : 'BEGIN';
++  queryKind = kind;
++  try { return await writer.query(sql, values); }
++  catch (error) {
++    if (firstFailure === null) firstFailure = corePgErrorFields(error, {phase, ordinal, queryKind: kind}, privateTokens);
++    throw error;
++  }
++}
++try {
++  observer = await connect(cfg.bootstrap);
++  installed161 = await checkCatalog(observer, join(cfg.candidate02, 'EXPECTED161-MODEL.json'), 161);
++  phase = 'CURRENT_STREAM_FIXTURE'; queryKind = 'COMPILE';
++  fixture = await compileFixture(observer, cfg.workRoot); fixtureCompiled = true;
++  const identity = Object.freeze({...structuredClone(fixture.plan.metadata.identity), rootOperationId: fixture.plan.metadata.rootOperationId});
++  const iterator = fixture.plan.batches();
++  const core = Object.freeze(structuredClone(iterator.next().value));
++  if (core.phase !== 'CORE' || core.first !== 0 || core.last !== 0) throw Error('CORE0_DESCRIPTOR_REQUIRED');
++  let step;
++  for await (const incoming of fixture.plan.steps(core)) { step = incoming; break; }
++  if (!step || step.request.operation_id !== core.firstOperationId || step.request.operation_id !== core.lastOperationId) throw Error('ORIGINAL_CORE0_REQUEST_REQUIRED');
++  tokens(identity); tokens(core); tokens(step.request);
++  await observer.discard(); observer = null;
++  phase = 'CORE'; ordinal = 0; queryKind = 'PRIVILEGE';
++  writer = await connect(cfg.controller);
++  const flags = (await writer.query(`SELECT rolsuper,rolcreaterole,rolcreatedb,rolreplication,rolbypassrls,
++    has_parameter_privilege(session_user,'session_replication_role','SET') AS replication_parameter
++    FROM pg_roles WHERE rolname=session_user`)).rows[0];
++  if (!flags || !Object.values(flags).every(value => value === false)) throw Error('RESTRICTED_CONTROLLER_REQUIRED');
++  const client = {query};
++  const kernel = createBatchedStreamSqlKernel(encodedScrypt);
++  if ((await query('BEGIN ISOLATION LEVEL READ COMMITTED')).command !== 'BEGIN') throw Error('BEGIN_ACK_INVALID');
++  transactionBegan = true;
++  const inspected = await kernel.lockAndInspect(client, identity, core); inspectState = inspected.state;
++  if (inspectState !== 'ABSENT') throw Error('FRESH_CORE_MUST_BE_ABSENT');
++  // Real adapter switches to INITIALIZER and sends original ordinal0/INITIALIZE.
++  // No complete, COMMIT, later group or failure injection exists in this probe.
++  await kernel.applyStep(client, identity, core, step, 0);
++  stepAck = true;
++} catch (error) {
++  if (firstFailure === null && /^[0-9A-Z]{5}$/.test(error?.code ?? '')) {
++    firstFailure = corePgErrorFields(error, {phase, ordinal, queryKind}, privateTokens);
++  } else if (firstFailure === null) applicationError = {phase, ordinal, queryKind, errorType: /^[A-Za-z]{1,40}$/.test(error?.name ?? '') ? error.name : 'Error'};
++} finally {
++  if (writer && transactionBegan) {
++    try { rollbackConfirmed = (await writer.query('ROLLBACK')).command === 'ROLLBACK'; }
++    catch (error) { rollbackFailure = {sqlState: /^[0-9A-Z]{5}$/.test(error?.code ?? '') ? error.code : null}; }
++  }
++  try { fixture?.plan.close(); } catch { closeFailure = true; }
++  for (const client of [observer, writer]) if (client) try { await client.discard(); } catch { closeFailure = true; }
++}
++const success = stepAck && rollbackConfirmed && firstFailure === null && applicationError === null && !closeFailure;
++let packet = {stage:'CORE_STEP0_DIAGNOSTIC',state:success?'COMPLETED':'FAILED',phase,ordinal,
++  installed161,fixtureCompiled,fixtureRows:162,inspectState,stepAck,rollbackConfirmed,rollbackFailure,
++  firstFailure,applicationError,closeFailure,commitAttempted:false,laterGroupsAttempted:false,
++  productionHostTested:false,fullSqlExported:false,genericLogsExported:false};
++if (Buffer.byteLength(JSON.stringify(packet,null,2)+'\n') > 4096) {
++  if (packet.firstFailure) packet.firstFailure = {...packet.firstFailure,message:null,messageRedacted:true,contextFrames:[]};
++}
++if (Buffer.byteLength(JSON.stringify(packet,null,2)+'\n') > 4096) {
++  packet = {stage:'CORE_STEP0_DIAGNOSTIC',state:'FAILED',phase:'SAFE_OUTPUT_CAP',commitAttempted:false};
++}
++process.stdout.write(JSON.stringify(packet)+'\n');
++process.exitCode = success && packet.state === 'COMPLETED' ? 0 : 1;
+--- /dev/null
++++ 05/core-error-fields.mjs
+@@ -0,0 +1,24 @@
++// Fixed CORE0 diagnostic projection. Never copy a PostgreSQL error object.
++export function corePgErrorFields(error, context, privateTokens = []) {
++  let message = typeof error?.message === 'string' ? error.message : null;
++  let messageRedacted = false;
++  if (message !== null) {
++    for (const token of privateTokens) if (typeof token === 'string' && token.length >= 3 && message.includes(token)) {
++      message = message.split(token).join('[redacted]'); messageRedacted = true;
++    }
++    const quoted = message.replace(/'(?:[^']|'')*'|"(?:[^"]|"")*"/g, '[redacted]');
++    messageRedacted ||= quoted !== message; message = quoted;
++    if (/[\r\n]|\b(?:SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|COPY|VALUES|PASSWORD)\b|\$\d|scrypt\$/i.test(message)) {
++      message = null; messageRedacted = true;
++    } else message = Buffer.from(message).subarray(0, 1024).toString('utf8').replace(/\uFFFD$/, '');
++  }
++  const metadata = key => typeof error?.[key] === 'string' && /^[A-Za-z_][A-Za-z0-9_]{0,127}$/.test(error[key]) ? error[key] : null;
++  const frames = [];
++  if (typeof error?.where === 'string') for (const line of error.where.split(/\r?\n/)) {
++    if (/^PL\/pgSQL function [A-Za-z0-9_.]+\([A-Za-z0-9_.,[\] ]*\) line [0-9]+ at [A-Za-z ]+$/.test(line)) frames.push(line.slice(0, 180));
++    if (frames.length === 3) break;
++  }
++  return {phase: context.phase, ordinal: context.ordinal, queryKind: context.queryKind,
++    sqlState: typeof error?.code === 'string' && /^[0-9A-Z]{5}$/.test(error.code) ? error.code : null,
++    message, messageRedacted, constraint: metadata('constraint'), table: metadata('table'), column: metadata('column'), contextFrames: frames};
++}
