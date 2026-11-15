@@ -1,0 +1,12 @@
+{
+  "admin_exec.DIRECT24-UNREGISTERED.py": "ff0aa0c64fcd504b368a06ea7869d262676f9934e8eb903310c492004942a317",
+  "admin_exec.DIRECT24-UNREGISTERED.py.diff": "4190380f556cf4abdc7ad0fdbb2aac3269c22129a593b8a7146a9d44a707fce2",
+  "issue_registration.py": "d43f2db072d2feea6c8d43a784a00447ed9af22daf08fc279f071c7e7bd8df26",
+  "issue_registration.py.diff": "c903d565368d8fd49daca743d13d7942796fa28abaa8a9dc45cfd76463e36e39",
+  "original-cas-direct24-carrier.UNISSUED.py": "4e1a72ec46857ba535a2d00b6372f58c4303f99d201a8d2a696334bccd9abfd8",
+  "original-cas-direct24-carrier.UNISSUED.py.diff": "f51b57bf5d4be5af9d0d3cffc0c946edb03b74317ed8fd816f19f2b4af7dbd0d",
+  "r3_direct24_batched_apply02.py": "da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef",
+  "r3_direct24_batched_apply02.py.diff": "42d8fa53461ada7201b457a9befe074e8cd2fe9332596a49e7da89b48b9f9012",
+  "register_cas.py": "27f6f760d3484fd02d155de05129c9f56f3a438fb5fc46de46cac2358c89a45e",
+  "register_cas.py.diff": "f556e055090c7258fc35a062a483d77c361522521bbf321371d2ff918244eb2f"
+}

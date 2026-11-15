@@ -1,0 +1,350 @@
+[
+  {
+    "path": "main/issue_registration.py",
+    "bytes": 8324,
+    "sha256": "d43f2db072d2feea6c8d43a784a00447ed9af22daf08fc279f071c7e7bd8df26",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/issue_registration.py"
+  },
+  {
+    "path": "main/admin_exec.DIRECT24-UNREGISTERED.py",
+    "bytes": 40162,
+    "sha256": "ff0aa0c64fcd504b368a06ea7869d262676f9934e8eb903310c492004942a317",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/admin_exec.DIRECT24-UNREGISTERED.py"
+  },
+  {
+    "path": "main/r3_direct24_batched_apply02.py",
+    "bytes": 40733,
+    "sha256": "da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/r3_direct24_batched_apply02.py"
+  },
+  {
+    "path": "main/admin_exec.DIRECT24-UNREGISTERED.py.diff",
+    "bytes": 4484,
+    "sha256": "4190380f556cf4abdc7ad0fdbb2aac3269c22129a593b8a7146a9d44a707fce2",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/admin_exec.DIRECT24-UNREGISTERED.py.diff"
+  },
+  {
+    "path": "main/QB-REVIEW.json",
+    "bytes": 3415,
+    "sha256": "dd7c958825f6b0a11944aa6403331901e6f4f3e8990988f4a434e4ca5e3be17d",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/QB-REVIEW.json"
+  },
+  {
+    "path": "main/original-cas-direct24-carrier.UNISSUED.py.diff",
+    "bytes": 2292,
+    "sha256": "f51b57bf5d4be5af9d0d3cffc0c946edb03b74317ed8fd816f19f2b4af7dbd0d",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/original-cas-direct24-carrier.UNISSUED.py.diff"
+  },
+  {
+    "path": "main/r3_direct24_batched_apply02.py.diff",
+    "bytes": 1298,
+    "sha256": "42d8fa53461ada7201b457a9befe074e8cd2fe9332596a49e7da89b48b9f9012",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/r3_direct24_batched_apply02.py.diff"
+  },
+  {
+    "path": "main/register_cas.py.diff",
+    "bytes": 13528,
+    "sha256": "f556e055090c7258fc35a062a483d77c361522521bbf321371d2ff918244eb2f",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/register_cas.py.diff"
+  },
+  {
+    "path": "main/original-cas-direct24-carrier.UNISSUED.py",
+    "bytes": 2628,
+    "sha256": "4e1a72ec46857ba535a2d00b6372f58c4303f99d201a8d2a696334bccd9abfd8",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/original-cas-direct24-carrier.UNISSUED.py"
+  },
+  {
+    "path": "main/register_cas.py",
+    "bytes": 19839,
+    "sha256": "27f6f760d3484fd02d155de05129c9f56f3a438fb5fc46de46cac2358c89a45e",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/register_cas.py"
+  },
+  {
+    "path": "main/issue_registration.py.diff",
+    "bytes": 2136,
+    "sha256": "c903d565368d8fd49daca743d13d7942796fa28abaa8a9dc45cfd76463e36e39",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/issue_registration.py.diff"
+  },
+  {
+    "path": "main/PINS.json",
+    "bytes": 1052,
+    "sha256": "52427709c5d17368b1ab7d3cb6c444198de3a19a9b142841070c5e9918d35f07",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/APPLY02-REGISTRATION-01/PINS.json"
+  },
+  {
+    "path": "T45/PHASES04.UNISSUED.json",
+    "bytes": 14534,
+    "sha256": "7d73a49d87581328209a375710f1dda3eda7cc7d98cd94f574d10db00ab7fa8f",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/PHASES04.UNISSUED.json"
+  },
+  {
+    "path": "T45/APPLY02-INTERFACE-DELTA.json",
+    "bytes": 17069,
+    "sha256": "37bb396b8dc291184bf5d2b436973d176a2059630ee9dce31d857aea98e891dc",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-INTERFACE-DELTA.json"
+  },
+  {
+    "path": "T45/FINAL-APPLY02-HANDOFF.json",
+    "bytes": 1413,
+    "sha256": "729b681162be6088bcf37b6538981a583c683a152e6a49f6fb99506c03a38e90",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/FINAL-APPLY02-HANDOFF.json"
+  },
+  {
+    "path": "T45/APPLY02-LOCAL-CHECKS.json",
+    "bytes": 1115,
+    "sha256": "5821795de320d81f017b4780c1927e1f664f52ee312e28bded99f85cc608900b",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-LOCAL-CHECKS.json"
+  },
+  {
+    "path": "T45/apply/fresh35-production-carrier.py",
+    "bytes": 185047,
+    "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/apply/normal_service04.py",
+    "bytes": 34276,
+    "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/normal_service04.py"
+  },
+  {
+    "path": "T45/apply/normal_service04_proof.py",
+    "bytes": 9403,
+    "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/normal_service04_proof.py"
+  },
+  {
+    "path": "T45/apply/ordinary05_roles.py",
+    "bytes": 21656,
+    "sha256": "cfbbf358e714d98f21125e15cad56ffc29092a912e751c7da3f1fe4ce6351229",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles.py"
+  },
+  {
+    "path": "T45/apply/ordinary05_roles_job.py",
+    "bytes": 30512,
+    "sha256": "de6e0a05755b226287c40182b26f7e68704bbd2d31b5aa820636a23fe3194531",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "path": "T45/restore/fresh35-production-carrier.py",
+    "bytes": 185047,
+    "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/restore/normal_service04.py",
+    "bytes": 34276,
+    "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/normal_service04.py"
+  },
+  {
+    "path": "T45/restore/normal_service04_proof.py",
+    "bytes": 9403,
+    "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/normal_service04_proof.py"
+  },
+  {
+    "path": "T45/restore/ordinary05_roles.py",
+    "bytes": 21656,
+    "sha256": "cfbbf358e714d98f21125e15cad56ffc29092a912e751c7da3f1fe4ce6351229",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles.py"
+  },
+  {
+    "path": "T45/restore/ordinary05_roles_job.py",
+    "bytes": 30512,
+    "sha256": "de6e0a05755b226287c40182b26f7e68704bbd2d31b5aa820636a23fe3194531",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles_job.py"
+  },
+  {
+    "path": "T45/start/fresh35-production-carrier.py",
+    "bytes": 185047,
+    "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/start/normal_service05_after08.py",
+    "bytes": 53944,
+    "sha256": "1446e1322afc2f7ee3541f9f4a8494f3d1a0fbeeed8bc598a04883e1d58f597d",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/normal_service05_after08.py"
+  },
+  {
+    "path": "T45/start/normal_service05_after08_proof.py",
+    "bytes": 19408,
+    "sha256": "325234625c9256ef21a1d94b4ac33d4f203900d113856b77f390ecd9f1024d54",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/normal_service05_after08_proof.py"
+  },
+  {
+    "path": "T45/start/operator-host.mjs",
+    "bytes": 72238,
+    "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/operator-host.mjs"
+  },
+  {
+    "path": "T45/start/operator-manifest.json",
+    "bytes": 48490,
+    "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/operator-manifest.json"
+  },
+  {
+    "path": "T45/start/operator-stream-import-cli.mjs",
+    "bytes": 26499,
+    "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/operator-stream-import-cli.mjs"
+  },
+  {
+    "path": "T45/start/operator-stream-program.mjs",
+    "bytes": 10302,
+    "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/operator-stream-program.mjs"
+  },
+  {
+    "path": "T45/start/production-plan.json",
+    "bytes": 747,
+    "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/production-plan.json"
+  },
+  {
+    "path": "T45/start/r3_05_cli.py",
+    "bytes": 7052,
+    "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/r3_05_cli.py"
+  },
+  {
+    "path": "T45/start/r3_05_readonly.py",
+    "bytes": 21212,
+    "sha256": "affd6d7fde33daf27d8cf2430326276699acad94acbee7a1276cb6d630993ffe",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/r3_05_readonly.py"
+  },
+  {
+    "path": "T45/start/r3_05_runtime.py",
+    "bytes": 9394,
+    "sha256": "9b724ffc29eed944ee7f345fb40fb24891c27cdc615dde859ab6b470a8fc55e4",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/r3_05_runtime.py"
+  },
+  {
+    "path": "T45/install/batched161-run.mjs",
+    "bytes": 10449,
+    "sha256": "10c0c04f3e3353209ef0263acd223a4deecd1d556c542a9a8f2dcc5d197be254",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/install/bundle/batched161-run.mjs"
+  },
+  {
+    "path": "T45/install/batched_install_host.py",
+    "bytes": 12978,
+    "sha256": "592df2f921552c5559605f5c10506e2104d893275a188d2965bd1cd149f132ec",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/install/bundle/batched_install_host.py"
+  },
+  {
+    "path": "T45/install/fresh35-production-carrier.py",
+    "bytes": 187609,
+    "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/install/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/install/normal05_retained_stop.py",
+    "bytes": 20709,
+    "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/install/bundle/normal05_retained_stop.py"
+  },
+  {
+    "path": "T45/install/private_transport.py",
+    "bytes": 12283,
+    "sha256": "5ad569200fba7991df7b10dc810e45a0bfef3a252005c9d0cd9839474742f7fb",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/install/bundle/private_transport.py"
+  },
+  {
+    "path": "T45/writer/batched_real_host.py",
+    "bytes": 37226,
+    "sha256": "7c5352d47a78e288a732f5f375bcf58a1123b32009e31b121af928ce2d59b30b",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/batched_real_host.py"
+  },
+  {
+    "path": "T45/writer/fresh35-production-carrier.py",
+    "bytes": 187609,
+    "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/fresh35-production-carrier.py"
+  },
+  {
+    "path": "T45/writer/materialized-profile.json",
+    "bytes": 27834,
+    "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/materialized-profile.json"
+  },
+  {
+    "path": "T45/writer/nonroot_input_access.py",
+    "bytes": 17738,
+    "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/nonroot_input_access.py"
+  },
+  {
+    "path": "T45/writer/normal05_retained_stop.py",
+    "bytes": 20709,
+    "sha256": "61a1d67349a910cebe2118e760cb18b4cb8699d780155398f42f3603bff0ccc0",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/normal05_retained_stop.py"
+  },
+  {
+    "path": "T45/writer/r3_05_cli.py",
+    "bytes": 7098,
+    "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/r3_05_cli.py"
+  },
+  {
+    "path": "T45/writer/r3_05_runtime.py",
+    "bytes": 9394,
+    "sha256": "4401d003240bf791fd4d48424160aa8572c322ed0b2cc4639aee530bb0a292bb",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/r3_05_runtime.py"
+  },
+  {
+    "path": "T45/writer/retained24-run.mjs",
+    "bytes": 20070,
+    "sha256": "c3fc22bd861fdc116ad4a4bfb1a0c4f61dc812d6d814fbc44107d138fe441270",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/retained24-run.mjs"
+  },
+  {
+    "path": "T45/actual/materialize24/READBACK-02.json",
+    "bytes": 3540,
+    "sha256": "60db4f1978edad869045269a9199aaf879a78b0a209395e25d8bdddc0ae91a23",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/materialize24/READBACK-02.json"
+  },
+  {
+    "path": "T45/actual/apply24/READBACK-01.json",
+    "bytes": 1608,
+    "sha256": "21dc200cb51f754b16f70bd02f66a8b0a43368082321498f5df086c6ac27142d",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/apply24/READBACK-01.json"
+  },
+  {
+    "path": "T45/actual/apply24/BOUNDARY-READONLY-145529.json",
+    "bytes": 2979,
+    "sha256": "e601f3a0a2a8fc9a9806d4702bc29edbb77f93a334546243e542d37e60204dfc",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/apply24/BOUNDARY-READONLY-145529.json"
+  },
+  {
+    "path": "T45/actual/LINUX-DRIVER-STATUS-144746.json",
+    "bytes": 6896,
+    "sha256": "a81de40e09d8fe725279649fbe0879159e88db901237ca9531e8af80e7c27c32",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/LINUX-DRIVER-STATUS-144746.json"
+  },
+  {
+    "path": "T45/actual/registration24-apply02/ROOT-ENTRY-RESULT.json",
+    "bytes": 697,
+    "sha256": "09ffa4a2794ee99ce51ae6ae3b1bf08686c66ebc0afa28686171808ffd269678",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/registration24-apply02/ROOT-ENTRY-RESULT.json"
+  },
+  {
+    "path": "T45/actual/registration24-apply02/ORIGINAL-AUDIT-READBACK-151110.json",
+    "bytes": 4426,
+    "sha256": "4c100da7a400d2f568d07aa855b7075ae0daf54b75f2235a6e7fba5bbc14c11a",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/registration24-apply02/ORIGINAL-AUDIT-READBACK-151110.json"
+  },
+  {
+    "path": "T45/actual/apply24-02/PRE-SUBMISSION-READONLY.json",
+    "bytes": 417,
+    "sha256": "a61180fcb2d6c7918f92e85be199d58060efa425ddc429e330347acba9837e4a",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/apply24-02/PRE-SUBMISSION-READONLY.json"
+  },
+  {
+    "path": "T45/actual/apply24-02/READBACK-01.json",
+    "bytes": 3042,
+    "sha256": "edea955b0a19ef305b8b227ae5cb35864046d1a6c4b69ad8f4e4e03778181447",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-batched-real-first-live-01/apply24-02/READBACK-01.json"
+  }
+]

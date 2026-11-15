@@ -1,0 +1,100 @@
+{
+  "authorityIssued": false,
+  "businessInitOrBatchKeyChanges": 0,
+  "changes": [
+    {
+      "diff": "--- selected02/normal_service05_after08_proof.py\n+++ apply02/normal_service05_after08_proof.py\n@@ -63,7 +63,7 @@\n             'previousRequestKey':PREVIOUS_JOB,'previousStopRequestKey':PREVIOUS_STOP,\n             'runtimeReadinessMaxSeconds':20,'databaseRoleChanges':0,\n             'restoreRequestKey':'t45-r3-ordinary23-auth-restore-20261114-01',\n-            'applyRequestKey':'t45-r3-ordinary24-auth-apply-20261115-01',\n+            'applyRequestKey':'t45-r3-ordinary24-auth-apply-20261115-02',\n             'ddlServiceProofSha256':DDL_SERVICE_PROOF,'ddlPostmasterStart':DDL_EPOCH,\n             'admin154RecordSha256':ADMIN154_RECORD_SHA,'admin154PostmasterStart':ADMIN154_EPOCH,\n             'admin154SourceSetSha256':'d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe',\n",
+      "oldSha256": "9534d5b3a7283b167fa6c326fe795b83f296a8e114f663e06064abeab0ccbfd1",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "325234625c9256ef21a1d94b4ac33d4f203900d113856b77f390ecd9f1024d54"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles.py\n+++ apply02/ordinary05_roles.py\n@@ -58,7 +58,7 @@\n def scope():\n     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',\n             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',\n-            'requestKey': 't45-r3-ordinary24-auth-apply-20261115-01',\n+            'requestKey': 't45-r3-ordinary24-auth-apply-20261115-02',\n             'restoreRequestKey': 't45-r3-ordinary24-auth-restore-20261115-01',\n             'previousServiceRequestKey': 't45-first-r3-native-service-start-20261114-23',\n             'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261115-24',\n",
+      "oldSha256": "e31302650428d42db7fd8b2936c57b41b20cea10b1add4f58ff29e735ff5b899",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles.py",
+      "sha256": "cfbbf358e714d98f21125e15cad56ffc29092a912e751c7da3f1fe4ce6351229"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -20,7 +20,7 @@\n WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')\n INSIDE = Path('/run/t45-maint/source')\n RESULTS = Path('/run/t45-maint/results')\n-PHASES = {'apply': ('t45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-01'), 'restore': ('t45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-auth-restore-20261115-01')}\n+PHASES = {'apply': ('t45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-apply-20261115-02'), 'restore': ('t45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-auth-restore-20261115-01')}\n STATIC_PINS = {\n     'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',\n     'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',\n",
+      "oldSha256": "0d677daf02c1d567295efab3965dd8b90ce755188bb78b9b75cc8c56dea27451",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "f7fadffde72c19d4d0288487ef03d05643042314692d6888b832aa7a8e9e2d6d"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -241,7 +241,7 @@\n     stop_key = 't45-r3-ordinary23-preserve-stop-20261114-01'\n     for path, pin in (\n         (control / 'results' / (stop_key + '.json'), 'a4ec77706cb5f4768971f4ccd0e9f8fe5cda1d3ff59dff9bd06c7617f478678c'),\n-        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '08b1341f3c82e4d37a2103dbb8a48773fccdf2b7e6557b50ca3995ceaf0f96de'),\n+        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '9029076c9e90825e5948836e35280ef18a7b195378c801700b7d985f7840ae7d'),\n         (prior_boot / 'cleanup.json', 'd52169a605d803fd7a82d94c6f64ab22db88d80a1f600fecd9b2d8da59f4f997'),\n         (control / 'results' / (prior_restore + '.json'), '29a6293fca781fd95859644cc2b818f81b1485d701ca1201dc7d17c68cc067db'),\n         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',\n",
+      "oldSha256": "f7fadffde72c19d4d0288487ef03d05643042314692d6888b832aa7a8e9e2d6d",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "dd8f0dde658cf912991d58d01bf41456e7223c11d4912d1e9ac34c67e0f2faf3"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -245,7 +245,7 @@\n         (prior_boot / 'cleanup.json', 'd52169a605d803fd7a82d94c6f64ab22db88d80a1f600fecd9b2d8da59f4f997'),\n         (control / 'results' / (prior_restore + '.json'), '29a6293fca781fd95859644cc2b818f81b1485d701ca1201dc7d17c68cc067db'),\n         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',\n-         '37be662f5d42a7def840b86e5f6d271b91a2473a05b15d5929fb3531cfaa5606'),\n+         '5deede6c65274a4511ba1d38301616d22a03b048e11d7cd4af2b25a9e462e3b8'),\n     ):\n         need(sha(ops.read_file(path, 65536, False, False)) == pin,\n              'MAINT_JOB_PREDECESSOR_STOP_OR_RESTORE_EVIDENCE_DIFFERS')\n",
+      "oldSha256": "dd8f0dde658cf912991d58d01bf41456e7223c11d4912d1e9ac34c67e0f2faf3",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "768ffe09e4eb2204a47b171f0c52091b86ec4d7cf62d4b451baf63fa2c6240e8"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -31,7 +31,7 @@\n CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-24'\n CURRENT_KEY = 't45-first-r3-native-service-start-20261115-24'\n CURRENT_SOURCE = '1446e1322afc2f7ee3541f9f4a8494f3d1a0fbeeed8bc598a04883e1d58f597d'\n-CURRENT_PROOF_SOURCE = '9534d5b3a7283b167fa6c326fe795b83f296a8e114f663e06064abeab0ccbfd1'\n+CURRENT_PROOF_SOURCE = '325234625c9256ef21a1d94b4ac33d4f203900d113856b77f390ecd9f1024d54'\n PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'\n APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'\n HOST_WORK_SECONDS = 220\n",
+      "oldSha256": "768ffe09e4eb2204a47b171f0c52091b86ec4d7cf62d4b451baf63fa2c6240e8",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "afbb731ed5009265a49ad52c2ecb0387de6874e606616150b9c9bf5920d1b3f7"
+    },
+    {
+      "addedGuard": "Exact old failed01 source/terminal/public result and absent auth markers before the new apply02 only",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/apply/bundle/ordinary05_roles_job.py"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles.py\n+++ apply02/ordinary05_roles.py\n@@ -58,7 +58,7 @@\n def scope():\n     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',\n             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',\n-            'requestKey': 't45-r3-ordinary24-auth-apply-20261115-01',\n+            'requestKey': 't45-r3-ordinary24-auth-apply-20261115-02',\n             'restoreRequestKey': 't45-r3-ordinary24-auth-restore-20261115-01',\n             'previousServiceRequestKey': 't45-first-r3-native-service-start-20261114-23',\n             'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261115-24',\n",
+      "oldSha256": "e31302650428d42db7fd8b2936c57b41b20cea10b1add4f58ff29e735ff5b899",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles.py",
+      "sha256": "cfbbf358e714d98f21125e15cad56ffc29092a912e751c7da3f1fe4ce6351229"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -20,7 +20,7 @@\n WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')\n INSIDE = Path('/run/t45-maint/source')\n RESULTS = Path('/run/t45-maint/results')\n-PHASES = {'apply': ('t45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-01'), 'restore': ('t45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-auth-restore-20261115-01')}\n+PHASES = {'apply': ('t45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-apply-20261115-02'), 'restore': ('t45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-auth-restore-20261115-01')}\n STATIC_PINS = {\n     'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',\n     'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',\n",
+      "oldSha256": "0d677daf02c1d567295efab3965dd8b90ce755188bb78b9b75cc8c56dea27451",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "f7fadffde72c19d4d0288487ef03d05643042314692d6888b832aa7a8e9e2d6d"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -241,7 +241,7 @@\n     stop_key = 't45-r3-ordinary23-preserve-stop-20261114-01'\n     for path, pin in (\n         (control / 'results' / (stop_key + '.json'), 'a4ec77706cb5f4768971f4ccd0e9f8fe5cda1d3ff59dff9bd06c7617f478678c'),\n-        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '08b1341f3c82e4d37a2103dbb8a48773fccdf2b7e6557b50ca3995ceaf0f96de'),\n+        (control / 'jobs' / stop_key / 'results/normal05-preserve-stop-result.json', '9029076c9e90825e5948836e35280ef18a7b195378c801700b7d985f7840ae7d'),\n         (prior_boot / 'cleanup.json', 'd52169a605d803fd7a82d94c6f64ab22db88d80a1f600fecd9b2d8da59f4f997'),\n         (control / 'results' / (prior_restore + '.json'), '29a6293fca781fd95859644cc2b818f81b1485d701ca1201dc7d17c68cc067db'),\n         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',\n",
+      "oldSha256": "f7fadffde72c19d4d0288487ef03d05643042314692d6888b832aa7a8e9e2d6d",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "dd8f0dde658cf912991d58d01bf41456e7223c11d4912d1e9ac34c67e0f2faf3"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -245,7 +245,7 @@\n         (prior_boot / 'cleanup.json', 'd52169a605d803fd7a82d94c6f64ab22db88d80a1f600fecd9b2d8da59f4f997'),\n         (control / 'results' / (prior_restore + '.json'), '29a6293fca781fd95859644cc2b818f81b1485d701ca1201dc7d17c68cc067db'),\n         (control / 'jobs' / prior_restore / 'results/maintenance-auth-result.json',\n-         '37be662f5d42a7def840b86e5f6d271b91a2473a05b15d5929fb3531cfaa5606'),\n+         '5deede6c65274a4511ba1d38301616d22a03b048e11d7cd4af2b25a9e462e3b8'),\n     ):\n         need(sha(ops.read_file(path, 65536, False, False)) == pin,\n              'MAINT_JOB_PREDECESSOR_STOP_OR_RESTORE_EVIDENCE_DIFFERS')\n",
+      "oldSha256": "dd8f0dde658cf912991d58d01bf41456e7223c11d4912d1e9ac34c67e0f2faf3",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "768ffe09e4eb2204a47b171f0c52091b86ec4d7cf62d4b451baf63fa2c6240e8"
+    },
+    {
+      "diff": "--- selected02/ordinary05_roles_job.py\n+++ apply02/ordinary05_roles_job.py\n@@ -31,7 +31,7 @@\n CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-24'\n CURRENT_KEY = 't45-first-r3-native-service-start-20261115-24'\n CURRENT_SOURCE = '1446e1322afc2f7ee3541f9f4a8494f3d1a0fbeeed8bc598a04883e1d58f597d'\n-CURRENT_PROOF_SOURCE = '9534d5b3a7283b167fa6c326fe795b83f296a8e114f663e06064abeab0ccbfd1'\n+CURRENT_PROOF_SOURCE = '325234625c9256ef21a1d94b4ac33d4f203900d113856b77f390ecd9f1024d54'\n PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'\n APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'\n HOST_WORK_SECONDS = 220\n",
+      "oldSha256": "768ffe09e4eb2204a47b171f0c52091b86ec4d7cf62d4b451baf63fa2c6240e8",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "afbb731ed5009265a49ad52c2ecb0387de6874e606616150b9c9bf5920d1b3f7"
+    },
+    {
+      "addedGuard": "Exact old failed01 source/terminal/public result and absent auth markers before the new apply02 only",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/restore/bundle/ordinary05_roles_job.py"
+    },
+    {
+      "diff": "--- selected02/batched_install_host.py\n+++ apply02/batched_install_host.py\n@@ -76,7 +76,7 @@\n     m=ModuleType(name[:-3]);m.__file__=str(path);sys.modules[m.__name__]=m;exec(compile(raw,str(path),'exec'),m.__dict__);return m\n \n def private_admin(h,a):\n-    key='t45-r3-ordinary24-auth-apply-20261115-01'\n+    key='t45-r3-ordinary24-auth-apply-20261115-02'\n     raw=read(BASE/'jobs'/key/'r3-outer-terminal.json');t=json.loads(raw)\n     need(sha(raw)==a['applyTerminalSha256'] and raw==read(CONTROL/'results'/(key+'.json'),owner=1000)\n         and (t['jobId'],t['status'],t['exitCode'])==(key,'COMPLETED',0),'BATCHED_INSTALL_ROLE_APPLY_REQUIRED')\n",
+      "oldSha256": "32e3045e211aeb99cd2a5c113cb03a468b17e364e34e28a7580b02055c964091",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/install/bundle/batched_install_host.py",
+      "sha256": "592df2f921552c5559605f5c10506e2104d893275a188d2965bd1cd149f132ec"
+    },
+    {
+      "diff": "--- selected02/batched_real_host.py\n+++ apply02/batched_real_host.py\n@@ -175,7 +175,7 @@\n  return p,json.loads(read(boot/'service-start-authorization.json'))\n \n def controller(a):\n- key='t45-r3-ordinary24-auth-apply-20261115-01'\n+ key='t45-r3-ordinary24-auth-apply-20261115-02'\n  terminal=read(JOBS/key/'r3-outer-terminal.json');t=json.loads(terminal)\n  need(sha(terminal)==a['applyTerminalSha256']and terminal==read(CONTROL/'results'/(key+'.json'),owner=1000)\n   and(t['jobId'],t['status'],t['exitCode'])==(key,'COMPLETED',0),'ORIGINAL_INSPECT_ROLE_APPLY_TERMINAL_REQUIRED')\n",
+      "oldSha256": "6040d685363f7b76a43d8c0c4b2f3aa7b4f75f6c02d2ddfce1d624f673de2dc4",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/APPLY02-CANDIDATE-01/writer/bundle/batched_real_host.py",
+      "sha256": "7c5352d47a78e288a732f5f375bcf58a1123b32009e31b121af928ce2d59b30b"
+    }
+  ],
+  "credentialNamespaceChanged": false,
+  "failedKeyRetained": "t45-r3-ordinary24-auth-apply-20261115-01",
+  "materializeTerminalReused": true,
+  "newOperationalKey": "t45-r3-ordinary24-auth-apply-20261115-02",
+  "ordinaryServiceKeyChanged": false,
+  "serverActions": 0,
+  "source381ArchiveReused": true,
+  "state": "SOURCE_ONLY_NOT_REGISTERED_OR_AUTHORIZED"
+}

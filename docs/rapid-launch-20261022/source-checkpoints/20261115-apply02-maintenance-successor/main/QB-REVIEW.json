@@ -1,0 +1,24 @@
+{
+  "state": "APPLY02_SCOPED_SOURCE_REVIEWS_NOT_NATIVE_RESULT",
+  "parentReviewSha256": "48a2ae9502c22c646c1e995d4962b4615e4aae34ae98abcf4ad2621a27cb2794",
+  "sourceThreadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "selectedRegistryPinsSha256": "52427709c5d17368b1ab7d3cb6c444198de3a19a9b142841070c5e9918d35f07",
+  "selectedPhasesSha256": "7d73a49d87581328209a375710f1dda3eda7cc7d98cd94f574d10db00ab7fa8f",
+  "reviews": [
+    {
+      "turnId": "01a1dfbe-823b-70a2-a275-c3311e22b5ca",
+      "messages": [
+        {
+          "messageCallId": "exec-589a3fec-e294-4232-b112-9233cebb45d5",
+          "text": "QB完成 APPLY02-REGISTRATION-01 实际5执行源/对应5diff，结论 SCOPED SOURCE STATIC PASS；无本次新增已确认阻断。0PG/0server/未运行issuer或载体/未写改文件，未重物化/driver/381/旧DB验证。\n当前PINS实SHA52427709c5d17368b1ab7d3cb6c444198de3a19a9b142841070c5e9918d35f07；10成员实hash全吻合，5py均AST通过。module da4303…独立对原C04 d60c仅JOBS.apply01→02；registrar27f6f760…独立对已核source-fix977343…的实际diff逐字吻合，保留准确原06 child_settled调用。issuerd43f2…与C04旧7125…、carrier4e1a72…与C04旧4bd1…的实际diff也分别逐字等于交付diff。dispatcherff0aa0…独立从准确C04模板绑定原policydc1197重建出实际parent9b267171846867b645363e1735271154c3f26dab35c7ab3ae16e07fde43a72de；与交付parentdiff完全一致；原keys一个未删，新增仅apply02，module路径/sourcepin/policy占位准确。\nregistrar BASIS新增原d60/旧policydc1197/旧apply01terminal6d200-rootresult77f6-source0d677，原其余身份不变。原锁内quiet绑定原FAILED2/phaseStarted/safeCode+public对象相等，要求intent/custody/capture/currentboot/PID absent/旧label无；两grant无active、新6keys皆absent；materialize例外仅本grant真实root/publicCOMPLETED0和protected7306 proof，另grant仍absent。没有伪造旧01成功或改业务key。\n发布新独占module→独占policy.pending、原policy hash+identity CAS替换→新dispatcher.pending、原9b267 hash+identity CAS最后，复查只豁免本次已替换的policy/dispatcher原inode但必须精确新sha，其他完整原identity保持。old-policy.bin/old-dispatcher.bin/authority/identities/publishintent/result审计保留；中断UNKNOWN无回滚/重放/删原件。新独占stage+audit拒绝再入。\nissuer ROOT=HERE.parents[3]在该包实际层级正确，输出限制原主控目录；读取该包5源、fresh15min真实basis/精确BASIS及新PHASES，原有限30min apply、90/92min roles、115restore/120policy/15registration原合同未放宽；role与host sourcehash绑定新leaf/host，apply02、start proof及install/writer接线沿刚通过T45包。不签或重跑materialize；工作root phaseissuer0f677未改。上述仅源码结论，尚不代表注册/apply02/真实业务完成。新实际basis与窗口由主控外签，执行/回执仍T45独有。"
+        }
+      ],
+      "final": [
+        {
+          "messageId": "msg_0a07ee903347bb2e016af9cae64f1881919bcf1736a17d188c",
+          "text": "新登记器和签发器的差分已通过限定源码验收，结论已交主控。旧失败记录保留，已成功的物化结果可复用，未发现新增阻断。\n\n本轮未执行服务器操作；登记和权限准备是否成功，仍以 T45 实际回执为准。"
+        }
+      ]
+    }
+  ]
+}

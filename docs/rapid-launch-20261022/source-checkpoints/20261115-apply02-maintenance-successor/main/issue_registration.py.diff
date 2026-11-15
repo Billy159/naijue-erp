@@ -1,0 +1,38 @@
+--- registered-parent/issue_registration.py
++++ apply02/issue_registration.py
+@@ -9,7 +9,7 @@
+ import time
+ 
+ HERE = Path(__file__).resolve().parent
+-ROOT = HERE.parents[2]
++ROOT = HERE.parents[3]
+ T45 = ROOT / 'outputs/T45/revisions'
+ AUTHORITY = ROOT / 'outputs/主控/20261115-r3-direct-real-import-route-01/USER-AUTHORITY.json'
+ AUTHORITY_SHA = '836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0'
+@@ -93,7 +93,7 @@
+     policy = dict(format='T45_R3_DIRECT24_BATCHED_REAL_V1', grantId=cas['GRANT'],
+                   startsAt=now, expiresAt=now + 7_200_000, jobs=rules)
+     cas['validate_policy_delta'](policy, {'grantId': cas['GRANT']})
+-    files = {'module': (HERE / 'r3_direct24_batched.py').read_bytes(),
++    files = {'module': (HERE / 'r3_direct24_batched_apply02.py').read_bytes(),
+              'policy': encode(policy),
+              'dispatcherTemplate': (HERE / 'admin_exec.DIRECT24-UNREGISTERED.py').read_bytes()}
+     dispatcher = cas['render_dispatcher'](files)
+@@ -114,7 +114,7 @@
+     packet = {'source': b64(cas_path.read_bytes()),
+               'packet': {'authorization': b64(registration_raw),
+                          'files': {name: b64(data) for name, data in files.items()}}}
+-    report = dict(state='ISSUED_EXACT_DIRECT24_CAS_NO_SERVER_ACTION',
++    report = dict(state='ISSUED_EXACT_APPLY02_POLICY_REPAIR_NO_SERVER_ACTION',
+                   directory=str(Path(output_directory).resolve()), startsAt=now,
+                   registrationExpiresAt=registration['expiresAt'], roleApplyExpiresAt=roles['expiresAt'],
+                   controllerValidUntil=roles['controllerValidUntil'],
+@@ -128,7 +128,7 @@
+     if dry_run:
+         return {**report, 'dryRun': True, 'state': 'DRY_RUN_NO_AUTHORITY_FILE_CREATED'}
+     output = Path(output_directory)
+-    assert output.parent.resolve() == HERE.parent.resolve() and not output.exists()
++    assert output.parent.resolve() == (ROOT/'outputs/主控').resolve() and not output.exists()
+     output.mkdir(mode=0o700)
+     for name, data in (
+         ('roles-authorization.json', role_raw), ('host-authorization.json', encode(host_authority)),

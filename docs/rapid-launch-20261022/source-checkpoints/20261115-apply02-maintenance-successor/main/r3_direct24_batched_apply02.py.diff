@@ -1,0 +1,11 @@
+--- registered-parent/r3_direct24_batched_apply02.py
++++ apply02/r3_direct24_batched_apply02.py
+@@ -8,7 +8,7 @@
+ FORMAT = 'T45_R3_DIRECT24_BATCHED_REAL_V1'
+ POLICY_NAME = 'direct24-batched-real.json'
+ READONLY_POLICY = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+-JOBS = {'materialize': 't45-r3-batched-source-materialize-20261115-01', 'apply': 't45-r3-ordinary24-auth-apply-20261115-01', 'start': 't45-first-r3-native-service-start-20261115-24', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary24-preserve-stop-20261115-01', 'restore': 't45-r3-ordinary24-auth-restore-20261115-01'}
++JOBS = {'materialize': 't45-r3-batched-source-materialize-20261115-01', 'apply': 't45-r3-ordinary24-auth-apply-20261115-02', 'start': 't45-first-r3-native-service-start-20261115-24', 'install': 't45-r3-batched-install-20261115-01', 'writer': 't45-r3-batched-real-execute-20261115-01', 'stop': 't45-r3-ordinary24-preserve-stop-20261115-01', 'restore': 't45-r3-ordinary24-auth-restore-20261115-01'}
+ ORIGINAL_WRITER = 't45-first-20261110-r3-real-execute-20261114-06'
+ INSPECT = 't45-r3-original-transaction-inspect-20261114-01'
+ INSPECT_TERMINAL = '33af79a05da4659e18febe940629f264bc1b3ffcdeede110aa1aac10af29a5c0'

@@ -7298,6 +7298,22 @@
             "actualAuditResultSha256": "8f0a95e24d0aea83dba3ec4f85a619fab90eda3abc5ed09130d3e50e39d856dc",
             "sourcePayloadArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_APPLY02_ACTUAL_FINITE_AUTH_READBACK_AND_START24_20261115",
+            "state": "ACTUAL_AUTH_FIELDS_CONFIRMED_NOT_IMPORTED",
+            "sourceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-apply02-maintenance-successor",
+              "files": 58,
+              "bytes": 1785454,
+              "manifestSha256": "c73d1f2eefb588bb0b3ad51285cc7f4bc90c40da69b43b56388d561087b707e7",
+              "reviewSha256": "dd7c958825f6b0a11944aa6403331901e6f4f3e8990988f4a434e4ca5e3be17d"
+            },
+            "materializeActualSha256": "60db4f1978edad869045269a9199aaf879a78b0a209395e25d8bdddc0ae91a23",
+            "oldApply01BoundarySha256": "e601f3a0a2a8fc9a9806d4702bc29edbb77f93a334546243e542d37e60204dfc",
+            "actualPolicyAuditSha256": "4c100da7a400d2f568d07aa855b7075ae0daf54b75f2235a6e7fba5bbc14c11a",
+            "actualApply02ReadbackSha256": "edea955b0a19ef305b8b227ae5cb35864046d1a6c4b69ad8f4e4e03778181447",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7326,20 +7342,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "SOURCE04_CONSUMER02_AND_REGISTRATION_SUCCESSOR_SCOPED_PASS",
-            "work": "Closed catalog-source binding mismatch using actual batchedCatalog object, exact restored23 pointer support/canonical access49entries48changes, writer expiry equal actual controller deadline. First actual registrar KeyError fixed by explicit original06 child_settled and proven unpublished-stage successor; no PG/harness or old-scope rechecks."
+            "state": "APPLY02_CALLERS_AND_EXACT_POLICY_CAS_SCOPED_SOURCE_PASS",
+            "work": "Actual two-public-receipt pin correction, failed01 pre-auth boundary/strict oldproof, sole operational key02 and necessary source-pin references all SOURCE PASS. New registrar exact old d60/dc119/9b267 identity CAS plus accepted7306 materialization reuse SOURCE PASS. No new PG/harness/driver rerun; actual operational receipts recorded separately."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "ACTUAL_CAS_REGISTERED_SOURCE_MATERIALIZATION_IN_PROGRESS",
+            "state": "ACTUAL_APPLY02_COMPLETED_START24_ISSUED",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Actual14:37:54.887Z original audit confirms REGISTERED_NO_PHASE_SUBMITTED, dispatcher9b267171, module d60c6863, policy dc119745, old lock/history retained; original failed2stage files plus exact new2 preserved. PG still stopped at audit. Proceed exact materialize02 then originalapply actual receipts before main start issuance; no real business write yet."
+            "work": "Materialize original key COMPLETED0/18.59s/7306 at14:44:55. apply01 FAILED pre-auth; no intent/custody/capture/container/boot proved actual14:55. apply02 actual15:14:29 COMPLETED0/8.4398s, finite auth fields readback/container exited/PGpidabsent at readback. Source driver native8.23.1getTransactionStatus verified RO, no patch. Start24 authorizedbf90, awaiting actualstart+sameROdescribe; no install/REALwrite."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "STOPPED_NOT_IMPORTED",
+          "formalR3": "CONTROLLED_SERVICE24_START_ISSUED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7348,24 +7364,23 @@
             "guard deletion",
             "unknown outcome replay with changed keys"
           ],
-          "latestDispatcherSha256": "9b267171846867b645363e1735271154c3f26dab35c7ab3ae16e07fde43a72de",
-          "latestPolicySha256": "dc11974510ceaed5038ed9adbceed9fe7dfc43f810ef96442955cccc264f6c3c",
+          "latestDispatcherSha256": "d23dbb5932b749d232fe32aa514fabc77f250a0197506df321ebe89b2ad9effa",
+          "latestPolicySha256": "cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
           "nextCheckpointScope": "normalcode/issuer exacthandoff\u2192service24/materialization/install/currentbinding\u2192actual approvedREALfirstbatch originalkeyreadback",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-direct-real-consumers-and-registration24",
-            "files": 45,
-            "bytes": 907407,
-            "manifestSha256": "6dfef80f20dac100bb222d1e62e40d5d88b224f5f1d2fc416a2d608f5b7ca436",
-            "reviewSha256": "48a2ae9502c22c646c1e995d4962b4615e4aae34ae98abcf4ad2621a27cb2794",
-            "registrationSuccessorReviewSha256": "7ece51befe673f5613e7a231fb40aa5194da240b1577f01fc44bf1bc69b283da"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-apply02-maintenance-successor",
+            "files": 58,
+            "bytes": 1785454,
+            "manifestSha256": "c73d1f2eefb588bb0b3ad51285cc7f4bc90c40da69b43b56388d561087b707e7",
+            "reviewSha256": "dd7c958825f6b0a11944aa6403331901e6f4f3e8990988f4a434e4ca5e3be17d"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "ACTUAL_CAS_REGISTERED_SUCCESSOR_ORIGINAL_WINDOW_SOURCE04_PASS",
-            "work": "Initial entry KeyError before AUDIT; proven old4a2 and no module/policy published. Corrected explicit child_settled(original06,writer) + original-stage exact-proof O_EXCL successor SOURCE PASS. Actual14:37:54 registration confirmed dispatcher9b267171/module d60c6863/policy dc119745, same original lock/history. Original role/policy windows unchanged. Selected phase source04 and T45 PHASES02; consumer03 not selected. Materialize window02 issued with same scope/key."
+            "state": "APPLY02_POLICY_ACTUAL_REGISTERED_AND_AUTH_FIELDS_CONFIRMED_START_ISSUED",
+            "work": "Original apply01 failed before intent/container/auth due wrong public SHA literals; two root/public object-equal actual receipts corrected, original FAILED preserved. New apply02 exact-source policy CAS independently passed and actually published d23dbb59/cb384d21/da4303 at15:11:10; original policy/dispatcher audited. New finite window issued15:09:43; actual apply02 readback confirmed. Start24 authoritybf90fa60 issued15:19:14, actual currentC/install/writer still pending."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7381,9 +7396,9 @@
           },
           "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
           "currentNormalMissingParts": [
-            "actual same-version source materialization/apply/start currentC receipts",
-            "actual deterministic current install descriptor + exact nine-field authority and real13ACK/capture",
-            "actual full REAL BATCHED writer/verify original-key readback; final reconcile/backup/business checks"
+            "actual service24 C/current epoch and same-source RO install descriptor",
+            "exact nine-field and outer install authority then actual13ACK/catalog capture",
+            "actual approved REAL BATCHED full writer/verify and quantity-money-stock-relationship reconciliation plus backup/core business gate"
           ],
           "normalSource": {
             "db05": {
@@ -7417,7 +7432,17 @@
               "nativeValidated": false
             }
           },
-          "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear"
+          "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear",
+          "finiteWindows": {
+            "issuedAt": "2026-11-15T15:09:43.153Z",
+            "applyExpiresAt": "2026-11-15T15:39:43.153Z",
+            "controllerUntil": "2026-11-15T16:39:43.153Z",
+            "backupAdminUntil": "2026-11-15T16:41:43.153Z",
+            "restorationDeadline": "2026-11-15T17:04:43.153Z",
+            "policyExpiresAt": "2026-11-15T17:09:43.153Z",
+            "roleAuthoritySha256": "87b03e56eaaebd524d4fb17955fee4c77de2ee68ba000e978ff0dfc8a80c6496",
+            "startAuthoritySha256": "bf90fa60f69519b27c9da11d1133d3544850a72218ac26029bb8574aea30130c"
+          }
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

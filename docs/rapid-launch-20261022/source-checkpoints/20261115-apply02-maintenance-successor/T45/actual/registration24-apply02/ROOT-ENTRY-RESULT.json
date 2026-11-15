@@ -1,0 +1,22 @@
+{
+  "returncode": 0,
+  "result": {
+    "automaticReplay": false,
+    "businessDatabaseWrites": 0,
+    "dispatcherSha256": "d23dbb5932b749d232fe32aa514fabc77f250a0197506df321ebe89b2ad9effa",
+    "moduleSha256": "da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef",
+    "oldHistoryPreserved": true,
+    "originalLockPreserved": true,
+    "phaseSubmitted": false,
+    "policySha256": "cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898",
+    "postgresStarted": false,
+    "published": [
+      "module",
+      "policy",
+      "dispatcher"
+    ],
+    "rolesExecuted": false,
+    "status": "EXACT_DIRECT24_APPLY02_REGISTERED_NO_NEW_PHASE_SUBMITTED"
+  },
+  "stderrBytes": 0
+}

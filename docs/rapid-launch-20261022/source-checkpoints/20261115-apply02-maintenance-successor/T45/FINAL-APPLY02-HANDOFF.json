@@ -1,0 +1,19 @@
+{
+  "authorityIssued": false,
+  "chosenCaptureNamespace": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/ordinary24-auth-capture-20261115-01",
+  "chosenCredentialNamespace": "/var/lib/naijue-erp/fresh35-production/native-services/ordinary24-auth-20261115-01",
+  "completedMaterializationReadySha256": "7306aa53eefd744a43c5b5781a1bc8eadd6fef4009bc308dfa27f93663492ce3",
+  "mustNotSubmitMaterializeAgain": true,
+  "namespaceEvidenceSha256": "e601f3a0a2a8fc9a9806d4702bc29edbb77f93a334546243e542d37e60204dfc",
+  "namespaceSelectionBasis": "Exact original24 namespaces proven absent; all actual authority/attempt/readback request fields use new apply02, not failed01",
+  "newOperationalApplyKey": "t45-r3-ordinary24-auth-apply-20261115-02",
+  "oldApplyTerminalUnchanged": true,
+  "postgresConnections": 0,
+  "rootRegistryOwner": "MAIN only",
+  "rulesPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261115-r3-service24-role-public-receipt-fix-local-01/PHASES04.UNISSUED.json",
+  "rulesSha256": "7d73a49d87581328209a375710f1dda3eda7cc7d98cd94f574d10db00ab7fa8f",
+  "serverActions": 0,
+  "sourceArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "state": "UNISSUED_FINAL_APPLY02_SOURCE_SUCCESSOR",
+  "unchangedServiceKey": "t45-first-r3-native-service-start-20261115-24"
+}

@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "apiSourceSha256": "de6e0a05755b226287c40182b26f7e68704bbd2d31b5aa820636a23fe3194531",
+      "phase": "apply",
+      "syntaxAndApiLoaded": true
+    },
+    {
+      "apiSourceSha256": "de6e0a05755b226287c40182b26f7e68704bbd2d31b5aa820636a23fe3194531",
+      "phase": "restore",
+      "syntaxAndApiLoaded": true
+    },
+    {
+      "apiSourceSha256": "325234625c9256ef21a1d94b4ac33d4f203900d113856b77f390ecd9f1024d54",
+      "phase": "start",
+      "syntaxAndApiLoaded": true
+    },
+    {
+      "apiSourceSha256": "592df2f921552c5559605f5c10506e2104d893275a188d2965bd1cd149f132ec",
+      "phase": "install",
+      "syntaxAndApiLoaded": true
+    },
+    {
+      "apiSourceSha256": "7c5352d47a78e288a732f5f375bcf58a1123b32009e31b121af928ce2d59b30b",
+      "phase": "writer",
+      "syntaxAndApiLoaded": true
+    }
+  ],
+  "materializationReused": true,
+  "postgresConnections": 0,
+  "rulesSha256": "7d73a49d87581328209a375710f1dda3eda7cc7d98cd94f574d10db00ab7fa8f",
+  "serverActions": 0,
+  "sourceArchiveReused": true,
+  "state": "SOURCE_SUCCESSOR_LOCAL_SYNTAX_API_ONLY_NOT_NATIVE_VALIDATION"
+}
