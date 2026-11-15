@@ -6611,18 +6611,62 @@
               "executed": false,
               "adopted": false
             }
+          },
+          {
+            "group": "row-intent-projection-eval-retired-20261115-0739",
+            "status": "EVALUATION_COMPLETED_NOT_ADOPTED_NO_NET_BENEFIT",
+            "evidence": {
+              "sourceBodySha256": "d3d309b8323321520aaa746a98a57ed6b922c020dd533fdfca746e4ec8cef39f",
+              "implementationPinsSha256": "a0c94423c294013137e271cc931b9bed8c362392883e66218f3f61cc626353db",
+              "resultPinsSha256": "6994532c4c48d961fdc5ccd15be141421e18774627e1c371fccc9c475ccfaad5",
+              "resultReviewSha256": "cef9579811254cd8c6b40bfc51788b47fb6dd178ecad8338833d31d0e961ec4f",
+              "retirementDecisionSha256": "8accb135cd6be315a9ba6ea6672427ec34d4abc102aa7c4f4abea32b4bb80acc",
+              "comparisonSha256": "e51fbaef01b130c58a59cf28d9c1d9d5c623a10c2509b6410a2a097f9af21ad2",
+              "semanticSha256": "25bd4257c8a6f56eca8339475bc9525dc197645d608b438ceced9fedeb107afc",
+              "cleanupSha256": "64b5d2fc51eadace96299487c763d41d3ed319173b125f21ff62afc1e7423652",
+              "actualExit": 0,
+              "candidateHelperMs": [
+                42.652,
+                36.791792
+              ],
+              "old04HistoricalHelperMs": [
+                25.376292,
+                17.364875
+              ],
+              "typedCalls": [
+                500,
+                1000
+              ],
+              "recordsArrayMetrics": null,
+              "semanticSameHeapPairsMatched": 14,
+              "candidateFullCalls": 2,
+              "independentPlans": 7,
+              "independentFiveTableReadback": "ZERO",
+              "pgExitCode": 0,
+              "allSixChildExit0AndReaped": true,
+              "signalErrors": [],
+              "elapsedSeconds": 34.143506,
+              "peakAllocatedBytes": 640028672,
+              "rootRemovedAndAbsent": true,
+              "rssOrCopyAttribution": null,
+              "netGainEstablished": false,
+              "adopted": false,
+              "newLayer13": false,
+              "newServerRun": false
+            }
           }
         ],
         "currentInFlight": {
-          "owner": "QB",
-          "work": "one new harness-delta static review of a0c94423/runner222f1145; exact source and04 diagnostics reused",
-          "boundary": "zero new PG/SQL execution/server/carrier; original metadata/ACL, same-heap old/new semantic boundaries, guarded single local attempt; no candidate adoption",
+          "owner": "D2",
+          "work": "source-only adjacent records-output variant plus exact reused evaluation-harness delta; original d3d retired, no repeated same-shape evaluation",
+          "boundary": "return original records across SQL/PL boundary without full ROOT variable; preserve null/object/error/order/xmin/profile/role/id/proof semantics, no new operators/schema/index/ACL/cache/framework; new PG only after exact reviewed pins and actual main once-decision",
           "T45": "r910 closed NEED_FIX; no new server scope",
           "formalR3": "STOPPED_NOT_IMPORTED",
           "formalLaunch": "NOT_COMPLETE",
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
-          "D2": "frozen exact harness awaiting actual review and main once-decision; no PG"
+          "D2": "prepare exact source and harness together for one combined new-delta review; no new PG",
+          "QB": "d3d new-result scope review closed PASS for evidence and NOT_ADOPTED, excludes new variant"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"
