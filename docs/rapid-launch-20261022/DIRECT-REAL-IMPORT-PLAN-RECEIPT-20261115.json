@@ -1,0 +1,10 @@
+{
+  "beforePlanSha256": "8aeb1af7a3befffcf14ff5418dba08aa34c09b7520a15d3b8a700f69781b91e6",
+  "afterPlanSha256": "56bc6cd0f7cbb31db28ffaa87e5f14a5751edade2a5995f2c5b31817298edf98",
+  "plan": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/上线接续方案-20261105/主控上线接续实施方案.txt",
+  "authoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+  "decisionSha256": "e5cac6006dd0091797b0df8e5294567b662b59fcb75b2a19c99adc9023081661",
+  "goal": "existing formal launch goal remains active; no replacement goal",
+  "rehearsalGate": "CANCELLED_BY_ACTUAL_HUMAN_LATEST_DIRECTION",
+  "formalFirstBatchStarted": "NOT_YET_REPORTED_PENDING_T45_ACTUAL_RECEIPT"
+}

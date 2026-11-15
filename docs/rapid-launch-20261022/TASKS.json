@@ -7157,28 +7157,119 @@
               "realBusinessWrites": 0,
               "serverActions": 0
             }
+          },
+          {
+            "group": "r3-direct-real-import-user-override-20261115-1318",
+            "status": "VERIFIED_HUMAN_SKIP_REHEARSAL_DIRECT_REAL_AUTHORIZED_T45_PREPARING",
+            "evidence": {
+              "authority": {
+                "originThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+                "turnId": "01a1df2e-2928-7320-805d-08d49c034825",
+                "messageId": "01a1df2e-293d-7061-ab16-5b0cc2e0e753",
+                "quote": "\u53ef\u4ee5\u4e0d\u641e\u5206\u6279\u6f14\u7ec3\u5417 \u76f4\u63a5\u5f00\u59cb\u5f04\u5427 \u6f14\u7ec3\u5565\u7684\u592a\u590d\u6742\u4e86",
+                "verifiedBy": "read_thread original human userMessage content",
+                "verifiedAt": "2026-11-15 12:36:05 UTC"
+              },
+              "planUpdate": {
+                "beforePlanSha256": "8aeb1af7a3befffcf14ff5418dba08aa34c09b7520a15d3b8a700f69781b91e6",
+                "afterPlanSha256": "56bc6cd0f7cbb31db28ffaa87e5f14a5751edade2a5995f2c5b31817298edf98",
+                "plan": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e0a\u7ebf\u63a5\u7eed\u65b9\u6848-20261105/\u4e3b\u63a7\u4e0a\u7ebf\u63a5\u7eed\u5b9e\u65bd\u65b9\u6848.txt",
+                "authoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+                "decisionSha256": "e5cac6006dd0091797b0df8e5294567b662b59fcb75b2a19c99adc9023081661",
+                "goal": "existing formal launch goal remains active; no replacement goal",
+                "rehearsalGate": "CANCELLED_BY_ACTUAL_HUMAN_LATEST_DIRECTION",
+                "formalFirstBatchStarted": "NOT_YET_REPORTED_PENDING_T45_ACTUAL_RECEIPT"
+              },
+              "runtime07": {
+                "state": "STOPPED_ONCE_CONSUMED_TEST_EXPECTATION_TOO_NARROW",
+                "actualDb05Installed": true,
+                "actual161Matched": true,
+                "checkSamples": {
+                  "reusedFrom06": true,
+                  "executedThisRun": false,
+                  "sourceOverallState": "FAILED"
+                },
+                "firstFailure": {
+                  "phase": "HISTORY",
+                  "ordinal": 5,
+                  "queryKind": "COMMIT",
+                  "sqlState": "42501",
+                  "message": "permission denied for function assert_standard_import_operation",
+                  "frames": [
+                    {
+                      "function": "validate_import_operation()",
+                      "line": 4,
+                      "at": "PERFORM"
+                    }
+                  ]
+                },
+                "actualHalfRawCommitAttempted": true,
+                "completedPrefixAck": "inferred from unchanged coordinator path toHISTORY, not independent exportedACK",
+                "coreCommittedNewConnectionRead": false,
+                "historyAbsentNewConnectionRead": false,
+                "committedFixtureRows": null,
+                "finalVerifyTested": false,
+                "pgStopped": true,
+                "all21ChildrenReaped": true,
+                "rootPreserved": "/tmp/d3-batched-core-20261115-07",
+                "elapsedSeconds": 2.559353166,
+                "peakAllocatedBytes": 49344512,
+                "observationsSha256": "b28934c07591772156c3e35fe8aee285e217d574064daab84d1a6ac13640a20c",
+                "executionReceiptSha256": "a5734ac6a8e4e9311f90140a7b07e2514fd47c57999e32f20270598123e2a557",
+                "resultPinsSha256": "dc11a2298e4f17e26554b361c008574c1cb53a311737c93f6310f32bcb95d2df",
+                "finding": "BATCH-HALF-COMMIT-EXPECTATION-01 testP2; owner-only private boundary correctly denied illegal bypass",
+                "fullRehearsal": "CANCELLED_AS_FORMAL_GATE_BY_USER_NOT_PASSED"
+              },
+              "actualReadOnly": {
+                "observedAt": "2026-11-15T12:38:04.827467Z",
+                "source": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01/LIVE-READONLY-123804-848904.json",
+                "sha256": "8df5655bf82e92609cb05b3e3d3c2a99deadf0f34a7f9cec1a13a7f3c84f1669",
+                "activeUnits": 0,
+                "r3Stopped": true,
+                "freeBytes": 273999286272
+              },
+              "retainedReal": {
+                "manifestSha256": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+                "rows": 511234,
+                "classes": 26,
+                "indexBytes": 2196459520,
+                "summaryBytes": 51222678,
+                "initializerBytes": 51225175,
+                "batchPlanPresent": false,
+                "originalInitSha256": "47a82a4e02c608e499268995d086b77a1163896c77dad9a6ea317f08b35f53f4"
+              },
+              "service24Jobs": {
+                "materialize": "t45-r3-batched-source-materialize-20261115-01",
+                "apply": "t45-r3-ordinary24-auth-apply-20261115-01",
+                "start": "t45-first-r3-native-service-start-20261115-24",
+                "install": "t45-r3-batched-install-20261115-01",
+                "writer": "t45-r3-batched-real-execute-20261115-01",
+                "stop": "t45-r3-ordinary24-preserve-stop-20261115-01",
+                "restore": "t45-r3-ordinary24-auth-restore-20261115-01"
+              },
+              "firstRealStarted": false,
+              "newServerMutationJobsSubmitted": 0
+            }
           }
         ],
         "currentInFlight": {
           "owner": "C",
-          "executionRoute": "BATCHED_DURABLE_COMMIT_RESUME",
-          "routeAuthority": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-batched-import-route-01/ROUTE-DECISION.md",
-          "humanAuthoritySha256": "06b5d0b8b72ac517178606f306281fbf97e751562512ceee8db3a3eee056d8f1",
+          "executionRoute": "DIRECT_REAL_BATCHED_IMPORT_NO_REHEARSAL_GATE",
+          "routeAuthority": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-real-import-route-01/ROUTE-DECISION.md",
+          "humanAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
           "supersededRoute": "WHOLE_PACKAGE_SINGLE_TRANSACTION_DO_NOT_RESUME",
-          "objective": "formal ERP launch, full accepted input/reconciliation/backup/core actual business unchanged",
+          "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "task": "BATCH-D1-01 durable batch DB contract/current write guard/receipt/read/finalize central SQL",
-            "state": "DB05_ONE_PROTECTED_COMPLETE_FLUSH_HOST04_SOURCE_DELTA_PASS",
-            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01",
-            "work": "ExactoneSETCONSTRAINTS within existingSDE complete afterfullgroup/FINALIZEvalidation beforePENDING; no newSELECT/triggersecurity/role/COMMIT.160otherfunctions/all326constraints unchanged; onebody/model/hash and6sourcehostbinding currentcandidate only."
+            "state": "NORMAL_PRODUCTION154_INSTALL_CAPTURE_SOURCE_CLOSING",
+            "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
+            "work": "Historical154 catalog7e107 input bridge alreadyvalid; no newfirstbrandneeded. Production V2 exact154\u219212/155\u2192DB05 finiteinstaller/capture/currentepoch target only;3sourcefilessyntax/same-treeimport done,freezepending."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
-            "task": "BATCH-D3-01 dependency closure/stable batch plan/stream coordinator/inspect-skip-resume",
-            "state": "07_READINESS_PASS_ONCE_ISSUED_AWAITING_ACTUAL_RESULT",
-            "writeScope": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D3/20261115-r3-batched-import-01",
-            "work": "06actualDB04/CHECKb58f/10CHECK-onlysamples passed; CORE SET42501 import_batch permission under originalinvokertrigger, no successCOMMIT.07freshDB05+actualnewcompletebody/originalsixcases;06tenCHECKsamplesreusedonlyscopedFAILEDsource, no rerun. Mainonce71fc22bc issued, wait actualrun."
+            "state": "NORMAL_RETAINED_REAL_WRAPPER_FROZEN_PENDING_SOURCE_REVIEW",
+            "writeScope": "outputs/D3/20261115-r3-retained-real-batch-plan-01",
+            "work": "RetainedREAL index2.196GB/summary51MB/INIT51MB exist,no batchedplan. Existinggenuine Admin154prepared sameobject\u2192oncepersistent batchplan\u2192BATCHED borrowedclient; no preflight/reclean/recompile or speculativeABSENTrecovery."
           },
           "D2": {
             "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
@@ -7187,13 +7278,14 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "DB05_HOST04_SOURCE_PASS_07_RUNNER_READINESS_PASS_NO_RUNTIME_CLAIM",
-            "work": "Source10bd0337 and07readiness eac965e5 completed only affected scopes. ActualnewSDEcomplete/CORECOMMIT andsixscene outcomes pendingD3 realPG; no repeat06CHECKsamples."
+            "state": "REHEARSAL_STOPPED_REVIEW_ONLY_NEW_NORMAL_DIFFS",
+            "work": "07 halfrawCOMMIT42501 is expected private boundary,23514onlyharnessP2,notproductprivilegefault;08cancelled/noexecution. Review only actualnormalwrapper/installer/service/issuerdiffs,notfullrehearsal."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "LOCAL_380_SOURCE_ASSEMBLY_COMPLETE_NO_SERVER_HOLD_RUNTIME",
-            "work": "Prepared original370+D3nine+D1eight=380 locally, exact9 reference inputs located; oldSQL stage01 not yet corrected/runtime. FIRST_REAL accepts REAL production input only; SYNTHETIC162/247 not genuinehost-admissible. No newprofile/bypass/server."
+            "state": "SOLE_SERVER_OWNER_DIRECT_REAL_SERVICE24_PREPARATION_ACTUAL_RO_COMPLETE",
+            "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
+            "work": "ActualRO noactiveunits/oldallterminal/R3stopped/255.18GiB,REALf4/index/summary/INITpreserved,coldbackupmetadata1491files68.5MB/WAL. Newservice24consumer/stop/materialize source prepared, no mutationjob yet. Complete sameversion runtime/install/actualCepoch/exactauthority then directREALCORE andcontinue via originalkeypredecessorinspect."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
@@ -7211,15 +7303,64 @@
           "latestDispatcherSha256": "4a2b9defe3bd7d7ba02f634fb2a828ce37a624fa1a81f42804914615fd3bc4b5",
           "latestPolicySha256": "9763399f50809d80acd197a102a0ac3fd18bed4d2e29f8f23099775c42eeb417",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
-          "nextCheckpointTarget": "NO_UNVERIFIED_ETA",
-          "nextCheckpointScope": "Follow07 unique once toactual DB05/COREcommit/halfgroup/UNKNOWN/resume/finalverify/stopreap; fix only concrete new failures",
+          "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
+          "nextCheckpointScope": "normalcode/issuer exacthandoff\u2192service24/materialization/install/currentbinding\u2192actual approvedREALfirstbatch originalkeyreadback",
           "latestSourceSnapshot": {
             "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261115-batched-actual-check-and-sde-complete-fix",
             "files": 76,
             "bytes": 12185133,
             "manifestSha256": "93f274cf611dc713fa7bd3e118d8a8ce68510195747d5e4da278065f017e9eba",
             "reviewSha256": "10bd0337e2c3c7c54894a326618cc4a3d83a7bf348de1a592390ed0257393493"
-          }
+          },
+          "controllerIssuer": {
+            "owner": "current controller",
+            "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
+            "state": "REUSE_ORIGINAL_SOURCE23_ISSUER_REGISTRAR_TEMPLATES_ADAPT_EXACT_SERVICE24",
+            "work": "No duplicateT45consumer; originalissuer61fc/phase4168/CAS7dc2; currentbasisded0766 anddispatcher4a2b,notoldf79/a052. Awaitfinalsource andactualdynamicfactsigning."
+          },
+          "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
+          "rehearsal08": {
+            "state": "CANCELLED_NO_DIRECTORY_NO_WIP_NO_ATTEMPT_NO_PG",
+            "ownerConfirmed": true
+          },
+          "deferredTests": {
+            "full162SixScene": "NOT_PASSED_NO_LONGER_FORMAL_FIRST_PREREQUISITE",
+            "partialGroupComplete23514": "NOT_RUN_DEFERRED_NOT_GATE",
+            "partialRawCommit": "42501_refusal_observed07_followup_snapshot_incomplete_NOT_CASE_PASS",
+            "commitAckLossUnknown": "NOT_RUN_DEFERRED_NOT_GATE",
+            "recoveryFaultInjection": "NOT_RUN_DEFERRED_NOT_GATE"
+          },
+          "formalFirstBatch": "NOT_STARTED_NO_RECEIPT_YET",
+          "currentNormalMissingParts": [
+            "T45 sameversion materialize/service24/currentCepoch+preciseissuer",
+            "D1 production154\u2192155\u2192DB05 finiteinstall/capture",
+            "D3 existingretainedREALindex/INIT\u2192durablebatchplan actualnormalwrapper"
+          ],
+          "normalSource": {
+            "db05": {
+              "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/DB-CANDIDATE-05",
+              "pinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+              "sqlSha256": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+              "modelSha256": "4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51",
+              "definitionsSha256": "b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216",
+              "bodiesSha256": "a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942",
+              "changedRoutine": "naijue_erp.standard_batched_import_complete_v1(jsonb,jsonb)",
+              "bodySha256": "20b676b0da8b22335b62f3ec14fa744922fe87ebed8ab9e16f9fc2c66a3e3464",
+              "definitionSha256": "a85fee7929293a06b9def5c00af637831890394225c95fd95803bbb1437d1d38",
+              "state": "ONE_SDE_COMPLETION_CONSTRAINT_FLUSH_BODY_PENDING_QB"
+            },
+            "host04": {
+              "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261115-r3-batched-import-01/HOST-FINALIZE-DELTA-04",
+              "pinsSha256": "fc76b75a2e48f73f35b2ef896a9a315b90d9a282e031f7618396b177c00dbe72",
+              "sourceClosureSha256": "5cb520339e6f0e55994659ac19f6dcc49955a40776f6807e4eac624da19da2d8",
+              "catalogSourceSha256": "ed9e93342630cef2a9e063393d3e02c9464daae3a52f1e62c188d6a2c8f4f544",
+              "hostSourceSha256": "a75d570011954da8c324774dd3bb674dbc9a9b7b2438f0cb322f27ff8b7ac632",
+              "state": "SIX_SOURCE_OVERLAY_ONLY_BODY_MODEL_PINS_PENDING_QB"
+            },
+            "d3SameTree9Pins": "1e213e8195133ee27eaefef0650ddb8563b58c7cc3a765adeb739998690f3c81",
+            "retainedWrapperPins": "0bb0fd731913c6f67dff5d1788e0a75014b23e0f4b8102937d86fd1e48c09104"
+          },
+          "latestPolicy": "skipcomplete rehearsal and all newfaultinjection; actual firstbatch only after necessarynormal runtimeconditions, thencommit/read originalkey/continue; failure stopcurrentbatch/unknowninspect/noautoclear"
         },
         "independentDeltaReviewer": "QB",
         "reuses": "single lane, prearmed local launch, 600s upload, 240s closeout, same original keys and full after-withdrawal readback"

@@ -10700,5 +10700,39 @@
       "identityRules": "marker alone never grants business write; committed root/input/actor immutable proof plus current exact source/receipt/audit xmin/time remain; root old xid/pid historical only",
       "implementationRequirements": "D1 freezes exact identity/descriptor JSON keys, nullability, hashing exclusion rules and no-secret sample in INTERFACE-V1 immediately for D3/D2, not wait all SQL implementation"
     }
+  },
+  "r3DirectRealImport20261115": {
+    "authorityPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-real-import-route-01/USER-AUTHORITY.json",
+    "authoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+    "decision": "DIRECT_REAL_BATCHED_IMPORT_NO_FULL_REHEARSAL_GATE",
+    "goal": "existing formal launch goal remains active",
+    "model": "gpt-6.1-sol/high",
+    "controller": "01a1cec6-7547-7d82-a867-00ea53f13031",
+    "owners": {
+      "T45": {
+        "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
+        "scope": "sole server execution; original service24 consumer/start/role/stop successor and same-version materialization; no second serviceowner"
+      },
+      "D1": {
+        "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
+        "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
+        "scope": "production154→155→DB05 finite installer/capture and genuine first-retained binding only"
+      },
+      "D3": {
+        "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
+        "writeScope": "outputs/D3/20261115-r3-retained-real-batch-plan-01",
+        "scope": "existing retained REAL index/INIT normal batch-plan/execute wrapper; no rehearsal"
+      },
+      "QB": {
+        "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+        "scope": "only actual new normal source differences and necessary blockers, no repeated validation"
+      },
+      "controllerIssuer": {
+        "writeScope": "outputs/主控/20261115-r3-direct-service24-issuer-local-01",
+        "scope": "sole reuse of prior source23 external issuer/registration templates, exactsource/newkeys/dynamicfacts; T45 submits"
+      }
+    },
+    "cancelled": "08 newharness/halfcommit/ACKinjection/full162 rehearsal asformal-first prerequisite",
+    "preserved": "no bypass of actual source/target/permissions/constraints/backup/finalquantity-money-stock-relationship reconciliation"
   }
 }
