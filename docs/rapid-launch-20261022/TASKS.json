@@ -7709,6 +7709,22 @@
             "work": "Same original never-published start key completed after exact append-only upload of missing staged members, no archive nor replay. Start c8c50e COMPLETE0 44.177s/C f1d1/PGepoch02:59:20.307Z/actual source2399. Actual install6808 COMPLETE0 in48.692s, 13 acknowledged durable commits and captured161; 02974 independent protected file read of 13 ACKs and 154/155/161 observations, completion c10ffe, role reset ACK and connection closed, no business rows. Stopped8aa5 COMPLETE0/clean shutdown/PGDATAPID+port absent and preserved installed state. Restore79c1 COMPLETE0/8.094s, real original two auth verifiers and expiry privately matched, maintenance container exited and target PG remains stopped. Result ce214. Original writer unsubmitted. No server changes further until new actual data binding."
           },
           "input": "User supplied the 2026-11-16 export and replaced inventory and transfer workbooks. Current seven files total 65243461 bytes. Transfer fit column restored. User set the business cutoff to 11:40 Asia/Shanghai and confirmed that the exact 1783 old nonzero keys absent in the updated inventory mean zero. Keep recorded explicit quantities; resolve outstanding new stock and transfer SKU identities. Keep the 2026-11-11 f4b86de7 26 classes and 511234 rows as historical comparison.",
+          "currentNov16SourceReconciliation": {
+            "cutoffAt": "2026-11-16T11:40:00+08:00",
+            "inventoryExportedAt": null,
+            "sales0200": "USER_CONFIRMED_CURRENT_THREE_LINES_ORIGINAL_FOURTH_AUDIT_ONLY",
+            "inventorySourceObservationsBound": 39537,
+            "inventoryTargetKeys": 39525,
+            "inventoryUnits": 80658,
+            "inventorySourceObservationsHeld": 0,
+            "approvedSparseZeroKeys": 1783,
+            "transferDocuments": 15250,
+            "transferLines": 285316,
+            "transferR4MappedDocuments": 15242,
+            "transferRemainingEvidenceVerifiedLines": 9,
+            "transferRemainingEvidenceSha256": "1e67e6948564d4fe22809021cb49cca870526d3245f367e7fc75544d61534b35",
+            "state": "STOCK_IDENTITIES_COMPLETE_TRANSFER_CONFIRMATION_CELLS_VERIFIED_D3_FINAL_ASSEMBLY_IN_PROGRESS"
+          },
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
