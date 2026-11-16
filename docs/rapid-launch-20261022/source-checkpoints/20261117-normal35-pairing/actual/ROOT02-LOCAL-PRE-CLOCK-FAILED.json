@@ -1,0 +1,21 @@
+{
+  "state": "ACTUAL_LOCAL_ISSUER_REFUSED_BEFORE_CLOCK_OR_OUTPUT_CREATION",
+  "recordedAtUTC": "2026-11-16T18:16:02.484212+00:00",
+  "rootSourcePinsSha256": "1466822280d0e7e1e146e2cfc2b591aae794fd5ac247c66e503c68c0b7c31565",
+  "rootReviewSha256": "1537ec7d994c252f661d4c98c19317b9ef9f78bfe9b61b6a82e773589e2b9ca6",
+  "basisSha256": "9dce15ffbe7a391e971afe52cf6b358696dc57458926111ba72b39d66ceabf28",
+  "exitCode": 1,
+  "exceptionType": "KeyError",
+  "missingKey": "sourceAssemblyServerActions",
+  "location": "issue_registration.py:45 checked_consumer called at issue:65",
+  "actualConsumerSourceMetadataKey": "serverActions",
+  "wrongKeyBelongsTo": "INTERFACE.UNISSUED.json",
+  "outputDirectory": "outputs/主控/20261117-r3-normal35-registration-window-01",
+  "outputDirectoryExists": false,
+  "authorityIssued": false,
+  "finiteWindowStarted": false,
+  "serverActions": 0,
+  "businessWrites": 0,
+  "clock03OrRetryAfterFix": "NOT_RUN",
+  "frozenSource02Unmodified": true
+}

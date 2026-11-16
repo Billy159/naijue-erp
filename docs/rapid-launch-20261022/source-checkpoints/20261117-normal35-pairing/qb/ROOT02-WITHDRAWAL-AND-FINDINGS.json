@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "checkedConsumerReadonlyCalls": 1,
+    "clockCalls": 0,
+    "existingFilesModified": false,
+    "fixturesOrAuthoritiesCreated": 0,
+    "issueCalls": 0,
+    "serverConnections": 0
+  },
+  "findings": [
+    {
+      "actualContract": {
+        "interfaceSourceAssemblyServerActions": 0,
+        "sourcePinsServerActions": 0
+      },
+      "actualReadonlyCallResult": {
+        "exception": "KeyError",
+        "field": "sourceAssemblyServerActions"
+      },
+      "id": "N35-R02",
+      "impact": "Real immutable consumer03 fails before issue takes now or creates any permit/output. Prior AST/hash checks did not verify this producer-consumer field contract.",
+      "line": 45,
+      "path": "outputs/D1/20261117-r3-normal35-root-source-02/issue_registration.py",
+      "priority": 1,
+      "requiredFix": "Keep consumer03 unchanged. In an immutable root successor pin and read the actual SOURCE-PINS and INTERFACE fields from their actual producers, preserving strict zero-action/clock/job/PG checks.",
+      "title": "checked_consumer reads an INTERFACE field from SOURCE-PINS"
+    }
+  ],
+  "sourceOnly": true,
+  "sourcePinsSha256": "1466822280d0e7e1e146e2cfc2b591aae794fd5ac247c66e503c68c0b7c31565",
+  "state": "SOURCE_NEED_FIX_NORMAL35_ROOT_CONSUMER_METADATA_FIELD",
+  "withdrawnReview": {
+    "mustNotUseForIssuance": true,
+    "originalBytesPreserved": true,
+    "path": "outputs/QB/20261117-r3-normal35-root-review-02/RESULT.json",
+    "sha256": "1537ec7d994c252f661d4c98c19317b9ef9f78bfe9b61b6a82e773589e2b9ca6"
+  }
+}

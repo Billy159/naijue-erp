@@ -1,0 +1,22 @@
+{
+  "state": "ACTUAL_NORMAL35_REGISTERED_APPLY_AUTHORIZED_PENDING",
+  "files": [
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/ACTUAL-ROOT-REGISTRATION-READBACK.json",
+      "file": "actual/ACTUAL-ROOT-REGISTRATION-READBACK.json",
+      "sha256": "27137faf09e1b05e9ca813be271f5e6179f971a5cad68cccbd5957e00f56683a",
+      "bytes": 1701
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/REGISTRATION-ENTRY-REPLY.json",
+      "file": "actual/REGISTRATION-ENTRY-REPLY.json",
+      "sha256": "eb5708f5881ac50caffafb6b4491d6fbd45c9226775ecdd24992f94933478dff",
+      "bytes": 504
+    }
+  ],
+  "phaseSubmittedAsOfRegistrationReadback": false,
+  "actualDispatcher": "34e31910f3417e88865b41938bb692245332e0b3f3fb7a6ca148d10973ba4f37",
+  "actualModule": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4",
+  "actualPolicy": "54078b491c94ba23901ad32190ff03e74cc5b3c9ec5cb771df84c52df04049b2",
+  "oldHistoryAndLockPreserved": true
+}

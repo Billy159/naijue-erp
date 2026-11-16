@@ -1,0 +1,15 @@
+{
+  "actualFinalReportAndActual03FilesUsed": true,
+  "actualFreshSha256": "9dce15ffbe7a391e971afe52cf6b358696dc57458926111ba72b39d66ceabf28",
+  "actualRootSourcePinsSha256": "4e19214d3f6c0b050836fe1de348244f9d526c6a641935d880b18dd937f5ebd3",
+  "currentFreshnessNotEvaluatedOrExtended": true,
+  "finalFrozenReviewBytesUnchanged": true,
+  "finalRootReviewSha256": "b8ea66d13c29810b74c999c71d1821e4bd1a3973dc351cc783903722592de5bc",
+  "issuerFunctionClockOrAuthorityCalls": 0,
+  "method": "Only actual issue AST statements strictly before the now assignment; current HERE03 and final existing reportb8ea, actual source/interface/f526/9dce. No issuance suffix.",
+  "outputDirectoryCreated": false,
+  "serverOrPGOrNativeCalls": 0,
+  "sourceOnly": true,
+  "state": "ACTUAL_FINAL03_REVIEW_AND_SOURCE_PRECLOCK_READBACK_PASS",
+  "usedWithdrawnReviewOrFutureReviewFixture": false
+}

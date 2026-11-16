@@ -1,0 +1,142 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockFreeAstMetadataPrefixCalls": 1,
+    "consumerOwnerSourcesOrFrozenReportsModified": false,
+    "fullIssuerOrReaderCASCarrierClientCalls": 0,
+    "issuanceClockCalls": 0,
+    "nativeOrFullDataCompilation": 0,
+    "new35JobsSubmitted": 0,
+    "outputDirectoryCreated": false,
+    "readonlyCheckedConsumerCalls": 1,
+    "roleAuthorityTargetCapabilityOrFutureFixturesCreated": 0,
+    "serverConnections": 0
+  },
+  "actualFreshSchemaEvidence": {
+    "currentFreshnessNotEvaluatedOrExtended": true,
+    "identities": 231,
+    "metadataMatched": true,
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/ACTUAL-ROOT-REGISTRATION-BASIS-01.json",
+    "pins": 222,
+    "sha256": "9dce15ffbe7a391e971afe52cf6b358696dc57458926111ba72b39d66ceabf28"
+  },
+  "closedFindings": [
+    "N35-R01",
+    "N35-R02"
+  ],
+  "consumerReviewSha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6",
+  "consumerSourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "files": {
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 34170,
+      "sha256": "329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8"
+    },
+    "admin_exec.NORMAL35-UNREGISTERED.py": {
+      "bytes": 45101,
+      "sha256": "f01c78db33f3dfdd88972f3b2455cad23269c78ac3642c59c4dcdde91c2d5198"
+    },
+    "issue_phase.py": {
+      "bytes": 38857,
+      "sha256": "58ccb2d3ebd3cda7ffd922b458342bcc7081e6253db479f04cf17659cde3702b"
+    },
+    "issue_registration.py": {
+      "bytes": 13717,
+      "sha256": "2b3d0f23c268137580e0c5d0b43ce3b13e0a0b090459019d8592efc890c8d69a"
+    },
+    "original-cas-normal35-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "34fb7f248d87c790bf95d1fc9a386d265ba2635d7de0438c79194350c7ada187"
+    },
+    "r3_direct35_normal.py": {
+      "bytes": 113939,
+      "sha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4"
+    },
+    "read_registration_basis.py": {
+      "bytes": 92302,
+      "sha256": "08c0d4ba87319263c281ad3b5f2c42d38e7177c4a4d81eb00b5886c6cba082ab"
+    },
+    "register_cas.py": {
+      "bytes": 115866,
+      "sha256": "de19fb1226d1b8c727ac14a646e4654f7a24bce601e7e682be78684f16fabcd9"
+    }
+  },
+  "findings": [],
+  "incrementalScope": "N35-R02 actual SOURCE/INTERFACE field consumption, all actual preclock dictionaries, statement ordering and new issuer hash only; unchanged root and consumer mechanisms reuse exact prior independent evidence.",
+  "independentChecks": {
+    "actual03EightFileHashesAndNineRequiredIssuerArgumentsPairedSeparately": true,
+    "actualConsumerSource8bAndInterface8cIndependentlyRawHashPinned": true,
+    "actualNewCheckedConsumerCalledReadOnlyAndAcceptedActualFiles": true,
+    "all18PinnedDeliveryFilesExact": true,
+    "clockFreeAstPrefixValidatedActualSourceInterfaceConsumerReportWitnessHumanAuthorityCompletedInputsWriterPureScopeAnd222Pins231Identities": true,
+    "consumer03EntryNativePrivateBudgetsKeysAndPermissionsNotChangedOrReaudited": true,
+    "existingWithdrawn02ReviewWasUsedOnlyForItsActual02FilesInMetadataRegression": true,
+    "grantLimitTimestampAndIdentityParsingMovedBeforeClock": true,
+    "historicalInstall32AndCurrentPredecessor34SeparationUnchanged": true,
+    "interfaceServerPGZeroClockAndAuthorityNullGuardsAdded": true,
+    "issueFunctionAstStatementMultisetUnchangedOnlyOrderingBeforeClockChanged": true,
+    "noFuture03PassReportFixtureConstructedOrUsed": true,
+    "onlyRegistrationIssuerChangedAmongEightIssuanceFiles": true,
+    "originalActualClockAssignmentAnd180MinuteCoverageAnd15MinuteFreshnessPredicatesAstExact": true,
+    "phaseIssuerRulesWitnessHelperCASReaderTemplateCarrierAnd222231MetadataByteUnchanged": true,
+    "sourceClockJobPGAndServerZeroGuardsPreserved": true,
+    "sourceOwnsServerActionsAndInterfaceOwnsSourceAssemblyServerActions": true
+  },
+  "independentEvidence": {
+    "frozenBeforeFinalReport": true,
+    "path": "outputs/QB/20261117-r3-normal35-root-review-03/ACTUAL-PRE-CLOCK-METADATA-RESULT.json",
+    "sha256": "51248e1155c758a433b03884b60c067ec17d9ebff04478e69e6834f704870312"
+  },
+  "limitations": [
+    "Source-only exact root03/source4e192/issuer2b3d/rules329dc pairs consumer03/source8b and reviewf526 only.",
+    "The real9dce snapshot was consumed only for metadata/schema checks. Its lifetime was not extended, and present15-minute validity was not evaluated. Actual issuance must obtain and enforce a valid original-chain fresh basis.",
+    "Full issue(), issuance clock, role/authority creation, CAS, reader main, client, carrier, native target and PG were not invoked. Only the permitted readonly checker and clock-free metadata AST prefix ran.",
+    "The withdrawn02 report was a real existing metadata-regression input for its own02 artifacts, never issuance approval or a future03 report fixture.",
+    "Old e3ee and1537 remain withdrawn and immutable; only this new exact review may serve as the root source pairing.",
+    "No runtime, new35 job, complete import, APP, cold, clone, deployment or role-business-acceptance PASS.",
+    "This final report is frozen once. Further evidence belongs in a separate file and must not rewrite issuance-bound bytes."
+  ],
+  "ownerMetadataRegressionReused": {
+    "path": "outputs/D1/20261117-r3-normal35-root-source-03/ACTUAL-METADATA-REGRESSION.json",
+    "sha256": "0b0597cc58c6c036721b391c8fc83998ccd021bdf359def26266f5d2d5d97cc0"
+  },
+  "reusedEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal35-root-review-02/ACTUAL-HISTORICAL-BINDING-RESULT.json",
+      "scope": "Actual historical install32 versus startup predecessor34 fix; phase issuer and witness bytes unchanged",
+      "sha256": "a21e120d61bb082c8b8308d2c973d0ac0b8d1a07d897d1f486a60e529e85a9df"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-root-review-01/ACTUAL-CONSTANTS-RESULT.json",
+      "scope": "Unchanged actual helper/CAS/reader constants,222/231, original lock, replay and finite guards",
+      "sha256": "70fa4d46a4c8fb40562c4b7118659502e1b03e149a19b4e90cff0174a922d1ea"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-03/RESULT.json",
+      "scope": "Unchanged final03 consumer pairing; no repeated52 semantics",
+      "sha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6"
+    }
+  ],
+  "reviewer": "QB",
+  "rulesSha256": "329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal35-root-source-03",
+  "sourceOnly": true,
+  "sourcePinsSha256": "4e19214d3f6c0b050836fe1de348244f9d526c6a641935d880b18dd937f5ebd3",
+  "state": "SOURCE_PASS_NORMAL35_ROOT_PAIR_ONLY",
+  "withdrawnReviews": [
+    {
+      "mustNotUseForIssuance": true,
+      "path": "outputs/QB/20261117-r3-normal35-root-review-01/RESULT.json",
+      "sha256": "e3ee720142d9d7495cec11a69e63fa1e73765dcf59bbe6b40450125506e3c517",
+      "withdrawalPath": "outputs/QB/20261117-r3-normal35-root-review-01/WITHDRAWAL-AND-FINDINGS-01.json",
+      "withdrawalSha256": "6112635fef5ad9609be33d360eda7654a3e364162fc60a74868c0e8fe1b6dce3"
+    },
+    {
+      "mustNotUseForIssuance": true,
+      "path": "outputs/QB/20261117-r3-normal35-root-review-02/RESULT.json",
+      "sha256": "1537ec7d994c252f661d4c98c19317b9ef9f78bfe9b61b6a82e773589e2b9ca6",
+      "withdrawalPath": "outputs/QB/20261117-r3-normal35-root-review-02/WITHDRAWAL-AND-FINDINGS-02.json",
+      "withdrawalSha256": "870996534160faa87405ea70696f3ad35d8fc50ee66c970525439c29c85e614c"
+    }
+  ]
+}

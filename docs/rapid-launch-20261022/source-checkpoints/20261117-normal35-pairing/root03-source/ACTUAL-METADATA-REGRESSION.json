@@ -1,0 +1,33 @@
+{
+  "PGConnections": 0,
+  "actualNowFreshnessNotEvaluated": true,
+  "clockCalled": false,
+  "finding": "N35-R02",
+  "freshCheckedAtUTC": "2026-11-16T18:12:17.607119+00:00",
+  "freshInputSha256": "9dce15ffbe7a391e971afe52cf6b358696dc57458926111ba72b39d66ceabf28",
+  "freshLifetimeExtended": false,
+  "futureReviewOrAuthorityCreated": false,
+  "inputSchemasConsumedBeforeClock": [
+    "consumer SOURCE-PINS",
+    "consumer INTERFACE",
+    "consumer report f526",
+    "root SOURCE02 report1537 retained for regression only",
+    "human authority",
+    "witness",
+    "9 rules/static source leaves",
+    "completed preparation receipts",
+    "writer pure scope",
+    "222 pins/231 identities and lock",
+    "grant limit/timestamp parsing"
+  ],
+  "interfaceSha256": "8c6adf9ad501f914226832b3663da8f18084439c7cd724007f1edc52998fa139",
+  "issuerFunctionCalled": false,
+  "newCheckedConsumerAcceptedActualFiles": true,
+  "oldCheckedConsumerError": "KeyError(sourceAssemblyServerActions)",
+  "outputDirectoryCreated": false,
+  "preclockPrefixUsedRealSource02Review1537ForUnchangedSource02Artifacts": true,
+  "serverConnections": 0,
+  "sourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "state": "ACTUAL_METADATA_KEYERROR_RED_GREEN_AND_PRECLOCK_PREFIX_PASS",
+  "targetOrCapabilityCreated": false
+}

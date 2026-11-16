@@ -1,0 +1,131 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "fullDataCompilationRuns": 0,
+    "issuanceClockCalls": 0,
+    "newJobsSubmitted": 0,
+    "ownerSourcesModified": false,
+    "priorReportsOverwritten": false,
+    "privateSnapshotBodiesOrDigestsRead": false,
+    "readerIssuerCASCarrierClientOrNativeInvocations": 0,
+    "serverConnections": 0,
+    "targetCapabilityAuthorityOrFutureFixturesCreated": 0
+  },
+  "closedFindings": [
+    "N35-R01"
+  ],
+  "consumerReviewSha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6",
+  "consumerSourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "files": {
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 34170,
+      "sha256": "329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8"
+    },
+    "admin_exec.NORMAL35-UNREGISTERED.py": {
+      "bytes": 45101,
+      "sha256": "f01c78db33f3dfdd88972f3b2455cad23269c78ac3642c59c4dcdde91c2d5198"
+    },
+    "issue_phase.py": {
+      "bytes": 38857,
+      "sha256": "58ccb2d3ebd3cda7ffd922b458342bcc7081e6253db479f04cf17659cde3702b"
+    },
+    "issue_registration.py": {
+      "bytes": 13435,
+      "sha256": "0bcc61f178eaec0dbf2ce1bb41e0148f842e267964c212fd78edfcaeae7cf8b2"
+    },
+    "original-cas-normal35-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "34fb7f248d87c790bf95d1fc9a386d265ba2635d7de0438c79194350c7ada187"
+    },
+    "r3_direct35_normal.py": {
+      "bytes": 113939,
+      "sha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4"
+    },
+    "read_registration_basis.py": {
+      "bytes": 92302,
+      "sha256": "08c0d4ba87319263c281ad3b5f2c42d38e7177c4a4d81eb00b5886c6cba082ab"
+    },
+    "register_cas.py": {
+      "bytes": 115866,
+      "sha256": "de19fb1226d1b8c727ac14a646e4654f7a24bce601e7e682be78684f16fabcd9"
+    }
+  },
+  "findings": [],
+  "incrementalScope": "N35-R01 exact installation-service consumer and new rule/issuer hash closure only. Unchanged reviewed mechanisms remain valid evidence; withdrawn root01 PASS remains withdrawn.",
+  "independentCorrectionChecks": {
+    "actualOldAssertEqualityEvaluatedFalseAndCorrectedEqualityTrueWithoutIssuerCall": true,
+    "actualReceipt6808JobAndTerminal01b467RootE14e9PublicC3f11MatchFrozenHistoricalInstall": true,
+    "actualRules329dcPinMatchesBothIssuers": true,
+    "all17PinnedDeliveryFilesExact": true,
+    "allOtherTerminalRootPublicServiceState13LayerCleanupCatalogAssertionsAndReturnPreserved": true,
+    "allWitnessOldFieldsByteValueEquivalentOnlyTwoPinnedHistoricalFieldsAdded": true,
+    "consumer03NoRuntimeOrEntryOrPrivateOrNativeChange": true,
+    "current34PredecessorAndEightBindingsUnchanged": true,
+    "eightIssuanceFilesPreciselyPairedForExistingNineArgumentRegistrationIssuer": true,
+    "fiveRootRuntimeCoreFilesAndCurrentFactsByteIdentical": true,
+    "historicalCatalogOnlyAssertRightFieldChangedPriorServiceToHistoricalInstallService": true,
+    "historicalInstallReadbackReferenceUsesExactExistingActualReceiptPathAndHash": true,
+    "historicalInstallServiceExactlyActual32F1d1Container1d12BirthAndEpoch": true,
+    "noPermissionBudgetKeys222HashOr231IdentityScopeChange": true,
+    "originalActualConstantEvidence70faStillAppliesToUnchangedHelperCASReaderHashes": true,
+    "phaseIssuerTextChangedOnlyOneHistoricalFieldReadAndFrozenRulesHash": true,
+    "registrationIssuerTextChangedOnlyFrozenRulesHash": true,
+    "startAuthorityAndObservationStillConsumeOriginal34PriorService": true
+  },
+  "independentEvidence": {
+    "frozenBeforeFinalReport": true,
+    "path": "outputs/QB/20261117-r3-normal35-root-review-02/ACTUAL-HISTORICAL-BINDING-RESULT.json",
+    "sha256": "a21e120d61bb082c8b8308d2c973d0ac0b8d1a07d897d1f486a60e529e85a9df"
+  },
+  "limitations": [
+    "This exact root02/source146682/rules329dc pairs only final03 consumer/source8b8f and reviewf526.",
+    "Fresh actual222 hashes and231 identities, unused35 state and full original grant window remain required before issuance; none was collected live by QB.",
+    "Original reader/issuer/register/CAS/carrier/client mains were not called. No authority, issuance clock or new35 job was created.",
+    "No runtime, PG, APP, cold, clone, deployment, role business acceptance or complete import PASS.",
+    "Actual start34 earliest original exception remains UNKNOWN; this correction does not retrospectively identify it.",
+    "Root01/a457/rules4470 and withdrawn e3ee remain historical and must not be used for issuance. Old reports are immutable.",
+    "This final report is frozen once. Further evidence must use a new file, preserving these issuance-bound bytes."
+  ],
+  "ownerActualHistoricalRegressionReused": {
+    "actualOldAndCorrectedPureFunctionChecksNotRepeatedByQB": true,
+    "path": "outputs/D1/20261117-r3-normal35-root-source-02/HISTORICAL-SERVICE-REGRESSION.json",
+    "sha256": "0e18a2ae289ad5f2cc96d89d227cd079255c4127278bd6d7bcc36dc0ce8d72a6"
+  },
+  "reusedEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal35-root-review-01/ACTUAL-CONSTANTS-RESULT.json",
+      "scope": "Actual helper/CAS/reader JOBS,222/231,28 helper methods, original lock and history mechanisms; exact core hashes unchanged",
+      "sha256": "70fa4d46a4c8fb40562c4b7118659502e1b03e149a19b4e90cff0174a922d1ea"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-03/RESULT.json",
+      "scope": "Final03 consumer/source8b8f; no repeated52 review",
+      "sha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-postcompile-root-binding-review-01/RESULT.json",
+      "scope": "Original entry source fix, not runtime earliest exception",
+      "sha256": "cf2841de11b468b75618af3df389f364b5bd126d3f806d1ec11b91332bbb3768"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+      "scope": "Separate private source seam only",
+      "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+    }
+  ],
+  "reviewer": "QB",
+  "rulesSha256": "329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal35-root-source-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "1466822280d0e7e1e146e2cfc2b591aae794fd5ac247c66e503c68c0b7c31565",
+  "state": "SOURCE_PASS_NORMAL35_ROOT_PAIR_ONLY",
+  "withdrawnRootReview": {
+    "originalBytesPreserved": true,
+    "path": "outputs/QB/20261117-r3-normal35-root-review-01/RESULT.json",
+    "remainsWithdrawnDoNotUseForIssuance": true,
+    "sha256": "e3ee720142d9d7495cec11a69e63fa1e73765dcf59bbe6b40450125506e3c517",
+    "withdrawalPath": "outputs/QB/20261117-r3-normal35-root-review-01/WITHDRAWAL-AND-FINDINGS-01.json",
+    "withdrawalSha256": "6112635fef5ad9609be33d360eda7654a3e364162fc60a74868c0e8fe1b6dce3"
+  }
+}

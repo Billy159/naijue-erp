@@ -1,0 +1,90 @@
+{
+  "PGConnections": 0,
+  "basisEntries": 222,
+  "clockIssued": false,
+  "consumerReviewSha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6",
+  "consumerSourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "files": {
+    "ACTUAL-METADATA-REGRESSION.json": {
+      "bytes": 1326,
+      "sha256": "0b0597cc58c6c036721b391c8fc83998ccd021bdf359def26266f5d2d5d97cc0"
+    },
+    "CORRECTION-ONLY.patch": {
+      "bytes": 7198,
+      "sha256": "1aca804f7cbfd394510a0bc08b3070313f911d0cef0fcb473660fef0074dc530"
+    },
+    "CURRENT-FACTS.json": {
+      "bytes": 58107,
+      "sha256": "605ee37836b7739aee817d6abd7d63f45338701395ffce5cfbb7b2d9fdf108ff"
+    },
+    "HANDOFF.md": {
+      "bytes": 7894,
+      "sha256": "cd45774e9e3d4ebccd71b3abf27f1081a2ae47553bb70a369ba8c806ac7cd546"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 2573,
+      "sha256": "9db9867b1d9146a93463af31963598daa44ea6f28f618b1969a35374ec07b83b"
+    },
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 34170,
+      "sha256": "329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8"
+    },
+    "admin_exec.NORMAL35-UNREGISTERED.py": {
+      "bytes": 45101,
+      "sha256": "f01c78db33f3dfdd88972f3b2455cad23269c78ac3642c59c4dcdde91c2d5198"
+    },
+    "assemble_source.py": {
+      "bytes": 22121,
+      "sha256": "39513810fb5d1238cc7fd5f23ce4f504c07c6953dc77efea6f86d538fa8fd5df"
+    },
+    "check_actual_metadata.py": {
+      "bytes": 4260,
+      "sha256": "532aac30e7425d4c59e47b7fc70903f608e2fa9eebe6cf084b94b0deaca46c26"
+    },
+    "check_historical_service.py": {
+      "bytes": 2772,
+      "sha256": "1546cdabc959a730abc267aac451b1ea8b42113ca039f5bfe44c7c37a662312d"
+    },
+    "check_source.py": {
+      "bytes": 9428,
+      "sha256": "fed2ca3765bff6667638f69567b7f805a8075440ca1b75df0ffb42189fb0bb09"
+    },
+    "issue_phase.py": {
+      "bytes": 38857,
+      "sha256": "58ccb2d3ebd3cda7ffd922b458342bcc7081e6253db479f04cf17659cde3702b"
+    },
+    "issue_registration.py": {
+      "bytes": 13717,
+      "sha256": "2b3d0f23c268137580e0c5d0b43ce3b13e0a0b090459019d8592efc890c8d69a"
+    },
+    "original-cas-normal35-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "34fb7f248d87c790bf95d1fc9a386d265ba2635d7de0438c79194350c7ada187"
+    },
+    "prepare_current_facts.py": {
+      "bytes": 7059,
+      "sha256": "2f19e3aee7a1a78f3c5bce73e758027d3eec810e2d7d4cc222bfa696de180193"
+    },
+    "r3_direct35_normal.py": {
+      "bytes": 113939,
+      "sha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4"
+    },
+    "read_registration_basis.py": {
+      "bytes": 92302,
+      "sha256": "08c0d4ba87319263c281ad3b5f2c42d38e7177c4a4d81eb00b5886c6cba082ab"
+    },
+    "register_cas.py": {
+      "bytes": 115866,
+      "sha256": "de19fb1226d1b8c727ac14a646e4654f7a24bce601e7e682be78684f16fabcd9"
+    }
+  },
+  "finding": "N35-R02",
+  "freshIdentityCount": 231,
+  "freshLifetimeExtended": false,
+  "newKeySubmitted": false,
+  "rulesSha256": "329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8",
+  "serverConnections": 0,
+  "sourceOnly": true,
+  "state": "NORMAL35_ROOT_SOURCE_03_METADATA_CONSUMER_FIX_PENDING_REVIEW",
+  "supersededSourcePinsSha256": "1466822280d0e7e1e146e2cfc2b591aae794fd5ac247c66e503c68c0b7c31565"
+}

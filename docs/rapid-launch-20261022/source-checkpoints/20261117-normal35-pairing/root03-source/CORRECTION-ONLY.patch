@@ -1,0 +1,62 @@
+--- outputs/D1/20261117-r3-normal35-root-source-02/issue_registration.py
++++ issue_registration.py
+@@ -42,7 +42,9 @@
+ 
+ def checked_consumer(witness):
+     directory=Path(witness['consumerSourceDirectory']);frozen=json.loads(checked(directory/'SOURCE-PINS.json',CONSUMER_PIN))
+-    assert frozen['clockOrAuthorityIssued'] is False and frozen['newJobSubmitted'] is False and frozen['PGConnections']==frozen['sourceAssemblyServerActions']==0
++    assert frozen['clockOrAuthorityIssued'] is False and frozen['newJobSubmitted'] is False and frozen['PGConnections']==frozen['serverActions']==0
++    interface=json.loads(checked(directory/'INTERFACE.UNISSUED.json','8c6adf9ad501f914226832b3663da8f18084439c7cd724007f1edc52998fa139'))
++    assert interface['sourceAssemblyServerActions']==interface['PGConnections']==0 and interface['newClock'] is None and interface['authoritySha256'] is None
+     for leaf,row in frozen['files'].items():
+         assert not Path(leaf).is_absolute() and '..' not in Path(leaf).parts
+         raw=checked(directory/leaf,row['sha256']);assert len(raw)==row['bytes']
+@@ -116,14 +118,14 @@
+         value=actual['final33-input-materialization-result.json']['value']if phase=='input_materialize'else actual['result']
+         cas['check_completed_value'](phase,actual['terminal'],value)
+     assert basis['actualPins'][str(cas['P'] / 'admin_exec.py')] == cas['OLD_DISPATCHER']
+-    now = time.time_ns() // 1_000_000
+     grant_limit = int(basis['grantExpiresAtEpoch'] * 1000)
+-    assert now + 10_800_000 <= grant_limit, 'Original grant does not cover the complete finite operation window'
+     captured = int(datetime.fromisoformat(basis['checkedAtUTC']).timestamp() * 1000)
+-    assert 0 <= now - captured <= 900_000, 'fresh real CAS basis required'
+     assert set(basis['oldIdentities']) == {str(p) for p in cas['BASIS']} | {'executionLock'} | set(cas['CUSTODY_FILES'])
+     assert all(basis['actualPins'][str(p)] == pin for p, pin in cas['BASIS'].items())
+     assert basis['oldIdentities']['executionLock'] == cas['LOCK_ID']
++    now = time.time_ns() // 1_000_000
++    assert now + 10_800_000 <= grant_limit, 'Original grant does not cover the complete finite operation window'
++    assert 0 <= now - captured <= 900_000, 'fresh real CAS basis required'
+ 
+     role_file = folders['apply'] / 'ordinary05_roles.py'
+     host_file = folders['apply'] / 'ordinary05_roles_job.py'
+--- outputs/D1/20261117-r3-normal35-root-source-02/assemble_source.py
++++ assemble_source.py
+@@ -151,7 +151,7 @@
+ # The final peer review is externally pinned by the root review, not replaced with a placeholder.
+ node=next(n for n in ast.parse(issuer).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='CONSUMER_REVIEW_PIN' for t in n.targets));lines=issuer.splitlines(keepends=True);issuer=''.join(lines[:node.lineno-1])+''.join(lines[node.end_lineno:])
+ issuer=issuer.replace('==consumer_review_pin==CONSUMER_REVIEW_PIN','==consumer_review_pin').replace("consumer_review['state']=='SOURCE_PASS_NORMAL34_APPLY02_CLI_CONSUMER_ONLY_PENDING_ROOT_PAIR'","consumer_review['state'].startswith('SOURCE_PASS_NORMAL35_')")
+-issuer=replacefun(issuer,'checked_consumer',"def checked_consumer(witness):\n    directory=Path(witness['consumerSourceDirectory']);frozen=json.loads(checked(directory/'SOURCE-PINS.json',CONSUMER_PIN))\n    assert frozen['clockOrAuthorityIssued'] is False and frozen['newJobSubmitted'] is False and frozen['PGConnections']==frozen['sourceAssemblyServerActions']==0\n    for leaf,row in frozen['files'].items():\n        assert not Path(leaf).is_absolute() and '..' not in Path(leaf).parts\n        raw=checked(directory/leaf,row['sha256']);assert len(raw)==row['bytes']\n    return frozen\n")
++issuer=replacefun(issuer,'checked_consumer',"def checked_consumer(witness):\n    directory=Path(witness['consumerSourceDirectory']);frozen=json.loads(checked(directory/'SOURCE-PINS.json',CONSUMER_PIN))\n    assert frozen['clockOrAuthorityIssued'] is False and frozen['newJobSubmitted'] is False and frozen['PGConnections']==frozen['serverActions']==0\n    interface=json.loads(checked(directory/'INTERFACE.UNISSUED.json','8c6adf9ad501f914226832b3663da8f18084439c7cd724007f1edc52998fa139'))\n    assert interface['sourceAssemblyServerActions']==interface['PGConnections']==0 and interface['newClock'] is None and interface['authoritySha256'] is None\n    for leaf,row in frozen['files'].items():\n        assert not Path(leaf).is_absolute() and '..' not in Path(leaf).parts\n        raw=checked(directory/leaf,row['sha256']);assert len(raw)==row['bytes']\n    return frozen\n")
+ issuer=issuer.replace("consumer_review['state'].startswith('SOURCE_PASS_NORMAL35_')","consumer_review['state']=='SOURCE_PASS_NORMAL35_CONSUMER_03_ONLY_PENDING_ROOT_PAIR'")
+ issuer=issuer.replace('==consumer_review_pin\n','==consumer_review_pin==CONSUMER_REVIEW_PIN\n')
+ issuer=issuer.replace('def checked_consumer(',"CONSUMER_REVIEW_PIN='f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6'\n\ndef checked_consumer(",1)
+@@ -160,6 +160,19 @@
+ oldline=next(line for line in issuer.splitlines() if "assert basis['unusedInner34']" in line)
+ issuer=issuer.replace(oldline,"    assert basis['prior34Closed']=={'service':cas['CLOSED34_SERVICE'],'restoredSha256':cas['CLOSED34_RESTORED_SHA'],'closureKind':'FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED'}")
+ issuer=issuer.replace("basis['predecessorBindings']==cas['PRIOR_BINDINGS']","basis['predecessorBindings']==cas['CLOSED34_BINDINGS']")
++# Parse/check real input metadata before sampling the issuance clock; preserve the time predicates after it.
++start=issuer.index('    now = time.time_ns() // 1_000_000')
++end=issuer.index("    role_file = folders['apply']",start)
++issuer=issuer[:start]+'''    grant_limit = int(basis['grantExpiresAtEpoch'] * 1000)
++    captured = int(datetime.fromisoformat(basis['checkedAtUTC']).timestamp() * 1000)
++    assert set(basis['oldIdentities']) == {str(p) for p in cas['BASIS']} | {'executionLock'} | set(cas['CUSTODY_FILES'])
++    assert all(basis['actualPins'][str(p)] == pin for p, pin in cas['BASIS'].items())
++    assert basis['oldIdentities']['executionLock'] == cas['LOCK_ID']
++    now = time.time_ns() // 1_000_000
++    assert now + 10_800_000 <= grant_limit, 'Original grant does not cover the complete finite operation window'
++    assert 0 <= now - captured <= 900_000, 'fresh real CAS basis required'
++
++'''+issuer[end:]
+ for a,b in [('SOURCE_PASS_NORMAL34_APPLY02_ROOT_PAIR_ONLY','SOURCE_PASS_NORMAL35_ROOT_PAIR_ONLY'),('READONLY_NORMAL34_APPLY02_REGISTRATION_BASIS','READONLY_NORMAL35_REGISTRATION_BASIS'),('ISSUED_NORMAL34_APPLY02_REGISTRATION_NO_PHASE_SUBMITTED','ISSUED_NORMAL35_REGISTRATION_NO_PHASE_SUBMITTED'),('r3_direct34_apply02.py','r3_direct35_normal.py'),('admin_exec.APPLY02-UNREGISTERED.py','admin_exec.NORMAL35-UNREGISTERED.py'),('original-cas-apply02-carrier','original-cas-normal35-carrier'),('direct34-batched-real.json','direct35-batched-real.json')]:issuer=issuer.replace(a,b)
+ put('issue_registration.py',issuer)
+ phase=(PREV/'issue_phase.py').read_text();phase=assign(phase,'FROZEN_RULES_SHA',repr(sha((HERE/'NINE-PHASES.UNISSUED.json').read_bytes())))

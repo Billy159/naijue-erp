@@ -1,0 +1,64 @@
+{
+  "actualFresh": {
+    "actualPins": 222,
+    "identities": 231,
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/ACTUAL-ROOT-REGISTRATION-BASIS-01.json",
+    "sha256": "9dce15ffbe7a391e971afe52cf6b358696dc57458926111ba72b39d66ceabf28"
+  },
+  "actualFreshPinsIdentityAndClosurePredicatesMatched": true,
+  "actualIssuerSourceSha256": "0bcc61f178eaec0dbf2ce1bb41e0148f842e267964c212fd78edfcaeae7cf8b2",
+  "actualSourceReportWitnessAndFreshTopLevelFieldsPresent": true,
+  "checkedConsumerActualReadonlyFailure": "KeyError sourceAssemblyServerActions",
+  "clockOrFreshnessWindowNotEvaluated": true,
+  "directFieldsBeforeClock": {
+    "basis": [
+      "activeOperationUnits",
+      "actualPins",
+      "basisMismatches",
+      "candidateKeys",
+      "completedPreparation",
+      "executionLockMatches",
+      "predecessorBindings",
+      "predecessorClosureKind",
+      "presentCandidateKeys",
+      "prior34Closed",
+      "state"
+    ],
+    "consumer_review": [
+      "findings",
+      "sourceOnly",
+      "sourcePinsSha256",
+      "state"
+    ],
+    "review": [
+      "consumerReviewSha256",
+      "consumerSourcePinsSha256",
+      "files",
+      "findings",
+      "rulesSha256",
+      "sourceOnly",
+      "state"
+    ],
+    "witness": [
+      "completionReadbackRefs",
+      "externallyIssuedStaticLeaves",
+      "inputMaterializationAlreadyCompleted",
+      "jobs",
+      "materializationAlreadyCompleted",
+      "materializationMode",
+      "materializeNeverResubmit",
+      "parentMaterializationRequestKey",
+      "parentMaterializationSha256",
+      "parentSourceRowsSha256",
+      "parentSourceSetSha256",
+      "phaseDirectories",
+      "sourceDelta"
+    ]
+  },
+  "futureIssuerFunctionNotCalled": true,
+  "knownOpenFinding": "N35-R02 SOURCE-PINS lacks sourceAssemblyServerActions; INTERFACE owns that field; SOURCE-PINS owns serverActions",
+  "newAuthorityFixtureServerOrPGActions": 0,
+  "sourceOnly": true,
+  "state": "INDEPENDENT_ACTUAL_PRE_CLOCK_DICTIONARY_AUDIT_WITH_N35_R02_OPEN",
+  "withdrawn1537RemainsWithdrawn": true
+}
