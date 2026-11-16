@@ -1,0 +1,15 @@
+{
+  "PGConnections": 0,
+  "actualOriginalSourcePinsMatched": true,
+  "authorityOrFutureFixtureConstructed": false,
+  "baselineSlots": 254,
+  "cases": 12,
+  "clockIssued": false,
+  "custodyMetadataSlots": 12,
+  "exactOriginalCLIArgumentsMatched": true,
+  "mainOrReaderOrCASCalled": false,
+  "noRemoteFileMutationInSource": true,
+  "oneSubprocessCallNoRetryLoop": true,
+  "serverActions": 0,
+  "state": "PASS_PURE_FIXED_CLASSIFIER_AND_ORIGINAL_CLI_PAIR_ONLY"
+}

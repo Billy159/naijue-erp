@@ -1,0 +1,24 @@
+{
+  "PGConnections": 0,
+  "actualRunpyMappingResolution": true,
+  "authorityConstructed": false,
+  "clockIssued": false,
+  "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "futureCOrEpochOrTargetConstructed": false,
+  "interfaceSha256": "b1a70148c1695885bedfd471f80166682cfdc7cb08229f0a506a303d28b8fb52",
+  "mainOrNativeOrCASCalled": false,
+  "rootReviewOrFreshBasisFixtureCreated": false,
+  "ruleCount": 6,
+  "ruleFields": [
+    "authorityLeaf",
+    "bundlePins",
+    "deadlineField",
+    "jobId",
+    "script",
+    "timeoutSeconds"
+  ],
+  "samePureFunctionsUsedByRealIssuer": true,
+  "serverActions": 0,
+  "state": "PASS_REAL_ISSUER_CONSUMER_AND_STATIC_RULE_PREFIX_NO_CLOCK"
+}

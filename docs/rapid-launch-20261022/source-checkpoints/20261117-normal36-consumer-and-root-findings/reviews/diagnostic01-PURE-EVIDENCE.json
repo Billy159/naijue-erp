@@ -1,0 +1,62 @@
+{
+  "PGConnections": 0,
+  "clockCalls": 0,
+  "diagnoseSha256": "345914e7b74e3790f220c455005e796f885d494dd0297ee52562b9b03666ce29",
+  "mainOrReaderOrSubprocessInvoked": false,
+  "oneSubprocessTimeout560": true,
+  "originalArgvExact": true,
+  "originalPinsExact": true,
+  "pureCounterexamples": {
+    "crossSetAmbiguityProducesTwoSlots": {
+      "automaticReplay": false,
+      "basisIndex": 0,
+      "basisProduced": false,
+      "custodyMetadataIndex": 0,
+      "errno": 2,
+      "errorClass": "FileNotFoundError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "earlierFrameLeakedToLaterException": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "RuntimeError",
+      "frame": {
+        "function": "read_basis",
+        "line": 10,
+        "source": "READER"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "unknownFinalClassMisclassifiedAsEarlierException": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "ValueError",
+      "frame": {
+        "function": "read_basis",
+        "line": 10,
+        "source": "READER"
+      },
+      "guardCode": "ACTIVE_OPERATION_OR_UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    }
+  },
+  "remoteMutationCallsAbsent": true,
+  "serverActions": 0,
+  "sourcePinsSha256": "ada3472b2153ef0beb895c53d7cc1992a35a47584b9c2355c58ac304160b99d3"
+}

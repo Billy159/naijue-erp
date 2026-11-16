@@ -1,0 +1,17 @@
+{
+  "PGConnections": 0,
+  "allDiagnosticFunctionASTUnchanged": true,
+  "casSHA": "43bc7cb86876670edcaae467f726e2e2905f5eb98f481635f3b31de0765da6ae",
+  "clockIssued": false,
+  "correctedSlots": [
+    184,
+    239
+  ],
+  "mainOrReaderOrCASCalled": false,
+  "newIndependentCodeLocationOnly": true,
+  "originalCLI560sAndAllGuardsUnchanged": true,
+  "priorClassifierReviewSha256": "631ba2c649b9cfab21101a818141cc334f9248c1448af0b3b50133cb28db3b68",
+  "readerSHA": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd",
+  "serverActions": 0,
+  "state": "PASS_ONLY_DIAGNOSTIC_CODE02_AND_CORRECTED_CAS_BINDING"
+}

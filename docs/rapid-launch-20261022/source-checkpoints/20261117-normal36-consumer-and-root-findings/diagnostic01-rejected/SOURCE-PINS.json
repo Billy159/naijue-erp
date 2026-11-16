@@ -1,0 +1,34 @@
+{
+  "PGConnections": 0,
+  "clockIssued": false,
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 2123,
+      "sha256": "6533273d714240e2a47638196be367a4e638d37af3a4c71eb7f3bb82d4a6be00"
+    },
+    "INPUT-PINS.json": {
+      "bytes": 4046,
+      "sha256": "b39cd60dcea1c542eedc032cb59f7ab99f2ea703b1d1d61ad2efdb0e0798873a"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 459,
+      "sha256": "0a8d20f79749ea70968f4e181cc02cd5db630671a43f77d553017e46d339e735"
+    },
+    "check_classifier.py": {
+      "bytes": 3862,
+      "sha256": "fb74077b8f4338d1f452aa9bab7dcbb66b498156220a5e2eb2a3685913570f8b"
+    },
+    "diagnose_cli.py": {
+      "bytes": 6211,
+      "sha256": "345914e7b74e3790f220c455005e796f885d494dd0297ee52562b9b03666ce29"
+    }
+  },
+  "newRemoteCallAuthorizedBySource": false,
+  "originalCASChanged": false,
+  "originalFailureCause": "UNKNOWN",
+  "originalGuardOrLockChanged": false,
+  "originalReaderChanged": false,
+  "readerOrCASOrMainCalled": false,
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_ONE_ORIGINAL_CLI_DIAGNOSTIC_NOT_EXECUTED"
+}

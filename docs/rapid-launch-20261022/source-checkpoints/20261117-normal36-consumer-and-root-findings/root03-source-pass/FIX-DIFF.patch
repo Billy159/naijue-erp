@@ -1,0 +1,31 @@
+--- 2c/register_cas.py
++++ baseline03/register_cas.py
+@@ -210,7 +210,7 @@
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-apply02-registration-cas-20261117-01/result.json': '9c49d310a615b8b55f8e561b5c83436699532b4a334816edb4b9ec30824796d0',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-registration-cas-20261116-01/old-dispatcher.bin': '79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-registration-cas-20261116-01/result.json': 'cefee00f768b93e7b050fb7c2bf52cc76d2f9807d4f9603fcdb8deb3bacc909d',
+- '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-registration-cas-20261117-01/result.json': '88b096d36fa6f8fc1613d58e815c8e84dc58049d1ab2b368cc5a3c1e3074c145',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal35-registration-cas-20261117-01/result.json': '88b096d36fa6f8fc1613d58e815c8e84dc58049d1ab2b368cc5a3c1e3074c145',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-restore33-only-registration-cas-20261116-01/old-dispatcher.bin': '149e2759ed0336e8c8a1823ca518da89d94040acdbe143f3e7bbd3b3222f61dc',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-restore33-only-registration-cas-20261116-01/result.json': 'a9cc9d69ef8601b33116a1e2970a7b248f3b7252f8cbbde777b342e1179b3e69',
+  '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-27.json': '2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb',
+@@ -265,7 +265,7 @@
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct33_restore02_only.py': '5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct34_apply02.py': '3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct34_normal.py': 'e539ceac12353067b4e5abe61e28766fa82843bc7446235a4be386236e3eb3ee',
+- '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct36_aux_prepare.py': '46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4',
++ '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct35_normal.py': '46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_failed19_readonly.py': '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_final33_input.py': '4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_final33_input_cached03.py': '17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63',
+--- 2c/original-cas-normal36-carrier.UNISSUED.py
++++ baseline03/original-cas-normal36-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-registration-source-20261117-01')
+ AUDIT=STAGE.parent/'r3-normal36-registration-cas-20261117-01'
+-SOURCE='e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11'
++SOURCE='43bc7cb86876670edcaae467f726e2e2905f5eb98f481635f3b31de0765da6ae'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000

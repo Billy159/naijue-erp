@@ -1,0 +1,33 @@
+{
+  "PGOrRoleOrApplicationAction": false,
+  "automaticReplay": false,
+  "newRootCodeOrStageOrJobOrAuthorityCreated": false,
+  "originalCLIArgv": [
+    "/usr/bin/python3",
+    "-I",
+    "-S",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-readonly-basis-source-20261117-01/read_registration_basis.py",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-readonly-basis-source-20261117-01/register_cas.py",
+    "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11"
+  ],
+  "originalCLITimeoutSeconds": 560,
+  "rawStderrOrMessageStackExported": false,
+  "readerOrCASOrGuardModified": false,
+  "resultLeaf": "DIAGNOSTIC-RESULT.json",
+  "resultSha256": "bea236e4c652ed5b6253aa56fcaf47e59cb4636e300919d7697dba4409ebe3a4",
+  "resultState": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED",
+  "resultUnknown": false,
+  "rootExecutionSourceBytes": 8053,
+  "rootExecutionSourceSha256": "276700ce306e05481df76989d90a6d51ecf56d7b0f23c7d33912c0cce6e20697",
+  "rootInterpreterArgv": [
+    "sudo",
+    "-n",
+    "/usr/bin/python3",
+    "-I",
+    "-S",
+    "-c",
+    "EXACT_REVIEWED_276700CE_BYTES"
+  ],
+  "rootProcessExitCode": 2,
+  "transportLoaderSha256": "42943d8124fa43c217ffa5b7e85d27684290d3938bb18212e1589253fc6886f8"
+}

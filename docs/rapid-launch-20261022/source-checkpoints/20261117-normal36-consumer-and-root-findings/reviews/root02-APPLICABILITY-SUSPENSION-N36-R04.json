@@ -1,0 +1,46 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "frozenReportsRewritten": false,
+    "readerOrCASOrMainInvoked": false,
+    "serverActions": 0
+  },
+  "actualEvidence": {
+    "observation": "FileNotFoundError errno2 CAS.read line434 basisIndex184 basisProduced=false; this is the observed new failure only.",
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-REGISTRATION-DIAGNOSTIC-ACTUAL-01/DIAGNOSTIC-RESULT.json",
+    "sha256": "bea236e4c652ed5b6253aa56fcaf47e59cb4636e300919d7697dba4409ebe3a4"
+  },
+  "affectedRootReviewSha256": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
+  "affectedSourcePinsSha256": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
+  "finding": {
+    "correction": "只将两处BASIS key恢复为真实历史35路径，原88b/4674 pin、254条数、guard/锁/角色预算不变；新CAS哈希须更新reader调用/diagnostic binding等派生闭包。",
+    "evidence": "BASIS槽184是未来AUDIT36/result.json并配历史35 audit88b；槽239是未来NEW_MODULE36并配历史35 helper4674。register同时要求AUDIT/NEW_MODULE absent，历史基线存在与发布目标不存在互相矛盾。",
+    "file": "outputs/D1/20261117-r3-normal36-root-source-02/register_cas.py",
+    "id": "N36-R04",
+    "priority": "P1",
+    "slots": [
+      184,
+      239
+    ],
+    "title": "历史基线误指向必须不存在的36号待发布命名空间"
+  },
+  "historicalEvidence": {
+    "auditResultSha256": "88b096d36fa6f8fc1613d58e815c8e84dc58049d1ab2b368cc5a3c1e3074c145",
+    "moduleSha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4",
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/ACTUAL-ROOT-REGISTRATION-READBACK.json",
+    "sha256": "27137faf09e1b05e9ca813be271f5e6179f971a5cad68cccbd5957e00f56683a"
+  },
+  "limits": [
+    "Slot239 is a static contradiction, not a second observed runtime failure.",
+    "Initial cc05 root cause remains UNKNOWN and is not backfilled.",
+    "Diagnostic9bb/review631 remain valid; only original root2c/review7e applicability to new issuance is suspended.",
+    "Await exact independent successor; no full old-scope re-review."
+  ],
+  "mustNotUseAffectedPairForNewIssuance": true,
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceOnly": true,
+  "state": "SOURCE_APPLICABILITY_SUSPENDED_FOR_NEW_ISSUANCE",
+  "supersededReportBytesPreserved": true
+}

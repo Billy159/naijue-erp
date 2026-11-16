@@ -51897,9 +51897,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T04:19:03.185194+08:00",
+  "updatedAt": "2026-11-17T05:22:14.839761+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-  "currentTarget": "DB05_STOPPED_ORIGINAL_AUTH_EXACT_RESTORED_PREPARE_FAILED_WRITER_NEVER_SUBMITTED",
+  "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
     "T45": "Sole server owner; diagnostic host/collector and bounded two-artifact staging install/restore source",
     "D1": "Native diagnostic runner source accepted; explicit auxiliary outer/native scope continuation and root source",
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Sole T45 actual fresh basis once using reviewed reader de8f and CAS e228, then main-only issuance from accepted source02/review7e12 if fresh actual checks match. Original writer not submitted, PG last actual stopped/exact original auth restored.",
+  "next": "T45 single start36 using main4f91 authority and original source498 start closure; collect only stored genuine outputs then main signs prepare02 from actual current36 evidence. No extra catalog/input/materialization replay; original writer remains unsubmitted/business0.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T04:19:03.185194+08:00",
+  "asOf": "2026-11-17T05:22:14.839761+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Sole T45 actual fresh basis once using reviewed reader de8f and CAS e228, then main-only issuance from accepted source02/review7e12 if fresh actual checks match. Original writer not submitted, PG last actual stopped/exact original auth restored.",
+  "next": "T45 single start36 using main4f91 authority and original source498 start closure; collect only stored genuine outputs then main signs prepare02 from actual current36 evidence. No extra catalog/input/materialization replay; original writer remains unsubmitted/business0.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,7 +52789,7 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": false,
+  "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
   "PGCurrentlyStopped": true,
@@ -52797,7 +52797,7 @@
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": true,
+  "originalAuthRestored": false,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -52812,11 +52812,9 @@
     "status": "COMPLETED"
   },
   "currentReleaseMode": {
-    "typedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal35-live-native-spec-window-01/ACTUAL-LIVE35-CAS-READBACK.json",
-    "typedSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
-    "dispatcherSha256": "5a06bf8de17ca75944934bb5c5676430a0f890bf9bec7ddcd71d804aebdc83bb",
-    "helperSha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4",
-    "policySha256": "8ede4587599742ec45ad90eef7b01e43d21d83635ce2689c85181691dca679e7"
+    "dispatcher": "780057a93427ea586e156de39186a69f00eb13df46e5f29ff36a192d4d91f8ab",
+    "module": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
+    "policy": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a"
   },
   "genuineFailureDiagnosis": "Root35 real complete describe passed after minimal root metadata binding fix. Start34 first masked error remains unknown; no replay needed.",
   "pendingUserDecision": null,
@@ -53015,7 +53013,7 @@
     "outer02NativeLogical01StaticPair": "cbcad60f",
     "twoArtifactPolicyPairs": "f1c250b8"
   },
-  "normal36": "NORMAL36_CONSUMER498_AND_ROOT2C_SOURCE_PAIR_ACCEPTED_FRESH_ACTUAL_BASIS_PENDING_NO_AUTHORITY",
+  "normal36": "NORMAL36_REGISTRATION_ACTUAL_MATCHED_APPLY36_COMPLETED_START_AUTHORIZED_OUTCOME_PENDING",
   "artifactRootJobAdmission": "PENDING_POST_IMPORT_BACKUP_APP_REQUIRED_ROUTE_NOT_PART_OF_CURRENT_SIX_DB_PHASES",
   "normal36Consumer": {
     "sourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
@@ -53023,11 +53021,99 @@
     "state": "SOURCE_ONLY_PASS"
   },
   "normal36Root": {
-    "state": "SOURCE_ONLY_PASS_PENDING_ACTUAL_FRESH_BASIS",
-    "sourcePinsSha256": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
+    "state": "SOURCE03_PASS_R04_FIXED_FRESH_ACTUAL_BASIS_MATCHED",
+    "sourcePinsSha256": "ab47b1257ab9390b83dfa2ea1441d7a2eb38286f8a83c768dedd2b7aff39e7b5",
+    "reviewSha256": "f3c2e1a0c6b3033850e343e9f5b0041d88e52637994934c570f0b1e55cba2438",
+    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal36-root-source-03"
+  },
+  "actualBasisRefusal": {
+    "sha256": "cc05dc9c04b42a49d6f749653bd27b743a6ac13d17fbdcc79921c02eee6ff352",
+    "state": "FAILED_NO_BASIS_NO_CLOCK_CAUSE_UNKNOWN"
+  },
+  "normal36DiagnosticActual": {
+    "automaticReplay": false,
+    "basisIndex": 184,
+    "basisProduced": false,
+    "custodyMetadataIndex": null,
+    "errno": 2,
+    "errorClass": "FileNotFoundError",
+    "frame": {
+      "function": "read",
+      "line": 434,
+      "source": "CAS"
+    },
+    "guardCode": "UNKNOWN",
+    "readerExitCode": 1,
+    "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+  },
+  "normal36Registration": {
+    "applyHostSha256": "13b4cb166833d9b73ece31ebb6381d9ab14e6257f79cd74da6f541041a485559",
+    "backupAdminValidUntil": 1794870207213,
+    "basisSha256": "c382a46568aebcbfe9eef2efc783583ef8b0ff448147fb38b0af99b452412954",
+    "carrierSha256": "b7cae0dee92e642407e6e1883e313f14a55505acba31b0a18892b39941838197",
+    "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+    "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+    "controllerValidUntil": 1794870087213,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal36-registration-window-01",
+    "dispatcherSha256": "780057a93427ea586e156de39186a69f00eb13df46e5f29ff36a192d4d91f8ab",
+    "independentReviewSha256": "f3c2e1a0c6b3033850e343e9f5b0041d88e52637994934c570f0b1e55cba2438",
+    "jobs": {
+      "apply": "t45-r3-ordinary36-auth-apply-20261116-01",
+      "prepare": "t45-r3-final33-plan-prepare-20261116-02",
+      "restore": "t45-r3-ordinary36-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-36",
+      "stop": "t45-r3-ordinary36-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false,
+    "policyExpiresAt": 1794873687213,
+    "policySha256": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a",
+    "registrationExpiresAt": 1794863787213,
+    "registrationSha256": "f2649299dbb421760f1243f4a1639d6938e577dee330ee468be3a6ec75166825",
+    "restorationDeadline": 1794871887213,
+    "roleApplyExpiresAt": 1794864687213,
+    "rolesSha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
     "rulesSha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e",
-    "reviewSha256": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
-    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal36-root-source-02"
+    "startsAt": 1794862887213,
+    "state": "ISSUED_NORMAL36_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
+  },
+  "normal36ActualFreshBasis": {
+    "sha256": "c382a46568aebcbfe9eef2efc783583ef8b0ff448147fb38b0af99b452412954",
+    "checkedAtUTC": "2026-11-16T20:59:09.253994+00:00",
+    "actualPins": 254,
+    "identities": 267,
+    "PGConnections": 0,
+    "mutations": 0
+  },
+  "normal36ActualRegistration": {
+    "state": "ACTUAL_NORMAL36_REGISTRATION_INDEPENDENT_READBACK_MATCHED",
+    "typedSha256": "3d81bd24ac5c9271ee82efbfc7f1bbc2b4d1f13cfdd41ce9e72a340d4fef5b9c",
+    "actualPins": {
+      "dispatcher": "780057a93427ea586e156de39186a69f00eb13df46e5f29ff36a192d4d91f8ab",
+      "module": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
+      "policy": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a"
+    },
+    "checkedAtUTC": "2026-11-16T21:07:07.262448+00:00"
+  },
+  "normal36Apply": {
+    "state": "ACTUAL_COMPLETED_0",
+    "typedSha256": "a09bb979c572e4d495daa30b48cc29e2b3e2bae59d81320fc294542568708559",
+    "terminalSha256": "501b515bb4e6f8a8aef2b150952f65503dc4c640ba4cf9506a0207546bdeda95",
+    "rootResultSha256": "08045cec1dadbeb1774c2db23cf2156cc4a269429fbf97ea0353ae22e9592974",
+    "publicResultSha256": "129c05e410073b408badec00354ad2c83d3187f1bf78f29e9a94fba4a8086fa1",
+    "elapsedSeconds": 7.5505810439935885,
+    "credentialValidUntilByRole": {
+      "erp35_admin_20261110_r3": 1794870207213,
+      "erp35_controller_20261110_r3": 1794870087213
+    }
+  },
+  "normal36Start": {
+    "bytes": 4959,
+    "expiresAt": 1794864711837,
+    "key": "t45-first-r3-native-service-start-20261116-36",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-direct-service36-start-window-01/service-start-authorization.json",
+    "sha256": "4f91f1bc9532777cb686b5cffd3ccd2166e035e37f5f0a5f726797af1ed67b1a",
+    "startsAt": 1794863811837
   }
 }
 }

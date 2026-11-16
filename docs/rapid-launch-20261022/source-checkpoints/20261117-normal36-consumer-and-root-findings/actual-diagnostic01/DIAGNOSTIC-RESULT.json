@@ -1,0 +1,1 @@
+{"automaticReplay": false, "basisIndex": 184, "basisProduced": false, "custodyMetadataIndex": null, "errno": 2, "errorClass": "FileNotFoundError", "frame": {"function": "read", "line": 434, "source": "CAS"}, "guardCode": "UNKNOWN", "readerExitCode": 1, "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"}

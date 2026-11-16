@@ -1,0 +1,43 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "futureFixtureConstructed": false,
+    "mainOrReaderOrCASOrDiagnosticInvoked": false,
+    "serverActions": 0
+  },
+  "changedSlots": [
+    184,
+    239
+  ],
+  "checks": {
+    "CASAllOtherASTUnchanged": true,
+    "actualBea184Only": true,
+    "allFrozenPins-diagnostic": true,
+    "allFrozenPins-root": true,
+    "allPreviouslyReviewedRuntimeFilesUnchanged": true,
+    "carrierOnlyCASPinChanged": true,
+    "correctHistoricalKeys": true,
+    "diagnosticCorrectCASAndOriginalReader": true,
+    "diagnosticOnlyTwoBindingAssignmentsChanged": true,
+    "exactNewCASandDiag": true,
+    "exactSources": true,
+    "noBaselineCustodyFutureNamespaceIntersection": true,
+    "noUnusedJobPathsInBaseline": true,
+    "oldPairAndSuspensionFrozen": true,
+    "onlyTwoOrderedKeysChanged": true,
+    "realHistorical27137PinsMatch": true,
+    "separateReadOnlyCode02": true
+  },
+  "newHistoricalRows": [
+    [
+      "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal35-registration-cas-20261117-01/result.json",
+      "88b096d36fa6f8fc1613d58e815c8e84dc58049d1ab2b368cc5a3c1e3074c145"
+    ],
+    [
+      "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct35_normal.py",
+      "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4"
+    ]
+  ],
+  "sourceOnly": true
+}

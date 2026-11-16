@@ -1,0 +1,265 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityOrFutureFixtureCreated": false,
+    "clockCalls": 0,
+    "mainOrReaderOrCASOrSubprocessInvoked": false,
+    "pureOriginalNeedInvokedWithFixedLiteral": true,
+    "serverActions": 0
+  },
+  "checks": {
+    "D01-finalRuntime": true,
+    "D01-finalUnknown": true,
+    "D01-finalUnknownNoHeader": true,
+    "D01CurrentFrameAccepted": true,
+    "D01DirectCauseNoOldFrame": true,
+    "D01MalformedChainNoOldFrame": true,
+    "D02-crossAmbiguous": true,
+    "D02-oneBasis": true,
+    "D02-oneCustody": true,
+    "D02-twoBasisAmbiguous": true,
+    "D03ActualFullCodeAccepted": true,
+    "D03OriginalNeedProducesAllowedFullCode": true,
+    "D03Reject-bareLiteral": true,
+    "D03Reject-inventedUppercase": true,
+    "allSixFrozenMembers": true,
+    "exactCarrier": true,
+    "exactNewSource": true,
+    "exactOriginalCLI": true,
+    "oldSourceAndReportsFrozen": true,
+    "onlyMetadataAndClassifyASTChanged": true,
+    "originalReaderAndCASPins": true,
+    "privacy-actualPrefixedGuard": true,
+    "privacy-bareLiteral": true,
+    "privacy-crossAmbiguous": true,
+    "privacy-directCause": true,
+    "privacy-finalRuntime": true,
+    "privacy-finalUnknown": true,
+    "privacy-finalUnknownNoHeader": true,
+    "privacy-inventedUppercase": true,
+    "privacy-newExactFrame": true,
+    "privacy-oneBasis": true,
+    "privacy-oneCustody": true,
+    "privacy-separatorMissing": true,
+    "privacy-twoBasisAmbiguous": true,
+    "slotAndGuardCounts": true
+  },
+  "closedFindings": [
+    "N36-D01",
+    "N36-D02",
+    "N36-D03"
+  ],
+  "diagnoseCliSha256": "276700ce306e05481df76989d90a6d51ecf56d7b0f23c7d33912c0cce6e20697",
+  "pureCaseCount": 13,
+  "pureResults": {
+    "actualPrefixedGuard": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "ValueError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "NORMAL34_REGISTRATION_ACTUAL_BASELINE_PIN_CHANGED",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "bareLiteral": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "ValueError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "crossAmbiguous": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": 2,
+      "errorClass": "FileNotFoundError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "directCause": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "TypeError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "finalRuntime": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "RuntimeError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "finalUnknown": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "UNKNOWN",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "finalUnknownNoHeader": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "UNKNOWN",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "inventedUppercase": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "ValueError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "newExactFrame": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "ValueError",
+      "frame": {
+        "function": "need",
+        "line": 413,
+        "source": "CAS"
+      },
+      "guardCode": "NORMAL34_REGISTRATION_ACTUAL_BASELINE_PIN_CHANGED",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "oneBasis": {
+      "automaticReplay": false,
+      "basisIndex": 0,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": 2,
+      "errorClass": "FileNotFoundError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "oneCustody": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": 0,
+      "errno": 2,
+      "errorClass": "FileNotFoundError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "separatorMissing": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": null,
+      "errorClass": "UNKNOWN",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "twoBasisAmbiguous": {
+      "automaticReplay": false,
+      "basisIndex": null,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": 2,
+      "errorClass": "FileNotFoundError",
+      "frame": {
+        "function": "UNKNOWN",
+        "line": null,
+        "source": "UNKNOWN"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    }
+  },
+  "sourcePinsSha256": "9bbdcdcc42fdc7a5728d5f122f646a8eff1e5a86fe5f94d2cfd8464ef4696768"
+}

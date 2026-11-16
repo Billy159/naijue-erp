@@ -1,0 +1,45 @@
+{
+  "CLIAndSourceMetadataCheckAndMainASTUnchanged": true,
+  "PGConnections": 0,
+  "clockIssued": false,
+  "closedFindings": [
+    "N36-D01",
+    "N36-D02",
+    "N36-D03"
+  ],
+  "files": {
+    "FIX-DIFF.patch": {
+      "bytes": 5378,
+      "sha256": "2e1f98d2f259ded8756d6ac239094255684ebc38c40bc8ab4b51c3cf27088ef7"
+    },
+    "HANDOFF.md": {
+      "bytes": 2434,
+      "sha256": "3de8b3f88d06dafea4c1d4ea98a6d7822f74ec9015df03a01196e7543e6203e3"
+    },
+    "INPUT-PINS.json": {
+      "bytes": 5857,
+      "sha256": "852a196cf4cfee167093ca2aa3c9fec11f5017c47930459707460ff92d4ce659"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 580,
+      "sha256": "87c5f4a28203f994cf48c52b902d505cf92507fea7a6fe23776198af9c7ea1dd"
+    },
+    "check_classifier.py": {
+      "bytes": 5319,
+      "sha256": "06dc2f45dd68203ff7dc036d399b22b107f213ffffffb28588d9adf6641a5018"
+    },
+    "diagnose_cli.py": {
+      "bytes": 8053,
+      "sha256": "276700ce306e05481df76989d90a6d51ecf56d7b0f23c7d33912c0cce6e20697"
+    }
+  },
+  "newRemoteCallAuthorizedBySource": false,
+  "originalCASChanged": false,
+  "originalFailureCause": "UNKNOWN",
+  "originalGuardOrLockChanged": false,
+  "originalReaderChanged": false,
+  "readerOrCASMainCalled": false,
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_ORIGINAL_CLI_DIAGNOSTIC_D01_D02_D03_SUCCESSOR_NOT_EXECUTED",
+  "supersedesRejectedSourceSha256": "ada3472b2153ef0beb895c53d7cc1992a35a47584b9c2355c58ac304160b99d3"
+}

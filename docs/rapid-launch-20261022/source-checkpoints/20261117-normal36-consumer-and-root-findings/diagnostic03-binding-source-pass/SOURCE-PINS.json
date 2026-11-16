@@ -1,0 +1,49 @@
+{
+  "PGConnections": 0,
+  "clockIssued": false,
+  "correctedCAS_SHA256": "43bc7cb86876670edcaae467f726e2e2905f5eb98f481635f3b31de0765da6ae",
+  "files": {
+    "BINDING-CHECKS.json": {
+      "bytes": 618,
+      "sha256": "1cefe87dc88eeaeff6fc49cddfa860e9e302b08cd6785dc27ef676e1a00e2dde"
+    },
+    "BINDING-DIFF.patch": {
+      "bytes": 1087,
+      "sha256": "99433a8072a1349f706526d2bd46608bfaa9f7264da409edcc291e8048c15432"
+    },
+    "HANDOFF.md": {
+      "bytes": 2830,
+      "sha256": "45ffd0abb967cc5c1665d3dc8d7ee6a03d6247c7a707d6ff00b82dfa3cda0460"
+    },
+    "INPUT-PINS.json": {
+      "bytes": 5857,
+      "sha256": "4546de597f813736d5b21d0c2205209635dad8979837f19e31acd3d7cafdb280"
+    },
+    "REUSED-CLASSIFIER-CHECKS.json": {
+      "bytes": 580,
+      "sha256": "87c5f4a28203f994cf48c52b902d505cf92507fea7a6fe23776198af9c7ea1dd"
+    },
+    "check_binding_only.py": {
+      "bytes": 2059,
+      "sha256": "a1bb5616879428fae6e006686f6497a5a0f95396ad04c7ff0ebf9021b4f4a57b"
+    },
+    "check_classifier.py": {
+      "bytes": 5319,
+      "sha256": "fd486bee8a6b0231f382c4b8c3f9d6d3b8058eac643f1864f3b1a1f3cbb0f8ac"
+    },
+    "diagnose_cli.py": {
+      "bytes": 8053,
+      "sha256": "573d0afcb16f3dafceb09d94df6b0c45c083ca3edb14697cba1f6d4326e3def8"
+    }
+  },
+  "newRemoteCallAuthorizedBySource": false,
+  "onlyRuntimeConstantsChanged": [
+    "CODE",
+    "CAS_SHA"
+  ],
+  "readerSHA256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd",
+  "reusedDiagnosticReviewSha256": "631ba2c649b9cfab21101a818141cc334f9248c1448af0b3b50133cb28db3b68",
+  "reusedDiagnosticSourceSha256": "9bbdcdcc42fdc7a5728d5f122f646a8eff1e5a86fe5f94d2cfd8464ef4696768",
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_CORRECTED_CAS_READONLY_CODE02_BINDING_NOT_EXECUTED"
+}

@@ -1,0 +1,19 @@
+{
+  "PGConnections": 0,
+  "actual35RegistrationReadbackSha256": "27137faf09e1b05e9ca813be271f5e6179f971a5cad68cccbd5957e00f56683a",
+  "actualDiagnosticSha256": "bea236e4c652ed5b6253aa56fcaf47e59cb4636e300919d7697dba4409ebe3a4",
+  "allCASFunctionASTUnchanged": true,
+  "clockIssued": false,
+  "correctedSlots": [
+    184,
+    239
+  ],
+  "noBaselineOrCustodyInsideReservedFutureNamespace": true,
+  "oldCC05Cause": "UNKNOWN",
+  "pinsAndOrderAndCountUnchanged": true,
+  "readerAndSIXUnchanged": true,
+  "readerOrCASMainCalled": false,
+  "serverActions": 0,
+  "slot239RuntimeFailureClaimed": false,
+  "state": "PASS_EXACT_TWO_HISTORICAL_BASELINE_PATH_REPAIRS"
+}

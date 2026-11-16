@@ -1,0 +1,36 @@
+{
+  "PGConnections": 0,
+  "baselineCount": 254,
+  "clockOrAuthorityIssued": false,
+  "diagnosticEvidenceSha256": "bea236e4c652ed5b6253aa56fcaf47e59cb4636e300919d7697dba4409ebe3a4",
+  "historical35RegistrationReadbackSha256": "27137faf09e1b05e9ca813be271f5e6179f971a5cad68cccbd5957e00f56683a",
+  "limits": [
+    "Only new diagnostic missing slot184 is observed; slot239 is a static contradiction, not a claimed second runtime failure.",
+    "Original cc05 cause remains UNKNOWN; no retroactive backfill.",
+    "No server path has been changed or inspected by D1."
+  ],
+  "originalCAS_SHA256": "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11",
+  "readerOrCASCalled": false,
+  "rootCause": "Historical BASIS keys were incorrectly renamed during normal36 source assembly. Future publish destinations must not replace immutable historical source/audit paths.",
+  "rows": [
+    {
+      "actualMissingThisDiagnostic": true,
+      "correctHistoricalPath": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal35-registration-cas-20261117-01/result.json",
+      "incorrectBaselinePath": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-registration-cas-20261117-01/result.json",
+      "slot": 184,
+      "staticAbsentPublishTargetConflict": false,
+      "unchangedExpectedPin": "88b096d36fa6f8fc1613d58e815c8e84dc58049d1ab2b368cc5a3c1e3074c145"
+    },
+    {
+      "actualMissingThisDiagnostic": false,
+      "correctHistoricalPath": "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct35_normal.py",
+      "incorrectBaselinePath": "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct36_aux_prepare.py",
+      "slot": 239,
+      "staticAbsentPublishTargetConflict": true,
+      "unchangedExpectedPin": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4"
+    }
+  ],
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "ACTUAL_SLOT184_EXPLAINED_BY_WRONG_FUTURE_PATH_AND_SECOND_STATIC_CONFLICT"
+}

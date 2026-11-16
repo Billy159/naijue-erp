@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "frozenReportRewritten": false,
+    "mainOrReaderOrSubprocessCalled": false,
+    "pureMetadataAndClassifyOnly": true,
+    "serverActions": 0
+  },
+  "finding": {
+    "correction": "从已钉真实need固定前缀及原AST字面量生成闭合实际guard枚举，不任意透传大写message。",
+    "evidence": "e228 register_cas.need实际抛ValueError(NORMAL34_REGISTRATION_+code)，reader.need也指向该函数。metadata只收need第二参数原字面量；纯实际构造的ValueError: NORMAL34_REGISTRATION_ACTUAL_BASELINE_PIN_CHANGED被classify丢为UNKNOWN。",
+    "file": "outputs/D1/20261117-r3-normal36-basis-diagnostic-source-01/diagnose_cli.py",
+    "id": "N36-D03",
+    "line": 16,
+    "priority": "P2",
+    "title": "闭合guard列表遗漏真实need添加的固定前缀"
+  },
+  "originalReportSha256": "81755b3389786e689897d68cff267957cad557ddbdb81afb81f1f9d9d73ef6c5",
+  "sourceOnly": true,
+  "sourcePinsSha256": "ada3472b2153ef0beb895c53d7cc1992a35a47584b9c2355c58ac304160b99d3",
+  "state": "SOURCE_NEED_FIX_SUPPLEMENT_N36_D03"
+}

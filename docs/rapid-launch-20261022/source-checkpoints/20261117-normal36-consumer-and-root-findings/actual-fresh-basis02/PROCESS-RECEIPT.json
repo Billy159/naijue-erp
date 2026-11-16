@@ -1,0 +1,32 @@
+{
+  "PGOrRoleOrApplicationAction": false,
+  "automaticReplay": false,
+  "oldCode01OrEvidenceChanged": false,
+  "originalCLIArgv": [
+    "/usr/bin/python3",
+    "-I",
+    "-S",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-readonly-basis-source-20261117-02/read_registration_basis.py",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-readonly-basis-source-20261117-02/register_cas.py",
+    "43bc7cb86876670edcaae467f726e2e2905f5eb98f481635f3b31de0765da6ae"
+  ],
+  "originalCLITimeoutSeconds": 560,
+  "readerOrCASModified": false,
+  "resultLeaf": "ACTUAL-REGISTRATION-BASIS.json",
+  "resultSha256": "c382a46568aebcbfe9eef2efc783583ef8b0ff448147fb38b0af99b452412954",
+  "resultState": "READONLY_NORMAL36_REGISTRATION_BASIS",
+  "resultUnknown": false,
+  "rootExecutionSourceSha256": "573d0afcb16f3dafceb09d94df6b0c45c083ca3edb14697cba1f6d4326e3def8",
+  "rootInterpreterArgv": [
+    "sudo",
+    "-n",
+    "/usr/bin/python3",
+    "-I",
+    "-S",
+    "-c",
+    "EXACT_REVIEWED_573D_BYTES"
+  ],
+  "rootProcessExitCode": 0,
+  "rootRegistrationStageOrAuditOrJobOrAuthorityCreated": false,
+  "stageReadbackSha256": "39c3a7861f42e388730b950f964060a7ed38f9a4e02811a3a5021cfb2d764522"
+}

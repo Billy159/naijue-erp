@@ -1,0 +1,69 @@
+--- ada/diagnose_cli.py
++++ successor02/diagnose_cli.py
+@@ -15,6 +15,15 @@
+    if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):funcs.add(n.name)
+    if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='need' and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and type(n.args[1].value)is str:guards.add(n.args[1].value)
+   frames[str(CODE/('register_cas.py' if label=='CAS' else 'read_registration_basis.py'))]=(label,funcs,len((cas if label=='CAS' else reader).splitlines()))
++ need_fn=next(n for n in trees['CAS'].body if isinstance(n,ast.FunctionDef) and n.name=='need')
++ raised=[n for n in ast.walk(need_fn) if isinstance(n,ast.Raise)];assert len(raised)==1
++ exc=raised[0].exc
++ assert isinstance(exc,ast.Call) and isinstance(exc.func,ast.Name) and exc.func.id=='ValueError' and len(exc.args)==1
++ value=exc.args[0]
++ assert isinstance(value,ast.BinOp) and isinstance(value.op,ast.Add) and isinstance(value.left,ast.Constant) and type(value.left.value)is str and isinstance(value.right,ast.Name) and value.right.id=='code'
++ prefix=value.left.value;assert re.fullmatch('[A-Z][A-Z0-9_]*_',prefix)
++ guards={prefix+code for code in guards}
++ assert all(re.fullmatch('[A-Z][A-Z0-9_]{0,159}',code) for code in guards)
+  tree=trees['CAS'];assign=lambda name:next(n.value for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id==name for t in n.targets))
+  basis=assign('BASIS');assert isinstance(basis,ast.DictComp)
+  pins=ast.literal_eval(basis.generators[0].iter.func.value)
+@@ -22,23 +31,39 @@
+  return {'guards':guards,'frames':frames,'basis':list(pins),'custody':custody}
+ 
+ def classify(stderr,schema,exit_code):
+- # Parse in memory, never return exception text or arbitrary property values.
+- text=stderr.decode('utf-8',errors='replace')
+- found=list(re.finditer(r'^('+ '|'.join(CLASSES)+r')(?::[^\r\n]*)?\r?$',text,re.M))
+- final_line=found[-1].group(0) if found else ''
+- error_class=found[-1].group(1) if found else 'UNKNOWN'
++ # Only the final actual exception segment may supply any diagnostic field.
++ text=stderr.decode('utf-8',errors='replace');lines=text.splitlines()
++ separators={'Traceback (most recent call last):','During handling of the above exception, another exception occurred:','The above exception was the direct cause of the following exception:'}
++ start=0
++ for i,line in enumerate(lines):
++  if line.strip() in separators:start=i+1
++ segment=lines[start:]
++ while segment and not segment[-1].strip():segment.pop()
++ # A preceding exception terminator is also a boundary if a malformed chain
++ # lacks its standard separator; never attribute its frames to the final one.
++ boundary=0
++ for i,line in enumerate(segment[:-1]):
++  if re.fullmatch(r'[A-Za-z_][A-Za-z0-9_.]*(?::[^\r\n]*)?',line):boundary=i+1
++ segment=segment[boundary:]
++ final_line=segment[-1] if segment else ''
++ match=re.fullmatch(r'([A-Za-z_][A-Za-z0-9_.]*)(?::[^\r\n]*)?',final_line)
++ actual_class=match.group(1) if match else None
++ qualified={'json.decoder.JSONDecodeError':'JSONDecodeError','subprocess.TimeoutExpired':'TimeoutExpired'}
++ error_class=actual_class if actual_class in CLASSES else qualified.get(actual_class,'UNKNOWN')
+  numbers=re.findall(r'\[Errno ([0-9]{1,3})\]',final_line)
+  errno=int(numbers[-1]) if error_class in ('OSError','PermissionError','FileNotFoundError','BlockingIOError','NotADirectoryError','IsADirectoryError') and numbers and int(numbers[-1]) in ERRNOS else None
+- codes=re.findall(r'^(?:ValueError|AssertionError): ([A-Z][A-Z0-9_]{0,159})\r?$',final_line,re.M)
++ codes=re.findall(r'^(?:ValueError|AssertionError): ([A-Z][A-Z0-9_]{0,159})$',final_line)
+  guard=codes[-1] if codes and codes[-1] in schema['guards'] else 'UNKNOWN'
+  frame={'source':'UNKNOWN','line':None,'function':'UNKNOWN'}
+- for path,line,function in re.findall(r'^  File "([^"\r\n]+)", line ([0-9]{1,6}), in ([^\r\n]+)\r?$',text,re.M):
++ for path,line,function in re.findall(r'^  File "([^"\r\n]+)", line ([0-9]{1,6}), in ([^\r\n]+)$','\n'.join(segment),re.M):
+   fixed=schema['frames'].get(path)
+   if fixed and function in fixed[1] and 1<=int(line)<=fixed[2]:frame={'source':fixed[0],'line':int(line),'function':function}
+- def slots(paths):
+-  hits=[i for i,p in enumerate(paths) if repr(p) in final_line or json.dumps(p) in final_line]
+-  return hits[0] if len(hits)==1 else None
+- return {'state':'READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED','readerExitCode':exit_code,'errorClass':error_class,'errno':errno,'guardCode':guard,'frame':frame,'basisIndex':slots(schema['basis']),'custodyMetadataIndex':slots(schema['custody']),'automaticReplay':False,'basisProduced':False}
++ hits=[('basis',i) for i,p in enumerate(schema['basis']) if repr(p) in final_line or json.dumps(p) in final_line]
++ hits += [('custody',i) for i,p in enumerate(schema['custody']) if repr(p) in final_line or json.dumps(p) in final_line]
++ unique=hits[0] if len(hits)==1 else None
++ basis_index=unique[1] if unique and unique[0]=='basis' else None
++ custody_index=unique[1] if unique and unique[0]=='custody' else None
++ return {'state':'READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED','readerExitCode':exit_code,'errorClass':error_class,'errno':errno,'guardCode':guard,'frame':frame,'basisIndex':basis_index,'custodyMetadataIndex':custody_index,'automaticReplay':False,'basisProduced':False}
+ 
+ def source_file(leaf,pin):
+  p=CODE/leaf

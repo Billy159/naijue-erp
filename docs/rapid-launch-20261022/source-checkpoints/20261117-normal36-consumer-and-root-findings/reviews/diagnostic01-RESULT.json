@@ -1,0 +1,54 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityConstructed": false,
+    "clockCalls": 0,
+    "mainOrReaderOrSubprocessInvoked": false,
+    "pureClassifierCounterexamples": 3,
+    "serverActions": 0,
+    "sourceModified": false
+  },
+  "diagnoseCliSha256": "345914e7b74e3790f220c455005e796f885d494dd0297ee52562b9b03666ce29",
+  "evidence": {
+    "path": "outputs/QB/20261117-r3-normal36-basis-diagnostic-review-01/PURE-EVIDENCE.json",
+    "sha256": "2142e8aa25629edb9984c9cdb162cfbf9fa85d8c3e63a4839f15b1f2f3ee3eba"
+  },
+  "executionReady": false,
+  "findings": [
+    {
+      "correction": "只解析最终实际异常段，未知class输出UNKNOWN，该段无精确源码frame则UNKNOWN，不回退旧异常。",
+      "evidence": "最后RuntimeError只有外部frame时仍返回先前READER frame；最后未知类时仍返回先前ValueError及固定guard。",
+      "file": "outputs/D1/20261117-r3-normal36-basis-diagnostic-source-01/diagnose_cli.py",
+      "id": "N36-D01",
+      "line": 28,
+      "priority": "P2",
+      "title": "异常链未隔离最终异常段，可能复用前段class/guard/frame"
+    },
+    {
+      "correction": "两集合合并计数，只接受全局唯一精确槽，歧义时两个均null。",
+      "evidence": "末行各含一个BASIS和CUSTODY路径时同时返回两个槽号。",
+      "file": "outputs/D1/20261117-r3-normal36-basis-diagnostic-source-01/diagnose_cli.py",
+      "id": "N36-D02",
+      "line": 39,
+      "priority": "P2",
+      "title": "文件槽唯一性未跨BASIS与CUSTODY统一判断"
+    }
+  ],
+  "limitations": [
+    "Only diagnostic carrier reviewed; original2c/7e/consumer498 reviews reused.",
+    "Actual cc05 cause remains UNKNOWN.",
+    "No authorization for new remote diagnostic call."
+  ],
+  "passedScope": [
+    "Five frozen input files exact; original de8 reader and e228 CAS hashes retained.",
+    "Exact original isolated CLI arguments; one subprocess call, timeout560; no retry loop.",
+    "No remote filesystem mutation calls; failure never sets basisProduced.",
+    "Output fields class/errno/guard/frame/slot remain bounded; no original message/stack/path/SQL/stderr hash output.",
+    "Exit0 forwards original reader stdout bytes unchanged, no automatic issuance."
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceOnly": true,
+  "sourcePinsSha256": "ada3472b2153ef0beb895c53d7cc1992a35a47584b9c2355c58ac304160b99d3",
+  "state": "SOURCE_NEED_FIX_NORMAL36_BASIS_DIAGNOSTIC_ONLY"
+}

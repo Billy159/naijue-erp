@@ -1,0 +1,21 @@
+{
+  "PGConnections": 0,
+  "actualOriginalSourcePinsMatched": true,
+  "authorityOrFutureFixtureConstructed": false,
+  "baselineSlots": 254,
+  "cases": 17,
+  "clockIssued": false,
+  "closedFindings": [
+    "N36-D01",
+    "N36-D02",
+    "N36-D03"
+  ],
+  "custodyMetadataSlots": 12,
+  "exactOriginalCLIArgumentsMatched": true,
+  "mainOrReaderOrCASCalled": false,
+  "noRemoteFileMutationInSource": true,
+  "oneSubprocessCallNoRetryLoop": true,
+  "originalNeedCalledWithFixedLiteralOnly": true,
+  "serverActions": 0,
+  "state": "PASS_PURE_FIXED_CLASSIFIER_AND_ORIGINAL_CLI_PAIR_ONLY"
+}

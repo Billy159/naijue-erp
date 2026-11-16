@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T04:19:03.185194+08:00",
-  "state": "NORMAL36_CONSUMER498_AND_ROOT2C_SOURCE_PAIR_ACCEPTED_FRESH_ACTUAL_BASIS_PENDING_NO_AUTHORITY",
+  "asOf": "2026-11-17T05:22:14.839761+08:00",
+  "state": "NORMAL36_REGISTRATION_ACTUAL_MATCHED_APPLY36_COMPLETED_START_AUTHORIZED_OUTCOME_PENDING",
   "goal": "ACTIVE",
   "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
   "consumerRulesSha256": "3f4879d7c973343878c681ef1672b57f1d0c1c695e6fcc1754ab3ed3419dd2b4",
@@ -14,7 +14,7 @@
     "R02 source rules9 versus root policy6; exact projection must also update CAS expected rules before clock",
     "R03 runpy issuer must explicitly resolve pinned HERE mapping modules"
   ],
-  "next": "Sole T45 actual fresh basis once using reviewed reader de8f and CAS e228, then main-only issuance from accepted source02/review7e12 if fresh actual checks match. Original writer not submitted, PG last actual stopped/exact original auth restored.",
+  "next": "T45 single start36 using main4f91 authority and original source498 start closure; collect only stored genuine outputs then main signs prepare02 from actual current36 evidence. No extra catalog/input/materialization replay; original writer remains unsubmitted/business0.",
   "latestActualRuntime": "PREPARE35_FAILED_UNKNOWN_STOP_AND_EXACT_AUTH_RESTORE35_COMPLETE_24CDC_47F79",
   "newServiceAuthorityOrClock": false,
   "businessWriterSubmitted": false,
@@ -752,10 +752,449 @@
       "path": "reviews/root02-INCREMENT-EVIDENCE.json",
       "sha256": "fb066664a03ebe0a6e5ae628cc7766d215ea1075584453c450f42b6c56bfd275",
       "bytes": 1736
+    },
+    {
+      "path": "diagnostic01-rejected/SOURCE-PINS.json",
+      "sha256": "ada3472b2153ef0beb895c53d7cc1992a35a47584b9c2355c58ac304160b99d3"
+    },
+    {
+      "path": "diagnostic01-rejected/HANDOFF.md",
+      "sha256": "6533273d714240e2a47638196be367a4e638d37af3a4c71eb7f3bb82d4a6be00"
+    },
+    {
+      "path": "diagnostic01-rejected/INPUT-PINS.json",
+      "sha256": "b39cd60dcea1c542eedc032cb59f7ab99f2ea703b1d1d61ad2efdb0e0798873a"
+    },
+    {
+      "path": "diagnostic01-rejected/LOCAL-CHECKS.json",
+      "sha256": "0a8d20f79749ea70968f4e181cc02cd5db630671a43f77d553017e46d339e735"
+    },
+    {
+      "path": "diagnostic01-rejected/check_classifier.py",
+      "sha256": "fb74077b8f4338d1f452aa9bab7dcbb66b498156220a5e2eb2a3685913570f8b"
+    },
+    {
+      "path": "diagnostic01-rejected/diagnose_cli.py",
+      "sha256": "345914e7b74e3790f220c455005e796f885d494dd0297ee52562b9b03666ce29"
+    },
+    {
+      "path": "diagnostic02-source-pass/SOURCE-PINS.json",
+      "sha256": "9bbdcdcc42fdc7a5728d5f122f646a8eff1e5a86fe5f94d2cfd8464ef4696768"
+    },
+    {
+      "path": "diagnostic02-source-pass/FIX-DIFF.patch",
+      "sha256": "2e1f98d2f259ded8756d6ac239094255684ebc38c40bc8ab4b51c3cf27088ef7"
+    },
+    {
+      "path": "diagnostic02-source-pass/HANDOFF.md",
+      "sha256": "3de8b3f88d06dafea4c1d4ea98a6d7822f74ec9015df03a01196e7543e6203e3"
+    },
+    {
+      "path": "diagnostic02-source-pass/INPUT-PINS.json",
+      "sha256": "852a196cf4cfee167093ca2aa3c9fec11f5017c47930459707460ff92d4ce659"
+    },
+    {
+      "path": "diagnostic02-source-pass/LOCAL-CHECKS.json",
+      "sha256": "87c5f4a28203f994cf48c52b902d505cf92507fea7a6fe23776198af9c7ea1dd"
+    },
+    {
+      "path": "diagnostic02-source-pass/check_classifier.py",
+      "sha256": "06dc2f45dd68203ff7dc036d399b22b107f213ffffffb28588d9adf6641a5018"
+    },
+    {
+      "path": "diagnostic02-source-pass/diagnose_cli.py",
+      "sha256": "276700ce306e05481df76989d90a6d51ecf56d7b0f23c7d33912c0cce6e20697"
+    },
+    {
+      "path": "reviews/diagnostic01-PURE-EVIDENCE.json",
+      "sha256": "2142e8aa25629edb9984c9cdb162cfbf9fa85d8c3e63a4839f15b1f2f3ee3eba"
+    },
+    {
+      "path": "reviews/diagnostic01-RESULT.json",
+      "sha256": "81755b3389786e689897d68cff267957cad557ddbdb81afb81f1f9d9d73ef6c5"
+    },
+    {
+      "path": "reviews/diagnostic01-SUPPLEMENT-D03.json",
+      "sha256": "a4caeb39c2632f67f13d8115bd700a88f29a90c88c018e3b15ffa44d28cf2940"
+    },
+    {
+      "path": "reviews/diagnostic02-RESULT.json",
+      "sha256": "631ba2c649b9cfab21101a818141cc334f9248c1448af0b3b50133cb28db3b68"
+    },
+    {
+      "path": "reviews/diagnostic02-INCREMENT-EVIDENCE.json",
+      "sha256": "c330628609efd8cc88f15e58a37b996c7d9eb79c93ed1886e917e7ac80b2a9a0"
+    },
+    {
+      "path": "root03-source-pass/SOURCE-PINS.json",
+      "sha256": "ab47b1257ab9390b83dfa2ea1441d7a2eb38286f8a83c768dedd2b7aff39e7b5",
+      "bytes": 3515
+    },
+    {
+      "path": "root03-source-pass/ACTUAL-PRE-CLOCK-METADATA-RESULT.json",
+      "sha256": "2429643d09996efcd7f436f24fce4e64666027344e9affcafc6c86093962d858",
+      "bytes": 973
+    },
+    {
+      "path": "root03-source-pass/FIX-DIFF.patch",
+      "sha256": "f853f1d89f7d735727107fc0be03a887bac9855079df90c63401f774475cce97",
+      "bytes": 3559
+    },
+    {
+      "path": "root03-source-pass/LOCAL-CHECKS.json",
+      "sha256": "2eed40134019b677e07ee167de700aa84dcda75cbd2a4acf89edd64a8b0f41be",
+      "bytes": 1339
+    },
+    {
+      "path": "root03-source-pass/PATH-REPAIR-CHECKS.json",
+      "sha256": "975f5922a8978fbbfcbff7cfa03dff9ce8cf2d0bf659ee64559b1ffde73b6148",
+      "bytes": 657
+    },
+    {
+      "path": "root03-source-pass/REAL-PRE-CLOCK-PREFIX-RESULT.json",
+      "sha256": "4ca926e76e9c14aec03c6ed20921b12e278a4a064ea405d2033fbe35ee718b75",
+      "bytes": 822
+    },
+    {
+      "path": "root03-source-pass/admin_exec.NORMAL36-UNREGISTERED.py",
+      "sha256": "ef02748504b4ef455644f9228dd42faf62d816c10e292145507a1b6ea4488834",
+      "bytes": 45335
+    },
+    {
+      "path": "root03-source-pass/check_historical_baseline_paths.py",
+      "sha256": "1ded93df350b57010fd3ab10f38d726abf30b4e86b5b98d1ccee3f1c0fbb9443",
+      "bytes": 3704
+    },
+    {
+      "path": "root03-source-pass/check_real_preclock_prefix.py",
+      "sha256": "f6f55a2b0d486ae728f267d424b78203c54727ad928a1333ef2453f845487bfb",
+      "bytes": 1925
+    },
+    {
+      "path": "root03-source-pass/identity_pair.py",
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787",
+      "bytes": 1347
+    },
+    {
+      "path": "root03-source-pass/issue_phase.py",
+      "sha256": "90f959296e4f57dcdcbdb3bbd6e2b8c45a531000d2431cde13eac855f39e4fd1",
+      "bytes": 39822
+    },
+    {
+      "path": "root03-source-pass/issue_registration.py",
+      "sha256": "09ef836b3a82cfd61ea6083d0f1429de292584a36350c6bc16b982c0587c06bf",
+      "bytes": 10370
+    },
+    {
+      "path": "root03-source-pass/issuer_aux_pair.py",
+      "sha256": "566f79be9b49b6d823c4c4a9509535327dc27d57f3066f16dd63b9a6421d7cd1",
+      "bytes": 2406
+    },
+    {
+      "path": "root03-source-pass/original-cas-normal36-carrier.UNISSUED.py",
+      "sha256": "da67cd83cdbadca5fd47f97cc3201e04fe0d2046a9a685b0366f829a05130033",
+      "bytes": 2584
+    },
+    {
+      "path": "root03-source-pass/r3_direct36_aux_prepare.py",
+      "sha256": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
+      "bytes": 122530
+    },
+    {
+      "path": "root03-source-pass/read_registration_basis.py",
+      "sha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd",
+      "bytes": 1996
+    },
+    {
+      "path": "root03-source-pass/register_cas.py",
+      "sha256": "43bc7cb86876670edcaae467f726e2e2905f5eb98f481635f3b31de0765da6ae",
+      "bytes": 118313
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/SOURCE-PINS.json",
+      "sha256": "f6083643deea808b94968804ad11781ea8eb12e1abfd563603fd3b6471aab1bf",
+      "bytes": 1770
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/BINDING-CHECKS.json",
+      "sha256": "1cefe87dc88eeaeff6fc49cddfa860e9e302b08cd6785dc27ef676e1a00e2dde",
+      "bytes": 618
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/BINDING-DIFF.patch",
+      "sha256": "99433a8072a1349f706526d2bd46608bfaa9f7264da409edcc291e8048c15432",
+      "bytes": 1087
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/HANDOFF.md",
+      "sha256": "45ffd0abb967cc5c1665d3dc8d7ee6a03d6247c7a707d6ff00b82dfa3cda0460",
+      "bytes": 2830
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/INPUT-PINS.json",
+      "sha256": "4546de597f813736d5b21d0c2205209635dad8979837f19e31acd3d7cafdb280",
+      "bytes": 5857
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/REUSED-CLASSIFIER-CHECKS.json",
+      "sha256": "87c5f4a28203f994cf48c52b902d505cf92507fea7a6fe23776198af9c7ea1dd",
+      "bytes": 580
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/check_binding_only.py",
+      "sha256": "a1bb5616879428fae6e006686f6497a5a0f95396ad04c7ff0ebf9021b4f4a57b",
+      "bytes": 2059
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/check_classifier.py",
+      "sha256": "fd486bee8a6b0231f382c4b8c3f9d6d3b8058eac643f1864f3b1a1f3cbb0f8ac",
+      "bytes": 5319
+    },
+    {
+      "path": "diagnostic03-binding-source-pass/diagnose_cli.py",
+      "sha256": "573d0afcb16f3dafceb09d94df6b0c45c083ca3edb14697cba1f6d4326e3def8",
+      "bytes": 8053
+    },
+    {
+      "path": "reviews/root03-DELTA-EVIDENCE.json",
+      "sha256": "0187694175e05539efeeed892bdd667d017444f6a26cad8d51651eb9e1aec9fe",
+      "bytes": 1358
+    },
+    {
+      "path": "reviews/root03-RESULT.json",
+      "sha256": "f3c2e1a0c6b3033850e343e9f5b0041d88e52637994934c570f0b1e55cba2438",
+      "bytes": 7104
+    },
+    {
+      "path": "reviews/root02-APPLICABILITY-SUSPENSION-N36-R04.json",
+      "sha256": "05053458ac8b79525c826269b2ca5652f8cc468ab249f102cccedd6042e76c09",
+      "bytes": 2493
+    },
+    {
+      "path": "actual-fresh-basis02/ACTUAL-REGISTRATION-BASIS.json",
+      "sha256": "c382a46568aebcbfe9eef2efc783583ef8b0ff448147fb38b0af99b452412954",
+      "bytes": 111769
+    },
+    {
+      "path": "actual-fresh-basis02/STAGE-RESULT.json",
+      "sha256": "39c3a7861f42e388730b950f964060a7ed38f9a4e02811a3a5021cfb2d764522",
+      "bytes": 390
+    },
+    {
+      "path": "actual-fresh-basis02/PROCESS-RECEIPT.json",
+      "sha256": "6cc230f4ba0b2247bbb0abe0478769229394ba2335ce4d260a671a95ded64af1",
+      "bytes": 1233
+    },
+    {
+      "path": "issued-safe-metadata/REGISTRATION-ISSUED-METADATA.json",
+      "sha256": "ad2fb7a8cff940f240dda8cdd12baae9518f3a77932e8a48bc1cd5ff2f73d58d",
+      "bytes": 1910
     }
   ],
   "root02SourcePinsSha256": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
   "root02ReviewSha256": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
   "root02RulesSha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e",
-  "root02Findings": "R01_R02_R03_CLOSED_IN_INDEPENDENT_SOURCE02_ONLY"
+  "root02Findings": "R01_R02_R03_CLOSED_IN_INDEPENDENT_SOURCE02_ONLY",
+  "actualBasisRefusal": {
+    "asOf": "2026-11-17T04:52:40.298458+08:00",
+    "state": "ACTUAL_DIAGNOSTIC_SLOT184_FUTURE_HISTORY_BASELINE_CONFLICT_ROOT02_NOT_USABLE_NEW_ISSUANCE",
+    "basisRefusalSha256": "cc05dc9c04b42a49d6f749653bd27b743a6ac13d17fbdcc79921c02eee6ff352",
+    "readerExitCode": 1,
+    "firstFailureUnderlyingCause": "UNKNOWN_NOT_RETAINED_NOT_RETROFILLED",
+    "actualBasisProduced": false,
+    "newAuthorityClockOrRegistration": false,
+    "businessWriterSubmitted": false,
+    "businessRowsWritten": 0,
+    "acceptedRootSource": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
+    "acceptedRootReview": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
+    "acceptedConsumerSource": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+    "existingRemoteReadonlyCode": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-readonly-basis-source-20261117-01",
+    "unchangedReaderSha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd",
+    "unchangedCASSourceSha256": "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11",
+    "diagnosticCandidate": "outputs/D1/20261117-r3-normal36-basis-diagnostic-source-02/SOURCE-PINS.json",
+    "diagnosticCandidateSha256": "9bbdcdcc42fdc7a5728d5f122f646a8eff1e5a86fe5f94d2cfd8464ef4696768",
+    "candidateNotAccepted": null,
+    "diagnosticServerExecutionAuthorized": true,
+    "next": "Freeze independent root03 correcting history audit35/result88b and helper35/4674 paths with original254 hashes/guards, update related source/carrier and diagnostic CODE02/CAS hash only. QB only R04 and bindings. Main then authorizes T45 accurate code02 stage plus one guarded true fresh read, no old carrier replay.",
+    "latestActualPGClosure": "47f79 exact original authentication restored and 24cdc stopped at19:22:48UTC, no subsequent PG operation by T45",
+    "goal": "ACTIVE",
+    "diagnosticReviewSha256": "631ba2c649b9cfab21101a818141cc334f9248c1448af0b3b50133cb28db3b68",
+    "diagnosticResult": {
+      "automaticReplay": false,
+      "basisIndex": 184,
+      "basisProduced": false,
+      "custodyMetadataIndex": null,
+      "errno": 2,
+      "errorClass": "FileNotFoundError",
+      "frame": {
+        "function": "read",
+        "line": 434,
+        "source": "CAS"
+      },
+      "guardCode": "UNKNOWN",
+      "readerExitCode": 1,
+      "state": "READONLY_NORMAL36_CLI_DIAGNOSTIC_REFUSED"
+    },
+    "diagnosticResultSha256": "bea236e4c652ed5b6253aa56fcaf47e59cb4636e300919d7697dba4409ebe3a4",
+    "basisProduced": false,
+    "root02ApplicableForNewIssuance": false,
+    "root02NewFinding": "R04 two historical35 baseline paths wrongly point to future36 AUDIT/result and NEW_MODULE, conflicting with required absence",
+    "currentRootSourceSuccessor": "D1 ROOT03 WIP only two baseline keys restored to actual35 paths; no remote fix or new clock"
+  },
+  "root02ApplicableForNewIssuance": false,
+  "root03SourcePinsSha256": "ab47b1257ab9390b83dfa2ea1441d7a2eb38286f8a83c768dedd2b7aff39e7b5",
+  "root03ReviewSha256": "f3c2e1a0c6b3033850e343e9f5b0041d88e52637994934c570f0b1e55cba2438",
+  "root03CASSourceSha256": "43bc7cb86876670edcaae467f726e2e2905f5eb98f481635f3b31de0765da6ae",
+  "actualFreshBasisSha256": "c382a46568aebcbfe9eef2efc783583ef8b0ff448147fb38b0af99b452412954",
+  "actualFreshCheckedAtUTC": "2026-11-16T20:59:09.253994+00:00",
+  "newFiniteRegistration": {
+    "applyHostSha256": "13b4cb166833d9b73ece31ebb6381d9ab14e6257f79cd74da6f541041a485559",
+    "backupAdminValidUntil": 1794870207213,
+    "basisSha256": "c382a46568aebcbfe9eef2efc783583ef8b0ff448147fb38b0af99b452412954",
+    "carrierSha256": "b7cae0dee92e642407e6e1883e313f14a55505acba31b0a18892b39941838197",
+    "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+    "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+    "controllerValidUntil": 1794870087213,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal36-registration-window-01",
+    "dispatcherSha256": "780057a93427ea586e156de39186a69f00eb13df46e5f29ff36a192d4d91f8ab",
+    "independentReviewSha256": "f3c2e1a0c6b3033850e343e9f5b0041d88e52637994934c570f0b1e55cba2438",
+    "jobs": {
+      "apply": "t45-r3-ordinary36-auth-apply-20261116-01",
+      "prepare": "t45-r3-final33-plan-prepare-20261116-02",
+      "restore": "t45-r3-ordinary36-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-36",
+      "stop": "t45-r3-ordinary36-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false,
+    "policyExpiresAt": 1794873687213,
+    "policySha256": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a",
+    "registrationExpiresAt": 1794863787213,
+    "registrationSha256": "f2649299dbb421760f1243f4a1639d6938e577dee330ee468be3a6ec75166825",
+    "restorationDeadline": 1794871887213,
+    "roleApplyExpiresAt": 1794864687213,
+    "rolesSha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
+    "rulesSha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e",
+    "startsAt": 1794862887213,
+    "state": "ISSUED_NORMAL36_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
+  },
+  "newAuthorityClockOrService": "NEW_REGISTRATION_AND_ROLE_PERMISSION_ISSUED_ONLY_NO_ROLE_APPLY_OR_SERVICE",
+  "actualRegistration36Sha256": "3d81bd24ac5c9271ee82efbfc7f1bbc2b4d1f13cfdd41ce9e72a340d4fef5b9c",
+  "actualRegistration36": {
+    "PGConnections": 0,
+    "PGStoppedAndOriginalDataIdentityMatched": true,
+    "activeOperationUnits": [],
+    "actualPins": {
+      "dispatcher": "780057a93427ea586e156de39186a69f00eb13df46e5f29ff36a192d4d91f8ab",
+      "module": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
+      "policy": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a"
+    },
+    "auditResult": {
+      "automaticReplay": false,
+      "businessDatabaseWrites": 0,
+      "dispatcherSha256": "780057a93427ea586e156de39186a69f00eb13df46e5f29ff36a192d4d91f8ab",
+      "moduleSha256": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
+      "oldHistoryPreserved": true,
+      "originalLockPreserved": true,
+      "phaseSubmitted": false,
+      "policySha256": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a",
+      "published": [
+        "module",
+        "policy",
+        "dispatcher"
+      ],
+      "status": "EXACT_NORMAL36_REGISTERED_NO_PHASE_SUBMITTED"
+    },
+    "auditResultSha256": "cb4a687d6613e053b788cdca79b02eb83dbe6f51d99ac79ac57845624242ed07",
+    "authenticationSnapshotBodiesOrDigestsRead": false,
+    "checkedAtUTC": "2026-11-16T21:07:07.262448+00:00",
+    "consumerMatched": true,
+    "entryResultSha256": "69a880096e26bb41e1dd04ad3ee2f4beadbe1c722a588481390c7a80b37de245",
+    "executionLock": [
+      66304,
+      12224849,
+      0,
+      0,
+      420,
+      1,
+      0,
+      1791828307183940015,
+      1791828307183940015
+    ],
+    "mutations": 0,
+    "new36CustodyProofBootAbsent": true,
+    "newRolesOrCredentialsApplied": false,
+    "oldBasisCount": 254,
+    "oldHistoryAndPrivateMetadataAndOriginalLockPreserved": true,
+    "oldIdentitiesMatched": 267,
+    "presentCandidateKeys": [],
+    "registrationAuthoritySha256": "f2649299dbb421760f1243f4a1639d6938e577dee330ee468be3a6ec75166825",
+    "snapshotMatched": true,
+    "state": "ACTUAL_NORMAL36_REGISTRATION_INDEPENDENT_READBACK_MATCHED"
+  },
+  "apply36TypedSha256": "a09bb979c572e4d495daa30b48cc29e2b3e2bae59d81320fc294542568708559",
+  "apply36Summary": {
+    "requestKey": "t45-r3-ordinary36-auth-apply-20261116-01",
+    "checkedAtUTC": "2026-11-16T21:14:10.187702+00:00",
+    "terminal": {
+      "atUTC": "2026-11-16T21:13:24.192129+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 7.5505810439935885,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-16T21:13:31.766145+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary36-auth-apply-20261116-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-ad95aa46351d"
+    },
+    "rootPins": {
+      "cleanup": "8bf2e623d1e3488f6e7077c112cf2e873bd188eeec68997613da39c9ba6ae6a7",
+      "inside": "f21baf47a475a625a30fd1d66fb4c747ec83d39e88f57ec06cbb7a540004f845",
+      "result": "08045cec1dadbeb1774c2db23cf2156cc4a269429fbf97ea0353ae22e9592974",
+      "terminal": "501b515bb4e6f8a8aef2b150952f65503dc4c640ba4cf9506a0207546bdeda95"
+    },
+    "publicResultSha256": "129c05e410073b408badec00354ad2c83d3187f1bf78f29e9a94fba4a8086fa1",
+    "resultObjectsEqual": true,
+    "actualServerRequestArgs": [
+      "13b4cb166833d9b73ece31ebb6381d9ab14e6257f79cd74da6f541041a485559"
+    ],
+    "sourceTypedPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-RUNTIME-01/apply/ACTUAL-APPLY36-RESULT.json",
+    "sourceTypedSha256": "a09bb979c572e4d495daa30b48cc29e2b3e2bae59d81320fc294542568708559",
+    "projection": "SAFE_OPERATIONAL_METADATA_ONLY",
+    "protectedSnapshotOrCredentialBodiesIncluded": false,
+    "roleAuthState": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK",
+    "credentialValidUntilByRole": {
+      "erp35_admin_20261110_r3": 1794870207213,
+      "erp35_controller_20261110_r3": 1794870087213
+    },
+    "runtimeAuthChanged": false,
+    "membershipsOrRoleAttributesChanged": false,
+    "cleanup": {
+      "confirmed": true,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "sourceDataPreserved": true,
+      "cid": "3d18e4d004a0c1a266b1fa58aa05383cddc9a78227dc9165860b1ce6b91ad25b"
+    }
+  },
+  "start36AuthorityMetadata": {
+    "bytes": 4959,
+    "expiresAt": 1794864711837,
+    "key": "t45-first-r3-native-service-start-20261116-36",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-direct-service36-start-window-01/service-start-authorization.json",
+    "sha256": "4f91f1bc9532777cb686b5cffd3ccd2166e035e37f5f0a5f726797af1ed67b1a",
+    "startsAt": 1794863811837
+  },
+  "originalAuthentication": "FINITE_AUTH_D834_ACTUALLY_APPLIED_ORIGINAL_NOT_YET_RESTORED",
+  "PG": "STOPPED_AT_ACTUAL_APPLY36_READBACK_START36_AUTHORIZED_OUTCOME_PENDING"
 }

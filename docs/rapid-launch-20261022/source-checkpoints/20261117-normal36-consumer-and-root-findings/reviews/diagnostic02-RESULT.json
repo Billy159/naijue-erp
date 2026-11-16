@@ -1,0 +1,96 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityOrFutureFixtureConstructed": false,
+    "clockCalls": 0,
+    "diagnosticMainOrReaderOrCASEntryInvoked": false,
+    "frozenReportsRewritten": false,
+    "ownerSourcesModified": false,
+    "pureOriginalNeedInvokedWithFixedLiteral": true,
+    "serverActions": 0,
+    "subprocessCalls": 0
+  },
+  "closedFindings": [
+    "N36-D01",
+    "N36-D02",
+    "N36-D03"
+  ],
+  "diagnoseCliSha256": "276700ce306e05481df76989d90a6d51ecf56d7b0f23c7d33912c0cce6e20697",
+  "executionReady": false,
+  "files": {
+    "FIX-DIFF.patch": {
+      "bytes": 5378,
+      "sha256": "2e1f98d2f259ded8756d6ac239094255684ebc38c40bc8ab4b51c3cf27088ef7"
+    },
+    "HANDOFF.md": {
+      "bytes": 2434,
+      "sha256": "3de8b3f88d06dafea4c1d4ea98a6d7822f74ec9015df03a01196e7543e6203e3"
+    },
+    "INPUT-PINS.json": {
+      "bytes": 5857,
+      "sha256": "852a196cf4cfee167093ca2aa3c9fec11f5017c47930459707460ff92d4ce659"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 580,
+      "sha256": "87c5f4a28203f994cf48c52b902d505cf92507fea7a6fe23776198af9c7ea1dd"
+    },
+    "check_classifier.py": {
+      "bytes": 5319,
+      "sha256": "06dc2f45dd68203ff7dc036d399b22b107f213ffffffb28588d9adf6641a5018"
+    },
+    "diagnose_cli.py": {
+      "bytes": 8053,
+      "sha256": "276700ce306e05481df76989d90a6d51ecf56d7b0f23c7d33912c0cce6e20697"
+    }
+  },
+  "findings": [],
+  "incrementalScope": "Only final exception segment isolation, global BASlS/CUSTODY slot uniqueness and original need fixed prefix guard classification; all other carrier/source/CLI semantics reused.",
+  "independentEvidence": {
+    "path": "outputs/QB/20261117-r3-normal36-basis-diagnostic-review-02/INCREMENT-EVIDENCE.json",
+    "pureCases": 13,
+    "sha256": "c330628609efd8cc88f15e58a37b996c7d9eb79c93ed1886e917e7ac80b2a9a0",
+    "staticAndPureConfirmations": 35
+  },
+  "independentVerification": {
+    "D01PreviousFrameGuardClassNotReusedAcrossFinalException": true,
+    "D01UnknownFinalClassRemainsUnknownAndDirectCauseBoundaryHandled": true,
+    "D02CrossSetAndSameSetAmbiguousSlotsBothNull": true,
+    "D02UniqueRealBasisOrCustodySlotStillClassified": true,
+    "D03BareLiteralAndInventedUppercaseRejected": true,
+    "D03OriginalNeedPureFunctionWithFixedLiteralProducesAcceptedCompleteGuard": true,
+    "allSixFrozenDeliveryHashesExact": true,
+    "exactOriginalIsolatedCLI560sAndSingleSubprocessNoRetryPreserved": true,
+    "failedDiagnosticNeverClaimsFreshBasis": true,
+    "oldAdaAnd81755AndD03SupplementRetainedExact": true,
+    "onlyMetadataAndClassifyASTChanged": true,
+    "originalReaderDe8AndCASE228HashesExact": true,
+    "outputNoRawMessageStackPathCredentialSQLOrStderrHash": true,
+    "sourceFileOriginalArgvMainASTUnchanged": true,
+    "successOriginalReaderStdoutBytesPreservedAndNoAutomaticIssuance": true
+  },
+  "limitations": [
+    "Original failed read cc05 first cause remains UNKNOWN. No genuine fresh basis or actual diagnostic terminal was collected here.",
+    "This report grants no remote execution permission; main must separately direct T45 for any one necessary readonly diagnostic call.",
+    "Original root2c/review7e and consumer498/review5ae are not re-reviewed or replaced.",
+    "Source-only classification PASS is not root cause resolution, successful basis, finite issuance, registration, PG or business import PASS."
+  ],
+  "newRemoteCallAuthorized": false,
+  "reusedEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal36-basis-diagnostic-review-01/RESULT.json",
+      "scope": "All unchanged original diagnostic carrier constraints; remains NEED_FIX for ada.",
+      "sha256": "81755b3389786e689897d68cff267957cad557ddbdb81afb81f1f9d9d73ef6c5"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal36-basis-diagnostic-review-01/SUPPLEMENT-D03.json",
+      "scope": "Original actual fixed prefix finding retained.",
+      "sha256": "a4caeb39c2632f67f13d8115bd700a88f29a90c88c018e3b15ffa44d28cf2940"
+    }
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal36-basis-diagnostic-source-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "9bbdcdcc42fdc7a5728d5f122f646a8eff1e5a86fe5f94d2cfd8464ef4696768",
+  "state": "SOURCE_PASS_NORMAL36_BASIS_DIAGNOSTIC_ONLY"
+}

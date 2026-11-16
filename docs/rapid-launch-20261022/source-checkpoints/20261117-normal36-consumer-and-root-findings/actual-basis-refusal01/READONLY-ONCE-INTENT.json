@@ -1,0 +1,13 @@
+{
+  "automaticReplay": false,
+  "carrierSha256": "0aa8e97d5acd554394a1a55169a9819563543199f6f5ac6e003ab0c375228d2e",
+  "casSha256": "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11",
+  "codeLocation": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-readonly-basis-source-20261117-01",
+  "intentAtUTC": "2026-11-16T20:20:31.615440+00:00",
+  "originalFunctionAPIPlanExecuted": false,
+  "readerSha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd",
+  "reason": "Main explicitly selected original CLI with real CAS_PATH and SHA; only these two root-private code files are placed outside reserved registration paths.",
+  "reservedStageOrAuditUsed": false,
+  "rootReviewSha256": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
+  "state": "MAIN_AUTHORIZED_ORIGINAL_CLI_READ_BASIS_ONCE"
+}

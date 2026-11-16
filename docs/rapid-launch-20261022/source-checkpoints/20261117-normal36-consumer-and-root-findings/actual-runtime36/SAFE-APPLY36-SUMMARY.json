@@ -1,0 +1,54 @@
+{
+  "requestKey": "t45-r3-ordinary36-auth-apply-20261116-01",
+  "checkedAtUTC": "2026-11-16T21:14:10.187702+00:00",
+  "terminal": {
+    "atUTC": "2026-11-16T21:13:24.192129+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 7.5505810439935885,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-16T21:13:31.766145+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary36-auth-apply-20261116-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-ad95aa46351d"
+  },
+  "rootPins": {
+    "cleanup": "8bf2e623d1e3488f6e7077c112cf2e873bd188eeec68997613da39c9ba6ae6a7",
+    "inside": "f21baf47a475a625a30fd1d66fb4c747ec83d39e88f57ec06cbb7a540004f845",
+    "result": "08045cec1dadbeb1774c2db23cf2156cc4a269429fbf97ea0353ae22e9592974",
+    "terminal": "501b515bb4e6f8a8aef2b150952f65503dc4c640ba4cf9506a0207546bdeda95"
+  },
+  "publicResultSha256": "129c05e410073b408badec00354ad2c83d3187f1bf78f29e9a94fba4a8086fa1",
+  "resultObjectsEqual": true,
+  "actualServerRequestArgs": [
+    "13b4cb166833d9b73ece31ebb6381d9ab14e6257f79cd74da6f541041a485559"
+  ],
+  "sourceTypedPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-RUNTIME-01/apply/ACTUAL-APPLY36-RESULT.json",
+  "sourceTypedSha256": "a09bb979c572e4d495daa30b48cc29e2b3e2bae59d81320fc294542568708559",
+  "projection": "SAFE_OPERATIONAL_METADATA_ONLY",
+  "protectedSnapshotOrCredentialBodiesIncluded": false,
+  "roleAuthState": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK",
+  "credentialValidUntilByRole": {
+    "erp35_admin_20261110_r3": 1794870207213,
+    "erp35_controller_20261110_r3": 1794870087213
+  },
+  "runtimeAuthChanged": false,
+  "membershipsOrRoleAttributesChanged": false,
+  "cleanup": {
+    "confirmed": true,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "sourceDataPreserved": true,
+    "cid": "3d18e4d004a0c1a266b1fa58aa05383cddc9a78227dc9165860b1ce6b91ad25b"
+  }
+}
