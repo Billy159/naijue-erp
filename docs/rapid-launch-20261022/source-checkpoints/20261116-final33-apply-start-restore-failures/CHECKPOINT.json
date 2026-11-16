@@ -1,0 +1,85 @@
+{
+  "asOf": "2026-11-16T22:50:56.796278+08:00",
+  "state": "AUTH_APPLIED_START33_FAILED_CLEAN_STOPPED_RESTORE01_FAILED_STALE_START_SOURCE_PIN_RECOVERY02_SOURCE_IN_PROGRESS",
+  "goal": "ACTIVE",
+  "realBusinessRowsWritten": 0,
+  "realWriterSubmitted": false,
+  "catalogUpdateSubmitted": false,
+  "nativePrepareSubmitted": false,
+  "authApply": "ACTUAL_COMPLETED_0_7.973_SECONDS",
+  "start33": "ACTUAL_FAILED_2_47.956_SECONDS",
+  "startFailureCode": "DB05_COMMAND_PREFLIGHT_REFUSED_CAUSE_NOT_YET_CONFIRMED",
+  "PGdataCleanStoppedAndPreserved": true,
+  "originalAuthRestored": false,
+  "restore01": "ACTUAL_FAILED_2_0.95065_SECONDS",
+  "restoreFailureCode": "ORDINARY05_FAILED_START_SOURCE_DIFFERS",
+  "restoreCause": "Old CURRENT_SOURCE pin remained 31c3 while actual approved input02 start source is defd7; source diagnosis confirmed by T45. This does not establish native describe cause.",
+  "restore02": "SOURCE_IN_PROGRESS_NO_REGISTRATION_OR_AUTHORITY",
+  "credentialControllerDeadline": 1794845631546,
+  "credentialAdminDeadline": 1794845751546,
+  "restorationUpperBound": 1794847431546,
+  "oldInputAndSourceCompletionNeverReplay": true,
+  "files": [
+    {
+      "file": "ACTUAL-APPLY-KEY-AFTER-01.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-APPLY-KEY-AFTER-01.json",
+      "sha256": "1fe2563989565a99c18fe13c926710a43564732ef647bdde1a5fd9c267ed16b1",
+      "bytes": 510
+    },
+    {
+      "file": "ACTUAL-APPLY-TRANSPORT-AUDIT-01.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-APPLY-TRANSPORT-AUDIT-01.json",
+      "sha256": "002c8ea306ebfcb8ad620ae2886e16ba17e264893355829b8ca14587d0131fc6",
+      "bytes": 2020
+    },
+    {
+      "file": "ACTUAL-APPLY-RECOVERY-COMPLETE-STAGE.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-APPLY-RECOVERY-COMPLETE-STAGE.json",
+      "sha256": "fa333ef989d460090553666ba248b9050ba15875eb9e206e7bb359d1ec8682f0",
+      "bytes": 2697
+    },
+    {
+      "file": "APPLY-RECOVERY-START-REPLY.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/APPLY-RECOVERY-START-REPLY.json",
+      "sha256": "cd26fcadfd196405ac876b44fbdabc3df0d2cd259968f9c0bd1eef752616b27b",
+      "bytes": 151
+    },
+    {
+      "file": "ACTUAL-APPLY-COMPLETED.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-APPLY-COMPLETED.json",
+      "sha256": "90214088440ad520ec15db8ed319e44575ddc8d46ff9df5adc7541b2ee244950",
+      "bytes": 3135
+    },
+    {
+      "file": "ACTUAL-START-FAILED-01.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-START-FAILED-01.json",
+      "sha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
+      "bytes": 4985
+    },
+    {
+      "file": "ACTUAL-FAILED-DESCRIBE-SAFE-01.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-FAILED-DESCRIBE-SAFE-01.json",
+      "sha256": "bce7dc939b98811dbd3bc7c3de6965b2a39f17ea223f8bc1a443080f9d024b14",
+      "bytes": 619
+    },
+    {
+      "file": "ACTUAL-RESTORE-FAILED-01.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-RESTORE-FAILED-01.json",
+      "sha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16",
+      "bytes": 1694
+    },
+    {
+      "file": "seven_phase_client600.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/seven_phase_client600.py",
+      "sha256": "42943d8124fa43c217ffa5b7e85d27684290d3938bb18212e1589253fc6886f8",
+      "bytes": 1451
+    },
+    {
+      "file": "resume_unaccepted_apply.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/resume_unaccepted_apply.py",
+      "sha256": "ddc6b7824d471d83d45ff5cdb0a54a4b893a0935dd0dfc65314afb92c9fec7fb",
+      "bytes": 9144
+    }
+  ],
+  "rawAuthorizationAndCredentialsIncluded": false
+}

@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T22:26:29.917562+08:00",
+  "updatedAt": "2026-11-16T22:50:56.796278+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,11 +52675,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-16T22:26:29.917562+08:00",
-  "state": "ACTUAL_MAIN9_AFTER_PREPARATION_REGISTERED_AND_READ_BACK_APPLY_AUTHORIZED_COMPLETION_PENDING",
+  "asOf": "2026-11-16T22:50:56.796278+08:00",
+  "state": "AUTH_APPLIED_START33_FAILED_CLEAN_STOPPED_RESTORE01_FAILED_STALE_START_SOURCE_PIN_RECOVERY02_SOURCE_IN_PROGRESS",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
-  "formalR3": "DB05_STOPPED_NEW_FINITE_APPLY_AUTHORIZED_COMPLETION_PENDING",
+  "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_CLEAN_STOPPED_33_AUTH_APPLIED_NOT_RESTORED",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 actual finite apply receipt then start33; installed catalog successor/native prepare/original writer; no replay of completed input02/ROOT06.",
+  "next": "Priority exact original authentication restoration via source-checked restore02-only successor. T45 consumer/D1 root registration/QB narrow review. Then diagnose genuine preflight using saved real outputs; never replay start33 or restore01.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52784,10 +52784,17 @@
     "rolesApplyDeadline": 1794840231546,
     "controllerDeadline": 1794845631546,
     "parentDeadline": 1794849231546,
-    "applyAuthorizedCompletionPending": true
+    "applyAuthorizedCompletionPending": false,
+    "applyActualCompleteSha256": "90214088440ad520ec15db8ed319e44575ddc8d46ff9df5adc7541b2ee244950",
+    "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
+    "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": "ACTUAL_COMPLETION_PENDING",
-  "PGStartedSince32": false,
-  "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE"
+  "newRolesApplied": true,
+  "PGStartedSince32": true,
+  "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
+  "PGCurrentlyStopped": true,
+  "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-final33-apply-start-restore-failures/CHECKPOINT.json",
+  "nativePreparation": "NOT_SUBMITTED",
+  "catalogSuccessor": "NOT_SUBMITTED"
 }
 }
