@@ -1,0 +1,326 @@
+{
+  "PGConnections": 0,
+  "actualExecutionDirectories": {
+    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/apply/bundle",
+    "prepare": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/prepare/bundle",
+    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/restore/bundle",
+    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/start/bundle",
+    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/stop/bundle",
+    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/writer/bundle"
+  },
+  "authoritiesIssued": false,
+  "auxMappingReviewSha256": "cbcad60f7519551d3fdd6bf26eadd124d60fff43f9eb24abda1fea9c335d0977",
+  "changedRuntimeMembers": [
+    "apply/bundle/ordinary05_roles.py",
+    "apply/bundle/ordinary05_roles_job.py",
+    "apply/bundle/prior_preserved35.py",
+    "prepare/bundle/final33-run.mjs",
+    "prepare/bundle/final33_host.py",
+    "prepare/bundle/normal05_retained_stop.py",
+    "prepare/bundle/r3_05_runtime.py",
+    "restore/bundle/ordinary05_roles.py",
+    "restore/bundle/ordinary05_roles_job.py",
+    "restore/bundle/prior_preserved35.py",
+    "start/bundle/batched161-run.mjs",
+    "start/bundle/final33-run.mjs",
+    "start/bundle/normal_service05_after08.py",
+    "start/bundle/normal_service05_after08_proof.py",
+    "start/bundle/prior_preserved35.py",
+    "start/bundle/r3_05_readonly.py",
+    "start/bundle/r3_05_runtime.py",
+    "start/bundle/start_owned_describe.py",
+    "stop/bundle/normal05_preserve_stop.py",
+    "stop/bundle/normal05_retained_stop.py",
+    "writer/bundle/final33-run.mjs",
+    "writer/bundle/final33_host.py",
+    "writer/bundle/normal05_retained_stop.py",
+    "writer/bundle/r3_05_runtime.py"
+  ],
+  "clockCalls": 0,
+  "diagnosticProjectionReviewSha256": "159071d4f3f264bfe4d47acef3dfbb9f8bc753f9a14853ea6f7f4c302941cb6a",
+  "files": {
+    "INTERFACE.UNISSUED.json": {
+      "bytes": 5812,
+      "sha256": "ee1eb83526f2a3ca3b9dfdf4000ecc4f4e68617ff14b8e77f96a4af6e064270b"
+    },
+    "INTERFACE.WIP.json": {
+      "bytes": 5288,
+      "sha256": "f7c3cb488d22715a1f149acb3abc12cee951fe54801eaac959b82dd107dc7fa4"
+    },
+    "LOCAL-STATIC-CHECKS.WIP.json": {
+      "bytes": 1995,
+      "sha256": "a006347f8153790a6050415fec4ef2ad1ad786eec1d413236355d839955c517c"
+    },
+    "PHASES36.UNISSUED.json": {
+      "bytes": 9095,
+      "sha256": "9fd922e91d5196892cf5c154be9bfa942b48c2285340d1de205ed4bc748d0cfb"
+    },
+    "SOURCE-DELTA.patch": {
+      "bytes": 133581,
+      "sha256": "806e6314a886e2334e20a819348150fbca7a1d21aab01206aa0d9e8718de8b43"
+    },
+    "apply/bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "apply/bundle/normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "apply/bundle/normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "apply/bundle/ordinary05_roles.py": {
+      "bytes": 21656,
+      "sha256": "f010b3043eb4ebba30150b0a8ee8e88e2d9d0d26908ee5e00df7c0408d9b1d8f"
+    },
+    "apply/bundle/ordinary05_roles_job.py": {
+      "bytes": 33305,
+      "sha256": "e1bea14b3e459865354efb1ef8dd8450ace0c960688f9595d96fab7089dd7913"
+    },
+    "apply/bundle/prior_preserved35.py": {
+      "bytes": 7010,
+      "sha256": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105"
+    },
+    "apply/bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "phase_cli.py": {
+      "bytes": 5147,
+      "sha256": "8890011d7f305810926988c1edc1b7b1450c3032b41ab698493e861d13f28f4e"
+    },
+    "prepare/bundle/final33-run.mjs": {
+      "bytes": 19314,
+      "sha256": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f"
+    },
+    "prepare/bundle/final33_host.py": {
+      "bytes": 51138,
+      "sha256": "85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6"
+    },
+    "prepare/bundle/fresh35-production-carrier.py": {
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    "prepare/bundle/nonroot_input_access.py": {
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    "prepare/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491"
+    },
+    "prepare/bundle/r3_05_cli.py": {
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    "prepare/bundle/r3_05_runtime.py": {
+      "bytes": 9394,
+      "sha256": "cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b"
+    },
+    "prior_preserved35.py": {
+      "bytes": 7010,
+      "sha256": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105"
+    },
+    "read_pending36.py": {
+      "bytes": 8972,
+      "sha256": "2727a1710f9c1db1358562915b7027e18de50d8ee5ecaef254ea1843f3af8788"
+    },
+    "restore/bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "restore/bundle/normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "restore/bundle/normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "restore/bundle/ordinary05_roles.py": {
+      "bytes": 21656,
+      "sha256": "f010b3043eb4ebba30150b0a8ee8e88e2d9d0d26908ee5e00df7c0408d9b1d8f"
+    },
+    "restore/bundle/ordinary05_roles_job.py": {
+      "bytes": 33305,
+      "sha256": "e1bea14b3e459865354efb1ef8dd8450ace0c960688f9595d96fab7089dd7913"
+    },
+    "restore/bundle/prior_preserved35.py": {
+      "bytes": 7010,
+      "sha256": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105"
+    },
+    "restore/bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "start/bundle/batched161-run.mjs": {
+      "bytes": 23971,
+      "sha256": "e6c44f641a6306b286e98613e0e69781fd64d92a5533c4ced884646648375e8a"
+    },
+    "start/bundle/final33-run.mjs": {
+      "bytes": 19314,
+      "sha256": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f"
+    },
+    "start/bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "start/bundle/normal_service05_after08.py": {
+      "bytes": 58967,
+      "sha256": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75"
+    },
+    "start/bundle/normal_service05_after08_proof.py": {
+      "bytes": 18437,
+      "sha256": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35"
+    },
+    "start/bundle/operator-host.mjs": {
+      "bytes": 72238,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    "start/bundle/operator-manifest.json": {
+      "bytes": 48490,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    "start/bundle/operator-stream-import-cli.mjs": {
+      "bytes": 26499,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    "start/bundle/operator-stream-program.mjs": {
+      "bytes": 10302,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    "start/bundle/prior_preserved35.py": {
+      "bytes": 7010,
+      "sha256": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105"
+    },
+    "start/bundle/production-plan.json": {
+      "bytes": 747,
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    "start/bundle/r3_05_cli.py": {
+      "bytes": 7052,
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    "start/bundle/r3_05_readonly.py": {
+      "bytes": 21212,
+      "sha256": "933b094ea9da9372982ccf94a3bebc004aa50fd59f774b43d3532ded388fa7ec"
+    },
+    "start/bundle/r3_05_runtime.py": {
+      "bytes": 9394,
+      "sha256": "cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b"
+    },
+    "start/bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "start/bundle/start_owned_describe.py": {
+      "bytes": 16843,
+      "sha256": "abf46f58a519f8e9c1c8abd3ff35482a94d02ae5ab9afd07fb01bdb66a7e33f6"
+    },
+    "stop/bundle/normal05_preserve_stop.py": {
+      "bytes": 20005,
+      "sha256": "0962a84910c8c62f1e34b35bde278b6ada7f39cc323f54ecae3391311e8b588b"
+    },
+    "stop/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491"
+    },
+    "writer/bundle/final33-run.mjs": {
+      "bytes": 19314,
+      "sha256": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f"
+    },
+    "writer/bundle/final33_host.py": {
+      "bytes": 51138,
+      "sha256": "85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6"
+    },
+    "writer/bundle/fresh35-production-carrier.py": {
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    "writer/bundle/nonroot_input_access.py": {
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    "writer/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491"
+    },
+    "writer/bundle/r3_05_cli.py": {
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    "writer/bundle/r3_05_runtime.py": {
+      "bytes": 9394,
+      "sha256": "cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b"
+    }
+  },
+  "historicalCatalogUpdate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/catalog_update/ACTUAL-CATALOG35-RESULT.json",
+    "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e"
+  },
+  "interfaceSha256": "ee1eb83526f2a3ca3b9dfdf4000ecc4f4e68617ff14b8e77f96a4af6e064270b",
+  "newRoleOrDatabaseCreated": false,
+  "old35OrFailed01OrCatalogOrInputReplayed": false,
+  "phases": [
+    "apply",
+    "prepare",
+    "restore",
+    "start",
+    "stop",
+    "writer"
+  ],
+  "predecessor": {
+    "closureKind": "SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED",
+    "restore": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/restore/ACTUAL-RESTORE35-RESULT.json",
+      "sha256": "47f79d19c08dec5ccbc4b1a96b70f642f13d251d00053c1f72f553cbc0efb66f"
+    },
+    "start": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/start/ACTUAL-START35-RESULT.json",
+      "sha256": "e1b0ce527d733738e82d7cb4cb041bcc23d673ddb3f64dde8c299387433297a0"
+    },
+    "stop": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/stop/ACTUAL-STOP35-RESULT.json",
+      "sha256": "02ee61f368e04cb7c3905d86f944034aa08b32b91005a14c1a4454a910137e3e"
+    }
+  },
+  "preparationIdentityMapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "rootOrNativeCauseFixed": false,
+  "rulesSha256": "9fd922e91d5196892cf5c154be9bfa942b48c2285340d1de205ed4bc748d0cfb",
+  "runtimeCandidatePass": false,
+  "runtimeMembers": 46,
+  "serverActions": 0,
+  "sourceAssemblyServerActions": 0,
+  "state": "SOURCE_FROZEN_NORMAL36_SIX_PHASE_CONSUMER_REVIEW_PENDING",
+  "unchangedRuntimeMembers": [
+    "apply/bundle/fresh35-production-carrier.py",
+    "apply/bundle/normal_service04.py",
+    "apply/bundle/normal_service04_proof.py",
+    "apply/bundle/root06_material.py",
+    "prepare/bundle/fresh35-production-carrier.py",
+    "prepare/bundle/nonroot_input_access.py",
+    "prepare/bundle/r3_05_cli.py",
+    "restore/bundle/fresh35-production-carrier.py",
+    "restore/bundle/normal_service04.py",
+    "restore/bundle/normal_service04_proof.py",
+    "restore/bundle/root06_material.py",
+    "start/bundle/fresh35-production-carrier.py",
+    "start/bundle/operator-host.mjs",
+    "start/bundle/operator-manifest.json",
+    "start/bundle/operator-stream-import-cli.mjs",
+    "start/bundle/operator-stream-program.mjs",
+    "start/bundle/production-plan.json",
+    "start/bundle/r3_05_cli.py",
+    "start/bundle/root06_material.py",
+    "writer/bundle/fresh35-production-carrier.py",
+    "writer/bundle/nonroot_input_access.py",
+    "writer/bundle/r3_05_cli.py"
+  ]
+}

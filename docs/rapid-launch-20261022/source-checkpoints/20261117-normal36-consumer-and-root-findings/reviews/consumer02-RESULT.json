@@ -1,0 +1,58 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authoritiesIssued": false,
+    "authorityFixturesCreated": false,
+    "clockCalls": 0,
+    "existingReportsOverwritten": false,
+    "mainInvoked": false,
+    "newJobsSubmitted": false,
+    "ownerSourcesModified": false,
+    "serverConnections": 0
+  },
+  "closedFindings": [
+    "N36-C01"
+  ],
+  "evidence": {
+    "metadataStaticConfirmations": 43,
+    "path": "outputs/QB/20261117-r3-normal36-consumer-review-02/INCREMENT-EVIDENCE.json",
+    "sha256": "af35166924060f5a9896a65f70df7e114a7646bfd51595c90e6e20097e6b6c4e"
+  },
+  "executionReady": false,
+  "findings": [],
+  "incrementalScope": "Only N36-C01 two assignments in each apply/restore ordinary05_roles_job.py, affected pins and new actual HERE/source/collector/phase directories. All other normal36 source findings reused from01.",
+  "independentVerification": {
+    "CLICollectorBytesUnchangedAndHereSelectsActual02": true,
+    "all54NewFrozenFilePinsExact": true,
+    "allUnaffectedRulePinsUnchanged": true,
+    "failedStartAndPrecontainerBranchesUseCorrectedTwoConstants": true,
+    "historical35SourceOldMainAndReceiptPinsUnchanged": true,
+    "interfaceDiffOnlyStateBaseRefAndActual02PathsPins": true,
+    "oldSourceAndQBNeedFixReportRetainedExact": true,
+    "other44RuntimeMembersByteIdentical": true,
+    "sixActualPhaseDirectoriesAndPolicyPinsMatch02": true,
+    "sixJobKeysScriptsTimeoutsAuthorityFieldsUnchanged": true,
+    "twoChangedFilesASTEqualToBaseAfterRemovingExactlyTwoAssignments": true,
+    "twoSourcePinsEqualActual36StartAndProofBytes": true
+  },
+  "interfaceSha256": "b1a70148c1695885bedfd471f80166682cfdc7cb08229f0a506a303d28b8fb52",
+  "limitations": [
+    "Exact D1 root/issuer/admission closure for498/3f/b1 pending; this consumer PASS is not issuance or execution authorization.",
+    "No current36 service or actual catalog/ROOT/INIT/persisted-plan/prepare/writer runtime claim.",
+    "No diagnostic76 repeat, full source compilation, build/pack, authority fixtures, native/target/main, clocks or server/PG."
+  ],
+  "phasePlanSha256": "3f4879d7c973343878c681ef1672b57f1d0c1c695e6fcc1754ab3ed3419dd2b4",
+  "reusedFrozenReviews": [
+    {
+      "path": "outputs/QB/20261117-r3-normal36-consumer-review-01/RESULT.json",
+      "scope": "All original normal36 incremental review except corrected N36-C01; original report remains NEED_FIX for f42 source.",
+      "sha256": "f7b408a8fae9b6b91c5cf5605dd983accbefdbe1865ab341aad933c75270510c"
+    }
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "state": "SOURCE_PASS_NORMAL36_CONSUMER_02_ONLY_PENDING_ROOT_PAIR"
+}

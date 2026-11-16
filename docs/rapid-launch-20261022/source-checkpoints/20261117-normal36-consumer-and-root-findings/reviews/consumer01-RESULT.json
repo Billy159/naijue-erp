@@ -1,0 +1,134 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authoritiesIssued": false,
+    "authorityFixturesCreated": false,
+    "clockCalls": 0,
+    "existingReportsOverwritten": false,
+    "fullDataCompilation": 0,
+    "mainInvoked": false,
+    "newJobsSubmitted": false,
+    "ownerSourcesModified": false,
+    "serverConnections": 0
+  },
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal36-consumer-review-01/STATIC-EVIDENCE.json",
+    "scope": "104 metadata/static confirmations including F1 mismatch; not runtime tests",
+    "sha256": "eebc63d40a3580e36301ecb441ab4ab9c267938ef39ad6ffb0206807827625cd"
+  },
+  "executionReady": false,
+  "findings": [
+    {
+      "evidence": "CURRENT_KEY已为36，但CURRENT_SOURCE仍d3c22969…、CURRENT_PROOF_SOURCE仍fa1520cf…；冻结36号启动文件实际为e39debb1…和642a0564…。真实36源码必在ORDINARY05_FAILED_START_SOURCE_DIFFERS拒绝，precontainer分支亦不匹配。",
+      "id": "N36-C01",
+      "impact": "启动失败后的原认证恢复在恢复操作前被阻断。正常停库成功分支不经过该校验，不能替代失败恢复分支核验。",
+      "priority": "P1",
+      "proof": [
+        {
+          "declarationsLines": [
+            29,
+            30
+          ],
+          "failureGuardLines": [
+            424,
+            425,
+            426
+          ],
+          "pairs": {
+            "CURRENT_PROOF_SOURCE": {
+              "actual36Source": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+              "consumerExpected": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a"
+            },
+            "CURRENT_SOURCE": {
+              "actual36Source": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+              "consumerExpected": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822"
+            }
+          },
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/apply/bundle/ordinary05_roles_job.py",
+          "phase": "apply",
+          "precontainerGuardLines": [
+            500,
+            501
+          ]
+        },
+        {
+          "declarationsLines": [
+            29,
+            30
+          ],
+          "failureGuardLines": [
+            424,
+            425,
+            426
+          ],
+          "pairs": {
+            "CURRENT_PROOF_SOURCE": {
+              "actual36Source": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+              "consumerExpected": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a"
+            },
+            "CURRENT_SOURCE": {
+              "actual36Source": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+              "consumerExpected": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822"
+            }
+          },
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/restore/bundle/ordinary05_roles_job.py",
+          "phase": "restore",
+          "precontainerGuardLines": [
+            500,
+            501
+          ]
+        }
+      ],
+      "requestedCorrection": "独立新版本同步apply/restore两个副本的CURRENT_SOURCE/CURRENT_PROOF_SOURCE为实际36源码，更新受影响SOURCE/PHASES/接口/登记闭包；原冻结版本与本报告保留。",
+      "title": "36号失败恢复仍校验35号启动源码哈希",
+      "trigger": "36号启动失败后，restore service=None且stopRequestKey=CURRENT_KEY，verify_current_stop调用verify_failed_start_closed。"
+    }
+  ],
+  "incrementalScope": "Successful35 predecessor; outer02/native01/plan02; six direct36 jobs; historical catalog35 versus current36; actual directories, CLI, pins, consumer schemas and diagnostic reuse.",
+  "independentVerification": {
+    "all22DeclaredUnchangedRuntimeBytesMatchNormal35_03": true,
+    "all46RuntimeMembersAndSixDirectoriesExact": true,
+    "all54FrozenDeliveryFilesExact": true,
+    "diagnosticRunnerAndProjectorReusedNo76CaseRerun": true,
+    "dictionaryPinReferencesChecked": 22,
+    "historicalCatalog35OriginalServicePreservedCurrent36ReadonlyNativePathReused": true,
+    "originalClientLoaderActualPathAndHashVerified": true,
+    "originalWriterInitInputBudgetAndSuccessSemanticsUnchanged": true,
+    "otherConcreteFindings": 0,
+    "outer02Native01Plan02ExplicitAcrossHostRunnerDescribeCollector": true,
+    "startSchemaFixedStopRequestKeyPlusTwoDynamicStopDigestsOldIncompleteRemoved": true,
+    "successful35ActualStartStopRestoreReceiptPinsServiceAndPureValidatorsMatch": true
+  },
+  "interfaceSha256": "ee1eb83526f2a3ca3b9dfdf4000ecc4f4e68617ff14b8e77f96a4af6e064270b",
+  "limitations": [
+    "D1 exact root/issuer/admission pairing pending separately.",
+    "No current36 real catalog/ROOT/INIT or future prepared/writer outcome measured.",
+    "No issuance, registration, main/native/target, server/PG, runtime/import/APP/build/full source compilation.",
+    "F1 successor recheck limited to impacted source and pins; passed scope reused."
+  ],
+  "phasePlanSha256": "9fd922e91d5196892cf5c154be9bfa942b48c2285340d1de205ed4bc748d0cfb",
+  "reusedFrozenReviews": [
+    {
+      "path": "outputs/QB/20261117-r3-prepare35-diagnostics-review-01/RESULT.json",
+      "sha256": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-failure-diagnostic-projection-review-01/RESULT.json",
+      "sha256": "159071d4f3f264bfe4d47acef3dfbb9f8bc753f9a14853ea6f7f4c302941cb6a"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-aux02-static-pair-review-01/RESULT.json",
+      "sha256": "cbcad60f7519551d3fdd6bf26eadd124d60fff43f9eb24abda1fea9c335d0977"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-03/RESULT.json",
+      "sha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6"
+    }
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "f42cc43d820bf8392772157520d8e9a3a303517def29a756d9de840877542fab",
+  "state": "SOURCE_NEED_FIX_NORMAL36_CONSUMER_F1"
+}

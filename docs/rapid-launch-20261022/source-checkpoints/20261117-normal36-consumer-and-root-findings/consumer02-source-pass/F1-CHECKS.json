@@ -1,0 +1,17 @@
+{
+  "affectedApplyRestoreOriginalCollector": {
+    "apply": 7,
+    "restore": 7
+  },
+  "bothFailedStartAndPrecontainerUseSameCorrectedConstants": true,
+  "changedRuntimeFiles": [
+    "apply/bundle/ordinary05_roles_job.py",
+    "restore/bundle/ordinary05_roles_job.py"
+  ],
+  "clockOrServerOrPG": false,
+  "oldFrozenSourceChanged": false,
+  "originalOtherFunctionsASTUnchanged": true,
+  "remainingRuntimeAndRootReview": true,
+  "state": "F1_TWO_PIN_CORRECTION_ONLY_STATIC_CHECKS",
+  "unchangedRuntimeFiles": 44
+}

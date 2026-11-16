@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T03:50:24.773536+08:00",
+  "updatedAt": "2026-11-17T04:14:52.876883+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_STOPPED_ORIGINAL_AUTH_EXACT_RESTORED_PREPARE_FAILED_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 final six-phase runtime closure and exact current/historical service split; D1 complete root/issuer with final consumer pins, QB only final new pairing. Then real fresh basis and bounded issuance.",
+  "next": "D1 independent root successor fixes exactly R01 R02 R03 and calls actual checked_consumer/static-rule prefix using accepted498/b1/5ae; QB only affected increments. After SOURCE acceptance, sole T45 reads one actual fresh basis before main limited issuance.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T03:50:24.773536+08:00",
+  "asOf": "2026-11-17T04:14:52.876883+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 final six-phase runtime closure and exact current/historical service split; D1 complete root/issuer with final consumer pins, QB only final new pairing. Then real fresh basis and bounded issuance.",
+  "next": "D1 independent root successor fixes exactly R01 R02 R03 and calls actual checked_consumer/static-rule prefix using accepted498/b1/5ae; QB only affected increments. After SOURCE acceptance, sole T45 reads one actual fresh basis before main limited issuance.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52999,7 +52999,7 @@
     "liveCASSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
     "actualServiceStatus": "STOPPED_PRESERVED_NO_NEW_PG_QUERY"
   },
-  "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-aux02-diagnostics-and-reception-source/CHECKPOINT.json",
+  "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal36-consumer-and-root-findings/CHECKPOINT.json",
   "PGStateAsOfApplyReadback": "HISTORICAL_START35_THEN_ACTUAL_STOP35_AND_RESTORE35",
   "nativeFailureDiagnostics": {
     "sourcePins": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
@@ -53015,7 +53015,17 @@
     "outer02NativeLogical01StaticPair": "cbcad60f",
     "twoArtifactPolicyPairs": "f1c250b8"
   },
-  "normal36": "UNFROZEN_CONSUMER_AND_ROOT_ISSUER_WIP_NO_EXECUTION",
-  "artifactRootJobAdmission": "PENDING_POST_IMPORT_BACKUP_APP_REQUIRED_ROUTE_NOT_PART_OF_CURRENT_SIX_DB_PHASES"
+  "normal36": "CONSUMER36_02_SOURCE_ACCEPTED_ROOT01_REJECTED_THREE_PRECLOCK_WIRING_FINDINGS_NO_AUTHORITY",
+  "artifactRootJobAdmission": "PENDING_POST_IMPORT_BACKUP_APP_REQUIRED_ROUTE_NOT_PART_OF_CURRENT_SIX_DB_PHASES",
+  "normal36Consumer": {
+    "sourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+    "reviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+    "state": "SOURCE_ONLY_PASS"
+  },
+  "normal36Root": {
+    "sourcePinsSha256": "879afef5bb57f0712cd3ef870eb7320a77c6530635035c8f8d78d3918a38e6eb",
+    "reviewSha256": "c73bb070dd5165a04a87375e7d7a53810dd62c29e758484d2713a8aa6c34cf80",
+    "state": "REJECTED_R01_R02_R03_NO_CLOCK_OR_EXECUTION"
+  }
 }
 }

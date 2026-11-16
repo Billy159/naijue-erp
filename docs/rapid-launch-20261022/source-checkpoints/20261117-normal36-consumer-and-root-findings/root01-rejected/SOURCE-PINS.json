@@ -1,0 +1,63 @@
+{
+  "PGConnections": 0,
+  "authorityConstructed": false,
+  "clockIssued": false,
+  "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "files": {
+    "ACTUAL-PRE-CLOCK-METADATA-RESULT.json": {
+      "bytes": 973,
+      "sha256": "2429643d09996efcd7f436f24fce4e64666027344e9affcafc6c86093962d858"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1052,
+      "sha256": "f806037c18b417428fd30f207d6d3e65cdb2df6ca315dddb0346dad37d2c8c26"
+    },
+    "SIX-PHASES.UNISSUED.json": {
+      "bytes": 33780,
+      "sha256": "7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94"
+    },
+    "admin_exec.NORMAL36-UNREGISTERED.py": {
+      "bytes": 45335,
+      "sha256": "ef02748504b4ef455644f9228dd42faf62d816c10e292145507a1b6ea4488834"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787"
+    },
+    "issue_phase.py": {
+      "bytes": 39681,
+      "sha256": "dbdbebc8e65351f7bf0c41f3df1a07099a2937cc90b6302ab81f5c44f4cfe6ce"
+    },
+    "issue_registration.py": {
+      "bytes": 8417,
+      "sha256": "0dbd88d8eaed07581a6348af1b0abbdaf2bb88b6a78596d78eedd5fa4cd4f32d"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2178,
+      "sha256": "30f9be90e3287dd683b928c94422686307e97630991c43fb1f32bea7b82cfb56"
+    },
+    "original-cas-normal36-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "8016623e0975fe57a9eea349d9df31cd8010faf1b779dd2ea4ab9dcdaae353e4"
+    },
+    "r3_direct36_aux_prepare.py": {
+      "bytes": 122530,
+      "sha256": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1996,
+      "sha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd"
+    },
+    "register_cas.py": {
+      "bytes": 120212,
+      "sha256": "2dbdf5adbcc7512361208033add702f7e4bad8e7a320c43db9a8f145fc6cedce"
+    }
+  },
+  "nativeSourceChanged": false,
+  "newJobSubmitted": false,
+  "rulesSha256": "7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_FROZEN_NORMAL36_ROOT_PAIR_REVIEW_PENDING"
+}

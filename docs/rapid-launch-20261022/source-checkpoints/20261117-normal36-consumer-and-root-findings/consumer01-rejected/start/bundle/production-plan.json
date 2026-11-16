@@ -1,0 +1,16 @@
+{
+  "authorizationReference": "T45 fixed independent R3 candidate. Each physical phase requires its own actual authority bytes.",
+  "enabled": true,
+  "imagePreparationExpiresAt": 1794236663999,
+  "operationId": "t45-first-20261110-r3-install-preparation",
+  "opsSourceSha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+  "stagingAuthoritySha256": "e8c6449e4cc03eaa0356d1f51be254dc0872ee82e72ee76ef653890708142f01",
+  "productionCarrier": {
+    "format": "FRESH35_PRODUCTION_CONTAINER_V2",
+    "front": {
+      "id": "f1caea1ce82b4804b7ba8b84d2c55fbe7d0a44d57e6e8d8f8ab90ac21628584c",
+      "name": "naijue-fresh35-first-20261109-r1-front"
+    },
+    "futureAppName": "naijue-rewrite-fresh35-first-20261110-r3-app"
+  }
+}

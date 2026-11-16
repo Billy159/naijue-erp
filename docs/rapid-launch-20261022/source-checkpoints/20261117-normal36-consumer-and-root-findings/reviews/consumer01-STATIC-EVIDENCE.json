@@ -1,0 +1,203 @@
+{
+  "PGConnections": 0,
+  "authorityFixturesCreated": false,
+  "checks": {
+    "22DeclaredUnchangedExact": true,
+    "46RuntimeMembers": true,
+    "F1Confirmed-apply": true,
+    "F1Confirmed-restore": true,
+    "actualPredecessorPins-restore": true,
+    "actualPredecessorPins-start": true,
+    "actualPredecessorPins-stop": true,
+    "actualPredecessorServiceCleanup": true,
+    "all54FrozenMembers": true,
+    "bundle-apply": true,
+    "bundle-prepare": true,
+    "bundle-restore": true,
+    "bundle-start": true,
+    "bundle-stop": true,
+    "bundle-writer": true,
+    "collectorDiagnosticASTReused": true,
+    "collectorRawEqualityBeforeProjection": true,
+    "collectorSuccessMappingCurrent36": true,
+    "diagnosticProjectorASTReused": true,
+    "diagnosticRunnerBytesReused": true,
+    "directory-apply": true,
+    "directory-prepare": true,
+    "directory-restore": true,
+    "directory-start": true,
+    "directory-stop": true,
+    "directory-writer": true,
+    "exactSixJobsNoCatalog": true,
+    "exactSourceFrozen": true,
+    "genuineReceipt-restore": true,
+    "genuineReceipt-start": true,
+    "genuineReceipt-stop": true,
+    "historicalCatalogActualPinned": true,
+    "interfaceAndRulesPins": true,
+    "job-apply": true,
+    "job-prepare": true,
+    "job-restore": true,
+    "job-start": true,
+    "job-stop": true,
+    "job-writer": true,
+    "mappingAllMetadata": true,
+    "noDuplicatePins-apply-fresh35-production-carrier.py": true,
+    "noDuplicatePins-apply-normal_service04.py": true,
+    "noDuplicatePins-apply-normal_service04_proof.py": true,
+    "noDuplicatePins-apply-ordinary05_roles.py": true,
+    "noDuplicatePins-apply-ordinary05_roles_job.py": true,
+    "noDuplicatePins-apply-prior_preserved35.py": true,
+    "noDuplicatePins-apply-root06_material.py": true,
+    "noDuplicatePins-prepare-final33_host.py": true,
+    "noDuplicatePins-prepare-fresh35-production-carrier.py": true,
+    "noDuplicatePins-prepare-nonroot_input_access.py": true,
+    "noDuplicatePins-prepare-normal05_retained_stop.py": true,
+    "noDuplicatePins-prepare-r3_05_cli.py": true,
+    "noDuplicatePins-prepare-r3_05_runtime.py": true,
+    "noDuplicatePins-restore-fresh35-production-carrier.py": true,
+    "noDuplicatePins-restore-normal_service04.py": true,
+    "noDuplicatePins-restore-normal_service04_proof.py": true,
+    "noDuplicatePins-restore-ordinary05_roles.py": true,
+    "noDuplicatePins-restore-ordinary05_roles_job.py": true,
+    "noDuplicatePins-restore-prior_preserved35.py": true,
+    "noDuplicatePins-restore-root06_material.py": true,
+    "noDuplicatePins-start-fresh35-production-carrier.py": true,
+    "noDuplicatePins-start-normal_service05_after08.py": true,
+    "noDuplicatePins-start-normal_service05_after08_proof.py": true,
+    "noDuplicatePins-start-prior_preserved35.py": true,
+    "noDuplicatePins-start-r3_05_cli.py": true,
+    "noDuplicatePins-start-r3_05_readonly.py": true,
+    "noDuplicatePins-start-r3_05_runtime.py": true,
+    "noDuplicatePins-start-root06_material.py": true,
+    "noDuplicatePins-start-start_owned_describe.py": true,
+    "noDuplicatePins-stop-normal05_preserve_stop.py": true,
+    "noDuplicatePins-stop-normal05_retained_stop.py": true,
+    "noDuplicatePins-writer-final33_host.py": true,
+    "noDuplicatePins-writer-fresh35-production-carrier.py": true,
+    "noDuplicatePins-writer-nonroot_input_access.py": true,
+    "noDuplicatePins-writer-normal05_retained_stop.py": true,
+    "noDuplicatePins-writer-r3_05_cli.py": true,
+    "noDuplicatePins-writer-r3_05_runtime.py": true,
+    "outer02Native01": true,
+    "predecessorStartSchemaCorrect": true,
+    "pureActualPriorValidators": true,
+    "ref-apply-ordinary05_roles_job.py-fresh35-production-carrier.py": true,
+    "ref-apply-ordinary05_roles_job.py-normal_service04.py": true,
+    "ref-apply-ordinary05_roles_job.py-normal_service04_proof.py": true,
+    "ref-apply-ordinary05_roles_job.py-prior_preserved35.py": true,
+    "ref-apply-ordinary05_roles_job.py-root06_material.py": true,
+    "ref-prepare-final33_host.py-final33-run.mjs": true,
+    "ref-prepare-final33_host.py-fresh35-production-carrier.py": true,
+    "ref-prepare-final33_host.py-nonroot_input_access.py": true,
+    "ref-prepare-final33_host.py-normal05_retained_stop.py": true,
+    "ref-prepare-final33_host.py-r3_05_cli.py": true,
+    "ref-prepare-final33_host.py-r3_05_runtime.py": true,
+    "ref-restore-ordinary05_roles_job.py-fresh35-production-carrier.py": true,
+    "ref-restore-ordinary05_roles_job.py-normal_service04.py": true,
+    "ref-restore-ordinary05_roles_job.py-normal_service04_proof.py": true,
+    "ref-restore-ordinary05_roles_job.py-prior_preserved35.py": true,
+    "ref-restore-ordinary05_roles_job.py-root06_material.py": true,
+    "ref-writer-final33_host.py-final33-run.mjs": true,
+    "ref-writer-final33_host.py-fresh35-production-carrier.py": true,
+    "ref-writer-final33_host.py-nonroot_input_access.py": true,
+    "ref-writer-final33_host.py-normal05_retained_stop.py": true,
+    "ref-writer-final33_host.py-r3_05_cli.py": true,
+    "ref-writer-final33_host.py-r3_05_runtime.py": true,
+    "repeatedCopiesExact": true,
+    "runnerAndDescribeDualScope": true
+  },
+  "clockCalls": 0,
+  "f1Evidence": [
+    {
+      "declarationsLines": [
+        29,
+        30
+      ],
+      "failureGuardLines": [
+        424,
+        425,
+        426
+      ],
+      "pairs": {
+        "CURRENT_PROOF_SOURCE": {
+          "actual36Source": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+          "consumerExpected": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a"
+        },
+        "CURRENT_SOURCE": {
+          "actual36Source": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+          "consumerExpected": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822"
+        }
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/apply/bundle/ordinary05_roles_job.py",
+      "phase": "apply",
+      "precontainerGuardLines": [
+        500,
+        501
+      ]
+    },
+    {
+      "declarationsLines": [
+        29,
+        30
+      ],
+      "failureGuardLines": [
+        424,
+        425,
+        426
+      ],
+      "pairs": {
+        "CURRENT_PROOF_SOURCE": {
+          "actual36Source": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+          "consumerExpected": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a"
+        },
+        "CURRENT_SOURCE": {
+          "actual36Source": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+          "consumerExpected": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822"
+        }
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/restore/bundle/ordinary05_roles_job.py",
+      "phase": "restore",
+      "precontainerGuardLines": [
+        500,
+        501
+      ]
+    }
+  ],
+  "mainInvoked": false,
+  "mapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "pythonSyntaxChecked": 37,
+  "runtimeMembers": 46,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourceSha256": "f42cc43d820bf8392772157520d8e9a3a303517def29a756d9de840877542fab",
+  "staticPinReferences": [
+    "apply/ordinary05_roles_job.py:root06_material.py",
+    "apply/ordinary05_roles_job.py:fresh35-production-carrier.py",
+    "apply/ordinary05_roles_job.py:normal_service04.py",
+    "apply/ordinary05_roles_job.py:normal_service04_proof.py",
+    "apply/ordinary05_roles_job.py:prior_preserved35.py",
+    "prepare/final33_host.py:normal05_retained_stop.py",
+    "prepare/final33_host.py:fresh35-production-carrier.py",
+    "prepare/final33_host.py:nonroot_input_access.py",
+    "prepare/final33_host.py:r3_05_cli.py",
+    "prepare/final33_host.py:r3_05_runtime.py",
+    "prepare/final33_host.py:final33-run.mjs",
+    "restore/ordinary05_roles_job.py:root06_material.py",
+    "restore/ordinary05_roles_job.py:fresh35-production-carrier.py",
+    "restore/ordinary05_roles_job.py:normal_service04.py",
+    "restore/ordinary05_roles_job.py:normal_service04_proof.py",
+    "restore/ordinary05_roles_job.py:prior_preserved35.py",
+    "writer/final33_host.py:normal05_retained_stop.py",
+    "writer/final33_host.py:fresh35-production-carrier.py",
+    "writer/final33_host.py:nonroot_input_access.py",
+    "writer/final33_host.py:r3_05_cli.py",
+    "writer/final33_host.py:r3_05_runtime.py",
+    "writer/final33_host.py:final33-run.mjs"
+  ]
+}

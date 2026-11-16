@@ -1,0 +1,137 @@
+{
+  "R01": {
+    "actualMissingField": "'sourceAssemblyServerActions'",
+    "interfaceKeys": [
+      "PGConnections",
+      "baseRejectedConsumerSourcePinsSha256",
+      "clock",
+      "collectorPath",
+      "current36ServiceProof",
+      "dynamicAuthorities",
+      "historicalCatalogUpdate",
+      "issuedAuthority",
+      "jobs",
+      "mappingSource",
+      "pending",
+      "phaseDirectories",
+      "predecessor",
+      "preparationIdentityMapping",
+      "reusedDiagnosticProjection",
+      "reusedDiagnosticRunner",
+      "role36Authority",
+      "rootPolicyPath",
+      "rulesPath",
+      "rulesSha256",
+      "runtimePins",
+      "serverActions",
+      "state"
+    ],
+    "sourceKeys": [
+      "PGConnections",
+      "actualExecutionDirectories",
+      "authoritiesIssued",
+      "baseConsumerSourcePinsSha256",
+      "changedRuntimeMembers",
+      "clockCalls",
+      "f1ClosedByIndependentReview",
+      "files",
+      "interfaceSha256",
+      "rootRegistrationOrExecution",
+      "rulesSha256",
+      "runtimeCandidatePass",
+      "runtimeMembers",
+      "serverActions",
+      "state",
+      "unchangedRuntimeMembers"
+    ]
+  },
+  "R02": {
+    "actualExtraFieldsByPhase": {
+      "apply": [
+        "authoritySha256",
+        "rolesAuthoritySha256",
+        "sourceDirectory"
+      ],
+      "prepare": [
+        "authoritySha256",
+        "rolesAuthoritySha256",
+        "sourceDirectory"
+      ],
+      "restore": [
+        "authoritySha256",
+        "rolesAuthoritySha256",
+        "sourceDirectory"
+      ],
+      "start": [
+        "authoritySha256",
+        "rolesAuthoritySha256",
+        "sourceDirectory"
+      ],
+      "stop": [
+        "authoritySha256",
+        "rolesAuthoritySha256",
+        "sourceDirectory"
+      ],
+      "writer": [
+        "authoritySha256",
+        "rolesAuthoritySha256",
+        "sourceDirectory"
+      ]
+    },
+    "requiredRuleKeys": [
+      "authorityLeaf",
+      "bundlePins",
+      "deadlineField",
+      "jobId",
+      "script",
+      "timeoutSeconds"
+    ]
+  },
+  "R03": {
+    "apiSearchDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle",
+    "caller": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1",
+    "localHelper": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal36-root-source-01/issuer_aux_pair.py",
+    "resolutionFailedWithoutOwnDirectory": true
+  },
+  "actions": {
+    "CASOrReaderInvoked": false,
+    "PGConnections": 0,
+    "authorityFixturesCreated": false,
+    "clockCalls": 0,
+    "issuerOrMainInvoked": false,
+    "privateBodiesRead": false,
+    "serverConnections": 0
+  },
+  "checks": {
+    "R01ActualSourceFieldMissing": true,
+    "R02ActualWitnessHasThreeRejectedFields": true,
+    "R02CASExpectedRulesAlsoRetainNineFields": true,
+    "R02IssuerCopiesAllWitnessRuleFields": true,
+    "R03BareImportsWithoutOwnPath": true,
+    "R03RunpyCannotResolveLocalMappingButExactHereCan": true,
+    "actual32_35MetadataEvidencePreserved": true,
+    "all12DeliveryFilesExact": true,
+    "basis254AndCustody12MetadataOnlyNoDigest": true,
+    "bothHelperJobsAssignmentsConsistent": true,
+    "casLockFilePutDecodeRenderMechanismsUnchanged": true,
+    "dispatcherOriginalExecutionLockMechanismUnchanged": true,
+    "exactFrozenSource": true,
+    "exactRulesConsumerAndReviewPins": true,
+    "helperTemplateCarrierPinsExact": true,
+    "identityPairBytesReused": true,
+    "liveBaselineDispatcherAndPolicyPins": true,
+    "pythonSyntaxOnly": true,
+    "sixActiveJobsAndThreeHistoricalOnly": true,
+    "sixActualDirectoriesAnd46Pins": true,
+    "sixCriticalHelperMethodsASTUnchanged": true
+  },
+  "reusedCriticalMethods": [
+    "frozen",
+    "current_service",
+    "historical_install",
+    "submitted",
+    "successful",
+    "current_batch_settled_or_absent"
+  ],
+  "sourcePinsSha256": "879afef5bb57f0712cd3ef870eb7320a77c6530635035c8f8d78d3918a38e6eb"
+}

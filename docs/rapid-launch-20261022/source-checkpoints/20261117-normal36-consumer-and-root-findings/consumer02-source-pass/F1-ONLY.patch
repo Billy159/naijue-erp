@@ -1,0 +1,26 @@
+--- f42/apply/bundle/ordinary05_roles_job.py
++++ successor02/apply/bundle/ordinary05_roles_job.py
+@@ -26,8 +26,8 @@
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+ CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
+ CURRENT_KEY = 't45-first-r3-native-service-start-20261116-36'
+-CURRENT_SOURCE = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
+-CURRENT_PROOF_SOURCE = 'fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a'
++CURRENT_SOURCE = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
++CURRENT_PROOF_SOURCE = '642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+--- f42/restore/bundle/ordinary05_roles_job.py
++++ successor02/restore/bundle/ordinary05_roles_job.py
+@@ -26,8 +26,8 @@
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+ CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
+ CURRENT_KEY = 't45-first-r3-native-service-start-20261116-36'
+-CURRENT_SOURCE = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
+-CURRENT_PROOF_SOURCE = 'fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a'
++CURRENT_SOURCE = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
++CURRENT_PROOF_SOURCE = '642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220

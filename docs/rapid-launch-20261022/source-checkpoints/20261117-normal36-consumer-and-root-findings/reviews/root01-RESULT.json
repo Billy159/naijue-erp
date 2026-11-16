@@ -1,0 +1,151 @@
+{
+  "actions": {
+    "CASOrReaderInvoked": false,
+    "PGConnections": 0,
+    "authorityFixturesCreated": false,
+    "clockCalls": 0,
+    "frozenReportsRewritten": false,
+    "issuerOrMainInvoked": false,
+    "ownerSourcesModified": false,
+    "privateBodiesOrSnapshotDigestsRead": false,
+    "serverConnections": 0
+  },
+  "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "evidence": {
+    "path": "outputs/QB/20261117-r3-normal36-root-review-01/STATIC-EVIDENCE.json",
+    "sha256": "cbf5d14c7908d3923de8d810335368a87cb3df4220371496aa03827ad6de6c94",
+    "staticConfirmations": 21
+  },
+  "executionReady": false,
+  "files": {
+    "ACTUAL-PRE-CLOCK-METADATA-RESULT.json": {
+      "bytes": 973,
+      "sha256": "2429643d09996efcd7f436f24fce4e64666027344e9affcafc6c86093962d858"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1052,
+      "sha256": "f806037c18b417428fd30f207d6d3e65cdb2df6ca315dddb0346dad37d2c8c26"
+    },
+    "SIX-PHASES.UNISSUED.json": {
+      "bytes": 33780,
+      "sha256": "7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94"
+    },
+    "admin_exec.NORMAL36-UNREGISTERED.py": {
+      "bytes": 45335,
+      "sha256": "ef02748504b4ef455644f9228dd42faf62d816c10e292145507a1b6ea4488834"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787"
+    },
+    "issue_phase.py": {
+      "bytes": 39681,
+      "sha256": "dbdbebc8e65351f7bf0c41f3df1a07099a2937cc90b6302ab81f5c44f4cfe6ce"
+    },
+    "issue_registration.py": {
+      "bytes": 8417,
+      "sha256": "0dbd88d8eaed07581a6348af1b0abbdaf2bb88b6a78596d78eedd5fa4cd4f32d"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2178,
+      "sha256": "30f9be90e3287dd683b928c94422686307e97630991c43fb1f32bea7b82cfb56"
+    },
+    "original-cas-normal36-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "8016623e0975fe57a9eea349d9df31cd8010faf1b779dd2ea4ab9dcdaae353e4"
+    },
+    "r3_direct36_aux_prepare.py": {
+      "bytes": 122530,
+      "sha256": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1996,
+      "sha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd"
+    },
+    "register_cas.py": {
+      "bytes": 120212,
+      "sha256": "2dbdf5adbcc7512361208033add702f7e4bad8e7a320c43db9a8f145fc6cedce"
+    }
+  },
+  "findings": [
+    {
+      "correction": "从真实SOURCE/INTERFACE现有字段分别读回并校验原字节，绑定interfaceSha256及实际5ae报告，不补造旧35字段。",
+      "evidence": "真实consumer498 SOURCE和b1 INTERFACE均无sourceAssemblyServerActions，issue在clock前必KeyError。",
+      "file": "outputs/D1/20261117-r3-normal36-root-source-01/issue_registration.py",
+      "id": "N36-R01",
+      "line": 26,
+      "priority": "P1",
+      "title": "签发器读取真实SOURCE不存在的字段"
+    },
+    {
+      "correction": "issuer与CAS EXPECTED_RULES均按同一6字段合同投影真实SIX，pin/键/预算不变。在clock前以真实静态规则字典完成schema与来源配对，不造未来authority fixture。",
+      "evidence": "SIX每项含9字段，issuer:45原样复制；CAS:637-647要求6字段，随后:655 actual==EXPECTED_RULES，而EXPECTED_RULES亦保存9字段。因此无任意规则能同时通过；只修issuer投影仍会第二处拒绝。issue:63的验证位于clock与角色构造之后。",
+      "file": "outputs/D1/20261117-r3-normal36-root-source-01/register_cas.py",
+      "id": "N36-R02",
+      "line": 637,
+      "priority": "P1",
+      "relatedFiles": [
+        "outputs/D1/20261117-r3-normal36-root-source-01/issue_registration.py"
+      ],
+      "title": "登记规则同时要求六字段与九字段"
+    },
+    {
+      "correction": "按已钉的准确HERE显式解析issuer_aux_pair及identity_pair，并验证原冻结源，不依赖调用者sys.path；保持两层scope/native闭合schema不变。",
+      "evidence": "486/495普通from issuer_aux_pair；api只向sys.path加consumer bundle，未加D1 HERE。repo cwd/runpy caller路径查找spec实际为None，精确HERE查找则存在。现有runpy发行到PREPARE时会ModuleNotFoundError；CLI脚本入口才可能隐式带上HERE。",
+      "file": "outputs/D1/20261117-r3-normal36-root-source-01/issue_phase.py",
+      "id": "N36-R03",
+      "line": 486,
+      "priority": "P2",
+      "title": "原runpy调用方式不能解析本目录身份映射模块"
+    }
+  ],
+  "independentVerification": {
+    "actualBaselineDispatcher5a06AndPolicy8edePinned": true,
+    "all12FrozenDeliveryPinsAndSyntaxExact": true,
+    "all46StaticConsumerPinsMatch": true,
+    "casOriginalLockReadPutDecodeRenderMechanismsReused": true,
+    "consumer498AndReview5aeAndSixActualDirectoriesBound": true,
+    "dispatcherExecutionLockMechanismUnchanged": true,
+    "dualIdentityStaticModulesByteIdenticalToAcceptedReview": true,
+    "freshBasis254PinsAnd12PrivateCustodyNoDigestIntersection": true,
+    "helperTemplateCarrierPinsMatch": true,
+    "historicalInstall32Catalog35Current36Separated": true,
+    "originalWriterInitInputRoleAndTimeBudgetsPreserved": true,
+    "otherConcreteFindings": 0,
+    "sixActiveKeysAndThreeHistoricalOnlyConsistent": true,
+    "sixCriticalHelperMethodASTReused": true,
+    "successful35StartStopRestoreAndFailedPrepareHistoryPreserved": true,
+    "twoHelperJobsDeclarationsIdentical": true
+  },
+  "limitations": [
+    "This source is NEED_FIX and must not issue or register.",
+    "Actual32/35 saved metadata proof f255 reused; not a fresh live basis.",
+    "No future36 service/epoch/ROOT/INIT/prepared-binding outcome constructed or asserted.",
+    "Only reviewed three findings and affected closure need successor verification; accepted consumer remains passed."
+  ],
+  "reusedEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal36-consumer-review-02/RESULT.json",
+      "scope": "Final consumer498; no re-review.",
+      "sha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-root-review-03/RESULT.json",
+      "scope": "Unchanged historical mechanisms, AST compared; old35 not current36 execution authority.",
+      "sha256": "b8ea66d13c29810b74c999c71d1821e4bd1a3973dc351cc783903722592de5bc"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-aux02-static-pair-review-01/RESULT.json",
+      "scope": "Dual identity static contract reused.",
+      "sha256": "cbcad60f7519551d3fdd6bf26eadd124d60fff43f9eb24abda1fea9c335d0977"
+    }
+  ],
+  "reviewer": "QB",
+  "rulesSha256": "7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal36-root-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "879afef5bb57f0712cd3ef870eb7320a77c6530635035c8f8d78d3918a38e6eb",
+  "state": "SOURCE_NEED_FIX_NORMAL36_ROOT_PAIR_01"
+}

@@ -1,0 +1,14 @@
+{
+  "PGConnections": 0,
+  "baseSourceSha256": "f42cc43d820bf8392772157520d8e9a3a303517def29a756d9de840877542fab",
+  "changedRuntimeFiles": [
+    "apply/bundle/ordinary05_roles_job.py",
+    "restore/bundle/ordinary05_roles_job.py"
+  ],
+  "clockCalls": 0,
+  "currentProofSourceSha256": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+  "currentSourceSha256": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+  "fullPinsAndDirectoriesNotFrozenYet": true,
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_EXACT_F1_TWO_PINS_FIXED_AWAIT_REMAINING_QB_FINDINGS"
+}

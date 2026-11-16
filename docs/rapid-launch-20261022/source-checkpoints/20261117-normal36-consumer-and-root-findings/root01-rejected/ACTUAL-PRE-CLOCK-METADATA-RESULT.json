@@ -1,0 +1,19 @@
+{
+  "F1Current36PinsMatchActualConsumerFiles": true,
+  "PGConnections": 0,
+  "actualPreclockMetadataProof": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal36-root-issuer-wip-01/ACTUAL-PRE-CLOCK-METADATA.WIP.json",
+    "sha256": "f255b8de5f59ff9b8aae469693bb93a3b2c6c1d5d79b522c74efe98108abbc4b"
+  },
+  "authorityIssued": false,
+  "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "future36COrEpochConstructed": false,
+  "nativeExecuted": false,
+  "notAFreshServerBasis": true,
+  "phaseBlueprintSha256": "3f4879d7c973343878c681ef1672b57f1d0c1c695e6fcc1754ab3ed3419dd2b4",
+  "prior35HelperSha256": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105",
+  "serverActions": 0,
+  "sixPathsAndRealCLI_HERE_Matched": true,
+  "sourceOnly": true,
+  "state": "FINAL_CONSUMER_METADATA_DELTA_MATCHED_REUSING_ACTUAL35_32_PROOF"
+}

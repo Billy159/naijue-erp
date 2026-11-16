@@ -1,0 +1,136 @@
+{
+  "allDynamicAuthorities": null,
+  "historicalCatalogUpdate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/catalog_update/ACTUAL-CATALOG35-RESULT.json",
+    "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e"
+  },
+  "jobs": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "f010b3043eb4ebba30150b0a8ee8e88e2d9d0d26908ee5e00df7c0408d9b1d8f",
+        "ordinary05_roles_job.py": "e1bea14b3e459865354efb1ef8dd8450ace0c960688f9595d96fab7089dd7913",
+        "prior_preserved35.py": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary36-auth-apply-20261116-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/apply/bundle",
+      "timeoutSeconds": 300
+    },
+    "prepare": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "final33-run.mjs": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f",
+        "final33_host.py": "85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+        "normal05_retained_stop.py": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491",
+        "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+        "r3_05_runtime.py": "cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-final33-plan-prepare-20261116-02",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "final33_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/prepare/bundle",
+      "timeoutSeconds": 780
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "f010b3043eb4ebba30150b0a8ee8e88e2d9d0d26908ee5e00df7c0408d9b1d8f",
+        "ordinary05_roles_job.py": "e1bea14b3e459865354efb1ef8dd8450ace0c960688f9595d96fab7089dd7913",
+        "prior_preserved35.py": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary36-auth-restore-20261116-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/restore/bundle",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "batched161-run.mjs": "e6c44f641a6306b286e98613e0e69781fd64d92a5533c4ced884646648375e8a",
+        "final33-run.mjs": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f",
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service05_after08.py": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+        "normal_service05_after08_proof.py": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+        "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+        "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+        "operator-stream-import-cli.mjs": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+        "operator-stream-program.mjs": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+        "prior_preserved35.py": "370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105",
+        "production-plan.json": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+        "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+        "r3_05_readonly.py": "933b094ea9da9372982ccf94a3bebc004aa50fd59f774b43d3532ded388fa7ec",
+        "r3_05_runtime.py": "cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+        "start_owned_describe.py": "abf46f58a519f8e9c1c8abd3ff35482a94d02ae5ab9afd07fb01bdb66a7e33f6"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-first-r3-native-service-start-20261116-36",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal_service05_after08.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/start/bundle",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "normal05_preserve_stop.py": "0962a84910c8c62f1e34b35bde278b6ada7f39cc323f54ecae3391311e8b588b",
+        "normal05_retained_stop.py": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary36-preserve-stop-20261116-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal05_preserve_stop.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/stop/bundle",
+      "timeoutSeconds": 120
+    },
+    "writer": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "final33-run.mjs": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f",
+        "final33_host.py": "85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+        "normal05_retained_stop.py": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491",
+        "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+        "r3_05_runtime.py": "cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-real-execute-20261115-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "final33_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/writer/bundle",
+      "timeoutSeconds": 3000
+    }
+  },
+  "noCatalogJob": true,
+  "preparationIdentityMapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "serverActions": 0,
+  "state": "WIP_SIX_PHASE_CONSUMER_RULES_NOT_FROZEN_OR_ISSUED"
+}

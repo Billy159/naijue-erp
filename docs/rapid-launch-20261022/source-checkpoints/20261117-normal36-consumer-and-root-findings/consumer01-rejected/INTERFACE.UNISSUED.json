@@ -1,0 +1,73 @@
+{
+  "PGConnections": 0,
+  "clock": null,
+  "collectorPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/read_pending36.py",
+  "current36ServiceProof": null,
+  "dynamicAuthorities": null,
+  "historicalCatalogUpdate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/catalog_update/ACTUAL-CATALOG35-RESULT.json",
+    "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e"
+  },
+  "issuedAuthority": null,
+  "jobs": {
+    "apply": "t45-r3-ordinary36-auth-apply-20261116-01",
+    "prepare": "t45-r3-final33-plan-prepare-20261116-02",
+    "restore": "t45-r3-ordinary36-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-36",
+    "stop": "t45-r3-ordinary36-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "mappingSource": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/SOURCE-PINS.json",
+    "sha256": "c92f6dd8c40af16b793305e5933e0670eae77446db44a7431a25ab5977e1cbd8"
+  },
+  "pending": [
+    "Independent exact six-phase consumer review",
+    "D1 paired root/issuer closure and controlled registration source",
+    "Fresh real metadata and C external finite issue; never use WIP as execution permission"
+  ],
+  "phaseDirectories": {
+    "apply": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/apply/bundle",
+    "prepare": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/prepare/bundle",
+    "restore": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/restore/bundle",
+    "start": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/start/bundle",
+    "stop": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/stop/bundle",
+    "writer": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/writer/bundle"
+  },
+  "predecessor": {
+    "closureKind": "SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED",
+    "restore": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/restore/ACTUAL-RESTORE35-RESULT.json",
+      "sha256": "47f79d19c08dec5ccbc4b1a96b70f642f13d251d00053c1f72f553cbc0efb66f"
+    },
+    "start": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/start/ACTUAL-START35-RESULT.json",
+      "sha256": "e1b0ce527d733738e82d7cb4cb041bcc23d673ddb3f64dde8c299387433297a0"
+    },
+    "stop": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/stop/ACTUAL-STOP35-RESULT.json",
+      "sha256": "02ee61f368e04cb7c3905d86f944034aa08b32b91005a14c1a4454a910137e3e"
+    }
+  },
+  "preparationIdentityMapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "reusedDiagnosticProjection": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01/SOURCE-PINS.json",
+    "sha256": "261b47f3a282ab65d586c5963f0772533d91bf2acff68c5a06e841337a05f6b3"
+  },
+  "reusedDiagnosticRunner": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/final33-run.mjs",
+    "sha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6"
+  },
+  "role36Authority": null,
+  "rootPolicyPath": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct36-batched-real.json",
+  "rulesPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-WIP-01/PHASES36.UNISSUED.json",
+  "rulesSha256": "9fd922e91d5196892cf5c154be9bfa942b48c2285340d1de205ed4bc748d0cfb",
+  "runtimePins": null,
+  "serverActions": 0,
+  "state": "SOURCE_FROZEN_REVIEW_PENDING_NO_RUNTIME_AUTHORITY"
+}

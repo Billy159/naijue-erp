@@ -1,0 +1,33 @@
+{
+  "PGConnections": 0,
+  "actualPreclockMetadataReused": "f255b8de5f59ff9b8aae469693bb93a3b2c6c1d5d79b522c74efe98108abbc4b",
+  "authorityConstructed": false,
+  "basisPins": 254,
+  "bothEffectiveJobsAssignmentsEqual": true,
+  "clockIssued": false,
+  "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "nativeExecuted": false,
+  "privateCustodyMetadataOnly": 12,
+  "rulesSha256": "7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94",
+  "runtimeRegistrationNotExecuted": true,
+  "serverActions": 0,
+  "sixActivePhases": [
+    "apply",
+    "prepare",
+    "restore",
+    "start",
+    "stop",
+    "writer"
+  ],
+  "state": "SOURCE_COMPILE_AND_EXACT_CAS_HELPER_RULES_METADATA_MATCHED",
+  "targetOrCapabilityConstructed": false,
+  "unchangedCriticalMethodAST": [
+    "frozen",
+    "current_service",
+    "historical_install",
+    "submitted",
+    "successful",
+    "current_batch_settled_or_absent"
+  ]
+}

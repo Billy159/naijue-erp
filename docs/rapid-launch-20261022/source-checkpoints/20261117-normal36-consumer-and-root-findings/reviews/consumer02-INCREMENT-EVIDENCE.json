@@ -1,0 +1,72 @@
+{
+  "PGConnections": 0,
+  "authorityFixturesCreated": false,
+  "checks": {
+    "CLICollectorBytesAndHereUnchanged": true,
+    "actual36Pins-apply/bundle/ordinary05_roles_job.py": true,
+    "actual36Pins-restore/bundle/ordinary05_roles_job.py": true,
+    "actualDirectory-apply": true,
+    "actualDirectory-prepare": true,
+    "actualDirectory-restore": true,
+    "actualDirectory-start": true,
+    "actualDirectory-stop": true,
+    "actualDirectory-writer": true,
+    "all54NewDeliveryPinsExact": true,
+    "baseBound": true,
+    "bundlePins-apply": true,
+    "bundlePins-prepare": true,
+    "bundlePins-restore": true,
+    "bundlePins-start": true,
+    "bundlePins-stop": true,
+    "bundlePins-writer": true,
+    "interfaceOnlyLocationAndF1MetadataChanged": true,
+    "newCollectorAndRulesActualLocation": true,
+    "newInterfaceRulesPins": true,
+    "newSourceFrozen": true,
+    "nonPinRuleUnchanged-apply": true,
+    "nonPinRuleUnchanged-prepare": true,
+    "nonPinRuleUnchanged-restore": true,
+    "nonPinRuleUnchanged-start": true,
+    "nonPinRuleUnchanged-stop": true,
+    "nonPinRuleUnchanged-writer": true,
+    "oldReportFrozen": true,
+    "oldSourceFrozen": true,
+    "onlyTwoAssignmentsAST-apply/bundle/ordinary05_roles_job.py": true,
+    "onlyTwoAssignmentsAST-restore/bundle/ordinary05_roles_job.py": true,
+    "onlyTwoRuntimeMembersChanged": true,
+    "otherBundlePinsUnchanged-apply": true,
+    "otherBundlePinsUnchanged-prepare": true,
+    "otherBundlePinsUnchanged-restore": true,
+    "otherBundlePinsUnchanged-start": true,
+    "otherBundlePinsUnchanged-stop": true,
+    "otherBundlePinsUnchanged-writer": true,
+    "sixJobsUnchanged": true,
+    "verify_failed_start_closedUsesBothCorrectPins-apply/bundle/ordinary05_roles_job.py": true,
+    "verify_failed_start_closedUsesBothCorrectPins-restore/bundle/ordinary05_roles_job.py": true,
+    "verify_precontainer_failureUsesBothCorrectPins-apply/bundle/ordinary05_roles_job.py": true,
+    "verify_precontainer_failureUsesBothCorrectPins-restore/bundle/ordinary05_roles_job.py": true
+  },
+  "clockCalls": 0,
+  "fixedFinding": "N36-C01",
+  "fixedMembers": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/apply/bundle/ordinary05_roles_job.py",
+      "pins": {
+        "CURRENT_PROOF_SOURCE": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+        "CURRENT_SOURCE": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75"
+      }
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/restore/bundle/ordinary05_roles_job.py",
+      "pins": {
+        "CURRENT_PROOF_SOURCE": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+        "CURRENT_SOURCE": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75"
+      }
+    }
+  ],
+  "mainInvoked": false,
+  "oldFrozenReportsChanged": false,
+  "serverConnections": 0,
+  "sourceOnly": true,
+  "unchangedRuntimeMembers": 44
+}
