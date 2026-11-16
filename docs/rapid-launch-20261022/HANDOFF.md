@@ -7689,3 +7689,12 @@ D3 最终接收索引 954bbd6508725fa0e9f38140d4ef8830d266d10d5ec8f9556db6196c84
 D1 六叶冻结8f92f694，独立QB正在核真正新增准备及首次writer差分。650秒工作片、130秒收尾、780秒作业与真实父C/controller认证期限分开，唯一prepare key与计划路径固定，持久完整INIT及步骤绑定保留；旧11/11守卫不改。普通HTTP仍使用旧compact整目录的实际调用者由原D2只读定位，未冒称可用。物化02的真实archivePath到targetPath及6reader包外路径补核894d0654通过，实际解包待接收。
 
 原9件静态程序恢复后，未来起点窗口04 c7d02bf在起点+4毫秒调用，stage3.865秒、publish5.267秒成功。root原install作业实得REFUSED_R3_CONTINUITY_BEFORE_PHASE/exit2/R3_CONTINUITY_OTHER_JOB_BLOCKED，终态6d87d961不含phaseStarted字段。原key真实读回39838a7d确认policy缺席、install worker终结且unit不活动、restore和4数据片均无、R3停稳。只中断本机等待，wrapper真实exit254，不能记130。无重放、无数据上传、无业务写入。下个窗口先补限定登记并真实调用admit消费者，再签准；现有保护规则和历史回执保留。检查点仅源码、合成验证与非秘密事实，不含已签授权或业务原件。
+
+
+## 2026-11-16T17:21:04.621953+08:00 — 本批固定接收登记实际生效，首组窗口05已签
+
+原root登记缺口已在同一现有CAS/原锁内补齐，仅准本次七份固定程序、54个准确manifest及211原数据片的限时接收/撤回。原r3_continuity及其他helper AST保持，非接收任务仍进原守卫。9个本机真实native bind/part_api消费检查通过；QB6412b093窄核SOURCE PASS。真实基线f42c295a确认7根pin和原锁、原writer双grant缺席、无活动unit、PG停。
+
+具体登记carrier一次执行成功，root审计bb418743、独立ACTUAL-READBACK 68c874cb确认dispatcher5094e418/module4441d264/policycc676709实际落地，真实Final33InputContinuation加载、32停稳证据和原身份/锁回读均通过，0PG连接/0业务/未提交接收job。原04拒绝和exit254完整保留，不重放。窗口05 33d42614按真实未来起点1794820891677签出，1080秒总窗/600上传/240收尾不变，等待实际原四片READY及撤回回执。
+
+普通HTTP底座由T45明确沿已核ef807b39完整应用候选，原D1在独立目录仅补ordinary161/C/formal generation接缝，T45仍唯一整合和server owner。D2只读定位证据保留，不把本地候选当现场运行。新正式33八阶段及实际计划/INIT/导入/备份恢复/HTTP仍未完成。7a27a05e已真实推送并ls-remote回读。

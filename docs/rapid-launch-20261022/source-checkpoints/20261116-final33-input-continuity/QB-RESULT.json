@@ -1,0 +1,88 @@
+{
+  "state": "PASS_FINAL33_INPUT_CONTINUITY_REGISTRATION_SOURCE_UNSIGNED",
+  "reviewedAt": "2026-11-16T09:12:00.443804+00:00",
+  "scope": "Only original-root input install/restore adapter, exact-group policy, CAS source and original stdin carrier; prior D1/data/source checks reused",
+  "findings": [],
+  "sourcePinsIndexSha256": "000fd7ecbebf3540f00eb6b06c5e36fb8fa6168c2b7513257010f78c55122b1c",
+  "files": {
+    "POLICY.UNISSUED.json": {
+      "sha256": "f04705e5dae6d80e16bb6024bda23764c67fc0169bffb078e91b9ad631f9bbf0",
+      "bytes": 6665
+    },
+    "read_registration_basis.py": {
+      "sha256": "a1418c750b859632eb467feab64c474eb12cd12c8bc35979d6013875dda2e52e",
+      "bytes": 4594
+    },
+    "admin_exec.INPUT-UNREGISTERED.py": {
+      "sha256": "02973173676f622901bada8bf9f4fb292acf504390630c6ac228bd78016af4df",
+      "bytes": 44205
+    },
+    "r3_final33_input.py": {
+      "sha256": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
+      "bytes": 6735
+    },
+    "GROUPS.json": {
+      "sha256": "4f6ffdc821ea5a12a7142897b508d3496e93f3b4c6ec356295326ef578fa0cf2",
+      "bytes": 31496
+    },
+    "register_cas.py": {
+      "sha256": "cc332a1092d0edc2eca381749adea668e79f392f26c67b3f21ed40b1becc802a",
+      "bytes": 12947
+    },
+    "original-cas-input-carrier.UNISSUED.py": {
+      "sha256": "8476519f77c28be557fca99ccf7df0f6fa88f6a56ca0812508e9380c63fff8b0",
+      "bytes": 2619
+    },
+    "check_admission.py": {
+      "sha256": "3ee3465e9a2c1867134b18df564e6e246b5aa301e604a086a1127becd55e0050",
+      "bytes": 5044
+    }
+  },
+  "parentDispatcherSha256": "4373d31d7e89e8201c9ee57109e17c6e92885441e394c092e175d2818cc7657d",
+  "verified": {
+    "exactParent4373ReconstructedFromPrior32TemplateAndActual99eaPolicy": true,
+    "allOldHelpersIncludingR3ContinuityAstUnchanged": true,
+    "newAdapterOnlyExactInputKeyFamilyAfterOriginalD0Guard": true,
+    "nonInputTasksStillOriginalAdmissionAndHold": true,
+    "fixedSevenCodeHashes54ManifestHashes211UniqueOriginalFragmentKeys": true,
+    "nineFrozenBundleLeavesRequestArgsDigestManifestAnd35SecondJobChecked": true,
+    "realNativeBindAndPartApiUsedNoAlternativePayloadConsumer": true,
+    "singleWindow1080Upload600Closeout240Unchanged": true,
+    "policyAtMost24HoursAndWithinGrant": true,
+    "withdrawMayPassGroupExpiryButNeverParentExpiry": true,
+    "authorityGroupExpiryAtLeast300SecondsBeforeParentExpiry": true,
+    "actual32ContainerIdStartedAtAndOperationLabelComparedStoppedPid0": true,
+    "oldCoreHardcoded05StoppedGenerationNotUsedFor32": true,
+    "originalHoldActual32StopCleanupAndAuthRestorationPinsRetained": true,
+    "sameOriginalExecutionLockIdentityAndNonblockingFlock": true,
+    "sevenOriginalSourceHoldByteHashesAndIdentitiesComparedBeforeEachPublication": true,
+    "writerAbsentBothGrantsNoActiveUnitAndStoppedPgdataChecked": true,
+    "casPublicationOrderModulePolicyDispatcherOnly": true,
+    "realConsumersBeforeAndAfterPublication": true,
+    "exclusiveAuditAndSourcePathsUnknownRetainedNoReplay": true,
+    "carrierPinsCurrentCasSourceAndExternalAuthorityDigest": true,
+    "carrierSourceStageExactAndExclusive": true,
+    "realMainBounded1MiBStdinDecodeRegisterExit0OnlyExactSuccess": true,
+    "carrierAndDecodeFiniteAuthorityWindowAndAllThreeSourcePinsBound": true,
+    "noPGRoleOrBusinessMutationEntryAdded": true
+  },
+  "localEvidence": {
+    "ownerReportedRealNativePureConsumerChecksPassed": 9,
+    "checkSourceSha256": "3ee3465e9a2c1867134b18df564e6e246b5aa301e604a086a1127becd55e0050",
+    "QBReadSourceWithoutRerunning": true,
+    "testUsesSyntheticStopObservationNotCurrentServerProof": true
+  },
+  "pending": [
+    "T45 actual read_registration_basis result must show current exact original pins/identities, candidate paths absent, old writer absent and no active units before signing",
+    "Final external policy may only bind reviewed fixed values with actual finite startsAt/expiresAt within grant; final authorization envelope/sourcePins/oldIdentities must pair this reviewed source",
+    "Carrier AUTH_SHA/START/EXPIRES remain unissued placeholders; actual registered root/audit results and first group runtime receipts separate"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "authorityIssuance": 0,
+    "sourceEdits": 0,
+    "fullRevalidation": 0
+  }
+}

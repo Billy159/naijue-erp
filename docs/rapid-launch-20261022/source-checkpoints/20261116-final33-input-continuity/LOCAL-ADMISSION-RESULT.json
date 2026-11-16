@@ -1,0 +1,20 @@
+{
+  "state": "PASS_EXACT_LOCAL_ADMISSION_CONSUMER",
+  "checks": [
+    "exact_group_1",
+    "exact_group_11",
+    "exact_group_54",
+    "expired_exact_withdrawal",
+    "unrelated_job_retains_original_hold",
+    "wrong_authority_argument_rejected",
+    "changed_root_source_rejected",
+    "unregistered_group_rejected",
+    "expired_registration_rejected"
+  ],
+  "passed": 9,
+  "serverCalls": 0,
+  "postgresConnections": 0,
+  "businessWrites": 0,
+  "moduleSha256": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
+  "groupIndexSha256": "4f6ffdc821ea5a12a7142897b508d3496e93f3b4c6ec356295326ef578fa0cf2"
+}

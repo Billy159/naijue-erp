@@ -1,0 +1,50 @@
+# 普通HTTP入口与新161目录接入定位
+
+本机找到4份已有HTTP发布包，均有源码、package-lock、READY、manifest及实际归档。逐份核归档摘要并只读检查包内入口，结果在ARTIFACT-CANDIDATES.json。最直接的正式owner消费证据指向ef807b39应用。当前33本机启动程序只启动PG并形成运行身份，其appStarted字段为false。最终33上线及独立恢复实际采用哪个应用根，由T45依据现场部署记录确认。
+
+## 已有载体
+
+| 本机应用候选 | commit | 归档SHA256 |
+| --- | --- | --- |
+| 20261112-post-backup-ordinary09-app-7e6626de-02 | 7e6626deb7cce6f24fe33f9eda7de6400787de8b | a8382341c90924a69c98d32a0bff4af42ea61b83b218432e58958b119e46d30a |
+| 20261113-r3-maintenance-service12-app-e5376516-01 | e5376516c744c47d56f97e4a90d056c94251c786 | 909963c477f3501cc58fac788a3baef5ee5bb27e41411360934ce121b2fc07be |
+| 20261113-r3-maintenance-service13-a-app-9fa2d7ed-01 | 9fa2d7ed6b747fc9faf109b2bb23b2f8675cf0b3 | b533cc7d375945d91217b3fb6df2eda548cc02b48fc62fa6a5c58a59773d5f61 |
+| 20261113-r3-faa8-service12-lineage-app-ef807b39-01 | ef807b39b5ac8c483e9350dc72108d57716bf291 | 7fb9323db5270951c66fe6bf8b62f95d3ba2520bdbc1fc66cd6035e85cf0f018 |
+
+以上目录均在outputs/D2下，绝对路径和source tree、lock、READY、归档及各manifest摘要见ARTIFACT-CANDIDATES。READY中的build/pack历史结果沿用原证据，本轮只读核文件。
+
+T45 `20261114-r3-formal-owner-helper-binding-local-02/bundle/deploy-first-install.py` 的FORMAL_R3_APP固定ef807b39、归档7fb9323d…、manifest d42b6d14…、native source d98c506a…。同文件还保留ordinary09的FIRST_R3常量，两组用途须按实际调用分辨。
+
+当前33候选的r3_05_readonly.py仍引用e537的909963c4…，其调用为复用SQL38操作payload。这个引用本身没有选定正式HTTP应用。normal_service05_after08.py生成`NORMAL_SAME_R3_SERVICE_AND_RUNTIME_AUTHENTICATED_NOT_APP_ACCEPTANCE`及appStarted=false。所有这些均为本机程序/已有状态记录，现场容器、挂载与活动进程本轮未读取。
+
+## 实际HTTP启动链
+
+正式owner链在T45上述bundle内，boot-entry.py的production-start路由进入production_owner/production_host。production_host.py L453–492选releaseDirectory/payload和Linux依赖，挂原受保护安装记录、ADMIN/SQL38、当前C、历史reference root、容量collector、私域runtime/profile及原媒体。实际命令为`/usr/local/bin/node /app/backend/production-main.js --exact35 <原runtime路径>`。config/release-contract.json将apps/api/src/production-main.ts编译入口映射到backend/production-main.js。
+
+ef807源码链为production-main.ts的runProductionCli → launch(r35) → createProductionRuntime35ApplicationApi → createPostgresRuntime35ApplicationApi → postgres-read-api.ts里的ownedPool初始化 → admitFresh35CompactZeroOrdinaryPoolV2 → admitOrdinaryPool。成功的opaque ordinary admission随后传给runtime27-command-issuer.ts，后者按同pool/lease/current admission验证，HTTP host在API及容量预检完成后listen。
+
+入口参数是一个canonical绝对私域runtime文件路径。既有CLI从runtime中的capacityLaunch派生容量窗口和物理target，并从T45提供的NAIJUE_CURRENT_PRODUCTION_SERVICE_SHA256、NAIJUE_ADMIN154_SUCCESSOR_SHA256、NAIJUE_ADMIN154_PARENT_SOURCE_SHA256、NAIJUE_ADMIN154_PARENT_CATALOG_SPEC_SHA256、NAIJUE_COMPACT_ZERO_SUCCESSOR_SHA256生成currentService/parentPins/successor输入。实际值及私域runtime内容由T45提供。
+
+## formal generation是另一处实际接缝
+
+ef807的runtime还消费productionGeneration。production-main.ts创建ProductionGeneration，经provider及postgres-read-api传至admitFresh35CompactZeroOrdinaryPoolV2的第6参，含generation.bind。该包host loader支持FRESH35_PRODUCTION_GENERATION_V1并核owner、PG进程tuple、备份/恢复及SQL36/SQL38回执，随后调用generation.bind。production_host.py负责准备对应挂载与C证明。
+
+D1当前交付的ordinary函数签名只有前5参，loadOrdinaryCurrentService保留retained import路径及旧C20固定命名分支。若直接把D1 host文件替进ef807，HTTP传入的第6参不会进入其formal generation校验。D1/work中也没有apps/api，所以该物料是writer/prepare源闭包，完整HTTP API启动链需从应用候选取得。
+
+## 新161实际接入位置
+
+D1准确PINS为8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28。HANDOFF和本机源码共同显示readFresh35BatchedContextInputs已执行CompactZero base → buildFresh35BatchedCatalogV1 → buildFresh35BatchedCommandSuccessorCatalogV1，得到161模型626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811。准备/writer使用此目录。
+
+同一host文件的admitOrdinaryPool仍从buildFresh35CompactZeroCatalog构建ordinary catalog。ordinary SQL和validateCatalogObservation使用完整model.routines数量，并逐routine核definition/prosrc，以及35表、70类型和完整lineage。因此普通HTTP启动必须配对新161，旧HTTP应用的目录结果不能覆盖新增模型。
+
+最少接入工作集中在fresh35-host-session.mjs的ordinary catalog选择、当前服务proof及formal generation接缝。复用combined-catalog-v1.mjs现有两级batched builders及其ordinary SQL/validator，让同一完整161 catalog进入真实ordinary验证和cap状态。源码加载器、reference index、安装祖先、SQL36/SQL38历史与新目录证据须随T45单一source closure闭合。
+
+ef807的production-main/provider/postgres-read-api/production-generation构成既有第6参调用链，须先与T45选择的应用核对。若保持这个调用契约，入口四文件可作为原调用者复用，改动集中在host与目录依赖。若调用契约有新增字段，T45需明确其实际参数并只改受影响传递处。runtime27 issuer已有opaque admission消费口，继续由真实ordinary入口提供cap。
+
+## 独立恢复与待T45确认项
+
+已有formal owner源码在generation证明中读取backupReceiptSha256、restorationReceiptSha256、owner和PG物理tuple，具备定位恢复后普通HTTP调用的接缝。ordinary09另有旧冷备后应用候选和原readback描述。两份均为可追溯本机物料，当前33对应的恢复HTTP应用及实际恢复结果仍需T45提供准确记录。
+
+T45需要确认最终应用commit/archive/manifest及Linux依赖身份、最终应用source root与161目录闭包、实际当前C及其proof格式、生产generation或受控ordinary路由、runtime/capacity物理target与父记录参数、正式启动/独立恢复各自的owner/PG/backup/restoration绑定。最终161配对的HTTP archive/READY、对应启动计划和同一恢复目标ordinary admission实测尚未在所核材料中找到。
+
+本轮证据为本机只读定位。源码、T45/D1文件、业务数据及中央包均无改动，未构建归档、未启动QA、未连接PG或服务器。建议接续动作由T45唯一集成，然后按实际改动做普通HTTP及恢复consumer定向验证。

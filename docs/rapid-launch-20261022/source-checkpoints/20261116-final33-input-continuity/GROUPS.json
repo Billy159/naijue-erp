@@ -1,0 +1,591 @@
+[
+  {
+    "number": 1,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/01-standard-001-004",
+    "batchManifestSha256": "52a433465c79ce4b8d73cb848694a4675bc82f4c5d4208795abed9d4d3e0ad55",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p001-20261116-01",
+      "t45-r3-final33-standard-p002-20261116-01",
+      "t45-r3-final33-standard-p003-20261116-01",
+      "t45-r3-final33-standard-p004-20261116-01"
+    ]
+  },
+  {
+    "number": 2,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/02-standard-005-008",
+    "batchManifestSha256": "9c1d30e2495104baa7c2c4aff561e1c9fbfe3787f054c239075792e731157f3f",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p005-20261116-01",
+      "t45-r3-final33-standard-p006-20261116-01",
+      "t45-r3-final33-standard-p007-20261116-01",
+      "t45-r3-final33-standard-p008-20261116-01"
+    ]
+  },
+  {
+    "number": 3,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/03-standard-009-012",
+    "batchManifestSha256": "bab7e9ac55fa1a543d317bc366723cc73c95585235c9567b415807f971062151",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p009-20261116-01",
+      "t45-r3-final33-standard-p010-20261116-01",
+      "t45-r3-final33-standard-p011-20261116-01",
+      "t45-r3-final33-standard-p012-20261116-01"
+    ]
+  },
+  {
+    "number": 4,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/04-standard-013-016",
+    "batchManifestSha256": "5f9d12bd78303a4a7f6b620631a5254bffaa5fedf86480434f1f59148a9eef61",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p013-20261116-01",
+      "t45-r3-final33-standard-p014-20261116-01",
+      "t45-r3-final33-standard-p015-20261116-01",
+      "t45-r3-final33-standard-p016-20261116-01"
+    ]
+  },
+  {
+    "number": 5,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/05-standard-017-020",
+    "batchManifestSha256": "eafa5c4c35b032150ebe3b78c8c046c8e13248761bfb981ef04ebd7969772e18",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p017-20261116-01",
+      "t45-r3-final33-standard-p018-20261116-01",
+      "t45-r3-final33-standard-p019-20261116-01",
+      "t45-r3-final33-standard-p020-20261116-01"
+    ]
+  },
+  {
+    "number": 6,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/06-standard-021-024",
+    "batchManifestSha256": "d65cebde249cf647387f6757bdd82451e0555a12bd8c81fa72e9fcbdeaff8d36",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p021-20261116-01",
+      "t45-r3-final33-standard-p022-20261116-01",
+      "t45-r3-final33-standard-p023-20261116-01",
+      "t45-r3-final33-standard-p024-20261116-01"
+    ]
+  },
+  {
+    "number": 7,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/07-standard-025-028",
+    "batchManifestSha256": "78debcdc78a6a0ccd87a0b85af5db3c652e70238f620232ed87f5ec251c078e3",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p025-20261116-01",
+      "t45-r3-final33-standard-p026-20261116-01",
+      "t45-r3-final33-standard-p027-20261116-01",
+      "t45-r3-final33-standard-p028-20261116-01"
+    ]
+  },
+  {
+    "number": 8,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/08-standard-029-032",
+    "batchManifestSha256": "a96a9bd3c668791146802a1a45c6d7060e57be5ea8431a676429c75d7dab9ff9",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p029-20261116-01",
+      "t45-r3-final33-standard-p030-20261116-01",
+      "t45-r3-final33-standard-p031-20261116-01",
+      "t45-r3-final33-standard-p032-20261116-01"
+    ]
+  },
+  {
+    "number": 9,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/09-standard-033-036",
+    "batchManifestSha256": "8661deffc306287ec85938cd5fa233b3972d11af1b476b8224fcf1d7fba10916",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p033-20261116-01",
+      "t45-r3-final33-standard-p034-20261116-01",
+      "t45-r3-final33-standard-p035-20261116-01",
+      "t45-r3-final33-standard-p036-20261116-01"
+    ]
+  },
+  {
+    "number": 10,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/10-standard-037-040",
+    "batchManifestSha256": "330ace879934ba7be5d5c6d2f54a06db194f3655eb7631a80b11422eb8f5a34a",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p037-20261116-01",
+      "t45-r3-final33-standard-p038-20261116-01",
+      "t45-r3-final33-standard-p039-20261116-01",
+      "t45-r3-final33-standard-p040-20261116-01"
+    ]
+  },
+  {
+    "number": 11,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/11-standard-041-041",
+    "batchManifestSha256": "4fc7d2f671862a4dbb414427767f424facb96c6da23dff52c8119ee6634f0855",
+    "artifactKeys": [
+      "t45-r3-final33-standard-p041-20261116-01"
+    ]
+  },
+  {
+    "number": 12,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/12-evidence-001-004",
+    "batchManifestSha256": "ac2d0ecc96f289674de065e95d9a7d8a832a730bac362c89034998cd7af6efb0",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p001-20261116-01",
+      "t45-r3-final33-evidence-p002-20261116-01",
+      "t45-r3-final33-evidence-p003-20261116-01",
+      "t45-r3-final33-evidence-p004-20261116-01"
+    ]
+  },
+  {
+    "number": 13,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/13-evidence-005-008",
+    "batchManifestSha256": "bdcece76b6dde5119e879bc38341be1ae8291e4e6371571114aa2e7f4c510e2d",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p005-20261116-01",
+      "t45-r3-final33-evidence-p006-20261116-01",
+      "t45-r3-final33-evidence-p007-20261116-01",
+      "t45-r3-final33-evidence-p008-20261116-01"
+    ]
+  },
+  {
+    "number": 14,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/14-evidence-009-012",
+    "batchManifestSha256": "5b3418f22cb1022d814d86e71b09464089cfa7b9936c68b6687196d744d1aa6d",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p009-20261116-01",
+      "t45-r3-final33-evidence-p010-20261116-01",
+      "t45-r3-final33-evidence-p011-20261116-01",
+      "t45-r3-final33-evidence-p012-20261116-01"
+    ]
+  },
+  {
+    "number": 15,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/15-evidence-013-016",
+    "batchManifestSha256": "e04d0749ef2c76dbdf1f2d1bb44b60f407556eb9e202646416bbcfa3e60d3025",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p013-20261116-01",
+      "t45-r3-final33-evidence-p014-20261116-01",
+      "t45-r3-final33-evidence-p015-20261116-01",
+      "t45-r3-final33-evidence-p016-20261116-01"
+    ]
+  },
+  {
+    "number": 16,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/16-evidence-017-020",
+    "batchManifestSha256": "48e2ca3910a4256ba5e64d66e1099a49f9897453accb7ef48f4dec47f815c432",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p017-20261116-01",
+      "t45-r3-final33-evidence-p018-20261116-01",
+      "t45-r3-final33-evidence-p019-20261116-01",
+      "t45-r3-final33-evidence-p020-20261116-01"
+    ]
+  },
+  {
+    "number": 17,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/17-evidence-021-024",
+    "batchManifestSha256": "5cd288da181386723ede5debc5bc41dfa04d260e9900a6acebeae2096ee84d18",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p021-20261116-01",
+      "t45-r3-final33-evidence-p022-20261116-01",
+      "t45-r3-final33-evidence-p023-20261116-01",
+      "t45-r3-final33-evidence-p024-20261116-01"
+    ]
+  },
+  {
+    "number": 18,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/18-evidence-025-028",
+    "batchManifestSha256": "b9abaf2c42989b18ec1d54aae13d39fe6330b549a808df51b8a9b4b9d3a653c6",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p025-20261116-01",
+      "t45-r3-final33-evidence-p026-20261116-01",
+      "t45-r3-final33-evidence-p027-20261116-01",
+      "t45-r3-final33-evidence-p028-20261116-01"
+    ]
+  },
+  {
+    "number": 19,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/19-evidence-029-032",
+    "batchManifestSha256": "dd3d3129d18613769a7d2a39c22098a58c1f301be1c7539c08be99cbba66091d",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p029-20261116-01",
+      "t45-r3-final33-evidence-p030-20261116-01",
+      "t45-r3-final33-evidence-p031-20261116-01",
+      "t45-r3-final33-evidence-p032-20261116-01"
+    ]
+  },
+  {
+    "number": 20,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/20-evidence-033-036",
+    "batchManifestSha256": "3987da5c52ce68a5dc516340bcdec95b53c1632b8e570823466427aefea12a2b",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p033-20261116-01",
+      "t45-r3-final33-evidence-p034-20261116-01",
+      "t45-r3-final33-evidence-p035-20261116-01",
+      "t45-r3-final33-evidence-p036-20261116-01"
+    ]
+  },
+  {
+    "number": 21,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/21-evidence-037-040",
+    "batchManifestSha256": "91e5668a42b2d4d2c23d14aba7bbd8fb97e689a5b6c8fb7bf4b66a3bc8a46cab",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p037-20261116-01",
+      "t45-r3-final33-evidence-p038-20261116-01",
+      "t45-r3-final33-evidence-p039-20261116-01",
+      "t45-r3-final33-evidence-p040-20261116-01"
+    ]
+  },
+  {
+    "number": 22,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/22-evidence-041-044",
+    "batchManifestSha256": "6da10b7adfb87275cae37da3a5659d7c6974172eabf557e410a56a89d65f7357",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p041-20261116-01",
+      "t45-r3-final33-evidence-p042-20261116-01",
+      "t45-r3-final33-evidence-p043-20261116-01",
+      "t45-r3-final33-evidence-p044-20261116-01"
+    ]
+  },
+  {
+    "number": 23,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/23-evidence-045-048",
+    "batchManifestSha256": "2d701f1c2f4253220a8c18a8651dfa2d8e99848f040c46b44f2e3b487e47e5c8",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p045-20261116-01",
+      "t45-r3-final33-evidence-p046-20261116-01",
+      "t45-r3-final33-evidence-p047-20261116-01",
+      "t45-r3-final33-evidence-p048-20261116-01"
+    ]
+  },
+  {
+    "number": 24,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/24-evidence-049-052",
+    "batchManifestSha256": "b4c8ed2ac3b6683cde794aabc1dafba70e8853e16f4ca803f9e1b5cc052bddc9",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p049-20261116-01",
+      "t45-r3-final33-evidence-p050-20261116-01",
+      "t45-r3-final33-evidence-p051-20261116-01",
+      "t45-r3-final33-evidence-p052-20261116-01"
+    ]
+  },
+  {
+    "number": 25,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/25-evidence-053-056",
+    "batchManifestSha256": "5787b81903a54d404eb5670cd11c8b6ba13c47e2198c9a59469e8b52e091fca1",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p053-20261116-01",
+      "t45-r3-final33-evidence-p054-20261116-01",
+      "t45-r3-final33-evidence-p055-20261116-01",
+      "t45-r3-final33-evidence-p056-20261116-01"
+    ]
+  },
+  {
+    "number": 26,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/26-evidence-057-060",
+    "batchManifestSha256": "3ba2c2da495536fa2c0096008c4c07eeef1857194efe30eb1851744ee2d648e7",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p057-20261116-01",
+      "t45-r3-final33-evidence-p058-20261116-01",
+      "t45-r3-final33-evidence-p059-20261116-01",
+      "t45-r3-final33-evidence-p060-20261116-01"
+    ]
+  },
+  {
+    "number": 27,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/27-evidence-061-064",
+    "batchManifestSha256": "88d5c47b1e4f339c7d7c8318e939d1698e1c5681ad9f7fee11aec5a09ff2b859",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p061-20261116-01",
+      "t45-r3-final33-evidence-p062-20261116-01",
+      "t45-r3-final33-evidence-p063-20261116-01",
+      "t45-r3-final33-evidence-p064-20261116-01"
+    ]
+  },
+  {
+    "number": 28,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/28-evidence-065-068",
+    "batchManifestSha256": "b22884d86d4b42767b23a134a2b5b696f7250faeea17e67cefab234882b71f99",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p065-20261116-01",
+      "t45-r3-final33-evidence-p066-20261116-01",
+      "t45-r3-final33-evidence-p067-20261116-01",
+      "t45-r3-final33-evidence-p068-20261116-01"
+    ]
+  },
+  {
+    "number": 29,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/29-evidence-069-072",
+    "batchManifestSha256": "fe05ffc60a9b58aed03307fba56ea33bb75d4e338c94c691019fd1f0b7e98d7f",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p069-20261116-01",
+      "t45-r3-final33-evidence-p070-20261116-01",
+      "t45-r3-final33-evidence-p071-20261116-01",
+      "t45-r3-final33-evidence-p072-20261116-01"
+    ]
+  },
+  {
+    "number": 30,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/30-evidence-073-076",
+    "batchManifestSha256": "5e4116995999ae405692f2ba986907c8d919547c3de38555c90b9371870e165e",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p073-20261116-01",
+      "t45-r3-final33-evidence-p074-20261116-01",
+      "t45-r3-final33-evidence-p075-20261116-01",
+      "t45-r3-final33-evidence-p076-20261116-01"
+    ]
+  },
+  {
+    "number": 31,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/31-evidence-077-080",
+    "batchManifestSha256": "3d3c9422e43ec31edf1388f5cf63527ad3f51637f26568b82db30e14e81cb76a",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p077-20261116-01",
+      "t45-r3-final33-evidence-p078-20261116-01",
+      "t45-r3-final33-evidence-p079-20261116-01",
+      "t45-r3-final33-evidence-p080-20261116-01"
+    ]
+  },
+  {
+    "number": 32,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/32-evidence-081-084",
+    "batchManifestSha256": "4ba8ae86c6e733b17c13adb7ba9928c6c5cabdecf1f1a7572418e2065c7acafd",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p081-20261116-01",
+      "t45-r3-final33-evidence-p082-20261116-01",
+      "t45-r3-final33-evidence-p083-20261116-01",
+      "t45-r3-final33-evidence-p084-20261116-01"
+    ]
+  },
+  {
+    "number": 33,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/33-evidence-085-088",
+    "batchManifestSha256": "f0d2f367020a09969561f3e178066eccf977d666316898862792287dc627bdaa",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p085-20261116-01",
+      "t45-r3-final33-evidence-p086-20261116-01",
+      "t45-r3-final33-evidence-p087-20261116-01",
+      "t45-r3-final33-evidence-p088-20261116-01"
+    ]
+  },
+  {
+    "number": 34,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/34-evidence-089-092",
+    "batchManifestSha256": "69914bfe156cc41e08b3e311e7cd2f5a971a6505b66270f99762760b1975d5ee",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p089-20261116-01",
+      "t45-r3-final33-evidence-p090-20261116-01",
+      "t45-r3-final33-evidence-p091-20261116-01",
+      "t45-r3-final33-evidence-p092-20261116-01"
+    ]
+  },
+  {
+    "number": 35,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/35-evidence-093-096",
+    "batchManifestSha256": "3e1483d3e189cfef3a67b3e21b92db421fd80151d050c28b0d94d77bc83522de",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p093-20261116-01",
+      "t45-r3-final33-evidence-p094-20261116-01",
+      "t45-r3-final33-evidence-p095-20261116-01",
+      "t45-r3-final33-evidence-p096-20261116-01"
+    ]
+  },
+  {
+    "number": 36,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/36-evidence-097-100",
+    "batchManifestSha256": "37e119a720d6b1bc07bfb5b184c77f319801ede17e5779f0e249d1b1665e14e1",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p097-20261116-01",
+      "t45-r3-final33-evidence-p098-20261116-01",
+      "t45-r3-final33-evidence-p099-20261116-01",
+      "t45-r3-final33-evidence-p100-20261116-01"
+    ]
+  },
+  {
+    "number": 37,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/37-evidence-101-104",
+    "batchManifestSha256": "9301d2f9b94e7a91deca1e789c2e60b1e31e284041de5efb9152bf0cfba40585",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p101-20261116-01",
+      "t45-r3-final33-evidence-p102-20261116-01",
+      "t45-r3-final33-evidence-p103-20261116-01",
+      "t45-r3-final33-evidence-p104-20261116-01"
+    ]
+  },
+  {
+    "number": 38,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/38-evidence-105-108",
+    "batchManifestSha256": "d878bda326e5ed9876e4793b47140a62ee43053207d62d2997900168f34ef64c",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p105-20261116-01",
+      "t45-r3-final33-evidence-p106-20261116-01",
+      "t45-r3-final33-evidence-p107-20261116-01",
+      "t45-r3-final33-evidence-p108-20261116-01"
+    ]
+  },
+  {
+    "number": 39,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/39-evidence-109-112",
+    "batchManifestSha256": "822f4f6c568b3fc0a1b1da54cfda0d26b10e0e080036483757d70bef0816a3a7",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p109-20261116-01",
+      "t45-r3-final33-evidence-p110-20261116-01",
+      "t45-r3-final33-evidence-p111-20261116-01",
+      "t45-r3-final33-evidence-p112-20261116-01"
+    ]
+  },
+  {
+    "number": 40,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/40-evidence-113-116",
+    "batchManifestSha256": "75258b4a24823f70bb3eb9568b93603e52eb2bf86f7739a13bbdb26db80610de",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p113-20261116-01",
+      "t45-r3-final33-evidence-p114-20261116-01",
+      "t45-r3-final33-evidence-p115-20261116-01",
+      "t45-r3-final33-evidence-p116-20261116-01"
+    ]
+  },
+  {
+    "number": 41,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/41-evidence-117-120",
+    "batchManifestSha256": "25c015d3479325ac27cedb90d09e5940ebf71039bb86cb75d902f6a5cfb8b14a",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p117-20261116-01",
+      "t45-r3-final33-evidence-p118-20261116-01",
+      "t45-r3-final33-evidence-p119-20261116-01",
+      "t45-r3-final33-evidence-p120-20261116-01"
+    ]
+  },
+  {
+    "number": 42,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/42-evidence-121-124",
+    "batchManifestSha256": "9f9bf7a4694fdac2e4076359eb2f5470575f7121649a90949b5c11dc7e118441",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p121-20261116-01",
+      "t45-r3-final33-evidence-p122-20261116-01",
+      "t45-r3-final33-evidence-p123-20261116-01",
+      "t45-r3-final33-evidence-p124-20261116-01"
+    ]
+  },
+  {
+    "number": 43,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/43-evidence-125-128",
+    "batchManifestSha256": "221a2c34930b12f87ec14a4c567368df699c3439ef89b8a9f2683f56aae16d91",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p125-20261116-01",
+      "t45-r3-final33-evidence-p126-20261116-01",
+      "t45-r3-final33-evidence-p127-20261116-01",
+      "t45-r3-final33-evidence-p128-20261116-01"
+    ]
+  },
+  {
+    "number": 44,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/44-evidence-129-132",
+    "batchManifestSha256": "a85900953cf451af098e90c773d38bcf9b9ee7f139378b13c12c43052a1a83ce",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p129-20261116-01",
+      "t45-r3-final33-evidence-p130-20261116-01",
+      "t45-r3-final33-evidence-p131-20261116-01",
+      "t45-r3-final33-evidence-p132-20261116-01"
+    ]
+  },
+  {
+    "number": 45,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/45-evidence-133-136",
+    "batchManifestSha256": "c3b498f571e04aa571af24427fe272150a66e94456e0b2ab2ea7153143f3d907",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p133-20261116-01",
+      "t45-r3-final33-evidence-p134-20261116-01",
+      "t45-r3-final33-evidence-p135-20261116-01",
+      "t45-r3-final33-evidence-p136-20261116-01"
+    ]
+  },
+  {
+    "number": 46,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/46-evidence-137-140",
+    "batchManifestSha256": "24cb7048f0445da6765d76b6cb1191bb15c4bc5658c8ec790aa0b9842220e3d2",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p137-20261116-01",
+      "t45-r3-final33-evidence-p138-20261116-01",
+      "t45-r3-final33-evidence-p139-20261116-01",
+      "t45-r3-final33-evidence-p140-20261116-01"
+    ]
+  },
+  {
+    "number": 47,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/47-evidence-141-144",
+    "batchManifestSha256": "255f4693391e04f72ccadf4dbe1cad90d6e3527fa7e7a530fa84c75c4d982510",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p141-20261116-01",
+      "t45-r3-final33-evidence-p142-20261116-01",
+      "t45-r3-final33-evidence-p143-20261116-01",
+      "t45-r3-final33-evidence-p144-20261116-01"
+    ]
+  },
+  {
+    "number": 48,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/48-evidence-145-148",
+    "batchManifestSha256": "e27d0b5fa6deb3c9917cb0c512e4243546fe79f3eff4e820c7dc988539d39777",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p145-20261116-01",
+      "t45-r3-final33-evidence-p146-20261116-01",
+      "t45-r3-final33-evidence-p147-20261116-01",
+      "t45-r3-final33-evidence-p148-20261116-01"
+    ]
+  },
+  {
+    "number": 49,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/49-evidence-149-152",
+    "batchManifestSha256": "03df611286ab9848f06a4f08984e97f5be3df1e8fe48dfaaf98d001971200138",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p149-20261116-01",
+      "t45-r3-final33-evidence-p150-20261116-01",
+      "t45-r3-final33-evidence-p151-20261116-01",
+      "t45-r3-final33-evidence-p152-20261116-01"
+    ]
+  },
+  {
+    "number": 50,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/50-evidence-153-156",
+    "batchManifestSha256": "9b14162eb281306c566429a7f9ad76836102de72f97163ce0e43311e9bed8434",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p153-20261116-01",
+      "t45-r3-final33-evidence-p154-20261116-01",
+      "t45-r3-final33-evidence-p155-20261116-01",
+      "t45-r3-final33-evidence-p156-20261116-01"
+    ]
+  },
+  {
+    "number": 51,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/51-evidence-157-160",
+    "batchManifestSha256": "707b272553a27ebeda9462f5464d0ea7a126a0cfc66726b0d2b564c65b2da379",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p157-20261116-01",
+      "t45-r3-final33-evidence-p158-20261116-01",
+      "t45-r3-final33-evidence-p159-20261116-01",
+      "t45-r3-final33-evidence-p160-20261116-01"
+    ]
+  },
+  {
+    "number": 52,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/52-evidence-161-164",
+    "batchManifestSha256": "a9d885c1dce31ef17d925e24cee2867077a8b0902e0af2eadea520c65f6358ca",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p161-20261116-01",
+      "t45-r3-final33-evidence-p162-20261116-01",
+      "t45-r3-final33-evidence-p163-20261116-01",
+      "t45-r3-final33-evidence-p164-20261116-01"
+    ]
+  },
+  {
+    "number": 53,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/53-evidence-165-168",
+    "batchManifestSha256": "1565066a2ef7f74bcffc6fdddec09102f7a2ac19d8cfb47d91fa912fd643d3b0",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p165-20261116-01",
+      "t45-r3-final33-evidence-p166-20261116-01",
+      "t45-r3-final33-evidence-p167-20261116-01",
+      "t45-r3-final33-evidence-p168-20261116-01"
+    ]
+  },
+  {
+    "number": 54,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CONTINUITY-01/groups/54-evidence-169-170",
+    "batchManifestSha256": "1f4131666b38b611cbbe330f844b2d84d22c47be8cfd99e15931a00eb7169a70",
+    "artifactKeys": [
+      "t45-r3-final33-evidence-p169-20261116-01",
+      "t45-r3-final33-evidence-p170-20261116-01"
+    ]
+  }
+]

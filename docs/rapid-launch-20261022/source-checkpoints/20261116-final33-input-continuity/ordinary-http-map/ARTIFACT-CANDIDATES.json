@@ -1,0 +1,249 @@
+[
+  {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02",
+    "sourceCommit": "7e6626deb7cce6f24fe33f9eda7de6400787de8b",
+    "sourceTree": "42435e0701dfa799cf6f5428f60458f936deb902",
+    "buildId": "erp-7e6626deb7cc-post-backup-ordinary09-20261112-assets-r2",
+    "ready": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02/READY.json",
+      "sha256": "4789a0e7ff31bf0197fc2809edbdbd2b91b4a059d7ad514efe3808c5a0c54250",
+      "bytes": 10206
+    },
+    "historicalReadyStatus": "FIXED_7E6626DE_223_APP09_ASSET_PATH_BUILD_PACK_PASS",
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02/packed/release.tar.gz",
+      "sha256": "a8382341c90924a69c98d32a0bff4af42ea61b83b218432e58958b119e46d30a",
+      "bytes": 3406831
+    },
+    "sourceLock": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02/source/package-lock.json",
+      "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "bytes": 105758
+    },
+    "evidence": {
+      "manifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02/packed/release-manifest.json",
+        "sha256": "6f74c3da9ccbccfce3ea311a8dc08ee81a5708a1ee8d4f1ed74e64e17fe5e982",
+        "bytes": 510590
+      },
+      "runtimeTemplateBinding": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02/runtime-template-binding.json",
+        "sha256": "8734c4f4212c70f842b93f58ad27b6f6aacd46d10fd3495b7f1b6e0d0a72dba9",
+        "bytes": 504
+      },
+      "packReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261112-post-backup-ordinary09-app-7e6626de-02/packed/pack-receipt.json",
+        "sha256": "2aacc19ed89fb5d62e0f781cb7ea8b2e72ba81fd97423e3ba68895af5c76c51b",
+        "bytes": 597
+      }
+    },
+    "selectedArchiveMembers": {
+      "./package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/production-main.js": {
+        "bytes": 2090564,
+        "sha256": "a5efc0fc5ac028409c569c9f795b7eb48bc907b2e37a418297845f26b137a103"
+      },
+      "./backend/native35-source/package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/native35-source/tools/unified-import/fresh35-host-session.mjs": {
+        "bytes": 70327,
+        "sha256": "cf316d07dd8ec16af4ebd38db20d47c6ec90edd69c0e9a8a7805c2d81abd942d"
+      }
+    },
+    "deploymentStatus": "LOCAL_ARTIFACT_ONLY_CURRENT_SITE_CHOICE_NOT_VERIFIED"
+  },
+  {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01",
+    "sourceCommit": "e5376516c744c47d56f97e4a90d056c94251c786",
+    "sourceTree": "6620c0df4c43307c380160724c75980e787fe507",
+    "buildId": "erp-e5376516c744-r3-maintenance-service12-20261113",
+    "ready": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01/READY.json",
+      "sha256": "8e240c039bbe4b2dddf4db4c36cc18d88be8ec7fb4022b1893af25331f72242a",
+      "bytes": 9395
+    },
+    "historicalReadyStatus": "SERVICE12_MAINTENANCE_223_FIXED_BUILD_PACK_READBACK_PASS",
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01/packed/release.tar.gz",
+      "sha256": "909963c477f3501cc58fac788a3baef5ee5bb27e41411360934ce121b2fc07be",
+      "bytes": 3411472
+    },
+    "sourceLock": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01/source/package-lock.json",
+      "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "bytes": 105758
+    },
+    "evidence": {
+      "manifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01/packed/release-manifest.json",
+        "sha256": "d661fa09be2ded0a4a3f0a6b6cb1c371e48796a8eb2d0ff89186ac4d0535e27e",
+        "bytes": 510582
+      },
+      "sourceManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01/manifests/source-manifest.json",
+        "sha256": "75a1e5548762f9e77cbe3460f6e22cc18d0b2ce28acdfd14b29cd3249a826f4c",
+        "bytes": 326027
+      },
+      "buildManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service12-app-e5376516-01/manifests/build-manifest.json",
+        "sha256": "e5c7eb5ea3bfe6940aa685c9d6c42137460af3d9f58d1f1e8039a32a910d301b",
+        "bytes": 540480
+      }
+    },
+    "selectedArchiveMembers": {
+      "./package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/production-main.js": {
+        "bytes": 2090564,
+        "sha256": "a5efc0fc5ac028409c569c9f795b7eb48bc907b2e37a418297845f26b137a103"
+      },
+      "./backend/native35-source/package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/native35-source/tools/unified-import/fresh35-host-session.mjs": {
+        "bytes": 70575,
+        "sha256": "b43e1bebdf426c86f96a9b7a88ddf4bfeeff5ca99c7e7bdc4e8e3af7cc2b72e5"
+      }
+    },
+    "deploymentStatus": "LOCAL_ARTIFACT_ONLY_CURRENT_SITE_CHOICE_NOT_VERIFIED"
+  },
+  {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01",
+    "sourceCommit": "9fa2d7ed6b747fc9faf109b2bb23b2f8675cf0b3",
+    "sourceTree": "78190d17643c581aafaa108af2d12b9fe28deeaa",
+    "buildId": "erp-9fa2d7ed6b74-r3-maintenance-service13-a-20261113",
+    "ready": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01/READY.json",
+      "sha256": "2d07e0d019f25789ebb6e1f47bb3f137650856669507e072d38ff58fa0a735cd",
+      "bytes": 10533
+    },
+    "historicalReadyStatus": "SERVICE13_A_MAINTENANCE_223_FIXED_BUILD_PACK_READBACK_PASS",
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01/packed/release.tar.gz",
+      "sha256": "b533cc7d375945d91217b3fb6df2eda548cc02b48fc62fa6a5c58a59773d5f61",
+      "bytes": 3410593
+    },
+    "sourceLock": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01/source/package-lock.json",
+      "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "bytes": 105758
+    },
+    "evidence": {
+      "manifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01/packed/release-manifest.json",
+        "sha256": "cafd41bdf2810fb73070c26a30f4cd599e4f71672a8933a79a49921d5bb8a9d6",
+        "bytes": 510584
+      },
+      "sourceManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01/manifests/source-manifest.json",
+        "sha256": "7e807194c9b4635c4d45f5fdcd63d5d3c039e715d537036d32a42694aff463c0",
+        "bytes": 326031
+      },
+      "buildManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-maintenance-service13-a-app-9fa2d7ed-01/manifests/build-manifest.json",
+        "sha256": "dbcf8ea95a39d40f5c55e2680a0f56ab9fc3658c49864685786b18bf0412ec3f",
+        "bytes": 540482
+      }
+    },
+    "selectedArchiveMembers": {
+      "./package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/production-main.js": {
+        "bytes": 2090564,
+        "sha256": "a5efc0fc5ac028409c569c9f795b7eb48bc907b2e37a418297845f26b137a103"
+      },
+      "./backend/native35-source/package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/native35-source/tools/unified-import/fresh35-host-session.mjs": {
+        "bytes": 70575,
+        "sha256": "fd62cafd5dda6af7ec8b76dd39d02d019bb82e2c9d7e35467ab0354b30122abf"
+      }
+    },
+    "deploymentStatus": "LOCAL_ARTIFACT_ONLY_CURRENT_SITE_CHOICE_NOT_VERIFIED"
+  },
+  {
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01",
+    "sourceCommit": "ef807b39b5ac8c483e9350dc72108d57716bf291",
+    "sourceTree": "ebb42fd318321f99f1df7121ea13950d84611a8f",
+    "buildId": "erp-ef807b39b5ac-r3-service12-lineage-20261113",
+    "ready": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/READY.json",
+      "sha256": "e99eedc388a5cf438df6cbfd7ef27e19fe575e1a19274e2ba50d886129ddacc8",
+      "bytes": 11931
+    },
+    "historicalReadyStatus": "R3_SERVICE12_LINEAGE_APP_BUILD_PACK_READBACK_PASS",
+    "archive": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/packed/release.tar.gz",
+      "sha256": "7fb9323db5270951c66fe6bf8b62f95d3ba2520bdbc1fc66cd6035e85cf0f018",
+      "bytes": 3416488
+    },
+    "sourceLock": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/source/package-lock.json",
+      "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "bytes": 105758
+    },
+    "evidence": {
+      "canonicalReleaseManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/packed/release-manifest.json",
+        "sha256": "d42b6d141d85f778dc68d1019f3865783b7adccc3c58a292e58ec90c482740b9",
+        "bytes": 510772
+      },
+      "releaseSourceManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/manifests/source-manifest.json",
+        "sha256": "5ca64709adcddfe40f318d090e83cf2a40594219a5fba0278f3fc7d00bfe6a26",
+        "bytes": 326198
+      },
+      "buildManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/manifests/build-manifest.json",
+        "sha256": "50413a935bddddb168bdfb92cf67e1dbd6fcc22011ea4187df1bf28387ab6cd1",
+        "bytes": 540670
+      },
+      "runtimeTemplate": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/runtime-template.json",
+        "sha256": "bf98a6e6089af60153b0f50c026814e8b3470b342129684e20eeb003bda0f9cb",
+        "bytes": 2135
+      },
+      "runtimeTemplateBinding": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/runtime-template-binding.json",
+        "sha256": "1a9b0592a2d947c7ef01675bad12d8e7427e9e705c634cf6ec580d46891992c7",
+        "bytes": 944
+      },
+      "packReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D2/20261113-r3-faa8-service12-lineage-app-ef807b39-01/packed/pack-receipt.json",
+        "sha256": "506bffea06c00ddfa78f1148b15281bb7aada24721060d3dd219db009ea8e02e",
+        "bytes": 585
+      }
+    },
+    "selectedArchiveMembers": {
+      "./package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/production-main.js": {
+        "bytes": 2110017,
+        "sha256": "dcdea48ff1b0f74e4dc687546dd9a25ec146b4e2e1d82661848bdd20ce14b7ce"
+      },
+      "./backend/native35-source/package-lock.json": {
+        "bytes": 105758,
+        "sha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048"
+      },
+      "./backend/native35-source/tools/unified-import/fresh35-host-session.mjs": {
+        "bytes": 72359,
+        "sha256": "3c2754a0a69fedb1b94bc59ddba5ea1f23c8a054830b862d58b6175ae748c031"
+      }
+    },
+    "deploymentStatus": "LOCAL_ARTIFACT_ONLY_CURRENT_SITE_CHOICE_NOT_VERIFIED"
+  }
+]

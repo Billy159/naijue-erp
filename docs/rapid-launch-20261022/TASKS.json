@@ -8184,8 +8184,8 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T16:45:44.688084+08:00",
-  "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_CONTINUITY_ADMISSION_FIX",
+  "updatedAt": "2026-11-16T17:21:04.621953+08:00",
+  "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-    "asOf": "2026-11-16T16:45:44.688084+08:00",
-    "state": "INPUT_RECEIVE_REFUSED_BEFORE_PHASE_CONTINUITY_REGISTRATION_REQUIRED",
+    "asOf": "2026-11-16T17:21:04.621953+08:00",
+    "state": "EXACT_INPUT_CONTINUITY_REGISTERED_WINDOW05_ISSUED_READY_PENDING",
     "realWriterSubmitted": false,
     "realBusinessRowsWritten": 0,
     "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_RESTORED",
@@ -52703,7 +52703,24 @@
     "d1FinalSourcePinsSha256": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
     "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
     "materialization02SourceReview": "PASS_894d0654_NO_ACTUAL_MATERIALIZATION",
-    "ordinaryHttp": "D2_READONLY_EXACT_CARRIER_AND_ADMISSION_MAPPING_IN_PROGRESS",
-    "next": "Fix finite original continuity registration and exercise actual admission consumer before next signed receive window. T45 sole server owner; preserve root hold and original writer key. Integrate final source and exact PREPARE/first-writer envelopes without repeated preflight."
+    "ordinaryHttp": "T45_SELECTED_EF807_FORMAL_GENERATION_BASE_D1_MINIMAL_ORDINARY161_SOURCE_IMPLEMENTATION",
+    "next": "Receive exact211 original fragments using registered input continuation; original native upload/withdraw and same-key unknown readback. T45 integrates final8 phases and source, D1 adapts exact formal-generation HTTP consumer, no complete rehearsal.",
+    "inputRegistration": {
+      "dispatcherSha256": "5094e41828fafad55af2715e0523ce5656787b87699ccbcff1a336910bf7939e",
+      "moduleSha256": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
+      "policySha256": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
+      "actualReadbackSha256": "68c874cbadcf3ea053f487aa58a52ade7ba9212a0918531d721552f9f569cb88",
+      "consumerClass": "Final33InputContinuation",
+      "oldSnapshotAndOriginalLockIdentityMatched": true,
+      "stoppedBasisVerifiedByActualConsumer": true,
+      "groups": 54,
+      "originalFragments": 211
+    },
+    "window05": {
+      "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+      "startsAt": 1794820891677,
+      "expiresAt": 1794821971677,
+      "state": "SIGNED_FUTURE_ACTIVATION_ACTUAL_READY_PENDING"
+    }
   }
 }

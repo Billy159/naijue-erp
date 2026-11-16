@@ -1,0 +1,34 @@
+{
+  "POLICY.UNISSUED.json": {
+    "sha256": "f04705e5dae6d80e16bb6024bda23764c67fc0169bffb078e91b9ad631f9bbf0",
+    "bytes": 6665
+  },
+  "read_registration_basis.py": {
+    "sha256": "a1418c750b859632eb467feab64c474eb12cd12c8bc35979d6013875dda2e52e",
+    "bytes": 4594
+  },
+  "admin_exec.INPUT-UNREGISTERED.py": {
+    "sha256": "02973173676f622901bada8bf9f4fb292acf504390630c6ac228bd78016af4df",
+    "bytes": 44205
+  },
+  "r3_final33_input.py": {
+    "sha256": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
+    "bytes": 6735
+  },
+  "GROUPS.json": {
+    "sha256": "4f6ffdc821ea5a12a7142897b508d3496e93f3b4c6ec356295326ef578fa0cf2",
+    "bytes": 31496
+  },
+  "register_cas.py": {
+    "sha256": "cc332a1092d0edc2eca381749adea668e79f392f26c67b3f21ed40b1becc802a",
+    "bytes": 12947
+  },
+  "original-cas-input-carrier.UNISSUED.py": {
+    "sha256": "8476519f77c28be557fca99ccf7df0f6fa88f6a56ca0812508e9380c63fff8b0",
+    "bytes": 2619
+  },
+  "check_admission.py": {
+    "sha256": "3ee3465e9a2c1867134b18df564e6e246b5aa301e604a086a1127becd55e0050",
+    "bytes": 5044
+  }
+}

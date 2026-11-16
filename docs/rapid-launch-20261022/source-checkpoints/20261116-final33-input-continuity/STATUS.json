@@ -1,0 +1,49 @@
+{
+  "asOf": "2026-11-16T17:21:04.621953+08:00",
+  "state": "EXACT_INPUT_CONTINUITY_REGISTERED_WINDOW05_ISSUED_READY_PENDING",
+  "realWriterSubmitted": false,
+  "realBusinessRowsWritten": 0,
+  "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_RESTORED",
+  "data": {
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "tables": 26,
+    "rows": 514485,
+    "inventoryQuantity": 80658,
+    "offlineFullPreflight": "PASS"
+  },
+  "window04": {
+    "authorizationSha256": "c7d02bf71fe37b2ac89d8d38d35c506b82d9217896096a778e6986e1b0ab7856",
+    "status": "REFUSED_R3_CONTINUITY_BEFORE_PHASE",
+    "exitCode": 2,
+    "errorCode": "R3_CONTINUITY_OTHER_JOB_BLOCKED",
+    "phaseStartedField": "ABSENT_IN_ACTUAL_TERMINAL",
+    "terminalSha256": "6d87d961a84b81f42dcbf21a989124c6ab8594de514bb85f9ff4660dd6c0204b",
+    "closeoutReadbackSha256": "39838a7d88180b14be34bc85d780fe780833f8717d687cdb4e19f72e829462e2",
+    "localWrapperExitCode": 254,
+    "receivedDataFragments": 0,
+    "restoreSubmitted": false,
+    "replay": false
+  },
+  "d1FinalSourcePinsSha256": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
+  "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
+  "materialization02SourceReview": "PASS_894d0654_NO_ACTUAL_MATERIALIZATION",
+  "ordinaryHttp": "T45_SELECTED_EF807_FORMAL_GENERATION_BASE_D1_MINIMAL_ORDINARY161_SOURCE_IMPLEMENTATION",
+  "next": "Receive exact211 original fragments using registered input continuation; original native upload/withdraw and same-key unknown readback. T45 integrates final8 phases and source, D1 adapts exact formal-generation HTTP consumer, no complete rehearsal.",
+  "inputRegistration": {
+    "dispatcherSha256": "5094e41828fafad55af2715e0523ce5656787b87699ccbcff1a336910bf7939e",
+    "moduleSha256": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
+    "policySha256": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
+    "actualReadbackSha256": "68c874cbadcf3ea053f487aa58a52ade7ba9212a0918531d721552f9f569cb88",
+    "consumerClass": "Final33InputContinuation",
+    "oldSnapshotAndOriginalLockIdentityMatched": true,
+    "stoppedBasisVerifiedByActualConsumer": true,
+    "groups": 54,
+    "originalFragments": 211
+  },
+  "window05": {
+    "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+    "startsAt": 1794820891677,
+    "expiresAt": 1794821971677,
+    "state": "SIGNED_FUTURE_ACTIVATION_ACTUAL_READY_PENDING"
+  }
+}
