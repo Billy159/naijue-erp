@@ -1,0 +1,81 @@
+{
+  "PGConnections": 0,
+  "authoritiesIssued": false,
+  "basisEntries": 171,
+  "completedPreparationKeys": 2,
+  "correction": "AFTER-PREP-BASIS-AUDIT-PATH-01",
+  "files": {
+    "AFTER-PREP-BASIS-AUDIT-PATH-01.diff": {
+      "bytes": 6041,
+      "sha256": "4b3034e2810595f7f34b411e8f29fc7ca0f5af5e157047ca867a2ea6605029cc"
+    },
+    "CORRECTION.md": {
+      "bytes": 1336,
+      "sha256": "6d1c93ffe6274f4cc812a1aa9719380bd3ce60126e06fade5eb7144d988c9dd4"
+    },
+    "HANDOFF.md": {
+      "bytes": 6936,
+      "sha256": "f3c9b1e3946c1928b383e747a3b0302ac6145e7d7aa7cebfdb869a763bb8e4c8"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 2011,
+      "sha256": "5886de167a44c5467e35b0721dafddac522f79563a1d830c9b8df3f59300a634"
+    },
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 29770,
+      "sha256": "b02abeb68031d20ce9fbac150862bdce9b8eb54eeb247328e9946b6935f1c9ed"
+    },
+    "admin_exec.AFTER-PREPARATION-UNREGISTERED.py": {
+      "bytes": 44650,
+      "sha256": "61d8544978d8818f2b13c4a400a9c083b8d3dd12ab2d393af46401b0d7d9dfae"
+    },
+    "assemble_candidate.py": {
+      "bytes": 20014,
+      "sha256": "85315a725fe2a2a38dd6dccb867e0b480be1b5f48aa7efd45cbd779e266008b2"
+    },
+    "issue_phase.py": {
+      "bytes": 39029,
+      "sha256": "c814e31fb501babcad533b612ac7098c79e053f725d7c48d1b79a901c20f690d"
+    },
+    "issue_registration.py": {
+      "bytes": 11752,
+      "sha256": "ca1785bf1c56e54bb7804484cbcf1f444b0aeceb8d7cf4431de93592e756fc1d"
+    },
+    "original-cas-after-preparation-carrier.UNISSUED.py": {
+      "bytes": 2650,
+      "sha256": "64ff9a9a71971a882e154e4ed109f78e1141cfaebc5ad49d63949af13e56dd28"
+    },
+    "r3_direct33_after_preparation.py": {
+      "bytes": 69093,
+      "sha256": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97"
+    },
+    "read_registration_basis.py": {
+      "bytes": 44995,
+      "sha256": "073365c243f4f75775454694a0f70d216601dfb469a9f38811d0e7ae7848e64a"
+    },
+    "register_cas.py": {
+      "bytes": 68342,
+      "sha256": "c6e7c5d374d74eb580f6d24fcc022f4171718c3d2e1e1b8d606a7dc364bef97a"
+    }
+  },
+  "fixtures": 0,
+  "helperSha256": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97",
+  "independentCorrectionReview": "PENDING",
+  "originalKeysChanged": false,
+  "predecessorDirectory": "outputs/D1/20261116-r3-after-preparation-window-source-01/predecessors/8a911110c9aa94dae380674f62978c92d62a45d4df5a16f2f976228172c53b72",
+  "predecessorPinsSha256": "8a911110c9aa94dae380674f62978c92d62a45d4df5a16f2f976228172c53b72",
+  "registrationExecuted": false,
+  "remainingKeys": 7,
+  "reusedSourcePins": {
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-FINAL-SOURCE-PREPARE-01/issue_registration.py": "fa66d9e4afd925e20c55630ea7383105f7ab4a5423ec2b0447624ebc7c28cfbd",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-FINAL-SOURCE-PREPARE-01/register_cas.py": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-INPUT02-SUCCESSOR-01/NINE-PHASES.UNISSUED.json": "edc5d4a164b8c92d8fe83312678035ed872ed2a282e6c970082ce06b410016cf",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-INPUT02-SUCCESSOR-01/admin_exec.INPUT02-UNREGISTERED.py": "9c3fffee9e0c9b23cc1130aea8c6f6eda14bb46a09df82c8076c83fad5d36f3c",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-INPUT02-SUCCESSOR-01/issue_phase.py": "a132ea38a8df10f4f906facfe9496f9ab9a56c5c555c0804f57adfa66fd61353",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-INPUT02-SUCCESSOR-01/r3_direct33_input02.py": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-INPUT02-SUCCESSOR-01/register_cas.py": "184e5c81f71fa86a2d40bd23881a121da0f47d1c2ff26408aaf82d85ef01dee1"
+  },
+  "serverConnections": 0,
+  "state": "SOURCE_CANDIDATE_UNISSUED_AFTER_PREPARATION",
+  "staticPinOccurrences": 75
+}

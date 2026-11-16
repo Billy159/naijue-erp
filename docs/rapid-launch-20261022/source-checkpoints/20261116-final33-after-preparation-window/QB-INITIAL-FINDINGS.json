@@ -1,0 +1,24 @@
+{
+  "state": "NEED_FIX_AFTER_PREPARATION_WINDOW_SOURCE",
+  "sourceOnly": true,
+  "sourcePinsSha256": "8a911110c9aa94dae380674f62978c92d62a45d4df5a16f2f976228172c53b72",
+  "findings": [
+    {
+      "id": "AFTER-PREP-BASIS-AUDIT-PATH-01",
+      "priority": "P1",
+      "file": "register_cas.py",
+      "line": 193,
+      "relatedFile": "read_registration_basis.py",
+      "title": "Historical successful CAS result pin points to the new absent audit directory",
+      "description": "BASIS171 pins old result20af at r3-direct33-after-preparation-registration-cas-20261116-01/result.json. The carrier and register require this new AUDIT directory to be absent, so readonly basis cannot pass and pre-publication snapshot cannot pass. HANDOFF requires the actual completed INPUT02 CAS02 result at r3-direct33-input02-registration-cas-20261116-02/result.json. Correct the historical path in CAS/reader and generator, update carrier/source pins; do not fabricate new audit or run reader to work around.",
+      "relatedLine": 190
+    }
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "fixturesCreated": 0,
+    "ownerSourceEdits": 0
+  }
+}

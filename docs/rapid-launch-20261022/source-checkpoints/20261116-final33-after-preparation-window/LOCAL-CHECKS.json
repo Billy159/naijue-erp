@@ -1,0 +1,52 @@
+{
+  "state": "LOCAL_SOURCE_PAIRING_AND_ACTUAL_PREDICATES_PASS",
+  "compiledPythonFiles": 8,
+  "helperByteEqual": true,
+  "basisEntries": 171,
+  "oldBasisEntries": 163,
+  "staticPinOccurrences": 75,
+  "remainingPhaseCount": 7,
+  "completedKeys": {
+    "input_materialize": "t45-r3-final33-input-materialize-20261116-02",
+    "materialize": "t45-r3-batched-root06-source-delta-20261116-01"
+  },
+  "actualCompletedValuePredicates": 2,
+  "oldActualPolicyStructuralValidation": true,
+  "nativeStartAndCFunctionsASTUnchanged": [
+    "start_authority",
+    "observation",
+    "normal_common",
+    "runtime_catalog_facts",
+    "historical_catalog",
+    "catalog_update_authority",
+    "verified_catalog_update",
+    "verified_input_materialization",
+    "verified_prepare",
+    "validate_native_preparation",
+    "final_native_authority"
+  ],
+  "readerCASBasisEqual": true,
+  "readerCASCompletionAndQuietASTEqual": true,
+  "registrationIssuerCalled": false,
+  "phaseIssuerCalled": false,
+  "registrationReaderExecuted": false,
+  "serverConnections": 0,
+  "PGConnections": 0,
+  "newFixtures": 0,
+  "authorityFilesCreated": 0,
+  "correction": {
+    "finding": "AFTER-PREP-BASIS-AUDIT-PATH-01",
+    "state": "LOCAL_EXACT_PATH_PAIRING_PASS",
+    "oldCompletedAuditPath": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct33-input02-registration-cas-20261116-02/result.json",
+    "oldCompletedAuditSha256": "20afba865671f741fadbdc4f92c19d2099feb8627e67f2da13dba5c3d5650a2e",
+    "newAuditResultAbsentFromBasis": true,
+    "newEntryAuditUnchanged": true,
+    "readerCASBasisEqual": true,
+    "otherRuntimeSourceBytesUnchanged": true,
+    "actualRegistrationReadbackRef": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/ACTUAL-INPUT02-REGISTRATION-READBACK.json",
+    "actualRegistrationReadbackSha256": "a11eb465a9da57a2f7741c4dde4f3bba777647603a28445265431ba3132f0ec7",
+    "authorityIssued": false,
+    "serverConnections": 0,
+    "PGConnections": 0
+  }
+}

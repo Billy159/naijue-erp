@@ -1,0 +1,103 @@
+{
+  "state": "SOURCE_PASS_AFTER_PREPARATION_WINDOW_ONLY",
+  "sourceOnly": true,
+  "reviewedAt": "2026-11-16T14:10:39.439941+00:00",
+  "findings": [],
+  "rulesSha256": "b02abeb68031d20ce9fbac150862bdce9b8eb54eeb247328e9946b6935f1c9ed",
+  "files": {
+    "register_cas.py": {
+      "bytes": 68342,
+      "sha256": "c6e7c5d374d74eb580f6d24fcc022f4171718c3d2e1e1b8d606a7dc364bef97a"
+    },
+    "r3_direct33_after_preparation.py": {
+      "bytes": 69093,
+      "sha256": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97"
+    },
+    "admin_exec.AFTER-PREPARATION-UNREGISTERED.py": {
+      "bytes": 44650,
+      "sha256": "61d8544978d8818f2b13c4a400a9c083b8d3dd12ab2d393af46401b0d7d9dfae"
+    },
+    "original-cas-after-preparation-carrier.UNISSUED.py": {
+      "bytes": 2650,
+      "sha256": "64ff9a9a71971a882e154e4ed109f78e1141cfaebc5ad49d63949af13e56dd28"
+    },
+    "read_registration_basis.py": {
+      "bytes": 44995,
+      "sha256": "073365c243f4f75775454694a0f70d216601dfb469a9f38811d0e7ae7848e64a"
+    },
+    "issue_registration.py": {
+      "bytes": 11752,
+      "sha256": "ca1785bf1c56e54bb7804484cbcf1f444b0aeceb8d7cf4431de93592e756fc1d"
+    },
+    "issue_phase.py": {
+      "bytes": 39029,
+      "sha256": "c814e31fb501babcad533b612ac7098c79e053f725d7c48d1b79a901c20f690d"
+    },
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 29770,
+      "sha256": "b02abeb68031d20ce9fbac150862bdce9b8eb54eeb247328e9946b6935f1c9ed"
+    }
+  },
+  "sourcePins": {
+    "path": "outputs/D1/20261116-r3-after-preparation-window-source-01/SOURCE-PINS.json",
+    "sha256": "1d9cabd70f50160a527a5c170a9f7903d05477b3e35b205353900205f90d0536"
+  },
+  "standards": {
+    "findings": []
+  },
+  "spec": {
+    "findings": []
+  },
+  "closedFindings": [
+    {
+      "id": "AFTER-PREP-BASIS-AUDIT-PATH-01",
+      "status": "SOURCE_CLOSED",
+      "previousEvidence": {
+        "path": "outputs/QB/20261116-final33-after-preparation-window-review-01/FINDINGS-01.json",
+        "sha256": "640fc89585e54ce67685e3f0e41c5bb8cca738b86cd1aa842189bc80f0eafa85"
+      },
+      "correction": "CAS/reader only replace historical20af result path with actual completed INPUT02 CAS02 audit. New audit absent requirement unchanged. Assembler replacement constrained to AUDIT assignment; carrier only CAS source SHA updates. Prior8a911 archived unchanged under candidate predecessors/8a911..."
+    }
+  ],
+  "verified": {
+    "basis": "171 CAS/reader entries equal; old163 all retained except live dispatcher97830/policy0d18, plus8 actual completion/module bindings. Original lock identity retained. Corrected oldCAS02 result20af path cross-checked with prior CAS AUDIT definition and actual saved registration readbacka11eb.",
+    "completedPreparation": "Exact aefd input02 and edf63 ROOT06 saved actual readbacks hashes and full values match candidate COMPLETED/witness; saved exported actual terminal b959/13cd and public result796b/0bd byte hashes verified. CAS/reader require terminal root/public exact bytes, each result SHA separately, root/public JSON object equality, root/marker exact bytes, input target device66304/inode13665604/root:61035/0750 and actual source root/root0755. No serialization-equality false premise.",
+    "quiet": "Same CAS/reader check_completed_value/completed_preparation/quiet functions by AST; current completed2 allowed, remaining7 and priorgrant9 worker/control/request/tmp/publicterminal absence enforced; operations returncode/stdout/stderr empty and PGpid absent mandatory. Saved facts are not current fresh server verification.",
+    "sourceReuse": "Helper exacta48 bytes. Wrapper diff exactly one helper loading filename. Nine original request keys and75 static rule occurrences exact originaledc values; EXPECTED_RULES equal witness. No native/SQL/business changes.",
+    "CAS": "Unique new ENTRY/AUDIT/module; exact protected original lock plus snapshot+quiet before audit/publication; old policy0d18/dispatcher97830 preserved; exclusive module, policy atomic replacement, dispatcher publish intent and atomic replacement, original identity snapshots retained. New policy startsAt equals signed registration; >5100 remaining and actual grant upper bound required; unknown outcomes recorded/read only, no automatic replay.",
+    "dynamicIssuance": "Existing reviewed dynamic root issuer reused with scoped completion/basis/review consumption changes. Actual time read within issue call after source/basis validation; parent exactly3h bounded by actualgrant; roles apply30/controller120/admin122/restore150min and CAS15min. No signed permit in candidate. Both policy apply/restore share one actual roles SHA, full75 rule equality enforced after removing only two dynamic pins.",
+    "phaseIssuance": "Top-level issue restricts7 remaining phases before output, refuses completed input02/materialize; completion refs exact checked. Apply reads same registration host/roles permit, validates source and expiry, does not refresh permit. Other18 functions AST equal reviewed phase issuer: true actualC/native/prepare/writer/stop/restore and full5100 budget unchanged; original timeouts300/780/3000 not reduced."
+  },
+  "savedActualRefs": {
+    "input_materialize": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/ACTUAL-INPUT02-KEY-COMPLETED.json",
+      "sha256": "aefdacd67a9142b77d1fb2dbb6366f0a69033ab802fe11a461919bf8cc73a5f0"
+    },
+    "materialize": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/MAIN9-EXECUTION-01/ACTUAL-MATERIALIZE-COMPLETED.json",
+      "sha256": "edf63f6072813ef13cd70794b5bcf0b5b31b10d001f5a3ef6c6e2376f98e2a19"
+    }
+  },
+  "reusedReview": {
+    "path": "outputs/QB/20261116-final33-input02-successor-review-01/RESULT-02.json",
+    "sha256": "2040e6344ceff9e7243de308a4d9b968abc024c47f25fe7aee141d649e7d9684"
+  },
+  "pending": [
+    "Actual fresh171 basis from T45 and actual remaining7 absence/lock/ops/PGquiet at registration",
+    "Actual dynamic issuer, source CAS outcome, apply/start/actualC/update/nativeprepare/originalwriter/stop/restore results",
+    "Database import/readback/backup/restore/HTTP/business acceptance not established by this source review"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "readerInvocations": 0,
+    "issuersInvoked": 0,
+    "fixturesCreated": 0,
+    "ownerSourceEdits": 0,
+    "testsRerun": 0
+  },
+  "runtimePassed": false,
+  "businessImported": false
+}

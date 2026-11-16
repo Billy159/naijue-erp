@@ -1,0 +1,9 @@
+--- original.remote
++++ registration600.remote
+@@ -1,5 +1,5 @@
+ def remote(cfg,command,data=None):
+     args=['/usr/bin/ssh','-i',cfg['keyFile'],'-o','IdentitiesOnly=yes','-o','IdentityAgent=none','-o','BatchMode=yes','-o','PasswordAuthentication=no','-o','KbdInteractiveAuthentication=no','-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=10','-o','ServerAliveInterval=20','-o','ServerAliveCountMax=3',cfg['host'],command]
+-    p=subprocess.run(args,input=data,capture_output=True,timeout=40)
++    p=subprocess.run(args,input=data,capture_output=True,timeout=600)
+     if p.returncode:raise ValueError('LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK')
+     return p.stdout

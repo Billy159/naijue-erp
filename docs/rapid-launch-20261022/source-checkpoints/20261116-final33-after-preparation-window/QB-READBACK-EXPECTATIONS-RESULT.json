@@ -1,0 +1,112 @@
+{
+  "state": "SOURCE_PASS_READBACK_EXPECTATIONS_FORMAT_ADAPTER_ONLY",
+  "sourceOnly": true,
+  "findings": [],
+  "reviewedAt": "2026-11-16T14:13:13.235382+00:00",
+  "script": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-READBACK-EXPECTATIONS-SOURCE-01/build_expectations.py",
+    "sha256": "58210ed828646506269bbc5e3c8634164002b9b6251589ccba440ee5c94a9db8",
+    "bytes": 7576
+  },
+  "ownerResult": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-READBACK-EXPECTATIONS-SOURCE-01/RESULT.json",
+    "sha256": "8f18784cc5c6d18e45282a5b1708c6e09c4864c34fc84faf58fcd635f15bdd82"
+  },
+  "privateReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/EXPECTED-SOURCE-INPUTS.receipt.json",
+    "sha256": "5026cb49e253fc57b987eff105d61c7ff61bf6cbb3d3a085673025375a279c9f"
+  },
+  "outputs": {
+    "AGGREGATE-READBACK-EXPECTATIONS.private.json": {
+      "bytes": 347,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/AGGREGATE-READBACK-EXPECTATIONS.private.json",
+      "sha256": "12ed1911ab70edf9c567460cb793078b40c3de6e444263f215610206efd6c291"
+    },
+    "WAREHOUSE-KEY-EXPECTATIONS.private.json": {
+      "bytes": 27743,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/WAREHOUSE-KEY-EXPECTATIONS.private.json",
+      "sha256": "9c68bbfdbf36ca8c2d84e3801fef1aa189d9d2f029ce4b25efa5c6fec29a7a79"
+    }
+  },
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "sources": {
+    "inventory_baseline": {
+      "bytes": 14190116,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/standard-ready-20261116-1140-r1/tables/inventory_baseline.jsonl",
+      "rows": 39525,
+      "sha256": "8bc68272d38ed4445715fcc8eea45ea8e919e47f0ef41665537b6d49f29f18b1"
+    },
+    "sales_settlement": {
+      "bytes": 23169256,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/standard-ready-20261116-1140-r1/tables/sales_settlement.jsonl",
+      "rows": 26647,
+      "sha256": "27a17d716a765102ee8a008531886ba04a20850088099a637db9f039492014e7"
+    },
+    "warehouse": {
+      "bytes": 24235,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/standard-ready-20261116-1140-r1/tables/warehouse.jsonl",
+      "rows": 54,
+      "sha256": "379bf15bd0b8cdf6fcb6bcf97bd41e8a8c850e520cbce90bc0971ecb73062a75"
+    }
+  },
+  "partition": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/current-materialized-r1/review/baseline-scope-review/per-warehouse-expected.private.jsonl",
+    "sha256": "117a09b061c6db823fa0befb1bf9972c3f0f77531f0f9445573f5171335f7133"
+  },
+  "offlineReadback": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/current-materialized-r1/review/offline-table-readback.json",
+    "sha256": "f619aae80fdf301dea6372c9b5bf6435fef1ad0079cab418c633ab66cc5d840f"
+  },
+  "projection": {
+    "path": "outputs/D1/20261116-r3-independent-physical-restore-source-01/source/tools/unified-import/physical-clone-projection.mjs",
+    "sha256": "9c56ed3837167717e5b09ed36dfc46986321b8bc2ed029979eb0c88a426451e9"
+  },
+  "comparatorCaller": {
+    "path": "outputs/D1/20261116-r3-independent-physical-restore-source-01/source/tools/unified-import/physical-clone-readback.mjs",
+    "sha256": "e7c058c3f6ee066de50034a3270bef9f01a854a10e0e6a261faf43301473da7f"
+  },
+  "standards": {
+    "findings": []
+  },
+  "spec": {
+    "findings": []
+  },
+  "verified": {
+    "sourceAndOutputPins": "Script5821, owner report, private receipt5026 and two outputs9c68/12ed exact SHA/size checked. Exact final7eb REAL manifest and its three warehouse/inventory_baseline/sales_settlement table pins/byte counts/row counts read; no prior f4b expected values reused.",
+    "inventoryIdentity": "Actual54 unique warehouse IDs; every inventory row has exact warehouse/sku/quantity fields, canonical integer quantity, nonempty source refs and no explicit_zero_evidence. Actual39525 unique warehouse/SKU keys retained, no missing or omitted key generated. SOURCE_LISTED never relabelled APPROVED_ABSENCE_ZERO.",
+    "exactKeyHashes": "Independently reconstructed current SQL format [\"warehouse\",\"sku\",\"bigint-text\",\"SOURCE_LISTED\"] plus LF per key, ordered by canonical lowercase UUID sku. UUID canonical text order equals PostgreSQL UUID byte order. All54 existing exact_key_sha256 values matched, including NULL for26 empty warehouses. No candidate converter or projection invoked.",
+    "tenFields": "Independently checked explicit/source-listed/source-listed-zero/approved-absence-zero/positive/negative/zero key counts and signed/positive/negative quantities for every warehouse. Nonempty sums match SQL sum/coalesce including0 for absent signs. Empty warehouse key counts0 and quantity sumsNULL match comparator noKeys fallback; key hashNULL. Existing comparator and source hashes match prior accepted D1 versions.",
+    "partition": "All54 key counts, signed quantities, positive/negative counts match exact original117a per-warehouse partition and warehouse-ID set. Totals39525 keys/80658 quantity match exact f619 offline readback. No whole preflight rerun.",
+    "cash": "All26647 actual rows have RECEIVE/REFUND direction and positive two-decimal money. Decimal integer cents independently summed per direction and matched both output fields/row counts; RECEIVE minus REFUND=2386707993 cents, equal exact f619 offline readback. Current comparator converts decimal strings to BigInt cents without rounding.",
+    "artifactsOnly": "Read existing private source/output bodies in place; report contains pins and summary only. Converter not run, no new private outputs or fixtures, no Git staging/upload, no database/server or clone execution."
+  },
+  "checks": {
+    "warehouses": 54,
+    "emptyWarehouses": 26,
+    "sourceListedKeys": 39525,
+    "approvedAbsenceZeroKeys": 0,
+    "signedQuantity": 80658,
+    "cashRows": 26647,
+    "cashNetCents": 2386707993,
+    "all54ExactKeyHashesAndTenFieldsMatched": true
+  },
+  "actions": {
+    "converterInvocations": 0,
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "fixturesCreated": 0,
+    "sourceEdits": 0,
+    "privateOutputWrites": 0,
+    "gitStageOrUploads": 0,
+    "wholePreflightReruns": 0
+  },
+  "pending": [
+    "Actual T45 outer-carrier source binding and placement of these exact two private input files",
+    "Actual independent physical clone, native verifier, database/runtime projection and comparator execution; restore closure remains owned by T45",
+    "This source/data-format review does not gate writer or establish formal import/runtime/business PASS"
+  ],
+  "runtimePassed": false,
+  "restorePassed": false,
+  "businessImported": false
+}

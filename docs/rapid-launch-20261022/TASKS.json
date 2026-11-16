@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T21:55:13.469573+08:00",
+  "updatedAt": "2026-11-16T22:26:29.917562+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,11 +52675,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-16T21:55:13.469573+08:00",
-  "state": "ORIGINAL211_READY_INPUT02_AND_ROOT06_COMPLETED_PG_STOPPED_RUNTIME_WINDOW_SOURCE_IN_PROGRESS",
+  "asOf": "2026-11-16T22:26:29.917562+08:00",
+  "state": "ACTUAL_MAIN9_AFTER_PREPARATION_REGISTERED_AND_READ_BACK_APPLY_AUTHORIZED_COMPLETION_PENDING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
-  "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_ROLE_AUTH_RESTORED",
+  "formalR3": "DB05_STOPPED_NEW_FINITE_APPLY_AUTHORIZED_COMPLETION_PENDING",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Reuse original211/input02/ROOT06. Finish D1 after-preparation finite window source and narrow QB review; T45 fresh basis and remaining7 native phases; actual writer/reconciliation/cold/clone/app/roles/URL pending.",
+  "next": "T45 actual finite apply receipt then start33; installed catalog successor/native prepare/original writer; no replay of completed input02/ROOT06.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52743,7 +52743,7 @@
     "policyAbsent": true,
     "state": "ACTUAL_COMPLETE_POLICY_WITHDRAWN"
   },
-  "rootNine": "SOURCE_PASS_AND_TWO_MATERIALIZATIONS_ACTUALLY_COMPLETE_NEW_RUNTIME_WINDOW_PENDING",
+  "rootNine": "SOURCE_PASS_AND_ACTUAL_NEW_FINITE_WINDOW_REGISTERED_READ_BACK",
   "currentReceiveWindow": {
     "state": "ALL_ORIGINAL54_GROUPS_COMPLETE_AND_WITHDRAWN_NO_REPLAY"
   },
@@ -52775,8 +52775,19 @@
     "sha256": "edf63f6072813ef13cd70794b5bcf0b5b31b10d001f5a3ef6c6e2376f98e2a19",
     "bytes": 3961
   },
-  "newRuntimeWindow": "D1_SOURCE_IN_PROGRESS_NO_AUTHORITY_ISSUED",
-  "newRolesApplied": false,
-  "PGStartedSince32": false
+  "newRuntimeWindow": {
+    "authoritySha256": "14f404521b540a1dcd1aaba2093d14b0d76886be6c5aa8c29e5d8e326a9fc3b4",
+    "currentPolicySha256": "542e78404c0493eb9b959af59f771437dd3017184022ef82e32b3c72b05d921d",
+    "currentDispatcherSha256": "149e2759ed0336e8c8a1823ca518da89d94040acdbe143f3e7bbd3b3222f61dc",
+    "moduleSha256": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97",
+    "actualReadbackSha256": "c58e94dbb4e71a60be23f75d0ef487247b74914ef7b2fbb81854143f3e0adcc7",
+    "rolesApplyDeadline": 1794840231546,
+    "controllerDeadline": 1794845631546,
+    "parentDeadline": 1794849231546,
+    "applyAuthorizedCompletionPending": true
+  },
+  "newRolesApplied": "ACTUAL_COMPLETION_PENDING",
+  "PGStartedSince32": false,
+  "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE"
 }
 }

@@ -1,0 +1,21 @@
+{
+  "SSHArgumentsUnchanged": true,
+  "compilePassed": true,
+  "globalSubprocessChanged": false,
+  "networkCalls": 0,
+  "newRemoteSourceSha256": "87f852282fd4196d4e3750f51e9810fe9fbb7f3c79f2aa0ee86d5ec2119759f3",
+  "onlyFunctionChange": "subprocess.run timeout=40 -> timeout=600",
+  "originalClientPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client.py",
+  "originalClientSha256": "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6",
+  "originalClientUnchanged": true,
+  "originalRemoteLines": [
+    25,
+    29
+  ],
+  "originalRemoteSourceSha256": "11fb3ac444d7b4ad99275de92b6798311b58a904e3cd781ecef937b0b66591af",
+  "originalStateFunctionReusedAtOriginalPath": true,
+  "serverGuardsChanged": false,
+  "state": "SINGLE_REGISTRATION_TRANSPORT_TIMEOUT_ONLY",
+  "thinModulePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/registration_transport600.py",
+  "thinModuleSha256": "7906c6cd7f04faa6d30660d97accac7445d7d142c92315fff6da560a6c1946f6"
+}

@@ -1,0 +1,33 @@
+{
+  "applyHostSha256": "133ef37831a0d6eab788567e711ce104ce70184e5a1e8e52e27aa57712996b47",
+  "backupAdminValidUntil": 1794845751546,
+  "basisSha256": "cdd4a050574c34f033a041447d28a49bb12810ca75608845b9afcf2079639688",
+  "carrierSha256": "3ccee7da24a5951b0e23408c062a29b83c54f8986e20a185554ef84b2043ccfb",
+  "controllerValidUntil": 1794845631546,
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service33-after-preparation-registration-window-01",
+  "dispatcherSha256": "149e2759ed0336e8c8a1823ca518da89d94040acdbe143f3e7bbd3b3222f61dc",
+  "independentReviewSha256": "c5c4a7791541177e011be48221170390b469a0cb356d6e45443c395f58abbeef",
+  "jobs": {
+    "apply": "t45-r3-ordinary33-auth-apply-20261116-01",
+    "catalog_update": "t45-r3-batched161-command-successor-20261116-01",
+    "input_materialize": "t45-r3-final33-input-materialize-20261116-02",
+    "materialize": "t45-r3-batched-root06-source-delta-20261116-01",
+    "prepare": "t45-r3-final33-plan-prepare-20261116-01",
+    "restore": "t45-r3-ordinary33-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-33",
+    "stop": "t45-r3-ordinary33-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "phaseSubmitted": false,
+  "policyExpiresAt": 1794849231546,
+  "policySha256": "542e78404c0493eb9b959af59f771437dd3017184022ef82e32b3c72b05d921d",
+  "registrationExpiresAt": 1794839331546,
+  "registrationSha256": "14f404521b540a1dcd1aaba2093d14b0d76886be6c5aa8c29e5d8e326a9fc3b4",
+  "restorationDeadline": 1794847431546,
+  "roleApplyExpiresAt": 1794840231546,
+  "rolesSha256": "33bcd2fbe1a81631d710f46ab40bf2687cdc40162baf02de474951e85e17d69f",
+  "rulesSha256": "b02abeb68031d20ce9fbac150862bdce9b8eb54eeb247328e9946b6935f1c9ed",
+  "sourceAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+  "startsAt": 1794838431546,
+  "state": "ISSUED_AFTER_PREPARATION_WINDOW_NO_PHASE_SUBMITTED"
+}

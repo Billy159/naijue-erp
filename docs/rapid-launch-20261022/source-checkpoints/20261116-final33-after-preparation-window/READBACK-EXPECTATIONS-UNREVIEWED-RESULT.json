@@ -1,0 +1,36 @@
+{
+  "state": "OFFLINE_SOURCE_FORMAT_ADAPTER_UNREVIEWED_NO_RUNTIME",
+  "script": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-READBACK-EXPECTATIONS-SOURCE-01/build_expectations.py",
+    "sha256": "58210ed828646506269bbc5e3c8634164002b9b6251589ccba440ee5c94a9db8",
+    "bytes": 7576
+  },
+  "privateReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/EXPECTED-SOURCE-INPUTS.receipt.json",
+    "sha256": "5026cb49e253fc57b987eff105d61c7ff61bf6cbb3d3a085673025375a279c9f"
+  },
+  "outputs": {
+    "AGGREGATE-READBACK-EXPECTATIONS.private.json": {
+      "bytes": 347,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/AGGREGATE-READBACK-EXPECTATIONS.private.json",
+      "sha256": "12ed1911ab70edf9c567460cb793078b40c3de6e444263f215610206efd6c291"
+    },
+    "WAREHOUSE-KEY-EXPECTATIONS.private.json": {
+      "bytes": 27743,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/WAREHOUSE-KEY-EXPECTATIONS.private.json",
+      "sha256": "9c68bbfdbf36ca8c2d84e3801fef1aa189d9d2f029ce4b25efa5c6fec29a7a79"
+    }
+  },
+  "checks": {
+    "all54WarehouseCountsAndSignedQuantitiesEqual": true,
+    "cashNetCents": 2386707993,
+    "cashNetEqualIndependentReadback": true,
+    "cashRows": 26647,
+    "explicitKeys": 39525,
+    "generatedInventoryKeys": 0,
+    "signedQuantity": 80658,
+    "warehouseCount": 54
+  },
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "runtimePassed": false
+}
