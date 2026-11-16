@@ -1,0 +1,353 @@
+--- 879/LOCAL-CHECKS.json
++++ successor02/LOCAL-CHECKS.json
+@@ -1,15 +1,21 @@
+ {
+   "PGConnections": 0,
+   "actualPreclockMetadataReused": "f255b8de5f59ff9b8aae469693bb93a3b2c6c1d5d79b522c74efe98108abbc4b",
++  "actualPrefixResultSha256": "4ca926e76e9c14aec03c6ed20921b12e278a4a064ea405d2033fbe35ee718b75",
+   "authorityConstructed": false,
+   "basisPins": 254,
+   "bothEffectiveJobsAssignmentsEqual": true,
+   "clockIssued": false,
++  "closedReviewFindings": [
++    "N36-R01",
++    "N36-R02",
++    "N36-R03"
++  ],
+   "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+   "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+   "nativeExecuted": false,
+   "privateCustodyMetadataOnly": 12,
+-  "rulesSha256": "7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94",
++  "rulesSha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e",
+   "runtimeRegistrationNotExecuted": true,
+   "serverActions": 0,
+   "sixActivePhases": [
+@@ -21,6 +27,7 @@
+     "writer"
+   ],
+   "state": "SOURCE_COMPILE_AND_EXACT_CAS_HELPER_RULES_METADATA_MATCHED",
++  "supersedesRejectedRootSourcePinsSha256": "879afef5bb57f0712cd3ef870eb7320a77c6530635035c8f8d78d3918a38e6eb",
+   "targetOrCapabilityConstructed": false,
+   "unchangedCriticalMethodAST": [
+     "frozen",
+--- 879/SIX-PHASES.UNISSUED.json
++++ successor02/SIX-PHASES.UNISSUED.json
+@@ -201,7 +201,6 @@
+   "jobs": {
+     "apply": {
+       "authorityLeaf": "host-authorization.json",
+-      "authoritySha256": null,
+       "bundlePins": {
+         "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+         "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+@@ -213,14 +212,11 @@
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-ordinary36-auth-apply-20261116-01",
+-      "rolesAuthoritySha256": null,
+       "script": "ordinary05_roles_job.py",
+-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/apply/bundle",
+       "timeoutSeconds": 300
+     },
+     "prepare": {
+       "authorityLeaf": "host-authorization.json",
+-      "authoritySha256": null,
+       "bundlePins": {
+         "final33-run.mjs": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f",
+         "final33_host.py": "85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6",
+@@ -232,14 +228,11 @@
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-final33-plan-prepare-20261116-02",
+-      "rolesAuthoritySha256": "NOT_APPLICABLE",
+       "script": "final33_host.py",
+-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle",
+       "timeoutSeconds": 780
+     },
+     "restore": {
+       "authorityLeaf": "host-authorization.json",
+-      "authoritySha256": null,
+       "bundlePins": {
+         "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+         "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+@@ -251,14 +244,11 @@
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-ordinary36-auth-restore-20261116-01",
+-      "rolesAuthoritySha256": null,
+       "script": "ordinary05_roles_job.py",
+-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/restore/bundle",
+       "timeoutSeconds": 300
+     },
+     "start": {
+       "authorityLeaf": "service-start-authorization.json",
+-      "authoritySha256": null,
+       "bundlePins": {
+         "batched161-run.mjs": "e6c44f641a6306b286e98613e0e69781fd64d92a5533c4ced884646648375e8a",
+         "final33-run.mjs": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f",
+@@ -279,28 +269,22 @@
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-first-r3-native-service-start-20261116-36",
+-      "rolesAuthoritySha256": "NOT_APPLICABLE",
+       "script": "normal_service05_after08.py",
+-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle",
+       "timeoutSeconds": 300
+     },
+     "stop": {
+       "authorityLeaf": "normal05-preserve-stop-input.json",
+-      "authoritySha256": null,
+       "bundlePins": {
+         "normal05_preserve_stop.py": "0962a84910c8c62f1e34b35bde278b6ada7f39cc323f54ecae3391311e8b588b",
+         "normal05_retained_stop.py": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491"
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-ordinary36-preserve-stop-20261116-01",
+-      "rolesAuthoritySha256": "NOT_APPLICABLE",
+       "script": "normal05_preserve_stop.py",
+-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/stop/bundle",
+       "timeoutSeconds": 120
+     },
+     "writer": {
+       "authorityLeaf": "host-authorization.json",
+-      "authoritySha256": null,
+       "bundlePins": {
+         "final33-run.mjs": "24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f",
+         "final33_host.py": "85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6",
+@@ -312,9 +296,7 @@
+       },
+       "deadlineField": "expiresAt",
+       "jobId": "t45-r3-batched-real-execute-20261115-01",
+-      "rolesAuthoritySha256": "NOT_APPLICABLE",
+       "script": "final33_host.py",
+-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/writer/bundle",
+       "timeoutSeconds": 3000
+     }
+   },
+--- 879/issue_phase.py
++++ successor02/issue_phase.py
+@@ -16,6 +16,9 @@
+ OLD_HOLD = '25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757'
+ CONTROLLER = 'erp35_controller_20261110_r3'
+ ADMIN = 'erp35_admin_20261110_r3'
++
++def load_issuer_pair():
++    return runpy.run_path(str(HERE/'issuer_aux_pair.py'),run_name='exact_local_issuer_pair')
+ 
+ def sha(data):
+     return hashlib.sha256(data).hexdigest()
+@@ -483,7 +486,7 @@
+         cli['require_execute_authority'](raw_inner, sha(raw_inner), binding, now, expiry, json.loads)
+     outer_scope=host['scope']()
+     if phase=='prepare':
+-        from issuer_aux_pair import pair_scope
++        pair_scope=load_issuer_pair()['pair_scope']
+         outer_scope=pair_scope(outer_scope,binding)
+     a = dict(outer_scope, **fields, **extra, expiresAt=expiry,
+         nativeAuthoritySha256=sha(raw_inner), nativeAuthorityBase64=base64.b64encode(raw_inner).decode(), expectedBinding=binding,
+@@ -492,13 +495,13 @@
+         inputMaterializationTerminalSha256=input_terminal, inputMaterializationResultSha256=input_result,
+         installTerminalSha256=installed['rootPins']['terminal'], installResultSha256=installed['rootPins']['result'])
+     if phase=='prepare':
+-        from issuer_aux_pair import check_native_projection
++        check_native_projection=load_issuer_pair()['check_native_projection']
+         check_native_projection(a,inner)
+     host['validate'](a, now)
+     return a, host['encode']
+ 
+ 
+-FROZEN_RULES_SHA = '7b24bbabec0011600b7111566bed8d08570fe3b7bea064807e6ecb18ed24af94'
++FROZEN_RULES_SHA = 'b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e'
+ CONSUMER_SOURCE_PIN = '498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f'
+ WIP_PENDING = False
+ 
+--- 879/issue_registration.py
++++ successor02/issue_registration.py
+@@ -14,6 +14,47 @@
+ def checked(p,pin):
+  b=Path(p).read_bytes();assert sha(b)==pin,p;return b
+ 
++def checked_consumer(witness,consumer_review_file,consumer_review_pin):
++ consumer_pin=witness['consumerSourcePinsSha256'];directory=Path(witness['consumerSourceDirectory'])
++ consumer=json.loads(checked(directory/'SOURCE-PINS.json',consumer_pin))
++ assert consumer['serverActions']==consumer['PGConnections']==consumer['clockCalls']==0 and consumer['authoritiesIssued'] is False
++ interface_pin='b1a70148c1695885bedfd471f80166682cfdc7cb08229f0a506a303d28b8fb52'
++ assert consumer['interfaceSha256']==interface_pin
++ interface=json.loads(checked(directory/'INTERFACE.UNISSUED.json',interface_pin))
++ assert interface['serverActions']==interface['PGConnections']==0
++ assert interface['clock'] is interface['issuedAuthority'] is interface['role36Authority'] is None
++ cr=json.loads(checked(consumer_review_file,consumer_review_pin))
++ assert cr['sourceOnly'] is True and cr['findings']==[] and cr['sourcePinsSha256']==consumer_pin
++ assert cr['state']=='SOURCE_PASS_NORMAL36_CONSUMER_02_ONLY_PENDING_ROOT_PAIR'
++ assert cr['interfaceSha256']==interface_pin
++ for leaf,row in consumer['files'].items():
++  assert not Path(leaf).is_absolute() and '..' not in Path(leaf).parts
++  raw=checked(directory/leaf,row['sha256']);assert len(raw)==row['bytes']
++ return consumer,interface,cr
++
++def checked_static_rules(witness,cas):
++ # Consumer phase descriptors also contain transport metadata. Only these six
++ # fields are policy rules; never forward authority placeholders or paths.
++ fields={'jobId','script','authorityLeaf','bundlePins','timeoutSeconds','deadlineField'}
++ directory=Path(witness['consumerSourceDirectory']);blueprint=json.loads(checked(directory/'PHASES36.UNISSUED.json','3f4879d7c973343878c681ef1672b57f1d0c1c695e6fcc1754ab3ed3419dd2b4'))
++ assert set(witness['jobs'])==set(witness['phaseDirectories'])==set(blueprint['jobs'])==set(cas['JOBS'])
++ result={};folders={}
++ for phase in cas['JOBS']:
++  consumer_rule=blueprint['jobs'][phase]
++  assert set(consumer_rule)==fields|{'authoritySha256','rolesAuthoritySha256','sourceDirectory'}
++  assert consumer_rule['authoritySha256'] is None
++  assert consumer_rule['rolesAuthoritySha256']==(None if phase in ('apply','restore') else 'NOT_APPLICABLE')
++  rule={k:consumer_rule[k] for k in fields}
++  assert set(witness['jobs'][phase])==fields and rule==witness['jobs'][phase]==cas['EXPECTED_RULES'][phase]
++  assert rule['jobId']==cas['JOBS'][phase] and rule['deadlineField']=='expiresAt'
++  assert rule['timeoutSeconds']=={'apply':300,'start':300,'prepare':780,'writer':3000,'stop':120,'restore':300}[phase]
++  folder=Path(witness['phaseDirectories'][phase]).resolve(strict=True)
++  assert folder==directory/phase/'bundle' and consumer_rule['sourceDirectory']==str(folder)
++  assert rule['script'] in rule['bundlePins'] and rule['authorityLeaf'] not in rule['bundlePins']
++  for leaf,pin in rule['bundlePins'].items():checked(folder/leaf,pin)
++  result[phase]=json.loads(json.dumps(rule));folders[phase]=folder
++ return result,folders
++
+ def issue(review_file,review_pin,basis_file,basis_pin,output_directory,consumer_review_file,consumer_review_pin):
+  review=json.loads(checked(review_file,review_pin));source_raw=(HERE/'SOURCE-PINS.json').read_bytes();source=json.loads(source_raw)
+  assert review['state']=='SOURCE_PASS_NORMAL36_ROOT_PAIR_ONLY' and review['sourceOnly'] is True and review['findings']==[]
+@@ -21,15 +62,9 @@
+  for leaf,row in source['files'].items():checked(HERE/leaf,row['sha256'])
+  witness_raw=(HERE/'SIX-PHASES.UNISSUED.json').read_bytes();witness=json.loads(witness_raw)
+  assert review['rulesSha256']==sha(witness_raw)
+- consumer_pin=witness['consumerSourcePinsSha256'];consumer_dir=Path(witness['consumerSourceDirectory'])
+- consumer=json.loads(checked(consumer_dir/'SOURCE-PINS.json',consumer_pin))
+- assert consumer['serverActions']==consumer['sourceAssemblyServerActions']==0 and consumer['authoritiesIssued'] is False
+- cr=json.loads(checked(consumer_review_file,consumer_review_pin))
+- assert cr['sourceOnly'] is True and cr['findings']==[] and cr['sourcePinsSha256']==consumer_pin and cr['state'].startswith('SOURCE_PASS_NORMAL36')
++ consumer_pin=witness['consumerSourcePinsSha256']
++ checked_consumer(witness,consumer_review_file,consumer_review_pin)
+  assert review['consumerSourcePinsSha256']==consumer_pin
+- for leaf,row in consumer['files'].items():
+-  assert not Path(leaf).is_absolute() and '..' not in Path(leaf).parts
+-  raw=checked(consumer_dir/leaf,row['sha256']);assert len(raw)==row['bytes']
+  human=json.loads(checked(HUMAN,HUMAN_SHA));decision=json.loads(checked(DECISION,DECISION_SHA))
+  assert human['messageId']=='01a1df2e-293d-7061-ab16-5b0cc2e0e753' and human['originThreadId']=='01a19f9f-97b5-7f81-b1ea-5479df73b469'
+  assert decision['state']=='CONTROLLER_SOURCE_MAPPING_DECISION_NOT_EXECUTION_AUTHORITY'
+@@ -41,12 +76,7 @@
+  assert set(basis['candidateKeys'])==set(jobs.values())
+  assert set(basis['oldIdentities'])=={str(p) for p in cas['BASIS']}|set(cas['CUSTODY_FILES'])|{'executionLock'}
+  assert basis['oldIdentities']['executionLock']==cas['LOCK_ID'] and all(basis['actualPins'][str(p)]==pin for p,pin in cas['BASIS'].items())
+- assert set(witness['jobs'])==set(witness['phaseDirectories'])==set(jobs)=={'apply','start','prepare','writer','stop','restore'}
+- folders={};rules=json.loads(json.dumps(witness['jobs']))
+- for phase,rule in rules.items():
+-  assert rule['jobId']==jobs[phase]
+-  folder=Path(witness['phaseDirectories'][phase]).resolve(strict=True);assert folder==consumer_dir/phase/'bundle';folders[phase]=folder
+-  for leaf,pin in rule['bundlePins'].items():checked(folder/leaf,pin)
++ rules,folders=checked_static_rules(witness,cas)
+  # No clock, future service, native authority or credential has been constructed above.
+  captured=int(datetime.fromisoformat(basis['checkedAtUTC']).timestamp()*1000)
+  now=time.time_ns()//1000000;grant_limit=int(basis['grantExpiresAtEpoch']*1000)
+--- 879/issuer_aux_pair.py
++++ successor02/issuer_aux_pair.py
+@@ -2,7 +2,10 @@
+ The existing issuer must first validate current service, approved inputs, actual
+ old failed/absent-plan facts, historical catalog plus current readback and budget.
+ """
+-from identity_pair import LOGICAL,MAPPING,OUTER,check_mapping,check_binding,need
++from pathlib import Path
++import runpy
++_identity=runpy.run_path(str(Path(__file__).resolve().with_name('identity_pair.py')),run_name='exact_local_identity_pair')
++LOGICAL,MAPPING,OUTER,check_mapping,check_binding,need=(_identity[k] for k in ('LOGICAL','MAPPING','OUTER','check_mapping','check_binding','need'))
+ 
+ def native_scope():
+     return {'requestKey':LOGICAL,'batchPlanPath':MAPPING['batchPlanPath']}
+--- 879/original-cas-normal36-carrier.UNISSUED.py
++++ successor02/original-cas-normal36-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal36-registration-source-20261117-01')
+ AUDIT=STAGE.parent/'r3-normal36-registration-cas-20261117-01'
+-SOURCE='2dbdf5adbcc7512361208033add702f7e4bad8e7a320c43db9a8f145fc6cedce'
++SOURCE='e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000
+--- 879/register_cas.py
++++ successor02/register_cas.py
+@@ -283,7 +283,6 @@
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64')
+ JOBS = {'apply': 't45-r3-ordinary36-auth-apply-20261116-01', 'prepare': 't45-r3-final33-plan-prepare-20261116-02', 'restore': 't45-r3-ordinary36-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-36', 'stop': 't45-r3-ordinary36-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ EXPECTED_RULES = {'apply': {'authorityLeaf': 'host-authorization.json',
+-           'authoritySha256': None,
+            'bundlePins': {'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+                           'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+                           'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+@@ -293,12 +292,9 @@
+                           'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a'},
+            'deadlineField': 'expiresAt',
+            'jobId': 't45-r3-ordinary36-auth-apply-20261116-01',
+-           'rolesAuthoritySha256': None,
+            'script': 'ordinary05_roles_job.py',
+-           'sourceDirectory': '/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/apply/bundle',
+            'timeoutSeconds': 300},
+  'prepare': {'authorityLeaf': 'host-authorization.json',
+-             'authoritySha256': None,
+              'bundlePins': {'final33-run.mjs': '24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f',
+                             'final33_host.py': '85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6',
+                             'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4',
+@@ -308,12 +304,9 @@
+                             'r3_05_runtime.py': 'cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b'},
+              'deadlineField': 'expiresAt',
+              'jobId': 't45-r3-final33-plan-prepare-20261116-02',
+-             'rolesAuthoritySha256': 'NOT_APPLICABLE',
+              'script': 'final33_host.py',
+-             'sourceDirectory': '/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle',
+              'timeoutSeconds': 780},
+  'restore': {'authorityLeaf': 'host-authorization.json',
+-             'authoritySha256': None,
+              'bundlePins': {'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+                             'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+                             'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+@@ -323,12 +316,9 @@
+                             'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a'},
+              'deadlineField': 'expiresAt',
+              'jobId': 't45-r3-ordinary36-auth-restore-20261116-01',
+-             'rolesAuthoritySha256': None,
+              'script': 'ordinary05_roles_job.py',
+-             'sourceDirectory': '/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/restore/bundle',
+              'timeoutSeconds': 300},
+  'start': {'authorityLeaf': 'service-start-authorization.json',
+-           'authoritySha256': None,
+            'bundlePins': {'batched161-run.mjs': 'e6c44f641a6306b286e98613e0e69781fd64d92a5533c4ced884646648375e8a',
+                           'final33-run.mjs': '24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f',
+                           'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+@@ -347,22 +337,16 @@
+                           'start_owned_describe.py': 'abf46f58a519f8e9c1c8abd3ff35482a94d02ae5ab9afd07fb01bdb66a7e33f6'},
+            'deadlineField': 'expiresAt',
+            'jobId': 't45-first-r3-native-service-start-20261116-36',
+-           'rolesAuthoritySha256': 'NOT_APPLICABLE',
+            'script': 'normal_service05_after08.py',
+-           'sourceDirectory': '/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle',
+            'timeoutSeconds': 300},
+  'stop': {'authorityLeaf': 'normal05-preserve-stop-input.json',
+-          'authoritySha256': None,
+           'bundlePins': {'normal05_preserve_stop.py': '0962a84910c8c62f1e34b35bde278b6ada7f39cc323f54ecae3391311e8b588b',
+                          'normal05_retained_stop.py': 'ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491'},
+           'deadlineField': 'expiresAt',
+           'jobId': 't45-r3-ordinary36-preserve-stop-20261116-01',
+-          'rolesAuthoritySha256': 'NOT_APPLICABLE',
+           'script': 'normal05_preserve_stop.py',
+-          'sourceDirectory': '/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/stop/bundle',
+           'timeoutSeconds': 120},
+  'writer': {'authorityLeaf': 'host-authorization.json',
+-            'authoritySha256': None,
+             'bundlePins': {'final33-run.mjs': '24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f',
+                            'final33_host.py': '85acf829edc4a8f51f5aa1e66d5de7b23dd6abc97d3d46ac0815d9f8de6ac5e6',
+                            'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4',
+@@ -372,9 +356,7 @@
+                            'r3_05_runtime.py': 'cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b'},
+             'deadlineField': 'expiresAt',
+             'jobId': 't45-r3-batched-real-execute-20261115-01',
+-            'rolesAuthoritySha256': 'NOT_APPLICABLE',
+             'script': 'final33_host.py',
+-            'sourceDirectory': '/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/writer/bundle',
+             'timeoutSeconds': 3000}}
+ COMPLETED = {'input_materialize': {'leaf': 'final33-input-materialization-result.json',
+                        'marker': '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/materialization-receipt.json',

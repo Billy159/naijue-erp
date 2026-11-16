@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T04:14:52.876883+08:00",
-  "state": "CONSUMER36_02_SOURCE_ACCEPTED_ROOT01_REJECTED_THREE_PRECLOCK_WIRING_FINDINGS_NO_AUTHORITY",
+  "asOf": "2026-11-17T04:19:03.185194+08:00",
+  "state": "NORMAL36_CONSUMER498_AND_ROOT2C_SOURCE_PAIR_ACCEPTED_FRESH_ACTUAL_BASIS_PENDING_NO_AUTHORITY",
   "goal": "ACTIVE",
   "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
   "consumerRulesSha256": "3f4879d7c973343878c681ef1672b57f1d0c1c695e6fcc1754ab3ed3419dd2b4",
@@ -14,7 +14,7 @@
     "R02 source rules9 versus root policy6; exact projection must also update CAS expected rules before clock",
     "R03 runpy issuer must explicitly resolve pinned HERE mapping modules"
   ],
-  "next": "D1 independent root successor fixes exactly R01 R02 R03 and calls actual checked_consumer/static-rule prefix using accepted498/b1/5ae; QB only affected increments. After SOURCE acceptance, sole T45 reads one actual fresh basis before main limited issuance.",
+  "next": "Sole T45 actual fresh basis once using reviewed reader de8f and CAS e228, then main-only issuance from accepted source02/review7e12 if fresh actual checks match. Original writer not submitted, PG last actual stopped/exact original auth restored.",
   "latestActualRuntime": "PREPARE35_FAILED_UNKNOWN_STOP_AND_EXACT_AUTH_RESTORE35_COMPLETE_24CDC_47F79",
   "newServiceAuthorityOrClock": false,
   "businessWriterSubmitted": false,
@@ -667,6 +667,95 @@
       "path": "execution-preparation/EXECUTION-PREPARATION.json",
       "sha256": "d99b19de3729b4385de29573de91c9cdde299d6032544a4d457c4ae1b7657b38",
       "bytes": 10415
+    },
+    {
+      "path": "root02-source-pass/SOURCE-PINS.json",
+      "sha256": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
+      "bytes": 3238
+    },
+    {
+      "path": "root02-source-pass/ACTUAL-PRE-CLOCK-METADATA-RESULT.json",
+      "sha256": "2429643d09996efcd7f436f24fce4e64666027344e9affcafc6c86093962d858",
+      "bytes": 973
+    },
+    {
+      "path": "root02-source-pass/FIX-DIFF.patch",
+      "sha256": "6d5a776324f33966902328e310480fed1e3e46862abfdcf5ba991facdec3275c",
+      "bytes": 22673
+    },
+    {
+      "path": "root02-source-pass/LOCAL-CHECKS.json",
+      "sha256": "2eed40134019b677e07ee167de700aa84dcda75cbd2a4acf89edd64a8b0f41be",
+      "bytes": 1339
+    },
+    {
+      "path": "root02-source-pass/REAL-PRE-CLOCK-PREFIX-RESULT.json",
+      "sha256": "4ca926e76e9c14aec03c6ed20921b12e278a4a064ea405d2033fbe35ee718b75",
+      "bytes": 822
+    },
+    {
+      "path": "root02-source-pass/admin_exec.NORMAL36-UNREGISTERED.py",
+      "sha256": "ef02748504b4ef455644f9228dd42faf62d816c10e292145507a1b6ea4488834",
+      "bytes": 45335
+    },
+    {
+      "path": "root02-source-pass/check_real_preclock_prefix.py",
+      "sha256": "f6f55a2b0d486ae728f267d424b78203c54727ad928a1333ef2453f845487bfb",
+      "bytes": 1925
+    },
+    {
+      "path": "root02-source-pass/identity_pair.py",
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787",
+      "bytes": 1347
+    },
+    {
+      "path": "root02-source-pass/issue_phase.py",
+      "sha256": "90f959296e4f57dcdcbdb3bbd6e2b8c45a531000d2431cde13eac855f39e4fd1",
+      "bytes": 39822
+    },
+    {
+      "path": "root02-source-pass/issue_registration.py",
+      "sha256": "09ef836b3a82cfd61ea6083d0f1429de292584a36350c6bc16b982c0587c06bf",
+      "bytes": 10370
+    },
+    {
+      "path": "root02-source-pass/issuer_aux_pair.py",
+      "sha256": "566f79be9b49b6d823c4c4a9509535327dc27d57f3066f16dd63b9a6421d7cd1",
+      "bytes": 2406
+    },
+    {
+      "path": "root02-source-pass/original-cas-normal36-carrier.UNISSUED.py",
+      "sha256": "be9626135d41a0294bd41b1574db830bc636efe8209cfa24b09da743bc93c12d",
+      "bytes": 2584
+    },
+    {
+      "path": "root02-source-pass/r3_direct36_aux_prepare.py",
+      "sha256": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
+      "bytes": 122530
+    },
+    {
+      "path": "root02-source-pass/read_registration_basis.py",
+      "sha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd",
+      "bytes": 1996
+    },
+    {
+      "path": "root02-source-pass/register_cas.py",
+      "sha256": "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11",
+      "bytes": 118318
+    },
+    {
+      "path": "reviews/root02-RESULT.json",
+      "sha256": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
+      "bytes": 7129
+    },
+    {
+      "path": "reviews/root02-INCREMENT-EVIDENCE.json",
+      "sha256": "fb066664a03ebe0a6e5ae628cc7766d215ea1075584453c450f42b6c56bfd275",
+      "bytes": 1736
     }
-  ]
+  ],
+  "root02SourcePinsSha256": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
+  "root02ReviewSha256": "7e12efda7ed2676e8951be5efe839260bea2cf9467e0b0d40b8cbb5b82834362",
+  "root02RulesSha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e",
+  "root02Findings": "R01_R02_R03_CLOSED_IN_INDEPENDENT_SOURCE02_ONLY"
 }

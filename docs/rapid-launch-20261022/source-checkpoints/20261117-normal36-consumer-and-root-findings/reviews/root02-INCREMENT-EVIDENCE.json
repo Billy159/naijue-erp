@@ -1,0 +1,53 @@
+{
+  "PGConnections": 0,
+  "actualConsumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "actualConsumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "actualIssuerMetadataFunctionsCalled": [
+    "checked_consumer",
+    "checked_static_rules"
+  ],
+  "actualPhaseLoaderOnlyCalled": true,
+  "checks": {
+    "CASOnlyExpectedRulesChanged": true,
+    "R01Actual498b1_5aeAccepted": true,
+    "R02ActualSixRulesAcceptedAndCASExact": true,
+    "R03ActualRunpyLocalHelperResolution": true,
+    "all15FrozenFilesExact": true,
+    "carrierOnlyCASPinChanged": true,
+    "criticalUnchangedSourceBytes": true,
+    "exactPureFunctionsSelected": true,
+    "identityNoNativeWireChange": true,
+    "newSourceExact": true,
+    "oldSourceAndNeedFixReportFrozen": true,
+    "pairSemanticASTUnchanged-check_native_projection": true,
+    "pairSemanticASTUnchanged-native_scope": true,
+    "pairSemanticASTUnchanged-pair_scope": true,
+    "phaseFinalOnlyExactLoaderCallsChanged": true,
+    "phaseFrozenRulesPinExact": true,
+    "postClockIssuerTailASTUnchanged": true,
+    "realIssuerCallsBothPureFunctionsBeforeClock": true,
+    "rulesAndCASExact": true,
+    "witnessOnlyNineToSixRuleProjection": true
+  },
+  "closedFindings": [
+    "N36-R01",
+    "N36-R02",
+    "N36-R03"
+  ],
+  "fields": [
+    "authorityLeaf",
+    "bundlePins",
+    "deadlineField",
+    "jobId",
+    "script",
+    "timeoutSeconds"
+  ],
+  "freshBasisFixtureCreated": false,
+  "fullIssueOrMainCalls": 0,
+  "future36ServiceOrAuthorityFixtureCreated": false,
+  "issuanceClockCalls": 0,
+  "nativeOrCASOrReaderCalls": 0,
+  "pureActualRuleCount": 6,
+  "rootPassReportFixtureCreated": false,
+  "serverConnections": 0
+}

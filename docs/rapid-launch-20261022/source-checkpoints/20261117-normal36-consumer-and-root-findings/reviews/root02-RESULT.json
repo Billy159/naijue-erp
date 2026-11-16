@@ -1,0 +1,168 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "actualLocalLoaderOnlyCalls": 1,
+    "actualPureMetadataCalls": 2,
+    "authorityFixturesCreated": false,
+    "clockCalls": 0,
+    "freshBasisFixturesCreated": false,
+    "frozenReportsRewritten": false,
+    "fullIssuerOrMainInvoked": false,
+    "futurePassReportFixturesCreated": false,
+    "nativeInvoked": false,
+    "ownerSourcesModified": false,
+    "privateBodiesOrSnapshotDigestsRead": false,
+    "readerOrCASInvoked": false,
+    "serverConnections": 0
+  },
+  "closedFindings": [
+    "N36-R01",
+    "N36-R02",
+    "N36-R03"
+  ],
+  "consumerInterfaceSha256": "b1a70148c1695885bedfd471f80166682cfdc7cb08229f0a506a303d28b8fb52",
+  "consumerPhasePlanSha256": "3f4879d7c973343878c681ef1672b57f1d0c1c695e6fcc1754ab3ed3419dd2b4",
+  "consumerReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "consumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "executionReady": false,
+  "executionSourcePins": {
+    "issue_phase.py": {
+      "bytes": 39822,
+      "sha256": "90f959296e4f57dcdcbdb3bbd6e2b8c45a531000d2431cde13eac855f39e4fd1"
+    },
+    "issue_registration.py": {
+      "bytes": 10370,
+      "sha256": "09ef836b3a82cfd61ea6083d0f1429de292584a36350c6bc16b982c0587c06bf"
+    },
+    "original-cas-normal36-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "be9626135d41a0294bd41b1574db830bc636efe8209cfa24b09da743bc93c12d"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1996,
+      "sha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd"
+    },
+    "register_cas.py": {
+      "bytes": 118318,
+      "sha256": "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11"
+    }
+  },
+  "files": {
+    "ACTUAL-PRE-CLOCK-METADATA-RESULT.json": {
+      "bytes": 973,
+      "sha256": "2429643d09996efcd7f436f24fce4e64666027344e9affcafc6c86093962d858"
+    },
+    "FIX-DIFF.patch": {
+      "bytes": 22673,
+      "sha256": "6d5a776324f33966902328e310480fed1e3e46862abfdcf5ba991facdec3275c"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1339,
+      "sha256": "2eed40134019b677e07ee167de700aa84dcda75cbd2a4acf89edd64a8b0f41be"
+    },
+    "REAL-PRE-CLOCK-PREFIX-RESULT.json": {
+      "bytes": 822,
+      "sha256": "4ca926e76e9c14aec03c6ed20921b12e278a4a064ea405d2033fbe35ee718b75"
+    },
+    "SIX-PHASES.UNISSUED.json": {
+      "bytes": 31880,
+      "sha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e"
+    },
+    "admin_exec.NORMAL36-UNREGISTERED.py": {
+      "bytes": 45335,
+      "sha256": "ef02748504b4ef455644f9228dd42faf62d816c10e292145507a1b6ea4488834"
+    },
+    "check_real_preclock_prefix.py": {
+      "bytes": 1925,
+      "sha256": "f6f55a2b0d486ae728f267d424b78203c54727ad928a1333ef2453f845487bfb"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787"
+    },
+    "issue_phase.py": {
+      "bytes": 39822,
+      "sha256": "90f959296e4f57dcdcbdb3bbd6e2b8c45a531000d2431cde13eac855f39e4fd1"
+    },
+    "issue_registration.py": {
+      "bytes": 10370,
+      "sha256": "09ef836b3a82cfd61ea6083d0f1429de292584a36350c6bc16b982c0587c06bf"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2406,
+      "sha256": "566f79be9b49b6d823c4c4a9509535327dc27d57f3066f16dd63b9a6421d7cd1"
+    },
+    "original-cas-normal36-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "be9626135d41a0294bd41b1574db830bc636efe8209cfa24b09da743bc93c12d"
+    },
+    "r3_direct36_aux_prepare.py": {
+      "bytes": 122530,
+      "sha256": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1996,
+      "sha256": "de8fa0a9f4473fb06dd6196b28ca34f76e57e48f62406db7afc6a21848746dbd"
+    },
+    "register_cas.py": {
+      "bytes": 118318,
+      "sha256": "e22846fa9ef6043b7f88be587b70a3d53ca4f4bc82a5c68dbae4d44d68ebbc11"
+    }
+  },
+  "findings": [],
+  "incrementalScope": "Only R01/R02/R03 and affected exact closure. Reuse prior root01/source879 review outside its three corrected findings, and accepted consumer498/review5ae.",
+  "independentEvidence": {
+    "actualPhaseLoaderAndPureNativeScopeCalled": true,
+    "actualPureMetadataFunctionsCalled": [
+      "checked_consumer",
+      "checked_static_rules"
+    ],
+    "fullIssuerCalls": 0,
+    "metadataStaticConfirmations": 20,
+    "path": "outputs/QB/20261117-r3-normal36-root-review-02/INCREMENT-EVIDENCE.json",
+    "sha256": "fb066664a03ebe0a6e5ae628cc7766d215ea1075584453c450f42b6c56bfd275"
+  },
+  "independentVerification": {
+    "CASOnlyExpectedRulesNineToSixProjectionChanged": true,
+    "R01ActualIssuerCheckedConsumerAcceptsReal498b1_5aeFiles": true,
+    "R02ActualIssuerCheckedStaticRulesAcceptsSixRealRulesEqualCASExpected": true,
+    "R03ActualPhaseLoaderResolvesExactHereMappingAndIdentity": true,
+    "all15FrozenFilesExact": true,
+    "carrierOnlyExactCASSourceHashChanged": true,
+    "helperDispatcherBasisReaderIdentityAndPriorMetadataBytesUnchanged": true,
+    "mappingNativeScopePairProjectionFunctionASTUnchanged": true,
+    "nativeWireSchemaUnchanged": true,
+    "old879AndC73FrozenBytesRetained": true,
+    "phaseFinalOnlyTwoImportsChangedToExactLoader": true,
+    "postClockRegistrationIssuerTailASTUnchanged": true,
+    "realIssuerCallsBothPureValidatorsBeforeIssuanceClock": true,
+    "witnessOnlySixRuleProjectionChanged": true
+  },
+  "limitations": [
+    "Source pair only. This report does not claim a new registered dispatcher, finite issuance or runtime success.",
+    "T45 must obtain genuine fresh basis via this exact basisreader/CAS and original chain; prior saved32/35 metadata is not a current fresh basis.",
+    "Issuance must consume these exact immutable report/source/rules/consumer files and real basis, with original time and budget checks.",
+    "No future36 service, ROOT/INIT absence, prepared plan, writer success, PG or business import measured.",
+    "No native/target/capability/authority/root-review/fresh-basis fixtures created; no clock sampled; no server actions.",
+    "Old c73 NEED_FIX and879 remain immutable. Later evidence belongs in separate files."
+  ],
+  "reusedEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal36-root-review-01/RESULT.json",
+      "scope": "All other root/CAS/basis/history/locking/budget scope; remains NEED_FIX for its own879 source.",
+      "sha256": "c73bb070dd5165a04a87375e7d7a53810dd62c29e758484d2713a8aa6c34cf80"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal36-consumer-review-02/RESULT.json",
+      "scope": "Consumer498 final accepted scope; no re-review or diagnostic76 repeat.",
+      "sha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b"
+    }
+  ],
+  "reviewer": "QB",
+  "rulesSha256": "b25acf54558fe9b0236e627f5ede5f785ad84f063f73ea0ff689730db41b4b4e",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal36-root-source-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "2c49164322b4b247295e04e22b683c1f61a08178630b1d1fb62b49ba6c0257d0",
+  "state": "SOURCE_PASS_NORMAL36_ROOT_PAIR_ONLY"
+}
