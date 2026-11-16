@@ -1,0 +1,58 @@
+{
+  "PGConnections": 0,
+  "archiveBytes": 40960,
+  "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+  "baseClientSha256": "1ca448c2de4678e388c2e4aa08a0b1ac9b220443ee4ecd690c7e492d81007ef4",
+  "classification": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT_SINGLE_EXACT_FRAGMENT_NOT_ORDINARY_SOURCE",
+  "consumerSourceSha256": "0c06a1bf239b1b6e83d3abe5889f54318c80e7146cbf0b59442c48f6f93dfee5",
+  "fixedScope": {
+    "archiveBytes": 40960,
+    "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+    "artifactKey": "r3-final33-recovery-input-20261117-01",
+    "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING",
+    "format": "T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1",
+    "fragmentIndex": 1,
+    "fragmentOffset": 0,
+    "grantId": "b16447fbc81f4d64",
+    "kind": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT",
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/private-standard-import-data/r3-final33-recovery-input-20261117-01",
+    "taskId": "T45"
+  },
+  "futureAuthority": null,
+  "futureReady": null,
+  "localArchive": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/unified-cleaning-20261116-1100/package/r3-readback-expectations-20261116-1140-r1/r3-final33-recovery-input-20261117-01.tar",
+  "localArchiveMetadata": {
+    "bytes": 40960,
+    "gid": 20,
+    "mode": 384,
+    "nlink": 1,
+    "uid": 501
+  },
+  "localReceiptSha256": "fe5d86318f10ea6856ded24fa9723c06f30ab1ef2c52817569cddd3d1194fd47",
+  "matureEntrypoints": [
+    "artifact_input",
+    "artifact_channel",
+    "artifact_stage"
+  ],
+  "maximumUploadWindowMillis": 600000,
+  "members": {
+    "AGGREGATE-READBACK-EXPECTATIONS.private.json": {
+      "bytes": 347,
+      "sha256": "12ed1911ab70edf9c567460cb793078b40c3de6e444263f215610206efd6c291"
+    },
+    "WAREHOUSE-KEY-EXPECTATIONS.private.json": {
+      "bytes": 27743,
+      "sha256": "9c68bbfdbf36ca8c2d84e3801fef1aa189d9d2f029ce4b25efa5c6fec29a7a79"
+    },
+    "app-readiness-owner.cjs": {
+      "bytes": 4431,
+      "sha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950"
+    }
+  },
+  "ordinaryV3BundleIncludesPrivateMembers": false,
+  "serverActions": 0,
+  "stageNotAttempted": true,
+  "state": "SOURCE_ONLY_PRIVATE_ARTIFACT_SCOPE_NOT_ISSUED",
+  "successorClientSha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81"
+}

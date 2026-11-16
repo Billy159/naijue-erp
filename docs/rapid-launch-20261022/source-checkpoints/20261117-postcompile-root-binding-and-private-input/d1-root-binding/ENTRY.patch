@@ -1,0 +1,17 @@
+--- T45-final-start34/batched161-run.mjs
++++ D1-postcompile-fix/batched161-run.mjs
+@@ -161,9 +161,11 @@
+    database_name:'erp_fresh35_20261110_r3',catalog_sha256:JSON.parse(original).successor.catalogSha256};
+   const binding=helper.finalBatchBinding(publicTarget,p.finalIdentity.admin);
+   const inputBinding=api.describeFinalR3InputBinding(publicTarget,p.finalIdentity.admin,p.finalIdentity.provision,binding);
+-  const options=helper.finalHostOptions(s,c);
+-  finalPreparationBinding=await api.describeFresh35FinalPreparationBinding(OPERATOR,options.referenceDirectory,
+-   options.currentService,options.parentPins,options.successorSha256,inputBinding,
++  await targets.assertFresh35Installed154UpgradeTargetCurrent(target);
++  finalPreparationBinding=api.buildFinalR3PreparationBinding(publicTarget,inputBinding,s.proofSha256,s.postmasterStart,
++   {transactionMode:'BATCHED_V1',batchedDbCandidatePinsSha256:'dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9',
++    batchedSourceSetSha256:batchedCatalog.sourceSetSha256,batchedCatalogSpecSha256:batchedCatalog.catalogSpecSha256,
++    batchedModelSha256:batchedCatalog.modelSha256},
+    {requestKey:helper.PREPARE,batchPlanPath:'/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/'+helper.PREPARE+'/batched-plan.sqlite'});
+  }
+  const liveFacts={...(describe?{finalPreparationBinding}:{}),requestKey:REQUEST,service:s,physical:c.physical,currentServiceSha256:s.proofSha256,

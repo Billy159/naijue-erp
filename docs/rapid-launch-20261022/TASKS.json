@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-17T01:20:52.362662+08:00",
+  "updatedAt": "2026-11-17T01:39:22.507871+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T01:20:52.362662+08:00",
-  "state": "NORMAL34_APPLY02_COMPLETED_START34_FAILED_AUTH_RESTORED_EXACT_UID_CONFLICT_FIX_RUNNING",
+  "asOf": "2026-11-17T01:39:22.507871+08:00",
+  "state": "AUTH_RESTORED_PG_STOPPED_ROOT_BINDING_FIX_SOURCE_PASS_NORMAL35_SOURCE_PREPARATION",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_STOPPED_ORIGINAL_AUTH_RESTORED",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "D1 minimal root-only final metadata binding fix and late path checks; T45 source only recovery artifact seam while waiting. No35 or new clock yet.",
+  "next": "T45 exact normal35 consumer source and D1 root source paired narrow review, then actual fresh/finite issuer. No new35 clock yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52870,6 +52870,36 @@
       "privateSafeReceiptSha256": "381d10acbc171f793e785366d3b3b74899bd344bf67235e9fefd4601ee2666a2"
     }
   },
-  "actualCurrentNormal34Checkpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal34-apply02-cli/CHECKPOINT.json"
+  "actualCurrentNormal34Checkpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal34-apply02-cli/CHECKPOINT.json",
+  "postcompileFix": {
+    "sourcePinsSha256": "e9160fad6e29da984578353cb5213a2c0371a6ef3fec1dd7ef793dea70a72aa0",
+    "entrySha256": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23",
+    "reviewSha256": "cf2841de11b468b75618af3df389f364b5bd126d3f806d1ec11b91332bbb3768",
+    "runtimePass": false,
+    "newNativeSourceOrMaterialization": false,
+    "capturedOriginalErrorCode": "UNKNOWN",
+    "deterministicSourceUIDConflict": true
+  },
+  "privateRecoveryArtifact": {
+    "sourcePinsSha256": "decccf382063eada6319eedc6d308fb0604b822e2363f691bf35cd2467806ca7",
+    "reviewSha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281",
+    "archiveBytes": 40960,
+    "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+    "readySha256": null,
+    "authoritySha256": null,
+    "serverReceived": false
+  },
+  "normal35": {
+    "state": "SOURCE_ONLY_CONSUMER_AND_ROOT_NOT_YET_FROZEN_NO_AUTHORITY_OR_SERVER",
+    "prior34CMetadataSha256": "7fed632320839f81486b66c13731322fda8da0157afc0eb97a3ecec43b274d19",
+    "applyKey": "t45-r3-ordinary35-auth-apply-20261116-01",
+    "startKey": "t45-first-r3-native-service-start-20261116-35",
+    "stopKey": "t45-r3-ordinary35-preserve-stop-20261116-01",
+    "restoreKey": "t45-r3-ordinary35-auth-restore-20261116-01",
+    "issued": false,
+    "executed": false,
+    "businessKeysUnchanged": true
+  },
+  "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-postcompile-root-binding-and-private-input/CHECKPOINT.json"
 }
 }

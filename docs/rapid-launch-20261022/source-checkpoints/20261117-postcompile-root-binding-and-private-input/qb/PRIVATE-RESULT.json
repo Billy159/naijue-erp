@@ -1,0 +1,111 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clientModuleInvocations": 0,
+    "consumerMembersOrStageInvocations": 0,
+    "ownerSourcesModified": false,
+    "privateBodiesCopiedExtractedOrPrinted": false,
+    "reportsOverwritten": false,
+    "serverConnections": 0,
+    "uploadOrAuthorityOrClockCalls": 0
+  },
+  "archive": {
+    "bytes": 40960,
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "members": {
+      "AGGREGATE-READBACK-EXPECTATIONS.private.json": {
+        "bytes": 347,
+        "sha256": "12ed1911ab70edf9c567460cb793078b40c3de6e444263f215610206efd6c291"
+      },
+      "WAREHOUSE-KEY-EXPECTATIONS.private.json": {
+        "bytes": 27743,
+        "sha256": "9c68bbfdbf36ca8c2d84e3801fef1aa189d9d2f029ce4b25efa5c6fec29a7a79"
+      },
+      "app-readiness-owner.cjs": {
+        "bytes": 4431,
+        "sha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950"
+      }
+    },
+    "sha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d"
+  },
+  "baseClientSha256": "1ca448c2de4678e388c2e4aa08a0b1ac9b220443ee4ecd690c7e492d81007ef4",
+  "findings": [],
+  "independentVerification": {
+    "actualLocalPrivateTarReadAndMemberHashesCheckedInMemory": true,
+    "allNinePinnedFilesExact": true,
+    "archiveNamesRegularMembersAndThreeMemberHashAndSizeChecksExact": true,
+    "archiveRequiresExactHashSizeIdentityUid1000Mode0600AndPrivateDirectories0700": true,
+    "authorityReferenceUsesOriginalBindingHashWithoutReserializingAuthority": true,
+    "consumerReferenceExactFiveFieldsRequiresNonNullReadyAndAuthorityPins": true,
+    "consumerRejectsUnsignedReferenceBeforeServerPathAccessByStaticControlFlow": true,
+    "fixedGrantManifestKeyArchiveAndFragmentOnlyDynamicFieldsAreStartsExpiresDecisionReference": true,
+    "maximumUploadAuthorityMillis": 600000,
+    "newScopeAndAuthorityAstIdenticalAcrossFourCopies": true,
+    "ordinarySourceFiltersUnchangedAndPrivateBodiesExcludedFromOrdinaryBundle": true,
+    "originalLocalFunctionsUnchangedAfterExactRecoveryBranch": 30,
+    "originalReceiverIdentityFiveIntegerVectorMatchesConsumer": true,
+    "originalReceiverReadyNineFieldProducerMatchesConsumer": true,
+    "originalRemoteFunctionsUnchangedAfterExactRecoveryBranch": 14,
+    "privateTarRegularUid501Mode0600SingleLink": true,
+    "pythonSyntaxCompiledWithoutModuleExecution": true,
+    "readyPinUsesOriginalRawBytes": true,
+    "reusedRootExternalAuthorityGrantWindowChecksAndOriginalExclusiveNoReplayChannel": true
+  },
+  "limitations": [
+    "No server READY or external signed authority exists in this source-only delivery; null pins must not be substituted or fabricated.",
+    "Later consumer integration must bind actual received ready.json raw SHA, original authority SHA and original archive identity.",
+    "Initial upload remains within externally issued authority and existing grant. Later immutable archive readback does not extend upload authority.",
+    "Final APP uid/group/mode placement and actual support consumption remain for the future exact consumer version.",
+    "No APP, cold, clone, runtime, database, deployment or business-import PASS is granted.",
+    "This frozen review covers only these pinned source bytes; a later package requires its exact changed-byte pairing."
+  ],
+  "ownerLocalChecksReused": {
+    "notRerunByQB": true,
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/LOCAL-CHECKS.json",
+    "sha256": "8735080f75d7283817b6a5f044278a8b8773dbe950be276fa41aa90becba8098"
+  },
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01",
+  "sourceFiles": {
+    "HANDOFF.md": {
+      "bytes": 3851,
+      "sha256": "cf7386bd73018ea61e36cb3f0534e6d26ba2ca2cc62635db9259a1dac9de4f5c"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 588,
+      "sha256": "8735080f75d7283817b6a5f044278a8b8773dbe950be276fa41aa90becba8098"
+    },
+    "PROFILE.UNISSUED.json": {
+      "bytes": 2551,
+      "sha256": "5ea26e07d1ee9b24a68733fffb682aadcac2371782844b6cc6339758b26d8317"
+    },
+    "RECEIVER-CONSUMER-INTERFACE.UNISSUED.json": {
+      "bytes": 3860,
+      "sha256": "a07e28b59e0ce6efdda7d9292d65389413fce62b68fedf05871b18a3a3bd1fc8"
+    },
+    "RECEIVER-DELTA.patch": {
+      "bytes": 4038,
+      "sha256": "fa907e7f99280d103b42d3e04911d375a1eed7e1899cf5a6c76e8b93aad3f1c7"
+    },
+    "check_source.py": {
+      "bytes": 3559,
+      "sha256": "7b4a50fd65c01681e4d168489a5385a77b31f1ac1425d12ad2416f4adb1505aa"
+    },
+    "recovery_input_artifact.py": {
+      "bytes": 6765,
+      "sha256": "0c06a1bf239b1b6e83d3abe5889f54318c80e7146cbf0b59442c48f6f93dfee5"
+    },
+    "recovery_scope.py": {
+      "bytes": 1424,
+      "sha256": "e403768f0ec086941f02117d24d543cf5b5aa5668ece99debe28db81bcd511b8"
+    },
+    "ssh-control-recovery-input.py": {
+      "bytes": 152217,
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81"
+    }
+  },
+  "sourceOnly": true,
+  "sourcePinsSha256": "decccf382063eada6319eedc6d308fb0604b822e2363f691bf35cd2467806ca7",
+  "state": "SOURCE_PASS_PRIVATE_RECOVERY_ARTIFACT_SEAM_ONLY"
+}

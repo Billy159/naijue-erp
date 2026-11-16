@@ -1,0 +1,47 @@
+{
+  "asOf": "2026-11-17T01:39:22.507871+08:00",
+  "state": "AUTH_RESTORED_PG_STOPPED_ROOT_BINDING_FIX_SOURCE_PASS_NORMAL35_SOURCE_PREPARATION",
+  "goal": "ACTIVE",
+  "actualPreviousRuntimeCheckpoint": "../20261117-normal34-apply02-cli/CHECKPOINT.json",
+  "entryFix": {
+    "sourcePinsSha256": "e9160fad6e29da984578353cb5213a2c0371a6ef3fec1dd7ef793dea70a72aa0",
+    "entrySha256": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23",
+    "reviewSha256": "cf2841de11b468b75618af3df389f364b5bd126d3f806d1ec11b91332bbb3768",
+    "runtimePass": false,
+    "newNativeSourceOrMaterialization": false,
+    "capturedOriginalErrorCode": "UNKNOWN",
+    "deterministicSourceUIDConflict": true
+  },
+  "privateArtifact": {
+    "sourcePinsSha256": "decccf382063eada6319eedc6d308fb0604b822e2363f691bf35cd2467806ca7",
+    "reviewSha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281",
+    "archiveBytes": 40960,
+    "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+    "readySha256": null,
+    "authoritySha256": null,
+    "serverReceived": false
+  },
+  "prior34CMetadataSha256": "7fed632320839f81486b66c13731322fda8da0157afc0eb97a3ecec43b274d19",
+  "prior34CRead": "EXACT_ORIGINAL_C_READ_ONCE_NO_NEW_C_CLOCK_PG_CREDENTIALS_OR_MUTATIONS",
+  "normal35": "SOURCE_ONLY_CONSUMER_AND_ROOT_NOT_YET_FROZEN_NO_AUTHORITY_OR_SERVER",
+  "originalAuthentication": "ACTUAL_RESTORED_1dab_381d",
+  "PG": "ACTUAL_STOPPED_ORIGINAL_PGDATA_PRESERVED",
+  "businessWrites": 0,
+  "originalWriter": "NEVER_SUBMITTED",
+  "successfulMaterializationsAnd211": "REUSE_NEVER_REPLAY",
+  "frozenPatchWhitespace": "Frozen .patch bytes retained; authored documents checked separately.",
+  "pending": [
+    "final normal35 same-version consumer/root source pairing review",
+    "actual finite registration/apply/start/catalog/native PREPARE/original writer",
+    "real batch readback/cold backup/independent physical restore",
+    "formal app/core roles/browser/public URL"
+  ],
+  "frozenSourceWhitespace": {
+    "preservedOriginalPins": true,
+    "exceptions": [
+      "private-artifact-source/recovery_input_artifact.py:74 blank line at EOF",
+      "private-artifact-source/recovery_scope.py:19 blank line at EOF"
+    ],
+    "check": "Authored documents and all other non-patch files checked; frozen reviewed bytes retained exactly."
+  }
+}

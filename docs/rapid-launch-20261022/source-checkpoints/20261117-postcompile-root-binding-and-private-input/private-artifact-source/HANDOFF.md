@@ -1,0 +1,25 @@
+# 固定三成员私密 artifact 接收与读取合同
+
+仅本机SOURCE准备。旧INPUT-RECEPTION及APP03/cold03/clone WIP均保留；未连接服务器、登记、上传、签发或修改任何实际任务。READY与authority仍NULL，不是收到/PASS。本交付只管一个独立seam，D1准确entry修复到达后优先正常链；维护后继service及production_owner真实boot绑定另待最终包，不造普通服务号。
+
+## 已核真实私域输入
+
+主控原三成员未改名USTAR归档40960B/244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d，本机owner/0600/nlink1与成熟private上传前提一致。只在私域读原tar并在内存计算三成员pin/size，未复制私密数据到outputs/Git/公开应用包，未打印正文。两个期望9c68/12ed及原.cjs24a1名称、字节不动。
+
+## 原成熟私密通道的精确后继
+
+原artifact_input/artifact_channel/artifact_stage和嵌入接收器继续使用原root-owned外部authorization、既有grant/身份、private-standard-import-data、0700/0600、status先查、原键O_EXCL、防重放/未知保留、流长度/哈希校验、原READY producer。新client只有一个固定key的scope分支，同时接到本机和远程两份private_standard_data_authority；其余30个本机函数和14个远程函数AST保持。没有普通源码分类或普通/artifacts路径，没有更名.private/.cjs躲过滤。
+
+固定scope仍是成熟PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT，单片index1/offset0/40960B/244bba、manifest7eb；C后续只填startsAt/expiresAt/decisionReference，窗口最多原600000ms、仍受原grant边界。它不是全数据PRIVATE_STANDARD_IMPORT_DATA，不会重发211片或ROOT06。原scope不认识这个key，所以当前需要先对这项最小源码差异复核并由C沿成熟渠道签发/安装准确新authority，不能把“有原工具”当“本新key已获server接纳”。现行原40秒连接与ControlMaster代码保持，未改变旧通道或server guard。
+
+## 读取器修正
+
+旧WIP把私域归档指向普通/artifacts且只核4字段；新独立recovery_input_artifact.py改读原/private-standard-import-data固定key，并要求5字段signed consumer reference（新增authoritySha256），真实ready.json准确原始字节SHA和原binding.json、manifest/fragment、实际5元组archive身份以及固定40960B/244bba均核实后，才读三成员。不会用本机回执当READY，不会重序列化dict伪称root接收器字节。上传authority过期后仍可由新签consumer引用读取原不可变归档；不把过期当新上传许可。
+
+现有stage_readiness_owner只在未来已签APP消费方root进程内，从此真实private归档精确24a1抽取原名.cjs，0440/0400私域source staging须由最终APP host合同核齐；这里不会调用它或提前改APP支持目录。clone期待值也只由最终已审host投影安全消费。该读取器是现WIP必要后继，尚未把APP/cold/clone记为可执行或整包通过。
+
+## 必要本机检查与待办
+
+LOCAL-CHECKS：Python编译；本机与远程新scope AST完全相同；原成熟30+14函数保持；真实私域tar经新unpack读取三成员pin/size一致；UNISSUED的NULL ready/authority在任何服务器路径访问前拒；原READY生产字段与5元组身份源码合同对应。没有伪READY/假许可/native fixture、clock调用、state/network/上传或PG操作。
+
+RECEIVER-CONSUMER-INTERFACE.UNISSUED.json给C/QB准确scope、原channel调用、原root授权路径、原READY字节规则、私密目录权限和三成员字段。先SOURCE窄审，后由C取必要实际基准并签有限private stage；真正接收完成后按原key读真实READY及fileIdentity，再供APP/clone真实消费。未知按原key，不重放。原14f34应用归档仍仅本机build/pack证据，本接收不替代它的server READY。

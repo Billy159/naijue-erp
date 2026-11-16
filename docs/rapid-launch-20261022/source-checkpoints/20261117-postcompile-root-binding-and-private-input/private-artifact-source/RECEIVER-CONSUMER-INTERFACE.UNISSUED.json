@@ -1,0 +1,93 @@
+{
+  "APPColdClonePass": false,
+  "PGConnections": 0,
+  "actualGrantStatusRequiredBeforeUpload": true,
+  "bindingEncoding": "existing target/binding.json binds original authoritySha256 and parsed authority; do not reconstruct signed-authority hash from differently serialized JSON",
+  "consumerReference": {
+    "archiveBytes": 40960,
+    "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+    "artifactKey": "r3-final33-recovery-input-20261117-01",
+    "authoritySha256": null,
+    "readySha256": null
+  },
+  "dynamicAuthorityFields": {
+    "decisionReference": null,
+    "expiresAt": null,
+    "startsAt": null
+  },
+  "existingClientEnvReferenceName": "ERP_RELEASE_CONNECTION_REF",
+  "existingEntrypoints": {
+    "consumer": "recovery_input_artifact.members(exact consumer reference)",
+    "stage": "artifact_stage(cfg,args) -> existing status ABSENT/O_EXCL once intent -> original artifact_channel(upload)",
+    "status": "artifact_input(args,cfg) -> artifact_channel(cfg,authority,authority_sha,status)"
+  },
+  "existingRootAuthorityPath": "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/artifact-staging-authorization.json",
+  "fileIdentityFields": [
+    "st_dev",
+    "st_ino",
+    "st_size",
+    "st_mtime_ns",
+    "st_ctime_ns"
+  ],
+  "maximumAuthorityWindowMillis": 600000,
+  "memberNamesAndPins": {
+    "AGGREGATE-READBACK-EXPECTATIONS.private.json": {
+      "bytes": 347,
+      "sha256": "12ed1911ab70edf9c567460cb793078b40c3de6e444263f215610206efd6c291"
+    },
+    "WAREHOUSE-KEY-EXPECTATIONS.private.json": {
+      "bytes": 27743,
+      "sha256": "9c68bbfdbf36ca8c2d84e3801fef1aa189d9d2f029ce4b25efa5c6fec29a7a79"
+    },
+    "app-readiness-owner.cjs": {
+      "bytes": 4431,
+      "sha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950"
+    }
+  },
+  "newAuthority": null,
+  "ordinarySourceTransportUsed": false,
+  "originalReadyFields": [
+    "status",
+    "artifactKey",
+    "archiveSha256",
+    "archiveBytes",
+    "authoritySha256",
+    "fileIdentity",
+    "manifestSha256",
+    "fragmentIndex",
+    "fragmentOffset"
+  ],
+  "privateModeContract": {
+    "archive.bin": {
+      "mode": "0600",
+      "nlink": 1,
+      "uid": 1000
+    },
+    "parentAndTarget": {
+      "mode": "0700",
+      "uid": 1000
+    }
+  },
+  "readyEncoding": "EXACT original receiver json.dumps(r,sort_keys=True).encode() without newline; must hash the actual received ready.json bytes, not re-encode a local dict",
+  "readyUnknownPolicy": "PARTIAL_OR_UNKNOWN_NO_REPLAY/read original artifact status; do not upload again after intent or existing target; never fabricate READY",
+  "rootOwnedAuthorityMustBeExternallyIssuedAndInstalled": true,
+  "scope": {
+    "archiveBytes": 40960,
+    "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+    "artifactKey": "r3-final33-recovery-input-20261117-01",
+    "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING",
+    "format": "T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1",
+    "fragmentIndex": 1,
+    "fragmentOffset": 0,
+    "grantId": "b16447fbc81f4d64",
+    "kind": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT",
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/private-standard-import-data/r3-final33-recovery-input-20261117-01",
+    "taskId": "T45"
+  },
+  "serverActions": 0,
+  "serverStatus": null,
+  "state": "SOURCE_ONLY_NO_SERVER_READY_OR_AUTHORITY",
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/private-standard-import-data/r3-final33-recovery-input-20261117-01",
+  "uploadAuthorityExpiry": "Bounds initial upload only; later protected immutable reads bind actual ready SHA+authority SHA+archive identity and signed consumer reference"
+}

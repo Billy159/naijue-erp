@@ -1,0 +1,165 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockOrIssuerCalls": 0,
+    "fullSourceCompilationRuns": 0,
+    "nativeOrCandidateInvocations": 0,
+    "ownerSourcesModified": false,
+    "reportsOverwritten": false,
+    "serverConnections": 0,
+    "targetsIdentityCapabilitiesOrAuthoritiesCreated": 0
+  },
+  "actualEvidence": {
+    "capturedFirstOriginalErrorMessage": "UNKNOWN_NOT_RETAINED_BY_EXISTING_MASK",
+    "restore34": {
+      "activeOperationUnits": [],
+      "exitCode": 0,
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-RUNTIME-01/restore/ACTUAL-RESTORE34-COMPLETED.json",
+      "pgdataPidAbsent": true,
+      "privateAuthenticationBodiesNotRead": true,
+      "sha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+      "terminal": "COMPLETED"
+    },
+    "start34": {
+      "errorType": "Error",
+      "exitCode": 2,
+      "guardCode": null,
+      "lastReachedStage": "COMPILE_END",
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-RUNTIME-01/start/ACTUAL-START34-RESULT.json",
+      "safeCode": "DB05_COMMAND_PREFLIGHT_REFUSED",
+      "sha256": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+      "sqlstate": null,
+      "systemCode": null,
+      "trace": [
+        {
+          "elapsedMilliseconds": 4,
+          "stage": "IMPORT_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 330,
+          "stage": "IMPORT_END"
+        },
+        {
+          "elapsedMilliseconds": 330,
+          "stage": "TRUST_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 346,
+          "stage": "TRUST_END"
+        },
+        {
+          "elapsedMilliseconds": 347,
+          "stage": "SOURCE_LOAD_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 31035,
+          "stage": "SOURCE_LOAD_END"
+        },
+        {
+          "elapsedMilliseconds": 31036,
+          "stage": "TARGET_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 31232,
+          "stage": "TARGET_END"
+        },
+        {
+          "elapsedMilliseconds": 31232,
+          "stage": "COMPILE_BEGIN"
+        },
+        {
+          "elapsedMilliseconds": 34666,
+          "stage": "COMPILE_END"
+        }
+      ]
+    },
+    "staticDefectIsNotClaimedAsCapturedFirstFailure": true,
+    "thisIsReviewOfExistingReceiptsNotLiveServerReadback": true
+  },
+  "baseAndNativeInputs": {
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/fresh35-combined-record-v1.mjs": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/fresh35-combined-target-v1.mjs": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/batched-stream-cli-state.mjs": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/r3-service20-entry.mjs": "a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6",
+    "outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/source/batched161-run.mjs": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23",
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-CLI-SUCCESSOR-UNISSUED-01/start/bundle/batched161-run.mjs": "820ad6f54f8ac06bceff6a5fd4903d73fe6fed033ac286e4b2bf8d0d93ce1e66",
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-CLI-SUCCESSOR-UNISSUED-01/start/bundle/final33-run.mjs": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b"
+  },
+  "confirmedStaticDefect": {
+    "actualGenericProjectionCompatibleButNotProofOfEarliestThrow": true,
+    "deterministicGuardIfReached": "FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED",
+    "entryRequiresRootUidAndEuid": true,
+    "oldLateCallChain": [
+      "compile",
+      "describeFresh35FinalPreparationBinding",
+      "readFresh35BatchedContextInputs",
+      "loadFresh35CombinedRecordEnvelope"
+    ],
+    "ordinaryLoaderRequiresNonRootUidAndEuid": true
+  },
+  "findings": [],
+  "independentVerification": {
+    "allSixPinnedDeliveryFilesAndEightBaseNativeHelperInputsExact": true,
+    "allTextOutsideLateReplacementUnchanged": true,
+    "builderRetainsTargetInputBindingEvidenceAndPreparationScopeChecks": true,
+    "candidateAndNativeFilesParsedWithoutExecution": true,
+    "compilePrefixThroughActualRootTargetAnd161CatalogCompilationUnchanged": true,
+    "existingPureBuilderExportAlreadyPresentInExact1075ByteA36Entry": true,
+    "existingRootApiChecksUidSourceOriginalRecordCurrentCBytesSameFileGenerationWindowLeaseAndAdminValidity": true,
+    "fiveEvidenceFieldsUseExactNativeDc08AndActualCompiledCatalogThreeHashes": true,
+    "helperNativeROOT06AndMaterializationUnchanged": true,
+    "lateRecheckUsesSameGenuineRootTargetFromExistingWeakMap": true,
+    "ordinaryPrepareAndWriterNonRootGuardUnchanged": true,
+    "ownerStaticRegistrationAndSevenSourceOptionsRequestHashChecksReusedWithoutRerun": true,
+    "patchMatchesExactSingleHunk": true,
+    "postcompileReturnLiveFactsSerializationCatchAndObservationBoundsUnchanged": true,
+    "samePublicTargetInputBindingCurrentServiceShaAndEpoch": true,
+    "unchangedOtherFunctionsAst": 11
+  },
+  "limitations": [
+    "The source contradiction is confirmed. The original earliest exception was masked and remains UNKNOWN.",
+    "This candidate retains START34 only for exact source comparison; failed34 must not be replayed.",
+    "T45 successor must update exact entry, collector runner SHA, host dependencies and root/restore pins as one paired version.",
+    "No new request key, authority, clock, runtime epoch, window or server action is issued by this review.",
+    "No native target, loader, catalog compiler, preparation builder, reader, PREPARE or WRITER was invoked by QB.",
+    "Actual repaired root runtime and full describe/serialization remain untested; no runtime, database, deployment or business-import PASS."
+  ],
+  "ownerLocalChecksReused": {
+    "notRerunByQB": true,
+    "path": "outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/LOCAL-CHECKS.json",
+    "sha256": "6d0c46b1a7f235510fd0cc57f6cccd0333228901c5f0f6bb59b1159185565dd4"
+  },
+  "pinsSha256": "e9160fad6e29da984578353cb5213a2c0371a6ef3fec1dd7ef793dea70a72aa0",
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-start34-postcompile-diagnosis-01",
+  "sourceFiles": {
+    "ENTRY.patch": {
+      "bytes": 1463,
+      "sha256": "49c82a6e426f159be30b71b3cf99f2b3b87cc44ceef94f993a6ba4ad83a8e448"
+    },
+    "HANDOFF.md": {
+      "bytes": 6888,
+      "sha256": "f9334e3cd4e720da138894ebf7d0d147d38be81bcbe037d776b40e2eeb10d9fa"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 2909,
+      "sha256": "6d0c46b1a7f235510fd0cc57f6cccd0333228901c5f0f6bb59b1159185565dd4"
+    },
+    "build_candidate.py": {
+      "bytes": 1682,
+      "sha256": "69751b7a0855cf02a9a3671478711e52a4c16810788002b536eeb60ebf9e52e8"
+    },
+    "check_postcompile.mjs": {
+      "bytes": 9956,
+      "sha256": "95a28ddf03f70ca0ff82a084b679271d27159328faeb62bbe74b23c47be17ca6"
+    },
+    "source/batched161-run.mjs": {
+      "bytes": 23963,
+      "sha256": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23"
+    }
+  },
+  "sourceOnly": true,
+  "state": "SOURCE_PASS_POSTCOMPILE_ROOT_BINDING_FIX_ONLY"
+}

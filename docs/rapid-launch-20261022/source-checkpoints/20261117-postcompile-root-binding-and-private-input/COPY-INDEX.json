@@ -1,0 +1,134 @@
+{
+  "files": [
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/PINS.json",
+      "file": "d1-root-binding/PINS.json",
+      "sha256": "e9160fad6e29da984578353cb5213a2c0371a6ef3fec1dd7ef793dea70a72aa0",
+      "bytes": 1786
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/ENTRY.patch",
+      "file": "d1-root-binding/ENTRY.patch",
+      "sha256": "49c82a6e426f159be30b71b3cf99f2b3b87cc44ceef94f993a6ba4ad83a8e448",
+      "bytes": 1463
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/HANDOFF.md",
+      "file": "d1-root-binding/HANDOFF.md",
+      "sha256": "f9334e3cd4e720da138894ebf7d0d147d38be81bcbe037d776b40e2eeb10d9fa",
+      "bytes": 6888
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/LOCAL-CHECKS.json",
+      "file": "d1-root-binding/LOCAL-CHECKS.json",
+      "sha256": "6d0c46b1a7f235510fd0cc57f6cccd0333228901c5f0f6bb59b1159185565dd4",
+      "bytes": 2909
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/build_candidate.py",
+      "file": "d1-root-binding/build_candidate.py",
+      "sha256": "69751b7a0855cf02a9a3671478711e52a4c16810788002b536eeb60ebf9e52e8",
+      "bytes": 1682
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/check_postcompile.mjs",
+      "file": "d1-root-binding/check_postcompile.mjs",
+      "sha256": "95a28ddf03f70ca0ff82a084b679271d27159328faeb62bbe74b23c47be17ca6",
+      "bytes": 9956
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/source/batched161-run.mjs",
+      "file": "d1-root-binding/source/batched161-run.mjs",
+      "sha256": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23",
+      "bytes": 23963
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/SOURCE-PINS.json",
+      "file": "private-artifact-source/SOURCE-PINS.json",
+      "sha256": "decccf382063eada6319eedc6d308fb0604b822e2363f691bf35cd2467806ca7",
+      "bytes": 1505
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/HANDOFF.md",
+      "file": "private-artifact-source/HANDOFF.md",
+      "sha256": "cf7386bd73018ea61e36cb3f0534e6d26ba2ca2cc62635db9259a1dac9de4f5c",
+      "bytes": 3851
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/LOCAL-CHECKS.json",
+      "file": "private-artifact-source/LOCAL-CHECKS.json",
+      "sha256": "8735080f75d7283817b6a5f044278a8b8773dbe950be276fa41aa90becba8098",
+      "bytes": 588
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/PROFILE.UNISSUED.json",
+      "file": "private-artifact-source/PROFILE.UNISSUED.json",
+      "sha256": "5ea26e07d1ee9b24a68733fffb682aadcac2371782844b6cc6339758b26d8317",
+      "bytes": 2551
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/RECEIVER-CONSUMER-INTERFACE.UNISSUED.json",
+      "file": "private-artifact-source/RECEIVER-CONSUMER-INTERFACE.UNISSUED.json",
+      "sha256": "a07e28b59e0ce6efdda7d9292d65389413fce62b68fedf05871b18a3a3bd1fc8",
+      "bytes": 3860
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/RECEIVER-DELTA.patch",
+      "file": "private-artifact-source/RECEIVER-DELTA.patch",
+      "sha256": "fa907e7f99280d103b42d3e04911d375a1eed7e1899cf5a6c76e8b93aad3f1c7",
+      "bytes": 4038
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/check_source.py",
+      "file": "private-artifact-source/check_source.py",
+      "sha256": "7b4a50fd65c01681e4d168489a5385a77b31f1ac1425d12ad2416f4adb1505aa",
+      "bytes": 3559
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/recovery_input_artifact.py",
+      "file": "private-artifact-source/recovery_input_artifact.py",
+      "sha256": "0c06a1bf239b1b6e83d3abe5889f54318c80e7146cbf0b59442c48f6f93dfee5",
+      "bytes": 6765
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/recovery_scope.py",
+      "file": "private-artifact-source/recovery_scope.py",
+      "sha256": "e403768f0ec086941f02117d24d543cf5b5aa5668ece99debe28db81bcd511b8",
+      "bytes": 1424
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/PRIVATE-RECOVERY-ARTIFACT-SOURCE-01/ssh-control-recovery-input.py",
+      "file": "private-artifact-source/ssh-control-recovery-input.py",
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+      "bytes": 152217
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+      "file": "qb/PRIVATE-RESULT.json",
+      "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281",
+      "bytes": 5244
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-postcompile-root-binding-review-01/RESULT.json",
+      "file": "qb/ENTRY-RESULT.json",
+      "sha256": "cf2841de11b468b75618af3df389f364b5bd126d3f806d1ec11b91332bbb3768",
+      "bytes": 7708
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/PRIOR34-C-METADATA.json",
+      "file": "actual/PRIOR34-C-METADATA.json",
+      "sha256": "7fed632320839f81486b66c13731322fda8da0157afc0eb97a3ecec43b274d19",
+      "bytes": 866
+    }
+  ],
+  "privateBodiesIncluded": false,
+  "onlyCodeReportsAndUnissuedTemplates": true,
+  "actualAuthorityOrReadyIssued": false,
+  "d1EntryReview": "SOURCE_PASS_POSTCOMPILE_ROOT_BINDING_FIX_ONLY_cf2841de",
+  "privateArtifactReview": "SOURCE_PASS_ONLY",
+  "excluded": [
+    "private tar and expectations content",
+    "all live authority/policy/credential bytes",
+    "unfrozen normal35 root/consumer WIP"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "PGConnections": 0,
+  "actualRestore34Sha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+  "actualStart34Sha256": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+  "baseConsumerSourcePinsSha256": "9dde7aaf1b3b40ec6fd90a344b62c1b158492c07f21c4d1b471289a9c96bc349",
+  "baseRootSourcePinsSha256": "581e206db21873b6d3000bd1d85192f73f6e1a0f5e1f47cbc4904a359beb3b42",
+  "capturedOriginalErrorCode": "UNKNOWN",
+  "clockIssued": false,
+  "files": {
+    "ENTRY.patch": {
+      "bytes": 1463,
+      "sha256": "49c82a6e426f159be30b71b3cf99f2b3b87cc44ceef94f993a6ba4ad83a8e448"
+    },
+    "HANDOFF.md": {
+      "bytes": 6888,
+      "sha256": "f9334e3cd4e720da138894ebf7d0d147d38be81bcbe037d776b40e2eeb10d9fa"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 2909,
+      "sha256": "6d0c46b1a7f235510fd0cc57f6cccd0333228901c5f0f6bb59b1159185565dd4"
+    },
+    "build_candidate.py": {
+      "bytes": 1682,
+      "sha256": "69751b7a0855cf02a9a3671478711e52a4c16810788002b536eeb60ebf9e52e8"
+    },
+    "check_postcompile.mjs": {
+      "bytes": 9956,
+      "sha256": "95a28ddf03f70ca0ff82a084b679271d27159328faeb62bbe74b23c47be17ca6"
+    },
+    "source/batched161-run.mjs": {
+      "bytes": 23963,
+      "sha256": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23"
+    }
+  },
+  "nativeSourceDelta": false,
+  "newMaterializationRequired": false,
+  "newRequestKeyCreated": false,
+  "root06SourceRowsSha256": "078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9",
+  "root06SourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "runtimeCandidatePass": false,
+  "serverConnections": 0,
+  "state": "SOURCE_ONLY_POSTCOMPILE_ROOT_BINDING_FIX_RUNTIME_PENDING",
+  "staticUIDConflictConfirmed": true
+}

@@ -1,0 +1,42 @@
+{
+  "state": "POSTCOMPILE_ROOT_ORDINARY_CONFLICT_SOURCE_CONFIRMED_CANDIDATE_CHECKED",
+  "actualStartEvidenceSha256": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+  "inputFileSha256": {
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-CLI-SUCCESSOR-UNISSUED-01/start/bundle/batched161-run.mjs": "820ad6f54f8ac06bceff6a5fd4903d73fe6fed033ac286e4b2bf8d0d93ce1e66",
+    "outputs/D1/20261117-r3-start34-postcompile-diagnosis-01/source/batched161-run.mjs": "fab8555f5aa763f76309655e2b999ee4fed01865e11fd32db5f3e641f4d39f23",
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-CLI-SUCCESSOR-UNISSUED-01/start/bundle/final33-run.mjs": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/fresh35-combined-record-v1.mjs": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/fresh35-combined-target-v1.mjs": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/batched-stream-cli-state.mjs": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+    "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/r3-service20-entry.mjs": "a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6"
+  },
+  "confirmedStaticBlock": {
+    "rootUID": 0,
+    "rootEUID": 0,
+    "ordinaryGuardExpression": "Number.isInteger(process.getuid?.())&&process.getuid()!==0&&process.geteuid?.()!==0",
+    "ordinaryRootResult": false,
+    "ordinary61035Result": true,
+    "errorCode": "FRESH35_COMBINED_RECORD_ORDINARY_RUNTIME_REQUIRED"
+  },
+  "actualExceptionMessage": "UNKNOWN_NOT_RETAINED_BY_MASK",
+  "actualFailureProjectionCompatible": true,
+  "candidateUsesExistingPureExport": true,
+  "rootTargetAndCatalogComeFromUnchangedCompilePrefix": true,
+  "lateOriginalRecordSourceAndCurrentCChecksUseExistingRootTargetAPI": true,
+  "nativeOrROOT06FilesChanged": false,
+  "helperChanged": false,
+  "entryAndCatchOtherFunctionsUnchanged": true,
+  "realSourceOptionsAndRegistrationHashMatch": true,
+  "postcompileReturnAndJSONStringifyUnchanged": true,
+  "targetsCreated": 0,
+  "adminOrProvisionTestObjectsCreated": 0,
+  "capabilitiesOrAuthoritiesCreated": 0,
+  "nativeEntryInvoked": false,
+  "fullSourceCompilationRepeated": false,
+  "serverConnections": 0,
+  "PGConnections": 0,
+  "clockIssued": false,
+  "runtimeCandidateValidation": "NOT_RUN",
+  "ordinaryNativeRuntimeValidation": "NOT_RUN_SOURCE_PREDICATE_ONLY"
+}

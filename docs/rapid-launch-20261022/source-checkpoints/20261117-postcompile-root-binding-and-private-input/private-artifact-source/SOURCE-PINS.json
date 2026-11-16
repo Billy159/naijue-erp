@@ -1,0 +1,46 @@
+{
+  "PGConnections": 0,
+  "authorityIssued": false,
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 3851,
+      "sha256": "cf7386bd73018ea61e36cb3f0534e6d26ba2ca2cc62635db9259a1dac9de4f5c"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 588,
+      "sha256": "8735080f75d7283817b6a5f044278a8b8773dbe950be276fa41aa90becba8098"
+    },
+    "PROFILE.UNISSUED.json": {
+      "bytes": 2551,
+      "sha256": "5ea26e07d1ee9b24a68733fffb682aadcac2371782844b6cc6339758b26d8317"
+    },
+    "RECEIVER-CONSUMER-INTERFACE.UNISSUED.json": {
+      "bytes": 3860,
+      "sha256": "a07e28b59e0ce6efdda7d9292d65389413fce62b68fedf05871b18a3a3bd1fc8"
+    },
+    "RECEIVER-DELTA.patch": {
+      "bytes": 4038,
+      "sha256": "fa907e7f99280d103b42d3e04911d375a1eed7e1899cf5a6c76e8b93aad3f1c7"
+    },
+    "check_source.py": {
+      "bytes": 3559,
+      "sha256": "7b4a50fd65c01681e4d168489a5385a77b31f1ac1425d12ad2416f4adb1505aa"
+    },
+    "recovery_input_artifact.py": {
+      "bytes": 6765,
+      "sha256": "0c06a1bf239b1b6e83d3abe5889f54318c80e7146cbf0b59442c48f6f93dfee5"
+    },
+    "recovery_scope.py": {
+      "bytes": 1424,
+      "sha256": "e403768f0ec086941f02117d24d543cf5b5aa5668ece99debe28db81bcd511b8"
+    },
+    "ssh-control-recovery-input.py": {
+      "bytes": 152217,
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81"
+    }
+  },
+  "privateDataBodiesIncluded": false,
+  "serverActions": 0,
+  "serverReady": null,
+  "state": "SOURCE_ONLY_PRIVATE_RECOVERY_ARTIFACT_SEAM_UNISSUED"
+}

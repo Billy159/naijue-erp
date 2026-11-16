@@ -1,0 +1,18 @@
+{
+  "PGConnections": 0,
+  "actualReceiverReadyProducerContractMatched": true,
+  "authorityIssued": false,
+  "checks": {
+    "localOriginalMethodsUnchanged": 30,
+    "remoteOriginalMethodsUnchanged": 14
+  },
+  "clientAndRemoteSameNewScope": true,
+  "clockOrIssuerCalled": false,
+  "dataBodiesPrinted": false,
+  "privateDataBodiesCopiedToOutputs": false,
+  "realLocalTarThreeMembersMatched": true,
+  "serverReady": null,
+  "state": "LOCAL_FIXED_PRIVATE_ARTIFACT_SOURCE_PAIRING_ONLY",
+  "stateOrNetworkOrUploadOrServerCalls": 0,
+  "unissuedReadyAndAuthorityRejectedBeforeFilesystem": true
+}
