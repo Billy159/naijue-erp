@@ -1,0 +1,50 @@
+[
+  {
+    "path": "FRESH128.json",
+    "bytes": 61380,
+    "sha256": "3e2be6cbc7bf45dd23633e375dc3ff547c7b36c6a46a574961913d826679f796",
+    "original": "outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/REGISTRATION-BASIS31-20261116T000552Z.json"
+  },
+  {
+    "path": "RESOURCES-ORIGINALS.json",
+    "bytes": 2940,
+    "sha256": "3faf0a69946c32949eccdaf721bd5dbbdf5d9f72c13a9c497aff6b5dc0519a6a",
+    "original": "outputs/T45/revisions/20261116-r3-service31-resource-originals-delta-readonly-01/RESOURCE-ORIGINALS31-20261116T000922Z.json"
+  },
+  {
+    "path": "ACTUAL-API-DRY-RUN.json",
+    "bytes": 1847,
+    "sha256": "9134a427c6bed5df73cda59aac0e1085ccbb7be9d73e116e7bf072a0a97dd4b2",
+    "original": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/ACTUAL-API-DRY-RUN31.json"
+  },
+  {
+    "path": "REGISTRATION-ISSUED-METADATA.json",
+    "bytes": 1885,
+    "sha256": "e6812e2d499bdff9d5d5990370b903bb5baaa0072ac939f8139a1a0fc961bcad",
+    "original": "outputs/\u4e3b\u63a7/20261116-r3-direct31-registration-window-01/ISSUED.json"
+  },
+  {
+    "path": "START-ISSUED-METADATA.json",
+    "bytes": 412,
+    "sha256": "77c605d8a7b0748a363cc411a70382ffc57fe70ba4141513d7f08d1af20d4e0a",
+    "original": "outputs/\u4e3b\u63a7/20261116-r3-direct-service31-start-window-01/ISSUED.json"
+  },
+  {
+    "path": "REGISTRATION-READBACK.json",
+    "bytes": 4549,
+    "sha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
+    "original": "outputs/T45/revisions/20261116-r3-service31-registration-actual-01/REGISTRATION31-READBACK-01.json"
+  },
+  {
+    "path": "APPLY-READBACK.json",
+    "bytes": 3135,
+    "sha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
+    "original": "outputs/T45/revisions/20261116-r3-service31-registration-actual-01/apply/READBACK-01.json"
+  },
+  {
+    "path": "RESULT-REGISTRATION-APPLY.json",
+    "bytes": 2922,
+    "sha256": "eb5868e7f16ba41406404c9446fe7e54c110a91826bad299d177f5cc25ab3510",
+    "original": "outputs/T45/revisions/20261116-r3-service31-registration-actual-01/RESULT31-REGISTRATION-APPLY.json"
+  }
+]

@@ -7600,6 +7600,19 @@
             "qbSha256": "997e25a1301db7a14a8c1ed78164e7af85ca0c68936a81c0c2f8f725e95ba484",
             "actualPrior30ClosedSha256": "698a2dfbe46c7770e529de3340c7197732f79f9a120baf6458488d208c2085f9",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_NORMAL31_ACTUAL_REGISTRATION_AUTH_APPLY_START_ISSUED_20261116",
+            "state": "ACTUAL_REGISTER_AND_APPLY_START_ISSUED_NOT_NATIVE_INSTALL_OR_REAL",
+            "evidenceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-registration-apply-and-issued-start",
+              "files": 8,
+              "bytes": 79070,
+              "manifestSha256": "45dcae3f1b8eae1632ca6c501ace6765b4c92f01918a5e71d8a0319f858b52c6"
+            },
+            "actualRegistryReadbackSha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
+            "actualApplyReadbackSha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7633,15 +7646,15 @@
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "NORMAL31_02_FROZEN_SOURCE_SOURCE_PASS_NEW_REAL_READONLY_BASIS_REQUESTED",
+            "state": "ACTUAL31_REGISTRATION_AND_AUTH_APPLY_COMPLETE_START31_AUTHORITY_HANDED_OFF",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Client846e natural same parent plus exact code725415/12283 and receiver857e bind T45/original install key/b164/source byte hash; original sensitive-name refusals remain. Producer43 local and26 member-buffer checks do not prove live freeze/admit. Normal31 5d0a and adapter839c/basis014a exact Main02 pair, completed04/8bb reused, original install/writer/INIT keys retained. New128 real read-only basis requested after source final997e; no31 registration/window/PG/install/REAL yet."
+            "work": "Fresh1283e2b true00:05:52 all pins/sixkeys/paths/stopped30; deltaRO3faf00:09:22 root254.99GiB/28GiBtrue and exactindexmetadata/summaryINITstreamhash. ActualAPI dryrun nofiles then actualISSUEe681 at00:10:16.817Z; actualregistry08c1 current38a22/a07d/365a matches, originalhistorylockpreserved. Apply31eae6 actualCOMPLETED0/7.5817s finished00:13:25.285Z, originalverifierrecoveryretained/newroles0/runtimeAuthattrsfalse; maintenanceCIDbf601 stopped0/noOOM and PGpidabs at00:13:38. Start31authority3d8e actuallyissued00:14:42.316Z handedoff originalkey once, no actual start result yet. Current31auth is APPLIED_NOT_RESTORED, must later actualrestore31; old30restore is historical. Install/REAL never submitted; source04 reuse."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "NORMAL31_02_FINAL_SOURCE_PASS_AFTER_CLIENT_RECEIVER_FIX_REAL_RO_THEN_API_PENDING_INSTALL_AND_REAL_UNSUBMITTED",
+          "formalR3": "REGISTRATION31_AND_AUTH_APPLY31_ACTUAL_COMPLETE_START31_ISSUED_NOT_YET_VERIFIED_INSTALL_AND_REAL_UNSUBMITTED",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7650,22 +7663,22 @@
             "guard deletion",
             "unknown outcome replay with changed keys"
           ],
-          "latestDispatcherSha256": "5b6c3c83d362bcfaaf064e6427702c3eb7af995b8b823574ba55114a7d090b5c",
-          "latestPolicySha256": "fbb5bb55532d708103e0e70acd5512b8a77ab7538555938a30f179d2a3241b10",
+          "latestDispatcherSha256": "38a22c41a2dbd4f02dd5d0a6b4bf8808d063a8aa99615b6277472b0d43bb60bf",
+          "latestPolicySha256": "a07d6db401cfc669bfb94a444cf0f310c4be0d416356cb92b481f79c537ff065",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "One actual new128 read-only basis, same-version real API dry run then finite registration only if exact current facts hold; source04 never rematerialize; no repeated same-class approval card.",
+          "nextCheckpointScope": "Actual single original start31 stored describe then immediate existing244f inner+outer install API; preserve actual descriptor clock and original install key; no same-class new approval.",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-exact-client-receiver-pair-source-pass",
-            "files": 97,
-            "bytes": 2286799,
-            "manifestSha256": "930b7169d4a23c7e614fd9c0ef2d3a1298481a174c7a814cb311b178eb161cbe"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-registration-apply-and-issued-start",
+            "files": 8,
+            "bytes": 79070,
+            "manifestSha256": "45dcae3f1b8eae1632ca6c501ace6765b4c92f01918a5e71d8a0319f858b52c6"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "NORMAL31_02_SOURCE_FINAL_PASS_NEW_REAL_BASIS_AND_API_NEXT",
-            "work": "Main02 PINS184e/module365a64917B<65536/BASIS128. Original successful27 and actual successful30 closure share identical checks with only two fixed immutable specs and explicit proof leaves; failed28/29 unchanged. Completed04 is reused, issuance refuses materialize. Current old5b6/fbb/95b protected. New code exception is exact tuple/row and actual nofollow bounded stable metadata/full hash bytes; original total/script/args/D0/admit retained. Final QB997e includes adapter state fix and thin actual31 install wrapper244f, no future clocks or authorities issued."
+            "state": "ACTUAL31_REGISTRATION_AND_APPLY_CONFIRMED_START31_ISSUED",
+            "work": "Finalsource997e/fresh3e2b/resource3faf and trueAPI matched before e681 finite window. Start3d8e by actualphase API uses genuine31 apply and normal30 successful-stop-restore scope, complete4320 budget meets. Thin244f awaits actual31 stored describe for immediate inner900+outer780 issuance, no recompile/clockrefresh/materialreplay."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7926,7 +7939,7 @@
           "normal31SourceTask": {
             "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/TASK.json",
             "sha256": "020246e833570b5a720a46e4d0be301b0e0b1ef7e3db455b27eb23d9596795eb",
-            "state": "FINAL_SAME_VERSION_SOURCE_PASS_NEW_REAL_RO_PENDING",
+            "state": "FINAL_SOURCE_PASS_ACTUAL_NEW_RO_API_REGISTRATION_APPLY_COMPLETE_START_PENDING",
             "reuseActual04": true,
             "installWriterOriginalKeysUnchanged": true,
             "mainPinsSha256": "184e65b96ab721b88853e5028971343fad46134748b110b3910f109f212f07e8",
@@ -7934,6 +7947,25 @@
             "reviewSha256": "997e25a1301db7a14a8c1ed78164e7af85ca0c68936a81c0c2f8f725e95ba484",
             "materialMode": "REUSE_ACTUAL_COMPLETED_ROOT04_NEVER_RESUBMIT",
             "serverActions": 0
+          },
+          "normal31FiniteWindows": {
+            "startsAt": 1794787816817,
+            "registrationExpiresAt": 1794788716817,
+            "roleApplyExpiresAt": 1794789616817,
+            "controllerValidUntil": 1794793216817,
+            "backupAdminValidUntil": 1794793336817,
+            "restorationDeadline": 1794794716817,
+            "policyExpiresAt": 1794795016817,
+            "generation": 31,
+            "state": "REGISTRATION_AND_APPLY_ACTUALLY_COMPLETED_START_ISSUED_AUTH31_NOT_RESTORED",
+            "issuedMetadataSha256": "e6812e2d499bdff9d5d5990370b903bb5baaa0072ac939f8139a1a0fc961bcad",
+            "actualApplyReadbackSha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
+            "actualRegistryReadbackSha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
+            "actualStartConfirmed": false,
+            "actualInstallConfirmed": false,
+            "actualRealImportConfirmed": false,
+            "actualRestoreConfirmed": false,
+            "startAuthoritySha256": "3d8ef61f246c658eeef0bbeb50c3d270414cf811466003c9acc51f5ae875019f"
           }
         },
         "independentDeltaReviewer": "QB",

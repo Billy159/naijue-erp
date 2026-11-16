@@ -1,0 +1,69 @@
+{
+  "activeOperationUnits": [],
+  "applyKey": "t45-r3-ordinary31-auth-apply-20261116-01",
+  "applyOwnContainer": {
+    "automaticReplay": false,
+    "cid": "bf60159eda24a90f4aced927d7c010facf3afe1f02e6475cc0b6085cca243755",
+    "confirmed": true,
+    "createAttempted": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "requestKey": "t45-r3-ordinary31-auth-apply-20261116-01",
+    "sourceDataPreserved": true,
+    "stage": "READ_BACK_OWN_CONTAINER_STOP"
+  },
+  "applyReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/apply/READBACK-01.json",
+  "applyReadbackSha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
+  "authenticationAttempted": false,
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-16T00:13:38.383304+00:00",
+  "cleanupSha256": "228789d2f18e3f6a5c5315d01be64de87e26e65f5bb1b6aba3257183fe6b1db0",
+  "credentialValidUntilByRoleAsiaShanghai": {
+    "erp35_admin_20261110_r3": "2026-11-16T09:42:16.817000+08:00",
+    "erp35_controller_20261110_r3": "2026-11-16T09:40:16.817000+08:00"
+  },
+  "credentialValidUntilByRoleEpochMs": {
+    "erp35_admin_20261110_r3": 1794793336817,
+    "erp35_controller_20261110_r3": 1794793216817
+  },
+  "formalBusinessAccepted": false,
+  "installSubmitted": false,
+  "material04ReusedNeverSubmitted": true,
+  "membershipsOrRoleAttributesChanged": false,
+  "newRoles": 0,
+  "originalRecoveryBasisRetained": true,
+  "pgdataPidAbsent": true,
+  "publicResultSha256": "9ff66796d67ac61ede6a21828e67adc03504bbabff6b97b84d61741a73e6b4eb",
+  "registrationReadbackSha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
+  "restorationDeadlineEpochMs": 1794794716817,
+  "rootPublicObjectsEqual": true,
+  "rootResultSha256": "1f045f18c4b5a7a026472d0b65e23535c5cd5e988774fc84b51fc5515a556eda",
+  "rootTerminalSha256": "9dd63f536541ffc21857d584ed11e1336e85bf938c3923fcf23fe3625e450851",
+  "runtimeAuthChanged": false,
+  "start31Submitted": false,
+  "state": "ACTUAL31_REGISTRATION_AND_FINITE_AUTH_APPLY_COMPLETED_ONLY",
+  "terminal": {
+    "atUTC": "2026-11-16T00:13:17.692997+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 7.581726092030294,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-16T00:13:25.285455+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary31-auth-apply-20261116-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-1bd952c9b0cc"
+  },
+  "writerSubmitted": false
+}
