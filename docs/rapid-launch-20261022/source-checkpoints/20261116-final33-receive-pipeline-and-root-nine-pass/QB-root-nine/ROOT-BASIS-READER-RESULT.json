@@ -1,0 +1,59 @@
+{
+  "state": "SOURCE_PASS_ROOT9_REGISTRATION_BASIS_READER_ONLY_NOT_EXECUTED",
+  "reviewedAt": "2026-11-16T12:06:49.495051+00:00",
+  "findings": [],
+  "source": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-FINAL-REGISTRATION-BASIS-01/read_registration_basis.py",
+    "sha256": "fb9146bc65b1949ff84180ba4b02dac4769d42b728792eea170c9390866ede79",
+    "bytes": 35312
+  },
+  "rootNineReview": {
+    "path": "outputs/QB/20261116-final33-root-nine-issuer-review-01/RESULT.json",
+    "sha256": "4f1a0ca9d244f6d7d1c2ef732a1b6bca537fd7b0d3700fea3b72ed74bd941a49"
+  },
+  "matchedCAS": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-FINAL-SOURCE-PREPARE-01/register_cas.py",
+    "sha256": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf"
+  },
+  "matchedIssuer": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-FINAL-SOURCE-PREPARE-01/issue_registration.py",
+    "sha256": "fa66d9e4afd925e20c55630ea7383105f7ab4a5423ec2b0447624ebc7c28cfbd"
+  },
+  "verified": {
+    "basis": "All159 path/hash pairs exactly equal fixed c7bba511 CAS BASIS, including actual CACHED03 dispatcherc573 and all original/recovery/cached03 input helpers/policies. No new allowlist or mutation.",
+    "jobs": "Exact nine JOBS match root CAS. Both b16447fbc81f4d64 and5cc58239751e4e2a namespaces scanned for worker/job, control/job, request.json/tmp and terminal result. Presence is reported; issue_registration requires empty presentCandidateKeys.",
+    "lock": "Exact original lock path and complete nine-field identity match root CAS LOCK_ID [66304,12224849,0,0,420,1,0,1791828307183940015,1791828307183940015]. Reader does not acquire or mutate lock; actual CAS rechecks under the original lock.",
+    "quiescence": "Reader refuses public staging policy presence, postmaster.pid presence, unknown systemctl state or any active/activating/deactivating operation unit in either grant. No database connection.",
+    "protectedRead": "Canonical path, O_RDONLY|O_NOFOLLOW|O_NONBLOCK, root-owned regular single-link non-group/world-writable files, bound4MiB and equal size/dev/inode/uid/gid/mode/link/mtime/ctime across descriptor and path. Same identity layout consumed by CAS.",
+    "outputContract": "All10 basis fields accessed by verified issue_registration exist with compatible types/semantics. actualPins/oldIdentities cover159, executionLock identity included, acceptedMaterializationSHA derives from exact originalroot05 receipt, checkedAtUTC timezone-aware ISO and grant expiry only. Mismatch/present lists are deliberately exported and then rejected if nonempty by issuer.",
+    "readonly": "Only protected reads, filesystem metadata, bounded systemctl observation and stdout JSON. No authority write, role change, PG call, dispatch or data write. Grant configuration body is not exported."
+  },
+  "issuerInputFields": [
+    "acceptedMaterializationSha256",
+    "activeOperationUnits",
+    "actualPins",
+    "basisMismatches",
+    "candidateKeys",
+    "checkedAtUTC",
+    "executionLockMatches",
+    "grantExpiresAtEpoch",
+    "oldIdentities",
+    "presentCandidateKeys"
+  ],
+  "pending": [
+    "Actual server capture near end of211 input reception, after policy withdrawal and all consumers/operations stopped",
+    "Issuer requires fresh<=900000ms capture and all empty mismatch/present/active collections; actual CAS rechecks identities and quiescence under original lock",
+    "No180-minute main window initiated by this review"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "readerExecuted": false,
+    "candidateInvocations": 0,
+    "sourceEdits": 0,
+    "testsRerun": 0,
+    "authorityIssued": false
+  },
+  "runtimeAccepted": false
+}

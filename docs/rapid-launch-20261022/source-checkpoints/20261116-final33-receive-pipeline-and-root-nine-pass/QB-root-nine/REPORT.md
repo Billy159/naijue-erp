@@ -1,0 +1,13 @@
+九阶段 root 登记与签发接线限定源码审查通过。FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS；normalStartupHoldClosed 仅表示本版源码闭包已收口，不表示现场服务启动、导入、恢复或 HTTP 已通过。
+
+本轮只核 root7→9 的新增输入物化、native prepare、两个 issuer 与 CAS/carrier 配对。原八阶段规则与所有既验输入物化源码保持准确版本，九阶段共75个包内叶哈希一致。依赖顺序从两种物化成功、apply/start、目录更新、实际prepare，到原writer，stop覆盖update/prepare/writer的结清。未知状态不升格。
+
+prepare从start保存的实际原输出消费finalPreparationBinding；writer从实际成功prepare结果取原preparedBinding及独立executionBinding，不手填或覆盖。650+130/780与长父TTL区分。输入物化仅该phase允许剩余240秒且总窗不超过300秒，原host截止及28GiB保留线不改。
+
+整链预算5100秒；controller120分钟、admin122分钟、恢复150分钟、policy180分钟、service最多140分钟，实际开工时仍须满足完整余量。三个已有本机检查只按纯metadata/validator及合成输入证据复用，没有重跑或当成PG/演练通过。
+
+发现并关闭一处P1：BASIS中的admin_exec旧4373与OLD_DISPATCHER新c573矛盾，导致freshbasis不可能同时通过issuer两项校验。owner已定点修正，CAS、carrier和生成器准确同步；旧发现保留FINDINGS-01.json，最终版本及关闭证据见RESULT.json。
+
+CAS基于准确03父c573，保留17b7/5d86输入分支及原锁；新增六份保留module/policy基础身份，其余历史basis不改。登记前仍须接收policy已撤回、无活动作业、PG停止、原writer未提交；现场基线由owner另交。
+
+本轮未签任何authority或main registration，未连接服务器/网络/PG，未改主控/T45源码，未执行候选或重跑测试。实际211片READY、材化、prepare、writer、备份/物理恢复和ordinary HTTP仍待现场证据。

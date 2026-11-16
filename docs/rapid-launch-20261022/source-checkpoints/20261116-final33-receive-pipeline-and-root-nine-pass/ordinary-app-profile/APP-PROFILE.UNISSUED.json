@@ -1,0 +1,49 @@
+{
+  "PGConnections": 0,
+  "baselineFormalAppPreserved": "ef807b39/7fb9323d/223",
+  "builds": 0,
+  "dynamicActualBindings": {
+    "currentService": null,
+    "finalCleanStop": null,
+    "finalColdBackup": null,
+    "finalCommitAndReconciliation": null,
+    "formalDeploymentPlan": null,
+    "independentPhysicalRestore": null,
+    "installedPayloadSha256": null,
+    "lease": null,
+    "linuxDependencyResultSha256": null,
+    "linuxDependencyRootIdentity": null,
+    "owner": null,
+    "processEpoch": null,
+    "productionAuthorization": null
+  },
+  "packs": 0,
+  "profile": {
+    "archiveBytes": 7687919,
+    "archivePayloadWithoutDependenciesSha256": "04e2e9649690dc99a86343033271cc188a8547eccb4ff3db79cb3ee442235f3f",
+    "archiveSha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f",
+    "buildId": "erp-d728f3749cc8-r3-final33-ordinary161-20261116",
+    "buildManifestSha256": "a4a29b637981a17ee277c4bafd2c069cd6bdcb276b0cab48ff7e7651d09b2336",
+    "buildReceiptSha256": "4bcb413506cd2a27865c9b8f0cdf4394ceaa108800bdb6e54a26473ba8065608",
+    "manifestBytes": 546469,
+    "manifestSha256": "48accb35b38018c60402932380c66b46f1ffe4a32edf04f0868858e5203ebcbc",
+    "nativeClosureMembers": 284,
+    "nativeSourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+    "normalizedManifestSha256": "e3e4098f8f5edcfbfbc73a292f8e4ee9aab40c9fb12410b6e4a60d3e138b0216",
+    "packReceiptSha256": "fdcc82a3b741cb7a520b79801ed318eeedac172046bb3377a9c064fa8e8b321d",
+    "packedMembers": 523,
+    "releasePayloadMembers": 522,
+    "runtimeTemplateSha256": "2ea7d8883a0a8fa2382810db282970ecc1744e1a1614b9e8e92dd032826335f2",
+    "sourceCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+    "sourceManifestSha256": "5addee3cc994256ebb22c506119ed08b730c24364c0caf6c1fa0586e61c7c1de"
+  },
+  "remainingSourceSeams": [
+    "Old finite09/old-batch recovery validator still requires its reviewed original facts; no reuse for final33. Exact final33 recovery receipt consumer and previous-stop successor remain to be paired."
+  ],
+  "serverActions": 0,
+  "sourceReady": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/READY.LOCAL.json",
+    "sha256": "b81e4063a20462be95dfbf342cec46bc44dcb278982fd57cea69f4002969bf6e"
+  },
+  "state": "EXACT_D728_STATIC_APP_PROFILE_NOT_EXECUTABLE_AUTHORIZATION"
+}

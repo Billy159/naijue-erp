@@ -1,0 +1,122 @@
+{
+  "state": "PREVIOUS_GROUP_ACTUALLY_CLOSED",
+  "group": 22,
+  "readyFragments": 85,
+  "resultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+  "observedAtMs": 1794831420928,
+  "history": [
+    {
+      "group": 7,
+      "resultSha256": "090afd6caa0f01a88d916e770a610917e4b66f5964da6aef8b5e85a2d702cdae",
+      "authoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 8,
+      "resultSha256": "30d8213ab0f44349049d65f7535d600b0c3a3a3d4a5d2de60d264d33b0db7109",
+      "authoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 9,
+      "resultSha256": "0a9b2622e058c7c687e52bf396de278d75881902b83652fc4be3213f84388719",
+      "authoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 10,
+      "resultSha256": "fd845c20c5d9541d67b36b311a85b8a561e24f655f7a3e842e9c85994698e2f6",
+      "authoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 11,
+      "resultSha256": "503086840585c839c6aa95e924d1a0077aa08978bb3de861aafd405b5fa738e6",
+      "authoritySha256": "70fadb3930edaa0bf4ed83838d3bae92cbec5bb0d4962a9be84d3230c487fbb4",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 12,
+      "resultSha256": "06bab274f1d6ab6034ea09306f1ef35aab3788c2a930bd35185410d9d1cd62c6",
+      "authoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 13,
+      "resultSha256": "a49f66a7c2b89584a6e77c1496701d9bf4430d800865054eb550f44c32e723be",
+      "authoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 14,
+      "resultSha256": "21dc22e7388def7f04481c0eb6d3f848e2e7f9bf20e7d4d3a2bb357754a7e0cf",
+      "authoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 15,
+      "resultSha256": "87ebf00ec2db2908f4a9fec25e83ed1e57a5d77a4adc948f5e133505936a00b9",
+      "authoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 16,
+      "resultSha256": "43e69a582bed3bb9ba5b7647f2a1438ff464f35d8bd7186035f91ac5c3de0096",
+      "authoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 17,
+      "resultSha256": "c0ff1220abdd908307cbeaae040e32fd9aa973a8696f8db1bd4191e326f48550",
+      "authoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 18,
+      "resultSha256": "08aa1e402b34eff8d963f5ef3ffc18057b017f1b4cb55eafff7a54abf11b7761",
+      "authoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 19,
+      "resultSha256": "1781b7ffd5c890d7d859371043ddd54a17567d334e78229f9a041e504c85e0da",
+      "authoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 20,
+      "resultSha256": "d80aa87466c94fa40adb60407b46625065025cbda46c5e6f3a04308937480cb3",
+      "authoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 21,
+      "resultSha256": "d7885ab6ebd71bc4e5a3ee0e4454bbffc872d24c588237f7975476aa0b53450f",
+      "authoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91",
+      "allReady": true,
+      "withdrawn": true
+    },
+    {
+      "group": 22,
+      "resultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+      "authoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08",
+      "allReady": true,
+      "withdrawn": true
+    }
+  ],
+  "serverActions": 0
+}

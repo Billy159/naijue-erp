@@ -1,0 +1,69 @@
+{
+  "files": {
+    "app-readiness-owner.cjs": {
+      "bytes": 4431,
+      "changed": false,
+      "predecessorSha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950",
+      "sha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950"
+    },
+    "boot-entry.py": {
+      "bytes": 67741,
+      "changed": true,
+      "predecessorSha256": "ec423d3b6a62d89890711159841add44e6865cef4a8aba9415c1e1a31280beff",
+      "sha256": "69f351a63bcd8698744a61ed7f55d669292f42b0efce4b1e5612ff547c81191a"
+    },
+    "deploy-candidate.py": {
+      "bytes": 199005,
+      "changed": false,
+      "predecessorSha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+      "sha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970"
+    },
+    "deploy-first-install.py": {
+      "bytes": 136307,
+      "changed": true,
+      "predecessorSha256": "3477b3c2c7b399f2169d55562c860514d175202225a1e8074168c7e7d2a12ab4",
+      "sha256": "57e1348f2725c80f31ca672d64639e5a776a58e9dcc2b079864b83f01af079c8"
+    },
+    "fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "changed": false,
+      "predecessorSha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "normal_service09_after_cold.py": {
+      "bytes": 41022,
+      "changed": false,
+      "predecessorSha256": "5785154e3c9183342d544e26b765eb2afd4ba36e79219193f6759c66ead489bf",
+      "sha256": "5785154e3c9183342d544e26b765eb2afd4ba36e79219193f6759c66ead489bf"
+    },
+    "normal_service09_after_cold_proof.py": {
+      "bytes": 17238,
+      "changed": false,
+      "predecessorSha256": "eeaa6b7d6bd9c2ac37c834b47c0c54efef841439fdd8b22e8ec207eff6971ba0",
+      "sha256": "eeaa6b7d6bd9c2ac37c834b47c0c54efef841439fdd8b22e8ec207eff6971ba0"
+    },
+    "production_host.py": {
+      "bytes": 42763,
+      "changed": true,
+      "predecessorSha256": "6288bf2b5039888b3793f5def7d1e80faee1fb39c1cdb7bfe1b64baa9649a12b",
+      "sha256": "f106feb59df98d0959b36e7d749d244632bd5fb3ec9c2c001e6f8269ce66d17d"
+    },
+    "production_owner.py": {
+      "bytes": 31423,
+      "changed": false,
+      "predecessorSha256": "de1482f029ca8a48aff8dcf6e793a930898b7eab47cc8a3d452c29097e1ba6ab",
+      "sha256": "de1482f029ca8a48aff8dcf6e793a930898b7eab47cc8a3d452c29097e1ba6ab"
+    },
+    "production_pg.py": {
+      "bytes": 10106,
+      "changed": false,
+      "predecessorSha256": "73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf",
+      "sha256": "73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf"
+    }
+  },
+  "frozen78ProductPinsChanged": false,
+  "noRuntimeAuthorizationCreated": true,
+  "originalBundlePreserved": true,
+  "profileSha256": "e1b58f8ab157f2410b50a850707db5c413c5abb2b8dc538b41039df731c78aed",
+  "state": "STATIC_APP_284_PROFILE_PAIRED_DYNAMIC_AND_FINAL_RECOVERY_SOURCE_PENDING"
+}

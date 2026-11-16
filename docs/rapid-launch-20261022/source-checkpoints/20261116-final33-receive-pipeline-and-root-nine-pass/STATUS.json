@@ -1,0 +1,33 @@
+{
+  "asOf": "2026-11-16T20:17:21.285688+08:00",
+  "state": "SERIAL_ORIGINAL54_GROUP_RECEIVE_ACTIVE_ROOT_NINE_SOURCE_PASS_UNSIGNED",
+  "readyFragments": 85,
+  "totalFragments": 211,
+  "currentClosedGroup": 22,
+  "exactLastResultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+  "sourceReviewSha256": "4f1a0ca9d244f6d7d1c2ef732a1b6bca537fd7b0d3700fea3b72ed74bd941a49",
+  "rootNineSourcePinsSha256": "1a6b221f9773fe0d94a294c7b23a9b6d1e258ef13757bc0cadd336cba617ee37",
+  "rootNineRulesSha256": "dd301b23051187724b2dd7946ac2b4a69641a04b4e7ed016be7eca500258f78b",
+  "basisReaderReviewSha256": "b76aef5d3823f0a3d17c2faf413077939b6090756ef3a5b2acc5532c2f40ef6b",
+  "mainRegistrationIssued": false,
+  "realWriterSubmitted": false,
+  "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_RESTORED",
+  "actualBusinessBatches": 0,
+  "currentRunSourcesPushed": {
+    "control": "182007af37a7fe42a235b88bfb8700e1e6cc8251",
+    "ordinaryApp": "d728f3749cc8cf504fec6c51720562c5774b72c0"
+  },
+  "liveProgressFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CACHED03-ISSUER-01/LOCAL-PRODUCER-PROGRESS.json",
+  "latestDataRoute": "Nov16 11:40 actual514485 rows,full offline preflight PASS; manifest7ebdac46",
+  "notTested": [
+    "Actual input materialization",
+    "Actual native PREPARE and original writer",
+    "Real full reconciliation",
+    "Final cold backup and independent physical restore",
+    "Actual ordinary app and formal URL/roles/business"
+  ],
+  "sourceStatus": {
+    "cloneChecker": "D1_IMPLEMENTATION_IN_PROGRESS_INTERFACE_DELIVERED",
+    "ordinaryAppOwner": "T45_FINAL33_RECEIPT_AND_STOP_CONSUMER_IN_PROGRESS_STATIC_PROFILE_DELIVERED"
+  }
+}

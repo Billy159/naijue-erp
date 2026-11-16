@@ -1,0 +1,236 @@
+{
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "reviewedAt": "2026-11-16T11:55:55.715957+00:00",
+  "scope": "Only root7-to9 registration/admission/issuer/carrier seams; prior D1 semantics, T45 eight phases and input materialization reviews reused. No runtime or business acceptance.",
+  "rulesSha256": "dd301b23051187724b2dd7946ac2b4a69641a04b4e7ed016be7eca500258f78b",
+  "sourcePinsSha256": "1a6b221f9773fe0d94a294c7b23a9b6d1e258ef13757bc0cadd336cba617ee37",
+  "sourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "normalStartupHoldClosed": true,
+  "normalStartupHoldScope": "SOURCE_ONLY_EXACT_NINE_PHASE_VERSION_CLOSURE_NOT_ACTUAL_STARTUP",
+  "findings": [],
+  "files": {
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 25085,
+      "sha256": "dd301b23051187724b2dd7946ac2b4a69641a04b4e7ed016be7eca500258f78b"
+    },
+    "PREPARATION.json": {
+      "bytes": 1571,
+      "sha256": "b63297cb59a26522d239c481b42b1f4b72a25874e5563416e207346f6f761e4c"
+    },
+    "admin_exec.DIRECT33-UNREGISTERED.py": {
+      "bytes": 44592,
+      "sha256": "f8c7fbc15820aa4a86e641666323dd631920219b0cd4528d97492e6ff8938080"
+    },
+    "assemble_root_nine.py": {
+      "bytes": 8016,
+      "sha256": "0372d49c815d304e2e3f59059bf98051972e2c4eb5de3594ebf35b4a62e07fa5"
+    },
+    "build_nine_phase.py": {
+      "bytes": 6833,
+      "sha256": "f8bf62d10e7d1c8d7db5b3ce35e8bb0396a9cfcde44b31073aa0e582ffd71394"
+    },
+    "check_root_native_chain.RESULT.json": {
+      "bytes": 465,
+      "sha256": "09b96169f86e65982ffa72d3a0081618e64a78c7d99ac0840982b91837acd7c2"
+    },
+    "check_root_native_chain.py": {
+      "bytes": 9444,
+      "sha256": "b775e6d7380ac88d835d64d7e3bfdafc83a4ef0da295f502c22444748ca8df53"
+    },
+    "check_root_nine.RESULT.json": {
+      "bytes": 532,
+      "sha256": "e4756d264ca68f7ff2ac35fcf9116b977414410ae4af017553674f0c72a952ad"
+    },
+    "check_root_nine.py": {
+      "bytes": 4612,
+      "sha256": "1149c0f84f51c30fd69b57f23867d540a9ae8757d788c3de1d446455ebfb71c0"
+    },
+    "check_root_nine_clock.RESULT.json": {
+      "bytes": 365,
+      "sha256": "14fed7bbba08aad7e51ed6af09ec77660a524193c94965cb5efdd1f990700703"
+    },
+    "check_root_nine_clock.py": {
+      "bytes": 2071,
+      "sha256": "b0026b7b1d6a067f0c14d95e88f6d2447124b9409df432855643049fdb03a15b"
+    },
+    "issue_phase.py": {
+      "bytes": 38195,
+      "sha256": "a132ea38a8df10f4f906facfe9496f9ab9a56c5c555c0804f57adfa66fd61353"
+    },
+    "issue_registration.py": {
+      "bytes": 10645,
+      "sha256": "fa66d9e4afd925e20c55630ea7383105f7ab4a5423ec2b0447624ebc7c28cfbd"
+    },
+    "original-cas-direct33-carrier.UNISSUED.py": {
+      "bytes": 2663,
+      "sha256": "27e3fac83c2d566965712afa0ea53da7e191990c803cc0aeb254882fd65e5b2c"
+    },
+    "r3_direct33_batched.py": {
+      "bytes": 69093,
+      "sha256": "b700b3b5b13c20222aa00847d95ef31975ca25e5b5baae0f5ee98b95e43a085c"
+    },
+    "register_cas.py": {
+      "bytes": 54214,
+      "sha256": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf"
+    }
+  },
+  "mainSourcePins": {
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 25085,
+      "sha256": "dd301b23051187724b2dd7946ac2b4a69641a04b4e7ed016be7eca500258f78b"
+    },
+    "PREPARATION.json": {
+      "bytes": 1571,
+      "sha256": "b63297cb59a26522d239c481b42b1f4b72a25874e5563416e207346f6f761e4c"
+    },
+    "admin_exec.DIRECT33-UNREGISTERED.py": {
+      "bytes": 44592,
+      "sha256": "f8c7fbc15820aa4a86e641666323dd631920219b0cd4528d97492e6ff8938080"
+    },
+    "assemble_root_nine.py": {
+      "bytes": 8016,
+      "sha256": "0372d49c815d304e2e3f59059bf98051972e2c4eb5de3594ebf35b4a62e07fa5"
+    },
+    "build_nine_phase.py": {
+      "bytes": 6833,
+      "sha256": "f8bf62d10e7d1c8d7db5b3ce35e8bb0396a9cfcde44b31073aa0e582ffd71394"
+    },
+    "check_root_native_chain.RESULT.json": {
+      "bytes": 465,
+      "sha256": "09b96169f86e65982ffa72d3a0081618e64a78c7d99ac0840982b91837acd7c2"
+    },
+    "check_root_native_chain.py": {
+      "bytes": 9444,
+      "sha256": "b775e6d7380ac88d835d64d7e3bfdafc83a4ef0da295f502c22444748ca8df53"
+    },
+    "check_root_nine.RESULT.json": {
+      "bytes": 532,
+      "sha256": "e4756d264ca68f7ff2ac35fcf9116b977414410ae4af017553674f0c72a952ad"
+    },
+    "check_root_nine.py": {
+      "bytes": 4612,
+      "sha256": "1149c0f84f51c30fd69b57f23867d540a9ae8757d788c3de1d446455ebfb71c0"
+    },
+    "check_root_nine_clock.RESULT.json": {
+      "bytes": 365,
+      "sha256": "14fed7bbba08aad7e51ed6af09ec77660a524193c94965cb5efdd1f990700703"
+    },
+    "check_root_nine_clock.py": {
+      "bytes": 2071,
+      "sha256": "b0026b7b1d6a067f0c14d95e88f6d2447124b9409df432855643049fdb03a15b"
+    },
+    "issue_phase.py": {
+      "bytes": 38195,
+      "sha256": "a132ea38a8df10f4f906facfe9496f9ab9a56c5c555c0804f57adfa66fd61353"
+    },
+    "issue_registration.py": {
+      "bytes": 10645,
+      "sha256": "fa66d9e4afd925e20c55630ea7383105f7ab4a5423ec2b0447624ebc7c28cfbd"
+    },
+    "original-cas-direct33-carrier.UNISSUED.py": {
+      "bytes": 2663,
+      "sha256": "27e3fac83c2d566965712afa0ea53da7e191990c803cc0aeb254882fd65e5b2c"
+    },
+    "r3_direct33_batched.py": {
+      "bytes": 69093,
+      "sha256": "b700b3b5b13c20222aa00847d95ef31975ca25e5b5baae0f5ee98b95e43a085c"
+    },
+    "register_cas.py": {
+      "bytes": 54214,
+      "sha256": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf"
+    }
+  },
+  "pins": {
+    "rootModule": "b700b3b5b13c20222aa00847d95ef31975ca25e5b5baae0f5ee98b95e43a085c",
+    "CAS": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf",
+    "dispatcherTemplate": "f8c7fbc15820aa4a86e641666323dd631920219b0cd4528d97492e6ff8938080",
+    "registrationIssuer": "fa66d9e4afd925e20c55630ea7383105f7ab4a5423ec2b0447624ebc7c28cfbd",
+    "phaseIssuer": "a132ea38a8df10f4f906facfe9496f9ab9a56c5c555c0804f57adfa66fd61353",
+    "carrier": "27e3fac83c2d566965712afa0ea53da7e191990c803cc0aeb254882fd65e5b2c",
+    "preparation": "b63297cb59a26522d239c481b42b1f4b72a25874e5563416e207346f6f761e4c",
+    "sourcePins": "1a6b221f9773fe0d94a294c7b23a9b6d1e258ef13757bc0cadd336cba617ee37"
+  },
+  "currentT45Pins": {
+    "eightRules": "d02127d070760b66d9e06c85d2567732307ee97c04e3b54532ff3d2fe8ef4e5c",
+    "host": "369ed6ae744d1d36f9a202d4435e61d680d14ace429171c7d191d5cd2473613d",
+    "runner": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b",
+    "inputHost": "7507d2dfbd652326c12b69e805545bdf22710be798ddc90045d75f9793343b68",
+    "inputProfile": "71b861440bc6368da3f2c0b6293fc87af6af0de77991b145c9f7c74daf9663c7"
+  },
+  "verifiedPaths": {
+    "exactSameVersionRules": "All old eight rules, directories and non-order witness fields byte/value equal prior d021 rules; ninth input materialization rule equals exact reviewed MATERIALIZATION02 bundle3 pins, reader/bundle hashes match. Nine phase bundles total75 leaf pins match.",
+    "predecessors": "Input/source materialization terminal0 both required before apply/start; actual current start+C+historical install and successful input/update before prepare; successful actual prepare/update before original writer. Stop settles update/prepare/writer and preserves unknown transaction state.",
+    "inputDeadline": "Only input_materialize admission allows remaining>=240s while authority expires<=startsAt+300s; issuer mirrors this. All other phases preserve full-job remaining requirement, original materializer300s guard and28GiB floor unchanged.",
+    "actualPrepareBinding": "Phase issuer reads stored start outputs with actual root/public object and byte/hash/size checks; finalPreparationBinding consumed directly from captured liveFacts, exact source/index/summary/scope/currentC/catalog checked. No manual binding replacement.",
+    "actualWriterBinding": "Writer requires actual successful PREPARE terminal/result/currentservice/native binding match, CLOSED and all process cleanup; uses original preparedBinding and separate unmodified executionBinding with prepare terminal/result pins. Native execute and host validators invoked by issuer. Runtime host independently reopens actual private PREPARE result and persisted plan.",
+    "budgets": "Prepare native650+130=780 separate from parentTTL; writer original key/2780+220=3000 retained. Start budget=300+780+780+3000+240=5100s, controller120m/admin122m/restoration150m/policy180m/service<=140m. Late start lacks full budget and rejects. Parent service/controller/restoration/policy constraints retained.",
+    "registrationAndInputBranch": "Parent actualCACHED03 c573 pinned; six original/recovery/cached03 module/policy basis entries added preserving all prior153 basis values except corrected current dispatcher, total159. Input branch exact17b7/5d86 and its function unchanged. New keys exactly original union nine; no broad admission. quiet requires reception policy withdrawn, PG stopped, no other active units and original writer absent. Original lock/CAS and unknown audit/no replay retained.",
+    "issuerAndCarrier": "Registration issuer binds exact rule review/source-only hold and fresh<=900s159-file basis/identities/old lock, exact human authority, original scopes and role/native validators; source-pinned carrier matches corrected CAS. Phase issuer consumes actual saved evidence and only writes exclusive outside authority outputs; no issuer run by QB."
+  },
+  "closedFindings": [
+    {
+      "id": "FINAL33-ROOT9-PARENT-BASIS-01",
+      "priority": 1,
+      "status": "CLOSED_SOURCE",
+      "earlierRecord": "outputs/QB/20261116-final33-root-nine-issuer-review-01/FINDINGS-01.json",
+      "earlierRecordSha256": "85c7a54b9ec611eda08069b7de5a3dd53ebfad02c71c5bd929d7a4daf0f49cc8",
+      "fix": "BASIS admin_exec historical4373 literal corrected to actualc573, equal OLD_DISPATCHER. Reverse-hash reconstruction proves CAS differs only this literal from477; carrier only CAS source pin; generator only exact Path replacement added.",
+      "fixedCAS": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf",
+      "fixedCarrier": "27e3fac83c2d566965712afa0ea53da7e191990c803cc0aeb254882fd65e5b2c"
+    }
+  ],
+  "evidenceReuse": [
+    {
+      "path": "outputs/QB/20261116-final33-eight-phase-outer-review-01/OUTER-REVIEW-02.json",
+      "sha256": "ad6e21578ded2086be5542ee2bc5c802aad89041d730958d73b16bb35ea0c7a3"
+    },
+    {
+      "path": "outputs/QB/20261116-r3-final-source-prepare-review-01/RESULT.json",
+      "sha256": "3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf"
+    },
+    {
+      "path": "outputs/QB/20261116-final33-input-reception-review-01/MATERIALIZATION02-LAYOUT-RESULT.json",
+      "sha256": "894d0654f025be132500a0f5c28b93d0399953346f9e3c66b0d7b1339e629c66"
+    },
+    {
+      "path": "outputs/QB/20261116-final33-cached03-registration-delta-review-01/RESULT.json",
+      "sha256": "f1da2569cb81aa7c3d14c7a9db9535617620431a9fcc5e957c44b0b737930ab3"
+    }
+  ],
+  "localOwnerEvidence": {
+    "check_root_nine.RESULT.json": {
+      "sha256": "e4756d264ca68f7ff2ac35fcf9116b977414410ae4af017553674f0c72a952ad",
+      "state": "PARTIAL_LOCAL_ROOT_NINE_CHECKS_PASS_UNSIGNED",
+      "use": "READ_AND_REUSE_ONLY_NO_RERUN"
+    },
+    "check_root_nine_clock.RESULT.json": {
+      "sha256": "14fed7bbba08aad7e51ed6af09ec77660a524193c94965cb5efdd1f990700703",
+      "state": "PASS_NATIVE_ROLE_AND_START_AUTHORITY_DATA_VALIDATORS_ONLY",
+      "use": "READ_AND_REUSE_ONLY_NO_RERUN"
+    },
+    "check_root_native_chain.RESULT.json": {
+      "sha256": "09b96169f86e65982ffa72d3a0081618e64a78c7d99ac0840982b91837acd7c2",
+      "state": "PASS_LOCAL_ROOT_NATIVE_PREPARE_WRITER_DATA_CONSUMPTION_NOT_RUNTIME",
+      "use": "READ_AND_REUSE_ONLY_NO_RERUN"
+    }
+  },
+  "localEvidenceLimits": "Native pure metadata builders and authority/host validators with synthetic data; no PG, actual ownership/cap issuance or rehearsal. PARTIAL_ROOT_NINE result remains partial historical fixture result; not relabeled full runtime PASS.",
+  "pending": [
+    "Actual CACHED03 registration and final211 READY receipts must be supplied by owner; later report7f7cc01c not independently reread in this root source review",
+    "Actual input/source materialization, readonly mount, currentC preparation/elapsed time and genuine scope token restoration",
+    "Actual original writer/commits/readback, role restoration and stop cleanup",
+    "Backup/physical restore/ordinary HTTP and release acceptance; no field in this source review passes them"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "sourceEdits": 0,
+    "candidateInvocations": 0,
+    "testsRerun": 0,
+    "authorityIssued": false,
+    "mainRegistrationSigned": false
+  },
+  "runtimePassed": false,
+  "businessAccepted": false
+}

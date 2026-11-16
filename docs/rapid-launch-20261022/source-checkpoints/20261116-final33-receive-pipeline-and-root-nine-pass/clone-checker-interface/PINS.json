@@ -1,0 +1,20 @@
+{
+  "format": "D1_R3_INDEPENDENT_PHYSICAL_RESTORE_INTERFACE_DELIVERY_V1",
+  "state": "INTERFACE_ONLY_IMPLEMENTATION_AND_ACTUAL_BINDING_PENDING",
+  "files": [
+    {
+      "path": "INTERFACE.md",
+      "sha256": "51e36d1ce9efd35e860027848fae02d8f156ad8dbfdd76fd39854f0966709074",
+      "bytes": 14295
+    }
+  ],
+  "sourceChanges": 0,
+  "serverActions": 0,
+  "pgConnections": 0,
+  "builds": 0,
+  "fixtures": 0,
+  "formalLoaderChanged": false,
+  "cloneOrdinaryCapProposed": false,
+  "cloneHttpProposed": false,
+  "runtimeImplemented": false
+}

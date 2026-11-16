@@ -1,0 +1,16 @@
+{
+  "checkedAtMs": 1794831136005,
+  "state": "LOCAL_STATIC_PROFILE_BRANCH_CHECKS_ONLY",
+  "actualNewManifestNativeMembers": 284,
+  "actualOldManifestNativeMembers": 223,
+  "newManifestWithTruncated223Pins": "REJECTED",
+  "packReceiptMembers": 523,
+  "releasePayloadMembers": 522,
+  "unchangedReleaseContract": true,
+  "allTenPythonFilesParsed": true,
+  "PGConnections": 0,
+  "serverActions": 0,
+  "builds": 0,
+  "packs": 0,
+  "finalRecoveryConsumer": "UNIMPLEMENTED_EXACT_FINAL33_SUCCESSOR_NOT_REPLACED_BY_OLD09"
+}
