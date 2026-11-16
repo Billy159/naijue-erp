@@ -1,0 +1,69 @@
+--- issue_phase.py
++++ issue_phase.py
+@@ -1,4 +1,4 @@
+-"""Issue finite direct30 phases from actual predecessor receipts; no server execution."""
++"""Issue finite direct31 phases from actual predecessor receipts; no server execution."""
+ from pathlib import Path
+ import base64
+ import hashlib
+@@ -56,9 +56,7 @@
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+     previous_base = CONTROL / '20261115-r3-direct-service24-start-window-01'
+     a = read(previous_base / 'service-start-authorization.json')
+-    # Actual28 failed after C/ACK; there is no standalone stop28 terminal.
+-    for key in ('previousStopRequestKey', 'previousStopTerminalSha256', 'previousStopResultSha256'):
+-        a.pop(key, None)
++    # The actual completed30 predecessor has its own successful stop and auth restoration.
+     a.update(proof['scope']())
+     seconds = min(6000, (roles['restorationDeadline'] - 600_000 - now) // 1000)
+     assert seconds > 3600
+@@ -68,15 +66,15 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service30 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service31 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+              previousResultSha256=witness['priorStartPublicResultSha256'],
+              previousCleanupSha256=witness['priorStartCleanupSha256'],
+              previousCurrentProofSha256=witness['priorService']['proofSha256'],
+-             previousIncompleteRootSha256=witness['priorStartIncompleteRootSha256'],
+-             previousRetainedAckSha256=witness['priorRetainedAckSha256'],
++             previousStopTerminalSha256=witness['priorStopTerminalSha256'],
++             previousStopResultSha256=witness['priorStopPublicResultSha256'],
+              restoreTerminalSha256=witness['priorRestoreTerminalSha256'],
+              restoreResultSha256=witness['priorRestorePublicResultSha256'],
+              applyTerminalSha256=apply['rootPins']['terminal'],
+@@ -349,17 +347,14 @@
+ def issue(phase, rules_file, rules_pin, registration_directory,
+           evidence_path=None, evidence_pin=None, predecessor_path=None, predecessor_pin=None):
+     witness = read(rules_file, rules_pin)
+-    assert witness['materializeNeverResubmit'] is True
+-    assert witness['materializationMode'] == 'NEW_EXACT_ROOT04_DELTA_ONCE'
+-    if phase == 'materialize':
+-        assert witness['materializationAlreadyCompleted'] is False
+-        assert witness['jobs']['materialize']['jobId'] == 't45-r3-batched-root04-source-delta-20261116-01'
+-        assert witness['parentMaterializationRequestKey'] == 't45-r3-batched-root03-source-delta-20261116-01'
++    assert phase != 'materialize', 'Completed root04 must never be submitted again'
++    assert witness['materializeNeverResubmit'] is True and witness['materializationAlreadyCompleted'] is True
++    assert witness['materializationMode'] == 'REUSE_ACTUAL_COMPLETED_ROOT04_NEVER_RESUBMIT'
+     issued = Path(registration_directory).resolve()
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct30-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct31-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -389,7 +384,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261116-r3-direct-service30-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service31-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),

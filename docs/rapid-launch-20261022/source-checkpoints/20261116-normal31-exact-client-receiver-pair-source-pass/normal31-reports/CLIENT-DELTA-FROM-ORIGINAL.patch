@@ -1,0 +1,65 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/monitor/normal-admission-20261112-01/admin_client.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v2.py
+@@ -1,9 +1,11 @@
+ """Temporary SSH identity + one bounded root dispatcher; no password fallback."""
+-import argparse, base64, fcntl, hashlib, json, os, re, shlex, subprocess, sys
++import argparse, base64, fcntl, hashlib, json, os, re, shlex, subprocess, sys, stat
+ from datetime import datetime, timezone
+ from pathlib import Path
+ 
+ HERE=Path(__file__).resolve().parent
++ORIGINAL_CLIENT=HERE/'admin_client.py'
++if hashlib.sha256(ORIGINAL_CLIENT.read_bytes()).hexdigest()!='54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6':raise ValueError('ORIGINAL_CLIENT_SOURCE_DIFFERS')
+ PROJECT=HERE.parent.parent/'naijue-erp-v0.0.1'
+ STATE=HERE/'release-connection.json'
+ 
+@@ -39,6 +41,33 @@
+     if p.resolve()!=p or not p.is_relative_to(PROJECT/'outputs'/task):raise ValueError('OWN_TASK_VERSIONED_DIRECTORY_REQUIRED')
+     return p
+ 
++def collect_bundle_files(cfg,args,source,job_id):
++    private=cfg['private']+'/jobs/'+job_id
++    files={}
++    for path in source.iterdir():
++        if not re.fullmatch(r'[A-Za-z0-9_-][A-Za-z0-9_.-]{0,120}',path.name) or path.suffix not in {'.py','.mjs','.js','.json','.sh','.sql','.yaml','.yml','.md'}:continue
++        if re.search(r'(^|[_.-])(private|secret|credentials?|password|token|cookie)([_.-]|$)',path.name,re.I):
++            # This single reviewed code member is uploaded as its exact verified bytes.
++            if (args.task,job_id,cfg['grantId'],path.name)!=('T45','t45-r3-batched-install-20261115-01','b16447fbc81f4d64','private_transport.py'):continue
++            if path.is_symlink():continue
++            try:
++                with os.fdopen(os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK),'rb') as stream:
++                    meta=os.fstat(stream.fileno())
++                    if not stat.S_ISREG(meta.st_mode) or meta.st_nlink!=1 or meta.st_size!=12283:continue
++                    body=stream.read(12284)
++                    identity=lambda m:(m.st_dev,m.st_ino,m.st_uid,m.st_gid,m.st_mode,m.st_nlink,m.st_size,m.st_mtime_ns,m.st_ctime_ns)
++                    if len(body)!=12283 or identity(meta)!=identity(os.fstat(stream.fileno())) or identity(meta)!=identity(path.lstat()):continue
++            except OSError:continue
++            if hashlib.sha256(body).hexdigest()!='725415efdb5f5ca4e591de08e44a1c2e19ee75e111d65c566b89d3d6dabbddf1':continue
++            files[path.name]=body
++            continue
++        if path.is_symlink() or not path.is_file() or path.stat().st_size>4*1024*1024:raise ValueError('BOUNDED_REGULAR_BUNDLE_REQUIRED')
++        text=path.read_text()
++        for prefix in sorted(args.rewrite,key=len,reverse=True):text=text.replace(prefix,private)
++        files[path.name]=text.encode()
++    if args.script not in files or len(files)>128 or sum(map(len,files.values()))>32*1024*1024:raise ValueError('PHASE_OR_BOUNDED_BUNDLE_REQUIRED')
++    return files
++
+ def submit(cfg,args):
+     if not re.fullmatch(r'T(10|15|16|17|18|19|3[6-9]|4[0-9]|5[01])',args.task):raise ValueError('TASK_OUTSIDE_RELEASE_SCOPE')
+     job_id=ident(args.job_id);source=directory(args.source_dir,args.task);output=directory(args.output_dir,args.task)
+@@ -47,14 +76,7 @@
+     current=dispatch(cfg,'status')
+     if current.get('status')!='READY':raise ValueError('RELEASE_GRANT_NOT_READY')
+     private=cfg['private']+'/jobs/'+job_id;control=cfg['control']+'/jobs/'+job_id
+-    files={}
+-    for path in source.iterdir():
+-        if not re.fullmatch(r'[A-Za-z0-9_-][A-Za-z0-9_.-]{0,120}',path.name) or path.suffix not in {'.py','.mjs','.js','.json','.sh','.sql','.yaml','.yml','.md'} or re.search(r'(^|[_.-])(private|secret|credentials?|password|token|cookie)([_.-]|$)',path.name,re.I):continue
+-        if path.is_symlink() or not path.is_file() or path.stat().st_size>4*1024*1024:raise ValueError('BOUNDED_REGULAR_BUNDLE_REQUIRED')
+-        text=path.read_text()
+-        for prefix in sorted(args.rewrite,key=len,reverse=True):text=text.replace(prefix,private)
+-        files[path.name]=text.encode()
+-    if args.script not in files or len(files)>128 or sum(map(len,files.values()))>32*1024*1024:raise ValueError('PHASE_OR_BOUNDED_BUNDLE_REQUIRED')
++    files=collect_bundle_files(cfg,args,source,job_id)
+     proofs=json.loads(Path(args.evidence).read_text()) if args.evidence else {}
+     for section in ['gateEvidence','taskEvidence']:
+         for proof in proofs.get(section,{}).values():

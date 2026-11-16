@@ -1,0 +1,45 @@
+--- admin_exec.DIRECT31-UNREGISTERED.py
++++ admin_exec.DIRECT31-UNREGISTERED.py
+@@ -1,5 +1,5 @@
+ """Root-owned, expiring project dispatcher; installed only from the existing lease."""
+-import argparse, fcntl, hashlib, json, os, pwd, re, shutil, signal, socket, subprocess, sys, time
++import argparse, fcntl, hashlib, json, os, pwd, re, shutil, signal, socket, stat, subprocess, sys, time
+ from datetime import datetime, timezone
+ from pathlib import Path
+ 
+@@ -347,6 +347,22 @@
+     check(tuple(adapter.KEYS.values())==R3_PARTY_SINGLE_PROJECTION_KEYS,'R3_CONTINUITY_SMOKE_A_KEYS_DIFFER')
+     return adapter.SmokeAdmission(core,prior,cfg,R3_PARTY_SINGLE_PROJECTION_POLICY_SHA256)
+ 
++def fixed_install_code_member(cfg,job,row):
++    return (job.get('taskId'),job.get('jobId'),job.get('grantId'),cfg.get('grantId'),
++            row.get('name'),row.get('bytes'),row.get('sha256')) == (
++        'T45','t45-r3-batched-install-20261115-01','b16447fbc81f4d64','b16447fbc81f4d64',
++        'private_transport.py',12283,'725415efdb5f5ca4e591de08e44a1c2e19ee75e111d65c566b89d3d6dabbddf1')
++
++def read_fixed_install_code(path):
++    with os.fdopen(os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK),'rb') as stream:
++        meta=os.fstat(stream.fileno())
++        check(stat.S_ISREG(meta.st_mode) and meta.st_nlink==1 and meta.st_size==12283,'FIXED_INSTALL_CODE_FILE_REFUSED')
++        data=stream.read(12284)
++        identity=lambda m:(m.st_dev,m.st_ino,m.st_uid,m.st_gid,m.st_mode,m.st_nlink,m.st_size,m.st_mtime_ns,m.st_ctime_ns)
++        check(len(data)==12283 and identity(meta)==identity(os.fstat(stream.fileno()))==identity(path.lstat()),'FIXED_INSTALL_CODE_CHANGED')
++    check(hashlib.sha256(data).hexdigest()=='725415efdb5f5ca4e591de08e44a1c2e19ee75e111d65c566b89d3d6dabbddf1','FIXED_INSTALL_CODE_SHA_REFUSED')
++    return data
++
+ def freeze(cfg,job_id):
+     c=canonical(Path(cfg['control']));p=canonical(Path(cfg['private']))
+     request=canonical(c/'requests'/(ident(job_id)+'.json'))
+@@ -363,9 +379,10 @@
+     private=p/'jobs'/job_id;check(not private.exists(),'JOB_ALREADY_PRESENT_NO_REPLAY')
+     buffers={};total=0
+     for row in rows:
+-        name=row.get('name','');check(re.fullmatch(r'[A-Za-z0-9_-][A-Za-z0-9_.-]{0,120}',name) and name not in buffers and Path(name).suffix in {'.py','.mjs','.js','.json','.sh','.sql','.yaml','.yml','.md'} and not re.search(r'(^|[_.-])(private|secret|credentials?|password|token|cookie)([_.-]|$)',name,re.I),'BUNDLE_MEMBER_REFUSED')
++        name=row.get('name','');fixed_code=fixed_install_code_member(cfg,job,row)
++        check(re.fullmatch(r'[A-Za-z0-9_-][A-Za-z0-9_.-]{0,120}',name) and name not in buffers and Path(name).suffix in {'.py','.mjs','.js','.json','.sh','.sql','.yaml','.yml','.md'} and (not re.search(r'(^|[_.-])(private|secret|credentials?|password|token|cookie)([_.-]|$)',name,re.I) or fixed_code),'BUNDLE_MEMBER_REFUSED')
+         f=canonical(source/name);check(f.is_file() and f.stat().st_size<=4*1024*1024,'BOUNDED_REGULAR_FILE_REQUIRED')
+-        data=f.read_bytes();total+=len(data);check(total<=32*1024*1024 and len(data)==row.get('bytes') and hashlib.sha256(data).hexdigest()==row.get('sha256'),'FILE_DIGEST_OR_TOTAL_SIZE_REFUSED');buffers[name]=data
++        data=read_fixed_install_code(f) if fixed_code else f.read_bytes();total+=len(data);check(total<=32*1024*1024 and len(data)==row.get('bytes') and hashlib.sha256(data).hexdigest()==row.get('sha256'),'FILE_DIGEST_OR_TOTAL_SIZE_REFUSED');buffers[name]=data
+     script=job.get('script');check(script in buffers and Path(script).suffix in {'.py','.sh','.mjs','.js'},'EXECUTABLE_PHASE_REQUIRED')
+     args=job.get('args',[]);check(isinstance(args,list) and len(args)<=64 and all(isinstance(a,str) and len(a)<=32768 and '\x00' not in a for a in args),'PHASE_ARGUMENTS_REFUSED')
+     d0_admit(cfg,job,buffers)

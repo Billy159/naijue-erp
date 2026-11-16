@@ -1,0 +1,68 @@
+{
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "rulesSha256": "5d0ab4760c08e3614b6b0914e69d09c8e53a37348d2aaa1a8cd31e92335bf2cf",
+  "normalStartupHoldClosed": true,
+  "holdClosureMeaning": "Only final same-version source-review hold is closed. New genuine read-only server basis, live admission, finite authority and exact runtime outcomes remain unverified by QB.",
+  "reviewScope": "Main31-02 new source seams plus T45 frozen31 client, completed30 predecessor, registration/basis adapters and thin install wrapper. Source-only review; previously accepted D1/SQL39/root04/source30 scopes reused.",
+  "inputs": {
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/PINS.json": "184e65b96ab721b88853e5028971343fad46134748b110b3910f109f212f07e8",
+    "outputs/T45/revisions/20261116-r3-normal31-source-local-01/PINS.json": "96c4a60704740b1e7555690f2f8428beda130ec6a6332943d5a41af1caca9949",
+    "outputs/T45/revisions/20261116-r3-normal31-source-local-01/READY31.json": "5e782752cff5f9082213d605bd8e411ba00f82d5835cd366c326fefa00a6ec21",
+    "outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/PHASES31.UNISSUED.json": "5d0ab4760c08e3614b6b0914e69d09c8e53a37348d2aaa1a8cd31e92335bf2cf",
+    "outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/PINS.json": "081aeccfb9e435027a65a3be0811f7a72df66d18482939da108c225c150db541",
+    "outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/READY.json": "06958055f17616c44f6b1dee39de9f73c594f619faa81660a128f89d29f47ff9",
+    "outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/PINS.json": "258e8b178f65358f4a6d5491ea267100f023c0721124ed5c6839e82794907df4",
+    "outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/READY.json": "588c3b77b9cead2efa2219b43225ec0c757b967aa544c4fd8a294d65c504cb81",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/issue-install31-from-actual.py": "244f65e4a6d8d4f7a54e55a26b6169d294dbc7fe9a54aaeb27582e9a1115edad"
+  },
+  "findings": [],
+  "resolvedFindings": [
+    {
+      "id": "INSTALL31-RECEIVER-MEMBER-01",
+      "resolution": "Main31-02 exact fixed code exception reaches original freeze member buffer using the same bounded hash-verified bytes. Main31-01 remains historical and ineligible."
+    },
+    {
+      "id": "REGISTRATION31-ISSUED-STATE-01",
+      "resolution": "Final T45 adapter839c checks actual issuer COMPLETED_ROOT04_REUSE state; stale ROOT03_SUCCESSOR assertion removed before any submission."
+    }
+  ],
+  "qbIndependentVerification": [
+    "All Main31-02, T45 candidate31, adapter31 and basis31 PINS members match actual bytes; announced READY and PINS digests match.",
+    "All Python members parsed without executing candidate modules; embedded registration and basis programs also parsed.",
+    "All 28 T45 recorded delta sections exactly reproduce actual old30 versus frozen31 source bytes.",
+    "All seven canonical bundle maps match their actual frozen source hashes and authority filenames; material04 is retained as historical policy data and cannot be issued again by issuer.",
+    "Natural sibling client846e equals frozen review copy; exception binds task/job/grant/name/12283/hash725415, verifies nofollow regular nlink1 stable metadata, and uploads same verified body without rewrite.",
+    "Main02 receiver binds both request and config grants, row tuple and actual body; canonical rejects symlinks, bounded descriptor read checks stable metadata, original total/script/args/D0 checks preserved, same data enters buffers and private write.",
+    "BASIS109 to128 removes no historical entries; only current dispatcher prior pin changes. New actual30/root04 metadata matches local archived READBACKs.",
+    "Shared successful27/30 predecessor validators preserve exact terminals, root/public equality, generation-specific proofLeaf, clean stop, original auth restoration and stopped container checks; failed28/29 source remains unchanged.",
+    "Frozen31 direct predecessor uses actual completed30 successful start, preservation stop and auth restoration; stop authority dynamic fields match issuer and proof schema.",
+    "Historical material04 caller3b870 remains separate from bootstrap31 caller872c; root04 BA/source382/EA/8bb evidence is reused, never rematerialized.",
+    "Final registration adapter/basis reader bind Main02 registrar6c946/carrier5236/template857e/rules5d0a/client846e/runnerc734; fixed pending lock identity and six future keys retained.",
+    "Thin wrapper244f statically checks stored start31 describe, root04 actual evidence, final source review/rules, Main02 pins and real client, then existing strict900 inner and outer issue APIs; not executed.",
+    "Module64917 remains below65536; existing4320/780/900/3000/role90-92-115-120/28GiB budgets unchanged."
+  ],
+  "producerEvidenceReviewed": {
+    "path": "outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/CHECKS-PAIR31.json",
+    "sha256": "771513b03d328a685e4c25a1b42986ac582a1f5685457e517d46fb3db9bb36f3",
+    "reportedChecksPassed": 26,
+    "qbReranProducerChecks": false,
+    "meaning": "Reviewed producer test source and results for actual collector/manifest and unchanged receiver member-buffer AST; expired30 authority used only as opaque filename fixture. Does not prove future31 authority semantics, full freeze/admit or runtime."
+  },
+  "standards": {
+    "openFindings": 0,
+    "scope": "No actionable standards violation found in reviewed incremental seams."
+  },
+  "spec": {
+    "openFindings": 0,
+    "scope": "Requested source-only delta and exact transport/member pairing satisfied for frozen inputs."
+  },
+  "realServerReadOrMutationByQB": false,
+  "candidateModulesExecutedByQB": false,
+  "authoritiesIssuedByQB": false,
+  "postgresActionsByQB": 0,
+  "genuineFactoriesRunByQB": 0,
+  "actual31RuntimeTested": false,
+  "actual31TransportOrFullFreezeTested": false,
+  "formalBusinessAccepted": false,
+  "nextBoundary": "T45 sole server owner may perform separately authorized new read-only basis and follow normal exact admission/authority chain. This source verdict is not a server or business PASS."
+}

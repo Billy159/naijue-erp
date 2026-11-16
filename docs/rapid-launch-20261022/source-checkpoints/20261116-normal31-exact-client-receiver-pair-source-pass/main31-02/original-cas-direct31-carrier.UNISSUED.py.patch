@@ -1,0 +1,11 @@
+--- original-cas-direct31-carrier.UNISSUED.py
++++ original-cas-direct31-carrier.UNISSUED.py
+@@ -3,7 +3,7 @@
+ import base64,contextlib,hashlib,io,json,os,re,runpy,stat,sys,time
+ STAGE=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct31-start-describe-registration-source-20261116-01')
+ AUDIT=STAGE.parent/'r3-direct31-start-describe-registration-cas-20261116-01'
+-SOURCE='9c08f83f93bc84a1d0b917b0072f75d417d6a58b6bb26bc01ab2173488a46c2f'
++SOURCE='6c9468dc661d64d629f71e2bf3a24e9b899a68f22beaa801705f10f33481f169'
+ AUTH=AUTH_SHA_LITERAL
+ os.umask(0o077)
+ assert os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0 and AUTH_START_LITERAL<=time.time_ns()//1000000<AUTH_EXPIRES_LITERAL-10000

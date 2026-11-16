@@ -1,0 +1,8 @@
+{
+  "CHECKS-PAIR31.json": "771513b03d328a685e4c25a1b42986ac582a1f5685457e517d46fb3db9bb36f3",
+  "check-pair31.py": "355814ba817cfee3047463bb9b68a0971410417819d556f2104c507695537afc",
+  "read-registration31-original.patch": "174eef8ecb6e0872a90894d2e2aca1f08b7eeeed2023f2b52ab1ed365cee0a59",
+  "read-registration31-original.py": "aabaea99f8e2a4edffbeef0805aa93a53aff8f84ba0090db73fefe48d110a847",
+  "register_issued31_once.patch": "a13bdf91a33625e9052cab428daa1ba3bba0570550e29f7a32b29c6d8e1f933d",
+  "register_issued31_once.py": "839cce1be2fd52d99e81ebc3b33e4c938ee363388fe1c6b70b04f21310837029"
+}

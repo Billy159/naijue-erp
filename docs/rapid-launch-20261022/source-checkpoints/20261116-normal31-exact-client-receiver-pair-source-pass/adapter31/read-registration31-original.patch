@@ -1,0 +1,49 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-adapter-local-02/read-registration30-original.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/read-registration31-original.py
+@@ -3,9 +3,6 @@
+ from datetime import datetime,timezone
+ import hashlib,json,runpy,shlex
+ HERE=Path(__file__).resolve().parent
+-client=HERE.parents[3].parent/'monitor/normal-admission-20261112-01/admin_client.py'
+-assert hashlib.sha256(client.read_bytes()).hexdigest()=='54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6'
+-m=runpy.run_path(str(client));cfg=m['state']()
+ program=r'''
+ from pathlib import Path
+ from datetime import datetime,timezone
+@@ -16,12 +13,12 @@
+ R=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ out={'checkedAtUTC':datetime.now(timezone.utc).isoformat(),'databaseConnections':0,'mutations':0,'originalEntryReplayed':False}
+-paths={'stage':B/'r3-direct30-start-describe-registration-source-20261116-01','audit':B/'r3-direct30-start-describe-registration-cas-20261116-01',
+- 'module':P/'r3_direct30_batched.py','policy':H/'direct30-batched-real.json','dispatcher':P/'admin_exec.py',
++paths={'stage':B/'r3-direct31-start-describe-registration-source-20261116-01','audit':B/'r3-direct31-start-describe-registration-cas-20261116-01',
++ 'module':P/'r3_direct31_batched.py','policy':H/'direct31-batched-real.json','dispatcher':P/'admin_exec.py',
+  'pending':P/'.direct27-fullchain-dispatcher.pending',
+- 'preservedOldDispatcher':B/'r3-direct30-start-describe-registration-cas-20261116-01/old-dispatcher.bin',
+- 'preserved29Policy':H/'direct29-batched-real.json',
+- 'preserved29Module':P/'r3_direct29_batched.py'}
++ 'preservedOldDispatcher':B/'r3-direct31-start-describe-registration-cas-20261116-01/old-dispatcher.bin',
++ 'preserved30Policy':H/'direct30-batched-real.json',
++ 'preserved30Module':P/'r3_direct30_batched.py'}
+ facts={}
+ for name,p in paths.items():
+  row={'path':str(p),'present':os.path.lexists(p)}
+@@ -43,7 +40,14 @@
+ out['postmasterPidAbsent']=not os.path.lexists(R/'state'/R.name/'data/postmaster.pid')
+ print(json.dumps(out,sort_keys=True))
+ '''
+-raw=m['remote'](cfg,shlex.join(['sudo','-n','/usr/bin/python3','-I','-S','-c',program]))
+-p=HERE/('REGISTRATION30-READBACK-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'.json')
+-with p.open('xb') as f:f.write(raw)
+-v=json.loads(raw);print(json.dumps({'receipt':str(p),'sha256':hashlib.sha256(raw).hexdigest(),**v},sort_keys=True))
++def main():
++    HERE=Path(__file__).resolve().parent
++    client=HERE.parents[3].parent/'monitor/normal-admission-20261112-01/admin_client.py'
++    assert hashlib.sha256(client.read_bytes()).hexdigest()=='54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6'
++    m=runpy.run_path(str(client));cfg=m['state']()
++    raw=m['remote'](cfg,shlex.join(['sudo','-n','/usr/bin/python3','-I','-S','-c',program]))
++    p=HERE/('REGISTRATION31-READBACK-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'.json')
++    with p.open('xb') as f:f.write(raw)
++    v=json.loads(raw);print(json.dumps({'receipt':str(p),'sha256':hashlib.sha256(raw).hexdigest(),**v},sort_keys=True))
++
++if __name__=='__main__':main()

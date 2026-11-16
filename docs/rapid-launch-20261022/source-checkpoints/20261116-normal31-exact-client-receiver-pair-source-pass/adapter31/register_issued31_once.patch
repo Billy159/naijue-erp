@@ -1,0 +1,76 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-adapter-local-02/register_issued30_once.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/register_issued31_once.py
+@@ -1,32 +1,46 @@
+-"""Original private carrier/envelope transport, literal-bound to issued direct30."""
++"""Original private carrier/envelope transport, literal-bound to issued direct31."""
+ from pathlib import Path
+ from datetime import datetime,timezone
+ import base64,hashlib,json,os,re,runpy,shlex,subprocess,sys,time
+ 
+ H=Path(__file__).resolve().parent
+ REPO=H.parents[3]
+-MAIN=REPO/'outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE30-PREFIX155-REPAIR-02'
+-SOURCE='44b4a0ac22d44ca5f22927bec789e6dfb834335514b97fc371b0690396092a7d'
+-TEMPLATE='ae1831baf8ad4fd128683bfda049b0f68a9d43c413547df20696be6dd0d37012'
+-SUCCESS='EXACT_DIRECT30_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'
+-RULES='79b327d6c86e12c94a36d198d817e26604a938e89c70a44af54f65bf1c2ac794'
++MAIN=REPO/'outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02'
++SOURCE='6c9468dc661d64d629f71e2bf3a24e9b899a68f22beaa801705f10f33481f169'
++TEMPLATE='52369590d7151082ff4108d5105198a91c770ade313441972ce892fa95c452be'
++SUCCESS='EXACT_DIRECT31_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'
++RULES='5d0ab4760c08e3614b6b0914e69d09c8e53a37348d2aaa1a8cd31e92335bf2cf'
+ CLIENT=REPO.parent/'monitor/normal-admission-20261112-01/admin_client.py'
+ CLIENT_SHA='54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6'
+ sha=lambda raw:hashlib.sha256(raw).hexdigest()
+ unpack=lambda raw:base64.b64decode(raw,validate=True)
+ 
++TRANSPORT_CLIENT=CLIENT.with_name('admin_client-t45-code-transport-v2.py')
++TRANSPORT_CLIENT_SHA='846e3dd51c7607b01c7e73b36f73c6edec03d3be981b2f40bf2bed14db7d2e54'
++PHASES=REPO/'outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01'
++RUNNER_SHA='c7344ef8b901f6685b49509520fc5535118b053e6f6dcf55718f84db3d152ee4'
++PRIVATE_SOURCE_SHA='725415efdb5f5ca4e591de08e44a1c2e19ee75e111d65c566b89d3d6dabbddf1'
++def check_local_pair():
++    assert sha(TRANSPORT_CLIENT.read_bytes())==TRANSPORT_CLIENT_SHA
++    assert sha((PHASES/'run_frozen_phase31.py').read_bytes())==RUNNER_SHA
++    assert sha((PHASES/'PHASES31.UNISSUED.json').read_bytes())==RULES
++    raw=(PHASES/'install/bundle/private_transport.py').read_bytes()
++    assert len(raw)==12283 and sha(raw)==PRIVATE_SOURCE_SHA
++    assert sha((MAIN/'admin_exec.DIRECT31-UNREGISTERED.py').read_bytes())=='857e267421cd728f87544619842f2aa059e60dd1f3bbbc6346bb501b115087d2'
++
+ def main():
++    check_local_pair()
+     directory,issued_pin,destination=sys.argv[1:]
+     directory=Path(directory).resolve(strict=True);destination=Path(destination)
+     read=lambda name:(directory/name).read_bytes()
+     issued=read('ISSUED.json');assert sha(issued)==issued_pin
+     report=json.loads(issued)
+-    assert report['state']=='ISSUED_EXACT_ROOT03_SUCCESSOR_REGISTRATION_NO_SERVER_ACTION'
++    assert report['state']=='ISSUED_EXACT_COMPLETED_ROOT04_REUSE_REGISTRATION_NO_SERVER_ACTION'
+     assert Path(report['directory'])==directory and report['rulesSha256']==RULES and report['phaseSubmitted'] is False
+     authority=read('registration-authorization.json');a=json.loads(authority)
+-    carrier=read('original-cas-direct30-carrier.ISSUED.py')
++    carrier=read('original-cas-direct31-carrier.ISSUED.py')
+     envelope=read('registration-envelope.json');e=json.loads(envelope)
+-    policy=read('direct30-batched-real.json')
++    policy=read('direct31-batched-real.json')
+     assert [sha(v) for v in (authority,carrier,policy)]==[report[k] for k in ('registrationSha256','carrierSha256','policySha256')]
+     assert a['sourceSha256']==SOURCE and sha(unpack(e['source']))==SOURCE and unpack(e['packet']['authorization'])==authority
+     assert {k:sha(unpack(v)) for k,v in e['packet']['files'].items()}==a['sourcePins']
+@@ -34,7 +48,7 @@
+     assert a['sourceRegistrationOnly'] is True and a['businessDatabaseWrites']==0 and a['jobKeys']==report['jobs']
+     assert a['startsAt']==report['startsAt'] and a['expiresAt']==report['registrationExpiresAt']
+     assert a['independentReviewSha256']==report['independentReviewSha256']
+-    template=(MAIN/'original-cas-direct30-carrier.UNISSUED.py').read_bytes()
++    template=(MAIN/'original-cas-direct31-carrier.UNISSUED.py').read_bytes()
+     assert sha(template)==TEMPLATE and sha((MAIN/'register_cas.py').read_bytes())==SOURCE
+     for name,value in (('AUTH_SHA_LITERAL',repr(sha(authority))),('AUTH_START_LITERAL',str(a['startsAt'])),('AUTH_EXPIRES_LITERAL',str(a['expiresAt']))):
+         assert template.count(name.encode())==1;template=template.replace(name.encode(),value.encode())
+@@ -66,7 +80,7 @@
+         and all(value.get(k) is False for k in ('phaseSubmitted','rolesExecuted','postgresStarted')) \
+         and value.get('policySha256')==report['policySha256'] and value.get('dispatcherSha256')==report['dispatcherSha256'] \
+         and value.get('moduleSha256')==a['newModuleSha256']
+-    proof['exactDirect30RegistrationReplyConfirmed']=verified
++    proof['exactDirect31RegistrationReplyConfirmed']=verified
+     with (destination/'ROOT-ENTRY-RESULT.json').open('x') as out:json.dump(proof,out,indent=2);out.write('\n')
+     print(json.dumps(proof))
+     return 0 if verified else 2

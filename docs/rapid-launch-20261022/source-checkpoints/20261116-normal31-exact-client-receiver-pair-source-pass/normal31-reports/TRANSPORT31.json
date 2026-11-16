@@ -1,0 +1,23 @@
+{
+  "allowedBytesRewritten": false,
+  "allowedGrant": "b16447fbc81f4d64",
+  "allowedJob": "t45-r3-batched-install-20261115-01",
+  "allowedSourceBasename": "private_transport.py",
+  "allowedSourceBytes": 12283,
+  "allowedSourceSha256": "725415efdb5f5ca4e591de08e44a1c2e19ee75e111d65c566b89d3d6dabbddf1",
+  "allowedTask": "T45",
+  "clientMainOrStateCalled": false,
+  "clientPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v2.py",
+  "clientSha256": "846e3dd51c7607b01c7e73b36f73c6edec03d3be981b2f40bf2bed14db7d2e54",
+  "naturalFileContext": true,
+  "networkCalls": 0,
+  "newAuthorityOrClock": false,
+  "old30SourceShaAccepted": false,
+  "originalClientSha256": "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6",
+  "regularNoFollowStableBoundedRead": true,
+  "reviewCopyPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/admin_client-t45-code-transport-v2.py",
+  "sameParent": true,
+  "serverActions": 0,
+  "sourceAudit": "Full frozen30 transport code was read and proven code-only; frozen31 differs only START/current proof/projection generation30->31, no embedded credential values",
+  "state": "LOCAL_FROZEN31_TRANSPORT_SOURCE_NOT_EXECUTED_NOT_REVIEWED"
+}

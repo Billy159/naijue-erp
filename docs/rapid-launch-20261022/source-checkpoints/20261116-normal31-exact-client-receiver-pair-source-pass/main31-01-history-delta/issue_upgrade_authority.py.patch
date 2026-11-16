@@ -1,0 +1,20 @@
+--- issue_upgrade_authority.py
++++ issue_upgrade_authority.py
+@@ -44,7 +44,7 @@
+     assert all(d[k] is False for k in ('businessRowsWritten', 'rolesCreated',
+                                       'serviceCreated', 'changesOriginalInputTarget'))
+     assert live['requestKey'] == 't45-r3-batched-install-20261115-01'
+-    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-30'
++    assert live['service']['serviceKey'] == 't45-first-r3-native-service-start-20261116-31'
+     assert live['physical']['systemIdentifier'] == '7706545564479176741'
+     assert live['physical']['databaseOid'] == '16393'
+     assert live['physical']['serverVersionNum'] == '170011'
+@@ -69,7 +69,7 @@
+                      programSha256=d['programSha256'], sourceSetSha256=d['sourceSetSha256'],
+                      targetSha256=d['targetSha256'], startsAt=d['startsAt'], expiresAt=d['expiresAt'],
+                      independentSafetyReviewSha256=review_pin,
+-                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current30 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
++                     authorizationReference='Verified human direct REAL instruction, origin message 01a1df2e-293d-7061-ab16-5b0cc2e0e753; exact current31 finite existing154-to161 catalog program only. No rehearsal or business import authority is created by this file.')
+     raw = (json.dumps(authority, sort_keys=True, indent=2) + '\n').encode()
+     output = Path(output_directory)
+     assert output.parent.resolve() == CONTROL.resolve() and not output.exists()

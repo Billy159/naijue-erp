@@ -1,0 +1,13 @@
+{
+  "PREPARATION.json": "6482941a61177e08a7ad281933508ed7472a06a71e03d32c08ebc6f08cf6c607",
+  "admin_exec.DIRECT31-UNREGISTERED.py": "857e267421cd728f87544619842f2aa059e60dd1f3bbbc6346bb501b115087d2",
+  "admin_exec.DIRECT31-UNREGISTERED.py.patch": "43652cfc693d7583545da092666e6fddd4edf68e90a627748c6abfa862edd177",
+  "issue_phase.py": "f6a7adaf06d353b0642954cde1ad6a71a39e9d720a46574012bf6233f0b70988",
+  "issue_registration.py": "f363b835344240a20f00a1fbf7310babae31e252a39e904f7a2a5465caa8e2ef",
+  "issue_upgrade_authority.py": "44ca8c7b9a15d3cc9457eefd00f6013b534b5a123dcb2ed84bd3b3aebd73437f",
+  "original-cas-direct31-carrier.UNISSUED.py": "52369590d7151082ff4108d5105198a91c770ade313441972ce892fa95c452be",
+  "original-cas-direct31-carrier.UNISSUED.py.patch": "0b037f558272c9d247db8d2cdb93f6b7e00e4dd34d63c1e03b7e8bb5fca45428",
+  "r3_direct31_batched.py": "365a696b1ee113ce337e36c8159f6be28eccf3ce1e0a314ef61aeddaa76e93c9",
+  "register_cas.py": "6c9468dc661d64d629f71e2bf3a24e9b899a68f22beaa801705f10f33481f169",
+  "register_cas.py.patch": "3b82a64a720ebe5bc1302eb6991b5818e5840355b74c3a5abcb5cf652e2ac793"
+}

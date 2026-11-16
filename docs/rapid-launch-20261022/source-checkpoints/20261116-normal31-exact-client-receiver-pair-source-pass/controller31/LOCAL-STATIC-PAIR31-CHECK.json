@@ -1,0 +1,18 @@
+{
+  "actual30NormalStopAndRestoreFields": true,
+  "all128BasisFixed": true,
+  "allSevenPhaseSourcePinsMatched": true,
+  "authoritiesIssued": false,
+  "completed04ReusedNeverResubmit": true,
+  "historicalAndBootstrapCallersDistinguished": true,
+  "mainPinsSha256": "184e65b96ab721b88853e5028971343fad46134748b110b3910f109f212f07e8",
+  "noUIDClockOrFactorySpoof": true,
+  "normalStartupHoldClosed": false,
+  "postgresConnections": 0,
+  "rulesSha256": "5d0ab4760c08e3614b6b0914e69d09c8e53a37348d2aaa1a8cd31e92335bf2cf",
+  "serverActions": 0,
+  "sourceLimit": 65536,
+  "sourceModuleBytes": 64917,
+  "startAuthorityKeySetMatchesProofSchema": true,
+  "state": "LOCAL_STATIC_EXACT_PAIR_CHECKS_PASSED_NO_AUTHORITY_OR_EXECUTION"
+}

@@ -1,0 +1,72 @@
+--- issue_registration.py
++++ issue_registration.py
+@@ -63,8 +63,8 @@
+             assert Path(leaf).name == leaf
+             checked(folder / leaf, pin)
+ 
+-    assert witness['materializationAlreadyCompleted'] is False and witness['materializeNeverResubmit'] is True
+-    assert witness['materializationMode'] == 'NEW_EXACT_ROOT04_DELTA_ONCE'
++    assert witness['materializationAlreadyCompleted'] is True and witness['materializeNeverResubmit'] is True
++    assert witness['materializationMode'] == 'REUSE_ACTUAL_COMPLETED_ROOT04_NEVER_RESUBMIT'
+     assert jobs['materialize'] == 't45-r3-batched-root04-source-delta-20261116-01'
+     assert witness['parentMaterializationRequestKey'] == 't45-r3-batched-root03-source-delta-20261116-01'
+     assert witness['parentMaterializationSha256'] == 'cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec'
+@@ -74,10 +74,12 @@
+     assert witness['sourceFiles'] == 382
+     expected_material = witness['expectedMaterializationSha256']
+     assert type(expected_material) is str and len(expected_material) == 64 and set(expected_material) <= set('0123456789abcdef')
+-    assert basis['acceptedMaterializationSha256'] == witness['parentMaterializationSha256']
++    assert witness['materializationAlreadyCompletedOperatorReadySha256'] == expected_material == '8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1'
++    assert witness['materializationReusedFromKey'] == jobs['materialize']
++    assert basis['acceptedMaterializationSha256'] == expected_material
+     assert basis['basisMismatches'] == [] and basis['executionLockMatches'] is True
+     assert basis['activeOperationUnits'] == basis['presentCandidateKeys'] == []
+-    assert set(basis['candidateKeys']) >= set(jobs.values()), 'All seven new current phase keys, including new04, require actual absence'
++    assert set(basis['candidateKeys']) >= set(jobs.values()) - {jobs['materialize']}, 'Only six unsubmitted current phases require absence; completed04 is protected reuse'
+     assert basis['actualPins'][str(cas['P'] / 'admin_exec.py')] == cas['OLD_DISPATCHER']
+     now = time.time_ns() // 1_000_000
+     grant_limit = int(basis['grantExpiresAtEpoch'] * 1000)
+@@ -108,19 +110,19 @@
+     for phase in ('apply', 'restore'):
+         assert 'roles-authorization.json' not in rules[phase]['bundlePins']
+         rules[phase]['bundlePins']['roles-authorization.json'] = sha(role_raw)
+-    policy = dict(format='T45_R3_DIRECT30_BATCHED_REAL_V1', grantId=cas['GRANT'],
++    policy = dict(format='T45_R3_DIRECT31_BATCHED_REAL_V1', grantId=cas['GRANT'],
+                   startsAt=now, expiresAt=now + 7_200_000, jobs=rules)
+     cas['validate_policy_delta'](policy, {'grantId': cas['GRANT']})
+-    files = {'module': (HERE / 'r3_direct30_batched.py').read_bytes(),
++    files = {'module': (HERE / 'r3_direct31_batched.py').read_bytes(),
+              'policy': encode(policy),
+-             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT30-UNREGISTERED.py').read_bytes()}
++             'dispatcherTemplate': (HERE / 'admin_exec.DIRECT31-UNREGISTERED.py').read_bytes()}
+     dispatcher = cas['render_dispatcher'](files)
+     registration = dict(cas['scope'](), sourceSha256=sha(cas_path.read_bytes()),
+                         sourcePins={key: sha(data) for key, data in files.items()},
+                         oldIdentities=basis['oldIdentities'], startsAt=now, expiresAt=now + 900_000,
+                         authorizationReference=REFERENCE, independentReviewSha256=review_pin)
+     registration_raw = encode(registration)
+-    carrier = (HERE / 'original-cas-direct30-carrier.UNISSUED.py').read_bytes()
++    carrier = (HERE / 'original-cas-direct31-carrier.UNISSUED.py').read_bytes()
+     assert ("SOURCE='" + registration['sourceSha256'] + "'").encode() in carrier
+     for name, value in (('AUTH_SHA_LITERAL', repr(sha(registration_raw))),
+                         ('AUTH_START_LITERAL', str(now)),
+@@ -132,7 +134,7 @@
+     packet = {'source': b64(cas_path.read_bytes()),
+               'packet': {'authorization': b64(registration_raw),
+                          'files': {name: b64(data) for name, data in files.items()}}}
+-    report = dict(state='ISSUED_EXACT_ROOT03_SUCCESSOR_REGISTRATION_NO_SERVER_ACTION',
++    report = dict(state='ISSUED_EXACT_COMPLETED_ROOT04_REUSE_REGISTRATION_NO_SERVER_ACTION',
+                   directory=str(Path(output_directory).resolve()), startsAt=now,
+                   registrationExpiresAt=registration['expiresAt'], roleApplyExpiresAt=roles['expiresAt'],
+                   controllerValidUntil=roles['controllerValidUntil'],
+@@ -152,8 +154,8 @@
+         ('roles-authorization.json', role_raw), ('host-authorization.json', encode(host_authority)),
+         ('registration-authorization.json', registration_raw),
+         ('registration-envelope.json', encode(packet)),
+-        ('original-cas-direct30-carrier.ISSUED.py', carrier),
+-        ('direct30-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
++        ('original-cas-direct31-carrier.ISSUED.py', carrier),
++        ('direct31-batched-real.json', files['policy']), ('admin_exec.ISSUED.py', dispatcher),
+         ('ISSUED.json', encode(report))):
+         with (output / name).open('xb') as stream:
+             stream.write(data)

@@ -1,0 +1,588 @@
+{
+  "excluded": "No live authority, issued envelope, connection settings, key material, media or business source package included.",
+  "files": [
+    {
+      "bytes": 4791,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/PREPARATION.json",
+      "path": "main31-02/PREPARATION.json",
+      "sha256": "6482941a61177e08a7ad281933508ed7472a06a71e03d32c08ebc6f08cf6c607"
+    },
+    {
+      "bytes": 42820,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/admin_exec.DIRECT31-UNREGISTERED.py",
+      "path": "main31-02/admin_exec.DIRECT31-UNREGISTERED.py",
+      "sha256": "857e267421cd728f87544619842f2aa059e60dd1f3bbbc6346bb501b115087d2"
+    },
+    {
+      "bytes": 3842,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/admin_exec.DIRECT31-UNREGISTERED.py.patch",
+      "path": "main31-02/admin_exec.DIRECT31-UNREGISTERED.py.patch",
+      "sha256": "43652cfc693d7583545da092666e6fddd4edf68e90a627748c6abfa862edd177"
+    },
+    {
+      "bytes": 25784,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/issue_phase.py",
+      "path": "main31-02/issue_phase.py",
+      "sha256": "f6a7adaf06d353b0642954cde1ad6a71a39e9d720a46574012bf6233f0b70988"
+    },
+    {
+      "bytes": 10204,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/issue_registration.py",
+      "path": "main31-02/issue_registration.py",
+      "sha256": "f363b835344240a20f00a1fbf7310babae31e252a39e904f7a2a5465caa8e2ef"
+    },
+    {
+      "bytes": 5143,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/issue_upgrade_authority.py",
+      "path": "main31-02/issue_upgrade_authority.py",
+      "sha256": "44ca8c7b9a15d3cc9457eefd00f6013b534b5a123dcb2ed84bd3b3aebd73437f"
+    },
+    {
+      "bytes": 2663,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/original-cas-direct31-carrier.UNISSUED.py",
+      "path": "main31-02/original-cas-direct31-carrier.UNISSUED.py",
+      "sha256": "52369590d7151082ff4108d5105198a91c770ade313441972ce892fa95c452be"
+    },
+    {
+      "bytes": 717,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/original-cas-direct31-carrier.UNISSUED.py.patch",
+      "path": "main31-02/original-cas-direct31-carrier.UNISSUED.py.patch",
+      "sha256": "0b037f558272c9d247db8d2cdb93f6b7e00e4dd34d63c1e03b7e8bb5fca45428"
+    },
+    {
+      "bytes": 64917,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/r3_direct31_batched.py",
+      "path": "main31-02/r3_direct31_batched.py",
+      "sha256": "365a696b1ee113ce337e36c8159f6be28eccf3ce1e0a314ef61aeddaa76e93c9"
+    },
+    {
+      "bytes": 46848,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/register_cas.py",
+      "path": "main31-02/register_cas.py",
+      "sha256": "6c9468dc661d64d629f71e2bf3a24e9b899a68f22beaa801705f10f33481f169"
+    },
+    {
+      "bytes": 1031,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/register_cas.py.patch",
+      "path": "main31-02/register_cas.py.patch",
+      "sha256": "3b82a64a720ebe5bc1302eb6991b5818e5840355b74c3a5abcb5cf652e2ac793"
+    },
+    {
+      "bytes": 1116,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-02/PINS.json",
+      "path": "main31-02/PINS.json",
+      "sha256": "184e65b96ab721b88853e5028971343fad46134748b110b3910f109f212f07e8"
+    },
+    {
+      "bytes": 2408,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/original-cas-direct31-carrier.UNISSUED.py.patch",
+      "path": "main31-01-history-delta/original-cas-direct31-carrier.UNISSUED.py.patch",
+      "sha256": "8a4f39d5eeb673e2503428cdb6f6bd7b626f98ded2369f45fe68e0c3b699f72c"
+    },
+    {
+      "bytes": 5289,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/issue_registration.py.patch",
+      "path": "main31-01-history-delta/issue_registration.py.patch",
+      "sha256": "b5010ce1f778072d4ae98e17091f5ed69376c91800efdcaeee8cb0710ea82c67"
+    },
+    {
+      "bytes": 13042,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/r3_direct31_batched.py.patch",
+      "path": "main31-01-history-delta/r3_direct31_batched.py.patch",
+      "sha256": "c27309ea865e2d559bbddf13f5a0a81e589109a9a526d53dc420c675dce33435"
+    },
+    {
+      "bytes": 1711,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/issue_upgrade_authority.py.patch",
+      "path": "main31-01-history-delta/issue_upgrade_authority.py.patch",
+      "sha256": "df77bee04793f4db20dd2ed93080d2901668c8f0adc37caf635459e1cc9709c5"
+    },
+    {
+      "bytes": 6944,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/admin_exec.DIRECT31-UNREGISTERED.py.patch",
+      "path": "main31-01-history-delta/admin_exec.DIRECT31-UNREGISTERED.py.patch",
+      "sha256": "3bf7a1ac94bf9c0e8dac57d043c9021b32c15c67e146a74df792670a8582be6f"
+    },
+    {
+      "bytes": 15991,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/register_cas.py.patch",
+      "path": "main31-01-history-delta/register_cas.py.patch",
+      "sha256": "0d5930d490202cea522a94170194046710040a0225baf1f32d1185addb8e6642"
+    },
+    {
+      "bytes": 4544,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE31-INSTALL-TRANSPORT-01/issue_phase.py.patch",
+      "path": "main31-01-history-delta/issue_phase.py.patch",
+      "sha256": "64d6a1a5eb57dc881fcdf055bd3db8a24f6f22688e92f6586dfd59b332fe2e85"
+    },
+    {
+      "bytes": 13944,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/prepare-main31.py",
+      "path": "controller31/prepare-main31.py",
+      "sha256": "338951072bd1cb1151da74b2da09de608f0bbb8bb843be54868040acd3f86679"
+    },
+    {
+      "bytes": 3342,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/TASK.json",
+      "path": "controller31/TASK.json",
+      "sha256": "020246e833570b5a720a46e4d0be301b0e0b1ef7e3db455b27eb23d9596795eb"
+    },
+    {
+      "bytes": 722,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/LOCAL-STATIC-PAIR31-CHECK.json",
+      "path": "controller31/LOCAL-STATIC-PAIR31-CHECK.json",
+      "sha256": "a41eda70f013afe1a8499ecb83e24a2fae98f358889ecf2446aec467f8a3a1f7"
+    },
+    {
+      "bytes": 3515,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/issue-install31-from-actual.py",
+      "path": "controller31/issue-install31-from-actual.py",
+      "sha256": "244f65e4a6d8d4f7a54e55a26b6169d294dbc7fe9a54aaeb27582e9a1115edad"
+    },
+    {
+      "bytes": 997,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/FINAL31-QB-REVIEW-PROVENANCE.json",
+      "path": "controller31/FINAL31-QB-REVIEW-PROVENANCE.json",
+      "sha256": "cf6930552a439e9ccc5a72fa9d6c52c633cd1c6a903f6925e0588583c1fcbb8a"
+    },
+    {
+      "bytes": 5321,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/prepare-main31-receiver02.py",
+      "path": "controller31/prepare-main31-receiver02.py",
+      "sha256": "364fb503b6645b381b0d2ddf593b2ccea94fd37cd63f64d47557ad3839745e40"
+    },
+    {
+      "bytes": 13848,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/PHASES31.UNISSUED.json",
+      "path": "normal31/PHASES31.UNISSUED.json",
+      "sha256": "5d0ab4760c08e3614b6b0914e69d09c8e53a37348d2aaa1a8cd31e92335bf2cf"
+    },
+    {
+      "bytes": 14235,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/admin_client-t45-code-transport-v2.py",
+      "path": "normal31/admin_client-t45-code-transport-v2.py",
+      "sha256": "846e3dd51c7607b01c7e73b36f73c6edec03d3be981b2f40bf2bed14db7d2e54"
+    },
+    {
+      "bytes": 185047,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/fresh35-production-carrier.py",
+      "path": "normal31/apply/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "bytes": 34276,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/normal_service04.py",
+      "path": "normal31/apply/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "bytes": 9403,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/normal_service04_proof.py",
+      "path": "normal31/apply/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "bytes": 21656,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/ordinary05_roles.py",
+      "path": "normal31/apply/bundle/ordinary05_roles.py",
+      "sha256": "504ddfd7465223bd96241f3a7ab431d939d92dc0cb4a8faee7c7fac6a21b719c"
+    },
+    {
+      "bytes": 32453,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/ordinary05_roles_job.py",
+      "path": "normal31/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "9626666e8afc45a9579903def2ec5d425f5b19d2c217137b0fdae24fb86d21f1"
+    },
+    {
+      "bytes": 7554,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/prior_completed30.py",
+      "path": "normal31/apply/bundle/prior_completed30.py",
+      "sha256": "50b395d3af8e6796c2e66a447dc96f0e790efdc265c3c9fa2a058a6bdefa3ddd"
+    },
+    {
+      "bytes": 1834,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/apply/bundle/root04_material.py",
+      "path": "normal31/apply/bundle/root04_material.py",
+      "sha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+    },
+    {
+      "bytes": 3757,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/freeze-local31.py",
+      "path": "normal31/freeze-local31.py",
+      "sha256": "09c8dc95cfc27e24bdc10352ad1b25af2ec93a86f23e9626e270f6ff37d52aeb"
+    },
+    {
+      "bytes": 13594,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/install/bundle/batched161-run.mjs",
+      "path": "normal31/install/bundle/batched161-run.mjs",
+      "sha256": "872c732ac92afd6e9455115d684c0678178b6ad9c2f5bbf90d7f4e9366210cf2"
+    },
+    {
+      "bytes": 12985,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/install/bundle/batched_install_host.py",
+      "path": "normal31/install/bundle/batched_install_host.py",
+      "sha256": "0096cc3b21bfacb8dda60a9a91c254b34b01064549218ee1de8ab1f4c746aa79"
+    },
+    {
+      "bytes": 187609,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/install/bundle/fresh35-production-carrier.py",
+      "path": "normal31/install/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "bytes": 20709,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/install/bundle/normal05_retained_stop.py",
+      "path": "normal31/install/bundle/normal05_retained_stop.py",
+      "sha256": "ca6cd5777caa6d598d1d1cb113dae2db28b756577c3c516bf391c5585275b372"
+    },
+    {
+      "bytes": 12283,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/install/bundle/private_transport.py",
+      "path": "normal31/install/bundle/private_transport.py",
+      "sha256": "725415efdb5f5ca4e591de08e44a1c2e19ee75e111d65c566b89d3d6dabbddf1"
+    },
+    {
+      "bytes": 13003,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/read-current-phase31.py",
+      "path": "normal31/read-current-phase31.py",
+      "sha256": "bfb8ccc5a1db75b6c6a337f9ec960a71e80d719f7382bebefc37350b3db11d73"
+    },
+    {
+      "bytes": 185047,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/fresh35-production-carrier.py",
+      "path": "normal31/restore/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "bytes": 34276,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/normal_service04.py",
+      "path": "normal31/restore/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    {
+      "bytes": 9403,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/normal_service04_proof.py",
+      "path": "normal31/restore/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    {
+      "bytes": 21656,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/ordinary05_roles.py",
+      "path": "normal31/restore/bundle/ordinary05_roles.py",
+      "sha256": "504ddfd7465223bd96241f3a7ab431d939d92dc0cb4a8faee7c7fac6a21b719c"
+    },
+    {
+      "bytes": 32453,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/ordinary05_roles_job.py",
+      "path": "normal31/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "9626666e8afc45a9579903def2ec5d425f5b19d2c217137b0fdae24fb86d21f1"
+    },
+    {
+      "bytes": 7554,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/prior_completed30.py",
+      "path": "normal31/restore/bundle/prior_completed30.py",
+      "sha256": "50b395d3af8e6796c2e66a447dc96f0e790efdc265c3c9fa2a058a6bdefa3ddd"
+    },
+    {
+      "bytes": 1834,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/restore/bundle/root04_material.py",
+      "path": "normal31/restore/bundle/root04_material.py",
+      "sha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+    },
+    {
+      "bytes": 5097,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/run_frozen_phase31.py",
+      "path": "normal31/run_frozen_phase31.py",
+      "sha256": "c7344ef8b901f6685b49509520fc5535118b053e6f6dcf55718f84db3d152ee4"
+    },
+    {
+      "bytes": 13594,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/batched161-run.mjs",
+      "path": "normal31/start/bundle/batched161-run.mjs",
+      "sha256": "872c732ac92afd6e9455115d684c0678178b6ad9c2f5bbf90d7f4e9366210cf2"
+    },
+    {
+      "bytes": 185047,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/fresh35-production-carrier.py",
+      "path": "normal31/start/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "bytes": 57079,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/normal_service05_after08.py",
+      "path": "normal31/start/bundle/normal_service05_after08.py",
+      "sha256": "98f30e6ceba4ac1671c51b9d25409d8fe5444056e18a40264b6c0953bafb4c0b"
+    },
+    {
+      "bytes": 18327,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/normal_service05_after08_proof.py",
+      "path": "normal31/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "c7e677d11a74d85867f0317f6e8b18a254de6283048defd41d5b1bb9acbaf8f7"
+    },
+    {
+      "bytes": 72238,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/operator-host.mjs",
+      "path": "normal31/start/bundle/operator-host.mjs",
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    {
+      "bytes": 48490,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/operator-manifest.json",
+      "path": "normal31/start/bundle/operator-manifest.json",
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    {
+      "bytes": 26499,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/operator-stream-import-cli.mjs",
+      "path": "normal31/start/bundle/operator-stream-import-cli.mjs",
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    {
+      "bytes": 10302,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/operator-stream-program.mjs",
+      "path": "normal31/start/bundle/operator-stream-program.mjs",
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    {
+      "bytes": 7554,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/prior_completed30.py",
+      "path": "normal31/start/bundle/prior_completed30.py",
+      "sha256": "50b395d3af8e6796c2e66a447dc96f0e790efdc265c3c9fa2a058a6bdefa3ddd"
+    },
+    {
+      "bytes": 747,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/production-plan.json",
+      "path": "normal31/start/bundle/production-plan.json",
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    {
+      "bytes": 7052,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/r3_05_cli.py",
+      "path": "normal31/start/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    {
+      "bytes": 21212,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/r3_05_readonly.py",
+      "path": "normal31/start/bundle/r3_05_readonly.py",
+      "sha256": "37c567e62477979518edaf72603cd5ac602c61f156d2f63ec560bde6ff008008"
+    },
+    {
+      "bytes": 9394,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/r3_05_runtime.py",
+      "path": "normal31/start/bundle/r3_05_runtime.py",
+      "sha256": "3979b266b72c8526c3c731990db6a1cd6dc054ff377942dca6e4a631356eb8ba"
+    },
+    {
+      "bytes": 1834,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/root04_material.py",
+      "path": "normal31/start/bundle/root04_material.py",
+      "sha256": "af6586b435cb76cbf31fcbc624b322aff2e1c5b0ae1f2eb198070c27be9b57df"
+    },
+    {
+      "bytes": 15078,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/start/bundle/start_owned_describe.py",
+      "path": "normal31/start/bundle/start_owned_describe.py",
+      "sha256": "a89503e0dc8b6dfbd23ff1f1e2a396c188085d9b614ac547c4e9e07b6a074cf4"
+    },
+    {
+      "bytes": 19581,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/stop/bundle/normal05_preserve_stop.py",
+      "path": "normal31/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "6721ff8876beaf6f9ded81b4737b1aff397dce19727972e7c172f2710d90027b"
+    },
+    {
+      "bytes": 20709,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/stop/bundle/normal05_retained_stop.py",
+      "path": "normal31/stop/bundle/normal05_retained_stop.py",
+      "sha256": "ca6cd5777caa6d598d1d1cb113dae2db28b756577c3c516bf391c5585275b372"
+    },
+    {
+      "bytes": 37233,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/batched_real_host.py",
+      "path": "normal31/writer/bundle/batched_real_host.py",
+      "sha256": "6b1b8fa7a83264040d64ae5095ab0b42e279ab170a9a363f0d78737499fb16f5"
+    },
+    {
+      "bytes": 187609,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/fresh35-production-carrier.py",
+      "path": "normal31/writer/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    {
+      "bytes": 27834,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/materialized-profile.json",
+      "path": "normal31/writer/bundle/materialized-profile.json",
+      "sha256": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904"
+    },
+    {
+      "bytes": 17738,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/nonroot_input_access.py",
+      "path": "normal31/writer/bundle/nonroot_input_access.py",
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    {
+      "bytes": 20709,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/normal05_retained_stop.py",
+      "path": "normal31/writer/bundle/normal05_retained_stop.py",
+      "sha256": "ca6cd5777caa6d598d1d1cb113dae2db28b756577c3c516bf391c5585275b372"
+    },
+    {
+      "bytes": 7098,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/r3_05_cli.py",
+      "path": "normal31/writer/bundle/r3_05_cli.py",
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    {
+      "bytes": 9394,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/r3_05_runtime.py",
+      "path": "normal31/writer/bundle/r3_05_runtime.py",
+      "sha256": "3979b266b72c8526c3c731990db6a1cd6dc054ff377942dca6e4a631356eb8ba"
+    },
+    {
+      "bytes": 20087,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CANDIDATE-01/writer/bundle/retained24-run.mjs",
+      "path": "normal31/writer/bundle/retained24-run.mjs",
+      "sha256": "073e01e1cbbd74c5b560d78c2511cd4d99bc00599cf0c46dc83ca9c96fa519cb"
+    },
+    {
+      "bytes": 5319,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/PINS.json",
+      "path": "normal31/PINS.json",
+      "sha256": "96c4a60704740b1e7555690f2f8428beda130ec6a6332943d5a41af1caca9949"
+    },
+    {
+      "bytes": 9888,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/READY31.json",
+      "path": "normal31-reports/READY31.json",
+      "sha256": "5e782752cff5f9082213d605bd8e411ba00f82d5835cd366c326fefa00a6ec21"
+    },
+    {
+      "bytes": 2011,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/REPORT31.md",
+      "path": "normal31-reports/REPORT31.md",
+      "sha256": "d51f14579eff856801bbc906590a47363b3ee4a92083d0d46314d0c994b574af"
+    },
+    {
+      "bytes": 6565,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CHECKS-LOCAL31.json",
+      "path": "normal31-reports/CHECKS-LOCAL31.json",
+      "sha256": "45b3b221c78b0dd221a07ca8ea03c4ecb2dc123ef766b6542d14e59b0f73537a"
+    },
+    {
+      "bytes": 1408,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/TRANSPORT31.json",
+      "path": "normal31-reports/TRANSPORT31.json",
+      "sha256": "25279c63a6f5d8ccb2f9461626cc887cbb7d41ae27f18083c78057c65b4f418d"
+    },
+    {
+      "bytes": 129721,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/DELTA-FROM-NORMAL30.patch",
+      "path": "normal31-reports/DELTA-FROM-NORMAL30.patch",
+      "sha256": "35ff4e1217dd415f1067e086d316d96bea5e529a86b039d5bce41a1aef6d119c"
+    },
+    {
+      "bytes": 4642,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal31-source-local-01/CLIENT-DELTA-FROM-ORIGINAL.patch",
+      "path": "normal31-reports/CLIENT-DELTA-FROM-ORIGINAL.patch",
+      "sha256": "c4dd73c3ff7c6cdab405270e8e660bfa48218829eed3add8c31af9807ef0ebf0"
+    },
+    {
+      "bytes": 2119,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/CHECKS-PAIR31.json",
+      "path": "adapter31/CHECKS-PAIR31.json",
+      "sha256": "771513b03d328a685e4c25a1b42986ac582a1f5685457e517d46fb3db9bb36f3"
+    },
+    {
+      "bytes": 10036,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/check-pair31.py",
+      "path": "adapter31/check-pair31.py",
+      "sha256": "355814ba817cfee3047463bb9b68a0971410417819d556f2104c507695537afc"
+    },
+    {
+      "bytes": 3416,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/read-registration31-original.patch",
+      "path": "adapter31/read-registration31-original.patch",
+      "sha256": "174eef8ecb6e0872a90894d2e2aca1f08b7eeeed2023f2b52ab1ed365cee0a59"
+    },
+    {
+      "bytes": 3249,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/read-registration31-original.py",
+      "path": "adapter31/read-registration31-original.py",
+      "sha256": "aabaea99f8e2a4edffbeef0805aa93a53aff8f84ba0090db73fefe48d110a847"
+    },
+    {
+      "bytes": 5512,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/register_issued31_once.patch",
+      "path": "adapter31/register_issued31_once.patch",
+      "sha256": "a13bdf91a33625e9052cab428daa1ba3bba0570550e29f7a32b29c6d8e1f933d"
+    },
+    {
+      "bytes": 6203,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/register_issued31_once.py",
+      "path": "adapter31/register_issued31_once.py",
+      "sha256": "839cce1be2fd52d99e81ebc3b33e4c938ee363388fe1c6b70b04f21310837029"
+    },
+    {
+      "bytes": 598,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/PINS.json",
+      "path": "adapter31/PINS.json",
+      "sha256": "081aeccfb9e435027a65a3be0811f7a72df66d18482939da108c225c150db541"
+    },
+    {
+      "bytes": 3725,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/READY.json",
+      "path": "adapter31/READY.json",
+      "sha256": "06958055f17616c44f6b1dee39de9f73c594f619faa81660a128f89d29f47ff9"
+    },
+    {
+      "bytes": 2198,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-adapter-local-01/REPORT.md",
+      "path": "adapter31/REPORT.md",
+      "sha256": "86488265d07171bac8967a16c8846e685cd257eb7b815ecba94742acd5638566"
+    },
+    {
+      "bytes": 20858,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/read-registration-basis31.patch",
+      "path": "basis31/read-registration-basis31.patch",
+      "sha256": "2d22d2c5404424aaaf9e895e8280c55822c7713e55ce49339a18be4845ef24ca"
+    },
+    {
+      "bytes": 19313,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/read-registration-basis31.py",
+      "path": "basis31/read-registration-basis31.py",
+      "sha256": "014a2db7ab2d95441529430138431f937925f582a0d9af8c3eb0a5b5e64defc3"
+    },
+    {
+      "bytes": 210,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/PINS.json",
+      "path": "basis31/PINS.json",
+      "sha256": "258e8b178f65358f4a6d5491ea267100f023c0721124ed5c6839e82794907df4"
+    },
+    {
+      "bytes": 3233,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-basis-local-01/READY.json",
+      "path": "basis31/READY.json",
+      "sha256": "588c3b77b9cead2efa2219b43225ec0c757b967aa544c4fd8a294d65c504cb81"
+    },
+    {
+      "bytes": 6250,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261116-normal31-source-pair-review-01/RESULT.json",
+      "path": "qb31/RESULT.json",
+      "sha256": "997e25a1301db7a14a8c1ed78164e7af85ca0c68936a81c0c2f8f725e95ba484"
+    },
+    {
+      "bytes": 937,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261116-normal31-source-pair-review-01/REPORT.md",
+      "path": "qb31/REPORT.md",
+      "sha256": "45b96f55019c53998c40d5a072b8274eff631b290e31484bcdf9066955d21858"
+    },
+    {
+      "bytes": 7737,
+      "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service30-registration-actual-01/RESULT30-CLOSED.json",
+      "path": "actual30/RESULT30-CLOSED.json",
+      "sha256": "698a2dfbe46c7770e529de3340c7197732f79f9a120baf6458488d208c2085f9"
+    }
+  ],
+  "state": "FROZEN_SOURCE31_02_AND_EXACT_QB_SOURCE_PASS_NO_RUNTIME_CLAIM"
+}

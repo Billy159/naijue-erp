@@ -1,0 +1,136 @@
+--- register_cas.py
++++ register_cas.py
+@@ -8,13 +8,13 @@
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-'+GRANT)
+ H=B/'r3-05-write-continuity'
+ LOCK=B.with_name('grant-5cc58239751e4e2a')/'execution.lock'
+-ENTRY=B/'r3-direct30-start-describe-registration-source-20261116-01/register_cas.py'
+-AUDIT=B/'r3-direct30-start-describe-registration-cas-20261116-01'
+-OLD_DISPATCHER = 'e15c47bb947a402f87de40e9972161b577df78611dd7a8f87019ad2f48ea54ed'
++ENTRY=B/'r3-direct31-start-describe-registration-source-20261116-01/register_cas.py'
++AUDIT=B/'r3-direct31-start-describe-registration-cas-20261116-01'
++OLD_DISPATCHER = '5b6c3c83d362bcfaaf064e6427702c3eb7af995b8b823574ba55114a7d090b5c'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+-HELPER = '95b2054ea4c7c95ebcfbe6c1fc1a1ab893c1255c8e52cd91424e5fd3c0dc28ed'
+-TEMPLATE = '6bb6374dec14c7b313d68bb2727f88002af747662e87adacfd4b643c1b367513'
+-JOBS = {'apply': 't45-r3-ordinary30-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root04-source-delta-20261116-01', 'restore': 't45-r3-ordinary30-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-30', 'stop': 't45-r3-ordinary30-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
++HELPER = '365a696b1ee113ce337e36c8159f6be28eccf3ce1e0a314ef61aeddaa76e93c9'
++TEMPLATE = '5638565aef3d79c80a96df8e4be7d2f03d49e795fbb371aa71d0a85efd998209'
++JOBS = {'apply': 't45-r3-ordinary31-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root04-source-delta-20261116-01', 'restore': 't45-r3-ordinary31-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-31', 'stop': 't45-r3-ordinary31-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ BASIS={
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original05_absent22_continuation.py'):'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/original05-absent22-continuation.json'):'27c9b661d7ade353bb42be2b23f104879462749c117779d971d3c4d5b9cd6282',
+@@ -36,7 +36,7 @@
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/original02-absent-continuation.json'):'74dea44d2b88283b1946aea35baee9c216dee6c2e2f1b19f440446e8390c377a',
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_failed19_readonly.py'):'4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/failed19-readonly-recovery.json'):'338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd',
+- Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py'):'e15c47bb947a402f87de40e9972161b577df78611dd7a8f87019ad2f48ea54ed',
++ Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py'):'5b6c3c83d362bcfaaf064e6427702c3eb7af995b8b823574ba55114a7d090b5c',
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_write_continuity.py'):'1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d',
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.before-r3-05-continuity.py'):'5bf72fc20dfa597c81a9eb5ae8956c497a980b1497e2cfbfe8d469932b27ad49',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/policy.json'):'25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757',
+@@ -125,12 +125,31 @@
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary29-auth-restore-20261116-01/results/maintenance-auth-cleanup.json'):'1d50af6619b16eae16013ad0063b26cb5705eec58b49e156fffefd1ba3015b21',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-29/results/normal-service-incomplete.json'):'70c903267ecca60c8b0de9e9dfb6a044d3060516690d30f3997e4c89bcb153ab',
+  Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-29/results/genuine-describe-process.json'):'719a1bcdeffacf67c8d2e24a37fa4226fa4925439bc16610934185a189d26935',
++ Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct30_batched.py'):'95b2054ea4c7c95ebcfbe6c1fc1a1ab893c1255c8e52cd91424e5fd3c0dc28ed',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct30-batched-real.json'):'fbb5bb55532d708103e0e70acd5512b8a77ab7538555938a30f179d2a3241b10',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct30-start-describe-registration-cas-20261116-01/old-dispatcher.bin'):'e15c47bb947a402f87de40e9972161b577df78611dd7a8f87019ad2f48ea54ed',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-batched-root04-source-delta-20261116-01/r3-outer-terminal.json'):'f9281d9e721000d0957da09fde525661ffb94005e3e82e809a39c35c9da85585',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-batched-root04-source-delta-20261116-01/results/batched-source-materialization.json'):'8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-auth-apply-20261116-01/r3-outer-terminal.json'):'2ef5d7101bf7b05d9b7d7d969c61571a265ca702c94e6e14dbd24d58cddc65ae',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-auth-apply-20261116-01/results/maintenance-auth-result.json'):'5aacd4b10b4c4c914fcfc00db9f6dc57c3a61751f60e60668609822b165afabf',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-auth-apply-20261116-01/results/maintenance-auth-cleanup.json'):'947170d2ba5da0c54931f3be2bd9a9ea55ffd2069aee0efacc9f86f600ec3d24',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-30/r3-outer-terminal.json'):'34d2f5e0f7cf2fabf8192a340eda31dac53e8ab16cda8cc14fe6acba33b93ed4',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-30/results/normal-service-result.json'):'bcb378acfa698c2bc8f7018bb713acc61318e66bf4f14bc2830cdec51790730d',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-preserve-stop-20261116-01/r3-outer-terminal.json'):'e52708fc14962a02d10906d25f9434268eb22ee4c36c754e75fc3b4bf70f2ddb',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-preserve-stop-20261116-01/results/normal05-preserve-stop-result.json'):'62ed7abefdb356fa4a7098d16f54f887191340949587a5406e51b4687007e5f3',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-auth-restore-20261116-01/r3-outer-terminal.json'):'762af3ad2ca11c0b6675b942d0f0f33b3d53dba39d8d8f2decea0312e5547213',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-auth-restore-20261116-01/results/maintenance-auth-result.json'):'fc22b1917a3ef1b67b259d8fb878416bb20f84dbb11cc26796233db19fa1039a',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary30-auth-restore-20261116-01/results/maintenance-auth-cleanup.json'):'8d72b0d314a7775a67acb3ec6f65cbe86aa65ef5323488206d9b1550a80db2d4',
++ Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-30.json'):'abf3b3251289ebb5f40218f51991c1a3bafea4854097543be175ed400d9ce06c',
++ Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-30/cleanup.json'):'9073bc7b9f1d013e8c74833d5e5aac5fb630df84c4c27c9fd4628d6dc47f8e9a',
++ Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root04-20261116-01/source-materialization.json'):'8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1',
++ Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-30/results/genuine-describe-process.json'):'8d57b0052484c4edff925f69d71da3c82c035152d559838214261db29c6ab165',
+ }
+-NEW_MODULE=P/'r3_direct30_batched.py';NEW_POLICY=H/'direct30-batched-real.json'
++NEW_MODULE=P/'r3_direct31_batched.py';NEW_POLICY=H/'direct31-batched-real.json'
+ FILES={'module','policy','dispatcherTemplate'}
+ LOCK_ID=[66304,12224849,0,0,420,1,0,1791828307183940015,1791828307183940015]
+ def need(v,c):
+- if not v:raise ValueError('DIRECT30_START_DESCRIBE_REGISTRATION_'+c)
++ if not v:raise ValueError('DIRECT31_START_DESCRIBE_REGISTRATION_'+c)
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def now():return time.time_ns()//1000000
+ def pack(v):return(json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode()
+@@ -150,7 +169,7 @@
+   need(f.write(raw)==len(raw),'SHORT_WRITE');f.flush();os.fchown(f.fileno(),0,0);os.fchmod(f.fileno(),mode);os.fsync(f.fileno())
+  sync(path.parent)
+ def scope():
+- return dict(format='T45_DIRECT30_START_DESCRIBE_REGISTRATION_CAS_V1',grantId=GRANT,
++ return dict(format='T45_DIRECT31_START_DESCRIBE_REGISTRATION_CAS_V1',grantId=GRANT,
+   oldDispatcherSha256=OLD_DISPATCHER,originalCoreSha256=CORE,newModuleSha256=HELPER,dispatcherTemplateSha256=TEMPLATE,
+   newModulePath=str(NEW_MODULE),newPolicyPath=str(NEW_POLICY),publishOrder=['module','policy','dispatcher'],
+   jobKeys=JOBS,sourceRegistrationOnly=True,businessDatabaseWrites=0,oldHistoryChanged=False)
+@@ -207,9 +226,15 @@
+  restored29=json.loads(raw29)['result'];need(restored29.get('exactOriginalVerifierAndExpiryVerifiedPrivately')is True and restored29.get('naturalExpiryCountedAsRestoration')is False,'ACTUAL_ORIGINAL_AUTH29_RESTORATION_REQUIRED')
+  for cid29 in ('8debce1e870690f3d27172d3f7a8161df3333b8f7016815a26f28efa9718c7b0','ff06e2310ac19dec78049c7b65b50aebb9a26237a9d5422eebbf42b3ddb3d4bb','6e8f8202a397ba735f8dc31d1e7d3016ef8836074d82c0ab70216761c39d3db3'):
+   q29=subprocess.run(['/usr/bin/docker','inspect','--format','{"running":{{json .State.Running}},"pid":{{json .State.Pid}}}',cid29],capture_output=True,timeout=5);need(q29.returncode==0 and not q29.stderr and json.loads(q29.stdout)=={'running':False,'pid':0},'PREVIOUS29_CONTAINER_ACTIVE_OR_UNKNOWN')
++ reused04='t45-r3-batched-root04-source-delta-20261116-01'
++ raw04=read(B/'jobs'/reused04/'r3-outer-terminal.json')[0];public04=read(C/'results'/(reused04+'.json'),1000)[0];mat04=json.loads(raw04)
++ need(sha(raw04)=='f9281d9e721000d0957da09fde525661ffb94005e3e82e809a39c35c9da85585' and raw04==public04 and mat04.get('jobId')==reused04 and mat04.get('status')=='COMPLETED' and mat04.get('exitCode')==0,'ACTUAL_COMPLETED04_TERMINAL_REQUIRED')
++ proof04=read(host/'state/installed-real-operation-batched-root04-20261116-01/source-materialization.json')[0];mat04=json.loads(proof04)
++ need(sha(proof04)=='8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1' and mat04.get('sourceSetSha256')=='ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663' and mat04.get('sourceRowsSha256')=='ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7' and mat04.get('sourceFiles')==382,'ACTUAL_COMPLETED04_PROOF_REQUIRED')
+  for grant in(GRANT,'5cc58239751e4e2a'):
+   control=C.with_name('grant-'+grant);worker=B.with_name('grant-'+grant)
+   for phase,key in JOBS.items():
++   if phase=='materialize' and grant==GRANT:continue
+    need(not any(os.path.lexists(p)for p in(control/'requests'/(key+'.json'),control/'requests'/(key+'.tmp'),control/'jobs'/key,control/'results'/(key+'.json'),worker/'jobs'/key)),'KEY_ALREADY_PRESENT_READ_ORIGINAL_ONLY')
+  q=subprocess.run(['/usr/bin/systemctl','list-units','--no-legend','--plain','--state=active,activating,deactivating','naijue-erp-op-b16447fb-*.service','naijue-erp-op-5cc58239-*.service'],capture_output=True,timeout=5);need(q.returncode==0 and not q.stdout.strip()and not q.stderr,'OPERATION_UNIT_ACTIVE_OR_UNKNOWN')
+ def load(raw,path,name):
+@@ -218,7 +243,7 @@
+  wrapper=load(raw,P/'admin_exec.py','original_absent20_wrapper')
+  _,prior=wrapper.r3_continuity(cfg)
+  need(prior.__class__.__name__=='Original02AbsentContinuation'
+-  and prior.policy_sha256=='faed7dec0ccd88d74745e47bbdca94bbb8a9095f550d8016945f38d76ead827e',
++  and prior.policy_sha256=='fbb5bb55532d708103e0e70acd5512b8a77ab7538555938a30f179d2a3241b10',
+   'EXACT_EXISTING_ABSENT21_WRAPPER_REQUIRED')
+  readonly=prior.readonly
+  need(readonly.__class__.__name__=='ReadOnlyRecovery'
+@@ -238,7 +263,7 @@
+ 
+ def validate_policy_delta(policy, previous):
+  need(set(policy)=={'format','grantId','startsAt','expiresAt','jobs'}
+-  and policy['format']=='T45_R3_DIRECT30_BATCHED_REAL_V1'
++  and policy['format']=='T45_R3_DIRECT31_BATCHED_REAL_V1'
+   and policy['grantId']==previous['grantId']==GRANT
+   and type(policy['startsAt']) is type(policy['expiresAt']) is int
+   and 0 < policy['startsAt'] < policy['expiresAt'] <= policy['startsAt']+7200000
+@@ -288,7 +313,7 @@
+   dispatcher=render_dispatcher(files)
+   need(now()+30000<a['expiresAt'],'REGISTRATION_WINDOW_TOO_SHORT')
+   AUDIT.mkdir(mode=0o700);sync(AUDIT.parent)
+-  put(AUDIT/'authorization.json',authority);put(AUDIT/'old-dispatcher.bin',old[P/'admin_exec.py'][0]);put(AUDIT/'old-policy.bin',old[H/'direct29-batched-real.json'][0]);put(AUDIT/'old-identities.json',pack(a['oldIdentities']))
++  put(AUDIT/'authorization.json',authority);put(AUDIT/'old-dispatcher.bin',old[P/'admin_exec.py'][0]);put(AUDIT/'old-policy.bin',old[H/'direct30-batched-real.json'][0]);put(AUDIT/'old-identities.json',pack(a['oldIdentities']))
+   result={'status':'REGISTRATION_UNKNOWN_READ_ORIGINAL_AUDIT_ONLY','published':[],'businessDatabaseWrites':0,'automaticReplay':False};pending=P/'.direct27-fullchain-dispatcher.pending'
+   try:
+    put(NEW_MODULE,files['module'],0o644);result['published'].append('module')
+@@ -305,10 +330,10 @@
+    need(read(P/'admin_exec.py')[0]==dispatcher,'PUBLISHED_DISPATCHER_READBACK_DIFFERS')
+    snapshot(a,sha(dispatcher));quiet_unused();installed_wrapper(read(P/'admin_exec.py')[0],cfg)
+    need(identity(os.fstat(lock.fileno()))==LOCK_ID,'ORIGINAL_LOCK_CHANGED_AFTER_PUBLICATION')
+-   result.update(status='EXACT_DIRECT30_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED',
++   result.update(status='EXACT_DIRECT31_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED',
+     moduleSha256=HELPER,policySha256=sha(files['policy']),dispatcherSha256=sha(dispatcher),oldHistoryPreserved=True,originalLockPreserved=True,phaseSubmitted=False,rolesExecuted=False,postgresStarted=False)
+   except BaseException as error:
+-   result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT30_START_DESCRIBE_REGISTRATION_[A-Z0-9_]+',str(error))else None)
++   result.update(exceptionClass=type(error).__name__,safeCode=str(error)if isinstance(error,ValueError)and re.fullmatch('DIRECT31_START_DESCRIBE_REGISTRATION_[A-Z0-9_]+',str(error))else None)
+    try:result['observedDispatcherSha256']=sha(read(P/'admin_exec.py')[0])
+    except Exception:result['observedDispatcherSha256']=None
+   put(AUDIT/'result.json',pack(result));return result
+@@ -318,4 +343,4 @@
+   and re.fullmatch('[a-f0-9]{64}',sys.argv[1]),'FIXED_ROOT_ENTRY_REQUIRED')
+  os.umask(0o077);packet=sys.stdin.buffer.read(16*1024**2+1);need(len(packet)<=16*1024**2,'BOUNDED_PACKET_REQUIRED')
+  a,files,authority=decode(json.loads(packet),sys.argv[1]);result=register(a,files,authority)
+- print(json.dumps(result,sort_keys=True));raise SystemExit(0 if result['status']=='EXACT_DIRECT30_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)
++ print(json.dumps(result,sort_keys=True));raise SystemExit(0 if result['status']=='EXACT_DIRECT31_START_DESCRIBE_REGISTERED_NO_NEW_PHASE_SUBMITTED'else 2)

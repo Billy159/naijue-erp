@@ -1,0 +1,11 @@
+--- register_cas.py
++++ register_cas.py
+@@ -13,7 +13,7 @@
+ OLD_DISPATCHER = '5b6c3c83d362bcfaaf064e6427702c3eb7af995b8b823574ba55114a7d090b5c'
+ CORE='1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'
+ HELPER = '365a696b1ee113ce337e36c8159f6be28eccf3ce1e0a314ef61aeddaa76e93c9'
+-TEMPLATE = '5638565aef3d79c80a96df8e4be7d2f03d49e795fbb371aa71d0a85efd998209'
++TEMPLATE = '857e267421cd728f87544619842f2aa059e60dd1f3bbbc6346bb501b115087d2'
+ JOBS = {'apply': 't45-r3-ordinary31-auth-apply-20261116-01', 'install': 't45-r3-batched-install-20261115-01', 'materialize': 't45-r3-batched-root04-source-delta-20261116-01', 'restore': 't45-r3-ordinary31-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-31', 'stop': 't45-r3-ordinary31-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ BASIS={
+  Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original05_absent22_continuation.py'):'16e54ec54cf945c086e547050fa7893e856b05e217f3b0b6feb650797e56e4fa',

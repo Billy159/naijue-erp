@@ -1,0 +1,66 @@
+{
+  "actualGenuineProgram30Sha256": "b35eaed0a68e23292b23c2b2cec6544caff5314843ce0bc8dbe4ad544c9a4abe",
+  "actualStart30ReadbackSha256": "102bb03b1ccb533601c088d2bfea7c58a6c748043cec1a7bf9e4fa957d12d56e",
+  "businessKeys": {
+    "classes": 26,
+    "initializerPreserved": true,
+    "install": "t45-r3-batched-install-20261115-01",
+    "manifest": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+    "rows": 511234,
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "clientFix": {
+    "allOtherSensitiveFiltersAndWrongHashJobNameStillBlocked": true,
+    "allowOnlyActualFrozenFuture31SourceSha256": "TO_BE_FROZEN_FROM_NONSECRET31_SOURCE_NOT_GENERIC_HASH_ARGUMENT",
+    "allowOnlyBasename": "private_transport.py",
+    "allowOnlyJob": "t45-r3-batched-install-20261115-01",
+    "allowOnlyTask": "T45",
+    "keepOriginalClientAndStateUnchanged": true,
+    "networkFreeCanonicalManifestMustEqualEveryActualFrozenPhaseBeforeFreshClock": true,
+    "newRealSameParentForkMaintainsHereStateProjectAndPrivateKeyContext": true,
+    "noMonkeypatchOrSpoofedFileName": true,
+    "noRewriteForAllowedSource": true
+  },
+  "current30PrivateTransportBytes": 12283,
+  "current30PrivateTransportSha256": "57c0615c21db1100b2e457fd4442752c0d38c9706d6eba15c3a07567326ec6e5",
+  "generation": 31,
+  "limitsUnchanged": [
+    "65536 module source limit",
+    "780 install",
+    "3000writer",
+    "strict900signing",
+    "4320fullchain",
+    "start300",
+    "early190/cleanup110/entry170/child150",
+    "role90-92-115-120",
+    "28GiB disk reserve"
+  ],
+  "model": "gpt-6.1-sol",
+  "noOriginalDescriptorRefreshOrBudgetReduction": true,
+  "noServerMutationOrClockByThisTask": true,
+  "oldSourceAndDatabaseBackupsPreserved": true,
+  "originalClientSha256": "54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6",
+  "owners": {
+    "QB": "existing independent review chat",
+    "T45": "sole server and T45 source/transport implementation owner",
+    "main": "current controller"
+  },
+  "rootCause": "Original client54019 submit filename filter drops required nonsecret installer source private_transport.py before submission; actual install key remains unsubmitted and original20min descriptor no longer has full780s admission budget",
+  "sourceReuse": {
+    "actualMaterializationReadbackSha256": "d951bfac51d0074c379eb1e899635cdda9029d0179aff02bd9461001f356df5c",
+    "actualMaterializationReceiptSha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+    "baseSourceSetSha256": "cc66e37d81bebf11b6325ccaf1ddcf72d829ab51d1b4c59b97246a1adc850c41",
+    "current31BootstrapCallerWillHaveOwnReviewedHash": true,
+    "materializationAlreadyCompleted": true,
+    "materializationKey": "t45-r3-batched-root04-source-delta-20261116-01",
+    "materializeNeverResubmit": true,
+    "noNewMaterializationKeyOrDirectory": true,
+    "preserveHistoricalMaterial04Caller30Hash": "3b8705430999882268d8cfd8044c0b79d16e218031e170956b5d6b11997abb6e",
+    "sourceFiles": 382,
+    "sourceRowsSha256": "ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7",
+    "sourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663"
+  },
+  "state": "LOCAL_PREPARATION_ONLY_WAIT_ACTUAL30_STOP_AND_AUTH_RESTORE_NO_NEW_CLOCK",
+  "thinking": "high",
+  "wholeNormalChainReviewBeforeClockRequired": true
+}
