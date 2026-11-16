@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T06:40:47.964000+08:00",
-  "state": "NORMAL37_CONSUMER_SOURCE_PASS_ROOT_EXACT_PAIRING_PENDING_NO_CLOCK_AUTHORITY_OR_RUNTIME",
+  "asOf": "2026-11-17T07:09:55.277583+08:00",
+  "state": "NORMAL37_REGISTRATION_AND_APPLY_ACTUALLY_COMPLETE_START_AUTHORITY_ISSUED_ACTUAL_RESULT_PENDING",
   "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
   "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
   "phaseRulesSha256": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
@@ -12,14 +12,14 @@
   "reusedRuntimeFiles": 22,
   "currentLoadBindings": 42,
   "inlineBindings": 7,
-  "PGCurrentlyStopped": true,
-  "originalAuthRestored": true,
+  "PGCurrentlyStopped": "LAST_ACTUAL_APPLY37_STOPPED_START37_RESULT_PENDING",
+  "originalAuthRestored": false,
   "writerSubmitted": false,
   "businessWrites": 0,
   "finiteAuthorityIssued": false,
   "newServiceStarted": false,
   "fullRehearsal": false,
-  "next": "D1 freezes exact root37 source using currentdb9c/3dd/helper9b and true36 safe closure, consumerd63d/QB9fd and Main sourcecontinuatione65; QB reviews changed glue only. Then sole T45 fresh actual stopped basis and Main finite issuance. PG stopped/original auth restored; writerNEVERsubmitted/business0.",
+  "next": "Sole T45 START37 once using eef82 and actual registryca068b/6f3258/45b0. Require actual terminal/stored descriptor/livefacts/proof/ACK, then actual5-key prepare03 context. Main prepare03 issuance from actual install32+context only; original writer never submitted/business0.",
   "copies": [
     {
       "path": "consumer37-source-pass/SOURCE-PINS.json",
@@ -310,10 +310,239 @@
       "path": "main/SOURCE-CONTINUATION-DECISION.json",
       "sha256": "e65a97ede2b12d55e37368154e2731a21e02d200adf14cf2132e82bb488c36e8",
       "bytes": 1775
+    },
+    {
+      "path": "root01-source-rejected/SOURCE-PINS.json",
+      "sha256": "673cd9f512fcea18250301f1d275427456a717fff4142c2096b2d8b4142338bb",
+      "bytes": 3042
+    },
+    {
+      "path": "root01-source-rejected/EXISTING-PATH-MAP.json",
+      "sha256": "a8d82e43eb983e5303e8deb6df38f25fe4f820a751e696e7a99f1555716de123",
+      "bytes": 61856
+    },
+    {
+      "path": "root01-source-rejected/EXISTING36-INPUTS.json",
+      "sha256": "fc084f4e0983c3ef555ca408b192903b67a780df578e44f2dc5d6f5c8d8f18ec",
+      "bytes": 72770
+    },
+    {
+      "path": "root01-source-rejected/HANDOFF.md",
+      "sha256": "0073300ceb03ebc3e768a35164eec885fd95f9cbb41aa335cee1ba93086337c6",
+      "bytes": 4110
+    },
+    {
+      "path": "root01-source-rejected/LOCAL-CHECKS.json",
+      "sha256": "994b73731116aae7824ab41b76724ef6ed877865aeaf68984c695c0bccfb2d88",
+      "bytes": 1168
+    },
+    {
+      "path": "root01-source-rejected/admin_exec.NORMAL37-UNREGISTERED.py",
+      "sha256": "80357990fc33e0e7be771009cf35079c777d5f6a81ef892a2ac42219bff5b8dd",
+      "bytes": 45335
+    },
+    {
+      "path": "root01-source-rejected/check_real_prefix.py",
+      "sha256": "cd0463933d6ebff544d40410dccb519d63c02e9d8c951687d7ea4c1f41f6673a",
+      "bytes": 10425
+    },
+    {
+      "path": "root01-source-rejected/identity_pair.py",
+      "sha256": "844dc2a45a55e0cb4800b366f6be0594ac6e753bd8c88164c0e15db2b60e1ea0",
+      "bytes": 1347
+    },
+    {
+      "path": "root01-source-rejected/issue_phase.py",
+      "sha256": "1b9c90bd21483fe9f3aeb7e9924b62fd0dcbe28888846de4baafe0aaee059c15",
+      "bytes": 40379
+    },
+    {
+      "path": "root01-source-rejected/issue_registration.py",
+      "sha256": "c8abe5c120e3fe131ecd6137e02363b5a8cc3842a832e85caddd4877ad55e097",
+      "bytes": 11942
+    },
+    {
+      "path": "root01-source-rejected/issuer_aux_pair.py",
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658",
+      "bytes": 2406
+    },
+    {
+      "path": "root01-source-rejected/original-cas-normal37-carrier.UNISSUED.py",
+      "sha256": "62cea801b3253810f59ac2f12e6cee163f7c385edf5990ebfe49e7d2d10ac35a",
+      "bytes": 2584
+    },
+    {
+      "path": "root01-source-rejected/r3_direct37_aux_prepare.py",
+      "sha256": "45b0df4a0f1d9f9aa2ecd3480865d95f8c7365e364e5c5e0030272d8d3b45975",
+      "bytes": 130174
+    },
+    {
+      "path": "root01-source-rejected/read_registration_basis.py",
+      "sha256": "5f646ed5570b6287757420d79b3678a5328bb7323dc37427e47f055ede3134b1",
+      "bytes": 1996
+    },
+    {
+      "path": "root01-source-rejected/register_cas.py",
+      "sha256": "9a8760e2ed58a62c00a5780377fd78e408ecb6eb9b55eb887705136882468f3c",
+      "bytes": 130680
+    },
+    {
+      "path": "root02-source-pass/SOURCE-PINS.json",
+      "sha256": "8acba98199336c54acf3830db9107d50e6a059e1646e0f27500c42959ad405e9",
+      "bytes": 3356
+    },
+    {
+      "path": "root02-source-pass/EXISTING-PATH-MAP.json",
+      "sha256": "a8d82e43eb983e5303e8deb6df38f25fe4f820a751e696e7a99f1555716de123",
+      "bytes": 61856
+    },
+    {
+      "path": "root02-source-pass/EXISTING36-INPUTS.json",
+      "sha256": "fc084f4e0983c3ef555ca408b192903b67a780df578e44f2dc5d6f5c8d8f18ec",
+      "bytes": 72770
+    },
+    {
+      "path": "root02-source-pass/FIX-DIFF.patch",
+      "sha256": "c9c7bcce04792d77cb82a843093e46d40fea0db7a6d15efaba3960c4ec7f43ab",
+      "bytes": 69203
+    },
+    {
+      "path": "root02-source-pass/HANDOFF.md",
+      "sha256": "3a2b5da8db2d22ac09c489592e45d6356e972a4f8675b5254c4d3cd4f2e43df3",
+      "bytes": 5029
+    },
+    {
+      "path": "root02-source-pass/LOCAL-CHECKS.json",
+      "sha256": "4f9b6cfca0e9504aa94e061db401cb5a9760a287a04481ec8ad6390f9ad303d8",
+      "bytes": 2616
+    },
+    {
+      "path": "root02-source-pass/admin_exec.NORMAL37-UNREGISTERED.py",
+      "sha256": "a5c2b49b1ffcfcd4fb0d1a0d7b33d1307021cbc1404a1a7d2611632d247460ad",
+      "bytes": 45564
+    },
+    {
+      "path": "root02-source-pass/check_real_prefix.py",
+      "sha256": "05d853f0471146953cdb79a751a43ec89b7472befb5acd7c1e44e65563f95549",
+      "bytes": 11486
+    },
+    {
+      "path": "root02-source-pass/identity_pair.py",
+      "sha256": "844dc2a45a55e0cb4800b366f6be0594ac6e753bd8c88164c0e15db2b60e1ea0",
+      "bytes": 1347
+    },
+    {
+      "path": "root02-source-pass/issue_phase.py",
+      "sha256": "1b9c90bd21483fe9f3aeb7e9924b62fd0dcbe28888846de4baafe0aaee059c15",
+      "bytes": 40379
+    },
+    {
+      "path": "root02-source-pass/issue_registration.py",
+      "sha256": "c8abe5c120e3fe131ecd6137e02363b5a8cc3842a832e85caddd4877ad55e097",
+      "bytes": 11942
+    },
+    {
+      "path": "root02-source-pass/issuer_aux_pair.py",
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658",
+      "bytes": 2406
+    },
+    {
+      "path": "root02-source-pass/original-cas-normal37-carrier.UNISSUED.py",
+      "sha256": "b0e57110789bb1707282c32efc484d92464caebddc97c3cb4133ca5a9392d6f1",
+      "bytes": 2584
+    },
+    {
+      "path": "root02-source-pass/r3_direct37_aux_prepare.py",
+      "sha256": "45b0df4a0f1d9f9aa2ecd3480865d95f8c7365e364e5c5e0030272d8d3b45975",
+      "bytes": 130174
+    },
+    {
+      "path": "root02-source-pass/read_registration_basis.py",
+      "sha256": "5f646ed5570b6287757420d79b3678a5328bb7323dc37427e47f055ede3134b1",
+      "bytes": 1996
+    },
+    {
+      "path": "root02-source-pass/register_cas.py",
+      "sha256": "84996a1834ecb542411f00ecb2718822212aa8f9a66c0dc079ea2f102def8611",
+      "bytes": 130680
+    },
+    {
+      "path": "reviews/ROOT01-NEEDFIX-RESULT.json",
+      "sha256": "6ec10f5fa5a3800a526514be79a697ccdcfd116895dc1944e0c7dae36bf77aa1",
+      "bytes": 6033
+    },
+    {
+      "path": "reviews/ROOT02-PASS-RESULT.json",
+      "sha256": "6cf82b11b3caeaebf355bf4e4d121071cd2b03a3818f97fe60ebe2c88b641f0e",
+      "bytes": 6758
+    },
+    {
+      "path": "actual/FRESH-BASIS02.json",
+      "sha256": "517c8da27d5016950f906983133f96d0141b044fbef1c7f5a36bd7411d8e5804",
+      "bytes": 127715
+    },
+    {
+      "path": "actual/REGISTRATION37-READBACK.json",
+      "sha256": "6e295dcf7d4e59e7ca22b82f3983f96405765cd2a5c5f6c95ee9f3c8ba3326f3",
+      "bytes": 1701
+    },
+    {
+      "path": "actual/ACTUAL-APPLY37-RESULT.json",
+      "sha256": "ab0d963836090c6662ad2da397a4cfc378dc6ff509095b20982ddc2052f2fa2e",
+      "bytes": 4794
+    },
+    {
+      "path": "issued-safe-metadata/REGISTRATION-ISSUED-METADATA.json",
+      "sha256": "2a45d18425d271827e1297f5857af4e1781b263c6edb3280eb611a4e6828760c",
+      "bytes": 1910
+    },
+    {
+      "path": "issued-safe-metadata/START-ISSUED-METADATA.json",
+      "sha256": "d62b9379719ec5bffd9dd259ab5a6ee551a6d4d6750751c5eb3a714f566210c0",
+      "bytes": 412
     }
   ],
   "referenceOnlyUnissuedJSON": {
     "PHASES37.UNISSUED.json": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
     "INTERFACE.UNISSUED.json": "2cc567338e19f69c69f486f490cf6444d9a5553a1231912c9b815b5ff5b7bdab"
-  }
+  },
+  "rootSourcePinsSha256": "8acba98199336c54acf3830db9107d50e6a059e1646e0f27500c42959ad405e9",
+  "rootReviewSha256": "6cf82b11b3caeaebf355bf4e4d121071cd2b03a3818f97fe60ebe2c88b641f0e",
+  "rootRulesSha256": "3aff9c7d69c8ddb5f01810339e4e2b95365aa943d309866dbe48d3bcb0bcd089",
+  "actualFreshBasisSha256": "517c8da27d5016950f906983133f96d0141b044fbef1c7f5a36bd7411d8e5804",
+  "actualRegistrationSha256": "6e295dcf7d4e59e7ca22b82f3983f96405765cd2a5c5f6c95ee9f3c8ba3326f3",
+  "actualApplySha256": "ab0d963836090c6662ad2da397a4cfc378dc6ff509095b20982ddc2052f2fa2e",
+  "newFiniteRegistration": {
+    "applyHostSha256": "2348e8367693f8345e9fb6952711b4d8161a83ddf440ed1f63408e99cfe5879c",
+    "backupAdminValidUntil": 1794877499153,
+    "basisSha256": "517c8da27d5016950f906983133f96d0141b044fbef1c7f5a36bd7411d8e5804",
+    "carrierSha256": "0fe5be2daa4f441fd0bae6893085504ae698e57ae770f03ce481cb8496c4ff06",
+    "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
+    "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+    "controllerValidUntil": 1794877379153,
+    "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal37-registration-window-01",
+    "dispatcherSha256": "6f32585ee20edcb0ac9019be4ba9907faad4d637268dea84f1db6cdf747204dd",
+    "independentReviewSha256": "6cf82b11b3caeaebf355bf4e4d121071cd2b03a3818f97fe60ebe2c88b641f0e",
+    "jobs": {
+      "apply": "t45-r3-ordinary37-auth-apply-20261116-01",
+      "prepare": "t45-r3-final33-plan-prepare-20261116-03",
+      "restore": "t45-r3-ordinary37-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-37",
+      "stop": "t45-r3-ordinary37-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false,
+    "policyExpiresAt": 1794880979153,
+    "policySha256": "ca068bb3151ae4c1c090e7867201ce0b4501ac4cf29a51a8db4d045339806523",
+    "registrationExpiresAt": 1794871079153,
+    "registrationSha256": "fbceb99a8758905ee823066e866f364b169b79c1823066749d4762ed6acaafd6",
+    "restorationDeadline": 1794879179153,
+    "roleApplyExpiresAt": 1794871979153,
+    "rolesSha256": "60b580ea352d16ad39ce76047a7238a4a0606ea8fb506e16ed3183e4325462ff",
+    "rulesSha256": "3aff9c7d69c8ddb5f01810339e4e2b95365aa943d309866dbe48d3bcb0bcd089",
+    "startsAt": 1794870179153,
+    "state": "ISSUED_NORMAL37_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
+  },
+  "newRolesApplied": true,
+  "startAuthoritySha256": "eef82e589c9b811ab48658a3f12e9292a7e8e56c779ef17e4734b77e17e5dba2"
 }

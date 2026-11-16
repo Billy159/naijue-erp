@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T06:40:47.964000+08:00",
+  "updatedAt": "2026-11-17T07:09:55.277583+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "D1 freezes exact root37 source using currentdb9c/3dd/helper9b and true36 safe closure, consumerd63d/QB9fd and Main sourcecontinuatione65; QB reviews changed glue only. Then sole T45 fresh actual stopped basis and Main finite issuance. PG stopped/original auth restored; writerNEVERsubmitted/business0.",
+  "next": "Sole T45 START37 once using eef82 and actual registryca068b/6f3258/45b0. Require actual terminal/stored descriptor/livefacts/proof/ACK, then actual5-key prepare03 context. Main prepare03 issuance from actual install32+context only; original writer never submitted/business0.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T06:40:47.964000+08:00",
+  "asOf": "2026-11-17T07:09:55.277583+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "D1 freezes exact root37 source using currentdb9c/3dd/helper9b and true36 safe closure, consumerd63d/QB9fd and Main sourcecontinuatione65; QB reviews changed glue only. Then sole T45 fresh actual stopped basis and Main finite issuance. PG stopped/original auth restored; writerNEVERsubmitted/business0.",
+  "next": "Sole T45 START37 once using eef82 and actual registryca068b/6f3258/45b0. Require actual terminal/stored descriptor/livefacts/proof/ACK, then actual5-key prepare03 context. Main prepare03 issuance from actual install32+context only; original writer never submitted/business0.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,15 +52789,15 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": false,
+  "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": true,
+  "PGCurrentlyStopped": "LAST_ACTUAL_APPLY37_STOPPED_START37_RESULT_PENDING",
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": true,
+  "originalAuthRestored": false,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53154,7 +53154,7 @@
   },
   "writerSubmitted": false,
   "businessWrites": 0,
-  "normal37": "NORMAL37_CONSUMER_SOURCE_PASS_ROOT_EXACT_PAIRING_PENDING_NO_CLOCK_AUTHORITY_OR_RUNTIME",
+  "normal37": "NORMAL37_REGISTRATION_AND_APPLY_ACTUALLY_COMPLETE_START_AUTHORITY_ISSUED_ACTUAL_RESULT_PENDING",
   "normal37ConsumerSource": {
     "sourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
     "reviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
@@ -53162,6 +53162,56 @@
     "interfaceSha256": "2cc567338e19f69c69f486f490cf6444d9a5553a1231912c9b815b5ff5b7bdab",
     "continuationDecisionSha256": "e65a97ede2b12d55e37368154e2731a21e02d200adf14cf2132e82bb488c36e8",
     "state": "SOURCE_PASS_ONLY"
+  },
+  "normal37Root": {
+    "sourcePinsSha256": "8acba98199336c54acf3830db9107d50e6a059e1646e0f27500c42959ad405e9",
+    "reviewSha256": "6cf82b11b3caeaebf355bf4e4d121071cd2b03a3818f97fe60ebe2c88b641f0e",
+    "rulesSha256": "3aff9c7d69c8ddb5f01810339e4e2b95365aa943d309866dbe48d3bcb0bcd089",
+    "state": "SOURCE02_PASS_R01_ONLY_CLOSED"
+  },
+  "normal37Registration": {
+    "issued": {
+      "applyHostSha256": "2348e8367693f8345e9fb6952711b4d8161a83ddf440ed1f63408e99cfe5879c",
+      "backupAdminValidUntil": 1794877499153,
+      "basisSha256": "517c8da27d5016950f906983133f96d0141b044fbef1c7f5a36bd7411d8e5804",
+      "carrierSha256": "0fe5be2daa4f441fd0bae6893085504ae698e57ae770f03ce481cb8496c4ff06",
+      "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
+      "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+      "controllerValidUntil": 1794877379153,
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal37-registration-window-01",
+      "dispatcherSha256": "6f32585ee20edcb0ac9019be4ba9907faad4d637268dea84f1db6cdf747204dd",
+      "independentReviewSha256": "6cf82b11b3caeaebf355bf4e4d121071cd2b03a3818f97fe60ebe2c88b641f0e",
+      "jobs": {
+        "apply": "t45-r3-ordinary37-auth-apply-20261116-01",
+        "prepare": "t45-r3-final33-plan-prepare-20261116-03",
+        "restore": "t45-r3-ordinary37-auth-restore-20261116-01",
+        "start": "t45-first-r3-native-service-start-20261116-37",
+        "stop": "t45-r3-ordinary37-preserve-stop-20261116-01",
+        "writer": "t45-r3-batched-real-execute-20261115-01"
+      },
+      "phaseSubmitted": false,
+      "policyExpiresAt": 1794880979153,
+      "policySha256": "ca068bb3151ae4c1c090e7867201ce0b4501ac4cf29a51a8db4d045339806523",
+      "registrationExpiresAt": 1794871079153,
+      "registrationSha256": "fbceb99a8758905ee823066e866f364b169b79c1823066749d4762ed6acaafd6",
+      "restorationDeadline": 1794879179153,
+      "roleApplyExpiresAt": 1794871979153,
+      "rolesSha256": "60b580ea352d16ad39ce76047a7238a4a0606ea8fb506e16ed3183e4325462ff",
+      "rulesSha256": "3aff9c7d69c8ddb5f01810339e4e2b95365aa943d309866dbe48d3bcb0bcd089",
+      "startsAt": 1794870179153,
+      "state": "ISSUED_NORMAL37_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
+    },
+    "actualReadbackSha256": "6e295dcf7d4e59e7ca22b82f3983f96405765cd2a5c5f6c95ee9f3c8ba3326f3",
+    "state": "ACTUAL_SUCCESS"
+  },
+  "normal37Apply": {
+    "actualReadbackSha256": "ab0d963836090c6662ad2da397a4cfc378dc6ff509095b20982ddc2052f2fa2e",
+    "state": "ACTUAL_COMPLETED",
+    "roleAuthoritySha256": "60b580ea352d16ad39ce76047a7238a4a0606ea8fb506e16ed3183e4325462ff"
+  },
+  "normal37Start": {
+    "authoritySha256": "eef82e589c9b811ab48658a3f12e9292a7e8e56c779ef17e4734b77e17e5dba2",
+    "state": "AUTHORIZED_ACTUAL_RESULT_PENDING"
   }
 }
 }

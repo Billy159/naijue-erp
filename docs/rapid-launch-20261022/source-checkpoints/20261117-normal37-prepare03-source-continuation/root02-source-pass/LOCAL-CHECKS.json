@@ -1,0 +1,53 @@
+{
+  "PGConnections": 0,
+  "activePolicyRuleCount": 6,
+  "added36HistoryPathsReconstructedFromActualReceipts": 35,
+  "affectedThreePythonSourcesCompile": true,
+  "allDispatcherAndCASFunctionASTUnchanged": true,
+  "allExistingPinnedPathsAndFutureMustAbsentNamespacesDisjoint": true,
+  "checksReusedWithoutReexecution": [
+    "real consumer9fd/6-field rules/e65 pure prefix",
+    "289 actual existing path reconstruction/future namespaces disjoint",
+    "16 private stat-only path declarations",
+    "helper130174 cap and mapping",
+    "original CAS function/lock/UNKNOWN/window structure"
+  ],
+  "clockCalls": 0,
+  "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
+  "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+  "current36RestoredReceiptActualSha256": "60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d",
+  "currentSixJobsFullyCovered": true,
+  "existingPinnedPathCount": 289,
+  "future37RestoredReceiptOrAuthorityExistingPins": false,
+  "helperBytes": 130174,
+  "historical254NamesAndPinsPreservedExceptCurrentDispatcher": true,
+  "historical65bPreservedAndRealContinuationE65Consumed": true,
+  "historicalDispatcherKeysPrefixPreserved": true,
+  "historicalReadOnlyJobLookupsRetained": 3,
+  "issuerOrReaderOrCASOrNativeInvoked": false,
+  "newDispatcherKeys": [
+    "t45-r3-ordinary37-auth-apply-20261116-01",
+    "t45-first-r3-native-service-start-20261116-37",
+    "t45-r3-final33-plan-prepare-20261116-03",
+    "t45-r3-ordinary37-preserve-stop-20261116-01",
+    "t45-r3-ordinary37-auth-restore-20261116-01"
+  ],
+  "onlyChangedRuntimeTopLevelAssignments": {
+    "admin_exec.NORMAL37-UNREGISTERED.py": "R3_ORIGINAL02_ABSENT_KEYS",
+    "original-cas-normal37-carrier.UNISSUED.py": "SOURCE",
+    "register_cas.py": "TEMPLATE"
+  },
+  "parentKeyCount": 91,
+  "parentRootReviewSha256": "6ec10f5fa5a3800a526514be79a697ccdcfd116895dc1944e0c7dae36bf77aa1",
+  "parentSourcePinsSha256": "673cd9f512fcea18250301f1d275427456a717fff4142c2096b2d8b4142338bb",
+  "phaseStartedFalseGuardCovered": true,
+  "phaseStartedTrueGuardCovered": true,
+  "pinnedFutureNamespaceCollisions": [],
+  "privateSnapshotMetadataOnlyFiles": 16,
+  "protectedPreChildRefusalTerminalGuardCovered": true,
+  "realRunpyNativeLogical01Outer03Mapping": true,
+  "reusedParentLocalChecksSha256": "994b73731116aae7824ab41b76724ef6ed877865aeaf68984c695c0bccfb2d88",
+  "serverActions": 0,
+  "state": "PASS_INCREMENTAL_N37_R01_FIVE_DISPATCHER_KEYS_AND_DERIVED_BINDINGS_ONLY",
+  "syntheticFullCompileOrFutureAuthorityTargetCapabilityFixtureCreated": false
+}

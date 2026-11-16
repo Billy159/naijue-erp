@@ -1,0 +1,23 @@
+{
+  "PGConnections": 0,
+  "activePolicyRuleCount": 6,
+  "added36HistoryPathsReconstructedFromActualReceipts": 35,
+  "allExistingPinnedPathsAndFutureMustAbsentNamespacesDisjoint": true,
+  "clockCalls": 0,
+  "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
+  "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+  "current36RestoredReceiptActualSha256": "60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d",
+  "existingPinnedPathCount": 289,
+  "future37RestoredReceiptOrAuthorityExistingPins": false,
+  "helperBytes": 130174,
+  "historical254NamesAndPinsPreservedExceptCurrentDispatcher": true,
+  "historical65bPreservedAndRealContinuationE65Consumed": true,
+  "historicalReadOnlyJobLookupsRetained": 3,
+  "issuerOrReaderOrCASOrNativeInvoked": false,
+  "pinnedFutureNamespaceCollisions": [],
+  "privateSnapshotMetadataOnlyFiles": 16,
+  "realRunpyNativeLogical01Outer03Mapping": true,
+  "serverActions": 0,
+  "state": "PASS_REAL37_ISSUER_METADATA_PREFIX_AND_AFFECTED_PATH_INVARIANTS_ONLY",
+  "syntheticFullCompileOrFutureAuthorityTargetCapabilityFixtureCreated": false
+}
