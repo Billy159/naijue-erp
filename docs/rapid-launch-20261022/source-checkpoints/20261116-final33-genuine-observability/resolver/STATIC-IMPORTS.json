@@ -1,0 +1,86 @@
+{
+  "state": "STATIC_MODULE_EVALUATION_CLOSURE_CHECKED_NOT_NATIVE_EXECUTION",
+  "seedCount": 8,
+  "staticModuleCount": 99,
+  "runtimeBareImports": [],
+  "dynamicBareImports": [
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "runFresh35CombinedInstall",
+      "line": 137
+    },
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "specifier": "pg/package.json",
+      "enclosingFunction": "runFresh35CombinedInstall",
+      "line": 137
+    },
+    {
+      "file": "tools/unified-import/execution-client.ts",
+      "specifier": "pg",
+      "enclosingFunction": "connectStandardImportClient",
+      "line": 179
+    },
+    {
+      "file": "tools/unified-import/whole-host-session.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "openReviewedWholeSalesHost",
+      "line": 204
+    },
+    {
+      "file": "tools/unified-import/whole-host-session.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "openFresh35SuccessorPhysicalHost",
+      "line": 256
+    },
+    {
+      "file": "tools/unified-import/whole-host-session.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "openFresh35PhysicalHost",
+      "line": 325
+    }
+  ],
+  "dynamicCatalogDriverImports": [
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "runFresh35CombinedInstall",
+      "line": 137
+    },
+    {
+      "file": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "specifier": "pg/package.json",
+      "enclosingFunction": "runFresh35CombinedInstall",
+      "line": 137
+    },
+    {
+      "file": "tools/unified-import/execution-client.ts",
+      "specifier": "pg",
+      "enclosingFunction": "connectStandardImportClient",
+      "line": 179
+    },
+    {
+      "file": "tools/unified-import/whole-host-session.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "openReviewedWholeSalesHost",
+      "line": 204
+    },
+    {
+      "file": "tools/unified-import/whole-host-session.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "openFresh35SuccessorPhysicalHost",
+      "line": 256
+    },
+    {
+      "file": "tools/unified-import/whole-host-session.mjs",
+      "specifier": "pg",
+      "enclosingFunction": "openFresh35PhysicalHost",
+      "line": 325
+    }
+  ],
+  "typeOnlyImportCount": 40,
+  "rootTargetOrCatalogConstructed": false,
+  "originalEntryInvoked": false,
+  "PGConnections": 0
+}

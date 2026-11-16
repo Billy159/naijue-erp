@@ -1,0 +1,100 @@
+--- actual-6c7653/batched161-run.mjs
++++ candidate/batched161-run.mjs
+@@ -4,7 +4,45 @@
+ import {lstat,mkdir,open,realpath} from 'node:fs/promises';
+ import {join} from 'node:path';
+ import {fileURLToPath,pathToFileURL} from 'node:url';
+-import {isDeepStrictEqual as equal} from 'node:util';
++import {isDeepStrictEqual as equal,types} from 'node:util';
++
++
++// Closed observations for the existing start_owned_describe parser only.
++const describeStages=Object.freeze(['IMPORT_BEGIN','IMPORT_END','TRUST_BEGIN','TRUST_END','SOURCE_LOAD_BEGIN','SOURCE_LOAD_END','TARGET_BEGIN','TARGET_END','COMPILE_BEGIN','COMPILE_END']);
++const describeErrorTypes=new Set(['Error','TypeError','ReferenceError','SyntaxError','RangeError','AssertionError','AggregateError','OTHER']);
++const describeSystemCodes=new Set(['ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ENOENT','EACCES','EPERM','ENOTDIR','ELOOP','EMFILE','ENFILE','OTHER']);
++const describeGuardCodes=new Set(['FRESH35_COMBINED_CATALOG_BASE_MODEL_CORE_DIFFERS','FRESH35_COMBINED_CURRENT_SOURCE_CHANGED']);
++const describeSafeCodes=new Set(["DB05_COMMAND_ACTUAL_LOGIN_DIFFERS","DB05_COMMAND_AMBIENT_CONFIG_REFUSED","DB05_COMMAND_CANONICAL_FILE_REQUIRED","DB05_COMMAND_CATALOG_161_REQUIRED","DB05_COMMAND_CATALOG_MODEL_LINEAGE_DIFFERS","DB05_COMMAND_CATALOG_PACKET_REQUIRED","DB05_COMMAND_CURRENT_C_REQUIRED","DB05_COMMAND_EXACT_ROUTINE_DIFFERS","DB05_COMMAND_FILE_CHANGED","DB05_COMMAND_FINAL_ENTRY_DIFFERS","DB05_COMMAND_FINAL_ORIGINAL_IDENTITY_REQUIRED","DB05_COMMAND_FINAL_ORIGINAL_TARGET_DIFFERS","DB05_COMMAND_FINAL_REVIEW_REQUIRED","DB05_COMMAND_FINITE_ADMIN_REQUIRED","DB05_COMMAND_FIXED_ENTRY_REQUIRED","DB05_COMMAND_FIXED_ROOT_PROCESS_REQUIRED","DB05_COMMAND_FUNCTION_ACL_OR_ATTRIBUTES_CHANGED","DB05_COMMAND_INNER_AUTHORITY_CHANGED","DB05_COMMAND_INNER_BINDING_DIFFERS","DB05_COMMAND_INPUT_BOUND","DB05_COMMAND_NATIVE_ACK_REQUIRED","DB05_COMMAND_ONE_REVIEWED_DO_REQUIRED","DB05_COMMAND_OUTER_BINDING_DIFFERS","DB05_COMMAND_PREFLIGHT_REFUSED","DB05_COMMAND_PROTECTED_FILE_REQUIRED","DB05_COMMAND_READBACK_ACL_OR_ATTRIBUTES_CHANGED","DB05_COMMAND_REVIEWED_INPUT_BYTES_DIFFER","DB05_COMMAND_REVIEWED_SINGLE_FUNCTION_REQUIRED","DB05_COMMAND_SQL_BYTES_DIFFER"]);
++const describeStartedAt=process.hrtime.bigint();
++function describeStage(stage,describe){
++ if(!describe||!describeStages.includes(stage))return;
++ const elapsedMilliseconds=Number((process.hrtime.bigint()-describeStartedAt)/1000000n);
++ try{process.stderr.write('T45_DESCRIBE_STAGE '+JSON.stringify({stage,elapsedMilliseconds})+'\n')}catch{/* Observations never replace a validation result. */}
++}
++function describeOwnData(error,key){
++ if(error===null||(typeof error!=='object'&&typeof error!=='function')||types.isProxy(error))return undefined;
++ try{const d=Object.getOwnPropertyDescriptor(error,key);return d&&Object.hasOwn(d,'value')?d.value:undefined}catch{return undefined}
++}
++function describeErrorType(error){
++ try{
++  for(let value=error,depth=0;value!==null&&(typeof value==='object'||typeof value==='function')&&depth<4;value=Object.getPrototypeOf(value),depth++){
++   if(types.isProxy(value))return 'OTHER';
++   const name=describeOwnData(value,'name');
++   if(typeof name==='string')return describeErrorTypes.has(name)?name:'OTHER';
++  }
++ }catch{/* No arbitrary getters or error text are serialized. */}
++ return 'OTHER';
++}
++function describePreflightFailure(error){
++ const message=describeOwnData(error,'message'),code=describeOwnData(error,'code');
++ const guard=typeof message==='string'?message.split(':',1)[0]:null;
++ return {requestKey:REQUEST,state:'UNKNOWN',
++  safeCode:describeSafeCodes.has(message)?message:'DB05_COMMAND_PREFLIGHT_REFUSED',
++  connectionCleanup:'NOT_OPENED',automaticReplay:false,
++  errorType:describeErrorType(error),
++  systemCode:typeof code==='string'?(describeSystemCodes.has(code)?code:'OTHER'):null,
++  guardCode:describeGuardCodes.has(guard)?guard:null};
++}
+ 
+ const REQUEST='t45-r3-batched161-command-successor-20261116-01';
+ const START='t45-first-r3-native-service-start-20261116-33';
+@@ -61,11 +99,15 @@
+  const b=c.sharedPostgresNamespace.container;
+  need(sha(sr)===s.proofSha256&&c.requestKey===s.serviceKey&&s.serviceKey===START
+   &&c.physical.postmasterStart===s.postmasterStart&&b.id===s.containerId&&b.startedAt===s.containerStartedAt,'CURRENT_C_REQUIRED');
++ describeStage('IMPORT_BEGIN',describe);
+  const [sources,targets,catalogs,trust,publication]=await Promise.all([
+   load('fresh35-combined-source-v1'),load('fresh35-combined-target-v1'),
+   load('fresh35-combined-catalog-v1'),load('trusted-install-path'),load('publish-installation-record'),
+  ]);
++ describeStage('IMPORT_END',describe);
++ describeStage('TRUST_BEGIN',describe);
+  await trust.assertTrustedRootPath(process.execPath);await trust.assertTrustedRootTree(OPERATOR);
++ describeStage('TRUST_END',describe);
+  const raw=await protectedBytes(OPERATOR+'/scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-PINS.json',65536);
+  need(sha(raw)===REVIEWED_INPUT_SHA256,'REVIEWED_INPUT_BYTES_DIFFER');
+  const review=JSON.parse(raw);
+@@ -82,11 +124,16 @@
+   p.installStartsAt=Date.now();
+   p.installExpiresAt=Math.min(p.installStartsAt+1200000,p.backupAdminValidUntil,c.sharedPostgresNamespace.serviceLeaseExpiresAt);
+  }
++ describeStage('SOURCE_LOAD_BEGIN',describe);
+  const paths=await sources.resolveFresh35ReferenceInputPaths('/opt/naijue-erp/fresh35-combined-v1/reference-inputs');
+  const source=await sources.loadFresh35CompactZeroSource(OPERATOR,paths);
++ describeStage('SOURCE_LOAD_END',describe);
++ describeStage('TARGET_BEGIN',describe);
+  const target=await targets.loadFresh35Installed154UpgradeTargetV1({source,currentServiceSha256:s.proofSha256,
+   startsAt:p.installStartsAt,expiresAt:p.installExpiresAt,backupAdminValidUntil:p.backupAdminValidUntil});
+  const {metadataTarget,descriptor:t}=targets.fresh35Installed154UpgradeTargetData(target);
++ describeStage('TARGET_END',describe);
++ describeStage('COMPILE_BEGIN',describe);
+  const base=await catalogs.buildFresh35CompactZeroCatalog(source,metadataTarget,paths);
+  const before=await catalogs.buildFresh35BatchedCatalogV1(source,metadataTarget,base);
+  const after=await catalogs.buildFresh35BatchedCommandSuccessorCatalogV1(source,metadataTarget,before);
+@@ -100,6 +147,7 @@
+   targetSha256:sha(JSON.stringify(t)),currentServiceSha256:s.proofSha256,postmasterStart:s.postmasterStart,
+   startsAt:t.startsAt,expiresAt:t.expiresAt,backupAdminValidUntil:p.backupAdminValidUntil};
+  d.programSha256=sha(JSON.stringify(d));
++ describeStage('COMPILE_END',describe);
+  let finalPreparationBinding;
+  if(describe){
+   const entry=await protectedBytes(OPERATOR+'/tools/unified-import/r3-service20-entry.mjs',2048);
+@@ -267,8 +315,6 @@
+  process.exitCode=result.state==='PROGRAM_DESCRIBED_NO_PG_OR_WRITE'
+   ||result.state==='DB05_COMMAND_SUCCESSOR_APPLIED_AND_READ_BACK'&&result.connectionCleanup==='CLOSED'?0:2;
+ }catch(error){
+- process.stdout.write(JSON.stringify({requestKey:REQUEST,state:'UNKNOWN',
+-  safeCode:/^DB05_COMMAND_[A-Z0-9_]{1,120}$/.test(error?.message??'')?error.message:'DB05_COMMAND_PREFLIGHT_REFUSED',
+-  connectionCleanup:'NOT_OPENED',automaticReplay:false})+'\n');
++ process.stdout.write(JSON.stringify(describePreflightFailure(error))+'\n');
+  process.exitCode=2;
+ }

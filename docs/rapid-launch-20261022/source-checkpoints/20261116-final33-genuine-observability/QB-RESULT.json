@@ -1,0 +1,93 @@
+{
+  "state": "SOURCE_PASS_GENUINE_PREFLIGHT_OBSERVABILITY_ONLY",
+  "sourceOnly": true,
+  "findings": [],
+  "reviewedAt": "2026-11-16T15:43:10.837847+00:00",
+  "sourcePins": {
+    "path": "outputs/D1/20261116-r3-genuine-preflight-observability-source-01/PINS.json",
+    "sha256": "536d8c38d7b139d8e84de338a200e6f1f324768e6857622af35703d4fbd0bfd5"
+  },
+  "files": {
+    "CHECKS.json": {
+      "sha256": "47ed86c0fb3daa75d7edbb31907c298b38532088647fb71e278d527922cc009c",
+      "bytes": 1385
+    },
+    "ENTRY.diff": {
+      "sha256": "ea085262a664e5995e99e2198a0f1b5a3cbf17657a5a7811c7bb90f36dee20c5",
+      "bytes": 7333
+    },
+    "HANDOFF.md": {
+      "sha256": "7eeb4696a6ba18ce47c8d2ea19b88e21c48c4079276f458e98c4e79f97839bac",
+      "bytes": 6563
+    },
+    "PARSER-CHECKS.json": {
+      "sha256": "2941f7d7a0c926b43550d2c36b9879b5182cfaf842f29535382a47e17558d24a",
+      "bytes": 429
+    },
+    "STAGE-PARSER.log": {
+      "sha256": "1a601a70d7fbfc427bc0b2236d207ca09863790a3a5cc4019b362e027cf47642",
+      "bytes": 680
+    },
+    "build_candidate.mjs": {
+      "sha256": "c91e2667360bbf1b1ecf15ab82252cccee06c7af5668a3c65137272077fb234d",
+      "bytes": 6042
+    },
+    "check_observability.mjs": {
+      "sha256": "19a6e0a8e57dca337026512bdf296fcd9d587acf9ce2f5ea867ae3240499dc86",
+      "bytes": 5978
+    },
+    "source/batched161-run.mjs": {
+      "sha256": "10a0664fc27e70521be2be828d79884f9f1a90451de06ade72e56cb8288d4d6d",
+      "bytes": 23714
+    }
+  },
+  "runtimeFiles": [
+    "source/batched161-run.mjs"
+  ],
+  "actualBase": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/start/bundle/batched161-run.mjs",
+    "sha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+    "bytes": 19921
+  },
+  "existingParser": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/start/bundle/start_owned_describe.py",
+    "sha256": "1c8521a278f849263d933fb8a9babebfcd8eb4ded1653b2afaf5d618153cddf1"
+  },
+  "standards": {
+    "findings": []
+  },
+  "spec": {
+    "findings": []
+  },
+  "verified": {
+    "exactScope": "All8 candidate pins/byte sizes verified, exact actual19921B runner6c7653 and original parser1c852 rehashed. Only runtime leaf is23714B runner10a066; ENTRY.diff inspected. Build/check scripts are local preparation/evidence, not runtime leaves.",
+    "behaviorReuse": "Independent static TypeScript AST analysis without importing candidate: original8 functions retained. protectedBytes/protectedJson/readInput/catalogPins/ownerGuard/runUpdate/main exact text+AST; compile AST exact after stripping only10 describeStage calls. Original outer success try block and failure exit2 AST unchanged. Original runtime guards, successful descriptor/payload/liveFacts, opaque/factory/SQL/cleanup/permissions remain unchanged source.",
+    "stageProtocol": "Independent literal comparison confirms exact existing parser10 stage enums/order,8 errorTypes,11 systemCodes,2 guardCodes. Compile has exactly10 ordered stage calls on describe path; emits only T45_DESCRIBE_STAGE stderr with stage and monotonic integer elapsedMilliseconds. Parser phase_trace/describeTrace/lastReachedStage unchanged; stdout failure has no independent stage protocol. Import/trust/source-reference/target/catalog stage boundaries match HANDOFF. COMPILE_END precedes final entry/helper/binding checks, so full10 trace is not success.",
+    "failurePrivacy": "Failure keeps original requestKey/stateUNKNOWN/connectionCleanupNOT_OPENED/automaticReplayfalse and safeCode; adds only existing accepted errorType/systemCode/guardCode fields. Unknown raw messages/codes map to fixed generic/OTHER/null; no sourceFrame/stack/message/path/SQL/admin value returned. Own data descriptors and bounded prototype walk reject Proxy before prototype/property observation, do not invoke getters. Return strings come only from closed enums.",
+    "safeCodes": "Independent AST extraction from exact base confirms28 literal need guard codes plus fixed DB05_COMMAND_PREFLIGHT_REFUSED equal candidate closed29. Unknown DB05-prefixed error text no longer passes arbitrary uppercase text. runUpdate internal exception/rollback body exact original.",
+    "existingChecks": "Read/reuse pinned owner CHECKS47ed/PARSER-CHECKS2941 and STAGE-PARSER1a60: focused actual observer ordinary Error/getter/proxy/sentinel cases and original parser prefixes already checked. QB did not rerun pure-helper tests, import native main, create target/cap/SQL fixture or execute full preflight."
+  },
+  "requiredIntegration": [
+    "This leaf retains historical START33 and cannot authorize replay of terminal33 or creation of34",
+    "Future T45 normal source assembly must update collector RUNNER_SHA to exact final entry, include collector finalpin in normalhost, and require restore CURRENT_SOURCE/proof plus start policy/authority hashes to equal exact final host/proof bytes",
+    "Historical ROOT06 marker installerRunner6c7653 remains historical; no marker rewrite or materialization replay",
+    "Actual runtime stage capture and final version pairing await separately authorized normal candidate. Full stage trace cannot establish success; generic preflight root cause remains unknown"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "candidateOrNativeImports": 0,
+    "nativeMainInvocations": 0,
+    "fullPreflightRuns": 0,
+    "newTargetOrCapFixtures": 0,
+    "authorityIssued": false,
+    "ownerSourceEdits": 0,
+    "existingOwnerSeamTestsRerun": 0,
+    "independentStaticASTReadComparison": true
+  },
+  "runtimePassed": false,
+  "rootCauseFixed": false,
+  "normalCandidatePairReviewed": false,
+  "businessImported": false
+}

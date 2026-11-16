@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T23:34:07.897073+08:00",
+  "updatedAt": "2026-11-16T23:51:45.740943+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-16T23:34:07.897073+08:00",
-  "state": "RESTORE02_ACTUAL_COMPLETE_ORIGINAL_AUTH_RESTORED_PG_STOPPED_GENUINE_DIAGNOSIS_ONLY",
+  "asOf": "2026-11-16T23:51:45.740943+08:00",
+  "state": "AUTH_RESTORED_PG_STOPPED_OBSERVABILITY_SOURCE_PASS_NORMAL34_SOURCE_PREPARATION",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_STOPPED_ORIGINAL_AUTH_RESTORED",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 narrow existing mount-plan metadata; D1 minimal safe observability source; QB only new delta. Prepare final same-version wiring before next necessary normal generation.",
+  "next": "T45 final normal34 consumer/roles and D1 root34 source closure; QB narrow same-version pairing; source data/input2/ROOT06 and prior passes reused. No new PG or clock yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52814,6 +52814,25 @@
     "policySha256": "b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3",
     "moduleSha256": "5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530"
   },
-  "genuineFailureDiagnosis": "D1 local frozen source loader d20+9predicates pass ONLY; whole184B failure not reproduced/root cause unknown. Fixed stage/error classification candidate in progress; no new normal startup issued."
+  "genuineFailureDiagnosis": "D1 local frozen source loader d20+9predicates pass ONLY; whole184B failure not reproduced/root cause unknown. Fixed stage/error classification candidate in progress; no new normal startup issued.",
+  "pendingUserDecision": null,
+  "observabilitySource": {
+    "pinsSha256": "536d8c38d7b139d8e84de338a200e6f1f324768e6857622af35703d4fbd0bfd5",
+    "runtimeEntrySha256": "10a0664fc27e70521be2be828d79884f9f1a90451de06ade72e56cb8288d4d6d",
+    "reviewSha256": "b3ab70ff5ee86c2b3a399f0194c7a6a1b0f0856eb4a7a2161feb74161d649307",
+    "rootCauseFixed": false,
+    "runtimePassed": false
+  },
+  "normal34": {
+    "state": "SOURCE_ONLY_PREPARATION_NO_AUTHORITY_OR_SERVER",
+    "applyKey": "t45-r3-ordinary34-auth-apply-20261116-01",
+    "startKey": "t45-first-r3-native-service-start-20261116-34",
+    "stopKey": "t45-r3-ordinary34-preserve-stop-20261116-01",
+    "restoreKey": "t45-r3-ordinary34-auth-restore-20261116-01",
+    "businessKeysUnchanged": true,
+    "inputAndSourceMaterializationNeverReplay": true,
+    "finalStartRestoreSourcePairingRequired": true,
+    "clockOnlyAfterCompleteFrozenSourceReview": true
+  }
 }
 }

@@ -1,0 +1,10 @@
+T45_DESCRIBE_STAGE {"stage":"IMPORT_BEGIN","elapsedMilliseconds":2}
+T45_DESCRIBE_STAGE {"stage":"IMPORT_END","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"TRUST_BEGIN","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"TRUST_END","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"SOURCE_LOAD_BEGIN","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"SOURCE_LOAD_END","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"TARGET_BEGIN","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"TARGET_END","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"COMPILE_BEGIN","elapsedMilliseconds":3}
+T45_DESCRIBE_STAGE {"stage":"COMPILE_END","elapsedMilliseconds":3}

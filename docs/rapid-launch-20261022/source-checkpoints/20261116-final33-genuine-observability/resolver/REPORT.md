@@ -1,0 +1,15 @@
+# 保存挂载证据后的 resolver 假设核对
+
+结论：ROOT06/node_modules 的host ENOENT尚未对应本次describe必需的某个缺失读取，不能据此修挂载、依赖或判ERR_MODULE_NOT_FOUND。根因继续UNKNOWN。
+
+已核准确T45 RESULT.json SHA97dcc8adece8a44bd576155a43a4204b7d5d2ea397abe7d8eb5c12af8f88849f。它明确区分观测的旧container/saved mount map与源码重建覆盖映射：ROOT06借STATE父RW可见；旧517独立源码/deps RO、SERVICE投影RO、reference父RO均符合原carrier。namespace ancestor未知、未查整树，不把host metadata当当时namespace stat。
+
+本轮仅静态解析准确冻结源码，不执行入口、模块工厂、Node native或PG。八个真实种子（五直接模块、root record模块、late r3-service20-entry和final33 helper）沿运行时静态import/export闭包共99模块，剔除40个type-only import；没有任何运行时bare package import。详见STATIC-IMPORTS.json。这是静态模块求值边界，不是完整动态call graph证明。
+
+实际发现的bare pg动态import都在runFresh35CombinedInstall、connectStandardImportClient、openReviewedWholeSalesHost、openFresh35SuccessorPhysicalHost或openFresh35PhysicalHost内部。准确batched161 runner的main在mode=describe时直接返回描述包，不进入runUpdate；catalog-pg-driver的import和Client创建在runUpdate内部。`describeFresh35FinalPreparationBinding`只走readFresh35BatchedContextInputs的protected/source/catalog metadata，不调这些连接/安装入口。
+
+对应driver源码有更具体契约：catalog-pg-driver.mjs:7和whole-host-session.mjs:361固定使用旧517 `/operation/node_modules`，并明确接受该deps目录uid/gid1000、inode13504771、0755及固定两个驱动文件身份。此路径既不是ROOT06/node_modules，也不在assertTrustedRootTree(OPERATOR=ROOT06/operation)的遍历下。不能把旧517的uid1000直接套到ROOT06 trust判断。
+
+因此当前没有证据要求为ROOT06创建node_modules、换依赖、放宽trust或扩大mount。已存在源证明“缺ROOT06/node_modules必然触发pg import”这个直接推断不成立；其它动态模块/FS/parent视图仍可能报错，未全面复现或排除。未制作fake target/cap/数据库fixture，未运行任何新正常链。
+
+最窄后续保持已有观测候选：阶段+有限errorType/systemCode/guardCode。若以后实际stage与有限系统码指向一个具体读取，才据那个准确路径/参数契约请求对应stat；现在不索取新的全树/全deps/环境/管理员值。原观测候选536d…和恢复877807/9f16未改。

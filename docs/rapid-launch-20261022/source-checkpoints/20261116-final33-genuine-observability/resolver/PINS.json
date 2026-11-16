@@ -1,0 +1,24 @@
+{
+  "state": "STATIC_RESOLVER_FOLLOWUP_ROOT_CAUSE_UNKNOWN",
+  "files": {
+    "REPORT.md": {
+      "sha256": "3acfc43147156e6ce7bcc73888f93b2e8ddf51656f0c00b4582e5887310a4fc0",
+      "bytes": 2610
+    },
+    "STATIC-IMPORTS.json": {
+      "sha256": "68046df350d3a66c3baac35e13a5d458757ae391fd3d580f04a3d343c83017ab",
+      "bytes": 2548
+    },
+    "static_imports.mjs": {
+      "sha256": "01b896e66f1d08e5b644e29559a0e26061e0c92a8299dd7b3550ae1f0572ea1c",
+      "bytes": 3138
+    }
+  },
+  "mountResultSha256": "97dcc8adece8a44bd576155a43a4204b7d5d2ea397abe7d8eb5c12af8f88849f",
+  "sourceOnly": true,
+  "serverConnections": 0,
+  "PGConnections": 0,
+  "nativeInvoked": false,
+  "mountOrDependencyFixMade": false,
+  "frozenObservabilityOrRecoverySourceChanged": false
+}

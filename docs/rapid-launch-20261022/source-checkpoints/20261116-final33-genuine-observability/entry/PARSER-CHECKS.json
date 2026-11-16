@@ -1,0 +1,12 @@
+{
+  "state": "EXACT_EXISTING_PROCESS_PARSER_PASS",
+  "parserSha256": "1c8521a278f849263d933fb8a9babebfcd8eb4ded1653b2afaf5d618153cddf1",
+  "allFourEnumSetsMatch": true,
+  "acceptedOrderedStageCount": 10,
+  "everyPrefixLastStageMatches": true,
+  "lastStageOnlyExistingStderrCarrier": true,
+  "failurePublicParserShapeMatched": true,
+  "sourceFrameOrStackAdded": false,
+  "nativeOrRootInsideInvoked": false,
+  "PGConnections": 0
+}

@@ -1,0 +1,63 @@
+{
+  "state": "PURE_OBSERVABILITY_SEAM_PASS",
+  "originalFunctionsASTUnchangedAfterStrippingMarks": [
+    "protectedBytes",
+    "protectedJson",
+    "readInput",
+    "catalogPins",
+    "compile",
+    "ownerGuard",
+    "runUpdate",
+    "main"
+  ],
+  "successTryBlockASTUnchanged": true,
+  "failureExitASTUnchanged": true,
+  "capturedFailureBaseFieldsCompatible": true,
+  "closedSafeCodeCount": 29,
+  "enums": {
+    "stages": [
+      "IMPORT_BEGIN",
+      "IMPORT_END",
+      "TRUST_BEGIN",
+      "TRUST_END",
+      "SOURCE_LOAD_BEGIN",
+      "SOURCE_LOAD_END",
+      "TARGET_BEGIN",
+      "TARGET_END",
+      "COMPILE_BEGIN",
+      "COMPILE_END"
+    ],
+    "errorTypes": [
+      "Error",
+      "TypeError",
+      "ReferenceError",
+      "SyntaxError",
+      "RangeError",
+      "AssertionError",
+      "AggregateError",
+      "OTHER"
+    ],
+    "systemCodes": [
+      "ERR_ASSERTION",
+      "ERR_INVALID_ARG_TYPE",
+      "ERR_INVALID_ARG_VALUE",
+      "ENOENT",
+      "EACCES",
+      "EPERM",
+      "ENOTDIR",
+      "ELOOP",
+      "EMFILE",
+      "ENFILE",
+      "OTHER"
+    ],
+    "guardCodes": [
+      "FRESH35_COMBINED_CATALOG_BASE_MODEL_CORE_DIFFERS",
+      "FRESH35_COMBINED_CURRENT_SOURCE_CHANGED"
+    ]
+  },
+  "noRawExceptionGetterRead": true,
+  "noSensitiveSentinelSerialized": true,
+  "originalNativeInvoked": false,
+  "PGConnections": 0,
+  "fixtureTargetOrCapCreated": false
+}

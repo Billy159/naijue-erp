@@ -1,0 +1,324 @@
+{
+  "state": "SOURCE_PASS_NORMAL34_CONSUMER_ONLY_PENDING_ROOT_PAIR",
+  "sourceOnly": true,
+  "rootPairReviewed": false,
+  "findings": [],
+  "reviewedAt": "2026-11-16T15:59:13.542650+00:00",
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-OBSERVABLE-CANDIDATE-UNISSUED-02",
+  "sourcePins": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-OBSERVABLE-CANDIDATE-UNISSUED-02/SOURCE-PINS.json",
+    "sha256": "2fe2e9ccec7c2d196067e0756bb317f42b79c43eae40b6ee693b97a6c2f7dfc9"
+  },
+  "files": {
+    "CLI-INTERFACE.UNISSUED.json": {
+      "bytes": 11490,
+      "sha256": "a47976c1645580f15743394fe6c2531da7988d48a71df84a70e66813f7f388f8"
+    },
+    "CONSUMER-INTERFACES.UNISSUED.json": {
+      "bytes": 23980,
+      "sha256": "619a208a167465587779bb5b933b042c4d3ea0e4740d047d9739e0660fa76433"
+    },
+    "DELTA.patch": {
+      "bytes": 89315,
+      "sha256": "aa2890a2f934a027a051c2a13116b626eda102ae2c6c51b4f726e0175f44fdfa"
+    },
+    "HANDOFF.md": {
+      "bytes": 3599,
+      "sha256": "01773d488a9110b269bd3602276d6fa25453f11abaa002f7f30063997e6f26d9"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 11376,
+      "sha256": "5a713ee4cf982e73ac5791c355de3519754a13265acc8c6f90192ec12689cdde"
+    },
+    "PHASES34.UNISSUED.json": {
+      "bytes": 11274,
+      "sha256": "37218f21e8acc91a35e6eb06f7b2d237ad47ff59ae92a5afcf6d3586ae45f3b6"
+    },
+    "ROOT-PAIRING-INTERFACE.UNISSUED.json": {
+      "bytes": 12397,
+      "sha256": "96e627338a161146669cc889682478e826d7a840460b71cddfc3d46a13dcaeb4"
+    },
+    "apply/bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "apply/bundle/normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "apply/bundle/normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "apply/bundle/ordinary05_roles.py": {
+      "bytes": 21656,
+      "sha256": "a1e5a1be9ae1c781803264f8b4312f08a145266fa4b2595c68d82c80eb93389a"
+    },
+    "apply/bundle/ordinary05_roles_job.py": {
+      "bytes": 32424,
+      "sha256": "f72a81ba41f2d34f66310f51913ca55913df92ad2192fcc59ef480266b29198a"
+    },
+    "apply/bundle/prior_failed33.py": {
+      "bytes": 7892,
+      "sha256": "06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662"
+    },
+    "apply/bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "assemble.py": {
+      "bytes": 13052,
+      "sha256": "c1b6f19291f3e348e74df9fa0ae3f8d9205da7b1005b3342a1cec2d286b86295"
+    },
+    "catalog_update/bundle/batched161_command_update_host.py": {
+      "bytes": 20835,
+      "sha256": "db566dc9654e0cfb9132108b47fefdb575be99d962a1ab5b25d4b5fe3e95e1c6"
+    },
+    "catalog_update/bundle/catalog-pg-driver.mjs": {
+      "bytes": 2061,
+      "sha256": "cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f"
+    },
+    "catalog_update/bundle/catalog-successor-run.mjs": {
+      "bytes": 18244,
+      "sha256": "72bacf01a143345e942bbb3669cfc2b2b5fbd04aeee237c5e5e08263224bd289"
+    },
+    "catalog_update/bundle/catalog_transport.py": {
+      "bytes": 12317,
+      "sha256": "4f15b1dfdf00c8408435d81606c37d21bf1ccffcbe2e9104920858e7a2f6f914"
+    },
+    "catalog_update/bundle/fresh35-production-carrier.py": {
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    "catalog_update/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+    },
+    "check_candidate.py": {
+      "bytes": 6251,
+      "sha256": "11464c4f23b49ab6998e0b537e8f4cd6bd529532637a0f21adf93afbe51b8d8d"
+    },
+    "freeze.py": {
+      "bytes": 10447,
+      "sha256": "e405b6ecfecbb2b0c9b15daaac54838324036d69755e9a0ab7e8c92ba27695ce"
+    },
+    "prepare/bundle/final33-run.mjs": {
+      "bytes": 15735,
+      "sha256": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b"
+    },
+    "prepare/bundle/final33_host.py": {
+      "bytes": 47923,
+      "sha256": "e0abd50a7b3e2952a1a1e2fdcca5707c844b2de70113009324e54b1e08e47ba6"
+    },
+    "prepare/bundle/fresh35-production-carrier.py": {
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    "prepare/bundle/nonroot_input_access.py": {
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    "prepare/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+    },
+    "prepare/bundle/r3_05_cli.py": {
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    "prepare/bundle/r3_05_runtime.py": {
+      "bytes": 9394,
+      "sha256": "9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08"
+    },
+    "restore/bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "restore/bundle/normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "restore/bundle/normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "restore/bundle/ordinary05_roles.py": {
+      "bytes": 21656,
+      "sha256": "a1e5a1be9ae1c781803264f8b4312f08a145266fa4b2595c68d82c80eb93389a"
+    },
+    "restore/bundle/ordinary05_roles_job.py": {
+      "bytes": 32424,
+      "sha256": "f72a81ba41f2d34f66310f51913ca55913df92ad2192fcc59ef480266b29198a"
+    },
+    "restore/bundle/prior_failed33.py": {
+      "bytes": 7892,
+      "sha256": "06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662"
+    },
+    "restore/bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "start/bundle/batched161-run.mjs": {
+      "bytes": 23714,
+      "sha256": "820ad6f54f8ac06bceff6a5fd4903d73fe6fed033ac286e4b2bf8d0d93ce1e66"
+    },
+    "start/bundle/final33-run.mjs": {
+      "bytes": 15735,
+      "sha256": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b"
+    },
+    "start/bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "start/bundle/normal_service05_after08.py": {
+      "bytes": 58961,
+      "sha256": "c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693"
+    },
+    "start/bundle/normal_service05_after08_proof.py": {
+      "bytes": 18249,
+      "sha256": "46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d"
+    },
+    "start/bundle/operator-host.mjs": {
+      "bytes": 72238,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    "start/bundle/operator-manifest.json": {
+      "bytes": 48490,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    "start/bundle/operator-stream-import-cli.mjs": {
+      "bytes": 26499,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    "start/bundle/operator-stream-program.mjs": {
+      "bytes": 10302,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    "start/bundle/prior_failed33.py": {
+      "bytes": 7892,
+      "sha256": "06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662"
+    },
+    "start/bundle/production-plan.json": {
+      "bytes": 747,
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    "start/bundle/r3_05_cli.py": {
+      "bytes": 7052,
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    "start/bundle/r3_05_readonly.py": {
+      "bytes": 21212,
+      "sha256": "af8c6b22be0e3d709a01c818250b03ebaa18f2bb05c4ee98e6d03a08a59370b7"
+    },
+    "start/bundle/r3_05_runtime.py": {
+      "bytes": 9394,
+      "sha256": "9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08"
+    },
+    "start/bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "start/bundle/start_owned_describe.py": {
+      "bytes": 16843,
+      "sha256": "f3cd38233ab5f982e22b64dd398514e71b463186921c5b00d7a76281e437ccdb"
+    },
+    "stop/bundle/normal05_preserve_stop.py": {
+      "bytes": 20005,
+      "sha256": "27b98e7fff3b3ee55c187a74e6f5b6792ab30fefb6afe4e65db59cdb033c5f6e"
+    },
+    "stop/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+    },
+    "writer/bundle/final33-run.mjs": {
+      "bytes": 15735,
+      "sha256": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b"
+    },
+    "writer/bundle/final33_host.py": {
+      "bytes": 47923,
+      "sha256": "e0abd50a7b3e2952a1a1e2fdcca5707c844b2de70113009324e54b1e08e47ba6"
+    },
+    "writer/bundle/fresh35-production-carrier.py": {
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4"
+    },
+    "writer/bundle/nonroot_input_access.py": {
+      "bytes": 17738,
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385"
+    },
+    "writer/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+    },
+    "writer/bundle/r3_05_cli.py": {
+      "bytes": 7098,
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6"
+    },
+    "writer/bundle/r3_05_runtime.py": {
+      "bytes": 9394,
+      "sha256": "9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08"
+    }
+  },
+  "phaseRules": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-OBSERVABLE-CANDIDATE-UNISSUED-02/PHASES34.UNISSUED.json",
+    "sha256": "37218f21e8acc91a35e6eb06f7b2d237ad47ff59ae92a5afcf6d3586ae45f3b6"
+  },
+  "interfaces": {
+    "CONSUMER-INTERFACES.UNISSUED.json": {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-OBSERVABLE-CANDIDATE-UNISSUED-02/CONSUMER-INTERFACES.UNISSUED.json",
+      "sha256": "619a208a167465587779bb5b933b042c4d3ea0e4740d047d9739e0660fa76433"
+    },
+    "ROOT-PAIRING-INTERFACE.UNISSUED.json": {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-OBSERVABLE-CANDIDATE-UNISSUED-02/ROOT-PAIRING-INTERFACE.UNISSUED.json",
+      "sha256": "96e627338a161146669cc889682478e826d7a840460b71cddfc3d46a13dcaeb4"
+    },
+    "CLI-INTERFACE.UNISSUED.json": {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-OBSERVABLE-CANDIDATE-UNISSUED-02/CLI-INTERFACE.UNISSUED.json",
+      "sha256": "a47976c1645580f15743394fe6c2531da7988d48a71df84a70e66813f7f388f8"
+    }
+  },
+  "closedFindings": [
+    {
+      "id": "NORMAL34-STOP-SUPPORT-PIN-01",
+      "priority": "P1",
+      "originalEvidence": {
+        "path": "outputs/QB/20261116-r3-normal34-joint-review-01/FINDINGS-01.json",
+        "sha256": "79e5bfda953a3728de4a9b431dfe036dfcfcc5d3591d94ea2410575a26932a81"
+      },
+      "status": "SOURCE_CLOSED",
+      "correction": "Independent02 runtime differs only STOP_REFERENCE0fd->actual1bbc support hash. read(expected) retained. Assembly refresh plus prewrite/check/freeze scalar-to-leaf-to-manifest assertions added. Original01/c05b preserved,51runtime leaves exactsame."
+    }
+  ],
+  "verified": {
+    "closure": "All62 frozen file pins/bytes verified;52 runtime member occurrences7/16/6/7/7/2/7 exact PHASES closure, no dynamic authority/role/clock/requests in bundles. Four maintenance keys34 and unchanged original catalog_update/prepare/writer keys. Input02/ROOT06 reuse only, no reissue authorized by consumer report.",
+    "actualPredecessor": "prior_failed33 derived from existing failed-postACK29 contract and inspected against actual saved9e2a FAILED33/C6e80/ACKb3c1/cleanb225 and b924 restore02 COMPLETED plus adfe safe restored marker. Separately hashes root/public receipts and compares JSON objects; exact original main defd7/proof1b855 and actual container/epoch stopped facts pinned. Outerrestore02 and actual innerrestore01 distinguished. No invented successful33 or stop33.",
+    "roleAndRecovery": "New34 role/capture/custody derived ordinarybase; original role logic except scopekeys/custody/prior33 original-auth path unchanged. Host uses stopped actual33 prior container, existing300/220+80/inside200 bounds and normal restore/failed-start cleanup guards; no92b7 hardcoded33bc/special oldrestore01 guard imported. Fresh34 roleauthority must be issued by later paired root source. Runtime/HBA/membership/SID/OID/PGDATA unchanged.",
+    "sameGeneration": "Entry820ad reverse onlySTART34->33 reproduces exact independently accepted10a. collectorf3cd RUNNER_SHA=entry; normalc9e staged/pinned collector and entry exact. apply/restore CURRENT_SOURCE=c9e/CURRENT_PROOF_SOURCE=46f8; all4 retainedstop copies NORMAL05_SHA/PROOF match. Start PHASES pins and consumer interfaces same finalbytes. Both ordinary host copies equal and prepare/writer host equal. Source scalar scan found only stop mismatch (closed) plus intentionally historical prior source pins; no other active stale changed-leaf references.",
+    "catalogDelta": "Cataloghost scope producer references now actual ROOT06 d20 sourceSet/078f sourceRows, not staleed517/150b. Only new candidate; actualROOT06 marker73ec/historicalinstaller6c unchanged. Installed historical batchedCatalog/sourceSet meanings unchanged; this does not explain start33 unknown preflight failure.",
+    "runtimeReuse": "Exact deltas inspected across normal/proof/readonly/runtime/catalog/prepare/writer/stop/role source. New paths/key generation/dependency pins and prior failed33 binding fields only; old mounts/UID/physical/opaque/native/SQL and output creation/exclusive cleanup behavior reused. Budgets300/780/3000 plus full5100 not reduced; receiver scopes still require real C/native/prepare evidence, no generated success proof.",
+    "APIAndCLI": "Five interface source SHA and11 listed function AST excerpts match actual consumers. Pure scopes and originalv3七phase parse checks read/reused from owner LOCAL-CHECKS; CLI exact static52 members and deferred dynamic leaves, v3 client08954 with existing independent600 transport preserved, no actual CLI/network invocation."
+  },
+  "reusedReview": {
+    "path": "outputs/QB/20261116-final33-genuine-observability-review-01/RESULT.json",
+    "sha256": "b3ab70ff5ee86c2b3a399f0194c7a6a1b0f0856eb4a7a2161feb74161d649307"
+  },
+  "pending": [
+    "D1 exact root34 helper/policy/registration/phase issuer pairing to final02 PHASES/interfaces and explicit completed input02/ROOT06 refusal",
+    "Actual fresh shared lock/basis/newmaintenance+threeoriginalbusinesskey absence/PGquiet/restoration states and actual finite34 authority",
+    "Actual34 start/observable preflight/C/native update/prepare/originalwriter/stop/restore and downstream business/backup/restore acceptance"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "newFixtures": 0,
+    "roleAuthorityOrClockIssued": false,
+    "ownerSourceEdits": 0,
+    "completedJobsReplayed": false,
+    "oldNativeBusinessTestsRerun": 0
+  },
+  "runtimePassed": false,
+  "rootCauseFixed": false,
+  "businessImported": false
+}

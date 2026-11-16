@@ -1,0 +1,53 @@
+{
+  "state": "SOURCE_ONLY_OBSERVABILITY_CANDIDATE_NOT_EXECUTED",
+  "files": {
+    "CHECKS.json": {
+      "sha256": "47ed86c0fb3daa75d7edbb31907c298b38532088647fb71e278d527922cc009c",
+      "bytes": 1385
+    },
+    "ENTRY.diff": {
+      "sha256": "ea085262a664e5995e99e2198a0f1b5a3cbf17657a5a7811c7bb90f36dee20c5",
+      "bytes": 7333
+    },
+    "HANDOFF.md": {
+      "sha256": "7eeb4696a6ba18ce47c8d2ea19b88e21c48c4079276f458e98c4e79f97839bac",
+      "bytes": 6563
+    },
+    "PARSER-CHECKS.json": {
+      "sha256": "2941f7d7a0c926b43550d2c36b9879b5182cfaf842f29535382a47e17558d24a",
+      "bytes": 429
+    },
+    "STAGE-PARSER.log": {
+      "sha256": "1a601a70d7fbfc427bc0b2236d207ca09863790a3a5cc4019b362e027cf47642",
+      "bytes": 680
+    },
+    "build_candidate.mjs": {
+      "sha256": "c91e2667360bbf1b1ecf15ab82252cccee06c7af5668a3c65137272077fb234d",
+      "bytes": 6042
+    },
+    "check_observability.mjs": {
+      "sha256": "19a6e0a8e57dca337026512bdf296fcd9d587acf9ce2f5ea867ae3240499dc86",
+      "bytes": 5978
+    },
+    "source/batched161-run.mjs": {
+      "sha256": "10a0664fc27e70521be2be828d79884f9f1a90451de06ade72e56cb8288d4d6d",
+      "bytes": 23714
+    }
+  },
+  "runtimeFiles": [
+    "source/batched161-run.mjs"
+  ],
+  "actualBaseSha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+  "candidateEntrySha256": "10a0664fc27e70521be2be828d79884f9f1a90451de06ade72e56cb8288d4d6d",
+  "existingParserSha256": "1c8521a278f849263d933fb8a9babebfcd8eb4ded1653b2afaf5d618153cddf1",
+  "parserLogicChanged": false,
+  "successProtocolChanged": false,
+  "rootCauseFixed": false,
+  "runtimeTested": false,
+  "nativeMainEvaluated": false,
+  "serverConnections": 0,
+  "PGConnections": 0,
+  "nativeTargetOrCapFixtureCreated": false,
+  "newClockOrAuthorityIssued": false,
+  "existingRecoverySourceChanged": false
+}
