@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T07:09:55.277583+08:00",
+  "updatedAt": "2026-11-17T07:18:41.871733+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Sole T45 START37 once using eef82 and actual registryca068b/6f3258/45b0. Require actual terminal/stored descriptor/livefacts/proof/ACK, then actual5-key prepare03 context. Main prepare03 issuance from actual install32+context only; original writer never submitted/business0.",
+  "next": "Read-only exact permission diagnosis for actual native PREPARE_CALL EACCES; identify fixed path/syscall/UID/mount/ancestor permission evidence without PG/new native/mutation. Failed03 never replay; no prepared evidence/no writer. Then Main decides smallest source/access fix with unused-phase continuation or original STOP37+exactRESTORE37 before deadlines. Do not automatically new38/renew60b.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T07:09:55.277583+08:00",
+  "asOf": "2026-11-17T07:18:41.871733+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Sole T45 START37 once using eef82 and actual registryca068b/6f3258/45b0. Require actual terminal/stored descriptor/livefacts/proof/ACK, then actual5-key prepare03 context. Main prepare03 issuance from actual install32+context only; original writer never submitted/business0.",
+  "next": "Read-only exact permission diagnosis for actual native PREPARE_CALL EACCES; identify fixed path/syscall/UID/mount/ancestor permission evidence without PG/new native/mutation. Failed03 never replay; no prepared evidence/no writer. Then Main decides smallest source/access fix with unused-phase continuation or original STOP37+exactRESTORE37 before deadlines. Do not automatically new38/renew60b.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52792,7 +52792,7 @@
   "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": "LAST_ACTUAL_APPLY37_STOPPED_START37_RESULT_PENDING",
+  "PGCurrentlyStopped": false,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
@@ -53154,7 +53154,7 @@
   },
   "writerSubmitted": false,
   "businessWrites": 0,
-  "normal37": "NORMAL37_REGISTRATION_AND_APPLY_ACTUALLY_COMPLETE_START_AUTHORITY_ISSUED_ACTUAL_RESULT_PENDING",
+  "normal37": "START37_ACTUAL_SUCCESS_PREPARE03_NATIVE_EACCES_FAILED_UNKNOWN_CURRENT_SERVICE_RUNNING_ROLE60B_APPLIED",
   "normal37ConsumerSource": {
     "sourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
     "reviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
@@ -53210,8 +53210,37 @@
     "roleAuthoritySha256": "60b580ea352d16ad39ce76047a7238a4a0606ea8fb506e16ed3183e4325462ff"
   },
   "normal37Start": {
-    "authoritySha256": "eef82e589c9b811ab48658a3f12e9292a7e8e56c779ef17e4734b77e17e5dba2",
-    "state": "AUTHORIZED_ACTUAL_RESULT_PENDING"
+    "actualReadbackSha256": "e7c2b22bd1de3ea2af4cb8d5e746ac65dbf0a10b7caff3ddfe0f32fa28df7e17",
+    "service": {
+      "containerId": "4ec61582c6dc2856b3d843d47af15c73a6cb65355c6f5916a2d386adca251fd6",
+      "containerStartedAt": "2026-11-16T23:08:51.161418347Z",
+      "postmasterStart": "2026-11-16 23:08:52.417902+00",
+      "proofSha256": "cba7c6cbe81503d054f00c03a9c2a8bd7943bf86be8c3f29df6db3a49fc02527",
+      "serviceKey": "t45-first-r3-native-service-start-20261116-37"
+    },
+    "state": "ACTUAL_COMPLETED",
+    "actualWorkDeadline": 1794878543232
+  },
+  "normal37Prepare03": {
+    "actualReadbackSha256": "58ba3f0dc52e8400c6c62a75c3098bf508c8e17771f76f7b9ae3c3644d284677",
+    "terminalSha256": "b4eb5ad67321213f2db643dce96966e801098e80064823dd78ddef40d18e96f7",
+    "terminalStatus": "FAILED",
+    "nativeOutcome": "UNKNOWN",
+    "failureDiagnostic": {
+      "errorType": "Error",
+      "format": "FINAL33_FAILURE_DIAGNOSTIC_V1",
+      "guardCode": "UNKNOWN",
+      "sqlstate": null,
+      "stage": "PREPARE_CALL",
+      "systemCode": "EACCES"
+    },
+    "nativeResultSha256": "61cfefe9db8ebb673de64b200762ab2648dd2012b1926460f212b92486fc8a27",
+    "childReaped": true,
+    "descendantsReaped": true,
+    "nativeAuthorityRemoved": true,
+    "scratchEmpty": true,
+    "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
+    "automaticReplay": false
   }
 }
 }

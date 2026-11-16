@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T07:09:55.277583+08:00",
-  "state": "NORMAL37_REGISTRATION_AND_APPLY_ACTUALLY_COMPLETE_START_AUTHORITY_ISSUED_ACTUAL_RESULT_PENDING",
+  "asOf": "2026-11-17T07:18:41.871733+08:00",
+  "state": "START37_ACTUAL_SUCCESS_PREPARE03_NATIVE_EACCES_FAILED_UNKNOWN_CURRENT_SERVICE_RUNNING_ROLE60B_APPLIED",
   "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
   "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
   "phaseRulesSha256": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
@@ -12,14 +12,14 @@
   "reusedRuntimeFiles": 22,
   "currentLoadBindings": 42,
   "inlineBindings": 7,
-  "PGCurrentlyStopped": "LAST_ACTUAL_APPLY37_STOPPED_START37_RESULT_PENDING",
+  "PGCurrentlyStopped": false,
   "originalAuthRestored": false,
   "writerSubmitted": false,
   "businessWrites": 0,
   "finiteAuthorityIssued": false,
   "newServiceStarted": false,
   "fullRehearsal": false,
-  "next": "Sole T45 START37 once using eef82 and actual registryca068b/6f3258/45b0. Require actual terminal/stored descriptor/livefacts/proof/ACK, then actual5-key prepare03 context. Main prepare03 issuance from actual install32+context only; original writer never submitted/business0.",
+  "next": "Read-only exact permission diagnosis for actual native PREPARE_CALL EACCES; identify fixed path/syscall/UID/mount/ancestor permission evidence without PG/new native/mutation. Failed03 never replay; no prepared evidence/no writer. Then Main decides smallest source/access fix with unused-phase continuation or original STOP37+exactRESTORE37 before deadlines. Do not automatically new38/renew60b.",
   "copies": [
     {
       "path": "consumer37-source-pass/SOURCE-PINS.json",
@@ -500,6 +500,21 @@
       "path": "issued-safe-metadata/START-ISSUED-METADATA.json",
       "sha256": "d62b9379719ec5bffd9dd259ab5a6ee551a6d4d6750751c5eb3a714f566210c0",
       "bytes": 412
+    },
+    {
+      "path": "actual/START37-SAFE-PROJECTION.json",
+      "sha256": "026d6704458971fb060ae10aa72809b6b8c37a092dfb08238c3310e3939447d3",
+      "bytes": 2215
+    },
+    {
+      "path": "actual/ACTUAL-PREPARE03-RESULT.json",
+      "sha256": "58ba3f0dc52e8400c6c62a75c3098bf508c8e17771f76f7b9ae3c3644d284677",
+      "bytes": 4053
+    },
+    {
+      "path": "issued-safe-metadata/PREPARE03-ISSUED-METADATA.json",
+      "sha256": "43886edda4d96263504bbf37db2f9ea03527491c9d1a2e2ce379f105232be9ae",
+      "bytes": 399
     }
   ],
   "referenceOnlyUnissuedJSON": {
@@ -544,5 +559,35 @@
     "state": "ISSUED_NORMAL37_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
   },
   "newRolesApplied": true,
-  "startAuthoritySha256": "eef82e589c9b811ab48658a3f12e9292a7e8e56c779ef17e4734b77e17e5dba2"
+  "startAuthoritySha256": "eef82e589c9b811ab48658a3f12e9292a7e8e56c779ef17e4734b77e17e5dba2",
+  "actualStartSha256": "e7c2b22bd1de3ea2af4cb8d5e746ac65dbf0a10b7caff3ddfe0f32fa28df7e17",
+  "actualPrepare03Sha256": "58ba3f0dc52e8400c6c62a75c3098bf508c8e17771f76f7b9ae3c3644d284677",
+  "actualPrepare03Diagnostic": {
+    "errorType": "Error",
+    "format": "FINAL33_FAILURE_DIAGNOSTIC_V1",
+    "guardCode": "UNKNOWN",
+    "sqlstate": null,
+    "stage": "PREPARE_CALL",
+    "systemCode": "EACCES"
+  },
+  "actualPrepare03NativeOutcome": "UNKNOWN_NOT_INFERRED_FROM_OUTER_FAILED",
+  "actualPrepare03NativeResultSha256": "61cfefe9db8ebb673de64b200762ab2648dd2012b1926460f212b92486fc8a27",
+  "actualPrepare03Cleanup": {
+    "childReaped": true,
+    "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
+    "descendantsReaped": true,
+    "nativeAuthorityRemoved": true,
+    "originalInputMetadataChanges": 0,
+    "privateInitializer": null,
+    "requestKey": "t45-r3-final33-plan-prepare-20261116-03",
+    "scratchEmpty": true,
+    "scratchRetainedPrivately": false
+  },
+  "currentService": {
+    "containerId": "4ec61582c6dc2856b3d843d47af15c73a6cb65355c6f5916a2d386adca251fd6",
+    "containerStartedAt": "2026-11-16T23:08:51.161418347Z",
+    "postmasterStart": "2026-11-16 23:08:52.417902+00",
+    "proofSha256": "cba7c6cbe81503d054f00c03a9c2a8bd7943bf86be8c3f29df6db3a49fc02527",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-37"
+  }
 }
