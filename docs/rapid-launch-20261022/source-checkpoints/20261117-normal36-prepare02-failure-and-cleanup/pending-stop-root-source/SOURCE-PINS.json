@@ -1,0 +1,44 @@
+{
+  "PGConnections": 0,
+  "clockOrAuthorityIssued": false,
+  "consumerReviewSha256": "2fb95f9d0cb2b7d607fc1c4142b1c713c96b6a4e7f9f373d64b0e5f9b044e025",
+  "consumerSourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 4621,
+      "sha256": "fdff7b6cc062189d8fb0a3b1fcd9f7aca859706dd5c50d282800ec9829a16f04"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 649,
+      "sha256": "7e15dce9c52b2e96ecec064d331d2ee5a1242e6a895f5aa8fd2dffca77fb85aa"
+    },
+    "STOP-DELTA.UNISSUED.json": {
+      "bytes": 1783,
+      "sha256": "2dc2f0b63c7a3a5518c149c9d4d55f4c77ea164bfbf8ef201ebc300c447970c8"
+    },
+    "check_source.py": {
+      "bytes": 3178,
+      "sha256": "9c6fed44974a925456c1b4901b9dbc7db03e736202664da3b6c94f65415f7f82"
+    },
+    "issue_live.py": {
+      "bytes": 6108,
+      "sha256": "6ab0976e7100cbd2fb2137a4d9c2a781efb76a311adbd73db2881be91179714e"
+    },
+    "issue_stop.py": {
+      "bytes": 5538,
+      "sha256": "ab17572010beea94008b754b7489f5e8eaa25ea8ebb3179ab81e8f35ea712375"
+    },
+    "live_cas.py": {
+      "bytes": 73077,
+      "sha256": "2b63dd9b7c39c8b7382c714de9f14a600fd62eff8daf0e18cf4447fa8ee341bb"
+    },
+    "original-cas-live36-stop-carrier.UNISSUED.py": {
+      "bytes": 2567,
+      "sha256": "989e4f5ed12f4d98fb6e143748da562f908cf4095e178a169fad57adc1006a22"
+    }
+  },
+  "phaseSubmitted": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_FROZEN_LIVE36_PENDING_STOP_TWO_PINS_CAS_AND_MAIN_STOP_ISSUER_UNISSUED"
+}

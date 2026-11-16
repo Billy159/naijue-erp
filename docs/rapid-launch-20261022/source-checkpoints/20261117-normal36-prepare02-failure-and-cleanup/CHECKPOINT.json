@@ -1,0 +1,114 @@
+{
+  "asOf": "2026-11-17T05:53:32.048557+08:00",
+  "state": "ACTUAL_START36_COMPLETE_PREPARE02_FAILED_BEFORE_NATIVE_CURRENT_PG_RUNNING_AUTH_APPLIED_STOP_REPAIR_PENDING",
+  "actualStartSha256": "2d9aa879a649ad9a47ccfeb4df218ee5adcca5059f1b0b5722197ca816acc486",
+  "actualPrepareSha256": "59586beda1f5daaa63cf006fba168c47091c7889745f83f671b7c4bf720cd3e7",
+  "failureCode": "NORMAL05_STOP_PINNED_MODULE_DIFFERS",
+  "nativeChildStarted": false,
+  "writerSubmitted": false,
+  "businessWrites": 0,
+  "PGCurrentlyStopped": false,
+  "originalAuthRestored": false,
+  "temporaryRoleAuthoritySha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
+  "stopConsumerSourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
+  "pendingStopRootSourcePinsSha256": "40edcdb5283ca21bcb387cc56d4a6c177fc75a97f60dabefc8bdd2e56ba53f9b",
+  "pendingStopRootReview": "PENDING",
+  "next": "Finish narrow reviewed active36 pendingSTOP two-pin CAS, original STOP36 once, exact original RESTORE36. No prepare03/service37/full rehearsal/writer. Current role d834 deadlines unchanged.",
+  "copies": [
+    {
+      "path": "actual/START36-SAFE-PROJECTION.json",
+      "sha256": "d48b7971485dbf7ef00270f19aa2d9445dd58c9ea396683997702c0abb482efc",
+      "bytes": 2116
+    },
+    {
+      "path": "actual/ACTUAL-PREPARE02-RESULT.json",
+      "sha256": "59586beda1f5daaa63cf006fba168c47091c7889745f83f671b7c4bf720cd3e7",
+      "bytes": 2296
+    },
+    {
+      "path": "actual/ACTUAL-PREPARE02-FAILURE-METADATA.json",
+      "sha256": "bc221a456c2170fff5060db8d448e1b414572b0844bbcda6d1a5253cefece730",
+      "bytes": 738
+    },
+    {
+      "path": "stop-consumer-source/SOURCE-PINS.json",
+      "sha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
+      "bytes": 3068
+    },
+    {
+      "path": "stop-consumer-source/FIX-DIFF.patch",
+      "sha256": "ccdc2e3b234856ae0a41677b9abd1d31c4b6b790c3fbca3d82561fd04c6f2e4d",
+      "bytes": 2482
+    },
+    {
+      "path": "stop-consumer-source/LOCAL-CHECKS.json",
+      "sha256": "f4c48918c595d43f8626d13d59cd7ff1f3cf5f7c818e26854e897cf048445d18",
+      "bytes": 573
+    },
+    {
+      "path": "stop-consumer-source/phase_cli.py",
+      "sha256": "8890011d7f305810926988c1edc1b7b1450c3032b41ab698493e861d13f28f4e",
+      "bytes": 5147
+    },
+    {
+      "path": "stop-consumer-source/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "c03316fa6ddd12fdca546ff23a143c8b496602208461b7f6682c355a1b710212",
+      "bytes": 20005
+    },
+    {
+      "path": "stop-consumer-source/stop/bundle/normal05_retained_stop.py",
+      "sha256": "03152b68ce77031578e7ffc64c1707a5160d7546c585a25db98cdb3cf7d9619c",
+      "bytes": 20709
+    },
+    {
+      "path": "pending-stop-root-source/SOURCE-PINS.json",
+      "sha256": "40edcdb5283ca21bcb387cc56d4a6c177fc75a97f60dabefc8bdd2e56ba53f9b",
+      "bytes": 1546
+    },
+    {
+      "path": "pending-stop-root-source/HANDOFF.md",
+      "sha256": "fdff7b6cc062189d8fb0a3b1fcd9f7aca859706dd5c50d282800ec9829a16f04",
+      "bytes": 4621
+    },
+    {
+      "path": "pending-stop-root-source/LOCAL-CHECKS.json",
+      "sha256": "7e15dce9c52b2e96ecec064d331d2ee5a1242e6a895f5aa8fd2dffca77fb85aa",
+      "bytes": 649
+    },
+    {
+      "path": "pending-stop-root-source/check_source.py",
+      "sha256": "9c6fed44974a925456c1b4901b9dbc7db03e736202664da3b6c94f65415f7f82",
+      "bytes": 3178
+    },
+    {
+      "path": "pending-stop-root-source/issue_live.py",
+      "sha256": "6ab0976e7100cbd2fb2137a4d9c2a781efb76a311adbd73db2881be91179714e",
+      "bytes": 6108
+    },
+    {
+      "path": "pending-stop-root-source/issue_stop.py",
+      "sha256": "ab17572010beea94008b754b7489f5e8eaa25ea8ebb3179ab81e8f35ea712375",
+      "bytes": 5538
+    },
+    {
+      "path": "pending-stop-root-source/live_cas.py",
+      "sha256": "2b63dd9b7c39c8b7382c714de9f14a600fd62eff8daf0e18cf4447fa8ee341bb",
+      "bytes": 73077
+    },
+    {
+      "path": "pending-stop-root-source/original-cas-live36-stop-carrier.UNISSUED.py",
+      "sha256": "989e4f5ed12f4d98fb6e143748da562f908cf4095e178a169fad57adc1006a22",
+      "bytes": 2567
+    },
+    {
+      "path": "reviews/STOP-CONSUMER-RESULT.json",
+      "sha256": "2fb95f9d0cb2b7d607fc1c4142b1c713c96b6a4e7f9f373d64b0e5f9b044e025",
+      "bytes": 1887
+    },
+    {
+      "path": "reviews/APPLICABILITY-SUSPENSION-N36-C02.json",
+      "sha256": "ae5356464b0be41173ab1ca03b4fbd5470b992a5a3139f75ab10594116e66def",
+      "bytes": 2751
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "mainInvoked": false,
+    "oldFrozenReportsRewritten": false,
+    "serverActions": 0
+  },
+  "closedForStopOnly": [
+    "N36-C02"
+  ],
+  "executionReady": false,
+  "findings": [],
+  "independentVerification": [
+    "All7 delivery files exact.",
+    "Only3 literal pins and support STOP_REFERENCE assignment change; all other AST exact.",
+    "Three pins equal frozen actual36 start/readonly/proof bytes; linked support pin equals new file.",
+    "Original CLI byte-identical; actual HERE/local stop-only blueprint/source-dir agrees; key/script/120s/authority argument unchanged.",
+    "No role,writer,INIT,preparation,deadline or scope change."
+  ],
+  "interfaceSha256": "07384cfb7e199984cb255aa980c86e0b6c19a478cacd08664a5f09262f46036b",
+  "limits": [
+    "Only new stop-source accepted; active36 two-pin CAS and main stop issuer still pending exact source review.",
+    "Old consumer498/5ae remains suspended for uncorrected new execution; failedprepare02 is not cleared for retry.",
+    "Actual apply/start retained; native35 UNKNOWN not reclassified; prepare02 child not started.",
+    "No server/clock/authority/PG/stop/restore operation performed."
+  ],
+  "reviewer": "QB",
+  "runtimePins": {
+    "normal05_preserve_stop.py": "c03316fa6ddd12fdca546ff23a143c8b496602208461b7f6682c355a1b710212",
+    "normal05_retained_stop.py": "03152b68ce77031578e7ffc64c1707a5160d7546c585a25db98cdb3cf7d9619c"
+  },
+  "schemaVersion": 1,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/STOP36-CLEANUP-PIN-FIX-UNISSUED-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
+  "state": "SOURCE_PASS_STOP36_PIN_FIX_ONLY_PENDING_ACTIVE_CAS_PAIR"
+}

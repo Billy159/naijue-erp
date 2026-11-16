@@ -1,0 +1,26 @@
+{
+  "PGConnections": 0,
+  "authorityOrTargetOrCapabilityFixturesCreated": false,
+  "clockCalls": 0,
+  "currentSafePinnedFiles": 273,
+  "dispatcherASTChanges": [
+    "R3_ORIGINAL02_ABSENT_POLICY_SHA256"
+  ],
+  "historicalPinsPreserved": 253,
+  "issuersInvoked": false,
+  "negativeDeltasRejected": [
+    "prepare",
+    "writer",
+    "restore",
+    "stop",
+    "expiresAt",
+    "startsAt"
+  ],
+  "phaseSubmitted": false,
+  "policySemanticChanges": [
+    "jobs.stop.bundlePins.normal05_preserve_stop.py",
+    "jobs.stop.bundlePins.normal05_retained_stop.py"
+  ],
+  "serverActions": 0,
+  "state": "LOCAL_SOURCE_ONLY_EXACT_METADATA_AND_PURE_DELTA_PASS"
+}

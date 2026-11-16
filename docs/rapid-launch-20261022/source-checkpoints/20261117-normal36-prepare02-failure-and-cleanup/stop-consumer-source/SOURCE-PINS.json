@@ -1,0 +1,69 @@
+{
+  "PGConnections": 0,
+  "dynamicAuthorityOrClock": null,
+  "files": {
+    "FIX-DIFF.patch": {
+      "bytes": 2482,
+      "sha256": "ccdc2e3b234856ae0a41677b9abd1d31c4b6b790c3fbca3d82561fd04c6f2e4d"
+    },
+    "INTERFACE.UNISSUED.json": {
+      "bytes": 3187,
+      "sha256": "07384cfb7e199984cb255aa980c86e0b6c19a478cacd08664a5f09262f46036b"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 573,
+      "sha256": "f4c48918c595d43f8626d13d59cd7ff1f3cf5f7c818e26854e897cf048445d18"
+    },
+    "PHASES36.UNISSUED.json": {
+      "bytes": 964,
+      "sha256": "876bfa68d3554068d0fb0ca63cbe45e6e8e60b89b1005c976b0f4b8b354bff7b"
+    },
+    "phase_cli.py": {
+      "bytes": 5147,
+      "sha256": "8890011d7f305810926988c1edc1b7b1450c3032b41ab698493e861d13f28f4e"
+    },
+    "stop/bundle/normal05_preserve_stop.py": {
+      "bytes": 20005,
+      "sha256": "c03316fa6ddd12fdca546ff23a143c8b496602208461b7f6682c355a1b710212"
+    },
+    "stop/bundle/normal05_retained_stop.py": {
+      "bytes": 20709,
+      "sha256": "03152b68ce77031578e7ffc64c1707a5160d7546c585a25db98cdb3cf7d9619c"
+    }
+  },
+  "job": {
+    "authorityLeaf": "normal05-preserve-stop-input.json",
+    "authoritySha256": null,
+    "bundlePins": {
+      "normal05_preserve_stop.py": "c03316fa6ddd12fdca546ff23a143c8b496602208461b7f6682c355a1b710212",
+      "normal05_retained_stop.py": "03152b68ce77031578e7ffc64c1707a5160d7546c585a25db98cdb3cf7d9619c"
+    },
+    "deadlineField": "expiresAt",
+    "jobId": "t45-r3-ordinary36-preserve-stop-20261116-01",
+    "rolesAuthoritySha256": "NOT_APPLICABLE",
+    "script": "normal05_preserve_stop.py",
+    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/STOP36-CLEANUP-PIN-FIX-UNISSUED-01/stop/bundle",
+    "timeoutSeconds": 120
+  },
+  "oldBundlePins": {
+    "normal05_preserve_stop.py": "0962a84910c8c62f1e34b35bde278b6ada7f39cc323f54ecae3391311e8b588b",
+    "normal05_retained_stop.py": "ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491"
+  },
+  "originalFailedPrepareKeyNeverReplayed": true,
+  "originalPolicySha256": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a",
+  "parentConsumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_FROZEN_STOP36_CLEANUP_PIN_FIX_UNISSUED_ONLY",
+  "stopScope": {
+    "format": "T45_R3_FAILED19_READONLY20_SERVICE_STOP_V1",
+    "requestKey": "t45-r3-ordinary36-preserve-stop-20261116-01",
+    "writerJobId": "t45-first-20261110-r3-real-execute-20261114-02"
+  },
+  "unchangedRoleAuthoritySha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
+  "updatedLiveSourcePins": {
+    "NORMAL05_SHA": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+    "PROOF_SHA": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+    "READONLY_SHA": "933b094ea9da9372982ccf94a3bebc004aa50fd59f774b43d3532ded388fa7ec"
+  }
+}

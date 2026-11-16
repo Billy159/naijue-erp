@@ -1,0 +1,27 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/stop/bundle/normal05_retained_stop.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/STOP36-CLEANUP-PIN-FIX-UNISSUED-01/stop/bundle/normal05_retained_stop.py
+@@ -25,10 +25,10 @@
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = 'fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a'
++PROOF_SHA = '642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40'
+-NORMAL05_SHA = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++READONLY_SHA = '933b094ea9da9372982ccf94a3bebc004aa50fd59f774b43d3532ded388fa7ec'
++NORMAL05_SHA = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/stop/bundle/normal05_preserve_stop.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/STOP36-CLEANUP-PIN-FIX-UNISSUED-01/stop/bundle/normal05_preserve_stop.py
+@@ -19,7 +19,7 @@
+ CONTROL = Path('/home/naijue/erp-release-20261006-01-control/grant-' + GRANT)
+ JOB = ROOT / 'jobs' / KEY
+ HOLD = ROOT / 'r3-05-write-continuity'
+-STOP_REFERENCE = 'ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491'
++STOP_REFERENCE = '03152b68ce77031578e7ffc64c1707a5160d7546c585a25db98cdb3cf7d9619c'
+ SERVICE_KEY = 't45-first-r3-native-service-start-20261116-36'
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}

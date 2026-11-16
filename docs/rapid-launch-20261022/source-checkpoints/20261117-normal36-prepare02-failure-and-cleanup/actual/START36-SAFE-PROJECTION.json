@@ -1,0 +1,59 @@
+{
+  "checkedAtUTC": "2026-11-16T21:22:59.484125+00:00",
+  "phase": "start",
+  "requestKey": "t45-first-r3-native-service-start-20261116-36",
+  "terminal": {
+    "atUTC": "2026-11-16T21:21:07.634415+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 42.128278318967205,
+    "exitCode": 0,
+    "exports": [
+      "genuine-describe-payload.json",
+      "genuine-describe-process.json",
+      "genuine-descriptor.json",
+      "genuine-live-facts.json",
+      "normal-service-create-attempt.json",
+      "normal-service-intent.json",
+      "normal-service-result.json"
+    ],
+    "finishedAtUTC": "2026-11-16T21:21:49.837197+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-first-r3-native-service-start-20261116-36",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-ded303d47bfe"
+  },
+  "rootPins": {
+    "result": "e12b554b5644bc36b62152e06e9248d66d5fa42c8b2e2c8b40871fecd06f5a66",
+    "terminal": "c6bc4d7dfb5be9afca0a1505159a1c487d8504a35f8df1f3de3db84b2b9f5a06"
+  },
+  "service": {
+    "containerId": "8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9",
+    "containerStartedAt": "2026-11-16T21:21:12.05366201Z",
+    "postmasterStart": "2026-11-16 21:21:13.328927+00",
+    "proofSha256": "1c2e696ca6708c438e93e917a2d6003fd579c5a777529c7a8fb43a4110461801",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-36"
+  },
+  "actualSharedServiceWorkDeadline": 1794871251837,
+  "outerAuthorityLeaseExpiresAt": 1794871286837,
+  "runnerConservativeWorkDeadline": 1794871216837,
+  "readOnlyReadiness": true,
+  "retainedAckConfirmed": true,
+  "retainedAckValidated": true,
+  "dataDirectoryIdentity": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502421,
+    "mode": 448,
+    "uid": 61035
+  },
+  "databaseConnections": 0,
+  "mutations": 0,
+  "noOtherOperationUnits": true,
+  "sourceSha256": "2d9aa879a649ad9a47ccfeb4df218ee5adcca5059f1b0b5722197ca816acc486",
+  "projectionOnly": true,
+  "protectedTextsExcluded": true
+}

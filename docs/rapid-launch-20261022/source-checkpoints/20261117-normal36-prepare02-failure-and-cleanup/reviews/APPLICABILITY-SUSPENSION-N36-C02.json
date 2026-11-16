@@ -1,0 +1,53 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "mainOrReaderOrCASInvoked": false,
+    "oldReportsRewritten": false,
+    "ownerSourcesModified": false,
+    "serverActions": 0
+  },
+  "actualEvidence": {
+    "failureMetadataSha256": "bc221a456c2170fff5060db8d448e1b414572b0844bbcda6d1a5253cefece730",
+    "observation": "FAILED2, elapsed0.7639206509920768, safeCode NORMAL05_STOP_PINNED_MODULE_DIFFERS; childStarted=false, connectionCleanup=NOT_OPENED; no plan/initializer/native files; service36 running in metadata readback.",
+    "prepareResultSha256": "59586beda1f5daaa63cf006fba168c47091c7889745f83f671b7c4bf720cd3e7"
+  },
+  "affectedConsumerSourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
+  "affectedReviewSha256": "5ae30a41a6df1dc5adc7ba6c1535e83e5ea229433939db6104e7b5c4c3ae749b",
+  "finding": {
+    "correctionScope": "仅独立stop-only三literal与host支撑PINS/闭包，及原owner active36 pending-stop两源码pin+dispatcher policySHA和stopissuer配对；不重试prepare、不新建37或新plan。",
+    "files": [
+      "prepare/bundle/normal05_retained_stop.py",
+      "stop/bundle/normal05_retained_stop.py"
+    ],
+    "id": "N36-C02",
+    "impact": "实际prepare02在child启动前失败；stop也调用inspect_birth及对应源码load，旧pin不应提交。",
+    "pins": {
+      "NORMAL05_SHA": {
+        "actual36SourceSha256": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+        "staleExpected": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822"
+      },
+      "PROOF_SHA": {
+        "actual36SourceSha256": "642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35",
+        "staleExpected": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a"
+      },
+      "READONLY_SHA": {
+        "actual36SourceSha256": "933b094ea9da9372982ccf94a3bebc004aa50fd59f774b43d3532ded388fa7ec",
+        "staleExpected": "13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40"
+      }
+    },
+    "priority": "P1",
+    "title": "共用stop支撑模块仍钉35号三份源码，当前36将拒绝"
+  },
+  "limits": [
+    "Existing actual apply/start results remain valid; no retrospective invalidation.",
+    "Old native35 UNKNOWN remains UNKNOWN. This failed02 native child never started.",
+    "Current sole objective is safe stop36 and exactrestore36; existing role expiry must not be extended.",
+    "Await exact independent frozen stop-only and activeCAS/issuer source; no execution permitted by this supplement."
+  ],
+  "mustNotUseUncorrectedSourceForNewExecution": true,
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceOnly": true,
+  "state": "CONSUMER_SOURCE_APPLICABILITY_SUSPENDED_FOR_NEW_EXECUTION"
+}

@@ -1,0 +1,17 @@
+{
+  "PGConnections": 0,
+  "authorityCreated": false,
+  "compiledMembers": 2,
+  "launcherReferenceChanges": 1,
+  "originalClientExecuted": false,
+  "originalSourceUnchanged": true,
+  "scope": {
+    "format": "T45_R3_FAILED19_READONLY20_SERVICE_STOP_V1",
+    "requestKey": "t45-r3-ordinary36-preserve-stop-20261116-01",
+    "writerJobId": "t45-first-20261110-r3-real-execute-20261114-02"
+  },
+  "serverActions": 0,
+  "state": "LOCAL_SYNTAX_AND_EXACT_LITERAL_DIFF_CONFIRMED_SOURCE_ONLY",
+  "supportLiteralChanges": 3,
+  "unchangedASTAfterOnlyApprovedPinNormalization": true
+}
