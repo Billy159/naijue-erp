@@ -1,0 +1,67 @@
+{
+  "state": "FINAL_SAME_VERSION_NORMAL_CHAIN_SOURCE_PASS",
+  "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+  "normalStartupHoldClosed": true,
+  "normalStartupHoldClosureScope": "Same-version source review only",
+  "scope": "Single normal32 successor source, changed seams since normal31 and final registration/basis adapters, prior D1 and 31 review evidence reused.",
+  "openFindings": [],
+  "inputs": {
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/PINS.json": "7f350d38f72968680420995a937b9ba5e4046f35b407538d29388c952af315f0",
+    "outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/PINS.json": "810c66b7eac209a25c4232a6d174d59b91956a465e1bf359421a1d3f7f56ed60",
+    "outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/READY32.json": "0ad9b3aea99f00369f04ddec37e2dfacf05dd25efdd8ec0465bc480375ea759a",
+    "outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/CANDIDATE-01/PHASES32.UNISSUED.json": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+    "outputs/T45/revisions/20261116-r3-service32-registration-adapter-local-01/PINS.json": "772a885a8a1b77237c7c82bcfda84260d2e0a68e246e9814e2067136e71ab7f8",
+    "outputs/T45/revisions/20261116-r3-service32-registration-adapter-local-01/READY.json": "b1edc84e0082031a93958525209e3f6567e1a3cca5a18f068e412feea1e1634b",
+    "outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/PINS.json": "d282ccc81d7b9cf826a479a8e2356844e5e764035bccc73822f3432ff3b5f5d5",
+    "outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/READY.json": "eb739a9b6bda7c64ede11706466228b710491388e4303348895be8ec05a9eb85",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/NORMAL32-INSTALL-SESSION-SUCCESSOR-SOURCE-01/issue-install-from-actual.py": "52943dbc789d82be93eb6ddd8ad7b3eb1a1db22b67e78166a89d57f58f150421",
+    "outputs/QB/20261116-r3-install-capture-source-review-01/RESULT.json": "5498a301414c34b928da96532300edf1167acbd339d56c3db3612a8dee9d0f28"
+  },
+  "historicalEvidence": {
+    "outputs/T45/revisions/20261116-r3-service31-registration-actual-01/RESULT31-CLOSED.json": "a52d1e454eed813414ebf8813e7e50b8ecdaedb8ae0512f54271c2c38dbf9b83",
+    "outputs/T45/revisions/20261116-r3-service31-registration-actual-01/install/READBACK-01.json": "964203c579afec4ddabd6bb69459b9530b5e7d3ab708c4e06664572e50ebec63",
+    "outputs/T45/revisions/20261116-r3-install-session-observation-source-local-01/ORIGINAL-CAPTURE-READBACK-20261116T015956Z.json": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5"
+  },
+  "sourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+  "expectedMaterializationSha256": "e8f8032b00601e976c094f0365064d0385d7af8f48f9f7bbb465dca896bf3a5e",
+  "expectedMaterializationRepresentsCompletedAction": false,
+  "moduleBytes": 65325,
+  "moduleLimitBytes": 65536,
+  "qbIndependentVerification": [
+    "All Main32 and T45 candidate/adapter/basis member hashes match fixed PINS. Python and embedded reader ASTs parsed. All seven Main recorded deltas reconstructed byte for byte.",
+    "All seven candidate phase maps have exact actual bundle members and pins; fixed materialization/apply/start/install/writer/stop/restore jobs match registrar and root module. Template placeholder, module to dispatcher to registrar to carrier and adapter pins match.",
+    "128 prior basis paths preserved, only the current dispatcher entry moves to its recorded successor, with 19 historical paths added. Successful27/30 derived paths, exact hashes and tuples match prior specifications. Actual31 start, stop, cleanup, restore, proof and distinct generation paths match saved evidence.",
+    "Original install key retains exact FAILED2 at PREDECESSOR154, zero acknowledged layers, rollback and closed connection evidence. Original capture was separately observed to contain only attempt and failure. Old result key is not reused. Writer and original input contracts preserve the original job key.",
+    "Source05 382 rows equals source04 with only both previously reviewed D1 leaves replaced. Recomputed compact source fingerprint from frozen metadata matches 2399. Source descriptions, expected materialization receipt, runner and all three start/install/materialization runner bytes match.",
+    "Only new install key and fixed new source bytes are admitted by the client/receiver exception. Exact v3 client and authorized member pins match frozen copy, registrar and install host. D0 and full manifest checks remain on path.",
+    "Start describe and install use same source05 runner. Actual describe must come from stored exact service32 result. Thin issuer wrapper checks three completed evidence receipts, stored describe, review, policy/rule and v3 client bindings before invoking inner and outer APIs.",
+    "The runner derives capture directory from the same compiled program used for installation, creates it exclusively and reads completion from that directory. It confirms 13 commit ACKs, RESET acknowledgement and CLOSED. Outer installation authority read/cleanup uses the exact child/session and protected authority identity.",
+    "Main writer issuer and T45 host require exact completed new install, same program and derived capture leaf, 13 ACKs, completion digest and the catalog/service binding before the original writer can proceed.",
+    "Final adapter issued-state literal matches issuer. Basis reader preserves completed root04 and separately checks new root05 output and seven keys across both grants. Script retains prior failure evidence and read-only resource metadata collection."
+  ],
+  "producerLocalPairEvidence": {
+    "sha256": "d9fe00b19301ff063ad132c098256a7d5d2b66b25ef7373a5ed5472f8fa0cd2c",
+    "rerunByQB": false,
+    "scope": "v3 collector to actual receiver member buffers only, without full freeze/admit"
+  },
+  "separateT45ReadOnlyEvidence": {
+    "sha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+    "checkedAtUTC": "2026-11-16T02:14:04.961947+00:00",
+    "observedPinsCount": 147,
+    "observedPinsMatch": true,
+    "basisMismatches": 0,
+    "presentCandidateKeys": 0,
+    "readByQBFromDiskOnly": true
+  },
+  "serverActionsByQB": 0,
+  "postgresActionsByQB": 0,
+  "authorityFilesIssuedByQB": 0,
+  "genuineFactoriesRunByQB": 0,
+  "officialRuntimeAttemptVerifiedByQB": false,
+  "formalBusinessAccepted": false,
+  "pendingRuntimeEvidence": [
+    "Actual registration API and full admission",
+    "Source05 materialization and service32 genuine start and describe",
+    "New installation, original writer and business outcome"
+  ]
+}

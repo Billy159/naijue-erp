@@ -1,0 +1,32 @@
+{
+  "state": "DRY_RUN_NO_AUTHORITY_FILE_CREATED",
+  "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261116-r3-direct32-registration-window-01",
+  "startsAt": 1794795848698,
+  "registrationExpiresAt": 1794796748698,
+  "roleApplyExpiresAt": 1794797648698,
+  "controllerValidUntil": 1794801248698,
+  "backupAdminValidUntil": 1794801368698,
+  "restorationDeadline": 1794802748698,
+  "policyExpiresAt": 1794803048698,
+  "sourceAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+  "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+  "basisSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+  "independentReviewSha256": "2795886e0d0fe60bfbe0ccdec2957135bea22243e74c8cfa94ef3ababd93d435",
+  "rolesSha256": "ba8b4dd97e7ea70e6fa39b6fb5d01952c5f95dac48f660a52b7adbb786a57047",
+  "applyHostSha256": "7d05b69816868b09913552ff228cbcba21fe5ca56f962291e2133ce72e1f5711",
+  "policySha256": "ade37ee6defe8f99ee4bf58e1ebdb36c805bb8c6139c17ee4acc1245598b66ce",
+  "dispatcherSha256": "584a8ca924b03d38f4a5317f7e9791aa377964f3024e88b07ef38cd2d82ac88b",
+  "registrationSha256": "744dbdb85d00543268cc9b2487b9bc96b2f23b45180b7b648a2be20568bc7bc0",
+  "carrierSha256": "8f9798ecab442d230fb377847bda9252efa599300d8bca4e0402518105a93409",
+  "jobs": {
+    "apply": "t45-r3-ordinary32-auth-apply-20261116-01",
+    "install": "t45-r3-batched-install-20261116-02",
+    "materialize": "t45-r3-batched-root05-source-delta-20261116-01",
+    "restore": "t45-r3-ordinary32-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-32",
+    "stop": "t45-r3-ordinary32-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "phaseSubmitted": false,
+  "dryRun": true
+}

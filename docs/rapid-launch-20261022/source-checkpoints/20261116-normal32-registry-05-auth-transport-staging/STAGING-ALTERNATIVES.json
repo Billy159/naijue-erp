@@ -1,0 +1,165 @@
+{
+  "archiveSameDeviceMustBeVerifiedUnderLock": true,
+  "automaticReplay": false,
+  "candidateArchiveDestination": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/preserved-start32-unsubmitted-staging-20261116-01",
+  "candidateArchiveSource": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-32",
+  "existingFileHashesReadOnServer": false,
+  "existingProcedure": "restore27 same-key procedure is key/authority/receiver specific; only pattern reusable",
+  "expectedOriginalManifestSha256": "99da864c3d65cdc49c96bed3d8032b53fecb6e70b025aa98651cfdde5466aca4",
+  "minimumJobBudgetSeconds": 300,
+  "missingExpectedRows": [
+    {
+      "bytes": 57079,
+      "name": "normal_service05_after08.py",
+      "sha256": "f2df2046bd54db1b702c677705b33c131b1df140cd03aed68a8cc4ccd9636cc8"
+    },
+    {
+      "bytes": 48490,
+      "name": "operator-manifest.json",
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184"
+    },
+    {
+      "bytes": 7554,
+      "name": "prior_completed31.py",
+      "sha256": "d8ac44039e3a7f8b20ee5c473a3b5e8c3147d8d15429f4261f03fb96a7c65fe0"
+    },
+    {
+      "bytes": 7052,
+      "name": "r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0"
+    },
+    {
+      "bytes": 9394,
+      "name": "r3_05_runtime.py",
+      "sha256": "9347780b0fb2c3358634067776b06a19e6f31db7f7430c9d4d2e082f3c81f519"
+    },
+    {
+      "bytes": 1834,
+      "name": "root05_material.py",
+      "sha256": "3607db2b2320067a05d3f5816a0d19ecea718d6e8fca7d990d105d34bca95f3e"
+    },
+    {
+      "bytes": 4816,
+      "name": "service-start-authorization.json",
+      "sha256": "e435f34b95043f78711b9eab597f0f2988608b5cf338de4d50f22e6c12cbe37b"
+    }
+  ],
+  "originalAuthoritySha256": "e435f34b95043f78711b9eab597f0f2988608b5cf338de4d50f22e6c12cbe37b",
+  "originalPreflightSha256": "367c1f7ab53c8473114483bede8634fa9ffd87c4fbcf894a908bea0c035ebb3f",
+  "originalStagingReadbackSha256": "b76edcae7b604f51dc51f0880e721639af541bef28e27882da7e749d7d3cd21a",
+  "remoteActions": 0,
+  "remoteStagedFileExpectedRows": [
+    {
+      "bytes": 13590,
+      "metadata": {
+        "bytes": 13590,
+        "mode": 384,
+        "name": "batched161-run.mjs",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "batched161-run.mjs",
+      "sha256": "66878bf76eebf9c5ac06c7b8f5d56645945313996deb2a84e74c04f291cf854a"
+    },
+    {
+      "bytes": 185047,
+      "metadata": {
+        "bytes": 185047,
+        "mode": 384,
+        "name": "fresh35-production-carrier.py",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    {
+      "bytes": 18327,
+      "metadata": {
+        "bytes": 18327,
+        "mode": 384,
+        "name": "normal_service05_after08_proof.py",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "normal_service05_after08_proof.py",
+      "sha256": "42b6e4d21a0f134424a1f2e18964d67db8645fb39379ee44e0b238d0dce9f6e9"
+    },
+    {
+      "bytes": 72238,
+      "metadata": {
+        "bytes": 72238,
+        "mode": 384,
+        "name": "operator-host.mjs",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "operator-host.mjs",
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae"
+    },
+    {
+      "bytes": 26499,
+      "metadata": {
+        "bytes": 26499,
+        "mode": 384,
+        "name": "operator-stream-import-cli.mjs",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "operator-stream-import-cli.mjs",
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e"
+    },
+    {
+      "bytes": 10302,
+      "metadata": {
+        "bytes": 10302,
+        "mode": 384,
+        "name": "operator-stream-program.mjs",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "operator-stream-program.mjs",
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6"
+    },
+    {
+      "bytes": 747,
+      "metadata": {
+        "bytes": 747,
+        "mode": 384,
+        "name": "production-plan.json",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "production-plan.json",
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d"
+    },
+    {
+      "bytes": 21212,
+      "metadata": {
+        "bytes": 21212,
+        "mode": 384,
+        "name": "r3_05_readonly.py",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "r3_05_readonly.py",
+      "sha256": "f2eb5fb19f0658581fa8f188c50d33878144392a28fd22b7aac6a8c9ceee846e"
+    },
+    {
+      "bytes": 15078,
+      "metadata": {
+        "bytes": 15078,
+        "mode": 384,
+        "name": "start_owned_describe.py",
+        "regular": true,
+        "uid": 1000
+      },
+      "name": "start_owned_describe.py",
+      "sha256": "dd5b48abbdf17d84ada1fe05a899b8f14e59aab68cfcf717fb2aa740ea3da164"
+    }
+  ],
+  "requestKey": "t45-first-r3-native-service-start-20261116-32",
+  "scope": "Local exact manifest and archive plan only; issuer and independently reviewed new scoped carrier needed for a continuation; original client rejects existing control dir",
+  "state": "LOCAL_EXACT_ORIGINAL_STAGING_ALTERNATIVES_NO_SERVER_ACTION",
+  "submissionDeadlineUTC": "2026-11-16T02:41:09.906Z"
+}

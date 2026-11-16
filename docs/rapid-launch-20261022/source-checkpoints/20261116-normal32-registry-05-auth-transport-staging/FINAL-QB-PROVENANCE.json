@@ -1,0 +1,17 @@
+{
+  "source": "ACTUAL_COMPLETED_QB_TURN",
+  "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
+  "turnId": "01a1e218-8379-7c70-9de8-8d9a7e396a5f",
+  "turnStatus": "completed",
+  "completedAt": 1794795841,
+  "finalItems": [
+    {
+      "id": "msg_0a07ee903347bb2e016afa693cbfc48191a736336df1181d9c",
+      "text": "32 后继版源码验收通过，待修 0 项，已回传主控。05 源码包只替换了已验的两份 D1 文件。第 31 轮失败记录保留，原 writer 须等新安装确认 13 层提交、回执目录匹配且连接已关闭后才能继续。\n\n服务器登记、05 源码落盘、新安装和业务导入仍待实际回执确认。\n\n[机器可读验收回执](/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261116-normal32-install-session-successor-review-01/RESULT.json)"
+    }
+  ],
+  "result": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261116-normal32-install-session-successor-review-01/RESULT.json",
+    "sha256": "2795886e0d0fe60bfbe0ccdec2957135bea22243e74c8cfa94ef3ababd93d435"
+  }
+}

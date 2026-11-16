@@ -7642,6 +7642,21 @@
             "rootBasisSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
             "originalCaptureSha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_NORMAL32_ACTUAL_REGISTRATION_ROOT05_AUTH_APPLY_START_UPLOAD_INCOMPLETE_20261116",
+            "state": "PHASE_NEVER_SUBMITTED_CONTROL_STAGING_ONLY_RESTORE_PENDING",
+            "evidenceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-registry-05-auth-transport-staging",
+              "files": 15,
+              "bytes": 39116,
+              "manifestSha256": "6c6bb4ae9b4de2e6408e054cdebfa466b9a424f8911e46948307d5ab7d884dcf"
+            },
+            "reviewSha256": "2795886e0d0fe60bfbe0ccdec2957135bea22243e74c8cfa94ef3ababd93d435",
+            "materialReadbackSha256": "7ee39a9180083955ce441b4c8a0c0190b4bb969c3c37e427fd2fd808b125d1b8",
+            "actualApplyReadbackSha256": "5ec66516cb681ac03524c1fed741621c82a6c848b64895c768e98ad39c3ba445",
+            "unsubmittedStartReadbackSha256": "dc14397b3286bea2afdf2260d0255596c4594ed5709d524e76048a7a79870fa7",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7670,20 +7685,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "D1_FINAL_PASS_32_FINAL_PAIR_REVIEW_ACTIVE",
-            "work": "D1 final capture result5498 exact two leaves. Final 32 changed chain and 147/adapters under review. Real facts restricted to previous 31 safe close and current server read-only preflight."
+            "state": "FINAL32_SAME_VERSION_SOURCE_PASS",
+            "work": "Exact 2795886 source result, single rules31a8/Main7f350. Actual partial upload happened before the server received a request."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "SINGLE_PACKAGE_32_FROZEN_LIVE_147_PREFLIGHT_PASS_WAIT_FINAL_REVIEW",
+            "state": "SOURCE05_MATERIALIZED_32_AUTH_APPLIED_START_UNSUBMITTED_CONTROL_PARTIAL_STAGING",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Unique T45 rules31a8, PINS810c, source delta05 2399/382, expected marker e8f8 not executed. New install key 20261116-02 follows verified old failed zero layers, original writer request unsubmitted. Capture0b6b actual only attempt and failure files and zero later outputs, preserved. Fresh actual feb3 02:14:04Z 147 matches, old 31 C/ACK/stop/exact restored role fields, seven new keys absent in both grants, 05 output absent, 254.97GiB/28GiB, protected index/summary/INIT match. Current PG stopped. No registry, phase, or authority launched."
+            "work": "Actual registry96d5 dispatcher4373/policy99ea/module4ff1, material05 7ee39 COMPLETED0/18.136s independent marker e8f8/source2399/382 and 04 preserved. Apply32 COMPLETED0/7.5057s 5ec665, original restoration basis retained. Temporary authentication is applied. Start call encountered channel error and dc1439/b76edc confirm no request/tmp/root job/terminal/other grant/PGDATA process/port/ACK/active unit or local submission history. Nine protected staging files exist, seven absent including authorization; complete manifest missing. No later install or writer submitted."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "ACTUAL31_SAFE_CLOSE_REPAIR32_SINGLE_PACKAGE_SOURCE_READY_LIVE_PREFLIGHT_PASS_FINAL_REVIEW_PENDING_NO_NEW_INSTALL",
+          "formalR3": "32_ACTUAL_REGISTRY_SOURCE05_APPLY_COMPLETE_START_UNSUBMITTED_PARTIAL_STAGE_EARLY_RESTORE_PENDING",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7692,22 +7707,22 @@
             "guard deletion",
             "unknown outcome replay with changed keys"
           ],
-          "latestDispatcherSha256": "38a22c41a2dbd4f02dd5d0a6b4bf8808d063a8aa99615b6277472b0d43bb60bf",
-          "latestPolicySha256": "a07d6db401cfc669bfb94a444cf0f310c4be0d416356cb92b481f79c537ff065",
+          "latestDispatcherSha256": "4373d31d7e89e8201c9ee57109e17c6e92885441e394c092e175d2818cc7657d",
+          "latestPolicySha256": "99ea865df185eef2cd1c01cc9303d5c08e9bd8d90202c8b9557b5723820fac6a",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "Final 32 same-version source review, actual issuer dry run on fresh feb3, then actual source materialization, service start and repaired installation. Formal writer held until actual 2026-11-16 business export is identified and verified.",
+          "nextCheckpointScope": "Resolve only confirmed unsubmitted stage to restore original authentication on existing deadline, or qualified same-key completion under original scope. Wait separately for location of the actual 11/16 export.",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-single-package-delta-and-real-preflight",
-            "files": 32,
-            "bytes": 226260,
-            "manifestSha256": "015fe71b05262de9995c49dc8da8e3ce75b60839b2f0bfa424966e8de81e6efe"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-registry-05-auth-transport-staging",
+            "files": 15,
+            "bytes": 39116,
+            "manifestSha256": "6c6bb4ae9b4de2e6408e054cdebfa466b9a424f8911e46948307d5ab7d884dcf"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "NORMAL32_SOURCE_PREPARED_EXACT_LIVE_PREFLIGHT_PASS_QB_PENDING",
-            "work": "Single input e497 binds service, known FAILED2 154/ACK0/rollback and safe close. Main 7f350 / module65325B/147basis and seven exact job scopes, protected historical install terminal and result, original 04 retained. Source-phase paired exact v3 ed39 bytes, new capture pipeline with actual success/13ACK conditions. Fresh feb3 already returned. Await final same-version QA and actual issuer dry run before finite authority."
+            "state": "START_NEVER_SUBMITTED_EARLY_RESTORE_NEEDS_STAGING_PRESERVATION_OR_EXACT_SAME_KEY_COMPLETION",
+            "work": "Final source review2795, actual API dry then registry, 05 and apply completed. Initial start e435 window insufficient for read-preserving preparation plus 300s. Existing early restore requires original control stage absent. T45 finalized exact same-volume rename under original lock and dual grant no-request evidence, retaining all nine verified files. User asked to explicitly approve just that directory move per agents.md. Alternative same-key in-place completion can be assessed for installation-only under existing role and restoration deadlines, pending source check."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -8032,6 +8047,24 @@
             "rootBasisSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
             "originalCaptureSha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
             "newConstraints": "One exact successor, previous install history protected, single current run candidate and existing registry. No new time window or install submitted."
+          },
+          "normal32FiniteWindows": {
+            "startsAt": 1794795873406,
+            "registrationExpiresAt": 1794796773406,
+            "roleApplyExpiresAt": 1794797673406,
+            "controllerValidUntil": 1794801273406,
+            "backupAdminValidUntil": 1794801393406,
+            "restorationDeadline": 1794802773406,
+            "policyExpiresAt": 1794803073406,
+            "state": "REGISTRATION_MATERIALIZE_APPLY_ACTUAL_START_NOT_SUBMITTED_EARLY_RESTORE_PENDING",
+            "actualStartConfirmed": false,
+            "actualOriginalStartRequestPresent": false,
+            "controlStageExistsOnly": true,
+            "actualInstallConfirmed": false,
+            "actualRealImportConfirmed": false,
+            "actualRestoreConfirmed": false,
+            "actualSourceMaterializationSha256": "e8f8032b00601e976c094f0365064d0385d7af8f48f9f7bbb465dca896bf3a5e",
+            "stageReadbackSha256": "b76edcae7b604f51dc51f0880e721639af541bef28e27882da7e749d7d3cd21a"
           }
         },
         "independentDeltaReviewer": "QB",

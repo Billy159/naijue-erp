@@ -1,0 +1,28 @@
+{
+  "activeOperationUnits": [],
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-16T02:34:40.428847+00:00",
+  "exactCause": "NOT_AVAILABLE_CLIENT_DID_NOT_PRESERVE_FAILING_SSH_STEP_OR_STDERR",
+  "expectedMembers": 16,
+  "installationSubmitted": false,
+  "manifestAbsent": true,
+  "missingMembers": [
+    "normal_service05_after08.py",
+    "operator-manifest.json",
+    "prior_completed31.py",
+    "r3_05_cli.py",
+    "r3_05_runtime.py",
+    "root05_material.py",
+    "service-start-authorization.json"
+  ],
+  "originalClientError": "LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK",
+  "originalReadbackSha256": "dc14397b3286bea2afdf2260d0255596c4594ed5709d524e76048a7a79870fa7",
+  "originalStagingReadbackSha256": "b76edcae7b604f51dc51f0880e721639af541bef28e27882da7e749d7d3cd21a",
+  "remoteTerminalPresent": false,
+  "requestKey": "t45-first-r3-native-service-start-20261116-32",
+  "stagedMembers": 9,
+  "state": "START32_UPLOAD_INCOMPLETE_NO_REQUEST_NO_ROOT_JOB",
+  "targetDatabaseStopped": true,
+  "temporaryAuthenticationRestored": false,
+  "writerSubmitted": false
+}

@@ -1,0 +1,31 @@
+{
+  "applyHostSha256": "695ea2c9a7ba3d6101f297d479fa0e1189c91c5f26be56aebe17074722e16943",
+  "backupAdminValidUntil": 1794801393406,
+  "basisSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+  "carrierSha256": "a79e33876edd6d93d7a5c0cf8376c518f7b060635daeb98b71177f991a10a1b0",
+  "controllerValidUntil": 1794801273406,
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct32-registration-window-01",
+  "dispatcherSha256": "4373d31d7e89e8201c9ee57109e17c6e92885441e394c092e175d2818cc7657d",
+  "independentReviewSha256": "2795886e0d0fe60bfbe0ccdec2957135bea22243e74c8cfa94ef3ababd93d435",
+  "jobs": {
+    "apply": "t45-r3-ordinary32-auth-apply-20261116-01",
+    "install": "t45-r3-batched-install-20261116-02",
+    "materialize": "t45-r3-batched-root05-source-delta-20261116-01",
+    "restore": "t45-r3-ordinary32-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-32",
+    "stop": "t45-r3-ordinary32-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "phaseSubmitted": false,
+  "policyExpiresAt": 1794803073406,
+  "policySha256": "99ea865df185eef2cd1c01cc9303d5c08e9bd8d90202c8b9557b5723820fac6a",
+  "registrationExpiresAt": 1794796773406,
+  "registrationSha256": "b1603c8782d594422fc306c0f59ae47b5d51ce94456d443e49312c58e7236696",
+  "restorationDeadline": 1794802773406,
+  "roleApplyExpiresAt": 1794797673406,
+  "rolesSha256": "6989d6f10b0b2737c89eb634e69f829f1baa748737430a1055f99c43d6d47eab",
+  "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+  "sourceAuthoritySha256": "836d9281a81ca798eb6a989112012508a8e0696c58cf2d9ae44c186563786fc0",
+  "startsAt": 1794795873406,
+  "state": "ISSUED_EXACT_FAILED_INSTALL_SUCCESSOR_REGISTRATION_NO_SERVER_ACTION"
+}
