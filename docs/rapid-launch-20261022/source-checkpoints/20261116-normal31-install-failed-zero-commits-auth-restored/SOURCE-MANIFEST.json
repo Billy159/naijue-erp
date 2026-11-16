@@ -1,0 +1,62 @@
+[
+  {
+    "path": "START-READBACK.json",
+    "bytes": 23871,
+    "sha256": "7dde7d9565a2cb7c2e5512aad9cda5aacb9c5858b44cf70c04b852178b3dff31",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/start/READBACK-01.json"
+  },
+  {
+    "path": "INSTALL-FAILED-READBACK.json",
+    "bytes": 2707,
+    "sha256": "964203c579afec4ddabd6bb69459b9530b5e7d3ab708c4e06664572e50ebec63",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/install/READBACK-01.json"
+  },
+  {
+    "path": "PRESTOP-FACTS.json",
+    "bytes": 7235,
+    "sha256": "f048fad9e18112df49ba52f6367ccd6d7480ce066bb5c20d66162a01faa5c61d",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/stop/FACTS-01.json"
+  },
+  {
+    "path": "STOP-READBACK.json",
+    "bytes": 5507,
+    "sha256": "8726146195b64baf7a322b552ddbc1775b3f7243289d2eb703b037968e2f165d",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/stop/READBACK-01.json"
+  },
+  {
+    "path": "RESTORE-READBACK.json",
+    "bytes": 3119,
+    "sha256": "362125d51310a95aaf3b7c8551e6714b044428fb673fb3ba8b14c4b4fca669ae",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/restore/READBACK-01.json"
+  },
+  {
+    "path": "RESULT31-CLOSED.json",
+    "bytes": 2758,
+    "sha256": "a52d1e454eed813414ebf8813e7e50b8ecdaedb8ae0512f54271c2c38dbf9b83",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/RESULT31-CLOSED.json"
+  },
+  {
+    "path": "INNER-INSTALL-ISSUED-METADATA.json",
+    "bytes": 727,
+    "sha256": "c05baf33c8aab807840b6892afc1097b56be51e3aaa8f414d0eaa4d46ab8af18",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service31-inner-install-window-01/ISSUED.json"
+  },
+  {
+    "path": "INSTALL-ISSUED-METADATA.json",
+    "bytes": 397,
+    "sha256": "38a1a983d4158d75873d32464f690074a859280e0e8a9326b8df98d98333ba49",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service31-install-window-01/ISSUED.json"
+  },
+  {
+    "path": "STOP-ISSUED-METADATA.json",
+    "bytes": 410,
+    "sha256": "23dc441e2125f4610ea2b3a909503616d9ba303c16c45d9fb8b8226fcddc9de2",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service31-stop-window-01/ISSUED.json"
+  },
+  {
+    "path": "RESTORE-ISSUED-METADATA.json",
+    "bytes": 402,
+    "sha256": "46c78b8735393362b4ed3962ab970294bad77b362e56762855275ed0b29125d1",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct-service31-restore-window-01/ISSUED.json"
+  }
+]

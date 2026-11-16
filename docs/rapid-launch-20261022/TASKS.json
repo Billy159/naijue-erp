@@ -7613,6 +7613,20 @@
             "actualRegistryReadbackSha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
             "actualApplyReadbackSha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_ACTUAL_INSTALL31_PREDECESSOR154_ZERO_LAYERS_ROLLBACK_STOP_AUTH_RESTORE_COMPLETE_20261116",
+            "state": "ACTUAL_INSTALL_FAILURE_AND_STOPPED_EXACT_AUTH_RESTORED",
+            "evidenceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-install-failed-zero-commits-auth-restored",
+              "files": 10,
+              "bytes": 47133,
+              "manifestSha256": "b3e11c86edf5a62c53e11f3e208ab82643a6b3e434e7f673c58fa8fd1d555386"
+            },
+            "installReadbackSha256": "964203c579afec4ddabd6bb69459b9530b5e7d3ab708c4e06664572e50ebec63",
+            "stopReadbackSha256": "8726146195b64baf7a322b552ddbc1775b3f7243289d2eb703b037968e2f165d",
+            "restoreReadbackSha256": "362125d51310a95aaf3b7c8551e6714b044428fb673fb3ba8b14c4b4fca669ae",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7624,9 +7638,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "EXACT_SQL39_PREDECESSOR_COMPOSITION_FIX_FROZEN_AND_SCOPED_PASS",
+            "state": "INSTALLER_ACTOR_CONTRACT_ROOT_CAUSE_CONFIRMED_SOURCE_FIX_IN_PROGRESS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "RealDERIVE_ROOT11441:10 assertion caused productionprefix directly feedingSQL39-before154 toexpectedSQL39-after154; retainedparent10/10 after/0before exactbodyhashes. Twofiles cataloga490+newhelper0fd extractsamepriorpuretenbodytransform preservingV1/before-after-anchor assertions, productionapplybeforeoriginalderive; noSQL/DB/business changes. Actualoffline oldred/new154/155wholecategories+defs/bodiesfixtureexact andprodrolemodel proven, notgenuinePG. D1PINS782b/report338e/QBscope6796 accepted. NewfullsourceclosurecomputedbyT45 next, old703unchanged."
+            "work": "Actual 154 reached post validated session admin and effective owner, producer actor=session_user emitted admin, old owner-login consumer requires owner. Same observe function for 154/155/161. Also PG17.11 RESET command semantics and exact pg8.23.1 parser show RESET not SET; actual31 tag was not retained. Narrow two-leaf source repair, preserve old consumer branches and all original SQL operands/order/guards."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7646,15 +7660,15 @@
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "ACTUAL31_REGISTRATION_AND_AUTH_APPLY_COMPLETE_START31_AUTHORITY_HANDED_OFF",
+            "state": "SERVICE31_STOPPED_ORIGINAL_AUTH31_ACTUALLY_RESTORED_INSTALL_SUCCESSOR_CONTRACT_INVENTORY_LOCAL",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Fresh1283e2b true00:05:52 all pins/sixkeys/paths/stopped30; deltaRO3faf00:09:22 root254.99GiB/28GiBtrue and exactindexmetadata/summaryINITstreamhash. ActualAPI dryrun nofiles then actualISSUEe681 at00:10:16.817Z; actualregistry08c1 current38a22/a07d/365a matches, originalhistorylockpreserved. Apply31eae6 actualCOMPLETED0/7.5817s finished00:13:25.285Z, originalverifierrecoveryretained/newroles0/runtimeAuthattrsfalse; maintenanceCIDbf601 stopped0/noOOM and PGpidabs at00:13:38. Start31authority3d8e actuallyissued00:14:42.316Z handedoff originalkey once, no actual start result yet. Current31auth is APPLIED_NOT_RESTORED, must later actualrestore31; old30restore is historical. Install/REAL never submitted; source04 reuse."
+            "work": "Actual start31 COMPL0/43.558s, C42e7/CID3c83/PGepoch00:16:43.861Z, genuine source04/13-step descriptor 05f132 native compile passed. Original install submitted once using fixed client846e/receiver857e, received private725415 exact bytes. Failed at PREDECESSOR154 identity, actual9642 FAILED2/39.7496s/ACK0/rollback acknowledged/connection closed; role reset ACK false. Original install key consumed and original receipt preserved. Original writer remains absent. Actual stop8726 clean/PID-port absent; auth restore3621 COMPL0/6.7598s, exact original verifier and expiry privately verified (not natural expiry), maintained original DATA/04, PG still stopped and active units empty. T45 alone integrates exact successor after supported admission/capture inventory, no new server action yet."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "REGISTRATION31_AND_AUTH_APPLY31_ACTUAL_COMPLETE_START31_ISSUED_NOT_YET_VERIFIED_INSTALL_AND_REAL_UNSUBMITTED",
+          "formalR3": "NATIVE31_ACTUAL_INSTALL_FAILED_PREDECESSOR154_KNOWN_ZERO_ACK_ROLLBACK_CLOSED_STOPPED_AUTH_RESTORED_REAL_UNSUBMITTED",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7667,18 +7681,18 @@
           "latestPolicySha256": "a07d6db401cfc669bfb94a444cf0f310c4be0d416356cb92b481f79c537ff065",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "Actual single original start31 stored describe then immediate existing244f inner+outer install API; preserve actual descriptor clock and original install key; no same-class new approval.",
+          "nextCheckpointScope": "D1 exact two-leaf contract fix and T45 original consumed-key/capture and single package integration plan; preserve existing formal writer and no rehearsal overlap.",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-registration-apply-and-issued-start",
-            "files": 8,
-            "bytes": 79070,
-            "manifestSha256": "45dcae3f1b8eae1632ca6c501ace6765b4c92f01918a5e71d8a0319f858b52c6"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-install-failed-zero-commits-auth-restored",
+            "files": 10,
+            "bytes": 47133,
+            "manifestSha256": "b3e11c86edf5a62c53e11f3e208ab82643a6b3e434e7f673c58fa8fd1d555386"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "ACTUAL31_REGISTRATION_AND_APPLY_CONFIRMED_START31_ISSUED",
-            "work": "Finalsource997e/fresh3e2b/resource3faf and trueAPI matched before e681 finite window. Start3d8e by actualphase API uses genuine31 apply and normal30 successful-stop-restore scope, complete4320 budget meets. Thin244f awaits actual31 stored describe for immediate inner900+outer780 issuance, no recompile/clockrefresh/materialreplay."
+            "state": "ACTUAL31_INSTALL_FAILED_SAFE_CLOSE_ISSUER_PENDING_EXACT_SUCCESSOR_CONTRACT",
+            "work": "Original start and install authority executed, actual ACK0 rollback then original stop and auth restore terminal; old explicit role window closed, no new clock. D1 fixes exact admin-to-owner and RESET ACK, T45 owns executable package integration from one source; need exact consumed-key and capture directory closure, preserve business writer/original input and no bypass, then review only changed chain."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -7939,7 +7953,7 @@
           "normal31SourceTask": {
             "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL31-INSTALL-TRANSPORT-FIX-SOURCE-01/TASK.json",
             "sha256": "020246e833570b5a720a46e4d0be301b0e0b1ef7e3db455b27eb23d9596795eb",
-            "state": "FINAL_SOURCE_PASS_ACTUAL_NEW_RO_API_REGISTRATION_APPLY_COMPLETE_START_PENDING",
+            "state": "SOURCE_PASSED_AND_ACTUAL_INSTALL_REVEALED_IDENTITY_CONTRACT_DEFECT_AUTH_RESTORED",
             "reuseActual04": true,
             "installWriterOriginalKeysUnchanged": true,
             "mainPinsSha256": "184e65b96ab721b88853e5028971343fad46134748b110b3910f109f212f07e8",
@@ -7957,15 +7971,40 @@
             "restorationDeadline": 1794794716817,
             "policyExpiresAt": 1794795016817,
             "generation": 31,
-            "state": "REGISTRATION_AND_APPLY_ACTUALLY_COMPLETED_START_ISSUED_AUTH31_NOT_RESTORED",
+            "state": "ORIGINAL31_INSTALL_FAILED_AND_SAFE_CLOSED",
             "issuedMetadataSha256": "e6812e2d499bdff9d5d5990370b903bb5baaa0072ac939f8139a1a0fc961bcad",
             "actualApplyReadbackSha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
             "actualRegistryReadbackSha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
-            "actualStartConfirmed": false,
+            "actualStartConfirmed": true,
             "actualInstallConfirmed": false,
             "actualRealImportConfirmed": false,
-            "actualRestoreConfirmed": false,
-            "startAuthoritySha256": "3d8ef61f246c658eeef0bbeb50c3d270414cf811466003c9acc51f5ae875019f"
+            "actualRestoreConfirmed": true,
+            "startAuthoritySha256": "3d8ef61f246c658eeef0bbeb50c3d270414cf811466003c9acc51f5ae875019f",
+            "actualStartReadbackSha256": "7dde7d9565a2cb7c2e5512aad9cda5aacb9c5858b44cf70c04b852178b3dff31",
+            "actualInstallAttempted": true,
+            "actualInstallTerminalStatus": "FAILED",
+            "actualInstallAcknowledgedLayers": 0,
+            "actualInstallRollbackAcknowledged": true,
+            "actualInstallReadbackSha256": "964203c579afec4ddabd6bb69459b9530b5e7d3ab708c4e06664572e50ebec63",
+            "actualStopConfirmed": true,
+            "actualStopReadbackSha256": "8726146195b64baf7a322b552ddbc1775b3f7243289d2eb703b037968e2f165d",
+            "actualRestoreReadbackSha256": "362125d51310a95aaf3b7c8551e6714b044428fb673fb3ba8b14c4b4fca669ae"
+          },
+          "singlePackageExecution": {
+            "humanThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+            "humanMessageId": "01a1e1b9-ec82-7293-ab78-e1166e98ef41",
+            "integrationOwner": "T45",
+            "authorityAndCoordinationOwner": "C",
+            "requirements": [
+              "One executable final package and manifest",
+              "Centralize generation parameters in existing generator",
+              "One final chain check for affected edges and reuse prior valid evidence",
+              "One package integrator and one server owner",
+              "Report actual install, first durable commit, batch progress, reconciliation and opening"
+            ],
+            "requestedFreshSourceCutoff": "2026-11-16",
+            "freshSourceExportLocated": false,
+            "currentPackageRetained": true
           }
         },
         "independentDeltaReviewer": "QB",

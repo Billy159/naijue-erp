@@ -1,0 +1,63 @@
+{
+  "activeOperationUnits": [],
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-16T01:46:09.656334+00:00",
+  "databaseStillStopped": true,
+  "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+  "formalBusinessAccepted": false,
+  "installAcknowledgedLayers": 0,
+  "installReadbackSha256": "964203c579afec4ddabd6bb69459b9530b5e7d3ab708c4e06664572e50ebec63",
+  "installRollbackAcknowledged": true,
+  "installTerminalStatus": "FAILED",
+  "membershipsOrRoleAttributesChanged": false,
+  "naturalExpiryCountedAsRestoration": false,
+  "pgdataPidAbsent": true,
+  "restoreCleanup": {
+    "automaticReplay": false,
+    "cid": "cd78b2052551a5dc6ef1dd9b01926c8f3d9eb3460e3a62c85cb8a4f87d96ef62",
+    "confirmed": true,
+    "createAttempted": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "requestKey": "t45-r3-ordinary31-auth-restore-20261116-01",
+    "sourceDataPreserved": true,
+    "stage": "READ_BACK_OWN_CONTAINER_STOP"
+  },
+  "restorePublicResultSha256": "72bcef34100e9b5324306b744580bee9b3c9044ee6370b2477bcced891fc5794",
+  "restoreReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/restore/READBACK-01.json",
+  "restoreReadbackSha256": "362125d51310a95aaf3b7c8551e6714b044428fb673fb3ba8b14c4b4fca669ae",
+  "restoreRootPins": {
+    "cleanup": "1b9cc4f95114b336f65bccfbd87e60d07b90d2b72d0e628d5b6a9795f483b87f",
+    "result": "023d953c3fece2054074002486c6f355465cb8d70458ad1b6fc447cae8db5778",
+    "terminal": "4541b36de09569184c0198d9573e5becdb01d7babf1fecc7ffd7d83d3a511c7d"
+  },
+  "restoreRootPublicObjectsEqual": true,
+  "restoreTerminal": {
+    "atUTC": "2026-11-16T01:45:49.215829+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 6.759815098019317,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-16T01:45:56.024225+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary31-auth-restore-20261116-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-f960952c0caf"
+  },
+  "runtimeAuthChanged": false,
+  "state": "ACTUAL31_CLOSED_INSTALL_FAILED_CLEAN_STOP_ORIGINAL_AUTH_RESTORED",
+  "stopCleanupSha256": "929460035e9b5ab7c9a9a9639a69322b6879e590bf1827006ef3c94dcd6e86cf",
+  "stopReadbackSha256": "8726146195b64baf7a322b552ddbc1775b3f7243289d2eb703b037968e2f165d",
+  "writerSubmitted": false
+}
