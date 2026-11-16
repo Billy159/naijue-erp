@@ -1,0 +1,48 @@
+{
+  "state": "CACHED03_CODE_PIN_SUCCESSOR_SOURCE_UNISSUED",
+  "policySha256": "5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1",
+  "oldPolicySha256": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
+  "sameOriginalStartAndExpiry": true,
+  "startsAt": 1794820451251,
+  "expiresAt": 1794906851251,
+  "changedPolicyKeys": [
+    "codeSha256"
+  ],
+  "same54Manifests": true,
+  "same211OriginalFragments": true,
+  "cached03PinsSha256": "87fa9d9522b6566c4edcb0135177fdf97785f3433eca3e3a035098684c21f652",
+  "files": {
+    "admin_exec.INPUT-CACHED03.py": {
+      "sha256": "c573dd195c6a6aa80b6ec44f4c253446a953bb3d2ce6221f49856cc9237401bb",
+      "bytes": 44276
+    },
+    "check_cached03.py": {
+      "sha256": "e96f34fe304ec3a39700c1ed239f616144f939ba4494db4172989e9a2b45623f",
+      "bytes": 5923
+    },
+    "issue_registration.py": {
+      "sha256": "2a1904ad597cd89cef7a8a0d4ac9367221ba7ef74c7f7cd1ff884c8448bcdfb2",
+      "bytes": 4746
+    },
+    "original-cas-input-cached03-carrier.UNISSUED.py": {
+      "sha256": "0a7f8b1de4a36b8490d08731e172b4a30d76eacea6ed9fc0a7473c89c309a038",
+      "bytes": 2637
+    },
+    "r3_final33_input_cached03.py": {
+      "sha256": "17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63",
+      "bytes": 6869
+    },
+    "read_registration_basis.py": {
+      "sha256": "50c48c349fa6a4a033a63387498991637012cf1962b23dfe3da56ca3b7e9652a",
+      "bytes": 5434
+    },
+    "register_cas.py": {
+      "sha256": "27a741ec52e5788238f1d6ee2a19ee349d0bcd5eae6780ded6d5a010d83236c5",
+      "bytes": 15426
+    }
+  },
+  "businessWrites": 0,
+  "serverActions": 0,
+  "authoritiesIssued": false,
+  "localChecksSha256": "d9437109ac58de5ae5380ce8c00dd128ecdd06f9b40a9deccf434f3224c4778c"
+}

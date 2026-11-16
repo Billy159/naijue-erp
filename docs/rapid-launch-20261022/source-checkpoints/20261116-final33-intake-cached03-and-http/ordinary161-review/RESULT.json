@@ -1,0 +1,95 @@
+{
+  "state": "SOURCE_PASS_NEW_FOUR_ORDINARY161_LEAVES_ONLY",
+  "reviewedAt": "2026-11-16T09:40:00.681707+00:00",
+  "candidate": "outputs/D1/20261116-r3-final33-ordinary161-01",
+  "baseCommit": "ef807b39b5ac8c483e9350dc72108d57716bf291",
+  "pinsSha256": "b7441e3a1435ce049387b4c67bca43d563724aa6fefbe80f14721429c56fc673",
+  "reportSha256": "db3a6bd5c7797fdda9cf91767faa51e01bd6c77eae779c0beaca6d957193fd86",
+  "patchSha256": "96f5d20e5d0d175b26189f4e9f528379495419707fab5c96646e57687bda0cac",
+  "newImplementationLeaves": [
+    {
+      "path": "scripts/release/manifest.mjs",
+      "beforeSha256": "b0e86b678d5bdef5ebc7ece63e93e5e2c41d352db5fe9ad2e3e7ee357fd07860",
+      "sha256": "8df73fb978ff8beac46639c7b56819f44d854c1bbf3ca1f96d0f884b20f0e9a5",
+      "bytes": 42081,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "beforeSha256": "7a1398ee8b81be36ac9d9bbb38a28cdcac014d38835cd070bb1c827f688b074f",
+      "sha256": "a073503b113d19b86184435c492a66f34ddea26982e5c8f1980dca9ab1e75b9f",
+      "bytes": 69148,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.d.mts",
+      "beforeSha256": "f8c36ad61cdf06a8a5a4e145f5435544018ca11dfd6728794bd2ded883c7907c",
+      "sha256": "f6e403f37e0a41cd0ce5e9d94ec8335b80e2fb4e0a65108ac606e1e41a2ac8c4",
+      "bytes": 8347,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "beforeSha256": "3c2754a0a69fedb1b94bc59ddba5ea1f23c8a054830b862d58b6175ae748c031",
+      "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+      "bytes": 121315,
+      "origin": "ORDINARY161_INTEGRATION"
+    }
+  ],
+  "frozenDependenciesReused": 74,
+  "sourceFilePinsVerified": 78,
+  "nativeClosurePinsVerified": 284,
+  "findings": [],
+  "verified": [
+    "All78 declared file sizes/hashes match source and work; 74 frozen dependencies byte-equal prior D1 final-source-prepare work; four before hashes match actual ef807 originals",
+    "Original formal current-service loader and SQL36/38 lineage function bodies are byte-equal except function rename; ordinaryWindow and assertFresh35OrdinaryLeaseV2 bodies byte-equal",
+    "Formal entry sixth generation argument reaches original loader and generation.bind owner/PG tuple/current-C callback; metadata JSON does not mint capability",
+    "Actual provider is production-provider-composition.ts; it and production-main, read-api, production-generation, runtime27 issuer, bounded-pool, authentication ports and release contract are byte-equal ef807",
+    "Formal ordinary catalog builds CompactZero -> Batched161 -> CommandSuccessor, hard pins161/model626c; installation history/lineage use baseCatalog, startup guards/observation validator/state.catalog/cap use full current catalog",
+    "Only new command-successor ordinary observation switches sourceSet to actual derived descriptor; old ordinary branch unchanged relative frozen D1 catalog",
+    "Release native35Closure preserves old223 and exact new284 selected by fixed CommandSuccessor review pin, existing path/fixture/SQL36/38 constraints retained;284 compiled pins all match actual work files",
+    "Metadata describe API reconstructs protected original target and returns source/catalog only; no pool, generation.bind, cap or SQL execution"
+  ],
+  "evidenceReuse": {
+    "strictTypecheck": {
+      "status": "OWNER_REPORTED_PASS_NOT_RERUN",
+      "config": "work/tsconfig.launch-api.json",
+      "configurationInspected": true,
+      "standaloneCompilerLog": "NOT_DELIVERED_IN_THIS_DIRECTORY"
+    },
+    "formalLifecycleModel": {
+      "logSha256": "62141cfbefc36a0bcf18f6d04e43f76f40235bf0319746e64fb2281d37cffeac",
+      "reportedPass": 1,
+      "reportedFail": 0,
+      "scope": "MODEL_ONLY_NOT_REAL_ADMISSION",
+      "sourceReviewed": "checks/formal-generation-model.test.mjs",
+      "notRerun": true
+    },
+    "compiledMetadata": {
+      "sha256": "18cbdf50c38a6c1b43cebbe34c6df5a1436849e0db7c0d068dba743247fbd921",
+      "rootSourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+      "derivedSourceSetSha256": "8b746195c7a3378dc6959c93524afb3a9b702cfcb91301060d83e8e12d615d1f",
+      "catalogSpecSha256": "9f7b87c2a1087a49c9ece576c405677e720c97b9cd76dc19aabcd36a3cc24cfc",
+      "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+      "routineCount": 161,
+      "scope": "OWNER_EXECUTED_METADATA_ONLY_NO_LIVE_C_OR_DB"
+    }
+  },
+  "nonBlockingEvidenceCorrections": [
+    "PINS preservedAppPaths contains nonexistent apps/api/src/postgres-provider.ts (also absent ef807); actual production-provider-composition.ts independently verified unchanged",
+    "Delivered checks/formal-generation-model.test.mjs imports ../tools/... relative to checks, which is not the candidate work path. Existing log is retained owner evidence, not a reproducible command against that delivered path. No tests rerun."
+  ],
+  "pending": [
+    "T45 final integration, build, runtime owner/C/config receipts and actual ordinary HTTP",
+    "Any independent restore target with differing physical tuple or PGDATA needs real T45 protected mapping; no arbitrary restore support claimed"
+  ],
+  "actions": {
+    "sourceEdits": 0,
+    "candidateExecution": 0,
+    "builds": 0,
+    "testsRerun": 0,
+    "serverCalls": 0,
+    "pgCalls": 0
+  },
+  "runtimeOrReleaseAccepted": false
+}

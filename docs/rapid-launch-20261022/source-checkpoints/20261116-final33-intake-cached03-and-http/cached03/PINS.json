@@ -1,0 +1,46 @@
+{
+  "PGConnections": 0,
+  "actualNetworkEffect": "NOT_TESTED",
+  "changedLeaves": [
+    "batch_protocol.py",
+    "batch_client.py",
+    "batch_transport.py"
+  ],
+  "changes": [
+    "Only exact validated durable ACK renews90 second idle budget; unchanged shared600 hard deadline",
+    "Distinct idle and total codes with bounded timing fields",
+    "One existing same-key readback after unknown finalize reply; strict READY binding consumed, no operation replay",
+    "Safe exception code/class without argv",
+    "First new cache bootstraps exact three changed inline leaves; four original leaves reused"
+  ],
+  "closeoutReserveSeconds": 240,
+  "codeSha256": {
+    "artifact-receiver.d3-chunk.py": "bee800f2341ff1cba5400ce61a2227acce50498c82216882630f33f040c46e97",
+    "batch_client.py": "f94ec48fd7955d00e9fae55c2ba795e78931892683cc92dbe9b8a765f6f16ced",
+    "batch_policy.py": "2eab0a4e7d868caca2e15e50dbc03fc6658117c5d671f6429c4e418d27f3208a",
+    "batch_protocol.py": "d4a8e67eb9b936f910b158f9df2c47695e9773d15eec0f50efd2cde045754225",
+    "batch_remote.py": "e59466060a593af70a4ce677c6f625b6c8dcfde2f63076eecbe07d5cb8a1e582",
+    "batch_transport.py": "b2028208500f9e4578c95f56e0198184e05d977bd649d7173e546ec56b506c51",
+    "d3-chunk-policy.py": "d5a0c206b7866049ffe1245073da744aeb7f3b4475884b2c867b661f0b451175"
+  },
+  "deltaSha256": "cd0ffa3a66b4b3b8d04425004839e1209a772055e01dffeba4bc5306ecac430c",
+  "launcher": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/STATIC-RECOVERY-01/run_cached03_at_approved_start.py",
+  "launcherSha256": "e2765667f455501012389b75ab8277cbd12bb38eb3e4e811eba7cd747f18ed67",
+  "localProbe": {
+    "path": "check_local.py",
+    "resultSha256": "36f2e951a4234c336cc2b80f600596a924ce8e2581cdeef93248e08122b7c20f",
+    "sourceSha256": "d6cfe3da7578911b85ff3c0cbd96bc86ff5bd9dfb93b9e6414ca4b97f8be405c",
+    "state": "LOCAL_ONLY_PASS_NO_NETWORK"
+  },
+  "maximumWindowSeconds": 1080,
+  "newRootPolicyRequired": true,
+  "oldFilesPreserved": true,
+  "originalClientSha256": "258733835fbe3180abadc43cb9d4d5cea9dc47e89dd05455f5a0d4f7d8a0bd58",
+  "querySeconds": 15,
+  "serial": true,
+  "serverActions": 0,
+  "sharedUploadSeconds": 600,
+  "stallSeconds": 90,
+  "state": "LOCAL_CACHED03_PATCH_IMPLEMENTED_REVIEW_PENDING_NOT_EXECUTED",
+  "unchangedCodeLeaves": 4
+}

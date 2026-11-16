@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T17:21:04.621953+08:00",
+  "updatedAt": "2026-11-16T19:55:54.082533+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -51897,19 +51897,19 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-16T16:45:44.688084+08:00",
+    "updatedAt": "2026-11-16T19:52:10.193593+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-    "currentTarget": "R3_DB05_INSTALLED_STOPPED_ZERO_BUSINESS_BATCHES",
+    "currentTarget": "DB05_INSTALLED_STOPPED_ORIGINAL_ROLE_AUTH_RESTORED",
     "owners": {
-      "T45": "sole final run-package integrator and server operator; exact continuity registration receive gate recovery",
-      "D1": "final-source PREPARE and first-writer six-leaf overlay delivered; QB source PASS",
+      "T45": "sole server owner, actual CACHED03 receiver and exact final9 integration",
+      "D1": "final-source and ordinary161 overlays delivered; timeout diagnosis reused",
       "D2": "readonly exact ordinary HTTP and restored application consumer mapping",
       "D3": "final11/16 standard514485-row package and full offline preflight complete",
-      "QB": "narrow independent new-source and final outer integration review",
+      "QB": "narrow root9 issuer review after accepted CACHED03 source/registration/issuer",
       "C": "actual receipt adoption, root finite registration/issuer and original-key coordination"
     },
-    "release": "NOT_READY_REAL_IMPORT_BACKUP_RESTORE_HTTP_PENDING",
-    "next": "Fix finite original continuity registration and exercise actual admission consumer before next signed receive window. T45 sole server owner; preserve root hold and original writer key. Integrate final source and exact PREPARE/first-writer envelopes without repeated preflight.",
+    "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_HTTP_PENDING",
+    "next": "Receive missing012 through first CACHED03 window after actual registered code pins; continue54 groups and native9-phase source review. No user fact/approval currently needed.",
     "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
   },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,11 +52675,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-    "asOf": "2026-11-16T17:21:04.621953+08:00",
-    "state": "EXACT_INPUT_CONTINUITY_REGISTERED_WINDOW05_ISSUED_READY_PENDING",
+    "asOf": "2026-11-16T19:55:54.082533+08:00",
+    "state": "CACHED03_FIRST_REAL_RECOVERY_CLOSED_TWELVE_READY_NEXT_GROUP_ISSUED",
     "realWriterSubmitted": false,
     "realBusinessRowsWritten": 0,
-    "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_RESTORED",
+    "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_ROLE_AUTH_RESTORED",
     "data": {
       "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
       "tables": 26,
@@ -52703,24 +52703,59 @@
     "d1FinalSourcePinsSha256": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
     "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
     "materialization02SourceReview": "PASS_894d0654_NO_ACTUAL_MATERIALIZATION",
-    "ordinaryHttp": "T45_SELECTED_EF807_FORMAL_GENERATION_BASE_D1_MINIMAL_ORDINARY161_SOURCE_IMPLEMENTATION",
-    "next": "Receive exact211 original fragments using registered input continuation; original native upload/withdraw and same-key unknown readback. T45 integrates final8 phases and source, D1 adapts exact formal-generation HTTP consumer, no complete rehearsal.",
+    "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
+    "next": "Original012 receive then remaining54 groups; final9 preparation/writer source reviewed ahead. Native actual import/backup/physical restore/formal roles pending.",
     "inputRegistration": {
-      "dispatcherSha256": "5094e41828fafad55af2715e0523ce5656787b87699ccbcff1a336910bf7939e",
-      "moduleSha256": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
-      "policySha256": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
-      "actualReadbackSha256": "68c874cbadcf3ea053f487aa58a52ade7ba9212a0918531d721552f9f569cb88",
-      "consumerClass": "Final33InputContinuation",
-      "oldSnapshotAndOriginalLockIdentityMatched": true,
-      "stoppedBasisVerifiedByActualConsumer": true,
+      "dispatcherSha256": "c573dd195c6a6aa80b6ec44f4c253446a953bb3d2ce6221f49856cc9237401bb",
+      "moduleSha256": "17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63",
+      "policySha256": "5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1",
+      "actualReadbackSha256": "7f7cc01c098384c64b4c688c02811678c62373c6887f717f236249f1bb5d1aa5",
       "groups": 54,
-      "originalFragments": 211
+      "originalFragments": 211,
+      "sameOriginalOverallExpiry": 1794906851251,
+      "stoppedBasisVerifiedByActualConsumer": true
     },
     "window05": {
       "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
       "startsAt": 1794820891677,
       "expiresAt": 1794821971677,
       "state": "SIGNED_FUTURE_ACTIVATION_ACTUAL_READY_PENDING"
+    },
+    "readyOriginalFragments": 12,
+    "totalOriginalFragments": 211,
+    "recovery023bf": {
+      "restoreTerminalSha256": "967d29d871d22fa3fba377b7bdec008bfc0bf3c26cdd214279fc05b50b539780",
+      "postWithdrawReadbackSha256": "309d0033abb13d2340427119bfa67c5f79195230c887e0e1e9f8c24aee273e84",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "policyAbsent": true,
+      "ready": [
+        9,
+        10,
+        11
+      ],
+      "absent": [
+        12
+      ]
+    },
+    "cached03FirstWindow": {
+      "authoritySha256": "f8c3c7803d406eac712214bcd3a40996857481666929ef0ca7437f23f341fe7c",
+      "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
+      "result": "ALL_FOUR_READY_WITH_ORIGINAL_PREEXISTING_THREE_PRESERVED_AND_ONLY012_RECEIVED",
+      "originalRestore": "COMPLETED_0",
+      "policyAbsent": true,
+      "state": "ACTUAL_COMPLETE_POLICY_WITHDRAWN"
+    },
+    "rootNine": "SOURCE_READY_INDEPENDENT_REVIEW_PENDING_UNSIGNED",
+    "currentReceiveWindow": {
+      "authoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1",
+      "state": "013_016_ISSUED_FUTURE_START_ACTUAL_PENDING",
+      "parts": [
+        13,
+        14,
+        15,
+        16
+      ]
     }
   }
 }

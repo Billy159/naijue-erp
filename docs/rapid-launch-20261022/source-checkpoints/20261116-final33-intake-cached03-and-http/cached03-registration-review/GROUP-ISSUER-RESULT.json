@@ -1,0 +1,56 @@
+{
+  "state": "SOURCE_PASS_CACHED03_GROUP_ISSUER_CODE_PIN_PAIRING_ONLY_NOT_ISSUED_OR_RUNTIME",
+  "reviewedAt": "2026-11-16T11:48:13.918388+00:00",
+  "findings": [],
+  "source": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CACHED03-ISSUER-01/issue_group.py",
+    "sha256": "8a54b334d0aaea68e34f9cb511026fe602bac0deb590303b2093a25c00776ba8",
+    "bytes": 6516
+  },
+  "previousIssuer": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-ISSUER-01/issue_group.py",
+    "sha256": "9b67f3ba8443e57c2b7ee66959b1b02c6f626b70d033c2f8192f77e416eff16b",
+    "bytes": 6585
+  },
+  "cached03Review": {
+    "path": "outputs/QB/20261116-final33-cached03-timeout-delta-review-01/RESULT.json",
+    "sha256": "37d6765ce2233a85678d32a085abf7b3c7c0f1ec7bff0f49e0274324003df14c"
+  },
+  "cached03RegistrationReview": {
+    "path": "outputs/QB/20261116-final33-cached03-registration-delta-review-01/RESULT.json",
+    "sha256": "f1da2569cb81aa7c3d14c7a9db9535617620431a9fcc5e957c44b0b737930ab3"
+  },
+  "policy": {
+    "path": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CACHED03-CONTINUITY-01/POLICY.CACHED03.json",
+    "sha256": "5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1"
+  },
+  "codeSha256": {
+    "artifact-receiver.d3-chunk.py": "bee800f2341ff1cba5400ce61a2227acce50498c82216882630f33f040c46e97",
+    "batch_client.py": "f94ec48fd7955d00e9fae55c2ba795e78931892683cc92dbe9b8a765f6f16ced",
+    "batch_policy.py": "2eab0a4e7d868caca2e15e50dbc03fc6658117c5d671f6429c4e418d27f3208a",
+    "batch_protocol.py": "d4a8e67eb9b936f910b158f9df2c47695e9773d15eec0f50efd2cde045754225",
+    "batch_remote.py": "e59466060a593af70a4ce677c6f625b6c8dcfde2f63076eecbe07d5cb8a1e582",
+    "batch_transport.py": "b2028208500f9e4578c95f56e0198184e05d977bd649d7173e546ec56b506c51",
+    "d3-chunk-policy.py": "d5a0c206b7866049ffe1245073da744aeb7f3b4475884b2c867b661f0b451175"
+  },
+  "verified": [
+    "BASE changed only to03 and exact independent03 review state/findings/hash replaces old02 review composition; all seven actual03 source hashes consumed from this verified review",
+    "First batch immutable fields still sourced from original CACHED02 fixed declaration with exact first manifestSHA52a433; only codeSha256 is replaced",
+    "Pinned policy5d861a checked and seven-code dict exactly equals review; startsAt must remain in original policy and eighteen-minute group expiry at least300 seconds before original policy expiry",
+    "Original54-group index/recovery normalized-boundary projection and source slice/segment/prefix hash/native part_api validation retained byte-for-byte",
+    "Original1080-second authority construction, nonnegative activation delay interface including caller-provided90-second future activation, exclusive output under outputs/主控 and no server execution retained byte-for-byte"
+  ],
+  "notTested": [
+    "No real group authority issued",
+    "No new network, runtime reception or post-withdraw boundary claim"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "authorityIssued": false,
+    "sourceEdits": 0,
+    "testsRerun": 0
+  }
+}

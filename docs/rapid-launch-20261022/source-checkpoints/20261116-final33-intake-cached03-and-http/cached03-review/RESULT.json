@@ -1,0 +1,86 @@
+{
+  "state": "SOURCE_PASS_CACHED03_THREE_LEAF_TIMEOUT_DELTA_ONLY",
+  "reviewedAt": "2026-11-16T11:43:53.123797+00:00",
+  "candidate": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03",
+  "pinsSha256": "87fa9d9522b6566c4edcb0135177fdf97785f3433eca3e3a035098684c21f652",
+  "localProbesSha256": "36f2e951a4234c336cc2b80f600596a924ce8e2581cdeef93248e08122b7c20f",
+  "localProbeSourceSha256": "d6cfe3da7578911b85ff3c0cbd96bc86ff5bd9dfb93b9e6414ca4b97f8be405c",
+  "deltaSha256": "cd0ffa3a66b4b3b8d04425004839e1209a772055e01dffeba4bc5306ecac430c",
+  "codeSha256": {
+    "artifact-receiver.d3-chunk.py": "bee800f2341ff1cba5400ce61a2227acce50498c82216882630f33f040c46e97",
+    "batch_client.py": "f94ec48fd7955d00e9fae55c2ba795e78931892683cc92dbe9b8a765f6f16ced",
+    "batch_policy.py": "2eab0a4e7d868caca2e15e50dbc03fc6658117c5d671f6429c4e418d27f3208a",
+    "batch_protocol.py": "d4a8e67eb9b936f910b158f9df2c47695e9773d15eec0f50efd2cde045754225",
+    "batch_remote.py": "e59466060a593af70a4ce677c6f625b6c8dcfde2f63076eecbe07d5cb8a1e582",
+    "batch_transport.py": "b2028208500f9e4578c95f56e0198184e05d977bd649d7173e546ec56b506c51",
+    "d3-chunk-policy.py": "d5a0c206b7866049ffe1245073da744aeb7f3b4475884b2c867b661f0b451175"
+  },
+  "launcher": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/STATIC-RECOVERY-01/run_cached03_at_approved_start.py",
+    "sha256": "e2765667f455501012389b75ab8277cbd12bb38eb3e4e811eba7cd747f18ed67",
+    "delta": "Only CACHED02->03 path and exact client hash. Original approved start wait, all seven leaf hashes, O_EXCL launch record and single subprocess invocation preserved."
+  },
+  "findings": [],
+  "scope": [
+    "batch_protocol.py STALL40->90",
+    "batch_transport.py deadline classification and safe timing",
+    "batch_client.py durable-binding tracking, safe errors, one independent same-key READY recovery, first-cache3-inline4-reused",
+    "Necessary unchanged embedded cache publisher and exact launcher pairing"
+  ],
+  "verified": {
+    "exactThreeChangedFourUnchanged": true,
+    "protocolDeltaOnlyStallConstant": true,
+    "idleRenewal": "Only progress callback returning true after Transfer.receive validates the next exact durable segment, key/bytes/prefix/inode/originalBinding and records evidence renews idle. Write progress, arbitrary stdout, duplicate ACK and invalid receipt cannot renew it.",
+    "hardDeadline": "Original min(monotonic+total, shared deadline) retained; ACK does not alter hard. Shared600, query15, closeout240, signed1080 window, serial receive/finalize and original-key no-replay flow unchanged.",
+    "safeTiming": "Idle/total classified separately, phase/elapsed/lastAckAge/sentBytes numeric fields only. TimeoutExpired converted to fixed SSH_QUERY_TIMEOUT or bounded Incomplete code; argv not persisted by new handlers.",
+    "finalizeUnknownReply": "Only OSError/TimeoutExpired or exact BATCH_SHORT_QUERY_FAILED may recover from one observe_failure -> status -> independent query. No finalize/receive resubmission. Malformed or semantic failure cannot be promoted by a coincidental READY status.",
+    "strictReadyClient": "READY exact key/length/wholehash/prefix/manifest/fragment tuple/device+inode, receipt full equality, original binding from accepted durable ACK or approved boundary, current recovery digest, READY authority and SHA shape checked.",
+    "strictReadyNative": "Status uses unchanged fixed batch_remote and receiver; native recovery_scope/open verifies protected original binding, real inode/layout/full prefix and READY raw receipt. For preexisting READY proof, recovery_ready_record requires approved old READY raw SHA, prior authority and inode pair, then exact receipt equality. Client fallback is not an independent cap or unchecked status trust.",
+    "cache": "First cache sends exact3 changed leaves inline; four unchanged leaves read from original protected cache. Next version memo requires same seven hashes. Embedded cached-stage source byte-equal CACHED02 with original protected ownership/canonical path/hash checks and no-replay publisher.",
+    "cacheWireSizeCheck": {
+      "method": "PURE_LOCAL_SERIALIZATION_ONLY_NOT_ISSUED_AUTHORITY",
+      "initialFourPartExampleBytes": 84199,
+      "compressedBytes": 28702,
+      "limits": [
+        262144,
+        65536
+      ],
+      "inline": 3,
+      "reused": 4
+    },
+    "sourceHelper": "final33-source.py remains exact66c569 frozen original helper"
+  },
+  "existingProbeEvidence": {
+    "status": "REUSED_NOT_RERUN",
+    "ownerResultState": "LOCAL_PATCH_PROBES_PASS_NOT_LIVE_TRANSFER",
+    "cases": [
+      "idle90",
+      "total hard2",
+      "fragmented/coalesced ACK lines",
+      "Transfer.finalize timeout then exactly one status read",
+      "unknown/wrongprefix/wrongbinding/wrongorigin/wrongrecoverydigest/wronginode/wrongmanifest reject",
+      "argv sentinel not in exported evidence"
+    ],
+    "limitation": "Transport uses mocked clock/pipes and actual finalize uses query/status stubs. Does not establish live network, actual READY provenance or real transfer performance."
+  },
+  "reusedPreviousScopes": [
+    "CACHED02 cached publisher/nonzero reply behavior",
+    "Original seven-leaf receiver/policy and boundary/native READY origin checks",
+    "Existing root input continuation and recovery-source review; no repeat full review"
+  ],
+  "requiredBeforeExecution": [
+    "New root policy/code pin registration and external exact authority must bind these seven CACHED03 hashes; old CACHED02 policy does not authorize changed leaves",
+    "Owner must retain actual previous023bf restore COMPLETED0 and policy ENOENT evidence; this source review makes no new server-state claim",
+    "Real transfer stall behavior, finalize unknown outcome readback and full closeout remain runtime evidence to collect"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "t45FilesChanged": 0,
+    "candidateMainInvocations": 0,
+    "probeReruns": 0,
+    "sourceAuthorityIssued": false
+  },
+  "businessOrTransferRuntimeAccepted": false
+}

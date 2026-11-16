@@ -1,0 +1,135 @@
+{
+  "state": "SOURCE_PASS_CACHED03_CODE_PIN_INCREMENT_ONLY_NOT_REGISTERED_OR_RUNTIME",
+  "reviewedAt": "2026-11-16T11:46:47.369292+00:00",
+  "findings": [],
+  "files": {
+    "admin_exec.INPUT-CACHED03.py": {
+      "sha256": "c573dd195c6a6aa80b6ec44f4c253446a953bb3d2ce6221f49856cc9237401bb",
+      "bytes": 44276
+    },
+    "check_cached03.py": {
+      "sha256": "e96f34fe304ec3a39700c1ed239f616144f939ba4494db4172989e9a2b45623f",
+      "bytes": 5923
+    },
+    "issue_registration.py": {
+      "sha256": "2a1904ad597cd89cef7a8a0d4ac9367221ba7ef74c7f7cd1ff884c8448bcdfb2",
+      "bytes": 4746
+    },
+    "original-cas-input-cached03-carrier.UNISSUED.py": {
+      "sha256": "0a7f8b1de4a36b8490d08731e172b4a30d76eacea6ed9fc0a7473c89c309a038",
+      "bytes": 2637
+    },
+    "r3_final33_input_cached03.py": {
+      "sha256": "17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63",
+      "bytes": 6869
+    },
+    "read_registration_basis.py": {
+      "sha256": "50c48c349fa6a4a033a63387498991637012cf1962b23dfe3da56ca3b7e9652a",
+      "bytes": 5434
+    },
+    "register_cas.py": {
+      "sha256": "27a741ec52e5788238f1d6ee2a19ee349d0bcd5eae6780ded6d5a010d83236c5",
+      "bytes": 15426
+    }
+  },
+  "candidate": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CACHED03-CONTINUITY-01",
+  "sourcePinsSha256": "16d108914f2e85c03baf36fe1471564a2a979a76b2b70edefe08353499a103b5",
+  "policySha256": "5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1",
+  "predecessorPolicySha256": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
+  "cached03Review": {
+    "path": "outputs/QB/20261116-final33-cached03-timeout-delta-review-01/RESULT.json",
+    "sha256": "37d6765ce2233a85678d32a085abf7b3c7c0f1ec7bff0f49e0274324003df14c"
+  },
+  "predecessorRecoveryReview": {
+    "path": "outputs/QB/20261116-final33-input-recovery-continuity-review-01/RESULT.json",
+    "sha256": "2e40a981fe31a3ff13e6a5a2c043c3a88a1d602e73d7351599bae85a91a1fe54"
+  },
+  "verified": {
+    "allSevenPythonFilesExact": true,
+    "moduleOnlyPolicyFilenameChange": true,
+    "policyChangedKeys": [
+      "codeSha256"
+    ],
+    "changedCodeLeaves": [
+      "batch_client.py",
+      "batch_protocol.py",
+      "batch_transport.py"
+    ],
+    "newCodePinsMatchReviewedCached03Exactly": true,
+    "sameStartsAt": 1794820451251,
+    "sameExpiresAt": 1794906851251,
+    "same54ManifestHashes": true,
+    "same211OriginalPartsReused": true,
+    "sameStopped32OriginalEvidenceAndHold": true,
+    "dispatcherDelta": "Only helper name, helper SHA17b7c5 and new policySHA5d861a; parent exact9ba20e, original r3_continuity function byte-equal/AST-equal",
+    "registrationDelta": "Distinct module/policy/source/audit/pending paths; old helper/policies retained. Eleven basis hashes in readbasis/register equal; prior nine plus actual4ce801 recovery helper/cc676 policy; exact old lock and original CAS lifecycle retained",
+    "policyTransitionGuard": "render hard-pins full policySHA5d861a and module/template; register compares policy keys and every non-codeSha256 value to protected old recovery policy plus hard-pinned seven new code hashes. Expiry or other field drift cannot pass",
+    "registrationPreconditions": "Same staging policy absent, stoppedPG, original writer absent both grants, no active grant operation; protected-file identities and hashes rechecked under original lock before each publish; audit unknown state not replayed",
+    "issuer": "Review state exact, findings empty, every review files hash/size verified; pinned freshbasis <=900s, exact11 actual hashes/identities/old lock and no candidate paths; hard5d861a policy/current window/remaining30min; render then fixed CAS source/carrier and exclusive output. No source registration or task execution is performed by this review"
+  },
+  "basisFiles": {
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py": "9ba20e12d8ca7033dcc7dcf60dd6c52f7c3c83b497b843b65fc7d565c1721db3",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct32_batched.py": "4ff1a618c2e10c2119a16bd19a621d3c0c48a3ba92fe01229baec809fbb29316",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_write_continuity.py": "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_failed19_readonly.py": "4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_final33_input.py": "4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/final33-input-reception.json": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/active.json": "0e164d5f759af04b5976eff19f8e17796b6fafa9220a8a8af8341b9fb36898a8",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/policy.json": "25f2e73242f24cbd78fc1d765a5f52e032ba89ea449c7f5f48ba9bd8a0190757",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct32-batched-real.json": "99ea865df185eef2cd1c01cc9303d5c08e9bd8d90202c8b9557b5723820fac6a",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_final33_input_recovery.py": "4ce801c947084c2d4870bac073cc85d844453d6b79e96129b065b94496e26722",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/final33-input-reception-recovery.json": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182"
+  },
+  "localChecks": {
+    "sha256": "d9437109ac58de5ae5380ce8c00dd128ecdd06f9b40a9deccf434f3224c4778c",
+    "status": "OWNER_EXISTING_PASS_REUSED_NOT_RERUN",
+    "scope": "Native new03 initial group and READY009-011/ABSENT012 shape, mutation refusal; exact render and policy mutation refusal inspected against pinned static guards",
+    "runtimeClaim": false
+  },
+  "savedPostWithdrawStatus": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-023bf0b91b0249590a04f8a5/POST-WITHDRAW-READONLY-02.json",
+    "sha256": "309d0033abb13d2340427119bfa67c5f79195230c887e0e1e9f8c24aee273e84",
+    "facts": {
+      "t45-r3-final33-standard-p009-20261116-01": {
+        "basis": "EXACT_WITHDRAWN_BATCH_READONLY",
+        "bytes": 2097152,
+        "nextSegment": null,
+        "status": "READY"
+      },
+      "t45-r3-final33-standard-p010-20261116-01": {
+        "basis": "EXACT_WITHDRAWN_BATCH_READONLY",
+        "bytes": 2097152,
+        "nextSegment": null,
+        "status": "READY"
+      },
+      "t45-r3-final33-standard-p011-20261116-01": {
+        "basis": "EXACT_WITHDRAWN_BATCH_READONLY",
+        "bytes": 2097152,
+        "nextSegment": null,
+        "status": "READY"
+      },
+      "t45-r3-final33-standard-p012-20261116-01": {
+        "basis": "EXACT_WITHDRAWN_BATCH_READONLY",
+        "nextSegment": 1,
+        "status": "ABSENT"
+      }
+    },
+    "use": "Read original local evidence only, not a new server call or fresh signing boundary. New external authority still requires owner fresh readback as appropriate."
+  },
+  "pending": [
+    "Owner fresh actual registration basis and outside authority issuance",
+    "Actual source registration CAS and new03 transfer/closeout results",
+    "Business writer and ordinaryHTTP remain outside this scope"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "sourceEdits": 0,
+    "testsRerun": 0,
+    "candidateMainInvocations": 0,
+    "authorityIssued": false,
+    "registrationExecuted": false
+  },
+  "runtimeAccepted": false
+}

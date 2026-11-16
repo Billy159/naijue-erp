@@ -1,0 +1,605 @@
+{
+  "state": "LOCAL_SOURCE_ONLY_RUNTIME_AND_RELEASE_PENDING",
+  "base": {
+    "appCommit": "ef807b39b5ac8c483e9350dc72108d57716bf291",
+    "archiveSha256": "7fb9323db5270951c66fe6bf8b62f95d3ba2520bdbc1fc66cd6035e85cf0f018",
+    "sourceManifestSha256": "5ca64709adcddfe40f318d090e83cf2a40594219a5fba0278f3fc7d00bfe6a26",
+    "originalFiles": "BASE.json"
+  },
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0027_standard_batched_import_v1.sql",
+      "beforeSha256": null,
+      "sha256": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+      "bytes": 422029,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/0028_batched_history_hall_provenance.sql",
+      "beforeSha256": null,
+      "sha256": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4",
+      "bytes": 163841,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/0039_synthetic_ten_routine_successor.sql",
+      "beforeSha256": null,
+      "sha256": "1f3deac19334fc58b5ace7a9d69fc727110eb64252208b784112dc9f88c37951",
+      "bytes": 29135,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/01-ten-routines.sql",
+      "beforeSha256": null,
+      "sha256": "1f3deac19334fc58b5ace7a9d69fc727110eb64252208b784112dc9f88c37951",
+      "bytes": 29135,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/02-single-read.sql",
+      "beforeSha256": null,
+      "sha256": "c0ed3f987a097a58c950c9bc015c909a563ac3e1e01aeb7ef355b1e4cb968427",
+      "bytes": 1564,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/03-on-demand-context.sql",
+      "beforeSha256": null,
+      "sha256": "3c2b3caaaeef1766b9ec435704863a43e87de3d54445762b8a6b43e037f438d8",
+      "bytes": 8289,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/04-inventory-readiness.sql",
+      "beforeSha256": null,
+      "sha256": "151f739e1427fd32fd0c7edd00253de8715442d5e4fa431e24bc8f1182d6cedf",
+      "bytes": 1502,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/05-prior-lookup.sql",
+      "beforeSha256": null,
+      "sha256": "60c4d1af0ba99380d64eaef853451db6188f8414cf749dd4fe45898b557a6787",
+      "bytes": 6128,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/06-root-single-scan.sql",
+      "beforeSha256": null,
+      "sha256": "fc63b9c28a6113f1f242305c3a06aeb110b9d79a5f58505e06ce330552ccab09",
+      "bytes": 2521,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/07-execute-authority.sql",
+      "beforeSha256": null,
+      "sha256": "0c7d80d25fcbd078151226326cedd96e3ecfd8b90ce3014129f971af85fe020f",
+      "bytes": 3959,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/08-witness-request.sql",
+      "beforeSha256": null,
+      "sha256": "f4e56d34846049f7a43319da6d6b1f3f32e8b31be9b48ffc2173f473968e1dd9",
+      "bytes": 92541,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/09-root-branches-import-index.sql",
+      "beforeSha256": null,
+      "sha256": "dc03d84e9da6f4abaeb073395ff608624781dd8c5fd30db5921c13393941bff4",
+      "bytes": 151498,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/10-party-set-proof.sql",
+      "beforeSha256": null,
+      "sha256": "91dd39e9eb0b84b632623438e772383266c287aaeac4230a204140ad85c625a6",
+      "bytes": 17506,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/11-party-audit-key.sql",
+      "beforeSha256": null,
+      "sha256": "807b1bd4a5901f8013ab5b84c4d6db138d224221bebe00be4edcc6b044734d59",
+      "bytes": 18124,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/12-party-prefix-single-projection.sql",
+      "beforeSha256": null,
+      "sha256": "d5ffad0eecc1e05b72eba107502c41a091bf0fe25c0b521030967739a6e80d90",
+      "bytes": 18331,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/patches/prefix155/INSTALL-ORDER.json",
+      "beforeSha256": null,
+      "sha256": "db217adcc8e87a0b5b70471d18b85b852d158e3f73b165f65dd6a93229a3a3c2",
+      "bytes": 9307,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "adapters/postgres/src/sales-historical-hall-projection.ts",
+      "beforeSha256": "e71cbd16fcba764ab7e279094d1cd036939b4668bbc248bcea6beb8e1628308b",
+      "sha256": "3140883b2964412e38146e52320a579da608584f2dd815317d5b142133524f5f",
+      "bytes": 24787,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "beforeSha256": "9f4d82cb39801a6a7d11b95d556bc90fa115f607b2ede00fe588bc8ea2d0a6b5",
+      "sha256": "51d86fe02d21c3349c1c025196f03caf35a042bdf697fdae1ae12ecf32b96b6e",
+      "bytes": 12740,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "beforeSha256": "8d4854fa26d65221513e3e6ad74418d85b1ee2732153f2199d300a6eb4e3361a",
+      "sha256": "37e27090c3b50008d415be8f2b8c9574fb1a4157ac4d3c86f3967257f371d94f",
+      "bytes": 15875,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/manifest.mjs",
+      "beforeSha256": "b0e86b678d5bdef5ebc7ece63e93e5e2c41d352db5fe9ad2e3e7ee357fd07860",
+      "sha256": "8df73fb978ff8beac46639c7b56819f44d854c1bbf3ca1f96d0f884b20f0e9a5",
+      "bytes": 42081,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03/FINAL155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "f3de864442187ac4adcfbfa9af07d258f2adf003fd537c18a85da3e5c247fdcc",
+      "bytes": 3128730,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs",
+      "beforeSha256": null,
+      "sha256": "827674e50d15296e55c7f61d997bd1324c6ce439a4f44cde9b3b7c721cf3f807",
+      "bytes": 3436,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/FINAL155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "074bfd7b09727cd11b03879c3b2defecbed9c800c3aad783b2236ae37734fcfe",
+      "bytes": 3113042,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/FROZEN155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "3f24bb8bf5b9fa7e3a11f20f4b8e03151a7498eac710550622acce10d1074436",
+      "bytes": 3084287,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/PARENT154-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "685a704591a050800213c76b25387649311278c0e16396a44f19cbf8e02fdd75",
+      "bytes": 3067086,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/WITNESS155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "a46b84e03e4b99ad2b13c81fbc113a49f1a58ce7be297aaa9640ea06f9788dbd",
+      "bytes": 3108269,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/derive155.mjs",
+      "beforeSha256": null,
+      "sha256": "16cc349d32c4ef16e3f03fbc0be28774737d5c76e7da5395dccf13fac332fedd",
+      "bytes": 4604,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-BODIES.json",
+      "beforeSha256": null,
+      "sha256": "58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3",
+      "bytes": 937854,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-DEFINITIONS.json",
+      "beforeSha256": null,
+      "sha256": "e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3",
+      "bytes": 973710,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-MODEL.json",
+      "beforeSha256": null,
+      "sha256": "6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd",
+      "bytes": 977195,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-PINS.json",
+      "beforeSha256": null,
+      "sha256": "849288162c8e21036b2b50e1a8ceaf4d5bc5edad2340a679dae488e9e10749f7",
+      "bytes": 1162,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+      "beforeSha256": null,
+      "sha256": "a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942",
+      "bytes": 930298,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+      "beforeSha256": null,
+      "sha256": "b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216",
+      "bytes": 966154,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+      "beforeSha256": null,
+      "sha256": "4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51",
+      "bytes": 1371825,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "beforeSha256": "496d28ee550cadffb33303f75849dea7384601f5af2a1c2450557db52bfd0175",
+      "sha256": "49455ce58e9999fdad82806683f59537916989515b58e54f926f91a720f56c06",
+      "bytes": 13571,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "beforeSha256": null,
+      "sha256": "e5f64cd5b90cbc96741d523a8600ecd81ee40bcca0e4a675c35172433964a67b",
+      "bytes": 18955,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "beforeSha256": "7a1398ee8b81be36ac9d9bbb38a28cdcac014d38835cd070bb1c827f688b074f",
+      "sha256": "a073503b113d19b86184435c492a66f34ddea26982e5c8f1980dca9ab1e75b9f",
+      "bytes": 69148,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "beforeSha256": "afcd0af1beafecd35a6eb6d8dd6a7689a7733d857ca80819023d38c84d20e7b6",
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a",
+      "bytes": 13317,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "beforeSha256": "703c04942ca8a6c9705afc28c0a00051c4c4714eec8848ea967b232b0ba3ec16",
+      "sha256": "a848a4ee942a3922535cb5315212717233f3227159ffb4a9067e56373ee3e27b",
+      "bytes": 21684,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "beforeSha256": "51adca9756c854ce5356fb81c5b393f850f079a84c111c1887bc92e45ab8817b",
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22",
+      "bytes": 35020,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "beforeSha256": "15ed4a039484c41812f19a6ad6efb8362dad507e12f78d7d735a38f8fe8a4418",
+      "sha256": "62187d919cd2406d662225f78d254820d257521324c5e39eca06f96fb6204d32",
+      "bytes": 12973,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs",
+      "beforeSha256": null,
+      "sha256": "0fd734488724fa0f62906693f6a8d7f7211d534fb8145db12e99894ef7743084",
+      "bytes": 1923,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "beforeSha256": "81ff199b977380f92886808567f3fdbe50d76b334094fd7c6ba6b14fa1e95e34",
+      "sha256": "aaedeef539bd83e83468ae813d8b5cac51fea4ad0f310f5e56b669f975199ad6",
+      "bytes": 119382,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/measure-prefix.mjs",
+      "beforeSha256": null,
+      "sha256": "e0835957dee56a0eb944f7d078aaf02bfcf08b2b8f0d23e9e82440a699bbaa60",
+      "bytes": 3642,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/FINAL155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "495ebec8eb8f21f4eb5d65ccaaa769a612493ebc59ab0e3aae8f5305e08ba955",
+      "bytes": 3130368,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/derive155.mjs",
+      "beforeSha256": null,
+      "sha256": "9f0f3e9b4d78db937c42087891c89393ea76955e955bd654851fe5f0270f6649",
+      "bytes": 3738,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/FINAL155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "6feafa7689dd7307a4604ae3b1338c97902412c6181b75cd68fa5bfe215012b1",
+      "bytes": 3129982,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/derive155.mjs",
+      "beforeSha256": null,
+      "sha256": "501e14f04aa91b8c00fe6836be94028868a27959601aa822e75a837edfba5f29",
+      "bytes": 3575,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/FINAL155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "f3de864442187ac4adcfbfa9af07d258f2adf003fd537c18a85da3e5c247fdcc",
+      "bytes": 3128730,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs",
+      "beforeSha256": null,
+      "sha256": "827674e50d15296e55c7f61d997bd1324c6ce439a4f44cde9b3b7c721cf3f807",
+      "bytes": 3436,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/FINAL155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "074bfd7b09727cd11b03879c3b2defecbed9c800c3aad783b2236ae37734fcfe",
+      "bytes": 3113042,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/FROZEN155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "3f24bb8bf5b9fa7e3a11f20f4b8e03151a7498eac710550622acce10d1074436",
+      "bytes": 3084287,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/PARENT154-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "685a704591a050800213c76b25387649311278c0e16396a44f19cbf8e02fdd75",
+      "bytes": 3067086,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/WITNESS155-CAPTURE.json",
+      "beforeSha256": null,
+      "sha256": "a46b84e03e4b99ad2b13c81fbc113a49f1a58ce7be297aaa9640ea06f9788dbd",
+      "bytes": 3108269,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/derive155.mjs",
+      "beforeSha256": null,
+      "sha256": "16cc349d32c4ef16e3f03fbc0be28774737d5c76e7da5395dccf13fac332fedd",
+      "bytes": 4604,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-prefix155-install.mjs",
+      "beforeSha256": null,
+      "sha256": "31c5ffa35abe596768ca3e58da742c359f5215dbd12d068c662b6f80f3aa01cd",
+      "bytes": 8583,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "beforeSha256": null,
+      "sha256": "28cf5bed4964b583443d9423211580afc42a29b777487f3958c5c37bc4078db0",
+      "bytes": 4562,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-prefix155.mjs",
+      "beforeSha256": null,
+      "sha256": "4aacf67ec33c7cbb458167377531e9c50609757118e4bcbb1fcba9b2fd86444d",
+      "bytes": 5329,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-sql39-compile-only.mjs",
+      "beforeSha256": null,
+      "sha256": "813f059d47319c66c60233136668af8c1c50d415a1d3bff0ba8dcaec644b02ab",
+      "bytes": 2309,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-sql39-install.mjs",
+      "beforeSha256": null,
+      "sha256": "a5bf9c55d77948b1aa2ca174d716a9c67f6a8ca5f513c6958e514f6593fd83f5",
+      "bytes": 7440,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "beforeSha256": null,
+      "sha256": "f3d1d823dbd7203acf5b23d9bfd22b4ec4b94e328329d8028171b73581d7d1f8",
+      "bytes": 4508,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-cli-state.mjs",
+      "beforeSha256": null,
+      "sha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+      "bytes": 12534,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-client.mjs",
+      "beforeSha256": null,
+      "sha256": "6f11842e84374fb6ec847b1cd466cbebc4efa42a5902712b5bf5c6fb5eb3955c",
+      "bytes": 4753,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-operation.mjs",
+      "beforeSha256": null,
+      "sha256": "5c0d2fd7e99c4ed351e64e001ae9a8b5131ef9ea8dbfb1cecad1eb78488d7a7d",
+      "bytes": 1296,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-plan.mjs",
+      "beforeSha256": null,
+      "sha256": "0bf181628d33ee8312c0cae3028fab3e9a2e04822556a763e0a12bd6bf6b474f",
+      "bytes": 9607,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "beforeSha256": null,
+      "sha256": "6cb420903d980521f32d7d2493471a3998628c45032c8621327bec123d85af92",
+      "bytes": 4267,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-sql-reply.mjs",
+      "beforeSha256": null,
+      "sha256": "091bb6223acaeeb27f85ce9e8fc883905179861b664fe00ad29e12c6c713f806",
+      "bytes": 2825,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/cli.mjs",
+      "beforeSha256": "c8ebe66b671fa0b7903d744f7567f9c0fb1230ce5d7ff654ef7ab312e03c889b",
+      "sha256": "e84144a5254a04c753f835b05b3d22769854ac94ef899abaa4cde0c79d8b8de5",
+      "bytes": 4552,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.d.mts",
+      "beforeSha256": "f8c36ad61cdf06a8a5a4e145f5435544018ca11dfd6728794bd2ded883c7907c",
+      "sha256": "f6e403f37e0a41cd0ce5e9d94ec8335b80e2fb4e0a65108ac606e1e41a2ac8c4",
+      "bytes": 8347,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "beforeSha256": "3c2754a0a69fedb1b94bc59ddba5ea1f23c8a054830b862d58b6175ae748c031",
+      "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+      "bytes": 121315,
+      "origin": "ORDINARY161_INTEGRATION"
+    },
+    {
+      "path": "tools/unified-import/full-size-carrier.mjs",
+      "beforeSha256": null,
+      "sha256": "61f71d546c0b6fca1cecb8b6138c406652827fb03a622fdaac2841baca9d7154",
+      "bytes": 6052,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/mixed-transfer-profile-generator.mjs",
+      "beforeSha256": null,
+      "sha256": "17a7b9d6726130470842074923ec1c1a1eeb8d08314328d0d35a0f7f7c737a58",
+      "bytes": 32654,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/r3-service20-entry.mjs",
+      "beforeSha256": null,
+      "sha256": "a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6",
+      "bytes": 1075,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/r3-service20-retained-import.mjs",
+      "beforeSha256": null,
+      "sha256": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca",
+      "bytes": 12791,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/stream-import-cli.mjs",
+      "beforeSha256": "82eba0e8cdc5a2f61746d79a153894973b64c41cd2c651560dbda213858e264e",
+      "sha256": "13bc180126128f61c55c7a280dc3aaf018febae772a7e9314d31b3563ad050fd",
+      "bytes": 29002,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/stream-program.mjs",
+      "beforeSha256": "205a3e2da066801f8db68490275ecb625f44cd3e8722597603fd80c1f9825e43",
+      "sha256": "dae5a13547e645316859f58b5d0fed031ae1e4f1935694a00589106a6f64c0f9",
+      "bytes": 10480,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/transfer-profile.mjs",
+      "beforeSha256": null,
+      "sha256": "1df7f7dbc03ec0e28ec694efb24069cf2ff05f97707ecbaa8359405cafa72539",
+      "bytes": 6934,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "beforeSha256": "4063531f33a15b188105bd73fc7890760cc61ff30e3e7cf2bc2dc20160e2633e",
+      "sha256": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da",
+      "bytes": 43110,
+      "origin": "REUSED_FROZEN_161_DEPENDENCY"
+    }
+  ],
+  "sourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+  "nativePins": 284,
+  "localCatalog": {
+    "scope": "LOCAL_METADATA_COMPILATION_ONLY_NO_LIVE_C_OR_DATABASE",
+    "sourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+    "batchedSourceSetSha256": "8b746195c7a3378dc6959c93524afb3a9b702cfcb91301060d83e8e12d615d1f",
+    "batchedCatalogSpecSha256": "9f7b87c2a1087a49c9ece576c405677e720c97b9cd76dc19aabcd36a3cc24cfc",
+    "batchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "routineCount": 161
+  },
+  "preservedAppPaths": [
+    "apps/api/src/production-main.ts",
+    "apps/api/src/postgres-read-api.ts",
+    "apps/api/src/production-generation.ts",
+    "apps/api/src/production-provider-composition.ts",
+    "adapters/postgres/src/runtime27-command-issuer.ts",
+    "adapters/postgres/src/bounded-pool.ts",
+    "packages/authentication/src/ports.ts",
+    "config/release-contract.json"
+  ],
+  "formalLoaderBodyByteEqual": true,
+  "formalLeaseAndWindowByteEqual": true,
+  "strictProductionEntryNoEmit": "PASS",
+  "formalGenerationLifecycleModelTests": {
+    "pass": 1,
+    "fail": 0,
+    "scope": "MODELED_OS_CATALOG_AND_C_NO_REAL_CAP"
+  },
+  "builds": 0,
+  "serverConnections": 0,
+  "PGConnections": 0,
+  "handoffSha256": "6b4324d9a1b02bb701886d7e41dc651c00f6694f975e40a3e4517896298fe29b",
+  "implementationPatchSha256": "96f5d20e5d0d175b26189f4e9f528379495419707fab5c96646e57687bda0cac",
+  "preservedProviderSha256": "9dff948424a6a195d611a31adbf145b3d440f1ab4458eb1e3b41f9fcaff9c9d4",
+  "evidenceCorrection": {
+    "previousPinsSha256": "b7441e3a1435ce049387b4c67bca43d563724aa6fefbe80f14721429c56fc673",
+    "productSourcePinsUnchanged": true,
+    "reason": "Correct provider filename and runnable checks imports only",
+    "checksScript": "checks/formal-generation-model.test.mjs",
+    "checksScriptSha256": "cb0cd22667109338830e8bf127a0b34edf32085bdb1f1cf441b5a977dc4ba923",
+    "checksPathTestLog": "CHECKS-PATH-TEST.log",
+    "checksPathTestLogSha256": "ab434681125c9e5181dd571374eb24d74298ab4e1560bb2423a041d4b88d565d",
+    "checksPathTestResult": {
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    }
+  }
+}

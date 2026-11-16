@@ -1,0 +1,14 @@
+{
+  "state": "PASS_LOCAL_RECOVERY_BOUNDARY_SOURCE_INCREMENT",
+  "checks": [
+    "unchanged_initial_group_consumption",
+    "native_actual_ready_full_partial1MiB_and_absent_boundary_shape_accepted",
+    "changed_segments_refused_before_admission"
+  ],
+  "passed": 3,
+  "serverCalls": 0,
+  "postgresConnections": 0,
+  "businessWrites": 0,
+  "recoveryModuleSha256": "4ce801c947084c2d4870bac073cc85d844453d6b79e96129b065b94496e26722",
+  "originalStatusOnlyUsedForLocalShapeTest": "CURRENT_BATCH_POLICY_NOT_AUTHORITY_FOR_POST_WITHDRAW_SIGNING"
+}

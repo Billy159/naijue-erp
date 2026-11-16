@@ -1,0 +1,34 @@
+{
+  "r3_final33_input_recovery.py": {
+    "sha256": "4ce801c947084c2d4870bac073cc85d844453d6b79e96129b065b94496e26722",
+    "bytes": 6869
+  },
+  "admin_exec.INPUT-RECOVERY.py": {
+    "sha256": "9ba20e12d8ca7033dcc7dcf60dd6c52f7c3c83b497b843b65fc7d565c1721db3",
+    "bytes": 44276
+  },
+  "read_registration_basis.py": {
+    "sha256": "d0d73d31c8b6270d3b10b1e7fe8832889ccac5c162170f42884b56bbf68b2d72",
+    "bytes": 5087
+  },
+  "original-cas-input-recovery-carrier.UNISSUED.py": {
+    "sha256": "584a7fd81d2d8b8ff1b1b8166d821924b794023dd45bbcb7f0b5697414a980da",
+    "bytes": 2637
+  },
+  "GROUPS.json": {
+    "sha256": "4f6ffdc821ea5a12a7142897b508d3496e93f3b4c6ec356295326ef578fa0cf2",
+    "bytes": 31496
+  },
+  "register_cas.py": {
+    "sha256": "f752a3c87d5511d8c7db741d8665c01cf9f5d545be34d8ffc68a2ffc7a0c4343",
+    "bytes": 13575
+  },
+  "POLICY.RETAINED.json": {
+    "sha256": "cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182",
+    "bytes": 6250
+  },
+  "check_recovery.py": {
+    "sha256": "50dc62ff7c23750713a557fcca461d3e0dd05e44340ca601d4cfa01c786e9ff3",
+    "bytes": 5809
+  }
+}

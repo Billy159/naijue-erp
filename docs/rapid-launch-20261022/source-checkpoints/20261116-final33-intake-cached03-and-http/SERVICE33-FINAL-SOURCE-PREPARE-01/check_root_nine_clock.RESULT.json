@@ -1,0 +1,13 @@
+{
+  "state": "PASS_NATIVE_ROLE_AND_START_AUTHORITY_DATA_VALIDATORS_ONLY",
+  "controllerMinutes": 120,
+  "adminMinutes": 122,
+  "restoreMinutes": 150,
+  "policyMinutes": 180,
+  "maximumServiceMinutes": 140,
+  "completeWorkSeconds": 5100,
+  "lateStartWithoutCompleteBudgetRejected": true,
+  "PGConnections": 0,
+  "serverActions": 0,
+  "noRealAuthorityIssued": true
+}

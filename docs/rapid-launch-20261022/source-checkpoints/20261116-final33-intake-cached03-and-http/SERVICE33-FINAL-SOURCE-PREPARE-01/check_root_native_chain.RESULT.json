@@ -1,0 +1,12 @@
+{
+  "state": "PASS_LOCAL_ROOT_NATIVE_PREPARE_WRITER_DATA_CONSUMPTION_NOT_RUNTIME",
+  "historicalCatalog": "REUSED_ACTUAL_INSTALL_READBACK",
+  "nativeMetadataBuilders": "REAL_SOURCE_WITH_SYNTHETIC_VALUES",
+  "preparedBindingKeptDistinctFromExecutionBinding": true,
+  "storedMetadataMutationRejected": true,
+  "unknownPrepareRejected": true,
+  "hostAndNativeAuthorityValidatorsCalled": true,
+  "PGConnections": 0,
+  "serverActions": 0,
+  "authoritiesIssued": false
+}

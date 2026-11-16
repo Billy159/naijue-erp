@@ -1,0 +1,125 @@
+{
+  "changes": [
+    {
+      "beforeSha256": null,
+      "bytes": 163841,
+      "path": "adapters/postgres/patches/0028_batched_history_hall_provenance.sql",
+      "payloadLeaf": "0028_batched_history_hall_provenance.sql",
+      "sha256": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4"
+    },
+    {
+      "beforeSha256": "e71cbd16fcba764ab7e279094d1cd036939b4668bbc248bcea6beb8e1628308b",
+      "bytes": 24787,
+      "path": "adapters/postgres/src/sales-historical-hall-projection.ts",
+      "payloadLeaf": "sales-historical-hall-projection.ts.json",
+      "sha256": "3140883b2964412e38146e52320a579da608584f2dd815317d5b142133524f5f"
+    },
+    {
+      "beforeSha256": "9f4d82cb39801a6a7d11b95d556bc90fa115f607b2ede00fe588bc8ea2d0a6b5",
+      "bytes": 12740,
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "payloadLeaf": "historical-sales-hall-evidence.ts.json",
+      "sha256": "51d86fe02d21c3349c1c025196f03caf35a042bdf697fdae1ae12ecf32b96b6e"
+    },
+    {
+      "beforeSha256": "8d4854fa26d65221513e3e6ad74418d85b1ee2732153f2199d300a6eb4e3361a",
+      "bytes": 15875,
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "payloadLeaf": "unified-historical-sales-hall-evidence.ts.json",
+      "sha256": "37e27090c3b50008d415be8f2b8c9574fb1a4157ac4d3c86f3967257f371d94f"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 937854,
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-BODIES.json",
+      "payloadLeaf": "COMMAND-SUCCESSOR-161-BODIES.json",
+      "sha256": "58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 973710,
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-DEFINITIONS.json",
+      "payloadLeaf": "COMMAND-SUCCESSOR-161-DEFINITIONS.json",
+      "sha256": "e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 977195,
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-MODEL.json",
+      "payloadLeaf": "COMMAND-SUCCESSOR-161-MODEL.json",
+      "sha256": "6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 1162,
+      "path": "scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-PINS.json",
+      "payloadLeaf": "COMMAND-SUCCESSOR-PINS.json",
+      "sha256": "849288162c8e21036b2b50e1a8ceaf4d5bc5edad2340a679dae488e9e10749f7"
+    },
+    {
+      "beforeSha256": "496d28ee550cadffb33303f75849dea7384601f5af2a1c2450557db52bfd0175",
+      "bytes": 13571,
+      "path": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "payloadLeaf": "fresh35-admin154-record-v1.mjs",
+      "sha256": "49455ce58e9999fdad82806683f59537916989515b58e54f926f91a720f56c06"
+    },
+    {
+      "beforeSha256": "a94f298a235ec8a9f78bfb750849145c50bb65925182e88072997bdfb89e42a1",
+      "bytes": 69061,
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "payloadLeaf": "fresh35-combined-catalog-v1.mjs",
+      "sha256": "319f4ac30157d2922dc8d62b5108d5656a375c059e322466f7f933d32d7746eb"
+    },
+    {
+      "beforeSha256": "c393b5608d0dc95294e77fbf94cd6b393ee43dee41aaa75167215ae96b98741c",
+      "bytes": 21684,
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "payloadLeaf": "fresh35-combined-source-v1.mjs",
+      "sha256": "a848a4ee942a3922535cb5315212717233f3227159ffb4a9067e56373ee3e27b"
+    },
+    {
+      "beforeSha256": "e94791c912f74458dd5689201135c7d5ca03fe090cf42a7b47c389129c66dc43",
+      "bytes": 12534,
+      "path": "tools/unified-import/batched-stream-cli-state.mjs",
+      "payloadLeaf": "batched-stream-cli-state.mjs",
+      "sha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c"
+    },
+    {
+      "beforeSha256": "a75d570011954da8c324774dd3bb674dbc9a9b7b2438f0cb322f27ff8b7ac632",
+      "bytes": 105820,
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "payloadLeaf": "fresh35-host-session.mjs",
+      "sha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b"
+    },
+    {
+      "beforeSha256": "6c3ec2b2f60746298d1b42e2c1e3e1da8257b9107945acd0dcf7388e406a83a3",
+      "bytes": 1075,
+      "path": "tools/unified-import/r3-service20-entry.mjs",
+      "payloadLeaf": "r3-service20-entry.mjs",
+      "sha256": "a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6"
+    },
+    {
+      "beforeSha256": "d08326e8fb0d16d3eb207ccc1ce89b728b16085f7fe1b1947f640d8775a69cc1",
+      "bytes": 12791,
+      "path": "tools/unified-import/r3-service20-retained-import.mjs",
+      "payloadLeaf": "r3-service20-retained-import.mjs",
+      "sha256": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca"
+    },
+    {
+      "beforeSha256": "e764eb1de1335aff331d7976039ba9519d16bab16b685fe05e2a565bc58fee29",
+      "bytes": 43110,
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "payloadLeaf": "whole-host-session.mjs",
+      "sha256": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da"
+    }
+  ],
+  "format": "T45_R3_EXACT_FROZEN_SOURCE_DELTA_V1",
+  "installerRunnerSha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+  "originalFullArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "predecessorMaterializationSha256": "e8f8032b00601e976c094f0365064d0385d7af8f48f9f7bbb465dca896bf3a5e",
+  "predecessorSourceRowsSha256": "f957e264097b8c778b12ff9f046d6ff9fd211708f5b86f60cc2efe06be8261d2",
+  "predecessorSourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+  "sourceFiles": 387,
+  "sourceRowsSha256": "078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9",
+  "sourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898"
+}

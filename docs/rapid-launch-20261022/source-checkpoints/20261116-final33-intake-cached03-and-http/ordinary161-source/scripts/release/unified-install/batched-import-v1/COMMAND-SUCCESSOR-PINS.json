@@ -1,0 +1,20 @@
+{
+  "after": {
+    "bodySha256": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+    "definitionSha256": "3bcc7f4bd796df962c6794e1fe2b63e1a92df269f78d431af7b0fefc7f3c97b6"
+  },
+  "before": {
+    "bodySha256": "a9e432e35c39edcd2b6fd43530fb3e0a72e0d2d8cc710f49f2bf6674bb7b3e00",
+    "definitionSha256": "75592806cd2c76fe77962822dba459335aab4ef00307f97550e655c1472ca076"
+  },
+  "catalogInputs": {
+    "COMMAND-SUCCESSOR-161-BODIES.json": "58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3",
+    "COMMAND-SUCCESSOR-161-DEFINITIONS.json": "e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3",
+    "COMMAND-SUCCESSOR-161-MODEL.json": "6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd"
+  },
+  "format": "FRESH35_DB05_COMMAND_SUCCESSOR_PINS_V1",
+  "functionIdentity": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+  "ownerPinsSha256": "c5e4d8b7f7b5cb324208beef2300ba602c94ef8854220d95fe6ddf33a09c9957",
+  "sqlPath": "adapters/postgres/patches/0028_batched_history_hall_provenance.sql",
+  "sqlSha256": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4"
+}

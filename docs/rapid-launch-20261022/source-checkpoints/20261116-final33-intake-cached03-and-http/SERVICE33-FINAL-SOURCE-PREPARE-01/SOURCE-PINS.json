@@ -1,0 +1,69 @@
+{
+  "state": "LOCAL_ROOT_NINE_SOURCE_READY_FOR_NARROW_REVIEW_NO_AUTHORITY_ISSUED",
+  "files": {
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 25085,
+      "sha256": "dd301b23051187724b2dd7946ac2b4a69641a04b4e7ed016be7eca500258f78b"
+    },
+    "PREPARATION.json": {
+      "bytes": 1571,
+      "sha256": "b63297cb59a26522d239c481b42b1f4b72a25874e5563416e207346f6f761e4c"
+    },
+    "admin_exec.DIRECT33-UNREGISTERED.py": {
+      "bytes": 44592,
+      "sha256": "f8c7fbc15820aa4a86e641666323dd631920219b0cd4528d97492e6ff8938080"
+    },
+    "assemble_root_nine.py": {
+      "bytes": 8016,
+      "sha256": "0372d49c815d304e2e3f59059bf98051972e2c4eb5de3594ebf35b4a62e07fa5"
+    },
+    "build_nine_phase.py": {
+      "bytes": 6833,
+      "sha256": "f8bf62d10e7d1c8d7db5b3ce35e8bb0396a9cfcde44b31073aa0e582ffd71394"
+    },
+    "check_root_native_chain.RESULT.json": {
+      "bytes": 465,
+      "sha256": "09b96169f86e65982ffa72d3a0081618e64a78c7d99ac0840982b91837acd7c2"
+    },
+    "check_root_native_chain.py": {
+      "bytes": 9444,
+      "sha256": "b775e6d7380ac88d835d64d7e3bfdafc83a4ef0da295f502c22444748ca8df53"
+    },
+    "check_root_nine.RESULT.json": {
+      "bytes": 532,
+      "sha256": "e4756d264ca68f7ff2ac35fcf9116b977414410ae4af017553674f0c72a952ad"
+    },
+    "check_root_nine.py": {
+      "bytes": 4612,
+      "sha256": "1149c0f84f51c30fd69b57f23867d540a9ae8757d788c3de1d446455ebfb71c0"
+    },
+    "check_root_nine_clock.RESULT.json": {
+      "bytes": 365,
+      "sha256": "14fed7bbba08aad7e51ed6af09ec77660a524193c94965cb5efdd1f990700703"
+    },
+    "check_root_nine_clock.py": {
+      "bytes": 2071,
+      "sha256": "b0026b7b1d6a067f0c14d95e88f6d2447124b9409df432855643049fdb03a15b"
+    },
+    "issue_phase.py": {
+      "bytes": 38195,
+      "sha256": "a132ea38a8df10f4f906facfe9496f9ab9a56c5c555c0804f57adfa66fd61353"
+    },
+    "issue_registration.py": {
+      "bytes": 10645,
+      "sha256": "fa66d9e4afd925e20c55630ea7383105f7ab4a5423ec2b0447624ebc7c28cfbd"
+    },
+    "original-cas-direct33-carrier.UNISSUED.py": {
+      "bytes": 2663,
+      "sha256": "27e3fac83c2d566965712afa0ea53da7e191990c803cc0aeb254882fd65e5b2c"
+    },
+    "r3_direct33_batched.py": {
+      "bytes": 69093,
+      "sha256": "b700b3b5b13c20222aa00847d95ef31975ca25e5b5baae0f5ee98b95e43a085c"
+    },
+    "register_cas.py": {
+      "bytes": 54214,
+      "sha256": "c7bba5115ca2d7ce8c41ca0d080e1757d2b4fba81e2daaa9ac10663eb1fcaabf"
+    }
+  }
+}

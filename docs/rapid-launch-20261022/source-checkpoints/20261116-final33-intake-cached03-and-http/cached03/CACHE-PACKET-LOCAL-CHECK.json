@@ -1,0 +1,14 @@
+{
+  "decodedBytes": 86475,
+  "fixtureOnly": true,
+  "inlineChangedLeaves": [
+    "batch_client.py",
+    "batch_protocol.py",
+    "batch_transport.py"
+  ],
+  "remoteStageSourceSha256": "3c92ba76df3a2bc82d1c15006f236146420555eea51f352826037df4458c5f25",
+  "reusedUnchangedLeaves": 4,
+  "serverActions": 0,
+  "state": "LOCAL_FIRST_CACHE_PACKET_PASS_NO_AUTHORITY_ISSUED_NO_SERVER_CALL",
+  "wireBytes": 29774
+}

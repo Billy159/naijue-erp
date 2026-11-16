@@ -1,0 +1,20 @@
+{
+  "state": "PASS_LOCAL_CACHED03_FIXED_POLICY_AND_NATIVE_RECOVERY_SOURCE_INCREMENT",
+  "checks": [
+    "unchanged_initial_group_consumption",
+    "native_actual_ready009_010_011_and_absent012_boundary_shape_accepted",
+    "changed_segments_refused_before_admission"
+  ],
+  "passed": 3,
+  "serverCalls": 0,
+  "postgresConnections": 0,
+  "businessWrites": 0,
+  "recoveryModuleSha256": "17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63",
+  "originalStatusOnlyUsedForLocalShapeTest": "EXACT_WITHDRAWN_BATCH_READONLY_ONLY_LOCAL_TEST_NO_AUTHORITY_ISSUED",
+  "exactPolicyOnlyThreeCodePinsChanged": true,
+  "originalOverallExpiryUnchanged": true,
+  "originalR3ContinuationUnchanged": true,
+  "oldModulesAndPoliciesInBasis": true,
+  "exactRenderMatches": true,
+  "changedPolicyRejected": true
+}

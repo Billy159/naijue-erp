@@ -1,0 +1,15 @@
+{
+  "state": "PARTIAL_LOCAL_ROOT_NINE_CHECKS_PASS_UNSIGNED",
+  "phaseCount": 9,
+  "allFrozenLeafPinsMatch": true,
+  "rootRenderKeepsReceiverBranch": true,
+  "nativePreparationValidatorAcceptedAndBudgetMutationRejected": true,
+  "inputMaterializerRealValidatorAndRootFrozenAcceptedSame300sAuthority": true,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "remaining": [
+    "same-source original-start facts/prepare/writer synthetic integration",
+    "fresh receiver recovery registration rebase",
+    "final independent review"
+  ]
+}

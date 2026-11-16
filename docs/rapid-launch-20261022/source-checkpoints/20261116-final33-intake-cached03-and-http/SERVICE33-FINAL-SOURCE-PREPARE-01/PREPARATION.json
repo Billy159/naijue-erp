@@ -1,0 +1,57 @@
+{
+  "state": "LOCAL_ROOT_NINE_SOURCE_READY_FOR_NARROW_REVIEW_NO_AUTHORITY_ISSUED",
+  "phaseCount": 9,
+  "order": [
+    "input_materialize",
+    "materialize",
+    "apply",
+    "start",
+    "catalog_update",
+    "prepare",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "expectedReceiverDispatcherSha256": "c573dd195c6a6aa80b6ec44f4c253446a953bb3d2ce6221f49856cc9237401bb",
+  "mainWriterOriginalKeyPreserved": true,
+  "nativePrepareRealBindingsFromStoredStartOutputs": true,
+  "writerConsumesUnmodifiedActualPrepareBindings": true,
+  "inputMaterializationDeadlineSeconds": 300,
+  "inputMaterializationMinimumRemainingSeconds": 240,
+  "nativePrepareWorkCleanupJobSeconds": [
+    650,
+    130,
+    780
+  ],
+  "writerWorkCleanupJobSeconds": [
+    2780,
+    220,
+    3000
+  ],
+  "credentialAndParentMinutes": {
+    "controller": 120,
+    "backupAdmin": 122,
+    "restoration": 150,
+    "policy": 180,
+    "serviceMax": 140
+  },
+  "fullStartChainRequiredSeconds": 5100,
+  "serverActions": 0,
+  "authoritiesIssued": false,
+  "localTests": [
+    "check_root_nine.RESULT.json",
+    "check_root_nine_clock.RESULT.json",
+    "check_root_native_chain.RESULT.json"
+  ],
+  "reusedReviews": [
+    "QB final33 outer ad6e2157",
+    "D1 final source8f92/QB3a58",
+    "input materialization894d0654"
+  ],
+  "remaining": [
+    "actual receiver CACHED03 registration readback before main registration",
+    "all211 READY before materialization",
+    "final independent source-only root issuer review",
+    "all native runtime/actual import/backup/physical restore/HTTP business checks"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "PGCalls": 0,
+  "argvSentinelLeaked": false,
+  "fragmentedAndCoalesced": {
+    "code": "OK",
+    "elapsed": 0.003,
+    "receipts": 3
+  },
+  "idle": {
+    "code": "IDLE_DURABLE_PROGRESS_TIMEOUT",
+    "elapsed": 90.0,
+    "receipts": 0
+  },
+  "limits": {
+    "closeout": 240,
+    "query": 15,
+    "sharedUpload": 600,
+    "stall": 90,
+    "window": 1080
+  },
+  "mismatchOrUnknown": "ALL_REJECTED_NO_REPLAY",
+  "networkCalls": 0,
+  "readyAfterUnknownReply": "ACCEPTED_WITH_EXACT_ORIGINAL_EVIDENCE",
+  "scope": "Actual transport local clock/pipes and actual Transfer.finalize with query/status stubs only",
+  "serverCalls": 0,
+  "state": "LOCAL_PATCH_PROBES_PASS_NOT_LIVE_TRANSFER",
+  "statusQueriesPerRecovery": 1,
+  "total": {
+    "code": "TOTAL_UPLOAD_DEADLINE_EXHAUSTED",
+    "elapsed": 2.0,
+    "receipts": 0
+  }
+}
