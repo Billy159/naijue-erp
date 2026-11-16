@@ -1,0 +1,44 @@
+{
+  "PGConnections": 0,
+  "authorityIssued": false,
+  "changedMembers": 24,
+  "clockCalls": 0,
+  "currentService37": null,
+  "historicalPredecessor36": {
+    "ACK": "2aec997f4ec24c1bb3623a99aa9134d245601c99d87d175c9855ae9538b1c80e",
+    "CLEANUP": "5743e18db1bbcb250aa91701ec61e47efd2cdd5bafe3202b765d07b85a2b43b7",
+    "KEY": "t45-first-r3-native-service-start-20261116-36",
+    "NORMAL_PUBLIC": "1cdf4eafa8be54dc3eda875b13165b4af2e3dbb03922032f6bbaa53c47313fd3",
+    "NORMAL_ROOT": "e12b554b5644bc36b62152e06e9248d66d5fa42c8b2e2c8b40871fecd06f5a66",
+    "OLD_MAIN": "e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75",
+    "RESTORE": "t45-r3-ordinary36-auth-restore-20261116-01",
+    "RESTORED_SAFE": "60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d",
+    "RESTORE_PUBLIC": "19bfcbb87599d163670b89172828d868a1507968d809903ae3bd69b9bc99741a",
+    "RESTORE_ROOT": "fa11b9b1d9c9f0051e3d1791341974016115e0522417e319f2c8ea200bb589ac",
+    "RESTORE_TERMINAL": "05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1",
+    "SERVICE": {
+      "containerId": "8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9",
+      "containerStartedAt": "2026-11-16T21:21:12.05366201Z",
+      "postmasterStart": "2026-11-16 21:21:13.328927+00",
+      "proofSha256": "1c2e696ca6708c438e93e917a2d6003fd579c5a777529c7a8fb43a4110461801",
+      "serviceKey": "t45-first-r3-native-service-start-20261116-36"
+    },
+    "STOP": "t45-r3-ordinary36-preserve-stop-20261116-01",
+    "STOP_PUBLIC": "dc9a120560cea3ce7c4fd84c477cc881a031fedd54e532a4d91c7810efef4257",
+    "STOP_ROOT": "79a55a62872a71f5372bc4420d5829eec9171bc719f2548e1b333267da918ca6",
+    "STOP_TERMINAL": "5d25717f747ee3f5db1b7ef8684da855a9e519a67bad21b64a9faf006f7e5fd0",
+    "TERMINAL": "c6bc4d7dfb5be9afca0a1505159a1c487d8504a35f8df1f3de3db84b2b9f5a06"
+  },
+  "members": 46,
+  "pinGraphIterations": 4,
+  "preparationIdentityMapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-03"
+  },
+  "roles37Authority": null,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE37_WIP_PIN_GRAPH_ASSEMBLED_PENDING_LITERAL_EDGE_AUDIT"
+}

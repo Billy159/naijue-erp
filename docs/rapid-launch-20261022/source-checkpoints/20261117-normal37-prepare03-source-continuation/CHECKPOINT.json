@@ -1,0 +1,319 @@
+{
+  "asOf": "2026-11-17T06:40:47.964000+08:00",
+  "state": "NORMAL37_CONSUMER_SOURCE_PASS_ROOT_EXACT_PAIRING_PENDING_NO_CLOCK_AUTHORITY_OR_RUNTIME",
+  "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+  "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
+  "phaseRulesSha256": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
+  "interfaceSha256": "2cc567338e19f69c69f486f490cf6444d9a5553a1231912c9b815b5ff5b7bdab",
+  "continuationDecisionSha256": "e65a97ede2b12d55e37368154e2731a21e02d200adf14cf2132e82bb488c36e8",
+  "normal36SafeClosureSha256": "589f5ab71df31c96db1ec22ae384aa08eeadf08f7a219cf8a3cb7b1cbd13a28a",
+  "staticRuntimeFiles": 46,
+  "changedRuntimeFiles": 24,
+  "reusedRuntimeFiles": 22,
+  "currentLoadBindings": 42,
+  "inlineBindings": 7,
+  "PGCurrentlyStopped": true,
+  "originalAuthRestored": true,
+  "writerSubmitted": false,
+  "businessWrites": 0,
+  "finiteAuthorityIssued": false,
+  "newServiceStarted": false,
+  "fullRehearsal": false,
+  "next": "D1 freezes exact root37 source using currentdb9c/3dd/helper9b and true36 safe closure, consumerd63d/QB9fd and Main sourcecontinuatione65; QB reviews changed glue only. Then sole T45 fresh actual stopped basis and Main finite issuance. PG stopped/original auth restored; writerNEVERsubmitted/business0.",
+  "copies": [
+    {
+      "path": "consumer37-source-pass/SOURCE-PINS.json",
+      "sha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+      "bytes": 10736
+    },
+    {
+      "path": "consumer37-source-pass/ASSEMBLY-STATE.json",
+      "sha256": "76bed3aa8e95fa33645c4ba38c918d3f44f04fda16d022f2cb6acba2c5d1e0f8",
+      "bytes": 2465
+    },
+    {
+      "path": "consumer37-source-pass/LITERAL-LOAD-DEPENDENCIES.json",
+      "sha256": "6e88d837ca1426b27e05e87ea5e41c5886f6fd02803af087fd46a7c4864a5dab",
+      "bytes": 261512
+    },
+    {
+      "path": "consumer37-source-pass/LOCAL-CHECKS.json",
+      "sha256": "ce65f51562c395e7a28f3173cda5b10184679ee692347b3eabbfb557299e2952",
+      "bytes": 601
+    },
+    {
+      "path": "consumer37-source-pass/SOURCE-DIFF.patch",
+      "sha256": "21830bade5c5dea73822401d339314a3eb7aacedfa9a8b2bac51902ec4b072d3",
+      "bytes": 83435
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/ordinary05_roles.py",
+      "sha256": "f41701ce01eaecc116ef7d8cba9015b51c881b2c83c8db34337ca4c3ac84ac87",
+      "bytes": 21656
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "4698cf02aad8c6b703d08bd6ff385d81129fc2f548d96a7e60b0d2adfe0c769c",
+      "bytes": 33305
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/prior_preserved36.py",
+      "sha256": "f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650",
+      "bytes": 7009
+    },
+    {
+      "path": "consumer37-source-pass/apply/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "path": "consumer37-source-pass/assemble_source37.py",
+      "sha256": "d2e6363ccc67d7157b242add9fcc810d4375d93ed4d82f4eb69eb885fa35ef38",
+      "bytes": 8900
+    },
+    {
+      "path": "consumer37-source-pass/check_and_freeze_source37.py",
+      "sha256": "83d1c5aa969a8dd6c4a62c136c9fb21efd8d4ee24e35343b5a47c545ba1479d6",
+      "bytes": 10613
+    },
+    {
+      "path": "consumer37-source-pass/phase_cli.py",
+      "sha256": "4bae6b259d1a115576d24ece624487c72439aeaa5762c745d0c17a7d889563af",
+      "bytes": 5147
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/final33-run.mjs",
+      "sha256": "35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d",
+      "bytes": 19314
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/final33_host.py",
+      "sha256": "921dbfbf5b58f67cd8a858a2c947618cdecc8b4ea7ccb6e2aef7a13bce16b5f6",
+      "bytes": 51138
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "bytes": 187609
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/nonroot_input_access.py",
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+      "bytes": 17738
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/normal05_retained_stop.py",
+      "sha256": "bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2",
+      "bytes": 20709
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/r3_05_cli.py",
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+      "bytes": 7098
+    },
+    {
+      "path": "consumer37-source-pass/prepare/bundle/r3_05_runtime.py",
+      "sha256": "9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1",
+      "bytes": 9394
+    },
+    {
+      "path": "consumer37-source-pass/prior_preserved36.py",
+      "sha256": "f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650",
+      "bytes": 7009
+    },
+    {
+      "path": "consumer37-source-pass/read_pending37.py",
+      "sha256": "84510ad3854f4ba2160ea8075c1d8ab9106ae03cc9c335bfabb7e93853bdb5bd",
+      "bytes": 8972
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/ordinary05_roles.py",
+      "sha256": "f41701ce01eaecc116ef7d8cba9015b51c881b2c83c8db34337ca4c3ac84ac87",
+      "bytes": 21656
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "4698cf02aad8c6b703d08bd6ff385d81129fc2f548d96a7e60b0d2adfe0c769c",
+      "bytes": 33305
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/prior_preserved36.py",
+      "sha256": "f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650",
+      "bytes": 7009
+    },
+    {
+      "path": "consumer37-source-pass/restore/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/batched161-run.mjs",
+      "sha256": "145c4e378ddee0c15a48721f8ca33bcc87aeb8ca928c5589834f4f8a20758f16",
+      "bytes": 23971
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/final33-run.mjs",
+      "sha256": "35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d",
+      "bytes": 19314
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/normal_service05_after08.py",
+      "sha256": "700e175b89aee2836e4de2c157f576b35f64a85ac648e3302050764779d9d63d",
+      "bytes": 58967
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "c10ee8cd21eb26fdb0bcd4d9ba88174939eb86bddc7dd683f0ae40de45bf66fe",
+      "bytes": 18437
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/operator-host.mjs",
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+      "bytes": 72238
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/operator-manifest.json",
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+      "bytes": 48490
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/operator-stream-import-cli.mjs",
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "bytes": 26499
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/operator-stream-program.mjs",
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "bytes": 10302
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/prior_preserved36.py",
+      "sha256": "f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650",
+      "bytes": 7009
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/production-plan.json",
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+      "bytes": 747
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "bytes": 7052
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/r3_05_readonly.py",
+      "sha256": "33fb16ec8c1cbc6a0ef055c993e03d59b3051c3f8caea22aa9f723ffafce0c63",
+      "bytes": 21212
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/r3_05_runtime.py",
+      "sha256": "9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1",
+      "bytes": 9394
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "path": "consumer37-source-pass/start/bundle/start_owned_describe.py",
+      "sha256": "fffd4ed16fedef726478be200ad93efea7bc71389c8b0714d604f4569f61ca84",
+      "bytes": 16843
+    },
+    {
+      "path": "consumer37-source-pass/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "65a0de5e20727aeae47c02ab9d2d2649b14c6c8151656315ad1906181e659e5c",
+      "bytes": 20005
+    },
+    {
+      "path": "consumer37-source-pass/stop/bundle/normal05_retained_stop.py",
+      "sha256": "bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2",
+      "bytes": 20709
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/final33-run.mjs",
+      "sha256": "35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d",
+      "bytes": 19314
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/final33_host.py",
+      "sha256": "921dbfbf5b58f67cd8a858a2c947618cdecc8b4ea7ccb6e2aef7a13bce16b5f6",
+      "bytes": 51138
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "bytes": 187609
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/nonroot_input_access.py",
+      "sha256": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+      "bytes": 17738
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/normal05_retained_stop.py",
+      "sha256": "bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2",
+      "bytes": 20709
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/r3_05_cli.py",
+      "sha256": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+      "bytes": 7098
+    },
+    {
+      "path": "consumer37-source-pass/writer/bundle/r3_05_runtime.py",
+      "sha256": "9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1",
+      "bytes": 9394
+    },
+    {
+      "path": "reviews/CONSUMER37-RESULT.json",
+      "sha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
+      "bytes": 3070
+    },
+    {
+      "path": "main/SOURCE-CONTINUATION-DECISION.json",
+      "sha256": "e65a97ede2b12d55e37368154e2731a21e02d200adf14cf2132e82bb488c36e8",
+      "bytes": 1775
+    }
+  ],
+  "referenceOnlyUnissuedJSON": {
+    "PHASES37.UNISSUED.json": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
+    "INTERFACE.UNISSUED.json": "2cc567338e19f69c69f486f490cf6444d9a5553a1231912c9b815b5ff5b7bdab"
+  }
+}

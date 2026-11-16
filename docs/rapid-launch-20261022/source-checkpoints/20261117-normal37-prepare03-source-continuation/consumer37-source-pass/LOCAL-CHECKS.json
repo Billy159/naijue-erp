@@ -1,0 +1,19 @@
+{
+  "PGConnections": 0,
+  "actual36PredecessorObjectChecked": true,
+  "applyRestoreRoleJobBodiesEqual": true,
+  "clientOrIssuerInvoked": false,
+  "clockCalls": 0,
+  "duplicateSupportBodiesEqual": true,
+  "explicitLoadCalls": 61,
+  "fullJobBudgetsRetained": true,
+  "hashLiteralOccurrences": 845,
+  "historicalInstallCatalogAndInputsPreserved": true,
+  "literalEdges": 42,
+  "nativeOrSyntheticOrBuildRun": false,
+  "pythonMembersCompiled": 37,
+  "runtimeMembers": 46,
+  "serverActions": 0,
+  "state": "NARROW_LOCAL37_LITERAL_EDGE_AND_SYNTAX_CHECKS_PASS_SOURCE_ONLY",
+  "unresolvedOldCurrentPins": []
+}

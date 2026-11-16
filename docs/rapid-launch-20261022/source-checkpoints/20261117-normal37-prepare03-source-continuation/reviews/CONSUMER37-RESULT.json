@@ -1,0 +1,55 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "frozenReportsRewritten": false,
+    "futureFixtureCreated": false,
+    "issuerOrNativeInvoked": false,
+    "ownerSourcesModified": false,
+    "serverActions": 0
+  },
+  "evidence": {
+    "path": "outputs/QB/20261117-r3-normal37-consumer-review-01/STATIC-EVIDENCE.json",
+    "sha256": "ebcb5937d79c0b90761a126f7adf9a433aa94e476702bf1fa3b66c1764418182",
+    "staticMetadataConfirmations": 76
+  },
+  "executionReady": false,
+  "findings": [],
+  "incrementalScope": "Current37 load closure including support3 literals, rolejob current-source hashes, dictionary pins, inline staging and new actual HERE; outer03/native01/plan03, true36 predecessor and preserved historical sources.",
+  "independentVerification": {
+    "actualSTART2d9STOP0a124RESTORE8aeRootPublicPinsServiceCleanupRestoredReceiptMatchPrior36": true,
+    "actualSafelyClosed589fConfirmed": true,
+    "all42LiteralAndDictionaryBindingsIndependentlyEqualActualTargets": true,
+    "allFrozenDeliveryFilesExact": true,
+    "historicalCatalog35AndInstall32InputsAndExternalPinsPreserved": true,
+    "newSourceContinuationDecisionE65Exact": true,
+    "noNativeSuccessInferredOrNative35UnknownBackfilled": true,
+    "noOldCurrentRuntimePinsExceptActual36PriorOldMain": true,
+    "originalCLIBytesOnlyBlueprintNameChangedTo37": true,
+    "outer03NativeLogical01Plan03AndOriginalWriterIdentityBound": true,
+    "runtimeMembers46Changed24Unchanged22": true,
+    "sevenInlineLiteralStagePinsEqualActualFiles": true,
+    "sixActualDirectoriesBudgetsKeysAndAll46BundlePinsMatch": true,
+    "threeSupportCopiesAndTwoRolejobCopiesMatch": true
+  },
+  "interfaceSha256": "2cc567338e19f69c69f486f490cf6444d9a5553a1231912c9b815b5ff5b7bdab",
+  "limitations": [
+    "D1 exact root37 issuer/CAS and new03 decision consumption require separate narrow pairing.",
+    "No current37 service birth, finite authority, fresh basis, ROOT/INIT state or preparation/writer outcome verified.",
+    "No main/native/target/synthetic/full compile/build/pack/server/PG/clock/issuer or future fixture executed.",
+    "SOURCE-only PASS is not permission to issue or run, nor runtime/import/business acceptance."
+  ],
+  "literalDependencySha256": "6e88d837ca1426b27e05e87ea5e41c5886f6fd02803af087fd46a7c4864a5dab",
+  "phasePlanSha256": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
+  "reuse": [
+    "Previous consumer scope and diagnostic/success semantics unchanged; no 76 diagnostic-case rerun.",
+    "Historical catalog35, install32, INPUT02, ROOT06 and private-source logic remain under existing evidence.",
+    "Old failed and suspended reports remain immutable; this accepts exact37 consumer only."
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
+  "state": "SOURCE_PASS_NORMAL37_CONSUMER_CURRENT_LOAD_CLOSURE_ONLY"
+}

@@ -1,0 +1,918 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/apply/bundle/ordinary05_roles.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/apply/bundle/ordinary05_roles.py
+@@ -21,8 +21,8 @@
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ WORK = STATE / 'fresh35-first-production-20261110-r3'
+ DATA = WORK / 'data'
+-CUSTODY = STATE / 'native-services/ordinary36-auth-20261116-01'
+-CAPTURE = WORK / 'ordinary36-auth-capture-20261116-01'
++CUSTODY = STATE / 'native-services/ordinary37-auth-20261116-01'
++CAPTURE = WORK / 'ordinary37-auth-capture-20261116-01'
+ DATABASE = 'erp_fresh35_20261110_r3'
+ CONTROLLER = 'erp35_controller_20261110_r3'
+ BACKUP_ADMIN = 'erp35_admin_20261110_r3'
+@@ -58,10 +58,10 @@
+ def scope():
+     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',
+             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',
+-            'requestKey': 't45-r3-ordinary36-auth-apply-20261116-01',
+-            'restoreRequestKey': 't45-r3-ordinary36-auth-restore-20261116-01',
+-            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-35',
+-            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-36',
++            'requestKey': 't45-r3-ordinary37-auth-apply-20261116-01',
++            'restoreRequestKey': 't45-r3-ordinary37-auth-restore-20261116-01',
++            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-36',
++            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-37',
+             'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),
+             'physical': PHYSICAL, 'roles': list(ROLES), 'maximumOfflineStepSeconds': 30,
+             'coldCopyCompleteSha256': 'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/apply/bundle/ordinary05_roles_job.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/apply/bundle/ordinary05_roles_job.py
+@@ -20,14 +20,14 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary36-auth-apply-20261116-01', 't45-r3-ordinary36-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary36-auth-restore-20261116-01', 't45-r3-ordinary36-auth-restore-20261116-01')}
+-STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_preserved35.py': '370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105'}
++PHASES = {'apply': ('t45-r3-ordinary37-auth-apply-20261116-01', 't45-r3-ordinary37-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary37-auth-restore-20261116-01', 't45-r3-ordinary37-auth-restore-20261116-01')}
++STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_preserved36.py': 'f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650'}
+ PRIOR_CID = '3ebc60712697f9a4fe8bd333fec07a6128b57a9c7b879c865332859acc237967'
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+-CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
+-CURRENT_KEY = 't45-first-r3-native-service-start-20261116-36'
+-CURRENT_SOURCE = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
+-CURRENT_PROOF_SOURCE = '642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35'
++CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-37'
++CURRENT_KEY = 't45-first-r3-native-service-start-20261116-37'
++CURRENT_SOURCE = '700e175b89aee2836e4de2c157f576b35f64a85ac648e3302050764779d9d63d'
++CURRENT_PROOF_SOURCE = 'c10ee8cd21eb26fdb0bcd4d9ba88174939eb86bddc7dd683f0ae40de45bf66fe'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -228,14 +228,14 @@
+                - CLEANUP_RESERVE_SECONDS)
+ 
+ 
+-def require_unused_apply35(ops, control):
+-    key='t45-r3-ordinary36-auth-apply-20261116-01'
++def require_unused_apply37(ops, control):
++    key='t45-r3-ordinary37-auth-apply-20261116-01'
+     root=WORKER/key
+     # The dispatcher owns this current request directory; only preexisting
+     # phase effects/custody/capture/container are forbidden here.
+-    need(not any(present(p) for p in [*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary36-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary36-auth-capture-20261116-01']),'ORDINARY35_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY')
++    need(not any(present(p) for p in [*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary37-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary37-auth-capture-20261116-01']),'ORDINARY37_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY')
+     ids=command(['docker','ps','-a','--filter','name=^/'+key+'$','--format','{{.ID}}'],5)
+-    need(not ids.strip(),'ORDINARY35_APPLY_CONTAINER_PRESENT_NO_REPLAY')
++    need(not ids.strip(),'ORDINARY37_APPLY_CONTAINER_PRESENT_NO_REPLAY')
+ 
+ 
+ def host(job, a, ops, prior, material):
+@@ -243,7 +243,7 @@
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+     prior.validate(ops,control)
+-    if a['phase']=='apply':require_unused_apply35(ops,control)
++    if a['phase']=='apply':require_unused_apply37(ops,control)
+     if a['phase']=='apply':material.validate(ops,control)
+     require_failed19_history(ops,control)
+     if a['phase'] == 'restore':
+@@ -334,7 +334,7 @@
+                 control/'requests'/(CURRENT_KEY+'.tmp'), control/'jobs'/CURRENT_KEY,
+                 control/'results'/(CURRENT_KEY+'.json'), WORKER/CURRENT_KEY,
+                 ROOT/'state/native-services'/CURRENT_KEY,
+-                ROOT/'authority/fresh35-current-production-service-v2-service-36.json')),
++                ROOT/'authority/fresh35-current-production-service-v2-service-37.json')),
+              'ORDINARY05_EARLY_RESTORE_ONLY_BEFORE_START')
+         return
+     s = a['service']
+@@ -343,7 +343,7 @@
+          and all(re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId')),
+          'ORDINARY05_RESTORE_SERVICE_SCOPE_REQUIRED')
+     stop = a['stopRequestKey']
+-    is_preserve = stop == 't45-r3-ordinary36-preserve-stop-20261116-01'
++    is_preserve = stop == 't45-r3-ordinary37-preserve-stop-20261116-01'
+     need(type(stop) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,70}',stop)
+          and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+                  ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+@@ -377,7 +377,7 @@
+              and all(r[k]==s[k] for k in ('serviceKey','containerId','containerStartedAt','postmasterStart')),
+              'ORDINARY05_RESTORE_NORMAL_STOP_REQUIRED')
+     auth = ROOT/'authority'
+-    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-36.json',65536)
++    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-37.json',65536)
+     p = ops.strict(proof_raw)
+     boot = ROOT/'state/native-services'/CURRENT_KEY
+     clean_raw = ops.read_file(boot/'cleanup.json',65536,True)
+@@ -565,7 +565,7 @@
+     signal.signal(signal.SIGTERM, interrupted)
+     signal.signal(signal.SIGINT, interrupted)
+     try:
+-        result = host(job, a, modules['fresh35-production-carrier.py'], modules['prior_preserved35.py'], modules['root06_material.py'])
++        result = host(job, a, modules['fresh35-production-carrier.py'], modules['prior_preserved36.py'], modules['root06_material.py'])
+     except Exception as error:
+         result = {'status': 'FINITE_AUTH_STEP_UNCONFIRMED_ORIGINAL_KEY_ONLY', 'requestKey': key, 'phase': phase,
+                   'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__,
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/apply/bundle/prior_preserved35.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/apply/bundle/prior_preserved36.py
+@@ -1,30 +1,30 @@
+-"""Actual successful35 start, preservation stop and exact original authentication restoration."""
++"""Actual successful36 start, preservation stop and exact original authentication restoration."""
+ from pathlib import Path
+ from types import ModuleType
+ import hashlib,json,stat
+-KEY = 't45-first-r3-native-service-start-20261116-35'
+-STOP = 't45-r3-ordinary35-preserve-stop-20261116-01'
+-RESTORE = 't45-r3-ordinary35-auth-restore-20261116-01'
+-SERVICE = {'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+-TERMINAL = '0bd548166072b27a28adf2784f754fbc13774bfde68fd05b687831836cce2426'
+-NORMAL_ROOT = 'd282fea89a6c981c0a8fb3292bfa8843e82d4c99321e6fdbff23c9e844cbb899'
+-NORMAL_PUBLIC = 'b7280b0c9d2152d38331ef966e786bd409955928516d53b87d38a724fffdb5d6'
+-STOP_TERMINAL = 'fb0a0503673a348504cbc7de62d5318fe1b60667789448e099b6189e4c805cd8'
+-STOP_ROOT = 'f1d6ed4a422ff9dfe6db88ceb2eea7155c650af1d96d3b251ed9a90f57673951'
+-STOP_PUBLIC = '284344322fa3a4213f56991006359386314247b921dd1e527047f62dae7e02d9'
+-CLEANUP = 'ab6e59eaf1f99785d3f36e3b5e2d25510332cf81ed7ce1b120447dba0150346c'
+-ACK = '7cb3a553fe96de7de11f35eff948da30f9933ae50403b5e0f7393b9671a5692a'
+-RESTORE_TERMINAL = 'e8b77fed8b54c3c31a59d82db724a378cfb41e6f4d523a10ac5acb63f83b3577'
+-RESTORE_ROOT = 'ca7ffc5eb4cb7ade449972579da939b39e96eb21d497bc9ca82e89e440744230'
+-RESTORE_PUBLIC = 'b01e7aef3d89c6a0655b87e0bc6cfe84c901aab021c059190bc986271258b099'
+-RESTORED_SAFE = '564feb3c3948d6590fdf5a6fb42532f44bdc5c0b059c6104cd288a3ec66b135f'
+-OLD_MAIN = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++KEY = 't45-first-r3-native-service-start-20261116-36'
++STOP = 't45-r3-ordinary36-preserve-stop-20261116-01'
++RESTORE = 't45-r3-ordinary36-auth-restore-20261116-01'
++SERVICE = {'containerId': '8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9', 'containerStartedAt': '2026-11-16T21:21:12.05366201Z', 'postmasterStart': '2026-11-16 21:21:13.328927+00', 'proofSha256': '1c2e696ca6708c438e93e917a2d6003fd579c5a777529c7a8fb43a4110461801', 'serviceKey': 't45-first-r3-native-service-start-20261116-36'}
++TERMINAL = 'c6bc4d7dfb5be9afca0a1505159a1c487d8504a35f8df1f3de3db84b2b9f5a06'
++NORMAL_ROOT = 'e12b554b5644bc36b62152e06e9248d66d5fa42c8b2e2c8b40871fecd06f5a66'
++NORMAL_PUBLIC = '1cdf4eafa8be54dc3eda875b13165b4af2e3dbb03922032f6bbaa53c47313fd3'
++STOP_TERMINAL = '5d25717f747ee3f5db1b7ef8684da855a9e519a67bad21b64a9faf006f7e5fd0'
++STOP_ROOT = '79a55a62872a71f5372bc4420d5829eec9171bc719f2548e1b333267da918ca6'
++STOP_PUBLIC = 'dc9a120560cea3ce7c4fd84c477cc881a031fedd54e532a4d91c7810efef4257'
++CLEANUP = '5743e18db1bbcb250aa91701ec61e47efd2cdd5bafe3202b765d07b85a2b43b7'
++ACK = '2aec997f4ec24c1bb3623a99aa9134d245601c99d87d175c9855ae9538b1c80e'
++RESTORE_TERMINAL = '05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1'
++RESTORE_ROOT = 'fa11b9b1d9c9f0051e3d1791341974016115e0522417e319f2c8ea200bb589ac'
++RESTORE_PUBLIC = '19bfcbb87599d163670b89172828d868a1507968d809903ae3bd69b9bc99741a'
++RESTORED_SAFE = '60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d'
++OLD_MAIN = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
+ DATA = {'device': 66304, 'gid': 61035, 'inode': 13502421, 'mode': 448, 'uid': 61035}
+ B=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ R=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ BOOT=R/'state/native-services'/KEY
+ def need(ok,code):
+-    if not ok:raise ValueError('PRIOR35_'+code)
++    if not ok:raise ValueError('PRIOR36_'+code)
+ def sha(body):return hashlib.sha256(body).hexdigest()
+ def module(body,path,name):
+     m=ModuleType(name);m.__file__=str(path);exec(compile(body,str(path),'exec'),m.__dict__);return m
+@@ -53,13 +53,13 @@
+  need(stopped['requestKey']==STOP and stopped['status']=='NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED' and stopped['service']==SERVICE and stopped['pgStopped'] is True and stopped['cleanupSha256']==CLEANUP and stopped['businessAdvanced'] is False and stopped['originalKeyReplayed'] is False,'PRESERVATION_STOP_REQUIRED')
+  clean=json.loads(root(BOOT/'cleanup.json',CLEANUP))
+  need(clean['requestKey']==KEY and all(clean['cleanup'][k] is True for k in ('cleanupComplete','cleanShutdown','dataPreserved','ownedPidAbsent','portAbsent')),'CLEAN_DATA_PRESERVED_REQUIRED')
+- p=json.loads(root(R/'authority/fresh35-current-production-service-v2-service-35.json',SERVICE['proofSha256'],False));birth=p['sharedPostgresNamespace']['container']
++ p=json.loads(root(R/'authority/fresh35-current-production-service-v2-service-36.json',SERVICE['proofSha256'],False));birth=p['sharedPostgresNamespace']['container']
+  need(p['requestKey']==KEY and birth['id']==SERVICE['containerId'] and birth['startedAt']==SERVICE['containerStartedAt'] and p['physical']['postmasterStart']==SERVICE['postmasterStart'] and p['dataDirectoryIdentity']==DATA,'ACTUAL_ORIGINAL_C_REQUIRED')
+  ack=json.loads(root(BOOT/'retained-ack.json',ACK));need(ack==dict(requestKey=KEY,proofSha256=SERVICE['proofSha256'],serviceLeaseExpiresAt=p['sharedPostgresNamespace']['serviceLeaseExpiresAt']),'ORIGINAL_ACK_REQUIRED')
+  terminal(RESTORE,RESTORE_TERMINAL);restored=pair(RESTORE,'maintenance-auth-result.json',RESTORE_ROOT,RESTORE_PUBLIC);validate_restored_object(restored)
+- marker=R/'state/native-services/ordinary35-auth-20261116-01/restored.json';s=marker.lstat()
++ marker=R/'state/native-services/ordinary36-auth-20261116-01/restored.json';s=marker.lstat()
+  need(json.loads(root(marker,RESTORED_SAFE))==restored['result'] and marker.resolve()==marker and stat.S_ISREG(s.st_mode) and s.st_uid==s.st_gid==0 and s.st_nlink==1 and not s.st_mode&0o077,'PRIVATE_SAFE_RESTORATION_RECEIPT_REQUIRED')
+- source=B/KEY/'bundle/normal_service05_after08.py';old=module(root(source,OLD_MAIN),source,'prior35_successful_source')
++ source=B/KEY/'bundle/normal_service05_after08.py';old=module(root(source,OLD_MAIN),source,'prior36_successful_source')
+  for cid in (SERVICE['containerId'],restored['cleanup']['cid']):
+   info=old.carrier_info(ops,cid);need(info['id']==cid and not info['running'] and info['pid']==0 and info['image']==ops.ENV_IMAGE,'ORIGINAL_CONTAINER_STOP_REQUIRED')
+  return dict(service=SERVICE,closureKind='SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED',bindings=binding())
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle/final33-run.mjs
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/final33-run.mjs
+@@ -24,9 +24,9 @@
+   sqlstate:FAILURE_SQLSTATES.includes(code)?code:null};
+ }
+ 
+-export const PREPARE='t45-r3-final33-plan-prepare-20261116-02';
++export const PREPARE='t45-r3-final33-plan-prepare-20261116-03';
+ export const LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01';
+-const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-02"});
++const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-03"});
+ export const WRITER='t45-r3-batched-real-execute-20261115-01';
+ const STATE='/var/lib/naijue-erp/fresh35-production';
+ const INPUT=STATE+'/r3-final33-private-import-input-20261116-01/package';
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle/final33_host.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/final33_host.py
+@@ -4,9 +4,9 @@
+ from types import ModuleType
+ import base64,hashlib,json,os,re,runpy,selectors,signal,stat,subprocess,sys,time
+ WRITER='t45-r3-batched-real-execute-20261115-01'
+-PREPARE='t45-r3-final33-plan-prepare-20261116-02'
++PREPARE='t45-r3-final33-plan-prepare-20261116-03'
+ LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01'
+-PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-02'}
++PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-03'}
+ HISTORICAL_CATALOG_SERVICE={'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+ PLAN_REL=Path('real-first-20261110-r3/reports')/PREPARE
+ def fixed_job_key(env):
+@@ -62,7 +62,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS = {'normal05_retained_stop.py': 'ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': 'cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b', 'final33-run.mjs': '24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f'}
++PINS = {'normal05_retained_stop.py': 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1', 'final33-run.mjs': '35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d'}
+ 
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+@@ -130,7 +130,7 @@
+  need(type(a['authorizationReference']) is str and 0<len(a['authorizationReference'])<=512,'FINAL33_REFERENCE_REQUIRED')
+  s=a['service']
+  need(type(s) is dict and set(s)=={'serviceKey','proofSha256','containerId','containerStartedAt','postmasterStart'}
+-  and s['serviceKey']=='t45-first-r3-native-service-start-20261116-36'
++  and s['serviceKey']=='t45-first-r3-native-service-start-20261116-37'
+   and all(type(s[k]) is str and re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId'))
+   and all(type(s[k]) is str and 0<len(s[k])<=64 for k in ('containerStartedAt','postmasterStart')),
+   'FINAL33_EXACT_CURRENT_SERVICE_REQUIRED')
+@@ -152,7 +152,7 @@
+ def authority(raw):return validate(json.loads(raw),now())
+ 
+ def registered_authority(a,support):
+- policy=json.loads(read(BASE/'r3-05-write-continuity/direct36-batched-real.json',262144))
++ policy=json.loads(read(BASE/'r3-05-write-continuity/direct37-batched-real.json',262144))
+  phase='prepare' if KEY==PREPARE else 'writer'
+  need(policy['grantId']==GRANT and policy['jobs']['start']['jobId']==a['service']['serviceKey']==support.SERVICE
+   and policy['jobs'][phase]['jobId']==KEY and policy['jobs'][phase]['script']=='final33_host.py'
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle/normal05_retained_stop.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261116-36'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++SERVICE = 't45-first-r3-native-service-start-20261116-37'
++NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-36.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-37.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = 'fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a'
++PROOF_SHA = 'c10ee8cd21eb26fdb0bcd4d9ba88174939eb86bddc7dd683f0ae40de45bf66fe'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40'
+-NORMAL05_SHA = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++READONLY_SHA = '33fb16ec8c1cbc6a0ef055c993e03d59b3051c3f8caea22aa9f723ffafce0c63'
++NORMAL05_SHA = '700e175b89aee2836e4de2c157f576b35f64a85ac648e3302050764779d9d63d'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/prepare/bundle/r3_05_runtime.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/r3_05_runtime.py
+@@ -10,13 +10,13 @@
+ 
+ HOST_ROOT = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ MATERIALIZED = HOST_ROOT/'state/r3-r2-private-import-input-20261112-01'
+-PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-36-worker-proof'
++PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-37-worker-proof'
+ PROFILE_SHA = 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+ INSTALLATION = '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+ SOURCE = '6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16'
+ TARGET = 'fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261116-36'
+-SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-37'
++SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ STATE_DEVICE = 66304
+ START_RESERVE = 28 * 1024**3
+ BASELINE_SCOPE_DIRECTORY = 'approvals/baseline-scope-input-r1'
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/restore/bundle/ordinary05_roles.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/restore/bundle/ordinary05_roles.py
+@@ -21,8 +21,8 @@
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ WORK = STATE / 'fresh35-first-production-20261110-r3'
+ DATA = WORK / 'data'
+-CUSTODY = STATE / 'native-services/ordinary36-auth-20261116-01'
+-CAPTURE = WORK / 'ordinary36-auth-capture-20261116-01'
++CUSTODY = STATE / 'native-services/ordinary37-auth-20261116-01'
++CAPTURE = WORK / 'ordinary37-auth-capture-20261116-01'
+ DATABASE = 'erp_fresh35_20261110_r3'
+ CONTROLLER = 'erp35_controller_20261110_r3'
+ BACKUP_ADMIN = 'erp35_admin_20261110_r3'
+@@ -58,10 +58,10 @@
+ def scope():
+     return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',
+             'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',
+-            'requestKey': 't45-r3-ordinary36-auth-apply-20261116-01',
+-            'restoreRequestKey': 't45-r3-ordinary36-auth-restore-20261116-01',
+-            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-35',
+-            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-36',
++            'requestKey': 't45-r3-ordinary37-auth-apply-20261116-01',
++            'restoreRequestKey': 't45-r3-ordinary37-auth-restore-20261116-01',
++            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-36',
++            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-37',
+             'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),
+             'physical': PHYSICAL, 'roles': list(ROLES), 'maximumOfflineStepSeconds': 30,
+             'coldCopyCompleteSha256': 'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/restore/bundle/ordinary05_roles_job.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/restore/bundle/ordinary05_roles_job.py
+@@ -20,14 +20,14 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary36-auth-apply-20261116-01', 't45-r3-ordinary36-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary36-auth-restore-20261116-01', 't45-r3-ordinary36-auth-restore-20261116-01')}
+-STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_preserved35.py': '370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105'}
++PHASES = {'apply': ('t45-r3-ordinary37-auth-apply-20261116-01', 't45-r3-ordinary37-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary37-auth-restore-20261116-01', 't45-r3-ordinary37-auth-restore-20261116-01')}
++STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_preserved36.py': 'f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650'}
+ PRIOR_CID = '3ebc60712697f9a4fe8bd333fec07a6128b57a9c7b879c865332859acc237967'
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+-CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
+-CURRENT_KEY = 't45-first-r3-native-service-start-20261116-36'
+-CURRENT_SOURCE = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
+-CURRENT_PROOF_SOURCE = '642a056411ce012a8e125d622214b60ef5b9ea67f43bdaf277b5d9a553dd9d35'
++CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-37'
++CURRENT_KEY = 't45-first-r3-native-service-start-20261116-37'
++CURRENT_SOURCE = '700e175b89aee2836e4de2c157f576b35f64a85ac648e3302050764779d9d63d'
++CURRENT_PROOF_SOURCE = 'c10ee8cd21eb26fdb0bcd4d9ba88174939eb86bddc7dd683f0ae40de45bf66fe'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -228,14 +228,14 @@
+                - CLEANUP_RESERVE_SECONDS)
+ 
+ 
+-def require_unused_apply35(ops, control):
+-    key='t45-r3-ordinary36-auth-apply-20261116-01'
++def require_unused_apply37(ops, control):
++    key='t45-r3-ordinary37-auth-apply-20261116-01'
+     root=WORKER/key
+     # The dispatcher owns this current request directory; only preexisting
+     # phase effects/custody/capture/container are forbidden here.
+-    need(not any(present(p) for p in [*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary36-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary36-auth-capture-20261116-01']),'ORDINARY35_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY')
++    need(not any(present(p) for p in [*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary37-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary37-auth-capture-20261116-01']),'ORDINARY37_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY')
+     ids=command(['docker','ps','-a','--filter','name=^/'+key+'$','--format','{{.ID}}'],5)
+-    need(not ids.strip(),'ORDINARY35_APPLY_CONTAINER_PRESENT_NO_REPLAY')
++    need(not ids.strip(),'ORDINARY37_APPLY_CONTAINER_PRESENT_NO_REPLAY')
+ 
+ 
+ def host(job, a, ops, prior, material):
+@@ -243,7 +243,7 @@
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+     prior.validate(ops,control)
+-    if a['phase']=='apply':require_unused_apply35(ops,control)
++    if a['phase']=='apply':require_unused_apply37(ops,control)
+     if a['phase']=='apply':material.validate(ops,control)
+     require_failed19_history(ops,control)
+     if a['phase'] == 'restore':
+@@ -334,7 +334,7 @@
+                 control/'requests'/(CURRENT_KEY+'.tmp'), control/'jobs'/CURRENT_KEY,
+                 control/'results'/(CURRENT_KEY+'.json'), WORKER/CURRENT_KEY,
+                 ROOT/'state/native-services'/CURRENT_KEY,
+-                ROOT/'authority/fresh35-current-production-service-v2-service-36.json')),
++                ROOT/'authority/fresh35-current-production-service-v2-service-37.json')),
+              'ORDINARY05_EARLY_RESTORE_ONLY_BEFORE_START')
+         return
+     s = a['service']
+@@ -343,7 +343,7 @@
+          and all(re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId')),
+          'ORDINARY05_RESTORE_SERVICE_SCOPE_REQUIRED')
+     stop = a['stopRequestKey']
+-    is_preserve = stop == 't45-r3-ordinary36-preserve-stop-20261116-01'
++    is_preserve = stop == 't45-r3-ordinary37-preserve-stop-20261116-01'
+     need(type(stop) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,70}',stop)
+          and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+                  ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+@@ -377,7 +377,7 @@
+              and all(r[k]==s[k] for k in ('serviceKey','containerId','containerStartedAt','postmasterStart')),
+              'ORDINARY05_RESTORE_NORMAL_STOP_REQUIRED')
+     auth = ROOT/'authority'
+-    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-36.json',65536)
++    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-37.json',65536)
+     p = ops.strict(proof_raw)
+     boot = ROOT/'state/native-services'/CURRENT_KEY
+     clean_raw = ops.read_file(boot/'cleanup.json',65536,True)
+@@ -565,7 +565,7 @@
+     signal.signal(signal.SIGTERM, interrupted)
+     signal.signal(signal.SIGINT, interrupted)
+     try:
+-        result = host(job, a, modules['fresh35-production-carrier.py'], modules['prior_preserved35.py'], modules['root06_material.py'])
++        result = host(job, a, modules['fresh35-production-carrier.py'], modules['prior_preserved36.py'], modules['root06_material.py'])
+     except Exception as error:
+         result = {'status': 'FINITE_AUTH_STEP_UNCONFIRMED_ORIGINAL_KEY_ONLY', 'requestKey': key, 'phase': phase,
+                   'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__,
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/restore/bundle/prior_preserved35.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/restore/bundle/prior_preserved36.py
+@@ -1,30 +1,30 @@
+-"""Actual successful35 start, preservation stop and exact original authentication restoration."""
++"""Actual successful36 start, preservation stop and exact original authentication restoration."""
+ from pathlib import Path
+ from types import ModuleType
+ import hashlib,json,stat
+-KEY = 't45-first-r3-native-service-start-20261116-35'
+-STOP = 't45-r3-ordinary35-preserve-stop-20261116-01'
+-RESTORE = 't45-r3-ordinary35-auth-restore-20261116-01'
+-SERVICE = {'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+-TERMINAL = '0bd548166072b27a28adf2784f754fbc13774bfde68fd05b687831836cce2426'
+-NORMAL_ROOT = 'd282fea89a6c981c0a8fb3292bfa8843e82d4c99321e6fdbff23c9e844cbb899'
+-NORMAL_PUBLIC = 'b7280b0c9d2152d38331ef966e786bd409955928516d53b87d38a724fffdb5d6'
+-STOP_TERMINAL = 'fb0a0503673a348504cbc7de62d5318fe1b60667789448e099b6189e4c805cd8'
+-STOP_ROOT = 'f1d6ed4a422ff9dfe6db88ceb2eea7155c650af1d96d3b251ed9a90f57673951'
+-STOP_PUBLIC = '284344322fa3a4213f56991006359386314247b921dd1e527047f62dae7e02d9'
+-CLEANUP = 'ab6e59eaf1f99785d3f36e3b5e2d25510332cf81ed7ce1b120447dba0150346c'
+-ACK = '7cb3a553fe96de7de11f35eff948da30f9933ae50403b5e0f7393b9671a5692a'
+-RESTORE_TERMINAL = 'e8b77fed8b54c3c31a59d82db724a378cfb41e6f4d523a10ac5acb63f83b3577'
+-RESTORE_ROOT = 'ca7ffc5eb4cb7ade449972579da939b39e96eb21d497bc9ca82e89e440744230'
+-RESTORE_PUBLIC = 'b01e7aef3d89c6a0655b87e0bc6cfe84c901aab021c059190bc986271258b099'
+-RESTORED_SAFE = '564feb3c3948d6590fdf5a6fb42532f44bdc5c0b059c6104cd288a3ec66b135f'
+-OLD_MAIN = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++KEY = 't45-first-r3-native-service-start-20261116-36'
++STOP = 't45-r3-ordinary36-preserve-stop-20261116-01'
++RESTORE = 't45-r3-ordinary36-auth-restore-20261116-01'
++SERVICE = {'containerId': '8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9', 'containerStartedAt': '2026-11-16T21:21:12.05366201Z', 'postmasterStart': '2026-11-16 21:21:13.328927+00', 'proofSha256': '1c2e696ca6708c438e93e917a2d6003fd579c5a777529c7a8fb43a4110461801', 'serviceKey': 't45-first-r3-native-service-start-20261116-36'}
++TERMINAL = 'c6bc4d7dfb5be9afca0a1505159a1c487d8504a35f8df1f3de3db84b2b9f5a06'
++NORMAL_ROOT = 'e12b554b5644bc36b62152e06e9248d66d5fa42c8b2e2c8b40871fecd06f5a66'
++NORMAL_PUBLIC = '1cdf4eafa8be54dc3eda875b13165b4af2e3dbb03922032f6bbaa53c47313fd3'
++STOP_TERMINAL = '5d25717f747ee3f5db1b7ef8684da855a9e519a67bad21b64a9faf006f7e5fd0'
++STOP_ROOT = '79a55a62872a71f5372bc4420d5829eec9171bc719f2548e1b333267da918ca6'
++STOP_PUBLIC = 'dc9a120560cea3ce7c4fd84c477cc881a031fedd54e532a4d91c7810efef4257'
++CLEANUP = '5743e18db1bbcb250aa91701ec61e47efd2cdd5bafe3202b765d07b85a2b43b7'
++ACK = '2aec997f4ec24c1bb3623a99aa9134d245601c99d87d175c9855ae9538b1c80e'
++RESTORE_TERMINAL = '05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1'
++RESTORE_ROOT = 'fa11b9b1d9c9f0051e3d1791341974016115e0522417e319f2c8ea200bb589ac'
++RESTORE_PUBLIC = '19bfcbb87599d163670b89172828d868a1507968d809903ae3bd69b9bc99741a'
++RESTORED_SAFE = '60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d'
++OLD_MAIN = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
+ DATA = {'device': 66304, 'gid': 61035, 'inode': 13502421, 'mode': 448, 'uid': 61035}
+ B=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ R=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ BOOT=R/'state/native-services'/KEY
+ def need(ok,code):
+-    if not ok:raise ValueError('PRIOR35_'+code)
++    if not ok:raise ValueError('PRIOR36_'+code)
+ def sha(body):return hashlib.sha256(body).hexdigest()
+ def module(body,path,name):
+     m=ModuleType(name);m.__file__=str(path);exec(compile(body,str(path),'exec'),m.__dict__);return m
+@@ -53,13 +53,13 @@
+  need(stopped['requestKey']==STOP and stopped['status']=='NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED' and stopped['service']==SERVICE and stopped['pgStopped'] is True and stopped['cleanupSha256']==CLEANUP and stopped['businessAdvanced'] is False and stopped['originalKeyReplayed'] is False,'PRESERVATION_STOP_REQUIRED')
+  clean=json.loads(root(BOOT/'cleanup.json',CLEANUP))
+  need(clean['requestKey']==KEY and all(clean['cleanup'][k] is True for k in ('cleanupComplete','cleanShutdown','dataPreserved','ownedPidAbsent','portAbsent')),'CLEAN_DATA_PRESERVED_REQUIRED')
+- p=json.loads(root(R/'authority/fresh35-current-production-service-v2-service-35.json',SERVICE['proofSha256'],False));birth=p['sharedPostgresNamespace']['container']
++ p=json.loads(root(R/'authority/fresh35-current-production-service-v2-service-36.json',SERVICE['proofSha256'],False));birth=p['sharedPostgresNamespace']['container']
+  need(p['requestKey']==KEY and birth['id']==SERVICE['containerId'] and birth['startedAt']==SERVICE['containerStartedAt'] and p['physical']['postmasterStart']==SERVICE['postmasterStart'] and p['dataDirectoryIdentity']==DATA,'ACTUAL_ORIGINAL_C_REQUIRED')
+  ack=json.loads(root(BOOT/'retained-ack.json',ACK));need(ack==dict(requestKey=KEY,proofSha256=SERVICE['proofSha256'],serviceLeaseExpiresAt=p['sharedPostgresNamespace']['serviceLeaseExpiresAt']),'ORIGINAL_ACK_REQUIRED')
+  terminal(RESTORE,RESTORE_TERMINAL);restored=pair(RESTORE,'maintenance-auth-result.json',RESTORE_ROOT,RESTORE_PUBLIC);validate_restored_object(restored)
+- marker=R/'state/native-services/ordinary35-auth-20261116-01/restored.json';s=marker.lstat()
++ marker=R/'state/native-services/ordinary36-auth-20261116-01/restored.json';s=marker.lstat()
+  need(json.loads(root(marker,RESTORED_SAFE))==restored['result'] and marker.resolve()==marker and stat.S_ISREG(s.st_mode) and s.st_uid==s.st_gid==0 and s.st_nlink==1 and not s.st_mode&0o077,'PRIVATE_SAFE_RESTORATION_RECEIPT_REQUIRED')
+- source=B/KEY/'bundle/normal_service05_after08.py';old=module(root(source,OLD_MAIN),source,'prior35_successful_source')
++ source=B/KEY/'bundle/normal_service05_after08.py';old=module(root(source,OLD_MAIN),source,'prior36_successful_source')
+  for cid in (SERVICE['containerId'],restored['cleanup']['cid']):
+   info=old.carrier_info(ops,cid);need(info['id']==cid and not info['running'] and info['pid']==0 and info['image']==ops.ENV_IMAGE,'ORIGINAL_CONTAINER_STOP_REQUIRED')
+  return dict(service=SERVICE,closureKind='SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED',bindings=binding())
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/batched161-run.mjs
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/batched161-run.mjs
+@@ -45,7 +45,7 @@
+ }
+ 
+ const REQUEST='t45-r3-batched161-command-successor-20261116-01';
+-const START='t45-first-r3-native-service-start-20261116-36';
++const START='t45-first-r3-native-service-start-20261116-37';
+ const OPERATOR='/var/lib/naijue-erp/fresh35-production/installed-real-operation-batched-root06-20261116-01/operation';
+ const SERVICE='/run/naijue-rewrite/current-production-service.json';
+ const INNER='/etc/naijue-erp/fresh35-batched161-command-successor-v1.json';
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/final33-run.mjs
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/final33-run.mjs
+@@ -24,9 +24,9 @@
+   sqlstate:FAILURE_SQLSTATES.includes(code)?code:null};
+ }
+ 
+-export const PREPARE='t45-r3-final33-plan-prepare-20261116-02';
++export const PREPARE='t45-r3-final33-plan-prepare-20261116-03';
+ export const LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01';
+-const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-02"});
++const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-03"});
+ export const WRITER='t45-r3-batched-real-execute-20261115-01';
+ const STATE='/var/lib/naijue-erp/fresh35-production';
+ const INPUT=STATE+'/r3-final33-private-import-input-20261116-01/package';
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/normal_service05_after08.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/normal_service05_after08.py
+@@ -10,8 +10,8 @@
+ from pathlib import Path
+ from types import ModuleType
+ 
+-JOB = 't45-first-r3-native-service-start-20261116-36'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++JOB = 't45-first-r3-native-service-start-20261116-37'
++NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ WORKER=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')/JOB
+ ACTIVE_CONTROL=Path('/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64')
+ ROOT=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+@@ -19,26 +19,26 @@
+ WORK=STATE/'fresh35-first-production-20261110-r3'
+ REL=Path('native-services')/JOB
+ BOOT=STATE/REL
+-PREVIOUS_JOB = 't45-first-r3-native-service-start-20261116-35'
++PREVIOUS_JOB = 't45-first-r3-native-service-start-20261116-36'
+ ORIGINAL_REQUEST='t45-first-r3-native-service-start-20261110-01'
+ ORIGINAL_BOOT=STATE/'native-services'/ORIGINAL_REQUEST
+ OPS_SHA='40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360'
+ PLAN_SHA='7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ OLD_CID='ae4d582c1d4abddc8794b577412904452ea29b234308aad9b5685af7383d6900'
+ OLD_PHYSICAL={'systemIdentifier':'7706545564479176741','databaseOid':'16393','serverVersionNum':'170011','postmasterStart':'2026-11-10 14:12:48.798294+00'}
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-36.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-37.json'
+ ROLE='erp35_runtime_20261110_r3'
+ DATABASE='erp_fresh35_20261110_r3'
+ HOST_WORK_SECONDS=190
+ MATERIAL06_SHA='584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a'
+-PRIOR32_SHA = '370bffd7aef582f8406020bcf43e7894651c776e51f9c5ad59f9b52034d6e105'
++PRIOR32_SHA = 'f5fcde63f48fec961c48ca73f3c472cdaa2680f694a256ccf9adc8f0ebd86650'
+ MATERIALIZED_JOB=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-r2-data-materialize-20261112-01')
+ MATERIALIZED_RECEIPT='88c4a8dff9a092f50479733d88593ffcb5ebbcc16ab6ffbfc6e0c9ec4cbfb157'
+ MATERIALIZER_SHA='1f8a8cc826d153455de7c8f93af3402032dc82fd4f498c1912d50c79185e41b8'
+ MATERIALIZED_PROFILE_SHA='ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+-R3_RUNTIME_SHA = 'cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b'
++R3_RUNTIME_SHA = '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1'
+ R3_CLI_SHA = 'b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0'
+-READONLY_SHA = '933b094ea9da9372982ccf94a3bebc004aa50fd59f774b43d3532ded388fa7ec'
++READONLY_SHA = '33fb16ec8c1cbc6a0ef055c993e03d59b3051c3f8caea22aa9f723ffafce0c63'
+ BASELINE_RUNTIME_SHA='4da4cd69a818800e82cf14d1ca409863c3ed6904b5980955cea299fcf9c14278'
+ CONTAINER_DEADLINE_PROGRAM="""import os,sys,time
+ seconds=(int(sys.argv[1])-time.time_ns()//1000000)//1000-3
+@@ -499,8 +499,8 @@
+                         (control/'jobs/t45-first-r3-native-controller-cleanup-20261110-01/results/cleanup-original-controller-result.json',a['cleanupResultSha256']),
+                         (control/'jobs/t45-first-r3-native-facts-close-20261110-01/results/native-closeout.json',a['closeoutResultSha256'])):
+         need(sha(ops.read_file(path,65536,False,False))==digest,'NORMAL_PRIOR_CLEAN_CLOSEOUT_DIFFERS')
+-    prior_path=WORKER/'bundle/prior_preserved35.py'
+-    prior=module(pinned(ops,prior_path,PRIOR32_SHA),prior_path,'prior_preserved35')
++    prior_path=WORKER/'bundle/prior_preserved36.py'
++    prior=module(pinned(ops,prior_path,PRIOR32_SHA),prior_path,'prior_preserved36')
+     prior.validate(ops,ACTIVE_CONTROL,a)
+     material_path=WORKER/'bundle/root06_material.py'
+     material=module(pinned(ops,material_path,MATERIAL06_SHA),material_path,'root06_material')
+@@ -544,7 +544,7 @@
+     need(identity(parent)['uid']==0 and identity(parent)['mode']==0o700,'NORMAL_PRIVATE_PARENT_REQUIRED')
+     boot=ROOT/'state'/REL;need(not os.path.lexists(boot),'NORMAL_OPERATION_PRESENT_NO_REPLAY');boot.mkdir(mode=0o700)
+     lifecycle['phase']='STAGE_PRIVATE_SOURCES'
+-    for name,pin in (('final33-run.mjs','24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f'),('normal_service05_after08.py',a['normalServiceSha256']),('normal_service05_after08_proof.py',a['proofSourceSha256']),('fresh35-production-carrier.py',OPS_SHA),('r3_05_readonly.py',READONLY_SHA),('operator-host.mjs','7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae'),('operator-stream-program.mjs','fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6'),('operator-stream-import-cli.mjs','6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e'),('operator-manifest.json','c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184'),('batched161-run.mjs','e6c44f641a6306b286e98613e0e69781fd64d92a5533c4ced884646648375e8a'),('start_owned_describe.py','abf46f58a519f8e9c1c8abd3ff35482a94d02ae5ab9afd07fb01bdb66a7e33f6')):
++    for name,pin in (('final33-run.mjs','35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d'),('normal_service05_after08.py',a['normalServiceSha256']),('normal_service05_after08_proof.py',a['proofSourceSha256']),('fresh35-production-carrier.py',OPS_SHA),('r3_05_readonly.py',READONLY_SHA),('operator-host.mjs','7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae'),('operator-stream-program.mjs','fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6'),('operator-stream-import-cli.mjs','6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e'),('operator-manifest.json','c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184'),('batched161-run.mjs','145c4e378ddee0c15a48721f8ca33bcc87aeb8ca928c5589834f4f8a20758f16'),('start_owned_describe.py','fffd4ed16fedef726478be200ad93efea7bc71389c8b0714d604f4569f61ca84')):
+         raw=ops.read_file(WORKER/'bundle'/name,262144,True);need(sha(raw)==pin,'NORMAL_NEW_PRIVATE_SOURCE_DIFFERS');ops.new_file(boot/name,raw,0o400)
+     ops.new_file(boot/'service-start-authorization.json',authraw,0o400)
+     lifecycle['phase']='STAGE_READONLY_PROJECTIONS'
+@@ -597,7 +597,7 @@
+         ack=await_retained_ack(ops,boot,deadline,a['expiresAt'],cid,plan,lease,birth,sha(raw))
+         need(ack,'NORMAL_RETAINED_ACK_UNCONFIRMED')
+         describe_path=boot/'start_owned_describe.py'
+-        describe=module(pinned(ops,describe_path,'abf46f58a519f8e9c1c8abd3ff35482a94d02ae5ab9afd07fb01bdb66a7e33f6'),describe_path,'start_owned_describe')
++        describe=module(pinned(ops,describe_path,'fffd4ed16fedef726478be200ad93efea7bc71389c8b0714d604f4569f61ca84'),describe_path,'start_owned_describe')
+         service={'serviceKey':JOB,'proofSha256':sha(raw),'containerId':birth['id'],
+                  'containerStartedAt':birth['startedAt'],'postmasterStart':ops.strict(raw)['physical']['postmasterStart']}
+         lifecycle['phase']='GENUINE_READONLY_DESCRIBE'
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/normal_service05_after08_proof.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/normal_service05_after08_proof.py
+@@ -2,8 +2,8 @@
+ import hashlib,json,re
+ from datetime import datetime,timezone
+ 
+-JOB = 't45-first-r3-native-service-start-20261116-36'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++JOB = 't45-first-r3-native-service-start-20261116-37'
++NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ FORMAT='FRESH35_CURRENT_PRODUCTION_SERVICE_V2'
+ RECEIPT_FORMAT='FRESH35_NORMAL_SERVICE_RETAINED_V1'
+ RECEIPT_STATE='NORMAL_SERVICE_RETAINED_CURRENT_EPOCH_NOT_BUSINESS_ACCEPTANCE'
+@@ -24,8 +24,8 @@
+ SERVICE14_EPOCH='2026-11-13 07:35:39.511422+00'
+ DDL_SERVICE_PROOF='76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727'
+ DDL_EPOCH='2026-11-13 08:53:20.527136+00'
+-PREVIOUS_JOB = 't45-first-r3-native-service-start-20261116-35'
+-PREVIOUS_EPOCH = '2026-11-16 18:33:48.303258+00'
++PREVIOUS_JOB = 't45-first-r3-native-service-start-20261116-36'
++PREVIOUS_EPOCH = '2026-11-16 21:21:13.328927+00'
+ PHYSICAL={'systemIdentifier':'7706545564479176741','databaseOid':'16393','serverVersionNum':'170011'}
+ SQL36_ROOT_RESULT='c02a30ddb237435a5e8a21bfb5a309fb572b0c0061a928c519fc25ec35f85120'
+ SQL36_TERMINAL='362329cd68913d9ea4cde447a9dc7bbb833df6127dc831a23387b1079f5a1115'
+@@ -59,10 +59,10 @@
+             'dataDirectory':WORK+'/data','dataDirectoryIdentity':DATA,'runtimeRole':'erp35_runtime_20261110_r3',
+             'runtimeLoginValidUntil':None,'maximumStartOperationSeconds':300,'maximumServiceSeconds':3600,
+             'authenticationAction':'AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY','previousRuntimeOutcome':'UNKNOWN_PRESERVED',
+-            'previousRequestKey':PREVIOUS_JOB,'previousStopRequestKey':'t45-r3-ordinary35-preserve-stop-20261116-01','previousClosureKind':'SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED',
++            'previousRequestKey':PREVIOUS_JOB,'previousStopRequestKey':'t45-r3-ordinary36-preserve-stop-20261116-01','previousClosureKind':'SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED',
+             'runtimeReadinessMaxSeconds':20,'databaseRoleChanges':0,
+-            'restoreRequestKey':'t45-r3-ordinary35-auth-restore-20261116-01',
+-            'applyRequestKey':'t45-r3-ordinary36-auth-apply-20261116-01',
++            'restoreRequestKey':'t45-r3-ordinary36-auth-restore-20261116-01',
++            'applyRequestKey':'t45-r3-ordinary37-auth-apply-20261116-01',
+             'ddlServiceProofSha256':DDL_SERVICE_PROOF,'ddlPostmasterStart':DDL_EPOCH,
+             'admin154RecordSha256':ADMIN154_RECORD_SHA,'admin154PostmasterStart':ADMIN154_EPOCH,
+             'admin154SourceSetSha256':'d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe',
+@@ -76,7 +76,7 @@
+             'closeoutResultSha256':'4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16'}
+ 
+ def validate_authority(a,now):
+-    need(type(PREVIOUS_EPOCH) is str,'NORMAL36_EXACT_PRIOR35_EPOCH_EVIDENCE_REQUIRED')
++    need(type(PREVIOUS_EPOCH) is str,'NORMAL37_EXACT_PRIOR36_EPOCH_EVIDENCE_REQUIRED')
+     fixed=scope();dynamic={'previousTerminalSha256','previousResultSha256','previousCleanupSha256','previousCurrentProofSha256',
+                            'previousStopTerminalSha256','previousStopResultSha256','previousRetainedAckSha256','restoreTerminalSha256','restoreResultSha256',
+                            'applyTerminalSha256','applyResultSha256'}
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/prior_preserved35.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/prior_preserved36.py
+@@ -1,30 +1,30 @@
+-"""Actual successful35 start, preservation stop and exact original authentication restoration."""
++"""Actual successful36 start, preservation stop and exact original authentication restoration."""
+ from pathlib import Path
+ from types import ModuleType
+ import hashlib,json,stat
+-KEY = 't45-first-r3-native-service-start-20261116-35'
+-STOP = 't45-r3-ordinary35-preserve-stop-20261116-01'
+-RESTORE = 't45-r3-ordinary35-auth-restore-20261116-01'
+-SERVICE = {'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+-TERMINAL = '0bd548166072b27a28adf2784f754fbc13774bfde68fd05b687831836cce2426'
+-NORMAL_ROOT = 'd282fea89a6c981c0a8fb3292bfa8843e82d4c99321e6fdbff23c9e844cbb899'
+-NORMAL_PUBLIC = 'b7280b0c9d2152d38331ef966e786bd409955928516d53b87d38a724fffdb5d6'
+-STOP_TERMINAL = 'fb0a0503673a348504cbc7de62d5318fe1b60667789448e099b6189e4c805cd8'
+-STOP_ROOT = 'f1d6ed4a422ff9dfe6db88ceb2eea7155c650af1d96d3b251ed9a90f57673951'
+-STOP_PUBLIC = '284344322fa3a4213f56991006359386314247b921dd1e527047f62dae7e02d9'
+-CLEANUP = 'ab6e59eaf1f99785d3f36e3b5e2d25510332cf81ed7ce1b120447dba0150346c'
+-ACK = '7cb3a553fe96de7de11f35eff948da30f9933ae50403b5e0f7393b9671a5692a'
+-RESTORE_TERMINAL = 'e8b77fed8b54c3c31a59d82db724a378cfb41e6f4d523a10ac5acb63f83b3577'
+-RESTORE_ROOT = 'ca7ffc5eb4cb7ade449972579da939b39e96eb21d497bc9ca82e89e440744230'
+-RESTORE_PUBLIC = 'b01e7aef3d89c6a0655b87e0bc6cfe84c901aab021c059190bc986271258b099'
+-RESTORED_SAFE = '564feb3c3948d6590fdf5a6fb42532f44bdc5c0b059c6104cd288a3ec66b135f'
+-OLD_MAIN = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++KEY = 't45-first-r3-native-service-start-20261116-36'
++STOP = 't45-r3-ordinary36-preserve-stop-20261116-01'
++RESTORE = 't45-r3-ordinary36-auth-restore-20261116-01'
++SERVICE = {'containerId': '8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9', 'containerStartedAt': '2026-11-16T21:21:12.05366201Z', 'postmasterStart': '2026-11-16 21:21:13.328927+00', 'proofSha256': '1c2e696ca6708c438e93e917a2d6003fd579c5a777529c7a8fb43a4110461801', 'serviceKey': 't45-first-r3-native-service-start-20261116-36'}
++TERMINAL = 'c6bc4d7dfb5be9afca0a1505159a1c487d8504a35f8df1f3de3db84b2b9f5a06'
++NORMAL_ROOT = 'e12b554b5644bc36b62152e06e9248d66d5fa42c8b2e2c8b40871fecd06f5a66'
++NORMAL_PUBLIC = '1cdf4eafa8be54dc3eda875b13165b4af2e3dbb03922032f6bbaa53c47313fd3'
++STOP_TERMINAL = '5d25717f747ee3f5db1b7ef8684da855a9e519a67bad21b64a9faf006f7e5fd0'
++STOP_ROOT = '79a55a62872a71f5372bc4420d5829eec9171bc719f2548e1b333267da918ca6'
++STOP_PUBLIC = 'dc9a120560cea3ce7c4fd84c477cc881a031fedd54e532a4d91c7810efef4257'
++CLEANUP = '5743e18db1bbcb250aa91701ec61e47efd2cdd5bafe3202b765d07b85a2b43b7'
++ACK = '2aec997f4ec24c1bb3623a99aa9134d245601c99d87d175c9855ae9538b1c80e'
++RESTORE_TERMINAL = '05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1'
++RESTORE_ROOT = 'fa11b9b1d9c9f0051e3d1791341974016115e0522417e319f2c8ea200bb589ac'
++RESTORE_PUBLIC = '19bfcbb87599d163670b89172828d868a1507968d809903ae3bd69b9bc99741a'
++RESTORED_SAFE = '60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d'
++OLD_MAIN = 'e39debb1bc94db8328c5c50fc2894491db01d396d4f5936bd13307506ac82d75'
+ DATA = {'device': 66304, 'gid': 61035, 'inode': 13502421, 'mode': 448, 'uid': 61035}
+ B=Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ R=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ BOOT=R/'state/native-services'/KEY
+ def need(ok,code):
+-    if not ok:raise ValueError('PRIOR35_'+code)
++    if not ok:raise ValueError('PRIOR36_'+code)
+ def sha(body):return hashlib.sha256(body).hexdigest()
+ def module(body,path,name):
+     m=ModuleType(name);m.__file__=str(path);exec(compile(body,str(path),'exec'),m.__dict__);return m
+@@ -53,13 +53,13 @@
+  need(stopped['requestKey']==STOP and stopped['status']=='NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED' and stopped['service']==SERVICE and stopped['pgStopped'] is True and stopped['cleanupSha256']==CLEANUP and stopped['businessAdvanced'] is False and stopped['originalKeyReplayed'] is False,'PRESERVATION_STOP_REQUIRED')
+  clean=json.loads(root(BOOT/'cleanup.json',CLEANUP))
+  need(clean['requestKey']==KEY and all(clean['cleanup'][k] is True for k in ('cleanupComplete','cleanShutdown','dataPreserved','ownedPidAbsent','portAbsent')),'CLEAN_DATA_PRESERVED_REQUIRED')
+- p=json.loads(root(R/'authority/fresh35-current-production-service-v2-service-35.json',SERVICE['proofSha256'],False));birth=p['sharedPostgresNamespace']['container']
++ p=json.loads(root(R/'authority/fresh35-current-production-service-v2-service-36.json',SERVICE['proofSha256'],False));birth=p['sharedPostgresNamespace']['container']
+  need(p['requestKey']==KEY and birth['id']==SERVICE['containerId'] and birth['startedAt']==SERVICE['containerStartedAt'] and p['physical']['postmasterStart']==SERVICE['postmasterStart'] and p['dataDirectoryIdentity']==DATA,'ACTUAL_ORIGINAL_C_REQUIRED')
+  ack=json.loads(root(BOOT/'retained-ack.json',ACK));need(ack==dict(requestKey=KEY,proofSha256=SERVICE['proofSha256'],serviceLeaseExpiresAt=p['sharedPostgresNamespace']['serviceLeaseExpiresAt']),'ORIGINAL_ACK_REQUIRED')
+  terminal(RESTORE,RESTORE_TERMINAL);restored=pair(RESTORE,'maintenance-auth-result.json',RESTORE_ROOT,RESTORE_PUBLIC);validate_restored_object(restored)
+- marker=R/'state/native-services/ordinary35-auth-20261116-01/restored.json';s=marker.lstat()
++ marker=R/'state/native-services/ordinary36-auth-20261116-01/restored.json';s=marker.lstat()
+  need(json.loads(root(marker,RESTORED_SAFE))==restored['result'] and marker.resolve()==marker and stat.S_ISREG(s.st_mode) and s.st_uid==s.st_gid==0 and s.st_nlink==1 and not s.st_mode&0o077,'PRIVATE_SAFE_RESTORATION_RECEIPT_REQUIRED')
+- source=B/KEY/'bundle/normal_service05_after08.py';old=module(root(source,OLD_MAIN),source,'prior35_successful_source')
++ source=B/KEY/'bundle/normal_service05_after08.py';old=module(root(source,OLD_MAIN),source,'prior36_successful_source')
+  for cid in (SERVICE['containerId'],restored['cleanup']['cid']):
+   info=old.carrier_info(ops,cid);need(info['id']==cid and not info['running'] and info['pid']==0 and info['image']==ops.ENV_IMAGE,'ORIGINAL_CONTAINER_STOP_REQUIRED')
+  return dict(service=SERVICE,closureKind='SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED',bindings=binding())
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/r3_05_readonly.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/r3_05_readonly.py
+@@ -5,7 +5,7 @@
+ import stat
+ 
+ WORKER = 61035
+-SERVICE = 't45-first-r3-native-service-start-20261116-36'
++SERVICE = 't45-first-r3-native-service-start-20261116-37'
+ STATE = Path('/var/lib/naijue-erp/fresh35-production')
+ AUTHORITY = Path('/etc/naijue-erp')
+ OPERATION = STATE/'installed-real-operation-51724553-20261114-01/operation'
+@@ -27,7 +27,7 @@
+ MANIFEST = 'd661fa09be2ded0a4a3f0a6b6cb1c371e48796a8eb2d0ff89186ac4d0535e27e'
+ DEPS_LOCK = '7e2bc5e96f2b95c7404479d2785372696323d8ec9b49ce6e642de2bedf120f7d'
+ DEPS_INPUT_LOCK = 'c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048'
+-PROOF = 'fresh35-current-production-service-v2-service-36.json'
++PROOF = 'fresh35-current-production-service-v2-service-37.json'
+ EXECUTION = 'fresh35-compact-zero-execution-v2.json'
+ PROVISION = 'fresh35-production-provision-v2.json'
+ DEPLOYMENT = 'fresh35-isolated-deployment-v1.json'
+@@ -394,7 +394,7 @@
+  assert.equal(createHash('sha256').update(await readFile(path)).digest('hex'),pin);
+ }
+ const records=['fresh35-combined-installation-v1.json','fresh35-admin154-successor-v1.json',
+-               'fresh35-compact-zero-successor-v2.json','fresh35-current-production-service-v2-service-36.json'];
++               'fresh35-compact-zero-successor-v2.json','fresh35-current-production-service-v2-service-37.json'];
+ if(phase==='EXECUTE')records.push('fresh35-compact-zero-execution-v2.json');
+ for(const path of [...records.map(name=>authority+'/'+name),'/run/naijue-rewrite/current-production-service.json']){
+  const fd=await open(path,'r');
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/r3_05_runtime.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/r3_05_runtime.py
+@@ -10,13 +10,13 @@
+ 
+ HOST_ROOT = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ MATERIALIZED = HOST_ROOT/'state/r3-r2-private-import-input-20261112-01'
+-PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-36-worker-proof'
++PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-37-worker-proof'
+ PROFILE_SHA = 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+ INSTALLATION = '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+ SOURCE = '6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16'
+ TARGET = 'fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261116-36'
+-SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-37'
++SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ STATE_DEVICE = 66304
+ START_RESERVE = 28 * 1024**3
+ BASELINE_SCOPE_DIRECTORY = 'approvals/baseline-scope-input-r1'
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/start/bundle/start_owned_describe.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/start/bundle/start_owned_describe.py
+@@ -2,12 +2,12 @@
+ from pathlib import Path
+ import ctypes,hashlib,json,os,re,selectors,signal,stat,subprocess,sys,time
+ 
+-SERVICE='t45-first-r3-native-service-start-20261116-36'
++SERVICE='t45-first-r3-native-service-start-20261116-37'
+ ROOT=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ STATE=Path('/var/lib/naijue-erp/fresh35-production')
+ BOOT=STATE/'native-services'/SERVICE
+ NODE='/opt/naijue-erp/fresh35-combined-v1/runtime/node/bin/node'
+-RUNNER_SHA = 'e6c44f641a6306b286e98613e0e69781fd64d92a5533c4ced884646648375e8a'
++RUNNER_SHA = '145c4e378ddee0c15a48721f8ca33bcc87aeb8ca928c5589834f4f8a20758f16'
+ MATERIAL_SHA='73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171'
+ SOURCE_SHA='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+ STDOUT_LIMIT=131072
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/stop/bundle/normal05_preserve_stop.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/stop/bundle/normal05_preserve_stop.py
+@@ -12,19 +12,19 @@
+ import time
+ 
+ 
+-KEY = 't45-r3-ordinary36-preserve-stop-20261116-01'
++KEY = 't45-r3-ordinary37-preserve-stop-20261116-01'
+ WRITER = 't45-first-20261110-r3-real-execute-20261114-02'
+ GRANT = 'b16447fbc81f4d64'
+ ROOT = Path('/root/erp-release-20261006-01-worker/grant-' + GRANT)
+ CONTROL = Path('/home/naijue/erp-release-20261006-01-control/grant-' + GRANT)
+ JOB = ROOT / 'jobs' / KEY
+ HOLD = ROOT / 'r3-05-write-continuity'
+-STOP_REFERENCE = 'ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261116-36'
++STOP_REFERENCE = 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-37'
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}
+ BEFORE_PHASE_REFUSALS = {'REFUSED_D0_INTERLOCK_BEFORE_PHASE', 'REFUSED_R3_CONTINUITY_BEFORE_PHASE'}
+-CURRENT_BATCH_OPERATIONS=('t45-r3-batched-install-20261116-02', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-plan-prepare-20261116-02', 't45-r3-batched-real-execute-20261115-01')
++CURRENT_BATCH_OPERATIONS=('t45-r3-batched-install-20261116-02', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-plan-prepare-20261116-03', 't45-r3-batched-real-execute-20261115-01')
+ DIGEST = re.compile('[0-9a-f]{64}')
+ 
+ 
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/stop/bundle/normal05_retained_stop.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/stop/bundle/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261116-36'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++SERVICE = 't45-first-r3-native-service-start-20261116-37'
++NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-36.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-37.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = 'fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a'
++PROOF_SHA = 'c10ee8cd21eb26fdb0bcd4d9ba88174939eb86bddc7dd683f0ae40de45bf66fe'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40'
+-NORMAL05_SHA = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++READONLY_SHA = '33fb16ec8c1cbc6a0ef055c993e03d59b3051c3f8caea22aa9f723ffafce0c63'
++NORMAL05_SHA = '700e175b89aee2836e4de2c157f576b35f64a85ac648e3302050764779d9d63d'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/writer/bundle/final33-run.mjs
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/writer/bundle/final33-run.mjs
+@@ -24,9 +24,9 @@
+   sqlstate:FAILURE_SQLSTATES.includes(code)?code:null};
+ }
+ 
+-export const PREPARE='t45-r3-final33-plan-prepare-20261116-02';
++export const PREPARE='t45-r3-final33-plan-prepare-20261116-03';
+ export const LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01';
+-const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-02"});
++const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-03"});
+ export const WRITER='t45-r3-batched-real-execute-20261115-01';
+ const STATE='/var/lib/naijue-erp/fresh35-production';
+ const INPUT=STATE+'/r3-final33-private-import-input-20261116-01/package';
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/writer/bundle/final33_host.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/writer/bundle/final33_host.py
+@@ -4,9 +4,9 @@
+ from types import ModuleType
+ import base64,hashlib,json,os,re,runpy,selectors,signal,stat,subprocess,sys,time
+ WRITER='t45-r3-batched-real-execute-20261115-01'
+-PREPARE='t45-r3-final33-plan-prepare-20261116-02'
++PREPARE='t45-r3-final33-plan-prepare-20261116-03'
+ LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01'
+-PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-02'}
++PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-03'}
+ HISTORICAL_CATALOG_SERVICE={'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+ PLAN_REL=Path('real-first-20261110-r3/reports')/PREPARE
+ def fixed_job_key(env):
+@@ -62,7 +62,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS = {'normal05_retained_stop.py': 'ba808098c6b5ab7af8b8478babab95790f47b2135b517a71f59b9fb26e5ec491', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': 'cf31545ea399a7267fb75a801d0e57d14a7372e0ae9340e3b51cdd2c0284147b', 'final33-run.mjs': '24a66dae1de539fb67e0b814242fd14597a821f37ff5cf8e1ae4ed9c3afa223f'}
++PINS = {'normal05_retained_stop.py': 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1', 'final33-run.mjs': '35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d'}
+ 
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+@@ -130,7 +130,7 @@
+  need(type(a['authorizationReference']) is str and 0<len(a['authorizationReference'])<=512,'FINAL33_REFERENCE_REQUIRED')
+  s=a['service']
+  need(type(s) is dict and set(s)=={'serviceKey','proofSha256','containerId','containerStartedAt','postmasterStart'}
+-  and s['serviceKey']=='t45-first-r3-native-service-start-20261116-36'
++  and s['serviceKey']=='t45-first-r3-native-service-start-20261116-37'
+   and all(type(s[k]) is str and re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId'))
+   and all(type(s[k]) is str and 0<len(s[k])<=64 for k in ('containerStartedAt','postmasterStart')),
+   'FINAL33_EXACT_CURRENT_SERVICE_REQUIRED')
+@@ -152,7 +152,7 @@
+ def authority(raw):return validate(json.loads(raw),now())
+ 
+ def registered_authority(a,support):
+- policy=json.loads(read(BASE/'r3-05-write-continuity/direct36-batched-real.json',262144))
++ policy=json.loads(read(BASE/'r3-05-write-continuity/direct37-batched-real.json',262144))
+  phase='prepare' if KEY==PREPARE else 'writer'
+  need(policy['grantId']==GRANT and policy['jobs']['start']['jobId']==a['service']['serviceKey']==support.SERVICE
+   and policy['jobs'][phase]['jobId']==KEY and policy['jobs'][phase]['script']=='final33_host.py'
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/writer/bundle/normal05_retained_stop.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/writer/bundle/normal05_retained_stop.py
+@@ -12,23 +12,23 @@
+ from types import ModuleType
+ 
+ GRANT = "b16447fbc81f4d64"
+-SERVICE = 't45-first-r3-native-service-start-20261116-36'
+-NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++SERVICE = 't45-first-r3-native-service-start-20261116-37'
++NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ IMAGE = "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769"
+ TARGET = Path("/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3")
+ JOBS = Path("/root/erp-release-20261006-01-worker")/("grant-"+GRANT)/"jobs"
+ CONTROL = Path("/home/naijue/erp-release-20261006-01-control")/("grant-"+GRANT)
+ GRANT_FILE = Path("/usr/local/lib/naijue-erp-night")/("grant-"+GRANT)/"grant.json"
+ ROOT = Path("/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity")
+-PROOF_NAME = 'fresh35-current-production-service-v2-service-36.json'
++PROOF_NAME = 'fresh35-current-production-service-v2-service-37.json'
+ HOST_BOOT = TARGET/"state/native-services"/SERVICE
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = 'fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a'
++PROOF_SHA = 'c10ee8cd21eb26fdb0bcd4d9ba88174939eb86bddc7dd683f0ae40de45bf66fe'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+-READONLY_SHA = '13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40'
+-NORMAL05_SHA = 'd3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822'
++READONLY_SHA = '33fb16ec8c1cbc6a0ef055c993e03d59b3051c3f8caea22aa9f723ffafce0c63'
++NORMAL05_SHA = '700e175b89aee2836e4de2c157f576b35f64a85ac648e3302050764779d9d63d'
+ FIELD_FACTS = ("readbackHoldSha256","readbackResultSha256","backupCaptureSha256",
+                "backupResultSha256","backupTerminalSha256")
+ AUTH_FILE = "normal05-stop-input.json"
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/writer/bundle/r3_05_runtime.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/writer/bundle/r3_05_runtime.py
+@@ -10,13 +10,13 @@
+ 
+ HOST_ROOT = Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3')
+ MATERIALIZED = HOST_ROOT/'state/r3-r2-private-import-input-20261112-01'
+-PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-36-worker-proof'
++PROOF_PROJECTION = HOST_ROOT/'authority/r3-service-37-worker-proof'
+ PROFILE_SHA = 'ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904'
+ INSTALLATION = '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'
+ SOURCE = '6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16'
+ TARGET = 'fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168'
+-SERVICE_KEY = 't45-first-r3-native-service-start-20261116-36'
+-SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-36'
++SERVICE_KEY = 't45-first-r3-native-service-start-20261116-37'
++SERVICE_NAME = 't45-fresh35-first-production-20261110-r3-service-37'
+ STATE_DEVICE = 66304
+ START_RESERVE = 28 * 1024**3
+ BASELINE_SCOPE_DIRECTORY = 'approvals/baseline-scope-input-r1'
