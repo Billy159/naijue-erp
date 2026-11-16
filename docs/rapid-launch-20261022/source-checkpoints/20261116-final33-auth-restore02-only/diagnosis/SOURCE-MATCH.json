@@ -1,0 +1,9 @@
+{
+  "state": "EXACT_ACTUAL_BOUNDARY_AND_LOCAL_SOURCE_MATCHED",
+  "entrySha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+  "fiveDirectModuleHashesMatch": true,
+  "rawAdminValuesRead": false,
+  "rootSourceSet": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "PGConnections": 0,
+  "nativeEntryInvoked": false
+}

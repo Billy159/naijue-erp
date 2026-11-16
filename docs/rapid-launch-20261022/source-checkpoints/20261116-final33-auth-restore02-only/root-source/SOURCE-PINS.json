@@ -1,0 +1,64 @@
+{
+  "PGConnections": 0,
+  "authorityIssued": false,
+  "basisEntries": 185,
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 6593,
+      "sha256": "f62bb348cff67073071fa69d01bc43862cd74004d3cf5fed010679b4aa9b769e"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1489,
+      "sha256": "e720d89c547c3c78c6571b1ce3b7e02348023a474434025d7023dbc38472fec7"
+    },
+    "POLICY.RESTORE02.UNISSUED.json": {
+      "bytes": 10676,
+      "sha256": "b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3"
+    },
+    "admin_exec.RESTORE33-UNREGISTERED.py": {
+      "bytes": 44693,
+      "sha256": "a86a853d3707f5cff2db2a007c2ebb6c44f7e18f246c78d86fa88fdb5d3272fc"
+    },
+    "assemble_source.py": {
+      "bytes": 18761,
+      "sha256": "5099a8f8c777baedfdc2318b1f9e35eaa912efd596e478722b5e79460c49a664"
+    },
+    "issue_registration.py": {
+      "bytes": 6000,
+      "sha256": "0cc220784627fea3ee9945b27dca7addad43ba8255fcd44aea6261bd889c0480"
+    },
+    "issue_restore.py": {
+      "bytes": 3019,
+      "sha256": "95f1b22ddf48121cfcf801d6e9a7e56977404eb82dad9914d3191f29ffef572b"
+    },
+    "original-cas-restore33-carrier.UNISSUED.py": {
+      "bytes": 2614,
+      "sha256": "32aecb7ccdd18cf270a6350ad1ae428731dd19a9bfd0d87e944d70584bfa1403"
+    },
+    "r3_direct33_restore02_only.py": {
+      "bytes": 87146,
+      "sha256": "5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530"
+    },
+    "read_registration_basis.py": {
+      "bytes": 56325,
+      "sha256": "7b375bc3bee45156a1a8f17d9b785a0638d52396f472f4ebf5f7edc6819e6f86"
+    },
+    "register_cas.py": {
+      "bytes": 104620,
+      "sha256": "81567d7782d8f7fbe8c823e9e7707081a05d64afa11656694bb6dd22080963f0"
+    }
+  },
+  "fixtureCreated": false,
+  "freshBasisCollected": false,
+  "originalA48Changed": false,
+  "originalMainPolicyChanged": false,
+  "pairedHostReviewSha256": "b9880f303d7829e4d48738decfd844c3a58288a88e5d43c4c7df64ccf5871917",
+  "pairedHostSourcePinsSha256": "9f16aae184896fda45c79e124db496b2644a681f3744d8561972117dbfb8c9f5",
+  "restoreRequestKey": "t45-r3-ordinary33-auth-restore-20261116-02",
+  "roleAuthorityReissued": false,
+  "rolesAuthoritySha256": "33bcd2fbe1a81631d710f46ab40bf2687cdc40162baf02de474951e85e17d69f",
+  "rolesLifetimeExtended": false,
+  "runtimeVerified": false,
+  "serverConnections": 0,
+  "state": "SOURCE_ONLY_RESTORE33_ROOT_PAIR_UNISSUED"
+}

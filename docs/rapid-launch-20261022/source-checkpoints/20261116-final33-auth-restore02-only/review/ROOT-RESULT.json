@@ -1,0 +1,103 @@
+{
+  "state": "SOURCE_PASS_AUTH_RESTORE33_ROOT_PAIR_ONLY",
+  "sourceOnly": true,
+  "findings": [],
+  "reviewedAt": "2026-11-16T15:09:51.038856+00:00",
+  "files": {
+    "register_cas.py": {
+      "bytes": 104620,
+      "sha256": "81567d7782d8f7fbe8c823e9e7707081a05d64afa11656694bb6dd22080963f0"
+    },
+    "read_registration_basis.py": {
+      "bytes": 56325,
+      "sha256": "7b375bc3bee45156a1a8f17d9b785a0638d52396f472f4ebf5f7edc6819e6f86"
+    },
+    "r3_direct33_restore02_only.py": {
+      "bytes": 87146,
+      "sha256": "5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530"
+    },
+    "admin_exec.RESTORE33-UNREGISTERED.py": {
+      "bytes": 44693,
+      "sha256": "a86a853d3707f5cff2db2a007c2ebb6c44f7e18f246c78d86fa88fdb5d3272fc"
+    },
+    "POLICY.RESTORE02.UNISSUED.json": {
+      "bytes": 10676,
+      "sha256": "b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3"
+    },
+    "original-cas-restore33-carrier.UNISSUED.py": {
+      "bytes": 2614,
+      "sha256": "32aecb7ccdd18cf270a6350ad1ae428731dd19a9bfd0d87e944d70584bfa1403"
+    },
+    "issue_registration.py": {
+      "bytes": 6000,
+      "sha256": "0cc220784627fea3ee9945b27dca7addad43ba8255fcd44aea6261bd889c0480"
+    },
+    "issue_restore.py": {
+      "bytes": 3019,
+      "sha256": "95f1b22ddf48121cfcf801d6e9a7e56977404eb82dad9914d3191f29ffef572b"
+    }
+  },
+  "sourcePins": {
+    "path": "outputs/D1/AUTH-RESTORE33-ROOT-SUCCESSOR-SOURCE-01/SOURCE-PINS.json",
+    "sha256": "8778079e90029c98702fd05c1a4a728e86bf34cb85f8db4c479168e00b57a12b"
+  },
+  "reusedHostReview": {
+    "path": "outputs/QB/20261116-final33-auth-restore02-review-01/HOST-RESULT.json",
+    "sha256": "b9880f303d7829e4d48738decfd844c3a58288a88e5d43c4c7df64ccf5871917"
+  },
+  "pairedHostSourcePinsSha256": "9f16aae184896fda45c79e124db496b2644a681f3744d8561972117dbfb8c9f5",
+  "rolesAuthoritySha256": "33bcd2fbe1a81631d710f46ab40bf2687cdc40162baf02de474951e85e17d69f",
+  "rolesLifetimeExtended": false,
+  "standards": {
+    "findings": []
+  },
+  "spec": {
+    "findings": []
+  },
+  "verified": {
+    "restoreOnlyAdmission": "New helper exact5aaa derived froma48: all28 class methods except admit AST unchanged; admission rejects unknown phase and every phase except exact newrestore02 before frozen/execution. No old readonly fallback through admit. Exact44aa template all fields except clock/review/reference required; expires bounded by original1794847431546. Original historical/frozen/finish/native guards reused, no source loosening.",
+    "policyAndDispatcher": "Original149e issued dispatcher bytes rehashed and compared: only policySHA placeholder, helperpath/hash, appended02 key differ. Newb912 policy retains original542e format/grant/startsAt1794838431546/expiresAt1794849231546 and all8 nonrestore rule values. Restore only newouter02 and exact reviewed7 static leaves92b7 plus originalroles33bc. Module and policy new paths; originalmain542e/a48/14f history untouched.",
+    "basis185": "CAS/reader185 entries equal; old171 retained with only live149e dispatcher/542e main policy updated plus14 actual history/completion/authority entries. No new AUDIT self-reference or new module/policy in required-existing basis. Shared original execution lock identity exact; fresh original185 plus3 private custody file identities consumed at issuance and CAS snapshots.",
+    "actualHistory": "COMPLETED input02/ROOT06 predicates reused; apply902140, failedstart9e2a, failedrestore112c saved actual JSON hashes/full values/terminal status and pins matched. Local exported actual terminal/public result bytes also rehashed: applyc4bf/15d9, start93fa/66fe, restore6d05/4354. Root/public terminals byte equal; root/public result SHA separately pinned then objects equal. start incompletec30/cleanupb225/currentproof6e80 plus old restorehostad071/auth6bb exact basis pins; no replay of used5 keys.",
+    "quietAndUnused": "CAS/reader five completed/used/history/quiet functions AST equal; common history4 functions also equal newhelper. Actual update/prepare/writer/stop keys required absent both grants, new02 absent both grants, oldrestore01 intent/inside/cleanup and custody attempt/restored absent; originalrole33bc custody authority required. PGpid absent, no active operations and exact failedstart container stopped false0 required at fresh read/CAS. Savedda02 not used as fresh evidence.",
+    "privateCustody": "Only original-auth.json/finite-auth.json/applied.json lstat identities captured; canonical regular root:root0400/singlelink/size bounded, snapshot compares inode/mode/mtime/ctime/etc. No private authentication snapshot body or content digest read by these new reader/CAS/helper functions. Original consumer still performs exact snapshot/verifier/expiry/boundary restoration internally. No secret value exported.",
+    "registration": "Exclusive new stage/audit/module/policy; same original protected execution lock; snapshot/quiet before publication; originalmain policy and dispatcher saved in audit. New module+policy written exclusively, new consumer validated before dispatcher atomic replace with publish intent; after-snapshot permits only dispatcher change while original185 basis/custody frozen. Unknown result saved and original audit consulted; no automatic replay/rollback.",
+    "issuers": "Both issuers consume exact independent rootreview8files plus host9f16/b988/static7pins. Registration dynamically takes now only at real call; expires=min(now+15min, original restoration, original policy, actualgrant) with >300s margin and fresh<=900s exact185basis+lock+3custody identities. Original33bc role bytes copied only, never regenerated. Restore issuer uses same registration role/policy, exact44aa template, min(now+15min, original restoration,parent) and genuine frozen host validate; no native or main invocation. Actual CAS success/newkey unused confirmation remains owner sequence before host issue/run."
+  },
+  "savedActualRefs": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-APPLY-COMPLETED.json",
+      "sha256": "90214088440ad520ec15db8ed319e44575ddc8d46ff9df5adc7541b2ee244950"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-START-FAILED-01.json",
+      "sha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-RESTORE-FAILED-01.json",
+      "sha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
+    }
+  ],
+  "pending": [
+    "T45 actual fresh185 basis, exact custody metadata and current quiet/new02unused/lock/original deadline checks",
+    "Actual finite issuance and independent restore-only CAS with exact registered consumer readback",
+    "Actual first outerrestore02 execution, inner snapshot/verifier/expiry/four-role boundary readback and owncontainer/PGstop cleanup",
+    "Authentication recovery remains unconfirmed until actual success; native describe/preflight refusal root cause remains unknown and is not attributed to corrected stale recovery source pin"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "readerInvocations": 0,
+    "candidateInvocations": 0,
+    "issuerInvocations": 0,
+    "fixturesCreated": 0,
+    "privateSnapshotContentsRead": 0,
+    "ownerSourceEdits": 0,
+    "roleAuthorityReissued": false,
+    "oldJobReplays": false
+  },
+  "runtimePassed": false,
+  "authenticationRestored": false,
+  "businessImported": false
+}

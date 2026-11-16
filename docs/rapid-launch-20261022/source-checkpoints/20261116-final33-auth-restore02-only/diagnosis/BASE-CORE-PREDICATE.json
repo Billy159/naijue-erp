@@ -1,0 +1,83 @@
+{
+  "state": "ACTUAL_BASE_CORE_PREDICATE_PASS",
+  "observations": [
+    {
+      "key": "routines",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "constraints",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "indexes",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "triggers",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "relations",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "columnAcls",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "schema",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "tableNames",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "object",
+      "coreType": "object"
+    },
+    {
+      "key": "owner",
+      "equal": true,
+      "modelHasKey": true,
+      "coreHasKey": true,
+      "modelType": "string",
+      "coreType": "string"
+    }
+  ],
+  "modelSha256": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+  "coreSha256": "2e2af3c2b8fa7460e2842e08d906bfee1114dd6c8d7d907ed5c3ed1e1c5ae480",
+  "fakeTargetCreated": false,
+  "catalogTokenCreated": false,
+  "originalNativeInvoked": false,
+  "PGConnections": 0
+}

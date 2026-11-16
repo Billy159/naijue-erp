@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T22:50:56.796278+08:00",
+  "updatedAt": "2026-11-16T23:34:07.897073+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,11 +52675,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-16T22:50:56.796278+08:00",
-  "state": "AUTH_APPLIED_START33_FAILED_CLEAN_STOPPED_RESTORE01_FAILED_STALE_START_SOURCE_PIN_RECOVERY02_SOURCE_IN_PROGRESS",
+  "asOf": "2026-11-16T23:34:07.897073+08:00",
+  "state": "RESTORE02_ACTUAL_COMPLETE_ORIGINAL_AUTH_RESTORED_PG_STOPPED_GENUINE_DIAGNOSIS_ONLY",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
-  "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_CLEAN_STOPPED_33_AUTH_APPLIED_NOT_RESTORED",
+  "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_STOPPED_ORIGINAL_AUTH_RESTORED",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Priority exact original authentication restoration via source-checked restore02-only successor. T45 consumer/D1 root registration/QB narrow review. Then diagnose genuine preflight using saved real outputs; never replay start33 or restore01.",
+  "next": "T45 narrow existing mount-plan metadata; D1 minimal safe observability source; QB only new delta. Prepare final same-version wiring before next necessary normal generation.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,12 +52789,31 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": true,
+  "newRolesApplied": false,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
   "PGCurrentlyStopped": true,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-final33-apply-start-restore-failures/CHECKPOINT.json",
   "nativePreparation": "NOT_SUBMITTED",
-  "catalogSuccessor": "NOT_SUBMITTED"
+  "catalogSuccessor": "NOT_SUBMITTED",
+  "finiteAuthPreviouslyApplied": true,
+  "originalAuthRestored": true,
+  "actualRestoration": {
+    "jobId": "t45-r3-ordinary33-auth-restore-20261116-02",
+    "typedSha256": "b924d2e2ff5db9dca9e06a6d39fb5484806ba79fafe2d940f240db9a5acfaa9f",
+    "terminalSha256": "7688b15851d8804dbb75d18827ddcfd7b09308af47b54acb18501aa418b3725d",
+    "cleanupSha256": "3dba242155468f723fbd61b7185750fcdabfa928a3236b14dc7b9e558fa3dcac",
+    "seconds": 7.693232840043493,
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "naturalExpiryCountedAsRestoration": false
+  },
+  "currentReleaseMode": {
+    "mode": "RESTORE02_ONLY_NO_OTHER_RUN_ADMITTED",
+    "dispatcherSha256": "79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f",
+    "policySha256": "b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3",
+    "moduleSha256": "5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530"
+  },
+  "genuineFailureDiagnosis": "D1 local frozen source loader d20+9predicates pass ONLY; whole184B failure not reproduced/root cause unknown. Fixed stage/error classification candidate in progress; no new normal startup issued."
 }
 }

@@ -1,0 +1,19 @@
+{
+  "basisSha256": "3d0178a9c0cb86ef68052ca69ab66a0befc1a30aa4f07751c3ccc0ca59ba5804",
+  "carrierSha256": "b8483d8199ecf1b8d42704f8ef60adf571cc4ae47bea033c8fc55794eb6b79a7",
+  "dispatcherSha256": "79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f",
+  "hostReviewSha256": "b9880f303d7829e4d48738decfd844c3a58288a88e5d43c4c7df64ccf5871917",
+  "hostSourcePinsSha256": "9f16aae184896fda45c79e124db496b2644a681f3744d8561972117dbfb8c9f5",
+  "independentReviewSha256": "f31037a08494d748d1e8237b9e5263d1156447d70a44068d9e7317c787fc26e5",
+  "phaseSubmitted": false,
+  "policyExpiresAt": 1794849231546,
+  "policySha256": "b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3",
+  "registrationExpiresAt": 1794842910419,
+  "registrationSha256": "f5c7a3f2220b366b11dfbd472c29eaf4b06b9cde6d296ca081277df30d0cbc7c",
+  "restorationDeadline": 1794847431546,
+  "restoreRequestKey": "t45-r3-ordinary33-auth-restore-20261116-02",
+  "rolesLifetimeExtended": false,
+  "rolesSha256": "33bcd2fbe1a81631d710f46ab40bf2687cdc40162baf02de474951e85e17d69f",
+  "startsAt": 1794842010419,
+  "state": "ISSUED_RESTORE33_ONLY_REGISTRATION_NO_PHASE_SUBMITTED"
+}

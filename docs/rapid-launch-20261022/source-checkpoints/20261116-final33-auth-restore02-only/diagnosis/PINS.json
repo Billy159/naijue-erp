@@ -1,0 +1,38 @@
+{
+  "state": "READONLY_DIAGNOSIS_ROOT_CAUSE_UNKNOWN_NOT_REPRODUCED",
+  "files": {
+    "BASE-CORE-PREDICATE.json": {
+      "sha256": "ba93ff9678db9bad7bc2980df6f62fc8221c778d5d7b31d219f0bd838bbb253d",
+      "bytes": 1874
+    },
+    "REPORT.md": {
+      "sha256": "c92cb48194126d0fd1ab034de2c4f96cc992455793ba2bab0a5c468c42b97cf8",
+      "bytes": 7502
+    },
+    "SOURCE-LOAD-BOUNDARY.json": {
+      "sha256": "286b3032c3be05cc74e596517d9195d2d80c2e8141969653e6da9fcf1500d0df",
+      "bytes": 466
+    },
+    "SOURCE-MATCH.json": {
+      "sha256": "bec470d70f7690f59ea329650116eef4282599a20ca76a623898e1e266ade95c",
+      "bytes": 359
+    },
+    "STATIC-BOUNDARY-CHECKS.json": {
+      "sha256": "fa7c323369749cc8eeea2b0933a39636ea47aed743271be5b3d7795eb91e7cc0",
+      "bytes": 1380
+    }
+  },
+  "entrySha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+  "actualBoundarySha256": "7ac887b601bac7632f46b259f0fe6ca40d70e149c8f0945ac2068bc578c0eeb7",
+  "actualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
+  "actualLocalSourceLoadPassed": true,
+  "sameActualSourceSet": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "nativeInvoked": false,
+  "protectedTargetOrCatalogFabricated": false,
+  "rawAdministratorValuesRead": false,
+  "fixtureCreated": false,
+  "serverConnections": 0,
+  "PGConnections": 0,
+  "sourceFixMade": false,
+  "recoveryFrozenSourceChanged": false
+}

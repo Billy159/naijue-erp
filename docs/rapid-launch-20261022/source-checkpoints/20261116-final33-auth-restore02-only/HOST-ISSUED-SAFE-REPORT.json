@@ -1,0 +1,16 @@
+{
+  "bytes": 1650,
+  "expiresAt": 1794843327498,
+  "hostSourcePinsSha256": "9f16aae184896fda45c79e124db496b2644a681f3744d8561972117dbfb8c9f5",
+  "key": "t45-r3-ordinary33-auth-restore-20261116-02",
+  "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-auth-restore33-only-host-window-01/host-authorization.json",
+  "policyExpiresAt": 1794849231546,
+  "restorationDeadline": 1794847431546,
+  "rolesLifetimeExtended": false,
+  "rolesSha256": "33bcd2fbe1a81631d710f46ab40bf2687cdc40162baf02de474951e85e17d69f",
+  "serverAction": false,
+  "sha256": "76aa7556a94e8ab390a5fd2b8b288f07e9838ab139ed38743cb9d43cd9562705",
+  "sourceReviewSha256": "f31037a08494d748d1e8237b9e5263d1156447d70a44068d9e7317c787fc26e5",
+  "startsAt": 1794842427498,
+  "state": "ISSUED_RESTORE02_HOST_ONLY_NOT_EXECUTED"
+}

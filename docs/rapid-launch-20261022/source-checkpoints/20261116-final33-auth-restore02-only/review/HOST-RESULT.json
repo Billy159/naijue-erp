@@ -1,0 +1,96 @@
+{
+  "state": "SOURCE_PASS_AUTH_RESTORE02_CONSUMER_ONLY_ROOT_PAIR_PENDING",
+  "sourceOnly": true,
+  "findings": [],
+  "reviewedAt": "2026-11-16T14:55:15.121513+00:00",
+  "sourcePins": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/AUTH-RESTORE33-SUCCESSOR-01/SOURCE-PINS.json",
+    "sha256": "9f16aae184896fda45c79e124db496b2644a681f3744d8561972117dbfb8c9f5"
+  },
+  "files": {
+    "fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "ordinary05_roles.py": {
+      "bytes": 21656,
+      "sha256": "8aecb0391192cf6bff140b0a618c0a63fe8b5d61c17bc9edfaa45830b3fc767d"
+    },
+    "ordinary05_roles_job.py": {
+      "bytes": 34789,
+      "sha256": "92b7f4f81cff7e504814dbf1a63b2bd2cd5ae5f7454ec16b030361fc1d3c1621"
+    },
+    "prior_completed32.py": {
+      "bytes": 7588,
+      "sha256": "bb36323d8e7f903362ec6b71e1d640055bd3b3c4def1d709dc7adbbb9d4f565d"
+    },
+    "root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    }
+  },
+  "bundleDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/AUTH-RESTORE33-SUCCESSOR-01/bundle",
+  "scopeTemplate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/AUTH-RESTORE33-SUCCESSOR-01/HOST-AUTHORITY.UNISSUED.json",
+    "sha256": "44aa12c0f7adf3a794c232f528154e68ee3c0f9b2ec2b1e58c75cc9ba765dd71"
+  },
+  "originalRoleAuthority": {
+    "mustReuseOriginalBytes": true,
+    "origin": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261116-r3-direct-service33-after-preparation-registration-window-01/roles-authorization.json",
+    "sha256": "33bcd2fbe1a81631d710f46ab40bf2687cdc40162baf02de474951e85e17d69f"
+  },
+  "savedPreviousFailure": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-RESTORE-FAILED-01.json",
+    "sha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
+  },
+  "savedSourceAndUnusedKeyEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/AUTH-RESTORE33-SUCCESSOR-01/ACTUAL-SOURCE-COMPARE-AND-NEWKEY-ABSENCE.json",
+    "sha256": "da02c5edb7e0f5c00945441835484112123733af374c2ed8289850d221a494dc"
+  },
+  "failedStartEvidence": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-START-FAILED-01.json",
+    "sha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202"
+  },
+  "standards": {
+    "findings": []
+  },
+  "spec": {
+    "findings": []
+  },
+  "verified": {
+    "minimalDelta": "Actual restore01 ad071 host compared with new92b7: PHASES restricts only restore02 outerjob/container; CURRENT_SOURCE31c3 replaced by exact actualdefd7; one new fixed predecessor-guard function and its host call. Other22 original functions AST identical. All6 support leaves byte-equal actual original restore01 bundle and previous accepted static pins.",
+    "sourceCorrection": "Actual saved failed start bundle main defd7 and actual b6cb signed start authority match, proof1b855 unchanged. Existing verify_failed_start_closed source predicates remain strict exact hashes, no alternative arbitrary source admitted. Only this stale source failure is attributed; generic native DESCRIBE/PREFLIGHT refusal root cause remains unknown.",
+    "predecessorGuard": "Before intent/container/inner restore, new guard requires old restore01 exact terminal6d05 FAILED/2/phaseStarted true and root/public byte equality; exact rooteba7/public4354 results with JSON object equality and exact guard-refusal status/safeCode/no-replay; oldhostad071 and oldhostauth6bb exact hashes. Saved112c metadata corroborates and saved original terminal/public result bytes rehashed.",
+    "innerCustody": "New guard requires authority33bc and custody authority.json same hash, old01 intent/inside/cleanup absent and original custody restore-attempt/restored absent. Savedda02 readback reports these exact paths absent. Inner ordinary05_roles.restore still compares original authority bytes and original before/finite snapshot, writes original restoreRequestKey01 attempt exclusively, exact original verifier/expiry/boundary/membership/settings readback required. It was not entered by failed outer01; no original outerkey replay.",
+    "originalPermit": "Original33bc role authorization bytes rehashed; no startsAt/expiresAt/controller/admin/restoration value refreshed. Innerkey01 and rolesource8aec retained. Host02 scope template dynamic clock/review/reference fields NULL; service/writer/policy NULL, failed33 stopkey and terminal93fa/root incompletec30/cleanupb225 fixed; no fabricated stop operation.",
+    "failedStartSafety": "Saved9e2a failed33 confirms original clean-stopb225, exact PGDATA66304/13502421/61035/0700, no running process/ops then. New host reuses unchanged stopped-container/PGDATA/HBA/installation/physical/role/runtime/membership guards and validated ACK/cleanup. Original300 outer,220work+80cleanup/200inside bounds unchanged.",
+    "unusedOuterKey": "Savedda02 exact metadata snapshot has02 absent at all10 worker/control/request/json/tmp/public-terminal paths across both grants. This is saved owner evidence, not a fresh current server assertion; root registration must recheck unused-key/quiet/lock/permit state."
+  },
+  "pending": [
+    "D1 restore-only root registration/dispatcher/policy/issuer source pairing, then actual fresh basis and original finite permit validity",
+    "Actual restore02 first submission and successful original verifier/expiry/four-role boundary readback",
+    "Actual own-container/PG-stopped cleanup; source PASS is not authentication-restored or business/runtime PASS"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "fixturesCreated": 0,
+    "authorityIssued": false,
+    "ownerSourceEdits": 0,
+    "oldJobsReplayed": false
+  },
+  "rootPairReviewed": false,
+  "runtimePassed": false,
+  "authenticationRestored": false,
+  "businessImported": false
+}

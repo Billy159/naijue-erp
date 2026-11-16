@@ -1,0 +1,13 @@
+{
+  "state": "ACTUAL_FUNCTION_LOCAL_SOURCE_LOAD_PASS",
+  "stage": "COMPACT_ZERO_SOURCE_LOAD",
+  "sourceFormat": "FRESH35_COMPACT_ZERO_SOURCE_V2",
+  "sourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "currentSourcePinCount": 284,
+  "actualFrozenSourceBytes": true,
+  "protectedServerTargetConstructed": false,
+  "catalogConstructed": false,
+  "originalNativeInvoked": false,
+  "PGConnections": 0,
+  "rawAdminValuesRead": false
+}

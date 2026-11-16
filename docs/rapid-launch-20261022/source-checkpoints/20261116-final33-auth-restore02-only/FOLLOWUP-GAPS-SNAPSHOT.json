@@ -1,0 +1,33 @@
+{
+  "priority": "GENUINE_PREFLIGHT_DIAGNOSIS_WITH_ORIGINAL_AUTH_RESTORED_PG_STOPPED",
+  "restore02": "ACTUAL_COMPLETED0/7.693232840s; exact original verifier+expiry and runtime/membership preservation confirmed; typed b924d2e2. Do not replay.",
+  "nativeDescribe": {
+    "known": "184-byte generic DB05_COMMAND_PREFLIGHT_REFUSED, cause UNKNOWN",
+    "traceLimitation": "Entry has no T45_DESCRIBE_STAGE marker; empty trace does not locate failure before imports",
+    "boundaryEvidenceSha256": "7ac887b601bac7632f46b259f0fe6ca40d70e149c8f0945ac2068bc578c0eeb7",
+    "argvEnvironment": "Only reconstructed from frozen bridge, never an observed saved snapshot"
+  },
+  "nextNormalGeneration": {
+    "mustPair": "Restore host CURRENT_SOURCE must match the actual final start source hash for that generation. Current failure was 31c3 old versus approved defd7; do not repeat this mismatch after any start-source change.",
+    "mustReuse": "Completed 211 fragments, input02, ROOT06; business writer original key unchanged",
+    "failedKeysNeverReplay": [
+      "t45-first-r3-native-service-start-20261116-33",
+      "t45-r3-ordinary33-auth-restore-20261116-01"
+    ]
+  },
+  "physicalClone": {
+    "outerCarrier": "T45 WIP nested bundle exists, not frozen/delivered",
+    "databaseChecker": "D1 SOURCE_PASS only; no actual physical clone",
+    "expectations": "9c68 warehouse +12ed cash input SOURCE_PASS c350",
+    "privateFilenames": "v3 collector excludes private names; do not silently assume these private expectation inputs are uploaded. Use a properly approved exact private input seam; preserve privacy and source pins."
+  },
+  "applicationArchive": {
+    "sourceCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+    "archiveSha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f",
+    "serverArtifactKey": "r3-final33-ordinary161-d728f374-20261116-01",
+    "status": "LOCAL_BUILD_PACK_PASS; server READY not verified in main records. Verify actual READY before assuming available.",
+    "nativeClosure": "78 source/284 native closure; its combined catalog a073 is distinct from ROOT06 import source319f. Do not mix them.",
+    "newBundlePairing": "The existing75 constructor proof covers old main9 only. For actual new APP/clone static bundles, compare exact collector member names/bytes/digests with required manifest once. v3 suffix set excludes .cjs and name filter excludes private/secret/credential/password/token/cookie; do not assume those leaves are transported or rename secrets to defeat filtering. Archived native members are a different artifact seam."
+  },
+  "formalImport": "CATALOG_UPDATE/PREPARE/WRITER NOT_SUBMITTED; business0; goal ACTIVE"
+}
