@@ -8184,8 +8184,8 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-12T04:20:03+08:00",
-  "stage": "R3_STOPPED_RECOVERY08_BOUNDED_TRANSFER_AUTHORIZED_ZERO_V2_WIP",
+  "updatedAt": "2026-11-16T16:45:44.688084+08:00",
+  "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_CONTINUITY_ADMISSION_FIX",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -51897,20 +51897,20 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-12T04:20:03+08:00",
+    "updatedAt": "2026-11-16T16:45:44.688084+08:00",
     "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-    "currentTarget": "R3_STOPPED_LAST_READBACK; SYNTHETIC05_PASSED_AND_CLEAN_STOP",
+    "currentTarget": "R3_DB05_INSTALLED_STOPPED_ZERO_BUSINESS_BATCHES",
     "owners": {
-      "T45": "first-admin local candidate fixed; protected r2 receiver binding in preparation",
-      "D1": "6c SQL38 and d1a6 R3 maintenance fixed and remotely verified",
-      "D2": "exact 6c built and packed once; 462 members and three cold entries checked",
-      "D3": "single private 31-member archive verified locally; no upload",
-      "QB": "narrow local first-admin synthetic verification",
-      "C": "actual receipt adoption, finite originals under standing authorization,existing3docs/public status"
+      "T45": "sole final run-package integrator and server operator; exact continuity registration receive gate recovery",
+      "D1": "final-source PREPARE and first-writer six-leaf overlay delivered; QB source PASS",
+      "D2": "readonly exact ordinary HTTP and restored application consumer mapping",
+      "D3": "final11/16 standard514485-row package and full offline preflight complete",
+      "QB": "narrow independent new-source and final outer integration review",
+      "C": "actual receipt adoption, root finite registration/issuer and original-key coordination"
     },
-    "release": "NOT_READY_REAL_PG_AND_IMPORT_AND_APP_NOT_VALIDATED",
-    "next": "QB checks the local no-echo first-admin helper using synthetic input. T45 aligns the original private receiver with the actual D3 archive and separate sidecars. Keep formal R3 stopped.",
-    "inventorySimplification": "760730 proofs canceled; full offline preflight and scoped ordinary-role synthetic PostgreSQL pass; real import and checks pending."
+    "release": "NOT_READY_REAL_IMPORT_BACKUP_RESTORE_HTTP_PENDING",
+    "next": "Fix finite original continuity registration and exercise actual admission consumer before next signed receive window. T45 sole server owner; preserve root hold and original writer key. Integrate final source and exact PREPARE/first-writer envelopes without repeated preflight.",
+    "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
   },
   "inventoryBaselineScopeSimplification20261111": {
     "status": "SPARSE_SCOPE_OFFLINE_AND_SCOPED_SYNTHETIC_PG_PASS_FORMAL_PENDING",
@@ -52673,5 +52673,37 @@
         "next": "T45_CHECK_ORIGINAL_GRANT_ISSUANCE_AND_HANDOFF_OFFLINE; LIVE_FACTS_UNKNOWN; DO_NOT_RETRY_UNCHANGED_AUTH"
       }
     }
+  },
+  "currentR3FinalBatch20261116": {
+    "asOf": "2026-11-16T16:45:44.688084+08:00",
+    "state": "INPUT_RECEIVE_REFUSED_BEFORE_PHASE_CONTINUITY_REGISTRATION_REQUIRED",
+    "realWriterSubmitted": false,
+    "realBusinessRowsWritten": 0,
+    "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_RESTORED",
+    "data": {
+      "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+      "tables": 26,
+      "rows": 514485,
+      "inventoryQuantity": 80658,
+      "offlineFullPreflight": "PASS"
+    },
+    "window04": {
+      "authorizationSha256": "c7d02bf71fe37b2ac89d8d38d35c506b82d9217896096a778e6986e1b0ab7856",
+      "status": "REFUSED_R3_CONTINUITY_BEFORE_PHASE",
+      "exitCode": 2,
+      "errorCode": "R3_CONTINUITY_OTHER_JOB_BLOCKED",
+      "phaseStartedField": "ABSENT_IN_ACTUAL_TERMINAL",
+      "terminalSha256": "6d87d961a84b81f42dcbf21a989124c6ab8594de514bb85f9ff4660dd6c0204b",
+      "closeoutReadbackSha256": "39838a7d88180b14be34bc85d780fe780833f8717d687cdb4e19f72e829462e2",
+      "localWrapperExitCode": 254,
+      "receivedDataFragments": 0,
+      "restoreSubmitted": false,
+      "replay": false
+    },
+    "d1FinalSourcePinsSha256": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
+    "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
+    "materialization02SourceReview": "PASS_894d0654_NO_ACTUAL_MATERIALIZATION",
+    "ordinaryHttp": "D2_READONLY_EXACT_CARRIER_AND_ADMISSION_MAPPING_IN_PROGRESS",
+    "next": "Fix finite original continuity registration and exercise actual admission consumer before next signed receive window. T45 sole server owner; preserve root hold and original writer key. Integrate final source and exact PREPARE/first-writer envelopes without repeated preflight."
   }
 }

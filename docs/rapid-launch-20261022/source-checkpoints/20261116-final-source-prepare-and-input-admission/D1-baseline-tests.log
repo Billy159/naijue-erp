@@ -1,0 +1,94 @@
+✖ admin154 CLI exposes separate setup and REAL import help through the real command entry (30.921459ms)
+✔ admin154 setup rejects incomplete, duplicate, unacknowledged or malformed selections before input or connection access (0.373709ms)
+✔ admin154 REAL entry rejects legacy, whole, synthetic and missing successor selections before protected record access (0.444542ms)
+✔ record preserves the real predecessor while separately binding the exact new source/model/epoch and native receipt (1.516459ms)
+✔ fixed protected loading refuses digest/record replacement and separate operation authorities cannot be interchanged (9.6945ms)
+✔ compact CLI requires explicit version and all separate parent/successor pins before file or connection access (2.561ms)
+✖ CLI route model carries compact token and all exact pins to the separate host, and refuses V2 on the old host (6.476208ms)
+✔ compact record comparison keeps old record distinct and binds native receipt, model, source and physical epoch (1.040875ms)
+✖ baseline scope with zero emitted rows still requires the exact successor host (4.107416ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 6
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 278.450917
+
+✖ failing tests:
+
+test at outputs/D1/20261116-r3-final-source-prepare-01/baseline/tests/fresh35-admin154-cli.test.mjs:7:1
+✖ admin154 CLI exposes separate setup and REAL import help through the real command entry (30.921459ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/cjs/loader:1568
+    throw err;
+    ^
+  
+  Error: Cannot find module '/Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/baseline/tools/unified-import/cli.mjs'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+      at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+      at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+      at Module._load (node:internal/modules/cjs/loader:1341:5)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+  
+  Node.js v24.21.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/baseline/tests/fresh35-admin154-cli.test.mjs:10:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs/D1/20261116-r3-final-source-prepare-01/baseline/tests/fresh35-compact-zero-cli.test.mjs:24:1
+✖ CLI route model carries compact token and all exact pins to the separate host, and refuses V2 on the old host (6.476208ms)
+  AssertionError [ERR_ASSERTION]: {"state":"NOT_STARTED","code":"IMPORT_FAILED","verification":"NOT_RUN"}
+  + actual - expected
+  
+  + 'NOT_STARTED'
+  - 'COMPACT_ZERO_PREPARED'
+  
+      at TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/baseline/tests/fresh35-compact-zero-cli.test.mjs:25:92)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'NOT_STARTED',
+    expected: 'COMPACT_ZERO_PREPARED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs/D1/20261116-r3-final-source-prepare-01/baseline/tests/fresh35-compact-zero-cli.test.mjs:35:1
+✖ baseline scope with zero emitted rows still requires the exact successor host (4.107416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'NOT_STARTED'
+  - 'COMPACT_ZERO_PREPARED'
+  
+      at TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/baseline/tests/fresh35-compact-zero-cli.test.mjs:36:47)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'NOT_STARTED',
+    expected: 'COMPACT_ZERO_PREPARED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

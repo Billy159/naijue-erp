@@ -1,0 +1,108 @@
+{
+  "state": "PASS_D1_FINAL_SOURCE_PREPARE_PERSISTED_CONSUMER_SOURCE_INCREMENT",
+  "reviewedAt": "2026-11-16T08:45:08.725508+00:00",
+  "scope": "Only six frozen MJS increment over ed5176dd. Prior hall/SQL/seven-phase/reception/materialization scopes reused.",
+  "findings": [],
+  "deliveryPins": {
+    "PINS.json": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
+    "HANDOFF.md": "c62d3ec6b841781f791b99bc5a6661b2320024cd1d7a285562b88d643e42bf19",
+    "DELTA.patch": "1521e06872ac224383bab55de01d1cbc38ae3e5a01307472a9a78fbc0128da84",
+    "COMPILED-SOURCE.json": "910afede4952fe39295c4aaa248f007dca2698b977e62e0242a1f054c5a73baa",
+    "final-source.test.mjs": "de50b3b96584f6628da8bef4f1ca84c57755cad60fdf20afb3272bfc3f773c93",
+    "new-tests.log": "e315ed3f0b1b81a46a22cdd0f8e8b3390bdd3884b9b557b447b527fecd8dd767",
+    "baseline-tests.log": "f85d44d4576bd0feb178ce3964a56fde8b4a875b583d52ce69e7ca2383f88842"
+  },
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "beforeSha256": "496d28ee550cadffb33303f75849dea7384601f5af2a1c2450557db52bfd0175",
+      "sha256": "49455ce58e9999fdad82806683f59537916989515b58e54f926f91a720f56c06",
+      "bytes": 13571
+    },
+    {
+      "path": "tools/unified-import/batched-stream-cli-state.mjs",
+      "beforeSha256": "e94791c912f74458dd5689201135c7d5ca03fe090cf42a7b47c389129c66dc43",
+      "sha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+      "bytes": 12534
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "beforeSha256": "8df19581e2921ddbd8f5d223016a58ea5aae6c20c62f99c7b3456dced39767b0",
+      "sha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+      "bytes": 105820
+    },
+    {
+      "path": "tools/unified-import/r3-service20-entry.mjs",
+      "beforeSha256": "6c3ec2b2f60746298d1b42e2c1e3e1da8257b9107945acd0dcf7388e406a83a3",
+      "sha256": "a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6",
+      "bytes": 1075
+    },
+    {
+      "path": "tools/unified-import/r3-service20-retained-import.mjs",
+      "beforeSha256": "d08326e8fb0d16d3eb207ccc1ce89b728b16085f7fe1b1947f640d8775a69cc1",
+      "sha256": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca",
+      "bytes": 12791
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "beforeSha256": "e764eb1de1335aff331d7976039ba9519d16bab16b685fe05e2a565bc58fee29",
+      "sha256": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da",
+      "bytes": 43110
+    }
+  ],
+  "sourceSetBefore": "ed5176dd3f56b39c044aa9058e320acec2ac676221ae641cdd0625892a4e9a18",
+  "sourceSetAfter": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "verifiedSource": {
+    "sixExactParentAndSuccessorPinsSizesAndPatch": true,
+    "noSqlOrBusinessDataChanges": true,
+    "finalSourceManifestIndexSummaryRegistrationAndSixEvidencePinsExact": true,
+    "preparationAuthorityProtectedBytesHashAndBindingNoTokenFromPureValidator": true,
+    "sameVerifiedPhysicalClientCallbackProvidesOpaqueAdmission": true,
+    "factoryRequiresActualAdmissionAndOriginalRegisteredObject": true,
+    "prepareReadOnlyBeginImporterExactCoreInspectRollbackOnly": true,
+    "prepareAndFirstWriteCoreAbsentResumeAndReadbackCoreCommitted": true,
+    "operationStartedAtAtFirstFunctionLineAndOriginal650DeadlinePassedThroughContextAndWire": true,
+    "job780AndCleanup130DistinctFromActualParentAuthorityAndCControllerExpiry": true,
+    "originalNativeRolvaliduntilPredicateRetained": true,
+    "uniquePrepareKeyAndNormalizedAbsolutePlanPathLockedInAuthority": true,
+    "existingPlanRefusedBeforeHostAndExclusiveCreation": true,
+    "planFileSingleLink600CurrentExecutionOwner": true,
+    "persistedInitIdentityProvisionsAdminAllDescriptorsFullRequestsStepCountsAndContextFingerprinted": true,
+    "writerRestorationDoesNotOpenSourceIndexSummaryManifestOrInvokeSourceCompiler": true,
+    "executionEnvelopePinsOriginalPreparedBindingHashWithoutReplacingPreparedBinding": true,
+    "sameOrCrossCEnvelopeDerivationUsesSameCurrentMetadataLoader": true,
+    "factoryOutputRederivedCompleteBindingCheckedAgainstActualFiniteExecutionAuthority": true,
+    "original1111InitializerBusinessAndRetainedEntryBlocksRetained": true,
+    "privateEncodedScryptNeverWrittenToSqliteOrPublicBinding": true,
+    "physicalConnectionAndPlanCleanupKnownUnknownBoundariesPreserved": true
+  },
+  "evidenceReuse": {
+    "fiveSmallFixturesPassed": true,
+    "readFixtureAndExistingLogsNoRerun": true,
+    "positiveGenuineAdmissionRuntimeNotRun": true,
+    "existingCompatibility": {
+      "pass": 6,
+      "fail": 3,
+      "sameFailuresOnUnchangedBaseReported": true
+    },
+    "typecheck": "Reported strict TypeScript dependencies; MJS checkJs:false, existing import/syntax evidence reused.",
+    "compiled": "Local metadata only;161 model626c. No current C or authority inferred from fixture metadata."
+  },
+  "externalSeamsPending": [
+    "T45 new six-file materialization and exact source/catalog/C pairing",
+    "Outer780 job/650 child hard limit and130 safe closeout; actual parent/policy/C/guardian/controller deadlines",
+    "Outer actual canonical private directory mounts, protected authority readable by ordinary consumer, no symlink parent substitution",
+    "Entry1075-byte loader bound over old1024 already-known integration item",
+    "New final prepare result/privateINIT/persisted plan, executionBinding exact authority and root/public actual receipts",
+    "Ordinary HTTP current161/C catalog gap remains explicitly unverified outside six-leaf scope"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "pgCalls": 0,
+    "candidateExecutions": 0,
+    "issuerOrRegistrationCalls": 0,
+    "sourceChanges": 0,
+    "fullPreflightReruns": 0
+  }
+}

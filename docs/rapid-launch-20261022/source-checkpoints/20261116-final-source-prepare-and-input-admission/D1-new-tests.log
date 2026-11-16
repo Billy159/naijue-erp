@@ -1,0 +1,13 @@
+✔ exact new batch fixes source/profile/six approvals/registration and real entry identities (0.926167ms)
+✔ persisted original requests restore without source files; every changed request, descriptor and origin is rejected (13.563792ms)
+✔ 90-minute credential authority stays inside parent C while one-shot job remains 780/650/130 seconds (0.767583ms)
+✔ the real PREPARE SQL consumer allows only read-only CORE inspection and rollback; never mutation or commit (3.19ms)
+✔ current execution envelope pins unchanged original preparation across a C/epoch renewal (2.851125ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 255.699167

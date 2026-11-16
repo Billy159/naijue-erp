@@ -1,0 +1,71 @@
+{
+  "state": "PASS_MATERIALIZATION02_ARCHIVE_TARGET_AND_SIX_READER_SOURCE_SEAM",
+  "reviewedAt": "2026-11-16T08:39:17.337937+00:00",
+  "scope": "Only new archivePath to target path mapping and six existing outside-package CLI readers; reuse all remaining guarded materialization and reception evidence",
+  "findings": [],
+  "closedFindings": [
+    "MATERIALIZATION33-ARCHIVE-TARGET-PATH-01",
+    "MATERIALIZATION33-OUTSIDE-PACKAGE-02"
+  ],
+  "hostSha256": "7507d2dfbd652326c12b69e805545bdf22710be798ddc90045d75f9793343b68",
+  "profileSha256": "71b861440bc6368da3f2c0b6293fc87af6af0de77991b145c9f7c74daf9663c7",
+  "receptionProfileSha256": "62e01d1cb13553c826e63d3454f3ff79da3158c4d35fd6a0bf70c8b4e20ab80d",
+  "testSourceSha256": "3bf91ee9097df428180fadf37bda2e46b29ac4b64cfffece35fa9b7a0ffcba61",
+  "testResultSha256": "b23fbf1d2062ebb8e4f37536aa2dba4e08b93ba34aebac52676b8b3ac3034227",
+  "verified": {
+    "onlyExtractFunctionAndProfilePinAstChangeInHost": true,
+    "profileOnlyAddsArchiveTargetMappingAndThreeLayoutFields": true,
+    "all31StandardAnd34EvidenceRawMemberNamesSizesHashesMatchPinnedD3ArchiveRecords": true,
+    "standardActualFirstThreeTarHeaders": [
+      "manifest.json",
+      "tables/customer.jsonl",
+      "tables/supplier.jsonl"
+    ],
+    "evidenceActualFirstTarHeader": "package/standard-preflight-20261116-1140-r1/index.sqlite",
+    "rawNamesDriveArchiveLookupAndDirectoryWhitelist": true,
+    "targetPathDrivesExclusiveFileCreation": true,
+    "rawAndTargetPathsBothRejectAbsoluteTraversalAndNonCanonicalForms": true,
+    "all65TargetPathsUniqueAndBothArchiveRawSetsUnique": true,
+    "all211FragmentBytesOffsetsHashesKeysUnchanged": true,
+    "standardDestination": "package/standard-ready-20261116-1140-r1",
+    "evidenceOriginalPathsPreserved": true,
+    "sixEvidenceFilesPresentInDestinationClosedSet": true,
+    "sixRelativeEvidencePathsStartDotDotSlash": true,
+    "existingSixCliRealpathRelativeOutsidePackagePredicatesInspected": true,
+    "guardReadsHashChecksModesOriginalKeyAndExclusiveCreationUnchanged": true
+  },
+  "outsidePackageRelations": {
+    "package/current-materialized-r1/review/baseline-scope-review/inventory-baseline-scope.jsonl": "../current-materialized-r1/review/baseline-scope-review/inventory-baseline-scope.jsonl",
+    "package/final-approval-20261116-1140-r1/current-effective-alignment.json": "../final-approval-20261116-1140-r1/current-effective-alignment.json",
+    "package/final-approval-20261116-1140-r1/historical-line-amount6.json": "../final-approval-20261116-1140-r1/historical-line-amount6.json",
+    "package/final-approval-20261116-1140-r1/historical-sales-hall.json": "../final-approval-20261116-1140-r1/historical-sales-hall.json",
+    "package/final-approval-20261116-1140-r1/historical-settlement24.json": "../final-approval-20261116-1140-r1/historical-settlement24.json",
+    "package/final-approval-20261116-1140-r1/historical-staff-null-hall.json": "../final-approval-20261116-1140-r1/historical-staff-null-hall.json"
+  },
+  "localSmallSampleEvidence": {
+    "state": "PASS_LOCAL_RAW_TAR_TO_DESTINATION_AND_APPROVAL_READER_SEAM",
+    "cases": [
+      "correct",
+      "empty",
+      "wrong_hash",
+      "symlink",
+      "raw_escape",
+      "target_escape"
+    ],
+    "ownerRootOwnershipCallsMocked": true,
+    "QBReexecuted": false
+  },
+  "pending": [
+    "Materialization request key remains unsubmitted according to owner; actual authority must pin this71b861 profile and7507d2 host",
+    "Actual all211 ready bindings and materialization readback",
+    "Native readonly prepare plan/INIT and final writer exact binding are separate scope"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "pgCalls": 0,
+    "candidateWrites": 0,
+    "sourceEdits": 0,
+    "largeCopies": 0,
+    "localArchiveReads": "Only first3 standard headers and first evidence header; no full archive rescan"
+  }
+}

@@ -1,0 +1,578 @@
+--- a/scripts/release/unified-install/fresh35-admin154-record-v1.mjs
++++ b/scripts/release/unified-install/fresh35-admin154-record-v1.mjs
+@@ -12,6 +12,7 @@
+ export const ADMIN154_AUTHORIZATION_PATH=etc+'/naijue-erp/fresh35-admin154-execution-v1.json';
+ export const COMPACT_ZERO_RECORD_PATH=etc+'/naijue-erp/fresh35-compact-zero-successor-v2.json';
+ export const COMPACT_ZERO_AUTHORIZATION_PATH=etc+'/naijue-erp/fresh35-compact-zero-execution-v2.json';
++export const BATCHED_PREPARATION_AUTHORIZATION_PATH=etc+'/naijue-erp/fresh35-batched-preparation-v1.json';
+ export const ADMIN154_PREDECESSOR_RECORD_SHA256='4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e';
+ export const ADMIN154_PREDECESSOR_SOURCE_SHA256='6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16';
+ export const ADMIN154_PATCH_SHA256='6d051a5f4a8dce3183a8c01074e43dadf73942d60ca8a6c99287950dc9c62c9b';
+@@ -96,3 +97,30 @@
+  need(closed(a,'authorizationReference,binding,decision,expiresAt,format,independentSafetyReviewSha256,startsAt')&&a.format==='FRESH35_COMPACT_ZERO_EXECUTION_AUTHORIZATION_V2'&&a.decision==='AUTHORIZE_EXACT_FIRST_REAL_BUSINESS_IMPORT_AND_READBACK'&&requestHash(a.binding)===requestHash(binding),'COMPACT_ZERO_EXACT_AUTHORIZATION_REQUIRED');
+  need(Number.isSafeInteger(a.startsAt)&&Number.isSafeInteger(a.expiresAt)&&a.startsAt<a.expiresAt&&a.expiresAt<=deadline&&Date.now()>=a.startsAt&&Date.now()<a.expiresAt&&digest(a.independentSafetyReviewSha256)&&typeof a.authorizationReference==='string'&&a.authorizationReference.trim().length>0,'COMPACT_ZERO_AUTHORIZATION_WINDOW_OR_REFERENCE_REQUIRED');const token=Object.freeze({profile:'FRESH35_COMPACT_ZERO_EXECUTION_AUTHORIZATION_V2'});authorities.set(token,captured);return token;
+ }
++
++/** Finite PREPARE authority has no initializer, step or mutation authority.
++ * Structural validation returns data only; protected-file loading owns tokens. */
++export function validateFresh35BatchedPreparationAuthorization(a,binding,deadline,now=Date.now(),operationDeadline=now+650000){
++ need(binding?.format==='FRESH35_BATCHED_PREPARATION_BINDING_V1'
++  &&Number.isSafeInteger(deadline)&&deadline>now,'BATCHED_PREPARATION_BINDING_REQUIRED');
++ need(closed(a,'authorizationReference,binding,decision,expiresAt,format,independentSafetyReviewSha256,maximumCleanupSeconds,maximumJobSeconds,maximumOperationSeconds,startsAt')
++  &&a.format==='FRESH35_BATCHED_PREPARATION_AUTHORIZATION_V1'
++  &&a.decision==='AUTHORIZE_EXACT_BATCH_PREPARATION_AND_READONLY_ROOT_INSPECTION'
++  &&a.maximumOperationSeconds===650&&a.maximumCleanupSeconds===130&&a.maximumJobSeconds===780
++  &&requestHash(a.binding)===requestHash(binding),'BATCHED_PREPARATION_AUTHORIZATION_REQUIRED');
++ // Credential/parent authority lifetime is not the one-shot job's runtime.
++ need(Number.isSafeInteger(operationDeadline)&&now<operationDeadline&&operationDeadline<=now+650000
++  &&Number.isSafeInteger(a.startsAt)&&Number.isSafeInteger(a.expiresAt)&&a.startsAt<=now&&operationDeadline<=a.expiresAt
++  &&a.expiresAt>a.startsAt&&a.expiresAt<=deadline
++  &&digest(a.independentSafetyReviewSha256)&&typeof a.authorizationReference==='string'
++  &&a.authorizationReference.trim().length>0&&a.authorizationReference.length<=512,'BATCHED_PREPARATION_WINDOW_REQUIRED');
++ return freeze(structuredClone(a));
++}
++export async function loadFresh35BatchedPreparationAuthorization(binding,deadline,expectedSha256,operationDeadline){
++ need(digest(expectedSha256),'BATCHED_PREPARATION_AUTHORIZATION_SHA_REQUIRED');
++ const captured=await protectedJson(BATCHED_PREPARATION_AUTHORIZATION_PATH);
++ need(captured.sha256===expectedSha256,'BATCHED_PREPARATION_AUTHORIZATION_SHA_DIFFERS');
++ validateFresh35BatchedPreparationAuthorization(captured.value,binding,deadline,Date.now(),operationDeadline);
++ const token=Object.freeze({profile:'FRESH35_BATCHED_PREPARATION_AUTHORIZATION_V1'});
++ authorities.set(token,captured);return token;
++}
+--- a/tools/unified-import/batched-stream-cli-state.mjs
++++ b/tools/unified-import/batched-stream-cli-state.mjs
+@@ -1,5 +1,102 @@
+ import {requestHash} from '../../packages/application/src/request-hash.ts';
+ import {openBatchedStreamPlan, prepareBatchedStreamPlan} from './batched-stream-plan.mjs';
++import {createHash} from 'node:crypto';
++import {canonicalRequestValue} from '../../packages/application/src/canonical-request-value.ts';
++import {parseStrictJson} from '../../packages/application/src/unified-import-contract.ts';
++import {resolve} from 'node:path';
++export const FINAL_R3_PREPARATION_KEY='t45-r3-final33-plan-prepare-20261116-01';
++
++// The new source batch is separate from the retained 11/11 original. These
++// public source pins never authorize a connection or a database mutation.
++export const FINAL_R3_SOURCE=Object.freeze({
++  manifestSha256:'7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679',
++  sourceProfileSha256:'b460db7ded610e6afe0fc8d506fedb8eda9d947819571211a25ecc5b52a39c0b',
++  indexSha256:'b5a6e1449795ccd4eef72de1599335633e2ee55cd076a7a0a920e9c4b063e9dd',
++  summarySha256:'6751463c596b0330faf7851c255bf972cbede3cfad6c0fed027e5befd137336d',
++});
++const finalSourceOptions=Object.freeze({
++  '--target-profile':'FRESH35_COMPACT_ZERO_FIRST_IMPORT_V2',
++  '--historical-settlement-retention-approval-sha256':'b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05',
++  '--historical-line-amount-evidence-sha256':'e6f76ffd32f7d807e433e85bd2228b65281a6dc83ec3205117661bea13fdc710',
++  '--historical-hall-approval-sha256':'a2e0893e36dc3260613a0e585c896aac6dd57939da2f7345d77561dcdf5a1a42',
++  '--current-effective-alignment-sha256':'5a359f66aa5d6163fbb81dd23039395afdb81c8e30ed31d308dd5418f0d3b9ab',
++  '--explicit-zero-approval-sha256':'669c0e4228ee2f7d8929bcc92a1bdf4cea9d491028e518d379818a64a775b566',
++  '--staff-hall-approval-sha256':'4dec9cf865099dd8a74564202fddf9ebb37648ade6f6e0e1a55b1fbf45f9bb40',
++});
++export function describeFinalR3InputBinding(target,admin,provision,binding){
++  if(!binding||Object.keys(binding).sort().join(',')!=='admin,manifestSha256,registration,sourceOptions,target'
++    ||binding.manifestSha256!==FINAL_R3_SOURCE.manifestSha256
++    ||requestHash(binding.target)!==requestHash(target)||requestHash(binding.admin)!==requestHash(admin)
++    ||requestHash(binding.sourceOptions)!==requestHash(finalSourceOptions)
++    ||requestHash(binding.registration)!==requestHash({batch_id:'9629d837-776e-7f61-4fd4-0cebd4e1a097',
++      source_namespace:'naijue:tplus:20261102',source_metadata_sha256:'f9488a2a0e148483fb985a73b177b923daf89b86df0c00179b4756fa097a098c',
++      cutoff_at:'2026-11-16T11:40:00+08:00'}))throw Error('FINAL_R3_SOURCE_BINDING_DIFFERS');
++  return Object.freeze({...FINAL_R3_SOURCE,batchBindingSha256:requestHash(binding),
++    targetSha256:requestHash(target),adminSha256:requestHash(admin),provisionSha256:requestHash(provision)});
++}
++export function assertFinalR3InputBinding(input){
++  if(!input||Object.keys(input).sort().join(',')!=='adminSha256,batchBindingSha256,indexSha256,manifestSha256,provisionSha256,sourceProfileSha256,summarySha256,targetSha256'
++    ||!Object.entries(FINAL_R3_SOURCE).every(([key,value])=>input[key]===value)
++    ||!Object.values(input).every(value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value)))throw Error('FINAL_R3_INPUT_BINDING_REQUIRED');
++}
++function assertFinalR3CurrentEvidence(target,inputBinding,currentServiceSha256,postmasterStart,evidence){
++  assertFinalR3InputBinding(inputBinding);
++  if(requestHash(target)!==inputBinding.targetSha256)throw Error('FINAL_R3_TARGET_DIFFERS');
++  if(!/^[a-f0-9]{64}$/.test(currentServiceSha256??'')
++    ||typeof postmasterStart!=='string'||!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+00$/.test(postmasterStart)
++    ||!evidence||Object.keys(evidence).sort().join(',')!=='batchedCatalogSpecSha256,batchedDbCandidatePinsSha256,batchedModelSha256,batchedSourceSetSha256,transactionMode'
++    ||evidence.transactionMode!=='BATCHED_V1'||!Object.entries(evidence).every(([key,value])=>key==='transactionMode'||typeof value==='string'&&/^[a-f0-9]{64}$/.test(value)))throw Error('FINAL_R3_CURRENT_PREPARATION_EVIDENCE_REQUIRED');
++}
++export function buildFinalR3PreparationBinding(target,inputBinding,currentServiceSha256,postmasterStart,evidence,preparationScope){
++  assertFinalR3CurrentEvidence(target,inputBinding,currentServiceSha256,postmasterStart,evidence);
++  if(!preparationScope||Object.keys(preparationScope).sort().join(',')!=='batchPlanPath,requestKey'
++    ||preparationScope.requestKey!==FINAL_R3_PREPARATION_KEY||typeof preparationScope.batchPlanPath!=='string'
++    ||resolve(preparationScope.batchPlanPath)!==preparationScope.batchPlanPath)throw Error('FINAL_R3_PREPARATION_SCOPE_REQUIRED');
++  return Object.freeze({format:'FRESH35_BATCHED_PREPARATION_BINDING_V1',target:structuredClone(target),
++    inputBinding:structuredClone(inputBinding),currentServiceSha256,postmasterStart,...evidence,
++    preparationScope:structuredClone(preparationScope)});
++}
++export function buildFinalR3ExecutionBinding(target,inputBinding,preparedBinding,currentServiceSha256,postmasterStart,evidence){
++  assertFinalR3CurrentEvidence(target,inputBinding,currentServiceSha256,postmasterStart,evidence);
++  if(preparedBinding?.format!=='FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2'
++    ||preparedBinding.manifestSha256!==FINAL_R3_SOURCE.manifestSha256
++    ||preparedBinding.finalSourceInputSha256!==requestHash(inputBinding)
++    ||Object.hasOwn(preparedBinding,'preparedBindingSha256'))throw Error('FINAL_R3_ORIGINAL_PREPARED_BINDING_REQUIRED');
++  return Object.freeze({...structuredClone(preparedBinding),currentServiceSha256,postmasterStart,...evidence,
++    preparedBindingSha256:requestHash(preparedBinding)});
++}
++
++/** Read the already persisted requests; never invoke a source compiler. The
++ * descriptor and complete request hashes become part of the prepared binding. */
++export async function describeCliBatchedContents(state,program){
++  const identity={...state.metadata.identity,rootOperationId:state.metadata.rootOperationId};
++  if(requestHash(state.metadata.identity)!==requestHash(program.identity)
++    ||requestHash(state.initialize())!==requestHash(program.initialize)
++    ||identity.rootOperationId!==program.initialize.operation_id)throw Error('BATCH_PLAN_INPUT_BINDING_DIFFERS');
++  const groups=[],stepsHash=createHash('sha256').update('[');
++  let next=0,count=0,previous=null;
++  for(const group of state.batches()){
++    const {descriptorSha256,...descriptor}=group;
++    if(requestHash({identity,descriptor})!==descriptorSha256||group.first!==next||group.ordinal!==groups.length
++      ||group.predecessor!==(previous?.subBatchId??null)
++      ||group.previousLastOperationId!==(previous?.lastOperationId??null)
++      ||group.previousDescriptorSha256!==(previous?.descriptorSha256??null))throw Error('BATCH_PLAN_DESCRIPTOR_DIFFERS');
++    const hash=createHash('sha256').update('[');let groupCount=0;
++    for await(const step of state.steps(group)){
++      if(groupCount)hash.update(',');hash.update(canonicalRequestValue(step));groupCount++;
++      if(group.phase==='CORE'){
++        if(groups.length!==0||group.first!==0||group.last!==0||step.method!=='initialize'
++          ||requestHash(step.request)!==requestHash(program.initialize))throw Error('BATCH_CORE_DESCRIPTOR_REQUIRED');
++      }else{if(count)stepsHash.update(',');stepsHash.update(canonicalRequestValue(step));count++;}
++    }
++    if(groupCount!==group.last-group.first+1)throw Error('BATCH_PLAN_RANGE_INCOMPLETE');
++    groups.push({descriptor:group,stepsSha256:hash.update(']').digest('hex')});next=group.last+1;previous=group;
++  }
++  if(groups[0]?.descriptor.phase!=='CORE'||previous?.phase!=='FINALIZE'
++    ||groups.length!==state.metadata.batchCount||next!==state.metadata.stepCount)throw Error('BATCH_PLAN_RANGE_INCOMPLETE');
++  return Object.freeze({stepCount:count,stepsSha256:stepsHash.update(']').digest('hex'),
++    batchedPlanSha256:requestHash({identity,groups,stepCount:next,context:state.metadata.context})});
++}
+ 
+ // No success state is stored here. These are the original public source and
+ // target bindings needed to resume the retained requests without recompiling.
+@@ -35,3 +132,51 @@
+     }},
+   };
+ }
++
++const finalNeed=(ok,code)=>{if(!ok)throw Error('FRESH35_HOST_'+code)};
++export function assertFinalR3Initializer(prepared,input){
++ assertFinalR3InputBinding(input);
++ const init=prepared.initialize,id=prepared.identity;
++ finalNeed(init?.payload?.mode==='PROVISIONED_ADMIN_EMPTY_BUSINESS'
++  &&init.package_manifest_sha256===FINAL_R3_SOURCE.manifestSha256
++  &&init.batch_id==='ee6716e0-d983-c718-bff7-98d9f872d116'
++  &&init.payload.document_batch_id==='9629d837-776e-7f61-4fd4-0cebd4e1a097'
++  &&init.namespace==='naijue:tplus:20261102'&&init.cutoff_at==='2026-11-16T11:40:00+08:00'
++  &&init.request_key===init.operation_id&&init.plan_sha256===id?.planSha256
++  &&init.batch_id===id.batchId&&init.payload.document_batch_id===id.documentBatchId
++  &&init.package_manifest_sha256===id.packageSha256&&init.namespace===id.namespace&&init.cutoff_at===id.cutoffAt
++  &&requestHash(init.payload.admin)===input.adminSha256
++  &&requestHash({operation_id:init.payload.provision_operation_id,request_sha256:init.payload.provision_request_sha256})===input.provisionSha256,
++  'FINAL_SOURCE_INITIALIZER_DIFFERS');
++}
++
++
++/** Pure validation returns requests only, never a registered object or authority. */
++export async function verifyFinalR3PersistedProgram(state,encodedScrypt,target,inputBinding,preparedBinding){
++  const prepared=retainedCliBatchedProgram(state,encodedScrypt);prepared.batchedPlan=state;
++  assertFinalR3Initializer(prepared,inputBinding);
++  const contents=await describeCliBatchedContents(state,prepared);
++  const id=prepared.identity;
++  finalNeed(requestHash(target)===inputBinding.targetSha256
++    &&preparedBinding?.finalSourceInputSha256===requestHash(inputBinding)
++    &&preparedBinding.initializerSha256===requestHash({initialize:prepared.initialize,encodedScrypt})
++    &&preparedBinding.initializerOperationId===prepared.initialize.operation_id
++    &&preparedBinding.initializerRequestKey===prepared.initialize.request_key
++    &&preparedBinding.manifestSha256===id.packageSha256&&preparedBinding.planSha256===id.planSha256
++    &&preparedBinding.baselineBatchId===id.batchId&&preparedBinding.documentBatchId===id.documentBatchId
++    &&preparedBinding.sourceNamespace===id.namespace&&preparedBinding.cutoffAt===id.cutoffAt
++    &&Object.entries(contents).every(([key,value])=>preparedBinding[key]===value),'FINAL_SOURCE_PERSISTED_PLAN_DIFFERS');
++  return prepared;
++}
++
++// This checks SQL parameters only. The physical host checks the genuine
++// protected authority and same-client context before calling it.
++export function checkFinalR3PreparationQuery(phase,sql,values,identity,core){
++  if(sql==='ROLLBACK'&&values===undefined)return 0;
++  if(phase===0&&sql==='BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY'&&values===undefined)return 1;
++  if(phase===1&&sql==='SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2'&&values===undefined)return 2;
++  if(phase===2&&sql==='SELECT naijue_erp.standard_batched_import_inspect_v1($1::jsonb,$2::jsonb)::text AS result_json'
++    &&Array.isArray(values)&&values.length===2&&requestHash(parseStrictJson(values[0]))===requestHash(identity)
++    &&requestHash(parseStrictJson(values[1]))===requestHash(core))return 3;
++  throw Error('FRESH35_HOST_FINAL_PREPARATION_SQL_REFUSED');
++}
+--- a/tools/unified-import/fresh35-host-session.mjs
++++ b/tools/unified-import/fresh35-host-session.mjs
+@@ -29,10 +29,14 @@
+ import {sameActiveWholeHostSession} from './whole-host-session.mjs';
+ import {buildFresh35SyntheticSql39Catalog} from '../../scripts/release/unified-install/fresh35-combined-catalog-v1.mjs';
+ import {readSyntheticSql39Record,validateSyntheticSql39Record} from '../../scripts/release/unified-install/synthetic-sql39-record.mjs';
++import {FINAL_R3_SOURCE,assertFinalR3InputBinding,buildFinalR3PreparationBinding,buildFinalR3ExecutionBinding,describeCliBatchedContents,assertFinalR3Initializer,verifyFinalR3PersistedProgram,checkFinalR3PreparationQuery} from './batched-stream-cli-state.mjs';
++import {loadFresh35BatchedPreparationAuthorization} from '../../scripts/release/unified-install/fresh35-admin154-record-v1.mjs';
++const finalPreparedPrograms=new WeakMap();
+ const loadedHostSha256=hash(await readFile(new URL(import.meta.url)));
+ const moduleRoot=resolve(fileURLToPath(new URL('../../',import.meta.url)));
+ const contexts=new WeakMap(),verifications=new WeakMap();
+ const r3ImportService18=Object.freeze({
++ catalogSha256:'7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88',
+  requestKey:'t45-first-r3-native-service-start-20261114-20',
+  containerName:'t45-fresh35-first-production-20261110-r3-service-20',
+  previousPostmasterStart:'2026-11-13 18:33:02.751343+00',
+@@ -348,7 +352,7 @@
+  const stepsSha256=await streamTypedHash(typedHashArray(checked));need(count>0,'REAL_STEPS_REQUIRED');
+  if(retained)need(baselinePublishId&&documentPublishId,'RETAINED_ORIGINAL_PUBLISH_REQUIRED');
+  await assertFresh35HostCurrent(context);
+- const binding=Object.freeze({format:c.compactZero?'FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2':c.admin154?'FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1':'FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1',installationRecordSha256:c.recordFileSha256,installProgramSha256:c.record.programSha256,sourceSetSha256:c.record.binding.sourceSetSha256,targetSha256:c.record.binding.targetSha256,catalogSha256:c.admin154?describeFresh35Admin154Record(c.successor).value.successor.catalogSha256:c.record.catalogSha256,manifestSha256:id.packageSha256,planSha256:id.planSha256,initializerSha256:requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt}),stepsSha256,stepCount:count,sourceNamespace:id.namespace,cutoffAt:id.cutoffAt,baselineBatchId:id.batchId,documentBatchId:id.documentBatchId,initializerOperationId:init.operation_id,initializerRequestKey:init.request_key,...(c.admin154?admin154ExecutionEvidence(c):{}),...(c.batchedImport?c.batchedEvidence:{})});
++ const binding=Object.freeze({format:c.compactZero?'FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2':c.admin154?'FRESH35_A53_ADMIN154_REAL_IMPORT_BINDING_V1':'FRESH35_PRODUCTION_REAL_IMPORT_BINDING_V1',installationRecordSha256:c.recordFileSha256,installProgramSha256:c.record.programSha256,sourceSetSha256:c.record.binding.sourceSetSha256,targetSha256:c.record.binding.targetSha256,catalogSha256:c.admin154?describeFresh35Admin154Record(c.successor).value.successor.catalogSha256:c.record.catalogSha256,manifestSha256:id.packageSha256,planSha256:id.planSha256,initializerSha256:requestHash({initialize:init,encodedScrypt:prepared.encodedScrypt}),stepsSha256,stepCount:count,sourceNamespace:id.namespace,cutoffAt:id.cutoffAt,baselineBatchId:id.batchId,documentBatchId:id.documentBatchId,initializerOperationId:init.operation_id,initializerRequestKey:init.request_key,...(c.admin154?admin154ExecutionEvidence(c):{}),...(c.batchedImport?c.batchedEvidence:{}),...(c.finalSource?{finalSourceInputSha256:requestHash(c.finalSource.inputBinding),...(await describeCliBatchedContents(prepared.batchedPlan,prepared)),...(c.finalSource.mode!=='PREPARE'?{preparedBindingSha256:requestHash(c.finalSource.preparedBinding)}:{})}:{} )});
+  if(retained)assertFresh35RetainedOriginalBusinessBinding(binding);
+  productionImportBindings.set(binding,{context,prepared});return binding;
+ }
+@@ -988,7 +992,7 @@
+ 
+ 
+ const batchedDbCandidatePinsSha256='dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9';
+-export async function loadFresh35BatchedImportContext(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256){
++async function readFresh35BatchedContextInputs(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256){
+  need(resolve(sourceRoot)===moduleRoot,'RUNNING_SOURCE_ROOT_REQUIRED');
+  requireService18ImportLineage(parentPins,successorSha256);
+  need(exactImportKeys(currentServiceInput,['sha256','capacityExpiresAt'])
+@@ -1009,11 +1013,51 @@
+  const catalog=await buildFresh35BatchedCommandSuccessorCatalogV1(source,target,predecessor),d=describeFresh35CombinedCatalog(catalog);
+  const evidence=Object.freeze({transactionMode:'BATCHED_V1',batchedDbCandidatePinsSha256,
+   batchedSourceSetSha256:d.sourceSetSha256,batchedCatalogSpecSha256:d.catalogSpecSha256,batchedModelSha256:d.modelSha256});
++ return {t,proof,evidence};
++}
++function finalR3PublicTarget(t){
++ return {protocol:'STANDARD_IMPORT_SQL_V1',system_identifier:t.physical.systemIdentifier,
++  database_oid:t.physical.databaseOid,database_name:t.proposal.database,catalog_sha256:r3ImportService18.catalogSha256};
++}
++/** Protected current C/source/catalog metadata only; no connection, admission,
++ * preparation or authority is created. The loader uses this same generation. */
++export async function describeFresh35FinalPreparationBinding(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256,inputBinding,preparationScope){
++ const {t,proof,evidence}=await readFresh35BatchedContextInputs(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256);
++ return buildFinalR3PreparationBinding(finalR3PublicTarget(t),inputBinding,currentServiceInput.sha256,proof.value.physical.postmasterStart,evidence,preparationScope);
++}
++/** Regenerate only the current execution envelope from the unchanged original
++ * prepared binding. C/epoch renewal never rewrites the persisted requests. */
++export async function describeFresh35FinalExecutionBinding(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256,inputBinding,preparedBinding){
++ const {t,proof,evidence}=await readFresh35BatchedContextInputs(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256);
++ return buildFinalR3ExecutionBinding(finalR3PublicTarget(t),inputBinding,preparedBinding,currentServiceInput.sha256,proof.value.physical.postmasterStart,evidence);
++}
++export async function loadFresh35BatchedImportContext(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256,finalSource=null){
++ const {t,proof,evidence}=await readFresh35BatchedContextInputs(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256);
+  // The original target fingerprint remains the immutable program input.
+  // Current native model/source proofs are explicit additional binding fields.
+- const binding=Object.freeze({...originalR3PreparedBusiness,currentServiceSha256:currentServiceInput.sha256,
+-  postmasterStart:proof.value.physical.postmasterStart,...evidence});
+- const authority=await loadFresh35CompactZeroAuthorization(binding,currentServiceInput.capacityExpiresAt);
++ let binding,authority,finalPreparationDeadline;
++ if(finalSource){
++  need(['PREPARE','FIRST_WRITE','RESUME'].includes(finalSource.mode),'FINAL_SOURCE_MODE_REQUIRED');
++  need(exactImportKeys(finalSource,finalSource.mode==='PREPARE'
++   ?['mode','inputBinding','preparationAuthorizationSha256','preparationScope','operationStartedAt']:['mode','inputBinding','preparedBinding']),'FINAL_SOURCE_OPTIONS_REQUIRED');
++  assertFinalR3InputBinding(finalSource.inputBinding);
++  const publicTarget=finalR3PublicTarget(t);
++  need(finalSource.inputBinding.targetSha256===requestHash(publicTarget),'FINAL_SOURCE_TARGET_DIFFERS');
++  if(finalSource.mode==='PREPARE'){
++   need(Number.isSafeInteger(finalSource.operationStartedAt)&&finalSource.operationStartedAt<=Date.now(),'FINAL_PREPARATION_START_REQUIRED');
++   finalPreparationDeadline=finalSource.operationStartedAt+650000;
++   binding=buildFinalR3PreparationBinding(publicTarget,finalSource.inputBinding,currentServiceInput.sha256,proof.value.physical.postmasterStart,evidence,finalSource.preparationScope);
++   authority=await loadFresh35BatchedPreparationAuthorization(binding,currentServiceInput.capacityExpiresAt,finalSource.preparationAuthorizationSha256,finalPreparationDeadline);
++  }else{
++   binding=buildFinalR3ExecutionBinding(publicTarget,finalSource.inputBinding,finalSource.preparedBinding,
++    currentServiceInput.sha256,proof.value.physical.postmasterStart,evidence);
++   authority=await loadFresh35CompactZeroAuthorization(binding,currentServiceInput.capacityExpiresAt);
++  }
++ }else{
++  binding=Object.freeze({...originalR3PreparedBusiness,currentServiceSha256:currentServiceInput.sha256,
++   postmasterStart:proof.value.physical.postmasterStart,...evidence});
++  authority=await loadFresh35CompactZeroAuthorization(binding,currentServiceInput.capacityExpiresAt);
++ }
+  const current=await assertFresh35Admin154AuthorizationCurrent(authority);
+  retainedServiceAuthorities.set(authority,Object.freeze({binding,proofIdentity:proof.identity,expiresAt:current.expiresAt}));
+  const predecessorContext=await loadFresh35CompactZeroContext(sourceRoot,referenceDirectory,currentServiceInput,parentPins,successorSha256,authority);
+@@ -1024,13 +1068,17 @@
+  need(actual.sourceSetSha256===evidence.batchedSourceSetSha256
+   &&actual.catalogSpecSha256===evidence.batchedCatalogSpecSha256&&actual.modelSha256===evidence.batchedModelSha256,
+   'BATCHED_CONTEXT_SOURCE_CHANGED');
++ if(finalSource?.mode==='PREPARE'){
++  need(Date.now()<finalPreparationDeadline&&finalPreparationDeadline<=c.currentService.expiresAt,'FINAL_PREPARATION_CURRENT_WINDOW_TOO_SHORT');
++ }
+  const token=Object.freeze({profile:'FRESH35_BATCHED_IMPORT_CONTEXT_V1'});
+- contexts.set(token,Object.freeze({...c,batchedImport:true,batchedEvidence:evidence,catalog:currentCatalog}));
++ contexts.set(token,Object.freeze({...c,batchedImport:true,batchedEvidence:evidence,catalog:currentCatalog,...(finalSource?{finalSource:structuredClone(finalSource),expectedPreparedBinding:binding,finalPreparationDeadline}: {})}));
+  await assertFresh35HostCurrent(token);return token;
+ }
+ 
+ /** This issuer requires the actual admitted physical session. Reconstructed
+- * programs are registered only after locked native CORE proof is observed. */
++ * old retained programs register after committed CORE proof; the final-source
++ * factory additionally binds the reviewed persistent plan before first CORE. */
+ export async function bindFresh35BatchedPrepared(context,client,admission,prepared){
+  const c=await assertFresh35HostCurrent(context);
+  need(c.batchedImport&&sameActiveWholeHostSession(client,client),'BATCHED_PHYSICAL_SESSION_REQUIRED');
+@@ -1042,8 +1090,10 @@
+  need(prepared?.transactionMode==='BATCHED_V1'&&prepared.packageKind==='REAL'
+   &&prepared.purpose==='FIRST_REAL_BUSINESS_IMPORT'&&prepared.batchedPlan,
+   'BATCHED_RETAINED_PROGRAM_REQUIRED');
+- assertFresh35RetainedOriginalInitializer(prepared.initialize,prepared.encodedScrypt);
++ if(c.finalSource)assertFinalR3Initializer(prepared,c.finalSource.inputBinding);
++ else assertFresh35RetainedOriginalInitializer(prepared.initialize,prepared.encodedScrypt);
+  const original=admin154PreparedPlans.has(prepared);
++ if(c.finalSource)need(original,'FINAL_SOURCE_FACTORY_OBJECT_REQUIRED');
+  let binding;
+  if(original)binding=await describeFresh35ProductionImportBinding(context,prepared);
+  else{
+@@ -1052,8 +1102,14 @@
+   binding=Object.freeze(structuredClone(retained.binding));
+   productionImportBindings.set(binding,{context,prepared});
+  }
+- const authority=await loadFresh35ProductionImportAuthorization(context,binding);
+- const guard=await fresh35ProductionBatchedImportQueryGuard(context,authority,prepared,prepared.batchedPlan);
++ if(c.finalSource&&c.finalSource.mode!=='PREPARE'){
++  need(finalPreparedPrograms.get(prepared)===c.finalSource.mode
++   &&requestHash(binding)===requestHash(c.expectedPreparedBinding),'FINAL_SOURCE_PREPARED_BINDING_DIFFERS');
++ }
++ const preparation=c.finalSource?.mode==='PREPARE';
++ const authority=preparation?null:await loadFresh35ProductionImportAuthorization(context,binding);
++ const guard=preparation?await fresh35FinalPreparationQueryGuard(context,prepared)
++  :await fresh35ProductionBatchedImportQueryGuard(context,authority,prepared,prepared.batchedPlan);
+  // The caller installs this genuine guard on the already-owned wire before
+  // invoking inspectRoot. The wire permits this read only, with no user callback.
+  const inspectRoot=async()=>{
+@@ -1062,7 +1118,7 @@
+   const identity={...prepared.identity,rootOperationId:prepared.initialize.operation_id};
+   let began=false;
+   try{
+-   ack(await client.query('BEGIN ISOLATION LEVEL READ COMMITTED'),'BEGIN');began=true;
++   ack(await client.query(preparation?'BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY':'BEGIN ISOLATION LEVEL READ COMMITTED'),'BEGIN');began=true;
+    ack(await client.query('SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2'),'SET');
+    const reply=await client.query('SELECT naijue_erp.standard_batched_import_inspect_v1($1::jsonb,$2::jsonb)::text AS result_json',
+     [JSON.stringify(identity),JSON.stringify(core)]);ack(reply,'SELECT');
+@@ -1071,7 +1127,8 @@
+    const found=parseStrictJson(reply.rows[0].result_json);
+    need(exactImportKeys(found,['state','subBatchId','descriptorSha256','summary'])
+     &&found.subBatchId===core.subBatchId&&found.descriptorSha256===core.descriptorSha256
+-    &&(original?['ABSENT','COMMITTED'].includes(found.state):found.state==='COMMITTED'),
++    &&(c.finalSource?found.state===(c.finalSource.mode==='RESUME'?'COMMITTED':'ABSENT')
++     :original?['ABSENT','COMMITTED'].includes(found.state):found.state==='COMMITTED'),
+     'BATCHED_RETAINED_ROOT_REQUIRED');
+    ack(await client.query('ROLLBACK'),'ROLLBACK');began=false;
+    if(!original){admin154PreparedPlans.set(prepared,structuredClone(target));retainedPreparedPrograms.add(prepared);}
+@@ -1084,3 +1141,35 @@
+  };
+  return Object.freeze({binding,guard,inspectRoot});
+ }
++
++
++/** Restore a factory-owned object from reviewed, persistent requests. The
++ * source index/compiler is never called by this writer factory. Admission and
++ * the exact execution authorization are independently checked by the host. */
++export async function restoreFresh35FinalPreparedImport(state,encodedScrypt,target,admission,inputBinding,preparedBinding,mode){
++ need(['FIRST_WRITE','RESUME'].includes(mode)&&isNodeScryptPasswordHash(encodedScrypt),'FINAL_SOURCE_FACTORY_INPUT_REQUIRED');
++ const {assertWholeSalesAdmissionV1}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
++ need(assertWholeSalesAdmissionV1(admission,target)===FINAL_R3_SOURCE.sourceProfileSha256,'FINAL_SOURCE_ADMISSION_PROFILE_DIFFERS');
++ need(requestHash(target)===inputBinding.targetSha256,'FINAL_SOURCE_TARGET_DIFFERS');
++ const prepared=await verifyFinalR3PersistedProgram(state,encodedScrypt,target,inputBinding,preparedBinding);
++ admin154PreparedPlans.set(prepared,structuredClone(target));finalPreparedPrograms.set(prepared,mode);
++ return prepared;
++}
++
++/** PREPARE never installs an execution guard. Only an exact read-only native
++ * CORE inspection is possible after the source/program has been persisted. */
++async function fresh35FinalPreparationQueryGuard(context,prepared){
++ const c=await assertFresh35HostCurrent(context);
++ need(c.finalSource?.mode==='PREPARE'&&admin154PreparedPlans.has(prepared),'FINAL_PREPARATION_FACTORY_REQUIRED');
++ const current=await assertFresh35Admin154AuthorizationCurrent(c.retainedAuthority);
++ const expiresAt=Math.min(c.currentService.expiresAt,current.expiresAt,c.finalPreparationDeadline);
++ const core=prepared.batchedPlan.batches().next().value;
++ const identity={...prepared.identity,rootOperationId:prepared.initialize.operation_id};
++ let phase=0;
++ return Object.freeze({expiresAt,authorizationSha256:current.sha256,async close(){phase=0},async check(sql,values){
++  if(sql==='ROLLBACK'){phase=0;return;}
++  await assertFresh35HostCurrent(context);await assertFresh35Admin154AuthorizationCurrent(c.retainedAuthority);
++  need(Date.now()<expiresAt,'FINAL_PREPARATION_WINDOW_EXPIRED');
++  phase=checkFinalR3PreparationQuery(phase,sql,values,identity,core);
++ }});
++}
+--- a/tools/unified-import/r3-service20-entry.mjs
++++ b/tools/unified-import/r3-service20-entry.mjs
+@@ -1,4 +1,7 @@
+ export {runOriginalR3Writer03,reconcileOriginalR3Readback20} from './r3-service20-retained-import.mjs';
++export {runFinalR3Prepare03,runFinalR3Writer03,runFinalR3Readback03} from './r3-service20-retained-import.mjs';
++export {FINAL_R3_SOURCE,FINAL_R3_PREPARATION_KEY,describeFinalR3InputBinding,buildFinalR3PreparationBinding} from './batched-stream-cli-state.mjs';
++export {describeFresh35FinalPreparationBinding,describeFresh35FinalExecutionBinding} from './fresh35-host-session.mjs';
+ export {readHistoricalSettlementRetentionCliApproval} from './historical-settlement-retention-cli-input.mjs';
+ export {readHistoricalLineAmountCliEvidence} from './historical-line-amount-cli-input.mjs';
+ export {readHistoricalHallCliApproval} from './historical-hall-cli-input.mjs';
+--- a/tools/unified-import/r3-service20-retained-import.mjs
++++ b/tools/unified-import/r3-service20-retained-import.mjs
+@@ -2,13 +2,111 @@
+ import {
+  openReviewedFresh35RetainedCompactZeroHost,prepareFresh35Admin154RetainedImport,
+  assertFresh35RetainedOriginalInitializer,
++ openReviewedFresh35CompactZeroHost,prepareFresh35Admin154Import,restoreFresh35FinalPreparedImport,
+ } from './fresh35-host-session.mjs';
+-import {prepareCliBatchedState,retainedCliBatchedProgram} from './batched-stream-cli-state.mjs';
++import {prepareCliBatchedState,openCliBatchedState,retainedCliBatchedProgram,describeFinalR3InputBinding,FINAL_R3_SOURCE,FINAL_R3_PREPARATION_KEY} from './batched-stream-cli-state.mjs';
+ import {runBatchedStreamOperation} from './batched-stream-operation.mjs';
+ import {requestHash} from '../../packages/application/src/request-hash.ts';
+ import {lstat} from 'node:fs/promises';
+-import {dirname,join} from 'node:path';
++import {dirname,join,resolve} from 'node:path';
+ import {reconcileWholePackage} from './whole-package-reconcile.mjs';
++import {sha256,parseStrictJson,decodeUtf8} from '../../packages/application/src/unified-import-contract.ts';
++
++function finalInputBinding(target,inputs){
++ const {options,provision,batchBinding}=inputs;
++ if(options?.allowSynthetic!==false||requestHash(options.target)!==requestHash(target)
++  ||requestHash(options.registration??null)!==requestHash(batchBinding?.registration))throw Error('FINAL_R3_REAL_OPTIONS_REQUIRED');
++ return describeFinalR3InputBinding(target,options.initialization_identity,provision,batchBinding);
++}
++async function finalPlanFile(path){
++ if(typeof path!=='string'||resolve(path)!==path)throw Error('FINAL_R3_CANONICAL_PLAN_PATH_REQUIRED');
++ const stat=await lstat(path);
++ if(!stat.isFile()||stat.isSymbolicLink()||stat.nlink!==1||(stat.mode&0o777)!==0o600
++  ||stat.uid!==process.getuid?.())throw Error('FINAL_R3_PRIVATE_PLAN_REQUIRED');
++}
++
++/** Reuse the PASS index and six approved readers in the genuine host callback.
++ * Returns a binding, never mutation authority. The external caller retains the
++ * private initializer and plan at its existing private result channel. */
++export async function runFinalR3Prepare03(config,sourceRoot,target,inputs,hostOptions,onPrivateInitializer){
++ const operationStartedAt=Date.now();
++ const working=()=>{if(Date.now()>=operationStartedAt+650000)throw Error('FINAL_R3_PREPARATION_WORK_DEADLINE_EXPIRED')};
++ if(inputs.preparationRequestKey!==FINAL_R3_PREPARATION_KEY)throw Error('FINAL_R3_PREPARATION_SCOPE_REQUIRED');
++ const inputBinding=finalInputBinding(target,inputs);
++ const {summaryBytes,manifestBytes,indexPath,batchPlanPath,options,provision,encodedScrypt}=inputs;
++ if(sha256(summaryBytes)!==FINAL_R3_SOURCE.summarySha256||sha256(manifestBytes)!==FINAL_R3_SOURCE.manifestSha256
++  ||parseStrictJson(decodeUtf8(manifestBytes)).schema_contract?.source_declarations_sha256!==FINAL_R3_SOURCE.sourceProfileSha256
++  ||hostOptions?.sourceProfileSha256!==FINAL_R3_SOURCE.sourceProfileSha256
++  ||typeof batchPlanPath!=='string'||resolve(batchPlanPath)!==batchPlanPath
++  ||typeof indexPath!=='string'||resolve(indexPath)!==indexPath)throw Error('FINAL_R3_PREPARED_SOURCE_REQUIRED');
++ if(onPrivateInitializer!==undefined&&typeof onPrivateInitializer!=='function')throw Error('R3_PRIVATE_INITIALIZER_CONSUMER_INVALID');
++ try{await lstat(batchPlanPath);throw Error('FINAL_R3_PLAN_ALREADY_EXISTS_READ_ORIGINAL_RESULT')}catch(error){if(error?.code!=='ENOENT')throw error}
++ const summary=JSON.parse(decodeUtf8(summaryBytes));
++ if(summary.index_sha256!==FINAL_R3_SOURCE.indexSha256)throw Error('FINAL_R3_INDEX_DIFFERS');
++ let plan,batchState,result;
++ try{
++  result=await openReviewedFresh35CompactZeroHost(config,sourceRoot,target,async admission=>{
++   working();
++   plan=await prepareStreamPlan(indexPath,summary,manifestBytes,{...options,historicalSalesAdmission:admission});
++   working();
++   const prepared=await prepareFresh35Admin154Import(plan,indexPath,summary,options.initialization_identity,provision,encodedScrypt,{coalesce:false,batched:true});
++   working();
++   const originalSteps=prepared.steps;
++   prepared.steps={async *[Symbol.asyncIterator](){for await(const step of originalSteps){working();yield step;}working();}};
++   batchState=await prepareCliBatchedState(batchPlanPath,prepared,inputs.batchBinding,summary,plan.totals);
++   working();
++   await finalPlanFile(batchPlanPath);
++   const retained=retainedCliBatchedProgram(batchState,encodedScrypt);
++   if(requestHash(retained.identity)!==requestHash(prepared.identity)
++    ||requestHash(retained.initialize)!==requestHash(prepared.initialize))throw Error('FINAL_R3_PERSISTED_PROGRAM_DIFFERS');
++   prepared.steps=retained.steps;prepared.transactionMode='BATCHED_V1';prepared.batchedPlan=batchState;
++   if(onPrivateInitializer)await onPrivateInitializer(structuredClone(prepared.initialize));
++   return prepared;
++  },async()=>{throw Error('FINAL_R3_PREPARATION_WRITER_REFUSED')},
++  {...hostOptions,purpose:'FIRST_REAL_BUSINESS_IMPORT',transactionMode:'BATCHED_V1',prepareOnly:true,
++   explicitZeroApproval:options.explicitZeroApproval,finalSource:{mode:'PREPARE',inputBinding,operationStartedAt,
++    preparationScope:{requestKey:inputs.preparationRequestKey,batchPlanPath},
++    preparationAuthorizationSha256:inputs.preparationAuthorizationSha256}});
++  return result;
++ }finally{
++  let failed=false;try{batchState?.close()}catch{failed=true}try{await plan?.dispose()}catch{failed=true}
++  if(failed){if(result)result.local_cleanup='FAILED';else throw Error('FINAL_R3_PREPARATION_LOCAL_CLEANUP_FAILED')}
++ }
++}
++
++/** First writer and explicit committed-root resume both consume the exact
++ * prepared database. Neither mode opens the source index or recompiles steps. */
++export async function runFinalR3Writer03(config,sourceRoot,target,inputs,hostOptions){
++ return runFinalR3Persisted03(config,sourceRoot,target,inputs,hostOptions,false);
++}
++export async function runFinalR3Readback03(config,sourceRoot,target,inputs,hostOptions){
++ return runFinalR3Persisted03(config,sourceRoot,target,inputs,hostOptions,true);
++}
++async function runFinalR3Persisted03(config,sourceRoot,target,inputs,hostOptions,readback){
++ const inputBinding=finalInputBinding(target,inputs),mode=readback||inputs.resume===true?'RESUME':'FIRST_WRITE';
++ if(inputs.resume!==undefined&&typeof inputs.resume!=='boolean')throw Error('FINAL_R3_RESUME_MODE_INVALID');
++ if(hostOptions?.sourceProfileSha256!==FINAL_R3_SOURCE.sourceProfileSha256)throw Error('FINAL_R3_SOURCE_PROFILE_DIFFERS');
++ let state,prepared,result,operationResult;
++ try{
++  await finalPlanFile(inputs.batchPlanPath);
++  state=await openCliBatchedState(inputs.batchPlanPath,inputs.batchBinding);
++  result=await openReviewedFresh35CompactZeroHost(config,sourceRoot,target,async admission=>{
++   prepared=await restoreFresh35FinalPreparedImport(state,inputs.encodedScrypt,target,admission,inputBinding,inputs.preparedBinding,mode);
++   return prepared;
++  },async client=>operationResult=readback
++   ?await reconcileWholePackage(client,prepared.initialize,inputs.encodedScrypt,state.metadata.context.summary.counts,state.metadata.context.totals)
++   :await runBatchedStreamOperation({planPath:inputs.batchPlanPath,identity:prepared.identity,
++    preparedPlan:state,openClient:async()=>client,encodedScrypt:inputs.encodedScrypt,borrowedClient:true}),
++  {...hostOptions,purpose:'FIRST_REAL_BUSINESS_IMPORT',transactionMode:'BATCHED_V1',prepareOnly:false,
++   explicitZeroApproval:inputs.options.explicitZeroApproval,finalSource:{mode,inputBinding,preparedBinding:inputs.preparedBinding}});
++  return result;
++ }catch(error){
++  if(!operationResult)throw error;
++  result={result:operationResult,cleanup:'UNKNOWN'};return result;
++ }finally{
++  try{state?.close()}catch{if(result)result.local_cleanup='FAILED';else throw Error('FINAL_R3_WRITER_LOCAL_CLEANUP_FAILED')}
++ }
++}
+ 
+ /** Retained original09 index/summary, never a new streamPreflight or batch.
+  * The fixed physical host verifies source/catalog/service and issues a fresh
+--- a/tools/unified-import/whole-host-session.mjs
++++ b/tools/unified-import/whole-host-session.mjs
+@@ -52,7 +52,7 @@
+  return error;
+ }
+ const allowed=new Set(['BEGIN ISOLATION LEVEL READ COMMITTED','BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY','COMMIT','ROLLBACK','SET CONSTRAINTS ALL IMMEDIATE','SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2','SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2','SELECT naijue_erp.standard_whole_package_inspect_v2($1::jsonb,$2::text)::text AS result_json','SELECT naijue_erp.standard_whole_package_prepare_v2($1::jsonb,$2::text)::text AS result_json','SELECT naijue_erp.standard_whole_package_step_v2($1::uuid,$2::integer,$3::text,$4::jsonb)::text AS result_json','SELECT naijue_erp.standard_whole_package_finish_v2($1::uuid)::text AS result_json','SELECT naijue_erp.standard_whole_package_verify_v2($1::jsonb,$2::text)::text AS result_json']);
+-const batchedAllowed=new Set(['BEGIN ISOLATION LEVEL READ COMMITTED','COMMIT','ROLLBACK','SET CONSTRAINTS ALL IMMEDIATE',
++const batchedAllowed=new Set(['BEGIN ISOLATION LEVEL READ COMMITTED','BEGIN ISOLATION LEVEL READ COMMITTED READ ONLY','COMMIT','ROLLBACK','SET CONSTRAINTS ALL IMMEDIATE',
+  'SET LOCAL ROLE erp_unified27_initializer_2393dbc6db9581c2','SET LOCAL ROLE erp_unified27_importer_2393dbc6db9581c2',
+  'SELECT naijue_erp.standard_batched_import_inspect_v1($1::jsonb,$2::jsonb)::text AS result_json',
+  'SELECT naijue_erp.standard_batched_import_step_v1($1::jsonb,$2::jsonb,$3::integer,$4::text,$5::jsonb,$6::text)::text AS result_json',
+@@ -226,18 +226,19 @@
+ export async function openReviewedFresh35RetainedCompactZeroPhysicalHost(config,sourceRoot,target,prepare,work,options){return openFresh35SuccessorPhysicalHost(config,sourceRoot,target,prepare,work,options,true,true);}
+ async function openFresh35SuccessorPhysicalHost(config,sourceRoot,target,prepare,work,options,compactZero,retainedR3=false){
+  if(typeof prepare!=='function'||typeof work!=='function'||!options
+-  ||Object.keys(options).some(k=>!['purpose','currentService','successorSha256','referenceDirectory','sourceProfileSha256','explicitZeroApproval','prepareOnly','transactionMode',...(compactZero?['parentPins']:[])].includes(k))
++  ||Object.keys(options).some(k=>!['purpose','currentService','successorSha256','referenceDirectory','sourceProfileSha256','explicitZeroApproval','prepareOnly','transactionMode','finalSource',...(compactZero?['parentPins']:[])].includes(k))
+   ||!(compactZero?['FIRST_REAL_BUSINESS_IMPORT']:['ADMIN_PROVISION_ONLY','FIRST_REAL_BUSINESS_IMPORT']).includes(options.purpose)
+   ||('prepareOnly'in options&&typeof options.prepareOnly!=='boolean'))throw Error('FRESH35_HOST_ADMIN154_OPTIONS_REQUIRED');
+  const batched=options.transactionMode==='BATCHED_V1';
+  if(options.transactionMode!==undefined&&(!batched||!compactZero||options.purpose!=='FIRST_REAL_BUSINESS_IMPORT'))throw Error('FRESH35_HOST_BATCHED_MODE_INVALID');
++ if(options.finalSource&&(!batched||retainedR3||options.prepareOnly!==(options.finalSource.mode==='PREPARE')))throw Error('FRESH35_HOST_FINAL_SOURCE_OPTIONS_REQUIRED');
+  const host=await import('./fresh35-host-session.mjs');
+  const recordModule=await import('../../scripts/release/unified-install/fresh35-admin154-record-v1.mjs');
+  const {describeFresh35CombinedTarget}=await import('../../scripts/release/unified-install/fresh35-combined-target-v1.mjs');
+  const {describeFresh35CombinedSource}=await import('../../scripts/release/unified-install/fresh35-combined-source-v1.mjs');
+  const {withVerifiedFresh35AdmissionV1,WHOLE_SALES_ADMISSION_MODULE_SHA256}=await import('../../scripts/release/unified-install/whole-sales-admission-v1.mjs');
+  const retainedAuthority=retainedR3&&!batched?await host.preloadFresh35RetainedCompactZeroService(options.currentService):null;
+- const context=await (batched?host.loadFresh35BatchedImportContext(sourceRoot,options.referenceDirectory,options.currentService,options.parentPins,options.successorSha256):compactZero?host.loadFresh35CompactZeroContext(sourceRoot,options.referenceDirectory,options.currentService,options.parentPins,options.successorSha256,retainedAuthority):host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256,options.purpose));
++ const context=await (batched?host.loadFresh35BatchedImportContext(sourceRoot,options.referenceDirectory,options.currentService,options.parentPins,options.successorSha256,options.finalSource):compactZero?host.loadFresh35CompactZeroContext(sourceRoot,options.referenceDirectory,options.currentService,options.parentPins,options.successorSha256,retainedAuthority):host.loadFresh35Admin154Context(sourceRoot,options.referenceDirectory,options.currentService,options.successorSha256,options.purpose));
+  const c=host.fresh35HostContext(context),t=describeFresh35CombinedTarget(c.target),successor=recordModule.describeFresh35Admin154Record(c.successor);
+  const pins=describeFresh35CombinedSource(c.source).currentSourcePins;
+  if(!pins.some(p=>p.path==='tools/unified-import/whole-host-session.mjs'&&p.sha256===loadedPhysicalHostSha256)
+@@ -250,7 +251,8 @@
+   ||config.host!==t.proposal.host||config.port!==t.proposal.port||config.database!==t.proposal.database||config.user!==t.proposal.controller
+   ||typeof config.password!=='string'||!config.password||(config.statement_timeout_ms!==undefined&&(!Number.isSafeInteger(config.statement_timeout_ms)||config.statement_timeout_ms<1000||config.statement_timeout_ms>3600000)))throw Error('WHOLE_CONNECTION_CONFIG_INVALID');
+  if(Object.keys(process.env).some(k=>k==='DATABASE_URL'||/^PG[A-Z_]+$/.test(k)))throw Error('AMBIENT_DATABASE_CONFIGURATION_PROHIBITED');
+- const timeout=Math.min(config.statement_timeout_ms??900000,c.currentService.expiresAt-Date.now());if(timeout<=0)throw Error('FRESH35_HOST_WINDOW_EXPIRED');
++ const wireExpiresAt=Math.min(c.currentService.expiresAt,c.finalPreparationDeadline??Infinity);
++ const timeout=Math.min(config.statement_timeout_ms??900000,wireExpiresAt-Date.now());if(timeout<=0)throw Error('FRESH35_HOST_WINDOW_EXPIRED');
+  const {Client}=retainedR3||batched?await loadRetainedR3LinuxPgDriver():await import('pg');const client=new Client({host:config.host,port:config.port,database:config.database,user:config.user,password:()=>config.password,
+   ssl:false,application_name:'unified-fresh35-admin154',connectionTimeoutMillis:Math.min(5000,timeout),statement_timeout:timeout,query_timeout:timeout+5000,lock_timeout:Math.min(5000,timeout),options:'-c search_path=pg_catalog'});
+  let connectFailed=false;client.on('error',()=>{connectFailed=true});
+@@ -260,6 +262,7 @@
+  try{
+   const result=await runWholeSession(client,context,reviewed,target,async(controlled,verified,tightenDeadline)=>{
+    await host.assertFresh35HostCurrent(context);
++   if(c.finalPreparationDeadline)tightenDeadline(Math.min(c.currentService.expiresAt,c.finalPreparationDeadline));
+    const execute=async admission=>{
+     const prepared=await prepare(admission);
+     if(batched){
+@@ -287,7 +290,7 @@
+    };
+    return setup?execute(undefined):withVerifiedFresh35AdmissionV1(verified,gateClient,controlled,target,execute);
+   },async gate=>{gateClient=gate;return setup?host.verifyFresh35Admin154SetupInstalled(gate,context):host.verifyFresh35InstalledV1(gate,context,options.sourceProfileSha256)},
+-  batched?'FRESH35_BATCHED_IMPORT_V1':compactZero?'FRESH35_COMPACT_ZERO_V2':'FRESH35_A53_ADMIN154_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:c.currentService.expiresAt,async authorizedQuery(sql,values){
++  batched?'FRESH35_BATCHED_IMPORT_V1':compactZero?'FRESH35_COMPACT_ZERO_V2':'FRESH35_A53_ADMIN154_V1',true,{explicitZeroApproval:options.explicitZeroApproval,fresh35ExpiresAt:wireExpiresAt,async authorizedQuery(sql,values){
+    if(sql==='ROLLBACK'){if(queryGuard)await queryGuard.check(sql,values);return;}
+    if(!queryGuard)throw Error('FRESH35_HOST_ADMIN154_EXACT_AUTHORIZATION_REQUIRED');await queryGuard.check(sql,values);
+   }});

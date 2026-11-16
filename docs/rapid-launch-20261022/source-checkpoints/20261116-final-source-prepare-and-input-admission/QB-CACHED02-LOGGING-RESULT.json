@@ -1,0 +1,35 @@
+{
+  "state": "PASS_CACHED02_NONZERO_RECEIPT_LOGGING_SOURCE_INCREMENT",
+  "reviewedAt": "2026-11-16T08:29:22.405553+00:00",
+  "findings": [],
+  "sourceBeforeSha256": "9a706b3f508c7531772a1cf3c451a320352cc8330e57db330304be512201021a",
+  "sourceAfterSha256": "258733835fbe3180abadc43cb9d4d5cea9dc47e89dd05455f5a0d4f7d8a0bd58",
+  "sourceBytes": 30576,
+  "authorityFixedFieldsSha256": "70e20de5d15e8c28258e8013f945c030ce7111e6dc01a3f612b3854f8fc8e8e2",
+  "batchManifestSha256": "52a433465c79ce4b8d73cb848694a4675bc82f4c5d4208795abed9d4d3e0ad55",
+  "ownerTargetedCheckSha256": "389d36b7e30894b512814a2e52b8e9a685b8978669691fcfd2a7683dc14b6fd8",
+  "verified": {
+    "onlyCachedQueryAstChanges": true,
+    "rawStdoutDigestRecordedBeforeReturncodeRejection": true,
+    "onlyStateAndSafeCodeUppercaseDigitUnderscoreNonemptyMax160Recorded": true,
+    "rawStdoutNotLogged": true,
+    "nonzeroReturnStillRaisesBeforeReturningResult": true,
+    "zeroReturnMalformedOrNonObjectReceiptRaisesStructuredReceiptRequired": true,
+    "finallyAlwaysPersistsEvidence": true,
+    "sixOtherCodeLeavesHelperManifestAndEmbeddedRemoteUnchanged": true,
+    "fixedFieldsPropagateNewClientPin": true
+  },
+  "reusedEvidence": {
+    "returnCode": 2,
+    "safeCode": "CACHE_FULL_UPLOAD_AND_CLOSEOUT_BUDGET_UNAVAILABLE",
+    "serverConnections": 0,
+    "state": "PASS_LOCAL_NONZERO_JSON_ERROR_PRESERVED_BEFORE_FAILURE"
+  },
+  "pending": "Future signed window must bind258733 client. This is source review only; runtime receipt remains separate.",
+  "actions": {
+    "serverCalls": 0,
+    "candidateExecutions": 0,
+    "authorityIssuance": 0,
+    "sourceEdits": 0
+  }
+}
