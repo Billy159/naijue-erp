@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T23:51:45.740943+08:00",
+  "updatedAt": "2026-11-17T01:04:47.144719+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-16T23:51:45.740943+08:00",
-  "state": "AUTH_RESTORED_PG_STOPPED_OBSERVABILITY_SOURCE_PASS_NORMAL34_SOURCE_PREPARATION",
+  "asOf": "2026-11-17T01:04:47.144719+08:00",
+  "state": "NORMAL34_APPLY02_REGISTERED_ACTUAL_APPLY_AUTHORIZED_RESULT_PENDING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_STOPPED_ORIGINAL_AUTH_RESTORED",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 final normal34 consumer/roles and D1 root34 source closure; QB narrow same-version pairing; source data/input2/ROOT06 and prior passes reused. No new PG or clock yet.",
+  "next": "Actual apply02 typed result, then issue original start34; original catalog/native PREPARE/writer remain never submitted.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52809,12 +52809,12 @@
     "naturalExpiryCountedAsRestoration": false
   },
   "currentReleaseMode": {
-    "mode": "RESTORE02_ONLY_NO_OTHER_RUN_ADMITTED",
-    "dispatcherSha256": "79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f",
-    "policySha256": "b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3",
-    "moduleSha256": "5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530"
+    "mode": "NORMAL34_APPLY02_NEW_FINITE_POLICY_ACTUALLY_REGISTERED",
+    "dispatcherSha256": "60df4053ecd7a4fa95fb0b85a92e5daa7b87b6486466c0d958fc753125a52a90",
+    "policySha256": "6e6fa47124048960cc8fe835b13babcf443217c08fc4e85a2935defdd59a4f61",
+    "moduleSha256": "3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09"
   },
-  "genuineFailureDiagnosis": "D1 local frozen source loader d20+9predicates pass ONLY; whole184B failure not reproduced/root cause unknown. Fixed stage/error classification candidate in progress; no new normal startup issued.",
+  "genuineFailureDiagnosis": "Actual33 genuine cause UNKNOWN; minimal safe observation source passed. Apply34-01 separate prephase refusal proven missing request.args authority digest, corrected CLI independently source-passed. No guard/time relaxation.",
   "pendingUserDecision": null,
   "observabilitySource": {
     "pinsSha256": "536d8c38d7b139d8e84de338a200e6f1f324768e6857622af35703d4fbd0bfd5",
@@ -52824,15 +52824,21 @@
     "runtimePassed": false
   },
   "normal34": {
-    "state": "SOURCE_ONLY_PREPARATION_NO_AUTHORITY_OR_SERVER",
-    "applyKey": "t45-r3-ordinary34-auth-apply-20261116-01",
+    "state": "NORMAL34_APPLY02_REGISTERED_ACTUAL_APPLY_AUTHORIZED_RESULT_PENDING",
+    "applyKey": "t45-r3-ordinary34-auth-apply-20261116-02",
     "startKey": "t45-first-r3-native-service-start-20261116-34",
     "stopKey": "t45-r3-ordinary34-preserve-stop-20261116-01",
     "restoreKey": "t45-r3-ordinary34-auth-restore-20261116-01",
     "businessKeysUnchanged": true,
     "inputAndSourceMaterializationNeverReplay": true,
     "finalStartRestoreSourcePairingRequired": true,
-    "clockOnlyAfterCompleteFrozenSourceReview": true
-  }
+    "clockOnlyAfterCompleteFrozenSourceReview": true,
+    "refusedPriorApplyKey": "t45-r3-ordinary34-auth-apply-20261116-01",
+    "actualRegistrationReadbackSha256": "d2d30c8b8f4e9dd2605714e9e9f35dc470423ca4bb556620a23d234504e2345e",
+    "finalRootReviewSha256": "0b43743b26ae94e6272fe1a54ce6586267cc980fe5cc3ab09a7f307a0f134807",
+    "rootSourcePinsSha256": "581e206db21873b6d3000bd1d85192f73f6e1a0f5e1f47cbc4904a359beb3b42",
+    "actualApplyResult": "PENDING"
+  },
+  "actualCurrentNormal34Checkpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal34-apply02-cli/CHECKPOINT.json"
 }
 }

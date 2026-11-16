@@ -1,0 +1,116 @@
+{
+  "PGConnections": 0,
+  "checks": {
+    "actual5467ArgumentAndEightNegativeCases": true,
+    "actualOriginalParserPhaseArgumentBound": true,
+    "allSevenUnissuedRejectedBeforeClientOrNetwork": true,
+    "innerRoleCustodyAndSixOtherKeysAndBudgetsUnchanged": true,
+    "static52PinsPythonAndGenerationClosure": true
+  },
+  "newClock": false,
+  "newKeyExecuted": false,
+  "newOuterApplyHostScope": {
+    "containerName": "t45-r3-ordinary34-auth-apply-20261116-02",
+    "dataDirectoryDevice": 66304,
+    "dataDirectoryInode": 13502421,
+    "format": "T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1",
+    "hostPorts": [],
+    "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+    "maximumOperationSeconds": 300,
+    "networkMode": "none",
+    "phase": "apply",
+    "requestKey": "t45-r3-ordinary34-auth-apply-20261116-02"
+  },
+  "newStartScope": {
+    "admin154PostmasterStart": "2026-11-13 03:37:40.014546+00",
+    "admin154RecordSha256": "96d35d3b4c7b356b334849373611068d07bb12b3fcf6c6f47dacce3d570a3e3e",
+    "admin154SourceSetSha256": "d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe",
+    "applyRequestKey": "t45-r3-ordinary34-auth-apply-20261116-02",
+    "authenticationAction": "AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY",
+    "cleanupResultSha256": "ff0992f717ba72976f20dfbb1060c83ff82e6945b549c7fd6839676f80f1b391",
+    "cleanupTerminalSha256": "b70a2f253dae0e81ed95ba6ae0afcf11be5538d359fb7f64fca90668b9c548b0",
+    "closeoutResultSha256": "4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16",
+    "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+    "coldCopyResultSha256": "28d7925f5bc5b89805acf8a52e9d88c12c394f41adebc93cbb0a7afe157274e9",
+    "coldCopyTerminalSha256": "a94f9ec670e4de6339e56ea66ebaf917d9fc4e140f03e11222e2c7cb30ad5777",
+    "containerName": "t45-fresh35-first-production-20261110-r3-service-34",
+    "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+    "dataDirectoryIdentity": {
+      "device": 66304,
+      "gid": 61035,
+      "inode": 13502421,
+      "mode": 448,
+      "uid": 61035
+    },
+    "databaseRoleChanges": 0,
+    "ddlPostmasterStart": "2026-11-13 08:53:20.527136+00",
+    "ddlServiceProofSha256": "76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727",
+    "decision": "START_SAME_PGDATA_WITH_ORIGINAL_RUNTIME_REFERENCE_READONLY",
+    "format": "T45_FIRST_R3_NORMAL_SERVICE_V1",
+    "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+    "maximumServiceSeconds": 3600,
+    "maximumStartOperationSeconds": 300,
+    "originalRuntimeMaterial": {
+      "configuration": {
+        "bytes": 207,
+        "device": 66304,
+        "gid": 0,
+        "inode": 13503993,
+        "mode": 384,
+        "uid": 0
+      },
+      "libpqReference": {
+        "bytes": 131,
+        "device": 66304,
+        "gid": 0,
+        "inode": 13503994,
+        "mode": 384,
+        "uid": 0
+      }
+    },
+    "previousClosureKind": "FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED",
+    "previousRequestKey": "t45-first-r3-native-service-start-20261116-33",
+    "previousRuntimeOutcome": "UNKNOWN_PRESERVED",
+    "requestKey": "t45-first-r3-native-service-start-20261116-34",
+    "restoreRequestKey": "t45-r3-ordinary33-auth-restore-20261116-02",
+    "runtimeLoginValidUntil": null,
+    "runtimeReadinessMaxSeconds": 20,
+    "runtimeRole": "erp35_runtime_20261110_r3",
+    "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+    "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168"
+  },
+  "originalArgRefusalRetained": true,
+  "roleAuthorityOriginalScope": {
+    "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+    "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+    "dataDirectoryIdentity": [
+      66304,
+      13502421,
+      61035,
+      61035,
+      448
+    ],
+    "decision": "CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3",
+    "format": "T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1",
+    "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+    "maximumOfflineStepSeconds": 30,
+    "ordinaryServiceRequestKey": "t45-first-r3-native-service-start-20261116-34",
+    "physical": {
+      "database": "erp_fresh35_20261110_r3",
+      "databaseOid": "16393",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7706545564479176741"
+    },
+    "previousServiceRequestKey": "t45-first-r3-native-service-start-20261116-33",
+    "requestKey": "t45-r3-ordinary34-auth-apply-20261116-01",
+    "restoreRequestKey": "t45-r3-ordinary34-auth-restore-20261116-01",
+    "roles": [
+      "erp35_controller_20261110_r3",
+      "erp35_admin_20261110_r3"
+    ]
+  },
+  "serverConnections": 0,
+  "sourceAuthorityIssued": false,
+  "status": "SOURCE_ONLY_APPLY02_CLI_SUCCESSOR_LOCAL_CHECKS"
+}

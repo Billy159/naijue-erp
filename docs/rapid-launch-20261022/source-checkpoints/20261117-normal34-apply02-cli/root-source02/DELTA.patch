@@ -1,0 +1,612 @@
+--- outputs/D1/20261116-r3-normal34-root-source-01/register_cas.py
++++ register_cas.py
+@@ -19,13 +19,13 @@
+ H = B / 'r3-05-write-continuity'
+ LOCK = B.with_name('grant-5cc58239751e4e2a') / 'execution.lock'
+ LOCK_ID = [66304,12224849,0,0,420,1,0,1791828307183940015,1791828307183940015]
+-ENTRY = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-registration-source-20261116-01/register_cas.py')
+-AUDIT = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-registration-cas-20261116-01')
+-NEW_MODULE = Path('/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct34_normal.py')
++ENTRY = B/'r3-normal34-apply02-registration-source-20261117-01/register_cas.py'
++AUDIT = B/'r3-normal34-apply02-registration-cas-20261117-01'
++NEW_MODULE = P/'r3_direct34_apply02.py'
+ NEW_POLICY = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct34-batched-real.json')
+-OLD_DISPATCHER = '79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f'
+-HELPER = 'e539ceac12353067b4e5abe61e28766fa82843bc7446235a4be386236e3eb3ee'
+-TEMPLATE = 'f5bcdd9be1e14a93fe36a88f1b39ca74990124b7a21be9a984089625ea2c29be'
++OLD_DISPATCHER = '5cfb0227b161475b3401ff5a7b402f4f758bc4052b2d110d6dc725ca34837782'
++HELPER = '3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09'
++TEMPLATE = '739cf2ce8701d2e19b9188264ffcab7336ec5bee1b7f0131603793c149680929'
+ BASIS = {Path(k):v for k,v in {'/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-20261110-r3-real-execute-20261114-02/r3-outer-terminal.json': 'ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-25/r3-outer-terminal.json': '79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-25/results/normal-service-result.json': 'c2a5ee898726e66ebb53e309cb39d803069fa1336f19fd5c50b016187f5e90be',
+@@ -129,6 +129,11 @@
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary33-auth-restore-20261116-02/r3-outer-terminal.json': '7688b15851d8804dbb75d18827ddcfd7b09308af47b54acb18501aa418b3725d',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary33-auth-restore-20261116-02/results/maintenance-auth-cleanup.json': '3dba242155468f723fbd61b7185750fcdabfa928a3236b14dc7b9e558fa3dcac',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary33-auth-restore-20261116-02/results/maintenance-auth-result.json': '2c0380766ac61444cc791da8789b9ba841ee5a78dacff7d11fbc5c43bfd83725',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary34-auth-apply-20261116-01/bundle/bundle-manifest.json': '544a6f1d3a87fb02a5a66ba701a199c5597e9e5fd3d86863e6c6faaa60df05a3',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary34-auth-apply-20261116-01/bundle/host-authorization.json': '5467fa0e5bb89f7002bd7fa62a477acb9c5021dad9ad1297610bf61fcc0f6e5d',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary34-auth-apply-20261116-01/bundle/roles-authorization.json': '60ff1ff38900e1d07001486e05848124b1ed64bba0ea425357d4ac9006af16c6',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary34-auth-apply-20261116-01/r3-outer-terminal.json': '39dd96689785ea6fc041eef092fd3097677f2e3ffbc3c5c6b56f2fce482c3600',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary34-auth-apply-20261116-01/request.json': '39bcfdde2286969bd3fd9035ad5efcc0e42d279453b5f997c8ba2e9bd2505807',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/active.json': '0e164d5f759af04b5976eff19f8e17796b6fafa9220a8a8af8341b9fb36898a8',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/bindings/writer.json': 'f6b60a9470edd408e2f2783e955669e9545b184c9e97a4f4fb4bf68cbea1ce01',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct24-batched-real.json': 'cb384d2176e3a8c4a46fd3ffb1ce1e4b82b293f41c5647310c10f1b8e8a10898',
+@@ -142,6 +147,7 @@
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct32-batched-real.json': '99ea865df185eef2cd1c01cc9303d5c08e9bd8d90202c8b9557b5723820fac6a',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct33-batched-real.json': '542e78404c0493eb9b959af59f771437dd3017184022ef82e32b3c72b05d921d',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct33-restore02-only.json': 'b91213cb9e127a8aa4d6dcc1298e86e0a318e270afdd9a7c97a92e0f032cebb3',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct34-batched-real.json': 'bd4ed7ee54fd2fc99f49875f75612f95ec5a68205c599703dad6746a771ac2ec',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/failed19-readonly-recovery.json': '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/final33-input-reception-cached03.json': '5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/final33-input-reception-recovery.json': 'cc67670964821aa412f735b84106e2dea8a24a485b2004370914fd6381045182',
+@@ -164,6 +170,8 @@
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct33-after-preparation-registration-cas-20261116-01/result.json': 'c0321dc4084523b38909646179798eef2d2fd748ec85863bd651558532c3044e',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct33-input02-registration-cas-20261116-02/result.json': '20afba865671f741fadbdc4f92c19d2099feb8627e67f2da13dba5c3d5650a2e',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct33-input02-registration-source-20261116-01/entry-result.json': '0a84a3b9ea7f91e5964f005b0934523a77feaee5d2474a1c8a354f82559ab987',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-registration-cas-20261116-01/old-dispatcher.bin': '79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f',
++ '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal34-registration-cas-20261116-01/result.json': 'cefee00f768b93e7b050fb7c2bf52cc76d2f9807d4f9603fcdb8deb3bacc909d',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-restore33-only-registration-cas-20261116-01/old-dispatcher.bin': '149e2759ed0336e8c8a1823ca518da89d94040acdbe143f3e7bbd3b3222f61dc',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-restore33-only-registration-cas-20261116-01/result.json': 'a9cc9d69ef8601b33116a1e2970a7b248f3b7252f8cbbde777b342e1179b3e69',
+  '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-27.json': '2640ef4df8bc3e2c64f31d327a41a1c4fddc9adf99584b68169ab854fe6c6dbb',
+@@ -189,7 +197,7 @@
+  '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-33/retained-ack.json': 'b3c1966bda82c89f40b12bd99625f2a83d1f3fcfecba40be629f8ac55644c442',
+  '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/materialization-receipt.json': '556cb0e3a336aaed7c5c156cc531b90c0895a63c65d1020e91dcfe1b00bbdb58',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.before-r3-05-continuity.py': '5bf72fc20dfa597c81a9eb5ae8956c497a980b1497e2cfbfe8d469932b27ad49',
+- '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py': '79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f',
++ '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/admin_exec.py': '5cfb0227b161475b3401ff5a7b402f4f758bc4052b2d110d6dc725ca34837782',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct24_batched.py': 'd60c68633383f5da9e5054d518010bb6a4f34d3a068c51f87fa738d6f36a6cef',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct24_batched_apply02.py': 'da4303f6597962842d0db5993396ca1012e2181ee2224ddec9f4bd01b1a69eef',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct25_batched.py': '57d8ea9c363f4c4db743b99bfacafdafecdb644d8e65894a416ec2a418aa2810',
+@@ -206,6 +214,7 @@
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct33_batched.py': 'b700b3b5b13c20222aa00847d95ef31975ca25e5b5baae0f5ee98b95e43a085c',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct33_input02.py': 'a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct33_restore02_only.py': '5aaa31f25ba1ed44a30c576fdd93df563646b3ad8b6c077632626a15da91e530',
++ '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct34_normal.py': 'e539ceac12353067b4e5abe61e28766fa82843bc7446235a4be386236e3eb3ee',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_failed19_readonly.py': '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_final33_input.py': '4441d264213d5abf3c2c4af1a56d7df0bd275f0a4587e66c1e1bf156c0793d3f',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_final33_input_cached03.py': '17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63',
+@@ -221,34 +230,26 @@
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original05_unknown22_inspect.py': '32aecd9f5ee7079f243b78f89d5a58e051610e16e10490cb8a12538a74a9863f',
+  '/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_write_continuity.py': '1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d'}.items()}
+ C=Path('/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64')
+-JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-01',
+- 'catalog_update': 't45-r3-batched161-command-successor-20261116-01',
+- 'input_materialize': 't45-r3-final33-input-materialize-20261116-02',
+- 'materialize': 't45-r3-batched-root06-source-delta-20261116-01',
+- 'prepare': 't45-r3-final33-plan-prepare-20261116-01',
+- 'restore': 't45-r3-ordinary34-auth-restore-20261116-01',
+- 'start': 't45-first-r3-native-service-start-20261116-34',
+- 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01',
+- 'writer': 't45-r3-batched-real-execute-20261115-01'}
++JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-02', 'catalog_update': 't45-r3-batched161-command-successor-20261116-01', 'input_materialize': 't45-r3-final33-input-materialize-20261116-02', 'materialize': 't45-r3-batched-root06-source-delta-20261116-01', 'prepare': 't45-r3-final33-plan-prepare-20261116-01', 'restore': 't45-r3-ordinary34-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-34', 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ EXPECTED_RULES = {'apply': {'authorityLeaf': 'host-authorization.json',
+            'bundlePins': {'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+                           'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+                           'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+                           'ordinary05_roles.py': 'a1e5a1be9ae1c781803264f8b4312f08a145266fa4b2595c68d82c80eb93389a',
+-                          'ordinary05_roles_job.py': 'f72a81ba41f2d34f66310f51913ca55913df92ad2192fcc59ef480266b29198a',
++                          'ordinary05_roles_job.py': '7b5d78536ccf1d750d090e6acf541996c85fce0d6cb6e78856974a1294e9e345',
+                           'prior_failed33.py': '06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662',
+                           'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a'},
+            'deadlineField': 'expiresAt',
+-           'jobId': 't45-r3-ordinary34-auth-apply-20261116-01',
++           'jobId': 't45-r3-ordinary34-auth-apply-20261116-02',
+            'script': 'ordinary05_roles_job.py',
+            'timeoutSeconds': 300},
+  'catalog_update': {'authorityLeaf': 'catalog-update-authorization.json',
+-                    'bundlePins': {'batched161_command_update_host.py': 'db566dc9654e0cfb9132108b47fefdb575be99d962a1ab5b25d4b5fe3e95e1c6',
++                    'bundlePins': {'batched161_command_update_host.py': '6d8e84b4776dea648d87c36bca4c89bd945a5e504812600e36a7ace4b699d81b',
+                                    'catalog-pg-driver.mjs': 'cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f',
+                                    'catalog-successor-run.mjs': '72bacf01a143345e942bbb3669cfc2b2b5fbd04aeee237c5e5e08263224bd289',
+                                    'catalog_transport.py': '4f15b1dfdf00c8408435d81606c37d21bf1ccffcbe2e9104920858e7a2f6f914',
+                                    'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4',
+-                                   'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb'},
++                                   'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb'},
+                     'deadlineField': 'expiresAt',
+                     'jobId': 't45-r3-batched161-command-successor-20261116-01',
+                     'script': 'batched161_command_update_host.py',
+@@ -288,10 +289,10 @@
+                  'timeoutSeconds': 300},
+  'prepare': {'authorityLeaf': 'host-authorization.json',
+              'bundlePins': {'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b',
+-                            'final33_host.py': 'e0abd50a7b3e2952a1a1e2fdcca5707c844b2de70113009324e54b1e08e47ba6',
++                            'final33_host.py': '2ac072adda091d1a7e2b5b252cb3c5168a1ef91442b572d01d2409622bbbbb09',
+                             'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4',
+                             'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385',
+-                            'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb',
++                            'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb',
+                             'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6',
+                             'r3_05_runtime.py': '9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08'},
+              'deadlineField': 'expiresAt',
+@@ -303,7 +304,7 @@
+                             'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5',
+                             'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73',
+                             'ordinary05_roles.py': 'a1e5a1be9ae1c781803264f8b4312f08a145266fa4b2595c68d82c80eb93389a',
+-                            'ordinary05_roles_job.py': 'f72a81ba41f2d34f66310f51913ca55913df92ad2192fcc59ef480266b29198a',
++                            'ordinary05_roles_job.py': '7b5d78536ccf1d750d090e6acf541996c85fce0d6cb6e78856974a1294e9e345',
+                             'prior_failed33.py': '06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662',
+                             'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a'},
+              'deadlineField': 'expiresAt',
+@@ -315,7 +316,7 @@
+                           'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b',
+                           'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360',
+                           'normal_service05_after08.py': 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693',
+-                          'normal_service05_after08_proof.py': '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d',
++                          'normal_service05_after08_proof.py': '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5',
+                           'operator-host.mjs': '7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae',
+                           'operator-manifest.json': 'c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184',
+                           'operator-stream-import-cli.mjs': '6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e',
+@@ -332,18 +333,18 @@
+            'script': 'normal_service05_after08.py',
+            'timeoutSeconds': 300},
+  'stop': {'authorityLeaf': 'normal05-preserve-stop-input.json',
+-          'bundlePins': {'normal05_preserve_stop.py': '27b98e7fff3b3ee55c187a74e6f5b6792ab30fefb6afe4e65db59cdb033c5f6e',
+-                         'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb'},
++          'bundlePins': {'normal05_preserve_stop.py': '42c92313194fc89b2fd8f4fcfdde617231eda1c12970717c7993550baeacb32e',
++                         'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb'},
+           'deadlineField': 'expiresAt',
+           'jobId': 't45-r3-ordinary34-preserve-stop-20261116-01',
+           'script': 'normal05_preserve_stop.py',
+           'timeoutSeconds': 120},
+  'writer': {'authorityLeaf': 'host-authorization.json',
+             'bundlePins': {'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b',
+-                           'final33_host.py': 'e0abd50a7b3e2952a1a1e2fdcca5707c844b2de70113009324e54b1e08e47ba6',
++                           'final33_host.py': '2ac072adda091d1a7e2b5b252cb3c5168a1ef91442b572d01d2409622bbbbb09',
+                            'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4',
+                            'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385',
+-                           'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb',
++                           'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb',
+                            'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6',
+                            'r3_05_runtime.py': '9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08'},
+             'deadlineField': 'expiresAt',
+@@ -448,7 +449,7 @@
+ 
+ 
+ def scope():
+-    return dict(format='T45_NORMAL34_REGISTRATION_CAS_V1', grantId=GRANT,
++    return dict(format='T45_NORMAL34_APPLY02_REGISTRATION_CAS_V1', grantId=GRANT,
+                 oldDispatcherSha256=OLD_DISPATCHER, newModuleSha256=HELPER,
+                 dispatcherTemplateSha256=TEMPLATE, newModulePath=str(NEW_MODULE),
+                 newPolicyPath=str(NEW_POLICY), publishOrder=['module', 'policy', 'dispatcher'],
+@@ -630,7 +631,7 @@
+    need('roles-authorization.json'in pins,'DYNAMIC_ROLE_PIN_REQUIRED');role_pins.append(pins.pop('roles-authorization.json'))
+   actual['bundlePins']=pins
+   need(actual==expected,'FROZEN75_STATIC_RULES_DIFFER')
+- need(len(role_pins)==2 and role_pins[0]==role_pins[1] and role_pins[0]!=ROLE_SHA,'NEW34_SAME_DYNAMIC_ROLES_PIN_REQUIRED')
++ need(len(role_pins)==2 and role_pins[0]==role_pins[1] and role_pins[0] not in (ROLE_SHA,REFUSED_ROLE_SHA),'NEW34_SAME_DYNAMIC_ROLES_PIN_REQUIRED')
+ 
+ 
+ def render(files):
+@@ -722,6 +723,53 @@
+     e=USED[phase]
+     need((terminal.get('jobId'),terminal.get('taskId'),terminal.get('grantId'),terminal.get('status'),terminal.get('exitCode'),terminal.get('phaseStarted'))==(e['requestKey'],'T45',GRANT,e['terminalStatus'],e['exitCode'],True),'EXACT_USED_TERMINAL_REQUIRED')
+     need(value==e['value'],'EXACT_USED_RESULT_REQUIRED')
++
++REFUSED_KEY = 't45-r3-ordinary34-auth-apply-20261116-01'
++REFUSED_TERMINAL_SHA = '39dd96689785ea6fc041eef092fd3097677f2e3ffbc3c5c6b56f2fce482c3600'
++REFUSED_REQUEST_SHA = '39bcfdde2286969bd3fd9035ad5efcc0e42d279453b5f997c8ba2e9bd2505807'
++REFUSED_HOST_SHA = '5467fa0e5bb89f7002bd7fa62a477acb9c5021dad9ad1297610bf61fcc0f6e5d'
++REFUSED_ROLE_SHA = '60ff1ff38900e1d07001486e05848124b1ed64bba0ea425357d4ac9006af16c6'
++REFUSED_MANIFEST_SHA = '544a6f1d3a87fb02a5a66ba701a199c5597e9e5fd3d86863e6c6faaa60df05a3'
++REFUSED_TERMINAL = {'atUTC': '2026-11-16T16:22:59.960926+00:00',
++ 'businessAcceptanceClaimed': False,
++ 'elapsedSeconds': 0.04957998695317656,
++ 'errorCode': 'R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED',
++ 'exitCode': 2,
++ 'exports': [],
++ 'finishedAtUTC': '2026-11-16T16:23:00.036362+00:00',
++ 'grantId': 'b16447fbc81f4d64',
++ 'jobId': 't45-r3-ordinary34-auth-apply-20261116-01',
++ 'phaseStarted': False,
++ 'privateLogsExported': False,
++ 'scope': 'ERP_EXISTING_TASKS_THROUGH_T51',
++ 'status': 'REFUSED_R3_CONTINUITY_BEFORE_PHASE',
++ 'taskId': 'T45',
++ 'unit': 'naijue-erp-op-b16447fb-cec65c8ea6c4'}
++REFUSED_REQUEST = {'args': [],
++ 'businessCutoverConfirmed': False,
++ 'gateEvidence': {},
++ 'grantId': 'b16447fbc81f4d64',
++ 'jobId': 't45-r3-ordinary34-auth-apply-20261116-01',
++ 'manifestSha256': '544a6f1d3a87fb02a5a66ba701a199c5597e9e5fd3d86863e6c6faaa60df05a3',
++ 'scope': 'ERP_EXISTING_TASKS_THROUGH_T51',
++ 'script': 'ordinary05_roles_job.py',
++ 'taskEvidence': {},
++ 'taskId': 'T45',
++ 'timeoutSeconds': 300}
++
++def refused_apply34_history():
++    # Immutable original-key evidence only. Do not require future custody/PG state here.
++    job=B/'jobs'/REFUSED_KEY
++    terminal=read(job/'r3-outer-terminal.json')[0]
++    public=read(C/'results'/(REFUSED_KEY+'.json'),1000)[0]
++    request=read(job/'request.json')[0]
++    need(sha(terminal)==REFUSED_TERMINAL_SHA and terminal==public and json.loads(terminal)==REFUSED_TERMINAL,'EXACT_APPLY34_BEFORE_PHASE_REFUSAL_REQUIRED')
++    need(sha(request)==REFUSED_REQUEST_SHA and json.loads(request)==REFUSED_REQUEST and REFUSED_REQUEST['args']==[],'EXACT_ORIGINAL_APPLY34_EMPTY_ARGS_REQUIRED')
++    need(REFUSED_TERMINAL['phaseStarted'] is False and REFUSED_TERMINAL['exports']==[] and REFUSED_TERMINAL['status']=='REFUSED_R3_CONTINUITY_BEFORE_PHASE' and REFUSED_TERMINAL['exitCode']==2 and REFUSED_TERMINAL['errorCode']=='R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED','NO_EXECUTED_APPLY_OR_FAKE_RESTORE_ALLOWED')
++    for leaf,pin in [('host-authorization.json',REFUSED_HOST_SHA),('roles-authorization.json',REFUSED_ROLE_SHA),('bundle-manifest.json',REFUSED_MANIFEST_SHA)]:
++        need(sha(read(job/'bundle'/leaf)[0])==pin,'EXACT_REFUSED_APPLY34_BUNDLE_REQUIRED')
++    need(not os.path.lexists(job/'phase.private.log') and not any(os.path.lexists(job/'results'/leaf) for leaf in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')),'ORIGINAL_REFUSED_KEY_CHILD_EVIDENCE_PRESENT')
++    return {'requestKey':REFUSED_KEY,'terminalSha256':REFUSED_TERMINAL_SHA,'requestSha256':REFUSED_REQUEST_SHA,'phaseStarted':False,'credentialWriteOccurred':False}
+ 
+ def required_history():
+     completed_preparation()
+@@ -759,6 +807,7 @@
+     for key,cid in OLD_CONTAINERS:
+         q=subprocess.run(['/usr/bin/docker','inspect','--format','{"id":{{json .Id}},"running":{{json .State.Running}},"pid":{{json .State.Pid}},"operation":{{json (index .Config.Labels "t45.operation")}}}',cid],capture_output=True,timeout=5)
+         need(q.returncode==0 and not q.stderr and 0<len(q.stdout)<=4096 and json.loads(q.stdout)=={'id':cid,'running':False,'pid':0,'operation':key},'EXACT_OLD33_CONTAINER_NOT_STOPPED')
++    refused_apply34_history()
+     return identities
+ 
+ def quiet():
+@@ -767,6 +816,7 @@
+     need(not any(os.path.lexists(p) for p in (state/'state/native-services/ordinary34-auth-20261116-01',state/'state/native-services'/JOBS['start'],state/'authority/fresh35-current-production-service-v2-service-34.json')),'NEW34_STATE_PRESENT_READ_ORIGINAL_ONLY')
+     pg=Path('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/data')
+     s=pg.lstat();need(pg.resolve()==pg and stat.S_ISDIR(s.st_mode) and (s.st_dev,s.st_ino,s.st_uid,s.st_gid,stat.S_IMODE(s.st_mode))==(66304,13502421,61035,61035,0o700) and not os.path.lexists(pg/'postmaster.pid'),'ORIGINAL_DATA_STOPPED_REQUIRED')
++    need(not os.path.lexists(state/'state/fresh35-first-production-20261110-r3/ordinary34-auth-capture-20261116-01'),'UNUSED_INNER34_CAPTURE_REQUIRED')
+     required_history()
+     for grant in (GRANT,'5cc58239751e4e2a'):
+         worker=B.with_name('grant-'+grant);control=C.with_name('grant-'+grant)
+@@ -777,13 +827,15 @@
+         need(not any(os.path.lexists(p) for p in (worker/'jobs'/oldstop,control/'jobs'/oldstop,control/'requests'/(oldstop+'.json'),control/'requests'/(oldstop+'.tmp'),control/'results'/(oldstop+'.json'))),'NO_FAKE_STOP33_ALLOWED')
+     q=subprocess.run(['/usr/bin/systemctl','list-units','--no-legend','--plain','--state=active,activating,deactivating','naijue-erp-op-b16447fb-*.service','naijue-erp-op-5cc58239-*.service'],capture_output=True,timeout=5)
+     need(q.returncode==0 and not q.stdout.strip() and not q.stderr,'ACTIVE_OPERATION_OR_UNKNOWN')
++    q=subprocess.run(['/usr/bin/docker','ps','-a','--filter','name=^/'+REFUSED_KEY+'$','--format','{{.ID}}'],capture_output=True,timeout=5)
++    need(q.returncode==0 and not q.stderr and not q.stdout.strip(),'REFUSED_APPLY34_CONTAINER_MUST_BE_ABSENT')
+     return completed_preparation()
+ 
+ 
+ def register(a, files, authority):
+     need(os.geteuid() == 0 and socket.gethostname() == 'naijue-server', 'EXACT_ROOT_HOST_REQUIRED')
+-    need(not any(os.path.lexists(path) for path in (AUDIT, NEW_MODULE, NEW_POLICY,
+-             P / '.normal34-dispatcher.pending')), 'ALREADY_PRESENT_OR_UNKNOWN_READ_ORIGINAL_ONLY')
++    need(not any(os.path.lexists(path) for path in (AUDIT, NEW_MODULE,
++             P / '.normal34-apply02-dispatcher.pending')), 'ALREADY_PRESENT_OR_UNKNOWN_READ_ORIGINAL_ONLY')
+     for folder in (B, P, H, LOCK.parent):
+         for path in [*reversed(folder.parents), folder]:
+             s = path.lstat()
+@@ -814,7 +866,7 @@
+         sync(AUDIT.parent)
+         put(AUDIT / 'authorization.json', authority)
+         put(AUDIT / 'old-dispatcher.bin', old)
+-        put(AUDIT / 'old-policy.bin',read(H/'direct33-restore02-only.json')[0])
++        put(AUDIT / 'old-policy.bin',read(NEW_POLICY)[0])
+         put(AUDIT / 'old-identities.json', pack(a['oldIdentities']))
+         result = dict(status='REGISTRATION_UNKNOWN_READ_ORIGINAL_AUDIT_ONLY', published=[],
+                       automaticReplay=False, businessDatabaseWrites=0)
+@@ -823,24 +875,27 @@
+             result['published'].append('module')
+             snapshot(a)
+             quiet()
+-            need(not os.path.lexists(NEW_POLICY),'RESTORE_POLICY_ALREADY_PRESENT')
+-            put(NEW_POLICY,files['policy'])
++            pending_policy=H/'.normal34-apply02-policy.pending'
++            need(not os.path.lexists(pending_policy),'POLICY_PENDING_ALREADY_PRESENT')
++            put(pending_policy,files['policy'])
++            os.replace(pending_policy,NEW_POLICY)
++            sync(H)
+             result['published'].append('policy')
+             consumer(new, cfg, files['module'], files['policy'])
+-            put(P / '.normal34-dispatcher.pending', new, 0o755)
+-            snapshot(a)
++            put(P / '.normal34-apply02-dispatcher.pending', new, 0o755)
++            snapshot(a,policy=sha(files['policy']))
+             quiet()
+             need(now() < a['expiresAt'], 'REGISTRATION_EXPIRED_BEFORE_CAS')
+             put(AUDIT / 'publish-intent.json', pack(dict(oldDispatcherSha256=OLD_DISPATCHER,
+                 dispatcherSha256=sha(new), moduleSha256=HELPER, policySha256=sha(files['policy']))))
+-            os.replace(P / '.normal34-dispatcher.pending', P / 'admin_exec.py')
++            os.replace(P / '.normal34-apply02-dispatcher.pending', P / 'admin_exec.py')
+             sync(P)
+             result['published'].append('dispatcher')
+-            snapshot(a,sha(new))
++            snapshot(a,sha(new),sha(files['policy']))
+             quiet()
+             consumer(read(P / 'admin_exec.py')[0], cfg, files['module'], files['policy'])
+             need(identity(os.fstat(lock.fileno())) == LOCK_ID, 'ORIGINAL_LOCK_CHANGED_AFTER_CAS')
+-            result.update(status='EXACT_NORMAL34_REGISTERED_NO_PHASE_SUBMITTED',
++            result.update(status='EXACT_NORMAL34_APPLY02_REGISTERED_NO_PHASE_SUBMITTED',
+                           dispatcherSha256=sha(new), moduleSha256=HELPER, policySha256=sha(files['policy']),
+                           oldHistoryPreserved=True, originalLockPreserved=True, phaseSubmitted=False)
+         except BaseException as error:
+@@ -861,4 +916,4 @@
+     approved, files, raw = decode(json.loads(encoded), sys.argv[1])
+     outcome = register(approved, files, raw)
+     print(json.dumps(outcome, sort_keys=True))
+-    raise SystemExit(0 if outcome['status'] == 'EXACT_NORMAL34_REGISTERED_NO_PHASE_SUBMITTED' else 2)
++    raise SystemExit(0 if outcome['status'] == 'EXACT_NORMAL34_APPLY02_REGISTERED_NO_PHASE_SUBMITTED' else 2)
+--- outputs/D1/20261116-r3-normal34-root-source-01/r3_direct34_normal.py
++++ r3_direct34_apply02.py
+@@ -8,7 +8,7 @@
+ FORMAT = 'T45_R3_DIRECT33_BATCHED_REAL_V1'
+ POLICY_NAME = 'direct34-batched-real.json'
+ READONLY_POLICY = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+-JOBS = {'input_materialize': 't45-r3-final33-input-materialize-20261116-02', 'materialize': 't45-r3-batched-root06-source-delta-20261116-01', 'apply': 't45-r3-ordinary34-auth-apply-20261116-01', 'catalog_update': 't45-r3-batched161-command-successor-20261116-01', 'prepare': 't45-r3-final33-plan-prepare-20261116-01', 'restore': 't45-r3-ordinary34-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-34', 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
++JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-02', 'catalog_update': 't45-r3-batched161-command-successor-20261116-01', 'input_materialize': 't45-r3-final33-input-materialize-20261116-02', 'materialize': 't45-r3-batched-root06-source-delta-20261116-01', 'prepare': 't45-r3-final33-plan-prepare-20261116-01', 'restore': 't45-r3-ordinary34-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-34', 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ HISTORICAL_INSTALL = {'publicResultSha256': 'c3f11ec9de8c87c59fbd39201f8cfb9a82069485096a9ca3a7c2da14132b6749',
+  'requestKey': 't45-r3-batched-install-20261116-02',
+  'rootResultSha256': 'e14e9b649d9b4d4864360384e93e059cdda80c37e769de91f2452abd1af87792',
+@@ -144,15 +144,7 @@
+  'start': 't45-first-r3-native-service-start-20261116-33',
+  'stop': 't45-r3-ordinary33-preserve-stop-20261116-01',
+  'writer': 't45-r3-batched-real-execute-20261115-01'}
+-JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-01',
+- 'catalog_update': 't45-r3-batched161-command-successor-20261116-01',
+- 'input_materialize': 't45-r3-final33-input-materialize-20261116-02',
+- 'materialize': 't45-r3-batched-root06-source-delta-20261116-01',
+- 'prepare': 't45-r3-final33-plan-prepare-20261116-01',
+- 'restore': 't45-r3-ordinary34-auth-restore-20261116-01',
+- 'start': 't45-first-r3-native-service-start-20261116-34',
+- 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01',
+- 'writer': 't45-r3-batched-real-execute-20261115-01'}
++JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-02', 'catalog_update': 't45-r3-batched161-command-successor-20261116-01', 'input_materialize': 't45-r3-final33-input-materialize-20261116-02', 'materialize': 't45-r3-batched-root06-source-delta-20261116-01', 'prepare': 't45-r3-final33-plan-prepare-20261116-01', 'restore': 't45-r3-ordinary34-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-34', 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ COMPLETED = {'input_materialize': {'leaf': 'final33-input-materialization-result.json',
+                        'marker': '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/materialization-receipt.json',
+                        'publicResultSha256': '796bdede6fc7f7ce464c5ca3966963335f80e24f4fc9248aedb3d10776417d64',
+@@ -272,6 +264,53 @@
+     need((terminal.get('jobId'),terminal.get('taskId'),terminal.get('grantId'),terminal.get('status'),terminal.get('exitCode'),terminal.get('phaseStarted'))==(e['requestKey'],'T45',GRANT,e['terminalStatus'],e['exitCode'],True),'EXACT_USED_TERMINAL_REQUIRED')
+     need(value==e['value'],'EXACT_USED_RESULT_REQUIRED')
+ 
++REFUSED_KEY = 't45-r3-ordinary34-auth-apply-20261116-01'
++REFUSED_TERMINAL_SHA = '39dd96689785ea6fc041eef092fd3097677f2e3ffbc3c5c6b56f2fce482c3600'
++REFUSED_REQUEST_SHA = '39bcfdde2286969bd3fd9035ad5efcc0e42d279453b5f997c8ba2e9bd2505807'
++REFUSED_HOST_SHA = '5467fa0e5bb89f7002bd7fa62a477acb9c5021dad9ad1297610bf61fcc0f6e5d'
++REFUSED_ROLE_SHA = '60ff1ff38900e1d07001486e05848124b1ed64bba0ea425357d4ac9006af16c6'
++REFUSED_MANIFEST_SHA = '544a6f1d3a87fb02a5a66ba701a199c5597e9e5fd3d86863e6c6faaa60df05a3'
++REFUSED_TERMINAL = {'atUTC': '2026-11-16T16:22:59.960926+00:00',
++ 'businessAcceptanceClaimed': False,
++ 'elapsedSeconds': 0.04957998695317656,
++ 'errorCode': 'R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED',
++ 'exitCode': 2,
++ 'exports': [],
++ 'finishedAtUTC': '2026-11-16T16:23:00.036362+00:00',
++ 'grantId': 'b16447fbc81f4d64',
++ 'jobId': 't45-r3-ordinary34-auth-apply-20261116-01',
++ 'phaseStarted': False,
++ 'privateLogsExported': False,
++ 'scope': 'ERP_EXISTING_TASKS_THROUGH_T51',
++ 'status': 'REFUSED_R3_CONTINUITY_BEFORE_PHASE',
++ 'taskId': 'T45',
++ 'unit': 'naijue-erp-op-b16447fb-cec65c8ea6c4'}
++REFUSED_REQUEST = {'args': [],
++ 'businessCutoverConfirmed': False,
++ 'gateEvidence': {},
++ 'grantId': 'b16447fbc81f4d64',
++ 'jobId': 't45-r3-ordinary34-auth-apply-20261116-01',
++ 'manifestSha256': '544a6f1d3a87fb02a5a66ba701a199c5597e9e5fd3d86863e6c6faaa60df05a3',
++ 'scope': 'ERP_EXISTING_TASKS_THROUGH_T51',
++ 'script': 'ordinary05_roles_job.py',
++ 'taskEvidence': {},
++ 'taskId': 'T45',
++ 'timeoutSeconds': 300}
++
++def refused_apply34_history():
++    # Immutable original-key evidence only. Do not require future custody/PG state here.
++    job=B/'jobs'/REFUSED_KEY
++    terminal=read(job/'r3-outer-terminal.json')[0]
++    public=read(C/'results'/(REFUSED_KEY+'.json'),1000)[0]
++    request=read(job/'request.json')[0]
++    need(sha(terminal)==REFUSED_TERMINAL_SHA and terminal==public and json.loads(terminal)==REFUSED_TERMINAL,'EXACT_APPLY34_BEFORE_PHASE_REFUSAL_REQUIRED')
++    need(sha(request)==REFUSED_REQUEST_SHA and json.loads(request)==REFUSED_REQUEST and REFUSED_REQUEST['args']==[],'EXACT_ORIGINAL_APPLY34_EMPTY_ARGS_REQUIRED')
++    need(REFUSED_TERMINAL['phaseStarted'] is False and REFUSED_TERMINAL['exports']==[] and REFUSED_TERMINAL['status']=='REFUSED_R3_CONTINUITY_BEFORE_PHASE' and REFUSED_TERMINAL['exitCode']==2 and REFUSED_TERMINAL['errorCode']=='R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED','NO_EXECUTED_APPLY_OR_FAKE_RESTORE_ALLOWED')
++    for leaf,pin in [('host-authorization.json',REFUSED_HOST_SHA),('roles-authorization.json',REFUSED_ROLE_SHA),('bundle-manifest.json',REFUSED_MANIFEST_SHA)]:
++        need(sha(read(job/'bundle'/leaf)[0])==pin,'EXACT_REFUSED_APPLY34_BUNDLE_REQUIRED')
++    need(not os.path.lexists(job/'phase.private.log') and not any(os.path.lexists(job/'results'/leaf) for leaf in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')),'ORIGINAL_REFUSED_KEY_CHILD_EVIDENCE_PRESENT')
++    return {'requestKey':REFUSED_KEY,'terminalSha256':REFUSED_TERMINAL_SHA,'requestSha256':REFUSED_REQUEST_SHA,'phaseStarted':False,'credentialWriteOccurred':False}
++
+ def required_history():
+     completed_preparation()
+     for phase,e in USED.items():
+@@ -308,6 +347,7 @@
+     for key,cid in OLD_CONTAINERS:
+         q=subprocess.run(['/usr/bin/docker','inspect','--format','{"id":{{json .Id}},"running":{{json .State.Running}},"pid":{{json .State.Pid}},"operation":{{json (index .Config.Labels "t45.operation")}}}',cid],capture_output=True,timeout=5)
+         need(q.returncode==0 and not q.stderr and 0<len(q.stdout)<=4096 and json.loads(q.stdout)=={'id':cid,'running':False,'pid':0,'operation':key},'EXACT_OLD33_CONTAINER_NOT_STOPPED')
++    refused_apply34_history()
+     return identities
+ 
+ 
+@@ -1102,6 +1142,7 @@
+ 
+     def admit(self, job, private):
+         phase = next((name for name, key in JOBS.items() if job.get('jobId') == key), None)
++        self.need(job.get('jobId')!=REFUSED_KEY,'REFUSED_APPLY34_01_REISSUE_FORBIDDEN')
+         if phase is None:
+             self.need(job.get('jobId') not in ['t45-r3-ordinary33-auth-apply-20261116-01', 't45-first-r3-native-service-start-20261116-33', 't45-r3-ordinary33-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-02'],'OLD33_MAINTENANCE_REISSUE_FORBIDDEN')
+             return self.readonly.admit(job, private)
+--- outputs/D1/20261116-r3-normal34-root-source-01/admin_exec.NORMAL34-UNREGISTERED.py
++++ admin_exec.APPLY02-UNREGISTERED.py
+@@ -13,8 +13,8 @@
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+ R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
+-R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = 'e539ceac12353067b4e5abe61e28766fa82843bc7446235a4be386236e3eb3ee'
+-R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-first-r3-native-service-start-20261116-29', 't45-first-r3-native-service-start-20261116-30', 't45-first-r3-native-service-start-20261116-31', 't45-first-r3-native-service-start-20261116-32', 't45-first-r3-native-service-start-20261116-33', 't45-r3-batched-install-20261115-01', 't45-r3-batched-install-20261116-02', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-root04-source-delta-20261116-01', 't45-r3-batched-root05-source-delta-20261116-01', 't45-r3-batched-root06-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-input-materialize-20261116-01', 't45-r3-final33-input-materialize-20261116-02', 't45-r3-final33-plan-prepare-20261116-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01', 't45-r3-ordinary29-auth-apply-20261116-01', 't45-r3-ordinary29-auth-restore-20261116-01', 't45-r3-ordinary29-preserve-stop-20261116-01', 't45-r3-ordinary30-auth-apply-20261116-01', 't45-r3-ordinary30-auth-restore-20261116-01', 't45-r3-ordinary30-preserve-stop-20261116-01', 't45-r3-ordinary31-auth-apply-20261116-01', 't45-r3-ordinary31-auth-restore-20261116-01', 't45-r3-ordinary31-preserve-stop-20261116-01', 't45-r3-ordinary32-auth-apply-20261116-01', 't45-r3-ordinary32-auth-restore-20261116-01', 't45-r3-ordinary32-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-apply-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-01', 't45-r3-ordinary33-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-02', 't45-r3-ordinary34-auth-apply-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01', 't45-first-r3-native-service-start-20261116-34', 't45-r3-ordinary34-preserve-stop-20261116-01']
++R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09'
++R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-first-r3-native-service-start-20261116-29', 't45-first-r3-native-service-start-20261116-30', 't45-first-r3-native-service-start-20261116-31', 't45-first-r3-native-service-start-20261116-32', 't45-first-r3-native-service-start-20261116-33', 't45-r3-batched-install-20261115-01', 't45-r3-batched-install-20261116-02', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-root04-source-delta-20261116-01', 't45-r3-batched-root05-source-delta-20261116-01', 't45-r3-batched-root06-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-input-materialize-20261116-01', 't45-r3-final33-input-materialize-20261116-02', 't45-r3-final33-plan-prepare-20261116-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01', 't45-r3-ordinary29-auth-apply-20261116-01', 't45-r3-ordinary29-auth-restore-20261116-01', 't45-r3-ordinary29-preserve-stop-20261116-01', 't45-r3-ordinary30-auth-apply-20261116-01', 't45-r3-ordinary30-auth-restore-20261116-01', 't45-r3-ordinary30-preserve-stop-20261116-01', 't45-r3-ordinary31-auth-apply-20261116-01', 't45-r3-ordinary31-auth-restore-20261116-01', 't45-r3-ordinary31-preserve-stop-20261116-01', 't45-r3-ordinary32-auth-apply-20261116-01', 't45-r3-ordinary32-auth-restore-20261116-01', 't45-r3-ordinary32-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-apply-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-01', 't45-r3-ordinary33-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-02', 't45-r3-ordinary34-auth-apply-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01', 't45-first-r3-native-service-start-20261116-34', 't45-r3-ordinary34-preserve-stop-20261116-01', 't45-r3-ordinary34-auth-apply-20261116-02']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+ R3_READONLY_RECOVERY_SOURCE_SHA256 = '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e'
+ FINAL33_INPUT_POLICY_SHA256 = '5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1'
+@@ -176,7 +176,7 @@
+     if R3_ORIGINAL02_ABSENT_POLICY_SHA256 is None:
+         return readonly
+     from types import ModuleType
+-    path=canonical(PUBLIC/'r3_direct34_normal.py')
++    path=canonical(PUBLIC/'r3_direct34_apply02.py')
+     check(PUBLIC.lstat().st_uid==0 and not PUBLIC.lstat().st_mode&0o022
+           and path.is_file() and path.lstat().st_uid==0 and not path.lstat().st_mode&0o022
+           and path.lstat().st_size<=131072,'R3_CONTINUITY_ABSENT20_PROTECTED_SOURCE_REQUIRED')
+--- outputs/D1/20261116-r3-normal34-root-source-01/check_source.py
++++ check_source.py
+@@ -1,96 +1,87 @@
+-"""Local static/pure checks only. No fresh reader, issuer, carrier, PG or fake authority."""
++"""Static and actual-receipt checks only; never invoke reader, issuer, CAS or native."""
+ from pathlib import Path
+ import ast,builtins,hashlib,json,runpy,symtable
+-HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[2]
+-PREV=HERE.parent/'20261116-r3-after-preparation-window-source-01'
+-RESTORE=HERE.parent/'AUTH-RESTORE33-ROOT-SUCCESSOR-SOURCE-01'
++HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[2];PREV=HERE.parent/'20261116-r3-normal34-root-source-01'
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+-def nodes(path):
++def functions(path):
+  return {n.name:ast.dump(n,include_attributes=False) for n in ast.parse(path.read_text()).body if isinstance(n,ast.FunctionDef)}
+ def methods(path):
+- c=next(n for n in ast.parse(path.read_text()).body if isinstance(n,ast.ClassDef) and n.name=='Original02AbsentContinuation')
++ c=next(n for n in ast.parse(path.read_text()).body if isinstance(n,ast.ClassDef))
+  return {n.name:ast.dump(n,include_attributes=False) for n in c.body if isinstance(n,ast.FunctionDef)}
+-checked=[]
++syntax=[]
+ for path in HERE.glob('*.py'):
+- body=path.read_text();compile(body,str(path),'exec');tab=symtable.symtable(body,str(path),'exec')
+- defined={s.get_name() for s in tab.get_symbols() if s.is_assigned() or s.is_imported() or s.is_namespace()};used=set()
++ s=path.read_text();compile(s,str(path),'exec');syntax.append(path.name)
++ # The deliberately injected fragment supplies six names through its final host module.
++ if path.name=='refused_apply34_fragment.py':continue
++ tab=symtable.symtable(s,str(path),'exec');defined={x.get_name() for x in tab.get_symbols() if x.is_assigned() or x.is_imported() or x.is_namespace()};used=set()
+  def walk(t):
+   for c in t.get_children():
+-   used.update(s.get_name() for s in c.get_symbols() if s.is_global() and s.is_referenced());walk(c)
+- walk(tab)
+- assert not used-defined-set(dir(builtins))-{'__name__','__file__'},path
+- checked.append(path.name)
++   used.update(x.get_name() for x in c.get_symbols() if x.is_global() and x.is_referenced());walk(c)
++ walk(tab);assert not used-defined-set(dir(builtins))-{'__file__','__name__'},path
+ cas=runpy.run_path(str(HERE/'register_cas.py'),run_name='local_source_only')
+-previous=runpy.run_path(str(RESTORE/'register_cas.py'),run_name='local_source_only')
+-rules=json.loads((HERE/'NINE-PHASES.UNISSUED.json').read_bytes());normal=Path(rules['consumerSourceDirectory'])
+-frozen=json.loads((normal/'SOURCE-PINS.json').read_bytes())
+-assert sha((normal/'SOURCE-PINS.json').read_bytes())==rules['consumerSourcePinsSha256']=='2fe2e9ccec7c2d196067e0756bb317f42b79c43eae40b6ee693b97a6c2f7dfc9'
++old=runpy.run_path(str(PREV/'register_cas.py'),run_name='local_source_only')
++facts=json.loads((HERE/'CURRENT-FACTS.json').read_bytes());w=json.loads((HERE/'NINE-PHASES.UNISSUED.json').read_bytes())
++normal=Path(w['consumerSourceDirectory']);frozen=json.loads((normal/'SOURCE-PINS.json').read_bytes());interface=json.loads((normal/'INTERFACE.UNISSUED.json').read_bytes());plan=json.loads((normal/'PHASES34-APPLY02.UNISSUED.json').read_bytes())
++assert sha((normal/'SOURCE-PINS.json').read_bytes())==w['consumerSourcePinsSha256']=='9dde7aaf1b3b40ec6fd90a344b62c1b158492c07f21c4d1b471289a9c96bc349'
+ for leaf,row in frozen['files'].items():
+- body=(normal/leaf).read_bytes();assert sha(body)==row['sha256'] and len(body)==row['bytes']
+-interface=json.loads((normal/'ROOT-PAIRING-INTERFACE.UNISSUED.json').read_bytes())
+-assert len(cas['JOBS'])==len(cas['EXPECTED_RULES'])==len(rules['jobs'])==9
+-assert cas['JOBS']=={k:r['jobId'] for k,r in rules['jobs'].items()}
+-assert cas['EXPECTED_RULES']==rules['jobs']
+-old=json.loads((PREV/'NINE-PHASES.UNISSUED.json').read_bytes())
+-for phase in ('input_materialize','materialize'):
+- assert rules['jobs'][phase]==old['jobs'][phase]
+-for phase,row in interface['jobs'].items():
+- assert rules['jobs'][phase]=={k:row[k] for k in ('jobId','script','authorityLeaf','bundlePins','timeoutSeconds','deadlineField')}
+- assert Path(rules['phaseDirectories'][phase]).parent.parent==normal
+- for leaf,pin in row['bundlePins'].items():assert sha((Path(row['sourceDirectory'])/leaf).read_bytes())==pin
+-assert sum(len(r['bundlePins']) for r in rules['jobs'].values())==75
+-for phase in ('catalog_update','prepare','writer'):
+- assert cas['JOBS'][phase]==previous['JOBS'][phase]
+-assert cas['LOCK']==previous['LOCK'] and cas['LOCK_ID']==previous['LOCK_ID']
+-assert cas['OLD_DISPATCHER']=='79032639a8125a4a29d274fb6d17cf94fa1455c05c06acce823f84f3fac7638f'
+-assert len(cas['BASIS'])==194
+-for path,pin in previous['BASIS'].items():
+- if path!=cas['P']/'admin_exec.py':assert cas['BASIS'][path]==pin
+-assert all(cas['BASIS'][p] not in ('',None) for p in cas['BASIS'])
+-actuals={
+- 'apply':'RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-APPLY-COMPLETED.json',
+- 'start':'RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-START-FAILED-01.json',
+- 'restore01':'RUNTIME-WINDOW-SUCCESSOR-01/ACTUAL-RESTORE-FAILED-01.json',
+- 'restore02':'AUTH-RESTORE33-SUCCESSOR-01/ACTUAL-RESTORE02-COMPLETED.json'}
+-for phase,rel in actuals.items():
+- actual=json.loads((normal.parent/rel).read_bytes())
+- cas['validate_used_value'](phase,actual['terminal'],actual['result'])
+- assert cas['USED'][phase]['terminalSha256']==actual['rootPins']['terminal']
+- assert cas['USED'][phase]['rootResultSha256']==actual['rootPins']['result']
+- assert cas['USED'][phase]['publicResultSha256']==actual['publicResultSha256']
+-assert cas['PRIOR_BINDINGS']==interface['predecessor']['bindings']
+-assert cas['PRIOR_SERVICE']==interface['predecessor']['service']
+-a=methods(PREV/'r3_direct33_after_preparation.py');b=methods(HERE/'r3_direct34_normal.py')
+-assert set(a)==set(b)
+-unchanged=[k for k in a if k not in ('original_basis','admit')]
+-assert all(a[k]==b[k] for k in unchanged)
+-a=nodes(PREV/'issue_phase.py');b=nodes(HERE/'issue_phase.py')
+-issuer_unchanged=[k for k in a if k not in ('start_authority','issue')]
+-assert set(a)==set(b) and all(a[k]==b[k] for k in issuer_unchanged)
+-a=nodes(HERE/'register_cas.py');b=nodes(HERE/'read_registration_basis.py')
+-shared=[k for k in b if k!='main'];assert all(a[k]==b[k] for k in shared)
+-assert cas['HELPER']==sha((HERE/'r3_direct34_normal.py').read_bytes())
+-assert cas['TEMPLATE']==sha((HERE/'admin_exec.NORMAL34-UNREGISTERED.py').read_bytes())
+-carrier=(HERE/'original-cas-normal34-carrier.UNISSUED.py').read_text()
+-assert ("SOURCE='"+sha((HERE/'register_cas.py').read_bytes())+"'") in carrier
+-assert all(carrier.count(k)==1 for k in ('AUTH_SHA_LITERAL','AUTH_START_LITERAL','AUTH_EXPIRES_LITERAL'))
+-assert "Completed input02/ROOT06 must never be reissued" in (HERE/'issue_phase.py').read_text()
+-assert 'COMPLETED_PREPARATION_REISSUE_FORBIDDEN' in (HERE/'r3_direct34_normal.py').read_text()
+-assert 'OLD33_MAINTENANCE_REISSUE_FORBIDDEN' in (HERE/'r3_direct34_normal.py').read_text()
+-assert "role_pins[0]!=ROLE_SHA" in (HERE/'register_cas.py').read_text()
+-review_path=ROOT/'outputs/QB/20261116-r3-normal34-joint-review-01/CONSUMER-RESULT.json'
+-assert sha(review_path.read_bytes())=='64b6d63e6e2c0b3e1628d96a67021d1461c5a3121c8dfb4f0a1f683a6f10c11d'
+-review=json.loads(review_path.read_bytes());assert review['findings']==[] and review['sourcePins']['sha256']==rules['consumerSourcePinsSha256']
++ b=(normal/leaf).read_bytes();assert sha(b)==row['sha256'] and len(b)==row['bytes']
++assert len(cas['BASIS'])==203 and {str(k):v for k,v in cas['BASIS'].items()}==facts['basis']
++assert cas['OLD_DISPATCHER']==facts['currentDispatcherSha256']=='5cfb0227b161475b3401ff5a7b402f4f758bc4052b2d110d6dc725ca34837782'
++assert cas['NEW_POLICY']==old['NEW_POLICY'] and cas['NEW_POLICY'] in cas['BASIS']
++assert cas['BASIS'][cas['NEW_POLICY']]=='bd4ed7ee54fd2fc99f49875f75612f95ec5a68205c599703dad6746a771ac2ec'
++assert cas['NEW_MODULE']!=old['NEW_MODULE'] and cas['AUDIT']!=old['AUDIT'] and cas['ENTRY']!=old['ENTRY']
++assert cas['LOCK']==old['LOCK'] and cas['LOCK_ID']==old['LOCK_ID']
++assert len(cas['JOBS'])==9 and cas['JOBS']=={k:row['jobId'] for k,row in w['jobs'].items()}
++assert cas['JOBS']['apply']=='t45-r3-ordinary34-auth-apply-20261116-02'
++assert all(cas['JOBS'][key]==old['JOBS'][key] for key in cas['JOBS'] if key!='apply')
++for phase,row in plan['jobs'].items():
++ assert w['jobs'][phase]=={key:row[key] for key in ('jobId','script','authorityLeaf','bundlePins','timeoutSeconds','deadlineField')}
++ assert Path(w['phaseDirectories'][phase]).parent.parent==normal
++for phase in ('input_materialize','materialize'):assert w['jobs'][phase]==old['EXPECTED_RULES'][phase]
++assert cas['EXPECTED_RULES']==w['jobs'] and sum(len(row['bundlePins']) for row in w['jobs'].values())==75
++assert w['innerRoleApplyKey']==cas['REFUSED_KEY']=='t45-r3-ordinary34-auth-apply-20261116-01'
++assert cas['REFUSED_REQUEST']['args']==[] and cas['REFUSED_TERMINAL']['phaseStarted'] is False
++assert cas['REFUSED_TERMINAL']['exports']==[] and cas['REFUSED_ROLE_SHA']==facts['oldUnusedRolesSha256']
++a=methods(PREV/'r3_direct34_normal.py');b=methods(HERE/'r3_direct34_apply02.py')
++unchanged_methods=[name for name in a if name!='admit'];assert set(a)==set(b) and all(a[name]==b[name] for name in unchanged_methods)
++assert a['frozen']==b['frozen']
++loaded_helper=runpy.run_path(str(HERE/'r3_direct34_apply02.py'),run_name='local_constants_only')
++assert loaded_helper['JOBS']==cas['JOBS']=={key:row['jobId'] for key,row in w['jobs'].items()}
++job_assignments=[n.value for n in ast.parse((HERE/'r3_direct34_apply02.py').read_text()).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='JOBS' for t in n.targets)]
++assert len(job_assignments)==2 and all(ast.literal_eval(node)==cas['JOBS'] for node in job_assignments)
++shared=functions(HERE/'read_registration_basis.py');compiled=functions(HERE/'register_cas.py')
++assert all(shared[name]==compiled[name] for name in shared if name!='main')
++helper=functions(HERE/'r3_direct34_apply02.py')
++for name in ('required_history','refused_apply34_history'):assert helper[name]==shared[name]==compiled[name]
++assert 'UNUSED_INNER34_CAPTURE_REQUIRED' not in helper['required_history']+helper['refused_apply34_history']
++new_issuer=functions(HERE/'issue_phase.py');old_issuer=functions(PREV/'issue_phase.py')
++issuer_unchanged=[name for name in old_issuer if name not in ('normalize_apply','issue')]
++assert set(new_issuer)==set(old_issuer) and all(new_issuer[name]==old_issuer[name] for name in issuer_unchanged)
++assert new_issuer['start_authority']==old_issuer['start_authority']
++reg=(HERE/'register_cas.py').read_text();tree=ast.parse(reg)
++registration=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='register')
++snapshots=[ast.unparse(n) for n in ast.walk(registration) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='snapshot']
++assert "snapshot(a, policy=sha(files['policy']))" in snapshots and "snapshot(a, sha(new), sha(files['policy']))" in snapshots
++assert "put(AUDIT / 'old-policy.bin',read(NEW_POLICY)[0])" in reg
++assert "os.replace(pending_policy,NEW_POLICY)" in reg and "sync(H)" in reg
++assert "and role_pins[0] not in (ROLE_SHA,REFUSED_ROLE_SHA)" in reg
++assert cas['HELPER']==sha((HERE/'r3_direct34_apply02.py').read_bytes()) and cas['TEMPLATE']==sha((HERE/'admin_exec.APPLY02-UNREGISTERED.py').read_bytes())
++assert (HERE/'r3_direct34_apply02.py').stat().st_size<=131072
++carrier=(HERE/'original-cas-apply02-carrier.UNISSUED.py').read_text();assert ("SOURCE='"+sha((HERE/'register_cas.py').read_bytes())+"'") in carrier
++assert all(carrier.count(token)==1 for token in ('AUTH_SHA_LITERAL','AUTH_START_LITERAL','AUTH_EXPIRES_LITERAL'))
++role_path=Path(w['phaseDirectories']['apply'])/'ordinary05_roles.py'
++role=runpy.run_path(str(role_path),run_name='local_scope_only')
++assert role['scope']()['requestKey']==cas['REFUSED_KEY'] and role['scope']()['ordinaryServiceRequestKey']==cas['JOBS']['start']
+ assert not any(HERE.glob('*authorization.json')) and not (HERE/'ISSUED.json').exists()
+-result={'state':'LOCAL_SOURCE_AND_ACTUAL_RECEIPT_CHECKS_PASS_ONLY','sourceOnly':True,
+- 'pythonSyntaxAndGlobalNames':checked,'consumerFilesPinned':len(frozen['files']),
+- 'rootRules':9,'newRuntimeConsumerLeaves':52,'rootStaticRuleMembersWithHistoricalPreparation':75,
+- 'basisEntries':194,'custodyMetadataOnlyFiles':len(cas['CUSTODY_FILES']),
+- 'actualUsedOutcomeObjectsChecked':list(actuals),'unchangedHelperMethods':unchanged,
+- 'unchangedPhaseIssuerFunctions':issuer_unchanged,'readerAndCASSharedFunctions':shared,
+- 'consumerSourcePinsSha256':rules['consumerSourcePinsSha256'],'rulesSha256':sha((HERE/'NINE-PHASES.UNISSUED.json').read_bytes()),
+- 'rootIndependentReview':'PENDING','freshBasis':'PENDING','clockIssued':False,
+- 'issuerInvoked':False,'freshReaderInvoked':False,'serverConnections':0,'PGConnections':0,
+- 'fakeAuthorityOrTargetFixture':False,'runtimePassClaimed':False}
+-(HERE/'LOCAL-CHECKS.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
+-print(json.dumps({k:result[k] for k in ('state','basisEntries','rootRules','clockIssued','PGConnections')}))
++report={'state':'LOCAL_APPLY02_SOURCE_CHECKS_PASS_ONLY','sourceOnly':True,'pythonSyntaxAndGlobalNames':syntax,
++ 'basisEntries':203,'metadataOnlyIdentities':4,'originalLockIdentity':1,'freshIdentityCount':208,
++ 'rules':9,'rootStaticMembers':75,'consumerRuntimeMembers':52,'unchangedHelperMethods':unchanged_methods,
++ 'finiteAuthorityGuardASTUnchanged':True,'unchangedPhaseIssuerFunctions':issuer_unchanged,
++ 'allHelperJOBSAssignmentsAndLoadedConstantsMatchPolicy':True,
++ 'readerCASAndHelperHistorySame':True,'existingPolicyCASUsesExplicitNewDigestSnapshots':True,
++ 'oldNormal34AndRefusalFactPinsPreserved':True,'newOuterApplyKey':cas['JOBS']['apply'],'innerRoleApplyKey':cas['REFUSED_KEY'],
++ 'consumerSourcePinsSha256':w['consumerSourcePinsSha256'],'rulesSha256':sha((HERE/'NINE-PHASES.UNISSUED.json').read_bytes()),
++ 'independentReview':'PENDING','freshBasis':'PENDING','clockOrAuthorityIssued':False,
++ 'issuerInvoked':False,'freshReaderInvoked':False,'nativeInvoked':False,'serverConnections':0,'PGConnections':0,'fixtureOrFakeAuthority':False}
++(HERE/'LOCAL-CHECKS.json').write_text(json.dumps(report,sort_keys=True,indent=2)+'\n')
++print(json.dumps({k:report[k] for k in ('state','basisEntries','freshIdentityCount','finiteAuthorityGuardASTUnchanged','clockOrAuthorityIssued','PGConnections')}))

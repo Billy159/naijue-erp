@@ -1,0 +1,121 @@
+{
+  "state": "SOURCE_PASS_NORMAL34_APPLY02_ROOT_PAIR_ONLY",
+  "sourceOnly": true,
+  "findings": [],
+  "reviewedAt": "2026-11-16T16:51:19.643221+00:00",
+  "rulesSha256": "ae54d7a85526bdd6b6c754fbafa66470312e75eff13b274943335285c047c38a",
+  "consumerSourcePinsSha256": "9dde7aaf1b3b40ec6fd90a344b62c1b158492c07f21c4d1b471289a9c96bc349",
+  "consumerReviewSha256": "79621a4a25ae25a3fa7be67a82ca1020c3ea58123e09389737a61406290fcf37",
+  "files": {
+    "register_cas.py": {
+      "bytes": 95140,
+      "sha256": "dfb233d566ba6cc8a13559090b8b00c48f82f975bfc9f532a7773dda1df2bace"
+    },
+    "read_registration_basis.py": {
+      "bytes": 71279,
+      "sha256": "476a7155aa939bacf7dc282558882e0cba824c13b0759c5a267e9ef236f5083d"
+    },
+    "r3_direct34_apply02.py": {
+      "bytes": 96636,
+      "sha256": "3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09"
+    },
+    "admin_exec.APPLY02-UNREGISTERED.py": {
+      "bytes": 44916,
+      "sha256": "739cf2ce8701d2e19b9188264ffcab7336ec5bee1b7f0131603793c149680929"
+    },
+    "original-cas-apply02-carrier.UNISSUED.py": {
+      "bytes": 2608,
+      "sha256": "7638681295fdaa305423329d77f62401d80ec48dcd5dc1c02225e534a0677a53"
+    },
+    "issue_registration.py": {
+      "bytes": 13465,
+      "sha256": "94e24c5c55859d0411a1e7fa773f2b048a904be504b07a33f91ec2d8064b0490"
+    },
+    "issue_phase.py": {
+      "bytes": 38871,
+      "sha256": "12a1c12603082375f08b560e7fbb44affb3cdde9ac8f3f54d6b22df25c135709"
+    },
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 31204,
+      "sha256": "ae54d7a85526bdd6b6c754fbafa66470312e75eff13b274943335285c047c38a"
+    }
+  },
+  "sourceDirectory": "outputs/D1/20261117-r3-normal34-apply02-root-source-02",
+  "sourcePins": {
+    "path": "outputs/D1/20261117-r3-normal34-apply02-root-source-02/SOURCE-PINS.json",
+    "sha256": "581e206db21873b6d3000bd1d85192f73f6e1a0f5e1f47cbc4904a359beb3b42"
+  },
+  "reusedConsumerReview": {
+    "path": "outputs/QB/20261117-r3-normal34-apply02-cli-review-01/CONSUMER-RESULT.json",
+    "sha256": "79621a4a25ae25a3fa7be67a82ca1020c3ea58123e09389737a61406290fcf37"
+  },
+  "reusedRootReview": {
+    "path": "outputs/QB/20261116-r3-normal34-joint-review-01/ROOT-RESULT.json",
+    "sha256": "5c89f4c67072206a891483ffb3c2689d85d6cb444a05b9c32ab6e094b7469a74"
+  },
+  "standards": {
+    "findings": []
+  },
+  "spec": {
+    "findings": []
+  },
+  "verified": {
+    "frozenPair": "All final source02 frozen hashes/bytes verified;581e root/rulesae54 pair to accepted T459dde/cde568/7747 and consumer79621. Reader476a/registration94e2/phase12a1/rulesae54 exact source01 bytes, other already-reviewed newroot seams reused. Derived helper3db0/template739c/CASdfb2/carrier updated consistently. No consumer/native revalidation.",
+    "basis203": "203 CAS/reader entries equal. Prior194 retained; only dispatcher changes to actual5cfb and9 added actual normalmodulee539/policybd4/auditcefee/old790 archive plus originalapply01 terminal39dd/request39bc/host5467/role60ff/manifest544a. Actual101d saved registration readback SHA and values checked. Four private metadata-only files +originalexecutionlock yield208identities; new stage/audit/module not self-referenced in required-existing baseline.",
+    "exactRefusalHistory": "Actual5d4 typed receipt/currentfacts/constant original request and terminal values agree; saved submission raw39bc and exported terminal39dd independently rehashed. New refused_apply34_history requires exact root/public terminal bytes, full prephase refused object, original args[] request, fixed host5467/unusedrole60ff/manifest544a and no old privatephase/maintenance output. Explicitly no executedapply or inventedrestore; original01 never replayed.",
+    "runtimeVersusRegistration": "Seven read/history functions AST exact across CAS/reader/helper, quiet exact CAS/reader. Runtime history adds only immutable refused01 facts and no oldchildoutput; original_basis unchanged calls this history. Future34 custody/capture/boot/C absence, PGstopped/ops empty, oldmaintenancecontainer absence and7newkey absence only registration quiet, so future applied/running phases do not misrequire absence or stoppedPG. Four private snapshots metadata only; no credential contents/digests read.",
+    "helperAndTemplate": "After closing duplicateJOBS: both exact top-level literals/effective final value ==CAS.JOBS==all9 rulejobIds, applyouter02. No conflicting duplicate top-level globals in helper/CAS/reader. All28 class methods except admit remain originalAST incl full frozen, admit explicitly rejects oldouter01. Template sourcehash only follows3db0, CAS follows helper/template, carrier follows CAS. Newrule/consumer and all historical ORIGINAL_JOBS unchanged. Per explicit follow-up, QB actually loaded helper and CAS via runpy with non-main module names and asserted both literal JOBS ==loaded helper JOBS==loaded CAS JOBS==all9rules; ORIGINAL_JOBS exact preserved. No instance, reader, issuer, candidate main, native, server or PG invoked.",
+    "samePathPolicyCAS": "Consumer policy path remains direct34-batched-real.json. Same original shared lock and snapshot203+4custody; save complete oldbd4 policy/old5cfbdispatcher/identities; exclusive newhelper; write full policy to same-directory pending then atomic replace+directory sync; new consumer reads exact newpolicy; subsequent snapshot explicitly supplies newpolicy digest, final snapshot supplies newdispatcher+policy. Dispatcher intent/pending/atomic replacement last, olde539/history intact. Unknown outcome audit/no automatic rollback/replay retained.",
+    "issuerAndRoles": "Registration9requiredarguments binds exact rootreview8files/rules plus consumer79621/9dde, actualfresh state208identities and unusedInner34/old60ff/refused01 facts before now. New34role generated only at real issue from unchanged actualscope inner01/newhostouter02,30/120/122/150min parent180/CAS15 bounded by actualgrant. Both apply/restore share same newroles SHA and explicit rejection of old33bc and60ff dynamic role pins. No usedcredential lifetime extension.",
+    "phaseNormalization": "17 phaseissuer functions AST identical to prior root. normalize_apply adds exact inner result.requestKey==roles.requestKey==ordinary34apply01 while outerterminal/result key==policyapply02. Top issuer matches successor registrationstate/rules/consumerpin and exclusive newoutput directory; unchanged genuine start proof/currentC/native prepare/writer/stop/restore guards and full5100/300/780/3000 budgets. Actual CLI singleSHA contract stays owned by accepted b82c adapter, not duplicated."
+  },
+  "actions": {
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "freshReaderInvocations": 0,
+    "issuerInvocations": 0,
+    "newAuthorityOrClockIssued": false,
+    "fixturesCreated": 0,
+    "privateAuthSnapshotBodiesOrDigestsRead": 0,
+    "ownerSourceEdits": 0,
+    "consumerOrNativeTestsRerun": 0,
+    "candidateModulesLoadedByQB": 2,
+    "duplicateGlobalsAndLiteralEffectiveValueStaticallyChecked": true,
+    "ownerActualConstantLoadCheckReused": true,
+    "rootHelperAndCASConstantsOnlyActuallyLoaded": true,
+    "candidateMainOrNativeInvocations": 0
+  },
+  "pending": [
+    "T45 actual fresh203hash+4metadata+lock208identity basis; current quiet/unusedInner34/new02/grant and finite window checks",
+    "Actual signed successor registration and same-path policy/dispatcher readback; unknown outcome only read originalaudit",
+    "Actual firstapply02 via exact singleSHA CLI, innerrole01 readback, followed by unchanged real start/C/native update/prepare/originalwriter/stop/restore",
+    "This source pair PASS is not actualapply/start/import/business PASS; original failed33 genuine preflight root cause remains unknown"
+  ],
+  "runtimePassed": false,
+  "rootCauseFixed": false,
+  "businessImported": false,
+  "closedFindings": [
+    {
+      "id": "NORMAL34-APPLY02-DUPLICATE-JOBS-01",
+      "ownerId": "APPLY02-ROOT-JOBS-DUPLICATE-01",
+      "priority": "P1",
+      "status": "SOURCE_CLOSED_IN_INDEPENDENT_SOURCE02",
+      "originalFindings": {
+        "path": "outputs/QB/20261117-r3-normal34-apply02-cli-review-01/ROOT-FINDINGS-01.json",
+        "sha256": "40b5e19c00ba3e08d160f61ebb73da0a9674653a5434cec8b27f117e774d7854"
+      },
+      "correction": "Both top-level JOBS literals now exactly match newouterapply02, effective final assignment, CAS.JOBS and all9 witness jobIds. Generator edits every exact top-level JOBS assignment via AST, leaves ORIGINAL_JOBS historical data unchanged. Existing check_source adds actual loaded-helper constants vs both literals/CAS/policy assertion. No method/frozen/clock/guard changes; source pins derived only."
+    }
+  ],
+  "withdrawnIncorrectPriorPass": {
+    "sha256": "9c28e79e9a7a55af7fd7a7bbd247b0a8936dfbad8b8c702ffd7eeb656504ebe3",
+    "path": "outputs/QB/20261117-r3-normal34-apply02-cli-review-01/WITHDRAWN-ROOT-REPORT-01.json",
+    "state": "WITHDRAWN_NOT_FOR_ISSUANCE",
+    "reason": "QB initially missed later top-level JOBS override; D1 caught before issuance. C confirmed no successor clock or operation."
+  },
+  "actualLoadedConstantsEvidence": {
+    "path": "outputs/QB/20261117-r3-normal34-apply02-cli-review-01/ACTUAL-CONSTANTS-RESULT.json",
+    "sha256": "0e41cd32105bd21134b78111ccedff30e6028b30c064d99c15701764f083467a"
+  }
+}

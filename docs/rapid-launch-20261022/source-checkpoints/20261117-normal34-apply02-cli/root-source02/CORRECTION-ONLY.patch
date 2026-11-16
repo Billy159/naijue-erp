@@ -1,0 +1,64 @@
+--- outputs/D1/20261117-r3-normal34-apply02-root-source-01/register_cas.py
++++ register_cas.py
+@@ -24,8 +24,8 @@
+ NEW_MODULE = P/'r3_direct34_apply02.py'
+ NEW_POLICY = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct34-batched-real.json')
+ OLD_DISPATCHER = '5cfb0227b161475b3401ff5a7b402f4f758bc4052b2d110d6dc725ca34837782'
+-HELPER = '8d71885b5d5dac1d47ffde2d9ae7216706dcf821be95dd5987c0565ed9ba2243'
+-TEMPLATE = '5f7369f8ff33a74f9f43bc0f852df9141446cf5d2108dfe732e957e6de813058'
++HELPER = '3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09'
++TEMPLATE = '739cf2ce8701d2e19b9188264ffcab7336ec5bee1b7f0131603793c149680929'
+ BASIS = {Path(k):v for k,v in {'/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-20261110-r3-real-execute-20261114-02/r3-outer-terminal.json': 'ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-25/r3-outer-terminal.json': '79c3657f7f0051c1646215ee7e5149ecfb6e6fa31606750167bc2e8f3b3f5738',
+  '/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-25/results/normal-service-result.json': 'c2a5ee898726e66ebb53e309cb39d803069fa1336f19fd5c50b016187f5e90be',
+--- outputs/D1/20261117-r3-normal34-apply02-root-source-01/r3_direct34_apply02.py
++++ r3_direct34_apply02.py
+@@ -144,15 +144,7 @@
+  'start': 't45-first-r3-native-service-start-20261116-33',
+  'stop': 't45-r3-ordinary33-preserve-stop-20261116-01',
+  'writer': 't45-r3-batched-real-execute-20261115-01'}
+-JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-01',
+- 'catalog_update': 't45-r3-batched161-command-successor-20261116-01',
+- 'input_materialize': 't45-r3-final33-input-materialize-20261116-02',
+- 'materialize': 't45-r3-batched-root06-source-delta-20261116-01',
+- 'prepare': 't45-r3-final33-plan-prepare-20261116-01',
+- 'restore': 't45-r3-ordinary34-auth-restore-20261116-01',
+- 'start': 't45-first-r3-native-service-start-20261116-34',
+- 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01',
+- 'writer': 't45-r3-batched-real-execute-20261115-01'}
++JOBS = {'apply': 't45-r3-ordinary34-auth-apply-20261116-02', 'catalog_update': 't45-r3-batched161-command-successor-20261116-01', 'input_materialize': 't45-r3-final33-input-materialize-20261116-02', 'materialize': 't45-r3-batched-root06-source-delta-20261116-01', 'prepare': 't45-r3-final33-plan-prepare-20261116-01', 'restore': 't45-r3-ordinary34-auth-restore-20261116-01', 'start': 't45-first-r3-native-service-start-20261116-34', 'stop': 't45-r3-ordinary34-preserve-stop-20261116-01', 'writer': 't45-r3-batched-real-execute-20261115-01'}
+ COMPLETED = {'input_materialize': {'leaf': 'final33-input-materialization-result.json',
+                        'marker': '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/materialization-receipt.json',
+                        'publicResultSha256': '796bdede6fc7f7ce464c5ca3966963335f80e24f4fc9248aedb3d10776417d64',
+--- outputs/D1/20261117-r3-normal34-apply02-root-source-01/admin_exec.APPLY02-UNREGISTERED.py
++++ admin_exec.APPLY02-UNREGISTERED.py
+@@ -13,7 +13,7 @@
+ PASS = {'PASS','PASSED','PASS_GATE','PASS_GATE_ACCEPTANCE','PASS_TASK_ACCEPTANCE'}
+ # Reviewed root registration remains unbound in this candidate.
+ R3_ORIGINAL02_ABSENT_POLICY_SHA256 = None
+-R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '8d71885b5d5dac1d47ffde2d9ae7216706dcf821be95dd5987c0565ed9ba2243'
++R3_ORIGINAL02_ABSENT_SOURCE_SHA256 = '3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09'
+ R3_ORIGINAL02_ABSENT_KEYS = ['t45-first-20261110-r3-real-execute-20261114-03', 't45-first-20261110-r3-real-execute-20261114-04', 't45-first-20261110-r3-real-execute-20261114-05', 't45-first-20261110-r3-real-execute-20261114-06', 't45-first-20261110-r3-real-readback-20261114-21', 't45-first-20261110-r3-real-readback-20261114-22', 't45-first-20261110-r3-real-readback-20261114-22-02', 't45-first-20261110-r3-real-readback-20261114-22-03', 't45-first-20261110-r3-real-readback-20261114-22-04', 't45-first-20261110-r3-real-readback-20261114-23-01', 't45-first-r3-native-service-start-20261114-21', 't45-first-r3-native-service-start-20261114-22', 't45-first-r3-native-service-start-20261114-23', 't45-first-r3-native-service-start-20261115-24', 't45-first-r3-native-service-start-20261116-25', 't45-first-r3-native-service-start-20261116-26', 't45-first-r3-native-service-start-20261116-27', 't45-first-r3-native-service-start-20261116-28', 't45-first-r3-native-service-start-20261116-29', 't45-first-r3-native-service-start-20261116-30', 't45-first-r3-native-service-start-20261116-31', 't45-first-r3-native-service-start-20261116-32', 't45-first-r3-native-service-start-20261116-33', 't45-r3-batched-install-20261115-01', 't45-r3-batched-install-20261116-02', 't45-r3-batched-real-execute-20261115-01', 't45-r3-batched-root03-source-delta-20261116-01', 't45-r3-batched-root04-source-delta-20261116-01', 't45-r3-batched-root05-source-delta-20261116-01', 't45-r3-batched-root06-source-delta-20261116-01', 't45-r3-batched-source-materialize-20261115-01', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-input-materialize-20261116-01', 't45-r3-final33-input-materialize-20261116-02', 't45-r3-final33-plan-prepare-20261116-01', 't45-r3-ordinary21-auth-apply-20261114-01', 't45-r3-ordinary21-auth-restore-20261114-01', 't45-r3-ordinary21-preserve-stop-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-01', 't45-r3-ordinary22-auth-apply-20261114-02', 't45-r3-ordinary22-auth-restore-20261114-01', 't45-r3-ordinary22-preserve-stop-20261114-01', 't45-r3-ordinary23-auth-apply-20261114-01', 't45-r3-ordinary23-auth-restore-20261114-01', 't45-r3-ordinary23-preserve-stop-20261114-01', 't45-r3-ordinary24-auth-apply-20261115-01', 't45-r3-ordinary24-auth-apply-20261115-02', 't45-r3-ordinary24-auth-restore-20261115-01', 't45-r3-ordinary24-preserve-stop-20261115-01', 't45-r3-ordinary25-auth-apply-20261116-01', 't45-r3-ordinary25-auth-restore-20261116-01', 't45-r3-ordinary25-preserve-stop-20261116-01', 't45-r3-ordinary26-auth-apply-20261116-01', 't45-r3-ordinary26-auth-restore-20261116-01', 't45-r3-ordinary26-preserve-stop-20261116-01', 't45-r3-ordinary27-auth-apply-20261116-01', 't45-r3-ordinary27-auth-restore-20261116-01', 't45-r3-ordinary27-preserve-stop-20261116-01', 't45-r3-ordinary28-auth-apply-20261116-01', 't45-r3-ordinary28-auth-restore-20261116-01', 't45-r3-ordinary28-preserve-stop-20261116-01', 't45-r3-ordinary29-auth-apply-20261116-01', 't45-r3-ordinary29-auth-restore-20261116-01', 't45-r3-ordinary29-preserve-stop-20261116-01', 't45-r3-ordinary30-auth-apply-20261116-01', 't45-r3-ordinary30-auth-restore-20261116-01', 't45-r3-ordinary30-preserve-stop-20261116-01', 't45-r3-ordinary31-auth-apply-20261116-01', 't45-r3-ordinary31-auth-restore-20261116-01', 't45-r3-ordinary31-preserve-stop-20261116-01', 't45-r3-ordinary32-auth-apply-20261116-01', 't45-r3-ordinary32-auth-restore-20261116-01', 't45-r3-ordinary32-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-apply-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-01', 't45-r3-ordinary33-preserve-stop-20261116-01', 't45-r3-ordinary33-auth-restore-20261116-02', 't45-r3-ordinary34-auth-apply-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01', 't45-first-r3-native-service-start-20261116-34', 't45-r3-ordinary34-preserve-stop-20261116-01', 't45-r3-ordinary34-auth-apply-20261116-02']
+ R3_READONLY_RECOVERY_POLICY_SHA256 = '338d30dc3b3d39de130f0152899eeb92a1aa91c9c60d2073b06a2227bb4024cd'
+ R3_READONLY_RECOVERY_SOURCE_SHA256 = '4c35abe0fc5ea65e6a3629bd6a690289d14586a790a1f2f2ce10cb3eb3cf808e'
+--- outputs/D1/20261117-r3-normal34-apply02-root-source-01/check_source.py
++++ check_source.py
+@@ -45,6 +45,10 @@
+ a=methods(PREV/'r3_direct34_normal.py');b=methods(HERE/'r3_direct34_apply02.py')
+ unchanged_methods=[name for name in a if name!='admit'];assert set(a)==set(b) and all(a[name]==b[name] for name in unchanged_methods)
+ assert a['frozen']==b['frozen']
++loaded_helper=runpy.run_path(str(HERE/'r3_direct34_apply02.py'),run_name='local_constants_only')
++assert loaded_helper['JOBS']==cas['JOBS']=={key:row['jobId'] for key,row in w['jobs'].items()}
++job_assignments=[n.value for n in ast.parse((HERE/'r3_direct34_apply02.py').read_text()).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='JOBS' for t in n.targets)]
++assert len(job_assignments)==2 and all(ast.literal_eval(node)==cas['JOBS'] for node in job_assignments)
+ shared=functions(HERE/'read_registration_basis.py');compiled=functions(HERE/'register_cas.py')
+ assert all(shared[name]==compiled[name] for name in shared if name!='main')
+ helper=functions(HERE/'r3_direct34_apply02.py')
+@@ -73,6 +77,7 @@
+  'basisEntries':203,'metadataOnlyIdentities':4,'originalLockIdentity':1,'freshIdentityCount':208,
+  'rules':9,'rootStaticMembers':75,'consumerRuntimeMembers':52,'unchangedHelperMethods':unchanged_methods,
+  'finiteAuthorityGuardASTUnchanged':True,'unchangedPhaseIssuerFunctions':issuer_unchanged,
++ 'allHelperJOBSAssignmentsAndLoadedConstantsMatchPolicy':True,
+  'readerCASAndHelperHistorySame':True,'existingPolicyCASUsesExplicitNewDigestSnapshots':True,
+  'oldNormal34AndRefusalFactPinsPreserved':True,'newOuterApplyKey':cas['JOBS']['apply'],'innerRoleApplyKey':cas['REFUSED_KEY'],
+  'consumerSourcePinsSha256':w['consumerSourcePinsSha256'],'rulesSha256':sha((HERE/'NINE-PHASES.UNISSUED.json').read_bytes()),

@@ -1,0 +1,46 @@
+{
+  "apply/ordinary05_roles_job.py": {
+    "new": "7b5d78536ccf1d750d090e6acf541996c85fce0d6cb6e78856974a1294e9e345",
+    "old": "f72a81ba41f2d34f66310f51913ca55913df92ad2192fcc59ef480266b29198a"
+  },
+  "catalog_update/batched161_command_update_host.py": {
+    "new": "6d8e84b4776dea648d87c36bca4c89bd945a5e504812600e36a7ace4b699d81b",
+    "old": "db566dc9654e0cfb9132108b47fefdb575be99d962a1ab5b25d4b5fe3e95e1c6"
+  },
+  "catalog_update/normal05_retained_stop.py": {
+    "new": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "old": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+  },
+  "prepare/final33_host.py": {
+    "new": "2ac072adda091d1a7e2b5b252cb3c5168a1ef91442b572d01d2409622bbbbb09",
+    "old": "e0abd50a7b3e2952a1a1e2fdcca5707c844b2de70113009324e54b1e08e47ba6"
+  },
+  "prepare/normal05_retained_stop.py": {
+    "new": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "old": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+  },
+  "restore/ordinary05_roles_job.py": {
+    "new": "7b5d78536ccf1d750d090e6acf541996c85fce0d6cb6e78856974a1294e9e345",
+    "old": "f72a81ba41f2d34f66310f51913ca55913df92ad2192fcc59ef480266b29198a"
+  },
+  "start/normal_service05_after08_proof.py": {
+    "new": "7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5",
+    "old": "46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d"
+  },
+  "stop/normal05_preserve_stop.py": {
+    "new": "42c92313194fc89b2fd8f4fcfdde617231eda1c12970717c7993550baeacb32e",
+    "old": "27b98e7fff3b3ee55c187a74e6f5b6792ab30fefb6afe4e65db59cdb033c5f6e"
+  },
+  "stop/normal05_retained_stop.py": {
+    "new": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "old": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+  },
+  "writer/final33_host.py": {
+    "new": "2ac072adda091d1a7e2b5b252cb3c5168a1ef91442b572d01d2409622bbbbb09",
+    "old": "e0abd50a7b3e2952a1a1e2fdcca5707c844b2de70113009324e54b1e08e47ba6"
+  },
+  "writer/normal05_retained_stop.py": {
+    "new": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "old": "1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb"
+  }
+}

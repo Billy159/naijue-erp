@@ -1,0 +1,16 @@
+{
+  "state": "ACTUAL_MODULE_CONSTANTS_LOAD_PASS_NO_ENTRY_OR_INSTANCE",
+  "checkedAt": "2026-11-16T16:51:19.643221+00:00",
+  "rootSourcePinsSha256": "581e206db21873b6d3000bd1d85192f73f6e1a0f5e1f47cbc4904a359beb3b42",
+  "helperSha256": "3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09",
+  "casSha256": "dfb233d566ba6cc8a13559090b8b00c48f82f975bfc9f532a7773dda1df2bace",
+  "twoJOBSAssignments": 2,
+  "loadedHelperJOBSEqualsBothAssignmentsCASAndAll9Rules": true,
+  "effectiveOuterApplyKey": "t45-r3-ordinary34-auth-apply-20261116-02",
+  "ORIGINAL_JOBSHistoricalUnchanged": true,
+  "instancesCreated": 0,
+  "readerIssuerOrEntryCalls": 0,
+  "serverCalls": 0,
+  "pgCalls": 0,
+  "authorityOrClockIssued": false
+}

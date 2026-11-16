@@ -1,0 +1,38 @@
+{
+  "asOf": "2026-11-17T01:04:47.144719+08:00",
+  "state": "NORMAL34_APPLY02_REGISTERED_ACTUAL_APPLY_AUTHORIZED_RESULT_PENDING",
+  "goal": "ACTIVE",
+  "rootReviewSha256": "0b43743b26ae94e6272fe1a54ce6586267cc980fe5cc3ab09a7f307a0f134807",
+  "consumerReviewSha256": "79621a4a25ae25a3fa7be67a82ca1020c3ea58123e09389737a61406290fcf37",
+  "rootSourcePinsSha256": "581e206db21873b6d3000bd1d85192f73f6e1a0f5e1f47cbc4904a359beb3b42",
+  "actualRegistrationReadbackSha256": "d2d30c8b8f4e9dd2605714e9e9f35dc470423ca4bb556620a23d234504e2345e",
+  "predecessorApply01": "REFUSED_BEFORE_PHASE_ARGS_EMPTY_NO_ROLE_MUTATION_NEVER_REPLAY",
+  "predecessorApply01TypedSha256": "5d4cbf13587694bd76ba29fd9cf7fcedff0fc0ac6e8b62515d479d32fd70df21",
+  "fix": "Use actual reviewed phase_cli.py to bind exactly one authority digest in request.args. Root guard/time budgets unchanged.",
+  "currentRoot": {
+    "dispatcher": "60df4053ecd7a4fa95fb0b85a92e5daa7b87b6486466c0d958fc753125a52a90",
+    "module": "3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09",
+    "policy": "6e6fa47124048960cc8fe835b13babcf443217c08fc4e85a2935defdd59a4f61"
+  },
+  "registration": "ACTUAL_CAS_AND_INDEPENDENT_READBACK_MATCHED_203_PINS_208_IDENTITIES",
+  "apply02": "AUTHORIZED_FIRST_SUBMISSION_RESULT_PENDING",
+  "currentAuthentication": "Original restored b924; new34 role not yet proven applied",
+  "PG": "STOPPED_AS_OF_REGISTRATION_READBACK",
+  "businessWrites": 0,
+  "originalWriter": "NEVER_SUBMITTED",
+  "completedPreparation": "211_READY_WITHDRAWN_INPUT02_AND_ROOT06_COMPLETE_NEVER_REPLAY",
+  "withdrawnReviewsNeverUsedForIssuance": [
+    "9c28",
+    "72714"
+  ],
+  "obsoleteRootSource01NeverUsedForIssuance": "5597",
+  "checks": "Frozen source copies verified against SOURCE-PINS; actual registration independently read back by sole server owner. No full data/preflight/native replay.",
+  "frozenPatchWhitespace": "Frozen .diff/.patch bytes retained; only authored documents subject to whitespace cleanup.",
+  "pending": [
+    "actual apply02 and start34",
+    "actual catalog update/native PREPARE/original real writer and readback",
+    "cold backup/independent physical restore",
+    "formal app/roles/core browser/public URL"
+  ],
+  "sourceAndRuntimeBoundariesPreserved": true
+}

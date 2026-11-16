@@ -1,0 +1,3 @@
+# APPLY02-ROOT-JOBS-DUPLICATE-01
+
+01/5597生成器只更新helper第一处顶层JOBS，e539注入常量区的第二处仍含外apply01，模块加载后会覆盖首处apply02，导致__init__的EXACT_JOB_RULE_REQUIRED拒绝。本次只在独立02版对两个AST精确JOBS赋值同步，ORIGINAL_JOBS历史不变；配套helper摘要、dispatcher模板、CAS及carrier摘要顺序派生。新检查实际加载helper常量，并逐一核对两个JOBS字面量、最终加载JOBS、CAS JOBS和九条policy jobId完全一致。原frozen时限谓词AST及28个未改方法相同；无许可/target/native fixture，无server/PG/clock，01原件完整保留。

@@ -1,0 +1,89 @@
+{
+  "PGConnections": 0,
+  "basisEntries": 203,
+  "clockOrAuthorityIssued": false,
+  "consumerReviewSha256": "79621a4a25ae25a3fa7be67a82ca1020c3ea58123e09389737a61406290fcf37",
+  "consumerSourcePinsSha256": "9dde7aaf1b3b40ec6fd90a344b62c1b158492c07f21c4d1b471289a9c96bc349",
+  "correction": "APPLY02-ROOT-JOBS-DUPLICATE-01",
+  "files": {
+    "CORRECTION-ONLY.patch": {
+      "bytes": 9596,
+      "sha256": "06efd5756ef460cb52ba77f11d4ea398b3e6cd08e6e68e8b25b1814411bcd52b"
+    },
+    "CORRECTION.md": {
+      "bytes": 656,
+      "sha256": "0dd5b62d7d5181d4e277f73001f051671fa01ea22e2ecae67528ef43cab7ec6e"
+    },
+    "CURRENT-FACTS.json": {
+      "bytes": 43274,
+      "sha256": "ccf51b0cc1b595405696ddb5f7b979c6f11e826c9a99a97eaed64431dbd9d808"
+    },
+    "DELTA.patch": {
+      "bytes": 61528,
+      "sha256": "ba9ae85b5d00a08d5bb04a256bb6d8cec15c24a1e13df22094c8bcf4fbfcc487"
+    },
+    "HANDOFF.md": {
+      "bytes": 6124,
+      "sha256": "4972ae38dc1b5a24242a037abc86f57daff5c50a24a535549efe0eb4796063c7"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 2618,
+      "sha256": "07db59f04ebbc79b36ee1e91e43f1ce56830b78004ce21848e86324e490d64cd"
+    },
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 31204,
+      "sha256": "ae54d7a85526bdd6b6c754fbafa66470312e75eff13b274943335285c047c38a"
+    },
+    "admin_exec.APPLY02-UNREGISTERED.py": {
+      "bytes": 44916,
+      "sha256": "739cf2ce8701d2e19b9188264ffcab7336ec5bee1b7f0131603793c149680929"
+    },
+    "assemble_source.py": {
+      "bytes": 12945,
+      "sha256": "25572b89619d7ed001ed80300779d98100ccfbaded69aa35490e771dcd78dfcd"
+    },
+    "check_source.py": {
+      "bytes": 7979,
+      "sha256": "a89c8464f8a762be5f53114730a3c696ccc4aaf5b7cbcd2f2a49d6e81428ae17"
+    },
+    "issue_phase.py": {
+      "bytes": 38871,
+      "sha256": "12a1c12603082375f08b560e7fbb44affb3cdde9ac8f3f54d6b22df25c135709"
+    },
+    "issue_registration.py": {
+      "bytes": 13465,
+      "sha256": "94e24c5c55859d0411a1e7fa773f2b048a904be504b07a33f91ec2d8064b0490"
+    },
+    "original-cas-apply02-carrier.UNISSUED.py": {
+      "bytes": 2608,
+      "sha256": "7638681295fdaa305423329d77f62401d80ec48dcd5dc1c02225e534a0677a53"
+    },
+    "prepare_current_facts.py": {
+      "bytes": 5915,
+      "sha256": "b65e7c72857543344f7b647ec4faa82113e4571997f0d9e17f453acaefdb8008"
+    },
+    "r3_direct34_apply02.py": {
+      "bytes": 96636,
+      "sha256": "3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09"
+    },
+    "read_registration_basis.py": {
+      "bytes": 71279,
+      "sha256": "476a7155aa939bacf7dc282558882e0cba824c13b0759c5a267e9ef236f5083d"
+    },
+    "refused_apply34_fragment.py": {
+      "bytes": 3196,
+      "sha256": "1d2f0bbacf4e3ecc600891441349d33cd654ec68efc28e9227c443d714f9f485"
+    },
+    "register_cas.py": {
+      "bytes": 95140,
+      "sha256": "dfb233d566ba6cc8a13559090b8b00c48f82f975bfc9f532a7773dda1df2bace"
+    }
+  },
+  "freshBasis": "PENDING",
+  "freshIdentityCount": 208,
+  "rulesSha256": "ae54d7a85526bdd6b6c754fbafa66470312e75eff13b274943335285c047c38a",
+  "serverConnections": 0,
+  "sourceOnly": true,
+  "state": "NORMAL34_APPLY02_ROOT_SOURCE_02_ONLY_PENDING_INDEPENDENT_PAIR_REVIEW",
+  "supersededSourcePinsSha256": "5597b4bddd3494adc911b8b62a73dc525aa057238a446f37368f4df092c22c50"
+}

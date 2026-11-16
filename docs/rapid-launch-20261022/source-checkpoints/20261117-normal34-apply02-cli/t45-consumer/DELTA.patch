@@ -1,0 +1,215 @@
+--- frozen02/apply/ordinary05_roles_job.py
++++ apply02/apply/ordinary05_roles_job.py
+@@ -20,14 +20,14 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary34-auth-apply-20261116-01', 't45-r3-ordinary34-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary34-auth-restore-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01')}
++PHASES = {'apply': ('t45-r3-ordinary34-auth-apply-20261116-02', 't45-r3-ordinary34-auth-apply-20261116-02'), 'restore': ('t45-r3-ordinary34-auth-restore-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01')}
+ STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_failed33.py': '06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662'}
+ PRIOR_CID = '823a830fffb5adf106f6d98cf92809e2900f93ce753ddaaf2c78a52ce6242383'
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-33'
+ CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+ CURRENT_KEY = 't45-first-r3-native-service-start-20261116-34'
+ CURRENT_SOURCE = 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693'
+-CURRENT_PROOF_SOURCE = '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d'
++CURRENT_PROOF_SOURCE = '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -228,11 +228,29 @@
+                - CLEANUP_RESERVE_SECONDS)
+ 
+ 
++def require_unentered_apply01(ops, control):
++    key='t45-r3-ordinary34-auth-apply-20261116-01'
++    root=WORKER/key
++    terminal=ops.read_file(root/'r3-outer-terminal.json',65536,True)
++    need(sha(terminal)=='39dd96689785ea6fc041eef092fd3097677f2e3ffbc3c5c6b56f2fce482c3600'
++         and terminal==ops.read_file(control/'results'/(key+'.json'),65536,False,False),'APPLY02_ACTUAL_01_TERMINAL_REQUIRED')
++    t=ops.strict(terminal)
++    need((t['jobId'],t['status'],t['exitCode'],t['phaseStarted'])==(key,'REFUSED_R3_CONTINUITY_BEFORE_PHASE',2,False)
++         and t['exports']==[] and t['errorCode']=='R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED','APPLY02_01_MUST_BE_PREPHASE_REFUSAL')
++    raw=ops.read_file(root/'request.json',65536,True)
++    need(sha(raw)=='39bcfdde2286969bd3fd9035ad5efcc0e42d279453b5f997c8ba2e9bd2505807' and ops.strict(raw)['args']==[],'APPLY02_01_EXACT_MISSING_ARG_REQUEST_REQUIRED')
++    need(sha(ops.read_file(root/'bundle/roles-authorization.json',65536,True))=='60ff1ff38900e1d07001486e05848124b1ed64bba0ea425357d4ac9006af16c6','APPLY02_01_UNUSED_ROLE_REFERENCE_REQUIRED')
++    need(not any(present(p) for p in [root/'phase.private.log',*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary34-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary34-auth-capture-20261116-01']),'APPLY02_INNER34_ALREADY_ENTERED_NO_REPLAY')
++    ids=command(['docker','ps','-a','--filter','name=^/'+key+'$','--format','{{.ID}}'],5)
++    need(not ids.strip(),'APPLY02_01_MAINTENANCE_CONTAINER_PRESENT')
++
++
+ def host(job, a, ops, prior, material):
+     deadline = time.monotonic() + HOST_WORK_SECONDS
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+     prior.validate(ops,control)
++    if a['phase']=='apply':require_unentered_apply01(ops,control)
+     if a['phase']=='apply':material.validate(ops,control)
+     require_failed19_history(ops,control)
+     if a['phase'] == 'restore':
+--- frozen02/catalog_update/batched161_command_update_host.py
++++ apply02/catalog_update/batched161_command_update_host.py
+@@ -31,7 +31,7 @@
+ OPERATOR='installed-real-operation-batched-root06-20261116-01'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+-PINS = {'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'catalog-successor-run.mjs': '72bacf01a143345e942bbb3669cfc2b2b5fbd04aeee237c5e5e08263224bd289', 'catalog_transport.py': '4f15b1dfdf00c8408435d81606c37d21bf1ccffcbe2e9104920858e7a2f6f914', 'catalog-pg-driver.mjs': 'cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f'}
++PINS = {'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'catalog-successor-run.mjs': '72bacf01a143345e942bbb3669cfc2b2b5fbd04aeee237c5e5e08263224bd289', 'catalog_transport.py': '4f15b1dfdf00c8408435d81606c37d21bf1ccffcbe2e9104920858e7a2f6f914', 'catalog-pg-driver.mjs': 'cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f'}
+ 
+ def need(v,c):
+     if not v:raise ValueError(c)
+@@ -142,7 +142,7 @@
+  return old
+ 
+ def private_admin(h,a):
+-    key='t45-r3-ordinary34-auth-apply-20261116-01'
++    key='t45-r3-ordinary34-auth-apply-20261116-02'
+     raw=read(BASE/'jobs'/key/'r3-outer-terminal.json');t=json.loads(raw)
+     need(sha(raw)==a['applyTerminalSha256'] and raw==read(CONTROL/'results'/(key+'.json'),owner=1000)
+         and (t['jobId'],t['status'],t['exitCode'])==(key,'COMPLETED',0),'BATCHED_INSTALL_ROLE_APPLY_REQUIRED')
+@@ -177,7 +177,7 @@
+     support=h.load('normal05_retained_stop.py',PINS['normal05_retained_stop.py'])
+     prior=installed(a)
+     proof,start_authority=h.current(ops,support,a)
+-    apply_key='t45-r3-ordinary34-auth-apply-20261116-01'
++    apply_key='t45-r3-ordinary34-auth-apply-20261116-02'
+     apply_public=read(CONTROL/'jobs'/apply_key/'results/maintenance-auth-result.json',owner=1000)
+     checked_start=read(HOST_STATE/'native-services'/START/'service-start-authorization.json')
+     data=HOST_STATE/HOST.name/'data'
+--- frozen02/catalog_update/normal05_retained_stop.py
++++ apply02/catalog_update/normal05_retained_stop.py
+@@ -25,7 +25,7 @@
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d'
++PROOF_SHA = '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'af8c6b22be0e3d709a01c818250b03ebaa18f2bb05c4ee98e6d03a08a59370b7'
+ NORMAL05_SHA = 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693'
+--- frozen02/prepare/final33_host.py
++++ apply02/prepare/final33_host.py
+@@ -59,7 +59,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS = {'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08', 'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b'}
++PINS = {'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08', 'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b'}
+ 
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+--- frozen02/prepare/normal05_retained_stop.py
++++ apply02/prepare/normal05_retained_stop.py
+@@ -25,7 +25,7 @@
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d'
++PROOF_SHA = '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'af8c6b22be0e3d709a01c818250b03ebaa18f2bb05c4ee98e6d03a08a59370b7'
+ NORMAL05_SHA = 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693'
+--- frozen02/restore/ordinary05_roles_job.py
++++ apply02/restore/ordinary05_roles_job.py
+@@ -20,14 +20,14 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary34-auth-apply-20261116-01', 't45-r3-ordinary34-auth-apply-20261116-01'), 'restore': ('t45-r3-ordinary34-auth-restore-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01')}
++PHASES = {'apply': ('t45-r3-ordinary34-auth-apply-20261116-02', 't45-r3-ordinary34-auth-apply-20261116-02'), 'restore': ('t45-r3-ordinary34-auth-restore-20261116-01', 't45-r3-ordinary34-auth-restore-20261116-01')}
+ STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_failed33.py': '06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662'}
+ PRIOR_CID = '823a830fffb5adf106f6d98cf92809e2900f93ce753ddaaf2c78a52ce6242383'
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-33'
+ CURRENT_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+ CURRENT_KEY = 't45-first-r3-native-service-start-20261116-34'
+ CURRENT_SOURCE = 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693'
+-CURRENT_PROOF_SOURCE = '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d'
++CURRENT_PROOF_SOURCE = '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5'
+ PLAN_SHA = '7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d'
+ APP09_NAME = 't45-fresh35-first-production-20261110-r3-service-09'
+ HOST_WORK_SECONDS = 220
+@@ -228,11 +228,29 @@
+                - CLEANUP_RESERVE_SECONDS)
+ 
+ 
++def require_unentered_apply01(ops, control):
++    key='t45-r3-ordinary34-auth-apply-20261116-01'
++    root=WORKER/key
++    terminal=ops.read_file(root/'r3-outer-terminal.json',65536,True)
++    need(sha(terminal)=='39dd96689785ea6fc041eef092fd3097677f2e3ffbc3c5c6b56f2fce482c3600'
++         and terminal==ops.read_file(control/'results'/(key+'.json'),65536,False,False),'APPLY02_ACTUAL_01_TERMINAL_REQUIRED')
++    t=ops.strict(terminal)
++    need((t['jobId'],t['status'],t['exitCode'],t['phaseStarted'])==(key,'REFUSED_R3_CONTINUITY_BEFORE_PHASE',2,False)
++         and t['exports']==[] and t['errorCode']=='R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED','APPLY02_01_MUST_BE_PREPHASE_REFUSAL')
++    raw=ops.read_file(root/'request.json',65536,True)
++    need(sha(raw)=='39bcfdde2286969bd3fd9035ad5efcc0e42d279453b5f997c8ba2e9bd2505807' and ops.strict(raw)['args']==[],'APPLY02_01_EXACT_MISSING_ARG_REQUEST_REQUIRED')
++    need(sha(ops.read_file(root/'bundle/roles-authorization.json',65536,True))=='60ff1ff38900e1d07001486e05848124b1ed64bba0ea425357d4ac9006af16c6','APPLY02_01_UNUSED_ROLE_REFERENCE_REQUIRED')
++    need(not any(present(p) for p in [root/'phase.private.log',*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary34-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary34-auth-capture-20261116-01']),'APPLY02_INNER34_ALREADY_ENTERED_NO_REPLAY')
++    ids=command(['docker','ps','-a','--filter','name=^/'+key+'$','--format','{{.ID}}'],5)
++    need(not ids.strip(),'APPLY02_01_MAINTENANCE_CONTAINER_PRESENT')
++
++
+ def host(job, a, ops, prior, material):
+     deadline = time.monotonic() + HOST_WORK_SECONDS
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+     prior.validate(ops,control)
++    if a['phase']=='apply':require_unentered_apply01(ops,control)
+     if a['phase']=='apply':material.validate(ops,control)
+     require_failed19_history(ops,control)
+     if a['phase'] == 'restore':
+--- frozen02/start/normal_service05_after08_proof.py
++++ apply02/start/normal_service05_after08_proof.py
+@@ -62,7 +62,7 @@
+             'previousRequestKey':PREVIOUS_JOB,'previousClosureKind':'FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED',
+             'runtimeReadinessMaxSeconds':20,'databaseRoleChanges':0,
+             'restoreRequestKey':'t45-r3-ordinary33-auth-restore-20261116-02',
+-            'applyRequestKey':'t45-r3-ordinary34-auth-apply-20261116-01',
++            'applyRequestKey':'t45-r3-ordinary34-auth-apply-20261116-02',
+             'ddlServiceProofSha256':DDL_SERVICE_PROOF,'ddlPostmasterStart':DDL_EPOCH,
+             'admin154RecordSha256':ADMIN154_RECORD_SHA,'admin154PostmasterStart':ADMIN154_EPOCH,
+             'admin154SourceSetSha256':'d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe',
+--- frozen02/stop/normal05_preserve_stop.py
++++ apply02/stop/normal05_preserve_stop.py
+@@ -19,7 +19,7 @@
+ CONTROL = Path('/home/naijue/erp-release-20261006-01-control/grant-' + GRANT)
+ JOB = ROOT / 'jobs' / KEY
+ HOLD = ROOT / 'r3-05-write-continuity'
+-STOP_REFERENCE = '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb'
++STOP_REFERENCE = '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb'
+ SERVICE_KEY = 't45-first-r3-native-service-start-20261116-34'
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}
+--- frozen02/stop/normal05_retained_stop.py
++++ apply02/stop/normal05_retained_stop.py
+@@ -25,7 +25,7 @@
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d'
++PROOF_SHA = '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'af8c6b22be0e3d709a01c818250b03ebaa18f2bb05c4ee98e6d03a08a59370b7'
+ NORMAL05_SHA = 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693'
+--- frozen02/writer/final33_host.py
++++ apply02/writer/final33_host.py
+@@ -59,7 +59,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS = {'normal05_retained_stop.py': '1bbc92a0bbe431a598f3543a2e7c57615fe23559bc9095f3e0d32b748757bacb', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08', 'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b'}
++PINS = {'normal05_retained_stop.py': '49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08', 'final33-run.mjs': 'bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b'}
+ 
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+--- frozen02/writer/normal05_retained_stop.py
++++ apply02/writer/normal05_retained_stop.py
+@@ -25,7 +25,7 @@
+ INSIDE_ROOT = Path("/var/lib/naijue-erp/fresh35-production")
+ INSIDE_BOOT = INSIDE_ROOT/"native-services"/SERVICE
+ CLEANUP_FLAGS = ("cleanupComplete","cleanShutdown","dataPreserved","ownedPidAbsent","portAbsent")
+-PROOF_SHA = '46f820136b6ab74428a2ee9feb47937fb4800a44c9567422fddbd6a26e87307d'
++PROOF_SHA = '7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5'
+ CONTINUITY_SHA = "1fe4820114624e8a183a11c84a116106a4a679cb522119bc3bf0298e07c8347d"
+ READONLY_SHA = 'af8c6b22be0e3d709a01c818250b03ebaa18f2bb05c4ee98e6d03a08a59370b7'
+ NORMAL05_SHA = 'c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693'
