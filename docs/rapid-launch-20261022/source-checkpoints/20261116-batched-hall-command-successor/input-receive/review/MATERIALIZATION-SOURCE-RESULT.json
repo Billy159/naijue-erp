@@ -1,0 +1,55 @@
+{
+  "state": "PASS_FINAL33_INPUT_MATERIALIZATION_SOURCE_PROFILE",
+  "reviewedAt": "2026-11-16T07:23:33.563738+00:00",
+  "scope": "Final33 root-only input materialization and exact profile; no prepare, mount, PG or business execution",
+  "findings": [],
+  "hostSourceSha256": "4e56eb172ba7c56d10a76f7718de395c6b272e787a64f122adbec3e74e6721c4",
+  "profileSha256": "62e01d1cb13553c826e63d3454f3ff79da3158c4d35fd6a0bf70c8b4e20ab80d",
+  "inheritedRawGuardSha256": "27a393b3b50eb60fa33963396172bc7b001862878314a0fe2ace0188ed449f56",
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "deliveryIndexSha256": "954bbd6508725fa0e9f38140d4ef8830d266d10d5ec8f9556db6196c8412d88f",
+  "independentlyVerified": {
+    "profilePinnedByHost": true,
+    "oldRawGuardPinnedByHost": true,
+    "all65MembersAnd211FragmentPinsMatchTwoPinnedD3ArchiveVerificationRecords": true,
+    "twoArchivesMemberDestinationSetsDisjoint": true,
+    "finalManifestAndAlignmentAndPreflightIndexSummaryPinsMatchD3DeliveryIndex": true,
+    "archiveStreamRechecksEveryFragmentAndTotalHash": true,
+    "joinedStreamDrainedAfterTarToEnforceTrailingCompressedArchiveClosure": true,
+    "tarExactPathsTypesSizesHashesAndCompleteMemberSet": true,
+    "absoluteTraversalSymlinkHardlinkUnknownDuplicateMemberRefused": true,
+    "exclusiveNewDestinationNoSourceOverwriteAndOriginalKeyOnlyOnPartial": true,
+    "rootPrivateReceivedReadyAuthorityAndMetadataBound": true,
+    "receivedFragmentDirectoriesMode700Files600Uid1000": true,
+    "newExtractedDirectoriesRoot61035Mode750Files440": true,
+    "fixedStateDevice66304InodeAndInstallationDigest": true,
+    "finite300SecondAuthorityOriginalGuard280SecondBoundAndSpaceSampler": true,
+    "rawGuardHasOnlyDefinitionsAtModuleLoadNoOldMainInvoked": true,
+    "noPostgresMountDockerOrOldBusinessActionInNewMaterializationEntrypoint": true
+  },
+  "budget": {
+    "compressedArchivesBytes": 440942867,
+    "expandedMembersBytes": 3790415288,
+    "combinedNewBytes": 4231358155,
+    "minimumPreservedFreeBytes": 30064771072,
+    "minimumBeforeExtractionBytes": 33855186360,
+    "recordedAvailableBytes": 273709731840,
+    "recordedAtUTC": "2026-11-16T03:55:02.677236+00:00",
+    "sourceReceipt": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-KEY-AND-SPACE-01.json",
+    "deletionRequiredByRecordedBudget": false,
+    "liveGuardRetained": true
+  },
+  "runtimeVerification": "Not executed by QB; T45 local targeted materialization tests and actual reception/materialization receipts remain separate.",
+  "pending": [
+    "All211 actual original-key ready receipts and actual materialization authority parts binding",
+    "T45 targeted small-sample tests, actual materialization result and native read-only prepare source review",
+    "Final preparedBinding and writer source freeze"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "pgCalls": 0,
+    "candidateWrites": 0,
+    "sourceEdits": 0,
+    "largeCopies": 0
+  }
+}

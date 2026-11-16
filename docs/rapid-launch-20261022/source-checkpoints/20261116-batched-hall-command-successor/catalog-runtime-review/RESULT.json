@@ -1,0 +1,160 @@
+{
+  "state": "PASS_NEW33_CATALOG_SUCCESSOR_SOURCE_PATH_FINAL_BUSINESS_BINDING_PENDING",
+  "reviewedAt": "2026-11-16T07:03:13.517619+00:00",
+  "scope": "Only new33 catalog_update, writer update receipt binding, runtime three-generation catalog, epoch lease budget and failure stop",
+  "rulesSha256": "0b2ded5bd9779ab0590301a7abe8e54278768c1aeb7f9954e5accd14f060632c",
+  "sourceSetSha256": "ed5176dd3f56b39c044aa9058e320acec2ac676221ae641cdd0625892a4e9a18",
+  "businessInputFinal": false,
+  "mainSourcePins": {
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-CATALOG-SUCCESSOR-SOURCE-01/issue_registration.py": "3bd546fae2c93e745eb91cf6f00b6e70063c7410863a261a8f37bc8d1b71f6cd",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-CATALOG-SUCCESSOR-SOURCE-01/r3_direct33_batched.py": "bdc6e10301a2049dc8fe50eb81db46504eabf5b46e82ad97a7d0694b66eb9d8a",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-CATALOG-SUCCESSOR-SOURCE-01/admin_exec.DIRECT33-UNREGISTERED.py": "71ae2f5d5aab6102365703d4b8d0782884db3d7d2f2095f739f4ea2227e746bd",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-CATALOG-SUCCESSOR-SOURCE-01/register_cas.py": "187916207e7f0de35ea03c29a3249b6a25452c4db64e68d340161a856cd9f452",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-CATALOG-SUCCESSOR-SOURCE-01/original-cas-direct33-carrier.UNISSUED.py": "a6b6a32288571adc8aba7fa860b4a877fc563db344b8c7d2ee0a51c39ad86964",
+    "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-CATALOG-SUCCESSOR-SOURCE-01/issue_phase.py": "70a0c66d18b48dd3ee5ec8cc81823ec2ba24b28bb66b76eb0d8cc40b0e31f82f"
+  },
+  "currentT45Pins": {
+    "apply": {
+      "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "ordinary05_roles.py": "8aecb0391192cf6bff140b0a618c0a63fe8b5d61c17bc9edfaa45830b3fc767d",
+      "ordinary05_roles_job.py": "adc73eeea8df4afe764a61d1cf9367401c27a496ea28f9c5816af340a1797e03",
+      "prior_completed32.py": "bb36323d8e7f903362ec6b71e1d640055bd3b3c4def1d709dc7adbbb9d4f565d",
+      "root06_material.py": "e909f12f4362481319281e6a3eaa6e887667dd8de1478f552d45581b1de143bd"
+    },
+    "catalog_update": {
+      "batched161_command_update_host.py": "2204af0cd559c157cc3a30e2837029b3cd154ff58bbb71e575f7883ac801fcdb",
+      "catalog-pg-driver.mjs": "cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f",
+      "catalog-successor-run.mjs": "dff38300b814c5223944c55a331b3d53cdebcd303dea474a2f72d0946420b2af",
+      "catalog_transport.py": "15c33ed77afd8339475f7b62a36c9f5454e16d7e84f20c4a15405343ab051be5",
+      "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "normal05_retained_stop.py": "1d2a9d7c238b1d5053470fea2dd3b750735472c129c84b9b5f00858e6e28ecef"
+    },
+    "materialize": {
+      "0028_batched_history_hall_provenance.sql": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4",
+      "COMMAND-SUCCESSOR-161-BODIES.json": "58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3",
+      "COMMAND-SUCCESSOR-161-DEFINITIONS.json": "e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3",
+      "COMMAND-SUCCESSOR-161-MODEL.json": "6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd",
+      "COMMAND-SUCCESSOR-PINS.json": "849288162c8e21036b2b50e1a8ceaf4d5bc5edad2340a679dae488e9e10749f7",
+      "batched161-run.mjs": "dff38300b814c5223944c55a331b3d53cdebcd303dea474a2f72d0946420b2af",
+      "fresh35-combined-catalog-v1.mjs": "319f4ac30157d2922dc8d62b5108d5656a375c059e322466f7f933d32d7746eb",
+      "fresh35-combined-source-v1.mjs": "a848a4ee942a3922535cb5315212717233f3227159ffb4a9067e56373ee3e27b",
+      "fresh35-host-session.mjs": "8df19581e2921ddbd8f5d223016a58ea5aae6c20c62f99c7b3456dced39767b0",
+      "historical-sales-hall-evidence.ts.json": "51d86fe02d21c3349c1c025196f03caf35a042bdf697fdae1ae12ecf32b96b6e",
+      "materialize-batched-source.py": "b7a5e845f3167d108b0f3876ebea557c416eaf0773d564486430bcd50cb787d2",
+      "sales-historical-hall-projection.ts.json": "3140883b2964412e38146e52320a579da608584f2dd815317d5b142133524f5f",
+      "source-description.json": "18384e4e32ccbcf63f5b61907b73f49ca315ce0fa524f72df45a675fbf6c0902",
+      "source-rows.json": "150b8b85afb3d14572e66fa21969789c1c1994c079ae39e8f1c3b5232a2657f4",
+      "unified-historical-sales-hall-evidence.ts.json": "37e27090c3b50008d415be8f2b8c9574fb1a4157ac4d3c86f3967257f371d94f"
+    },
+    "restore": {
+      "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "ordinary05_roles.py": "8aecb0391192cf6bff140b0a618c0a63fe8b5d61c17bc9edfaa45830b3fc767d",
+      "ordinary05_roles_job.py": "adc73eeea8df4afe764a61d1cf9367401c27a496ea28f9c5816af340a1797e03",
+      "prior_completed32.py": "bb36323d8e7f903362ec6b71e1d640055bd3b3c4def1d709dc7adbbb9d4f565d",
+      "root06_material.py": "e909f12f4362481319281e6a3eaa6e887667dd8de1478f552d45581b1de143bd"
+    },
+    "start": {
+      "batched161-run.mjs": "dff38300b814c5223944c55a331b3d53cdebcd303dea474a2f72d0946420b2af",
+      "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "normal_service05_after08.py": "b457427b764ffbb7f0fea249ee0dd1399b1fd8bc538b5f5ed88c28bb3ff16feb",
+      "normal_service05_after08_proof.py": "1b8550677d727949873efc42afaa25b5d243e31f3e6f5266ff97c97bda68f3c0",
+      "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+      "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+      "operator-stream-import-cli.mjs": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "operator-stream-program.mjs": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "prior_completed32.py": "bb36323d8e7f903362ec6b71e1d640055bd3b3c4def1d709dc7adbbb9d4f565d",
+      "production-plan.json": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+      "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "r3_05_readonly.py": "225dae5a38eeef11c246ce1abe7d3d3fce7098f46fc9acf391f86280bff8f3ab",
+      "r3_05_runtime.py": "95c79a9054763fe5bf144fc76d41b92a76d4008d02012ddbd8e66180c07ff13c",
+      "root06_material.py": "e909f12f4362481319281e6a3eaa6e887667dd8de1478f552d45581b1de143bd",
+      "start_owned_describe.py": "eaa3c51e7320ddcfddb34166c002edf4359df736e5e4c7271c37cd8c6b9f1375"
+    },
+    "stop": {
+      "normal05_preserve_stop.py": "1d6e2ba838715b5624b1f4c4593365bd0d9b22174528114ba78ac78cad106388",
+      "normal05_retained_stop.py": "1d2a9d7c238b1d5053470fea2dd3b750735472c129c84b9b5f00858e6e28ecef"
+    },
+    "writer": {
+      "batched_real_host.py": "6a1b2288d01e9cc987e1fce596d0ca03fd09ea3081c1a370aca9ce65164914c7",
+      "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "materialized-profile.json": "ce6d6a3c71497701f1dab5ddf5fac89cc93d0824324b0aa75512dfc05177d904",
+      "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+      "normal05_retained_stop.py": "1d2a9d7c238b1d5053470fea2dd3b750735472c129c84b9b5f00858e6e28ecef",
+      "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+      "r3_05_runtime.py": "95c79a9054763fe5bf144fc76d41b92a76d4008d02012ddbd8e66180c07ff13c",
+      "retained24-run.mjs": "c730424370a8c631b561ccbb12ee73fc11a307ca165f4139df99e41b742707f2"
+    }
+  },
+  "findings": [],
+  "verifiedPaths": [
+    "Original32 actual historical install13-layer receipt retained as predecessor, current33 C includes exactPGDATA/SID/OID/epoch/container and apply binding",
+    "Update compiled descriptor and inner9-field bytes bind function, SQL, time and current service",
+    "Runtime predecessor model retains161; successor permits only exact six-argument routine body/definition hash change with originalACL/attributes",
+    "Update executes DO in native transaction, checks before/in-transaction catalog, requires COMMIT/I, then separate READ ONLY transaction, owner/physical guards, postcatalog and ROLLBACK/I, RESET ROLE/I and CLOSED",
+    "Unknown commit never promotes success and writer does not replay update",
+    "Writer authority binds update terminal/result/completion three hashes; root reader rehashes genuine commit.json/completion.json and before/after catalog captures on same C",
+    "Dispatcher enforces update before writer, originalwriter key retained",
+    "All deadlines use epoch milliseconds, writer controller expiry plus120s stays within workdeadline, backupAdmin remains below lease minus35s; startup budget corrected4320sec",
+    "Update before-phase refusal permits exact-service stop then original role restoration; incomplete/active/mismatched receipt paths remain refused"
+  ],
+  "evidenceReuse": "Read T45 five-case native-wire mock source and saved checks, Main reported exact shape/negative cases. QB did not execute candidate or rerun mocks. D1 previous isolated regression and QB32 review reused. Read T45 targeted10 stop terminal boundary/mismatched copies/active-unit test source; did not rerun.",
+  "pending": [
+    "D3 final offline manifest/alignment/original named decision byte-pairing",
+    "Final prepared business binding and source freeze; current writer guard and writerCanBeSubmitted remain blocked",
+    "T45 actual successor update/readback and full real business batch verification"
+  ],
+  "actions": {
+    "serverConnections": 0,
+    "pgCalls": 0,
+    "candidateExecutions": 0,
+    "issuerOrRegistrationCalls": 0,
+    "sourceChanges": 0
+  },
+  "normalStartupHoldClosed": false,
+  "closedFindings": [
+    {
+      "id": "CATALOG33-DRIVER-DIRNAME-01",
+      "priority": 1,
+      "status": "CLOSED_SOURCE_VERIFIED",
+      "problem": "Driver extraction called dirname without import; after successful realpath it would fail before creating the PG client.",
+      "fix": "Explicit node:path dirname import; driver cdfb4f and host2204af propagated into rules5fcfcc; driver body byte-exact to prior verified32 function."
+    },
+    {
+      "id": "CATALOG33-START-BUDGET-02",
+      "priority": 2,
+      "status": "CLOSED_SOURCE_VERIFIED",
+      "problem": "Start complete-chain budget omitted catalog_update780 seconds. At registration+1800sec, old3540 gate passed with3600sec left but start300+update780 left2520sec for writer3000, which refused.",
+      "fix": "Sum start300+catalog_update780+writer3000+existing240=4320sec before controller expiry; counterexample now rejected before start."
+    },
+    {
+      "id": "CATALOG33-STOP-REFUSAL-03",
+      "priority": 2,
+      "status": "CLOSED_SOURCE_VERIFIED",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/CANDIDATE-01/stop/bundle/normal05_preserve_stop.py",
+      "line": 178,
+      "problem": "Current three-key stop rejects REFUSED_D0_INTERLOCK_BEFORE_PHASE and REFUSED_R3_CONTINUITY_BEFORE_PHASE, although dispatcher records these with phaseStarted=False and exitCode2 and continuity accepts them as settled. After successful start and refused update, explicit stop fails and restore remains gated on successful stop.",
+      "requestedFix": "Accept only confirmed before-phase refusal statuses with phaseStarted=False and exitCode2; retain exact two-sided terminal bytes and inactive operation-unit checks.",
+      "fix": "Only current_batch_terminals accepts two exact REFUSED statuses with phaseStarted is False and type(exitCode) is int and exitCode==2. Historical TERMINALS unchanged; root/public exact bytes, exact key/grant/task/finishedAt and inactive unit checks retained. Final stop leaf 1d6e2b and rules0b2ded propagated."
+    }
+  ],
+  "additionalPins": {
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/CANDIDATE-01/read-current-phase33.py": "2ac6ab3cb44ef6304582ed98d0548765f2c030e101c446ad8bda092b4db74c77",
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/check_stop_refusal.py": "713313606f6d84609351b3dfaf134ec811485e04208d821479dbaadee480de4a",
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/check_update_lifecycle.mjs": "5405c800c75b51bbda15bd096045f02c678aed1ecde0cab288f2f019830b2083",
+    "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/prepare_catalog_update.py": "2255373b0d3460ecb381321a369484b1eadcfa725d23acc3b562e4cde93062df"
+  },
+  "sourceClosure": {
+    "sourceSetSha256": "ed5176dd3f56b39c044aa9058e320acec2ac676221ae641cdd0625892a4e9a18",
+    "sourceRowsSha256": "150b8b85afb3d14572e66fa21969789c1c1994c079ae39e8f1c3b5232a2657f4",
+    "reviewedCatalogInputSha256": "849288162c8e21036b2b50e1a8ceaf4d5bc5edad2340a679dae488e9e10749f7",
+    "beforeModelSha256": "6e0a0e039eead7714d4e2ec6c995678860dee16d35e7282245bc5748eb565e85",
+    "afterModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "allSevenPhaseBundlePinsVerified": true,
+    "readerSha256": "2ac6ab3cb44ef6304582ed98d0548765f2c030e101c446ad8bda092b4db74c77",
+    "writerCanBeSubmitted": false
+  }
+}

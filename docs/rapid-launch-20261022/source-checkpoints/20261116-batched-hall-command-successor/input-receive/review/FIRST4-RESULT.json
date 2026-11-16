@@ -1,0 +1,74 @@
+{
+  "state": "PASS_FIRST_FOUR_FINAL33_CHUNKED_RECEPTION_SOURCE_DIFF",
+  "reviewedAt": "2026-11-16T07:21:03.159961+00:00",
+  "scope": "Only first standard p001-p004 source changes from actual proven local06 chunked family. Authority fixed fields reviewed, no authority issued by QB.",
+  "findings": [],
+  "batchManifestSha256": "52a433465c79ce4b8d73cb848694a4675bc82f4c5d4208795abed9d4d3e0ad55",
+  "authorityFieldsSha256": "5bce5a83f1d4909efda514cde29bcfb008ea019a3771a708fe43ca76933a148e",
+  "codePins": {
+    "artifact-receiver.d3-chunk.py": "bee800f2341ff1cba5400ce61a2227acce50498c82216882630f33f040c46e97",
+    "batch_client.py": "caa8a8b2daff47ca6178bdf7c7c16beaa1f3de5ef75477ce23eb3beb7c1bf7e3",
+    "batch_policy.py": "2eab0a4e7d868caca2e15e50dbc03fc6658117c5d671f6429c4e418d27f3208a",
+    "batch_protocol.py": "6e704ab273b72389f41dd34881e83f2a0c80a395ba144ec3b1f702f52ff960d2",
+    "batch_remote.py": "e59466060a593af70a4ce677c6f625b6c8dcfde2f63076eecbe07d5cb8a1e582",
+    "batch_transport.py": "fab1b1a452b01d02825df9a5f59adce84a93ed3210dce1c46d535daabfa21b46",
+    "d3-chunk-policy.py": "d5a0c206b7866049ffe1245073da744aeb7f3b4475884b2c867b661f0b451175"
+  },
+  "localSourceHelperSha256": "66c569455eead6aee80c6fc974adc57a2eceed22be1f41a6cd6818afc6434faf",
+  "profileSha256": "62e01d1cb13553c826e63d3454f3ff79da3158c4d35fd6a0bf70c8b4e20ab80d",
+  "deliveryIndexSha256": "954bbd6508725fa0e9f38140d4ef8830d266d10d5ec8f9556db6196c8412d88f",
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "verification": {
+    "sevenSourcePinsMatch": true,
+    "unchangedFiles": [
+      "batch_transport.py",
+      "batch_remote.py",
+      "batch_policy.py"
+    ],
+    "receiver211TuplesExactlyMatchProfile": true,
+    "groupCount": 54,
+    "groupSizesIncludeExactTerminalOneAndTwo": true,
+    "firstGroupOrderedExact": true,
+    "firstFourArchiveSlicesReadOnlyVerifiedBytes": 8388608,
+    "firstFourWholeFragmentHashesMatch": true,
+    "firstFour256KiBSegmentsCount": 32,
+    "segmentOffsetHashAndPrefixAllMatch": true,
+    "noLargeFilesCopied": true,
+    "helperExactPinnedByClient": true,
+    "helperReadsOnlyOneBounded2MiBSliceFromPrivateOriginal": true,
+    "oldAttemptAndRemoteOriginalKeyChecksRetained": true,
+    "oldPolicyWithdrawalAndFiniteWindowRetained": true
+  },
+  "window": {
+    "uploadSeconds": 600,
+    "closeoutReserveSeconds": 240,
+    "maximumAuthorityWindowSeconds": 1080,
+    "signedActualAuthorityPending": true
+  },
+  "space": {
+    "sourceReceipt": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-KEY-AND-SPACE-01.json",
+    "checkedAtUTC": "2026-11-16T03:55:02.677236+00:00",
+    "availableBytesRecorded": 273709731840,
+    "device": 66304,
+    "compressedArchivesBytes": 440942867,
+    "expandedMembersBytes": 3790415288,
+    "compressedPlusExpandedBytes": 4231358155,
+    "floorBytes": 30064771072,
+    "deletionRequiredByRecordedBudget": false,
+    "currentWindowStillChecksActualSpace": true
+  },
+  "notInThisPass": [
+    "final33_input_host materialization",
+    "native read-only prepare and final plan/INIT/writer binding",
+    "actual reception results",
+    "business import acceptance"
+  ],
+  "actions": {
+    "serverCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "authorityIssuance": 0,
+    "sourceEdits": 0,
+    "largeCopies": 0
+  }
+}

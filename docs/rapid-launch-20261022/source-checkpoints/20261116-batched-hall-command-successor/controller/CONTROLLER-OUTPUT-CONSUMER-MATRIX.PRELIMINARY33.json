@@ -1,0 +1,80 @@
+{
+  "format": "R3_COMPLETE_NORMAL_CHAIN_AUDIT_SCOPE_V1",
+  "state": "FINAL33_SOURCE_AND_ACTUAL_DEPENDENCIES_IN_PROGRESS",
+  "humanInstruction": {
+    "threadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+    "messageId": "01a1e34f-d39a-7a90-be83-f207971ed2af"
+  },
+  "finalBusinessManifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "normalStartupHoldClosed": false,
+  "formalR3": "INSTALLED_DB05_STOPPED_ORIGINAL_AUTH_RESTORED",
+  "realWriterSubmitted": false,
+  "rows": [
+    {
+      "step": "final data and inventory scope",
+      "producer": "D3 final approved data plus main external V2 alignment",
+      "consumer": "same offline preflight index and six approval readers",
+      "status": "ACTUAL_LOCAL_FULL_PACKAGE_PASS",
+      "fact": "26 tables, 514485 rows, zero issues, complete_package_validation=true; actual inventory physical export time unknown"
+    },
+    {
+      "step": "receive private input fragments",
+      "producer": "main finite receive authority and exact group manifest",
+      "consumer": "T45 original four-piece chunked policy/client/receiver family",
+      "status": "SOURCE_REVIEW_PASS_ACTUAL_REQUEST_NOT_PUBLISHED",
+      "fact": "First client atime defect corrected. Signer now writes mode0600. Old upload left exactly three checked static files; current root policy and four data fragment directories absent; no original request/tmp/worker/unit. Resume requires exact unchanged staged members, missing files and a fresh full upload/closeout budget."
+    },
+    {
+      "step": "materialize two exact archives",
+      "producer": "actual per-fragment ready and identity records after successful receive",
+      "consumer": "final33_input_host exact 65 member archive and full-stream checks",
+      "status": "SOURCE_REVIEW_AND_LOCAL_SYNTHETIC_STREAM_PASS_ACTUAL_PENDING",
+      "fact": "Expected 4231358155 bytes simultaneous compression and extraction, same filesystem reserve28GiB; paths, regular member kinds, exclusive destination and full hashes reviewed"
+    },
+    {
+      "step": "finite registration and authentication",
+      "producer": "main exact final source rules and fresh actual lock/key/space observation",
+      "consumer": "same existing CAS dispatcher and finite apply host",
+      "status": "SOURCE_SEVEN_PHASE_INCREMENT_PASS_PREPARE_PHASE_BINDING_PENDING",
+      "fact": "Original32 install13ACKs and auth restoration are real historical inputs; no new registration or role change yet"
+    },
+    {
+      "step": "start and immutable describe",
+      "producer": "new actual33 service proof, epoch, namespace and stored describe outputs",
+      "consumer": "main issue_phase and update/prepare/writer hosts",
+      "status": "SEVEN_PHASE_SOURCE_REVIEW_PASS_NEW_PREPARE_BUDGET_PENDING",
+      "fact": "Original physical system/OID/PGDATA identity fixed. Current source-only4320sec budget must include new prepare780sec for5100 total before final signing."
+    },
+    {
+      "step": "one routine successor",
+      "producer": "D1 exact SQL/model/definition/body and same-current-C update descriptor",
+      "consumer": "catalog_update finite owner session and actual after-COMMIT readonly observation",
+      "status": "LOCAL_ISOLATED_PG_AND_INDEPENDENT_SOURCE_PASS_ACTUAL_PENDING",
+      "fact": "Preserve old installed161 and ACL; one routine update. New catalog live success must precede prepare and writer. Three source defects in dirname/start budget/refused-stage stop consumption closed."
+    },
+    {
+      "step": "prepare actual final source plan and INIT",
+      "producer": "same verified-client opaque historical-sales admission with actual target/admin/provision through existing private input",
+      "consumer": "D1 bounded prepareOnly overlay and T45 finite prepare host",
+      "status": "MINIMAL_SOURCE_IMPLEMENTATION_IN_PROGRESS",
+      "fact": "Use passed index/summary and six approvals; no repeated preflight. Old11/11 retained guards cannot be used as final11/16 authority. New output binding, INIT hash, steps, original plan and cleanup become actual inputs before writer signing."
+    },
+    {
+      "step": "first writer and original-key readback",
+      "producer": "same finalized prepared binding plus actual one-routine successor and same-C start/auth receipts",
+      "consumer": "never-submitted original writer and factory-registered exact prepared object",
+      "status": "WAITING_FOR_ACTUAL_PREPARE_AND_NEW_RECEIVER_BINDING",
+      "fact": "Factory identity, original CORE ABSENT, complete persisted INIT/steps and source references required. Committed normal resume remains original path."
+    },
+    {
+      "step": "preservation stop and authentication restore",
+      "producer": "actual same-C terminal/result/cleanup for every submitted update, prepare and writer",
+      "consumer": "original clean stop and original exact role restoration",
+      "status": "SEVEN_PHASE_SOURCE_REVIEW_PASS_NEW_PREPARE_TERMINAL_MEMBERS_PENDING",
+      "fact": "Stage-before-refusal is accepted only matching root/public bytes, phaseStarted=false,exitCode2 and inactive unit. Unknown outcomes retain original keys and readback."
+    }
+  ],
+  "databaseConnectionsByMain": 0,
+  "serverMutationByMain": false,
+  "evidenceBoundary": "Local and isolated source checks do not certify actual new registration, start, successor installation, plan, import, restore, browser or release."
+}

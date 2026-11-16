@@ -1,0 +1,40 @@
+{
+  "state": "PASS_FINAL33_CLIENT_ATIME_SOURCE_INCREMENT",
+  "reviewedAt": "2026-11-16T07:26:03.789785+00:00",
+  "findings": [],
+  "sourceBeforeSha256": "caa8a8b2daff47ca6178bdf7c7c16beaa1f3de5ef75477ce23eb3beb7c1bf7e3",
+  "sourceAfterSha256": "2f7e7aa56128efc15a56ddccd25e99a5d746214069e3153a4dbc574ec527b728",
+  "authorityFixedFieldsSha256": "e2c32f1ec63370cd6cbf278272998f8432f833a0e04081c1366c2a204f91d3d7",
+  "batchManifestSha256": "52a433465c79ce4b8d73cb848694a4675bc82f4c5d4208795abed9d4d3e0ad55",
+  "verified": {
+    "onlyExactLocalAtimeComparisonChanges": true,
+    "beforeBytesExactlyReconstructedFromSingleReplacement": true,
+    "nineIdentityFields": [
+      "dev",
+      "ino",
+      "uid",
+      "gid",
+      "mode",
+      "nlink",
+      "size",
+      "mtime_ns",
+      "ctime_ns"
+    ],
+    "atimeExcluded": true,
+    "canonicalRegularOwnerPrivateModeSingleLinkSizeBoundUnchanged": true,
+    "lengthCheckUnchanged": true,
+    "authorizationAndManifestSha256VerificationAfterReadUnchanged": true,
+    "sixOtherSourceLeavesAndHelperAndFirstGroupManifestUnchanged": true,
+    "newClientPinPropagatedToAuthorityFixedFields": true,
+    "failureAtFirstExactLocalIsBeforeRemoteSetupAndExecutionDirectory": true
+  },
+  "reuse": "FIRST4-RESULT.json retained; only this new source increment reviewed. Owner targeted atime/permission test results remain separate.",
+  "authorityBoundary": "Old authority7482a1 reported by owner to fail before remote actions. QB source inspection confirms that failure location is before remote setup; QB did not invoke or reissue any authority. New signed authority must bind the new client pin.",
+  "actions": {
+    "serverCalls": 0,
+    "candidateExecutions": 0,
+    "issuerCalls": 0,
+    "sourceEdits": 0,
+    "largeCopies": 0
+  }
+}
