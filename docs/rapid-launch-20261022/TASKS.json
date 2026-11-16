@@ -7730,7 +7730,12 @@
             "warehouseSkuReconciliationKeys": 150941,
             "existingHallDecisionReaffirmed": "01a1e2f7-cfeb-79c1-93de-42e673146e05",
             "historicalSalesHallEvidenceGaps": 1,
-            "state": "ALL_TABLES_MATERIALIZED_91121_EXISTING_HALL_DECISION_EVIDENCE_AND_FINAL_PREFLIGHT_IN_PROGRESS"
+            "batchedHistoricalHallMasterProof": "D1_LOCAL_REPAIR_IN_PROGRESS_AFTER_EXACT_SOURCE_CONFIRMED_SAME_TRANSACTION_REQUIREMENT",
+            "newSkuUnlistedWarehousePairsAwaitingSourceConfirmation": 1272,
+            "predictedPeakFreeGiB": 44.98,
+            "heldRootReserveGiB": 28,
+            "capacityEstimateSha256": "c9938161f32010eaf6480b435c7ddc2efb3482a7357788b908d9b6ec885b88a3",
+            "state": "ALL_TABLES_MATERIALIZED_BOUNDED_HALL_RECEIVER_REPAIR_AND_NEW_SKU_SCOPE_IN_PROGRESS"
           },
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
