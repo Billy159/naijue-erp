@@ -7720,10 +7720,11 @@
             "approvedSparseZeroKeys": 1783,
             "transferDocuments": 15250,
             "transferLines": 285316,
-            "transferR4MappedDocuments": 15242,
-            "transferRemainingEvidenceVerifiedLines": 9,
-            "transferRemainingEvidenceSha256": "1e67e6948564d4fe22809021cb49cca870526d3245f367e7fc75544d61534b35",
-            "state": "STOCK_IDENTITIES_COMPLETE_TRANSFER_CONFIRMATION_CELLS_VERIFIED_D3_FINAL_ASSEMBLY_IN_PROGRESS"
+            "transferR5MappedDocuments": 15250,
+            "transferR5HeldLines": 0,
+            "transferR5ReceiptSha256": "0be823fa12e64e0ca2cede45d2647306aebf61f0515e423511a83010dae3a165",
+            "transferSizeColorAuthorityMessage": "01a1e2e7-afbe-7a81-92e9-091685bfd65f",
+            "state": "STOCK_AND_TRANSFER_IDENTITIES_COMPLETE_D3_FINAL_ASSEMBLY_IN_PROGRESS"
           },
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
