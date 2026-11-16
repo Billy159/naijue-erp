@@ -7724,7 +7724,13 @@
             "transferR5HeldLines": 0,
             "transferR5ReceiptSha256": "0be823fa12e64e0ca2cede45d2647306aebf61f0515e423511a83010dae3a165",
             "transferSizeColorAuthorityMessage": "01a1e2e7-afbe-7a81-92e9-091685bfd65f",
-            "state": "STOCK_AND_TRANSFER_IDENTITIES_COMPLETE_D3_FINAL_ASSEMBLY_IN_PROGRESS"
+            "materializedTableCount": 26,
+            "materializedRows": 514485,
+            "materializedReceiptSha256": "c87bb9e3fa38cd943389fbdecc4a3a3467bee9f9b18a93593fc301d2705e6f01",
+            "warehouseSkuReconciliationKeys": 150941,
+            "existingHallDecisionReaffirmed": "01a1e2f7-cfeb-79c1-93de-42e673146e05",
+            "historicalSalesHallEvidenceGaps": 1,
+            "state": "ALL_TABLES_MATERIALIZED_91121_EXISTING_HALL_DECISION_EVIDENCE_AND_FINAL_PREFLIGHT_IN_PROGRESS"
           },
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
