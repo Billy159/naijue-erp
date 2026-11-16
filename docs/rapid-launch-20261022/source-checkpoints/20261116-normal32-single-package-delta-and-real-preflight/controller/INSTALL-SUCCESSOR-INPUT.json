@@ -1,0 +1,147 @@
+{
+  "actual31": {
+    "closeoutPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/RESULT31-CLOSED.json",
+    "closeoutSha256": "a52d1e454eed813414ebf8813e7e50b8ecdaedb8ae0512f54271c2c38dbf9b83",
+    "dispatcherSha256": "38a22c41a2dbd4f02dd5d0a6b4bf8808d063a8aa99615b6277472b0d43bb60bf",
+    "moduleSha256": "365a696b1ee113ce337e36c8159f6be28eccf3ce1e0a314ef61aeddaa76e93c9",
+    "policySha256": "a07d6db401cfc669bfb94a444cf0f310c4be0d416356cb92b481f79c537ff065",
+    "readbacks": {
+      "apply": {
+        "checkedAt": "2026-11-16T00:13:38.383304+00:00",
+        "exitCode": 0,
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/apply/READBACK-01.json",
+        "publicResultSha256": "9ff66796d67ac61ede6a21828e67adc03504bbabff6b97b84d61741a73e6b4eb",
+        "requestKey": "t45-r3-ordinary31-auth-apply-20261116-01",
+        "rootPins": {
+          "cleanup": "228789d2f18e3f6a5c5315d01be64de87e26e65f5bb1b6aba3257183fe6b1db0",
+          "result": "1f045f18c4b5a7a026472d0b65e23535c5cd5e988774fc84b51fc5515a556eda",
+          "terminal": "9dd63f536541ffc21857d584ed11e1336e85bf938c3923fcf23fe3625e450851"
+        },
+        "sha256": "eae6b3f97225d0d8d3633d33443a21e18b19f8a762da9402def27c0e587ca682",
+        "status": "COMPLETED"
+      },
+      "install": {
+        "checkedAt": "2026-11-16T00:21:22.829436+00:00",
+        "exitCode": 2,
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/install/READBACK-01.json",
+        "publicResultSha256": "408a5258b02908d4975be1dec731c8d72ef77ca63b9cd87a65dcee02b7f5093c",
+        "requestKey": "t45-r3-batched-install-20261115-01",
+        "rootPins": {
+          "result": "5d82a437a9bae7cabf78a7dd8ce48776c48be0a8f875da1aa426d04160019d5f",
+          "terminal": "5d95d500adc1a2cbbccff93fee5512ed2dd5a38e83f7fe974ac7e94f0b76d5c2"
+        },
+        "sha256": "964203c579afec4ddabd6bb69459b9530b5e7d3ab708c4e06664572e50ebec63",
+        "status": "FAILED"
+      },
+      "prestop": {
+        "checkedAt": "2026-11-16T00:25:17.734910+00:00",
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/stop/FACTS-01.json",
+        "sha256": "f048fad9e18112df49ba52f6367ccd6d7480ce066bb5c20d66162a01faa5c61d"
+      },
+      "restore": {
+        "checkedAt": "2026-11-16T01:46:09.656334+00:00",
+        "exitCode": 0,
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/restore/READBACK-01.json",
+        "publicResultSha256": "72bcef34100e9b5324306b744580bee9b3c9044ee6370b2477bcced891fc5794",
+        "requestKey": "t45-r3-ordinary31-auth-restore-20261116-01",
+        "rootPins": {
+          "cleanup": "1b9cc4f95114b336f65bccfbd87e60d07b90d2b72d0e628d5b6a9795f483b87f",
+          "result": "023d953c3fece2054074002486c6f355465cb8d70458ad1b6fc447cae8db5778",
+          "terminal": "4541b36de09569184c0198d9573e5becdb01d7babf1fecc7ffd7d83d3a511c7d"
+        },
+        "sha256": "362125d51310a95aaf3b7c8551e6714b044428fb673fb3ba8b14c4b4fca669ae",
+        "status": "COMPLETED"
+      },
+      "start": {
+        "checkedAt": "2026-11-16T00:17:37.027467+00:00",
+        "exitCode": 0,
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/start/READBACK-01.json",
+        "publicResultSha256": "1140621973efc4247ee7ac35667cf705345d68f5e2bda716c8c68f3df093d03f",
+        "requestKey": "t45-first-r3-native-service-start-20261116-31",
+        "rootPins": {
+          "result": "326773273e586e3d1864bda75c81f0f94c28dc537362bb7c1160796ccd43902d",
+          "terminal": "5246a9abdb987e4309c4bc6d181373623580b019fb32a5290d8677058d94ef21"
+        },
+        "sha256": "7dde7d9565a2cb7c2e5512aad9cda5aacb9c5858b44cf70c04b852178b3dff31",
+        "status": "COMPLETED"
+      },
+      "stop": {
+        "checkedAt": "2026-11-16T00:27:15.038436+00:00",
+        "exitCode": 0,
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/stop/READBACK-01.json",
+        "publicResultSha256": "c4dfe6d6b2bcd9684503f119101eeb2e5f6c028561e8534ef716dafb93b76089",
+        "requestKey": "t45-r3-ordinary31-preserve-stop-20261116-01",
+        "rootPins": {
+          "cleanup": "929460035e9b5ab7c9a9a9639a69322b6879e590bf1827006ef3c94dcd6e86cf",
+          "result": "dc995ed92abadab3f4a9c0a72c1ed361ce1ce45f5eb666fa6df42a71a9f47a92",
+          "terminal": "9ff56dfa1229233855b0cfacd9de65278bb6fd5b36dce0962e748d40c5455a49"
+        },
+        "sha256": "8726146195b64baf7a322b552ddbc1775b3f7243289d2eb703b037968e2f165d",
+        "status": "COMPLETED"
+      }
+    },
+    "registrationPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261116-r3-direct31-registration-window-01/ISSUED.json",
+    "registrationReadbackPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service31-registration-actual-01/REGISTRATION31-READBACK-01.json",
+    "registrationReadbackSha256": "08c1e86d0b856e826afbc8dae46c3ad27e41409b792709604d2709244c3d6060",
+    "service": {
+      "containerId": "3c83bbf2bb61d2342759b0b2be1a918b866d2a7b3021cc3eb1d14058471c1a00",
+      "containerStartedAt": "2026-11-16T00:16:42.588439615Z",
+      "postmasterStart": "2026-11-16 00:16:43.861378+00",
+      "proofSha256": "42e7a80f72519feed61892a4598f7f654005e9c44535aaee0ac6f4c66a3c112e",
+      "serviceKey": "t45-first-r3-native-service-start-20261116-31"
+    }
+  },
+  "business": {
+    "classes": 26,
+    "manifestSha256": "f4b86de73073da86fe8e49af5a871aaf1d3e856856a0912d835ea0180f1b0deb",
+    "originalWriterNeverSubmitted": true,
+    "rows": 511234
+  },
+  "capture": {
+    "exclusiveCreateMode": "0700",
+    "historicalDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/batched161-upgrade",
+    "samePathFunctionForRunnerAndModule": true,
+    "successorBasenamePrefix": "batched161-upgrade-",
+    "successorSuffix": "genuine descriptor.programSha256"
+  },
+  "finalExecutablePackageOwner": "T45",
+  "finiteWindowIssued": false,
+  "grantId": "b16447fbc81f4d64",
+  "historicalInstall": {
+    "acknowledgedLayers": 0,
+    "connectionCleanup": "CLOSED",
+    "exitCode": 2,
+    "originalHistoryMustBeRetained": true,
+    "phaseStarted": true,
+    "requestKey": "t45-r3-batched-install-20261115-01",
+    "rollbackAcknowledged": true,
+    "safeCode": "FRESH35_COMBINED_CATALOG_ACTUAL_PHYSICAL_IDENTITY_DIFFERS",
+    "stage": "PREDECESSOR154",
+    "status": "FAILED"
+  },
+  "phaseKeys": {
+    "apply": "t45-r3-ordinary32-auth-apply-20261116-01",
+    "install": "t45-r3-batched-install-20261116-02",
+    "restore": "t45-r3-ordinary32-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-32",
+    "stop": "t45-r3-ordinary32-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "predecessorServiceGeneration": 31,
+  "serverActionAuthorizedByThisFile": false,
+  "serviceGeneration": 32,
+  "source": {
+    "baseFiles": 382,
+    "baseMaterializationKey": "t45-r3-batched-root04-source-delta-20261116-01",
+    "baseMaterializationMarkerSha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+    "baseSourceRowsSha256": "ea377da72415020f91f0f5eb9c5988dd9134cabe76e502eeceae1a30b14eafa7",
+    "baseSourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+    "expectedChangedOwnerFiles": [
+      "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+    ],
+    "operationRevisionSelectedBy": "T45"
+  },
+  "state": "SOURCE_PREPARATION_ONLY",
+  "taskId": "T45"
+}

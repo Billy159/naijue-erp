@@ -1,0 +1,90 @@
+--- a/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs
++++ b/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs
+@@ -6,7 +6,7 @@
+ import {assertTrustedRootPath,assertTrustedRootTree} from './trusted-install-path.mjs';
+ import {describeFresh35CombinedSource,fresh35CombinedSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
+ import {describeFresh35CombinedTarget,describeFresh35Installed154UpgradeTarget,fresh35Installed154UpgradeTargetData,assertFresh35Installed154UpgradeTargetCurrent} from './fresh35-combined-target-v1.mjs';
+-import {buildFresh35CompactZeroCatalog,buildFresh35ProductionPrefix155Catalog,buildFresh35BatchedCatalogV1,describeFresh35CombinedCatalog,fresh35CombinedCatalogSql,validateFresh35CombinedCatalogObservation,assertFresh35CombinedCatalogCurrent} from './fresh35-combined-catalog-v1.mjs';
++import {buildFresh35CompactZeroCatalog,buildFresh35ProductionPrefix155Catalog,buildFresh35BatchedCatalogV1,describeFresh35CombinedCatalog,fresh35Installed154UpgradeCatalogObservation,assertFresh35CombinedCatalogCurrent} from './fresh35-combined-catalog-v1.mjs';
+ import {publishInstallationRecord} from './publish-installation-record.mjs';
+ 
+ export const BATCHED161_UPGRADE_AUTHORIZATION_PATH='/etc/naijue-erp/fresh35-batched161-upgrade-v1.json';
+@@ -65,6 +65,13 @@
+  const token=Object.freeze({profile:d.format});programs.set(token,{source,target,metadataTarget,envelope,snapshot,service,predecessor,prefix,successor,layers,sql,descriptor:freeze({...d,programSha256:hash(JSON.stringify(d))})});return token;
+ }
+ export function describeFresh35Batched161Upgrade(program){need(programs.has(program),'GENUINE_PROGRAM_REQUIRED');return programs.get(program).descriptor}
++/** Bind the capture directory to this exact compiled program. The runner creates it. */
++export function fresh35Batched161UpgradeRecordDirectory(program){
++ const {programSha256}=describeFresh35Batched161Upgrade(program);
++ const {target}=programs.get(program);
++ const {proposal}=describeFresh35Installed154UpgradeTarget(target);
++ return join(proposal.workspaceDirectory,`batched161-upgrade-${programSha256}`);
++}
+ /** External main issuer owns this fixed root file; this module never creates it. */
+ export async function loadFresh35Batched161UpgradeAuthorization(program){
+  const d=describeFresh35Batched161Upgrade(program),p=programs.get(program);need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0,'ROOT_INSTALL_CONTROLLER_REQUIRED');
+@@ -105,7 +112,7 @@
+ export async function runFresh35Batched161Upgrade({program,authorization,client,recordDirectory}){
+  const d=describeFresh35Batched161Upgrade(program),p=programs.get(program),a=authorities.get(authorization),t=describeFresh35Installed154UpgradeTarget(p.target);
+  need(a?.program===program&&!used.has(authorization),'GENUINE_UNUSED_AUTHORITY_REQUIRED');
+- need(recordDirectory===join(t.proposal.workspaceDirectory,'batched161-upgrade'),'FIXED_CAPTURE_DIRECTORY_REQUIRED');
++ need(recordDirectory===fresh35Batched161UpgradeRecordDirectory(program),'FIXED_CAPTURE_DIRECTORY_REQUIRED');
+  await assertTrustedRootPath(recordDirectory);const st=await lstat(recordDirectory);need(st.isDirectory()&&!st.isSymbolicLink()&&st.uid===0&&(st.mode&0o077)===0&&await realpath(recordDirectory)===recordDirectory,'PROTECTED_CAPTURE_DIRECTORY_REQUIRED');
+  const current=async()=>{await assertFresh35Installed154UpgradeTargetCurrent(p.target);need((await protectedJson(BATCHED161_UPGRADE_AUTHORIZATION_PATH,true)).sha256===a.sha256,'AUTHORITY_CHANGED');};
+  const status=()=>typeof client.getTransactionStatus==='function'?client.getTransactionStatus():Object.getOwnPropertyDescriptor(client,'_txStatus')?.value;
+@@ -114,7 +121,7 @@
+  const restoreRole=async()=>{
+   if(!roleSwitchAttempted||roleRestoreAttempted||status()!=='I')return;
+   roleRestoreAttempted=true;const r=await client.query('RESET ROLE');
+-  need(r?.command==='SET'&&status()==='I','ROLE_RESTORE_ACK_REQUIRED');roleRestoreAcknowledged=true;
++  need(r?.command==='RESET'&&status()==='I','ROLE_RESTORE_ACK_REQUIRED');roleRestoreAcknowledged=true;
+  };
+  const observe=async(catalog,label)=>{
+   await current();await send('BEGIN ISOLATION LEVEL READ COMMITTED','BEGIN');
+@@ -126,9 +133,9 @@
+    const row=captured.rows?.[0];need(captured.rows?.length===1&&row?.session_user===t.proposal.admin&&row.effective_user===t.proposal.owner&&row.role===t.proposal.owner&&row.admin_valid_until_ms===String(d.backupAdminValidUntil),'ACTUAL_SESSION_ROLE_IDENTITY_DIFFERS');
+    connectionIdentity=Object.freeze({authenticationMode:d.authenticationMode,sessionUser:row.session_user,effectiveUser:row.effective_user,role:row.role,backendPid:row.backend_pid,backupAdminValidUntil:d.backupAdminValidUntil,roleSwitchAcknowledged});
+   }
+-  const statements=fresh35CombinedCatalogSql(catalog,p.source,p.metadataTarget);await send(statements.guardSql,'DO');
++  const statements=fresh35Installed154UpgradeCatalogObservation(catalog,p.target);await send(statements.guardSql,'DO');
+   const reply=await send(statements.observationSql,'SELECT');need(reply.rows?.length===1&&typeof reply.rows[0].catalog_json==='string','NATIVE_CATALOG_REQUIRED');
+-  const raw=reply.rows[0].catalog_json,result=validateFresh35CombinedCatalogObservation(raw,catalog,p.source,p.metadataTarget);
++  const raw=reply.rows[0].catalog_json,result=statements.validate(raw);
+   await send('ROLLBACK','ROLLBACK');await publishInstallationRecord(join(recordDirectory,'catalog-'+label+'.json'),raw+'\n');if(label==='154')await publishInstallationRecord(join(recordDirectory,'connection-identity.json'),JSON.stringify(connectionIdentity)+'\n');return result;
+  };
+  let stage='NOT_STARTED',commitUnknown=false;const commits=[];
+--- a/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs
++++ b/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs
+@@ -7,7 +7,7 @@
+ import {resolve} from 'node:path';
+ import {isDeepStrictEqual} from 'node:util';
+ import {describeFresh35CombinedSource,fresh35CombinedSourceData,fresh35Admin154SourceData,fresh35CompactZeroSourceData,assertFresh35CombinedSourcesCurrent,combinedSha256 as hash} from './fresh35-combined-source-v1.mjs';
+-import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverCheck,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation} from './fresh35-combined-target-v1.mjs';
++import {describeFresh35CombinedTarget,fresh35CombinedRuntimeTargetGuard,loadFresh35SyntheticBootstrapNetwork,assertFresh35SyntheticBootstrapNetworkCurrent,fresh35CombinedObserverCheck,fresh35CombinedObserverObservationSql,validateFresh35CombinedObserverObservation,fresh35Installed154UpgradeTargetData} from './fresh35-combined-target-v1.mjs';
+ import {parseFresh35DumpSections} from './fresh35-retirement-schema.mjs';
+ import {parseStrictJson} from '../../../packages/application/src/unified-import-contract.ts';
+ const catalogs=new WeakMap(),need=(ok,code)=>{if(!ok)throw Error('FRESH35_COMBINED_CATALOG_'+code)};
+@@ -392,10 +392,21 @@
+ export function validateFresh35CombinedCatalogObservation(raw,catalog,source,target){
+  return validateCatalogObservation(raw,catalog,source,target,false);
+ }
+-function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=false){
++/** The installer checks the active SET ROLE and live epoch on this transaction.
++ * The pinned observation reports the effective owner and authenticated session separately. */
++export function fresh35Installed154UpgradeCatalogObservation(catalog,upgradeTarget){
++ const {source,metadataTarget,descriptor}=fresh35Installed154UpgradeTargetData(upgradeTarget);
++ const statements=fresh35CombinedCatalogSql(catalog,source,metadataTarget);
++ return Object.freeze({
++  ...statements,
++  validate:raw=>validateCatalogObservation(raw,catalog,source,metadataTarget,false,false,descriptor.proposal.admin),
++ });
++}
++function validateCatalogObservation(raw,catalog,source,target,runtime,ordinary=false,upgradeSessionUser){
+  fresh35CombinedCatalogSql(catalog,source,target);const c=catalogs.get(catalog),t=describeFresh35CombinedTarget(target);
+  need(typeof raw==='string'&&Buffer.byteLength(raw)<=16*1024*1024,'BOUNDED_RAW_OBSERVATION_REQUIRED');const packet=parseStrictJson(raw),i=packet.identity;
+- need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===c.descriptor.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===(ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner)&&i.host===(ordinary===true?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary===true?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
++ const expectedActor=upgradeSessionUser??(ordinary?t.proposal.runtime:runtime?t.proposal.controller:t.proposal.owner);
++ need(packet.format==='FRESH35_COMBINED_ACTUAL_CATALOG_V1'&&packet.sourceSetSha256===c.descriptor.sourceSetSha256&&i&&i.systemIdentifier===t.physical.systemIdentifier&&i.databaseOid===t.physical.databaseOid&&i.serverVersionNum===t.physical.serverVersionNum&&i.database===t.proposal.database&&i.owner===t.proposal.owner&&i.actor===expectedActor&&i.host===(ordinary===true?t.ordinary.serverAddress:t.proposal.host)&&i.port===(ordinary===true?t.ordinary.serverPort:t.proposal.port),'ACTUAL_PHYSICAL_IDENTITY_DIFFERS');
+  const expectedKeys=['relations','columns','routines','types','constraints','indexes','triggers','sequences','policies','defaultAcl','dependencies','sharedDependencies','schema','database','roles','membership','bootstrapObserver'];
+  need(packet.catalog&&Object.keys(packet.catalog).sort().join(',')===expectedKeys.sort().join(',')&&expectedKeys.every(k=>Array.isArray(packet.catalog[k])),'FULL_RAW_CATALOG_REQUIRED');
+  need(packet.catalog.types.length===70&&packet.catalog.routines.length===c.model.routines.length&&packet.catalog.relations.filter(r=>r.relkind==='r').length===35,'RAW_OBJECT_COHORT_DIFFERS');

@@ -1,0 +1,26 @@
+{
+  "baseSourceSetSha256": "ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663",
+  "scope": "TWO_OWNER_FILES_ONLY",
+  "files": [
+    {
+      "path": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "previousSha256": "8f53a4ad3c135a81774e960656fb6012630e0921e571ad99ce6f8fc320101b9f",
+      "sha256": "e5f64cd5b90cbc96741d523a8600ecd81ee40bcca0e4a675c35172433964a67b",
+      "beforeBytes": 18627,
+      "bytes": 18955
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "previousSha256": "a49048834d6050d7e759733d7a3c7ec3f1726b6fabf0baa6512954e0cda75048",
+      "sha256": "a94f298a235ec8a9f78bfb750849145c50bb65925182e88072997bdfb89e42a1",
+      "beforeBytes": 64250,
+      "bytes": 64959
+    }
+  ],
+  "successorSourceSetSha256": null,
+  "captureIncrement": {
+    "path": "scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+    "previousSha256": "f189a2f2d6aa3c33491d8f9823a8b78b0552e7509e535e2b288e77a4640e17c5",
+    "patchSha256": "a23b3aab303e8ffb871ef16c1757c52135eb7d45b22cab2829b49b28689d7ba8"
+  }
+}

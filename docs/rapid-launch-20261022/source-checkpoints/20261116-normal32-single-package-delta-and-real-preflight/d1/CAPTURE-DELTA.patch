@@ -1,0 +1,25 @@
+--- a/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs
++++ b/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs
+@@ -65,6 +65,13 @@
+  const token=Object.freeze({profile:d.format});programs.set(token,{source,target,metadataTarget,envelope,snapshot,service,predecessor,prefix,successor,layers,sql,descriptor:freeze({...d,programSha256:hash(JSON.stringify(d))})});return token;
+ }
+ export function describeFresh35Batched161Upgrade(program){need(programs.has(program),'GENUINE_PROGRAM_REQUIRED');return programs.get(program).descriptor}
++/** Bind the capture directory to this exact compiled program. The runner creates it. */
++export function fresh35Batched161UpgradeRecordDirectory(program){
++ const {programSha256}=describeFresh35Batched161Upgrade(program);
++ const {target}=programs.get(program);
++ const {proposal}=describeFresh35Installed154UpgradeTarget(target);
++ return join(proposal.workspaceDirectory,`batched161-upgrade-${programSha256}`);
++}
+ /** External main issuer owns this fixed root file; this module never creates it. */
+ export async function loadFresh35Batched161UpgradeAuthorization(program){
+  const d=describeFresh35Batched161Upgrade(program),p=programs.get(program);need(process.platform==='linux'&&process.getuid?.()===0&&process.geteuid?.()===0,'ROOT_INSTALL_CONTROLLER_REQUIRED');
+@@ -105,7 +112,7 @@
+ export async function runFresh35Batched161Upgrade({program,authorization,client,recordDirectory}){
+  const d=describeFresh35Batched161Upgrade(program),p=programs.get(program),a=authorities.get(authorization),t=describeFresh35Installed154UpgradeTarget(p.target);
+  need(a?.program===program&&!used.has(authorization),'GENUINE_UNUSED_AUTHORITY_REQUIRED');
+- need(recordDirectory===join(t.proposal.workspaceDirectory,'batched161-upgrade'),'FIXED_CAPTURE_DIRECTORY_REQUIRED');
++ need(recordDirectory===fresh35Batched161UpgradeRecordDirectory(program),'FIXED_CAPTURE_DIRECTORY_REQUIRED');
+  await assertTrustedRootPath(recordDirectory);const st=await lstat(recordDirectory);need(st.isDirectory()&&!st.isSymbolicLink()&&st.uid===0&&(st.mode&0o077)===0&&await realpath(recordDirectory)===recordDirectory,'PROTECTED_CAPTURE_DIRECTORY_REQUIRED');
+  const current=async()=>{await assertFresh35Installed154UpgradeTargetCurrent(p.target);need((await protectedJson(BATCHED161_UPGRADE_AUTHORIZATION_PATH,true)).sha256===a.sha256,'AUTHORITY_CHANGED');};
+  const status=()=>typeof client.getTransactionStatus==='function'?client.getTransactionStatus():Object.getOwnPropertyDescriptor(client,'_txStatus')?.value;

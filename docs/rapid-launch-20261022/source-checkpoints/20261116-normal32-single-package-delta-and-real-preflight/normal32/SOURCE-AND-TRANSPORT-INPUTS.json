@@ -1,0 +1,27 @@
+{
+  "actualMaterialization": false,
+  "commonInput": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL32-INSTALL-SESSION-SUCCESSOR-SOURCE-01/INSTALL-SUCCESSOR-INPUT.json",
+  "commonInputSha256": "e497b6e494a85776f15c83dc6be6f8142bb0892dde5d0736dcb47f74433e4ae1",
+  "expectedMaterializationSha256": "e8f8032b00601e976c094f0365064d0385d7af8f48f9f7bbb465dca896bf3a5e",
+  "futureSourceRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root05-20261116-01/operation",
+  "materializationKey": "t45-r3-batched-root05-source-delta-20261116-01",
+  "materializationLeaf": "installed-real-operation-batched-root05-20261116-01",
+  "materializerSha256": "6d38caaf6f19ff57684e4456316bff015d122c57228d54d889a7a0408208d0cf",
+  "ownerPinsSha256": "65e2a29f37b561217c7b7967359526551faae97cd42969cf5993f22abc2ec6ef",
+  "parent04Retained": true,
+  "privateTransport": {
+    "bytes": 12283,
+    "grant": "b16447fbc81f4d64",
+    "installKey": "t45-r3-batched-install-20261116-02",
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/CANDIDATE-01/install/bundle/private_transport.py",
+    "sha256": "ed39d5af3d5594cd24c64b359ac71ac29d5eb0e0d4bb3cdc64f62559a3567411",
+    "task": "T45"
+  },
+  "remoteActions": 0,
+  "runnerSha256": "66878bf76eebf9c5ac06c7b8f5d56645945313996deb2a84e74c04f291cf854a",
+  "sourceDescriptionSha256": "6878ff0489c454fa0241a56c6c0a0f2c5d19e25f19117bfa7362fd3b4ba0d397",
+  "sourceFiles": 382,
+  "sourceRowsSha256": "f957e264097b8c778b12ff9f046d6ff9fd211708f5b86f60cc2efe06be8261d2",
+  "sourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+  "state": "LOCAL_SOURCE_INPUTS_PREPARED_NOT_EXECUTED"
+}

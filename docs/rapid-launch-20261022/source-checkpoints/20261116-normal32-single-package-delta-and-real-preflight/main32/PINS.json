@@ -1,0 +1,17 @@
+{
+  "PREPARATION.json": "e18f3f072b8b4889e72830f3eaa6a9be3d6c35604c404b6d7db0ec4314c9f6db",
+  "admin_exec.DIRECT32-UNREGISTERED.py": "dce956bb8eb7a059cde279d752f462e781e9ac5ab2445357caafa90ccd315c0b",
+  "admin_exec.DIRECT32-UNREGISTERED.py.patch": "fca106736129cfb81461fb9cddccbb71c0586ff11f8d88fbffbc450502ea7fb6",
+  "issue_phase.py": "de5c768b1d1e2471de22082943e0e907e0f32e962ea84fb1cc495c989f5d7027",
+  "issue_phase.py.patch": "5907d5a1cfb8b8907171458aece67c03b4f1a762134458e233e7082bb87dda1f",
+  "issue_registration.py": "56e3bb5b5604ee7d6a5643b008f33c7996e37707d08afb5b72cf837884f23117",
+  "issue_registration.py.patch": "38679edbe020fb7a4a710f4532f69eb1328ac53f1b56f10a39e43cb75519ede3",
+  "issue_upgrade_authority.py": "704b015f524d1a88b1b5fb104084b1d7041204b968a16e1a44a3ec19ee3de4f0",
+  "issue_upgrade_authority.py.patch": "ba0106689d17dc6fcecddaea369bf2058322c20c26e19c3f1f8ab3db178ecddb",
+  "original-cas-direct32-carrier.UNISSUED.py": "243a98e0f6a49ae97320247ff5ee1d0054d63d2587a809e30947af9d0089d0ce",
+  "original-cas-direct32-carrier.UNISSUED.py.patch": "e6b6f7d0afe9f622ecd99c8d1bdf59a161a4bdb0928ccd527fc692c7e37c310e",
+  "r3_direct32_batched.py": "4ff1a618c2e10c2119a16bd19a621d3c0c48a3ba92fe01229baec809fbb29316",
+  "r3_direct32_batched.py.patch": "3d12a21435d9d0685d6c4d10f817ec9ded9542c3c087ba9e158bb4eddeda7b37",
+  "register_cas.py": "b8df38927320c289c203a4f0b58025a635315ddc3bc5b28488f03851a241060b",
+  "register_cas.py.patch": "06a06ffb51f6ad32156bc48bb4cde2e9fee24bc95f3d582be6b78007327abfb3"
+}

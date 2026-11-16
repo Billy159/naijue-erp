@@ -1,0 +1,194 @@
+[
+  {
+    "path": "controller/INSTALL-SUCCESSOR-INPUT.json",
+    "bytes": 8464,
+    "sha256": "e497b6e494a85776f15c83dc6be6f8142bb0892dde5d0736dcb47f74433e4ae1",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL32-INSTALL-SESSION-SUCCESSOR-SOURCE-01/INSTALL-SUCCESSOR-INPUT.json"
+  },
+  {
+    "path": "controller/DATA-CUTOFF-20261116.json",
+    "bytes": 676,
+    "sha256": "e6fbcf42e64fc5da742df2b535f79a41fc8e7c2048de2f5307659c072b3defc2",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL32-INSTALL-SESSION-SUCCESSOR-SOURCE-01/DATA-CUTOFF-20261116.json"
+  },
+  {
+    "path": "controller/prepare-main32.py",
+    "bytes": 20328,
+    "sha256": "8809a99199e0ec4233eb4b3e9a0bf2465295243978abe741fc698719a91ff1a3",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL32-INSTALL-SESSION-SUCCESSOR-SOURCE-01/prepare-main32.py"
+  },
+  {
+    "path": "controller/issue-install-from-actual.py",
+    "bytes": 4001,
+    "sha256": "52943dbc789d82be93eb6ddd8ad7b3eb1a1db22b67e78166a89d57f58f150421",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/NORMAL32-INSTALL-SESSION-SUCCESSOR-SOURCE-01/issue-install-from-actual.py"
+  },
+  {
+    "path": "normal32/PINS.json",
+    "bytes": 7434,
+    "sha256": "810c66b7eac209a25c4232a6d174d59b91956a465e1bf359421a1d3f7f56ed60",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/PINS.json"
+  },
+  {
+    "path": "normal32/READY32.json",
+    "bytes": 3471,
+    "sha256": "0ad9b3aea99f00369f04ddec37e2dfacf05dd25efdd8ec0465bc480375ea759a",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/READY32.json"
+  },
+  {
+    "path": "normal32/SOURCE-AND-TRANSPORT-INPUTS.json",
+    "bytes": 1955,
+    "sha256": "822a6c7956445be935e5e8a41111cb8234f0f214577142af57745c82631e7b26",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/SOURCE-AND-TRANSPORT-INPUTS.json"
+  },
+  {
+    "path": "normal32/CHECKS-LOCAL32.json",
+    "bytes": 894,
+    "sha256": "858d7fcd41b29012cab0a9fc34c8b1ec334370c0f6946572d3ceba4763a478b4",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/CHECKS-LOCAL32.json"
+  },
+  {
+    "path": "normal32/TRANSPORT32.json",
+    "bytes": 884,
+    "sha256": "dcb384e24b08e0bd7f8814cdf7029d0fe1d3c9ca5e9398e795e8ca221d810c5b",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/TRANSPORT32.json"
+  },
+  {
+    "path": "normal32/CANDIDATE-01/PHASES32.UNISSUED.json",
+    "bytes": 14415,
+    "sha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/CANDIDATE-01/PHASES32.UNISSUED.json"
+  },
+  {
+    "path": "main32/PINS.json",
+    "bytes": 1519,
+    "sha256": "7f350d38f72968680420995a937b9ba5e4046f35b407538d29388c952af315f0",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/PINS.json"
+  },
+  {
+    "path": "main32/PREPARATION.json",
+    "bytes": 837,
+    "sha256": "e18f3f072b8b4889e72830f3eaa6a9be3d6c35604c404b6d7db0ec4314c9f6db",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/PREPARATION.json"
+  },
+  {
+    "path": "main32/r3_direct32_batched.py.patch",
+    "bytes": 14200,
+    "sha256": "3d12a21435d9d0685d6c4d10f817ec9ded9542c3c087ba9e158bb4eddeda7b37",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/r3_direct32_batched.py.patch"
+  },
+  {
+    "path": "main32/admin_exec.DIRECT32-UNREGISTERED.py.patch",
+    "bytes": 8804,
+    "sha256": "fca106736129cfb81461fb9cddccbb71c0586ff11f8d88fbffbc450502ea7fb6",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/admin_exec.DIRECT32-UNREGISTERED.py.patch"
+  },
+  {
+    "path": "main32/register_cas.py.patch",
+    "bytes": 16461,
+    "sha256": "06a06ffb51f6ad32156bc48bb4cde2e9fee24bc95f3d582be6b78007327abfb3",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/register_cas.py.patch"
+  },
+  {
+    "path": "main32/issue_phase.py.patch",
+    "bytes": 7883,
+    "sha256": "5907d5a1cfb8b8907171458aece67c03b4f1a762134458e233e7082bb87dda1f",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/issue_phase.py.patch"
+  },
+  {
+    "path": "main32/issue_registration.py.patch",
+    "bytes": 6332,
+    "sha256": "38679edbe020fb7a4a710f4532f69eb1328ac53f1b56f10a39e43cb75519ede3",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/issue_registration.py.patch"
+  },
+  {
+    "path": "main32/issue_upgrade_authority.py.patch",
+    "bytes": 2467,
+    "sha256": "ba0106689d17dc6fcecddaea369bf2058322c20c26e19c3f1f8ab3db178ecddb",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/issue_upgrade_authority.py.patch"
+  },
+  {
+    "path": "main32/original-cas-direct32-carrier.UNISSUED.py.patch",
+    "bytes": 2408,
+    "sha256": "e6b6f7d0afe9f622ecd99c8d1bdf59a161a4bdb0928ccd527fc692c7e37c310e",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01/original-cas-direct32-carrier.UNISSUED.py.patch"
+  },
+  {
+    "path": "d1/PINS.json",
+    "bytes": 1110,
+    "sha256": "65e2a29f37b561217c7b7967359526551faae97cd42969cf5993f22abc2ec6ef",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261116-r3-install-session-observation-01/PINS.json"
+  },
+  {
+    "path": "d1/DELTA.patch",
+    "bytes": 10270,
+    "sha256": "bf455a962fec4d99876d3c346f393ef3fdfbc22b34957a0b13b562b4736b310f",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261116-r3-install-session-observation-01/DELTA.patch"
+  },
+  {
+    "path": "d1/CAPTURE-DELTA.patch",
+    "bytes": 2554,
+    "sha256": "a23b3aab303e8ffb871ef16c1757c52135eb7d45b22cab2829b49b28689d7ba8",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261116-r3-install-session-observation-01/CAPTURE-DELTA.patch"
+  },
+  {
+    "path": "d1/CAPTURE-OFFLINE-RESULT.json",
+    "bytes": 290,
+    "sha256": "d742b24fd735619ad4c256408d6663adef8f26c7ffc9a3096a1349db0f5dd06b",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261116-r3-install-session-observation-01/CAPTURE-OFFLINE-RESULT.json"
+  },
+  {
+    "path": "qb-leaf/RESULT.json",
+    "bytes": 1938,
+    "sha256": "5498a301414c34b928da96532300edf1167acbd339d56c3db3612a8dee9d0f28",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261116-r3-install-capture-source-review-01/RESULT.json"
+  },
+  {
+    "path": "adapter32/READY.json",
+    "bytes": 2711,
+    "sha256": "b1edc84e0082031a93958525209e3f6567e1a3cca5a18f068e412feea1e1634b",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-adapter-local-01/READY.json"
+  },
+  {
+    "path": "adapter32/PINS.json",
+    "bytes": 509,
+    "sha256": "772a885a8a1b77237c7c82bcfda84260d2e0a68e246e9814e2067136e71ab7f8",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-adapter-local-01/PINS.json"
+  },
+  {
+    "path": "adapter32/CHECKS-PAIR32.json",
+    "bytes": 549,
+    "sha256": "d9fe00b19301ff063ad132c098256a7d5d2b66b25ef7373a5ed5472f8fa0cd2c",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-adapter-local-01/CHECKS-PAIR32.json"
+  },
+  {
+    "path": "basis32/READY.json",
+    "bytes": 2406,
+    "sha256": "eb739a9b6bda7c64ede11706466228b710491388e4303348895be8ec05a9eb85",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/READY.json"
+  },
+  {
+    "path": "basis32/PINS.json",
+    "bytes": 210,
+    "sha256": "d282ccc81d7b9cf826a479a8e2356844e5e764035bccc73822f3432ff3b5f5d5",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/PINS.json"
+  },
+  {
+    "path": "basis32/REGISTRATION-BASIS32-20261116T021407Z.json",
+    "bytes": 73414,
+    "sha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/REGISTRATION-BASIS32-20261116T021407Z.json"
+  },
+  {
+    "path": "basis32/FRESH147-RESULT.json",
+    "bytes": 5776,
+    "sha256": "ecfd5065dc5999d930694e5ce2660aed2fcf8e482ebc7aaa68d73f1892575691",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/FRESH147-RESULT.json"
+  },
+  {
+    "path": "actual31-capture/ORIGINAL-CAPTURE-READBACK-20261116T015956Z.json",
+    "bytes": 1090,
+    "sha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
+    "original": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-install-session-observation-source-local-01/ORIGINAL-CAPTURE-READBACK-20261116T015956Z.json"
+  }
+]

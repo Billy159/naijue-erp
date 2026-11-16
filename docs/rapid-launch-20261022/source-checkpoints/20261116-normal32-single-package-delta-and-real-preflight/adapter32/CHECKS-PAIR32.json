@@ -1,0 +1,16 @@
+{
+  "actualFullFreezeOrAdmissionTested": false,
+  "allEmbeddedAstParsed": true,
+  "authorityFilesCreated": false,
+  "basisFiles": 147,
+  "clientActualCollectorMatchesReceiverBuffers": true,
+  "futureKeys": 7,
+  "futurePresencePaths": 7,
+  "newMaterializationMustBeAbsent": true,
+  "oldInstallKeyAndTransportRejected": true,
+  "oldInstallationCaptureReadNotRepeated": true,
+  "priorAcceptedMaterialization04": true,
+  "remoteActions": 0,
+  "renderedProgramBytes": 53548,
+  "state": "PASS_MAIN32_ADAPTER_LOCAL_METADATA_AND_EXACT_RECEIVER_PAIR_ONLY"
+}

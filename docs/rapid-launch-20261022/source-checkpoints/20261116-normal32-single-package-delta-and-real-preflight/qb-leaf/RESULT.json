@@ -1,0 +1,38 @@
+{
+  "state": "PASS_D1_FINAL_TWO_LEAF_CAPTURE_SOURCE_INCREMENT",
+  "scope": "Capture increment only, previous actor/reset review reused. Exact two source leaves from D1; T45 final runtime bundle integration pending.",
+  "sourceDirectory": "outputs/D1/20261116-r3-install-session-observation-01",
+  "pinsSha256": "65e2a29f37b561217c7b7967359526551faae97cd42969cf5993f22abc2ec6ef",
+  "captureDeltaSha256": "a23b3aab303e8ffb871ef16c1757c52135eb7d45b22cab2829b49b28689d7ba8",
+  "captureOfflineEvidenceSha256": "d742b24fd735619ad4c256408d6663adef8f26c7ffc9a3096a1349db0f5dd06b",
+  "previousInstallerSha256": "f189a2f2d6aa3c33491d8f9823a8b78b0552e7509e535e2b288e77a4640e17c5",
+  "installerSha256": "e5f64cd5b90cbc96741d523a8600ecd81ee40bcca0e4a675c35172433964a67b",
+  "unchangedCatalogSha256": "a94f298a235ec8a9f78bfb750849145c50bb65925182e88072997bdfb89e42a1",
+  "openFindings": [],
+  "independentChecks": {
+    "previousInstallerReconstructedByteExactly": true,
+    "captureDeltaReproducedByteExactly": true,
+    "completeTwoLeafDeltaReproducedByteExactly": true,
+    "genuineProgramAndInternalInstalledTargetRequired": true,
+    "workspaceAndFullProgramHashDeriveStableUniquePath": true,
+    "identicalRuntimeHelperRejectsOldAndOtherProgramPaths": true,
+    "existingCanonicalRootPrivateDirectoryChecksPreserved": true,
+    "existingExclusiveReceiptPublicationPreserved": true
+  },
+  "reviewedProducerEvidence": {
+    "sameProgramStable": true,
+    "differentProgramDistinct": true,
+    "legacyDirectoryRejected": true,
+    "otherProgramDirectoryRejected": true,
+    "unbrandedInputRejected": true,
+    "reranFixture": false
+  },
+  "executedCandidate": false,
+  "postgresActions": 0,
+  "serverActions": 0,
+  "formalBusinessAccepted": false,
+  "pending": [
+    "T45 final runner and same-version bundle: helper uses same compiled program, non-recursive exclusive mkdir and completion read use same directory",
+    "Live install outcome"
+  ]
+}

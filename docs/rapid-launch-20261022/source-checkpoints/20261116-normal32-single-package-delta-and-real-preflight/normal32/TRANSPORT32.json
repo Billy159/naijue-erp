@@ -1,0 +1,15 @@
+{
+  "clientPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v3.py",
+  "clientSha256": "08954fa485ba3ec179a25bd69524da5353c9deb01f6890bb6230955adf404e6f",
+  "commonInputSha256": "e497b6e494a85776f15c83dc6be6f8142bb0892dde5d0736dcb47f74433e4ae1",
+  "privateTransport": {
+    "bytes": 12283,
+    "grant": "b16447fbc81f4d64",
+    "installKey": "t45-r3-batched-install-20261116-02",
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/CANDIDATE-01/install/bundle/private_transport.py",
+    "sha256": "ed39d5af3d5594cd24c64b359ac71ac29d5eb0e0d4bb3cdc64f62559a3567411",
+    "task": "T45"
+  },
+  "sameOriginalParent": true,
+  "serverActions": 0
+}

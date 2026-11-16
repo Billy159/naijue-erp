@@ -1,0 +1,125 @@
+{
+  "acceptedMaterializationSha256": "8bb064ba27cbdaeb04b64408fee3ac2f2c7c9b28c7a7720761105ca1d7d191e1",
+  "activeOperationUnits": [],
+  "allThree31ContainersStopped": true,
+  "automaticReplay": false,
+  "basisFiles": 147,
+  "basisMismatches": [],
+  "candidateKeyStates": 14,
+  "candidateKeys": 7,
+  "checkedAtAsiaShanghai": "2026-11-16T10:14:04.961947+08:00",
+  "checkedAtUTC": "2026-11-16T02:14:04.961947+00:00",
+  "current31CompletedClosure": {
+    "cleanDataVerified": true,
+    "cleanupSha256": "929460035e9b5ab7c9a9a9639a69322b6879e590bf1827006ef3c94dcd6e86cf",
+    "closureKind": "COMPLETED_START_CLEAN_STOP_AUTH_RESTORED",
+    "exitCode": 0,
+    "privateRestoredMarkerMetadataVerified": true,
+    "requestKey": "t45-first-r3-native-service-start-20261116-31",
+    "restoreRequestKey": "t45-r3-ordinary31-auth-restore-20261116-01",
+    "restoreRootResultSha256": "023d953c3fece2054074002486c6f355465cb8d70458ad1b6fc447cae8db5778",
+    "restoreTerminalSha256": "4541b36de09569184c0198d9573e5becdb01d7babf1fecc7ffd7d83d3a511c7d",
+    "retainedAckSha256": "319c4f9b4e2fb871368d2ea07a6861316da74b65ce41d67b79f685db763d994d",
+    "stopRequestKey": "t45-r3-ordinary31-preserve-stop-20261116-01",
+    "stopRootResultSha256": "dc995ed92abadab3f4a9c0a72c1ed361ce1ce45f5eb666fa6df42a71a9f47a92",
+    "stopTerminalSha256": "9ff56dfa1229233855b0cfacd9de65278bb6fd5b36dce0962e748d40c5455a49",
+    "terminalSha256": "5246a9abdb987e4309c4bc6d181373623580b019fb32a5290d8677058d94ef21",
+    "terminalStatus": "COMPLETED"
+  },
+  "currentContainers": {
+    "t45-first-r3-native-service-start-20261116-32": []
+  },
+  "databaseConnections": 0,
+  "executionLockMatches": true,
+  "grantExpiresAtUTC": "2026-12-12T04:08:53.164555+00:00",
+  "historicalInstall": {
+    "acknowledgedLayers": 0,
+    "connectionCleanup": "CLOSED",
+    "exitCode": 2,
+    "originalCapturePriorCheckedAtUTC": "2026-11-16T01:59:56.211330+00:00",
+    "originalCapturePriorReceiptSha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
+    "originalCaptureReadRepeated": false,
+    "publicResultSha256": "408a5258b02908d4975be1dec731c8d72ef77ca63b9cd87a65dcee02b7f5093c",
+    "requestKey": "t45-r3-batched-install-20261115-01",
+    "resultSha256": "5d82a437a9bae7cabf78a7dd8ce48776c48be0a8f875da1aa426d04160019d5f",
+    "rollbackAcknowledged": true,
+    "stage": "PREDECESSOR154",
+    "status": "FAILED",
+    "terminalSha256": "5d95d500adc1a2cbbccff93fee5512ed2dd5a38e83f7fe974ac7e94f0b76d5c2"
+  },
+  "issues": [],
+  "mutations": 0,
+  "newAuthorityIssued": false,
+  "newRoot05OutputAbsent": true,
+  "original31AuthenticationRestorationReceiptVerified": true,
+  "originals": {
+    "index": {
+      "bodyExported": false,
+      "bodyParsed": false,
+      "bodyRead": false,
+      "metadataDifferences": {},
+      "stableMetadata": true,
+      "state": "EXACT_METADATA_ONLY_INDEX_BODY_NOT_READ"
+    },
+    "initializer": {
+      "bodyExported": false,
+      "bodyParsed": false,
+      "bodyRead": true,
+      "metadataDifferences": {},
+      "sha256": "47a82a4e02c608e499268995d086b77a1163896c77dad9a6ea317f08b35f53f4",
+      "stableMetadata": true,
+      "state": "EXACT_STREAM_DIGEST_MATCH"
+    },
+    "summary": {
+      "bodyExported": false,
+      "bodyParsed": false,
+      "bodyRead": true,
+      "metadataDifferences": {},
+      "sha256": "2f688ba6a10d4fe3902ba2fe1e0786aebc947dcbb6c108d540cd2301050d9559",
+      "stableMetadata": true,
+      "state": "EXACT_STREAM_DIGEST_MATCH"
+    }
+  },
+  "parentMaterializationSha256": "cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec",
+  "postmasterPidAbsent": true,
+  "presentCandidateKeys": [],
+  "readErrors": [],
+  "readerSha256": "e2f76e9c8649e3c988eac12ed8e7b8f66a74920c34ed6248c6c73823f45beba7",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-basis-local-01/REGISTRATION-BASIS32-20261116T021407Z.json",
+  "receiptSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+  "registrationExecuted": false,
+  "registrationPaths": {
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct32-batched-real.json": false,
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct32-start-describe-registration-cas-20261116-01": false,
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct32-start-describe-registration-source-20261116-01": false,
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-direct32-start-describe-registration-source-20261116-01/register_cas.py": false,
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root05-20261116-01": false,
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/.direct27-fullchain-dispatcher.pending": false,
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct32_batched.py": false
+  },
+  "resourceDifferences": [],
+  "rootAndDataResources": {
+    "root": {
+      "availableBytes": 273776857088,
+      "device": 66304,
+      "deviceMajorMinor": "259:0",
+      "filesystem": "ext4",
+      "mount": "/",
+      "path": "/",
+      "reserve28GiBSatisfied": true,
+      "reserveBytes": 30064771072
+    },
+    "targetPGDATA": {
+      "availableBytes": 273776857088,
+      "device": 66304,
+      "deviceMajorMinor": "259:0",
+      "filesystem": "ext4",
+      "mount": "/",
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/data",
+      "reserve28GiBSatisfied": true,
+      "reserveBytes": 30064771072
+    }
+  },
+  "state": "PASS_REAL32_REGISTRATION_BASIS_READ_ONLY",
+  "targetPortAbsent": true
+}

@@ -1,0 +1,16 @@
+{
+  "actual31CloseoutSha256": "a52d1e454eed813414ebf8813e7e50b8ecdaedb8ae0512f54271c2c38dbf9b83",
+  "authorityFilesIssued": false,
+  "commonParametersSha256": "e497b6e494a85776f15c83dc6be6f8142bb0892dde5d0736dcb47f74433e4ae1",
+  "mainModuleBytes": 65325,
+  "newInstallKey": "t45-r3-batched-install-20261116-02",
+  "oldInstallKey": "t45-r3-batched-install-20261115-01",
+  "privateTransportBytes": 12283,
+  "privateTransportSha256": "ed39d5af3d5594cd24c64b359ac71ac29d5eb0e0d4bb3cdc64f62559a3567411",
+  "rootBasisFiles": 147,
+  "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+  "serverActions": 0,
+  "sourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+  "state": "LOCAL_MAIN32_SOURCE_REVIEW_PENDING",
+  "unchangedWriterKey": "t45-r3-batched-real-execute-20261115-01"
+}

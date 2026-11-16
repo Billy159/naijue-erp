@@ -1,0 +1,7 @@
+{
+  "CHECKS-PAIR32.json": "d9fe00b19301ff063ad132c098256a7d5d2b66b25ef7373a5ed5472f8fa0cd2c",
+  "read-registration32-original.patch": "acc38db85d7604d74dfb9770542b43363d10a732b1015b945a25f95f60c30ecc",
+  "read-registration32-original.py": "ec86fdf222b3da86c6c3eb787068191ba301f6d008f2db6f79b0c505a91bd2ba",
+  "register_issued32_once.patch": "d0a74259d037196b49d87ec6777f207ccf9d21522814decaaa967bcce6e72e04",
+  "register_issued32_once.py": "f825a8ae3ff0029f0a21fd06e9877ec3cdcf0ee558bc2afdf0d859345be86a2e"
+}

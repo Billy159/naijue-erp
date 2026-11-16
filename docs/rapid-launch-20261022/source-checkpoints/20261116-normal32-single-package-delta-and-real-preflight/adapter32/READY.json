@@ -1,0 +1,40 @@
+{
+  "absenceCheckPaths": 7,
+  "authorityFilesCreated": false,
+  "files": {
+    "CHECKS-PAIR32.json": "d9fe00b19301ff063ad132c098256a7d5d2b66b25ef7373a5ed5472f8fa0cd2c",
+    "read-registration32-original.patch": "acc38db85d7604d74dfb9770542b43363d10a732b1015b945a25f95f60c30ecc",
+    "read-registration32-original.py": "ec86fdf222b3da86c6c3eb787068191ba301f6d008f2db6f79b0c505a91bd2ba",
+    "register_issued32_once.patch": "d0a74259d037196b49d87ec6777f207ccf9d21522814decaaa967bcce6e72e04",
+    "register_issued32_once.py": "f825a8ae3ff0029f0a21fd06e9877ec3cdcf0ee558bc2afdf0d859345be86a2e"
+  },
+  "localRunnerSha256": "2c52e903f3bf725bc78b9dd594b62befb3495f6bfe5a873ae9c42c33b61cc37e",
+  "mainCarrierSha256": "243a98e0f6a49ae97320247ff5ee1d0054d63d2587a809e30947af9d0089d0ce",
+  "mainDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01/SERVICE32-INSTALL-SESSION-SUCCESSOR-01",
+  "mainModuleBytes": 65325,
+  "mainModuleSha256": "4ff1a618c2e10c2119a16bd19a621d3c0c48a3ba92fe01229baec809fbb29316",
+  "mainPinsSha256": "7f350d38f72968680420995a937b9ba5e4046f35b407538d29388c952af315f0",
+  "mainRegistrarSha256": "b8df38927320c289c203a4f0b58025a635315ddc3bc5b28488f03851a241060b",
+  "mainTemplateSha256": "dce956bb8eb7a059cde279d752f462e781e9ac5ab2445357caafa90ccd315c0b",
+  "metadataPrepareOnly": true,
+  "normal32ReadySha256": "0ad9b3aea99f00369f04ddec37e2dfacf05dd25efdd8ec0465bc480375ea759a",
+  "oldCaptureReadRepeated": false,
+  "oldInstallOriginalCaptureReceiptSha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
+  "phaseReaderSha256": "982ea6a40f33b383a77e9455cf7a9b92209bdb6a366941a53afe095a2e09d031",
+  "pinsSha256": "772a885a8a1b77237c7c82bcfda84260d2e0a68e246e9814e2067136e71ab7f8",
+  "privateTransport": {
+    "bytes": 12283,
+    "grant": "b16447fbc81f4d64",
+    "installKey": "t45-r3-batched-install-20261116-02",
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-normal32-install-session-successor-local-01/CANDIDATE-01/install/bundle/private_transport.py",
+    "sha256": "ed39d5af3d5594cd24c64b359ac71ac29d5eb0e0d4bb3cdc64f62559a3567411",
+    "task": "T45"
+  },
+  "remoteActions": 0,
+  "resourceAndOriginalsCombinedInFutureBasisCall": true,
+  "rootBasisFiles": 147,
+  "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+  "state": "FROZEN_LOCAL_EXACT_MAIN32_ADAPTER_PENDING_INDEPENDENT_PAIR_REVIEW",
+  "transportClientSha256": "08954fa485ba3ec179a25bd69524da5353c9deb01f6890bb6230955adf404e6f",
+  "unsubmittedPhaseKeys": 7
+}

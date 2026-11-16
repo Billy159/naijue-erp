@@ -1,0 +1,103 @@
+--- issue_phase.py
++++ issue_phase.py
+@@ -1,4 +1,4 @@
+-"""Issue finite direct31 phases from actual predecessor receipts; no server execution."""
++"""Issue finite direct32 phases from actual predecessor receipts; no server execution."""
+ from pathlib import Path
+ import base64
+ import hashlib
+@@ -56,7 +56,7 @@
+     proof = api(folder / 'normal_service05_after08_proof.py', rule)
+     previous_base = CONTROL / '20261115-r3-direct-service24-start-window-01'
+     a = read(previous_base / 'service-start-authorization.json')
+-    # The actual completed30 predecessor has its own successful stop and auth restoration.
++    # The actual completed31 predecessor has its own successful stop and auth restoration.
+     a.update(proof['scope']())
+     seconds = min(6000, (roles['restorationDeadline'] - 600_000 - now) // 1000)
+     assert seconds > 3600
+@@ -66,7 +66,7 @@
+     assert roles['backupAdminValidUntil'] < lease - 35_000 < policy['expiresAt']
+     a.update(startsAt=now, expiresAt=expiry, maximumServiceSeconds=seconds,
+              serviceLeaseExpiresAt=lease, capacityExpiresAt=lease,
+-             authorizationReference='Finite same-PGDATA service31 for the approved direct REAL batch and exact DB05 install.',
++             authorizationReference='Finite same-PGDATA service32 for the approved direct REAL batch and exact DB05 install.',
+              normalServiceSha256=rule['bundlePins']['normal_service05_after08.py'],
+              proofSourceSha256=rule['bundlePins']['normal_service05_after08_proof.py'],
+              previousTerminalSha256=witness['priorStartTerminalSha256'],
+@@ -112,7 +112,7 @@
+         authority = dict(host['scope'](), service=service, startsAt=now, expiresAt=expiry,
+                          writerTerminalSha256=OLD_WRITER, policySha256=OLD_HOLD, sourceSha256=sha(src.read_bytes()),
+                          currentBatchTerminals=evidence['currentBatchTerminals'],
+-                         authorizationReference='Cleanly stop exact generation 28 and preserve its data directory.')
++                         authorizationReference='Cleanly stop the exact authorized service and preserve its data directory.')
+         host['validate'](authority, now)
+         return authority
+     service = observation(start, policy, witness) if start is not None else None
+@@ -221,20 +221,18 @@
+     description_pin = rule['bundlePins']['source-description.json']
+     description = read(folder / 'source-description.json', description_pin)
+     assert description['format'] == 'T45_R3_EXACT_TWO_FILE_SOURCE_DELTA_V1'
+-    assert description['predecessorMaterializationSha256'] == witness['parentMaterializationSha256'] == 'cdcaf09ad0325dc0d563b8191d6e0fa803f28b2ffe195ee81961b436f9420cec'
+-    assert description['predecessorSourceRowsSha256'] == witness['parentSourceRowsSha256'] == '399d3ac7ce1e7d903ba37b7243ea3c9d694712d9cb8f9fec06137125d7c89109'
+-    assert description['sourceSetSha256'] == witness['sourceSetSha256'] == 'ba6c85d25118972ba81e859a0539a854a6cb39f4360b47ed35914fdbcf183663'
+-    assert description['sourceRowsSha256'] == witness['sourceRowsSha256']
+-    assert description['sourceFiles'] == witness['sourceFiles'] == 382
+-    assert len(description['changes']) == 2 and {row['path'] for row in description['changes']} == {
+-        'scripts/release/unified-install/fresh35-combined-catalog-v1.mjs',
+-        'scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs'}
++    for key, witness_key in (('predecessorMaterializationSha256','parentMaterializationSha256'),
++                             ('predecessorSourceRowsSha256','parentSourceRowsSha256'),
++                             ('sourceSetSha256','sourceSetSha256'),('sourceRowsSha256','sourceRowsSha256'),
++                             ('sourceFiles','sourceFiles')):
++        assert description[key] == witness[witness_key]
++    assert sorted(row['path'] for row in description['changes']) == ['scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs', 'scripts/release/unified-install/fresh35-combined-catalog-v1.mjs']
+     host = api(folder / rule['script'], rule)
+     fixed = host['scope']()
+-    assert fixed['outputDirectory'] == '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root04-20261116-01'
++    assert fixed['outputDirectory'] == '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root05-20261116-01'
+     assert fixed['sourceDescriptionSha256'] == description_pin
+     authority = dict(fixed, startsAt=now, expiresAt=min(now+900_000,policy['expiresAt']),
+-                     authorizationReference='Exact reviewed two-file SQL39 model-composition source delta from preserved703; new04 once, old03 never replayed; no database or service action.',
++                     authorizationReference='Exact reviewed two-file installer identity, RESET and capture delta from preserved completed root04. Materialize the new source once without starting PostgreSQL.',
+                      independentReviewSha256=manifest['independentReviewSha256'],
+                      sourceSha256=rule['bundlePins'][rule['script']])
+     host['validate'](authority, now)
+@@ -304,6 +302,11 @@
+     assert result['service'] == fields['service']
+     assert result['state'] == 'DB05_CATALOG_INSTALLED_AND_CAPTURED'
+     assert result['connectionCleanup'] == 'CLOSED' and result['roleRestoreAcknowledged'] is True
++    assert installed['resultObjectsEqual'] is True and result['acknowledgedLayers'] == 13
++    program = context['start']['descriptor']['programSha256']
++    assert result['programSha256'] == program
++    assert result['captureDirectoryLeaf'] == 'batched161-upgrade-' + program
++    assert len(result['completionSha256']) == 64 and set(result['completionSha256']) <= set('0123456789abcdef')
+     catalog = result['batchedCatalog']
+     assert set(catalog) == {'sourceSetSha256', 'catalogSpecSha256', 'modelSha256'}
+     assert catalog['catalogSpecSha256'] == result['successorCatalogSpecSha256']
+@@ -347,14 +350,13 @@
+ def issue(phase, rules_file, rules_pin, registration_directory,
+           evidence_path=None, evidence_pin=None, predecessor_path=None, predecessor_pin=None):
+     witness = read(rules_file, rules_pin)
+-    assert phase != 'materialize', 'Completed root04 must never be submitted again'
+-    assert witness['materializeNeverResubmit'] is True and witness['materializationAlreadyCompleted'] is True
+-    assert witness['materializationMode'] == 'REUSE_ACTUAL_COMPLETED_ROOT04_NEVER_RESUBMIT'
++    assert witness['materializeNeverResubmit'] is True and witness['materializationAlreadyCompleted'] is False
++    assert witness['materializationMode'] == 'NEW_EXACT_TWO_FILE_DELTA_FROM_ACTUAL_COMPLETED_ROOT04'
+     issued = Path(registration_directory).resolve()
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+     assert manifest['rulesSha256'] == rules_pin
+-    policy = read(issued/'direct31-batched-real.json',manifest['policySha256'])
++    policy = read(issued/'direct32-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+@@ -384,7 +386,7 @@
+     assert policy['startsAt']<=authority['startsAt']<=now
+     assert now+rule['timeoutSeconds']*1000<authority['expiresAt']<=policy['expiresAt']
+     raw=encode_authority(authority)
+-    directory=CONTROL/('20261116-r3-direct-service31-'+phase+'-window-01')
++    directory=CONTROL/('20261116-r3-direct-service32-'+phase+'-window-01')
+     directory.mkdir(mode=0o700)
+     with (directory/rule['authorityLeaf']).open('xb') as stream:stream.write(raw)
+     report=dict(path=str(directory/rule['authorityLeaf']),sha256=sha(raw),bytes=len(raw),

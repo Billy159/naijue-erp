@@ -1,0 +1,11 @@
+{
+  "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+  "sourceMessageId": "01a1e1b0-8500-7323-b5c0-14c7aea995b8",
+  "humanDecision": "是把11月11日的换成11月16日的数据",
+  "decisionScope": "Use verified November 16 export as the formal business input",
+  "exportLocation": "AWAITING_USER_LOCATION",
+  "existingOldPackage": "Preserved reference, not a November 16 batch",
+  "currentServerScope": "Continue already-authorized schema installation while data input is located",
+  "writerAdmission": "New actual source package, cutoff, dispositions, plan/index and authoritative manifest required prior to writer",
+  "previousWriterKeyStillUnsubmitted": true
+}

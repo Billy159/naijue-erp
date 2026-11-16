@@ -7627,6 +7627,21 @@
             "stopReadbackSha256": "8726146195b64baf7a322b552ddbc1775b3f7243289d2eb703b037968e2f165d",
             "restoreReadbackSha256": "362125d51310a95aaf3b7c8551e6714b044428fb673fb3ba8b14c4b4fca669ae",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_NORMAL32_SINGLE_PACKAGE_INSTALL_SESSION_FIX_REAL_147_PREFLIGHT_20261116",
+            "state": "LOCAL_SOURCE_AND_REAL_RO_COMPLETE_FINAL_SOURCE_REVIEW_PENDING",
+            "evidenceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-single-package-delta-and-real-preflight",
+              "files": 32,
+              "bytes": 226260,
+              "manifestSha256": "015fe71b05262de9995c49dc8da8e3ce75b60839b2f0bfa424966e8de81e6efe"
+            },
+            "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+            "mainPinsSha256": "7f350d38f72968680420995a937b9ba5e4046f35b407538d29388c952af315f0",
+            "rootBasisSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+            "originalCaptureSha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7638,9 +7653,9 @@
           "objective": "existing formal launch goal; user now cancels full rehearsal gate and authorizes direct approved REAL batch progression",
           "D1": {
             "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-            "state": "INSTALLER_ACTOR_CONTRACT_ROOT_CAUSE_CONFIRMED_SOURCE_FIX_IN_PROGRESS",
+            "state": "TWO_OWNER_FILES_FINAL_ACTOR_RESET_CAPTURE_SOURCE_PASS",
             "writeScope": "outputs/D1/20261115-r3-real154-install-host-01",
-            "work": "Actual 154 reached post validated session admin and effective owner, producer actor=session_user emitted admin, old owner-login consumer requires owner. Same observe function for 154/155/161. Also PG17.11 RESET command semantics and exact pg8.23.1 parser show RESET not SET; actual31 tag was not retained. Narrow two-leaf source repair, preserve old consumer branches and all original SQL operands/order/guards."
+            "work": "D1 final PINS65e2, installer e5f64/catalog a94f29, delta bf455. Fixed admin session/effective owner role 154/155/161, RESET/I and derived original workspace capture basename from genuine program digest; prior actor/RESET and final capture QB5498 scope passed. Historical SQL guard, original 13 transactions and unknown COMMIT behavior retained."
           },
           "D3": {
             "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
@@ -7655,20 +7670,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "NORMAL31_02_FINAL_SAME_VERSION_SOURCE_PASS",
-            "work": "RESULT997e actual completed review, rules5d0a/Main02 PINS184e. Two transport/registration seams closed, full exact new pair reviewed; no runtime or business PASS. Prior D1/SQL39/source04 scopes reused."
+            "state": "D1_FINAL_PASS_32_FINAL_PAIR_REVIEW_ACTIVE",
+            "work": "D1 final capture result5498 exact two leaves. Final 32 changed chain and 147/adapters under review. Real facts restricted to previous 31 safe close and current server read-only preflight."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "SERVICE31_STOPPED_ORIGINAL_AUTH31_ACTUALLY_RESTORED_INSTALL_SUCCESSOR_CONTRACT_INVENTORY_LOCAL",
+            "state": "SINGLE_PACKAGE_32_FROZEN_LIVE_147_PREFLIGHT_PASS_WAIT_FINAL_REVIEW",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Actual start31 COMPL0/43.558s, C42e7/CID3c83/PGepoch00:16:43.861Z, genuine source04/13-step descriptor 05f132 native compile passed. Original install submitted once using fixed client846e/receiver857e, received private725415 exact bytes. Failed at PREDECESSOR154 identity, actual9642 FAILED2/39.7496s/ACK0/rollback acknowledged/connection closed; role reset ACK false. Original install key consumed and original receipt preserved. Original writer remains absent. Actual stop8726 clean/PID-port absent; auth restore3621 COMPL0/6.7598s, exact original verifier and expiry privately verified (not natural expiry), maintained original DATA/04, PG still stopped and active units empty. T45 alone integrates exact successor after supported admission/capture inventory, no new server action yet."
+            "work": "Unique T45 rules31a8, PINS810c, source delta05 2399/382, expected marker e8f8 not executed. New install key 20261116-02 follows verified old failed zero layers, original writer request unsubmitted. Capture0b6b actual only attempt and failure files and zero later outputs, preserved. Fresh actual feb3 02:14:04Z 147 matches, old 31 C/ACK/stop/exact restored role fields, seven new keys absent in both grants, 05 output absent, 254.97GiB/28GiB, protected index/summary/INIT match. Current PG stopped. No registry, phase, or authority launched."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "NATIVE31_ACTUAL_INSTALL_FAILED_PREDECESSOR154_KNOWN_ZERO_ACK_ROLLBACK_CLOSED_STOPPED_AUTH_RESTORED_REAL_UNSUBMITTED",
+          "formalR3": "ACTUAL31_SAFE_CLOSE_REPAIR32_SINGLE_PACKAGE_SOURCE_READY_LIVE_PREFLIGHT_PASS_FINAL_REVIEW_PENDING_NO_NEW_INSTALL",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7681,18 +7696,18 @@
           "latestPolicySha256": "a07d6db401cfc669bfb94a444cf0f310c4be0d416356cb92b481f79c537ff065",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "D1 exact two-leaf contract fix and T45 original consumed-key/capture and single package integration plan; preserve existing formal writer and no rehearsal overlap.",
+          "nextCheckpointScope": "Final 32 same-version source review, actual issuer dry run on fresh feb3, then actual source materialization, service start and repaired installation. Formal writer held until actual 2026-11-16 business export is identified and verified.",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal31-install-failed-zero-commits-auth-restored",
-            "files": 10,
-            "bytes": 47133,
-            "manifestSha256": "b3e11c86edf5a62c53e11f3e208ab82643a6b3e434e7f673c58fa8fd1d555386"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-single-package-delta-and-real-preflight",
+            "files": 32,
+            "bytes": 226260,
+            "manifestSha256": "015fe71b05262de9995c49dc8da8e3ce75b60839b2f0bfa424966e8de81e6efe"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "ACTUAL31_INSTALL_FAILED_SAFE_CLOSE_ISSUER_PENDING_EXACT_SUCCESSOR_CONTRACT",
-            "work": "Original start and install authority executed, actual ACK0 rollback then original stop and auth restore terminal; old explicit role window closed, no new clock. D1 fixes exact admin-to-owner and RESET ACK, T45 owns executable package integration from one source; need exact consumed-key and capture directory closure, preserve business writer/original input and no bypass, then review only changed chain."
+            "state": "NORMAL32_SOURCE_PREPARED_EXACT_LIVE_PREFLIGHT_PASS_QB_PENDING",
+            "work": "Single input e497 binds service, known FAILED2 154/ACK0/rollback and safe close. Main 7f350 / module65325B/147basis and seven exact job scopes, protected historical install terminal and result, original 04 retained. Source-phase paired exact v3 ed39 bytes, new capture pipeline with actual success/13ACK conditions. Fresh feb3 already returned. Await final same-version QA and actual issuer dry run before finite authority."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -8004,7 +8019,19 @@
             ],
             "requestedFreshSourceCutoff": "2026-11-16",
             "freshSourceExportLocated": false,
-            "currentPackageRetained": true
+            "currentPackageRetained": true,
+            "dataCutoffHumanMessageId": "01a1e1b0-8500-7323-b5c0-14c7aea995b8",
+            "currentPackageOnlyHistoricalReferenceForBusiness": true,
+            "waitingForUserExportLocation": true
+          },
+          "normal32Source": {
+            "commonInputSha256": "e497b6e494a85776f15c83dc6be6f8142bb0892dde5d0736dcb47f74433e4ae1",
+            "rulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+            "mainPinsSha256": "7f350d38f72968680420995a937b9ba5e4046f35b407538d29388c952af315f0",
+            "sourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+            "rootBasisSha256": "feb3fafac6762d76a01e5a67faa353efdc5ff13aac27c60c4bafcaf13b95c616",
+            "originalCaptureSha256": "0b6b2e3561a0d924932bcc43c0e2b2bf1ea9123a5dc5bd59d638a39cb4b05ae5",
+            "newConstraints": "One exact successor, previous install history protected, single current run candidate and existing registry. No new time window or install submitted."
           }
         },
         "independentDeltaReviewer": "QB",
