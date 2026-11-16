@@ -1,0 +1,21 @@
+{
+  "verification": "LOCAL_MODELED_OBSERVATION_SQL_AND_NATIVE_MODEL",
+  "livePgChecks": 0,
+  "productionRuntimeCatalogSpecSha256": null,
+  "original": {
+    "operatorSourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+    "observedCatalogSourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+    "catalogSourceSetSha256": "b7aa9fa8766d53d06ab9bd335d047fe9830cc95e8df31333e942193221ba7269",
+    "modelSha256": "6e0a0e039eead7714d4e2ec6c995678860dee16d35e7282245bc5748eb565e85",
+    "controllerMetadataGuardSha256": "c1f64d847fca4c73deee83f094031b9aac847e8631b3bd32728a833b472e7977"
+  },
+  "afterOneLeaf": {
+    "operatorSourceSetSha256": "e5bf7a2628b6d18202d3254799cc3bf3ad881c261b0d71f70def15188306c7f9",
+    "observedCatalogSourceSetSha256": "2621bb5f3d788ae946c620a935eb1dc6fb6cc28f714b9404d99ea34ea65a373d",
+    "catalogSourceSetSha256": "2621bb5f3d788ae946c620a935eb1dc6fb6cc28f714b9404d99ea34ea65a373d",
+    "modelSha256": "6e0a0e039eead7714d4e2ec6c995678860dee16d35e7282245bc5748eb565e85",
+    "controllerMetadataGuardSha256": "c1f64d847fca4c73deee83f094031b9aac847e8631b3bd32728a833b472e7977",
+    "sourceRowsSha256": "961d0916274f1cd2cf5d12cb18664b1edef29b82b9753862d35b82bdf5ee40a9",
+    "files": 382
+  }
+}
