@@ -1,0 +1,135 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "fullDataCompilationRuns": 0,
+    "issuanceClockCalls": 0,
+    "nativeTargetOrAuthorityInstances": 0,
+    "newJobsSubmitted": 0,
+    "ownerSourcesModified": false,
+    "priorReportsOverwritten": false,
+    "privateAuthenticationSnapshotBodiesOrDigestsRead": false,
+    "readerIssuerCASCarrierOrClientInvocations": 0,
+    "serverConnections": 0
+  },
+  "consumerReview": {
+    "path": "outputs/QB/20261117-r3-normal35-consumer-review-03/RESULT.json",
+    "state": "SOURCE_PASS_NORMAL35_CONSUMER_03_ONLY_PENDING_ROOT_PAIR"
+  },
+  "consumerReviewSha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6",
+  "consumerSourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "files": {
+    "NINE-PHASES.UNISSUED.json": {
+      "bytes": 33450,
+      "sha256": "4470e4c8315bfb00478791f27bbac21b0dd0dd20f084a1616802d1ae2e7c3c38"
+    },
+    "admin_exec.NORMAL35-UNREGISTERED.py": {
+      "bytes": 45101,
+      "sha256": "f01c78db33f3dfdd88972f3b2455cad23269c78ac3642c59c4dcdde91c2d5198"
+    },
+    "issue_phase.py": {
+      "bytes": 38845,
+      "sha256": "abe191d45e556697dfc2ce19432f04e9e9eb4f566a0a4feaab3c05a055b25448"
+    },
+    "issue_registration.py": {
+      "bytes": 13435,
+      "sha256": "6f89e40f8334775224d2adb535f1670555e5fc0e1a410fb4375effccd3eb4a87"
+    },
+    "original-cas-normal35-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "34fb7f248d87c790bf95d1fc9a386d265ba2635d7de0438c79194350c7ada187"
+    },
+    "r3_direct35_normal.py": {
+      "bytes": 113939,
+      "sha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4"
+    },
+    "read_registration_basis.py": {
+      "bytes": 92302,
+      "sha256": "08c0d4ba87319263c281ad3b5f2c42d38e7177c4a4d81eb00b5886c6cba082ab"
+    },
+    "register_cas.py": {
+      "bytes": 115866,
+      "sha256": "de19fb1226d1b8c727ac14a646e4654f7a24bce601e7e682be78684f16fabcd9"
+    }
+  },
+  "findings": [],
+  "incrementalVerification": {
+    "all15PinnedDeliveryFilesExact": true,
+    "allOriginal203EntriesRetainedOnlyCurrentDispatcherAndOldPolicyUpdated19NewEntries": true,
+    "basis222EqualsCurrentFactsAndReaderCASActualConstants": true,
+    "eightPrivateSnapshotPathsMetadataOnlyPlusOriginalLockGive231Identities": true,
+    "fourNewMaintenanceKeysAndInnerCustody35ThreeBusinessKeysINITAndCompletedTwoMaterializationsPreserved": true,
+    "freshEvidenceFifteenMinuteLimitAndFull180MinuteGrantCoverageBeforeActualIssue": true,
+    "independentDirect35ModuleAndPolicyPathsOldDirect34PolicyAndHelperRetained": true,
+    "issuerPinsExactConsumerReportPathStateHashAndActualSourcePinsSha256Field": true,
+    "issuerRequiresThisRootStateSourceOnlyNoFindingsRulesConsumerPinsAndAllEightSourceFiles": true,
+    "loadedHelperCASReaderJOBSAndTwoHelperLiteralAssignmentsEqualNineRules": true,
+    "newClosed34RootPublicTerminalResultCACKCleanupTupleAndExactSafeAuthRestorationChecks": true,
+    "newRoleHashMustDifferFrom33bc60ffAndUsed34_06ada": true,
+    "newRoleScopeAndOld34PrivateOriginalAuthenticationComparisonReusedFromConsumerPass": true,
+    "newRoleWindowsFromActualFutureNowThirty120_122_150MinutesWithinParent180AndRegistration15": true,
+    "nineRules75StaticMembersPair52CurrentConsumerAnd23UnchangedCompletedInputs": true,
+    "noNativeEntryOrFullDataCompilationRepeated": true,
+    "old34SourcePinsAndStoppedOldContainersRequiredWithoutFuture35PgStoppedOrCustodyAbsentRuntimeRequirement": true,
+    "originalDispatcherAndPolicyArchivedUnknownResultsReadOriginalAuditWithoutReplay": true,
+    "originalHistoricalJOBSUsedAndCompletedUnchanged": true,
+    "phaseIssuerStillEightArguments": true,
+    "real34ServiceAndEightBindingsAgreeAcrossFactsWitnessConsumerAndActualLoadedModules": true,
+    "registrationIssuerStillNineRequiredArguments": true,
+    "registrationQuietSeparatelyRequiresUnused35StateStoppedOriginalPgNoActiveOperations": true,
+    "rootPermissionsBudgets300_780_3000_5100And28GiBUnchanged": true,
+    "sameOriginalLockSnapshotsModuleThenExclusiveNewPolicyThenDispatcherLastCAS": true,
+    "threeTypedActual34ReceiptsHashesAndNewFailureCleanupPredicatesIndependentlyMatched": true,
+    "unchangedHelperMethodsIncludingFiniteFrozenGuard": 28,
+    "unchangedPhaseIssuerFunctionsIncludingStartAuthority": 17,
+    "used34MaintenanceAndRefused34Apply01AndCompletedMaterializationReplayRejected": true
+  },
+  "independentEvidence": {
+    "frozenBeforeThisFinalReport": true,
+    "path": "outputs/QB/20261117-r3-normal35-root-review-01/ACTUAL-CONSTANTS-RESULT.json",
+    "sha256": "70fa4d46a4c8fb40562c4b7118659502e1b03e149a19b4e90cff0174a922d1ea"
+  },
+  "limitations": [
+    "Source-only pair passes. Actual fresh222/231 server readback and unused35 state have not been collected by QB and remain required before issuance.",
+    "No authority, issuance clock, CAS publication, new35 job, server action, PG connection or business import was performed by QB.",
+    "Actual root loader, issuer, register, reader main and carrier were never called. Only module definitions and constants were loaded for the independent evidence.",
+    "Failed34 earliest original exception remains UNKNOWN; confirmed static root/ordinary conflict is not claimed as the captured earliest runtime error.",
+    "No APP, cold, clone, role business acceptance, deployment or complete business-import PASS.",
+    "Only this exact final03 consumer and roota457/rules4470 pair is reviewed. Old rejected01/02 and used authorities remain non-replayable.",
+    "This final report is frozen once. Later additional evidence must use another file and must not rewrite these issuance-bound bytes."
+  ],
+  "ownerChecksReused": {
+    "archiveCommitAfB604ByteVerificationReusedNotRerun": true,
+    "notRerunByQB": true,
+    "path": "outputs/D1/20261117-r3-normal35-root-source-01/LOCAL-CHECKS.json",
+    "sha256": "5e4e4ab670936f6de2aa589f5ce5cc1b3846fb33a7f2ded2955d5f3ac0d25cf0"
+  },
+  "reusedFrozenReviews": [
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-03/RESULT.json",
+      "scope": "All exact final consumer semantics and closedC01/C02/C03",
+      "sha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal34-apply02-cli-review-01/ROOT-RESULT.json",
+      "scope": "Unchanged mature original registration and helper contracts",
+      "sha256": "0b43743b26ae94e6272fe1a54ce6586267cc980fe5cc3ab09a7f307a0f134807"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-postcompile-root-binding-review-01/RESULT.json",
+      "scope": "Entry static defect and minimal source fix, not runtime earliest exception",
+      "sha256": "cf2841de11b468b75618af3df389f364b5bd126d3f806d1ec11b91332bbb3768"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+      "scope": "Separate private seam only; no actual upload implied",
+      "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+    }
+  ],
+  "reviewer": "QB",
+  "rulesSha256": "4470e4c8315bfb00478791f27bbac21b0dd0dd20f084a1616802d1ae2e7c3c38",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal35-root-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "a457926e1d496e1fc6e1d9c4319abbf0b343e05997ead82f93b07ddadd339de4",
+  "state": "SOURCE_PASS_NORMAL35_ROOT_PAIR_ONLY"
+}

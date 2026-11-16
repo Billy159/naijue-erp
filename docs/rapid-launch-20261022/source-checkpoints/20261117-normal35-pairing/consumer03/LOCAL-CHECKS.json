@@ -1,0 +1,11 @@
+{
+  "PGConnections": 0,
+  "independentSuccessorReview": "PENDING",
+  "locationCorrectionChecksSha256": "0ea308202816911863ebf47b5e46d1e7d5987b65b273e45d9b4f116027cf546c",
+  "reusedQBResult": "outputs/QB/20261117-r3-normal35-consumer-review-02/RESULT.json",
+  "reusedQBResultSha256": "41d1719572a9675c5597730082cd1286385f9ee6c36c53318130af38437fe867",
+  "reusedScope": "N35-C01/C02 closed; all52 runtime unchanged from02",
+  "runtimePass": false,
+  "serverActions": 0,
+  "state": "LOCAL_SOURCE_ONLY_NORMAL35_03_LOCATION_CORRECTION_CHECKED"
+}

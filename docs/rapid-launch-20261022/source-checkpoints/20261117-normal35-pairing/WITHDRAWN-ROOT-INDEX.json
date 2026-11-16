@@ -1,0 +1,27 @@
+{
+  "state": "ROOT01_A457_AND_REVIEW_E3EE_WITHDRAWN_NEVER_ISSUED",
+  "files": [
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal35-root-review-01/RESULT.json",
+      "file": "qb/ROOT01-WITHDRAWN-RESULT.json",
+      "sha256": "e3ee720142d9d7495cec11a69e63fa1e73765dcf59bbe6b40450125506e3c517",
+      "bytes": 7370
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal35-root-review-01/WITHDRAWAL-AND-FINDINGS-01.json",
+      "file": "qb/ROOT01-WITHDRAWAL-AND-FINDINGS.json",
+      "sha256": "6112635fef5ad9609be33d360eda7654a3e364162fc60a74868c0e8fe1b6dce3",
+      "bytes": 4827
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-actual-01/install/READBACK-02.json",
+      "file": "actual/HISTORICAL-INSTALL02-READBACK.json",
+      "sha256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b",
+      "bytes": 3380
+    }
+  ],
+  "defect": "historical_catalog compares real service32 installation receipt against updated current predecessor34. Keep exact check with separate original historical service binding.",
+  "newServerReadsNeeded": false,
+  "rootSuccessor02": "PENDING",
+  "consumer03ReviewF526RemainsValid": true
+}

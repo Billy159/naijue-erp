@@ -1,0 +1,25 @@
+{
+  "baseQBResultSha256": "67558bf5560dda2f685588e47d6431fd66ba82ba6d2e6638d579cfc2e603c164",
+  "baseRejectedSourcePinsSha256": "2a9d90b6f7f56218b3b48cef21dd9bd2a655e1131a9ab79f48c43dd5a5f7ec43",
+  "findings": [
+    "N35-C01",
+    "N35-C02"
+  ],
+  "newOperations": 0,
+  "normativePredecessor": "PHASES35.predecessor := exact existing prior_failed34 SERVICE and binding() eight fields",
+  "runtimeDelta": {
+    "catalog_update/bundle/batched161_command_update_host.py": {
+      "new": "0a1c6eb1d7190db9616a8aa873e5ed5ccd7cff9999aa17c7bf392fecafe1421e",
+      "old": "fe03d9399be49b1adc133591a3aefe25e8b24a29e77db7ad4289af7bd206c66e"
+    },
+    "prepare/bundle/final33_host.py": {
+      "new": "6a1247e3bb3e9ec8a66c84c97d53de781aad887b0309f8c511addd3d15310482",
+      "old": "ac4d82807dca34ef2b5e62712c0fadf80b2eb0c2730f7757d27982fc8c880d90"
+    },
+    "writer/bundle/final33_host.py": {
+      "new": "6a1247e3bb3e9ec8a66c84c97d53de781aad887b0309f8c511addd3d15310482",
+      "old": "ac4d82807dca34ef2b5e62712c0fadf80b2eb0c2730f7757d27982fc8c880d90"
+    }
+  },
+  "unchangedRuntimeMembers": 49
+}

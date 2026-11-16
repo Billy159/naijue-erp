@@ -1,0 +1,81 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "actualLocalInstallationReceiptReadOnly": true,
+    "existingReportsOrOwnerSourcesModified": false,
+    "fixturesCreated": 0,
+    "issuanceClockCalls": 0,
+    "issuerHistoricalCatalogOrNativeInvocations": 0,
+    "serverConnections": 0
+  },
+  "consumerReviewSha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6",
+  "consumerSourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "findings": [
+    {
+      "actualEvidence": {
+        "historicalInstallTuple": {
+          "publicResultSha256": "c3f11ec9de8c87c59fbd39201f8cfb9a82069485096a9ca3a7c2da14132b6749",
+          "requestKey": "t45-r3-batched-install-20261116-02",
+          "rootResultSha256": "e14e9b649d9b4d4864360384e93e059cdda80c37e769de91f2452abd1af87792",
+          "terminalSha256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2"
+        },
+        "path": "outputs/T45/revisions/20261116-r3-service32-registration-actual-01/install/READBACK-02.json",
+        "rootPublicTerminalAndResultReferencesMatchWitness": true,
+        "sha256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b",
+        "terminalExitCode": 0,
+        "terminalStatus": "COMPLETED"
+      },
+      "actualInstallationService": {
+        "containerId": "1d12c5abe2fadfc7ec5293fc9467f01c66c2ec4f9d7b1654a5b0a38c54f42d95",
+        "containerStartedAt": "2026-11-16T02:59:19.015923853Z",
+        "postmasterStart": "2026-11-16 02:59:20.307231+00",
+        "proofSha256": "f1d1a4e9f85492cba0028febc4bf05390b490161cd2983afbe76209199d8480d",
+        "serviceKey": "t45-first-r3-native-service-start-20261116-32"
+      },
+      "assertion": "result['service'] == witness['priorService']",
+      "id": "N35-R01",
+      "impact": "The retained actual installation receipt passes its exact job and terminal/root/public hash checks, then fails this service assertion. Both catalog_update_authority and final_native_authority consume historical_catalog, so catalog_update and prepare/writer issuance fail before producing valid phase authority.",
+      "line": 299,
+      "newStartupPredecessor": {
+        "containerId": "3ebc60712697f9a4fe8bd333fec07a6128b57a9c7b879c865332859acc237967",
+        "containerStartedAt": "2026-11-16T17:11:20.986520431Z",
+        "postmasterStart": "2026-11-16 17:11:22.392132+00",
+        "proofSha256": "a30976e3decacda1d23da2014cb32ed4d42d7295d7c9cc073060d4084653a34d",
+        "serviceKey": "t45-first-r3-native-service-start-20261116-34"
+      },
+      "path": "outputs/D1/20261117-r3-normal35-root-source-01/issue_phase.py",
+      "priority": 1,
+      "requiredFix": "In a separate immutable successor bind the installation-time service32 to the exact original installation receipt under historicalInstall, and make historical_catalog require it. Keep priorService34 for actual next-start predecessor validation. Preserve all exact job/hash/service assertions and historical receipt bytes; do not remove the assertion or relabel the original receipt.",
+      "title": "historical_catalog compares actual installed32 service to the new34 startup predecessor"
+    }
+  ],
+  "limitations": [
+    "Do not issue roota457/rules4470 based on e3ee7201.",
+    "A new exact root successor and scoped independent review are required.",
+    "No runtime, PG or actual issuance was used to reproduce this contradiction."
+  ],
+  "preservedEvidence": {
+    "path": "outputs/QB/20261117-r3-normal35-root-review-01/ACTUAL-CONSTANTS-RESULT.json",
+    "scope": "Actual constant and AST facts remain valid but do not prove correct historical field consumption.",
+    "sha256": "70fa4d46a4c8fb40562c4b7118659502e1b03e149a19b4e90cff0174a922d1ea"
+  },
+  "reviewCorrection": "The initial review proved seventeen functions unchanged but failed to trace changed priorService semantics into this unchanged historical consumer. The initial root PASS is withdrawn.",
+  "reviewer": "QB",
+  "rulesSha256": "4470e4c8315bfb00478791f27bbac21b0dd0dd20f084a1616802d1ae2e7c3c38",
+  "schemaVersion": 1,
+  "sourceOnly": true,
+  "sourcePinsSha256": "a457926e1d496e1fc6e1d9c4319abbf0b343e05997ead82f93b07ddadd339de4",
+  "state": "SOURCE_NEED_FIX_NORMAL35_ROOT_HISTORICAL_INSTALL_SERVICE_BINDING",
+  "unaffectedScopesReused": [
+    "Final03 consumerf526 and all closedC01/C02/C03 findings",
+    "Exact entrycf284 and private seam58fa",
+    "Actual222/231 constant equality, original lock and no replay checks, subject to successor affected closure"
+  ],
+  "withdrawnReview": {
+    "mustNotUseForIssuance": true,
+    "originalBytesPreserved": true,
+    "path": "outputs/QB/20261117-r3-normal35-root-review-01/RESULT.json",
+    "previousState": "SOURCE_PASS_NORMAL35_ROOT_PAIR_ONLY",
+    "sha256": "e3ee720142d9d7495cec11a69e63fa1e73765dcf59bbe6b40450125506e3c517"
+  }
+}

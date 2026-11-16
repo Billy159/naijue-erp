@@ -1,0 +1,17 @@
+{
+  "PGConnections": 0,
+  "actualBlueprintPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/PHASES35.UNISSUED.json",
+  "actualCLIHere": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03",
+  "actualSubmission": false,
+  "advertisedCLIPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/phase_cli.py",
+  "all52RuntimeMembersByteIdenticalTo02": true,
+  "clockOrAuthorityIssued": false,
+  "consumerSourceInterfacePathsAndHashesMatch": true,
+  "nativeOrTargetOrBuilderInvoked": false,
+  "normativePredecessorAndScopeUnchangedFrom02": true,
+  "runtimePass": false,
+  "serverConnections": 0,
+  "sevenActualAdvertisedCLIUnissuedPhasesRejectedBeforeClientStateNetwork": true,
+  "sevenSourceDirectoriesAndInterfacesCurrent03": true,
+  "state": "LOCAL_N35_C03_EXECUTION_LOCATION_CORRECTION_CHECKED_SOURCE_ONLY"
+}

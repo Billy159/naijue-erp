@@ -1,0 +1,127 @@
+{
+  "apply/bundle/ordinary05_roles.py": {
+    "new": "d8f7ea5a8ba50317f9da00c4fc4ae9e42f35d39a54c004f453cdfe362ad44a5f",
+    "old": "a1e5a1be9ae1c781803264f8b4312f08a145266fa4b2595c68d82c80eb93389a",
+    "oldPath": "apply/bundle/ordinary05_roles.py"
+  },
+  "apply/bundle/ordinary05_roles_job.py": {
+    "new": "d08a389ec455f7f0da0502e6a4e8fab9798afe792db14dcd9d4d734624070011",
+    "old": "7b5d78536ccf1d750d090e6acf541996c85fce0d6cb6e78856974a1294e9e345",
+    "oldPath": "apply/bundle/ordinary05_roles_job.py"
+  },
+  "apply/bundle/prior_failed34.py": {
+    "new": "7b75278c4ec5f8cba68745d242a2a2c3fb0fea364896b7bcceaa33a32e146beb",
+    "old": "06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662",
+    "oldPath": "apply/bundle/prior_failed33.py"
+  },
+  "catalog_update/bundle/batched161_command_update_host.py": {
+    "new": "0a1c6eb1d7190db9616a8aa873e5ed5ccd7cff9999aa17c7bf392fecafe1421e",
+    "old": "6d8e84b4776dea648d87c36bca4c89bd945a5e504812600e36a7ace4b699d81b",
+    "oldPath": "catalog_update/bundle/batched161_command_update_host.py"
+  },
+  "catalog_update/bundle/catalog-successor-run.mjs": {
+    "new": "e85116b983059257e6529a4008afeb4c304e49c5378b43810fa6ad6deb4fa129",
+    "old": "72bacf01a143345e942bbb3669cfc2b2b5fbd04aeee237c5e5e08263224bd289",
+    "oldPath": "catalog_update/bundle/catalog-successor-run.mjs"
+  },
+  "catalog_update/bundle/catalog_transport.py": {
+    "new": "f7961de0522b15823a6835215819a23c326bdea24b794264d76bab65ddd3e3a8",
+    "old": "4f15b1dfdf00c8408435d81606c37d21bf1ccffcbe2e9104920858e7a2f6f914",
+    "oldPath": "catalog_update/bundle/catalog_transport.py"
+  },
+  "catalog_update/bundle/normal05_retained_stop.py": {
+    "new": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+    "old": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "oldPath": "catalog_update/bundle/normal05_retained_stop.py"
+  },
+  "prepare/bundle/final33_host.py": {
+    "new": "6a1247e3bb3e9ec8a66c84c97d53de781aad887b0309f8c511addd3d15310482",
+    "old": "2ac072adda091d1a7e2b5b252cb3c5168a1ef91442b572d01d2409622bbbbb09",
+    "oldPath": "prepare/bundle/final33_host.py"
+  },
+  "prepare/bundle/normal05_retained_stop.py": {
+    "new": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+    "old": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "oldPath": "prepare/bundle/normal05_retained_stop.py"
+  },
+  "prepare/bundle/r3_05_runtime.py": {
+    "new": "f0f7cf620e7d6fc81f5ed27f901c5f6ca5289be8a158ca737e819027659606f9",
+    "old": "9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08",
+    "oldPath": "prepare/bundle/r3_05_runtime.py"
+  },
+  "restore/bundle/ordinary05_roles.py": {
+    "new": "d8f7ea5a8ba50317f9da00c4fc4ae9e42f35d39a54c004f453cdfe362ad44a5f",
+    "old": "a1e5a1be9ae1c781803264f8b4312f08a145266fa4b2595c68d82c80eb93389a",
+    "oldPath": "restore/bundle/ordinary05_roles.py"
+  },
+  "restore/bundle/ordinary05_roles_job.py": {
+    "new": "d08a389ec455f7f0da0502e6a4e8fab9798afe792db14dcd9d4d734624070011",
+    "old": "7b5d78536ccf1d750d090e6acf541996c85fce0d6cb6e78856974a1294e9e345",
+    "oldPath": "restore/bundle/ordinary05_roles_job.py"
+  },
+  "restore/bundle/prior_failed34.py": {
+    "new": "7b75278c4ec5f8cba68745d242a2a2c3fb0fea364896b7bcceaa33a32e146beb",
+    "old": "06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662",
+    "oldPath": "restore/bundle/prior_failed33.py"
+  },
+  "start/bundle/batched161-run.mjs": {
+    "new": "491d59c446261d3fdc015c5959e0ffb77fa7f73aeaa76ac3ecd696ce1816643b",
+    "old": "820ad6f54f8ac06bceff6a5fd4903d73fe6fed033ac286e4b2bf8d0d93ce1e66",
+    "oldPath": "start/bundle/batched161-run.mjs"
+  },
+  "start/bundle/normal_service05_after08.py": {
+    "new": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822",
+    "old": "c9e3fd6d53bc3a8c2c60222d1abb2435ddad82d1cba6b97dcaf9326405348693",
+    "oldPath": "start/bundle/normal_service05_after08.py"
+  },
+  "start/bundle/normal_service05_after08_proof.py": {
+    "new": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a",
+    "old": "7822dfca50c4233433b4cb9fb040ba02f4748edac1841555ca3652cca4cbc4e5",
+    "oldPath": "start/bundle/normal_service05_after08_proof.py"
+  },
+  "start/bundle/prior_failed34.py": {
+    "new": "7b75278c4ec5f8cba68745d242a2a2c3fb0fea364896b7bcceaa33a32e146beb",
+    "old": "06851cb398f38b184e2af3af3ee4de95b1d3c3f46eb9231b8a00091820682662",
+    "oldPath": "start/bundle/prior_failed33.py"
+  },
+  "start/bundle/r3_05_readonly.py": {
+    "new": "13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40",
+    "old": "af8c6b22be0e3d709a01c818250b03ebaa18f2bb05c4ee98e6d03a08a59370b7",
+    "oldPath": "start/bundle/r3_05_readonly.py"
+  },
+  "start/bundle/r3_05_runtime.py": {
+    "new": "f0f7cf620e7d6fc81f5ed27f901c5f6ca5289be8a158ca737e819027659606f9",
+    "old": "9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08",
+    "oldPath": "start/bundle/r3_05_runtime.py"
+  },
+  "start/bundle/start_owned_describe.py": {
+    "new": "c6c515159a315d1efe0292d910d1efdcd53f95d496dcd6643e71ac0f8ce7c8a1",
+    "old": "f3cd38233ab5f982e22b64dd398514e71b463186921c5b00d7a76281e437ccdb",
+    "oldPath": "start/bundle/start_owned_describe.py"
+  },
+  "stop/bundle/normal05_preserve_stop.py": {
+    "new": "a39d398e19badab8123a3ec5ab9dc17aa64d7c976e33f3a50f9250587e24ea41",
+    "old": "42c92313194fc89b2fd8f4fcfdde617231eda1c12970717c7993550baeacb32e",
+    "oldPath": "stop/bundle/normal05_preserve_stop.py"
+  },
+  "stop/bundle/normal05_retained_stop.py": {
+    "new": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+    "old": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "oldPath": "stop/bundle/normal05_retained_stop.py"
+  },
+  "writer/bundle/final33_host.py": {
+    "new": "6a1247e3bb3e9ec8a66c84c97d53de781aad887b0309f8c511addd3d15310482",
+    "old": "2ac072adda091d1a7e2b5b252cb3c5168a1ef91442b572d01d2409622bbbbb09",
+    "oldPath": "writer/bundle/final33_host.py"
+  },
+  "writer/bundle/normal05_retained_stop.py": {
+    "new": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+    "old": "49c666aaa5c4120a0e230e798c4734c634c7e54d897b0b438fb0a91c64e69beb",
+    "oldPath": "writer/bundle/normal05_retained_stop.py"
+  },
+  "writer/bundle/r3_05_runtime.py": {
+    "new": "f0f7cf620e7d6fc81f5ed27f901c5f6ca5289be8a158ca737e819027659606f9",
+    "old": "9a56ff4b807a13a181f4461cf2e339649c71d7d5247413ebf2f02f4a1a25ea08",
+    "oldPath": "writer/bundle/r3_05_runtime.py"
+  }
+}

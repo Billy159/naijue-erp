@@ -1,0 +1,33 @@
+--- rejected01/catalog_update/bundle/batched161_command_update_host.py
++++ successor02/catalog_update/bundle/batched161_command_update_host.py
+@@ -168,7 +168,7 @@
+     for sig in (signal.SIGTERM,signal.SIGINT):signal.signal(sig,interrupted)
+     raw=read(JOB/'bundle/catalog-update-authorization.json');need(sha(raw)==sys.argv[1],'BATCHED_INSTALL_OUTER_HASH_REQUIRED')
+     a=validate(json.loads(raw),now());need(a['sourceSha256']==sha(read(Path(__file__))),'BATCHED_INSTALL_SELF_DIFFERS')
+-    policy=json.loads(read(BASE/'r3-05-write-continuity/direct34-batched-real.json'))
++    policy=json.loads(read(BASE/'r3-05-write-continuity/direct35-batched-real.json'))
+     need(policy['grantId']==GRANT and policy['jobs']['catalog_update']['jobId']==KEY
+         and policy['jobs']['catalog_update']['script']=='batched161_command_update_host.py'
+         and policy['jobs']['catalog_update']['bundlePins']['batched161_command_update_host.py']==a['sourceSha256']
+--- rejected01/prepare/bundle/final33_host.py
++++ successor02/prepare/bundle/final33_host.py
+@@ -149,7 +149,7 @@
+ def authority(raw):return validate(json.loads(raw),now())
+ 
+ def registered_authority(a,support):
+- policy=json.loads(read(BASE/'r3-05-write-continuity/direct34-batched-real.json',262144))
++ policy=json.loads(read(BASE/'r3-05-write-continuity/direct35-batched-real.json',262144))
+  phase='prepare' if KEY==PREPARE else 'writer'
+  need(policy['grantId']==GRANT and policy['jobs']['start']['jobId']==a['service']['serviceKey']==support.SERVICE
+   and policy['jobs'][phase]['jobId']==KEY and policy['jobs'][phase]['script']=='final33_host.py'
+--- rejected01/writer/bundle/final33_host.py
++++ successor02/writer/bundle/final33_host.py
+@@ -149,7 +149,7 @@
+ def authority(raw):return validate(json.loads(raw),now())
+ 
+ def registered_authority(a,support):
+- policy=json.loads(read(BASE/'r3-05-write-continuity/direct34-batched-real.json',262144))
++ policy=json.loads(read(BASE/'r3-05-write-continuity/direct35-batched-real.json',262144))
+  phase='prepare' if KEY==PREPARE else 'writer'
+  need(policy['grantId']==GRANT and policy['jobs']['start']['jobId']==a['service']['serviceKey']==support.SERVICE
+   and policy['jobs'][phase]['jobId']==KEY and policy['jobs'][phase]['script']=='final33_host.py'

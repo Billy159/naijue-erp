@@ -1,0 +1,72 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clientOrNativeOrIssuerInvocations": 0,
+    "clockOrAuthorityIssued": false,
+    "existingReportsOverwritten": false,
+    "fullDataCompilation": 0,
+    "newJobsSubmitted": false,
+    "ownerSourcesModified": false,
+    "serverConnections": 0
+  },
+  "baseIndependentReview": {
+    "path": "outputs/QB/20261117-r3-normal35-consumer-review-01/RESULT.json",
+    "remainingUnchangedScopeReused": true,
+    "sha256": "67558bf5560dda2f685588e47d6431fd66ba82ba6d2e6638d579cfc2e603c164"
+  },
+  "closedFindings": [
+    "N35-C01",
+    "N35-C02"
+  ],
+  "findings": [
+    {
+      "actual": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/phase_cli.py",
+      "evidence": [
+        "phase_cli.py defines HERE=Path(__file__).resolve().parent.",
+        "prepare() loads HERE/PHASES35.UNISSUED.json and uses source=HERE/phase/bundle.",
+        "02 jobs.sourceDirectory points to02 and three corrected consumer pins differ from01."
+      ],
+      "expected": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02/phase_cli.py",
+      "field": "executionCLI.source",
+      "id": "N35-C03",
+      "impact": "Following the published02 CLI source selects the rejected01 blueprint and bundle. Authority files installed in02 are missing at01; even if provided at01, its catalog/prepare/writer bytes do not match02 policy pins and the exact bundle check refuses execution. Identical CLI byte hashes do not make HERE-relative versions interchangeable.",
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02/INTERFACE.UNISSUED.json",
+      "priority": 1,
+      "requiredFix": "Publish an immutable successor with executionCLI.source pointing to that exact successor directory, consistent with jobs.sourceDirectory and its blueprint. Keep old frozen directories unchanged; no runtime leaf change is needed.",
+      "title": "The successor advertises the rejected01 CLI location instead of its own execution directory"
+    }
+  ],
+  "independentCorrectionChecks": {
+    "CLIBytesUnchangedButExecutionLocationIsSignificant": true,
+    "all52ActualRuntimePinsAndBundleMembershipMatchPlanAndInterface": true,
+    "all68PinnedDeliveryFilesExact": true,
+    "canonicalPredecessorServiceAndEightBindingsMatchExistingPriorFailed34Source": true,
+    "canonicalServiceMatchesPinned7fedMetadataAndActualInterface": true,
+    "changedFilesOnlyReplaceOneDirect34PolicyPathWithDirect35": true,
+    "changedPythonFilesCompileWithoutExecution": 3,
+    "contractDeltaLimitedToNewDirectoriesThreePinsCorrectedPredecessorAndCorrectionProvenance": true,
+    "entryNativePrivateSemanticsNotReaudited": true,
+    "exactlyThreeRuntimeFilesChanged": true,
+    "other49RuntimeMembersExactPreviousPins": true,
+    "sevenJobKeysTimeoutsAndAuthorityFieldsUnchanged": true
+  },
+  "interfaceSha256": "5bd412c01d8d7fff2d8e8b621e1d8015a8f9170982377e4c06cbad8494363b0c",
+  "limitations": [
+    "02 remains unissued and must not be executed until C03 is corrected and exact successor/root paired.",
+    "The original01 two findings are closed in02; their original NEED_FIX report remains unchanged.",
+    "Root35 final pairing remains a separate pending frozen delivery.",
+    "No runtime, APP, cold, clone, deployment or business-import PASS."
+  ],
+  "ownerCorrectionChecks": {
+    "notRerunByQB": true,
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02/LOCAL-CORRECTION-CHECKS.json",
+    "sha256": "31e2ecd3e78af824bbc206c0f5bace95580d71cc3ce2164babb8914cb254449c"
+  },
+  "phasePlanSha256": "3b647a7044bd6573dbff863ee9bc136bf007b6e9edb4e873de6261c54e5c3a8e",
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "1fd71678c062a5024f83694a12a65867748ecbca128cb5ded02f3afa81c2d8e4",
+  "state": "SOURCE_NEED_FIX_NORMAL35_02_EXECUTION_CLI_LOCATION"
+}

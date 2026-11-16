@@ -1,0 +1,26 @@
+{
+  "PGConnections": 0,
+  "checkedAtUTC": "2026-11-16T17:35:28.324860+00:00",
+  "containerId": "3ebc60712697f9a4fe8bd333fec07a6128b57a9c7b879c865332859acc237967",
+  "containerStartedAt": "2026-11-16T17:11:20.986520431Z",
+  "credentialFilesRead": false,
+  "fileIdentity": {
+    "bytes": 2165,
+    "ctimeNs": 1794849083207787581,
+    "device": 66304,
+    "gid": 0,
+    "inode": 13536327,
+    "mode": 292,
+    "mtimeNs": 1794849083207787581,
+    "nlink": 1,
+    "uid": 0
+  },
+  "newJobSubmitted": false,
+  "postmasterStart": "2026-11-16 17:11:22.392132+00",
+  "proofSha256": "a30976e3decacda1d23da2014cb32ed4d42d7295d7c9cc073060d4084653a34d",
+  "sameFileIdentityAfterRead": true,
+  "serverMutations": 0,
+  "serviceKey": "t45-first-r3-native-service-start-20261116-34",
+  "snapshotBodiesOrDigestsRead": false,
+  "state": "EXACT_EXISTING34_PUBLIC_C_METADATA_READ_ONLY"
+}

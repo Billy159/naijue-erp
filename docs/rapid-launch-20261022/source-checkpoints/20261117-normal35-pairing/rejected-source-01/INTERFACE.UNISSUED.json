@@ -1,0 +1,347 @@
+{
+  "PGConnections": 0,
+  "actualPredecessor34": {
+    "ACK": "773a34c1a5e3111e531ede3bacf24e7f96d92d47ff5435fef94b8be6e8203b4a",
+    "C": "a30976e3decacda1d23da2014cb32ed4d42d7295d7c9cc073060d4084653a34d",
+    "cleanup": "41838bb703af6a5326a91a5bcad1ef4abd51f290191d147d7519c4df46ac68d5",
+    "restore": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+    "safeRestored": "381d10acbc171f793e785366d3b3b74899bd344bf67235e9fefd4601ee2666a2",
+    "start": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+    "tupleComplete": true
+  },
+  "actualPredecessorTuple": {
+    "PGConnections": 0,
+    "checkedAtUTC": "2026-11-16T17:35:28.324860+00:00",
+    "containerId": "3ebc60712697f9a4fe8bd333fec07a6128b57a9c7b879c865332859acc237967",
+    "containerStartedAt": "2026-11-16T17:11:20.986520431Z",
+    "credentialFilesRead": false,
+    "fileIdentity": {
+      "bytes": 2165,
+      "ctimeNs": 1794849083207787581,
+      "device": 66304,
+      "gid": 0,
+      "inode": 13536327,
+      "mode": 292,
+      "mtimeNs": 1794849083207787581,
+      "nlink": 1,
+      "uid": 0
+    },
+    "newJobSubmitted": false,
+    "postmasterStart": "2026-11-16 17:11:22.392132+00",
+    "proofSha256": "a30976e3decacda1d23da2014cb32ed4d42d7295d7c9cc073060d4084653a34d",
+    "sameFileIdentityAfterRead": true,
+    "serverMutations": 0,
+    "serviceKey": "t45-first-r3-native-service-start-20261116-34",
+    "snapshotBodiesOrDigestsRead": false,
+    "state": "EXACT_EXISTING34_PUBLIC_C_METADATA_READ_ONLY"
+  },
+  "authoritySha256": null,
+  "capture": "state/fresh35-first-production-20261110-r3/ordinary35-auth-capture-20261116-01",
+  "consumerSourceInterfaces": {
+    "host": {
+      "functions": {
+        "original_stopped": "def original_stopped(phase):\n    prior = inspect(PRIOR_CID)\n    need(prior['Id'] == PRIOR_CID and prior['Name'] == '/' + PRIOR_NAME and prior['Image'] == IMAGE\n         and prior['Config']['Labels'].get('t45.operation') == 't45-first-r3-native-service-start-20261116-34'\n         and not prior['State']['Running'] and prior['State']['Pid'] == 0\n         and prior['State']['StartedAt']=='2026-11-16T17:11:20.986520431Z',\n         'MAINT_JOB_ORIGINAL_08_NOT_STOPPED')\n    for name in (CURRENT_NAME, APP09_NAME):\n        ids = command(['docker', 'ps', '-a', '--no-trunc', '--filter', 'name=^/' + name + '$', '--format', '{{.ID}}'], 5).decode().splitlines()\n        need(len(ids) <= 1, 'MAINT_JOB_SERVICE_NAME_AMBIGUOUS')\n        if ids:\n            need(phase == 'restore' and name == CURRENT_NAME, 'MAINT_JOB_SERVICE_ORDER_VIOLATION')\n            value = inspect(ids[0])\n            need(value['Name'] == '/' + name and value['Image'] == IMAGE\n                 and value['Config']['Labels'].get('t45.operation') == CURRENT_KEY\n                 and not value['State']['Running'] and value['State']['Pid'] == 0,\n                 'MAINT_JOB_10_MUST_BE_STOPPED_BEFORE_RESTORE')\n    data = ROOT / 'state/fresh35-first-production-20261110-r3/data'\n    s = data.lstat()\n    need(stat.S_ISDIR(s.st_mode) and not data.is_symlink()\n         and (s.st_dev, s.st_ino, s.st_uid, s.st_gid, stat.S_IMODE(s.st_mode)) == (66304, 13502421, 61035, 61035, 0o700)\n         and not present(data / 'postmaster.pid'), 'MAINT_JOB_ORIGINAL_STOPPED_DATA_REQUIRED')",
+        "require_unused_apply35": "def require_unused_apply35(ops, control):\n    key='t45-r3-ordinary35-auth-apply-20261116-01'\n    root=WORKER/key\n    # The dispatcher owns this current request directory; only preexisting\n    # phase effects/custody/capture/container are forbidden here.\n    need(not any(present(p) for p in [*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary35-auth-20261116-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary35-auth-capture-20261116-01']),'ORDINARY35_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY')\n    ids=command(['docker','ps','-a','--filter','name=^/'+key+'$','--format','{{.ID}}'],5)\n    need(not ids.strip(),'ORDINARY35_APPLY_CONTAINER_PRESENT_NO_REPLAY')",
+        "scope": "def scope(phase):\n    need(phase in PHASES, 'MAINT_JOB_FIXED_PHASE_REQUIRED')\n    key, name = PHASES[phase]\n    return {'format': 'T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1', 'phase': phase,\n            'requestKey': key, 'containerName': name, 'imageId': IMAGE,\n            'maximumOperationSeconds': 300, 'networkMode': 'none', 'hostPorts': [],\n            'dataDirectoryDevice': 66304, 'dataDirectoryInode': 13502421,\n            'installationRecordSha256': '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'}",
+        "validate": "def validate(a, phase, now):\n    fixed = scope(phase)\n    extra = {'startsAt', 'expiresAt', 'authorizationReference', 'independentReviewSha256',\n             'rolesAuthoritySha256', 'rolesSourceSha256', 'hostSourceSha256'}\n    if phase == 'restore':\n        extra |= {'service', 'writerTerminalSha256', 'policySha256', 'stopRequestKey',\n                  'stopTerminalSha256', 'stopResultSha256', 'stopCleanupSha256'}\n    need(type(a) is dict and set(a) == set(fixed) | extra\n         and all(a[k] == v for k, v in fixed.items()), 'MAINT_JOB_EXACT_EXTERNAL_SCOPE_REQUIRED')\n    need(type(now) is int and type(a['startsAt']) is type(a['expiresAt']) is int\n         and a['startsAt'] <= now and now + 300000 < a['expiresAt'] <= a['startsAt'] + 1800000,\n         'MAINT_JOB_EXTERNAL_WINDOW_REQUIRED')\n    need(type(a['authorizationReference']) is str and 0 < len(a['authorizationReference']) <= 512\n         and all(type(a[k]) is str and re.fullmatch('[a-f0-9]{64}', a[k]) for k in\n                 ('independentReviewSha256', 'rolesAuthoritySha256', 'rolesSourceSha256', 'hostSourceSha256')),\n         'MAINT_JOB_EXTERNAL_REVIEW_REQUIRED')"
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "d08a389ec455f7f0da0502e6a4e8fab9798afe792db14dcd9d4d734624070011"
+    },
+    "role": {
+      "functions": {
+        "scope": "def scope():\n    return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',\n            'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',\n            'requestKey': 't45-r3-ordinary35-auth-apply-20261116-01',\n            'restoreRequestKey': 't45-r3-ordinary35-auth-restore-20261116-01',\n            'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-34',\n            'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261116-35',\n            'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),\n            'physical': PHYSICAL, 'roles': list(ROLES), 'maximumOfflineStepSeconds': 30,\n            'coldCopyCompleteSha256': 'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',\n            'installationRecordSha256': '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'}",
+        "validate": "def validate(authority, now, restoring=False):\n    fixed = scope()\n    extra = {'startsAt', 'expiresAt', 'controllerValidUntil', 'backupAdminValidUntil', 'restorationDeadline',\n             'authorizationReference', 'rolesSourceSha256', 'independentReviewSha256'}\n    need(type(authority) is dict and set(authority) == set(fixed) | extra\n         and all(authority[k] == v for k, v in fixed.items()), 'MAINT_EXACT_AUTHORITY_REQUIRED')\n    a = authority\n    need(all(type(a[k]) is int for k in ('startsAt', 'expiresAt', 'controllerValidUntil', 'backupAdminValidUntil', 'restorationDeadline'))\n         and a['startsAt'] < a['expiresAt'] <= a['startsAt'] + 1800000\n         and a['expiresAt'] < a['controllerValidUntil'] <= a['backupAdminValidUntil'] < a['restorationDeadline']\n         <= a['startsAt'] + 12600000, 'MAINT_FINITE_AUTH_AND_RESTORATION_WINDOW_REQUIRED')\n    deadline = a['restorationDeadline'] if restoring else a['expiresAt']\n    need(type(now) is int and a['startsAt'] <= now and now + 30000 < deadline,\n         'MAINT_ORIGINAL_WINDOW_EXPIRED')\n    need(type(a['authorizationReference']) is str and 0 < len(a['authorizationReference']) <= 512\n         and all(type(a[k]) is str and re.fullmatch('[a-f0-9]{64}', a[k])\n                 for k in ('rolesSourceSha256', 'independentReviewSha256')), 'MAINT_EXTERNAL_REVIEW_REQUIRED')"
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/apply/bundle/ordinary05_roles.py",
+      "sha256": "d8f7ea5a8ba50317f9da00c4fc4ae9e42f35d39a54c004f453cdfe362ad44a5f"
+    },
+    "start": {
+      "functions": {
+        "scope": "def scope():\n    return {'format':'T45_FIRST_R3_NORMAL_SERVICE_V1','decision':'START_SAME_PGDATA_WITH_ORIGINAL_RUNTIME_REFERENCE_READONLY',\n            'requestKey':JOB,'containerName':NAME,'installationRecordSha256':RECORD,'sourceSetSha256':SOURCE,'targetSha256':TARGET,\n            'dataDirectory':WORK+'/data','dataDirectoryIdentity':DATA,'runtimeRole':'erp35_runtime_20261110_r3',\n            'runtimeLoginValidUntil':None,'maximumStartOperationSeconds':300,'maximumServiceSeconds':3600,\n            'authenticationAction':'AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY','previousRuntimeOutcome':'UNKNOWN_PRESERVED',\n            'previousRequestKey':PREVIOUS_JOB,'previousClosureKind':'FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED',\n            'runtimeReadinessMaxSeconds':20,'databaseRoleChanges':0,\n            'restoreRequestKey':'t45-r3-ordinary34-auth-restore-20261116-01',\n            'applyRequestKey':'t45-r3-ordinary35-auth-apply-20261116-01',\n            'ddlServiceProofSha256':DDL_SERVICE_PROOF,'ddlPostmasterStart':DDL_EPOCH,\n            'admin154RecordSha256':ADMIN154_RECORD_SHA,'admin154PostmasterStart':ADMIN154_EPOCH,\n            'admin154SourceSetSha256':'d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe',\n            'coldCopyTerminalSha256':'a94f9ec670e4de6339e56ea66ebaf917d9fc4e140f03e11222e2c7cb30ad5777',\n            'coldCopyResultSha256':'28d7925f5bc5b89805acf8a52e9d88c12c394f41adebc93cbb0a7afe157274e9',\n            'coldCopyCompleteSha256':'f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1',\n            'originalRuntimeMaterial':{'configuration':{'device':66304,'inode':13503993,'uid':0,'gid':0,'mode':0o600,'bytes':207},\n                                       'libpqReference':{'device':66304,'inode':13503994,'uid':0,'gid':0,'mode':0o600,'bytes':131}},\n            'cleanupTerminalSha256':'b70a2f253dae0e81ed95ba6ae0afcf11be5538d359fb7f64fca90668b9c548b0',\n            'cleanupResultSha256':'ff0992f717ba72976f20dfbb1060c83ff82e6945b549c7fd6839676f80f1b391',\n            'closeoutResultSha256':'4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16'}",
+        "validate_authority": "def validate_authority(a,now):\n    need(type(PREVIOUS_EPOCH) is str,'NORMAL35_EXACT_PRIOR34_EPOCH_EVIDENCE_REQUIRED')\n    fixed=scope();dynamic={'previousTerminalSha256','previousResultSha256','previousCleanupSha256','previousCurrentProofSha256',\n                           'previousIncompleteRootSha256','previousRetainedAckSha256','restoreTerminalSha256','restoreResultSha256',\n                           'applyTerminalSha256','applyResultSha256'}\n    del fixed['maximumServiceSeconds']\n    extra={'startsAt','expiresAt','serviceLeaseExpiresAt','capacityExpiresAt','maximumServiceSeconds','authorizationReference','normalServiceSha256','proofSourceSha256','record38Sha256','phaseResults','phaseTerminals'}|dynamic\n    need(type(a) is dict and set(a)==set(fixed)|extra and all(a[k]==v for k,v in fixed.items()),'NORMAL_EXACT_AUTHORITY_SCOPE_REQUIRED')\n    need(type(now) is int and all(type(a[k]) is int for k in ('startsAt','expiresAt','serviceLeaseExpiresAt','capacityExpiresAt','maximumServiceSeconds'))\n         and a['startsAt']<=now<a['expiresAt']<=a['startsAt']+1800000\n         and a['maximumServiceSeconds']>0\n         and a['serviceLeaseExpiresAt']==a['capacityExpiresAt']==a['startsAt']+a['maximumServiceSeconds']*1000\n         and a['serviceLeaseExpiresAt'] < 2**53\n         and a['expiresAt']<work_deadline(a), 'NORMAL_COORDINATION_AND_SERVICE_WINDOWS_REQUIRED')\n    need(type(a['authorizationReference']) is str and 0<len(a['authorizationReference'])<=512\n         and all(is_digest(a[k]) for k in ({'normalServiceSha256','proofSourceSha256','record38Sha256'}|dynamic))\n         and all(type(a[k]) is dict and set(a[k])==set(PHASES)\n                 and all(is_digest(value) for value in a[k].values()) for k in ('phaseResults','phaseTerminals'))\n         and a['phaseResults']['SQL36']==SQL36_ROOT_RESULT and a['phaseTerminals']['SQL36']==SQL36_TERMINAL,\n         'NORMAL_EXTERNAL_SOURCE_REVIEW_REFERENCE_REQUIRED')\n    need(micros(a['admin154PostmasterStart'])<micros(SERVICE14_EPOCH)<micros(a['ddlPostmasterStart'])<micros(PREVIOUS_EPOCH)<a['startsAt']*1000,\n         'NORMAL05_ACTUAL_SERVICE15_DDL_EPOCH_REQUIRED')\n    return work_deadline(a)"
+      },
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a"
+    }
+  },
+  "continuedPermitActualFreshStillRequired": true,
+  "custody": "state/native-services/ordinary35-auth-20261116-01",
+  "executionCLI": {
+    "actualExecution": false,
+    "allSevenPhasesCovered": true,
+    "automaticPhaseArg": "Original exact authority SHA once; actual parsed and constructed request.args must match [authoritySHA]",
+    "baseSha256": "b82c96f647b7ffc0cb5b36a9b9bf3c532abe34cc6510d3dc0d088ba452fc84e2",
+    "beforeAnyStateOrNetwork": "Original b82c UNISSUED/shape/hash/argument checks preserved",
+    "change": "Only PHASES35.UNISSUED.json blueprint filename",
+    "sha256": "4a71c2da4cfdf726c59fa5e4cc205ade7c805fc68bc6798613af7f22ea9a2a83",
+    "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/phase_cli.py"
+  },
+  "existingCMetadataReadOnlyCount": 1,
+  "futureActualServiceAndReceipts": null,
+  "innerRoleRequestKey": "t45-r3-ordinary35-auth-apply-20261116-01",
+  "jobs": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "d8f7ea5a8ba50317f9da00c4fc4ae9e42f35d39a54c004f453cdfe362ad44a5f",
+        "ordinary05_roles_job.py": "d08a389ec455f7f0da0502e6a4e8fab9798afe792db14dcd9d4d734624070011",
+        "prior_failed34.py": "7b75278c4ec5f8cba68745d242a2a2c3fb0fea364896b7bcceaa33a32e146beb",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary35-auth-apply-20261116-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/apply/bundle",
+      "timeoutSeconds": 300
+    },
+    "catalog_update": {
+      "authorityLeaf": "catalog-update-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "batched161_command_update_host.py": "fe03d9399be49b1adc133591a3aefe25e8b24a29e77db7ad4289af7bd206c66e",
+        "catalog-pg-driver.mjs": "cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f",
+        "catalog-successor-run.mjs": "e85116b983059257e6529a4008afeb4c304e49c5378b43810fa6ad6deb4fa129",
+        "catalog_transport.py": "f7961de0522b15823a6835215819a23c326bdea24b794264d76bab65ddd3e3a8",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "normal05_retained_stop.py": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched161-command-successor-20261116-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "batched161_command_update_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/catalog_update/bundle",
+      "timeoutSeconds": 780
+    },
+    "prepare": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "final33-run.mjs": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b",
+        "final33_host.py": "ac4d82807dca34ef2b5e62712c0fadf80b2eb0c2730f7757d27982fc8c880d90",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+        "normal05_retained_stop.py": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+        "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+        "r3_05_runtime.py": "f0f7cf620e7d6fc81f5ed27f901c5f6ca5289be8a158ca737e819027659606f9"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-final33-plan-prepare-20261116-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "final33_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/prepare/bundle",
+      "timeoutSeconds": 780
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "d8f7ea5a8ba50317f9da00c4fc4ae9e42f35d39a54c004f453cdfe362ad44a5f",
+        "ordinary05_roles_job.py": "d08a389ec455f7f0da0502e6a4e8fab9798afe792db14dcd9d4d734624070011",
+        "prior_failed34.py": "7b75278c4ec5f8cba68745d242a2a2c3fb0fea364896b7bcceaa33a32e146beb",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary35-auth-restore-20261116-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/restore/bundle",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "batched161-run.mjs": "491d59c446261d3fdc015c5959e0ffb77fa7f73aeaa76ac3ecd696ce1816643b",
+        "final33-run.mjs": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b",
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service05_after08.py": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822",
+        "normal_service05_after08_proof.py": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a",
+        "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+        "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+        "operator-stream-import-cli.mjs": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+        "operator-stream-program.mjs": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+        "prior_failed34.py": "7b75278c4ec5f8cba68745d242a2a2c3fb0fea364896b7bcceaa33a32e146beb",
+        "production-plan.json": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+        "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+        "r3_05_readonly.py": "13cb3f6cea0fffdb030102986e554e2af45a86b01415673aa0dabe3bc6280a40",
+        "r3_05_runtime.py": "f0f7cf620e7d6fc81f5ed27f901c5f6ca5289be8a158ca737e819027659606f9",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+        "start_owned_describe.py": "c6c515159a315d1efe0292d910d1efdcd53f95d496dcd6643e71ac0f8ce7c8a1"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-first-r3-native-service-start-20261116-35",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal_service05_after08.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/start/bundle",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "normal05_preserve_stop.py": "a39d398e19badab8123a3ec5ab9dc17aa64d7c976e33f3a50f9250587e24ea41",
+        "normal05_retained_stop.py": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary35-preserve-stop-20261116-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal05_preserve_stop.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/stop/bundle",
+      "timeoutSeconds": 120
+    },
+    "writer": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundlePins": {
+        "final33-run.mjs": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b",
+        "final33_host.py": "ac4d82807dca34ef2b5e62712c0fadf80b2eb0c2730f7757d27982fc8c880d90",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "nonroot_input_access.py": "0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385",
+        "normal05_retained_stop.py": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+        "r3_05_cli.py": "b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6",
+        "r3_05_runtime.py": "f0f7cf620e7d6fc81f5ed27f901c5f6ca5289be8a158ca737e819027659606f9"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-real-execute-20261115-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "final33_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/writer/bundle",
+      "timeoutSeconds": 3000
+    }
+  },
+  "newClock": null,
+  "noReplayUsed34OrOldRoleAuthorities": true,
+  "normalServiceSha256": "d3c22969ce59d3e3da0e334f547329bace3cf52b5e4e93617d0e9be33ddae822",
+  "outerApplyRequestKey": "t45-r3-ordinary35-auth-apply-20261116-01",
+  "privateArtifactAndAPPOrCloneIncluded": false,
+  "proofSourceSha256": "fa1520cff6b482a0b2b5f2e5545356622aa79f09684cc89a9ccd57efb3bd571a",
+  "rootConsumerPolicyRelativePath": "r3-05-write-continuity/direct35-batched-real.json",
+  "rootOwner": "D1_ONLY_NO_ROOT_SOURCE_MODIFIED_BY_T45",
+  "runtimeCandidatePass": false,
+  "scopeValues": {
+    "newOuterApplyHostScope": {
+      "containerName": "t45-r3-ordinary35-auth-apply-20261116-01",
+      "dataDirectoryDevice": 66304,
+      "dataDirectoryInode": 13502421,
+      "format": "T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1",
+      "hostPorts": [],
+      "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "maximumOperationSeconds": 300,
+      "networkMode": "none",
+      "phase": "apply",
+      "requestKey": "t45-r3-ordinary35-auth-apply-20261116-01"
+    },
+    "newOuterRestoreHostScope": {
+      "containerName": "t45-r3-ordinary35-auth-restore-20261116-01",
+      "dataDirectoryDevice": 66304,
+      "dataDirectoryInode": 13502421,
+      "format": "T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1",
+      "hostPorts": [],
+      "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "maximumOperationSeconds": 300,
+      "networkMode": "none",
+      "phase": "restore",
+      "requestKey": "t45-r3-ordinary35-auth-restore-20261116-01"
+    },
+    "newStartScope": {
+      "admin154PostmasterStart": "2026-11-13 03:37:40.014546+00",
+      "admin154RecordSha256": "96d35d3b4c7b356b334849373611068d07bb12b3fcf6c6f47dacce3d570a3e3e",
+      "admin154SourceSetSha256": "d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe",
+      "applyRequestKey": "t45-r3-ordinary35-auth-apply-20261116-01",
+      "authenticationAction": "AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY",
+      "cleanupResultSha256": "ff0992f717ba72976f20dfbb1060c83ff82e6945b549c7fd6839676f80f1b391",
+      "cleanupTerminalSha256": "b70a2f253dae0e81ed95ba6ae0afcf11be5538d359fb7f64fca90668b9c548b0",
+      "closeoutResultSha256": "4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16",
+      "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+      "coldCopyResultSha256": "28d7925f5bc5b89805acf8a52e9d88c12c394f41adebc93cbb0a7afe157274e9",
+      "coldCopyTerminalSha256": "a94f9ec670e4de6339e56ea66ebaf917d9fc4e140f03e11222e2c7cb30ad5777",
+      "containerName": "t45-fresh35-first-production-20261110-r3-service-35",
+      "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+      "dataDirectoryIdentity": {
+        "device": 66304,
+        "gid": 61035,
+        "inode": 13502421,
+        "mode": 448,
+        "uid": 61035
+      },
+      "databaseRoleChanges": 0,
+      "ddlPostmasterStart": "2026-11-13 08:53:20.527136+00",
+      "ddlServiceProofSha256": "76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727",
+      "decision": "START_SAME_PGDATA_WITH_ORIGINAL_RUNTIME_REFERENCE_READONLY",
+      "format": "T45_FIRST_R3_NORMAL_SERVICE_V1",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "maximumServiceSeconds": 3600,
+      "maximumStartOperationSeconds": 300,
+      "originalRuntimeMaterial": {
+        "configuration": {
+          "bytes": 207,
+          "device": 66304,
+          "gid": 0,
+          "inode": 13503993,
+          "mode": 384,
+          "uid": 0
+        },
+        "libpqReference": {
+          "bytes": 131,
+          "device": 66304,
+          "gid": 0,
+          "inode": 13503994,
+          "mode": 384,
+          "uid": 0
+        }
+      },
+      "previousClosureKind": "FAILED_AFTER_C_ACK_CLEAN_STOP_AUTH_RESTORED",
+      "previousRequestKey": "t45-first-r3-native-service-start-20261116-34",
+      "previousRuntimeOutcome": "UNKNOWN_PRESERVED",
+      "requestKey": "t45-first-r3-native-service-start-20261116-35",
+      "restoreRequestKey": "t45-r3-ordinary34-auth-restore-20261116-01",
+      "runtimeLoginValidUntil": null,
+      "runtimeReadinessMaxSeconds": 20,
+      "runtimeRole": "erp35_runtime_20261110_r3",
+      "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+      "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168"
+    },
+    "roleAuthorityOriginalScope": {
+      "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+      "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+      "dataDirectoryIdentity": [
+        66304,
+        13502421,
+        61035,
+        61035,
+        448
+      ],
+      "decision": "CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3",
+      "format": "T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "maximumOfflineStepSeconds": 30,
+      "ordinaryServiceRequestKey": "t45-first-r3-native-service-start-20261116-35",
+      "physical": {
+        "database": "erp_fresh35_20261110_r3",
+        "databaseOid": "16393",
+        "serverVersionNum": "170011",
+        "systemIdentifier": "7706545564479176741"
+      },
+      "previousServiceRequestKey": "t45-first-r3-native-service-start-20261116-34",
+      "requestKey": "t45-r3-ordinary35-auth-apply-20261116-01",
+      "restoreRequestKey": "t45-r3-ordinary35-auth-restore-20261116-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ]
+    }
+  },
+  "sourceAssemblyServerActions": 0,
+  "state": "SOURCE_ONLY_NORMAL35_UNISSUED"
+}

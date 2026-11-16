@@ -1,0 +1,18 @@
+{
+  "PGConnections": 0,
+  "actualPolicyPathsMatchInterface": true,
+  "baseRejectedSourcePinsSha256": "2a9d90b6f7f56218b3b48cef21dd9bd2a655e1131a9ab79f48c43dd5a5f7ec43",
+  "clockOrAuthorityIssued": false,
+  "keysBudgetsAndCLIUnchangedFrom01": true,
+  "nativeOrBuilderInvoked": false,
+  "normativePredecessorMatchesActual34ServiceAndEightBindings": true,
+  "otherRuntimeMembersByteIdentical": 49,
+  "runtimeChangesOnly": [
+    "catalog_update/bundle/batched161_command_update_host.py",
+    "prepare/bundle/final33_host.py",
+    "writer/bundle/final33_host.py"
+  ],
+  "runtimePass": false,
+  "serverConnections": 0,
+  "state": "LOCAL_TWO_FINDING_CORRECTION_CHECKED_SOURCE_ONLY"
+}

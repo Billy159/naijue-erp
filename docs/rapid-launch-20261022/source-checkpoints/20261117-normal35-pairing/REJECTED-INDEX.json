@@ -1,0 +1,65 @@
+{
+  "state": "SOURCE_01_AND02_NOT_USED_FOR_ISSUANCE",
+  "files": [
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal35-consumer-review-01/RESULT.json",
+      "file": "qb/CONSUMER-01-NEED-FIX.json",
+      "sha256": "67558bf5560dda2f685588e47d6431fd66ba82ba6d2e6638d579cfc2e603c164",
+      "bytes": 16729
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal35-consumer-review-02/RESULT.json",
+      "file": "qb/CONSUMER-02-NEED-FIX.json",
+      "sha256": "41d1719572a9675c5597730082cd1286385f9ee6c36c53318130af38437fe867",
+      "bytes": 4242
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/SOURCE-PINS.json",
+      "file": "rejected-source-01/SOURCE-PINS.json",
+      "sha256": "2a9d90b6f7f56218b3b48cef21dd9bd2a655e1131a9ab79f48c43dd5a5f7ec43",
+      "bytes": 10499
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/INTERFACE.UNISSUED.json",
+      "file": "rejected-source-01/INTERFACE.UNISSUED.json",
+      "sha256": "7492fc93427334b1f0e6b967006ff40fa917140a2f6b2465c08a9574e751a37d",
+      "bytes": 30035
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-01/PHASES35.UNISSUED.json",
+      "file": "rejected-source-01/PHASES35.UNISSUED.json",
+      "sha256": "7ff116678469f88a0b85a16d1027394a2e0c349ab25af25f50a014f1a6d91334",
+      "bytes": 12247
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02/SOURCE-PINS.json",
+      "file": "rejected-source-02/SOURCE-PINS.json",
+      "sha256": "1fd71678c062a5024f83694a12a65867748ecbca128cb5ded02f3afa81c2d8e4",
+      "bytes": 11194
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02/INTERFACE.UNISSUED.json",
+      "file": "rejected-source-02/INTERFACE.UNISSUED.json",
+      "sha256": "5bd412c01d8d7fff2d8e8b621e1d8015a8f9170982377e4c06cbad8494363b0c",
+      "bytes": 31716
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-02/PHASES35.UNISSUED.json",
+      "file": "rejected-source-02/PHASES35.UNISSUED.json",
+      "sha256": "3b647a7044bd6573dbff863ee9bc136bf007b6e9edb4e873de6261c54e5c3a8e",
+      "bytes": 12247
+    }
+  ],
+  "server35Actions": 0,
+  "clock35Issued": false,
+  "01Findings": [
+    "N35-C01 three stale policy paths",
+    "N35-C02 normative predecessor33 instead of34"
+  ],
+  "02Findings": [
+    "N35-C01/C02 closed",
+    "N35-C03 actual executionCLI location still01/HERE selects old blueprint/bundle"
+  ],
+  "successor03": "PENDING_SOURCE_FREEZE_AND_NARROW_REVIEW",
+  "runtimeCodeForRejectedVersions": "Referenced by exact pins; not duplicated or executed"
+}

@@ -1,0 +1,78 @@
+{
+  "actions": {
+    "CLIClientNativeTargetBuilderOrIssuerInvocations": 0,
+    "PGConnections": 0,
+    "clockOrAuthorityIssued": false,
+    "existingReportsOverwritten": false,
+    "fullDataCompilation": 0,
+    "newJobsSubmitted": false,
+    "ownerSourcesModified": false,
+    "serverConnections": 0
+  },
+  "closedFindings": [
+    "N35-C01",
+    "N35-C02",
+    "N35-C03"
+  ],
+  "findings": [],
+  "incrementalScope": "Only N35-C03 advertised executable location, HERE-relative selection and affected location/metadata closure; all52 runtime semantics reused from02 and prior reviews.",
+  "independentVerification": {
+    "CLIFileCanonicalAndUnchangedBytes": true,
+    "HEREAssignmentStaticallyIsResolvedOwnFileParent": true,
+    "HEREBlueprintIsExact03PhasePlan": true,
+    "HEREPhaseBundleSelectionEqualsAllSevenCurrentJobSourceDirectories": true,
+    "actualExecutableLocationCannotBeSubstitutedBySameByteHashOldDirectory": true,
+    "all11Normal35AbsoluteLocationsInInterfacePointTo03": true,
+    "all52ActualFilesAndNoExtraBundleMembersMatchCurrentPlanAndInterface": true,
+    "all52RuntimePinsByteIdenticalTo02": true,
+    "all71PinnedDeliveryFilesExact": true,
+    "allThreeConsumerSourceInterfacePathsHashesAndFunctionTextMatch03": true,
+    "executionCLISourceEqualsActual03PhaseCliFile": true,
+    "noRuntimeLeafOrNativeOrPermissionChange": true,
+    "originalExternalClientAnd600LoaderResolveAtSameDepthWithExactReviewedPins": true,
+    "phaseKeysTimeoutsAuthorityFieldsAndCanonical34ServiceEightBindingsUnchangedFrom02": true
+  },
+  "interfaceSha256": "8c6adf9ad501f914226832b3663da8f18084439c7cd724007f1edc52998fa139",
+  "limitations": [
+    "Exact frozen root35 pairing is still pending; this report alone does not authorize issuance or execution.",
+    "Fresh unused-key and live service state remain for original admission chain, not statically verified.",
+    "No failed34 or rejected01/02 replay or old authority reuse.",
+    "No runtime, APP, cold, clone, database, deployment or business-import PASS.",
+    "These immutable review bytes apply only to source8b8f03 and exact interface8c6ad/plane712a; later changes need scoped successor pairing."
+  ],
+  "locationPatchSha256": "f2ad66797a92987398fc2e568fa882d3bca29c1a499cfa4d0022c37eaac7cf32",
+  "ownerLocationChecksReused": {
+    "ownerActualHereAndSevenUnissuedEarlyRejectionChecksNotRerunByQB": true,
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03/EXECUTION-LOCATION-CHECKS.json",
+    "sha256": "0ea308202816911863ebf47b5e46d1e7d5987b65b273e45d9b4f116027cf546c"
+  },
+  "phasePlanSha256": "e712a480575b27d4c48dd7f631166069dda6529af8964995b67bb97b6f85cfa5",
+  "reusedFrozenReviews": [
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-02/RESULT.json",
+      "scope": "C01/C02 closed and49 other runtime bytes;02 retained NEED_FIX for its ownC03",
+      "sha256": "41d1719572a9675c5597730082cd1286385f9ee6c36c53318130af38437fe867"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-01/RESULT.json",
+      "scope": "Full52 new generation scope except two then-open findings;01 retained NEED_FIX",
+      "sha256": "67558bf5560dda2f685588e47d6431fd66ba82ba6d2e6638d579cfc2e603c164"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-postcompile-root-binding-review-01/RESULT.json",
+      "scope": "Reviewed entry fix; not rerun",
+      "sha256": "cf2841de11b468b75618af3df389f364b5bd126d3f806d1ec11b91332bbb3768"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+      "scope": "Separate private seam; not included or rereviewed here",
+      "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+    }
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03",
+  "sourceOnly": true,
+  "sourcePinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
+  "state": "SOURCE_PASS_NORMAL35_CONSUMER_03_ONLY_PENDING_ROOT_PAIR"
+}
