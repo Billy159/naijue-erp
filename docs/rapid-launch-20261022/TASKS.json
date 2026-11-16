@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-16T20:17:21.285688+08:00",
+  "updatedAt": "2026-11-16T21:55:13.469573+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,99 +52675,108 @@
     }
   },
   "currentR3FinalBatch20261116": {
-    "asOf": "2026-11-16T20:17:21.285688+08:00",
-    "state": "SERIAL_ORIGINAL54_GROUP_RECEIVE_ACTIVE_ROOT_NINE_SOURCE_PASS_UNSIGNED",
-    "realWriterSubmitted": false,
-    "realBusinessRowsWritten": 0,
-    "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_ROLE_AUTH_RESTORED",
-    "data": {
-      "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
-      "tables": 26,
-      "rows": 514485,
-      "inventoryQuantity": 80658,
-      "offlineFullPreflight": "PASS"
-    },
-    "window04": {
-      "authorizationSha256": "c7d02bf71fe37b2ac89d8d38d35c506b82d9217896096a778e6986e1b0ab7856",
-      "status": "REFUSED_R3_CONTINUITY_BEFORE_PHASE",
-      "exitCode": 2,
-      "errorCode": "R3_CONTINUITY_OTHER_JOB_BLOCKED",
-      "phaseStartedField": "ABSENT_IN_ACTUAL_TERMINAL",
-      "terminalSha256": "6d87d961a84b81f42dcbf21a989124c6ab8594de514bb85f9ff4660dd6c0204b",
-      "closeoutReadbackSha256": "39838a7d88180b14be34bc85d780fe780833f8717d687cdb4e19f72e829462e2",
-      "localWrapperExitCode": 254,
-      "receivedDataFragments": 0,
-      "restoreSubmitted": false,
-      "replay": false
-    },
-    "d1FinalSourcePinsSha256": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
-    "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
-    "materialization02SourceReview": "PASS_894d0654_NO_ACTUAL_MATERIALIZATION",
-    "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-    "next": "Finish original211 receipt parts, actual materialization, native preparation/original writer; clone PG checker and exact APP consumer source prepared in parallel.",
-    "inputRegistration": {
-      "dispatcherSha256": "c573dd195c6a6aa80b6ec44f4c253446a953bb3d2ce6221f49856cc9237401bb",
-      "moduleSha256": "17b7c5af2072cb525be2a0c9d02db20bcb6dc89bb9b89063369ec0345223ad63",
-      "policySha256": "5d861a567b4918c65a327f077f92c19cda778086c71730e9a2930287b38979e1",
-      "actualReadbackSha256": "7f7cc01c098384c64b4c688c02811678c62373c6887f717f236249f1bb5d1aa5",
-      "groups": 54,
-      "originalFragments": 211,
-      "sameOriginalOverallExpiry": 1794906851251,
-      "stoppedBasisVerifiedByActualConsumer": true
-    },
-    "window05": {
-      "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
-      "startsAt": 1794820891677,
-      "expiresAt": 1794821971677,
-      "state": "SIGNED_FUTURE_ACTIVATION_ACTUAL_READY_PENDING"
-    },
-    "readyOriginalFragments": 85,
-    "totalOriginalFragments": 211,
-    "recovery023bf": {
-      "restoreTerminalSha256": "967d29d871d22fa3fba377b7bdec008bfc0bf3c26cdd214279fc05b50b539780",
-      "postWithdrawReadbackSha256": "309d0033abb13d2340427119bfa67c5f79195230c887e0e1e9f8c24aee273e84",
-      "status": "COMPLETED",
-      "exitCode": 0,
-      "policyAbsent": true,
-      "ready": [
-        9,
-        10,
-        11
-      ],
-      "absent": [
-        12
-      ]
-    },
-    "cached03FirstWindow": {
-      "authoritySha256": "f8c3c7803d406eac712214bcd3a40996857481666929ef0ca7437f23f341fe7c",
-      "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
-      "result": "ALL_FOUR_READY_WITH_ORIGINAL_PREEXISTING_THREE_PRESERVED_AND_ONLY012_RECEIVED",
-      "originalRestore": "COMPLETED_0",
-      "policyAbsent": true,
-      "state": "ACTUAL_COMPLETE_POLICY_WITHDRAWN"
-    },
-    "rootNine": "QB_SOURCE_PASS_4f1a0ca9_NO_MAIN_AUTHORITY_ISSUED",
-    "currentReceiveWindow": {
-      "authoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1",
-      "state": "013_016_ISSUED_FUTURE_START_ACTUAL_PENDING",
-      "parts": [
-        13,
-        14,
-        15,
-        16
-      ]
-    },
-    "receivePipeline": {
-      "mode": "FINITE_LOCAL_COORDINATION_ONLY_ORIGINAL54_GROUPS",
-      "mainSession": 40919,
-      "t45Session": 55326,
-      "liveProgressFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CACHED03-ISSUER-01/LOCAL-PRODUCER-PROGRESS.json",
-      "currentClosedGroup": 22,
-      "futureActivationSeconds": 30,
-      "nativeWindowSeconds": 1080,
-      "uploadSeconds": 600,
-      "closeoutSeconds": 240,
-      "onUnknown": "STOP_READ_ORIGINAL_KEY_NO_REPLAY"
-    }
-  }
+  "asOf": "2026-11-16T21:55:13.469573+08:00",
+  "state": "ORIGINAL211_READY_INPUT02_AND_ROOT06_COMPLETED_PG_STOPPED_RUNTIME_WINDOW_SOURCE_IN_PROGRESS",
+  "realWriterSubmitted": false,
+  "realBusinessRowsWritten": 0,
+  "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_ROLE_AUTH_RESTORED",
+  "data": {
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "tables": 26,
+    "rows": 514485,
+    "inventoryQuantity": 80658,
+    "offlineFullPreflight": "PASS"
+  },
+  "window04": {
+    "authorizationSha256": "c7d02bf71fe37b2ac89d8d38d35c506b82d9217896096a778e6986e1b0ab7856",
+    "status": "REFUSED_R3_CONTINUITY_BEFORE_PHASE",
+    "exitCode": 2,
+    "errorCode": "R3_CONTINUITY_OTHER_JOB_BLOCKED",
+    "phaseStartedField": "ABSENT_IN_ACTUAL_TERMINAL",
+    "terminalSha256": "6d87d961a84b81f42dcbf21a989124c6ab8594de514bb85f9ff4660dd6c0204b",
+    "closeoutReadbackSha256": "39838a7d88180b14be34bc85d780fe780833f8717d687cdb4e19f72e829462e2",
+    "localWrapperExitCode": 254,
+    "receivedDataFragments": 0,
+    "restoreSubmitted": false,
+    "replay": false
+  },
+  "d1FinalSourcePinsSha256": "8f92f6941068e54c481753f9efefa9322ac29e7406de55e51366ee47f62cad28",
+  "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
+  "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
+  "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
+  "next": "Reuse original211/input02/ROOT06. Finish D1 after-preparation finite window source and narrow QB review; T45 fresh basis and remaining7 native phases; actual writer/reconciliation/cold/clone/app/roles/URL pending.",
+  "inputRegistration": {
+    "historicalPriorRegistrationRetainedInPreviousCommits": true,
+    "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
+    "currentModuleSha256": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97",
+    "currentPolicySha256": "0d18b5d6e60e4709f814bc43bc64d6f725445a6c4df38425e5f0fe2cc56ebcd5",
+    "runtimeWindowExpiredForFull5100StartBudget": true
+  },
+  "window05": {
+    "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+    "startsAt": 1794820891677,
+    "expiresAt": 1794821971677,
+    "state": "SIGNED_FUTURE_ACTIVATION_ACTUAL_READY_PENDING"
+  },
+  "readyOriginalFragments": 211,
+  "totalOriginalFragments": 211,
+  "recovery023bf": {
+    "restoreTerminalSha256": "967d29d871d22fa3fba377b7bdec008bfc0bf3c26cdd214279fc05b50b539780",
+    "postWithdrawReadbackSha256": "309d0033abb13d2340427119bfa67c5f79195230c887e0e1e9f8c24aee273e84",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "policyAbsent": true,
+    "ready": [
+      9,
+      10,
+      11
+    ],
+    "absent": [
+      12
+    ]
+  },
+  "cached03FirstWindow": {
+    "authoritySha256": "f8c3c7803d406eac712214bcd3a40996857481666929ef0ca7437f23f341fe7c",
+    "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
+    "result": "ALL_FOUR_READY_WITH_ORIGINAL_PREEXISTING_THREE_PRESERVED_AND_ONLY012_RECEIVED",
+    "originalRestore": "COMPLETED_0",
+    "policyAbsent": true,
+    "state": "ACTUAL_COMPLETE_POLICY_WITHDRAWN"
+  },
+  "rootNine": "SOURCE_PASS_AND_TWO_MATERIALIZATIONS_ACTUALLY_COMPLETE_NEW_RUNTIME_WINDOW_PENDING",
+  "currentReceiveWindow": {
+    "state": "ALL_ORIGINAL54_GROUPS_COMPLETE_AND_WITHDRAWN_NO_REPLAY"
+  },
+  "receivePipeline": {
+    "mode": "FINITE_LOCAL_COORDINATION_ONLY_ORIGINAL54_GROUPS",
+    "mainSession": 40919,
+    "t45Session": 55326,
+    "liveProgressFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/FINAL33-INPUT-CACHED03-ISSUER-01/LOCAL-PRODUCER-PROGRESS.json",
+    "currentClosedGroup": 54,
+    "futureActivationSeconds": 30,
+    "nativeWindowSeconds": 1080,
+    "uploadSeconds": 600,
+    "closeoutSeconds": 240,
+    "onUnknown": "STOP_READ_ORIGINAL_KEY_NO_REPLAY",
+    "state": "NATURALLY_EXITED_0_BOTH_LOCAL_LOOPS",
+    "readyOriginalFragments": 211,
+    "noReplay": true
+  },
+  "actualPreparationCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-final33-211-complete-materializations/CHECKPOINT.json",
+  "actualInput02": {
+    "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/ACTUAL-INPUT02-KEY-COMPLETED.json",
+    "file": "ACTUAL-INPUT02-KEY-COMPLETED.json",
+    "sha256": "aefdacd67a9142b77d1fb2dbb6366f0a69033ab802fe11a461919bf8cc73a5f0",
+    "bytes": 3906
+  },
+  "actualROOT06": {
+    "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/MAIN9-EXECUTION-01/ACTUAL-MATERIALIZE-COMPLETED.json",
+    "file": "ACTUAL-MATERIALIZE-COMPLETED.json",
+    "sha256": "edf63f6072813ef13cd70794b5bcf0b5b31b10d001f5a3ef6c6e2376f98e2a19",
+    "bytes": 3961
+  },
+  "newRuntimeWindow": "D1_SOURCE_IN_PROGRESS_NO_AUTHORITY_ISSUED",
+  "newRolesApplied": false,
+  "PGStartedSince32": false
+}
 }

@@ -1,0 +1,185 @@
+{
+  "state": "SOURCE_PASS_INDEPENDENT_PHYSICAL_CLONE_DATABASE_CHECKER_ONLY_NOT_EXECUTED",
+  "reviewedAt": "2026-11-16T12:31:23.763033+00:00",
+  "scope": "Only three new D1 physical-clone checker leaves and their integration seams. Reuse161/native verifier/fixed projection semantics; no PG/server/network/full rehearsal or fixture.",
+  "candidate": "outputs/D1/20261116-r3-independent-physical-restore-source-01",
+  "pinsSha256": "ef240360e528bb547b5d2249691c2e410d8b32fd574d3a2da891ca91db21cfba",
+  "handoffSha256": "84fa26751729f5071adb7ea95729b0acfed5556e969cb6e1267f16e43d0cb922",
+  "sourceReuseSha256": "d9fd2586eab8e45bcdd7be210a24022015560ec852ff84bce2a34a448e8ca708",
+  "files": [
+    {
+      "path": "source/tools/unified-import/physical-clone-projection.mjs",
+      "sha256": "9c56ed3837167717e5b09ed36dfc46986321b8bc2ed029979eb0c88a426451e9",
+      "bytes": 24964
+    },
+    {
+      "path": "source/tools/unified-import/physical-clone-readback.d.mts",
+      "sha256": "2139b1344bb2c18de85fd3f115a952985c968684b850ca28fa23d5fa76b6b4a0",
+      "bytes": 4347
+    },
+    {
+      "path": "source/tools/unified-import/physical-clone-readback.mjs",
+      "sha256": "e7c058c3f6ee066de50034a3270bef9f01a854a10e0e6a261faf43301473da7f",
+      "bytes": 16571
+    }
+  ],
+  "documents": [
+    {
+      "path": "HANDOFF.md",
+      "sha256": "84fa26751729f5071adb7ea95729b0acfed5556e969cb6e1267f16e43d0cb922",
+      "bytes": 9412
+    },
+    {
+      "path": "SOURCE-REUSE.json",
+      "sha256": "d9fd2586eab8e45bcdd7be210a24022015560ec852ff84bce2a34a448e8ca708",
+      "bytes": 4436
+    },
+    {
+      "path": "CHECKS.log",
+      "sha256": "e3cbc5e9a5ef65777639b095111424bbc163ef624a7d849f786b54fd9a5069e1",
+      "bytes": 1664
+    },
+    {
+      "path": "INTERFACE.md",
+      "sha256": "51e36d1ce9efd35e860027848fae02d8f156ad8dbfdd76fd39854f0966709074",
+      "bytes": 14295
+    }
+  ],
+  "findings": [],
+  "verified": {
+    "sameRootAndGenuineTokens": "Loader requires own running sourceRoot, consumes protected actual installation target, source/reference and CompactZero->full161 catalog; checker describes genuine target/catalog tokens and hard-pins routine161/model626c. Catalog functions independently enforce same source/target objects. Both distinct pools must instanceof same-root BoundedPostgresPool class; fixed internal SQL only. T45 trusted carrier supplies real configs/connection/copy/auth/provenance and assertCurrent.",
+    "clonePhysical": "Both logins require actual same SID/OID/database/version/endpoint, clone postmaster epoch distinct from historical installation, exact current physical backend, live login attributes/role memberships and no recovery. New clone epoch is supplied by protected carrier callback and checked at each query; no change to formal loader original13502421 guard and no ordinary admission or clone HTTP.",
+    "controllerCatalogTransaction": "Physical-before-role SELECT, READ ONLY REPEATABLE READ, same backend physical, original full161 two-DO guard/complete observation validator, same backend physical and acknowledged ROLLBACK before releasing first controller lease.",
+    "nativeTransaction": "Separate controller lease repeats physical; original reconcileWholePackage keeps READ COMMITTED/initializer/nativeverify/ROLLBACK, wrapper adds physical same-backend check after BEGIN before SET ROLE and after original role restoration. No importer execution, publish or COMMIT added. Native VERIFIED requires original acknowledged rollback and original sourceCounts/sourceTotals comparison; source_truth_verified:false preserved.",
+    "runtimeTransaction": "Actual runtime login membership/TTL/physical before role, RR READ ONLY, same backend, SET LOCAL original runtime role, full161 ordinary guard/validator, original WHOLE_V2 identity/ACL/policies, fixed projection and original validate/comparator in same snapshot, repeat runtime identity, RESET ROLE, original login physical same backend, ROLLBACK and release.",
+    "currentAndCleanup": "Carrier assertCurrent and actual role/parent deadlines before and after each fixed query and final return; rollback remains allowed after revocation. No operation retry. RollbackAttempted prevents rollback replay; failed leases discarded, release/discard failure yields CLEANUP_UNKNOWN. No success if query/identity/verify/rollback/lease state or cleanup unconfirmed. T45 still owns final pool.dispose and clone lifecycle.",
+    "newBatchInputs": "Exact actual manifest/plan/baseline/document INIT binding checked before SQL, source expectations manifest bound, original scope/publish/audit proof consumed. expectedExplicitValuesSha256 is explicit actual approved input, no default oldf4 hash or regenerated plan/admin.",
+    "resultBoundary": "Success only original comparison reconciled plus explicit scope digest; no incomplete values defaulted0. Failure has null uncompleted quantities/booleans and controlled safe codes. Every state restoreClosed:false and hostClosure:T45_OUTER_STOP_READBACK_REQUIRED. CLOSED describes internal leases only; no APP/release/clone-stop claim. detail stays private, encodedScrypt/config/argv/raw exception text not returned."
+  },
+  "exactReuse": {
+    "segments": [
+      {
+        "label": "runtimeReadbackSql+validateProjection",
+        "sourcePath": "outputs/T45/revisions/20261114-r3-ordinary19-recovery02-successor-static-01/readback/bundle/reconcile.bundle.mjs",
+        "sourceSha256": "628a55a098e9c538be790c9858a0e93877b99d4efe547cc16f600d13a60ab4b1",
+        "startLine": 488,
+        "endLine": 648,
+        "extractedSha256": "a44babe8cad025234715b95e1940c99daa59ccd2c7c69b81db0b01d37320d0e8",
+        "byteExact": true
+      },
+      {
+        "label": "warehouseFields+comparator",
+        "sourcePath": "outputs/T45/revisions/20261114-r3-ordinary19-recovery02-successor-static-01/readback/bundle/reconcile.bundle.mjs",
+        "sourceSha256": "628a55a098e9c538be790c9858a0e93877b99d4efe547cc16f600d13a60ab4b1",
+        "startLine": 686,
+        "endLine": 760,
+        "extractedSha256": "23b35e8f5296995f48076b6369c9cee4ce58f81f9362d5b28da083d6fb020cfb",
+        "byteExact": true
+      },
+      {
+        "label": "ordinaryIdentitySql",
+        "sourcePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/tools/unified-import/fresh35-host-session.mjs",
+        "sourceSha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+        "startLine": 881,
+        "endLine": 894,
+        "extractedSha256": "02b49b92739e10b59943557fe2ad6763f52e61a2f3b5dad68cd170f5832790d1",
+        "byteExact": true
+      },
+      {
+        "label": "runtime WHOLE_V2 identity",
+        "sourcePath": "outputs/T45/revisions/20261114-r3-ordinary19-recovery02-successor-static-01/readback/bundle/reconcile.bundle.mjs",
+        "sourceSha256": "628a55a098e9c538be790c9858a0e93877b99d4efe547cc16f600d13a60ab4b1",
+        "startLine": 346,
+        "endLine": 368,
+        "templateByteExact": true,
+        "changes": [
+          "local binding IDENTITY renamed runtimeIdentityBase",
+          "same existing WHOLE_V2 pg_temp string replacement"
+        ]
+      }
+    ],
+    "allFourCheckedAgainstActualSourceBytes": true,
+    "originalVerifierByteEqualFinalPrepare": true,
+    "sevenDependencies": [
+      {
+        "path": "tools/unified-import/fresh35-host-session.mjs",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/tools/unified-import/fresh35-host-session.mjs",
+        "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+        "bytes": 121315
+      },
+      {
+        "path": "tools/unified-import/whole-package-reconcile.mjs",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/tools/unified-import/whole-package-reconcile.mjs",
+        "sha256": "c04e709de46a61bc6026a06f60bdd917e5b132644542f69e3d2d2eeae3de3ad1",
+        "bytes": 9878
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+        "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a",
+        "bytes": 13317
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+        "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22",
+        "bytes": 35020
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+        "sha256": "a848a4ee942a3922535cb5315212717233f3227159ffb4a9067e56373ee3e27b",
+        "bytes": 21684
+      },
+      {
+        "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+        "sha256": "a073503b113d19b86184435c492a66f34ddea26982e5c8f1980dca9ab1e75b9f",
+        "bytes": 69148
+      },
+      {
+        "path": "adapters/postgres/src/bounded-pool.ts",
+        "referencePath": "outputs/D1/20261116-r3-final33-ordinary161-01/work/adapters/postgres/src/bounded-pool.ts",
+        "sha256": "cbf91a8df6c4b4ab06098fe6b53fd99ff652fc57b7272938d09d3453ce8e9fff",
+        "bytes": 17378
+      }
+    ],
+    "allSevenPinnedAndMappedWorkBytesEqual": true,
+    "basePinsRef": {
+      "path": "outputs/D1/20261116-r3-final33-ordinary161-01/PINS.json",
+      "sha256": "2589f6116b8f5ce10f5a6a9858a88e9051e3f6d3bd479f9c1ace428e924669df"
+    }
+  },
+  "existingChecks": {
+    "path": "outputs/D1/20261116-r3-independent-physical-restore-source-01/CHECKS.log",
+    "sha256": "e3cbc5e9a5ef65777639b095111424bbc163ef624a7d849f786b54fd9a5069e1",
+    "method": "READ_REUSE_ONLY_NOT_RERUN",
+    "syntaxMjs": 2,
+    "realModuleImport": true,
+    "pureInvalidInputBoundaries": 3,
+    "declarationNoEmit": true,
+    "scope": "No successful DB fixture, fake cap/issuer/driver, PG/network/server or runtime evidence."
+  },
+  "pending": [
+    "T45 actual carrier wrapper and protected cold/copy provenance, clone PGDATA/mount/netns/owner/endpoint/epoch/TTL reference mapping",
+    "Exact3 leaf pins plus same-root original dependencies and two real bounded pools in final checker root; no reuse of incompatible class instance from another bundle",
+    "Actual clone full161 catalog/native source and runtime per-warehouse/cash/scope readback",
+    "T45 pool disposal, clone PG/guardian/namespace stop, original/cold preservation readback and outside COMPLETED terminal",
+    "OrdinaryHTTP/application/release acceptance is not covered and cannot consume DB VERIFIED alone as restoreClosed"
+  ],
+  "actions": {
+    "sourceEdits": 0,
+    "candidateExecution": 0,
+    "testsRerun": 0,
+    "fixturesCreated": 0,
+    "pgCalls": 0,
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "applicationBuilds": 0,
+    "authorityIssued": false
+  },
+  "actualDatabaseReadbackTested": false,
+  "restoreTested": false,
+  "restoreClosed": false,
+  "applicationReleased": false
+}

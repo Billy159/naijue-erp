@@ -1,0 +1,143 @@
+{
+  "state": "SOURCE_PASS_FINAL33_APP02_COLD02_OWNER_DELTA_ONLY_NOT_EXECUTED",
+  "reviewedAt": "2026-11-16T12:40:57.568337+00:00",
+  "scope": "Only new final33 receipt consumer, APP02 candidate owner/recovery branch and COLD02 pairing. Product78/SQL semantics/build/archive verification and prior owner/copy core scopes reused.",
+  "findings": [],
+  "appBundle": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-OWNER-UNISSUED-02/BUNDLE.FINAL.UNISSUED.json",
+    "sha256": "1950aea4fb45c11cd08c1a5311a659a37ac3195f2daae4420fa4018f72bf8a5c",
+    "files": {
+      "fresh35-production-carrier.py": {
+        "bytes": 185047,
+        "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "predecessorSha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+      },
+      "deploy-candidate.py": {
+        "bytes": 199005,
+        "sha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970",
+        "predecessorSha256": "0f2a35cf49647775ee48ce461388900deb8ec954a02d0bd3a39dd4f8cd0d8970"
+      },
+      "production_host.py": {
+        "bytes": 43434,
+        "sha256": "3dafb2dd5be66d2a5f7dfd810b134a3f1546f4c621b94a0cdbefee310886ac47",
+        "predecessorSha256": "f106feb59df98d0959b36e7d749d244632bd5fb3ec9c2c001e6f8269ce66d17d"
+      },
+      "app-readiness-owner.cjs": {
+        "bytes": 4431,
+        "sha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950",
+        "predecessorSha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950"
+      },
+      "boot-entry.py": {
+        "bytes": 68164,
+        "sha256": "1eb53765566128854b259ca1293df57c9434aa6c52fe3ca67bfe044018f878e9",
+        "predecessorSha256": "69f351a63bcd8698744a61ed7f55d669292f42b0efce4b1e5612ff547c81191a"
+      },
+      "normal_service09_after_cold.py": {
+        "bytes": 41022,
+        "sha256": "5785154e3c9183342d544e26b765eb2afd4ba36e79219193f6759c66ead489bf",
+        "predecessorSha256": "5785154e3c9183342d544e26b765eb2afd4ba36e79219193f6759c66ead489bf"
+      },
+      "production_owner.py": {
+        "bytes": 31423,
+        "sha256": "de1482f029ca8a48aff8dcf6e793a930898b7eab47cc8a3d452c29097e1ba6ab",
+        "predecessorSha256": "de1482f029ca8a48aff8dcf6e793a930898b7eab47cc8a3d452c29097e1ba6ab"
+      },
+      "deploy-first-install.py": {
+        "bytes": 136959,
+        "sha256": "028a820065cefebcbb3f6dac12f7e9efb07291cf593d222c01c78ee5b93c7a46",
+        "predecessorSha256": "57e1348f2725c80f31ca672d64639e5a776a58e9dcc2b079864b83f01af079c8"
+      },
+      "production_pg.py": {
+        "bytes": 10106,
+        "sha256": "73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf",
+        "predecessorSha256": "73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf"
+      },
+      "final33_receipts.py": {
+        "bytes": 20085,
+        "sha256": "bd7744b5b44a282780cd5a810f4cce23c4efe440a68d294e2311e85220b8174a",
+        "predecessorSha256": null
+      },
+      "normal_service09_after_cold_proof.py": {
+        "bytes": 17238,
+        "sha256": "eeaa6b7d6bd9c2ac37c834b47c0c54efef841439fdd8b22e8ec207eff6971ba0",
+        "predecessorSha256": "eeaa6b7d6bd9c2ac37c834b47c0c54efef841439fdd8b22e8ec207eff6971ba0"
+      }
+    }
+  },
+  "coldBundle": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FINAL33-COLD-UNISSUED-02/BUNDLE.UNISSUED.json",
+    "sha256": "16b605f1d6eea72b94653b3e60734b4a52546a3d25a2dbb042957d3cfaf5340f",
+    "files": {
+      "cold_copy.py": {
+        "bytes": 15026,
+        "sha256": "6dbb46d3b99dde6a07cc8934caf1d2d29e66f4a60113d4bde07258670acdfcad"
+      },
+      "post_import_cold_copy.py": {
+        "bytes": 21264,
+        "sha256": "aa050d0c253da8db2340bfafd67f95657ef51069be62b76107ff2eda5e8625cf"
+      },
+      "final33_receipts.py": {
+        "bytes": 20085,
+        "sha256": "bd7744b5b44a282780cd5a810f4cce23c4efe440a68d294e2311e85220b8174a"
+      }
+    }
+  },
+  "consumerSha256": "bd7744b5b44a282780cd5a810f4cce23c4efe440a68d294e2311e85220b8174a",
+  "deltaSha256": "c3ef51ea981b6e86437ab3a1d290c1bf12667f1199649e4ff1cf379ce9adcb81",
+  "profile": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-OWNER-UNISSUED-02/APP-PROFILE.UNISSUED.json",
+    "sha256": "2e3a2312e6b4a304ef4bee6395ea006a065a19f68b3bb27b8ec032da4277b287"
+  },
+  "verified": {
+    "sameCurrentVersion": "Authoritative APP FINAL bundle1950aea4 binds current bd7744 consumer and current boot1eb537/helper028a820. COLD02 manifest16b605 binds byte-identical bd7744 reader. Earlier APP staging BUNDLE and COLD01 pins not used. All11 APP and3 COLD actual leaf sizes/hashes match authoritative bundles.",
+    "newCandidateClosedBranch": "Only exact sourceCommit d728 selects new fixed14f34/7687919B manifest/build/pack/runtime/native source profile. Formal plan requires all exact fields, normalized release manifest,284 native pin/member binding and pack523 with payload522 profile; actual archive/member/build was not rerun. Unknown candidates still reject via original/formal branch.",
+    "realFinalSourceConsumer": "Root/public successful original terminals and matching result objects required for start33, prepare, original writer, catalog161 update, stop33 and original role restoration. Private native results hashed against public nativeResultSha, original host authority rawSHA/request/service, CLOSED/lifecycle/process cleanup. Prepared manifest/baseline/document/cutoff/namespace match actual final source constants, and writer originalPreparedBinding/expectedBinding reference unmodified PREPARE native bindings and exact prepare receipts.",
+    "writerAndCatalog": "Writer/native COMPLETED plus exact VERIFIED and independent readback CLOSED required; catalog update exact161/626c/cf27/0560 with native commit/readback/role/child cleanup and commitOutcomeUnknown:false. No old failed writer or32 hold promoted as final source.",
+    "stopAndPreviousGeneration": "Stop33 requires matching actual prepare/writer/update terminals plus preserved actual native cleanup; original33 proof/physical/data13502421 and original role restore checked. New candidate previousCleanStop derives from actual33 cleanup and original inspect_birth/data identity/port inspection; original owner generation_proof separately requires new actual PG epoch and boot owner identity.",
+    "cold02": "New fixedmeasure/copy keys and final33 destination/input manifest/newAPP archive, actual READY and real source/stop evidence used. Cold core6dbb46 byte-equal prior original; measure/inventory/stopped/tree guards unchanged;28GiB floor, exact measured inventory/allocation and280s work guard retained. Only metadata/evidence/formats/actual lineage reader and source-specific finalcopy result changed. No oldf4/09 receipt substituted.",
+    "restoreBarrier": "APP requires successful exact coldCOPY terminal/result==complete marker+private manifestSHA, exact current source evidence/newAPP/model/28GiB marker. Separately requires D1 DB exactVERIFIED with zero warehouse/cash/current/omission differences and original restoreClosed:false marker, PLUS protected T45 outer clone CLOSED result bound to same source/cold/database receipt and distinct clone actual data/epoch/container/netns. All pool/PG/guardian/ns/original/cold closure flags required. DB VERIFIED alone cannot satisfy this path.",
+    "originalOwnerAndLegacy": "production_owner.py and production_pg.py byte-equal APP01; boot actual host/production_start functions unchanged, real systemd INVOCATION_ID and new epoch on original DATA13502421/generation.bind retained. New candidate alone permits final33 descriptor closed field; legacy09/f4 logical recovery code remains in old else branch. No service34 or cloneHTTP added.",
+    "protectedReadsAndPairing": "Receipt reader canonical/no-follow/root-or-public UID/singlelink/size/hash/identity and nonwritable-parent checks; source authority/private native binding read. All boot PRODUCTION_SUPPORT and production_pg SUPPORT hashes match actual bundle. New reader pinned both helper and cold loader.",
+    "unissuedBoundary": "Dynamic service/epoch/leases/installedLinux payload and root identities/authorities/actual cold+restore hashes remain null in profile. This review does not create executable authority or assert recovery complete."
+  },
+  "reuse": {
+    "ownerFoundation": [
+      "production_owner.py de1482f029ca8a48aff8dcf6e793a930898b7eab47cc8a3d452c29097e1ba6ab",
+      "production_pg.py 73f1ef2e50d6af5aaaaf4ba2a078104bc6ea4c10d869f8ab9e3a0db201a187cf"
+    ],
+    "coldCopyCore": "6dbb46d3b99dde6a07cc8934caf1d2d29e66f4a60113d4bde07258670acdfcad",
+    "D1DatabaseCheckerReview": {
+      "path": "outputs/QB/20261116-final33-physical-clone-checker-review-01/RESULT.json",
+      "sha256": "63cd99e10016bb71153a7ed4163e7bfbdc638483f38269d2b226d14e6773a52c"
+    },
+    "rootNineReview": {
+      "path": "outputs/QB/20261116-final33-root-nine-issuer-review-01/RESULT.json",
+      "sha256": "4f1a0ca9d244f6d7d1c2ef732a1b6bca537fd7b0d3700fea3b72ed74bd941a49"
+    },
+    "existingLocalValidation": "Owner reported AST/inert imports/support pins; reused without re-execution. QB independently checked AST, hashes, exact unchanged function/core comparisons only."
+  },
+  "pending": [
+    "Actual newAPP READY/LINUX dependencies installed payload identity and independent candidate acceptance",
+    "Actual final prepare/writer/161 update/stop33/role restore receipts",
+    "Cold measurement/budget/copy and private manifest actual readback",
+    "T45 clone carrier and finite auth still being prepared, actual copy/start/DB checker/pools+PG+guardian+namespace close and original/cold preservation receipts",
+    "Formal owner actual currentC/epoch/boot invocation/lease/generation binding, HTTP/role behavior and release acceptance"
+  ],
+  "actions": {
+    "sourceEdits": 0,
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "fixturesCreated": 0,
+    "candidateExecution": 0,
+    "testsRerun": 0,
+    "productFilesRehashed": 0,
+    "builds": 0,
+    "archiveExtracted": 0,
+    "authorityIssued": false
+  },
+  "runtimePassed": false,
+  "coldComplete": false,
+  "restoreClosed": false,
+  "applicationReleased": false
+}

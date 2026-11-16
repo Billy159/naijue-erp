@@ -1,0 +1,184 @@
+{
+  "state": "SOURCE_PASS_MAIN9_INPUT02_UNSTARTED_PREDECESSOR_SUCCESSOR_ONLY",
+  "reviewedAt": "2026-11-16T13:30:25.954738+00:00",
+  "reviewKind": "INCREMENTAL_FIELD_CORRECTION_AND_UNPUBLISHED_CAS_SUCCESSOR",
+  "findings": [],
+  "standards": {
+    "findings": [],
+    "scope": "Exact narrow delta, protected original evidence, exclusive successor paths and no-replay behavior"
+  },
+  "spec": {
+    "findings": [],
+    "scope": "Main requested errorCode correction and unique CAS02 successor; preserve original failed entry and unchanged 162 basis values"
+  },
+  "files": {
+    "LOCAL-CHECKS.json": {
+      "sha256": "4cdde43ffb4f8d6ad04a8688f48ac298c30eb85fc7255fe02245918c0e16a04e",
+      "bytes": 1067
+    },
+    "NINE-PHASES.UNISSUED.json": {
+      "sha256": "edc5d4a164b8c92d8fe83312678035ed872ed2a282e6c970082ce06b410016cf",
+      "bytes": 25309
+    },
+    "POLICY.INPUT02.UNISSUED.json": {
+      "sha256": "0d18b5d6e60e4709f814bc43bc64d6f725445a6c4df38425e5f0fe2cc56ebcd5",
+      "bytes": 9288
+    },
+    "admin_exec.INPUT02-UNREGISTERED.py": {
+      "sha256": "9c3fffee9e0c9b23cc1130aea8c6f6eda14bb46a09df82c8076c83fad5d36f3c",
+      "bytes": 44640
+    },
+    "host-authorization.UNISSUED-SUCCESSOR.json": {
+      "sha256": "fefa8c223a843af970cbe355846eb713a01e9ace7dc6debcac2438081f9f482c",
+      "bytes": 1318
+    },
+    "issue_input02.py": {
+      "sha256": "4e3ef7edc88d7ccfcf3a18a7fd3013b6a394823c1e08cf6b55e9b21f03e18b6b",
+      "bytes": 1763
+    },
+    "issue_phase.py": {
+      "sha256": "a132ea38a8df10f4f906facfe9496f9ab9a56c5c555c0804f57adfa66fd61353",
+      "bytes": 38195
+    },
+    "issue_registration.py": {
+      "sha256": "8ee6ca3a28d899f2ee918436ac47dd305e7b15a1e0ac0eb34e898d75141584ec",
+      "bytes": 5068
+    },
+    "original-cas-input02-carrier.UNISSUED.py": {
+      "sha256": "0258342807a2b47c023f5bebf60526854f519eb47e2b9df1925e31e00e17b5a0",
+      "bytes": 2625
+    },
+    "r3_direct33_input02.py": {
+      "sha256": "a48f6fdbf1d1b1e18509588bde07f7e7506af29fcbd4c6acf65a5c0f3115ea97",
+      "bytes": 69093
+    },
+    "read_registration_basis.py": {
+      "sha256": "9f95642884e367b8c81ae1afb4d3789caa72bef1f711fd2f3e775d6d779deb56",
+      "bytes": 36047
+    },
+    "register_cas.py": {
+      "sha256": "184e5c81f71fa86a2d40bd23881a121da0f47d1c2ff26408aaf82d85ef01dee1",
+      "bytes": 48938
+    },
+    "roles-authorization.UNISSUED-SUCCESSOR.json": {
+      "sha256": "cba6a8b2a981634f4c2eababfdc99baeea12d1ccdee99093dc8d2f6667c093b1",
+      "bytes": 1848
+    }
+  },
+  "sourcePinsPath": "outputs/主控/20261115-r3-direct-service24-issuer-local-01/SERVICE33-INPUT02-SUCCESSOR-01/SOURCE-PINS.json",
+  "sourcePinsSha256": "ed65fc07eecedaf10dea6f80eb6ebe4093c81e16956532ecc17fa9ddbf8aabfe",
+  "originalReviewPreserved": {
+    "path": "outputs/QB/20261116-final33-input02-successor-review-01/RESULT.json",
+    "sha256": "d1220a0f98ea3417a72f8f3df3c81d29f00063fedb98ff210efc2e67eb9ccbf1",
+    "note": "Historical report unchanged. Its predecessor error-field wording omitted the actual schema mismatch; this RESULT-02 supersedes that specific assertion and current source pins."
+  },
+  "changedFiles": [
+    "LOCAL-CHECKS.json",
+    "original-cas-input02-carrier.UNISSUED.py",
+    "read_registration_basis.py",
+    "register_cas.py"
+  ],
+  "closedFindings": [
+    {
+      "id": "INPUT02-CAS-PREDECESSOR-ERROR-FIELD-01",
+      "originalBehavior": "CAS queried t.get(error), while exact actual9a terminal has errorCode only; first CAS refused before publication.",
+      "correction": "CAS now requires errorCode=R3_CONTINUITY_DIRECT33_EXACT_FINITE_AUTHORITY_REQUIRED.",
+      "evidence": "Read original actual9a terminal; evaluate the extracted corrected predicate locally against its actual bytes and fields. No candidate executed. Local terminal reused for both raw-byte operands only for expression evaluation; this does not independently prove remote root/public equality.",
+      "status": "SOURCE_CLOSED_RUNTIME_PENDING"
+    }
+  ],
+  "verified": {
+    "exactCASDelta": "Current184e CAS differs from reviewed98ad only in two policy hardpin literals f12->0d18; exact reverse reproduced98ad. Reviewed98ad field-fix reverse reproduces oldc903 as recorded in preserved prior increment.",
+    "basis": "CAS and reader contain identical 163 entries. Removing only new failed-entry pin reproduces exact original reader9dfd1f16dbd3f7d4ff93e162129977d37b95abe7522b115946265e9f258e1e65; prior162 values and all other reader logic unchanged.",
+    "failedEntryRetention": "quiet() requires exact prior entry-result0a84 bytes and safeCode FINAL33_INPUT_REGISTRATION_KNOWN_UNSTARTED_INPUT01_REFUSAL_REQUIRED, plus absence of old CAS01 audit directory. Called under original lock after snapshot, before AUDIT02 creation/module/policy/dispatcher publication and between publication stages.",
+    "newCarrier": "Current025834 carrier differs from cbecc only in CAS source pin98ad->184e; exact reverse reproducedcbecc. Unique source/AUDIT02 paths and old-entry retention unchanged.",
+    "unchangedReviewedScope": "Helpera48/rulesedc/issuer4e3 and a132/dispatcher template9c3/readbasis9f95 exact prior bytes; T45 bundle2205/waiter8eef unchanged. Policy/role/host data pins refreshed only as unusedApplyDataRefresh details.",
+    "existingLocalChecks": "Current owner LOCAL-CHECKS4cdde reports data validators PASS. Read/reused only; native validators not rerun by QB."
+  },
+  "savedOwnerEvidence": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/ACTUAL-REGISTRATION-AUDIT.json",
+      "sha256": "b5279035b20fa7a5609125d9072c2c0c0c0cdfc1103ad08b3c71d32d6d41d797",
+      "checkedAtMs": 1794835115591,
+      "scope": "Saved read-only owner audit, not a fresh server assertion: oldCAS01 intent/result absent; oldentry0a84 retained; module absent; live dispatcher2a9/policy49 retained; no pending files; PGConnections0/writes0."
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/MAIN9-EXECUTION-01/input_materialize/receipts/release-receipts/t45-r3-final33-input-materialize-20261116-01/job.json",
+      "sha256": "9a3734dccce2148ba03480df7f8f24a64a82b597e3b4a25c7b72790d40a079db",
+      "scope": "Actual original terminal: exactkey/status REFUSED_R3_CONTINUITY_BEFORE_PHASE/exit2/phaseStartedFalse/errorCode; error absent."
+    }
+  ],
+  "t45Bundle": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/BUNDLE.UNISSUED.json",
+    "sha256": "2205088c246aebcb7ab138a1ce11b631bd457bb651034b180a455de95fbdf12b"
+  },
+  "waiter": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/wait_and_run_input02.py",
+    "sha256": "8eefedcd3c892526e1013ef40e2eeca7cda8597f5bc17a78a11185252d4e8fd8",
+    "cliPath": "../monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v3.py",
+    "cliSha256": "08954fa485ba3ec179a25bd69524da5353c9deb01f6890bb6230955adf404e6f"
+  },
+  "pending": [
+    "Fresh163 basis, absence/unsubmitted status, absolute clock and full5100 admission checks by T45 at actual registration/apply; retained deadlines control",
+    "Actual CAS02 registration outcome; no automatic replay of old CAS or prior input01",
+    "Actual input02 first submission and materialization, remaining main9 phases and real PG/business/restore/HTTP outcomes"
+  ],
+  "actions": {
+    "sourceEdits": 0,
+    "serverCalls": 0,
+    "networkCalls": 0,
+    "pgCalls": 0,
+    "candidateInvocations": 0,
+    "fixturesCreated": 0,
+    "testsRerun": 0,
+    "authorityIssued": false,
+    "oldInputReplayed": false
+  },
+  "runtimePassed": false,
+  "materializationComplete": false,
+  "businessImported": false,
+  "priorIncrementPreserved": {
+    "path": "outputs/QB/20261116-final33-input02-successor-review-01/RESULT-02-FIELD-FIX-BEFORE-UNUSED-APPLY-REFRESH.json",
+    "sha256": "9fa2d4f47b1498144017361ae2aa0387d450eafda79f30159ebd3193bd373d56"
+  },
+  "unusedApplyDataRefresh": {
+    "status": "SOURCE_PASS_UNUSED_APPLY_WINDOW_ONLY_ABSOLUTE_CREDENTIAL_DEADLINES_RETAINED",
+    "startsAt": 1794835754189,
+    "expiresAt": 1794837554189,
+    "applyWindowMs": 1800000,
+    "previousStartsAt": 1794834363794,
+    "previousExpiresAt": 1794836163794,
+    "controllerValidUntil": 1794841563794,
+    "backupAdminValidUntil": 1794841683794,
+    "restorationDeadline": 1794843363794,
+    "parentExpiresAt": 1794843790690,
+    "absoluteCredentialAndRestorationDeadlinesUnchanged": true,
+    "roleRelativeMinutes": {
+      "controller": 96.82675,
+      "backupAdmin": 98.82675,
+      "restoration": 126.82675
+    },
+    "exactDeltaVerification": "Reversing only role startsAt/expiresAt yields prior afb8f2 role bytes. Host only same startsAt/expiresAt and rolesAuthoritySha256; reversing yields prior3a7 bytes. Policy only two apply/restore role bundlePins; reversing yields priorf12 bytes. CAS only two exact policy-hardpin literals; reversing yields reviewed98ad bytes. Carrier only184e new CAS source pin; reversing yields priorcbecc bytes. Thus no other code/SQL/permission/guard/basis/field-fix change.",
+    "unchangedSourceFiles": [
+      "NINE-PHASES.UNISSUED.json",
+      "admin_exec.INPUT02-UNREGISTERED.py",
+      "issue_input02.py",
+      "issue_phase.py",
+      "issue_registration.py",
+      "r3_direct33_input02.py",
+      "read_registration_basis.py"
+    ],
+    "existingValidation": "Read owner LOCAL-CHECKS4cdd native validation claim; exact independent data/pin/time-bound comparison only, no validator or candidate rerun.",
+    "remainingFullChainSeconds": 5100,
+    "full5100LatestPossibleStartEpochMs": 1794836463794,
+    "runtimeBoundary": "Fresh absence/unsubmitted/window checks and full5100 admission remain required by actual owner execution. Source pass does not assert current availability or extend credentials."
+  },
+  "changedFilesFromPriorIncrement": [
+    "LOCAL-CHECKS.json",
+    "POLICY.INPUT02.UNISSUED.json",
+    "host-authorization.UNISSUED-SUCCESSOR.json",
+    "original-cas-input02-carrier.UNISSUED.py",
+    "register_cas.py",
+    "roles-authorization.UNISSUED-SUCCESSOR.json"
+  ]
+}

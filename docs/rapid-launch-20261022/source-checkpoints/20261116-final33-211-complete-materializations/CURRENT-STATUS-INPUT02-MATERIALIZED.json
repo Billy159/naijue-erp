@@ -1,0 +1,23 @@
+{
+  "PGStarted": false,
+  "applySubmitted": false,
+  "automaticReplay": false,
+  "blocked": "FULL_5100_SECONDS_BEFORE_CONTROLLER_DEADLINE_NO_LONGER_AVAILABLE",
+  "businessAcceptanceClaimed": false,
+  "checkedAtUTC": "2026-11-16T13:42:06.110215+00:00",
+  "completedOriginalKeys": [
+    "t45-r3-final33-input-materialize-20261116-02",
+    "t45-r3-batched-root06-source-delta-20261116-01"
+  ],
+  "evidence": {
+    "INPUT02-SUCCESSOR-01/ACTUAL-INPUT02-KEY-COMPLETED.json": "aefdacd67a9142b77d1fb2dbb6366f0a69033ab802fe11a461919bf8cc73a5f0",
+    "INPUT02-SUCCESSOR-01/ACTUAL-INPUT02-REGISTRATION-READBACK.json": "a11eb465a9da57a2f7741c4dde4f3bba777647603a28445265431ba3132f0ec7",
+    "MAIN9-EXECUTION-01/ACTUAL-APPLY-ABSENT-AFTER-MATERIALIZE.json": "a6d4fd0b96ced318cb46f8c1583d3536673d7b21daafd430063c7a911a9bb02e",
+    "MAIN9-EXECUTION-01/ACTUAL-MATERIALIZE-COMPLETED.json": "edf63f6072813ef13cd70794b5bcf0b5b31b10d001f5a3ef6c6e2376f98e2a19",
+    "MAIN9-EXECUTION-01/ACTUAL-START-ABSENT-AFTER-MATERIALIZE.json": "9a9b435da51493d7e322e6370f0bd14b2ff45f7a0e5b91587357644bf7607d0a"
+  },
+  "latestStartUTC": "2026-11-16T13:41:03.794Z",
+  "startSubmitted": false,
+  "state": "INPUT02_AND_ROOT06_COMPLETED_PG_STOPPED_UNUSED_ROLE_AUTH_NOT_APPLIED",
+  "writerSubmitted": false
+}

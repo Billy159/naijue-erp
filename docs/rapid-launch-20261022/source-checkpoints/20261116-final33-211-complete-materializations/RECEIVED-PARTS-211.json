@@ -1,0 +1,2336 @@
+{
+  "authoritiesIssued": false,
+  "hostWillIndependentlyCheckEveryReadyAndFullArchive": true,
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "missingKeys": [],
+  "profileSha256": "71b861440bc6368da3f2c0b6293fc87af6af0de77991b145c9f7c74daf9663c7",
+  "readyCount": 211,
+  "receivedParts": [
+    {
+      "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+      "key": "t45-r3-final33-standard-p001-20261116-01",
+      "readySha256": "fe1bf2c3260e3fb29e8044d4689073620855f0e67be41ec2c4246fd148975315"
+    },
+    {
+      "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+      "key": "t45-r3-final33-standard-p002-20261116-01",
+      "readySha256": "bebe5b20e82ab783bfe595ba7705467f68a664e0bed63989193acb2a9fde811d"
+    },
+    {
+      "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+      "key": "t45-r3-final33-standard-p003-20261116-01",
+      "readySha256": "a6b60a80c2f73f85d6ca3c426a78840afd1f45bebf5494af0c4ff2cfd7c6d642"
+    },
+    {
+      "authoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f",
+      "key": "t45-r3-final33-standard-p004-20261116-01",
+      "readySha256": "c69a636f92eb91f272731521bf05ca232620cfccce7fed6ad2b403f54ba1a0f6"
+    },
+    {
+      "authoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352",
+      "key": "t45-r3-final33-standard-p005-20261116-01",
+      "readySha256": "4b604307d0db8ae1604da606d078d692a8db4a29411e69c4b83849d0ca67a38d"
+    },
+    {
+      "authoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352",
+      "key": "t45-r3-final33-standard-p006-20261116-01",
+      "readySha256": "9cda4b00131182602c7ef0fe5172f53bef0613a02b9d92f1e5964e272ffb43dd"
+    },
+    {
+      "authoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352",
+      "key": "t45-r3-final33-standard-p007-20261116-01",
+      "readySha256": "a4220be93a124526e00068e7af44eb98473c119f64ad130b9cc70a569e6fb011"
+    },
+    {
+      "authoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352",
+      "key": "t45-r3-final33-standard-p008-20261116-01",
+      "readySha256": "4ebf9992417aece691485f60f49585dc0ae7aeac221b24068badad8f91c27d33"
+    },
+    {
+      "authoritySha256": "057a669079c93140d268d82e8b3ebd8911e76cedda477d8f7c0e9f32a4d69ac2",
+      "key": "t45-r3-final33-standard-p009-20261116-01",
+      "readySha256": "c3dadacef9aca52212ed76eb84076ed94d6633fa58131833944796f2fe8c8b3b"
+    },
+    {
+      "authoritySha256": "057a669079c93140d268d82e8b3ebd8911e76cedda477d8f7c0e9f32a4d69ac2",
+      "key": "t45-r3-final33-standard-p010-20261116-01",
+      "readySha256": "5ee05d0fbb8d68dfc6aeb44a4938af3564fb5dba331c2fdca1513ea86c1e3004"
+    },
+    {
+      "authoritySha256": "023bf0b91b0249590a04f8a522d7902258ae5ded2b95a63412204160a8997839",
+      "key": "t45-r3-final33-standard-p011-20261116-01",
+      "readySha256": "632d7866a23d56d6d6cb96f627e1a87acaf964ac73e2ab3b67ab6667a9158dc2"
+    },
+    {
+      "authoritySha256": "f8c3c7803d406eac712214bcd3a40996857481666929ef0ca7437f23f341fe7c",
+      "key": "t45-r3-final33-standard-p012-20261116-01",
+      "readySha256": "320ca733a6e86b463bd53b6d091bcdec9764e728034aeec8c4314c4d759b9b16"
+    },
+    {
+      "authoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1",
+      "key": "t45-r3-final33-standard-p013-20261116-01",
+      "readySha256": "4889b2f555e710747530e9aadf10ea2045d166779019d2ee42acfc55015ee000"
+    },
+    {
+      "authoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1",
+      "key": "t45-r3-final33-standard-p014-20261116-01",
+      "readySha256": "30c4fbaef4a45558d95c7825d2ad4fe427974a5b6f992a20b88ba00458b5af27"
+    },
+    {
+      "authoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1",
+      "key": "t45-r3-final33-standard-p015-20261116-01",
+      "readySha256": "3d34fe194c759fb4522fae117a327bdd7eaffc090bd4ad2fcc286ed4af96ac4b"
+    },
+    {
+      "authoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1",
+      "key": "t45-r3-final33-standard-p016-20261116-01",
+      "readySha256": "1fac5c6f956005632f8e7fe00f80f1224fde7e05313c212fe4473480c12499cb"
+    },
+    {
+      "authoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b",
+      "key": "t45-r3-final33-standard-p017-20261116-01",
+      "readySha256": "387f4b377f5fb0f7784fb53254a99de6cfcfddc3167a71e2ff8c1fe9bb86eb53"
+    },
+    {
+      "authoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b",
+      "key": "t45-r3-final33-standard-p018-20261116-01",
+      "readySha256": "fdbefbe10040401161dcf7eaf80ebececfb48e9763fbdf5ae53455bc3966dabc"
+    },
+    {
+      "authoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b",
+      "key": "t45-r3-final33-standard-p019-20261116-01",
+      "readySha256": "e683adf2797f038363237c12134d7c32a4d1eaa8c18d919ba5275c6a05d44da2"
+    },
+    {
+      "authoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b",
+      "key": "t45-r3-final33-standard-p020-20261116-01",
+      "readySha256": "bd864a76a7247cc58468ac07e32d78f009101d779e88b363e0987a2612c26ca5"
+    },
+    {
+      "authoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8",
+      "key": "t45-r3-final33-standard-p021-20261116-01",
+      "readySha256": "9c492e0b450fdfbb023c4eb3b0e2ab7ad5b30cb21bb66005d1897407d217336e"
+    },
+    {
+      "authoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8",
+      "key": "t45-r3-final33-standard-p022-20261116-01",
+      "readySha256": "9991a812997a592b86927d1c7ca04f1f06023697ff7ee554a457f71447b02c7d"
+    },
+    {
+      "authoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8",
+      "key": "t45-r3-final33-standard-p023-20261116-01",
+      "readySha256": "99bfce6ab04e8dbf03a60fd2debddd8c6d275f6e049c984798b7e5b5ebe77c68"
+    },
+    {
+      "authoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8",
+      "key": "t45-r3-final33-standard-p024-20261116-01",
+      "readySha256": "2a67b961ac065c2d26a5a56058591c6b8b7fb0f0baf18edde5fc8522f1541727"
+    },
+    {
+      "authoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a",
+      "key": "t45-r3-final33-standard-p025-20261116-01",
+      "readySha256": "d369b5f2294390eeaa8f7ac86132cb27c3fe1f6ca0ef34fdeaa5eaab9f8020fd"
+    },
+    {
+      "authoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a",
+      "key": "t45-r3-final33-standard-p026-20261116-01",
+      "readySha256": "5647c75aa0e805e6032188ccc5d31343ffbe66f2e7437bae8db0ed58a8f0b9ac"
+    },
+    {
+      "authoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a",
+      "key": "t45-r3-final33-standard-p027-20261116-01",
+      "readySha256": "7dcc155c93b9cbe61904c9f882171b95a8b82d07a441e857ef1ea7ea9c65ad13"
+    },
+    {
+      "authoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a",
+      "key": "t45-r3-final33-standard-p028-20261116-01",
+      "readySha256": "42e82bfd252dfee918d84b7bd2d7026553e53d0497e27d3ed2aaf9abfb21f94c"
+    },
+    {
+      "authoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56",
+      "key": "t45-r3-final33-standard-p029-20261116-01",
+      "readySha256": "c1b45e70a0b8eb958faa65a1065673a9ef028dfca673a23cbecf608133d795a7"
+    },
+    {
+      "authoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56",
+      "key": "t45-r3-final33-standard-p030-20261116-01",
+      "readySha256": "2143c33c4f925e2df59225f2e9761eb17c8f4c5e73056892af815eb2afb3dfc3"
+    },
+    {
+      "authoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56",
+      "key": "t45-r3-final33-standard-p031-20261116-01",
+      "readySha256": "6df54a6a5bcad169813bb7c8c4fda1b0995a36b7106b8f0899b9db4f75d4cdb5"
+    },
+    {
+      "authoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56",
+      "key": "t45-r3-final33-standard-p032-20261116-01",
+      "readySha256": "29846aecf002e36cda5c796d468cbbdcca45e42edd3a93049399c590145ab4eb"
+    },
+    {
+      "authoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794",
+      "key": "t45-r3-final33-standard-p033-20261116-01",
+      "readySha256": "ce38fd230bcc1b621ec4749163917ed780d7b3deecabf7a69f43624e0124f0b9"
+    },
+    {
+      "authoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794",
+      "key": "t45-r3-final33-standard-p034-20261116-01",
+      "readySha256": "d99eae23f7e3ba9b3d5bab3ff41e471a6f7b6cfe6a8c22afdb50fd3de3f23acc"
+    },
+    {
+      "authoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794",
+      "key": "t45-r3-final33-standard-p035-20261116-01",
+      "readySha256": "862e6b05f2dc332cbdb7ba58b27b94bfc06c476f38c184700d68e861f67f425e"
+    },
+    {
+      "authoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794",
+      "key": "t45-r3-final33-standard-p036-20261116-01",
+      "readySha256": "31aafdf1f4abf84905f9b80324ecddabf78c5d55950b9f7849f942859286856c"
+    },
+    {
+      "authoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433",
+      "key": "t45-r3-final33-standard-p037-20261116-01",
+      "readySha256": "109c2bb8f4a9bdc6089adc9061b0664b3a83c80347605e87e253448395c07fb4"
+    },
+    {
+      "authoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433",
+      "key": "t45-r3-final33-standard-p038-20261116-01",
+      "readySha256": "c9aae671f3fb737dd53b19cfeba23540a6af75547596fda8d91be1144940fe84"
+    },
+    {
+      "authoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433",
+      "key": "t45-r3-final33-standard-p039-20261116-01",
+      "readySha256": "9efddde04359f3d949f5fa4d8774773ab9a9ea469c2a28465935115f67b03b0d"
+    },
+    {
+      "authoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433",
+      "key": "t45-r3-final33-standard-p040-20261116-01",
+      "readySha256": "3d82e70aeaa236c51e6e1edcbb7f20837a6c74162c5c1165bdd75ca770bce2c7"
+    },
+    {
+      "authoritySha256": "70fadb3930edaa0bf4ed83838d3bae92cbec5bb0d4962a9be84d3230c487fbb4",
+      "key": "t45-r3-final33-standard-p041-20261116-01",
+      "readySha256": "1a8dc6118922bfb98ec66687fa6cfcfbaa0a9aa1208a334b7ab601a7fd66cd88"
+    },
+    {
+      "authoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1",
+      "key": "t45-r3-final33-evidence-p001-20261116-01",
+      "readySha256": "962b8e35702e5096aff771395391f2ca9053360d0fa18b52a58a8ab0b5570d19"
+    },
+    {
+      "authoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1",
+      "key": "t45-r3-final33-evidence-p002-20261116-01",
+      "readySha256": "b2371dcd1a40b0f87a223dbdf50dc78daee8f561c26f96d0bdcb83ca4ca5ba1a"
+    },
+    {
+      "authoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1",
+      "key": "t45-r3-final33-evidence-p003-20261116-01",
+      "readySha256": "d5cc528cc357c053ab1ff1240e9cd9769f37bb6c2b5987b8921356cc28387474"
+    },
+    {
+      "authoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1",
+      "key": "t45-r3-final33-evidence-p004-20261116-01",
+      "readySha256": "434c1bec25cc5af3771f28cd72130b4dbd24986132a2c1e1871566166947f82a"
+    },
+    {
+      "authoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9",
+      "key": "t45-r3-final33-evidence-p005-20261116-01",
+      "readySha256": "4f27836568ae2f3658929a42daf86075e13fb17c63a227fd75323f741058cb9f"
+    },
+    {
+      "authoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9",
+      "key": "t45-r3-final33-evidence-p006-20261116-01",
+      "readySha256": "0f313e1b18d3a9bcf783aba09f27d900d2dc6a9e19a8f7d1c248f5b169a29edd"
+    },
+    {
+      "authoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9",
+      "key": "t45-r3-final33-evidence-p007-20261116-01",
+      "readySha256": "be314d7c506af8be69a3db9c339c68cbf343b70a807fca1deec046a6c2c4d6c9"
+    },
+    {
+      "authoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9",
+      "key": "t45-r3-final33-evidence-p008-20261116-01",
+      "readySha256": "d13941f28a62978080f27dd1b267b67a5e38e1a946e0684323fcdcdb24c7585a"
+    },
+    {
+      "authoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216",
+      "key": "t45-r3-final33-evidence-p009-20261116-01",
+      "readySha256": "ed3fa6ff866b542a2d4f6c0a98ad8526cf06503954eeb6ccd4597a61c66d735c"
+    },
+    {
+      "authoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216",
+      "key": "t45-r3-final33-evidence-p010-20261116-01",
+      "readySha256": "301018ff9732d6542d35027622d9ad96efa33d6eddc973984a0bd245921f86ca"
+    },
+    {
+      "authoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216",
+      "key": "t45-r3-final33-evidence-p011-20261116-01",
+      "readySha256": "183d14da1006eb4450c7de45dd8b86182ddef94676b8d613c124cfb36ccbaebc"
+    },
+    {
+      "authoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216",
+      "key": "t45-r3-final33-evidence-p012-20261116-01",
+      "readySha256": "9c8cf437a243dbdcc236f01350246a81e602d28f4c26016514647272cef8fd95"
+    },
+    {
+      "authoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b",
+      "key": "t45-r3-final33-evidence-p013-20261116-01",
+      "readySha256": "e92c53658b7d94c4463b7b82007c9a39bd205eec359220953bebd529d773e98e"
+    },
+    {
+      "authoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b",
+      "key": "t45-r3-final33-evidence-p014-20261116-01",
+      "readySha256": "3e0ae6bea0a910e1a1944b746a2eb9638cff70c9f0727c0e639483419991a136"
+    },
+    {
+      "authoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b",
+      "key": "t45-r3-final33-evidence-p015-20261116-01",
+      "readySha256": "f9366189d9dafb55eb915d97e4d17adc0d2b160cd8431ab1bfce8f367a4dd23b"
+    },
+    {
+      "authoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b",
+      "key": "t45-r3-final33-evidence-p016-20261116-01",
+      "readySha256": "128c33ba158a8561163c4adbc1ffca26be8e7eb6024dccc77a38f62ca1345453"
+    },
+    {
+      "authoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363",
+      "key": "t45-r3-final33-evidence-p017-20261116-01",
+      "readySha256": "3ecb78de28990d1e9b0ff047efb4d51af2182d3a787a14a95b0100e1e7a13b95"
+    },
+    {
+      "authoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363",
+      "key": "t45-r3-final33-evidence-p018-20261116-01",
+      "readySha256": "52d2b51de50bc02ecbe920a58598f64eb38316e2a081f8cee51841e871ab9569"
+    },
+    {
+      "authoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363",
+      "key": "t45-r3-final33-evidence-p019-20261116-01",
+      "readySha256": "450ee7f9fd8edbaad9f8407f196e0db0498ef745ab97d7cb6d9d8eac3c65bcb8"
+    },
+    {
+      "authoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363",
+      "key": "t45-r3-final33-evidence-p020-20261116-01",
+      "readySha256": "bb896814db30c4c53268e3f3bddc429b7a1adfa1293fa19c2a07b1244983836f"
+    },
+    {
+      "authoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905",
+      "key": "t45-r3-final33-evidence-p021-20261116-01",
+      "readySha256": "f1b1c0ae38af1637c6a678d4c4df6fd9183f8ecdbf763a59e3188fc02ba1f69f"
+    },
+    {
+      "authoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905",
+      "key": "t45-r3-final33-evidence-p022-20261116-01",
+      "readySha256": "704d0e67c4b7e4b8d8ae6274ef6b2ea1bc7510645de847e0cc8efcebbd9ab301"
+    },
+    {
+      "authoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905",
+      "key": "t45-r3-final33-evidence-p023-20261116-01",
+      "readySha256": "8cbe44e7b52780349a88c7b34e7ec9a222d4707b716df559ee9015cc4a3e05c3"
+    },
+    {
+      "authoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905",
+      "key": "t45-r3-final33-evidence-p024-20261116-01",
+      "readySha256": "fb66d3a33a5b2aec206be5a0ea8104ae40f88157ec06c303c9a6ac9c14b670fb"
+    },
+    {
+      "authoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a",
+      "key": "t45-r3-final33-evidence-p025-20261116-01",
+      "readySha256": "6215f4666026b9a158b85797d35828f40eb4c749f7b848a5608535e094b2d52a"
+    },
+    {
+      "authoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a",
+      "key": "t45-r3-final33-evidence-p026-20261116-01",
+      "readySha256": "50f229f0c0a6e6edf91bec7c99b1c9575a72aaff98d02489ee04ce2bca9c909e"
+    },
+    {
+      "authoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a",
+      "key": "t45-r3-final33-evidence-p027-20261116-01",
+      "readySha256": "032eead2079176285c2ceff2187993f8ff0bedefcfeaba20ac1d2e2783506d04"
+    },
+    {
+      "authoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a",
+      "key": "t45-r3-final33-evidence-p028-20261116-01",
+      "readySha256": "b91e9e27eb2f66bbfbe0d77bc35cc99852a593147618969fa55c93ec6d9b7acc"
+    },
+    {
+      "authoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560",
+      "key": "t45-r3-final33-evidence-p029-20261116-01",
+      "readySha256": "c71d4f9eeaf643d2aa8c992e4815773021acad66ef9922bd28c73ca881679c2d"
+    },
+    {
+      "authoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560",
+      "key": "t45-r3-final33-evidence-p030-20261116-01",
+      "readySha256": "bba9cc9a85486fe1ffe1abec8b1b676b8a6b5c1530e2d808ec44549d1db933f6"
+    },
+    {
+      "authoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560",
+      "key": "t45-r3-final33-evidence-p031-20261116-01",
+      "readySha256": "c1b90ce89aeb3b1a6010797550079b7e3f7462960ddb3236807ef57157b4c47f"
+    },
+    {
+      "authoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560",
+      "key": "t45-r3-final33-evidence-p032-20261116-01",
+      "readySha256": "dea184fc5e6bb3833c2fc128f7f7605272a7a29382940312ddf61f88ffe9a81b"
+    },
+    {
+      "authoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf",
+      "key": "t45-r3-final33-evidence-p033-20261116-01",
+      "readySha256": "97dabffeb790a3ad91141dd0a4306972556b4272fbe7c09beea8699ca430cf6d"
+    },
+    {
+      "authoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf",
+      "key": "t45-r3-final33-evidence-p034-20261116-01",
+      "readySha256": "74323cce91cfbdda180d6a8bb9f1ec878cfea4184ed39d53291907d01c3beeec"
+    },
+    {
+      "authoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf",
+      "key": "t45-r3-final33-evidence-p035-20261116-01",
+      "readySha256": "73a43c3ff55704a5943377d4b0b1ac7e6f96bd86f246c9d174958cf265feb626"
+    },
+    {
+      "authoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf",
+      "key": "t45-r3-final33-evidence-p036-20261116-01",
+      "readySha256": "b0ac489cbcb4e5182ee95d264d67c50f7faa678913222a7b19afac7d595e3705"
+    },
+    {
+      "authoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91",
+      "key": "t45-r3-final33-evidence-p037-20261116-01",
+      "readySha256": "d406bb8312332c4da2ebb5407b3a841a1c5d1a62fac05bb4f033f8bf26cde428"
+    },
+    {
+      "authoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91",
+      "key": "t45-r3-final33-evidence-p038-20261116-01",
+      "readySha256": "a8181708cce8ebc32bb396aa1bb38d6187baaa26ed488d3a64be0dfb924462ff"
+    },
+    {
+      "authoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91",
+      "key": "t45-r3-final33-evidence-p039-20261116-01",
+      "readySha256": "3879458395842783e803f98897b712f58bb469783bcd762a7979288ec57ba0bd"
+    },
+    {
+      "authoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91",
+      "key": "t45-r3-final33-evidence-p040-20261116-01",
+      "readySha256": "ce966b2e9c7e2a45ccf325cd38e8d0a87bc0e873fe059ab6979feb850d1804d2"
+    },
+    {
+      "authoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08",
+      "key": "t45-r3-final33-evidence-p041-20261116-01",
+      "readySha256": "1167cf3fb44f1addde9ab2975063cf280d2a9236f9cdf360e3f90be3a1375009"
+    },
+    {
+      "authoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08",
+      "key": "t45-r3-final33-evidence-p042-20261116-01",
+      "readySha256": "39a15c7b0e28eae3d3f7ef1e8c5f98a63b3754010e01715bdd06ba2aeb167878"
+    },
+    {
+      "authoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08",
+      "key": "t45-r3-final33-evidence-p043-20261116-01",
+      "readySha256": "ea31a407bc10daa2689bf4ef056be1fbe015ad601469fc493446df7dcb59c3c3"
+    },
+    {
+      "authoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08",
+      "key": "t45-r3-final33-evidence-p044-20261116-01",
+      "readySha256": "822195b11a64eeaa6a0babc2bccfefecfe46408698db7f2780613cf178dc879a"
+    },
+    {
+      "authoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959",
+      "key": "t45-r3-final33-evidence-p045-20261116-01",
+      "readySha256": "213d7e52f79186f5a0479d2a3eeb8fe8a1c8b6e77d727594e91299b505cfe4d3"
+    },
+    {
+      "authoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959",
+      "key": "t45-r3-final33-evidence-p046-20261116-01",
+      "readySha256": "99ab4aa2c0ec6e894bdf2421c2a865b1adc9d0eb1b1216cbd1f5ce795b8a268d"
+    },
+    {
+      "authoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959",
+      "key": "t45-r3-final33-evidence-p047-20261116-01",
+      "readySha256": "a8781790770dcc050e0a3eb7aabeae5d18fcd503df55784c03345c96d926d043"
+    },
+    {
+      "authoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959",
+      "key": "t45-r3-final33-evidence-p048-20261116-01",
+      "readySha256": "a4fab5ca6914c39150e8686eab304f7e18614cb5ba23595767a637b2820c0bb5"
+    },
+    {
+      "authoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e",
+      "key": "t45-r3-final33-evidence-p049-20261116-01",
+      "readySha256": "f13bb547648e23c626062e506185345bdef00235b8a4306fc9ea1df4a6860df7"
+    },
+    {
+      "authoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e",
+      "key": "t45-r3-final33-evidence-p050-20261116-01",
+      "readySha256": "4c1bed6c4e103036c00df66f3b2196c5f1c3e99b9c157026883659d7bbbd26c9"
+    },
+    {
+      "authoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e",
+      "key": "t45-r3-final33-evidence-p051-20261116-01",
+      "readySha256": "f76e731aebd2a6ebef4641277121d581b8e2a9f2840834efca6b7785fd6104b7"
+    },
+    {
+      "authoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e",
+      "key": "t45-r3-final33-evidence-p052-20261116-01",
+      "readySha256": "539e2fb1def09b6fa94e47647212430d469303e9e3c7c776da5f5d36000b22ad"
+    },
+    {
+      "authoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1",
+      "key": "t45-r3-final33-evidence-p053-20261116-01",
+      "readySha256": "3615c177ec0075d451f42bd92064769c0330d262b0e1c7ac667400d51eb9d65f"
+    },
+    {
+      "authoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1",
+      "key": "t45-r3-final33-evidence-p054-20261116-01",
+      "readySha256": "a3aa2d75fd72c48f88bb6c54da3980363c6bfca615d2ce1aa28c662a85fe673f"
+    },
+    {
+      "authoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1",
+      "key": "t45-r3-final33-evidence-p055-20261116-01",
+      "readySha256": "ab1a71470165cb65fa298c77f9dc25e550345dd207fac2da66f86a2b7b5dea64"
+    },
+    {
+      "authoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1",
+      "key": "t45-r3-final33-evidence-p056-20261116-01",
+      "readySha256": "75e04539d43e4d9ef1508e587f4c179a43ee65cb333e5651de8eb5f9a130fc29"
+    },
+    {
+      "authoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99",
+      "key": "t45-r3-final33-evidence-p057-20261116-01",
+      "readySha256": "5fd2423e066d6b456e95687b9146534a184f3a35d2834d81e82a73a1ef36444c"
+    },
+    {
+      "authoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99",
+      "key": "t45-r3-final33-evidence-p058-20261116-01",
+      "readySha256": "2d94214b3622f88354c8fbf2ddf39340da98703762261902d0c6ac956fb5311f"
+    },
+    {
+      "authoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99",
+      "key": "t45-r3-final33-evidence-p059-20261116-01",
+      "readySha256": "0c90d4ba27f52d75a8fe3a7f7665bf2659f45556a7b3daa2c06a76c461972fcd"
+    },
+    {
+      "authoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99",
+      "key": "t45-r3-final33-evidence-p060-20261116-01",
+      "readySha256": "44d975cfb56413765df370a3ddf34529ef79cae306fcd650bcbbeed53d6c7571"
+    },
+    {
+      "authoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b",
+      "key": "t45-r3-final33-evidence-p061-20261116-01",
+      "readySha256": "2479bc958bfe04f764ca98e9b557109ab1a3c8e6b0dedbfefb515683c3400295"
+    },
+    {
+      "authoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b",
+      "key": "t45-r3-final33-evidence-p062-20261116-01",
+      "readySha256": "fb222a38c6c9edc05857374fff45d89bb952b4caafddf2087fc38a30591a11b5"
+    },
+    {
+      "authoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b",
+      "key": "t45-r3-final33-evidence-p063-20261116-01",
+      "readySha256": "3db6ca71a4aab3c5e4551047b25749c2b2bcdc8357b2fafc8b6b38a59074bd79"
+    },
+    {
+      "authoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b",
+      "key": "t45-r3-final33-evidence-p064-20261116-01",
+      "readySha256": "0c262e9153a3fbf0e448c371911053f8ce5226d2b3b5ca8dda83b6e21554b573"
+    },
+    {
+      "authoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5",
+      "key": "t45-r3-final33-evidence-p065-20261116-01",
+      "readySha256": "914ec9fbd4d61c1e5a565054f74e98ca426b59d9a21ffe8850f187f568627359"
+    },
+    {
+      "authoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5",
+      "key": "t45-r3-final33-evidence-p066-20261116-01",
+      "readySha256": "72f77bb57ef81e0bb8cf441afa19a29a8c76d01379ab27d0073913b590d8f05f"
+    },
+    {
+      "authoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5",
+      "key": "t45-r3-final33-evidence-p067-20261116-01",
+      "readySha256": "0c2e8d66646635530886f15e3c761f72da1397273fe9e7fbad58a7c0671f5f21"
+    },
+    {
+      "authoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5",
+      "key": "t45-r3-final33-evidence-p068-20261116-01",
+      "readySha256": "6d44ff56b8ede7969db0a561f73d0960ccb877ea83d462d0ecf707bdefb0d8a7"
+    },
+    {
+      "authoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7",
+      "key": "t45-r3-final33-evidence-p069-20261116-01",
+      "readySha256": "cde352e48ac4ee4acc54c38c446bbf6dedf5b1c3b8d4f9307703f47bf6c44e8f"
+    },
+    {
+      "authoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7",
+      "key": "t45-r3-final33-evidence-p070-20261116-01",
+      "readySha256": "a90fb9438669c9b7ad62f199f3f58ed84e33c39f71eda26603410111d4dbc228"
+    },
+    {
+      "authoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7",
+      "key": "t45-r3-final33-evidence-p071-20261116-01",
+      "readySha256": "bb970e3c19727ac186858bb942231cf51c5a44ecd1ac5f12823f7a657084131d"
+    },
+    {
+      "authoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7",
+      "key": "t45-r3-final33-evidence-p072-20261116-01",
+      "readySha256": "d02a559a3514d55caeb02e7ecea29ba3c6a49a6326e9c9b042f0929fb898b8e7"
+    },
+    {
+      "authoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e",
+      "key": "t45-r3-final33-evidence-p073-20261116-01",
+      "readySha256": "12c4fa14895c5a824acb23717c20d9b0a5946471d06e8c7a20299b8a299966e5"
+    },
+    {
+      "authoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e",
+      "key": "t45-r3-final33-evidence-p074-20261116-01",
+      "readySha256": "3409ae5910fec139e0dc58a8ba1641f07ae36e3fdfa072523ca03547d6cd4792"
+    },
+    {
+      "authoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e",
+      "key": "t45-r3-final33-evidence-p075-20261116-01",
+      "readySha256": "9866b29390be5b8de35f976a5d667381ec55f73ca0cd4471d01656244c793a81"
+    },
+    {
+      "authoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e",
+      "key": "t45-r3-final33-evidence-p076-20261116-01",
+      "readySha256": "ca7aab0a9f32590502873e557299190fc464500ab89c570a941ca8fd4e2976bd"
+    },
+    {
+      "authoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0",
+      "key": "t45-r3-final33-evidence-p077-20261116-01",
+      "readySha256": "e8752ae14dbcc52437316e7ba82284a87c6993bec17efc50fd1d8ad5ddcda25b"
+    },
+    {
+      "authoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0",
+      "key": "t45-r3-final33-evidence-p078-20261116-01",
+      "readySha256": "335fcdfbab7c2e0caf5134943378ef3f26cf1e23258f997052d751c1d6fe54e1"
+    },
+    {
+      "authoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0",
+      "key": "t45-r3-final33-evidence-p079-20261116-01",
+      "readySha256": "430c398b88c67a6e566611fe726846e364ac64a9a4eca7baaca69c506c164cac"
+    },
+    {
+      "authoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0",
+      "key": "t45-r3-final33-evidence-p080-20261116-01",
+      "readySha256": "d69dccccff56ed5e47a79f3743dcbe3d1937d8b483f5a50c2c4959c606916b43"
+    },
+    {
+      "authoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6",
+      "key": "t45-r3-final33-evidence-p081-20261116-01",
+      "readySha256": "d23904ab49bf0acb0d1ec8dc724fb979d8328c1d6f72f475fe4d80093ff7ff08"
+    },
+    {
+      "authoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6",
+      "key": "t45-r3-final33-evidence-p082-20261116-01",
+      "readySha256": "93afbf12ce05a9c4e1f2e5c3f6838fc09816c3e299e4e76ccdbddb3c10b17561"
+    },
+    {
+      "authoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6",
+      "key": "t45-r3-final33-evidence-p083-20261116-01",
+      "readySha256": "76568329acb20c7e44b00e1298418b310d1d7226a681ad2a982d6613386d74e0"
+    },
+    {
+      "authoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6",
+      "key": "t45-r3-final33-evidence-p084-20261116-01",
+      "readySha256": "3b988d75a45fd44c0153f814e938b2bb9608f6b406133bc32d6b23aa1c8e54de"
+    },
+    {
+      "authoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9",
+      "key": "t45-r3-final33-evidence-p085-20261116-01",
+      "readySha256": "e5921dc42643babbbb145aecd7be6cdf284b929843f5c30dea01d2aebc13f8f4"
+    },
+    {
+      "authoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9",
+      "key": "t45-r3-final33-evidence-p086-20261116-01",
+      "readySha256": "0bfc3be07bd2e261391f7a411384393545577f29e9f6fc15daab3d0ea43e2682"
+    },
+    {
+      "authoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9",
+      "key": "t45-r3-final33-evidence-p087-20261116-01",
+      "readySha256": "46897ab6d8f13b317794eba5ee63a90507c4509dda62accabb7ad717d5f8a1fd"
+    },
+    {
+      "authoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9",
+      "key": "t45-r3-final33-evidence-p088-20261116-01",
+      "readySha256": "9744455c9d617dc8f5b1f7855339c995bd9aed3411d5741811b28146ffa65193"
+    },
+    {
+      "authoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c",
+      "key": "t45-r3-final33-evidence-p089-20261116-01",
+      "readySha256": "5396603454eac215c070139e2d372711b7106d34b5f17e39c5a1a2dba04ee72a"
+    },
+    {
+      "authoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c",
+      "key": "t45-r3-final33-evidence-p090-20261116-01",
+      "readySha256": "2e079c75e4af3843efa2a5061b90cc6d36e713b2a63e91c980f1dafab95103d4"
+    },
+    {
+      "authoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c",
+      "key": "t45-r3-final33-evidence-p091-20261116-01",
+      "readySha256": "4f5cd797f31a3a7e97ade8dc1a6e51de4c188758ade15237ee8c6dca6eb4112a"
+    },
+    {
+      "authoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c",
+      "key": "t45-r3-final33-evidence-p092-20261116-01",
+      "readySha256": "ac5472050f85137f20488ed128ff745c67d87620f004f8f6829a1ed97758080f"
+    },
+    {
+      "authoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9",
+      "key": "t45-r3-final33-evidence-p093-20261116-01",
+      "readySha256": "4583ba239e9cdb252d56b027c6dd2d651ce9e71fac9385878cb6a4954c7090e3"
+    },
+    {
+      "authoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9",
+      "key": "t45-r3-final33-evidence-p094-20261116-01",
+      "readySha256": "817fffed3940239f1da7fd0222546e07b121c94cec1f132ada6077af3e96c79f"
+    },
+    {
+      "authoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9",
+      "key": "t45-r3-final33-evidence-p095-20261116-01",
+      "readySha256": "ee131b2027200c61984ffcb6fee2687dc262aadd61696cbaa65569a6c2ca139e"
+    },
+    {
+      "authoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9",
+      "key": "t45-r3-final33-evidence-p096-20261116-01",
+      "readySha256": "c16fc30746a9fe17846a4d2b31d591bfa7b34b520fdd917fc0e1987c3f44c935"
+    },
+    {
+      "authoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e",
+      "key": "t45-r3-final33-evidence-p097-20261116-01",
+      "readySha256": "1f1a7c3a6355117fa6c25eae98622e51e8b82d65220215f3ea5cf9c14bf2386e"
+    },
+    {
+      "authoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e",
+      "key": "t45-r3-final33-evidence-p098-20261116-01",
+      "readySha256": "55d15a55ff03040e807ebed5eed6d26ad902d45632dcc11cf81813fc3b38e55c"
+    },
+    {
+      "authoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e",
+      "key": "t45-r3-final33-evidence-p099-20261116-01",
+      "readySha256": "3e54cf644af3792f5bda7dbca4733e657c884d306807f62d42f14891d2d03fc8"
+    },
+    {
+      "authoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e",
+      "key": "t45-r3-final33-evidence-p100-20261116-01",
+      "readySha256": "39f2a80fb95902f4d52c578be646f72051525a275337458254284bd0455f8609"
+    },
+    {
+      "authoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48",
+      "key": "t45-r3-final33-evidence-p101-20261116-01",
+      "readySha256": "67a08f2c23788d8fc7585f610b4ea2778ae9cd604290cfc2e07e675a2b26d10d"
+    },
+    {
+      "authoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48",
+      "key": "t45-r3-final33-evidence-p102-20261116-01",
+      "readySha256": "6186685db069138dee2cdfc1c42ba7dde8a4aedb4e8ab87f073b1b5f35cd09d3"
+    },
+    {
+      "authoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48",
+      "key": "t45-r3-final33-evidence-p103-20261116-01",
+      "readySha256": "ae45429c4a995ae739d9edbc39cf9dacbb6088784ce92affa86c913b317e14b3"
+    },
+    {
+      "authoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48",
+      "key": "t45-r3-final33-evidence-p104-20261116-01",
+      "readySha256": "c07fbb2c91a8789a38d488bd66a3cfb49c464f8c5c71f65ea000c99f83868685"
+    },
+    {
+      "authoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953",
+      "key": "t45-r3-final33-evidence-p105-20261116-01",
+      "readySha256": "d575dd1269918cef34abcc64536d924e75270fe017b98767c884ea666f1e723f"
+    },
+    {
+      "authoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953",
+      "key": "t45-r3-final33-evidence-p106-20261116-01",
+      "readySha256": "1ecd04fb73cef9f16fc9e3b35e0168fcc7dec1f38ff0316c214a7cef80ea6ee6"
+    },
+    {
+      "authoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953",
+      "key": "t45-r3-final33-evidence-p107-20261116-01",
+      "readySha256": "1f2cf638d185d7bf96bd487b47460ad52a3d6e48af5cb3d94bb2cb5c038c731e"
+    },
+    {
+      "authoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953",
+      "key": "t45-r3-final33-evidence-p108-20261116-01",
+      "readySha256": "1aab4ea6a695b902172b1b420c074ff0008fdf5553ddddf639824996c4b53b42"
+    },
+    {
+      "authoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37",
+      "key": "t45-r3-final33-evidence-p109-20261116-01",
+      "readySha256": "2d9c5548d9fd182c8583ab3e4a66d95d256a7b77edd557ccc5619a23498ab3a4"
+    },
+    {
+      "authoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37",
+      "key": "t45-r3-final33-evidence-p110-20261116-01",
+      "readySha256": "8d9c160771bd157909a200721702fb408cbe27e07e6968aad0ffe3f26648bd07"
+    },
+    {
+      "authoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37",
+      "key": "t45-r3-final33-evidence-p111-20261116-01",
+      "readySha256": "d4ef47c184b8ee701781170eb5d0569c0553417955fcfb41f7680396687fe15b"
+    },
+    {
+      "authoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37",
+      "key": "t45-r3-final33-evidence-p112-20261116-01",
+      "readySha256": "f3b25275feb8fa989b7567d8d5076d186eaf511f01ceef33a0c74ce74fe70db1"
+    },
+    {
+      "authoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6",
+      "key": "t45-r3-final33-evidence-p113-20261116-01",
+      "readySha256": "cae2ad89dd3587465f6bf30b03d78116186a700c31412e13141d6ba9026a76b2"
+    },
+    {
+      "authoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6",
+      "key": "t45-r3-final33-evidence-p114-20261116-01",
+      "readySha256": "e6c27fce38683ece7e258adadd2325ca64b6ef373c2fbac7f3d904548c52463f"
+    },
+    {
+      "authoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6",
+      "key": "t45-r3-final33-evidence-p115-20261116-01",
+      "readySha256": "480dfd96c208998fd9e29b8282afb9ad698c789cfc2903a7858a174c90e754b3"
+    },
+    {
+      "authoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6",
+      "key": "t45-r3-final33-evidence-p116-20261116-01",
+      "readySha256": "a353162bb84cba637503cffa6fc645379383299f98a10cf99116ab693bd02046"
+    },
+    {
+      "authoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7",
+      "key": "t45-r3-final33-evidence-p117-20261116-01",
+      "readySha256": "38c30636db860e60ae918f9135ba9d0ee774c17eae30a332a2210f8be936a3fa"
+    },
+    {
+      "authoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7",
+      "key": "t45-r3-final33-evidence-p118-20261116-01",
+      "readySha256": "4df02519cd90769f85159aa60cf2ecda19bde445798f7057c1cc5927258b2f8a"
+    },
+    {
+      "authoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7",
+      "key": "t45-r3-final33-evidence-p119-20261116-01",
+      "readySha256": "0d314e547e723b73193d35529fda4e10530779734aacb8344ad60ac959e33499"
+    },
+    {
+      "authoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7",
+      "key": "t45-r3-final33-evidence-p120-20261116-01",
+      "readySha256": "e2db11b596119e993293d76827a515cebf85099f0d04d82c450fd60ba02cea19"
+    },
+    {
+      "authoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492",
+      "key": "t45-r3-final33-evidence-p121-20261116-01",
+      "readySha256": "09b7f455fc84ee4c82060f7b82a5751aad7e49db3fc51b81726aa7f6104b0bde"
+    },
+    {
+      "authoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492",
+      "key": "t45-r3-final33-evidence-p122-20261116-01",
+      "readySha256": "33bf83e9b7e8b1e7efdbd9cd54862655d35a1b23ca6f7623814514baa68bff10"
+    },
+    {
+      "authoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492",
+      "key": "t45-r3-final33-evidence-p123-20261116-01",
+      "readySha256": "19ff980de90265a2e2385520080e48d44548a60abbc3131e991ee140b6c208e1"
+    },
+    {
+      "authoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492",
+      "key": "t45-r3-final33-evidence-p124-20261116-01",
+      "readySha256": "b93829e9704e9432ce0409eb1f01f60546e1f2534f039dcafff7cc9cd8be2654"
+    },
+    {
+      "authoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99",
+      "key": "t45-r3-final33-evidence-p125-20261116-01",
+      "readySha256": "6bfa36f33fdc64640a835bc5dde8fd8b833c65a590b57c71d77b8cafb60320a2"
+    },
+    {
+      "authoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99",
+      "key": "t45-r3-final33-evidence-p126-20261116-01",
+      "readySha256": "1b81ad96af30332a442b7dbe487b05510984b821b88c408dce5dabf213fc1df7"
+    },
+    {
+      "authoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99",
+      "key": "t45-r3-final33-evidence-p127-20261116-01",
+      "readySha256": "0984193eca3973227f3ff5996bdaa38ca71462183fc99a2bae5992893fb2ba19"
+    },
+    {
+      "authoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99",
+      "key": "t45-r3-final33-evidence-p128-20261116-01",
+      "readySha256": "6a030119f0b922c7b4c2f7ecf7ff128921ef6cd0c5eac17e4e64016985062169"
+    },
+    {
+      "authoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed",
+      "key": "t45-r3-final33-evidence-p129-20261116-01",
+      "readySha256": "7cc75ffdf56c28d76be408e06092eba84cbd84fe706ac20dab9a036ff1955657"
+    },
+    {
+      "authoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed",
+      "key": "t45-r3-final33-evidence-p130-20261116-01",
+      "readySha256": "b6c86268066816e4f3209692ed57621fb74df951200f5d3493606e79d042cc3a"
+    },
+    {
+      "authoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed",
+      "key": "t45-r3-final33-evidence-p131-20261116-01",
+      "readySha256": "68a7b0423322c785707977c9164531999798771d89ee4a78245dbdc7b7516722"
+    },
+    {
+      "authoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed",
+      "key": "t45-r3-final33-evidence-p132-20261116-01",
+      "readySha256": "e1177d9e515f6c30f40e18f761b6e9701f387c00245fc905d6b83d91a42a94aa"
+    },
+    {
+      "authoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70",
+      "key": "t45-r3-final33-evidence-p133-20261116-01",
+      "readySha256": "49690f0d9928b17676e75cdc2fa8b353c3d8f4e602162840387e8574a00b92be"
+    },
+    {
+      "authoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70",
+      "key": "t45-r3-final33-evidence-p134-20261116-01",
+      "readySha256": "e2cc5a080c7a180061364ef1f3937aa772203e2532bf38ffe7a81ee14e8609c8"
+    },
+    {
+      "authoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70",
+      "key": "t45-r3-final33-evidence-p135-20261116-01",
+      "readySha256": "5b5103099762b1c2f3f5a6ebe5b263d547bbbc0564888f9160693505cb1e0288"
+    },
+    {
+      "authoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70",
+      "key": "t45-r3-final33-evidence-p136-20261116-01",
+      "readySha256": "52a292303b5f1c5c307a578ddf99811560cad63f9a94a47675eb9de8ec4f0a23"
+    },
+    {
+      "authoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93",
+      "key": "t45-r3-final33-evidence-p137-20261116-01",
+      "readySha256": "d2994ff7d287f0c29f1e6a911dc39fc34ee3312530fb9216b93b14737d3f4e1a"
+    },
+    {
+      "authoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93",
+      "key": "t45-r3-final33-evidence-p138-20261116-01",
+      "readySha256": "f048963e543c5f6619252cebd998e99e5a0c010dbe2d91ec2de4818b0ba0ef3e"
+    },
+    {
+      "authoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93",
+      "key": "t45-r3-final33-evidence-p139-20261116-01",
+      "readySha256": "7a1b697c74519be0ef738ecda8061e678bdf3a838dc509bea82f2d6d55ce840c"
+    },
+    {
+      "authoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93",
+      "key": "t45-r3-final33-evidence-p140-20261116-01",
+      "readySha256": "3f5930a6589414d60eeb1675ce7600d2c002064669ffe33b3725952ce840e82c"
+    },
+    {
+      "authoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30",
+      "key": "t45-r3-final33-evidence-p141-20261116-01",
+      "readySha256": "2a1eb6c1da64c966a8fae8481981381de6a3cc945d70e725bc656ffa51898860"
+    },
+    {
+      "authoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30",
+      "key": "t45-r3-final33-evidence-p142-20261116-01",
+      "readySha256": "6db495a543add8b37eed71d9c805ff6ed3941a084f4385cd46deb2cf034f1761"
+    },
+    {
+      "authoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30",
+      "key": "t45-r3-final33-evidence-p143-20261116-01",
+      "readySha256": "114661c0603fec7987d95a1a69b3bb04ed145926094e911139f346c5de24707e"
+    },
+    {
+      "authoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30",
+      "key": "t45-r3-final33-evidence-p144-20261116-01",
+      "readySha256": "968535816496b29195c10152dc70ab0afaefee4e2ef7b2f0df1337d2eaf8ea57"
+    },
+    {
+      "authoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67",
+      "key": "t45-r3-final33-evidence-p145-20261116-01",
+      "readySha256": "402530493110a83a137f64377b97d6a7a47b34c03590258bb91833143bee6b09"
+    },
+    {
+      "authoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67",
+      "key": "t45-r3-final33-evidence-p146-20261116-01",
+      "readySha256": "ec81180c7aa3c74e5a3f3d5f98d822aeab3fd51b78a7b36428890e42544c9157"
+    },
+    {
+      "authoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67",
+      "key": "t45-r3-final33-evidence-p147-20261116-01",
+      "readySha256": "3ed41add44bd7fa2b55ffbf42f4859ee7a6a803c18e029ea55b36f99416820e7"
+    },
+    {
+      "authoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67",
+      "key": "t45-r3-final33-evidence-p148-20261116-01",
+      "readySha256": "5e80ef6715ada241d6e73477bc59d70b98c9259e0b66ecbded7f9b95c2d74552"
+    },
+    {
+      "authoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59",
+      "key": "t45-r3-final33-evidence-p149-20261116-01",
+      "readySha256": "bb455b4e84c41d76b583b460ab6ef79497efe3687c59f453c9f13719fb1e7394"
+    },
+    {
+      "authoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59",
+      "key": "t45-r3-final33-evidence-p150-20261116-01",
+      "readySha256": "fd813c58592c218f5ae05bf88ef13929ed99c8bb9143902bb7d959c8d6e319f1"
+    },
+    {
+      "authoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59",
+      "key": "t45-r3-final33-evidence-p151-20261116-01",
+      "readySha256": "255c5faf83cd70ab3241442797eddb06a8733045db7c64afc11b5bf6a89bf15c"
+    },
+    {
+      "authoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59",
+      "key": "t45-r3-final33-evidence-p152-20261116-01",
+      "readySha256": "19b9ec873360bf1a2ce3d0ae2b5ba83194420532b6b879578a9087ace6643c82"
+    },
+    {
+      "authoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a",
+      "key": "t45-r3-final33-evidence-p153-20261116-01",
+      "readySha256": "c1e7832cb46bf3b1c186f930b9150d7570fb6ca0276ddd7543878a25b381187f"
+    },
+    {
+      "authoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a",
+      "key": "t45-r3-final33-evidence-p154-20261116-01",
+      "readySha256": "c6abf7688540c90e9e6f133976b9d94406c2c774e37b080043db692d9afb2c96"
+    },
+    {
+      "authoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a",
+      "key": "t45-r3-final33-evidence-p155-20261116-01",
+      "readySha256": "bdcf7cb8f69df78847f75cde4699956ce9abcc247cd437bf663a155517fe61d8"
+    },
+    {
+      "authoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a",
+      "key": "t45-r3-final33-evidence-p156-20261116-01",
+      "readySha256": "f79202438675cf05afa4884acc10c6baeaae6669abead01b9ec3f5b411f06afb"
+    },
+    {
+      "authoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0",
+      "key": "t45-r3-final33-evidence-p157-20261116-01",
+      "readySha256": "ad2c5c04176404ac81c226ef693490ccb395ec1f24f7eb4c423a7589f997b95c"
+    },
+    {
+      "authoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0",
+      "key": "t45-r3-final33-evidence-p158-20261116-01",
+      "readySha256": "85a277f6f9ae518b9a62126ca12ffdbb606b6b7fde7306ab6d3c87f2c8078d46"
+    },
+    {
+      "authoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0",
+      "key": "t45-r3-final33-evidence-p159-20261116-01",
+      "readySha256": "06a90282e3ba8e7ae4a35d896f405365c0f8f9be944c5c5bbbf8801d8ce22a08"
+    },
+    {
+      "authoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0",
+      "key": "t45-r3-final33-evidence-p160-20261116-01",
+      "readySha256": "e4368a154391083be3c3352160947a04150228c39626d418ffac1ef74a6c8919"
+    },
+    {
+      "authoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c",
+      "key": "t45-r3-final33-evidence-p161-20261116-01",
+      "readySha256": "86fe51abf71f7477242d9dbd3dc24598c70926f64da20073154e21712814fb7e"
+    },
+    {
+      "authoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c",
+      "key": "t45-r3-final33-evidence-p162-20261116-01",
+      "readySha256": "a8ebad89916cf44812cb6c32a833b8c7468a69629e9ede6962d7efe54b46aa37"
+    },
+    {
+      "authoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c",
+      "key": "t45-r3-final33-evidence-p163-20261116-01",
+      "readySha256": "4ba4c73c98c0120b4819b46efc4ccef9aeb9ea8d465c7df04ae34f44df980dcd"
+    },
+    {
+      "authoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c",
+      "key": "t45-r3-final33-evidence-p164-20261116-01",
+      "readySha256": "85797aa166a2f56b19f6b8bacbd47a15098bf42e7867b2cea3ba782f9f4ef5b3"
+    },
+    {
+      "authoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e",
+      "key": "t45-r3-final33-evidence-p165-20261116-01",
+      "readySha256": "79a506018fb6184d3585c83e9ca86f825748ec4a237ee9f49a7e1e353a189bfa"
+    },
+    {
+      "authoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e",
+      "key": "t45-r3-final33-evidence-p166-20261116-01",
+      "readySha256": "f2de1b1cc7c5f9113bedc9d61ea513a642e1c4036c7a90fafc4411251560962b"
+    },
+    {
+      "authoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e",
+      "key": "t45-r3-final33-evidence-p167-20261116-01",
+      "readySha256": "af26abe66c6254e699eef0b9c87fb4eb0bcc126fab332d0bd0da84232245b93a"
+    },
+    {
+      "authoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e",
+      "key": "t45-r3-final33-evidence-p168-20261116-01",
+      "readySha256": "7d45ff59f5295512fc49dde7e073b90f289f394ef5b77f6fa42cf0d46d86e306"
+    },
+    {
+      "authoritySha256": "b1b4a4c45a8d144fac48d9f22fbcd829dd6fc9923bb57677ad54b3fef63cf94a",
+      "key": "t45-r3-final33-evidence-p169-20261116-01",
+      "readySha256": "4b5c68498023f28e901ab06fcb93cb0fe8d0da1e888cd3b4f52b285e8de30fe7"
+    },
+    {
+      "authoritySha256": "b1b4a4c45a8d144fac48d9f22fbcd829dd6fc9923bb57677ad54b3fef63cf94a",
+      "key": "t45-r3-final33-evidence-p170-20261116-01",
+      "readySha256": "207337bbec9d78bb3db404ec2e15b6869802ba881883fb978bfb6ad78c044dad"
+    }
+  ],
+  "requiredCount": 211,
+  "serverActions": 0,
+  "sources": {
+    "t45-r3-final33-evidence-p001-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9446ab677c25b37fd287b421/RESULT.json",
+      "resultSha256": "06bab274f1d6ab6034ea09306f1ef35aab3788c2a930bd35185410d9d1cd62c6",
+      "sourceReadyRecordSha256": "962b8e35702e5096aff771395391f2ca9053360d0fa18b52a58a8ab0b5570d19",
+      "sourceReceiptAuthoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1"
+    },
+    "t45-r3-final33-evidence-p002-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9446ab677c25b37fd287b421/RESULT.json",
+      "resultSha256": "06bab274f1d6ab6034ea09306f1ef35aab3788c2a930bd35185410d9d1cd62c6",
+      "sourceReadyRecordSha256": "b2371dcd1a40b0f87a223dbdf50dc78daee8f561c26f96d0bdcb83ca4ca5ba1a",
+      "sourceReceiptAuthoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1"
+    },
+    "t45-r3-final33-evidence-p003-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9446ab677c25b37fd287b421/RESULT.json",
+      "resultSha256": "06bab274f1d6ab6034ea09306f1ef35aab3788c2a930bd35185410d9d1cd62c6",
+      "sourceReadyRecordSha256": "d5cc528cc357c053ab1ff1240e9cd9769f37bb6c2b5987b8921356cc28387474",
+      "sourceReceiptAuthoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1"
+    },
+    "t45-r3-final33-evidence-p004-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9446ab677c25b37fd287b421/RESULT.json",
+      "resultSha256": "06bab274f1d6ab6034ea09306f1ef35aab3788c2a930bd35185410d9d1cd62c6",
+      "sourceReadyRecordSha256": "434c1bec25cc5af3771f28cd72130b4dbd24986132a2c1e1871566166947f82a",
+      "sourceReceiptAuthoritySha256": "9446ab677c25b37fd287b42107c4d0af915213976afc4c5ecba7075619f316f1"
+    },
+    "t45-r3-final33-evidence-p005-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e9ea58145ce7e6a73dc45ce2/RESULT.json",
+      "resultSha256": "a49f66a7c2b89584a6e77c1496701d9bf4430d800865054eb550f44c32e723be",
+      "sourceReadyRecordSha256": "4f27836568ae2f3658929a42daf86075e13fb17c63a227fd75323f741058cb9f",
+      "sourceReceiptAuthoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9"
+    },
+    "t45-r3-final33-evidence-p006-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e9ea58145ce7e6a73dc45ce2/RESULT.json",
+      "resultSha256": "a49f66a7c2b89584a6e77c1496701d9bf4430d800865054eb550f44c32e723be",
+      "sourceReadyRecordSha256": "0f313e1b18d3a9bcf783aba09f27d900d2dc6a9e19a8f7d1c248f5b169a29edd",
+      "sourceReceiptAuthoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9"
+    },
+    "t45-r3-final33-evidence-p007-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e9ea58145ce7e6a73dc45ce2/RESULT.json",
+      "resultSha256": "a49f66a7c2b89584a6e77c1496701d9bf4430d800865054eb550f44c32e723be",
+      "sourceReadyRecordSha256": "be314d7c506af8be69a3db9c339c68cbf343b70a807fca1deec046a6c2c4d6c9",
+      "sourceReceiptAuthoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9"
+    },
+    "t45-r3-final33-evidence-p008-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e9ea58145ce7e6a73dc45ce2/RESULT.json",
+      "resultSha256": "a49f66a7c2b89584a6e77c1496701d9bf4430d800865054eb550f44c32e723be",
+      "sourceReadyRecordSha256": "d13941f28a62978080f27dd1b267b67a5e38e1a946e0684323fcdcdb24c7585a",
+      "sourceReceiptAuthoritySha256": "e9ea58145ce7e6a73dc45ce20966184364003eabcb6c997967455230828ab8f9"
+    },
+    "t45-r3-final33-evidence-p009-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-39732b72c6f718bb5b04ef4b/RESULT.json",
+      "resultSha256": "21dc22e7388def7f04481c0eb6d3f848e2e7f9bf20e7d4d3a2bb357754a7e0cf",
+      "sourceReadyRecordSha256": "ed3fa6ff866b542a2d4f6c0a98ad8526cf06503954eeb6ccd4597a61c66d735c",
+      "sourceReceiptAuthoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216"
+    },
+    "t45-r3-final33-evidence-p010-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-39732b72c6f718bb5b04ef4b/RESULT.json",
+      "resultSha256": "21dc22e7388def7f04481c0eb6d3f848e2e7f9bf20e7d4d3a2bb357754a7e0cf",
+      "sourceReadyRecordSha256": "301018ff9732d6542d35027622d9ad96efa33d6eddc973984a0bd245921f86ca",
+      "sourceReceiptAuthoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216"
+    },
+    "t45-r3-final33-evidence-p011-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-39732b72c6f718bb5b04ef4b/RESULT.json",
+      "resultSha256": "21dc22e7388def7f04481c0eb6d3f848e2e7f9bf20e7d4d3a2bb357754a7e0cf",
+      "sourceReadyRecordSha256": "183d14da1006eb4450c7de45dd8b86182ddef94676b8d613c124cfb36ccbaebc",
+      "sourceReceiptAuthoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216"
+    },
+    "t45-r3-final33-evidence-p012-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-39732b72c6f718bb5b04ef4b/RESULT.json",
+      "resultSha256": "21dc22e7388def7f04481c0eb6d3f848e2e7f9bf20e7d4d3a2bb357754a7e0cf",
+      "sourceReadyRecordSha256": "9c8cf437a243dbdcc236f01350246a81e602d28f4c26016514647272cef8fd95",
+      "sourceReceiptAuthoritySha256": "39732b72c6f718bb5b04ef4ba04520ad65812d130f8eea06a5e7635cc8dc0216"
+    },
+    "t45-r3-final33-evidence-p013-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0e753ce623a5af6aacb29bf8/RESULT.json",
+      "resultSha256": "87ebf00ec2db2908f4a9fec25e83ed1e57a5d77a4adc948f5e133505936a00b9",
+      "sourceReadyRecordSha256": "e92c53658b7d94c4463b7b82007c9a39bd205eec359220953bebd529d773e98e",
+      "sourceReceiptAuthoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b"
+    },
+    "t45-r3-final33-evidence-p014-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0e753ce623a5af6aacb29bf8/RESULT.json",
+      "resultSha256": "87ebf00ec2db2908f4a9fec25e83ed1e57a5d77a4adc948f5e133505936a00b9",
+      "sourceReadyRecordSha256": "3e0ae6bea0a910e1a1944b746a2eb9638cff70c9f0727c0e639483419991a136",
+      "sourceReceiptAuthoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b"
+    },
+    "t45-r3-final33-evidence-p015-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0e753ce623a5af6aacb29bf8/RESULT.json",
+      "resultSha256": "87ebf00ec2db2908f4a9fec25e83ed1e57a5d77a4adc948f5e133505936a00b9",
+      "sourceReadyRecordSha256": "f9366189d9dafb55eb915d97e4d17adc0d2b160cd8431ab1bfce8f367a4dd23b",
+      "sourceReceiptAuthoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b"
+    },
+    "t45-r3-final33-evidence-p016-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0e753ce623a5af6aacb29bf8/RESULT.json",
+      "resultSha256": "87ebf00ec2db2908f4a9fec25e83ed1e57a5d77a4adc948f5e133505936a00b9",
+      "sourceReadyRecordSha256": "128c33ba158a8561163c4adbc1ffca26be8e7eb6024dccc77a38f62ca1345453",
+      "sourceReceiptAuthoritySha256": "0e753ce623a5af6aacb29bf8bdaa8e280566fb591e93ae22894cb587bbd6479b"
+    },
+    "t45-r3-final33-evidence-p017-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-d300fb10c200a83de75cf5c1/RESULT.json",
+      "resultSha256": "43e69a582bed3bb9ba5b7647f2a1438ff464f35d8bd7186035f91ac5c3de0096",
+      "sourceReadyRecordSha256": "3ecb78de28990d1e9b0ff047efb4d51af2182d3a787a14a95b0100e1e7a13b95",
+      "sourceReceiptAuthoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363"
+    },
+    "t45-r3-final33-evidence-p018-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-d300fb10c200a83de75cf5c1/RESULT.json",
+      "resultSha256": "43e69a582bed3bb9ba5b7647f2a1438ff464f35d8bd7186035f91ac5c3de0096",
+      "sourceReadyRecordSha256": "52d2b51de50bc02ecbe920a58598f64eb38316e2a081f8cee51841e871ab9569",
+      "sourceReceiptAuthoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363"
+    },
+    "t45-r3-final33-evidence-p019-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-d300fb10c200a83de75cf5c1/RESULT.json",
+      "resultSha256": "43e69a582bed3bb9ba5b7647f2a1438ff464f35d8bd7186035f91ac5c3de0096",
+      "sourceReadyRecordSha256": "450ee7f9fd8edbaad9f8407f196e0db0498ef745ab97d7cb6d9d8eac3c65bcb8",
+      "sourceReceiptAuthoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363"
+    },
+    "t45-r3-final33-evidence-p020-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-d300fb10c200a83de75cf5c1/RESULT.json",
+      "resultSha256": "43e69a582bed3bb9ba5b7647f2a1438ff464f35d8bd7186035f91ac5c3de0096",
+      "sourceReadyRecordSha256": "bb896814db30c4c53268e3f3bddc429b7a1adfa1293fa19c2a07b1244983836f",
+      "sourceReceiptAuthoritySha256": "d300fb10c200a83de75cf5c14cfd33903a64a2dcaee21b80cb0e7b2a54672363"
+    },
+    "t45-r3-final33-evidence-p021-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f238902dd885a0b955699014/RESULT.json",
+      "resultSha256": "c0ff1220abdd908307cbeaae040e32fd9aa973a8696f8db1bd4191e326f48550",
+      "sourceReadyRecordSha256": "f1b1c0ae38af1637c6a678d4c4df6fd9183f8ecdbf763a59e3188fc02ba1f69f",
+      "sourceReceiptAuthoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905"
+    },
+    "t45-r3-final33-evidence-p022-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f238902dd885a0b955699014/RESULT.json",
+      "resultSha256": "c0ff1220abdd908307cbeaae040e32fd9aa973a8696f8db1bd4191e326f48550",
+      "sourceReadyRecordSha256": "704d0e67c4b7e4b8d8ae6274ef6b2ea1bc7510645de847e0cc8efcebbd9ab301",
+      "sourceReceiptAuthoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905"
+    },
+    "t45-r3-final33-evidence-p023-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f238902dd885a0b955699014/RESULT.json",
+      "resultSha256": "c0ff1220abdd908307cbeaae040e32fd9aa973a8696f8db1bd4191e326f48550",
+      "sourceReadyRecordSha256": "8cbe44e7b52780349a88c7b34e7ec9a222d4707b716df559ee9015cc4a3e05c3",
+      "sourceReceiptAuthoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905"
+    },
+    "t45-r3-final33-evidence-p024-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f238902dd885a0b955699014/RESULT.json",
+      "resultSha256": "c0ff1220abdd908307cbeaae040e32fd9aa973a8696f8db1bd4191e326f48550",
+      "sourceReadyRecordSha256": "fb66d3a33a5b2aec206be5a0ea8104ae40f88157ec06c303c9a6ac9c14b670fb",
+      "sourceReceiptAuthoritySha256": "f238902dd885a0b955699014cf885259da37499480d78893a01e0bd5c9ed5905"
+    },
+    "t45-r3-final33-evidence-p025-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5ca68e57f93d74f2753d00c3/RESULT.json",
+      "resultSha256": "08aa1e402b34eff8d963f5ef3ffc18057b017f1b4cb55eafff7a54abf11b7761",
+      "sourceReadyRecordSha256": "6215f4666026b9a158b85797d35828f40eb4c749f7b848a5608535e094b2d52a",
+      "sourceReceiptAuthoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a"
+    },
+    "t45-r3-final33-evidence-p026-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5ca68e57f93d74f2753d00c3/RESULT.json",
+      "resultSha256": "08aa1e402b34eff8d963f5ef3ffc18057b017f1b4cb55eafff7a54abf11b7761",
+      "sourceReadyRecordSha256": "50f229f0c0a6e6edf91bec7c99b1c9575a72aaff98d02489ee04ce2bca9c909e",
+      "sourceReceiptAuthoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a"
+    },
+    "t45-r3-final33-evidence-p027-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5ca68e57f93d74f2753d00c3/RESULT.json",
+      "resultSha256": "08aa1e402b34eff8d963f5ef3ffc18057b017f1b4cb55eafff7a54abf11b7761",
+      "sourceReadyRecordSha256": "032eead2079176285c2ceff2187993f8ff0bedefcfeaba20ac1d2e2783506d04",
+      "sourceReceiptAuthoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a"
+    },
+    "t45-r3-final33-evidence-p028-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5ca68e57f93d74f2753d00c3/RESULT.json",
+      "resultSha256": "08aa1e402b34eff8d963f5ef3ffc18057b017f1b4cb55eafff7a54abf11b7761",
+      "sourceReadyRecordSha256": "b91e9e27eb2f66bbfbe0d77bc35cc99852a593147618969fa55c93ec6d9b7acc",
+      "sourceReceiptAuthoritySha256": "5ca68e57f93d74f2753d00c34e50c0bc5d3feecc646da53018e5d4a92dd77a9a"
+    },
+    "t45-r3-final33-evidence-p029-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f6f78239ca0c8a6873b14627/RESULT.json",
+      "resultSha256": "1781b7ffd5c890d7d859371043ddd54a17567d334e78229f9a041e504c85e0da",
+      "sourceReadyRecordSha256": "c71d4f9eeaf643d2aa8c992e4815773021acad66ef9922bd28c73ca881679c2d",
+      "sourceReceiptAuthoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560"
+    },
+    "t45-r3-final33-evidence-p030-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f6f78239ca0c8a6873b14627/RESULT.json",
+      "resultSha256": "1781b7ffd5c890d7d859371043ddd54a17567d334e78229f9a041e504c85e0da",
+      "sourceReadyRecordSha256": "bba9cc9a85486fe1ffe1abec8b1b676b8a6b5c1530e2d808ec44549d1db933f6",
+      "sourceReceiptAuthoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560"
+    },
+    "t45-r3-final33-evidence-p031-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f6f78239ca0c8a6873b14627/RESULT.json",
+      "resultSha256": "1781b7ffd5c890d7d859371043ddd54a17567d334e78229f9a041e504c85e0da",
+      "sourceReadyRecordSha256": "c1b90ce89aeb3b1a6010797550079b7e3f7462960ddb3236807ef57157b4c47f",
+      "sourceReceiptAuthoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560"
+    },
+    "t45-r3-final33-evidence-p032-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f6f78239ca0c8a6873b14627/RESULT.json",
+      "resultSha256": "1781b7ffd5c890d7d859371043ddd54a17567d334e78229f9a041e504c85e0da",
+      "sourceReadyRecordSha256": "dea184fc5e6bb3833c2fc128f7f7605272a7a29382940312ddf61f88ffe9a81b",
+      "sourceReceiptAuthoritySha256": "f6f78239ca0c8a6873b146276f5b80b38700cd1749d04720dcc31b57ac1a7560"
+    },
+    "t45-r3-final33-evidence-p033-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9fce1a1a9bb9b9fa9a8d97be/RESULT.json",
+      "resultSha256": "d80aa87466c94fa40adb60407b46625065025cbda46c5e6f3a04308937480cb3",
+      "sourceReadyRecordSha256": "97dabffeb790a3ad91141dd0a4306972556b4272fbe7c09beea8699ca430cf6d",
+      "sourceReceiptAuthoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf"
+    },
+    "t45-r3-final33-evidence-p034-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9fce1a1a9bb9b9fa9a8d97be/RESULT.json",
+      "resultSha256": "d80aa87466c94fa40adb60407b46625065025cbda46c5e6f3a04308937480cb3",
+      "sourceReadyRecordSha256": "74323cce91cfbdda180d6a8bb9f1ec878cfea4184ed39d53291907d01c3beeec",
+      "sourceReceiptAuthoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf"
+    },
+    "t45-r3-final33-evidence-p035-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9fce1a1a9bb9b9fa9a8d97be/RESULT.json",
+      "resultSha256": "d80aa87466c94fa40adb60407b46625065025cbda46c5e6f3a04308937480cb3",
+      "sourceReadyRecordSha256": "73a43c3ff55704a5943377d4b0b1ac7e6f96bd86f246c9d174958cf265feb626",
+      "sourceReceiptAuthoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf"
+    },
+    "t45-r3-final33-evidence-p036-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9fce1a1a9bb9b9fa9a8d97be/RESULT.json",
+      "resultSha256": "d80aa87466c94fa40adb60407b46625065025cbda46c5e6f3a04308937480cb3",
+      "sourceReadyRecordSha256": "b0ac489cbcb4e5182ee95d264d67c50f7faa678913222a7b19afac7d595e3705",
+      "sourceReceiptAuthoritySha256": "9fce1a1a9bb9b9fa9a8d97beb49f6e8942cf2d19b4778fa7b57d13891e7886bf"
+    },
+    "t45-r3-final33-evidence-p037-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb724a83ec5ee02224ad08b3/RESULT.json",
+      "resultSha256": "d7885ab6ebd71bc4e5a3ee0e4454bbffc872d24c588237f7975476aa0b53450f",
+      "sourceReadyRecordSha256": "d406bb8312332c4da2ebb5407b3a841a1c5d1a62fac05bb4f033f8bf26cde428",
+      "sourceReceiptAuthoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91"
+    },
+    "t45-r3-final33-evidence-p038-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb724a83ec5ee02224ad08b3/RESULT.json",
+      "resultSha256": "d7885ab6ebd71bc4e5a3ee0e4454bbffc872d24c588237f7975476aa0b53450f",
+      "sourceReadyRecordSha256": "a8181708cce8ebc32bb396aa1bb38d6187baaa26ed488d3a64be0dfb924462ff",
+      "sourceReceiptAuthoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91"
+    },
+    "t45-r3-final33-evidence-p039-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb724a83ec5ee02224ad08b3/RESULT.json",
+      "resultSha256": "d7885ab6ebd71bc4e5a3ee0e4454bbffc872d24c588237f7975476aa0b53450f",
+      "sourceReadyRecordSha256": "3879458395842783e803f98897b712f58bb469783bcd762a7979288ec57ba0bd",
+      "sourceReceiptAuthoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91"
+    },
+    "t45-r3-final33-evidence-p040-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb724a83ec5ee02224ad08b3/RESULT.json",
+      "resultSha256": "d7885ab6ebd71bc4e5a3ee0e4454bbffc872d24c588237f7975476aa0b53450f",
+      "sourceReadyRecordSha256": "ce966b2e9c7e2a45ccf325cd38e8d0a87bc0e873fe059ab6979feb850d1804d2",
+      "sourceReceiptAuthoritySha256": "fb724a83ec5ee02224ad08b3fc70b4256691422264a95da36438784d16e2ac91"
+    },
+    "t45-r3-final33-evidence-p041-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb1ca8c597e551acf5d92d45/RESULT.json",
+      "resultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+      "sourceReadyRecordSha256": "1167cf3fb44f1addde9ab2975063cf280d2a9236f9cdf360e3f90be3a1375009",
+      "sourceReceiptAuthoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08"
+    },
+    "t45-r3-final33-evidence-p042-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb1ca8c597e551acf5d92d45/RESULT.json",
+      "resultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+      "sourceReadyRecordSha256": "39a15c7b0e28eae3d3f7ef1e8c5f98a63b3754010e01715bdd06ba2aeb167878",
+      "sourceReceiptAuthoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08"
+    },
+    "t45-r3-final33-evidence-p043-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb1ca8c597e551acf5d92d45/RESULT.json",
+      "resultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+      "sourceReadyRecordSha256": "ea31a407bc10daa2689bf4ef056be1fbe015ad601469fc493446df7dcb59c3c3",
+      "sourceReceiptAuthoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08"
+    },
+    "t45-r3-final33-evidence-p044-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fb1ca8c597e551acf5d92d45/RESULT.json",
+      "resultSha256": "86208b61ff18beb4cb329dd7942cf40918fa7c2181498c462031641c0a34e8d3",
+      "sourceReadyRecordSha256": "822195b11a64eeaa6a0babc2bccfefecfe46408698db7f2780613cf178dc879a",
+      "sourceReceiptAuthoritySha256": "fb1ca8c597e551acf5d92d45cf34332758c0f5ed1b96cd315e1ad46532de9e08"
+    },
+    "t45-r3-final33-evidence-p045-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-61680678d7e5831b6438390c/RESULT.json",
+      "resultSha256": "5847be394ce5d7ad3de8706093ff3f14fd628e20a48cad38aa1c7ca19b42a1a4",
+      "sourceReadyRecordSha256": "213d7e52f79186f5a0479d2a3eeb8fe8a1c8b6e77d727594e91299b505cfe4d3",
+      "sourceReceiptAuthoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959"
+    },
+    "t45-r3-final33-evidence-p046-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-61680678d7e5831b6438390c/RESULT.json",
+      "resultSha256": "5847be394ce5d7ad3de8706093ff3f14fd628e20a48cad38aa1c7ca19b42a1a4",
+      "sourceReadyRecordSha256": "99ab4aa2c0ec6e894bdf2421c2a865b1adc9d0eb1b1216cbd1f5ce795b8a268d",
+      "sourceReceiptAuthoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959"
+    },
+    "t45-r3-final33-evidence-p047-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-61680678d7e5831b6438390c/RESULT.json",
+      "resultSha256": "5847be394ce5d7ad3de8706093ff3f14fd628e20a48cad38aa1c7ca19b42a1a4",
+      "sourceReadyRecordSha256": "a8781790770dcc050e0a3eb7aabeae5d18fcd503df55784c03345c96d926d043",
+      "sourceReceiptAuthoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959"
+    },
+    "t45-r3-final33-evidence-p048-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-61680678d7e5831b6438390c/RESULT.json",
+      "resultSha256": "5847be394ce5d7ad3de8706093ff3f14fd628e20a48cad38aa1c7ca19b42a1a4",
+      "sourceReadyRecordSha256": "a4fab5ca6914c39150e8686eab304f7e18614cb5ba23595767a637b2820c0bb5",
+      "sourceReceiptAuthoritySha256": "61680678d7e5831b6438390c50655ec905bf5dd3e49207cdc5d497bb32865959"
+    },
+    "t45-r3-final33-evidence-p049-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-392e6fc23be5a2e849d5254f/RESULT.json",
+      "resultSha256": "74332d0906a3cbed4bf18fb592efd288545163f768d29a5b620571948dd50ce5",
+      "sourceReadyRecordSha256": "f13bb547648e23c626062e506185345bdef00235b8a4306fc9ea1df4a6860df7",
+      "sourceReceiptAuthoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e"
+    },
+    "t45-r3-final33-evidence-p050-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-392e6fc23be5a2e849d5254f/RESULT.json",
+      "resultSha256": "74332d0906a3cbed4bf18fb592efd288545163f768d29a5b620571948dd50ce5",
+      "sourceReadyRecordSha256": "4c1bed6c4e103036c00df66f3b2196c5f1c3e99b9c157026883659d7bbbd26c9",
+      "sourceReceiptAuthoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e"
+    },
+    "t45-r3-final33-evidence-p051-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-392e6fc23be5a2e849d5254f/RESULT.json",
+      "resultSha256": "74332d0906a3cbed4bf18fb592efd288545163f768d29a5b620571948dd50ce5",
+      "sourceReadyRecordSha256": "f76e731aebd2a6ebef4641277121d581b8e2a9f2840834efca6b7785fd6104b7",
+      "sourceReceiptAuthoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e"
+    },
+    "t45-r3-final33-evidence-p052-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-392e6fc23be5a2e849d5254f/RESULT.json",
+      "resultSha256": "74332d0906a3cbed4bf18fb592efd288545163f768d29a5b620571948dd50ce5",
+      "sourceReadyRecordSha256": "539e2fb1def09b6fa94e47647212430d469303e9e3c7c776da5f5d36000b22ad",
+      "sourceReceiptAuthoritySha256": "392e6fc23be5a2e849d5254f5e3ea6bfde6bebc269fb00d4abe76bd7d561495e"
+    },
+    "t45-r3-final33-evidence-p053-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-89eed33753f1c151f4abe019/RESULT.json",
+      "resultSha256": "e7488acad2d18cfee013e8ab919241846043dcf245808b28d104f1ab7fc0087e",
+      "sourceReadyRecordSha256": "3615c177ec0075d451f42bd92064769c0330d262b0e1c7ac667400d51eb9d65f",
+      "sourceReceiptAuthoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1"
+    },
+    "t45-r3-final33-evidence-p054-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-89eed33753f1c151f4abe019/RESULT.json",
+      "resultSha256": "e7488acad2d18cfee013e8ab919241846043dcf245808b28d104f1ab7fc0087e",
+      "sourceReadyRecordSha256": "a3aa2d75fd72c48f88bb6c54da3980363c6bfca615d2ce1aa28c662a85fe673f",
+      "sourceReceiptAuthoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1"
+    },
+    "t45-r3-final33-evidence-p055-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-89eed33753f1c151f4abe019/RESULT.json",
+      "resultSha256": "e7488acad2d18cfee013e8ab919241846043dcf245808b28d104f1ab7fc0087e",
+      "sourceReadyRecordSha256": "ab1a71470165cb65fa298c77f9dc25e550345dd207fac2da66f86a2b7b5dea64",
+      "sourceReceiptAuthoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1"
+    },
+    "t45-r3-final33-evidence-p056-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-89eed33753f1c151f4abe019/RESULT.json",
+      "resultSha256": "e7488acad2d18cfee013e8ab919241846043dcf245808b28d104f1ab7fc0087e",
+      "sourceReadyRecordSha256": "75e04539d43e4d9ef1508e587f4c179a43ee65cb333e5651de8eb5f9a130fc29",
+      "sourceReceiptAuthoritySha256": "89eed33753f1c151f4abe0198c82d8fb60a9bf91bd56891f5ff4a0c1e7f0a0f1"
+    },
+    "t45-r3-final33-evidence-p057-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6dc3f2f326d55bffa413b78a/RESULT.json",
+      "resultSha256": "7fc1810850fdaf6464badbf296dbda6f314248f61748d89556313cf0e0ac01fc",
+      "sourceReadyRecordSha256": "5fd2423e066d6b456e95687b9146534a184f3a35d2834d81e82a73a1ef36444c",
+      "sourceReceiptAuthoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99"
+    },
+    "t45-r3-final33-evidence-p058-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6dc3f2f326d55bffa413b78a/RESULT.json",
+      "resultSha256": "7fc1810850fdaf6464badbf296dbda6f314248f61748d89556313cf0e0ac01fc",
+      "sourceReadyRecordSha256": "2d94214b3622f88354c8fbf2ddf39340da98703762261902d0c6ac956fb5311f",
+      "sourceReceiptAuthoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99"
+    },
+    "t45-r3-final33-evidence-p059-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6dc3f2f326d55bffa413b78a/RESULT.json",
+      "resultSha256": "7fc1810850fdaf6464badbf296dbda6f314248f61748d89556313cf0e0ac01fc",
+      "sourceReadyRecordSha256": "0c90d4ba27f52d75a8fe3a7f7665bf2659f45556a7b3daa2c06a76c461972fcd",
+      "sourceReceiptAuthoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99"
+    },
+    "t45-r3-final33-evidence-p060-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6dc3f2f326d55bffa413b78a/RESULT.json",
+      "resultSha256": "7fc1810850fdaf6464badbf296dbda6f314248f61748d89556313cf0e0ac01fc",
+      "sourceReadyRecordSha256": "44d975cfb56413765df370a3ddf34529ef79cae306fcd650bcbbeed53d6c7571",
+      "sourceReceiptAuthoritySha256": "6dc3f2f326d55bffa413b78aedfad19e52294ad1a14966b5003a42e6e083da99"
+    },
+    "t45-r3-final33-evidence-p061-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-01c15eb3e28f41afdcefa34f/RESULT.json",
+      "resultSha256": "beb6c2474aa157169b96cf07ad39c65460a75e7e7929490e4f643467b4591bc0",
+      "sourceReadyRecordSha256": "2479bc958bfe04f764ca98e9b557109ab1a3c8e6b0dedbfefb515683c3400295",
+      "sourceReceiptAuthoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b"
+    },
+    "t45-r3-final33-evidence-p062-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-01c15eb3e28f41afdcefa34f/RESULT.json",
+      "resultSha256": "beb6c2474aa157169b96cf07ad39c65460a75e7e7929490e4f643467b4591bc0",
+      "sourceReadyRecordSha256": "fb222a38c6c9edc05857374fff45d89bb952b4caafddf2087fc38a30591a11b5",
+      "sourceReceiptAuthoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b"
+    },
+    "t45-r3-final33-evidence-p063-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-01c15eb3e28f41afdcefa34f/RESULT.json",
+      "resultSha256": "beb6c2474aa157169b96cf07ad39c65460a75e7e7929490e4f643467b4591bc0",
+      "sourceReadyRecordSha256": "3db6ca71a4aab3c5e4551047b25749c2b2bcdc8357b2fafc8b6b38a59074bd79",
+      "sourceReceiptAuthoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b"
+    },
+    "t45-r3-final33-evidence-p064-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-01c15eb3e28f41afdcefa34f/RESULT.json",
+      "resultSha256": "beb6c2474aa157169b96cf07ad39c65460a75e7e7929490e4f643467b4591bc0",
+      "sourceReadyRecordSha256": "0c262e9153a3fbf0e448c371911053f8ce5226d2b3b5ca8dda83b6e21554b573",
+      "sourceReceiptAuthoritySha256": "01c15eb3e28f41afdcefa34f089862a713f78491760e02b9a89cbe26dc6bf77b"
+    },
+    "t45-r3-final33-evidence-p065-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ac52c6a8a85787542e71d13b/RESULT.json",
+      "resultSha256": "67c1eea97b7ea0b270394fc05cbfd060cd9647c4626e20479d4d0c6bd8abf836",
+      "sourceReadyRecordSha256": "914ec9fbd4d61c1e5a565054f74e98ca426b59d9a21ffe8850f187f568627359",
+      "sourceReceiptAuthoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5"
+    },
+    "t45-r3-final33-evidence-p066-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ac52c6a8a85787542e71d13b/RESULT.json",
+      "resultSha256": "67c1eea97b7ea0b270394fc05cbfd060cd9647c4626e20479d4d0c6bd8abf836",
+      "sourceReadyRecordSha256": "72f77bb57ef81e0bb8cf441afa19a29a8c76d01379ab27d0073913b590d8f05f",
+      "sourceReceiptAuthoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5"
+    },
+    "t45-r3-final33-evidence-p067-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ac52c6a8a85787542e71d13b/RESULT.json",
+      "resultSha256": "67c1eea97b7ea0b270394fc05cbfd060cd9647c4626e20479d4d0c6bd8abf836",
+      "sourceReadyRecordSha256": "0c2e8d66646635530886f15e3c761f72da1397273fe9e7fbad58a7c0671f5f21",
+      "sourceReceiptAuthoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5"
+    },
+    "t45-r3-final33-evidence-p068-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ac52c6a8a85787542e71d13b/RESULT.json",
+      "resultSha256": "67c1eea97b7ea0b270394fc05cbfd060cd9647c4626e20479d4d0c6bd8abf836",
+      "sourceReadyRecordSha256": "6d44ff56b8ede7969db0a561f73d0960ccb877ea83d462d0ecf707bdefb0d8a7",
+      "sourceReceiptAuthoritySha256": "ac52c6a8a85787542e71d13bd85770ba07789242167307af4b49b0451ae4d0d5"
+    },
+    "t45-r3-final33-evidence-p069-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0ec327d7df260bac78c7e90a/RESULT.json",
+      "resultSha256": "8e3d8389d922cf9c495b288f6551d1e0d6f02015d478432ab29edb925a9ed7f7",
+      "sourceReadyRecordSha256": "cde352e48ac4ee4acc54c38c446bbf6dedf5b1c3b8d4f9307703f47bf6c44e8f",
+      "sourceReceiptAuthoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7"
+    },
+    "t45-r3-final33-evidence-p070-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0ec327d7df260bac78c7e90a/RESULT.json",
+      "resultSha256": "8e3d8389d922cf9c495b288f6551d1e0d6f02015d478432ab29edb925a9ed7f7",
+      "sourceReadyRecordSha256": "a90fb9438669c9b7ad62f199f3f58ed84e33c39f71eda26603410111d4dbc228",
+      "sourceReceiptAuthoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7"
+    },
+    "t45-r3-final33-evidence-p071-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0ec327d7df260bac78c7e90a/RESULT.json",
+      "resultSha256": "8e3d8389d922cf9c495b288f6551d1e0d6f02015d478432ab29edb925a9ed7f7",
+      "sourceReadyRecordSha256": "bb970e3c19727ac186858bb942231cf51c5a44ecd1ac5f12823f7a657084131d",
+      "sourceReceiptAuthoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7"
+    },
+    "t45-r3-final33-evidence-p072-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-0ec327d7df260bac78c7e90a/RESULT.json",
+      "resultSha256": "8e3d8389d922cf9c495b288f6551d1e0d6f02015d478432ab29edb925a9ed7f7",
+      "sourceReadyRecordSha256": "d02a559a3514d55caeb02e7ecea29ba3c6a49a6326e9c9b042f0929fb898b8e7",
+      "sourceReceiptAuthoritySha256": "0ec327d7df260bac78c7e90acfc0814ae667d06600ae2955ed3bab608d54a3d7"
+    },
+    "t45-r3-final33-evidence-p073-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6150379fc4ddcd9635283c6e/RESULT.json",
+      "resultSha256": "f00325daa5654bb69ebf6f1be752e5fb93183bbf533b259b4efdcab8bd006cf1",
+      "sourceReadyRecordSha256": "12c4fa14895c5a824acb23717c20d9b0a5946471d06e8c7a20299b8a299966e5",
+      "sourceReceiptAuthoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e"
+    },
+    "t45-r3-final33-evidence-p074-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6150379fc4ddcd9635283c6e/RESULT.json",
+      "resultSha256": "f00325daa5654bb69ebf6f1be752e5fb93183bbf533b259b4efdcab8bd006cf1",
+      "sourceReadyRecordSha256": "3409ae5910fec139e0dc58a8ba1641f07ae36e3fdfa072523ca03547d6cd4792",
+      "sourceReceiptAuthoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e"
+    },
+    "t45-r3-final33-evidence-p075-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6150379fc4ddcd9635283c6e/RESULT.json",
+      "resultSha256": "f00325daa5654bb69ebf6f1be752e5fb93183bbf533b259b4efdcab8bd006cf1",
+      "sourceReadyRecordSha256": "9866b29390be5b8de35f976a5d667381ec55f73ca0cd4471d01656244c793a81",
+      "sourceReceiptAuthoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e"
+    },
+    "t45-r3-final33-evidence-p076-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6150379fc4ddcd9635283c6e/RESULT.json",
+      "resultSha256": "f00325daa5654bb69ebf6f1be752e5fb93183bbf533b259b4efdcab8bd006cf1",
+      "sourceReadyRecordSha256": "ca7aab0a9f32590502873e557299190fc464500ab89c570a941ca8fd4e2976bd",
+      "sourceReceiptAuthoritySha256": "6150379fc4ddcd9635283c6e88371f3f44160e5060b4c75c0a245be2d22f637e"
+    },
+    "t45-r3-final33-evidence-p077-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-960b05e05d63956c448be577/RESULT.json",
+      "resultSha256": "3ea2591abe2681dfee29eae41b68eb19102a885ead0040a2536d19d073531699",
+      "sourceReadyRecordSha256": "e8752ae14dbcc52437316e7ba82284a87c6993bec17efc50fd1d8ad5ddcda25b",
+      "sourceReceiptAuthoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0"
+    },
+    "t45-r3-final33-evidence-p078-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-960b05e05d63956c448be577/RESULT.json",
+      "resultSha256": "3ea2591abe2681dfee29eae41b68eb19102a885ead0040a2536d19d073531699",
+      "sourceReadyRecordSha256": "335fcdfbab7c2e0caf5134943378ef3f26cf1e23258f997052d751c1d6fe54e1",
+      "sourceReceiptAuthoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0"
+    },
+    "t45-r3-final33-evidence-p079-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-960b05e05d63956c448be577/RESULT.json",
+      "resultSha256": "3ea2591abe2681dfee29eae41b68eb19102a885ead0040a2536d19d073531699",
+      "sourceReadyRecordSha256": "430c398b88c67a6e566611fe726846e364ac64a9a4eca7baaca69c506c164cac",
+      "sourceReceiptAuthoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0"
+    },
+    "t45-r3-final33-evidence-p080-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-960b05e05d63956c448be577/RESULT.json",
+      "resultSha256": "3ea2591abe2681dfee29eae41b68eb19102a885ead0040a2536d19d073531699",
+      "sourceReadyRecordSha256": "d69dccccff56ed5e47a79f3743dcbe3d1937d8b483f5a50c2c4959c606916b43",
+      "sourceReceiptAuthoritySha256": "960b05e05d63956c448be577227c53b7ad43bead2a8a3bc0f878484d2fdf15b0"
+    },
+    "t45-r3-final33-evidence-p081-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-05a59ca7b744fc05bca381bb/RESULT.json",
+      "resultSha256": "78e7885defb604f60f9098d478be79141d92462aa749d23f8e5b00a215dcefdb",
+      "sourceReadyRecordSha256": "d23904ab49bf0acb0d1ec8dc724fb979d8328c1d6f72f475fe4d80093ff7ff08",
+      "sourceReceiptAuthoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6"
+    },
+    "t45-r3-final33-evidence-p082-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-05a59ca7b744fc05bca381bb/RESULT.json",
+      "resultSha256": "78e7885defb604f60f9098d478be79141d92462aa749d23f8e5b00a215dcefdb",
+      "sourceReadyRecordSha256": "93afbf12ce05a9c4e1f2e5c3f6838fc09816c3e299e4e76ccdbddb3c10b17561",
+      "sourceReceiptAuthoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6"
+    },
+    "t45-r3-final33-evidence-p083-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-05a59ca7b744fc05bca381bb/RESULT.json",
+      "resultSha256": "78e7885defb604f60f9098d478be79141d92462aa749d23f8e5b00a215dcefdb",
+      "sourceReadyRecordSha256": "76568329acb20c7e44b00e1298418b310d1d7226a681ad2a982d6613386d74e0",
+      "sourceReceiptAuthoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6"
+    },
+    "t45-r3-final33-evidence-p084-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-05a59ca7b744fc05bca381bb/RESULT.json",
+      "resultSha256": "78e7885defb604f60f9098d478be79141d92462aa749d23f8e5b00a215dcefdb",
+      "sourceReadyRecordSha256": "3b988d75a45fd44c0153f814e938b2bb9608f6b406133bc32d6b23aa1c8e54de",
+      "sourceReceiptAuthoritySha256": "05a59ca7b744fc05bca381bb53957dc998539230fbc2781707642700ed80d0a6"
+    },
+    "t45-r3-final33-evidence-p085-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea42dcd3182c27ea2aa416e8/RESULT.json",
+      "resultSha256": "d7c00e5a978719a3d8e73ba199b06b946e1709fedb4fea2d3afd2ab24c7935ac",
+      "sourceReadyRecordSha256": "e5921dc42643babbbb145aecd7be6cdf284b929843f5c30dea01d2aebc13f8f4",
+      "sourceReceiptAuthoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9"
+    },
+    "t45-r3-final33-evidence-p086-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea42dcd3182c27ea2aa416e8/RESULT.json",
+      "resultSha256": "d7c00e5a978719a3d8e73ba199b06b946e1709fedb4fea2d3afd2ab24c7935ac",
+      "sourceReadyRecordSha256": "0bfc3be07bd2e261391f7a411384393545577f29e9f6fc15daab3d0ea43e2682",
+      "sourceReceiptAuthoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9"
+    },
+    "t45-r3-final33-evidence-p087-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea42dcd3182c27ea2aa416e8/RESULT.json",
+      "resultSha256": "d7c00e5a978719a3d8e73ba199b06b946e1709fedb4fea2d3afd2ab24c7935ac",
+      "sourceReadyRecordSha256": "46897ab6d8f13b317794eba5ee63a90507c4509dda62accabb7ad717d5f8a1fd",
+      "sourceReceiptAuthoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9"
+    },
+    "t45-r3-final33-evidence-p088-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea42dcd3182c27ea2aa416e8/RESULT.json",
+      "resultSha256": "d7c00e5a978719a3d8e73ba199b06b946e1709fedb4fea2d3afd2ab24c7935ac",
+      "sourceReadyRecordSha256": "9744455c9d617dc8f5b1f7855339c995bd9aed3411d5741811b28146ffa65193",
+      "sourceReceiptAuthoritySha256": "ea42dcd3182c27ea2aa416e83a2b37ee68b722345a01de4ad37c9f189e5a0ef9"
+    },
+    "t45-r3-final33-evidence-p089-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-077b04c5a22c2a74c07f78a7/RESULT.json",
+      "resultSha256": "44f2d81bb5900b602b39903e692a2890a6cb339c7ea97c954b0afabebfa9943e",
+      "sourceReadyRecordSha256": "5396603454eac215c070139e2d372711b7106d34b5f17e39c5a1a2dba04ee72a",
+      "sourceReceiptAuthoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c"
+    },
+    "t45-r3-final33-evidence-p090-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-077b04c5a22c2a74c07f78a7/RESULT.json",
+      "resultSha256": "44f2d81bb5900b602b39903e692a2890a6cb339c7ea97c954b0afabebfa9943e",
+      "sourceReadyRecordSha256": "2e079c75e4af3843efa2a5061b90cc6d36e713b2a63e91c980f1dafab95103d4",
+      "sourceReceiptAuthoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c"
+    },
+    "t45-r3-final33-evidence-p091-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-077b04c5a22c2a74c07f78a7/RESULT.json",
+      "resultSha256": "44f2d81bb5900b602b39903e692a2890a6cb339c7ea97c954b0afabebfa9943e",
+      "sourceReadyRecordSha256": "4f5cd797f31a3a7e97ade8dc1a6e51de4c188758ade15237ee8c6dca6eb4112a",
+      "sourceReceiptAuthoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c"
+    },
+    "t45-r3-final33-evidence-p092-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-077b04c5a22c2a74c07f78a7/RESULT.json",
+      "resultSha256": "44f2d81bb5900b602b39903e692a2890a6cb339c7ea97c954b0afabebfa9943e",
+      "sourceReadyRecordSha256": "ac5472050f85137f20488ed128ff745c67d87620f004f8f6829a1ed97758080f",
+      "sourceReceiptAuthoritySha256": "077b04c5a22c2a74c07f78a742d3c395649816a69ea6ac095ad9462ead46577c"
+    },
+    "t45-r3-final33-evidence-p093-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-00e29da3cbf5896f9e2166a8/RESULT.json",
+      "resultSha256": "8397302d1345722667412ed461431bd4ca20ef322c743e83350c83670006569a",
+      "sourceReadyRecordSha256": "4583ba239e9cdb252d56b027c6dd2d651ce9e71fac9385878cb6a4954c7090e3",
+      "sourceReceiptAuthoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9"
+    },
+    "t45-r3-final33-evidence-p094-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-00e29da3cbf5896f9e2166a8/RESULT.json",
+      "resultSha256": "8397302d1345722667412ed461431bd4ca20ef322c743e83350c83670006569a",
+      "sourceReadyRecordSha256": "817fffed3940239f1da7fd0222546e07b121c94cec1f132ada6077af3e96c79f",
+      "sourceReceiptAuthoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9"
+    },
+    "t45-r3-final33-evidence-p095-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-00e29da3cbf5896f9e2166a8/RESULT.json",
+      "resultSha256": "8397302d1345722667412ed461431bd4ca20ef322c743e83350c83670006569a",
+      "sourceReadyRecordSha256": "ee131b2027200c61984ffcb6fee2687dc262aadd61696cbaa65569a6c2ca139e",
+      "sourceReceiptAuthoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9"
+    },
+    "t45-r3-final33-evidence-p096-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-00e29da3cbf5896f9e2166a8/RESULT.json",
+      "resultSha256": "8397302d1345722667412ed461431bd4ca20ef322c743e83350c83670006569a",
+      "sourceReadyRecordSha256": "c16fc30746a9fe17846a4d2b31d591bfa7b34b520fdd917fc0e1987c3f44c935",
+      "sourceReceiptAuthoritySha256": "00e29da3cbf5896f9e2166a8696664a866aea27df5abbd988b51faee555419e9"
+    },
+    "t45-r3-final33-evidence-p097-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-a864636566f4d1643454ddf0/RESULT.json",
+      "resultSha256": "68c23e0dc8b72174f8c6b34218d062b60477be4cc7b6d567f29d9947ad239cf0",
+      "sourceReadyRecordSha256": "1f1a7c3a6355117fa6c25eae98622e51e8b82d65220215f3ea5cf9c14bf2386e",
+      "sourceReceiptAuthoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e"
+    },
+    "t45-r3-final33-evidence-p098-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-a864636566f4d1643454ddf0/RESULT.json",
+      "resultSha256": "68c23e0dc8b72174f8c6b34218d062b60477be4cc7b6d567f29d9947ad239cf0",
+      "sourceReadyRecordSha256": "55d15a55ff03040e807ebed5eed6d26ad902d45632dcc11cf81813fc3b38e55c",
+      "sourceReceiptAuthoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e"
+    },
+    "t45-r3-final33-evidence-p099-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-a864636566f4d1643454ddf0/RESULT.json",
+      "resultSha256": "68c23e0dc8b72174f8c6b34218d062b60477be4cc7b6d567f29d9947ad239cf0",
+      "sourceReadyRecordSha256": "3e54cf644af3792f5bda7dbca4733e657c884d306807f62d42f14891d2d03fc8",
+      "sourceReceiptAuthoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e"
+    },
+    "t45-r3-final33-evidence-p100-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-a864636566f4d1643454ddf0/RESULT.json",
+      "resultSha256": "68c23e0dc8b72174f8c6b34218d062b60477be4cc7b6d567f29d9947ad239cf0",
+      "sourceReadyRecordSha256": "39f2a80fb95902f4d52c578be646f72051525a275337458254284bd0455f8609",
+      "sourceReceiptAuthoritySha256": "a864636566f4d1643454ddf00471603154eedb448f24bef18f1fc8e743a0f98e"
+    },
+    "t45-r3-final33-evidence-p101-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e5c31d748fff6b444f9d9027/RESULT.json",
+      "resultSha256": "e064dcce49745475a7e19491278a3561e8648a51e350c15e5b8c2cc7b23287f3",
+      "sourceReadyRecordSha256": "67a08f2c23788d8fc7585f610b4ea2778ae9cd604290cfc2e07e675a2b26d10d",
+      "sourceReceiptAuthoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48"
+    },
+    "t45-r3-final33-evidence-p102-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e5c31d748fff6b444f9d9027/RESULT.json",
+      "resultSha256": "e064dcce49745475a7e19491278a3561e8648a51e350c15e5b8c2cc7b23287f3",
+      "sourceReadyRecordSha256": "6186685db069138dee2cdfc1c42ba7dde8a4aedb4e8ab87f073b1b5f35cd09d3",
+      "sourceReceiptAuthoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48"
+    },
+    "t45-r3-final33-evidence-p103-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e5c31d748fff6b444f9d9027/RESULT.json",
+      "resultSha256": "e064dcce49745475a7e19491278a3561e8648a51e350c15e5b8c2cc7b23287f3",
+      "sourceReadyRecordSha256": "ae45429c4a995ae739d9edbc39cf9dacbb6088784ce92affa86c913b317e14b3",
+      "sourceReceiptAuthoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48"
+    },
+    "t45-r3-final33-evidence-p104-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-e5c31d748fff6b444f9d9027/RESULT.json",
+      "resultSha256": "e064dcce49745475a7e19491278a3561e8648a51e350c15e5b8c2cc7b23287f3",
+      "sourceReadyRecordSha256": "c07fbb2c91a8789a38d488bd66a3cfb49c464f8c5c71f65ea000c99f83868685",
+      "sourceReceiptAuthoritySha256": "e5c31d748fff6b444f9d90272613f49ff8b612fc4612c632864ecb1be686ec48"
+    },
+    "t45-r3-final33-evidence-p105-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-aa220d557a442caae4c983ea/RESULT.json",
+      "resultSha256": "0bebc0c5689e7d5177ac61b33af400062a307c50d5ddf6b001743d51a6c933a6",
+      "sourceReadyRecordSha256": "d575dd1269918cef34abcc64536d924e75270fe017b98767c884ea666f1e723f",
+      "sourceReceiptAuthoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953"
+    },
+    "t45-r3-final33-evidence-p106-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-aa220d557a442caae4c983ea/RESULT.json",
+      "resultSha256": "0bebc0c5689e7d5177ac61b33af400062a307c50d5ddf6b001743d51a6c933a6",
+      "sourceReadyRecordSha256": "1ecd04fb73cef9f16fc9e3b35e0168fcc7dec1f38ff0316c214a7cef80ea6ee6",
+      "sourceReceiptAuthoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953"
+    },
+    "t45-r3-final33-evidence-p107-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-aa220d557a442caae4c983ea/RESULT.json",
+      "resultSha256": "0bebc0c5689e7d5177ac61b33af400062a307c50d5ddf6b001743d51a6c933a6",
+      "sourceReadyRecordSha256": "1f2cf638d185d7bf96bd487b47460ad52a3d6e48af5cb3d94bb2cb5c038c731e",
+      "sourceReceiptAuthoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953"
+    },
+    "t45-r3-final33-evidence-p108-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-aa220d557a442caae4c983ea/RESULT.json",
+      "resultSha256": "0bebc0c5689e7d5177ac61b33af400062a307c50d5ddf6b001743d51a6c933a6",
+      "sourceReadyRecordSha256": "1aab4ea6a695b902172b1b420c074ff0008fdf5553ddddf639824996c4b53b42",
+      "sourceReceiptAuthoritySha256": "aa220d557a442caae4c983ea2c071d29a05d8daee27a1e9c1ea572f4140ae953"
+    },
+    "t45-r3-final33-evidence-p109-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-532a9d4b186a913da140f926/RESULT.json",
+      "resultSha256": "a048ae53691fd770657e62014e6d657c0a131cfe8ec96ae84d63e72acdad1c03",
+      "sourceReadyRecordSha256": "2d9c5548d9fd182c8583ab3e4a66d95d256a7b77edd557ccc5619a23498ab3a4",
+      "sourceReceiptAuthoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37"
+    },
+    "t45-r3-final33-evidence-p110-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-532a9d4b186a913da140f926/RESULT.json",
+      "resultSha256": "a048ae53691fd770657e62014e6d657c0a131cfe8ec96ae84d63e72acdad1c03",
+      "sourceReadyRecordSha256": "8d9c160771bd157909a200721702fb408cbe27e07e6968aad0ffe3f26648bd07",
+      "sourceReceiptAuthoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37"
+    },
+    "t45-r3-final33-evidence-p111-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-532a9d4b186a913da140f926/RESULT.json",
+      "resultSha256": "a048ae53691fd770657e62014e6d657c0a131cfe8ec96ae84d63e72acdad1c03",
+      "sourceReadyRecordSha256": "d4ef47c184b8ee701781170eb5d0569c0553417955fcfb41f7680396687fe15b",
+      "sourceReceiptAuthoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37"
+    },
+    "t45-r3-final33-evidence-p112-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-532a9d4b186a913da140f926/RESULT.json",
+      "resultSha256": "a048ae53691fd770657e62014e6d657c0a131cfe8ec96ae84d63e72acdad1c03",
+      "sourceReadyRecordSha256": "f3b25275feb8fa989b7567d8d5076d186eaf511f01ceef33a0c74ce74fe70db1",
+      "sourceReceiptAuthoritySha256": "532a9d4b186a913da140f9260d7e23152cf89c906641637790f3bb0515e01d37"
+    },
+    "t45-r3-final33-evidence-p113-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fcf9c8f2108f769c7aa25005/RESULT.json",
+      "resultSha256": "ddaf3d33fd1daed17b1df08343c185ea2b7cfe21f569f898faeb14c59556d482",
+      "sourceReadyRecordSha256": "cae2ad89dd3587465f6bf30b03d78116186a700c31412e13141d6ba9026a76b2",
+      "sourceReceiptAuthoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6"
+    },
+    "t45-r3-final33-evidence-p114-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fcf9c8f2108f769c7aa25005/RESULT.json",
+      "resultSha256": "ddaf3d33fd1daed17b1df08343c185ea2b7cfe21f569f898faeb14c59556d482",
+      "sourceReadyRecordSha256": "e6c27fce38683ece7e258adadd2325ca64b6ef373c2fbac7f3d904548c52463f",
+      "sourceReceiptAuthoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6"
+    },
+    "t45-r3-final33-evidence-p115-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fcf9c8f2108f769c7aa25005/RESULT.json",
+      "resultSha256": "ddaf3d33fd1daed17b1df08343c185ea2b7cfe21f569f898faeb14c59556d482",
+      "sourceReadyRecordSha256": "480dfd96c208998fd9e29b8282afb9ad698c789cfc2903a7858a174c90e754b3",
+      "sourceReceiptAuthoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6"
+    },
+    "t45-r3-final33-evidence-p116-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fcf9c8f2108f769c7aa25005/RESULT.json",
+      "resultSha256": "ddaf3d33fd1daed17b1df08343c185ea2b7cfe21f569f898faeb14c59556d482",
+      "sourceReadyRecordSha256": "a353162bb84cba637503cffa6fc645379383299f98a10cf99116ab693bd02046",
+      "sourceReceiptAuthoritySha256": "fcf9c8f2108f769c7aa25005e061a2e68dda09240e66f1cbe5e7fb7e0ed318f6"
+    },
+    "t45-r3-final33-evidence-p117-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-2c2a39598bbd7c1506ca2afa/RESULT.json",
+      "resultSha256": "aa4cc61b0f7063f7865405dab693f87547d9f4f7c72b89a1ae98f212808a92fd",
+      "sourceReadyRecordSha256": "38c30636db860e60ae918f9135ba9d0ee774c17eae30a332a2210f8be936a3fa",
+      "sourceReceiptAuthoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7"
+    },
+    "t45-r3-final33-evidence-p118-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-2c2a39598bbd7c1506ca2afa/RESULT.json",
+      "resultSha256": "aa4cc61b0f7063f7865405dab693f87547d9f4f7c72b89a1ae98f212808a92fd",
+      "sourceReadyRecordSha256": "4df02519cd90769f85159aa60cf2ecda19bde445798f7057c1cc5927258b2f8a",
+      "sourceReceiptAuthoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7"
+    },
+    "t45-r3-final33-evidence-p119-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-2c2a39598bbd7c1506ca2afa/RESULT.json",
+      "resultSha256": "aa4cc61b0f7063f7865405dab693f87547d9f4f7c72b89a1ae98f212808a92fd",
+      "sourceReadyRecordSha256": "0d314e547e723b73193d35529fda4e10530779734aacb8344ad60ac959e33499",
+      "sourceReceiptAuthoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7"
+    },
+    "t45-r3-final33-evidence-p120-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-2c2a39598bbd7c1506ca2afa/RESULT.json",
+      "resultSha256": "aa4cc61b0f7063f7865405dab693f87547d9f4f7c72b89a1ae98f212808a92fd",
+      "sourceReadyRecordSha256": "e2db11b596119e993293d76827a515cebf85099f0d04d82c450fd60ba02cea19",
+      "sourceReceiptAuthoritySha256": "2c2a39598bbd7c1506ca2afa22959a3a80d630f69444dac14b79c2c97f2ae9d7"
+    },
+    "t45-r3-final33-evidence-p121-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5a772f4173f41d09a96001ec/RESULT.json",
+      "resultSha256": "669b275bcd6313800c252347ea9fa1aa2025f030dfba39277422523732037009",
+      "sourceReadyRecordSha256": "09b7f455fc84ee4c82060f7b82a5751aad7e49db3fc51b81726aa7f6104b0bde",
+      "sourceReceiptAuthoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492"
+    },
+    "t45-r3-final33-evidence-p122-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5a772f4173f41d09a96001ec/RESULT.json",
+      "resultSha256": "669b275bcd6313800c252347ea9fa1aa2025f030dfba39277422523732037009",
+      "sourceReadyRecordSha256": "33bf83e9b7e8b1e7efdbd9cd54862655d35a1b23ca6f7623814514baa68bff10",
+      "sourceReceiptAuthoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492"
+    },
+    "t45-r3-final33-evidence-p123-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5a772f4173f41d09a96001ec/RESULT.json",
+      "resultSha256": "669b275bcd6313800c252347ea9fa1aa2025f030dfba39277422523732037009",
+      "sourceReadyRecordSha256": "19ff980de90265a2e2385520080e48d44548a60abbc3131e991ee140b6c208e1",
+      "sourceReceiptAuthoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492"
+    },
+    "t45-r3-final33-evidence-p124-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-5a772f4173f41d09a96001ec/RESULT.json",
+      "resultSha256": "669b275bcd6313800c252347ea9fa1aa2025f030dfba39277422523732037009",
+      "sourceReadyRecordSha256": "b93829e9704e9432ce0409eb1f01f60546e1f2534f039dcafff7cc9cd8be2654",
+      "sourceReceiptAuthoritySha256": "5a772f4173f41d09a96001ecc9f319164526c68dd4562ef72a2c541fd5c07492"
+    },
+    "t45-r3-final33-evidence-p125-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8c7a18fe90040ed67ff5a959/RESULT.json",
+      "resultSha256": "1af701d1c2f2feaa4c12bc605e43ff80c2a622b2c59bf0ffa0cf88f56d1e52e3",
+      "sourceReadyRecordSha256": "6bfa36f33fdc64640a835bc5dde8fd8b833c65a590b57c71d77b8cafb60320a2",
+      "sourceReceiptAuthoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99"
+    },
+    "t45-r3-final33-evidence-p126-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8c7a18fe90040ed67ff5a959/RESULT.json",
+      "resultSha256": "1af701d1c2f2feaa4c12bc605e43ff80c2a622b2c59bf0ffa0cf88f56d1e52e3",
+      "sourceReadyRecordSha256": "1b81ad96af30332a442b7dbe487b05510984b821b88c408dce5dabf213fc1df7",
+      "sourceReceiptAuthoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99"
+    },
+    "t45-r3-final33-evidence-p127-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8c7a18fe90040ed67ff5a959/RESULT.json",
+      "resultSha256": "1af701d1c2f2feaa4c12bc605e43ff80c2a622b2c59bf0ffa0cf88f56d1e52e3",
+      "sourceReadyRecordSha256": "0984193eca3973227f3ff5996bdaa38ca71462183fc99a2bae5992893fb2ba19",
+      "sourceReceiptAuthoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99"
+    },
+    "t45-r3-final33-evidence-p128-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8c7a18fe90040ed67ff5a959/RESULT.json",
+      "resultSha256": "1af701d1c2f2feaa4c12bc605e43ff80c2a622b2c59bf0ffa0cf88f56d1e52e3",
+      "sourceReadyRecordSha256": "6a030119f0b922c7b4c2f7ecf7ff128921ef6cd0c5eac17e4e64016985062169",
+      "sourceReceiptAuthoritySha256": "8c7a18fe90040ed67ff5a9595ca5a2dfaf4d83f5a73203f4b644b0648bbf7c99"
+    },
+    "t45-r3-final33-evidence-p129-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b19961e964ce5092a6b98871/RESULT.json",
+      "resultSha256": "c0a37dbb1f347750a2b4e9c56fb8a3f762dfa875e26b9c4302b725d259216174",
+      "sourceReadyRecordSha256": "7cc75ffdf56c28d76be408e06092eba84cbd84fe706ac20dab9a036ff1955657",
+      "sourceReceiptAuthoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed"
+    },
+    "t45-r3-final33-evidence-p130-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b19961e964ce5092a6b98871/RESULT.json",
+      "resultSha256": "c0a37dbb1f347750a2b4e9c56fb8a3f762dfa875e26b9c4302b725d259216174",
+      "sourceReadyRecordSha256": "b6c86268066816e4f3209692ed57621fb74df951200f5d3493606e79d042cc3a",
+      "sourceReceiptAuthoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed"
+    },
+    "t45-r3-final33-evidence-p131-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b19961e964ce5092a6b98871/RESULT.json",
+      "resultSha256": "c0a37dbb1f347750a2b4e9c56fb8a3f762dfa875e26b9c4302b725d259216174",
+      "sourceReadyRecordSha256": "68a7b0423322c785707977c9164531999798771d89ee4a78245dbdc7b7516722",
+      "sourceReceiptAuthoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed"
+    },
+    "t45-r3-final33-evidence-p132-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b19961e964ce5092a6b98871/RESULT.json",
+      "resultSha256": "c0a37dbb1f347750a2b4e9c56fb8a3f762dfa875e26b9c4302b725d259216174",
+      "sourceReadyRecordSha256": "e1177d9e515f6c30f40e18f761b6e9701f387c00245fc905d6b83d91a42a94aa",
+      "sourceReceiptAuthoritySha256": "b19961e964ce5092a6b9887186e008b8846b9235d9f8537bc500fa628a5e11ed"
+    },
+    "t45-r3-final33-evidence-p133-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-71c1115e1c51d8a9aa8b13dc/RESULT.json",
+      "resultSha256": "8421e4194e2cdd7a7b5920670b3920418e4fef07c2680e266d37d244a67083ed",
+      "sourceReadyRecordSha256": "49690f0d9928b17676e75cdc2fa8b353c3d8f4e602162840387e8574a00b92be",
+      "sourceReceiptAuthoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70"
+    },
+    "t45-r3-final33-evidence-p134-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-71c1115e1c51d8a9aa8b13dc/RESULT.json",
+      "resultSha256": "8421e4194e2cdd7a7b5920670b3920418e4fef07c2680e266d37d244a67083ed",
+      "sourceReadyRecordSha256": "e2cc5a080c7a180061364ef1f3937aa772203e2532bf38ffe7a81ee14e8609c8",
+      "sourceReceiptAuthoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70"
+    },
+    "t45-r3-final33-evidence-p135-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-71c1115e1c51d8a9aa8b13dc/RESULT.json",
+      "resultSha256": "8421e4194e2cdd7a7b5920670b3920418e4fef07c2680e266d37d244a67083ed",
+      "sourceReadyRecordSha256": "5b5103099762b1c2f3f5a6ebe5b263d547bbbc0564888f9160693505cb1e0288",
+      "sourceReceiptAuthoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70"
+    },
+    "t45-r3-final33-evidence-p136-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-71c1115e1c51d8a9aa8b13dc/RESULT.json",
+      "resultSha256": "8421e4194e2cdd7a7b5920670b3920418e4fef07c2680e266d37d244a67083ed",
+      "sourceReadyRecordSha256": "52a292303b5f1c5c307a578ddf99811560cad63f9a94a47675eb9de8ec4f0a23",
+      "sourceReceiptAuthoritySha256": "71c1115e1c51d8a9aa8b13dcd5ff80954140b35d9ca34052bf71f0d98228ef70"
+    },
+    "t45-r3-final33-evidence-p137-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6fc23ea5e5dd75a1caf51f33/RESULT.json",
+      "resultSha256": "ba2c5a82ad4d1b0684eeaa30a7c0610ab3bb9daa33a452b4bbbf477e34195ef0",
+      "sourceReadyRecordSha256": "d2994ff7d287f0c29f1e6a911dc39fc34ee3312530fb9216b93b14737d3f4e1a",
+      "sourceReceiptAuthoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93"
+    },
+    "t45-r3-final33-evidence-p138-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6fc23ea5e5dd75a1caf51f33/RESULT.json",
+      "resultSha256": "ba2c5a82ad4d1b0684eeaa30a7c0610ab3bb9daa33a452b4bbbf477e34195ef0",
+      "sourceReadyRecordSha256": "f048963e543c5f6619252cebd998e99e5a0c010dbe2d91ec2de4818b0ba0ef3e",
+      "sourceReceiptAuthoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93"
+    },
+    "t45-r3-final33-evidence-p139-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6fc23ea5e5dd75a1caf51f33/RESULT.json",
+      "resultSha256": "ba2c5a82ad4d1b0684eeaa30a7c0610ab3bb9daa33a452b4bbbf477e34195ef0",
+      "sourceReadyRecordSha256": "7a1b697c74519be0ef738ecda8061e678bdf3a838dc509bea82f2d6d55ce840c",
+      "sourceReceiptAuthoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93"
+    },
+    "t45-r3-final33-evidence-p140-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-6fc23ea5e5dd75a1caf51f33/RESULT.json",
+      "resultSha256": "ba2c5a82ad4d1b0684eeaa30a7c0610ab3bb9daa33a452b4bbbf477e34195ef0",
+      "sourceReadyRecordSha256": "3f5930a6589414d60eeb1675ce7600d2c002064669ffe33b3725952ce840e82c",
+      "sourceReceiptAuthoritySha256": "6fc23ea5e5dd75a1caf51f332cda2f39b0e783015893736f11fdcf00be43bd93"
+    },
+    "t45-r3-final33-evidence-p141-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9dd7c21a312a3dc64742d158/RESULT.json",
+      "resultSha256": "3b9ceedca7e1d7510c4eb0954b14fdcffaf8a684515463de79f23a03f0ca9f92",
+      "sourceReadyRecordSha256": "2a1eb6c1da64c966a8fae8481981381de6a3cc945d70e725bc656ffa51898860",
+      "sourceReceiptAuthoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30"
+    },
+    "t45-r3-final33-evidence-p142-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9dd7c21a312a3dc64742d158/RESULT.json",
+      "resultSha256": "3b9ceedca7e1d7510c4eb0954b14fdcffaf8a684515463de79f23a03f0ca9f92",
+      "sourceReadyRecordSha256": "6db495a543add8b37eed71d9c805ff6ed3941a084f4385cd46deb2cf034f1761",
+      "sourceReceiptAuthoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30"
+    },
+    "t45-r3-final33-evidence-p143-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9dd7c21a312a3dc64742d158/RESULT.json",
+      "resultSha256": "3b9ceedca7e1d7510c4eb0954b14fdcffaf8a684515463de79f23a03f0ca9f92",
+      "sourceReadyRecordSha256": "114661c0603fec7987d95a1a69b3bb04ed145926094e911139f346c5de24707e",
+      "sourceReceiptAuthoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30"
+    },
+    "t45-r3-final33-evidence-p144-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-9dd7c21a312a3dc64742d158/RESULT.json",
+      "resultSha256": "3b9ceedca7e1d7510c4eb0954b14fdcffaf8a684515463de79f23a03f0ca9f92",
+      "sourceReadyRecordSha256": "968535816496b29195c10152dc70ab0afaefee4e2ef7b2f0df1337d2eaf8ea57",
+      "sourceReceiptAuthoritySha256": "9dd7c21a312a3dc64742d1589eedcb5cc4ea7fc5f9c4eb6dd74b55418d96af30"
+    },
+    "t45-r3-final33-evidence-p145-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-4b5389700efe1d271594173a/RESULT.json",
+      "resultSha256": "e6fd08f6f39c6d00d5ee347420c76834a7b945b808a9e40aa002fb43b65154a5",
+      "sourceReadyRecordSha256": "402530493110a83a137f64377b97d6a7a47b34c03590258bb91833143bee6b09",
+      "sourceReceiptAuthoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67"
+    },
+    "t45-r3-final33-evidence-p146-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-4b5389700efe1d271594173a/RESULT.json",
+      "resultSha256": "e6fd08f6f39c6d00d5ee347420c76834a7b945b808a9e40aa002fb43b65154a5",
+      "sourceReadyRecordSha256": "ec81180c7aa3c74e5a3f3d5f98d822aeab3fd51b78a7b36428890e42544c9157",
+      "sourceReceiptAuthoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67"
+    },
+    "t45-r3-final33-evidence-p147-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-4b5389700efe1d271594173a/RESULT.json",
+      "resultSha256": "e6fd08f6f39c6d00d5ee347420c76834a7b945b808a9e40aa002fb43b65154a5",
+      "sourceReadyRecordSha256": "3ed41add44bd7fa2b55ffbf42f4859ee7a6a803c18e029ea55b36f99416820e7",
+      "sourceReceiptAuthoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67"
+    },
+    "t45-r3-final33-evidence-p148-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-4b5389700efe1d271594173a/RESULT.json",
+      "resultSha256": "e6fd08f6f39c6d00d5ee347420c76834a7b945b808a9e40aa002fb43b65154a5",
+      "sourceReadyRecordSha256": "5e80ef6715ada241d6e73477bc59d70b98c9259e0b66ecbded7f9b95c2d74552",
+      "sourceReceiptAuthoritySha256": "4b5389700efe1d271594173ab62bd462db32a2229062cb00801d73775abadb67"
+    },
+    "t45-r3-final33-evidence-p149-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-bb852eb7d6d1c07444eb848d/RESULT.json",
+      "resultSha256": "4cecc4b4a74aadf5101009d952a79f8266686a12915bce6e132a08298c12584f",
+      "sourceReadyRecordSha256": "bb455b4e84c41d76b583b460ab6ef79497efe3687c59f453c9f13719fb1e7394",
+      "sourceReceiptAuthoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59"
+    },
+    "t45-r3-final33-evidence-p150-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-bb852eb7d6d1c07444eb848d/RESULT.json",
+      "resultSha256": "4cecc4b4a74aadf5101009d952a79f8266686a12915bce6e132a08298c12584f",
+      "sourceReadyRecordSha256": "fd813c58592c218f5ae05bf88ef13929ed99c8bb9143902bb7d959c8d6e319f1",
+      "sourceReceiptAuthoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59"
+    },
+    "t45-r3-final33-evidence-p151-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-bb852eb7d6d1c07444eb848d/RESULT.json",
+      "resultSha256": "4cecc4b4a74aadf5101009d952a79f8266686a12915bce6e132a08298c12584f",
+      "sourceReadyRecordSha256": "255c5faf83cd70ab3241442797eddb06a8733045db7c64afc11b5bf6a89bf15c",
+      "sourceReceiptAuthoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59"
+    },
+    "t45-r3-final33-evidence-p152-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-bb852eb7d6d1c07444eb848d/RESULT.json",
+      "resultSha256": "4cecc4b4a74aadf5101009d952a79f8266686a12915bce6e132a08298c12584f",
+      "sourceReadyRecordSha256": "19b9ec873360bf1a2ce3d0ae2b5ba83194420532b6b879578a9087ace6643c82",
+      "sourceReceiptAuthoritySha256": "bb852eb7d6d1c07444eb848ddf643b62cda4c65217cb40bebac09cdb02f6aa59"
+    },
+    "t45-r3-final33-evidence-p153-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8152bbbd5f087c475aee53cd/RESULT.json",
+      "resultSha256": "5f24f44123be7dcffe299b6fdd13d143a1521fea121b3ece740079aaf1f95153",
+      "sourceReadyRecordSha256": "c1e7832cb46bf3b1c186f930b9150d7570fb6ca0276ddd7543878a25b381187f",
+      "sourceReceiptAuthoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a"
+    },
+    "t45-r3-final33-evidence-p154-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8152bbbd5f087c475aee53cd/RESULT.json",
+      "resultSha256": "5f24f44123be7dcffe299b6fdd13d143a1521fea121b3ece740079aaf1f95153",
+      "sourceReadyRecordSha256": "c6abf7688540c90e9e6f133976b9d94406c2c774e37b080043db692d9afb2c96",
+      "sourceReceiptAuthoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a"
+    },
+    "t45-r3-final33-evidence-p155-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8152bbbd5f087c475aee53cd/RESULT.json",
+      "resultSha256": "5f24f44123be7dcffe299b6fdd13d143a1521fea121b3ece740079aaf1f95153",
+      "sourceReadyRecordSha256": "bdcf7cb8f69df78847f75cde4699956ce9abcc247cd437bf663a155517fe61d8",
+      "sourceReceiptAuthoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a"
+    },
+    "t45-r3-final33-evidence-p156-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-8152bbbd5f087c475aee53cd/RESULT.json",
+      "resultSha256": "5f24f44123be7dcffe299b6fdd13d143a1521fea121b3ece740079aaf1f95153",
+      "sourceReadyRecordSha256": "f79202438675cf05afa4884acc10c6baeaae6669abead01b9ec3f5b411f06afb",
+      "sourceReceiptAuthoritySha256": "8152bbbd5f087c475aee53cd4614c59a51f9ef191bb6ee5e3a8045e3cb9bc77a"
+    },
+    "t45-r3-final33-evidence-p157-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-1d6ac31ec87e2a43d2af5fb0/RESULT.json",
+      "resultSha256": "0a8aef760893c21336d87570f42c76ff4c793d210b4c90f1bb4271852bc61eaa",
+      "sourceReadyRecordSha256": "ad2c5c04176404ac81c226ef693490ccb395ec1f24f7eb4c423a7589f997b95c",
+      "sourceReceiptAuthoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0"
+    },
+    "t45-r3-final33-evidence-p158-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-1d6ac31ec87e2a43d2af5fb0/RESULT.json",
+      "resultSha256": "0a8aef760893c21336d87570f42c76ff4c793d210b4c90f1bb4271852bc61eaa",
+      "sourceReadyRecordSha256": "85a277f6f9ae518b9a62126ca12ffdbb606b6b7fde7306ab6d3c87f2c8078d46",
+      "sourceReceiptAuthoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0"
+    },
+    "t45-r3-final33-evidence-p159-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-1d6ac31ec87e2a43d2af5fb0/RESULT.json",
+      "resultSha256": "0a8aef760893c21336d87570f42c76ff4c793d210b4c90f1bb4271852bc61eaa",
+      "sourceReadyRecordSha256": "06a90282e3ba8e7ae4a35d896f405365c0f8f9be944c5c5bbbf8801d8ce22a08",
+      "sourceReceiptAuthoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0"
+    },
+    "t45-r3-final33-evidence-p160-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-1d6ac31ec87e2a43d2af5fb0/RESULT.json",
+      "resultSha256": "0a8aef760893c21336d87570f42c76ff4c793d210b4c90f1bb4271852bc61eaa",
+      "sourceReadyRecordSha256": "e4368a154391083be3c3352160947a04150228c39626d418ffac1ef74a6c8919",
+      "sourceReceiptAuthoritySha256": "1d6ac31ec87e2a43d2af5fb01c381675039449be0af8bdde917dffa4af894fc0"
+    },
+    "t45-r3-final33-evidence-p161-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-90a93515204d474040d773e5/RESULT.json",
+      "resultSha256": "7a0e1c759fab1637aeb564159c8b6187cda217d240a7092192da81da40416403",
+      "sourceReadyRecordSha256": "86fe51abf71f7477242d9dbd3dc24598c70926f64da20073154e21712814fb7e",
+      "sourceReceiptAuthoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c"
+    },
+    "t45-r3-final33-evidence-p162-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-90a93515204d474040d773e5/RESULT.json",
+      "resultSha256": "7a0e1c759fab1637aeb564159c8b6187cda217d240a7092192da81da40416403",
+      "sourceReadyRecordSha256": "a8ebad89916cf44812cb6c32a833b8c7468a69629e9ede6962d7efe54b46aa37",
+      "sourceReceiptAuthoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c"
+    },
+    "t45-r3-final33-evidence-p163-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-90a93515204d474040d773e5/RESULT.json",
+      "resultSha256": "7a0e1c759fab1637aeb564159c8b6187cda217d240a7092192da81da40416403",
+      "sourceReadyRecordSha256": "4ba4c73c98c0120b4819b46efc4ccef9aeb9ea8d465c7df04ae34f44df980dcd",
+      "sourceReceiptAuthoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c"
+    },
+    "t45-r3-final33-evidence-p164-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-90a93515204d474040d773e5/RESULT.json",
+      "resultSha256": "7a0e1c759fab1637aeb564159c8b6187cda217d240a7092192da81da40416403",
+      "sourceReadyRecordSha256": "85797aa166a2f56b19f6b8bacbd47a15098bf42e7867b2cea3ba782f9f4ef5b3",
+      "sourceReceiptAuthoritySha256": "90a93515204d474040d773e5f1fd49db01f9282db87170e646389fbd8f2e922c"
+    },
+    "t45-r3-final33-evidence-p165-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-c47e79976e4e64e3b5b7714e/RESULT.json",
+      "resultSha256": "89f862c2b6c5ec13e158c3d8a414dab95d158215a01437755fce5f1bb4da1c48",
+      "sourceReadyRecordSha256": "79a506018fb6184d3585c83e9ca86f825748ec4a237ee9f49a7e1e353a189bfa",
+      "sourceReceiptAuthoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e"
+    },
+    "t45-r3-final33-evidence-p166-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-c47e79976e4e64e3b5b7714e/RESULT.json",
+      "resultSha256": "89f862c2b6c5ec13e158c3d8a414dab95d158215a01437755fce5f1bb4da1c48",
+      "sourceReadyRecordSha256": "f2de1b1cc7c5f9113bedc9d61ea513a642e1c4036c7a90fafc4411251560962b",
+      "sourceReceiptAuthoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e"
+    },
+    "t45-r3-final33-evidence-p167-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-c47e79976e4e64e3b5b7714e/RESULT.json",
+      "resultSha256": "89f862c2b6c5ec13e158c3d8a414dab95d158215a01437755fce5f1bb4da1c48",
+      "sourceReadyRecordSha256": "af26abe66c6254e699eef0b9c87fb4eb0bcc126fab332d0bd0da84232245b93a",
+      "sourceReceiptAuthoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e"
+    },
+    "t45-r3-final33-evidence-p168-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-c47e79976e4e64e3b5b7714e/RESULT.json",
+      "resultSha256": "89f862c2b6c5ec13e158c3d8a414dab95d158215a01437755fce5f1bb4da1c48",
+      "sourceReadyRecordSha256": "7d45ff59f5295512fc49dde7e073b90f289f394ef5b77f6fa42cf0d46d86e306",
+      "sourceReceiptAuthoritySha256": "c47e79976e4e64e3b5b7714e70d2f0875c0798ad351b7c0f9120d6c32d3df96e"
+    },
+    "t45-r3-final33-evidence-p169-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b1b4a4c45a8d144fac48d9f2/RESULT.json",
+      "resultSha256": "05d507cfd8ee2eef0eb8893d1077fc590b850959089ae2b601429f5ca372aeb2",
+      "sourceReadyRecordSha256": "4b5c68498023f28e901ab06fcb93cb0fe8d0da1e888cd3b4f52b285e8de30fe7",
+      "sourceReceiptAuthoritySha256": "b1b4a4c45a8d144fac48d9f22fbcd829dd6fc9923bb57677ad54b3fef63cf94a"
+    },
+    "t45-r3-final33-evidence-p170-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b1b4a4c45a8d144fac48d9f2/RESULT.json",
+      "resultSha256": "05d507cfd8ee2eef0eb8893d1077fc590b850959089ae2b601429f5ca372aeb2",
+      "sourceReadyRecordSha256": "207337bbec9d78bb3db404ec2e15b6869802ba881883fb978bfb6ad78c044dad",
+      "sourceReceiptAuthoritySha256": "b1b4a4c45a8d144fac48d9f22fbcd829dd6fc9923bb57677ad54b3fef63cf94a"
+    },
+    "t45-r3-final33-standard-p001-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-33d426147ca35a4a29fd584d/RESULT.json",
+      "resultSha256": "38f13f9d92d0106d3e143142e7b247ad5b3a7ab7de5ee3d4b612e13467a00f1a",
+      "sourceReadyRecordSha256": "fe1bf2c3260e3fb29e8044d4689073620855f0e67be41ec2c4246fd148975315",
+      "sourceReceiptAuthoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f"
+    },
+    "t45-r3-final33-standard-p002-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-33d426147ca35a4a29fd584d/RESULT.json",
+      "resultSha256": "38f13f9d92d0106d3e143142e7b247ad5b3a7ab7de5ee3d4b612e13467a00f1a",
+      "sourceReadyRecordSha256": "bebe5b20e82ab783bfe595ba7705467f68a664e0bed63989193acb2a9fde811d",
+      "sourceReceiptAuthoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f"
+    },
+    "t45-r3-final33-standard-p003-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-33d426147ca35a4a29fd584d/RESULT.json",
+      "resultSha256": "38f13f9d92d0106d3e143142e7b247ad5b3a7ab7de5ee3d4b612e13467a00f1a",
+      "sourceReadyRecordSha256": "a6b60a80c2f73f85d6ca3c426a78840afd1f45bebf5494af0c4ff2cfd7c6d642",
+      "sourceReceiptAuthoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f"
+    },
+    "t45-r3-final33-standard-p004-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-33d426147ca35a4a29fd584d/RESULT.json",
+      "resultSha256": "38f13f9d92d0106d3e143142e7b247ad5b3a7ab7de5ee3d4b612e13467a00f1a",
+      "sourceReadyRecordSha256": "c69a636f92eb91f272731521bf05ca232620cfccce7fed6ad2b403f54ba1a0f6",
+      "sourceReceiptAuthoritySha256": "33d426147ca35a4a29fd584ddcfda2679d3d98736b77976fbd8536c5f298198f"
+    },
+    "t45-r3-final33-standard-p005-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-9144665604b1f322de3324cb/RESULT.json",
+      "resultSha256": "3d8d3687e45ab5a9c6905224763cd03c6340a4c5719de55078881f550d87c046",
+      "sourceReadyRecordSha256": "4b604307d0db8ae1604da606d078d692a8db4a29411e69c4b83849d0ca67a38d",
+      "sourceReceiptAuthoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352"
+    },
+    "t45-r3-final33-standard-p006-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-9144665604b1f322de3324cb/RESULT.json",
+      "resultSha256": "3d8d3687e45ab5a9c6905224763cd03c6340a4c5719de55078881f550d87c046",
+      "sourceReadyRecordSha256": "9cda4b00131182602c7ef0fe5172f53bef0613a02b9d92f1e5964e272ffb43dd",
+      "sourceReceiptAuthoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352"
+    },
+    "t45-r3-final33-standard-p007-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-9144665604b1f322de3324cb/RESULT.json",
+      "resultSha256": "3d8d3687e45ab5a9c6905224763cd03c6340a4c5719de55078881f550d87c046",
+      "sourceReadyRecordSha256": "a4220be93a124526e00068e7af44eb98473c119f64ad130b9cc70a569e6fb011",
+      "sourceReceiptAuthoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352"
+    },
+    "t45-r3-final33-standard-p008-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-02/execution-9144665604b1f322de3324cb/RESULT.json",
+      "resultSha256": "3d8d3687e45ab5a9c6905224763cd03c6340a4c5719de55078881f550d87c046",
+      "sourceReadyRecordSha256": "4ebf9992417aece691485f60f49585dc0ae7aeac221b24068badad8f91c27d33",
+      "sourceReceiptAuthoritySha256": "9144665604b1f322de3324cbc348c2614636b64ac42d7fa6eb8777c77352f352"
+    },
+    "t45-r3-final33-standard-p009-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f8c3c7803d406eac712214bc/RESULT.json",
+      "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
+      "sourceReadyRecordSha256": "c3dadacef9aca52212ed76eb84076ed94d6633fa58131833944796f2fe8c8b3b",
+      "sourceReceiptAuthoritySha256": "057a669079c93140d268d82e8b3ebd8911e76cedda477d8f7c0e9f32a4d69ac2"
+    },
+    "t45-r3-final33-standard-p010-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f8c3c7803d406eac712214bc/RESULT.json",
+      "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
+      "sourceReadyRecordSha256": "5ee05d0fbb8d68dfc6aeb44a4938af3564fb5dba331c2fdca1513ea86c1e3004",
+      "sourceReceiptAuthoritySha256": "057a669079c93140d268d82e8b3ebd8911e76cedda477d8f7c0e9f32a4d69ac2"
+    },
+    "t45-r3-final33-standard-p011-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f8c3c7803d406eac712214bc/RESULT.json",
+      "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
+      "sourceReadyRecordSha256": "632d7866a23d56d6d6cb96f627e1a87acaf964ac73e2ab3b67ab6667a9158dc2",
+      "sourceReceiptAuthoritySha256": "023bf0b91b0249590a04f8a522d7902258ae5ded2b95a63412204160a8997839"
+    },
+    "t45-r3-final33-standard-p012-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-f8c3c7803d406eac712214bc/RESULT.json",
+      "resultSha256": "509906c41f83228e6aa4ebe2b26bdf2502738c8e8b6415d00d7dae6930f9280c",
+      "sourceReadyRecordSha256": "320ca733a6e86b463bd53b6d091bcdec9764e728034aeec8c4314c4d759b9b16",
+      "sourceReceiptAuthoritySha256": "f8c3c7803d406eac712214bcd3a40996857481666929ef0ca7437f23f341fe7c"
+    },
+    "t45-r3-final33-standard-p013-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-601431b9007264a9746dc27b/RESULT.json",
+      "resultSha256": "5a46390bc2b178d8901b5c7bbcca6df779d42304b8146efb934b535697f859c6",
+      "sourceReadyRecordSha256": "4889b2f555e710747530e9aadf10ea2045d166779019d2ee42acfc55015ee000",
+      "sourceReceiptAuthoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1"
+    },
+    "t45-r3-final33-standard-p014-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-601431b9007264a9746dc27b/RESULT.json",
+      "resultSha256": "5a46390bc2b178d8901b5c7bbcca6df779d42304b8146efb934b535697f859c6",
+      "sourceReadyRecordSha256": "30c4fbaef4a45558d95c7825d2ad4fe427974a5b6f992a20b88ba00458b5af27",
+      "sourceReceiptAuthoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1"
+    },
+    "t45-r3-final33-standard-p015-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-601431b9007264a9746dc27b/RESULT.json",
+      "resultSha256": "5a46390bc2b178d8901b5c7bbcca6df779d42304b8146efb934b535697f859c6",
+      "sourceReadyRecordSha256": "3d34fe194c759fb4522fae117a327bdd7eaffc090bd4ad2fcc286ed4af96ac4b",
+      "sourceReceiptAuthoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1"
+    },
+    "t45-r3-final33-standard-p016-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-601431b9007264a9746dc27b/RESULT.json",
+      "resultSha256": "5a46390bc2b178d8901b5c7bbcca6df779d42304b8146efb934b535697f859c6",
+      "sourceReadyRecordSha256": "1fac5c6f956005632f8e7fe00f80f1224fde7e05313c212fe4473480c12499cb",
+      "sourceReceiptAuthoritySha256": "601431b9007264a9746dc27b5c231a84cb75e21b8085df48fa331c10eaf71be1"
+    },
+    "t45-r3-final33-standard-p017-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-36a7126a88d17d86975c4b94/RESULT.json",
+      "resultSha256": "dc5f53620cf3a854c22c85abf055313973b1dec288348013d61c2765b31dcc36",
+      "sourceReadyRecordSha256": "387f4b377f5fb0f7784fb53254a99de6cfcfddc3167a71e2ff8c1fe9bb86eb53",
+      "sourceReceiptAuthoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b"
+    },
+    "t45-r3-final33-standard-p018-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-36a7126a88d17d86975c4b94/RESULT.json",
+      "resultSha256": "dc5f53620cf3a854c22c85abf055313973b1dec288348013d61c2765b31dcc36",
+      "sourceReadyRecordSha256": "fdbefbe10040401161dcf7eaf80ebececfb48e9763fbdf5ae53455bc3966dabc",
+      "sourceReceiptAuthoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b"
+    },
+    "t45-r3-final33-standard-p019-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-36a7126a88d17d86975c4b94/RESULT.json",
+      "resultSha256": "dc5f53620cf3a854c22c85abf055313973b1dec288348013d61c2765b31dcc36",
+      "sourceReadyRecordSha256": "e683adf2797f038363237c12134d7c32a4d1eaa8c18d919ba5275c6a05d44da2",
+      "sourceReceiptAuthoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b"
+    },
+    "t45-r3-final33-standard-p020-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-36a7126a88d17d86975c4b94/RESULT.json",
+      "resultSha256": "dc5f53620cf3a854c22c85abf055313973b1dec288348013d61c2765b31dcc36",
+      "sourceReadyRecordSha256": "bd864a76a7247cc58468ac07e32d78f009101d779e88b363e0987a2612c26ca5",
+      "sourceReceiptAuthoritySha256": "36a7126a88d17d86975c4b942a011b5804f93023a426067ddba232d36696fa5b"
+    },
+    "t45-r3-final33-standard-p021-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-29c370eacad41447aebfbab8/RESULT.json",
+      "resultSha256": "7fec0fcdaa4f08435b185d3b832b0916cfd213b1e2a17c9d83a24303bae098fa",
+      "sourceReadyRecordSha256": "9c492e0b450fdfbb023c4eb3b0e2ab7ad5b30cb21bb66005d1897407d217336e",
+      "sourceReceiptAuthoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8"
+    },
+    "t45-r3-final33-standard-p022-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-29c370eacad41447aebfbab8/RESULT.json",
+      "resultSha256": "7fec0fcdaa4f08435b185d3b832b0916cfd213b1e2a17c9d83a24303bae098fa",
+      "sourceReadyRecordSha256": "9991a812997a592b86927d1c7ca04f1f06023697ff7ee554a457f71447b02c7d",
+      "sourceReceiptAuthoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8"
+    },
+    "t45-r3-final33-standard-p023-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-29c370eacad41447aebfbab8/RESULT.json",
+      "resultSha256": "7fec0fcdaa4f08435b185d3b832b0916cfd213b1e2a17c9d83a24303bae098fa",
+      "sourceReadyRecordSha256": "99bfce6ab04e8dbf03a60fd2debddd8c6d275f6e049c984798b7e5b5ebe77c68",
+      "sourceReceiptAuthoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8"
+    },
+    "t45-r3-final33-standard-p024-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-29c370eacad41447aebfbab8/RESULT.json",
+      "resultSha256": "7fec0fcdaa4f08435b185d3b832b0916cfd213b1e2a17c9d83a24303bae098fa",
+      "sourceReadyRecordSha256": "2a67b961ac065c2d26a5a56058591c6b8b7fb0f0baf18edde5fc8522f1541727",
+      "sourceReceiptAuthoritySha256": "29c370eacad41447aebfbab8629e2851f2967d53d29a51f01c9c4b7f21bee2b8"
+    },
+    "t45-r3-final33-standard-p025-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea37c51b148c471adb10737f/RESULT.json",
+      "resultSha256": "090afd6caa0f01a88d916e770a610917e4b66f5964da6aef8b5e85a2d702cdae",
+      "sourceReadyRecordSha256": "d369b5f2294390eeaa8f7ac86132cb27c3fe1f6ca0ef34fdeaa5eaab9f8020fd",
+      "sourceReceiptAuthoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a"
+    },
+    "t45-r3-final33-standard-p026-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea37c51b148c471adb10737f/RESULT.json",
+      "resultSha256": "090afd6caa0f01a88d916e770a610917e4b66f5964da6aef8b5e85a2d702cdae",
+      "sourceReadyRecordSha256": "5647c75aa0e805e6032188ccc5d31343ffbe66f2e7437bae8db0ed58a8f0b9ac",
+      "sourceReceiptAuthoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a"
+    },
+    "t45-r3-final33-standard-p027-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea37c51b148c471adb10737f/RESULT.json",
+      "resultSha256": "090afd6caa0f01a88d916e770a610917e4b66f5964da6aef8b5e85a2d702cdae",
+      "sourceReadyRecordSha256": "7dcc155c93b9cbe61904c9f882171b95a8b82d07a441e857ef1ea7ea9c65ad13",
+      "sourceReceiptAuthoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a"
+    },
+    "t45-r3-final33-standard-p028-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-ea37c51b148c471adb10737f/RESULT.json",
+      "resultSha256": "090afd6caa0f01a88d916e770a610917e4b66f5964da6aef8b5e85a2d702cdae",
+      "sourceReadyRecordSha256": "42e82bfd252dfee918d84b7bd2d7026553e53d0497e27d3ed2aaf9abfb21f94c",
+      "sourceReceiptAuthoritySha256": "ea37c51b148c471adb10737f98886bd10d8b11d9939c07c94acd45f906f3432a"
+    },
+    "t45-r3-final33-standard-p029-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fe15a1aec1a1e7e211f24f47/RESULT.json",
+      "resultSha256": "30d8213ab0f44349049d65f7535d600b0c3a3a3d4a5d2de60d264d33b0db7109",
+      "sourceReadyRecordSha256": "c1b45e70a0b8eb958faa65a1065673a9ef028dfca673a23cbecf608133d795a7",
+      "sourceReceiptAuthoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56"
+    },
+    "t45-r3-final33-standard-p030-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fe15a1aec1a1e7e211f24f47/RESULT.json",
+      "resultSha256": "30d8213ab0f44349049d65f7535d600b0c3a3a3d4a5d2de60d264d33b0db7109",
+      "sourceReadyRecordSha256": "2143c33c4f925e2df59225f2e9761eb17c8f4c5e73056892af815eb2afb3dfc3",
+      "sourceReceiptAuthoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56"
+    },
+    "t45-r3-final33-standard-p031-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fe15a1aec1a1e7e211f24f47/RESULT.json",
+      "resultSha256": "30d8213ab0f44349049d65f7535d600b0c3a3a3d4a5d2de60d264d33b0db7109",
+      "sourceReadyRecordSha256": "6df54a6a5bcad169813bb7c8c4fda1b0995a36b7106b8f0899b9db4f75d4cdb5",
+      "sourceReceiptAuthoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56"
+    },
+    "t45-r3-final33-standard-p032-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-fe15a1aec1a1e7e211f24f47/RESULT.json",
+      "resultSha256": "30d8213ab0f44349049d65f7535d600b0c3a3a3d4a5d2de60d264d33b0db7109",
+      "sourceReadyRecordSha256": "29846aecf002e36cda5c796d468cbbdcca45e42edd3a93049399c590145ab4eb",
+      "sourceReceiptAuthoritySha256": "fe15a1aec1a1e7e211f24f4718c29b492b6113e902b233395274ceb004f31d56"
+    },
+    "t45-r3-final33-standard-p033-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-3d278ceb8565f9db776bc0f5/RESULT.json",
+      "resultSha256": "0a9b2622e058c7c687e52bf396de278d75881902b83652fc4be3213f84388719",
+      "sourceReadyRecordSha256": "ce38fd230bcc1b621ec4749163917ed780d7b3deecabf7a69f43624e0124f0b9",
+      "sourceReceiptAuthoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794"
+    },
+    "t45-r3-final33-standard-p034-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-3d278ceb8565f9db776bc0f5/RESULT.json",
+      "resultSha256": "0a9b2622e058c7c687e52bf396de278d75881902b83652fc4be3213f84388719",
+      "sourceReadyRecordSha256": "d99eae23f7e3ba9b3d5bab3ff41e471a6f7b6cfe6a8c22afdb50fd3de3f23acc",
+      "sourceReceiptAuthoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794"
+    },
+    "t45-r3-final33-standard-p035-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-3d278ceb8565f9db776bc0f5/RESULT.json",
+      "resultSha256": "0a9b2622e058c7c687e52bf396de278d75881902b83652fc4be3213f84388719",
+      "sourceReadyRecordSha256": "862e6b05f2dc332cbdb7ba58b27b94bfc06c476f38c184700d68e861f67f425e",
+      "sourceReceiptAuthoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794"
+    },
+    "t45-r3-final33-standard-p036-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-3d278ceb8565f9db776bc0f5/RESULT.json",
+      "resultSha256": "0a9b2622e058c7c687e52bf396de278d75881902b83652fc4be3213f84388719",
+      "sourceReadyRecordSha256": "31aafdf1f4abf84905f9b80324ecddabf78c5d55950b9f7849f942859286856c",
+      "sourceReceiptAuthoritySha256": "3d278ceb8565f9db776bc0f526feebe82e48c04c394a9d66ff7274aa2f95f794"
+    },
+    "t45-r3-final33-standard-p037-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b63761d47720b3d41430d556/RESULT.json",
+      "resultSha256": "fd845c20c5d9541d67b36b311a85b8a561e24f655f7a3e842e9c85994698e2f6",
+      "sourceReadyRecordSha256": "109c2bb8f4a9bdc6089adc9061b0664b3a83c80347605e87e253448395c07fb4",
+      "sourceReceiptAuthoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433"
+    },
+    "t45-r3-final33-standard-p038-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b63761d47720b3d41430d556/RESULT.json",
+      "resultSha256": "fd845c20c5d9541d67b36b311a85b8a561e24f655f7a3e842e9c85994698e2f6",
+      "sourceReadyRecordSha256": "c9aae671f3fb737dd53b19cfeba23540a6af75547596fda8d91be1144940fe84",
+      "sourceReceiptAuthoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433"
+    },
+    "t45-r3-final33-standard-p039-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b63761d47720b3d41430d556/RESULT.json",
+      "resultSha256": "fd845c20c5d9541d67b36b311a85b8a561e24f655f7a3e842e9c85994698e2f6",
+      "sourceReadyRecordSha256": "9efddde04359f3d949f5fa4d8774773ab9a9ea469c2a28465935115f67b03b0d",
+      "sourceReceiptAuthoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433"
+    },
+    "t45-r3-final33-standard-p040-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-b63761d47720b3d41430d556/RESULT.json",
+      "resultSha256": "fd845c20c5d9541d67b36b311a85b8a561e24f655f7a3e842e9c85994698e2f6",
+      "sourceReadyRecordSha256": "3d82e70aeaa236c51e6e1edcbb7f20837a6c74162c5c1165bdd75ca770bce2c7",
+      "sourceReceiptAuthoritySha256": "b63761d47720b3d41430d556125ab0adc4fefc8b8921af6da8e130e2e6cde433"
+    },
+    "t45-r3-final33-standard-p041-20261116-01": {
+      "resultPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT-RECEPTION-01/CACHED-03/execution-70fadb3930edaa0bf4ed8383/RESULT.json",
+      "resultSha256": "503086840585c839c6aa95e924d1a0077aa08978bb3de861aafd405b5fa738e6",
+      "sourceReadyRecordSha256": "1a8dc6118922bfb98ec66687fa6cfcfbaa0a9aa1208a334b7ab601a7fd66cd88",
+      "sourceReceiptAuthoritySha256": "70fadb3930edaa0bf4ed83838d3bae92cbec5bb0d4962a9be84d3230c487fbb4"
+    }
+  },
+  "state": "ALL211_ORIGINAL_READY_BINDINGS_COLLECTED"
+}

@@ -1,0 +1,96 @@
+{
+  "PGStarted": false,
+  "builds": 0,
+  "businessAcceptanceClaimed": false,
+  "completedPhases": {
+    "input_materialize": {
+      "automaticReplay": false,
+      "completedAtUTC": "2026-11-16T13:39:38.794919+00:00",
+      "evidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/ACTUAL-INPUT02-KEY-COMPLETED.json",
+      "evidenceSha256": "aefdacd67a9142b77d1fb2dbb6366f0a69033ab802fe11a461919bf8cc73a5f0",
+      "key": "t45-r3-final33-input-materialize-20261116-02",
+      "markerSha256": "556cb0e3a336aaed7c5c156cc531b90c0895a63c65d1020e91dcfe1b00bbdb58",
+      "publicResultSha256": "796bdede6fc7f7ce464c5ca3966963335f80e24f4fc9248aedb3d10776417d64",
+      "rootResultSha256": "556cb0e3a336aaed7c5c156cc531b90c0895a63c65d1020e91dcfe1b00bbdb58",
+      "state": "FINAL33_PRIVATE_INPUTS_MATERIALIZED_NO_PG_OR_PRECHECK_REPLAY",
+      "terminalSha256": "b959313cb4d054bd1017480781c280cecc787ce41ad0990cdd88c807d2f73004"
+    },
+    "materialize": {
+      "automaticReplay": false,
+      "completedAtUTC": "2026-11-16T13:40:56.864391+00:00",
+      "evidencePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/MAIN9-EXECUTION-01/ACTUAL-MATERIALIZE-COMPLETED.json",
+      "evidenceSha256": "edf63f6072813ef13cd70794b5bcf0b5b31b10d001f5a3ef6c6e2376f98e2a19",
+      "key": "t45-r3-batched-root06-source-delta-20261116-01",
+      "markerSha256": "73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171",
+      "publicResultSha256": "0bd916e2d757a93de11853899f8ca69d2b884a60c3104b80286daa2687311e7e",
+      "rootResultSha256": "73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171",
+      "state": "EXACT_FROZEN_SOURCE_MATERIALIZED_NO_INSTALL_OR_EXECUTION",
+      "terminalSha256": "13cdb833a19ab30816660d1300f244ab41d3bd4485bcd8f50715d2b5b54e99c6"
+    }
+  },
+  "completedPhasesMustNeverReplay": true,
+  "databaseConnections": 0,
+  "freshServerReadPerformedForThisAssembly": false,
+  "input02BundleManifestSha256": "2205088c246aebcb7ab138a1ce11b631bd457bb651034b180a455de95fbdf12b",
+  "latestServerStopEvidence": "MAIN9-EXECUTION-01/ACTUAL-START-ABSENT-AFTER-MATERIALIZE.json",
+  "latestServerStopEvidenceSha256": "9a9b435da51493d7e322e6370f0bd14b2ff45f7a0e5b91587357644bf7607d0a",
+  "newRemoteRequests": 0,
+  "newRuntimeAuthorityPending": true,
+  "oldWindowFurtherExecutionStopped": true,
+  "permissionsChanges": 0,
+  "preparedAtUTC": "2026-11-16T13:48:24.608262+00:00",
+  "prestage": {
+    "apply": {
+      "authorityLeavesPresent": false,
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/MAIN9-EXECUTION-01/apply/bundle",
+      "newHostPinsChecked": [],
+      "staticLeaves": 7,
+      "submissionIntentPresent": false,
+      "unchangedPinsEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SENDER-PAIRING-01/RESULT-02.json"
+    },
+    "prepare": {
+      "authorityLeavesPresent": false,
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/prepare/bundle",
+      "newHostPinsChecked": [
+        {
+          "name": "final33_host.py",
+          "predecessorSha256": "369ed6ae744d1d36f9a202d4435e61d680d14ace429171c7d191d5cd2473613d",
+          "sha256": "1708e40ce73420215963b4b0a500ae924ffe9ef1281166da264cd50e530a2497"
+        }
+      ],
+      "staticLeaves": 7,
+      "submissionIntentPresent": false,
+      "unchangedPinsEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SENDER-PAIRING-01/RESULT-02.json"
+    },
+    "start": {
+      "authorityLeavesPresent": false,
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/start/bundle",
+      "newHostPinsChecked": [
+        {
+          "name": "normal_service05_after08.py",
+          "predecessorSha256": "31c3cd53187e71194b33148ca4a14a1bff72721c4f75e755d93e00aaae93715b",
+          "sha256": "defd7f48ad1d9f9ea5586c193cd3002fcd9ebc37695e7daa6f242b7add0c2a66"
+        }
+      ],
+      "staticLeaves": 16,
+      "submissionIntentPresent": false,
+      "unchangedPinsEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SENDER-PAIRING-01/RESULT-02.json"
+    },
+    "writer": {
+      "authorityLeavesPresent": false,
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/INPUT02-SUCCESSOR-01/writer/final-bundle",
+      "newHostPinsChecked": [
+        {
+          "name": "final33_host.py",
+          "predecessorSha256": "369ed6ae744d1d36f9a202d4435e61d680d14ace429171c7d191d5cd2473613d",
+          "sha256": "1708e40ce73420215963b4b0a500ae924ffe9ef1281166da264cd50e530a2497"
+        }
+      ],
+      "staticLeaves": 7,
+      "submissionIntentPresent": false,
+      "unchangedPinsEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/SENDER-PAIRING-01/RESULT-02.json"
+    }
+  },
+  "sourceImplementationChanges": 0,
+  "state": "EXISTING_TYPED_RECEIPTS_ASSEMBLED_AND_UNSUBMITTED_STATIC_PHASES_PRESTAGED"
+}
