@@ -1,0 +1,66 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityOrFutureSuccessFixtureCreated": false,
+    "clockCalls": 0,
+    "frozenReportsRewritten": false,
+    "mainOrIssuerOrReaderOrCASInvoked": false,
+    "onlyPureDeltaRenderAndStaticMetadataEvaluated": true,
+    "serverActions": 0
+  },
+  "consumerReviewSha256": "2fb95f9d0cb2b7d607fc1c4142b1c713c96b6a4e7f9f373d64b0e5f9b044e025",
+  "consumerSourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal36-live-stop-review-01/STATIC-EVIDENCE.json",
+    "sha256": "152a620919f01157a852252d4458b39a039a4d7511872b8c450c686dec94afc4"
+  },
+  "executionReady": false,
+  "findings": [
+    {
+      "correction": "独立后继只去掉未来36 restored既有文件pin；保留历史35 pin和当前36 restored/restore-attempt不存在护栏。相应变更CAS/source/carrier hash及新报告实际消费路径，不改期限/角色/已用键。",
+      "evidence": "ACTUAL ordinary36-auth.../restored.json=历史35安全回执564feb3；snapshot会读取此路径，custody:116又拒绝该文件存在。因此当前尚未恢复36时读取必败；造文件也不能通过。历史35对应原path/pin已另保留。",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal36-live-stop-source-01/live_cas.py",
+      "id": "N36-S01",
+      "line": 30,
+      "priority": "P1",
+      "title": "ACTUAL要求未来36恢复回执存在，custody同时要求它不存在"
+    }
+  ],
+  "limitations": [
+    "40ed source must not issue/readbasis/CAS until successor accepted.",
+    "Consumer59708/2fb95 and collector180410 source results do not authorize remote execution.",
+    "No fresh basis or future CAS/STOP success fixture created.",
+    "Existing actual apply/start/failed02 preserved; no prepare retry, new service or role extension."
+  ],
+  "otherReviewedScope": {
+    "actualDispatcherOnlyPolicySHAAssignmentChanges": true,
+    "actualIssuedPolicyOnlyTwoPendingStopPinsChange": true,
+    "currentServiceDirectHelperMetadataNoBadStopInspectBirthOrNative": true,
+    "fourTerminalPinsAndWriterAbsenceMatchConsumerScope": true,
+    "historical254MinusDispatcherPreserved": true,
+    "originalLockSerialCASExclusiveBackupAtomicReplaceReadbackAndUnknownNoReplayReviewed": true,
+    "originalRolesD834AndAllFourDeadlinesMatchActualIssuedMetadata": true,
+    "otherConcreteFindings": 0,
+    "private12HistoricalAnd3CurrentSnapshotsStatOnly": true,
+    "restoreUsesUnchangedOriginalIssuerAndSourceWithEquivalentRestoreRule": true,
+    "stopIssuerRequiresActualCASReadbackAndFreshStopBasis": true,
+    "threeUnrelatedChangesRejectedByPureDelta": true
+  },
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceOnly": true,
+  "sourcePinsSha256": "40edcdb5283ca21bcb387cc56d4a6c177fc75a97f60dabefc8bdd2e56ba53f9b",
+  "state": "SOURCE_NEED_FIX_NORMAL36_LIVE_STOP_CAS_S01",
+  "stopBasisReader": {
+    "CProofAckBirthDockerAndPGDATAReadOnlyChecks": true,
+    "actualServiceAndFourTerminalMetadataPair": true,
+    "noActualReaderExecution": true,
+    "noOpsBackupEvidenceMetadataOnlyNoSnapshotBodyDigest": true,
+    "noPGNativeDescribeOrDefectiveSupportInvoked": true,
+    "readerSha256": "4430956670f2e7013b2192f567f05735e1e48f5749f95d9043e4dfbe0259ee66",
+    "requiredFieldsMatchIssueStopAndOriginalPreservationValidator": true,
+    "sourcePinsSha256": "180410adef2fbec46039244e81094c398c09eb689083e1475726c553062f43c3",
+    "state": "SOURCE_PASS_STOP36_READONLY_BASIS_COLLECTOR_ONLY",
+    "writerBothGrantsAbsentNoFakeTerminal": true
+  }
+}

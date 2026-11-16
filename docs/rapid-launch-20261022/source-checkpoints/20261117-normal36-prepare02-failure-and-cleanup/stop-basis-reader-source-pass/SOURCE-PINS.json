@@ -1,0 +1,46 @@
+{
+  "PGConnections": 0,
+  "actualInvocation": "Only after exact Main instruction: original mature600 UID0 Python -I -S -c exact source bytes; no new remote staging or CLI path arguments.",
+  "authorityOrClockCreated": false,
+  "baseReader": "NORMAL35-RUNTIME-01/prepare/READ-NATIVE-STOP-BASIS-01.py",
+  "currentBatchTerminals": {
+    "t45-r3-batched-install-20261116-02": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2",
+    "t45-r3-batched-real-execute-20261115-01": null,
+    "t45-r3-batched161-command-successor-20261116-01": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb",
+    "t45-r3-final33-plan-prepare-20261116-02": "fb41bffdf48ee9447cf3f51653e0c3764e9e2f77ae1eb303d4a6dcf070177aac"
+  },
+  "files": {
+    "read_stop_basis36.py": {
+      "bytes": 9331,
+      "sha256": "4430956670f2e7013b2192f567f05735e1e48f5749f95d9043e4dfbe0259ee66"
+    }
+  },
+  "mainExecuted": false,
+  "mutations": 0,
+  "requiredFields": [
+    "serverOwnerVerified",
+    "exactService",
+    "writerSettled",
+    "writerUnsubmitted",
+    "noOtherOperationUnits",
+    "backupNotActive",
+    "checkedAtUTC",
+    "PGConnections",
+    "mutations",
+    "authenticationSnapshotBodiesOrDigestsRead",
+    "currentBatchTerminals"
+  ],
+  "scope": "Existing original four terminal keys, dual-grant writer absence, C36/proof/ACK/birth/PGDATA metadata, noops and existing backup checks. No prior native35 result read or fake native02 receipt.",
+  "serverActions": 0,
+  "service": {
+    "containerId": "8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9",
+    "containerStartedAt": "2026-11-16T21:21:12.05366201Z",
+    "postmasterStart": "2026-11-16 21:21:13.328927+00",
+    "proofSha256": "1c2e696ca6708c438e93e917a2d6003fd579c5a777529c7a8fb43a4110461801",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-36"
+  },
+  "sourceOnly": true,
+  "state": "SOURCE_ONLY_STOP36_EXISTING_READONLY_BASIS_COLLECTOR_NOT_EXECUTED",
+  "syntaxCompiled": true,
+  "usesDefectiveRetainedStop": false
+}

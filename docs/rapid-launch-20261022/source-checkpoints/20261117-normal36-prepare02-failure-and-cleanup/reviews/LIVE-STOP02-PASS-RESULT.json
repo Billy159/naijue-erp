@@ -1,0 +1,126 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityOrFutureSuccessFixtureCreated": false,
+    "clockCalls": 0,
+    "frozenReportsRewritten": false,
+    "mainOrIssuerOrReaderOrCASInvoked": false,
+    "ownerSourcesModified": false,
+    "serverActions": 0
+  },
+  "closedFindings": [
+    "N36-S01"
+  ],
+  "consumerReviewSha256": "2fb95f9d0cb2b7d607fc1c4142b1c713c96b6a4e7f9f373d64b0e5f9b044e025",
+  "consumerSourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
+  "evidence": {
+    "path": "outputs/QB/20261117-r3-normal36-live-stop-review-02/INCREMENT-EVIDENCE.json",
+    "sha256": "402cec22fb5990483302a963eba210ddee3d1c978dfdb08b85a6c778e5f5e8f6",
+    "staticMetadataChecks": 13
+  },
+  "executionReady": false,
+  "executionSourcePins": {
+    "issue_live.py": {
+      "bytes": 6108,
+      "sha256": "6ab0976e7100cbd2fb2137a4d9c2a781efb76a311adbd73db2881be91179714e"
+    },
+    "issue_stop.py": {
+      "bytes": 5538,
+      "sha256": "6463ea07b3188481d1c2febcc9c1a47b0eb5e504662426ac699e379530f09a38"
+    },
+    "live_cas.py": {
+      "bytes": 72872,
+      "sha256": "612b9c02af651e2cc81129e7e3727340e77ded8db184177b94a3007fe3f8734e"
+    },
+    "original-cas-live36-stop-carrier.UNISSUED.py": {
+      "bytes": 2567,
+      "sha256": "91c26d39f682cc7b2f553dd7f386a971fbf467567470dee5578e4427e95c91e1"
+    }
+  },
+  "files": {
+    "FIX-DIFF.patch": {
+      "bytes": 120647,
+      "sha256": "18667f11c30be726677fdd0372850313e97554118d2f3acd2c42acefd2682051"
+    },
+    "HANDOFF.md": {
+      "bytes": 4621,
+      "sha256": "0105f3beb7933e19d79082f544d7507e46e0cd562c7fe82b360b9b88ae8424f3"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1050,
+      "sha256": "ec8f275cd301e08ace6c6071c966bf9dd03d1cac6109658b94726896601ce095"
+    },
+    "STOP-DELTA.UNISSUED.json": {
+      "bytes": 1783,
+      "sha256": "2dc2f0b63c7a3a5518c149c9d4d55f4c77ea164bfbf8ef201ebc300c447970c8"
+    },
+    "check_source.py": {
+      "bytes": 6544,
+      "sha256": "ee5032bf389e71ec225bbe29dcb0d9d6de4fde9beae530d74c0eb28a17a6bc05"
+    },
+    "issue_live.py": {
+      "bytes": 6108,
+      "sha256": "6ab0976e7100cbd2fb2137a4d9c2a781efb76a311adbd73db2881be91179714e"
+    },
+    "issue_stop.py": {
+      "bytes": 5538,
+      "sha256": "6463ea07b3188481d1c2febcc9c1a47b0eb5e504662426ac699e379530f09a38"
+    },
+    "live_cas.py": {
+      "bytes": 72872,
+      "sha256": "612b9c02af651e2cc81129e7e3727340e77ded8db184177b94a3007fe3f8734e"
+    },
+    "original-cas-live36-stop-carrier.UNISSUED.py": {
+      "bytes": 2567,
+      "sha256": "91c26d39f682cc7b2f553dd7f386a971fbf467567470dee5578e4427e95c91e1"
+    }
+  },
+  "findings": [],
+  "incrementalScope": "Only S01 removal of impossible future36 restored baseline pin, exact derived CAS/carrier/source hashes and real new review02 path. All other review01 scope and accepted stop-source/reader reused.",
+  "independentVerification": {
+    "all272ExistingPinsExactlyReconstructedFrom254HistoricalAnd18Actual36Metadata": true,
+    "allCASASTExceptACTUALIdentical": true,
+    "allNineFrozenFilesExact": true,
+    "allOriginalTwelvePrivateCustodyMetadataAndThreeCurrentStatOnlyChecksUnchanged": true,
+    "allRolesD834DeadlinesOriginalLockServiceUsedAndUnusedKeysUnchanged": true,
+    "carrierOnlyExactCASSourceHashChanged": true,
+    "historical35RestorePinAndCurrent36AbsenceGuardsPreserved": true,
+    "liveIssuerAndStopDeltaByteIdentical": true,
+    "noPrepareRetryOrNewServiceOrRoleRenewalAdded": true,
+    "old40edAnd19bNeedFixBytesPreserved": true,
+    "onlyOneFutureRestorePinRemoved273To272": true,
+    "stopIssuerOnlyExactRealReview02PathChanged": true
+  },
+  "limitations": [
+    "Source-only pair acceptance. Main/T45 must collect actual fresh active36 basis and actual CAS readback/fresh STOP basis before the exact issuers may proceed.",
+    "Original role/service/restore/parent/grant deadlines remain binding; none extended or sampled by QB.",
+    "Current sole scope is safe STOP36 and exact RESTORE36. No failedprepare02 replay, writer/INIT execution, new37, catalog replay or renewed credentials.",
+    "No actual CAS/STOP/RESTORE execution or production/business success asserted.",
+    "Old498 whole-consumer suspension and40ed NEED_FIX remain; this is only the exact new stop source/CAS/issuer pairing."
+  ],
+  "reusedEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal36-live-stop-review-01/RESULT.json",
+      "scope": "All reviewed mechanisms except corrected S01; remains NEED_FIX for40ed source. Includes accepted collector180410/443095 source.",
+      "sha256": "19b90044331c28fa3d4717f953508cc39f2726c7d0f71d2bd5ff2315bf587503"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-stop36-pin-review-01/RESULT.json",
+      "scope": "Stop-only59708 three pins plus host reference/CLI closure.",
+      "sha256": "2fb95f9d0cb2b7d607fc1c4142b1c713c96b6a4e7f9f373d64b0e5f9b044e025"
+    }
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-normal36-live-stop-source-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "2e46ddc95c3252d53e4cb71ce76beb41b35e4270f26a3efab2c7dbb2a918d8fe",
+  "state": "SOURCE_PASS_NORMAL36_LIVE_STOP_TWO_PINS_CAS_ISSUER_ONLY",
+  "stopBasisReader": {
+    "actualReaderExecuted": false,
+    "readerSha256": "4430956670f2e7013b2192f567f05735e1e48f5749f95d9043e4dfbe0259ee66",
+    "requiredFieldsAndFourTerminalsMatchStopIssuer": true,
+    "sourcePinsSha256": "180410adef2fbec46039244e81094c398c09eb689083e1475726c553062f43c3",
+    "state": "SOURCE_PASS_STOP36_READONLY_BASIS_COLLECTOR_ONLY_REUSED"
+  }
+}

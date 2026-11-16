@@ -1,0 +1,34 @@
+{
+  "PGConnections": 0,
+  "S01CASASTChangeOnlyRemovedFutureRestorePin": [
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary36-auth-20261116-01/restored.json"
+  ],
+  "authorityOrTargetOrCapabilityFixturesCreated": false,
+  "clockCalls": 0,
+  "currentSafePinnedFiles": 272,
+  "dispatcherASTChanges": [
+    "R3_ORIGINAL02_ABSENT_POLICY_SHA256"
+  ],
+  "exactNewSafePaths": 18,
+  "futureRestoreReceiptRequired": false,
+  "historicalPinsPreserved": 253,
+  "historicalPrivateMetadataOnlyFiles": 12,
+  "issuersInvoked": false,
+  "liveIssuerAndStopPolicyDeltaUnchanged": true,
+  "negativeDeltasRejected": [
+    "prepare",
+    "writer",
+    "restore",
+    "stop",
+    "expiresAt",
+    "startsAt"
+  ],
+  "phaseSubmitted": false,
+  "policySemanticChanges": [
+    "jobs.stop.bundlePins.normal05_preserve_stop.py",
+    "jobs.stop.bundlePins.normal05_retained_stop.py"
+  ],
+  "serverActions": 0,
+  "state": "LOCAL_SOURCE_ONLY_EXACT_METADATA_AND_PURE_DELTA_PASS",
+  "stopIssuerOnlyReviewPathSuccessor": true
+}

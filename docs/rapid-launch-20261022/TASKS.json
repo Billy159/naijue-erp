@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T05:53:32.048557+08:00",
+  "updatedAt": "2026-11-17T06:15:14.015349+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Finish narrow reviewed active36 pendingSTOP two-pin CAS, original STOP36 once, exact original RESTORE36. No prepare03/service37/full rehearsal/writer. Current role d834 deadlines unchanged.",
+  "next": "Original fbb6 permit and25c707 intent frozen, no publish under insufficient remaining300s budget. Main prepares distinct finite exact-restore permit for same unsubmitted key; original role deadlines unchanged. Resume existing empty control directories only after precise source and real fresh absence evidence.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T05:53:32.048557+08:00",
+  "asOf": "2026-11-17T06:15:14.015349+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Finish narrow reviewed active36 pendingSTOP two-pin CAS, original STOP36 once, exact original RESTORE36. No prepare03/service37/full rehearsal/writer. Current role d834 deadlines unchanged.",
+  "next": "Original fbb6 permit and25c707 intent frozen, no publish under insufficient remaining300s budget. Main prepares distinct finite exact-restore permit for same unsubmitted key; original role deadlines unchanged. Resume existing empty control directories only after precise source and real fresh absence evidence.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52792,7 +52792,7 @@
   "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": false,
+  "PGCurrentlyStopped": true,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
@@ -53013,7 +53013,7 @@
     "outer02NativeLogical01StaticPair": "cbcad60f",
     "twoArtifactPolicyPairs": "f1c250b8"
   },
-  "normal36": "ACTUAL_START36_COMPLETE_PREPARE02_FAILED_BEFORE_NATIVE_CURRENT_PG_RUNNING_AUTH_APPLIED_STOP_REPAIR_PENDING",
+  "normal36": "STOP36_COMPLETE_RESTORE36_NOT_PUBLISHED_EMPTY_CONTROL_BUNDLE_ORIGINAL_KEY_FINITE_RESTORATION_SUCCESSOR_PREPARING",
   "artifactRootJobAdmission": "PENDING_POST_IMPORT_BACKUP_APP_REQUIRED_ROUTE_NOT_PART_OF_CURRENT_SIX_DB_PHASES",
   "normal36Consumer": {
     "sourcePinsSha256": "498a16f17109bb5cc1142e4e9be9d3429ded9aab445222e77ce5965d906ed73f",
@@ -53137,8 +53137,15 @@
   "normal36SafeCleanup": {
     "consumerSourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
     "consumerReviewSha256": "2fb95f9d0cb2b7d607fc1c4142b1c713c96b6a4e7f9f373d64b0e5f9b044e025",
-    "pendingRootSourcePinsSha256": "40edcdb5283ca21bcb387cc56d4a6c177fc75a97f60dabefc8bdd2e56ba53f9b",
-    "rootReview": "PENDING"
+    "rootSourcePinsSha256": "2e46ddc95c3252d53e4cb71ce76beb41b35e4270f26a3efab2c7dbb2a918d8fe",
+    "rootReviewSha256": "c00ddf6e7cc8f8c878b93818ec59a456702ecdaf8edfa2347fd2e87257f239b4",
+    "actualCASReadbackSha256": "8e28f14879a90ab05d7f4467e7f7c9b9ef7c1d2506c2ab424e3ec507aa7adf9f",
+    "actualStopSha256": "0a1248f28c51437bc83dc474eae05f0d43dbc9a626af9d10ee82cf541b2ad87c",
+    "actualStopTerminalStatus": "COMPLETED",
+    "restoreSubmission": "ACTUAL_NOT_PUBLISHED_ONLY_EMPTY_CONTROL_DIRECTORIES",
+    "restoreInventorySha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
+    "originalPermit": "FBB6_FROZEN_NOT_PUBLISHED",
+    "newFiniteRestorationPermit": "SOURCE_PREPARATION_ONLY_ROLE_DEADLINES_UNCHANGED"
   },
   "writerSubmitted": false,
   "businessWrites": 0

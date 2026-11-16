@@ -1,0 +1,65 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityIssued": false,
+    "clientInvoked": false,
+    "clockCalls": 0,
+    "fixturesCreated": false,
+    "remoteCalls": 0,
+    "sourceModified": false,
+    "stateLoaderInvoked": false
+  },
+  "callChain": [
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/phase_cli.py",
+      "line": 47,
+      "observation": "execute repeats exact prepare then calls loaded client main directly; prepare does not invoke state or remote"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/seven_phase_client600.py",
+      "line": 6,
+      "observation": "Loads original client function globals, changes only remote40 to reviewed remote600; source paths remain original"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v3.py",
+      "line": 172,
+      "observation": "main calls state then locked submit; direct main call propagates ValueError without __main__ formatting"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v3.py",
+      "line": 71,
+      "observation": "submit may fail before or during status/staging/upload; local PREPARED history is written only after control bundle upload and before request transfer"
+    }
+  ],
+  "checks": {
+    "actualSourceManifestMatchesRecordedIntent": "25c7073069327ed6d4a1e3e8dd316ccb8a4f9d8697a0dab767a62bee9f4c0ecd",
+    "allRestoreBundlePinsMatched": true,
+    "authorityKey": "t45-r3-ordinary36-auth-restore-20261116-01",
+    "authoritySha256": "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e",
+    "localClientHistoryCurrentKeyPresent": false,
+    "newPolicySha256": "3dd91f04c776d7bd157bde7e5c5c44d63b1a3724ef167ade99cf6e9f0f13a633",
+    "originalCLI": "8890011d7f305810926988c1edc1b7b1450c3032b41ab698493e861d13f28f4e",
+    "restoreRuleIdenticalToOriginalIssuedPolicy": true
+  },
+  "findings": [],
+  "inputPins": {
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/monitor/normal-admission-20261112-01/admin_client-t45-code-transport-v3.py": "08954fa485ba3ec179a25bd69524da5353c9deb01f6890bb6230955adf404e6f",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-RUNTIME-01/restore/SUBMISSION-UNCONFIRMED.json": "9b674877b4767417906a48741b58c016c550d08607f6ce7cfc4ca6cd2835b754",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-RUNTIME-01/restore/SUBMIT-ONCE-INTENT.json": "a043990944d734039441cc836f723590d971c9174e32116f0e23b174e10a92a4",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL36-SOURCE-SUCCESSOR-02/phase_cli.py": "8890011d7f305810926988c1edc1b7b1450c3032b41ab698493e861d13f28f4e",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/registration_transport600.py": "7906c6cd7f04faa6d30660d97accac7445d7d142c92315fff6da560a6c1946f6",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/seven_phase_client600.py": "42943d8124fa43c217ffa5b7e85d27684290d3938bb18212e1589253fc6886f8",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-direct-service36-restore-window-01/host-authorization.json": "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e",
+    "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-normal36-live-stop-window-01/direct36-batched-real.json": "3dd91f04c776d7bd157bde7e5c5c44d63b1a3724ef167ade99cf6e9f0f13a633"
+  },
+  "limitations": [
+    "Existing UNCONFIRMED retains errorClass=ValueError only, no safeCode/traceback/returncode; cannot attribute first cause.",
+    "No local history entry does not prove remote job/request absent; remote staging/upload occurs before that local history write.",
+    "Initial prepare success does not exercise state/status/remote/actual submit; execute repeats prepare and then reaches these later branches.",
+    "No real client, state loader, clock, authority issuer, remote reader, SQL, stop or restore executed. No replay, new key, auth renewal, source fix or new platform proposed.",
+    "Await T45 original-key real read-only evidence; no fabricated absence or job terminal."
+  ],
+  "rootCauseLocated": false,
+  "sourceOnly": true,
+  "state": "SOURCE_AND_EXISTING_LOCAL_METADATA_ONLY_NO_CONFIRMED_RESTORE_WIRING_DEFECT"
+}

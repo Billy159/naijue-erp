@@ -1,0 +1,22 @@
+{
+  "authoritySha256": "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e",
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-16T22:05:48.999859+00:00",
+  "policySha256": "3dd91f04c776d7bd157bde7e5c5c44d63b1a3724ef167ade99cf6e9f0f13a633",
+  "request": {
+    "args": [
+      "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e"
+    ],
+    "businessCutoverConfirmed": false,
+    "gateEvidence": {},
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary36-auth-restore-20261116-01",
+    "manifestSha256": "25c7073069327ed6d4a1e3e8dd316ccb8a4f9d8697a0dab767a62bee9f4c0ecd",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "script": "ordinary05_roles_job.py",
+    "taskEvidence": {},
+    "taskId": "T45",
+    "timeoutSeconds": 300
+  },
+  "state": "EXACT_RESTORE36_ONCE_INTENT"
+}
