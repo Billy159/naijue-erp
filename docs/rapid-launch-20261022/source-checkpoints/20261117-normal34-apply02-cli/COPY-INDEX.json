@@ -527,6 +527,30 @@
       "file": "actual/APPLY02-REGISTRATION-ENTRY-REPLY.json",
       "sha256": "0a125c3b0f7efabbf063afc8a88ce5c99cbf1ab8648ccc6f4479f9fd4a243580",
       "bytes": 512
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-RUNTIME-01/ACTUAL-APPLY02-COMPLETED.json",
+      "file": "actual/ACTUAL-APPLY02-COMPLETED.json",
+      "sha256": "428e0a98fd9355d3643e37caa52f3c03c8044850c5ca0f52fef5aa01aa5c4aa3",
+      "bytes": 4601
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-RUNTIME-01/start/ACTUAL-START34-RESULT.json",
+      "file": "actual/ACTUAL-START34-RESULT.json",
+      "sha256": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+      "bytes": 5807
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-RUNTIME-01/ACTUAL-REQUEST-ARGUMENT-READBACK.json",
+      "file": "actual/ACTUAL-REQUEST-ARGUMENT-READBACK.json",
+      "sha256": "662fc09af94ed79dc5f54000a2197a029fb8d2ddc84ff97156b035551d054d3c",
+      "bytes": 525
+    },
+    {
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL34-APPLY02-RUNTIME-01/restore/ACTUAL-RESTORE34-COMPLETED.json",
+      "file": "actual/ACTUAL-RESTORE34-COMPLETED.json",
+      "sha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+      "bytes": 4548
     }
   ],
   "referenceOnly": [

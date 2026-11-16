@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T01:04:47.144719+08:00",
-  "state": "NORMAL34_APPLY02_REGISTERED_ACTUAL_APPLY_AUTHORIZED_RESULT_PENDING",
+  "asOf": "2026-11-17T01:20:52.362662+08:00",
+  "state": "NORMAL34_APPLY02_COMPLETED_START34_FAILED_AUTH_RESTORED_EXACT_UID_CONFLICT_FIX_RUNNING",
   "goal": "ACTIVE",
   "rootReviewSha256": "0b43743b26ae94e6272fe1a54ce6586267cc980fe5cc3ab09a7f307a0f134807",
   "consumerReviewSha256": "79621a4a25ae25a3fa7be67a82ca1020c3ea58123e09389737a61406290fcf37",
@@ -15,9 +15,9 @@
     "policy": "6e6fa47124048960cc8fe835b13babcf443217c08fc4e85a2935defdd59a4f61"
   },
   "registration": "ACTUAL_CAS_AND_INDEPENDENT_READBACK_MATCHED_203_PINS_208_IDENTITIES",
-  "apply02": "AUTHORIZED_FIRST_SUBMISSION_RESULT_PENDING",
-  "currentAuthentication": "Original restored b924; new34 role not yet proven applied",
-  "PG": "STOPPED_AS_OF_REGISTRATION_READBACK",
+  "apply02": "ACTUAL_COMPLETED_0_7.882_SECONDS",
+  "currentAuthentication": "EXACT_ORIGINAL_VERIFIER_AND_EXPIRY_RESTORED_PRIVATELY_NOT_NATURAL_EXPIRY",
+  "PG": "ACTUAL_CLEAN_STOP_ORIGINAL_PGDATA_PRESERVED_PID_PORT_ABSENT_OPS_EMPTY",
   "businessWrites": 0,
   "originalWriter": "NEVER_SUBMITTED",
   "completedPreparation": "211_READY_WITHDRAWN_INPUT02_AND_ROOT06_COMPLETE_NEVER_REPLAY",
@@ -29,10 +29,40 @@
   "checks": "Frozen source copies verified against SOURCE-PINS; actual registration independently read back by sole server owner. No full data/preflight/native replay.",
   "frozenPatchWhitespace": "Frozen .diff/.patch bytes retained; only authored documents subject to whitespace cleanup.",
   "pending": [
-    "actual apply02 and start34",
-    "actual catalog update/native PREPARE/original real writer and readback",
-    "cold backup/independent physical restore",
-    "formal app/roles/core browser/public URL"
+    "D1 root metadata final binding source fix and narrow review",
+    "new exact same-version normal successor with unchanged actual business keys",
+    "actual catalog/native PREPARE/original real writer and readback",
+    "cold backup/independent physical restore/formal app/roles/core browser/public URL"
   ],
-  "sourceAndRuntimeBoundariesPreserved": true
+  "sourceAndRuntimeBoundariesPreserved": true,
+  "applyTypedSha256": "428e0a98fd9355d3643e37caa52f3c03c8044850c5ca0f52fef5aa01aa5c4aa3",
+  "start34": {
+    "state": "ACTUAL_FAILED_2_45.367_SECONDS",
+    "typedSha256": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+    "terminalSha256": "9a97f8c6702b0e1f1916c508bd1afb9c1c968200491e6226046d6ef584192c59",
+    "currentProofSha256": "a30976e3decacda1d23da2014cb32ed4d42d7295d7c9cc073060d4084653a34d",
+    "retainedAckSha256": "773a34c1a5e3111e531ede3bacf24e7f96d92d47ff5435fef94b8be6e8203b4a",
+    "cleanupSha256": "41838bb703af6a5326a91a5bcad1ef4abd51f290191d147d7519c4df46ac68d5",
+    "lastReachedStage": "COMPILE_END_34666_MS_NOT_COMPLETE_DESCRIBE_PASS",
+    "rootCause": "UNKNOWN_LATE_RESULT_PATH_D1_DIAGNOSIS_RUNNING",
+    "timeout": false,
+    "serverArgsCorrect": true
+  },
+  "restore34": {
+    "key": "t45-r3-ordinary34-auth-restore-20261116-01",
+    "typedSha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+    "state": "COMPLETED_0",
+    "seconds": 7.397153850004543,
+    "terminalSha256": "6ec792da7f9738b0d0983c2561b19129767ca6105fd800820f41bfc03fcd548a",
+    "rootResultSha256": "87e2d61a95d1b8d41e386028c6d3e21d96f5e348c349539cc64e0515e3cb5757",
+    "publicResultSha256": "62238aac84a4aa016b3e07cc91112ffa79a15b196c8543d36b56d827cf0f88eb",
+    "cleanupSha256": "7618a11fbdcdc59b9ccef529fb47d9103644c26faa7446644efc98a8c1ea8ed0",
+    "privateSafeReceiptSha256": "381d10acbc171f793e785366d3b3b74899bd344bf67235e9fefd4601ee2666a2"
+  },
+  "diagnosis": {
+    "state": "DETERMINISTIC_SOURCE_UID_CONFLICT_EXACT_THROWN_CODE_NOT_CAPTURED",
+    "chain": "Root-only genuine entry calls ordinary nonroot-only combined record loader after COMPILE_END through describeFresh35FinalPreparationBinding/readFresh35BatchedContextInputs.",
+    "sourceFix": "D1 authorized minimal actual root metadata seam, preserve ordinary/root guards; check entire late return path. No extra full compile/PG/rehearsal.",
+    "newClockOr35": "NOT_ISSUED"
+  }
 }

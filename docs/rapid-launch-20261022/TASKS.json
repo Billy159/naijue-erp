@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-17T01:04:47.144719+08:00",
+  "updatedAt": "2026-11-17T01:20:52.362662+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T01:04:47.144719+08:00",
-  "state": "NORMAL34_APPLY02_REGISTERED_ACTUAL_APPLY_AUTHORIZED_RESULT_PENDING",
+  "asOf": "2026-11-17T01:20:52.362662+08:00",
+  "state": "NORMAL34_APPLY02_COMPLETED_START34_FAILED_AUTH_RESTORED_EXACT_UID_CONFLICT_FIX_RUNNING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_STOPPED_ORIGINAL_AUTH_RESTORED",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Actual apply02 typed result, then issue original start34; original catalog/native PREPARE/writer remain never submitted.",
+  "next": "D1 minimal root-only final metadata binding fix and late path checks; T45 source only recovery artifact seam while waiting. No35 or new clock yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52799,22 +52799,27 @@
   "finiteAuthPreviouslyApplied": true,
   "originalAuthRestored": true,
   "actualRestoration": {
-    "jobId": "t45-r3-ordinary33-auth-restore-20261116-02",
-    "typedSha256": "b924d2e2ff5db9dca9e06a6d39fb5484806ba79fafe2d940f240db9a5acfaa9f",
-    "terminalSha256": "7688b15851d8804dbb75d18827ddcfd7b09308af47b54acb18501aa418b3725d",
-    "cleanupSha256": "3dba242155468f723fbd61b7185750fcdabfa928a3236b14dc7b9e558fa3dcac",
-    "seconds": 7.693232840043493,
+    "jobId": "t45-r3-ordinary34-auth-restore-20261116-01",
+    "typedSha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+    "terminalSha256": "6ec792da7f9738b0d0983c2561b19129767ca6105fd800820f41bfc03fcd548a",
+    "cleanupSha256": "7618a11fbdcdc59b9ccef529fb47d9103644c26faa7446644efc98a8c1ea8ed0",
+    "seconds": 7.397153850004543,
     "status": "COMPLETED",
     "exitCode": 0,
     "naturalExpiryCountedAsRestoration": false
   },
   "currentReleaseMode": {
-    "mode": "NORMAL34_APPLY02_NEW_FINITE_POLICY_ACTUALLY_REGISTERED",
+    "mode": "NORMAL34_USED_APPLY02_AND_FAILED_START_RESTORED_NO_REPLAY",
     "dispatcherSha256": "60df4053ecd7a4fa95fb0b85a92e5daa7b87b6486466c0d958fc753125a52a90",
     "policySha256": "6e6fa47124048960cc8fe835b13babcf443217c08fc4e85a2935defdd59a4f61",
     "moduleSha256": "3db008f0476be4413bd14d9014d2c3a5e2591618c03c6be74d5afd8a05c8cf09"
   },
-  "genuineFailureDiagnosis": "Actual33 genuine cause UNKNOWN; minimal safe observation source passed. Apply34-01 separate prephase refusal proven missing request.args authority digest, corrected CLI independently source-passed. No guard/time relaxation.",
+  "genuineFailureDiagnosis": {
+    "state": "DETERMINISTIC_SOURCE_UID_CONFLICT_EXACT_THROWN_CODE_NOT_CAPTURED",
+    "chain": "Root-only genuine entry calls ordinary nonroot-only combined record loader after COMPILE_END through describeFresh35FinalPreparationBinding/readFresh35BatchedContextInputs.",
+    "sourceFix": "D1 authorized minimal actual root metadata seam, preserve ordinary/root guards; check entire late return path. No extra full compile/PG/rehearsal.",
+    "newClockOr35": "NOT_ISSUED"
+  },
   "pendingUserDecision": null,
   "observabilitySource": {
     "pinsSha256": "536d8c38d7b139d8e84de338a200e6f1f324768e6857622af35703d4fbd0bfd5",
@@ -52824,7 +52829,7 @@
     "runtimePassed": false
   },
   "normal34": {
-    "state": "NORMAL34_APPLY02_REGISTERED_ACTUAL_APPLY_AUTHORIZED_RESULT_PENDING",
+    "state": "NORMAL34_APPLY02_COMPLETED_START34_FAILED_AUTH_RESTORED_EXACT_UID_CONFLICT_FIX_RUNNING",
     "applyKey": "t45-r3-ordinary34-auth-apply-20261116-02",
     "startKey": "t45-first-r3-native-service-start-20261116-34",
     "stopKey": "t45-r3-ordinary34-preserve-stop-20261116-01",
@@ -52837,7 +52842,33 @@
     "actualRegistrationReadbackSha256": "d2d30c8b8f4e9dd2605714e9e9f35dc470423ca4bb556620a23d234504e2345e",
     "finalRootReviewSha256": "0b43743b26ae94e6272fe1a54ce6586267cc980fe5cc3ab09a7f307a0f134807",
     "rootSourcePinsSha256": "581e206db21873b6d3000bd1d85192f73f6e1a0f5e1f47cbc4904a359beb3b42",
-    "actualApplyResult": "PENDING"
+    "actualApplyResult": "COMPLETED_0_7.882_SECONDS",
+    "actualApplyResultSha256": "428e0a98fd9355d3643e37caa52f3c03c8044850c5ca0f52fef5aa01aa5c4aa3",
+    "startAuthoritySha256": "dea9ee51842088f4b8b532a8c63e163b2bb66e01c86fdb0c53ae44b091171e10",
+    "startResult": "PENDING",
+    "actualStart34": {
+      "state": "ACTUAL_FAILED_2_45.367_SECONDS",
+      "typedSha256": "09a37c519d0ca0433191977dd9d1f2466ceb0337d7763b284e1a03c19b1afd8d",
+      "terminalSha256": "9a97f8c6702b0e1f1916c508bd1afb9c1c968200491e6226046d6ef584192c59",
+      "currentProofSha256": "a30976e3decacda1d23da2014cb32ed4d42d7295d7c9cc073060d4084653a34d",
+      "retainedAckSha256": "773a34c1a5e3111e531ede3bacf24e7f96d92d47ff5435fef94b8be6e8203b4a",
+      "cleanupSha256": "41838bb703af6a5326a91a5bcad1ef4abd51f290191d147d7519c4df46ac68d5",
+      "lastReachedStage": "COMPILE_END_34666_MS_NOT_COMPLETE_DESCRIBE_PASS",
+      "rootCause": "UNKNOWN_LATE_RESULT_PATH_D1_DIAGNOSIS_RUNNING",
+      "timeout": false,
+      "serverArgsCorrect": true
+    },
+    "restore34": {
+      "key": "t45-r3-ordinary34-auth-restore-20261116-01",
+      "typedSha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
+      "state": "COMPLETED_0",
+      "seconds": 7.397153850004543,
+      "terminalSha256": "6ec792da7f9738b0d0983c2561b19129767ca6105fd800820f41bfc03fcd548a",
+      "rootResultSha256": "87e2d61a95d1b8d41e386028c6d3e21d96f5e348c349539cc64e0515e3cb5757",
+      "publicResultSha256": "62238aac84a4aa016b3e07cc91112ffa79a15b196c8543d36b56d827cf0f88eb",
+      "cleanupSha256": "7618a11fbdcdc59b9ccef529fb47d9103644c26faa7446644efc98a8c1ea8ed0",
+      "privateSafeReceiptSha256": "381d10acbc171f793e785366d3b3b74899bd344bf67235e9fefd4601ee2666a2"
+    }
   },
   "actualCurrentNormal34Checkpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal34-apply02-cli/CHECKPOINT.json"
 }
