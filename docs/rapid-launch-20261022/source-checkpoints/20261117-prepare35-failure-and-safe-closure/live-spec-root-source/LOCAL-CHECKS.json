@@ -1,0 +1,27 @@
+{
+  "PGConnections": 0,
+  "actualOldDispatcherSha256": "34e31910f3417e88865b41938bb692245332e0b3f3fb7a6ca148d10973ba4f37",
+  "actualOldPolicySha256": "54078b491c94ba23901ad32190ff03e74cc5b3c9ec5cb771df84c52df04049b2",
+  "changedPolicyFields": [
+    "jobs.prepare.bundlePins.final33_host.py",
+    "jobs.writer.bundlePins.final33_host.py"
+  ],
+  "clockOrAuthorityIssued": false,
+  "consumerReviewSha256": "19667cb10bb6075e789556239c8dfcdb48d3a3b7008ed00db260ac221271a2c0",
+  "currentService": {
+    "containerId": "ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14",
+    "containerStartedAt": "2026-11-16T18:33:46.920948412Z",
+    "postmasterStart": "2026-11-16 18:33:48.303258+00",
+    "proofSha256": "82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-35"
+  },
+  "minimumRemainingSeconds": 4020,
+  "newJobSubmitted": false,
+  "privateBodiesOrDigestsRead": false,
+  "proposedDispatcherSha256": "5a06bf8de17ca75944934bb5c5676430a0f890bf9bec7ddcd71d804aebdc83bb",
+  "proposedPolicySha256": "8ede4587599742ec45ad90eef7b01e43d21d83635ce2689c85181691dca679e7",
+  "realExecutionNotPerformed": true,
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_ACTUAL_METADATA_AND_BYTE_DIFF_CHECKED",
+  "usedRulesAndOriginalRolesAndTimesUnchanged": true
+}

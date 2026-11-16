@@ -1,0 +1,44 @@
+--- frozen-root03/issue_phase.py
++++ live-successor/issue_phase.py
+@@ -495,13 +495,13 @@
+     return a, host['encode']
+ 
+ 
+-FROZEN_RULES_SHA = '329dc564ebd227f2cb479e351b8854638445b906dc3818ef0410bdd53dc1dbf8'
++FROZEN_RULES_SHA = '2fc1e2ab9d0d399c487b7a65432204f2f21e58d4044f29da5efd7a26894b85eb'
+ 
+ def issue(phase, rules_file, rules_pin, registration_directory,
+           evidence_path=None, evidence_pin=None, predecessor_path=None, predecessor_pin=None):
+     assert rules_pin==FROZEN_RULES_SHA
+     witness = read(rules_file, rules_pin)
+-    assert phase in ('apply','start','catalog_update','prepare','writer','stop','restore'), 'Completed input02/ROOT06 must never be reissued'
++    assert phase in ('prepare','writer'), 'Only the two unused phases may be issued by this successor'
+     assert witness['materializeNeverResubmit'] is True and witness['materializationAlreadyCompleted'] is True and witness['inputMaterializationAlreadyCompleted'] is True
+     assert witness['inputMaterializeNeverResubmit'] is True
+     for done,ref in witness['completionReadbackRefs'].items():
+@@ -512,9 +512,16 @@
+     issued = Path(registration_directory).resolve()
+     assert issued.parent == CONTROL.resolve()
+     manifest = read(issued/'ISSUED.json')
+-    assert manifest['state']=='ISSUED_NORMAL35_REGISTRATION_NO_PHASE_SUBMITTED' and manifest['rulesSha256']==rules_pin and manifest['consumerSourcePinsSha256']=='8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a'
++    assert manifest['state']=='ISSUED_LIVE35_TWO_UNUSED_HOSTS_SOURCE_CAS' and manifest['rulesSha256']==rules_pin and manifest['consumerSourcePinsSha256']=='1d2cff53cee31d52cf214be3b4d5ded5408761328579fb0ff734373b3de0c279'
+     policy = read(issued/'direct35-batched-real.json',manifest['policySha256'])
+     roles = read(issued/'roles-authorization.json',manifest['rolesSha256'])
++    completion=read(issued/'ACTUAL-LIVE35-CAS-READBACK.json')
++    assert completion['state']=='ACTUAL_LIVE35_TWO_HOSTS_CAS_READBACK_MATCHED'
++    assert completion['authorizationSha256']==manifest['liveCasAuthoritySha256']
++    if phase=='prepare':assert 0<=time.time_ns()//1000000-completion['checkedAt']<=300000, 'Fresh actual live CAS readback required'
++    assert completion['dispatcherSha256']==manifest['dispatcherSha256'] and completion['policySha256']==manifest['policySha256']
++    assert completion['rolesAuthoritySha256']==manifest['rolesSha256']=='9e436ae9bed8f6d5dff1b2860e94b0f7490ebaacd8208d63d97c5884e5bc5322'
++
+     rule = policy['jobs'][phase]
+     folder = Path(witness['phaseDirectories'][phase]).resolve(strict=True)
+     assert folder.is_relative_to(T45.resolve()) and folder.name in ('bundle', 'final-bundle')
+@@ -526,6 +533,7 @@
+     os.environ['ERP_SHARED_JOB_ID']=rule['jobId']
+     os.environ['ERP_SHARED_JOB_DIR']='/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/'+rule['jobId']
+     now=time.time_ns()//1_000_000
++    if phase=='prepare':assert now+4020000<roles['controllerValidUntil'], 'Complete prepare/writer budget unavailable; clean stop/restore required'
+     assert policy['startsAt']<=now<policy['expiresAt']
+     encode_authority=lambda value:(json.dumps(value,sort_keys=True,indent=2)+'\n').encode()
+     if phase=='apply':

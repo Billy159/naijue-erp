@@ -1,0 +1,35 @@
+{
+  "PGConnections": 0,
+  "T45FrozenChanged": false,
+  "authorityIssued": false,
+  "files": {
+    "CONTINUATION-CONTRACT.md": {
+      "bytes": 3621,
+      "sha256": "eda806cd4a7953e85ddbc980ee7258e5f1526a84e8cc2d8b73cf74a76376452e"
+    },
+    "DIFF.patch": {
+      "bytes": 8107,
+      "sha256": "bfbe8387513c3d33c6f71d72946b5289aabf04ef335fc7a6a1e0b32c8aa83939"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 425,
+      "sha256": "2c3d0e61318bfce7b6d5ad41a8821f13017fd0ea326e0954345e36b520b162fe"
+    },
+    "RESULT-INTERFACE.json": {
+      "bytes": 3966,
+      "sha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21"
+    },
+    "check-diagnostics.mjs": {
+      "bytes": 2883,
+      "sha256": "ada082828f9c5cd6bdfec2647de16d27380d24d97682339630b31b01b8d74d0e"
+    },
+    "final33-run.mjs": {
+      "bytes": 18645,
+      "sha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6"
+    }
+  },
+  "nativeExecuted": false,
+  "nativeSourceChanged": false,
+  "serverActions": 0,
+  "state": "UNISSUED_FAILURE_DIAGNOSTIC_SOURCE_ONLY_NOT_ROOT_CAUSE_FIX"
+}

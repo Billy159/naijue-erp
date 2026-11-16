@@ -1,0 +1,78 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "fullCompilation": 0,
+    "issuerOrClockOrNativeCalls": 0,
+    "newJobsSubmitted": 0,
+    "ownerSourcesOrPriorReportsModified": false,
+    "serverConnections": 0,
+    "targetCapabilityAuthorityOrFutureFixturesCreated": 0
+  },
+  "actualCatalogResultSha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+  "actualEvidence": {
+    "path": "outputs/QB/20261117-r3-normal35-live-spec-review-01/ACTUAL-SPEC-EVIDENCE.json",
+    "sha256": "efff05c6adb1a72da504203a99adac86f5f96cf869374a766f428b02f22990a8"
+  },
+  "actualStartResultSha256": "e1b0ce527d733738e82d7cb4cb041bcc23d673ddb3f64dde8c299387433297a0",
+  "changedFiles": {
+    "prepare/bundle/final33_host.py": {
+      "bytes": 47923,
+      "sha256": "3bf28414d6949de2ee81070d3aba14efcc61e6d96a872b67f095a8bec5baed7d"
+    },
+    "writer/bundle/final33_host.py": {
+      "bytes": 47923,
+      "sha256": "3bf28414d6949de2ee81070d3aba14efcc61e6d96a872b67f095a8bec5baed7d"
+    }
+  },
+  "findings": [],
+  "independentChecks": {
+    "CLIBytesUnchangedAndActualPathHereBlueprintSevenBundlesSameSuccessorDirectory": true,
+    "actualNativeBindingAndCommittedCatalogAgreeSpecSourceModelCAndEpoch": true,
+    "actualOriginalGuardPredicateFalseAndNewGuardTrueForBothHosts": true,
+    "all52RuntimePinsMatchSevenBlueprintAndInterfaceJobs": true,
+    "all60PinnedDeliveryFilesExact": true,
+    "allOtherStrictAssertionsAndScopeBudgetSourceBytesUnchanged": true,
+    "exactTwoHostChangesEachSingleSpecLiteralOnly": true,
+    "fiftyOtherRuntimePinsIdenticalToOriginal03": true,
+    "noFutureAuthorityFixtureUsedForPredicate": true,
+    "noNativeCompilationOrRepeatedHistoricalSemanticReview": true,
+    "roleAuthorityServiceAndDeadlinesNotChanged": true,
+    "sourceInterfacePathsHashesAndFunctionsExact": true,
+    "twoPythonSyntaxChecksWithoutExecution": true
+  },
+  "interfaceSha256": "4e4fb98d3ffd114b74aba3bb3f49a28f982e6aaaa657dd8991881b33cd269f5d",
+  "limitations": [
+    "Only exact pending prepare/writer source passes. Exact active35 policy/dispatcher CAS remains pending D1 frozen delivery and separate review.",
+    "Apply/start/catalog are already used; successful catalog must not be resubmitted or described again.",
+    "No extension of existing role9e43 or parent policy/service deadlines and no new36 are permitted by this report.",
+    "Existing full prepare780 plus writer3000 budgets and original role windows must still be enforced by the original active chain.",
+    "No live freshness or current operation state was checked by QB; local actual receipts only.",
+    "No PREPARE/writer runtime, complete import, APP/cold/clone or business acceptance PASS.",
+    "Report frozen once; old source03 and all prior reports remain unchanged."
+  ],
+  "ownerLocalChecks": {
+    "nativeAndPureCollectorChecksReusedNotRerun": true,
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/LOCAL-CHECKS.json",
+    "sha256": "02619fde76eda4da90ce150e0cec27f06e2eb492b2528d8f9edb58bc7f713606"
+  },
+  "pendingPhasesOnly": [
+    "prepare",
+    "writer"
+  ],
+  "phasePlanSha256": "cc33b3da52ecd5e843f20c99f401173b2b8c18127d3f069c5e4062bcaf5ea119",
+  "reusedReviews": [
+    {
+      "path": "outputs/QB/20261117-r3-normal35-consumer-review-03/RESULT.json",
+      "scope": "Unchanged50 runtime semantic scope and original CLI",
+      "sha256": "f5262466669bd1120bd183fa6191dbe39a71a5fea5f3178a531fc76b0e189ae6"
+    }
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "1d2cff53cee31d52cf214be3b4d5ded5408761328579fb0ff734373b3de0c279",
+  "state": "SOURCE_PASS_NORMAL35_NATIVE_SPEC_CONSUMER_ONLY_PENDING_LIVE_CAS",
+  "usedApplyStartCatalogNeverReplay": true,
+  "validatedSpec": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29"
+}

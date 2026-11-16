@@ -8184,7 +8184,7 @@
     }
   },
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-11-17T02:29:30.206869+08:00",
+  "updatedAt": "2026-11-17T02:50:23.993327+08:00",
   "stage": "R3_DB05_STOPPED_FINAL1116_INPUT_REGISTERED_RECEIVE_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "044580535a8178fd0443a0c5ed7c24ac965d7b93",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -51897,21 +51897,21 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-    "updatedAt": "2026-11-16T20:17:21.285688+08:00",
-    "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-    "currentTarget": "DB05_INSTALLED_STOPPED_ORIGINAL_ROLE_AUTH_RESTORED",
-    "owners": {
-      "T45": "Sole server owner, finite original receive loop and final33 APP receipt/stop source preparation",
-      "D1": "Independent physical restore PG checker implementation; no clone HTTP platform or formal loader relaxation",
-      "D2": "readonly exact ordinary HTTP and restored application consumer mapping",
-      "D3": "final11/16 standard514485-row package and full offline preflight complete",
-      "QB": "Root9 source and freshbasis reader accepted; next only new clone checker and APP owner deltas",
-      "C": "actual receipt adoption, root finite registration/issuer and original-key coordination"
-    },
-    "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_HTTP_PENDING",
-    "next": "Receive original54 groups using native receiver; source9 review accepted, main authority clock remains unstarted. Final actual import/backup/independent physical clone/formal app still pending.",
-    "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
+  "updatedAt": "2026-11-17T03:37:23.565446+08:00",
+  "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
+  "currentTarget": "DB05_STOPPED_ORIGINAL_AUTH_EXACT_RESTORED_PREPARE_FAILED_WRITER_NEVER_SUBMITTED",
+  "owners": {
+    "T45": "Sole server owner; diagnostic host/collector and bounded two-artifact staging install/restore source",
+    "D1": "Native diagnostic runner source accepted; explicit auxiliary outer/native scope continuation and root source",
+    "D2": "readonly exact ordinary HTTP and restored application consumer mapping",
+    "D3": "final11/16 standard514485-row package and full offline preflight complete",
+    "QB": "Only newly frozen deltas; 135dde diagnostic runner/interface accepted",
+    "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
+  "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
+  "next": "D1 explicit new outer auxiliary attempt02/native logical scope01 mapping proof and minimal root source; T45 artifact install/restore and optional diagnostic collector source. No new authority or service issued. New whole execution package not yet frozen.",
+  "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
+},
   "inventoryBaselineScopeSimplification20261111": {
     "status": "SPARSE_SCOPE_OFFLINE_AND_SCOPED_SYNTHETIC_PG_PASS_FORMAL_PENDING",
     "humanMessageId": "01a1c99e-67fa-76c3-8dca-6a92604611ae",
@@ -52675,11 +52675,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T02:29:30.206869+08:00",
-  "state": "NORMAL35_ACTUAL_REGISTERED_APPLY35_AUTHORIZED_RESULT_PENDING",
+  "asOf": "2026-11-17T03:37:23.565446+08:00",
+  "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
-  "formalR3": "DB05_INSTALLED_BUSINESS_EMPTY_STOPPED_ORIGINAL_AUTH_RESTORED",
+  "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Actual apply35 result then immediately sign original start35. No completed input/source or historical install replay.",
+  "next": "D1 explicit new outer auxiliary attempt02/native logical scope01 mapping proof and minimal root source; T45 artifact install/restore and optional diagnostic collector source. No new authority or service issued. New whole execution package not yet frozen.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52793,33 +52793,32 @@
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
   "PGCurrentlyStopped": true,
-  "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-final33-apply-start-restore-failures/CHECKPOINT.json",
-  "nativePreparation": "NOT_SUBMITTED",
-  "catalogSuccessor": "NOT_SUBMITTED",
+  "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
+  "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
+  "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
   "originalAuthRestored": true,
   "actualRestoration": {
-    "jobId": "t45-r3-ordinary34-auth-restore-20261116-01",
-    "typedSha256": "1dab92bb68f7a6051205fec4de10e476a9ba018a7f4fffcaadb933c604d62703",
-    "terminalSha256": "6ec792da7f9738b0d0983c2561b19129767ca6105fd800820f41bfc03fcd548a",
-    "cleanupSha256": "7618a11fbdcdc59b9ccef529fb47d9103644c26faa7446644efc98a8c1ea8ed0",
-    "seconds": 7.397153850004543,
-    "status": "COMPLETED",
+    "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
-    "naturalExpiryCountedAsRestoration": false
+    "publicResultSha256": "b01e7aef3d89c6a0655b87e0bc6cfe84c901aab021c059190bc986271258b099",
+    "requestKey": "t45-r3-ordinary35-auth-restore-20261116-01",
+    "rootPins": {
+      "cleanup": "ec36370990e10f73f4da635c5614d9d9a97cb8d33107b877c6477d0aa5a871bd",
+      "inside": "17cf540d8a847a986cfa0b16d5da679d8c986795ccc1915a3be7711167e03af4",
+      "result": "ca7ffc5eb4cb7ade449972579da939b39e96eb21d497bc9ca82e89e440744230",
+      "terminal": "e8b77fed8b54c3c31a59d82db724a378cfb41e6f4d523a10ac5acb63f83b3577"
+    },
+    "status": "COMPLETED"
   },
   "currentReleaseMode": {
-    "mode": "NORMAL35_FINITE_POLICY_ACTUALLY_REGISTERED",
-    "dispatcherSha256": "34e31910f3417e88865b41938bb692245332e0b3f3fb7a6ca148d10973ba4f37",
-    "moduleSha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4",
-    "policySha256": "54078b491c94ba23901ad32190ff03e74cc5b3c9ec5cb771df84c52df04049b2"
+    "typedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal35-live-native-spec-window-01/ACTUAL-LIVE35-CAS-READBACK.json",
+    "typedSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
+    "dispatcherSha256": "5a06bf8de17ca75944934bb5c5676430a0f890bf9bec7ddcd71d804aebdc83bb",
+    "helperSha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4",
+    "policySha256": "8ede4587599742ec45ad90eef7b01e43d21d83635ce2689c85181691dca679e7"
   },
-  "genuineFailureDiagnosis": {
-    "state": "DETERMINISTIC_SOURCE_UID_CONFLICT_EXACT_THROWN_CODE_NOT_CAPTURED",
-    "chain": "Root-only genuine entry calls ordinary nonroot-only combined record loader after COMPILE_END through describeFresh35FinalPreparationBinding/readFresh35BatchedContextInputs.",
-    "sourceFix": "D1 authorized minimal actual root metadata seam, preserve ordinary/root guards; check entire late return path. No extra full compile/PG/rehearsal.",
-    "newClockOr35": "NOT_ISSUED"
-  },
+  "genuineFailureDiagnosis": "Root35 real complete describe passed after minimal root metadata binding fix. Start34 first masked error remains unknown; no replay needed.",
   "pendingUserDecision": null,
   "observabilitySource": {
     "pinsSha256": "536d8c38d7b139d8e84de338a200e6f1f324768e6857622af35703d4fbd0bfd5",
@@ -52890,14 +52889,14 @@
     "serverReceived": false
   },
   "normal35": {
-    "state": "NORMAL35_ACTUAL_REGISTERED_APPLY35_AUTHORIZED_RESULT_PENDING",
+    "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
     "prior34CMetadataSha256": "7fed632320839f81486b66c13731322fda8da0157afc0eb97a3ecec43b274d19",
     "applyKey": "t45-r3-ordinary35-auth-apply-20261116-01",
     "startKey": "t45-first-r3-native-service-start-20261116-35",
     "stopKey": "t45-r3-ordinary35-preserve-stop-20261116-01",
     "restoreKey": "t45-r3-ordinary35-auth-restore-20261116-01",
     "issued": true,
-    "executed": false,
+    "executed": true,
     "businessKeysUnchanged": true,
     "consumerDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-UNISSUED-03",
     "consumerPinsSha256": "8b8f63b0ed37613c816db0d3c8c16b1acf5902d61266be6b8b8cc7cd93bb193a",
@@ -52911,7 +52910,7 @@
     "rejectedConsumer01": "2a9_NOT_USED_FOR_ISSUANCE",
     "rejectedConsumer02": "1fd_NOT_USED_FOR_ISSUANCE",
     "rootWithdrawalSha256": "6112635fef5ad9609be33d360eda7654a3e364162fc60a74868c0e8fe1b6dce3",
-    "rootSuccessor02": "PENDING",
+    "rootSuccessor02": "SUPERSEDED_BY_REVIEWED_ROOT03",
     "rootDefect": "N35-R01 historical install service32 versus current predecessor34",
     "historicalInstallReadbackSha256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b",
     "rootReviewSha256": "b8ea66d13c29810b74c999c71d1821e4bd1a3973dc351cc783903722592de5bc",
@@ -52939,7 +52938,7 @@
         "stop": "t45-r3-ordinary35-preserve-stop-20261116-01",
         "writer": "t45-r3-batched-real-execute-20261115-01"
       },
-      "phaseSubmitted": false,
+      "phaseSubmitted": true,
       "policyExpiresAt": 1794864182387,
       "policySha256": "54078b491c94ba23901ad32190ff03e74cc5b3c9ec5cb771df84c52df04049b2",
       "registrationExpiresAt": 1794854282387,
@@ -52952,13 +52951,63 @@
       "startsAt": 1794853382387,
       "state": "ISSUED_NORMAL35_REGISTRATION_NO_PHASE_SUBMITTED"
     },
-    "registrationActualReadback": "PENDING",
+    "registrationActualReadback": "MATCHED_27137",
     "localRoot02Failure": "BEFORE_CLOCK_NO_OUTPUT_KEYERROR_SOURCE_ASSEMBLY_SERVER_ACTIONS_FIXED_IN03",
     "registrationActualReadbackSha256": "27137faf09e1b05e9ca813be271f5e6179f971a5cad68cccbd5957e00f56683a",
-    "registrationActualState": "EXACT_NORMAL35_REGISTERED_NO_PHASE_SUBMITTED",
+    "registrationActualState": "REGISTERED_AND_CONSUMED_SAFE_CLOSED",
     "applyAuthoritySha256": "148ed3b407bccaf0a0679332108a3fc5f703e9de87caede7433c0ed1dd10f925",
-    "applyActualResult": "PENDING"
+    "applyActualResult": "COMPLETED_0_8.459_SECONDS",
+    "applyTypedSha256": "55d7ac775f69e81737f5c7567a4b17af7a2e5929a338b1ec556098755abe5489",
+    "startAuthoritySha256": "c5988c40b3c364886d966e6d8cf5a8a5567f8921652d682e694ca5f9e712e796",
+    "startActualResult": "COMPLETED_0_43.1808_SECONDS",
+    "startTypedSha256": "e1b0ce527d733738e82d7cb4cb041bcc23d673ddb3f64dde8c299387433297a0",
+    "actualService": {
+      "containerId": "ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14",
+      "containerStartedAt": "2026-11-16T18:33:46.920948412Z",
+      "postmasterStart": "2026-11-16 18:33:48.303258+00",
+      "proofSha256": "82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0",
+      "serviceKey": "t45-first-r3-native-service-start-20261116-35"
+    },
+    "catalogUpdateAuthoritySha256": "29787d73991f37d8a19b64db26988f2431e3dd0c3d6092ba4baed3a3d53f42e4",
+    "catalogActualResult": "COMPLETED_0_39.2293_SECONDS",
+    "catalogTypedSha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+    "actualCatalogSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+    "prepareLocalRefusal": {
+      "state": "ACTUAL_LOCAL_PREPARE_HOST_VALIDATE_REFUSED_NO_AUTHORITY_EMITTED",
+      "error": "FINAL33_NATIVE_BINDING_REQUIRED",
+      "hostSourceSha256": "6a1247e3bb3e9ec8a66c84c97d53de781aad887b0309f8c511addd3d15310482",
+      "expectedOldSpecSha256": "05609b8c0eb2b4be1fb84e2e3ef1d8b1737f82afe712cd49cd111860e22675bb",
+      "actualCommittedAndDescribedSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+      "nativePreparationAuthorityValidator": "PASSED_BEFORE_HOST_VALIDATE",
+      "prepareOutputDirectoryExists": false,
+      "prepareOrWriterSubmitted": false,
+      "catalogPermanentlyCompletedNeverReplay": true,
+      "service35": "HISTORICAL_BEFORE_ACTUAL_FAILED_PREPARE_AND_STOP_RESTORE",
+      "credentialOrLeaseExtended": false,
+      "businessWrites": 0
+    },
+    "postCatalogSourcePatch": "ACTUAL_LIVE_CAS_3CE7_COMPLETED_ONLY_TWO_PENDING_HOSTS",
+    "latestWholeRemainingChainStartUTC": "HISTORICAL_ELAPSED_NOT_REUSABLE",
+    "prepareActualResult": "FAILED_2_14.7255_SECONDS_NATIVE_UNKNOWN",
+    "prepareTypedSha256": "09a5cf58e6ac35b4628d8bd1b962779f015bc726d1aafc0e4e4c6346c279646e",
+    "prepareFailedKeyNeverReplay": true,
+    "stopActualResult": "COMPLETED_0_4.2382_SECONDS",
+    "stopTypedSha256": "02ee61f368e04cb7c3905d86f944034aa08b32b91005a14c1a4454a910137e3e",
+    "restoreActualResult": "COMPLETED_0_8.4966_SECONDS",
+    "restoreTypedSha256": "47f79d19c08dec5ccbc4b1a96b70f642f13d251d00053c1f72f553cbc0efb66f",
+    "closureSha256": "24cdc14719c9fac5379817aefd486831f45ffdc19e7acb75b36e460372038c94",
+    "liveCASSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
+    "actualServiceStatus": "STOPPED_PRESERVED_NO_NEW_PG_QUERY"
   },
-  "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-postcompile-root-binding-and-private-input/CHECKPOINT.json"
+  "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
+  "PGStateAsOfApplyReadback": "HISTORICAL_START35_THEN_ACTUAL_STOP35_AND_RESTORE35",
+  "nativeFailureDiagnostics": {
+    "sourcePins": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
+    "QBReview": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b",
+    "sourceOnly": true,
+    "rootCauseFixed": false,
+    "hostCollectorProjection": "PENDING"
+  },
+  "artifactReception": "APP14f34_7687919B_AND_PRIVATE244b_40960B_NOT_SERVER_READY_B164_POLICY_ABSENT_AT_ACTUAL19_31"
 }
 }

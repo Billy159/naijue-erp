@@ -1,0 +1,124 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "constantDefinitionLoads": 1,
+    "issuanceClockCalls": 0,
+    "liveBasisSnapshotInstallReadbackOrIssuerCalls": 0,
+    "nativeTargetCapabilityAuthorityOrFutureFixturesCreated": 0,
+    "newJobsSubmitted": 0,
+    "ownerFilesOrPriorReportsModified": false,
+    "purePolicyDeltaAndDispatcherRenderInMemoryOnly": true,
+    "serverConnections": 0
+  },
+  "actualOldDispatcherSha256": "34e31910f3417e88865b41938bb692245332e0b3f3fb7a6ca148d10973ba4f37",
+  "actualOldPolicySha256": "54078b491c94ba23901ad32190ff03e74cc5b3c9ec5cb771df84c52df04049b2",
+  "consumerReviewSha256": "19667cb10bb6075e789556239c8dfcdb48d3a3b7008ed00db260ac221271a2c0",
+  "consumerSourcePinsSha256": "1d2cff53cee31d52cf214be3b4d5ded5408761328579fb0ff734373b3de0c279",
+  "files": {
+    "ISSUER-DIFF.patch": {
+      "bytes": 3244,
+      "sha256": "1e9b2aa3deacb6ba2fd879815b1f67205271bf6c6777d0b41b2715f04d9be960"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1326,
+      "sha256": "a6beec394222b77599e990ed42272934260979b39c708a7fb71e7e2463e3d246"
+    },
+    "TWO-PHASES.UNISSUED.json": {
+      "bytes": 34214,
+      "sha256": "2fc1e2ab9d0d399c487b7a65432204f2f21e58d4044f29da5efd7a26894b85eb"
+    },
+    "issue_live.py": {
+      "bytes": 6157,
+      "sha256": "8bdf187e72e07b0f564a591f6ff8db542b08f04c9cb4e81ec67804ae2e44cb7a"
+    },
+    "issue_phase.py": {
+      "bytes": 39584,
+      "sha256": "7a5fa9327dcda07fbd08ebede9619b514a2fe9ea9c1026b9f46bd3705eee2f7a"
+    },
+    "live_cas.py": {
+      "bytes": 24088,
+      "sha256": "b2fbc4a34b5697ee1584d9aa1e9d3ff7ef56d265cf500835a60c0b431547eb96"
+    },
+    "original-cas-live35-carrier.UNISSUED.py": {
+      "bytes": 2552,
+      "sha256": "c334b771356bd9f805ad16d9c393d43e7d73268b71afd80eaf04526adcfc417c"
+    }
+  },
+  "findings": [],
+  "independentChecks": {
+    "actualCurrent35TupleAndUsedApplyStartCatalogRootPublicPinsMatchExistingTypedReceipts": true,
+    "actualIssueCasAuthorityMaximumTenMinutesAndFreshLiveBasisFiveMinuteCheck": true,
+    "actualOriginalPolicy54078Dispatcher34eAndRole9eRawHashesMatchOriginalIssuedArtifacts": true,
+    "allSevenPinnedDeliveryFilesExactAndPythonSyntaxGlobalNamesChecked": true,
+    "consumerOnlyTwoLiteralSpecFixReusedNoRepeatedFiftyRuntimeNativeOrHistoricalSemanticReview": true,
+    "dispatcherRawBytesChangeSingleBoundPolicyShaOnly": true,
+    "exclusiveAuditAndPendingFilesIntentBeforePolicyThenDispatcherReplacementWithFsync": true,
+    "full4020SecondsBeforeControllerAdminServiceWorkParentGrantLimitsAndRestorationMargin": true,
+    "liveGuardUsesExistingCurrentServiceCACKBirthContainerSIDOIDAndRunningPid": true,
+    "liveSnapshot52PinnedFilesPlusGrantMetadataPrivateCustodyMetadataAndLock": true,
+    "liveWitnessOnlyTwoHostPinsAndTwoPendingDirectoriesChangedOtherFieldsPreserved": true,
+    "newBasisReadbackManifestProducerConsumerSchemaFieldsAllMatchWithoutFutureFixtures": true,
+    "newPhaseIssuerOnlyPrepareWriterAndRequiresActualMatchingCasReadback": true,
+    "noActiveOperationsAndFourUnusedPrepareWriterStopRestoreKeysRequired": true,
+    "noOldStoppedDatabaseQuietHistoricalInstallOrNativeCallInLiveCasPath": true,
+    "oldPolicyDispatcherIdentitiesArchivedUnknownOutcomeReadOriginalAuditNoReplay": true,
+    "originalDataIdentityAndRunningPostmasterPidRequiredNoSqlOrDescribe": true,
+    "originalExecutionLockIdentityAndNonblockingExclusiveLockPreserved": true,
+    "otherEighteenPhaseIssuerFunctionsAstByteSemanticsUnchanged": true,
+    "policyObjectChangeExactlyPrepareAndWriterHostPinsTo3bf284": true,
+    "postCasReadbackMatchesExactPolicyDispatcherAuthorityRoleServiceAndOriginalDeadlines": true,
+    "prepareIssuerRechecksFreshReadbackAndFull4020SecondsWriterRetainsOriginalBudgetAndServiceChecks": true,
+    "privateOriginalFiniteAppliedFilesMetadataOnlyNoBodyOrDigestAndRestoreNotEntered": true,
+    "roleAuthorityRawBytesParentWindowControllerAdminRestoreAndServiceDeadlinesUnchanged": true,
+    "unchangedStopRestoreRulesRoleAndExistingAuthorityContractsRetained": true
+  },
+  "independentEvidence": [
+    {
+      "path": "outputs/QB/20261117-r3-normal35-live-spec-review-01/LIVE-CAS-INDEPENDENT-EVIDENCE.json",
+      "sha256": "39b8e7e22b8ec048f96ee9c79fd52512eaee9fc98ccd294a7f4fab3f55d1aa59"
+    },
+    {
+      "path": "outputs/QB/20261117-r3-normal35-live-spec-review-01/LIVE-METADATA-SCHEMA-EVIDENCE.json",
+      "sha256": "f2d415ff78523addb507797821d6cabd58d60bfc2912c2df63f6302fa32cb36e"
+    }
+  ],
+  "limitations": [
+    "Source pairing only. Actual fresh live basis, CAS publication and readback must run through the original authorized chain and have not been performed by QB.",
+    "Current running state and remaining lifetime were not measured by QB; existing typed receipts and exact local original artifacts were reviewed. Actual budget guards must pass at fresh read, issue, CAS and pending-phase issuance.",
+    "Only the two unused pending hosts may change; apply/start/catalog and completed inputs must not be replayed or redescribed, no new36 and no extension of used role/service/grant deadlines.",
+    "The 4020-second full prepare/writer budget and original restoration margin remain required. Insufficient time must not be worked around by shortening budgets or renewing credentials.",
+    "No new PREPARE/writer runtime, complete business import, APP/cold/clone or business acceptance PASS.",
+    "Final report bytes are frozen once. Additional evidence must use another file, not overwrite this issuance-bound report."
+  ],
+  "originalRoleSha256": "9e436ae9bed8f6d5dff1b2860e94b0f7490ebaacd8208d63d97c5884e5bc5322",
+  "ownerLocalChecksReused": {
+    "notRerunByQB": true,
+    "path": "outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/LOCAL-CHECKS.json",
+    "sha256": "a6beec394222b77599e990ed42272934260979b39c708a7fb71e7e2463e3d246"
+  },
+  "pendingPhasesOnly": [
+    "prepare",
+    "writer"
+  ],
+  "proposedDispatcherSha256": "5a06bf8de17ca75944934bb5c5676430a0f890bf9bec7ddcd71d804aebdc83bb",
+  "proposedPolicySha256": "8ede4587599742ec45ad90eef7b01e43d21d83635ce2689c85181691dca679e7",
+  "reusedConsumerReview": {
+    "path": "outputs/QB/20261117-r3-normal35-live-spec-review-01/CONSUMER-RESULT.json",
+    "sha256": "19667cb10bb6075e789556239c8dfcdb48d3a3b7008ed00db260ac221271a2c0"
+  },
+  "reviewer": "QB",
+  "rulesSha256": "2fc1e2ab9d0d399c487b7a65432204f2f21e58d4044f29da5efd7a26894b85eb",
+  "schemaVersion": 1,
+  "service": {
+    "containerId": "ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14",
+    "containerStartedAt": "2026-11-16T18:33:46.920948412Z",
+    "postmasterStart": "2026-11-16 18:33:48.303258+00",
+    "proofSha256": "82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-35"
+  },
+  "sourceDirectory": "outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "5bf37a951a2e75b07a30afd83a7770744cb263f80670ba35d9a7f9de9a94454f",
+  "state": "SOURCE_PASS_NORMAL35_LIVE_TWO_HOSTS_CAS_ONLY",
+  "usedApplyStartCatalogNeverReplay": true
+}

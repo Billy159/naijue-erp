@@ -1,0 +1,14 @@
+{
+  "state": "PASS_PURE_FAILURE_DIAGNOSTICS_ONLY",
+  "checks": 17,
+  "node": "v24.21.0",
+  "sourceOnly": true,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "nativeExecuted": false,
+  "targetOrCapabilityConstructed": false,
+  "authorityIssued": false,
+  "sourceSha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6",
+  "successfulFunctionBytesUnchanged": true,
+  "noErrorPropertyGetterEvaluated": true
+}

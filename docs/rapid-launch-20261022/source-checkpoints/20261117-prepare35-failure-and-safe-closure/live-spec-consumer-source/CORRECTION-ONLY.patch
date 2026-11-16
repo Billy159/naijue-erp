@@ -1,0 +1,22 @@
+--- frozen03/prepare/bundle/final33_host.py
++++ pending-spec-successor/prepare/bundle/final33_host.py
+@@ -136,7 +136,7 @@
+   and binding.get('postmasterStart')==s['postmasterStart'] and binding.get('transactionMode')=='BATCHED_V1'
+   and binding.get('batchedModelSha256')=='626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811'
+   and binding.get('batchedSourceSetSha256')=='cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c'
+-  and binding.get('batchedCatalogSpecSha256')=='05609b8c0eb2b4be1fb84e2e3ef1d8b1737f82afe712cd49cd111860e22675bb',
++  and binding.get('batchedCatalogSpecSha256')=='9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29',
+   'FINAL33_NATIVE_BINDING_REQUIRED')
+  if KEY==PREPARE:
+   need(binding.get('format')=='FRESH35_BATCHED_PREPARATION_BINDING_V1'
+--- frozen03/writer/bundle/final33_host.py
++++ pending-spec-successor/writer/bundle/final33_host.py
+@@ -136,7 +136,7 @@
+   and binding.get('postmasterStart')==s['postmasterStart'] and binding.get('transactionMode')=='BATCHED_V1'
+   and binding.get('batchedModelSha256')=='626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811'
+   and binding.get('batchedSourceSetSha256')=='cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c'
+-  and binding.get('batchedCatalogSpecSha256')=='05609b8c0eb2b4be1fb84e2e3ef1d8b1737f82afe712cd49cd111860e22675bb',
++  and binding.get('batchedCatalogSpecSha256')=='9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29',
+   'FINAL33_NATIVE_BINDING_REQUIRED')
+  if KEY==PREPARE:
+   need(binding.get('format')=='FRESH35_BATCHED_PREPARATION_BINDING_V1'

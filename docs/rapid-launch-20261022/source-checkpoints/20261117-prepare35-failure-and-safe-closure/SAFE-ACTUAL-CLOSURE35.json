@@ -1,0 +1,117 @@
+{
+  "boundaries": {
+    "QAPublished": false,
+    "actualPreparationDatabaseOutcome": "UNKNOWN_NO_ADDITIONAL_PG_QUERY",
+    "formalBusinessAccepted": false,
+    "fullBusinessImportCompleted": false,
+    "newBuild": false,
+    "newServiceGeneration": false,
+    "writerOrNativeReplayed": false
+  },
+  "checkedAtUTC": "2026-11-16T19:22:48.582273+00:00",
+  "evidence": {
+    "liveCAS": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal35-live-native-spec-window-01/ACTUAL-LIVE35-CAS-READBACK.json",
+      "sha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88"
+    },
+    "nativeAndWriterAbsence": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/prepare/ACTUAL-PREPARE35-NATIVE-STOP-BASIS-01.json",
+      "sha256": "90e1c621aec102c5cb8d324e013462753387958c95d504aaead4b68abf566e2a"
+    },
+    "prepare": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/prepare/ACTUAL-PREPARE35-RESULT.json",
+      "sha256": "09a5cf58e6ac35b4628d8bd1b962779f015bc726d1aafc0e4e4c6346c279646e"
+    },
+    "restore": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/restore/ACTUAL-RESTORE35-RESULT.json",
+      "sha256": "47f79d19c08dec5ccbc4b1a96b70f642f13d251d00053c1f72f553cbc0efb66f"
+    },
+    "stop": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/stop/ACTUAL-STOP35-RESULT.json",
+      "sha256": "02ee61f368e04cb7c3905d86f944034aa08b32b91005a14c1a4454a910137e3e"
+    }
+  },
+  "finalResources": {
+    "PGDataIdentity": {
+      "device": 66304,
+      "gid": 61035,
+      "inode": 13502421,
+      "mode": 448,
+      "uid": 61035
+    },
+    "PGStopped": true,
+    "activeOperationUnits": [],
+    "authenticationSnapshotBodiesOrDigestsRead": false,
+    "exactOriginalTwoRoleAuthenticationRestored": true,
+    "membershipsOrRoleAttributesChanged": false,
+    "naturalExpiryUsedAsRestoration": false,
+    "original35ContainerStopped": true,
+    "ownRestoreContainerStopped": true,
+    "portAbsent": true,
+    "runtimeAuthenticationChanged": false
+  },
+  "nativePreparation": {
+    "batchPlanPresent": false,
+    "exclusiveProcessAndDescendantsReaped": true,
+    "initializerPresent": false,
+    "nativeConnectionCleanup": "UNKNOWN",
+    "prepareKeyMustNeverReplay": true,
+    "safeCode": "FINAL33_NATIVE_OUTCOME_UNCONFIRMED",
+    "sqlstate": null,
+    "state": "UNKNOWN",
+    "underlyingCause": "UNKNOWN_NOT_RETAINED_IN_ORIGINAL_RECEIPTS"
+  },
+  "phases": {
+    "prepare": {
+      "elapsedSeconds": 14.725505770009477,
+      "exitCode": 2,
+      "publicResultSha256": "b9f2907655ed12d6e978a207cc05ddb0525091828517174039cf883692deab85",
+      "requestKey": "t45-r3-final33-plan-prepare-20261116-01",
+      "rootPins": {
+        "result": "58ea7d796302112eb063bbcf99629d60c8422bcfcba38bf8a0afb60b8d5f24b7",
+        "terminal": "d8ff6c3e9e4c3324d7d40b75429c133feeec77ed5afa45a6dc5791678c47d201"
+      },
+      "status": "FAILED"
+    },
+    "restore": {
+      "elapsedSeconds": 8.496592034993228,
+      "exitCode": 0,
+      "publicResultSha256": "b01e7aef3d89c6a0655b87e0bc6cfe84c901aab021c059190bc986271258b099",
+      "requestKey": "t45-r3-ordinary35-auth-restore-20261116-01",
+      "rootPins": {
+        "cleanup": "ec36370990e10f73f4da635c5614d9d9a97cb8d33107b877c6477d0aa5a871bd",
+        "inside": "17cf540d8a847a986cfa0b16d5da679d8c986795ccc1915a3be7711167e03af4",
+        "result": "ca7ffc5eb4cb7ade449972579da939b39e96eb21d497bc9ca82e89e440744230",
+        "terminal": "e8b77fed8b54c3c31a59d82db724a378cfb41e6f4d523a10ac5acb63f83b3577"
+      },
+      "status": "COMPLETED"
+    },
+    "stop": {
+      "elapsedSeconds": 4.238190727017354,
+      "exitCode": 0,
+      "publicResultSha256": "284344322fa3a4213f56991006359386314247b921dd1e527047f62dae7e02d9",
+      "requestKey": "t45-r3-ordinary35-preserve-stop-20261116-01",
+      "rootPins": {
+        "cleanup": "ab6e59eaf1f99785d3f36e3b5e2d25510332cf81ed7ce1b120447dba0150346c",
+        "result": "f1d6ed4a422ff9dfe6db88ceb2eea7155c650af1d96d3b251ed9a90f57673951",
+        "terminal": "fb0a0503673a348504cbc7de62d5318fe1b60667789448e099b6189e4c805cd8"
+      },
+      "status": "COMPLETED"
+    }
+  },
+  "preserved": {
+    "failedPrepareEvidenceAndDirectory": true,
+    "historicalHold": true,
+    "originalInputs": true,
+    "originalRoleRecoveryBasis": true,
+    "successfulCatalogUpdate": true
+  },
+  "remaining": "Original native cause is unknown; reviewed source successor and newly authorized execution conditions are required. No pending submitted maintenance operation remains in the final readback.",
+  "state": "NORMAL35_PREPARE_FAILED_ORIGINAL_KEY_PRESERVED_STOPPED_AND_EXACT_AUTH_RESTORED",
+  "writer": {
+    "absenceEvidence": "nativeAndWriterAbsence",
+    "requestKey": "t45-r3-batched-real-execute-20261115-01",
+    "submitted": false,
+    "terminal": null
+  }
+}

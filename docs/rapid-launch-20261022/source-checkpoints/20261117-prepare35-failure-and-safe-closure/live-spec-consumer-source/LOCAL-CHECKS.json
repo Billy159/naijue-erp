@@ -1,0 +1,24 @@
+{
+  "CLIBytesAndCurrentHEREPaired": true,
+  "PGConnections": 0,
+  "actualStartAndCommittedCatalogSpecMatched": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+  "changedRuntimeMembers": [
+    "prepare/bundle/final33_host.py",
+    "writer/bundle/final33_host.py"
+  ],
+  "clockIssued": false,
+  "nativeFourSourceConstantsAndDbCandidatePinMatched": true,
+  "nativeNoStaleOrNewHardcodedCatalogSpecLiteral": true,
+  "nativeOrIssuerOrCompilerInvoked": false,
+  "nativeSourceSha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+  "newAuthorityTargetCapabilityOrFixtureCreated": false,
+  "newJobSubmitted": false,
+  "newPredicateOnSameActual35Binding": true,
+  "oldPredicateOnActual35Binding": false,
+  "realV3TwoPendingBundlesMatched": true,
+  "runtimePass": false,
+  "serverActions": 0,
+  "state": "LOCAL_SPEC_ONLY_CORRECTION_REAL_BINDING_RED_GREEN",
+  "unchangedRuntimeMembers": 50,
+  "usedRoleAndSource03FilesUnchanged": true
+}

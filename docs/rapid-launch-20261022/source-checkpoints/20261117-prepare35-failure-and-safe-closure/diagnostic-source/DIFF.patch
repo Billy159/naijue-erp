@@ -1,0 +1,89 @@
+--- outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/prepare/bundle/final33-run.mjs
++++ diagnostic-source/final33-run.mjs
+@@ -4,7 +4,25 @@
+ import {open,lstat,realpath} from 'node:fs/promises';
+ import {dirname,relative,resolve,sep} from 'node:path';
+ import {fileURLToPath,pathToFileURL} from 'node:url';
+-import {isDeepStrictEqual as equal} from 'node:util';
++import {isDeepStrictEqual as equal,types} from 'node:util';
++import {AssertionError} from 'node:assert';
++
++
++// Closed diagnostic values only: never emit arbitrary message, stack, path or error properties.
++const FAILURE_STAGES=Object.freeze(['PREFLIGHT','BIND_INPUTS','PREPARE_READERS','PREPARE_CALL','PREPARE_RESULT','EXECUTION_BINDING']);
++const FAILURE_SYSTEM_CODES=Object.freeze(['ERR_ASSERTION','ERR_INVALID_ARG_TYPE','ERR_INVALID_ARG_VALUE','ERR_OUT_OF_RANGE','ERR_MODULE_NOT_FOUND','ERR_UNKNOWN_FILE_EXTENSION','ERR_ACCESS_DENIED','EACCES','EPERM','ENOENT','ELOOP','ENOTDIR','ECONNREFUSED','ECONNRESET','ETIMEDOUT','EPIPE','EHOSTUNREACH','ENETUNREACH','EADDRINUSE']);
++const FAILURE_SQLSTATES=Object.freeze(['42601','42702','42501','42P01','42703','42883','23502','23503','23505','23514','22012','22P02','40001','40P01','57014','55P03','55000','P0001','28P01','3D000','53300','57P01','08006']);
++const FAILURE_GUARDS=Object.freeze(["FINAL33_APPROVAL_CANONICAL_REQUIRED","FINAL33_APPROVAL_OUTSIDE_PACKAGE_REQUIRED","FINAL33_CANONICAL_INPUT_REQUIRED","FINAL33_CURRENT_SERVICE_DIFFERS","FINAL33_ENV_REFUSED","FINAL33_FINITE_AUTHORITY_REQUIRED","FINAL33_FIXED_CONTROLLER_REQUIRED","FINAL33_FIXED_PROCESS_REQUIRED","FINAL33_INITIALIZER_BOUND","FINAL33_INPUT_CHANGED","FINAL33_NATIVE_OUTCOME_UNCONFIRMED","FINAL33_ORIGINAL_PREPARE_BINDING_REQUIRED","FINAL33_PERSISTED_INITIALIZER_BINDING_DIFFERS","FINAL33_PERSISTED_SCOPE_BINDING_DIFFERS","FINAL33_PREFLIGHT_REFUSED","FINAL33_PRIVATE_INPUT_BOUND","FINAL33_PRIVATE_PLAN_DIRECTORY_REQUIRED","FINAL33_PROTECTED_INPUT_REQUIRED","FINAL33_PROTECTED_PARENT_REQUIRED","FINAL33_RESTORED_SCOPE_DIFFERS","FINAL33_SCRATCH_REQUIRED","FINAL33_SOURCE_MATERIALIZATION_DIFFERS"]);
++export function describeFailure(error,stage){
++ const native=types.isNativeError(error);
++ const own=key=>{try{const d=Object.getOwnPropertyDescriptor(error,key);return d&&'value'in d?d.value:undefined}catch{return undefined}};
++ const pick=(values,value)=>typeof value==='string'&&values.includes(value)?value:'UNKNOWN';
++ const code=native?own('code'):undefined,message=native?own('message'):undefined;
++ const errorType=!native?'UNKNOWN':error instanceof AssertionError?'AssertionError':error instanceof TypeError?'TypeError':error instanceof RangeError?'RangeError':error instanceof SyntaxError?'SyntaxError':Object.getPrototypeOf(error)===Error.prototype?'Error':'UNKNOWN';
++ return {format:'FINAL33_FAILURE_DIAGNOSTIC_V1',stage:pick(FAILURE_STAGES,stage),errorType,
++  systemCode:pick(FAILURE_SYSTEM_CODES,code),guardCode:pick(FAILURE_GUARDS,message),
++  sqlstate:FAILURE_SQLSTATES.includes(code)?code:null};
++}
+ 
+ export const PREPARE='t45-r3-final33-plan-prepare-20261116-01';
+ export const WRITER='t45-r3-batched-real-execute-20261115-01';
+@@ -143,7 +161,7 @@
+   &&material.nodeModulesChanged===false&&material.databaseWrites===0,'FINAL33_SOURCE_MATERIALIZATION_DIFFERS');
+  await protectedBytes(OPERATOR+'/tools/unified-import/r3-service20-entry.mjs','a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6',2048,1075);
+  const api=await load('tools/unified-import/r3-service20-entry.mjs');
+- const p=await privateInput();let options;
++ const p=await privateInput();let options;let failureStage='BIND_INPUTS';
+  const evidence={requestKey:KEY,service:a.service,inputSha256:process.argv[2],phase:a.phase,state:'UNKNOWN',
+   connectionCleanup:'NOT_OPENED',automaticReplay:false};
+  try{
+@@ -152,23 +170,28 @@
+   options={target:p.target,initialization_identity:p.admin,allowSynthetic:false,registration:{...REGISTRATION}};
+   let result;
+   if(KEY===PREPARE){
++   failureStage='PREPARE_READERS';
+    const manifestBytes=await protectedBytes(PACKAGE+'/manifest.json',INPUT_PINS.manifest,2097152,undefined,true);
+    const manifest=JSON.parse(manifestBytes);
+    for(const [reader,key,path,pin]of APPROVALS){await outsidePackage(INPUT+'/'+path);options[key]=await api[reader](PACKAGE,manifest,INPUT+'/'+path,pin)}
+    const summaryBytes=await protectedBytes(INPUT+'/standard-preflight-20261116-1140-r1/summary.json',INPUT_PINS.summary,67108864,58708922,true);
+    evidence.connectionCleanup='UNKNOWN';
++   failureStage='PREPARE_CALL';
+    result=await api.runFinalR3Prepare03(config,OPERATOR,p.target,{indexPath:INPUT+'/standard-preflight-20261116-1140-r1/index.sqlite',
+     summaryBytes,manifestBytes,batchPlanPath:PLAN,options,provision:p.provision,encodedScrypt:p.encodedScrypt,batchBinding,
+     preparationAuthorizationSha256:a.nativeAuthoritySha256,preparationRequestKey:PREPARE},hostOptions,retainInitializer);
++   failureStage='PREPARE_RESULT';
+    evidence.nativeResult=result.result;evidence.state=result.result?.state??'UNKNOWN';
+    evidence.connectionCleanup=result.cleanup;evidence.localCleanup=result.local_cleanup??null;evidence.hostVerification=result.host_verification??null;
+    if(evidence.state==='BATCHED_IMPORT_PREPARED'&&result.result.root_state==='ABSENT'&&result.result.business_database_writes===false){
+     evidence.preparedBinding=result.result.binding;
++    failureStage='EXECUTION_BINDING';
+     const inputBinding=api.describeFinalR3InputBinding(p.target,p.admin,p.provision,batchBinding);
+     evidence.executionBinding=await api.describeFresh35FinalExecutionBinding(OPERATOR,hostOptions.referenceDirectory,
+      hostOptions.currentService,hostOptions.parentPins,hostOptions.successorSha256,inputBinding,result.result.binding);
+    }
+   }else{
++   failureStage='UNKNOWN';
+    need(p.preparedBinding&&equal(p.preparedBinding,a.originalPreparedBinding),'FINAL33_ORIGINAL_PREPARE_BINDING_REQUIRED');
+    options.explicitZeroApproval=await persistedScope(batchBinding,p.preparedBinding,p.encodedScrypt);
+    const inputs={batchPlanPath:PLAN,batchBinding,options,provision:p.provision,encodedScrypt:p.encodedScrypt,preparedBinding:p.preparedBinding};
+@@ -184,8 +207,9 @@
+   }
+   evidence.connectionCleanup=result.cleanup;evidence.localCleanup=result.local_cleanup??null;evidence.hostVerification=result.host_verification??null;
+  }catch(error){
+-  evidence.sqlstate=/^[A-Z0-9]{5}$/.test(error?.code??'')?error.code:null;
+-  evidence.safeCode=/^[A-Z][A-Z0-9_]{0,159}$/.test(error?.message??'')?error.message:'FINAL33_NATIVE_OUTCOME_UNCONFIRMED';
++  evidence.failureDiagnostic=describeFailure(error,failureStage);
++  evidence.sqlstate=evidence.failureDiagnostic.sqlstate;
++  evidence.safeCode=evidence.failureDiagnostic.guardCode==='UNKNOWN'?'FINAL33_NATIVE_OUTCOME_UNCONFIRMED':evidence.failureDiagnostic.guardCode;
+  }finally{
+   if(options?.explicitZeroApproval)try{await api.closeExplicitZeroApproval(options.explicitZeroApproval)}catch{evidence.approvalCleanup='UNCONFIRMED'}
+   p.encodedScrypt=null;p.postgres.password=null;p.admin=null;p.provision=null;
+@@ -198,6 +222,6 @@
+   :key===WRITER&&v.state==='COMPLETED'&&v.verification?.state==='VERIFIED'&&v.readbackConnectionCleanup==='CLOSED'&&!v.readbackLocalCleanup);}
+ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  try{const result=await main();process.stdout.write(JSON.stringify(result)+'\n');process.exitCode=successful(result,KEY)?0:2}
+- catch(error){process.stdout.write(JSON.stringify({requestKey:KEY,state:'UNKNOWN',connectionCleanup:'NOT_OPENED',
+-  safeCode:/^[A-Z][A-Z0-9_]{0,159}$/.test(error?.message??'')?error.message:'FINAL33_PREFLIGHT_REFUSED'})+'\n');process.exitCode=2}
+-}
++ catch(error){const failureDiagnostic=describeFailure(error,'PREFLIGHT');process.stdout.write(JSON.stringify({requestKey:KEY,state:'UNKNOWN',connectionCleanup:'NOT_OPENED',
++  safeCode:failureDiagnostic.guardCode==='UNKNOWN'?'FINAL33_PREFLIGHT_REFUSED':failureDiagnostic.guardCode,failureDiagnostic})+'\n');process.exitCode=2}
++}

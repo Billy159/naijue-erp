@@ -1,0 +1,13 @@
+此件只补失败信息，不是修复根因或批准新运行。真实恢复回执47f79d19已证明原角色认证恢复、PG停库；旧准备FAILED与目录469已commit均保留。此次不生成36包、不发clock、不物化、不执行。
+
+1. 复用已commit目录：保留catalog_update原key及469根/public/commit/completion四层证据，绝不再次提交。下一真实服务有新的C/epoch时，只读核实际数据库当前目录source/model/spec与469一致，将“历史commit所属C35”和“当前服务C”分开绑定，不能改写469的service字段。现有final33_host.py:226 applied_catalog_successor、issue_phase.py verified_catalog_update把result.service==当前service；后续须精确允许已提交历史记录并另要当前原库的真实只读目录核对，不能跳过核对或制造新catalog terminal。此次仅标明接线位置，不实现/重跑。
+
+2. 旧准备保全：旧d8ff FAILED/09a5/ba016/90e1都冻结，writer在双grant真未提交；原plan目录存在但batched-plan.sqlite与original-initializer.json皆不存在、scratch空。新aux key必须一次性、精确授权并在原锁下核未用/无活动op/旧失败已收回/旧计划与initializer仍不存在；旧空目录和失败证据不可删除或覆盖。新aux使用独立精确plan路径，沿既有780秒和原650+130预算，不继承或延长旧角色/许可。
+
+3. 不可绕过的native键合同：batched-stream-cli-state.mjs:7固定FINAL_R3_PREPARATION_KEY，:50-54 buildFinalR3PreparationBinding严格等于它；r3-service20-retained-import.mjs:34也严格要求这个键。因此新的aux若是新native preparationScope.requestKey，至少须改变这个固定scope合同/常量的精确版本，并核source pins/catalog source闭包影响。不能只换外层名字而暗用旧native scope，也不能允许任意key。主控先确定精确scope与闭包处置；此处没有修改native或生成物化包。
+
+4. 消费接线：外层final33_host.py PREPARE/PLAN_REL、runner PREPARE/PLAN、root policy唯一aux映射、issuer preparationScope均须指向同一准确aux。writer业务key与INIT/批次/注册/输入identity保持；writer的original_prepared:665起必须消费新aux真实COMPLETED根/public/native绑定及计划，绝不消费旧FAILED或拼造preparedBinding。native恢复/持久计划API仍用runFinalR3Prepare03、buildFinalR3PreparationBinding、prepareCliBatchedState、runFinalR3Writer03；没有旁路接口。业务identity不变须以原输入、initializer与返回binding逐项核对，不能凭aux名称推断。
+
+5. 诊断候选final33-run.mjs仅在原catch增加闭合failureDiagnostic，以及PREPARE_READERS/PREPARE_CALL/PREPARE_RESULT/EXECUTION_BINDING等固定赋值。系统码/SQLSTATE/errorType复用既有ordinary诊断白名单；guardCode只允许本runner原有固定guard字面量。任意message/stack/path/凭据不输出，未知值UNKNOWN；旧任意全大写message透传收紧为固定guard或原通用安全码。成功字段、事务、业务调用、cleanup、角色和预算均不改变。
+
+6. T45只需在既有final33_host.py结果投影及现有collector加入一个可选failureDiagnostic闭合对象（schema见RESULT-INTERFACE.json），严格校验后复制；无诊断字段的历史结果继续原样，不能据诊断字段判成功或连接CLOSED。必要bundle runner/host/collector pins由各原owner更新，失败键不重放。诊断对象缺失/格式不符只记UNKNOWN，不读原stderr；原stdout解析、native-result摘要和root/public读回不变。此件未实现T45投影，也没有改其冻结源。

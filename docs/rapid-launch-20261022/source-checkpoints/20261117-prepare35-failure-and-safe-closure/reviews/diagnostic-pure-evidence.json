@@ -1,0 +1,16 @@
+{
+  "state": "INDEPENDENT_CLOSED_DIAGNOSTIC_SCHEMA_AND_PRIVACY_PASS",
+  "sourceOnly": true,
+  "runnerSha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6",
+  "originalRunnerSha256": "bdb646493a204e776f211483d1af8ce70812434c1892457b616774c4c3b1498b",
+  "schemaExact": true,
+  "originalFixedGuardLiteralsOnly": 22,
+  "successfulAndOtherNonMainFunctionsByteUnchanged": true,
+  "closedValueCases": 76,
+  "maximumObservedJsonBytes": 187,
+  "errorPropertyGetterCalls": 0,
+  "mainOrNativeOrIssuerCalls": 0,
+  "clockCalls": 0,
+  "targetCapabilityOrAuthorityCreated": false,
+  "serverOrPGCalls": 0
+}

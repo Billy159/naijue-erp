@@ -1,0 +1,108 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "diagnosticModuleImportAndPureErrorClassificationOnly": true,
+    "mainNativeIssuerOrCollectorCalls": 0,
+    "ownerSourcesOrFrozenReportsModified": false,
+    "serverConnections": 0,
+    "syntheticErrorsForClassifierOnly": true,
+    "targetCapabilityAuthorityOrFutureBusinessFixturesCreated": 0
+  },
+  "continuationContractBoundary": {
+    "catalog469HistoricalCommitAndFutureCurrentServiceMustBeSeparatelyBound": true,
+    "failedOldPrepareAndAbsentPlanInitializerEvidenceMustBePreserved": true,
+    "fixedNativePreparationKeyStillBlocksArbitraryNewAuxScope": true,
+    "newExactAuxScopeRequiresSeparateMainDecisionAndExactSourceClosureReview": true,
+    "noNewAuxKeyPlanPackageOrNativeContractProduced": true,
+    "runtimeRestorationAndAbsentFileClaimsNotRevalidatedByThisSourceReview": true,
+    "status": "PROPOSAL_AND_BLOCKERS_ONLY_NOT_EXECUTION_AUTHORIZATION",
+    "writerMustConsumeActualNewAuxCompletedNativeBindingsNotFailedOrFabricatedPreparation": true
+  },
+  "files": {
+    "CONTINUATION-CONTRACT.md": {
+      "bytes": 3621,
+      "sha256": "eda806cd4a7953e85ddbc980ee7258e5f1526a84e8cc2d8b73cf74a76376452e"
+    },
+    "DIFF.patch": {
+      "bytes": 8107,
+      "sha256": "bfbe8387513c3d33c6f71d72946b5289aabf04ef335fc7a6a1e0b32c8aa83939"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 425,
+      "sha256": "2c3d0e61318bfce7b6d5ad41a8821f13017fd0ea326e0954345e36b520b162fe"
+    },
+    "RESULT-INTERFACE.json": {
+      "bytes": 3966,
+      "sha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21"
+    },
+    "check-diagnostics.mjs": {
+      "bytes": 2883,
+      "sha256": "ada082828f9c5cd6bdfec2647de16d27380d24d97682339630b31b01b8d74d0e"
+    },
+    "final33-run.mjs": {
+      "bytes": 18645,
+      "sha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6"
+    }
+  },
+  "findings": [],
+  "independentChecks": {
+    "allSixPinnedDeliveryFilesExact": true,
+    "arbitraryUppercaseMessagePassthroughRemovedBothCatches": true,
+    "businessCallsTransactionsBudgetsScopeSourceAndCleanupFlowUnchanged": true,
+    "closedSixFieldOutputExactlyMatchesResultInterfaceRequiredFieldsAndEnums": true,
+    "errorPropertyGetterInvocations": 0,
+    "guardWhitelistExactlyTwentyTwoOriginalRunnerFixedLiterals": true,
+    "independentPureSchemaPrivacyCases": 76,
+    "knownFixedGuardOrOriginalGenericSafeCodeOnly": true,
+    "mainAstEquivalentAfterRemovingOnlyDiagnosticCatchReplacementAndFixedStageAssignments": true,
+    "nineteenSystemCodesAndTwentyThreeSqlstatesClosed": true,
+    "noSharedContractNativeOrFrozenT45SourceChange": true,
+    "ordinaryUnknownValuesAndProxyWrappedErrorsFallBackToClosedUnknown": true,
+    "ownDataDescriptorsReadWithoutInvokingCodeMessageStackCauseNameGetters": true,
+    "sixFixedPrepareStagesPlusUnknownOnly": true,
+    "successfulFunctionAndEveryOtherNonMainOriginalFunctionBytesUnchanged": true
+  },
+  "independentEvidence": {
+    "path": "outputs/QB/20261117-r3-prepare35-diagnostics-review-01/PURE-DIAGNOSTIC-EVIDENCE.json",
+    "sha256": "7e3ba4626ea7a0ecffcb032eaff68f1f05ea429c762245ed9b98fd9473d21ec1"
+  },
+  "interfaceSha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21",
+  "limitations": [
+    "This is failure-information source only, not root-cause identification or repair. Earlier masked exceptions are not recovered or retroactively identified.",
+    "T45 result/collector projection and exact candidate bundle pins remain pending separate frozen source review.",
+    "No new auxiliary task,36 package, key remapping, native scope change, materialization, deployment or execution is authorized by this report.",
+    "No actual failed key or committed catalog may be replayed under this source conclusion.",
+    "No native,PG,target,capability,clock or server execution was used.",
+    "Report frozen once; subsequent projection or continuation evidence requires another file/version."
+  ],
+  "ownerLocalChecksReused": {
+    "path": "outputs/D1/20261117-r3-prepare35-diagnostic-source-01/LOCAL-CHECKS.json",
+    "seventeenOwnerChecksNotRerun": true,
+    "sha256": "2c3d0e61318bfce7b6d5ad41a8821f13017fd0ea326e0954345e36b520b162fe"
+  },
+  "projectionInterface": {
+    "T45HostAndCollectorImplementation": "PENDING_NOT_REVIEWED_OR_PASSED",
+    "additionalProperties": false,
+    "closedFields": [
+      "format",
+      "stage",
+      "errorType",
+      "systemCode",
+      "guardCode",
+      "sqlstate"
+    ],
+    "field": "failureDiagnostic",
+    "invalidOrMissing": "Omit or project UNKNOWN; never expose original raw object/error text.",
+    "optionalOnly": true,
+    "originalNativeResultHashAndRootPublicReadbackBindingsMustRemain": true,
+    "successAndCleanupMustNotBeInferredFromDiagnostic": true
+  },
+  "reviewer": "QB",
+  "runnerSha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-prepare35-diagnostic-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
+  "state": "SOURCE_PASS_PREPARE_DIAGNOSTIC_RUNNER_AND_INTERFACE_ONLY"
+}

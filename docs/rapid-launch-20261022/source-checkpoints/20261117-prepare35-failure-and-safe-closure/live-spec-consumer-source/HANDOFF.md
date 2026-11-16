@@ -1,0 +1,19 @@
+# 活服务35的未执行PREPARE/WRITER指纹修正（仅SOURCE）
+
+本后继不动原03冻结源、已实际apply/start/catalog、原roles9e43、现有期限或活服务C82e。原PREPARE首次签发在纯host.validate被FINAL33_NATIVE_BINDING_REQUIRED拒绝，没有产生授权输出或提交PREPARE；writer也未提交。不能把实际新binding改旧值、删除guard、重装catalog、重描述、新36或延长角色期限。
+
+## 仅两处运行源码
+
+prepare/bundle/final33_host.py和writer同文件，原sha6a1247e3，新sha3bf28414d6949de2ee81070d3aba14efcc61e6d96a872b67f095a8bec5baed7d。每文件只将validate里唯一batchedCatalogSpecSha256字面量05609b8c0eb2b4be1fb84e2e3ef1d8b1737f82afe712cd49cd111860e22675bb改为9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29，其余原字节及所有断言不动。原52成员中50完全相同；无native、模型、SQL、CLI、预算、密钥、角色或scope调整。
+
+新spec来自两项既有真实证据：start35 e1b0的descriptor和finalPreparationBinding，以及catalog_update469实际COMMITTED/原key postcommit readback。三者均为9f459，model626c/sourcecf27/C82e/epoch2026-11-16 18:33:48.303258+00相同。原native609879源码四个FINAL_R3_SOURCE常量与实际inputBinding精确，既有dbcandidate dc08精确；原native接收本次实际catalog证据，不硬编码旧spec。本轮没有重新编译、调用native、创建target或模拟成功许可。
+
+## 独立位置与待执行范围
+
+本目录拥有独立PHASES35和INTERFACE及原字节CLI4a71。CLI真实HERE、蓝图、所有当前jobs.sourceDirectory与sourceInterfaces逐项本目录配对。全52源只为闭包完整和已验字节复用，实际只允许主控后继CAS消费两个未用prepare/writer bundlePins；apply/start/catalog已成功且永久不可重放，stop/restore继续原实际35受控链。原登记policy54078/dispatcher34e/module4674及roles9e43是需要按原锁精确比较的现场基准，不是新许可。本候选尚未安装，也没有签发新权限或改变现存parent/role/deadline。
+
+## 必要检查
+
+LOCAL-CHECKS仅两文件Python语法、精确单字面量差异、原实际35 binding上的原predicate FALSE与修版TRUE、native原四常量与实际dc08对应、其余50原字节、CLI原字节与真实HERE/蓝图/接口位置、两pending bundles原v3真实纯collector配对。没有authority/角色/target/cap fixture，没有state/network/SQL/PG/clock/issuer/新任务。不同于源码PASS，原完整预算须在实际后继签发时仍满足；无法满足则按原链stop/精确restore，不能压预算或延长已用凭据。
+
+下一步原QB只核本差异与原D1 live CAS的必要接线；原D1独立负责原锁上当前35活服务状态和已用结果钉住，不能复用要求PG停库的初始登记quiet。旧source/review全部保留，当前运行事实沿typed回执消费。本后继runtime未测，PREPARE/WRITER未执行，导入和上线未完成。

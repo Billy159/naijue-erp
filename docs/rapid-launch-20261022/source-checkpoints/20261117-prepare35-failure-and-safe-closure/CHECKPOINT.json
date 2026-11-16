@@ -1,0 +1,198 @@
+{
+  "asOf": "2026-11-17T03:37:23.565446+08:00",
+  "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
+  "goal": "ACTIVE",
+  "actualClosureSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/RESULT35-PREPARE-FAILED-SAFELY-CLOSED.json",
+  "actualClosureSha256": "24cdc14719c9fac5379817aefd486831f45ffdc19e7acb75b36e460372038c94",
+  "actualClosureCheckedUTC": "2026-11-16T19:22:48.582273+00:00",
+  "actualCatalog35": "COMMITTED_469177_NEVER_REPLAY",
+  "liveSpecCAS": {
+    "typedSourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal35-live-native-spec-window-01/ACTUAL-LIVE35-CAS-READBACK.json",
+    "typedSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
+    "dispatcherSha256": "5a06bf8de17ca75944934bb5c5676430a0f890bf9bec7ddcd71d804aebdc83bb",
+    "helperSha256": "46741990f7567458e53e55a0dd79b6538d4361a49193508b68ef09db4b2ef7e4",
+    "policySha256": "8ede4587599742ec45ad90eef7b01e43d21d83635ce2689c85181691dca679e7"
+  },
+  "nativePreparation": {
+    "batchPlanPresent": false,
+    "exclusiveProcessAndDescendantsReaped": true,
+    "initializerPresent": false,
+    "nativeConnectionCleanup": "UNKNOWN",
+    "prepareKeyMustNeverReplay": true,
+    "safeCode": "FINAL33_NATIVE_OUTCOME_UNCONFIRMED",
+    "sqlstate": null,
+    "state": "UNKNOWN",
+    "underlyingCause": "UNKNOWN_NOT_RETAINED_IN_ORIGINAL_RECEIPTS"
+  },
+  "businessWriterSubmitted": false,
+  "businessRowsWritten": 0,
+  "input02ROOT06And211": "PERMANENTLY_COMPLETE_NEVER_REPLAY",
+  "diagnostics": {
+    "sourcePins": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
+    "QBReview": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b",
+    "sourceOnly": true,
+    "rootCauseFixed": false,
+    "hostCollectorProjection": "PENDING"
+  },
+  "next": "D1 explicit new outer auxiliary attempt02/native logical scope01 mapping proof and minimal root source; T45 artifact install/restore and optional diagnostic collector source. No new authority or service issued. New whole execution package not yet frozen.",
+  "artifactReception": "APP14f34_7687919B_AND_PRIVATE244b_40960B_NOT_SERVER_READY_B164_POLICY_ABSENT_AT_ACTUAL19_31",
+  "copies": [
+    {
+      "path": "diagnostic-source/SOURCE-PINS.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/SOURCE-PINS.json",
+      "sha256": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
+      "bytes": 1087
+    },
+    {
+      "path": "diagnostic-source/CONTINUATION-CONTRACT.md",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/CONTINUATION-CONTRACT.md",
+      "sha256": "eda806cd4a7953e85ddbc980ee7258e5f1526a84e8cc2d8b73cf74a76376452e",
+      "bytes": 3621
+    },
+    {
+      "path": "diagnostic-source/DIFF.patch",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/DIFF.patch",
+      "sha256": "bfbe8387513c3d33c6f71d72946b5289aabf04ef335fc7a6a1e0b32c8aa83939",
+      "bytes": 8107
+    },
+    {
+      "path": "diagnostic-source/LOCAL-CHECKS.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/LOCAL-CHECKS.json",
+      "sha256": "2c3d0e61318bfce7b6d5ad41a8821f13017fd0ea326e0954345e36b520b162fe",
+      "bytes": 425
+    },
+    {
+      "path": "diagnostic-source/RESULT-INTERFACE.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/RESULT-INTERFACE.json",
+      "sha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21",
+      "bytes": 3966
+    },
+    {
+      "path": "diagnostic-source/check-diagnostics.mjs",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/check-diagnostics.mjs",
+      "sha256": "ada082828f9c5cd6bdfec2647de16d27380d24d97682339630b31b01b8d74d0e",
+      "bytes": 2883
+    },
+    {
+      "path": "diagnostic-source/final33-run.mjs",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/final33-run.mjs",
+      "sha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6",
+      "bytes": 18645
+    },
+    {
+      "path": "live-spec-root-source/SOURCE-PINS.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/SOURCE-PINS.json",
+      "sha256": "5bf37a951a2e75b07a30afd83a7770744cb263f80670ba35d9a7f9de9a94454f",
+      "bytes": 1380
+    },
+    {
+      "path": "live-spec-root-source/ISSUER-DIFF.patch",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/ISSUER-DIFF.patch",
+      "sha256": "1e9b2aa3deacb6ba2fd879815b1f67205271bf6c6777d0b41b2715f04d9be960",
+      "bytes": 3244
+    },
+    {
+      "path": "live-spec-root-source/LOCAL-CHECKS.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/LOCAL-CHECKS.json",
+      "sha256": "a6beec394222b77599e990ed42272934260979b39c708a7fb71e7e2463e3d246",
+      "bytes": 1326
+    },
+    {
+      "path": "live-spec-root-source/issue_live.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/issue_live.py",
+      "sha256": "8bdf187e72e07b0f564a591f6ff8db542b08f04c9cb4e81ec67804ae2e44cb7a",
+      "bytes": 6157
+    },
+    {
+      "path": "live-spec-root-source/issue_phase.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/issue_phase.py",
+      "sha256": "7a5fa9327dcda07fbd08ebede9619b514a2fe9ea9c1026b9f46bd3705eee2f7a",
+      "bytes": 39584
+    },
+    {
+      "path": "live-spec-root-source/live_cas.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/live_cas.py",
+      "sha256": "b2fbc4a34b5697ee1584d9aa1e9d3ff7ef56d265cf500835a60c0b431547eb96",
+      "bytes": 24088
+    },
+    {
+      "path": "live-spec-root-source/original-cas-live35-carrier.UNISSUED.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal35-live-prepare-writer-source-01/original-cas-live35-carrier.UNISSUED.py",
+      "sha256": "c334b771356bd9f805ad16d9c393d43e7d73268b71afd80eaf04526adcfc417c",
+      "bytes": 2552
+    },
+    {
+      "path": "live-spec-consumer-source/SOURCE-PINS.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/SOURCE-PINS.json",
+      "sha256": "1d2cff53cee31d52cf214be3b4d5ded5408761328579fb0ff734373b3de0c279",
+      "bytes": 9911
+    },
+    {
+      "path": "live-spec-consumer-source/CORRECTION-ONLY.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/CORRECTION-ONLY.json",
+      "sha256": "302840b3c1aa57f1fed4d605774c538e6e457c102d29db7d45924e9439de43df",
+      "bytes": 552
+    },
+    {
+      "path": "live-spec-consumer-source/CORRECTION-ONLY.patch",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/CORRECTION-ONLY.patch",
+      "sha256": "b3124cb7b3918d71541acd9a7e3ce7e6d81aeccad483a90ebeb351374691ca20",
+      "bytes": 1626
+    },
+    {
+      "path": "live-spec-consumer-source/HANDOFF.md",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/HANDOFF.md",
+      "sha256": "d16cb97fe9d8dee354ec7a5c6efc0f6e91a0ed07d4551d2c83c5468c41af680e",
+      "bytes": 2978
+    },
+    {
+      "path": "live-spec-consumer-source/LOCAL-CHECKS.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/LOCAL-CHECKS.json",
+      "sha256": "02619fde76eda4da90ce150e0cec27f06e2eb492b2528d8f9edb58bc7f713606",
+      "bytes": 968
+    },
+    {
+      "path": "live-spec-consumer-source/check_spec_correction.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/check_spec_correction.py",
+      "sha256": "fb4ca6f42af4ecb16376ca1c007b25a47a65bd4f7845de78f3c342fa3f21b2fe",
+      "bytes": 5706
+    },
+    {
+      "path": "live-spec-consumer-source/prepare/bundle/final33_host.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/prepare/bundle/final33_host.py",
+      "sha256": "3bf28414d6949de2ee81070d3aba14efcc61e6d96a872b67f095a8bec5baed7d",
+      "bytes": 47923
+    },
+    {
+      "path": "live-spec-consumer-source/writer/bundle/final33_host.py",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/writer/bundle/final33_host.py",
+      "sha256": "3bf28414d6949de2ee81070d3aba14efcc61e6d96a872b67f095a8bec5baed7d",
+      "bytes": 47923
+    },
+    {
+      "path": "reviews/diagnostic-result.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-prepare35-diagnostics-review-01/RESULT.json",
+      "sha256": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b",
+      "bytes": 5171
+    },
+    {
+      "path": "reviews/diagnostic-pure-evidence.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-prepare35-diagnostics-review-01/PURE-DIAGNOSTIC-EVIDENCE.json",
+      "sha256": "7e3ba4626ea7a0ecffcb032eaff68f1f05ea429c762245ed9b98fd9473d21ec1",
+      "bytes": 613
+    },
+    {
+      "path": "reviews/live-spec-consumer-result.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal35-live-spec-review-01/CONSUMER-RESULT.json",
+      "sha256": "19667cb10bb6075e789556239c8dfcdb48d3a3b7008ed00db260ac221271a2c0",
+      "bytes": 4001
+    },
+    {
+      "path": "reviews/live-spec-cas-result.json",
+      "sourcePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal35-live-spec-review-01/LIVE-CAS-RESULT.json",
+      "sha256": "322162ccb62d4427cc46bff8057d1ddb5f05a9d11054d2447121fed236ff7412",
+      "bytes": 7074
+    }
+  ],
+  "copyScope": "Only selected frozen static source/reviews and safe operational closure. Omitted UNISSUED policies and full runtime closure remain reference-only under original source pins. No live role/authority/policy bodies, protected describe/context, private business rows, or credentials included."
+}

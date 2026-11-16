@@ -1,0 +1,14 @@
+{
+  "state": "ACTUAL_LOCAL_PREPARE_HOST_VALIDATE_REFUSED_NO_AUTHORITY_EMITTED",
+  "error": "FINAL33_NATIVE_BINDING_REQUIRED",
+  "hostSourceSha256": "6a1247e3bb3e9ec8a66c84c97d53de781aad887b0309f8c511addd3d15310482",
+  "expectedOldSpecSha256": "05609b8c0eb2b4be1fb84e2e3ef1d8b1737f82afe712cd49cd111860e22675bb",
+  "actualCommittedAndDescribedSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+  "nativePreparationAuthorityValidator": "PASSED_BEFORE_HOST_VALIDATE",
+  "prepareOutputDirectoryExists": false,
+  "prepareOrWriterSubmitted": false,
+  "catalogPermanentlyCompletedNeverReplay": true,
+  "service35": "RUNNING_UNDER_ORIGINAL_FINITE_ROLE9E",
+  "credentialOrLeaseExtended": false,
+  "businessWrites": 0
+}

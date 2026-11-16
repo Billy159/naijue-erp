@@ -1,0 +1,40 @@
+{
+  "PGConnections": 0,
+  "clockOrAuthorityIssued": false,
+  "consumerReviewSha256": "19667cb10bb6075e789556239c8dfcdb48d3a3b7008ed00db260ac221271a2c0",
+  "consumerSourcePinsSha256": "1d2cff53cee31d52cf214be3b4d5ded5408761328579fb0ff734373b3de0c279",
+  "files": {
+    "ISSUER-DIFF.patch": {
+      "bytes": 3244,
+      "sha256": "1e9b2aa3deacb6ba2fd879815b1f67205271bf6c6777d0b41b2715f04d9be960"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1326,
+      "sha256": "a6beec394222b77599e990ed42272934260979b39c708a7fb71e7e2463e3d246"
+    },
+    "TWO-PHASES.UNISSUED.json": {
+      "bytes": 34214,
+      "sha256": "2fc1e2ab9d0d399c487b7a65432204f2f21e58d4044f29da5efd7a26894b85eb"
+    },
+    "issue_live.py": {
+      "bytes": 6157,
+      "sha256": "8bdf187e72e07b0f564a591f6ff8db542b08f04c9cb4e81ec67804ae2e44cb7a"
+    },
+    "issue_phase.py": {
+      "bytes": 39584,
+      "sha256": "7a5fa9327dcda07fbd08ebede9619b514a2fe9ea9c1026b9f46bd3705eee2f7a"
+    },
+    "live_cas.py": {
+      "bytes": 24088,
+      "sha256": "b2fbc4a34b5697ee1584d9aa1e9d3ff7ef56d265cf500835a60c0b431547eb96"
+    },
+    "original-cas-live35-carrier.UNISSUED.py": {
+      "bytes": 2552,
+      "sha256": "c334b771356bd9f805ad16d9c393d43e7d73268b71afd80eaf04526adcfc417c"
+    }
+  },
+  "newJobSubmitted": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "UNISSUED_LIVE35_TWO_UNUSED_HOSTS_SOURCE"
+}
