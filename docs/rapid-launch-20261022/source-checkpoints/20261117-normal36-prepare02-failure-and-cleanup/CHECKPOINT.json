@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T06:15:14.015349+08:00",
-  "state": "STOP36_COMPLETE_RESTORE36_NOT_PUBLISHED_EMPTY_CONTROL_BUNDLE_ORIGINAL_KEY_FINITE_RESTORATION_SUCCESSOR_PREPARING",
+  "asOf": "2026-11-17T06:27:38.314100+08:00",
+  "state": "NORMAL36_FAILED_PREPARE02_SAFELY_CLOSED_EXACT_AUTH_RESTORED_NORMAL37_SOURCE_ONLY_PREPARING",
   "actualStartSha256": "2d9aa879a649ad9a47ccfeb4df218ee5adcca5059f1b0b5722197ca816acc486",
   "actualPrepareSha256": "59586beda1f5daaa63cf006fba168c47091c7889745f83f671b7c4bf720cd3e7",
   "failureCode": "NORMAL05_STOP_PINNED_MODULE_DIFFERS",
@@ -8,12 +8,12 @@
   "writerSubmitted": false,
   "businessWrites": 0,
   "PGCurrentlyStopped": true,
-  "originalAuthRestored": false,
+  "originalAuthRestored": true,
   "temporaryRoleAuthoritySha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
   "stopConsumerSourcePinsSha256": "59708ff131224173c7850af0b5a272870c5695144283746e2fd17bf63697c217",
   "pendingStopRootSourcePinsSha256": "2e46ddc95c3252d53e4cb71ce76beb41b35e4270f26a3efab2c7dbb2a918d8fe",
   "pendingStopRootReview": "SOURCE_PASS_ONLY",
-  "next": "Original fbb6 permit and25c707 intent frozen, no publish under insufficient remaining300s budget. Main prepares distinct finite exact-restore permit for same unsubmitted key; original role deadlines unchanged. Resume existing empty control directories only after precise source and real fresh absence evidence.",
+  "next": "Fix actual pre-native support literal-pins load closure in isolated normal37/prepare03 SOURCE, reuse T45/D1/QB and all passed scope. Main exact source/actual stopped baseline before new finite registration. No full rehearsal, replay, business write, APP deployment or release acceptance claimed.",
   "copies": [
     {
       "path": "actual/START36-SAFE-PROJECTION.json",
@@ -239,18 +239,111 @@
       "path": "actual/restore/RESTORE36-INVENTORY.json",
       "sha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
       "bytes": 2870
+    },
+    {
+      "path": "restore-repermit-source/SOURCE-PINS.json",
+      "sha256": "ca4e5df6800f86fbd22f7ef9360504f3460943f43c04b518d871123898178fe5",
+      "bytes": 785
+    },
+    {
+      "path": "restore-repermit-source/HANDOFF.md",
+      "sha256": "098453bd1de70b38f44dba87c2024d8a2763f79113b1a1148b144e7074aaf5d4",
+      "bytes": 2793
+    },
+    {
+      "path": "restore-repermit-source/LOCAL-CHECKS.json",
+      "sha256": "2d7c4a8a40f87802519a5094f2d60dad4dbf077eabe708c752b40c0a2d16ca54",
+      "bytes": 722
+    },
+    {
+      "path": "restore-repermit-source/check_source.py",
+      "sha256": "1cc31cc73c2dec87cc7380a724b5df4824a41ff0af8ae0dd7a9d7c59959e0025",
+      "bytes": 1551
+    },
+    {
+      "path": "restore-repermit-source/issue_restore.py",
+      "sha256": "61de8b3827288460ac09348396b709288549ac2be3fae47d4e44c53999a4246f",
+      "bytes": 7661
+    },
+    {
+      "path": "restore-resume03-source-rejected/SOURCE-PINS.json",
+      "sha256": "1893b45628b04c210fc8b1c02cd02949868d5fab0583e9dbdb87587fd149609d",
+      "bytes": 1218
+    },
+    {
+      "path": "restore-resume03-source-rejected/resume_unaccepted_restore36.py",
+      "sha256": "388a71c10e4ee1eb13563acd21b7c77057fff2c9a74ea417ba6ddecaf50c653e",
+      "bytes": 12599
+    },
+    {
+      "path": "restore-resume04-source-pass/SOURCE-PINS.json",
+      "sha256": "597b1da6a51b2375c4de71d83ccd829c26e0bc859e8045da5a1927ede58a01f0",
+      "bytes": 1635
+    },
+    {
+      "path": "restore-resume04-source-pass/FIX-DIFF.patch",
+      "sha256": "a83e9bfda788547e1c73d4e5680395024ed3ec88418943ef197258d7c5a03a78",
+      "bytes": 1897
+    },
+    {
+      "path": "restore-resume04-source-pass/resume_unaccepted_restore36.py",
+      "sha256": "957f0869ac0e4a57e68f820b72f4bce65f47ea099521dfd1f2bf0287edd8a005",
+      "bytes": 13002
+    },
+    {
+      "path": "reviews/RESTORE-RESUME03-NEEDFIX-RESULT.json",
+      "sha256": "2e52ca86ff193bebb764458b7c1006e2b1f4f0c5b10d7ec8ffae6a1b270ebaaf",
+      "bytes": 3257
+    },
+    {
+      "path": "reviews/RESTORE-RESUME04-PASS-RESULT.json",
+      "sha256": "06021cfcd6bfdbf01beaefda7b82608c0d7d223de8bda5a349c297b420803a85",
+      "bytes": 2561
+    },
+    {
+      "path": "reviews/RESTORE-REPERMIT-PASS-RESULT.json",
+      "sha256": "0378b7c68c733a0274394d00878c64b9bbeee32a8297a9736859ef84b8eca38b",
+      "bytes": 4252
+    },
+    {
+      "path": "actual/restore/FRESH-INVENTORY02.json",
+      "sha256": "2abfe7950a7747578f7a8804f45576c2dc0786d1920d5d50588421e7d11c4360",
+      "bytes": 2870
+    },
+    {
+      "path": "actual/restore/ACTUAL-RESTORE36-RESULT.json",
+      "sha256": "8ae0035cca6a6c5b11266ea6e0a1998f317315b724c9230121d0fdfe7c073857",
+      "bytes": 5331
+    },
+    {
+      "path": "actual/RESULT36-SAFELY-CLOSED.json",
+      "sha256": "589f5ab71df31c96db1ec22ae384aa08eeadf08f7a219cf8a3cb7b1cbd13a28a",
+      "bytes": 2766
+    },
+    {
+      "path": "issued-safe-metadata/RESTORE02-ISSUED-METADATA.json",
+      "sha256": "e758b9e875b8e62f83203f86c9d32add17bb0e2e225f7f0b7c1556598bac1c3c",
+      "bytes": 1147
     }
   ],
   "pendingStopRootReviewSha256": "c00ddf6e7cc8f8c878b93818ec59a456702ecdaf8edfa2347fd2e87257f239b4",
   "actualCASReadbackSha256": "8e28f14879a90ab05d7f4467e7f7c9b9ef7c1d2506c2ab424e3ec507aa7adf9f",
   "actualStopSha256": "0a1248f28c51437bc83dc474eae05f0d43dbc9a626af9d10ee82cf541b2ad87c",
   "actualStopTerminalStatus": "COMPLETED",
-  "restoreSubmission": "ACTUAL_NOT_PUBLISHED_ONLY_EMPTY_CONTROL_DIRECTORIES",
+  "restoreSubmission": "ORIGINAL_KEY_ACTUAL_COMPLETED_AFTER_ONCE_PARTIAL_UPLOAD_RESUME",
   "restoreFirstExceptionClass": "ValueError",
   "restoreFirstCause": "UNKNOWN_NOT_RETAINED",
   "restoreCollect": "WAITING_RECEIPT_NO_REPLAY",
-  "PGLastCheckedAtUTC": "2026-11-16T22:13:11.022746+00:00",
+  "PGLastCheckedAtUTC": "2026-11-16T22:24:11.545625+00:00",
   "restoreOriginalPermit": "FBB6_FROZEN_NO_FURTHER_PUBLICATION_OR_TIME_CHANGE",
   "restoreOriginalKeyDiagnosticSha256": "eeeada6da9228ab17de0bb1f6cc1ded62072a280a1c7e0609b65c190c26ee26e",
-  "restoreInventorySha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69"
+  "restoreInventorySha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
+  "temporaryRoleAuthority": "D834_APPLIED_THEN_EXACT_ORIGINAL_AUTH_RESTORED_NOT_REUSED_OR_EXTENDED",
+  "actualRestoreSha256": "8ae0035cca6a6c5b11266ea6e0a1998f317315b724c9230121d0fdfe7c073857",
+  "actualSafeClosureSha256": "589f5ab71df31c96db1ec22ae384aa08eeadf08f7a219cf8a3cb7b1cbd13a28a",
+  "actualRestoreTerminalSha256": "05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1",
+  "actualRestoreElapsedSeconds": 7.558030991989654,
+  "actualRestoreAuthoritySha256": "c7922705578599f82413746e803d0ce9be09f24d3a28ad54bc230e627974ba0b",
+  "actualRestoreManifestSha256": "3104bb77ca353dad53ced4810a5b13a0250833d4984eb5beb755ebd797c772a0",
+  "oldFbb6Published": false
 }

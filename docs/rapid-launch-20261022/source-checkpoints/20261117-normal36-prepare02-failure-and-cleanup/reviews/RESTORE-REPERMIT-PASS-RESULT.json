@@ -1,0 +1,81 @@
+{
+  "actions": {
+    "actualFrozenInputsAndValidateInventoryPureFunctionsCalled": true,
+    "clockCalls": 0,
+    "frozenReportsRewritten": false,
+    "invalidExistingMetadataVariantsRejected": 3,
+    "issueCalled": false,
+    "newPermitConstructed": false,
+    "originalPreservationAuthorityCalled": false,
+    "ownerSourcesModified": false,
+    "readerClientRemoteOrPGInvoked": false,
+    "uploadOrRequestPublished": false
+  },
+  "evidence": {
+    "path": "outputs/QB/20261117-r3-normal36-restore-repermit-review-01/PRECLOCK-EVIDENCE.json",
+    "sha256": "13a450c7baf9cd25780c868035e75eba4dc9c74c341663411e4e1aab4f23f2b0",
+    "staticAndPureMetadataConfirmations": 17
+  },
+  "executionReady": false,
+  "existingEvidencePins": {
+    "inventory": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
+    "oldManifest": "25c7073069327ed6d4a1e3e8dd316ccb8a4f9d8697a0dab767a62bee9f4c0ecd",
+    "oldPermit": "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e",
+    "roles": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
+    "start": "2d9aa879a649ad9a47ccfeb4df218ee5adcca5059f1b0b5722197ca816acc486",
+    "stop": "0a1248f28c51437bc83dc474eae05f0d43dbc9a626af9d10ee82cf541b2ad87c"
+  },
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 2793,
+      "sha256": "098453bd1de70b38f44dba87c2024d8a2763f79113b1a1148b144e7074aaf5d4"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 722,
+      "sha256": "2d7c4a8a40f87802519a5094f2d60dad4dbf077eabe708c752b40c0a2d16ca54"
+    },
+    "check_source.py": {
+      "bytes": 1551,
+      "sha256": "1cc31cc73c2dec87cc7380a724b5df4824a41ff0af8ae0dd7a9d7c59959e0025"
+    },
+    "issue_restore.py": {
+      "bytes": 7661,
+      "sha256": "61de8b3827288460ac09348396b709288549ac2be3fae47d4e44c53999a4246f"
+    }
+  },
+  "findings": [],
+  "independentVerification": {
+    "START2d9STOP0a124ServiceAndCleanStopMatchOldFbb6": true,
+    "actualFrozenInputFunctionsAcceptRealStartStopRolesRulesOldPermitAndInventory": true,
+    "allFourFrozenFilesExact": true,
+    "clockOnlyInsideActualIssueEntry": true,
+    "exactPreservationAuthorityRestoreLiteralOnly": true,
+    "freshInventoryFiveMinuteLimitAndOriginalRestorationParentLimitsEnforced": true,
+    "frozenInputsAndInventoryValidationBeforeOnlyIssuanceClock": true,
+    "inventoryAllFieldsExceptObservationTimeMustRemainExact": true,
+    "live3ddRestoreRuleEqualsOriginalB047Rule": true,
+    "negativePGOrRestoreStateOrResultsChangesRejected": true,
+    "newPermitAllNonTimeFieldsMustEqualOldPermit": true,
+    "noClientOrPublishOrPGEntryAdded": true,
+    "oldFbb6AndBundleManifest25c707BoundToActualOldBundle": true,
+    "originalRoleD834AndSource90fUnchangedPinned": true,
+    "outputOnlyIndependentMainWindow02ExclusiveCreate": true,
+    "realInventory6c391EmptyTenLeavesNineFieldDirectoryIdentitiesAndDualGrantAbsencesAccepted": true
+  },
+  "issuerSha256": "61de8b3827288460ac09348396b709288549ac2be3fae47d4e44c53999a4246f",
+  "limitations": [
+    "Existing6c391 inventory consumed only for exact schema/input checks; current freshness was not sampled or extended. Main must supply actual inventory within five minutes at real issue call.",
+    "No restoration, role/controller/admin/parent deadline extended. Expired or insufficient remaining original window must refuse.",
+    "Oldfbb6/window01/25c707 and original bundle remain untouched and must not be published.",
+    "Acceptance covers wrapper only. New actual permit-driven manifest/request/intent and mature partial-upload adapter are separately reviewed by D1 as instructed.",
+    "No new permit, request, future valid inventory, target, capability or success fixture created.",
+    "No actual issuance, publication, restore or business/database success claimed."
+  ],
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "scope": "Only Main-only new finite exact RESTORE36 wrapper. Existing pinned root03 preservation_authority restore logic reused; upload/resume adapter and actual issuance/execution excluded.",
+  "sourceDirectory": "outputs/D1/20261117-r3-normal36-restore-repermit-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "ca4e5df6800f86fbd22f7ef9360504f3460943f43c04b518d871123898178fe5",
+  "state": "SOURCE_PASS_NORMAL36_RESTORE_REPERMIT_WRAPPER_ONLY"
+}

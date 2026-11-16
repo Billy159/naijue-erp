@@ -1,0 +1,37 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clientOrResumeInvoked": false,
+    "clockCalls": 0,
+    "futurePermitOrTargetOrCapabilityFixtureCreated": false,
+    "remoteCalls": 0,
+    "sourceModified": false
+  },
+  "adapterSha256": "957f0869ac0e4a57e68f820b72f4bce65f47ea099521dfd1f2bf0287edd8a005",
+  "closedFindings": [
+    "R36-U01",
+    "R36-U02"
+  ],
+  "executionReady": false,
+  "findings": [],
+  "independentChecks": [
+    "Removing exactly three pre-call valid_time() statements and root-lock stat block yields SOURCE03 identical bytes.",
+    "All SOURCE04 members/bytes/SHA match. Main Python and two embedded programs compile.",
+    "Three final original tmp upload/request publish/first start calls each now require remaining full300s immediately before the call.",
+    "Root execution.lock canonical regular-file nine-field stat equals actual eee diagnostic; no open/flock/write to that root lock added.",
+    "Original SOURCE03 scope review reused: real6c391 original empty three-directory identities; same original key/300/policy3dd/rolesd834; new real Main permit SHA only; oldfbb6 never submitted; original constructors/local clientlock/O_EXCL/NOFOLLOW/identity/absence/UNKNOWN-no-replay retained.",
+    "Compatible with D1 Main-only wrapperca4e input: actual newly-issued window02 host-authorization JSON bytes/SHA; exact restore scope and original role/deadline fields. No future permit used in this review."
+  ],
+  "inventorySha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
+  "limitations": [
+    "Main wrapperca4e awaits separate narrow QB review; this SOURCE review does not issue authority or authorize a new upload.",
+    "Main must use fresh actual empty original-key inventory and exact reviewed wrapper.",
+    "Only T45 after explicit Main instruction may call reviewed resume API with actual new permit file/SHA; no complete execute/submit repeat, oldfbb6, new key, expiry extension or unknown replay.",
+    "No runtime restoration or PG correctness claimed by local SOURCE PASS."
+  ],
+  "parentReviewSha256": "2e52ca86ff193bebb764458b7c1006e2b1f4f0c5b10d7ec8ffae6a1b270ebaaf",
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RESTORE36-UNACCEPTED-RESUME-SOURCE-04",
+  "sourceOnly": true,
+  "sourcePinsSha256": "597b1da6a51b2375c4de71d83ccd829c26e0bc859e8045da5a1927ede58a01f0",
+  "state": "SOURCE_PASS_RESTORE36_PARTIAL_RESUME_ONLY_PENDING_REAL_MAIN_PERMIT"
+}

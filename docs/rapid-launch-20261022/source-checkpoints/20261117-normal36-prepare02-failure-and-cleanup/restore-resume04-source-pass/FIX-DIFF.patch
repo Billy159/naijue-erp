@@ -1,0 +1,25 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RESTORE36-UNACCEPTED-RESUME-SOURCE-03/resume_unaccepted_restore36.py
++++ /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RESTORE36-UNACCEPTED-RESUME-SOURCE-04/resume_unaccepted_restore36.py
+@@ -60,6 +60,10 @@
+ from pathlib import Path
+ import hashlib,json,os,stat,time,subprocess
+ C=Path(CONTROL);K=KEY;J=C/'jobs'/K;B=Path(PRIVATE)
++root_lock=B.with_name('grant-5cc58239751e4e2a')/'execution.lock'
++z=root_lock.lstat();assert root_lock.resolve()==root_lock and stat.S_ISREG(z.st_mode)
++assert [z.st_dev,z.st_ino,z.st_uid,z.st_gid,stat.S_IMODE(z.st_mode),z.st_nlink,z.st_size,z.st_mtime_ns,z.st_ctime_ns]==[66304,12224849,0,0,420,1,0,1791828307183940015,1791828307183940015]
++
+ expected=EXPECTED
+ if not expected:
+  for label,p in {'job':J,'bundle':J/'bundle','results':J/'results'}.items():
+@@ -127,8 +131,11 @@
+         history_path.write_text(json.dumps(history,indent=2)+'\n');os.chmod(history_path,0o600)
+         temp=cfg['control']+'/requests/'+KEY+'.tmp';target=cfg['control']+'/requests/'+KEY+'.json'
+         save('RESTORE36-RECOVERY-REQUEST-ONCE.json',dict(key=KEY,completeStageSha256=complete,atMs=time.time_ns()//1000000))
++        valid_time()
+         client['remote'](cfg,'umask 077; cat > '+shlex.quote(temp),json.dumps(request).encode())
++        valid_time()
+         client['remote'](cfg,'mv '+shlex.quote(temp)+' '+shlex.quote(target))
++        valid_time()
+         value=client['dispatch'](cfg,'start',KEY)
+         output=R/'NORMAL36-RUNTIME-01/restore';output.mkdir(parents=True,exist_ok=True)
+         with (output/('release-submission-'+KEY+'.json')).open('x') as f:f.write(json.dumps(request,indent=2)+'\n')

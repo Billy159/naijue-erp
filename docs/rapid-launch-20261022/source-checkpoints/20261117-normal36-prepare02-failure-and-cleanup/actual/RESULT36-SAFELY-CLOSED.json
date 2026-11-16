@@ -1,0 +1,61 @@
+{
+  "PGStopped": true,
+  "activeOperationUnits": [],
+  "actualServerRequestArgs": [
+    "c7922705578599f82413746e803d0ce9be09f24d3a28ad54bc230e627974ba0b"
+  ],
+  "applicationSwitched": false,
+  "authenticationSnapshotBodiesOrDigestsRead": false,
+  "businessAcceptancePassed": false,
+  "checkedAtUTC": "2026-11-16T22:24:11.545625+00:00",
+  "cleanupOnlyComplete": true,
+  "furtherServerActionsStarted": false,
+  "hostPortAbsent": true,
+  "naturalExpiryCountedAsRestoration": false,
+  "newMainAuthoritySha256": "c7922705578599f82413746e803d0ce9be09f24d3a28ad54bc230e627974ba0b",
+  "newManifestSha256": "3104bb77ca353dad53ced4810a5b13a0250833d4984eb5beb755ebd797c772a0",
+  "normalService": {
+    "id": "8f1705b2cdb8277170196bf9fd4132e59d0f639380385d5c5952ff2797eaf2e9",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-fresh35-first-production-20261110-r3-service-36",
+    "pid": 0,
+    "running": false
+  },
+  "oldFbb6AndOriginalIntentPreserved": true,
+  "oldFbb6Published": false,
+  "originalDataDirectoryIdentity": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502421,
+    "mode": 448,
+    "uid": 61035
+  },
+  "originalTwoRoleAuthAndExpiryRestored": true,
+  "preservedNative35Outcome": "UNKNOWN_NOT_BACKFILLED",
+  "preservedPrepare02": {
+    "nativeChildStarted": false,
+    "nativeConnectionCleanup": "NOT_OPENED",
+    "readbackSha256": "59586beda1f5daaa63cf006fba168c47091c7889745f83f671b7c4bf720cd3e7",
+    "replayed": false,
+    "safeCode": "NORMAL05_STOP_PINNED_MODULE_DIFFERS",
+    "state": "FAILED"
+  },
+  "restoreCleanupSha256": "583f5cca54c807695d59a18d77d84ecdc2987f533f19d8c16a296925e722b8e0",
+  "restoreElapsedSeconds": 7.558030991989654,
+  "restoreMaintenanceContainer": {
+    "id": "5244927badbfc4597d0e2368ef6fb0db17bb0bb4bdc768ab8e8674d96ff8586c",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-ordinary36-auth-restore-20261116-01",
+    "pid": 0,
+    "running": false
+  },
+  "restorePublicResultSha256": "19bfcbb87599d163670b89172828d868a1507968d809903ae3bd69b9bc99741a",
+  "restoreReadbackSha256": "8ae0035cca6a6c5b11266ea6e0a1998f317315b724c9230121d0fdfe7c073857",
+  "restoreRequestKey": "t45-r3-ordinary36-auth-restore-20261116-01",
+  "restoreRootResultSha256": "fa11b9b1d9c9f0051e3d1791341974016115e0522417e319f2c8ea200bb589ac",
+  "restoreTerminalSha256": "05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1",
+  "runtimeAuthOrMembershipOrAttributesChanged": false,
+  "safeRestorationReceiptSha256": "60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d",
+  "state": "NORMAL36_FAILED_PREPARE02_PRESERVATION_STOP_AND_EXACT_AUTH_RESTORE_CONFIRMED",
+  "writerSubmittedByThisContinuation": false
+}

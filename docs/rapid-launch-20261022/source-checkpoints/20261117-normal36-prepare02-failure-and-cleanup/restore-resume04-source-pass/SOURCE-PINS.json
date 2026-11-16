@@ -1,0 +1,36 @@
+{
+  "PGConnections": 0,
+  "eachRequestUploadPublishStartChecksFull300Seconds": true,
+  "embeddedProgramsCompiled": 2,
+  "files": {
+    "FIX-DIFF.patch": {
+      "bytes": 1897,
+      "sha256": "a83e9bfda788547e1c73d4e5680395024ed3ec88418943ef197258d7c5a03a78"
+    },
+    "resume_unaccepted_restore36.py": {
+      "bytes": 13002,
+      "sha256": "957f0869ac0e4a57e68f820b72f4bce65f47ea099521dfd1f2bf0287edd8a005"
+    }
+  },
+  "fixesOnly": [
+    "R36-U01",
+    "R36-U02"
+  ],
+  "full300SecondsRetained": true,
+  "inventoryPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RESTORE36-UNACCEPTED-RESUME-SOURCE-01/ACTUAL-INVENTORY.json",
+  "inventorySha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
+  "mainAuthorityFile": null,
+  "mainAuthoritySha256": null,
+  "mainOrResumeInvoked": false,
+  "matureBase": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RUNTIME-WINDOW-SUCCESSOR-01/resume_unaccepted_apply.py",
+  "mutations": 0,
+  "newManifestSha256": null,
+  "newlyUploadedLeafNineFieldIdentityPreserved": true,
+  "oldFbb6Rejected": true,
+  "onlyRequestedFixesReversedToParentBytes": true,
+  "parentSourcePinsSha256": "1893b45628b04c210fc8b1c02cd02949868d5fab0583e9dbdb87587fd149609d",
+  "rootExecutionLockStatOnly": true,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_ONLY_RESTORE36_ORIGINAL_EMPTY_STAGE_RESUME_NEW_MAIN_AUTHORITY_REQUIRED"
+}

@@ -1,0 +1,26 @@
+{
+  "PGConnections": 0,
+  "clockOrAuthorityIssued": false,
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 2793,
+      "sha256": "098453bd1de70b38f44dba87c2024d8a2763f79113b1a1148b144e7074aaf5d4"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 722,
+      "sha256": "2d7c4a8a40f87802519a5094f2d60dad4dbf077eabe708c752b40c0a2d16ca54"
+    },
+    "check_source.py": {
+      "bytes": 1551,
+      "sha256": "1cc31cc73c2dec87cc7380a724b5df4824a41ff0af8ae0dd7a9d7c59959e0025"
+    },
+    "issue_restore.py": {
+      "bytes": 7661,
+      "sha256": "61de8b3827288460ac09348396b709288549ac2be3fae47d4e44c53999a4246f"
+    }
+  },
+  "phaseSubmitted": false,
+  "roleOrRestorationDeadlineExtended": false,
+  "sourceOnly": true,
+  "state": "SOURCE_FROZEN_MAIN_ONLY_EXACT_RESTORE36_REPERMIT_UNISSUED"
+}

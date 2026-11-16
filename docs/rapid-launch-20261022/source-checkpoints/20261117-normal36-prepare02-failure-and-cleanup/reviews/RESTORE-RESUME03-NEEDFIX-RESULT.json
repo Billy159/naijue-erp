@@ -1,0 +1,48 @@
+{
+  "actualInventorySha256": "6c3917a736ee92bed1f1cc171a2b06f2ff37c392ecc9d15186f6f6e047770e69",
+  "adapterSha256": "388a71c10e4ee1eb13563acd21b7c77057fff2c9a74ea417ba6ddecaf50c653e",
+  "checks": {
+    "PGConnections": 0,
+    "clientInvoked": false,
+    "clockCalls": 0,
+    "frozenFilePinsMatched": true,
+    "futurePermitFixtureCreated": false,
+    "pythonAndEmbeddedProgramsCompile": true,
+    "remoteCalls": 0,
+    "resumeInvoked": false,
+    "sourceModified": false
+  },
+  "executionReady": false,
+  "findings": [
+    {
+      "evidence": "valid_time once at122, but remote tmp upload130, request publication131, dispatch first start132 have no intervening valid_time. Each original remote permits600sec. Existing receiver guard still rejects too-short authority, but that does not meet the explicit per-step full300 admission requirement.",
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RESTORE36-UNACCEPTED-RESUME-SOURCE-03/resume_unaccepted_restore36.py",
+      "id": "R36-U01",
+      "line": 130,
+      "minimalFix": "Call the unchanged valid_time immediately before each of these three original calls; no sequence, receiver or budget change.",
+      "priority": "P1",
+      "title": "Recheck full300 budget before each final transfer/publish/start step"
+    },
+    {
+      "evidence": "Probe validates original directories/absence/noops/PG and restore records, but never stats root execution.lock. Only original local release-client.lock is taken110; the source delivery claims original root lock bound.",
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/RESTORE36-UNACCEPTED-RESUME-SOURCE-03/resume_unaccepted_restore36.py",
+      "id": "R36-U02",
+      "line": 58,
+      "minimalFix": "Stat-only compare original nine-field identity from actual eee diagnostic in each original probe; do not acquire or mutate root lock.",
+      "priority": "P1",
+      "title": "Verify original root execution-lock identity in the existing metadata probe"
+    }
+  ],
+  "nextReview": "Only independent SOURCE04 two fixes plus derived pins; no full source or PG repetition.",
+  "reusedAcceptedScope": [
+    "Exact real empty-stage inventory6c391 and three directory identities/inodes28841818/19/20.",
+    "Nine actual static source members and new real authority in memory; original oldfbb6 file preserved and rejected as submitted authority.",
+    "Original AST manifest/raw/request construction, same key/300/source/role/policy; phase arg real new Main permit SHA only.",
+    "Original local client lock, O_EXCL/NOFOLLOW writes, member digest+identity preservation, whole-stage readback.",
+    "Dual grant original-key absence, no operations/upload leftovers, stopped PG, restore-attempt/restored absent.",
+    "Original history/tmp/json/first-start order; exceptions read-original-only, no replay loop."
+  ],
+  "sourceOnly": true,
+  "sourcePinsSha256": "1893b45628b04c210fc8b1c02cd02949868d5fab0583e9dbdb87587fd149609d",
+  "state": "SOURCE_NEED_FIX_RESTORE36_PARTIAL_RESUME_U01_U02"
+}

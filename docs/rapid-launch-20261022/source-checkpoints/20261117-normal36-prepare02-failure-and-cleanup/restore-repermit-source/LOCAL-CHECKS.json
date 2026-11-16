@@ -1,0 +1,13 @@
+{
+  "PGConnections": 0,
+  "clientOrRemoteInvoked": false,
+  "clockCalls": 0,
+  "expectedMembersIncludingManifest": 10,
+  "futurePermitOrTargetOrCapabilityFixtureCreated": false,
+  "issuerInvoked": false,
+  "oldPermitSha256": "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e",
+  "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-direct-service36-restore-window-02",
+  "requestKey": "t45-r3-ordinary36-auth-restore-20261116-01",
+  "rolesAuthoritySha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
+  "state": "REAL_EXISTING_METADATA_PRECLOCK_PREFIX_AND_RESTORE_ONLY_SOURCE_PASS"
+}

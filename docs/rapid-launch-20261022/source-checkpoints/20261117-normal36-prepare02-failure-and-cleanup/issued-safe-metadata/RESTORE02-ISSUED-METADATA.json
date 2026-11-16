@@ -1,0 +1,18 @@
+{
+  "bytes": 1988,
+  "expiresAt": 1794868646036,
+  "independentReviewSha256": "0378b7c68c733a0274394d00878c64b9bbeee32a8297a9736859ef84b8eca38b",
+  "inventorySha256": "2abfe7950a7747578f7a8804f45576c2dc0786d1920d5d50588421e7d11c4360",
+  "key": "t45-r3-ordinary36-auth-restore-20261116-01",
+  "oldPermitNeverPublish": true,
+  "originalPermitSha256": "fbb6ccf5bc21f99fe01b381b44dea0d59938be91f9e959a91c9c77e9ce933c8e",
+  "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-direct-service36-restore-window-02/host-authorization.json",
+  "phaseSubmitted": false,
+  "policySha256": "3dd91f04c776d7bd157bde7e5c5c44d63b1a3724ef167ade99cf6e9f0f13a633",
+  "roleOrRestorationDeadlineExtended": false,
+  "rolesAuthoritySha256": "d8341c2a2f0067bf33073a1001e1f50f7f91f6fb872b626a8d2dbd9d57bea57f",
+  "sha256": "c7922705578599f82413746e803d0ce9be09f24d3a28ad54bc230e627974ba0b",
+  "sourcePinsSha256": "ca4e5df6800f86fbd22f7ef9360504f3460943f43c04b518d871123898178fe5",
+  "startsAt": 1794867746036,
+  "state": "ISSUED_NEW_FINITE_EXACT_RESTORE36_PERMIT_ONLY_NOT_SUBMITTED"
+}
