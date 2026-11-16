@@ -1,0 +1,65 @@
+{
+  "authenticationRestore": {
+    "checkedAtUTC": "2026-11-16T03:16:07.114782+00:00",
+    "exitCode": 0,
+    "finishedAtUTC": "2026-11-16T03:15:49.153074+00:00",
+    "maintenanceContainerStopped": true,
+    "membershipsOrRoleAttributesChanged": false,
+    "originalTwoRoleVerifierAndExpiryVerifiedPrivately": true,
+    "publicResultSha256": "43b2490ac016005eec8c45d556898c47505343b3cf455cca52e06fb2d69843cd",
+    "receipt": "restore/READBACK-01.json",
+    "receiptSha256": "79c1cc81ba31fd6fefcee05ab4a8fb6aec15483b04651acc3017edd072c2e59b",
+    "requestKey": "t45-r3-ordinary32-auth-restore-20261116-01",
+    "rootPins": {
+      "cleanup": "dfe98ab8a267a44bcbca9eb77705f99b67c1f1942593e2f9b52f596a5d63be14",
+      "result": "545dd9d12e10f40472c662c3eba0b7dc9bba132d661714b92dd7a76ccbec0849",
+      "terminal": "f9ea3d772478aedb4cfc4fdf9e5713894c6611af69ab270b7d26c7908e7a92a3"
+    },
+    "rootPublicResultObjectsEqual": true,
+    "runtimeAuthChanged": false,
+    "terminalStatus": "COMPLETED"
+  },
+  "automaticReplay": false,
+  "businessImported": false,
+  "checkedAtUTC": "2026-11-16T03:16:07.114782+00:00",
+  "formalBusinessAccepted": false,
+  "formalRelease": false,
+  "installation": {
+    "captureReadbackSha256": "02974d6f38a5aeb4e70aae0640bcdac031d4a41484d9bb795ff0c7f43b4198fe",
+    "catalogSha256": "6da5ccda084f3d02d6e5dcf3b2121adaf7890c839c0f3e602b9a13d1aea9e3f9",
+    "commitAcknowledgements": 13,
+    "completionSha256": "c10ffe419c2ef4cef52ed1c2e110d1b8f9b1d1d4d3974782836f8e9832de6d3f",
+    "connectionCleanup": "CLOSED",
+    "finishedAtUTC": "2026-11-16T03:04:29.166973+00:00",
+    "receipt": "RESULT32-INSTALL.json",
+    "receiptSha256": "913cda1c73cc0848b0cd69ea4d32f42ac37117ca6741ddc4be37712fbb099b35",
+    "requestKey": "t45-r3-batched-install-20261116-02",
+    "terminalSha256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2"
+  },
+  "noActiveOperationUnits": true,
+  "pgdataPidAbsent": true,
+  "preserveStop": {
+    "activeHoldRetained": true,
+    "checkedAtUTC": "2026-11-16T03:14:02.644170+00:00",
+    "cleanShutdown": true,
+    "dataPreserved": true,
+    "exitCode": 0,
+    "finishedAtUTC": "2026-11-16T03:13:40.196121+00:00",
+    "ownedPidAbsent": true,
+    "portAbsentAtStop": true,
+    "publicResultSha256": "c42df34e6626b639fd4eb39013a5b0a40ad22c5195be68404aa4a808c6739914",
+    "receipt": "stop/READBACK-01.json",
+    "receiptSha256": "8aa5fa8394046c3d801d108e666c190c9ff6a495ef9ebee3cd83392821aeb62d",
+    "requestKey": "t45-r3-ordinary32-preserve-stop-20261116-01",
+    "rootPins": {
+      "cleanup": "ce45a97bd5611b692cb015cc718e3971ec21b3279b54cad9ef66fd2a9a9f1915",
+      "result": "238075e9e127dd08c685fb4bcd8503e647e34530e5b02601d0480ae5e555a154",
+      "terminal": "544e6852d4fc4fd72e893a37ae70a4bea210ffab2dbf545722a8c764843a4525"
+    },
+    "rootPublicResultObjectsEqual": true,
+    "terminalStatus": "COMPLETED"
+  },
+  "state": "DB05_CATALOG_INSTALLED_CLEANLY_STOPPED_AND_ORIGINAL_AUTH_RESTORED",
+  "writerNotSubmitted": true,
+  "writerRequestKey": "t45-r3-batched-real-execute-20261115-01"
+}

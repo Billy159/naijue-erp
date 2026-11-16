@@ -1,0 +1,22 @@
+{
+  "actualRemoteFilesystemTested": false,
+  "authorityFilesCreated": false,
+  "exampleEnvelopeBytes": 215131,
+  "expectedStaticPinsMatchExactRules": true,
+  "jobSubmitted": false,
+  "maxEnvelopeBytes": 262144,
+  "missingStaticFiles": 6,
+  "networkCalls": 0,
+  "originalExactPreflightMatched": true,
+  "originalManifestSha256": "99da864c3d65cdc49c96bed3d8032b53fecb6e70b025aa98651cfdde5466aca4",
+  "plusRenewedDynamicLeaf": 1,
+  "rejected": [
+    "changed static bytes",
+    "unknown packet fields",
+    "fewer than 300s left",
+    "less than real closeout budget"
+  ],
+  "state": "PASS_LOCAL_ORIGINAL_PROTOCOL_AND_PREPARATION_WIRE_ONLY",
+  "t45RulesSha256": "31a8a26901410e5a48dbcb79e06632fa69e2981776cd9d81a6b06b376f4ff180",
+  "unchangedStageFiles": 9
+}

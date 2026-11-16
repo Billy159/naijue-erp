@@ -1,0 +1,22 @@
+{
+  "authorityFilesCreated": false,
+  "examplePacketBytes": 215131,
+  "files": {
+    "CHECKS.json": "6c2a6cf2fe020e19b1cd11469b93ab12b15dd24857c8b80e9706d3da32e656fd",
+    "READ-ME.md": "d9e56ef53bbc89ad8c050069fb08799c9f32fc02cbe58f34b9a4708d042555d1",
+    "carrier.UNISSUED.py": "efb234654b2ec39f4160ac3fece7c6da8e609001f052ab8d83ca8b1aaf1680e3",
+    "resume_start32.py": "af727f432c5f3c53dcb8ca8e8def8c62fd1a3b9d9dd99efd6816266195f041ba",
+    "run_resume_once.py": "4e44e718d4e35bf79ad99dd78312d958423c704ae01f8abfc6237f357758e376"
+  },
+  "key": "t45-first-r3-native-service-start-20261116-32",
+  "maximumPacketBytes": 262144,
+  "missingStaticMembers": 6,
+  "newDynamicStartLeaf": 1,
+  "originalReadbackSha256": "b76edcae7b604f51dc51f0880e721639af541bef28e27882da7e749d7d3cd21a",
+  "originalStagingMembersPreserved": 9,
+  "pinsSha256": "13f5a4b8499438a72459b2453cbacfaba994746a8b3f1402577b5c4a58f88e16",
+  "serverActions": 0,
+  "sourceAndAuditPathOwnedByOriginalGrant": true,
+  "sourceManifestSha256": "99da864c3d65cdc49c96bed3d8032b53fecb6e70b025aa98651cfdde5466aca4",
+  "state": "FROZEN_LOCAL_START32_UNSUBMITTED_CONTROL_RESUME_AWAITING_QB_AND_ISSUANCE"
+}

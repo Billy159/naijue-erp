@@ -7657,6 +7657,20 @@
             "actualApplyReadbackSha256": "5ec66516cb681ac03524c1fed741621c82a6c848b64895c768e98ad39c3ba445",
             "unsubmittedStartReadbackSha256": "dc14397b3286bea2afdf2260d0255596c4594ed5709d524e76048a7a79870fa7",
             "formalRealImport": "NOT_STARTED"
+          },
+          {
+            "group": "R3_ACTUAL_DB05_INSTALLED_13_DURABLE_COMMIT_ACKS_SAFE_CLOSE_20261116",
+            "state": "ACTUAL_INSTALL_COMPLETE_SAFE_STOP_RESTORE_SOURCE_DATA_WAIT",
+            "evidenceSnapshot": {
+              "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-actual-db05-installed-and-auth-restored",
+              "files": 22,
+              "bytes": 78021,
+              "manifestSha256": "a7ff682ab32c277327ad8a9c7985099aebd0f260dc0390230c328bfd1ae77926"
+            },
+            "installReadbackSha256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b",
+            "captureReadbackSha256": "02974d6f38a5aeb4e70aae0640bcdac031d4a41484d9bb795ff0c7f43b4198fe",
+            "restoreReadbackSha256": "79c1cc81ba31fd6fefcee05ab4a8fb6aec15483b04651acc3017edd072c2e59b",
+            "formalRealImport": "NOT_STARTED"
           }
         ],
         "currentInFlight": {
@@ -7685,20 +7699,20 @@
           },
           "QB": {
             "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
-            "state": "FINAL32_SAME_VERSION_SOURCE_PASS",
-            "work": "Exact 2795886 source result, single rules31a8/Main7f350. Actual partial upload happened before the server received a request."
+            "state": "NORMAL32_PAIR_AND_SAME_KEY_SOURCE_PASS_ACTUAL_INSTALL_INDEPENDENT_CAPTURE_PROVEN",
+            "work": "QB source verdict2795886, samekey b31f87. Real T45 results separate evidence 6808/02974 and safe close79c1, not drawn from static review."
           },
           "T45": {
             "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
-            "state": "SOURCE05_MATERIALIZED_32_AUTH_APPLIED_START_UNSUBMITTED_CONTROL_PARTIAL_STAGING",
+            "state": "ACTUAL_DB05_INSTALL_PASS_SAFE_STOP_EXACT_AUTH_RESTORE_DONE_WRITER_UNSUBMITTED",
             "writeScope": "outputs/T45/revisions/20261115-r3-batched-real-first-live-01 and service24 consumer source/stop/materialize directories",
-            "work": "Actual registry96d5 dispatcher4373/policy99ea/module4ff1, material05 7ee39 COMPLETED0/18.136s independent marker e8f8/source2399/382 and 04 preserved. Apply32 COMPLETED0/7.5057s 5ec665, original restoration basis retained. Temporary authentication is applied. Start call encountered channel error and dc1439/b76edc confirm no request/tmp/root job/terminal/other grant/PGDATA process/port/ACK/active unit or local submission history. Nine protected staging files exist, seven absent including authorization; complete manifest missing. No later install or writer submitted."
+            "work": "Same original never-published start key completed after exact append-only upload of missing staged members, no archive nor replay. Start c8c50e COMPLETE0 44.177s/C f1d1/PGepoch02:59:20.307Z/actual source2399. Actual install6808 COMPLETE0 in48.692s, 13 acknowledged durable commits and captured161; 02974 independent protected file read of 13 ACKs and 154/155/161 observations, completion c10ffe, role reset ACK and connection closed, no business rows. Stopped8aa5 COMPLETE0/clean shutdown/PGDATAPID+port absent and preserved installed state. Restore79c1 COMPLETE0/8.094s, real original two auth verifiers and expiry privately matched, maintenance container exited and target PG remains stopped. Result ce214. Original writer unsubmitted. No server changes further until new actual data binding."
           },
           "input": "reuse accepted f4b86de7 scope26classes511234rows and all source/dispositions; do not re-clean",
           "firstCheckpointTarget": "2026-11-15 16:30 Asia/Shanghai",
           "totalDurationEstimate": "NOT_VERIFIED_NO_2_TO_4_DAY_PROMISE",
           "businessGate": "CLOSED_UNTIL_ALL_BATCHES_RECONCILED_AND_PUBLISHED",
-          "formalR3": "32_ACTUAL_REGISTRY_SOURCE05_APPLY_COMPLETE_START_UNSUBMITTED_PARTIAL_STAGE_EARLY_RESTORE_PENDING",
+          "formalR3": "DB05_ACTUALLY_INSTALLED_THIRTEEN_COMMIT_ACKS_CAPTURE161_PRESERVED_STOPPED_ORIGINAL_AUTH_RESTORED_WAIT_FRESH_DATA",
           "formalLaunch": "NOT_COMPLETE",
           "oldRouteForbidden": [
             "new single-transaction full-package compile/measure loop",
@@ -7711,18 +7725,18 @@
           "latestPolicySha256": "99ea865df185eef2cd1c01cc9303d5c08e9bd8d90202c8b9557b5723820fac6a",
           "firstCheckpoint": "16:30 source check met; 17:10 DB source/model package andD3 CLI source delivered, not PGready",
           "nextCheckpointTarget": "actualhandoff nodes, no unverifiedwholeproject ETA",
-          "nextCheckpointScope": "Resolve only confirmed unsubmitted stage to restore original authentication on existing deadline, or qualified same-key completion under original scope. Wait separately for location of the actual 11/16 export.",
+          "nextCheckpointScope": "Receive and identify the 11/16 export, verify actual cutoff and reconciliation against previous scope, use the already installed catalog and original unsubmitted writer intent with new verified manifest/plan. Then actual first durable business batch, full reconciliation, backup applicability, role/browser verification and release.",
           "latestSourceSnapshot": {
-            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-registry-05-auth-transport-staging",
-            "files": 15,
-            "bytes": 39116,
-            "manifestSha256": "6c6bb4ae9b4de2e6408e054cdebfa466b9a424f8911e46948307d5ab7d884dcf"
+            "path": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261116-normal32-actual-db05-installed-and-auth-restored",
+            "files": 22,
+            "bytes": 78021,
+            "manifestSha256": "a7ff682ab32c277327ad8a9c7985099aebd0f260dc0390230c328bfd1ae77926"
           },
           "controllerIssuer": {
             "owner": "current controller",
             "writeScope": "outputs/\u4e3b\u63a7/20261115-r3-direct-service24-issuer-local-01",
-            "state": "START_NEVER_SUBMITTED_EARLY_RESTORE_NEEDS_STAGING_PRESERVATION_OR_EXACT_SAME_KEY_COMPLETION",
-            "work": "Final source review2795, actual API dry then registry, 05 and apply completed. Initial start e435 window insufficient for read-preserving preparation plus 300s. Existing early restore requires original control stage absent. T45 finalized exact same-volume rename under original lock and dual grant no-request evidence, retaining all nine verified files. User asked to explicitly approve just that directory move per agents.md. Alternative same-key in-place completion can be assessed for installation-only under existing role and restoration deadlines, pending source check."
+            "state": "INSTALL_MILESTONE_VERIFIED_SAFE_CLOSE_DONE_SCOPE_PENDING_ACTUAL_NOV16_EXPORT",
+            "work": "Source and same-key continuation independent reviews passed, original upload partial never admitted. Same-key with original role and service lease upper bound prep in existing channel completed first request, old nine leaves kept. Prior moved-staging alternative not needed. One actual DB05 installation success plus 13 persistent ACKs/capture verified and once safe stop/exact auth restore. Next actual data location requested under latest human decision, then rebind actual batch source/plan/index and use retained installed catalog without reinstall."
           },
           "rehearsalGate": "CANCELLED_BY_VERIFIED_HUMAN_MESSAGE_01a1df2e-293d-7061-ab16-5b0cc2e0e753",
           "rehearsal08": {
@@ -8056,15 +8070,37 @@
             "backupAdminValidUntil": 1794801393406,
             "restorationDeadline": 1794802773406,
             "policyExpiresAt": 1794803073406,
-            "state": "REGISTRATION_MATERIALIZE_APPLY_ACTUAL_START_NOT_SUBMITTED_EARLY_RESTORE_PENDING",
-            "actualStartConfirmed": false,
+            "state": "ACTUAL_DB05_INSTALLED_SINGLE_START_CONFIRMED_SAFE_SHUTDOWN_EXACT_AUTH_RESTORED",
+            "actualStartConfirmed": true,
             "actualOriginalStartRequestPresent": false,
             "controlStageExistsOnly": true,
-            "actualInstallConfirmed": false,
+            "actualInstallConfirmed": true,
             "actualRealImportConfirmed": false,
-            "actualRestoreConfirmed": false,
+            "actualRestoreConfirmed": true,
             "actualSourceMaterializationSha256": "e8f8032b00601e976c094f0365064d0385d7af8f48f9f7bbb465dca896bf3a5e",
-            "stageReadbackSha256": "b76edcae7b604f51dc51f0880e721639af541bef28e27882da7e749d7d3cd21a"
+            "stageReadbackSha256": "b76edcae7b604f51dc51f0880e721639af541bef28e27882da7e749d7d3cd21a",
+            "actualStartReadbackSha256": "c8c50e34af41e1f163d5c28d4e6f981f97b35277d1e43c37dbeaf880b6bbbf05",
+            "actualInstallReadbackSha256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b",
+            "actualInstallAcknowledgedLayers": 13,
+            "actualInstallCaptureSha256": "02974d6f38a5aeb4e70aae0640bcdac031d4a41484d9bb795ff0c7f43b4198fe",
+            "actualStopConfirmed": true,
+            "actualRestoreReadbackSha256": "79c1cc81ba31fd6fefcee05ab4a8fb6aec15483b04651acc3017edd072c2e59b",
+            "closedSha256": "ce214e0e00e585843c7c3d943ff2b82585f38c89cdc87708593c11c218bb2c63"
+          },
+          "installedDb05Actual": {
+            "requestKey": "t45-r3-batched-install-20261116-02",
+            "state": "DB05_CATALOG_INSTALLED_AND_CAPTURED",
+            "installationCompletionSha256": "c10ffe419c2ef4cef52ed1c2e110d1b8f9b1d1d4d3974782836f8e9832de6d3f",
+            "catalogObservation161Sha256": "6da5ccda084f3d02d6e5dcf3b2121adaf7890c839c0f3e602b9a13d1aea9e3f9",
+            "catalogSpec": {
+              "catalogSpecSha256": "4be30c87bfea605a313e48a5a94e158f8cb7bb90d6d78aa00e4a0d28dfd14b26",
+              "modelSha256": "6e0a0e039eead7714d4e2ec6c995678860dee16d35e7282245bc5748eb565e85",
+              "sourceSetSha256": "b7aa9fa8766d53d06ab9bd335d047fe9830cc95e8df31333e942193221ba7269"
+            },
+            "commitAcknowledgedLayers": 13,
+            "captureDirectoryLeaf": "batched161-upgrade-f2bc8f29c659aacf7dbf60e5bf227d5043f7e3f1f32cf3587a4cf661dd6f11e5",
+            "preservedOnStoppedDataDirectory": true,
+            "businessImported": false
           }
         },
         "independentDeltaReviewer": "QB",

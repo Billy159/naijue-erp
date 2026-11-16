@@ -1,0 +1,57 @@
+{
+  "automaticReplay": false,
+  "businessImported": false,
+  "captureSHA256": "02974d6f38a5aeb4e70aae0640bcdac031d4a41484d9bb795ff0c7f43b4198fe",
+  "catalogs": {
+    "154": {
+      "bytes": 3261940,
+      "catalogSha256": "d1315c0e4050d6dd0e049a0ea549a11051ccd9d16e11cdbe8ae49e9835176ff6",
+      "fileSha256": "a5eca6c2d246ee2f300b369928b274ba52e46e463f76beeeee76948aa6c65875"
+    },
+    "155": {
+      "bytes": 3378454,
+      "catalogSha256": "51bc5e44bfe6f1094913b979eed36af582cd4c848f7242f510616a41e1eb07a6",
+      "fileSha256": "b55e301b550d92a14aa8fddccf8b4b032a40963ed42ba68da86459fedd467e7e"
+    },
+    "161": {
+      "bytes": 3820608,
+      "catalogSha256": "6da5ccda084f3d02d6e5dcf3b2121adaf7890c839c0f3e602b9a13d1aea9e3f9",
+      "fileSha256": "4305b26223c2a50afa9c8f333a8a4a61617964d876c6a4d639f3904ccd442c16"
+    }
+  },
+  "checkedAtUTC": "2026-11-16T03:11:14.089135+00:00",
+  "childReaped": true,
+  "commitAcknowledgements": 13,
+  "completionSHA256": "c10ffe419c2ef4cef52ed1c2e110d1b8f9b1d1d4d3974782836f8e9832de6d3f",
+  "connectionCleanup": "CLOSED",
+  "descendantsReaped": true,
+  "formalBusinessAccepted": false,
+  "innerAuthorityRemoved": true,
+  "ownedOperationUnitInactive": true,
+  "postgresRunningAtTerminalReadback": true,
+  "publicResultSHA256": "c3f11ec9de8c87c59fbd39201f8cfb9a82069485096a9ca3a7c2da14132b6749",
+  "readbackSHA256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b",
+  "requestKey": "t45-r3-batched-install-20261116-02",
+  "roleRestoreAcknowledged": true,
+  "rootResultSHA256": "e14e9b649d9b4d4864360384e93e059cdda80c37e769de91f2452abd1af87792",
+  "state": "DB05_CATALOG_INSTALLED_AND_CAPTURED",
+  "terminal": {
+    "atUTC": "2026-11-16T03:03:40.447109+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 48.69176094303839,
+    "exitCode": 0,
+    "exports": [
+      "batched-install-result.json"
+    ],
+    "finishedAtUTC": "2026-11-16T03:04:29.166973+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-batched-install-20261116-02",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-d8e42333f17e"
+  },
+  "terminalSHA256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2"
+}
