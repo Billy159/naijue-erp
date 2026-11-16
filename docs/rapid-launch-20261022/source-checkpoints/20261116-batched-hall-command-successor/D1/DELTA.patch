@@ -1,0 +1,213 @@
+--- a/adapters/postgres/src/sales-historical-hall-projection.ts
++++ b/adapters/postgres/src/sales-historical-hall-projection.ts
+@@ -22,6 +22,7 @@
+  SELECT h.id AS document_id,init_r.id AS root_operation_id,
+   init_a.after_values AS root_values,init_a.xmin AS root_xmin,init_r.xmin AS root_receipt_xmin,
+   init_r.completed_at AS root_completed_at,baseline.id AS baseline_batch_id,
++  init_r.actor_account_id AS root_actor,init_r.result_data->'batched_import_v1' AS root_batch_marker,
+   init_a.after_values->'request'->'payload'->>'schema_declarations_sha256' AS source_profile,
+   (known_baseline.mapping_version='STANDARD_INITIAL_EXPLICIT_KEYS_V1'
+    OR init_a.after_values->>'profile'='STANDARD_IMPORT_SQL_V1'
+@@ -114,9 +115,26 @@
+    AND (c.capture->>'captured_at' ~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}([.][0-9]{1,9})?(Z|[+-][0-9]{2}:[0-9]{2})$')
+    AND isfinite((c.capture->>'captured_at')::timestamptz)
+    AND (c.capture->>'captured_at')::timestamptz>=roots.root_completed_at
+-   AND s.source_audit_xmin=roots.root_xmin AND s.source_receipt_xmin=roots.root_xmin
+-   AND roots.root_receipt_xmin=roots.root_xmin
+-   AND roots.root_xmin::text::bigint=mod((roots.root_values->'whole_package_v2'->>'full_xid')::numeric,4294967296)::bigint
++   AND CASE WHEN roots.root_batch_marker IS NOT NULL OR s.source_receipt_result ? 'batched_import_v1' THEN
++    roots.root_batch_marker=roots.root_values->'batched_import_v1'
++    AND roots.root_batch_marker->'descriptor'->>'phase'='CORE'
++    AND roots.root_batch_marker->'identity'->>'rootOperationId'=roots.root_operation_id::text
++    AND roots.root_batch_marker->'identity'->>'batchId'=roots.baseline_batch_id::text
++    AND roots.root_batch_marker->'identity'->>'documentBatchId'=s.source_batch_id::text
++    AND roots.root_batch_marker->'identity'->>'packageSha256'=s.package_manifest_sha256
++    AND roots.root_batch_marker->'identity'->>'namespace'=s.source_namespace
++    AND s.source_audit_actor=roots.root_actor
++    AND s.source_audit_values->'batched_import_v1'=s.source_receipt_result->'batched_import_v1'
++    AND s.source_audit_values->'batched_import_v1'->'identity'=roots.root_batch_marker->'identity'
++    AND s.source_audit_values->'batched_import_v1'->>'controller'=roots.root_batch_marker->>'controller'
++    AND s.source_audit_values->'batched_import_v1'->'descriptor'->>'phase'='HISTORY'
++    AND s.source_audit_values->'request'->>'plan_sha256'=roots.root_values->'request'->>'plan_sha256'
++    AND s.source_audit_values->'request'->>'package_manifest_sha256'=s.package_manifest_sha256
++    AND s.source_audit_values->'request'->>'cutoff_at'=roots.root_values->'request'->>'cutoff_at'
++   ELSE s.source_audit_xmin=roots.root_xmin AND s.source_receipt_xmin=roots.root_xmin
++    AND roots.root_receipt_xmin=roots.root_xmin
++    AND roots.root_xmin::text::bigint=mod((roots.root_values->'whole_package_v2'->>'full_xid')::numeric,4294967296)::bigint
++   END
+    AND roots.root_values->'whole_package_v2'->>'root_operation'=roots.root_operation_id::text
+    AND encode(sha256(convert_to(roots.root_values->'request'->'payload'->'historical_hall_approval'->>'utf8','UTF8')),'hex')=roots.root_values->'request'->'payload'->'historical_hall_approval'->>'sha256'
+    AND EXISTS(
+@@ -134,7 +152,17 @@
+      AND left(ms.decision_reason,1)='{' AND ms.decision_reason::jsonb=jsonb_build_object('format','STANDARD_IMPORT_POINTER_V1','code','SOURCE_BOUND','operationId',mr.id)
+      AND ma.object_type='IMPORT' AND ma.object_id=ms.import_batch_id AND ma.action=mr.action AND mr.target_type='IMPORT' AND mr.target_id=ms.import_batch_id
+      AND mr.status='COMMITTED' AND ma.actor_account_id=mr.actor_account_id AND mr.actor_account_id=s.source_audit_actor
+-     AND ma.occurred_at=mr.completed_at AND ma.xmin=roots.root_xmin AND mr.xmin=roots.root_xmin
++     AND ma.occurred_at=mr.completed_at
++     AND CASE WHEN roots.root_batch_marker IS NOT NULL THEN
++      ma.after_values->'batched_import_v1'=mr.result_data->'batched_import_v1'
++      AND ma.after_values->'batched_import_v1'->'identity'=roots.root_batch_marker->'identity'
++      AND ma.after_values->'batched_import_v1'->>'controller'=roots.root_batch_marker->>'controller'
++      AND ma.after_values->'batched_import_v1'->'descriptor'->>'phase'='MASTER'
++      AND (ma.after_values->'batched_import_v1'->'descriptor'->>'ordinal')::integer
++       <(s.source_audit_values->'batched_import_v1'->'descriptor'->>'ordinal')::integer
++      AND ma.after_values->'request'->>'plan_sha256'=roots.root_values->'request'->>'plan_sha256'
++      AND ma.after_values->'request'->>'cutoff_at'=roots.root_values->'request'->>'cutoff_at'
++     ELSE ma.xmin=roots.root_xmin AND mr.xmin=roots.root_xmin END
+      AND ma.after_values->>'profile'='STANDARD_IMPORT_SQL_V1' AND ma.after_values->>'phase'='MASTER'
+      AND mr.result_data->>'profile'='STANDARD_IMPORT_SQL_V1' AND mr.result_data->>'packageManifestSha256'=s.package_manifest_sha256
+      AND ma.after_values->'request'->>'namespace'=s.source_namespace
+@@ -151,6 +179,9 @@
+      AND (approved.item->'source_refs') @> (s.source_record->'source_refs') AND (s.source_record->'source_refs') @> (approved.item->'source_refs')
+      AND jsonb_array_length(approved.item->'source_refs')=jsonb_array_length(s.source_record->'source_refs')
+      AND ms.source_key=approved.item->'target_initialization'->>'warehouse_source_key'
++     AND (NOT(s.source_record->'historical_hall_evidence' ? 'migration_decision')
++      OR (roots.root_batch_marker IS NOT NULL
++       AND (master.item->'source_refs' @> (s.source_record->'historical_hall_evidence'->'migration_decision'->'source_refs')) IS TRUE))
+    )
+   ) IS TRUE AS capture_verified
+  FROM hall_source s JOIN hall_roots roots ON roots.document_id=s.document_id
+--- a/packages/application/src/historical-sales-hall-evidence.ts
++++ b/packages/application/src/historical-sales-hall-evidence.ts
+@@ -43,15 +43,22 @@
+  readonly captured_at:string;readonly transaction_snapshot:string;readonly relation_basis:string;
+ }
+ export interface HistoricalHallEvidenceReference {readonly evidence_sha256:string;readonly record_key:string;}
+-export interface HistoricalSalesHallEvidenceV2 {
++export interface HistoricalHallMigrationDecision {
++ readonly basis:'USER_APPROVED_NEW_WAREHOUSE_HALL';readonly decision_ref:string;readonly evidence_sha256:string;
++ readonly source_refs:readonly {readonly file_sha256:string;readonly sheet:string|null;readonly row:number}[];
++}
++interface HistoricalSalesHallEvidenceV2Base {
+  readonly format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2';readonly basis:'MIGRATION_DERIVED';
+  readonly original_hall_id:null;readonly selected_hall_id:string;readonly warehouse_id:string;
+- readonly target_snapshot:{readonly warehouse_id:string;readonly hall_id:string;readonly version:number;readonly captured_at:string};
+- readonly source_capture:HistoricalHallSourceCapture;readonly identity_bridge:HistoricalHallEvidenceReference;
+- readonly resolution:HistoricalHallEvidenceReference|null;readonly has_difference:boolean;readonly review_required:boolean;
++ readonly has_difference:boolean;readonly review_required:boolean;
+ }
++type HistoricalHallV2Source=
++ | {readonly source_capture:HistoricalHallSourceCapture;readonly identity_bridge:HistoricalHallEvidenceReference;readonly resolution:HistoricalHallEvidenceReference|null;readonly migration_decision?:never}
++ | {readonly source_capture:null;readonly identity_bridge:null;readonly resolution:null;readonly migration_decision:HistoricalHallMigrationDecision};
++type HistoricalHallTargetSnapshot<T extends string|null>={readonly warehouse_id:string;readonly hall_id:string;readonly version:number;readonly captured_at:T};
++export type HistoricalSalesHallEvidenceV2=HistoricalSalesHallEvidenceV2Base&HistoricalHallV2Source&{readonly target_snapshot:HistoricalHallTargetSnapshot<string>};
+ export type HistoricalSalesHallEvidence=HistoricalSalesHallEvidenceV1|HistoricalSalesHallEvidenceV2;
+-export type HistoricalSalesHallInitializationIntent=Omit<HistoricalSalesHallEvidenceV2,'target_snapshot'>&{readonly target_snapshot:{readonly warehouse_id:string;readonly hall_id:string;readonly version:number;readonly captured_at:null}};
++export type HistoricalSalesHallInitializationIntent=HistoricalSalesHallEvidenceV2Base&HistoricalHallV2Source&{readonly target_snapshot:HistoricalHallTargetSnapshot<null>};
+ export type HistoricalSalesHallInputEvidence=HistoricalSalesHallEvidence|HistoricalSalesHallInitializationIntent;
+ export function isHistoricalHallInitializationIntent(value:HistoricalSalesHallInputEvidence):value is HistoricalSalesHallInitializationIntent{return value.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'&&value.target_snapshot.captured_at===null;}
+ const text=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&v.length<=4096&&!/[\u0000-\u001f\u007f]/.test(v);
+@@ -67,11 +74,23 @@
+ }
+ function parseEvidence(value:unknown,allowIntent:boolean):HistoricalSalesHallInputEvidence {
+  if(value&&typeof value==='object'&&Object.getOwnPropertyDescriptor(value,'format_version')?.value==='HISTORICAL_SALES_HALL_EVIDENCE_V1')return parseV1(value);
+- fail(closed(value,['format_version','basis','original_hall_id','selected_hall_id','warehouse_id','target_snapshot','source_capture','identity_bridge','resolution','has_difference','review_required']),'HISTORICAL_HALL_EVIDENCE_SHAPE');
++ const hasDecision=value!==null&&typeof value==='object'&&Object.hasOwn(value,'migration_decision');
++ fail(closed(value,['format_version','basis','original_hall_id','selected_hall_id','warehouse_id','target_snapshot','source_capture','identity_bridge','resolution','has_difference','review_required',...(hasDecision?['migration_decision']:[])]),'HISTORICAL_HALL_EVIDENCE_SHAPE');
+  const v=value as Record<string,any>;
+  fail(v.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'&&v.basis==='MIGRATION_DERIVED'&&v.original_hall_id===null&&uuid(v.selected_hall_id)&&uuid(v.warehouse_id)&&typeof v.has_difference==='boolean'&&typeof v.review_required==='boolean','HISTORICAL_HALL_EVIDENCE_SHAPE');
+  const t=v.target_snapshot;
+  fail(closed(t,['warehouse_id','hall_id','version','captured_at'])&&t.warehouse_id===v.warehouse_id&&t.hall_id===v.selected_hall_id&&version(t.version,1)&&(capturedInstant(t.captured_at)||allowIntent&&t.captured_at===null),'HISTORICAL_HALL_TARGET_SNAPSHOT_INVALID');
++ if(hasDecision){
++  const decision=v.migration_decision;
++  fail(v.source_capture===null&&v.identity_bridge===null&&v.resolution===null&&v.has_difference===false&&v.review_required===false
++   &&closed(decision,['basis','decision_ref','evidence_sha256','source_refs'])
++   &&decision.basis==='USER_APPROVED_NEW_WAREHOUSE_HALL'&&text(decision.decision_ref)&&digest(decision.evidence_sha256)
++   &&Array.isArray(decision.source_refs)&&decision.source_refs.length>0&&decision.source_refs.length<=100
++   &&decision.source_refs.every((ref:unknown)=>closed(ref,['file_sha256','sheet','row'])&&ref.file_sha256===decision.evidence_sha256&&(ref.sheet===null||text(ref.sheet))&&version(ref.row,1))
++   &&new Set(decision.source_refs.map((ref:{file_sha256:string;sheet:string|null;row:number})=>JSON.stringify([ref.file_sha256,ref.sheet,ref.row]))).size===decision.source_refs.length,
++   'HISTORICAL_HALL_MIGRATION_DECISION_INVALID');
++  return freeze(structuredClone(v)) as HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent;
++ }
+  const capture=parseHistoricalHallSourceCapture(v.source_capture);
+  fail(reference(v.identity_bridge)&&(v.resolution===null||reference(v.resolution)),'HISTORICAL_HALL_EVIDENCE_REFERENCE_INVALID');
+  const difference=capture.runtime_hall_ids.length>1;
+@@ -84,8 +103,8 @@
+ export function parseHistoricalSalesHallInputEvidence(value:unknown):HistoricalSalesHallInputEvidence{return parseEvidence(value,true);}
+ /** The caller supplies actual target and source observations separately. Parsing
+  * neither authenticates the external members nor invents a target capture. */
+-export function buildHistoricalSalesHallEvidenceV2(value:Omit<HistoricalSalesHallEvidenceV2,'format_version'>):HistoricalSalesHallEvidenceV2 {
++export function buildHistoricalSalesHallEvidenceV2(value:Omit<HistoricalSalesHallEvidenceV2Base,'format_version'>&HistoricalHallV2Source&{target_snapshot:HistoricalHallTargetSnapshot<string>}):HistoricalSalesHallEvidenceV2 {
+  return parseHistoricalSalesHallEvidence({...value,format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2'}) as HistoricalSalesHallEvidenceV2;
+ }
+ 
+-export function buildHistoricalSalesHallInitializationIntent(value:Omit<HistoricalSalesHallInitializationIntent,'format_version'>):HistoricalSalesHallInitializationIntent{const parsed=parseHistoricalSalesHallInputEvidence({...value,format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2'});fail(isHistoricalHallInitializationIntent(parsed),'HISTORICAL_HALL_INITIALIZATION_INTENT_REQUIRED');return parsed as HistoricalSalesHallInitializationIntent;}
++export function buildHistoricalSalesHallInitializationIntent(value:Omit<HistoricalSalesHallEvidenceV2Base,'format_version'>&HistoricalHallV2Source&{target_snapshot:HistoricalHallTargetSnapshot<null>}):HistoricalSalesHallInitializationIntent{const parsed=parseHistoricalSalesHallInputEvidence({...value,format_version:'HISTORICAL_SALES_HALL_EVIDENCE_V2'});fail(isHistoricalHallInitializationIntent(parsed),'HISTORICAL_HALL_INITIALIZATION_INTENT_REQUIRED');return parsed as HistoricalSalesHallInitializationIntent;}
+--- a/packages/application/src/unified-historical-sales-hall-evidence.ts
++++ b/packages/application/src/unified-historical-sales-hall-evidence.ts
+@@ -7,10 +7,11 @@
+ export {parseHistoricalSalesHallEvidence,buildHistoricalSalesHallEvidence,buildHistoricalSalesHallEvidenceV2,buildHistoricalSalesHallInitializationIntent,parseHistoricalSalesHallInputEvidence,isHistoricalHallInitializationIntent,parseHistoricalHallSourceCapture} from './historical-sales-hall-evidence.ts';
+ export type {HistoricalSalesHallEvidence,HistoricalSalesHallInputEvidence,HistoricalSalesHallInitializationIntent} from './historical-sales-hall-evidence.ts';
+ type Ref={readonly file_sha256:string;readonly sheet:string|null;readonly row:number};
++type HistoricalHallInitializationMember={readonly warehouse_source_key:string;readonly hall_source_key?:string};
+ export interface HistoricalSalesHallApproval {
+  readonly format_version:'HISTORICAL_SALES_HALL_APPROVAL_V1'|'HISTORICAL_SALES_HALL_APPROVAL_V2';readonly source_namespace:string;readonly evidence_sha256:string;
+  readonly source_captures?:readonly HistoricalHallSourceCapture[];readonly identity_bridges?:readonly HistoricalHallIdentityBridge[];readonly resolutions?:readonly HistoricalHallResolution[];
+- readonly records:readonly {readonly source_key:string;readonly target_id:string;readonly source_refs:readonly Ref[];readonly evidence:HistoricalSalesHallInputEvidence;readonly target_initialization?:{readonly warehouse_source_key:string}}[];
++ readonly records:readonly {readonly source_key:string;readonly target_id:string;readonly source_refs:readonly Ref[];readonly evidence:HistoricalSalesHallInputEvidence;readonly target_initialization?:HistoricalHallInitializationMember}[];
+ }
+ const verified=new WeakMap<object,{readonly utf8:string;readonly sha256:string;readonly records:ReadonlyMap<string,HistoricalSalesHallApproval['records'][number]>}>();
+ const hash=(v:unknown):v is string=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
+@@ -34,15 +35,29 @@
+  fail(Array.isArray(o.records)&&o.records.length>0&&o.records.length<=250000,'HISTORICAL_HALL_APPROVAL_RECORDS');
+  const members=v2?readV2Members(o,input.sourceHashes,input.sourceNamespace):undefined;
+  const records=new Map<string,HistoricalSalesHallApproval['records'][number]>(),sourceKeys=new Set<string>();
++ let migrationDecisionUsed=false;
+  for(const row of o.records){const evidence=parseHistoricalSalesHallInputEvidence(row?.evidence),intent=isHistoricalHallInitializationIntent(evidence);fail(closed(row,['source_key','target_id','source_refs','evidence',...(intent?['target_initialization']:[])])&&text(row.source_key)&&uuid(row.target_id)&&!records.has(row.target_id)&&!sourceKeys.has(row.source_key)&&validRefs(row.source_refs,input.sourceHashes),'HISTORICAL_HALL_APPROVAL_RECORD');
+-  if(intent)fail(v2&&closed(row.target_initialization,['warehouse_source_key'])&&text(row.target_initialization.warehouse_source_key),'HISTORICAL_HALL_INITIALIZATION_MEMBER_REQUIRED');if(intent)Object.freeze(row.target_initialization);fail((evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2')===v2,'HISTORICAL_HALL_APPROVAL_VERSION');if(members)members.check(evidence as HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent);for(const r of row.source_refs)Object.freeze(r);Object.freeze(row.source_refs);row.evidence=evidence;Object.freeze(row);records.set(row.target_id,row);sourceKeys.add(row.source_key);
++  const decision=evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2'?evidence.migration_decision:undefined;
++  if(decision){
++   fail(!migrationDecisionUsed&&v2&&intent&&input.sourceHashes.has(decision.evidence_sha256)&&validRefs(decision.source_refs,input.sourceHashes),'HISTORICAL_HALL_MIGRATION_DECISION_APPROVAL_REQUIRED');
++   migrationDecisionUsed=true;
++  }
++  if(intent){
++   fail(v2&&closed(row.target_initialization,['warehouse_source_key',...(decision?['hall_source_key']:[])])
++    &&text(row.target_initialization.warehouse_source_key)&&(!decision||text(row.target_initialization.hall_source_key)),'HISTORICAL_HALL_INITIALIZATION_MEMBER_REQUIRED');
++   Object.freeze(row.target_initialization);
++  }
++  fail((evidence.format_version==='HISTORICAL_SALES_HALL_EVIDENCE_V2')===v2,'HISTORICAL_HALL_APPROVAL_VERSION');
++  if(members&&!decision)members.check(evidence as HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent);
++  for(const r of row.source_refs)Object.freeze(r);Object.freeze(row.source_refs);row.evidence=evidence;Object.freeze(row);records.set(row.target_id,row);sourceKeys.add(row.source_key);
+  }
+  if(members)members.finish();
+  Object.freeze(o.records);Object.freeze(o);verified.set(o,{utf8:decodeUtf8(input.bytes),sha256:input.trustedSha256,records});return o as HistoricalSalesHallApproval;
+ }
+ export function historicalSalesHallApprovalMatchesSource(approval:unknown,namespace:string,sourceHashes:ReadonlySet<string>):boolean {
+  if(!approval||typeof approval!=='object'||!verified.has(approval))return false;const a=approval as HistoricalSalesHallApproval;
+- return a.source_namespace===namespace&&sourceHashes.has(a.evidence_sha256)&&a.records.every(r=>r.source_refs.every(ref=>sourceHashes.has(ref.file_sha256)));
++ return a.source_namespace===namespace&&sourceHashes.has(a.evidence_sha256)&&a.records.every(r=>r.source_refs.every(ref=>sourceHashes.has(ref.file_sha256))
++  &&(r.evidence.format_version!=='HISTORICAL_SALES_HALL_EVIDENCE_V2'||!r.evidence.migration_decision||sourceHashes.has(r.evidence.migration_decision.evidence_sha256)));
+ }
+ export function validateHistoricalSalesHallEvidence(value:unknown,context:{sourceNamespace:string;sourceKey:string;targetId:unknown;sourceRefs:readonly Ref[];fields:Record<string,unknown>;approval:HistoricalSalesHallApproval|undefined;warehouse?:Record<string,unknown>;warehouseSourceKey?:string;warehouseTargetId?:unknown;requireInitializationMaster?:boolean}):HistoricalSalesHallInputEvidence {
+  const evidence=parseHistoricalSalesHallInputEvidence(value),a=context.approval,proof=a&&verified.get(a),expected=proof&&typeof context.targetId==='string'?proof.records.get(context.targetId):undefined;
+@@ -84,6 +99,7 @@
+  }
+  deepFreeze(o.source_captures);deepFreeze(o.identity_bridges);deepFreeze(o.resolutions);
+  return {check(e:HistoricalSalesHallEvidenceV2|HistoricalSalesHallInitializationIntent){
++  if(e.source_capture===null||e.identity_bridge===null)throw Error('HISTORICAL_HALL_CAPTURE_MEMBER_REQUIRED');
+   const c=e.source_capture,ck=requestHash(c),bk=memberKey(e.identity_bridge),b=bridges.get(bk);
+   fail(captures.has(ck),'HISTORICAL_HALL_CAPTURE_MEMBER_REQUIRED');
+   fail(b&&b.source_namespace===c.source_namespace&&b.warehouse_source_key===c.warehouse_source_key&&b.runtime_warehouse_id===c.runtime_warehouse_id&&b.target_warehouse_id===e.warehouse_id&&b.source_capture_sha256===c.capture_evidence_sha256&&hallSet(b.hall_links.map(h=>h.runtime_hall_id))===hallSet(c.runtime_hall_ids),'HISTORICAL_HALL_BRIDGE_REQUIRED');
+@@ -94,6 +110,6 @@
+  },finish(){fail(usedCapture.size===captures.size&&usedBridge.size===bridges.size&&usedResolution.size===resolutions.size,'HISTORICAL_HALL_UNUSED_MEMBER');}};
+ }
+ 
+-export function historicalSalesHallInitializationMember(approval:HistoricalSalesHallApproval|undefined,targetId:unknown):Readonly<{warehouse_source_key:string}>|undefined{
++export function historicalSalesHallInitializationMember(approval:HistoricalSalesHallApproval|undefined,targetId:unknown):HistoricalHallInitializationMember|undefined{
+  const proof=approval&&verified.get(approval);if(!proof||typeof targetId!=='string')return undefined;return proof.records.get(targetId)?.target_initialization;
+ }
+--- a/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs
++++ b/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs
+@@ -443,9 +443,9 @@
+ // Additive source/model bridge. Root/empty admission remains a separate live
+ // check on the same physical client before any batch writer is exposed.
+ const batchedImportPins={
+- 'EXPECTED161-MODEL.json':'4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51',
+- 'EXPECTED161-DEFINITIONS.json':'b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216',
+- 'EXPECTED161-BODIES.json':'a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942',
++ 'EXPECTED161-MODEL.json':'6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd',
++ 'EXPECTED161-DEFINITIONS.json':'e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3',
++ 'EXPECTED161-BODIES.json':'58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3',
+ };
+ async function readBatchedInputs(source){
+  const {root}=fresh35CombinedSourceData(source),inputs={};

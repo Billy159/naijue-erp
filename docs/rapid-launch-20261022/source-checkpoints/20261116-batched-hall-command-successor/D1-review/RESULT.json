@@ -1,0 +1,107 @@
+{
+  "state": "PASS_D1_BATCHED_HALL_PROVENANCE_SOURCE_INCREMENT",
+  "reviewedAt": "2026-11-16T06:48:50.128046+00:00",
+  "reviewer": "existing QB",
+  "scope": "D1 frozen eight-file source increment over installed DB05 source2399; six-argument command, trusted V2 intake, runtime projection and exact catalog successor",
+  "findings": [],
+  "delivery": {
+    "REPORT.md": "c4f1e4e5f8e708d556e3e8e1e3178d2396bbd429fa43e4cc370cc7f61d93486e",
+    "PINS.json": "c5e4d8b7f7b5cb324208beef2300ba602c94ef8854220d95fe6ddf33a09c9957",
+    "DELTA.patch": "42aa56e61c7ed77166067d8b0f8c13a8604fbea9e661fde80e4b182643c0daa0",
+    "LOCAL-PG-RESULT.json": "dbf83ba4e046283b0708461a52b2457308bb132f6c14ba1cfa088afa85e6fded",
+    "test-cross-commit.py": "9f9061951315e9cbd8eade5f1e50e5116bec371b2ad345a08abdf11df1cb8a82",
+    "decision-package.test.mjs": "bd8ed81e73c24426458e0132be0eade601038f4e41e5ce03c661175acfe4b808"
+  },
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0028_batched_history_hall_provenance.sql",
+      "beforeSha256": null,
+      "sha256": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4",
+      "bytes": 163841
+    },
+    {
+      "path": "adapters/postgres/src/sales-historical-hall-projection.ts",
+      "beforeSha256": "e71cbd16fcba764ab7e279094d1cd036939b4668bbc248bcea6beb8e1628308b",
+      "sha256": "3140883b2964412e38146e52320a579da608584f2dd815317d5b142133524f5f",
+      "bytes": 24787
+    },
+    {
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "beforeSha256": "9f4d82cb39801a6a7d11b95d556bc90fa115f607b2ede00fe588bc8ea2d0a6b5",
+      "sha256": "51d86fe02d21c3349c1c025196f03caf35a042bdf697fdae1ae12ecf32b96b6e",
+      "bytes": 12740
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "beforeSha256": "8d4854fa26d65221513e3e6ad74418d85b1ee2732153f2199d300a6eb4e3361a",
+      "sha256": "37e27090c3b50008d415be8f2b8c9574fb1a4157ac4d3c86f3967257f371d94f",
+      "bytes": 15875
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+      "beforeSha256": "a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942",
+      "sha256": "58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3",
+      "bytes": 937854
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+      "beforeSha256": "b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216",
+      "sha256": "e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3",
+      "bytes": 973710
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+      "beforeSha256": "4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51",
+      "sha256": "6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd",
+      "bytes": 977195
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "beforeSha256": "a94f298a235ec8a9f78bfb750849145c50bb65925182e88072997bdfb89e42a1",
+      "sha256": "d669a616452baef8a18c7cac5ac537384ffdd24a8ad0e74c312120bf534a8f24",
+      "bytes": 64959
+    }
+  ],
+  "independentlyVerified": {
+    "eightBeforeAfterPinsAndSizes": true,
+    "textDeltaExact": true,
+    "onlySixArgumentRoutineChanges": true,
+    "definitionOnlyBodyReplacement": true,
+    "modelOnlyBodyAndDefinitionHashesChange": true,
+    "sqlEmbeddedBodyExact": true,
+    "ddlTransactionBeforeAfterBodyAndPgProcMetadataChecks": true,
+    "lockedWarehouseHallVersion": true,
+    "masterCommittedProofRootActorNamespaceManifestPlanCutoffOrderAndBatchIdentity": true,
+    "sourceRecordDigestAndReviewedAt": true,
+    "decisionAtMostOneTrustedApprovalIntent": true,
+    "decisionOriginalReferenceDigestAndNullLegacyCapture": true,
+    "decisionRequiresBothHallAndWarehouseCommittedMasterReferences": true,
+    "originalNonDecisionEvidenceBranchRetained": true,
+    "nativeReadbackExistingPersistentProofCompatible": true,
+    "runtimeProjectionBatchedBranchAndOriginalSameTransactionBranch": true
+  },
+  "routine": {
+    "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+    "bodyBefore": "a9e432e35c39edcd2b6fd43530fb3e0a72e0d2d8cc710f49f2bf6674bb7b3e00",
+    "bodyAfter": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba"
+  },
+  "reusedEvidence": {
+    "D1LocalPgResult": "LOCAL_PG17_11_EXACT_CAPTURE_BLOCK_REGRESSION_PASS",
+    "method": "Read test source and saved result; exact DDL installed and exact capture blocks probed in isolated PG17.11; native and runtime projection exercised with synthetic receipts across real commits. QB did not rerun.",
+    "typeAndIntakeChecks": "D1 REPORT records targeted strict typecheck and 21 existing plus one decision-package test. QB reviewed changed types and test source without reexecuting candidate."
+  },
+  "pending": [
+    "T45 final33 frozen source/catalog_update/authorization/writer exact pairing",
+    "D3 final genuine named decision and unchanged prior approved warehouse-hall mapping byte-level pairing",
+    "T45 actual successor install and full real batch readback"
+  ],
+  "reusedPriorReview": "outputs/QB/20261116-normal32-install-session-successor-review-01/RESULT.json",
+  "actions": {
+    "serverConnected": false,
+    "pgExecuted": false,
+    "candidateExecuted": false,
+    "issuerOrRegistrarInvoked": false,
+    "sourceModified": false,
+    "fullRegressionRerun": false
+  }
+}

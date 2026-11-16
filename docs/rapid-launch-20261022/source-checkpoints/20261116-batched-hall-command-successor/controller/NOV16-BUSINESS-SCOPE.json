@@ -1,0 +1,30 @@
+{
+  "businessCutoffAt": "2026-11-16T11:40:00+08:00",
+  "cutoffAuthority": "Direct user response in the current thread, 11：40",
+  "inventoryExportedAt": null,
+  "inventorySourceSha256": "494a0c28189a70cb7f6d2b67576f2696b5a386830683e71d982191075e3b4509",
+  "comparisonInventorySourceSha256": "35bab4a4222a02bca1536488fad63c7d6f83be142e7e15f9f17448c551dd365b",
+  "zeroScope": {
+    "comparison": "Old explicit nonzero and absent in the currently pinned source observation set",
+    "count": 1783,
+    "quantity": "0",
+    "scopeRequiresConfirmedWarehouseAndSkuIdentity": true,
+    "newZeroRecordsGenerated": false,
+    "sourceThreadId": "01a19f9f-97b5-7f81-b1ea-5479df73b469",
+    "sourceUserMessageId": "01a1e28e-dfa6-7e00-a5b0-2c04414e05f1"
+  },
+  "newSkuOtherWarehouseZeroScope": {
+    "quantity": "0",
+    "skuCount": 24,
+    "otherWarehouseCount": 53,
+    "pairCount": 1272,
+    "sourceThreadId": "01a1cec6-7547-7d82-a867-00ea53f13031",
+    "sourceUserMessageId": "01a1e309-4215-75a1-82a4-45d724637241",
+    "newZeroRecordsGenerated": false
+  },
+  "currentTransferSourceSha256": "8e7f19e057e6203e571dd3972cfb9184c7c18360238f122bfd3c79c803f9518d",
+  "explicitStockQuantitySemantics": "Preserve recorded quantities and signs",
+  "otherUnresolvedSourceIdentitySemantics": "Remain unknown",
+  "finalBusinessManifestPresent": false,
+  "realBusinessImportStarted": false
+}

@@ -1,0 +1,35 @@
+{
+  "code": "91121",
+  "currentRuntimeAvailability": {
+    "checkedAtUTC": "2026-11-16T06:10:35.927224+00:00",
+    "evidencePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-historical-91121-readonly-01/SOURCE-AVAILABILITY-01.json",
+    "pgQueryExecuted": false,
+    "sha256": "afb3e86739206d1b2f910ca571bcfb63c137cd2db6e007db894341f7fcd732a2",
+    "sourceRoute": "UNAVAILABLE_EXACT_HISTORICAL_CONTAINERS_ABSENT"
+  },
+  "historicalCapture": {
+    "captured_at": "2026-11-05 06:59:14.18784+00",
+    "evidencePath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/unified-cleaning-20261102-v2-01/c0448-facts-T45-01/warehouse-hall-capture.private.json",
+    "exactCodeMatches": 0,
+    "jobId": "t45-c0448-facts-readonly-20261105-01",
+    "members": 51,
+    "metadataSha256": "536dee58b2e507d88dcdff0ca9e7aed0a7ced32426a8b8207f7c46f2fd6a2f67",
+    "scope": "EXACT_FIXED_51_WAREHOUSE_BRIDGE",
+    "sha256": "dc2aec6ffebce3759c73a19adc2b62d599ef4dbf679430845380e7fef9af500b",
+    "snapshot": "31029:31029:",
+    "snapshot_transaction_started_at": "2026-11-05 06:59:14.182753+00"
+  },
+  "historicalIdentity": {
+    "hallRelation": "UNKNOWN",
+    "matchedTransactionSnapshot": null,
+    "runtimeHallIds": null,
+    "runtimeVersion": null,
+    "runtimeWarehouseId": null,
+    "warehouseExistence": "UNKNOWN"
+  },
+  "otherWarehouseInferred": false,
+  "r3Started": false,
+  "serverWrites": 0,
+  "status": "NOT_IN_FIXED_CAPTURE_HISTORICAL_SQL_NOT_EXECUTED",
+  "targetIdsUsedAsSource": false
+}

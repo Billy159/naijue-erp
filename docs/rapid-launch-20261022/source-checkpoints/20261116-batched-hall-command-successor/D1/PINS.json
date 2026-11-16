@@ -1,0 +1,54 @@
+{
+  "baseSourceSetSha256": "23991537d21caa7fc6db4d06a395e2441392637f0dd70f7fcf763216f5e6f1d6",
+  "kind": "POST_DB05_OWNER_OVERLAY_NOT_MATERIALIZED",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0028_batched_history_hall_provenance.sql",
+      "beforeSha256": null,
+      "sha256": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4",
+      "bytes": 163841
+    },
+    {
+      "path": "adapters/postgres/src/sales-historical-hall-projection.ts",
+      "beforeSha256": "e71cbd16fcba764ab7e279094d1cd036939b4668bbc248bcea6beb8e1628308b",
+      "sha256": "3140883b2964412e38146e52320a579da608584f2dd815317d5b142133524f5f",
+      "bytes": 24787
+    },
+    {
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "beforeSha256": "9f4d82cb39801a6a7d11b95d556bc90fa115f607b2ede00fe588bc8ea2d0a6b5",
+      "sha256": "51d86fe02d21c3349c1c025196f03caf35a042bdf697fdae1ae12ecf32b96b6e",
+      "bytes": 12740
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "beforeSha256": "8d4854fa26d65221513e3e6ad74418d85b1ee2732153f2199d300a6eb4e3361a",
+      "sha256": "37e27090c3b50008d415be8f2b8c9574fb1a4157ac4d3c86f3967257f371d94f",
+      "bytes": 15875
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+      "beforeSha256": "a57ed0c0663b913e82f90b0bef4cef51506542c4398bef7330a7f6775ae60942",
+      "sha256": "58daf1854a1d09f710c98a45e9895ca25302257727ac274865a4a1507e5278b3",
+      "bytes": 937854
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+      "beforeSha256": "b3f394b80055f164b2e11449487c3da5c234a510b39dfae73dab8993c0f79216",
+      "sha256": "e8fde77cd17c203bda75d9cb1a1c665d69fe5d20c77a0b7e901a731a2af4c9b3",
+      "bytes": 973710
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+      "beforeSha256": "4e692cad636a86b4cc3bb3c55874c926e32b79508b846222f32d0d01f3ffed51",
+      "sha256": "6bd0ce4cd15347e082edaab43fcec856af2f4b7a56d2cb1708266786503e99fd",
+      "bytes": 977195
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "beforeSha256": "a94f298a235ec8a9f78bfb750849145c50bb65925182e88072997bdfb89e42a1",
+      "sha256": "d669a616452baef8a18c7cac5ac537384ffdd24a8ad0e74c312120bf534a8f24",
+      "bytes": 64959
+    }
+  ]
+}
