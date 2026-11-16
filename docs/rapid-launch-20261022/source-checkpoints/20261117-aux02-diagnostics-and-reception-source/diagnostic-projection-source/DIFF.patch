@@ -1,0 +1,67 @@
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/prepare/bundle/final33_host.py
++++ final33_host.py
+@@ -509,6 +509,19 @@
+  scratch.mkdir(mode=0o700);os.chown(scratch,61035,61035);scratch.chmod(0o700);sync(projection)
+  return True
+ 
++DIAGNOSTIC_ENUMS = {'format': ('FINAL33_FAILURE_DIAGNOSTIC_V1',), 'stage': ('PREFLIGHT', 'BIND_INPUTS', 'PREPARE_READERS', 'PREPARE_CALL', 'PREPARE_RESULT', 'EXECUTION_BINDING', 'UNKNOWN'), 'errorType': ('Error', 'AssertionError', 'TypeError', 'RangeError', 'SyntaxError', 'UNKNOWN'), 'systemCode': ('ERR_ASSERTION', 'ERR_INVALID_ARG_TYPE', 'ERR_INVALID_ARG_VALUE', 'ERR_OUT_OF_RANGE', 'ERR_MODULE_NOT_FOUND', 'ERR_UNKNOWN_FILE_EXTENSION', 'ERR_ACCESS_DENIED', 'EACCES', 'EPERM', 'ENOENT', 'ELOOP', 'ENOTDIR', 'ECONNREFUSED', 'ECONNRESET', 'ETIMEDOUT', 'EPIPE', 'EHOSTUNREACH', 'ENETUNREACH', 'EADDRINUSE', 'UNKNOWN'), 'guardCode': ('FINAL33_APPROVAL_CANONICAL_REQUIRED', 'FINAL33_APPROVAL_OUTSIDE_PACKAGE_REQUIRED', 'FINAL33_CANONICAL_INPUT_REQUIRED', 'FINAL33_CURRENT_SERVICE_DIFFERS', 'FINAL33_ENV_REFUSED', 'FINAL33_FINITE_AUTHORITY_REQUIRED', 'FINAL33_FIXED_CONTROLLER_REQUIRED', 'FINAL33_FIXED_PROCESS_REQUIRED', 'FINAL33_INITIALIZER_BOUND', 'FINAL33_INPUT_CHANGED', 'FINAL33_NATIVE_OUTCOME_UNCONFIRMED', 'FINAL33_ORIGINAL_PREPARE_BINDING_REQUIRED', 'FINAL33_PERSISTED_INITIALIZER_BINDING_DIFFERS', 'FINAL33_PERSISTED_SCOPE_BINDING_DIFFERS', 'FINAL33_PREFLIGHT_REFUSED', 'FINAL33_PRIVATE_INPUT_BOUND', 'FINAL33_PRIVATE_PLAN_DIRECTORY_REQUIRED', 'FINAL33_PROTECTED_INPUT_REQUIRED', 'FINAL33_PROTECTED_PARENT_REQUIRED', 'FINAL33_RESTORED_SCOPE_DIFFERS', 'FINAL33_SCRATCH_REQUIRED', 'FINAL33_SOURCE_MATERIALIZATION_DIFFERS', 'UNKNOWN'), 'sqlstate': ('42601', '42702', '42501', '42P01', '42703', '42883', '23502', '23503', '23505', '23514', '22012', '22P02', '40001', '40P01', '57014', '55P03', '55000', 'P0001', '28P01', '3D000', '53300', '57P01', '08006', None)}
++
++def project_failure_diagnostic(value):
++    if type(value) is not dict or set(value) != set(DIAGNOSTIC_ENUMS):
++        return None
++    for key, allowed in DIAGNOSTIC_ENUMS.items():
++        item = value[key]
++        if item is not None and type(item) is not str:
++            return None
++        if item not in allowed:
++            return None
++    return {key: value[key] for key in DIAGNOSTIC_ENUMS}
++
+ def run(a,raw,ops,support,apply):
+  global cli,runtime,access,CHILD_CUTOFF
+  cli=load('r3_05_cli.py',PINS['r3_05_cli.py']);runtime=load('r3_05_runtime.py',PINS['r3_05_runtime.py'])
+@@ -582,6 +595,9 @@
+   'nativeResultBindingMatched':matched,'lifecycleConfirmed':bool(receipt and receipt.get('lifecycleConfirmed') is True),
+   'automaticReplay':False,'nativeOutcomeInferredFromOuterStatus':False,
+   'safeCode':result.get('safeCode'),'sqlstate':result.get('sqlstate'),'batchPlanPath':a['batchPlanPath']}
++ if matched:
++  diagnostic=project_failure_diagnostic(result.get('failureDiagnostic'))
++  if diagnostic is not None:public['failureDiagnostic']=diagnostic
+  if matched and KEY==PREPARE and result.get('preparedBinding') is not None:
+   public['preparedBinding']=result['preparedBinding'];public['executionBinding']=result.get('executionBinding')
+  if matched and KEY==WRITER:public.update(verification=result.get('verification'),readbackConnectionCleanup=result.get('readbackConnectionCleanup'))
+--- /Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/read_pending35.py
++++ read_pending35.py
+@@ -32,6 +32,19 @@
+   ident=lambda z:(z.st_dev,z.st_ino,z.st_uid,z.st_gid,z.st_mode,z.st_nlink,z.st_size,z.st_mtime_ns,z.st_ctime_ns)
+   assert ident(s)==ident(os.fstat(f.fileno()))==ident(p.lstat())
+  return raw
++DIAGNOSTIC_ENUMS = {'format': ('FINAL33_FAILURE_DIAGNOSTIC_V1',), 'stage': ('PREFLIGHT', 'BIND_INPUTS', 'PREPARE_READERS', 'PREPARE_CALL', 'PREPARE_RESULT', 'EXECUTION_BINDING', 'UNKNOWN'), 'errorType': ('Error', 'AssertionError', 'TypeError', 'RangeError', 'SyntaxError', 'UNKNOWN'), 'systemCode': ('ERR_ASSERTION', 'ERR_INVALID_ARG_TYPE', 'ERR_INVALID_ARG_VALUE', 'ERR_OUT_OF_RANGE', 'ERR_MODULE_NOT_FOUND', 'ERR_UNKNOWN_FILE_EXTENSION', 'ERR_ACCESS_DENIED', 'EACCES', 'EPERM', 'ENOENT', 'ELOOP', 'ENOTDIR', 'ECONNREFUSED', 'ECONNRESET', 'ETIMEDOUT', 'EPIPE', 'EHOSTUNREACH', 'ENETUNREACH', 'EADDRINUSE', 'UNKNOWN'), 'guardCode': ('FINAL33_APPROVAL_CANONICAL_REQUIRED', 'FINAL33_APPROVAL_OUTSIDE_PACKAGE_REQUIRED', 'FINAL33_CANONICAL_INPUT_REQUIRED', 'FINAL33_CURRENT_SERVICE_DIFFERS', 'FINAL33_ENV_REFUSED', 'FINAL33_FINITE_AUTHORITY_REQUIRED', 'FINAL33_FIXED_CONTROLLER_REQUIRED', 'FINAL33_FIXED_PROCESS_REQUIRED', 'FINAL33_INITIALIZER_BOUND', 'FINAL33_INPUT_CHANGED', 'FINAL33_NATIVE_OUTCOME_UNCONFIRMED', 'FINAL33_ORIGINAL_PREPARE_BINDING_REQUIRED', 'FINAL33_PERSISTED_INITIALIZER_BINDING_DIFFERS', 'FINAL33_PERSISTED_SCOPE_BINDING_DIFFERS', 'FINAL33_PREFLIGHT_REFUSED', 'FINAL33_PRIVATE_INPUT_BOUND', 'FINAL33_PRIVATE_PLAN_DIRECTORY_REQUIRED', 'FINAL33_PROTECTED_INPUT_REQUIRED', 'FINAL33_PROTECTED_PARENT_REQUIRED', 'FINAL33_RESTORED_SCOPE_DIFFERS', 'FINAL33_SCRATCH_REQUIRED', 'FINAL33_SOURCE_MATERIALIZATION_DIFFERS', 'UNKNOWN'), 'sqlstate': ('42601', '42702', '42501', '42P01', '42703', '42883', '23502', '23503', '23505', '23514', '22012', '22P02', '40001', '40P01', '57014', '55P03', '55000', 'P0001', '28P01', '3D000', '53300', '57P01', '08006', None)}
++
++def project_failure_diagnostic(value):
++    if type(value) is not dict or set(value) != set(DIAGNOSTIC_ENUMS):
++        return None
++    for key, allowed in DIAGNOSTIC_ENUMS.items():
++        item = value[key]
++        if item is not None and type(item) is not str:
++            return None
++        if item not in allowed:
++            return None
++    return {key: value[key] for key in DIAGNOSTIC_ENUMS}
++
+ out={'checkedAtUTC':datetime.now(timezone.utc).isoformat(),'requestKey':KEY,'phase':PHASE,
+  'requestPresent':os.path.lexists(C/'requests'/(KEY+'.json')),'rootJobPresent':os.path.lexists(B/KEY),
+  'databaseConnections':0,'mutations':0,'privateBodiesRead':False,'automaticReplay':False,'rootPins':{}}
+@@ -46,6 +59,12 @@
+    public=take(public_path,1000,empty=True) if public_path.is_file() else None
+    value=json.loads(raw);public_value=json.loads(public) if public is not None else None
+    same=isinstance(value,dict) and value==public_value
++   if isinstance(value,dict) and 'failureDiagnostic' in value:
++    diagnostic=project_failure_diagnostic(value['failureDiagnostic'])
++    value=dict(value)
++    value.pop('failureDiagnostic')
++    if diagnostic is not None:value['failureDiagnostic']=diagnostic
++    else:out['failureDiagnosticOmittedInvalid']=True
+    if kind=='result':
+     out.update(result=value,resultObjectsEqual=same,publicResultSha256=sha(public) if public is not None else None)
+     out['rootPins']['result']=sha(raw)

@@ -1,0 +1,33 @@
+{
+  "baseCollector": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/read_pending35.py",
+    "sha256": "1da7600c7bd6af1fb0e52b74c327114e1d910fa6070a31627dd8809f4cc14347"
+  },
+  "baseHost": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-NATIVE-SPEC-SUCCESSOR-UNISSUED-01/prepare/bundle/final33_host.py",
+    "sha256": "3bf28414d6949de2ee81070d3aba14efcc61e6d96a872b67f095a8bec5baed7d"
+  },
+  "collectorProjectionCoversResultCleanupAndIncompleteLeaves": true,
+  "files": {
+    "DIFF.patch": "f0a00d2a5618cb328bae636e94587c268288678fbef7abd77f8be814bfa688b7",
+    "RESULT-INTERFACE.json": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21",
+    "final33_host.py": "5bd04b768e8cc05c51adc9071aa8556b1a67afa4728c64a02ed907b2fae45f6f",
+    "read_pending35.py": "bee2a3f498fba4f116c5fa73ea4a7db9f25d36a20f8a496bb6eaec323b63ea50"
+  },
+  "hostOriginalOtherFunctionsUnchanged": true,
+  "nativeOrPGExecuted": false,
+  "newExecutionScopeCreated": false,
+  "oldFilesModified": false,
+  "pureProjectionChecks": 44,
+  "review": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-prepare35-diagnostics-review-01/RESULT.json",
+    "sha256": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b"
+  },
+  "reviewedInterface": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare35-diagnostic-source-01/RESULT-INTERFACE.json",
+    "sha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21"
+  },
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_OPTIONAL_CLOSED_FAILURE_DIAGNOSTIC_PROJECTION",
+  "successAndConnectionRulesUnchanged": true
+}

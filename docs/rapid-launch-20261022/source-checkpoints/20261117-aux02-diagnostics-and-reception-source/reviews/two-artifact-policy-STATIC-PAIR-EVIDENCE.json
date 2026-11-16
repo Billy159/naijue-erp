@@ -1,0 +1,21 @@
+{
+  "actions": {
+    "authorityOrTargetFixturesCreated": false,
+    "ownerSourcesModified": false,
+    "rootIssuerReceiverScannerOrRestoreCalls": 0,
+    "serverPGOrClockCalls": 0
+  },
+  "admissionStillPending": true,
+  "all14FilePinsExact": true,
+  "appAndPrivateSchemaSeparate": true,
+  "appBuildPackMetadataSourceSetAndArchivePinsMatch": true,
+  "bothExternalIssuersNoClockCalls": true,
+  "consumerScannerByteExactOriginal": true,
+  "executionReady": false,
+  "matureRestoreAstUnchangedExceptStatusLabel": true,
+  "no284RehashBuildPackOrPrivateDataRead": true,
+  "sourceOnly": true,
+  "sourcePinsSha256": "2a8a9b55c9a2377ee85863b86c340d2109586caec35dbb776447fe114818948b",
+  "state": "INDEPENDENT_TWO_ARTIFACT_FIXED_POLICY_SOURCE_PAIR_PASS",
+  "workerParentKernelFlockCheckedWithoutRelockingExecutionLock": true
+}

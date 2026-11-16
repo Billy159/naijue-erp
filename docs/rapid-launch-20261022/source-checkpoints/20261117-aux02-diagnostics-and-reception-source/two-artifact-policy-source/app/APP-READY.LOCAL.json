@@ -1,0 +1,38 @@
+{
+  "state": "LOCAL_HTTP_BUILD_PACK_PASS_NOT_DEPLOYED",
+  "sourceCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+  "sourceTree": "bd971917697f35c7f0a8681cd976a56ed8cb0f22",
+  "baseCommit": "ef807b39b5ac8c483e9350dc72108d57716bf291",
+  "changedFiles": 78,
+  "declaredOverlayFiles": 78,
+  "buildId": "erp-d728f3749cc8-r3-final33-ordinary161-20261116",
+  "nativeSourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+  "nativeClosureFiles": 284,
+  "releaseMembers": 522,
+  "nativeModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "modelEvidence": "REUSED_EXACT_D1_COMPILED_METADATA_AND_SCOPED_QB_SOURCE_REVIEW",
+  "archive": {
+    "file": "release.tar.gz",
+    "bytes": 7687919,
+    "sha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f"
+  },
+  "releaseManifestSha256": "48accb35b38018c60402932380c66b46f1ffe4a32edf04f0868858e5203ebcbc",
+  "packReceiptSha256": "fdcc82a3b741cb7a520b79801ed318eeedac172046bb3377a9c064fa8e8b321d",
+  "sourceManifestSha256": "5addee3cc994256ebb22c506119ed08b730c24364c0caf6c1fa0586e61c7c1de",
+  "buildManifestSha256": "a4a29b637981a17ee277c4bafd2c069cd6bdcb276b0cab48ff7e7651d09b2336",
+  "buildReceiptSha256": "4bcb413506cd2a27865c9b8f0cdf4394ceaa108800bdb6e54a26473ba8065608",
+  "archiveExtractions": 1,
+  "frontendSourceChanged": false,
+  "dependencyInstall": false,
+  "builds": 1,
+  "packs": 1,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "runtimeApplicationStarted": false,
+  "unverified": [
+    "New app host profile and actual normal owner/C/environment",
+    "Ordinary HTTP actual role and 161 admission",
+    "Independent physical clone admission and restore",
+    "Deployment and formal business acceptance"
+  ]
+}

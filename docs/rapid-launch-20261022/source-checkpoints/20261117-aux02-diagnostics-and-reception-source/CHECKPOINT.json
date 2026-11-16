@@ -1,0 +1,222 @@
+{
+  "asOf": "2026-11-17T03:50:24.773536+08:00",
+  "state": "REVIEWED_SOURCE_ONLY_NORMAL36_CONSUMER_ROOT_PAIRING_IN_PROGRESS_PG_STOPPED_AUTH_RESTORED",
+  "goal": "ACTIVE",
+  "businessWriterSubmitted": false,
+  "businessRowsWritten": 0,
+  "PG": "STOPPED_ORIGINAL_DATA_PRESERVED",
+  "authentication": "EXACT_ORIGINAL_RESTORED_47F79",
+  "reviewedSourceOnly": {
+    "diagnosticRunner": "135dde6e",
+    "diagnosticHostCollector": "159071d4",
+    "outer02NativeLogical01StaticPair": "cbcad60f",
+    "twoArtifactPolicyPairs": "f1c250b8"
+  },
+  "newActualServiceOrAuthority": false,
+  "nativeSourceOrMaterializationChanged": false,
+  "normal36": "UNFROZEN_CONSUMER_AND_ROOT_ISSUER_WIP_NO_EXECUTION",
+  "artifactServerReady": false,
+  "artifactRootJobAdmission": "PENDING_POST_IMPORT_BACKUP_APP_REQUIRED_ROUTE_NOT_PART_OF_CURRENT_SIX_DB_PHASES",
+  "next": "T45 final six-phase runtime closure and exact current/historical service split; D1 complete root/issuer with final consumer pins, QB only final new pairing. Then real fresh basis and bounded issuance.",
+  "copies": [
+    {
+      "path": "aux-identity-source/SOURCE-PINS.json",
+      "bytes": 1341,
+      "sha256": "c92f6dd8c40af16b793305e5933e0670eae77446db44a7431a25ab5977e1cbd8",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/SOURCE-PINS.json"
+    },
+    {
+      "path": "aux-identity-source/LOCAL-CHECKS.json",
+      "bytes": 3366,
+      "sha256": "69455bb0bddba5c5f68d1f83745f9761f927e1c7d5ba90c33c70652c62fa76d7",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/LOCAL-CHECKS.json"
+    },
+    {
+      "path": "aux-identity-source/MAPPING-CONTRACT.md",
+      "bytes": 4952,
+      "sha256": "296b8213ff702119844dfa2293b362cd991eb693e8ebf5926a5095b11087999d",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/MAPPING-CONTRACT.md"
+    },
+    {
+      "path": "aux-identity-source/identity_pair.py",
+      "bytes": 1347,
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/identity_pair.py"
+    },
+    {
+      "path": "aux-identity-source/issuer_aux_pair.py",
+      "bytes": 2178,
+      "sha256": "30f9be90e3287dd683b928c94422686307e97630991c43fb1f32bea7b82cfb56",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/issuer_aux_pair.py"
+    },
+    {
+      "path": "aux-identity-source/root_aux_pair.py",
+      "bytes": 1232,
+      "sha256": "bf9c0dbe2f70c1b3802b2166448488ca9c9b52ca850fc02c4e770c8d839d7213",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-aux-prepare02-static-source-01/root_aux_pair.py"
+    },
+    {
+      "path": "diagnostic-projection-source/SOURCE-PINS.json",
+      "bytes": 2043,
+      "sha256": "261b47f3a282ab65d586c5963f0772533d91bf2acff68c5a06e841337a05f6b3",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01/SOURCE-PINS.json"
+    },
+    {
+      "path": "diagnostic-projection-source/DIFF.patch",
+      "bytes": 7017,
+      "sha256": "f0a00d2a5618cb328bae636e94587c268288678fbef7abd77f8be814bfa688b7",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01/DIFF.patch"
+    },
+    {
+      "path": "diagnostic-projection-source/RESULT-INTERFACE.json",
+      "bytes": 3966,
+      "sha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01/RESULT-INTERFACE.json"
+    },
+    {
+      "path": "diagnostic-projection-source/final33_host.py",
+      "bytes": 50143,
+      "sha256": "5bd04b768e8cc05c51adc9071aa8556b1a67afa4728c64a02ed907b2fae45f6f",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01/final33_host.py"
+    },
+    {
+      "path": "diagnostic-projection-source/read_pending35.py",
+      "bytes": 8258,
+      "sha256": "bee2a3f498fba4f116c5fa73ea4a7db9f25d36a20f8a496bb6eaec323b63ea50",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01/read_pending35.py"
+    },
+    {
+      "path": "two-artifact-policy-source/SOURCE-PINS.json",
+      "bytes": 3067,
+      "sha256": "2a8a9b55c9a2377ee85863b86c340d2109586caec35dbb776447fe114818948b",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/SOURCE-PINS.json"
+    },
+    {
+      "path": "two-artifact-policy-source/app/APP-PACK-RECEIPT.json",
+      "bytes": 587,
+      "sha256": "fdcc82a3b741cb7a520b79801ed318eeedac172046bb3377a9c064fa8e8b321d",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/APP-PACK-RECEIPT.json"
+    },
+    {
+      "path": "two-artifact-policy-source/app/APP-READY.LOCAL.json",
+      "bytes": 1744,
+      "sha256": "b81e4063a20462be95dfbf342cec46bc44dcb278982fd57cea69f4002969bf6e",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/APP-READY.LOCAL.json"
+    },
+    {
+      "path": "two-artifact-policy-source/app/FIXED-SCOPE.json",
+      "bytes": 614,
+      "sha256": "4d577c3de8eb0f2967b794791c3ceed8979b1e93a83f683b4a15b34bf6fd3024",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/FIXED-SCOPE.json"
+    },
+    {
+      "path": "two-artifact-policy-source/app/ROOT-POLICY-DIFF.patch",
+      "bytes": 3030,
+      "sha256": "6b3d03b611c8c427bbfa2a13b31d68a8cee7e5f3c02b93dbebb5987889652b07",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/ROOT-POLICY-DIFF.patch"
+    },
+    {
+      "path": "two-artifact-policy-source/app/issue_authority.py",
+      "bytes": 1026,
+      "sha256": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/issue_authority.py"
+    },
+    {
+      "path": "two-artifact-policy-source/app/receiver_client.py",
+      "bytes": 152217,
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/receiver_client.py"
+    },
+    {
+      "path": "two-artifact-policy-source/app/reception_scope.py",
+      "bytes": 6683,
+      "sha256": "671458ddaac0abe77f9cbd8f5c08f3d1755feadaaf5b0789b533859c6565c841",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/reception_scope.py"
+    },
+    {
+      "path": "two-artifact-policy-source/app/root_policy.py",
+      "bytes": 6209,
+      "sha256": "bc90e4859f3b38b1ada0d66ec1761ac0fcd90ad6fff49dab8f20b6c4681c1724",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/app/root_policy.py"
+    },
+    {
+      "path": "two-artifact-policy-source/private/FIXED-SCOPE.json",
+      "bytes": 697,
+      "sha256": "c742f0b5495ff57c73a75a63a576ea110ce1a9da332b03eec87b1b3b2043fc37",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/private/FIXED-SCOPE.json"
+    },
+    {
+      "path": "two-artifact-policy-source/private/ROOT-POLICY-DIFF.patch",
+      "bytes": 2832,
+      "sha256": "07f1c07360b7fb13c504c7285347e975c66fcca7df2b1e17f93f4c920256219e",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/private/ROOT-POLICY-DIFF.patch"
+    },
+    {
+      "path": "two-artifact-policy-source/private/issue_authority.py",
+      "bytes": 1026,
+      "sha256": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/private/issue_authority.py"
+    },
+    {
+      "path": "two-artifact-policy-source/private/receiver_client.py",
+      "bytes": 152217,
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/private/receiver_client.py"
+    },
+    {
+      "path": "two-artifact-policy-source/private/reception_scope.py",
+      "bytes": 6496,
+      "sha256": "3b07b2d9594cbb433f943566c41347f6dc599dad16db3554022e7538c4b15cee",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/private/reception_scope.py"
+    },
+    {
+      "path": "two-artifact-policy-source/private/root_policy.py",
+      "bytes": 5826,
+      "sha256": "733aa01d0d8cde6bbbf76ad6b791e997d783f1594ebe15c7471c14e92592153a",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/private/root_policy.py"
+    },
+    {
+      "path": "reviews/diagnostic-projection-RESULT.json",
+      "bytes": 3852,
+      "sha256": "159071d4f3f264bfe4d47acef3dfbb9f8bc753f9a14853ea6f7f4c302941cb6a",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-failure-diagnostic-projection-review-01/RESULT.json"
+    },
+    {
+      "path": "reviews/diagnostic-projection-PURE-PROJECTION-EVIDENCE.json",
+      "bytes": 776,
+      "sha256": "5d0bc8ba5eb4625a91e9208308a4b8bb2c94eb9e2037cc30620fea38dbb068f0",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-failure-diagnostic-projection-review-01/PURE-PROJECTION-EVIDENCE.json"
+    },
+    {
+      "path": "reviews/aux-identity-RESULT.json",
+      "bytes": 5699,
+      "sha256": "cbcad60f7519551d3fdd6bf26eadd124d60fff43f9eb24abda1fea9c335d0977",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-aux02-static-pair-review-01/RESULT.json"
+    },
+    {
+      "path": "reviews/aux-identity-STATIC-IDENTITY-PROOF-EVIDENCE.json",
+      "bytes": 1604,
+      "sha256": "4fb7d775a93b3289c8b78738b6b52fba43aa2608c2d72b090c5fd866a1bcc16e",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-aux02-static-pair-review-01/STATIC-IDENTITY-PROOF-EVIDENCE.json"
+    },
+    {
+      "path": "reviews/two-artifact-policy-RESULT.json",
+      "bytes": 6680,
+      "sha256": "f1c250b87fd5d0b91c6eddff7898a6e8efc2c01e6102ed89e1a0350500c7275b",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-artifact-policy-pair-review-01/RESULT.json"
+    },
+    {
+      "path": "reviews/two-artifact-policy-STATIC-PAIR-EVIDENCE.json",
+      "bytes": 816,
+      "sha256": "4ee73ce33ef30545f8469bf41c4370088fcfa3a2978316f88128d2f650b56b05",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-artifact-policy-pair-review-01/STATIC-PAIR-EVIDENCE.json"
+    },
+    {
+      "path": "PREPARE02-OUTER-NATIVE-IDENTITY-DECISION.json",
+      "bytes": 3151,
+      "sha256": "65b363aa97539df158bacdc19fe1baa6e1f77ed7baf87f36f7131d0e68d05e39",
+      "original": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261115-r3-direct-service24-issuer-local-01/PREPARE02-OUTER-NATIVE-IDENTITY-DECISION.json"
+    }
+  ],
+  "excluded": "Private archive bodies/business expectations, credentials, live authorities, role fields, auth snapshots, protected actual description/context bodies; no owner WIP copied."
+}

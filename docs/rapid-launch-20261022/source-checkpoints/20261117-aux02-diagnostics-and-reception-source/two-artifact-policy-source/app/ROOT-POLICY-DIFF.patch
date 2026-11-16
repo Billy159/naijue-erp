@@ -1,0 +1,66 @@
+--- mature/faa8_policy.py
++++ app/root_policy.py
+@@ -7,7 +7,7 @@
+ import stat
+ import sys
+ 
+-import faa8_scope as s
++import reception_scope as s
+ 
+ PENDING = "staging-policy.pending"
+ INTENT = "staging-policy-install-intent.json"
+@@ -37,20 +37,18 @@
+     return (json.dumps(value, sort_keys=True)+"\n").encode()
+ 
+ def quiet(receiver, authority, profile, digest):
+-    _, source = s.receiver_api(receiver, authority, profile, digest, "bounded-status")
+-    api = {"__name__":"faa8_reused_receiver"}
+-    exec(compile(source, "artifact-receiver.recovery08.py", "exec"), api)
+-    return api["recovery_no_other_writers"](s.TARGET, uid=1000)
++    return s.quiet_check(Path(os.environ['ERP_SHARED_JOB_DIR']))
++
+ 
+ def proof(digest, st):
+     return {"authoritySha256":digest, "profileSha256":s.PROFILE, "device":st.st_dev, "inode":st.st_ino}
+ 
+ def install(job, raw, digest, authority, profile, receiver):
+-    ready,_ = s.read(s.BUNDLE/"D2-READY.json",65536,0,0o600)
+-    receipt,_ = s.read(s.BUNDLE/"D2-PACK-RECEIPT.json",65536,0,0o600)
++    ready,_ = s.read(s.BUNDLE/"APP-READY.LOCAL.json",65536,0,0o600)
++    receipt,_ = s.read(s.BUNDLE/"APP-PACK-RECEIPT.json",65536,0,0o600)
+     s.need((len(ready),s.sha(ready),len(receipt),s.sha(receipt)) ==
+            (profile["readyBytes"],profile["readySha256"],profile["packReceiptBytes"],profile["packReceiptSha256"]),
+-           "FAA8_EXACT_D2_READBACK_REQUIRED")
++           "EXACT_FROZEN_APP_BUILD_PACK_EVIDENCE_REQUIRED")
+     parent = s.TARGET.parent
+     for path in (parent,*parent.parents):
+         st = path.lstat()
+@@ -75,7 +73,7 @@
+     sync(job)
+     actual, st = s.read(s.POLICY,65536,0,0o444)
+     s.need(st.st_gid == 0 and actual == raw and proof(digest, st) == mark, "FAA8_POLICY_PUBLICATION_UNKNOWN")
+-    return {"status":"EXACT_BOUNDED_ORDINARY_POLICY_INSTALLED_NOT_PAYLOAD_READY",
++    return {"status":"EXACT_FIXED_ARTIFACT_POLICY_INSTALLED_NOT_PAYLOAD_READY",
+             "before":"ABSENT","installed":mark,"consumerCheck":consumers,"availableBytes":v.f_bavail*v.f_frsize}
+ 
+ def restore(job, raw, digest, authority, profile, receiver):
+@@ -111,7 +109,7 @@
+         finally:
+             os.close(fd)
+     s.need(not os.path.lexists(s.POLICY) and not os.path.lexists(pending), "FAA8_POLICY_ABSENCE_NOT_RESTORED")
+-    return {"status":"FAA8_ORIGINAL_POLICY_ABSENCE_RESTORED", "consumerCheck":consumers,
++    return {"status":"ORIGINAL_ARTIFACT_POLICY_ABSENCE_RESTORED", "consumerCheck":consumers,
+             "targetPresent":os.path.lexists(s.TARGET),"artifactChanged":False}
+ 
+ def main():
+@@ -127,7 +125,10 @@
+     digest = sys.argv[1]
+     active = job.name == s.INSTALL
+     authority = s.bind(raw,digest,fixed,active)
++    s.verify_original_worker_lock()
++    s.quiet_check(job)
+     result = (install if active else restore)(job,raw,digest,authority,profile,receiver)
++    s.verify_original_worker_lock()
+     write(job/"results/staging-policy-readback.json",pack({**result,"authoritySha256":digest,"artifactKey":s.KEY}),0o600)
+     sync(job/"results")
+ 

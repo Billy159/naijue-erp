@@ -1,0 +1,29 @@
+{
+  "actions": {
+    "adaptersNativeBuilderOrValidatorsInvoked": 0,
+    "authorityTargetCapabilityOrFutureFixturesCreated": false,
+    "identityConstantsOnlyLoaded": true,
+    "ownerSourcesOrFrozenReportsModified": false,
+    "serverPGClockOrCompilationRuns": 0
+  },
+  "actualRootInitAndBothBatchAbsenceStillMustBeEstablishedOnNewGenuineSession": true,
+  "allFivePinnedFilesAndNineReferencedProofSourcePinsExact": true,
+  "decisionIsSourceOnlyNotExecutionAuthority": true,
+  "decisionSha256": "65b363aa97539df158bacdc19fe1baa6e1f77ed7baf87f36f7131d0e68d05e39",
+  "mapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "nativeLogicalKeyFixed01CanonicalPathAllowsExact02Plan": true,
+  "oldUnknownNotReclassified": true,
+  "originalNativeAuthorizationTenFieldSchemaUnchanged": true,
+  "prepareOnlyRefusesWriterAndRunsReadonlyCatalogAndRootInspection": true,
+  "runtimeBundleNotAssembled": true,
+  "sourceOnly": true,
+  "sourcePinsSha256": "c92f6dd8c40af16b793305e5933e0670eae77446db44a7431a25ab5977e1cbd8",
+  "state": "INDEPENDENT_AUX02_LOGICAL01_STATIC_MAPPING_AND_READONLY_SOURCE_PROOF_PASS",
+  "transactionAdvisoryLocksAndLocalPlanInitializerEffectsExplicit": true,
+  "writerInitAndInputIdentityPreservationConditionalOnFutureExactGenuineBindings": true
+}

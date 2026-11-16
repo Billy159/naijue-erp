@@ -1,0 +1,104 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "authorityTargetCapabilityOrPrivateDataFixturesCreated": false,
+    "clockCalls": 0,
+    "ownerSourcesOrFrozenReportsModified": false,
+    "rootPolicyIssuerReceiverScannerRestoreOrWorkerCalls": 0,
+    "serverConnections": 0
+  },
+  "currentRootAdmissionForFourJobs": "NOT_REGISTERED_OR_VERIFIED_REQUIRES_SEPARATE_MINIMAL_ADAPTER",
+  "executionReady": false,
+  "files": {
+    "app/APP-PACK-RECEIPT.json": "fdcc82a3b741cb7a520b79801ed318eeedac172046bb3377a9c064fa8e8b321d",
+    "app/APP-READY.LOCAL.json": "b81e4063a20462be95dfbf342cec46bc44dcb278982fd57cea69f4002969bf6e",
+    "app/FIXED-SCOPE.json": "4d577c3de8eb0f2967b794791c3ceed8979b1e93a83f683b4a15b34bf6fd3024",
+    "app/ROOT-POLICY-DIFF.patch": "6b3d03b611c8c427bbfa2a13b31d68a8cee7e5f3c02b93dbebb5987889652b07",
+    "app/issue_authority.py": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+    "app/receiver_client.py": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+    "app/reception_scope.py": "671458ddaac0abe77f9cbd8f5c08f3d1755feadaaf5b0789b533859c6565c841",
+    "app/root_policy.py": "bc90e4859f3b38b1ada0d66ec1761ac0fcd90ad6fff49dab8f20b6c4681c1724",
+    "private/FIXED-SCOPE.json": "c742f0b5495ff57c73a75a63a576ea110ce1a9da332b03eec87b1b3b2043fc37",
+    "private/ROOT-POLICY-DIFF.patch": "07f1c07360b7fb13c504c7285347e975c66fcca7df2b1e17f93f4c920256219e",
+    "private/issue_authority.py": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+    "private/receiver_client.py": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+    "private/reception_scope.py": "3b07b2d9594cbb433f943566c41347f6dc599dad16db3554022e7538c4b15cee",
+    "private/root_policy.py": "733aa01d0d8cde6bbbf76ad6b791e997d783f1594ebe15c7471c14e92592153a"
+  },
+  "findings": [],
+  "fixedScopes": {
+    "app": {
+      "archiveBytes": 7687919,
+      "archiveSha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f",
+      "artifactKey": "r3-final33-ordinary161-d728f374-20261116-01",
+      "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+      "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+      "grantId": "b16447fbc81f4d64",
+      "kind": "ORDINARY_SOURCE_AND_TOOLS",
+      "sourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+      "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/artifacts/r3-final33-ordinary161-d728f374-20261116-01",
+      "taskId": "T45"
+    },
+    "private": {
+      "archiveBytes": 40960,
+      "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+      "artifactKey": "r3-final33-recovery-input-20261117-01",
+      "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING",
+      "format": "T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1",
+      "fragmentIndex": 1,
+      "fragmentOffset": 0,
+      "grantId": "b16447fbc81f4d64",
+      "kind": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT",
+      "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+      "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/private-standard-import-data/r3-final33-recovery-input-20261117-01",
+      "taskId": "T45"
+    }
+  },
+  "independentChecks": {
+    "actualRootAdmissionStillExplicitlyUnverifiedNotBorrowedFrom211Stages": true,
+    "allFourteenPinnedFilesAndMatureBaseHashExact": true,
+    "app14f34_7687919NativeSourceSet6499FromReviewedMetadata": true,
+    "appLocalReadyAndPackOnlyBuildEvidenceNeverServerPayloadReady": true,
+    "appOrdinaryAndPrivateFragmentSchemasIndependentExactKeysNoUnion": true,
+    "appWindowMaximum1080000Private600000AndInstallMargin30000": true,
+    "currentDispatcherSourceHoldsOriginalSerialWhileDirectChildPopenWaits": true,
+    "externalSourceIssuerAcceptsExplicitTimesAndReviewHashNoSelfClockSampling": true,
+    "fixedAuthorityKeysTypesHashesTargetGrantAndFiniteWindowsExact": true,
+    "installStatusExplicitlyNotPayloadReady": true,
+    "matureAbsentInstallExclusiveLinksIntentAndReadbackMechanismReused": true,
+    "matureSameInodeAuthorityBytesAndIntentBoundRestoreAstUnchangedExceptStatusLabel": true,
+    "noSecondExecutionLockFlockPolicyInodeRestoreLockRemainsDistinct": true,
+    "private40960_244bManifest7ebExactFragment1Offset0": true,
+    "quietChecksOtherOperationsAndTargetConsumers": true,
+    "receiver954342BytesReusedForBothPairs": true,
+    "sameTargetConsumerScannerBytesExactlyMatureRecovery08": true,
+    "sixPythonSourcesSyntaxCompileOnly": true,
+    "workerParentUidAndKernelFlockPidDeviceInodeVerifiedBeforeAndAfterOperation": true
+  },
+  "independentEvidence": {
+    "path": "outputs/QB/20261117-r3-two-artifact-policy-pair-review-01/STATIC-PAIR-EVIDENCE.json",
+    "sha256": "4ee73ce33ef30545f8469bf41c4370088fcfa3a2978316f88128d2f650b56b05"
+  },
+  "limitations": [
+    "Only exact2a8 SOURCE pairs pass. Current dispatcher5a06 has not registered or verified these four root install/restore jobs; this report does not make them executable.",
+    "A separate exact minimal original-lock admission adapter and fresh root/consumer boundary evidence remain necessary before any submission. Do not borrow211 input-stage rules.",
+    "No actual authority was issued and no policy installed,withdrawn,uploaded or read back on the server.",
+    "APP-READY.LOCAL cannot substitute for actual received server READY. PRIVATE signed READY/authority/archive identity and original three-member checks remain required via the reviewed receiver/reader.",
+    "No build,pack,recomputed284-file source-set,private body extraction or full old-source review was repeated.",
+    "No APP,PG,cold,clone,deployment or complete business acceptance PASS.",
+    "Report frozen once; subsequent admission or runtime evidence requires its own file/version."
+  ],
+  "reusedPrivateReview": {
+    "path": "outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+    "privateSourcePins": "decccf382063eada6319eedc6d308fb0604b822e2363f691bf35cd2467806ca7",
+    "readerSha256": "0c06a1bf239b1b6e83d3abe5889f54318c80e7146cbf0b59442c48f6f93dfee5",
+    "receiverSha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+    "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+  },
+  "reviewer": "QB",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "2a8a9b55c9a2377ee85863b86c340d2109586caec35dbb776447fe114818948b",
+  "state": "SOURCE_PASS_TWO_FIXED_ARTIFACT_POLICY_PAIRS"
+}

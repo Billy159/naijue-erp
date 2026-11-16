@@ -1,0 +1,12 @@
+{
+  "archiveBytes": 7687919,
+  "archiveSha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f",
+  "artifactKey": "r3-final33-ordinary161-d728f374-20261116-01",
+  "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+  "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+  "grantId": "b16447fbc81f4d64",
+  "kind": "ORDINARY_SOURCE_AND_TOOLS",
+  "sourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/artifacts/r3-final33-ordinary161-d728f374-20261116-01",
+  "taskId": "T45"
+}

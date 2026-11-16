@@ -1,0 +1,35 @@
+{
+  "PGConnections": 0,
+  "authorityConstructed": false,
+  "checks": [
+    "Python sources compile only",
+    "exact approved mapping accepts",
+    "four arbitrary mapping fields reject",
+    "scope function returns logical01 + plan02",
+    "original native fixed01 and canonical-path predicate confirmed"
+  ],
+  "clockIssued": false,
+  "mapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "nativeSourceChanged": false,
+  "proofSources": {
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/adapters/postgres/patches/0027_standard_batched_import_v1.sql": "332c0b6b18a434054ba845ff74e386038f31f6347f862835d8e6aeacf3971cd3",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/adapters/postgres/patches/0027_standard_import_initialization.sql": "680fdac8120d35122f8414924ed40fb175c1533a7cfd6b656077cec7242332f1",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/fresh35-admin154-record-v1.mjs": "49455ce58e9999fdad82806683f59537916989515b58e54f926f91a720f56c06",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/whole-sales-admission-v1.mjs": "4db4c959be578dca2522a1fa5a01fe3cb3146d37d62edf6da55b781f11dff874",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/batched-stream-cli-state.mjs": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/r3-service20-retained-import.mjs": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/whole-host-session.mjs": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da"
+  },
+  "runtimeAssemblyPending": true,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "STATIC_EXACT_IDENTITY_PAIR_CHECKED_NO_AUTHORITY_OR_TARGET_FIXTURE",
+  "targetOrCapabilityConstructed": false
+}

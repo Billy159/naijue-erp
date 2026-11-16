@@ -1,0 +1,19 @@
+{
+  "actions": {
+    "mainCollectorNativePGClockOrServerCalls": 0,
+    "ownerOrFrozenFilesModified": false,
+    "pureAstProjectionBlocksOnly": true,
+    "targetCapabilityAuthorityOrBusinessFixturesCreated": false
+  },
+  "collectorRawEqualityAndHashLogicAstUnchanged": true,
+  "hostAndEmbeddedCollectorProjectorsAstIdentical": true,
+  "hostRunAstUnchangedExceptMatchedProjectionBlock": true,
+  "otherHostFunctionsAndOuterCollectorAstUnchanged": true,
+  "projectionChecks": 15,
+  "runnerTestsRepeated": false,
+  "sixFieldSchemaEnumsExact": true,
+  "sourceOnly": true,
+  "sourcePinsSha256": "261b47f3a282ab65d586c5963f0772533d91bf2acff68c5a06e841337a05f6b3",
+  "state": "INDEPENDENT_OPTIONAL_DIAGNOSTIC_PROJECTION_PASS",
+  "validCopiedInvalidOmittedAndMatchedGateChecks": true
+}

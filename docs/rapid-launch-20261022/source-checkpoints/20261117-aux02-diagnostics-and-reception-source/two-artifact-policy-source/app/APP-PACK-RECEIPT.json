@@ -1,0 +1,16 @@
+{
+  "format": "naijue-release-pack-receipt-v1",
+  "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+  "buildId": "erp-d728f3749cc8-r3-final33-ordinary161-20261116",
+  "sourceCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+  "archive": {
+    "file": "release.tar.gz",
+    "bytes": 7687919,
+    "sha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f"
+  },
+  "manifestSha256": "48accb35b38018c60402932380c66b46f1ffe4a32edf04f0868858e5203ebcbc",
+  "members": 523,
+  "archiveExtractions": 1,
+  "businessOrProductionValidation": false,
+  "deploymentExecuted": false
+}

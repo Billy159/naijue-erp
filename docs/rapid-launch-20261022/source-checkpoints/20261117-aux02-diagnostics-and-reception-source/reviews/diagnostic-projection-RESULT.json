@@ -1,0 +1,61 @@
+{
+  "actions": {
+    "mainNativeCollectorClockServerOrPGCalls": 0,
+    "ownerSourcesOrFrozenReportsModified": false,
+    "pureProjectorAndProjectionAstBlocksOnly": true,
+    "realTargetCapabilityAuthorityOrBusinessFixturesCreated": 0,
+    "runnerTestsRepeated": false
+  },
+  "collectorSha256": "bee2a3f498fba4f116c5fa73ea4a7db9f25d36a20f8a496bb6eaec323b63ea50",
+  "files": {
+    "DIFF.patch": "f0a00d2a5618cb328bae636e94587c268288678fbef7abd77f8be814bfa688b7",
+    "RESULT-INTERFACE.json": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21",
+    "final33_host.py": "5bd04b768e8cc05c51adc9071aa8556b1a67afa4728c64a02ed907b2fae45f6f",
+    "read_pending35.py": "bee2a3f498fba4f116c5fa73ea4a7db9f25d36a20f8a496bb6eaec323b63ea50"
+  },
+  "findings": [],
+  "hostSha256": "5bd04b768e8cc05c51adc9071aa8556b1a67afa4728c64a02ed907b2fae45f6f",
+  "independentChecks": {
+    "allFourPinnedDeliveryFilesAndBaseHostCollectorExact": true,
+    "collectorCoversResultChildCleanupIncompleteOptionalDiagnostics": true,
+    "collectorRawRootPublicEqualityComputedBeforeSanitizingOptionalField": true,
+    "copiedResultInterfaceByteMatchesReviewedD1Interface": true,
+    "exactSixFieldTypesAndEnumsMatchInterfaceNoExtraProperties": true,
+    "hostAndEmbeddedCollectorProjectorsAstIdentical": true,
+    "hostProjectionOnlyInsideMatchedRequestInputHashServiceBindingGate": true,
+    "hostRunAstUnchangedExceptMatchedProjectionBlock": true,
+    "originalNativePublicResultObjectsNotMutatedByProjectionCopy": true,
+    "originalRawRootPublicAndNativeResultHashesUnchanged": true,
+    "outerCollectorModuleAstUnchangedAndEmbeddedProgramOnlyAddsClosedProjection": true,
+    "successCleanupLifecycleAndReplayConditionsUnaffectedByDiagnostic": true,
+    "validObjectCopiedAndInvalidMissingExtraTypesEnumsOmitted": true,
+    "wholeOtherHostModuleIncludingBudgetRolesScopeAndFunctionsAstUnchanged": true
+  },
+  "independentEvidence": {
+    "path": "outputs/QB/20261117-r3-failure-diagnostic-projection-review-01/PURE-PROJECTION-EVIDENCE.json",
+    "sha256": "5d0bc8ba5eb4625a91e9208308a4b8bb2c94eb9e2037cc30620fea38dbb068f0"
+  },
+  "interfaceSha256": "9ec23310d663a171f7b345257b520beead8312361a51047a1223647abe55cf21",
+  "limitations": [
+    "Source-only optional projection passes for these exact host and collector bytes. No main,collector remote program,native,PG or real target was run.",
+    "Missing or invalid diagnostics are omitted; diagnosis cannot imply success,CLOSED cleanup,retry permission or business acceptance.",
+    "Original raw hashes and raw root/public equality retain their original meaning; optional projected object is a closed copy.",
+    "Full bundle runner/host/collector pin integration and any future execution scope require their own exact frozen handoff.",
+    "Dual-identity aux02,root cause repair,native PREPARE contract and continuation are outside this review.",
+    "Old35,failed PREPARE and committed catalog are not authorized for replay.",
+    "Final report frozen once; subsequent changes or evidence must use another version/file."
+  ],
+  "reusedRunnerReview": {
+    "path": "outputs/QB/20261117-r3-prepare35-diagnostics-review-01/RESULT.json",
+    "runnerSeventySixCasesNotRepeated": true,
+    "sha256": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b"
+  },
+  "reviewedRunnerSha256": "acee52e8e13a6c9ca50b760e5a2577e4dbde890e597c2076ad5e5be7c2eefed6",
+  "reviewer": "QB",
+  "runnerReviewSha256": "135dde6ec460b51ea69f2c649326830782dcfa51984fa48f26b8bc42040d604b",
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/FAILURE-DIAGNOSTIC-PROJECTION-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "261b47f3a282ab65d586c5963f0772533d91bf2acff68c5a06e841337a05f6b3",
+  "state": "SOURCE_PASS_OPTIONAL_FAILURE_DIAGNOSTIC_PROJECTION_ONLY"
+}

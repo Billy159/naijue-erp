@@ -1,0 +1,95 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "adaptersOrNativeValidatorsMainAndBuilderCalls": 0,
+    "clockOrAuthorityCalls": 0,
+    "fullDataCompilationRuns": 0,
+    "identityConstantsOnlyLoaded": true,
+    "ownerSourcesOrFrozenReportsModified": false,
+    "runnerCollectorTestsRepeated": false,
+    "serverConnections": 0,
+    "targetCapabilityAuthorityOrFutureBusinessFixturesCreated": false
+  },
+  "decisionBindingSha256": "678ffe0515c07729c6a52d2b4e3bb92dfea715763a20068d2cb69ed864c291c9",
+  "decisionIsSourceOnlyNotExecutionAuthority": true,
+  "decisionSha256": "65b363aa97539df158bacdc19fe1baa6e1f77ed7baf87f36f7131d0e68d05e39",
+  "files": {
+    "LOCAL-CHECKS.json": {
+      "bytes": 3366,
+      "sha256": "69455bb0bddba5c5f68d1f83745f9761f927e1c7d5ba90c33c70652c62fa76d7"
+    },
+    "MAPPING-CONTRACT.md": {
+      "bytes": 4952,
+      "sha256": "296b8213ff702119844dfa2293b362cd991eb693e8ebf5926a5095b11087999d"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "037d0769410b291befa6c4addd1a39aeca8c8e6a9db0d74598837b4cc8814787"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2178,
+      "sha256": "30f9be90e3287dd683b928c94422686307e97630991c43fb1f32bea7b82cfb56"
+    },
+    "root_aux_pair.py": {
+      "bytes": 1232,
+      "sha256": "bf9c0dbe2f70c1b3802b2166448488ca9c9b52ca850fc02c4e770c8d839d7213"
+    }
+  },
+  "findings": [],
+  "independentChecks": {
+    "approved65b363DecisionAndExactFourFieldMappingMatch": true,
+    "businessWriterInitManifestIndexSummaryAndBusinessIdentityRequirementsPreservedNotRuntimeProven": true,
+    "catalogGuardRepeatableReadonlyRollbackAndCoreInspectReadonlyRollback": true,
+    "existingCommittedRootOrConflictCannotBeAcceptedAsNewAbsent": true,
+    "fivePinnedNewFilesExact": true,
+    "genuineCoreAbsenceRequiresOriginalRootInitReceiptAndBothBatchIdentitiesAbsent": true,
+    "historicalCatalog469MustStayBoundToHistoricalCAndNewCurrentCatalogReadbackSeparate": true,
+    "inspectSqlAndImporterIdentityBranchReadOnlyWithTransactionAdvisoryLocks": true,
+    "issuerStaticPairKeepsOuter02AndNativeLogical01Explicit": true,
+    "nativeWireRemainsOriginalClosedTenFieldsMappingNotInserted": true,
+    "nineReferencedReadonlyProofSourcePinsExact": true,
+    "oldUnknownNotReclassifiedFromMissingFiles": true,
+    "originalNativeFixed01PredicateAndCanonicalAbsolutePlanPathStructurallyCompatible": true,
+    "originalNativeWriterAndInitializerSourceUnmodified": true,
+    "outer02DistinctFromNativeLogical01AndIndependentPlan02": true,
+    "prepareOnlyReturnsBeforeWriterCallbackAndWriterCallbackRefuses": true,
+    "queryGuardOnlyExactBeginSetRoleInspectRollbackNoCommitOrMutationStep": true,
+    "rootAddonRequiresExactJobPolicyMappingBindingAnd650130780Budget": true,
+    "threePythonSourcesSyntaxCompiledOnly": true
+  },
+  "independentEvidence": {
+    "path": "outputs/QB/20261117-r3-aux02-static-pair-review-01/STATIC-IDENTITY-PROOF-EVIDENCE.json",
+    "sha256": "4fb7d775a93b3289c8b78738b6b52fba43aa2608c2d72b090c5fd866a1bcc16e"
+  },
+  "limitations": [
+    "SOURCE-only static route passes; no normal36 registration/execute package exists in this delivery.",
+    "Readonly proof is source-level and acknowledges local plan/initializer writes and transaction advisory locks; no actual PG readonly or absence result is claimed.",
+    "Runtime restoration/old absent-plan/current database statements in the contract were not revalidated in this review.",
+    "No root-cause repair,full import,APP/cold/clone,role business acceptance or deployment PASS.",
+    "Do not replay old35,failed prepare or committed catalog.",
+    "Future exact six-phase consumer and root wiring require separate narrow pairing review.",
+    "Report frozen once; subsequent evidence or integration must be separately versioned."
+  ],
+  "mapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-02"
+  },
+  "pendingIntegrationConditions": [
+    "Adapters are additive static interfaces only, to run after original frozen-manifest,authority,lock,current-service,history and budget checks; they are not standalone admission or issuance.",
+    "Future exact consumer/root/issuer/runner/collector must bind outer02 request and terminal, native logical01 preparationScope and exact02 plan consistently.",
+    "Native validator and genuine protected session remain mandatory; no target/token/capability/authority was created or validated here.",
+    "Old failed01,empty directory and all evidence remain immutable and non-replayable; new02 key/plan absence and original writer unused require actual original-lock checks.",
+    "Current same physical database requires genuine ROOT/INIT/batch ABSENT and exact current catalog readback; historical files absent and old UNKNOWN cannot substitute.",
+    "Original writer may consume only actual new outer02 COMPLETED root/public/native preparation and execution bindings, never failed01 or synthesized binding.",
+    "650+130=780,writer3000,28GiB and original approvals/inputs/INIT remain unchanged; old used credentials may not be reused or extended."
+  ],
+  "reviewer": "QB",
+  "runtimeAssemblyPending": true,
+  "schemaVersion": 1,
+  "sourceDirectory": "outputs/D1/20261117-r3-aux-prepare02-static-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "c92f6dd8c40af16b793305e5933e0670eae77446db44a7431a25ab5977e1cbd8",
+  "state": "SOURCE_PASS_AUX02_LOGICAL01_STATIC_PAIR_ONLY"
+}

@@ -1,0 +1,39 @@
+{
+  "state": "CONTROLLER_SOURCE_MAPPING_DECISION_NOT_EXECUTION_AUTHORITY",
+  "decision": "EXPLICIT_NEW_OUTER_AUXILIARY_ATTEMPT_WITH_UNCHANGED_NATIVE_LOGICAL_PREPARATION_SCOPE",
+  "recordedAt": "2026-11-17T03:40:28.647429+08:00",
+  "authorizationBasis": "Existing user standing controlled ERP continuation authorization; no new user approval represented.",
+  "outerAttemptRequestKey": "t45-r3-final33-plan-prepare-20261116-02",
+  "nativeLogicalPreparationRequestKey": "t45-r3-final33-plan-prepare-20261116-01",
+  "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-02/batched-plan.sqlite",
+  "originalWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "oldPrepare": {
+    "typedResultSha256": "09a5cf58e6ac35b4628d8bd1b962779f015bc726d1aafc0e4e4c6346c279646e",
+    "terminalSha256": "d8ff6c3e9e4c3324d7d40b75429c133feeec77ed5afa45a6dc5791678c47d201",
+    "state": "FAILED_2_NATIVE_UNKNOWN_CAUSE_NOT_RETAINED",
+    "mustNeverReplay": true,
+    "oldPlanAndInitializer": "ABSENT_AT_ACTUAL_19_15_30_METADATA_ONLY_READBACK",
+    "databaseOutcome": "UNKNOWN_NOT_RETROACTIVELY_CLAIMED_ABSENT"
+  },
+  "actualSafeClosureSha256": "24cdc14719c9fac5379817aefd486831f45ffdc19e7acb75b36e460372038c94",
+  "originalAuthenticationRestorationSha256": "47f79d19c08dec5ccbc4b1a96b70f642f13d251d00053c1f72f553cbc0efb66f",
+  "catalogSuccessor": {
+    "typedResultSha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+    "state": "ACTUALLY_COMMITTED_AND_READ_BACK",
+    "mustNeverReplay": true,
+    "newServiceRequiresActualCurrentCatalogReadback": true
+  },
+  "conditions": [
+    "D1 proves original PREPARE-only path has no business mutation and native writer callback refuses.",
+    "New outer and native logical identities are both exact named fields throughout source/authority validation, never an implicit rename.",
+    "Old failed outer request, terminal, empty plan directory and evidence remain immutable; no result substitution.",
+    "New service preserves physical target identity; actual current catalog is read back using existing genuine/native path.",
+    "Existing genuine PREPARE-only checks must establish actual same ROOT/INIT/batches absent before any writer authority is accepted; any existing committed root or conflict stops new initialization.",
+    "New independent plan path must be absent, and original writer genuinely unused, under existing locks.",
+    "Only actual new outer02 COMPLETED and matching native preparation/execution binding can feed the unchanged original writer.",
+    "Used role9e and all old failed keys remain used; no reuse, extension, or deadline bypass.",
+    "All original budgets, 28GiB free-space floor, identities, approvals, input materializations and business INIT remain unchanged."
+  ],
+  "scope": "Source preparation only. No new role, finite clock, host execution authority, service, PG operation, new native source, materialization, full rehearsal, catalog replay or business write is issued by this document."
+}

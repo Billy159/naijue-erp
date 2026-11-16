@@ -1,0 +1,14 @@
+{
+  "archiveBytes": 40960,
+  "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+  "artifactKey": "r3-final33-recovery-input-20261117-01",
+  "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING",
+  "format": "T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1",
+  "fragmentIndex": 1,
+  "fragmentOffset": 0,
+  "grantId": "b16447fbc81f4d64",
+  "kind": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT",
+  "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+  "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/private-standard-import-data/r3-final33-recovery-input-20261117-01",
+  "taskId": "T45"
+}
