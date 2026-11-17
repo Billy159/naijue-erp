@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T10:14:00.761676+08:00",
+  "updatedAt": "2026-11-17T10:25:25.594076+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 START38 once using actual273663 permit, final invoke2ca2 and original fixed budgets. Collect true C/birth/epoch/four protected outputs and prepare04 actual context; single affected C05 native search check. Main issues unused PREPARE04 only from actual success. Writer never submitted.",
+  "next": "T45 unused PREPARE04 once via final2ca2 and real159d50 permit; native logical01/plan04. Require actual prepared/execution binding, CLOSED connection and cleanup before Main issues original never-submitted writer. Existing completed keys not replayed; no new checks or deadline extension.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T10:14:00.761676+08:00",
+  "asOf": "2026-11-17T10:25:25.594076+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 START38 once using actual273663 permit, final invoke2ca2 and original fixed budgets. Collect true C/birth/epoch/four protected outputs and prepare04 actual context; single affected C05 native search check. Main issues unused PREPARE04 only from actual success. Writer never submitted.",
+  "next": "T45 unused PREPARE04 once via final2ca2 and real159d50 permit; native logical01/plan04. Require actual prepared/execution binding, CLOSED connection and cleanup before Main issues original never-submitted writer. Existing completed keys not replayed; no new checks or deadline extension.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52792,7 +52792,7 @@
   "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": true,
+  "PGCurrentlyStopped": false,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
@@ -53242,7 +53242,7 @@
     "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
     "automaticReplay": false
   },
-  "normal38": "NORMAL38_REGISTERED_APPLY_COMPLETED_START_REAL_ISSUED_PENDING_ACTUAL",
+  "normal38": "START38_ACTUAL_SUCCESS_C05_NATIVE_SEARCH_CONFIRMED_PREPARE04_REAL_ISSUED_PENDING_ACTUAL",
   "normal38SourceDecisionSha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c",
   "normal37PermissionFix": {
     "device": 66304,
@@ -53332,6 +53332,56 @@
   "lastVerifiedPGState": {
     "stopped": true,
     "atUTC": "2026-11-17T02:11:53.756728+00:00"
+  },
+  "PGCurrentState": "ACTUAL_START38_READONLY_READY_RUNNING",
+  "normal38StartInProgress": {
+    "observedAtUTC": "2026-11-17T02:16:43.832013+00:00",
+    "observationSha256": "6b6c858195268833d26d7d7ea48c8691c76437ef3e53ab7a41baea4fce905b67",
+    "unitActive": true,
+    "PGDATAPidPresent": true,
+    "terminalPresent": false,
+    "resultPresent": false,
+    "claimedStartSuccess": false
+  },
+  "normal38ActualStart": {
+    "sha256": "6206d7a6b21885dc3c0d9b9f4872a3aa71bcf5690f31d4a3864eeb8a7f7177a0",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 42.64823097200133,
+    "terminalSha256": "da9c547a4981c1edd31049ddb138073991a6a279562435fcd573d1fa57998aaf",
+    "resultSha256": "a87fac20c34ff46336287e16d3e3dd808df0d67176467921b860e5b266bd6f2d",
+    "publicResultSha256": "5faf78825a2589ea2b276d269646cf947a0f0b2695a76ff7917941c0333c4059",
+    "actualService": {
+      "containerId": "4a2be3fca19bf1f46151c0271d5a0cb2cd10b280cd43c483e93d478be85f18d2",
+      "containerStartedAt": "2026-11-17T02:16:22.168473079Z",
+      "postmasterStart": "2026-11-17 02:16:23.493239+00",
+      "proofSha256": "a9e740c7dff329838f8fd82572d90353378c6e8b3fb1a3c29ac1fdd2362837e3",
+      "serviceKey": "t45-first-r3-native-service-start-20261116-38"
+    },
+    "storedFourOutputsReused": true,
+    "plan04Native01Observed": true,
+    "actualSharedServiceWorkDeadline": 1794889531008
+  },
+  "normal38C05": {
+    "firstProbe": "EXTRA_EMPTYGROUPS_ASSERTION_FAILED_NOT_DIRECTORY_DENIAL",
+    "firstSha256": "4c9e54de9949fb91b2779087a72ad31e965dd92d09f7ffb954097c7f5d83942b",
+    "actualGuardGroups": [
+      61035
+    ],
+    "actualGuardObservationSha256": "363cb96a248c16546960662e30553175e150d5f1450817901c61ce6dc40607d9",
+    "alreadyStartedEmptyGroupsObservationSha256": "86e28b550a619d40333f36088dd2105747b26a52b8f6dcfdbf34bf1722176b7c",
+    "searchConfirmed": true,
+    "readWriteFalse": true,
+    "permissionMutation": false,
+    "repeat25Slots": false
+  },
+  "normal38Prepare04": {
+    "authoritySha256": "159d50cb392088ca1513c553995375f28765f815291a8104134e4ac778bfc0e0",
+    "startsAt": 1794882234325,
+    "expiresAt": 1794888366465,
+    "nativeLogicalKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "privateContextSha256": "e6d6cab594aef34efcabc95dd640c1e2d738ddb0e86260af131ff95caf0d152f",
+    "actualResult": "NOT_YET_RECEIVED"
   }
 }
 }

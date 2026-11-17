@@ -464,23 +464,48 @@
       "path": "actual-safe/MAIN38-START-ISSUED-METADATA.json",
       "sha256": "92c87149f743cac944ed37697900c22e823728b261c70eeae60891202b42b6b0",
       "bytes": 412
+    },
+    {
+      "path": "actual-safe/START38-SAFE-PROJECTION.json",
+      "sha256": "0aefd82fe13d115f1f2c41f92a0ceb3416be11d6baf51e439dcc3acc23511b7c",
+      "bytes": 2215
+    },
+    {
+      "path": "actual-safe/C05-PROBE-UNCONFIRMED.json",
+      "sha256": "4c9e54de9949fb91b2779087a72ad31e965dd92d09f7ffb954097c7f5d83942b",
+      "bytes": 104
+    },
+    {
+      "path": "actual-safe/C05-ACTUAL-GUARD-SEARCH-CONFIRMED.json",
+      "sha256": "363cb96a248c16546960662e30553175e150d5f1450817901c61ce6dc40607d9",
+      "bytes": 857
+    },
+    {
+      "path": "actual-safe/C05-ALREADY-STARTED-EMPTYGROUPS-OBSERVATION.json",
+      "sha256": "86e28b550a619d40333f36088dd2105747b26a52b8f6dcfdbf34bf1722176b7c",
+      "bytes": 810
+    },
+    {
+      "path": "actual-safe/MAIN38-PREPARE04-ISSUED-METADATA.json",
+      "sha256": "e790e6017e080a5507b306a03bda68f93583743a87ee766b915c9fb1f8d2d261",
+      "bytes": 399
     }
   ],
   "sourceOnly": false,
   "privateAndAuthorityBodiesCopied": false,
   "subsetNote": "Static source and safe review evidence subset. UNISSUED JSON bodies are referenced only; not a replayable runtime capability package.",
-  "asOf": "2026-11-17T10:14:00.761676+08:00",
-  "state": "NORMAL38_REGISTERED_APPLY_COMPLETED_START_REAL_ISSUED_PENDING_ACTUAL",
+  "asOf": "2026-11-17T10:25:25.594076+08:00",
+  "state": "START38_ACTUAL_SUCCESS_C05_NATIVE_SEARCH_CONFIRMED_PREPARE04_REAL_ISSUED_PENDING_ACTUAL",
   "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
   "rootSourcePinsSha256": "6590c4bfd1bbbf1f370da7b9181119b1ea9dc1f1ac5a73f267753150f07b5ff7",
   "consumerReviewSha256": "0653f28262f6eaa6860cae236815f2e82c4c4711dc06be084f33920d14c48cc7",
   "rootReviewSha256": "ee0053ef2d527947f706fc8f5b700865eaf8b059a1d724d3eff4e38ae787d3fd",
   "rolesApplied": true,
-  "PGStopped": true,
+  "PGStopped": false,
   "originalAuthenticationRestored": false,
   "businessWriterSubmitted": false,
   "businessWrites": 0,
-  "next": "T45 START38 once using actual273663 permit, final invoke2ca2 and original fixed budgets. Collect true C/birth/epoch/four protected outputs and prepare04 actual context; single affected C05 native search check. Main issues unused PREPARE04 only from actual success. Writer never submitted.",
+  "next": "T45 unused PREPARE04 once via final2ca2 and real159d50 permit; native logical01/plan04. Require actual prepared/execution binding, CLOSED connection and cleanup before Main issues original never-submitted writer. Existing completed keys not replayed; no new checks or deadline extension.",
   "staticPatchBodyOmittedOriginalHashRetainedInSourceManifest": true,
   "main38IssuedMetadataSha256": "282b7ad15fbb22952d9839192aee4a9ed4fe8932e50d279279a57ab088764879",
   "main38FiniteIssued": true,
@@ -489,5 +514,19 @@
   "actualApplyKnown": true,
   "actualRegistrationSha256": "7aa7fdf925b052108f27989d2a411d184b2c55a125d05325549acc00e31e0542",
   "actualApplySha256": "41495cafbc1bb570087d727715b4e83993650cf13c92ee32bc921da03c38588b",
-  "start38AuthoritySha256": "273663cf89ce4b99b4e0255de91b5e5ef01a7f18bfef728f9d3690be186d2c10"
+  "start38AuthoritySha256": "273663cf89ce4b99b4e0255de91b5e5ef01a7f18bfef728f9d3690be186d2c10",
+  "actualStartSha256": "6206d7a6b21885dc3c0d9b9f4872a3aa71bcf5690f31d4a3864eeb8a7f7177a0",
+  "actualService": {
+    "containerId": "4a2be3fca19bf1f46151c0271d5a0cb2cd10b280cd43c483e93d478be85f18d2",
+    "containerStartedAt": "2026-11-17T02:16:22.168473079Z",
+    "postmasterStart": "2026-11-17 02:16:23.493239+00",
+    "proofSha256": "a9e740c7dff329838f8fd82572d90353378c6e8b3fb1a3c29ac1fdd2362837e3",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-38"
+  },
+  "actualC05SearchSha256": "363cb96a248c16546960662e30553175e150d5f1450817901c61ce6dc40607d9",
+  "alreadyStartedEmptyGroupsObservationSha256": "86e28b550a619d40333f36088dd2105747b26a52b8f6dcfdbf34bf1722176b7c",
+  "privateContextSha256": "e6d6cab594aef34efcabc95dd640c1e2d738ddb0e86260af131ff95caf0d152f",
+  "privateContextBodyCopied": false,
+  "prepare04AuthoritySha256": "159d50cb392088ca1513c553995375f28765f815291a8104134e4ac778bfc0e0",
+  "prepare04ActualResult": "NOT_YET_RECEIVED"
 }
