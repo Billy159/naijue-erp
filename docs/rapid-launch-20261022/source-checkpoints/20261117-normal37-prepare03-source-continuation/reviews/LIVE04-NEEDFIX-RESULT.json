@@ -1,0 +1,50 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clockCalls": 0,
+    "futureBindingAuthorityTargetOrPositiveReportFixtureCreated": false,
+    "issuerReaderCASNativeOrJobInvoked": false,
+    "serverActions": 0
+  },
+  "completedScope": [
+    "Read pending04 caller and STOP byte diffs against accepted37 consumer",
+    "Read helper four-key substitutions and phase issuer differential",
+    "Read actual_inputs, issue_live, issue_stop, carrier and three-file CAS control flow",
+    "Compared literal ACTUAL305 to accepted historical289 map and reproduced two missing historical paths plus present/absent contradiction without runtime"
+  ],
+  "consumerSourcePinsSha256": "665118b52ac0545a6b0ee158e52f703c99fe3981b0043db49298444448d23af0",
+  "disposition": "Main abandoned this execution window for insufficient complete budget. Freeze source01 and this NEED_FIX once; do not request or undertake source02 review or live04 issuance in this window. Original STOP37 and exact RESTORE37 remain Main/T45-owned and require actual receipts.",
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal37-live-pending04-review-01/STATIC-EVIDENCE.json",
+    "sha256": "81659731acc268487ebad290178d0cb8a6443299087fb3b6af2d7a114b0e930a"
+  },
+  "findings": [
+    {
+      "description": "ACTUAL requires current ordinary37/restored.json with the historical36 restoration digest60d6, while custody requires that current37 file to be absent. snapshot reads all ACTUAL files before custody, so no filesystem state can satisfy both. The historical36 authorityd834 and restored60d6 entries from the accepted289 history map are also absent.",
+      "evidenceSha256": "81659731acc268487ebad290178d0cb8a6443299087fb3b6af2d7a114b0e930a",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal37-live-pending04-source-01/live_cas.py",
+      "id": "P04-R01",
+      "impact": "The read-only basis and CAS precondition cannot pass; historical36 protection is incomplete. This source cannot authorize pending04 execution.",
+      "line": 30,
+      "minimumCorrection": "Preserve exact historical36 authority and restoration paths and pins; retain current37 authority60b separately; remove current37 restored from existing pins and preserve its absence requirement. Future real37 restoration must keep its own actual receipt identity.",
+      "priority": "P1",
+      "relatedLines": [
+        117,
+        125,
+        131
+      ],
+      "title": "Historical36 restoration receipt is required at the still-live37 future path"
+    }
+  ],
+  "notClaimed": [
+    "No complete source PASS",
+    "Prepared check_static.py was not executed after Main abandoned this window",
+    "No new04 binding, authority, epoch, target or positive fixture",
+    "No original42-load re-review, full compilation, native, PG or remote execution",
+    "Source02 is not reviewed or released by this report"
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal37-live-pending04-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "be8538572eff22257059baacf522f8fbc3d6bf3ebcc71430dda9139023d0dee9",
+  "state": "SOURCE_NEED_FIX_NORMAL37_LIVE_PENDING04_CAS_CALLERS_ISSUERS_ONLY"
+}

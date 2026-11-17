@@ -1,0 +1,231 @@
+{
+  "actualFailureReadbackSha256": "58ba3f0dc52e8400c6c62a75c3098bf508c8e17771f76f7b9ae3c3644d284677",
+  "actualNativeResultSha256": "61cfefe9db8ebb673de64b200762ab2648dd2012b1926460f212b92486fc8a27",
+  "alreadyObservedPlanChainReceiptSha256": "a23f2a149ca723fa665662a51a25537747c43ccc8a349ed5034bb96434c3e8da",
+  "errorObjectLocated": false,
+  "executionOwner": "T45_ONLY_AFTER_MAIN_DIRECTION",
+  "hostMappingsAreStaticDeclarationsNotLiveMountClaims": true,
+  "liveContainerAndMountBinding": "T45 must bind exact actual CID and birth and selected mounts before invoking; map host fields are SOURCE declarations",
+  "metadataOnlyAddition": {
+    "container": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3",
+    "fields": "device/inode/ACL absent from previous receipt",
+    "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3",
+    "slot": "C05_UNOBSERVED_IDENTITY_ACL"
+  },
+  "nativeGid": 61035,
+  "nativeSupplementaryGroups": [],
+  "nativeUid": 61035,
+  "planChainWillNotBeReprobed": true,
+  "postgresTransport": "FIXED_TCP_127_0_0_1_56791_NOT_UDS",
+  "privateFileBodiesOrDigestsRead": false,
+  "service": {
+    "containerId": "4ec61582c6dc2856b3d843d47af15c73a6cb65355c6f5916a2d386adca251fd6",
+    "containerStartedAt": "2026-11-16T23:08:51.161418347Z",
+    "postmasterStart": "2026-11-16 23:08:52.417902+00",
+    "proofSha256": "cba7c6cbe81503d054f00c03a9c2a8bd7943bf86be8c3f29df6db3a49fc02527",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-37"
+  },
+  "slots": [
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/final33-private/t45-r3-final33-plan-prepare-20261116-03/scratch",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/final33-private/t45-r3-final33-plan-prepare-20261116-03/scratch",
+      "note": null,
+      "required": "read_write_search",
+      "slot": "SCRATCH_DIRECTORY",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite",
+      "note": "Index opened readonly only later; summary/manifest succeeded in PREPARE_READERS before reported error.",
+      "required": "read",
+      "slot": "INPUT_INDEX",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite-wal",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite-wal",
+      "note": null,
+      "required": "existence_only",
+      "slot": "INDEX_SIDECAR_WAL",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite-shm",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite-shm",
+      "note": null,
+      "required": "existence_only",
+      "slot": "INDEX_SIDECAR_SHM",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite-journal",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/r3-final33-private-import-input-20261116-01/package/standard-preflight-20261116-1140-r1/index.sqlite-journal",
+      "note": null,
+      "required": "existence_only",
+      "slot": "INDEX_SIDECAR_JOURNAL",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/etc/naijue-erp/fresh35-combined-installation-v1.json",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-37/authority-61035/fresh35-combined-installation-v1.json",
+      "note": "Preparation authority was removed by successful nativeAuthorityRemoved cleanup; absence now is not the error cause.",
+      "required": "read",
+      "slot": "INSTALL_RECORD",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/etc/naijue-erp/fresh35-admin154-successor-v1.json",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-37/authority-61035/fresh35-admin154-successor-v1.json",
+      "note": "Preparation authority was removed by successful nativeAuthorityRemoved cleanup; absence now is not the error cause.",
+      "required": "read",
+      "slot": "ADMIN154_RECORD",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/etc/naijue-erp/fresh35-compact-zero-successor-v2.json",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-37/authority-61035/fresh35-compact-zero-successor-v2.json",
+      "note": "Preparation authority was removed by successful nativeAuthorityRemoved cleanup; absence now is not the error cause.",
+      "required": "read",
+      "slot": "COMPACT_ZERO_RECORD",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/etc/naijue-erp/fresh35-batched-preparation-v1.json",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-37/authority-61035/fresh35-batched-preparation-v1.json",
+      "note": "Preparation authority was removed by successful nativeAuthorityRemoved cleanup; absence now is not the error cause.",
+      "required": "read",
+      "slot": "NATIVE_PREPARATION_AUTHORITY",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-batched-root06-20261116-01/operation",
+      "host": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root06-20261116-01/operation",
+      "note": null,
+      "required": "read_search",
+      "slot": "ROOT06_OPERATION_ROOT",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-51724553-20261114-01/operation/node_modules",
+      "host": "/srv/naijue-erp/isolated-targets/r3-e894-linux-deps-check-20261110-01/payload/node_modules",
+      "note": "Host mapping is declared source; caller verifies actual C37 Mounts before treating host/container correspondence as observed.",
+      "required": "read_search",
+      "slot": "LINUX_PG_DRIVER_ROOT",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-51724553-20261114-01/operation/node_modules/.package-lock.json",
+      "host": "/srv/naijue-erp/isolated-targets/r3-e894-linux-deps-check-20261110-01/payload/node_modules/.package-lock.json",
+      "note": "Host mapping is declared source; caller verifies actual C37 Mounts before treating host/container correspondence as observed.",
+      "required": "read",
+      "slot": "LINUX_PG_LOCKFILE",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-51724553-20261114-01/operation/node_modules/pg/esm/index.mjs",
+      "host": "/srv/naijue-erp/isolated-targets/r3-e894-linux-deps-check-20261110-01/payload/node_modules/pg/esm/index.mjs",
+      "note": "Host mapping is declared source; caller verifies actual C37 Mounts before treating host/container correspondence as observed.",
+      "required": "read",
+      "slot": "LINUX_PG_ESM_ENTRY",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-51724553-20261114-01/operation/node_modules/pg/lib/index.js",
+      "host": "/srv/naijue-erp/isolated-targets/r3-e894-linux-deps-check-20261110-01/payload/node_modules/pg/lib/index.js",
+      "note": "Host mapping is declared source; caller verifies actual C37 Mounts before treating host/container correspondence as observed.",
+      "required": "read",
+      "slot": "LINUX_PG_CJS_ENTRY",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs",
+      "host": null,
+      "note": null,
+      "required": "read_search",
+      "slot": "REFERENCE_ROOT",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/INDEX.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_INDEX",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_1",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_2",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_3",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/candidate-source-pins.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_4",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/expected-core-metadata.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_5",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_6",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-install-review-plan-20261105-r2/migration-lineage.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_7",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_8",
+      "stage": "PREPARE_CALL"
+    },
+    {
+      "container": "/opt/naijue-erp/fresh35-combined-v1/reference-inputs/cloud-pg-schema178v2-20261105-r2/evidence/functions.json",
+      "host": null,
+      "note": null,
+      "required": "read",
+      "slot": "REFERENCE_FIXED_9",
+      "stage": "PREPARE_CALL"
+    }
+  ],
+  "state": "SOURCE_ONLY_SUPPLEMENTAL_FIXED37_PERMISSION_SLOTS"
+}

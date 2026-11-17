@@ -1,0 +1,85 @@
+--- outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/final33-run.mjs
++++ outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-PENDING04-SOURCE-01/prepare/bundle/final33-run.mjs
+@@ -24,9 +24,9 @@
+   sqlstate:FAILURE_SQLSTATES.includes(code)?code:null};
+ }
+ 
+-export const PREPARE='t45-r3-final33-plan-prepare-20261116-03';
++export const PREPARE='t45-r3-final33-plan-prepare-20261116-04';
+ export const LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01';
+-const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-03"});
++const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-04"});
+ export const WRITER='t45-r3-batched-real-execute-20261115-01';
+ const STATE='/var/lib/naijue-erp/fresh35-production';
+ const INPUT=STATE+'/r3-final33-private-import-input-20261116-01/package';
+--- outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/final33_host.py
++++ outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-PENDING04-SOURCE-01/prepare/bundle/final33_host.py
+@@ -4,9 +4,9 @@
+ from types import ModuleType
+ import base64,hashlib,json,os,re,runpy,selectors,signal,stat,subprocess,sys,time
+ WRITER='t45-r3-batched-real-execute-20261115-01'
+-PREPARE='t45-r3-final33-plan-prepare-20261116-03'
++PREPARE='t45-r3-final33-plan-prepare-20261116-04'
+ LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01'
+-PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-03'}
++PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-04'}
+ HISTORICAL_CATALOG_SERVICE={'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+ PLAN_REL=Path('real-first-20261110-r3/reports')/PREPARE
+ def fixed_job_key(env):
+@@ -62,7 +62,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS = {'normal05_retained_stop.py': 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1', 'final33-run.mjs': '35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d'}
++PINS = {'normal05_retained_stop.py': 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1', 'final33-run.mjs': '431ad2a9e18dbe89457d60949614f75e4d9d61125b517658a9c39cb0fa4f7ae1'}
+ 
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+--- outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/writer/bundle/final33-run.mjs
++++ outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-PENDING04-SOURCE-01/writer/bundle/final33-run.mjs
+@@ -24,9 +24,9 @@
+   sqlstate:FAILURE_SQLSTATES.includes(code)?code:null};
+ }
+ 
+-export const PREPARE='t45-r3-final33-plan-prepare-20261116-03';
++export const PREPARE='t45-r3-final33-plan-prepare-20261116-04';
+ export const LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01';
+-const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-03"});
++const PREPARATION_IDENTITY_MAPPING=Object.freeze({"batchPlanPath":"/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04/batched-plan.sqlite","businessWriterRequestKey":"t45-r3-batched-real-execute-20261115-01","nativeLogicalPreparationKey":"t45-r3-final33-plan-prepare-20261116-01","outerPreparationAttemptKey":"t45-r3-final33-plan-prepare-20261116-04"});
+ export const WRITER='t45-r3-batched-real-execute-20261115-01';
+ const STATE='/var/lib/naijue-erp/fresh35-production';
+ const INPUT=STATE+'/r3-final33-private-import-input-20261116-01/package';
+--- outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/writer/bundle/final33_host.py
++++ outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-PENDING04-SOURCE-01/writer/bundle/final33_host.py
+@@ -4,9 +4,9 @@
+ from types import ModuleType
+ import base64,hashlib,json,os,re,runpy,selectors,signal,stat,subprocess,sys,time
+ WRITER='t45-r3-batched-real-execute-20261115-01'
+-PREPARE='t45-r3-final33-plan-prepare-20261116-03'
++PREPARE='t45-r3-final33-plan-prepare-20261116-04'
+ LOGICAL_PREPARE='t45-r3-final33-plan-prepare-20261116-01'
+-PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-03/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-03'}
++PREPARATION_IDENTITY_MAPPING={'batchPlanPath': '/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04/batched-plan.sqlite', 'businessWriterRequestKey': 't45-r3-batched-real-execute-20261115-01', 'nativeLogicalPreparationKey': 't45-r3-final33-plan-prepare-20261116-01', 'outerPreparationAttemptKey': 't45-r3-final33-plan-prepare-20261116-04'}
+ HISTORICAL_CATALOG_SERVICE={'containerId': 'ed42d33a198fe1c35a72d5c27b3c138d2cd5e8bc892a73d39f83fc77c88c8c14', 'containerStartedAt': '2026-11-16T18:33:46.920948412Z', 'postmasterStart': '2026-11-16 18:33:48.303258+00', 'proofSha256': '82e15c91ea0b2b237ddada69e2345a78f28e1ee4301c45e859735853ba0a3ec0', 'serviceKey': 't45-first-r3-native-service-start-20261116-35'}
+ PLAN_REL=Path('real-first-20261110-r3/reports')/PREPARE
+ def fixed_job_key(env):
+@@ -62,7 +62,7 @@
+ A_CUSTODY_KEY='t45-r3-first-admin-custody-receive-20261113-01'
+ UUID=re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\Z')
+ TRACK={'childEntered':False,'accessEntered':False,'projection':None}
+-PINS = {'normal05_retained_stop.py': 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1', 'final33-run.mjs': '35072a44396e94da66c2f143f7dc86fe8b72c9a5cb5c92b7cb991febf823276d'}
++PINS = {'normal05_retained_stop.py': 'bf553f2f5531ba71d2f4e98f82c4027378d7fdd19308c210bbbf745ee65547a2', 'fresh35-production-carrier.py': 'efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4', 'nonroot_input_access.py': '0dab63562102ded384773477bdcad0c01d3ff5d2aa076431bacf5bd973b43385', 'r3_05_cli.py': 'b5e48708ca9b910d0aa0f85c689540958534afb4ded346c4d598dca5d0aa6ad6', 'r3_05_runtime.py': '9cfd9770265e712ddbd6378e0ee39a9f91ae72c690ea4b526244b59d2520dbf1', 'final33-run.mjs': '431ad2a9e18dbe89457d60949614f75e4d9d61125b517658a9c39cb0fa4f7ae1'}
+ 
+ SOURCE_ROWS_SHA256='078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9'
+ SOURCE_SET_SHA256='d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898'
+--- outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/stop/bundle/normal05_preserve_stop.py
++++ outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-PENDING04-SOURCE-01/stop/bundle/normal05_preserve_stop.py
+@@ -24,7 +24,7 @@
+ SERVICE_FIELDS = {'serviceKey', 'proofSha256', 'containerId', 'containerStartedAt', 'postmasterStart'}
+ TERMINALS = {'COMPLETED', 'FAILED', 'INTERRUPTED_UNKNOWN_OUTCOME_NO_REPLAY'}
+ BEFORE_PHASE_REFUSALS = {'REFUSED_D0_INTERLOCK_BEFORE_PHASE', 'REFUSED_R3_CONTINUITY_BEFORE_PHASE'}
+-CURRENT_BATCH_OPERATIONS=('t45-r3-batched-install-20261116-02', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-plan-prepare-20261116-03', 't45-r3-batched-real-execute-20261115-01')
++CURRENT_BATCH_OPERATIONS=('t45-r3-batched-install-20261116-02', 't45-r3-batched161-command-successor-20261116-01', 't45-r3-final33-plan-prepare-20261116-04', 't45-r3-batched-real-execute-20261115-01')
+ DIGEST = re.compile('[0-9a-f]{64}')
+ 
+ 

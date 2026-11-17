@@ -1,0 +1,68 @@
+{
+  "C05RepairReceiptSha256": "b7794bcd006bd8531e907d6f67aa570da8f7df3dc5c8f25508b8df8555f31041",
+  "PGStopped": true,
+  "activeOperationUnits": [],
+  "authenticationSnapshotBodiesOrDigestsRead": false,
+  "businessAcceptancePassed": false,
+  "checkedAtUTC": "2026-11-17T00:05:02.793483+00:00",
+  "cleanupOnlyComplete": true,
+  "failed03Preserved": {
+    "failureStage": "PREPARE_CALL",
+    "nativeConnectionCleanup": "UNKNOWN",
+    "outcome": "UNKNOWN",
+    "processCleanup": "REAPED_EXCLUSIVE_PROCESS",
+    "readbackSha256": "58ba3f0dc52e8400c6c62a75c3098bf508c8e17771f76f7b9ae3c3644d284677",
+    "replayed": false,
+    "systemCode": "EACCES"
+  },
+  "furtherServerActionsStarted": false,
+  "hostPortAbsent": true,
+  "naturalExpiryCountedAsRestoration": false,
+  "new38Started": false,
+  "normal37ServiceContainer": {
+    "id": "4ec61582c6dc2856b3d843d47af15c73a6cb65355c6f5916a2d386adca251fd6",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-fresh35-first-production-20261110-r3-service-37",
+    "pid": 0,
+    "running": false
+  },
+  "old35FailureCause": "UNKNOWN_UNCHANGED",
+  "originalAuthVerifierAndExpiryActuallyRestored": true,
+  "originalDataDirectoryIdentity": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502421,
+    "mode": 448,
+    "uid": 61035
+  },
+  "pending04FiniteAuthorityIssued": false,
+  "pending04OrLiveCASExecuted": false,
+  "privateSafeRestoredReceiptSha256": "9a4711ac1b3feb35520261f3830e06f08c4ff3d824a66be0f7979cdaeae8d7c9",
+  "restoreCleanupSha256": "0a0ccd4b87fad58193f3d971eaf6e80435b05961d70e759229ed8c8ef0ed729a",
+  "restoreElapsedSeconds": 7.669129073037766,
+  "restoreMaintenanceContainer": {
+    "id": "6515e443e4fe0a866d3e641729df74695cccb8908ac8abe3869106159c1b6c7c",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-ordinary37-auth-restore-20261116-01",
+    "pid": 0,
+    "running": false
+  },
+  "restorePublicResultSha256": "b14893c32626bde5e03b91d78660fa853c5776126e62e83b9b43797ad39ca3da",
+  "restoreReadbackSha256": "785aae60cdee09935e446ded9af41393338589c2645f66650c87f40529d4be70",
+  "restoreRequestKey": "t45-r3-ordinary37-auth-restore-20261116-01",
+  "restoreRootResultSha256": "4ad0c6d2a1057462824c39c8e5372766ab2366376c8e4779f8da20d838e4d2f3",
+  "restoreTerminalSha256": "97dc45bd776ee72489fd7448acb6f3f0463e9f4d8d277acbfa76b04fc1e89e69",
+  "retainedC05SearchMatches": true,
+  "retainedC05SearchMetadata": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502393,
+    "mode": 456,
+    "slot": "C05",
+    "uid": 0
+  },
+  "runtimeAuthOrMembershipOrAttributesChanged": false,
+  "state": "NORMAL37_FAILED_PREPARE03_STOPPED_AND_EXACT_ORIGINAL_AUTH_RESTORED",
+  "supplemental25ReceiptSha256": "bcde121658009e1e40b777f23bf7b3b916ae9a1c08c44dbca192b42055f0be49",
+  "writerSubmitted": false
+}

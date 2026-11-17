@@ -1,0 +1,98 @@
+{
+  "actualEvidence": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-PERMISSION-DIAGNOSTIC-01/ACTUAL-PLAN03-PERMISSIONS.json",
+    "sha256": "a23f2a149ca723fa665662a51a25537747c43ccc8a349ed5034bb96434c3e8da"
+  },
+  "checks": {
+    "artifactWip": "HELD",
+    "authorityIssued": false,
+    "failed03Replayed": false,
+    "nativeOrDatabaseExecuted": false,
+    "permissionsOrRolesChanged": false,
+    "pythonAstParse": "PASS",
+    "readerExecuted": false
+  },
+  "existingLeaseComparison": {
+    "currentFinal33Calls": "access.metadata only; no access.prepare/restore call",
+    "currentMetadataRule": "all ancestors no symlink and no group/world write; 0:61035/0710 satisfies this rule",
+    "oldLeaseScope": "old fixed input profile,31 package files,6 approval files,baseline sidecars,REAL,ledger",
+    "recommendation": "single exact runtime-parent correction is smaller than broad old input lease; Main decides lifetime and exact restoration boundary",
+    "restorationNote": "If made temporary, keep search across both preparation and original writer; restore original numeric owner/group/mode on same inode after all children reaped. Do not revive old ledger or rewrite historical receipts.",
+    "reuseWholeOldLease": "REJECTED_SCOPE_MISMATCH_NEW_FINAL33_INPUT",
+    "sameTargetAlreadyExistsIn": "nonroot_input_access.make_plan REAL branch"
+  },
+  "proposedMinimumDifference": {
+    "after": {
+      "gid": 61035,
+      "mode": "0710",
+      "uid": 0
+    },
+    "before": {
+      "gid": 0,
+      "mode": "0700",
+      "uid": 0
+    },
+    "grant": "group search only; no group read/write; no world permission",
+    "identity": "same dev/inode opened O_DIRECTORY|O_NOFOLLOW, actual before identity/ACL must first be read by T45",
+    "permissionExecutionAuthorizedByThisSource": false,
+    "scope": "one exact R3-owned runtime parent directory, no descendants"
+  },
+  "provenCurrentDefect": {
+    "current": {
+      "gid": 0,
+      "mode": "0700",
+      "uid": 0
+    },
+    "nativeIdentity": {
+      "gid": 61035,
+      "groups": [],
+      "uid": 61035
+    },
+    "nativeSearch": false,
+    "olderNative35Cause": "UNKNOWN_UNCHANGED",
+    "originalUniqueErrorCauseProven": false,
+    "slot": "PLAN_REAL_PARENT / T45 C05,H06"
+  },
+  "remaining": "Actual supplemental permission metadata and Main decision; pending04 mapping is not signed or executed by this SOURCE; no deadline/role extension.",
+  "sourceTrace": [
+    {
+      "fact": "UNKNOWN assigned before PREPARE_CALL; does not prove a PG connection",
+      "lines": "181-183",
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/final33-run.mjs"
+    },
+    {
+      "fact": "first I/O lstat plan; only then enters physical host",
+      "lines": "43-48",
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/r3-service20-retained-import.mjs"
+    },
+    {
+      "fact": "plan leaf directory created with uid/gid61035 mode0700; existing ancestor receives no search correction here",
+      "lines": "553-557",
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/final33_host.py"
+    },
+    {
+      "fact": "old REAL branch grants root:61035/0710 using same-object fd update; old scope must not be applied to new inputs",
+      "lines": "141-161,220-246",
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL37-SOURCE-SUCCESSOR-01/prepare/bundle/nonroot_input_access.py"
+    },
+    {
+      "fact": "driver lives at fixed installed-real-operation-51724553 node_modules; host mount source declared in FIXED-SLOTS, actual mount mapping must be checked; no /opt driver assumption",
+      "lines": "360-389",
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/whole-host-session.mjs"
+    }
+  ],
+  "state": "SOURCE_ONLY_MINIMUM_FIX_PROPOSAL_AND_SUPPLEMENTAL_DIAGNOSTIC",
+  "supplementalReadOnlyInterface": {
+    "bodyOrDigestRead": false,
+    "executionOwner": "T45 only after Main direction; D1 has not run reader; T45 verify actual CID/birth/mount mappings first",
+    "network": "none, no sockets/PG/UDS",
+    "priorPlanChain": "not repeated; only previously absent C05 dev/inode/ACL metadata added",
+    "privateAuthorityAbsence": "expected after cleanup, not proof of original failure",
+    "reader": "read_permission_slots.py",
+    "sidecars": "lstat/access only, never SQLite open",
+    "slotMap": "FIXED-SLOTS.json",
+    "slots": 25,
+    "stdout": "numeric metadata and fixed slot labels only, no raw error/path/message/stack/SQL",
+    "view": "exact current37 container only, root metadata plus forked actual dropUID61035 access/lstat"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "bytes": 11696,
+      "path": "FIXED-SLOTS.json",
+      "sha256": "c9a553b0308a049d0aeb8949fb107d17367ed11ef41585b1866919a231273d8a"
+    },
+    {
+      "bytes": 13248,
+      "path": "read_permission_slots.py",
+      "sha256": "abe4477c5d5ec1045936ef549fc0c05cfa4662c73b1db21ed139667cbc9d6d25"
+    },
+    {
+      "bytes": 4818,
+      "path": "REPORT.json",
+      "sha256": "0bbe8150d90da3749ba8a2e8b155d98fe0aa3cf9cfed2228ab29b0f4ea1fdfc2"
+    }
+  ],
+  "format": "D1_PERMISSION_SOURCE_PINS_V1",
+  "state": "SOURCE_ONLY_NOT_EXECUTED"
+}

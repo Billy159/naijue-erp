@@ -1,0 +1,64 @@
+{
+  "PGConnections": 0,
+  "clockOrAuthorityIssued": false,
+  "consumerSourcePinsSha256": "665118b52ac0545a6b0ee158e52f703c99fe3981b0043db49298444448d23af0",
+  "files": {
+    "CALLER-DIFF.patch": {
+      "bytes": 10938,
+      "sha256": "ebdbd0812f45bf4196d2278648ef662c68bb08182b667054cd2055c73b7ddd20"
+    },
+    "HANDOFF.md": {
+      "bytes": 4945,
+      "sha256": "0a9531380fcffbbfd28ed33eb8d1367a25daf349a7ba7876dd94fe012156b88c"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 914,
+      "sha256": "0fa0f150910b69ac814f72635906b0a9fb47c642ea8ff9f67e51312c477253f3"
+    },
+    "PENDING04-RULES.UNISSUED.json": {
+      "bytes": 34670,
+      "sha256": "1ae5b323d779903bfed2d9d8ba37255bb46d4ce68a0b8003ebcd43b41e89f52c"
+    },
+    "actual_inputs.py": {
+      "bytes": 3976,
+      "sha256": "d7488b4926130eb21b728b6c63c1c5d40fc648ad807135b0bb745032c6b0aa30"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "15df86e6f4b5af0e8ea84b6a375720277a4a3fcb5f8bb1b83bcc66c6be429ca5"
+    },
+    "issue_live.py": {
+      "bytes": 6683,
+      "sha256": "2044e014584bb44a852545f05c225af5d8648a33c9a8e2222de3918f657abf92"
+    },
+    "issue_phase.py": {
+      "bytes": 42678,
+      "sha256": "020463306e8565b0355e11d63af51a15a6eca0bcd188306148242de772f7eaca"
+    },
+    "issue_stop.py": {
+      "bytes": 4192,
+      "sha256": "4d29c8d47208ba1bc4c5dc770cbd42c78b989e706e985fd1719fbe33657dd339"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2406,
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658"
+    },
+    "live_cas.py": {
+      "bytes": 87935,
+      "sha256": "c0f62ab8971cdd06b7d3fedee50e0479c6e100a22bd5aa7cdf80af1d1968f2f7"
+    },
+    "original-cas-live37-pending04-carrier.UNISSUED.py": {
+      "bytes": 2555,
+      "sha256": "ceae6bff338b16f044d87912c180f9f65e1480650e31371aba0708847f87430f"
+    },
+    "r3_direct37_aux_prepare.py": {
+      "bytes": 130174,
+      "sha256": "b8aca23fed1e5bdbc1b94f129b76054c806bf4ce5ea7a62ce600af02f544d8b8"
+    }
+  },
+  "format": "D1_LIVE_PENDING04_SOURCE_PINS_V1",
+  "realDecisionSha256": "245668f34289e5e418fbc592180b5d0ccea06316a402c0955ff96d3157039346",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_ONLY_ACTIVE37_PENDING04_NO_FINITE_AUTHORITY_OR_RUNTIME"
+}

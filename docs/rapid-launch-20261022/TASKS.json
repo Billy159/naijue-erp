@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T07:18:41.871733+08:00",
+  "updatedAt": "2026-11-17T08:22:26.704807+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Read-only exact permission diagnosis for actual native PREPARE_CALL EACCES; identify fixed path/syscall/UID/mount/ancestor permission evidence without PG/new native/mutation. Failed03 never replay; no prepared evidence/no writer. Then Main decides smallest source/access fix with unused-phase continuation or original STOP37+exactRESTORE37 before deadlines. Do not automatically new38/renew60b.",
+  "next": "T45 consumer38 and D1 root38 one exact SOURCE candidate; newSTART38 truly captures plan04. Joint checks cover full transitive versions, genuine historical-map/future-absence plus reject oldP04, real signed-request constructor pre-network, affected native UID/mount permissions, closed failure branch readback. Reuse passed inputs/catalog/logic; no new authority/service/04/writer until accepted source and actual fresh stopped basis. No user materials/authorization missing.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T07:18:41.871733+08:00",
+  "asOf": "2026-11-17T08:22:26.704807+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Read-only exact permission diagnosis for actual native PREPARE_CALL EACCES; identify fixed path/syscall/UID/mount/ancestor permission evidence without PG/new native/mutation. Failed03 never replay; no prepared evidence/no writer. Then Main decides smallest source/access fix with unused-phase continuation or original STOP37+exactRESTORE37 before deadlines. Do not automatically new38/renew60b.",
+  "next": "T45 consumer38 and D1 root38 one exact SOURCE candidate; newSTART38 truly captures plan04. Joint checks cover full transitive versions, genuine historical-map/future-absence plus reject oldP04, real signed-request constructor pre-network, affected native UID/mount permissions, closed failure branch readback. Reuse passed inputs/catalog/logic; no new authority/service/04/writer until accepted source and actual fresh stopped basis. No user materials/authorization missing.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,15 +52789,15 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": true,
+  "newRolesApplied": false,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": false,
+  "PGCurrentlyStopped": true,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": false,
+  "originalAuthRestored": true,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53154,7 +53154,7 @@
   },
   "writerSubmitted": false,
   "businessWrites": 0,
-  "normal37": "START37_ACTUAL_SUCCESS_PREPARE03_NATIVE_EACCES_FAILED_UNKNOWN_CURRENT_SERVICE_RUNNING_ROLE60B_APPLIED",
+  "normal37": "NORMAL37_SAFELY_CLOSED_EXACT_AUTH_RESTORED_C05_FIX_RETAINED_NORMAL38_OUTER04_SOURCE_ONLY",
   "normal37ConsumerSource": {
     "sourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
     "reviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
@@ -53241,6 +53241,37 @@
     "scratchEmpty": true,
     "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
     "automaticReplay": false
+  },
+  "normal38": "SOURCE_PREPARATION_ONLY_NO_AUTHORITY_OR_RUNTIME",
+  "normal38SourceDecisionSha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c",
+  "normal37PermissionFix": {
+    "device": 66304,
+    "inode": 13502393,
+    "uid": 0,
+    "gid": 61035,
+    "mode": 456,
+    "retained": true,
+    "beforeSha256": "e0080527d013852e29c2170b014315894d7e6af81c0f8a0c8d3ac59075f1e57d",
+    "afterSha256": "b7794bcd006bd8531e907d6f67aa570da8f7df3dc5c8f25508b8df8555f31041",
+    "supplemental25Sha256": "bcde121658009e1e40b777f23bf7b3b916ae9a1c08c44dbca192b42055f0be49",
+    "noNewReadWriteWorldAccess": true
+  },
+  "normal37Pending04": {
+    "state": "SOURCE_ONLY_WINDOW_ABANDONED_NO_CAS_OR_JOB",
+    "source01": "be8538572eff22257059baacf522f8fbc3d6bf3ebcc71430dda9139023d0dee9",
+    "review01": "e64f580eb48df28c30c12f953751e4dff87dbd36735fccae04b1968e14920511",
+    "source02": "75843fcea5ff6bc7167fc8083848a676adfea44dd83a299bc9c4eb1c281ab500",
+    "source02Review": "NOT_REVIEWED",
+    "failure": "P04_R01_REAL36_HISTORY_WRONGLY_RENAMED_TO37"
+  },
+  "normal37SafeClosure": {
+    "actualStopSha256": "0f0e3240bd881413bc25934071e6983dd533cda9275b65e343f8049e8580619d",
+    "actualRestoreSha256": "785aae60cdee09935e446ded9af41393338589c2645f66650c87f40529d4be70",
+    "actualClosureSha256": "f5bee4600fe863bf032cad64512010fa6800c52e14f2249e30d1b2514b759d85",
+    "restoredSafeReceiptSha256": "9a4711ac1b3feb35520261f3830e06f08c4ff3d824a66be0f7979cdaeae8d7c9",
+    "PGStopped": true,
+    "originalAuthAndExpiryRestored": true,
+    "naturalExpiryCountedAsRestoration": false
   }
 }
 }

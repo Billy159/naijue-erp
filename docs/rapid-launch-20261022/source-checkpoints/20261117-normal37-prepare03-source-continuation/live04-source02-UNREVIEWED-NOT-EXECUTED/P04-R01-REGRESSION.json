@@ -1,0 +1,13 @@
+{
+  "actualPins": 306,
+  "all289HistoricalPathsPreserved": true,
+  "clockRead": false,
+  "current37RestoredNotInPinMap": true,
+  "currentDispatcherOnlyHistoricalPinChange": true,
+  "historical36RestoredActualPinPreserved": true,
+  "historicalPins": 289,
+  "issuerInvoked": false,
+  "serverActions": 0,
+  "sixteenPrivateMetadataOriginalPathsPreserved": true,
+  "state": "P04_R01_EXACT_ACTUAL_HISTORY_PATH_REGRESSION_PASS"
+}

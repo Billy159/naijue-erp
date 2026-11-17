@@ -1,0 +1,23 @@
+{
+  "PGConnections": 0,
+  "authorityOrTargetOrJobFixtureCreated": false,
+  "clockRead": false,
+  "consumerSourcePinsSha256": "665118b52ac0545a6b0ee158e52f703c99fe3981b0043db49298444448d23af0",
+  "helperBytes": 130174,
+  "mainIssuerInvoked": false,
+  "newHelperSha256": "b8aca23fed1e5bdbc1b94f129b76054c806bf4ce5ea7a62ce600af02f544d8b8",
+  "newStopSha256": "1914f2ebfa2b79ac45e8c5d96089f7d60d1c3e3ed1ae16087ff82dceb1ef9f46",
+  "onlyStopAssignmentChanged": true,
+  "preservedUsedRules": [
+    "apply",
+    "start",
+    "restore"
+  ],
+  "proposedDispatcherSha256": "2e20c9feb3a94da30433df6e4eaab3d426013f37fe196651f406938dcd0eeb8f",
+  "proposedPolicySha256": "9be14ac1c86ed2061ce17b54c03c4b5164b124d4e382de4a11bd4d8d88296469",
+  "protectedOldPrefixPreserved": true,
+  "remainingRuntimeVerification": "NOT_RUN",
+  "serverActions": 0,
+  "state": "LOCAL_SOURCE_DELTA_ONLY_PASS",
+  "unrelatedPolicyDeltaRejected": true
+}

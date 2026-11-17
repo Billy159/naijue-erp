@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T07:18:41.871733+08:00",
-  "state": "START37_ACTUAL_SUCCESS_PREPARE03_NATIVE_EACCES_FAILED_UNKNOWN_CURRENT_SERVICE_RUNNING_ROLE60B_APPLIED",
+  "asOf": "2026-11-17T08:22:26.704807+08:00",
+  "state": "NORMAL37_SAFELY_CLOSED_EXACT_AUTH_RESTORED_C05_FIX_RETAINED_NORMAL38_OUTER04_SOURCE_ONLY",
   "consumerSourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
   "consumerReviewSha256": "9fd6b7a992b6de3dedf6925910b1fc5e5d4397e57f233848b0816fbbb72440bc",
   "phaseRulesSha256": "e5d260233bc169d5e35e1a45bd67f4554fb7f1cf0d73cb78b39d75424310dc1e",
@@ -12,14 +12,14 @@
   "reusedRuntimeFiles": 22,
   "currentLoadBindings": 42,
   "inlineBindings": 7,
-  "PGCurrentlyStopped": false,
-  "originalAuthRestored": false,
+  "PGCurrentlyStopped": true,
+  "originalAuthRestored": true,
   "writerSubmitted": false,
   "businessWrites": 0,
   "finiteAuthorityIssued": false,
   "newServiceStarted": false,
   "fullRehearsal": false,
-  "next": "Read-only exact permission diagnosis for actual native PREPARE_CALL EACCES; identify fixed path/syscall/UID/mount/ancestor permission evidence without PG/new native/mutation. Failed03 never replay; no prepared evidence/no writer. Then Main decides smallest source/access fix with unused-phase continuation or original STOP37+exactRESTORE37 before deadlines. Do not automatically new38/renew60b.",
+  "next": "T45 consumer38 and D1 root38 one exact SOURCE candidate; newSTART38 truly captures plan04. Joint checks cover full transitive versions, genuine historical-map/future-absence plus reject oldP04, real signed-request constructor pre-network, affected native UID/mount permissions, closed failure branch readback. Reuse passed inputs/catalog/logic; no new authority/service/04/writer until accepted source and actual fresh stopped basis. No user materials/authorization missing.",
   "copies": [
     {
       "path": "consumer37-source-pass/SOURCE-PINS.json",
@@ -515,6 +515,231 @@
       "path": "issued-safe-metadata/PREPARE03-ISSUED-METADATA.json",
       "sha256": "43886edda4d96263504bbf37db2f9ea03527491c9d1a2e2ce379f105232be9ae",
       "bytes": 399
+    },
+    {
+      "path": "actual/PLAN03-UID-PERMISSIONS.json",
+      "sha256": "a23f2a149ca723fa665662a51a25537747c43ccc8a349ed5034bb96434c3e8da",
+      "bytes": 5088
+    },
+    {
+      "path": "actual/C05-BEFORE.json",
+      "sha256": "e0080527d013852e29c2170b014315894d7e6af81c0f8a0c8d3ac59075f1e57d",
+      "bytes": 622
+    },
+    {
+      "path": "actual/C05-AFTER.json",
+      "sha256": "b7794bcd006bd8531e907d6f67aa570da8f7df3dc5c8f25508b8df8555f31041",
+      "bytes": 807
+    },
+    {
+      "path": "actual/SUPPLEMENTAL25-PERMISSIONS.json",
+      "sha256": "bcde121658009e1e40b777f23bf7b3b916ae9a1c08c44dbca192b42055f0be49",
+      "bytes": 24744
+    },
+    {
+      "path": "actual/STOP37-BASIS.json",
+      "sha256": "8cd12dd127d3765cfac68a5ac8e0618801aae5914068e39b222b658ddb9b71ca",
+      "bytes": 5156
+    },
+    {
+      "path": "actual/ACTUAL-STOP37-RESULT.json",
+      "sha256": "0f0e3240bd881413bc25934071e6983dd533cda9275b65e343f8049e8580619d",
+      "bytes": 6298
+    },
+    {
+      "path": "actual/ACTUAL-RESTORE37-RESULT.json",
+      "sha256": "785aae60cdee09935e446ded9af41393338589c2645f66650c87f40529d4be70",
+      "bytes": 5484
+    },
+    {
+      "path": "actual/RESULT37-SAFELY-CLOSED.json",
+      "sha256": "f5bee4600fe863bf032cad64512010fa6800c52e14f2249e30d1b2514b759d85",
+      "bytes": 2864
+    },
+    {
+      "path": "permission-reader-source/SOURCE-PINS.json",
+      "sha256": "933718063921ee70448a607d482ff27e3be908e1ea9e0b9c6a79a27392dfb97e",
+      "bytes": 561
+    },
+    {
+      "path": "permission-reader-source/FIXED-SLOTS.json",
+      "sha256": "c9a553b0308a049d0aeb8949fb107d17367ed11ef41585b1866919a231273d8a",
+      "bytes": 11696
+    },
+    {
+      "path": "permission-reader-source/read_permission_slots.py",
+      "sha256": "abe4477c5d5ec1045936ef549fc0c05cfa4662c73b1db21ed139667cbc9d6d25",
+      "bytes": 13248
+    },
+    {
+      "path": "permission-reader-source/REPORT.json",
+      "sha256": "0bbe8150d90da3749ba8a2e8b155d98fe0aa3cf9cfed2228ab29b0f4ea1fdfc2",
+      "bytes": 4818
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/SOURCE-PINS.json",
+      "sha256": "be8538572eff22257059baacf522f8fbc3d6bf3ebcc71430dda9139023d0dee9",
+      "bytes": 2262
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/CALLER-DIFF.patch",
+      "sha256": "ebdbd0812f45bf4196d2278648ef662c68bb08182b667054cd2055c73b7ddd20",
+      "bytes": 10938
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/HANDOFF.md",
+      "sha256": "0a9531380fcffbbfd28ed33eb8d1367a25daf349a7ba7876dd94fe012156b88c",
+      "bytes": 4945
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/LOCAL-CHECKS.json",
+      "sha256": "0fa0f150910b69ac814f72635906b0a9fb47c642ea8ff9f67e51312c477253f3",
+      "bytes": 914
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/actual_inputs.py",
+      "sha256": "d7488b4926130eb21b728b6c63c1c5d40fc648ad807135b0bb745032c6b0aa30",
+      "bytes": 3976
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/identity_pair.py",
+      "sha256": "15df86e6f4b5af0e8ea84b6a375720277a4a3fcb5f8bb1b83bcc66c6be429ca5",
+      "bytes": 1347
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/issue_live.py",
+      "sha256": "2044e014584bb44a852545f05c225af5d8648a33c9a8e2222de3918f657abf92",
+      "bytes": 6683
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/issue_phase.py",
+      "sha256": "020463306e8565b0355e11d63af51a15a6eca0bcd188306148242de772f7eaca",
+      "bytes": 42678
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/issue_stop.py",
+      "sha256": "4d29c8d47208ba1bc4c5dc770cbd42c78b989e706e985fd1719fbe33657dd339",
+      "bytes": 4192
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/issuer_aux_pair.py",
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658",
+      "bytes": 2406
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/live_cas.py",
+      "sha256": "c0f62ab8971cdd06b7d3fedee50e0479c6e100a22bd5aa7cdf80af1d1968f2f7",
+      "bytes": 87935
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/original-cas-live37-pending04-carrier.UNISSUED.py",
+      "sha256": "ceae6bff338b16f044d87912c180f9f65e1480650e31371aba0708847f87430f",
+      "bytes": 2555
+    },
+    {
+      "path": "live04-source01-NEEDFIX-NOT-EXECUTED/r3_direct37_aux_prepare.py",
+      "sha256": "b8aca23fed1e5bdbc1b94f129b76054c806bf4ce5ea7a62ce600af02f544d8b8",
+      "bytes": 130174
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/SOURCE-PINS.json",
+      "sha256": "75843fcea5ff6bc7167fc8083848a676adfea44dd83a299bc9c4eb1c281ab500",
+      "bytes": 2505
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/CALLER-DIFF.patch",
+      "sha256": "ebdbd0812f45bf4196d2278648ef662c68bb08182b667054cd2055c73b7ddd20",
+      "bytes": 10938
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/HANDOFF.md",
+      "sha256": "1e3d66eabf96b2721621163a72cf628c73a62878ca21256b179ca8ec0bd2ee07",
+      "bytes": 5466
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/LOCAL-CHECKS.json",
+      "sha256": "0fa0f150910b69ac814f72635906b0a9fb47c642ea8ff9f67e51312c477253f3",
+      "bytes": 914
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/P04-R01-REGRESSION.json",
+      "sha256": "39e7988b1a650a6ced250f75be62c366473e73ce9d91bb1741e167a3761e859a",
+      "bytes": 423
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/actual_inputs.py",
+      "sha256": "d7488b4926130eb21b728b6c63c1c5d40fc648ad807135b0bb745032c6b0aa30",
+      "bytes": 3976
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/identity_pair.py",
+      "sha256": "15df86e6f4b5af0e8ea84b6a375720277a4a3fcb5f8bb1b83bcc66c6be429ca5",
+      "bytes": 1347
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/issue_live.py",
+      "sha256": "2044e014584bb44a852545f05c225af5d8648a33c9a8e2222de3918f657abf92",
+      "bytes": 6683
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/issue_phase.py",
+      "sha256": "020463306e8565b0355e11d63af51a15a6eca0bcd188306148242de772f7eaca",
+      "bytes": 42678
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/issue_stop.py",
+      "sha256": "4d29c8d47208ba1bc4c5dc770cbd42c78b989e706e985fd1719fbe33657dd339",
+      "bytes": 4192
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/issuer_aux_pair.py",
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658",
+      "bytes": 2406
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/live_cas.py",
+      "sha256": "af18f2961cd2cc75eaa66017df24faf647e09bd66ae9d8e3a9b5938d4fb28230",
+      "bytes": 87935
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/original-cas-live37-pending04-carrier.UNISSUED.py",
+      "sha256": "24153fba37b91938a0a6b9fe0c68663b899e48f6c347a3e5f1861f31caf10e93",
+      "bytes": 2555
+    },
+    {
+      "path": "live04-source02-UNREVIEWED-NOT-EXECUTED/r3_direct37_aux_prepare.py",
+      "sha256": "b8aca23fed1e5bdbc1b94f129b76054c806bf4ce5ea7a62ce600af02f544d8b8",
+      "bytes": 130174
+    },
+    {
+      "path": "reviews/LIVE04-NEEDFIX-RESULT.json",
+      "sha256": "e64f580eb48df28c30c12f953751e4dff87dbd36735fccae04b1968e14920511",
+      "bytes": 3356
+    },
+    {
+      "path": "main/PENDING04-SOURCE-DECISION01.json",
+      "sha256": "d861ea7b400c3fee6f79e0dfc20c1ba23e241682d3d3b23210755494a6fdd7f2",
+      "bytes": 2795
+    },
+    {
+      "path": "main/PENDING04-SOURCE-DECISION02.json",
+      "sha256": "245668f34289e5e418fbc592180b5d0ccea06316a402c0955ff96d3157039346",
+      "bytes": 3617
+    },
+    {
+      "path": "main/NORMAL38-SOURCE-DECISION.json",
+      "sha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c",
+      "bytes": 3332
+    },
+    {
+      "path": "issued-safe-metadata/STOP37-ISSUED-METADATA.json",
+      "sha256": "66a8d1e97154c326c62d1ee3240faf063881e73d2aab9bbe9174e533aa93defa",
+      "bytes": 410
+    },
+    {
+      "path": "issued-safe-metadata/RESTORE37-ISSUED-METADATA.json",
+      "sha256": "78e2425286404e7f789b3fb12c88cf925c7146729a1866c53ddbf00e108beeb8",
+      "bytes": 402
     }
   ],
   "referenceOnlyUnissuedJSON": {
@@ -558,7 +783,7 @@
     "startsAt": 1794870179153,
     "state": "ISSUED_NORMAL37_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
   },
-  "newRolesApplied": true,
+  "newRolesApplied": false,
   "startAuthoritySha256": "eef82e589c9b811ab48658a3f12e9292a7e8e56c779ef17e4734b77e17e5dba2",
   "actualStartSha256": "e7c2b22bd1de3ea2af4cb8d5e746ac65dbf0a10b7caff3ddfe0f32fa28df7e17",
   "actualPrepare03Sha256": "58ba3f0dc52e8400c6c62a75c3098bf508c8e17771f76f7b9ae3c3644d284677",
@@ -589,5 +814,28 @@
     "postmasterStart": "2026-11-16 23:08:52.417902+00",
     "proofSha256": "cba7c6cbe81503d054f00c03a9c2a8bd7943bf86be8c3f29df6db3a49fc02527",
     "serviceKey": "t45-first-r3-native-service-start-20261116-37"
-  }
+  },
+  "actualStopSha256": "0f0e3240bd881413bc25934071e6983dd533cda9275b65e343f8049e8580619d",
+  "actualRestoreSha256": "785aae60cdee09935e446ded9af41393338589c2645f66650c87f40529d4be70",
+  "actualSafeClosureSha256": "f5bee4600fe863bf032cad64512010fa6800c52e14f2249e30d1b2514b759d85",
+  "restored37SafeReceiptSha256": "9a4711ac1b3feb35520261f3830e06f08c4ff3d824a66be0f7979cdaeae8d7c9",
+  "pending04LiveCAS": "NEVER_EXECUTED_WINDOW_ABANDONED",
+  "pending04AuthorityIssued": false,
+  "pending04JobSubmitted": false,
+  "pending04Source01": "NEED_FIX_P04_R01",
+  "pending04Source02": "UNREVIEWED_WIP_UNUSED",
+  "permissionFix": {
+    "device": 66304,
+    "inode": 13502393,
+    "uid": 0,
+    "gid": 61035,
+    "mode": 456,
+    "retained": true,
+    "beforeSha256": "e0080527d013852e29c2170b014315894d7e6af81c0f8a0c8d3ac59075f1e57d",
+    "afterSha256": "b7794bcd006bd8531e907d6f67aa570da8f7df3dc5c8f25508b8df8555f31041",
+    "supplemental25Sha256": "bcde121658009e1e40b777f23bf7b3b916ae9a1c08c44dbca192b42055f0be49",
+    "noNewReadWriteWorldAccess": true
+  },
+  "normal38": "SOURCE_PREPARATION_ONLY",
+  "normal38DecisionSha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c"
 }
