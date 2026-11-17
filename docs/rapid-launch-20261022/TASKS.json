@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T12:52:24.058047+00:00",
+  "updatedAt": "2026-11-17T13:14:27.369028+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 Source41 only service-specific proof projection path/mount and five new maintenance identities plus capture41, preserve all39/40 data/directories and no exist_ok bypass. D1 separate Root41 starts from actual115 and adds exact five new maintenance keys after T45 interface. SameQB only affected source/identity/pin and failure40+restoration binding; no server/clock/roles/PG until complete source and fresh finite issuance. No writer key selected.",
+  "next": "Finish existing D1 ordinary41 root115→120 source, sameQB joint new-delta review, T45 exact static execution preparation; only then actual metadata fresh/Main finite issuance/CAS and five maintenance phases. No new writer key or SQL/import claim.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T12:52:24.058047+00:00",
+  "asOf": "2026-11-17T13:14:27.369028+00:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 Source41 only service-specific proof projection path/mount and five new maintenance identities plus capture41, preserve all39/40 data/directories and no exist_ok bypass. D1 separate Root41 starts from actual115 and adds exact five new maintenance keys after T45 interface. SameQB only affected source/identity/pin and failure40+restoration binding; no server/clock/roles/PG until complete source and fresh finite issuance. No writer key selected.",
+  "next": "Finish existing D1 ordinary41 root115→120 source, sameQB joint new-delta review, T45 exact static execution preparation; only then actual metadata fresh/Main finite issuance/CAS and five maintenance phases. No new writer key or SQL/import claim.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -54471,7 +54471,7 @@
   "nextMaintenanceSource": {
     "consumerOwner": "T45",
     "rootOwner": "D1",
-    "phase": "NORMAL41_SOURCE_REPAIR_PREPARATION_AFTER_ACTUAL40_FAILURE_AND_EXACT_AUTH_RESTORATION",
+    "phase": "NORMAL41_CONSUMER_DELTA_PASS_D1_ROOT_PAIR_PENDING",
     "baseActualRoot": {
       "dispatcherSha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
       "moduleSha256": "96dbb198f0424298e90096a704c998b8f2e2629f8afae387f07b230b978052f0",
@@ -54715,6 +54715,22 @@
     ],
     "omittedBodies": [],
     "next": "T45 Source41 only service-specific proof projection path/mount and five new maintenance identities plus capture41, preserve all39/40 data/directories and no exist_ok bypass. D1 separate Root41 starts from actual115 and adds exact five new maintenance keys after T45 interface. SameQB only affected source/identity/pin and failure40+restoration binding; no server/clock/roles/PG until complete source and fresh finite issuance. No writer key selected."
+  },
+  "normal41ConsumerSource": {
+    "state": "CONSUMER_SOURCE_DELTA_PASS_ROOT_PAIR_PENDING",
+    "sourcePinsSha256": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+    "interfaceSha256": "7a362dbefcfc363d9dcdc7e4e379179b1119fd49c668ec958bff0b38a9a99454",
+    "rulesSha256": "e0c5749cb235681cc176b669166f4421d5d62cec30cfa44500d5ee4ea31b9763",
+    "reviewSha256": "b441bbea7dbd71a32ebadbeeadde98424b44a56a9184204f6f2d7836ba4f2370",
+    "ownerNewChecks": 35,
+    "independentNewChecks": 19,
+    "rootPairReviewed": false,
+    "serverActions": 0,
+    "SQLInstalled": false,
+    "futureAuthorityOrCepoch": null,
+    "newWriterKey": null,
+    "custodyMetadataBoundary": "Actual40 has five historical files x six known fields, not six files; future fresh/CAS binds full actual stat9.",
+    "checkpoint": "source-checkpoints/20261117-normal41-maintenance-consumer/CHECKPOINT.json"
   }
 }
 }

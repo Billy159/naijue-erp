@@ -1,0 +1,54 @@
+{
+  "SQLInstalled": false,
+  "actions": {
+    "futureCAuthorityEpochRoleOrPositiveRuntimeFixturesCreated": false,
+    "ownerFilesOrPriorReportsModified": false,
+    "serverPGNativeApplicationIssuerReaderCASClockCalls": 0
+  },
+  "actualEvidenceBoundary": [
+    "Start40 FAILED precontainer createAttemptedfalse/Cnull/epochnull and Restore40 exact original auth, own restoreC777 stopped are pinned historical inputs; no new server operation.",
+    "Source+stat supports bounded high confidence attribution to old39 projection path, but log0/no exception.filename or actual frame; no captured exact failure path claimed.",
+    "ACK39 original expectedd035 now has actual prior normal40 fresh5e121 matching evidence; future fresh still requires actual raw read.",
+    "Consumer closed40 metadata is five files x six known fields, not complete stat9. Root future fresh/CAS must bind all required recovery metadata; do not invent mtime/ctime or claim completed6custody/stat9 here.",
+    "Latest successful service remains39; historical helper retains original service/closureKind/bindings and does not require currentDATA stopped during later running41 phases."
+  ],
+  "checks": {
+    "independentNewDeltaChecks": 19,
+    "old40_61_18_11_Root82_32_SQL91_H01_Node24ReusedNotRerun": true,
+    "ownerNewDeltaChecks": 35
+  },
+  "closed40Facts": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01/CLOSED40-FACTS.json",
+    "sha256": "d897cd3ae2d6c32a72a5a39c6967ce091ca7fc3fd33f5a8250328c2a5c558dd3"
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-three-routine-maintenance-joint-review-01/OWNER35-DELTA-EVIDENCE.json",
+      "sha256": "1181e3307e73e5ab0a1918b3c728a09eebf69759ca5881dbebbbfd7799875ef1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-three-routine-maintenance-joint-review-01/CONSUMER-DELTA-EVIDENCE.json",
+      "sha256": "be8712b685bc1f97b8e47bd0ee26673e6df05b5b87f94b16dc9c9f95b810a7da"
+    }
+  ],
+  "findings": [],
+  "interfaceSha256": "7a362dbefcfc363d9dcdc7e4e379179b1119fd49c668ec958bff0b38a9a99454",
+  "notVerified": [
+    "D1 root115→120 final source and exact root/consumer joint pairing pending.",
+    "Future fresh new keys/projection41/capture41 absence, full custody stat9, actual C/epoch/finite auth/authority/windows and descriptor not produced or checked by QB.",
+    "No actual41 apply/start/upgrade/stop/restore, SQL installation/readback, import, APP successor, STAGED exposure or production acceptance verified."
+  ],
+  "rootPairReviewComplete": false,
+  "rulesSha256": "e0c5749cb235681cc176b669166f4421d5d62cec30cfa44500d5ee4ea31b9763",
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+  "spec": {
+    "findings": []
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_PASS_NORMAL41_CONSUMER_DELTA_ONLY"
+}

@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "Final41 source44e all71 files pin and lengths exact",
+    "Interface7a36 phasee0c READYbf4 exact",
+    "Exact five new IDs disjoint actual115 not writer",
+    "Only49 static bundle members with authority absent and exact new scope",
+    "Actual closed40 input references exact no new server reads",
+    "Failure attribution bounded no filename/frame no invented C40 epoch",
+    "Proof host/mount source41 only targeted path and2 identities changed",
+    "Capture41 independent but original exclusive prepare/restore algorithm preserved",
+    "Closed40 helper5e281 exact3 bundle copies and historical39 preserved",
+    "Historical39 binding and return3field API unchanged",
+    "Old40 exact failed precontainer no C and exact restore not expiry guarded",
+    "No current DATA pid absence requirement in historical validation",
+    "40 metadata stated as5files6known fields not complete stat9",
+    "Original finite secrets stat only safe restored receipt explicit known hash",
+    "ACK39 historical actual basis5e121 verified no replacement for future fresh",
+    "PhaseCLI exactly blueprint41 change and internal prepare only once",
+    "Native and JS probe identity-only inverse; old Node24 grammar reused",
+    "Original H01 predicate/driver/CHILD inherited without semantics rerun",
+    "Same five step budgets5100 floor28G and futurefacts absent"
+  ],
+  "checksCompleted": 19,
+  "findings": [],
+  "futurePositiveFixturesCreated": false,
+  "oldAcceptedChecksNotRerun": true,
+  "ownerFilesModified": false,
+  "runtimeCalls": 0,
+  "sourcePinsSha256": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+  "state": "SOURCE41_INDEPENDENT_CONSUMER_DELTA_PASS"
+}

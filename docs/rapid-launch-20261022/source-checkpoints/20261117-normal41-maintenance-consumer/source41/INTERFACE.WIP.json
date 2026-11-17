@@ -1,0 +1,268 @@
+{
+  "C01CaptureDirectory": "ordinary41-auth-capture-20261117-01",
+  "MainRecoveryDecisionSha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+  "Root08MarkerSha256": "5bbfe6fa34d8e9c7990dbed5dfda745617d9f2c1fb58a9e431e9778b9339b67c",
+  "Root08TerminalSha256": "e8849c90c8836a9d28e016b2216c3e5a725fd9998b39dc1c940a8f499d6f70b3",
+  "actualRestore40Sha256": "18da0908ca69461ce8a008339948c28b41cacddf0f3e706b8c6c7becee94401f",
+  "actualRootDispatcherSha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+  "afterModel": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "beforeModel": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "diagnostic02ReadbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+  "dynamicRolesAuthorizationRule": "Main issued roles-authorization.json added to apply/restore bundlePins with exactly same actual SHA; absent in SOURCE",
+  "existingRoleNames": [
+    "erp35_controller_20261110_r3",
+    "erp35_admin_20261110_r3"
+  ],
+  "futureCOrEpochOrRolesTemporaryValuesOrAuthorityOrWindow": null,
+  "futureClock": null,
+  "futureFiniteRoles": null,
+  "futureServiceProof": null,
+  "generation": 41,
+  "genuineStartDescriptorAPI": {
+    "afterSourceModel": "ada8",
+    "beforeCurrentCompiledSource": "6ef510; actual target spec remains unissued",
+    "beforeInstalledHistory": "cf27/9f/626",
+    "beforeSQLProvedByDescriptor": false,
+    "databaseConnections": 0,
+    "mode": "describe",
+    "outputs": [
+      "genuine-descriptor.json",
+      "genuine-live-facts.json",
+      "genuine-describe-payload.json",
+      "genuine-describe-process.json"
+    ],
+    "runner": "catalog-successor-run.mjs"
+  },
+  "jobs": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundleBytes": null,
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "hostFixedScope": {
+        "containerName": "t45-r3-ordinary40-auth-apply-20261117-01",
+        "dataDirectoryDevice": 66304,
+        "dataDirectoryInode": 13502421,
+        "format": "T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1",
+        "hostPorts": [],
+        "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+        "maximumOperationSeconds": 300,
+        "networkMode": "none",
+        "phase": "apply",
+        "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01"
+      },
+      "jobId": "t45-r3-ordinary41-auth-apply-20261117-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01/apply/bundle",
+      "timeoutSeconds": 300
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "bundleBytes": null,
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "hostFixedScope": {
+        "containerName": "t45-r3-ordinary40-auth-restore-20261117-01",
+        "dataDirectoryDevice": 66304,
+        "dataDirectoryInode": 13502421,
+        "format": "T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1",
+        "hostPorts": [],
+        "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+        "maximumOperationSeconds": 300,
+        "networkMode": "none",
+        "phase": "restore",
+        "requestKey": "t45-r3-ordinary40-auth-restore-20261117-01"
+      },
+      "jobId": "t45-r3-ordinary41-auth-restore-20261117-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01/restore/bundle",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "authoritySha256": null,
+      "bundleBytes": null,
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "hostFixedScope": {
+        "admin154PostmasterStart": "2026-11-13 03:37:40.014546+00",
+        "admin154RecordSha256": "96d35d3b4c7b356b334849373611068d07bb12b3fcf6c6f47dacce3d570a3e3e",
+        "admin154SourceSetSha256": "d69cae66caf44473cd6c578943852e0f8eb4af38064135d2c0fcebc368aa3afe",
+        "applyRequestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+        "authenticationAction": "AUTHENTICATE_ORIGINAL_RUNTIME_REFERENCE_ONLY",
+        "cleanupResultSha256": "ff0992f717ba72976f20dfbb1060c83ff82e6945b549c7fd6839676f80f1b391",
+        "cleanupTerminalSha256": "b70a2f253dae0e81ed95ba6ae0afcf11be5538d359fb7f64fca90668b9c548b0",
+        "closeoutResultSha256": "4c603c85e6df1d5a18d59ad07f9e2a302e7c94e624a30c9c665a6ce71cfd5a16",
+        "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+        "coldCopyResultSha256": "28d7925f5bc5b89805acf8a52e9d88c12c394f41adebc93cbb0a7afe157274e9",
+        "coldCopyTerminalSha256": "a94f9ec670e4de6339e56ea66ebaf917d9fc4e140f03e11222e2c7cb30ad5777",
+        "containerName": "t45-fresh35-first-production-20261110-r3-service-40",
+        "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+        "dataDirectoryIdentity": {
+          "device": 66304,
+          "gid": 61035,
+          "inode": 13502421,
+          "mode": 448,
+          "uid": 61035
+        },
+        "databaseRoleChanges": 0,
+        "ddlPostmasterStart": "2026-11-13 08:53:20.527136+00",
+        "ddlServiceProofSha256": "76326acb7db45e6a65a1eb6b88b9b44a1cf6ed7bf8bae09d5f99e2f3184a8727",
+        "decision": "START_SAME_PGDATA_WITH_ORIGINAL_RUNTIME_REFERENCE_READONLY",
+        "format": "T45_FIRST_R3_NORMAL_SERVICE_V1",
+        "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+        "maximumServiceSeconds": 3600,
+        "maximumStartOperationSeconds": 300,
+        "originalRuntimeMaterial": {
+          "configuration": {
+            "bytes": 207,
+            "device": 66304,
+            "gid": 0,
+            "inode": 13503993,
+            "mode": 384,
+            "uid": 0
+          },
+          "libpqReference": {
+            "bytes": 131,
+            "device": 66304,
+            "gid": 0,
+            "inode": 13503994,
+            "mode": 384,
+            "uid": 0
+          }
+        },
+        "previousClosureKind": "SUCCESSFUL_START_PRESERVATION_STOP_AUTH_RESTORED",
+        "previousRequestKey": "t45-first-r3-native-service-start-20261116-39",
+        "previousRuntimeOutcome": "UNKNOWN_PRESERVED",
+        "previousStopRequestKey": "t45-r3-ordinary39-preserve-stop-20261116-01",
+        "requestKey": "t45-first-r3-native-service-start-20261117-40",
+        "restoreRequestKey": "t45-r3-ordinary39-auth-restore-20261116-01",
+        "runtimeLoginValidUntil": null,
+        "runtimeReadinessMaxSeconds": 20,
+        "runtimeRole": "erp35_runtime_20261110_r3",
+        "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+        "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168"
+      },
+      "jobId": "t45-first-r3-native-service-start-20261117-41",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal_service05_after08.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01/start/bundle",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "authoritySha256": null,
+      "bundleBytes": null,
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "hostFixedScope": {
+        "format": "T45_R3_FAILED19_READONLY20_SERVICE_STOP_V1",
+        "requestKey": "t45-r3-ordinary40-preserve-stop-20261117-01",
+        "writerJobId": "t45-first-20261110-r3-real-execute-20261114-02"
+      },
+      "jobId": "t45-r3-ordinary41-preserve-stop-20261117-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal05_preserve_stop.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01/stop/bundle",
+      "timeoutSeconds": 120
+    },
+    "upgrade": {
+      "authorityLeaf": "catalog-update-authorization.json",
+      "authoritySha256": null,
+      "bundleBytes": null,
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "hostFixedScope": {
+        "MainRecoveryDecisionSha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+        "automaticReplay": false,
+        "businessImported": false,
+        "database": "erp_fresh35_20261110_r3",
+        "decision": "UPDATE_EXACT_SETTLEMENT24_THREE_ROUTINES_ONLY",
+        "diagnostic02ReadbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+        "format": "T45_R3_SETTLEMENT24_THREE_ROUTINE_HOST_V1",
+        "maximumChildSeconds": 700,
+        "requestKey": "t45-r3-settlement24-three-routine-upgrade-20261117-01",
+        "sourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+        "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3"
+      },
+      "jobId": "t45-r3-settlement24-three-routine-upgrade41-20261117-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "batched161_command_update_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-THREE-ROUTINE-MAINTENANCE-SOURCE-01/upgrade/bundle",
+      "timeoutSeconds": 780
+    }
+  },
+  "lastSuccessfulServiceRequestKey": "t45-first-r3-native-service-start-20261116-39",
+  "minimumAvailableBytes": 30064771072,
+  "oldProtectedKeys": 115,
+  "originalMainPhaseAPIParameters": 8,
+  "originalMainRegistrationAPIParameters": 7,
+  "originalPhaseCLIAPI": "execute(phase,policy_file,policy_pin,authority_pin,output_directory,supplied_phase_args=None)",
+  "parentBudgetSeconds": 5100,
+  "phaseCliSha256": "b4df0f64d99a059348cfb06a68f61dc94186edc748307ee0d5b341a10c5f0d6a",
+  "phaseOrder": [
+    "apply",
+    "start",
+    "upgrade",
+    "stop",
+    "restore"
+  ],
+  "predecessorConsumerSourceSha256": "acfb09f079c332b523929c51664a7e4f3bb399ef81ae34ed2ef710055ce60ddf",
+  "previousFailedStart40": {
+    "containerCreated": false,
+    "epoch": null,
+    "requestKey": "t45-first-r3-native-service-start-20261117-40",
+    "resultSha256": "029ac2c84001d4ea28275e4c4c85d25415864f19330ec81447e71b4735606d84",
+    "service": null
+  },
+  "proofProjectionHostDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/r3-service-41-worker-proof",
+  "retainedAck39ExpectedRawSHARequiresActualFresh": "d035fa81890f8cbc0b7ded918c5ceac7f28259c2c126e3c651f8ff364c9bdb8f",
+  "rolesFixedScope": {
+    "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+    "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+    "dataDirectoryIdentity": [
+      66304,
+      13502421,
+      61035,
+      61035,
+      448
+    ],
+    "decision": "CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3",
+    "format": "T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1",
+    "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+    "maximumOfflineStepSeconds": 30,
+    "ordinaryServiceRequestKey": "t45-first-r3-native-service-start-20261117-40",
+    "physical": {
+      "database": "erp_fresh35_20261110_r3",
+      "databaseOid": "16393",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7706545564479176741"
+    },
+    "previousServiceRequestKey": "t45-first-r3-native-service-start-20261116-39",
+    "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+    "restoreRequestKey": "t45-r3-ordinary40-auth-restore-20261117-01",
+    "roles": [
+      "erp35_controller_20261110_r3",
+      "erp35_admin_20261110_r3"
+    ]
+  },
+  "rootPolicyFormat": "T45_R3_NORMAL41_BATCHED_REAL_V1",
+  "rootPolicyLeaf": "direct41-batched-real.json",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE41_INTERFACE_IDS_FIXED_STATIC_PINS_PENDING",
+  "stopCurrentBatchOperations": [
+    "t45-r3-batched-install-20261116-02",
+    "t45-r3-batched161-command-successor-20261116-01",
+    "t45-r3-final33-plan-prepare-20261116-05",
+    "t45-r3-batched-real-execute-20261115-01",
+    "t45-r3-settlement24-three-routine-upgrade-20261117-01"
+  ],
+  "writerSuccessorSelected": false
+}

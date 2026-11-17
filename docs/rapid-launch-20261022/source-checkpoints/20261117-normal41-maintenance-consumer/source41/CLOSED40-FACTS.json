@@ -1,0 +1,129 @@
+{
+  "actualRoot115Sha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+  "exceptionFilenameOrFrameActuallyRecorded": false,
+  "noNewServerRead": true,
+  "restore40": {
+    "naturalExpiryCountedAsRestoration": false,
+    "originalVerifierAndExpiryRestored": true,
+    "ownRestoreContainer": {
+      "id": "777103b72d3d3d34ee29872135cfca0913699b4c1c146208e5d282cf9011ed3d",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-ordinary40-auth-restore-20261117-01",
+      "pid": 0,
+      "running": false
+    },
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-MAINTENANCE-EXECUTION-PREPARATION-02/runtime/restore/ACTUAL-RESTORE40-TERMINAL-RESULT.json",
+    "privateCustodyMetadataOnly": {
+      "applied.json": {
+        "bytes": 493,
+        "device": 66304,
+        "exists": true,
+        "gid": 0,
+        "inode": 13667449,
+        "mode": 256,
+        "uid": 0
+      },
+      "finite-auth.json": {
+        "bytes": 2549,
+        "device": 66304,
+        "exists": true,
+        "gid": 0,
+        "inode": 13667446,
+        "mode": 256,
+        "uid": 0
+      },
+      "original-auth.json": {
+        "bytes": 2533,
+        "device": 66304,
+        "exists": true,
+        "gid": 0,
+        "inode": 13667443,
+        "mode": 256,
+        "uid": 0
+      },
+      "restore-attempt.json": {
+        "bytes": 114,
+        "device": 66304,
+        "exists": true,
+        "gid": 0,
+        "inode": 13667476,
+        "mode": 256,
+        "uid": 0
+      },
+      "restored.json": {
+        "bytes": 466,
+        "device": 66304,
+        "exists": true,
+        "gid": 0,
+        "inode": 13667478,
+        "mode": 256,
+        "uid": 0
+      }
+    },
+    "publicResultSha256": "81de4646c36dd79cab8931772084f50460d523f2280cd245503d595d81529e60",
+    "rootPins": {
+      "cleanup": "5afd8b63ab6cb339664e864a714678e7974fd2d6791224db948c57d34fb3f050",
+      "inside": "9c05282d710b61591897b8e7d9bd91261a7479ece7e309de113490ba5f8caf1c",
+      "result": "9502e078f1a550522371db45800c0d1c64fa1496b6bfb72d77521d3f614a0bc9",
+      "terminal": "95f3f3fa5eaf68c0b4ab12a0bc3225fc1e74f535665dc87367123362e3f561f2"
+    },
+    "safeRestorationReceiptSha256": "27a91d7c7cc83c6200fe6fbad49f524c0aa79b0b0b062fa0a0d51878aa2940aa",
+    "sha256": "18da0908ca69461ce8a008339948c28b41cacddf0f3e706b8c6c7becee94401f"
+  },
+  "sourceReasonSha256": "31e9d364e42a98bf492b84df41f0dd9bc5fa178421faf360ac1a843e4da8c048",
+  "start40": {
+    "createAttempted": false,
+    "epoch": null,
+    "incomplete": {
+      "automaticRetry": false,
+      "binding": {
+        "authoritySha256": "22cb4195e49328ea88c8a4cc50b02ef09009db34d493cbb816cf325692cc28c8",
+        "normalServiceSha256": "4f43750bfb1f84071ba3a636da5d8d8975589acf59cf9c2075af1d1e43f962ee",
+        "proofSourceSha256": "8488ed1d5f6e256c781ebe7e325f94510652d7588eb017641dde9ae93e91b5b3",
+        "rootManifestSha256": "213c8dba0504d55ba47e48291ba8aa8c9620aa5a44becaa4c0ce770d98666036",
+        "rootRequestSha256": "0f681fd371e3e18c903543dcb3fea50bdcfd129947fcec980f065ed425042e59"
+      },
+      "cid": null,
+      "confirmed": true,
+      "createAttempted": false,
+      "format": "T45_R3_PRECONTAINER_FAILURE_V1",
+      "observation": {
+        "checkedAt": 1794919049667,
+        "dataDirectoryIdentity": {
+          "device": 66304,
+          "gid": 61035,
+          "inode": 13502421,
+          "mode": 448,
+          "uid": 61035
+        },
+        "lifecycleOutputsAbsent": true,
+        "listenerAbsent": true,
+        "ownedContainerAbsent": true,
+        "postmasterPidAbsent": true
+      },
+      "originalKeyOnly": true,
+      "phase": "PREPARE_R3_MOUNTS",
+      "requestKey": "t45-first-r3-native-service-start-20261117-40",
+      "runtimeMaterialPreserved": true,
+      "state": "PRE_CONTAINER_FAILURE_RESOURCES_ABSENT"
+    },
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-MAINTENANCE-EXECUTION-PREPARATION-02/runtime/start/ACTUAL-START40-TERMINAL-RESULT.json",
+    "rootPins": {
+      "incomplete": "8d00467d9b6d23acdaa86ba359840ed3406998fdc8a21794573d1b0eb97eac53",
+      "result": "5c6abca56245e16b9a889b2740b9be56e6497f2309686c5a57230b9bfbc93c3f",
+      "terminal": "83d71ed2e1ae38a56168e290b4a9fc26bef1d8f609559cd158bf377a14b8f0d3"
+    },
+    "service": null,
+    "sha256": "029ac2c84001d4ea28275e4c4c85d25415864f19330ec81447e71b4735606d84"
+  },
+  "state": "ACTUAL40_FAILED_PRECONTAINER_AND_AUTH_EXACTLY_RESTORED_NOT_SUCCESSFUL_SERVICE",
+  "successful39RetainedAckActualObservation": {
+    "basisPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-ROOT-EXECUTION-PREPARATION-01/fresh/ACTUAL-BASIS-BASIS.json",
+    "basisSha256": "5e12108b65f869b4723f2bc92fe73ee3e52e2b322e584a5dfb3c69ffde69c2d5",
+    "checkedAtUTC": "2026-11-17T12:22:11.610608+00:00",
+    "observation": "Previously actually observed in normal40 fresh; not a new server read or substitute for future fresh",
+    "olderPRIOR39StaticMetadataRetainedAsHistorical": true,
+    "original39AckSHAReadBackMatchesDerivedExpected": true,
+    "rawAckSha256": "d035fa81890f8cbc0b7ded918c5ceac7f28259c2c126e3c651f8ff364c9bdb8f"
+  }
+}

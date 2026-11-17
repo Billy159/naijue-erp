@@ -1,0 +1,434 @@
+{
+  "state": "NORMAL41_CONSUMER_DELTA_SOURCE_PASS_ROOT_PAIR_PENDING",
+  "sourcePinsSha256": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+  "consumerReviewSha256": "b441bbea7dbd71a32ebadbeeadde98424b44a56a9184204f6f2d7836ba4f2370",
+  "sourceOnly": true,
+  "rootPairReviewed": false,
+  "SQLUpgradePerformed": false,
+  "currentActualRootSha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+  "currentActualRegisteredKeys": 115,
+  "PGStoppedAtLastActualObservation": true,
+  "originalAuthRestoredAtLastActualObservation": true,
+  "newServerActionsThisSource": 0,
+  "futureRuntimeAuthorityOrCOrEpoch": null,
+  "newWriterChosen": false,
+  "closed40CustodyMetadataBoundary": "Consumer historical facts are five files x six known fields; future actual root fresh/CAS must bind full stat9 without inventing historical times.",
+  "copied": [
+    {
+      "path": "source41/SOURCE-PINS.json",
+      "sha256": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+      "bytes": 12529
+    },
+    {
+      "path": "source41/ACTUAL115-DISPATCHER.py",
+      "sha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+      "bytes": 53020
+    },
+    {
+      "path": "source41/CLOSED40-FACTS.json",
+      "sha256": "d897cd3ae2d6c32a72a5a39c6967ce091ca7fc3fd33f5a8250328c2a5c558dd3",
+      "bytes": 5491
+    },
+    {
+      "path": "source41/DELTA41-CHECK-RESULT.json",
+      "sha256": "1181e3307e73e5ab0a1918b3c728a09eebf69759ca5881dbebbbfd7799875ef1",
+      "bytes": 2183
+    },
+    {
+      "path": "source41/HANDOFF.md",
+      "sha256": "65d44f2e12a6edd0b072d82559b852d003e19ad4aff0e04afe5fa061767bf9e4",
+      "bytes": 5195
+    },
+    {
+      "path": "source41/INTERFACE.UNISSUED.json",
+      "sha256": "7a362dbefcfc363d9dcdc7e4e379179b1119fd49c668ec958bff0b38a9a99454",
+      "bytes": 22178
+    },
+    {
+      "path": "source41/INTERFACE.WIP.json",
+      "sha256": "f0f8097dc7f26bf0f0b115250651191bab0e2a3a5558d4c5362996517aee1615",
+      "bytes": 13334
+    },
+    {
+      "path": "source41/PHASES41.UNISSUED.json",
+      "sha256": "e0c5749cb235681cc176b669166f4421d5d62cec30cfa44500d5ee4ea31b9763",
+      "bytes": 8204
+    },
+    {
+      "path": "source41/apply/bundle/ordinary05_roles.py",
+      "sha256": "ee8ed3b8b09980945ccd4fce122a278bb0699a355134af629f5f37267b1edc03",
+      "bytes": 21656
+    },
+    {
+      "path": "source41/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "1e76b032015ef9547df8660cc4b2476d84a79e13575c5303a34e26959d9e1333",
+      "bytes": 33305
+    },
+    {
+      "path": "source41/apply/bundle/prior_preserved38.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "path": "source41/apply/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source41/check_delta41.py",
+      "sha256": "c94b3f411bb2fbfe147ee52be33616bacb36ac808e02cf47e9f59fef37efe6f9",
+      "bytes": 6883
+    },
+    {
+      "path": "source41/check_source.py",
+      "sha256": "f4b4537aa2f626fcc1ba71c922235b66722fd47b88d6ffac2524890c0c10d85c",
+      "bytes": 136
+    },
+    {
+      "path": "source41/phase_cli.py",
+      "sha256": "963953929d6d82737a648704d4801aa79d1ce61215ecce71bf35f45e1578bc78",
+      "bytes": 5149
+    },
+    {
+      "path": "source41/prepare_consumer.py",
+      "sha256": "996ec7b560015cd29e77b24f5a8b879e0c7774b19978532bd8400ea2d8d3a82d",
+      "bytes": 143
+    },
+    {
+      "path": "source41/prepare_successor41.py",
+      "sha256": "20bc7495401cbfdc6da928a805f6fa0b682d74c3d229843e4df82742809146dc",
+      "bytes": 4128
+    },
+    {
+      "path": "source41/prior_closed40.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "path": "source41/restore/bundle/ordinary05_roles.py",
+      "sha256": "ee8ed3b8b09980945ccd4fce122a278bb0699a355134af629f5f37267b1edc03",
+      "bytes": 21656
+    },
+    {
+      "path": "source41/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "1e76b032015ef9547df8660cc4b2476d84a79e13575c5303a34e26959d9e1333",
+      "bytes": 33305
+    },
+    {
+      "path": "source41/restore/bundle/prior_preserved38.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "path": "source41/restore/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source41/start/bundle/catalog-successor-run.mjs",
+      "sha256": "7c993880d5ff96afae689a0d255067ff79583561105fc3bc54dcc23b180a129f",
+      "bytes": 19380
+    },
+    {
+      "path": "source41/start/bundle/normal_service05_after08.py",
+      "sha256": "c7368468dca6327424d7415254de6fa17b1013ad23712b592393670b73667db2",
+      "bytes": 59225
+    },
+    {
+      "path": "source41/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "225a4ca13d03e9b41e55aa06f90e239cd98ef6c2f357a6be8dc9bd87101c67ad",
+      "bytes": 18437
+    },
+    {
+      "path": "source41/start/bundle/prior_preserved38.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "path": "source41/start/bundle/r3_05_readonly.py",
+      "sha256": "18a77c85ebc45c93dd12a818e9459d346232b54d06c77ac3c41b87afd07a00f4",
+      "bytes": 21247
+    },
+    {
+      "path": "source41/start/bundle/r3_05_runtime.py",
+      "sha256": "58341573251f393dfd13843fcca18502927dddfcf2c53bfc110b0a6ebcaa6252",
+      "bytes": 9394
+    },
+    {
+      "path": "source41/start/bundle/start_owned_describe.py",
+      "sha256": "ffe0b7b736c73cb367d112ebe80d1ce14e03b71c41a5843ec27d26124642dd3d",
+      "bytes": 15229
+    },
+    {
+      "path": "source41/start/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source41/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "f24daf308e252a8ac9e5840ef51fac9094bbc7ebd7bb1f9d6680fa940380d015",
+      "bytes": 20066
+    },
+    {
+      "path": "source41/stop/bundle/normal05_retained_stop.py",
+      "sha256": "e25a6b467964a0403fd6deb593afc19c5040be841efbcfc1cdddab341a985783",
+      "bytes": 20709
+    },
+    {
+      "path": "source41/upgrade/bundle/batched161_command_update_host.py",
+      "sha256": "66e67a6c85d11c277ae0fc9ef8999cc64fa704d34181197116e2f0f943da6a49",
+      "bytes": 33522
+    },
+    {
+      "path": "source41/upgrade/bundle/catalog-successor-run.mjs",
+      "sha256": "7c993880d5ff96afae689a0d255067ff79583561105fc3bc54dcc23b180a129f",
+      "bytes": 19380
+    },
+    {
+      "path": "source41/upgrade/bundle/catalog_transport.py",
+      "sha256": "5b352e19ef115a8ffdc30acd2ba98d3b666bbbd5a749b1955ad51dfcb8422db7",
+      "bytes": 12485
+    },
+    {
+      "path": "review/CONSUMER-RESULT.json",
+      "sha256": "b441bbea7dbd71a32ebadbeeadde98424b44a56a9184204f6f2d7836ba4f2370",
+      "bytes": 3419
+    },
+    {
+      "path": "review/OWNER35-DELTA-EVIDENCE.json",
+      "sha256": "1181e3307e73e5ab0a1918b3c728a09eebf69759ca5881dbebbbfd7799875ef1",
+      "bytes": 2183
+    },
+    {
+      "path": "review/CONSUMER-DELTA-EVIDENCE.json",
+      "sha256": "be8712b685bc1f97b8e47bd0ee26673e6df05b5b87f94b16dc9c9f95b810a7da",
+      "bytes": 1697
+    }
+  ],
+  "inherited": [
+    {
+      "path": "ACTUAL110-DISPATCHER.py",
+      "bytes": 51608,
+      "sha256": "7cab381f7cd7aa402a0087a14ecb2571460dd11274b00cee0dbd62938fb8b814",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/ACTUAL110-DISPATCHER.py"
+    },
+    {
+      "path": "C01-CHECK-RESULT.json",
+      "bytes": 1029,
+      "sha256": "6bed6c621e6df5c3ca1f8b992d75d4aedee4ccf8c774817b09a0da863ffb6b12",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/C01-CHECK-RESULT.json"
+    },
+    {
+      "path": "CHECK-RESULT.json",
+      "bytes": 4155,
+      "sha256": "b7918ce635d1aac210d3f0c2d3b0e2f78b0b23ef6a294ba5bc19484cc1c896c2",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/CHECK-RESULT.json"
+    },
+    {
+      "path": "PHASES40.UNISSUED.json",
+      "bytes": 7891,
+      "sha256": "c6491825b7e81ce52bfbcdd33952599e0b0584a059936b68fe935a2f77266b71",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/PHASES40.UNISSUED.json"
+    },
+    {
+      "path": "PRIOR39-STATIC-METADATA.json",
+      "bytes": 3733,
+      "sha256": "cc5fbe045463cc32a4382aef2377f51bfec8daac1e5efa22d417b8773710b12f",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/PRIOR39-STATIC-METADATA.json"
+    },
+    {
+      "path": "apply/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/apply/bundle/fresh35-production-carrier.py"
+    },
+    {
+      "path": "apply/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/apply/bundle/normal_service04.py"
+    },
+    {
+      "path": "apply/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/apply/bundle/normal_service04_proof.py"
+    },
+    {
+      "path": "apply/bundle/root06_material.py",
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/apply/bundle/root06_material.py"
+    },
+    {
+      "path": "evidence/QB-NODE24-SYNTAX-REUSED.json",
+      "bytes": 917,
+      "sha256": "57f7d2afe4188ab8118f0c04f11e594d9e4b67c65a96ac0b3aff57635dd45fd0",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/evidence/QB-NODE24-SYNTAX-REUSED.json"
+    },
+    {
+      "path": "prior_preserved39.py",
+      "bytes": 8758,
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/prior_preserved39.py"
+    },
+    {
+      "path": "read_phase.py",
+      "bytes": 3954,
+      "sha256": "397cdfba140a300bc1e546908df5d16f5267394fec347f3119badce3be8c539d",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/read_phase.py"
+    },
+    {
+      "path": "restore/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/restore/bundle/fresh35-production-carrier.py"
+    },
+    {
+      "path": "restore/bundle/normal_service04.py",
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/restore/bundle/normal_service04.py"
+    },
+    {
+      "path": "restore/bundle/normal_service04_proof.py",
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/restore/bundle/normal_service04_proof.py"
+    },
+    {
+      "path": "restore/bundle/root06_material.py",
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/restore/bundle/root06_material.py"
+    },
+    {
+      "path": "start/bundle/batched161-run.mjs",
+      "bytes": 23971,
+      "sha256": "0f45396df7aec8bac9651591c685b30f7d318066feffb0f7f4e98df592855af6",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/batched161-run.mjs"
+    },
+    {
+      "path": "start/bundle/final33-run.mjs",
+      "bytes": 19482,
+      "sha256": "1be01cec400b242cbcf7ff45451e5e60f0bbc87a1d0ea3f7bb2e527d56ee8851",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/final33-run.mjs"
+    },
+    {
+      "path": "start/bundle/fresh35-production-carrier.py",
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/fresh35-production-carrier.py"
+    },
+    {
+      "path": "start/bundle/operator-host.mjs",
+      "bytes": 72238,
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/operator-host.mjs"
+    },
+    {
+      "path": "start/bundle/operator-manifest.json",
+      "bytes": 48490,
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/operator-manifest.json"
+    },
+    {
+      "path": "start/bundle/operator-stream-import-cli.mjs",
+      "bytes": 26499,
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/operator-stream-import-cli.mjs"
+    },
+    {
+      "path": "start/bundle/operator-stream-program.mjs",
+      "bytes": 10302,
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/operator-stream-program.mjs"
+    },
+    {
+      "path": "start/bundle/production-plan.json",
+      "bytes": 747,
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/production-plan.json"
+    },
+    {
+      "path": "start/bundle/r3_05_cli.py",
+      "bytes": 7052,
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/r3_05_cli.py"
+    },
+    {
+      "path": "start/bundle/root06_material.py",
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/root06_material.py"
+    },
+    {
+      "path": "start/bundle/root07_material.py",
+      "bytes": 2623,
+      "sha256": "55ac6600ac982367b9d99678193b3a80dfe8e05b76828022c0c1aeb24a8864e2",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/root07_material.py"
+    },
+    {
+      "path": "start/bundle/source-catalog-lineage.json",
+      "bytes": 5684,
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/source-catalog-lineage.json"
+    },
+    {
+      "path": "start/bundle/source_lineage.py",
+      "bytes": 6431,
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/start/bundle/source_lineage.py"
+    },
+    {
+      "path": "upgrade/bundle/catalog-pg-driver.mjs",
+      "bytes": 2061,
+      "sha256": "cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/catalog-pg-driver.mjs"
+    },
+    {
+      "path": "upgrade/bundle/diagnostic02-readback.json",
+      "bytes": 4810,
+      "sha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/diagnostic02-readback.json"
+    },
+    {
+      "path": "upgrade/bundle/fresh35-production-carrier.py",
+      "bytes": 187609,
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/fresh35-production-carrier.py"
+    },
+    {
+      "path": "upgrade/bundle/historical-catalog35.json",
+      "bytes": 3601,
+      "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/historical-catalog35.json"
+    },
+    {
+      "path": "upgrade/bundle/historical-writer39-failed.json",
+      "bytes": 3804,
+      "sha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/historical-writer39-failed.json"
+    },
+    {
+      "path": "upgrade/bundle/main-recovery-decision.json",
+      "bytes": 4430,
+      "sha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/main-recovery-decision.json"
+    },
+    {
+      "path": "upgrade/bundle/normal05_retained_stop.py",
+      "bytes": 20709,
+      "sha256": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+      "checkpoint": "../20261117-normal40-maintenance-consumer/source02/upgrade/bundle/normal05_retained_stop.py"
+    }
+  ],
+  "omittedBodies": [
+    {
+      "path": "C01-ONLY-DELTA.patch",
+      "bytes": 3464,
+      "sha256": "4abcb0dc784af38070dc03fcdda1becee75b4ca900c805ff9d8acb785afb5bb4",
+      "reason": "Frozen historical patch body retained at source owner; current code pinned."
+    }
+  ]
+}
