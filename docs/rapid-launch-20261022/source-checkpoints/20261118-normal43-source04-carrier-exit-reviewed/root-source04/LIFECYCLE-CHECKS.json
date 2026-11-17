@@ -1,0 +1,29 @@
+{
+  "state": "SOURCE04_R04_EXACT_HISTORICAL_LIFECYCLE_CHECKS_PASS",
+  "checks": 17,
+  "passed": [
+    "all original SQL ACK guardian clean data auth proof checks unchanged",
+    "exact actual metadata source",
+    "actual fixed service42 expected exit and closed state",
+    "actual full identity metadata service42 accepted",
+    "actual fixed restoreOwn42 expected exit and closed state",
+    "actual full identity metadata restoreOwn42 accepted",
+    "reject wrong service42 ExitCode",
+    "reject wrong restoreOwn42 ExitCode",
+    "reject wrong service42 Running",
+    "reject wrong service42 Pid",
+    "reject wrong service42 OOMKilled",
+    "reject wrong service42 Error",
+    "reject different fixed container identity",
+    "unchanged reviewed issue_registration.py",
+    "unchanged reviewed issue_phase.py",
+    "unchanged reviewed read_registration_basis.py",
+    "unchanged reviewed FIVE-PHASES.UNISSUED.json"
+  ],
+  "serverActions": 0,
+  "factoryOrConstructorCalls": 0,
+  "PGConnections": 0,
+  "NodeCalls": 0,
+  "clockCalls": 0,
+  "positiveFutureFixtures": false
+}

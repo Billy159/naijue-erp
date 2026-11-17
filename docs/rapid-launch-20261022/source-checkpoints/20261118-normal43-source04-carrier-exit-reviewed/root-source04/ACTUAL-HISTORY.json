@@ -1,0 +1,1527 @@
+{
+  "state": "ACTUAL_ROOT127_CLOSED42_INSTALLED_AFTERADA_COMPLETED_PREPARE05_ONLY_NO_NEW_AUTHORITY",
+  "scope": {
+    "state": "AUTHORIZE_SOURCE_ONLY_NORMAL43_REUSE_EXISTING_PREPARE_AND_REASONED_WRITER_SUCCESSOR",
+    "authorityBasis": "Existing human standing authorization and active ERP launch goal. Main scope selection; no new human approval message.",
+    "phaseOrder": [
+      "apply",
+      "start",
+      "writer",
+      "stop",
+      "restore"
+    ],
+    "jobs": {
+      "apply": "t45-r3-ordinary43-auth-apply-20261118-01",
+      "start": "t45-first-r3-native-service-start-20261118-43",
+      "writer": "t45-r3-batched-real-after42-execute-20261118-01",
+      "stop": "t45-r3-ordinary43-preserve-stop-20261118-01",
+      "restore": "t45-r3-ordinary43-auth-restore-20261118-01"
+    },
+    "phaseBudgetsSeconds": {
+      "apply": 300,
+      "start": 300,
+      "writer": 3000,
+      "stop": 120,
+      "restore": 300
+    },
+    "parentBudgetSeconds": 5100,
+    "minimumAvailableBytes": 30064771072,
+    "rootBefore": 127,
+    "rootAfter": 132,
+    "actualBeforeDispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+    "closed42OwnerResultSha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe",
+    "sourceAnalysisDeliveryPinsSha256": "c6f39c1357a443b9a9c09c39bbc4f0e443b611572633cd65dcb903b63560e79a",
+    "prepareReuse": "Preserve successful prepare05 44910 steps/SQLite/initializer/original preparedBinding. New execution envelope from real new C/epoch/current catalog. Exact custody/persisted-program guards; no recompile/replay/rewriting original artifacts.",
+    "lineage": "Root08 392/ac85/marker5bb and actual Upgrade42 SQLdaf/afterada8/a5f/aef proof distinct from historical catalog35/626. Preserve all historical records.",
+    "writerMode": "FIRST_WRITE only after existing same-client inspectRoot ABSENT. COMMITTED or unknown stops to Main, no automatic RESUME. Transport successor alone changes; original business operation/request/batch IDs/manifest/11:40 cutoff unchanged.",
+    "owners": {
+      "T45": "consumer/newlineage/plan custody/local execution and sole server owner",
+      "D1": "Root/Main; coordinate file ownership with T45 before edits",
+      "QB": "necessary new source/adapters independent delta after freeze; reuse closed prior checks"
+    },
+    "serverFreshClockIssuerCASPGOrWriterCurrentlyAuthorized": false,
+    "actualRuntimeRequires": "Final exact source+QA and Main concrete runtime scope then fresh/real clock; writer authority from actual live descriptor/new binding/retained original plan evidence.",
+    "APP": "Reuse completed 289/nativee041/archive0abef build; no rebuild or deployment in current source scope.",
+    "lastRemoteCheckpoint": "cc1fa99b8dd73e113891ff10f0ab0f66be2e0e33"
+  },
+  "owner42": {
+    "SQLUpgrade": {
+      "afterCatalog": {
+        "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+        "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+        "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+      },
+      "businessImported": false,
+      "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+      "commitAcknowledged": true,
+      "commitOutcomeUnknown": false,
+      "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+      "connectionCleanup": "CLOSED",
+      "postCommitIndependentReadback": true,
+      "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+      "routines": 3,
+      "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+      "status": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+    },
+    "actualCheckedAtShanghai": "2026-11-18T00:42:46.904812+08:00",
+    "actualCheckedAtUTC": "2026-11-17T16:42:46.904812+00:00",
+    "closeout": {
+      "activeOperationUnits": [],
+      "databaseStillStopped": true,
+      "hardRestorationDeadlineEpochMs": 1794937071192,
+      "hardRestorationDeadlineMet": true,
+      "naturalExpiryUsedAsRestoration": false,
+      "originalDataIdentityPreserved": true,
+      "originalVerifierAndExpiryRestoredPrivately": true,
+      "ownRestoreContainerStoppedPID0Exit0": true,
+      "portAbsent": true,
+      "privateSafeRestorationReceiptSha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05",
+      "restoreFinishedAtUTC": "2026-11-17T16:41:44.957044+00:00",
+      "roleAttributesAndMembershipsUnchanged": true,
+      "runtimeAuthenticationUnchanged": true
+    },
+    "databaseTarget": {
+      "database": "erp_fresh35_20261110_r3",
+      "databaseOid": "16393",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7706545564479176741"
+    },
+    "gitSafety": {
+      "containsGenuineFourLeafRawBodies": false,
+      "containsOriginalOrFiniteSnapshotBodiesOrDigests": false,
+      "containsPasswordsKeysTokensOrDSNs": false,
+      "filesActuallyStagedOrCommittedByThisRun": false,
+      "privateRuntimeLogsAndGenuineFilesMustNotBeAddedToGit": true
+    },
+    "nextMinimalDependencies": [
+      {
+        "executed": false,
+        "required": "Use existing Root08 physical source and actual after-model ada8 evidence; Main must select a new reviewed preparation carrier and unused key, bind a new finite live service/target and current source/CAS facts. Reuse valid prior evidence; do not replay old prepare05 or closed Start42.",
+        "step": "Next actual preparation"
+      },
+      {
+        "executed": false,
+        "required": "Reuse the reviewed cb1155328d46286569e166246000c66e53ec8365 / source f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b / source closure289 e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6. Obtain D1 existing exact build/pack delivery and pair it with this actual after-model; no duplicate build. Old native57a/archive13b8/626 cannot represent the new pair. This maintenance run did not inspect or deploy a new APP package.",
+        "step": "APP"
+      },
+      {
+        "executed": false,
+        "required": "Require accepted new actual preparation/readback, exact current source mappings and input/CAS, reuse valid same-input backup evidence, and Main explicit scoped authority for one new writer key. Old writer15 original key stays FAILED and is never replayed. Business import, APP exposure and formal acceptance remain separate.",
+        "step": "Business writer/import"
+      }
+    ],
+    "operations": {
+      "CASSubmissions": 1,
+      "extraPGQueriesForReport": 0,
+      "oldFailedKeysReplayed": false,
+      "phaseSubmissions": {
+        "apply": 1,
+        "restore": 1,
+        "start": 1,
+        "stop": 1,
+        "upgrade": 1
+      },
+      "positiveTestFixtureRun": false
+    },
+    "phaseEvidence": {
+      "apply": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/APPLY-SAFE.json",
+        "sha256": "10c303c03ae22875937a5b104955662f28a28997ccae68d60b3325d24055850e"
+      },
+      "restore": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/RESTORE-SAFE.json",
+        "sha256": "9d7772010cdb1b9512bbbd4528f2e38cf892717328b3771bb5af4978b77dd380"
+      },
+      "start": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/START-SAFE.json",
+        "sha256": "e00bfb0fcadfcb908a97bdafd8a68d5902500cf523438e3963248cb068ff5d34"
+      },
+      "stop": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/STOP-SAFE.json",
+        "sha256": "4b098702e69ae2412e123faec0d8c32d311331bdaf255a66eb2a4a00c3c2d8b0"
+      },
+      "upgrade": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/UPGRADE-SAFE.json",
+        "sha256": "5a971a08031e8ac675113a99dfe168368e83908ed3f296ef8e50cabc28d8ce50"
+      }
+    },
+    "publicationAndBusiness": {
+      "APPDeployed": false,
+      "businessImported": false,
+      "formalBusinessAcceptanceClaimed": false,
+      "publicBusinessOpened": false
+    },
+    "registration": {
+      "actualDispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+      "moduleSha256": "fc29d0b17aa02cbaa00c9cbdc80d5382016e7ca3ccad5acb8ca64c57c777a225",
+      "old122AndThreeGuardsPreserved": true,
+      "policySha256": "02afe6e97e2b3a3a565613daf4c165892993ec4a95bda0403afed864b7ef4aaa",
+      "receiptSha256": "42cc4979c85d7ce38ad2f8470ccfcbe8fd8868f76e9bbf947152f44da8aa9c8e",
+      "rootAfter": 127,
+      "rootBefore": 122
+    },
+    "scope": "Five maintenance phases only; no business writer/import/APP/publication",
+    "state": "PASS_SCOPED_NORMAL42_THREE_ROUTINE_MAINTENANCE_AND_SAFE_CLOSEOUT",
+    "versionBinding": {
+      "adapterSourcePinsSha256": "9c86348d30475f3b75787f64613a7f1ea62b71b5adf72edad0573aede0e271ed",
+      "consumerSourcePinsSha256": "a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b",
+      "review": {
+        "adapter": "f03370ce04b11268d2a51838f6a625be55e4877002b6990c4d541f2a037c8442",
+        "consumer": "ce35e6651cfa8d287e5735040fba6d96645fab699dfe020390c01434d467cb5e",
+        "root": "863fc8703c9f28920a90ab336c8c51687f2e3c89a042d8bcb0799dc58029051f"
+      },
+      "rootSourcePinsSha256": "c5831945c03c041abfc113e2e303c5e30197bea776ca4c9737e00196abbb501e"
+    }
+  },
+  "phase42": {
+    "apply": {
+      "automaticReplay": false,
+      "businessAcceptanceClaimed": false,
+      "phase": "apply",
+      "publicResultSha256": "0f1ab7d86e4ca622e3a94122df618b4a96816ca6fd4a88e8a439b960c971bc7f",
+      "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "rootPublicObjectsEqual": true,
+      "rootResultSha256": "ebde4ce37eddba9ee904a581f095c53c9f050f3efec4b0568a8e8d270301e96b",
+      "safeFacts": {
+        "cleanup": {
+          "automaticReplay": false,
+          "cid": "6b4403ec49207d98ee2d811218a96a217e2abdcfff5f831ef47423d5d3fb00e9",
+          "confirmed": true,
+          "createAttempted": true,
+          "exitCode": 0,
+          "oomKilled": false,
+          "ownContainerStopped": true,
+          "ownedPidAbsent": true,
+          "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+          "sourceDataPreserved": true,
+          "stage": "READ_BACK_OWN_CONTAINER_STOP"
+        },
+        "inner": {
+          "authenticationAttempted": false,
+          "automaticReplay": false,
+          "credentialValidUntilByRole": {
+            "erp35_admin_20261110_r3": 1794936291192,
+            "erp35_controller_20261110_r3": 1794936171192
+          },
+          "membershipsOrRoleAttributesChanged": false,
+          "newRoles": 0,
+          "privateRecoveryBasisRetained": true,
+          "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+          "runtimeAuthChanged": false,
+          "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+        },
+        "outerStatus": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED",
+        "phase": "apply"
+      },
+      "terminal": {
+        "sha256": "c479cd0eec93c68c9ce0f278dd72458718f44f596169b834746a3b3f44a8d171",
+        "value": {
+          "atUTC": "2026-11-17T16:24:42.960202+00:00",
+          "businessAcceptanceClaimed": false,
+          "elapsedSeconds": 6.57097292796243,
+          "exitCode": 0,
+          "exports": [
+            "maintenance-auth-cleanup.json",
+            "maintenance-auth-inside.json",
+            "maintenance-auth-intent.json",
+            "maintenance-auth-result.json"
+          ],
+          "finishedAtUTC": "2026-11-17T16:24:49.583437+00:00",
+          "grantId": "b16447fbc81f4d64",
+          "jobId": "t45-r3-ordinary42-auth-apply-20261117-01",
+          "phaseStarted": true,
+          "privateLogsExported": false,
+          "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+          "status": "COMPLETED",
+          "taskId": "T45",
+          "unit": "naijue-erp-op-b16447fb-f3d13bd433fd"
+        }
+      }
+    },
+    "restore": {
+      "automaticReplay": false,
+      "businessAcceptanceClaimed": false,
+      "finalClosure": {
+        "activeOperationUnits": [],
+        "actualStoppedOwnRestoreContainer": {
+          "exitCode": 0,
+          "id": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+          "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+          "name": "/t45-r3-ordinary42-auth-restore-20261117-01",
+          "operation": "t45-r3-ordinary42-auth-restore-20261117-01",
+          "pid": 0,
+          "running": false
+        },
+        "authenticationSnapshotBodiesOrDigestsRead": false,
+        "checkedAtUTC": "2026-11-17T16:42:46.904812+00:00",
+        "originalPortAbsent": true,
+        "pgdataPidAbsent": true,
+        "privateSafeRestoreReceipt": {
+          "matchesWorkerInner": true,
+          "sha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05"
+        }
+      },
+      "phase": "restore",
+      "privateMetadataFilesStatOnly": 5,
+      "publicResultSha256": "5bdd5304d3669b5ba2a74cf3eedbde30135b04f1ecacb0d58c922ca08e4afadc",
+      "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "rootPublicObjectsEqual": true,
+      "rootResultSha256": "ca96543508c89e4a8cc0455dc40a8e5f2cd3e86a0ff076395c246d550a0fc7f8",
+      "safeFacts": {
+        "cleanup": {
+          "automaticReplay": false,
+          "cid": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+          "confirmed": true,
+          "createAttempted": true,
+          "exitCode": 0,
+          "oomKilled": false,
+          "ownContainerStopped": true,
+          "ownedPidAbsent": true,
+          "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+          "sourceDataPreserved": true,
+          "stage": "READ_BACK_OWN_CONTAINER_STOP"
+        },
+        "inner": {
+          "automaticReplay": false,
+          "databaseStillStopped": true,
+          "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+          "membershipsOrRoleAttributesChanged": false,
+          "naturalExpiryCountedAsRestoration": false,
+          "privateRecoveryBasisRetained": true,
+          "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+          "runtimeAuthChanged": false,
+          "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+        },
+        "outerStatus": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED",
+        "phase": "restore"
+      },
+      "terminal": {
+        "sha256": "7f10ff02d069efb568f66218e9906d0ddce7cc12b630dfc5b3794750dbbfc4d6",
+        "value": {
+          "atUTC": "2026-11-17T16:41:38.511734+00:00",
+          "businessAcceptanceClaimed": false,
+          "elapsedSeconds": 6.414372559986077,
+          "exitCode": 0,
+          "exports": [
+            "maintenance-auth-cleanup.json",
+            "maintenance-auth-inside.json",
+            "maintenance-auth-intent.json",
+            "maintenance-auth-result.json"
+          ],
+          "finishedAtUTC": "2026-11-17T16:41:44.957044+00:00",
+          "grantId": "b16447fbc81f4d64",
+          "jobId": "t45-r3-ordinary42-auth-restore-20261117-01",
+          "phaseStarted": true,
+          "privateLogsExported": false,
+          "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+          "status": "COMPLETED",
+          "taskId": "T45",
+          "unit": "naijue-erp-op-b16447fb-e8cd01760153"
+        }
+      }
+    },
+    "start": {
+      "automaticReplay": false,
+      "businessAcceptanceClaimed": false,
+      "genuineFourLeavesReadBackAndRetainedPrivately": true,
+      "genuineRawBodiesIncluded": false,
+      "phase": "start",
+      "publicResultSha256": "c299f3895461d7d80b56a058366ea091ad684338260b1517e1f82474e1062443",
+      "requestKey": "t45-first-r3-native-service-start-20261117-42",
+      "rootPublicObjectsEqual": true,
+      "rootResultSha256": "606bd8180330e0e72e6a24461d46d23bc417510de2db556e646a67fc808a0677",
+      "safeFacts": {
+        "actualSharedServiceWorkDeadline": 1794936435412,
+        "dataDirectoryIdentity": {
+          "device": 66304,
+          "gid": 61035,
+          "inode": 13502421,
+          "mode": 448,
+          "uid": 61035
+        },
+        "descriptionSource": "STORED_START_JOB_OUTPUTS_NO_NODE_RERUN",
+        "outerAuthorityLeaseExpiresAt": 1794936470412,
+        "physical": {
+          "databaseOid": "16393",
+          "postmasterStart": "2026-11-17 16:27:47.780746+00",
+          "serverVersionNum": "170011",
+          "systemIdentifier": "7706545564479176741"
+        },
+        "readOnlyReadiness": true,
+        "retainedAckValidated": true,
+        "runnerConservativeWorkDeadline": 1794936400412,
+        "service": {
+          "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+          "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+          "postmasterStart": "2026-11-17 16:27:47.780746+00",
+          "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+          "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+        }
+      },
+      "terminal": {
+        "sha256": "2f9287f0a468b9f6b1cc18ba3d3966d2529913b5b8d1baec2b569e0a1413f267",
+        "value": {
+          "atUTC": "2026-11-17T16:27:42.501881+00:00",
+          "businessAcceptanceClaimed": false,
+          "elapsedSeconds": 43.14121406304184,
+          "exitCode": 0,
+          "exports": [
+            "genuine-describe-payload.json",
+            "genuine-describe-process.json",
+            "genuine-descriptor.json",
+            "genuine-live-facts.json",
+            "normal-service-create-attempt.json",
+            "normal-service-intent.json",
+            "normal-service-result.json"
+          ],
+          "finishedAtUTC": "2026-11-17T16:28:25.680696+00:00",
+          "grantId": "b16447fbc81f4d64",
+          "jobId": "t45-first-r3-native-service-start-20261117-42",
+          "phaseStarted": true,
+          "privateLogsExported": false,
+          "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+          "status": "COMPLETED",
+          "taskId": "T45",
+          "unit": "naijue-erp-op-b16447fb-8ebbe0468095"
+        }
+      }
+    },
+    "stop": {
+      "activeOperationUnits": [],
+      "actualStoppedService": {
+        "id": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+        "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+        "name": "/t45-fresh35-first-production-20261110-r3-service-42",
+        "operation": "t45-first-r3-native-service-start-20261117-42",
+        "pid": 0,
+        "running": false
+      },
+      "automaticReplay": false,
+      "businessAcceptanceClaimed": false,
+      "guardianCleanupSha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+      "originalPortAbsent": true,
+      "pgdataPidAbsent": true,
+      "phase": "stop",
+      "publicResult": {
+        "businessAdvanced": false,
+        "checkedAtUTC": "2026-11-17T16:38:24.179467+00:00",
+        "cleanupSha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+        "currentBatchTerminals": {
+          "t45-r3-batched-install-20261116-02": {
+            "state": "COMPLETED",
+            "terminalSha256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2"
+          },
+          "t45-r3-batched-real-execute-20261115-01": {
+            "state": "FAILED",
+            "terminalSha256": "00132d00459328530dd4656d9a9e853b81abfbc92a73076fcde733d080cbdb35"
+          },
+          "t45-r3-batched161-command-successor-20261116-01": {
+            "state": "COMPLETED",
+            "terminalSha256": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb"
+          },
+          "t45-r3-final33-plan-prepare-20261116-05": {
+            "state": "COMPLETED",
+            "terminalSha256": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1"
+          },
+          "t45-r3-settlement24-three-routine-upgrade42-20261117-01": {
+            "state": "COMPLETED",
+            "terminalSha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+          }
+        },
+        "holdRetained": true,
+        "originalKeyReplayed": false,
+        "pgStopped": true,
+        "preserveMode": "ACTIVE_HOLD",
+        "requestKey": "t45-r3-ordinary42-preserve-stop-20261117-01",
+        "service": {
+          "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+          "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+          "postmasterStart": "2026-11-17 16:27:47.780746+00",
+          "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+          "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+        },
+        "status": "NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED",
+        "writerTerminalSha256": "ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e",
+        "writerTerminalStatus": "FAILED"
+      },
+      "publicResultSha256": "34a2fc38d836c467fd8286f2ef479ebb1464e14ba779dbc9e20cba28a736c936",
+      "requestKey": "t45-r3-ordinary42-preserve-stop-20261117-01",
+      "rootPublicObjectsEqual": true,
+      "rootResultSha256": "76693db7e3348093766de365032735f8c82d680c7f114f8040d299c2f613e8dd",
+      "terminal": {
+        "sha256": "8b8971ec716c33f0fb1a78cc0de5dd2abf090170addb4636186e70b846242a6f",
+        "value": {
+          "atUTC": "2026-11-17T16:38:20.852143+00:00",
+          "businessAcceptanceClaimed": false,
+          "elapsedSeconds": 3.362951856048312,
+          "exitCode": 0,
+          "exports": [
+            "normal05-preserve-stop-intent.json",
+            "normal05-preserve-stop-result.json"
+          ],
+          "finishedAtUTC": "2026-11-17T16:38:24.262004+00:00",
+          "grantId": "b16447fbc81f4d64",
+          "jobId": "t45-r3-ordinary42-preserve-stop-20261117-01",
+          "phaseStarted": true,
+          "privateLogsExported": false,
+          "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+          "status": "COMPLETED",
+          "taskId": "T45",
+          "unit": "naijue-erp-op-b16447fb-bb2b7adcb965"
+        }
+      }
+    },
+    "upgrade": {
+      "automaticReplay": false,
+      "businessAcceptanceClaimed": false,
+      "phase": "upgrade",
+      "publicResult": {
+        "automaticReplay": false,
+        "batchedCatalog": {
+          "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+          "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+          "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+        },
+        "beforeCatalogSha256": "309c3a6b5659855fe6bd0755a8900f5847763c727d7eb53191a21557e6f013d3",
+        "businessImported": false,
+        "captureDirectoryLeaf": "settlement24-three-routine-7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+        "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+        "childReaped": true,
+        "commitAcknowledged": true,
+        "commitOutcomeUnknown": false,
+        "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+        "connectionCleanup": "CLOSED",
+        "descendantsReaped": true,
+        "formalBusinessAccepted": false,
+        "innerAuthorityRemoved": true,
+        "nativeResultBindingMatched": true,
+        "postCommitReadback": true,
+        "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+        "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+        "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+        "roleRestoreAcknowledged": true,
+        "routineAttributesSha256": "436c26997092b6f4366d65f43fd5be0082a304d59bbf69f473210369a51361b7",
+        "service": {
+          "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+          "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+          "postmasterStart": "2026-11-17 16:27:47.780746+00",
+          "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+          "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+        },
+        "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+        "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+        "state": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+      },
+      "publicResultSha256": "68e18919106857a6c2b0940e1f08ca9ca1af9d02c54d2b8a90ebd71487677ad9",
+      "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "rootPublicObjectsEqual": true,
+      "rootResultSha256": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+      "terminal": {
+        "sha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d",
+        "value": {
+          "atUTC": "2026-11-17T16:32:57.376085+00:00",
+          "businessAcceptanceClaimed": false,
+          "elapsedSeconds": 40.25283640099224,
+          "exitCode": 0,
+          "exports": [
+            "batched161-command-update-result.json"
+          ],
+          "finishedAtUTC": "2026-11-17T16:33:37.634754+00:00",
+          "grantId": "b16447fbc81f4d64",
+          "jobId": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+          "phaseStarted": true,
+          "privateLogsExported": false,
+          "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+          "status": "COMPLETED",
+          "taskId": "T45",
+          "unit": "naijue-erp-op-b16447fb-de99cce1cb06"
+        }
+      }
+    }
+  },
+  "actualRoot127": {
+    "PGStarted": false,
+    "automaticReplay": false,
+    "dispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+    "maintenanceSubmitted": false,
+    "moduleSha256": "fc29d0b17aa02cbaa00c9cbdc80d5382016e7ca3ccad5acb8ca64c57c777a225",
+    "old122AndThreeGuardsPreserved": true,
+    "policySha256": "02afe6e97e2b3a3a565613daf4c165892993ec4a95bda0403afed864b7ef4aaa",
+    "published": [
+      "module",
+      "policy",
+      "dispatcher"
+    ],
+    "status": "EXACT_NORMAL42_FIVE_PHASE_ROOT_REGISTERED_NO_PHASE_OR_SQL_EXECUTED"
+  },
+  "upgrade42": {
+    "PGConnections": 0,
+    "activeOperationUnits": [],
+    "automaticReplay": false,
+    "checkedAtUTC": "2026-11-17T16:34:40.546777+00:00",
+    "mutations": 0,
+    "noOtherOperationUnits": true,
+    "originalPortAbsent": true,
+    "ownOperationUnitInactive": true,
+    "pgdataPidAbsent": false,
+    "portAbsent": true,
+    "presentAcrossExistingGrants": [
+      "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-settlement24-three-routine-upgrade42-20261117-01.json",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-settlement24-three-routine-upgrade42-20261117-01.json"
+    ],
+    "publicResultSha256": "68e18919106857a6c2b0940e1f08ca9ca1af9d02c54d2b8a90ebd71487677ad9",
+    "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+    "result": {
+      "automaticReplay": false,
+      "batchedCatalog": {
+        "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+        "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+        "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+      },
+      "beforeCatalogSha256": "309c3a6b5659855fe6bd0755a8900f5847763c727d7eb53191a21557e6f013d3",
+      "businessImported": false,
+      "captureDirectoryLeaf": "settlement24-three-routine-7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+      "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+      "childReaped": true,
+      "commitAcknowledged": true,
+      "commitOutcomeUnknown": false,
+      "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+      "connectionCleanup": "CLOSED",
+      "descendantsReaped": true,
+      "formalBusinessAccepted": false,
+      "innerAuthorityRemoved": true,
+      "nativeResultBindingMatched": true,
+      "postCommitReadback": true,
+      "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+      "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+      "roleRestoreAcknowledged": true,
+      "routineAttributesSha256": "436c26997092b6f4366d65f43fd5be0082a304d59bbf69f473210369a51361b7",
+      "service": {
+        "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+        "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+        "postmasterStart": "2026-11-17 16:27:47.780746+00",
+        "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+        "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+      },
+      "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+      "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+      "state": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+    },
+    "resultObjectsEqual": true,
+    "results": {
+      "batched161-command-update-result.json": {
+        "objectsEqual": true,
+        "publicSha256": "68e18919106857a6c2b0940e1f08ca9ca1af9d02c54d2b8a90ebd71487677ad9",
+        "rootSha256": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+        "value": {
+          "automaticReplay": false,
+          "batchedCatalog": {
+            "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+            "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+            "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+          },
+          "beforeCatalogSha256": "309c3a6b5659855fe6bd0755a8900f5847763c727d7eb53191a21557e6f013d3",
+          "businessImported": false,
+          "captureDirectoryLeaf": "settlement24-three-routine-7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+          "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+          "childReaped": true,
+          "commitAcknowledged": true,
+          "commitOutcomeUnknown": false,
+          "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+          "connectionCleanup": "CLOSED",
+          "descendantsReaped": true,
+          "formalBusinessAccepted": false,
+          "innerAuthorityRemoved": true,
+          "nativeResultBindingMatched": true,
+          "postCommitReadback": true,
+          "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+          "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+          "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+          "roleRestoreAcknowledged": true,
+          "routineAttributesSha256": "436c26997092b6f4366d65f43fd5be0082a304d59bbf69f473210369a51361b7",
+          "service": {
+            "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+            "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+            "postmasterStart": "2026-11-17 16:27:47.780746+00",
+            "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+            "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+          },
+          "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+          "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+          "state": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+        }
+      }
+    },
+    "rootPins": {
+      "result": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+      "terminal": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+    },
+    "rootResultSha256": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+    "terminal": {
+      "atUTC": "2026-11-17T16:32:57.376085+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 40.25283640099224,
+      "exitCode": 0,
+      "exports": [
+        "batched161-command-update-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T16:33:37.634754+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-de99cce1cb06"
+    },
+    "terminalRootPublicSha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+  },
+  "stop42": {
+    "PGConnections": 0,
+    "activeOperationUnits": [],
+    "actualStoppedService": {
+      "id": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-fresh35-first-production-20261110-r3-service-42",
+      "operation": "t45-first-r3-native-service-start-20261117-42",
+      "pid": 0,
+      "running": false
+    },
+    "automaticReplay": false,
+    "checkedAtUTC": "2026-11-17T16:39:01.006617+00:00",
+    "guardianCleanup": {
+      "sha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+      "value": {
+        "cleanup": {
+          "cleanShutdown": true,
+          "cleanupComplete": true,
+          "dataPreserved": true,
+          "databasePrivilegesChanged": false,
+          "errors": [],
+          "ownedPidAbsent": true,
+          "portAbsent": true
+        },
+        "errorCategory": "PASS_READ_ONLY",
+        "phase": "SERVICE_RETAINED",
+        "previousRuntimeOutcome": "UNKNOWN_PRESERVED",
+        "qExitCode": 0,
+        "queryStages": [
+          {
+            "category": "SERVER_STARTING",
+            "kind": "BASIC_READ_ONLY",
+            "ok": false,
+            "result": null,
+            "returnCode": 2,
+            "severity": "FATAL",
+            "sqlstate": null,
+            "stderrBytes": 112,
+            "stdoutBytes": 0
+          },
+          {
+            "category": "PASS_READ_ONLY",
+            "kind": "BASIC_READ_ONLY",
+            "ok": true,
+            "result": {
+              "currentUser": "erp35_runtime_20261110_r3",
+              "one": 1,
+              "readOnly": "on",
+              "sessionUser": "erp35_runtime_20261110_r3"
+            },
+            "returnCode": 0,
+            "sqlstate": null,
+            "stderrBytes": 0,
+            "stdoutBytes": 121
+          },
+          {
+            "category": "PASS_READ_ONLY",
+            "kind": "ROLE_ATTRIBUTES",
+            "ok": true,
+            "result": {
+              "membershipCount": 1,
+              "memberships": [
+                {
+                  "admin_option": false,
+                  "inherit_option": false,
+                  "role": "erp_unified27_runtime_2393dbc6db9581c2",
+                  "set_option": true
+                }
+              ],
+              "readOnly": "on",
+              "role": {
+                "bypassRls": false,
+                "canLogin": true,
+                "connectionLimit": 2,
+                "createDb": false,
+                "createRole": false,
+                "inherit": false,
+                "name": "erp35_runtime_20261110_r3",
+                "replication": false,
+                "superuser": false,
+                "validUntil": "infinity"
+              }
+            },
+            "returnCode": 0,
+            "sqlstate": null,
+            "stderrBytes": 0,
+            "stdoutBytes": 418
+          },
+          {
+            "category": "PASS_READ_ONLY",
+            "kind": "PRIVILEGES",
+            "ok": true,
+            "result": {
+              "controlSystemExecute": true,
+              "membersSelect": true,
+              "readOnly": "on",
+              "rolesSelect": true
+            },
+            "returnCode": 0,
+            "sqlstate": null,
+            "stderrBytes": 0,
+            "stdoutBytes": 97
+          },
+          {
+            "category": "PASS_READ_ONLY",
+            "kind": "READINESS",
+            "ok": true,
+            "result": {
+              "actor": "erp35_runtime_20261110_r3",
+              "address": "127.0.0.1",
+              "database": "erp_fresh35_20261110_r3",
+              "databaseOid": "16393",
+              "port": 56791,
+              "postmasterStart": "2026-11-17 16:27:47.780746+00",
+              "readOnly": "on",
+              "roleBoundary": true,
+              "runtimeLoginValidUntil": "infinity",
+              "serverVersionNum": "170011",
+              "sessionActor": "erp35_runtime_20261110_r3",
+              "systemIdentifier": "7706545564479176741"
+            },
+            "returnCode": 0,
+            "sqlstate": null,
+            "stderrBytes": 0,
+            "stdoutBytes": 401
+          },
+          {
+            "category": "PASS_READ_ONLY",
+            "kind": "LOCK_CAPACITY_SETTINGS",
+            "ok": true,
+            "result": {
+              "autovacuum_max_workers": 3,
+              "max_connections": 8,
+              "max_locks_per_transaction": 65536,
+              "max_prepared_transactions": 0,
+              "max_wal_senders": 10,
+              "max_worker_processes": 8,
+              "readOnly": "on",
+              "shared_buffers_bytes": 33554432,
+              "shared_memory_size_bytes": 827326464,
+              "shared_memory_type": "mmap"
+            },
+            "returnCode": 0,
+            "sqlstate": null,
+            "stderrBytes": 0,
+            "stdoutBytes": 301
+          }
+        ],
+        "reason": "EXACT_GUARDIAN_STOP_REQUESTED",
+        "requestKey": "t45-first-r3-native-service-start-20261117-42",
+        "retained": true,
+        "runtimeMaterialPreserved": true,
+        "sqlstate": null
+      }
+    },
+    "mutations": 0,
+    "originalPortAbsent": true,
+    "pgdataPidAbsent": true,
+    "presentAcrossExistingGrants": [
+      "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary42-preserve-stop-20261117-01",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary42-preserve-stop-20261117-01",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary42-preserve-stop-20261117-01.json",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary42-preserve-stop-20261117-01.json"
+    ],
+    "requestKey": "t45-r3-ordinary42-preserve-stop-20261117-01",
+    "results": {
+      "normal05-preserve-stop-result.json": {
+        "objectsEqual": true,
+        "publicSha256": "34a2fc38d836c467fd8286f2ef479ebb1464e14ba779dbc9e20cba28a736c936",
+        "rootSha256": "76693db7e3348093766de365032735f8c82d680c7f114f8040d299c2f613e8dd",
+        "value": {
+          "businessAdvanced": false,
+          "checkedAtUTC": "2026-11-17T16:38:24.179467+00:00",
+          "cleanupSha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+          "currentBatchTerminals": {
+            "t45-r3-batched-install-20261116-02": {
+              "state": "COMPLETED",
+              "terminalSha256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2"
+            },
+            "t45-r3-batched-real-execute-20261115-01": {
+              "state": "FAILED",
+              "terminalSha256": "00132d00459328530dd4656d9a9e853b81abfbc92a73076fcde733d080cbdb35"
+            },
+            "t45-r3-batched161-command-successor-20261116-01": {
+              "state": "COMPLETED",
+              "terminalSha256": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb"
+            },
+            "t45-r3-final33-plan-prepare-20261116-05": {
+              "state": "COMPLETED",
+              "terminalSha256": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1"
+            },
+            "t45-r3-settlement24-three-routine-upgrade42-20261117-01": {
+              "state": "COMPLETED",
+              "terminalSha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+            }
+          },
+          "holdRetained": true,
+          "originalKeyReplayed": false,
+          "pgStopped": true,
+          "preserveMode": "ACTIVE_HOLD",
+          "requestKey": "t45-r3-ordinary42-preserve-stop-20261117-01",
+          "service": {
+            "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+            "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+            "postmasterStart": "2026-11-17 16:27:47.780746+00",
+            "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+            "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+          },
+          "status": "NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED",
+          "writerTerminalSha256": "ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e",
+          "writerTerminalStatus": "FAILED"
+        }
+      }
+    },
+    "terminal": {
+      "sha256": "8b8971ec716c33f0fb1a78cc0de5dd2abf090170addb4636186e70b846242a6f",
+      "value": {
+        "atUTC": "2026-11-17T16:38:20.852143+00:00",
+        "businessAcceptanceClaimed": false,
+        "elapsedSeconds": 3.362951856048312,
+        "exitCode": 0,
+        "exports": [
+          "normal05-preserve-stop-intent.json",
+          "normal05-preserve-stop-result.json"
+        ],
+        "finishedAtUTC": "2026-11-17T16:38:24.262004+00:00",
+        "grantId": "b16447fbc81f4d64",
+        "jobId": "t45-r3-ordinary42-preserve-stop-20261117-01",
+        "phaseStarted": true,
+        "privateLogsExported": false,
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "COMPLETED",
+        "taskId": "T45",
+        "unit": "naijue-erp-op-b16447fb-bb2b7adcb965"
+      }
+    }
+  },
+  "restore42": {
+    "PGConnections": 0,
+    "activeOperationUnits": [],
+    "actualStoppedOwnRestoreContainer": {
+      "exitCode": 0,
+      "id": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-ordinary42-auth-restore-20261117-01",
+      "operation": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "pid": 0,
+      "running": false
+    },
+    "authenticationSnapshotBodiesOrDigestsRead": false,
+    "automaticReplay": false,
+    "checkedAtUTC": "2026-11-17T16:42:46.904812+00:00",
+    "mutations": 0,
+    "originalPortAbsent": true,
+    "pgdataPidAbsent": true,
+    "presentAcrossExistingGrants": [
+      "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary42-auth-restore-20261117-01",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary42-auth-restore-20261117-01",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary42-auth-restore-20261117-01.json",
+      "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary42-auth-restore-20261117-01.json"
+    ],
+    "privateRecoveryMetadataOnly": {
+      "applied.json": [
+        66304,
+        13667553,
+        0,
+        0,
+        256,
+        1,
+        493,
+        1794932688213360359,
+        1794932688213360359
+      ],
+      "finite-auth.json": [
+        66304,
+        13667550,
+        0,
+        0,
+        256,
+        1,
+        2549,
+        1794932687140371255,
+        1794932687140371255
+      ],
+      "original-auth.json": [
+        66304,
+        13667547,
+        0,
+        0,
+        256,
+        1,
+        2533,
+        1794932686998372698,
+        1794932686998372698
+      ],
+      "restore-attempt.json": [
+        66304,
+        13667615,
+        0,
+        0,
+        256,
+        1,
+        114,
+        1794933702452069802,
+        1794933702452069802
+      ],
+      "restored.json": [
+        66304,
+        13667617,
+        0,
+        0,
+        256,
+        1,
+        466,
+        1794933703566064455,
+        1794933703566064455
+      ]
+    },
+    "privateSafeRestoreReceipt": {
+      "matchesWorkerInner": true,
+      "sha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05"
+    },
+    "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+    "results": {
+      "maintenance-auth-cleanup.json": {
+        "objectsEqual": true,
+        "publicSha256": "ae6bbb5d3510521de3f4e25e61a6c8e504c9b6c233e9cb15296f13c546b369bc",
+        "rootSha256": "c6ddae25d7b998a51f6fc67bfcf58bd6e17cf8769134b5ddf2be17c63b8d1067",
+        "value": {
+          "automaticReplay": false,
+          "cid": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+          "confirmed": true,
+          "createAttempted": true,
+          "exitCode": 0,
+          "oomKilled": false,
+          "ownContainerStopped": true,
+          "ownedPidAbsent": true,
+          "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+          "sourceDataPreserved": true,
+          "stage": "READ_BACK_OWN_CONTAINER_STOP"
+        }
+      },
+      "maintenance-auth-result.json": {
+        "objectsEqual": true,
+        "publicSha256": "5bdd5304d3669b5ba2a74cf3eedbde30135b04f1ecacb0d58c922ca08e4afadc",
+        "rootSha256": "ca96543508c89e4a8cc0455dc40a8e5f2cd3e86a0ff076395c246d550a0fc7f8",
+        "value": {
+          "SQL36OrBusinessImport": false,
+          "automaticReplay": false,
+          "cleanup": {
+            "automaticReplay": false,
+            "cid": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+            "confirmed": true,
+            "createAttempted": true,
+            "exitCode": 0,
+            "oomKilled": false,
+            "ownContainerStopped": true,
+            "ownedPidAbsent": true,
+            "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+            "sourceDataPreserved": true,
+            "stage": "READ_BACK_OWN_CONTAINER_STOP"
+          },
+          "newDatabaseOrRole": false,
+          "normal08Or05Started": false,
+          "phase": "restore",
+          "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+          "result": {
+            "automaticReplay": false,
+            "databaseStillStopped": true,
+            "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+            "membershipsOrRoleAttributesChanged": false,
+            "naturalExpiryCountedAsRestoration": false,
+            "privateRecoveryBasisRetained": true,
+            "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+            "roles": [
+              "erp35_controller_20261110_r3",
+              "erp35_admin_20261110_r3"
+            ],
+            "runtimeAuthChanged": false,
+            "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+          },
+          "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+        }
+      }
+    },
+    "terminal": {
+      "sha256": "7f10ff02d069efb568f66218e9906d0ddce7cc12b630dfc5b3794750dbbfc4d6",
+      "value": {
+        "atUTC": "2026-11-17T16:41:38.511734+00:00",
+        "businessAcceptanceClaimed": false,
+        "elapsedSeconds": 6.414372559986077,
+        "exitCode": 0,
+        "exports": [
+          "maintenance-auth-cleanup.json",
+          "maintenance-auth-inside.json",
+          "maintenance-auth-intent.json",
+          "maintenance-auth-result.json"
+        ],
+        "finishedAtUTC": "2026-11-17T16:41:44.957044+00:00",
+        "grantId": "b16447fbc81f4d64",
+        "jobId": "t45-r3-ordinary42-auth-restore-20261117-01",
+        "phaseStarted": true,
+        "privateLogsExported": false,
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "COMPLETED",
+        "taskId": "T45",
+        "unit": "naijue-erp-op-b16447fb-e8cd01760153"
+      }
+    }
+  },
+  "custodyStat9": {
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/applied.json": [
+      66304,
+      13666945,
+      0,
+      0,
+      256,
+      1,
+      493,
+      1794893437013043029,
+      1794893437013043029
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/finite-auth.json": [
+      66304,
+      13666942,
+      0,
+      0,
+      256,
+      1,
+      2549,
+      1794893436024056178,
+      1794893436024056178
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/original-auth.json": [
+      66304,
+      13666939,
+      0,
+      0,
+      256,
+      1,
+      2533,
+      1794893435897057868,
+      1794893435897057868
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/restore-attempt.json": [
+      66304,
+      13667009,
+      0,
+      0,
+      256,
+      1,
+      114,
+      1794896630532563884,
+      1794896630532563884
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/restored.json": [
+      66304,
+      13667011,
+      0,
+      0,
+      256,
+      1,
+      466,
+      1794896631566578146,
+      1794896631566578146
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary40-auth-20261117-01/applied.json": [
+      66304,
+      13667449,
+      0,
+      0,
+      256,
+      1,
+      493,
+      1794918557027534554,
+      1794918557027534554
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary40-auth-20261117-01/finite-auth.json": [
+      66304,
+      13667446,
+      0,
+      0,
+      256,
+      1,
+      2549,
+      1794918556005536229,
+      1794918556005536229
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary40-auth-20261117-01/original-auth.json": [
+      66304,
+      13667443,
+      0,
+      0,
+      256,
+      1,
+      2533,
+      1794918555883536430,
+      1794918555883536430
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary40-auth-20261117-01/restore-attempt.json": [
+      66304,
+      13667476,
+      0,
+      0,
+      256,
+      1,
+      114,
+      1794919460961421220,
+      1794919460961421220
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary40-auth-20261117-01/restored.json": [
+      66304,
+      13667478,
+      0,
+      0,
+      256,
+      1,
+      466,
+      1794919461935392779,
+      1794919461935392779
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary41-auth-20261117-01/applied.json": [
+      66304,
+      13667489,
+      0,
+      0,
+      256,
+      1,
+      493,
+      1794922728387003106,
+      1794922728387003106
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary41-auth-20261117-01/finite-auth.json": [
+      66304,
+      13667486,
+      0,
+      0,
+      256,
+      1,
+      2549,
+      1794922727364004596,
+      1794922727364004596
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary41-auth-20261117-01/original-auth.json": [
+      66304,
+      13667483,
+      0,
+      0,
+      256,
+      1,
+      2533,
+      1794922727254004756,
+      1794922727254004756
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary42-auth-20261117-01/applied.json": [
+      66304,
+      13667553,
+      0,
+      0,
+      256,
+      1,
+      493,
+      1794932688213360359,
+      1794932688213360359
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary42-auth-20261117-01/finite-auth.json": [
+      66304,
+      13667550,
+      0,
+      0,
+      256,
+      1,
+      2549,
+      1794932687140371255,
+      1794932687140371255
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary42-auth-20261117-01/original-auth.json": [
+      66304,
+      13667547,
+      0,
+      0,
+      256,
+      1,
+      2533,
+      1794932686998372698,
+      1794932686998372698
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary42-auth-20261117-01/restore-attempt.json": [
+      66304,
+      13667615,
+      0,
+      0,
+      256,
+      1,
+      114,
+      1794933702452069802,
+      1794933702452069802
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary42-auth-20261117-01/restored.json": [
+      66304,
+      13667617,
+      0,
+      0,
+      256,
+      1,
+      466,
+      1794933703566064455,
+      1794933703566064455
+    ]
+  },
+  "prepare05": {
+    "safeReadbackSha256": "4709f62e62f604200ed17e4be751d823fd521589ce1cf4451cb686a963f1fb46",
+    "key": "t45-r3-final33-plan-prepare-20261116-05",
+    "terminalSha256": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1",
+    "rootResultSha256": "a6861080bab7021463e47763db97e59332b4d643f742289ba8ddff15f5923fd6",
+    "nativeResultSha256": "552b8cf8bffe5c702c0e22513725065e7bf68ba23fe773b29f9b82689d814784",
+    "preparedBinding": {
+      "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+      "batchedCatalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+      "batchedDbCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+      "batchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+      "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+      "batchedSourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+      "catalogSha256": "7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88",
+      "currentServiceSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+      "cutoffAt": "2026-11-16T11:40:00+08:00",
+      "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+      "finalSourceInputSha256": "d3bfd39a995dc164309f8ec6bf7be34f6b3e721d9dd4fbcaa7d0192367702856",
+      "format": "FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2",
+      "initializerOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758",
+      "initializerRequestKey": "7e820f8b-0770-9773-6249-9999b0e0d758",
+      "initializerSha256": "b0d291c8b2f431fefd8be929c6a78132f683a71590e9e8753c88368969f2af8c",
+      "installProgramSha256": "e715d1c4d8bde9e542cdfc0f544ff6efc6986b57bd183eb8b7745f44cb742a1d",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+      "planSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+      "postmasterStart": "2026-11-17 05:39:40.169724+00",
+      "sourceNamespace": "naijue:tplus:20261102",
+      "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+      "stepCount": 44910,
+      "stepsSha256": "45a764dfa0da3e95567dad4394f79d0cb2dc83218582cdee163a53de937db997",
+      "successorCatalogSpecSha256": "5ab03ca9c07eae189d326e2816a753fdfc35f4e84e8d5398763983dafa107027",
+      "successorRecordSha256": "d18f80cec591b3740f7aeceb14f1148bdea4ce867feba4e5ff3465dbdb8d231e",
+      "successorSourceSetSha256": "e43584e931791601974440955dfe3464cd0f3d9220141acfe5a9172212841d15",
+      "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+      "transactionMode": "BATCHED_V1"
+    },
+    "executionBinding": {
+      "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+      "batchedCatalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+      "batchedDbCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+      "batchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+      "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+      "batchedSourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+      "catalogSha256": "7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88",
+      "currentServiceSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+      "cutoffAt": "2026-11-16T11:40:00+08:00",
+      "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+      "finalSourceInputSha256": "d3bfd39a995dc164309f8ec6bf7be34f6b3e721d9dd4fbcaa7d0192367702856",
+      "format": "FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2",
+      "initializerOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758",
+      "initializerRequestKey": "7e820f8b-0770-9773-6249-9999b0e0d758",
+      "initializerSha256": "b0d291c8b2f431fefd8be929c6a78132f683a71590e9e8753c88368969f2af8c",
+      "installProgramSha256": "e715d1c4d8bde9e542cdfc0f544ff6efc6986b57bd183eb8b7745f44cb742a1d",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+      "planSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+      "postmasterStart": "2026-11-17 05:39:40.169724+00",
+      "preparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+      "sourceNamespace": "naijue:tplus:20261102",
+      "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+      "stepCount": 44910,
+      "stepsSha256": "45a764dfa0da3e95567dad4394f79d0cb2dc83218582cdee163a53de937db997",
+      "successorCatalogSpecSha256": "5ab03ca9c07eae189d326e2816a753fdfc35f4e84e8d5398763983dafa107027",
+      "successorRecordSha256": "d18f80cec591b3740f7aeceb14f1148bdea4ce867feba4e5ff3465dbdb8d231e",
+      "successorSourceSetSha256": "e43584e931791601974440955dfe3464cd0f3d9220141acfe5a9172212841d15",
+      "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+      "transactionMode": "BATCHED_V1"
+    },
+    "result": {
+      "automaticReplay": false,
+      "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-05/batched-plan.sqlite",
+      "executionBinding": {
+        "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+        "batchedCatalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+        "batchedDbCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+        "batchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+        "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+        "batchedSourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+        "catalogSha256": "7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88",
+        "currentServiceSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+        "cutoffAt": "2026-11-16T11:40:00+08:00",
+        "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+        "finalSourceInputSha256": "d3bfd39a995dc164309f8ec6bf7be34f6b3e721d9dd4fbcaa7d0192367702856",
+        "format": "FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2",
+        "initializerOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758",
+        "initializerRequestKey": "7e820f8b-0770-9773-6249-9999b0e0d758",
+        "initializerSha256": "b0d291c8b2f431fefd8be929c6a78132f683a71590e9e8753c88368969f2af8c",
+        "installProgramSha256": "e715d1c4d8bde9e542cdfc0f544ff6efc6986b57bd183eb8b7745f44cb742a1d",
+        "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+        "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+        "planSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+        "postmasterStart": "2026-11-17 05:39:40.169724+00",
+        "preparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+        "sourceNamespace": "naijue:tplus:20261102",
+        "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+        "stepCount": 44910,
+        "stepsSha256": "45a764dfa0da3e95567dad4394f79d0cb2dc83218582cdee163a53de937db997",
+        "successorCatalogSpecSha256": "5ab03ca9c07eae189d326e2816a753fdfc35f4e84e8d5398763983dafa107027",
+        "successorRecordSha256": "d18f80cec591b3740f7aeceb14f1148bdea4ce867feba4e5ff3465dbdb8d231e",
+        "successorSourceSetSha256": "e43584e931791601974440955dfe3464cd0f3d9220141acfe5a9172212841d15",
+        "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+        "transactionMode": "BATCHED_V1"
+      },
+      "lifecycleConfirmed": true,
+      "nativeConnectionCleanup": "CLOSED",
+      "nativeOutcomeInferredFromOuterStatus": false,
+      "nativeResultBindingMatched": true,
+      "nativeResultSha256": "552b8cf8bffe5c702c0e22513725065e7bf68ba23fe773b29f9b82689d814784",
+      "phase": "PREPARE",
+      "preparationIdentityMapping": {
+        "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-05/batched-plan.sqlite",
+        "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+        "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+        "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-05"
+      },
+      "preparedBinding": {
+        "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+        "batchedCatalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+        "batchedDbCandidatePinsSha256": "dc08f911c509fc376f8b7e92ac94af788f9b31fb8871ca9af39b21c966597ab9",
+        "batchedModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+        "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+        "batchedSourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+        "catalogSha256": "7e10755bbc434732a08dd69899a8f668701c504cfc1e26f117c8abc472614c88",
+        "currentServiceSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+        "cutoffAt": "2026-11-16T11:40:00+08:00",
+        "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+        "finalSourceInputSha256": "d3bfd39a995dc164309f8ec6bf7be34f6b3e721d9dd4fbcaa7d0192367702856",
+        "format": "FRESH35_COMPACT_ZERO_REAL_IMPORT_BINDING_V2",
+        "initializerOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758",
+        "initializerRequestKey": "7e820f8b-0770-9773-6249-9999b0e0d758",
+        "initializerSha256": "b0d291c8b2f431fefd8be929c6a78132f683a71590e9e8753c88368969f2af8c",
+        "installProgramSha256": "e715d1c4d8bde9e542cdfc0f544ff6efc6986b57bd183eb8b7745f44cb742a1d",
+        "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+        "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+        "planSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+        "postmasterStart": "2026-11-17 05:39:40.169724+00",
+        "sourceNamespace": "naijue:tplus:20261102",
+        "sourceSetSha256": "6c49bd9218e7cb313e7ac7d7cce83a166651e7418dd1c82322dc42589daefa16",
+        "stepCount": 44910,
+        "stepsSha256": "45a764dfa0da3e95567dad4394f79d0cb2dc83218582cdee163a53de937db997",
+        "successorCatalogSpecSha256": "5ab03ca9c07eae189d326e2816a753fdfc35f4e84e8d5398763983dafa107027",
+        "successorRecordSha256": "d18f80cec591b3740f7aeceb14f1148bdea4ce867feba4e5ff3465dbdb8d231e",
+        "successorSourceSetSha256": "e43584e931791601974440955dfe3464cd0f3d9220141acfe5a9172212841d15",
+        "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+        "transactionMode": "BATCHED_V1"
+      },
+      "processCleanup": {
+        "childReaped": true,
+        "connectionCleanup": "CLOSED",
+        "descendantsReaped": true,
+        "nativeAuthorityRemoved": true,
+        "originalInputMetadataChanges": 0,
+        "privateInitializer": {
+          "bytes": 58716444,
+          "sha256": "663de92c28076aef3ae613bf01230ab6f59c3873c79100e9e5d26f87dce4025b"
+        },
+        "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+        "scratchEmpty": true,
+        "scratchRetainedPrivately": false
+      },
+      "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+      "safeCode": null,
+      "service": {
+        "containerId": "a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5",
+        "containerStartedAt": "2026-11-17T05:39:38.918702945Z",
+        "postmasterStart": "2026-11-17 05:39:40.169724+00",
+        "proofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+        "serviceKey": "t45-first-r3-native-service-start-20261116-39"
+      },
+      "sqlstate": null,
+      "state": "BATCHED_IMPORT_PREPARED"
+    }
+  },
+  "actualInputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261118-r3-after42-source43-scope-01/SOURCE-SCOPE.json",
+      "sha256": "89f3971ef29022be17de1bdf192f032f3af582f95dc45b3a66ef5a94ca09bae9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/RESULT.json",
+      "sha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/APPLY-SAFE.json",
+      "sha256": "10c303c03ae22875937a5b104955662f28a28997ccae68d60b3325d24055850e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/RESTORE-SAFE.json",
+      "sha256": "9d7772010cdb1b9512bbbd4528f2e38cf892717328b3771bb5af4978b77dd380"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/START-SAFE.json",
+      "sha256": "e00bfb0fcadfcb908a97bdafd8a68d5902500cf523438e3963248cb068ff5d34"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/STOP-SAFE.json",
+      "sha256": "4b098702e69ae2412e123faec0d8c32d311331bdaf255a66eb2a4a00c3c2d8b0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/UPGRADE-SAFE.json",
+      "sha256": "5a971a08031e8ac675113a99dfe168368e83908ed3f296ef8e50cabc28d8ce50"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/upgrade/ACTUAL-UPGRADE42-RESULT.json",
+      "sha256": "791d4f472921d827f900cb5165d1b7d852a60696449f7b6ead5e6fe695295a4d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/stop/ACTUAL-ORIGINAL-KEY-READBACK.PRIVATE.json",
+      "sha256": "97928ee0be902def451e3223cbb5dc07ce423d5233c9bd401e676066fa7cebe8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/restore/ACTUAL-ORIGINAL-KEY-READBACK.PRIVATE.json",
+      "sha256": "717f3510482959a4dc0a3c25a43cfbe3fbf1b51b47b1d7f60671258931bdaec5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-ROOT-EXECUTION-PREPARATION-01/cas/ACTUAL-CAS-RESULT.json",
+      "sha256": "42cc4979c85d7ce38ad2f8470ccfcbe8fd8868f76e9bbf947152f44da8aa9c8e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/prepare/RESULT-PREPARE05.json",
+      "sha256": "4709f62e62f604200ed17e4be751d823fd521589ce1cf4451cb686a963f1fb46"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/prepare/release-receipts/t45-r3-final33-plan-prepare-20261116-05/final33-prepare-result.json",
+      "sha256": "881fc71435b0401496e183791e4a184242b71c654464ff8cd9e1d9c232961d35"
+    }
+  ],
+  "clock": null,
+  "finiteAuthorities": null,
+  "current43C": null,
+  "current43Epoch": null
+}

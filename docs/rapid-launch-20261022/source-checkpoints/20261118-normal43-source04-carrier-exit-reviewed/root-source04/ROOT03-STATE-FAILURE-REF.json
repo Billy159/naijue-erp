@@ -1,0 +1,19 @@
+{
+  "state": "SOURCE04_MAIN_AUTHORIZED_EXACT_FIXED_HISTORICAL_LIFECYCLE_CORRECTION",
+  "source03PinsSha256": "d7ce75ec73170ca4ac3c8f28549e891293279759bcc5aeb8276a5b21237a2ac9",
+  "actualDiagnostic": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL43-ROOT-EXECUTION-PREPARATION-02/fresh/ACTUAL-READ-HELPER-DIAGNOSTIC.json",
+    "sha256": "9dd124feb543fc10ed08f2c6d8ce6a0076e79c0dca634dbc93b9e61cf675ffad"
+  },
+  "actualClosedContainers": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL43-ROOT-EXECUTION-PREPARATION-02/fresh/ACTUAL-CLOSED42-TWO-CONTAINERS.json",
+    "sha256": "b1150a55bca2d78458fae9ba8ee2f95e4493132d42634c3cca87ca4997d9c4c2"
+  },
+  "sourceScope": {
+    "path": "outputs/主控/20261118-r3-normal43-source04-carrier-exit-scope-01/SOURCE-SCOPE.json",
+    "sha256": "f493d62351c52035160f9e64e0267c29a63c31e666904fdf95673897b3dbe06c"
+  },
+  "oldStageAndArtifactsPreserved": true,
+  "source04ServerActions": 0,
+  "source04LocalPrepareCalls": 0
+}

@@ -1,0 +1,172 @@
+{
+  "PGConnections": 0,
+  "STAGEDExposed": false,
+  "authoritiesIssued": false,
+  "businessImportComplete": false,
+  "candidateKeys": 132,
+  "checks": 70,
+  "clockCalls": 0,
+  "completedPrepare05HistoricalOnly": true,
+  "consumerReviewSha256": "14108adc17241c3f5115d1483a4abefcc9c006ff4e963793cd323523a7713a5b",
+  "consumerRulesSha256": "28b4d7eab540bdc0ccae33e520ad75564471eafd2c998906649c59eb25eb7d3f",
+  "consumerSourcePinsSha256": "8b492612798f9ebb3e8182477bb8f3eb2fa99f52acd78f846d3d1f2726a73f5e",
+  "files": {
+    "ACTUAL-HISTORY.json": {
+      "bytes": 71184,
+      "sha256": "07682638c268e248486ae15d19ad8b57a82d28f69ed199f8bd5156f046c43931"
+    },
+    "ACTUAL127-DISPATCHER.py": {
+      "bytes": 58110,
+      "sha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f"
+    },
+    "BASELINE-ROOT01.json": {
+      "bytes": 851,
+      "sha256": "aaeeaacd32c5091f53db2fe3bca890fc909e985234bb551d18a5f6ade06d2132"
+    },
+    "CONSUMER-REVIEW-REF.json": {
+      "bytes": 297,
+      "sha256": "13d1a39d25fbede8456be7ef6b0567bad77fcc6bd54f2d11a573285a36c772ae"
+    },
+    "DELTA-CHECKS.json": {
+      "bytes": 4058,
+      "sha256": "17f9d82ccf93f52d0f248456cb297cad7ace80b69b5541ba9c86d829a75d1566"
+    },
+    "FIVE-PHASES.UNISSUED.json": {
+      "bytes": 109287,
+      "sha256": "919589e41915227e5b1da03ea92b52b8563e33b55677ae38ff8ce6535fefbc6a"
+    },
+    "HANDOFF.md": {
+      "bytes": 8708,
+      "sha256": "209ff95c1e1fddfd17ade9b63391222cac71481095a5ff599985d1ef16c0ec5e"
+    },
+    "HISTORY-BRIDGE-CHECKS.json": {
+      "bytes": 299,
+      "sha256": "dd1859b1c48e93e91112fa21e4ac47451790b6c73a19e65c94544506e2815d49"
+    },
+    "HISTORY-INPUTS.json": {
+      "bytes": 111142,
+      "sha256": "61b01c9c9b9f12baa00b1d1301fa5ccdf74ce916677ae83a04a7514ea297d4bc"
+    },
+    "LIFECYCLE-CHECKS.json": {
+      "bytes": 1077,
+      "sha256": "4edeaa5144660f621eb8157baa2dac170f7ecf135619a69f90f82d91bb4c91bb"
+    },
+    "READER-METADATA-AUDIT.md": {
+      "bytes": 2145,
+      "sha256": "99d3573ed234dd3eb8d22e53f27555864c88cd942581399396fc44cc3bb1fb99"
+    },
+    "ROLE-TIMING-CHECKS.json": {
+      "bytes": 455,
+      "sha256": "9d1ecc05a75abdce75b2ca3fce4264d8461dade319c4f1138c5ad0f6ac70fbce"
+    },
+    "ROOT02-READ-FAILURE-REF.json": {
+      "bytes": 1042,
+      "sha256": "d4e9bbc22e747a8d30124699a990210e00b70cdccd3d29f7be3ef9c3bda28065"
+    },
+    "ROOT03-STATE-FAILURE-REF.json": {
+      "bytes": 1051,
+      "sha256": "7b2a9f1754f7b7ba3c218f7a96678313cc82baf7973e4c5bdc1eb6ba3b73a64b"
+    },
+    "WIP-STATUS.md": {
+      "bytes": 2530,
+      "sha256": "1b66c6060204120c6d73fbd821f33fab893c6dbc2a40fff220e9ed1cc26e648e"
+    },
+    "admin_exec.NORMAL43-UNREGISTERED.py": {
+      "bytes": 59448,
+      "sha256": "fc4def4e10b9bf2e5f42ea10c8cbf3212804e048f8cc7b25a0f7e47570d7adee"
+    },
+    "capture_actual_inputs.py": {
+      "bytes": 3974,
+      "sha256": "1026f8dba492945fbd855da2961d0b8ae2c8fde6698c16519f28f96c2707baed"
+    },
+    "check_delta.py": {
+      "bytes": 11037,
+      "sha256": "e5a04284973297ca37bd231ec7c1fead7254004bd2bd8d85210166bb471c4cdb"
+    },
+    "check_lifecycle.py": {
+      "bytes": 3458,
+      "sha256": "01b1fd4d4fb86bf538721773bd19012665e041645972ca732d38799f6af246e0"
+    },
+    "check_role_timing.py": {
+      "bytes": 1905,
+      "sha256": "2bba7185a598bb23ce99ed0002a8f0577cf0f744ce12d0bc16e882f29ff5b88e"
+    },
+    "freeze_source.py": {
+      "bytes": 1739,
+      "sha256": "2fb81b23334522ec46fd3dcf79fde550b3c0f9b72de8c7a258c266e1014f2e4a"
+    },
+    "issue_phase.py": {
+      "bytes": 25215,
+      "sha256": "d4e98e4dfdcdbcb448aface5f666ae1fe3d5142e91e5400fcf0f5cef32932c08"
+    },
+    "issue_registration.py": {
+      "bytes": 8929,
+      "sha256": "3f2d9737257c22869170c88cb19e2006f25039452ee598382fd563c5c81d6903"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 3054,
+      "sha256": "24fd0caf41f2b5dc924dc9983abb677a5be12c31b8f0552b55807c4ef302c638"
+    },
+    "plan_custody.template.py": {
+      "bytes": 1316,
+      "sha256": "ad3380f22deefc6992213cee7d078b6b3589ce9f60e0d366b44dc3a5ba196982"
+    },
+    "prepare_channel.py": {
+      "bytes": 7173,
+      "sha256": "a2d1bca2d68a8bbe7d2f561c1b093f86d065d86216f81530292fd0a905c88b40"
+    },
+    "prepare_source.py": {
+      "bytes": 8207,
+      "sha256": "9867ad0256d8747b8bec4aa675f646dc299a14edd0e10b90bdab79930025c1bd"
+    },
+    "r3_normal43_continuation.py": {
+      "bytes": 67584,
+      "sha256": "b17e9b0b529a86a0dd5efbdf5ba63817519cdfa676247931d4998be444fc88ce"
+    },
+    "read_registration_basis.py": {
+      "bytes": 2989,
+      "sha256": "d80357aa740151ecf7e353639706102ec8fae07b8edfd02557874ff7a4730939"
+    },
+    "register_cas.py": {
+      "bytes": 56184,
+      "sha256": "b01726eb58b31ebee3a5d900087435dd8f793582c451ff70b600c8f1b0d98f38"
+    },
+    "render_admission.py": {
+      "bytes": 4481,
+      "sha256": "f9348b6b77b10c886f25103c7c743844570b347529037b83242875da7d18686e"
+    },
+    "render_main.py": {
+      "bytes": 3009,
+      "sha256": "576a8e1b746100dd34364b24c0d1abdb4f508e407f0f76168e10dbc991098f69"
+    },
+    "render_registration.py": {
+      "bytes": 7630,
+      "sha256": "c61e03acb5c5823912eae9976bf45f271f57dbc416aa340c471a47003c8cfbb2"
+    },
+    "validate_closed42.template.py": {
+      "bytes": 5059,
+      "sha256": "068537f6cee0fc4358a6cb2df3229da41f10200b4e9e412eca198ac21352c398"
+    },
+    "writer_authority.template.py": {
+      "bytes": 6148,
+      "sha256": "bb954a15ab4e161faf484e50070215ac8522212c7415a5585d27d18a4d2d4ab0"
+    }
+  },
+  "futureCOrEpochOrWindow": null,
+  "interfaceSha256": "872656c154ed271349ce1a675d16b8281517a2c33b0edca9bedf412d6342f481",
+  "newContinuationKeys": 5,
+  "oldProtectedKeys": 127,
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "publicationRestrictionsLifted": false,
+  "rootPairReviewComplete": false,
+  "rulesSha256": "919589e41915227e5b1da03ea92b52b8563e33b55677ae38ff8ce6535fefbc6a",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "NORMAL43_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED"
+}

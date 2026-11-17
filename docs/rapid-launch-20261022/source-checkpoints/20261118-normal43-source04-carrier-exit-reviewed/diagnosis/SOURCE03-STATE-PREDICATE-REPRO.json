@@ -1,0 +1,17 @@
+{
+  "state": "ACTUAL_HISTORICAL_STATE_REPRODUCES_SOURCE03_SERVICE_PREDICATE_FAILURE",
+  "actualMetadataSha256": "b1150a55bca2d78458fae9ba8ee2f95e4493132d42634c3cca87ca4997d9c4c2",
+  "predicate": "s['Running'] is False and s['Pid'] == 0 and (s['ExitCode'] == 0)",
+  "verdictByContainer": {
+    "restoreOwn42": true,
+    "service42": false
+  },
+  "service42ActualExitCode": 143,
+  "restoreOwn42ActualExitCode": 0,
+  "historicalGuardianCleanReceiptUnchanged": true,
+  "frozenSourceChanged": false,
+  "serverActions": 0,
+  "factoryOrConstructorCalls": 0,
+  "PGConnections": 0,
+  "futureFixtureUsed": false
+}

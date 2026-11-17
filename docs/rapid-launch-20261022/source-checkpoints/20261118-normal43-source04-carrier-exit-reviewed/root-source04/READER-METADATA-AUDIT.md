@@ -1,0 +1,13 @@
+本次仅本机源码和既存安全回执核对，没有运行reader、constructor、factory、Docker或PostgreSQL。
+
+已确认并修正的R04：旧循环把service42与restoreOwn42都要求ExitCode0。实际b115证明service42是载体timeout/sleep的退出码143，而restoreOwn42为0，两者均Running=false/PID0/OOMKilled=false/Error空/Status=exited。已审stop先验证guardian干净停PG、进程/端口退出及Data保留，再docker stop载体；容器退出码不代替PGclean证明。Source04只对这两个固定CID、准确ID/name/image/operation/StartedAt/FinishedAt等实测元数据作精确匹配，全部原PG、guardian1b3f、DATA、认证和snapshot检查的代码前缀保持字节语义一致。没有全局允许非零退出码。
+
+其余reader物理断言没有在现存真实回执中发现另一项类似“已被反证仍写死”的条件：
+
+- 18份认证snapshot的完整stat9有原回执来源；仅metadata比较，未读取body或digest。
+- prepare05计划目录61035/0700、SQLite及initializer61035/0600来自原创建/读回合同。initializer58716444由4709回执和原样copy实现证明，typed b0不变；当前全stat9仍未观测，须futurefresh取真值，不能称已在现场通过。
+- 原ACK42摘要没有来源时继续留None，由唯一futurefresh读取真实safe ACK并核proof/work，再绑定Main7/CAS；不假设rawSHA。
+- 新加入PRESERVE的原native-private/native-result.json有真实SHA552b及原root写入路径。其当前owner/完整stat9/大小未在本机安全回执中单列实测，未来仍按现有root所有、nlink1、不可组写、最多131072字节的原读取合同核验；若不符只报告具体事实，不能预先降低门槛。
+- 原PGDATA固定identity、活动operation缺席、28GiB余量和execution lock均是已有明确合同的futurefresh条件，没有把未知状态标成当前通过。
+
+这些待现场物理核验的条件不构成新缺陷结论，未据猜测修改。R04只使用b115实际两CID，错误退出码、不同CID、Running/PID/OOM/Error等不一致继续拒绝；原SQL/PG/角色/权限、业务计划和时限算法不变。

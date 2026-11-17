@@ -1,0 +1,1 @@
+{"automaticReplay": false, "basisReceiptPresent": false, "errorType": "ValueError", "originalIntentPresent": true, "safeCode": "LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK", "stageReceiptPresent": true, "state": "SOURCE03_STAGE_OR_FRESH_OUTCOME_UNCONFIRMED_NO_REPLAY"}

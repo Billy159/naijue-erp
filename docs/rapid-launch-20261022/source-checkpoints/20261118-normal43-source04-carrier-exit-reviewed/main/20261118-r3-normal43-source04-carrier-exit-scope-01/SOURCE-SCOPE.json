@@ -1,0 +1,33 @@
+{
+  "state": "AUTHORIZE_SOURCE04_FIXED_CONTAINER_EXIT_SEMANTICS_AND_NECESSARY_PATH_PAIRING_ONLY",
+  "basisRuntimeDecisionSha256": "5bb87955fcddf84223a4ab99f6f437e2a142e949e8a90798013c2994f0a42602",
+  "actualFailedReadDiagnosticSha256": "9dd124feb543fc10ed08f2c6d8ce6a0076e79c0dca634dbc93b9e61cf675ffad",
+  "actualContainerMetadataSha256": "b1150a55bca2d78458fae9ba8ee2f95e4493132d42634c3cca87ca4997d9c4c2",
+  "sourcePredicateReproductionSha256": "f04ab9296ec3b715a817b17635ef1e07309e1c063889a8586e7218c3abbf94a7",
+  "exactClosedContainers": {
+    "service42": {
+      "id": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+      "expectedExitCode": 143
+    },
+    "restoreOwn42": {
+      "id": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+      "expectedExitCode": 0
+    }
+  },
+  "rationale": "Historical service carrier is timeout/sleep PID1; existing guardian proves PG clean stop and data preservation before docker stop carrier. Carrier Exit143 must not be used alone as PGclean evidence; restoration worker own container still must exit0.",
+  "preservedRequirements": [
+    "Exact original container identity/name/image/operation/birth",
+    "Running false and Pid0",
+    "Original successful Stop42 and guardian1b3f all cleanup flags",
+    "Original PGDATA identity, no postmaster PID/listener and no active operations",
+    "Original authentication restored, all private snapshot metadata guards",
+    "All existing Source43 business/plan/native typed binding/role/budget/FIRST_WRITE guards"
+  ],
+  "sourceCodeChangesOnly": [
+    "Classify ExitCode by those two exact fixed CIDs (143/0), no global nonzero allowance",
+    "New server stage r3-normal43-registration-source-20261118-03 with CAS ENTRY in same stage",
+    "New local NORMAL43-ROOT-EXECUTION-PREPARATION-03 and matching static binder references",
+    "Only necessary derived hashes/renderers/reports; preserve all prior frozen source/stages/failures/diagnostics"
+  ],
+  "newClockOrServerStageFreshCASPGNodeOrWriterAuthorizedByThisFile": false
+}

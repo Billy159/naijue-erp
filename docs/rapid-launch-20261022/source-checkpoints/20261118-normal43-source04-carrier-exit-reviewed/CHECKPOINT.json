@@ -1,0 +1,342 @@
+{
+  "state": "SOURCE43_SOURCE04_REVIEWED_FIXED_HISTORICAL_CARRIER_SEMANTICS_RUNTIME_PENDING",
+  "asOf": "2026-11-17T18:17:26.936784+00:00",
+  "rootCurrent": 127,
+  "rootCandidate": 132,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "source43CASOrPGOrBusinessExecuted": false,
+  "runtimeClockIssued": false,
+  "SQLUpgrade42Completed": true,
+  "sourcePinsSha256": "118e3b5254e3f0f2bbc373fe38f41d083313f802b1829ed3b0ce295a3c0ea341",
+  "reviewSha256": "363c35d5ed07443c702bb2c311a6628d9ffc7046385fedb17a6007f7f34e19b2",
+  "actualCarrierExitCodes": {
+    "service42": 143,
+    "restoreOwn42": 0
+  },
+  "source43CompleteImportPerformed": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Use reviewed Source04/118e, static04/7440, Main runtime decision0a61. New ROOTPREP03/server18-03/ENTRY exact; two fixed historical carriers match actual143/0 while all guardian PGclean/data/auth/plan guards retained. Source43 still requires genuine full fresh before Main clock, then only same five unconsumed transport jobs and original plan/business IDs. FIRST_WRITE ABSENT mandatory. No business import/APP deployment/public opening yet. Preserve prior stages and all real failure diagnostics; do not replay.",
+  "copies": [
+    {
+      "originalPath": "root-source04/SOURCE-PINS.json",
+      "storedPath": "root-source04/SOURCE-PINS.json",
+      "sha256": "118e3b5254e3f0f2bbc373fe38f41d083313f802b1829ed3b0ce295a3c0ea341",
+      "bytes": 6042
+    },
+    {
+      "originalPath": "root-source04/ACTUAL-HISTORY.json",
+      "storedPath": "root-source04/ACTUAL-HISTORY.json",
+      "sha256": "07682638c268e248486ae15d19ad8b57a82d28f69ed199f8bd5156f046c43931",
+      "bytes": 71184
+    },
+    {
+      "originalPath": "root-source04/ACTUAL127-DISPATCHER.py",
+      "storedPath": "root-source04/ACTUAL127-DISPATCHER.py",
+      "sha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+      "bytes": 58110
+    },
+    {
+      "originalPath": "root-source04/BASELINE-ROOT01.json",
+      "storedPath": "root-source04/BASELINE-ROOT01.json",
+      "sha256": "aaeeaacd32c5091f53db2fe3bca890fc909e985234bb551d18a5f6ade06d2132",
+      "bytes": 851
+    },
+    {
+      "originalPath": "root-source04/CONSUMER-REVIEW-REF.json",
+      "storedPath": "root-source04/CONSUMER-REVIEW-REF.json",
+      "sha256": "13d1a39d25fbede8456be7ef6b0567bad77fcc6bd54f2d11a573285a36c772ae",
+      "bytes": 297
+    },
+    {
+      "originalPath": "root-source04/DELTA-CHECKS.json",
+      "storedPath": "root-source04/DELTA-CHECKS.json",
+      "sha256": "17f9d82ccf93f52d0f248456cb297cad7ace80b69b5541ba9c86d829a75d1566",
+      "bytes": 4058
+    },
+    {
+      "originalPath": "root-source04/FIVE-PHASES.UNISSUED.json",
+      "storedPath": "root-source04/FIVE-PHASES.UNISSUED.json",
+      "sha256": "919589e41915227e5b1da03ea92b52b8563e33b55677ae38ff8ce6535fefbc6a",
+      "bytes": 109287
+    },
+    {
+      "originalPath": "root-source04/HANDOFF.md",
+      "storedPath": "root-source04/HANDOFF.md",
+      "sha256": "209ff95c1e1fddfd17ade9b63391222cac71481095a5ff599985d1ef16c0ec5e",
+      "bytes": 8708
+    },
+    {
+      "originalPath": "root-source04/HISTORY-BRIDGE-CHECKS.json",
+      "storedPath": "root-source04/HISTORY-BRIDGE-CHECKS.json",
+      "sha256": "dd1859b1c48e93e91112fa21e4ac47451790b6c73a19e65c94544506e2815d49",
+      "bytes": 299
+    },
+    {
+      "originalPath": "root-source04/HISTORY-INPUTS.json",
+      "storedPath": "root-source04/HISTORY-INPUTS.json",
+      "sha256": "61b01c9c9b9f12baa00b1d1301fa5ccdf74ce916677ae83a04a7514ea297d4bc",
+      "bytes": 111142
+    },
+    {
+      "originalPath": "root-source04/LIFECYCLE-CHECKS.json",
+      "storedPath": "root-source04/LIFECYCLE-CHECKS.json",
+      "sha256": "4edeaa5144660f621eb8157baa2dac170f7ecf135619a69f90f82d91bb4c91bb",
+      "bytes": 1077
+    },
+    {
+      "originalPath": "root-source04/READER-METADATA-AUDIT.md",
+      "storedPath": "root-source04/READER-METADATA-AUDIT.md",
+      "sha256": "99d3573ed234dd3eb8d22e53f27555864c88cd942581399396fc44cc3bb1fb99",
+      "bytes": 2145
+    },
+    {
+      "originalPath": "root-source04/ROLE-TIMING-CHECKS.json",
+      "storedPath": "root-source04/ROLE-TIMING-CHECKS.json",
+      "sha256": "9d1ecc05a75abdce75b2ca3fce4264d8461dade319c4f1138c5ad0f6ac70fbce",
+      "bytes": 455
+    },
+    {
+      "originalPath": "root-source04/ROOT02-READ-FAILURE-REF.json",
+      "storedPath": "root-source04/ROOT02-READ-FAILURE-REF.json",
+      "sha256": "d4e9bbc22e747a8d30124699a990210e00b70cdccd3d29f7be3ef9c3bda28065",
+      "bytes": 1042
+    },
+    {
+      "originalPath": "root-source04/ROOT03-STATE-FAILURE-REF.json",
+      "storedPath": "root-source04/ROOT03-STATE-FAILURE-REF.json",
+      "sha256": "7b2a9f1754f7b7ba3c218f7a96678313cc82baf7973e4c5bdc1eb6ba3b73a64b",
+      "bytes": 1051
+    },
+    {
+      "originalPath": "root-source04/WIP-STATUS.md",
+      "storedPath": "root-source04/WIP-STATUS.md",
+      "sha256": "1b66c6060204120c6d73fbd821f33fab893c6dbc2a40fff220e9ed1cc26e648e",
+      "bytes": 2530
+    },
+    {
+      "originalPath": "root-source04/admin_exec.NORMAL43-UNREGISTERED.py",
+      "storedPath": "root-source04/admin_exec.NORMAL43-UNREGISTERED.py",
+      "sha256": "fc4def4e10b9bf2e5f42ea10c8cbf3212804e048f8cc7b25a0f7e47570d7adee",
+      "bytes": 59448
+    },
+    {
+      "originalPath": "root-source04/capture_actual_inputs.py",
+      "storedPath": "root-source04/capture_actual_inputs.py",
+      "sha256": "1026f8dba492945fbd855da2961d0b8ae2c8fde6698c16519f28f96c2707baed",
+      "bytes": 3974
+    },
+    {
+      "originalPath": "root-source04/check_delta.py",
+      "storedPath": "root-source04/check_delta.py",
+      "sha256": "e5a04284973297ca37bd231ec7c1fead7254004bd2bd8d85210166bb471c4cdb",
+      "bytes": 11037
+    },
+    {
+      "originalPath": "root-source04/check_lifecycle.py",
+      "storedPath": "root-source04/check_lifecycle.py",
+      "sha256": "01b1fd4d4fb86bf538721773bd19012665e041645972ca732d38799f6af246e0",
+      "bytes": 3458
+    },
+    {
+      "originalPath": "root-source04/check_role_timing.py",
+      "storedPath": "root-source04/check_role_timing.py",
+      "sha256": "2bba7185a598bb23ce99ed0002a8f0577cf0f744ce12d0bc16e882f29ff5b88e",
+      "bytes": 1905
+    },
+    {
+      "originalPath": "root-source04/freeze_source.py",
+      "storedPath": "root-source04/freeze_source.py",
+      "sha256": "2fb81b23334522ec46fd3dcf79fde550b3c0f9b72de8c7a258c266e1014f2e4a",
+      "bytes": 1739
+    },
+    {
+      "originalPath": "root-source04/issue_phase.py",
+      "storedPath": "root-source04/issue_phase.py",
+      "sha256": "d4e98e4dfdcdbcb448aface5f666ae1fe3d5142e91e5400fcf0f5cef32932c08",
+      "bytes": 25215
+    },
+    {
+      "originalPath": "root-source04/issue_registration.py",
+      "storedPath": "root-source04/issue_registration.py",
+      "sha256": "3f2d9737257c22869170c88cb19e2006f25039452ee598382fd563c5c81d6903",
+      "bytes": 8929
+    },
+    {
+      "originalPath": "root-source04/patch_dispatcher.py",
+      "storedPath": "root-source04/patch_dispatcher.py",
+      "sha256": "24fd0caf41f2b5dc924dc9983abb677a5be12c31b8f0552b55807c4ef302c638",
+      "bytes": 3054
+    },
+    {
+      "originalPath": "root-source04/plan_custody.template.py",
+      "storedPath": "root-source04/plan_custody.template.py",
+      "sha256": "ad3380f22deefc6992213cee7d078b6b3589ce9f60e0d366b44dc3a5ba196982",
+      "bytes": 1316
+    },
+    {
+      "originalPath": "root-source04/prepare_channel.py",
+      "storedPath": "root-source04/prepare_channel.py",
+      "sha256": "a2d1bca2d68a8bbe7d2f561c1b093f86d065d86216f81530292fd0a905c88b40",
+      "bytes": 7173
+    },
+    {
+      "originalPath": "root-source04/prepare_source.py",
+      "storedPath": "root-source04/prepare_source.py",
+      "sha256": "9867ad0256d8747b8bec4aa675f646dc299a14edd0e10b90bdab79930025c1bd",
+      "bytes": 8207
+    },
+    {
+      "originalPath": "root-source04/r3_normal43_continuation.py",
+      "storedPath": "root-source04/r3_normal43_continuation.py.FROZEN-BYTES.json",
+      "sha256": "b17e9b0b529a86a0dd5efbdf5ba63817519cdfa676247931d4998be444fc88ce",
+      "bytes": 67584
+    },
+    {
+      "originalPath": "root-source04/read_registration_basis.py",
+      "storedPath": "root-source04/read_registration_basis.py",
+      "sha256": "d80357aa740151ecf7e353639706102ec8fae07b8edfd02557874ff7a4730939",
+      "bytes": 2989
+    },
+    {
+      "originalPath": "root-source04/register_cas.py",
+      "storedPath": "root-source04/register_cas.py",
+      "sha256": "b01726eb58b31ebee3a5d900087435dd8f793582c451ff70b600c8f1b0d98f38",
+      "bytes": 56184
+    },
+    {
+      "originalPath": "root-source04/render_admission.py",
+      "storedPath": "root-source04/render_admission.py",
+      "sha256": "f9348b6b77b10c886f25103c7c743844570b347529037b83242875da7d18686e",
+      "bytes": 4481
+    },
+    {
+      "originalPath": "root-source04/render_main.py",
+      "storedPath": "root-source04/render_main.py",
+      "sha256": "576a8e1b746100dd34364b24c0d1abdb4f508e407f0f76168e10dbc991098f69",
+      "bytes": 3009
+    },
+    {
+      "originalPath": "root-source04/render_registration.py",
+      "storedPath": "root-source04/render_registration.py",
+      "sha256": "c61e03acb5c5823912eae9976bf45f271f57dbc416aa340c471a47003c8cfbb2",
+      "bytes": 7630
+    },
+    {
+      "originalPath": "root-source04/validate_closed42.template.py",
+      "storedPath": "root-source04/validate_closed42.template.py",
+      "sha256": "068537f6cee0fc4358a6cb2df3229da41f10200b4e9e412eca198ac21352c398",
+      "bytes": 5059
+    },
+    {
+      "originalPath": "root-source04/writer_authority.template.py",
+      "storedPath": "root-source04/writer_authority.template.py",
+      "sha256": "bb954a15ab4e161faf484e50070215ac8522212c7415a5585d27d18a4d2d4ab0",
+      "bytes": 6148
+    },
+    {
+      "originalPath": "static04/SOURCE-PINS.json",
+      "storedPath": "static04/SOURCE-PINS.json",
+      "sha256": "7440e2f41d1144c555baabb364bada5ad71c007b77b427c13afa11bda7006c83",
+      "bytes": 1655
+    },
+    {
+      "originalPath": "static04/bind_actual43_context.py",
+      "storedPath": "static04/bind_actual43_context.py",
+      "sha256": "1683fbc4cb5c8bbac69e5ce6307d8a83f92901dad70f72ef292c1a9593ff5d2d",
+      "bytes": 8396
+    },
+    {
+      "originalPath": "static04/read_apply43.remote.py",
+      "storedPath": "static04/read_apply43.remote.py",
+      "sha256": "b3683e4a178550a112c7f0786b51a19eb82061c00eeceeb57a669704f74a0eee",
+      "bytes": 2543
+    },
+    {
+      "originalPath": "static04/read_original_key43.py",
+      "storedPath": "static04/read_original_key43.py",
+      "sha256": "3c3eb969f54341200248a708f75b332a47300ac7d3121a4f7e8b83749f6adf51",
+      "bytes": 1480
+    },
+    {
+      "originalPath": "static04/read_restore43.remote.py",
+      "storedPath": "static04/read_restore43.remote.py",
+      "sha256": "42e6d25652fa84d57b643fc96e7890a663b1e95d5905a445b392d26aedcee5c6",
+      "bytes": 4811
+    },
+    {
+      "originalPath": "static04/read_start43.remote.py",
+      "storedPath": "static04/read_start43.remote.py",
+      "sha256": "614e5fb1369f96be01c89a6a7ad602fa708237767712fd800860a4c2ce471184",
+      "bytes": 12749
+    },
+    {
+      "originalPath": "static04/read_stop43.remote.py",
+      "storedPath": "static04/read_stop43.remote.py",
+      "sha256": "9dafd296de4be2b53f1b39f467cf7720c1a5c0e592d023aaf0ae746bf78ca938",
+      "bytes": 4519
+    },
+    {
+      "originalPath": "static04/read_writer43.remote.py",
+      "storedPath": "static04/read_writer43.remote.py",
+      "sha256": "95296ccedabea7446375b955a331b1e539fa414814a4bce939981757d6dddb6c",
+      "bytes": 2586
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "363c35d5ed07443c702bb2c311a6628d9ffc7046385fedb17a6007f7f34e19b2",
+      "bytes": 3799
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-CODE-STAGE.json",
+      "storedPath": "actual-safe/ACTUAL-CODE-STAGE.json",
+      "sha256": "0900da4fc3b79dd88b5c14cf816e6a94a8820c07dc0a7dc687ca81d97eaed0a2",
+      "bytes": 397
+    },
+    {
+      "originalPath": "actual-safe/LOCAL-CHANNEL-OUTCOME.json",
+      "storedPath": "actual-safe/LOCAL-CHANNEL-OUTCOME.json",
+      "sha256": "877fa1adf6c07a8ecf27f4fb19c1a54b10233650e4cb3f246a7dbb1a6e78403f",
+      "bytes": 282
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-READ-HELPER-DIAGNOSTIC.json",
+      "storedPath": "actual-safe/ACTUAL-READ-HELPER-DIAGNOSTIC.json",
+      "sha256": "9dd124feb543fc10ed08f2c6d8ce6a0076e79c0dca634dbc93b9e61cf675ffad",
+      "bytes": 668
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-CLOSED42-TWO-CONTAINERS.json",
+      "storedPath": "actual-safe/ACTUAL-CLOSED42-TWO-CONTAINERS.json",
+      "sha256": "b1150a55bca2d78458fae9ba8ee2f95e4493132d42634c3cca87ca4997d9c4c2",
+      "bytes": 1292
+    },
+    {
+      "originalPath": "main/20261118-r3-normal43-source04-carrier-exit-scope-01/SOURCE-SCOPE.json",
+      "storedPath": "main/20261118-r3-normal43-source04-carrier-exit-scope-01/SOURCE-SCOPE.json",
+      "sha256": "f493d62351c52035160f9e64e0267c29a63c31e666904fdf95673897b3dbe06c",
+      "bytes": 2056
+    },
+    {
+      "originalPath": "main/20261118-r3-normal43-runtime-decision-03/DECISION.json",
+      "storedPath": "main/20261118-r3-normal43-runtime-decision-03/DECISION.json",
+      "sha256": "0a61a5e9b1bf2071e9582dda14e39d354914f26ebe65b454b6429cd65a76a8d1",
+      "bytes": 5303
+    },
+    {
+      "originalPath": "diagnosis/SOURCE03-STATE-PREDICATE-REPRO.json",
+      "storedPath": "diagnosis/SOURCE03-STATE-PREDICATE-REPRO.json",
+      "sha256": "f04ab9296ec3b715a817b17635ef1e07309e1c063889a8586e7218c3abbf94a7",
+      "bytes": 604
+    },
+    {
+      "originalPath": "local/PREPARED-CHANNEL.json",
+      "storedPath": "local/PREPARED-CHANNEL.json",
+      "sha256": "527d3e8e7d26752c8e55e1c5c4938dafb57ac9031234f4f82e1ab403692f449f",
+      "bytes": 971
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}
