@@ -1,0 +1,37 @@
+{
+  "MainFinite39RequiredBeforeExecution": true,
+  "PGConnections": 0,
+  "actualAuthorityFilesCreated": false,
+  "allSixPhasesUseOriginalClientAndExactlyOneActualAuthorityArgument": true,
+  "cliSha256": "758ee15f07f7dc458aad089de2efda267b33aa3f287739025f21db9572ac6585",
+  "clockCalls": 0,
+  "dynamicCurrentServiceOrEpochCreated": false,
+  "interfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
+  "invokeSha256": "29d096cd70e009f362942abdab7d95f8f854d9ebd1bbacf21615a96a66f7e835",
+  "jobs": {
+    "apply": "t45-r3-ordinary39-auth-apply-20261116-01",
+    "prepare": "t45-r3-final33-plan-prepare-20261116-05",
+    "restore": "t45-r3-ordinary39-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-39",
+    "stop": "t45-r3-ordinary39-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "originalAuthorityArgumentAndExecuteFunctionASTsReused": true,
+  "positiveExecutionRequestConstructed": false,
+  "preparationIdentityMapping": {
+    "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-05/batched-plan.sqlite",
+    "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+    "nativeLogicalPreparationKey": "t45-r3-final33-plan-prepare-20261116-01",
+    "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-05"
+  },
+  "readbackObservers": [
+    "read_pending39.py",
+    "read_start39.py",
+    "read_stop_restore39.py"
+  ],
+  "rulesSha256": "da36a2529a471d3b43cfb4ac7a8a45ab35c2c30387c3249788ed834af592928f",
+  "serverActions": 0,
+  "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
+  "state": "NORMAL39_ORIGINAL_SIX_PHASE_INVOCATION_AND_OBSERVERS_COMPILED_NOT_INVOKED",
+  "stopRestoreShareExactSamePreparedInvocation": true
+}

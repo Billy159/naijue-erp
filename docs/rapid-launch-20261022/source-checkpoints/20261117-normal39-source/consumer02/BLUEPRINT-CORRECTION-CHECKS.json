@@ -1,0 +1,16 @@
+{
+  "PGConnections": 0,
+  "all53RuntimePinsInheritedFromFrozen01": true,
+  "authoritiesOrFutureCConstructed": false,
+  "blueprintAndInterfacePreparationMappingEqual": true,
+  "clockCalls": 0,
+  "nativeLogicalRequestKeyPreserved": "t45-r3-final33-plan-prepare-20261116-01",
+  "observersAndEmbeddedProgramsCompiled": [
+    "read_pending39.py",
+    "read_start39.py",
+    "read_stop_restore39.py"
+  ],
+  "runtimeMembersUnchanged": 53,
+  "serverActions": 0,
+  "state": "SOURCE_ONLY_PLAN05_BLUEPRINT_CORRECTION_AND_OBSERVER_COMPILE"
+}
