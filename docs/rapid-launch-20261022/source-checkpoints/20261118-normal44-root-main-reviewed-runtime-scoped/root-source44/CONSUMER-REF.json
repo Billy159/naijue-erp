@@ -1,0 +1,8 @@
+{
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL44-FULL-DATA-CONTINUATION-SOURCE-01",
+  "executionDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL44-EXECUTION-CONSUMER-01",
+  "sourcePinsSha256": "400ba4ebd1a622875ab6c2ebf6508f4b3d5d542ae12de433833c254f5f018ef5",
+  "interfaceSha256": "aabab11c159d5917a759750a93d337080b4ab54c507326b5552ba7a354f4dece",
+  "rulesSha256": "b739f20a3c0d95b87b98ef34d950bc452be4427687589d8bb386b18865511032",
+  "executionInterfaceSha256": "54b93a038626a6492f8d3155c6b7483ea01dbc8c94be92f2a2d50d1695c20309"
+}

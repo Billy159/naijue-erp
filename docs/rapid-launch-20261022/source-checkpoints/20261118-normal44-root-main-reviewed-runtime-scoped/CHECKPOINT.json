@@ -1,0 +1,215 @@
+{
+  "state": "NORMAL44_ROOT_MAIN_SOURCE_REVIEWED_RUNTIME_SCOPED_ACTUAL_FRESH_PENDING",
+  "asOf": "2026-11-17T19:32:24.491671+00:00",
+  "rootCurrent": 132,
+  "rootCandidate": 137,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "source44CASOrPGOrBusinessExecuted": false,
+  "runtimeClockIssued": false,
+  "SQLUpgrade42Completed": true,
+  "sourcePinsSha256": "35e4504e034d36652e93eac6125f51444c4b7032e14b295fe33822acd04dabcf",
+  "reviewSha256": "e5e2cb73e06e08393fb90991ae8963fd8a183c8b54ce6ac29d87a1305b4f56c5",
+  "runtimeDecisionSha256": "b6a7019e6088f7c756be3a00b0420d7c75d20b7813bd681898698d24b6d02ce1",
+  "source44CompleteImportPerformed": false,
+  "ordinaryAccessActualPass": false,
+  "liveNamespaceProven": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Execute only reviewed Source44 Root35e/consumer400b/static a7a4 with QB e5e2 root34 plus consumer860d44 reused, under Main decisionb6a701. T45 sole owner first performs exact stage44-01/RootPrep01 actual readonly fresh including fixed61035 mapped454 metadata-access. Any failure stops before Main clock, no permission changes. Only genuine passing basis<=120s permits unique Main clock, CAS132to137, then apply/start/writer/stop/restore original plan/business IDs; FIRST_WRITE ABSENT and full real four-leaf required. No recompile, SQL/APP rebuild or public opening. Current DB stopped/auth restored; actual fresh/runtime still pending.",
+  "copies": [
+    {
+      "originalPath": "root-source44/SOURCE-PINS.json",
+      "storedPath": "root-source44/SOURCE-PINS.json",
+      "sha256": "35e4504e034d36652e93eac6125f51444c4b7032e14b295fe33822acd04dabcf",
+      "bytes": 5214
+    },
+    {
+      "originalPath": "root-source44/ACTUAL-HISTORY.json",
+      "storedPath": "root-source44/ACTUAL-HISTORY.json",
+      "sha256": "0861b7ceb3406189b577098719cf36bb966f050727606760082c3913a1e53d9f",
+      "bytes": 38570
+    },
+    {
+      "originalPath": "root-source44/ACTUAL132-DISPATCHER.py",
+      "storedPath": "root-source44/ACTUAL132-DISPATCHER.py",
+      "sha256": "e321fd75440c43300006ea8408d1329ec55e3aed5638a83b3b5bf9eca25e0173",
+      "bytes": 59510
+    },
+    {
+      "originalPath": "root-source44/CONSUMER-REF.json",
+      "storedPath": "root-source44/CONSUMER-REF.json",
+      "sha256": "e3eb4f5595b61492e6e3f720dc6274c2aa07a791082605e0a65f56c144eb3e37",
+      "bytes": 831
+    },
+    {
+      "originalPath": "root-source44/CONSUMER-REVIEW-REF.json",
+      "storedPath": "root-source44/CONSUMER-REVIEW-REF.json",
+      "sha256": "f81b964e576faa087a2b56ea0f1ef4435d41e092c8cea1933e1e1b940f65ee76",
+      "bytes": 279
+    },
+    {
+      "originalPath": "root-source44/DELTA-CHECKS.json",
+      "storedPath": "root-source44/DELTA-CHECKS.json",
+      "sha256": "0ca39af937006020b9dbe0c278126e5b1a18179ac2d5499129e55cd44a2a368b",
+      "bytes": 3074
+    },
+    {
+      "originalPath": "root-source44/DESCRIBE-ACCESS-PATHS.json",
+      "storedPath": "root-source44/DESCRIBE-ACCESS-PATHS.json",
+      "sha256": "ef8be09db133d8c8e073e8b42d12623bfb3a1246a271a68fb0c3d61437022c9b",
+      "bytes": 111879
+    },
+    {
+      "originalPath": "root-source44/DESCRIBE-STATIC-IMPORTS.json",
+      "storedPath": "root-source44/DESCRIBE-STATIC-IMPORTS.json",
+      "sha256": "d445e56c2496a3acaaeb86c65a08a2311a321903c9aeb9d9ae7dbc419fced92d",
+      "bytes": 71398
+    },
+    {
+      "originalPath": "root-source44/FIVE-PHASES.UNISSUED.json",
+      "storedPath": "root-source44/FIVE-PHASES.UNISSUED.json",
+      "sha256": "c14ae3209542d8dd63cf09b1cc89a2c88be642e9264765891f56d238970af347",
+      "bytes": 135930
+    },
+    {
+      "originalPath": "root-source44/HANDOFF.md",
+      "storedPath": "root-source44/HANDOFF.md",
+      "sha256": "6766a2a93a3501dbd732bc042ca5b77653adffc8cbb253a66a31b8048dadf7b6",
+      "bytes": 6570
+    },
+    {
+      "originalPath": "root-source44/HISTORY-INPUTS.json",
+      "storedPath": "root-source44/HISTORY-INPUTS.json",
+      "sha256": "4671b7327dd387b8f5ecaff4d727719f3ceb872e586389b81c45c4592000bb2e",
+      "bytes": 135842
+    },
+    {
+      "originalPath": "root-source44/admin_exec.NORMAL44-UNREGISTERED.py",
+      "storedPath": "root-source44/admin_exec.NORMAL44-UNREGISTERED.py",
+      "sha256": "c398eb9504a30d8ebb3b411f229763f20e6545a90641a7a33191196c6c1c3ac7",
+      "bytes": 60848
+    },
+    {
+      "originalPath": "root-source44/capture_actual_inputs.py",
+      "storedPath": "root-source44/capture_actual_inputs.py",
+      "sha256": "9bae6277c3acffec78de93bae9fb66c9938fd8b7ac2700c01e7cc1065b853818",
+      "bytes": 4088
+    },
+    {
+      "originalPath": "root-source44/check_delta.py",
+      "storedPath": "root-source44/check_delta.py",
+      "sha256": "2427c74cc92f10bc0f630ce502e433e958682658d14b66f28cf84f41a3620a0c",
+      "bytes": 12924
+    },
+    {
+      "originalPath": "root-source44/describe_access.template.py",
+      "storedPath": "root-source44/describe_access.template.py",
+      "sha256": "91ba936cf74ab2e126c10eccc8cec2b13a8abea3a22ec68b2cc5ff095dd2ccba",
+      "bytes": 4818
+    },
+    {
+      "originalPath": "root-source44/freeze_source.py",
+      "storedPath": "root-source44/freeze_source.py",
+      "sha256": "b5235da5ac80f9d8c27d07084b13c51be75c1cb654ea747e2c7143c49914596e",
+      "bytes": 1563
+    },
+    {
+      "originalPath": "root-source44/issue_phase.py",
+      "storedPath": "root-source44/issue_phase.py",
+      "sha256": "d399a03f595f791cbd942eb78851907a97e01d1c268358b1d55a96212348f10b",
+      "bytes": 25349
+    },
+    {
+      "originalPath": "root-source44/issue_registration.py",
+      "storedPath": "root-source44/issue_registration.py",
+      "sha256": "2922aa774531afbe0008848ee9baa34ed84d802f9ea8df7bf010e34c00b67cb6",
+      "bytes": 9846
+    },
+    {
+      "originalPath": "root-source44/patch_dispatcher.py",
+      "storedPath": "root-source44/patch_dispatcher.py",
+      "sha256": "0fbfd580afd981c5b2199cf9bbc57a6585f7b69ce181183a66c4550fe4068a31",
+      "bytes": 3054
+    },
+    {
+      "originalPath": "root-source44/plan_custody.template.py",
+      "storedPath": "root-source44/plan_custody.template.py",
+      "sha256": "ad3380f22deefc6992213cee7d078b6b3589ce9f60e0d366b44dc3a5ba196982",
+      "bytes": 1316
+    },
+    {
+      "originalPath": "root-source44/prepare_access_source.py",
+      "storedPath": "root-source44/prepare_access_source.py",
+      "sha256": "80f222a40980b60656af0bc02a6c0a34387d3fbd3587ac2c407b08a972d3b6d0",
+      "bytes": 4146
+    },
+    {
+      "originalPath": "root-source44/prepare_channel.py",
+      "storedPath": "root-source44/prepare_channel.py",
+      "sha256": "cd69585890ad69e27ef930957de3202be6536b85b1999aa974784bd1bbe70e4c",
+      "bytes": 7173
+    },
+    {
+      "originalPath": "root-source44/prepare_source.py",
+      "storedPath": "root-source44/prepare_source.py",
+      "sha256": "783aedf611f1af21037b9c7a1c5671aadf3cdbe1037d45c0b8535f32dc6b6f59",
+      "bytes": 5869
+    },
+    {
+      "originalPath": "root-source44/r3_normal44_continuation.py",
+      "storedPath": "root-source44/r3_normal44_continuation.py.FROZEN-BYTES.json",
+      "sha256": "b63ba94df73b9e709a44269620302cb36315e93b4b17e6f0fc504f64197056e5",
+      "bytes": 83956
+    },
+    {
+      "originalPath": "root-source44/read_registration_basis.py",
+      "storedPath": "root-source44/read_registration_basis.py",
+      "sha256": "4c1e9cbff4ca3c452fdf631be8146d5d179659acffea9d55d3755e1621858bf3",
+      "bytes": 101659
+    },
+    {
+      "originalPath": "root-source44/register_cas.py",
+      "storedPath": "root-source44/register_cas.py",
+      "sha256": "3e8d9134edf855ac16b9865f1fd3146c875aa7047c5fae058861470db3784e5c",
+      "bytes": 48312
+    },
+    {
+      "originalPath": "root-source44/render_source.py",
+      "storedPath": "root-source44/render_source.py",
+      "sha256": "85f1c0d08411693d22c00134e4dfc928d0f9ef3e2a4aa4ef2aa7fbd088b30518",
+      "bytes": 10750
+    },
+    {
+      "originalPath": "root-source44/validate_closed42.template.py",
+      "storedPath": "root-source44/validate_closed42.template.py",
+      "sha256": "068537f6cee0fc4358a6cb2df3229da41f10200b4e9e412eca198ac21352c398",
+      "bytes": 5059
+    },
+    {
+      "originalPath": "root-source44/validate_closed43.template.py",
+      "storedPath": "root-source44/validate_closed43.template.py",
+      "sha256": "b845e0bb3faa7e9d57be14c42d913cd914430e3be5903e2d593f19dfa3fa45a8",
+      "bytes": 5531
+    },
+    {
+      "originalPath": "root-source44/writer_authority.template.py",
+      "storedPath": "root-source44/writer_authority.template.py",
+      "sha256": "bb954a15ab4e161faf484e50070215ac8522212c7415a5585d27d18a4d2d4ab0",
+      "bytes": 6148
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "e5e2cb73e06e08393fb90991ae8963fd8a183c8b54ce6ac29d87a1305b4f56c5",
+      "bytes": 4128
+    },
+    {
+      "originalPath": "main/DECISION.json",
+      "storedPath": "main/DECISION.json",
+      "sha256": "b6a7019e6088f7c756be3a00b0420d7c75d20b7813bd681898698d24b6d02ce1",
+      "bytes": 5211
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}
