@@ -1,0 +1,159 @@
+{
+  "actualStaticRulesPairChecked": true,
+  "casBytes": 122272,
+  "casOnlyExpectedRulesASTChanged": true,
+  "clockOrIssuerInvoked": false,
+  "consumerInterfaceSha256": "30fe85689b72d4148f930877a455a108e4b924fa82a31992e4571eb6af0fcffe",
+  "consumerRulesSha256": "f775c7870086b55e62851dd6b5bb558662ad9474f688c1ed13b8e528844d1ed6",
+  "consumerRuntimeChangedMembers": [
+    "apply/bundle/ordinary05_roles_job.py",
+    "prepare/bundle/final33-run.mjs",
+    "prepare/bundle/final33_host.py",
+    "prepare/bundle/normal05_retained_stop.py",
+    "restore/bundle/ordinary05_roles_job.py",
+    "start/bundle/final33-run.mjs",
+    "start/bundle/normal_service05_after08.py",
+    "stop/bundle/normal05_preserve_stop.py",
+    "stop/bundle/normal05_retained_stop.py",
+    "writer/bundle/final33-run.mjs",
+    "writer/bundle/final33_host.py",
+    "writer/bundle/normal05_retained_stop.py"
+  ],
+  "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
+  "consumerStageEvidence": {
+    "PGConnections": 0,
+    "allRuntimeDifferencesOnlyDirectStageEditsOrNecessaryPins": true,
+    "changedRuntimeMembers": [
+      "apply/bundle/ordinary05_roles_job.py",
+      "prepare/bundle/final33-run.mjs",
+      "prepare/bundle/final33_host.py",
+      "prepare/bundle/normal05_retained_stop.py",
+      "restore/bundle/ordinary05_roles_job.py",
+      "start/bundle/final33-run.mjs",
+      "start/bundle/normal_service05_after08.py",
+      "stop/bundle/normal05_preserve_stop.py",
+      "stop/bundle/normal05_retained_stop.py",
+      "writer/bundle/final33-run.mjs",
+      "writer/bundle/final33_host.py",
+      "writer/bundle/normal05_retained_stop.py"
+    ],
+    "clockCalls": 0,
+    "directSourceEvidence": [
+      {
+        "lines": [
+          {
+            "line": 12,
+            "text": "const FAILURE_STAGES=Object.freeze(['PREFLIGHT','BIND_INPUTS','PREPARE_READERS','PREPARE_CALL','PREPARE_RESULT','EXECUTION_BINDING','WRITER_SCOPE','WRITER_CALL','WRITER_READBACK']);"
+          },
+          {
+            "line": 197,
+            "text": "failureStage='WRITER_SCOPE';"
+          },
+          {
+            "line": 202,
+            "text": "failureStage='WRITER_CALL';"
+          },
+          {
+            "line": 207,
+            "text": "failureStage='WRITER_READBACK';"
+          }
+        ],
+        "sha256": "1e048874cface2f4fc773235644b2277aa4b736d2de23453bc7c25c0517565d3",
+        "source": "prepare/bundle/final33-run.mjs"
+      },
+      {
+        "lines": [
+          {
+            "line": 12,
+            "text": "const FAILURE_STAGES=Object.freeze(['PREFLIGHT','BIND_INPUTS','PREPARE_READERS','PREPARE_CALL','PREPARE_RESULT','EXECUTION_BINDING','WRITER_SCOPE','WRITER_CALL','WRITER_READBACK']);"
+          },
+          {
+            "line": 197,
+            "text": "failureStage='WRITER_SCOPE';"
+          },
+          {
+            "line": 202,
+            "text": "failureStage='WRITER_CALL';"
+          },
+          {
+            "line": 207,
+            "text": "failureStage='WRITER_READBACK';"
+          }
+        ],
+        "sha256": "1e048874cface2f4fc773235644b2277aa4b736d2de23453bc7c25c0517565d3",
+        "source": "start/bundle/final33-run.mjs"
+      },
+      {
+        "lines": [
+          {
+            "line": 12,
+            "text": "const FAILURE_STAGES=Object.freeze(['PREFLIGHT','BIND_INPUTS','PREPARE_READERS','PREPARE_CALL','PREPARE_RESULT','EXECUTION_BINDING','WRITER_SCOPE','WRITER_CALL','WRITER_READBACK']);"
+          },
+          {
+            "line": 197,
+            "text": "failureStage='WRITER_SCOPE';"
+          },
+          {
+            "line": 202,
+            "text": "failureStage='WRITER_CALL';"
+          },
+          {
+            "line": 207,
+            "text": "failureStage='WRITER_READBACK';"
+          }
+        ],
+        "sha256": "1e048874cface2f4fc773235644b2277aa4b736d2de23453bc7c25c0517565d3",
+        "source": "writer/bundle/final33-run.mjs"
+      }
+    ],
+    "existingSixFieldsOnly": true,
+    "nativePGFaultFixtureFullBuildOrServerInvoked": false,
+    "old37ReceiptsAndHistoryPreserved": true,
+    "oldConsumerUnmodified": true,
+    "pinGraphIterations": 3,
+    "producerAndTwoHostAndReadonlyCollectorAllowlistAgree": true,
+    "reusedJointHandoffSha256": "7564f8efdb16ea5c0d030f2ae1fa5a6171c3999f6e1067da5182d0b3ee416502",
+    "serverActions": 0,
+    "stages": [
+      "WRITER_SCOPE",
+      "WRITER_CALL",
+      "WRITER_READBACK"
+    ],
+    "state": "SOURCE_ONLY_THREE_WRITER_STAGES_AND_REQUIRED_REFERENCES",
+    "unchangedRuntimeMembers": 34
+  },
+  "consumerUnchangedRuntimeMembers": 34,
+  "currentInvokeSourceSha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e",
+  "currentJointSummarySha256": "055ebba6871281f217ea32c0d644d371279f98ad56075f62ac065a21e2f6bc0d",
+  "diagnosticFieldsRemainSix": true,
+  "existingPassedHistoryAndGuardEvidenceReused": true,
+  "fullHistory324Stat20Guards73Recalculated": false,
+  "futureFixtureCreated": false,
+  "helperBytes": 125406,
+  "newStages": [
+    "WRITER_SCOPE",
+    "WRITER_CALL",
+    "WRITER_READBACK"
+  ],
+  "originalPhaseCliExactBytesUnchanged": true,
+  "parentRootSourceSha256": "25a4e7c2017afe8113af9b55fed3b576de121975de3dc53eac8ef260e8865170",
+  "readonlyCollectorEnumAlsoChecked": true,
+  "rulesSha256": "48228a026e57fe263545f8a3e30af59e9d3fbd5a22d8b44c4a2fa44d45672acc",
+  "serverActions": 0,
+  "stageDeltaEvidenceSha256": "deea616f82221c5102830193ecdc3aed93be857d74d6a1f58f0a63fd3b574614",
+  "state": "SOURCE03_EXACT_STAGE_ONLY_ROOT_REBINDING_NOT_RUNTIME",
+  "unchangedRootFilesExactBytes": [
+    "r3_direct38_aux_prepare.py",
+    "admin_exec.NORMAL38-UNREGISTERED.py",
+    "read_registration_basis.py",
+    "issue_registration.py",
+    "identity_pair.py",
+    "issuer_aux_pair.py",
+    "EXISTING-PATH-MAP.json",
+    "EXISTING37-INPUTS.json",
+    "GUARD-PATHS.json",
+    "history_guard_assertions.py",
+    "collect_guard_paths.py",
+    "P04-R01-NEGATIVE-JOINT-REGRESSION.json"
+  ]
+}

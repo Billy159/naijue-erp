@@ -1,0 +1,33 @@
+{
+  "actual38WipKeys": 324,
+  "clockOrIssuerInvoked": false,
+  "current324PlusPrivate20Pass": true,
+  "failures": [
+    {
+      "check": "history",
+      "failure": "('HISTORICAL_PATH_OR_PIN_CHANGED', '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary36-auth-20261116-01/authority.json')"
+    },
+    {
+      "check": "must_absent",
+      "failure": "('EXISTING_PATH_OVERLAPS_ACTUAL_ABSENCE_GUARD', [('/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary37-auth-20261116-01/restored.json', '/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary37-auth-20261116-01/restored.json', 'custody', 125)])"
+    }
+  ],
+  "oldActualGuardRows": [
+    {
+      "function": "custody",
+      "line": 125,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary37-auth-20261116-01/restored.json",
+      "sourceGuard": "os.path.lexists(root / 'restored.json')"
+    },
+    {
+      "function": "custody",
+      "line": 125,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary37-auth-20261116-01/restore-attempt.json",
+      "sourceGuard": "os.path.lexists(root / 'restore-attempt.json')"
+    }
+  ],
+  "oldActualKeys": 305,
+  "oldSource": "be8538572eff22257059baacf522f8fbc3d6bf3ebcc71430dda9139023d0dee9",
+  "serverActions": 0,
+  "state": "SAME_HISTORY_AND_ACTUAL_GUARD_ASSERTIONS_REJECT_REAL_BE853"
+}

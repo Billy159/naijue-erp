@@ -1,0 +1,55 @@
+{
+  "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
+  "currentBindings": {
+    "JOINT-CHECK-HANDOFF.json": {
+      "bytes": 4390,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-02/JOINT-CHECK-HANDOFF.json",
+      "sha256": "055ebba6871281f217ea32c0d644d371279f98ad56075f62ac065a21e2f6bc0d"
+    },
+    "invoke_once.py": {
+      "bytes": 6626,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-02/invoke_once.py",
+      "sha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e"
+    }
+  },
+  "currentStageDeltaEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/STAGE-DELTA-EVIDENCE.json",
+    "sha256": "deea616f82221c5102830193ecdc3aed93be857d74d6a1f58f0a63fd3b574614"
+  },
+  "references": {
+    "ALL-FINAL-MEMBER-LOAD-SITES.json": {
+      "bytes": 96049,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/ALL-FINAL-MEMBER-LOAD-SITES.json",
+      "sha256": "6a0c86dfc9446c63ece3058663ab782b46f1c37bdbad305d3efb2a8d642be8e9"
+    },
+    "HISTORY-PATH-JOINT-READBACK.json": {
+      "bytes": 7615,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/HISTORY-PATH-JOINT-READBACK.json",
+      "sha256": "40809dce0340ac6db79e69e86e7dae0703323512509502143b578d67f145dd2b"
+    },
+    "REQUEST-AND-FAILURE-COVERAGE.json": {
+      "bytes": 3563,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/REQUEST-AND-FAILURE-COVERAGE.json",
+      "sha256": "cd2ee07bb107ae928636c7b7b92e675996346fee26bbf788f66353bf3f693d3c"
+    },
+    "RESULT.json": {
+      "bytes": 790,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/RESULT.json",
+      "sha256": "02641b4b8f1c299081cb3e3c863ec7a1e5e54d8241fdb685395e409bdfd6f7fe"
+    },
+    "invoke_once.py": {
+      "bytes": 6626,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/invoke_once.py",
+      "sha256": "13e5ac8612e67f117e4de357b42201e06cdb85438782aef17ac9aba57b5c73c1"
+    }
+  },
+  "reusedBaselineConsumerSourcePinsSha256": "7e3a6ebe38b74a7f60a990c15ad9f5ea915977133a9134aff8935ee1e58ae5e0",
+  "runtimeAuthorityIssued": false,
+  "sameTurnHistoryBaselineEvidence": {
+    "finalSourcePass": false,
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal38-joint-review-01/HISTORY-BASELINE-EVIDENCE.json",
+    "sha256": "71d349b142e809e88dfa2dfb634198ebe7fdce59159e9056d3517c1edf52490d"
+  },
+  "serverActions": 0,
+  "state": "FINAL_SOURCE03_STAGE_ONLY_BINDING_WITH_EXACT_BASELINE_JOINT_EVIDENCE_REUSED"
+}

@@ -1,0 +1,36 @@
+{
+  "clockOrIssuerInvoked": false,
+  "records": {
+    "r3_direct38_aux_prepare.py": {
+      "actualBytes": 125406,
+      "allOtherOldTopFunctionASTsEqual": true,
+      "historical36AssignmentsASTEqual": true,
+      "intentionallyChangedClassMethods": [
+        "original_basis",
+        "admit"
+      ],
+      "oldBytes": 130174,
+      "oldTopFunctionsWithIntendedChanges": [],
+      "originalCap": 131072,
+      "otherOldGuardMethodsASTEqual": true,
+      "withinOriginalCap": true
+    },
+    "register_cas.py": {
+      "actualBytes": 122272,
+      "allOtherOldTopFunctionASTsEqual": true,
+      "historical36AssignmentsASTEqual": true,
+      "oldBytes": 130680,
+      "oldTopFunctionsWithIntendedChanges": [
+        "scope",
+        "required_history",
+        "quiet",
+        "register"
+      ],
+      "originalCap": 131072,
+      "withinOriginalCap": true
+    }
+  },
+  "serverActions": 0,
+  "state": "STATIC_AST_AND_FIXED_PATH_REPRESENTATION_EQUIVALENCE_CHECKED",
+  "staticActualPathMapEquals324TypedReconstruction": true
+}

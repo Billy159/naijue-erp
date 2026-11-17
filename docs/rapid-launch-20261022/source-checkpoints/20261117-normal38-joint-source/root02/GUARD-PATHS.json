@@ -1,0 +1,530 @@
+{
+  "paths": [
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-first-r3-native-service-start-20261116-38",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-batched-real-execute-20261115-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-final33-plan-prepare-20261116-04",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-first-r3-native-service-start-20261116-38.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-first-r3-native-service-start-20261116-38.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-batched-real-execute-20261115-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-batched-real-execute-20261115-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-final33-plan-prepare-20261116-04.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-final33-plan-prepare-20261116-04.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-apply-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-apply-20261116-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-restore-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-restore-20261116-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-preserve-stop-20261116-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-first-r3-native-service-start-20261116-38.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-batched-real-execute-20261115-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-final33-plan-prepare-20261116-04.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary38-auth-apply-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary38-auth-restore-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-38",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-batched-real-execute-20261115-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-final33-plan-prepare-20261116-04",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-first-r3-native-service-start-20261116-38.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-first-r3-native-service-start-20261116-38.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-batched-real-execute-20261115-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-batched-real-execute-20261115-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-final33-plan-prepare-20261116-04.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-final33-plan-prepare-20261116-04.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-apply-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-apply-20261116-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-restore-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-restore-20261116-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-preserve-stop-20261116-01.tmp",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-first-r3-native-service-start-20261116-38.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-batched-real-execute-20261115-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-final33-plan-prepare-20261116-04.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary38-auth-apply-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary38-auth-restore-20261116-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+    "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-first-r3-native-service-start-20261116-38",
+    "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-batched-real-execute-20261115-01",
+    "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-final33-plan-prepare-20261116-04",
+    "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+    "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+    "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-38",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-batched-real-execute-20261115-01",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-final33-plan-prepare-20261116-04",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct38-batched-real.json",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal38-registration-cas-20261117-01",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-38.json",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/data/postmaster.pid",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/ordinary38-auth-capture-20261116-01",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary38-auth-20261116-01",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-38",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-01/batched-plan.sqlite",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-01/original-initializer.json",
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/.normal38-dispatcher.pending",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/artifact-staging-authorization.json",
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct38_aux_prepare.py"
+  ],
+  "rows": [
+    {
+      "function": "quiet",
+      "line": 317,
+      "path": "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/artifact-staging-authorization.json",
+      "sourceGuard": "os.path.lexists(P / 'artifact-staging-authorization.json')"
+    },
+    {
+      "function": "quiet",
+      "line": 319,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary38-auth-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 319,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261116-38",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 319,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-38.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 319,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/ordinary38-auth-capture-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 319,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 321,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-01/batched-plan.sqlite",
+      "sourceGuard": "os.path.lexists(oldplan / name)"
+    },
+    {
+      "function": "quiet",
+      "line": 321,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-01/original-initializer.json",
+      "sourceGuard": "os.path.lexists(oldplan / name)"
+    },
+    {
+      "function": "quiet",
+      "line": 324,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/fresh35-first-production-20261110-r3/data/postmaster.pid",
+      "sourceGuard": "os.path.lexists(pg / 'postmaster.pid')"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-apply-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-apply-20261116-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary38-auth-apply-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-final33-plan-prepare-20261116-04",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-final33-plan-prepare-20261116-04",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-final33-plan-prepare-20261116-04.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-final33-plan-prepare-20261116-04.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-final33-plan-prepare-20261116-04.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-restore-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-auth-restore-20261116-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary38-auth-restore-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-38",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-first-r3-native-service-start-20261116-38",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-first-r3-native-service-start-20261116-38.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-first-r3-native-service-start-20261116-38.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-first-r3-native-service-start-20261116-38.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary38-preserve-stop-20261116-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-batched-real-execute-20261115-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-batched-real-execute-20261115-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-batched-real-execute-20261115-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-batched-real-execute-20261115-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-batched-real-execute-20261115-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-apply-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-apply-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-apply-20261116-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary38-auth-apply-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-final33-plan-prepare-20261116-04",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-final33-plan-prepare-20261116-04",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-final33-plan-prepare-20261116-04.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-final33-plan-prepare-20261116-04.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-final33-plan-prepare-20261116-04.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-auth-restore-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-restore-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-auth-restore-20261116-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary38-auth-restore-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-first-r3-native-service-start-20261116-38",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-first-r3-native-service-start-20261116-38",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-first-r3-native-service-start-20261116-38.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-first-r3-native-service-start-20261116-38.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-first-r3-native-service-start-20261116-38.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-ordinary38-preserve-stop-20261116-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-ordinary38-preserve-stop-20261116-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-ordinary38-preserve-stop-20261116-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r3-batched-real-execute-20261115-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/jobs/t45-r3-batched-real-execute-20261115-01",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-batched-real-execute-20261115-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/requests/t45-r3-batched-real-execute-20261115-01.tmp",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "quiet",
+      "line": 330,
+      "path": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/results/t45-r3-batched-real-execute-20261115-01.json",
+      "sourceGuard": "os.path.lexists(p)"
+    },
+    {
+      "function": "register",
+      "line": 339,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal38-registration-cas-20261117-01",
+      "sourceGuard": "os.path.lexists(path)"
+    },
+    {
+      "function": "register",
+      "line": 339,
+      "path": "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_direct38_aux_prepare.py",
+      "sourceGuard": "os.path.lexists(path)"
+    },
+    {
+      "function": "register",
+      "line": 339,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct38-batched-real.json",
+      "sourceGuard": "os.path.lexists(path)"
+    },
+    {
+      "function": "register",
+      "line": 339,
+      "path": "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/.normal38-dispatcher.pending",
+      "sourceGuard": "os.path.lexists(path)"
+    },
+    {
+      "function": "register",
+      "line": 381,
+      "path": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/direct38-batched-real.json",
+      "sourceGuard": "os.path.lexists(NEW_POLICY)"
+    },
+    {
+      "function": "admit",
+      "line": 685,
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-04",
+      "sourceGuard": "os.path.lexists(new_plan)"
+    }
+  ],
+  "state": "STATIC_SOURCE_PATHS_NOT_RUNTIME_ABSENCE"
+}

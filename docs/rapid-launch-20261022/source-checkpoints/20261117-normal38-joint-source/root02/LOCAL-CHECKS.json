@@ -1,0 +1,84 @@
+{
+  "PGConnections": 0,
+  "actualGuardPaths": 73,
+  "allSixCurrentJobsCoveredByThreeExistingGuards": true,
+  "casBytes": 122272,
+  "clockRead": false,
+  "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
+  "existingPins": 324,
+  "guardIntersections": [],
+  "helperBytes": 125406,
+  "issuerCalled": false,
+  "jointChecks": {
+    "1_history_and_future_absence": {
+      "covered": "Actual324 existing pins and20stat paths; actual73 guard paths collected from final source; lexical POSIX-normalized intersection empty; real be853 rejected by same two assertions",
+      "evidence": [
+        "GUARD-PATHS.json",
+        "EXISTING37-INPUTS.json",
+        "EXISTING-PATH-MAP.json",
+        "P04-R01-NEGATIVE-JOINT-REGRESSION.json"
+      ],
+      "gap": "Fresh server absence/metadata still requires T45 read-only stopped basis after SOURCE reviews"
+    },
+    "2_original_request_constructor": {
+      "covered": "Existing phase_cli/original3 constructor assignments and single authority arg remain; actual signed pre-network checks and one-attempt intent wrapper statically compiled by T45",
+      "evidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-02/invoke_once.py",
+        "sha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e"
+      },
+      "gap": "No role/authority/request exists for38 yet; real args=[actualSHA], roles member, manifest, HERE/key/script/timeout remain actual post-issuance checks, never PASS from None"
+    },
+    "3_transitive_source_and_cleanup": {
+      "covered": "T45 exact46 final member load/exec/import-site inventory incl unchanged carrier,42explicit edges and7inline pins; all local members syntax checked; old ROOT06/387 evidence reused; exact03 adds only three fixed stages/allowlists and12 necessary changed/pin runtime members plus collector, no new load edges; STAGE-DELTA deea checked",
+      "evidence": {
+        "bytes": 96049,
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/ALL-FINAL-MEMBER-LOAD-SITES.json",
+        "sha256": "6a0c86dfc9446c63ece3058663ab782b46f1c37bdbad305d3efb2a8d642be8e9"
+      },
+      "gap": "Installed transitive387/current server bytes not freshly read; SOURCE review does not claim live/runtime closure or acceptance"
+    },
+    "4_native_uid_mount_access": {
+      "covered": "Real37 C05 beforee008/afterb779 and25slotsbcde evidence retained; no new permission feature, source38 start/roles do not reset C05",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-02/C05-STARTUP-PRESERVATION.json",
+      "gap": "After actual START38, T45 must read only C05 sameinode metadata/native61035 search once; no repeat old PLAN chain or25slots"
+    },
+    "5_failure_and_readback": {
+      "covered": "Current03 six-field V1 producer, two host projectors and collector agree on WRITER_SCOPE/WRITER_CALL/WRITER_READBACK; existing readback and old UNKNOWN facts preserved",
+      "evidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-02/JOINT-CHECK-HANDOFF.json",
+        "sha256": "055ebba6871281f217ea32c0d644d371279f98ad56075f62ac065a21e2f6bc0d"
+      },
+      "gap": "Actual stage errors not fault-injected or run; raw filesystem path/syscall and PREPARE_CALL substage unmapped; restore SQLSTATE NOT_CAPTURED and stop/restore native lastStage still not covered; actual38 cleanup/terminal untested"
+    }
+  },
+  "jointSupplementResultSha256": "055ebba6871281f217ea32c0d644d371279f98ad56075f62ac065a21e2f6bc0d",
+  "parentRootLocalChecksSha256": "c30d3fe082018c608153066ac5ccba47dd615e3df78083bdbacb019707d68b0f",
+  "privateStatOnly": 20,
+  "protectedCurrentTotal": 101,
+  "protectedOldPrefix": 96,
+  "rulesSha256": "48228a026e57fe263545f8a3e30af59e9d3fbd5a22d8b44c4a2fa44d45672acc",
+  "sameAssertionsRejectRealBe853": [
+    "history",
+    "must_absent"
+  ],
+  "serverActions": 0,
+  "sourceAndWrapperPreparationBeforeClock": true,
+  "sourceOnly": true,
+  "stageOnlySuccessor": {
+    "allOtherRuntimeBytesReusedAfterInversePinNormalization": true,
+    "changedRuntimeMembers": 12,
+    "currentInvokeSourceSha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e",
+    "currentJointSummarySha256": "055ebba6871281f217ea32c0d644d371279f98ad56075f62ac065a21e2f6bc0d",
+    "diagnosticFields": 6,
+    "history324Stat20Guard73NotRecomputed": true,
+    "newStageValues": [
+      "WRITER_SCOPE",
+      "WRITER_CALL",
+      "WRITER_READBACK"
+    ],
+    "unchangedRuntimeMembers": 34
+  },
+  "state": "LOCAL_JOINT_SOURCE38_STAGE_ONLY_SUCCESSOR_CHECKED_PRIOR_HISTORY_REUSED",
+  "staticSourcesCompiledBeforeMainClock": true,
+  "syntheticOrFutureAuthorityOrTargetFixtureCreated": false
+}

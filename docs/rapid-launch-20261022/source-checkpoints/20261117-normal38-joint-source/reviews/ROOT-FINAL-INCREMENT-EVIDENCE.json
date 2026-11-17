@@ -1,0 +1,85 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "clientIssuerReaderCASNativeOrJobInvoked": false,
+    "clockCalls": 0,
+    "futureBindingAuthorityTargetOrPositiveReportFixtureCreated": false,
+    "pureMetadataValidatorsOnly": true,
+    "serverActions": 0
+  },
+  "checks": {
+    "ActualMainDecisionAndHistoricalClosureExact": true,
+    "All22FrozenRootMembersExact": true,
+    "AllHistoryGuardHelperCapAndIssuerBytesReused": true,
+    "CASAllOperationsASTUnchanged": true,
+    "CASOnlyExpectedRulesLiteralChanged": true,
+    "CarrierOnlyExactCASSourcePinChanged": true,
+    "CatalogInputRootHistoricalOnly": true,
+    "ConsumerPredecessorPureValidatorsAcceptActual37": true,
+    "CurrentFolderInterfaceMatches": true,
+    "ExactCurrentStageAndWrapperReference": true,
+    "ExactFinalRootSource": true,
+    "ExactFinalRulesAndConsumer": true,
+    "ExactHelperAndTemplatePins": true,
+    "Native01Outer04PairAcrossRootAndConsumer": true,
+    "NoDynamicConsumerRuntimeClaims": true,
+    "OnlySixCurrentKeys": true,
+    "Original131072Cap": true,
+    "PhaseIssuerOnlyTwoSourcePinsChanged": true,
+    "RealFrozenSixFieldSchemaAccepted": true,
+    "RegistrationKeepsSevenActualInputs": true,
+    "SameTurnHistoryEvidenceReusedWithoutRerun": true,
+    "currentBindings_JOINT-CHECK-HANDOFF.json": true,
+    "currentBindings_invoke_once.py": true,
+    "currentJointHandoffExact": true,
+    "issue_phase.pyStaticCompileBeforeClock": true,
+    "issue_registration.pyStaticCompileBeforeClock": true,
+    "previousFailureGapsExact": true,
+    "previousJointHandoffExact": true,
+    "references_ALL-FINAL-MEMBER-LOAD-SITES.json": true,
+    "references_HISTORY-PATH-JOINT-READBACK.json": true,
+    "references_REQUEST-AND-FAILURE-COVERAGE.json": true,
+    "references_RESULT.json": true,
+    "references_invoke_once.py": true
+  },
+  "clockPreparationStaticOrder": {
+    "issue_phase.py": {
+      "clockLine": 544,
+      "compileLines": [
+        539
+      ],
+      "parameters": [
+        "phase",
+        "rules_file",
+        "rules_pin",
+        "registration_directory",
+        "evidence_path",
+        "evidence_pin",
+        "predecessor_path",
+        "predecessor_pin"
+      ]
+    },
+    "issue_registration.py": {
+      "clockLine": 99,
+      "compileLines": [
+        113,
+        97
+      ],
+      "parameters": [
+        "review_file",
+        "review_pin",
+        "basis_file",
+        "basis_pin",
+        "output_directory",
+        "consumer_review_file",
+        "consumer_review_pin"
+      ]
+    }
+  },
+  "consumerEvidenceSha256": "ff483baa3f8d707b3890c3814fb82a92a24249667f157be76951ca2a6c6e9c68",
+  "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
+  "historyBaselineEvidenceSha256": "71d349b142e809e88dfa2dfb634198ebe7fdce59159e9056d3517c1edf52490d",
+  "rootSourcePinsSha256": "6590c4bfd1bbbf1f370da7b9181119b1ea9dc1f1ac5a73f267753150f07b5ff7",
+  "rulesSha256": "48228a026e57fe263545f8a3e30af59e9d3fbd5a22d8b44c4a2fa44d45672acc",
+  "state": "FINAL_ROOT02_AND_CONSUMER03_SOURCE_PAIR_CHECKED_NOT_RUNTIME"
+}

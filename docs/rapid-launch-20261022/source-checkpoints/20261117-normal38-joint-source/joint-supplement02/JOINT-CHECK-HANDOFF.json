@@ -1,0 +1,73 @@
+{
+  "PGConnections": 0,
+  "clientOrIssuerInvoked": false,
+  "consumer": {
+    "interface": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/INTERFACE.UNISSUED.json",
+      "sha256": "30fe85689b72d4148f930877a455a108e4b924fa82a31992e4571eb6af0fcffe"
+    },
+    "rules": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/PHASES38.UNISSUED.json",
+      "sha256": "f775c7870086b55e62851dd6b5bb558662ad9474f688c1ed13b8e528844d1ed6"
+    },
+    "source": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/SOURCE-PINS.json",
+      "sha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec"
+    }
+  },
+  "currentInvocationWrapper": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-02/invoke_once.py",
+    "sha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e"
+  },
+  "diff": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/STAGE-ONLY-DIFF.patch",
+    "sha256": "614be5b30c346dcf974ae6e249fd61736d9318132b84b8b9337b19ed8f694751"
+  },
+  "directEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/STAGE-DELTA-EVIDENCE.json",
+    "sha256": "deea616f82221c5102830193ecdc3aed93be857d74d6a1f58f0a63fd3b574614"
+  },
+  "interfaceJobKeyDirectoryPinsChecked": true,
+  "item5Delta": {
+    "existingSixFields": [
+      "format",
+      "stage",
+      "errorType",
+      "systemCode",
+      "guardCode",
+      "sqlstate"
+    ],
+    "newStagePositions": {
+      "WRITER_CALL": "runFinalR3Writer03 invocation and returned result parsing",
+      "WRITER_READBACK": "runFinalR3Readback03 invocation and returned result parsing",
+      "WRITER_SCOPE": "original prepared binding and persistedScope checks"
+    },
+    "remainingLimits": [
+      "Specific filesystem path/syscall and PREPARE_CALL internal substage not retained",
+      "Restore single-user SQLSTATE remains NOT_CAPTURED",
+      "No claim of PG, import, conservation, release or business acceptance"
+    ],
+    "runtimeVerified": false,
+    "sourceGapClosed": "Writer native failures now retain one of these three fixed stages. Producer in all three runner copies plus both host projectors and readonly collector have matching enums."
+  },
+  "newAuthorityServiceProofOrClock": null,
+  "oldConsumer02Unmodified": true,
+  "priorInvocationWrapper": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/invoke_once.py",
+    "sha256": "13e5ac8612e67f117e4de357b42201e06cdb85438782aef17ac9aba57b5c73c1"
+  },
+  "priorJointHandoffReuse": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-01/JOINT-CHECK-HANDOFF.json",
+    "sha256": "7564f8efdb16ea5c0d030f2ae1fa5a6171c3999f6e1067da5182d0b3ee416502"
+  },
+  "runtimeAPIOrderBudgetsRolesPermissionsUnchanged": true,
+  "scopeReuse": "Items1-4 and unchanged edges use prior evidence. Actual future request/bundle checks bind SOURCE03. No repeated server/closure/permission checks.",
+  "serverActions": 0,
+  "state": "NORMAL38_THREE_WRITER_STAGE_SUCCESSOR_SOURCE_HANDOFF_ONLY",
+  "wrapperInvoked": false,
+  "wrapperOnlyChanges": [
+    "exact consumer directory02->03",
+    "exact consumer SOURCE_SHA"
+  ],
+  "wrapperSyntaxCompiled": true
+}

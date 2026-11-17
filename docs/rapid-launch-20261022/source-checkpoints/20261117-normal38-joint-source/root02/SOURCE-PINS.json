@@ -1,0 +1,117 @@
+{
+  "PGConnections": 0,
+  "actualGuardPaths": 73,
+  "casBytes": 122272,
+  "clockOrAuthorityIssued": false,
+  "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
+  "continuationDecisionSha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c",
+  "currentInvokeSourceSha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e",
+  "currentJointSummarySha256": "055ebba6871281f217ea32c0d644d371279f98ad56075f62ac065a21e2f6bc0d",
+  "currentSixDispatcherJobKeysCovered": true,
+  "existingPinnedPaths": 324,
+  "existingPinnedPathsFutureMustAbsentDisjoint": true,
+  "files": {
+    "AST-COMPACTION-EQUIVALENCE.json": {
+      "bytes": 1029,
+      "sha256": "b5c792362b25dec3424f7c363352a5c6d7e1bad58d4d2b3dc277c8cd7e314e2b"
+    },
+    "EXISTING-PATH-MAP.json": {
+      "bytes": 79851,
+      "sha256": "d01cc1135e9e0cab6bbd2ecb411dc8763c1b3ddb798f009df7fd047537dd5f40"
+    },
+    "EXISTING37-INPUTS.json": {
+      "bytes": 80555,
+      "sha256": "3f4514312cce88c9ac2fd436fe2daaf45c85322454c7dca41ffd8efca671e2e8"
+    },
+    "GUARD-PATHS.json": {
+      "bytes": 27343,
+      "sha256": "e65b1858c843da9aed1ae7ec69ab60dee89adc870cd8cf0dc7f18f5d40b6d6f8"
+    },
+    "HANDOFF.md": {
+      "bytes": 8864,
+      "sha256": "6f3921f4495bb9d2f248783916099f75f7801f1dc6a60441063c669c00386226"
+    },
+    "JOINT-CHECK-REFERENCES.json": {
+      "bytes": 3830,
+      "sha256": "742ef6e3afb7a0bb592a77a22e0be1544f8033b17826cd68a0c5da605790d3e4"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 5311,
+      "sha256": "00c360f4a75f223f0aa75df187d506c6050162a821fd1a3767c25041656fbd08"
+    },
+    "P04-R01-NEGATIVE-JOINT-REGRESSION.json": {
+      "bytes": 1552,
+      "sha256": "e4672c3af22bda66e9c02f09316516e14a1a3fe30c04b227614ba95277ef5d4b"
+    },
+    "SIX-PHASES.UNISSUED.json": {
+      "bytes": 36706,
+      "sha256": "48228a026e57fe263545f8a3e30af59e9d3fbd5a22d8b44c4a2fa44d45672acc"
+    },
+    "STAGE-ONLY-REBIND-CHECKS.json": {
+      "bytes": 5952,
+      "sha256": "b2b5e3be453f47cf9ee9076f2bd7a78ec5c511e5fffca243ca0b7d03cef8c5c6"
+    },
+    "admin_exec.NORMAL38-UNREGISTERED.py": {
+      "bytes": 45793,
+      "sha256": "4a95242730655e8c52736eaafc40899125c15287dd5361b17520aa278616d8b4"
+    },
+    "check_real_prefix.py": {
+      "bytes": 8911,
+      "sha256": "c35664da494e6eb30ab933e0c694d9d177837ca138e36919fa047f96051e6d8b"
+    },
+    "collect_guard_paths.py": {
+      "bytes": 3690,
+      "sha256": "6ca986050332b3fb9fa981d0081a8f958413ffea842652411e090e2e8979c8e2"
+    },
+    "history_guard_assertions.py": {
+      "bytes": 768,
+      "sha256": "e97db2a119e0a6791fb6c0bd4037e4d42d6de4997204ac57668e680afbc896b9"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "15df86e6f4b5af0e8ea84b6a375720277a4a3fcb5f8bb1b83bcc66c6be429ca5"
+    },
+    "issue_phase.py": {
+      "bytes": 40521,
+      "sha256": "3594c57993fb3fc1b00784f9ba902f1ae75e04024990704f7a94f3899d2b0559"
+    },
+    "issue_registration.py": {
+      "bytes": 12301,
+      "sha256": "bb8dd96b448df7d24817d73e50326098a33a453edde4315068f58b36f74b82da"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2406,
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658"
+    },
+    "original-cas-normal38-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "d15071f2bee604ccc3da06697ed5e7c529af76864c596e6656fb70f02bb0d5cd"
+    },
+    "r3_direct38_aux_prepare.py": {
+      "bytes": 125406,
+      "sha256": "3b7ebfcb95df010fdbd585b5551851cba6cd65953e54352ab25ee01bb3ec368d"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1996,
+      "sha256": "f76d13f64d09d2dbcfcf7f6abd8e2252b4431f4aa5775e26e0ae6112d2a5d219"
+    },
+    "register_cas.py": {
+      "bytes": 122272,
+      "sha256": "039be0445b580de6d1f3dcbeba62ad9dfb944321f46e425c1d44001e52ebd0ea"
+    }
+  },
+  "fullHistoryRegressionRepeated": false,
+  "helperBytes": 125406,
+  "historyGuardAndCapEvidenceReused": true,
+  "originalSourceByteCap": 131072,
+  "parentRootSourcePinsSha256": "25a4e7c2017afe8113af9b55fed3b576de121975de3dc53eac8ef260e8865170",
+  "privateMetadataOnlySnapshots": 20,
+  "rulesSha256": "48228a026e57fe263545f8a3e30af59e9d3fbd5a22d8b44c4a2fa44d45672acc",
+  "sameAssertionsRejectRealP04R01": true,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "stageDeltaEvidenceSha256": "deea616f82221c5102830193ecdc3aed93be857d74d6a1f58f0a63fd3b574614",
+  "stageOnlySuccessor": true,
+  "state": "SOURCE_FROZEN_NORMAL38_MAIN_ROOT_PAIR_UNISSUED_ONLY",
+  "syntheticFullRehearsalOrFutureFixtureCreated": false
+}

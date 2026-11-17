@@ -1,0 +1,27 @@
+{
+  "existingCarrierUnchanged": true,
+  "existingRoleFilesystemMutationTargets": [
+    "CAPTURE",
+    "owned temporary role files",
+    "private role custody files"
+  ],
+  "firstHostInstallVolumeReadOnlyMetadataOnly": true,
+  "newRuntimePermissionImplementationAdded": false,
+  "oldRepairReceiptSha256": "b7794bcd006bd8531e907d6f67aa570da8f7df3dc5c8f25508b8df8555f31041",
+  "oldSupplemental25ReceiptSha256": "bcde121658009e1e40b777f23bf7b3b916ae9a1c08c44dbca192b42055f0be49",
+  "repeatPlanChainOr25Slots": false,
+  "retainedCorrectState": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502393,
+    "mode": 456,
+    "slot": "C05",
+    "uid": 0
+  },
+  "serverActions": 0,
+  "state": "SOURCE_INSPECTION_NO_C05_RESET_STATEMENT_IN_STARTUP_OR_ROLE_PATH",
+  "successfulStart38MustReadBackOnce": {
+    "metadata": null,
+    "native61035Group61035GroupsEmptySearch": null
+  }
+}
