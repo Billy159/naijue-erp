@@ -1,0 +1,21 @@
+{
+  "state": "SOURCE_ANALYSIS_COMPLETE_NO_EXECUTION_SCOPE_SELECTED",
+  "files": {
+    "ACTUAL-BASIS.ANALYSIS.json": {
+      "bytes": 11220,
+      "sha256": "80982f3ef7adb9d1c2737765ab2eba964cfb527f2670950071bafc64d89643c0"
+    },
+    "NECESSARY-DELTA.md": {
+      "bytes": 8009,
+      "sha256": "12f02721154a092f4f0ac1014367bb61961abf2b9e48c2bb35f0f890ed50c172"
+    }
+  },
+  "serverActions": 0,
+  "PGConnections": 0,
+  "NodeCalls": 0,
+  "issuerCalls": 0,
+  "CASCalls": 0,
+  "writerKey": null,
+  "newClock": null,
+  "authorities": null
+}

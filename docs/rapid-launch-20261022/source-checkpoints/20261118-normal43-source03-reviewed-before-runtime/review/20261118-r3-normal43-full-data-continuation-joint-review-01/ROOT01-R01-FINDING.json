@@ -1,0 +1,38 @@
+{
+  "PGConnections": 0,
+  "clockCalls": 0,
+  "findings": [
+    {
+      "actualExpectedRuleKeys": [
+        "apply",
+        "restore",
+        "start",
+        "stop",
+        "writer"
+      ],
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261118-r3-ordinary43-root-source-01/r3_normal43_continuation.py",
+      "id": "SOURCE43-ROOT01-R01",
+      "impact": "register_cas.consumer constructs Normal43Continuation before AUDIT creation and any publication; valid reviewed five-phase policy is always refused with R3_CONTINUITY_NORMAL43_FINAL_FIVE_CONSUMER_RULES_REQUIRED.",
+      "line": 121,
+      "priority": 1,
+      "requestedFix": "Original D1 owner corrects exact phase-set predicate and stale module description in isolated successor; retain original frozen source and guards. Re-freeze dependent module/dispatcher/CAS/source pins and include this actual set comparison in targeted checks.",
+      "requiredByConstructor": [
+        "apply",
+        "start",
+        "upgrade",
+        "stop",
+        "restore"
+      ],
+      "staticPredicateResult": false,
+      "title": "Root43 constructor still requires upgrade instead of writer"
+    }
+  ],
+  "issuerCalls": 0,
+  "ownerFunctionsExecuted": false,
+  "positiveRuntimeFixtureCreated": false,
+  "rootPairReviewComplete": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourcePinsSha256": "0778f0079fc5950531c2fac64619351a35b58096ada4f672e68629b122619d58",
+  "state": "NEED_FIX_SOURCE_ONLY"
+}

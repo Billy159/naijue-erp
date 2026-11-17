@@ -1,0 +1,83 @@
+{
+  "currentLiveCatalogNotObservedInSourcePhase": true,
+  "currentSQLChangedInSeparateUpgrade42": true,
+  "format": "T45_R3_ROOT08_AND_ACTUAL_UPGRADE42_LINEAGE_V1",
+  "historicalCatalog35Unchanged": true,
+  "modelAndGuardSQLUnchanged": false,
+  "root08": {
+    "key": "t45-r3-batched-root08-source-delta-20261117-01",
+    "marker": {
+      "SQLUpgradePerformed": false,
+      "addedFiles": 5,
+      "automaticReplay": false,
+      "businessDurableState": "UNKNOWN",
+      "changedFiles": 3,
+      "databaseConnections": 0,
+      "databaseWrites": 0,
+      "importReady": false,
+      "inheritedUnchangedFiles": 384,
+      "installerRunnerSha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+      "liveCatalogVerified": false,
+      "nodeModulesChanged": false,
+      "oldLineageProvesNewSQLInstalled": false,
+      "originalSourcePreserved": true,
+      "predecessorMaterializationSha256": "84599588dcf7b720d41d04bbea4b5f52b58396b2e16b1262d0ec639bdcf49065",
+      "requestKey": "t45-r3-batched-root08-source-delta-20261117-01",
+      "serviceStarted": false,
+      "sourceDescriptionSha256": "5445b6ba2363d4f59a04edb927d91ef145873ce31a8266ea781955618b746ec6",
+      "sourceFiles": 392,
+      "sourceModelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+      "sourceRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root08-20261117-01/operation",
+      "sourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+      "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+      "state": "SOURCE_PHYSICALLY_MATERIALIZED_SQL_UPGRADE_NOT_PERFORMED"
+    },
+    "publicResultSha256": "18c0487f2c884d51c970e3ef84fcef51ce8d4bd819d0c5465d43019c9de4ef0a",
+    "rootResultSha256": "5bbfe6fa34d8e9c7990dbed5dfda745617d9f2c1fb58a9e431e9778b9339b67c",
+    "terminalSha256": "e8849c90c8836a9d28e016b2216c3e5a725fd9998b39dc1c940a8f499d6f70b3"
+  },
+  "sourceOnly": true,
+  "upgrade42": {
+    "key": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+    "publicResultSha256": "68e18919106857a6c2b0940e1f08ca9ca1af9d02c54d2b8a90ebd71487677ad9",
+    "result": {
+      "automaticReplay": false,
+      "batchedCatalog": {
+        "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+        "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+        "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+      },
+      "beforeCatalogSha256": "309c3a6b5659855fe6bd0755a8900f5847763c727d7eb53191a21557e6f013d3",
+      "businessImported": false,
+      "captureDirectoryLeaf": "settlement24-three-routine-7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+      "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+      "childReaped": true,
+      "commitAcknowledged": true,
+      "commitOutcomeUnknown": false,
+      "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+      "connectionCleanup": "CLOSED",
+      "descendantsReaped": true,
+      "formalBusinessAccepted": false,
+      "innerAuthorityRemoved": true,
+      "nativeResultBindingMatched": true,
+      "postCommitReadback": true,
+      "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+      "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+      "roleRestoreAcknowledged": true,
+      "routineAttributesSha256": "436c26997092b6f4366d65f43fd5be0082a304d59bbf69f473210369a51361b7",
+      "service": {
+        "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+        "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+        "postmasterStart": "2026-11-17 16:27:47.780746+00",
+        "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+        "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+      },
+      "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+      "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+      "state": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+    },
+    "rootResultSha256": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+    "terminalSha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+  }
+}

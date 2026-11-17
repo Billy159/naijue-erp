@@ -1,0 +1,33 @@
+{
+  "state": "APPROVE_SOURCE43_ROLE_TIMING_WITHIN_EXISTING_PARENT_BUDGET",
+  "basisSourceScopeSha256": "89f3971ef29022be17de1bdf192f032f3af582f95dc45b3a66ef5a94ca09bae9",
+  "authorizationBasis": "Main scoped judgment under existing human standing authorization; source-only parameter correction, no new human approval message and no current role renewal.",
+  "newMainClockOffsetsSeconds": {
+    "applyExpiresAt": 900,
+    "registrationExpiresAt": 600,
+    "controllerValidUntil": 4000,
+    "backupAdminValidUntil": 4120,
+    "restorationDeadline": 4900,
+    "policyExpiresAt": 5100
+  },
+  "workerBudgetsUnchanged": {
+    "apply": 300,
+    "start": 300,
+    "writer": 3000,
+    "stop": 120,
+    "restore": 300
+  },
+  "maximumServiceSecondsUnchanged": 4200,
+  "outerMinusWorkMillisecondsUnchanged": 35000,
+  "originalAlgorithmUnchanged": true,
+  "guardArithmetic": "Start complete-chain budget=300+3000+240=3540; signing start must be <t0+460. lease=min(startNow+4200,t0+4300) with existing integer rounding; earliest shared work=t0+4165 > admin=t0+4120, leaving original controller/admin 120s separation. Hard4900 < parent5100.",
+  "oldOffsetsNotUsedFor43": {
+    "controller": 3600,
+    "admin": 3720,
+    "restoration": 4500
+  },
+  "current42RolesAlreadyRestored": true,
+  "currentlyIssuedOrExecuted": false,
+  "runtimeAuthorizationGrantedByThisFile": false,
+  "sourceChangeScope": "Only Main7 future role offsets; preserve all algorithm, capacity, expiry, original-auth restoration, authority guards and source-only review requirements. D1 verifies pure arithmetic and QB reviews necessary new delta; no positive authority fixture."
+}

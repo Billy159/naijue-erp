@@ -1,0 +1,15 @@
+{
+  "state": "SOURCE03_MAIN_AUTHORIZED_EXACT_ENTRY_STAGE_ALIGNMENT_ONLY",
+  "source02PinsSha256": "8baceaa556db0d01180b82472a7cf7a7a2bef6d1fc33e83360ec02bd16e572dd",
+  "originalFreshFailedNoReplay": true,
+  "stageSucceeded": true,
+  "actualReadHelperDiagnosticPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL43-ROOT-EXECUTION-PREPARATION-01/fresh/ACTUAL-READ-HELPER-DIAGNOSTIC.json",
+  "actualReadHelperDiagnosticSha256": "9f55d6febb5201d15a3575ea64c86d9f76d0d9bcf86ca308e99dda74c71bd868",
+  "sourceMismatchReportSha256": "8b3bdf59209b3fe48579c7919f2dad792a5ed4ccbde28022ef93e13753f968b4",
+  "source03ServerActions": 0,
+  "source03LocalPrepareCalls": 0,
+  "newScopeRequiredBeforeStageOrFresh": true,
+  "newStage": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal43-registration-source-20261118-02",
+  "newLocalTarget": "NORMAL43-ROOT-EXECUTION-PREPARATION-02",
+  "oldStageAndReceiptPreserved": true
+}

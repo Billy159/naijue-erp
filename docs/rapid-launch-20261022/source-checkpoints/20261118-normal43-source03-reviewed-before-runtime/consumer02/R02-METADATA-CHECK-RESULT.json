@@ -1,0 +1,16 @@
+{
+  "NodeRuns": 0,
+  "PGConnections": 0,
+  "SQLChanges": 0,
+  "businessSourceChanges": 0,
+  "correctionSha256": "95fecf1ef02a2cff2220026da550263e76ac2184ec87b98a429d775c6faeb9f6",
+  "currentStat9": null,
+  "historicalExpectedBytes": 58716444,
+  "nativeSemanticInitializerHashChanged": false,
+  "old35And14ChecksRerun": false,
+  "oldExpectedBytes": 51225175,
+  "parentSourcePinsSha256": "ad4290c28a84f32eac3029ac2b077ccd51e772551295760643772f5df8d0315e",
+  "phaseRulesChanged": false,
+  "serverActions": 0,
+  "state": "PASS_SCOPED_LOCAL_R02_METADATA_ONLY"
+}

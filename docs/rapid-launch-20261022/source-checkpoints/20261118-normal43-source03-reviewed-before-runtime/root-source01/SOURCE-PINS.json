@@ -1,0 +1,148 @@
+{
+  "PGConnections": 0,
+  "STAGEDExposed": false,
+  "authoritiesIssued": false,
+  "businessImportComplete": false,
+  "candidateKeys": 132,
+  "checks": 65,
+  "clockCalls": 0,
+  "completedPrepare05HistoricalOnly": true,
+  "consumerReviewSha256": "822e12ffb9557b2953c726cf15179b4e606fe8edd224f42c6e1c42b4929ae6b2",
+  "consumerRulesSha256": "28b4d7eab540bdc0ccae33e520ad75564471eafd2c998906649c59eb25eb7d3f",
+  "consumerSourcePinsSha256": "ad4290c28a84f32eac3029ac2b077ccd51e772551295760643772f5df8d0315e",
+  "files": {
+    "ACTUAL-HISTORY.json": {
+      "bytes": 71184,
+      "sha256": "07682638c268e248486ae15d19ad8b57a82d28f69ed199f8bd5156f046c43931"
+    },
+    "ACTUAL127-DISPATCHER.py": {
+      "bytes": 58110,
+      "sha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f"
+    },
+    "CONSUMER-REVIEW-REF.json": {
+      "bytes": 286,
+      "sha256": "ee3eea281609d3c98440b3f7918bc0e442b3304e10712c4d3722387b298e1a21"
+    },
+    "DELTA-CHECKS.json": {
+      "bytes": 3680,
+      "sha256": "b7b33590562551ad26b24f6fa26b923abc602c88f437e908cc46b73d09a49b99"
+    },
+    "FIVE-PHASES.UNISSUED.json": {
+      "bytes": 107446,
+      "sha256": "73dab9ae6e8e39ab2af3128a270a55278a1bc6430d5562e3ce6afbc162a0018a"
+    },
+    "HANDOFF.md": {
+      "bytes": 6948,
+      "sha256": "df09b26fe4668e6f51dbed2e42cbfc6299ab1c750306121f0309724ea6260f68"
+    },
+    "HISTORY-BRIDGE-CHECKS.json": {
+      "bytes": 299,
+      "sha256": "dd1859b1c48e93e91112fa21e4ac47451790b6c73a19e65c94544506e2815d49"
+    },
+    "HISTORY-INPUTS.json": {
+      "bytes": 107358,
+      "sha256": "ca8c9de26192c861fbef8e5b339e2f385a926e1c9a8cdb652e4387c2797226ff"
+    },
+    "ROLE-TIMING-CHECKS.json": {
+      "bytes": 455,
+      "sha256": "9d1ecc05a75abdce75b2ca3fce4264d8461dade319c4f1138c5ad0f6ac70fbce"
+    },
+    "WIP-STATUS.md": {
+      "bytes": 2530,
+      "sha256": "1b66c6060204120c6d73fbd821f33fab893c6dbc2a40fff220e9ed1cc26e648e"
+    },
+    "admin_exec.NORMAL43-UNREGISTERED.py": {
+      "bytes": 59448,
+      "sha256": "199dfc9018b2b2cc685c9c63228b850ea116c8b24f4d11f9be9403b0b36ef676"
+    },
+    "capture_actual_inputs.py": {
+      "bytes": 3974,
+      "sha256": "1026f8dba492945fbd855da2961d0b8ae2c8fde6698c16519f28f96c2707baed"
+    },
+    "check_delta.py": {
+      "bytes": 9405,
+      "sha256": "448226c24c1091281a521e328d4e9a59c74b879c3b20ae4e58628b59f106c755"
+    },
+    "check_role_timing.py": {
+      "bytes": 1905,
+      "sha256": "2bba7185a598bb23ce99ed0002a8f0577cf0f744ce12d0bc16e882f29ff5b88e"
+    },
+    "freeze_source.py": {
+      "bytes": 1739,
+      "sha256": "2fb81b23334522ec46fd3dcf79fde550b3c0f9b72de8c7a258c266e1014f2e4a"
+    },
+    "issue_phase.py": {
+      "bytes": 25215,
+      "sha256": "d4e98e4dfdcdbcb448aface5f666ae1fe3d5142e91e5400fcf0f5cef32932c08"
+    },
+    "issue_registration.py": {
+      "bytes": 8929,
+      "sha256": "3f2d9737257c22869170c88cb19e2006f25039452ee598382fd563c5c81d6903"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 3054,
+      "sha256": "24fd0caf41f2b5dc924dc9983abb677a5be12c31b8f0552b55807c4ef302c638"
+    },
+    "plan_custody.template.py": {
+      "bytes": 1316,
+      "sha256": "ec5bd0f46b2f150dc201c4f74a0b75c9ae12fe0afb983e8e4b77f9ec069a909e"
+    },
+    "prepare_channel.py": {
+      "bytes": 7173,
+      "sha256": "cee5dbe91aa89af0185a05b3841691d36cf4eada2f4181f1aa0bb27a59d3dd4a"
+    },
+    "prepare_source.py": {
+      "bytes": 6926,
+      "sha256": "d0c84deeef229c73846cd2dc5288f93ac110d4b6cd90991377bede6b1b5e4a5f"
+    },
+    "r3_normal43_continuation.py": {
+      "bytes": 65597,
+      "sha256": "c5aa92efd69dbd6aa839002bcfe0def091347394ff8b428f3b42f94bd81d6ddd"
+    },
+    "read_registration_basis.py": {
+      "bytes": 2989,
+      "sha256": "d80357aa740151ecf7e353639706102ec8fae07b8edfd02557874ff7a4730939"
+    },
+    "register_cas.py": {
+      "bytes": 56184,
+      "sha256": "9c92ea5cf5fd37b446fe5988285e55e5aac386dfd49cda5dfbe700c3c26a56ad"
+    },
+    "render_admission.py": {
+      "bytes": 4155,
+      "sha256": "560c49f5b914bf27a0a7cd183b6e3e56deff1005fb39ce80e407603c253f8d3a"
+    },
+    "render_main.py": {
+      "bytes": 3009,
+      "sha256": "576a8e1b746100dd34364b24c0d1abdb4f508e407f0f76168e10dbc991098f69"
+    },
+    "render_registration.py": {
+      "bytes": 7472,
+      "sha256": "aaa52b76c0b3d614f3801f07c052d04b72bc1bb46a5f0f46238bb987c1550f82"
+    },
+    "validate_closed42.template.py": {
+      "bytes": 4088,
+      "sha256": "1d45881c13b10ddd37f00a6531fa97ee4c99d7b9eaf1927167d05ba44205e8be"
+    },
+    "writer_authority.template.py": {
+      "bytes": 6148,
+      "sha256": "bb954a15ab4e161faf484e50070215ac8522212c7415a5585d27d18a4d2d4ab0"
+    }
+  },
+  "futureCOrEpochOrWindow": null,
+  "interfaceSha256": "6555bbe1e0a89a5f9eb572c6c956d3b1e9ef178d3ffd3dc2089db8050e7991cc",
+  "newContinuationKeys": 5,
+  "oldProtectedKeys": 127,
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "publicationRestrictionsLifted": false,
+  "rootPairReviewComplete": false,
+  "rulesSha256": "73dab9ae6e8e39ab2af3128a270a55278a1bc6430d5562e3ce6afbc162a0018a",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "NORMAL43_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED"
+}

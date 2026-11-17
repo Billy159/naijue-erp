@@ -1,0 +1,14 @@
+{
+  "state": "CORRECT_SOURCE43_INITIALIZER_SIZE_FROM_ACTUAL_PREPARE05_EVIDENCE",
+  "originalSourceScopeSha256": "89f3971ef29022be17de1bdf192f032f3af582f95dc45b3a66ef5a94ca09bae9",
+  "prepareResultSha256": "4709f62e62f604200ed17e4be751d823fd521589ce1cf4451cb686a963f1fb46",
+  "incorrectUnusedLegacyConstant": 51225175,
+  "historicallyObservedRawInitializerBytes": 58716444,
+  "historicallyObservedRawCopySha256": "663de92c28076aef3ae613bf01230ab6f59c3873c79100e9e5d26f87dce4025b",
+  "historicalEvidencePath": "RESULT-PREPARE05.processCleanup.privateInitializer",
+  "sourceProof": "preserve_final_initializer reads HOST_STATE/PLAN_REL/original-initializer.json and writes identical raw bytes to JOB/native-private/original-initializer.json, returning raw byte length and SHA.",
+  "preservedTypedSemanticInitializerSha256": "b0d291c8b2f431fefd8be929c6a78132f683a71590e9e8753c88368969f2af8c",
+  "currentStat9Observed": null,
+  "correction": "Independent consumer SOURCE02 expected historical byte count becomes58716444 with explicit provenance. Current metadata must still come from unique futurefresh and match expected historical size; full stat9 bound through Main/CAS/runtime. Never substitute rawSHA for native typed requestHash. Keep original persisted-program semantic guards and all old files unchanged.",
+  "noNewRuntimeOrOriginalBodyReadAuthorized": true
+}

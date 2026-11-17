@@ -1,0 +1,60 @@
+{
+  "state": "AUTHORIZE_REVIEWED_NORMAL43_COMPLETE_DATA_IMPORT_AND_REQUIRED_SAFE_CLOSEOUT",
+  "authorizationBasis": "Main scoped judgment under human standing authorization and explicit ERP launch/full-data-import instructions, following exact final source and independent review; not a new human approval message.",
+  "sourcePinsSha256": "8baceaa556db0d01180b82472a7cf7a7a2bef6d1fc33e83360ec02bd16e572dd",
+  "reviewSha256": "fb3da3b054454923c1d4b7dde293a2af5e49ca95359425505b4c13475608ff8a",
+  "consumerSourcePinsSha256": "8b492612798f9ebb3e8182477bb8f3eb2fa99f52acd78f846d3d1f2726a73f5e",
+  "consumerInterfaceSha256": "872656c154ed271349ce1a675d16b8281517a2c33b0edca9bedf412d6342f481",
+  "consumerReviewSha256": "14108adc17241c3f5115d1483a4abefcc9c006ff4e963793cd323523a7713a5b",
+  "FIVEPhasesSha256": "919589e41915227e5b1da03ea92b52b8563e33b55677ae38ff8ce6535fefbc6a",
+  "sourceScopeSha256": "89f3971ef29022be17de1bdf192f032f3af582f95dc45b3a66ef5a94ca09bae9",
+  "roleTimingAddendumSha256": "6ac3a4e070f4a108bfbbae5e6dde1293330a3577ed4a34ecdd1408ee7d07cd11",
+  "initializerCustodyCorrectionSha256": "95fecf1ef02a2cff2220026da550263e76ac2184ec87b98a429d775c6faeb9f6",
+  "rootBefore": 127,
+  "rootAfter": 132,
+  "actualBeforeDispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "jobs": {
+    "apply": "t45-r3-ordinary43-auth-apply-20261118-01",
+    "restore": "t45-r3-ordinary43-auth-restore-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-43",
+    "stop": "t45-r3-ordinary43-preserve-stop-20261118-01",
+    "writer": "t45-r3-batched-real-after42-execute-20261118-01"
+  },
+  "workerBudgetsSeconds": {
+    "apply": 300,
+    "restore": 300,
+    "start": 300,
+    "stop": 120,
+    "writer": 3000
+  },
+  "maximumParentSeconds": 5100,
+  "minimumAvailableBytes": 30064771072,
+  "roleOffsetsSeconds": {
+    "apply": 900,
+    "controller": 4000,
+    "admin": 4120,
+    "hardRestore": 4900
+  },
+  "maximumServiceSeconds": 4200,
+  "completeChainStartGuardSeconds": 3540,
+  "startMustBeIssuedBeforeMainOffsetSeconds": 460,
+  "scope": "Apply finite credentials only to existing two system roles; start one exact new C43 on preserved PGDATA; retain and validate original prepare05 SQLite/initializer/44910 steps and both historical bindings. From genuine new start outputs and actual afterada catalog, derive new execution binding, then only the selected transport successor performs original business operation/request/batch IDs under existing FIRST_WRITE/durable and transaction/COMMIT/readback contracts. Stop exact C43 and restore original verifier/expiry before hard deadline, preserve all other attributes/memberships/runtime auth, original snapshots, old keys and 31 existing administrative records.",
+  "reuseOriginalPrepare": true,
+  "prepareReplayOrRecompileAuthorized": false,
+  "newBusinessOperationIdsAuthorized": false,
+  "SQLUpgradeOrAPPRebuildAuthorized": false,
+  "beforeWriteRequirement": "Original same-client inspectRoot must be ABSENT. COMMITTED or unknown stops to Main; no automatic RESUME or replay. Signed original plan custody must match actual fresh, initializer expected historical raw bytes58716444; native typed-semantic initializer b0 remains separate. New execution binding/catalog/target/service/epoch must match true stored outputs and original plan.",
+  "publicBusinessOrAPPDeploymentAuthorized": false,
+  "failureRule": "Resolve unknown under original job/business IDs; never blindly replay or change transport key. Execute existing typed closure paths from actual evidence. Preserve original files and current data; no delete/truncate/rebuild.",
+  "requireActualFreshBeforeRealMainClock": true,
+  "actualRuntimeClockIssued": false,
+  "actualCASOrPhaseExecuted": false,
+  "T45SoleServerOwner": true
+}

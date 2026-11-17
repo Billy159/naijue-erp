@@ -1,0 +1,11 @@
+{
+  "state": "SOURCE02_FIXES_ONLY_R01_R02_ROOT01_OTHER29_REVIEW_COMPLETE",
+  "source01Path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261118-r3-ordinary43-root-source-01",
+  "source01PinsSha256": "0778f0079fc5950531c2fac64619351a35b58096ada4f672e68629b122619d58",
+  "findingPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261118-r3-normal43-full-data-continuation-joint-review-01/ROOT01-R01-FINDING.json",
+  "findingSha256": "a9ce7f0f21276f2a6bf32eb7c2acde42da4837b9adb1197546ff5147f6aa2116",
+  "serverActions": 0,
+  "rootPreparationAlreadyPerformed": false,
+  "root01ReviewSha256": "a3bc4962a45fb8120ad0725d28b5fd7e3ea8fe46cc660da24925cdc537ee660e",
+  "secondFindingSha256": "20770625fd13a1aa5d4139559bbe88f5eb604dffec7193be000a1ccbbb7cfeed"
+}

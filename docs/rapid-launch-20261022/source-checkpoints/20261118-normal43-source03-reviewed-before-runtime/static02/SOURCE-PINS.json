@@ -1,0 +1,40 @@
+{
+  "NodeRuns": 0,
+  "PGConnections": 0,
+  "actualRuntimeAuthorized": false,
+  "consumerSourcePinsSha256": "8b492612798f9ebb3e8182477bb8f3eb2fa99f52acd78f846d3d1f2726a73f5e",
+  "files": {
+    "bind_actual43_context.py": {
+      "bytes": 8396,
+      "sha256": "038040dec978dd53ec666f331a71de773111c995a4a97a622317e5094a6b5aba"
+    },
+    "read_apply43.remote.py": {
+      "bytes": 2543,
+      "sha256": "b3683e4a178550a112c7f0786b51a19eb82061c00eeceeb57a669704f74a0eee"
+    },
+    "read_original_key43.py": {
+      "bytes": 1480,
+      "sha256": "3c3eb969f54341200248a708f75b332a47300ac7d3121a4f7e8b83749f6adf51"
+    },
+    "read_restore43.remote.py": {
+      "bytes": 4811,
+      "sha256": "42e6d25652fa84d57b643fc96e7890a663b1e95d5905a445b392d26aedcee5c6"
+    },
+    "read_start43.remote.py": {
+      "bytes": 12749,
+      "sha256": "614e5fb1369f96be01c89a6a7ad602fa708237767712fd800860a4c2ce471184"
+    },
+    "read_stop43.remote.py": {
+      "bytes": 4519,
+      "sha256": "9dafd296de4be2b53f1b39f467cf7720c1a5c0e592d023aaf0ae746bf78ca938"
+    },
+    "read_writer43.remote.py": {
+      "bytes": 2586,
+      "sha256": "95296ccedabea7446375b955a331b1e539fa414814a4bce939981757d6dddb6c"
+    }
+  },
+  "interfaceSha256": "872656c154ed271349ce1a675d16b8281517a2c33b0edca9bedf412d6342f481",
+  "parentAdapterSourcePinsSha256": "5f44969c07ac55412eba94029a1f3709ed465783edb96cf19ff07b8803130722",
+  "serverActions": 0,
+  "state": "SOURCE43_STATIC_ADAPTERS_METADATA_SUCCESSOR02_UNISSUED"
+}

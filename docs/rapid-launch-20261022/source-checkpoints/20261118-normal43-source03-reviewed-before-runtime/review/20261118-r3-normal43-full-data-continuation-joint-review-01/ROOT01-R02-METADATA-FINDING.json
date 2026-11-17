@@ -1,0 +1,26 @@
+{
+  "PGConnections": 0,
+  "additionalEvidenceSupersedesUnqualifiedConsumerClosure": true,
+  "clockCalls": 0,
+  "consumerSourcePinsSha256": "ad4290c28a84f32eac3029ac2b077ccd51e772551295760643772f5df8d0315e",
+  "findings": [
+    {
+      "evidence": "Original RESULT-PREPARE05.json SHA4709f62e62f604200ed17e4be751d823fd521589ce1cf4451cb686a963f1fb46 processCleanup.privateInitializer.bytes=58716444; rawSHA663de92c28076aef3ae613bf01230ab6f59c3873c79100e9e5d26f87dce4025b. Original preserve_final_initializer reads original report initializer raw bytes, copies unchanged, and returns len(raw).",
+      "id": "SOURCE43-ROOT01-R02",
+      "impact": "Future fresh plan_basis rejects the actual retained original initializer before registration; published size metadata is inaccurate.",
+      "location": "Root01 register_cas.py:59 and plan_custody.template.py; frozen consumer interface historicalPlanCustody initializer bytes=51225175",
+      "priority": 1,
+      "requestedFix": "Original owners issue isolated successor correcting metadata against actual prepare05 receipt and derived pins; keep raw initializer unread, semantic preparedBinding initializerSha256 b0d291 unchanged, actual future stat9 still unknown.",
+      "title": "Initializer raw byte length copied from unused stale constant"
+    }
+  ],
+  "initializerBodyRead": false,
+  "issuerCalls": 0,
+  "originalConsumerAndStaticPassReportsPreserved": true,
+  "positiveRuntimeFixtureCreated": false,
+  "rootPairReviewComplete": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourcePinsSha256": "0778f0079fc5950531c2fac64619351a35b58096ada4f672e68629b122619d58",
+  "state": "NEED_FIX_SOURCE_ONLY"
+}

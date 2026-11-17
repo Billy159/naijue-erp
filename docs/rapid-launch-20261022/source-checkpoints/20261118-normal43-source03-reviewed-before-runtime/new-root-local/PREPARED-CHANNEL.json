@@ -1,0 +1,17 @@
+{
+  "actualFreshBasis": null,
+  "codePins": {
+    "r3_normal43_continuation.py": "29c275e4abb79ea55bb2e7dcf90b27e8377f421c1c10ab4448648522cad8cddf",
+    "read_registration_basis.py": "d80357aa740151ecf7e353639706102ec8fae07b8edfd02557874ff7a4730939",
+    "register_cas.py": "bccbece856be80992b7c498df48f9b99e118856fe1271ca22527880253c0d683"
+  },
+  "preparedProgramPins": {
+    "CODE-STAGE-PACKET.json": "8e45b6c198845b0f21e1257c5172c62a674511f084f2f7b9708261a4da1add83",
+    "READ-PAIRED-BASIS.py": "604d614f4f18f411232244903f60729c721369c845dd8fa66a4399da3d57451c",
+    "STAGE-ROOT-SOURCE.py": "f55a33b7e1c1399e804e4ed5f32432ddc5244ba7a89912e03fa64bf976b9cb90"
+  },
+  "serverActions": 0,
+  "sourcePinsSha256": "d7ce75ec73170ca4ac3c8f28549e891293279759bcc5aeb8276a5b21237a2ac9",
+  "stagedRootDirectory": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal43-registration-source-20261118-02",
+  "state": "LOCAL_ORIGINAL_CHANNEL_PREPARED_NOT_EXECUTED"
+}

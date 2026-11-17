@@ -1,0 +1,9 @@
+{
+  "state": "SOURCE43_RETAINED_HISTORY_BRIDGE_CHECKS_PASS",
+  "checks": 3,
+  "realCompletedPrepare05Accepted": true,
+  "realHistoricalStartRefusedAsPrepare": true,
+  "realOldExecutionEnvelopeRefusedAsCurrentAfter42": true,
+  "futureCOrEpochOrPositiveAuthorityFixture": false,
+  "runtimeCalls": 0
+}

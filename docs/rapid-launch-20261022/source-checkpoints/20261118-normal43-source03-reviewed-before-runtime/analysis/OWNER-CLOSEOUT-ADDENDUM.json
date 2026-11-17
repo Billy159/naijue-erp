@@ -1,0 +1,33 @@
+{
+  "state": "OWNER42_FINAL_CLOSEOUT_FILE_VERIFIED_SOURCE_ANALYSIS_DEPENDENCY_NOW_CLOSED",
+  "ownerResultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/RESULT.json",
+  "ownerResultSha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe",
+  "scope": "Five maintenance phases only; no business writer/import/APP/publication",
+  "closeout": {
+    "activeOperationUnits": [],
+    "databaseStillStopped": true,
+    "hardRestorationDeadlineEpochMs": 1794937071192,
+    "hardRestorationDeadlineMet": true,
+    "naturalExpiryUsedAsRestoration": false,
+    "originalDataIdentityPreserved": true,
+    "originalVerifierAndExpiryRestoredPrivately": true,
+    "ownRestoreContainerStoppedPID0Exit0": true,
+    "portAbsent": true,
+    "privateSafeRestorationReceiptSha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05",
+    "restoreFinishedAtUTC": "2026-11-17T16:41:44.957044+00:00",
+    "roleAttributesAndMembershipsUnchanged": true,
+    "runtimeAuthenticationUnchanged": true
+  },
+  "afterCatalog": {
+    "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+    "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+    "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+  },
+  "sourceAnalysisDeliveryPinsSha256": "c6f39c1357a443b9a9c09c39bbc4f0e443b611572633cd65dcb903b63560e79a",
+  "previousAnalysisFilesUnchanged": true,
+  "note": "Addendum to the already pinned analysis; not a runtime scope or authorization.",
+  "writerKey": null,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "clockCalls": 0
+}

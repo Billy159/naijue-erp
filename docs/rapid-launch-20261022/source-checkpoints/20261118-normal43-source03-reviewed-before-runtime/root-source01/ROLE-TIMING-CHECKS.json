@@ -1,0 +1,16 @@
+{
+  "state": "SOURCE43_RELATIVE_TIMING_ARITHMETIC_PASS",
+  "checks": 10,
+  "durationsMilliseconds": {
+    "controller": 4000000,
+    "admin": 4120000,
+    "restoration": 4900000,
+    "parent": 5100000
+  },
+  "strictStartElapsedLessThanMilliseconds": 460000,
+  "earliestWorkDeadlineRelativeMilliseconds": 4165000,
+  "outerMinusWorkMilliseconds": 35000,
+  "clockCalls": 0,
+  "authoritiesIssued": false,
+  "positiveAuthorityOrFutureServiceFixtures": false
+}

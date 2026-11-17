@@ -1,0 +1,44 @@
+{
+  "state": "AUTHORIZE_SOURCE_ONLY_NORMAL43_REUSE_EXISTING_PREPARE_AND_REASONED_WRITER_SUCCESSOR",
+  "authorityBasis": "Existing human standing authorization and active ERP launch goal. Main scope selection; no new human approval message.",
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "jobs": {
+    "apply": "t45-r3-ordinary43-auth-apply-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-43",
+    "writer": "t45-r3-batched-real-after42-execute-20261118-01",
+    "stop": "t45-r3-ordinary43-preserve-stop-20261118-01",
+    "restore": "t45-r3-ordinary43-auth-restore-20261118-01"
+  },
+  "phaseBudgetsSeconds": {
+    "apply": 300,
+    "start": 300,
+    "writer": 3000,
+    "stop": 120,
+    "restore": 300
+  },
+  "parentBudgetSeconds": 5100,
+  "minimumAvailableBytes": 30064771072,
+  "rootBefore": 127,
+  "rootAfter": 132,
+  "actualBeforeDispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+  "closed42OwnerResultSha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe",
+  "sourceAnalysisDeliveryPinsSha256": "c6f39c1357a443b9a9c09c39bbc4f0e443b611572633cd65dcb903b63560e79a",
+  "prepareReuse": "Preserve successful prepare05 44910 steps/SQLite/initializer/original preparedBinding. New execution envelope from real new C/epoch/current catalog. Exact custody/persisted-program guards; no recompile/replay/rewriting original artifacts.",
+  "lineage": "Root08 392/ac85/marker5bb and actual Upgrade42 SQLdaf/afterada8/a5f/aef proof distinct from historical catalog35/626. Preserve all historical records.",
+  "writerMode": "FIRST_WRITE only after existing same-client inspectRoot ABSENT. COMMITTED or unknown stops to Main, no automatic RESUME. Transport successor alone changes; original business operation/request/batch IDs/manifest/11:40 cutoff unchanged.",
+  "owners": {
+    "T45": "consumer/newlineage/plan custody/local execution and sole server owner",
+    "D1": "Root/Main; coordinate file ownership with T45 before edits",
+    "QB": "necessary new source/adapters independent delta after freeze; reuse closed prior checks"
+  },
+  "serverFreshClockIssuerCASPGOrWriterCurrentlyAuthorized": false,
+  "actualRuntimeRequires": "Final exact source+QA and Main concrete runtime scope then fresh/real clock; writer authority from actual live descriptor/new binding/retained original plan evidence.",
+  "APP": "Reuse completed 289/nativee041/archive0abef build; no rebuild or deployment in current source scope.",
+  "lastRemoteCheckpoint": "cc1fa99b8dd73e113891ff10f0ab0f66be2e0e33"
+}
