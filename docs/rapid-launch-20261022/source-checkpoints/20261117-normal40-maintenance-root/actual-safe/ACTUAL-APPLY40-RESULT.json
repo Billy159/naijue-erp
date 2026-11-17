@@ -1,0 +1,104 @@
+{
+  "activeOperationUnits": [],
+  "authenticationAttempted": false,
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "checkedAtUTC": "2026-11-17T12:29:38.203635+00:00",
+  "cleanup": {
+    "automaticReplay": false,
+    "cid": "eeb51151a197e3aae382de040988f07fa4ed2762aabc4e20c3f5ff992e0d9f99",
+    "confirmed": true,
+    "createAttempted": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+    "sourceDataPreserved": true,
+    "stage": "READ_BACK_OWN_CONTAINER_STOP"
+  },
+  "noOtherOperationUnits": true,
+  "observerMutations": 0,
+  "observerPGConnections": 0,
+  "originalAuthenticationRestoredAfterThisApply": false,
+  "pgdataPidAbsent": true,
+  "phase": "apply",
+  "portAbsent": true,
+  "publicCleanupSha256": "e80e52d2110380d48b4e83036bb954c51cd108843f8fb11f4147b55f0d0594e0",
+  "publicResultSha256": "4f43c5325b0ad4b3eebba870a1f69773cb7f8f48d9232a9df6756950b173e301",
+  "readbackSha256": "fc129a501d75688a83045fc27f4e3cef2d13e3255c22ea07109d5e3c77f85f2d",
+  "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+  "restorationDeadline": 1794922675816,
+  "restorationDeadlineBeijing": "2026-11-17T21:37:55.816000+08:00",
+  "result": {
+    "SQL36OrBusinessImport": false,
+    "automaticReplay": false,
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "eeb51151a197e3aae382de040988f07fa4ed2762aabc4e20c3f5ff992e0d9f99",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "newDatabaseOrRole": false,
+    "normal08Or05Started": false,
+    "phase": "apply",
+    "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+    "result": {
+      "authenticationAttempted": false,
+      "automaticReplay": false,
+      "credentialValidUntilByRole": {
+        "erp35_admin_20261110_r3": 1794921895816,
+        "erp35_controller_20261110_r3": 1794921775816
+      },
+      "membershipsOrRoleAttributesChanged": false,
+      "newRoles": 0,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary40-auth-apply-20261117-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ],
+      "runtimeAuthChanged": false,
+      "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+    },
+    "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+  },
+  "resultObjectsEqual": true,
+  "rootPin": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+  "rootPins": {
+    "cleanup": "938eac3250cec2c21c2c723172c65e3ae5656ecd475d75d95a48c2ca1f998407",
+    "result": "20863af3b0969b1a36e43bad13c8af8fa16cd9001b45c32686545759da661cea",
+    "terminal": "90244f0ab0dec56271bcf973dffff957a5daee50ba0d99cb05f670657eecc593"
+  },
+  "sourcePin": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+  "startOrSQLOrAPPExecuted": false,
+  "state": "ACTUAL_ORDINARY40_APPLY_COMPLETED_OWN_CONTAINER_CLEANED_ORIGINAL_AUTH_RESTORE_STILL_REQUIRED",
+  "terminal": {
+    "atUTC": "2026-11-17T12:29:12.083163+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 6.298841087962501,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T12:29:18.434268+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary40-auth-apply-20261117-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-3698189bc0df"
+  }
+}

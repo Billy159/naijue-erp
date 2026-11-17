@@ -1,0 +1,25 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-normal40-registration-window-01/phase-apply",
+  "issued": {
+    "phase": "apply",
+    "jobId": "t45-r3-ordinary40-auth-apply-20261117-01",
+    "authoritySha256": "18da052235e4985b17a929dbea1e5c1ef46a2f86dddc74bd659b018722473c96",
+    "sourcePinsSha256": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+    "phaseSubmitted": false,
+    "automaticReplay": false
+  },
+  "files": {
+    "ISSUED.json": {
+      "sha256": "b843ff933901f5c6d44bc007485080b548b17791d40b55d4ad70e1c75a4d2776",
+      "bytes": 297,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "18da052235e4985b17a929dbea1e5c1ef46a2f86dddc74bd659b018722473c96",
+      "bytes": 1116,
+      "mode": "0o600"
+    }
+  },
+  "rawAuthorityOrRoleOrProgramBodiesIncluded": false,
+  "actualPhaseSubmitted": false
+}

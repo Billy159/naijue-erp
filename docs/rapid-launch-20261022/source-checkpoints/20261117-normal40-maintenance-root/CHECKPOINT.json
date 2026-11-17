@@ -1,0 +1,224 @@
+{
+  "asOf": "2026-11-17T12:52:24.058047+00:00",
+  "state": "ACTUAL_NORMAL40_APPLY_SUCCEEDED_START_FAILED_PRECONTAINER_EXACT_ORIGINAL_AUTH_RESTORED_NO_SQL_UPGRADE",
+  "sourcePinsSha256": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+  "sourceReviewSha256": "e1dd544f66f2e9cc3030519ab7956598d66a5a6512de0481f47d6d48ae0f1bdc",
+  "consumerSourcePinsSha256": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+  "consumerReviewSha256": "65c7667606f40aa7931194142227e73881b660b2c6a136dfbb736fda489ff618",
+  "currentActualRoot": {
+    "dispatcherSha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+    "moduleSha256": "96dbb198f0424298e90096a704c998b8f2e2629f8afae387f07b230b978052f0",
+    "policySha256": "7ce698a4dc6e5ba41828192bbeee37febcf604ebf178c7ec190a1bfb33abab03",
+    "registeredKeys": 115,
+    "actualCASResultSha256": "6bc2fe7c6364bc166a5fb215c220a6e79c72eeceb7a963106bd68d65e19cd935"
+  },
+  "apply": "COMPLETED_EXIT0",
+  "start": "FAILED_EXIT2_PREPARE_R3_MOUNTS_FILEEXISTSERROR_NO_CONTAINER_CREATED",
+  "upgrade": "NOT_SUBMITTED",
+  "stop": "NOT_SUBMITTED_PRECONTAINER_PATH_DOES_NOT_REQUIRE_EMPTY_STOP",
+  "restore": "COMPLETED_EXIT0_EXACT_ORIGINAL_VERIFIER_AND_EXPIRY_PRIVATELY_VERIFIED_NOT_NATURAL_EXPIRY",
+  "authenticationCurrentlyRestored": true,
+  "PGCurrentlyStopped": true,
+  "runtimeAuthRoleAttributesAndMembershipsChanged": false,
+  "SQLUpgradePerformed": false,
+  "AppOrImportExecuted": false,
+  "failedStart40NeverReplay": true,
+  "actualExceptionFilename": null,
+  "actualTracebackFrame": null,
+  "failureAttribution": "HIGH_CONFIDENCE_SOURCE_AND_ACTUAL_FIXED_PATH_STAT_SEQUENCE_INFERENCE_NOT_CAPTURED_EXCEPTION_FILENAME",
+  "old39ProjectionPreserved": true,
+  "newService41ProjectionRequired": true,
+  "rawAuthorityRolePolicyPacketOrCredentialBodiesIncluded": false,
+  "copies": [
+    {
+      "path": "source/SOURCE-PINS.json",
+      "sha256": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+      "bytes": 3952
+    },
+    {
+      "path": "source/ACTUAL110-DISPATCHER.py",
+      "sha256": "7cab381f7cd7aa402a0087a14ecb2571460dd11274b00cee0dbd62938fb8b814",
+      "bytes": 51608
+    },
+    {
+      "path": "source/CHECKS.json",
+      "sha256": "46e2f6ac7adcbc86679bc067bc95b47a8c4284f75ef8e2eeda617143740cf0ff",
+      "bytes": 3775
+    },
+    {
+      "path": "source/FIVE-PHASES.UNISSUED.json",
+      "sha256": "9ca0325b89f51b28d92ad574196d698dfe86fe939e1be10a8059a1da828f35db",
+      "bytes": 18764
+    },
+    {
+      "path": "source/HANDOFF.md",
+      "sha256": "927d2471dac34ed7227d4b1f14d9cb49b0c81f7da2b6bc31d8b7fa29f85a750d",
+      "bytes": 4455
+    },
+    {
+      "path": "source/HISTORY-INPUTS.WIP.json",
+      "sha256": "752a9baa80fcc6dffffde74f5445e40bcbbc2c293646a5d0445d1c6b3584db9b",
+      "bytes": 8918
+    },
+    {
+      "path": "source/HISTORY-INPUTS.json",
+      "sha256": "6639229856517f384f0b2b7b45099641099ccb70b25ac35939e366c8231764b2",
+      "bytes": 16556
+    },
+    {
+      "path": "source/admin_exec.NORMAL40-UNREGISTERED.py",
+      "sha256": "a963fd90aa13a1d58e15cb7345b296b467d82d513834094dfc69af2819a5e9d8",
+      "bytes": 52958
+    },
+    {
+      "path": "source/admission.template.py",
+      "sha256": "a0721d94fff7c0dff59e395b2666cd55d8fd63f4a36874b1d2c608a4e0c85eed",
+      "bytes": 7209
+    },
+    {
+      "path": "source/assemble_cas.py",
+      "sha256": "1aa5ccb6d1aaada9da37ffbc4eebb3488f04f742d81ece6d23379be9006b5b7f",
+      "bytes": 5765
+    },
+    {
+      "path": "source/assemble_channel.py",
+      "sha256": "d85b87de93fa8ca53f2e2b88086090c72afa2f8fbc15f45223ac1cfb03c8fbd5",
+      "bytes": 2238
+    },
+    {
+      "path": "source/assemble_main_apis.py",
+      "sha256": "ac914f87e805e19c23c2c83f892a63d19b71adbcc3fd08040f2bed6f72389441",
+      "bytes": 14888
+    },
+    {
+      "path": "source/check_source.py",
+      "sha256": "9190142d9481d392fb55b93e46d7f7485ed1405d8a56c67684e8ea9dbbaf52bd",
+      "bytes": 5105
+    },
+    {
+      "path": "source/freeze_source.py",
+      "sha256": "a2bea2ab78ed4d47c38bccc3c53a4f61270dc137c1c137c5b048f01a8dab300f",
+      "bytes": 1497
+    },
+    {
+      "path": "source/issue_phase.py",
+      "sha256": "61cf314fa2a5260850e8ae6457f8f54fe0f04f1276901fa887742333f44d505c",
+      "bytes": 23176
+    },
+    {
+      "path": "source/issue_registration.py",
+      "sha256": "e224502becdbc3c871825ec1423a57b555c7009bba8f08714bab155da56acc86",
+      "bytes": 7267
+    },
+    {
+      "path": "source/patch_dispatcher.py",
+      "sha256": "fc97f7df95d43c8a4e15702f79b3ec2c65d8f772da945afa6bb0a7ed62b93a7a",
+      "bytes": 3055
+    },
+    {
+      "path": "source/prepare_channel.py",
+      "sha256": "1fe7d85c2a2aefcbbe27ec3eba2663b21195ab2859a9f7dfb7c9858130c1df30",
+      "bytes": 7173
+    },
+    {
+      "path": "source/prepare_history.py",
+      "sha256": "9daa641cf1a81000c292a2d640a3311b248f6cfed9a441bdc9b06a2b428314d3",
+      "bytes": 5545
+    },
+    {
+      "path": "source/read_registration_basis.py",
+      "sha256": "6a00d5cb45b980b4b969963bd65b2cce02e00eb51aa7b534750e099e948f1efe",
+      "bytes": 2408
+    },
+    {
+      "path": "source/register_cas.py",
+      "sha256": "21d15092bbf35d9e42069d85d605075dea95677e3984d25f01454f74dbbcdf57",
+      "bytes": 22073
+    },
+    {
+      "path": "source/render_admission.py",
+      "sha256": "ac33b8ac4a727d040d4304c9600537733a3cd4b5dd8105a57f181e5801988e83",
+      "bytes": 3147
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "e1dd544f66f2e9cc3030519ab7956598d66a5a6512de0481f47d6d48ae0f1bdc",
+      "bytes": 6293
+    },
+    {
+      "path": "actual-safe/FRESH-BASIS.json",
+      "sha256": "5e12108b65f869b4723f2bc92fe73ee3e52e2b322e584a5dfb3c69ffde69c2d5",
+      "bytes": 7843
+    },
+    {
+      "path": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "sha256": "6bc2fe7c6364bc166a5fb215c220a6e79c72eeceb7a963106bd68d65e19cd935",
+      "bytes": 502
+    },
+    {
+      "path": "actual-safe/POST-CAS-READBACK.json",
+      "sha256": "cb27f171d81edae0e0b16a65cb1a6bfe69f089d00dfe187ae0d0d87b7d6184ff",
+      "bytes": 923
+    },
+    {
+      "path": "actual-safe/REGISTRATION-ISSUED-SAFE-METADATA.json",
+      "sha256": "56dabe4bca158867853d821e5af8ac168acfc4e08acbbc64f0239dc5be3f7700",
+      "bytes": 3361
+    },
+    {
+      "path": "actual-safe/APPLY-ISSUED-SAFE-METADATA.json",
+      "sha256": "829a95f097433563008871d48bfe78e31b5fc4c88c9eb358504221b81d04cd90",
+      "bytes": 960
+    },
+    {
+      "path": "actual-safe/START-ISSUED-SAFE-METADATA.json",
+      "sha256": "df7580222f16348da02fd2da02ac37d5460cde86d49ae8f84fdbebb1dbd81a38",
+      "bytes": 974
+    },
+    {
+      "path": "actual-safe/RESTORE-ISSUED-SAFE-METADATA.json",
+      "sha256": "a00575a63cfe02e079dc59e9c4ea99753102cfa5bb66ecccfa260c961623906e",
+      "bytes": 966
+    },
+    {
+      "path": "actual-safe/ACTUAL-APPLY40-RESULT.json",
+      "sha256": "01505fe664a6ce439944a5f54a8e36776db2b279ba8c2064c9535dbc7cf50d6d",
+      "bytes": 3983
+    },
+    {
+      "path": "actual-safe/ACTUAL-START40-FAILED-RESULT.json",
+      "sha256": "029ac2c84001d4ea28275e4c4c85d25415864f19330ec81447e71b4735606d84",
+      "bytes": 3587
+    },
+    {
+      "path": "actual-safe/ACTUAL-RESTORE40-RESULT.json",
+      "sha256": "18da0908ca69461ce8a008339948c28b41cacddf0f3e706b8c6c7becee94401f",
+      "bytes": 5211
+    },
+    {
+      "path": "actual-safe/START40-NARROW-DIAGNOSTIC.json",
+      "sha256": "31e9d364e42a98bf492b84df41f0dd9bc5fa178421faf360ac1a843e4da8c048",
+      "bytes": 4831
+    },
+    {
+      "path": "actual-safe/START40-FIXED-PATH-METADATA.json",
+      "sha256": "e05fce70efa9a3dd04a2b4de7c7378c64bfb3ccc060360887b0b94b10caf21f8",
+      "bytes": 2898
+    },
+    {
+      "path": "source/r3_normal40_continuation.py.FROZEN-BYTES.json",
+      "sha256": "36d27573a49c15e1da2ecac1c97126dd66a886fde195e0ac230419844b6ab013",
+      "bytes": 46037,
+      "decodedOriginalSha256": "96dbb198f0424298e90096a704c998b8f2e2629f8afae387f07b230b978052f0"
+    }
+  ],
+  "omittedBodies": [],
+  "next": "T45 Source41 only service-specific proof projection path/mount and five new maintenance identities plus capture41, preserve all39/40 data/directories and no exist_ok bypass. D1 separate Root41 starts from actual115 and adds exact five new maintenance keys after T45 interface. SameQB only affected source/identity/pin and failure40+restoration binding; no server/clock/roles/PG until complete source and fresh finite issuance. No writer key selected.",
+  "exactFrozenSourceEncodings": [
+    {
+      "originalPath": "source/r3_normal40_continuation.py",
+      "encodedPath": "source/r3_normal40_continuation.py.FROZEN-BYTES.json",
+      "originalSha256": "96dbb198f0424298e90096a704c998b8f2e2629f8afae387f07b230b978052f0"
+    }
+  ]
+}

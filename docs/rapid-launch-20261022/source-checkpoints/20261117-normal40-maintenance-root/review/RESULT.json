@@ -1,0 +1,75 @@
+{
+  "actions": {
+    "businessBodiesOrCredentialsRead": false,
+    "futureCAuthorityEpochRoleOrPositiveFixturesCreated": false,
+    "ownerFilesOrFrozenReportsModified": false,
+    "serverPGNativeApplicationIssuerReaderCASClockCalls": 0
+  },
+  "actualNormal40MaintenanceVerified": false,
+  "actualNormal40RegistrationVerified": false,
+  "actualSQLUpgradeVerified": false,
+  "checkSummary": {
+    "consumer61_18_11AndNode24ReusedNotRerun": true,
+    "independentNewRootPairChecks": 32,
+    "priorSQL91Native20_21Host36_68H01Root08DiagnosticNotRerun": true,
+    "reproducedNewRootOwnerChecks": 82
+  },
+  "closedConsumerFindings": [
+    "C01"
+  ],
+  "consumerInterfaceSha256": "fe47f538d3dad023ed45702c3fa0314f5ad63694d23085a16e18e35b8d606fd0",
+  "consumerReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/CONSUMER-FIX-RESULT.json",
+    "sha256": "65c7667606f40aa7931194142227e73881b660b2c6a136dfbb736fda489ff618"
+  },
+  "consumerReviewSha256": "65c7667606f40aa7931194142227e73881b660b2c6a136dfbb736fda489ff618",
+  "consumerRulesSha256": "c6491825b7e81ce52bfbcdd33952599e0b0584a059936b68fe935a2f77266b71",
+  "consumerSourcePinsSha256": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+  "currentExecutionContract": {
+    "dynamicLeaves": "Only actual Main-issued leaves in T45 execution copies; never write dynamic authorities into frozen SOURCE.",
+    "frozenConsumerRuntimeChanged": false,
+    "phase": "T45 executes each phase by calling phase_cli.execute exactly once. Its sole internal prepare handles that phase; do not externally prepare then execute.",
+    "rootChannel": "prepare_local once locally→stage_and_read produces one combined basis→Main7 registration→separate register_once. Main reports only local preparation performed; QB made no calls."
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/ROOT-OWNER82-EVIDENCE.json",
+      "sha256": "46e2f6ac7adcbc86679bc067bc95b47a8c4284f75ef8e2eeda617143740cf0ff"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/ROOT-PAIR-EVIDENCE.json",
+      "sha256": "3f48ffe4b31279a3184a33c2bb25781d8751918b8d27277cdc6918d26eafa79d"
+    }
+  ],
+  "findings": [],
+  "notVerified": [
+    "No actual normal40 fresh/CAS/apply/start/serviceC/epoch/temporary auth/upgrade/stop/restore performed or observed by QB. Paired SOURCE PASS only; actual original ACK39 and all fixed fresh conditions still required.",
+    "Future exact authorities/window, service descriptor and live SQL before/inTx-after/postCOMMIT independent readback are separate execution evidence; no future fixtures created.",
+    "Source PASS does not establish SQL installed, importReady, APP successor closure, real full import, production acceptance, STAGED exposure or publication restrictions lifted. Original failed writer and diagnostic01 remain consumed."
+  ],
+  "rootPairReviewComplete": true,
+  "rulesSha256": "9ca0325b89f51b28d92ad574196d698dfe86fe939e1be10a8059a1da828f35db",
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-ordinary40-root-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+  "spec": {
+    "findings": [],
+    "scope": "Five maintenance steps only, genuine saved descriptor consumption, exact before/after catalog separation and original failure closure."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Frozen22-file root increment, original110 root/3guards/API and unchanged consumer source boundary."
+  },
+  "state": "SOURCE_PASS_NORMAL40_FIVE_MAINTENANCE_ROOT_AND_CONSUMER_PAIR_ONLY",
+  "verifiedScope": [
+    "Root sourcebd3/22 members and rules9ca exact; consumer7db/interfacefe47/c649/genuine QB65c exact. C01 correction and prior consumer evidence reused without another consumer review.",
+    "Actual root7cab110 unchanged except exact five unique maintenance keys→115, three protected-key guards and full old AST retained except the new constants/helper/execute branch. No import/prepare/writer registration or selection.",
+    "Original Main registration7/phase8 arguments and original five-field direct40 policy.300/300/780/120/300 phases,parent5100s,registration600s and28GiB floor. Original two role names, same genuinely issued roles SHA on apply/restore; no new role or guessed time generated.",
+    "Future locked metadata basis reads raw ACK39 and checks derived expected SHA; five old auth snapshots fullstat9 only. Actual39 restore, closed diagnostic02 and Root08source marker retained; current40 capture absent/newkeys unused/PGDATA stopped/old lock required. ACK is still only expected until actual future read.",
+    "Sole registration Main clock follows exact source/joint/consumer/basis/stat9/static bytes checks; actual fresh age≤120s and grant bound required.Original CAS audit, shared lock, atomic exclusive publication and four quiet/snapshot checkpoints retained; UNKNOWN original audit only,no replay.",
+    "Start requires actual Apply. Upgrade consumes four actual saved start outputs with encodedbyte hashes, current service/C/epoch/start/apply bindings and genuine finite window; no second native describe. Historical installed35cf27/9f/626, current compiledbefore6ef/futuretargetspec/626 and afterada8 remain distinct, original H01/native/SQL/driver/CHILD guards reused.",
+    "Root08 marker proves source materialization only SQLfalse/importReadyfalse; old diagnostic3prosrc never substitutes live before definitions/owner/fullmetadata. Five existing record classes preserved; no all-database-empty claim.",
+    "Stop includes current upgrade settled-or-absent and original historical four batch outcomes. Early restore, failed start precontainer and postACK paths, exact preserved service stop and original auth restoration retained. Terminal/commit UNKNOWN never converted to rollback or replay."
+  ]
+}

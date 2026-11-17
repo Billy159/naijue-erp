@@ -1,0 +1,80 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-normal40-registration-window-01",
+  "issued": {
+    "state": "ISSUED_NORMAL40_FIVE_PHASE_REGISTRATION_NO_PHASE_SUBMITTED",
+    "sourcePinsSha256": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+    "rulesSha256": "9ca0325b89f51b28d92ad574196d698dfe86fe939e1be10a8059a1da828f35db",
+    "consumerSourcePinsSha256": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+    "consumerReviewSha256": "65c7667606f40aa7931194142227e73881b660b2c6a136dfbb736fda489ff618",
+    "independentReviewSha256": "e1dd544f66f2e9cc3030519ab7956598d66a5a6512de0481f47d6d48ae0f1bdc",
+    "basisSha256": "5e12108b65f869b4723f2bc92fe73ee3e52e2b322e584a5dfb3c69ffde69c2d5",
+    "rolesSha256": "6b35ddad4dc91efb2605677bc06123a13c0e545319e270c39a983b464af53d09",
+    "applyHostSha256": "18da052235e4985b17a929dbea1e5c1ef46a2f86dddc74bd659b018722473c96",
+    "policySha256": "7ce698a4dc6e5ba41828192bbeee37febcf604ebf178c7ec190a1bfb33abab03",
+    "dispatcherSha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+    "registrationSha256": "96f64cc54ade1ab1e47ae15eb2f93f9472b40ef7dfa27ef0f047ad0c9884f019",
+    "jobs": {
+      "apply": "t45-r3-ordinary40-auth-apply-20261117-01",
+      "restore": "t45-r3-ordinary40-auth-restore-20261117-01",
+      "start": "t45-first-r3-native-service-start-20261117-40",
+      "stop": "t45-r3-ordinary40-preserve-stop-20261117-01",
+      "upgrade": "t45-r3-settlement24-three-routine-upgrade-20261117-01"
+    },
+    "phaseSubmitted": false
+  },
+  "files": {
+    "registration-packet.json": {
+      "sha256": "4c959245dcbd77c409510371579b1355c9c51f57f381e194c70592574b31e932",
+      "bytes": 136017,
+      "mode": "0o600"
+    },
+    "admin_exec.ISSUED.py": {
+      "sha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+      "bytes": 53020,
+      "mode": "0o600"
+    },
+    "ISSUED.json": {
+      "sha256": "da1a709a84e46f254281fcfd86575b0a48fccbc7b82943a71e23d366f91651c9",
+      "bytes": 1421,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "18da052235e4985b17a929dbea1e5c1ef46a2f86dddc74bd659b018722473c96",
+      "bytes": 1116,
+      "mode": "0o600"
+    },
+    "direct40-batched-real.json": {
+      "sha256": "7ce698a4dc6e5ba41828192bbeee37febcf604ebf178c7ec190a1bfb33abab03",
+      "bytes": 6506,
+      "mode": "0o600"
+    },
+    "roles-authorization.json": {
+      "sha256": "6b35ddad4dc91efb2605677bc06123a13c0e545319e270c39a983b464af53d09",
+      "bytes": 1646,
+      "mode": "0o600"
+    },
+    "registration-authorization.json": {
+      "sha256": "96f64cc54ade1ab1e47ae15eb2f93f9472b40ef7dfa27ef0f047ad0c9884f019",
+      "bytes": 8191,
+      "mode": "0o600"
+    }
+  },
+  "policyTiming": {
+    "startsAt": 1794918175816,
+    "expiresAt": 1794923275816
+  },
+  "roleTiming": {
+    "startsAt": 1794918175816,
+    "expiresAt": 1794919075816,
+    "controllerValidUntil": 1794921775816,
+    "backupAdminValidUntil": 1794921895816,
+    "restorationDeadline": 1794922675816
+  },
+  "registrationTiming": {
+    "startsAt": 1794918175816,
+    "expiresAt": 1794918775816
+  },
+  "rawAuthorityRolePolicyOrPacketBodiesIncluded": false,
+  "actualCASExecuted": false,
+  "actualPhaseSubmitted": false
+}
