@@ -1,0 +1,114 @@
+{
+  "state": "SOURCE_READY_FOR_MAIN_SINGLE_NARROW_QB_REVIEW",
+  "sourceOnly": true,
+  "executionReady": false,
+  "checksPassed": 91,
+  "sourceFiles": 392,
+  "operationSourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "catalogSourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+  "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+  "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "changedRoutines": 3,
+  "otherRoutinesUnchanged": 158,
+  "PGConnections": 0,
+  "nativeBusinessEntryCalls": 0,
+  "sealed18Reruns": 0,
+  "authorityIssued": false,
+  "SQLInstalled": false,
+  "durableBusinessState": "UNKNOWN",
+  "APPRebuilt": false,
+  "frontendOrSharedContractChanges": false,
+  "pins": [
+    {
+      "path": "generate_successor.py",
+      "bytes": 9194,
+      "sha256": "d9a4e61c4666d915cd9a8e44e2b735652dd0336eb557d93c34fefd2a9e45d3f2"
+    },
+    {
+      "path": "wire_catalog.py",
+      "bytes": 7557,
+      "sha256": "1b314b1fbc249ed1c7988bde8bbdcb151e7df98531fc0fba496d70a2a816a00b"
+    },
+    {
+      "path": "derive_metadata.mjs",
+      "bytes": 5921,
+      "sha256": "c1ead3f978f76877f0552bac32e5cc8c9719a1393a691346879047f3c57dd1b6"
+    },
+    {
+      "path": "check_successor.py",
+      "bytes": 9598,
+      "sha256": "89bf172ea8b3944723112d374caf2bb5436fc2d45e9b5f47df14c857b1d3d092"
+    },
+    {
+      "path": "ROUTINE-CHANGES.json",
+      "bytes": 4180,
+      "sha256": "cb2bb431b6e822b774bb8e91ddfa5f19e1d8d70a5145eb35efa242e0a50fb4a4"
+    },
+    {
+      "path": "DERIVED-METADATA.json",
+      "bytes": 11681,
+      "sha256": "e3cbafc80c977f15dd3085e189855ceacb575e4d085a9aed71f45a3abd023858"
+    },
+    {
+      "path": "CHECK-RESULT.json",
+      "bytes": 8721,
+      "sha256": "d44e96fb851937fe4b7ef1859385fcd81aeac33e863f6fc2ea4c8ecf6e584cc2"
+    },
+    {
+      "path": "source-rows.json",
+      "bytes": 72609,
+      "sha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 4900,
+      "sha256": "91d81b640c8e18ee1314a724a0090fd205542bd3205d2b43fd1ba16d31f8482d"
+    },
+    {
+      "path": "metadata/catalog-batched.json",
+      "bytes": 4467,
+      "sha256": "682592be01b4ea556c6b61e005d382bc9b3b61e70fc3728547ed0a40f4f52220"
+    },
+    {
+      "path": "metadata/catalog-command.json",
+      "bytes": 4485,
+      "sha256": "a6e79b3530636cd3d8f18a71db33dc93e09e84c467cfc450066ae042ad041f84"
+    },
+    {
+      "path": "metadata/catalog-compactZero.json",
+      "bytes": 4412,
+      "sha256": "e1327bd5aced225f9c0d21e97da90f15b705b9794a891746ef2c7822311b2fc4"
+    },
+    {
+      "path": "metadata/catalog-settlement24.json",
+      "bytes": 3695,
+      "sha256": "a3ed8cc05b43123857c43f83f11fde83b6bacdf736bb40d9219b937d794b41f7"
+    },
+    {
+      "path": "metadata/guardSql.sql",
+      "bytes": 1003306,
+      "sha256": "a977e4924e4eb90a2c38aaeefeb8cec168a5e370d3a855d16ac3f20b5fa09e58"
+    },
+    {
+      "path": "metadata/observationSql.sql",
+      "bytes": 5740,
+      "sha256": "17e83addc12c413a150dc72d8ae45cea60a328c37725a6a7441c7a1acbd415bc"
+    },
+    {
+      "path": "metadata/source-admin154.json",
+      "bytes": 384393,
+      "sha256": "57324169d9d8e72f26eefe84bab138dd60dc8129cbbc60237e3214c20cd12c71"
+    },
+    {
+      "path": "metadata/source-combined.json",
+      "bytes": 382608,
+      "sha256": "ebe3e37ce66fe24f206918cd56678a7eb836c1634f42512d6b4b2cfea1990347"
+    },
+    {
+      "path": "metadata/source-compactZero.json",
+      "bytes": 385495,
+      "sha256": "78af7cb88618ff168841abefde566fe8ecdc81156b12bd5ef5a4f23b6155e7f1"
+    }
+  ]
+}

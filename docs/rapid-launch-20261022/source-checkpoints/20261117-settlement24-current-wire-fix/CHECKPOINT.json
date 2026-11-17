@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T15:28:10.509614+08:00",
-  "state": "ACTUAL_OLD_RAW_SETTLEMENT24_SQL_GATE_MISMATCH_CONFIRMED_SOURCE_FIX_STARTED_NO_PG_UPGRADE",
+  "asOf": "2026-11-17T16:04:44.430971+08:00",
+  "state": "SETTLEMENT24_THREE_ROUTINE_SOURCE_REVIEWED_NO_DB_UPGRADE_DURABLE_PREPARATION_ONLY",
   "actualCauseConfirmed": true,
   "actualGuard": "HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED",
   "actualFunctionName": "standard_whole_package_command_v2",
@@ -57,7 +57,176 @@
       "path": "main/SOURCE-FIX-DECISION-ONLY.json",
       "sha256": "3b04898ea9050610f83295c51075c65dfeaf95c0566a1cd834b140df1085bef6",
       "bytes": 4819
+    },
+    {
+      "path": "source/SOURCE-PINS.json",
+      "sha256": "76864577847c0ab030aaa78881bc24ffd5d5db288b2af1034eb5fc26f2061c3b",
+      "bytes": 3785
+    },
+    {
+      "path": "source/generate_successor.py",
+      "sha256": "d9a4e61c4666d915cd9a8e44e2b735652dd0336eb557d93c34fefd2a9e45d3f2",
+      "bytes": 9194
+    },
+    {
+      "path": "source/wire_catalog.py",
+      "sha256": "1b314b1fbc249ed1c7988bde8bbdcb151e7df98531fc0fba496d70a2a816a00b",
+      "bytes": 7557
+    },
+    {
+      "path": "source/derive_metadata.mjs",
+      "sha256": "c1ead3f978f76877f0552bac32e5cc8c9719a1393a691346879047f3c57dd1b6",
+      "bytes": 5921
+    },
+    {
+      "path": "source/check_successor.py",
+      "sha256": "89bf172ea8b3944723112d374caf2bb5436fc2d45e9b5f47df14c857b1d3d092",
+      "bytes": 9598
+    },
+    {
+      "path": "source/ROUTINE-CHANGES.json",
+      "sha256": "cb2bb431b6e822b774bb8e91ddfa5f19e1d8d70a5145eb35efa242e0a50fb4a4",
+      "bytes": 4180
+    },
+    {
+      "path": "source/DERIVED-METADATA.json",
+      "sha256": "e3cbafc80c977f15dd3085e189855ceacb575e4d085a9aed71f45a3abd023858",
+      "bytes": 11681
+    },
+    {
+      "path": "source/CHECK-RESULT.json",
+      "sha256": "d44e96fb851937fe4b7ef1859385fcd81aeac33e863f6fc2ea4c8ecf6e584cc2",
+      "bytes": 8721
+    },
+    {
+      "path": "source/source-rows.json",
+      "sha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+      "bytes": 72609
+    },
+    {
+      "path": "source/HANDOFF.md",
+      "sha256": "91d81b640c8e18ee1314a724a0090fd205542bd3205d2b43fd1ba16d31f8482d",
+      "bytes": 4900
+    },
+    {
+      "path": "source/metadata/catalog-batched.json",
+      "sha256": "682592be01b4ea556c6b61e005d382bc9b3b61e70fc3728547ed0a40f4f52220",
+      "bytes": 4467
+    },
+    {
+      "path": "source/metadata/catalog-command.json",
+      "sha256": "a6e79b3530636cd3d8f18a71db33dc93e09e84c467cfc450066ae042ad041f84",
+      "bytes": 4485
+    },
+    {
+      "path": "source/metadata/catalog-compactZero.json",
+      "sha256": "e1327bd5aced225f9c0d21e97da90f15b705b9794a891746ef2c7822311b2fc4",
+      "bytes": 4412
+    },
+    {
+      "path": "source/metadata/catalog-settlement24.json",
+      "sha256": "a3ed8cc05b43123857c43f83f11fde83b6bacdf736bb40d9219b937d794b41f7",
+      "bytes": 3695
+    },
+    {
+      "path": "source/metadata/observationSql.sql",
+      "sha256": "17e83addc12c413a150dc72d8ae45cea60a328c37725a6a7441c7a1acbd415bc",
+      "bytes": 5740
+    },
+    {
+      "path": "source/operation/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "3647d994a1073dab052e74aeb02c28cffc90d67849414f27cb16898000234c58",
+      "bytes": 74255
+    },
+    {
+      "path": "source/operation/scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3",
+      "bytes": 22126
+    },
+    {
+      "path": "source/operation/tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa",
+      "bytes": 105967
+    },
+    {
+      "path": "source/operation/adapters/postgres/patches/settlement24-current-wire-successor.sql",
+      "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+      "bytes": 7213
+    },
+    {
+      "path": "source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json",
+      "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180",
+      "bytes": 939487
+    },
+    {
+      "path": "source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json",
+      "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9",
+      "bytes": 975343
+    },
+    {
+      "path": "source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json",
+      "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8",
+      "bytes": 977195
+    },
+    {
+      "path": "source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json",
+      "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+      "bytes": 5692
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "976ca7fd03741c81bab9d635c6577cbe5cc430b5e20ea9374621e8e530cb43bb",
+      "bytes": 10229
+    },
+    {
+      "path": "actual-safe/ACTUAL-REFERENCE-SOURCE-METADATA.json",
+      "sha256": "77137b5ddad46171e48fcbe6eabc48ced85ef35f99f6de674cc60a01728099a4",
+      "bytes": 1234
     }
   ],
-  "next": "D1 independent exact3routine source successor with b978/currentmanifest namespace/24-26 preserving old acceptance and all other158; T45 only prepares minimal durable readonly source/entry, no PG/runtime until concrete source reviewed and Main finite issuance. Originalfailedwriter never replay; actual durable evidence before controlled recovery."
+  "next": "T45 freeze bounded offline-single-user durable readonly code+root admission+original client; QB narrow review then Main actual fresh basis/finite issuance. D1 prepares Root08 SOURCE-only consumer for392 rows, without binding unknown future root. No actual PG or3routine SQL upgrade yet; failedwriter immutable/no blind new key.",
+  "sourcePinsSha256": "76864577847c0ab030aaa78881bc24ffd5d5db288b2af1034eb5fc26f2061c3b",
+  "sourceReviewSha256": "976ca7fd03741c81bab9d635c6577cbe5cc430b5e20ea9374621e8e530cb43bb",
+  "sourceCheckCount": 91,
+  "afterSourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "afterCompactSourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "afterCatalogSourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+  "afterCatalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+  "afterModelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "afterModelNotInstalled": true,
+  "sourceChangedExistingFiles": 3,
+  "sourceAddedFiles": 5,
+  "sourceInheritedMetadataRows": 384,
+  "omittedDerivedBodies": [
+    {
+      "path": "metadata/guardSql.sql",
+      "bytes": 1003306,
+      "sha256": "a977e4924e4eb90a2c38aaeefeb8cec168a5e370d3a855d16ac3f20b5fa09e58",
+      "reason": "Large derived duplicate descriptor/query body omitted; original SOURCE hash and generator retained"
+    },
+    {
+      "path": "metadata/source-admin154.json",
+      "bytes": 384393,
+      "sha256": "57324169d9d8e72f26eefe84bab138dd60dc8129cbbc60237e3214c20cd12c71",
+      "reason": "Large derived duplicate descriptor/query body omitted; original SOURCE hash and generator retained"
+    },
+    {
+      "path": "metadata/source-combined.json",
+      "bytes": 382608,
+      "sha256": "ebe3e37ce66fe24f206918cd56678a7eb836c1634f42512d6b4b2cfea1990347",
+      "reason": "Large derived duplicate descriptor/query body omitted; original SOURCE hash and generator retained"
+    },
+    {
+      "path": "metadata/source-compactZero.json",
+      "bytes": 385495,
+      "sha256": "78af7cb88618ff168841abefde566fe8ecdc81156b12bd5ef5a4f23b6155e7f1",
+      "reason": "Large derived duplicate descriptor/query body omitted; original SOURCE hash and generator retained"
+    }
+  ],
+  "actualReferenceMetadataSha256": "77137b5ddad46171e48fcbe6eabc48ced85ef35f99f6de674cc60a01728099a4",
+  "actualSettlementCount": 26,
+  "actualSourceReferenceCount": 148,
+  "actualEvidenceReferenceUsed": true,
+  "actualAllRefHashesInManifest": true,
+  "actualEvidenceHashInManifest": true
 }

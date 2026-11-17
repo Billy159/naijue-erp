@@ -1,0 +1,130 @@
+{
+  "APPRebuilt": false,
+  "SQLInstalled": false,
+  "actions": {
+    "applicationDerivationOrGeneratorInvoked": false,
+    "approvedBusinessPayloadRead": false,
+    "frontendSharedContractOrT45FilesModified": false,
+    "full387TreeRehash": false,
+    "futureCAuthorityEpochRoleOrPositiveRuntimeFixturesCreated": false,
+    "onlyChangedModulesSyntaxChecked": true,
+    "sealed18Reruns": 0,
+    "serverPGNativeBusinessEntryIssuerClockCalls": 0,
+    "sourceOrFrozenOwnerFilesModified": false
+  },
+  "actualEvidenceBoundary": {
+    "SQLSTATE23514FromSourceOnly": true,
+    "SQLSTATEActuallyObserved": null,
+    "actualFunction": "standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+    "actualObservedGuard": "HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED",
+    "actualProsrcLine": 491,
+    "actualStage": "INIT in CORE/APPLY",
+    "actualWireMatchesApprovedReference": "Established by accepted actual safe projection; not independently reread from payload by QB",
+    "notObservedPUBLISHThrow": true,
+    "notSQL535": true,
+    "settlement26Evidence": "Existing accepted metadata,not newly read settlement rows"
+  },
+  "afterModelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "beforeModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "catalogSourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+  "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+  "checkSummary": {
+    "independentBuiltInJSONHashChecks": 21,
+    "independentEightLeafAndMetadataChecks": 69,
+    "offlinePredicateAndExactRoutineDeltaChecks": 91,
+    "total": 181
+  },
+  "durableBusinessState": "UNKNOWN",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-current-wire-source-review-01/PREDICATE-EVIDENCE.json",
+      "sha256": "d44e96fb851937fe4b7ef1859385fcd81aeac33e863f6fc2ea4c8ecf6e584cc2"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-current-wire-source-review-01/SOURCE-DELTA-EVIDENCE.json",
+      "sha256": "416c3794670773b3b2270bfdf2a2db261825529c614f693d5a1d14343a79ff68"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-current-wire-source-review-01/METADATA-EVIDENCE.json",
+      "sha256": "525dd824099fa86d1ee1e1a8ba8e1842b2a5eb57221bf62c8b44376182dba211"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "mainDecisionSha256": "3b04898ea9050610f83295c51075c65dfeaf95c0566a1cd834b140df1085bef6",
+  "operationSourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "reusedReports": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-lineage-review-01/RESULT.json",
+      "sha256": "bfe6ab7d8061ec0e9ef6f82a7436f19f3434e5f5a170f76d36a07753f0c1c43f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal39-joint-review-01/RESULT.json",
+      "sha256": "7a38e76f73f61dd7466e7bd500980fcb7c9522b2619d9798cc635673d5100dc8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-host-lexical-fix-review-01/RESULT.json",
+      "sha256": "235153599223116db2f71893221b299d248a3a0acc0f05f287b05c6b995a1379"
+    }
+  ],
+  "routineChanges": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-current-wire-fix-source-01/ROUTINE-CHANGES.json",
+    "sha256": "cb2bb431b6e822b774bb8e91ddfa5f19e1d8d70a5145eb35efa242e0a50fb4a4"
+  },
+  "runtimeStillRequired": [
+    "Actual PostgreSQL parsing/execution and three-function upgrade have not occurred in this review. Source PASS grants no finite SQL-upgrade or runtime authority; actual target/current before hashes,controlled application and real after readback remain separate.",
+    "New after modelada8 differs from old626c. Existing ROOT07/source-lineage receipts cannot establish these3 functions installed or new catalog gate passing.",
+    "APP a7/native57a/archive13b8 remains the historical candidate. It does not include this new native closure; source/APP successor pairing and any later packaging are separate work,not passed here.",
+    "Original writer FAILED history is preserved; durable business state remains UNKNOWN. No replay of its original key,no blind new writer key or reimport,no businessOperationId change is authorized by this SOURCE result. Actual controlled read-only durable evidence is required before runtime recovery.",
+    "No whole-business readback,conservation,PG/native regression,sealed18 rerun,deployment,PUBLISH or formal acceptance performed. STAGED remains hidden and existing publication restrictions remain."
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-current-wire-fix-source-01",
+  "sourceManifestBytes": 3785,
+  "sourceOnly": true,
+  "sourcePinsSha256": "76864577847c0ab030aaa78881bc24ffd5d5db288b2af1034eb5fc26f2061c3b",
+  "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "spec": {
+    "findings": [],
+    "scope": "Main3b048 exact approved b978 + namespace + manifest and24/26, six-argument INIT/PUBLISH/assert_document_migration/verify closure, old25/27 and old4b24/26 preserved."
+  },
+  "sqlParsedByPostgres": false,
+  "standards": {
+    "findings": [],
+    "scope": "Only eight changed/new SOURCE leaves, preserved immutable historical SQL/catalog assertions, metadata-only reproducible checks, no database/data/owner mutation."
+  },
+  "state": "SOURCE_PASS_SETTLEMENT24_CURRENT_WIRE_THREE_ROUTINE_SOURCE_ONLY",
+  "threeRoutinePins": [
+    {
+      "afterBodySha256": "ed028cc873d9d4dd556dd60b790fca8ef912550b463a949736f214acefd5dcbd",
+      "afterDefinitionSha256": "ed9e5daa0797e7ced0caa920f4c6d8ad465c7edcf01ed20b903d5f3f1d4ee869",
+      "beforeBodySha256": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+      "beforeDefinitionSha256": "3bcc7f4bd796df962c6794e1fe2b63e1a92df269f78d431af7b0fefc7f3c97b6",
+      "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)"
+    },
+    {
+      "afterBodySha256": "45269a5359a89ae4e36383cbf4dec7fea4017bc9677a90b96df0eaf0e011c39f",
+      "afterDefinitionSha256": "51f8516e6d82124fb440569ff7faae0c1eefff32c2d4b835b444eb190d2371eb",
+      "beforeBodySha256": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+      "beforeDefinitionSha256": "3b44e33fd7d32d1ba33b2b520a1c62ac93f04c55198475d404eb2cdadd3e31ce",
+      "signature": "naijue_erp.assert_document_migration(uuid)"
+    },
+    {
+      "afterBodySha256": "005f47f4925a9d4118d7dcc461a42fe2568a4cddd21b2e73f28bae18ba5892ee",
+      "afterDefinitionSha256": "5433d23324c4f4d999d086f22759363232ae5484de5591f0969dd37ede2b858c",
+      "beforeBodySha256": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8",
+      "beforeDefinitionSha256": "fcad22a97e86d0b4c0226dbd6014600a7fecd9fa4923785aaf2983ee89b53eca",
+      "signature": "naijue_erp.standard_whole_package_verify_v2(jsonb,text)"
+    }
+  ],
+  "upgradeSQLSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+  "verifiedScope": [
+    "Final SOURCE7686 and all listed delivery file hashes/lengths verified. Independent Main3b048 and three actual safe projection pins1f32/7736/6898 match. Evidence identifies six-argument INIT line491 and actual24-doc b978 raw58251 bytes; SQLSTATE was not actually observed and is not promoted from source23514.",
+    "Only command6arg,assert_document_migration(uuid),verify_v2(jsonb,text) differ from accepted current161 snapshots. Exact unique-anchor replacements reverse to before bodies and exact definitions. The other158 routine bodies/definitions,35 tables,351 columns,114 indexes and all model owner/security/search_path/ACL fields remain identical.",
+    "Actual generated predicates tested offline: new approved b978/namespace naijue:tplus:20261102/manifest7eb/24docs/26settlements accepted; wrong/missing namespace or manifest,wrong raw,wrong doc/settlement counts and missing evidence-use rejected in their relevant guards. Old25/27 and old4b24/26 predicates preserved. This is an offline expression test, not PostgreSQL execution.",
+    "Existing wire SHA,shape/source/evidence-use guards and per-identity/per-amount/source-ref/exact-set checks unchanged outside the precise five source anchors. No input,amount,quantity,identity,businessOperationId or approval edit made.",
+    "392-row inventory retains all387 old paths,changes exactly source/catalog/host3 leaves and adds5 pinned SQL/snapshot/PINS assets. Other384 row metadata reused; no full387 tree rehash or deep old-scope review. Source module only adds5 entries; catalog old bytes are an unchanged prefix; host only adds one import and two successor catalog bindings.",
+    "Thin successor requires current command predecessor,exact3 before/after body/definition hashes,complete model equality and other158 exact bodies/definitions. Existing recursive source/catalog guards,old0035/0027/0028/COMMAND snapshots and one-routine command assertions preserved.",
+    "Upgrade SQL payload contains exactly the3 reviewed change specs. One transaction,exact current owner/before body+definition checks,unique anchors,after body+definition checks and all other pg_proc metadata readback required. No business DML,schema/role/ACL change statements; SQL was not installed or PostgreSQL-parsed.",
+    "Pure built-in JSON/hash checks independently reproduce compact sourceac85,catalog sourcea5f7,catalogSpecaefb and actual historical-role-mapped modelada8. Generated guard/observation hashes match after descriptor and contain all3 after routine pins. No source loader or derivation application module imported; no approved business reference body read."
+  ]
+}

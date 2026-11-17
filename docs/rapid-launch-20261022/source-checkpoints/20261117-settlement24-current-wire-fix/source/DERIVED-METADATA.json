@@ -1,0 +1,252 @@
+{
+  "format": "D1_SETTLEMENT24_CURRENT_WIRE_SOURCE_METADATA_V1",
+  "state": "SOURCE_ONLY_NOT_INSTALLED_OR_RUNTIME_READY",
+  "historicalTarget": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261110-r3-installed-proof-result-01/fresh35-production-facts-result.json",
+    "sha256": "d663dd7d86287524a426f77ecee537f60318ec81f4ae64bd5210d089b9bd37b5",
+    "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+    "usedForMetadataOnly": true
+  },
+  "predecessorSourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e",
+  "sourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "sourceFiles": 392,
+  "changed": [
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "3647d994a1073dab052e74aeb02c28cffc90d67849414f27cb16898000234c58"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa"
+    }
+  ],
+  "added": [
+    {
+      "path": "adapters/postgres/patches/settlement24-current-wire-successor.sql",
+      "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json",
+      "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json",
+      "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json",
+      "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json",
+      "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19"
+    }
+  ],
+  "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "sourceLayers": {
+    "combined": "528b0b90a3d3e09d542f2c95d5cf40146a29f1a557a0fb63952e723400baed58",
+    "admin154": "a02ab3f6831d2ac1d9d12d7b03875c9c4a95aa295b9016e510634e852d6bb9e9",
+    "compactZero": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3"
+  },
+  "catalog": {
+    "format": "FRESH35_SETTLEMENT24_CURRENT_WIRE_CATALOG_SPEC_V1",
+    "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+    "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+    "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+    "evidencePins": {
+      "model": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "functions": "9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f"
+    },
+    "changes": [
+      {
+        "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+        "before": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+        "after": "ed028cc873d9d4dd556dd60b790fca8ef912550b463a949736f214acefd5dcbd",
+        "beforeDefinitionSha256": "3bcc7f4bd796df962c6794e1fe2b63e1a92df269f78d431af7b0fefc7f3c97b6",
+        "afterDefinitionSha256": "ed9e5daa0797e7ced0caa920f4c6d8ad465c7edcf01ed20b903d5f3f1d4ee869"
+      },
+      {
+        "signature": "naijue_erp.assert_document_migration(uuid)",
+        "before": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+        "after": "45269a5359a89ae4e36383cbf4dec7fea4017bc9677a90b96df0eaf0e011c39f",
+        "beforeDefinitionSha256": "3b44e33fd7d32d1ba33b2b520a1c62ac93f04c55198475d404eb2cdadd3e31ce",
+        "afterDefinitionSha256": "51f8516e6d82124fb440569ff7faae0c1eefff32c2d4b835b444eb190d2371eb"
+      },
+      {
+        "signature": "naijue_erp.standard_whole_package_verify_v2(jsonb,text)",
+        "before": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8",
+        "after": "005f47f4925a9d4118d7dcc461a42fe2568a4cddd21b2e73f28bae18ba5892ee",
+        "beforeDefinitionSha256": "fcad22a97e86d0b4c0226dbd6014600a7fecd9fa4923785aaf2983ee89b53eca",
+        "afterDefinitionSha256": "5433d23324c4f4d999d086f22759363232ae5484de5591f0969dd37ede2b858c"
+      }
+    ],
+    "guardSqlSha256": "a977e4924e4eb90a2c38aaeefeb8cec168a5e370d3a855d16ac3f20b5fa09e58",
+    "observationSqlSha256": "17e83addc12c413a150dc72d8ae45cea60a328c37725a6a7441c7a1acbd415bc",
+    "completeMetadataGuard": true,
+    "controllerLineageReadColumns": [
+      "version",
+      "description"
+    ],
+    "accountColumnWrites": {
+      "relation": "user_account",
+      "grantee": "erp_unified27_runtime_2393dbc6db9581c2",
+      "insertColumns": [
+        "id",
+        "staff_id",
+        "login_name",
+        "password_hash",
+        "login_enabled",
+        "auth_version",
+        "version",
+        "created_at",
+        "updated_at"
+      ],
+      "updateColumns": [
+        "login_name",
+        "login_enabled",
+        "auth_version",
+        "version",
+        "updated_at",
+        "password_hash"
+      ]
+    },
+    "rawRowtypeComparison": "ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES",
+    "dependencyValidation": "PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION",
+    "captureMissingEvidencePreserved": [
+      "RAW_PG_TYPE_ROWS_AND_UNMODELED_TYPE_PROPERTIES",
+      "AUTHORIZED_NEW35_TARGET_CATALOG_AND_ENGINE_DEPENDENCIES"
+    ],
+    "independentSafetyReviewComplete": false,
+    "sqlParsedByPostgres": false,
+    "engineVerified": false,
+    "hostEnabled": false,
+    "predecessorModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "patchSqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+    "permissionChanges": [],
+    "routineCount": 161,
+    "indexCount": 114,
+    "requiresLockedRootAdmission": true,
+    "successorPinsSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+    "changedRoutineCount": 3,
+    "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17"
+  },
+  "predecessorCatalog": {
+    "format": "FRESH35_BATCHED_COMMAND_SUCCESSOR_CATALOG_SPEC_V1",
+    "sourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+    "targetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+    "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "evidencePins": {
+      "model": "2469ff8fb09dfe06c4992e31f8fa5aa85f462fae20d0c5490cee3082a921e28f",
+      "functions": "9959bca2dd4d91d3fb1ba7558c5abdd0b70676b096eaf73c4dd117261534551f"
+    },
+    "changes": [
+      {
+        "signature": "naijue_erp.assert_document_migration(pg_catalog.uuid)",
+        "before": "b3896913f7dc67074ac7d5874a5b97b13c14fb006a98049c0023a6bbdf3a8ff5",
+        "after": "0bd06d8d4d0163c5772233b72af9048c802387052aa18aa57ae21020b950130a"
+      },
+      {
+        "signature": "naijue_erp.standard_whole_package_verify_v2(jsonb,text)",
+        "before": "103dad3f9486c17f315fb627abf0920305ad6c0df7ec23cc8f3f295679f2f5b1",
+        "after": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8"
+      },
+      {
+        "signature": "naijue_erp.validate_import_accounting_final_record_commit()",
+        "before": "7a337f3a2e9b2c961790c6f6a5adbb55850067a765898ce4fa13fce33828a15c",
+        "after": "2fc1ae00d5081ab5a28a0b02578aec6f77c104d26086e1157db96144d5b40d13"
+      },
+      {
+        "signature": "naijue_erp.standard_whole_package_command_v2(jsonb,text,text,uuid,integer)",
+        "before": "071119364504d6a818ea3454514ec139763784f8a914fa5cbc4284fccaaa520b",
+        "after": "4b31ea7398b4aae5fa6c91a9af2276258493cdccc9f72bfabe4aa12313b62c09"
+      },
+      {
+        "signature": "naijue_erp.standard_inventory_key_proof(pg_catalog.uuid,pg_catalog.uuid)",
+        "before": "687848f69a5ca3e139c35aafc9b9be8c31cd23f9d70a07cb34d4bde9021d7d66",
+        "after": "bd3e945b2849aebfdeb0aa1d2029a0cdca58015574515392b693f7d38f8fd241"
+      },
+      {
+        "signature": "naijue_erp.guard_cutoff_ledger()",
+        "before": "65cd4ff3d8671651ba21ea9c87e2bbcb8d0d1f9613b50698fae6d953202de939",
+        "after": "6b1119b4feaf986c15ffd302e3b832fa1bc9df103d34c5257cb7a16792013fc4"
+      },
+      {
+        "signature": "naijue_erp.guard_recorded_live_balance_pair()",
+        "before": "891aea0441b73343caf02b249515b757884e760fefc444c644a5f25b74e88d0f",
+        "after": "5c27c87037c8333d7c4ff7a57eb08896b4230653b6d0c58f11e6e875333c7b0e"
+      },
+      {
+        "signature": "naijue_erp.validate_sparse_balance_commit()",
+        "before": "b4fcf066b75f334152e997080ce3157c578731bea4fd98366bd93e5e1ff88d64",
+        "after": "dc98d189239d97774a3b319813e27e37eb04489a517d81de2d9cca85b6019714"
+      },
+      {
+        "signature": "naijue_erp.validate_transfer_effect()",
+        "before": "f7296739bc086cc8a7ed293272b1061480ffd3d83c92e40552697fe812f79f1a",
+        "after": "6c1f9a7133b8c896cd7f08a2227db891c48a28cbb6d9f783e6673ba05607ea36"
+      }
+    ],
+    "guardSqlSha256": "8d44c9592b8d58968a0395fb23bbe726a983fe7f8819bb19ca2d29397048a278",
+    "observationSqlSha256": "a7fd41b7a78ce11162c3d80b147f6baae9b5181518bf76c2a80e712cbccfecc7",
+    "completeMetadataGuard": true,
+    "controllerLineageReadColumns": [
+      "version",
+      "description"
+    ],
+    "accountColumnWrites": {
+      "relation": "user_account",
+      "grantee": "erp_unified27_runtime_2393dbc6db9581c2",
+      "insertColumns": [
+        "id",
+        "staff_id",
+        "login_name",
+        "password_hash",
+        "login_enabled",
+        "auth_version",
+        "version",
+        "created_at",
+        "updated_at"
+      ],
+      "updateColumns": [
+        "login_name",
+        "login_enabled",
+        "auth_version",
+        "version",
+        "updated_at",
+        "password_hash"
+      ]
+    },
+    "rawRowtypeComparison": "ALL_NONIDENTITY_FIELDS_AGAINST_NATIVE_PG17_11_TABLE_AND_ARRAY_TEMPLATES_PLUS_EXACT70_IDENTITIES",
+    "dependencyValidation": "PHYSICAL_DEPENDENCY_SCHEMA_BOUNDARY_NOT_DYNAMIC_BUSINESS_EXECUTION",
+    "captureMissingEvidencePreserved": [
+      "RAW_PG_TYPE_ROWS_AND_UNMODELED_TYPE_PROPERTIES",
+      "AUTHORIZED_NEW35_TARGET_CATALOG_AND_ENGINE_DEPENDENCIES"
+    ],
+    "independentSafetyReviewComplete": false,
+    "sqlParsedByPostgres": false,
+    "engineVerified": false,
+    "hostEnabled": false,
+    "predecessorModelSha256": "6e0a0e039eead7714d4e2ec6c995678860dee16d35e7282245bc5748eb565e85",
+    "patchSqlSha256": "d677eebb66c8e7f1d6327ca83d5d244a1ac646b4d108a0ee1a16d81710d46dc4",
+    "permissionChanges": [],
+    "routineCount": 161,
+    "indexCount": 114,
+    "requiresLockedRootAdmission": true,
+    "catalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362"
+  },
+  "guardSqlSha256": "a977e4924e4eb90a2c38aaeefeb8cec168a5e370d3a855d16ac3f20b5fa09e58",
+  "observationSqlSha256": "17e83addc12c413a150dc72d8ae45cea60a328c37725a6a7441c7a1acbd415bc",
+  "SQLModelChanged": true,
+  "oldSourceLineageDoesNotProveNewSQLInstalled": true,
+  "clockCalls": 0,
+  "nativeCalls": 0,
+  "PGConnections": 0,
+  "authorityIssued": false,
+  "futureC": null,
+  "futureEpoch": null,
+  "executionReady": false
+}
