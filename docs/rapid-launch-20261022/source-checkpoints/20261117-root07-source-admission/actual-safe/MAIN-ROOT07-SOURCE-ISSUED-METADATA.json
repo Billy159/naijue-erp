@@ -1,0 +1,46 @@
+{
+  "issuanceMetadata": {
+    "PGConnections": 0,
+    "basisSha256": "3587fca0e42d679bbe09a146e3472591716d67ff5725bc925a53784096bcbd2f",
+    "files": {
+      "admin_exec.ISSUED.py": {
+        "bytes": 46922,
+        "sha256": "69d52a00145421a7e675685aa626a30cdb5ffe0e62fdcba7c8ba272f18c01262"
+      },
+      "materialize-authorization.json": {
+        "bytes": 1112,
+        "sha256": "3b983df1d3d13843144dec874f681425330c1c859651292ee64497529a4de39b"
+      },
+      "original-cas-root07-carrier.ISSUED.py": {
+        "bytes": 2637,
+        "sha256": "821ba00b701884e349adb58d925e09184abfd0686390e2b5aa01a69626a9f0c0"
+      },
+      "registration-authorization.json": {
+        "bytes": 8152,
+        "sha256": "c1a796ad1a063749f6a636ec88ca57c2a0b25616ac9519814f687bf08e865872"
+      },
+      "registration-envelope.json": {
+        "bytes": 123899,
+        "sha256": "47b4f264976c8ef1468a2b94240e8401825e96a28de091f87ab8b8b2c502cc63"
+      },
+      "root07-source-only-20261117-01.json": {
+        "bytes": 3045,
+        "sha256": "b87fa978f93da13582569027b8453cd3aedaaf3bd700aa26fdb8a500f6050189"
+      }
+    },
+    "reviewSha256": "ab648b95bbb74dca0e3ddb041f7d14874a9acc2278372297ab411cda3c847822",
+    "rolesIssued": false,
+    "serviceOrEpochConstructed": false,
+    "sourceJobSubmitted": false,
+    "state": "MAIN_EXACT_ROOT07_SOURCE_AUTHORITY_ISSUED_NO_ROLE_OR_JOB_SUBMITTED"
+  },
+  "startsAt": 1794889364018,
+  "registrationExpiresAt": 1794890264018,
+  "sourceExpiresAt": 1794891164018,
+  "outputDirectoryMode": "0o700",
+  "privateAuthorityModes": {
+    "registration-authorization.json": "0o600",
+    "materialize-authorization.json": "0o600"
+  },
+  "rawAuthorityPolicyEnvelopeBodiesExcluded": true
+}

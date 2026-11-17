@@ -1,0 +1,10 @@
+{
+  "actualMaterialization": true,
+  "futureNativeExecutionReady": false,
+  "sourceLineage": {
+    "lineageSha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+    "materializationPublicResultSha256": "549e0670727b55f057cc11706ae0886be8f9310e50e452988031c36673eb3469",
+    "materializationResultSha256": "84599588dcf7b720d41d04bbea4b5f52b58396b2e16b1262d0ec639bdcf49065",
+    "materializationTerminalSha256": "f1228d139a4588d52af17fc611fb0f10bd0a0960b1d74b8f229928a9906edb9d"
+  }
+}

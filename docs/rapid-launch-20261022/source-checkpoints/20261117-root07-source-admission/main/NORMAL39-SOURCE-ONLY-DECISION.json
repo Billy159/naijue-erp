@@ -1,0 +1,109 @@
+{
+  "actualCandidate39KeyAbsence": null,
+  "actualFresh39StoppedBasis": null,
+  "actualRoot07": {
+    "PGConnections": 0,
+    "businessWrites": 0,
+    "changedRuntimeLeaves": 1,
+    "inheritedRuntimeLeaves": 386,
+    "liveCatalogVerified": false,
+    "operatorSourceSetSha256": "f9a7f170360185a2993b2e4e6d5fb3d1eb1767bcc325d71b72b2723c16faae7e",
+    "publicResultSha256": "549e0670727b55f057cc11706ae0886be8f9310e50e452988031c36673eb3469",
+    "requestKey": "t45-r3-batched-root07-source-delta-20261117-01",
+    "rootResultAndOperatorReadySha256": "84599588dcf7b720d41d04bbea4b5f52b58396b2e16b1262d0ec639bdcf49065",
+    "serviceStarted": false,
+    "sourceFiles": 387,
+    "sourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e",
+    "terminalSha256": "f1228d139a4588d52af17fc611fb0f10bd0a0960b1d74b8f229928a9906edb9d"
+  },
+  "actualRoot07CASResultSha256": "7630dbcd878d442bfdbbc9b05d315960b120a7d57e82bb9252921e4e415343c5",
+  "actualRoot07FinalCheckedAtUTC": "2026-11-17T04:27:42.499498+00:00",
+  "actualRoot07FinalResultSha256": "4fed06b5738e356c284b1b75a741be2702814a5cb891e213a59c0261afd198e2",
+  "actualRoot07LineagePinsSha256": "3fae9e15b26dc7928be82685d83c6d332671ac93a2dc41feec252896e4d231c9",
+  "actualRoot07PostSourceQuietSha256": "2783ed8ac13c9aef78b6fac254a6346caa79564b9317efc9272f91c5590cd08b",
+  "batchPlanPath": "/var/lib/naijue-erp/fresh35-production/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-05/batched-plan.sqlite",
+  "budgetsSecondsPreserved": [
+    300,
+    780,
+    3000,
+    5100
+  ],
+  "businessWriterNeverSubmitted": true,
+  "businessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+  "current39CIDBirthOrEpoch": null,
+  "current39ServiceProof": null,
+  "currentActualRootBaseline": {
+    "dispatcherSha256": "69d52a00145421a7e675685aa626a30cdb5ffe0e62fdcba7c8ba272f18c01262",
+    "historicalNormalModuleSha256": "3b7ebfcb95df010fdbd585b5551851cba6cd65953e54352ab25ee01bb3ec368d",
+    "historicalNormalPolicySha256": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e",
+    "sourceModuleSha256": "76f8913957c728b82dbbd9d5831cfd085a95436f283aa8be997e47802dae6080",
+    "sourcePolicySha256": "b87fa978f93da13582569027b8453cd3aedaaf3bd700aa26fdb8a500f6050189"
+  },
+  "currentPGStoppedAndOriginalAuthRestored": true,
+  "existingProtectedPrefix": 102,
+  "expectedProtectedPrefixAfterFiveNewNormalKeys": 107,
+  "failed04NativeOutcomeAndConnection": "UNKNOWN_REAPED_EXCLUSIVE_PROCESS_IS_NOT_CLOSED",
+  "failed04ResultSha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655",
+  "failedOuter01Through04NeverReplay": true,
+  "finiteAuthorityIssued": false,
+  "historical36RestoredReceiptMustRemainAt36": "60d6d5a5b16b321c334222ffaef9dc8ac0a0bf69e822878743a920151bfdbb4d",
+  "historical37RestoredReceiptMustRemainAt37": "9a4711ac1b3feb35520261f3830e06f08c4ff3d824a66be0f7979cdaeae8d7c9",
+  "jobs": {
+    "apply": "t45-r3-ordinary39-auth-apply-20261116-01",
+    "prepare": "t45-r3-final33-plan-prepare-20261116-05",
+    "restore": "t45-r3-ordinary39-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-39",
+    "stop": "t45-r3-ordinary39-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "mustPreserveRoot07DispatcherAdapterPolicyAndCompletedKey": true,
+  "nativeLogicalPreparationRequestKey": "t45-r3-final33-plan-prepare-20261116-01",
+  "newServiceProofOrBirthCreated": false,
+  "noSourceClockOrPGOrServerActionByThisDecision": true,
+  "normalGeneration": 39,
+  "outerPreparationAttemptKey": "t45-r3-final33-plan-prepare-20261116-05",
+  "preserveCompletedNeverReplay": [
+    "RECEPTION211",
+    "INPUT02",
+    "ROOT06",
+    "ROOT07",
+    "INSTALL32",
+    "CATALOG35",
+    "STOP38",
+    "EXACT_RESTORE38"
+  ],
+  "prior38ExactRestoreSha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60",
+  "prior38RestoredSafeReceiptSha256": "ce98579474ee7adfff5a521f59d0e6e91e54eb964770f758a1dc695eb36c0f15",
+  "prior38SafeClosureSha256": "6f386c9ee462d58ee346e68f447377737bea562124be6ce6b50fb0e67652dab6",
+  "prior38UsedRoleAuthorityMustNeverReuseOrExtend": true,
+  "prior38UsedRoleAuthoritySha256": "941991a7401ae24448f7f90e2e24973db701b1ef635bbeb64685abec4a9c949b",
+  "requiredBeforeFiniteNormal39": [
+    "finalT45Normal39ConsumerSourceClosure",
+    "finalD1Normal39RootPairSource",
+    "singleNarrowJointQBReviewReusingPriorPasses",
+    "oneActualFreshStoppedNormal39Basis"
+  ],
+  "reserveGiB": 28,
+  "roleAuthorityCreated": false,
+  "roleClockHasNotStarted": true,
+  "roleClockMustFollowSourceMaterialization": true,
+  "sourceLineage": {
+    "actualCurrentNativeCatalogVerificationStillRequired": true,
+    "currentSourceCatalog": {
+      "catalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+      "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+      "sourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803"
+    },
+    "historicalCatalog35": {
+      "catalogSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+      "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+      "sourceSetSha256": "cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c"
+    },
+    "newPGMetadataOrDDLJobRequired": false,
+    "proofSha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+    "reviewSha256": "bfe6ab7d8061ec0e9ef6f82a7436f19f3434e5f5a170f76d36a07753f0c1c43f",
+    "sourceSha256": "8bd24ede58825205dc8815c14eba2bf593de56f82691b9d1faca24da3f1852d9"
+  },
+  "sourceOnly": true,
+  "state": "MAIN_NORMAL39_PREPARE05_SOURCE_CONTINUATION_ONLY_NO_FINITE_AUTHORITY_OR_RUNTIME"
+}
