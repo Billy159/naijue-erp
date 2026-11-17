@@ -1,0 +1,58 @@
+{
+  "actions": {
+    "approvedBusinessPayloadRead": false,
+    "futureAuthorityMarkerCepochOrPositiveRuntimeFixturesCreated": false,
+    "oldOwnerSourcesModified": false,
+    "workerMainServerPGNodeNativeIssuerReaderCASClockCalls": 0
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/CONSUMER-CHECK-EVIDENCE.json",
+      "sha256": "c9ea16c8e0fd234b32e2c27d9c20d8fd8aecb5739c2d176f3d8ee3516cf64823"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root08-materialization-joint-review-01/PAIR-EVIDENCE.json",
+      "sha256": "5f6310a58a702f8164acffdb29c10f5223b6773856a9a61db2dc52e1216ca612"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "notVerified": [
+    "Consumer projection only. Future root admission/dispatcher/CAS/profile issuer and actual fresh baseline remain unprepared; no whole registration/execution PASS.",
+    "Root future baseline must derive from real durable root108 and its actual receipts,not assume saved eab. Larger delta assets up to977195 bytes require exact bounded current root/client bundle pairing.",
+    "No actual Root08 filesystem copy or marker,three-function upgrade,APP/native packaging,SQL/nativePG gate,durable DB state or import recovery verified.",
+    "Original FAILED writer not replayed,blind new key/import/businessOperationId change not authorized; source768 and prior source-only boundaries retained."
+  ],
+  "profileSha256": "5445b6ba2363d4f59a04edb927d91ef145873ce31a8266ea781955618b746ec6",
+  "reusedReports": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-admission-review-01/RESULT.json",
+      "sha256": "ab648b95bbb74dca0e3ddb041f7d14874a9acc2278372297ab411cda3c847822"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-current-wire-source-review-01/RESULT.json",
+      "sha256": "976ca7fd03741c81bab9d635c6577cbe5cc430b5e20ea9374621e8e530cb43bb"
+    }
+  ],
+  "rootPairReviewComplete": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root08-materialization-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+  "spec": {
+    "findings": [],
+    "scope": "ROOT07 actual parent to ROOT08 392/3+5/384 inheritance,actual failed39 closure,new model not SQL upgrade."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Fixed source-only filesystem delta,retained seven helpers,immutable history and metadata-only protected bodies."
+  },
+  "state": "SOURCE_PASS_ROOT08_MATERIALIZATION_CONSUMER_ONLY",
+  "verifiedScope": [
+    "39 finite source checks independently reproduced plus exact manifest/evidence/pair checks; genuine Main3b/Source768/QB976 reused,no three-routine re-review.",
+    "Fixed Root08 key/output and actual ROOT07 marker8459/rows74de/sourcef9a7. New392 rows3b8/sourceac85,3 changed+5 new assets exact,384 inherited metadata unchanged.",
+    "Actual failed39 writer dbd/root/native CLOSED/four cleanup and actual STOP0fd/exactRESTORE35fa/closedb8b2 metadata retained. No writerNeverSubmitted or historical zero-write assertion.",
+    "Seven original worker helpers unchanged. Protected DATA,inputs,initializer,plan,admin,native-private andfive auth snapshots only stat9 before/after;28GiB and300s bounds,no other operation before/after.",
+    "Python copies code only;6c runner hash/copy never exec/import. Sole external command is readonly systemctl list. Marker explicitly SQL_UPGRADE_NOT_PERFORMED/importReadyfalse/UNKNOWN/newada8 and oldlineage-not-installation."
+  ],
+  "workerSha256": "f144ef127c352801601d7b94968d3a99870ddfdbd6a08a9c0b93162eb3933c99"
+}

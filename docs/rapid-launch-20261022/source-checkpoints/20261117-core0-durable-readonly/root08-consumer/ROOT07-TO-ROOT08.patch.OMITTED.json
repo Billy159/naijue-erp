@@ -1,0 +1,6 @@
+{
+  "path": "root08-consumer/ROOT07-TO-ROOT08.patch",
+  "sha256": "b711292e3b91f52d39255b3d8c49c3d7a1355f45d3ec6e97aa0feae260b8b73c",
+  "bytes": 13249,
+  "reason": "Frozen patch body kept at original owner path; copied body omitted because literal patch context contains whitespace rejected by checkpoint check. Frozen bytes unchanged."
+}

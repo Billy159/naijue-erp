@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T16:04:44.430971+08:00",
+  "updatedAt": "2026-11-17T08:49:55.775574+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 freeze bounded offline-single-user durable readonly code+root admission+original client; QB narrow review then Main actual fresh basis/finite issuance. D1 prepares Root08 SOURCE-only consumer for392 rows, without binding unknown future root. No actual PG or3routine SQL upgrade yet; failedwriter immutable/no blind new key.",
+  "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T16:04:44.430971+08:00",
+  "asOf": "2026-11-17T08:49:55.775574+00:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 freeze bounded offline-single-user durable readonly code+root admission+original client; QB narrow review then Main actual fresh basis/finite issuance. D1 prepares Root08 SOURCE-only consumer for392 rows, without binding unknown future root. No actual PG or3routine SQL upgrade yet; failedwriter immutable/no blind new key.",
+  "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53829,6 +53829,284 @@
     "evidenceReferenceUsed": true,
     "allRefHashesInManifest": true,
     "evidenceHashInManifest": true
+  },
+  "core0DurableReadonly": {
+    "asOf": "2026-11-17T08:49:55.775574+00:00",
+    "state": "ACTUAL_CORE0_DIAGNOSTIC_FAILED_EARLY_NO_DURABLE_EVIDENCE_OR_WORKER_CLEANUP_RECEIPT",
+    "sourcePinsSha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
+    "sourceReviewSha256": "9c2ce6cf248d3e56079e56867b3fe926aaf989ce393d6e6b021c74aa4407bddb",
+    "originalWriter": "FAILED_CONSUMED_NO_REPLAY",
+    "businessDurableState": "UNKNOWN",
+    "SQLUpgradePerformed": false,
+    "root08ConsumerSourcePins": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+    "root08OverallReady": false,
+    "rawAuthorityPolicyPacketBodiesIncluded": false,
+    "copies": [
+      {
+        "path": "source02/SOURCE-PINS.json",
+        "sha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
+        "bytes": 2297
+      },
+      {
+        "path": "source02/HANDOFF.md",
+        "sha256": "99e4d0ce60a0b96d5327217411b440616c9bf05685b869aecd94d520323d8653",
+        "bytes": 7665
+      },
+      {
+        "path": "source02/PLAN.WIP.md",
+        "sha256": "63db70889b64ae3a0a4d7044da9ddfc592d94418815cb7fff63c35916cebab6d",
+        "bytes": 963
+      },
+      {
+        "path": "source02/SOURCE-CHECKS.json",
+        "sha256": "b9621b45888fdab360a9268a0853162512f07b93590169e8b5f4f8712d735936",
+        "bytes": 1480
+      },
+      {
+        "path": "source02/admin_exec.DURABLE-UNREGISTERED.py",
+        "sha256": "ff532c52df8a6629f730602e515b6557b498caf33529bd3d508c299478b1241a",
+        "bytes": 49337
+      },
+      {
+        "path": "source02/bundle/durable-readonly.sql",
+        "sha256": "1e1ece61f3fc9bd727219b747a1a5eda8f6230f5497c00042950d75dba270c3d",
+        "bytes": 7114
+      },
+      {
+        "path": "source02/bundle/durable_readonly_job.py",
+        "sha256": "b65d7c50c8aedc11faa736cdc5fc72183ff83abd5df8e6660ff009cb3b0f74a0",
+        "bytes": 19305
+      },
+      {
+        "path": "source02/bundle/scope.json",
+        "sha256": "d68b1bc6c46f327174641481cf2a4d5ad0802f042249bf32f1493ec601fa4081",
+        "bytes": 2708
+      },
+      {
+        "path": "source02/diagnostic_cli.py",
+        "sha256": "0dda6e6db2dba3d39b983e765205ac333fa9308a1e841c1bc67ef2d0277ec13f",
+        "bytes": 4408
+      },
+      {
+        "path": "source02/main_issuer.py",
+        "sha256": "ca34bfccbeec4865109e68d26b23fdba1d7db6ec889348b0ab583b4133aeaa3c",
+        "bytes": 6813
+      },
+      {
+        "path": "source02/patch_dispatcher.py",
+        "sha256": "42b39a9b34a665bfe6a3f419ad22e0922a5e291bb2a6689af051415d6e6a2fe3",
+        "bytes": 3198
+      },
+      {
+        "path": "source02/r3_core0_durable_readonly.py",
+        "sha256": "0fb16f260ce868b68cc49b20b7ea723c5426a9342ba4aa79200d7dda1ab6d10f",
+        "bytes": 3999
+      },
+      {
+        "path": "source02/read_registration_basis.py",
+        "sha256": "3e67976c676de0dce88cdfed1a56eb2a34c4c02801058fcc621228991bd10cce",
+        "bytes": 688
+      },
+      {
+        "path": "source02/register_exact.py",
+        "sha256": "b3b618e24e3269e8e80e4673cf5b9c87d64c4970f24ec780e554b233da38743e",
+        "bytes": 9345
+      },
+      {
+        "path": "review/PREDECESSOR-NEED-FIX.json",
+        "sha256": "e8f5534e4a999d06584f7faba2e9c3743ee9758a853079fa95c1a16706201b09",
+        "bytes": 8518
+      },
+      {
+        "path": "review/FIX-RESULT.json",
+        "sha256": "9c2ce6cf248d3e56079e56867b3fe926aaf989ce393d6e6b021c74aa4407bddb",
+        "bytes": 4189
+      },
+      {
+        "path": "review/FIX-EVIDENCE.json",
+        "sha256": "488244e04a391327b251fbe47959d5aa93eff66e145fff59a7f11e60413beb85",
+        "bytes": 2712
+      },
+      {
+        "path": "actual-safe/FRESH-RESTORE39-BASIS.json",
+        "sha256": "39bc820433ee8713364c8ee309ccf885c2e561ab4b865116152e2b38886eeacf",
+        "bytes": 5485
+      },
+      {
+        "path": "actual-safe/FRESH-REGISTRATION-BASIS.json",
+        "sha256": "4b0d9e468e4e4069d429b4527e9d906743bac45b26d5896aa0ab7ac5527f061e",
+        "bytes": 1213
+      },
+      {
+        "path": "actual-safe/ISSUED-SAFE-METADATA.json",
+        "sha256": "00871d7263da5e9ad42818862497c3f0b26ce9b9d55265eaefb42effea57f4e4",
+        "bytes": 1927
+      },
+      {
+        "path": "root08-consumer/SOURCE-PINS.json",
+        "sha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+        "bytes": 3969
+      },
+      {
+        "path": "root08-consumer/CHECK-RESULT.json",
+        "sha256": "c9ea16c8e0fd234b32e2c27d9c20d8fd8aecb5739c2d176f3d8ee3516cf64823",
+        "bytes": 2565
+      },
+      {
+        "path": "root08-consumer/HANDOFF.md",
+        "sha256": "ee76844c3f0b6869c8ed5c10bd9e3fea9ebb2be65880d8bab7a80ec34de91d39",
+        "bytes": 4629
+      },
+      {
+        "path": "root08-consumer/ROOT-REGISTRATION-INTERFACE.json",
+        "sha256": "7735d2f7ac7e32860c4739f7d7192bccdd18b85906cdb15a7cc81f7a8b3eb82c",
+        "bytes": 2203
+      },
+      {
+        "path": "root08-consumer/bundle/materialize-batched-source.py",
+        "sha256": "f144ef127c352801601d7b94968d3a99870ddfdbd6a08a9c0b93162eb3933c99",
+        "bytes": 14019
+      },
+      {
+        "path": "root08-consumer/bundle/source-profile.json",
+        "sha256": "5445b6ba2363d4f59a04edb927d91ef145873ce31a8266ea781955618b746ec6",
+        "bytes": 6928
+      },
+      {
+        "path": "root08-consumer/bundle/source-rows.json",
+        "sha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+        "bytes": 72609
+      },
+      {
+        "path": "root08-consumer/check_source.py",
+        "sha256": "d70271204680cade287e4d5247333f4a80529fa76edb260f9a42787ec3caa6fd",
+        "bytes": 6370
+      },
+      {
+        "path": "root08-consumer/prepare_source.py",
+        "sha256": "a7affb03ed77017cf18888a80fe22f679b865480f4dedb4cbbf96afc651c2e81",
+        "bytes": 5183
+      },
+      {
+        "path": "root08-consumer/QB-CONSUMER-RESULT.json",
+        "sha256": "abfa3e0957368558fd96c7e1130302621f63998eb0216fc3896196e7c1ef39af",
+        "bytes": 3998
+      },
+      {
+        "path": "actual-safe/ACTUAL-CAS-RESULT.json",
+        "sha256": "938e3e03fe6d5776abc16f96561c7de1c0fa889edccfd1907836ea40a01d2e8f",
+        "bytes": 481
+      },
+      {
+        "path": "actual-safe/BEFORE-DIAGNOSTIC-ORIGINAL-KEY-READBACK.json",
+        "sha256": "754fb070a9a43480c8dde3b7f74d464aa516d842113aac93d6b578bae7a2f2ba",
+        "bytes": 912
+      },
+      {
+        "path": "root08-consumer/ROOT07-TO-ROOT08.patch.OMITTED.json",
+        "sha256": "72afc9280c15def892d87636b0d0b3585a6a52ae4e8cfffb7d6c6f2d24086c5c",
+        "bytes": 339
+      },
+      {
+        "path": "source02/DELTA-F01-F02.patch.OMITTED.json",
+        "sha256": "fccf22743bf6ecfdfa17c6d310e3ba653dc96326492589e7eef70ccb69cfa8ef",
+        "bytes": 328
+      },
+      {
+        "path": "actual-safe/DIAGNOSTIC-FAILED-READBACK-01.json",
+        "sha256": "3f2c6caf2cdaa0114fc8208ef182584f9085fe6e5a8b05ed8a7678d01e0ff0e1",
+        "bytes": 1074
+      }
+    ],
+    "omittedDuplicateBodies": [
+      {
+        "path": "bundle/delta-00.asset",
+        "bytes": 74255,
+        "sha256": "3647d994a1073dab052e74aeb02c28cffc90d67849414f27cb16898000234c58",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-01.asset",
+        "bytes": 22126,
+        "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-02.asset",
+        "bytes": 105967,
+        "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-03.asset",
+        "bytes": 7213,
+        "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-04.asset",
+        "bytes": 939487,
+        "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-05.asset",
+        "bytes": 975343,
+        "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-06.asset",
+        "bytes": 977195,
+        "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      },
+      {
+        "path": "bundle/delta-07.asset",
+        "bytes": 5692,
+        "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+        "reason": "Exact existing reviewed three-routine source delta; body retained in settlement24 checkpoint; no repeated copy."
+      }
+    ],
+    "actualDispatcherSha256": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
+    "registeredModuleSha256": "0fb16f260ce868b68cc49b20b7ea723c5426a9342ba4aa79200d7dda1ab6d10f",
+    "registeredPolicySha256": "b1f6bebd87b049d35f833b1fb6798e945be787294b9451bfa05232d5516497d3",
+    "actualCASResultSha256": "938e3e03fe6d5776abc16f96561c7de1c0fa889edccfd1907836ea40a01d2e8f",
+    "registeredKeys": 108,
+    "actualDiagnosticRequestManifestSha256": "f0dc3983537a4cc9a57193c5fd2b4464b830ea7a6e81432fefe75be9b66154e7",
+    "diagnosticExecutionResult": "FAILED_EXIT1",
+    "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
+    "omittedFrozenPatchBodies": [
+      {
+        "path": "root08-consumer/ROOT07-TO-ROOT08.patch",
+        "sha256": "b711292e3b91f52d39255b3d8c49c3d7a1355f45d3ec6e97aa0feae260b8b73c",
+        "bytes": 13249,
+        "reason": "Frozen patch body kept at original owner path; copied body omitted because literal patch context contains whitespace rejected by checkpoint check. Frozen bytes unchanged."
+      },
+      {
+        "path": "source02/DELTA-F01-F02.patch",
+        "sha256": "45cb3926978b3e9f2343e8d2889a6b0e18a500e7817dcd8e918713715fe8fc89",
+        "bytes": 8540,
+        "reason": "Frozen patch body kept at original owner path; copied body omitted because literal patch context contains whitespace rejected by checkpoint check. Frozen bytes unchanged."
+      }
+    ],
+    "diagnosticTerminalSha256": "8e8af93929b3a17f3b81f7e7e394fa03d54ca4d13a82c105646b5b6ba361af5b",
+    "diagnosticElapsedSeconds": 0.6194057520478964,
+    "diagnosticReadbackSha256": "3f2c6caf2cdaa0114fc8208ef182584f9085fe6e5a8b05ed8a7678d01e0ff0e1",
+    "actualActiveOperationUnits": [],
+    "diagnosticOwnContainerMetadata": "NOT_OBSERVED",
+    "diagnosticSingleUserCleanupProven": false,
+    "originalPortAbsent": true,
+    "pgdataPidAbsent": true
+  },
+  "root08SourceOnlyMaterialization": {
+    "consumerSourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
+    "consumerReviewSha256": "abfa3e0957368558fd96c7e1130302621f63998eb0216fc3896196e7c1ef39af",
+    "consumerSourceOnlyPASS": true,
+    "rootAdmissionBeingPreparedAgainstActualDispatcher": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
+    "overallRootReviewPASS": false,
+    "actualMaterialized": false,
+    "SQLUpgradePerformed": false
   }
 }
 }

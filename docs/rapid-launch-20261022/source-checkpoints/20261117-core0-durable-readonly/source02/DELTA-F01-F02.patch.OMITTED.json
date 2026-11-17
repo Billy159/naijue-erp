@@ -1,0 +1,6 @@
+{
+  "path": "source02/DELTA-F01-F02.patch",
+  "sha256": "45cb3926978b3e9f2343e8d2889a6b0e18a500e7817dcd8e918713715fe8fc89",
+  "bytes": 8540,
+  "reason": "Frozen patch body kept at original owner path; copied body omitted because literal patch context contains whitespace rejected by checkpoint check. Frozen bytes unchanged."
+}

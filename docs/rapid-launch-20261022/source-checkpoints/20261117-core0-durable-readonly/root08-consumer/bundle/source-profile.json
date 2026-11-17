@@ -1,0 +1,129 @@
+{
+  "actualRoot08Marker": null,
+  "addedFiles": 5,
+  "businessDurableState": "UNKNOWN",
+  "catalogSourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e",
+  "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+  "changedFiles": 3,
+  "changes": [
+    {
+      "beforeSha256": "319f4ac30157d2922dc8d62b5108d5656a375c059e322466f7f933d32d7746eb",
+      "bytes": 74255,
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "payloadLeaf": "delta-00.asset",
+      "sha256": "3647d994a1073dab052e74aeb02c28cffc90d67849414f27cb16898000234c58"
+    },
+    {
+      "beforeSha256": "a848a4ee942a3922535cb5315212717233f3227159ffb4a9067e56373ee3e27b",
+      "bytes": 22126,
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "payloadLeaf": "delta-01.asset",
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3"
+    },
+    {
+      "beforeSha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+      "bytes": 105967,
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "payloadLeaf": "delta-02.asset",
+      "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 7213,
+      "path": "adapters/postgres/patches/settlement24-current-wire-successor.sql",
+      "payloadLeaf": "delta-03.asset",
+      "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 939487,
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json",
+      "payloadLeaf": "delta-04.asset",
+      "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 975343,
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json",
+      "payloadLeaf": "delta-05.asset",
+      "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 977195,
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json",
+      "payloadLeaf": "delta-06.asset",
+      "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8"
+    },
+    {
+      "beforeSha256": null,
+      "bytes": 5692,
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json",
+      "payloadLeaf": "delta-07.asset",
+      "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19"
+    }
+  ],
+  "clock": null,
+  "dataIdentity": [
+    66304,
+    13502421,
+    61035,
+    61035,
+    448
+  ],
+  "evidence": {
+    "closed39": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/RESULT-NORMAL39-CLOSED-WRITER-FAILED.json",
+      "sha256": "b8b2eb66f0d79d39a5a07aaa7afd56eb0d83d00efd465197e50e2a379a0be8f5"
+    },
+    "parentWorker": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT07-MATERIALIZATION-SOURCE-01/bundle/materialize-batched-source.py",
+      "sha256": "666adbbb3143aeccf88289cbd15277f806e2d9c5bc73ae3e9b2cbc34c7afb40a"
+    },
+    "restore39": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/restore/ACTUAL-RESTORE39-TERMINAL-RESULT.json",
+      "sha256": "35faee2f3949882106463abb976d878859a49c1d0c0d7304dd7b20a1cd256d6c"
+    },
+    "root07Marker": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT07-EXECUTION-PREPARATION-01/runtime/ACTUAL-ROOT07-MATERIALIZATION-ROOT.json",
+      "sha256": "84599588dcf7b720d41d04bbea4b5f52b58396b2e16b1262d0ec639bdcf49065"
+    },
+    "stop39": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/stop/ACTUAL-STOP39-TERMINAL-RESULT.json",
+      "sha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac"
+    },
+    "writerFailed": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/writer/READBACK-04.json",
+      "sha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa"
+    }
+  },
+  "finiteAuthority": null,
+  "format": "D1_ROOT08_EXACT_SOURCE_MATERIALIZATION_PROFILE_V1",
+  "futureC": null,
+  "futureEpoch": null,
+  "inheritedUnchangedFiles": 384,
+  "installedModelUnchangedByMaterialization": true,
+  "installerRunnerSha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+  "maximumOperationSeconds": 300,
+  "minimumAvailableAfterBytes": 30064771072,
+  "noImportReadyClaim": true,
+  "noSQLUpgrade": true,
+  "originalWriterStatus": "FAILED",
+  "outputDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root08-20261117-01",
+  "predecessorDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root07-20261117-01",
+  "predecessorKey": "t45-r3-batched-root07-source-delta-20261117-01",
+  "predecessorMaterializationSha256": "84599588dcf7b720d41d04bbea4b5f52b58396b2e16b1262d0ec639bdcf49065",
+  "predecessorSourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e",
+  "predecessorSourceSetSha256": "f9a7f170360185a2993b2e4e6d5fb3d1eb1767bcc325d71b72b2723c16faae7e",
+  "requestKey": "t45-r3-batched-root08-source-delta-20261117-01",
+  "rootRegistrationBasis": null,
+  "runnerDisposition": "COPY_INHERITED_CODE_ONLY_NEVER_EXECUTE_OR_IMPORT",
+  "sourceDecisionSha256": "3b04898ea9050610f83295c51075c65dfeaf95c0566a1cd834b140df1085bef6",
+  "sourceFiles": 392,
+  "sourceModelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "sourcePinsSha256": "76864577847c0ab030aaa78881bc24ffd5d5db288b2af1034eb5fc26f2061c3b",
+  "sourceReviewSha256": "976ca7fd03741c81bab9d635c6577cbe5cc430b5e20ea9374621e8e530cb43bb",
+  "sourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+  "workerNeverSubmitted": false
+}

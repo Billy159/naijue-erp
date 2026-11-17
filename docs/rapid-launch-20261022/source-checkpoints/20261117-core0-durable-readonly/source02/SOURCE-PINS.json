@@ -1,0 +1,40 @@
+{
+  "MainIssuerCalled": false,
+  "PGOrContainerOrJobStarted": false,
+  "actualDiagnosticContainerId": null,
+  "files": {
+    "DELTA-F01-F02.patch": "45cb3926978b3e9f2343e8d2889a6b0e18a500e7817dcd8e918713715fe8fc89",
+    "HANDOFF.md": "99e4d0ce60a0b96d5327217411b440616c9bf05685b869aecd94d520323d8653",
+    "PLAN.WIP.md": "63db70889b64ae3a0a4d7044da9ddfc592d94418815cb7fff63c35916cebab6d",
+    "SOURCE-CHECKS.json": "b9621b45888fdab360a9268a0853162512f07b93590169e8b5f4f8712d735936",
+    "admin_exec.DURABLE-UNREGISTERED.py": "ff532c52df8a6629f730602e515b6557b498caf33529bd3d508c299478b1241a",
+    "bundle/durable-readonly.sql": "1e1ece61f3fc9bd727219b747a1a5eda8f6230f5497c00042950d75dba270c3d",
+    "bundle/durable_readonly_job.py": "b65d7c50c8aedc11faa736cdc5fc72183ff83abd5df8e6660ff009cb3b0f74a0",
+    "bundle/scope.json": "d68b1bc6c46f327174641481cf2a4d5ad0802f042249bf32f1493ec601fa4081",
+    "diagnostic_cli.py": "0dda6e6db2dba3d39b983e765205ac333fa9308a1e841c1bc67ef2d0277ec13f",
+    "main_issuer.py": "ca34bfccbeec4865109e68d26b23fdba1d7db6ec889348b0ab583b4133aeaa3c",
+    "patch_dispatcher.py": "42b39a9b34a665bfe6a3f419ad22e0922a5e291bb2a6689af051415d6e6a2fe3",
+    "r3_core0_durable_readonly.py": "0fb16f260ce868b68cc49b20b7ea723c5426a9342ba4aa79200d7dda1ab6d10f",
+    "read_registration_basis.py": "3e67976c676de0dce88cdfed1a56eb2a34c4c02801058fcc621228991bd10cce",
+    "register_exact.py": "b3b618e24e3269e8e80e4673cf5b9c87d64c4970f24ec780e554b233da38743e"
+  },
+  "fixesOnly": [
+    "F01",
+    "F02"
+  ],
+  "predecessorSourcePinsSha256": "f98303e1bdc8f6edc27aa4941570213f089fd11d151ee906d4d30964947a26a4",
+  "registeredPolicySha256": null,
+  "registryCASExecuted": false,
+  "requestKeyProposal": "t45-r3-core0-durable-readonly-20261117-01",
+  "rootBaseSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
+  "sourceOnly": true,
+  "sourcePreparationServerActions": 0,
+  "state": "SOURCE02_F01_F02_FIXED_PENDING_SAME_QB_DELTA_REVIEW",
+  "unregisteredDispatcherSha256": "ff532c52df8a6629f730602e515b6557b498caf33529bd3d508c299478b1241a",
+  "unverified": [
+    "Same QB narrow delta review PASS",
+    "Actual fresh bases and Main finite issuance",
+    "Actual original CAS and diagnostic-key absence",
+    "Actual limited PG readonly diagnostic and cleanup"
+  ]
+}

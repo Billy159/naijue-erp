@@ -1,0 +1,132 @@
+{
+  "actions": {
+    "approvedInputBusinessBodiesRead": false,
+    "futurePositiveRuntimeFixturesCreated": false,
+    "ownerSourceOrFrozenReportsModified": false,
+    "purePatchPolicySha256": null,
+    "serverPGNativeContainerIssuerReaderRoleCASClockCalls": 0
+  },
+  "checksCompleted": 58,
+  "documentation": [
+    {
+      "title": "Docker container ls formatting and no-trunc",
+      "url": "https://docs.docker.com/reference/cli/docker/container/ls/"
+    }
+  ],
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-core0-durable-readonly-source-review-01/SOURCE-EVIDENCE.json",
+    "sha256": "45a63e37d93ac6ac972fd28abb3b3a236e2e2c29d5ea320a97b80e51b5711043"
+  },
+  "executionReady": false,
+  "findings": [
+    {
+      "axis": "spec",
+      "evidence": "Static source plus official Docker formatted ID/no-trunc documentation; no Docker or CID fixture executed.",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-01/bundle/durable_readonly_job.py",
+      "finding": "Fallback docker ps --format {{.ID}} omits --no-trunc. Its short ID then enters inspect(cid), whose full value[Id] must equal cid. This refuses before state/cleanup readback, leaving actualContainerId and stopped/PID0 unconfirmed. This branch does not mean the single-user query was started.",
+      "id": "F01",
+      "line": 215,
+      "priority": 2,
+      "relatedLines": [
+        176,
+        178,
+        214,
+        215,
+        217,
+        219,
+        220
+      ],
+      "requiredChange": "Resolve a full CID in the exact-name fallback before the existing full ID/image/name/operation checks and cleanup; retain strict validation and original-key no-replay behavior.",
+      "source": "https://docs.docker.com/reference/cli/docker/container/ls/",
+      "title": "Creation-uncertain cleanup passes a truncated CID into the full-ID validator",
+      "trigger": "Docker create completes but the caller loses its full-ID response, so cid remains None and exact-name fallback finds the created container."
+    },
+    {
+      "axis": "spec",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-01/main_issuer.py",
+      "finding": "time.time_ns() occurs before the second basis read/hash/validation. The requested two actual bases before the sole Main clock protocol is not met. Bad registry input still refuses before authority output; this is an ordering gap, not observed unauthorized issuance.",
+      "id": "F02",
+      "line": 33,
+      "priority": 2,
+      "relatedLines": [
+        33,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "requiredChange": "Read/hash/validate both actual basis objects and the reference first, then take one clock sample and use it to check both ages before constructing authority.",
+      "title": "Sole Main clock is sampled before registry-basis validation",
+      "trigger": "issue_once has checked restore evidence, while registry evidence has not yet been read, hashed or validated."
+    }
+  ],
+  "notVerified": [
+    "F01/F02 require owner correction and a new frozen source before zero-finding SOURCE_PASS. This report cannot satisfy main_issuer findings==[].",
+    "No actual fresh stopped/auth/root basis,key absence,issuance,CAS,container,query,PG syntax,control cleanup or durable result verified.",
+    "Original writer FAILED/durable UNKNOWN preserved. No zero-write claim,writer replay,new import,three-function upgrade,APP or publication permission.",
+    "No future authority/CID/Cepoch/role or positive runtime fixture; no approved business input body read."
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "f98303e1bdc8f6edc27aa4941570213f089fd11d151ee906d4d30964947a26a4",
+  "spec": {
+    "findings": [
+      {
+        "axis": "spec",
+        "evidence": "Static source plus official Docker formatted ID/no-trunc documentation; no Docker or CID fixture executed.",
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-01/bundle/durable_readonly_job.py",
+        "finding": "Fallback docker ps --format {{.ID}} omits --no-trunc. Its short ID then enters inspect(cid), whose full value[Id] must equal cid. This refuses before state/cleanup readback, leaving actualContainerId and stopped/PID0 unconfirmed. This branch does not mean the single-user query was started.",
+        "id": "F01",
+        "line": 215,
+        "priority": 2,
+        "relatedLines": [
+          176,
+          178,
+          214,
+          215,
+          217,
+          219,
+          220
+        ],
+        "requiredChange": "Resolve a full CID in the exact-name fallback before the existing full ID/image/name/operation checks and cleanup; retain strict validation and original-key no-replay behavior.",
+        "source": "https://docs.docker.com/reference/cli/docker/container/ls/",
+        "title": "Creation-uncertain cleanup passes a truncated CID into the full-ID validator",
+        "trigger": "Docker create completes but the caller loses its full-ID response, so cid remains None and exact-name fallback finds the created container."
+      },
+      {
+        "axis": "spec",
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-01/main_issuer.py",
+        "finding": "time.time_ns() occurs before the second basis read/hash/validation. The requested two actual bases before the sole Main clock protocol is not met. Bad registry input still refuses before authority output; this is an ordering gap, not observed unauthorized issuance.",
+        "id": "F02",
+        "line": 33,
+        "priority": 2,
+        "relatedLines": [
+          33,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "requiredChange": "Read/hash/validate both actual basis objects and the reference first, then take one clock sample and use it to check both ages before constructing authority.",
+        "title": "Sole Main clock is sampled before registry-basis validation",
+        "trigger": "issue_once has checked restore evidence, while registry evidence has not yet been read, hashed or validated."
+      }
+    ],
+    "scope": "Own full-CID cleanup and both actual fresh bases checked before sole issuance clock."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "13 frozen pins, fixed SQL, original limits and exact dispatcher/CLI/CAS preservation."
+  },
+  "state": "SOURCE_NEED_FIX_CORE0_DURABLE_READONLY_AND_EXACT_REGISTRATION_SOURCE_ONLY",
+  "verifiedScope": [
+    "Final f983/13 files and READY bf09 exact. Python AST/source-cap checked; no application entry invoked.",
+    "Fixed BEGIN REPEATABLE READ READ ONLY plus one WITH/SELECT plus ROLLBACK. Prescribed operation/subbatch/namespace/manifest counts,35 table counts,catalog and3 prosrc hashes only. No business rows/credentials/pg_authid/DML/DDL/COPY/COMMIT/business functions in SQL.",
+    "Fixed image6de,UID61035,DATA66304:13502421,SID7706545564479176741/OID16393/PG170011 and old three bodies. PGDATA physical startup/shutdown/WAL/hint writes explicitly disclosed; only PGDATA writable bind,deploy/bundle readonly,no inputs/plans/backup/sdc mounts.",
+    "Global parent FLOCK then service-operation lock,closed39/auth/no operations/backup/port/pid and28GiB gates present.300=210work+90cleanup,180inside/160query/120statement. Child-group and clean-control requirements subject toF01.",
+    "Pure None-policy render matches ef0a,107+1=108 with3 guards and old functions/ROOT07/normal38/39/writer protection unchanged. Packet/shared-lock/CAS publication and AUDIT/UNKNOWN/no-replay preserved.",
+    "Original7-argument issuer requires real sourceOnly/zero-finding review and two2min bases,subject toF02. CAS300s/phase900s. Original08954 client/42943 loader and fixed parser/collector/constructor/main preserved; no actual authority used."
+  ]
+}

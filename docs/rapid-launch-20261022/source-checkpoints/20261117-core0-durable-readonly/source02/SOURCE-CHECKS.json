@@ -1,0 +1,42 @@
+{
+  "F01": {
+    "oneNoTruncFlagInOwnRecoveryOnly": true,
+    "runtimeCIDFixtureUsed": false,
+    "strictFullIdNameImageOperationNetworkInspectUnchanged": true
+  },
+  "F02": {
+    "CAS300Purpose900SecondsUnchanged": true,
+    "allStaticReadsAndBothActualBasisValidationBeforeSingleClock": true,
+    "apiSevenArgumentsUnchanged": true,
+    "basisIdentitiesShapeValidatedBeforeClock": true,
+    "bothAgesSameSoleStamp120Seconds": true,
+    "issuerOrClockCalled": false
+  },
+  "QBOriginalReview": {
+    "findings": [
+      "F01",
+      "F02"
+    ],
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-core0-durable-readonly-source-review-01/RESULT.json",
+    "sha256": "e8f5534e4a999d06584f7faba2e9c3743ee9758a853079fa95c1a16706201b09"
+  },
+  "derivedPinsOnly": [
+    "bundle.worker",
+    "admission.EXPECTED_BUNDLE",
+    "dispatcher.modulePin"
+  ],
+  "executionReady": false,
+  "fixedSQLOrOldFullScopeReverified": false,
+  "predecessorSourcePinsSha256": "f98303e1bdc8f6edc27aa4941570213f089fd11d151ee906d4d30964947a26a4",
+  "protected108KeysAndThreeGuardsAndOldFunctionsPreserved": true,
+  "serverPGContainerRegistryIssuerActions": 0,
+  "state": "F01_F02_SOURCE_DELTA_CHECKS_ONLY_NOT_RUNTIME_PASS",
+  "unchangedByteExactly": [
+    "fixedSQL",
+    "scopeTargetLimitsLocksPermissions",
+    "register_exact.py",
+    "read_registration_basis.py",
+    "diagnostic_cli.py",
+    "patch_dispatcher.py"
+  ]
+}
