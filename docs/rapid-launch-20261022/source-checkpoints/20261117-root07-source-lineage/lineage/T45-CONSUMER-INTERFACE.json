@@ -1,0 +1,53 @@
+{
+  "actualRoot07ReceiptAvailable": false,
+  "additionalPGMetadataOperation": false,
+  "executionReady": false,
+  "format": "D1_ROOT07_STRICT_SOURCE_LINEAGE_CONSUMER_V1",
+  "futureAuthority": null,
+  "futureC": null,
+  "futureEpoch": null,
+  "materialization": {
+    "changedFiles": 1,
+    "inheritedUnchangedFiles": 386,
+    "installerRunnerSha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+    "requestKey": "t45-r3-batched-root07-source-delta-20261117-01",
+    "runtimeLeaf": {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+      "sourceFile": "operation/tools/unified-import/fresh35-host-session.mjs"
+    },
+    "sourceDescriptionFile": "source-description.json",
+    "sourceDescriptionSha256": "c0b18a897fa32f956f0c8d2950b2631c3be1a8debb517fc53f67097e84d3f7b9",
+    "sourceFiles": 387,
+    "sourceRowsFile": "source-rows.json",
+    "sourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e"
+  },
+  "newAuthorityField": {
+    "sourceLineage": {
+      "lineageSha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "materializationPublicResultSha256": null,
+      "materializationResultSha256": null,
+      "materializationTerminalSha256": null
+    }
+  },
+  "newHostBundleLeaves": [
+    {
+      "file": "source_lineage.py",
+      "leaf": "source_lineage.py",
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736"
+    },
+    {
+      "file": "SOURCE-CATALOG-LINEAGE.json",
+      "leaf": "source-catalog-lineage.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0"
+    }
+  ],
+  "representativeHostCandidate": {
+    "basis": "T45 reference-error WIP a33dccffa138233096e4ff420675562646fe1e330ca4ef8e13a00776ab1b217a",
+    "file": "final33_host.SOURCE-CANDIDATE.py",
+    "phaseIdentity": "HISTORICAL_38_SOURCE_ONLY_T45_MUST_PAIR_ACTUAL_NEW_PHASE_ONCE",
+    "sha256": "c4f887f1cae3da69c2762a788f9150574e64d811a0a1c1ac3622fa1e32324724"
+  },
+  "sourceDecisionSha256": "f5f7e4c6c2a5fbec2e61624f5d8d74e2e6e8c7ee3440a7a174761c4860e1b197",
+  "sourceOnly": true
+}

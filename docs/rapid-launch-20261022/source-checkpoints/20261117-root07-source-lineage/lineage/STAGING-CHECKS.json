@@ -1,0 +1,13 @@
+{
+  "state": "387_REAL_FROZEN_SOURCE_PATHS_ONE_HOST_DELTA_ONLY",
+  "changed": [
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "beforeSha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+      "bytes": 105724
+    }
+  ],
+  "sourcePaths": 387,
+  "serverActions": 0
+}

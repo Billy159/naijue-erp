@@ -1,0 +1,25 @@
+{
+  "successfulDerivation": {
+    "program": "derive_metadata.mjs",
+    "clockCalls": 0,
+    "nativeCalls": 0,
+    "PGConnections": 0,
+    "futureTargetFixture": false,
+    "actualHistoricalCreationFactsSha256": "d663dd7d86287524a426f77ecee537f60318ec81f4ae64bd5210d089b9bd37b5"
+  },
+  "earlierRefusedLocalAttempt": {
+    "selection": "fresh35Admin154ControllerCatalogSql with existing expired historical service metadata",
+    "result": "FRESH35_COMBINED_CATALOG_ADMIN154_CURRENT_CONTROLLER_REQUIRED",
+    "implicitDateNowReads": 1,
+    "nativeCalls": 0,
+    "PGConnections": 0,
+    "authorityIssued": false,
+    "correction": "Use original pure fresh35CombinedCatalogSql; no clock override or guard weakening"
+  },
+  "unselectedDrafts": {
+    "directory": "held-not-selected",
+    "executed": false,
+    "deliveredAsRuntime": false,
+    "reason": "Existing native PREPARE catalog verification suffices; separate PG metadata operation unnecessary"
+  }
+}

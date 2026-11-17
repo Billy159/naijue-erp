@@ -1,0 +1,20 @@
+{
+  "format": "T45_R3_EXACT_FROZEN_SOURCE_DELTA_V1",
+  "predecessorMaterializationSha256": "73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171",
+  "predecessorSourceRowsSha256": "078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9",
+  "predecessorSourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "originalFullArchiveSha256": "f3616f7d6f4cdfa4858eece1c624c2d7eded78308e34e6c6b984f2fc9363f484",
+  "sourceFiles": 387,
+  "sourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e",
+  "sourceSetSha256": "f9a7f170360185a2993b2e4e6d5fb3d1eb1767bcc325d71b72b2723c16faae7e",
+  "installerRunnerSha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+  "changes": [
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "beforeSha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+      "bytes": 105724,
+      "payloadLeaf": "fresh35-host-session.mjs"
+    }
+  ]
+}

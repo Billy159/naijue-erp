@@ -1,0 +1,44 @@
+{
+  "actions": {
+    "QBClockCalls": 0,
+    "applicationModuleNativePGServerIssuerFixtureCalls": 0,
+    "derivedMetadataRegeneratedByApplication": false
+  },
+  "changedRow": [
+    {
+      "bytes": 105820,
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b"
+    },
+    {
+      "bytes": 105724,
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368"
+    }
+  ],
+  "checks": {
+    "ActualDerivationInput0": true,
+    "ActualDerivationInput1": true,
+    "ActualHistoricalTargetCalibration": true,
+    "Exact387OriginalPaths": true,
+    "ExactlyOneHostRowChanged386Inherited": true,
+    "HelperNoClockOrPGOrDDLCall": true,
+    "MetadataHelperOutsideOperation387": true,
+    "NoFutureServiceOrProgramConstructed": true,
+    "OwnerClockAttemptAccuratelyDisclosed": true,
+    "ThreeActualMaterializationPinsUnbound": true,
+    "UnselectedPGDraftNotInDeliveredSOURCE": true,
+    "admin154OnlyHostPinChanged": true,
+    "combinedOnlyHostPinChanged": true,
+    "compactZeroOnlyHostPinChanged": true
+  },
+  "ownerHistoricalClockAttempt": {
+    "PGConnections": 0,
+    "authorityIssued": false,
+    "correction": "Use original pure fresh35CombinedCatalogSql; no clock override or guard weakening",
+    "implicitDateNowReads": 1,
+    "nativeCalls": 0,
+    "result": "FRESH35_COMBINED_CATALOG_ADMIN154_CURRENT_CONTROLLER_REQUIRED",
+    "selection": "fresh35Admin154ControllerCatalogSql with existing expired historical service metadata"
+  }
+}

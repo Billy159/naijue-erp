@@ -1,0 +1,71 @@
+{
+  "actions": {
+    "QBClockCalls": 0,
+    "applicationModulesNativePGServerIssuerOrCatalogBuilderCalls": 0,
+    "fullCompileBuildOrEmit": false,
+    "futureCepochAuthorityProgramTargetOrPositiveReceiptFixtureCreated": false,
+    "ownerFrozenFilesModified": false
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-lineage-review-01/METADATA-EVIDENCE.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-lineage-review-01/HOST-EVIDENCE.json",
+      "sha256": "9ec76343fb9248244e622b02723aa3ffedeec9b99cdc8e408b448fb42fabdabc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-lineage-review-01/PAIRING-EVIDENCE.json",
+      "sha256": "8ddd5ce0afe902ca61046442e8a4e9b834f0911e0fc1e5da865440cbbe0ac296"
+    }
+  ],
+  "executionReady": false,
+  "finalT45ConsumerAndMaterializerPaired": false,
+  "findings": [],
+  "helperSha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+  "hostCandidateSha256": "c4f887f1cae3da69c2762a788f9150574e64d811a0a1c1ac3622fa1e32324724",
+  "lineageSha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+  "materializationRuntimeProven": false,
+  "nativeCatalogRuntimeProven": false,
+  "ownerAttemptAccounting": {
+    "authorityIssuedByRefusedProbe": false,
+    "historicalRefusedMetadataProbeDateNowReads": 1,
+    "note": "Do not describe the complete D1 working round as zero clock. QB static review itself made no clock read.",
+    "source": "LOCAL-ATTEMPTS.json",
+    "successfulMetadataDerivationClockCalls": 0
+  },
+  "requiredFutureWork": [
+    "T45 final consumer, runner/host/marker-reader/materializer and all direct/transitive pins must form a new consistent source closure. Representative host retains historical38 identity and cannot be executed or used to replay38.",
+    "Main/T45 original-lock SOURCE-only registration and finite authorization/baseline/key-absence protocol are not part of this verified contract.",
+    "Actual ROOT07 materialization with genuine three receipt pins and marker must occur before next normal role clock; current nulls are not materialization proof.",
+    "Future actual START/PREPARE must establish current service/epoch/lease and native current catalog binding, including original full livePG35/161 validation. Static proof never replaces these facts.",
+    "No independent PGmetadatajob, new catalog-success receipt or DDL is required by this source delta; actual preparation/writer/readback/import/release remain untested."
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root07-source-successor-01",
+  "sourceManifestSha256": "8bd24ede58825205dc8815c14eba2bf593de56f82691b9d1faca24da3f1852d9",
+  "sourceOnly": true,
+  "sourceOnlyRootRegistrationPreparedOrVerified": false,
+  "sourcePinsSha256": "8bd24ede58825205dc8815c14eba2bf593de56f82691b9d1faca24da3f1852d9",
+  "spec": {
+    "findings": [],
+    "scope": "Real historical calibration and original metadata algorithms, strict old/current catalog separation, real ROOT07 receipt requirements and preserved physical native checks."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Fixed single-leaf lineage, immutable historical receipts, exact current binding and no PG/clock implementation in helper."
+  },
+  "state": "SOURCE_PASS_ROOT07_SOURCE_LINEAGE_CONTRACT_ONLY",
+  "verifiedScope": [
+    "All32 frozen SOURCE members exact. Reused3690+4a lexical conclusion and2351 APP review without rechecking their modules.",
+    "387 original operation paths preserved; one host row0a10→36f5/105724B,386 unchanged. Helper/proof remain outside387 operation rows.",
+    "Saved metadata recomputation follows original JSON property order for combined/admin154/compactZero, parent sourceSet links, batched161 pins and command review hash chain; catalog descriptors recomputed. No application modules or derive_metadata program rerun by QB.",
+    "Saved actual creation facts d663 and START38 typed6206 provenance verified. Historical target fe0b matches actual creation programBinding; ROOT06 d20 and catalog35 cf27/actual9f4595/model626c calibrate exactly. Old05609 fixture is not a live predecessor.",
+    "Candidate metadata gives operatorf9a7, batcheddb127, catalogSpec344ccd and rows74de/source-descriptionc0b18.344ccd is static metadata for the actual historical installation target, not a future service proof or live catalog result.",
+    "Three catalog layers preserve all fields except sourceSet,observationSql and descriptor hash. Model626c and full guard SQL unchanged; observation SQL only changes source tag. Source-layer leaf pins retain only the approved host delta.",
+    "29 unrelated host function ASTs unchanged. Historical catalog validator retains all existing root/public/service/commit/completion/capture guards, comparing exact historical cf27/9f/626c. Wrapper invokes every historical guard first, then independently validates proof plus actual ROOT07 materialization lineage.",
+    "Current expectedBinding separately requires exact db127/344ccd/626c; current service/epoch/transactionMode/native preparation and live35/161 verification guards remain. No relaxed comparison or catalog35 replay introduced.",
+    "Actual ROOT07 terminal/root/public/marker must all match the fixed key, expected paths, pinned description/rows/source,parentROOT06 and original installer. Real ROOT06 marker rejected as ROOT07, with no positive future marker fixture.",
+    "SourceLineage reference schema is closed; its three future actual terminal/result/public pins remain null in delivered interface and cannot satisfy helper validation."
+  ]
+}

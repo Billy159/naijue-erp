@@ -1,0 +1,62 @@
+{
+  "D1Source": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root07-source-successor-01/SOURCE.json",
+    "sha256": "8bd24ede58825205dc8815c14eba2bf593de56f82691b9d1faca24da3f1852d9"
+  },
+  "MainIdentityDecision": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-root07-single-leaf-source-decision-01/DECISION.json",
+    "sha256": "f5f7e4c6c2a5fbec2e61624f5d8d74e2e6e8c7ee3440a7a174761c4860e1b197"
+  },
+  "PGConnections": 0,
+  "actualCompletionMarker": null,
+  "actualExecution": false,
+  "actualServerKeyAbsence": null,
+  "bundlePins": {
+    "batched161-run.mjs": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4",
+    "fresh35-host-session.mjs": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+    "materialize-batched-source.py": "666adbbb3143aeccf88289cbd15277f806e2d9c5bc73ae3e9b2cbc34c7afb40a",
+    "source-description.json": "c0b18a897fa32f956f0c8d2950b2631c3be1a8debb517fc53f67097e84d3f7b9",
+    "source-rows.json": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e"
+  },
+  "changedRuntimeLeaves": 1,
+  "clockCalls": 0,
+  "executionReady": false,
+  "files": {
+    "bundle/batched161-run.mjs": {
+      "bytes": 19921,
+      "sha256": "6c7653bac1aa19e90a05ee8167e59305c906c8bdda6866ef0c562545107fe8f4"
+    },
+    "bundle/fresh35-host-session.mjs": {
+      "bytes": 105724,
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368"
+    },
+    "bundle/materialize-batched-source.py": {
+      "bytes": 10008,
+      "sha256": "666adbbb3143aeccf88289cbd15277f806e2d9c5bc73ae3e9b2cbc34c7afb40a"
+    },
+    "bundle/source-description.json": {
+      "bytes": 1096,
+      "sha256": "c0b18a897fa32f956f0c8d2950b2631c3be1a8debb517fc53f67097e84d3f7b9"
+    },
+    "bundle/source-rows.json": {
+      "bytes": 71551,
+      "sha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e"
+    }
+  },
+  "finiteAuthority": null,
+  "inheritedRuntimeLeaves": 386,
+  "materializationBeforeNextFiniteRoleClock": true,
+  "materializerSha256": "666adbbb3143aeccf88289cbd15277f806e2d9c5bc73ae3e9b2cbc34c7afb40a",
+  "nativePGOrSourceLoaderRun": false,
+  "operatorSourceSetSha256": "f9a7f170360185a2993b2e4e6d5fb3d1eb1767bcc325d71b72b2723c16faae7e",
+  "outputDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root07-20261117-01",
+  "requestKey": "t45-r3-batched-root07-source-delta-20261117-01",
+  "review": "PENDING_SCOPED_MATERIALIZATION_AND_STRICT_LINEAGE_REVIEW",
+  "serverActions": 0,
+  "sourceDescriptionSha256": "c0b18a897fa32f956f0c8d2950b2631c3be1a8debb517fc53f67097e84d3f7b9",
+  "sourceFiles": 387,
+  "sourceOnly": true,
+  "sourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e",
+  "state": "ROOT07_SINGLE_RUNTIME_LEAF_MATERIALIZATION_SOURCE_FROZEN_FOR_REVIEW_UNISSUED",
+  "syntaxOnlyCompile": true
+}

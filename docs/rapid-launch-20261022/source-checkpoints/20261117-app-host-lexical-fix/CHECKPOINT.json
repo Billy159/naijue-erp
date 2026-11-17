@@ -43,6 +43,11 @@
       "path": "build-pack-safe/APP-TUPLE.SOURCE-ONLY.json",
       "sha256": "a4e12c9455c11a27efed098deedaade166d64c657eceac269588f7b64b44a811",
       "bytes": 1214
+    },
+    {
+      "path": "build-pack-safe/PUBLISH-RESULT.json",
+      "sha256": "e546439046242496af4c8b9249bd73d9ffa8798efff798ea24207f890b2dc634",
+      "bytes": 391
     }
   ],
   "next": "T45 publishes exact APP own branch and completes strict new owner/profile pins. ROOT07 materialization/lineage/registration final SOURCE pairing remains D1/T45 work, no server or finite role issued.",
@@ -52,7 +57,7 @@
     "commit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
     "tree": "bba4ce31d4a4bc72b29ff170b8836f7d18d4a8f5",
     "branch": "codex/t45-app-host-lexical-fix-20261117",
-    "sourcePublished": "PENDING_T45_ACTUAL_REMOTE_READBACK",
+    "sourcePublished": "EXACT_REMOTE_READBACK_MATCHED",
     "hostSha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
     "nativeSourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
     "archiveSha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1",
@@ -70,6 +75,7 @@
     "serverUploaded": false,
     "deployed": false,
     "ownerProfilePinCandidate": "IN_PROGRESS",
-    "privateRecoveryReadinessHelperImpact": "BEING_CHECKED_FROM_EXISTING_SOURCE_ONLY"
+    "privateRecoveryReadinessHelperImpact": "BEING_CHECKED_FROM_EXISTING_SOURCE_ONLY",
+    "publicationSha256": "e546439046242496af4c8b9249bd73d9ffa8798efff798ea24207f890b2dc634"
   }
 }

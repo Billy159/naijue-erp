@@ -1,0 +1,11 @@
+{
+  "commit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+  "force": false,
+  "independentReadbackMatched": true,
+  "parent": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+  "ref": "refs/heads/codex/t45-app-host-lexical-fix-20261117",
+  "serverDeploymentActions": 0,
+  "state": "EXACT_APP_SOURCE_PUBLISHED_NEW_REF",
+  "tree": "bba4ce31d4a4bc72b29ff170b8836f7d18d4a8f5",
+  "uploadedBlobs": 1
+}
