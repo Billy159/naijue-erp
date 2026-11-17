@@ -1,0 +1,11 @@
+--- phase_cli.py
++++ phase_cli.FORMAT02-CANDIDATE.py
+@@ -25,7 +25,7 @@
+  # below invokes state/remote/dispatch/submit before every byte/argument check.
+  need(phase in PHASES,'EXACT_ORIGINAL_AUTH_ROLLBACK_ONLY_PHASE');p=Path(policy_file);need(type(policy_pin) is str and sha(p.read_bytes())==policy_pin,'EXACT_ISSUED_POLICY_PIN_REQUIRED');policy=json.loads(p.read_bytes())
+  need(type(policy.get('startsAt')) is int and type(policy.get('expiresAt')) is int and policy['startsAt']<policy['expiresAt'],'ISSUED_POLICY_REQUIRED')
+- need(policy.get('format')=='T45_R3_ORIGINAL_AUTH41_ROLLBACK_ONLY_V1' and set(policy.get('jobs',{}))=={'rollback'},'EXACT_NEW_ROLLBACK_ONLY_POLICY_REQUIRED')
++ need(policy.get('format')=='T45_R3_ORIGINAL_AUTH41_ROLLBACK02_ONLY_V1' and set(policy.get('jobs',{}))=={'rollback'},'EXACT_NEW_ROLLBACK_ONLY_POLICY_REQUIRED')
+  blueprint=json.loads((HERE/'ROLLBACK41.UNISSUED.json').read_bytes());rule=policy['jobs'][phase];fixed=blueprint['jobs'][phase]
+  need(rule['jobId']==fixed['jobId'] and rule['script']==fixed['script'] and rule['timeoutSeconds']==fixed['timeoutSeconds'] and rule['authorityLeaf']==fixed['authorityLeaf'],'EXACT_SUCCESSOR_RULE_REQUIRED')
+  source=HERE/phase/'bundle';pin=authority(source/rule['authorityLeaf'],expected_authority_pin,rule['jobId'])

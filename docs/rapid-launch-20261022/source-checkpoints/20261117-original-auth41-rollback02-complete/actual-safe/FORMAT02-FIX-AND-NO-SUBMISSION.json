@@ -1,0 +1,21 @@
+{
+  "activeOperationsAbsent": true,
+  "actualExecuteElapsedSeconds": 0.0028,
+  "actualExecuteExceptionClass": "ValueError",
+  "actualPredicateMismatch": "EXACT_NEW_ROLLBACK_ONLY_POLICY_REQUIRED",
+  "afterSHA": "0eee1c743268c67cdbd4f82fbbd91a7a737ec295bb639534ea4151df0ed3e1cc",
+  "beforeSHA": "77f29a97e5f3ae30d095d374afc7144bbcfa08345c613cbea7562e795e1ba186",
+  "existingWindowUnchanged": true,
+  "noCASOrSigningRepeated": true,
+  "noSecondExecuteOrPrepareCalled": true,
+  "observerCheckedAtUTC": "2026-11-17T15:40:16.447917+00:00",
+  "observerSHA": "d70de6d348e7312f0a3562fabc3fe9f0f2ddfbd1e59c94f08ffcf94c8a47dbd0",
+  "onlyLocalAdapterLiteralChanged": true,
+  "originalExceptionMessageCaptured": false,
+  "predicateEvidence": "Exact actual c6fc policy format differs from old literal at prepare line28, before LOADER at32 and before execute invokes client.main; confirmed from source and actual input, no prepare replay",
+  "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+  "serverKeyAbsent": true,
+  "sourceOrPolicyOrAuthorityOrRootChanged": false,
+  "state": "LOCAL_FORMAT02_SINGLE_LITERAL_FIXED_NO_REMOTE_SUBMISSION",
+  "terminalAbsent": true
+}

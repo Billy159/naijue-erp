@@ -1,0 +1,33 @@
+{
+  "state": "SOURCE_ONLY_ROLLBACK02_DELTA_PASS",
+  "checks": 21,
+  "passed": [
+    "actual121 exact",
+    "121 immutable keys plus02 only",
+    "all original121 functions preserved",
+    "execute only added02 branch",
+    "module exact ticket unissued",
+    "old01 actualFAILED anchored",
+    "old module policy result retained",
+    "closedC no live or expired work bypass",
+    "02 unique finish",
+    "only new15min rollback decision no role renewal",
+    "new decision and same Main7",
+    "new unused namespace correct original template",
+    "bind consumer02 fresh35-production-carrier.py",
+    "bind consumer02 normal_service04.py",
+    "bind consumer02 normal_service04_proof.py",
+    "bind consumer02 ordinary05_roles.py",
+    "bind consumer02 ordinary05_roles_job.py",
+    "bind consumer02 prior_preserved38.py",
+    "bind consumer02 root06_material.py",
+    "bind consumer02 successful39_history.py",
+    "all final generated source compile"
+  ],
+  "reusedOriginal46and25and23": true,
+  "serverCalls": 0,
+  "clockCalls": 0,
+  "issuerCalls": 0,
+  "PGConnections": 0,
+  "authoritiesIssued": false
+}

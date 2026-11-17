@@ -1,0 +1,85 @@
+{
+  "bundlePins": {
+    "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+    "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+    "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+    "ordinary05_roles.py": "ae787f26a0b4f4129e3bf776c10ad9314f38da4920c71893caefa4621ff7cea3",
+    "ordinary05_roles_job.py": "e5e594ef0a2937ec0e9734163be5ed89620aad43db73a65c71d3c82352ec8ddb",
+    "prior_preserved38.py": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+    "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+    "successful39_history.py": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+  },
+  "checkResultSha256": "185ef34b46cb27af45fdc22d2348498bdfbe0ea073fef7ec6595afa9cfb595e4",
+  "failedPredecessorTerminalSha256": "16ae761461af0353d77dbc98aa3610287d01594a17ab89d50f00fd0861816566",
+  "files": {
+    "CHECK-RESULT.json": {
+      "bytes": 4031,
+      "sha256": "185ef34b46cb27af45fdc22d2348498bdfbe0ea073fef7ec6595afa9cfb595e4"
+    },
+    "FIXED-INPUT-METADATA.json": {
+      "bytes": 3403,
+      "sha256": "0e55e5b5ab90137fe4382b0dbc475b6dd1514e36ba9c15def45b90fdff9ec79d"
+    },
+    "HANDOFF.md": {
+      "bytes": 2684,
+      "sha256": "e1fa84c753e1db6db2d63d2943c8747186c25ec1e9c97f115fda0fe54808aec8"
+    },
+    "INTERFACE.UNISSUED.json": {
+      "bytes": 6956,
+      "sha256": "7f01da0f4e4a650ee24a454a7c8bd4e9be76ed6f51756f6853718c7214b0af78"
+    },
+    "SOURCE-DELTA.patch": {
+      "bytes": 3191,
+      "sha256": "8ed09c3638495af77db8970ebb4e5003a90c5ccc9f06028d79ca0a645c2e767d"
+    },
+    "bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "bundle/normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "bundle/normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "bundle/ordinary05_roles.py": {
+      "bytes": 18549,
+      "sha256": "ae787f26a0b4f4129e3bf776c10ad9314f38da4920c71893caefa4621ff7cea3"
+    },
+    "bundle/ordinary05_roles_job.py": {
+      "bytes": 24509,
+      "sha256": "e5e594ef0a2937ec0e9734163be5ed89620aad43db73a65c71d3c82352ec8ddb"
+    },
+    "bundle/prior_preserved38.py": {
+      "bytes": 7267,
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a"
+    },
+    "bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "bundle/successful39_history.py": {
+      "bytes": 8758,
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+    },
+    "check_source.py": {
+      "bytes": 9671,
+      "sha256": "091c04fb63752aa1d1c1c515351f3f67f72b8a3a1a4d9461f47b86b15b31efd2"
+    }
+  },
+  "fixedInputMetadataSha256": "0e55e5b5ab90137fe4382b0dbc475b6dd1514e36ba9c15def45b90fdff9ec79d",
+  "interfaceSha256": "7f01da0f4e4a650ee24a454a7c8bd4e9be76ed6f51756f6853718c7214b0af78",
+  "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+  "newAuthorityNotYetIssued": true,
+  "newTemporaryLoginOrApplyAllowed": false,
+  "oldHardDeadlineNotMetAcknowledged": true,
+  "parentSourcePinsSha256": "02fd0d579d45fae57329511ae1cc43e39c1ed2e1419caca215e005292a2c2287",
+  "restoreAlgorithmAndOwnCleanupPreserved": true,
+  "runtimeReady": false,
+  "serverMetadataOnlyReads": 1,
+  "serverMutationsOrPGOrIssuerOrCASCalls": 0,
+  "sourceOnly": true,
+  "state": "ORIGINAL_AUTH41_ROLLBACK02_SOURCE_READY_UNISSUED_NOT_EXECUTED"
+}

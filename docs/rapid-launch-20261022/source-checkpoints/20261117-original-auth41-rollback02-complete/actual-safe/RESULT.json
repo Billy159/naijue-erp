@@ -1,0 +1,149 @@
+{
+  "CASCalls": 1,
+  "actualDispatcherSha256": "ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b",
+  "businessAcceptanceClaimed": false,
+  "businessImportOrSQLUpgradeOrAPPDeploymentPerformed": false,
+  "cleanupReceipt": {
+    "objectsEqual": true,
+    "publicSha256": "59456c9569aa03629a02678a174648d922a0e7491ac4e7adb978af0e6d02ca27",
+    "rootSha256": "59d36f5e3290a5b1ca6e48399c6e72334079db6ab96dabb6415dc159aa6af178",
+    "value": {
+      "automaticReplay": false,
+      "cid": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    }
+  },
+  "evidence": {
+    "FINAL-PRIVATE-SAFE-READBACK.json": "364d76bc02fe5c958d900a18315747e2680c85c2063481b04f20b86464e155b8",
+    "FORMAT02-FIX-AND-NO-SUBMISSION.json": "6bc93894832c7b62f36b93fd1bd611e9cb9e2c774981d5bd105486b31e5971b5",
+    "ORIGINAL-KEY-READBACK-01.PRIVATE.json": "d70de6d348e7312f0a3562fabc3fe9f0f2ddfbd1e59c94f08ffcf94c8a47dbd0",
+    "ORIGINAL-KEY-READBACK-03.PRIVATE.json": "59abe98cf0c14bf624b8b2598836f0b4d2fba8312334cc6e56034abcc59dbafe"
+  },
+  "finalPrivateSafeReadback": {
+    "PGConnections": 0,
+    "checkedAtUTC": "2026-11-17T15:48:38.710672+00:00",
+    "mutations": 0,
+    "originalDataIdentityPreserved": true,
+    "originalDataPIDAbsent": true,
+    "originalHardDeadlineMet": false,
+    "originalPortAbsent": true,
+    "ownContainer": {
+      "exitCode": 0,
+      "id": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "operation": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "pid": 0,
+      "running": false
+    },
+    "privateOriginalAndFiniteSnapshotBodiesOrDigestsRead": false,
+    "privateSafeReceiptMatchesOriginalWorkerInner": true,
+    "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+    "safeRestorationReceiptSha256": "84585d7a0cfb13f096a81037a6b1437934e63488107fe04c3fb82f628e603136",
+    "snapshotStat9": [
+      {
+        "leaf": "applied.json",
+        "sameSignedStat9": true
+      },
+      {
+        "leaf": "finite-auth.json",
+        "sameSignedStat9": true
+      },
+      {
+        "leaf": "original-auth.json",
+        "sameSignedStat9": true
+      }
+    ],
+    "status": "EXACT_PRIVATE_SAFE_RESTORATION_RECEIPT_AND_ACTUAL_OWN_CONTAINER_STOP_CONFIRMED"
+  },
+  "localFormatAdapterPreSubmitFailurePreserved": true,
+  "newRoleOrTemporaryExpiryExtended": false,
+  "old01FailedKeyPreservedNeverReplayed": true,
+  "originalAuthenticationRestored": true,
+  "originalHardDeadlineMet": false,
+  "proofBoundTo": "SOURCE3af/root4c76/policyc6fc/key02",
+  "recordedAtUTC": "2026-11-17T15:49:03.697568+00:00",
+  "remoteSubmissionFor02": 1,
+  "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+  "resultReceipt": {
+    "objectsEqual": true,
+    "publicSha256": "f591e4bfe12ddf1f1717d3b84e54d3af02d4be7dcb23e6192bea74be77337a8d",
+    "rootSha256": "915b0a5749a22b1dbbdf6938616db414d37a96df90a86bfdfff24a01ea79b14c",
+    "value": {
+      "SQL36OrBusinessImport": false,
+      "automaticReplay": false,
+      "cleanup": {
+        "automaticReplay": false,
+        "cid": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+        "confirmed": true,
+        "createAttempted": true,
+        "exitCode": 0,
+        "oomKilled": false,
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+        "sourceDataPreserved": true,
+        "stage": "READ_BACK_OWN_CONTAINER_STOP"
+      },
+      "newDatabaseOrRole": false,
+      "normal08Or05Started": false,
+      "phase": "restore",
+      "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "result": {
+        "automaticReplay": false,
+        "databaseStillStopped": true,
+        "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+        "membershipsOrRoleAttributesChanged": false,
+        "naturalExpiryCountedAsRestoration": false,
+        "operationMode": "ORIGINAL_AUTH_ROLLBACK_ONLY",
+        "originalHardDeadlineMet": false,
+        "originalRestorationHardDeadline": 1794926977752,
+        "privateRecoveryBasisRetained": true,
+        "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+        "roles": [
+          "erp35_controller_20261110_r3",
+          "erp35_admin_20261110_r3"
+        ],
+        "runtimeAuthChanged": false,
+        "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+      },
+      "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+    }
+  },
+  "rootRegistrationReceiptSha256": "9df6e813950dc97d0fa286c517f92e2472d1a9000bc5b1e6a8d81050db1bd2be",
+  "sourceOnly": false,
+  "state": "PASS_SCOPED_ORIGINAL_AUTH41_ROLLBACK02_AND_OWN_CONTAINER_CLEANUP",
+  "terminal": {
+    "sha256": "2be96680dde0686d0221f8bd07bd42a21f07263bf27a8017742a6d5975073d45",
+    "value": {
+      "atUTC": "2026-11-17T15:46:55.209751+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 6.5726720439852215,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T15:47:01.808710+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-bb68f2a71a14"
+    }
+  },
+  "unknownResultReplayed": false
+}

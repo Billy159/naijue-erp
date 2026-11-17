@@ -1,0 +1,327 @@
+{
+  "state": "ORIGINAL_AUTH41_ROLLBACK02_ACTUAL_PASS_ROOT122_PG_STOPPED_SQL_UPGRADE_AND_IMPORT_PENDING",
+  "asOf": "2026-11-17T15:50:12.901427+00:00",
+  "currentActualRoot": {
+    "dispatcherSha256": "ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b",
+    "moduleSha256": "4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7",
+    "policySha256": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391",
+    "registeredKeys": 122,
+    "actualCASResultSha256": "9df6e813950dc97d0fa286c517f92e2472d1a9000bc5b1e6a8d81050db1bd2be"
+  },
+  "actualResultSha256": "79836b98ca0d482da43d34d674967ed1a95475fdb2b5eaa98254e1be58e345ae",
+  "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+  "terminalSha256": "2be96680dde0686d0221f8bd07bd42a21f07263bf27a8017742a6d5975073d45",
+  "status": "COMPLETED",
+  "exitCode": 0,
+  "elapsedSeconds": 6.5726720439852215,
+  "resultSha256": "915b0a5749a22b1dbbdf6938616db414d37a96df90a86bfdfff24a01ea79b14c",
+  "cleanupSha256": "59d36f5e3290a5b1ca6e48399c6e72334079db6ab96dabb6415dc159aa6af178",
+  "originalAuthenticationRestored": true,
+  "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+  "membershipsOrRoleAttributesChanged": false,
+  "runtimeAuthChanged": false,
+  "originalHardDeadlineMet": false,
+  "ownContainer": {
+    "exitCode": 0,
+    "id": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-ordinary41-original-auth-rollback-20261117-02",
+    "operation": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+    "pid": 0,
+    "running": false
+  },
+  "PGCurrentlyStopped": true,
+  "originalDataIdentityPreserved": true,
+  "privateRecoveryBasisRetained": true,
+  "snapshotBodiesOrDigestsReadForFinalConfirmation": false,
+  "remoteSubmissions": 1,
+  "CASCalls": 1,
+  "localPreSubmissionFormatRejectionPreserved": true,
+  "newRoleOrTemporaryExpiryExtended": false,
+  "next": "T45/D1 ordinary42 SOURCE-only successor for exact3 routine maintenance from physically installed Root08, actualRoot122 baseline; fix demonstrated upgrade retained_stop old35 identity, stop two actual helper pins, work-vs-outer lease semantics, public-proof read classification and executor policy-format binding. Preserve all old FAILED keys and original41 snapshots; reuse approved SQLdaf/91+69 and prior same-scope checks. New consumer/root joint and concrete Main authorization before new runtime; no blind business writer replay. SQL upgrade and import still unperformed/unverified; newAPP is local build only.",
+  "copies": [
+    {
+      "originalPath": "root-source/SOURCE-PINS.json",
+      "storedPath": "root-source/SOURCE-PINS.json",
+      "sha256": "4c76a3867d4f76d14c1cf2b1fe4b0a00da69c62696c5a2b2303ad62dfd6873f1",
+      "bytes": 2844
+    },
+    {
+      "originalPath": "root-source/ACTUAL121-DISPATCHER.py",
+      "storedPath": "root-source/ACTUAL121-DISPATCHER.py",
+      "sha256": "ade6214cc9ff142bfb0bab75fe77b0ce0a006ee5049a2ca1aa7a1f0c95b8102a",
+      "bytes": 55553
+    },
+    {
+      "originalPath": "root-source/CONSUMER-BINDING.json",
+      "storedPath": "root-source/CONSUMER-BINDING.json",
+      "sha256": "ca112f7b354eaed3ee561647372943de474ed382af1488d27231b08c76b7127a",
+      "bytes": 5606
+    },
+    {
+      "originalPath": "root-source/DELTA-CHECKS.json",
+      "storedPath": "root-source/DELTA-CHECKS.json",
+      "sha256": "32c00218deadf59361f20ac67aba1e81db78fe8e38237376ade1f18dcfb42403",
+      "bytes": 1109
+    },
+    {
+      "originalPath": "root-source/HANDOFF.md",
+      "storedPath": "root-source/HANDOFF.md",
+      "sha256": "bc283799b93a8e0c17e104563c4b6b424c9ce8bc8d8827aa76dd26c0a86676b8",
+      "bytes": 2641
+    },
+    {
+      "originalPath": "root-source/HISTORY.json",
+      "storedPath": "root-source/HISTORY.json",
+      "sha256": "88d34edfde80a4c1145dceb980fbf0d3c242a495a02ae1420d9d1d5fe6098342",
+      "bytes": 5965
+    },
+    {
+      "originalPath": "root-source/PREDECESSOR-SOURCE-PINS.json",
+      "storedPath": "root-source/PREDECESSOR-SOURCE-PINS.json",
+      "sha256": "9e918af11c6e2d045dbd36548bcc079d31d4ba63e07d01ed6298a1be07f462e9",
+      "bytes": 3442
+    },
+    {
+      "originalPath": "root-source/admin_exec.ROLLBACK-UNREGISTERED.py",
+      "storedPath": "root-source/admin_exec.ROLLBACK-UNREGISTERED.py",
+      "sha256": "5826f9647c868fc57364902a1ec3f2afa45464a3fcbfd97e1972ac3b60730fe5",
+      "bytes": 56632
+    },
+    {
+      "originalPath": "root-source/admission.template.py",
+      "storedPath": "root-source/admission.template.py",
+      "sha256": "5c3beffc8864e0aa4d6e63afcfc3d5e81e2a696321c1dc846699433a9e201929",
+      "bytes": 7171
+    },
+    {
+      "originalPath": "root-source/assemble_root.py",
+      "storedPath": "root-source/assemble_root.py",
+      "sha256": "482f64894788b7ead0a6ea6e108f2a2da4ea4e878b6896a517672311a1197aac",
+      "bytes": 9074
+    },
+    {
+      "originalPath": "root-source/check_delta.py",
+      "storedPath": "root-source/check_delta.py",
+      "sha256": "0bb11b8783e12dad80e54f6b51563b55b8ad4401b94295dfd429648d2a3f09c2",
+      "bytes": 3677
+    },
+    {
+      "originalPath": "root-source/issue_registration.py",
+      "storedPath": "root-source/issue_registration.py",
+      "sha256": "b296d82b98e256dd8494f1e0b75edbe868d86b51e3c776df583103cab7b4f5bb",
+      "bytes": 6640
+    },
+    {
+      "originalPath": "root-source/main_issuer.template.py",
+      "storedPath": "root-source/main_issuer.template.py",
+      "sha256": "b296d82b98e256dd8494f1e0b75edbe868d86b51e3c776df583103cab7b4f5bb",
+      "bytes": 6640
+    },
+    {
+      "originalPath": "root-source/prepare_channel.py",
+      "storedPath": "root-source/prepare_channel.py",
+      "sha256": "cfa7ba1157538db90b69e778ead92eaede1c00a1584f587511002d4769462248",
+      "bytes": 7234
+    },
+    {
+      "originalPath": "root-source/r3_original_auth41_rollback02.py",
+      "storedPath": "root-source/r3_original_auth41_rollback02.py",
+      "sha256": "4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7",
+      "bytes": 16100
+    },
+    {
+      "originalPath": "root-source/read_registration_basis.py",
+      "storedPath": "root-source/read_registration_basis.py",
+      "sha256": "6b4b67e6397fd49835d8c46ee6f4e6db2e8345181a40176da79180716abf99d0",
+      "bytes": 1231
+    },
+    {
+      "originalPath": "root-source/register_cas.py",
+      "storedPath": "root-source/register_cas.py",
+      "sha256": "1cd71f6a7f7467b0c924c6c1031bb39598abda3dec75bd24b870d13b59d6d511",
+      "bytes": 22873
+    },
+    {
+      "originalPath": "consumer-source/SOURCE-PINS.json",
+      "storedPath": "consumer-source/SOURCE-PINS.json",
+      "sha256": "3af811e1aba655bb0ae07015eebd00afb2f8fc3cc8985ef7edaef3b2f1bfcda0",
+      "bytes": 3787
+    },
+    {
+      "originalPath": "consumer-source/CHECK-RESULT.json",
+      "storedPath": "consumer-source/CHECK-RESULT.json",
+      "sha256": "185ef34b46cb27af45fdc22d2348498bdfbe0ea073fef7ec6595afa9cfb595e4",
+      "bytes": 4031
+    },
+    {
+      "originalPath": "consumer-source/FIXED-INPUT-METADATA.json",
+      "storedPath": "consumer-source/FIXED-INPUT-METADATA.json",
+      "sha256": "0e55e5b5ab90137fe4382b0dbc475b6dd1514e36ba9c15def45b90fdff9ec79d",
+      "bytes": 3403
+    },
+    {
+      "originalPath": "consumer-source/HANDOFF.md",
+      "storedPath": "consumer-source/HANDOFF.md",
+      "sha256": "e1fa84c753e1db6db2d63d2943c8747186c25ec1e9c97f115fda0fe54808aec8",
+      "bytes": 2684
+    },
+    {
+      "originalPath": "consumer-source/INTERFACE.UNISSUED.json",
+      "storedPath": "consumer-source/INTERFACE.UNISSUED.json",
+      "sha256": "7f01da0f4e4a650ee24a454a7c8bd4e9be76ed6f51756f6853718c7214b0af78",
+      "bytes": 6956
+    },
+    {
+      "originalPath": "consumer-source/SOURCE-DELTA.patch",
+      "storedPath": "consumer-source/SOURCE-DELTA.patch.FROZEN-BYTES.json",
+      "sha256": "8ed09c3638495af77db8970ebb4e5003a90c5ccc9f06028d79ca0a645c2e767d",
+      "bytes": 3191
+    },
+    {
+      "originalPath": "consumer-source/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer-source/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer-source/bundle/normal_service04.py",
+      "storedPath": "consumer-source/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "originalPath": "consumer-source/bundle/normal_service04_proof.py",
+      "storedPath": "consumer-source/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "originalPath": "consumer-source/bundle/ordinary05_roles.py",
+      "storedPath": "consumer-source/bundle/ordinary05_roles.py",
+      "sha256": "ae787f26a0b4f4129e3bf776c10ad9314f38da4920c71893caefa4621ff7cea3",
+      "bytes": 18549
+    },
+    {
+      "originalPath": "consumer-source/bundle/ordinary05_roles_job.py",
+      "storedPath": "consumer-source/bundle/ordinary05_roles_job.py",
+      "sha256": "e5e594ef0a2937ec0e9734163be5ed89620aad43db73a65c71d3c82352ec8ddb",
+      "bytes": 24509
+    },
+    {
+      "originalPath": "consumer-source/bundle/prior_preserved38.py",
+      "storedPath": "consumer-source/bundle/prior_preserved38.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer-source/bundle/root06_material.py",
+      "storedPath": "consumer-source/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer-source/bundle/successful39_history.py",
+      "storedPath": "consumer-source/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer-source/check_source.py",
+      "storedPath": "consumer-source/check_source.py",
+      "sha256": "091c04fb63752aa1d1c1c515351f3f67f72b8a3a1a4d9461f47b86b15b31efd2",
+      "bytes": 9671
+    },
+    {
+      "originalPath": "review/CONSUMER-RESULT.json",
+      "storedPath": "review/CONSUMER-RESULT.json",
+      "sha256": "cc9cbfb4c0ac2511aacbad10fbff9b55eb41c9517d5f0fb268407e6246846bfe",
+      "bytes": 2336
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "b5087cde4e860313dd0eaddad1ba19162af8e2cf2fae4ff1eddd0b478bbeadb3",
+      "bytes": 2211
+    },
+    {
+      "originalPath": "review/ADAPTER-FORMAT02-RESULT.json",
+      "storedPath": "review/ADAPTER-FORMAT02-RESULT.json",
+      "sha256": "e8161935e14dacc11fb767f97f4015dd9e85d90f7a16fcb3d26c995ff1047f9f",
+      "bytes": 2591
+    },
+    {
+      "originalPath": "main-safe/ISSUED-SAFE-METADATA.json",
+      "storedPath": "main-safe/ISSUED-SAFE-METADATA.json",
+      "sha256": "765c608124149384b0cbad95fb77cc2fda1b2108efe11e25ddfadb65dfe9a8e3",
+      "bytes": 2582
+    },
+    {
+      "originalPath": "main-safe/DECISION.json",
+      "storedPath": "main-safe/DECISION.json",
+      "sha256": "2c0fe7105855f19cc2777ff19b80aa5f139d375de13fdf5fcbd5932052e74f16",
+      "bytes": 1564
+    },
+    {
+      "originalPath": "actual-safe/FRESH-BASIS.json",
+      "storedPath": "actual-safe/FRESH-BASIS.json",
+      "sha256": "2728eff1074b7d27fe504b6dff28ed99c2ab73a634db2b1e3a86e9b86c034e40",
+      "bytes": 12879
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "storedPath": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "sha256": "9df6e813950dc97d0fa286c517f92e2472d1a9000bc5b1e6a8d81050db1bd2be",
+      "bytes": 506
+    },
+    {
+      "originalPath": "actual-safe/RESULT.json",
+      "storedPath": "actual-safe/RESULT.json",
+      "sha256": "79836b98ca0d482da43d34d674967ed1a95475fdb2b5eaa98254e1be58e345ae",
+      "bytes": 6114
+    },
+    {
+      "originalPath": "actual-safe/FINAL-PRIVATE-SAFE-READBACK.json",
+      "storedPath": "actual-safe/FINAL-PRIVATE-SAFE-READBACK.json",
+      "sha256": "364d76bc02fe5c958d900a18315747e2680c85c2063481b04f20b86464e155b8",
+      "bytes": 1266
+    },
+    {
+      "originalPath": "actual-safe/FORMAT02-FIX-AND-NO-SUBMISSION.json",
+      "storedPath": "actual-safe/FORMAT02-FIX-AND-NO-SUBMISSION.json",
+      "sha256": "6bc93894832c7b62f36b93fd1bd611e9cb9e2c774981d5bd105486b31e5971b5",
+      "bytes": 1173
+    },
+    {
+      "originalPath": "actual-safe/EXECUTE-RETURN-SAFE.json",
+      "storedPath": "actual-safe/EXECUTE-RETURN-SAFE.json",
+      "sha256": "08fae40389e27e62166506ac742099a03436718c3a911a08a2d56b84a991bfa5",
+      "bytes": 180
+    },
+    {
+      "originalPath": "actual-safe/EXECUTE-AFTER-FORMAT02-RETURN-SAFE.json",
+      "storedPath": "actual-safe/EXECUTE-AFTER-FORMAT02-RETURN-SAFE.json",
+      "sha256": "ab76f29092b35f2a09457cb072a278c671da4e5cef10134f7a96178b014c23ca",
+      "bytes": 94
+    },
+    {
+      "originalPath": "actual-safe/FORMAT02-ONLY.patch",
+      "storedPath": "actual-safe/FORMAT02-ONLY.patch",
+      "sha256": "c93710c1f566620cf97e197136985ed4016492978bbd81d8b3f48f380cd76838",
+      "bytes": 1293
+    },
+    {
+      "originalPath": "actual-safe/phase_cli.ORIGINAL-FORMAT.py",
+      "storedPath": "actual-safe/phase_cli.ORIGINAL-FORMAT.py",
+      "sha256": "77f29a97e5f3ae30d095d374afc7144bbcfa08345c613cbea7562e795e1ba186",
+      "bytes": 5283
+    },
+    {
+      "originalPath": "execution-adapter/phase_cli.py",
+      "storedPath": "execution-adapter/phase_cli.py",
+      "sha256": "0eee1c743268c67cdbd4f82fbbd91a7a737ec295bb639534ea4151df0ed3e1cc",
+      "bytes": 5285
+    }
+  ],
+  "rawRoleAuthorityPolicyPacketSnapshotOrPrivateReadbackBodiesIncluded": false
+}

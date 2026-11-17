@@ -1,0 +1,13 @@
+回滚02 SOURCE，未签发/登记/执行。实际基线是121/ade6214，绝不倒回120。只新增 t45-r3-ordinary41-original-auth-rollback-20261117-02 到122，保留全部121旧键和三处原保护。旧01 FAILED16ae、rootresult和原b7模块/c437政策永久保留，不重放或改判。
+
+本次消费者 SOURCE3af811e1aba655bb0ae07015eebd00afb2f8fc3cc8985ef7edaef3b2f1bfcda0，interface7f01da0f4e4a650ee24a454a7c8bd4e9be76ed6f51756f6853718c7214b0af78，QB consumer cc9cbfb4c0ac2511aacbad10fbff9b55eb41c9517d5f0fb268407e6246846bfe。只改02身份和真实0444/root:root/nlink1/canonical公开proof读取，私域读法和恢复算法不变。D1不修改消费者。
+
+Root直接核C41/proofc31/真实cleanup9b53/DockerStoppedPID0/原DATA和端口、六份已知终态及无其它active操作。额外固定核01失败回执，PRESERVE保留旧模块政策结果。新的快照fullstat9从实际fresh采集，SOURCE未观测值仍None，Main/CAS/Root/host/inside逐层绑定；不读取或摘要原/finite snapshot内容。无STOP/确认替身，也不经过旧Restore41。
+
+新窗口最多15分钟，worker300秒；两层新rollback-only票据同真实start/expires/stat9。旧0980仅历史，绝不续临时角色、不带apply能力。原hard未达成如实记录，新窗口是独立原认证回滚，不伪称旧hard通过。专属original-auth41-rollback02/finish只处理本作业，其余旧作业照旧。
+
+Main7：issue_registration.issue(review_file,review_pin,basis_file,basis_pin,output_directory,consumer_review_file,consumer_review_pin)。真实时钟之前必须有最终联合QB与Main具体决定：outputs/主控/20261117-r3-original-auth41-rollback-decision-02/DECISION.json，state=AUTHORIZE_EXACT_ORIGINAL_AUTH41_ROLLBACK02_WINDOW_AFTER_REVIEW，绑定jobId/sourcePinsSha256/reviewSha256、maximumWindowSeconds900、temporaryRoleExpiryExtended=false、applyAuthorized=false。不自动执行。
+
+T45原通道：prepare_channel.prepare_local→stage_and_read→Main7→register_once(registration_directory)。新TARGET ORIGINAL-AUTH41-ROLLBACK02-ROOT-EXECUTION-PREPARATION-01，serverSTAGE r3-original-auth41-rollback02-registration-source-20261117-01；模板准确原DURABLE02/3cec。政策original-auth41-rollback-only-20261117-02.json，唯一rollback规则；ISSUED authoritySha256=新host、rolesAuthoritySha256=新rollback inner、registrationSha256=CAS。实际运行仍由T45唯一owner按Main新指令执行。
+
+DELTA-CHECKS 21项仅新增键、121→122、失败锚和新consumer/pins；原46/25/23直接复用。0server/fresh/clock/issuer/PG，无正向授权样例；APP/前端/共享合同未动。

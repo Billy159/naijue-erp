@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T15:29:16.915947+00:00",
+  "updatedAt": "2026-11-17T15:50:12.901427+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121→122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
+  "next": "T45/D1 ordinary42 SOURCE-only successor for exact3 routine maintenance from physically installed Root08, actualRoot122 baseline; fix demonstrated upgrade retained_stop old35 identity, stop two actual helper pins, work-vs-outer lease semantics, public-proof read classification and executor policy-format binding. Preserve all old FAILED keys and original41 snapshots; reuse approved SQLdaf/91+69 and prior same-scope checks. New consumer/root joint and concrete Main authorization before new runtime; no blind business writer replay. SQL upgrade and import still unperformed/unverified; newAPP is local build only.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T15:29:16.915947+00:00",
-  "state": "ACTUAL_ROOT121_ROLLBACK01_FAILED_PRIVATE_PUBLIC_PROOF_CLASSIFICATION_AUTH_NOT_RESTORED",
+  "asOf": "2026-11-17T15:50:12.901427+00:00",
+  "state": "ORIGINAL_AUTH41_ROLLBACK02_ACTUAL_PASS_ROOT122_PG_STOPPED_SQL_UPGRADE_AND_IMPORT_PENDING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121→122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
+  "next": "T45/D1 ordinary42 SOURCE-only successor for exact3 routine maintenance from physically installed Root08, actualRoot122 baseline; fix demonstrated upgrade retained_stop old35 identity, stop two actual helper pins, work-vs-outer lease semantics, public-proof read classification and executor policy-format binding. Preserve all old FAILED keys and original41 snapshots; reuse approved SQLdaf/91+69 and prior same-scope checks. New consumer/root joint and concrete Main authorization before new runtime; no blind business writer replay. SQL upgrade and import still unperformed/unverified; newAPP is local build only.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52797,7 +52797,7 @@
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": false,
+  "originalAuthRestored": true,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53589,11 +53589,11 @@
   "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "dispatcherSha256": "ade6214cc9ff142bfb0bab75fe77b0ce0a006ee5049a2ca1aa7a1f0c95b8102a",
-    "moduleSha256": "b7af59ad9fc3517324aaf6b407e21d7d90708e3c226846714860c8ef194afacc",
-    "policySha256": "c4379f1716fd98fc50bf774f7e1e3e698a584b3207585aadfc33d5b2ec627de5",
-    "registeredKeys": 121,
-    "actualCASResultSha256": "ea8c6ac32536b5bfcad4e957dd53634a3303fa289bf77a98e21db07000f2a306"
+    "dispatcherSha256": "ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b",
+    "moduleSha256": "4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7",
+    "policySha256": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391",
+    "registeredKeys": 122,
+    "actualCASResultSha256": "9df6e813950dc97d0fa286c517f92e2472d1a9000bc5b1e6a8d81050db1bd2be"
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -54841,6 +54841,49 @@
     "failureLocation": "verify_current_stop reads known publicproof root0/gid0/0444 with private=True; carrier.private guard rejects; beforeintent/create with actual private metadata corroboration. No source0-write inference used as auth restoration proof.",
     "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121→122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
     "successorAuthorityIssued": false,
+    "rawRoleAuthorityPolicyPacketSnapshotOrPrivateReadbackBodiesIncluded": false
+  },
+  "originalAuth41Rollback02": {
+    "state": "ORIGINAL_AUTH41_ROLLBACK02_ACTUAL_PASS_ROOT122_PG_STOPPED_SQL_UPGRADE_AND_IMPORT_PENDING",
+    "asOf": "2026-11-17T15:50:12.901427+00:00",
+    "currentActualRoot": {
+      "dispatcherSha256": "ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b",
+      "moduleSha256": "4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7",
+      "policySha256": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391",
+      "registeredKeys": 122,
+      "actualCASResultSha256": "9df6e813950dc97d0fa286c517f92e2472d1a9000bc5b1e6a8d81050db1bd2be"
+    },
+    "actualResultSha256": "79836b98ca0d482da43d34d674967ed1a95475fdb2b5eaa98254e1be58e345ae",
+    "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+    "terminalSha256": "2be96680dde0686d0221f8bd07bd42a21f07263bf27a8017742a6d5975073d45",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 6.5726720439852215,
+    "resultSha256": "915b0a5749a22b1dbbdf6938616db414d37a96df90a86bfdfff24a01ea79b14c",
+    "cleanupSha256": "59d36f5e3290a5b1ca6e48399c6e72334079db6ab96dabb6415dc159aa6af178",
+    "originalAuthenticationRestored": true,
+    "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+    "membershipsOrRoleAttributesChanged": false,
+    "runtimeAuthChanged": false,
+    "originalHardDeadlineMet": false,
+    "ownContainer": {
+      "exitCode": 0,
+      "id": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "operation": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "pid": 0,
+      "running": false
+    },
+    "PGCurrentlyStopped": true,
+    "originalDataIdentityPreserved": true,
+    "privateRecoveryBasisRetained": true,
+    "snapshotBodiesOrDigestsReadForFinalConfirmation": false,
+    "remoteSubmissions": 1,
+    "CASCalls": 1,
+    "localPreSubmissionFormatRejectionPreserved": true,
+    "newRoleOrTemporaryExpiryExtended": false,
+    "next": "T45/D1 ordinary42 SOURCE-only successor for exact3 routine maintenance from physically installed Root08, actualRoot122 baseline; fix demonstrated upgrade retained_stop old35 identity, stop two actual helper pins, work-vs-outer lease semantics, public-proof read classification and executor policy-format binding. Preserve all old FAILED keys and original41 snapshots; reuse approved SQLdaf/91+69 and prior same-scope checks. New consumer/root joint and concrete Main authorization before new runtime; no blind business writer replay. SQL upgrade and import still unperformed/unverified; newAPP is local build only.",
     "rawRoleAuthorityPolicyPacketSnapshotOrPrivateReadbackBodiesIncluded": false
   }
 }

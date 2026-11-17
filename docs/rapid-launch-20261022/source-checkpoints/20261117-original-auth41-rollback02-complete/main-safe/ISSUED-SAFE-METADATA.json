@@ -1,0 +1,62 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-original-auth41-rollback-window-02",
+  "issued": {
+    "state": "ORIGINAL_AUTH41_ROLLBACK02_ISSUED_NOT_REGISTERED_OR_EXECUTED",
+    "sourcePinsSha256": "4c76a3867d4f76d14c1cf2b1fe4b0a00da69c62696c5a2b2303ad62dfd6873f1",
+    "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+    "authoritySha256": "6ce5556f189ec256d620a0c47a79975fa85d77ce6567f05b8da1ca5f849d9dfd",
+    "rolesAuthoritySha256": "997800a4dc7c900634b5fef893eb5091450f8e4120e232e24c8a81d03ab75658",
+    "registrationSha256": "0d20250444018dcaec5baf2b1ffae75d98b07227573adf967ff49ada179a5a13",
+    "policySha256": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391",
+    "authorizationDecisionSha256": "2c0fe7105855f19cc2777ff19b80aa5f139d375de13fdf5fcbd5932052e74f16",
+    "originalTemporaryRolesAuthoritySha256": "0980cee0d05d7deed79ae92089cde540ebb77e47ad1f3511b6de1c989a542d9c",
+    "startsAt": 1794929915953,
+    "expiresAt": 1794930815953,
+    "originalHardDeadline": 1794926977752,
+    "originalHardDeadlineClaimedMet": false,
+    "applyAuthorized": false,
+    "temporaryRoleExpiryExtended": false
+  },
+  "files": {
+    "registration-packet.json": {
+      "sha256": "64de0d3e5bd1c6f12d9295c7f48c4013b7e389168651e7cd36b85fad82fc3438",
+      "bytes": 121069,
+      "mode": "0o600"
+    },
+    "ISSUED.json": {
+      "sha256": "2c938c905be00be10c5e8c54678bfa0c1a28829eee578ef3c0eae4b02b14bda5",
+      "bytes": 1019,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "6ce5556f189ec256d620a0c47a79975fa85d77ce6567f05b8da1ca5f849d9dfd",
+      "bytes": 2304,
+      "mode": "0o600"
+    },
+    "roles-authorization.json": {
+      "sha256": "997800a4dc7c900634b5fef893eb5091450f8e4120e232e24c8a81d03ab75658",
+      "bytes": 2036,
+      "mode": "0o600"
+    },
+    "registration-authorization.json": {
+      "sha256": "0d20250444018dcaec5baf2b1ffae75d98b07227573adf967ff49ada179a5a13",
+      "bytes": 16613,
+      "mode": "0o600"
+    },
+    "original-auth41-rollback-only-20261117-02.json": {
+      "sha256": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391",
+      "bytes": 1371,
+      "mode": "0o600"
+    }
+  },
+  "authorityTiming": {
+    "startsAt": 1794929915953,
+    "expiresAt": 1794930815953
+  },
+  "registrationTiming": {
+    "startsAt": 1794929915953,
+    "expiresAt": 1794930095953
+  },
+  "rawAuthorityRolePolicyPacketOrSnapshotBodiesIncluded": false,
+  "actualCASOrRollbackExecuted": false
+}
