@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T20:15:23.092472+00:00",
+  "updatedAt": "2026-11-17T20:37:57.320580+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
+  "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T20:15:23.092472+00:00",
-  "state": "SOURCE45_CATALOG_AND_ROOT_SOURCE_REVIEWED_RUNTIME_SCOPED_ACTUAL_FRESH_PENDING",
+  "asOf": "2026-11-17T20:37:57.320580+00:00",
+  "state": "NORMAL45_ORIGINAL_WRITER_IN_FLIGHT_OUTCOME_UNKNOWN",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
+  "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55088,6 +55088,32 @@
     "platformGoalStatusLastObserved": "blocked",
     "authorizedTaskContinues": true,
     "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
+    "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+  },
+  "normal45ActualInFlight": {
+    "state": "NORMAL45_ORIGINAL_WRITER_IN_FLIGHT_OUTCOME_UNKNOWN",
+    "asOf": "2026-11-17T20:37:57.320580+00:00",
+    "rootCurrent": 142,
+    "rootCandidate": null,
+    "PGCurrentlyStopped": null,
+    "originalAuthenticationRestorationFor45Confirmed": false,
+    "old137AndThreeGuardsPreserved": true,
+    "normal45ActualFreshPassed": true,
+    "normal45ApplyCompleted": true,
+    "normal45StartCompletedGenuineFourLeaf": true,
+    "normal45WriterUniqueSubmissionAccepted": true,
+    "normal45WriterUnitActive": true,
+    "normal45WriterCommitOutcome": "UNKNOWN",
+    "normal45BusinessWritesState": "UNKNOWN",
+    "normal45StopSubmitted": false,
+    "normal45RestoreSubmitted": false,
+    "progressSha256": "fccaf1aef123bef9f2f564bc2b71a4e4a904bf4122542f989ca3680ec7a5327e",
+    "SQLUpgrade42Completed": true,
+    "businessImportCompleted": false,
+    "APPDeployedOrPublicBusinessOpened": false,
+    "platformGoalStatusLastObserved": "blocked",
+    "authorizedTaskContinues": true,
+    "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
     "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
   }
 }

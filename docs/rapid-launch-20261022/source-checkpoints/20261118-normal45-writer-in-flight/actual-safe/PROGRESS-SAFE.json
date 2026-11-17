@@ -1,0 +1,48 @@
+{
+  "state": "NORMAL45_ORIGINAL_WRITER_REQUEST_ACCEPTED_UNIT_ACTIVE_OUTCOME_PENDING",
+  "asOfUTC": "2026-11-17T20:37:16.219506+00:00",
+  "sourcePinsSha256": "77b7c9e5abec43006cd7e00d09e703bcac495af6aa609a25d7d742fb2dd3d944",
+  "consumerSourcePinsSha256": "1676656b24964fa6cb14857b161896b2322cc0edca1b51281875717f3587ed3e",
+  "runtimeDecisionSha256": "7006763a537379942f945d82960ab8bf7b8bca66432721f59328a0e1ad2bb05b",
+  "rootCurrent": 142,
+  "dispatcherSha256": "a19591c74163d6b94afd12b4f165f481adb3fbf92c3bb25e7e3c0a4ecfa0cc52",
+  "moduleSha256": "1e4cbc156bf02eccb6af8da38774825630ebfc782b4d6c15d63011b1e254670a",
+  "policySha256": "13116146bec4db2186847f02ff4791a8e5c39aced50d9482a130245f38fbc6d0",
+  "old137AndThreeGuardsPreserved": true,
+  "actualFreshSha256": "0a7f9298735710cee710d4216885c9f7d0ddcbbb2d1c37dccaf1f328a22d364e",
+  "CASResultSha256": "5efb34acb882aab8b6cde49b9376cf680c1459e34f19155d5e406ecbb1141025",
+  "applyTerminalSha256": "d9797ddd9e9b241d1c8f06a39add1b2974a41d5a29ef8aa27e94968eac0da006",
+  "start": {
+    "status": "COMPLETED0_GENUINE_FOUR_LEAF_VALIDATED",
+    "finishedAtUTC": "2026-11-17T20:28:20.836238+00:00",
+    "storedReadbackSha256": "eaa4452a822878d3045c0e4264f6db5a024a0fe1afe7b3b4d7d094806b7db136",
+    "containerId": "a8a29eb7604992be310e4f23b5aa43e064acb52298bd150df49bfc66db20d127",
+    "proofSha256": "28a7657bc2f5b5ffcb189f3031a73786f5ba2f6e33d7c6630c8b3012401d2e00",
+    "postmasterStart": "2026-11-17 20:27:42.926095+00"
+  },
+  "writer": {
+    "key": "t45-r3-batched-real-after44-execute-20261118-01",
+    "unit": "naijue-erp-op-b16447fb-4276fdf91fca",
+    "uniqueSubmissionAccepted": true,
+    "latestUnitActiveReadbackSha256": "7a5f651ff01c4949d1e112e5270904189401be92575538910b7b6f44deb8dc3e",
+    "noTerminalOrResultsInLatestReadback": true,
+    "earlierPreRootObservationNotUsedAsCurrentNoWritesClaim": true,
+    "commitOutcome": "UNKNOWN",
+    "businessWritesState": "UNKNOWN",
+    "automaticReplay": false
+  },
+  "mainClockEpochMs": 1794946698808,
+  "deadlinesCST": {
+    "controller": "2026-11-18 05:24:58.808+08:00",
+    "backupAdmin": "2026-11-18 05:26:58.808+08:00",
+    "hardOriginalAuthRestore": "2026-11-18 05:39:58.808+08:00",
+    "policy": "2026-11-18 05:43:18.808+08:00"
+  },
+  "stop45Submitted": false,
+  "restore45Submitted": false,
+  "originalAuthenticationRestorationFor45Confirmed": false,
+  "businessImportCompleted": false,
+  "APPDeployedOrPublicBusinessOpened": false,
+  "rawAuthPrivateSnapshotGenuineLeavesOrCredentialDigestsIncluded": false,
+  "next": "Continue only original writer key/control readback until settled, no replay/new key or PG diagnostic. Then genuine stop45 and exact original-auth restore45 before hard deadline; preserve current data and original44910/IDs/SQL42/APP. Never assume zero writes or COMMIT from pending/earlier pre-root observation."
+}

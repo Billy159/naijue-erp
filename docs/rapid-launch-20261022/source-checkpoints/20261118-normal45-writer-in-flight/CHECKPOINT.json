@@ -1,0 +1,34 @@
+{
+  "state": "NORMAL45_ORIGINAL_WRITER_IN_FLIGHT_OUTCOME_UNKNOWN",
+  "asOf": "2026-11-17T20:37:57.320580+00:00",
+  "rootCurrent": 142,
+  "rootCandidate": null,
+  "PGCurrentlyStopped": null,
+  "originalAuthenticationRestorationFor45Confirmed": false,
+  "old137AndThreeGuardsPreserved": true,
+  "normal45ActualFreshPassed": true,
+  "normal45ApplyCompleted": true,
+  "normal45StartCompletedGenuineFourLeaf": true,
+  "normal45WriterUniqueSubmissionAccepted": true,
+  "normal45WriterUnitActive": true,
+  "normal45WriterCommitOutcome": "UNKNOWN",
+  "normal45BusinessWritesState": "UNKNOWN",
+  "normal45StopSubmitted": false,
+  "normal45RestoreSubmitted": false,
+  "progressSha256": "fccaf1aef123bef9f2f564bc2b71a4e4a904bf4122542f989ca3680ec7a5327e",
+  "SQLUpgrade42Completed": true,
+  "businessImportCompleted": false,
+  "APPDeployedOrPublicBusinessOpened": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
+  "copies": [
+    {
+      "originalPath": "actual-safe/PROGRESS-SAFE.json",
+      "storedPath": "actual-safe/PROGRESS-SAFE.json",
+      "sha256": "fccaf1aef123bef9f2f564bc2b71a4e4a904bf4122542f989ca3680ec7a5327e",
+      "bytes": 2840
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}
