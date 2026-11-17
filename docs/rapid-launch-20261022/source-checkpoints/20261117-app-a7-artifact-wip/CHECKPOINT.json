@@ -52,7 +52,19 @@
       "path": "r3_two_fixed_artifact_admission.py",
       "sha256": "b42f6c3cf1f6d9bdc8d949e3a54565314f857040f6086fa927ac15d08ed92869",
       "bytes": 12846
+    },
+    {
+      "path": "issue_profile.py",
+      "sha256": "c4b1ae99aa2e644028810f74d4e8646f37cdb8793602bcb2b673c92ad5fb4f26",
+      "bytes": 10128
     }
   ],
-  "next": "T45 final source-only receiver metadata successor for actual APP a7, no server artifact action before actual writer VERIFIED/closed, same-service STOP/exact RESTORE and fresh baseline. Reuse old846 review except concrete changed tuple/current39 binding."
+  "next": "T45 final source-only receiver metadata successor for actual APP a7, no server artifact action before actual writer VERIFIED/closed, same-service STOP/exact RESTORE and fresh baseline. Reuse old846 review except concrete changed tuple/current39 binding.",
+  "unissuedProfileBodiesOmitted": [
+    {
+      "path": "FIXED-PROFILES.WIP.json",
+      "sha256": "f2cd36ae07fc589ca582878bb05830a9e295958bcbc220ddafdd5cd39ff249bc",
+      "bytes": 4283
+    }
+  ]
 }
