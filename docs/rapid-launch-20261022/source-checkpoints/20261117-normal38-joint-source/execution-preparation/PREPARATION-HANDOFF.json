@@ -1,0 +1,170 @@
+{
+  "PGConnections": 0,
+  "clientOrIssuerInvoked": false,
+  "clockCalls": 0,
+  "compiledSources": {
+    "MAIN-ISSUE-REGISTRATION.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/MAIN-ISSUE-REGISTRATION.py",
+      "sha256": "b05ae63482908a77f36bb85c0da412b7909b7e91d8d5d1b2160de1bdd07d7cfc"
+    },
+    "READ-STOPPED-BASIS-AND-C05.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/READ-STOPPED-BASIS-AND-C05.py",
+      "sha256": "204d6e65e6eb910a3d5fb63c0f823f78aa8b946185aae7d5823863dc75d408b7"
+    },
+    "READER-SAFE-PROCESS-CARRIER.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/READER-SAFE-PROCESS-CARRIER.py",
+      "sha256": "1fb5d791f8d40e5281ef9972543e19ced54dc8f990293d311bc9673f8da57346"
+    },
+    "STAGE-READONLY-SOURCES.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/STAGE-READONLY-SOURCES.py",
+      "sha256": "bf7a4f25ffef5482b68ffed2c8c34c196dce9f260f1c81796bd9c81c8fff0213"
+    },
+    "STAGE-SAFE-PROCESS-CARRIER.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/STAGE-SAFE-PROCESS-CARRIER.py",
+      "sha256": "df7f8fea238099edb13994bf0352ff77547bb382e896ee517a48a22fa7ce277f"
+    },
+    "prepare_local.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/prepare_local.py",
+      "sha256": "c1c3aace72b5634f737761f0d26262aeef5040454911df3e3fd06381091a512c"
+    },
+    "read_stop_restore38.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/read_stop_restore38.py",
+      "sha256": "54a4ade62e41916e945806cb40306b36b6185c9965a786fb5089922fff3a9c29"
+    }
+  },
+  "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
+  "freshBasis": {
+    "C05": "single lstat/resolve expected dev66304 inode13502393 uid0 gid61035 mode0710; no contents/native call",
+    "entry": "sudo -n /usr/bin/python3 -I -S -c <exact READER-SAFE-PROCESS-CARRIER.py bytes>",
+    "futureOutputPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/ACTUAL-REGISTRATION-BASIS.json",
+    "metadataAfterActualStartNativeSearch": "STILL_PENDING_ACTUAL_START38",
+    "readerInvoked": false,
+    "registrationStageOrAuditOccupied": false,
+    "remoteReadonlyCodeDirectory": "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-normal38-readonly-basis-source-20261117-01",
+    "repeat25OrFullSourceHash": false,
+    "requiresFinalTwoQBReports": true,
+    "rootCAS": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal38-root-source-02/register_cas.py",
+      "sha256": "039be0445b580de6d1f3dcbeba62ad9dfb944321f46e425c1d44001e52ebd0ea"
+    },
+    "rootReader": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal38-root-source-02/read_registration_basis.py",
+      "sha256": "f76d13f64d09d2dbcfcf7f6abd8e2252b4431f4aa5775e26e0ae6112d2a5d219"
+    },
+    "sourceStaged": false
+  },
+  "invocationWrapper": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-JOINT-WIRING-SOURCE-02/invoke_once.py",
+    "sha256": "2ca2d032580f51a5101118098ce454b2bac4a3c94a78ad90dba1032b519ace6e"
+  },
+  "mainOutputDirectoryNotCreated": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-normal38-registration-window-01",
+  "mainSevenArgPreparedScript": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/MAIN-ISSUE-REGISTRATION.py",
+    "sha256": "b05ae63482908a77f36bb85c0da412b7909b7e91d8d5d1b2160de1bdd07d7cfc"
+  },
+  "newAuthorityOrService": null,
+  "phaseRulesUnissued": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary38-auth-apply-20261116-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/apply/bundle",
+      "timeoutSeconds": 300
+    },
+    "prepare": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-final33-plan-prepare-20261116-04",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "final33_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/prepare/bundle",
+      "timeoutSeconds": 780
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary38-auth-restore-20261116-01",
+      "rolesAuthoritySha256": null,
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/restore/bundle",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "authoritySha256": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-first-r3-native-service-start-20261116-38",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal_service05_after08.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/start/bundle",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "authoritySha256": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary38-preserve-stop-20261116-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "normal05_preserve_stop.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/stop/bundle",
+      "timeoutSeconds": 120
+    },
+    "writer": {
+      "authorityLeaf": "host-authorization.json",
+      "authoritySha256": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-real-execute-20261115-01",
+      "rolesAuthoritySha256": "NOT_APPLICABLE",
+      "script": "final33_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/writer/bundle",
+      "timeoutSeconds": 3000
+    }
+  },
+  "rootSourceManifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-normal38-root-source-02/SOURCE-PINS.json",
+    "sha256": "6590c4bfd1bbbf1f370da7b9181119b1ea9dc1f1ac5a73f267753150f07b5ff7"
+  },
+  "rulesSha256": "48228a026e57fe263545f8a3e30af59e9d3fbd5a22d8b44c4a2fa44d45672acc",
+  "serverActions": 0,
+  "sourceBaselineExpected": [
+    "6f32585 dispatcher",
+    "45b0df helper",
+    "ca068bb policy",
+    "37 restored9a471",
+    "C05 0:61035/0710",
+    "six candidate keys absent/no active operations"
+  ],
+  "state": "LOCAL_NORMAL38_PRE_CLOCK_PREPARATION_ONLY_NOT_EXECUTED",
+  "stopRestoreOriginalKeys": {
+    "restore": "t45-r3-ordinary38-auth-restore-20261116-01",
+    "stop": "t45-r3-ordinary38-preserve-stop-20261116-01"
+  },
+  "stopRestoreReadback": {
+    "actualServiceFromIssuedAuthorityOnly": true,
+    "arguments": [
+      "phase",
+      "actualPolicyPath",
+      "actualPolicySHA",
+      "actualAuthoritySHA",
+      "newExclusiveReceiptPath"
+    ],
+    "cleanupFacts": [
+      "root/public terminal and result agree",
+      "request args key script timeout exact",
+      "service stopped/pid0, PGDATA preserved/port absent",
+      "stop child cleanup, retained C05",
+      "restore exact original verifier and expiry privately verified; safe restored receipt plus metadata-only custody"
+    ],
+    "originalKeyReadbackOnUnknownNoReplay": true,
+    "script": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-EXECUTION-PREPARATION-01/read_stop_restore38.py",
+      "sha256": "54a4ade62e41916e945806cb40306b36b6185c9965a786fb5089922fff3a9c29"
+    }
+  },
+  "writerSubmitted": false
+}

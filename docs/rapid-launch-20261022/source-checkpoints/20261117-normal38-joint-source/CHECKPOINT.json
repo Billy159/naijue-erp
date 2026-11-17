@@ -424,22 +424,70 @@
       "path": "reviews/HISTORY-BASELINE-EVIDENCE.json",
       "sha256": "71d349b142e809e88dfa2dfb634198ebe7fdce59159e9056d3517c1edf52490d",
       "bytes": 19180
+    },
+    {
+      "path": "actual-safe/MAIN38-ISSUED-METADATA.json",
+      "sha256": "282b7ad15fbb22952d9839192aee4a9ed4fe8932e50d279279a57ab088764879",
+      "bytes": 1910
+    },
+    {
+      "path": "actual-safe/ACTUAL-STOPPED38-BASIS.json",
+      "sha256": "b11b2c6575e0b28f193f851735b53b9cafb02b359b0e3a8f27de3321e30e9e0b",
+      "bytes": 143869
+    },
+    {
+      "path": "execution-preparation/PREPARATION-HANDOFF.json",
+      "sha256": "66b971c08fac311009fa81905b9b6032605f11abf48ba15c8efd936e4f74e45c",
+      "bytes": 10454
+    },
+    {
+      "path": "execution-preparation/MAIN-ISSUE-REGISTRATION.py",
+      "sha256": "b05ae63482908a77f36bb85c0da412b7909b7e91d8d5d1b2160de1bdd07d7cfc",
+      "bytes": 1151
+    },
+    {
+      "path": "actual-safe/ACTUAL-CAS38-RESULT.json",
+      "sha256": "0f59710ce80eb86a4899ba3ce932939062244e8d81706fcf6fb82350b673a2c1",
+      "bytes": 504
+    },
+    {
+      "path": "actual-safe/ACTUAL-REGISTRATION38-READBACK.json",
+      "sha256": "7aa7fdf925b052108f27989d2a411d184b2c55a125d05325549acc00e31e0542",
+      "bytes": 1701
+    },
+    {
+      "path": "actual-safe/ACTUAL-APPLY38-RESULT.json",
+      "sha256": "41495cafbc1bb570087d727715b4e83993650cf13c92ee32bc921da03c38588b",
+      "bytes": 4794
+    },
+    {
+      "path": "actual-safe/MAIN38-START-ISSUED-METADATA.json",
+      "sha256": "92c87149f743cac944ed37697900c22e823728b261c70eeae60891202b42b6b0",
+      "bytes": 412
     }
   ],
-  "sourceOnly": true,
+  "sourceOnly": false,
   "privateAndAuthorityBodiesCopied": false,
   "subsetNote": "Static source and safe review evidence subset. UNISSUED JSON bodies are referenced only; not a replayable runtime capability package.",
-  "asOf": "2026-11-17T10:04:33.406996+08:00",
-  "state": "NORMAL38_FINAL03_ROOT02_JOINT_SOURCE_PASS_ONLY_AWAITING_FRESH_STOPPED_BASIS",
+  "asOf": "2026-11-17T10:14:00.761676+08:00",
+  "state": "NORMAL38_REGISTERED_APPLY_COMPLETED_START_REAL_ISSUED_PENDING_ACTUAL",
   "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
   "rootSourcePinsSha256": "6590c4bfd1bbbf1f370da7b9181119b1ea9dc1f1ac5a73f267753150f07b5ff7",
   "consumerReviewSha256": "0653f28262f6eaa6860cae236815f2e82c4c4711dc06be084f33920d14c48cc7",
   "rootReviewSha256": "ee0053ef2d527947f706fc8f5b700865eaf8b059a1d724d3eff4e38ae787d3fd",
-  "rolesApplied": false,
+  "rolesApplied": true,
   "PGStopped": true,
-  "originalAuthenticationRestored": true,
+  "originalAuthenticationRestored": false,
   "businessWriterSubmitted": false,
   "businessWrites": 0,
-  "next": "T45 obtains one fresh stopped registration basis using final root02 reader/CAS. Main issues new finite38 using actual joint review pair and fresh basis, then T45 registers/applies/starts and actual unused outer04. No replay, rehearsal, deadline extension or user approval missing. Original writer only after genuine prepared result.",
-  "staticPatchBodyOmittedOriginalHashRetainedInSourceManifest": true
+  "next": "T45 START38 once using actual273663 permit, final invoke2ca2 and original fixed budgets. Collect true C/birth/epoch/four protected outputs and prepare04 actual context; single affected C05 native search check. Main issues unused PREPARE04 only from actual success. Writer never submitted.",
+  "staticPatchBodyOmittedOriginalHashRetainedInSourceManifest": true,
+  "main38IssuedMetadataSha256": "282b7ad15fbb22952d9839192aee4a9ed4fe8932e50d279279a57ab088764879",
+  "main38FiniteIssued": true,
+  "actualFreshBasisSha256": "b11b2c6575e0b28f193f851735b53b9cafb02b359b0e3a8f27de3321e30e9e0b",
+  "actualRegistrationKnown": true,
+  "actualApplyKnown": true,
+  "actualRegistrationSha256": "7aa7fdf925b052108f27989d2a411d184b2c55a125d05325549acc00e31e0542",
+  "actualApplySha256": "41495cafbc1bb570087d727715b4e83993650cf13c92ee32bc921da03c38588b",
+  "start38AuthoritySha256": "273663cf89ce4b99b4e0255de91b5e5ef01a7f18bfef728f9d3690be186d2c10"
 }

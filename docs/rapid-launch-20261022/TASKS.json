@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T10:04:33.406996+08:00",
+  "updatedAt": "2026-11-17T10:14:00.761676+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 obtains one fresh stopped registration basis using final root02 reader/CAS. Main issues new finite38 using actual joint review pair and fresh basis, then T45 registers/applies/starts and actual unused outer04. No replay, rehearsal, deadline extension or user approval missing. Original writer only after genuine prepared result.",
+  "next": "T45 START38 once using actual273663 permit, final invoke2ca2 and original fixed budgets. Collect true C/birth/epoch/four protected outputs and prepare04 actual context; single affected C05 native search check. Main issues unused PREPARE04 only from actual success. Writer never submitted.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T10:04:33.406996+08:00",
+  "asOf": "2026-11-17T10:14:00.761676+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 obtains one fresh stopped registration basis using final root02 reader/CAS. Main issues new finite38 using actual joint review pair and fresh basis, then T45 registers/applies/starts and actual unused outer04. No replay, rehearsal, deadline extension or user approval missing. Original writer only after genuine prepared result.",
+  "next": "T45 START38 once using actual273663 permit, final invoke2ca2 and original fixed budgets. Collect true C/birth/epoch/four protected outputs and prepare04 actual context; single affected C05 native search check. Main issues unused PREPARE04 only from actual success. Writer never submitted.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,7 +52789,7 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": false,
+  "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
   "PGCurrentlyStopped": true,
@@ -52797,7 +52797,7 @@
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": true,
+  "originalAuthRestored": false,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53242,7 +53242,7 @@
     "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
     "automaticReplay": false
   },
-  "normal38": "NORMAL38_FINAL03_ROOT02_JOINT_SOURCE_PASS_ONLY_AWAITING_FRESH_STOPPED_BASIS",
+  "normal38": "NORMAL38_REGISTERED_APPLY_COMPLETED_START_REAL_ISSUED_PENDING_ACTUAL",
   "normal38SourceDecisionSha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c",
   "normal37PermissionFix": {
     "device": 66304,
@@ -53285,6 +53285,53 @@
       "WRITER_READBACK"
     ],
     "runtime": false
+  },
+  "normal38Issued": {
+    "metadataSha256": "282b7ad15fbb22952d9839192aee4a9ed4fe8932e50d279279a57ab088764879",
+    "basisSha256": "b11b2c6575e0b28f193f851735b53b9cafb02b359b0e3a8f27de3321e30e9e0b",
+    "startsAt": 1794881166465,
+    "registrationExpiresAt": 1794882066465,
+    "roleApplyExpiresAt": 1794882966465,
+    "controllerValidUntil": 1794888366465,
+    "backupAdminValidUntil": 1794888486465,
+    "restorationDeadline": 1794890166465,
+    "policyExpiresAt": 1794891966465,
+    "registrationSha256": "67e06acc6372edad319727ef7bcca61bebd4f0e4c3366f59ffb3beeedc1de353",
+    "carrierSha256": "20bf2c541deff8b461daab3664d9974914be79ea5738d6c571acd3af693acb2b",
+    "policySha256": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e",
+    "dispatcherSha256": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c",
+    "rolesSha256": "941991a7401ae24448f7f90e2e24973db701b1ef635bbeb64685abec4a9c949b",
+    "authorityBodiesCopied": false
+  },
+  "normal38ActualRegistration": {
+    "sha256": "7aa7fdf925b052108f27989d2a411d184b2c55a125d05325549acc00e31e0542",
+    "atUTC": "2026-11-17T02:09:34.155341+00:00",
+    "dispatcherSha256": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c",
+    "helperSha256": "3b7ebfcb95df010fdbd585b5551851cba6cd65953e54352ab25ee01bb3ec368d",
+    "policySha256": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e",
+    "oldPinsMatched": 324,
+    "oldIdentitiesMatched": 345,
+    "privateStatOnly": 20
+  },
+  "normal38ActualApply": {
+    "sha256": "41495cafbc1bb570087d727715b4e83993650cf13c92ee32bc921da03c38588b",
+    "checkedAtUTC": "2026-11-17T02:11:53.756728+00:00",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 7.382955781009514,
+    "terminalSha256": "aab86daa8e0ad1247d73992b58966ce0160b504fb0fed50c19a21b61dafb361f",
+    "maintenanceStopped": true,
+    "noRuntimeAuthOrMembershipAttributeChanges": true
+  },
+  "normal38StartIssued": {
+    "sha256": "273663cf89ce4b99b4e0255de91b5e5ef01a7f18bfef728f9d3690be186d2c10",
+    "startsAt": 1794881564008,
+    "expiresAt": 1794882464008,
+    "runtimeResult": "NOT_YET_RECEIVED"
+  },
+  "lastVerifiedPGState": {
+    "stopped": true,
+    "atUTC": "2026-11-17T02:11:53.756728+00:00"
   }
 }
 }
