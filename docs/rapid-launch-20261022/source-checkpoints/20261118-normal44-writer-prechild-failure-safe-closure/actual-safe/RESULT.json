@@ -1,0 +1,67 @@
+{
+  "APPDeployed": false,
+  "CASReceiptSha256": "4e4cf73ab183b6457ee6efaac2c290826a2a492db7b345eb809cacdb1f5d6774",
+  "SQLReupgraded": false,
+  "activeOperationUnits": [],
+  "actualDispatcherSha256": "0afafdc9757f06bfc6b1556a287d39b46f5ba6b77b3f157ce7aa25592978dd21",
+  "actualMappedAccessPaths": 454,
+  "actualMappedOrdinaryAccessPassed": true,
+  "actualRootKeys": 137,
+  "businessAcceptance": false,
+  "businessImportSucceeded": false,
+  "databaseStopped": true,
+  "exactOriginalVerifierAndExpiryRestored": true,
+  "latestCheckedAtUTC": "2026-11-17T19:47:28.485567+00:00",
+  "naturalExpiryCountedAsRestoration": false,
+  "old132AndThreeGuardsPreserved": true,
+  "originalBusinessIDsPreserved": true,
+  "originalPlan44910Preserved": true,
+  "ownRestoreContainerStopped": true,
+  "phases": {
+    "apply": {
+      "exitCode": 0,
+      "requestKey": "t45-r3-ordinary44-auth-apply-20261118-01",
+      "status": "COMPLETED"
+    },
+    "restore": {
+      "exitCode": 0,
+      "requestKey": "t45-r3-ordinary44-auth-restore-20261118-01",
+      "status": "COMPLETED"
+    },
+    "start": {
+      "exitCode": 0,
+      "requestKey": "t45-first-r3-native-service-start-20261118-44",
+      "status": "COMPLETED"
+    },
+    "stop": {
+      "exitCode": 0,
+      "requestKey": "t45-r3-ordinary44-preserve-stop-20261118-01",
+      "status": "COMPLETED"
+    },
+    "writer": {
+      "exitCode": 2,
+      "requestKey": "t45-r3-batched-real-after43-execute-20261118-01",
+      "status": "FAILED"
+    }
+  },
+  "planRecompiledOrReplayed": false,
+  "portAndPIDAbsent": true,
+  "rawPrivateMaterialCopiedToSafeRevision": false,
+  "remaining": "Writer host compares catalog generations before child dispatch; D1 local provenance analysis only, frozen sources unchanged, no new runtime scope. Root08 materialization marker is not a statement about later actual42 SQL status.",
+  "rootReviewSha256": "e5e2cb73e06e08393fb90991ae8963fd8a183c8b54ce6ac29d87a1305b4f56c5",
+  "rootSourcePinsSha256": "35e4504e034d36652e93eac6125f51444c4b7032e14b295fe33822acd04dabcf",
+  "safeFiles": {
+    "APPLY-SAFE.json": "b9239dafe78e40ca91f20b8ea232edb924b786058504b784e54edff4d07b21ee",
+    "RESTORE-SAFE.json": "ce750c40392a32f7a03832193d285f06b7421821715229a0f4212008dbcad4f6",
+    "START-SAFE.json": "ed8d2c21818bdf9d0f1778e62f8d990f8919eda15d5ced8266fa6afbec1ea4a4",
+    "STOP-SAFE.json": "4b382f6931dea51122aa6dddc16354a8eb2e3a7bfa90a8e47c3d97c206489aae",
+    "WRITER-FAILED-SAFE.json": "1236526952d07481c1d40eec09319a2970347b54bec27ddd67c380f8aea1dcae"
+  },
+  "sourceOnlyReviewPassed": true,
+  "sourcePinsSha256": "400ba4ebd1a622875ab6c2ebf6508f4b3d5d542ae12de433833c254f5f018ef5",
+  "state": "NORMAL44_SAFE_CLOSED_WRITER_FAILED_BEFORE_CHILD_OR_CONNECTION_NO_IMPORT_SUCCESS",
+  "writerChildStarted": false,
+  "writerConnectionCleanup": "NOT_OPENED",
+  "writerFailureCode": "BATCHED24_INSTALLED_CATALOG_REQUIRED",
+  "writerReplayed": false
+}

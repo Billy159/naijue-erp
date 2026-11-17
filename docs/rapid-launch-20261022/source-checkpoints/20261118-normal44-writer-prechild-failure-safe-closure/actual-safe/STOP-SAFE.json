@@ -1,0 +1,21 @@
+{
+  "automaticReplay": false,
+  "businessAdvanced": false,
+  "cleanShutdown": true,
+  "cleanupComplete": true,
+  "cleanupSha256": "5b06582c9f4da3fc949efdca4b145f94590050945c0f3a1388ae64a853384991",
+  "dataPreserved": true,
+  "databasePrivilegesChanged": false,
+  "elapsedSeconds": 3.2438481870340183,
+  "errors": [],
+  "exitCode": 0,
+  "finishedAtUTC": "2026-11-17T19:44:43.798013+00:00",
+  "holdRetained": true,
+  "ownedPidAbsent": true,
+  "pgStopped": true,
+  "phase": "stop",
+  "portAbsent": true,
+  "requestKey": "t45-r3-ordinary44-preserve-stop-20261118-01",
+  "rootResultSha256": "dffe5895b95ee88cc6519cc96bc14ef62a9bc392b8a590e783bd8e743e1b370a",
+  "status": "COMPLETED"
+}

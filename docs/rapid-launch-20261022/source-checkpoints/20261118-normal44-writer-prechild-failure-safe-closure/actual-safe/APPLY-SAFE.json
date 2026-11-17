@@ -1,0 +1,13 @@
+{
+  "automaticReplay": false,
+  "elapsedSeconds": 6.897428156982642,
+  "exitCode": 0,
+  "finishedAtUTC": "2026-11-17T19:37:08.461159+00:00",
+  "ownContainerStopped": true,
+  "phase": "apply",
+  "requestKey": "t45-r3-ordinary44-auth-apply-20261118-01",
+  "roleAttributesOrMembershipsChanged": false,
+  "rootResultSha256": "faa1395bc7c1ea6faf12485afc48b4b6fb4fe5cb9b888ce4cff903fdf5722e26",
+  "runtimeAuthChanged": false,
+  "status": "COMPLETED"
+}

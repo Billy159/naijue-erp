@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T19:32:24.491671+00:00",
+  "updatedAt": "2026-11-17T19:49:24.227361+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Execute only reviewed Source44 Root35e/consumer400b/static a7a4 with QB e5e2 root34 plus consumer860d44 reused, under Main decisionb6a701. T45 sole owner first performs exact stage44-01/RootPrep01 actual readonly fresh including fixed61035 mapped454 metadata-access. Any failure stops before Main clock, no permission changes. Only genuine passing basis<=120s permits unique Main clock, CAS132to137, then apply/start/writer/stop/restore original plan/business IDs; FIRST_WRITE ABSENT and full real four-leaf required. No recompile, SQL/APP rebuild or public opening. Current DB stopped/auth restored; actual fresh/runtime still pending.",
+  "next": "Wait for D1 exact source-only minimal installed32 versus command35 catalog contract diagnosis/proposal; expectedBinding actual42-afterAda is correct. Preserve SQL42 success and original44910-step plan/business IDs. Writer44 consumed FAILED2, never replay. Start44 actual ordinary/four-leaf success retained; stop44 and exact original-auth restore44 completed. No new source mutation/key/runtime authorized until Main cause-based scope. Business import/APP deployment/public opening not completed.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T19:32:24.491671+00:00",
-  "state": "NORMAL44_ROOT_MAIN_SOURCE_REVIEWED_RUNTIME_SCOPED_ACTUAL_FRESH_PENDING",
+  "asOf": "2026-11-17T19:49:24.227361+00:00",
+  "state": "NORMAL44_WRITER_FAILED_BEFORE_CHILD_START_STOP_AND_ORIGINAL_AUTH_RESTORED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Execute only reviewed Source44 Root35e/consumer400b/static a7a4 with QB e5e2 root34 plus consumer860d44 reused, under Main decisionb6a701. T45 sole owner first performs exact stage44-01/RootPrep01 actual readonly fresh including fixed61035 mapped454 metadata-access. Any failure stops before Main clock, no permission changes. Only genuine passing basis<=120s permits unique Main clock, CAS132to137, then apply/start/writer/stop/restore original plan/business IDs; FIRST_WRITE ABSENT and full real four-leaf required. No recompile, SQL/APP rebuild or public opening. Current DB stopped/auth restored; actual fresh/runtime still pending.",
+  "next": "Wait for D1 exact source-only minimal installed32 versus command35 catalog contract diagnosis/proposal; expectedBinding actual42-afterAda is correct. Preserve SQL42 success and original44910-step plan/business IDs. Writer44 consumed FAILED2, never replay. Start44 actual ordinary/four-leaf success retained; stop44 and exact original-auth restore44 completed. No new source mutation/key/runtime authorized until Main cause-based scope. Business import/APP deployment/public opening not completed.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55016,6 +55016,34 @@
     "platformGoalStatusLastObserved": "blocked",
     "authorizedTaskContinues": true,
     "next": "Execute only reviewed Source44 Root35e/consumer400b/static a7a4 with QB e5e2 root34 plus consumer860d44 reused, under Main decisionb6a701. T45 sole owner first performs exact stage44-01/RootPrep01 actual readonly fresh including fixed61035 mapped454 metadata-access. Any failure stops before Main clock, no permission changes. Only genuine passing basis<=120s permits unique Main clock, CAS132to137, then apply/start/writer/stop/restore original plan/business IDs; FIRST_WRITE ABSENT and full real four-leaf required. No recompile, SQL/APP rebuild or public opening. Current DB stopped/auth restored; actual fresh/runtime still pending.",
+    "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+  },
+  "normal44ActualCloseout": {
+    "state": "NORMAL44_WRITER_FAILED_BEFORE_CHILD_START_STOP_AND_ORIGINAL_AUTH_RESTORED",
+    "asOf": "2026-11-17T19:49:24.227361+00:00",
+    "rootCurrent": 137,
+    "rootCandidate": null,
+    "dispatcherSha256": "0afafdc9757f06bfc6b1556a287d39b46f5ba6b77b3f157ce7aa25592978dd21",
+    "old132AndThreeGuardsPreserved": true,
+    "PGCurrentlyStopped": true,
+    "originalAuthenticationRestored": true,
+    "normal44ApplyCompleted": true,
+    "normal44StartCompletedGenuineFourLeaf": true,
+    "normal44WriterStatus": "FAILED2",
+    "writerSafeCode": "BATCHED24_INSTALLED_CATALOG_REQUIRED",
+    "writerChildStarted": false,
+    "writerConnectionCleanup": "NOT_OPENED",
+    "normal44StopCompleted": true,
+    "normal44RestoreCompleted": true,
+    "SQLUpgrade42Completed": true,
+    "ownerResultSha256": "427285c12815b2865f66c7feda9d09185676208484cd6725943bd6feca6ef265",
+    "source44CompleteImportPerformed": false,
+    "ordinaryAccessActualPass": true,
+    "originalPreparedPlanRecompiled": false,
+    "APPDeployedOrPublicBusinessOpened": false,
+    "platformGoalStatusLastObserved": "blocked",
+    "authorizedTaskContinues": true,
+    "next": "Wait for D1 exact source-only minimal installed32 versus command35 catalog contract diagnosis/proposal; expectedBinding actual42-afterAda is correct. Preserve SQL42 success and original44910-step plan/business IDs. Writer44 consumed FAILED2, never replay. Start44 actual ordinary/four-leaf success retained; stop44 and exact original-auth restore44 completed. No new source mutation/key/runtime authorized until Main cause-based scope. Business import/APP deployment/public opening not completed.",
     "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
   }
 }

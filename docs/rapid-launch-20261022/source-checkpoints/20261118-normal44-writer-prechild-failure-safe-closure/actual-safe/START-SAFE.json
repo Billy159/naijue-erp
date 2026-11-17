@@ -1,0 +1,18 @@
+{
+  "appStarted": false,
+  "automaticReplay": false,
+  "businessWrites": 0,
+  "containerId": "41a0cae6a007606afadf4c51dbb18d595f5de207b5ed266c755b8e3f6ca01a22",
+  "currentServiceProofSha256": "88e1094edf9f5c42f2c02dfbc92bfd87c31bcdcf116e87ed355ac7e2f8af8ee4",
+  "describeMutations": 0,
+  "describePGConnections": 0,
+  "elapsedSeconds": 43.47732162597822,
+  "exitCode": 0,
+  "finishedAtUTC": "2026-11-17T19:40:13.401057+00:00",
+  "genuineFourLeavesMatched": true,
+  "phase": "start",
+  "postmasterStart": "2026-11-17 19:39:35.509506+00",
+  "readinessReadOnly": true,
+  "requestKey": "t45-first-r3-native-service-start-20261118-44",
+  "status": "COMPLETED"
+}

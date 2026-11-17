@@ -1,0 +1,66 @@
+{
+  "state": "NORMAL44_WRITER_FAILED_BEFORE_CHILD_START_STOP_AND_ORIGINAL_AUTH_RESTORED",
+  "asOf": "2026-11-17T19:49:24.227361+00:00",
+  "rootCurrent": 137,
+  "rootCandidate": null,
+  "dispatcherSha256": "0afafdc9757f06bfc6b1556a287d39b46f5ba6b77b3f157ce7aa25592978dd21",
+  "old132AndThreeGuardsPreserved": true,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "normal44ApplyCompleted": true,
+  "normal44StartCompletedGenuineFourLeaf": true,
+  "normal44WriterStatus": "FAILED2",
+  "writerSafeCode": "BATCHED24_INSTALLED_CATALOG_REQUIRED",
+  "writerChildStarted": false,
+  "writerConnectionCleanup": "NOT_OPENED",
+  "normal44StopCompleted": true,
+  "normal44RestoreCompleted": true,
+  "SQLUpgrade42Completed": true,
+  "ownerResultSha256": "427285c12815b2865f66c7feda9d09185676208484cd6725943bd6feca6ef265",
+  "source44CompleteImportPerformed": false,
+  "ordinaryAccessActualPass": true,
+  "originalPreparedPlanRecompiled": false,
+  "APPDeployedOrPublicBusinessOpened": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Wait for D1 exact source-only minimal installed32 versus command35 catalog contract diagnosis/proposal; expectedBinding actual42-afterAda is correct. Preserve SQL42 success and original44910-step plan/business IDs. Writer44 consumed FAILED2, never replay. Start44 actual ordinary/four-leaf success retained; stop44 and exact original-auth restore44 completed. No new source mutation/key/runtime authorized until Main cause-based scope. Business import/APP deployment/public opening not completed.",
+  "copies": [
+    {
+      "originalPath": "actual-safe/RESULT.json",
+      "storedPath": "actual-safe/RESULT.json",
+      "sha256": "427285c12815b2865f66c7feda9d09185676208484cd6725943bd6feca6ef265",
+      "bytes": 2902
+    },
+    {
+      "originalPath": "actual-safe/APPLY-SAFE.json",
+      "storedPath": "actual-safe/APPLY-SAFE.json",
+      "sha256": "b9239dafe78e40ca91f20b8ea232edb924b786058504b784e54edff4d07b21ee",
+      "bytes": 446
+    },
+    {
+      "originalPath": "actual-safe/START-SAFE.json",
+      "storedPath": "actual-safe/START-SAFE.json",
+      "sha256": "ed8d2c21818bdf9d0f1778e62f8d990f8919eda15d5ced8266fa6afbec1ea4a4",
+      "bytes": 657
+    },
+    {
+      "originalPath": "actual-safe/WRITER-FAILED-SAFE.json",
+      "storedPath": "actual-safe/WRITER-FAILED-SAFE.json",
+      "sha256": "1236526952d07481c1d40eec09319a2970347b54bec27ddd67c380f8aea1dcae",
+      "bytes": 705
+    },
+    {
+      "originalPath": "actual-safe/STOP-SAFE.json",
+      "storedPath": "actual-safe/STOP-SAFE.json",
+      "sha256": "4b382f6931dea51122aa6dddc16354a8eb2e3a7bfa90a8e47c3d97c206489aae",
+      "bytes": 680
+    },
+    {
+      "originalPath": "actual-safe/RESTORE-SAFE.json",
+      "storedPath": "actual-safe/RESTORE-SAFE.json",
+      "sha256": "ce750c40392a32f7a03832193d285f06b7421821715229a0f4212008dbcad4f6",
+      "bytes": 966
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}

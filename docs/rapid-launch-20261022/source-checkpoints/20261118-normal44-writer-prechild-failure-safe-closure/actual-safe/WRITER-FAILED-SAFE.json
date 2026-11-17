@@ -1,0 +1,19 @@
+{
+  "automaticReplay": false,
+  "businessImportSucceeded": false,
+  "childReaped": true,
+  "childStarted": false,
+  "connectionCleanup": "NOT_OPENED",
+  "descendantsReaped": true,
+  "elapsedSeconds": 0.45685407996643335,
+  "exitCode": 2,
+  "finishedAtUTC": "2026-11-17T19:42:33.680125+00:00",
+  "incompleteRootSha256": "8ef45604c78b3b27a908fd07443e263b8be121e3bc20d7420ff0b61135f214c3",
+  "nativeState": "UNKNOWN",
+  "originalInputMetadataChanges": 0,
+  "phase": "writer",
+  "requestKey": "t45-r3-batched-real-after43-execute-20261118-01",
+  "safeCode": "BATCHED24_INSTALLED_CATALOG_REQUIRED",
+  "status": "FAILED",
+  "terminalSha256": "88c28c7472087f893e8c89cc9ee2f906b00044126a8919c7e1ef20c827356527"
+}
