@@ -1,0 +1,81 @@
+{
+  "state": "AUTHORIZE_SOURCE_ONLY_NORMAL45_EXACT_INSTALL32_AND_COMMAND35_CATALOG_BINDINGS",
+  "authorityBasis": "Direct human continuation/full-import instructions and standing authorization for similar ERP actions. Main concrete cause-based source scope, not a new human approval message.",
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "jobs": {
+    "apply": "t45-r3-ordinary45-auth-apply-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-45",
+    "writer": "t45-r3-batched-real-after44-execute-20261118-01",
+    "stop": "t45-r3-ordinary45-preserve-stop-20261118-01",
+    "restore": "t45-r3-ordinary45-auth-restore-20261118-01"
+  },
+  "phaseBudgetsSeconds": {
+    "apply": 300,
+    "start": 300,
+    "writer": 3000,
+    "stop": 120,
+    "restore": 300
+  },
+  "parentBudgetSeconds": 5100,
+  "minimumAvailableBytes": 30064771072,
+  "rootBefore": 137,
+  "rootAfter": 142,
+  "actualBeforeDispatcherSha256": "0afafdc9757f06bfc6b1556a287d39b46f5ba6b77b3f157ce7aa25592978dd21",
+  "closed42OwnerResultSha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe",
+  "sourceAnalysisDeliveryPinsSha256": "c6f39c1357a443b9a9c09c39bbc4f0e443b611572633cd65dcb903b63560e79a",
+  "prepareReuse": "Preserve successful prepare05 44910 steps/SQLite/initializer/original preparedBinding. New execution envelope from real new C/epoch/current catalog. Exact custody/persisted-program guards; no recompile/replay/rewriting original artifacts.",
+  "lineage": "Root08 392/ac85/marker5bb and actual Upgrade42 SQLdaf/afterada8/a5f/aef proof distinct from historical catalog35/626. Preserve all historical records.",
+  "writerMode": "FIRST_WRITE only after existing same-client inspectRoot ABSENT. COMMITTED or unknown stops to Main, no automatic RESUME. Transport successor alone changes; original business operation/request/batch IDs/manifest/11:40 cutoff unchanged.",
+  "owners": {
+    "T45": "consumer/newlineage/plan custody/local execution and sole server owner",
+    "D1": "Root/Main; coordinate file ownership with T45 before edits",
+    "QB": "necessary new source/adapters independent delta after freeze; reuse closed prior checks"
+  },
+  "serverFreshClockIssuerCASPGOrWriterCurrentlyAuthorized": false,
+  "actualRuntimeRequires": "Final exact source+QA and Main concrete runtime scope then fresh/real clock; writer authority from actual live descriptor/new binding/retained original plan evidence.",
+  "APP": "Reuse completed 289/nativee041/archive0abef build; no rebuild or deployment in current source scope.",
+  "lastRemoteCheckpoint": "472813074a1b39ef501e2b4c776c1fdce7137057",
+  "closed43OwnerResultSha256": "f874853e6d4ae0a3c4040e6dc059e72378553cc48a4105f36ec2a5d4075225aa",
+  "sourcePlanPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261118-r3-normal44-writer-catalog-diagnosis-01/FINDING-AND-MINIMAL-PLAN.md",
+  "sourcePlanSha256": "d914e6851b435e35ff2ae0cd41008bffc7cba823bf5612625df5932488887cb3",
+  "sourceDelta": [
+    "T45: installed(a) compares original install32 result batchedCatalog against exact original install32 tuple from actual e14e/6808, retain other14 predicates and protected proof/physical/13-layer guards.",
+    "T45: historical command35 result comparison binds result.batchedCatalog == a.batchedCatalog == original command35 expected tuple. No new AUTH schema, no global catalog rewrite.",
+    "T45: add minimal real-record predicate test extracting same production15-condition AST. Oldsource false/newsource true with actual32+actual44AUTH nonsecret fields; targeted wrong-generation and key/status/service/program/completion negatives rejected. Also use actual35 with same production command35 predicate; no future positive fixture or full host execution.",
+    "D1: Root/Main successor from actual137/0af preserves old137/three guards, binds exact consumer/QA/paths. Independently require true44 start/stop/restore plus writer44 FAILED2 beforechild/connectionNOTOPENED; no successful writer44 invented. Keep successful42 semantic predecessor and typedfailed43 proof distinct; original Main7/8/E/P and business IDs retained.",
+    "Reuse passed ordinary child identity/projection/safe diagnostics and access454 mechanism. Only necessary new generation references, changed exact sources, and existing freshness predicates; no repeated whole unrelated review."
+  ],
+  "roleTimingOffsetsSeconds": {
+    "controller": 4000,
+    "backupAdmin": 4120,
+    "hardRestore": 4900
+  },
+  "serviceMaximumSeconds": 4200,
+  "sourceOnlyVerification": "Local static/syntax and actual recorded-input predicate checks only. Do not execute full host/installed/factory/Node/PG, no original plan/initializer/Auth credential bodies, new clocks or AUTH, server fresh/CAS/jobs. Frozen versions35e/400b and prior records retained. New runtime needs exact frozen source+independent necessary delta+Main concrete runtime scope.",
+  "forbidden": "No replay consumed writer44 or earlier keys, no SQL42 reinstall/replay, plan recompilation, APP rebuild/deploy/public opening, new business IDs, data deletion/truncation/rebuild, permission expansion or global generation replacement.",
+  "closed44OwnerResultSha256": "427285c12815b2865f66c7feda9d09185676208484cd6725943bd6feca6ef265",
+  "sourcePlanRecordedInputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261118-r3-normal44-writer-catalog-diagnosis-01/SAFE-AUTHORITY-LINEAGE-CHECKS.json",
+      "sha256": "fc7e581159e61de8e558ddcb1e63325f896bd506c0aa2d3941f4bbe073c713d1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261118-r3-normal44-writer-catalog-diagnosis-01/RECORDED-GUARD-COMPARISON.json",
+      "sha256": "fddf7911fa3f915cb467aa517ccf534ecdd30990f1d8d6083f8f6bb125e6391a"
+    }
+  ],
+  "retainedCatalogSemantics": {
+    "install32": "b7aa/4be3/6e0 original13-layer installation",
+    "command35": "cf27/9f45/626 outerAUTH historical batchedCatalog",
+    "prepare05": "db127/344/626 original immutable44910-step prepared/native witness",
+    "actual42Current": "a5f/aef/ada installed SQL42 and genuine current expectedBinding",
+    "Root08Marker": "Source392/ac85/5bb only; not SQL-installed proof"
+  },
+  "predecessorPolicy": "Consumer successful42 previousStartBindings/FixedScope/priorService semantics remain. Root separately mandates typed43 failed-start cleanup+restore and successful44 start/stop+restore with failed-beforechild44 writer, current stopped PGDATA and unchanged original plan. No nonexistent writer44 PASS/commit, no merging those catalog generations."
+}

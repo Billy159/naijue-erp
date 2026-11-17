@@ -1,0 +1,20 @@
+{
+  "state": "SOURCE_ONLY_RECORDED_AUTHORITY_FIELD_CHECKS",
+  "checks": {
+    "install32_terminal_and_result_pins": true,
+    "outer_batchedCatalog_is_historical_command35": true,
+    "command35_three_evidence_pins": true,
+    "current_binding_after42_three_fields": true,
+    "current_binding_service_digest_and_epoch": true,
+    "original_prepared_and_execution_witness_unchanged": true,
+    "prepare05_actual_terminal_result_pins": true,
+    "root08_marker_reference_5bb": true,
+    "current_root08_upgrade42_refs": true,
+    "original_initializer_plan_input_refs_unchanged": true
+  },
+  "actualRuntimeChildStarted": false,
+  "noCurrentFilesystemOrCredentialRead": true,
+  "sourceMutation": false,
+  "NodeRuns": 0,
+  "PGConnections": 0
+}

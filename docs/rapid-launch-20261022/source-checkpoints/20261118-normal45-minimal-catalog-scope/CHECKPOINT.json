@@ -1,0 +1,46 @@
+{
+  "state": "SOURCE45_MINIMAL_CATALOG_GENERATION_FIX_AUTHORIZED_LOCAL_ONLY",
+  "asOf": "2026-11-17T19:57:33.586979+00:00",
+  "rootCurrent": 137,
+  "rootCandidate": 142,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "normal44WriterPermanentlyFailedBeforeChild": true,
+  "normal44SafeClosureCompleted": true,
+  "owner44ResultSha256": "427285c12815b2865f66c7feda9d09185676208484cd6725943bd6feca6ef265",
+  "source45RuntimeAuthorized": false,
+  "source45ScopeSha256": "e71bb637bf12b2e8b1c024a76c737f67782837c6e06dd5ed24b149859df55105",
+  "SQLUpgrade42Completed": true,
+  "businessImportCompleted": false,
+  "APPDeployedOrPublicBusinessOpened": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Implement only source45 under scopee71/d914 plan. T45 fixes exact install32 catalog tuple plus command35 result==outerAUTH==expected, retaining all other proof/physical and15-condition contract, with real32/35/actual44-AUTH production-predicate regression and targeted negatives. D1 exact137/0af->142 Root/Main successor binds frozen consumer later; old137/3guards/history retained, original44910/SQL42/APP/business IDs unchanged. Independent affected delta QA then new concrete Main runtime decision required; no runtime clock/fresh/CAS/Node/PG/job authorized now. Writer44 consumed never replay.",
+  "copies": [
+    {
+      "originalPath": "main/SOURCE-SCOPE.json",
+      "storedPath": "main/SOURCE-SCOPE.json",
+      "sha256": "e71bb637bf12b2e8b1c024a76c737f67782837c6e06dd5ed24b149859df55105",
+      "bytes": 6706
+    },
+    {
+      "originalPath": "diagnosis/FINDING-AND-MINIMAL-PLAN.md",
+      "storedPath": "diagnosis/FINDING-AND-MINIMAL-PLAN.md",
+      "sha256": "d914e6851b435e35ff2ae0cd41008bffc7cba823bf5612625df5932488887cb3",
+      "bytes": 7922
+    },
+    {
+      "originalPath": "diagnosis/SAFE-AUTHORITY-LINEAGE-CHECKS.json",
+      "storedPath": "diagnosis/SAFE-AUTHORITY-LINEAGE-CHECKS.json",
+      "sha256": "fc7e581159e61de8e558ddcb1e63325f896bd506c0aa2d3941f4bbe073c713d1",
+      "bytes": 741
+    },
+    {
+      "originalPath": "diagnosis/RECORDED-GUARD-COMPARISON.json",
+      "storedPath": "diagnosis/RECORDED-GUARD-COMPARISON.json",
+      "sha256": "fddf7911fa3f915cb467aa517ccf534ecdd30990f1d8d6083f8f6bb125e6391a",
+      "bytes": 9338
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}
