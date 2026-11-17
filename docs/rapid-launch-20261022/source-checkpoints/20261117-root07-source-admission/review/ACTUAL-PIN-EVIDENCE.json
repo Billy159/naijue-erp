@@ -1,0 +1,20 @@
+{
+  "actualTypedReferences": {
+    "prepare": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/prepare/ACTUAL-PREPARE04-FAILED-RESULT.json",
+      "sha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655"
+    },
+    "restore": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/restore/ACTUAL-RESTORE38-RESULT.json",
+      "sha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60"
+    },
+    "stop": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/stop/ACTUAL-STOP38-RESULT.json",
+      "sha256": "4bb2ffa20dd366c5e4d42f97ad9b1d385c511663c12189fa529ad4e6f195fdff"
+    }
+  },
+  "noNewServerRead": true,
+  "privateSnapshotBodiesOrDigestsRead": false,
+  "rootPublicPairsVerified": 12,
+  "state": "SAVED_ACTUAL38_TYPED_PINS_MATCH_STATIC_SOURCE"
+}

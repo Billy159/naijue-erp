@@ -1,0 +1,70 @@
+{
+  "PGConnections": 0,
+  "actualKeyAbsence": null,
+  "allThreeGuardsPreserved": true,
+  "authority": null,
+  "clockCalls": 0,
+  "executionReady": false,
+  "files": {
+    "ACTUAL38-DISPATCHER.py": {
+      "bytes": 45855,
+      "sha256": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c"
+    },
+    "HANDOFF.md": {
+      "bytes": 6274,
+      "sha256": "0265c2660ee8d0b6ad2b31e4d1f6f89cb3593d753ce73f0d446cb7d81d693816"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 665,
+      "sha256": "39da4cc7379da568c9f4812800ebb02e8fb8f5410e9241784e72f774c997d21f"
+    },
+    "STATIC-INPUTS.json": {
+      "bytes": 8858,
+      "sha256": "c1d54a440b341d3200b71665328fb2aad0bef1fad2a1611609f3f9a445ae11fa"
+    },
+    "admin_exec.ROOT07-UNREGISTERED.py": {
+      "bytes": 46860,
+      "sha256": "d7bac1fce532896704a32e1c51048106afaecfa8da85b1f4975a32faee51596c"
+    },
+    "check_source.py": {
+      "bytes": 4721,
+      "sha256": "a3b20a5c5cbfe74f02d9f593d9da827fb04f3b524f04a280adf8b13113794681"
+    },
+    "issue_source_registration.py": {
+      "bytes": 6958,
+      "sha256": "a631068f4dd7e34f91a621bdb41a1cda6e60d00b107b4dfdef8c9da4d6462d05"
+    },
+    "original-cas-root07-carrier.UNISSUED.py": {
+      "bytes": 2599,
+      "sha256": "2d90fce7caf8663060f080aea9e9d7d541fe3b293f7550cc98af0f61efb17daa"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 3634,
+      "sha256": "d0e92755d2219fcd7deda884ca750cd3e6f6a1f868e8cee769f08c6aa7ed41da"
+    },
+    "r3_root07_source_admission.py": {
+      "bytes": 15414,
+      "sha256": "76f8913957c728b82dbbd9d5831cfd085a95436f283aa8be997e47802dae6080"
+    },
+    "read_registration_basis.py": {
+      "bytes": 2791,
+      "sha256": "aaa2b065f6f2f189f39848d9324b57daa4ad3c760781c8ab78e4e5aeeb520f80"
+    },
+    "register_cas.py": {
+      "bytes": 19333,
+      "sha256": "39485d93abc95a3eb414b03bd32b34cdec6aa65ae76ed19be32eae8a8a5d0297"
+    }
+  },
+  "freshBasis": null,
+  "issuerInvocations": 0,
+  "lineageReviewSha256": "bfe6ab7d8061ec0e9ef6f82a7436f19f3434e5f5a170f76d36a07753f0c1c43f",
+  "lineageSourceSha256": "8bd24ede58825205dc8815c14eba2bf593de56f82691b9d1faca24da3f1852d9",
+  "materializationCompletion": null,
+  "materializerSourcePinsSha256": "919c10d32c1ed59cea733a96fcfbaa206e17e471fe76cdb9ab59160661e7588d",
+  "newPrefix": 102,
+  "oldPrefix": 101,
+  "registrationResult": null,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "ROOT07_SOURCE_ONLY_SINGLE_KEY_ADMISSION_CAS_AND_MAIN_ISSUER_SOURCE_FROZEN_UNISSUED"
+}

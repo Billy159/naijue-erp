@@ -1,0 +1,21 @@
+{
+  "state": "STATIC_SOURCE_ONLY_ROOT07_REGISTRATION_CHECKS_PASS",
+  "sourceOnly": true,
+  "oldProtectedPrefix": 101,
+  "newProtectedPrefix": 102,
+  "guardCount": 3,
+  "oldNormalPolicyAndHelperUnchanged": true,
+  "originalCASPrimitivesByteASTEqual": true,
+  "privateCustodyStatOnly": true,
+  "privateCustodyIdentities": 5,
+  "actualBasisPins": 17,
+  "materializerSourcePinsSha256": "919c10d32c1ed59cea733a96fcfbaa206e17e471fe76cdb9ab59160661e7588d",
+  "clockCalls": 0,
+  "issuerInvocations": 0,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "futurePositiveFixture": false,
+  "actualNewKeyAbsence": null,
+  "actualSourceAuthority": null,
+  "executionReady": false
+}

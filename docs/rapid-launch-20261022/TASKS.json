@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T11:27:49.249429+08:00",
+  "updatedAt": "2026-11-17T12:20:55.435172+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "D1 ROOT07 SOURCE-only single-item original-lock registration pair with final materializer919c and lineage8bd/bfe; QB narrow registration/materializer delta then T45 fresh stopped basis/Main finite source permission/T45 once materialization. All before new normal role clock; no role/PG39 yet.",
+  "next": "T45 one real fresh read_basis using final39485/module76f8/aaa2 reader; Main actualab648 review+freshbasis -> original5arg a631 source-only issuance with private umask077, then T45 atomic original-lock CAS/readback and once ROOT07 materialization. No newnormal role before materialization complete.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T11:27:49.249429+08:00",
+  "asOf": "2026-11-17T12:20:55.435172+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "D1 ROOT07 SOURCE-only single-item original-lock registration pair with final materializer919c and lineage8bd/bfe; QB narrow registration/materializer delta then T45 fresh stopped basis/Main finite source permission/T45 once materialization. All before new normal role clock; no role/PG39 yet.",
+  "next": "T45 one real fresh read_basis using final39485/module76f8/aaa2 reader; Main actualab648 review+freshbasis -> original5arg a631 source-only issuance with private umask077, then T45 atomic original-lock CAS/readback and once ROOT07 materialization. No newnormal role before materialization complete.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53466,7 +53466,7 @@
     "actualCatalog35SpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
     "old05609": "OLD_LOCAL_FIXTURE_DESCRIPTOR_NOT_ACTUAL_CATALOG35"
   },
-  "root07": "SOURCE_LINEAGE_PASS_MATERIALIZER_FROZEN_NO_ACTUAL_INSTALL_OR_AUTHORITY",
+  "root07": "ROOT07_REGISTRATION_AND_MATERIALIZER_SOURCE_PASS_AWAITING_REAL_FRESH_STOPPED_BASIS",
   "appLexicalSuccessorLocal": {
     "state": "APP_OWN_SINGLE_HOST_FIX_BUILD_PACK_ACTUAL_PASS_LOCAL_ONLY",
     "commit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
@@ -53511,6 +53511,20 @@
     "newPGMetadataJob": false,
     "sourceScope": "387paths/onehostchange/386inherit",
     "futureCurrentCAndEpoch": null
+  },
+  "root07RegistrationSourceOnly": {
+    "sourcePinsSha256": "855f16733b10d4fde150065a1744f8e53cb6092912adfe372474946707f97eec",
+    "reviewSha256": "ab648b95bbb74dca0e3ddb041f7d14874a9acc2278372297ab411cda3c847822",
+    "materializerSourcePinsSha256": "919c10d32c1ed59cea733a96fcfbaa206e17e471fe76cdb9ab59160661e7588d",
+    "lineageReviewSha256": "bfe6ab7d8061ec0e9ef6f82a7436f19f3434e5f5a170f76d36a07753f0c1c43f",
+    "MainSourceIssuerSha256": "a631068f4dd7e34f91a621bdb41a1cda6e60d00b107b4dfdef8c9da4d6462d05",
+    "rootSourceCASsha256": "39485d93abc95a3eb414b03bd32b34cdec6aa65ae76ed19be32eae8a8a5d0297",
+    "sourceWindowMaximumSeconds": 1800,
+    "registrationWindowMaximumSeconds": 900,
+    "authorityIssued": false,
+    "actualFreshBasis": null,
+    "old101PrefixPlusOneRoot07": 102,
+    "rolesOrServiceIssued": false
   }
 }
 }

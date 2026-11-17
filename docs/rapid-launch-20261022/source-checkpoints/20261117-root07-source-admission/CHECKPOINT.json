@@ -1,0 +1,111 @@
+{
+  "state": "ROOT07_REGISTRATION_AND_MATERIALIZER_SOURCE_PASS_AWAITING_REAL_FRESH_STOPPED_BASIS",
+  "sourceOnly": true,
+  "executionReady": false,
+  "sourcePinsSha256": "855f16733b10d4fde150065a1744f8e53cb6092912adfe372474946707f97eec",
+  "materializerSourcePinsSha256": "919c10d32c1ed59cea733a96fcfbaa206e17e471fe76cdb9ab59160661e7588d",
+  "lineageReviewSha256": "bfe6ab7d8061ec0e9ef6f82a7436f19f3434e5f5a170f76d36a07753f0c1c43f",
+  "newProtectedKeys": "101_PLUS_ROOT07_EQUALS102",
+  "actualFreshBasis": null,
+  "finiteAuthority": null,
+  "serverRegistration": false,
+  "sourceMaterialized": false,
+  "rolesOrNewServiceCreated": false,
+  "privateBodiesOrFiniteAuthoritiesCopied": false,
+  "legacy6c765Payload": "Copied and checked by materializer666ad, never exec/imported. Original catalog35 updater remains history; not ROOT07 runnable installer.",
+  "omittedStaticBodiesHashReferences": [],
+  "copies": [
+    {
+      "path": "SOURCE-PINS.json",
+      "sha256": "855f16733b10d4fde150065a1744f8e53cb6092912adfe372474946707f97eec",
+      "bytes": 2482
+    },
+    {
+      "path": "ACTUAL38-DISPATCHER.py",
+      "sha256": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c",
+      "bytes": 45855
+    },
+    {
+      "path": "HANDOFF.md",
+      "sha256": "0265c2660ee8d0b6ad2b31e4d1f6f89cb3593d753ce73f0d446cb7d81d693816",
+      "bytes": 6274
+    },
+    {
+      "path": "LOCAL-CHECKS.json",
+      "sha256": "39da4cc7379da568c9f4812800ebb02e8fb8f5410e9241784e72f774c997d21f",
+      "bytes": 665
+    },
+    {
+      "path": "STATIC-INPUTS.json",
+      "sha256": "c1d54a440b341d3200b71665328fb2aad0bef1fad2a1611609f3f9a445ae11fa",
+      "bytes": 8858
+    },
+    {
+      "path": "admin_exec.ROOT07-UNREGISTERED.py",
+      "sha256": "d7bac1fce532896704a32e1c51048106afaecfa8da85b1f4975a32faee51596c",
+      "bytes": 46860
+    },
+    {
+      "path": "check_source.py",
+      "sha256": "a3b20a5c5cbfe74f02d9f593d9da827fb04f3b524f04a280adf8b13113794681",
+      "bytes": 4721
+    },
+    {
+      "path": "issue_source_registration.py",
+      "sha256": "a631068f4dd7e34f91a621bdb41a1cda6e60d00b107b4dfdef8c9da4d6462d05",
+      "bytes": 6958
+    },
+    {
+      "path": "original-cas-root07-carrier.UNISSUED.py",
+      "sha256": "2d90fce7caf8663060f080aea9e9d7d541fe3b293f7550cc98af0f61efb17daa",
+      "bytes": 2599
+    },
+    {
+      "path": "patch_dispatcher.py",
+      "sha256": "d0e92755d2219fcd7deda884ca750cd3e6f6a1f868e8cee769f08c6aa7ed41da",
+      "bytes": 3634
+    },
+    {
+      "path": "r3_root07_source_admission.py",
+      "sha256": "76f8913957c728b82dbbd9d5831cfd085a95436f283aa8be997e47802dae6080",
+      "bytes": 15414
+    },
+    {
+      "path": "read_registration_basis.py",
+      "sha256": "aaa2b065f6f2f189f39848d9324b57daa4ad3c760781c8ab78e4e5aeeb520f80",
+      "bytes": 2791
+    },
+    {
+      "path": "register_cas.py",
+      "sha256": "39485d93abc95a3eb414b03bd32b34cdec6aa65ae76ed19be32eae8a8a5d0297",
+      "bytes": 19333
+    },
+    {
+      "path": "review/REGISTRATION-EVIDENCE.json",
+      "sha256": "39da4cc7379da568c9f4812800ebb02e8fb8f5410e9241784e72f774c997d21f",
+      "bytes": 665
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "ab648b95bbb74dca0e3ddb041f7d14874a9acc2278372297ab411cda3c847822",
+      "bytes": 5855
+    },
+    {
+      "path": "review/ACTUAL-PIN-EVIDENCE.json",
+      "sha256": "74f4503de0393a6994578cbefea9928ae0cb812245f47e64c01c72f7f86ef315",
+      "bytes": 1257
+    },
+    {
+      "path": "review/PAIR-EVIDENCE.json",
+      "sha256": "a3079ee0e1d495f18708c9d51b3d1e852504d41a03247c64695905651651d5c1",
+      "bytes": 1569
+    },
+    {
+      "path": "review/check_registration.py",
+      "sha256": "ebc0459b183179cbae9ec31eb62da2196ac9ebec4120976bcde16700e50df56c",
+      "bytes": 4992
+    }
+  ],
+  "reviewSha256": "ab648b95bbb74dca0e3ddb041f7d14874a9acc2278372297ab411cda3c847822",
+  "legacy6cRuntimeExecution": false
+}

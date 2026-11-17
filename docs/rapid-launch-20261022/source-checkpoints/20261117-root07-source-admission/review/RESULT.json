@@ -1,0 +1,63 @@
+{
+  "actions": {
+    "QBClockCalls": 0,
+    "fullBuildOrCompile": false,
+    "futureAuthorityPolicyCepochReceiptOrPositiveFixtureCreated": false,
+    "issuerReaderCASSourceAdmitMaterializerApplicationNativePGServerCalls": 0,
+    "ownerFrozenSourcesChanged": false,
+    "privateSnapshotBodiesOrDigestsRead": false
+  },
+  "actualFreshBasisVerified": false,
+  "actualMaterializationVerified": false,
+  "actualRegistrationCASVerified": false,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-admission-review-01/REGISTRATION-EVIDENCE.json",
+      "sha256": "39da4cc7379da568c9f4812800ebb02e8fb8f5410e9241784e72f774c997d21f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-admission-review-01/PAIR-EVIDENCE.json",
+      "sha256": "a3079ee0e1d495f18708c9d51b3d1e852504d41a03247c64695905651651d5c1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-root07-source-admission-review-01/ACTUAL-PIN-EVIDENCE.json",
+      "sha256": "74f4503de0393a6994578cbefea9928ae0cb812245f47e64c01c72f7f86ef315"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "lineageReviewSha256": "bfe6ab7d8061ec0e9ef6f82a7436f19f3434e5f5a170f76d36a07753f0c1c43f",
+  "materializerSourcePinsSha256": "919c10d32c1ed59cea733a96fcfbaa206e17e471fe76cdb9ab59160661e7588d",
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-root07-source-admission-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "855f16733b10d4fde150065a1744f8e53cb6092912adfe372474946707f97eec",
+  "spec": {
+    "findings": [],
+    "scope": "Registration/materializer source pair, closed bundle and request authority protocol, real stopped38 baseline requirements and original CAS guards."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Single fixed SOURCE key, immutable normal/history inputs, original source cap and shared-lock protocol."
+  },
+  "state": "SOURCE_PASS_ROOT07_SOURCE_ADMISSION_AND_MATERIALIZER_PAIR_ONLY",
+  "unverified": [
+    "Fresh T45 baseline/key absence/17 current hashes/5 current full metadata identities and shared-lock boundary must be obtained in the actual stage.",
+    "Main finite issuance, controlled registration, actual CAS audit/result readback and single original-client request/member/manifest/authority SHA/HERE checks are untested.",
+    "Actual ROOT07 copying and terminal/root/public/marker receipts must complete before next normal role clock; existing null placeholders are not runtime evidence.",
+    "Future normal START consumer3743149 WIP still needs independent ROOT07 source path and dependent pin pairing before actual START. This separate unfrozen consumer is not covered or implied ready by this source verdict.",
+    "Native livePG35/161 verification, PREPARE/writer/readback, APP publication and business acceptance remain outside this review."
+  ],
+  "verifiedScope": [
+    "Both frozen manifests and every declared D1/T45 file pin and size exact; existing lineage/lexical/APP reviews reused.",
+    "Actual e46 dispatcher101 protected prefix retained, one ROOT07 key appended to102, all3 existing phase/terminal guards preserved. One adapter/execute branch only; other original functions and normal helper3b/policy51da digest pins unchanged.",
+    "CAS need/sha/now/pack/identity/read/sync/put8 ASTs match accepted prior primitives; original shared lock identity and nonblocking locking, exclusive writes, module→policy→atomic dispatcher publication, fsync/audit and UNKNOWN original-audit-only behavior retained,131072 cap unchanged.",
+    "17 safe/public basis hashes and5 private metadata paths disjoint. Saved actual38 failed04, STOP and exactRESTORE typed receipts independently match12 root/public references, stop object and restored safe fields. Unknown native cleanup preserved; no private snapshot body or digest recomputed.",
+    "Fresh9-field private identities flow through basis reader, Main issuer, registration snapshot/source policy and execution-time admission. Stopped original PGDATA/container/C proof and exact auth restoration required; no natural-expiry shortcut.",
+    "ROOT07 SOURCE scope is independent,30min max with15min registration max and original grant bound; no normal role/C/epoch issuance. Both-grant original business writer must remain never submitted, rather than already complete.",
+    "Main sole clock appears after final review, all five materializer static leaves, lineage review/Main decision and actual stopped basis checks. Main issue/reader/CAS were not invoked by QB.",
+    "Python materializer666ad has exact ROOT06 parent/ROOT07 output, V1 descriptor,387 paths with1 approved host change/386 inherited, stopped DATA and28GiB reserve. Other materializer helper function ASTs reused.",
+    "Original6c runner is verified and copied only; no materializer exec/import/subprocess/Node call. It retains historical catalog35/ROOT06 constants and is not a ROOT07 executable installer. Admission fixes script to materialize-batched-source.py, timeout300 and args=[actual authority SHA], preventing execution of6c through this key.",
+    "Existing dispatcher freeze protects request/manifest rows and digest; source admission requires exactly five pinned static leaves+authority+generated bundle-manifest, original job-manifest SHA and same raw request. Actual core read cap131072 fits all five members.",
+    "Marker producer source fields align with accepted lineage contract, including host-side ROOT07 operation path, exact ROOT06 parent,1/386,desc c0b/rows74de/sourcef9a7 and retained6c. No positive completion marker or authority constructed."
+  ]
+}
