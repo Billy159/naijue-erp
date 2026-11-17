@@ -1,0 +1,11 @@
+{
+  "state": "SUPERSEDED_BEFORE_CLOCK_CAS_OR_RESTORE_BY_CONFIRMED_SOURCE_PREFLIGHT_DEFECT",
+  "decisionSha256": "7de5b07cee5496f8f4dbe8ec2ccf79e2073cb1bc3d2126f43bd3d98e97f86c5a",
+  "sourcePinsSha256": "907486b1566997d3ee9d05a9834483ff83d55c6992d9ce37794ee987ca9f7623",
+  "defect": "PRESERVE index33/34 incorrectly target current new module/policy while paired reader requires those targets absent. Historical file paths require correction.",
+  "actualClockIssued": false,
+  "actualCASOrRestoreExecuted": false,
+  "originalAuthRestoration": "PENDING",
+  "originalHardMet": false,
+  "successorDecisionDirectory": "20261118-r3-original-auth45-guardian-restore-decision-02"
+}

@@ -1,0 +1,64 @@
+{
+  "files": {
+    "CHECK-RESULT.json": {
+      "bytes": 859,
+      "sha256": "4ed7675a5f04193544dcce009c8cd1a1c5cb94b5cc14bda4d4a784e8b77c0e15"
+    },
+    "HANDOFF.md": {
+      "bytes": 846,
+      "sha256": "e1bfb5a2af9eb0bb1e725ec926c80dfa234e11c947f3d013f92a8307b1468efe"
+    },
+    "INTERFACE.UNISSUED.json": {
+      "bytes": 8383,
+      "sha256": "83b45b0a3048cf2aaf5287b7e95b083103396e886f3b51201d6b20a10277df51"
+    },
+    "ROLLBACK45.UNISSUED.json": {
+      "bytes": 1422,
+      "sha256": "9e7a1da53a86f74952263ed637054e93928c34fdc16cd122b240d22af86d6bfe"
+    },
+    "bundle/fresh35-production-carrier.py": {
+      "bytes": 185047,
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360"
+    },
+    "bundle/normal_service04.py": {
+      "bytes": 34276,
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5"
+    },
+    "bundle/normal_service04_proof.py": {
+      "bytes": 9403,
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73"
+    },
+    "bundle/ordinary05_roles.py": {
+      "bytes": 18555,
+      "sha256": "8009923fd8972e42d55fb28de46ab5e581e36110ca0e864ef5a888904bf8e97d"
+    },
+    "bundle/ordinary05_roles_job.py": {
+      "bytes": 24515,
+      "sha256": "2360d986c22b92b9558d9024cd560d6f75e0463112a5f1a9883cebcb31db65b2"
+    },
+    "bundle/prior_preserved38.py": {
+      "bytes": 7267,
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a"
+    },
+    "bundle/root06_material.py": {
+      "bytes": 1836,
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a"
+    },
+    "bundle/successful39_history.py": {
+      "bytes": 8758,
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+    },
+    "phase_cli.py": {
+      "bytes": 5291,
+      "sha256": "5f9927e42646bdbfcc29ed8b1186485a7ce6970674efff585f79ca005caebeed"
+    },
+    "read_restore.remote.py": {
+      "bytes": 4881,
+      "sha256": "2366a4c0d96bb9dd4f285401cd6380d05e34202b49538fa89793742b814b8693"
+    }
+  },
+  "runtimeAuthorized": false,
+  "sourceMechanism": "ORIGINAL-AUTH41-ROLLBACK-SOURCE-02 actual success rollback02",
+  "sourceOnly": true,
+  "state": "ORIGINAL_AUTH45_GUARDIAN_RESTORE_SOURCE_UNISSUED"
+}

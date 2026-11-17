@@ -1,0 +1,85 @@
+{
+  "state": "ORIGINAL_AUTH45_GUARDIAN_RESTORE_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED",
+  "files": {
+    "ACTUAL142-DISPATCHER.py": {
+      "sha256": "a19591c74163d6b94afd12b4f165f481adb3fbf92c3bb25e7e3c0a4ecfa0cc52",
+      "bytes": 62310
+    },
+    "CONSUMER-BINDING.json": {
+      "sha256": "64ad26c6f50c9d6e0270383f4f05fb393c9649c06c55d855321dd3aa58a22b10",
+      "bytes": 4601
+    },
+    "CONSUMER-REVIEW-REF.json": {
+      "sha256": "835e483daae3d17a66139f8cbba8abaf5f0a18d7800edfc52c49ff1f6cfd3e70",
+      "bytes": 276
+    },
+    "DELTA-CHECKS.json": {
+      "sha256": "eb238656dc033ba3225dc75a2b20d11353bd6f7b032fb06d2ed68d104744a80a",
+      "bytes": 1988
+    },
+    "HANDOFF.md": {
+      "sha256": "756bd617b1e523bc49149f1247dd5bb2adbd6d4b3bd34a4c35e3524f39d240b8",
+      "bytes": 3969
+    },
+    "HISTORY.json": {
+      "sha256": "744193ca8e20b689d61f1cbbba9d94f78ff76a1ce664fbb964d7656409a029d6",
+      "bytes": 6470
+    },
+    "PRESERVE-PATH-FIX.json": {
+      "sha256": "6ffd641f20202838cd7d9de9d5e0f86c8969b4298911d1ce162f5581c4f05cea",
+      "bytes": 1112
+    },
+    "PREVIOUS-61-CHECKS.REUSED.json": {
+      "sha256": "268913f75d06c34df1bc7507948cf614f66796b73bc1f527956c35f45a53cb3b",
+      "bytes": 3741
+    },
+    "admin_exec.ROLLBACK-UNREGISTERED.py": {
+      "sha256": "dc4f2a50197f8a26002891155ce15ee5b9971c93be715a17c0cb9ad0307cdad1",
+      "bytes": 63459
+    },
+    "admission.template.py": {
+      "sha256": "e0ec7375db24f43b34e0ede521f1c7d01ec507d365230f726afd35084b190089",
+      "bytes": 10151
+    },
+    "check_delta.py": {
+      "sha256": "d0e9716b52460e746c15d521dfca1b4f8a31e2606f56c15e5dc47b4f80758211",
+      "bytes": 6310
+    },
+    "finalize_source.py": {
+      "sha256": "685c9db67b9154d9447d64d36e18f0adb9d6a0a3f6a792218b7eb6ef8ae88bb7",
+      "bytes": 3248
+    },
+    "issue_registration.py": {
+      "sha256": "002a76ac15e3fa7384e910fa42093dc7e55be594b5af604dc8562938e8b3a1cb",
+      "bytes": 6709
+    },
+    "prepare_channel.py": {
+      "sha256": "a68ee8995f8351bd761814142591cb92169b31b1ad5f79d2ac17a6e73f3ee9da",
+      "bytes": 7270
+    },
+    "r3_original_auth45_guardian_restore.py": {
+      "sha256": "6069169514a44d98869ffdcef77c2088be0fedc618967866aa42717480152904",
+      "bytes": 17336
+    },
+    "read_registration_basis.py": {
+      "sha256": "4eae584d84e67ec92037adb233394841887a1b6d52a8b36209fc3840a7019bc9",
+      "bytes": 1237
+    },
+    "register_cas.py": {
+      "sha256": "d06ffac809849844c5aa22e30ce2c5337ae30f922aaa9d2b748594c7dc3d85b4",
+      "bytes": 40307
+    },
+    "register_cas.template.py": {
+      "sha256": "8a2cfd250a8d8ad701dda70629acc789a7bee3af265972e05cbbfd5662e87833",
+      "bytes": 39150
+    }
+  },
+  "clock": null,
+  "authorities": null,
+  "serverActions": 0,
+  "oldRootCount": 142,
+  "newRootCount": 143,
+  "consumerSourcePinsSha256": "4cb93146e127d362aef8b9ae1e2d3b48be4cf529a5990b658e698bb3ab19da12",
+  "consumerReviewSha256": "e648fbb87e1a4a7dc616353147d8c593d85c180c2bc25f32e8d0689c79f9e010",
+  "previousSourcePinsSha256": "907486b1566997d3ee9d05a9834483ff83d55c6992d9ce37794ee987ca9f7623"
+}

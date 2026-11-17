@@ -1,0 +1,24 @@
+{
+  "PGConnections": 0,
+  "SQLUnchanged": true,
+  "checks": [
+    "unchanged ordinary05_roles.py:change_sql",
+    "unchanged ordinary05_roles.py:offline",
+    "unchanged ordinary05_roles.py:capture",
+    "unchanged ordinary05_roles.py:validate_snapshot",
+    "unchanged ordinary05_roles.py:stopped",
+    "unchanged ordinary05_roles_job.py:read",
+    "unchanged ordinary05_roles_job.py:write",
+    "unchanged ordinary05_roles_job.py:docker_args",
+    "unchanged ordinary05_roles_job.py:inside",
+    "unchanged ordinary05_roles_job.py:host",
+    "unchanged ordinary05_roles_job.py:require_failed19_history",
+    "public0444 proof uses original corrected readFalse",
+    "no apply function or finite renewal phase"
+  ],
+  "count": 13,
+  "factoryRuns": 0,
+  "futureAUTHOrClock": null,
+  "serverActions": 0,
+  "state": "PASS_RESTORE_ONLY_NECESSARY_SOURCE_DELTA"
+}

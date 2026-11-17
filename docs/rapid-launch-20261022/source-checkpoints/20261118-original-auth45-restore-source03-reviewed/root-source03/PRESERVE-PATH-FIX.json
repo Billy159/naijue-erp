@@ -1,0 +1,21 @@
+{
+  "state": "EXACT_HISTORICAL_PATH_CORRECTION_SOURCE_ONLY",
+  "failedSourcePinsSha256": "907486b1566997d3ee9d05a9834483ff83d55c6992d9ce37794ee987ca9f7623",
+  "actualFreshDiagnosticSha256": "e3a11525e9f99654cfcd35300f8e3140a913883b0f1e87fbd1460c622c89d7d1",
+  "actualPresenceSha256": "ac4689ac5fc4abb4376bc16539f55ae213a4da1d6c652879f159f8f86698662a",
+  "missingZeroBasedIndexes": [
+    33,
+    34
+  ],
+  "correctHistoricalReferences": {
+    "/usr/local/lib/naijue-erp-night/grant-b16447fbc81f4d64/r3_original_auth41_rollback02.py": "4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7",
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/r3-05-write-continuity/original-auth41-rollback-only-20261117-02.json": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391"
+  },
+  "referenceSource": "outputs/D1/20261118-r3-ordinary45-root-source-01/register_cas.py",
+  "originalHashesUnchanged": true,
+  "newTargetPathsMustRemainAbsent": true,
+  "existingSource02NotModified": true,
+  "previous61ChecksReusedNotRerun": true,
+  "consumer4cbUnchanged": true,
+  "serverActions": 0
+}

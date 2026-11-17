@@ -1,0 +1,76 @@
+{
+  "state": "ORIGINAL_AUTH45_GUARDIAN_RESTORE_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED",
+  "files": {
+    "ACTUAL142-DISPATCHER.py": {
+      "sha256": "a19591c74163d6b94afd12b4f165f481adb3fbf92c3bb25e7e3c0a4ecfa0cc52",
+      "bytes": 62310
+    },
+    "CONSUMER-BINDING.json": {
+      "sha256": "64ad26c6f50c9d6e0270383f4f05fb393c9649c06c55d855321dd3aa58a22b10",
+      "bytes": 4601
+    },
+    "CONSUMER-REVIEW-REF.json": {
+      "sha256": "835e483daae3d17a66139f8cbba8abaf5f0a18d7800edfc52c49ff1f6cfd3e70",
+      "bytes": 276
+    },
+    "DELTA-CHECKS.json": {
+      "sha256": "268913f75d06c34df1bc7507948cf614f66796b73bc1f527956c35f45a53cb3b",
+      "bytes": 3741
+    },
+    "HANDOFF.md": {
+      "sha256": "dc2022a7b5ed72643b3d1f87ee4bfd8762360d3889034c73593f1307ad03a123",
+      "bytes": 3336
+    },
+    "HISTORY.json": {
+      "sha256": "744193ca8e20b689d61f1cbbba9d94f78ff76a1ce664fbb964d7656409a029d6",
+      "bytes": 6470
+    },
+    "admin_exec.ROLLBACK-UNREGISTERED.py": {
+      "sha256": "dc4f2a50197f8a26002891155ce15ee5b9971c93be715a17c0cb9ad0307cdad1",
+      "bytes": 63459
+    },
+    "admission.template.py": {
+      "sha256": "e0ec7375db24f43b34e0ede521f1c7d01ec507d365230f726afd35084b190089",
+      "bytes": 10151
+    },
+    "check_delta.py": {
+      "sha256": "59f1b8c3d75a0dd0de05200e6cf7b9301b2be532b13b6c49789070bccfe06c10",
+      "bytes": 4900
+    },
+    "finalize_source.py": {
+      "sha256": "46628cc0a00ec12f0df0fe48e3f9e99845d8b63656717dee0568f3363b48a1ac",
+      "bytes": 3248
+    },
+    "issue_registration.py": {
+      "sha256": "cbc5bfae2d30ba14c4aea59304be1a23f629e0b7239ed3548f24d9c05bb3072f",
+      "bytes": 6709
+    },
+    "prepare_channel.py": {
+      "sha256": "9809753cc0cdb8a46bd8399f62637bdb2d7e475f1ac14db5889da1ba0b98c432",
+      "bytes": 7270
+    },
+    "r3_original_auth45_guardian_restore.py": {
+      "sha256": "6069169514a44d98869ffdcef77c2088be0fedc618967866aa42717480152904",
+      "bytes": 17336
+    },
+    "read_registration_basis.py": {
+      "sha256": "4eae584d84e67ec92037adb233394841887a1b6d52a8b36209fc3840a7019bc9",
+      "bytes": 1237
+    },
+    "register_cas.py": {
+      "sha256": "17f5fc8f90821177738892be95f54a2a075b7c9cf892b2fe26f7b4cc89c0fa39",
+      "bytes": 40321
+    },
+    "register_cas.template.py": {
+      "sha256": "bd4b3e8df405ca3a49aa2897eb7ac158bb17f19e146d1c649d2ed0e8fbfccb76",
+      "bytes": 39164
+    }
+  },
+  "clock": null,
+  "authorities": null,
+  "serverActions": 0,
+  "oldRootCount": 142,
+  "newRootCount": 143,
+  "consumerSourcePinsSha256": "4cb93146e127d362aef8b9ae1e2d3b48be4cf529a5990b658e698bb3ab19da12",
+  "consumerReviewSha256": "e648fbb87e1a4a7dc616353147d8c593d85c180c2bc25f32e8d0689c79f9e010"
+}

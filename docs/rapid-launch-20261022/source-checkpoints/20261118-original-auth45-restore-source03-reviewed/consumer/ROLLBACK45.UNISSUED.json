@@ -1,0 +1,23 @@
+{
+  "format": "T45_R3_ORIGINAL_AUTH45_GUARDIAN_RESTORE_ONLY_V1",
+  "futureAuthorities": null,
+  "jobs": {
+    "rollback": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": {
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "8009923fd8972e42d55fb28de46ab5e581e36110ca0e864ef5a888904bf8e97d",
+        "ordinary05_roles_job.py": "2360d986c22b92b9558d9024cd560d6f75e0463112a5f1a9883cebcb31db65b2",
+        "prior_preserved38.py": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+        "successful39_history.py": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+      },
+      "jobId": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-SOURCE-01/bundle",
+      "timeoutSeconds": 300
+    }
+  }
+}

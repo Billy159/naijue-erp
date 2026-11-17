@@ -1,0 +1,19 @@
+{
+  "state": "NEED_FIX_SOURCE02_PREFLIGHT_CONTRADICTION",
+  "sourceOnly": true,
+  "sourcePinsSha256": "907486b1566997d3ee9d05a9834483ff83d55c6992d9ce37794ee987ca9f7623",
+  "supersedesRootReadinessClaimOf": "9558a85cbfe32ec84954269dd26516f7d82a5fa77a7ea95729a6882f39b4b680",
+  "findings": [
+    {
+      "id": "ROOT45-HISTORICAL-PRESERVE-PATH-01",
+      "severity": "blocking",
+      "detail": "PRESERVE index33/34 mistakenly protects NEW_MODULE and NEW_POLICY as existing historical files; reader and registration require these same new paths absent. Preserved hashes are historical rollback02 hashes. Source02 cannot obtain its readonly basis.",
+      "requiredFix": "Restore historical r3_original_auth41_rollback02.py and original-auth41-rollback-only-20261117-02.json paths with existing exact pins; keep new45 outputs absent before CAS."
+    }
+  ],
+  "runtimeExecutionAuthorizedByThisReport": false,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "privateSnapshotBodiesRead": false,
+  "unchangedConsumerReviewReused": "e648fbb87e1a4a7dc616353147d8c593d85c180c2bc25f32e8d0689c79f9e010"
+}

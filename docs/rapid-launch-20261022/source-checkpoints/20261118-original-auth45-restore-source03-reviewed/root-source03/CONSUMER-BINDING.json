@@ -1,0 +1,78 @@
+{
+  "consumerDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-EXECUTION-01/rollback/bundle",
+  "consumerSourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-SOURCE-01",
+  "rule": {
+    "authorityLeaf": "host-authorization.json",
+    "bundlePins": {
+      "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "ordinary05_roles.py": "8009923fd8972e42d55fb28de46ab5e581e36110ca0e864ef5a888904bf8e97d",
+      "ordinary05_roles_job.py": "2360d986c22b92b9558d9024cd560d6f75e0463112a5f1a9883cebcb31db65b2",
+      "prior_preserved38.py": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "successful39_history.py": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+    },
+    "jobId": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "script": "ordinary05_roles_job.py",
+    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-SOURCE-01/bundle",
+    "timeoutSeconds": 300
+  },
+  "history": {
+    "consumerSourcePinsSha256": "4cb93146e127d362aef8b9ae1e2d3b48be4cf529a5990b658e698bb3ab19da12",
+    "consumerInterfaceSha256": "83b45b0a3048cf2aaf5287b7e95b083103396e886f3b51201d6b20a10277df51",
+    "consumerReviewSha256": "e648fbb87e1a4a7dc616353147d8c593d85c180c2bc25f32e8d0689c79f9e010",
+    "innerScopeFixed": {
+      "coldCopyCompleteSha256": "f081eb73e96650c1623ab158dd11923c395600dd37f51e4d6940a7bb633148c1",
+      "dataDirectory": "/var/lib/naijue-erp/fresh35-production/fresh35-first-production-20261110-r3/data",
+      "dataDirectoryIdentity": [
+        66304,
+        13502421,
+        61035,
+        61035,
+        448
+      ],
+      "decision": "RESTORE_EXISTING_ORIGINAL_TWO_ROLE_AUTH_ONLY",
+      "format": "T45_R3_ORIGINAL45_AUTH_GUARDIAN_RESTORE_ONLY_V1",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "maximumOfflineStepSeconds": 30,
+      "ordinaryServiceRequestKey": "t45-first-r3-native-service-start-20261118-45",
+      "physical": {
+        "database": "erp_fresh35_20261110_r3",
+        "databaseOid": "16393",
+        "serverVersionNum": "170011",
+        "systemIdentifier": "7706545564479176741"
+      },
+      "previousServiceRequestKey": "t45-first-r3-native-service-start-20261117-42",
+      "requestKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "restoreRequestKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ]
+    },
+    "outerScopeFixed": {
+      "containerName": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "dataDirectoryDevice": 66304,
+      "dataDirectoryInode": 13502421,
+      "decision": "ROLLBACK_EXACT_ORIGINAL_AUTH_ONLY",
+      "format": "T45_R3_ORIGINAL45_AUTH_GUARDIAN_RESTORE_ONLY_ROOT_JOB_V1",
+      "guardianCleanupSha256": "43f215a347cbeb2a31221b6d5406bfc5679acac2f40af7e3decd7e807a419efe",
+      "historicalRolesAuthoritySha256": "073384eab7a9de27501915e2481c1529ae5b2dd8c43178532d2769a999bf6c85",
+      "hostPorts": [],
+      "imageId": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "installationRecordSha256": "4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e",
+      "maximumOperationSeconds": 300,
+      "networkMode": "none",
+      "phase": "restore",
+      "requestKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "service": {
+        "containerId": "a8a29eb7604992be310e4f23b5aa43e064acb52298bd150df49bfc66db20d127",
+        "containerStartedAt": "2026-11-17T20:27:41.490657182Z",
+        "postmasterStart": "2026-11-17 20:27:42.926095+00",
+        "proofSha256": "28a7657bc2f5b5ffcb189f3031a73786f5ba2f6e33d7c6630c8b3012401d2e00",
+        "serviceKey": "t45-first-r3-native-service-start-20261118-45"
+      }
+    }
+  }
+}
