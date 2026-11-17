@@ -1,0 +1,31 @@
+{
+  "authoritiesIssued": false,
+  "clockCalls": 0,
+  "files": {
+    "CHECKS.json": {
+      "bytes": 1599,
+      "sha256": "221bacf7092799b9a15f089b1f649691d52a468275d0facb9fd6637ea26bf45e"
+    },
+    "CORRECTION.json": {
+      "bytes": 760,
+      "sha256": "dcabd7243be17023bd87b9a3aad57f9f356603fd5151a350c6d9dd9d006634aa"
+    },
+    "HANDOFF.md": {
+      "bytes": 1715,
+      "sha256": "6dbd22819ed5baa7662292ec50e19b9cfc072c53610b4cb72a48a8259142dcd3"
+    },
+    "check.py": {
+      "bytes": 2757,
+      "sha256": "3f7a14edc45146f4728333e49556c3b229b37257cf8c571117ef5d64c76f3fb1"
+    },
+    "issue_stop.py": {
+      "bytes": 3621,
+      "sha256": "bf2901ab38c5deb18aa060a42e44378731753b0b183ea3482bb83d0bf2096b71"
+    }
+  },
+  "issuerCalls": 0,
+  "originalRegisteredSourcePinsSha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+  "serverCalls": 0,
+  "sourceOnly": true,
+  "state": "STOP41_ONE_ID_ISSUER_SOURCE_READY_NOT_CALLED"
+}

@@ -1,0 +1,9 @@
+STOP41 本机签发单键修复，仅用于原stop键。原17文件aadc、注册/角色/政策/Root120和执行端保持原字节，不重签注册或角色，不运行服务器。
+
+已核实际基线4c0b的currentBatchTerminals和现有STOP bundle固定集合都包含 upgrade41；旧FIVE最后一项却是未提交的upgrade40。CORRECTION.json只替换这一项，前4键和集合精确比较全部保留，不伪造旧40终态。
+
+Main使用本目录 issue_stop.issue，八参数与原issue_phase.issue完全一致。rules_file及rules_pin仍传原冻结FIVE / 6460d3c0d7048f1f27d8660329c5b4d741e8561296b601077bc1bf72daa14026，registration_directory为原Main41登记。evidence为实际STOP basis及其精确pin，predecessor为实际Start41完整读回及其pin。仅在原preservation_authority边界复制witness并准确替换该一项，再调用原函数。其余原验证、所有实际证据值、finite clock/expiry、角色/政策读取及原输出算法直接运行原已注册模块。调用完恢复函数引用。
+
+必须先有同QB本次源码复核：outputs/QB/20261117-r3-ordinary41-stop-issuer-fix-review-01/RESULT.json，要求sourceOnly=true、findings=[]、sourcePinsSha256等于本目录最终SOURCE-PINS哈希、originalRegisteredSourcePinsSha256=aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8。
+
+原ISSUED sourcePin保留真实aadc；同phase-stop目录额外STOP-CORRECTION-BINDING.json只记录本次修正SOURCE/QB/原登记/实际authority与原证据pin，不改原ISSUED、policy、roles或registration。原RESTORE继续用aadc原八参数分支。本次只编译与精确集合增量核验，无issuer/clock/server调用、无授权或正向运行样例。

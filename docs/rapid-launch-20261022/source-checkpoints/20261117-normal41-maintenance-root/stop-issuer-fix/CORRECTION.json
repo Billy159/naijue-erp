@@ -1,0 +1,19 @@
+{
+  "originalRegisteredSourcePinsSha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+  "before": [
+    "t45-r3-batched-install-20261116-02",
+    "t45-r3-batched161-command-successor-20261116-01",
+    "t45-r3-final33-plan-prepare-20261116-05",
+    "t45-r3-batched-real-execute-20261115-01",
+    "t45-r3-settlement24-three-routine-upgrade-20261117-01"
+  ],
+  "after": [
+    "t45-r3-batched-install-20261116-02",
+    "t45-r3-batched161-command-successor-20261116-01",
+    "t45-r3-final33-plan-prepare-20261116-05",
+    "t45-r3-batched-real-execute-20261115-01",
+    "t45-r3-settlement24-three-routine-upgrade41-20261117-01"
+  ],
+  "stopJobId": "t45-r3-ordinary41-preserve-stop-20261117-01",
+  "registrationOrRoleOrPolicyChanges": false
+}

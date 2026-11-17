@@ -1,0 +1,54 @@
+{
+  "actions": {
+    "actualAuthorityCreated": false,
+    "newStopKeyCASRoleOrPolicyCreated": false,
+    "ownerFilesOrPriorReportsModified": false,
+    "serverPGNativeApplicationIssuerClockCalls": 0
+  },
+  "checksCompleted": 13,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-ordinary41-stop-issuer-fix-review-01/FIX-EVIDENCE.json",
+      "sha256": "876893d98ff8b751fdbe2fb9c7b23a31112e1b3e38a39ff17f1206e2c0be23fa"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-ordinary41-stop-issuer-fix-review-01/ACTUAL-CONTRACT-EVIDENCE.json",
+      "sha256": "92678c4aff18f17e1f2e8c0d8c09d1006e159f85e14c47d84f146db20790e831"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-ordinary41-stop-issuer-fix-01/CHECKS.json",
+      "sha256": "221bacf7092799b9a15f089b1f649691d52a468275d0facb9fd6637ea26bf45e"
+    }
+  ],
+  "findings": [],
+  "notVerified": [
+    "Actual STOP and original RESTORE still must execute and read back under their original keys; this report alone proves neither stopped PG nor restored auth.",
+    "Upgrade FAILED/UNKNOWN remains separate; unchanged upgradebundle retained35 helper mismatch is not fixed or cleared by this MainSTOP correction. No partial commit/rollback/SQL-upgrade claim made.",
+    "No replay, old40terminal fabrication, relaxed set guard or changed live key permitted. No old SQL/APP/UI/full-source tests rerun."
+  ],
+  "originalRegisteredSourcePinsSha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+  "owner29DeltaChecksReused": true,
+  "priorJointReport": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-three-routine-maintenance-joint-review-01/RESULT.json",
+    "preserved": true,
+    "scopeGapAcknowledged": "Earlier review omitted this root STOP list versus consumer exact set relation; historical Source PASS is not runtime PASS.",
+    "sha256": "2e68cfb4a8f13d7249e9d65bee4910b1a4fc6601aa9b5917b0a78ee23685d79d"
+  },
+  "runtimeReadyForGeneralMaintenance": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-ordinary41-stop-issuer-fix-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "09cbc7b14bf40438c63989b43b835bcf486a33479d8b649c8492f2443d820726",
+  "spec": {
+    "findings": []
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_PASS_STOP41_ONE_ID_MAIN_ISSUER_FIX_ONLY",
+  "verifiedScope": [
+    "Correct only Main expected currentBatchTerminals upgrade40→actual upgrade41; first4 keys and exact guard unchanged. Actualbasis4c0b/terminalf797 and consumerSTOP41 match.",
+    "NewSTOP-only8API requires actual evidence and actualStart predecessor, exact newSOURCE/QB plus unchanged original17/aadc, then delegates original issuer after copying one witness field. Original finite policy/roles/service/lease/expiry/evidence/host/output checks retained.",
+    "Original issued sourcePin remains aadc and actualregistered root/policy/roles/rules untouched. Additional exclusive0600 sidecar binds newsource/QB and originalsource/rules/evidence/predecessor/actualauthority; same original stop key, no CAS/role/key replacement.",
+    "Original set expression evaluated only with actual keyset plus old/missing/extra negative keysets; no issuer, clock, authority or future positive fixture invoked."
+  ]
+}

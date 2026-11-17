@@ -1,5 +1,5 @@
 {
-  "state": "ACTUAL_NORMAL41_UPGRADE_FAILED_UNKNOWN_PG_RUNNING_TEMP_AUTH_STOP_MAIN_CONTRACT_FIX_PENDING",
+  "state": "ACTUAL_NORMAL41_UPGRADE_AND_STOP_FAILED_PG_RUNNING_ORIGINAL_AUTH_NOT_RESTORED_RECOVERY_SOURCE_IN_PROGRESS",
   "sourceOnlyReview": true,
   "currentActualRegisteredKeys": 120,
   "PGRunning": true,
@@ -175,8 +175,8 @@
   "SQLCommitOrRollbackAcknowledged": false,
   "actualUpgradeSafeReadbackSha256": "e9b0fadeab0a11ca866ace9f109714d5327256f3c456878f2d0a20d0c5b7101c",
   "upgradeNeverReplay": true,
-  "stopAuthorityIssued": false,
-  "stopSubmitted": false,
+  "stopAuthorityIssued": true,
+  "stopSubmitted": true,
   "stopMainIssueFailures": [
     "Missing actual Start predecessor: no output or authority created; input corrected.",
     "Frozen witness retains unsubmitted40 upgrade key; actual basis and server stop helper require41; exact-set guard rejected. D1 minimal Main-only contract correction pending."
@@ -184,5 +184,17 @@
   "upgradeDefect": "Pinned upgrade support still generation35; current actual C41 birth matches original Start. Dedicated stop support is41. No guard or proof changed.",
   "actualStopBasisSha256": "4c0b5301d535cddf9464cebe7786dde1e27710a36b1067837c97c46f57cf0f3c",
   "restoreHardDeadlineEpochMs": 1794926977752,
-  "asOf": "2026-11-17T13:57:42.367051+00:00"
+  "asOf": "2026-11-17T14:15:59.207001+00:00",
+  "stopMainFixSourcePinsSha256": "09cbc7b14bf40438c63989b43b835bcf486a33479d8b649c8492f2443d820726",
+  "stopMainFixReviewSha256": "88098da019fa80789535549cc730bc3742355e40f086cfedb64c764bc6d11d86",
+  "stopTerminalSha256": "d7e54f8934700ba6feb74be64e2927f5e2de7c6367b664d4a4847a5ec79133bb",
+  "stopSafeReadbackSha256": "791c69be347aac1fbc379fdef60154c8d5783bfdbc5df4c938a0e893dcc87736",
+  "stopSafeCode": "NORMAL05_STOP_PINNED_MODULE_DIFFERS",
+  "stopCleanupConfirmed": false,
+  "stopNeverReplay": true,
+  "actualCodeMetadataSha256": "e987b1dca0d31d51c10d81353ecfb0486672f7c064d85350da00c64d042a1fe0",
+  "recoveryStopKeySourceOnly": "t45-r3-ordinary41-preserve-stop-recovery-20261117-01",
+  "recoveryStopRegistered": false,
+  "serviceWorkDeadlineEpochMs": 1794926342048,
+  "outerServiceLeaseEpochMs": 1794926377048
 }

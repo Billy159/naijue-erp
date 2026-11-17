@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T13:57:42.367051+00:00",
+  "updatedAt": "2026-11-17T14:15:59.207001+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Urgent minimum Main-only STOP41 witness correction via original D1 and sameQB: preserve original frozenaadc/Root120/policy5bdd/roles0980/regbe31, replace stale40 upgrade identity with actual41 in exact required set, no invented terminal or bypass. Then actual Stop41→exact original-auth Restore41 before22:49:37. Failed upgrade41 never replay; only then correct generation35 upgrade support in reasoned successor source.",
+  "next": "T45 consumer SOURCE only one RecoveryStop key and actual two loader pins readonly18a77/guardianc736, preserve all exact guardian/mount/DATA/owner/drain/clock/cleanup checks. D1 Root121 only this one key with original120+3guards, exact-running-owned-C41/nootherop/lock metadata basis, plus originalRestore41 exact RecoveryStop-success bridge and Main8 adapter. SameQB new affected source/pair only. No direct signal/kill, no SQL/replay/newrole/lease extension. Then one actual fresh/finite registration/RecoveryStop→original-auth Restore41 before original hard22:49:37.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T13:57:42.367051+00:00",
-  "state": "ACTUAL_NORMAL41_UPGRADE_FAILED_UNKNOWN_PG_RUNNING_TEMP_AUTH_STOP_MAIN_CONTRACT_FIX_PENDING",
+  "asOf": "2026-11-17T14:15:59.207001+00:00",
+  "state": "ACTUAL_NORMAL41_UPGRADE_AND_STOP_FAILED_PG_RUNNING_ORIGINAL_AUTH_NOT_RESTORED_RECOVERY_SOURCE_IN_PROGRESS",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Urgent minimum Main-only STOP41 witness correction via original D1 and sameQB: preserve original frozenaadc/Root120/policy5bdd/roles0980/regbe31, replace stale40 upgrade identity with actual41 in exact required set, no invented terminal or bypass. Then actual Stop41→exact original-auth Restore41 before22:49:37. Failed upgrade41 never replay; only then correct generation35 upgrade support in reasoned successor source.",
+  "next": "T45 consumer SOURCE only one RecoveryStop key and actual two loader pins readonly18a77/guardianc736, preserve all exact guardian/mount/DATA/owner/drain/clock/cleanup checks. D1 Root121 only this one key with original120+3guards, exact-running-owned-C41/nootherop/lock metadata basis, plus originalRestore41 exact RecoveryStop-success bridge and Main8 adapter. SameQB new affected source/pair only. No direct signal/kill, no SQL/replay/newrole/lease extension. Then one actual fresh/finite registration/RecoveryStop→original-auth Restore41 before original hard22:49:37.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -54733,7 +54733,7 @@
     "checkpoint": "source-checkpoints/20261117-normal41-maintenance-consumer/CHECKPOINT.json"
   },
   "normal41Maintenance": {
-    "state": "ACTUAL_NORMAL41_UPGRADE_FAILED_UNKNOWN_PG_RUNNING_TEMP_AUTH_STOP_MAIN_CONTRACT_FIX_PENDING",
+    "state": "ACTUAL_NORMAL41_UPGRADE_AND_STOP_FAILED_PG_RUNNING_ORIGINAL_AUTH_NOT_RESTORED_RECOVERY_SOURCE_IN_PROGRESS",
     "sourceOnlyReview": true,
     "currentActualRegisteredKeys": 120,
     "PGRunning": true,
@@ -54745,8 +54745,8 @@
     "SQLCommitOrRollbackAcknowledged": false,
     "actualUpgradeSafeReadbackSha256": "e9b0fadeab0a11ca866ace9f109714d5327256f3c456878f2d0a20d0c5b7101c",
     "upgradeNeverReplay": true,
-    "stopAuthorityIssued": false,
-    "stopSubmitted": false,
+    "stopAuthorityIssued": true,
+    "stopSubmitted": true,
     "stopMainIssueFailures": [
       "Missing actual Start predecessor: no output or authority created; input corrected.",
       "Frozen witness retains unsubmitted40 upgrade key; actual basis and server stop helper require41; exact-set guard rejected. D1 minimal Main-only contract correction pending."
@@ -54754,7 +54754,19 @@
     "upgradeDefect": "Pinned upgrade support still generation35; current actual C41 birth matches original Start. Dedicated stop support is41. No guard or proof changed.",
     "actualStopBasisSha256": "4c0b5301d535cddf9464cebe7786dde1e27710a36b1067837c97c46f57cf0f3c",
     "restoreHardDeadlineEpochMs": 1794926977752,
-    "asOf": "2026-11-17T13:57:42.367051+00:00"
+    "asOf": "2026-11-17T14:15:59.207001+00:00",
+    "stopMainFixSourcePinsSha256": "09cbc7b14bf40438c63989b43b835bcf486a33479d8b649c8492f2443d820726",
+    "stopMainFixReviewSha256": "88098da019fa80789535549cc730bc3742355e40f086cfedb64c764bc6d11d86",
+    "stopTerminalSha256": "d7e54f8934700ba6feb74be64e2927f5e2de7c6367b664d4a4847a5ec79133bb",
+    "stopSafeReadbackSha256": "791c69be347aac1fbc379fdef60154c8d5783bfdbc5df4c938a0e893dcc87736",
+    "stopSafeCode": "NORMAL05_STOP_PINNED_MODULE_DIFFERS",
+    "stopCleanupConfirmed": false,
+    "stopNeverReplay": true,
+    "actualCodeMetadataSha256": "e987b1dca0d31d51c10d81353ecfb0486672f7c064d85350da00c64d042a1fe0",
+    "recoveryStopKeySourceOnly": "t45-r3-ordinary41-preserve-stop-recovery-20261117-01",
+    "recoveryStopRegistered": false,
+    "serviceWorkDeadlineEpochMs": 1794926342048,
+    "outerServiceLeaseEpochMs": 1794926377048
   },
   "appSettlement24Successor": {
     "state": "BUILT_PACKED_ARCHIVE_READBACK_LOCAL_ONLY_NOT_DEPLOYED",

@@ -1,0 +1,45 @@
+{
+  "activeOperationUnits": [],
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "checkedAtUTC": "2026-11-17T14:03:50.322551+00:00",
+  "cleanupConfirmed": false,
+  "noOtherOperationUnits": true,
+  "originalAuthenticationRestored": false,
+  "ownOperationUnitInactive": true,
+  "pgdataPidAbsent": false,
+  "portAbsent": true,
+  "publicResultSha256": "9030783389af97bbb68c4ed2a53dfefadb3907f35fc99ef22133f8ecc401a55c",
+  "readbackSha256": "43f12caa7cd862310bfa0351dfb055d60bef877576af52e69d8bc15b128f8a5e",
+  "requestKey": "t45-r3-ordinary41-preserve-stop-20261117-01",
+  "result": {
+    "checkedAtUTC": "2026-11-17T14:03:33.197911+00:00",
+    "requestKey": "t45-r3-ordinary41-preserve-stop-20261117-01",
+    "safeCode": "NORMAL05_STOP_PINNED_MODULE_DIFFERS",
+    "status": "NORMAL05_PRESERVATION_OUTCOME_UNKNOWN_ORIGINAL_KEY_ONLY"
+  },
+  "resultObjectsEqual": true,
+  "rootPins": {
+    "result": "35e73f8a425127559e6e65df96978fd12f316222b1e85ebeca77da2ea2d5dd4d",
+    "terminal": "d7e54f8934700ba6feb74be64e2927f5e2de7c6367b664d4a4847a5ec79133bb"
+  },
+  "state": "STOP41_FAILED_NATIVE_PRESERVATION_UNKNOWN_NO_REPLAY_OR_OFFLINE_RESTORE_YET",
+  "terminal": {
+    "atUTC": "2026-11-17T14:03:33.002030+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 0.23121606599306688,
+    "exitCode": 2,
+    "exports": [
+      "normal05-preserve-stop-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T14:03:33.256554+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary41-preserve-stop-20261117-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-a9087dfc72f0"
+  }
+}
