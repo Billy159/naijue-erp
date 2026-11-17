@@ -1,0 +1,60 @@
+{
+  "checkedAtUTC": "2026-11-17T05:42:02.285391+00:00",
+  "phase": "start",
+  "requestKey": "t45-first-r3-native-service-start-20261116-39",
+  "terminal": {
+    "atUTC": "2026-11-17T05:39:34.666413+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 42.13674368202919,
+    "exitCode": 0,
+    "exports": [
+      "genuine-describe-payload.json",
+      "genuine-describe-process.json",
+      "genuine-descriptor.json",
+      "genuine-live-facts.json",
+      "normal-service-create-attempt.json",
+      "normal-service-intent.json",
+      "normal-service-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T05:40:16.824886+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-first-r3-native-service-start-20261116-39",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-0d15889e575a"
+  },
+  "rootPins": {
+    "result": "422bdd6ee1aab240357007d344231b6f00979a4b2af0f6e4aa84c3cea452ae09",
+    "terminal": "78f5caaae6ec9f733f97808550748a6ef486e5c14835e377a76061726b37cac2"
+  },
+  "service": {
+    "containerId": "a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5",
+    "containerStartedAt": "2026-11-17T05:39:38.918702945Z",
+    "postmasterStart": "2026-11-17 05:39:40.169724+00",
+    "proofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-39"
+  },
+  "actualSharedServiceWorkDeadline": 1794901490291,
+  "outerAuthorityLeaseExpiresAt": 1794901525291,
+  "runnerConservativeWorkDeadline": 1794901455291,
+  "readOnlyReadiness": true,
+  "retainedAckConfirmed": true,
+  "retainedAckValidated": true,
+  "dataDirectoryIdentity": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502421,
+    "mode": 448,
+    "uid": 61035
+  },
+  "databaseConnections": 0,
+  "mutations": 0,
+  "noOtherOperationUnits": true,
+  "rawCapacitySettingsSha256": "c18742439da8aee944672df0dc7301a2f9c0cbc847a9542769f0bdb7a66f8a91",
+  "sourceSha256": "e4de8581b1e72b6ffc2d22f9e6ad48f3fa33dd5eebbfc6fc6afc11ca6bb0c737",
+  "projectionOnly": true,
+  "protectedTextsExcluded": true
+}

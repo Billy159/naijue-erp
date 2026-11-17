@@ -1,5 +1,5 @@
 {
-  "state": "NORMAL39_ACTUAL_CAS_APPLY_COMPLETED_START39_AUTH_ISSUED_START_PENDING",
+  "state": "START39_ACTUAL_SUCCESS_PREPARE05_AUTH_ISSUED_PENDING_ACTUAL",
   "sourceOnly": false,
   "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
   "consumerInterfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
@@ -12,7 +12,7 @@
   "nativeLogicalKey": "t45-r3-final33-plan-prepare-20261116-01",
   "outerKey": "t45-r3-final33-plan-prepare-20261116-05",
   "finiteAuthorityCreated": true,
-  "current39ServiceOrEpochCreated": false,
+  "current39ServiceOrEpochCreated": true,
   "privateOrAuthorityBodiesCopied": false,
   "unissuedJsonOrPatchBodiesOmittedOriginalHashesRetained": true,
   "copies": [
@@ -460,10 +460,20 @@
       "path": "main/APP-A7-SOURCE-ONLY-DECISION.json",
       "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
       "bytes": 3142
+    },
+    {
+      "path": "actual-safe/START39-SAFE-PROJECTION.json",
+      "sha256": "8ff096a22fbadc7115f5a1ee633a6c5d5886d44a2ef7f09d8d8bdd00bf88c864",
+      "bytes": 2215
+    },
+    {
+      "path": "actual-safe/PREPARE05-ISSUED-SAFE.json",
+      "sha256": "c9632c1968f508dd4949563f60f14262686cfa539c0301cd85d8edc5691487a0",
+      "bytes": 399
     }
   ],
-  "next": "T45 START39 once, exact actual terminal/four stored outputs/current39 C-epoch/context; Main native PREPARE05 authority only after actual START. Original writer never submitted/business0; source APP WIP independent.",
-  "asOf": "2026-11-17T13:36:27.864063+08:00",
+  "next": "T45 unused PREPARE05 once with actual97d251 authority, actual39 sameC/epoch and native01/plan05; require prepared/execution binding, CLOSED native cleanup before Main signs original stable writer. No old failed key replay or deadline renewal.",
+  "asOf": "2026-11-17T13:47:04.760304+08:00",
   "rootSourcePinsSha256": "b96d2548a58fe1ffc3a1b855420aea8a519d7982d3707927b88accfa7d0a6b7b",
   "rootRulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
   "rootConsumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
@@ -518,5 +528,17 @@
   "current39OriginalAuthRestored": false,
   "actualServerRegistration": true,
   "businessWriterSubmitted": false,
-  "businessWrites": 0
+  "businessWrites": 0,
+  "actualStartSha256": "e4de8581b1e72b6ffc2d22f9e6ad48f3fa33dd5eebbfc6fc6afc11ca6bb0c737",
+  "actualService": {
+    "containerId": "a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5",
+    "containerStartedAt": "2026-11-17T05:39:38.918702945Z",
+    "postmasterStart": "2026-11-17 05:39:40.169724+00",
+    "proofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-39"
+  },
+  "PGStopped": false,
+  "privateContextSha256": "054fa2d500cdfc3a14cd0a74e85f33d68b570703669e9eec7b75927f78cfc4af",
+  "privateContextBodyCopied": false,
+  "prepare05AuthoritySha256": "97d25144468444b0d5aaa9dc3956498c8eb0245612ec017f4d8fb130c6cec0ad"
 }
