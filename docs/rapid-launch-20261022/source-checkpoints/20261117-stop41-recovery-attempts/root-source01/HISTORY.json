@@ -1,0 +1,36 @@
+{
+  "service": {
+    "containerId": "cbf6459fc0e0f9cf89d1b0826618ba5d5a50fa650d7ef08dc420cfdd4e05fb5c",
+    "containerStartedAt": "2026-11-17T13:42:11.910047227Z",
+    "postmasterStart": "2026-11-17 13:42:13.196867+00",
+    "proofSha256": "c31d0e8ab940538ce17612834b23681a6413ca2c9fc1106fe82600e68f9c6cfa",
+    "serviceKey": "t45-first-r3-native-service-start-20261117-41"
+  },
+  "startPins": {
+    "result": "9132db0e45e635fd26f7423a62cd815605bb2ef0076c921127e8c587eaaeeee5",
+    "terminal": "bff45b1ff8381697f3fa914c04a7ce4ac88a4a8aa590dd8e846bca1846de68f1"
+  },
+  "failedStop": {
+    "key": "t45-r3-ordinary41-preserve-stop-20261117-01",
+    "terminalSha256": "d7e54f8934700ba6feb74be64e2927f5e2de7c6367b664d4a4847a5ec79133bb",
+    "resultSha256": "35e73f8a425127559e6e65df96978fd12f316222b1e85ebeca77da2ea2d5dd4d"
+  },
+  "originalWorkDeadline": 1794926342048,
+  "originalLeaseExpiresAt": 1794926377048,
+  "originalRestorationDeadline": 1794926977752,
+  "originalRolesSha256": "0980cee0d05d7deed79ae92089cde540ebb77e47ad1f3511b6de1c989a542d9c",
+  "originalRegisteredSourcePinsSha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+  "dispatcherSha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0",
+  "module41Sha256": "c478692d5d36ebb56e17fea3c2fc18baa7dd30729eb019e14282a10622a836ce",
+  "policy41Sha256": "5bdd2a3d7aa88486bf2248fee43cadf976738b2e2d330a7b918860c726bde4f9",
+  "newJobId": "t45-r3-ordinary41-preserve-stop-recovery-20261117-01",
+  "oldProtectedKeys": 120,
+  "newProtectedKeys": 121,
+  "consumerSourcePinsSha256": "e1f1b00c94d263dbce4a280d0c7a6fad9e5b34c8e516806f599cc381993e0de0",
+  "finiteAuthority": null,
+  "consumerInterfaceSha256": "011950babe938a49d2272f496656975f360fd4c93e5fd03d55771e46f49a56fd",
+  "jobs": {
+    "stop": "t45-r3-ordinary41-preserve-stop-recovery-20261117-01"
+  },
+  "consumerReviewSha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09"
+}

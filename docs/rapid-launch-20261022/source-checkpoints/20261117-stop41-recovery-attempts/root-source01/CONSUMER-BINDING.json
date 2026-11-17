@@ -1,0 +1,28 @@
+{
+  "consumerDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-RECOVERY-STOP-SOURCE-01/bundle",
+  "consumerSourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-RECOVERY-STOP-SOURCE-01",
+  "rule": {
+    "jobId": "t45-r3-ordinary41-preserve-stop-recovery-20261117-01",
+    "script": "normal41_recovery_stop.py",
+    "authorityLeaf": "normal05-stop-input.json",
+    "bundlePins": {
+      "normal05_retained_stop.py": "8a5af47d5f92225ae90bfef5ed2d3b04abe36a4cbd3cfb8f09744b26a9d31f7e",
+      "normal41_recovery_stop.py": "24489903130118c367dff8e61e739689df525deab443f96565a6d4faf101fbab"
+    },
+    "timeoutSeconds": 120,
+    "deadlineField": "expiresAt"
+  },
+  "actualCurrentBatchTerminals": {
+    "t45-r3-batched-install-20261116-02": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2",
+    "t45-r3-batched-real-execute-20261115-01": "00132d00459328530dd4656d9a9e853b81abfbc92a73076fcde733d080cbdb35",
+    "t45-r3-batched161-command-successor-20261116-01": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb",
+    "t45-r3-final33-plan-prepare-20261116-05": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1",
+    "t45-r3-ordinary41-preserve-stop-20261117-01": "d7e54f8934700ba6feb74be64e2927f5e2de7c6367b664d4a4847a5ec79133bb",
+    "t45-r3-settlement24-three-routine-upgrade41-20261117-01": "f797d647162d0b256cabb3f7c5be8518daa291146338fb780613124235b47575"
+  },
+  "history": {
+    "consumerSourcePinsSha256": "e1f1b00c94d263dbce4a280d0c7a6fad9e5b34c8e516806f599cc381993e0de0",
+    "consumerInterfaceSha256": "011950babe938a49d2272f496656975f360fd4c93e5fd03d55771e46f49a56fd",
+    "consumerReviewSha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09"
+  }
+}

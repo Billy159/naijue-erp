@@ -1,0 +1,79 @@
+{
+  "PGConnections": 0,
+  "authoritiesIssued": false,
+  "candidateKeys": 121,
+  "clockCalls": 0,
+  "consumerReviewSha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09",
+  "consumerSourcePinsSha256": "e1f1b00c94d263dbce4a280d0c7a6fad9e5b34c8e516806f599cc381993e0de0",
+  "files": {
+    "ACTUAL120-DISPATCHER.py": {
+      "bytes": 54436,
+      "sha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0"
+    },
+    "CHECKS.json": {
+      "bytes": 1212,
+      "sha256": "67baaee15acfe2203c2f43c2f8827b1f7de1ce2966e068c5d15dcbe03aa62169"
+    },
+    "CONSUMER-BINDING.json": {
+      "bytes": 1976,
+      "sha256": "6ed0a766c53150c0b92ca7a6d0891ace0edd123f153de33474a80c423fdd37fc"
+    },
+    "HANDOFF.md": {
+      "bytes": 3794,
+      "sha256": "7e817622dc61d161ee9f9dffb6447e293270eac84281f49362a7611e777a5436"
+    },
+    "HISTORY.json": {
+      "bytes": 1947,
+      "sha256": "caf9c90864936c73e9694975e5aa8bb4c89bfab5e902329a31eb6924f82362b0"
+    },
+    "admin_exec.RECOVERY-UNREGISTERED.py": {
+      "bytes": 55432,
+      "sha256": "4f5102d490384dc9402a10432e6156318d1d12a2d46e7c1fa212b95cace96693"
+    },
+    "admission.template.py": {
+      "bytes": 4923,
+      "sha256": "7140dc2d53013437773bbbcd7e334cd12466e73583b8eaa2d91353f7e0f826bc"
+    },
+    "assemble_root.py": {
+      "bytes": 8010,
+      "sha256": "bf3d317184cebb5f30de7e18c9b3617d3f8cb12f28da6ccf89449994d4b51408"
+    },
+    "check_source.py": {
+      "bytes": 4629,
+      "sha256": "77a3175d7c04ff9f159bc8ea4a2785c2a531db30669af6e70b4f82cc3943d4a8"
+    },
+    "issue_recovery.py": {
+      "bytes": 5232,
+      "sha256": "b48e43df0299227ad7b49b1af547b019908206a530dda98e30af426ed212bf65"
+    },
+    "issue_restore.py": {
+      "bytes": 2766,
+      "sha256": "f43f6c0ae6423c44db337ef07306516a7b934036b9c288f8e4b9ef1d37447065"
+    },
+    "prepare_channel.py": {
+      "bytes": 7188,
+      "sha256": "52e49b6491c25579e062588467735f48c255f27b2713810685405d43c82474f1"
+    },
+    "prepare_history.py": {
+      "bytes": 2069,
+      "sha256": "b270372b201399df205b6d146a513ee8d9db82a91f77d59f980aaec28779d1f2"
+    },
+    "r3_stop41_recovery.py": {
+      "bytes": 9587,
+      "sha256": "031887727ff895e34518c0500d6cf24eb7dc0ca44c2b2d7c1f3a6ee2a3bfa6f2"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1131,
+      "sha256": "7fd7e536756175fe522b6ccd603c3f1335b9d11be0482392f31a7ce30a5bc86d"
+    },
+    "register_cas.py": {
+      "bytes": 20884,
+      "sha256": "9cb5d02ff887bbec0f78ce91203aa88177262f503a65514876a32c388bbba6ec"
+    }
+  },
+  "issuerCalls": 0,
+  "oldProtectedKeys": 120,
+  "serverCalls": 0,
+  "sourceOnly": true,
+  "state": "STOP41_RECOVERY_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED"
+}

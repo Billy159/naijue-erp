@@ -1,0 +1,42 @@
+{
+  "actions": {
+    "newActualAuthorityOrPositiveFixtureCreated": false,
+    "ownerFilesOrOldReportsModified": false,
+    "serverPGNativeApplicationIssuerClockGuardianSignalCalls": 0
+  },
+  "checksCompleted": 14,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-stop-recovery-joint-review-01/CONSUMER-EVIDENCE.json",
+      "sha256": "438d44b35c14f98af06e1a80fe81e205c6007f952fe986ac8b247961d1804622"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-RECOVERY-STOP-SOURCE-01/CHECK-RESULT.json",
+      "sha256": "924dab70b1a9027b9119c6138e3cf00fea2eb13d0ab4e1097e0ad44b301ad9a6"
+    }
+  ],
+  "findings": [],
+  "interfaceSha256": "011950babe938a49d2272f496656975f360fd4c93e5fd03d55771e46f49a56fd",
+  "notVerified": [
+    "Root120→121 registration and originalRestore41 replacement closure/Main8 adapter still pending final source review.",
+    "No actual recovery submission, stoppedPG, sameC cleanup or originalauth restored verified. FAILED/UNKNOWN upgrade and Stop41 remain consumed, no rollback or SQL upgrade claimed."
+  ],
+  "owner15ChecksReused": true,
+  "readySha256": "d62064048459f66eb08a5f1d667bbdff388866c1ce5a82c705afc463bb9d66d6",
+  "rootPairReviewComplete": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-RECOVERY-STOP-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "e1f1b00c94d263dbce4a280d0c7a6fad9e5b34c8e516806f599cc381993e0de0",
+  "spec": {
+    "findings": []
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_PASS_RECOVERY_STOP41_CONSUMER_DELTA_ONLY",
+  "verifiedScope": [
+    "Support only2actuale987 pin corrections; allsupport functions and original close/guardian/birth/PID/owner/mount/drain/deadline/DATA/cleanup logic retained.",
+    "One explicit recovery key, exact sameactualCcbf/proof/epoch and6consumed terminal pins includingf797/d7e54. Originalkeys never replayed; maxworkdeadline/restorationdeadline unchanged.",
+    "Real original preservation_stop must return cleanclose before generic normal05-stop-result status emitted; its sameC/cleanup fields satisfy existing restore generic branch. OriginalRoot/Main recovery-to-restore adapters still need accurate pairing."
+  ]
+}

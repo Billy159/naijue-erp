@@ -1,0 +1,29 @@
+{
+  "state": "SOURCE02_FINISHING_SEAM_DELTA_PASS",
+  "checks": 16,
+  "passed": [
+    "own stop41-recovery-stop no old finish",
+    "own stop41-recovery-restore no old finish",
+    "delegate unchanged stop",
+    "delegate unchanged restore",
+    "delegate unchanged legacy-other",
+    "only two tags and finish added to Recovery",
+    "original frozen01 preserved",
+    "unchanged issue_recovery.py",
+    "unchanged read_registration_basis.py",
+    "unchanged CONSUMER-BINDING.json",
+    "unchanged HISTORY.json",
+    "restore uses separate actual FIX report only",
+    "new local and server prep path",
+    "CAS exact source02 entry",
+    "own phase prefix",
+    "source compile only"
+  ],
+  "source01ChecksReused": 21,
+  "old21Reexecuted": false,
+  "serverCalls": 0,
+  "clockCalls": 0,
+  "issuerCalls": 0,
+  "PGConnections": 0,
+  "authorityOrCOrRoleFixtures": false
+}

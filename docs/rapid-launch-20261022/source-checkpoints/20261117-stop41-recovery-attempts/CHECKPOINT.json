@@ -1,0 +1,237 @@
+{
+  "state": "ACTUAL_GUARDIAN41_CLOSED_ORIGINAL_AUTH_NOT_RESTORED_NEW_ROLLBACK_ONLY_SOURCE_PREPARATION",
+  "asOf": "2026-11-17T14:50:00.814224+00:00",
+  "currentActualRegisteredKeys": 120,
+  "PGStopped": true,
+  "actualGuardianMetadataSha256": "d771a74f49d71d6cb44b4c31403d1e231262f849f35ddb4e25782e1af14358c4",
+  "actualCleanupSha256": "9b53d0e1ecdc7c9545a2dcbda3c213591abb87e830c24004fa14d7e79796c1ac",
+  "originalAuthRestored": false,
+  "originalRestorationHardDeadlineEpochMs": 1794926977752,
+  "originalRestorationHardDeadlineMissed": true,
+  "source02FreshFailed": true,
+  "actualDiagnosticSafeCode": "EXACT_ORIGINAL_C41_REQUIRED",
+  "sourceDefect": "proof shared lease is work1794926342048, incorrectly compared to outer1794926377048; no qualified basis exported; never signed or CASed recovery Source02",
+  "recoveryStopJobRegisteredOrSubmitted": false,
+  "newRollbackAuthorityIssued": false,
+  "SQLUpgradeVerified": false,
+  "newBusinessImportPerformed": false,
+  "scope": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120\u2192121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
+  "copies": [
+    {
+      "originalPath": "root-source01/SOURCE-PINS.json",
+      "sha256": "3b9e6ecd6793156138981ea1de0308bf17fa36b05f45cbf649237fff51a09d3a",
+      "storedPath": "root-source01/SOURCE-PINS.json"
+    },
+    {
+      "originalPath": "root-source01/ACTUAL120-DISPATCHER.py",
+      "sha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0",
+      "storedPath": "root-source01/ACTUAL120-DISPATCHER.py"
+    },
+    {
+      "originalPath": "root-source01/CHECKS.json",
+      "sha256": "67baaee15acfe2203c2f43c2f8827b1f7de1ce2966e068c5d15dcbe03aa62169",
+      "storedPath": "root-source01/CHECKS.json"
+    },
+    {
+      "originalPath": "root-source01/CONSUMER-BINDING.json",
+      "sha256": "6ed0a766c53150c0b92ca7a6d0891ace0edd123f153de33474a80c423fdd37fc",
+      "storedPath": "root-source01/CONSUMER-BINDING.json"
+    },
+    {
+      "originalPath": "root-source01/HANDOFF.md",
+      "sha256": "7e817622dc61d161ee9f9dffb6447e293270eac84281f49362a7611e777a5436",
+      "storedPath": "root-source01/HANDOFF.md"
+    },
+    {
+      "originalPath": "root-source01/HISTORY.json",
+      "sha256": "caf9c90864936c73e9694975e5aa8bb4c89bfab5e902329a31eb6924f82362b0",
+      "storedPath": "root-source01/HISTORY.json"
+    },
+    {
+      "originalPath": "root-source01/admin_exec.RECOVERY-UNREGISTERED.py",
+      "sha256": "4f5102d490384dc9402a10432e6156318d1d12a2d46e7c1fa212b95cace96693",
+      "storedPath": "root-source01/admin_exec.RECOVERY-UNREGISTERED.py"
+    },
+    {
+      "originalPath": "root-source01/admission.template.py",
+      "sha256": "7140dc2d53013437773bbbcd7e334cd12466e73583b8eaa2d91353f7e0f826bc",
+      "storedPath": "root-source01/admission.template.py"
+    },
+    {
+      "originalPath": "root-source01/assemble_root.py",
+      "sha256": "bf3d317184cebb5f30de7e18c9b3617d3f8cb12f28da6ccf89449994d4b51408",
+      "storedPath": "root-source01/assemble_root.py"
+    },
+    {
+      "originalPath": "root-source01/check_source.py",
+      "sha256": "77a3175d7c04ff9f159bc8ea4a2785c2a531db30669af6e70b4f82cc3943d4a8",
+      "storedPath": "root-source01/check_source.py"
+    },
+    {
+      "originalPath": "root-source01/issue_recovery.py",
+      "sha256": "b48e43df0299227ad7b49b1af547b019908206a530dda98e30af426ed212bf65",
+      "storedPath": "root-source01/issue_recovery.py"
+    },
+    {
+      "originalPath": "root-source01/issue_restore.py",
+      "sha256": "f43f6c0ae6423c44db337ef07306516a7b934036b9c288f8e4b9ef1d37447065",
+      "storedPath": "root-source01/issue_restore.py"
+    },
+    {
+      "originalPath": "root-source01/prepare_channel.py",
+      "sha256": "52e49b6491c25579e062588467735f48c255f27b2713810685405d43c82474f1",
+      "storedPath": "root-source01/prepare_channel.py"
+    },
+    {
+      "originalPath": "root-source01/prepare_history.py",
+      "sha256": "b270372b201399df205b6d146a513ee8d9db82a91f77d59f980aaec28779d1f2",
+      "storedPath": "root-source01/prepare_history.py"
+    },
+    {
+      "originalPath": "root-source01/r3_stop41_recovery.py",
+      "sha256": "031887727ff895e34518c0500d6cf24eb7dc0ca44c2b2d7c1f3a6ee2a3bfa6f2",
+      "storedPath": "root-source01/r3_stop41_recovery.py"
+    },
+    {
+      "originalPath": "root-source01/read_registration_basis.py",
+      "sha256": "7fd7e536756175fe522b6ccd603c3f1335b9d11be0482392f31a7ce30a5bc86d",
+      "storedPath": "root-source01/read_registration_basis.py"
+    },
+    {
+      "originalPath": "root-source01/register_cas.py",
+      "sha256": "9cb5d02ff887bbec0f78ce91203aa88177262f503a65514876a32c388bbba6ec",
+      "storedPath": "root-source01/register_cas.py"
+    },
+    {
+      "originalPath": "root-source02/SOURCE-PINS.json",
+      "sha256": "09bf8cd700e275db5b017e89e0faddf98310778f337ef5c2786bb2cbf41efd53",
+      "storedPath": "root-source02/SOURCE-PINS.json"
+    },
+    {
+      "originalPath": "root-source02/ACTUAL120-DISPATCHER.py",
+      "sha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0",
+      "storedPath": "root-source02/ACTUAL120-DISPATCHER.py"
+    },
+    {
+      "originalPath": "root-source02/CHECKS.json",
+      "sha256": "7f5c0f38edb26688ed5f98da5e559be1a35dc5f6aa91b76c139fe032da407ea5",
+      "storedPath": "root-source02/CHECKS.json"
+    },
+    {
+      "originalPath": "root-source02/CONSUMER-BINDING.json",
+      "sha256": "6ed0a766c53150c0b92ca7a6d0891ace0edd123f153de33474a80c423fdd37fc",
+      "storedPath": "root-source02/CONSUMER-BINDING.json"
+    },
+    {
+      "originalPath": "root-source02/HANDOFF.md",
+      "sha256": "1a74473437f8a3ef17d99faa22401e5976297311c44921c63078667ce48f8f07",
+      "storedPath": "root-source02/HANDOFF.md"
+    },
+    {
+      "originalPath": "root-source02/HISTORY.json",
+      "sha256": "caf9c90864936c73e9694975e5aa8bb4c89bfab5e902329a31eb6924f82362b0",
+      "storedPath": "root-source02/HISTORY.json"
+    },
+    {
+      "originalPath": "root-source02/PREDECESSOR-SOURCE-PINS.json",
+      "sha256": "3b9e6ecd6793156138981ea1de0308bf17fa36b05f45cbf649237fff51a09d3a",
+      "storedPath": "root-source02/PREDECESSOR-SOURCE-PINS.json"
+    },
+    {
+      "originalPath": "root-source02/REUSED-SOURCE01-CHECKS.json",
+      "sha256": "67baaee15acfe2203c2f43c2f8827b1f7de1ce2966e068c5d15dcbe03aa62169",
+      "storedPath": "root-source02/REUSED-SOURCE01-CHECKS.json"
+    },
+    {
+      "originalPath": "root-source02/admin_exec.RECOVERY-UNREGISTERED.py",
+      "sha256": "e37e798e65d307c5b71e5f78b8dce24f8bc8dfd0b0433dc28fdad20a733ad9a5",
+      "storedPath": "root-source02/admin_exec.RECOVERY-UNREGISTERED.py"
+    },
+    {
+      "originalPath": "root-source02/admission.template.py",
+      "sha256": "ebb2b98b9db92cebe21a7a587ca70c94688878db0d551eeed284c335d5f0db58",
+      "storedPath": "root-source02/admission.template.py"
+    },
+    {
+      "originalPath": "root-source02/assemble_root.py",
+      "sha256": "e8c33c2bce1e196c0eb19a1711c3821f1efb5c514d200143e8ac62c9a273968e",
+      "storedPath": "root-source02/assemble_root.py"
+    },
+    {
+      "originalPath": "root-source02/check_finish_delta.py",
+      "sha256": "689cc2a588a76ada61bc8184f235775cdf2af25cfbd46fb2915b0dc37b2a3636",
+      "storedPath": "root-source02/check_finish_delta.py"
+    },
+    {
+      "originalPath": "root-source02/check_source.py",
+      "sha256": "77a3175d7c04ff9f159bc8ea4a2785c2a531db30669af6e70b4f82cc3943d4a8",
+      "storedPath": "root-source02/check_source.py"
+    },
+    {
+      "originalPath": "root-source02/issue_recovery.py",
+      "sha256": "b48e43df0299227ad7b49b1af547b019908206a530dda98e30af426ed212bf65",
+      "storedPath": "root-source02/issue_recovery.py"
+    },
+    {
+      "originalPath": "root-source02/issue_restore.py",
+      "sha256": "f786754210bb3af32317996fa0e62fc98326b78988dfcb219ef6d8af3cf5dea0",
+      "storedPath": "root-source02/issue_restore.py"
+    },
+    {
+      "originalPath": "root-source02/prepare_channel.py",
+      "sha256": "b142dd4bfd3f4b1faecef2b65ba681bc9b6de84c1473b17b105ce86e063a17c3",
+      "storedPath": "root-source02/prepare_channel.py"
+    },
+    {
+      "originalPath": "root-source02/prepare_history.py",
+      "sha256": "b270372b201399df205b6d146a513ee8d9db82a91f77d59f980aaec28779d1f2",
+      "storedPath": "root-source02/prepare_history.py"
+    },
+    {
+      "originalPath": "root-source02/r3_stop41_recovery.py",
+      "sha256": "cf63ae1a226f5dc9f058d5ae89bafc6e67b9e9335897e030c89b6375e118872d",
+      "storedPath": "root-source02/r3_stop41_recovery.py"
+    },
+    {
+      "originalPath": "root-source02/read_registration_basis.py",
+      "sha256": "7fd7e536756175fe522b6ccd603c3f1335b9d11be0482392f31a7ce30a5bc86d",
+      "storedPath": "root-source02/read_registration_basis.py"
+    },
+    {
+      "originalPath": "root-source02/register_cas.py",
+      "sha256": "82c234d2e9fe33426888b2e3b402f37ddc263970a8677ce613db6ff7e988d7cd",
+      "storedPath": "root-source02/register_cas.py"
+    },
+    {
+      "originalPath": "review/CONSUMER-RESULT.json",
+      "sha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09",
+      "storedPath": "review/CONSUMER-RESULT.json"
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "sha256": "83f2d3b6ded9e78f02a0e8279003593f55dc0fe19f6d52caa875ecfaf5635368",
+      "storedPath": "review/RESULT.json"
+    },
+    {
+      "originalPath": "review/FIX-RESULT.json",
+      "sha256": "a2dc3fd390d8989f91427af434b803938a177f1b54995485cabb32760de7d781",
+      "storedPath": "review/FIX-RESULT.json"
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-FRESH-FAILURE.json",
+      "sha256": "3affea5c8c48da688f565989a03f409f63d1e045761452bdc9779f124b11ae16",
+      "storedPath": "actual-safe/ACTUAL-FRESH-FAILURE.json"
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-FIXED-READER-DIAGNOSTIC.json",
+      "sha256": "1119694f26a866d6664635db2906859c95b0bd836eb6e01494bd5eafc52a0d9e",
+      "storedPath": "actual-safe/ACTUAL-FIXED-READER-DIAGNOSTIC.json"
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-GUARDIAN-CLOSE-METADATA.json",
+      "sha256": "d771a74f49d71d6cb44b4c31403d1e231262f849f35ddb4e25782e1af14358c4",
+      "storedPath": "actual-safe/ACTUAL-GUARDIAN-CLOSE-METADATA.json"
+    }
+  ],
+  "rawAuthorityRolePolicyCredentialOrSnapshotBodiesIncluded": false
+}

@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T14:15:59.207001+00:00",
+  "updatedAt": "2026-11-17T14:50:00.814224+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 consumer SOURCE only one RecoveryStop key and actual two loader pins readonly18a77/guardianc736, preserve all exact guardian/mount/DATA/owner/drain/clock/cleanup checks. D1 Root121 only this one key with original120+3guards, exact-running-owned-C41/nootherop/lock metadata basis, plus originalRestore41 exact RecoveryStop-success bridge and Main8 adapter. SameQB new affected source/pair only. No direct signal/kill, no SQL/replay/newrole/lease extension. Then one actual fresh/finite registration/RecoveryStop→original-auth Restore41 before original hard22:49:37.",
+  "next": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120→121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T14:15:59.207001+00:00",
-  "state": "ACTUAL_NORMAL41_UPGRADE_AND_STOP_FAILED_PG_RUNNING_ORIGINAL_AUTH_NOT_RESTORED_RECOVERY_SOURCE_IN_PROGRESS",
+  "asOf": "2026-11-17T14:50:00.814224+00:00",
+  "state": "ACTUAL_GUARDIAN41_CLOSED_ORIGINAL_AUTH_NOT_RESTORED_NEW_ROLLBACK_ONLY_SOURCE_PREPARATION",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 consumer SOURCE only one RecoveryStop key and actual two loader pins readonly18a77/guardianc736, preserve all exact guardian/mount/DATA/owner/drain/clock/cleanup checks. D1 Root121 only this one key with original120+3guards, exact-running-owned-C41/nootherop/lock metadata basis, plus originalRestore41 exact RecoveryStop-success bridge and Main8 adapter. SameQB new affected source/pair only. No direct signal/kill, no SQL/replay/newrole/lease extension. Then one actual fresh/finite registration/RecoveryStop→original-auth Restore41 before original hard22:49:37.",
+  "next": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120→121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52792,7 +52792,7 @@
   "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": false,
+  "PGCurrentlyStopped": true,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
@@ -53333,7 +53333,7 @@
     "stopped": true,
     "atUTC": "2026-11-17T02:11:53.756728+00:00"
   },
-  "PGCurrentState": "ACTUAL_C41_RUNNING_NO_ACTIVE_OPERATION_UPGRADE_FAILED",
+  "PGCurrentState": "ACTUAL_GUARDIAN41_CLOSED_PID0_DATA_PRESERVED",
   "normal38StartInProgress": {
     "observedAtUTC": "2026-11-17T02:16:43.832013+00:00",
     "observationSha256": "6b6c858195268833d26d7d7ea48c8691c76437ef3e53ab7a41baea4fce905b67",
@@ -54733,10 +54733,10 @@
     "checkpoint": "source-checkpoints/20261117-normal41-maintenance-consumer/CHECKPOINT.json"
   },
   "normal41Maintenance": {
-    "state": "ACTUAL_NORMAL41_UPGRADE_AND_STOP_FAILED_PG_RUNNING_ORIGINAL_AUTH_NOT_RESTORED_RECOVERY_SOURCE_IN_PROGRESS",
+    "state": "ACTUAL_GUARDIAN41_CLOSED_ORIGINAL_AUTH_NOT_RESTORED_NEW_ROLLBACK_ONLY_SOURCE_PREPARATION",
     "sourceOnlyReview": true,
     "currentActualRegisteredKeys": 120,
-    "PGRunning": true,
+    "PGRunning": false,
     "originalAuthRestored": false,
     "temporaryAuthRestorationPending": true,
     "SQLUpgradeVerified": false,
@@ -54766,7 +54766,11 @@
     "recoveryStopKeySourceOnly": "t45-r3-ordinary41-preserve-stop-recovery-20261117-01",
     "recoveryStopRegistered": false,
     "serviceWorkDeadlineEpochMs": 1794926342048,
-    "outerServiceLeaseEpochMs": 1794926377048
+    "outerServiceLeaseEpochMs": 1794926377048,
+    "PGStopped": true,
+    "actualGuardianMetadataSha256": "d771a74f49d71d6cb44b4c31403d1e231262f849f35ddb4e25782e1af14358c4",
+    "actualCleanupSha256": "9b53d0e1ecdc7c9545a2dcbda3c213591abb87e830c24004fa14d7e79796c1ac",
+    "originalRestorationHardDeadlineMissed": true
   },
   "appSettlement24Successor": {
     "state": "BUILT_PACKED_ARCHIVE_READBACK_LOCAL_ONLY_NOT_DEPLOYED",
@@ -54783,6 +54787,26 @@
     "serverUploaded": false,
     "deployed": false,
     "targetSpecificSpec": null
+  },
+  "stop41RecoveryAttempts": {
+    "state": "ACTUAL_GUARDIAN41_CLOSED_ORIGINAL_AUTH_NOT_RESTORED_NEW_ROLLBACK_ONLY_SOURCE_PREPARATION",
+    "asOf": "2026-11-17T14:50:00.814224+00:00",
+    "currentActualRegisteredKeys": 120,
+    "PGStopped": true,
+    "actualGuardianMetadataSha256": "d771a74f49d71d6cb44b4c31403d1e231262f849f35ddb4e25782e1af14358c4",
+    "actualCleanupSha256": "9b53d0e1ecdc7c9545a2dcbda3c213591abb87e830c24004fa14d7e79796c1ac",
+    "originalAuthRestored": false,
+    "originalRestorationHardDeadlineEpochMs": 1794926977752,
+    "originalRestorationHardDeadlineMissed": true,
+    "source02FreshFailed": true,
+    "actualDiagnosticSafeCode": "EXACT_ORIGINAL_C41_REQUIRED",
+    "sourceDefect": "proof shared lease is work1794926342048, incorrectly compared to outer1794926377048; no qualified basis exported; never signed or CASed recovery Source02",
+    "recoveryStopJobRegisteredOrSubmitted": false,
+    "newRollbackAuthorityIssued": false,
+    "SQLUpgradeVerified": false,
+    "newBusinessImportPerformed": false,
+    "scope": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120→121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
+    "rawAuthorityRolePolicyCredentialOrSnapshotBodiesIncluded": false
   }
 }
 }

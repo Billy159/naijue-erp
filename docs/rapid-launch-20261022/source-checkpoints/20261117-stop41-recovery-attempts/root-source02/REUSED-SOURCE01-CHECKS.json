@@ -1,0 +1,33 @@
+{
+  "state": "SOURCE_ONLY_EXACT_C41_RECOVERY_CHECKS_PASS",
+  "checks": 21,
+  "passed": [
+    "final consumer exact",
+    "exact normal05_retained_stop.py",
+    "exact normal41_recovery_stop.py",
+    "120 old keys plus exactly one recovery",
+    "all old root functions unchanged",
+    "execute only recovery stop and original restore bridge",
+    "policy unissued",
+    "module pin exact",
+    "six exact old terminals including failed stop",
+    "C41 and original deadlines",
+    "only exact runningC41 no active other operations",
+    "CAS does not pretend current PG stopped",
+    "original lock snapshot CAS preserved",
+    "live original birth and failed Stop required",
+    "no new business or restore fake old terminal",
+    "constructor permits original restore after stop policy expiry",
+    "restore original hard boundary and stopped original DATA",
+    "no new roles and stop original close margin",
+    "Main7 registration and Main8 restore API",
+    "exact restore witness bridge and restored function reference",
+    "all local source compile"
+  ],
+  "serverCalls": 0,
+  "clockCalls": 0,
+  "issuerCalls": 0,
+  "PGConnections": 0,
+  "authoritiesIssued": false,
+  "positiveRuntimeFixtures": false
+}

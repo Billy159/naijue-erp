@@ -1,0 +1,20 @@
+{
+  "CASRolesPGOrStopSubmitted": false,
+  "actualBasisExists": false,
+  "actualError": "LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK",
+  "actualRemoteTraceUnavailable": true,
+  "automaticRetryOrSecondFresh": false,
+  "codeStageRecorded": true,
+  "codeStageResult": {
+    "files": {
+      "r3_stop41_recovery.py": "cf63ae1a226f5dc9f058d5ae89bafc6e67b9e9335897e030c89b6375e118872d",
+      "read_registration_basis.py": "7fd7e536756175fe522b6ccd603c3f1335b9d11be0482392f31a7ce30a5bc86d",
+      "register_cas.py": "82c234d2e9fe33426888b2e3b402f37ddc263970a8677ce613db6ff7e988d7cd"
+    },
+    "registryOrAuthorityOrPGOrJobAction": false,
+    "status": "EXACT_REVIEWED_CODE_STAGED_NO_REGISTRATION"
+  },
+  "codeStageSha256": "439820a9050ec6bdfc6e7c41f083ae0cdaf07f2b01d8078ce70860597049499d",
+  "errorLocation": "prepare_channel.stage_and_read READ-PAIRED-BASIS remote returned failure",
+  "state": "SOURCE02_CODE_STAGE_RETURNED_COMBINED_FRESH_FAILED_NO_BASIS_NO_RETRY"
+}

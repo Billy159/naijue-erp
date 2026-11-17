@@ -1,0 +1,64 @@
+{
+  "actions": {
+    "actualAuthorityOrPositiveProductionFixtureCreated": false,
+    "ownerFilesOrOldReportsModified": false,
+    "serverPGNativeApplicationIssuerClockGuardianSignalCalls": 0
+  },
+  "checkSummary": {
+    "consumer14AndOwner15Reused": true,
+    "newR01OnlyIndependentChecks": 10,
+    "source01IndependentRootChecksReused": 16,
+    "source01OwnerChecksReused": 21
+  },
+  "closedFindings": [
+    "R01"
+  ],
+  "consumerReviewSha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09",
+  "consumerSourcePinsSha256": "e1f1b00c94d263dbce4a280d0c7a6fad9e5b34c8e516806f599cc381993e0de0",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-stop-recovery-joint-review-01/CONSUMER-RESULT.json",
+      "sha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-stop-recovery-joint-review-01/ROOT-OWNER21-EVIDENCE.json",
+      "sha256": "67baaee15acfe2203c2f43c2f8827b1f7de1ce2966e068c5d15dcbe03aa62169"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-stop-recovery-joint-review-01/ROOT-DELTA-EVIDENCE.json",
+      "sha256": "03039c6699511c9a95e2c3ea29bfbc02daf56c539f12e67dcf248d8c6bd67d3f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-stop-recovery-joint-review-01/R01-FIX-EVIDENCE.json",
+      "sha256": "acca8d8918e870d324949acc6ab5afc6b48958001384e6a5fcd0305f35f9e64d"
+    }
+  ],
+  "findings": [],
+  "notVerified": [
+    "No actual Source02 fresh/CAS/recoveryStop/cleanup/originalauthRestore observed or executed by QB; actual finite-window owner steps remain.",
+    "Only new paired safety SOURCE is accepted. Upgrade/SQL partialcommit or rollback/import/business acceptance remain UNKNOWN or unverified."
+  ],
+  "priorNeedFix": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-stop-recovery-joint-review-01/RESULT.json",
+    "preserved": true,
+    "sha256": "83f2d3b6ded9e78f02a0e8279003593f55dc0fe19f6d52caa875ecfaf5635368"
+  },
+  "rootPairReviewComplete": true,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-stop41-recovery-root-source-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "09bf8cd700e275db5b017e89e0faddf98310778f337ef5c2786bb2cbf41efd53",
+  "spec": {
+    "findings": []
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_PASS_RECOVERY_STOP41_SOURCE02_ROOT_AND_CONSUMER_PAIR_ONLY",
+  "verifiedScope": [
+    "Source02 only fixes exact2 phase tags and own finish no-op, derived module pin, separate02 stage/audit and FIX QApath. Every other admitted check and bridge is inherited from reviewed Source01; original120/3guards/oldfunctions remain.",
+    "Consumer exactly two actual hash fixes, same C41,6 genuine terminal pins, full guardian/PID/owner/mount/drain/DATA/cleanup guard preserved. Original FAILEDStop/upgrade never replayed or declared rollback.",
+    "Root121 registers only1key under original lock with exact existing liveC41 and no otheroperation; snapshots/audit/exclusive publishing unchanged, no PG-stopped fiction.",
+    "OriginalRestore41 additive gate requires actual RecoveryCOMPLETED/generic sameC proof/cleanup and originalDATA stopped. Main8 keeps actualreceipt unchanged and changes only copied stop-ID expectation, then uses originalissuer and records separate QA binding; originalaadc/role0980/policy5bdd/deadlines unchanged.",
+    "Main7 capsStop240s and originalworkdeadline, requires120+35 margin, issuesregistration<=180s; Restore constructor does not demand current recoveryStopwindow but originalharddeadline and300s originalmargin remain."
+  ]
+}

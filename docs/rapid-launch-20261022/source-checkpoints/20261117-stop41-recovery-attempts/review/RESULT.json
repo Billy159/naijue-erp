@@ -1,0 +1,47 @@
+{
+  "actions": {
+    "issuerClockServerPGSignalCalls": 0,
+    "ownerFilesModified": false,
+    "positiveFixtureCreated": false
+  },
+  "consumerReviewReused": true,
+  "consumerReviewSha256": "e9d821e14f4ee584d3c4dc830bcf427b9e721c335e657c159c28e416ead41d09",
+  "consumerSourcePinsSha256": "e1f1b00c94d263dbce4a280d0c7a6fad9e5b34c8e516806f599cc381993e0de0",
+  "findings": [
+    {
+      "axis": "spec",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-stop41-recovery-root-source-01/r3_stop41_recovery.py",
+      "finding": "Recovery.admit returns bare stop/restore phases but Recovery has no finish method; __getattr__ forwards finish to prior Normal41, whose finish only consumes its normal40-prefixed phases and otherwise delegates further. The actual120 dispatcher explicitly calls hold.finish after publishing a COMPLETED terminal. Thus these new safety phases enter an unrelated legacy hold completion path instead of a bounded new recovery completion contract. This review did not execute that path or claim an observed runtime failure.",
+      "id": "R01",
+      "line": 34,
+      "priority": 2,
+      "requiredChange": "Add a narrowly scoped Recovery.finish for exactly its own two admitted phases (or a unique prefix plus finish), returning without legacy hold mutation and delegating all unrelated phases. Preserve dispatcher/guards and original closure checks.",
+      "title": "Recovery completion falls through to legacy Hold.finish"
+    }
+  ],
+  "notVerified": [
+    "No actual recovery stop/restore success; oldFAILED/UNKNOWN keys preserved.",
+    "Source02 requires only finish/new source pins/review target correction plus unchanged-delta reuse, not old-scope rerun."
+  ],
+  "rootPairReviewComplete": true,
+  "sourceOnly": true,
+  "sourcePinsSha256": "3b9e6ecd6793156138981ea1de0308bf17fa36b05f45cbf649237fff51a09d3a",
+  "spec": {
+    "findings": [
+      {
+        "axis": "spec",
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-stop41-recovery-root-source-01/r3_stop41_recovery.py",
+        "finding": "Recovery.admit returns bare stop/restore phases but Recovery has no finish method; __getattr__ forwards finish to prior Normal41, whose finish only consumes its normal40-prefixed phases and otherwise delegates further. The actual120 dispatcher explicitly calls hold.finish after publishing a COMPLETED terminal. Thus these new safety phases enter an unrelated legacy hold completion path instead of a bounded new recovery completion contract. This review did not execute that path or claim an observed runtime failure.",
+        "id": "R01",
+        "line": 34,
+        "priority": 2,
+        "requiredChange": "Add a narrowly scoped Recovery.finish for exactly its own two admitted phases (or a unique prefix plus finish), returning without legacy hold mutation and delegating all unrelated phases. Preserve dispatcher/guards and original closure checks.",
+        "title": "Recovery completion falls through to legacy Hold.finish"
+      }
+    ]
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_NEED_FIX_RECOVERY_STOP41_ROOT_COMPLETION_DISPATCH"
+}
