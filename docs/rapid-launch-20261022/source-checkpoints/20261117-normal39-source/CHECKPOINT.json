@@ -1,5 +1,5 @@
 {
-  "state": "NORMAL39_SOURCE_PAIR_REVIEWED_NO_FINITE_AUTHORITY",
+  "state": "NORMAL39_ACTUAL_FRESH_BASIS_MATCHED_MAIN_FINITE_ISSUED_CAS_APPLY_PENDING",
   "sourceOnly": true,
   "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
   "consumerInterfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
@@ -11,7 +11,7 @@
   "sourceConsumer01PhaseSha256": "8f275d658b5958df53cdf1276aadcd3adfef12683cc613be55d15c5379fbab66",
   "nativeLogicalKey": "t45-r3-final33-plan-prepare-20261116-01",
   "outerKey": "t45-r3-final33-plan-prepare-20261116-05",
-  "finiteAuthorityCreated": false,
+  "finiteAuthorityCreated": true,
   "current39ServiceOrEpochCreated": false,
   "privateOrAuthorityBodiesCopied": false,
   "unissuedJsonOrPatchBodiesOmittedOriginalHashesRetained": true,
@@ -430,10 +430,20 @@
       "path": "review/RESULT.json",
       "sha256": "7a38e76f73f61dd7466e7bd500980fcb7c9522b2619d9798cc635673d5100dc8",
       "bytes": 6262
+    },
+    {
+      "path": "actual-safe/ACTUAL-FRESH-BASIS.json",
+      "sha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
+      "bytes": 16012
+    },
+    {
+      "path": "actual-safe/ISSUED-SAFE-METADATA.json",
+      "sha256": "8073d245c1fff476ae70d392aad5630b7f17da5e67b72a7f74a896e32340f6d1",
+      "bytes": 3309
     }
   ],
-  "next": "T45 one actual stopped fresh39 basis including same-read ACK38 raw SHA; Main exact seven-argument issuance after real reports/basis; actual CAS/APPLY/START39/PREPARE05 then original stable writer. Never replay completed source or failed01-04.",
-  "asOf": "2026-11-17T13:21:53.222220+08:00",
+  "next": "T45 original CAS once then exact typed readback; if matched APPLY39 once and complete typed result; Main START authority only after actual APPLY. Original writer remains never submitted, business0. No renewed old role/source permits.",
+  "asOf": "2026-11-17T13:26:53.579827+08:00",
   "rootSourcePinsSha256": "b96d2548a58fe1ffc3a1b855420aea8a519d7982d3707927b88accfa7d0a6b7b",
   "rootRulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
   "rootConsumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
@@ -447,5 +457,39 @@
       "sha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
       "reason": "Unissued policy body omitted; original exact source hash retained"
     }
-  ]
+  ],
+  "roleClockStarted": true,
+  "rolesApplied": false,
+  "actualFreshBasisSha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
+  "actualACK38RawSHAObservedThisRead": true,
+  "issuedSafeMetadataSha256": "8073d245c1fff476ae70d392aad5630b7f17da5e67b72a7f74a896e32340f6d1",
+  "actualIssuedManifest": {
+    "applyHostSha256": "ecfa0201da700dd91eed1051eeaef747ea8f6c5a068f4d4223ba6bab6e77c3ef",
+    "backupAdminValidUntil": 1794900445875,
+    "basisSha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
+    "consumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
+    "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
+    "controllerValidUntil": 1794900325875,
+    "dispatcherSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
+    "independentReviewSha256": "7a38e76f73f61dd7466e7bd500980fcb7c9522b2619d9798cc635673d5100dc8",
+    "jobs": {
+      "apply": "t45-r3-ordinary39-auth-apply-20261116-01",
+      "prepare": "t45-r3-final33-plan-prepare-20261116-05",
+      "restore": "t45-r3-ordinary39-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-39",
+      "stop": "t45-r3-ordinary39-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false,
+    "policyExpiresAt": 1794903925875,
+    "policySha256": "104048251747ed638ffb6464d9c12777855d7355c30261b53b75407f8dfc4173",
+    "registrationExpiresAt": 1794894025875,
+    "registrationSha256": "4822a2e9e21515e7819a22a3e652020c825ee16de469cdf6f2b9e37cb708d1ba",
+    "restorationDeadline": 1794902125875,
+    "roleApplyExpiresAt": 1794894925875,
+    "rolesSha256": "36003d787a8752fdaf0b4380491cd3073b55cf9101d20279a756d716ec036f4c",
+    "rulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
+    "startsAt": 1794893125875,
+    "state": "ISSUED_NORMAL39_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
+  }
 }

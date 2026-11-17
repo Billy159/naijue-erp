@@ -1,0 +1,76 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261117-r3-normal39-registration-window-01",
+  "manifest": {
+    "state": "ISSUED_NORMAL39_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED",
+    "startsAt": 1794893125875,
+    "registrationExpiresAt": 1794894025875,
+    "roleApplyExpiresAt": 1794894925875,
+    "controllerValidUntil": 1794900325875,
+    "backupAdminValidUntil": 1794900445875,
+    "restorationDeadline": 1794902125875,
+    "policyExpiresAt": 1794903925875,
+    "rulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
+    "basisSha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
+    "independentReviewSha256": "7a38e76f73f61dd7466e7bd500980fcb7c9522b2619d9798cc635673d5100dc8",
+    "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
+    "consumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
+    "rolesSha256": "36003d787a8752fdaf0b4380491cd3073b55cf9101d20279a756d716ec036f4c",
+    "applyHostSha256": "ecfa0201da700dd91eed1051eeaef747ea8f6c5a068f4d4223ba6bab6e77c3ef",
+    "policySha256": "104048251747ed638ffb6464d9c12777855d7355c30261b53b75407f8dfc4173",
+    "dispatcherSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
+    "registrationSha256": "4822a2e9e21515e7819a22a3e652020c825ee16de469cdf6f2b9e37cb708d1ba",
+    "jobs": {
+      "apply": "t45-r3-ordinary39-auth-apply-20261116-01",
+      "prepare": "t45-r3-final33-plan-prepare-20261116-05",
+      "restore": "t45-r3-ordinary39-auth-restore-20261116-01",
+      "start": "t45-first-r3-native-service-start-20261116-39",
+      "stop": "t45-r3-ordinary39-preserve-stop-20261116-01",
+      "writer": "t45-r3-batched-real-execute-20261115-01"
+    },
+    "phaseSubmitted": false
+  },
+  "files": {
+    "admin_exec.ISSUED.py": {
+      "sha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
+      "bytes": 48350,
+      "mode": "0o600"
+    },
+    "ISSUED.json": {
+      "sha256": "b576bf4487c2af946737a1f1b2784df96857e7551e4d02e4ee757763995d1137",
+      "bytes": 1642,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "ecfa0201da700dd91eed1051eeaef747ea8f6c5a068f4d4223ba6bab6e77c3ef",
+      "bytes": 1212,
+      "mode": "0o600"
+    },
+    "roles-authorization.json": {
+      "sha256": "36003d787a8752fdaf0b4380491cd3073b55cf9101d20279a756d716ec036f4c",
+      "bytes": 1742,
+      "mode": "0o600"
+    },
+    "original-cas-normal39-carrier.ISSUED.py": {
+      "sha256": "e0abb1362dbb450a203b17d825ca4f57618c1b2a8c51e4ca0c898abf64264cbd",
+      "bytes": 2622,
+      "mode": "0o600"
+    },
+    "registration-envelope.json": {
+      "sha256": "6219c80e1dd6597c0571aa2d28085bc71af917cce2dcb26a4508810aaeb4821d",
+      "bytes": 192723,
+      "mode": "0o600"
+    },
+    "registration-authorization.json": {
+      "sha256": "4822a2e9e21515e7819a22a3e652020c825ee16de469cdf6f2b9e37cb708d1ba",
+      "bytes": 13247,
+      "mode": "0o600"
+    },
+    "direct39-batched-real.json": {
+      "sha256": "104048251747ed638ffb6464d9c12777855d7355c30261b53b75407f8dfc4173",
+      "bytes": 7356,
+      "mode": "0o600"
+    }
+  },
+  "authorityBodiesIncluded": false,
+  "phaseSubmitted": false
+}
