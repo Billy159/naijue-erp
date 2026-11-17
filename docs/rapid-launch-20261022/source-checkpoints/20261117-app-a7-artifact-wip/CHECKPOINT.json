@@ -1,0 +1,58 @@
+{
+  "state": "APP_A7_ADMISSION_AUTHORING_WIP_FINAL_T45_RECEIVER_PAIR_MISSING",
+  "WIP": true,
+  "sourceOnly": true,
+  "frozenSourcePins": null,
+  "finalReceiverPair": null,
+  "mainSourceDecisionSha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+  "existingSource846Preserved": true,
+  "privateRecovery244bUnchanged": true,
+  "privatePayloadRereadOrRehash": false,
+  "actualFiniteProfileOrCAS": false,
+  "postWriterSuccessStopRestoreFreshBaseline": null,
+  "clockCalls": 0,
+  "serverActions": 0,
+  "copies": [
+    {
+      "path": "APP-CANDIDATE-REFERENCE.json",
+      "sha256": "0548b6ac593a79733b32212be8bb33386d29050110f8d738d266129c771030eb",
+      "bytes": 5242
+    },
+    {
+      "path": "HANDOFF.WIP.md",
+      "sha256": "199b73e52d5cee9a9843c801316ead7b5ecd89196bec6d5e3597c07dd427b467",
+      "bytes": 5138
+    },
+    {
+      "path": "INTERFACE.WIP.json",
+      "sha256": "18bce57db6b60b2569ad6a03ce417deddcff90631b7278984a559bf9094ecaaa",
+      "bytes": 1644
+    },
+    {
+      "path": "REUSED-ARTIFACT-EVIDENCE.previous02.json",
+      "sha256": "8e4e7bbb2fc047c68b9b707c864092cb0c28e64cc12e6e9f041d3804a4bb2080",
+      "bytes": 2213
+    },
+    {
+      "path": "WIP-CHECKS.json",
+      "sha256": "439eb7ecb5e2d8e0d343c05b0c2b254819213a3a7a71216d346da671055114e0",
+      "bytes": 2569
+    },
+    {
+      "path": "check_wip.py",
+      "sha256": "0e4f9edd3b6a60036c10d1df3bfb5bffa3020b858228c69d1357cc98669371bd",
+      "bytes": 7199
+    },
+    {
+      "path": "patch_dispatcher.py",
+      "sha256": "c2b86c5b5248ed6432968437e157730339267e61658b4cc529b9d06b4db2437e",
+      "bytes": 4006
+    },
+    {
+      "path": "r3_two_fixed_artifact_admission.py",
+      "sha256": "b42f6c3cf1f6d9bdc8d949e3a54565314f857040f6086fa927ac15d08ed92869",
+      "bytes": 12846
+    }
+  ],
+  "next": "T45 final source-only receiver metadata successor for actual APP a7, no server artifact action before actual writer VERIFIED/closed, same-service STOP/exact RESTORE and fresh baseline. Reuse old846 review except concrete changed tuple/current39 binding."
+}

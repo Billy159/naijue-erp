@@ -1,0 +1,58 @@
+{
+  "checkedAtUTC": "2026-11-17T05:57:36.380354+00:00",
+  "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+  "terminal": {
+    "atUTC": "2026-11-17T05:48:45.735554+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 416.84846502699656,
+    "exitCode": 0,
+    "exports": [
+      "final33-prepare-child-cleanup.json",
+      "final33-prepare-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T05:55:42.617857+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-final33-plan-prepare-20261116-05",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-d2b1de9a2d54"
+  },
+  "rootPins": {
+    "result": "a6861080bab7021463e47763db97e59332b4d643f742289ba8ddff15f5923fd6",
+    "terminal": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1"
+  },
+  "publicResultSha256": "881fc71435b0401496e183791e4a184242b71c654464ff8cd9e1d9c232961d35",
+  "resultObjectsEqual": true,
+  "terminalRootPublicSha256": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1",
+  "activeOperationUnits": [],
+  "ownOperationUnitInactive": true,
+  "noOtherOperationUnits": true,
+  "result": {
+    "state": "BATCHED_IMPORT_PREPARED",
+    "nativeResultBindingMatched": true,
+    "lifecycleConfirmed": true,
+    "nativeConnectionCleanup": "CLOSED",
+    "processCleanup": {
+      "childReaped": true,
+      "connectionCleanup": "CLOSED",
+      "descendantsReaped": true,
+      "nativeAuthorityRemoved": true,
+      "originalInputMetadataChanges": 0,
+      "privateInitializer": {
+        "bytes": 58716444,
+        "sha256": "663de92c28076aef3ae613bf01230ab6f59c3873c79100e9e5d26f87dce4025b"
+      },
+      "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+      "scratchEmpty": true,
+      "scratchRetainedPrivately": false
+    }
+  },
+  "sourceSha256": "6d5ebd8d4cc284aa020c1a5b155aa04f1daab0bb8c1cb05c92404c13cda741d5",
+  "preparedAndExecutionBindingBodiesExcluded": true,
+  "actualPreparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+  "actualBindingServiceProofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+  "actualBindingPostmasterStart": "2026-11-17 05:39:40.169724+00"
+}

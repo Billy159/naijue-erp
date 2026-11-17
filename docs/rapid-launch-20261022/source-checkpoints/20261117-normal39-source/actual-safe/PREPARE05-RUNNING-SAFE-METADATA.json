@@ -1,0 +1,14 @@
+{
+  "state": "PREPARE05_ACTUAL_ORIGINAL_KEY_RUNNING_AS_OF_CAPTURE",
+  "readbackSha256": "6b20c684acf9cb8727faafa1c68b204ac626272595c8762bc397630529f375f9",
+  "checkedAtUTC": "2026-11-17T05:50:00.500433+00:00",
+  "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+  "activeOperationUnits": [
+    "naijue-erp-op-b16447fb-d2b1de9a2d54.service"
+  ],
+  "terminalPresent": false,
+  "resultPresent": false,
+  "nativeConnectionState": "NOT_YET_OBSERVED",
+  "writerSubmitted": false,
+  "automaticReplay": false
+}

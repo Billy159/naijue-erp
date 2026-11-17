@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T13:47:04.760304+08:00",
+  "updatedAt": "2026-11-17T14:00:53.739158+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 unused PREPARE05 once with actual97d251 authority, actual39 sameC/epoch and native01/plan05; require prepared/execution binding, CLOSED native cleanup before Main signs original stable writer. No old failed key replay or deadline renewal.",
+  "next": "T45 original stable writer first real execution once under actualad338 authority/current39/real prepared05; confirm original-key absence before call and preserve UNKNOWN without resubmission. Require typed VERIFIED native+readback CLOSED, sameC cleanup and actual stock/money/source/relationship checks before STOP39/exactRESTORE39. No APP server operation yet.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T13:47:04.760304+08:00",
+  "asOf": "2026-11-17T14:00:53.739158+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 unused PREPARE05 once with actual97d251 authority, actual39 sameC/epoch and native01/plan05; require prepared/execution binding, CLOSED native cleanup before Main signs original stable writer. No old failed key replay or deadline renewal.",
+  "next": "T45 original stable writer first real execution once under actualad338 authority/current39/real prepared05; confirm original-key absence before call and preserve UNKNOWN without resubmission. Require typed VERIFIED native+readback CLOSED, sameC cleanup and actual stock/money/source/relationship checks before STOP39/exactRESTORE39. No APP server operation yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53152,8 +53152,8 @@
     "restoreManifestSha256": "3104bb77ca353dad53ced4810a5b13a0250833d4984eb5beb755ebd797c772a0",
     "restoreTerminalSha256": "05b4053582802f473a9b49bed1b9f4b4ff6cc9125999418ca90b3e36471180f1"
   },
-  "writerSubmitted": false,
-  "businessWrites": 0,
+  "writerSubmitted": null,
+  "businessWrites": null,
   "normal37": "NORMAL37_SAFELY_CLOSED_EXACT_AUTH_RESTORED_C05_FIX_RETAINED_NORMAL38_OUTER04_SOURCE_ONLY",
   "normal37ConsumerSource": {
     "sourcePinsSha256": "d63d745735ec3da7dd5f20ec7ee402805a7b1777b49997a731c1fa0dcb61ad59",
@@ -53451,7 +53451,18 @@
     "executionReady": false,
     "registrationCASPrepared": false,
     "actualPostWriterBaselineAvailable": false,
-    "registrationSourceWIPHeldForFailureDiagnosis": true
+    "registrationSourceWIPHeldForFailureDiagnosis": true,
+    "a7SuccessorWIP": {
+      "state": "AUTHORING_WIP_FINAL_T45_RECEIVER_PAIR_MISSING",
+      "mainSourceDecisionSha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+      "D1HandoffSha256": "199b73e52d5cee9a9843c801316ead7b5ecd89196bec6d5e3597c07dd427b467",
+      "localSnapshot": "source-checkpoints/20261117-app-a7-artifact-wip",
+      "frozenSourceManifest": null,
+      "futurePostWriterBaseline": null,
+      "serverExecution": false,
+      "old846ReviewPreserved": true,
+      "private244bUnchanged": true
+    }
   },
   "lexicalFixSourceOnly": {
     "sourcePinsSha256": "499937678edee0fe1802babb85bac2fcf67ef0063604261408141633daa4958e",
@@ -53564,7 +53575,7 @@
     "originalAuthRestored": true,
     "noActiveOperation": true
   },
-  "normal39": "START39_ACTUAL_SUCCESS_PREPARE05_AUTH_ISSUED_PENDING_ACTUAL",
+  "normal39": "PREPARE05_ACTUAL_SUCCESS_ORIGINAL_REAL_WRITER_AUTH_ISSUED_AWAIT_ACTUAL",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
     "dispatcherSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
@@ -53641,7 +53652,50 @@
     "startsAt": 1794894338639,
     "expiresAt": 1794900325875,
     "privateContextSha256": "054fa2d500cdfc3a14cd0a74e85f33d68b570703669e9eec7b75927f78cfc4af",
-    "actualResult": "NOT_YET_RECEIVED"
+    "actualResult": "COMPLETED",
+    "actualPendingObservation": {
+      "state": "PREPARE05_ACTUAL_ORIGINAL_KEY_RUNNING_AS_OF_CAPTURE",
+      "readbackSha256": "6b20c684acf9cb8727faafa1c68b204ac626272595c8762bc397630529f375f9",
+      "checkedAtUTC": "2026-11-17T05:50:00.500433+00:00",
+      "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+      "activeOperationUnits": [
+        "naijue-erp-op-b16447fb-d2b1de9a2d54.service"
+      ],
+      "terminalPresent": false,
+      "resultPresent": false,
+      "nativeConnectionState": "NOT_YET_OBSERVED",
+      "writerSubmitted": false,
+      "automaticReplay": false
+    },
+    "resultSha256": "6d5ebd8d4cc284aa020c1a5b155aa04f1daab0bb8c1cb05c92404c13cda741d5",
+    "elapsedSeconds": 416.848465,
+    "preparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+    "nativeConnectionCleanup": "CLOSED",
+    "processCleanup": {
+      "childReaped": true,
+      "connectionCleanup": "CLOSED",
+      "descendantsReaped": true,
+      "nativeAuthorityRemoved": true,
+      "originalInputMetadataChanges": 0,
+      "privateInitializer": {
+        "bytes": 58716444,
+        "sha256": "663de92c28076aef3ae613bf01230ab6f59c3873c79100e9e5d26f87dce4025b"
+      },
+      "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+      "scratchEmpty": true,
+      "scratchRetainedPrivately": false
+    }
+  },
+  "businessWritesLastConfirmedBeforeWriter": 0,
+  "normal39Writer": {
+    "state": "REAL_AUTHORITY_ISSUED_ACTUAL_SUBMISSION_NOT_YET_OBSERVED_BY_MAIN",
+    "originalKey": "t45-r3-batched-real-execute-20261115-01",
+    "authoritySha256": "ad338798da9fa280d41d92410637a1501a71cd520bd312d1e0aa7125ffc59fba",
+    "startsAt": 1794895149406,
+    "expiresAt": 1794900325875,
+    "privateActualContextSha256": "62fa0585a315f38eb6a3be9aa70e890224ae1a8d29b03c48bd16dbd7ce535e3f",
+    "actualTypedResult": null,
+    "automaticReplay": false
   }
 }
 }

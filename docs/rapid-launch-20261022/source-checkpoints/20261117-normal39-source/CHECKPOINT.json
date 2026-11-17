@@ -1,5 +1,5 @@
 {
-  "state": "START39_ACTUAL_SUCCESS_PREPARE05_AUTH_ISSUED_PENDING_ACTUAL",
+  "state": "PREPARE05_ACTUAL_SUCCESS_ORIGINAL_REAL_WRITER_AUTH_ISSUED_AWAIT_ACTUAL",
   "sourceOnly": false,
   "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
   "consumerInterfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
@@ -470,10 +470,20 @@
       "path": "actual-safe/PREPARE05-ISSUED-SAFE.json",
       "sha256": "c9632c1968f508dd4949563f60f14262686cfa539c0301cd85d8edc5691487a0",
       "bytes": 399
+    },
+    {
+      "path": "actual-safe/PREPARE05-SUCCESS-SAFE-PROJECTION.json",
+      "sha256": "06e88d0a6efd9ead55c4d1985cd7e1429ac7e7534a83f6866718eb9b1f4161a4",
+      "bytes": 2321
+    },
+    {
+      "path": "actual-safe/WRITER-ISSUED-SAFE.json",
+      "sha256": "d074004e5f4fe6a3a8c2fd3a19b2f7b60039d27a6803103a270c7ec385c8bd84",
+      "bytes": 399
     }
   ],
-  "next": "T45 unused PREPARE05 once with actual97d251 authority, actual39 sameC/epoch and native01/plan05; require prepared/execution binding, CLOSED native cleanup before Main signs original stable writer. No old failed key replay or deadline renewal.",
-  "asOf": "2026-11-17T13:47:04.760304+08:00",
+  "next": "T45 original stable writer first real execution once under actualad338 authority/current39/real prepared05; confirm original-key absence before call and preserve UNKNOWN without resubmission. Require typed VERIFIED native+readback CLOSED, sameC cleanup and actual stock/money/source/relationship checks before STOP39/exactRESTORE39. No APP server operation yet.",
+  "asOf": "2026-11-17T14:00:53.739158+08:00",
   "rootSourcePinsSha256": "b96d2548a58fe1ffc3a1b855420aea8a519d7982d3707927b88accfa7d0a6b7b",
   "rootRulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
   "rootConsumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
@@ -527,8 +537,8 @@
   "startAuthoritySha256": "0308cfdd2e2a401fbf52bd437a175b40ec5a75b0acf0288358282760d56e199d",
   "current39OriginalAuthRestored": false,
   "actualServerRegistration": true,
-  "businessWriterSubmitted": false,
-  "businessWrites": 0,
+  "businessWriterSubmitted": null,
+  "businessWrites": null,
   "actualStartSha256": "e4de8581b1e72b6ffc2d22f9e6ad48f3fa33dd5eebbfc6fc6afc11ca6bb0c737",
   "actualService": {
     "containerId": "a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5",
@@ -540,5 +550,14 @@
   "PGStopped": false,
   "privateContextSha256": "054fa2d500cdfc3a14cd0a74e85f33d68b570703669e9eec7b75927f78cfc4af",
   "privateContextBodyCopied": false,
-  "prepare05AuthoritySha256": "97d25144468444b0d5aaa9dc3956498c8eb0245612ec017f4d8fb130c6cec0ad"
+  "prepare05AuthoritySha256": "97d25144468444b0d5aaa9dc3956498c8eb0245612ec017f4d8fb130c6cec0ad",
+  "actualPrepare05ResultSha256": "6d5ebd8d4cc284aa020c1a5b155aa04f1daab0bb8c1cb05c92404c13cda741d5",
+  "actualPrepare05Status": "COMPLETED",
+  "actualPrepare05ElapsedSeconds": 416.848465,
+  "actualPreparedBindingSha256": "bd1601155aeb8bc1f340c6763633b551ea56760b9b9f5bd5ee3b97899af5dab0",
+  "nativePrepareConnectionCleanup": "CLOSED",
+  "privateWriterContextSha256": "62fa0585a315f38eb6a3be9aa70e890224ae1a8d29b03c48bd16dbd7ce535e3f",
+  "privateWriterContextBodyCopied": false,
+  "writerAuthoritySha256": "ad338798da9fa280d41d92410637a1501a71cd520bd312d1e0aa7125ffc59fba",
+  "businessWritesLastConfirmedBeforeWriter": 0
 }
