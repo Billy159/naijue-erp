@@ -1,0 +1,56 @@
+{
+  "PGOrContainerOrNativeOrBusinessJobOrAPPStarted": false,
+  "batchOrdinal": 0,
+  "businessAcceptanceClaimed": false,
+  "currentPlanIdentityUnchanged": true,
+  "durableCommitStatus": "UNKNOWN_NO_PG_READBACK",
+  "failedSubBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
+  "failureCause": "UNKNOWN",
+  "firstStepOrdinal": 0,
+  "lastStepOrdinal": 0,
+  "logBytesReturned": 0,
+  "logEmptyIsNotZeroErrors": true,
+  "logWindowUTC": [
+    "2026-11-17T06:04:00Z",
+    "2026-11-17T06:09:00Z"
+  ],
+  "matchingStepCount": 1,
+  "newWriterKey": false,
+  "pastFullPlanIdentityNotRetained": true,
+  "phase": "CORE",
+  "rawLogOrBusinessContentRetained": false,
+  "reads": [
+    {
+      "PGConnections": 0,
+      "actualInvocationExitCode": 0,
+      "checkedAtUTC": "2026-11-17T06:33:14.243823+00:00",
+      "reader": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-LOG-SCHEMA-READONLY-01/read_closed39_logs.py",
+      "readerSha256": "bc11dba8a6ccd7083147ad180c65a0394d1dea82a6de44e3eb768217eca7263d",
+      "result": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-LOG-SCHEMA-READONLY-01/ACTUAL-CLOSED39-LOG-PROJECTION.json",
+      "resultSha256": "fae55f3e49c03fe45fb335dbd7ee43553a7ac538e90ef63104bd3b39ed8e12ab",
+      "serverMutations": 0
+    },
+    {
+      "PGConnections": 0,
+      "actualInvocationExitCode": 0,
+      "checkedAtUTC": "2026-11-17T06:33:11.586236+00:00",
+      "reader": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-LOG-SCHEMA-READONLY-01/read_plan05_schema.py",
+      "readerSha256": "ef8c921cb95941017e7ab445cc8cebf0f37579356f007ec6cd7e97b16d3dd05b",
+      "result": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-LOG-SCHEMA-READONLY-01/ACTUAL-PLAN05-SCHEMA.json",
+      "resultSha256": "95134a65172c56a8193d4644126c2079da015012c48867383b66933e8d8f02de",
+      "serverMutations": 0
+    },
+    {
+      "PGConnections": 0,
+      "actualInvocationExitCode": 0,
+      "checkedAtUTC": "2026-11-17T06:35:59.291224+00:00",
+      "reader": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-LOG-SCHEMA-READONLY-01/read_failed_batch_metadata.py",
+      "readerSha256": "6146ade2ee030c2b3f2c9c63f9b58acced5ba240f4df98ad5e584caeac6b7ced",
+      "result": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-LOG-SCHEMA-READONLY-01/ACTUAL-FAILED-BATCH-METADATA.json",
+      "resultSha256": "cc7f41a8dd0816a1e100ade3390b44202487f73c3c51a443273585fe378a3a61",
+      "serverMutations": 0
+    }
+  ],
+  "state": "THREE_FINITE_READONLY_OBSERVATIONS_COMPLETED_FAILURE_CAUSE_AND_DURABLE_COMMIT_UNKNOWN",
+  "writerReplayed": false
+}

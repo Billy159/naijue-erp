@@ -1,0 +1,63 @@
+{
+  "asOf": "2026-11-17T15:28:10.509614+08:00",
+  "state": "ACTUAL_OLD_RAW_SETTLEMENT24_SQL_GATE_MISMATCH_CONFIRMED_SOURCE_FIX_STARTED_NO_PG_UPGRADE",
+  "actualCauseConfirmed": true,
+  "actualGuard": "HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED",
+  "actualFunctionName": "standard_whole_package_command_v2",
+  "actualParameterTypes": [
+    "jsonb",
+    "text",
+    "text",
+    "uuid",
+    "integer",
+    "jsonb"
+  ],
+  "actualProsrcLine": 491,
+  "schemaExplicitInLog": false,
+  "actualSQLSTATE": null,
+  "actualWireSha256": "b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05",
+  "actualDocumentCount": 24,
+  "actualReferenceAndInitializerWireBytesEqual": true,
+  "actualWireUtf8Bytes": 58251,
+  "actualInitializerPrefixBytesRead": 64993,
+  "fullInitializerRead": false,
+  "initializerWholeValidityNotChecked": true,
+  "adminAndRemainingPayloadNotRead": true,
+  "cause": "Current SQL24doc exception binds old raw4b prefix while actual approved byte-identical new wire is b978. Current TS independently permits same approved economic subset with changed source locators. Actual wire binding mismatch and SQL535 are not this throw.",
+  "semanticFactsNotNewlyRecomputed": true,
+  "settlement26CountOnlyExistingPreflightMetadata": true,
+  "candidateSourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-current-wire-fix-source-01",
+  "SQLRoutinesInScope": 3,
+  "routineTotal": 161,
+  "otherRoutinesUnchanged": 158,
+  "actualDBFunctionUpgrade": false,
+  "actualDurableDatabaseState": "UNKNOWN",
+  "PGStopped": true,
+  "originalAuthenticationRestored": true,
+  "originalFailedWriterNeverReplay": true,
+  "noNewWriterKeyOrBusinessWritesAuthorized": true,
+  "rawLogInputOrInitializerBodiesCopied": false,
+  "copies": [
+    {
+      "path": "actual-safe/PG-GUARD-PROJECTION.json",
+      "sha256": "1f32c1b5139f862462a619e490fe3469bdfa76c6decc67d7c65034b46beabfab",
+      "bytes": 1810
+    },
+    {
+      "path": "actual-safe/PG-CONTEXT-FRAMES.json",
+      "sha256": "77369535b5a2872a06dee3611b71a0fb4ce0234ff2f0ba9d3a7303bf988e3b08",
+      "bytes": 1399
+    },
+    {
+      "path": "actual-safe/ACTUAL-APPROVED-WIRE-PREFIX-BINDING.json",
+      "sha256": "689851b2a9aee920d0acfa83b9ef832a8fb0e442647bc96b5834faf39cad05b6",
+      "bytes": 2408
+    },
+    {
+      "path": "main/SOURCE-FIX-DECISION-ONLY.json",
+      "sha256": "3b04898ea9050610f83295c51075c65dfeaf95c0566a1cd834b140df1085bef6",
+      "bytes": 4819
+    }
+  ],
+  "next": "D1 independent exact3routine source successor with b978/currentmanifest namespace/24-26 preserving old acceptance and all other158; T45 only prepares minimal durable readonly source/entry, no PG/runtime until concrete source reviewed and Main finite issuance. Originalfailedwriter never replay; actual durable evidence before controlled recovery."
+}

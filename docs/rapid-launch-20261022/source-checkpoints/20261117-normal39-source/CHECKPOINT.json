@@ -530,6 +530,26 @@
       "path": "actual-safe/RESULT-NORMAL39-CLOSED-WRITER-FAILED.json",
       "sha256": "b8b2eb66f0d79d39a5a07aaa7afd56eb0d83d00efd465197e50e2a379a0be8f5",
       "bytes": 4482
+    },
+    {
+      "path": "actual-safe/failure-triage/ACTUAL-CLOSED39-LOG-PROJECTION.json",
+      "sha256": "fae55f3e49c03fe45fb335dbd7ee43553a7ac538e90ef63104bd3b39ed8e12ab",
+      "bytes": 737
+    },
+    {
+      "path": "actual-safe/failure-triage/ACTUAL-PLAN05-SCHEMA.json",
+      "sha256": "95134a65172c56a8193d4644126c2079da015012c48867383b66933e8d8f02de",
+      "bytes": 1489
+    },
+    {
+      "path": "actual-safe/failure-triage/ACTUAL-FAILED-BATCH-METADATA.json",
+      "sha256": "cc7f41a8dd0816a1e100ade3390b44202487f73c3c51a443273585fe378a3a61",
+      "bytes": 1565
+    },
+    {
+      "path": "actual-safe/failure-triage/RESULT.json",
+      "sha256": "4dc13ac1335e42bca242d3f92ba43580e6a7c3a9171bbacb0d5f697e7c700c25",
+      "bytes": 3318
     }
   ],
   "next": "Only bounded existing C39 PG-log enum/SQLSTATE projection and readonly SQLite plan schema metadata via T45; D1 source analysis. PG stopped/originalauth restored. Preserve failed original writer/data/plan; never replay/new-key blindly import. Actual durable evidence and specific failure cause needed before controlled recovery.",
@@ -635,5 +655,45 @@
   "actualNativeSkippedBatches": 0,
   "actualNativeSubBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
   "originalErrorNotRetained": true,
-  "nativeCounterNotDurableProof": true
+  "nativeCounterNotDurableProof": true,
+  "failureLocalization": {
+    "state": "FIRST_CORE_BATCH_ORDINAL0_ONE_STEP_METADATA_CONFIRMED_CAUSE_UNKNOWN",
+    "sourceEvidenceResultSha256": "4dc13ac1335e42bca242d3f92ba43580e6a7c3a9171bbacb0d5f697e7c700c25",
+    "dockerLogWindowUTC": [
+      "2026-11-17T06:04:00+00:00",
+      "2026-11-17T06:09:00+00:00"
+    ],
+    "capturedDockerLogBytes": 0,
+    "emptyLogNotNoErrorProof": true,
+    "totalPlanBatches": 1061,
+    "actualFailedBatch": {
+      "subBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
+      "ordinal": 0,
+      "phase": "CORE",
+      "first": 0,
+      "last": 0,
+      "rows": 0,
+      "bytes": 58716477,
+      "descriptorSha256": "6037275a83ec3a8e285f907cdc1eda792b31aeae6dfcb155a045cb0284de5b6e",
+      "predecessor": null,
+      "previousDescriptorSha256": null,
+      "storedCommandCount": 1,
+      "storedMinOrdinal": 0,
+      "storedMaxOrdinal": 0
+    },
+    "planIdentityObservedNow": {
+      "device": 66304,
+      "inode": 13667005,
+      "bytes": 740864000,
+      "mtimeNs": 1794894827064767108,
+      "ctimeNs": 1794894827064767108,
+      "nlink": 1
+    },
+    "earlierCompletePlanIdentity": "UNKNOWN_NOT_PREVIOUSLY_RETAINED",
+    "planStatIdentityUnchangedAcrossThisRead": true,
+    "PGConnections": 0,
+    "businessPayloadSQLParamsInitializerRead": false,
+    "databaseDurableState": "UNKNOWN",
+    "methodInitialize": "FROZEN_SOURCE_INFERENCE_NOT_STEP_PAYLOAD_OBSERVATION"
+  }
 }

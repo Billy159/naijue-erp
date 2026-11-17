@@ -1,0 +1,88 @@
+{
+  "state": "MAIN_SOURCE_FIX_DECISION_ACTUAL_SETTLEMENT24_WIRE_SQL_CONTRACT_MISMATCH_NO_FINITE_AUTHORITY",
+  "sourceOnly": true,
+  "userAuthority": "Existing continuous ERP launch and same controlled ERP operations authorization; source implementation only",
+  "actualEvidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-PG-PRIVATE-LOG-READONLY-01/ACTUAL-PG-PRIVATE-LOG-PROJECTION.json",
+      "sha256": "1f32c1b5139f862462a619e490fe3469bdfa76c6decc67d7c65034b46beabfab"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-CONTEXT-FRAMES-READONLY-01/ACTUAL-CONTEXT-FRAMES.json",
+      "sha256": "77369535b5a2872a06dee3611b71a0fb4ce0234ff2f0ba9d3a7303bf988e3b08"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-SETTLEMENT-WIRE-READONLY-01/ACTUAL-SETTLEMENT-WIRE-PREFIX-PROJECTION.json",
+      "sha256": "689851b2a9aee920d0acfa83b9ef832a8fb0e442647bc96b5834faf39cad05b6"
+    }
+  ],
+  "actualFailure": {
+    "guard": "HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED",
+    "nativeStage": "APPLY",
+    "batchOrdinal": 0,
+    "batchPhase": "CORE",
+    "function": "standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+    "prosrcLine": 491,
+    "SQLSTATEActuallyObserved": null,
+    "inputWireEqualsApprovedReference": true,
+    "actualDocumentCount": 24,
+    "wireUtf8Bytes": 58251,
+    "rawWireSha256": "b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05",
+    "specificCause": "Current SQL INIT only accepts old raw4b7181e4 prefix for 24-doc exception; actual approved byte-identical current wire b978 is rejected. Input binding mismatch and SQL535 are not this observed throw."
+  },
+  "approvedBatch": {
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "namespace": "naijue:tplus:20261102",
+    "documentCount": 24,
+    "documentCountEvidence": "actual689 projection",
+    "settlementCount": 26,
+    "settlementCountEvidence": "existing preflight metadata dc2945238c6ed2643bd142a9e17ef38d517294ea23c218e26897b4e25edb8b24; not newly read settlement rows",
+    "semanticFactsSha256": "e35826c61bfa12fb1934125393dd199104ad8d16cd5b6939089e9718edf2a1c0",
+    "semanticEvidence": "existing TS reader contract/preparation chain, not a new independent semantic projection",
+    "sixAmountExceptionsRemainSeparateAndUnchanged": true
+  },
+  "sourceFixScope": {
+    "routineSignatures": [
+      "standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)",
+      "assert_document_migration(uuid)",
+      "standard_whole_package_verify_v2(jsonb,text)"
+    ],
+    "routinesChanged": 3,
+    "otherRoutinesUnchanged": 158,
+    "routineTotal": 161,
+    "tablesUnchanged": 35,
+    "columnsUnchanged": 351,
+    "indexesUnchanged": 114,
+    "ownerSecuritySearchPathAndACLUnchanged": true,
+    "beforeBodies": {
+      "standard_whole_package_command_v2(jsonb,text,text,uuid,int4,jsonb)": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+      "assert_document_migration(uuid)": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+      "standard_whole_package_verify_v2(jsonb,text)": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8"
+    },
+    "method": "Independent successor source anchored to exact current161 before hashes; admit only this exact approved b978 wire with current manifest/namespace and24/26, preserve old25/27 and old24/26 raw4b behavior and all existing source/evidence/identity/amount/exact-set checks. Align INIT/PUBLISH/assert_document_migration/verify closure. No arbitrary24 allowance or generic canonical platform. Preserve frozen0035/0027/0028/current161/ROOT07 histories."
+  },
+  "runtime": {
+    "PGStopped": true,
+    "originalAuthRestored": true,
+    "originalWriterKey": "t45-r3-batched-real-execute-20261115-01",
+    "originalWriterStatus": "FAILED",
+    "neverReplayOriginalWriter": true,
+    "businessDurableState": "UNKNOWN",
+    "sourcePreparationMayProceedWithoutDatabaseMutation": true,
+    "PGFunctionUpgradeNotExecuted": true,
+    "controlledReadOnlyDurableEvidenceRequiredBeforeRuntimeRecovery": true,
+    "noNewWriterKeyOrReimportAuthorizedByThisSourceDecision": true,
+    "noDataInputAmountsIdentitiesOrApprovalEdits": true,
+    "rolesOrFiniteAuthorityIssued": false,
+    "futureCOrEpoch": null,
+    "clock": null,
+    "businessWrites": null,
+    "floorGiB": 28,
+    "budgetsSeconds": [
+      300,
+      780,
+      3000,
+      5100
+    ]
+  }
+}

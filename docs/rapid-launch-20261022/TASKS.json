@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T14:30:31.782672+08:00",
+  "updatedAt": "2026-11-17T15:28:10.509614+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Only bounded existing C39 PG-log enum/SQLSTATE projection and readonly SQLite plan schema metadata via T45; D1 source analysis. PG stopped/originalauth restored. Preserve failed original writer/data/plan; never replay/new-key blindly import. Actual durable evidence and specific failure cause needed before controlled recovery.",
+  "next": "D1 independent exact3routine source successor with b978/currentmanifest namespace/24-26 preserving old acceptance and all other158; T45 only prepares minimal durable readonly source/entry, no PG/runtime until concrete source reviewed and Main finite issuance. Originalfailedwriter never replay; actual durable evidence before controlled recovery.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T14:30:31.782672+08:00",
+  "asOf": "2026-11-17T15:28:10.509614+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Only bounded existing C39 PG-log enum/SQLSTATE projection and readonly SQLite plan schema metadata via T45; D1 source analysis. PG stopped/originalauth restored. Preserve failed original writer/data/plan; never replay/new-key blindly import. Actual durable evidence and specific failure cause needed before controlled recovery.",
+  "next": "D1 independent exact3routine source successor with b978/currentmanifest namespace/24-26 preserving old acceptance and all other158; T45 only prepares minimal durable readonly source/entry, no PG/runtime until concrete source reviewed and Main finite issuance. Originalfailedwriter never replay; actual durable evidence before controlled recovery.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53751,7 +53751,8 @@
     "actualSkippedBatches": 0,
     "actualSubBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
     "counter0NotDatabase0WriteProof": true,
-    "originalErrorNotRetained": true
+    "originalErrorNotRetained": true,
+    "nativeResultErrorNotRetained": true
   },
   "normal39Stop": {
     "actualResultSha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac",
@@ -53760,6 +53761,61 @@
     "elapsedSeconds": 4.748562,
     "checkedAtUTC": "2026-11-17T06:17:31.301697+00:00",
     "dataAndFailedWriterRecordsPreserved": true
+  },
+  "normal39FailureLocalization": {
+    "state": "FIRST_CORE_BATCH_ORDINAL0_ONE_STEP_METADATA_CONFIRMED_CAUSE_UNKNOWN",
+    "sourceEvidenceResultSha256": "4dc13ac1335e42bca242d3f92ba43580e6a7c3a9171bbacb0d5f697e7c700c25",
+    "dockerLogWindowUTC": [
+      "2026-11-17T06:04:00+00:00",
+      "2026-11-17T06:09:00+00:00"
+    ],
+    "capturedDockerLogBytes": 0,
+    "emptyLogNotNoErrorProof": true,
+    "totalPlanBatches": 1061,
+    "actualFailedBatch": {
+      "subBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
+      "ordinal": 0,
+      "phase": "CORE",
+      "first": 0,
+      "last": 0,
+      "rows": 0,
+      "bytes": 58716477,
+      "descriptorSha256": "6037275a83ec3a8e285f907cdc1eda792b31aeae6dfcb155a045cb0284de5b6e",
+      "predecessor": null,
+      "previousDescriptorSha256": null,
+      "storedCommandCount": 1,
+      "storedMinOrdinal": 0,
+      "storedMaxOrdinal": 0
+    },
+    "planIdentityObservedNow": {
+      "device": 66304,
+      "inode": 13667005,
+      "bytes": 740864000,
+      "mtimeNs": 1794894827064767108,
+      "ctimeNs": 1794894827064767108,
+      "nlink": 1
+    },
+    "earlierCompletePlanIdentity": "UNKNOWN_NOT_PREVIOUSLY_RETAINED",
+    "planStatIdentityUnchangedAcrossThisRead": true,
+    "PGConnections": 0,
+    "businessPayloadSQLParamsInitializerRead": false,
+    "databaseDurableState": "UNKNOWN",
+    "methodInitialize": "FROZEN_SOURCE_INFERENCE_NOT_STEP_PAYLOAD_OBSERVATION"
+  },
+  "settlement24CurrentWireRepair": {
+    "state": "ACTUAL_OLD_RAW_SETTLEMENT24_SQL_GATE_MISMATCH_CONFIRMED_SOURCE_FIX_STARTED_NO_PG_UPGRADE",
+    "actualCauseConfirmed": true,
+    "actualGuard": "HISTORICAL_SETTLEMENT_EXACT_SET_REQUIRED",
+    "actualFunctionName": "standard_whole_package_command_v2",
+    "actualProsrcLine": 491,
+    "actualWireSha256": "b97826567240e9509b60a263ba62d35bc08135b57cce84cc184debc83b1d6a05",
+    "actualDocumentCount": 24,
+    "actualReferenceAndInitializerWireBytesEqual": true,
+    "SQLRoutinesInScope": 3,
+    "actualDBFunctionUpgrade": false,
+    "actualDurableDatabaseState": "UNKNOWN",
+    "candidateSourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-current-wire-fix-source-01",
+    "decisionSha256": "3b04898ea9050610f83295c51075c65dfeaf95c0566a1cd834b140df1085bef6"
   }
 }
 }
