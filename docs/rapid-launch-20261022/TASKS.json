@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T14:50:00.814224+00:00",
+  "updatedAt": "2026-11-17T15:29:16.915947+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120→121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
+  "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121→122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T14:50:00.814224+00:00",
-  "state": "ACTUAL_GUARDIAN41_CLOSED_ORIGINAL_AUTH_NOT_RESTORED_NEW_ROLLBACK_ONLY_SOURCE_PREPARATION",
+  "asOf": "2026-11-17T15:29:16.915947+00:00",
+  "state": "ACTUAL_ROOT121_ROLLBACK01_FAILED_PRIVATE_PUBLIC_PROOF_CLASSIFICATION_AUTH_NOT_RESTORED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120→121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
+  "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121→122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53589,11 +53589,11 @@
   "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "dispatcherSha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0",
-    "moduleSha256": "c478692d5d36ebb56e17fea3c2fc18baa7dd30729eb019e14282a10622a836ce",
-    "policySha256": "5bdd2a3d7aa88486bf2248fee43cadf976738b2e2d330a7b918860c726bde4f9",
-    "registeredKeys": 120,
-    "actualCASResultSha256": "1db7cc13c68e9d31e2bd41ea6f91057032ef0cec42fb176a6d5d0dda1b93a13a"
+    "dispatcherSha256": "ade6214cc9ff142bfb0bab75fe77b0ce0a006ee5049a2ca1aa7a1f0c95b8102a",
+    "moduleSha256": "b7af59ad9fc3517324aaf6b407e21d7d90708e3c226846714860c8ef194afacc",
+    "policySha256": "c4379f1716fd98fc50bf774f7e1e3e698a584b3207585aadfc33d5b2ec627de5",
+    "registeredKeys": 121,
+    "actualCASResultSha256": "ea8c6ac32536b5bfcad4e957dd53634a3303fa289bf77a98e21db07000f2a306"
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -54807,6 +54807,41 @@
     "newBusinessImportPerformed": false,
     "scope": "New independent original-auth-rollback-only SOURCE preparation, job t45-r3-ordinary41-original-auth-rollback-20261117-01; T45 consumer/D1 Root+Main/sameQB. New clock not issued. Proposed only15min after source PASS+actualfresh, worker<=original300s, only original snapshot41 two verifier+expiry restored; no apply/temp-login renewal/business/SQL. Old authority and oldhard unchanged; do not claim missed deadline met. Originalroles0980 as historical provenance, original snapshot private; actual sameC guardianclosed/cleanup9b53/DATA identity/nootherop mandatory. Root120→121 only this new key after exact stopped fresh. Source03/60-120 catch-up withdrawn before any signature/CAS/job.",
     "rawAuthorityRolePolicyCredentialOrSnapshotBodiesIncluded": false
+  },
+  "originalAuth41Rollback": {
+    "state": "ACTUAL_ROOT121_ROLLBACK01_FAILED_PRIVATE_PUBLIC_PROOF_CLASSIFICATION_AUTH_NOT_RESTORED",
+    "asOf": "2026-11-17T15:29:16.915947+00:00",
+    "currentActualRoot": {
+      "dispatcherSha256": "ade6214cc9ff142bfb0bab75fe77b0ce0a006ee5049a2ca1aa7a1f0c95b8102a",
+      "moduleSha256": "b7af59ad9fc3517324aaf6b407e21d7d90708e3c226846714860c8ef194afacc",
+      "policySha256": "c4379f1716fd98fc50bf774f7e1e3e698a584b3207585aadfc33d5b2ec627de5",
+      "registeredKeys": 121,
+      "actualCASResultSha256": "ea8c6ac32536b5bfcad4e957dd53634a3303fa289bf77a98e21db07000f2a306"
+    },
+    "firstAttemptJobId": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+    "terminalSha256": "16ae761461af0353d77dbc98aa3610287d01594a17ab89d50f00fd0861816566",
+    "resultSha256": "07978734fcce13e68db82f3913168af14580bc1d89849cfdf8292e34ee50c422",
+    "safeReadbackSha256": "b8210157364b8ae1b011f4687424be5536f1703fbd2b9c12dfb0c3cb672295ef",
+    "status": "FAILED",
+    "exitCode": 2,
+    "safeCode": "PRIVATE_INPUT_REQUIRED",
+    "elapsedSeconds": 0.454836,
+    "authenticationRestored": false,
+    "ownMaintenanceContainerCreatedEvidence": false,
+    "ownMaintenanceContainersCurrentlyAbsent": true,
+    "ownCleanupSucceededClaimed": false,
+    "originalC41Stopped": true,
+    "PGCurrentlyStopped": true,
+    "originalRecoverySnapshotsStat9Retained": true,
+    "originalHardDeadlineClaimedMet": false,
+    "firstWindowStartsAt": 1794928498367,
+    "firstWindowExpiresAt": 1794929398367,
+    "applyAuthorized": false,
+    "temporaryRoleExpiryExtended": false,
+    "failureLocation": "verify_current_stop reads known publicproof root0/gid0/0444 with private=True; carrier.private guard rejects; beforeintent/create with actual private metadata corroboration. No source0-write inference used as auth restoration proof.",
+    "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121→122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
+    "successorAuthorityIssued": false,
+    "rawRoleAuthorityPolicyPacketSnapshotOrPrivateReadbackBodiesIncluded": false
   }
 }
 }

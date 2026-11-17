@@ -1,0 +1,17 @@
+{
+  "state": "SOURCE02_TEMPLATE_PATH_ONLY_PASS",
+  "checks": 6,
+  "passed": [
+    "original3eb source intact",
+    "runtime/Main/CAS all byte-identical",
+    "single template path expression changed",
+    "existing expected3cec guard unchanged",
+    "actual template02 exact3cec",
+    "changed adapter compile only"
+  ],
+  "reusedOriginal25": true,
+  "consumerChecksRerun": false,
+  "serverCalls": 0,
+  "clockCalls": 0,
+  "issuerCalls": 0
+}

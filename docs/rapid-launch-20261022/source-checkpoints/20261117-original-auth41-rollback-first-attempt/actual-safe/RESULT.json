@@ -1,0 +1,82 @@
+{
+  "actualMetadata": {
+    "activeOperationUnits": [],
+    "checkedAtUTC": "2026-11-17T15:22:09.528517+00:00",
+    "maintenanceContainerAbsent": true,
+    "originalPortAbsent": true,
+    "pgdataPidAbsent": true,
+    "rollbackAttemptAbsent": true,
+    "rollbackRestoreReceiptAbsent": true
+  },
+  "automaticReplay": false,
+  "cleanupReceiptPresent": false,
+  "evidence": {
+    "FAILURE-METADATA-ONLY-01.json": "9c6375d340ca91cfbc885f349832de21ae45240d74032cf2f37325b38ba07e5b",
+    "ORIGINAL-KEY-READBACK-01.PRIVATE.json": "84252eb043fa4be814db566547c1debdf0c6f02eaf3616f97d02fc8a76620af8",
+    "READONLY-INPUT-FAILURE-LOCATION-01.json": "b33c31b215ce0930b5dd43b5346fd7fbc1a7fd0d2f540211d4e05aee21a21ef5"
+  },
+  "formalBusinessAcceptance": false,
+  "format": "T45_ORIGINAL_AUTH41_ROLLBACK_ACTUAL_RESULT_V1",
+  "oldHardDeadlineMet": false,
+  "originalAuthenticationRestorationProven": false,
+  "readonlyFailureLocation": {
+    "PGConnections": 0,
+    "checkedAtUTC": "2026-11-17T15:23:00.781481+00:00",
+    "error": {
+      "safeCode": "PRIVATE_INPUT_REQUIRED",
+      "type": "ValueError"
+    },
+    "jobHostOrMainCalled": false,
+    "lastInputMetadata": {
+      "gid": 0,
+      "mode": "0o444",
+      "path": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/fresh35-current-production-service-v2-service-41.json",
+      "privateRequired": true,
+      "uid": 0
+    },
+    "mutations": 0,
+    "readonlyInputChecks": 35,
+    "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+    "snapshotBodiesOrDigestsRead": false,
+    "stage": "verify_current_stop READONLY"
+  },
+  "recordedAtUTC": "2026-11-17T15:23:31.250259+00:00",
+  "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+  "requiredSuccessor": "Reviewed new consumer/root and unique key; proof is root-owned public immutable0444 and requires public metadata read contract while all private snapshot guards remain intact",
+  "resultReceipt": {
+    "objectsEqual": true,
+    "publicSha256": "505fd0d848cf20435ac41738edb26c7195121c369f2952342bdb2d874e666ccf",
+    "rootSha256": "07978734fcce13e68db82f3913168af14580bc1d89849cfdf8292e34ee50c422",
+    "value": {
+      "automaticReplay": false,
+      "phase": "restore",
+      "privateRecoveryBasisAndPartialStatePreserved": true,
+      "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+      "safeCode": "PRIVATE_INPUT_REQUIRED",
+      "status": "FINITE_AUTH_STEP_UNCONFIRMED_ORIGINAL_KEY_ONLY"
+    }
+  },
+  "sourceOrServerConfigurationModified": false,
+  "status": "FAILED_PRE_CONTAINER_PRIVATE_INPUT_CONTRACT_MISMATCH",
+  "terminal": {
+    "sha256": "16ae761461af0353d77dbc98aa3610287d01594a17ab89d50f00fd0861816566",
+    "value": {
+      "atUTC": "2026-11-17T15:20:34.747714+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 0.45483617996796966,
+      "exitCode": 2,
+      "exports": [
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T15:20:35.207307+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "FAILED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-816dd81bef84"
+    }
+  }
+}

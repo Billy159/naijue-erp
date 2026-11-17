@@ -1,0 +1,36 @@
+{
+  "PGConnections": 0,
+  "authorityIssued": false,
+  "checks": [
+    "Original Source01 and all frozen bytes retained",
+    "Source02 exact inventory and predecessor",
+    "Only template03 to original02 expression changed in adapter",
+    "Every runtime issuer CAS admission binding and original checks byte-identical",
+    "Actual referenced original02 helper equals unchanged exact SHA guard",
+    "Original template has exactly the two reviewed staging substitutions",
+    "In-memory derived staging code compiles without any execution",
+    "Existing consumer and Root review bindings fully reused"
+  ],
+  "clockCalls": 0,
+  "closedFindings": [
+    "ROLLBACK-P01"
+  ],
+  "consumerIndependentChecksReused": 23,
+  "consumerReviewSha256": "8647ebaee9a51551ce764faffeb3e15eaef276b76b17199bb1fa347faf3f285a",
+  "consumerSourcePinsSha256": "02fd0d579d45fae57329511ae1cc43e39c1ed2e1419caca215e005292a2c2287",
+  "findings": [],
+  "independentFixChecks": 8,
+  "issuerCalls": 0,
+  "originalAuthenticationRestored": false,
+  "originalHardDeadlineMet": false,
+  "ownerConsumerChecksReused": 46,
+  "ownerRootChecksReused": 25,
+  "positiveRuntimeFixtureCreated": false,
+  "predecessorSourcePinsSha256": "3ebffdc25567e5dc408b002038294d0088289ab29156a147f7802eb1a9b7332f",
+  "priorRootChecksReused": 25,
+  "rootPairReviewComplete": true,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourcePinsSha256": "9e918af11c6e2d045dbd36548bcc079d31d4ba63e07d01ed6298a1be07f462e9",
+  "state": "SOURCE_PASS_ORIGINAL_AUTH41_ROLLBACK_SOURCE02_TEMPLATE_FIX_ONLY"
+}

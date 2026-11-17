@@ -1,0 +1,24 @@
+{
+  "PGConnections": 0,
+  "authorityIssued": false,
+  "clockCalls": 0,
+  "consumerReviewReusable": true,
+  "finding": {
+    "actualTemplate": "DURABLE-READONLY-EXECUTION-PREPARATION-03/STAGE-ROOT-SOURCE.py",
+    "actualTemplateSha256": "7dcc5d1640c74626908e33bb87adcf23e45671dc60fc7e67b1a6913a48cf352d",
+    "file": "outputs/D1/20261117-r3-original-auth41-rollback-root-source-01/prepare_channel.py",
+    "id": "ROLLBACK-P01",
+    "impact": "prepare_local rejects on exact hash before target creation or network; source review did not verify this referenced helper file",
+    "line": 17,
+    "minimalFix": "Point new isolated source to original02 template retaining exact guard; preserve source01 and all runtime algorithms",
+    "requiredTemplate": "DURABLE-READONLY-EXECUTION-PREPARATION-02/STAGE-ROOT-SOURCE.py",
+    "requiredTemplateSha256": "3cecf232aa5ed6949ffe6256643058daf38d83baa87d720878adca7b70934622"
+  },
+  "networkAttempted": false,
+  "oldReportPreserved": true,
+  "priorReviewSha256": "85ba0ecfea04ece3f3fc0279371b72f5d05eb1462721894dbe802e8210225b42",
+  "serverFailure": false,
+  "sourceOnly": true,
+  "sourcePinsSha256": "3ebffdc25567e5dc408b002038294d0088289ab29156a147f7802eb1a9b7332f",
+  "state": "NEED_FIX_SOURCE01_LOCAL_TEMPLATE_REFERENCE"
+}

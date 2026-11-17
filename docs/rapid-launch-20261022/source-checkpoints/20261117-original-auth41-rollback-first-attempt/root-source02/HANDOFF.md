@@ -1,0 +1,23 @@
+仅回滚原认证的新独立有限权限 SOURCE，尚未签发或执行。旧hard路线未完成，不能声称已按旧期限恢复认证；旧票据、Source01/02/03及失败fresh全部保留。
+
+实际根仍120/2b8e，只追加 t45-r3-ordinary41-original-auth-rollback-20261117-01 到121。没有确认/STOP成功替身，没有原Restore41提交，也没有新服务、SQL业务或导入。新票据只回滚原original-auth快照内两个角色的verifier及expiry；临时角色原0980仅历史，不续期、不再给apply能力。独立票据最多900秒，worker上限300秒，原角色算法、安全比较、维护容器退出由T45专用消费者保存。
+
+Root/fresh/CAS直接只读核真实CLOSED41：proofc31、Ccbf、原出生与ACK、work1794926342048/outer1794926377048分别对齐、真实cleanup9b53、DockerStopped/PID0、原PGDATA同inode且pid消失、端口不存在及无其它active operation。使用原锁/快照/原子登记机制；120旧键、三道保护、全部旧函数保留。主控与根不读取或摘要原/finite认证快照，只读固定3路径stat9；SOURCE未观测的身份字段保持None。实际fresh采完整9项，新回滚inner和outer均绑定真实9项，Root再比实际9项，消费者host和容器内也核同值。
+
+新policy original-auth41-rollback-only-20261117-01.json只有rollback一条规则、原五字段；动态roles-authorization.json是rollback-only票据，格式/decision与原apply票据隔离。它不会成为旧临时登录roles的新许可。Root返回专属original-auth41-rollback标识且本层finish明确无操作，其它阶段仍委托旧链。
+
+Main注册/签发仍七参数 issue_registration.issue(review_file,review_pin,basis_file,basis_pin,output_directory,consumer_review_file,consumer_review_pin)。在读取真实时钟前核最终Source/QB、实际locked closed fresh、原stat9，并要求主控具体新窗口审批：outputs/主控/20261117-r3-original-auth41-rollback-decision-01/DECISION.json；state=AUTHORIZE_EXACT_ORIGINAL_AUTH41_ROLLBACK_WINDOW_AFTER_REVIEW，jobId/最终sourcePinsSha256/reviewSha256准确，maximumWindowSeconds=900、temporaryRoleExpiryExtended=false、applyAuthorized=false。不据此次SOURCE通过自动执行。
+
+原通道 prepare_channel.prepare_local→stage_and_read(独立复核,pin)→Main七参数签发→T45 register_once(新窗口目录)，再由T45原client仅运行新回滚键。窗口目录输出host-authorization/roles-authorization/policy/registration-packet/ISSUED，实际authoritySha256和registrationSha256分别使用，不重签旧41票据。最终完成仅以实际原verifier/expiry精确读回、其余role/runtime字段未变和自身维护容器清理回执为准。
+
+本次只有本机SOURCE；0server/clock/issuer/PG/角色变更，无新窗口样例。APP已交付不再build；SQL/真实数据完整导入和业务开放仍未完成。T45消费者文件不由D1修改。
+
+精确API：prepare_channel.prepare_local→stage_and_read(review_file,review_pin)由T45进行新代码stage及只读fresh；Main issue_registration.issue(review_file,review_pin,basis_file,basis_pin,output_directory,consumer_review_file,consumer_review_pin)保持七参数；随后T45 register_once(registration_directory)，最后用原单任务client按新规则执行rollback。Main输出host-authorization.json、roles-authorization.json、original-auth41-rollback-only-20261117-01.json、registration-packet.json 和 ISSUED.json；authoritySha256是新host票据SHA，rolesAuthoritySha256是新回滚inner SHA，registrationSha256是CAS票据SHA，980不是新票据SHA。
+
+Main最终具体批准文件：outputs/主控/20261117-r3-original-auth41-rollback-decision-01/DECISION.json，state=AUTHORIZE_EXACT_ORIGINAL_AUTH41_ROLLBACK_WINDOW_AFTER_REVIEW，准确绑定jobId、sourcePinsSha256、reviewSha256、maximumWindowSeconds=900、temporaryRoleExpiryExtended=false、applyAuthorized=false。只有它与联合SOURCE/QB、实际fresh都通过后才用真实time.time_ns签发；不能靠静态SOURCE、观测d771或旧hard自动执行。新的实际15分钟单独记账，不能倒改旧期限。
+
+消费者最终：ORIGINAL-AUTH41-ROLLBACK-SOURCE-01，SOURCE 02fd0d579d45fae57329511ae1cc43e39c1ed2e1419caca215e005292a2c2287、interface53d15b19fa7291f1e9cfde54725abb34abeb2830870985051f269aa90342539c；8静态叶，不含动态回滚票据。Main使用同一实际startsAt/expiresAt/三份fullstat9构造两层；实际snapshot比较在服务器host真实/srv以及容器内assert_entry分别按真实路径执行，Main只调用pure validator，不伪造路径。Root入场同样核实际fullstat9。25项本轮SOURCE检查，旧SQL/APP/其它已审范围不重跑。Root独有original-auth41-rollback标签及finish，仅处理这一新键，其它旧任务全部委托旧层。
+
+消费者独立复核为 outputs/QB/20261117-r3-original-auth41-rollback-joint-review-01/CONSUMER-RESULT.json，SHA8647ebaee9a51551ce764faffeb3e15eaef276b76b17199bb1fa347faf3f285a；联合Root复核尚待Main派同QB。
+
+Source02仅纠正prepare_channel的模板路径：原实际错误是DURABLE-READONLY-EXECUTION-PREPARATION-03（不是STOP41）；现在精确回到02及原3cec guard。原TARGET01未创建，serverSTAGE未使用，两者原样保留；原16文件中的runtime/Main/CAS逐字不变，复用原25及消费者检查，仅6项模板增量核对。原3eb包保留。

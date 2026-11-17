@@ -1,0 +1,513 @@
+--- old/ordinary05_roles.py
++++ rollback-only/ordinary05_roles.py
+@@ -3,15 +3,12 @@
+ Imported only by the root maintenance carrier. No standalone CLI, service start,
+ new role, membership, HBA, runtime password or application writer.
+ """
+-import base64
+ import csv
+ import hashlib
+-import hmac
+ import io
+ import json
+ import os
+ import re
+-import secrets
+ import stat
+ import subprocess
+ import time
+@@ -31,7 +28,7 @@
+ PHYSICAL = {'systemIdentifier': '7706545564479176741', 'databaseOid': '16393',
+             'database': DATABASE, 'serverVersionNum': '170011'}
+ DATA_IDENTITY = (66304, 13502421, 61035, 61035, 0o700)
+-PHASES = ('before', 'apply-readback', 'restore-before', 'restore-readback', 'recovery-readback')
++PHASES = ('rollback-before', 'rollback-readback')
+ 
+ 
+ def need(ok, code):
+@@ -56,10 +53,10 @@
+ 
+ 
+ def scope():
+-    return {'format': 'T45_R3_ORDINARY05_CONTROLLER_BACKUP_FINITE_AUTH_V1',
+-            'decision': 'CAPTURE_SET_FINITE_AUTH_AND_RESTORE_EXACT_ORIGINAL_AUTH_SAME_STOPPED_R3',
+-            'requestKey': 't45-r3-ordinary41-auth-apply-20261117-01',
+-            'restoreRequestKey': 't45-r3-ordinary41-auth-restore-20261117-01',
++    return {'format': 'T45_R3_ORIGINAL41_AUTH_ROLLBACK_ONLY_V1',
++            'decision': 'RESTORE_EXISTING_ORIGINAL_TWO_ROLE_AUTH_ONLY',
++            'requestKey': 't45-r3-ordinary41-original-auth-rollback-20261117-01',
++            'restoreRequestKey': 't45-r3-ordinary41-original-auth-rollback-20261117-01',
+             'previousServiceRequestKey': 't45-first-r3-native-service-start-20261116-39',
+             'ordinaryServiceRequestKey': 't45-first-r3-native-service-start-20261117-41',
+             'dataDirectory': str(DATA), 'dataDirectoryIdentity': list(DATA_IDENTITY),
+@@ -69,22 +66,13 @@
+ 
+ 
+ def validate(authority, now, restoring=False):
+-    fixed = scope()
+-    extra = {'startsAt', 'expiresAt', 'controllerValidUntil', 'backupAdminValidUntil', 'restorationDeadline',
+-             'authorizationReference', 'rolesSourceSha256', 'independentReviewSha256'}
+-    need(type(authority) is dict and set(authority) == set(fixed) | extra
+-         and all(authority[k] == v for k, v in fixed.items()), 'MAINT_EXACT_AUTHORITY_REQUIRED')
+-    a = authority
+-    need(all(type(a[k]) is int for k in ('startsAt', 'expiresAt', 'controllerValidUntil', 'backupAdminValidUntil', 'restorationDeadline'))
+-         and a['startsAt'] < a['expiresAt'] <= a['startsAt'] + 1800000
+-         and a['expiresAt'] < a['controllerValidUntil'] <= a['backupAdminValidUntil'] < a['restorationDeadline']
+-         <= a['startsAt'] + 12600000, 'MAINT_FINITE_AUTH_AND_RESTORATION_WINDOW_REQUIRED')
+-    deadline = a['restorationDeadline'] if restoring else a['expiresAt']
+-    need(type(now) is int and a['startsAt'] <= now and now + 30000 < deadline,
+-         'MAINT_ORIGINAL_WINDOW_EXPIRED')
+-    need(type(a['authorizationReference']) is str and 0 < len(a['authorizationReference']) <= 512
+-         and all(type(a[k]) is str and re.fullmatch('[a-f0-9]{64}', a[k])
+-                 for k in ('rolesSourceSha256', 'independentReviewSha256')), 'MAINT_EXTERNAL_REVIEW_REQUIRED')
++    fixed=scope()
++    extra={'startsAt','expiresAt','authorizationReference','rolesSourceSha256','independentReviewSha256','originalRecoveryStat9'}
++    need(restoring is True and type(authority)is dict and set(authority)==set(fixed)|extra and all(authority[k]==v for k,v in fixed.items()),'ROLLBACK_ONLY_EXACT_AUTHORITY_REQUIRED')
++    need(type(now)is type(authority['startsAt'])is type(authority['expiresAt'])is int and authority['startsAt']<=now and now+30000<authority['expiresAt']<=authority['startsAt']+900000,'ROLLBACK_NEW_REAL_FINITE_WINDOW_REQUIRED')
++    need(type(authority['authorizationReference'])is str and 0<len(authority['authorizationReference'])<=512 and all(type(authority[k])is str and re.fullmatch('[a-f0-9]{64}',authority[k])for k in('rolesSourceSha256','independentReviewSha256')),'ROLLBACK_EXTERNAL_SOURCE_REVIEW_REQUIRED')
++    stats=authority['originalRecoveryStat9'];need(type(stats)is dict and set(stats)=={'original-auth.json','finite-auth.json','applied.json'}and all(type(row)is list and len(row)==9 and all(type(v)is int for v in row)for row in stats.values()),'ROLLBACK_REAL_FRESH_SNAPSHOT_METADATA_REQUIRED')
++
+ 
+ 
+ def private_file(path, raw):
+@@ -249,27 +237,10 @@
+         os.close(parent)
+ 
+ 
+-def verifier(password, salt):
+-    need(re.fullmatch('[a-f0-9]{64}', password) and type(salt) is bytes and len(salt) == 16,
+-         'MAINT_GENERATED_AUTH_FORMAT_REQUIRED')
+-    salted = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 4096)
+-    client = hmac.new(salted, b'Client Key', hashlib.sha256).digest()
+-    server = hmac.new(salted, b'Server Key', hashlib.sha256).digest()
+-    b64 = lambda b: base64.b64encode(b).decode()
+-    return 'SCRAM-SHA-256$4096:' + b64(salt) + '$' + b64(hashlib.sha256(client).digest()) + ':' + b64(server)
+-
+-
+-def desired(before, materials, deadlines):
+-    after = json.loads(encode(before))
+-    need(set(materials) == set(deadlines) == set(ROLES), 'MAINT_ONLY_TWO_EXISTING_ROLES_REQUIRED')
+-    for r in after['roles']:
+-        r['rolpassword'] = materials[r['rolname']]['verifier']
+-        r['rolvaliduntil'] = timestamp(deadlines[r['rolname']])
+-    for r in after['boundary']:
+-        if r['rolname'] in ROLES:
+-            r['rolvaliduntil'] = timestamp(deadlines[r['rolname']])
+-    validate_snapshot(after)
+-    return after
++
++
++
++
+ 
+ 
+ def change_sql(before, after):
+@@ -323,74 +294,38 @@
+              and not s.st_mode & 0o022 and s.st_nlink == 1 and 0 < s.st_size <= 65536
+              and hashlib.sha256(path.read_bytes()).hexdigest() == expected,
+              'MAINT_ORIGINAL_RECORD_OR_COLD_COPY_DIFFERS')
++    for leaf,expected in authority['originalRecoveryStat9'].items():
++        s=(CUSTODY/leaf).lstat();observed=[s.st_dev,s.st_ino,s.st_uid,s.st_gid,stat.S_IMODE(s.st_mode),s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns]
++        need(observed==expected and stat.S_ISREG(s.st_mode)and not(CUSTODY/leaf).is_symlink(),'ROLLBACK_ORIGINAL_SNAPSHOT_METADATA_CHANGED')
+     return authority
+ 
+ 
+-def prepare(core, authority_raw, pin):
+-    authority = assert_entry(authority_raw, pin, False)
+-    stopped(core)
+-    need(not os.path.lexists(CUSTODY) and not os.path.lexists(CAPTURE), 'MAINT_AUTH_OPERATION_ALREADY_PRESENT_NO_REPLAY')
+-    CUSTODY.mkdir(mode=0o700)
+-    CAPTURE.mkdir(mode=0o700)
+-    os.chown(CAPTURE, 61035, 61035)
+-    sync_directory(CUSTODY.parent)
+-    sync_directory(CAPTURE.parent)
+-    private_file(CUSTODY / 'authority.json', authority_raw)
+-    before = capture(core, 'before')
+-    prior_path = STATE / 'native-services/ordinary34-auth-20261116-01/original-auth.json'
+-    prior = read_private(prior_path)
+-    need(set(prior) == set(before) and all(prior[k] == before[k] for k in (
+-         'physical', 'boundary', 'memberships', 'settings')),
+-         'ORDINARY05_RESTORE11_ORIGINAL_BOUNDARY_DIFFERS')
+-    need(prior == before,'ORDINARY16_RESTORE02_ORIGINAL_TWO_ROLE_AUTH_DIFFERS')
+-    private_file(CUSTODY / 'original-auth.json', encode(before))
+-    # Verify that both original expiries are exactly expressible by ALTER ROLE
+-    # before generating materials or attempting either password change.
+-    change_sql(before, before)
+-    materials = {}
+-    for role in ROLES:
+-        password = secrets.token_hex(32)
+-        materials[role] = {'password': password, 'verifier': verifier(password, secrets.token_bytes(16))}
+-        private_file(CUSTODY / (role + '.json'), encode({'host': '127.0.0.1', 'port': 56791,
+-                     'database': DATABASE, 'user': role, 'password': password, 'ssl': False}))
+-    deadlines = {CONTROLLER: authority['controllerValidUntil'],
+-                 BACKUP_ADMIN: authority['backupAdminValidUntil']}
+-    after = desired(before, materials, deadlines)
+-    private_file(CUSTODY / 'finite-auth.json', encode(after))
+-    validate(authority, time.time_ns() // 1000000)
+-    private_file(CUSTODY / 'apply-attempt.json', encode({'requestKey': authority['requestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))
+-    offline(core, change_sql(before, after))
+-    observed = capture(core, 'apply-readback')
+-    need(observed == after, 'MAINT_FINITE_AUTH_READBACK_NOT_CONFIRMED_NO_REPLAY')
+-    receipt = {'status': 'EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK',
+-               'requestKey': authority['requestKey'], 'roles': list(ROLES),
+-               'credentialValidUntilByRole': deadlines, 'runtimeAuthChanged': False,
+-               'membershipsOrRoleAttributesChanged': False, 'newRoles': 0, 'authenticationAttempted': False,
+-               'privateRecoveryBasisRetained': True, 'automaticReplay': False}
+-    private_file(CUSTODY / 'applied.json', encode(receipt))
+-    return receipt
++
+ 
+ 
+ def restore(core, authority_raw, pin):
+     authority = assert_entry(authority_raw, pin, True)
+-    need(read_private_raw(CUSTODY / 'authority.json') == authority_raw, 'MAINT_ORIGINAL_AUTHORITY_DIFFERS')
+-    need(not os.path.lexists(CUSTODY / 'restore-attempt.json') and not os.path.lexists(CUSTODY / 'restored.json'),
++    need(hashlib.sha256(read_private_raw(CUSTODY / 'authority.json')).hexdigest()=='0980cee0d05d7deed79ae92089cde540ebb77e47ad1f3511b6de1c989a542d9c','ROLLBACK_EXACT_HISTORICAL41_AUTHORITY_REQUIRED')
++    need(not os.path.lexists(CUSTODY/'restore-attempt.json')and not os.path.lexists(CUSTODY/'restored.json'),'ROLLBACK_OLD_RESTORE_ATTEMPT_MUST_BE_ABSENT')
++    need(not os.path.lexists(CUSTODY / 'original-auth-rollback-attempt.json') and not os.path.lexists(CUSTODY / 'original-auth-rollback-restored.json'),
+          'MAINT_RESTORE_ALREADY_ATTEMPTED_READ_ORIGINAL_KEY')
+     stopped(core)
+     before = read_private(CUSTODY / 'original-auth.json')
+     after = read_private(CUSTODY / 'finite-auth.json')
+-    observed = capture(core, 'restore-before')
++    observed = capture(core, 'rollback-before')
+     need(observed == before or observed == after, 'MAINT_CURRENT_AUTH_NOT_ORIGINAL_OR_OWN_FINITE_STATE')
+-    private_file(CUSTODY / 'restore-attempt.json', encode({'requestKey': authority['restoreRequestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))
++    private_file(CUSTODY / 'original-auth-rollback-attempt.json', encode({'requestKey': authority['restoreRequestKey'], 'state': 'ATTEMPT_ONCE_OUTCOME_UNKNOWN_UNTIL_READBACK'}))
+     if observed != before:
+         validate(authority, time.time_ns() // 1000000, True)
+         offline(core, change_sql(after, before))
+-    restored = capture(core, 'restore-readback')
++    restored = capture(core, 'rollback-readback')
+     need(restored == before, 'MAINT_EXACT_ORIGINAL_AUTH_RESTORATION_UNCONFIRMED')
+     receipt = {'status': 'EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK',
+                'requestKey': authority['restoreRequestKey'], 'roles': list(ROLES),
++               'operationMode':'ORIGINAL_AUTH_ROLLBACK_ONLY', 'originalRestorationHardDeadline':1794926977752,
++               'originalHardDeadlineMet':time.time_ns()//1000000<=1794926977752,
+                'exactOriginalVerifierAndExpiryVerifiedPrivately': True, 'naturalExpiryCountedAsRestoration': False,
+                'runtimeAuthChanged': False, 'membershipsOrRoleAttributesChanged': False,
+                'privateRecoveryBasisRetained': True, 'databaseStillStopped': True, 'automaticReplay': False}
+-    private_file(CUSTODY / 'restored.json', encode(receipt))
++    private_file(CUSTODY / 'original-auth-rollback-restored.json', encode(receipt))
+     return receipt
+--- old/ordinary05_roles_job.py
++++ rollback-only/ordinary05_roles_job.py
+@@ -20,7 +20,7 @@
+ WORKER = Path('/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs')
+ INSIDE = Path('/run/t45-maint/source')
+ RESULTS = Path('/run/t45-maint/results')
+-PHASES = {'apply': ('t45-r3-ordinary41-auth-apply-20261117-01', 't45-r3-ordinary41-auth-apply-20261117-01'), 'restore': ('t45-r3-ordinary41-auth-restore-20261117-01', 't45-r3-ordinary41-auth-restore-20261117-01')}
++PHASES = {'restore': ('t45-r3-ordinary41-original-auth-rollback-20261117-01', 't45-r3-ordinary41-original-auth-rollback-20261117-01')}
+ STATIC_PINS = {'root06_material.py': '584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a', 'fresh35-production-carrier.py': '40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360', 'normal_service04.py': '60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5', 'normal_service04_proof.py': 'a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73', 'prior_preserved38.py': '5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a'}
+ PRIOR_CID = '3ebc60712697f9a4fe8bd333fec07a6128b57a9c7b879c865332859acc237967'
+ PRIOR_NAME = 't45-fresh35-first-production-20261110-r3-service-34'
+@@ -87,32 +87,26 @@
+         os.close(fd)
+ 
+ 
+-def scope(phase):
++def scope(phase='restore'):
+     need(phase in PHASES, 'MAINT_JOB_FIXED_PHASE_REQUIRED')
+     key, name = PHASES[phase]
+-    return {'format': 'T45_R3_ORDINARY05_FINITE_AUTH_ROOT_JOB_V1', 'phase': phase,
++    return {'format': 'T45_R3_ORIGINAL41_AUTH_ROLLBACK_ONLY_ROOT_JOB_V1', 'phase': phase,
+             'requestKey': key, 'containerName': name, 'imageId': IMAGE,
+-            'maximumOperationSeconds': 300, 'networkMode': 'none', 'hostPorts': [],
++            'maximumOperationSeconds': 300,
++            'decision':'ROLLBACK_EXACT_ORIGINAL_AUTH_ONLY', 'service': {'containerId': 'cbf6459fc0e0f9cf89d1b0826618ba5d5a50fa650d7ef08dc420cfdd4e05fb5c', 'containerStartedAt': '2026-11-17T13:42:11.910047227Z', 'postmasterStart': '2026-11-17 13:42:13.196867+00', 'proofSha256': 'c31d0e8ab940538ce17612834b23681a6413ca2c9fc1106fe82600e68f9c6cfa', 'serviceKey': 't45-first-r3-native-service-start-20261117-41'},
++            'guardianCleanupSha256':'9b53d0e1ecdc7c9545a2dcbda3c213591abb87e830c24004fa14d7e79796c1ac',
++            'historicalRolesAuthoritySha256':'0980cee0d05d7deed79ae92089cde540ebb77e47ad1f3511b6de1c989a542d9c', 'networkMode': 'none', 'hostPorts': [],
+             'dataDirectoryDevice': 66304, 'dataDirectoryInode': 13502421,
+             'installationRecordSha256': '4ed44478765d20c1ccde4f5a2c29441456a0ee7cd6ed1c16ccd2ee3d3b65c39e'}
+ 
+ 
+ def validate(a, phase, now):
+-    fixed = scope(phase)
+-    extra = {'startsAt', 'expiresAt', 'authorizationReference', 'independentReviewSha256',
+-             'rolesAuthoritySha256', 'rolesSourceSha256', 'hostSourceSha256'}
+-    if phase == 'restore':
+-        extra |= {'service', 'writerTerminalSha256', 'policySha256', 'stopRequestKey',
+-                  'stopTerminalSha256', 'stopResultSha256', 'stopCleanupSha256'}
+-    need(type(a) is dict and set(a) == set(fixed) | extra
+-         and all(a[k] == v for k, v in fixed.items()), 'MAINT_JOB_EXACT_EXTERNAL_SCOPE_REQUIRED')
+-    need(type(now) is int and type(a['startsAt']) is type(a['expiresAt']) is int
+-         and a['startsAt'] <= now and now + 300000 < a['expiresAt'] <= a['startsAt'] + 1800000,
+-         'MAINT_JOB_EXTERNAL_WINDOW_REQUIRED')
+-    need(type(a['authorizationReference']) is str and 0 < len(a['authorizationReference']) <= 512
+-         and all(type(a[k]) is str and re.fullmatch('[a-f0-9]{64}', a[k]) for k in
+-                 ('independentReviewSha256', 'rolesAuthoritySha256', 'rolesSourceSha256', 'hostSourceSha256')),
+-         'MAINT_JOB_EXTERNAL_REVIEW_REQUIRED')
++    fixed=scope(phase)
++    extra={'startsAt','expiresAt','authorizationReference','independentReviewSha256','rolesAuthoritySha256','rolesSourceSha256','hostSourceSha256','originalRecoveryStat9'}
++    need(phase=='restore'and type(a)is dict and set(a)==set(fixed)|extra and all(a[k]==v for k,v in fixed.items()),'ROLLBACK_JOB_EXACT_ONLY_SCOPE_REQUIRED')
++    need(type(now)is type(a['startsAt'])is type(a['expiresAt'])is int and a['startsAt']<=now and now+300000<a['expiresAt']<=a['startsAt']+900000,'ROLLBACK_JOB_NEW_REAL_FIFTEEN_MINUTE_WINDOW_REQUIRED')
++    need(type(a['authorizationReference'])is str and 0<len(a['authorizationReference'])<=512 and all(type(a[k])is str and re.fullmatch('[a-f0-9]{64}',a[k])for k in('independentReviewSha256','rolesAuthoritySha256','rolesSourceSha256','hostSourceSha256')),'ROLLBACK_JOB_EXTERNAL_REVIEW_REQUIRED')
++    stats=a['originalRecoveryStat9'];need(type(stats)is dict and set(stats)=={'original-auth.json','finite-auth.json','applied.json'}and all(type(row)is list and len(row)==9 and all(type(v)is int for v in row)for row in stats.values()),'ROLLBACK_JOB_ACTUAL_SNAPSHOT_STAT9_REQUIRED')
+ 
+ 
+ def module(raw, path, name):
+@@ -215,7 +209,7 @@
+         signal.signal(sig, interrupted)
+     signal.alarm(INSIDE_ALARM_SECONDS)
+     try:
+-        result = (leaf.prepare if a['phase'] == 'apply' else leaf.restore)(factory.core, roles_raw, roles_pin)
++        result = leaf.restore(factory.core, roles_raw, roles_pin)
+         need(ops.read_file(normal.WORK / 'data/pg_hba.conf', 65536, True, False) == hba,
+              'MAINT_JOB_ORIGINAL_HBA_CHANGED')
+         write(RESULTS / 'maintenance-auth-inside.json', {'phase': a['phase'], 'requestKey': a['requestKey'], 'result': result})
+@@ -228,14 +222,7 @@
+                - CLEANUP_RESERVE_SECONDS)
+ 
+ 
+-def require_unused_apply37(ops, control):
+-    key='t45-r3-ordinary41-auth-apply-20261117-01'
+-    root=WORKER/key
+-    # The dispatcher owns this current request directory; only preexisting
+-    # phase effects/custody/capture/container are forbidden here.
+-    need(not any(present(p) for p in [*[root/'results'/n for n in ('maintenance-auth-intent.json','maintenance-auth-inside.json','maintenance-auth-cleanup.json','maintenance-auth-result.json')],ROOT/'state/native-services/ordinary41-auth-20261117-01',ROOT/'state/fresh35-first-production-20261110-r3/ordinary41-auth-capture-20261117-01']),'ORDINARY37_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY')
+-    ids=command(['docker','ps','-a','--filter','name=^/'+key+'$','--format','{{.ID}}'],5)
+-    need(not ids.strip(),'ORDINARY37_APPLY_CONTAINER_PRESENT_NO_REPLAY')
++
+ 
+ 
+ def host(job, a, ops, prior, material):
+@@ -243,8 +230,6 @@
+     original_stopped(a['phase'])
+     control = ops.CONTROL.with_name('grant-b16447fbc81f4d64')
+     prior.validate(ops,control)
+-    if a['phase']=='apply':require_unused_apply37(ops,control)
+-    if a['phase']=='apply':material.validate(ops,control)
+     require_failed19_history(ops,control)
+     if a['phase'] == 'restore':
+         verify_current_stop(ops, control, a)
+@@ -323,79 +308,19 @@
+ 
+ 
+ def verify_current_stop(ops, control, a):
+-    pins = ('writerTerminalSha256','policySha256','stopRequestKey','stopTerminalSha256',
+-            'stopResultSha256','stopCleanupSha256')
+-    if a['service'] is None:
+-        if a['stopRequestKey'] == CURRENT_KEY:
+-            verify_failed_start_closed(ops, control, a)
+-            return
+-        need(all(a[k] is None for k in pins)
+-             and not any(present(p) for p in (control/'requests'/(CURRENT_KEY+'.json'),
+-                control/'requests'/(CURRENT_KEY+'.tmp'), control/'jobs'/CURRENT_KEY,
+-                control/'results'/(CURRENT_KEY+'.json'), WORKER/CURRENT_KEY,
+-                ROOT/'state/native-services'/CURRENT_KEY,
+-                ROOT/'authority/fresh35-current-production-service-v2-service-41.json')),
+-             'ORDINARY05_EARLY_RESTORE_ONLY_BEFORE_START')
+-        return
+-    s = a['service']
+-    need(type(s) is dict and set(s) == {'serviceKey','proofSha256','containerId',
+-         'containerStartedAt','postmasterStart'} and s['serviceKey'] == CURRENT_KEY
+-         and all(re.fullmatch('[a-f0-9]{64}',s[k]) for k in ('proofSha256','containerId')),
+-         'ORDINARY05_RESTORE_SERVICE_SCOPE_REQUIRED')
+-    stop = a['stopRequestKey']
+-    is_preserve = stop == 't45-r3-ordinary41-preserve-stop-20261117-01'
+-    need(type(stop) is str and re.fullmatch('[a-z0-9][a-z0-9-]{0,70}',stop)
+-         and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+-                 ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+-         'ORDINARY05_RESTORE_STOP_SCOPE_REQUIRED')
+-    terminal_raw = ops.read_file(control/'results'/(stop+'.json'),65536,False,False)
+-    t = ops.strict(terminal_raw)
+-    need(sha(terminal_raw)==a['stopTerminalSha256']
+-         and (t['jobId'],t['taskId'],t['grantId'],t['status'],t['exitCode'])==
+-         (stop,'T45','b16447fbc81f4d64','COMPLETED',0),'ORDINARY05_RESTORE_STOP_TERMINAL_REQUIRED')
+-    name = 'normal05-preserve-stop-result.json' if is_preserve else 'normal05-stop-result.json'
+-    result_raw = ops.read_file(WORKER/stop/'results'/name,65536,True)
+-    r = ops.strict(result_raw)
+-    need(sha(result_raw)==a['stopResultSha256'] and r['requestKey']==stop
+-         and r['cleanupSha256']==a['stopCleanupSha256'],'ORDINARY05_RESTORE_STOP_RESULT_REQUIRED')
+-    if is_preserve:
+-        active = a['writerTerminalSha256'] is not None
+-        need(r['status']=='NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED'
+-             and r['service']==s and r['holdRetained'] is active and r['businessAdvanced'] is False
+-             and r['writerTerminalSha256']==a['writerTerminalSha256'],
+-             'ORDINARY05_RESTORE_PRESERVATION_REQUIRED')
+-        if active:
+-            need(re.fullmatch('[a-f0-9]{64}',a['policySha256'])
+-                 and ops.read_file(WORKER/stop/'r3-outer-terminal.json',65536,True)==terminal_raw,
+-                 'ORDINARY05_RESTORE_PROTECTED_STOP_TERMINAL_REQUIRED')
+-        else:
+-            need(a['policySha256'] is None and r['preserveMode']=='PRE_WRITER',
+-                 'ORDINARY05_RESTORE_PRE_WRITER_EVIDENCE_REQUIRED')
+-    else:
+-        need(r['status']=='NORMAL05_RETAINED_CLEAN_STOP_CONFIRMED'
+-             and r['serviceProofSha256']==s['proofSha256']
+-             and all(r[k]==s[k] for k in ('serviceKey','containerId','containerStartedAt','postmasterStart')),
+-             'ORDINARY05_RESTORE_NORMAL_STOP_REQUIRED')
+-    auth = ROOT/'authority'
+-    proof_raw = ops.read_file(auth/'fresh35-current-production-service-v2-service-41.json',65536)
+-    p = ops.strict(proof_raw)
+-    boot = ROOT/'state/native-services'/CURRENT_KEY
+-    clean_raw = ops.read_file(boot/'cleanup.json',65536,True)
+-    c = ops.strict(clean_raw)
+-    need(sha(proof_raw)==s['proofSha256'] and p['requestKey']==CURRENT_KEY
+-         and p['physical']['postmasterStart']==s['postmasterStart']
+-         and sha(clean_raw)==a['stopCleanupSha256'] and c['requestKey']==CURRENT_KEY
+-         and c['retained'] is True and c['runtimeMaterialPreserved'] is True
+-         and all(c['cleanup'].get(k) is True for k in
+-                 ('cleanupComplete','cleanShutdown','dataPreserved','ownedPidAbsent','portAbsent')),
+-         'ORDINARY05_RESTORE_ORIGINAL_PROOF_AND_CLEANUP_REQUIRED')
+-    b = inspect(s['containerId'])
+-    need(b['Name']=='/'+CURRENT_NAME and b['Id']==s['containerId'] and b['Image']==IMAGE
+-         and b['State']['StartedAt']==s['containerStartedAt'] and b['State']['Pid']==0
+-         and b['State']['Running'] is False and b['Config']['Labels'].get('t45.operation')==CURRENT_KEY,
+-         'ORDINARY05_RESTORE_EXACT_STOPPED_CONTAINER_REQUIRED')
+-    need(not command(['/usr/bin/ss','-H','-ltn','sport = :56791'],5).strip(),
+-         'ORDINARY05_RESTORE_LISTENER_PRESENT')
++    s=a['service'];boot=ROOT/'state/native-services'/CURRENT_KEY
++    proofraw=ops.read_file(ROOT/'authority/fresh35-current-production-service-v2-service-41.json',65536,True);p=ops.strict(proofraw)
++    need(sha(proofraw)==s['proofSha256']and p['requestKey']==CURRENT_KEY and p['physical']['postmasterStart']==s['postmasterStart']and p['physical']['databaseOid']=='16393'and p['physical']['systemIdentifier']=='7706545564479176741','ROLLBACK_EXACT41_PROOF_REQUIRED')
++    need(ops.strict(ops.read_file(boot/'retained-ack.json',65536,True))==dict(requestKey=CURRENT_KEY,proofSha256=s['proofSha256'],serviceLeaseExpiresAt=1794926342048),'ROLLBACK_REAL41_ACK_REQUIRED')
++    cleanraw=ops.read_file(boot/'cleanup.json',65536,True);c=ops.strict(cleanraw)
++    need(sha(cleanraw)==a['guardianCleanupSha256']and c['requestKey']==CURRENT_KEY and c['retained']is True and c['runtimeMaterialPreserved']is True and c['reason']=='NORMAL_FINITE_SERVICE_OR_CAPACITY_EXPIRED'and all(c['cleanup'].get(k)is True for k in('cleanupComplete','cleanShutdown','dataPreserved','ownedPidAbsent','portAbsent')),'ROLLBACK_ACTUAL_GUARDIAN_CLEANUP_REQUIRED')
++    b=inspect(s['containerId']);need(b['Id']==s['containerId']and b['Name']=='/'+CURRENT_NAME and b['Image']==IMAGE and b['State']['StartedAt']==s['containerStartedAt']and b['State']['Running']is False and b['State']['Pid']==0 and b['Config']['Labels'].get('t45.operation')==CURRENT_KEY,'ROLLBACK_EXACT_STOPPED_C41_REQUIRED')
++    apply='t45-r3-ordinary41-auth-apply-20261117-01';t=ops.read_file(WORKER/apply/'r3-outer-terminal.json',65536,True);need(sha(t)=='73ca3c4dd871b684381db6c1b474504097b44f1d7f119de903052b2c1da6fda4'and t==ops.read_file(control/'results'/(apply+'.json'),65536,False,False),'ROLLBACK_ORIGINAL_APPLY_TERMINAL_REQUIRED')
++    ar=ops.read_file(WORKER/apply/'results/maintenance-auth-result.json',65536,True);need(sha(ar)=='cdc51c702f155c920275b27cd89723d05d5da21b7a73f957cec185e3477dd659'and ops.strict(ar)['result']['privateRecoveryBasisRetained']is True,'ROLLBACK_ORIGINAL_APPLY_READBACK_REQUIRED')
++    for leaf,expected in a['originalRecoveryStat9'].items():
++        path=ROOT/'state/native-services/ordinary41-auth-20261117-01'/leaf;z=path.lstat();need(path.resolve()==path and stat.S_ISREG(z.st_mode)and [z.st_dev,z.st_ino,z.st_uid,z.st_gid,stat.S_IMODE(z.st_mode),z.st_nlink,z.st_size,z.st_mtime_ns,z.st_ctime_ns]==expected and z.st_uid==z.st_gid==0 and stat.S_IMODE(z.st_mode)==0o400 and z.st_nlink==1,'ROLLBACK_SNAPSHOT_STAT_ONLY_CHANGED')
++    need(not command(['/usr/bin/ss','-H','-ltn','sport = :56791'],5).strip(),'ROLLBACK_NO_LISTENER_REQUIRED')
++    q=command(['/usr/bin/systemctl','list-units','--no-legend','--plain','--state=active,activating,deactivating','naijue-erp-op-*.service'],5).decode().splitlines();own='naijue-erp-op-b16447fb-'+sha(a['requestKey'].encode())[:12]+'.service';need(all(row.split()[0]==own for row in q if row.strip()),'ROLLBACK_NO_OTHER_OPERATIONS_REQUIRED')
+ 
+ 
+ def require_failed19_history(ops,control):
+@@ -408,113 +333,10 @@
+     for path,pin in fixed:
+         need(sha(ops.read_file(path,65536,True))==pin,'ORDINARY20_ORIGINAL_FAILED19_HISTORY_CHANGED')
+ 
+-def verify_failed_start_closed(ops, control, a):
+-    need(a['writerTerminalSha256'] is None and a['policySha256'] is None
+-         and all(re.fullmatch('[a-f0-9]{64}',a[k]) for k in
+-                 ('stopTerminalSha256','stopResultSha256','stopCleanupSha256')),
+-         'ORDINARY05_FAILED_START_EXACT_PINS_REQUIRED')
+-    require_failed19_history(ops,control)
+-    terminal = ops.read_file(control/'results'/(CURRENT_KEY+'.json'),65536,False,False)
+-    t = ops.strict(terminal)
+-    need(sha(terminal)==a['stopTerminalSha256'] and
+-         (t['jobId'],t['taskId'],t['grantId'],t['status'],t['exitCode'])==
+-         (CURRENT_KEY,'T45','b16447fbc81f4d64','FAILED',2),
+-         'ORDINARY05_FAILED_START_TERMINAL_REQUIRED')
+-    source = WORKER/CURRENT_KEY/'bundle'
+-    need(sha(ops.read_file(source/'normal_service05_after08.py',65536,True))==CURRENT_SOURCE
+-         and sha(ops.read_file(source/'normal_service05_after08_proof.py',65536,True))==CURRENT_PROOF_SOURCE,
+-         'ORDINARY05_FAILED_START_SOURCE_DIFFERS')
+-    root = WORKER/CURRENT_KEY/'results'
+-    raw = ops.read_file(root/'normal-service-incomplete.json',65536,True)
+-    r = ops.strict(raw)
+-    if r.get('format')=='T45_R3_PRECONTAINER_FAILURE_V1':
+-        verify_precontainer_failure(ops,control,a,t,raw,r)
+-        return
+-    need(sha(raw)==a['stopResultSha256'] and r['requestKey']==CURRENT_KEY
+-         and r['confirmed'] is True and r['containerStopped'] is True and r['pid']==0
+-         and r['createAttempted'] is True and r['successfulResultHandoff'] is False
+-         and r['originalKeyOnly'] is True and r['automaticRetry'] is False
+-         and r['runtimeMaterialPreserved'] is True,
+-         'ORDINARY05_FAILED_START_CLEAN_STOP_RECEIPT_REQUIRED')
+-    boot = ROOT/'state/native-services'/CURRENT_KEY
+-    leaf=r['cleanStop'].get('cleanupLeaf')
+-    need(leaf in ('cleanup.json','failed-start-cleanup.json'),
+-         'ORDINARY05_FAILED_START_FIXED_CLEANUP_LEAF_REQUIRED')
+-    clean = ops.read_file(boot/leaf,65536,True)
+-    x = ops.strict(clean)
+-    need(sha(clean)==a['stopCleanupSha256']==r['cleanStop']['cleanupSha256']
+-         and x['requestKey']==CURRENT_KEY and x['runtimeMaterialPreserved'] is True,
+-         'ORDINARY05_FAILED_START_CLEANUP_REQUIRED')
+-    if leaf=='cleanup.json':
+-        need(all(x['cleanup'].get(k) is True for k in
+-                 ('cleanupComplete','cleanShutdown','dataPreserved','ownedPidAbsent','portAbsent')),
+-             'ORDINARY05_FAILED_START_GUARDIAN_CLEANUP_REQUIRED')
+-    else:
+-        need(x['status']=='NORMAL_FAILED_START_CLEAN_STOP_CONFIRMED'
+-             and x['originalPGDATAAndCleanStateVerified'] is True
+-             and x['dataDirectoryIdentity']==dict(device=66304,inode=13502421,uid=61035,gid=61035,mode=0o700),
+-             'ORDINARY05_FAILED_START_DIRECT_CLEAN_STATE_REQUIRED')
+-    normalraw=ops.read_file(source/'normal_service05_after08.py',65536,True)
+-    normal=module(normalraw,source/'normal_service05_after08.py','fixed_failed_start_publication')
+-    proofraw=ops.read_file(source/'normal_service05_after08_proof.py',65536,True)
+-    proof=module(proofraw,source/'normal_service05_after08_proof.py','fixed_failed_start_proof')
+-    facts=normal.failed_start_publication(ops,proof,boot,r['cid'])
+-    need(all(r.get(k)==v for k,v in facts.items()),'ORDINARY27_FAILED_START_PUBLICATION_CHANGED')
+-    b = inspect(r['cid'])
+-    birth = ops.strict(ops.read_file(boot/'carrier-birth.json',65536,True))
+-    need(b['Id']==r['cid']==birth['id'] and b['Name']=='/'+CURRENT_NAME and b['Image']==IMAGE
+-         and b['Config']['Labels'].get('t45.operation')==CURRENT_KEY
+-         and b['State']['StartedAt']==birth['startedAt'] and b['State']['Pid']==0
+-         and b['State']['Running'] is False
+-         and not command(['/usr/bin/ss','-H','-ltn','sport = :56791'],5).strip(),
+-         'ORDINARY05_FAILED_START_EXACT_STOPPED_CONTAINER_REQUIRED')
+-
+-
+-def verify_precontainer_failure(ops,control,a,terminal,raw,r):
+-    """Fixed current-generation failure; no container or PG was started by this path."""
+-    job=WORKER/CURRENT_KEY
+-    root_result=ops.read_file(job/'results/normal-service-result.json',65536,True)
+-    value=ops.strict(root_result)
+-    public_result=ops.read_file(control/'jobs'/CURRENT_KEY/'results/normal-service-result.json',65536,False,False)
+-    root_terminal=ops.read_file(job/'r3-outer-terminal.json',65536,True)
+-    need(ops.strict(root_terminal)==terminal and sha(root_terminal)==a['stopTerminalSha256']
+-         and sha(raw)==a['stopResultSha256'] and sha(root_result)==a['stopCleanupSha256']
+-         and ops.strict(public_result)==value
+-         and value['requestKey']==CURRENT_KEY
+-         and value['status']=='NORMAL_OUTCOME_UNCONFIRMED_ORIGINAL_KEY_ONLY'
+-         and value['automaticRetry'] is False,
+-         'ORDINARY27_PRECONTAINER_ORIGINAL_TERMINAL_RESULT_REQUIRED')
+-    need(r['requestKey']==CURRENT_KEY and r['state']=='PRE_CONTAINER_FAILURE_RESOURCES_ABSENT'
+-         and r['createAttempted'] is False and r['cid'] is None and r['confirmed'] is True
+-         and r['originalKeyOnly'] is True and r['runtimeMaterialPreserved'] is True
+-         and r['automaticRetry'] is False and 'containerStopped' not in r,
+-         'ORDINARY27_PRECONTAINER_TYPED_EVIDENCE_REQUIRED')
+-    source=job/'bundle'
+-    mainraw=ops.read_file(source/'normal_service05_after08.py',65536,True)
+-    proofraw=ops.read_file(source/'normal_service05_after08_proof.py',65536,True)
+-    authraw=ops.read_file(source/'service-start-authorization.json',65536,True)
+-    request=ops.read_file(job/'request.json',65536,True)
+-    manifest=ops.read_file(job/'manifest.json',65536,True)
+-    q=ops.strict(request);auth=ops.strict(authraw)
+-    manifest_bytes=(json.dumps(ops.strict(manifest),sort_keys=True)+'\n').encode()
+-    need(sha(mainraw)==CURRENT_SOURCE and sha(proofraw)==CURRENT_PROOF_SOURCE
+-         and auth['normalServiceSha256']==CURRENT_SOURCE and auth['proofSourceSha256']==CURRENT_PROOF_SOURCE
+-         and (q['jobId'],q['taskId'],q['grantId'],q['script'],q['args'])==
+-             (CURRENT_KEY,'T45','b16447fbc81f4d64','normal_service05_after08.py',[sha(authraw)])
+-         and q['manifestSha256']==sha(manifest_bytes)
+-         and r['binding']==dict(rootManifestSha256=sha(manifest),rootRequestSha256=sha(request),
+-              authoritySha256=sha(authraw),normalServiceSha256=CURRENT_SOURCE,proofSourceSha256=CURRENT_PROOF_SOURCE),
+-         'ORDINARY27_PRECONTAINER_SOURCE_REQUEST_MANIFEST_REQUIRED')
+-    expected=dict(device=66304,inode=13502421,uid=61035,gid=61035,mode=0o700)
+-    observed=r['observation']
+-    need(type(observed['checkedAt']) is int and observed['checkedAt']<=time.time_ns()//1000000
+-         and observed['dataDirectoryIdentity']==expected
+-         and all(observed[k] is True for k in ('ownedContainerAbsent','postmasterPidAbsent',
+-                                              'listenerAbsent','lifecycleOutputsAbsent')),
+-         'ORDINARY27_PRECONTAINER_ORIGINAL_OBSERVATION_REQUIRED')
+-    normal=module(mainraw,source/'normal_service05_after08.py','fixed_current_precontainer_observer')
+-    proof=module(proofraw,source/'normal_service05_after08_proof.py','fixed_current_precontainer_proof')
+-    normal.observe_precontainer_absence(ops,proof)
++
++
++
++
+ 
+ 
+ def main():
+@@ -542,8 +364,9 @@
+     roles_raw = read(base / 'roles-authorization.json', 65536)
+     need(sha(roles_raw) == a['rolesAuthoritySha256'], 'MAINT_JOB_ROLE_AUTHORITY_BYTES_DIFFER')
+     role_authority = json.loads(roles_raw)
+-    modules['ordinary05_roles.py'].validate(role_authority, time.time_ns() // 1000000, phase == 'restore')
++    modules['ordinary05_roles.py'].validate(role_authority, time.time_ns() // 1000000, True)
+     need(role_authority['rolesSourceSha256'] == a['rolesSourceSha256'], 'MAINT_JOB_ROLE_SOURCE_BINDING_DIFFERS')
++    need(role_authority['requestKey']==key and role_authority['startsAt']==a['startsAt']and role_authority['expiresAt']==a['expiresAt']and role_authority['originalRecoveryStat9']==a['originalRecoveryStat9'],'ROLLBACK_ONLY_INNER_OUTER_SAME_NEW_WINDOW_REQUIRED')
+     if internal:
+         try:
+             inside(base, a, roles_raw, a['rolesAuthoritySha256'], modules['fresh35-production-carrier.py'],
+@@ -553,7 +376,7 @@
+             progress = {key: os.path.lexists(leaf.CUSTODY / name) for key, name in (
+                 ('originalRecoveryBasisPresent', 'original-auth.json'), ('finiteAuthBasisPresent', 'finite-auth.json'),
+                 ('applyAttemptPresent', 'apply-attempt.json'), ('finiteAuthReadbackPresent', 'applied.json'),
+-                ('restoreAttemptPresent', 'restore-attempt.json'), ('originalAuthReadbackPresent', 'restored.json'))}
++                ('restoreAttemptPresent', 'original-auth-rollback-attempt.json'), ('originalAuthReadbackPresent', 'original-auth-rollback-restored.json'))}
+             write(RESULTS / 'maintenance-auth-inside.json', {'phase': phase, 'requestKey': key,
+                   'result': {'status': 'MAINTENANCE_AUTH_INSIDE_UNCONFIRMED_ORIGINAL_KEY_ONLY', 'progress': progress,
+                              'safeCode': str(error) if isinstance(error, ValueError) and re.fullmatch('[A-Z0-9_]+', str(error)) else type(error).__name__,

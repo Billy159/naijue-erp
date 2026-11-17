@@ -1,0 +1,319 @@
+{
+  "state": "ACTUAL_ROOT121_ROLLBACK01_FAILED_PRIVATE_PUBLIC_PROOF_CLASSIFICATION_AUTH_NOT_RESTORED",
+  "asOf": "2026-11-17T15:29:16.915947+00:00",
+  "currentActualRoot": {
+    "dispatcherSha256": "ade6214cc9ff142bfb0bab75fe77b0ce0a006ee5049a2ca1aa7a1f0c95b8102a",
+    "moduleSha256": "b7af59ad9fc3517324aaf6b407e21d7d90708e3c226846714860c8ef194afacc",
+    "policySha256": "c4379f1716fd98fc50bf774f7e1e3e698a584b3207585aadfc33d5b2ec627de5",
+    "registeredKeys": 121,
+    "actualCASResultSha256": "ea8c6ac32536b5bfcad4e957dd53634a3303fa289bf77a98e21db07000f2a306"
+  },
+  "firstAttemptJobId": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+  "terminalSha256": "16ae761461af0353d77dbc98aa3610287d01594a17ab89d50f00fd0861816566",
+  "resultSha256": "07978734fcce13e68db82f3913168af14580bc1d89849cfdf8292e34ee50c422",
+  "safeReadbackSha256": "b8210157364b8ae1b011f4687424be5536f1703fbd2b9c12dfb0c3cb672295ef",
+  "status": "FAILED",
+  "exitCode": 2,
+  "safeCode": "PRIVATE_INPUT_REQUIRED",
+  "elapsedSeconds": 0.454836,
+  "authenticationRestored": false,
+  "ownMaintenanceContainerCreatedEvidence": false,
+  "ownMaintenanceContainersCurrentlyAbsent": true,
+  "ownCleanupSucceededClaimed": false,
+  "originalC41Stopped": true,
+  "PGCurrentlyStopped": true,
+  "originalRecoverySnapshotsStat9Retained": true,
+  "originalHardDeadlineClaimedMet": false,
+  "firstWindowStartsAt": 1794928498367,
+  "firstWindowExpiresAt": 1794929398367,
+  "applyAuthorized": false,
+  "temporaryRoleExpiryExtended": false,
+  "failureLocation": "verify_current_stop reads known publicproof root0/gid0/0444 with private=True; carrier.private guard rejects; beforeintent/create with actual private metadata corroboration. No source0-write inference used as auth restoration proof.",
+  "next": "T45 exact successor rollback02 SOURCE only: public C41 proof mode0444 uses nonprivate reader plus exact root/gid/nlink/mode/SHA/content; all private snapshot guards and original two-field restoration algorithms unchanged. Verify subsequent fixed input metadata. D1 actualRoot121\u2192122 onlynew02, preserve FAILED01 and old121/3guards. SameQB minimal delta then new concrete DECISION02/actualfresh/new15min signature. Never replay old01 or reuse expired oldwindow; no temporary login extension/business/SQL import.",
+  "successorAuthorityIssued": false,
+  "copies": [
+    {
+      "originalPath": "root-source02/SOURCE-PINS.json",
+      "storedPath": "root-source02/SOURCE-PINS.json",
+      "sha256": "9e918af11c6e2d045dbd36548bcc079d31d4ba63e07d01ed6298a1be07f462e9",
+      "bytes": 3442
+    },
+    {
+      "originalPath": "root-source02/ACTUAL120-DISPATCHER.py",
+      "storedPath": "root-source02/ACTUAL120-DISPATCHER.py",
+      "sha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0",
+      "bytes": 54436
+    },
+    {
+      "originalPath": "root-source02/CHECKS.json",
+      "storedPath": "root-source02/CHECKS.json",
+      "sha256": "e7d308dc688870168c6ee7e1a1f533173fc1d5d4c87325b6ad079ded8cc9720d",
+      "bytes": 1361
+    },
+    {
+      "originalPath": "root-source02/CONSUMER-BINDING.json",
+      "storedPath": "root-source02/CONSUMER-BINDING.json",
+      "sha256": "54c3ad255fb14e63c83bd7aa0759677072ef8463697f2989e67ad0474640e150",
+      "bytes": 5606
+    },
+    {
+      "originalPath": "root-source02/DELTA-CHECKS.json",
+      "storedPath": "root-source02/DELTA-CHECKS.json",
+      "sha256": "f148b199060413072793ae1d6bcdfbe0ad0048cd2b68608624ee0a50a41c1b2b",
+      "bytes": 441
+    },
+    {
+      "originalPath": "root-source02/HANDOFF.md",
+      "storedPath": "root-source02/HANDOFF.md",
+      "sha256": "91ada771297e6903b2bf9ff01aaf3b0b07f59b24170e881d64e000099af921e0",
+      "bytes": 5408
+    },
+    {
+      "originalPath": "root-source02/HISTORY.json",
+      "storedPath": "root-source02/HISTORY.json",
+      "sha256": "da1ccdfd375839deac60330009bdad03a4e8157cc058c5dac8408905176be68a",
+      "bytes": 5406
+    },
+    {
+      "originalPath": "root-source02/PREDECESSOR-SOURCE-PINS.json",
+      "storedPath": "root-source02/PREDECESSOR-SOURCE-PINS.json",
+      "sha256": "3ebffdc25567e5dc408b002038294d0088289ab29156a147f7802eb1a9b7332f",
+      "bytes": 3055
+    },
+    {
+      "originalPath": "root-source02/admin_exec.ROLLBACK-UNREGISTERED.py",
+      "storedPath": "root-source02/admin_exec.ROLLBACK-UNREGISTERED.py",
+      "sha256": "e36ed281ae9442e2fb18225f056f0255d034e765d95c387e1651318494b96530",
+      "bytes": 55491
+    },
+    {
+      "originalPath": "root-source02/admission.template.py",
+      "storedPath": "root-source02/admission.template.py",
+      "sha256": "639af90120346861a609d403123682ca39fb578cda6ddf488b5ff75b32665cc2",
+      "bytes": 6754
+    },
+    {
+      "originalPath": "root-source02/assemble_root.py",
+      "storedPath": "root-source02/assemble_root.py",
+      "sha256": "22a0db98b6f9919f0a2c0eca4004cfc78719ab9102f06392af962589b1eb3281",
+      "bytes": 8577
+    },
+    {
+      "originalPath": "root-source02/bind_consumer.py",
+      "storedPath": "root-source02/bind_consumer.py",
+      "sha256": "69ade79ab71734ad4e969f4d250c5c8077efb7a42b4feaa1b19b91d466e371ac",
+      "bytes": 1025
+    },
+    {
+      "originalPath": "root-source02/check_source.py",
+      "storedPath": "root-source02/check_source.py",
+      "sha256": "02021b31e26ebf94b78f5102fc955496aa692f94dd7169cfe4f5096bf4e40689",
+      "bytes": 4319
+    },
+    {
+      "originalPath": "root-source02/issue_registration.py",
+      "storedPath": "root-source02/issue_registration.py",
+      "sha256": "e1db261edf4f306dba4e9bde4ca5d7b07fc8debeebb90320a99c0e628ab0a70e",
+      "bytes": 6628
+    },
+    {
+      "originalPath": "root-source02/main_issuer.template.py",
+      "storedPath": "root-source02/main_issuer.template.py",
+      "sha256": "e1db261edf4f306dba4e9bde4ca5d7b07fc8debeebb90320a99c0e628ab0a70e",
+      "bytes": 6628
+    },
+    {
+      "originalPath": "root-source02/prepare_channel.py",
+      "storedPath": "root-source02/prepare_channel.py",
+      "sha256": "7b1df4f73ca17c9add017fb1506b5bb31963f2a8d588afe69c5ccc6e6d902e6c",
+      "bytes": 7222
+    },
+    {
+      "originalPath": "root-source02/r3_original_auth41_rollback.py",
+      "storedPath": "root-source02/r3_original_auth41_rollback.py",
+      "sha256": "b7af59ad9fc3517324aaf6b407e21d7d90708e3c226846714860c8ef194afacc",
+      "bytes": 15150
+    },
+    {
+      "originalPath": "root-source02/read_registration_basis.py",
+      "storedPath": "root-source02/read_registration_basis.py",
+      "sha256": "b64f10786843a7ff2dbddcba091fc37bed8a2492758ffa9a8fa3fe25c4b09749",
+      "bytes": 1229
+    },
+    {
+      "originalPath": "root-source02/register_cas.py",
+      "storedPath": "root-source02/register_cas.py",
+      "sha256": "af31866fcb04f3cd8b2da2d69c92218021509b5181e538f6c80b6f723199bbd8",
+      "bytes": 22234
+    },
+    {
+      "originalPath": "root-source01/SOURCE-PINS.json",
+      "storedPath": "root-source01/SOURCE-PINS.json",
+      "sha256": "3ebffdc25567e5dc408b002038294d0088289ab29156a147f7802eb1a9b7332f",
+      "bytes": 3055
+    },
+    {
+      "originalPath": "root-source01/prepare_channel.py",
+      "storedPath": "root-source01/prepare_channel.py",
+      "sha256": "74643c13bf5bb4386e39021b1f4c14791a883deba6a207484f96ad613044e87c",
+      "bytes": 7222
+    },
+    {
+      "originalPath": "consumer-source/SOURCE-PINS.json",
+      "storedPath": "consumer-source/SOURCE-PINS.json",
+      "sha256": "02fd0d579d45fae57329511ae1cc43e39c1ed2e1419caca215e005292a2c2287",
+      "bytes": 3444
+    },
+    {
+      "originalPath": "consumer-source/CHECK-RESULT.json",
+      "storedPath": "consumer-source/CHECK-RESULT.json",
+      "sha256": "24dc4be14a55d0002e2afd7374a3cb46a5437ba74ab3dd28c839e6dc63861179",
+      "bytes": 2928
+    },
+    {
+      "originalPath": "consumer-source/HANDOFF.md",
+      "storedPath": "consumer-source/HANDOFF.md",
+      "sha256": "ee111c364fa50937ec6c6a62025de14f9d7d11b2922f7998929cc530d27ac291",
+      "bytes": 3630
+    },
+    {
+      "originalPath": "consumer-source/INTERFACE.UNISSUED.json",
+      "storedPath": "consumer-source/INTERFACE.UNISSUED.json",
+      "sha256": "53d15b19fa7291f1e9cfde54725abb34abeb2830870985051f269aa90342539c",
+      "bytes": 6557
+    },
+    {
+      "originalPath": "consumer-source/SOURCE-DELTA.patch",
+      "storedPath": "consumer-source/SOURCE-DELTA.patch",
+      "sha256": "bc5282eeb2b26f7efddbc17d9261b225950c17150d8c26532d3954ed26977b5a",
+      "bytes": 35718
+    },
+    {
+      "originalPath": "consumer-source/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer-source/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer-source/bundle/normal_service04.py",
+      "storedPath": "consumer-source/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "originalPath": "consumer-source/bundle/normal_service04_proof.py",
+      "storedPath": "consumer-source/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "originalPath": "consumer-source/bundle/ordinary05_roles.py",
+      "storedPath": "consumer-source/bundle/ordinary05_roles.py",
+      "sha256": "7275869d813c916acf1aa84894e1a701855e1433c515d3ebf59158bb7b225740",
+      "bytes": 18549
+    },
+    {
+      "originalPath": "consumer-source/bundle/ordinary05_roles_job.py",
+      "storedPath": "consumer-source/bundle/ordinary05_roles_job.py",
+      "sha256": "534cd1ab27184d3f321f664c57c7de76f8618cbd2ef308898c092d2f81acd524",
+      "bytes": 24287
+    },
+    {
+      "originalPath": "consumer-source/bundle/prior_preserved38.py",
+      "storedPath": "consumer-source/bundle/prior_preserved38.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer-source/bundle/root06_material.py",
+      "storedPath": "consumer-source/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer-source/bundle/successful39_history.py",
+      "storedPath": "consumer-source/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer-source/check_source.py",
+      "storedPath": "consumer-source/check_source.py",
+      "sha256": "5de927eff0d71aa73786f72593674694cfd02f5d11bb37769c85e84261249ea1",
+      "bytes": 6933
+    },
+    {
+      "originalPath": "consumer-source/prepare_source.py",
+      "storedPath": "consumer-source/prepare_source.py",
+      "sha256": "b4c0f3bed3f8e99166e2e06946936421a1b855bf0d6e31b74f7d12fa55ceae41",
+      "bytes": 14010
+    },
+    {
+      "originalPath": "review/CONSUMER-RESULT.json",
+      "storedPath": "review/CONSUMER-RESULT.json",
+      "sha256": "8647ebaee9a51551ce764faffeb3e15eaef276b76b17199bb1fa347faf3f285a",
+      "bytes": 2342
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "85ba0ecfea04ece3f3fc0279371b72f5d05eb1462721894dbe802e8210225b42",
+      "bytes": 2699
+    },
+    {
+      "originalPath": "review/FIX-RESULT.json",
+      "storedPath": "review/FIX-RESULT.json",
+      "sha256": "0cca623c17dde9bd625efe828240ed538a63bcc50e6f3e552838d0252b03ade1",
+      "bytes": 1540
+    },
+    {
+      "originalPath": "review/SOURCE01-PREPARATION-FINDING.json",
+      "storedPath": "review/SOURCE01-PREPARATION-FINDING.json",
+      "sha256": "710be882323bc24ef46eccc6571586170d68c6a6f35f6718fd393698c71e2f91",
+      "bytes": 1264
+    },
+    {
+      "originalPath": "main-safe/ISSUED-SAFE-METADATA.json",
+      "storedPath": "main-safe/ISSUED-SAFE-METADATA.json",
+      "sha256": "75653de6a3da879bcbe8b1d8ddab2f7cdc21c57e274d2959f5e502a230abece1",
+      "bytes": 2580
+    },
+    {
+      "originalPath": "main-safe/DECISION.json",
+      "storedPath": "main-safe/DECISION.json",
+      "sha256": "c32b511becad09cc9296e8d688e427d3863d17cfa8b0472441f873c730c575c5",
+      "bytes": 1319
+    },
+    {
+      "originalPath": "actual-safe/FRESH-BASIS.json",
+      "storedPath": "actual-safe/FRESH-BASIS.json",
+      "sha256": "2ce8a53de3478d0a72d806f76bd37dfedd5bcf3790f9d90bda0d4756e06ef582",
+      "bytes": 12030
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "storedPath": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "sha256": "ea8c6ac32536b5bfcad4e957dd53634a3303fa289bf77a98e21db07000f2a306",
+      "bytes": 504
+    },
+    {
+      "originalPath": "actual-safe/RESULT.json",
+      "storedPath": "actual-safe/RESULT.json",
+      "sha256": "b8210157364b8ae1b011f4687424be5536f1703fbd2b9c12dfb0c3cb672295ef",
+      "bytes": 3340
+    },
+    {
+      "originalPath": "actual-safe/READONLY-INPUT-FAILURE-LOCATION-01.json",
+      "storedPath": "actual-safe/READONLY-INPUT-FAILURE-LOCATION-01.json",
+      "sha256": "b33c31b215ce0930b5dd43b5346fd7fbc1a7fd0d2f540211d4e05aee21a21ef5",
+      "bytes": 595
+    },
+    {
+      "originalPath": "actual-safe/FAILURE-METADATA-ONLY-01.json",
+      "storedPath": "actual-safe/FAILURE-METADATA-ONLY-01.json",
+      "sha256": "9c6375d340ca91cfbc885f349832de21ae45240d74032cf2f37325b38ba07e5b",
+      "bytes": 2848
+    }
+  ],
+  "rawRoleAuthorityPolicyPacketSnapshotOrPrivateReadbackBodiesIncluded": false
+}

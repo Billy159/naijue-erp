@@ -1,0 +1,87 @@
+{
+  "MainAPIParameters": 7,
+  "PGConnections": 0,
+  "applyAuthorized": false,
+  "authoritiesIssued": false,
+  "candidateKeys": 121,
+  "clockCalls": 0,
+  "consumerInterfaceSha256": "53d15b19fa7291f1e9cfde54725abb34abeb2830870985051f269aa90342539c",
+  "consumerReviewSha256": "8647ebaee9a51551ce764faffeb3e15eaef276b76b17199bb1fa347faf3f285a",
+  "consumerSourcePinsSha256": "02fd0d579d45fae57329511ae1cc43e39c1ed2e1419caca215e005292a2c2287",
+  "files": {
+    "ACTUAL120-DISPATCHER.py": {
+      "bytes": 54436,
+      "sha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0"
+    },
+    "CHECKS.json": {
+      "bytes": 1361,
+      "sha256": "e7d308dc688870168c6ee7e1a1f533173fc1d5d4c87325b6ad079ded8cc9720d"
+    },
+    "CONSUMER-BINDING.json": {
+      "bytes": 5606,
+      "sha256": "54c3ad255fb14e63c83bd7aa0759677072ef8463697f2989e67ad0474640e150"
+    },
+    "HANDOFF.md": {
+      "bytes": 5044,
+      "sha256": "e65f0c0e0f2e437b4aa6ae3c68e867ae774aefab3707d2df0995ccd236f53421"
+    },
+    "HISTORY.json": {
+      "bytes": 5406,
+      "sha256": "da1ccdfd375839deac60330009bdad03a4e8157cc058c5dac8408905176be68a"
+    },
+    "admin_exec.ROLLBACK-UNREGISTERED.py": {
+      "bytes": 55491,
+      "sha256": "e36ed281ae9442e2fb18225f056f0255d034e765d95c387e1651318494b96530"
+    },
+    "admission.template.py": {
+      "bytes": 6754,
+      "sha256": "639af90120346861a609d403123682ca39fb578cda6ddf488b5ff75b32665cc2"
+    },
+    "assemble_root.py": {
+      "bytes": 8577,
+      "sha256": "22a0db98b6f9919f0a2c0eca4004cfc78719ab9102f06392af962589b1eb3281"
+    },
+    "bind_consumer.py": {
+      "bytes": 1025,
+      "sha256": "69ade79ab71734ad4e969f4d250c5c8077efb7a42b4feaa1b19b91d466e371ac"
+    },
+    "check_source.py": {
+      "bytes": 4319,
+      "sha256": "02021b31e26ebf94b78f5102fc955496aa692f94dd7169cfe4f5096bf4e40689"
+    },
+    "issue_registration.py": {
+      "bytes": 6628,
+      "sha256": "e1db261edf4f306dba4e9bde4ca5d7b07fc8debeebb90320a99c0e628ab0a70e"
+    },
+    "main_issuer.template.py": {
+      "bytes": 6628,
+      "sha256": "e1db261edf4f306dba4e9bde4ca5d7b07fc8debeebb90320a99c0e628ab0a70e"
+    },
+    "prepare_channel.py": {
+      "bytes": 7222,
+      "sha256": "74643c13bf5bb4386e39021b1f4c14791a883deba6a207484f96ad613044e87c"
+    },
+    "r3_original_auth41_rollback.py": {
+      "bytes": 15150,
+      "sha256": "b7af59ad9fc3517324aaf6b407e21d7d90708e3c226846714860c8ef194afacc"
+    },
+    "read_registration_basis.py": {
+      "bytes": 1229,
+      "sha256": "b64f10786843a7ff2dbddcba091fc37bed8a2492758ffa9a8fa3fe25c4b09749"
+    },
+    "register_cas.py": {
+      "bytes": 22234,
+      "sha256": "af31866fcb04f3cd8b2da2d69c92218021509b5181e538f6c80b6f723199bbd8"
+    }
+  },
+  "issuerCalls": 0,
+  "maximumNewAuthorityMilliseconds": 900000,
+  "newKeys": 1,
+  "newTemporaryRoleExpiry": false,
+  "oldProtectedKeys": 120,
+  "originalHardDeadlineClaimedMet": false,
+  "rootPairReviewComplete": false,
+  "serverCalls": 0,
+  "sourceOnly": true,
+  "state": "ORIGINAL_AUTH41_ROLLBACK_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED"
+}

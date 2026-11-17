@@ -1,0 +1,19 @@
+{
+  "state": "AUTHORIZE_EXACT_ORIGINAL_AUTH41_ROLLBACK_WINDOW_AFTER_REVIEW",
+  "authorizationBasis": "User standing authorization for similar controlled ERP operations; Main scoped decision after final source and independent review, not a new human message.",
+  "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+  "sourcePinsSha256": "9e918af11c6e2d045dbd36548bcc079d31d4ba63e07d01ed6298a1be07f462e9",
+  "reviewSha256": "0cca623c17dde9bd625efe828240ed538a63bcc50e6f3e552838d0252b03ade1",
+  "consumerSourcePinsSha256": "02fd0d579d45fae57329511ae1cc43e39c1ed2e1419caca215e005292a2c2287",
+  "consumerReviewSha256": "8647ebaee9a51551ce764faffeb3e15eaef276b76b17199bb1fa347faf3f285a",
+  "maximumWindowSeconds": 900,
+  "maximumWorkerSeconds": 300,
+  "temporaryRoleExpiryExtended": false,
+  "applyAuthorized": false,
+  "originalHardDeadlineClaimedMet": false,
+  "originalHardDeadlineEpochMs": 1794926977752,
+  "newRealClockAlreadyIssued": false,
+  "actualCASOrRollbackExecuted": false,
+  "scope": "Restore only original verifier and expiry of two existing database roles from protected original41 snapshot, after exact same C41 closed proof and fresh metadata; preserve all other attributes, memberships, runtime auth and business data. No temporary login creation or renewal.",
+  "requiredActualFresh": true
+}

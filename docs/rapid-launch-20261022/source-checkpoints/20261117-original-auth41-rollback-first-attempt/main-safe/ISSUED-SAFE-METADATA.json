@@ -1,0 +1,62 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-original-auth41-rollback-window-01",
+  "issued": {
+    "state": "ORIGINAL_AUTH41_ROLLBACK_ISSUED_NOT_REGISTERED_OR_EXECUTED",
+    "sourcePinsSha256": "9e918af11c6e2d045dbd36548bcc079d31d4ba63e07d01ed6298a1be07f462e9",
+    "jobId": "t45-r3-ordinary41-original-auth-rollback-20261117-01",
+    "authoritySha256": "2d3a8e415e1bab3c363a567bb4a571de44f580e33c7bc0c0b8d36b8f18559cdd",
+    "rolesAuthoritySha256": "d172ed11eafc547b77285705f6d925082327432c2a87b4fac86aba180651021e",
+    "registrationSha256": "d792150e13bb354a6fba1a1153cc025f904dfb7e33e2430648e99e155797372d",
+    "policySha256": "c4379f1716fd98fc50bf774f7e1e3e698a584b3207585aadfc33d5b2ec627de5",
+    "authorizationDecisionSha256": "c32b511becad09cc9296e8d688e427d3863d17cfa8b0472441f873c730c575c5",
+    "originalTemporaryRolesAuthoritySha256": "0980cee0d05d7deed79ae92089cde540ebb77e47ad1f3511b6de1c989a542d9c",
+    "startsAt": 1794928498367,
+    "expiresAt": 1794929398367,
+    "originalHardDeadline": 1794926977752,
+    "originalHardDeadlineClaimedMet": false,
+    "applyAuthorized": false,
+    "temporaryRoleExpiryExtended": false
+  },
+  "files": {
+    "original-auth41-rollback-only-20261117-01.json": {
+      "sha256": "c4379f1716fd98fc50bf774f7e1e3e698a584b3207585aadfc33d5b2ec627de5",
+      "bytes": 1369,
+      "mode": "0o600"
+    },
+    "registration-packet.json": {
+      "sha256": "25ac6541b8848cd3a9e30e11e2cc521f232ab38bb85a221827493f44e7a4459d",
+      "bytes": 116805,
+      "mode": "0o600"
+    },
+    "ISSUED.json": {
+      "sha256": "21a9b2fa79bfb00d11ddddd6cf1ecd91ff9bd089cabb5853ff4667fd31186f42",
+      "bytes": 1017,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "2d3a8e415e1bab3c363a567bb4a571de44f580e33c7bc0c0b8d36b8f18559cdd",
+      "bytes": 2304,
+      "mode": "0o600"
+    },
+    "roles-authorization.json": {
+      "sha256": "d172ed11eafc547b77285705f6d925082327432c2a87b4fac86aba180651021e",
+      "bytes": 2036,
+      "mode": "0o600"
+    },
+    "registration-authorization.json": {
+      "sha256": "d792150e13bb354a6fba1a1153cc025f904dfb7e33e2430648e99e155797372d",
+      "bytes": 15508,
+      "mode": "0o600"
+    }
+  },
+  "authorityTiming": {
+    "startsAt": 1794928498367,
+    "expiresAt": 1794929398367
+  },
+  "registrationTiming": {
+    "startsAt": 1794928498367,
+    "expiresAt": 1794928678367
+  },
+  "rawAuthorityRolePolicyPacketOrSnapshotBodiesIncluded": false,
+  "actualCASOrRollbackExecuted": false
+}
