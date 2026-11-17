@@ -1,0 +1,62 @@
+{
+  "state": "AUTHORIZE_SOURCE_ONLY_NORMAL44_FIXED_ORDINARY_DESCRIBE_IDENTITY_AND_SAFE_FAILURE_DIAGNOSTICS",
+  "authorityBasis": "Existing human standing authorization and active ERP launch goal. Main scope selection; no new human approval message.",
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "jobs": {
+    "apply": "t45-r3-ordinary44-auth-apply-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-44",
+    "writer": "t45-r3-batched-real-after43-execute-20261118-01",
+    "stop": "t45-r3-ordinary44-preserve-stop-20261118-01",
+    "restore": "t45-r3-ordinary44-auth-restore-20261118-01"
+  },
+  "phaseBudgetsSeconds": {
+    "apply": 300,
+    "start": 300,
+    "writer": 3000,
+    "stop": 120,
+    "restore": 300
+  },
+  "parentBudgetSeconds": 5100,
+  "minimumAvailableBytes": 30064771072,
+  "rootBefore": 132,
+  "rootAfter": 137,
+  "actualBeforeDispatcherSha256": "e321fd75440c43300006ea8408d1329ec55e3aed5638a83b3b5bf9eca25e0173",
+  "closed42OwnerResultSha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe",
+  "sourceAnalysisDeliveryPinsSha256": "c6f39c1357a443b9a9c09c39bbc4f0e443b611572633cd65dcb903b63560e79a",
+  "prepareReuse": "Preserve successful prepare05 44910 steps/SQLite/initializer/original preparedBinding. New execution envelope from real new C/epoch/current catalog. Exact custody/persisted-program guards; no recompile/replay/rewriting original artifacts.",
+  "lineage": "Root08 392/ac85/marker5bb and actual Upgrade42 SQLdaf/afterada8/a5f/aef proof distinct from historical catalog35/626. Preserve all historical records.",
+  "writerMode": "FIRST_WRITE only after existing same-client inspectRoot ABSENT. COMMITTED or unknown stops to Main, no automatic RESUME. Transport successor alone changes; original business operation/request/batch IDs/manifest/11:40 cutoff unchanged.",
+  "owners": {
+    "T45": "consumer/newlineage/plan custody/local execution and sole server owner",
+    "D1": "Root/Main; coordinate file ownership with T45 before edits",
+    "QB": "necessary new source/adapters independent delta after freeze; reuse closed prior checks"
+  },
+  "serverFreshClockIssuerCASPGOrWriterCurrentlyAuthorized": false,
+  "actualRuntimeRequires": "Final exact source+QA and Main concrete runtime scope then fresh/real clock; writer authority from actual live descriptor/new binding/retained original plan evidence.",
+  "APP": "Reuse completed 289/nativee041/archive0abef build; no rebuild or deployment in current source scope.",
+  "lastRemoteCheckpoint": "da8fd78b6e56ceb763e3fb19e863502760e47fcd",
+  "closed43OwnerResultSha256": "f874853e6d4ae0a3c4040e6dc059e72378553cc48a4105f36ec2a5d4075225aa",
+  "sourcePlanPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261118-r3-normal43-start-description-diagnosis-01/SOURCE44-PLAN.md",
+  "sourcePlanSha256": "93173303cfa1d63d010044c8632bf43db3a955cf0d7f069a4b09c0e757060d08",
+  "sourceDelta": [
+    "T45: root parent and collectors retained; only Node description child fixed uid/gid61035 and empty supplementary groups; preserve Root08 ORDINARY_RUNTIME_REQUIRED",
+    "Reuse exact final33-private group traverse projection. Unique new start-key child root:61035 0710 and only generator/helper/historical witness files0440. No broadening BOOT, auth, provision, profile, raw initializer or plan access. Only necessary readonly mount if exact existing mount insufficient.",
+    "T45: generator and Python safe catch share closed sets of type/system/guard/stage and at most mapped source frame, no raw message/stack/path/credentials",
+    "D1: Root/Main successor exact source/pins/path closure from actual132, preserve old132 and three guards; old43 failed/consumed never replay",
+    "QB: independently review only changed identity/projection/catch and successor pins; reuse prior unchanged passes"
+  ],
+  "roleTimingOffsetsSeconds": {
+    "controller": 4000,
+    "backupAdmin": 4120,
+    "hardRestore": 4900
+  },
+  "serviceMaximumSeconds": 4200,
+  "sourceOnlyVerification": "Local syntax/static/source contract checks only. No Node describe/PG/docker, original artifact body reads, runtime clocks, auth issuance, server fresh, CAS or job submission in this scope. New runtime requires concrete Main decision after frozen source and delta review.",
+  "forbidden": "No SQL upgrade, plan recompile, full writer diagnostic, APP rebuild/deploy, public opening, old job replay, rewriting original business IDs or history, fabricated live proof."
+}

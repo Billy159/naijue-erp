@@ -1,0 +1,15 @@
+{
+  "state": "SOURCE44_MINIMAL_READABILITY_PREFLIGHT_SOURCE_ADDITION_ONLY",
+  "scopeSha256": "2ee1c9f2b8178f05131dbc40965dd2cf94378f8191427047d0f9cb2ad1b709a3",
+  "reason": "Root08 mkdir/write mode arguments are affected by unrecorded umask. Original receipts do not prove effective ordinary access. Root readability alone is insufficient.",
+  "sourceOwner": "D1 Root fresh source; T45 provides exact describe dependency and readonly-mount mapping, owns consumer only.",
+  "requiredBeforeClockCASPGOrStart": "Metadata and fixed61035/empty-groups access checks for only actual describe source/ref/installation/current-proof/node/dependencies and ancestor traversal using exact host/container mount mapping. No Node, describe, PostgreSQL or business plan execution. Actual current proof publication remains live Start contract; preexisting corresponding projection parents/files can be checked before Start.",
+  "constraints": [
+    "No chmod/chown of existing trees or relaxation of Root08 loader guards",
+    "No secret/profile/password/verifier/raw initializer/SQLite body access",
+    "No new permission framework, whole-machine scan or unrelated checks",
+    "Failure returns concrete unmet path/permission fact to Main before starting a new service; do not consume new Start job knowingly",
+    "Static source permissions and actual effective access must be reported separately"
+  ],
+  "serverFreshCurrentlyAuthorized": false
+}

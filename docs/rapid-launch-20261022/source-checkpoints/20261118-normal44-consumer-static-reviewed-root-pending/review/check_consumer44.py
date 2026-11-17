@@ -1,0 +1,84 @@
+"""New Source44 delta only; bytes/AST and pure closed diagnostic filtering."""
+from pathlib import Path
+import ast,copy,hashlib,json,re
+R=Path(__file__).resolve().parents[3];OUT=Path(__file__).resolve().parent
+V=R/'outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01'
+D=V/'NORMAL44-FULL-DATA-CONTINUATION-SOURCE-01';O=V/'NORMAL43-FULL-DATA-CONTINUATION-SOURCE-02'
+E=V/'NORMAL44-EXECUTION-CONSUMER-01';A=V/'NORMAL44-STATIC-ADAPTER-SOURCE-01';AO=V/'NORMAL43-STATIC-ADAPTER-SOURCE-04'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();dump=lambda n:ast.dump(n,include_attributes=False);checks=[]
+def ck(n,v):
+ assert v,n
+ checks.append(n)
+def tree(p):return ast.parse(p.read_bytes())
+def funcs(p):return {n.name:n for n in tree(p).body if isinstance(n,ast.FunctionDef)}
+def constants(p):
+ out={}
+ for n in tree(p).body:
+  if isinstance(n,ast.Assign)and len(n.targets)==1 and isinstance(n.targets[0],ast.Name):
+   try:out[n.targets[0].id]=ast.literal_eval(n.value)
+   except (ValueError,TypeError):pass
+ return out
+scope_dir=R/'outputs/主控/20261118-r3-after43-source44-scope-01'
+scope=json.loads((scope_dir/'SOURCE-SCOPE.json').read_bytes())
+ck('Exact Main44 scope and both source-only history readability additions',sha(scope_dir/'SOURCE-SCOPE.json')=='2ee1c9f2b8178f05131dbc40965dd2cf94378f8191427047d0f9cb2ad1b709a3'and(scope_dir/'HISTORY-INTERFACE-CLARIFICATION-01.json').is_file()and(scope_dir/'ORDINARY-READABILITY-FRESH-ADDENDUM-01.json').is_file()and scope['serverFreshClockIssuerCASPGOrWriterCurrentlyAuthorized']is False)
+sp=json.loads((D/'SOURCE-PINS.json').read_bytes());i=json.loads((D/'INTERFACE.UNISSUED.json').read_bytes());oldi=json.loads((O/'INTERFACE.UNISSUED.json').read_bytes());ph=json.loads((D/'PHASES44.UNISSUED.json').read_bytes())
+ck('Frozen Source44 exact75 members and source400b interfaceaabab phasesb739',sha(D/'SOURCE-PINS.json')=='400ba4ebd1a622875ab6c2ebf6508f4b3d5d542ae12de433833c254f5f018ef5'and len(sp['files'])==75 and sha(D/'INTERFACE.UNISSUED.json')=='aabab11c159d5917a759750a93d337080b4ab54c507326b5552ba7a354f4dece'and sha(D/'PHASES44.UNISSUED.json')=='b739f20a3c0d95b87b98ef34d950bc452be4427687589d8bb386b18865511032'and all(sha(D/n)==p['sha256']and(D/n).stat().st_size==p['bytes']for n,p in sp['files'].items()))
+ck('Only five new selected transport keys from actual132 to137 with old budgets',i['phaseOrder']==scope['phaseOrder']==['apply','start','writer','stop','restore']and{k:v['jobId']for k,v in i['jobs'].items()}==scope['jobs']and i['oldProtectedKeys']==132 and i['candidateRootKeys']==137 and i['actualRootDispatcherSha256']==scope['actualBeforeDispatcherSha256']and i['parentBudgetSeconds']==5100 and i['minimumAvailableBytes']==30064771072 and all(i['jobs'][p]['timeoutSeconds']==scope['phaseBudgetsSeconds'][p]for p in i['jobs']))
+ck('Five phase manifests exact current source files and no issued AUTH',all(rule['bundlePins']==ph['jobs'][p]['bundlePins']and rule['bundlePins']=={f.name:sha(f)for f in(D/p/'bundle').iterdir()if f.is_file()}and not(D/p/'bundle'/rule['authorityLeaf']).exists()for p,rule in i['jobs'].items()))
+ei=json.loads((E/'INTERFACE.UNISSUED.json').read_bytes());expected=copy.deepcopy(i);expected['sourceDirectory']=str(E)
+for p in expected['jobs']:expected['jobs'][p]['sourceDirectory']=str(E/p/'bundle')
+ck('Execution clone changes only six exact sourceDirectory paths',ei==expected and sha(E/'INTERFACE.UNISSUED.json')=='54b93a038626a6492f8d3155c6b7483ea01dbc8c94be92f2a2d50d1695c20309'and all((D/n).read_bytes()==(E/n).read_bytes()for n in sp['files']if n!='INTERFACE.UNISSUED.json'))
+B=D/'start/bundle';OB=O/'start/bundle';py=B/'start_owned_describe.py';pf=funcs(py);of=funcs(OB/'start_owned_describe.py');pt=py.read_text();pc=constants(py)
+capture=ast.get_source_segment(pt,pf['capture']);inside=ast.get_source_segment(pt,pf['inside']);run=ast.get_source_segment(pt,pf['run'])
+oldcapture=ast.get_source_segment((OB/'start_owned_describe.py').read_text(),of['capture'])
+expectedcap=oldcapture.replace('*,descendants=False):','*,descendants=False,ordinary=False):').replace("start_new_session=True)","start_new_session=True,\n        **({'user':61035,'group':61035,'extra_groups':[]} if ordinary else {}))")
+ck('Capture changes only explicit ordinary child credentials preserving cleanup algorithm',capture==expectedcap)
+ck('Root supervisor remains root with subreaper and bounded IO while only Node ordinary',all(x in inside for x in ('os.getuid()==os.geteuid()==os.getgid()==os.getegid()==0','prctl(36,1,0,0,0)','descendants=True,ordinary=True',"str(PROJECTION/'final-execution-describe.mjs')"))and"'/usr/bin/docker','exec','-i','--user','0:0'"in run and 'ordinary=True'not in run)
+stage=ast.get_source_segment(pt,pf['stage_projection']);meta=ast.get_source_segment(pt,pf['projection_metadata']);anc=ast.get_source_segment(pt,pf['ordinary_ancestors'])
+ck('Unique root61035 projection parent and selected start directory explicitly0710',all(x in stage for x in ("parent=ROOT/'state/final33-private'","os.chown(parent,0,61035);parent.chmod(0o710)","target=parent/SERVICE","not os.path.lexists(target)","os.chown(target,0,61035);target.chmod(0o710)"))and '0o710 if directory else 0o440'in meta)
+ck('Exactly generator helper witness projected with immutable SHA and root61035 0440',all(x in stage for x in ("('final-execution-describe.mjs',RUNNER_SHA)","('final33-run.mjs',HELPER_SHA)","('historical-prepare05.json',WITNESS_SHA)","ops.new_file(target/name,raw,0o440);os.chown(target/name,0,61035)","sha(raw)==pin"))and pc['RUNNER_SHA']==sha(B/'final-execution-describe.mjs')and pc['HELPER_SHA']==sha(B/'final33-run.mjs')and pc['WITNESS_SHA']==sha(B/'historical-prepare05.json'))
+carrierfunc=funcs(B/'fresh35-production-carrier.py')['new_file'];carrierbody=ast.get_source_segment((B/'fresh35-production-carrier.py').read_text(),carrierfunc)
+ck('Existing file writer explicitly fchmod ensures0440 independent of inherited umask','os.fchmod(fd,mode)'in carrierbody and 'os.O_EXCL|os.O_NOFOLLOW'in carrierbody)
+ck('Projection metadata enforces canonical exact ownership mode nlink and real ancestor traverse',all(x in meta for x in ('path.resolve()==path','s.st_nlink==1','(s.st_uid,s.st_gid,stat.S_IMODE(s.st_mode))==(0,61035','ordinary_ancestors(path)'))and all(x in anc for x in ('parent.resolve()==parent','s.st_uid==0','not s.st_mode&0o022','0o010 if s.st_gid==61035 else 0o001',"if parent==ROOT/'state':break")))
+ck('Inside verifies exact three files and hashes before Node dispatch',inside.index('DESCRIBE_EXACT_THREE_PROJECTION_FILES_REQUIRED')<inside.index('value=capture(')and inside.index('DESCRIBE_PROJECTION_SOURCE_DIFFERS')<inside.index('value=capture('))
+guardian=B/'normal_service05_after08.py';gf=funcs(guardian);ogf=funcs(OB/'normal_service05_after08.py');gt=guardian.read_text()
+ck('Guardian ownership shutdown lease and failed-start code unchanged',set(gf)==set(ogf)and all(dump(n)==dump(gf[k])for k,n in ogf.items()if k!='host'))
+host=ast.get_source_segment(gt,gf['host']);owned=ast.get_source_segment(gt,gf['owned_05']);mount=ast.get_source_segment((B/'r3_05_runtime.py').read_text(),funcs(B/'r3_05_runtime.py')['add_mounts_before_original_capacity'])
+ck('Only one additional readonly projection bind is appended before original container creation',host.count('mounts.append(describe.stage_projection(ops,boot))')==1 and host.index('mounts.append(describe.stage_projection(ops,boot))')<host.index('cid=None'))
+ck('Original mount verifier checks actual source target readonly and duplicates',"(m['source'],False)"in owned and 'seen==expected'in owned and "target not in seen and mount['Type']=='bind'"in owned and "item['readonly'] is True"in mount and "item['source'],item['target'],True"in mount)
+ck('No BOOT auth original plan permissions widened by new projection function',all(x not in stage for x in ('boot.chmod','boot.chown','password','profile.json','original-initializer.json','batched-plan.sqlite','roles-authorization.json','service-start-authorization.json')))
+js=(B/'final-execution-describe.mjs').read_text();oldjs=(OB/'final-execution-describe.mjs').read_text();helper=(B/'final33-run.mjs').read_text();oldhelper=(OB/'final33-run.mjs').read_text()
+ck('JS ordinary entry exactly61035 and no supplementary group expansion',"every(x=>x===61035)&&process.getgroups().every(x=>x===61035)"in js and "fileURLToPath(import.meta.url)===PROJECTION+'/final-execution-describe.mjs'"in js and "PROJECTION+'/historical-prepare05.json'"in js and 'BOOT+'not in js)
+ck('Pure helper import remains guarded and business helper code unchanged except transport key',helper==oldhelper.replace('t45-r3-batched-real-after42-execute-20261118-01','t45-r3-batched-real-after43-execute-20261118-01')and "if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))"in helper)
+ck('Original fresh binding and original plan evidence comparisons retained',all(x in js for x in ('api.describeFresh35FinalExecutionBinding(','expectedBinding.preparedBindingSha256===requestHash(historical.preparedBinding)',"'FINAL44_DESCRIBE_ORIGINAL_PLAN_CHANGED'",'a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e','aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17','ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9'))and 'runFinalR3Writer03('not in js and 'runFinalR3Prepare03('not in js)
+jslist=lambda name:ast.literal_eval(re.search(r'const '+name+r'=Object\.freeze\((\[[^;]+\])\);',js).group(1))
+ck('JS and Python closed guard stage and type system diagnostic sets agree',set(pc['GUARD_CODES'])==set(jslist('GUARDS'))|{'UNKNOWN'}and set(pc['SYSTEM_CODES'])==set(ast.literal_eval(re.search(r'const FAILURE_SYSTEM_CODES=Object\.freeze\((\[[^;]+\])\);',helper).group(1)))|{'UNKNOWN'})
+safejs=js[js.index('function safeFailure(error)'):js.index('try{process.stdout.write')]
+ck('JS safe diagnostics emit only enums and one mapped positive source frame',all(x in safejs for x in ("types.isNativeError(error)","Object.getOwnPropertyDescriptor(error,key)","STAGES.includes(stage)?stage:'UNKNOWN'","GUARDS.includes(message)?message:'UNKNOWN'","FRAMES.find(([path])=>path===frame[1])","Number.isSafeInteger(row)&&row>0","Number.isSafeInteger(column)&&column>0","sourceFrame={module,line:row,column}"))and not re.search(r'[{,]\s*(message|stack|cause)\s*:',safejs))
+env={k:pc[k]for k in ('ERROR_TYPES','SYSTEM_CODES','GUARD_CODES','SOURCE_MODULES')}
+exec(compile(ast.Module(body=[pf['safe_native_failure']],type_ignores=[]),'<pure-safe-diagnostic-filter>','exec'),env)
+safe=env['safe_native_failure'];value={'safeCode':'FINAL44_EXECUTION_DESCRIPTION_UNCONFIRMED','errorType':'TypeError','systemCode':'EACCES','guardCode':'UNKNOWN','stage':'SOURCE_IMPORT','sourceFrame':{'module':'RECORD','line':7,'column':3},'message':'PRIVATE_SENTINEL','stack':'PRIVATE_SENTINEL','cause':'PRIVATE_SENTINEL','password':'PRIVATE_SENTINEL'}
+filtered=safe(value)
+ck('Python pure filter preserves only approved fields and never raw secret sentinels',set(filtered)=={'safeCode','errorType','systemCode','guardCode','stage','sourceFrame'}and'PRIVATE_SENTINEL'not in json.dumps(filtered))
+ck('Python filter refuses arbitrary enums paths oversized or boolean source coordinates',safe({'safeCode':'PRIVATE_SENTINEL','errorType':'PRIVATE_SENTINEL','systemCode':'PRIVATE_SENTINEL','guardCode':'PRIVATE_SENTINEL','stage':'PRIVATE_SENTINEL','sourceFrame':{'module':'/private/path','line':1,'column':1}})=={}and'sourceFrame'not in safe({'sourceFrame':{'module':'RECORD','line':True,'column':1}})and'sourceFrame'not in safe({'sourceFrame':{'module':'RECORD','line':9007199254740992,'column':1}}))
+ck('Diagnostics remain outside descriptor and failures cannot become successful four leaves',"if value['exitCode']!=0 and isinstance(native,dict):value.update(safe_native_failure(native))"in inside and "process['exitCode']==0"in run and run.index("process['exitCode']==0")<run.index("native_raw=stored")and "'safeCode'"not in js[js.index('stage=\'RESULT\''):js.index("const HISTORICAL_WITNESS_PIN")])
+ck('Historical42 success proof unchanged and failed43 is separate evidence only',i['priorService']==oldi['priorService']and i['previousStartBindings']==oldi['previousStartBindings']and all((B/n).read_bytes()==(OB/n).read_bytes()for n in ('prior_preserved38.py','closed40_history.py','closed41_history.py','successful39_history.py','historical-prepare05.json','source-catalog-lineage.json','after42-source-catalog-lineage.json'))and i['closed43IndependentEvidence']['successfulStartClaimed']is False and i['closed43IndependentEvidence']['successfulStopJobClaimed']is False and i['closed43IndependentEvidence']['writerNeverSubmitted']is True)
+ck('Actual ordinary readability explicitly unverified and mandatory before clocks CAS PG',i['describeIdentityProjection']['runtimeVerified']is False and i['ordinaryReadabilityBeforeRuntime']['actualCurrentMetadataVerified']is False and i['ordinaryReadabilityBeforeRuntime']['failureMustStopWithoutPermissionChanges']is True and i['ordinaryReadabilityBeforeRuntime']['noPrivatePlanInitializerOrAuthBodyAccess']is True and i['ordinaryReadabilityBeforeRuntime']['sourceModeArgumentIsNotActualModeEvidence']is True)
+ap=json.loads((A/'SOURCE-PINS.json').read_bytes())
+ck('Frozen static44 exact eight files and consumer source binding',sha(A/'SOURCE-PINS.json')=='a7a4ab6d64d2f753e3bf114213fb3c92cc23e6b51ffff7519551f42fdbdc5807'and len(ap['files'])==8 and ap['consumerSourcePinsSha256']==sha(D/'SOURCE-PINS.json')and all(sha(A/n)==p['sha256']and(A/n).stat().st_size==p['bytes']for n,p in ap['files'].items()))
+for n in ('bind_actual44_context.py','read_start44.remote.py','read_stop_basis44.template.py'):
+ ck('Static and frozen consumer same '+n,(A/n).read_bytes()==(D/n).read_bytes())
+wrapper=(A/'read_original_key44.py').read_text();binder=(A/'bind_actual44_context.py').read_text()
+ck('Static wrapper original loader exact and new RootPrep01 ExecPrep01 clone path references',all(x in wrapper for x in ('42943d8124fa43c217ffa5b7e85d27684290d3938bb18212e1589253fc6886f8','NORMAL44-EXECUTION-CONSUMER-01','NORMAL44-EXECUTION-PREPARATION-01',"pins['files']['phase_cli.py']['sha256']"))and"ROOT_PREP=V/'NORMAL44-ROOT-EXECUTION-PREPARATION-01'"in binder)
+# Explicit mapping checks ensure only the successor identities and labels change.
+replacements=[('t45-r3-batched-real-after42-execute-20261118-01','t45-r3-batched-real-after43-execute-20261118-01'),('ordinary43-','ordinary44-'),('20261118-43','20261118-44'),('service-43','service-44'),('r3-service-43','r3-service-44'),('NORMAL43-FULL-DATA-CONTINUATION-SOURCE-02','NORMAL44-FULL-DATA-CONTINUATION-SOURCE-01'),('NORMAL43-EXECUTION-PREPARATION-02','NORMAL44-EXECUTION-PREPARATION-01'),('NORMAL43-EXECUTION-CONSUMER-02','NORMAL44-EXECUTION-CONSUMER-01'),('NORMAL43-ROOT-EXECUTION-PREPARATION-03','NORMAL44-ROOT-EXECUTION-PREPARATION-01'),('r3_normal43_continuation.py','r3_normal44_continuation.py'),('direct43-batched-real','direct44-batched-real'),('read_stop_basis43','read_stop_basis44'),("read_'+phase+'43.remote.py","read_'+phase+'44.remote.py"),('START43','START44'),('CURRENT43','CURRENT44')]
+for p in A.glob('*.py'):
+ q=AO/p.name.replace('44','43')
+ if not q.exists():q=O/p.name.replace('44','43')
+ expected=q.read_text()
+ for a,b in replacements:expected=expected.replace(a,b)
+ ck('Adapter successor only exact key path labels '+p.name,expected==p.read_text())
+report=dict(state='PASS_SCOPED_SOURCE_ONLY',scope='SOURCE44_CONSUMER_AND_STATIC_NECESSARY_NEW_IDENTITY_PROJECTION_DIAGNOSTIC_DELTA_ONLY',sourceOnly=True,sourcePinsSha256=sha(D/'SOURCE-PINS.json'),interfaceSha256=sha(D/'INTERFACE.UNISSUED.json'),phaseBlueprintSha256=sha(D/'PHASES44.UNISSUED.json'),adapterSourcePinsSha256=sha(A/'SOURCE-PINS.json'),executionInterfaceSha256=sha(E/'INTERFACE.UNISSUED.json'),rootPairReviewComplete=False,adapterReviewComplete=True,findings=[],checks=checks,independentDeltaChecks=len(checks),ownerDeltaChecksReused=53,previousAcceptedSQLPlanAPPAndSourceChecksReused=True,ordinarySourceReadabilityActualPass=False,ordinaryReadabilityFutureFreshRequired=True,mandatoryRootFollowup='D1 must independently verify exact selected Root08 source/reference/installation/node/dependency ancestors and host/container mount map using fixed61035 empty supplementary groups before clock CAS PG or Start. Root-readable and requested mode are insufficient. Preserve private guards and stop on actual failure.',runtimeAcceptance=False,serverActions=0,PGConnections=0,clockCalls=0,issuerCalls=0,NodeRuns=0,rootFactoryExecuted=False,readerExecuted=False,positiveRuntimeFixtureCreated=False,writerSubmissions=0,initializerBodyRead=False)
+p=OUT/'CONSUMER-RESULT.json'
+with p.open('x')as f:f.write(json.dumps(report,ensure_ascii=False,sort_keys=True,indent=2)+'\n')
+print(json.dumps(dict(path=str(p),sha256=sha(p),checks=len(checks))))

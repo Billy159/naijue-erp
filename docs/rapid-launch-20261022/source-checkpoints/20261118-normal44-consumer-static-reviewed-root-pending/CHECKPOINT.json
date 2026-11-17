@@ -1,0 +1,567 @@
+{
+  "state": "NORMAL44_CONSUMER_STATIC_SOURCE_PASSED_ROOT_MAIN_PENDING",
+  "asOf": "2026-11-17T19:14:15.264539+00:00",
+  "rootCurrent": 132,
+  "rootCandidate": 137,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "normal43WriterSubmitted": false,
+  "source44RuntimeAuthorized": false,
+  "SQLUpgrade42Completed": true,
+  "consumerSourcePinsSha256": "400ba4ebd1a622875ab6c2ebf6508f4b3d5d542ae12de433833c254f5f018ef5",
+  "consumerReviewSha256": "860d26a7a525357574f9be27068db8a26b5fae14a4c275799196fd97e09f2251",
+  "source44RootReviewComplete": false,
+  "source43CompleteImportPerformed": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Source44 consumer400b/static a7a4 independently passed860d44 checks; Root/Main successor from actual132 still being finalized. Need accurate STATE/DEPLOY/DEPS mapped-bind ordinary-access preflight source and static import resolution judgment, then QB only Root delta. No runtime clock/AUTH/server fresh/CAS/Node/PG/job authorized yet. Original44910-step plan, SQL42 afterAda, business IDs/stock cutoff11:40 unchanged. Business import/APP deployment/public opening not completed.",
+  "copies": [
+    {
+      "originalPath": "consumer44/SOURCE-PINS.json",
+      "storedPath": "consumer44/SOURCE-PINS.json",
+      "sha256": "400ba4ebd1a622875ab6c2ebf6508f4b3d5d542ae12de433833c254f5f018ef5",
+      "bytes": 11869
+    },
+    {
+      "originalPath": "consumer44/DELTA44-CHECK-RESULT.json",
+      "storedPath": "consumer44/DELTA44-CHECK-RESULT.json",
+      "sha256": "b77fcb92cf1efcf5e43a5218f9c8d68c13f2b759800d1b59450d22ae327c625f",
+      "bytes": 2932
+    },
+    {
+      "originalPath": "consumer44/HANDOFF.md",
+      "storedPath": "consumer44/HANDOFF.md",
+      "sha256": "b82f76036405541a2745dc80cbe66cd54ce16698551a3812f361e9e04400b06a",
+      "bytes": 205
+    },
+    {
+      "originalPath": "consumer44/INTERFACE.UNISSUED.json",
+      "storedPath": "consumer44/INTERFACE.UNISSUED.json",
+      "sha256": "aabab11c159d5917a759750a93d337080b4ab54c507326b5552ba7a354f4dece",
+      "bytes": 42384
+    },
+    {
+      "originalPath": "consumer44/KEYS.UNISSUED.json",
+      "storedPath": "consumer44/KEYS.UNISSUED.json",
+      "sha256": "a21017f23e0207347b4dcdd6a979b9d6bd662556e130f0c09503d013fcc9e7a7",
+      "bytes": 297
+    },
+    {
+      "originalPath": "consumer44/PHASES44.UNISSUED.json",
+      "storedPath": "consumer44/PHASES44.UNISSUED.json",
+      "sha256": "b739f20a3c0d95b87b98ef34d950bc452be4427687589d8bb386b18865511032",
+      "bytes": 7945
+    },
+    {
+      "originalPath": "consumer44/PRIOR42-HISTORICAL-EVIDENCE.json",
+      "storedPath": "consumer44/PRIOR42-HISTORICAL-EVIDENCE.json",
+      "sha256": "d5c4428f29bc03d03cdb846d0eebd2ed80ecc618a6f4f61f575f6782ae9dadef",
+      "bytes": 2340
+    },
+    {
+      "originalPath": "consumer44/READABILITY-AND-CALL-DELTA.md",
+      "storedPath": "consumer44/READABILITY-AND-CALL-DELTA.md",
+      "sha256": "d6ad2095538bcddaffc5918e116ae09857dcaaaac12a23069cc09ac52f45358c",
+      "bytes": 3150
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/closed40_history.py",
+      "storedPath": "consumer44/apply/bundle/closed40_history.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/closed41_history.py",
+      "storedPath": "consumer44/apply/bundle/closed41_history.py",
+      "sha256": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+      "bytes": 7827
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer44/apply/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/normal_service04.py",
+      "storedPath": "consumer44/apply/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/normal_service04_proof.py",
+      "storedPath": "consumer44/apply/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/ordinary05_roles.py",
+      "storedPath": "consumer44/apply/bundle/ordinary05_roles.py",
+      "sha256": "16fdf4a0f75910797ae225a22edf3e6a310fdc814c29562272fa598d8ba208e4",
+      "bytes": 21656
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/ordinary05_roles_job.py",
+      "storedPath": "consumer44/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "1aedea9a940d210a53c284d622fcf2e1ed3bb47de1e3db37bc89f203bb434aca",
+      "bytes": 33577
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/prior_preserved38.py",
+      "storedPath": "consumer44/apply/bundle/prior_preserved38.py",
+      "sha256": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+      "bytes": 8281
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/root06_material.py",
+      "storedPath": "consumer44/apply/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer44/apply/bundle/successful39_history.py",
+      "storedPath": "consumer44/apply/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer44/bind_actual44_context.py",
+      "storedPath": "consumer44/bind_actual44_context.py",
+      "sha256": "fa143a437fdc07c96077b4a54c23f87c52c5081cd43bbab1299a42855ab35518",
+      "bytes": 8396
+    },
+    {
+      "originalPath": "consumer44/check_delta44.py",
+      "storedPath": "consumer44/check_delta44.py",
+      "sha256": "c4464bdfd5f4b9959078806d0fa03687a56e64bd24f3bec3403151851ffbc369",
+      "bytes": 9981
+    },
+    {
+      "originalPath": "consumer44/phase_cli.py",
+      "storedPath": "consumer44/phase_cli.py",
+      "sha256": "72d1e3bc64b57b60c585e5ce4be5ad0681bf6e2fd5d5d0aae29836c0601218ad",
+      "bytes": 5295
+    },
+    {
+      "originalPath": "consumer44/read_phase.py",
+      "storedPath": "consumer44/read_phase.py",
+      "sha256": "90b9bc3889bc35bf9dc902eadf06411329db0f8e16bb8f080cda5ed576d487e8",
+      "bytes": 3966
+    },
+    {
+      "originalPath": "consumer44/read_start44.remote.py",
+      "storedPath": "consumer44/read_start44.remote.py",
+      "sha256": "61d6b6118dd070b2f00703273ef7225dc53fa94ff33c8682fea03d02a3135a00",
+      "bytes": 12749
+    },
+    {
+      "originalPath": "consumer44/read_stop_basis44.template.py",
+      "storedPath": "consumer44/read_stop_basis44.template.py",
+      "sha256": "3972fac31a35b1a6022b090eff778ce96460d73086c3673f6cc5c2e617cca482",
+      "bytes": 12653
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/closed40_history.py",
+      "storedPath": "consumer44/restore/bundle/closed40_history.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/closed41_history.py",
+      "storedPath": "consumer44/restore/bundle/closed41_history.py",
+      "sha256": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+      "bytes": 7827
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer44/restore/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/normal_service04.py",
+      "storedPath": "consumer44/restore/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/normal_service04_proof.py",
+      "storedPath": "consumer44/restore/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/ordinary05_roles.py",
+      "storedPath": "consumer44/restore/bundle/ordinary05_roles.py",
+      "sha256": "16fdf4a0f75910797ae225a22edf3e6a310fdc814c29562272fa598d8ba208e4",
+      "bytes": 21656
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/ordinary05_roles_job.py",
+      "storedPath": "consumer44/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "1aedea9a940d210a53c284d622fcf2e1ed3bb47de1e3db37bc89f203bb434aca",
+      "bytes": 33577
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/prior_preserved38.py",
+      "storedPath": "consumer44/restore/bundle/prior_preserved38.py",
+      "sha256": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+      "bytes": 8281
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/root06_material.py",
+      "storedPath": "consumer44/restore/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer44/restore/bundle/successful39_history.py",
+      "storedPath": "consumer44/restore/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer44/start/bundle/after42-source-catalog-lineage.json",
+      "storedPath": "consumer44/start/bundle/after42-source-catalog-lineage.json",
+      "sha256": "cc6e6544cf3c99b62c837675c7b92452af95d6f7cdbbaff72d28dcfac739c5b6",
+      "bytes": 4595
+    },
+    {
+      "originalPath": "consumer44/start/bundle/batched161-run.mjs",
+      "storedPath": "consumer44/start/bundle/batched161-run.mjs",
+      "sha256": "0f45396df7aec8bac9651591c685b30f7d318066feffb0f7f4e98df592855af6",
+      "bytes": 23971
+    },
+    {
+      "originalPath": "consumer44/start/bundle/catalog-successor-run.mjs",
+      "storedPath": "consumer44/start/bundle/catalog-successor-run.mjs",
+      "sha256": "468c3f96241bd1341887c61f3b358ba6db60c3e3d49bc73e40559de1e067d8a8",
+      "bytes": 19380
+    },
+    {
+      "originalPath": "consumer44/start/bundle/closed40_history.py",
+      "storedPath": "consumer44/start/bundle/closed40_history.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer44/start/bundle/closed41_history.py",
+      "storedPath": "consumer44/start/bundle/closed41_history.py",
+      "sha256": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+      "bytes": 7827
+    },
+    {
+      "originalPath": "consumer44/start/bundle/final-execution-describe.mjs",
+      "storedPath": "consumer44/start/bundle/final-execution-describe.mjs",
+      "sha256": "7ccbc7f50abf8ce5d92eff0a9d145219a0abb14a40a8103ba798241006b293c1",
+      "bytes": 8878
+    },
+    {
+      "originalPath": "consumer44/start/bundle/final33-run.mjs",
+      "storedPath": "consumer44/start/bundle/final33-run.mjs",
+      "sha256": "d2f652caf7bad65a426c46482507d2b518ee3a769681b9da167aa5260e756f9f",
+      "bytes": 18091
+    },
+    {
+      "originalPath": "consumer44/start/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer44/start/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer44/start/bundle/historical-prepare05.json",
+      "storedPath": "consumer44/start/bundle/historical-prepare05.json",
+      "sha256": "78fcd3f7811343615343f6c59c841fe06a70aaadeeee3a41a6845abe26d86ee2",
+      "bytes": 5988
+    },
+    {
+      "originalPath": "consumer44/start/bundle/historical_source_lineage.py",
+      "storedPath": "consumer44/start/bundle/historical_source_lineage.py",
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+      "bytes": 6431
+    },
+    {
+      "originalPath": "consumer44/start/bundle/normal_service05_after08.py",
+      "storedPath": "consumer44/start/bundle/normal_service05_after08.py",
+      "sha256": "39b4fdc6d5993dec8ad5e6c3f58a9c8297c1f269df86644d53159476c4d42aec",
+      "bytes": 59831
+    },
+    {
+      "originalPath": "consumer44/start/bundle/normal_service05_after08_proof.py",
+      "storedPath": "consumer44/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "a35fc433d7f07ffccc8a6c2c7d24072b3f3b0f06c65f953af9c87df3222b2666",
+      "bytes": 18424
+    },
+    {
+      "originalPath": "consumer44/start/bundle/operator-host.mjs",
+      "storedPath": "consumer44/start/bundle/operator-host.mjs",
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+      "bytes": 72238
+    },
+    {
+      "originalPath": "consumer44/start/bundle/operator-manifest.json",
+      "storedPath": "consumer44/start/bundle/operator-manifest.json",
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+      "bytes": 48490
+    },
+    {
+      "originalPath": "consumer44/start/bundle/operator-stream-import-cli.mjs",
+      "storedPath": "consumer44/start/bundle/operator-stream-import-cli.mjs",
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "bytes": 26499
+    },
+    {
+      "originalPath": "consumer44/start/bundle/operator-stream-program.mjs",
+      "storedPath": "consumer44/start/bundle/operator-stream-program.mjs",
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "bytes": 10302
+    },
+    {
+      "originalPath": "consumer44/start/bundle/prior_preserved38.py",
+      "storedPath": "consumer44/start/bundle/prior_preserved38.py",
+      "sha256": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+      "bytes": 8281
+    },
+    {
+      "originalPath": "consumer44/start/bundle/production-plan.json",
+      "storedPath": "consumer44/start/bundle/production-plan.json",
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+      "bytes": 747
+    },
+    {
+      "originalPath": "consumer44/start/bundle/r3_05_cli.py",
+      "storedPath": "consumer44/start/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "bytes": 7052
+    },
+    {
+      "originalPath": "consumer44/start/bundle/r3_05_readonly.py",
+      "storedPath": "consumer44/start/bundle/r3_05_readonly.py",
+      "sha256": "d96325b49722c54c48d6cf3d71f112ca40d532d60f717b69255f992c9ef8cd89",
+      "bytes": 21247
+    },
+    {
+      "originalPath": "consumer44/start/bundle/r3_05_runtime.py",
+      "storedPath": "consumer44/start/bundle/r3_05_runtime.py",
+      "sha256": "e9e13ae1bf4db8c3b318299ff364002868452d1b20de25b5634334b904c58fc9",
+      "bytes": 9394
+    },
+    {
+      "originalPath": "consumer44/start/bundle/root06_material.py",
+      "storedPath": "consumer44/start/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer44/start/bundle/root07_material.py",
+      "storedPath": "consumer44/start/bundle/root07_material.py",
+      "sha256": "023f938955d392fd5d8ddf4015cffad039caf29afd708b7d2ec863dec7c1e742",
+      "bytes": 2645
+    },
+    {
+      "originalPath": "consumer44/start/bundle/root08_material.py",
+      "storedPath": "consumer44/start/bundle/root08_material.py",
+      "sha256": "9554e7c88abe6b36f4fb98e493f5ddd39cc81c220aaa853944a04b4b21b95685",
+      "bytes": 757
+    },
+    {
+      "originalPath": "consumer44/start/bundle/source-catalog-lineage.json",
+      "storedPath": "consumer44/start/bundle/source-catalog-lineage.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "bytes": 5684
+    },
+    {
+      "originalPath": "consumer44/start/bundle/source_lineage.py",
+      "storedPath": "consumer44/start/bundle/source_lineage.py",
+      "sha256": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da",
+      "bytes": 4993
+    },
+    {
+      "originalPath": "consumer44/start/bundle/start_owned_describe.py",
+      "storedPath": "consumer44/start/bundle/start_owned_describe.py",
+      "sha256": "6c0be2f176409f00ada158a8dbf6f17b4915aca5228503957f75b674f2e351e5",
+      "bytes": 18357
+    },
+    {
+      "originalPath": "consumer44/start/bundle/successful39_history.py",
+      "storedPath": "consumer44/start/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer44/stop/bundle/normal05_preserve_stop.py",
+      "storedPath": "consumer44/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "c12305f5b6a31a33e273020fde576554c090316081e02f6b2f4b226bc891e5f7",
+      "bytes": 20557
+    },
+    {
+      "originalPath": "consumer44/stop/bundle/normal05_retained_stop.py",
+      "storedPath": "consumer44/stop/bundle/normal05_retained_stop.py",
+      "sha256": "62a194a84ca2e177823db4e1da3efdb69b015a149d4cbb4878879551ce145868",
+      "bytes": 20970
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/after42-source-catalog-lineage.json",
+      "storedPath": "consumer44/writer/bundle/after42-source-catalog-lineage.json",
+      "sha256": "cc6e6544cf3c99b62c837675c7b92452af95d6f7cdbbaff72d28dcfac739c5b6",
+      "bytes": 4595
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/final33-run.mjs",
+      "storedPath": "consumer44/writer/bundle/final33-run.mjs",
+      "sha256": "d2f652caf7bad65a426c46482507d2b518ee3a769681b9da167aa5260e756f9f",
+      "bytes": 18091
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/final33_host.py",
+      "storedPath": "consumer44/writer/bundle/final33_host.py",
+      "sha256": "45dbc76da420272ffd55a36a50fc0883080ddc05f0145fd2647dba005d01d3f3",
+      "bytes": 54086
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer44/writer/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "bytes": 187609
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/historical-prepare05.json",
+      "storedPath": "consumer44/writer/bundle/historical-prepare05.json",
+      "sha256": "78fcd3f7811343615343f6c59c841fe06a70aaadeeee3a41a6845abe26d86ee2",
+      "bytes": 5988
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/historical_source_lineage.py",
+      "storedPath": "consumer44/writer/bundle/historical_source_lineage.py",
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+      "bytes": 6431
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/nonroot_input_access.py",
+      "storedPath": "consumer44/writer/bundle/nonroot_input_access.py",
+      "sha256": "dd998ca17ebb2510ba9dfd2d84f10c6dae044862a64a0aa36798263c4f6b860e",
+      "bytes": 17754
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/normal05_retained_stop.py",
+      "storedPath": "consumer44/writer/bundle/normal05_retained_stop.py",
+      "sha256": "62a194a84ca2e177823db4e1da3efdb69b015a149d4cbb4878879551ce145868",
+      "bytes": 20970
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/r3_05_cli.py",
+      "storedPath": "consumer44/writer/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "bytes": 7052
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/r3_05_runtime.py",
+      "storedPath": "consumer44/writer/bundle/r3_05_runtime.py",
+      "sha256": "e9e13ae1bf4db8c3b318299ff364002868452d1b20de25b5634334b904c58fc9",
+      "bytes": 9394
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/source-catalog-lineage.json",
+      "storedPath": "consumer44/writer/bundle/source-catalog-lineage.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "bytes": 5684
+    },
+    {
+      "originalPath": "consumer44/writer/bundle/source_lineage.py",
+      "storedPath": "consumer44/writer/bundle/source_lineage.py",
+      "sha256": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da",
+      "bytes": 4993
+    },
+    {
+      "originalPath": "static44/SOURCE-PINS.json",
+      "storedPath": "static44/SOURCE-PINS.json",
+      "sha256": "a7a4ab6d64d2f753e3bf114213fb3c92cc23e6b51ffff7519551f42fdbdc5807",
+      "bytes": 1385
+    },
+    {
+      "originalPath": "static44/bind_actual44_context.py",
+      "storedPath": "static44/bind_actual44_context.py",
+      "sha256": "fa143a437fdc07c96077b4a54c23f87c52c5081cd43bbab1299a42855ab35518",
+      "bytes": 8396
+    },
+    {
+      "originalPath": "static44/read_apply44.remote.py",
+      "storedPath": "static44/read_apply44.remote.py",
+      "sha256": "7c267a626df31b9aaaa5d324d97c0456b7ce42329a180c949dfbcfa0c0ad0938",
+      "bytes": 2543
+    },
+    {
+      "originalPath": "static44/read_original_key44.py",
+      "storedPath": "static44/read_original_key44.py",
+      "sha256": "f38d998134ec89941b354c9abdb19c558db09e9a9f932e534b79333025cef206",
+      "bytes": 1480
+    },
+    {
+      "originalPath": "static44/read_restore44.remote.py",
+      "storedPath": "static44/read_restore44.remote.py",
+      "sha256": "05fb6b45cbfad6ada7cc3d981d8ec0bca610595ec1f9d90e6768f0a2a4a37001",
+      "bytes": 4811
+    },
+    {
+      "originalPath": "static44/read_start44.remote.py",
+      "storedPath": "static44/read_start44.remote.py",
+      "sha256": "61d6b6118dd070b2f00703273ef7225dc53fa94ff33c8682fea03d02a3135a00",
+      "bytes": 12749
+    },
+    {
+      "originalPath": "static44/read_stop44.remote.py",
+      "storedPath": "static44/read_stop44.remote.py",
+      "sha256": "23e00d1bc2c7555491e612f3e26aed7d2994258a77164972c6211895a4d317ff",
+      "bytes": 4519
+    },
+    {
+      "originalPath": "static44/read_stop_basis44.template.py",
+      "storedPath": "static44/read_stop_basis44.template.py",
+      "sha256": "3972fac31a35b1a6022b090eff778ce96460d73086c3673f6cc5c2e617cca482",
+      "bytes": 12653
+    },
+    {
+      "originalPath": "static44/read_writer44.remote.py",
+      "storedPath": "static44/read_writer44.remote.py",
+      "sha256": "bd82868e93f710edb9215134c2b378bfb02a263dff3503b79b86f01bd32df832",
+      "bytes": 2586
+    },
+    {
+      "originalPath": "review/CONSUMER-FINAL-RESULT.json",
+      "storedPath": "review/CONSUMER-FINAL-RESULT.json",
+      "sha256": "860d26a7a525357574f9be27068db8a26b5fae14a4c275799196fd97e09f2251",
+      "bytes": 5590
+    },
+    {
+      "originalPath": "review/CONSUMER-RESULT.json",
+      "storedPath": "review/CONSUMER-RESULT.json",
+      "sha256": "afc77a94ed836e61dfcca84e7626f0f55148b6ee12fff5e107ded2f2235864a3",
+      "bytes": 4754
+    },
+    {
+      "originalPath": "review/check_consumer44.py",
+      "storedPath": "review/check_consumer44.py",
+      "sha256": "6c6e69cd222bef318617113c3555256da690f5bb9bcca1d6884f3e3dfd71cd2c",
+      "bytes": 16818
+    },
+    {
+      "originalPath": "main/ORDINARY-READABILITY-FRESH-ADDENDUM-01.json",
+      "storedPath": "main/ORDINARY-READABILITY-FRESH-ADDENDUM-01.json",
+      "sha256": "bac3c76cba8e345bd1406191648cdc9abc0a85217d684cf569e19b890ecd1b48",
+      "bytes": 1432
+    },
+    {
+      "originalPath": "main/SOURCE-SCOPE.json",
+      "storedPath": "main/SOURCE-SCOPE.json",
+      "sha256": "2ee1c9f2b8178f05131dbc40965dd2cf94378f8191427047d0f9cb2ad1b709a3",
+      "bytes": 4545
+    },
+    {
+      "originalPath": "main/HISTORY-INTERFACE-CLARIFICATION-01.json",
+      "storedPath": "main/HISTORY-INTERFACE-CLARIFICATION-01.json",
+      "sha256": "a2f9d9f83ae5451c020ca42a0a35fa9476fbff4c070707769b50f503a3cb362c",
+      "bytes": 1195
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}

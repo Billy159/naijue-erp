@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T18:51:25.749490+00:00",
+  "updatedAt": "2026-11-17T19:14:15.264539+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Implement source-only normal44: root parent stays root, describe child fixed61035/empty groups with exact three-file readonly projection; retain ORDINARY_RUNTIME_REQUIRED and all private guards. Safe closed-set diagnostics only. T45 consumer owner, D1 Root/Main exact successor from132, QB new delta only. No new runtime clock/auth/fresh/CAS/PG/job authorized yet. Preserve original44910-step plan/SQL42/IDs; no recompilation, APP rebuild or public opening.",
+  "next": "Source44 consumer400b/static a7a4 independently passed860d44 checks; Root/Main successor from actual132 still being finalized. Need accurate STATE/DEPLOY/DEPS mapped-bind ordinary-access preflight source and static import resolution judgment, then QB only Root delta. No runtime clock/AUTH/server fresh/CAS/Node/PG/job authorized yet. Original44910-step plan, SQL42 afterAda, business IDs/stock cutoff11:40 unchanged. Business import/APP deployment/public opening not completed.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T18:51:25.749490+00:00",
-  "state": "NORMAL43_START_FAILED_TYPED_CLEANUP_ORIGINAL_AUTH_RESTORED_SOURCE44_LOCAL_IMPLEMENTATION_AUTHORIZED",
+  "asOf": "2026-11-17T19:14:15.264539+00:00",
+  "state": "NORMAL44_CONSUMER_STATIC_SOURCE_PASSED_ROOT_MAIN_PENDING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Implement source-only normal44: root parent stays root, describe child fixed61035/empty groups with exact three-file readonly projection; retain ORDINARY_RUNTIME_REQUIRED and all private guards. Safe closed-set diagnostics only. T45 consumer owner, D1 Root/Main exact successor from132, QB new delta only. No new runtime clock/auth/fresh/CAS/PG/job authorized yet. Preserve original44910-step plan/SQL42/IDs; no recompilation, APP rebuild or public opening.",
+  "next": "Source44 consumer400b/static a7a4 independently passed860d44 checks; Root/Main successor from actual132 still being finalized. Need accurate STATE/DEPLOY/DEPS mapped-bind ordinary-access preflight source and static import resolution judgment, then QB only Root delta. No runtime clock/AUTH/server fresh/CAS/Node/PG/job authorized yet. Original44910-step plan, SQL42 afterAda, business IDs/stock cutoff11:40 unchanged. Business import/APP deployment/public opening not completed.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -54976,6 +54976,25 @@
     "ownerResultSha256": "f874853e6d4ae0a3c4040e6dc059e72378553cc48a4105f36ec2a5d4075225aa",
     "restoreTerminalSha256": "5a333ddb2bf93bf13050a3be735c209b814616271ca0adcbbd5987d280b34361",
     "next": "Implement source-only normal44: root parent stays root, describe child fixed61035/empty groups with exact three-file readonly projection; retain ORDINARY_RUNTIME_REQUIRED and all private guards. Safe closed-set diagnostics only. T45 consumer owner, D1 Root/Main exact successor from132, QB new delta only. No new runtime clock/auth/fresh/CAS/PG/job authorized yet. Preserve original44910-step plan/SQL42/IDs; no recompilation, APP rebuild or public opening.",
+    "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+  },
+  "normal44ConsumerSource": {
+    "state": "NORMAL44_CONSUMER_STATIC_SOURCE_PASSED_ROOT_MAIN_PENDING",
+    "asOf": "2026-11-17T19:14:15.264539+00:00",
+    "rootCurrent": 132,
+    "rootCandidate": 137,
+    "PGCurrentlyStopped": true,
+    "originalAuthenticationRestored": true,
+    "normal43WriterSubmitted": false,
+    "source44RuntimeAuthorized": false,
+    "SQLUpgrade42Completed": true,
+    "consumerSourcePinsSha256": "400ba4ebd1a622875ab6c2ebf6508f4b3d5d542ae12de433833c254f5f018ef5",
+    "consumerReviewSha256": "860d26a7a525357574f9be27068db8a26b5fae14a4c275799196fd97e09f2251",
+    "source44RootReviewComplete": false,
+    "source43CompleteImportPerformed": false,
+    "platformGoalStatusLastObserved": "blocked",
+    "authorizedTaskContinues": true,
+    "next": "Source44 consumer400b/static a7a4 independently passed860d44 checks; Root/Main successor from actual132 still being finalized. Need accurate STATE/DEPLOY/DEPS mapped-bind ordinary-access preflight source and static import resolution judgment, then QB only Root delta. No runtime clock/AUTH/server fresh/CAS/Node/PG/job authorized yet. Original44910-step plan, SQL42 afterAda, business IDs/stock cutoff11:40 unchanged. Business import/APP deployment/public opening not completed.",
     "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
   }
 }

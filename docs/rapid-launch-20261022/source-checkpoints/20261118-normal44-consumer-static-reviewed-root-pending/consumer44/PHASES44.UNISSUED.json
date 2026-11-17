@@ -1,0 +1,122 @@
+{
+  "format": "T45_R3_NORMAL44_BATCHED_REAL_V1",
+  "futureAuthorities": null,
+  "jobs": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": {
+        "closed40_history.py": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+        "closed41_history.py": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "16fdf4a0f75910797ae225a22edf3e6a310fdc814c29562272fa598d8ba208e4",
+        "ordinary05_roles_job.py": "1aedea9a940d210a53c284d622fcf2e1ed3bb47de1e3db37bc89f203bb434aca",
+        "prior_preserved38.py": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+        "successful39_history.py": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary44-auth-apply-20261118-01",
+      "script": "ordinary05_roles_job.py",
+      "timeoutSeconds": 300
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": {
+        "closed40_history.py": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+        "closed41_history.py": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "normal_service04.py": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+        "normal_service04_proof.py": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+        "ordinary05_roles.py": "16fdf4a0f75910797ae225a22edf3e6a310fdc814c29562272fa598d8ba208e4",
+        "ordinary05_roles_job.py": "1aedea9a940d210a53c284d622fcf2e1ed3bb47de1e3db37bc89f203bb434aca",
+        "prior_preserved38.py": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+        "successful39_history.py": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary44-auth-restore-20261118-01",
+      "script": "ordinary05_roles_job.py",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "bundlePins": {
+        "after42-source-catalog-lineage.json": "cc6e6544cf3c99b62c837675c7b92452af95d6f7cdbbaff72d28dcfac739c5b6",
+        "batched161-run.mjs": "0f45396df7aec8bac9651591c685b30f7d318066feffb0f7f4e98df592855af6",
+        "catalog-successor-run.mjs": "468c3f96241bd1341887c61f3b358ba6db60c3e3d49bc73e40559de1e067d8a8",
+        "closed40_history.py": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+        "closed41_history.py": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+        "final-execution-describe.mjs": "7ccbc7f50abf8ce5d92eff0a9d145219a0abb14a40a8103ba798241006b293c1",
+        "final33-run.mjs": "d2f652caf7bad65a426c46482507d2b518ee3a769681b9da167aa5260e756f9f",
+        "fresh35-production-carrier.py": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+        "historical-prepare05.json": "78fcd3f7811343615343f6c59c841fe06a70aaadeeee3a41a6845abe26d86ee2",
+        "historical_source_lineage.py": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+        "normal_service05_after08.py": "39b4fdc6d5993dec8ad5e6c3f58a9c8297c1f269df86644d53159476c4d42aec",
+        "normal_service05_after08_proof.py": "a35fc433d7f07ffccc8a6c2c7d24072b3f3b0f06c65f953af9c87df3222b2666",
+        "operator-host.mjs": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+        "operator-manifest.json": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+        "operator-stream-import-cli.mjs": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+        "operator-stream-program.mjs": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+        "prior_preserved38.py": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+        "production-plan.json": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+        "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+        "r3_05_readonly.py": "d96325b49722c54c48d6cf3d71f112ca40d532d60f717b69255f992c9ef8cd89",
+        "r3_05_runtime.py": "e9e13ae1bf4db8c3b318299ff364002868452d1b20de25b5634334b904c58fc9",
+        "root06_material.py": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+        "root07_material.py": "023f938955d392fd5d8ddf4015cffad039caf29afd708b7d2ec863dec7c1e742",
+        "root08_material.py": "9554e7c88abe6b36f4fb98e493f5ddd39cc81c220aaa853944a04b4b21b95685",
+        "source-catalog-lineage.json": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+        "source_lineage.py": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da",
+        "start_owned_describe.py": "6c0be2f176409f00ada158a8dbf6f17b4915aca5228503957f75b674f2e351e5",
+        "successful39_history.py": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-first-r3-native-service-start-20261118-44",
+      "script": "normal_service05_after08.py",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "bundlePins": {
+        "normal05_preserve_stop.py": "c12305f5b6a31a33e273020fde576554c090316081e02f6b2f4b226bc891e5f7",
+        "normal05_retained_stop.py": "62a194a84ca2e177823db4e1da3efdb69b015a149d4cbb4878879551ce145868"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary44-preserve-stop-20261118-01",
+      "script": "normal05_preserve_stop.py",
+      "timeoutSeconds": 120
+    },
+    "writer": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": {
+        "after42-source-catalog-lineage.json": "cc6e6544cf3c99b62c837675c7b92452af95d6f7cdbbaff72d28dcfac739c5b6",
+        "final33-run.mjs": "d2f652caf7bad65a426c46482507d2b518ee3a769681b9da167aa5260e756f9f",
+        "final33_host.py": "45dbc76da420272ffd55a36a50fc0883080ddc05f0145fd2647dba005d01d3f3",
+        "fresh35-production-carrier.py": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+        "historical-prepare05.json": "78fcd3f7811343615343f6c59c841fe06a70aaadeeee3a41a6845abe26d86ee2",
+        "historical_source_lineage.py": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+        "nonroot_input_access.py": "dd998ca17ebb2510ba9dfd2d84f10c6dae044862a64a0aa36798263c4f6b860e",
+        "normal05_retained_stop.py": "62a194a84ca2e177823db4e1da3efdb69b015a149d4cbb4878879551ce145868",
+        "r3_05_cli.py": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+        "r3_05_runtime.py": "e9e13ae1bf4db8c3b318299ff364002868452d1b20de25b5634334b904c58fc9",
+        "source-catalog-lineage.json": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+        "source_lineage.py": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da"
+      },
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-batched-real-after43-execute-20261118-01",
+      "script": "final33_host.py",
+      "timeoutSeconds": 3000
+    }
+  },
+  "parentBudgetSeconds": 5100,
+  "phaseOrder": [
+    "apply",
+    "start",
+    "writer",
+    "stop",
+    "restore"
+  ],
+  "sourceOnly": true
+}
