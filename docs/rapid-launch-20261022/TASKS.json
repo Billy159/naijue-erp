@@ -51897,9 +51897,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T22:40:38.271990+00:00",
+  "updatedAt": "2026-11-17T23:02:19.248472+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-  "currentTarget": "ROOT144_AUTH45_RESTORED_PG_STOPPED_ORIGINAL_ROOT_PARTIAL_COMMIT_RESUME_BINDING_ANALYSIS",
+  "currentTarget": "ROOT144_PG_STOPPED_PARTIAL_COMMIT_NORMAL46_RESUME_SOURCE_ROOT09_CANDIDATE",
   "owners": {
     "T45": "Sole server owner; diagnostic host/collector and bounded two-artifact staging install/restore source",
     "D1": "Native diagnostic runner source accepted; explicit auxiliary outer/native scope continuation and root source",
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "ACTUAL originalbusinessroot durable observation: Root144/3cfd/modulec108/policy7b2/CASef5a; COMPLETED0/5.402s/terminal5caf/readbackb814/safea5e407. RootCORE COMMITTED/7identitymatch, baselineIMPORTED+complete, documentSTAGED+notcomplete,467committedreceipts/151groups ordinal0..150 step0..466 (CORE1 MASTER68 KEYS80 BASELINE_CLOSE1 DOCUMENT_OPEN1 HISTORY0 FINALIZE0),audit467/allobservedconflicts0/namespacecorrect. Existence of partial commits is PROVEN, notUNKNOWN or0writes; wholecompletion and exactexpecteddescriptor binding stillNOT_PROVEN. RR readonly/ROLLBACK/reaped/clean control/helper stoppedPID0/PGpid-portabsent/noactiveops. Auth45 actuallyrestored, oldhardfalseforever. Next D1 source-only exact originalclient RESUME binding/cursor and firstuncommittedHISTORY cause evidence, then Main concrete limited successor; never FIRST_WRITE/oldkey replay/reprepare/SQL42 reinstall/44910 change. APP289 undeployed/publicclosed, backup/independentrestore stillpending.",
+  "next": "Current actual Root144/3cfd, originalauth45 restored, PG stopped, originalbusinessroot PERSISTED_PARTIAL (151groups/467receipts; baselineIMPORTED/documentSTAGED; allobservedconflicts0). Original plan metadata actual761f/85a:1061groups/44911steps includingCORE, preparednonCORE44910 unchanged; tail1060 FINALIZE44910; candidate151HISTORY467..581/115requests/496rows/888469B with exact predecessor150, notoversized. Original fixedSQLite stat9+sidecars unchanged0PG0mutations. No manualcursor or RESUME yet. Current45wrapper lacks resume:true; real originalclient RESUME exists and verifies originalplan/descriptors/CORE and skips exact committed groups. Main scope4e6 source-only authorizes3operatorleaves optionalclosed stage sink+passthrough/perkey trace and explicit normal46RESUME; preserve old392/ac85/factory/host5e4f/SQL42/44910/IDs, new sourceRoot09 closure separately pinned. T45 source consumer/D1Root145 source-onlymaterialization/QB necessarydelta only; actualRoot09 must precede later normal46Root150 finite decision/fresh/clock. Budget3000/2780/220 and old caps unchanged, fullRTOUNKNOWN. Restore evidenceaddendum57ee fixes real45 guardian-proof handoff gap with strict typed actual closure alternative within original hard, neverfakeStopPASS or extend deadline. No newclock/AUTH/CAS/PG/source-materialization/writer/APP/opening yet. Old45hardfalse forever.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows.",
   "supersededCurrentTargetBeforeAuth45SummaryRepair": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED"
 },
@@ -52676,8 +52676,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T22:40:38.271990+00:00",
-  "state": "PERSISTED_PARTIAL_FIXED_ORIGINAL_ROOT_READONLY_CONFIRMED",
+  "asOf": "2026-11-17T23:02:19.248472+00:00",
+  "state": "NORMAL46_EXPLICIT_RESUME_PROGRESS_SOURCE_PREPARING_ROOT09_MATERIALIZATION_PENDING",
   "realWriterSubmitted": true,
   "realBusinessRowsWritten": null,
   "formalR3": "SQL42_COMMITTED_AUTH45_RESTORED_PG_STOPPED_ORIGINAL_ROOT_PARTIALLY_COMMITTED",
@@ -52705,7 +52705,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "ACTUAL originalbusinessroot durable observation: Root144/3cfd/modulec108/policy7b2/CASef5a; COMPLETED0/5.402s/terminal5caf/readbackb814/safea5e407. RootCORE COMMITTED/7identitymatch, baselineIMPORTED+complete, documentSTAGED+notcomplete,467committedreceipts/151groups ordinal0..150 step0..466 (CORE1 MASTER68 KEYS80 BASELINE_CLOSE1 DOCUMENT_OPEN1 HISTORY0 FINALIZE0),audit467/allobservedconflicts0/namespacecorrect. Existence of partial commits is PROVEN, notUNKNOWN or0writes; wholecompletion and exactexpecteddescriptor binding stillNOT_PROVEN. RR readonly/ROLLBACK/reaped/clean control/helper stoppedPID0/PGpid-portabsent/noactiveops. Auth45 actuallyrestored, oldhardfalseforever. Next D1 source-only exact originalclient RESUME binding/cursor and firstuncommittedHISTORY cause evidence, then Main concrete limited successor; never FIRST_WRITE/oldkey replay/reprepare/SQL42 reinstall/44910 change. APP289 undeployed/publicclosed, backup/independentrestore stillpending.",
+  "next": "Current actual Root144/3cfd, originalauth45 restored, PG stopped, originalbusinessroot PERSISTED_PARTIAL (151groups/467receipts; baselineIMPORTED/documentSTAGED; allobservedconflicts0). Original plan metadata actual761f/85a:1061groups/44911steps includingCORE, preparednonCORE44910 unchanged; tail1060 FINALIZE44910; candidate151HISTORY467..581/115requests/496rows/888469B with exact predecessor150, notoversized. Original fixedSQLite stat9+sidecars unchanged0PG0mutations. No manualcursor or RESUME yet. Current45wrapper lacks resume:true; real originalclient RESUME exists and verifies originalplan/descriptors/CORE and skips exact committed groups. Main scope4e6 source-only authorizes3operatorleaves optionalclosed stage sink+passthrough/perkey trace and explicit normal46RESUME; preserve old392/ac85/factory/host5e4f/SQL42/44910/IDs, new sourceRoot09 closure separately pinned. T45 source consumer/D1Root145 source-onlymaterialization/QB necessarydelta only; actualRoot09 must precede later normal46Root150 finite decision/fresh/clock. Budget3000/2780/220 and old caps unchanged, fullRTOUNKNOWN. Restore evidenceaddendum57ee fixes real45 guardian-proof handoff gap with strict typed actual closure alternative within original hard, neverfakeStopPASS or extend deadline. No newclock/AUTH/CAS/PG/source-materialization/writer/APP/opening yet. Old45hardfalse forever.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55304,6 +55304,25 @@
     "APPDeployedOrPublicBusinessOpened": false,
     "next": "ACTUAL originalbusinessroot durable observation: Root144/3cfd/modulec108/policy7b2/CASef5a; COMPLETED0/5.402s/terminal5caf/readbackb814/safea5e407. RootCORE COMMITTED/7identitymatch, baselineIMPORTED+complete, documentSTAGED+notcomplete,467committedreceipts/151groups ordinal0..150 step0..466 (CORE1 MASTER68 KEYS80 BASELINE_CLOSE1 DOCUMENT_OPEN1 HISTORY0 FINALIZE0),audit467/allobservedconflicts0/namespacecorrect. Existence of partial commits is PROVEN, notUNKNOWN or0writes; wholecompletion and exactexpecteddescriptor binding stillNOT_PROVEN. RR readonly/ROLLBACK/reaped/clean control/helper stoppedPID0/PGpid-portabsent/noactiveops. Auth45 actuallyrestored, oldhardfalseforever. Next D1 source-only exact originalclient RESUME binding/cursor and firstuncommittedHISTORY cause evidence, then Main concrete limited successor; never FIRST_WRITE/oldkey replay/reprepare/SQL42 reinstall/44910 change. APP289 undeployed/publicclosed, backup/independentrestore stillpending.",
     "rawPrivateAuthInitializerSQLiteBusinessRowOrLogBodiesIncluded": false
+  },
+  "originalPlanMetadataAndNormal46SourceScope": {
+    "state": "NORMAL46_EXPLICIT_RESUME_PROGRESS_SOURCE_PREPARING_ROOT09_MATERIALIZATION_PENDING",
+    "asOf": "2026-11-17T23:02:19.248472+00:00",
+    "rootCurrent": 144,
+    "nextSourceOnlyRootCandidate": 145,
+    "laterNormal46RootCandidate": 150,
+    "businessCommitState": "PERSISTED_PARTIAL",
+    "originalAuth45Restored": true,
+    "PGCurrentlyStopped": true,
+    "original45HardMet": false,
+    "actualSQLiteTotalStepCountIncludingCORE": 44911,
+    "preparedNonCoreStepCountUnchanged": 44910,
+    "actualBatchCount": 1061,
+    "candidateFirstHistoryRows": 496,
+    "candidateFirstHistoryBytes": 888469,
+    "newClockAUTHCASOrSourceMaterializationResumeExecuted": false,
+    "rawAUTHCredentialsInitializerSQLiteBusinessRowsIncluded": false,
+    "next": "Current actual Root144/3cfd, originalauth45 restored, PG stopped, originalbusinessroot PERSISTED_PARTIAL (151groups/467receipts; baselineIMPORTED/documentSTAGED; allobservedconflicts0). Original plan metadata actual761f/85a:1061groups/44911steps includingCORE, preparednonCORE44910 unchanged; tail1060 FINALIZE44910; candidate151HISTORY467..581/115requests/496rows/888469B with exact predecessor150, notoversized. Original fixedSQLite stat9+sidecars unchanged0PG0mutations. No manualcursor or RESUME yet. Current45wrapper lacks resume:true; real originalclient RESUME exists and verifies originalplan/descriptors/CORE and skips exact committed groups. Main scope4e6 source-only authorizes3operatorleaves optionalclosed stage sink+passthrough/perkey trace and explicit normal46RESUME; preserve old392/ac85/factory/host5e4f/SQL42/44910/IDs, new sourceRoot09 closure separately pinned. T45 source consumer/D1Root145 source-onlymaterialization/QB necessarydelta only; actualRoot09 must precede later normal46Root150 finite decision/fresh/clock. Budget3000/2780/220 and old caps unchanged, fullRTOUNKNOWN. Restore evidenceaddendum57ee fixes real45 guardian-proof handoff gap with strict typed actual closure alternative within original hard, neverfakeStopPASS or extend deadline. No newclock/AUTH/CAS/PG/source-materialization/writer/APP/opening yet. Old45hardfalse forever."
   }
 }
 }

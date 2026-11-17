@@ -1,0 +1,13 @@
+{
+  "state": "AUTHORIZE_NORMAL46_STRICT_ACTUAL_GUARDIAN_CLOSURE_AS_ALTERNATIVE_RESTORE_EVIDENCE_SOURCE_ONLY",
+  "parentScopeSha256": "4e6ec9485e97299ec3cee917655c71d19a921249340380f5c85a2eae3e4160d5",
+  "cause": "Observed normal45 Stop attempt original transport failure, actual Stop terminal/results absent, exact guardian clean closure proved, original restore producer wrongly had no legitimate alternative and original hard deadline missed. Fix this concrete repeated recovery boundary for normal46 only; preserve history.",
+  "jobIdUnchanged": "t45-r3-ordinary46-auth-restore-20261118-01",
+  "scope": "Keep normal46 original restore worker/role semantics and successful-Stop evidence path. Add strictly typed alternative to Main8 issuance: actual same Start46 successful genuine proof/CID/birth/PGDATA, actual writer46 terminal and exclusive child+descendants reaped, originalStop46 root/public result absent or terminal failed (never assert PASS), trusted same guardian cleanup/retainedACK/proof all exact and clean shutdown/data preserved/PID0/PGDATA pid and port absent/no active ops, protected original46 snapshot stat9 intact; fresh exact proof then original hard deadline still has original required cleanup reserve. Reuse proven source143 guardian closure/offline original-auth restore predicates, adapted only to exact46 identity.",
+  "forbidden": "No fake StopPASS, no service=None/unsubmittedStart branch for actual successful Start, no natural expiry treated as original verifier restoration, no deadline extension/finite login renewal/fabricated guardian facts or weak predicates, no replay after unknown restore attempt, no old45/hard-history change. If exact alternative unavailable or hard deadline missed, original route cannot be forged; later cause-based separately timed restore-only remains separate.",
+  "actualRestoration": "Only exact original two role verifiers+expiry privately restored/readback, attrs/memberships/runtimeauth/allbusinessdata unchanged; ownhelper stopped, PG remains stopped. Original normal46 authorization/time limits preserved.",
+  "sourceOnly": true,
+  "clockAUTHCASOrRoleActions": 0,
+  "noExtraJobOrRootCount": true,
+  "review": "Only necessary changed producer/predicate cases using real known45 closure as reference, trueStop unchanged and false/absent/wrongC/dirty/pid/activeops/expired-hard negatives; reuse successful restore engine/auth45 evidence, no repeat server/auth test."
+}

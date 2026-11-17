@@ -1,0 +1,34 @@
+{
+  "state": "AUTHORIZE_ONE_FIXED_ORIGINAL_PLAN_METADATA_ONLY_PRIVATE_READ",
+  "authorityBasis": "Existing direct human ERP continuation and similar-action standing authorization; Main concrete minimum evidence based on actual partial commits and D1 cause analysis0d03.",
+  "analysisSha256": "0d03f27ce37d805d33ca1d448b4834950aa7e47d9acdd842a5737dfb2da6c5c5",
+  "fixedFile": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/real-first-20261110-r3/reports/t45-r3-final33-plan-prepare-20261116-05/batched-plan.sqlite",
+  "fixedStat9": [
+    66304,
+    13667005,
+    61035,
+    61035,
+    384,
+    1,
+    740864000,
+    1794894827064767108,
+    1794894827064767108
+  ],
+  "scope": "One existing fixed file opened sqlite read-only/immutable/query_only under original private channel. Only existing meta and batch index descriptor metadata for ordinals0,150,151 and existing final tail ordinal. Determine actual table/column names from frozen original schema source before read. No guessed tables or paths, fail if original bound file identity differs.",
+  "allowedMetadata": "Existing format/identity equality booleans+typed hashes, batchCount/meta.stepCount, oversizedGroupCount/maxRows/maxBytes if already held in meta; for four fixed descriptors phase/ordinal/first/last/rows/bytes/subBatchId/descriptorSha/previousSha and necessary first-last operation ID binding only. Missing fields UNKNOWN. Bounded max16KiB safe closed output,30sec process budget.",
+  "forbidden": "No step table or step.value traversal/export, no initializer or raw business rows/amounts/personnel/barcodes/SQL parameters/log bodies; no original plan recompile/prepare/materialization/rewrite/chmod/chown/journal; no PG/service/helper/roles/auth/RootCAS/new clock/new writer/FIRST_WRITE/RESUME/APP.",
+  "custody": "Canonical exact regular file/owner/mode/nlink/fullstat9 before and after unchanged; URI mode=ro immutable=1 plus query_only, never create SQLite sidecars; original directory retained, no writes or recovery changes. Only original fixed file, no scans of unrelated paths.",
+  "typedBindings": {
+    "preparedNonCoreStepCount": 44910,
+    "markerIdentityPlanSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+    "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+    "metaStepCountIncludesCORE": "SOURCE_DERIVED_EXPECTATION_ONLY_ACTUAL_READ_REQUIRED"
+  },
+  "interpretation": "Observed group151 is candidate uncommitted descriptor only. Do not hand-set resume offset. Existing real RESUME must inspect original descriptors with same client and skip only exact committed matches. Metadata alone does not identify exact old signal cause or authorize new writer.",
+  "T45SoleServerOwner": true,
+  "actualReadPerformed": false,
+  "actualRoot": 144,
+  "PGCurrentlyStopped": true,
+  "auth45ActuallyRestored": true,
+  "oldHardMet": false
+}

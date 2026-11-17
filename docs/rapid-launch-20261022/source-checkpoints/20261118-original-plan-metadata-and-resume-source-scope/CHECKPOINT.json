@@ -1,0 +1,63 @@
+{
+  "state": "NORMAL46_EXPLICIT_RESUME_PROGRESS_SOURCE_PREPARING_ROOT09_MATERIALIZATION_PENDING",
+  "asOf": "2026-11-17T23:02:19.248472+00:00",
+  "rootCurrent": 144,
+  "nextSourceOnlyRootCandidate": 145,
+  "laterNormal46RootCandidate": 150,
+  "businessCommitState": "PERSISTED_PARTIAL",
+  "originalAuth45Restored": true,
+  "PGCurrentlyStopped": true,
+  "original45HardMet": false,
+  "actualSQLiteTotalStepCountIncludingCORE": 44911,
+  "preparedNonCoreStepCountUnchanged": 44910,
+  "actualBatchCount": 1061,
+  "candidateFirstHistoryRows": 496,
+  "candidateFirstHistoryBytes": 888469,
+  "newClockAUTHCASOrSourceMaterializationResumeExecuted": false,
+  "copies": [
+    {
+      "originalPath": "actual-safe/ORIGINAL-PLAN-METADATA-RESULT.json",
+      "storedPath": "actual-safe/ORIGINAL-PLAN-METADATA-RESULT.json",
+      "sha256": "761f73af474f3229a4d69dc60088f85e4e6def96f317cdb400299bb37c01658c",
+      "bytes": 3069
+    },
+    {
+      "originalPath": "main/METADATA-READ-SCOPE.json",
+      "storedPath": "main/METADATA-READ-SCOPE.json",
+      "sha256": "7e1dcd8161df68c3c3ff897b3ca35dd6cdc3ca9088a9ac4ca2fa5c5f37bbe607",
+      "bytes": 2910
+    },
+    {
+      "originalPath": "analysis/ANALYSIS.md",
+      "storedPath": "analysis/ANALYSIS.md",
+      "sha256": "0d03f27ce37d805d33ca1d448b4834950aa7e47d9acdd842a5737dfb2da6c5c5",
+      "bytes": 8178
+    },
+    {
+      "originalPath": "analysis/METADATA-AND-PROGRESS-SEAM.md",
+      "storedPath": "analysis/METADATA-AND-PROGRESS-SEAM.md",
+      "sha256": "d1fa02a6d4f72e5b0bb87cd3f2faa414dc5a61ada75194b80c5a8146e3eff208",
+      "bytes": 4412
+    },
+    {
+      "originalPath": "analysis/SOURCE-REFS.json",
+      "storedPath": "analysis/SOURCE-REFS.json",
+      "sha256": "0dc9b51f3d204ee81bb77999017bd05ab142bee950bf04e0f8bd321059f88e48",
+      "bytes": 3871
+    },
+    {
+      "originalPath": "main/SOURCE-SCOPE.json",
+      "storedPath": "main/SOURCE-SCOPE.json",
+      "sha256": "4e6ec9485e97299ec3cee917655c71d19a921249340380f5c85a2eae3e4160d5",
+      "bytes": 6962
+    },
+    {
+      "originalPath": "main/RESTORE-GUARDIAN-EVIDENCE-ADDENDUM.json",
+      "storedPath": "main/RESTORE-GUARDIAN-EVIDENCE-ADDENDUM.json",
+      "sha256": "57eeea0ee12d1c1f9e0b926d728d7dd2f77f0e222ecae0452fd83db47734bd0d",
+      "bytes": 2438
+    }
+  ],
+  "rawAUTHCredentialsInitializerSQLiteBusinessRowsIncluded": false,
+  "next": "Current actual Root144/3cfd, originalauth45 restored, PG stopped, originalbusinessroot PERSISTED_PARTIAL (151groups/467receipts; baselineIMPORTED/documentSTAGED; allobservedconflicts0). Original plan metadata actual761f/85a:1061groups/44911steps includingCORE, preparednonCORE44910 unchanged; tail1060 FINALIZE44910; candidate151HISTORY467..581/115requests/496rows/888469B with exact predecessor150, notoversized. Original fixedSQLite stat9+sidecars unchanged0PG0mutations. No manualcursor or RESUME yet. Current45wrapper lacks resume:true; real originalclient RESUME exists and verifies originalplan/descriptors/CORE and skips exact committed groups. Main scope4e6 source-only authorizes3operatorleaves optionalclosed stage sink+passthrough/perkey trace and explicit normal46RESUME; preserve old392/ac85/factory/host5e4f/SQL42/44910/IDs, new sourceRoot09 closure separately pinned. T45 source consumer/D1Root145 source-onlymaterialization/QB necessarydelta only; actualRoot09 must precede later normal46Root150 finite decision/fresh/clock. Budget3000/2780/220 and old caps unchanged, fullRTOUNKNOWN. Restore evidenceaddendum57ee fixes real45 guardian-proof handoff gap with strict typed actual closure alternative within original hard, neverfakeStopPASS or extend deadline. No newclock/AUTH/CAS/PG/source-materialization/writer/APP/opening yet. Old45hardfalse forever."
+}

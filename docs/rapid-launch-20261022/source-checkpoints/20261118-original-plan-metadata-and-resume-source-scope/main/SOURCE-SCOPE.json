@@ -1,0 +1,71 @@
+{
+  "state": "AUTHORIZE_MINIMAL_ROOT09_DELTA_AND_EXPLICIT_NORMAL46_RESUME_SOURCE_WITH_CLOSED_PROGRESS_ONLY",
+  "asOf": "2026-11-17T22:58:05.860863+00:00",
+  "authorityBasis": "Existing direct human ERP continuation and similar-action standing authorization. Main concrete cause-based source implementation after actual partial commits and ordinary-sized first history descriptor; no new human approval fabricated.",
+  "evidence": {
+    "durablePartialMainResultSha256": "fa7b6f85e3d8374c2db3ea090bdaf8ad4e2a9ebb39059a398165a6d7658a5595",
+    "metadataSafeResultSha256": "761f73af474f3229a4d69dc60088f85e4e6def96f317cdb400299bb37c01658c",
+    "resumeAnalysisSha256": "0d03f27ce37d805d33ca1d448b4834950aa7e47d9acdd842a5737dfb2da6c5c5",
+    "progressSeamAnalysisSha256": "d1fa02a6d4f72e5b0bb87cd3f2faa414dc5a61ada75194b80c5a8146e3eff208"
+  },
+  "currentRoot": 144,
+  "currentDispatcherSha256": "3cfd79c52ad1a6ba72c3bdb1622af8118653ee7fa890ebfd1a21bb1fbac212e9",
+  "implementation": "Reuse verified actual Root08 code as immutable base. Add optional closed progress sink only through batched-stream-client existing stages, operation passthrough and retained original RESUME entry passthrough (3 existing operator leaves), plus per-key final33 runner/private host sink and observer. Preserve existing default behavior, original factory/controller/same wire guards/actualhost5e4f, every business request and SQL unchanged. No client proxy/factory replacement/guard bypass or tracing platform. No new package/dependency.",
+  "sourceMaterialization": {
+    "jobId": "t45-r3-batched-root09-after45-resume-progress-source-20261118-01",
+    "rootBefore": 144,
+    "rootAfter": 145,
+    "moduleLeaf": "r3_root09_after45_resume_progress_source_admission.py",
+    "policyLeaf": "root09-after45-resume-progress-source-only-20261118-01.json",
+    "targetName": "installed-real-operation-batched-root09-after45-resume-progress-20261118-01",
+    "scope": "Existing successful source-only materialization seam, only exact 3-leaf delta over immutable392/ac85 base, compute and pin new physical sourceRows/sourceSet distinctly; old Root08/source/markers/inputs/private baseline remain intact. New separate source directory with exact copy/custody, no hardlinks or symlink aliases changing old stat. Preserve private baseline content and access semantics without body exposure. Necessary actual actor readability and closure proof in this one materialization, no PG/factory/SQL/roles/business import/APP build. Never label changed code ac85 unchanged.",
+    "maximumWindowSeconds": 900,
+    "maximumWorkerSeconds": 300,
+    "CASSeconds": 180
+  },
+  "normal46PlannedJobs": {
+    "apply": "t45-r3-ordinary46-auth-apply-20261118-01",
+    "start": "t45-first-r3-native-service-start-20261118-46",
+    "writer": "t45-r3-batched-real-after45-resume-20261118-01",
+    "stop": "t45-r3-ordinary46-preserve-stop-20261118-01",
+    "restore": "t45-r3-ordinary46-auth-restore-20261118-01"
+  },
+  "normal46PlannedRootBefore": 145,
+  "normal46PlannedRootAfter": 150,
+  "normal46Scope": "Explicit RESUME in outer/native authorization and actual inputs.resume===true, fixed original businessroot/operation/request/manifest/plan/prepare05 and SQLite. Same real client must revalidate original full program and inspect CORE COMMITTED, then inspect each original descriptor and skip only exact COMMITTED matches. No manual offset467/151 or regrouping. Existing trusted execution may privately consume original initializer/request/SQLite steps as required, never export their bodies; no reprepare/recompile or new business IDs. SQL42 remains actual current SQL, not upgraded again.",
+  "typedPlan": {
+    "markerIdentityPlanSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+    "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+    "preparedNonCoreStepCount": 44910,
+    "actualSQLiteTotalStepCountIncludingCORE": 44911,
+    "actualBatchCount": 1061,
+    "lastGroupOrdinal": 1060,
+    "lastStepOrdinal": 44910,
+    "firstCandidateHistoryDescriptorSha256": "15cb5fefd0167b3ceb78f2cdf1a38d44281224b659e947d0a83b2397e251a988",
+    "firstCandidateHistoryRows": 496,
+    "firstCandidateHistoryBytes": 888469,
+    "candidateNotManualResumeCursor": true
+  },
+  "closedProgress": "Only bounded private closed stage/phase/ordinal/step/descriptorHash/elapsed/remaining budget/query class/ACK-COMMIT flags and cleanup cause. Cover original plan verification/restore/core inspect, committed-group skips and INSPECT/APPLY/COMPLETE/constraints/COMMIT boundaries; no SQL text/parameters/business rows/arbitrary errors/credentials. Sink fixed per-key ordinary-owned scratch, private preserved output, bounded size and minimal overhead; no public endpoint or separate tracing service. Stage recorder must retain all real transaction/cleanup semantics. Actual observer validates closed schema/custody only.",
+  "budgetPolicy": {
+    "workerSeconds": 3000,
+    "childSeconds": 2780,
+    "cleanupSeconds": 220,
+    "statementMaximumSeconds": 900,
+    "lockMaximumSeconds": 5,
+    "normal45FiniteRoleServiceWindowCaps": "Reuse original45 caps; do not extend just to mask unknown throughput. Concrete unique actual clocks only after final review and real fresh. Keep cleanup reserves outside work; reject new APPLY if remaining original budget insufficient.",
+    "fullImportRTO": "UNKNOWN_DO_NOT_PROMISE_FROM_STATIC_METADATA"
+  },
+  "readbackBoundaryCaveat": "Old frozen readonly query last_step>=44910 rejects legal final44910. Current observed prefix<=466 remains valid, no repeat review/PG. Any new necessary query must use actual total44911 and preserve preparedNonCore44910 distinctly.",
+  "sourceStagesOnly": true,
+  "actualClockAUTHCASOrMaterializationResumeExecuted": false,
+  "runtimeGate": "Source-only first. Root09 physical materialization only after final exact source/necessary independent delta review/Main concrete decision/actual fresh. Normal46 runtime only after actual Root09 completion and final exact source/review/Main finite decision/fresh, with real apply/start/explicitRESUME/stop/exact original auth restoration and original-key readback. Do not issue clocks during preparation.",
+  "forbidden": "No old-key replay/FIRST_WRITE/SQL42 or schema/ACL changes/data deletion/manual business-ID changes/plan recompile/full regression/APP289 rebuild or deployment/public opening/backup before actual completion. Old auth45 restored and PG stopped preserved until specifically gated new runtime.",
+  "owners": {
+    "T45": "3 operator delta leaves/per-key consumer/private progress/actual source materialization sole server owner",
+    "D1": "Root145 source admission and later Root150 finite RESUME registration/Main issuer adapters",
+    "QB": "one necessary changed-source and joint adapter delta review; reuse old proven default mechanism/auth/SQL42 evidence"
+  },
+  "existingHumanAuthorizationContinues": true,
+  "old45HardMet": false
+}

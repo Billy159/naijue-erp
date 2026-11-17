@@ -1,0 +1,59 @@
+{
+  "state": "LOCAL_CAUSE_ANALYSIS_ONLY_NOT_RESUME_AUTHORIZATION",
+  "references": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/r3-service20-retained-import.mjs",
+      "sha256": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca",
+      "actualRoot08RelativePath": "tools/unified-import/r3-service20-retained-import.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/batched-stream-operation.mjs",
+      "sha256": "5c0d2fd7e99c4ed351e64e001ae9a8b5131ef9ea8dbfb1cecad1eb78488d7a7d",
+      "actualRoot08RelativePath": "tools/unified-import/batched-stream-operation.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/batched-stream-cli-state.mjs",
+      "sha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c",
+      "actualRoot08RelativePath": "tools/unified-import/batched-stream-cli-state.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/batched-stream-plan.mjs",
+      "sha256": "0bf181628d33ee8312c0cae3028fab3e9a2e04822556a763e0a12bd6bf6b474f",
+      "actualRoot08RelativePath": "tools/unified-import/batched-stream-plan.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/batched-stream-client.mjs",
+      "sha256": "6f11842e84374fb6ec847b1cd466cbebc4efa42a5902712b5bf5c6fb5eb3955c",
+      "actualRoot08RelativePath": "tools/unified-import/batched-stream-client.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/batched-stream-sql-kernel.mjs",
+      "sha256": "6cb420903d980521f32d7d2493471a3998628c45032c8621327bec123d85af92",
+      "actualRoot08RelativePath": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-app-settlement24-build-01/source/tools/unified-import/whole-host-session.mjs",
+      "sha256": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da",
+      "actualRoot08RelativePath": "tools/unified-import/whole-host-session.mjs",
+      "matchesActualRoot08SourceRows": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ROOT08-EXECUTION-PREPARATION-01/job-bundle/delta-02.asset.json",
+      "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa",
+      "role": "Actual operator host source; APP host48abc deliberately not substituted"
+    }
+  ],
+  "durableReadbackSha256": "b8143470f8e8d24ab38a45149d4a268a87c78da9048ca13e3346648c20f5ee17",
+  "nativeExitMetadataSha256": "cf3e73300e63e308b9d20c7ed307de2e632b1a61859eece7089c24da591a1482",
+  "businessState": "PERSISTED_PARTIAL",
+  "SQLiteInitializerOrBusinessBodiesRead": false,
+  "sourceFrozen": false,
+  "serverActions": 0,
+  "NodePGClockCASRoleActions": 0
+}
