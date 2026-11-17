@@ -1,0 +1,108 @@
+{
+  "PGConnections": 0,
+  "actualKeyAbsence": null,
+  "authoritiesIssued": false,
+  "authority": null,
+  "baselineDispatcherSha256": "69d52a00145421a7e675685aa626a30cdb5ffe0e62fdcba7c8ba272f18c01262",
+  "clockCalls": 0,
+  "consumerInterfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
+  "consumerRulesSha256": "da36a2529a471d3b43cfb4ac7a8a45ab35c2c30387c3249788ed834af592928f",
+  "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
+  "continuationDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
+  "current39C": null,
+  "current39Epoch": null,
+  "current39ServiceProof": null,
+  "executionReady": false,
+  "files": {
+    "ACTUAL69-DISPATCHER.py": {
+      "bytes": 46922,
+      "sha256": "69d52a00145421a7e675685aa626a30cdb5ffe0e62fdcba7c8ba272f18c01262"
+    },
+    "HANDOFF.md": {
+      "bytes": 4815,
+      "sha256": "39df51da2cf1a01d33f56befb927d75013a09d2c8f770e7c9987ad32ef5fe46e"
+    },
+    "HISTORY-INPUTS.json": {
+      "bytes": 30706,
+      "sha256": "d542e129716d167cc956bd9e1b654d05d078f7d1a303780c6d3d3b6611b3c7fc"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 4658,
+      "sha256": "7dde5b941fede77e568452b5271a5b88d80c4e095bf28faf7c81482142a7d3fd"
+    },
+    "SIX-PHASES.UNISSUED.json": {
+      "bytes": 34739,
+      "sha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50"
+    },
+    "admin_exec.NORMAL39-UNREGISTERED.py": {
+      "bytes": 48288,
+      "sha256": "d1e257e94a8ea4be12a23bac53360d268d195a25cac51c3432eee87720235def"
+    },
+    "check_source.py": {
+      "bytes": 8768,
+      "sha256": "532eafcaeff075b2f900cbedd1a4f0c49ff6841c16465c8a0a3ecde08ae58e00"
+    },
+    "identity_pair.py": {
+      "bytes": 1347,
+      "sha256": "74badf44163c6fe11a1798ee7256ebeea359727e7023280efba6556b4ba937d4"
+    },
+    "issue_phase.py": {
+      "bytes": 41327,
+      "sha256": "2ae4c0cce8d0a10f2eecdc2451607789ef9f05283b502703d251d32608180f09"
+    },
+    "issue_registration.py": {
+      "bytes": 10927,
+      "sha256": "5222a6e61d912370a0b937e85164d99e84533e52c34a420296b92d5b6ec6b945"
+    },
+    "issuer_aux_pair.py": {
+      "bytes": 2406,
+      "sha256": "e06630eb12fb92b12afa56b3208a3d2e15f25d40261a2a62c2d9d12f2b6d7658"
+    },
+    "original-cas-normal39-carrier.UNISSUED.py": {
+      "bytes": 2584,
+      "sha256": "d9d9fb35a2916a5575b82c2d8764b5930c44938fce6daaa9ea2758a0745223a5"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 4030,
+      "sha256": "b5a4855da819d09bda11c0ad482195fa5762f543cd48e9f96d7fa440f59e183e"
+    },
+    "r3_normal39_continuation.py": {
+      "bytes": 47828,
+      "sha256": "b8ec4823753f791332631a1f907a79c4f9d752e2e74108d7b572510b7f610785"
+    },
+    "read_registration_basis.py": {
+      "bytes": 2794,
+      "sha256": "a74ee57f7bef8a258815c1759eed08198b11dbc3dd12f916e470cb76c88a9dd9"
+    },
+    "register_cas.py": {
+      "bytes": 27703,
+      "sha256": "8790b6685a71dfc7c1188ca062383505b530747be8ea5005753b5dd3a95522d0"
+    }
+  },
+  "formalBusinessAccepted": false,
+  "issuerInvocations": 0,
+  "localStaticChecks": 104,
+  "nativeCalls": 0,
+  "newTotalKeys": 107,
+  "newlyAppendedKeys": 5,
+  "oldPrefixKeys": 102,
+  "oldRoot07AndNormal38Preserved": true,
+  "phaseIssuerArguments": 8,
+  "positiveFutureFixtures": 0,
+  "readerInvocations": 0,
+  "realBusinessFullImportCompleted": false,
+  "registrationIssuerArguments": 7,
+  "rulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
+  "serverActions": 0,
+  "sixCurrentKeys": {
+    "apply": "t45-r3-ordinary39-auth-apply-20261116-01",
+    "prepare": "t45-r3-final33-plan-prepare-20261116-05",
+    "restore": "t45-r3-ordinary39-auth-restore-20261116-01",
+    "start": "t45-first-r3-native-service-start-20261116-39",
+    "stop": "t45-r3-ordinary39-preserve-stop-20261116-01",
+    "writer": "t45-r3-batched-real-execute-20261115-01"
+  },
+  "sourceCapsBytes": 131072,
+  "sourceOnly": true,
+  "state": "FROZEN_NORMAL39_ROOT_SOURCE_PAIR_NOT_EXECUTED"
+}

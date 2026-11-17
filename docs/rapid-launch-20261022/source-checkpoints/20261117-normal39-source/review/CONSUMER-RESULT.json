@@ -1,0 +1,49 @@
+{
+  "actions": {
+    "clockIssuerClientReaderCASApplicationNativePGServerCalls": 0,
+    "fullCompileOrBuild": false,
+    "futureAuthorityServiceEpochTargetOrPositiveFixtureCreated": false,
+    "ownerFrozenFilesModified": false
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal39-joint-review-01/CONSUMER-EVIDENCE.json",
+      "sha256": "2a1de417dad1b95037e32bdf39d048a976b7aaa9a98ba5d0c13d390ba64a46be"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal39-joint-review-01/PRODUCER-EVIDENCE.json",
+      "sha256": "8e36ce255fa0356e499f73be7fc05d17ca23e490dc7c6694f51b4f5a78e643a0"
+    }
+  ],
+  "findings": [],
+  "interfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
+  "notVerified": [
+    "Root wrapper/CAS/issuer pair is not passed by this consumer projection; root report waits for actual frozen root bytes.",
+    "Actual fresh registration baseline, finite roles/authority, current39 proof/CID/birth/epoch and single actual signed request remain unavailable and untested. Null placeholders and compile-only invoke readiness are not runtime PASS.",
+    "Actual current loads, nativePG35/161/PREPARE05/writer/readback/conservation/STOP/RESTORE/business acceptance remain untested.",
+    "Existing diagnostic limits remain: native substage/path/syscall is not fully captured and restore private-channel SQLSTATE remains NOT_CAPTURED."
+  ],
+  "reviewKind": "Consumer projection of one joint normal39 SOURCE review; root pairing requires a separate real root projection in this same review.",
+  "rulesSha256": "da36a2529a471d3b43cfb4ac7a8a45ab35c2c30387c3249788ed834af592928f",
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-SOURCE-SUCCESSOR-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
+  "spec": {
+    "findings": [],
+    "scope": "Main247e normal39/outer05/native01/plan05/original writer and actual ROOT07 binding."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Frozen current load closure and independent historical identities, no owner or runtime edits."
+  },
+  "state": "SOURCE_PASS_NORMAL39_CONSUMER_CURRENT_LOAD_CLOSURE_ONLY",
+  "verifiedScope": [
+    "Frozen source exact,53 runtime members and6 exact phase bundles/actual paths/budgets; interface and blueprint use the same05/native01 identity. Old973 top04 blueprint is not accepted by this report.",
+    "73 static checks bind current42 literal/dictionary edges and7 inline pins to actual final files; lineage helperc3db/proofeb69 added to source manifests and host9-member closures. Original external carrier/business logic reused.",
+    "Three native caller copies and separate START descriptor producer bind ROOT07, plan05 and actual ROOT07 terminalf122/root8459/public549e. Main247e-to-producer AST scope checks independently reproduced with the same8e36 metadata digest. No describe/native/application function executed.",
+    "Accepted ROOT07 history/current lineage logic and historical catalog35 cf27/actual9f,model626c,service35/install32 identities preserved; new expectedBinding remains exactdb127/344c.",
+    "Prior38 static evidence preserves genuine stopped38 C/ACK/results,failed04 native UNKNOWN and5 private9-field stat-only paths. It does not require shared PGDATA stopped or current-production-service pointer to remain38 during future39 PREPARE.",
+    "ReferenceError producer and both host/embedded observer classifiers keep exact six fields and existing three writer stages; representative source is synchronized across three runners and two hosts.",
+    "Original CLI only blueprint filename changed. Exact29d invoke wrapper binds currentdd4a directory/source and original single-authority argument/parser/constructor path; observers are source-syntax checked, never invoked."
+  ]
+}
