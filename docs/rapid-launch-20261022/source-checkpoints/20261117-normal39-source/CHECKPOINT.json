@@ -1,6 +1,6 @@
 {
-  "state": "NORMAL39_ACTUAL_FRESH_BASIS_MATCHED_MAIN_FINITE_ISSUED_CAS_APPLY_PENDING",
-  "sourceOnly": true,
+  "state": "NORMAL39_ACTUAL_CAS_APPLY_COMPLETED_START39_AUTH_ISSUED_START_PENDING",
+  "sourceOnly": false,
   "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
   "consumerInterfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
   "consumerPhaseSha256": "da36a2529a471d3b43cfb4ac7a8a45ab35c2c30387c3249788ed834af592928f",
@@ -440,10 +440,30 @@
       "path": "actual-safe/ISSUED-SAFE-METADATA.json",
       "sha256": "8073d245c1fff476ae70d392aad5630b7f17da5e67b72a7f74a896e32340f6d1",
       "bytes": 3309
+    },
+    {
+      "path": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "sha256": "fdcad23ff6e888dd5242bfd993ff91e33d9e842fb6e1a3c415d25f06245b1ef7",
+      "bytes": 538
+    },
+    {
+      "path": "actual-safe/ACTUAL-APPLY39-RESULT.json",
+      "sha256": "8f388d065467b562c7419cc9e5bd8152e4d1c8d94167d52f384bf87758527176",
+      "bytes": 5097
+    },
+    {
+      "path": "actual-safe/START39-ISSUED-SAFE.json",
+      "sha256": "0b130b4c7454e3b66d0e5938c82e53383f0b06dd8b5429b91daaf381f500c736",
+      "bytes": 412
+    },
+    {
+      "path": "main/APP-A7-SOURCE-ONLY-DECISION.json",
+      "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+      "bytes": 3142
     }
   ],
-  "next": "T45 original CAS once then exact typed readback; if matched APPLY39 once and complete typed result; Main START authority only after actual APPLY. Original writer remains never submitted, business0. No renewed old role/source permits.",
-  "asOf": "2026-11-17T13:26:53.579827+08:00",
+  "next": "T45 START39 once, exact actual terminal/four stored outputs/current39 C-epoch/context; Main native PREPARE05 authority only after actual START. Original writer never submitted/business0; source APP WIP independent.",
+  "asOf": "2026-11-17T13:36:27.864063+08:00",
   "rootSourcePinsSha256": "b96d2548a58fe1ffc3a1b855420aea8a519d7982d3707927b88accfa7d0a6b7b",
   "rootRulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
   "rootConsumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
@@ -459,7 +479,7 @@
     }
   ],
   "roleClockStarted": true,
-  "rolesApplied": false,
+  "rolesApplied": true,
   "actualFreshBasisSha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
   "actualACK38RawSHAObservedThisRead": true,
   "issuedSafeMetadataSha256": "8073d245c1fff476ae70d392aad5630b7f17da5e67b72a7f74a896e32340f6d1",
@@ -491,5 +511,12 @@
     "rulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
     "startsAt": 1794893125875,
     "state": "ISSUED_NORMAL39_SIX_PHASE_REGISTRATION_NO_PHASE_SUBMITTED"
-  }
+  },
+  "actualCASResultSha256": "fdcad23ff6e888dd5242bfd993ff91e33d9e842fb6e1a3c415d25f06245b1ef7",
+  "actualApplyResultSha256": "8f388d065467b562c7419cc9e5bd8152e4d1c8d94167d52f384bf87758527176",
+  "startAuthoritySha256": "0308cfdd2e2a401fbf52bd437a175b40ec5a75b0acf0288358282760d56e199d",
+  "current39OriginalAuthRestored": false,
+  "actualServerRegistration": true,
+  "businessWriterSubmitted": false,
+  "businessWrites": 0
 }

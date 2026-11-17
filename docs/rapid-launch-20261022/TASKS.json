@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T13:26:53.579827+08:00",
+  "updatedAt": "2026-11-17T13:36:27.864063+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 original CAS once then exact typed readback; if matched APPLY39 once and complete typed result; Main START authority only after actual APPLY. Original writer remains never submitted, business0. No renewed old role/source permits.",
+  "next": "T45 START39 once, exact actual terminal/four stored outputs/current39 C-epoch/context; Main native PREPARE05 authority only after actual START. Original writer never submitted/business0; source APP WIP independent.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T13:26:53.579827+08:00",
+  "asOf": "2026-11-17T13:36:27.864063+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 original CAS once then exact typed readback; if matched APPLY39 once and complete typed result; Main START authority only after actual APPLY. Original writer remains never submitted, business0. No renewed old role/source permits.",
+  "next": "T45 START39 once, exact actual terminal/four stored outputs/current39 C-epoch/context; Main native PREPARE05 authority only after actual START. Original writer never submitted/business0; source APP WIP independent.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,7 +52789,7 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": false,
+  "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
   "PGCurrentlyStopped": true,
@@ -52797,7 +52797,7 @@
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": true,
+  "originalAuthRestored": false,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53564,14 +53564,17 @@
     "originalAuthRestored": true,
     "noActiveOperation": true
   },
-  "normal39": "NORMAL39_ACTUAL_FRESH_BASIS_MATCHED_MAIN_FINITE_ISSUED_CAS_APPLY_PENDING",
+  "normal39": "NORMAL39_ACTUAL_CAS_APPLY_COMPLETED_START39_AUTH_ISSUED_START_PENDING",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "dispatcherSha256": "69d52a00145421a7e675685aa626a30cdb5ffe0e62fdcba7c8ba272f18c01262",
+    "dispatcherSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
     "sourceModuleSha256": "76f8913957c728b82dbbd9d5831cfd085a95436f283aa8be997e47802dae6080",
     "sourcePolicySha256": "b87fa978f93da13582569027b8453cd3aedaaf3bd700aa26fdb8a500f6050189",
     "normalModuleHistoricalSha256": "3b7ebfcb95df010fdbd585b5551851cba6cd65953e54352ab25ee01bb3ec368d",
-    "normalPolicyHistoricalSha256": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e"
+    "normalPolicyHistoricalSha256": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e",
+    "normalModuleSha256": "b8ec4823753f791332631a1f907a79c4f9d752e2e74108d7b572510b7f610785",
+    "normalPolicySha256": "104048251747ed638ffb6464d9c12777855d7355c30261b53b75407f8dfc4173",
+    "actualCASResultSha256": "fdcad23ff6e888dd5242bfd993ff91e33d9e842fb6e1a3c415d25f06245b1ef7"
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -53595,7 +53598,7 @@
   },
   "normal39Finite": {
     "issued": true,
-    "applied": false,
+    "applied": true,
     "actualBasisSha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
     "basisCheckedAtUTC": "2026-11-17T05:24:18.158001+00:00",
     "ACK38RawSHAActuallyObserved": true,
@@ -53606,7 +53609,13 @@
     "startsAt": 1794893125875,
     "registrationExpiresAt": 1794894025875,
     "controllerValidUntil": 1794900325875,
-    "restorationDeadline": 1794902125875
-  }
+    "restorationDeadline": 1794902125875,
+    "applyResultSha256": "8f388d065467b562c7419cc9e5bd8152e4d1c8d94167d52f384bf87758527176",
+    "applyFinishedAtUTC": "2026-11-17T05:30:38.756707+00:00",
+    "applyCheckedAtUTC": "2026-11-17T05:33:13.399308+00:00",
+    "applyElapsedSeconds": 7.690823742,
+    "currentOriginalAuthenticationRestored": false
+  },
+  "newDatabaseRolesCreated": 0
 }
 }
