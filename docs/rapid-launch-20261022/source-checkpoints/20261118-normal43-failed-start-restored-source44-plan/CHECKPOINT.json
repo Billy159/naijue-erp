@@ -1,0 +1,65 @@
+{
+  "state": "NORMAL43_START_FAILED_TYPED_CLEANUP_ORIGINAL_AUTH_RESTORED_SOURCE44_LOCAL_IMPLEMENTATION_AUTHORIZED",
+  "asOf": "2026-11-17T18:51:25.749490+00:00",
+  "rootCurrent": 132,
+  "rootCandidate": 137,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "normal43CASCompleted": true,
+  "normal43ApplyCompleted": true,
+  "normal43StartFailed": true,
+  "normal43WriterAuthorityIssued": false,
+  "normal43WriterSubmitted": false,
+  "normal43StopJobSubmitted": false,
+  "normal43TypedFailedStartCleanupCompleted": true,
+  "normal43RestoreCompleted": true,
+  "normal43CompleteImportPerformed": false,
+  "normal44RuntimeAuthorized": false,
+  "SQLUpgrade42Completed": true,
+  "runtimeSpecificFirstDescriptionFailure": "UNKNOWN_ORIGINAL_CATCH_DISCARDED_ERROR",
+  "staticIdentityContradictionConfirmed": true,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "ownerResultSha256": "f874853e6d4ae0a3c4040e6dc059e72378553cc48a4105f36ec2a5d4075225aa",
+  "restoreTerminalSha256": "5a333ddb2bf93bf13050a3be735c209b814616271ca0adcbbd5987d280b34361",
+  "next": "Implement source-only normal44: root parent stays root, describe child fixed61035/empty groups with exact three-file readonly projection; retain ORDINARY_RUNTIME_REQUIRED and all private guards. Safe closed-set diagnostics only. T45 consumer owner, D1 Root/Main exact successor from132, QB new delta only. No new runtime clock/auth/fresh/CAS/PG/job authorized yet. Preserve original44910-step plan/SQL42/IDs; no recompilation, APP rebuild or public opening.",
+  "copies": [
+    {
+      "originalPath": "actual-safe/RESULT.json",
+      "storedPath": "actual-safe/RESULT.json",
+      "sha256": "f874853e6d4ae0a3c4040e6dc059e72378553cc48a4105f36ec2a5d4075225aa",
+      "bytes": 4289
+    },
+    {
+      "originalPath": "actual-safe/START-FAILED-SAFE.json",
+      "storedPath": "actual-safe/START-FAILED-SAFE.json",
+      "sha256": "a4135a5515dd6712890bc5ba574bba85bafc5d3a7d4f032cc03b2b67f04c4fb4",
+      "bytes": 1276
+    },
+    {
+      "originalPath": "actual-safe/RESTORE-SAFE.json",
+      "storedPath": "actual-safe/RESTORE-SAFE.json",
+      "sha256": "aff24722fbf45b87d3f03e07da7a2f1d677f6a5db18d4010089479771cc75bb2",
+      "bytes": 1348
+    },
+    {
+      "originalPath": "diagnosis/FINDING.md",
+      "storedPath": "diagnosis/FINDING.md",
+      "sha256": "696d85e6f2631238f298e9c0d99daf44b1f2aca41d92bff6ad9e76e245c10a42",
+      "bytes": 2920
+    },
+    {
+      "originalPath": "diagnosis/SOURCE44-PLAN.md",
+      "storedPath": "diagnosis/SOURCE44-PLAN.md",
+      "sha256": "93173303cfa1d63d010044c8632bf43db3a955cf0d7f069a4b09c0e757060d08",
+      "bytes": 11759
+    },
+    {
+      "originalPath": "main/SOURCE-SCOPE.json",
+      "storedPath": "main/SOURCE-SCOPE.json",
+      "sha256": "2ee1c9f2b8178f05131dbc40965dd2cf94378f8191427047d0f9cb2ad1b709a3",
+      "bytes": 4545
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}

@@ -1,0 +1,32 @@
+{
+  "activeOperationUnits": [],
+  "credentialValuesOrOriginalSnapshotDigestsExported": false,
+  "databaseStillStopped": true,
+  "elapsedSeconds": 6.3084031590260565,
+  "exitCode": 0,
+  "finishedAtUTC": "2026-11-17T18:36:50.666299+00:00",
+  "hardRestoreDeadlineBeijing": "2026-11-18T03:42:43.266+08:00",
+  "membershipsOrRoleAttributesChanged": false,
+  "naturalExpiryCountedAsRestoration": false,
+  "objectsEqual": true,
+  "originalVerifierAndExpiryPrivatelyVerified": true,
+  "ownContainer": {
+    "exitCode": 0,
+    "id": "616f7e902fc82b69110ddf00bf7b909bc290ed42769d2af3d64c029b4238a2ec",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-ordinary43-auth-restore-20261118-01",
+    "operation": "t45-r3-ordinary43-auth-restore-20261118-01",
+    "pid": 0,
+    "running": false
+  },
+  "pgdataPidAbsent": true,
+  "portAbsent": true,
+  "publicResultSha256": "b366961157dba1c2341d393f1dc59cef50199d28128527f4e90e66cd8cce80a5",
+  "requestKey": "t45-r3-ordinary43-auth-restore-20261118-01",
+  "restoredBeforeHardDeadline": true,
+  "rootResultSha256": "34f5a172e7b14d5171b86bc74e188c6e293fd842ef93f16af6de6ce59d40c6ee",
+  "runtimeAuthChanged": false,
+  "sourceDataPreserved": true,
+  "status": "COMPLETED",
+  "terminalSha256": "5a333ddb2bf93bf13050a3be735c209b814616271ca0adcbbd5987d280b34361"
+}

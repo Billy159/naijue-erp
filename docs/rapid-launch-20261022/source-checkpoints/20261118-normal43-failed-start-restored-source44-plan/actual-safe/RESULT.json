@@ -1,0 +1,91 @@
+{
+  "APPDeployedOrPublicBusinessOpened": false,
+  "apply": {
+    "exitCode": 0,
+    "finishedAtUTC": "2026-11-17T18:24:18.215783+00:00",
+    "key": "t45-r3-ordinary43-auth-apply-20261118-01",
+    "rootResultSha256": "76eaaa08fdcd470363559ca969ca74332cf89c4fb18f74cc643ed5a7e43a2f09",
+    "status": "COMPLETED",
+    "terminalSha256": "2feb4777b35e7fdd16e43543f2d412efc25beea192c72a2cc738ead553c81110"
+  },
+  "businessAcceptanceClaimed": false,
+  "businessImportCompleted": false,
+  "cas": {
+    "afterKeys": 132,
+    "beforeKeys": 127,
+    "dispatcherSha256": "e321fd75440c43300006ea8408d1329ec55e3aed5638a83b3b5bf9eca25e0173",
+    "moduleSha256": "b17e9b0b529a86a0dd5efbdf5ba63817519cdfa676247931d4998be444fc88ce",
+    "old127AndThreeGuardsPreserved": true,
+    "policySha256": "9f2acb92242fc6428f2e3582fe3a270a9aa13725c892100d3687c7f25a649caa",
+    "receiptSha256": "280aedbc97d692af542e568775fa8eb6772f28053359a05b318d0bd51dc92a1e",
+    "status": "EXACT_NORMAL43_FIVE_PHASE_ROOT_REGISTERED_NO_PHASE_OR_SQL_EXECUTED"
+  },
+  "consumerSourcePinsSha256": "8b492612798f9ebb3e8182477bb8f3eb2fa99f52acd78f846d3d1f2726a73f5e",
+  "descriptionFailure": {
+    "NodeOrDescribeReruns": 0,
+    "Root08HostLeafSha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa",
+    "Root08RecordLoaderLeafSha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a",
+    "entryRequiredUIDs": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "exactRoot08OrdinaryAPIRequiresNonRoot": true,
+    "existingSafeLogReceiptSha256": "264fbcfa04b3ae1e5ab8f32ec3e958422c7f526c7ff64d761f22fff44660383e",
+    "existingStderrBytes": 0,
+    "existingStdoutBytes": 113,
+    "existingStdoutState": "UNKNOWN",
+    "ordinaryGuardPreserved": true,
+    "runtimeSpecificFirstFailure": "UNKNOWN",
+    "safeCode": "FINAL43_EXECUTION_DESCRIPTION_UNCONFIRMED",
+    "staticIdentityConflictConfirmed": true
+  },
+  "followup": "D1 minimal source identity/ordinary-readability proposal only, then Main exact scope; no new key, Node, PG, write or replay currently authorized",
+  "originalCredentialsOrSnapshotBodiesOrDigestsInThisReport": false,
+  "originalPrepare05": {
+    "SQLiteOrInitializerBodyReadByThisDiagnosis": false,
+    "oldPreparedAndExecutionBindingsModified": false,
+    "recompiled": false,
+    "replayed": false,
+    "steps": 44910
+  },
+  "restore": {
+    "key": "t45-r3-ordinary43-auth-restore-20261118-01",
+    "safeSummary": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL43-FULL-DATA-CONTINUATION-RESULT-01/RESTORE-SAFE.json",
+      "sha256": "aff24722fbf45b87d3f03e07da7a2f1d677f6a5db18d4010089479771cc75bb2"
+    },
+    "state": "COMPLETED_ORIGINAL_AUTH_RESTORED"
+  },
+  "rootSourcePinsSha256": "118e3b5254e3f0f2bbc373fe38f41d083313f802b1829ed3b0ce295a3c0ea341",
+  "runtimeDecisionSha256": "0a61a5e9b1bf2071e9582dda14e39d354914f26ebe65b454b6429cd65a76a8d1",
+  "scope": "Actual controlled normal43 attempt and required safe closeout; full business import not completed",
+  "sourceReviewSha256": "363c35d5ed07443c702bb2c311a6628d9ffc7046385fedb17a6007f7f34e19b2",
+  "start": {
+    "key": "t45-first-r3-native-service-start-20261118-43",
+    "safeSummary": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL43-FULL-DATA-CONTINUATION-RESULT-01/START-FAILED-SAFE.json",
+      "sha256": "a4135a5515dd6712890bc5ba574bba85bafc5d3a7d4f032cc03b2b67f04c4fb4"
+    },
+    "state": "FAILED_NOT_REPLAYABLE"
+  },
+  "state": "NORMAL43_CAS_APPLY_COMPLETED_START_FAILED_CLEAN_STOP_ORIGINAL_AUTH_RESTORED_WRITER_NEVER_SUBMITTED",
+  "stop": {
+    "key": "t45-r3-ordinary43-preserve-stop-20261118-01",
+    "state": "NO_STOP_JOB_SUBMITTED_TYPED_FAILED_START_CLEANUP_COMPLETED",
+    "stopJobPASSClaimed": false
+  },
+  "target": {
+    "PGDATADevice": 66304,
+    "PGDATAInode": 13502421,
+    "database": "erp_fresh35_20261110_r3",
+    "databaseOid": "16393",
+    "systemIdentifier": "7706545564479176741"
+  },
+  "writer": {
+    "key": "t45-r3-batched-real-after42-execute-20261118-01",
+    "state": "NEVER_ISSUED_OR_SUBMITTED",
+    "submissionCalls": 0
+  }
+}
