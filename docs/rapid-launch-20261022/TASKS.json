@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T08:49:55.775574+00:00",
+  "updatedAt": "2026-11-17T08:56:27.543476+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
+  "next": "T45 SOURCE03 prepares reasoned successor diagnostic02 with exact key-specific python -I -S, preserving old108 keys and worker isolation requirement; same QB checks only launch/key/pin delta. Main actual issuance awaits PASS plus actual fresh bases. Root08 final root-dependent pins await actual diagnostic02 CAS; reuse consumer4fed/abfa. No SQL upgrade or business retry.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T08:49:55.775574+00:00",
+  "asOf": "2026-11-17T08:56:27.543476+00:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
+  "next": "T45 SOURCE03 prepares reasoned successor diagnostic02 with exact key-specific python -I -S, preserving old108 keys and worker isolation requirement; same QB checks only launch/key/pin delta. Main actual issuance awaits PASS plus actual fresh bases. Root08 final root-dependent pins await actual diagnostic02 CAS; reuse consumer4fed/abfa. No SQL upgrade or business retry.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53831,8 +53831,8 @@
     "evidenceHashInManifest": true
   },
   "core0DurableReadonly": {
-    "asOf": "2026-11-17T08:49:55.775574+00:00",
-    "state": "ACTUAL_CORE0_DIAGNOSTIC_FAILED_EARLY_NO_DURABLE_EVIDENCE_OR_WORKER_CLEANUP_RECEIPT",
+    "asOf": "2026-11-17T08:56:27.543476+00:00",
+    "state": "DIAGNOSTIC01_ACTUAL_ENTRY_FLAG_CONTRACT_FAILURE_CONFIRMED_SOURCE03_REPAIR_IN_PROGRESS",
     "sourcePinsSha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
     "sourceReviewSha256": "9c2ce6cf248d3e56079e56867b3fe926aaf989ce393d6e6b021c74aa4407bddb",
     "originalWriter": "FAILED_CONSUMED_NO_REPLAY",
@@ -54016,6 +54016,11 @@
         "path": "actual-safe/DIAGNOSTIC-FAILED-READBACK-01.json",
         "sha256": "3f2c6caf2cdaa0114fc8208ef182584f9085fe6e5a8b05ed8a7678d01e0ff0e1",
         "bytes": 1074
+      },
+      {
+        "path": "actual-safe/ACTUAL-FAILURE-SAFE-PROJECTION.json",
+        "sha256": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+        "bytes": 792
       }
     ],
     "omittedDuplicateBodies": [
@@ -54075,7 +54080,7 @@
     "registeredKeys": 108,
     "actualDiagnosticRequestManifestSha256": "f0dc3983537a4cc9a57193c5fd2b4464b830ea7a6e81432fefe75be9b66154e7",
     "diagnosticExecutionResult": "FAILED_EXIT1",
-    "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
+    "next": "T45 SOURCE03 prepares reasoned successor diagnostic02 with exact key-specific python -I -S, preserving old108 keys and worker isolation requirement; same QB checks only launch/key/pin delta. Main actual issuance awaits PASS plus actual fresh bases. Root08 final root-dependent pins await actual diagnostic02 CAS; reuse consumer4fed/abfa. No SQL upgrade or business retry.",
     "omittedFrozenPatchBodies": [
       {
         "path": "root08-consumer/ROOT07-TO-ROOT08.patch",
@@ -54097,7 +54102,21 @@
     "diagnosticOwnContainerMetadata": "NOT_OBSERVED",
     "diagnosticSingleUserCleanupProven": false,
     "originalPortAbsent": true,
-    "pgdataPidAbsent": true
+    "pgdataPidAbsent": true,
+    "actualFailureSafeProjectionSha256": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+    "actualGuardCode": "FIXED_ISOLATED_ROOT_ENTRY_REQUIRED",
+    "actualWorkerSourceFrame": "durable_readonly_job.py:235",
+    "failureBeforeWorkerHostOrInsideCall": true,
+    "dispatcherSourceLaunchFlags": [
+      "-s"
+    ],
+    "requiredWorkerLaunchFlags": [
+      "-I",
+      "-S"
+    ],
+    "originalDiagnosticKeyConsumed": true,
+    "plannedReasonedSuccessorKey": "t45-r3-core0-durable-readonly-20261117-02",
+    "futureRootOrAuthorityCreated": false
   },
   "root08SourceOnlyMaterialization": {
     "consumerSourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
@@ -54106,7 +54125,8 @@
     "rootAdmissionBeingPreparedAgainstActualDispatcher": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
     "overallRootReviewPASS": false,
     "actualMaterialized": false,
-    "SQLUpgradePerformed": false
+    "SQLUpgradePerformed": false,
+    "finalRootDependentPinsWaitingForActualDiagnostic02Root": true
   }
 }
 }

@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-17T08:49:55.775574+00:00",
-  "state": "ACTUAL_CORE0_DIAGNOSTIC_FAILED_EARLY_NO_DURABLE_EVIDENCE_OR_WORKER_CLEANUP_RECEIPT",
+  "asOf": "2026-11-17T08:56:27.543476+00:00",
+  "state": "DIAGNOSTIC01_ACTUAL_ENTRY_FLAG_CONTRACT_FAILURE_CONFIRMED_SOURCE03_REPAIR_IN_PROGRESS",
   "sourcePinsSha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
   "sourceReviewSha256": "9c2ce6cf248d3e56079e56867b3fe926aaf989ce393d6e6b021c74aa4407bddb",
   "originalWriter": "FAILED_CONSUMED_NO_REPLAY",
@@ -184,6 +184,16 @@
       "path": "actual-safe/DIAGNOSTIC-FAILED-READBACK-01.json",
       "sha256": "3f2c6caf2cdaa0114fc8208ef182584f9085fe6e5a8b05ed8a7678d01e0ff0e1",
       "bytes": 1074
+    },
+    {
+      "path": "actual-safe/ACTUAL-FAILURE-SAFE-PROJECTION.json",
+      "sha256": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+      "bytes": 792
+    },
+    {
+      "path": "review/LAUNCH-MISMATCH-EVIDENCE.json",
+      "sha256": "2524641c0d79fb4267e801961a244fe3108e898c825dbe92a0775b8fc9cf4817",
+      "bytes": 2231
     }
   ],
   "omittedDuplicateBodies": [
@@ -243,7 +253,7 @@
   "registeredKeys": 108,
   "actualDiagnosticRequestManifestSha256": "f0dc3983537a4cc9a57193c5fd2b4464b830ea7a6e81432fefe75be9b66154e7",
   "diagnosticExecutionResult": "FAILED_EXIT1",
-  "next": "T45 reads only existing failed diagnostic original-key phase log safe code/frames; no replay or new diagnostic key until cause found. Durable UNKNOWN, cleanup/result absent; retain actual CAS45914. D1 Root08 SOURCE admission can proceed independently against actual root, no server execution.",
+  "next": "T45 SOURCE03 prepares reasoned successor diagnostic02 with exact key-specific python -I -S, preserving old108 keys and worker isolation requirement; same QB checks only launch/key/pin delta. Main actual issuance awaits PASS plus actual fresh bases. Root08 final root-dependent pins await actual diagnostic02 CAS; reuse consumer4fed/abfa. No SQL upgrade or business retry.",
   "omittedFrozenPatchBodies": [
     {
       "path": "root08-consumer/ROOT07-TO-ROOT08.patch",
@@ -265,5 +275,20 @@
   "diagnosticOwnContainerMetadata": "NOT_OBSERVED",
   "diagnosticSingleUserCleanupProven": false,
   "originalPortAbsent": true,
-  "pgdataPidAbsent": true
+  "pgdataPidAbsent": true,
+  "actualFailureSafeProjectionSha256": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+  "actualGuardCode": "FIXED_ISOLATED_ROOT_ENTRY_REQUIRED",
+  "actualWorkerSourceFrame": "durable_readonly_job.py:235",
+  "failureBeforeWorkerHostOrInsideCall": true,
+  "dispatcherSourceLaunchFlags": [
+    "-s"
+  ],
+  "requiredWorkerLaunchFlags": [
+    "-I",
+    "-S"
+  ],
+  "originalDiagnosticKeyConsumed": true,
+  "plannedReasonedSuccessorKey": "t45-r3-core0-durable-readonly-20261117-02",
+  "futureRootOrAuthorityCreated": false,
+  "independentLaunchMismatchEvidenceSha256": "2524641c0d79fb4267e801961a244fe3108e898c825dbe92a0775b8fc9cf4817"
 }

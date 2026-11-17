@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "futureAuthorityCIDCepochOrPositiveFixturesCreated": false,
+    "serverPGNativeIssuerReaderCASClockCalls": 0
+  },
+  "actualDiagnosticTerminal": {
+    "elapsedSeconds": 0.6194057520478964,
+    "exitCode": 1,
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-EXECUTION-PREPARATION-02/diagnostic-call/READBACK-01.json",
+    "sha256": "3f2c6caf2cdaa0114fc8208ef182584f9085fe6e5a8b05ed8a7678d01e0ff0e1",
+    "status": "FAILED",
+    "terminalSha256": "8e8af93929b3a17f3b81f7e7e394fa03d54ca4d13a82c105646b5b6ba361af5b"
+  },
+  "actualFailureProjection": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-EXECUTION-PREPARATION-02/diagnostic-call/ACTUAL-FAILURE-SAFE-PROJECTION.json",
+    "sha256": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7"
+  },
+  "actualHostPythonFlags": [
+    "-s"
+  ],
+  "actualRootCAS": {
+    "dispatcherSha256": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-EXECUTION-PREPARATION-02/cas/ACTUAL-CAS-RESULT.json",
+    "sha256": "938e3e03fe6d5776abc16f96561c7de1c0fa889edccfd1907836ea40a01d2e8f"
+  },
+  "durableBusinessState": "UNKNOWN",
+  "failureBeforeHostOrInsideCall": true,
+  "guard": "FIXED_ISOLATED_ROOT_ENTRY_REQUIRED",
+  "historicalOwnContainerCreationState": "UNKNOWN_FROM_EXISTING_RECEIPTS",
+  "originalDiagnosticKeyMayReplay": false,
+  "priorReviewGap": "Host launcher versus isolated/no_site entry guard pairing was missed in prior review; frozen prior scope report preserved.",
+  "priorSourceAndCASAndTerminalRewritten": false,
+  "priorSourcePinsSha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
+  "requiredHostPythonFlags": [
+    "-I",
+    "-S"
+  ],
+  "sourceOnly": true,
+  "state": "ACTUAL_DIAGNOSTIC01_LAUNCH_GUARD_MISMATCH_CONFIRMED_ORIGINAL_KEY_CONSUMED"
+}
