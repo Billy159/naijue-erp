@@ -1,0 +1,108 @@
+{
+  "state": "SOURCE_PASS_LEXICAL_FIX_AND_DIAGNOSTIC_DELTA_ONLY_NOT_INSTALLED",
+  "sourceOnly": true,
+  "sourceSha256": "17ffcf70fd00b3a1050517e69619c9a04a41537133573508c7f7db0bdf873008",
+  "sourcePinsSha256": "499937678edee0fe1802babb85bac2fcf67ef0063604261408141633daa4958e",
+  "runtimeHostChangedLeaves": 1,
+  "diagnosticRepresentativeLeaves": 3,
+  "moduleScopeChecks": 8,
+  "actualRuntimeCauseCaptured": false,
+  "materializedOrInstalled": false,
+  "newSourceBindingsDerived": false,
+  "actualCatalog35SpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+  "documentBoundaryCorrection": "Frozen4999 impact mentions05609, which is old local fixture descriptor, not actual catalog35 spec9f4595. D1 successor contract and current QB review must distinguish them; original document preserved unchanged.",
+  "patchBodyOmittedOriginalPreserved": true,
+  "copies": [
+    {
+      "path": "SOURCE-PINS.json",
+      "sha256": "499937678edee0fe1802babb85bac2fcf67ef0063604261408141633daa4958e",
+      "bytes": 1841
+    },
+    {
+      "path": "SOURCE.json",
+      "sha256": "17ffcf70fd00b3a1050517e69619c9a04a41537133573508c7f7db0bdf873008",
+      "bytes": 1866
+    },
+    {
+      "path": "RESULT.json",
+      "sha256": "8db8fbca5a4732dea1558ff2bb9cfd96173c3413a05c821b9bca84ea95fe9256",
+      "bytes": 1352
+    },
+    {
+      "path": "LOCAL-CHECKS.json",
+      "sha256": "7dd181433987fc7feb8903c6b924f25522d6c24b7a676943da2377a7ac4dcfcb",
+      "bytes": 4635
+    },
+    {
+      "path": "INTERFACE-IMPACT.json",
+      "sha256": "225c7515595ec3e8030aad14df6a84b845cd512249b7dd781b9012e24593bc44",
+      "bytes": 1557
+    },
+    {
+      "path": "HANDOFF.md",
+      "sha256": "4dc7ade26ef3128fb638c971cacc1a42284171723d1af7288f952497cead8c3d",
+      "bytes": 9614
+    },
+    {
+      "path": "check_scope.mjs",
+      "sha256": "08eb131d51bea3615ad01d7d5b956609bb91eb4aa1c1acce5c295b0d6802ee0f",
+      "bytes": 5779
+    },
+    {
+      "path": "source/tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+      "bytes": 105724
+    },
+    {
+      "path": "diagnostic/final33-run.mjs",
+      "sha256": "1609b55c05fc064d7720dc6528380341a6a1731aae61f33309885777b13e3998",
+      "bytes": 19482
+    },
+    {
+      "path": "diagnostic/final33_host.py",
+      "sha256": "ff552c14ef04b0d6d4786b5628e7393153a531cddd1053b5146290182c1db15d",
+      "bytes": 51206
+    },
+    {
+      "path": "diagnostic/read_pending38.py",
+      "sha256": "51ad8116104ca5137bcb0956d285aef426da7b56f169c2371828753e60a55a82",
+      "bytes": 9115
+    },
+    {
+      "path": "review/DELTA-EVIDENCE.json",
+      "sha256": "46dcc63d2c1e52599b2ad86dc1d52eeee1f79b8cf0650f26fbc9e6f68aac2b38",
+      "bytes": 2573
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "3690724c13a05698afbdf640ad72fb2a2eed62aa8469b87e4addbcef237a3549",
+      "bytes": 5390
+    },
+    {
+      "path": "review/PIN-EVIDENCE.json",
+      "sha256": "395cd22b29089aed32625b0f49ce03f3ce24dda27355fac1ae731cdf4eca6bd0",
+      "bytes": 898
+    },
+    {
+      "path": "review/SCOPE-EVIDENCE.json",
+      "sha256": "7dd181433987fc7feb8903c6b924f25522d6c24b7a676943da2377a7ac4dcfcb",
+      "bytes": 4635
+    },
+    {
+      "path": "review/check_scope.mjs",
+      "sha256": "24b17bbbaee6a59c332135a65b46cb1f7d70bda065cf1362b878639a9ee069d9",
+      "bytes": 6071
+    },
+    {
+      "path": "review/CATALOG-IDENTITY-CLARIFICATION.json",
+      "sha256": "4a048b02e446b841ac791c3d6334d6200498fb1bcfcee999f8a19c995e6ade9c",
+      "bytes": 2260
+    }
+  ],
+  "reviewSha256": "3690724c13a05698afbdf640ad72fb2a2eed62aa8469b87e4addbcef237a3549",
+  "requiredCatalogClarificationSha256": "4a048b02e446b841ac791c3d6334d6200498fb1bcfcee999f8a19c995e6ade9c",
+  "executionReady": false,
+  "sourceAdmissionImplemented": false,
+  "historicalDB05MetadataSuccessorImplemented": false,
+  "next": "D1 true ROOT07 source derivation and strict historical/current metadata successor contract; T45 consumer/materializer WIP only, final pairing pending."
+}

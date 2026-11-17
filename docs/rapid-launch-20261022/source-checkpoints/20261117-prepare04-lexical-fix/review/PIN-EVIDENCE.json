@@ -1,0 +1,23 @@
+{
+  "applicationModulesExecuted": false,
+  "checks": {
+    "ExactSourceManifest": true,
+    "ExactSourcePins": true,
+    "Frozen_HANDOFF.md": true,
+    "Frozen_INTERFACE-IMPACT.json": true,
+    "Frozen_LOCAL-CHECKS.json": true,
+    "Frozen_MINIMAL-NOT-APPLIED.patch": true,
+    "Frozen_RESULT.json": true,
+    "Frozen_SOURCE-PINS.json": true,
+    "Frozen_check_scope.mjs": true,
+    "Frozen_diagnostic/final33-run.mjs": true,
+    "Frozen_diagnostic/final33_host.py": true,
+    "Frozen_diagnostic/read_pending38.py": true,
+    "Frozen_source/tools/unified-import/fresh35-host-session.mjs": true,
+    "OriginalAndCandidate_diagnostic/final33-run.mjs": true,
+    "OriginalAndCandidate_diagnostic/final33_host.py": true,
+    "OriginalAndCandidate_diagnostic/read_pending38.py": true,
+    "OriginalAndCandidate_source/tools/unified-import/fresh35-host-session.mjs": true
+  },
+  "sourceChanged": false
+}

@@ -1,0 +1,32 @@
+{
+  "applicationSourceRowDelta": {
+    "beforeBytes": 105820,
+    "beforeSha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+    "bytes": 105724,
+    "path": "tools/unified-import/fresh35-host-session.mjs",
+    "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368"
+  },
+  "executionReady": false,
+  "futureRoleOrServiceOrEpochOrAuthority": null,
+  "modelAndSQLInputsEdited": false,
+  "newActualMaterializationReceipt": null,
+  "newBatchedDescriptorSha256": null,
+  "newBatchedSourceSetSha256": null,
+  "newOperatorSourceSetSha256": null,
+  "newSourceRowsSha256": null,
+  "oldActualMaterializationResultSha256": "73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171",
+  "oldBatchedCatalog": {
+    "catalogSpecSha256": "05609b8c0eb2b4be1fb84e2e3ef1d8b1737f82afe712cd49cd111860e22675bb",
+    "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "sourceSetSha256": "cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c"
+  },
+  "oldDB05ReceiptDirectlyMatchesNewDescriptor": false,
+  "oldDB05SourceSuccessorPairingImplemented": false,
+  "oldOperatorSourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "oldSourceRowsSha256": "078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9",
+  "replayAllowed": false,
+  "requiresNewDatabaseDDLByThisDelta": false,
+  "sourceFilePaths": 387,
+  "sourceSetAndDescriptorNeedRealSourceDerivation": true,
+  "state": "SOURCE_INTERFACE_IMPACT_ONLY_NO_FUTURE_BINDING_OR_RECEIPT"
+}

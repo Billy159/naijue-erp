@@ -1,0 +1,65 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "applicationModulesIssuerReaderNativeCatalogOrJobInvoked": false,
+    "clockCalls": 0,
+    "fullCompileBuildOrEmit": false,
+    "futureTargetAuthorityServiceReceiptOrFaultFixtureCreated": false,
+    "serverActions": 0
+  },
+  "actualFailureCauseConfirmed": false,
+  "actualNativeConnectionClosedProven": false,
+  "actualNativeNeverConnectedProven": false,
+  "actualThrowCaptured": false,
+  "applicationHostSha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-prepare04-lexical-fix-review-01/PIN-EVIDENCE.json",
+      "sha256": "395cd22b29089aed32625b0f49ce03f3ce24dda27355fac1ae731cdf4eca6bd0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-prepare04-lexical-fix-review-01/SCOPE-EVIDENCE.json",
+      "sha256": "7dd181433987fc7feb8903c6b924f25522d6c24b7a676943da2377a7ac4dcfcb"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-prepare04-lexical-fix-review-01/DELTA-EVIDENCE.json",
+      "sha256": "46dcc63d2c1e52599b2ad86dc1d52eeee1f79b8cf0650f26fbc9e6f68aac2b38"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "historicalDB05MetadataSuccessorImplemented": false,
+  "newDerivedSourceSetOrDescriptor": null,
+  "remainingRequired": [
+    "Real derivation of new full source rows/operator/sourceSet/batched descriptor/observation metadata using the actual source algorithm; do not relabel d20/cf27/05609 as patched-source PASS.",
+    "Independent successor materialization/marker/consumer closure; preserve old ROOT06 key,387-file material and078f/73ec receipts without overwrite or replay.",
+    "Owner-defined historical DB05 to new source metadata successor pairing; strict existing comparison must not be weakened and catalog35 must not be replayed to manufacture evidence.",
+    "Actual synchronized runner/host/collector copies and their complete new pin closure. These representative diagnostics are not installed into fb8f or ROOT06.",
+    "Controlled admission, actual PREPARE/native cleanup, writer/readback and production/business acceptance remain untested.846/7ecc artifact scope and prior permissions/cleaning reviews were not reopened."
+  ],
+  "sourceAdmissionImplemented": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-prepare04-lexical-fix-source-01",
+  "sourceManifestSha256": "17ffcf70fd00b3a1050517e69619c9a04a41537133573508c7f7db0bdf873008",
+  "sourceOnly": true,
+  "sourcePinsSha256": "499937678edee0fe1802babb85bac2fcf67ef0063604261408141633daa4958e",
+  "spec": {
+    "findings": [],
+    "scope": "Confirmed lexical defect, eight-module unresolved-name check, existing export/dependency relationship, ReferenceError six-field classification and real source-impact boundary"
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Minimal frozen-source import/closed-diagnostic change, no owner source edits, runtime/PG/permission scope preserved"
+  },
+  "state": "SOURCE_PASS_PREPARE04_LEXICAL_FIX_AND_DIAGNOSTIC_DELTA_ONLY",
+  "verifiedScope": [
+    "All four candidate/original pins and all eleven SOURCE manifest member pins/sizes exact; original implementation and frozen consumer trees remain unchanged.",
+    "Original host has two unresolved references at1065/1066 to builders defined only as locals of another function. Candidate adds both names to the existing module-level named import and removes only that local dynamic destructuring.",
+    "Reproduced TypeScript parse/bind with noResolve/noEmit, restricted to2304/2552/18004: original host two unresolved names, candidate zero, seven adjacent original modules zero. This is not a general typecheck or full compile.",
+    "Existing catalog module exports both builder functions. All static module specifiers/order unchanged; that catalog already has three static import declarations. No new dependency edge, cycle or additional module evaluation is introduced by the named bindings.",
+    "Within this factory, context loading precedes physical driver/connect and prepare callback. This orders the confirmed static defect but does not prove the actual failed04 never connected.",
+    "Representative runner only adds ReferenceError classification; host and embedded readonly collector only add that errorType enum. Existing six fields, stages, system/guard/SQLSTATE whitelists and all other function bodies are preserved. No raw path/message/stack added.",
+    "Saved actual failed04 and safe projection pinned metadata verified locally. Actual raw throw was not captured; native outcome and connection remain UNKNOWN, and REAPED_EXCLUSIVE_PROCESS is not CLOSED.",
+    "Source loader includes this host in its current source closure; multilayer source bindings, batched sourceSet, descriptor and observation SQL source label require actual rederivation. No new derived values or positive metadata fixture generated.",
+    "SQL/model/body inputs are not edited by this delta. No evidence here warrants DDL reinstallation or business import replay. Existing DB05 historical catalog strict equality to expectedBinding is preserved."
+  ]
+}

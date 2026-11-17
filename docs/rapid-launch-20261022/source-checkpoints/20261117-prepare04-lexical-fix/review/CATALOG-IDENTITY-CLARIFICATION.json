@@ -1,0 +1,24 @@
+{
+  "actions": {
+    "serverPGClockCatalogFixtureOrFullCompileCalls": 0
+  },
+  "actualHostCrosscheck": "Frozen fb8f consumer prepare/bundle/final33_host.py:142 strictly requires actual9f4595. Its existing historical result/binding equality remains unchanged.",
+  "applicability": "Primary SOURCE_PASS applies to the minimal import/classification code and verified source-dependency impact only; does not validate05609 as historical live state. Read this clarification together with the frozen primary report.",
+  "authoritativeActualPredecessor": {
+    "batchedCatalog": {
+      "catalogSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+      "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+      "sourceSetSha256": "cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c"
+    },
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/catalog_update/ACTUAL-CATALOG35-RESULT.json",
+    "rootResultSha256": "a474d758af30d53a4154f90081066213df351a33cb1226f976d6231ed7fdb020",
+    "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e"
+  },
+  "codeVerdictUnchanged": "SOURCE_PASS_PREPARE04_LEXICAL_FIX_AND_DIAGNOSTIC_DELTA_ONLY",
+  "documentLimitation": "Frozen candidate INTERFACE-IMPACT.json oldBatchedCatalog.catalogSpecSha25605609 is not the actual catalog35 spec. HANDOFF treats its layer insufficiently precisely. Main/D1 identify05609 as an old local compile-source physical-fixture descriptor. It must never be promoted to a live catalog identity or reused as a future binding.",
+  "futureMetadataContract": "New root07/source successor contract is outside this review and remains unimplemented/unreviewed here. Derive and bind actual new metadata against typed469177/a474d predecessor; no fixture replay, old receipt rewriting or relaxed equality.",
+  "primaryReportSha256": "3690724c13a05698afbdf640ad72fb2a2eed62aa8469b87e4addbcef237a3549",
+  "sourceOnly": true,
+  "sourcePinsSha256": "499937678edee0fe1802babb85bac2fcf67ef0063604261408141633daa4958e",
+  "state": "SOURCE_REVIEW_HISTORICAL_CATALOG_IDENTITY_CLARIFICATION"
+}

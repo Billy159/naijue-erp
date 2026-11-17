@@ -1,0 +1,37 @@
+{
+  "SQLFilesChanged": 0,
+  "applicationRuntimeChangedLeaves": 1,
+  "diagnosticRepresentativeChangedLeaves": 3,
+  "files": [
+    {
+      "beforeSha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+      "bytes": 105724,
+      "candidate": "source/tools/unified-import/fresh35-host-session.mjs",
+      "original": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368"
+    },
+    {
+      "beforeSha256": "1e048874cface2f4fc773235644b2277aa4b736d2de23453bc7c25c0517565d3",
+      "bytes": 19482,
+      "candidate": "diagnostic/final33-run.mjs",
+      "original": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/prepare/bundle/final33-run.mjs",
+      "sha256": "1609b55c05fc064d7720dc6528380341a6a1731aae61f33309885777b13e3998"
+    },
+    {
+      "beforeSha256": "052d2fc42541e85bb32715d0a5415dbfdb4b45248a86aa3f09043231c5911215",
+      "bytes": 51206,
+      "candidate": "diagnostic/final33_host.py",
+      "original": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/prepare/bundle/final33_host.py",
+      "sha256": "ff552c14ef04b0d6d4786b5628e7393153a531cddd1053b5146290182c1db15d"
+    },
+    {
+      "beforeSha256": "e998ecfa8676b62e7cc6aaedf22ec3875f6ea1b0d5599077e01be098f0024876",
+      "bytes": 9115,
+      "candidate": "diagnostic/read_pending38.py",
+      "original": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/read_pending38.py",
+      "sha256": "51ad8116104ca5137bcb0956d285aef426da7b56f169c2371828753e60a55a82"
+    }
+  ],
+  "newModuleDependencyPaths": 0,
+  "state": "IMMUTABLE_LOCAL_CANDIDATE_NOT_INSTALLED"
+}

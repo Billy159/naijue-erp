@@ -1,0 +1,110 @@
+{
+  "state": "STATIC_SCOPE_AND_MINIMAL_DELTA_CHECKS_PASS_ONLY",
+  "method": "TypeScript parse/bind, noResolve, noEmit; only unresolved-name codes 2304/2552/18004; not general typecheck or full compile",
+  "inspectedModules": [
+    "fresh35-host-session",
+    "whole-host-session",
+    "r3-service20-retained-import",
+    "stream-plan",
+    "first-admin-setup",
+    "stream-program",
+    "batched-stream-cli-state",
+    "batched-stream-plan"
+  ],
+  "baselineMissing": [
+    {
+      "file": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs",
+      "line": 1065,
+      "code": 2304,
+      "text": "Cannot find name 'buildFresh35BatchedCatalogV1'."
+    },
+    {
+      "file": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs",
+      "line": 1066,
+      "code": 2304,
+      "text": "Cannot find name 'buildFresh35BatchedCommandSuccessorCatalogV1'."
+    }
+  ],
+  "candidateMissing": [],
+  "otherInspectedModulesMissing": [],
+  "businessFunctionBodiesUnchanged": true,
+  "diagnosticChanges": "ReferenceError type classification and two existing closed-enum acceptors only",
+  "actualThrowCaptured": false,
+  "actualFailureCauseConfirmed": false,
+  "nativeCalls": 0,
+  "PGConnections": 0,
+  "clockOrAuthorityCalls": 0,
+  "faultInjectionOrErrorFixtures": 0,
+  "pins": [
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 105820,
+      "sha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/whole-host-session.mjs",
+      "bytes": 43110,
+      "sha256": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/r3-service20-retained-import.mjs",
+      "bytes": 12791,
+      "sha256": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/stream-plan.mjs",
+      "bytes": 23594,
+      "sha256": "d222f0b8671097a71983c36497792698e2498d017c020c08476ba3e6f9c8541c"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/first-admin-setup.mjs",
+      "bytes": 4042,
+      "sha256": "37dd67e3cf672664f251fb4c862a38646b042ad49a11dee8548045999bb83ee8"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/stream-program.mjs",
+      "bytes": 10480,
+      "sha256": "dae5a13547e645316859f58b5d0fed031ae1e4f1935694a00589106a6f64c0f9"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/batched-stream-cli-state.mjs",
+      "bytes": 12534,
+      "sha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/tools/unified-import/batched-stream-plan.mjs",
+      "bytes": 9607,
+      "sha256": "0bf181628d33ee8312c0cae3028fab3e9a2e04822556a763e0a12bd6bf6b474f"
+    },
+    {
+      "path": "outputs/D1/20261117-r3-prepare04-lexical-fix-source-01/source/tools/unified-import/fresh35-host-session.mjs",
+      "bytes": 105724,
+      "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368"
+    },
+    {
+      "path": "outputs/D1/20261116-r3-final-source-prepare-01/work/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "bytes": 69061,
+      "sha256": "319f4ac30157d2922dc8d62b5108d5656a375c059e322466f7f933d32d7746eb"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-SOURCE-SUCCESSOR-03/prepare/bundle/final33-run.mjs",
+      "bytes": 19433,
+      "sha256": "1e048874cface2f4fc773235644b2277aa4b736d2de23453bc7c25c0517565d3"
+    },
+    {
+      "path": "outputs/D1/20261117-r3-prepare04-lexical-fix-source-01/diagnostic/final33-run.mjs",
+      "bytes": 19482,
+      "sha256": "1609b55c05fc064d7720dc6528380341a6a1731aae61f33309885777b13e3998"
+    },
+    {
+      "path": "outputs/D1/20261117-r3-prepare04-lexical-fix-source-01/diagnostic/final33_host.py",
+      "bytes": 51206,
+      "sha256": "ff552c14ef04b0d6d4786b5628e7393153a531cddd1053b5146290182c1db15d"
+    },
+    {
+      "path": "outputs/D1/20261117-r3-prepare04-lexical-fix-source-01/diagnostic/read_pending38.py",
+      "bytes": 9115,
+      "sha256": "51ad8116104ca5137bcb0956d285aef426da7b56f169c2371828753e60a55a82"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "QBReview": "NOT_REQUESTED_BY_D1_MAIN_ROUTES_EXISTING_QB",
+  "actualEvidence": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/prepare/ACTUAL-PREPARE04-FAILED-RESULT.json",
+      "sha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-FAILURE-PROTOCOL-READONLY-01/ACTUAL-NATIVE58B7-SAFE-PROJECTION.json",
+      "sha256": "95b55c81902973c71aeb936bf76f3caeab2882b1ce0b656a700aa4622c14c19f"
+    }
+  ],
+  "actualFailureCauseConfirmed": false,
+  "actualNativeConnectionClosedProven": false,
+  "actualNativeNeverConnectedProven": false,
+  "actualThrowCaptured": false,
+  "derivedSourceSetAndDescriptor": "NOT_GENERATED_REQUIRES_ACTUAL_SOURCE_METADATA_DERIVATION",
+  "executionReady": false,
+  "frozenInputsEdited": false,
+  "fullCompileRun": false,
+  "installation": "NOT_DONE",
+  "newRuntimeOrPGOrNativeOrIssuerOrClockOrFaultInjectionOrFutureFixtureCalls": 0,
+  "registrationWIPHeld": true,
+  "state": "SOURCE_CANDIDATE_LEXICAL_FIX_AND_SIX_FIELD_REFERENCEERROR_CLASSIFICATION_ONLY",
+  "staticDefectConfirmed": true,
+  "staticScopeChecks": "PASS_8_MODULES_BASELINE_TWO_MISSING_CANDIDATE_ZERO",
+  "syntaxChecks": "PASS_2_MJS_2_PY_AND_EMBEDDED_COLLECTOR"
+}
