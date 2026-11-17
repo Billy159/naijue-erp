@@ -1,0 +1,94 @@
+{
+  "bindings": {
+    "ACK": "d035fa81890f8cbc0b7ded918c5ceac7f28259c2c126e3c651f8ff364c9bdb8f",
+    "CLEANUP": "5619126a8236edf660da4d132ce0483086975e75ff3f5e94482db60f4c370660",
+    "KEY": "t45-first-r3-native-service-start-20261116-39",
+    "NORMAL_PUBLIC": "fc3c44ea0bab6e92cc8ebd98b8db612c4329c37cf0beb7a0fbc31e6dc4138e87",
+    "NORMAL_ROOT": "422bdd6ee1aab240357007d344231b6f00979a4b2af0f6e4aa84c3cea452ae09",
+    "OLD_MAIN": "8f87d994ce56007446dfa8b60c64ab28dc9d8bbb34a9c08db4f088a49f866eea",
+    "RESTORE": "t45-r3-ordinary39-auth-restore-20261116-01",
+    "RESTORE_PUBLIC": "80c510bb7f1fe0e13bfd8b462aa9cd5f6ca3d1791fbaa312a97d6a409e4ad365",
+    "RESTORE_ROOT": "08f94d2ddcc78e733cac57313d04b0573a8003d81fe76a1ad482c6d716ecbeca",
+    "RESTORE_TERMINAL": "400bcdd5c5aa69a11b45a03a90bb64a1bbce17a835cb2bf57636949b4ec411c7",
+    "SERVICE": {
+      "containerId": "a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5",
+      "containerStartedAt": "2026-11-17T05:39:38.918702945Z",
+      "postmasterStart": "2026-11-17 05:39:40.169724+00",
+      "proofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+      "serviceKey": "t45-first-r3-native-service-start-20261116-39"
+    },
+    "STOP": "t45-r3-ordinary39-preserve-stop-20261116-01",
+    "STOP_PUBLIC": "ed4c169630e1fe352dd2a54bc7da7f1448922e3410ebe3cf628c6df7b46aa42e",
+    "STOP_ROOT": "73567688aaa35d1a2b303ed03c03e5403ed648625131434b2338d4974a41a0d7",
+    "STOP_TERMINAL": "18b47182038fbb44f5541adf2bbce8baeda4c90acd05a1092f0481b393ebd575",
+    "TERMINAL": "78f5caaae6ec9f733f97808550748a6ef486e5c14835e377a76061726b37cac2"
+  },
+  "custodyStatOnly": {
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/applied.json": [
+      66304,
+      13666945,
+      0,
+      0,
+      256,
+      1,
+      493,
+      1794893437013043029,
+      1794893437013043029
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/finite-auth.json": [
+      66304,
+      13666942,
+      0,
+      0,
+      256,
+      1,
+      2549,
+      1794893436024056178,
+      1794893436024056178
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/original-auth.json": [
+      66304,
+      13666939,
+      0,
+      0,
+      256,
+      1,
+      2533,
+      1794893435897057868,
+      1794893435897057868
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/restore-attempt.json": [
+      66304,
+      13667009,
+      0,
+      0,
+      256,
+      1,
+      114,
+      1794896630532563884,
+      1794896630532563884
+    ],
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/ordinary39-auth-20261116-01/restored.json": [
+      66304,
+      13667011,
+      0,
+      0,
+      256,
+      1,
+      466,
+      1794896631566578146,
+      1794896631566578146
+    ]
+  },
+  "futureFreshMustValidateDerivedAck": true,
+  "retainedAckExpectedFromExactKnownObjectSha256": "d035fa81890f8cbc0b7ded918c5ceac7f28259c2c126e3c651f8ff364c9bdb8f",
+  "retainedAckRawSHANotYetObserved": true,
+  "service": {
+    "containerId": "a17a885412cb8122e8b77a65d5058f1653c69a3cc20d1a11a3950e4fe6e4e1d5",
+    "containerStartedAt": "2026-11-17T05:39:38.918702945Z",
+    "postmasterStart": "2026-11-17 05:39:40.169724+00",
+    "proofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
+    "serviceKey": "t45-first-r3-native-service-start-20261116-39"
+  },
+  "state": "ACTUAL39_CLOSED_AUTH_RESTORED_ROOT08_SOURCE_ONLY_METADATA"
+}

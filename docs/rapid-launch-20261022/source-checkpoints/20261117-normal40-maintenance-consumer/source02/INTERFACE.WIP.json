@@ -1,0 +1,76 @@
+{
+  "MainRecoveryDecisionSha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+  "Root08MarkerSha256": "5bbfe6fa34d8e9c7990dbed5dfda745617d9f2c1fb58a9e431e9778b9339b67c",
+  "Root08TerminalSha256": "e8849c90c8836a9d28e016b2216c3e5a725fd9998b39dc1c940a8f499d6f70b3",
+  "actualRootDispatcherSha256": "7cab381f7cd7aa402a0087a14ecb2571460dd11274b00cee0dbd62938fb8b814",
+  "afterModel": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "beforeModel": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "diagnostic02ReadbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+  "existingRoleNames": [
+    "erp35_controller_20261110_r3",
+    "erp35_admin_20261110_r3"
+  ],
+  "futureCOrEpochOrRolesTemporaryValuesOrAuthorityOrWindow": null,
+  "generation": 40,
+  "jobs": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary40-auth-apply-20261117-01",
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/apply/bundle",
+      "timeoutSeconds": 300
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary40-auth-restore-20261117-01",
+      "script": "ordinary05_roles_job.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/restore/bundle",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-first-r3-native-service-start-20261117-40",
+      "script": "normal_service05_after08.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/start/bundle",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-ordinary40-preserve-stop-20261117-01",
+      "script": "normal05_preserve_stop.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/stop/bundle",
+      "timeoutSeconds": 120
+    },
+    "upgrade": {
+      "authorityLeaf": "catalog-update-authorization.json",
+      "bundlePins": null,
+      "deadlineField": "expiresAt",
+      "jobId": "t45-r3-settlement24-three-routine-upgrade-20261117-01",
+      "script": "batched161_command_update_host.py",
+      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/upgrade/bundle",
+      "timeoutSeconds": 780
+    }
+  },
+  "minimumAvailableBytes": 30064771072,
+  "oldProtectedKeys": 110,
+  "parentBudgetSeconds": 5100,
+  "phaseOrder": [
+    "apply",
+    "start",
+    "upgrade",
+    "stop",
+    "restore"
+  ],
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_INTERFACE_KEYS_FIXED_BUNDLE_PINS_PENDING_CONSUMER",
+  "writerSuccessorSelected": false
+}

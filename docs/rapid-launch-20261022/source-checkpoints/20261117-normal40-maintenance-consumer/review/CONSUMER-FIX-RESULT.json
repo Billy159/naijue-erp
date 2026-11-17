@@ -1,0 +1,63 @@
+{
+  "SQLInstalled": false,
+  "actions": {
+    "futureAuthorityCIDRoleEpochOrPositiveFixturesCreated": false,
+    "ownerFilesModified": false,
+    "serverPGNativeApplicationIssuerReaderCASClockCalls": 0
+  },
+  "actualEvidenceBoundary": [
+    "Main-supplied actual Root08 marker5bb/source392/3b8/ac85 and root7cab110 retained as source inputs, not newly executed by QB.",
+    "Diag02 scoped operation/subbatch/namespace zero and five existing record classes preserved; three prosrc observations do not prove definitions or full canonical metadata.",
+    "ACK39 digest is derived expected; no observed raw ACK proof claimed. Actual fresh must verify the original bytes and five private stat9 before admission."
+  ],
+  "checks": {
+    "C01OnlyIndependentChecks": 11,
+    "prior61Owner18IndependentAndNode24Reused": true
+  },
+  "closedFindings": [
+    "C01"
+  ],
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/CONSUMER-EVIDENCE.json",
+      "sha256": "5335b61de2d122c875ba033053498d1ae1bfe0057bcba3bb6b5a7f5a56a6c33f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/OWNER62-EVIDENCE.json",
+      "sha256": "368a81730e3ab7f00c1e62008f5119b744a67d0ec3c5fbfd35fcec591f4e0373"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/NODE24-SYNTAX-EVIDENCE.json",
+      "sha256": "57f7d2afe4188ab8118f0c04f11e594d9e4b67c65a96ac0b3aff57635dd45fd0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/C01-FIX-EVIDENCE.json",
+      "sha256": "88d0924d30b04e3c353c15acd62485377e8228ff6053ae78782f81ad8f7a0cf5"
+    }
+  ],
+  "findings": [],
+  "interfaceSha256": "fe47f538d3dad023ed45702c3fa0314f5ad63694d23085a16e18e35b8d606fd0",
+  "notVerified": [
+    "Root-side five-key110→115 source and joint pairing await final frozen root.",
+    "Future actual service/C/epoch/temporary auth/deadlines/descriptor/finite authorities and upgrade PG readback remain absent.",
+    "No actual SQL upgrade, import, APP successor closure, STAGED release or production acceptance proved.",
+    "Consumer Source02 PASS only; new capture absence and all admission facts require actual fresh. No historical39 directory was deleted or changed."
+  ],
+  "priorNeedFixSha256": "332ce27aa5ab85d96b03c12bfb41d8cfb843b039a5d6b74e5d04724922c852b6",
+  "reused": [
+    "Source91 SQL, Root08 source/materialization, role algorithms, original native7a body, hostH01/QBef728, original CHILD,36/68/20+21 accepted scopes; no repeats."
+  ],
+  "rootPairReviewComplete": false,
+  "rulesSha256": "c6491825b7e81ce52bfbcdd33952599e0b0584a059936b68fe935a2f77266b71",
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+  "spec": {
+    "findings": []
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_PASS_NORMAL40_CONSUMER_C01_FIX_ONLY"
+}

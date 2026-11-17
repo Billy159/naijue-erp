@@ -1,0 +1,18 @@
+{
+  "nodeVersion": "v24.21.0",
+  "syntaxOnly": true,
+  "applicationOrNativeExecuted": false,
+  "checks": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/start/bundle/catalog-successor-run.mjs",
+      "sha256": "0397cb73bb2dfcd9d72e00522bec4dc98f38c3e064290e113cdc47d76e7701ac",
+      "syntaxExitCode": 0
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/worker-probe-syntax-only.mjs",
+      "sourceString": "start/bundle/r3_05_readonly.py:WORKER_PROBE",
+      "sha256": "cb64afe02884131b647657e6df04b92dcef21f394cbafa978fe7a9a0cae1f8b2",
+      "syntaxExitCode": 0
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "asOf": "2026-11-17T12:03:59.673261+00:00",
+  "state": "NORMAL40_CONSUMER_SOURCE02_C01_FIXED_QB_SOURCE_PASS_PENDING_ROOT_PAIR",
+  "sourceOnly": true,
+  "sourcePinsSha256": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+  "sourceReviewSha256": "65c7667606f40aa7931194142227e73881b660b2c6a136dfbb736fda489ff618",
+  "fixedFinding": "C01_ORDINARY40_DISTINCT_AUTH_CAPTURE_PATH",
+  "previousReportedOwnerCheckCount": 62,
+  "actualPreviousOwnerCheckCount": 61,
+  "independentConsumerChecks": 18,
+  "independentFixChecks": 11,
+  "targetNode24SyntaxChecksReused": 2,
+  "rootPairReviewComplete": false,
+  "actualServerIssuerClockOrPGCalls": 0,
+  "futureCepochTemporaryRolesWindowAuthority": null,
+  "SQLUpgraded": false,
+  "newWriterKeyChosen": false,
+  "copies": [
+    {
+      "path": "source02/SOURCE-PINS.json",
+      "sha256": "7db507149e2c6c6187e033839dcc7faffa54f331cb7c0fdd828d6ede6872df16",
+      "bytes": 11096
+    },
+    {
+      "path": "source02/ACTUAL110-DISPATCHER.py",
+      "sha256": "7cab381f7cd7aa402a0087a14ecb2571460dd11274b00cee0dbd62938fb8b814",
+      "bytes": 51608
+    },
+    {
+      "path": "source02/C01-CHECK-RESULT.json",
+      "sha256": "6bed6c621e6df5c3ca1f8b992d75d4aedee4ccf8c774817b09a0da863ffb6b12",
+      "bytes": 1029
+    },
+    {
+      "path": "source02/CHECK-RESULT.json",
+      "sha256": "b7918ce635d1aac210d3f0c2d3b0e2f78b0b23ef6a294ba5bc19484cc1c896c2",
+      "bytes": 4155
+    },
+    {
+      "path": "source02/HANDOFF.md",
+      "sha256": "62d0c30db3f9525e4018f798baa45e81bb81121e5c0eca29397293323b8368d6",
+      "bytes": 6007
+    },
+    {
+      "path": "source02/INTERFACE.UNISSUED.json",
+      "sha256": "fe47f538d3dad023ed45702c3fa0314f5ad63694d23085a16e18e35b8d606fd0",
+      "bytes": 19421
+    },
+    {
+      "path": "source02/INTERFACE.WIP.json",
+      "sha256": "58530df67dfc7085898e0d932f367cf613bbcd1460792f8aa6046e3bf7db8d7b",
+      "bytes": 3875
+    },
+    {
+      "path": "source02/PHASES40.UNISSUED.json",
+      "sha256": "c6491825b7e81ce52bfbcdd33952599e0b0584a059936b68fe935a2f77266b71",
+      "bytes": 7891
+    },
+    {
+      "path": "source02/PRIOR39-STATIC-METADATA.json",
+      "sha256": "cc5fbe045463cc32a4382aef2377f51bfec8daac1e5efa22d417b8773710b12f",
+      "bytes": 3733
+    },
+    {
+      "path": "source02/apply/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "path": "source02/apply/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "path": "source02/apply/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "path": "source02/apply/bundle/ordinary05_roles.py",
+      "sha256": "925a69b1ad09ef659f4a16dbc3605081c683bc7d21f5a86cc3945e7474634d92",
+      "bytes": 21656
+    },
+    {
+      "path": "source02/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "6ab1b890ef1d9ed6d694af0fb194490645161c1f7e914e888b63a4b05c5db08d",
+      "bytes": 33305
+    },
+    {
+      "path": "source02/apply/bundle/prior_preserved38.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source02/apply/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "path": "source02/check_source.py",
+      "sha256": "5d1169726d75c35b2e987f02372c29b408ccbc6c35835b5f428e4dd8d0abd8a3",
+      "bytes": 7121
+    },
+    {
+      "path": "source02/evidence/QB-NODE24-SYNTAX-REUSED.json",
+      "sha256": "57f7d2afe4188ab8118f0c04f11e594d9e4b67c65a96ac0b3aff57635dd45fd0",
+      "bytes": 917
+    },
+    {
+      "path": "source02/phase_cli.py",
+      "sha256": "b4df0f64d99a059348cfb06a68f61dc94186edc748307ee0d5b341a10c5f0d6a",
+      "bytes": 5149
+    },
+    {
+      "path": "source02/prepare_consumer.py",
+      "sha256": "4e9c61588de98a241af82afe7910c9798b9a1bff825a943ec591b72563f6016c",
+      "bytes": 9345
+    },
+    {
+      "path": "source02/prior_preserved39.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source02/read_phase.py",
+      "sha256": "397cdfba140a300bc1e546908df5d16f5267394fec347f3119badce3be8c539d",
+      "bytes": 3954
+    },
+    {
+      "path": "source02/restore/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "path": "source02/restore/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "path": "source02/restore/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "path": "source02/restore/bundle/ordinary05_roles.py",
+      "sha256": "925a69b1ad09ef659f4a16dbc3605081c683bc7d21f5a86cc3945e7474634d92",
+      "bytes": 21656
+    },
+    {
+      "path": "source02/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "6ab1b890ef1d9ed6d694af0fb194490645161c1f7e914e888b63a4b05c5db08d",
+      "bytes": 33305
+    },
+    {
+      "path": "source02/restore/bundle/prior_preserved38.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source02/restore/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "path": "source02/start/bundle/batched161-run.mjs",
+      "sha256": "0f45396df7aec8bac9651591c685b30f7d318066feffb0f7f4e98df592855af6",
+      "bytes": 23971
+    },
+    {
+      "path": "source02/start/bundle/catalog-successor-run.mjs",
+      "sha256": "0397cb73bb2dfcd9d72e00522bec4dc98f38c3e064290e113cdc47d76e7701ac",
+      "bytes": 19378
+    },
+    {
+      "path": "source02/start/bundle/final33-run.mjs",
+      "sha256": "1be01cec400b242cbcf7ff45451e5e60f0bbc87a1d0ea3f7bb2e527d56ee8851",
+      "bytes": 19482
+    },
+    {
+      "path": "source02/start/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "path": "source02/start/bundle/normal_service05_after08.py",
+      "sha256": "4f43750bfb1f84071ba3a636da5d8d8975589acf59cf9c2075af1d1e43f962ee",
+      "bytes": 59225
+    },
+    {
+      "path": "source02/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "8488ed1d5f6e256c781ebe7e325f94510652d7588eb017641dde9ae93e91b5b3",
+      "bytes": 18437
+    },
+    {
+      "path": "source02/start/bundle/operator-host.mjs",
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+      "bytes": 72238
+    },
+    {
+      "path": "source02/start/bundle/operator-manifest.json",
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+      "bytes": 48490
+    },
+    {
+      "path": "source02/start/bundle/operator-stream-import-cli.mjs",
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "bytes": 26499
+    },
+    {
+      "path": "source02/start/bundle/operator-stream-program.mjs",
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "bytes": 10302
+    },
+    {
+      "path": "source02/start/bundle/prior_preserved38.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "path": "source02/start/bundle/production-plan.json",
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+      "bytes": 747
+    },
+    {
+      "path": "source02/start/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "bytes": 7052
+    },
+    {
+      "path": "source02/start/bundle/r3_05_readonly.py",
+      "sha256": "e74e77521a59cc62036ab84e56e117ed9176e20649dca86b3e23438874ce2317",
+      "bytes": 21247
+    },
+    {
+      "path": "source02/start/bundle/r3_05_runtime.py",
+      "sha256": "58df7e4c5370820cc4501b89f1813273fd78b726ca50cc24858a76f4ddb007f6",
+      "bytes": 9394
+    },
+    {
+      "path": "source02/start/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "path": "source02/start/bundle/root07_material.py",
+      "sha256": "55ac6600ac982367b9d99678193b3a80dfe8e05b76828022c0c1aeb24a8864e2",
+      "bytes": 2623
+    },
+    {
+      "path": "source02/start/bundle/source-catalog-lineage.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "bytes": 5684
+    },
+    {
+      "path": "source02/start/bundle/source_lineage.py",
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+      "bytes": 6431
+    },
+    {
+      "path": "source02/start/bundle/start_owned_describe.py",
+      "sha256": "15cdbb635b2045f61ef3d3f83bfbb11143060322ed3349117af55e6f7df6ae43",
+      "bytes": 15229
+    },
+    {
+      "path": "source02/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "2711e4d23872557a0b6a32d2bce5a4fca01f7e3a058fd12cedda37fa8c575d93",
+      "bytes": 20064
+    },
+    {
+      "path": "source02/stop/bundle/normal05_retained_stop.py",
+      "sha256": "dbc754b883fb7747d2754878da6dfbdbe56aea2c7c5cd026695e99d7a5ac2530",
+      "bytes": 20709
+    },
+    {
+      "path": "source02/upgrade/bundle/batched161_command_update_host.py",
+      "sha256": "d76dd1b6e5a3041966afefc3290fab5cfedd61dbccfff288149af31b9a6aae5b",
+      "bytes": 33520
+    },
+    {
+      "path": "source02/upgrade/bundle/catalog-pg-driver.mjs",
+      "sha256": "cdfb4fdeb6919364c5795c1e2ccb6f58650337b0b7bc59aa71d102b3e9a1a87f",
+      "bytes": 2061
+    },
+    {
+      "path": "source02/upgrade/bundle/catalog-successor-run.mjs",
+      "sha256": "0397cb73bb2dfcd9d72e00522bec4dc98f38c3e064290e113cdc47d76e7701ac",
+      "bytes": 19378
+    },
+    {
+      "path": "source02/upgrade/bundle/catalog_transport.py",
+      "sha256": "cb80e5c15aaf5d3a09a1f922f13c12908eaab8b424ed1550bcaf506bf37bf36d",
+      "bytes": 12483
+    },
+    {
+      "path": "source02/upgrade/bundle/diagnostic02-readback.json",
+      "sha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+      "bytes": 4810
+    },
+    {
+      "path": "source02/upgrade/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "bytes": 187609
+    },
+    {
+      "path": "source02/upgrade/bundle/historical-catalog35.json",
+      "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+      "bytes": 3601
+    },
+    {
+      "path": "source02/upgrade/bundle/historical-writer39-failed.json",
+      "sha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa",
+      "bytes": 3804
+    },
+    {
+      "path": "source02/upgrade/bundle/main-recovery-decision.json",
+      "sha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+      "bytes": 4430
+    },
+    {
+      "path": "source02/upgrade/bundle/normal05_retained_stop.py",
+      "sha256": "0c27df9e48f20d78616938619d763804dbb26939e988e02b5755cea683c8a244",
+      "bytes": 20709
+    },
+    {
+      "path": "review/PREDECESSOR-CONSUMER-NEED-FIX.json",
+      "sha256": "332ce27aa5ab85d96b03c12bfb41d8cfb843b039a5d6b74e5d04724922c852b6",
+      "bytes": 7620
+    },
+    {
+      "path": "review/CONSUMER-FIX-RESULT.json",
+      "sha256": "65c7667606f40aa7931194142227e73881b660b2c6a136dfbb736fda489ff618",
+      "bytes": 3538
+    }
+  ],
+  "omittedBodies": [
+    {
+      "path": "C01-ONLY-DELTA.patch",
+      "bytes": 3464,
+      "sha256": "4abcb0dc784af38070dc03fcdda1becee75b4ca900c805ff9d8acb785afb5bb4",
+      "reason": "Frozen patch or large inherited derived source retained at owner path; pins and generator retained without modifying original."
+    }
+  ]
+}

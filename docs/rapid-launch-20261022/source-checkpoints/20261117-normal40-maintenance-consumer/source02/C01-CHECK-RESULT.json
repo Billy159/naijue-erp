@@ -1,0 +1,22 @@
+{
+  "Node24RecheckPerformed": false,
+  "checkCount": 10,
+  "checks": [
+    "exact one capture expression changed apply/bundle/ordinary05_roles.py",
+    "exact one capture expression changed apply/bundle/ordinary05_roles_job.py",
+    "exact one capture expression changed restore/bundle/ordinary05_roles.py",
+    "exact one capture expression changed restore/bundle/ordinary05_roles_job.py",
+    "all start bundle bytes reused",
+    "all upgrade bundle bytes reused",
+    "all stop bundle bytes reused",
+    "apply capture and unused-check both exact40",
+    "restore capture and unused-check both exact40",
+    "all historical39 receipt/custody stat9 provenance bytes unchanged"
+  ],
+  "futurePositiveFixtureCreated": false,
+  "old39CaptureOrDataDeletedOrModified": false,
+  "old62ChecksReusedNotRerun": true,
+  "predecessorSourcePinsSha256": "acfb09f079c332b523929c51664a7e4f3bb399ef81ae34ed2ef710055ce60ddf",
+  "serverOrIssuerOrClockOrRolesOrPGCalls": 0,
+  "state": "SOURCE02_C01_EXCLUSIVE_CURRENT40_CAPTURE_PATH_FIXED_ONLY"
+}

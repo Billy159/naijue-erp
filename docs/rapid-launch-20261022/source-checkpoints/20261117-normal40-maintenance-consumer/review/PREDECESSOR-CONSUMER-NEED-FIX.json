@@ -1,0 +1,108 @@
+{
+  "SQLInstalled": false,
+  "actions": {
+    "futureAuthorityCIDRoleEpochOrPositiveFixturesCreated": false,
+    "ownerFilesModified": false,
+    "serverPGNativeApplicationIssuerReaderCASClockCalls": 0
+  },
+  "actualEvidenceBoundary": [
+    "Main-supplied actual Root08 marker5bb/source392/3b8/ac85 and root7cab110 retained as source inputs, not newly executed by QB.",
+    "Diag02 scoped operation/subbatch/namespace zero and five existing record classes preserved; three prosrc observations do not prove definitions or full canonical metadata.",
+    "ACK39 digest is derived expected; no observed raw ACK proof claimed. Actual fresh must verify the original bytes and five private stat9 before admission."
+  ],
+  "checks": {
+    "independentConsumerDelta": 18,
+    "reproducedOwnerAffectedChecks": 61,
+    "targetNode24SyntaxOnly": 2
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/CONSUMER-EVIDENCE.json",
+      "sha256": "5335b61de2d122c875ba033053498d1ae1bfe0057bcba3bb6b5a7f5a56a6c33f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/OWNER62-EVIDENCE.json",
+      "sha256": "368a81730e3ab7f00c1e62008f5119b744a67d0ec3c5fbfd35fcec591f4e0373"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal40-three-routine-maintenance-joint-review-01/NODE24-SYNTAX-EVIDENCE.json",
+      "sha256": "57f7d2afe4188ab8118f0c04f11e594d9e4b67c65a96ac0b3aff57635dd45fd0"
+    }
+  ],
+  "findings": [
+    {
+      "axis": "spec",
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/apply/bundle/ordinary05_roles.py",
+      "finding": "New40 CUSTODY and keys are new but CAPTURE remains ordinary39-auth-capture-20261116-01 in both apply/restore sources and host unused guard. Actual successful39 apply/restore requires this directory to have been created; retained protocol has no removal path and preserves recovery materials. The new apply host/inside will reject the old capture before auth40. This is a generation-specific source binding omission, not a role algorithm failure.",
+      "id": "C01",
+      "line": 25,
+      "priority": 2,
+      "relatedFiles": [
+        {
+          "line": 25,
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/restore/bundle/ordinary05_roles.py"
+        },
+        {
+          "line": 236,
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/apply/bundle/ordinary05_roles_job.py"
+        },
+        {
+          "line": 23,
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/prepare_consumer.py"
+        }
+      ],
+      "requiredChange": "Use a new fixed ordinary40-auth-capture-20261117-01 leaf consistently in apply/restore role CAPTURE, host unused checks and owner generator, derive affected pins only. Preserve all39 capture/auth evidence; no deletion or reuse.",
+      "title": "New40 auth phase reuses retained39 capture directory",
+      "trigger": "Execute new40 Apply with preserved successful39 capture; source refuses ORDINARY37_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY or MAINT_AUTH_OPERATION_ALREADY_PRESENT_NO_REPLAY."
+    }
+  ],
+  "interfaceSha256": "22b3288665ff624e4a8f8b876733b4c0fe89b6026cc10a9467031ea20e5f56f5",
+  "notVerified": [
+    "Root-side five-key110→115 source and joint pairing await final frozen root.",
+    "C01 requires owner Source02 correction before consumer PASS; no T45 direct dispatch by QB.",
+    "Future actual service/C/epoch/temporary auth/deadlines/descriptor/finite authorities and upgrade PG readback remain absent.",
+    "No actual SQL upgrade, import, APP successor closure, STAGED release or production acceptance proved."
+  ],
+  "reused": [
+    "Source91 SQL, Root08 source/materialization, role algorithms, original native7a body, hostH01/QBef728, original CHILD,36/68/20+21 accepted scopes; no repeats."
+  ],
+  "rootPairReviewComplete": false,
+  "rulesSha256": "5f776e5d8b3002543f02d9d93d72594e04955efcbc1abbccfd67be4bc97b0951",
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "acfb09f079c332b523929c51664a7e4f3bb399ef81ae34ed2ef710055ce60ddf",
+  "spec": {
+    "findings": [
+      {
+        "axis": "spec",
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/apply/bundle/ordinary05_roles.py",
+        "finding": "New40 CUSTODY and keys are new but CAPTURE remains ordinary39-auth-capture-20261116-01 in both apply/restore sources and host unused guard. Actual successful39 apply/restore requires this directory to have been created; retained protocol has no removal path and preserves recovery materials. The new apply host/inside will reject the old capture before auth40. This is a generation-specific source binding omission, not a role algorithm failure.",
+        "id": "C01",
+        "line": 25,
+        "priority": 2,
+        "relatedFiles": [
+          {
+            "line": 25,
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/restore/bundle/ordinary05_roles.py"
+          },
+          {
+            "line": 236,
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/apply/bundle/ordinary05_roles_job.py"
+          },
+          {
+            "line": 23,
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL40-THREE-ROUTINE-MAINTENANCE-SOURCE-01/prepare_consumer.py"
+          }
+        ],
+        "requiredChange": "Use a new fixed ordinary40-auth-capture-20261117-01 leaf consistently in apply/restore role CAPTURE, host unused checks and owner generator, derive affected pins only. Preserve all39 capture/auth evidence; no deletion or reuse.",
+        "title": "New40 auth phase reuses retained39 capture directory",
+        "trigger": "Execute new40 Apply with preserved successful39 capture; source refuses ORDINARY37_APPLY_EFFECTS_ALREADY_PRESENT_NO_REPLAY or MAINT_AUTH_OPERATION_ALREADY_PRESENT_NO_REPLAY."
+      }
+    ]
+  },
+  "standards": {
+    "findings": []
+  },
+  "state": "SOURCE_NEED_FIX_NORMAL40_CONSUMER_CAPTURE_GENERATION"
+}
