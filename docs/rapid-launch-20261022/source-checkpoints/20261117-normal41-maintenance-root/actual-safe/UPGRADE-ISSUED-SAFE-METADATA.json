@@ -1,0 +1,25 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-normal41-registration-window-01/phase-upgrade",
+  "issued": {
+    "phase": "upgrade",
+    "jobId": "t45-r3-settlement24-three-routine-upgrade41-20261117-01",
+    "authoritySha256": "a760bbfa91567faf559381954c8f3b83da9d5988cc8ccff60ae284611ce0f109",
+    "sourcePinsSha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+    "phaseSubmitted": false,
+    "automaticReplay": false
+  },
+  "files": {
+    "ISSUED.json": {
+      "sha256": "38b525d3bc409c54eac687aa2a84ab67ce6bd2ed29cbca3a0dd8c77cbaa9a6c6",
+      "bytes": 314,
+      "mode": "0o600"
+    },
+    "catalog-update-authorization.json": {
+      "sha256": "a760bbfa91567faf559381954c8f3b83da9d5988cc8ccff60ae284611ce0f109",
+      "bytes": 10451,
+      "mode": "0o600"
+    }
+  },
+  "rawAuthorityOrRoleOrProgramBodiesIncluded": false,
+  "actualPhaseSubmitted": false
+}

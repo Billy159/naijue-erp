@@ -1,0 +1,57 @@
+{
+  "requestKey": "t45-first-r3-native-service-start-20261117-41",
+  "service": {
+    "containerId": "cbf6459fc0e0f9cf89d1b0826618ba5d5a50fa650d7ef08dc420cfdd4e05fb5c",
+    "containerStartedAt": "2026-11-17T13:42:11.910047227Z",
+    "postmasterStart": "2026-11-17 13:42:13.196867+00",
+    "proofSha256": "c31d0e8ab940538ce17612834b23681a6413ca2c9fc1106fe82600e68f9c6cfa",
+    "serviceKey": "t45-first-r3-native-service-start-20261117-41"
+  },
+  "physical": {
+    "databaseOid": "16393",
+    "postmasterStart": "2026-11-17 13:42:13.196867+00",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7706545564479176741"
+  },
+  "dataDirectoryIdentity": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502421,
+    "mode": 448,
+    "uid": 61035
+  },
+  "retainedAckConfirmed": true,
+  "readOnlyReadiness": true,
+  "resultObjectsEqual": true,
+  "actualSharedServiceWorkDeadline": 1794926342048,
+  "outerAuthorityLeaseExpiresAt": 1794926377048,
+  "rootResultSha256": "9132db0e45e635fd26f7423a62cd815605bb2ef0076c921127e8c587eaaeeee5",
+  "terminalRootPublicSha256": "bff45b1ff8381697f3fa914c04a7ce4ac88a4a8aa590dd8e846bca1846de68f1",
+  "state": "ACTUAL_START41_COMPLETED_WITH_STORED_GENUINE_DESCRIPTION_SQL_UPGRADE_PENDING",
+  "privateContextSha256": "dc2a47bf118c5a719502a891bcd26f537f0042cd359100cf2677ca975a81d2d4",
+  "descriptionSource": "STORED_START_JOB_OUTPUTS_NO_NODE_RERUN",
+  "describeStoredOutputs": {
+    "descriptor": {
+      "leaf": "genuine-descriptor.json",
+      "bytes": 6023,
+      "sha256": "8b5014332a9a7f75e6bafc2a44023c907bf9f129bc68fbe20cc0b47d482d2513"
+    },
+    "liveFacts": {
+      "leaf": "genuine-live-facts.json",
+      "bytes": 1931,
+      "sha256": "afe6026b7d5e2a01c81be550269ceff14a4386dd502230b42997086575350f12"
+    },
+    "payload": {
+      "leaf": "genuine-describe-payload.json",
+      "bytes": 444,
+      "sha256": "ef8c910b896e579af495b7647d76dc8d1c939748d56295e6f8dacf6463475f8f"
+    },
+    "process": {
+      "leaf": "genuine-describe-process.json",
+      "bytes": 518,
+      "sha256": "69f479307a33ee87248e8b4f7c57773883dca90dd8646581c5d5b7f2dc8dca68"
+    }
+  },
+  "rawPrivateOrPayloadOrAuthorityBodiesIncluded": false,
+  "SQLUpgradePerformed": false
+}

@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T13:14:27.369028+00:00",
+  "updatedAt": "2026-11-17T13:57:42.367051+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Finish existing D1 ordinary41 root115→120 source, sameQB joint new-delta review, T45 exact static execution preparation; only then actual metadata fresh/Main finite issuance/CAS and five maintenance phases. No new writer key or SQL/import claim.",
+  "next": "Urgent minimum Main-only STOP41 witness correction via original D1 and sameQB: preserve original frozenaadc/Root120/policy5bdd/roles0980/regbe31, replace stale40 upgrade identity with actual41 in exact required set, no invented terminal or bypass. Then actual Stop41→exact original-auth Restore41 before22:49:37. Failed upgrade41 never replay; only then correct generation35 upgrade support in reasoned successor source.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T13:14:27.369028+00:00",
-  "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
+  "asOf": "2026-11-17T13:57:42.367051+00:00",
+  "state": "ACTUAL_NORMAL41_UPGRADE_FAILED_UNKNOWN_PG_RUNNING_TEMP_AUTH_STOP_MAIN_CONTRACT_FIX_PENDING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Finish existing D1 ordinary41 root115→120 source, sameQB joint new-delta review, T45 exact static execution preparation; only then actual metadata fresh/Main finite issuance/CAS and five maintenance phases. No new writer key or SQL/import claim.",
+  "next": "Urgent minimum Main-only STOP41 witness correction via original D1 and sameQB: preserve original frozenaadc/Root120/policy5bdd/roles0980/regbe31, replace stale40 upgrade identity with actual41 in exact required set, no invented terminal or bypass. Then actual Stop41→exact original-auth Restore41 before22:49:37. Failed upgrade41 never replay; only then correct generation35 upgrade support in reasoned successor source.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,15 +52789,15 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": false,
+  "newRolesApplied": true,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": true,
+  "PGCurrentlyStopped": false,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": true,
+  "originalAuthRestored": false,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53333,7 +53333,7 @@
     "stopped": true,
     "atUTC": "2026-11-17T02:11:53.756728+00:00"
   },
-  "PGCurrentState": "STOP39_AND_EXACT_ORIGINAL_AUTH_RESTORE39_CONFIRMED",
+  "PGCurrentState": "ACTUAL_C41_RUNNING_NO_ACTIVE_OPERATION_UPGRADE_FAILED",
   "normal38StartInProgress": {
     "observedAtUTC": "2026-11-17T02:16:43.832013+00:00",
     "observationSha256": "6b6c858195268833d26d7d7ea48c8691c76437ef3e53ab7a41baea4fce905b67",
@@ -53589,11 +53589,11 @@
   "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "dispatcherSha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
-    "moduleSha256": "96dbb198f0424298e90096a704c998b8f2e2629f8afae387f07b230b978052f0",
-    "policySha256": "7ce698a4dc6e5ba41828192bbeee37febcf604ebf178c7ec190a1bfb33abab03",
-    "registeredKeys": 115,
-    "actualCASResultSha256": "6bc2fe7c6364bc166a5fb215c220a6e79c72eeceb7a963106bd68d65e19cd935"
+    "dispatcherSha256": "2b8e633af94581d2ca5fcbf9c1a970353a3bae1019a55a5f462befc063832ca0",
+    "moduleSha256": "c478692d5d36ebb56e17fea3c2fc18baa7dd30729eb019e14282a10622a836ce",
+    "policySha256": "5bdd2a3d7aa88486bf2248fee43cadf976738b2e2d330a7b918860c726bde4f9",
+    "registeredKeys": 120,
+    "actualCASResultSha256": "1db7cc13c68e9d31e2bd41ea6f91057032ef0cec42fb176a6d5d0dda1b93a13a"
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -54731,6 +54731,46 @@
     "newWriterKey": null,
     "custodyMetadataBoundary": "Actual40 has five historical files x six known fields, not six files; future fresh/CAS binds full actual stat9.",
     "checkpoint": "source-checkpoints/20261117-normal41-maintenance-consumer/CHECKPOINT.json"
+  },
+  "normal41Maintenance": {
+    "state": "ACTUAL_NORMAL41_UPGRADE_FAILED_UNKNOWN_PG_RUNNING_TEMP_AUTH_STOP_MAIN_CONTRACT_FIX_PENDING",
+    "sourceOnlyReview": true,
+    "currentActualRegisteredKeys": 120,
+    "PGRunning": true,
+    "originalAuthRestored": false,
+    "temporaryAuthRestorationPending": true,
+    "SQLUpgradeVerified": false,
+    "businessImportPerformed": false,
+    "rawRolePolicyAuthorityContextOrPayloadBodiesIncluded": false,
+    "SQLCommitOrRollbackAcknowledged": false,
+    "actualUpgradeSafeReadbackSha256": "e9b0fadeab0a11ca866ace9f109714d5327256f3c456878f2d0a20d0c5b7101c",
+    "upgradeNeverReplay": true,
+    "stopAuthorityIssued": false,
+    "stopSubmitted": false,
+    "stopMainIssueFailures": [
+      "Missing actual Start predecessor: no output or authority created; input corrected.",
+      "Frozen witness retains unsubmitted40 upgrade key; actual basis and server stop helper require41; exact-set guard rejected. D1 minimal Main-only contract correction pending."
+    ],
+    "upgradeDefect": "Pinned upgrade support still generation35; current actual C41 birth matches original Start. Dedicated stop support is41. No guard or proof changed.",
+    "actualStopBasisSha256": "4c0b5301d535cddf9464cebe7786dde1e27710a36b1067837c97c46f57cf0f3c",
+    "restoreHardDeadlineEpochMs": 1794926977752,
+    "asOf": "2026-11-17T13:57:42.367051+00:00"
+  },
+  "appSettlement24Successor": {
+    "state": "BUILT_PACKED_ARCHIVE_READBACK_LOCAL_ONLY_NOT_DEPLOYED",
+    "commit": "cb1155328d46286569e166246000c66e53ec8365",
+    "tree": "24fdaa9d88adf34aeac71033d954522dcd734a99",
+    "sourcePinsSha256": "f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b",
+    "sourceReviewSha256": "e5e56730dcc24f71eb091997818b85db63daeb526dc6e2c1f35050b85d678f1b",
+    "archiveSha256": "0abef69a1969c67f4d8965ddfda8d9a30eee67c4e29e3a19afc0efc1664bda77",
+    "archiveBytes": 8072920,
+    "nativeSourceSetSha256": "e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6",
+    "nativeMembers": 289,
+    "buildExitCode": 0,
+    "packExitCode": 0,
+    "serverUploaded": false,
+    "deployed": false,
+    "targetSpecificSpec": null
   }
 }
 }

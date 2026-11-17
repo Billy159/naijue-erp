@@ -1,0 +1,108 @@
+{
+  "state": "APP_CB115_FOUR_PLUS_FIVE_SOURCE_REVIEW_BUILD_PACK_AND_ARCHIVE_READBACK_PASS_LOCAL_NOT_DEPLOYED",
+  "commit": "cb1155328d46286569e166246000c66e53ec8365",
+  "tree": "24fdaa9d88adf34aeac71033d954522dcd734a99",
+  "sourcePinsSha256": "f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b",
+  "sourceReviewSha256": "e5e56730dcc24f71eb091997818b85db63daeb526dc6e2c1f35050b85d678f1b",
+  "archiveSha256": "0abef69a1969c67f4d8965ddfda8d9a30eee67c4e29e3a19afc0efc1664bda77",
+  "archiveBytes": 8072920,
+  "nativeMembers": 289,
+  "nativeSourceSetSha256": "e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6",
+  "serverUploaded": false,
+  "deployed": false,
+  "targetSpecificSpec": null,
+  "copies": [
+    {
+      "originalPath": "source/SOURCE-PINS.json",
+      "storedPath": "source/SOURCE-PINS.json",
+      "sha256": "f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b",
+      "bytes": 3652
+    },
+    {
+      "originalPath": "source/READY.json",
+      "storedPath": "source/READY.json",
+      "sha256": "0b991e42d98f78a5e1413a6e3de94d4704210a0ca767a84d49b7ac621fa91dcd",
+      "bytes": 528
+    },
+    {
+      "originalPath": "source/HANDOFF.md",
+      "storedPath": "source/HANDOFF.md",
+      "sha256": "3a84aaf34989784cc53f2b4294992d38f512f6cdf73dc8ae9bde586ff778bf87",
+      "bytes": 2366
+    },
+    {
+      "originalPath": "source/operation/scripts/release/manifest.mjs",
+      "storedPath": "source/operation/scripts/release/manifest.mjs",
+      "sha256": "db0fd7789d0df3672f3139fd357da518fd01639f335606e49049000ba81b99cd",
+      "bytes": 42369
+    },
+    {
+      "originalPath": "source/operation/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "storedPath": "source/operation/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "edf9b9e05c5d8ebc86729bf2a1d24e064f60872d8f1773ee83e28a66a73750c8",
+      "bytes": 74419
+    },
+    {
+      "originalPath": "source/operation/scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "storedPath": "source/operation/scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3",
+      "bytes": 22126
+    },
+    {
+      "originalPath": "source/operation/tools/unified-import/fresh35-host-session.mjs",
+      "storedPath": "source/operation/tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "48abc1af7194a62fb5e75822d64ddb9b5c5e9a3932962c36e35cd25cb9962cfd",
+      "bytes": 121552
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "e5e56730dcc24f71eb091997818b85db63daeb526dc6e2c1f35050b85d678f1b",
+      "bytes": 4204
+    },
+    {
+      "originalPath": "build-local/RESULT.json",
+      "storedPath": "build-local/RESULT.json",
+      "sha256": "87dd5e639ce12846cec4711a438542141b89591f11cba74d15e967735968f651",
+      "bytes": 147879
+    },
+    {
+      "originalPath": "build-local/RECEIPTS.json",
+      "storedPath": "build-local/RECEIPTS.json",
+      "sha256": "f6a853a967d67b251b250472e41b39f7abd13392c8123139789adec208d37530",
+      "bytes": 1348
+    }
+  ],
+  "inheritedAssets": [
+    {
+      "path": "adapters/postgres/patches/settlement24-current-wire-successor.sql",
+      "bytes": 7213,
+      "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+      "existingCheckpoint": "source-checkpoints/20261117-settlement24-current-wire-fix/source/operation/adapters/postgres/patches/settlement24-current-wire-successor.sql"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json",
+      "bytes": 939487,
+      "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180",
+      "existingCheckpoint": "source-checkpoints/20261117-settlement24-current-wire-fix/source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json",
+      "bytes": 975343,
+      "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9",
+      "existingCheckpoint": "source-checkpoints/20261117-settlement24-current-wire-fix/source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json",
+      "bytes": 977195,
+      "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8",
+      "existingCheckpoint": "source-checkpoints/20261117-settlement24-current-wire-fix/source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json"
+    },
+    {
+      "path": "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json",
+      "bytes": 5692,
+      "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+      "existingCheckpoint": "source-checkpoints/20261117-settlement24-current-wire-fix/source/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json"
+    }
+  ]
+}

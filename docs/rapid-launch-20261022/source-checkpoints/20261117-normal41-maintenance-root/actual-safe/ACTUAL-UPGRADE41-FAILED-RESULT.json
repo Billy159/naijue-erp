@@ -1,0 +1,53 @@
+{
+  "APPOrBusinessImportExecuted": false,
+  "activeOperationUnits": [],
+  "actualDatabaseStateNotReclassifiedFromSourceOrder": true,
+  "actualNativeProjectionPathsAbsent": {
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-settlement24-three-routine-upgrade41-20261117-01/native-private": true,
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/batched-command33-private/t45-r3-settlement24-three-routine-upgrade41-20261117-01": true,
+    "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261117-41/authority-61035/fresh35-settlement24-three-routine-41-v1.json": true
+  },
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-17T13:49:12.974679+00:00",
+  "commitAcknowledged": "NO_EVIDENCE",
+  "incomplete": {
+    "automaticReplay": false,
+    "requestKey": "t45-r3-settlement24-three-routine-upgrade41-20261117-01",
+    "safeCode": "NORMAL05_STOP_CONTAINER_BIRTH_DIFFERS",
+    "state": "UNKNOWN"
+  },
+  "incompleteObjectsEqual": true,
+  "independentAfterReadback": "NO_EVIDENCE",
+  "originalAuthenticationRestored": false,
+  "pgdataPidAbsent": false,
+  "publicIncompleteSha256": "25aba8338e17b0e80ccdb8e5fde2491dcb107db0f25c777c9c035e36c7f461c8",
+  "readbackSha256": "7fc284780de33bce394f1f585a4482d18689bd6551fd4ed9565544a118e3e694",
+  "requestKey": "t45-r3-settlement24-three-routine-upgrade41-20261117-01",
+  "rollbackAcknowledged": "NO_EVIDENCE",
+  "rootPins": {
+    "incomplete": "b618dd7b28cfba91f142b4a1c5c2cd60de419c563a5b27090ebf01373c920591",
+    "terminal": "f797d647162d0b256cabb3f7c5be8518daa291146338fb780613124235b47575"
+  },
+  "state": "FAILED_TERMINAL_NATIVE_OUTCOME_UNKNOWN_NO_REPLAY_STOP_RESTORE_REQUIRED",
+  "staticDefect": "upgrade support remains generation35; transport invokes its inspect_birth before admin/projection/native entry",
+  "stopBasisPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL41-STOP-BASIS-01/ACTUAL-STOP41-BASIS.json",
+  "stopBasisSha256": "4c0b5301d535cddf9464cebe7786dde1e27710a36b1067837c97c46f57cf0f3c",
+  "terminal": {
+    "atUTC": "2026-11-17T13:48:49.157274+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 0.4026032450492494,
+    "exitCode": 2,
+    "exports": [
+      "batched161-command-update-incomplete.json"
+    ],
+    "finishedAtUTC": "2026-11-17T13:48:49.595977+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-settlement24-three-routine-upgrade41-20261117-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-572e425a1a00"
+  }
+}

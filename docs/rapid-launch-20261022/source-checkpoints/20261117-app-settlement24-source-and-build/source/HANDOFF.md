@@ -1,0 +1,11 @@
+# APP settlement24 准确后继：源码待QB
+
+原APP a7bab2 自有工作树已隔离派生至本目录 source，独立Git对象目录 source-objects.git。分支 codex/t45-app-settlement24-wire-20261117，commit cb1155328d46286569e166246000c66e53ec8365，tree24fdaa9d88adf34aeac71033d954522dcd734a99。准确4修改、5新增，完整差异 SOURCE-DELTA.patch；旧APP及D1/Source41/服务器均未修改、未推送。
+
+保留APP自身b7246 host的formal generation/currentService/lease/owner和Root07词法逻辑，仅做原建议85fa中的5个host锚点；新host48abc1af7194a62fb5e75822d64ddb9b5c5e9a3932962c36e35cd25cb9962cfd。combined-source新增5资产入口；combined-catalog逐字追加D1已审builder，并保留APP普通观察分支，对新准确格式使用catalog descriptor。原manifest223/284分支继续有效，新faaa57且command predecessor匹配时才接受289。SQLdaf3/PINSfaaa57/3快照逐字复用，不重编译SQL。
+
+本机必要检查：4个修改模块 Node v24.21.0 --check 均exit0；9叶与建议/已审原件字节匹配，原APP逻辑保留，追加builder与D1字节一致，反向四叶补丁可检查通过。仅通过原release native35Closure源加载器派生源码元数据一次：真实289成员、sourceSet e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6，5资产及3native模块pins匹配；提取实际修改表达式，7个marker/count分支与3个ordinary观察版本选择检查通过。未调用host/native业务入口、target/catalog spec编译、PG、构建或打包。旧223fixture与SQL91/旧APP词法范围未重跑。
+
+初次cached whitespace检查采用bare默认HEAD，比较成了无关历史树；没有改动源码。随后使用准确父a7重核，差异仅9叶、diffcheck exit0，详细原件保留。WIP-STATE.json是优先响应Root41时的历史断点，现状态以SOURCE-FROZEN.json为准。
+
+e041只是实际源码闭包，不是已构建native包；新buildId/整包native/target-specific spec/archive均未产生。原57a/13b8包仍是旧626，不表示新三函数已运行。待Main安排同QB定向复核4叶接线/模型与观察绑定/289分支；获后续明确指令才做必要build/pack，不能据SOURCE通过称SQL已升级、真实导入或正式业务通过。41根端配对和实际fresh继续优先，当前没有stage/fresh/issuer/roles/CAS/PG操作。

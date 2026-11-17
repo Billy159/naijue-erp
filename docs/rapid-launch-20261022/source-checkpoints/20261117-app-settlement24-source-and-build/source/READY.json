@@ -1,0 +1,14 @@
+{
+  "QB": "PENDING",
+  "builds": 0,
+  "commit": "cb1155328d46286569e166246000c66e53ec8365",
+  "packs": 0,
+  "runtimeReady": false,
+  "serverActions": 0,
+  "sourceClosureFiles": 289,
+  "sourceClosureSha256": "e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6",
+  "sourceOnly": true,
+  "sourcePinsSha256": "f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b",
+  "state": "APP_OWN_SETTLEMENT24_FOUR_PLUS_FIVE_SOURCE_FROZEN_AWAITING_QB_NOT_BUILT",
+  "tree": "24fdaa9d88adf34aeac71033d954522dcd734a99"
+}

@@ -1,0 +1,42 @@
+{
+  "PREPARED.json": {
+    "sha256": "007f1dfdef7a08a69874826db87bb4a2b1021e7de6578f502d3ce0c9f1185863",
+    "bytes": 1132
+  },
+  "BUILD-EXECUTION.json": {
+    "sha256": "9493afd4d38ae618675836f754a3f9385c43fd7e7d88e831afb2b2348b6fb805",
+    "bytes": 92
+  },
+  "PACK-EXECUTION.json": {
+    "sha256": "e6570b1e369da6e6c7c1207388ddd6cfa00b7d6fcc06eee3bf677df1413d5f62",
+    "bytes": 92
+  },
+  "manifests/source-manifest.json": {
+    "sha256": "ff7b2dbf9318941b5dcdcf350d2f182c4340115a6b90bfd1862906e6d5e466d6",
+    "bytes": 340043
+  },
+  "manifests/build-manifest.json": {
+    "sha256": "b537b8c5dbf1a70df7ee7e6684984a1c4074d6cf3cb153397fc4b4a900bb452e",
+    "bytes": 587864
+  },
+  "manifests/build-receipt.json": {
+    "sha256": "136b2712d9645284a6aff4a89fa4228161a4b85783d131fab26e2e95ff20cebe",
+    "bytes": 7022
+  },
+  "packed/release-manifest.json": {
+    "sha256": "e4cfe86fe940520b5c64f5db719b49e74ce708b9de6f869573f87a5342aa369b",
+    "bytes": 549588
+  },
+  "packed/pack-receipt.json": {
+    "sha256": "8954f0ceea90ce1f4194437ed6f2292c3d7d5aaee4f295652135889796acdacf",
+    "bytes": 584
+  },
+  "RESULT.json": {
+    "sha256": "87dd5e639ce12846cec4711a438542141b89591f11cba74d15e967735968f651",
+    "bytes": 147879
+  },
+  "HANDOFF.md": {
+    "sha256": "62fce4a3ff9134e6aa4a4fbaf289257433d79190a4c71e60ec203e277df6f444",
+    "bytes": 2079
+  }
+}

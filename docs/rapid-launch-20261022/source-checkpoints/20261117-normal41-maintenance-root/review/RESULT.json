@@ -1,0 +1,70 @@
+{
+  "actions": {
+    "credentialOrBusinessBodyRead": false,
+    "futureAuthorityCIDCepochRoleWindowOrPositiveFixtureCreated": false,
+    "ownerFilesOrOldReportsModified": false,
+    "serverPGNativeApplicationIssuerReaderCASClockCalls": 0
+  },
+  "actualEvidenceBoundary": [
+    "40 startup failure was observed as precontainer FileExistsError; source+stat supports bounded high confidence attribution to old39 proof directory. No actual exception.filename or frame was captured, and no stronger causal claim made.",
+    "39 ACK had actual prior normal40fresh5e121 observation; futurefresh still rereads the original bytes. This source review does not count that historical observation as a new41fresh read.",
+    "Root08marker5bb is source materialization only, SQLfalse/importReadyfalse; historical diagnostic3prosrc does not prove live definitions or full canonical catalog. Existing identity/operations rows preserved."
+  ],
+  "actualNormal41MaintenanceVerified": false,
+  "actualNormal41RegistrationVerified": false,
+  "actualSQLUpgradeVerified": false,
+  "checkSummary": {
+    "consumer35And19ReusedNotRerun": true,
+    "independentRootPairDeltaChecks": 24,
+    "newRootOwnerDeltaChecks": 39,
+    "old40Root82_32Consumer61_18_11SQL91H01Node24ReusedNotRerun": true
+  },
+  "consumerInterfaceSha256": "7a362dbefcfc363d9dcdc7e4e379179b1119fd49c668ec958bff0b38a9a99454",
+  "consumerReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-three-routine-maintenance-joint-review-01/CONSUMER-RESULT.json",
+    "sha256": "b441bbea7dbd71a32ebadbeeadde98424b44a56a9184204f6f2d7836ba4f2370"
+  },
+  "consumerReviewSha256": "b441bbea7dbd71a32ebadbeeadde98424b44a56a9184204f6f2d7836ba4f2370",
+  "consumerRulesSha256": "e0c5749cb235681cc176b669166f4421d5d62cec30cfa44500d5ee4ea31b9763",
+  "consumerSourcePinsSha256": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-three-routine-maintenance-joint-review-01/ROOT-OWNER39-DELTA-EVIDENCE.json",
+      "sha256": "f0902c24cdcdbf48a032d044ad7651c2843ca1640028f1df17fcb66f3e9b1ea7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal41-three-routine-maintenance-joint-review-01/ROOT-PAIR-DELTA-EVIDENCE.json",
+      "sha256": "3d0d7b6ec9a723a31e835bd0172f033a489e5aae991aaaf45f060ff93fcf9b8c"
+    }
+  ],
+  "findings": [],
+  "notVerified": [
+    "Actual future41fresh and original ACK/currentDATA/newkeys/projection41/capture41 state and full9 custody not observed by QB. SOURCE defines the required metadata binding; it is not completed live evidence.",
+    "No actual41 registration/apply/start/C/epoch/temporary auth/descriptor/upgrade/stop/restore/SQL before-after readback executed or verified by QB.",
+    "SOURCE PASS does not establish SQL installation, import readiness, APP successor closure, real full import, STAGED exposure, production acceptance or lifting of publication restrictions. Original consumed writer/failed diagnostic keys remain consumed."
+  ],
+  "rootPairReviewComplete": true,
+  "rulesSha256": "6460d3c0d7048f1f27d8660329c5b4d741e8561296b601077bc1bf72daa14026",
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-ordinary41-root-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+  "spec": {
+    "findings": [],
+    "scope": "New41five maintenance IDs/projection/capture, actual40 failure/auth restore and futurefullstat9 fresh→Main→CAS binding."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Exact frozen17-file root delta; no owner mutations, original115 root and3guards retained."
+  },
+  "state": "SOURCE_PASS_NORMAL41_ROOT_INCREMENT_AND_CONSUMER_PAIR_ONLY",
+  "verifiedScope": [
+    "Rootaadc/17files/FIVE6460/modulec478/unregistered9f53 exact, accurately paired with consumer44e1/interface7a362/PHASES41e0c574/genuine QBb441. Consumer35+19 accepted checks reused without another review.",
+    "Actual1150864 root full AST retained except exact five new key append, new constants/helper and one execute branch. Three original protected-key guards and old functions retained; actual module.JOBS insertion order also matches dispatcher key tuple. No writer/prepare/import job added.",
+    "Closed40failed precontainer noC/epoch plus actual18da exact original verifier/expiry restoration and safe27a91 receipt are pinned. Latest genuine successful service remains39. Root helper checks historical closure without requiring currentDATA stopped during running41 upgrade; original phase-specific stopped/service checks remain.",
+    "Source40 custody is accurately five files with six known fields and actualFullStat9=None. Future original-lock basis collects complete9 for39+40 CUSTODY; Main matches each40 known6+nlink1 and includes the full observed9 in oldIdentities; CAS original-lock snapshots compare those full9 before/after all four publication checkpoints. No invented historical timestamps.",
+    "Original authentication snapshot content/digest remains unread. The known safe restored.json receipt is explicitly checked by27a91 and compared with exact original-auth restored result. RootCAS also preserves40module96db/policy7ce/FAILED start and completed restore/cleanup evidence along old sources.",
+    "Original7 registration and8 phase APIs, direct41 original five-field policy,5100parent/600CAS and old relative role/phase budgets retained. Phase issuer semantic code unchanged except41 labels and accurate historical authorization prose; original genuine four-leaf upgrade descriptor, before626/currentcompiled6ef/future spec/afterada8, H01/native/driver/CHILD and UNKNOWN/StopRestore mechanisms reused.",
+    "Independent proof41/capture41 source bindings retain strict mkdir and old directories. Same three-code root stage, single combined fresh basis, Main issue, separate register_once. T45 phase_cli.execute remains sole per-phase call with its internal prepare; no external prepare→execute pair or new replay path."
+  ]
+}

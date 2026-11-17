@@ -1,0 +1,61 @@
+{
+  "SQLInstalled": false,
+  "actions": {
+    "buildPackPGServerNativeBusinessApplicationIssuerClockCalls": 0,
+    "futureNativeBuildTargetSpecArchiveOrPositiveFixtureCreated": false,
+    "ownerFilesOrOldReportsModified": false,
+    "sourceClosureLoaderCalls": 0
+  },
+  "baseCommit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+  "checksCompleted": 17,
+  "commit": "cb1155328d46286569e166246000c66e53ec8365",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-settlement24-source-review-01/DELTA-EVIDENCE.json",
+      "sha256": "6efc75c2caf0f8a5bb8767e6b762a50b738f916121d72c7d8adf888c5acd5297"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-SETTLEMENT24-CANDIDATE-01/STATIC-CHECK-RESULT.json",
+      "sha256": "9870daa3334ca2ea0f3b7f3a1946b101826dc944910d798fd6cac695a4b6dcfe"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-SETTLEMENT24-CANDIDATE-01/SOURCE-CLOSURE-CHECK-RESULT.json",
+      "sha256": "60d79f8985ddfafc31f14d4f90b253c4d5cd977c170a05aad6e94957f4cd2c42"
+    }
+  ],
+  "findings": [],
+  "notVerified": [
+    "No build/pack/newbuildId/native package/target-specific catalogSpec/archive produced or reviewed. Old57a/13b8 package remains old626.",
+    "No actual PG/SQL upgrade/real native business/role/UI/whole import/production acceptance performed. SOURCE PASS alone does not permit claiming these completed.",
+    "Normal41 actual fresh/finite issuance/CAS/maintenance remains separate owner/Main scope, not revalidated here."
+  ],
+  "reused": [
+    "Owner4Node24syntax/7marker/3format/9leaf/289closure evidence; D1 SQL91 and oldAPP lexical/role/UI scopes not rerun."
+  ],
+  "runtimeReady": false,
+  "sourceClosure": {
+    "files": 289,
+    "kind": "SOURCE_METADATA_ONLY_NOT_BUILT_NATIVE_OR_TARGET_SPEC",
+    "sha256": "e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6"
+  },
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-SETTLEMENT24-CANDIDATE-01/source",
+  "sourceOnly": true,
+  "sourcePinsSha256": "f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b",
+  "spec": {
+    "findings": [],
+    "scope": "APP generation/service/lease/owner/Root07 preserved; current three-routine catalog and ordinary observation/sourceSet/manifest289 wiring."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Exact APP-owned parent four-leaf wiring and five byte-identical assets; no owner edits."
+  },
+  "state": "SOURCE_PASS_APP_SETTLEMENT24_FOUR_PLUS_FIVE_ONLY",
+  "tree": "24fdaa9d88adf34aeac71033d954522dcd734a99",
+  "verifiedScope": [
+    "APP a7bab2 own parent→cb1155328d46286569e166246000c66e53ec8365/tree24fdaa verified exact4M+5A. Nine delivered selected leaves match frozen pins, sizes and exact commit objects.",
+    "Parenthostb7246→48abc is exactly five scoped anchors: new builder import, batched-context evidence, active batched catalog, ordinary161 builder and ada8 model guard. Every other parent byte preserves original APP generation/current service/lease/owner/Root07 logic.",
+    "Combined-source only prepends five assets to original source pin mechanism. SQLdaf3/PINSfaaa and3 snapshots byte-identical to accepted D1 Source768/QB976ca; prior91 semantic checks reused.",
+    "Catalog suffix is exactly accepted D1 builder; APP-specific ordinaryObservation prefix preserved except adding new exact settlement format to choose c.descriptor. Its sourceSet matches unchanged actual catalog validator; legacy format behavior retained.",
+    "Manifest only adds exactfaaa marker plus command-predecessor gating for289; old223/284 and all other source requirements unchanged. Prior7marker/3format cases and actual289/e041 source closure metadata verified by evidence pins/changed-leaf agreement and reused without rerunning loader or fixtures."
+  ]
+}

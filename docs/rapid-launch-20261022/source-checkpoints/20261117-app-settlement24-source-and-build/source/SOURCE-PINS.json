@@ -1,0 +1,84 @@
+{
+  "actualBuiltNativeOrTargetSpecOrArchive": null,
+  "added": 5,
+  "authoritiesOrRolesOrCAS": 0,
+  "baseCommit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+  "branch": "refs/heads/codex/t45-app-settlement24-wire-20261117",
+  "builds": 0,
+  "changedSourceLeaves": {
+    "adapters/postgres/patches/settlement24-current-wire-successor.sql": {
+      "bytes": 7213,
+      "sha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184"
+    },
+    "scripts/release/manifest.mjs": {
+      "bytes": 42369,
+      "sha256": "db0fd7789d0df3672f3139fd357da518fd01639f335606e49049000ba81b99cd"
+    },
+    "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json": {
+      "bytes": 939487,
+      "sha256": "a49a6127ad7575c9739a2f130914afdd20fa73392e4f2c1160a17339d089a180"
+    },
+    "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json": {
+      "bytes": 975343,
+      "sha256": "af82ab642d959ecf731697e8bc97618e97ce6d30bb945205ee1c1314323363c9"
+    },
+    "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json": {
+      "bytes": 977195,
+      "sha256": "80c31dcb7ab64ab436e07c2e4a2a1297e11d2c22a58e4dec1ddacda704a9a2c8"
+    },
+    "scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json": {
+      "bytes": 5692,
+      "sha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19"
+    },
+    "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs": {
+      "bytes": 74419,
+      "sha256": "edf9b9e05c5d8ebc86729bf2a1d24e064f60872d8f1773ee83e28a66a73750c8"
+    },
+    "scripts/release/unified-install/fresh35-combined-source-v1.mjs": {
+      "bytes": 22126,
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3"
+    },
+    "tools/unified-import/fresh35-host-session.mjs": {
+      "bytes": 121552,
+      "sha256": "48abc1af7194a62fb5e75822d64ddb9b5c5e9a3932962c36e35cd25cb9962cfd"
+    }
+  },
+  "commit": "cb1155328d46286569e166246000c66e53ec8365",
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 2366,
+      "sha256": "3a84aaf34989784cc53f2b4294992d38f512f6cdf73dc8ae9bde586ff778bf87"
+    },
+    "SOURCE-CLOSURE-CHECK-RESULT.json": {
+      "bytes": 55355,
+      "sha256": "60d79f8985ddfafc31f14d4f90b253c4d5cd977c170a05aad6e94957f4cd2c42"
+    },
+    "SOURCE-DELTA.patch": {
+      "bytes": 2934074,
+      "sha256": "905067b0263ec066ede49318a4faa2a260d490c42f9e241f5de5471cf887a85a"
+    },
+    "SOURCE-FROZEN.json": {
+      "bytes": 2845,
+      "sha256": "676ba60f261a037e4ea1e0197f43ab7a8edefa1c6e5e1e4e7859a50ac91b2caa"
+    },
+    "STATIC-CHECK-RESULT.json": {
+      "bytes": 1527,
+      "sha256": "9870daa3334ca2ea0f3b7f3a1946b101826dc944910d798fd6cac695a4b6dcfe"
+    },
+    "check_source_closure.mjs": {
+      "bytes": 4806,
+      "sha256": "03445c196cac6662fbe36f2a43c6b58cdc04feebf92c259f3eb8e8581ef7c082"
+    }
+  },
+  "independentQB": "PENDING",
+  "modified": 4,
+  "nativeBusinessOrPGOrServerCalls": 0,
+  "packs": 0,
+  "reviewScope": "Only APP own4 leaves and5 byte-identical assets; reuse D1 SQL91/APP prior gates; no PG/build/runtime acceptance",
+  "sourceClosureFiles": 289,
+  "sourceClosureSha256": "e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6",
+  "sourceOnly": true,
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-SETTLEMENT24-CANDIDATE-01/source",
+  "state": "APP_OWN_SETTLEMENT24_FOUR_PLUS_FIVE_SOURCE_FROZEN_AWAITING_QB_NOT_BUILT",
+  "tree": "24fdaa9d88adf34aeac71033d954522dcd734a99"
+}

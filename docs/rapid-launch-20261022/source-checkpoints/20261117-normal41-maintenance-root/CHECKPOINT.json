@@ -1,0 +1,188 @@
+{
+  "state": "ACTUAL_NORMAL41_UPGRADE_FAILED_UNKNOWN_PG_RUNNING_TEMP_AUTH_STOP_MAIN_CONTRACT_FIX_PENDING",
+  "sourceOnlyReview": true,
+  "currentActualRegisteredKeys": 120,
+  "PGRunning": true,
+  "originalAuthRestored": false,
+  "temporaryAuthRestorationPending": true,
+  "SQLUpgradeVerified": false,
+  "businessImportPerformed": false,
+  "copies": [
+    {
+      "originalPath": "source/SOURCE-PINS.json",
+      "storedPath": "source/SOURCE-PINS.json",
+      "sha256": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+      "bytes": 3262
+    },
+    {
+      "originalPath": "source/ACTUAL115-DISPATCHER.py",
+      "storedPath": "source/ACTUAL115-DISPATCHER.py",
+      "sha256": "0864546416726e3290f571f86344bf0f7288c54e80e3fce86fd2426d7f38edff",
+      "bytes": 53020
+    },
+    {
+      "originalPath": "source/DELTA-CHECKS.json",
+      "storedPath": "source/DELTA-CHECKS.json",
+      "sha256": "f0902c24cdcdbf48a032d044ad7651c2843ca1640028f1df17fcb66f3e9b1ea7",
+      "bytes": 1960
+    },
+    {
+      "originalPath": "source/FIVE-PHASES.UNISSUED.json",
+      "storedPath": "source/FIVE-PHASES.UNISSUED.json",
+      "sha256": "6460d3c0d7048f1f27d8660329c5b4d741e8561296b601077bc1bf72daa14026",
+      "bytes": 22848
+    },
+    {
+      "originalPath": "source/HANDOFF.md",
+      "storedPath": "source/HANDOFF.md",
+      "sha256": "e7df561dbfa98a273485d698060bf5291ecc61de5474948a2f93fec06c94780f",
+      "bytes": 3961
+    },
+    {
+      "originalPath": "source/HISTORY-INPUTS.json",
+      "storedPath": "source/HISTORY-INPUTS.json",
+      "sha256": "09f4161d864841c9b4483aaa401756660098ea8b287c028ed279ab72be270f28",
+      "bytes": 20640
+    },
+    {
+      "originalPath": "source/PREDECESSOR-SOURCE-PINS.json",
+      "storedPath": "source/PREDECESSOR-SOURCE-PINS.json",
+      "sha256": "bd3df3b68c8de4402d0770be36e36be7912e4060bfa89ce4bfc2dafc0b279a4c",
+      "bytes": 3952
+    },
+    {
+      "originalPath": "source/admin_exec.NORMAL41-UNREGISTERED.py",
+      "storedPath": "source/admin_exec.NORMAL41-UNREGISTERED.py",
+      "sha256": "9f53a44e0f0b8c42d4e826922d1ca3a91b6cde4cd888adef05aca490e47991b9",
+      "bytes": 54374
+    },
+    {
+      "originalPath": "source/assemble_source.py",
+      "storedPath": "source/assemble_source.py",
+      "sha256": "3d7b247021eac65c0c50e23c79c902e2ad0a3a3e7f8e79f7a4754346383b6246",
+      "bytes": 12557
+    },
+    {
+      "originalPath": "source/check_delta.py",
+      "storedPath": "source/check_delta.py",
+      "sha256": "3e0d6971fbbe48100ad4056fc2c2379670e68b95075e68e7cbfe7e43ed97859d",
+      "bytes": 5554
+    },
+    {
+      "originalPath": "source/freeze_source.py",
+      "storedPath": "source/freeze_source.py",
+      "sha256": "1acf9c9f0d7bc2e61dfeedeaa60272cb38d952ce13bb58e37923156a0ad33603",
+      "bytes": 1511
+    },
+    {
+      "originalPath": "source/issue_phase.py",
+      "storedPath": "source/issue_phase.py",
+      "sha256": "f666d0d5919f5556d0c2b538db3e0a27112ca8a9b31debb922dbe4cbb714fede",
+      "bytes": 23191
+    },
+    {
+      "originalPath": "source/issue_registration.py",
+      "storedPath": "source/issue_registration.py",
+      "sha256": "bd65b10f16197b449f5a2facaf431a56b2cd4c70e5efb9380184556ab8d1dce8",
+      "bytes": 7679
+    },
+    {
+      "originalPath": "source/patch_dispatcher.py",
+      "storedPath": "source/patch_dispatcher.py",
+      "sha256": "ca99d1c54d3497dc099a4be2fabb593d37fdf2ab1f0af1aecf64b572640c507b",
+      "bytes": 3055
+    },
+    {
+      "originalPath": "source/prepare_channel.py",
+      "storedPath": "source/prepare_channel.py",
+      "sha256": "e1bc623062ba056ba1b84be88ac51cecc948a976f4da16239d7a29dabac644d5",
+      "bytes": 7173
+    },
+    {
+      "originalPath": "source/r3_normal41_continuation.py",
+      "storedPath": "source/r3_normal41_continuation.py.FROZEN-BYTES.json",
+      "sha256": "c478692d5d36ebb56e17fea3c2fc18baa7dd30729eb019e14282a10622a836ce",
+      "bytes": 40045
+    },
+    {
+      "originalPath": "source/read_registration_basis.py",
+      "storedPath": "source/read_registration_basis.py",
+      "sha256": "b9909d72c5132758764fc042cafad97688747b4c50e76e2c8f5abe44965a0f71",
+      "bytes": 2498
+    },
+    {
+      "originalPath": "source/register_cas.py",
+      "storedPath": "source/register_cas.py",
+      "sha256": "05080f653973fd95e16aa4a5ca88c0f0d7448c9c80c1a06d04cd625e3cc01547",
+      "bytes": 24274
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "2e68cfb4a8f13d7249e9d65bee4910b1a4fc6601aa9b5917b0a78ee23685d79d",
+      "bytes": 6325
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-BASIS-BASIS.json",
+      "storedPath": "actual-safe/ACTUAL-BASIS-BASIS.json",
+      "sha256": "b6337ac6e596c229377a24336514b7a52b48e988ea7a22349b49d5a80c31c2ec",
+      "bytes": 10711
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "storedPath": "actual-safe/ACTUAL-CAS-RESULT.json",
+      "sha256": "1db7cc13c68e9d31e2bd41ea6f91057032ef0cec42fb176a6d5d0dda1b93a13a",
+      "bytes": 502
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-POST-CAS-READBACK.json",
+      "storedPath": "actual-safe/ACTUAL-POST-CAS-READBACK.json",
+      "sha256": "c7ad97d5eeaa4c66a26b169c918cbaaa259017de7037b9f59c70e8bee4fca384",
+      "bytes": 923
+    },
+    {
+      "originalPath": "actual-safe/REGISTRATION-ISSUED-SAFE-METADATA.json",
+      "storedPath": "actual-safe/REGISTRATION-ISSUED-SAFE-METADATA.json",
+      "sha256": "f889fb0becd39b782bc0fee898005e0384246f12a798deb089c5b78b8e08c541",
+      "bytes": 3364
+    },
+    {
+      "originalPath": "actual-safe/APPLY-ISSUED-SAFE-METADATA.json",
+      "storedPath": "actual-safe/APPLY-ISSUED-SAFE-METADATA.json",
+      "sha256": "716e050fe38dd8e2ce4924ef1a5f1f21d0d32d5bca2aabbe6a2bfc78585b742f",
+      "bytes": 960
+    },
+    {
+      "originalPath": "actual-safe/START-ISSUED-SAFE-METADATA.json",
+      "storedPath": "actual-safe/START-ISSUED-SAFE-METADATA.json",
+      "sha256": "75b6e59f23f720fff2386efcc5070165271b11e10c3a852d59da0bfd5889c12b",
+      "bytes": 974
+    },
+    {
+      "originalPath": "actual-safe/UPGRADE-ISSUED-SAFE-METADATA.json",
+      "storedPath": "actual-safe/UPGRADE-ISSUED-SAFE-METADATA.json",
+      "sha256": "4b7315aefcb9c279bc69f119dd79d4fc5a5e4e8ae5e3aea49968a4fae4928170",
+      "bytes": 990
+    },
+    {
+      "originalPath": "actual-safe/ACTUAL-APPLY41-RESULT.json",
+      "storedPath": "actual-safe/ACTUAL-APPLY41-RESULT.json",
+      "sha256": "2120ad91c03080569bc9912115869847f681790f9df2db29dc589d812db511f1",
+      "bytes": 3974
+    }
+  ],
+  "rawRolePolicyAuthorityContextOrPayloadBodiesIncluded": false,
+  "SQLCommitOrRollbackAcknowledged": false,
+  "actualUpgradeSafeReadbackSha256": "e9b0fadeab0a11ca866ace9f109714d5327256f3c456878f2d0a20d0c5b7101c",
+  "upgradeNeverReplay": true,
+  "stopAuthorityIssued": false,
+  "stopSubmitted": false,
+  "stopMainIssueFailures": [
+    "Missing actual Start predecessor: no output or authority created; input corrected.",
+    "Frozen witness retains unsubmitted40 upgrade key; actual basis and server stop helper require41; exact-set guard rejected. D1 minimal Main-only contract correction pending."
+  ],
+  "upgradeDefect": "Pinned upgrade support still generation35; current actual C41 birth matches original Start. Dedicated stop support is41. No guard or proof changed.",
+  "actualStopBasisSha256": "4c0b5301d535cddf9464cebe7786dde1e27710a36b1067837c97c46f57cf0f3c",
+  "restoreHardDeadlineEpochMs": 1794926977752,
+  "asOf": "2026-11-17T13:57:42.367051+00:00"
+}

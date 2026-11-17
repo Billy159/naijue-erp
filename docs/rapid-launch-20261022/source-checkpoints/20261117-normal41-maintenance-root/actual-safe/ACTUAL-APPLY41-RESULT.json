@@ -1,0 +1,104 @@
+{
+  "activeOperationUnits": [],
+  "authenticationAttempted": false,
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "checkedAtUTC": "2026-11-17T13:39:10.778790+00:00",
+  "cleanup": {
+    "automaticReplay": false,
+    "cid": "3a44dc77939f212bd38888332217327e1809f566bacdcc772c7bbacfb31ed74e",
+    "confirmed": true,
+    "createAttempted": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "requestKey": "t45-r3-ordinary41-auth-apply-20261117-01",
+    "sourceDataPreserved": true,
+    "stage": "READ_BACK_OWN_CONTAINER_STOP"
+  },
+  "noOtherOperationUnits": true,
+  "observerMutations": 0,
+  "observerPGConnections": 0,
+  "originalAuthenticationRestoredAfterThisApply": false,
+  "pgdataPidAbsent": true,
+  "phase": "apply",
+  "portAbsent": true,
+  "publicCleanupSha256": "7f6cb4cc01ffee4c9c3f80374a1fbb5194a74159f351bc7ab4b5e38143ad0520",
+  "publicResultSha256": "1f5e461d5f911c0238a2cc25a63217de2284b36699b98934755fd20a681143b6",
+  "readbackSha256": "0d71f4a9e284eb493f57656b0ba33147b38a81fb8517d92924365251e5e12a79",
+  "requestKey": "t45-r3-ordinary41-auth-apply-20261117-01",
+  "restorationDeadline": 1794926977752,
+  "restorationDeadlineBeijing": "2026-11-17T22:49:37.752000+08:00",
+  "result": {
+    "SQL36OrBusinessImport": false,
+    "automaticReplay": false,
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "3a44dc77939f212bd38888332217327e1809f566bacdcc772c7bbacfb31ed74e",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary41-auth-apply-20261117-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "newDatabaseOrRole": false,
+    "normal08Or05Started": false,
+    "phase": "apply",
+    "requestKey": "t45-r3-ordinary41-auth-apply-20261117-01",
+    "result": {
+      "authenticationAttempted": false,
+      "automaticReplay": false,
+      "credentialValidUntilByRole": {
+        "erp35_admin_20261110_r3": 1794926197752,
+        "erp35_controller_20261110_r3": 1794926077752
+      },
+      "membershipsOrRoleAttributesChanged": false,
+      "newRoles": 0,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary41-auth-apply-20261117-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ],
+      "runtimeAuthChanged": false,
+      "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+    },
+    "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+  },
+  "resultObjectsEqual": true,
+  "rootPin": "aadc9d64d157e46f0d7568ceecc69efca26f599fd68f4de8950d1942ac96a3a8",
+  "rootPins": {
+    "cleanup": "127b3c8ad8d9e9fa60e8ed263bfaf9e05e77e1978e71d1b046d90451153a64c5",
+    "result": "cdc51c702f155c920275b27cd89723d05d5da21b7a73f957cec185e3477dd659",
+    "terminal": "73ca3c4dd871b684381db6c1b474504097b44f1d7f119de903052b2c1da6fda4"
+  },
+  "sourcePin": "44e1b0d0a2089adf825c1352ab68c6d681b4bc12df1592600d87eebc9e095199",
+  "startOrSQLOrAPPExecuted": false,
+  "state": "ACTUAL_APPLY41_FINITE_AUTH_COMPLETED_OWN_CONTAINER_STOPPED_ORIGINAL_RESTORE_PENDING",
+  "terminal": {
+    "atUTC": "2026-11-17T13:38:43.320310+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 6.401424825016875,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T13:38:49.766759+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary41-auth-apply-20261117-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-d67b0b4daf96"
+  }
+}
