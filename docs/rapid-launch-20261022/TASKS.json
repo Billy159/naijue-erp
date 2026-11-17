@@ -51897,9 +51897,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T22:06:36.501892+00:00",
+  "updatedAt": "2026-11-17T22:16:57.175104+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-  "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
+  "currentTarget": "SQL42_COMMITTED_AUTH45_ACTUALLY_RESTORED_PG_STOPPED_WRITER45_DURABLE_UNKNOWN_READONLY_EVIDENCE_NEXT",
   "owners": {
     "T45": "Sole server owner; diagnostic host/collector and bounded two-artifact staging install/restore source",
     "D1": "Native diagnostic runner source accepted; explicit auxiliary outer/native scope continuation and root source",
@@ -51909,8 +51909,9 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Priority original-auth45 restore: exact source03 8343/consumer4cb/Qc09d/e648/Decision02bd54; corrected two historical PRESERVE paths, failed907/955/7de5 retained superseded. Stage02 original private channel CONNECT_TIMEOUT; actual server source-stage outcome pending readonly facts. No new900s clock/AUTH/CAS/restore yet. Actual Root142/a195, C45 guardian-clean stopped/data preserved, originalauth45 not restored, old hard05:39:58.808 missed permanently. Writer45 FAILED2 native unconfirmed fallback; business durable COMMIT UNKNOWN. Only after source03 actual fresh and uniqueMain7, T45 exactCAS143 then single restore-only job immediately; no apply/finite renewal/business writes. After restoration originalbusinessRoot durable readonly required before any import/resume, preserve44910/IDs/data. APP289 notdeployed/publicclosed.",
-  "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
+  "next": "Actual original-auth45 restored and independently readback, not naturalexpiry. Root143/f7d3/module6069/policybf5/CAS99a0, terminal09c820 COMPLETED0/6.923s finished06:14:13.31533, readback159426/safe28a592 match; original2verifier+expiry privately verified, attrs/memberships/runtimeauth unchanged, helper stoppedPID0exit0, PG stopped/pidabsent/portabsent/noactiveops. Oldhard05:39:58.808 remains missedfalse forever, no Stop45PASS. Writer45 FAILED2 and nativeunconfirmed fallback, actualbusinessCOMMIT UNKNOWN. Next only fixed writer45cleanup exit/resultSHA/reaped metadata readonly evidence then originalbusinessRoot durable readonly; preserve all possible writes/44910/IDs/SQL42, no blindFIRST_WRITE/RESUME or oldkey replay. No APP289 deployment/publicbusiness opening yet.",
+  "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows.",
+  "supersededCurrentTargetBeforeAuth45SummaryRepair": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED"
 },
   "inventoryBaselineScopeSimplification20261111": {
     "status": "SPARSE_SCOPE_OFFLINE_AND_SCOPED_SYNTHETIC_PG_PASS_FORMAL_PENDING",
@@ -52675,11 +52676,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T22:06:36.501892+00:00",
-  "state": "AUTH45_SOURCE03_REVIEWED_ORIGINAL_CHANNEL_TIMEOUT_RESTORE_PENDING",
-  "realWriterSubmitted": false,
-  "realBusinessRowsWritten": 0,
-  "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
+  "asOf": "2026-11-17T22:16:57.175104+00:00",
+  "state": "AUTH45_ACTUALLY_RESTORED_PG_STOPPED_BUSINESS_COMMIT_UNKNOWN",
+  "realWriterSubmitted": true,
+  "realBusinessRowsWritten": null,
+  "formalR3": "SQL42_COMMITTED_AUTH45_RESTORED_PG_STOPPED_BUSINESS45_DURABLE_UNKNOWN",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52704,7 +52705,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Priority original-auth45 restore: exact source03 8343/consumer4cb/Qc09d/e648/Decision02bd54; corrected two historical PRESERVE paths, failed907/955/7de5 retained superseded. Stage02 original private channel CONNECT_TIMEOUT; actual server source-stage outcome pending readonly facts. No new900s clock/AUTH/CAS/restore yet. Actual Root142/a195, C45 guardian-clean stopped/data preserved, originalauth45 not restored, old hard05:39:58.808 missed permanently. Writer45 FAILED2 native unconfirmed fallback; business durable COMMIT UNKNOWN. Only after source03 actual fresh and uniqueMain7, T45 exactCAS143 then single restore-only job immediately; no apply/finite renewal/business writes. After restoration originalbusinessRoot durable readonly required before any import/resume, preserve44910/IDs/data. APP289 notdeployed/publicclosed.",
+  "next": "Actual original-auth45 restored and independently readback, not naturalexpiry. Root143/f7d3/module6069/policybf5/CAS99a0, terminal09c820 COMPLETED0/6.923s finished06:14:13.31533, readback159426/safe28a592 match; original2verifier+expiry privately verified, attrs/memberships/runtimeauth unchanged, helper stoppedPID0exit0, PG stopped/pidabsent/portabsent/noactiveops. Oldhard05:39:58.808 remains missedfalse forever, no Stop45PASS. Writer45 FAILED2 and nativeunconfirmed fallback, actualbusinessCOMMIT UNKNOWN. Next only fixed writer45cleanup exit/resultSHA/reaped metadata readonly evidence then originalbusinessRoot durable readonly; preserve all possible writes/44910/IDs/SQL42, no blindFIRST_WRITE/RESUME or oldkey replay. No APP289 deployment/publicbusiness opening yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52793,8 +52794,8 @@
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
   "PGCurrentlyStopped": true,
-  "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
-  "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
+  "actualCurrentFailureCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-normal45-failed-guardian-closed-auth-pending/CHECKPOINT.json",
+  "nativePreparation": "PREPARE05_ACTUAL_COMPLETED_44910_IMMUTABLE_WRITER45_OUTCOME_UNKNOWN",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
   "originalAuthRestored": true,
@@ -52816,7 +52817,7 @@
     "module": "9b5555137b5443d538401d61fc7cc2c689d17d79dfa4a14bd5a3ccc0967e57ea",
     "policy": "b0476add83b3f8496be0944c8f5f29b933ebda42e3c0b68ed1f65ece7b57c36a"
   },
-  "genuineFailureDiagnosis": "Root35 real complete describe passed after minimal root metadata binding fix. Start34 first masked error remains unknown; no replay needed.",
+  "genuineFailureDiagnosis": "Writer45 native receipt digest matches fixed RETAINED20_CHILD_RESULT_UNCONFIRMED fallback; actual exit cause and durable business state pending readonly evidence.",
   "pendingUserDecision": null,
   "observabilitySource": {
     "pinsSha256": "536d8c38d7b139d8e84de338a200e6f1f324768e6857622af35703d4fbd0bfd5",
@@ -52997,7 +52998,7 @@
     "liveCASSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
     "actualServiceStatus": "STOPPED_PRESERVED_NO_NEW_PG_QUERY"
   },
-  "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal36-consumer-and-root-findings/CHECKPOINT.json",
+  "currentSourceFixCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-original-auth45-restore-source03-reviewed/CHECKPOINT.json",
   "PGStateAsOfApplyReadback": "HISTORICAL_START35_THEN_ACTUAL_STOP35_AND_RESTORE35",
   "nativeFailureDiagnostics": {
     "sourcePins": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
@@ -53330,10 +53331,15 @@
     "runtimeResult": "NOT_YET_RECEIVED"
   },
   "lastVerifiedPGState": {
-    "stopped": true,
-    "atUTC": "2026-11-17T02:11:53.756728+00:00"
+    "state": "STOPPED_AFTER_ORIGINAL_AUTH45_RESTORED",
+    "pgdataPidAbsent": true,
+    "portAbsent": true,
+    "activeOperationUnits": [],
+    "readbackSha256": "159426159749266436f62cb92e59463e7cf190da409b3e47ef6a05895746ff36",
+    "atUTC": "2026-11-17T22:14:22.425529+00:00",
+    "stopped": true
   },
-  "PGCurrentState": "ACTUAL_GUARDIAN41_CLOSED_PID0_DATA_PRESERVED",
+  "PGCurrentState": "ACTUAL_AUTH45_RESTORE_READBACK_PG_STOPPED_NO_ACTIVE_OPS",
   "normal38StartInProgress": {
     "observedAtUTC": "2026-11-17T02:16:43.832013+00:00",
     "observationSha256": "6b6c858195268833d26d7d7ea48c8691c76437ef3e53ab7a41baea4fce905b67",
@@ -53589,10 +53595,11 @@
   "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "registeredKeys": 127,
-    "dispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
-    "moduleSha256": "fc29d0b17aa02cbaa00c9cbdc80d5382016e7ca3ccad5acb8ca64c57c777a225",
-    "policySha256": "02afe6e97e2b3a3a565613daf4c165892993ec4a95bda0403afed864b7ef4aaa"
+    "dispatcherSha256": "f7d3d324aefca45933085b5a5e14c6802695585011ecdff48ac69df36e5c521e",
+    "moduleSha256": "6069169514a44d98869ffdcef77c2088be0fedc618967866aa42717480152904",
+    "policySha256": "bf5ab07f4c86346ab8aa2341471d5a70c0c1f7f9315fbe51a72ca0ebdc8b26fb",
+    "casReadbackSha256": "99a0d70adf6577f0a6e496717edb121caa772da30ab51122bb117c80c3ae9056",
+    "registeredKeys": 143
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -54453,8 +54460,8 @@
     "futureRoleCClockOrAuthority": null,
     "diagnosticProsrcIsNotDefinitionProof": true
   },
-  "businessImportDurableRowsObserved": 0,
-  "originalImportDurableScope": "NO_RECORDS_FOR_FIXED_ORIGINAL_IMPORT_SCOPE_EXISTING_IDENTITY_AND_OPERATIONAL_ROWS_PRESERVED",
+  "businessImportDurableRowsObserved": null,
+  "originalImportDurableScope": "UNKNOWN_AFTER_ACTUAL_WRITER45_FAILED_NATIVE_UNCONFIRMED_PRESERVE_POSSIBLE_WRITES",
   "currentOperationSourceFiles": 392,
   "currentOperationSourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
   "currentOperationSourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
@@ -55156,6 +55163,67 @@
     "APPDeployedOrPublicBusinessOpened": false,
     "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false,
     "next": "Priority original-auth45 restore: exact source03 8343/consumer4cb/Qc09d/e648/Decision02bd54; corrected two historical PRESERVE paths, failed907/955/7de5 retained superseded. Stage02 original private channel CONNECT_TIMEOUT; actual server source-stage outcome pending readonly facts. No new900s clock/AUTH/CAS/restore yet. Actual Root142/a195, C45 guardian-clean stopped/data preserved, originalauth45 not restored, old hard05:39:58.808 missed permanently. Writer45 FAILED2 native unconfirmed fallback; business durable COMMIT UNKNOWN. Only after source03 actual fresh and uniqueMain7, T45 exactCAS143 then single restore-only job immediately; no apply/finite renewal/business writes. After restoration originalbusinessRoot durable readonly required before any import/resume, preserve44910/IDs/data. APP289 notdeployed/publicclosed."
+  },
+  "auth45ActuallyRestored": {
+    "state": "AUTH45_ACTUALLY_RESTORED_PG_STOPPED_BUSINESS_COMMIT_UNKNOWN",
+    "asOf": "2026-11-17T22:16:57.175104+00:00",
+    "restoreKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "rootCurrent": 143,
+    "dispatcherSha256": "f7d3d324aefca45933085b5a5e14c6802695585011ecdff48ac69df36e5c521e",
+    "moduleSha256": "6069169514a44d98869ffdcef77c2088be0fedc618967866aa42717480152904",
+    "policySha256": "bf5ab07f4c86346ab8aa2341471d5a70c0c1f7f9315fbe51a72ca0ebdc8b26fb",
+    "sourceSha256": "8343cb342a585216c0931dd749009f9e1ac918de6d1e6710f81c5f0060ba63f6",
+    "reviewSha256": "c09d66ee47b453811c2989917e4794e1fc5fe31901eb3af2dddfd72c32561e59",
+    "actualCASReadbackSha256": "99a0d70adf6577f0a6e496717edb121caa772da30ab51122bb117c80c3ae9056",
+    "actualTerminalSha256": "09c82002e59d70c8ef086af7c65219ae049876cdc59258f480e2f69aae241210",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "durationSeconds": 6.923,
+    "finishedUTC": "2026-11-17T22:14:13.315330+00:00",
+    "independentReadonlyReadbackSha256": "159426159749266436f62cb92e59463e7cf190da409b3e47ef6a05895746ff36",
+    "privateSafeRestoreReceiptSha256": "28a5928a29fdf2c9c8094798af22a7ba6a709af9f40ea50e8e27cc8b3f32b37e",
+    "privateSafeReceiptMatchesWorker": true,
+    "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+    "membershipsOrRoleAttributesChanged": false,
+    "runtimeAuthChanged": false,
+    "databaseStillStopped": true,
+    "ownRestoreHelperStoppedPID0Exit0": true,
+    "pgdataPidAbsent": true,
+    "originalPortAbsent": true,
+    "activeOperationUnits": [],
+    "originalHardDeadlineMet": false,
+    "oldHardMayNeverBeChangedToMet": true,
+    "naturalExpiryCountedAsRestoration": false,
+    "oldStop45PASSClaimed": false,
+    "businessCommitState": "UNKNOWN",
+    "writer45Replayed": false,
+    "APPDeployedOrPublicBusinessOpened": false,
+    "T45RestoreResultSha256": "be1e9a8beed0812f9f32394b274268737c41baff87cb9dc49b94a6dd88f3fe4e",
+    "T45Normal45ResultSha256": "5958ad5f49fe998054d40fe03886af3a6ac3953ff7990f6377d13c6f30616f82",
+    "next": "Actual original-auth45 restored and independently readback, not naturalexpiry. Root143/f7d3/module6069/policybf5/CAS99a0, terminal09c820 COMPLETED0/6.923s finished06:14:13.31533, readback159426/safe28a592 match; original2verifier+expiry privately verified, attrs/memberships/runtimeauth unchanged, helper stoppedPID0exit0, PG stopped/pidabsent/portabsent/noactiveops. Oldhard05:39:58.808 remains missedfalse forever, no Stop45PASS. Writer45 FAILED2 and nativeunconfirmed fallback, actualbusinessCOMMIT UNKNOWN. Next only fixed writer45cleanup exit/resultSHA/reaped metadata readonly evidence then originalbusinessRoot durable readonly; preserve all possible writes/44910/IDs/SQL42, no blindFIRST_WRITE/RESUME or oldkey replay. No APP289 deployment/publicbusiness opening yet.",
+    "rawAuthorityCredentialSnapshotOrDigestBodiesIncluded": false
+  },
+  "supersededCurrentFieldsBeforeAuth45SummaryRepair": {
+    "realWriterSubmitted": false,
+    "realBusinessRowsWritten": 0,
+    "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
+    "PGCurrentState": "ACTUAL_GUARDIAN41_CLOSED_PID0_DATA_PRESERVED",
+    "businessImportDurableRowsObserved": 0,
+    "originalImportDurableScope": "NO_RECORDS_FOR_FIXED_ORIGINAL_IMPORT_SCOPE_EXISTING_IDENTITY_AND_OPERATIONAL_ROWS_PRESERVED",
+    "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
+    "genuineFailureDiagnosis": "Root35 real complete describe passed after minimal root metadata binding fix. Start34 first masked error remains unknown; no replay needed.",
+    "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
+    "currentSourceFixCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-normal36-consumer-and-root-findings/CHECKPOINT.json",
+    "currentActualRoot": {
+      "registeredKeys": 127,
+      "dispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+      "moduleSha256": "fc29d0b17aa02cbaa00c9cbdc80d5382016e7ca3ccad5acb8ca64c57c777a225",
+      "policySha256": "02afe6e97e2b3a3a565613daf4c165892993ec4a95bda0403afed864b7ef4aaa"
+    },
+    "lastVerifiedPGState": {
+      "stopped": true,
+      "atUTC": "2026-11-17T02:11:53.756728+00:00"
+    }
   }
 }
 }

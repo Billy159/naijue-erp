@@ -1,0 +1,122 @@
+{
+  "activeOperationUnits": [],
+  "authenticationSnapshotBodiesOrDigestsExported": false,
+  "businessAcceptanceClaimed": false,
+  "businessCommitState": "UNKNOWN",
+  "businessImportOrResumeOrSQLInstallPerformed": false,
+  "checkedAtUTC": "2026-11-17T22:14:22.425529+00:00",
+  "cleanup": {
+    "automaticReplay": false,
+    "cid": "db1e52517061426869b8735caac0d8c16e02e917999291d8c0f75f6dc402d33f",
+    "confirmed": true,
+    "createAttempted": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "requestKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "sourceDataPreserved": true,
+    "stage": "READ_BACK_OWN_CONTAINER_STOP"
+  },
+  "cleanupPublicSha256": "ffb0c226767250361c9811c9530dcb238ccbac65f86c5c9f5ec72fa65b61e4a4",
+  "cleanupRootSha256": "f59857ad32d19be5baa317603be77d332278bf03ad493005e6f63873f7c86e66",
+  "databaseServiceStarted": false,
+  "dispatcherSha256": "f7d3d324aefca45933085b5a5e14c6802695585011ecdff48ac69df36e5c521e",
+  "evidence": {
+    "actualCAS": {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-ROOT-EXECUTION-PREPARATION-02/cas/ACTUAL-CAS-RESULT.json",
+      "sha256": "99a0d70adf6577f0a6e496717edb121caa772da30ab51122bb117c80c3ae9056"
+    },
+    "actualOriginalKeyReadback": {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-EXECUTION-PREPARATION-01/runtime/rollback/ACTUAL-ORIGINAL-KEY-READBACK-01.PRIVATE.json",
+      "sha256": "159426159749266436f62cb92e59463e7cf190da409b3e47ef6a05895746ff36"
+    },
+    "mainIssued": {
+      "path": "outputs/主控/20261118-r3-original-auth45-guardian-restore-window-01/ISSUED.json",
+      "sha256": "c433cd84728cf96b4c7423bd87d0c96786584812b723cc5b672feed7268f1a17"
+    },
+    "source03": {
+      "path": "outputs/D1/20261118-r3-original-auth45-guardian-restore-root-source-03/SOURCE-PINS.json",
+      "sha256": "8343cb342a585216c0931dd749009f9e1ac918de6d1e6710f81c5f0060ba63f6"
+    },
+    "source03Review": {
+      "path": "outputs/QB/20261118-r3-auth45-guardian-restore-review-01/ROOT03-RESULT.json",
+      "sha256": "c09d66ee47b453811c2989917e4794e1fc5fe31901eb3af2dddfd72c32561e59"
+    }
+  },
+  "jobId": "t45-r3-original-auth45-guardian-restore-20261118-01",
+  "newDatabaseOrRole": false,
+  "newRecoveryWindowCountsAsOldDeadlineMet": false,
+  "observationMutations": 0,
+  "observationPGConnections": 0,
+  "old142AndThreeGuardsPreserved": true,
+  "originalAuthenticationRestored": true,
+  "originalHardDeadlineMet": false,
+  "originalPortAbsent": true,
+  "originalStop45PassClaimed": false,
+  "pgdataPidAbsent": true,
+  "privateReadbackVerified": true,
+  "publicationOrAppDeploymentPerformed": false,
+  "realStoppedRestoreContainer": {
+    "exitCode": 0,
+    "id": "db1e52517061426869b8735caac0d8c16e02e917999291d8c0f75f6dc402d33f",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-original-auth45-guardian-restore-20261118-01",
+    "operation": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "pid": 0,
+    "running": false
+  },
+  "recordedAtUTC": "2026-11-17T22:15:38.139175+00:00",
+  "remaining": "Writer45 native durable business outcome requires separately scoped original-key readonly diagnosis; no replay, resume or business mutation authorized by this result.",
+  "replayedJobs": [],
+  "restorationBoundaries": {
+    "automaticReplay": false,
+    "databaseStillStopped": true,
+    "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+    "membershipsOrRoleAttributesChanged": false,
+    "naturalExpiryCountedAsRestoration": false,
+    "operationMode": "ORIGINAL_AUTH_ROLLBACK_ONLY",
+    "originalHardDeadlineMet": false,
+    "originalRestorationHardDeadline": 1794951598808,
+    "privateRecoveryBasisRetained": true,
+    "requestKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "roles": [
+      "erp35_controller_20261110_r3",
+      "erp35_admin_20261110_r3"
+    ],
+    "runtimeAuthChanged": false,
+    "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+  },
+  "rootRegistryAfter": 143,
+  "safePrivateRestoreReceiptSha256": "28a5928a29fdf2c9c8094798af22a7ba6a709af9f40ea50e8e27cc8b3f32b37e",
+  "state": "PASS_EXACT_ORIGINAL_AUTH45_RESTORED_AND_PRIVATE_READBACK_CONFIRMED_ONLY",
+  "terminal": {
+    "sha256": "09c82002e59d70c8ef086af7c65219ae049876cdc59258f480e2f69aae241210",
+    "value": {
+      "atUTC": "2026-11-17T22:14:06.362833+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 6.923382383014541,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T22:14:13.315330+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-74e664a8861a"
+    }
+  },
+  "workerResultPublicSha256": "ec81a1dfa06682c10639d3bd1afcd48a4c3d5294b6e3e8815bd8b97745e5c849",
+  "workerResultRootSha256": "1b6cdcc959a65390d577143cfbf22ca63a54b5d31cb3faea731a3b9898afc113",
+  "workerResultsObjectsEqual": true,
+  "writer45SafeCode": "FINAL33_NATIVE_RESULT_BINDING_REQUIRED",
+  "writer45State": "FAILED_EXIT_2_UNKNOWN_BUSINESS_COMMIT_STATE"
+}

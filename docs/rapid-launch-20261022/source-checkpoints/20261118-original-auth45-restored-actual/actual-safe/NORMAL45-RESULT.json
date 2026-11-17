@@ -1,0 +1,40 @@
+{
+  "APPBuildOrDeployment": false,
+  "activeOperationUnits": [],
+  "apply45": "COMPLETED_EXIT_0",
+  "businessAcceptanceClaimed": false,
+  "businessCommitState": "UNKNOWN",
+  "databaseStillStopped": true,
+  "formalBusinessReady": false,
+  "guardianStopped45": {
+    "cleanupSha256": "43f215a347cbeb2a31221b6d5406bfc5679acac2f40af7e3decd7e807a419efe",
+    "closureSnapshotSha256": "600f80aedf0536f5092d4cb4f7ff9670de4dad82f41d6968c6b8c99051f7604f",
+    "status": "SERVICE_RETAINED"
+  },
+  "nextRequired": "Cause-based original-key readonly native evidence inspection under specific continuation scope; business commit state remains unknown.",
+  "noReplay": true,
+  "originalAuthenticationRestored": true,
+  "originalHardDeadlineMet": false,
+  "originalStop45PassClaimed": false,
+  "recovery": {
+    "exitCode": 0,
+    "requestKey": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "resultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-RESULT-01/RESULT.json",
+    "resultSha256": "be1e9a8beed0812f9f32394b274268737c41baff87cb9dc49b94a6dd88f3fe4e",
+    "status": "COMPLETED"
+  },
+  "start45": "COMPLETED_EXIT_0",
+  "state": "CLOSED_FAILED_WRITER_ORIGINAL_AUTH_RESTORED_BUSINESS_COMMIT_UNKNOWN",
+  "writer45": {
+    "childReaped": true,
+    "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
+    "descendantsReaped": true,
+    "exitCode": 2,
+    "requestKey": "t45-r3-batched-real-after44-execute-20261118-01",
+    "resultSha256": "cd7208c2e93ead58eae19f8abc8732f00c48abf23f60cef0e831a6c9342ccc87",
+    "safeCode": "FINAL33_NATIVE_RESULT_BINDING_REQUIRED",
+    "sqlstate": null,
+    "status": "FAILED",
+    "terminalSha256": "a574859a24eb391e9bf9e1ec7aa1ba9918d6b0e427bbd614072e07b7406df6cd"
+  }
+}

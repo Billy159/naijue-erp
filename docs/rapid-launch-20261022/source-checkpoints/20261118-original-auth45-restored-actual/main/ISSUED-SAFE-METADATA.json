@@ -1,0 +1,18 @@
+{
+  "applyAuthorized": false,
+  "authoritySha256": "f26b9bee4ba987a8365e99178f7a7db02ea6e41c4397a6365b779332230a420e",
+  "authorizationDecisionSha256": "bd54d66e1ef38c051407d31b47573de77b20e7e59b98b3dcd14efe5666014aac",
+  "expiresAt": 1794954399996,
+  "jobId": "t45-r3-original-auth45-guardian-restore-20261118-01",
+  "oldHardMet": false,
+  "originalHardDeadline": 1794951598808,
+  "originalHardDeadlineClaimedMet": false,
+  "originalTemporaryRolesAuthoritySha256": "073384eab7a9de27501915e2481c1529ae5b2dd8c43178532d2769a999bf6c85",
+  "policySha256": "bf5ab07f4c86346ab8aa2341471d5a70c0c1f7f9315fbe51a72ca0ebdc8b26fb",
+  "registrationSha256": "2aeb5f7d40c2b8cb27cbbd317c749dfa35886840fc6c5d552e0b1533b4afcc54",
+  "rolesAuthoritySha256": "f4d056e2f9005bc8eac7fb937882e5b4d5cac4b8e72eed2cf52d53bf3770a744",
+  "sourcePinsSha256": "8343cb342a585216c0931dd749009f9e1ac918de6d1e6710f81c5f0060ba63f6",
+  "startsAt": 1794953499996,
+  "state": "ORIGINAL_AUTH45_GUARDIAN_RESTORE_ISSUED_NOT_REGISTERED_OR_EXECUTED",
+  "temporaryRoleExpiryExtended": false
+}
