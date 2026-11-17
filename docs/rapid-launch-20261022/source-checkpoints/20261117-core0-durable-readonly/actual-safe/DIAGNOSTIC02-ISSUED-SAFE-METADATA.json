@@ -1,0 +1,46 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-core0-durable-readonly-window-02",
+  "issued": {
+    "requestKey": "t45-r3-core0-durable-readonly-20261117-02",
+    "authoritySha256": "8240dc937e4722a4c3e2444653f4ae7dfa70acd1eeec3063392103fce2dfbde9",
+    "policySha256": "4b9e9042efe499a2aff77b93360493d3e00ab505b81f58712410c2e019e50cc5",
+    "registrationAuthoritySha256": "77367d279e7b450bfbad58e3b61cbb39ff05eb96976bce3ce0a796827a9288ad",
+    "startsAt": 1794907853642,
+    "expiresAt": 1794908753642,
+    "freshBasisSha256": "52ae2fd15917ee977c7a1a14a0887941ddf9f5cf4aed5185505d1811f79a906a",
+    "registryBasisSha256": "c088eae0d0e77966141098144dee5ed8f4e45662ecb7fc04af694ccfb4307e71",
+    "reviewSha256": "5f8eb60c87a9442946f5a26bb072925d63a517e79c71c8c5168f3a7baf0bebf3",
+    "registryCASExecuted": false,
+    "diagnosticSubmitted": false
+  },
+  "files": {
+    "registration-packet.json": {
+      "sha256": "183d3d42bb31b73fe162d07c839a3d00f664cdb12aa66f33e6e99a86b5167f60",
+      "bytes": 77587,
+      "mode": "0o600"
+    },
+    "registered-policy.json": {
+      "sha256": "4b9e9042efe499a2aff77b93360493d3e00ab505b81f58712410c2e019e50cc5",
+      "bytes": 737,
+      "mode": "0o600"
+    },
+    "ISSUED.json": {
+      "sha256": "7bc39d0507f59dfe340bb09602e5a635f69fe97d74583e3faf8b94d5b3a75fd4",
+      "bytes": 732,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "8240dc937e4722a4c3e2444653f4ae7dfa70acd1eeec3063392103fce2dfbde9",
+      "bytes": 713,
+      "mode": "0o600"
+    },
+    "registration-authorization.json": {
+      "sha256": "77367d279e7b450bfbad58e3b61cbb39ff05eb96976bce3ce0a796827a9288ad",
+      "bytes": 2793,
+      "mode": "0o600"
+    }
+  },
+  "rawAuthorityOrPacketBodiesIncluded": false,
+  "registryCASActuallyExecuted": false,
+  "diagnosticActuallySubmitted": false
+}

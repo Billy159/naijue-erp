@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T09:28:20.562996+00:00",
+  "updatedAt": "2026-11-17T09:41:38.725237+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "QB finish only frozen Source03 launch/new-key/root pins delta. T45 static exec-prep03 complete; after actual PASS Main requests paired fresh, issues original7arg once within120s, then exact CAS and diagnostic02 run300 with own cleanup. No old01/writer replay, no blind new-key import; Root08 awaits actual next root and diagnostic cleanup.",
+  "next": "D1 freeze Root08 root110 against actualb401 and successfuldiagnostic02 b460/bcce; sameQB only newroot review reuses consumer4fed/abfa and66transport. Main fresh/finite once then T45 physical Root08 source-only. T45 prepares minimal existing host integration for reviewed3routine seam5c48/177930; actual SQL upgrade/readback follows separate finite execution. Then exact next prepare and reasoned successor writer retaining business IDs; no writer key selected yet.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T09:28:20.562996+00:00",
+  "asOf": "2026-11-17T09:41:38.725237+00:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "QB finish only frozen Source03 launch/new-key/root pins delta. T45 static exec-prep03 complete; after actual PASS Main requests paired fresh, issues original7arg once within120s, then exact CAS and diagnostic02 run300 with own cleanup. No old01/writer replay, no blind new-key import; Root08 awaits actual next root and diagnostic cleanup.",
+  "next": "D1 freeze Root08 root110 against actualb401 and successfuldiagnostic02 b460/bcce; sameQB only newroot review reuses consumer4fed/abfa and66transport. Main fresh/finite once then T45 physical Root08 source-only. T45 prepares minimal existing host integration for reviewed3routine seam5c48/177930; actual SQL upgrade/readback follows separate finite execution. Then exact next prepare and reasoned successor writer retaining business IDs; no writer key selected yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53752,7 +53752,9 @@
     "actualSubBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
     "counter0NotDatabase0WriteProof": true,
     "originalErrorNotRetained": true,
-    "nativeResultErrorNotRetained": true
+    "nativeResultErrorNotRetained": true,
+    "partialCommitState": "ACTUAL_DIAGNOSTIC02_NO_RECORDS_IN_FIXED_OPERATION_SUBBATCH_NAMESPACE_SCOPE",
+    "durableReadbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf"
   },
   "normal39Stop": {
     "actualResultSha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac",
@@ -53831,12 +53833,12 @@
     "evidenceHashInManifest": true
   },
   "core0DurableReadonly": {
-    "asOf": "2026-11-17T09:28:20.562996+00:00",
-    "state": "DIAGNOSTIC01_ACTUAL_ENTRY_FLAG_CONTRACT_FAILURE_CONFIRMED_SOURCE03_REPAIR_IN_PROGRESS",
+    "asOf": "2026-11-17T09:41:38.725237+00:00",
+    "state": "ACTUAL_DIAGNOSTIC02_READONLY_COMPLETE_CONTROLLED_RECOVERY_PREPARATION",
     "sourcePinsSha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
     "sourceReviewSha256": "9c2ce6cf248d3e56079e56867b3fe926aaf989ce393d6e6b021c74aa4407bddb",
     "originalWriter": "FAILED_CONSUMED_NO_REPLAY",
-    "businessDurableState": "UNKNOWN",
+    "businessDurableState": "NO_RECORDS_FOR_FIXED_ORIGINAL_IMPORT_SCOPE_EXISTING_IDENTITY_AND_OPERATIONAL_ROWS_PRESERVED",
     "SQLUpgradePerformed": false,
     "root08ConsumerSourcePins": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
     "root08OverallReady": false,
@@ -54111,6 +54113,51 @@
         "path": "source03/EXECUTION-LOCAL-PREPARATION.json",
         "sha256": "015538e444fd3e52a0df40e322a780955f3e7f4fb300d41a65c3f2f7c4877ff5",
         "bytes": 1426
+      },
+      {
+        "path": "review/SOURCE03-RESULT.json",
+        "sha256": "5f8eb60c87a9442946f5a26bb072925d63a517e79c71c8c5168f3a7baf0bebf3",
+        "bytes": 6367
+      },
+      {
+        "path": "actual-safe/diagnostic02-ACTUAL-RESTORE39-BASIS.json",
+        "sha256": "52ae2fd15917ee977c7a1a14a0887941ddf9f5cf4aed5185505d1811f79a906a",
+        "bytes": 5485
+      },
+      {
+        "path": "actual-safe/diagnostic02-ACTUAL-REGISTRATION-BASIS.json",
+        "sha256": "c088eae0d0e77966141098144dee5ed8f4e45662ecb7fc04af694ccfb4307e71",
+        "bytes": 2023
+      },
+      {
+        "path": "actual-safe/DIAGNOSTIC02-ISSUED-SAFE-METADATA.json",
+        "sha256": "5b12b5d0d7a4671ab33ec3bb061f0823b5fe8d113b880c12a0213b1d66c4fa6d",
+        "bytes": 1927
+      },
+      {
+        "path": "actual-safe/DIAGNOSTIC02-ACTUAL-CAS-RESULT.json",
+        "sha256": "1ea0b632f7bc1dbac0cc6907fec61d3773d10b4e5a3abad03ac0c47902b9fda8",
+        "bytes": 481
+      },
+      {
+        "path": "actual-safe/DIAGNOSTIC02-BEFORE-ORIGINAL-KEY-READBACK.json",
+        "sha256": "1f84fe1d2344a11e071133d4d2900339b8ef488c22a4744b073d4009fdd0d12a",
+        "bytes": 363
+      },
+      {
+        "path": "actual-safe/DIAGNOSTIC02-ACTUAL-SUCCESS-READBACK.json",
+        "sha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+        "bytes": 4810
+      },
+      {
+        "path": "actual-safe/DIAGNOSTIC02-ACTUAL-SHORT-RESULT.json",
+        "sha256": "bcceec1cdc67b6f70374cd68da483b944a43ec97f4d10aee4f04f242a7641bea",
+        "bytes": 7161
+      },
+      {
+        "path": "actual-safe/MAIN-CONTROLLED-RECOVERY-DECISION.json",
+        "sha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78",
+        "bytes": 4430
       }
     ],
     "omittedDuplicateBodies": [
@@ -54170,7 +54217,7 @@
     "registeredKeys": 108,
     "actualDiagnosticRequestManifestSha256": "f0dc3983537a4cc9a57193c5fd2b4464b830ea7a6e81432fefe75be9b66154e7",
     "diagnosticExecutionResult": "FAILED_EXIT1",
-    "next": "QB finish only frozen Source03 launch/new-key/root pins delta. T45 static exec-prep03 complete; after actual PASS Main requests paired fresh, issues original7arg once within120s, then exact CAS and diagnostic02 run300 with own cleanup. No old01/writer replay, no blind new-key import; Root08 awaits actual next root and diagnostic cleanup.",
+    "next": "D1 freeze Root08 root110 against actualb401 and successfuldiagnostic02 b460/bcce; sameQB only newroot review reuses consumer4fed/abfa and66transport. Main fresh/finite once then T45 physical Root08 source-only. T45 prepares minimal existing host integration for reviewed3routine seam5c48/177930; actual SQL upgrade/readback follows separate finite execution. Then exact next prepare and reasoned successor writer retaining business IDs; no writer key selected yet.",
     "omittedFrozenPatchBodies": [
       {
         "path": "root08-consumer/ROOT07-TO-ROOT08.patch",
@@ -54209,7 +54256,7 @@
     "futureRootOrAuthorityCreated": false,
     "independentLaunchMismatchEvidenceSha256": "2524641c0d79fb4267e801961a244fe3108e898c825dbe92a0775b8fc9cf4817",
     "successor02": {
-      "state": "SOURCE03_FROZEN_PENDING_SAME_QB_LAUNCH_AND_KEY_DELTA_REVIEW",
+      "state": "ACTUAL_DIAGNOSTIC02_COMPLETED_READONLY_SCOPE_AND_CLEAN_SHUTDOWN_CONFIRMED",
       "sourcePinsSha256": "3a773cb694af40439676c440d9039c07fdc3fbf4bfdaa083acc55a8e6b733019",
       "newRequestKey": "t45-r3-core0-durable-readonly-20261117-02",
       "actualRootBaseSha256": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
@@ -54219,9 +54266,15 @@
         "-S"
       ],
       "old108KeysAndGuardsPreservedSourceClaim": true,
-      "sourceReview": null,
+      "sourceReview": "5f8eb60c87a9442946f5a26bb072925d63a517e79c71c8c5168f3a7baf0bebf3",
       "actualFiniteAuthority": null,
-      "actualCAS": null,
+      "actualCAS": {
+        "dispatcherSha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de",
+        "moduleSha256": "f6aca8ef0f69f606a8166264c634c5ae44d6e0070c17851a87d02bc1405e3257",
+        "policySha256": "4b9e9042efe499a2aff77b93360493d3e00ab505b81f58712410c2e019e50cc5",
+        "registeredKeys": 109,
+        "actualCASResultSha256": "1ea0b632f7bc1dbac0cc6907fec61d3773d10b4e5a3abad03ac0c47902b9fda8"
+      },
       "actualPGReadonlyResult": null,
       "SQLUpgrade": false,
       "omittedPatchBodies": [
@@ -54238,8 +54291,135 @@
           "reason": "Frozen patch retained at owner path; exact delta source and generator copied, literal patch whitespace not rewritten."
         }
       ],
-      "executionLocalPreparationSha256": "015538e444fd3e52a0df40e322a780955f3e7f4fb300d41a65c3f2f7c4877ff5"
-    }
+      "executionLocalPreparationSha256": "015538e444fd3e52a0df40e322a780955f3e7f4fb300d41a65c3f2f7c4877ff5",
+      "actualFiniteAuthorityMetadata": {
+        "authoritySha256": "8240dc937e4722a4c3e2444653f4ae7dfa70acd1eeec3063392103fce2dfbde9",
+        "diagnosticSubmitted": false,
+        "expiresAt": 1794908753642,
+        "freshBasisSha256": "52ae2fd15917ee977c7a1a14a0887941ddf9f5cf4aed5185505d1811f79a906a",
+        "policySha256": "4b9e9042efe499a2aff77b93360493d3e00ab505b81f58712410c2e019e50cc5",
+        "registrationAuthoritySha256": "77367d279e7b450bfbad58e3b61cbb39ff05eb96976bce3ce0a796827a9288ad",
+        "registryBasisSha256": "c088eae0d0e77966141098144dee5ed8f4e45662ecb7fc04af694ccfb4307e71",
+        "registryCASExecuted": false,
+        "requestKey": "t45-r3-core0-durable-readonly-20261117-02",
+        "reviewSha256": "5f8eb60c87a9442946f5a26bb072925d63a517e79c71c8c5168f3a7baf0bebf3",
+        "startsAt": 1794907853642
+      },
+      "rawAuthorityPolicyPacketBodiesIncluded": false,
+      "actualPGReadonlyResultSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+      "actualSummarySha256": "bcceec1cdc67b6f70374cd68da483b944a43ec97f4d10aee4f04f242a7641bea",
+      "terminalSha256": "68ef74f754d803b13788fe420517900570cd4f5c714e264a16b204182d7f65a6",
+      "elapsedSeconds": 6.6857566150138155,
+      "actualEvidence": {
+        "catalog": {
+          "columns": 351,
+          "indexes": 114,
+          "routines": 161,
+          "tables": 35
+        },
+        "catalogCountsMatchExpectedBefore": true,
+        "databaseMatches": true,
+        "databaseOid": "16393",
+        "defaultTransactionReadOnly": true,
+        "failedSubBatch": {
+          "committedCount": 0,
+          "receiptCount": 0
+        },
+        "format": "T45_R3_CORE0_DURABLE_READONLY_V1",
+        "functionBodySha256": {
+          "command": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+          "migration": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+          "verify": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8"
+        },
+        "namespace": {
+          "baselineBatchPresent": false,
+          "completedBatchCount": 0,
+          "documentBatchPresent": false,
+          "importedBatchCount": 0,
+          "matchingBatchCount": 0,
+          "namespaceRecordCount": 0
+        },
+        "rootOperation": {
+          "committedCount": 0,
+          "count": 0,
+          "hasBatchedMarker": false,
+          "otherStatusCount": 0
+        },
+        "serverVersionNum": "170011",
+        "tableCounts": {
+          "audit_change": 1,
+          "auth_session": 0,
+          "barcode_scheme": 0,
+          "color": 0,
+          "customer": 0,
+          "fit": 0,
+          "hall": 0,
+          "import_batch": 0,
+          "import_record": 0,
+          "inventory_balance": 0,
+          "inventory_ledger": 0,
+          "operation_receipt": 1,
+          "payment_account": 0,
+          "payment_account_hall": 0,
+          "payment_method": 0,
+          "product": 0,
+          "product_category": 0,
+          "product_image": 0,
+          "runtime_document_number_allocation": 0,
+          "sales_header": 0,
+          "sales_line": 0,
+          "sales_settlement": 0,
+          "schema_migration": 27,
+          "season": 0,
+          "size": 0,
+          "size_group": 0,
+          "size_group_member": 0,
+          "sku": 0,
+          "sku_barcode": 0,
+          "staff": 1,
+          "supplier": 0,
+          "transfer_header": 0,
+          "transfer_line": 0,
+          "user_account": 1,
+          "warehouse": 0
+        },
+        "threeBodiesMatchExpectedBefore": {
+          "command": true,
+          "migration": true,
+          "verify": true
+        },
+        "transactionReadOnly": true
+      },
+      "actualCleanup": {
+        "actualContainerId": "5a815d05577502f9d1c18906e19f4cd42e4659d9fbb5264946407ac38f7fd9f7",
+        "actualContainerStartedAt": "2026-11-17T09:35:23.222012617Z",
+        "createAttempted": true,
+        "dataPreserved": true,
+        "originalPortAbsent": true,
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "pgdataPidAbsent": true,
+        "physicalPGDATAFileWritesPossible": true
+      },
+      "singleUserCleanup": {
+        "childReaped": true,
+        "cleanClusterAfterRead": true,
+        "descendantsAbsent": true,
+        "networkConnectionsOpened": 0
+      },
+      "originalImportDurableScope": "NO_RECORDS_FOR_FIXED_ROOT_OPERATION_SUBBATCH_NAMESPACE_AND_BUSINESS_TABLES",
+      "wholeDatabaseEmptyClaimed": false,
+      "observedDefinitions": null,
+      "roleOrCredentialChanges": false
+    },
+    "currentActualRoot": {
+      "dispatcherSha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de",
+      "moduleSha256": "f6aca8ef0f69f606a8166264c634c5ae44d6e0070c17851a87d02bc1405e3257",
+      "policySha256": "4b9e9042efe499a2aff77b93360493d3e00ab505b81f58712410c2e019e50cc5",
+      "registeredKeys": 109,
+      "actualCASResultSha256": "1ea0b632f7bc1dbac0cc6907fec61d3773d10b4e5a3abad03ac0c47902b9fda8"
+    },
+    "mainRecoveryDecisionSha256": "b07d9ba7ea9320e387ec43a2d99cd93a30faf99bfa95bb60915d8d3d59071b78"
   },
   "root08SourceOnlyMaterialization": {
     "consumerSourcePinsSha256": "4fed5130c1566729ae4d57e4bf2d6ba32d201b7500fb7f18bf91e48cea6a71a2",
@@ -54249,7 +54429,9 @@
     "overallRootReviewPASS": false,
     "actualMaterialized": false,
     "SQLUpgradePerformed": false,
-    "finalRootDependentPinsWaitingForActualDiagnostic02Root": true
+    "finalRootDependentPinsWaitingForActualDiagnostic02Root": false,
+    "actualBaseDispatcherSha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de",
+    "actualDiagnostic02ReceiptSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf"
   },
   "settlement24UpgradeSeam": {
     "asOf": "2026-11-17T09:21:22.512082+00:00",
@@ -54266,6 +54448,8 @@
     "diagnostic02ActualDurableResult": null,
     "futureRoleCClockOrAuthority": null,
     "diagnosticProsrcIsNotDefinitionProof": true
-  }
+  },
+  "businessImportDurableRowsObserved": 0,
+  "originalImportDurableScope": "NO_RECORDS_FOR_FIXED_ORIGINAL_IMPORT_SCOPE_EXISTING_IDENTITY_AND_OPERATIONAL_ROWS_PRESERVED"
 }
 }

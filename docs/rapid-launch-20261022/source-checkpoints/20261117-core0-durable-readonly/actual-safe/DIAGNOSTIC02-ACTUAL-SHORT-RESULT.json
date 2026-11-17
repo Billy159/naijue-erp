@@ -1,0 +1,194 @@
+{
+  "SQLUpgradeOrRoot08OrAPPExecuted": false,
+  "activeOperationUnits": [],
+  "actualCheckedAtBeijing": "2026-11-17T17:36:19.092678+08:00",
+  "actualCheckedAtUTC": "2026-11-17T09:36:19.092678+00:00",
+  "actualOwnContainer": {
+    "id": "5a815d05577502f9d1c18906e19f4cd42e4659d9fbb5264946407ac38f7fd9f7",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "network": "none",
+    "operation": "t45-r3-core0-durable-readonly-20261117-02",
+    "pid": 0,
+    "running": false,
+    "startedAt": "2026-11-17T09:35:23.222012617Z"
+  },
+  "actualRequestSha256": "8fe91bb1649a10df2691d5224b2a898f266869ba17271860f6074442b6fc1dec",
+  "allDatabaseEmptyClaimed": false,
+  "authorityReusedFrom39": false,
+  "businessAcceptanceClaimed": false,
+  "businessDML": false,
+  "cas": {
+    "PGStarted": false,
+    "automaticReplay": false,
+    "diagnosticSubmitted": false,
+    "dispatcherSha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de",
+    "moduleSha256": "f6aca8ef0f69f606a8166264c634c5ae44d6e0070c17851a87d02bc1405e3257",
+    "old108AndThreeGuardsPreserved": true,
+    "policySha256": "4b9e9042efe499a2aff77b93360493d3e00ab505b81f58712410c2e019e50cc5",
+    "published": [
+      "module",
+      "policy",
+      "dispatcher"
+    ],
+    "status": "EXACT_ONE_READONLY_KEY_REGISTERED_NO_PG_OR_JOB"
+  },
+  "fixedOriginalOperationAndFailedBatchAndNamespaceNoDurableRecordsObserved": true,
+  "formalReadinessClaimed": false,
+  "issuedSha256": "7bc39d0507f59dfe340bb09602e5a635f69fe97d74583e3faf8b94d5b3a75fd4",
+  "nonzeroTableCountsPreserved": {
+    "audit_change": 1,
+    "operation_receipt": 1,
+    "schema_migration": 27,
+    "staff": 1,
+    "user_account": 1
+  },
+  "old01OrWriterReplayed": false,
+  "originalClientAccepted": "QUEUED_AUTO_RETRY_FALSE",
+  "originalKeyReadback": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-EXECUTION-PREPARATION-03/diagnostic-call/READBACK-02.json",
+  "originalKeyReadbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+  "ownContainerCleanup": {
+    "actualContainerId": "5a815d05577502f9d1c18906e19f4cd42e4659d9fbb5264946407ac38f7fd9f7",
+    "actualContainerStartedAt": "2026-11-17T09:35:23.222012617Z",
+    "createAttempted": true,
+    "dataPreserved": true,
+    "originalPortAbsent": true,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "pgdataPidAbsent": true,
+    "physicalPGDATAFileWritesPossible": true
+  },
+  "physicalPGDATAFileWritesPossible": true,
+  "publicReceiptPins": {
+    "cleanup": "590cc8be6819b28d3101f7bce6a22831edaea3cf6f9dc8cf4e5431e327baa7de",
+    "result": "db4d323d3741c89dff4cc5b07208e362e010cd17e87870a1bac92b1a29e70070"
+  },
+  "receiptRootPins": {
+    "cleanup": "efa0d88a847a8bf83f1beb2decb5dd3c90918d28155616cef1db338426b3e45a",
+    "result": "67e2ba34665b3f86123bdc6f49cdec697defb3a51091389cf95d60b36a481fd4",
+    "terminal": "68ef74f754d803b13788fe420517900570cd4f5c714e264a16b204182d7f65a6"
+  },
+  "requestKey": "t45-r3-core0-durable-readonly-20261117-02",
+  "roleOrCredentialChanges": false,
+  "scopeLimits": [
+    "Fixed original operation/subbatch/namespace only; not a full business reconciliation",
+    "Old three prosrc and old catalog verified; successor SQL not applied",
+    "Physical PGDATA writes during single-user recovery/cleanup possible; no business DML",
+    "Original writer remains FAILED and must never replay"
+  ],
+  "snapshot": {
+    "actualSingleUserPid": 8,
+    "cleanup": {
+      "childReaped": true,
+      "cleanClusterAfterRead": true,
+      "descendantsAbsent": true,
+      "networkConnectionsOpened": 0
+    },
+    "evidence": {
+      "catalog": {
+        "columns": 351,
+        "indexes": 114,
+        "routines": 161,
+        "tables": 35
+      },
+      "catalogCountsMatchExpectedBefore": true,
+      "databaseMatches": true,
+      "databaseOid": "16393",
+      "defaultTransactionReadOnly": true,
+      "failedSubBatch": {
+        "committedCount": 0,
+        "receiptCount": 0
+      },
+      "format": "T45_R3_CORE0_DURABLE_READONLY_V1",
+      "functionBodySha256": {
+        "command": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+        "migration": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+        "verify": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8"
+      },
+      "namespace": {
+        "baselineBatchPresent": false,
+        "completedBatchCount": 0,
+        "documentBatchPresent": false,
+        "importedBatchCount": 0,
+        "matchingBatchCount": 0,
+        "namespaceRecordCount": 0
+      },
+      "rootOperation": {
+        "committedCount": 0,
+        "count": 0,
+        "hasBatchedMarker": false,
+        "otherStatusCount": 0
+      },
+      "serverVersionNum": "170011",
+      "tableCounts": {
+        "audit_change": 1,
+        "auth_session": 0,
+        "barcode_scheme": 0,
+        "color": 0,
+        "customer": 0,
+        "fit": 0,
+        "hall": 0,
+        "import_batch": 0,
+        "import_record": 0,
+        "inventory_balance": 0,
+        "inventory_ledger": 0,
+        "operation_receipt": 1,
+        "payment_account": 0,
+        "payment_account_hall": 0,
+        "payment_method": 0,
+        "product": 0,
+        "product_category": 0,
+        "product_image": 0,
+        "runtime_document_number_allocation": 0,
+        "sales_header": 0,
+        "sales_line": 0,
+        "sales_settlement": 0,
+        "schema_migration": 27,
+        "season": 0,
+        "size": 0,
+        "size_group": 0,
+        "size_group_member": 0,
+        "sku": 0,
+        "sku_barcode": 0,
+        "staff": 1,
+        "supplier": 0,
+        "transfer_header": 0,
+        "transfer_line": 0,
+        "user_account": 1,
+        "warehouse": 0
+      },
+      "threeBodiesMatchExpectedBefore": {
+        "command": true,
+        "migration": true,
+        "verify": true
+      },
+      "transactionReadOnly": true
+    },
+    "physicalPGDATAFileWritesPossible": true,
+    "roleOrCredentialChanges": false,
+    "singleUserPostmasterEpoch": "NOT_APPLICABLE",
+    "status": "FIXED_DURABLE_READONLY_SNAPSHOT_OBSERVED",
+    "transactionEnd": "ROLLBACK"
+  },
+  "sourcePinsSha256": "3a773cb694af40439676c440d9039c07fdc3fbf4bfdaa083acc55a8e6b733019",
+  "sourceReviewSha256": "5f8eb60c87a9442946f5a26bb072925d63a517e79c71c8c5168f3a7baf0bebf3",
+  "state": "ACTUAL_NEW02_DURABLE_READONLY_COMPLETED_AND_CLEANUP_CONFIRMED",
+  "terminal": {
+    "atUTC": "2026-11-17T09:35:19.999638+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 6.6857566150138155,
+    "exitCode": 0,
+    "exports": [
+      "durable-readonly-cleanup.json",
+      "durable-readonly-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T09:35:26.712404+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-core0-durable-readonly-20261117-02",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-c814d0f62433"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "actions": {
+    "approvedBusinessInputBodyRead": false,
+    "futureAuthorityCIDCepochOrPositiveRuntimeFixturesCreated": false,
+    "old58And45SQLPermissionsOrRoot08ConsumerRerun": false,
+    "ownerOrOldFrozenReportsModified": false,
+    "purePatchPolicySha256": null,
+    "serverPGNativeContainerIssuerReaderRoleCASClockCalls": 0
+  },
+  "actualNew02DurableResultAvailable": false,
+  "actualRegisteredBaselineSha256": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
+  "admissionModuleSha256": "f6aca8ef0f69f606a8166264c634c5ae44d6e0070c17851a87d02bc1405e3257",
+  "deltaChecks": 115,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-core0-durable-readonly-source-review-01/SOURCE03-EVIDENCE.json",
+      "sha256": "274b979acbbd6305195c558f9c7f81e4fb03489d34895a78407c3cb0ab00e2b0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-core0-durable-readonly-source-review-01/LAUNCH-MISMATCH-EVIDENCE.json",
+      "sha256": "2524641c0d79fb4267e801961a244fe3108e898c825dbe92a0775b8fc9cf4817"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "newRequestKey": "t45-r3-core0-durable-readonly-20261117-02",
+  "preservedActualFailure": {
+    "exitCode": 1,
+    "failureBeforeHostInside": true,
+    "guard": "FIXED_ISOLATED_ROOT_ENTRY_REQUIRED",
+    "historicalOwnContainerCreation": "UNKNOWN_FROM_EXISTING_RECEIPTS",
+    "oldKeyConsumed": true,
+    "oldKeyReplayAllowed": false,
+    "originalRequestKey": "t45-r3-core0-durable-readonly-20261117-01",
+    "safeProjectionSha256": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+    "status": "FAILED",
+    "terminalSha256": "8e8af93929b3a17f3b81f7e7e394fa03d54ca4d13a82c105646b5b6ba361af5b"
+  },
+  "reusedReports": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-core0-durable-readonly-source-review-01/RESULT.json",
+      "sha256": "e8f5534e4a999d06584f7faba2e9c3743ee9758a853079fa95c1a16706201b09"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-core0-durable-readonly-source-review-01/FIX-RESULT.json",
+      "sha256": "9c2ce6cf248d3e56079e56867b3fe926aaf989ce393d6e6b021c74aa4407bddb"
+    }
+  ],
+  "runtimeStillRequired": [
+    "Only source carrier fix and exact registration source pass. New02 actual acceptance,PG syntax/single-user query output,child/container/pg_control cleanup and durable conclusions are not tested.",
+    "Main must obtain actual≤2min stopped/auth/root45914 basis,new02 key absence and actual finite authority before original controlled new02 CAS and execution. No actual issuer/clock/root call performed by QB.",
+    "Business SQL remains readonly; writable PGDATA startup/shutdown/WAL/hint physical writes remain possible. No new role/credential changes authorized by this source report.",
+    "Original writer FAILED and durable business state UNKNOWN remain. No original writer/diagnostic01 replay,blind import key,SQL upgrade,APP deployment or publication allowed. Root08 consumer/upgrade seam passes remain separate source-only deliverables."
+  ],
+  "sameDiagnosticReviewContinuation": true,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-03",
+  "sourceOnly": true,
+  "sourcePinsSha256": "3a773cb694af40439676c440d9039c07fdc3fbf4bfdaa083acc55a8e6b733019",
+  "spec": {
+    "findings": [],
+    "scope": "Actual isolated-entry failure corrected only for explicitly approved successor key;108 prefix/3 guards and consumed01 root namespace retained."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "New02 exact carrier/identity/pin chain only; original SQL/permissions/58+45/client/CAS mechanics reused."
+  },
+  "state": "SOURCE_PASS_CORE0_DURABLE02_ISOLATED_ENTRY_AND_EXACT_REGISTRATION_SOURCE_ONLY",
+  "unregisteredDispatcherSha256": "9e50ba728ce08d700cb2eb0282d3601b1324d7bf696eed01a17157c666a5bb50",
+  "verifiedScope": [
+    "Final Source03 3a773c/16 files and READY9fe2 exact. Source02/f983 reports and actual oldCAS/diagnostic01 FAILED terminal remain immutable; this is a new-key source continuation,not original-key replay.",
+    "Actual safe failurebe9 and observed root45914 exactly bound. Old host generic-s conflicts with unchanged worker isolated/no_site guard; preceding review omission is documented in LAUNCH-MISMATCH evidence,without rewriting its source-specific earlier pass.",
+    "Only approved new02 Python argv uses -I -S. Other Python jobs and old01 retain-s. Worker main/inside/host/cleanup/security/budget functions AST unchanged; new load/closed checks only bind actual diagnostic01 terminal8e8 and safe proofbe9. No requirement for nonexistent old01 cleanup.",
+    "Pure patch of actual observed45914 reproduces template9e50 with no policy. Original108-key prefix plus new02=109 and3 guards; all old functions,Root07,normal38/39,old diagnostic01 factory/module0fb/policyb1 and writer protection preserved. Execute only gains one admission branch and exact-key argv expression.",
+    "Independent new modulef6aca/policy02/root ENTRY02/AUDIT02/pending/window02 are distinct. CAS PRESERVE adds original diagnostic01 module,policy,terminal and worker;9 prior root files plus original lock cannot be overwritten. Original packet/shared-lock/snapshot/publication/AUDIT UNKNOWN protocol unchanged.",
+    "Four fixed static members include only reviewed SQL,scope,worker and genuine old failure safe projection. Together with one actual Main authority this is exactly5 members,one authoritySHA arg,script durable_readonly_job.py and timeout300. No stale authority file in prepared source bundle.",
+    "Original7-argument issuer,complete static+two fresh actual bases before sole clock,120s dual freshness,CAS300s and phase900s retained. Original08954 client/42943 loader/parser/collector/constructor/main retained for exact new02/window02. Fixed SQL1e1e,counts/3prosrc/transaction/target/permissions/mounts/locks directly reused,not rerun."
+  ],
+  "workerSha256": "b65ce7f0e750f5767383979ec63157f7d7413d1e453909c19c4c6f7e54e71f38"
+}
