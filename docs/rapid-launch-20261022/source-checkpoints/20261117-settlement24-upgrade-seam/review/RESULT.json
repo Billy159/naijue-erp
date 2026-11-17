@@ -1,0 +1,59 @@
+{
+  "SQLInstalled": false,
+  "SQLReusedSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+  "actions": {
+    "approvedBusinessInputBodyRead": false,
+    "futureRoleCAuthorityOrPositiveFixtureCreated": false,
+    "nativeRunnerOrApplicationImported": false,
+    "old91SQLSemanticsOrSealed18Rerun": false,
+    "ownerOrConsumerSourcesModified": false,
+    "serverPGNativeIssuerReaderCASClockCalls": 0
+  },
+  "afterModelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+  "beforeModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "checkSummary": {
+    "independentMetadataChecks": 21,
+    "reproducedWiringChecks": 20,
+    "syntaxOnlyNode24": true
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-upgrade-seam-source-review-01/WIRING-EVIDENCE.json",
+      "sha256": "8228022b4a9ea920c3e9b65f7bdff4f1a0fa02e21c91f0d055bd2f019a61ae67"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-settlement24-upgrade-seam-source-review-01/PAIR-EVIDENCE.json",
+      "sha256": "aaacfa4c06c92af584ba370cf5209a7dfbb0e7e3c5f7b6712394596a140836ba"
+    }
+  ],
+  "findings": [],
+  "fullHostOrRuntimePassed": false,
+  "nativeSuccessorSha256": "7a7593172a8c4b05d5f9e7855c1f8c9d78c2b2896b5e0bc84afb34f60cabf821",
+  "notVerified": [
+    "Only unbound native runner source and host adaptation contract pass. Complete adapted host/runtime/root admission/issuer/request/descriptor pairing is not delivered or passed here.",
+    "Actual diagnostic02 durable evidence and current3 before prosrc/definition/remaining metadata facts plus Main recovery decision still required. Diagnostic prosrc-only counts must not be promoted to definition proof.",
+    "Real Root08 materialization/marker,finite admin/service C/epoch/inner/outer authority and exact program descriptor must be bound before any execution. Original inner API decision label remains legacy; future host/authority must bind this exact3-routine descriptor and reviewed SQL.",
+    "No actual PG syntax,transaction,commit,postcommit readback,SQL install,APP/native build or import recovery validated. Original writer FAILED/durable UNKNOWN and publication/STAGED limits remain."
+  ],
+  "runtimeReady": false,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-settlement24-upgrade-seam-source-01",
+  "sourceOnly": true,
+  "sourcePinsSha256": "5c48da1bcb12675b9e305d5119eb0b1cda3e6f17461ce494634cf4d8c576a980",
+  "spec": {
+    "findings": [],
+    "scope": "Root08 exact reviewed3 routines,daf3 SQL before626/inTxnAfterada8/commitACK/postcommit independent readonly3-body/definition/other-proc metadata."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Only native successor and minimal existing-host adaptation contract; original driver/finite guard/cleanup protocol reused."
+  },
+  "state": "SOURCE_PASS_SETTLEMENT24_THREE_ROUTINE_UPGRADE_SEAM_ONLY",
+  "verifiedScope": [
+    "Frozen5c48 seven files and actual accepted catalog35/e851 parent metadata exact. Source768/QB976 and reviewed SQL daf3/routinePins reused without91 semantic rerun or Root08 consumer re-review.",
+    "Native REQUEST/START/INNER remain null; refusal precedes stdin read,C-service read,application loader,credential projection and clock. Actual Root08 marker,diagnostic02 result,before facts,Main recovery decision,C/epoch/roles/windows/authorities remain absent.",
+    "Before compiled explicitly from current command catalog626 and after from exact settlement24 successorada8. Root08 source marker is not an installation proof; before-upgrade live model cannot be borrowed from after-ada8 import context.",
+    "Original reviewed SQL bytes roundtrip exactly:2 original SET LOCALs and1 complete DO under retained READ COMMITTED begin/commit ACK. Before,in-txn after,and postcommit separate READ ONLY observations cover3 prosrc/definitions and combined all-other pg_proc attributes.",
+    "Original owner/target/current guard,native send ACK,status/commitOutcomeUnknown,rollback/RESET ROLE and connection/credential cleanup retained. Source has no automatic SQL/writer replay.",
+    "Host contract explicitly remains a future minimal field adaptation,not executable complete host. Used catalog35/Root06 single-function job not replayed; APPa7 stays old candidate."
+  ]
+}

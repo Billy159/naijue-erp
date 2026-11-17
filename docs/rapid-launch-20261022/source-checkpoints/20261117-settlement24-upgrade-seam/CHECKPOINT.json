@@ -1,0 +1,69 @@
+{
+  "asOf": "2026-11-17T09:18:32.534394+00:00",
+  "state": "SOURCE_PASS_THREE_ROUTINE_NATIVE_UNBOUND_SEAM_ONLY_FULL_HOST_AND_RUNTIME_NOT_READY",
+  "sourceOnly": true,
+  "sourcePinsSha256": "5c48da1bcb12675b9e305d5119eb0b1cda3e6f17461ce494634cf4d8c576a980",
+  "SQLOriginalPreservedSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+  "newWiringChecks": 20,
+  "old91OrSQLSemanticTestsRerun": false,
+  "actualSQLInstalled": false,
+  "actualRoot08Marker": null,
+  "actualDiagnostic02Durable": null,
+  "futureRolesOrCOrEpochOrAuthority": null,
+  "APPa7NativeUpgraded": false,
+  "originalWriterReplayed": false,
+  "newWriterKeyChosen": false,
+  "copies": [
+    {
+      "path": "source/SOURCE-PINS.json",
+      "sha256": "5c48da1bcb12675b9e305d5119eb0b1cda3e6f17461ce494634cf4d8c576a980",
+      "bytes": 2006
+    },
+    {
+      "path": "source/CHECK-RESULT.json",
+      "sha256": "8228022b4a9ea920c3e9b65f7bdff4f1a0fa02e21c91f0d055bd2f019a61ae67",
+      "bytes": 1419
+    },
+    {
+      "path": "source/HANDOFF.md",
+      "sha256": "7cd3140799790be051b695e544700c3e9d89a2189eabe421a2181029beeb50dd",
+      "bytes": 3801
+    },
+    {
+      "path": "source/HOST-UPGRADE-CONTRACT.json",
+      "sha256": "72144b8bcbd96dc4b43d8932f72493c182600fc0bc5d07aa64094c4fe0c37664",
+      "bytes": 9895
+    },
+    {
+      "path": "source/check_seam.mjs",
+      "sha256": "3541150cada8667598a4d8f010bbb1c4d557c6f67f0e308206636ff0ebc2791b",
+      "bytes": 4540
+    },
+    {
+      "path": "source/prepare_successor.py",
+      "sha256": "36a063c5e862d8a33dd4055c4dbf61e0b80e6b80e12ea190cc23554691126769",
+      "bytes": 8365
+    },
+    {
+      "path": "source/settlement24-catalog-run.UNBOUND.mjs",
+      "sha256": "7a7593172a8c4b05d5f9e7855c1f8c9d78c2b2896b5e0bc84afb34f60cabf821",
+      "bytes": 19225
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "1779301d073b987bbe5ec2130ceafb06e85684ff7c41396d118a938999c400ba",
+      "bytes": 4529
+    }
+  ],
+  "omittedPatchBodies": [
+    {
+      "path": "CATALOG35-TO-THREE-ROUTINES.patch",
+      "bytes": 15529,
+      "sha256": "1015b8836267fc85cbf5581bcbc717091916769fe775f88223368a8c43f3d28f",
+      "reason": "Frozen patch source retained with hash; substantive unbound successor and generator copied."
+    }
+  ],
+  "sourceReviewSha256": "1779301d073b987bbe5ec2130ceafb06e85684ff7c41396d118a938999c400ba",
+  "fullHostReady": false,
+  "diagnostic02ProsrcIsNotDefinitionProof": true
+}

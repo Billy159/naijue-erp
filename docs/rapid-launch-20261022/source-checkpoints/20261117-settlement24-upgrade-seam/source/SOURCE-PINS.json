@@ -1,0 +1,57 @@
+{
+  "state": "SOURCE_UPGRADE_SEAM_PREPARED_RUNTIME_UNBOUND_NOT_FULL_HOST_OR_EXECUTION_PASS",
+  "sourceOnly": true,
+  "runtimeReady": false,
+  "consumerSource768Preserved": true,
+  "SQLReusedSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+  "sqlModified": false,
+  "actualParentRunnerSha256": "e85116b983059257e6529a4008afeb4c304e49c5378b43810fa6ad6deb4fa129",
+  "nativeSuccessorSha256": "7a7593172a8c4b05d5f9e7855c1f8c9d78c2b2896b5e0bc84afb34f60cabf821",
+  "localWiringChecks": 20,
+  "nodeSyntaxChecked": true,
+  "SQLSemanticOrOld91Rerun": false,
+  "serverPGNativeIssuerClockCalls": 0,
+  "originalWriterReplayed": false,
+  "writerNewKeyChosen": false,
+  "SQLInstalled": false,
+  "actualRoot08Marker": null,
+  "actualDiagnostic02DurableResult": null,
+  "actualThreeBeforeRoutines": null,
+  "futureRoles": null,
+  "futureC": null,
+  "futureEpoch": null,
+  "window": null,
+  "innerAuthority": null,
+  "outerAuthority": null,
+  "APPa7NativeUpgraded": false,
+  "files": {
+    "CATALOG35-TO-THREE-ROUTINES.patch": {
+      "bytes": 15529,
+      "sha256": "1015b8836267fc85cbf5581bcbc717091916769fe775f88223368a8c43f3d28f"
+    },
+    "CHECK-RESULT.json": {
+      "bytes": 1419,
+      "sha256": "8228022b4a9ea920c3e9b65f7bdff4f1a0fa02e21c91f0d055bd2f019a61ae67"
+    },
+    "HANDOFF.md": {
+      "bytes": 3801,
+      "sha256": "7cd3140799790be051b695e544700c3e9d89a2189eabe421a2181029beeb50dd"
+    },
+    "HOST-UPGRADE-CONTRACT.json": {
+      "bytes": 9895,
+      "sha256": "72144b8bcbd96dc4b43d8932f72493c182600fc0bc5d07aa64094c4fe0c37664"
+    },
+    "check_seam.mjs": {
+      "bytes": 4540,
+      "sha256": "3541150cada8667598a4d8f010bbb1c4d557c6f67f0e308206636ff0ebc2791b"
+    },
+    "prepare_successor.py": {
+      "bytes": 8365,
+      "sha256": "36a063c5e862d8a33dd4055c4dbf61e0b80e6b80e12ea190cc23554691126769"
+    },
+    "settlement24-catalog-run.UNBOUND.mjs": {
+      "bytes": 19225,
+      "sha256": "7a7593172a8c4b05d5f9e7855c1f8c9d78c2b2896b5e0bc84afb34f60cabf821"
+    }
+  }
+}

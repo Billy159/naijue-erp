@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T08:56:27.543476+00:00",
+  "updatedAt": "2026-11-17T09:21:22.512082+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T08:56:27.543476+00:00",
+  "asOf": "2026-11-17T09:21:22.512082+00:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -54127,6 +54127,22 @@
     "actualMaterialized": false,
     "SQLUpgradePerformed": false,
     "finalRootDependentPinsWaitingForActualDiagnostic02Root": true
+  },
+  "settlement24UpgradeSeam": {
+    "asOf": "2026-11-17T09:21:22.512082+00:00",
+    "state": "SOURCE_PASS_NATIVE_UNBOUND_SEAM_ONLY_NOT_FULL_HOST_OR_RUNTIME",
+    "sourcePinsSha256": "5c48da1bcb12675b9e305d5119eb0b1cda3e6f17461ce494634cf4d8c576a980",
+    "sourceReviewSha256": "1779301d073b987bbe5ec2130ceafb06e85684ff7c41396d118a938999c400ba",
+    "nativeRunnerSha256": "7a7593172a8c4b05d5f9e7855c1f8c9d78c2b2896b5e0bc84afb34f60cabf821",
+    "SQLReusedSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+    "newWiringChecks": 20,
+    "independentMetadataChecks": 21,
+    "SQLInstalled": false,
+    "fullHostReady": false,
+    "Root08ActualMarker": null,
+    "diagnostic02ActualDurableResult": null,
+    "futureRoleCClockOrAuthority": null,
+    "diagnosticProsrcIsNotDefinitionProof": true
   }
 }
 }
