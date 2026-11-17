@@ -1,0 +1,10 @@
+{
+  "checksSha256": "5a5dc0c677f9f7b6c183e92c0b725419af6311b2354e33a67014ab214343143f",
+  "executionReady": false,
+  "handoff": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/DURABLE-READONLY-SOURCE-03/HANDOFF.md",
+  "newKey": "t45-r3-core0-durable-readonly-20261117-02",
+  "rootDeltaSha256": "f9eb22a3d58dc121e5899d6da76fe177d6af1a2c1fbaf1c51615cccc6e96bfe1",
+  "sourceOnly": true,
+  "sourcePinsSha256": "3a773cb694af40439676c440d9039c07fdc3fbf4bfdaa083acc55a8e6b733019",
+  "state": "SOURCE03_EXPLICIT_NEW02_ISOLATED_ENTRY_PREPARED_PENDING_SAME_QB_REVIEW"
+}

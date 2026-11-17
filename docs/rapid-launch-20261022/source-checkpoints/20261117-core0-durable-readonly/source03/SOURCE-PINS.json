@@ -1,0 +1,37 @@
+{
+  "actualIssuerOrClockOrServerStageOrCASOrPGOrSubmit": false,
+  "actualRegisteredBaseSha256": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
+  "files": {
+    "DELTA-F01-F02.patch": "45cb3926978b3e9f2343e8d2889a6b0e18a500e7817dcd8e918713715fe8fc89",
+    "HANDOFF.md": "ad76a66c724165988388a3aabb673ad0257de7e5e8c66ce5a2cccded46171d5e",
+    "NEW02-ROOT-DELTA.patch": "f9eb22a3d58dc121e5899d6da76fe177d6af1a2c1fbaf1c51615cccc6e96bfe1",
+    "PLAN.WIP.md": "c84c849ec9693dc671829582eee5fc2bb33397274a4ac38bd22ddd3ca1c0576c",
+    "SOURCE-CHECKS.json": "5a5dc0c677f9f7b6c183e92c0b725419af6311b2354e33a67014ab214343143f",
+    "admin_exec.DURABLE-UNREGISTERED.py": "9e50ba728ce08d700cb2eb0282d3601b1324d7bf696eed01a17157c666a5bb50",
+    "bundle/durable-readonly.sql": "1e1ece61f3fc9bd727219b747a1a5eda8f6230f5497c00042950d75dba270c3d",
+    "bundle/durable_readonly_job.py": "b65ce7f0e750f5767383979ec63157f7d7413d1e453909c19c4c6f7e54e71f38",
+    "bundle/prior-diagnostic01-failure.json": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+    "bundle/scope.json": "d81d73ddf34b406ebc3f4e70616234c5785dbdaef163990848bcaf8e0f180810",
+    "diagnostic_cli.py": "b3aecbd973fce5f774b75316ad456a67173678dd2e186c2e2a41e63017b973c5",
+    "main_issuer.py": "2a8f71d7e2898173a2522cce530a2c939fd810f44d2fa5d4a3ff353bee267fdf",
+    "patch_dispatcher.py": "c223ade469e19496e56ea76a8894b385cd19f3b51b32f5d8fe31cab579ef98dd",
+    "r3_core0_durable_readonly_02.py": "f6aca8ef0f69f606a8166264c634c5ae44d6e0070c17851a87d02bc1405e3257",
+    "read_registration_basis.py": "3e67976c676de0dce88cdfed1a56eb2a34c4c02801058fcc621228991bd10cce",
+    "register_exact.py": "7c393052a10219321d8bec6028decf9ce6c03b76c0415c04672b8eeb8ea0f12b"
+  },
+  "futureCID": null,
+  "newModuleSha256": "f6aca8ef0f69f606a8166264c634c5ae44d6e0070c17851a87d02bc1405e3257",
+  "oldDiagnostic01ConsumedAndFailed": true,
+  "oldWriterNeverReplay": true,
+  "policySha256": null,
+  "predecessorSourcePinsSha256": "5210c19e30c87b7b495c31cda4afb7a8af9d973222b4b9be6adf15e082d5e440",
+  "requestKeyProposal": "t45-r3-core0-durable-readonly-20261117-02",
+  "sourceOnly": true,
+  "state": "SOURCE03_EXPLICIT_NEW02_ISOLATED_ENTRY_PREPARED_PENDING_SAME_QB_REVIEW",
+  "unregisteredDispatcherSha256": "9e50ba728ce08d700cb2eb0282d3601b1324d7bf696eed01a17157c666a5bb50",
+  "unverified": [
+    "Same QB review of exact new02 launcher/identity/pin delta",
+    "Actual future fresh/issuance/CAS/new02 acceptance",
+    "Actual PG readonly result and own lifecycle cleanup"
+  ]
+}

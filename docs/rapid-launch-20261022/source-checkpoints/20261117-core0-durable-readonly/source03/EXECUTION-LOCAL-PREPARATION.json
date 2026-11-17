@@ -1,0 +1,23 @@
+{
+  "actualIssuanceAndClientRequestRequiredForObserverRender": true,
+  "actualStageOrFreshOrServerOrIssuerOrClockOrCASOrContainerOrPGOrSubmit": false,
+  "filePins": {
+    "CODE-STAGE-PACKET.json": "80e25352c32261c825837ced7cef7c4af68b3f76863e22238332c2b58fa51bc9",
+    "FOLLOWUP-COMMANDS.json": "7eb7c6a59f377c37952cbf5752d9234a3073d76fc449f34f9845bcb4089ab992",
+    "PREPARED-CHANNEL.json": "176658ae50039a6a8c3ecff7ee8f4652e599fb5d03bc3ca6a8974704ef87860b",
+    "READ-BOTH-ROOT-SOURCE.py": "2d14925292f0da2f96910d599f6f2e153096522f18a81d3f6b33124ea5df9c19",
+    "READ-ORIGINAL-02-TEMPLATE.py": "76ae8c512e7351ddd103c5343c0aa11172efab5909972e1c343f597621e9ebac",
+    "STAGE-ROOT-SOURCE.py": "7dcc5d1640c74626908e33bb87adcf23e45671dc60fc7e67b1a6913a48cf352d",
+    "prepare_fresh_channel.py": "0c7815278cbc9a9b2762f6694a67e2daf3870d3fb0a228d60cf2b5ca2f807061",
+    "prepare_original_readback.py": "d1e23c5e7fcc8bf934c2540f3a009d4349e1eb48294e6cb9df485aaafd1e7cef"
+  },
+  "followupArgvPrepared": true,
+  "freshPrepared": true,
+  "frozenSource03Unchanged": true,
+  "futureCheckedAtOrAuthorityOrCIDFixture": false,
+  "old01ObserverUnchangedExceptNewKeyAndActualFuturePins": true,
+  "originalKeyReadonlyObserverTemplatePrepared": true,
+  "rootReadMaximumSeconds": 45,
+  "sourcePinsSha256": "3a773cb694af40439676c440d9039c07fdc3fbf4bfdaa083acc55a8e6b733019",
+  "state": "SOURCE03_ALL_LOCAL_CHANNELS_PREPARED_PENDING_MAIN_SAME_QB"
+}

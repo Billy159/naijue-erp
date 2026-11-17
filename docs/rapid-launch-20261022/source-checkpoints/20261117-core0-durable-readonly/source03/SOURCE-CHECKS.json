@@ -1,0 +1,35 @@
+{
+  "MainSevenParameterAPIAndSolePostValidationClockPreserved": true,
+  "actualBaseSha256": "45914df73ffcf2840df3e9d264654f64154ebb3a9d42805b74998caee812041f",
+  "actualLocalInterpreterFlagsOnly": {
+    "isolated": 1,
+    "no_site": 1
+  },
+  "argumentExpressionEvaluatedWithoutAuthorityOrJobSubmissionFixture": true,
+  "fixedSQLByteExactlyReused": true,
+  "futureAuthorityAndCID": null,
+  "issuerOrClockOrServerOrStageOrCASOrContainerOrPGOrSubmit": false,
+  "new02ActualArgvPrefix": [
+    "/usr/bin/python3",
+    "-I",
+    "-S"
+  ],
+  "old01ArgvPrefixStill": [
+    "/usr/bin/python3",
+    "-s"
+  ],
+  "old01MissingCleanupNotRequired": true,
+  "old01ModulePolicyAndFactoryConstantsPreserved": true,
+  "old108KeysPreservedNew02Appended": true,
+  "old58And45FullRangesRerun": false,
+  "preservedOld01FailedAndActualSafeProjection": "be9c9c6c8d74f5c363c9645fde1b775eb3a2b619a3a9e4c757f2935aaf72b6f7",
+  "scopeOnlyNecessaryIdentityAndHistoricalFactChanges": [
+    "admissionPolicyPath",
+    "containerName",
+    "priorDiagnostic01Failure",
+    "requestKey"
+  ],
+  "state": "SOURCE03_NEW02_ENTRY_CONTRACT_NARROW_CHECKS_ONLY",
+  "threeOriginalGuardsAndOldFunctionsPreservedExceptExactNewBranchAndArgv": true,
+  "workerIsolationRequirementRetained": true
+}

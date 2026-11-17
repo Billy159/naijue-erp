@@ -1,0 +1,1 @@
+Source03 current plan is HANDOFF.md. Source01/02 and the entry-only WIP are immutable history, not a runnable recovery of the spent01 key. Current Source03 uses the explicit Main02 key and actual45914 base; no runtime action performed.
