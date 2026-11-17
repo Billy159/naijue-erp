@@ -1,0 +1,56 @@
+{
+  "PGConnections": 0,
+  "actualPostWriterEvidenceRequired": true,
+  "archivesRebuiltRehashedOrExtracted": false,
+  "clockOrAuthorityIssued": false,
+  "executionReady": false,
+  "files": {
+    "FIXED-PROFILES.json": {
+      "bytes": 3745,
+      "sha256": "02d451e09db2b06839e9b1ad1a9d96f5c45eb0d4e6e04b0f4522b045770c831d"
+    },
+    "HANDOFF.md": {
+      "bytes": 6636,
+      "sha256": "c73a339802247b9dd65f5a8c3232956069f045d0e3c24e7b32c3f85e67b5026e"
+    },
+    "INTERFACE.SOURCE-ONLY.json": {
+      "bytes": 2182,
+      "sha256": "39c776c989bac1bc8745e9cac6f79abd91c25a54ede4ce801f0d7b68a9778321"
+    },
+    "KNOWN37-PATCH-PREVIEW.UNREGISTERED.py": {
+      "bytes": 47066,
+      "sha256": "dfdd5aeed97efc23ccb238837ae99aaa55530b8225f9f84776a18948e4fef1be"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 1311,
+      "sha256": "15ef663304524d2c1033ad74f5928d8aa9147bf2cddf1aec18a2d3b49dead630"
+    },
+    "REUSED-ARTIFACT-EVIDENCE.json": {
+      "bytes": 2213,
+      "sha256": "8e4e7bbb2fc047c68b9b707c864092cb0c28e64cc12e6e9f041d3804a4bb2080"
+    },
+    "check_source.py": {
+      "bytes": 5367,
+      "sha256": "d66878463353f5427b499187a05e0b9d30ec7a65a00a43bb892b958a6cf3be8f"
+    },
+    "issue_profile.py": {
+      "bytes": 9298,
+      "sha256": "89094f721e26b3700744c8b2f9040fe8c518564d7a36b5309d5ef7d75fb1fe8e"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 3748,
+      "sha256": "3dd07d209c4d9a9511469d8dbb9678b4908ef98a6ad145a215d5d106cb173af2"
+    },
+    "r3_two_fixed_artifact_admission.py": {
+      "bytes": 12648,
+      "sha256": "ab3a7dd9b55434268cf993c66868f1f344ab08361e13edbf6ca8fd7fc35b0c09"
+    }
+  },
+  "futureActualActiveBaseline": null,
+  "pairReviewSha256": "f1c250b87fd5d0b91c6eddff7898a6e8efc2c01e6102ed89e1a0350500c7275b",
+  "pairSourcePinsSha256": "2a8a9b55c9a2377ee85863b86c340d2109586caec35dbb776447fe114818948b",
+  "registrationCASPrepared": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE_FROZEN_TWO_FIXED_ARTIFACT_ADMISSION_NOT_REGISTERED"
+}

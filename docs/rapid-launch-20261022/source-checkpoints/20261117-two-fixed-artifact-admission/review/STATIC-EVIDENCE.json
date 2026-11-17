@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "archivesReadRehashedRebuiltOrExtracted": false,
+    "clockCalls": 0,
+    "futureAuthorityServiceClockProfileOrPositiveWriterFixtureCreated": false,
+    "issuerClientReaderCASReceiverOrRootPolicyInvoked": false,
+    "serverActions": 0
+  },
+  "actualExisting38DispatcherSha256": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c",
+  "actualProtectedPrefixLength": 101,
+  "checks": {
+    "Actual101PrefixPreservedAndExactlyFourAppended": true,
+    "ActualSigned38Dispatcher": true,
+    "AdapterNoSecondFlockOrPGImplementation": true,
+    "AllTenFrozenMembers": true,
+    "AllThreeActualGuardASTsPreserved": true,
+    "AlreadyPatchedSourceRefused": true,
+    "ExactFourConfigKeys": true,
+    "ExactSource": true,
+    "FutureBaselineAndProfileNotClaimed": true,
+    "ModuleExactlyTwoFixedProfiles": true,
+    "PrivatePriorReviewExact": true,
+    "ProducerNoSelfClockOrPGCalls": true,
+    "R3_ORIGINAL02_ABSENT_POLICY_SHA256Unchanged": true,
+    "R3_ORIGINAL02_ABSENT_SOURCE_SHA256Unchanged": true,
+    "RealFailed03CannotStandInForActualWriter": true,
+    "UnboundTransformNotExecutionReady": true,
+    "appReusedScopeAndBundleContracts": true,
+    "appScopeTimeout": true,
+    "pairReviewExact": true,
+    "pairSourceExact": true,
+    "privateReusedScopeAndBundleContracts": true,
+    "privateScopeTimeout": true
+  },
+  "meaning": "Pure in-memory patch of signed38 source; not post-writer baseline, profile, registered dispatcher or runtime admission.",
+  "transformedProfilePin": null,
+  "transformedProtectedCount": 105
+}

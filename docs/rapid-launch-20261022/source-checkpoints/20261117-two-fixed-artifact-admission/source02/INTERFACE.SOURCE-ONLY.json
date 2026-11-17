@@ -1,0 +1,43 @@
+{
+  "actualBaselineRequiredFields": [
+    "state=READONLY_POST_WRITER_ARTIFACT_BASELINE",
+    "grantId",
+    "checkedAtEpochMs",
+    "grantExpiresAtEpoch",
+    "dispatcherSha256",
+    "normalHelperSha256",
+    "normalPolicySha256",
+    "normalPhaseKeys {start,writer,stop,restore}",
+    "stoppedService",
+    "evidencePins {writerTerminal,writerResult,stopTerminal,stopResult,restoreTerminal,restoreResult,restoredReceipt,currentProof}",
+    "restoredReceiptPath",
+    "currentProofPath",
+    "fourKeysAbsent {four exact keys:true from actual readback}",
+    "PGStopped",
+    "noOtherOperationUnits",
+    "PGConnections=0",
+    "mutations=0",
+    "privateSnapshotBodiesOrDigestsRead=false"
+  ],
+  "actualRegistrationCAS": "NOT_PREPARED; bind only after actual post-writer baseline and its exact owner-controlled registration path are supplied",
+  "baselineMeaning": "Actual fresh post-writer success/readback plus STOP and exact original authentication restoration; no existing37 closed-but-unsubmitted-writer receipt can satisfy it",
+  "executionReady": false,
+  "existingPairSourcesAndReceiverOwner": "T45",
+  "finiteIssuanceOwner": "Main",
+  "fixedJobs": [
+    "t45-r3-final33-d728-artifact-policy-install-20261117-01",
+    "t45-r3-final33-d728-artifact-policy-restore-20261117-01",
+    "t45-r3-final33-recovery-artifact-policy-install-20261117-01",
+    "t45-r3-final33-recovery-artifact-policy-restore-20261117-01"
+  ],
+  "futureActualBaseline": null,
+  "futureAuthorityPins": null,
+  "futureDispatcherOrProfileSha256": null,
+  "historical37Preview": "KNOWN37-PATCH-PREVIEW.UNREGISTERED.py, profile pin None; source edit demonstration only, never register or execute",
+  "profileIssuer": "issue_profile.issue(starts_at,expires_at,decision_reference,authority_files,authority_pins,writer_file,writer_pin,stop_file,stop_pin,restore_file,restore_pin,baseline_file,baseline_pin,dispatcher_file,normal_policy_file,review_file,review_pin,output_directory)",
+  "rootSourceOwner": "D1",
+  "serverActions": 0,
+  "serverAndReceiverOwner": "T45",
+  "state": "SOURCE_INTERFACE_ONLY_ACTUAL_POST_WRITER_BASELINE_REQUIRED",
+  "times": "Explicit Main real times only, no self clock sampling"
+}

@@ -1,0 +1,44 @@
+{
+  "app": {
+    "archiveBytes": 7687919,
+    "archiveSha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f",
+    "localBuildReadyIsNotServerPayloadReady": true,
+    "nativeSourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+    "sourceCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0"
+  },
+  "archiveRehashedOrRebuiltOrExtracted": false,
+  "pairReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-artifact-policy-pair-review-01/RESULT.json",
+    "sha256": "f1c250b87fd5d0b91c6eddff7898a6e8efc2c01e6102ed89e1a0350500c7275b"
+  },
+  "pairSource": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-01/SOURCE-PINS.json",
+    "sha256": "2a8a9b55c9a2377ee85863b86c340d2109586caec35dbb776447fe114818948b"
+  },
+  "private": {
+    "actualPayloadBodiesRead": false,
+    "archive": {
+      "bytes": 40960,
+      "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+      "members": {
+        "AGGREGATE-READBACK-EXPECTATIONS.private.json": {
+          "bytes": 347,
+          "sha256": "12ed1911ab70edf9c567460cb793078b40c3de6e444263f215610206efd6c291"
+        },
+        "WAREHOUSE-KEY-EXPECTATIONS.private.json": {
+          "bytes": 27743,
+          "sha256": "9c68bbfdbf36ca8c2d84e3801fef1aa189d9d2f029ce4b25efa5c6fec29a7a79"
+        },
+        "app-readiness-owner.cjs": {
+          "bytes": 4431,
+          "sha256": "24a179568c89f3e40d94125cb8f89d02be09c0f1bba968b4ad083e28dfbab950"
+        }
+      },
+      "sha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d"
+    },
+    "priorReviewPath": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+    "priorReviewSha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+  },
+  "serverActions": 0,
+  "state": "REUSE_REVIEWED_EXACT_ARTIFACT_METADATA_ONLY"
+}

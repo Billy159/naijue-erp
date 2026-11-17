@@ -1,0 +1,85 @@
+{
+  "state": "SOURCE_PASS_TWO_FIXED_ARTIFACT_ADMISSION_ONLY_NOT_REGISTERED",
+  "sourceOnly": true,
+  "executionReady": false,
+  "registrationCASPrepared": false,
+  "actualPostWriterBaselineAvailableOrValidated": false,
+  "sourceSha256": "846aa1c8626d3a47cea3426a566e5e560e40f9a4ebea5c40040e62ef7266a662",
+  "reviewSha256": "7ecc9afd8c2e569c5e98abd4898f9f36fdfe5d5b86ad0e21a1b5966326117c09",
+  "actualArchiveOrPrivateBodyCopied": false,
+  "futureAuthoritiesOrBindingsCreated": false,
+  "copies": [
+    {
+      "path": "source02/SOURCE-PINS.json",
+      "sha256": "846aa1c8626d3a47cea3426a566e5e560e40f9a4ebea5c40040e62ef7266a662",
+      "bytes": 2003
+    },
+    {
+      "path": "source02/FIXED-PROFILES.json",
+      "sha256": "02d451e09db2b06839e9b1ad1a9d96f5c45eb0d4e6e04b0f4522b045770c831d",
+      "bytes": 3745
+    },
+    {
+      "path": "source02/HANDOFF.md",
+      "sha256": "c73a339802247b9dd65f5a8c3232956069f045d0e3c24e7b32c3f85e67b5026e",
+      "bytes": 6636
+    },
+    {
+      "path": "source02/INTERFACE.SOURCE-ONLY.json",
+      "sha256": "39c776c989bac1bc8745e9cac6f79abd91c25a54ede4ce801f0d7b68a9778321",
+      "bytes": 2182
+    },
+    {
+      "path": "source02/KNOWN37-PATCH-PREVIEW.UNREGISTERED.py",
+      "sha256": "dfdd5aeed97efc23ccb238837ae99aaa55530b8225f9f84776a18948e4fef1be",
+      "bytes": 47066
+    },
+    {
+      "path": "source02/LOCAL-CHECKS.json",
+      "sha256": "15ef663304524d2c1033ad74f5928d8aa9147bf2cddf1aec18a2d3b49dead630",
+      "bytes": 1311
+    },
+    {
+      "path": "source02/REUSED-ARTIFACT-EVIDENCE.json",
+      "sha256": "8e4e7bbb2fc047c68b9b707c864092cb0c28e64cc12e6e9f041d3804a4bb2080",
+      "bytes": 2213
+    },
+    {
+      "path": "source02/check_source.py",
+      "sha256": "d66878463353f5427b499187a05e0b9d30ec7a65a00a43bb892b958a6cf3be8f",
+      "bytes": 5367
+    },
+    {
+      "path": "source02/issue_profile.py",
+      "sha256": "89094f721e26b3700744c8b2f9040fe8c518564d7a36b5309d5ef7d75fb1fe8e",
+      "bytes": 9298
+    },
+    {
+      "path": "source02/patch_dispatcher.py",
+      "sha256": "3dd07d209c4d9a9511469d8dbb9678b4908ef98a6ad145a215d5d106cb173af2",
+      "bytes": 3748
+    },
+    {
+      "path": "source02/r3_two_fixed_artifact_admission.py",
+      "sha256": "ab3a7dd9b55434268cf993c66868f1f344ab08361e13edbf6ca8fd7fc35b0c09",
+      "bytes": 12648
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "7ecc9afd8c2e569c5e98abd4898f9f36fdfe5d5b86ad0e21a1b5966326117c09",
+      "bytes": 4638
+    },
+    {
+      "path": "review/STATIC-EVIDENCE.json",
+      "sha256": "4087d0c1650b63df6d831dc9132e2bcd96ca606663f91584eaf39f16ddfb727c",
+      "bytes": 1582
+    },
+    {
+      "path": "review/check_static.py",
+      "sha256": "42ca8ae1186aff9ee629ee5657db68c5c5d1bf255d1b1274451e94e2af7b5cc0",
+      "bytes": 6310
+    }
+  ],
+  "currentPrepare04": "FAILED_NO_WRITER",
+  "next": "D1 registration SOURCE WIP held for real prepare04 failure diagnosis. Actual artifact admission only after successful original writer, STOP, exact auth restore and fresh real postwriter basis; none of these future facts exist."
+}

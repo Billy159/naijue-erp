@@ -1,0 +1,48 @@
+{
+  "actions": {
+    "PGConnections": 0,
+    "archivesReadRehashedRebuiltOrExtracted": false,
+    "clockCalls": 0,
+    "futureAuthorityServiceClockProfileOrPositiveWriterFixtureCreated": false,
+    "issuerClientReaderCASReceiverOrRootPolicyInvoked": false,
+    "serverActions": 0
+  },
+  "actualPostWriterBaselineAvailableOrValidated": false,
+  "authorizationBoundary": "SOURCE-only review of the adapter/profile/patch. Does not authorize bypass of real post-writer closure, future actual baseline or controlled registration; no new user approval is requested by this report.",
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-fixed-artifact-admission-review-01/STATIC-EVIDENCE.json",
+    "sha256": "4087d0c1650b63df6d831dc9132e2bcd96ca606663f91584eaf39f16ddfb727c"
+  },
+  "executionReady": false,
+  "findings": [],
+  "registrationCASPrepared": false,
+  "runtimeStillRequired": [
+    "Actual successful original writer/readback, preservation STOP and exact RESTORE from the same current service. None is fabricated or assumed successful by this report.",
+    "Fresh T45 post-writer stopped baseline with exact dispatcher/helper/normal-policy hashes, identities, phase keys/service/eight evidence pins, four-key absence and original-lock/no-operations evidence. Current signed38 e46 source is only a source-patcher input, not that future baseline.",
+    "Owner-controlled registration using the complete existing shared-lock/CAS/exclusive backup/publication/readback protocol remains NOT_PREPARED and NOT_EXECUTED. This report does not make admission execution-ready.",
+    "Actual finite profile and original artifact-authority issuance and signed request/member/manifest/args checks before submission, followed by install/upload/READY readback and withdrawal.",
+    "No app publishing, business acceptance, package installation, private staging or server READY is established. Local app build READY is not server payload READY."
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-two-fixed-artifact-admission-source-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "846aa1c8626d3a47cea3426a566e5e560e40f9a4ebea5c40040e62ef7266a662",
+  "spec": {
+    "findings": [],
+    "scope": "Four exact keys, real post-writer typed receipts and fresh actual baseline required, same-C phase identity, original protected prefix and all three guards preserved"
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Fixed source delta, owner/data preservation, unchanged normal module/policy/role boundaries"
+  },
+  "state": "SOURCE_PASS_TWO_FIXED_ARTIFACT_ROOT_ADMISSION_ONLY",
+  "verifiedScope": [
+    "Ten frozen files exact; app/private profiles and reused code/scope metadata agree with accepted pair2a8/reviewf1c2 and private58fa evidence. No archive payload read, extraction, rebuild or rehash.",
+    "Exactly four fixed install/restore job keys; distinct app/private scope schemas and existing35-second timeout,1080000/600000ms window contracts preserved. No211 admission borrowing.",
+    "Explicit-time Main producer requires actual writer/STOP/RESTORE typed receipts plus fresh post-writer baseline, actual dispatcher/policy bytes, four unused keys and exact authority pins. Service and phase keys derive from actual normal policy and same-C receipts. Historical37 is reference only.",
+    "Writer requires COMPLETED, verification.state VERIFIED, native and readback connections CLOSED, lifecycle/binding confirmation and four cleanup booleans; genuine failed03 is rejected as a writer, without constructing any future successful receipt.",
+    "STOP matches actual writer service; restored original verifier/expiry requires exact restoration marker and cleanup, with natural expiry explicitly false. Runtime admission rereads pinned eight evidence objects and current physical stopped PGDATA/container identity.",
+    "Pure patcher tested in memory against actual signed38 dispatchere46f7579, preserving the full101-key prefix and appending only4 keys to105; all3 existing protection guard ASTs preserved, original helper/policy digest constants unchanged. Repatch refused.",
+    "Actual38 source transform used profile pin None and was not written as a runnable candidate. The known37 96-to100 preview is not claimed as current38 verification or runtime readiness.",
+    "Source syntax checked; reviewed one-branch wrapper delegates nonartifact admission/finish to original normal helper and uses existing scope binders/root policy. No new flock or PG implementation."
+  ]
+}

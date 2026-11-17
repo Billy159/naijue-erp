@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T10:25:25.594076+08:00",
+  "updatedAt": "2026-11-17T10:42:50.957750+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 unused PREPARE04 once via final2ca2 and real159d50 permit; native logical01/plan04. Require actual prepared/execution binding, CLOSED connection and cleanup before Main issues original never-submitted writer. Existing completed keys not replayed; no new checks or deadline extension.",
+  "next": "D1 minimal immutable lexical-scope correction for two catalog builders and exact affected free-identifier/diagnostic checks, plus real sourceSet/marker/catalog impact. Actual04 exception remains uncaptured; no false runtime cause claim. T45 no new server action/generation/clock/permit until reviewed exact successor. Preserve originalROOT06/input/catalog and failed04; writer never submitted/business0.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T10:25:25.594076+08:00",
+  "asOf": "2026-11-17T10:42:50.957750+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 unused PREPARE04 once via final2ca2 and real159d50 permit; native logical01/plan04. Require actual prepared/execution binding, CLOSED connection and cleanup before Main issues original never-submitted writer. Existing completed keys not replayed; no new checks or deadline extension.",
+  "next": "D1 minimal immutable lexical-scope correction for two catalog builders and exact affected free-identifier/diagnostic checks, plus real sourceSet/marker/catalog impact. Actual04 exception remains uncaptured; no false runtime cause claim. T45 no new server action/generation/clock/permit until reviewed exact successor. Preserve originalROOT06/input/catalog and failed04; writer never submitted/business0.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,15 +52789,15 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": true,
+  "newRolesApplied": false,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": false,
+  "PGCurrentlyStopped": true,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": false,
+  "originalAuthRestored": true,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53242,7 +53242,7 @@
     "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
     "automaticReplay": false
   },
-  "normal38": "START38_ACTUAL_SUCCESS_C05_NATIVE_SEARCH_CONFIRMED_PREPARE04_REAL_ISSUED_PENDING_ACTUAL",
+  "normal38": "NORMAL38_SAFELY_CLOSED_EXACT_AUTH_RESTORED_FAILED04_NATIVE_UNKNOWN_SOURCE_SCOPE_DEFECT_REPAIR_ONLY",
   "normal38SourceDecisionSha256": "fe13a24ab163b76493baa8797fb0807acea1c861010998850511a65b2fc0853c",
   "normal37PermissionFix": {
     "device": 66304,
@@ -53333,7 +53333,7 @@
     "stopped": true,
     "atUTC": "2026-11-17T02:11:53.756728+00:00"
   },
-  "PGCurrentState": "ACTUAL_START38_READONLY_READY_RUNNING",
+  "PGCurrentState": "ACTUAL_STOPPED_EXACT_AUTH_RESTORED_NO_ACTIVE_OPS",
   "normal38StartInProgress": {
     "observedAtUTC": "2026-11-17T02:16:43.832013+00:00",
     "observationSha256": "6b6c858195268833d26d7d7ea48c8691c76437ef3e53ab7a41baea4fce905b67",
@@ -53382,6 +53382,76 @@
     "nativeLogicalKey": "t45-r3-final33-plan-prepare-20261116-01",
     "privateContextSha256": "e6d6cab594aef34efcabc95dd640c1e2d738ddb0e86260af131ff95caf0d152f",
     "actualResult": "NOT_YET_RECEIVED"
+  },
+  "normal38ActualPrepare04": {
+    "sha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655",
+    "status": "FAILED",
+    "exitCode": 2,
+    "elapsedSeconds": 89.5689,
+    "finishedAtUTC": "2026-11-17T02:27:37.479949+00:00",
+    "terminalSha256": "96901db99ba450caf5d1f21c0421a50866c9eaf47d7cbd4a38beb8ac8e5a518c",
+    "resultSha256": "81d92aadb2f8b298660924b11fddbf8b074609f36d70e767860ef967f5f93bfa",
+    "nativeResultSha256": "58b7a16f6845dd552476a960c875c64b9d3b7e4e34a095ce9f2e234ce6a080a4",
+    "failureDiagnostic": {
+      "format": "FINAL33_FAILURE_DIAGNOSTIC_V1",
+      "stage": "PREPARE_CALL",
+      "errorType": "UNKNOWN",
+      "systemCode": "UNKNOWN",
+      "guardCode": "UNKNOWN",
+      "sqlstate": null
+    },
+    "nativeConnectionCleanup": "UNKNOWN",
+    "processReapedAuthorityRemovedScratchEmpty": true,
+    "reapedIsNotClosed": true,
+    "replayForbidden": true
+  },
+  "normal38StopIssued": {
+    "authoritySha256": "88292b378e464d61692b92f6a4f75f8d232075af23b6070bd4e57420b517d952",
+    "startsAt": 1794882714287,
+    "expiresAt": 1794883014287,
+    "actualResult": "NOT_YET_RECEIVED"
+  },
+  "normal38ActualStop": {
+    "sha256": "4bb2ffa20dd366c5e4d42f97ad9b1d385c511663c12189fa529ad4e6f195fdff",
+    "checkedAtUTC": "2026-11-17T02:35:13.648449+00:00",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 4.3689,
+    "PGStopped": true,
+    "DATAIdentityPreserved": true
+  },
+  "normal38RestoreIssued": {
+    "authoritySha256": "0bafc6bd34919e9cde5ac75a6998638f58854b75d51d3b68c45129edb9c6bb87",
+    "startsAt": 1794882957082,
+    "expiresAt": 1794883857082,
+    "actualResult": "NOT_YET_RECEIVED"
+  },
+  "normal38SafeClosure": {
+    "actualStopSha256": "4bb2ffa20dd366c5e4d42f97ad9b1d385c511663c12189fa529ad4e6f195fdff",
+    "actualRestoreSha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60",
+    "actualClosureSha256": "6f386c9ee462d58ee346e68f447377737bea562124be6ce6b50fb0e67652dab6",
+    "restoredSafeReceiptSha256": "ce98579474ee7adfff5a521f59d0e6e91e54eb964770f758a1dc695eb36c0f15",
+    "checkedAtUTC": "2026-11-17T02:39:09.191517+00:00",
+    "PGStopped": true,
+    "originalAuthAndExpiryRestored": true,
+    "naturalExpiryCountedAsRestoration": false,
+    "originalDATAAndC05Preserved": true
+  },
+  "normal38Defect": {
+    "kind": "LEXICAL_SCOPE_UNBOUND_TWO_CATALOG_BUILDERS",
+    "sameFailureProjection": true,
+    "actualOriginalThrowCaptured": false,
+    "owner": "D1",
+    "immutableFixAndImpactPending": true
+  },
+  "artifactAdmissionSourceOnly": {
+    "sourceSha256": "846aa1c8626d3a47cea3426a566e5e560e40f9a4ebea5c40040e62ef7266a662",
+    "reviewSha256": "7ecc9afd8c2e569c5e98abd4898f9f36fdfe5d5b86ad0e21a1b5966326117c09",
+    "actualCurrentDispatcherPurePrefixPreservation": "101_TO_105",
+    "executionReady": false,
+    "registrationCASPrepared": false,
+    "actualPostWriterBaselineAvailable": false,
+    "registrationSourceWIPHeldForFailureDiagnosis": true
   }
 }
 }

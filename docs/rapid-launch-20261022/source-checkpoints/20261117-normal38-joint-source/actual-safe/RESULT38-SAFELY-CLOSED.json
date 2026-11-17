@@ -1,0 +1,110 @@
+{
+  "APPChangedOrPublished": false,
+  "C05Preserved": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502393,
+    "mode": 456,
+    "slot": "C05",
+    "uid": 0
+  },
+  "PGStopped": true,
+  "activeOperationUnits": [],
+  "actualApply": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/apply/ACTUAL-APPLY38-RESULT.json",
+    "sha256": "41495cafbc1bb570087d727715b4e83993650cf13c92ee32bc921da03c38588b"
+  },
+  "actualFailedPrepare": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/prepare/ACTUAL-PREPARE04-FAILED-RESULT.json",
+    "sha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655"
+  },
+  "actualRestore": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/restore/ACTUAL-RESTORE38-RESULT.json",
+    "sha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60"
+  },
+  "actualStart": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/start/ACTUAL-START38-TERMINAL-RESULT.json",
+    "sha256": "6206d7a6b21885dc3c0d9b9f4872a3aa71bcf5690f31d4a3864eeb8a7f7177a0"
+  },
+  "actualStop": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL38-RUNTIME-01/stop/ACTUAL-STOP38-RESULT.json",
+    "sha256": "4bb2ffa20dd366c5e4d42f97ad9b1d385c511663c12189fa529ad4e6f195fdff"
+  },
+  "businessAccepted": false,
+  "cleanupOnlyComplete": true,
+  "dataDirectoryIdentity": {
+    "device": 66304,
+    "gid": 61035,
+    "inode": 13502421,
+    "mode": 448,
+    "uid": 61035
+  },
+  "exclusiveProcessReapedIsNotNativeClosed": true,
+  "failedPrepare04ConnectionCleanup": "UNKNOWN",
+  "failedPrepare04Diagnostic": {
+    "errorType": "UNKNOWN",
+    "format": "FINAL33_FAILURE_DIAGNOSTIC_V1",
+    "guardCode": "UNKNOWN",
+    "sqlstate": null,
+    "stage": "PREPARE_CALL",
+    "systemCode": "UNKNOWN"
+  },
+  "failedPrepare04NativeOutcome": "UNKNOWN",
+  "failedPrepare04NativeResultSha256": "58b7a16f6845dd552476a960c875c64b9d3b7e4e34a095ce9f2e234ce6a080a4",
+  "failedPrepare04ProcessCleanup": {
+    "childReaped": true,
+    "connectionCleanup": "REAPED_EXCLUSIVE_PROCESS",
+    "descendantsReaped": true,
+    "nativeAuthorityRemoved": true,
+    "originalInputMetadataChanges": 0,
+    "privateInitializer": null,
+    "requestKey": "t45-r3-final33-plan-prepare-20261116-04",
+    "scratchEmpty": true,
+    "scratchRetainedPrivately": false
+  },
+  "naturalExpiryCountedAsRestoration": false,
+  "noNewGenerationOrAuthority": true,
+  "originalTwoRoleAuthAndExpiryRestored": true,
+  "originalWriterKey": "t45-r3-batched-real-execute-20261115-01",
+  "originalWriterNeverSubmitted": true,
+  "portAbsent": true,
+  "replayForbidden": [
+    "used211",
+    "INPUT02",
+    "ROOT06",
+    "install32",
+    "catalog35",
+    "failed01",
+    "failed02",
+    "failed03",
+    "failed04",
+    "APPLY38",
+    "START38",
+    "STOP38",
+    "RESTORE38"
+  ],
+  "restoreContainer": {
+    "id": "6f769390304fdae9a34329b505d75b028570b85835b85ed1dbd1f8638b1857c3",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-ordinary38-auth-restore-20261116-01",
+    "pid": 0,
+    "running": false
+  },
+  "restoredSafeReceiptSha256": "ce98579474ee7adfff5a521f59d0e6e91e54eb964770f758a1dc695eb36c0f15",
+  "roleAuthority9419UsedAndRestoredNeverReuseOrExtend": true,
+  "rootInstalledRemains": {
+    "dispatcher": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c",
+    "helper": "3b7ebfcb95df010fdbd585b5551851cba6cd65953e54352ab25ee01bb3ec368d",
+    "policy": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e"
+  },
+  "runtimeAuthMembershipAttributesUnchanged": true,
+  "service38": {
+    "id": "4a2be3fca19bf1f46151c0271d5a0cb2cd10b280cd43c483e93d478be85f18d2",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-fresh35-first-production-20261110-r3-service-38",
+    "pid": 0,
+    "running": false
+  },
+  "sourceOnlyPassDoesNotEqualRuntimePrepareOrBusinessAcceptance": true,
+  "state": "NORMAL38_FAILED_PREPARE04_SAFELY_CLOSED_NO_REPLAY"
+}

@@ -489,23 +489,63 @@
       "path": "actual-safe/MAIN38-PREPARE04-ISSUED-METADATA.json",
       "sha256": "e790e6017e080a5507b306a03bda68f93583743a87ee766b915c9fb1f8d2d261",
       "bytes": 399
+    },
+    {
+      "path": "actual-safe/ACTUAL-PREPARE04-FAILED-RESULT.json",
+      "sha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655",
+      "bytes": 4055
+    },
+    {
+      "path": "actual-safe/ACTUAL-STOP38-BASIS.json",
+      "sha256": "3e94bee475a9b4b8100743cc81375d564e9f75693b80c8361d6828587478a2e1",
+      "bytes": 4760
+    },
+    {
+      "path": "actual-safe/MAIN38-STOP-ISSUED-METADATA.json",
+      "sha256": "2005794beec04a6ee542a9de659c63133ed2522e142f876d8013c0553f9a69d6",
+      "bytes": 410
+    },
+    {
+      "path": "actual-safe/ACTUAL-STOP38-RESULT.json",
+      "sha256": "4bb2ffa20dd366c5e4d42f97ad9b1d385c511663c12189fa529ad4e6f195fdff",
+      "bytes": 6451
+    },
+    {
+      "path": "actual-safe/MAIN38-RESTORE-ISSUED-METADATA.json",
+      "sha256": "99aec6625c95305e70b18ae003d1435c772bc04155a780b7ba370b6b71a884c9",
+      "bytes": 402
+    },
+    {
+      "path": "actual-safe/ACTUAL-RESTORE38-RESULT.json",
+      "sha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60",
+      "bytes": 5484
+    },
+    {
+      "path": "actual-safe/RESULT38-SAFELY-CLOSED.json",
+      "sha256": "6f386c9ee462d58ee346e68f447377737bea562124be6ce6b50fb0e67652dab6",
+      "bytes": 4721
+    },
+    {
+      "path": "actual-safe/NATIVE58B7-SAFE-PROJECTION.json",
+      "sha256": "95b55c81902973c71aeb936bf76f3caeab2882b1ce0b656a700aa4622c14c19f",
+      "bytes": 648
     }
   ],
   "sourceOnly": false,
   "privateAndAuthorityBodiesCopied": false,
   "subsetNote": "Static source and safe review evidence subset. UNISSUED JSON bodies are referenced only; not a replayable runtime capability package.",
-  "asOf": "2026-11-17T10:25:25.594076+08:00",
-  "state": "START38_ACTUAL_SUCCESS_C05_NATIVE_SEARCH_CONFIRMED_PREPARE04_REAL_ISSUED_PENDING_ACTUAL",
+  "asOf": "2026-11-17T10:42:50.957750+08:00",
+  "state": "NORMAL38_SAFELY_CLOSED_EXACT_AUTH_RESTORED_FAILED04_NATIVE_UNKNOWN_SOURCE_SCOPE_DEFECT_REPAIR_ONLY",
   "consumerSourcePinsSha256": "fb8f2e938e62902db3165ed792656eb5ebd3cd13c1dec093dde308e4d1a62aec",
   "rootSourcePinsSha256": "6590c4bfd1bbbf1f370da7b9181119b1ea9dc1f1ac5a73f267753150f07b5ff7",
   "consumerReviewSha256": "0653f28262f6eaa6860cae236815f2e82c4c4711dc06be084f33920d14c48cc7",
   "rootReviewSha256": "ee0053ef2d527947f706fc8f5b700865eaf8b059a1d724d3eff4e38ae787d3fd",
-  "rolesApplied": true,
-  "PGStopped": false,
-  "originalAuthenticationRestored": false,
+  "rolesApplied": false,
+  "PGStopped": true,
+  "originalAuthenticationRestored": true,
   "businessWriterSubmitted": false,
   "businessWrites": 0,
-  "next": "T45 unused PREPARE04 once via final2ca2 and real159d50 permit; native logical01/plan04. Require actual prepared/execution binding, CLOSED connection and cleanup before Main issues original never-submitted writer. Existing completed keys not replayed; no new checks or deadline extension.",
+  "next": "D1 minimal immutable lexical-scope correction for two catalog builders and exact affected free-identifier/diagnostic checks, plus real sourceSet/marker/catalog impact. Actual04 exception remains uncaptured; no false runtime cause claim. T45 no new server action/generation/clock/permit until reviewed exact successor. Preserve originalROOT06/input/catalog and failed04; writer never submitted/business0.",
   "staticPatchBodyOmittedOriginalHashRetainedInSourceManifest": true,
   "main38IssuedMetadataSha256": "282b7ad15fbb22952d9839192aee4a9ed4fe8932e50d279279a57ab088764879",
   "main38FiniteIssued": true,
@@ -528,5 +568,32 @@
   "privateContextSha256": "e6d6cab594aef34efcabc95dd640c1e2d738ddb0e86260af131ff95caf0d152f",
   "privateContextBodyCopied": false,
   "prepare04AuthoritySha256": "159d50cb392088ca1513c553995375f28765f815291a8104134e4ac778bfc0e0",
-  "prepare04ActualResult": "NOT_YET_RECEIVED"
+  "prepare04ActualResult": "FAILED",
+  "actualPrepare04Sha256": "6cdb346addd81ae0725756e36b745e47f863eb21589b91fdd58d41ab934e9655",
+  "prepare04FailureDiagnostic": {
+    "format": "FINAL33_FAILURE_DIAGNOSTIC_V1",
+    "stage": "PREPARE_CALL",
+    "errorType": "UNKNOWN",
+    "systemCode": "UNKNOWN",
+    "guardCode": "UNKNOWN",
+    "sqlstate": null
+  },
+  "nativeOutcome": "UNKNOWN",
+  "nativeConnectionCleanup": "UNKNOWN",
+  "connectionCleanupClaim": "REAPED_EXCLUSIVE_PROCESS_NOT_CLOSED",
+  "stop38AuthoritySha256": "88292b378e464d61692b92f6a4f75f8d232075af23b6070bd4e57420b517d952",
+  "actualStop38Sha256": "4bb2ffa20dd366c5e4d42f97ad9b1d385c511663c12189fa529ad4e6f195fdff",
+  "restore38AuthoritySha256": "0bafc6bd34919e9cde5ac75a6998638f58854b75d51d3b68c45129edb9c6bb87",
+  "actualRestore38Sha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60",
+  "actualSafeClosure38Sha256": "6f386c9ee462d58ee346e68f447377737bea562124be6ce6b50fb0e67652dab6",
+  "restored38SafeReceiptSha256": "ce98579474ee7adfff5a521f59d0e6e91e54eb964770f758a1dc695eb36c0f15",
+  "newGenerationOrAuthorityIssued": false,
+  "sourceDefect": {
+    "kind": "LEXICAL_SCOPE_UNBOUND_TWO_CATALOG_BUILDERS",
+    "sameFailureProjection": true,
+    "actualOriginalThrowCaptured": false,
+    "owner": "D1",
+    "immutableFixAndImpactPending": true
+  },
+  "nativeProducerDiagnosticAlreadyUnknownSha256": "95b55c81902973c71aeb936bf76f3caeab2882b1ce0b656a700aa4622c14c19f"
 }
