@@ -1,0 +1,19 @@
+{
+  "state": "ORIGINAL45_HARD_AUTH_RESTORATION_DEADLINE_MISSED_NOT_REWRITTEN",
+  "observedAtUTC": "2026-11-17T21:41:33.852982+00:00",
+  "originalHardEpochMs": 1794951598808,
+  "originalHardCST": "2026-11-18T05:39:58.808+08:00",
+  "originalHardMet": false,
+  "originalRestore45AuthorityIssued": false,
+  "originalStop45PASSClaimed": false,
+  "actualGuardianCleanStopSnapshotSha256": "600f80aedf0536f5092d4cb4f7ff9670de4dad82f41d6968c6b8c99051f7604f",
+  "guardianCleanupSha256": "43f215a347cbeb2a31221b6d5406bfc5679acac2f40af7e3decd7e807a419efe",
+  "lastActualC45StoppedPID0PGDataPIDAbsentConfirmed": true,
+  "originalAuth45RestorationConfirmed": false,
+  "naturalExpiryCountedAsRestoration": false,
+  "businessCommitState": "UNKNOWN",
+  "dataAndOriginalInputsPreserved": true,
+  "successorScopeSha256": "6cd0482137c2d8516a60464d0ecbac9f21dab8a35ce7832dbd8195f86536c364",
+  "successorScope": "Restore-only using actually successful rollback02 mechanism with true45 guardian closure and original snapshots; separate real bounded recovery clock after exact source review/fresh, no apply/finite renewal/business writes/sourceplan or APP changes.",
+  "laterRecoveryCannotChangeOriginalHardMet": true
+}

@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T20:37:57.320580+00:00",
+  "updatedAt": "2026-11-17T21:47:19.332045+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
+  "next": "Only priority: original-auth45 guardian-bound restore-only successor (key t45-r3-original-auth45-guardian-restore-20261118-01), reuse proven rollback02 engine under scope6cd, Root142to143 preserving142/3guards; exact consumer4cb/source Root+necessary QA then actual closed-state/snapshot metadata fresh and one real900s recovery window. No apply/finite renewal/business writes/old key replay or fake Stop PASS. Original45 hard05:39:58.808 missed permanently; actual C45 guardian-clean stopped600f/43f2/data preserved, old Stop45 absent. Business commit UNKNOWN, native unconfirmed fallback; preserve all possible writes and original44910/IDs. After exact auth restore, original durable businessRoot readonly evidence required before any resume/import/APP/opening. Never assume0writes/rollback or change old deadline.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T20:37:57.320580+00:00",
-  "state": "NORMAL45_ORIGINAL_WRITER_IN_FLIGHT_OUTCOME_UNKNOWN",
+  "asOf": "2026-11-17T21:47:19.332045+00:00",
+  "state": "NORMAL45_FAILED_GUARDIAN_CLEAN_STOP_AUTH_PENDING_OLD_HARD_MISSED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
+  "next": "Only priority: original-auth45 guardian-bound restore-only successor (key t45-r3-original-auth45-guardian-restore-20261118-01), reuse proven rollback02 engine under scope6cd, Root142to143 preserving142/3guards; exact consumer4cb/source Root+necessary QA then actual closed-state/snapshot metadata fresh and one real900s recovery window. No apply/finite renewal/business writes/old key replay or fake Stop PASS. Original45 hard05:39:58.808 missed permanently; actual C45 guardian-clean stopped600f/43f2/data preserved, old Stop45 absent. Business commit UNKNOWN, native unconfirmed fallback; preserve all possible writes and original44910/IDs. After exact auth restore, original durable businessRoot readonly evidence required before any resume/import/APP/opening. Never assume0writes/rollback or change old deadline.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55114,6 +55114,31 @@
     "platformGoalStatusLastObserved": "blocked",
     "authorizedTaskContinues": true,
     "next": "Track only existing writer45 key t45-r3-batched-real-after44-execute-20261118-01 and unit4276fdf91fca until genuine settled outcome; no replay/new key. Queue accepted and unitactive7a5f, no terminal/result yet; business writes and commit unknown, do not use earlier pre-root observation as current no-writes evidence. Then exact Stop45/Restore45 with original verifier+expiry readback before hard2026-11-18T05:39:58.808+08. Controller05:24:58.808/admin05:26:58.808. Preserve original44910/IDs/SQL42/APP and any staged data. No public APP deployment/opening yet.",
+    "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+  },
+  "normal45FailedGuardianClosure": {
+    "state": "NORMAL45_FAILED_GUARDIAN_CLEAN_STOP_AUTH_PENDING_OLD_HARD_MISSED",
+    "asOf": "2026-11-17T21:47:19.332045+00:00",
+    "rootCurrent": 142,
+    "rootCandidate": 143,
+    "PGCurrentlyStopped": true,
+    "lastActualClosedSnapshotUTC": "2026-11-17T21:31:49.959310+00:00",
+    "originalAuthRestorationFor45Confirmed": false,
+    "original45HardMet": false,
+    "naturalExpiryCountedAsRestoration": false,
+    "stop45PASSClaimed": false,
+    "writer45Status": "FAILED2_NATIVE_UNCONFIRMED",
+    "businessCommitState": "UNKNOWN",
+    "zeroWritesOrRollbackClaimed": false,
+    "incidentSha256": "4bc619182808d1b92ccfbc8f37e87f0279fb6878d8816d4d1222f274b891a726",
+    "newRestoreOnlyWindowIssued": false,
+    "sourceRecoveryScopeSha256": "6cd0482137c2d8516a60464d0ecbac9f21dab8a35ce7832dbd8195f86536c364",
+    "SQLUpgrade42Completed": true,
+    "businessImportCompleted": false,
+    "APPDeployedOrPublicBusinessOpened": false,
+    "platformGoalStatusLastObserved": "blocked",
+    "authorizedTaskContinues": true,
+    "next": "Only priority: original-auth45 guardian-bound restore-only successor (key t45-r3-original-auth45-guardian-restore-20261118-01), reuse proven rollback02 engine under scope6cd, Root142to143 preserving142/3guards; exact consumer4cb/source Root+necessary QA then actual closed-state/snapshot metadata fresh and one real900s recovery window. No apply/finite renewal/business writes/old key replay or fake Stop PASS. Original45 hard05:39:58.808 missed permanently; actual C45 guardian-clean stopped600f/43f2/data preserved, old Stop45 absent. Business commit UNKNOWN, native unconfirmed fallback; preserve all possible writes and original44910/IDs. After exact auth restore, original durable businessRoot readonly evidence required before any resume/import/APP/opening. Never assume0writes/rollback or change old deadline.",
     "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
   }
 }

@@ -1,0 +1,40 @@
+{
+  "state": "AUTHORIZE_MINIMAL_SOURCE_ONLY_ORIGINAL_AUTH45_RESTORE_FROM_REAL_GUARDIAN_EXPIRY",
+  "authorityBasis": "Existing human standing ERP operational and similar-action authorization; required original-auth restoration after actual45 failed import, not a new human approval message.",
+  "key": "t45-r3-original-auth45-guardian-restore-20261118-01",
+  "rootBefore": 142,
+  "rootAfter": 143,
+  "actualBeforeDispatcherSha256": "a19591c74163d6b94afd12b4f165f481adb3fbf92c3bb25e7e3c0a4ecfa0cc52",
+  "actualBeforeModuleSha256": "1e4cbc156bf02eccb6af8da38774825630ebfc782b4d6c15d63011b1e254670a",
+  "actualBeforePolicySha256": "13116146bec4db2186847f02ff4791a8e5c39aced50d9482a130245f38fbc6d0",
+  "mechanism": "Reuse actually successful original-auth41 rollback02 source and corrected publicproof readFalse guard, private snapshots unchanged strict guards; narrowly bind45 actual original snapshots/roles/target/guardian. T45 consumer/serverowner, D1 Root/Main/CAS, necessary bounded delta review only.",
+  "actualClosure": {
+    "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-EXECUTION-PREPARATION-01/runtime/stop/ACTUAL-FIXED45-CLOSURE-SNAPSHOT.PRIVATE.json",
+    "sha256": "600f80aedf0536f5092d4cb4f7ff9670de4dad82f41d6968c6b8c99051f7604f",
+    "checkedAtUTC": "2026-11-17T21:31:49.959310+00:00",
+    "guardianSha256": "43f215a347cbeb2a31221b6d5406bfc5679acac2f40af7e3decd7e807a419efe",
+    "guardianReason": "NORMAL_FINITE_SERVICE_OR_CAPACITY_EXPIRED",
+    "containerId": "a8a29eb7604992be310e4f23b5aa43e064acb52298bd150df49bfc66db20d127",
+    "proofSha256": "28a7657bc2f5b5ffcb189f3031a73786f5ba2f6e33d7c6630c8b3012401d2e00",
+    "actualStoppedPID0PGPIDAbsentDataIdentityVerified": true,
+    "cleanShutdownDataPreservedNoActiveOps": true,
+    "stop45TerminalAndResultPresent": false
+  },
+  "reasonForSuccessor": "Successful Start45 cannot be misrepresented as failed/unsubmitted start; original Main8 service-present restore requires real Stop COMPLETED0, while actualStop absent and guardian-expiry clean-stop genuine. Use existing legitimate restore-only route, no fake evidence or old key replay.",
+  "originalHardRestoreCST": "2026-11-18T05:39:58.808+08:00",
+  "originalHardDeadlineHonesty": "Keep original hard deadline and record actual final restoration time. If missed, originalHardMet=false forever; a separately actual-issued new bounded15min recovery window is not a changed or met original deadline.",
+  "proposedRecoveryWindowSeconds": 900,
+  "maximumWorkerSeconds": 300,
+  "minimumAvailableBytes": 30064771072,
+  "scope": "Only restore original two system-role verifier+expiry from unchanged private45 snapshots on same stopped PGDATA; privately verify exact original fields and unchanged role attrs/memberships/runtime auth, reap own helper container and leave original PG stopped. Preserve all possible committed/staged business data and original inputs.",
+  "forbidden": [
+    "No new finite login application or renewal",
+    "No data import/resume/replay, business SQL, dump, backup, APP change, sourceplan compile, public opening, truncation/deletion/rebuild",
+    "No fake Stop45 PASS, start-failed claim or natural expiry as restore",
+    "No new SSH/executor/hostkey bypass/password fallback; only original recovered private management channel",
+    "No credential/auth snapshot bodies or verifier digests in public/Git"
+  ],
+  "sourceOnlyNow": true,
+  "runtimeClockAUTHCASOrNewJobAuthorizedNow": false,
+  "runtimeRequires": "Exact frozen minimal worker+Root delta and necessary actual closed-state/snapshot metadata readback, then Main real bounded recovery clock/AUTH/CAS; no future positive fixture or old authority rewrite."
+}

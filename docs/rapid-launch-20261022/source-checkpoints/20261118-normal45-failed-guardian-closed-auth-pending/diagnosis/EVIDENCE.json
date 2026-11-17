@@ -1,0 +1,38 @@
+{
+  "state": "SOURCE_AND_STORED_RECEIPT_ONLY_NATIVE_OUTCOME_UNKNOWN",
+  "files": {
+    "host": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-EXECUTION-CONSUMER-01/writer/bundle/final33_host.py",
+      "sha256": "db2c2f278ffd3d3be0365e8081c17ff83532c9eeb6686ad4b6e13adb7eab18f6"
+    },
+    "runner": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-EXECUTION-CONSUMER-01/writer/bundle/final33-run.mjs",
+      "sha256": "4123a6d98a1beced8070f6a20d03967dae2e17d095a22ee53890dd81e24f9575"
+    },
+    "actual_safe_readback03": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-EXECUTION-PREPARATION-01/runtime/writer/SAFE-WRITER45-READBACK-03.PRIVATE.json",
+      "sha256": "0b7626f2710da365878ee2d121bfb7eb8c457b91cb0cd4752b47ad928f38eaf9"
+    },
+    "static_binder": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-STATIC-ADAPTER-SOURCE-01/bind_actual45_context.py",
+      "sha256": "467a90c6995df9c0d86566bbcec829fa03d624e8dfaedbced97a9c0f32cdb893"
+    },
+    "static_wrong_named_template": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-STATIC-ADAPTER-SOURCE-01/read_stop_basis44.template.py",
+      "sha256": "5a6df3c1512d76faa2453f6d1b77baa79d6cee539c4f157ad903d1a192f5a463"
+    },
+    "consumer_correct_template": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-FULL-DATA-CONTINUATION-SOURCE-01/read_stop_basis45.template.py",
+      "sha256": "5a6df3c1512d76faa2453f6d1b77baa79d6cee539c4f157ad903d1a192f5a463"
+    }
+  },
+  "fallbackFromActualSourceSha256": "03721ee4b2623b92207b57a71b410e87af6677f31e238a42a1552ea8364b4085",
+  "actualPublicNativeResultSha256": "03721ee4b2623b92207b57a71b410e87af6677f31e238a42a1552ea8364b4085",
+  "staticExpectedTemplate45Exists": false,
+  "serverActions": 0,
+  "PGConnections": 0,
+  "NodeRuns": 0,
+  "factoryCalls": 0,
+  "credentialOrInitializerOrSQLiteOrBusinessBodiesRead": false,
+  "existingSourceChanges": 0
+}

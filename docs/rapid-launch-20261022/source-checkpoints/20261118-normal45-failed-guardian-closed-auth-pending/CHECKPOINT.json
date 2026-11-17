@@ -1,0 +1,57 @@
+{
+  "state": "NORMAL45_FAILED_GUARDIAN_CLEAN_STOP_AUTH_PENDING_OLD_HARD_MISSED",
+  "asOf": "2026-11-17T21:47:19.332045+00:00",
+  "rootCurrent": 142,
+  "rootCandidate": 143,
+  "PGCurrentlyStopped": true,
+  "lastActualClosedSnapshotUTC": "2026-11-17T21:31:49.959310+00:00",
+  "originalAuthRestorationFor45Confirmed": false,
+  "original45HardMet": false,
+  "naturalExpiryCountedAsRestoration": false,
+  "stop45PASSClaimed": false,
+  "writer45Status": "FAILED2_NATIVE_UNCONFIRMED",
+  "businessCommitState": "UNKNOWN",
+  "zeroWritesOrRollbackClaimed": false,
+  "incidentSha256": "4bc619182808d1b92ccfbc8f37e87f0279fb6878d8816d4d1222f274b891a726",
+  "newRestoreOnlyWindowIssued": false,
+  "sourceRecoveryScopeSha256": "6cd0482137c2d8516a60464d0ecbac9f21dab8a35ce7832dbd8195f86536c364",
+  "SQLUpgrade42Completed": true,
+  "businessImportCompleted": false,
+  "APPDeployedOrPublicBusinessOpened": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "Only priority: original-auth45 guardian-bound restore-only successor (key t45-r3-original-auth45-guardian-restore-20261118-01), reuse proven rollback02 engine under scope6cd, Root142to143 preserving142/3guards; exact consumer4cb/source Root+necessary QA then actual closed-state/snapshot metadata fresh and one real900s recovery window. No apply/finite renewal/business writes/old key replay or fake Stop PASS. Original45 hard05:39:58.808 missed permanently; actual C45 guardian-clean stopped600f/43f2/data preserved, old Stop45 absent. Business commit UNKNOWN, native unconfirmed fallback; preserve all possible writes and original44910/IDs. After exact auth restore, original durable businessRoot readonly evidence required before any resume/import/APP/opening. Never assume0writes/rollback or change old deadline.",
+  "copies": [
+    {
+      "originalPath": "actual-safe/INCIDENT-SAFE.json",
+      "storedPath": "actual-safe/INCIDENT-SAFE.json",
+      "sha256": "4bc619182808d1b92ccfbc8f37e87f0279fb6878d8816d4d1222f274b891a726",
+      "bytes": 3013
+    },
+    {
+      "originalPath": "main/ORIGINAL-HARD-DEADLINE-MISSED.json",
+      "storedPath": "main/ORIGINAL-HARD-DEADLINE-MISSED.json",
+      "sha256": "512e841e06422407e80d31747bb0d323e6687e6287278e94634e3d2eeebb9eb1",
+      "bytes": 1196
+    },
+    {
+      "originalPath": "main/RECOVERY-SOURCE-SCOPE.json",
+      "storedPath": "main/RECOVERY-SOURCE-SCOPE.json",
+      "sha256": "6cd0482137c2d8516a60464d0ecbac9f21dab8a35ce7832dbd8195f86536c364",
+      "bytes": 3703
+    },
+    {
+      "originalPath": "diagnosis/FINDING.md",
+      "storedPath": "diagnosis/FINDING.md",
+      "sha256": "274fe23d9ba4e42a1c120138fa9085e41b681301abfbd5fcfa994a6f06791ea2",
+      "bytes": 6745
+    },
+    {
+      "originalPath": "diagnosis/EVIDENCE.json",
+      "storedPath": "diagnosis/EVIDENCE.json",
+      "sha256": "260c1200c36583372c3266cd759cc08a8d804610b6a90656249bc94adb35c0a5",
+      "bytes": 2637
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}
