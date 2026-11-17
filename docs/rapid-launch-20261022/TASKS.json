@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T14:00:53.739158+08:00",
+  "updatedAt": "2026-11-17T14:30:31.782672+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "T45 actual sameC STOP39 evidence then Main original finite STOP/RESTORE issuance; preserve entire failed original writer/native/plan/durable state. No replay/new-key reimport or APP operation. Bounded original native structured diagnostic/durable file evidence only; no new PG query yet.",
+  "next": "Only bounded existing C39 PG-log enum/SQLSTATE projection and readonly SQLite plan schema metadata via T45; D1 source analysis. PG stopped/originalauth restored. Preserve failed original writer/data/plan; never replay/new-key blindly import. Actual durable evidence and specific failure cause needed before controlled recovery.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T14:00:53.739158+08:00",
+  "asOf": "2026-11-17T14:30:31.782672+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "T45 actual sameC STOP39 evidence then Main original finite STOP/RESTORE issuance; preserve entire failed original writer/native/plan/durable state. No replay/new-key reimport or APP operation. Bounded original native structured diagnostic/durable file evidence only; no new PG query yet.",
+  "next": "Only bounded existing C39 PG-log enum/SQLSTATE projection and readonly SQLite plan schema metadata via T45; D1 source analysis. PG stopped/originalauth restored. Preserve failed original writer/data/plan; never replay/new-key blindly import. Actual durable evidence and specific failure cause needed before controlled recovery.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52789,15 +52789,15 @@
     "startActualFailureSha256": "9e2a0abb672daff71941282dd43f7683e92b31c29401dc8d45c5b6d54115a202",
     "restoreActualFailureSha256": "112cababb9cb9a080e8bcc3ea61db5614ffb5aff8e7197f4af0c1ae4c6abee16"
   },
-  "newRolesApplied": true,
+  "newRolesApplied": false,
   "PGStartedSince32": true,
   "physicalRestoreExpectations": "QB_SOURCE_PASS_c350c8b2_NO_ACTUAL_CLONE",
-  "PGCurrentlyStopped": false,
+  "PGCurrentlyStopped": true,
   "actualCurrentFailureCheckpoint": "/Users/billy/.codex/worktrees/erp-0448z-integration/erp-e5c5a762-cleaning-20261102/docs/rapid-launch-20261022/source-checkpoints/20261117-prepare35-failure-and-safe-closure/CHECKPOINT.json",
   "nativePreparation": "ACTUAL_FAILED_UNKNOWN_09A5_OLD_KEY_NEVER_REPLAY",
   "catalogSuccessor": "ACTUAL_COMMITTED_AND_READ_BACK_4691",
   "finiteAuthPreviouslyApplied": true,
-  "originalAuthRestored": false,
+  "originalAuthRestored": true,
   "actualRestoration": {
     "elapsedSeconds": 8.496592034993228,
     "exitCode": 0,
@@ -53333,7 +53333,7 @@
     "stopped": true,
     "atUTC": "2026-11-17T02:11:53.756728+00:00"
   },
-  "PGCurrentState": "ACTUAL_START39_READONLY_READY_RUNNING",
+  "PGCurrentState": "STOP39_AND_EXACT_ORIGINAL_AUTH_RESTORE39_CONFIRMED",
   "normal38StartInProgress": {
     "observedAtUTC": "2026-11-17T02:16:43.832013+00:00",
     "observationSha256": "6b6c858195268833d26d7d7ea48c8691c76437ef3e53ab7a41baea4fce905b67",
@@ -53461,7 +53461,18 @@
       "futurePostWriterBaseline": null,
       "serverExecution": false,
       "old846ReviewPreserved": true,
-      "private244bUnchanged": true
+      "private244bUnchanged": true,
+      "supersededBySourcePinsSha256": "7e86f50e2b916e6cab8357255dc8f75e8f00907fb29e09747bfa8874887e3535"
+    },
+    "a7Successor": {
+      "state": "APP_A7_FIXED_ARTIFACT_PAIRED_SOURCE_PASS_RUNTIME_BLOCKED_ACTUAL_WRITER_FAILED",
+      "sourcePinsSha256": "7e86f50e2b916e6cab8357255dc8f75e8f00907fb29e09747bfa8874887e3535",
+      "pairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+      "reviewSha256": "e62ba979a6be3666fd0f54264bbdff0ac68500ea7b385a0e913d0fc9f6fb7196",
+      "consumerReviewSha256": "325bb997d01032d549ef2943de94b03334b1adb718e76da812e8b89dbe63b2e6",
+      "executionReady": false,
+      "actualProfileIssued": false,
+      "actualRegistration": false
     }
   },
   "lexicalFixSourceOnly": {
@@ -53575,7 +53586,7 @@
     "originalAuthRestored": true,
     "noActiveOperation": true
   },
-  "normal39": "REAL_WRITER_FAILED_ROLLED_BACK_PRIOR_BATCH_COMMITS_UNKNOWN_STOP_RESTORE_PENDING",
+  "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
     "dispatcherSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
@@ -53625,7 +53636,10 @@
     "applyFinishedAtUTC": "2026-11-17T05:30:38.756707+00:00",
     "applyCheckedAtUTC": "2026-11-17T05:33:13.399308+00:00",
     "applyElapsedSeconds": 7.690823742,
-    "currentOriginalAuthenticationRestored": false
+    "currentOriginalAuthenticationRestored": true,
+    "restored": true,
+    "actualRestoreSha256": "35faee2f3949882106463abb976d878859a49c1d0c0d7304dd7b20a1cd256d6c",
+    "naturalExpiryCountedAsRestoration": false
   },
   "newDatabaseRolesCreated": 0,
   "normal39ActualStart": {
@@ -53729,7 +53743,23 @@
       "scratchEmpty": true,
       "scratchRetainedPrivately": false
     },
-    "originalKeyMustNotReplay": true
+    "originalKeyMustNotReplay": true,
+    "actualClosedResultSha256": "b8b2eb66f0d79d39a5a07aaa7afd56eb0d83d00efd465197e50e2a379a0be8f5",
+    "actualNativeDiagnosticProjectionSha256": "752b9d6ed15f05fcc852ce06c56b94b2bd6c6f32bb8909aa3e215460f9d98e9f",
+    "actualNativeStage": "APPLY",
+    "actualCompletedBatches": 0,
+    "actualSkippedBatches": 0,
+    "actualSubBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
+    "counter0NotDatabase0WriteProof": true,
+    "originalErrorNotRetained": true
+  },
+  "normal39Stop": {
+    "actualResultSha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "elapsedSeconds": 4.748562,
+    "checkedAtUTC": "2026-11-17T06:17:31.301697+00:00",
+    "dataAndFailedWriterRecordsPreserved": true
   }
 }
 }

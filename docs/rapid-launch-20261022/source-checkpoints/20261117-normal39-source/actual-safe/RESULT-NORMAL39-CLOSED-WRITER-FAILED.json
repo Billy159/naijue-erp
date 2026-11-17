@@ -1,0 +1,120 @@
+{
+  "APPServerActions": 0,
+  "businessAcceptanceClaimed": false,
+  "checkedAtUTC": "2026-11-17T06:25:48.040374+00:00",
+  "diagnosticEvidence": {
+    "nativeResultProjection": {
+      "businessReady": {
+        "allowlisted": true,
+        "present": true,
+        "type": "bool",
+        "value": false
+      },
+      "completedBatches": {
+        "allowlisted": true,
+        "present": true,
+        "type": "int",
+        "value": 0
+      },
+      "skippedBatches": {
+        "allowlisted": true,
+        "present": true,
+        "type": "int",
+        "value": 0
+      },
+      "stage": {
+        "allowlisted": true,
+        "present": true,
+        "type": "str",
+        "value": "APPLY"
+      },
+      "state": {
+        "allowlisted": true,
+        "present": true,
+        "type": "str",
+        "value": "ROLLED_BACK"
+      },
+      "subBatchId": {
+        "allowlisted": true,
+        "present": true,
+        "type": "str",
+        "value": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115"
+      }
+    },
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/WRITER39-READONLY-DIAGNOSTIC-01/ACTUAL-NATIVE-RESULT-PROJECTION.json",
+    "sha256": "752b9d6ed15f05fcc852ce06c56b94b2bd6c6f32bb8909aa3e215460f9d98e9f",
+    "topFieldSchema": {
+      "connectionCleanup": {
+        "present": true,
+        "type": "str"
+      },
+      "failureDiagnostic": {
+        "present": false,
+        "type": "ABSENT"
+      },
+      "readbackConnectionCleanup": {
+        "present": false,
+        "type": "ABSENT"
+      },
+      "safeCode": {
+        "present": false,
+        "type": "ABSENT"
+      },
+      "sqlstate": {
+        "present": false,
+        "type": "ABSENT"
+      },
+      "state": {
+        "present": true,
+        "type": "str"
+      },
+      "verification": {
+        "present": false,
+        "type": "ABSENT"
+      }
+    }
+  },
+  "evidence": {
+    "prepare": {
+      "exitCode": 0,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/prepare/READBACK-03.json",
+      "requestKey": "t45-r3-final33-plan-prepare-20261116-05",
+      "sha256": "6d5ebd8d4cc284aa020c1a5b155aa04f1daab0bb8c1cb05c92404c13cda741d5",
+      "status": "COMPLETED"
+    },
+    "restore": {
+      "exitCode": 0,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/restore/ACTUAL-RESTORE39-TERMINAL-RESULT.json",
+      "requestKey": "t45-r3-ordinary39-auth-restore-20261116-01",
+      "sha256": "35faee2f3949882106463abb976d878859a49c1d0c0d7304dd7b20a1cd256d6c",
+      "status": "COMPLETED"
+    },
+    "stop": {
+      "exitCode": 0,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/stop/ACTUAL-STOP39-TERMINAL-RESULT.json",
+      "requestKey": "t45-r3-ordinary39-preserve-stop-20261116-01",
+      "sha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac",
+      "status": "COMPLETED"
+    },
+    "writer": {
+      "exitCode": 2,
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/writer/READBACK-04.json",
+      "requestKey": "t45-r3-batched-real-execute-20261115-01",
+      "sha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa",
+      "status": "FAILED"
+    }
+  },
+  "failureCause": "UNKNOWN_STRUCTURED_ERROR_NOT_RETAINED",
+  "mainReported": true,
+  "maintenanceContainerStopped": true,
+  "newWriterKeyIssuedOrSubmitted": false,
+  "nextRequired": "SOURCE_FAILURE_DIAGNOSIS_AND_EXPLICIT_DURABLE_STATE_RECOVERY_PLAN_BEFORE_ANY_FUTURE_WRITES",
+  "originalVerifierAndExpiryRestored": true,
+  "partialCommitDurability": "UNKNOWN_NOT_DATABASE_READ_BACK",
+  "runtimeAuthAndMembershipsChanged": false,
+  "service39Stopped": true,
+  "sourceDataAndFailedWriterAndPlanPreserved": true,
+  "state": "NORMAL39_SAFELY_STOPPED_AUTH_EXACTLY_RESTORED_WRITER_FAILED_NO_REPLAY",
+  "verificationRun": false,
+  "writerRepeated": false
+}

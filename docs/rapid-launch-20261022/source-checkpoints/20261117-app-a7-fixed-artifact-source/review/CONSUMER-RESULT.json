@@ -1,0 +1,49 @@
+{
+  "actions": {
+    "archivesOrPrivatePayloadsReadRehashedExtracted": false,
+    "futureAuthorityCepochOrPositiveFixturesCreated": false,
+    "ownerSourcesModified": false,
+    "serverPGNativeIssuerReceiverReaderClockCalls": 0
+  },
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-a7-fixed-artifact-joint-review-01/CONSUMER-EVIDENCE.json",
+    "sha256": "7a842893d6dcff3b63f2f7e90e4bd98f41d80b592ef8777a1ad66edfec671a64"
+  },
+  "findings": [],
+  "mainSourceSelectionSha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+  "notVerified": [
+    "Root03 is not frozen at consumer projection time; this report does not pass root admission/profile/producer pair. Final root report is required in this same joint review.",
+    "No actual writer completion,STOP/RESTORE,fresh postwriter baseline,four-key absence,CAS,authority,received server READY,APP publication or business acceptance established.",
+    "Local build READY and packaging metadata are source evidence only; archive/native closure was not recomputed and no receiver/client/issuer/clock/server/native/PG/build/pack was invoked."
+  ],
+  "pairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "reusedReports": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-artifact-policy-pair-review-01/RESULT.json",
+      "sha256": "f1c250b87fd5d0b91c6eddff7898a6e8efc2c01e6102ed89e1a0350500c7275b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+      "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+    }
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-02",
+  "sourceOnly": true,
+  "sourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "spec": {
+    "findings": [],
+    "scope": "APP a7 fixed five-field tuple plus KEY/TARGET/install/restore and exact existing READY/PACK metadata; closed existing schemas preserved."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Exact source delta, unchanged mature receiver/root policy/private scope, no payload or owner mutations."
+  },
+  "state": "SOURCE_PASS_APP_A7_FIXED_ARTIFACT_CONSUMER_PAIR_ONLY",
+  "verifiedScope": [
+    "Final consumer SOURCE179d verified,14 source metadata/code file pins exact. Compared with accepted pair2a8/reviewf1c250, only app fixed scope, scope module and two local metadata receipts differ.",
+    "Five fixed APP fields agree with independent Mainb749 selection: archive13b8/7690353/native57a3,new artifact key,target. Commit a7/treebba4/releaseb74b remain tuple metadata evidence; receiver schema unchanged.",
+    "APP KEY/TARGET/install/restore and FIELDS pin exact. Only pins function metadata differs; all other app scope ASTs unchanged. Receiver,root policy,issuer,patch and all six private source files byte-identical to accepted pair.",
+    "APP READY18e6 and PACKed0f are identical to original candidate saved metadata; archive/native/source/commit/tree/parent/release/pack tuple crosschecks pass. Payload archives and private helper/three members were not read,rehashed,extracted or executed.",
+    "Private244b/40960,scope/helper/member contract and prior receiver/root policy acceptance reused. No new tests of already passed behavior."
+  ]
+}

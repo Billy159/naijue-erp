@@ -1,0 +1,85 @@
+{
+  "dynamicAuthorityPins": null,
+  "fourKeysActualAbsence": null,
+  "futureActiveRootBaseline": null,
+  "knownHistoricalRootBaseline37": {
+    "dispatcherSha256": "6f32585ee20edcb0ac9019be4ba9907faad4d637268dea84f1db6cdf747204dd",
+    "helperSha256": "45b0df4a0f1d9f9aa2ecd3480865d95f8c7365e364e5c5e0030272d8d3b45975",
+    "policySha256": "ca068bb3151ae4c1c090e7867201ce0b4501ac4cf29a51a8db4d045339806523",
+    "use": "Known actual37 baseline only; never stand in for a future post-writer baseline"
+  },
+  "knownObservedNormal39Registration": {
+    "dispatcherSha256": "eabf10a911740fc864165ff9d5e66f0e654edc755b31299924755f91aa050206",
+    "moduleSha256": "b8ec4823753f791332631a1f907a79c4f9d752e2e74108d7b572510b7f610785",
+    "use": "Main reported actual registered normal39 only; never future post-writer baseline"
+  },
+  "pairReviewMode": "ACTUAL_JOINT_ROOT_REPORT_REQUIRED_AT_ISSUANCE",
+  "postWriterEvidencePaths": null,
+  "postWriterPhaseKeys": null,
+  "profiles": {
+    "app": {
+      "bundlePins": {
+        "APP-PACK-RECEIPT.json": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+        "APP-READY.LOCAL.json": "18e666855c5784503ee23142d0abbbebb4ad3d187b997fe456b1f860293ef87b",
+        "FIXED-SCOPE.json": "49490f279529035fb539ceadf605afbfffc6b56c4a396a668b5410560561a95b",
+        "receiver_client.py": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+        "reception_scope.py": "0cb22a932c3504a12795b0dcd3917192bd5004193f710465ed2bf71c9f21dd9f",
+        "root_policy.py": "bc90e4859f3b38b1ada0d66ec1761ac0fcd90ad6fff49dab8f20b6c4681c1724"
+      },
+      "fixedScope": {
+        "archiveBytes": 7690353,
+        "archiveSha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1",
+        "artifactKey": "r3-final33-ordinary161-a7bab2ee-20261117-01",
+        "decision": "AUTHORIZE_EXACT_ORDINARY_ARTIFACT_STAGING",
+        "format": "T45_ORDINARY_ARTIFACT_STAGING_V1",
+        "grantId": "b16447fbc81f4d64",
+        "kind": "ORDINARY_SOURCE_AND_TOOLS",
+        "sourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+        "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/artifacts/r3-final33-ordinary161-a7bab2ee-20261117-01",
+        "taskId": "T45"
+      },
+      "installKey": "t45-r3-final33-a7bab2-artifact-policy-install-20261117-01",
+      "maximumWindowMs": 1080000,
+      "restoreKey": "t45-r3-final33-a7bab2-artifact-policy-restore-20261117-01",
+      "timeoutSeconds": 35
+    },
+    "private": {
+      "bundlePins": {
+        "FIXED-SCOPE.json": "c742f0b5495ff57c73a75a63a576ea110ce1a9da332b03eec87b1b3b2043fc37",
+        "receiver_client.py": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+        "reception_scope.py": "3b07b2d9594cbb433f943566c41347f6dc599dad16db3554022e7538c4b15cee",
+        "root_policy.py": "733aa01d0d8cde6bbbf76ad6b791e997d783f1594ebe15c7471c14e92592153a"
+      },
+      "fixedScope": {
+        "archiveBytes": 40960,
+        "archiveSha256": "244bba744ce2f737bc3d5419ee6ba4179abbd15173b1d532d800fff231e39d4d",
+        "artifactKey": "r3-final33-recovery-input-20261117-01",
+        "decision": "AUTHORIZE_EXACT_PRIVATE_STANDARD_IMPORT_DATA_STAGING",
+        "format": "T45_PRIVATE_STANDARD_IMPORT_DATA_STAGING_V1",
+        "fragmentIndex": 1,
+        "fragmentOffset": 0,
+        "grantId": "b16447fbc81f4d64",
+        "kind": "PRIVATE_STANDARD_IMPORT_DATA_FRAGMENT",
+        "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+        "targetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/private-standard-import-data/r3-final33-recovery-input-20261117-01",
+        "taskId": "T45"
+      },
+      "installKey": "t45-r3-final33-recovery-artifact-policy-install-20261117-01",
+      "maximumWindowMs": 600000,
+      "restoreKey": "t45-r3-final33-recovery-artifact-policy-restore-20261117-01",
+      "timeoutSeconds": 35
+    }
+  },
+  "receiverPairReview": null,
+  "receiverPairReviewSha256": null,
+  "receiverPairSource": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-02/SOURCE-PINS.json",
+  "receiverPairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "sourceOnly": true,
+  "sourceSelection": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-app-a7-fixed-artifact-source-selection-01/DECISION.json",
+    "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d"
+  },
+  "state": "SOURCE_ONLY_TWO_FIXED_SCOPES_ACTUAL_PAIR179_NOT_ISSUED",
+  "stoppedService": null,
+  "writerStopRestoreEvidence": null
+}

@@ -1,0 +1,49 @@
+{
+  "PGConnections": 0,
+  "basePolicy": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261113-r3-service15-host-continuation-local-01/receive/faa8_policy.py",
+    "sha256": "1790e6bff11d251512ab46bcf1c7624f9668e4612fafc415106c78d0b1cc2739"
+  },
+  "clockCalls": 0,
+  "currentRootDispatcherAdmission": "NOT_VERIFIED_OR_REGISTERED_FOR_THESE_PROPOSED_INSTALL_RESTORE_KEYS; C must bind exact approved controlled admission before any submission. Existing 211 input stage rules must not be borrowed.",
+  "executionReady": false,
+  "files": {
+    "app/APP-PACK-RECEIPT.json": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+    "app/APP-READY.LOCAL.json": "18e666855c5784503ee23142d0abbbebb4ad3d187b997fe456b1f860293ef87b",
+    "app/FIXED-SCOPE.json": "49490f279529035fb539ceadf605afbfffc6b56c4a396a668b5410560561a95b",
+    "app/ROOT-POLICY-DIFF.patch": "6b3d03b611c8c427bbfa2a13b31d68a8cee7e5f3c02b93dbebb5987889652b07",
+    "app/issue_authority.py": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+    "app/receiver_client.py": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+    "app/reception_scope.py": "0cb22a932c3504a12795b0dcd3917192bd5004193f710465ed2bf71c9f21dd9f",
+    "app/root_policy.py": "bc90e4859f3b38b1ada0d66ec1761ac0fcd90ad6fff49dab8f20b6c4681c1724",
+    "private/FIXED-SCOPE.json": "c742f0b5495ff57c73a75a63a576ea110ce1a9da332b03eec87b1b3b2043fc37",
+    "private/ROOT-POLICY-DIFF.patch": "07f1c07360b7fb13c504c7285347e975c66fcca7df2b1e17f93f4c920256219e",
+    "private/issue_authority.py": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+    "private/receiver_client.py": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+    "private/reception_scope.py": "3b07b2d9594cbb433f943566c41347f6dc599dad16db3554022e7538c4b15cee",
+    "private/root_policy.py": "733aa01d0d8cde6bbbf76ad6b791e997d783f1594ebe15c7471c14e92592153a"
+  },
+  "mainSourceSelection": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-app-a7-fixed-artifact-source-selection-01/DECISION.json",
+    "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d"
+  },
+  "old35OrAppFilesModified": false,
+  "originalConsumerScannerCopiedByteExactly": true,
+  "originalWorkerLock": "Original admin_exec parent holds exact original execution.lock for whole child; verify root parent and kernel FLOCK identity, do not attempt a conflicting second lock.",
+  "predecessorSourcePinsSha256": "2a8a9b55c9a2377ee85863b86c340d2109586caec35dbb776447fe114818948b",
+  "privateScopeAndAllMembersByteIdentical": true,
+  "reviewRequired": true,
+  "serverActions": 0,
+  "sourceSetEvidence": {
+    "archiveExtraction": false,
+    "archivePayloadReread": false,
+    "fullSourceSetHashRecomputed": false,
+    "manifestSourceSet": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+    "packReceipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-02/app/APP-PACK-RECEIPT.json",
+    "packReceiptSha256": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+    "ready": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-02/app/APP-READY.LOCAL.json",
+    "readySha256": "18e666855c5784503ee23142d0abbbebb4ad3d187b997fe456b1f860293ef87b",
+    "reason": "Reuse exact existing a7 build/pack metadata; receiver still compares manifest.native35 sourceSet. Commit/tree/releaseManifest remain tuple evidence only."
+  },
+  "state": "SOURCE_ONLY_TWO_SEPARATE_FIXED_SCOPES_NOT_ISSUED"
+}

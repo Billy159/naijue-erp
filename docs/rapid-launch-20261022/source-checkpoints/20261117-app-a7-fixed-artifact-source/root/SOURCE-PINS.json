@@ -1,0 +1,90 @@
+{
+  "PGConnections": 0,
+  "actualFourKeyAbsence": null,
+  "actualStoppedService": null,
+  "archivesReadRehashedRebuiltOrExtracted": false,
+  "authoritiesIssued": false,
+  "clock": null,
+  "clockCalls": 0,
+  "consumerReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-a7-fixed-artifact-joint-review-01/CONSUMER-RESULT.json",
+    "sha256": "325bb997d01032d549ef2943de94b03334b1adb718e76da812e8b89dbe63b2e6"
+  },
+  "executionReady": false,
+  "files": {
+    "APP-CANDIDATE-REFERENCE.json": {
+      "bytes": 5308,
+      "sha256": "cb55129989f1f2dea61bd633c185d543463bd2ffd1ca3344039c65ad6705c0d6"
+    },
+    "FIXED-PROFILES.json": {
+      "bytes": 4884,
+      "sha256": "ae6a84b7f378ed0b75ac957c54bf13bb543dab12b7667ba8c2db6f7db056fe0c"
+    },
+    "HANDOFF.md": {
+      "bytes": 5126,
+      "sha256": "d611b32d411da1c54e1a8f4ecaf9dcf4a6c49ab33a2183093e15b86a84683b75"
+    },
+    "INTERFACE.SOURCE-ONLY.json": {
+      "bytes": 3473,
+      "sha256": "5c0b01944487b3d0091b2bc5b88e0e7543256430ca00f05baf39c5e8e8f0983d"
+    },
+    "KNOWN39-PATCH-PREVIEW.UNREGISTERED.py": {
+      "bytes": 49846,
+      "sha256": "6f33b808b1cf76c29f7b8cdec18fed7c930c8e9a6c8f4e6070df460d017d1af0"
+    },
+    "LOCAL-CHECKS.json": {
+      "bytes": 3352,
+      "sha256": "76ca54820e8539954f878ae277bb471839e48ab341b29287385060f50aaec742"
+    },
+    "REUSED-ARTIFACT-EVIDENCE.previous02.json": {
+      "bytes": 2213,
+      "sha256": "8e4e7bbb2fc047c68b9b707c864092cb0c28e64cc12e6e9f041d3804a4bb2080"
+    },
+    "check_source.py": {
+      "bytes": 9419,
+      "sha256": "7346c574238865a9be55ea5362492cba61dba75b876dde3a66a3dfc6489d4d06"
+    },
+    "issue_profile.py": {
+      "bytes": 10178,
+      "sha256": "478d194434713c63a301110ccd8d9c157fa39ce8160f4bc6768886ea03a41f6e"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 4013,
+      "sha256": "b879f91885b80c372f97606d3f380e70d59c8bfba272a25dc51464f4670490a9"
+    },
+    "r3_two_fixed_artifact_admission.py": {
+      "bytes": 13090,
+      "sha256": "abf622eb87b3c56c0a1996f3e2380185522059975bcbc5f83d7ef220ed20de3e"
+    }
+  },
+  "fixedJobs": [
+    "t45-r3-final33-a7bab2-artifact-policy-install-20261117-01",
+    "t45-r3-final33-a7bab2-artifact-policy-restore-20261117-01",
+    "t45-r3-final33-recovery-artifact-policy-install-20261117-01",
+    "t45-r3-final33-recovery-artifact-policy-restore-20261117-01"
+  ],
+  "formalBusinessAccepted": false,
+  "futureActualPostWriterBaseline": null,
+  "futureAuthority": null,
+  "futureC": null,
+  "futureEpoch": null,
+  "issuerInvocations": 0,
+  "jointRootReviewRequired": true,
+  "localNarrowChecks": 54,
+  "nativeCalls": 0,
+  "normal39SourceB96Preserved": true,
+  "oldSource846Preserved": true,
+  "pairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "positiveFutureFixtures": 0,
+  "previewProfileSha256": null,
+  "previewProtectedKeys": 111,
+  "privatePayloadReads": 0,
+  "profileIssuerArguments": 18,
+  "protectedHistoricalPrefix": 107,
+  "receiverInvocations": 0,
+  "registrationCASPrepared": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourceSelectionSha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+  "state": "SOURCE_FROZEN_APP_A7_FIXED_ARTIFACT_ADMISSION_REQUIRES_JOINT_REVIEW"
+}

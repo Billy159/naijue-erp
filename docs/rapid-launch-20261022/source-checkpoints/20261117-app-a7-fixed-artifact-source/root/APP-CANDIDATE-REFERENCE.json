@@ -1,0 +1,74 @@
+{
+  "archivesReadRehashedRebuiltOrExtracted": false,
+  "candidateDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01",
+  "finalReceiverPairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "futurePostWriterBaseline": null,
+  "metadataReferences": {
+    "APP-TUPLE.SOURCE-ONLY.json": {
+      "bytes": 1214,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/APP-TUPLE.SOURCE-ONLY.json",
+      "sha256": "a4e12c9455c11a27efed098deedaade166d64c657eceac269588f7b64b44a811"
+    },
+    "BUILD-EXECUTION.json": {
+      "bytes": 92,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/BUILD-EXECUTION.json",
+      "sha256": "9a6a9658336191ccecb016f2773a09aff3396d89161a173300ce917835c304cb"
+    },
+    "PACK-EXECUTION.json": {
+      "bytes": 92,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/PACK-EXECUTION.json",
+      "sha256": "f50c5fef46b951254d35f5ac6e94a387a3b9b85f02912a917b797f462c62db43"
+    },
+    "PUBLISH-RESULT.json": {
+      "bytes": 391,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/PUBLISH-RESULT.json",
+      "sha256": "e546439046242496af4c8b9249bd73d9ffa8798efff798ea24207f890b2dc634"
+    },
+    "READY.LOCAL.json": {
+      "bytes": 1905,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/READY.LOCAL.json",
+      "sha256": "18e666855c5784503ee23142d0abbbebb4ad3d187b997fe456b1f860293ef87b"
+    },
+    "SOURCE-FROZEN.json": {
+      "bytes": 1308,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/SOURCE-FROZEN.json",
+      "sha256": "070221339458b1b17ee8f0b774cb54b3ae0602f757f36bd7305b77f6701dd3f6"
+    },
+    "packed/pack-receipt.json": {
+      "bytes": 584,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-LEXICAL-CANDIDATE-01/packed/pack-receipt.json",
+      "sha256": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377"
+    }
+  },
+  "parent": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+  "privatePayloadBodiesRead": false,
+  "selectedSourceAppInstallKey": "t45-r3-final33-a7bab2-artifact-policy-install-20261117-01",
+  "selectedSourceAppRestoreKey": "t45-r3-final33-a7bab2-artifact-policy-restore-20261117-01",
+  "selectedSourceArtifactKey": "r3-final33-ordinary161-a7bab2ee-20261117-01",
+  "selectedSourceTargetDirectory": "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/artifacts/r3-final33-ordinary161-a7bab2ee-20261117-01",
+  "sourceSelection": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-app-a7-fixed-artifact-source-selection-01/DECISION.json",
+    "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d"
+  },
+  "sourceTree": "bba4ce31d4a4bc72b29ff170b8836f7d18d4a8f5",
+  "state": "ACTUAL_APP_METADATA_AND_FINAL_PAIR_SOURCE_REFERENCE_NOT_SERVER_READY",
+  "tuple": {
+    "archiveBytes": 7690353,
+    "archivePayloadWithoutDependenciesSha256": "08840ca11d50fe2823aea82017ee24028d49bef9ae988fbfc197a4f78b6e710f",
+    "archiveSha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1",
+    "buildId": "erp-a7bab2eec252-r3-app-host-lexical-20261117",
+    "buildManifestSha256": "275e4291dceba63a7b3e34e06c4e716f33569681f8c9f622fe56cc2211ab0ab5",
+    "buildReceiptSha256": "8d9cb51ba7f61268ac88e09e9621f2363cd8bdaddccaf75369445ec1918700d3",
+    "manifestBytes": 546466,
+    "manifestSha256": "b74bf6fe9b215638552702f5879679cc9779e8a816b696dceb8e8adf0810b7a6",
+    "nativeClosureMembers": 284,
+    "nativeSourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+    "normalizedManifestSha256": "ba0dad8207675645daf2dd583eca1ab84ac405c9f8d1b21d525a1924dd97cf75",
+    "packReceiptSha256": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+    "packedMembers": 523,
+    "releasePayloadMembers": 522,
+    "runtimeTemplateSha256": "e1e6597e9c60f87939c3e6e385f696fdc9502dae0250476b358f014e0d5b3316",
+    "sourceCommit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+    "sourceManifestSha256": "c1e8db83f6cf7b1b1ba7929454b3ba3c7ee21afe18a7a1d71efc12c0f79cf5af"
+  }
+}

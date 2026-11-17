@@ -1,0 +1,16 @@
+{
+  "format": "naijue-release-pack-receipt-v1",
+  "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+  "buildId": "erp-a7bab2eec252-r3-app-host-lexical-20261117",
+  "sourceCommit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+  "archive": {
+    "file": "release.tar.gz",
+    "bytes": 7690353,
+    "sha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1"
+  },
+  "manifestSha256": "b74bf6fe9b215638552702f5879679cc9779e8a816b696dceb8e8adf0810b7a6",
+  "members": 523,
+  "archiveExtractions": 1,
+  "businessOrProductionValidation": false,
+  "deploymentExecuted": false
+}

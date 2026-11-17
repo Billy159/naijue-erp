@@ -1,0 +1,113 @@
+{
+  "actions": {
+    "archivesOrPrivatePayloadsReadRehashedExtracted": false,
+    "buildOrPackExecuted": false,
+    "issuerReaderCASReceiverServerNativePGClockCalls": 0,
+    "ownerSourcesOrOldFrozenReportsModified": false,
+    "positiveFutureFixtures": 0,
+    "purePatchProfileSha256": null
+  },
+  "actualPostWriterBaselineAvailableOrValidated": false,
+  "actualRuntimeBoundary": {
+    "VERIFIEDPrerequisiteSatisfied": false,
+    "earlierDurableBatchState": "UNKNOWN",
+    "failureDiagnostic": null,
+    "lifecycleConfirmed": true,
+    "nativeConnectionCleanup": "CLOSED",
+    "nativeResultBindingMatched": true,
+    "readbackConnectionCleanup": null,
+    "safeCode": null,
+    "source": "Existing local writer READBACK04 metadata checked only; no runtime acceptance or re-execution by QB",
+    "sourcePassPermitsProfileOrRegistrationReceptionAPP": false,
+    "sqlstate": null,
+    "verification": null,
+    "wholeBatchZeroWritesProven": false,
+    "writerEvidence": {
+      "earlierDurableBatchState": "UNKNOWN",
+      "exitCode": 2,
+      "nativeState": "ROLLED_BACK",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL39-EXECUTION-PREPARATION-01/runtime/writer/READBACK-04.json",
+      "readbackConnectionCleanup": null,
+      "replayAllowed": false,
+      "sha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa",
+      "terminalStatus": "FAILED",
+      "verification": null,
+      "wholeBatchZeroWritesProven": false
+    },
+    "writerFinishedAtBeijing": "2026-11-17 14:08:18",
+    "writerFinishedAtUTC": "2026-11-17T06:08:18.543585+00:00",
+    "writerReplayOrNewKeyImportAllowed": false
+  },
+  "checkSummary": {
+    "consumerDeltaChecks": 56,
+    "consumerWasNotRerunForRoot": true,
+    "rootDeltaChecks": 54
+  },
+  "consumerReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-a7-fixed-artifact-joint-review-01/CONSUMER-RESULT.json",
+    "sha256": "325bb997d01032d549ef2943de94b03334b1adb718e76da812e8b89dbe63b2e6"
+  },
+  "consumerReviewSha256": "325bb997d01032d549ef2943de94b03334b1adb718e76da812e8b89dbe63b2e6",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-a7-fixed-artifact-joint-review-01/CONSUMER-EVIDENCE.json",
+      "sha256": "7a842893d6dcff3b63f2f7e90e4bd98f41d80b592ef8777a1ad66edfec671a64"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-a7-fixed-artifact-joint-review-01/ROOT-EVIDENCE.json",
+      "sha256": "716811f28190e61f44bd78a40578f58dd55137e6419a5a662c79da07b5aa6cd7"
+    }
+  ],
+  "executionReady": false,
+  "findings": [],
+  "mainSourceSelectionSha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+  "pairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "pairedScopesReviewed": true,
+  "registrationCASPrepared": false,
+  "reusedReports": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-fixed-artifact-admission-review-01/RESULT.json",
+      "sha256": "7ecc9afd8c2e569c5e98abd4898f9f36fdfe5d5b86ad0e21a1b5966326117c09"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-two-artifact-policy-pair-review-01/RESULT.json",
+      "sha256": "f1c250b87fd5d0b91c6eddff7898a6e8efc2c01e6102ed89e1a0350500c7275b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-private-recovery-artifact-review-01/RESULT.json",
+      "sha256": "58fa8e854244b7d9692b7b895da03f617074046c6dde1095fc32f119de9f7281"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-normal39-joint-review-01/RESULT.json",
+      "sha256": "7a38e76f73f61dd7466e7bd500980fcb7c9522b2619d9798cc635673d5100dc8"
+    }
+  ],
+  "runtimeStillRequired": [
+    "Actual original writer VERIFIED prerequisite is currently unmet: genuine writer FAILED/exit2/native ROLLED_BACK with verification/readback cleanup null. This cannot prove zero writes for the full batch; earlier durable batch state remains UNKNOWN. Do not replay the original writer or import under another key.",
+    "Same-C STOP/exactRESTORE remain Main/T45 actual safety work and are not passed by this report. No later receipt is presumed here.",
+    "Actual fresh postwriter stopped baseline,four-key absence,original lock/no-active-operation evidence and all actual digest/identity pins must be established; saved registered39 eab and None-profile preview are not that future baseline.",
+    "Finite explicit-time profile and authority issuance,complete original-lock controlled CAS registration,actual request/member/manifest/authority checks,received server READY and withdrawal are unprepared/unexecuted by QB. Current failure does not satisfy issuance prerequisites.",
+    "No APP installation/publication,PG/business acceptance,whole-batch readback or completed real-business import is established. Local READY/PACK metadata does not substitute for server payload READY."
+  ],
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/D1/20261117-r3-two-fixed-artifact-admission-source-03",
+  "sourceOnly": true,
+  "sourcePinsSha256": "7e86f50e2b916e6cab8357255dc8f75e8f00907fb29e09747bfa8874887e3535",
+  "spec": {
+    "findings": [],
+    "scope": "One actual joint review of final pair179d/root7e86, current39 wrapper and four fixed artifact profiles, original18-argument producer and true writer/STOP/RESTORE/fresh baseline requirements."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "Narrow fixed source delta, preserved accepted runtime methods, original source limits and protected key prefix, no owner/payload/runtime mutation."
+  },
+  "state": "SOURCE_PASS_TWO_FIXED_ARTIFACT_ROOT_ADMISSION_ONLY",
+  "verifiedScope": [
+    "Genuine consumer report325bb997 paired with final root SOURCE7e86 and peer179d/Mainb749. Root manifest bytes and pins exact. Prior846/QB7ecc, pair2a8/QBf1c250 and normal39b96/QB7a38 scope directly reused.",
+    "APP a7 fixed five-field tuple/archive13b8/7690353/native57a3 and KEY/TARGET/install/restore agree across independent Main decision, consumer scope and root profiles. Commit/tree/release are tuple evidence only, never new receiver authority fields. Existing READY18e6/PACKed0f metadata binds exact original candidate.",
+    "Both existing scope schemas preserved. Receiver954342,root policies,scope binders/issuer/scanner and private244b/40960/helper/three-member contract unchanged; no archive or private payload read,rehashed,extracted,rebuilt or executed.",
+    "Root runtime only changes selected profiles,explicit four-key mapping and source-completion guard. Every prior admission/stopped-basis/evidence/finish method AST preserved. New artifact adapter first wraps actual normal39_continuation then FixedArtifactAdmission.",
+    "Pure transform of saved actual registered39 eab with profile=None exactly reproduces unregistered preview6f33. Protected107-key prefix retained with only4 appended keys=111; all3 guards and every old nonexecute function,ROOT07 and normal38/39 adapters preserved. Execute only adds one artifact branch before its sole admission.",
+    "Original18-argument explicit-time producer preserved. One actual joint report must bind own final SOURCE and pair179d/pairedScopesReviewed,using existing review_file/review_pin. No invented future report or hardcoded future report SHA. Actual active NORMAL39 policy/module constants replace historical38 constants in future baseline matching.",
+    "Real writer COMPLETED+VERIFIED,native/readback CLOSED,lifecycle cleanup,same-service STOP,exactRESTORE,eight genuine evidence pins,fresh stopped baseline,four unused keys and real artifact authorities remain required before any profile output. No211/SRC7 borrowing or role/source renewal."
+  ]
+}

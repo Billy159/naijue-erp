@@ -1,5 +1,5 @@
 {
-  "state": "REAL_WRITER_FAILED_ROLLED_BACK_PRIOR_BATCH_COMMITS_UNKNOWN_STOP_RESTORE_PENDING",
+  "state": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "sourceOnly": false,
   "consumerSourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
   "consumerInterfaceSha256": "0aadc5be5ccda5551924779bb5998fc0e30e3a21ea554817ce6d428fed43fb63",
@@ -495,10 +495,45 @@
       "path": "actual-safe/WRITER-FAILED-ROLLED-BACK-READBACK.json",
       "sha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa",
       "bytes": 3804
+    },
+    {
+      "path": "actual-safe/STOP39-ACTUAL-BASIS.json",
+      "sha256": "03dd52ab91f14e83e2543bec302d65f3c02825e94df43264094273dbb3d1404e",
+      "bytes": 4581
+    },
+    {
+      "path": "actual-safe/ACTUAL-STOP39-RESULT.json",
+      "sha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac",
+      "bytes": 6533
+    },
+    {
+      "path": "actual-safe/STOP39-ISSUED-SAFE.json",
+      "sha256": "77a06b4cbbe249bdfaa8f802d6cd97d976c9d6ded06328c864bb14a0e7b6ece8",
+      "bytes": 410
+    },
+    {
+      "path": "actual-safe/RESTORE39-ISSUED-SAFE.json",
+      "sha256": "d0afee1808cc673d7b417b2376906c76c0ebb084cb00597af16fe4cded8ec13f",
+      "bytes": 402
+    },
+    {
+      "path": "actual-safe/ACTUAL-RESTORE39-RESULT.json",
+      "sha256": "35faee2f3949882106463abb976d878859a49c1d0c0d7304dd7b20a1cd256d6c",
+      "bytes": 5485
+    },
+    {
+      "path": "actual-safe/ACTUAL-WRITER-NATIVE-DIAGNOSTIC-PROJECTION.json",
+      "sha256": "752b9d6ed15f05fcc852ce06c56b94b2bd6c6f32bb8909aa3e215460f9d98e9f",
+      "bytes": 2315
+    },
+    {
+      "path": "actual-safe/RESULT-NORMAL39-CLOSED-WRITER-FAILED.json",
+      "sha256": "b8b2eb66f0d79d39a5a07aaa7afd56eb0d83d00efd465197e50e2a379a0be8f5",
+      "bytes": 4482
     }
   ],
-  "next": "T45 original stable writer first real execution once under actualad338 authority/current39/real prepared05; confirm original-key absence before call and preserve UNKNOWN without resubmission. Require typed VERIFIED native+readback CLOSED, sameC cleanup and actual stock/money/source/relationship checks before STOP39/exactRESTORE39. No APP server operation yet.",
-  "asOf": "2026-11-17T14:00:53.739158+08:00",
+  "next": "Only bounded existing C39 PG-log enum/SQLSTATE projection and readonly SQLite plan schema metadata via T45; D1 source analysis. PG stopped/originalauth restored. Preserve failed original writer/data/plan; never replay/new-key blindly import. Actual durable evidence and specific failure cause needed before controlled recovery.",
+  "asOf": "2026-11-17T14:30:31.782672+08:00",
   "rootSourcePinsSha256": "b96d2548a58fe1ffc3a1b855420aea8a519d7982d3707927b88accfa7d0a6b7b",
   "rootRulesSha256": "d72c773e276451a4be032deb04caf80714da43e49a079f3a23ca67d1cdba3b50",
   "rootConsumerReviewSha256": "2fc893b8979bdb4908826acc972592ede40ba3e3d166b49ae734447f79ef00a0",
@@ -514,7 +549,7 @@
     }
   ],
   "roleClockStarted": true,
-  "rolesApplied": true,
+  "rolesApplied": false,
   "actualFreshBasisSha256": "4fceb86b406feef9efad1113beff133be4de4775d1c7fabd28e62dae463daab5",
   "actualACK38RawSHAObservedThisRead": true,
   "issuedSafeMetadataSha256": "8073d245c1fff476ae70d392aad5630b7f17da5e67b72a7f74a896e32340f6d1",
@@ -550,7 +585,7 @@
   "actualCASResultSha256": "fdcad23ff6e888dd5242bfd993ff91e33d9e842fb6e1a3c415d25f06245b1ef7",
   "actualApplyResultSha256": "8f388d065467b562c7419cc9e5bd8152e4d1c8d94167d52f384bf87758527176",
   "startAuthoritySha256": "0308cfdd2e2a401fbf52bd437a175b40ec5a75b0acf0288358282760d56e199d",
-  "current39OriginalAuthRestored": false,
+  "current39OriginalAuthRestored": true,
   "actualServerRegistration": true,
   "businessWriterSubmitted": true,
   "businessWrites": null,
@@ -562,7 +597,7 @@
     "proofSha256": "9aa960bc95192c2b72f61526df793a1bfccd3a9f047aa17f01cbe0632b73b6b3",
     "serviceKey": "t45-first-r3-native-service-start-20261116-39"
   },
-  "PGStopped": false,
+  "PGStopped": true,
   "privateContextSha256": "054fa2d500cdfc3a14cd0a74e85f33d68b570703669e9eec7b75927f78cfc4af",
   "privateContextBodyCopied": false,
   "prepare05AuthoritySha256": "97d25144468444b0d5aaa9dc3956498c8eb0245612ec017f4d8fb130c6cec0ad",
@@ -589,5 +624,16 @@
   "writerVerification": null,
   "writerReadbackConnectionCleanup": null,
   "priorBatchCommittedState": "UNKNOWN",
-  "writerOriginalKeyMustNotReplay": true
+  "writerOriginalKeyMustNotReplay": true,
+  "actualStop39ResultSha256": "0fd93d487ab48b2ef141a194771a1c09a8bc100a7cd3f9c0a91d81949a83b2ac",
+  "restore39AuthoritySha256": "7168ff0a75c1019f1c34d2e2df19b254dd3e53434b32f76257034e5db4edcc31",
+  "actualRestore39ResultSha256": "35faee2f3949882106463abb976d878859a49c1d0c0d7304dd7b20a1cd256d6c",
+  "actualClosed39ResultSha256": "b8b2eb66f0d79d39a5a07aaa7afd56eb0d83d00efd465197e50e2a379a0be8f5",
+  "actualNativeDiagnosticProjectionSha256": "752b9d6ed15f05fcc852ce06c56b94b2bd6c6f32bb8909aa3e215460f9d98e9f",
+  "actualNativeStage": "APPLY",
+  "actualNativeCompletedBatches": 0,
+  "actualNativeSkippedBatches": 0,
+  "actualNativeSubBatchId": "a8d40958-8f80-afdb-e60a-5f2ff5ddc115",
+  "originalErrorNotRetained": true,
+  "nativeCounterNotDurableProof": true
 }

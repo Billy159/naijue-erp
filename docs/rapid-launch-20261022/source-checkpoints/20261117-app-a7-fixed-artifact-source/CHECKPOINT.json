@@ -1,0 +1,171 @@
+{
+  "state": "APP_A7_FIXED_ARTIFACT_PAIRED_SOURCE_PASS_RUNTIME_BLOCKED_ACTUAL_WRITER_FAILED",
+  "asOf": "2026-11-17T14:24:03.528557+08:00",
+  "sourceOnly": true,
+  "sourcePinsSha256": "7e86f50e2b916e6cab8357255dc8f75e8f00907fb29e09747bfa8874887e3535",
+  "pairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "reviewSha256": "e62ba979a6be3666fd0f54264bbdff0ac68500ea7b385a0e913d0fc9f6fb7196",
+  "consumerReviewSha256": "325bb997d01032d549ef2943de94b03334b1adb718e76da812e8b89dbe63b2e6",
+  "producerArguments": 18,
+  "actualWriterFailedReadbackSha256": "dbd5e1c4f8baa4d3489a9eda8fd7c29e5a834097aad6ba808e96aa07973e9aaa",
+  "priorBatchDurableState": "UNKNOWN",
+  "executionReady": false,
+  "actualProfileIssued": false,
+  "actualRegistration": false,
+  "actualArtifactReception": false,
+  "actualAPPAction": false,
+  "copies": [
+    {
+      "path": "root/SOURCE-PINS.json",
+      "sha256": "7e86f50e2b916e6cab8357255dc8f75e8f00907fb29e09747bfa8874887e3535",
+      "bytes": 3327
+    },
+    {
+      "path": "root/APP-CANDIDATE-REFERENCE.json",
+      "sha256": "cb55129989f1f2dea61bd633c185d543463bd2ffd1ca3344039c65ad6705c0d6",
+      "bytes": 5308
+    },
+    {
+      "path": "root/FIXED-PROFILES.json",
+      "sha256": "ae6a84b7f378ed0b75ac957c54bf13bb543dab12b7667ba8c2db6f7db056fe0c",
+      "bytes": 4884
+    },
+    {
+      "path": "root/HANDOFF.md",
+      "sha256": "d611b32d411da1c54e1a8f4ecaf9dcf4a6c49ab33a2183093e15b86a84683b75",
+      "bytes": 5126
+    },
+    {
+      "path": "root/INTERFACE.SOURCE-ONLY.json",
+      "sha256": "5c0b01944487b3d0091b2bc5b88e0e7543256430ca00f05baf39c5e8e8f0983d",
+      "bytes": 3473
+    },
+    {
+      "path": "root/KNOWN39-PATCH-PREVIEW.UNREGISTERED.py",
+      "sha256": "6f33b808b1cf76c29f7b8cdec18fed7c930c8e9a6c8f4e6070df460d017d1af0",
+      "bytes": 49846
+    },
+    {
+      "path": "root/LOCAL-CHECKS.json",
+      "sha256": "76ca54820e8539954f878ae277bb471839e48ab341b29287385060f50aaec742",
+      "bytes": 3352
+    },
+    {
+      "path": "root/REUSED-ARTIFACT-EVIDENCE.previous02.json",
+      "sha256": "8e4e7bbb2fc047c68b9b707c864092cb0c28e64cc12e6e9f041d3804a4bb2080",
+      "bytes": 2213
+    },
+    {
+      "path": "root/check_source.py",
+      "sha256": "7346c574238865a9be55ea5362492cba61dba75b876dde3a66a3dfc6489d4d06",
+      "bytes": 9419
+    },
+    {
+      "path": "root/issue_profile.py",
+      "sha256": "478d194434713c63a301110ccd8d9c157fa39ce8160f4bc6768886ea03a41f6e",
+      "bytes": 10178
+    },
+    {
+      "path": "root/patch_dispatcher.py",
+      "sha256": "b879f91885b80c372f97606d3f380e70d59c8bfba272a25dc51464f4670490a9",
+      "bytes": 4013
+    },
+    {
+      "path": "root/r3_two_fixed_artifact_admission.py",
+      "sha256": "abf622eb87b3c56c0a1996f3e2380185522059975bcbc5f83d7ef220ed20de3e",
+      "bytes": 13090
+    },
+    {
+      "path": "consumer/SOURCE-PINS.json",
+      "sha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+      "bytes": 3964
+    },
+    {
+      "path": "consumer/app/APP-PACK-RECEIPT.json",
+      "sha256": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+      "bytes": 584
+    },
+    {
+      "path": "consumer/app/APP-READY.LOCAL.json",
+      "sha256": "18e666855c5784503ee23142d0abbbebb4ad3d187b997fe456b1f860293ef87b",
+      "bytes": 1905
+    },
+    {
+      "path": "consumer/app/FIXED-SCOPE.json",
+      "sha256": "49490f279529035fb539ceadf605afbfffc6b56c4a396a668b5410560561a95b",
+      "bytes": 614
+    },
+    {
+      "path": "consumer/app/issue_authority.py",
+      "sha256": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+      "bytes": 1026
+    },
+    {
+      "path": "consumer/app/receiver_client.py",
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+      "bytes": 152217
+    },
+    {
+      "path": "consumer/app/reception_scope.py",
+      "sha256": "0cb22a932c3504a12795b0dcd3917192bd5004193f710465ed2bf71c9f21dd9f",
+      "bytes": 6687
+    },
+    {
+      "path": "consumer/app/root_policy.py",
+      "sha256": "bc90e4859f3b38b1ada0d66ec1761ac0fcd90ad6fff49dab8f20b6c4681c1724",
+      "bytes": 6209
+    },
+    {
+      "path": "consumer/private/FIXED-SCOPE.json",
+      "sha256": "c742f0b5495ff57c73a75a63a576ea110ce1a9da332b03eec87b1b3b2043fc37",
+      "bytes": 697
+    },
+    {
+      "path": "consumer/private/issue_authority.py",
+      "sha256": "a0655b673529a11966073afce03ba02efe0e405bd0c8d8cf8a9456ba90b3d19a",
+      "bytes": 1026
+    },
+    {
+      "path": "consumer/private/receiver_client.py",
+      "sha256": "954342825d020435db0b1ba36573054e5010ba8a4e531fc0cac7dcf4162a3b81",
+      "bytes": 152217
+    },
+    {
+      "path": "consumer/private/reception_scope.py",
+      "sha256": "3b07b2d9594cbb433f943566c41347f6dc599dad16db3554022e7538c4b15cee",
+      "bytes": 6496
+    },
+    {
+      "path": "consumer/private/root_policy.py",
+      "sha256": "733aa01d0d8cde6bbbf76ad6b791e997d783f1594ebe15c7471c14e92592153a",
+      "bytes": 5826
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "e62ba979a6be3666fd0f54264bbdff0ac68500ea7b385a0e913d0fc9f6fb7196",
+      "bytes": 8256
+    },
+    {
+      "path": "review/CONSUMER-RESULT.json",
+      "sha256": "325bb997d01032d549ef2943de94b03334b1adb718e76da812e8b89dbe63b2e6",
+      "bytes": 3673
+    },
+    {
+      "path": "main/SOURCE-SELECTION-ONLY.json",
+      "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d",
+      "bytes": 3142
+    }
+  ],
+  "omitted": [
+    {
+      "path": "consumer/app/ROOT-POLICY-DIFF.patch",
+      "sha256": "6b3d03b611c8c427bbfa2a13b31d68a8cee7e5f3c02b93dbebb5987889652b07",
+      "reason": "Unissued profile or non-code body omitted; original source hash retained"
+    },
+    {
+      "path": "consumer/private/ROOT-POLICY-DIFF.patch",
+      "sha256": "07f1c07360b7fb13c504c7285347e975c66fcca7df2b1e17f93f4c920256219e",
+      "reason": "Unissued profile or non-code body omitted; original source hash retained"
+    }
+  ]
+}

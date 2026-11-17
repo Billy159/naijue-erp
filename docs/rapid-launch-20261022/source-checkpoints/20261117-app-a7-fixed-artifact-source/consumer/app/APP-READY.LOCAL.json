@@ -1,0 +1,41 @@
+{
+  "PGConnections": 0,
+  "archive": {
+    "bytes": 7690353,
+    "file": "release.tar.gz",
+    "sha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1"
+  },
+  "archiveExtractions": 1,
+  "baseCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+  "buildId": "erp-a7bab2eec252-r3-app-host-lexical-20261117",
+  "buildManifestSha256": "275e4291dceba63a7b3e34e06c4e716f33569681f8c9f622fe56cc2211ab0ab5",
+  "buildReceiptSha256": "8d9cb51ba7f61268ac88e09e9621f2363cd8bdaddccaf75369445ec1918700d3",
+  "buildSeconds": 33.364,
+  "builds": 1,
+  "changedFiles": 1,
+  "dependencyInstall": false,
+  "frontendSourceChanged": false,
+  "modelEvidence": "UNCHANGED_APP_MODEL_INPUTS_REUSED_NOT_NEW_PG_ACCEPTANCE",
+  "nativeClosureFiles": 284,
+  "nativeModelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+  "nativeSourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+  "packReceiptSha256": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+  "packSeconds": 31.463,
+  "packs": 1,
+  "releaseKey": "erp-a7bab2eec252-r3-app-host-lexical-20261117",
+  "releaseManifestSha256": "b74bf6fe9b215638552702f5879679cc9779e8a816b696dceb8e8adf0810b7a6",
+  "releaseMembers": 522,
+  "runtimeApplicationStarted": false,
+  "serverActions": 0,
+  "serverReceptionRequestKey": null,
+  "sourceCommit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+  "sourceManifestSha256": "c1e8db83f6cf7b1b1ba7929454b3ba3c7ee21afe18a7a1d71efc12c0f79cf5af",
+  "sourceReviewSha256": "235153599223116db2f71893221b299d248a3a0acc0f05f287b05c6b995a1379",
+  "sourceTree": "bba4ce31d4a4bc72b29ff170b8836f7d18d4a8f5",
+  "state": "LOCAL_HTTP_BUILD_PACK_PASS_NOT_DEPLOYED",
+  "unverified": [
+    "new fixed artifact tuple/profile source review",
+    "ROOT07 strict source lineage final pair",
+    "runtime/PG/QA/reception/upload/install/publishing/business acceptance"
+  ]
+}

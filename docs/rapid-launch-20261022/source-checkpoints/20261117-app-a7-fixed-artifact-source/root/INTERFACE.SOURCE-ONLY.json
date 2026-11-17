@@ -1,0 +1,78 @@
+{
+  "PGConnections": 0,
+  "activeNormalDigestConstants": [
+    "NORMAL39_POLICY_SHA256",
+    "NORMAL39_MODULE_SHA256"
+  ],
+  "actualBaselineRequiredFields": [
+    "READONLY_POST_WRITER_ARTIFACT_BASELINE",
+    "grantId",
+    "checkedAtEpochMs",
+    "grantExpiresAtEpoch",
+    "dispatcherSha256",
+    "normalHelperSha256",
+    "normalPolicySha256",
+    "normalPhaseKeys {start,writer,stop,restore}",
+    "stoppedService",
+    "evidencePins {writerTerminal,writerResult,stopTerminal,stopResult,restoreTerminal,restoreResult,restoredReceipt,currentProof}",
+    "restoredReceiptPath",
+    "currentProofPath",
+    "fourKeysAbsent",
+    "PGStopped",
+    "noOtherOperationUnits",
+    "PGConnections=0",
+    "mutations=0",
+    "privateSnapshotBodiesOrDigestsRead=false"
+  ],
+  "actualFourKeyAbsence": null,
+  "actualJointReviewRequired": {
+    "findings": [],
+    "pairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+    "pairedScopesReviewed": true,
+    "sourceOnly": true,
+    "sourcePinsSha256": "MUST_EQUAL_ACTUAL_FROZEN_ROOT_SOURCE_SHA",
+    "state": "SOURCE_PASS_TWO_FIXED_ARTIFACT_ROOT_ADMISSION_ONLY"
+  },
+  "actualRegistrationCAS": "NOT_PREPARED_UNTIL_ACTUAL_POSTWRITER_BASELINE",
+  "actualStoppedService": null,
+  "clock": null,
+  "executionReady": false,
+  "finiteIssuanceOwner": "Main",
+  "fixedJobs": [
+    "t45-r3-final33-a7bab2-artifact-policy-install-20261117-01",
+    "t45-r3-final33-a7bab2-artifact-policy-restore-20261117-01",
+    "t45-r3-final33-recovery-artifact-policy-install-20261117-01",
+    "t45-r3-final33-recovery-artifact-policy-restore-20261117-01"
+  ],
+  "fixedJobsCount": 4,
+  "futureActualPostWriterBaseline": null,
+  "futureAuthorities": null,
+  "normalWrapper": "normal39_continuation(core,prior,cfg)",
+  "prerequisites": [
+    "One actual joint source review of own SOURCE and receiver pair179",
+    "Original writer COMPLETED VERIFIED, native/readback CLOSED and lifecycle cleanup",
+    "Same C STOP and exact original authentication RESTORE",
+    "Actual fresh postwriter stopped root baseline, four unused keys, original lock and no operations"
+  ],
+  "previewOnly": {
+    "append": 4,
+    "baseline": "actual registered normal39 eab",
+    "isFuturePostWriterBaseline": false,
+    "profileSha256": null,
+    "protectedPrefix": 107,
+    "total": 111
+  },
+  "profileIssuer": "issue(starts_at,expires_at,decision_reference,authority_files,authority_pins,writer_file,writer_pin,stop_file,stop_pin,restore_file,restore_pin,baseline_file,baseline_pin,dispatcher_file,normal_policy_file,review_file,review_pin,output_directory)",
+  "profileIssuerArguments": 18,
+  "receiverAndServerOwner": "T45",
+  "receiverPairSource": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ARTIFACT-ROOT-PAIRING-SOURCE-02/SOURCE-PINS.json",
+  "receiverPairSourcePinsSha256": "179d65977bd82c43f136ce4ff8323227a457f500fd750bbda700d56a6a43215f",
+  "rootSourceOwner": "D1",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourceSelection": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261117-r3-app-a7-fixed-artifact-source-selection-01/DECISION.json",
+    "sha256": "b749f98a5477cae8b693c9362b0f209adf62915c31340872a0491768c088de3d"
+  },
+  "state": "SOURCE_INTERFACE_ACTUAL_PAIR179_FUTURE_POSTWRITER_BASELINE_REQUIRED"
+}
