@@ -1,0 +1,36 @@
+{
+  "PGConnections": 0,
+  "checks": [
+    "Exact frozen local preparation metadata",
+    "All ten prepared programs exact frozen bytes and pins",
+    "All52 execution bundle members match exact consumer source",
+    "Actual execution CLI exactly reviewed42 policy adapter",
+    "Five execution calls exact key script authority and budget",
+    "Start stored four leaves are byte pinned against boot root and public copies",
+    "Start actual authority argument and work versus outer binding",
+    "Context raw facts separated from explicit host work deadline",
+    "Stop basis future substitutions remain unissued",
+    "Stop actual future service proof cleanup and own C bind exact42",
+    "Restore safe receipt exact original fields and private snapshots stat only",
+    "All prepared programs compile without invoking them"
+  ],
+  "clockCalls": 0,
+  "findings": [
+    {
+      "file": "bind_actual42_context.py",
+      "function": "render_stop_basis",
+      "id": "NORMAL42-A01",
+      "minimumFix": "Use actual original-key observer only; distinguish proven absence from unknown; copy exact supported terminal status/exitCode without inventing receipts; retain all actual unit/absence/readback guards.",
+      "problem": "original_result requires non-null upgrade terminal; binder and template accept only COMPLETED0/FAILED2. Existing stop42 contract also accepts proven not-submitted None and exact settled before-phase refusals or interrupted outcome. These valid cleanup cases cannot be rendered by new adapter."
+    }
+  ],
+  "independentChecks": 12,
+  "issuerCalls": 0,
+  "positiveRuntimeFixtureCreated": false,
+  "preparedChannelSha256": "9c5d3f9fa4a4ac75d88bb83f773b567cabcb83521956f02f6f589037c2c59bf9",
+  "rootAndConsumerSourceAcceptanceUnaffected": true,
+  "runtimeAcceptance": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "NEED_FIX_NORMAL42_LOCAL_STOP_BASIS_TERMINAL_ROUTING"
+}

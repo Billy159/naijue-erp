@@ -1,0 +1,45 @@
+{
+  "PGConnections": 0,
+  "changedPrograms": {
+    "bind_actual42_context.py": "012ef9969d570c15eb0411c800f2ae638f12287c917e2b8f1c361bbb8de1d50f",
+    "read_stop_basis42.template.py": "a294a967b5c667151494e7cf93216328747cf0cb6b3d12161ffa68eb715d8503"
+  },
+  "checks": [
+    "Exact final isolated adapter source9c863 and all six files",
+    "Prior prepared10 program source remains intact and reused",
+    "Only render_stop_basis changes among binder functions",
+    "Isolated adapter reads original42 actual runtime and own new template",
+    "Actual upgrade observer is sole input and active operations reject before branch",
+    "Missing terminal alone insufficient: exact across-grant absence and no results required",
+    "Absence also requires existing matching pre-submit proof not inflight unknown or partial",
+    "Both binder and template exactly retain existing three terminal and two refusal classes",
+    "Actual terminal retains task grant finish bool phase and exact tuple fields",
+    "Template independently verifies byte pair hash original tuple and upgrade inactive",
+    "Original two-grant full absence branch unchanged",
+    "Original protected take and other functions unchanged",
+    "Future substitution carries only actual service terminal outcome and CAS pins",
+    "Future runtime evidence and authority not manufactured by review or source",
+    "Both changed programs compile without invoking runtime functions",
+    "Prior finding and Root consumer joint preserved"
+  ],
+  "clockCalls": 0,
+  "closedFindings": [
+    "NORMAL42-A01"
+  ],
+  "consumerReviewSha256": "ce35e6651cfa8d287e5735040fba6d96645fab699dfe020390c01434d467cb5e",
+  "findings": [],
+  "independentFixChecks": 16,
+  "issuerCalls": 0,
+  "localAdapterReviewComplete": true,
+  "ownerFixChecksReused": 21,
+  "positiveRuntimeFixtureCreated": false,
+  "preparedChannelSha256": "9c5d3f9fa4a4ac75d88bb83f773b567cabcb83521956f02f6f589037c2c59bf9",
+  "rootReviewSha256": "863fc8703c9f28920a90ab336c8c51687f2e3c89a042d8bcb0799dc58029051f",
+  "runtimeAcceptance": false,
+  "runtimeFunctionsCalled": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourcePinsSha256": "9c86348d30475f3b75787f64613a7f1ea62b71b5adf72edad0573aede0e271ed",
+  "state": "SOURCE_PASS_NORMAL42_ADAPTER_ASSEMBLY_FIX_ONLY",
+  "unaffectedAdapterChecksReused": 12
+}

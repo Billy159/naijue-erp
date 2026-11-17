@@ -1,0 +1,51 @@
+{
+  "PGConnections": 0,
+  "adapterOpenFindings": [
+    "NORMAL42-A01"
+  ],
+  "checks": [
+    "Exact corrected c583 final source and21 frozen files",
+    "Old source preserved and counters accurately122 to127",
+    "Metadata successor keeps all runtime Main and consumer bindings byte-identical",
+    "Consumer source interface blueprint and independent review exact",
+    "Actual122 immutable dispatcher matches real CAS result ec3b",
+    "All122 keys retained and only five exact new42 keys appended",
+    "Every old constant and old function guard remains unchanged",
+    "Execute gains only exact42 branch with final pinned module and unissued policy",
+    "Five exact frozen rules and parent5100 match consumer and policy",
+    "Stop issuer operation membership exactly matches actual42 consumer",
+    "Prior service and all nine guardian rollback02 bindings exact reviewed consumer",
+    "Original history and closed40 validation algorithms retained",
+    "Original exact frozen request submitted receipt and settled-upgrade algorithms retained",
+    "New latest41 reads exact successful start guardian proof work outer and rollback receipts",
+    "Snapshot stat only exact13 observed identities no original verifier reads",
+    "Own five phase finish tags handled locally and old phases delegate",
+    "Original CAS ownership locking snapshot and durable publication primitives retained",
+    "CAS keeps28GiB inactive units and unique five keys across grants",
+    "Main seven and eight argument APIs and exact source QA future fresh precede real clock",
+    "Main exact42 policy format and same role pin applied to apply restore only",
+    "Main8 exact typed prior41 closure and correct work outer observation",
+    "Actual source template and new independent target stage exact",
+    "Final source remains unissued without runtime acceptance"
+  ],
+  "clockCalls": 0,
+  "closedFindings": [
+    "NORMAL42-M01"
+  ],
+  "consumerIndependentChecksReused": 32,
+  "consumerReviewSha256": "ce35e6651cfa8d287e5735040fba6d96645fab699dfe020390c01434d467cb5e",
+  "consumerSourcePinsSha256": "a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b",
+  "findings": [],
+  "independentRootDeltaChecks": 23,
+  "issuerCalls": 0,
+  "localAdapterReviewComplete": false,
+  "ownerConsumerChecksReused": 67,
+  "ownerRootChecksReused": 49,
+  "positiveRuntimeFixtureCreated": false,
+  "rootPairReviewComplete": true,
+  "runtimeAcceptance": false,
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourcePinsSha256": "c5831945c03c041abfc113e2e303c5e30197bea776ca4c9737e00196abbb501e",
+  "state": "SOURCE_PASS_NORMAL42_ROOT_CONSUMER_PAIR_ONLY"
+}

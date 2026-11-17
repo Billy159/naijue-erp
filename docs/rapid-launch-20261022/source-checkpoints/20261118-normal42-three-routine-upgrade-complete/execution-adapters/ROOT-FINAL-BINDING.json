@@ -1,0 +1,42 @@
+{
+  "MainAPIs": {
+    "issue_phase.py": [
+      "phase",
+      "rules_file",
+      "rules_pin",
+      "registration_directory",
+      "evidence_path",
+      "evidence_pin",
+      "predecessor_path",
+      "predecessor_pin"
+    ],
+    "issue_registration.py": [
+      "review_file",
+      "review_pin",
+      "basis_file",
+      "basis_pin",
+      "output_directory",
+      "consumer_review_file",
+      "consumer_review_pin"
+    ]
+  },
+  "actualRootBefore": 122,
+  "candidateRootAfter": 127,
+  "consumerPreparedChannelSha256": "9c5d3f9fa4a4ac75d88bb83f773b567cabcb83521956f02f6f589037c2c59bf9",
+  "consumerSourcePinsSha256": "a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b",
+  "freshOrCASDirectoriesCreated": false,
+  "futureCASDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-ROOT-EXECUTION-PREPARATION-01/cas",
+  "futureFreshDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-ROOT-EXECUTION-PREPARATION-01/fresh",
+  "localAdapterReview": "PENDING",
+  "localRootPrepareCalls": 1,
+  "rootFiveInterfaceSha256": "e1fc1206cf6c4b0c62018a99a7f7348c94cbec659aa23f7a21dffd96d58aceb4",
+  "rootJointReview": "PENDING",
+  "rootPreparedChannelSha256": "fdaa6f6b1e0c3ddd2899784334586214322182aaa9c3c234e4bb1d24e634c81c",
+  "rootPreparedDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-ROOT-EXECUTION-PREPARATION-01",
+  "rootSourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/D1/20261117-r3-ordinary42-root-source-02",
+  "rootSourcePinsSha256": "c5831945c03c041abfc113e2e303c5e30197bea776ca4c9737e00196abbb501e",
+  "runtimeDirectoriesCreated": false,
+  "serverOrClockOrIssuerOrCASOrPGOrJobCalls": 0,
+  "source01PrepareCalls": 0,
+  "state": "NORMAL42_FINAL_SOURCE02_LOCAL_ROOT_AND_CONSUMER_BOUND_UNISSUED"
+}

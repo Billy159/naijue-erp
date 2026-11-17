@@ -1,0 +1,109 @@
+{
+  "asOf": "2026-11-17T09:39:32.699914+00:00",
+  "state": "CONTROLLED_RECOVERY_ORDER_FROM_ACTUAL_READONLY_PROOF_NO_RUNTIME_AUTHORITY_IN_THIS_DOCUMENT",
+  "authorizationBasis": "Existing continuous human ERP launch and same controlled operations standing authorization; controller factual decision, not a newly fabricated human approval.",
+  "actualDiagnosticReadbackSha256": "b460ff5de8330945d9f65d17410f3b623808a4521c56815930a0364302ac13bf",
+  "actualDiagnosticSummarySha256": "bcceec1cdc67b6f70374cd68da483b944a43ec97f4d10aee4f04f242a7641bea",
+  "actualTerminal": "68ef74f754d803b13788fe420517900570cd4f5c714e264a16b204182d7f65a6",
+  "actualRootDispatcherSha256": "b4013f9a04e35bfae287742a7d91b9c2a9daf1d06b0768262db01b8de40926de",
+  "observedOriginalRootOperation": {
+    "committedCount": 0,
+    "count": 0,
+    "hasBatchedMarker": false,
+    "otherStatusCount": 0
+  },
+  "observedOriginalFailedSubBatch": {
+    "committedCount": 0,
+    "receiptCount": 0
+  },
+  "observedNamespace": {
+    "baselineBatchPresent": false,
+    "completedBatchCount": 0,
+    "documentBatchPresent": false,
+    "importedBatchCount": 0,
+    "matchingBatchCount": 0,
+    "namespaceRecordCount": 0
+  },
+  "tableCounts": {
+    "audit_change": 1,
+    "auth_session": 0,
+    "barcode_scheme": 0,
+    "color": 0,
+    "customer": 0,
+    "fit": 0,
+    "hall": 0,
+    "import_batch": 0,
+    "import_record": 0,
+    "inventory_balance": 0,
+    "inventory_ledger": 0,
+    "operation_receipt": 1,
+    "payment_account": 0,
+    "payment_account_hall": 0,
+    "payment_method": 0,
+    "product": 0,
+    "product_category": 0,
+    "product_image": 0,
+    "runtime_document_number_allocation": 0,
+    "sales_header": 0,
+    "sales_line": 0,
+    "sales_settlement": 0,
+    "schema_migration": 27,
+    "season": 0,
+    "size": 0,
+    "size_group": 0,
+    "size_group_member": 0,
+    "sku": 0,
+    "sku_barcode": 0,
+    "staff": 1,
+    "supplier": 0,
+    "transfer_header": 0,
+    "transfer_line": 0,
+    "user_account": 1,
+    "warehouse": 0
+  },
+  "observedThreeBeforeBodyHashes": {
+    "command": "cc11ea590f93b579a0e1286a2c28bd2fc7a6b423a366bc35ef54406a4cc46fba",
+    "migration": "508188784710a0bebaa7cf2d32e188f20ab82918e67a34b681d7b9d44951f5f4",
+    "verify": "8e490d4abdfaa1e8faa4a3ee3a7fe43d87c73521b1836818ae126db83acbbab8"
+  },
+  "observedFunctionDefinitions": null,
+  "prosrcObservationIsNotDefinitionProof": true,
+  "catalogCounts": {
+    "columns": 351,
+    "indexes": 114,
+    "routines": 161,
+    "tables": 35
+  },
+  "businessDurableClassification": "NO_RECORDS_FOR_FIXED_ORIGINAL_IMPORT_OPERATION_SUBBATCH_NAMESPACE_AND_NO_ROWS_IN_BUSINESS_TABLES_EXCLUDING_PRESERVED_EXISTING_IDENTITY_AND_OPERATIONAL_RECORDS",
+  "existingRowsPreserved": [
+    "staff",
+    "user_account",
+    "audit_change",
+    "operation_receipt",
+    "schema_migration"
+  ],
+  "sourceInputOrIdentityAlterationAuthorized": false,
+  "truncateDeleteOrRebuildAuthorized": false,
+  "originalFailedWriterPermanentlyConsumed": true,
+  "oldFailedDiagnostic01PermanentlyConsumed": true,
+  "actualDataAndBackupsPreserved": true,
+  "PGDATAStartupShutdownPhysicalWritesPossible": true,
+  "SQLUpgradeAlreadyPerformed": false,
+  "nextOrderedSteps": [
+    "Freeze and independently review Root08 exact110-key source admission against actual109-key b401 root, reusing consumer4fed/abfa.",
+    "Main actual fresh finite issuance then T45 Root08 SOURCE-only physical materialization; no SQL/model-installed claim.",
+    "Bind existing controlled host/native seam5c48/QB177930 to real Root08 marker and actual target. Preserve original SQL daf378, three before body/definition/owner/metadata guards, transactional update and independent post-COMMIT READONLY readback; full host source change gets affected-scope review before finite execution.",
+    "Only after actual upgrade/readback and next exact preparation binding, prepare a reasoned successor writer request preserving original business operation/subBatch/namespace identities. Old writer request is never replayed; successor writer key is not selected by this decision.",
+    "Complete actual whole-batch import/reconciliation/backup and formal same-version deployment/roles/browser acceptance under existing launch scope."
+  ],
+  "futureWriterRequestKey": null,
+  "futureServiceContainerOrEpoch": null,
+  "futureRolesAndAuthorities": null,
+  "reserveBytes": 30064771072,
+  "budgetsUnchanged": [
+    300,
+    780,
+    3000,
+    5100
+  ]
+}

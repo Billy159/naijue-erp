@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "all unrelated binder functions unchanged",
+    "no changes to take or remote reader metadata algorithm",
+    "only fixed original upgrade observation read",
+    "missing terminal separately requires global absence",
+    "inactive operations required before either branch",
+    "absence requires existing explicit no submission evidence",
+    "unknown observation is never fabricated or caught as absent",
+    "actual terminal job task grant finish and phase retained",
+    "all existing stop terminal classes retained binder",
+    "before phase refusal retains false phase and integer2 binder",
+    "all existing stop terminal classes retained template",
+    "before phase refusal retains false phase and integer2 template",
+    "real terminal tuple bound without guessed exit code",
+    "None pin paired only with None outcome",
+    "remote upgrade unit inactive independently rechecked",
+    "original both grant full absence checks unchanged",
+    "new source adapter still uses original42 runtime paths",
+    "old PREPARED preserved",
+    "old root binding preserved",
+    "consumer and Root source preserved",
+    "only local syntax checked no fixture executed"
+  ],
+  "count": 21,
+  "positiveFixtureCreated": false,
+  "runtimeFunctionsCalled": false,
+  "serverOrClockOrIssuerOrCASOrPGCalls": 0,
+  "state": "SCOPED_STOP42_ASSEMBLY_SOURCE_DELTA_PASS_NOT_EXECUTED"
+}

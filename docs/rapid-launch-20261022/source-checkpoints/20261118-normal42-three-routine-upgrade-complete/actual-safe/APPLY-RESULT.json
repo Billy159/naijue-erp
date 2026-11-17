@@ -1,0 +1,153 @@
+{
+  "PGConnections": 0,
+  "activeOperationUnits": [],
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-17T16:25:08.352414+00:00",
+  "mutations": 0,
+  "noOtherOperationUnits": true,
+  "originalPortAbsent": true,
+  "ownOperationUnitInactive": true,
+  "pgdataPidAbsent": true,
+  "portAbsent": true,
+  "presentAcrossExistingGrants": [
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary42-auth-apply-20261117-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-ordinary42-auth-apply-20261117-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-ordinary42-auth-apply-20261117-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-ordinary42-auth-apply-20261117-01.json"
+  ],
+  "publicResultSha256": "0f1ab7d86e4ca622e3a94122df618b4a96816ca6fd4a88e8a439b960c971bc7f",
+  "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+  "result": {
+    "SQL36OrBusinessImport": false,
+    "automaticReplay": false,
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "6b4403ec49207d98ee2d811218a96a217e2abdcfff5f831ef47423d5d3fb00e9",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "newDatabaseOrRole": false,
+    "normal08Or05Started": false,
+    "phase": "apply",
+    "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+    "result": {
+      "authenticationAttempted": false,
+      "automaticReplay": false,
+      "credentialValidUntilByRole": {
+        "erp35_admin_20261110_r3": 1794936291192,
+        "erp35_controller_20261110_r3": 1794936171192
+      },
+      "membershipsOrRoleAttributesChanged": false,
+      "newRoles": 0,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "roles": [
+        "erp35_controller_20261110_r3",
+        "erp35_admin_20261110_r3"
+      ],
+      "runtimeAuthChanged": false,
+      "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+    },
+    "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+  },
+  "resultObjectsEqual": true,
+  "results": {
+    "maintenance-auth-cleanup.json": {
+      "objectsEqual": true,
+      "publicSha256": "7e3b9ef4d6290ad619186381f3f2f209dd93213c2c6c12ef1277bf4aef7fdcca",
+      "rootSha256": "a6e16bd831833878425649210a4506a465c68a462ea40d5bb19e7547f91e1d0b",
+      "value": {
+        "automaticReplay": false,
+        "cid": "6b4403ec49207d98ee2d811218a96a217e2abdcfff5f831ef47423d5d3fb00e9",
+        "confirmed": true,
+        "createAttempted": true,
+        "exitCode": 0,
+        "oomKilled": false,
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+        "sourceDataPreserved": true,
+        "stage": "READ_BACK_OWN_CONTAINER_STOP"
+      }
+    },
+    "maintenance-auth-result.json": {
+      "objectsEqual": true,
+      "publicSha256": "0f1ab7d86e4ca622e3a94122df618b4a96816ca6fd4a88e8a439b960c971bc7f",
+      "rootSha256": "ebde4ce37eddba9ee904a581f095c53c9f050f3efec4b0568a8e8d270301e96b",
+      "value": {
+        "SQL36OrBusinessImport": false,
+        "automaticReplay": false,
+        "cleanup": {
+          "automaticReplay": false,
+          "cid": "6b4403ec49207d98ee2d811218a96a217e2abdcfff5f831ef47423d5d3fb00e9",
+          "confirmed": true,
+          "createAttempted": true,
+          "exitCode": 0,
+          "oomKilled": false,
+          "ownContainerStopped": true,
+          "ownedPidAbsent": true,
+          "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+          "sourceDataPreserved": true,
+          "stage": "READ_BACK_OWN_CONTAINER_STOP"
+        },
+        "newDatabaseOrRole": false,
+        "normal08Or05Started": false,
+        "phase": "apply",
+        "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+        "result": {
+          "authenticationAttempted": false,
+          "automaticReplay": false,
+          "credentialValidUntilByRole": {
+            "erp35_admin_20261110_r3": 1794936291192,
+            "erp35_controller_20261110_r3": 1794936171192
+          },
+          "membershipsOrRoleAttributesChanged": false,
+          "newRoles": 0,
+          "privateRecoveryBasisRetained": true,
+          "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+          "roles": [
+            "erp35_controller_20261110_r3",
+            "erp35_admin_20261110_r3"
+          ],
+          "runtimeAuthChanged": false,
+          "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+        },
+        "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+      }
+    }
+  },
+  "rootPins": {
+    "result": "ebde4ce37eddba9ee904a581f095c53c9f050f3efec4b0568a8e8d270301e96b",
+    "terminal": "c479cd0eec93c68c9ce0f278dd72458718f44f596169b834746a3b3f44a8d171"
+  },
+  "rootResultSha256": "ebde4ce37eddba9ee904a581f095c53c9f050f3efec4b0568a8e8d270301e96b",
+  "terminal": {
+    "atUTC": "2026-11-17T16:24:42.960202+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 6.57097292796243,
+    "exitCode": 0,
+    "exports": [
+      "maintenance-auth-cleanup.json",
+      "maintenance-auth-inside.json",
+      "maintenance-auth-intent.json",
+      "maintenance-auth-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T16:24:49.583437+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-ordinary42-auth-apply-20261117-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-f3d13bd433fd"
+  },
+  "terminalRootPublicSha256": "c479cd0eec93c68c9ce0f278dd72458718f44f596169b834746a3b3f44a8d171"
+}

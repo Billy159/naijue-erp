@@ -1,0 +1,21 @@
+{
+  "PGConnections": 0,
+  "actualSourceHeader": {
+    "candidateKeys": 120,
+    "oldProtectedKeys": 115
+  },
+  "clockCalls": 0,
+  "consumerReviewUnaffected": true,
+  "file": "outputs/D1/20261117-r3-ordinary42-root-source-01/SOURCE-PINS.json",
+  "findingId": "NORMAL42-M01",
+  "issuerCalls": 0,
+  "minimalFix": "Correct only the two source header counters in isolated successor; preserve frozen source01 and runtime bytes.",
+  "requiredByActualDispatcherAndFive": {
+    "candidateKeys": 127,
+    "oldProtectedKeys": 122
+  },
+  "serverActions": 0,
+  "sourceOnly": true,
+  "sourcePinsSha256": "c074841b4edb6f6982fa1564ef7854c0a930168c527c3cc5b58cd9681e28ccf7",
+  "state": "NEED_FIX_ROOT42_SOURCE01_KEY_COUNT_METADATA"
+}

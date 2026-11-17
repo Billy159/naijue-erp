@@ -1,0 +1,116 @@
+{
+  "dynamicBinderPrepared": true,
+  "executionDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-CONSUMER-01",
+  "executionInterfaceSha256": "b754db06bd7013a8bf31b3803559e3af3b92b5661847aedfc4ec7315022b4838",
+  "executionPhaseBlueprintSha256": "2a71935227185d348dcb904922ccb25216c776ef8011dec3cf1f76a8f77570b5",
+  "externalPrepareOrExecuteCalls": 0,
+  "frozenConsumerUnchanged": true,
+  "futureFixedPaths": {
+    "actualRootCAS": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-ROOT-EXECUTION-PREPARATION-01/cas/ACTUAL-CAS-RESULT.json",
+    "applyObservation": "runtime/apply/ACTUAL-ORIGINAL-KEY-READBACK.PRIVATE.json",
+    "restoreClosureObservation": "runtime/restore/ACTUAL-ORIGINAL-KEY-READBACK.PRIVATE.json",
+    "startProtected": "runtime/start/ACTUAL-START42-PROTECTED-STORED-OUTPUTS.PRIVATE.json",
+    "stopClosureObservation": "runtime/stop/ACTUAL-ORIGINAL-KEY-READBACK.PRIVATE.json",
+    "upgradeObservation": "runtime/upgrade/ACTUAL-ORIGINAL-KEY-READBACK.PRIVATE.json"
+  },
+  "futureRuntimeOrAuthorities": null,
+  "genuineFourLeafReadbackSource": "Start42 original protected result refs; no Node or native rerun",
+  "genuineOutputs": "Only original Start42 stored four outputs, no native rerun; raw facts kept separately from host-observed work deadline; shared=outer-35000",
+  "newAdapterChecks": "Exact five42 rules/key/script/pins/phase args interface; policyformat matches42; syntax and binding only, no positive AUTH/prepare/execute",
+  "observerPins": {
+    "READ-APPLY-ORIGINAL-KEY.py": "02e453b6025c398b2ad45b741b4e269f292c5083191432b9ec6fc218750a2e67",
+    "READ-RESTORE-ORIGINAL-KEY.py": "085fc890eb5dac17ee80752d675ccc85e16dc314cf1be08023f6b799544fcaee",
+    "READ-START-ORIGINAL-KEY.py": "b1a2ca6abe5b8a0733bc86e32ef920ae5c8a326e69236e3174caa9c11fd0b024",
+    "READ-START42-PROTECTED-STORED-OUTPUTS.py": "3c84051658cb6c3de30d0d373bbb1248357c73b31ae38f8bf80b5f4ec3980e22",
+    "READ-STOP-ORIGINAL-KEY.py": "43e9196d60aee72c27be52490466af7b230e2100ee2eb58484decc6f282da49c",
+    "READ-UPGRADE-ORIGINAL-KEY.py": "dbd41344874fa008ee89e37b0ac460061c4712d9d1d98e500910082f33e31876"
+  },
+  "phaseCalls": {
+    "apply": {
+      "authorityLeaf": "host-authorization.json",
+      "jobId": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/apply",
+      "script": "ordinary05_roles_job.py",
+      "timeoutSeconds": 300
+    },
+    "restore": {
+      "authorityLeaf": "host-authorization.json",
+      "jobId": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/restore",
+      "script": "ordinary05_roles_job.py",
+      "timeoutSeconds": 300
+    },
+    "start": {
+      "authorityLeaf": "service-start-authorization.json",
+      "jobId": "t45-first-r3-native-service-start-20261117-42",
+      "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/start",
+      "script": "normal_service05_after08.py",
+      "timeoutSeconds": 300
+    },
+    "stop": {
+      "authorityLeaf": "normal05-preserve-stop-input.json",
+      "jobId": "t45-r3-ordinary42-preserve-stop-20261117-01",
+      "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/stop",
+      "script": "normal05_preserve_stop.py",
+      "timeoutSeconds": 120
+    },
+    "upgrade": {
+      "authorityLeaf": "catalog-update-authorization.json",
+      "jobId": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+      "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-EXECUTION-PREPARATION-01/runtime/upgrade",
+      "script": "batched161_command_update_host.py",
+      "timeoutSeconds": 780
+    }
+  },
+  "phaseCliSha256": "5a300f8971a93042e39bf25d191497d57bee059db37726e8946b027a6a60f32c",
+  "policyFormat": "T45_R3_NORMAL42_BATCHED_REAL_V1",
+  "preparedPrograms": {
+    "READ-APPLY-ORIGINAL-KEY.py": {
+      "bytes": 2543,
+      "sha256": "02e453b6025c398b2ad45b741b4e269f292c5083191432b9ec6fc218750a2e67"
+    },
+    "READ-RESTORE-ORIGINAL-KEY.py": {
+      "bytes": 2545,
+      "sha256": "085fc890eb5dac17ee80752d675ccc85e16dc314cf1be08023f6b799544fcaee"
+    },
+    "READ-RESTORE42-SAFE-CLOSURE.py": {
+      "bytes": 4811,
+      "sha256": "1ba81c7912018cd1615bbbba20620e382626f02cb4160818b05ed102ceaeef49"
+    },
+    "READ-START-ORIGINAL-KEY.py": {
+      "bytes": 2698,
+      "sha256": "b1a2ca6abe5b8a0733bc86e32ef920ae5c8a326e69236e3174caa9c11fd0b024"
+    },
+    "READ-START42-PROTECTED-STORED-OUTPUTS.py": {
+      "bytes": 12533,
+      "sha256": "3c84051658cb6c3de30d0d373bbb1248357c73b31ae38f8bf80b5f4ec3980e22"
+    },
+    "READ-STOP-ORIGINAL-KEY.py": {
+      "bytes": 2519,
+      "sha256": "43e9196d60aee72c27be52490466af7b230e2100ee2eb58484decc6f282da49c"
+    },
+    "READ-STOP42-SAFE-CLOSURE.py": {
+      "bytes": 4519,
+      "sha256": "4c86ae97fab1ffee67c3483386b16f77f3321e2def051e5a68bbcd9c8cb7a8f9"
+    },
+    "READ-UPGRADE-ORIGINAL-KEY.py": {
+      "bytes": 2579,
+      "sha256": "dbd41344874fa008ee89e37b0ac460061c4712d9d1d98e500910082f33e31876"
+    },
+    "bind_actual42_context.py": {
+      "bytes": 6391,
+      "sha256": "c386ff40c3185c5d150e8d095d33a82e7219cf334ca99f72f2a9d3a4659045c8"
+    },
+    "read_stop_basis42.template.py": {
+      "bytes": 11661,
+      "sha256": "e9d63c81daec2bff71389190d4275281af86404c78c7c33c33cacec781194944"
+    }
+  },
+  "rootPrepareLocalCalls": 0,
+  "rootPrepared": false,
+  "rootSourceDirectoryOrPin": null,
+  "serverOrFreshOrClockOrIssuerOrCASOrPGCalls": 0,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-THREE-ROUTINE-MAINTENANCE-SOURCE-01",
+  "sourcePinsSha256": "a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b",
+  "state": "NORMAL42_LOCAL_EXECUTION_DYNAMIC_CONTEXT_AND_CLOSURE_SOURCE_PREPARED_ROOT_PENDING"
+}

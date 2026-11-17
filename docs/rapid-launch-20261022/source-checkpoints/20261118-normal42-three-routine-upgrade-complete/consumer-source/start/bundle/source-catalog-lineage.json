@@ -1,0 +1,123 @@
+{
+  "format": "D1_R3_SOURCE_CATALOG_LINEAGE_V1",
+  "state": "STATIC_SOURCE_LINEAGE_PROVED_NOT_LIVE_CATALOG_PASS",
+  "historicalTargetSha256": "fe0b2fe570382453f27def1c9d92eac8fc2fb5b37fc51f096a1a8c912bc28168",
+  "historicalRoot06": {
+    "sourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+    "sourceRowsSha256": "078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9",
+    "resultSha256": "73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171"
+  },
+  "root07": {
+    "requestKey": "t45-r3-batched-root07-source-delta-20261117-01",
+    "operatorRoot": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-batched-root07-20261117-01/operation",
+    "hostOutputDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root07-20261117-01",
+    "sourceSetSha256": "f9a7f170360185a2993b2e4e6d5fb3d1eb1767bcc325d71b72b2723c16faae7e",
+    "sourceRowsSha256": "74de5cbfd7315fbfa28be3f42087cb187709b16a0685dcca3a24ae1e66c3813e",
+    "sourceDescriptionSha256": "c0b18a897fa32f956f0c8d2950b2631c3be1a8debb517fc53f67097e84d3f7b9",
+    "sourceFiles": 387,
+    "changed": [
+      {
+        "path": "tools/unified-import/fresh35-host-session.mjs",
+        "beforeSha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+        "sha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+        "bytes": 105724,
+        "payloadLeaf": "fresh35-host-session.mjs"
+      }
+    ]
+  },
+  "historicalCatalog": {
+    "catalogSpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
+    "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811",
+    "sourceSetSha256": "cf27add8653a4aa85b8cb10d609e2b85b1c4e55cf02f7fd2f5bf9e60ecb5ce9c"
+  },
+  "currentSourceCatalog": {
+    "sourceSetSha256": "db127efd32e1953fa550e56bd715b6ea334cc9d7e141217c4da8151bcd8c7803",
+    "catalogSpecSha256": "344ccd895e1e65dedf0fdae5be71e291a6226ba5c21d9c0f4276b2be5490f362",
+    "modelSha256": "626c560485431d38db4b83e1247475af2996a41e980bd7d1db3de9aa91116811"
+  },
+  "historicalCatalogEvidence": {
+    "protocolSha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e",
+    "terminalSha256": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb",
+    "resultSha256": "a474d758af30d53a4154f90081066213df351a33cb1226f976d6231ed7fdb020",
+    "publicResultSha256": "2698e7d0e259037adac1c92af3ce0942a11289469fe942f4f91f14e52b75eee5",
+    "completionSha256": "fe89ee20df99555feec98782c7542730a199a9edffeb9e43b2c4f98388aa2207"
+  },
+  "sourceLayers": {
+    "historical-root06": {
+      "combined": "8fa7f0734d8c2804a7eaad63baa7e7c3a45d456f48a1e01599436ad4e6cbf5a1",
+      "admin154": "ac60231ff7fd38c1b63546a1b50d643203fdc0cc28bdf6f07e747a1543d7a2a5",
+      "compactZero": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898"
+    },
+    "root07-candidate": {
+      "combined": "cec20f538bacbf980c0afe86187cece90f46725c34de947a4b131e285efbd6ce",
+      "admin154": "54dcc1647790df63df1c6d7d377d5bdc881f07638a90db6cff936005068c209e",
+      "compactZero": "f9a7f170360185a2993b2e4e6d5fb3d1eb1767bcc325d71b72b2723c16faae7e"
+    }
+  },
+  "sourcePathsUnchanged": true,
+  "runtimeLeafChanges": 1,
+  "inheritedUnchangedFiles": 386,
+  "onlySourceObservationTagChanged": true,
+  "modelAndGuardSQLUnchanged": true,
+  "descriptorChangesOnly": [
+    "sourceSetSha256",
+    "observationSqlSha256",
+    "catalogSpecSha256"
+  ],
+  "evidence": [
+    {
+      "path": "metadata/historical-root06/source-combined.json",
+      "sha256": "81a8a359a6636d6056ce0c9eb53de3cf84452b831dbc756407067c8844e2ab63"
+    },
+    {
+      "path": "metadata/historical-root06/source-admin154.json",
+      "sha256": "dcdd61e2c9e67267ed41b5b68136db4a8c900bf90188b310d3737745d0ecbfc4"
+    },
+    {
+      "path": "metadata/historical-root06/source-compactZero.json",
+      "sha256": "cfc36957a59c69d04f6243c820afeae04e923d86ca25409ebeb7d76f10edf6f4"
+    },
+    {
+      "path": "metadata/historical-root06/catalog-compactZero.json",
+      "sha256": "b3de240398a970eafa771c3d71ffb0b056a5036db716982a2139c7d9a433c6a4"
+    },
+    {
+      "path": "metadata/historical-root06/catalog-batched.json",
+      "sha256": "f6d5094e879bd68cf810356420d5cdbdafb28f10a1cb13dee30c1ed93afb636e"
+    },
+    {
+      "path": "metadata/historical-root06/catalog-command.json",
+      "sha256": "47d47297202e35a42684e6b393cb68ff25d093d371cafe30fd4a84ad2b8a9203"
+    },
+    {
+      "path": "metadata/root07-candidate/source-combined.json",
+      "sha256": "952edf0352beb16f715ba5085b44a69b63732cdb40f9a3f2021abaf72d80576d"
+    },
+    {
+      "path": "metadata/root07-candidate/source-admin154.json",
+      "sha256": "65b563ac26b60294ea4ff482efcc764f80965e1d15792cc5db86138f3c3266b9"
+    },
+    {
+      "path": "metadata/root07-candidate/source-compactZero.json",
+      "sha256": "cf95a2c260ea2d96215c50ea7b370fcadcbc254972cd28cb555c1a5b355e0801"
+    },
+    {
+      "path": "metadata/root07-candidate/catalog-compactZero.json",
+      "sha256": "cfdd348fe16a164efd3a5650b3e3aed3dfd5292aa9d00a13ea3eff498d61c514"
+    },
+    {
+      "path": "metadata/root07-candidate/catalog-batched.json",
+      "sha256": "375ce3cdcbceea2bfe4dfc0fb6884a56e2682c837ba1eafa79bb8e520509a3e5"
+    },
+    {
+      "path": "metadata/root07-candidate/catalog-command.json",
+      "sha256": "09a435cda0224aebb437aebcf97f0ed88ab646748d65ece23f40e9f713693cb2"
+    }
+  ],
+  "metadataOperationRequired": false,
+  "materializationRuntimeProven": false,
+  "nativeCatalogRuntimeProven": false,
+  "futureC": null,
+  "futureAuthority": null,
+  "futureProgramSha256": null
+}

@@ -1,0 +1,16 @@
+{
+  "actualRootBefore": 122,
+  "candidateRootAfter": 127,
+  "futureActualGeneration": null,
+  "jobs": {
+    "apply": "t45-r3-ordinary42-auth-apply-20261117-01",
+    "restore": "t45-r3-ordinary42-auth-restore-20261117-01",
+    "start": "t45-first-r3-native-service-start-20261117-42",
+    "stop": "t45-r3-ordinary42-preserve-stop-20261117-01",
+    "upgrade": "t45-r3-settlement24-three-routine-upgrade42-20261117-01"
+  },
+  "rootPolicyFormat": "T45_R3_NORMAL42_BATCHED_REAL_V1",
+  "rootPolicyLeaf": "direct42-batched-real.json",
+  "sourceOnly": true,
+  "state": "SOURCE_DESIGN_UNISSUED"
+}

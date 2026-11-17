@@ -1,0 +1,108 @@
+{
+  "PGConnections": 0,
+  "SQLInstalled": false,
+  "STAGEDExposed": false,
+  "authoritiesIssued": false,
+  "candidateKeys": 127,
+  "checks": 49,
+  "clockCalls": 0,
+  "consumerRulesSha256": "2a71935227185d348dcb904922ccb25216c776ef8011dec3cf1f76a8f77570b5",
+  "consumerSourcePinsSha256": "a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b",
+  "files": {
+    "ACTUAL-HISTORY.json": {
+      "bytes": 3767,
+      "sha256": "5e66dcd3722bf430bcd89d97bf98837b13e3c7f06a6b5baeab9dc56e90b4e8b1"
+    },
+    "ACTUAL122-DISPATCHER.py": {
+      "bytes": 56694,
+      "sha256": "ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b"
+    },
+    "DELTA-CHECKS.json": {
+      "bytes": 2675,
+      "sha256": "a5de5d946b3baba99ca1b094b4ed256a609af38e40869969e675d71845e7068b"
+    },
+    "FIVE-PHASES.UNISSUED.json": {
+      "bytes": 32910,
+      "sha256": "e1fc1206cf6c4b0c62018a99a7f7348c94cbec659aa23f7a21dffd96d58aceb4"
+    },
+    "HANDOFF.WIP.md": {
+      "bytes": 1113,
+      "sha256": "d2d04b368cf5a12753f6cf3fb47ebcf81844a6c0afae61ab24b7468389291c5d"
+    },
+    "HANDOFF.md": {
+      "bytes": 4161,
+      "sha256": "2e15dc4c74836f607c0be9948ad379353e1b6bddf9fd17615a2dd130278e8b6e"
+    },
+    "HISTORY-INPUTS.json": {
+      "bytes": 32822,
+      "sha256": "5febe70f5a362c01db8ba192f12cbff6d7b22d7ae01652b9e87ac0090c3e3a14"
+    },
+    "admin_exec.NORMAL42-UNREGISTERED.py": {
+      "bytes": 58048,
+      "sha256": "3c887653eeca86497b09e3146bffba1caf84e95be524d53d5c1748b6c00cdf5b"
+    },
+    "check_delta.py": {
+      "bytes": 8541,
+      "sha256": "95d6fce73252b741fc52a7cacc14db1e3166f7a0b53a6416976f65312d2e22dc"
+    },
+    "freeze_source.py": {
+      "bytes": 1546,
+      "sha256": "b148c65e35ff3ac40c14fc68d67fb88c3f5f481eb849acac2e327a9f4a2c7064"
+    },
+    "issue_phase.py": {
+      "bytes": 23181,
+      "sha256": "3ee0100c3fa7129e4706c3b99f88673103d8b715b3ff42496a49c95aabc8976c"
+    },
+    "issue_registration.py": {
+      "bytes": 7757,
+      "sha256": "5fe59856123d9d7e794bb6e61da77f52f647b314750d398ce02aacfb607c9409"
+    },
+    "patch_dispatcher.py": {
+      "bytes": 3055,
+      "sha256": "510655c1d82601becb73fd8eea7ee22e0bf68209ca7d35c86f16566e3374fe3d"
+    },
+    "prepare_channel.py": {
+      "bytes": 7173,
+      "sha256": "2cbae55282525804bd5140b0418ef90df4cf2d1aac694d3c59e8323425d27b76"
+    },
+    "prepare_source.py": {
+      "bytes": 4195,
+      "sha256": "402053c5e4df4cc0f055948cccef109821c901f4bdf6e20969a9bda65543a98c"
+    },
+    "r3_normal42_continuation.py": {
+      "bytes": 53852,
+      "sha256": "fc29d0b17aa02cbaa00c9cbdc80d5382016e7ca3ccad5acb8ca64c57c777a225"
+    },
+    "read_registration_basis.py": {
+      "bytes": 2602,
+      "sha256": "9ef52cfdd0ccdfd52bd7a8dc2ee06f877aeb3cca15563808df79045f95cca43d"
+    },
+    "register_cas.py": {
+      "bytes": 38979,
+      "sha256": "c051635b0a4a28d0fae19f5fd2b41f169dcca48d6a9c7da817f0e45f5ee56f87"
+    },
+    "render_admission.py": {
+      "bytes": 5475,
+      "sha256": "43c8005079c599c28a0267b91ce8ad24b2b6e34aaa474a32c2d885cde894921f"
+    },
+    "render_main.py": {
+      "bytes": 1946,
+      "sha256": "dab48148bff07f6ec87c9d523e806989fc48e0b590abef5b762f11b2218c497c"
+    },
+    "render_registration.py": {
+      "bytes": 4990,
+      "sha256": "cef8c5ffcdcd8cac5534ab7e8d7c9401dfb32c05a55d2f61f251dfa85376f677"
+    }
+  },
+  "importReady": false,
+  "interfaceSha256": "6e069416ab62383824634b349f233f6efc44eebf3c9bd5e939dcb71897827fa5",
+  "newMaintenanceKeys": 5,
+  "oldProtectedKeys": 122,
+  "publicationRestrictionsLifted": false,
+  "rolesOrFutureCOrEpochOrWindow": null,
+  "rootPairReviewComplete": false,
+  "rulesSha256": "e1fc1206cf6c4b0c62018a99a7f7348c94cbec659aa23f7a21dffd96d58aceb4",
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "NORMAL42_ROOT_SOURCE_READY_UNISSUED_NOT_REGISTERED"
+}

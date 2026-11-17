@@ -1,0 +1,15 @@
+ordinary42 根端 SOURCE 接续，仅 apply → start → upgrade → stop → restore 三函数维护。尚未服务器执行、登记、签发有限授权或启动数据库。请求键沿既定20261117，不因跨午夜改名。SQL升级和完整真实导入均未完成；STAGED不暴露，发布限制保持。
+
+准确实际基线：Root122 dispatcher ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b，原rollback02模块4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7、policy c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391。候选仅追加T45最终固定5键至127；所有122旧键、旧函数和3道保护保留。CAS保留全部44个上一基线受保护成员及新增rollback02成功回执。历史41 upgrade/stop和rollback01失败保留，不重放，不伪造Stop41成功。原认证恢复成功与原hard deadline未满足同时保留，不以自然到期替代恢复。
+
+消费者 NORMAL42-THREE-ROUTINE-MAINTENANCE-SOURCE-01：SOURCE a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b；INTERFACE 6e069416ab62383824634b349f233f6efc44eebf3c9bd5e939dcb71897827fa5；PHASES42 2a71935227185d348dcb904922ccb25216c776ef8011dec3cf1f76a8f77570b5。同QB consumer ce35e6651cfa8d287e5735040fba6d96645fab699dfe020390c01434d467cb5e 已绑定，rootPairReviewComplete仍须由同QB对本最终SOURCE复核，不能把consumer PASS用作joint或运行通过。
+
+最新前次服务为真实41/Ccbf/proof c31/epoch 2026-11-17 13:42:13.196867+00，guardian cleanup9b53停稳；随后rollback02终态2be966、结果915b0a、清理59d36、safe receipt84585恢复original verifier/expiry。Main start只绑定这九个实际SHA，closureKind SUCCESSFUL_START_GUARDIAN_CLOSED_AUTH_RESTORED，去掉previousStop字段。原39/40历史代码和证据继续保留。
+
+新Root fresh读取13份旧39/40/41认证快照的完整stat9，只比较元数据，不读取body或digest；沿旧CAS锁和前后snapshot。新增验证前次41实际start/ACK/proof/guardian closure及rollback02精确成功、ownCafaa stopped/PID0。原库停止、端口和operation等真实检查仅定义于未来fresh，不冒称本轮已做。当前PG模型626只作历史before，未新读库。
+
+原 Main7 issue_registration.issue(review_file,review_pin,basis_file,basis_pin,output_directory,consumer_review_file,consumer_review_pin) 与 Main8 issue_phase.issue(phase,rules_file,rules_pin,registration_directory,evidence_path=None,evidence_pin=None,predecessor_path=None,predecessor_pin=None) 保持。direct42-batched-real.json / T45_R3_NORMAL42_BATCHED_REAL_V1 对齐消费者CLI。预算300/300/780/120/300、parent5100、CAS600及原角色相对期限不变。work=proof.sharedPostgresNamespace.serviceLeaseExpiresAt，ACK/result用work；outer=startAuthority.serviceLeaseExpiresAt，outer-work严格35000。future42 C/epoch/角色票据/时钟保持空。自身finish只吞normal42五阶段，其余仍交原实现。
+
+唯一原通道 prepare_channel.prepare_local() 只本地准备新 NORMAL42-ROOT-EXECUTION-PREPARATION-01；stage_and_read(review_file,review_pin) 与 register_once(registration_directory) 由T45在Main具体scope后执行，本轮未调用。stage模板准确 DURABLE-READONLY-EXECUTION-PREPARATION-02/STAGE-ROOT-SOURCE.py SHA3cecf232aa5ed6949ffe6256643058daf38d83baa87d720878adca7b70934622，不使用不存在的03模板。Main7未来只在准确joint、consumer报告和唯一真实fresh全部通过后取clock；无需另增Decision格式。源码本身不执行这些入口。
+
+DELTA-CHECKS仅新增Root122→127桥接、真实41/rollback02、13stat9、五阶段格式/Main7+8、work/outer和原stage闭包。旧SQL91+69、H01/20+21/36/68、sealed18run2真实PG10/10、APP构建成果均复用，未重跑。0 server/fresh/clock/issuer/CAS/PG/SQL/角色/APP/正向runtime fixture。前端、共享合同、业务数据未修改。

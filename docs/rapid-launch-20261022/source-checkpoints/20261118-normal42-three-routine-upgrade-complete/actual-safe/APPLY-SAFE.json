@@ -1,0 +1,64 @@
+{
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "phase": "apply",
+  "publicResultSha256": "0f1ab7d86e4ca622e3a94122df618b4a96816ca6fd4a88e8a439b960c971bc7f",
+  "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+  "rootPublicObjectsEqual": true,
+  "rootResultSha256": "ebde4ce37eddba9ee904a581f095c53c9f050f3efec4b0568a8e8d270301e96b",
+  "safeFacts": {
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "6b4403ec49207d98ee2d811218a96a217e2abdcfff5f831ef47423d5d3fb00e9",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "inner": {
+      "authenticationAttempted": false,
+      "automaticReplay": false,
+      "credentialValidUntilByRole": {
+        "erp35_admin_20261110_r3": 1794936291192,
+        "erp35_controller_20261110_r3": 1794936171192
+      },
+      "membershipsOrRoleAttributesChanged": false,
+      "newRoles": 0,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "runtimeAuthChanged": false,
+      "status": "EXACT_TWO_ROLE_FINITE_AUTH_FIELDS_READ_BACK_NOT_NATIVE_COMMIT_ACK"
+    },
+    "outerStatus": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED",
+    "phase": "apply"
+  },
+  "terminal": {
+    "sha256": "c479cd0eec93c68c9ce0f278dd72458718f44f596169b834746a3b3f44a8d171",
+    "value": {
+      "atUTC": "2026-11-17T16:24:42.960202+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 6.57097292796243,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T16:24:49.583437+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary42-auth-apply-20261117-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-f3d13bd433fd"
+    }
+  }
+}

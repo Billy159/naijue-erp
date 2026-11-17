@@ -1,0 +1,66 @@
+{
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "genuineFourLeavesReadBackAndRetainedPrivately": true,
+  "genuineRawBodiesIncluded": false,
+  "phase": "start",
+  "publicResultSha256": "c299f3895461d7d80b56a058366ea091ad684338260b1517e1f82474e1062443",
+  "requestKey": "t45-first-r3-native-service-start-20261117-42",
+  "rootPublicObjectsEqual": true,
+  "rootResultSha256": "606bd8180330e0e72e6a24461d46d23bc417510de2db556e646a67fc808a0677",
+  "safeFacts": {
+    "actualSharedServiceWorkDeadline": 1794936435412,
+    "dataDirectoryIdentity": {
+      "device": 66304,
+      "gid": 61035,
+      "inode": 13502421,
+      "mode": 448,
+      "uid": 61035
+    },
+    "descriptionSource": "STORED_START_JOB_OUTPUTS_NO_NODE_RERUN",
+    "outerAuthorityLeaseExpiresAt": 1794936470412,
+    "physical": {
+      "databaseOid": "16393",
+      "postmasterStart": "2026-11-17 16:27:47.780746+00",
+      "serverVersionNum": "170011",
+      "systemIdentifier": "7706545564479176741"
+    },
+    "readOnlyReadiness": true,
+    "retainedAckValidated": true,
+    "runnerConservativeWorkDeadline": 1794936400412,
+    "service": {
+      "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+      "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+      "postmasterStart": "2026-11-17 16:27:47.780746+00",
+      "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+      "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+    }
+  },
+  "terminal": {
+    "sha256": "2f9287f0a468b9f6b1cc18ba3d3966d2529913b5b8d1baec2b569e0a1413f267",
+    "value": {
+      "atUTC": "2026-11-17T16:27:42.501881+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 43.14121406304184,
+      "exitCode": 0,
+      "exports": [
+        "genuine-describe-payload.json",
+        "genuine-describe-process.json",
+        "genuine-descriptor.json",
+        "genuine-live-facts.json",
+        "normal-service-create-attempt.json",
+        "normal-service-intent.json",
+        "normal-service-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T16:28:25.680696+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-first-r3-native-service-start-20261117-42",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-8ebbe0468095"
+    }
+  }
+}

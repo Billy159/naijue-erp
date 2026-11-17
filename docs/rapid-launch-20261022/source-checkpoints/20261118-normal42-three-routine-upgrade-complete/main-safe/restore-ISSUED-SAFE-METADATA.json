@@ -1,0 +1,25 @@
+{
+  "directory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/\u4e3b\u63a7/20261118-r3-normal42-registration-window-01/phase-restore",
+  "issued": {
+    "phase": "restore",
+    "jobId": "t45-r3-ordinary42-auth-restore-20261117-01",
+    "authoritySha256": "2ec393a07e72ab98fe16d561cc463221379705a1b9d2ebb9a3ecb89db7fe028d",
+    "sourcePinsSha256": "c5831945c03c041abfc113e2e303c5e30197bea776ca4c9737e00196abbb501e",
+    "phaseSubmitted": false,
+    "automaticReplay": false
+  },
+  "files": {
+    "ISSUED.json": {
+      "sha256": "80f18e5786e83f7c0b99c5c278e9278a6b758c2d04cad68ba4c7033aca87c26b",
+      "bytes": 301,
+      "mode": "0o600"
+    },
+    "host-authorization.json": {
+      "sha256": "2ec393a07e72ab98fe16d561cc463221379705a1b9d2ebb9a3ecb89db7fe028d",
+      "bytes": 1989,
+      "mode": "0o600"
+    }
+  },
+  "rawAuthorityOrRoleOrProgramBodiesIncluded": false,
+  "actualPhaseSubmitted": false
+}

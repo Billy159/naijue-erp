@@ -1,0 +1,126 @@
+{
+  "PGConnections": 0,
+  "activeOperationUnits": [],
+  "automaticReplay": false,
+  "checkedAtUTC": "2026-11-17T16:34:40.546777+00:00",
+  "mutations": 0,
+  "noOtherOperationUnits": true,
+  "originalPortAbsent": true,
+  "ownOperationUnitInactive": true,
+  "pgdataPidAbsent": false,
+  "portAbsent": true,
+  "presentAcrossExistingGrants": [
+    "/root/erp-release-20261006-01-worker/grant-b16447fbc81f4d64/jobs/t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/jobs/t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/requests/t45-r3-settlement24-three-routine-upgrade42-20261117-01.json",
+    "/home/naijue/erp-release-20261006-01-control/grant-b16447fbc81f4d64/results/t45-r3-settlement24-three-routine-upgrade42-20261117-01.json"
+  ],
+  "publicResultSha256": "68e18919106857a6c2b0940e1f08ca9ca1af9d02c54d2b8a90ebd71487677ad9",
+  "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+  "result": {
+    "automaticReplay": false,
+    "batchedCatalog": {
+      "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+      "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+      "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+    },
+    "beforeCatalogSha256": "309c3a6b5659855fe6bd0755a8900f5847763c727d7eb53191a21557e6f013d3",
+    "businessImported": false,
+    "captureDirectoryLeaf": "settlement24-three-routine-7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+    "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+    "childReaped": true,
+    "commitAcknowledged": true,
+    "commitOutcomeUnknown": false,
+    "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+    "connectionCleanup": "CLOSED",
+    "descendantsReaped": true,
+    "formalBusinessAccepted": false,
+    "innerAuthorityRemoved": true,
+    "nativeResultBindingMatched": true,
+    "postCommitReadback": true,
+    "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+    "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+    "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+    "roleRestoreAcknowledged": true,
+    "routineAttributesSha256": "436c26997092b6f4366d65f43fd5be0082a304d59bbf69f473210369a51361b7",
+    "service": {
+      "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+      "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+      "postmasterStart": "2026-11-17 16:27:47.780746+00",
+      "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+      "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+    },
+    "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+    "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+    "state": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+  },
+  "resultObjectsEqual": true,
+  "results": {
+    "batched161-command-update-result.json": {
+      "objectsEqual": true,
+      "publicSha256": "68e18919106857a6c2b0940e1f08ca9ca1af9d02c54d2b8a90ebd71487677ad9",
+      "rootSha256": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+      "value": {
+        "automaticReplay": false,
+        "batchedCatalog": {
+          "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+          "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+          "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+        },
+        "beforeCatalogSha256": "309c3a6b5659855fe6bd0755a8900f5847763c727d7eb53191a21557e6f013d3",
+        "businessImported": false,
+        "captureDirectoryLeaf": "settlement24-three-routine-7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+        "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+        "childReaped": true,
+        "commitAcknowledged": true,
+        "commitOutcomeUnknown": false,
+        "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+        "connectionCleanup": "CLOSED",
+        "descendantsReaped": true,
+        "formalBusinessAccepted": false,
+        "innerAuthorityRemoved": true,
+        "nativeResultBindingMatched": true,
+        "postCommitReadback": true,
+        "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+        "requestKey": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+        "reviewedInputSha256": "faaa57ae44e67f9d70f43913db121aadc1ed98d64e9a6049f65244a2bf543c19",
+        "roleRestoreAcknowledged": true,
+        "routineAttributesSha256": "436c26997092b6f4366d65f43fd5be0082a304d59bbf69f473210369a51361b7",
+        "service": {
+          "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+          "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+          "postmasterStart": "2026-11-17 16:27:47.780746+00",
+          "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+          "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+        },
+        "sourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
+        "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+        "state": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+      }
+    }
+  },
+  "rootPins": {
+    "result": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+    "terminal": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+  },
+  "rootResultSha256": "edde0904a28d8795b28611d9fd98104979abd475edea5857680065221216241e",
+  "terminal": {
+    "atUTC": "2026-11-17T16:32:57.376085+00:00",
+    "businessAcceptanceClaimed": false,
+    "elapsedSeconds": 40.25283640099224,
+    "exitCode": 0,
+    "exports": [
+      "batched161-command-update-result.json"
+    ],
+    "finishedAtUTC": "2026-11-17T16:33:37.634754+00:00",
+    "grantId": "b16447fbc81f4d64",
+    "jobId": "t45-r3-settlement24-three-routine-upgrade42-20261117-01",
+    "phaseStarted": true,
+    "privateLogsExported": false,
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "taskId": "T45",
+    "unit": "naijue-erp-op-b16447fb-de99cce1cb06"
+  },
+  "terminalRootPublicSha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+}

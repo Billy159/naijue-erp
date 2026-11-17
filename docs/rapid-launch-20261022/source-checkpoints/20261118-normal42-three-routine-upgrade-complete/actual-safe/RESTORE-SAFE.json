@@ -1,0 +1,82 @@
+{
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "finalClosure": {
+    "activeOperationUnits": [],
+    "actualStoppedOwnRestoreContainer": {
+      "exitCode": 0,
+      "id": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-ordinary42-auth-restore-20261117-01",
+      "operation": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "pid": 0,
+      "running": false
+    },
+    "authenticationSnapshotBodiesOrDigestsRead": false,
+    "checkedAtUTC": "2026-11-17T16:42:46.904812+00:00",
+    "originalPortAbsent": true,
+    "pgdataPidAbsent": true,
+    "privateSafeRestoreReceipt": {
+      "matchesWorkerInner": true,
+      "sha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05"
+    }
+  },
+  "phase": "restore",
+  "privateMetadataFilesStatOnly": 5,
+  "publicResultSha256": "5bdd5304d3669b5ba2a74cf3eedbde30135b04f1ecacb0d58c922ca08e4afadc",
+  "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+  "rootPublicObjectsEqual": true,
+  "rootResultSha256": "ca96543508c89e4a8cc0455dc40a8e5f2cd3e86a0ff076395c246d550a0fc7f8",
+  "safeFacts": {
+    "cleanup": {
+      "automaticReplay": false,
+      "cid": "4dc3ab9e126afb225854506e9b57c01529efbd50d0e6b4bb3efe5888cfe05f32",
+      "confirmed": true,
+      "createAttempted": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "ownContainerStopped": true,
+      "ownedPidAbsent": true,
+      "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "sourceDataPreserved": true,
+      "stage": "READ_BACK_OWN_CONTAINER_STOP"
+    },
+    "inner": {
+      "automaticReplay": false,
+      "databaseStillStopped": true,
+      "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+      "membershipsOrRoleAttributesChanged": false,
+      "naturalExpiryCountedAsRestoration": false,
+      "privateRecoveryBasisRetained": true,
+      "requestKey": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "runtimeAuthChanged": false,
+      "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+    },
+    "outerStatus": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED",
+    "phase": "restore"
+  },
+  "terminal": {
+    "sha256": "7f10ff02d069efb568f66218e9906d0ddce7cc12b630dfc5b3794750dbbfc4d6",
+    "value": {
+      "atUTC": "2026-11-17T16:41:38.511734+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 6.414372559986077,
+      "exitCode": 0,
+      "exports": [
+        "maintenance-auth-cleanup.json",
+        "maintenance-auth-inside.json",
+        "maintenance-auth-intent.json",
+        "maintenance-auth-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T16:41:44.957044+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary42-auth-restore-20261117-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-e8cd01760153"
+    }
+  }
+}

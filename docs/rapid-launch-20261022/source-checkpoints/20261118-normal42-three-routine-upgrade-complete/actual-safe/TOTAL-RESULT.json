@@ -1,0 +1,130 @@
+{
+  "SQLUpgrade": {
+    "afterCatalog": {
+      "catalogSpecSha256": "aefbfd2ea3425a7cf6f9ad7bd22f8f98d4a946d7a90cc0f3c75ea539fdea4f17",
+      "modelSha256": "ada8f33433c6a4188173e98ea155f840fbd23d4643921b54d89ed777a7b027a9",
+      "sourceSetSha256": "a5f721749c1c7e59ce532ea6a287a310b2604ccbc77e0f1f2f0d831c5a2f8f6e"
+    },
+    "businessImported": false,
+    "catalogSha256": "96f8911f658a6876f925ddb28c845fc819a3a4dc2df080f1882ad56fef96b529",
+    "commitAcknowledged": true,
+    "commitOutcomeUnknown": false,
+    "completionSha256": "5e6fd6bf2cf98d19836e22d8b4b3774d9fa807afc1c0e08c289502db395667ab",
+    "connectionCleanup": "CLOSED",
+    "postCommitIndependentReadback": true,
+    "programSha256": "7ef75eec39a3bce9d1f7d5837c5cbc5901f1d40466dcbf6bc956d5237bc6f267",
+    "routines": 3,
+    "sqlSha256": "daf378435cdc532e5e49649cf8a344fc4cf92e0c48f0d9da358d9a1b42108184",
+    "status": "SETTLEMENT24_THREE_ROUTINES_APPLIED_AND_READ_BACK"
+  },
+  "actualCheckedAtShanghai": "2026-11-18T00:42:46.904812+08:00",
+  "actualCheckedAtUTC": "2026-11-17T16:42:46.904812+00:00",
+  "closeout": {
+    "activeOperationUnits": [],
+    "databaseStillStopped": true,
+    "hardRestorationDeadlineEpochMs": 1794937071192,
+    "hardRestorationDeadlineMet": true,
+    "naturalExpiryUsedAsRestoration": false,
+    "originalDataIdentityPreserved": true,
+    "originalVerifierAndExpiryRestoredPrivately": true,
+    "ownRestoreContainerStoppedPID0Exit0": true,
+    "portAbsent": true,
+    "privateSafeRestorationReceiptSha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05",
+    "restoreFinishedAtUTC": "2026-11-17T16:41:44.957044+00:00",
+    "roleAttributesAndMembershipsUnchanged": true,
+    "runtimeAuthenticationUnchanged": true
+  },
+  "databaseTarget": {
+    "database": "erp_fresh35_20261110_r3",
+    "databaseOid": "16393",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "serverVersionNum": "170011",
+    "systemIdentifier": "7706545564479176741"
+  },
+  "gitSafety": {
+    "containsGenuineFourLeafRawBodies": false,
+    "containsOriginalOrFiniteSnapshotBodiesOrDigests": false,
+    "containsPasswordsKeysTokensOrDSNs": false,
+    "filesActuallyStagedOrCommittedByThisRun": false,
+    "privateRuntimeLogsAndGenuineFilesMustNotBeAddedToGit": true
+  },
+  "nextMinimalDependencies": [
+    {
+      "executed": false,
+      "required": "Use existing Root08 physical source and actual after-model ada8 evidence; Main must select a new reviewed preparation carrier and unused key, bind a new finite live service/target and current source/CAS facts. Reuse valid prior evidence; do not replay old prepare05 or closed Start42.",
+      "step": "Next actual preparation"
+    },
+    {
+      "executed": false,
+      "required": "Reuse the reviewed cb1155328d46286569e166246000c66e53ec8365 / source f42b93cbfd95e00949783c2416f8756577a7915515e947f4f03365dfd428982b / source closure289 e041e3fecc6e8e37c64b466f3c3dfaad93d2da6fcc481c521e967ceb1c8f10d6. Obtain D1 existing exact build/pack delivery and pair it with this actual after-model; no duplicate build. Old native57a/archive13b8/626 cannot represent the new pair. This maintenance run did not inspect or deploy a new APP package.",
+      "step": "APP"
+    },
+    {
+      "executed": false,
+      "required": "Require accepted new actual preparation/readback, exact current source mappings and input/CAS, reuse valid same-input backup evidence, and Main explicit scoped authority for one new writer key. Old writer15 original key stays FAILED and is never replayed. Business import, APP exposure and formal acceptance remain separate.",
+      "step": "Business writer/import"
+    }
+  ],
+  "operations": {
+    "CASSubmissions": 1,
+    "extraPGQueriesForReport": 0,
+    "oldFailedKeysReplayed": false,
+    "phaseSubmissions": {
+      "apply": 1,
+      "restore": 1,
+      "start": 1,
+      "stop": 1,
+      "upgrade": 1
+    },
+    "positiveTestFixtureRun": false
+  },
+  "phaseEvidence": {
+    "apply": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/APPLY-SAFE.json",
+      "sha256": "10c303c03ae22875937a5b104955662f28a28997ccae68d60b3325d24055850e"
+    },
+    "restore": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/RESTORE-SAFE.json",
+      "sha256": "9d7772010cdb1b9512bbbd4528f2e38cf892717328b3771bb5af4978b77dd380"
+    },
+    "start": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/START-SAFE.json",
+      "sha256": "e00bfb0fcadfcb908a97bdafd8a68d5902500cf523438e3963248cb068ff5d34"
+    },
+    "stop": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/STOP-SAFE.json",
+      "sha256": "4b098702e69ae2412e123faec0d8c32d311331bdaf255a66eb2a4a00c3c2d8b0"
+    },
+    "upgrade": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/UPGRADE-SAFE.json",
+      "sha256": "5a971a08031e8ac675113a99dfe168368e83908ed3f296ef8e50cabc28d8ce50"
+    }
+  },
+  "publicationAndBusiness": {
+    "APPDeployed": false,
+    "businessImported": false,
+    "formalBusinessAcceptanceClaimed": false,
+    "publicBusinessOpened": false
+  },
+  "registration": {
+    "actualDispatcherSha256": "3a3c1b0ec91a41b5696f81c2ed965a361790a810102a290de815dee412bb848f",
+    "moduleSha256": "fc29d0b17aa02cbaa00c9cbdc80d5382016e7ca3ccad5acb8ca64c57c777a225",
+    "old122AndThreeGuardsPreserved": true,
+    "policySha256": "02afe6e97e2b3a3a565613daf4c165892993ec4a95bda0403afed864b7ef4aaa",
+    "receiptSha256": "42cc4979c85d7ce38ad2f8470ccfcbe8fd8868f76e9bbf947152f44da8aa9c8e",
+    "rootAfter": 127,
+    "rootBefore": 122
+  },
+  "scope": "Five maintenance phases only; no business writer/import/APP/publication",
+  "state": "PASS_SCOPED_NORMAL42_THREE_ROUTINE_MAINTENANCE_AND_SAFE_CLOSEOUT",
+  "versionBinding": {
+    "adapterSourcePinsSha256": "9c86348d30475f3b75787f64613a7f1ea62b71b5adf72edad0573aede0e271ed",
+    "consumerSourcePinsSha256": "a6a8ab8b1bf1cd7a2c98820c8ac00aa4e54f821d7c890c9a91b85fcbe98fa21b",
+    "review": {
+      "adapter": "f03370ce04b11268d2a51838f6a625be55e4877002b6990c4d541f2a037c8442",
+      "consumer": "ce35e6651cfa8d287e5735040fba6d96645fab699dfe020390c01434d467cb5e",
+      "root": "863fc8703c9f28920a90ab336c8c51687f2e3c89a042d8bcb0799dc58029051f"
+    },
+    "rootSourcePinsSha256": "c5831945c03c041abfc113e2e303c5e30197bea776ca4c9737e00196abbb501e"
+  }
+}

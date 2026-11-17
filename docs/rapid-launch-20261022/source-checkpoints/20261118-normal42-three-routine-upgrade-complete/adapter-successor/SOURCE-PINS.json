@@ -1,0 +1,42 @@
+{
+  "changes": [
+    "stop assembly actual absent or accepted terminal types",
+    "isolated adapter source path to existing exact42 runtime"
+  ],
+  "checkCount": 21,
+  "checkResultSha256": "f902e60b5fc81a1b97be51f95c45c25813b0bf9e0a0e63115045bf2bc3a180c0",
+  "files": {
+    "CHECK-RESULT.json": {
+      "bytes": 1391,
+      "sha256": "f902e60b5fc81a1b97be51f95c45c25813b0bf9e0a0e63115045bf2bc3a180c0"
+    },
+    "HANDOFF.md": {
+      "bytes": 2537,
+      "sha256": "a420a580660e65f89500e13985c37273ebb7af732073e9deb790dbb0f5530ab7"
+    },
+    "STOP-ONLY-DELTA.patch": {
+      "bytes": 7416,
+      "sha256": "08dffab471eb57c8824e30d77da125743bd3bd80b80eca799b42095578630048"
+    },
+    "bind_actual42_context.py": {
+      "bytes": 7757,
+      "sha256": "012ef9969d570c15eb0411c800f2ae638f12287c917e2b8f1c361bbb8de1d50f"
+    },
+    "check_stop_delta.py": {
+      "bytes": 5504,
+      "sha256": "7248981513ce89996902985498885a66b6805e6c4d31d1e518398ddea6655ef4"
+    },
+    "read_stop_basis42.template.py": {
+      "bytes": 12362,
+      "sha256": "a294a967b5c667151494e7cf93216328747cf0cb6b3d12161ffa68eb715d8503"
+    }
+  },
+  "positiveFixtureCreated": false,
+  "priorPreparedSha256": "9c5d3f9fa4a4ac75d88bb83f773b567cabcb83521956f02f6f589037c2c59bf9",
+  "rootBindingSha256": "5d2a1e91ba987ee3c746af215225a13764ab25e65eb97266196d1b17ee43a1ee",
+  "runtimeFunctionsCalled": false,
+  "runtimeReady": false,
+  "serverOrClockOrIssuerOrCASOrPGCalls": 0,
+  "sourceOnly": true,
+  "state": "STOP42_LOCAL_ASSEMBLY_SUCCESSOR_SOURCE_ONLY_READY"
+}

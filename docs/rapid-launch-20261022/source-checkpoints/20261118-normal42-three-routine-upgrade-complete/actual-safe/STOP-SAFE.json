@@ -1,0 +1,85 @@
+{
+  "activeOperationUnits": [],
+  "actualStoppedService": {
+    "id": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-fresh35-first-production-20261110-r3-service-42",
+    "operation": "t45-first-r3-native-service-start-20261117-42",
+    "pid": 0,
+    "running": false
+  },
+  "automaticReplay": false,
+  "businessAcceptanceClaimed": false,
+  "guardianCleanupSha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+  "originalPortAbsent": true,
+  "pgdataPidAbsent": true,
+  "phase": "stop",
+  "publicResult": {
+    "businessAdvanced": false,
+    "checkedAtUTC": "2026-11-17T16:38:24.179467+00:00",
+    "cleanupSha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+    "currentBatchTerminals": {
+      "t45-r3-batched-install-20261116-02": {
+        "state": "COMPLETED",
+        "terminalSha256": "01b46789810bde6d88f43cfddcce77d5bc6f28694fbb37b1b431e6caff69a4f2"
+      },
+      "t45-r3-batched-real-execute-20261115-01": {
+        "state": "FAILED",
+        "terminalSha256": "00132d00459328530dd4656d9a9e853b81abfbc92a73076fcde733d080cbdb35"
+      },
+      "t45-r3-batched161-command-successor-20261116-01": {
+        "state": "COMPLETED",
+        "terminalSha256": "515874b0f761b6de9fef10396e2fdc5a4e2be70cd562d8707ed602708ba5d1eb"
+      },
+      "t45-r3-final33-plan-prepare-20261116-05": {
+        "state": "COMPLETED",
+        "terminalSha256": "2f7a11142ced7b8056c52eb5af5ba5f2dcfad78d11918fe88f4cc4350d8795d1"
+      },
+      "t45-r3-settlement24-three-routine-upgrade42-20261117-01": {
+        "state": "COMPLETED",
+        "terminalSha256": "d6e9b9fbba71248f93560603d7108bde2f35ebacb80468b5a925f476a357514d"
+      }
+    },
+    "holdRetained": true,
+    "originalKeyReplayed": false,
+    "pgStopped": true,
+    "preserveMode": "ACTIVE_HOLD",
+    "requestKey": "t45-r3-ordinary42-preserve-stop-20261117-01",
+    "service": {
+      "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+      "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+      "postmasterStart": "2026-11-17 16:27:47.780746+00",
+      "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+      "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+    },
+    "status": "NORMAL05_PRESERVATION_ONLY_CLEAN_STOP_CONFIRMED",
+    "writerTerminalSha256": "ef30fec62cb5a606b0003a6538ff746e14887f3e674b81ed050a75492825831e",
+    "writerTerminalStatus": "FAILED"
+  },
+  "publicResultSha256": "34a2fc38d836c467fd8286f2ef479ebb1464e14ba779dbc9e20cba28a736c936",
+  "requestKey": "t45-r3-ordinary42-preserve-stop-20261117-01",
+  "rootPublicObjectsEqual": true,
+  "rootResultSha256": "76693db7e3348093766de365032735f8c82d680c7f114f8040d299c2f613e8dd",
+  "terminal": {
+    "sha256": "8b8971ec716c33f0fb1a78cc0de5dd2abf090170addb4636186e70b846242a6f",
+    "value": {
+      "atUTC": "2026-11-17T16:38:20.852143+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 3.362951856048312,
+      "exitCode": 0,
+      "exports": [
+        "normal05-preserve-stop-intent.json",
+        "normal05-preserve-stop-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T16:38:24.262004+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-ordinary42-preserve-stop-20261117-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-bb2b7adcb965"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "state": "ACTUAL122_AND_RESTORED41_ANCHORS_CONSUMER42_PENDING",
+  "actualDispatcherSha256": "ec3b5573c6cacc688f487450e783eb7e7fb7ecd7b5ded9dbc9540f952195df2b",
+  "actualRollback02ModuleSha256": "4c81da43cf09161e3927ab7a4a9c05a62df97222973647540f0446df16d45fa7",
+  "actualRollback02PolicySha256": "c6fc9bc4c22aabb84eb72a4351197a1285ef93a1da273f2ee5d7d8e3259c1391",
+  "rollback02": {
+    "key": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+    "terminalSha256": "2be96680dde0686d0221f8bd07bd42a21f07263bf27a8017742a6d5975073d45",
+    "rootResultSha256": "915b0a5749a22b1dbbdf6938616db414d37a96df90a86bfdfff24a01ea79b14c",
+    "publicResultSha256": "f591e4bfe12ddf1f1717d3b84e54d3af02d4be7dcb23e6192bea74be77337a8d",
+    "cleanupSha256": "59d36f5e3290a5b1ca6e48399c6e72334079db6ab96dabb6415dc159aa6af178",
+    "value": {
+      "SQL36OrBusinessImport": false,
+      "automaticReplay": false,
+      "cleanup": {
+        "automaticReplay": false,
+        "cid": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+        "confirmed": true,
+        "createAttempted": true,
+        "exitCode": 0,
+        "oomKilled": false,
+        "ownContainerStopped": true,
+        "ownedPidAbsent": true,
+        "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+        "sourceDataPreserved": true,
+        "stage": "READ_BACK_OWN_CONTAINER_STOP"
+      },
+      "newDatabaseOrRole": false,
+      "normal08Or05Started": false,
+      "phase": "restore",
+      "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "result": {
+        "automaticReplay": false,
+        "databaseStillStopped": true,
+        "exactOriginalVerifierAndExpiryVerifiedPrivately": true,
+        "membershipsOrRoleAttributesChanged": false,
+        "naturalExpiryCountedAsRestoration": false,
+        "operationMode": "ORIGINAL_AUTH_ROLLBACK_ONLY",
+        "originalHardDeadlineMet": false,
+        "originalRestorationHardDeadline": 1794926977752,
+        "privateRecoveryBasisRetained": true,
+        "requestKey": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+        "roles": [
+          "erp35_controller_20261110_r3",
+          "erp35_admin_20261110_r3"
+        ],
+        "runtimeAuthChanged": false,
+        "status": "EXACT_ORIGINAL_TWO_ROLE_AUTH_AND_BOUNDARIES_RESTORED_BY_OFFLINE_READBACK"
+      },
+      "status": "FINITE_MAINTENANCE_AUTH_STEP_AND_OWN_CONTAINER_EXIT_CONFIRMED"
+    },
+    "safeRestorationReceiptSha256": "84585d7a0cfb13f096a81037a6b1437934e63488107fe04c3fb82f628e603136",
+    "ownContainer": {
+      "exitCode": 0,
+      "id": "afaa00bd9e859e4dff561beb1a1c8d69c682c91072745e956528f678117b7dc9",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "operation": "t45-r3-ordinary41-original-auth-rollback-20261117-02",
+      "pid": 0,
+      "running": false
+    }
+  },
+  "actualSources": [
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH41-ROLLBACK02-ROOT-EXECUTION-PREPARATION-01/cas/ACTUAL-CAS-RESULT.json",
+      "sha256": "9df6e813950dc97d0fa286c517f92e2472d1a9000bc5b1e6a8d81050db1bd2be"
+    },
+    {
+      "path": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH41-ROLLBACK02-EXECUTION-PREPARATION-01/runtime/rollback/RESULT.json",
+      "sha256": "79836b98ca0d482da43d34d674967ed1a95475fdb2b5eaa98254e1be58e345ae"
+    }
+  ],
+  "oldHardDeadlineMet": false,
+  "SQLInstalled": false,
+  "importReady": false,
+  "phaseOrder": null,
+  "jobs": null,
+  "consumerSourcePinsSha256": null,
+  "current42Service": null,
+  "current42Epoch": null,
+  "clock": null,
+  "finiteAuthorities": null
+}
