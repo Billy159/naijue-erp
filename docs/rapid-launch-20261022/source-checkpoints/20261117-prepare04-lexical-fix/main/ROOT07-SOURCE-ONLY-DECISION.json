@@ -1,0 +1,47 @@
+{
+  "budgetsSecondsUnchanged": [
+    300,
+    780,
+    3000,
+    5100
+  ],
+  "businessWriterNeverSubmitted": true,
+  "containerOperationDirectory": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-batched-root07-20261117-01/operation",
+  "currentActualRootBaseline": {
+    "dispatcherSha256": "e46f75794d7e151b0fba870c3b33786dacb54585e0476736db432fa8e60b4f8c",
+    "helperSha256": "3b7ebfcb95df010fdbd585b5551851cba6cd65953e54352ab25ee01bb3ec368d",
+    "policySha256": "51da8cb64ce60386c60340126f95bb85a99a01d0275845a048dc600e092d949e"
+  },
+  "freshReadOnlyStoppedBasisAndExactSourceReviewRequired": true,
+  "hostOutputDirectory": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/installed-real-operation-batched-root07-20261117-01",
+  "inheritedRuntimeLeaves": 386,
+  "lexicalFixReviewSha256": "3690724c13a05698afbdf640ad72fb2a2eed62aa8469b87e4addbcef237a3549",
+  "lexicalFixSourcePinsSha256": "499937678edee0fe1802babb85bac2fcf67ef0063604261408141633daa4958e",
+  "mandatoryCatalogClarificationSha256": "4a048b02e446b841ac791c3d6334d6200498fb1bcfcee999f8a19c995e6ade9c",
+  "materializationBeforeNextFiniteRoleClock": true,
+  "mustPreserveCompletedINPUT02ROOT06Install32Catalog35": true,
+  "newMaterializationCompletionReceipt": null,
+  "newMaterializationRequestKey": "t45-r3-batched-root07-source-delta-20261117-01",
+  "newRoleServiceEpochOrAuthority": null,
+  "noPGNativeOrServerActionByThisDecision": true,
+  "oldFailureOuter01Through04NeverReplay": true,
+  "originalBusinessWriterRequestKey": "t45-r3-batched-real-execute-20261115-01",
+  "parentActualMaterializationResultSha256": "73ec88d3de4b7239972b5282d2750076846d95b190801992e2bcf42c9ff5b171",
+  "parentOperatorSourceSetSha256": "d20f9f89091f7a0c1006fdadf0c5fecc7711dc7398d8e2cf0471789c2f9ea898",
+  "parentSourceRowsSha256": "078f2c0019df117ae9a32e2276feebca9094ce6dc91e5eaede3f8d9201202fe9",
+  "prior38ExactRestoreSha256": "e2f432b88adabb23fcf33611240b3f9c4268a789c0c0260d0da87a48e7902e60",
+  "prior38RestoredSafeReceiptSha256": "ce98579474ee7adfff5a521f59d0e6e91e54eb964770f758a1dc695eb36c0f15",
+  "prior38SafeClosureSha256": "6f386c9ee462d58ee346e68f447377737bea562124be6ce6b50fb0e67652dab6",
+  "reserveGiB": 28,
+  "runtimeLeafDelta": {
+    "afterSha256": "36f5e49c10a4e7541ed6a77cc377030b7ff343b7bd462ab2001a41040488d368",
+    "beforeSha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b",
+    "bytes": 105724,
+    "path": "tools/unified-import/fresh35-host-session.mjs"
+  },
+  "scope": "Choose exact unexecuted source successor identity and path only. Reuse existing original-lock registration/materialization protocol; actual root07 source-only registration and materialization precede next normal role window. No schema/model/business data change; derived source/catalog metadata must use actual new source and independently verified strict successor pairing.",
+  "sourceDescriptionSha256": null,
+  "sourceFilePaths": 387,
+  "sourceOnly": true,
+  "state": "MAIN_SOURCE_ONLY_ROOT07_SINGLE_RUNTIME_LEAF_SUCCESSOR_NO_FINITE_AUTHORITY"
+}

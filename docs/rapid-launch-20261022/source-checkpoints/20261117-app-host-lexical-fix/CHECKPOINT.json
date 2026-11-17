@@ -1,0 +1,75 @@
+{
+  "state": "APP_OWN_SINGLE_HOST_FIX_BUILD_PACK_ACTUAL_PASS_LOCAL_ONLY",
+  "sourceOnly": false,
+  "executionReady": false,
+  "reviewSha256": "235153599223116db2f71893221b299d248a3a0acc0f05f287b05c6b995a1379",
+  "originalAppCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+  "oldHostSha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+  "newHostSha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
+  "operatorHost36f5NotSubstitutedIntoApp": true,
+  "ordinaryReadApiFailureNotClaimed": true,
+  "copies": [
+    {
+      "path": "APP-SOURCE-IMPACT.json",
+      "sha256": "1b80820a7bdb3df3b2eec4ee07f6b8d604b8246533ffd6be7731cf77600f9181",
+      "bytes": 9932
+    },
+    {
+      "path": "candidate/tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
+      "bytes": 121219
+    },
+    {
+      "path": "review/RESULT.json",
+      "sha256": "235153599223116db2f71893221b299d248a3a0acc0f05f287b05c6b995a1379",
+      "bytes": 3502
+    },
+    {
+      "path": "review/STATIC-EVIDENCE.json",
+      "sha256": "5bcb383ba03500b13526d891138fdf9105005331851bc11174572dc130654d66",
+      "bytes": 2082
+    },
+    {
+      "path": "review/check_app.mjs",
+      "sha256": "b0f74516550f44f53a5695256f4a2e86acc75f5946e5f6310e48e851047cb96c",
+      "bytes": 4831
+    },
+    {
+      "path": "build-pack-safe/READY.LOCAL.json",
+      "sha256": "18e666855c5784503ee23142d0abbbebb4ad3d187b997fe456b1f860293ef87b",
+      "bytes": 1905
+    },
+    {
+      "path": "build-pack-safe/APP-TUPLE.SOURCE-ONLY.json",
+      "sha256": "a4e12c9455c11a27efed098deedaade166d64c657eceac269588f7b64b44a811",
+      "bytes": 1214
+    }
+  ],
+  "next": "T45 publishes exact APP own branch and completes strict new owner/profile pins. ROOT07 materialization/lineage/registration final SOURCE pairing remains D1/T45 work, no server or finite role issued.",
+  "asOf": "2026-11-17T11:17:29.393082+08:00",
+  "APPBuildPackActual": {
+    "state": "APP_OWN_SINGLE_HOST_FIX_BUILD_PACK_ACTUAL_PASS_LOCAL_ONLY",
+    "commit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+    "tree": "bba4ce31d4a4bc72b29ff170b8836f7d18d4a8f5",
+    "branch": "codex/t45-app-host-lexical-fix-20261117",
+    "sourcePublished": "PENDING_T45_ACTUAL_REMOTE_READBACK",
+    "hostSha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
+    "nativeSourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+    "archiveSha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1",
+    "archiveBytes": 7690353,
+    "releaseManifestSha256": "b74bf6fe9b215638552702f5879679cc9779e8a816b696dceb8e8adf0810b7a6",
+    "buildExitCode": 0,
+    "buildSeconds": 33.364,
+    "packExitCode": 0,
+    "packSeconds": 31.463,
+    "packOwnExtractReadback": "MATCH",
+    "nativeMembers": 284,
+    "payloadMembers": 522,
+    "packedMembers": 523,
+    "serverReady": false,
+    "serverUploaded": false,
+    "deployed": false,
+    "ownerProfilePinCandidate": "IN_PROGRESS",
+    "privateRecoveryReadinessHelperImpact": "BEING_CHECKED_FROM_EXISTING_SOURCE_ONLY"
+  }
+}

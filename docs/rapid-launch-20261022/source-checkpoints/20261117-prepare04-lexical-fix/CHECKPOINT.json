@@ -97,6 +97,11 @@
       "path": "review/CATALOG-IDENTITY-CLARIFICATION.json",
       "sha256": "4a048b02e446b841ac791c3d6334d6200498fb1bcfcee999f8a19c995e6ade9c",
       "bytes": 2260
+    },
+    {
+      "path": "main/ROOT07-SOURCE-ONLY-DECISION.json",
+      "sha256": "f5f7e4c6c2a5fbec2e61624f5d8d74e2e6e8c7ee3440a7a174761c4860e1b197",
+      "bytes": 3066
     }
   ],
   "reviewSha256": "3690724c13a05698afbdf640ad72fb2a2eed62aa8469b87e4addbcef237a3549",
@@ -104,5 +109,7 @@
   "executionReady": false,
   "sourceAdmissionImplemented": false,
   "historicalDB05MetadataSuccessorImplemented": false,
-  "next": "D1 true ROOT07 source derivation and strict historical/current metadata successor contract; T45 consumer/materializer WIP only, final pairing pending."
+  "next": "D1 true ROOT07 source derivation and strict historical/current metadata successor contract; T45 consumer/materializer WIP only, final pairing pending.",
+  "root07SourceDecisionSha256": "f5f7e4c6c2a5fbec2e61624f5d8d74e2e6e8c7ee3440a7a174761c4860e1b197",
+  "sourceMaterializationMustPrecedeNextFiniteRoleClock": true
 }

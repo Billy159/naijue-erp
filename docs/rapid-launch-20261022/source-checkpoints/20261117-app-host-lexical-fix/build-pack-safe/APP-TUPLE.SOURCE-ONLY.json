@@ -1,0 +1,19 @@
+{
+  "archiveBytes": 7690353,
+  "archivePayloadWithoutDependenciesSha256": "08840ca11d50fe2823aea82017ee24028d49bef9ae988fbfc197a4f78b6e710f",
+  "archiveSha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1",
+  "buildId": "erp-a7bab2eec252-r3-app-host-lexical-20261117",
+  "buildManifestSha256": "275e4291dceba63a7b3e34e06c4e716f33569681f8c9f622fe56cc2211ab0ab5",
+  "buildReceiptSha256": "8d9cb51ba7f61268ac88e09e9621f2363cd8bdaddccaf75369445ec1918700d3",
+  "manifestBytes": 546466,
+  "manifestSha256": "b74bf6fe9b215638552702f5879679cc9779e8a816b696dceb8e8adf0810b7a6",
+  "nativeClosureMembers": 284,
+  "nativeSourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+  "normalizedManifestSha256": "ba0dad8207675645daf2dd583eca1ab84ac405c9f8d1b21d525a1924dd97cf75",
+  "packReceiptSha256": "ed0fbf97e004c8409af5335a62853159e7c6a18464d4538909767e08c3491377",
+  "packedMembers": 523,
+  "releasePayloadMembers": 522,
+  "runtimeTemplateSha256": "e1e6597e9c60f87939c3e6e385f696fdc9502dae0250476b358f014e0d5b3316",
+  "sourceCommit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+  "sourceManifestSha256": "c1e8db83f6cf7b1b1ba7929454b3ba3c7ee21afe18a7a1d71efc12c0f79cf5af"
+}

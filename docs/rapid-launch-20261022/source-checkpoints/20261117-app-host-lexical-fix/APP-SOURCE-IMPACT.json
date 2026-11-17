@@ -1,0 +1,213 @@
+{
+  "APPBoundary": {
+    "actualImportedSymbols": [
+      "admitFresh35SyntheticOrdinaryPoolV1",
+      "admitFresh35OrdinaryPoolV2",
+      "admitFresh35CompactZeroOrdinaryPoolV2",
+      "describeFresh35OrdinaryAdmissionV2",
+      "closeFresh35OrdinaryAdmissionV2"
+    ],
+    "actualImporter": {
+      "line": 4,
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/source/apps/api/src/postgres-read-api.ts"
+    },
+    "contract": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/source/config/release-contract.json",
+    "doesNotProveOrdinaryRequestCallsBatchedImportContext": true,
+    "entry": "tools/unified-import/fresh35-host-session.mjs",
+    "external": "./native35-source/tools/unified-import/fresh35-host-session.mjs",
+    "requiredByReleaseNativeEntryAndMembers": true
+  },
+  "APPHostBefore": {
+    "bytes": 121315,
+    "sha256FromExistingManifests": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79"
+  },
+  "APPHostLexicalFinding": {
+    "buildersDeclaredOnlyLocally": [
+      1173,
+      1341
+    ],
+    "function": "loadFresh35BatchedImportContext",
+    "original04ThrowNotProven": true,
+    "sameTwoUnboundBuildersConfirmedByReadingOwnAPPSource": true,
+    "topImportLine": 25,
+    "unboundUsesInOtherFunction": [
+      1227,
+      1228
+    ]
+  },
+  "actions": {
+    "APPBuildOrPack": false,
+    "archiveReadOrRehashed": false,
+    "existingManifestReadOnly": true,
+    "oldSourceTreeOrClosureRehashed": false,
+    "otherModulesReverified": false,
+    "serverOrPG": false,
+    "sourceLoaderInvoked": false
+  },
+  "actualManifestRows": [
+    {
+      "array": "pins",
+      "index": 247,
+      "lineNumbers": [
+        997,
+        11222,
+        11226,
+        11227
+      ],
+      "manifest": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/manifests/build-manifest.json",
+      "row": {
+        "path": "tools/unified-import/fresh35-host-session.mjs",
+        "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79"
+      }
+    },
+    {
+      "array": "files",
+      "index": 248,
+      "lineNumbers": [
+        997,
+        11222,
+        11226,
+        11227
+      ],
+      "manifest": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/manifests/build-manifest.json",
+      "row": {
+        "bytes": 121315,
+        "member": "backend/native35-source/tools/unified-import/fresh35-host-session.mjs",
+        "native35Kind": "module",
+        "path": "backend/native35-source/tools/unified-import/fresh35-host-session.mjs",
+        "role": "native35",
+        "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+        "sourcePath": "tools/unified-import/fresh35-host-session.mjs"
+      }
+    },
+    {
+      "array": "files",
+      "index": 1726,
+      "lineNumbers": [
+        8638
+      ],
+      "manifest": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/manifests/source-manifest.json",
+      "row": {
+        "bytes": 121315,
+        "path": "tools/unified-import/fresh35-host-session.mjs",
+        "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79"
+      }
+    },
+    {
+      "array": "pins",
+      "index": 247,
+      "lineNumbers": [
+        1002,
+        11169,
+        11173
+      ],
+      "manifest": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/packed/release-manifest.json",
+      "row": {
+        "path": "tools/unified-import/fresh35-host-session.mjs",
+        "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79"
+      }
+    },
+    {
+      "array": "members",
+      "index": 247,
+      "lineNumbers": [
+        1002,
+        11169,
+        11173
+      ],
+      "manifest": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/packed/release-manifest.json",
+      "row": {
+        "bytes": 121315,
+        "native35Kind": "module",
+        "path": "backend/native35-source/tools/unified-import/fresh35-host-session.mjs",
+        "role": "native35",
+        "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+        "sourcePath": "tools/unified-import/fresh35-host-session.mjs"
+      }
+    }
+  ],
+  "actualOwnerLoadChecks": [
+    {
+      "function": "formal_r3_app",
+      "line": 68,
+      "meaning": "d728 uses fixed FORMAL_R3_FINAL33_APP pins including archive14f/native6499, not ROOT07 metadata",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-OWNER-UNISSUED-03/bundle/deploy-first-install.py"
+    },
+    {
+      "function": "native35_member_map override",
+      "line": 237,
+      "meaning": "APP and installed source are separate closures; exact native sourceProfile/sourceSet/count and member map must equal fixed APP pins",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-OWNER-UNISSUED-03/bundle/deploy-first-install.py"
+    },
+    {
+      "function": "verify_formal_linux_payload",
+      "line": 382,
+      "meaning": "fixed embedded manifest/tree/package-lock and existing dependencies; not an arbitrary corrected operator leaf",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-OWNER-UNISSUED-03/bundle/deploy-first-install.py"
+    },
+    {
+      "function": "stage_app",
+      "line": 448,
+      "meaning": "verify exact packaged APP then mount payload read-only at /app; ROOT07 is not substituted into APP native leaf",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-OWNER-UNISSUED-03/bundle/production_host.py"
+    },
+    {
+      "function": "native35Closure and release validation",
+      "lines": [
+        34,
+        47,
+        55,
+        461,
+        488
+      ],
+      "meaning": "native closure derives from selected APP source; source bytes/native pins/release members must agree; old6499 cannot label a changed APP host",
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/source/scripts/release/manifest.mjs"
+    }
+  ],
+  "conclusion": {
+    "cannotCopyROOT07WholeHostOverDifferentAPPHost": true,
+    "existingAPPHasSameLexicalDefect": true,
+    "oldAPPAndOperatorAreSeparateClosures": true,
+    "oldAPPDoesNotContainRoot07Fix": true,
+    "oldAPPWholeVersionCannotBeRelabeledFixed": true,
+    "oldD728EvidenceRetainedAsHistoricalCandidate": true,
+    "ordinaryAPPRequestFailureNotInferredFromUnusedBatchedFunction": true,
+    "ownerRequiresRoot07NewSourceSetInsteadOfAPP6499": false
+  },
+  "currentAPP": {
+    "archive": {
+      "bytes": 7687919,
+      "file": "release.tar.gz",
+      "sha256": "14f34cd1dccaf0b3cd40c979620889f728307714fddf1b33896ee7c72882701f"
+    },
+    "nativeMembers": 284,
+    "nativeSourceSetSha256": "6499882af2b206dd5896cd20aad9e297d0e2ca69c052851542faf05c4daf1eac",
+    "payloadMembers": 522,
+    "sourceCommit": "d728f3749cc8cf504fec6c51720562c5774b72c0",
+    "sourceREADYWas": "LOCAL_HTTP_BUILD_PACK_PASS_NOT_DEPLOYED"
+  },
+  "futureSourceSetCommitArchiveProfilePins": null,
+  "minimalIndependentAPPCandidate": {
+    "bytes": 121219,
+    "edits": [
+      "Add two builders to existing module-level named import",
+      "Remove only readFresh35BatchedContextInputs local dynamic destructure; preserve other ordinary/runtime APP additions"
+    ],
+    "patchNotAppliedToFrozenAPP": true,
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-ROOT07-SOURCE-IMPACT-01/candidate/tools/unified-import/fresh35-host-session.mjs",
+    "reverseTwoEditsEqualsOriginalSource": true,
+    "sha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
+    "singleHostSyntaxCheck": true
+  },
+  "operatorHostBefore": {
+    "bytes": 105820,
+    "sha256": "0a10be276269c1aadb3420acaddaed0dce3f1a033bbf9b4d2320ddfe80ecf60b"
+  },
+  "requiredFutureIfAPPFixIsAdopted": [
+    "Freeze minimal patch on APP own74d source without dropping APP-specific additions",
+    "Derive own APP native sourceSet and affected pin/source delta with original selected loader; do not substitute operator new sourceSet",
+    "Produce matching source/build/release/pack/READY and owner/application profile pins in a later authorized necessary batch; reuse unchanged code/dependencies as appropriate",
+    "Preserve old d728/archive14f/6499 evidence, ROOT06 and existing successful receipts"
+  ],
+  "state": "SOURCE_ONLY_APP_HOST_IS_AFFECTED_SEPARATE_CLOSURE_NO_BUILD_OR_REPACK"
+}

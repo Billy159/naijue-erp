@@ -1,0 +1,41 @@
+{
+  "state": "STATIC_APP_OWN_HOST_TWO_IMPORTS_CHECKED_ONLY",
+  "original": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/source/tools/unified-import/fresh35-host-session.mjs",
+    "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79",
+    "bytes": 121315
+  },
+  "candidate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-ROOT07-SOURCE-IMPACT-01/candidate/tools/unified-import/fresh35-host-session.mjs",
+    "sha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
+    "bytes": 121219
+  },
+  "catalog": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/source/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+    "sha256": "a073503b113d19b86184435c492a66f34ddea26982e5c8f1980dca9ab1e75b9f"
+  },
+  "baselineUnresolved": [
+    {
+      "line": 1227,
+      "code": 2304,
+      "text": "Cannot find name 'buildFresh35BatchedCatalogV1'."
+    },
+    {
+      "line": 1228,
+      "code": 2304,
+      "text": "Cannot find name 'buildFresh35BatchedCommandSuccessorCatalogV1'."
+    }
+  ],
+  "candidateUnresolved": [],
+  "existingSecondLocalImportPreserved": true,
+  "reverseTwoEditsRestoreExactOriginal": true,
+  "staticESMDependencyPathsAndOrderUnchanged": true,
+  "newDependencyOrModuleEvaluationIntroduced": false,
+  "operatorLeafSubstituted": false,
+  "method": "APP own original and candidate only; TypeScript noResolve/noEmit, unresolved diagnostics2304/2552/18004 and AST export/import checks; not general typecheck or full compile",
+  "actions": {
+    "otherOperatorModulesRechecked": false,
+    "applicationModuleOrCatalogBuilderExecuted": false,
+    "clockIssuerServerPGNativeBrowserBuildPackOrFaultFixtureCalls": 0
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "actions": {
+    "applicationModuleOrCatalogBuilderExecuted": false,
+    "clockIssuerServerPGNativeBrowserBuildPackOrFaultFixtureCalls": 0,
+    "otherOperatorModulesRechecked": false
+  },
+  "boundaries": [
+    "This code-only SOURCE_PASS does not establish actual ordinary read-api request failure, a browser failure or the raw PREPARE04 throw. Batched-function lexical defect is not proof that ordinary requests reached that function.",
+    "APP and operator closures remain independent. Old APP native sourceSet6499 does not automatically become ROOT07 metadata, and old d728/archive14f is not a newly patched APP.",
+    "No new build, package, manifest, native closure, sourceSet, READY, artifact-policy binding, server install, publishing or business acceptance verified here.",
+    "T45 must derive and bind the APP-own corrected source and all necessary new build/package/manifest/READY/owner pins in the authorized later batch; preserve old evidence."
+  ],
+  "candidateHost": {
+    "bytes": 121219,
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/APP-ROOT07-SOURCE-IMPACT-01/candidate/tools/unified-import/fresh35-host-session.mjs",
+    "sha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f"
+  },
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/QB/20261117-r3-app-host-lexical-fix-review-01/STATIC-EVIDENCE.json",
+    "sha256": "5bcb383ba03500b13526d891138fdf9105005331851bc11174572dc130654d66"
+  },
+  "executionReady": false,
+  "findings": [],
+  "inputReportSha256": "1b80820a7bdb3df3b2eec4ee07f6b8d604b8246533ffd6be7731cf77600f9181",
+  "originalHost": {
+    "bytes": 121315,
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/HTTP-CANDIDATE-01/source/tools/unified-import/fresh35-host-session.mjs",
+    "sha256": "74d4a387c13184abb82ad26cff06f2fdb890d4c333de2f278445c3d32519ac79"
+  },
+  "sourceOnly": true,
+  "spec": {
+    "findings": [],
+    "scope": "Only two builder named imports and removal of1173 local destructuring; APP-own export/dependency/scope validation."
+  },
+  "standards": {
+    "findings": [],
+    "scope": "One APP-native leaf; exact original/candidate pins, preservation of APP-specific implementation and existing local binding."
+  },
+  "state": "SOURCE_PASS_APP_HOST_LEXICAL_FIX_ONLY",
+  "verifiedScope": [
+    "Actual APP original74d4/121315B and candidateb724/121219B exact, distinct from operator host0a10/36f5.",
+    "Candidate equals original with exactly two source edits: append two builders to the existing catalog named import and remove only the first local dynamic destructuring at original1173. Reverse edits reproduce the exact original bytes.",
+    "Original1341 local destructuring in the other function is preserved. All remaining APP-specific functions and additions remain byte-identical.",
+    "APP-own original/candidate parse-bind with noResolve/noEmit and unresolved codes2304/2552/18004: original1227/1228 two missing builder names; candidate0. No other operator modules reviewed or executed.",
+    "APP-own catalog exports both builder functions. Static ESM dependency specifiers/order unchanged; no new dependency/cycle or extra module evaluation introduced. Actual application modules were not imported or run."
+  ]
+}

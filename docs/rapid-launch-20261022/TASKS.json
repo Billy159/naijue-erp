@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T10:57:30.361694+08:00",
+  "updatedAt": "2026-11-17T11:17:29.393082+08:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "D1 true ROOT07 source derivation and strict historical/current metadata successor contract; T45 consumer/materializer WIP only, final pairing pending.",
+  "next": "D1 ROOT07 static strict source-lineage+actual materialization marker proof, no new PG metadata job. Then independent SRC07 registration/materialization before next normal role clock; T45 actual APP own build-pack done, owner/profile pins ahead. PG remains stopped/original auth restored/writer never submitted.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,7 +52675,7 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T10:57:30.361694+08:00",
+  "asOf": "2026-11-17T11:17:29.393082+08:00",
   "state": "PREPARE35_FAILED_UNKNOWN_STOP35_AND_EXACT_AUTH_RESTORE35_COMPLETED_WRITER_NEVER_SUBMITTED",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "D1 true ROOT07 source derivation and strict historical/current metadata successor contract; T45 consumer/materializer WIP only, final pairing pending.",
+  "next": "D1 ROOT07 static strict source-lineage+actual materialization marker proof, no new PG metadata job. Then independent SRC07 registration/materialization before next normal role clock; T45 actual APP own build-pack done, owner/profile pins ahead. PG remains stopped/original auth restored/writer never submitted.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -53466,6 +53466,34 @@
     "actualCatalog35SpecSha256": "9f4595dfd24f8c22d95d36725eefb38cda0ac2bd31707e88f9f45b6a723f8c29",
     "old05609": "OLD_LOCAL_FIXTURE_DESCRIPTOR_NOT_ACTUAL_CATALOG35"
   },
-  "root07": "SOURCE_PREPARATION_ONLY_NOT_MATERIALIZED_NO_FINITE_AUTHORITY"
+  "root07": "SOURCE_PREPARATION_ONLY_NOT_MATERIALIZED_NO_FINITE_AUTHORITY",
+  "appLexicalSuccessorLocal": {
+    "state": "APP_OWN_SINGLE_HOST_FIX_BUILD_PACK_ACTUAL_PASS_LOCAL_ONLY",
+    "commit": "a7bab2eec252e63b2ede61d2392cbd1f1bbb9728",
+    "tree": "bba4ce31d4a4bc72b29ff170b8836f7d18d4a8f5",
+    "branch": "codex/t45-app-host-lexical-fix-20261117",
+    "sourcePublished": "PENDING_T45_ACTUAL_REMOTE_READBACK",
+    "hostSha256": "b7246e2ab3daf55b046443a80bb9a2e7eebbbedcc6de3ccf54ffa32a6de2e62f",
+    "nativeSourceSetSha256": "57a302e1c06f420fb281084133a71ad8de3473dc86c59148b7efdb7642103abf",
+    "archiveSha256": "13b8de7b328e791782bf39a99bf071df01cc05e768ea763418b4a785b6b99cc1",
+    "archiveBytes": 7690353,
+    "releaseManifestSha256": "b74bf6fe9b215638552702f5879679cc9779e8a816b696dceb8e8adf0810b7a6",
+    "buildExitCode": 0,
+    "buildSeconds": 33.364,
+    "packExitCode": 0,
+    "packSeconds": 31.463,
+    "packOwnExtractReadback": "MATCH",
+    "nativeMembers": 284,
+    "payloadMembers": 522,
+    "packedMembers": 523,
+    "serverReady": false,
+    "serverUploaded": false,
+    "deployed": false,
+    "ownerProfilePinCandidate": "IN_PROGRESS",
+    "privateRecoveryReadinessHelperImpact": "BEING_CHECKED_FROM_EXISTING_SOURCE_ONLY"
+  },
+  "root07SourceDecisionSha256": "f5f7e4c6c2a5fbec2e61624f5d8d74e2e6e8c7ee3440a7a174761c4860e1b197",
+  "root07SourceMaterializationKey": "t45-r3-batched-root07-source-delta-20261117-01",
+  "root07MaterializationBeforeNextRoleClock": true
 }
 }
