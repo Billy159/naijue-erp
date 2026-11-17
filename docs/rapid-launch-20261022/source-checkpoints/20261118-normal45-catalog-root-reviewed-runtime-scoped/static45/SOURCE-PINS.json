@@ -1,0 +1,40 @@
+{
+  "consumerSourcePinsSha256": "1676656b24964fa6cb14857b161896b2322cc0edca1b51281875717f3587ed3e",
+  "files": {
+    "bind_actual45_context.py": {
+      "bytes": 8396,
+      "sha256": "467a90c6995df9c0d86566bbcec829fa03d624e8dfaedbced97a9c0f32cdb893"
+    },
+    "read_apply45.remote.py": {
+      "bytes": 2543,
+      "sha256": "9627707508415632b5bc1e8a5822f4f78a1e24704a0935d1bc7e17e0e66cf9fa"
+    },
+    "read_original_key45.py": {
+      "bytes": 1480,
+      "sha256": "451eef989946b8dcb6ace05336f473a0719e64da05a044d87380f7f079af3148"
+    },
+    "read_restore45.remote.py": {
+      "bytes": 4811,
+      "sha256": "7d72490801703ddde30827870eca04a33024cab10fba395fa1a16c6a8630f307"
+    },
+    "read_start45.remote.py": {
+      "bytes": 12749,
+      "sha256": "7723ef302c05b720877220138fdf2016f675eda11b6c439c1530984c5cea43a3"
+    },
+    "read_stop45.remote.py": {
+      "bytes": 4519,
+      "sha256": "536f6f516b1921f00b373df21a4b62fbceb2426253bd50458b55fa28e4c11527"
+    },
+    "read_stop_basis44.template.py": {
+      "bytes": 12653,
+      "sha256": "5a6df3c1512d76faa2453f6d1b77baa79d6cee539c4f157ad903d1a192f5a463"
+    },
+    "read_writer45.remote.py": {
+      "bytes": 2586,
+      "sha256": "7ec0e94b26547b1fb6442711ecf9a12fc64918c8c4606a2399907e7cd7f1bf15"
+    }
+  },
+  "serverActions": 0,
+  "sourceOnly": true,
+  "state": "SOURCE45_FIXED_STATIC_ADAPTERS_UNISSUED"
+}

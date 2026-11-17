@@ -1,0 +1,23 @@
+{
+  "NodeModuleExecutions": 0,
+  "checks": [
+    "exact45 apply key budget manifest",
+    "exact45 restore key budget manifest",
+    "exact45 start key budget manifest",
+    "exact45 stop key budget manifest",
+    "exact45 writer key budget manifest",
+    "apply dependencies and guardian pair",
+    "restore dependencies and guardian pair",
+    "stop/bundle/normal05_retained_stop.py exact live pair",
+    "writer/bundle/normal05_retained_stop.py exact live pair",
+    "stop caller exact helper",
+    "writer dependencies",
+    "ordinary descriptor triple exact",
+    "original plan and successful42 semantics preserved",
+    "no runtime authority"
+  ],
+  "count": 14,
+  "hostFunctionsExecuted": false,
+  "serverActions": 0,
+  "state": "PASS_NECESSARY_SOURCE45_PINS_AND_PYTHON_SYNTAX"
+}

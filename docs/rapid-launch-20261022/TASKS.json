@@ -51897,7 +51897,7 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T19:57:33.586979+00:00",
+  "updatedAt": "2026-11-17T20:15:23.092472+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
   "currentTarget": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED",
   "owners": {
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Implement only source45 under scopee71/d914 plan. T45 fixes exact install32 catalog tuple plus command35 result==outerAUTH==expected, retaining all other proof/physical and15-condition contract, with real32/35/actual44-AUTH production-predicate regression and targeted negatives. D1 exact137/0af->142 Root/Main successor binds frozen consumer later; old137/3guards/history retained, original44910/SQL42/APP/business IDs unchanged. Independent affected delta QA then new concrete Main runtime decision required; no runtime clock/fresh/CAS/Node/PG/job authorized now. Writer44 consumed never replay.",
+  "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows."
 },
   "inventoryBaselineScopeSimplification20261111": {
@@ -52675,8 +52675,8 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T19:57:33.586979+00:00",
-  "state": "SOURCE45_MINIMAL_CATALOG_GENERATION_FIX_AUTHORIZED_LOCAL_ONLY",
+  "asOf": "2026-11-17T20:15:23.092472+00:00",
+  "state": "SOURCE45_CATALOG_AND_ROOT_SOURCE_REVIEWED_RUNTIME_SCOPED_ACTUAL_FRESH_PENDING",
   "realWriterSubmitted": false,
   "realBusinessRowsWritten": 0,
   "formalR3": "DB05_INSTALLED_STOPPED_ORIGINAL_AUTH_ACTUALLY_RESTORED_NO_BUSINESS_WRITER",
@@ -52704,7 +52704,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Implement only source45 under scopee71/d914 plan. T45 fixes exact install32 catalog tuple plus command35 result==outerAUTH==expected, retaining all other proof/physical and15-condition contract, with real32/35/actual44-AUTH production-predicate regression and targeted negatives. D1 exact137/0af->142 Root/Main successor binds frozen consumer later; old137/3guards/history retained, original44910/SQL42/APP/business IDs unchanged. Independent affected delta QA then new concrete Main runtime decision required; no runtime clock/fresh/CAS/Node/PG/job authorized now. Writer44 consumed never replay.",
+  "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -55064,6 +55064,30 @@
     "platformGoalStatusLastObserved": "blocked",
     "authorizedTaskContinues": true,
     "next": "Implement only source45 under scopee71/d914 plan. T45 fixes exact install32 catalog tuple plus command35 result==outerAUTH==expected, retaining all other proof/physical and15-condition contract, with real32/35/actual44-AUTH production-predicate regression and targeted negatives. D1 exact137/0af->142 Root/Main successor binds frozen consumer later; old137/3guards/history retained, original44910/SQL42/APP/business IDs unchanged. Independent affected delta QA then new concrete Main runtime decision required; no runtime clock/fresh/CAS/Node/PG/job authorized now. Writer44 consumed never replay.",
+    "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+  },
+  "normal45RootReviewed": {
+    "state": "SOURCE45_CATALOG_AND_ROOT_SOURCE_REVIEWED_RUNTIME_SCOPED_ACTUAL_FRESH_PENDING",
+    "asOf": "2026-11-17T20:15:23.092472+00:00",
+    "rootCurrent": 137,
+    "rootCandidate": 142,
+    "PGCurrentlyStopped": true,
+    "originalAuthenticationRestored": true,
+    "normal44WriterPermanentlyFailedBeforeChild": true,
+    "normal44SafeClosureCompleted": true,
+    "sourcePinsSha256": "77b7c9e5abec43006cd7e00d09e703bcac495af6aa609a25d7d742fb2dd3d944",
+    "consumerSourcePinsSha256": "1676656b24964fa6cb14857b161896b2322cc0edca1b51281875717f3587ed3e",
+    "reviewSha256": "079988f03355eda077f92aefee590952e5ec139336cb63e429939f0448c82092",
+    "runtimeDecisionSha256": "7006763a537379942f945d82960ab8bf7b8bca66432721f59328a0e1ad2bb05b",
+    "source45CASOrPGOrBusinessExecuted": false,
+    "runtimeClockIssued": false,
+    "SQLUpgrade42Completed": true,
+    "normal45OrdinaryAccessActualPass": false,
+    "businessImportCompleted": false,
+    "APPDeployedOrPublicBusinessOpened": false,
+    "platformGoalStatusLastObserved": "blocked",
+    "authorizedTaskContinues": true,
+    "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
     "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
   }
 }

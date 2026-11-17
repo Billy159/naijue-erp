@@ -1,0 +1,80 @@
+{
+  "ackShaSource": "Future approved fresh actual ACK raw readback; not observed here",
+  "bindings": {
+    "previousCleanupSha256": "1b3f4495209cb228d2d271dedc87e8153efa5464d66d6e3b251cc4d710eff091",
+    "previousCurrentProofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+    "previousResultSha256": "606bd8180330e0e72e6a24461d46d23bc417510de2db556e646a67fc808a0677",
+    "previousRetainedAckSha256": null,
+    "previousTerminalSha256": "2f9287f0a468b9f6b1cc18ba3d3966d2529913b5b8d1baec2b569e0a1413f267",
+    "restoreCleanupSha256": "c6ddae25d7b998a51f6fc67bfcf58bd6e17cf8769134b5ddf2be17c63b8d1067",
+    "restoreResultSha256": "ca96543508c89e4a8cc0455dc40a8e5f2cd3e86a0ff076395c246d550a0fc7f8",
+    "restoreSafeReceiptSha256": "aeb681666f04086e7a797a070c33a2b22688867c54d988e8ae86c06fcee38c05",
+    "restoreTerminalSha256": "7f10ff02d069efb568f66218e9906d0ddce7cc12b630dfc5b3794750dbbfc4d6"
+  },
+  "service": {
+    "containerId": "90bfb5f1dd6f74f157c002d31f7e51d2003bc65cc6942cac28998e5a5e258f91",
+    "containerStartedAt": "2026-11-17T16:27:46.424906086Z",
+    "postmasterStart": "2026-11-17 16:27:47.780746+00",
+    "proofSha256": "e789550dfaf241d8885af1ed4d433eaa68ab175b20fb3895059b1f9b51b6d35a",
+    "serviceKey": "t45-first-r3-native-service-start-20261117-42"
+  },
+  "snapshotMetadataOnly": {
+    "applied.json": [
+      66304,
+      13667553,
+      0,
+      0,
+      256,
+      1,
+      493,
+      1794932688213360359,
+      1794932688213360359
+    ],
+    "finite-auth.json": [
+      66304,
+      13667550,
+      0,
+      0,
+      256,
+      1,
+      2549,
+      1794932687140371255,
+      1794932687140371255
+    ],
+    "original-auth.json": [
+      66304,
+      13667547,
+      0,
+      0,
+      256,
+      1,
+      2533,
+      1794932686998372698,
+      1794932686998372698
+    ],
+    "restore-attempt.json": [
+      66304,
+      13667615,
+      0,
+      0,
+      256,
+      1,
+      114,
+      1794933702452069802,
+      1794933702452069802
+    ],
+    "restored.json": [
+      66304,
+      13667617,
+      0,
+      0,
+      256,
+      1,
+      466,
+      1794933703566064455,
+      1794933703566064455
+    ]
+  },
+  "stopResultSha256": "76693db7e3348093766de365032735f8c82d680c7f114f8040d299c2f613e8dd",
+  "stopTerminalSha256": "8b8971ec716c33f0fb1a78cc0de5dd2abf090170addb4636186e70b846242a6f"
+}

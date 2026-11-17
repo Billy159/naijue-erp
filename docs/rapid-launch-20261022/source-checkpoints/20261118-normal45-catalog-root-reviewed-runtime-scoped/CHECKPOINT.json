@@ -1,0 +1,746 @@
+{
+  "state": "SOURCE45_CATALOG_AND_ROOT_SOURCE_REVIEWED_RUNTIME_SCOPED_ACTUAL_FRESH_PENDING",
+  "asOf": "2026-11-17T20:15:23.092472+00:00",
+  "rootCurrent": 137,
+  "rootCandidate": 142,
+  "PGCurrentlyStopped": true,
+  "originalAuthenticationRestored": true,
+  "normal44WriterPermanentlyFailedBeforeChild": true,
+  "normal44SafeClosureCompleted": true,
+  "sourcePinsSha256": "77b7c9e5abec43006cd7e00d09e703bcac495af6aa609a25d7d742fb2dd3d944",
+  "consumerSourcePinsSha256": "1676656b24964fa6cb14857b161896b2322cc0edca1b51281875717f3587ed3e",
+  "reviewSha256": "079988f03355eda077f92aefee590952e5ec139336cb63e429939f0448c82092",
+  "runtimeDecisionSha256": "7006763a537379942f945d82960ab8bf7b8bca66432721f59328a0e1ad2bb05b",
+  "source45CASOrPGOrBusinessExecuted": false,
+  "runtimeClockIssued": false,
+  "SQLUpgrade42Completed": true,
+  "normal45OrdinaryAccessActualPass": false,
+  "businessImportCompleted": false,
+  "APPDeployedOrPublicBusinessOpened": false,
+  "platformGoalStatusLastObserved": "blocked",
+  "authorizedTaskContinues": true,
+  "next": "T45 sole owner executes reviewed Source45 Root77b/consumer167/staticcec under Main decision700676: first exact stage45-01/RootPrep01 readonly fresh (real mapped454 metadata/access, actual44 closed/failed-beforechild writer, original plan preserved). Failure stops before clock and does not change permissions. Only passing original basis<=120s permits unique Main7 clock, CAS137/0af to142, then selected45 apply/start/writer/stop/restore; FIRST_WRITE only after same-client inspectRoot ABSENT. Original44910/business IDs/SQL42/APP unchanged. Genuine new45 fourleaf/current binding required, no replays or future positive fixtures. No actual45 clock/fresh/CAS/phase yet.",
+  "copies": [
+    {
+      "originalPath": "root-source45/SOURCE-PINS.json",
+      "storedPath": "root-source45/SOURCE-PINS.json",
+      "sha256": "77b7c9e5abec43006cd7e00d09e703bcac495af6aa609a25d7d742fb2dd3d944",
+      "bytes": 5364
+    },
+    {
+      "originalPath": "root-source45/ACTUAL-HISTORY.json",
+      "storedPath": "root-source45/ACTUAL-HISTORY.json",
+      "sha256": "b5ea925aeae7e88cdfab2ede660acf831d9475c6d654e717f088e58ecb593d8b",
+      "bytes": 81242
+    },
+    {
+      "originalPath": "root-source45/ACTUAL137-DISPATCHER.py",
+      "storedPath": "root-source45/ACTUAL137-DISPATCHER.py",
+      "sha256": "0afafdc9757f06bfc6b1556a287d39b46f5ba6b77b3f157ce7aa25592978dd21",
+      "bytes": 60910
+    },
+    {
+      "originalPath": "root-source45/CONSUMER-REF.json",
+      "storedPath": "root-source45/CONSUMER-REF.json",
+      "sha256": "98bff6f081a9f7cf93dbbb69768f3893693ca7af70b54313b9aceaed376c2aeb",
+      "bytes": 831
+    },
+    {
+      "originalPath": "root-source45/CONSUMER-REVIEW-REF.json",
+      "storedPath": "root-source45/CONSUMER-REVIEW-REF.json",
+      "sha256": "a99a19fd97f6d88930096c0ea61a8a772b34355533444010cdfc3c0be28d9bc6",
+      "bytes": 274
+    },
+    {
+      "originalPath": "root-source45/DELTA-CHECKS.json",
+      "storedPath": "root-source45/DELTA-CHECKS.json",
+      "sha256": "1f2103c27c8a7211be1b01273a3c3dbbc0d553f9ce6ecf9d8bb9b27e87c7f660",
+      "bytes": 2807
+    },
+    {
+      "originalPath": "root-source45/DESCRIBE-ACCESS-PATHS.json",
+      "storedPath": "root-source45/DESCRIBE-ACCESS-PATHS.json",
+      "sha256": "0417d3b325284b7e918667a2f7efcc3ae1ece7f528920d05fcb977b65cb87069",
+      "bytes": 111879
+    },
+    {
+      "originalPath": "root-source45/DESCRIBE-STATIC-IMPORTS.json",
+      "storedPath": "root-source45/DESCRIBE-STATIC-IMPORTS.json",
+      "sha256": "d445e56c2496a3acaaeb86c65a08a2311a321903c9aeb9d9ae7dbc419fced92d",
+      "bytes": 71398
+    },
+    {
+      "originalPath": "root-source45/FIVE-PHASES.UNISSUED.json",
+      "storedPath": "root-source45/FIVE-PHASES.UNISSUED.json",
+      "sha256": "086d43eb04a4e9ed94b78ab9f410abb84d3ad40b963c151691ac402b35567e51",
+      "bytes": 166632
+    },
+    {
+      "originalPath": "root-source45/HANDOFF.md",
+      "storedPath": "root-source45/HANDOFF.md",
+      "sha256": "15fbcf38dbd02bf2ac33034a19c6a613f585e187fd7b83d26396608cc87fdfcb",
+      "bytes": 5599
+    },
+    {
+      "originalPath": "root-source45/HISTORY-INPUTS.json",
+      "storedPath": "root-source45/HISTORY-INPUTS.json",
+      "sha256": "734df9258ea5fb791a4930925bdb9b8e530d0847e8b1130d0f9d5b6725973c13",
+      "bytes": 166544
+    },
+    {
+      "originalPath": "root-source45/admin_exec.NORMAL45-UNREGISTERED.py",
+      "storedPath": "root-source45/admin_exec.NORMAL45-UNREGISTERED.py",
+      "sha256": "f5ffef2b89fd1ff359e648fa4503a2d4dee6eaa647a4425549a059852700f8be",
+      "bytes": 62248
+    },
+    {
+      "originalPath": "root-source45/capture_actual_inputs.py",
+      "storedPath": "root-source45/capture_actual_inputs.py",
+      "sha256": "30c8e555ce9992151e53acd1a3785ad8871d57fe703055d04a0744b9f1a86852",
+      "bytes": 3564
+    },
+    {
+      "originalPath": "root-source45/check_delta.py",
+      "storedPath": "root-source45/check_delta.py",
+      "sha256": "089d2dc86189d978e93bc1c11331465325829c22a4d63794b22dd85288ce8def",
+      "bytes": 10413
+    },
+    {
+      "originalPath": "root-source45/describe_access.template.py",
+      "storedPath": "root-source45/describe_access.template.py",
+      "sha256": "93c890162aa5bbeaac4842412957cde376daf95707fc3de7ed0405089ccb6e3e",
+      "bytes": 4818
+    },
+    {
+      "originalPath": "root-source45/freeze_source.py",
+      "storedPath": "root-source45/freeze_source.py",
+      "sha256": "88d79cb2f68e75615047c96151d43063f84efd8548c856087a19e75b9e33cdc9",
+      "bytes": 1563
+    },
+    {
+      "originalPath": "root-source45/issue_phase.py",
+      "storedPath": "root-source45/issue_phase.py",
+      "sha256": "a9fc82ee0827fc13248a10c60c5ae8a88017cb91bc57463218554c9b1bb42beb",
+      "bytes": 25363
+    },
+    {
+      "originalPath": "root-source45/issue_registration.py",
+      "storedPath": "root-source45/issue_registration.py",
+      "sha256": "656784aeee0e1f9d20aebdd4cb4c5fce5c57005e8fb1fa1a3a7942c8f8b26c52",
+      "bytes": 9920
+    },
+    {
+      "originalPath": "root-source45/patch_dispatcher.py",
+      "storedPath": "root-source45/patch_dispatcher.py",
+      "sha256": "043b1adf1f854e0a3c96e9a614948dfe184f5707d9bd0574fd6eaed04403a998",
+      "bytes": 3054
+    },
+    {
+      "originalPath": "root-source45/plan_custody.template.py",
+      "storedPath": "root-source45/plan_custody.template.py",
+      "sha256": "ad3380f22deefc6992213cee7d078b6b3589ce9f60e0d366b44dc3a5ba196982",
+      "bytes": 1316
+    },
+    {
+      "originalPath": "root-source45/prepare_access_source.py",
+      "storedPath": "root-source45/prepare_access_source.py",
+      "sha256": "a2aa952f806b8f3ab3aee2e3e1d0b1a5193534667971642dc8ad3b26256eabd2",
+      "bytes": 4146
+    },
+    {
+      "originalPath": "root-source45/prepare_channel.py",
+      "storedPath": "root-source45/prepare_channel.py",
+      "sha256": "6f9e52e9396c25e5d31e3a31ab6019dc3817d0d69e998b914c4cef1c2fe73fec",
+      "bytes": 7173
+    },
+    {
+      "originalPath": "root-source45/prepare_source.py",
+      "storedPath": "root-source45/prepare_source.py",
+      "sha256": "f34debd1b7bc7f002562b7b151e5ed94596c03b280f4c6c958da2877a0bf3006",
+      "bytes": 6013
+    },
+    {
+      "originalPath": "root-source45/r3_normal45_continuation.py",
+      "storedPath": "root-source45/r3_normal45_continuation.py.FROZEN-BYTES.json",
+      "sha256": "1e4cbc156bf02eccb6af8da38774825630ebfc782b4d6c15d63011b1e254670a",
+      "bytes": 104226
+    },
+    {
+      "originalPath": "root-source45/read_registration_basis.py",
+      "storedPath": "root-source45/read_registration_basis.py",
+      "sha256": "c5caa3df12da5eaf9b0ace75449b64f1256c4228d7fbc1743c774f6f045c751e",
+      "bytes": 101755
+    },
+    {
+      "originalPath": "root-source45/register_cas.py",
+      "storedPath": "root-source45/register_cas.py",
+      "sha256": "03ccc915b0cb780e4e8a63178e4b43041f7e27f0bacd3fc9903b1ada8519bf02",
+      "bytes": 46307
+    },
+    {
+      "originalPath": "root-source45/render_source.py",
+      "storedPath": "root-source45/render_source.py",
+      "sha256": "551f0165cb1842016d235e3921c8af3bf8196f518ed3e3bad239e1923098c90e",
+      "bytes": 7247
+    },
+    {
+      "originalPath": "root-source45/validate_closed42.template.py",
+      "storedPath": "root-source45/validate_closed42.template.py",
+      "sha256": "068537f6cee0fc4358a6cb2df3229da41f10200b4e9e412eca198ac21352c398",
+      "bytes": 5059
+    },
+    {
+      "originalPath": "root-source45/validate_closed43.template.py",
+      "storedPath": "root-source45/validate_closed43.template.py",
+      "sha256": "b845e0bb3faa7e9d57be14c42d913cd914430e3be5903e2d593f19dfa3fa45a8",
+      "bytes": 5531
+    },
+    {
+      "originalPath": "root-source45/validate_closed44.template.py",
+      "storedPath": "root-source45/validate_closed44.template.py",
+      "sha256": "8b7a96634d994ec10a64b6906c1f84a0524ad4a15b8c0ae029e1f0f10acb2a95",
+      "bytes": 5845
+    },
+    {
+      "originalPath": "root-source45/writer_authority.template.py",
+      "storedPath": "root-source45/writer_authority.template.py",
+      "sha256": "bb954a15ab4e161faf484e50070215ac8522212c7415a5585d27d18a4d2d4ab0",
+      "bytes": 6148
+    },
+    {
+      "originalPath": "consumer45/SOURCE-PINS.json",
+      "storedPath": "consumer45/SOURCE-PINS.json",
+      "sha256": "1676656b24964fa6cb14857b161896b2322cc0edca1b51281875717f3587ed3e",
+      "bytes": 12040
+    },
+    {
+      "originalPath": "consumer45/HANDOFF.md",
+      "storedPath": "consumer45/HANDOFF.md",
+      "sha256": "8845fb732301d93faf677996d4ca1bd18035265902cd27f9d4b5a431f51bba15",
+      "bytes": 1193
+    },
+    {
+      "originalPath": "consumer45/INTERFACE.UNISSUED.json",
+      "storedPath": "consumer45/INTERFACE.UNISSUED.json",
+      "sha256": "314b10698f43a8a10e51aa86dd9af2929c413ad61c1eb1b7c0251655207b8da4",
+      "bytes": 42955
+    },
+    {
+      "originalPath": "consumer45/KEYS.UNISSUED.json",
+      "storedPath": "consumer45/KEYS.UNISSUED.json",
+      "sha256": "1f4f193b2c8f8fc5fbf88d02cd5f0ecdcbc7ab745197e4511d6d2e52793f73a5",
+      "bytes": 297
+    },
+    {
+      "originalPath": "consumer45/PHASES45.UNISSUED.json",
+      "storedPath": "consumer45/PHASES45.UNISSUED.json",
+      "sha256": "b2d6807c0f82888b3153bd20ad70b274e72923704bffd2e6f5349f69dd71ad4e",
+      "bytes": 7945
+    },
+    {
+      "originalPath": "consumer45/PIN-AND-SYNTAX-RESULT.json",
+      "storedPath": "consumer45/PIN-AND-SYNTAX-RESULT.json",
+      "sha256": "943a16623fe79def8104e86b9a46226db91eee60471120e60c4aebaec2809593",
+      "bytes": 788
+    },
+    {
+      "originalPath": "consumer45/PRIOR42-HISTORICAL-EVIDENCE.json",
+      "storedPath": "consumer45/PRIOR42-HISTORICAL-EVIDENCE.json",
+      "sha256": "d5c4428f29bc03d03cdb846d0eebd2ed80ecc618a6f4f61f575f6782ae9dadef",
+      "bytes": 2340
+    },
+    {
+      "originalPath": "consumer45/READABILITY-AND-CALL-DELTA.md",
+      "storedPath": "consumer45/READABILITY-AND-CALL-DELTA.md",
+      "sha256": "d6ad2095538bcddaffc5918e116ae09857dcaaaac12a23069cc09ac52f45358c",
+      "bytes": 3150
+    },
+    {
+      "originalPath": "consumer45/RECORDED-PREDICATE-RESULT.json",
+      "storedPath": "consumer45/RECORDED-PREDICATE-RESULT.json",
+      "sha256": "c1537a580403bf84d10a2f2702709865bcf001900359c15378b5f64eb9345dac",
+      "bytes": 2369
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/closed40_history.py",
+      "storedPath": "consumer45/apply/bundle/closed40_history.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/closed41_history.py",
+      "storedPath": "consumer45/apply/bundle/closed41_history.py",
+      "sha256": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+      "bytes": 7827
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer45/apply/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/normal_service04.py",
+      "storedPath": "consumer45/apply/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/normal_service04_proof.py",
+      "storedPath": "consumer45/apply/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/ordinary05_roles.py",
+      "storedPath": "consumer45/apply/bundle/ordinary05_roles.py",
+      "sha256": "d39952ee71e5f3b6e535bfabe90bd6289d7bbb7603b5d64053f0f8dddff7f494",
+      "bytes": 21656
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/ordinary05_roles_job.py",
+      "storedPath": "consumer45/apply/bundle/ordinary05_roles_job.py",
+      "sha256": "b3f61c0fde0e051b40c3f3535122c791263651a0c91cedecf33d5bf47d7fc089",
+      "bytes": 33577
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/prior_preserved38.py",
+      "storedPath": "consumer45/apply/bundle/prior_preserved38.py",
+      "sha256": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+      "bytes": 8281
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/root06_material.py",
+      "storedPath": "consumer45/apply/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer45/apply/bundle/successful39_history.py",
+      "storedPath": "consumer45/apply/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer45/bind_actual45_context.py",
+      "storedPath": "consumer45/bind_actual45_context.py",
+      "sha256": "467a90c6995df9c0d86566bbcec829fa03d624e8dfaedbced97a9c0f32cdb893",
+      "bytes": 8396
+    },
+    {
+      "originalPath": "consumer45/check_recorded_catalog_predicates.py",
+      "storedPath": "consumer45/check_recorded_catalog_predicates.py",
+      "sha256": "a4298765f8b04a49d5211590af6384cd643a7698743406709e16f613e8c2a947",
+      "bytes": 6558
+    },
+    {
+      "originalPath": "consumer45/phase_cli.py",
+      "storedPath": "consumer45/phase_cli.py",
+      "sha256": "a07792568ee10070922ee8f8c5b12aba2d0463a4e69baf4069c60dde4ee738c0",
+      "bytes": 5295
+    },
+    {
+      "originalPath": "consumer45/read_phase.py",
+      "storedPath": "consumer45/read_phase.py",
+      "sha256": "90b9bc3889bc35bf9dc902eadf06411329db0f8e16bb8f080cda5ed576d487e8",
+      "bytes": 3966
+    },
+    {
+      "originalPath": "consumer45/read_start45.remote.py",
+      "storedPath": "consumer45/read_start45.remote.py",
+      "sha256": "7723ef302c05b720877220138fdf2016f675eda11b6c439c1530984c5cea43a3",
+      "bytes": 12749
+    },
+    {
+      "originalPath": "consumer45/read_stop_basis45.template.py",
+      "storedPath": "consumer45/read_stop_basis45.template.py",
+      "sha256": "5a6df3c1512d76faa2453f6d1b77baa79d6cee539c4f157ad903d1a192f5a463",
+      "bytes": 12653
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/closed40_history.py",
+      "storedPath": "consumer45/restore/bundle/closed40_history.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/closed41_history.py",
+      "storedPath": "consumer45/restore/bundle/closed41_history.py",
+      "sha256": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+      "bytes": 7827
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer45/restore/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/normal_service04.py",
+      "storedPath": "consumer45/restore/bundle/normal_service04.py",
+      "sha256": "60059ac98adb07dcbe54724aa126043bd0c142a3fc3d619c8345e7a4e144bca5",
+      "bytes": 34276
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/normal_service04_proof.py",
+      "storedPath": "consumer45/restore/bundle/normal_service04_proof.py",
+      "sha256": "a4dac3679576102fd509ea4aa23906efd994d6a14c963586a5cfcebf09b52c73",
+      "bytes": 9403
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/ordinary05_roles.py",
+      "storedPath": "consumer45/restore/bundle/ordinary05_roles.py",
+      "sha256": "d39952ee71e5f3b6e535bfabe90bd6289d7bbb7603b5d64053f0f8dddff7f494",
+      "bytes": 21656
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/ordinary05_roles_job.py",
+      "storedPath": "consumer45/restore/bundle/ordinary05_roles_job.py",
+      "sha256": "b3f61c0fde0e051b40c3f3535122c791263651a0c91cedecf33d5bf47d7fc089",
+      "bytes": 33577
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/prior_preserved38.py",
+      "storedPath": "consumer45/restore/bundle/prior_preserved38.py",
+      "sha256": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+      "bytes": 8281
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/root06_material.py",
+      "storedPath": "consumer45/restore/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer45/restore/bundle/successful39_history.py",
+      "storedPath": "consumer45/restore/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer45/start/bundle/after42-source-catalog-lineage.json",
+      "storedPath": "consumer45/start/bundle/after42-source-catalog-lineage.json",
+      "sha256": "cc6e6544cf3c99b62c837675c7b92452af95d6f7cdbbaff72d28dcfac739c5b6",
+      "bytes": 4595
+    },
+    {
+      "originalPath": "consumer45/start/bundle/batched161-run.mjs",
+      "storedPath": "consumer45/start/bundle/batched161-run.mjs",
+      "sha256": "0f45396df7aec8bac9651591c685b30f7d318066feffb0f7f4e98df592855af6",
+      "bytes": 23971
+    },
+    {
+      "originalPath": "consumer45/start/bundle/catalog-successor-run.mjs",
+      "storedPath": "consumer45/start/bundle/catalog-successor-run.mjs",
+      "sha256": "468c3f96241bd1341887c61f3b358ba6db60c3e3d49bc73e40559de1e067d8a8",
+      "bytes": 19380
+    },
+    {
+      "originalPath": "consumer45/start/bundle/closed40_history.py",
+      "storedPath": "consumer45/start/bundle/closed40_history.py",
+      "sha256": "5e281d37eb8d87fbcb5312ba1292370d1d5bb1b5b38a9c28832e089d19e8542a",
+      "bytes": 7267
+    },
+    {
+      "originalPath": "consumer45/start/bundle/closed41_history.py",
+      "storedPath": "consumer45/start/bundle/closed41_history.py",
+      "sha256": "80c318d92b7043e829bf8b08451db1dcc83c38ff7177e99ff8e23d3ab775dafc",
+      "bytes": 7827
+    },
+    {
+      "originalPath": "consumer45/start/bundle/final-execution-describe.mjs",
+      "storedPath": "consumer45/start/bundle/final-execution-describe.mjs",
+      "sha256": "ee1d6a23ed8c6b56fcb24b5d87e1b92a3ea82d0a4f07d13565c88bbb6bb83ac7",
+      "bytes": 8878
+    },
+    {
+      "originalPath": "consumer45/start/bundle/final33-run.mjs",
+      "storedPath": "consumer45/start/bundle/final33-run.mjs",
+      "sha256": "4123a6d98a1beced8070f6a20d03967dae2e17d095a22ee53890dd81e24f9575",
+      "bytes": 18091
+    },
+    {
+      "originalPath": "consumer45/start/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer45/start/bundle/fresh35-production-carrier.py",
+      "sha256": "40f9700e21a6488380e9b91aaa0f1a12cf6c9f05397ec835a0247f4d3f21a360",
+      "bytes": 185047
+    },
+    {
+      "originalPath": "consumer45/start/bundle/historical-prepare05.json",
+      "storedPath": "consumer45/start/bundle/historical-prepare05.json",
+      "sha256": "78fcd3f7811343615343f6c59c841fe06a70aaadeeee3a41a6845abe26d86ee2",
+      "bytes": 5988
+    },
+    {
+      "originalPath": "consumer45/start/bundle/historical_source_lineage.py",
+      "storedPath": "consumer45/start/bundle/historical_source_lineage.py",
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+      "bytes": 6431
+    },
+    {
+      "originalPath": "consumer45/start/bundle/normal_service05_after08.py",
+      "storedPath": "consumer45/start/bundle/normal_service05_after08.py",
+      "sha256": "aa74287fdc4465a831ee946c473ae774f9559eb899485b9769b9c65701e178f6",
+      "bytes": 59831
+    },
+    {
+      "originalPath": "consumer45/start/bundle/normal_service05_after08_proof.py",
+      "storedPath": "consumer45/start/bundle/normal_service05_after08_proof.py",
+      "sha256": "a9316c2c6348dd6cc2a360ec3a4fd3085018db542ee97b498be660d8c4c045c5",
+      "bytes": 18424
+    },
+    {
+      "originalPath": "consumer45/start/bundle/operator-host.mjs",
+      "storedPath": "consumer45/start/bundle/operator-host.mjs",
+      "sha256": "7c88c0fae43c544959b2834f81dfe32fec2b99fbedd9c1533494c68e109245ae",
+      "bytes": 72238
+    },
+    {
+      "originalPath": "consumer45/start/bundle/operator-manifest.json",
+      "storedPath": "consumer45/start/bundle/operator-manifest.json",
+      "sha256": "c4795906bdfab154e5cd66305a3e9ec698cd1a0b23e3a896258b396540a42184",
+      "bytes": 48490
+    },
+    {
+      "originalPath": "consumer45/start/bundle/operator-stream-import-cli.mjs",
+      "storedPath": "consumer45/start/bundle/operator-stream-import-cli.mjs",
+      "sha256": "6836bb2aadbfcd81621e0a49143ff5a44b26c9a913c8b12b4925296037113e5e",
+      "bytes": 26499
+    },
+    {
+      "originalPath": "consumer45/start/bundle/operator-stream-program.mjs",
+      "storedPath": "consumer45/start/bundle/operator-stream-program.mjs",
+      "sha256": "fa0ca2e0e41fe83925155406959d683458671d647caf475ce6ebf0b9761c87f6",
+      "bytes": 10302
+    },
+    {
+      "originalPath": "consumer45/start/bundle/prior_preserved38.py",
+      "storedPath": "consumer45/start/bundle/prior_preserved38.py",
+      "sha256": "8ca784cebda01f47ce9fb31fb45c8623003ed0915b29d514e84af858ca87b8a3",
+      "bytes": 8281
+    },
+    {
+      "originalPath": "consumer45/start/bundle/production-plan.json",
+      "storedPath": "consumer45/start/bundle/production-plan.json",
+      "sha256": "7a416900f8b3988dc51b118a928c277f252fad1f736928d72003b1f21e0ce17d",
+      "bytes": 747
+    },
+    {
+      "originalPath": "consumer45/start/bundle/r3_05_cli.py",
+      "storedPath": "consumer45/start/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "bytes": 7052
+    },
+    {
+      "originalPath": "consumer45/start/bundle/r3_05_readonly.py",
+      "storedPath": "consumer45/start/bundle/r3_05_readonly.py",
+      "sha256": "3a104040974c8d5b26fb598e8292e983425e9a15cee61934737187759ef05354",
+      "bytes": 21247
+    },
+    {
+      "originalPath": "consumer45/start/bundle/r3_05_runtime.py",
+      "storedPath": "consumer45/start/bundle/r3_05_runtime.py",
+      "sha256": "148a8d300a0092d0b0021af5dcadf4243b9c1b59f09ff6eb735b211ce305a184",
+      "bytes": 9394
+    },
+    {
+      "originalPath": "consumer45/start/bundle/root06_material.py",
+      "storedPath": "consumer45/start/bundle/root06_material.py",
+      "sha256": "584a152728466cdcafac5552f9011976af3258c89af2c07fcbfaae2a445d2c8a",
+      "bytes": 1836
+    },
+    {
+      "originalPath": "consumer45/start/bundle/root07_material.py",
+      "storedPath": "consumer45/start/bundle/root07_material.py",
+      "sha256": "023f938955d392fd5d8ddf4015cffad039caf29afd708b7d2ec863dec7c1e742",
+      "bytes": 2645
+    },
+    {
+      "originalPath": "consumer45/start/bundle/root08_material.py",
+      "storedPath": "consumer45/start/bundle/root08_material.py",
+      "sha256": "9554e7c88abe6b36f4fb98e493f5ddd39cc81c220aaa853944a04b4b21b95685",
+      "bytes": 757
+    },
+    {
+      "originalPath": "consumer45/start/bundle/source-catalog-lineage.json",
+      "storedPath": "consumer45/start/bundle/source-catalog-lineage.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "bytes": 5684
+    },
+    {
+      "originalPath": "consumer45/start/bundle/source_lineage.py",
+      "storedPath": "consumer45/start/bundle/source_lineage.py",
+      "sha256": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da",
+      "bytes": 4993
+    },
+    {
+      "originalPath": "consumer45/start/bundle/start_owned_describe.py",
+      "storedPath": "consumer45/start/bundle/start_owned_describe.py",
+      "sha256": "e11cb7317bab72f30f129213e211776ca5ba3ce9d1b6bba52fdcb0adc8ee6401",
+      "bytes": 18357
+    },
+    {
+      "originalPath": "consumer45/start/bundle/successful39_history.py",
+      "storedPath": "consumer45/start/bundle/successful39_history.py",
+      "sha256": "bfd84aee27527a0c47996a044f911cd79fa207acf635965d3e44e70ca1d37700",
+      "bytes": 8758
+    },
+    {
+      "originalPath": "consumer45/stop/bundle/normal05_preserve_stop.py",
+      "storedPath": "consumer45/stop/bundle/normal05_preserve_stop.py",
+      "sha256": "6d2456cf14e214255b577e341d0b4ff7c99b830247e9d87f3b382a61ad018b6f",
+      "bytes": 20557
+    },
+    {
+      "originalPath": "consumer45/stop/bundle/normal05_retained_stop.py",
+      "storedPath": "consumer45/stop/bundle/normal05_retained_stop.py",
+      "sha256": "3df4bc8e333e811edb3290a15e25bf6c361f568634e4422fb7822fa339a73c14",
+      "bytes": 20970
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/after42-source-catalog-lineage.json",
+      "storedPath": "consumer45/writer/bundle/after42-source-catalog-lineage.json",
+      "sha256": "cc6e6544cf3c99b62c837675c7b92452af95d6f7cdbbaff72d28dcfac739c5b6",
+      "bytes": 4595
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/final33-run.mjs",
+      "storedPath": "consumer45/writer/bundle/final33-run.mjs",
+      "sha256": "4123a6d98a1beced8070f6a20d03967dae2e17d095a22ee53890dd81e24f9575",
+      "bytes": 18091
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/final33_host.py",
+      "storedPath": "consumer45/writer/bundle/final33_host.py",
+      "sha256": "db2c2f278ffd3d3be0365e8081c17ff83532c9eeb6686ad4b6e13adb7eab18f6",
+      "bytes": 54395
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/fresh35-production-carrier.py",
+      "storedPath": "consumer45/writer/bundle/fresh35-production-carrier.py",
+      "sha256": "efa37e755b2ee8c5655311f2e9ef655b3dce7dbee629bd8c706c2d09341b29a4",
+      "bytes": 187609
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/historical-prepare05.json",
+      "storedPath": "consumer45/writer/bundle/historical-prepare05.json",
+      "sha256": "78fcd3f7811343615343f6c59c841fe06a70aaadeeee3a41a6845abe26d86ee2",
+      "bytes": 5988
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/historical_source_lineage.py",
+      "storedPath": "consumer45/writer/bundle/historical_source_lineage.py",
+      "sha256": "c3db9e977206bfb148d5a61e98f47d05f6367160bf6af9a03aa6e58815a8a736",
+      "bytes": 6431
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/nonroot_input_access.py",
+      "storedPath": "consumer45/writer/bundle/nonroot_input_access.py",
+      "sha256": "2fd4fbb3de4c95552815e3db9fcfe733cc91919fa7e4d9f19fc6112cd65cb5f1",
+      "bytes": 17754
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/normal05_retained_stop.py",
+      "storedPath": "consumer45/writer/bundle/normal05_retained_stop.py",
+      "sha256": "3df4bc8e333e811edb3290a15e25bf6c361f568634e4422fb7822fa339a73c14",
+      "bytes": 20970
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/r3_05_cli.py",
+      "storedPath": "consumer45/writer/bundle/r3_05_cli.py",
+      "sha256": "b3f963efd9e8b37b653bf9eeaf5e9bfdc71b689a0f45c100a1d95fb9348f05c0",
+      "bytes": 7052
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/r3_05_runtime.py",
+      "storedPath": "consumer45/writer/bundle/r3_05_runtime.py",
+      "sha256": "148a8d300a0092d0b0021af5dcadf4243b9c1b59f09ff6eb735b211ce305a184",
+      "bytes": 9394
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/source-catalog-lineage.json",
+      "storedPath": "consumer45/writer/bundle/source-catalog-lineage.json",
+      "sha256": "eb69d614ca0d9e42bd87110724725122e585a4f8f4146ea6b14cfa32ae235ce0",
+      "bytes": 5684
+    },
+    {
+      "originalPath": "consumer45/writer/bundle/source_lineage.py",
+      "storedPath": "consumer45/writer/bundle/source_lineage.py",
+      "sha256": "0fb01ca460ea35b48d2f28f303a91901af34083aee710bb61cc67d99e03a88da",
+      "bytes": 4993
+    },
+    {
+      "originalPath": "static45/SOURCE-PINS.json",
+      "storedPath": "static45/SOURCE-PINS.json",
+      "sha256": "cec6d8ec2e60ba5e2789d85c2294773afebf86846962bd85cfbf1cd229091328",
+      "bytes": 1373
+    },
+    {
+      "originalPath": "static45/bind_actual45_context.py",
+      "storedPath": "static45/bind_actual45_context.py",
+      "sha256": "467a90c6995df9c0d86566bbcec829fa03d624e8dfaedbced97a9c0f32cdb893",
+      "bytes": 8396
+    },
+    {
+      "originalPath": "static45/read_apply45.remote.py",
+      "storedPath": "static45/read_apply45.remote.py",
+      "sha256": "9627707508415632b5bc1e8a5822f4f78a1e24704a0935d1bc7e17e0e66cf9fa",
+      "bytes": 2543
+    },
+    {
+      "originalPath": "static45/read_original_key45.py",
+      "storedPath": "static45/read_original_key45.py",
+      "sha256": "451eef989946b8dcb6ace05336f473a0719e64da05a044d87380f7f079af3148",
+      "bytes": 1480
+    },
+    {
+      "originalPath": "static45/read_restore45.remote.py",
+      "storedPath": "static45/read_restore45.remote.py",
+      "sha256": "7d72490801703ddde30827870eca04a33024cab10fba395fa1a16c6a8630f307",
+      "bytes": 4811
+    },
+    {
+      "originalPath": "static45/read_start45.remote.py",
+      "storedPath": "static45/read_start45.remote.py",
+      "sha256": "7723ef302c05b720877220138fdf2016f675eda11b6c439c1530984c5cea43a3",
+      "bytes": 12749
+    },
+    {
+      "originalPath": "static45/read_stop45.remote.py",
+      "storedPath": "static45/read_stop45.remote.py",
+      "sha256": "536f6f516b1921f00b373df21a4b62fbceb2426253bd50458b55fa28e4c11527",
+      "bytes": 4519
+    },
+    {
+      "originalPath": "static45/read_stop_basis44.template.py",
+      "storedPath": "static45/read_stop_basis44.template.py",
+      "sha256": "5a6df3c1512d76faa2453f6d1b77baa79d6cee539c4f157ad903d1a192f5a463",
+      "bytes": 12653
+    },
+    {
+      "originalPath": "static45/read_writer45.remote.py",
+      "storedPath": "static45/read_writer45.remote.py",
+      "sha256": "7ec0e94b26547b1fb6442711ecf9a12fc64918c8c4606a2399907e7cd7f1bf15",
+      "bytes": 2586
+    },
+    {
+      "originalPath": "review/RESULT.json",
+      "storedPath": "review/RESULT.json",
+      "sha256": "079988f03355eda077f92aefee590952e5ec139336cb63e429939f0448c82092",
+      "bytes": 3943
+    },
+    {
+      "originalPath": "review/CONSUMER-RESULT.json",
+      "storedPath": "review/CONSUMER-RESULT.json",
+      "sha256": "96a068d401f140e77af02ff5c4a61d1a41ed9bee5094bd37fac6fb5431e3daf4",
+      "bytes": 5215
+    },
+    {
+      "originalPath": "main/DECISION.json",
+      "storedPath": "main/DECISION.json",
+      "sha256": "7006763a537379942f945d82960ab8bf7b8bca66432721f59328a0e1ad2bb05b",
+      "bytes": 6000
+    }
+  ],
+  "rawAuthorityPrivateSnapshotOrGenuineOutputBodiesIncluded": false
+}

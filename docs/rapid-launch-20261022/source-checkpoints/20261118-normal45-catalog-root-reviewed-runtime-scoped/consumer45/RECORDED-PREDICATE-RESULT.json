@@ -1,0 +1,46 @@
+{
+  "NodeRuns": 0,
+  "PGConnections": 0,
+  "actualCommand35Predicate": true,
+  "checks": [
+    "same actual32 + actual44 nonsecret authority: old15 false new15 true",
+    "first14 AST predicates unchanged",
+    "install32 rejects batchedCatalog substitution",
+    "install32 rejects batchedCatalog substitution",
+    "install32 rejects requestKey substitution",
+    "install32 rejects state substitution",
+    "install32 rejects service substitution",
+    "install32 rejects programSha256 substitution",
+    "install32 rejects completionSha256 substitution",
+    "actual35 + actual44 historical authority passes production command predicate",
+    "command35 rejects result wrong generation",
+    "command35 rejects a wrong generation",
+    "command35 rejects result wrong generation",
+    "command35 rejects a wrong generation"
+  ],
+  "count": 14,
+  "credentialOrRawAuthorityExported": false,
+  "factoryRuns": 0,
+  "first14Preserved": true,
+  "fullFunctionsExecuted": false,
+  "futurePositiveFixtureCreated": false,
+  "inputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-service32-registration-actual-01/install/READBACK-02.json",
+      "sha256": "6808ecbd33dc8a0f76fc4f2c22690ac2b0cb773340a1151eae71f8b9e944fa8b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL35-RUNTIME-01/catalog_update/ACTUAL-CATALOG35-RESULT.json",
+      "sha256": "4691772528f237973a6a2b0d636edde1ffcf7916c30db0f55bc0e714dd11547e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261118-r3-normal44-registration-window-01/phase-writer/host-authorization.json",
+      "sha256": "f56b16746c51f99bbfd8324cad42b38ee81df7fba7377e79a7a648e122b3757f"
+    }
+  ],
+  "metadataSubstitution": "Only sha(raw/public) and json.loads(public) use existing receipt hashes and captured public equality; service is captured actual32, original protected proof not reconstructed. Negative public objects mirror changed record so field guards themselves reject.",
+  "newInstalledPredicate": true,
+  "oldInstalledPredicate": false,
+  "serverActions": 0,
+  "state": "PASS_RECORDED_PRODUCTION_PREDICATES_ONLY"
+}

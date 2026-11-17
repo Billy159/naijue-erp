@@ -1,0 +1,3244 @@
+{
+  "state": "SOURCE_ONLY_FIXED_ORDINARY_DESCRIBE_ACCESS_PATHS",
+  "maps": [
+    {
+      "name": "state",
+      "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state",
+      "targetRoot": "/var/lib/naijue-erp/fresh35-production",
+      "basis": "EXISTING_STATE_BIND"
+    },
+    {
+      "name": "deploy",
+      "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261109-r1/deploy",
+      "targetRoot": "/opt/naijue-erp/fresh35-combined-v1",
+      "basis": "EXISTING_DEPLOY_BIND"
+    },
+    {
+      "name": "deps",
+      "hostRoot": "/srv/naijue-erp/isolated-targets/r3-e894-linux-deps-check-20261110-01/payload/node_modules",
+      "targetRoot": "/var/lib/naijue-erp/fresh35-production/installed-real-operation-51724553-20261114-01/operation/node_modules",
+      "basis": "EXISTING_517_OPERATION_NESTED_DEPENDENCY_BIND_NOT_ROOT08_ALIAS"
+    },
+    {
+      "name": "record43",
+      "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/state/native-services/t45-first-r3-native-service-start-20261118-44/authority-61035",
+      "targetRoot": "/etc/naijue-erp",
+      "basis": "HISTORICAL44_IDENTICAL_INSTALLATION_RECORD_PROJECTION_NOT_FUTURE45"
+    },
+    {
+      "name": "proof43",
+      "hostRoot": "/srv/naijue-erp/isolated-targets/fresh35-first-production-20261110-r3/authority/r3-service-44-worker-proof",
+      "targetRoot": "/run/naijue-rewrite",
+      "basis": "HISTORICAL44_PROOF_PROJECTION_NOT_LIVE45"
+    }
+  ],
+  "rows": [
+    {
+      "map": 0,
+      "relative": ".",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0001_runtime_sales.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0003_auth_sessions.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0004_transfer_runtime.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0005_product_read_fields.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0006_party_maintenance.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0011_history_storage.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0012_history_header_native_reference.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0013_native_party_import.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0014_native_catalogue_import.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0017_native_payment_import.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0023_inventory_key_admission.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0024_history_effective_revisions.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0025_product_season_selection.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/migrations/0027_unified_business_documents.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-category-depth-successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-live-ledger-balance-pairs.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_document_product_reference_lock_permissions.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_document_specification_barcodes_permissions.psql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_document_specification_barcodes_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_explicit_zero_evidence_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_fit_numeric_business_codes_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_fresh_core_history_fk_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_historical-original-restoration_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_historical_missing_settlement_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_historical_restoration_acl_hardening_v1.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_historical_sales_source_profile_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_historical_staff_null_hall_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_product_maintenance_permissions.psql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_product_nullable_scheme_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_published_settlement_identity_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_staff_departure_date_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_batched_import_v1.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_category_alias_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_initialization.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_initialization_precedence_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_master_chunks_v2_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_publish_verify_disambiguation_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_settlement_identity_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_access_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_guards_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_intent_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_preflight_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_search_path_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_source_commit_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_verify_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_import_whole_package_zero_balance_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_known_balance_runtime_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_whole_closure_batch_binding_candidate.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_standard_whole_closure_singletons_candidate.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_unified_live_history_dispatch_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_whole_conversion_prefix_counts_v2.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0027_zero_amount_archive_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0028_batched_history_hall_provenance.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0035_historical_line_amount_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0035_historical_sales_hall_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0035_historical_settlement_difference_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0035_historical_settlement_retention_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0036_admin_provision_only_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0038_inventory_baseline_scope_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/0039_synthetic_ten_routine_successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/01-ten-routines.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/02-single-read.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/03-on-demand-context.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/04-inventory-readiness.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/05-prior-lookup.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/06-root-single-scan.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/07-execute-authority.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/08-witness-request.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/09-root-branches-import-index.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/10-party-set-proof.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/11-party-audit-key.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/12-party-prefix-single-projection.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/prefix155/INSTALL-ORDER.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/bounded-pool.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/catalogue-completeness.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/catalogue-maintenance-store.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/codec.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/document-barcode-successor-admission.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/document-inventory-anchor-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/history-import-lifecycle.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/history-typed-publication.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/inventory-key-admission-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/inventory-posting-balances.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/inventory-publication-guards.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-catalogue-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-core-staged-prefix-bind.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-document-specification.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-import-accounting-capability.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-import-record-accounting.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-stage-continuation26.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/native-transfer-snapshots.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/ordinary-document-list-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/ordinary27-product-capacity.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/party-read-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/product-maintenance-store.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/product-query-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/published-document-inventory-anchor-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/runtime-document-number.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/runtime27-command-issuer.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/sales-historical-hall-projection.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/sales-migration-origin-codec.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/sales-native-facts.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/sales-retained-approval-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/sales-unit-of-work.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/source-confirmed-read-authorization.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/standard-catalogue-completeness27.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/standard27-product-create-capacity.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/src/transfer-unit-of-work.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/package-lock.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/package.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/barcode-generation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/calendar-date.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/canonical-request-value.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/catalogue-maintenance-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/catalogue-maintenance-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/catalogue-price-input.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/catalogue-settings-read-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/catalogue-source-proof.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/document-specification.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/historical-sales-hall-evidence.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/history-import-lifecycle.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/history-storage-contract.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/history-temporal-mapping.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/history-typed-closure.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/history-typed-publication.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/import-v2-contract.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/import-v2.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/import-v3-history-header-native-reference.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/import-v3-history-header.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/import-v3-history-sales-detail.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/import-v3-history-settlement.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-cutoff-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-key-admission.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-posting.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-query-contracts.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-query-response.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-query-service.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/inventory-query-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/maintenance-commit-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-barcode-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-catalogue-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-import-record-accounting.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-import-schema-contract.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-party-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-payment-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-sales-preparation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-stock-contributor-import.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/native-transfer-preparation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/ordinary-document-query-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/party-maintenance-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/party-maintenance-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/party-read-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/party-read-service.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/product-maintenance-authorization.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/product-maintenance-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/product-maintenance-service.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/product-maintenance-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/product-query-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/product-query-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/request-hash.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/runtime-document-number.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/runtime27-command-capability.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-authorization.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-business-rules.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-change-evidence.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-native-facts.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-payload-budget.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-query-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-query-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-retained-approval.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/sales-service.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/source-confirmed-document-number.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/transfer-payload-budget.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/transfer-policy.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/transfer-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/transfer-query-ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/transfer-query-validation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/transfer-service.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-current-effective-alignment.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-explicit-zero-approval.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-historical-line-amount-evidence.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-historical-settlement-retention.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-historical-staff-hall-approval.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-contract.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-execution-core.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-execution-v2-client.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-execution-v2.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-execution.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-historical-sales.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-master-chunks-v2.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-source-reconciliation.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-stable-identity.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-import-whole-package-profile.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-source-registration.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/application/src/unified-zero-amount-archive.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/authentication",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/authentication/src",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/authentication/src/passwords.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/authentication/src/ports.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/catalog.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/document-inventory-effects.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/documents.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/errors.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/inventory.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/sales-money.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/sales-settlement-error.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/packages/domain/src/values.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03/FINAL155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-root114-final-combination-local-01",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/FINAL155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/FROZEN155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/PARENT154-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/WITNESS155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/20261115-r3-root114-final-combination-local-01/derive155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-BODIES.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-DEFINITIONS.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-161-MODEL.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/COMMAND-SUCCESSOR-PINS.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/EXPECTED161-BODIES.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/EXPECTED161-DEFINITIONS.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/EXPECTED161-MODEL.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh27-legacy-rowtypes.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh27-plan.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh27-portable-successors.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh27-publication-isolation.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh27-sql-bundle.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-batched161-upgrade-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-collector.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-evidence-v2-adapter.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-evidence-v2-query.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-evidence-v2.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-postconditions.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-record-draft.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-catalog-schema-diff.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-core-guards.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-isolated-entry-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-production-entry-v2.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-identity.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-install.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-metadata.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-schema.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-source.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-v2-install-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-retirement-v2-projection.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/install-whole-sales-record-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/launch-fresh35-isolated-v1.py",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/launch-fresh35-production-v2.py",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/launch-whole-sales-install-v1.py",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/legacy-dependency-source-report.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/measure-prefix.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/FINAL155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/derive155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/FINAL155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/derive155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/FINAL155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/FINAL155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/FROZEN155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/PARENT154-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/WITNESS155-CAPTURE.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/derive155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/preload-whole-sales-install-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/publish-installation-record.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/record-whole-installation.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/render-whole-package-local.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/synthetic-prefix155-install.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/synthetic-prefix155.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/synthetic-sql39-compile-only.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/synthetic-sql39-install.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/trusted-install-path.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-catalog-gate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-closure-integration-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-explicit-zero-integration-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-installation-record.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-integration-candidate.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-module-boundary.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-platform-layout.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-record-v1.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-sales-trusted-path.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/whole-search-path-source.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/fixtures",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/fixtures/unified-import",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/fixtures/unified-import/baseline-scope-synthetic.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/fixtures/unified-import/synthetic-package.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/fixtures/unified-import/whole-package-synthetic.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/integration",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/integration/baseline-scope-sql-atomicity.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tests/integration/run-baseline-scope-pg.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/admin154-setup-cli.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/batched-stream-cli-state.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/batched-stream-client.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/batched-stream-operation.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/batched-stream-plan.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/batched-stream-sql-kernel.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/batched-stream-sql-reply.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/cli.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/cli.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/current-effective-alignment-cli-input.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/execution-client.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/execution-plan.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/execution-v2-admission.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/explicit-zero-cli-input.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/first-admin-setup.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/fresh35-host-session.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/fresh35-receiver-diagnostics.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/full-size-carrier.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/historical-hall-cli-input.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/historical-line-amount-cli-input.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/historical-settlement-retention-cli-input.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/mixed-transfer-profile-generator.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/package-reader.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/r3-service20-entry.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/r3-service20-retained-import.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/source-occurrence-file-reader.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/source-occurrence-reader.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/source-occurrence-report.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/source-occurrence-storage.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/source-reconciliation-cli-input.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/source-registration.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-baseline-requests.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-binding.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-document-requests.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-import-cli.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-master-graph.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-package-metadata.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-plan.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-preflight-cli.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-preflight.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-prepare-cli.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-program.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-relations.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/stream-typed-hash.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/transfer-profile.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-host-session.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-package-client.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-package-host.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-package-inspect.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-package-reconcile.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-package-sql-kernel.ts",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/tools/unified-import/whole-sales-host.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/adapters/postgres/patches/settlement24-current-wire-successor.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-BODIES.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-DEFINITIONS.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-161-MODEL.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 0,
+      "relative": "installed-real-operation-batched-root08-20261117-01/operation/scripts/release/unified-install/batched-import-v1/SETTLEMENT24-CURRENT-WIRE-PINS.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": ".",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": true
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/INDEX.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": true
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/candidate-source-pins.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/expected-core-metadata.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-install-review-plan-20261105-r2/migration-lineage.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-v2-guard-schema-review-20261105-r2",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": true
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/cloud-pg-schema178v2-20261105-r2",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": true
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/cloud-pg-schema178v2-20261105-r2/evidence",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": true
+    },
+    {
+      "map": 1,
+      "relative": "reference-inputs/cloud-pg-schema178v2-20261105-r2/evidence/functions.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "runtime",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "runtime/node",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "runtime/node/bin",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 1,
+      "relative": "runtime/node/bin/node",
+      "kind": "file",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 3,
+      "relative": ".",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 3,
+      "relative": "fresh35-combined-installation-v1.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 4,
+      "relative": ".",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 4,
+      "relative": "current-production-service.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 2,
+      "relative": ".",
+      "kind": "directory",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 2,
+      "relative": ".package-lock.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 2,
+      "relative": "pg",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 2,
+      "relative": "pg/package.json",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    },
+    {
+      "map": 2,
+      "relative": "pg/esm",
+      "kind": "directory",
+      "execute": true,
+      "listDirectory": false
+    },
+    {
+      "map": 2,
+      "relative": "pg/esm/index.mjs",
+      "kind": "file",
+      "execute": false,
+      "listDirectory": false
+    }
+  ],
+  "dependencyFiles": [
+    ".package-lock.json",
+    "pg/package.json",
+    "pg/esm/index.mjs"
+  ],
+  "sourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
+  "sourceFilesChecked": 391,
+  "excludedPrivateSourceLeaf": "runtime/baseline-scope-input-pins.json",
+  "referenceFiles": [
+    "INDEX.json",
+    "fresh35-install-review-plan-20261105-r2/00-BLOCKED-entry.sql",
+    "fresh35-install-review-plan-20261105-r2/01-schema-REVIEW-ONLY.sql",
+    "fresh35-install-review-plan-20261105-r2/02-lineage-REVIEW-ONLY.sql",
+    "fresh35-install-review-plan-20261105-r2/candidate-source-pins.json",
+    "fresh35-install-review-plan-20261105-r2/expected-core-metadata.json",
+    "fresh35-install-review-plan-20261105-r2/expected-declared-metadata.json",
+    "fresh35-install-review-plan-20261105-r2/migration-lineage.json",
+    "fresh35-v2-guard-schema-review-20261105-r2/expected-catalog-model.json",
+    "cloud-pg-schema178v2-20261105-r2/evidence/functions.json"
+  ],
+  "actor": {
+    "uid": 61035,
+    "gid": 61035,
+    "groups": []
+  },
+  "newProjection45CheckedStaticallyOnly": true,
+  "liveNamespaceProven": false,
+  "dependencyImportResolutionVerified": false,
+  "bodyReads": false
+}

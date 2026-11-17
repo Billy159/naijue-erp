@@ -1,0 +1,1905 @@
+{
+  "state": "SOURCE_ONLY_EXPLICIT_IMPORT_GRAPH_NO_MODULE_EXECUTION",
+  "entry": "tools/unified-import/r3-service20-entry.mjs",
+  "selectedDynamicLoaderRoots": [
+    "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+    "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+    "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs",
+    "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+    "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+    "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs"
+  ],
+  "moduleCount": 99,
+  "modules": [
+    {
+      "path": "packages/application/src/calendar-date.ts",
+      "sha256": "3d12245db7fc90f2f985e50a0436b18ba8e2157cb92d9d214665cf06a36e658e"
+    },
+    {
+      "path": "packages/application/src/canonical-request-value.ts",
+      "sha256": "29daee138b2d5c802eb915610adef8448be447a7531df7883276896cbf9633fb"
+    },
+    {
+      "path": "packages/application/src/historical-sales-hall-evidence.ts",
+      "sha256": "51d86fe02d21c3349c1c025196f03caf35a042bdf697fdae1ae12ecf32b96b6e"
+    },
+    {
+      "path": "packages/application/src/history-import-lifecycle.ts",
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+    },
+    {
+      "path": "packages/application/src/history-storage-contract.ts",
+      "sha256": "e3c1f3ae440510adb2992c362324f60e45bbf0ecce09417f4dc13af3780779d5"
+    },
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+    },
+    {
+      "path": "packages/application/src/history-typed-publication.ts",
+      "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+    },
+    {
+      "path": "packages/application/src/import-v2-contract.ts",
+      "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+    },
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+    },
+    {
+      "path": "packages/application/src/native-barcode-import.ts",
+      "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02"
+    },
+    {
+      "path": "packages/application/src/native-import-record-accounting.ts",
+      "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+    },
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053"
+    },
+    {
+      "path": "packages/application/src/request-hash.ts",
+      "sha256": "5cf9de26135fceb57d0e40564316e14c314a356ab9357fa6780522c7bd0114e4"
+    },
+    {
+      "path": "packages/application/src/unified-current-effective-alignment.ts",
+      "sha256": "40676fb6929f247fa6bd47163e1da4d9170d373f84412ba826bca4dd15298846"
+    },
+    {
+      "path": "packages/application/src/unified-explicit-zero-approval.ts",
+      "sha256": "c19b7e623c7fa769ff815fb18a61afb1d924b28676af33ca527be7d7d8a68d85"
+    },
+    {
+      "path": "packages/application/src/unified-historical-line-amount-evidence.ts",
+      "sha256": "1b13b515be32e3e9a4b90b198ca27b93e52297e2cdbce03cda49dae43be60a39"
+    },
+    {
+      "path": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "sha256": "37e27090c3b50008d415be8f2b8c9574fb1a4157ac4d3c86f3967257f371d94f"
+    },
+    {
+      "path": "packages/application/src/unified-historical-settlement-retention.ts",
+      "sha256": "132581ff8591b22b931a43fac35d9dff7b2acb2927d94fe523bbe02cb766f75c"
+    },
+    {
+      "path": "packages/application/src/unified-historical-staff-hall-approval.ts",
+      "sha256": "281ff8fc48e7946ad5f01edb976b7113f6c5ce896cd407ca6c8ff822b1d785da"
+    },
+    {
+      "path": "packages/application/src/unified-import-contract.ts",
+      "sha256": "09418b111cc2a978570af9d35e95b9c73af318834ed4bc4833191b258e73f70a"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution-core.ts",
+      "sha256": "38ee4cd704d03dfd37654c14f8b03ad693a81fef15d1403cb32a44e152054f5c"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution-v2-client.ts",
+      "sha256": "d575ca8ea6e1b0476cd5b9951790e23d09adea78c7fb9aa3ed3bc69d9ead7269"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution-v2.ts",
+      "sha256": "af7bff9dbd4d50027da769d8a48f7daf34ec430e96d003684f975ac3e5ccf243"
+    },
+    {
+      "path": "packages/application/src/unified-import-execution.ts",
+      "sha256": "b9f88c9fa5998555f98ee830de21b1746eb1abe28a2b9440d5c26b0a0bd08f2e"
+    },
+    {
+      "path": "packages/application/src/unified-import-historical-sales.ts",
+      "sha256": "1b8fd1e6ea7a69c89c5e6f49e3dacebf552995e7a18757e5f4b2a68d6bad025e"
+    },
+    {
+      "path": "packages/application/src/unified-import-master-chunks-v2.ts",
+      "sha256": "e2145d1844af7e9d4564f89d79e226f1806e1b3f7445261fc7d0782f848a29a7"
+    },
+    {
+      "path": "packages/application/src/unified-import-source-reconciliation.ts",
+      "sha256": "81f97d5dcc5ddf91ec4bbb30f970576ddd4e4e986b6feef64c6dd532459ccbb4"
+    },
+    {
+      "path": "packages/application/src/unified-import-stable-identity.ts",
+      "sha256": "4516d0322198decfd77bc6c862c4d2fd07fc7c72d599a2a2a387b2760120e628"
+    },
+    {
+      "path": "packages/application/src/unified-source-registration.ts",
+      "sha256": "56df246b0c2e03b4b411d71e8f85b9d1d7e5496495b15aaef1149115adc86df0"
+    },
+    {
+      "path": "packages/application/src/unified-zero-amount-archive.ts",
+      "sha256": "97c2e976faa20556a3deac6bcd06e5f5474ce758213aa2043c2eb0fa01c5f24b"
+    },
+    {
+      "path": "packages/authentication/src/passwords.ts",
+      "sha256": "f570e5f696ae71df145edb202e18b41eae7798f9d862cb67be6a156b6bf2fafd"
+    },
+    {
+      "path": "packages/domain/src/errors.ts",
+      "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9"
+    },
+    {
+      "path": "packages/domain/src/sales-money.ts",
+      "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30"
+    },
+    {
+      "path": "packages/domain/src/values.ts",
+      "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs",
+      "sha256": "8a46b94861f052fcfa1ea5eca0a3015dfb807104b37e527e8bce3f8a6289853b"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-plan.mjs",
+      "sha256": "1f15a288d25541154232cf96f58f252418c0732d7ac8ccded890960499f09534"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh27-publication-isolation.mjs",
+      "sha256": "cd959a6dce0dae5e9e61236a91a7da5c672f261c504755a967615395b5ae4bca"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "sha256": "bff6775978742931e577ab0d93dddd6d8f4199cc568dc2678d24a2636daf6495"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "sha256": "49455ce58e9999fdad82806683f59537916989515b58e54f926f91a720f56c06"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "sha256": "2f56976353842d3bc935bd364cab5cdcabbea195c3a72675ace822a19f14e6af"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "sha256": "ff9c0db13266ddbfe4ef17eeee41c5cee33273948f4fb7920ba5938d1bea742d"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "sha256": "3647d994a1073dab052e74aeb02c28cffc90d67849414f27cb16898000234c58"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "sha256": "d4dc1ba9dff4e4fa72517b5a9355841c9b33a97fc5390c15d42638aa92e768be"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "sha256": "b411833ec42648645a25d187fb089554e304649e94190de38a36d70725a46e2a"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "sha256": "5dc3bd6b6d28d537ec27e306b7f2be329750fcbf57e8edacd0e83adcc09dafc3"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "sha256": "5329f80c652f86405c7c43193dba2c043d9bd0e3bdf47c6950162528d9eccd22"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "sha256": "06b50d9468af6680c101cd0b1504ea237b3329f390cd93fe4a3b3446615a2e3f"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-core-guards.mjs",
+      "sha256": "963a7447b0af71e306c125d944215d9f38ade476c871b13cea24070a9638d869"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "sha256": "509a242ca7ba266804cacd43cbb06b73c936357f01069decb0881401f969ae6c"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs",
+      "sha256": "75d285812a7873f3e2634d1bc62d278b22366df8e9d3a2db887fd35ee700726a"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "sha256": "b35c5864303d36d22df6fb632066653b3769b24a9c05fa6305e7269d78ccf74f"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-identity.mjs",
+      "sha256": "21c6cd18ed91ade49d907eccc4cfd04837927ef06d3fde8380b01ded6453b234"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "sha256": "017f1c59f18bd602cb9b2f2c1847783bd24d97fc88ec9854e5423df6da6c1efe"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-schema.mjs",
+      "sha256": "a0c91b1972ed928ed89875d42d8e6fb803cee3d6b49686f30f99fec5e6fdb151"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-retirement-source.mjs",
+      "sha256": "769053161ee12a9674e6cc0e6fb05114fe3a14010cd0d5d05fe27d89d047a470"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+      "sha256": "7d1983e0b87fad0470c8720b080421b3eb61604ca3e5280695bf6e46080c0890"
+    },
+    {
+      "path": "scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs",
+      "sha256": "0fd734488724fa0f62906693f6a8d7f7211d534fb8145db12e99894ef7743084"
+    },
+    {
+      "path": "scripts/release/unified-install/legacy-dependency-source-report.mjs",
+      "sha256": "6b404decadc415b5f103e729d6289ada57349b18ecf2f0ccb3c87d4e327b26b6"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/derive155.mjs",
+      "sha256": "9f0f3e9b4d78db937c42087891c89393ea76955e955bd654851fe5f0270f6649"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/derive155.mjs",
+      "sha256": "501e14f04aa91b8c00fe6836be94028868a27959601aa822e75a837edfba5f29"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs",
+      "sha256": "827674e50d15296e55c7f61d997bd1324c6ce439a4f44cde9b3b7c721cf3f807"
+    },
+    {
+      "path": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/derive155.mjs",
+      "sha256": "16cc349d32c4ef16e3f03fbc0be28774737d5c76e7da5395dccf13fac332fedd"
+    },
+    {
+      "path": "scripts/release/unified-install/publish-installation-record.mjs",
+      "sha256": "3f63fbc4bf2785453d79d6a11f0915cce6cc59dd0f6ccaeda0d181fad4ae6b53"
+    },
+    {
+      "path": "scripts/release/unified-install/render-whole-package-local.mjs",
+      "sha256": "3128b307ddfb69e44ef65626df4b071e664f1f012597daa87fe4d467c65ca71a"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "sha256": "28cf5bed4964b583443d9423211580afc42a29b777487f3958c5c37bc4078db0"
+    },
+    {
+      "path": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "sha256": "f3d1d823dbd7203acf5b23d9bfd22b4ec4b94e328329d8028171b73581d7d1f8"
+    },
+    {
+      "path": "scripts/release/unified-install/trusted-install-path.mjs",
+      "sha256": "24caac5f0b2bcd8a2f8a4c19887b7453652a73a365c623bf33735bd1a1281e6f"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-catalog-gate.mjs",
+      "sha256": "0ec3ff7e2f8b0bb2711e86153013f4ece5537c28a93c5ba4e0d48a4786ef46f3"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-closure-integration-candidate.mjs",
+      "sha256": "a08a305b185b38bc71e268e0a70b1dc732b3b46a3dc628b7dbf908ae85bbba65"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-explicit-zero-integration-candidate.mjs",
+      "sha256": "41768498b284e1154415be3934aba16f5a450b2d7e13cca02838d2634065e712"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-installation-record.mjs",
+      "sha256": "a93e687b311d510dd4a2a418085c4b9928b5a3762475bb50553419cb70a67a8c"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "sha256": "4db4c959be578dca2522a1fa5a01fe3cb3146d37d62edf6da55b781f11dff874"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "sha256": "8d7b5da1b76eab9c21ed75b2a9677d9a367e9b01b8ff877c77620344737da1d1"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-integration-candidate.mjs",
+      "sha256": "2eaa1912c1c81b2ecc8dcd43471493801e4cb0fdb6499cee66da68921b47cc70"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-record-v1.mjs",
+      "sha256": "f5e171a9a985c2d6f018d0dea8df20d24eda32a038b5ac3489363b7c36367df8"
+    },
+    {
+      "path": "scripts/release/unified-install/whole-sales-trusted-path.mjs",
+      "sha256": "ee0d9ea8147bf7ae56d658caff700fc83dd1c5b7f05e4518ff00fa86f0574628"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-cli-state.mjs",
+      "sha256": "609879727a851cf6a79a4ab589096cb0cfe560476557ae9ef5d42d826df7613c"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-client.mjs",
+      "sha256": "6f11842e84374fb6ec847b1cd466cbebc4efa42a5902712b5bf5c6fb5eb3955c"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-operation.mjs",
+      "sha256": "5c0d2fd7e99c4ed351e64e001ae9a8b5131ef9ea8dbfb1cecad1eb78488d7a7d"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-plan.mjs",
+      "sha256": "0bf181628d33ee8312c0cae3028fab3e9a2e04822556a763e0a12bd6bf6b474f"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "sha256": "6cb420903d980521f32d7d2493471a3998628c45032c8621327bec123d85af92"
+    },
+    {
+      "path": "tools/unified-import/batched-stream-sql-reply.mjs",
+      "sha256": "091bb6223acaeeb27f85ce9e8fc883905179861b664fe00ad29e12c6c713f806"
+    },
+    {
+      "path": "tools/unified-import/current-effective-alignment-cli-input.mjs",
+      "sha256": "07bb69786643443e4a344a1dd22e954926ba5279b7f3265d04d789e1abac1937"
+    },
+    {
+      "path": "tools/unified-import/execution-client.ts",
+      "sha256": "e4e85aee9c0710b07c20e9b6be1cccf03521a5bedaac29bb713e566af29c8197"
+    },
+    {
+      "path": "tools/unified-import/explicit-zero-cli-input.mjs",
+      "sha256": "73233672eca45524f32a4693f65c889d4f8be537e99045718b360f320a6ab17b"
+    },
+    {
+      "path": "tools/unified-import/first-admin-setup.mjs",
+      "sha256": "37dd67e3cf672664f251fb4c862a38646b042ad49a11dee8548045999bb83ee8"
+    },
+    {
+      "path": "tools/unified-import/fresh35-host-session.mjs",
+      "sha256": "5e4f50a53cc93f96271b1fee3956b8f14f4607db5dbab46c28eb97f02e0d46aa"
+    },
+    {
+      "path": "tools/unified-import/historical-hall-cli-input.mjs",
+      "sha256": "74aaf48eff4cdfc2d7c031f94df9d1e7aca73ff9e7de33e9806873309df498ef"
+    },
+    {
+      "path": "tools/unified-import/historical-line-amount-cli-input.mjs",
+      "sha256": "c52412f3ee33cd500790dd2737b6e75e720c257effa8e1155570778d4e7e0920"
+    },
+    {
+      "path": "tools/unified-import/historical-settlement-retention-cli-input.mjs",
+      "sha256": "85ef8d7636e8591d534651b14d427145c6a57997dbb617b96d65caf282cb1e92"
+    },
+    {
+      "path": "tools/unified-import/r3-service20-entry.mjs",
+      "sha256": "a36f2a10911f19682e488bd1432924f4616f8e7b5007691e4ac50caafe3a68f6"
+    },
+    {
+      "path": "tools/unified-import/r3-service20-retained-import.mjs",
+      "sha256": "e911e92001f2f59efdbb3611faf80ec68b66aa5f2059fa964231b9910faa1aca"
+    },
+    {
+      "path": "tools/unified-import/stream-plan.mjs",
+      "sha256": "d222f0b8671097a71983c36497792698e2498d017c020c08476ba3e6f9c8541c"
+    },
+    {
+      "path": "tools/unified-import/stream-program.mjs",
+      "sha256": "dae5a13547e645316859f58b5d0fed031ae1e4f1935694a00589106a6f64c0f9"
+    },
+    {
+      "path": "tools/unified-import/stream-typed-hash.mjs",
+      "sha256": "9e48167e3e3df337bc7d34a8bbde1b1dc8b59c853fcc287d59c0c7a2f479441d"
+    },
+    {
+      "path": "tools/unified-import/whole-host-session.mjs",
+      "sha256": "a4e62e6bfe45957078946ace0475eaa35a867ca649ec7634ac2da5548ba8b4da"
+    },
+    {
+      "path": "tools/unified-import/whole-package-client.ts",
+      "sha256": "ad7f7a64732b164ee3a0394c8f66e42e54c69b87438895de568e336031788fd8"
+    },
+    {
+      "path": "tools/unified-import/whole-package-reconcile.mjs",
+      "sha256": "c04e709de46a61bc6026a06f60bdd917e5b132644542f69e3d2d2eeae3de3ad1"
+    },
+    {
+      "path": "tools/unified-import/whole-package-sql-kernel.ts",
+      "sha256": "e415ebe8f99e015e9eb6fd7c82fe116774bd7bcd8a7fe1c98a246eda35f00fea"
+    }
+  ],
+  "edges": [
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 1,
+      "target": "tools/unified-import/r3-service20-retained-import.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 2,
+      "target": "tools/unified-import/r3-service20-retained-import.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 3,
+      "target": "tools/unified-import/batched-stream-cli-state.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 4,
+      "target": "tools/unified-import/fresh35-host-session.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 5,
+      "target": "tools/unified-import/historical-settlement-retention-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 6,
+      "target": "tools/unified-import/historical-line-amount-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 7,
+      "target": "tools/unified-import/historical-hall-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 8,
+      "target": "tools/unified-import/current-effective-alignment-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 9,
+      "target": "tools/unified-import/explicit-zero-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-entry.mjs",
+      "line": 10,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs",
+      "line": 8,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "line": 11,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs",
+      "line": 12,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 4,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-compact-zero-candidate.mjs",
+      "line": 136,
+      "target": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 1,
+      "target": "tools/unified-import/stream-plan.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 2,
+      "target": "tools/unified-import/fresh35-host-session.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 7,
+      "target": "tools/unified-import/batched-stream-cli-state.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 8,
+      "target": "tools/unified-import/batched-stream-operation.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 9,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 12,
+      "target": "tools/unified-import/whole-package-reconcile.mjs"
+    },
+    {
+      "source": "tools/unified-import/r3-service20-retained-import.mjs",
+      "line": 13,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-cli-state.mjs",
+      "line": 1,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-cli-state.mjs",
+      "line": 2,
+      "target": "tools/unified-import/batched-stream-plan.mjs"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-cli-state.mjs",
+      "line": 4,
+      "target": "packages/application/src/canonical-request-value.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-cli-state.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 1,
+      "target": "scripts/release/unified-install/synthetic-prefix155-record.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 2,
+      "target": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 8,
+      "target": "packages/application/src/canonical-request-value.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 9,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 10,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 11,
+      "target": "packages/authentication/src/passwords.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 12,
+      "target": "tools/unified-import/execution-client.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 13,
+      "target": "tools/unified-import/first-admin-setup.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 14,
+      "target": "tools/unified-import/whole-package-client.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 15,
+      "target": "tools/unified-import/whole-package-sql-kernel.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 16,
+      "target": "tools/unified-import/stream-typed-hash.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 18,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 21,
+      "target": "scripts/release/unified-install/fresh35-catalog-contract.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 22,
+      "target": "scripts/release/unified-install/fresh35-combined-record-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 23,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 24,
+      "target": "scripts/release/unified-install/fresh35-combined-target-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 25,
+      "target": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 26,
+      "target": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 27,
+      "target": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 28,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 29,
+      "target": "tools/unified-import/whole-host-session.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 30,
+      "target": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 31,
+      "target": "scripts/release/unified-install/synthetic-sql39-record.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 32,
+      "target": "tools/unified-import/batched-stream-cli-state.mjs"
+    },
+    {
+      "source": "tools/unified-import/fresh35-host-session.mjs",
+      "line": 33,
+      "target": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/historical-settlement-retention-cli-input.mjs",
+      "line": 3,
+      "target": "tools/unified-import/explicit-zero-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/historical-settlement-retention-cli-input.mjs",
+      "line": 4,
+      "target": "packages/application/src/unified-historical-settlement-retention.ts"
+    },
+    {
+      "source": "tools/unified-import/historical-line-amount-cli-input.mjs",
+      "line": 3,
+      "target": "tools/unified-import/explicit-zero-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/historical-line-amount-cli-input.mjs",
+      "line": 4,
+      "target": "packages/application/src/unified-historical-line-amount-evidence.ts"
+    },
+    {
+      "source": "tools/unified-import/historical-hall-cli-input.mjs",
+      "line": 3,
+      "target": "tools/unified-import/explicit-zero-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/historical-hall-cli-input.mjs",
+      "line": 4,
+      "target": "packages/application/src/unified-historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "tools/unified-import/current-effective-alignment-cli-input.mjs",
+      "line": 3,
+      "target": "tools/unified-import/explicit-zero-cli-input.mjs"
+    },
+    {
+      "source": "tools/unified-import/current-effective-alignment-cli-input.mjs",
+      "line": 4,
+      "target": "packages/application/src/unified-current-effective-alignment.ts"
+    },
+    {
+      "source": "tools/unified-import/explicit-zero-cli-input.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "tools/unified-import/explicit-zero-cli-input.mjs",
+      "line": 6,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-explicit-zero-approval.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh27-publication-isolation.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-core-guards.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/legacy-dependency-source-report.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-plan.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-source.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/whole-sales-catalog-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-source.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/legacy-dependency-source-report.mjs"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-historical-settlement-retention.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 3,
+      "target": "packages/application/src/unified-historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 5,
+      "target": "packages/application/src/unified-import-source-reconciliation.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 7,
+      "target": "packages/application/src/unified-current-effective-alignment.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 9,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 11,
+      "target": "packages/application/src/unified-historical-staff-hall-approval.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 13,
+      "target": "packages/application/src/unified-zero-amount-archive.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 14,
+      "target": "packages/application/src/unified-import-stable-identity.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 15,
+      "target": "packages/application/src/unified-import-historical-sales.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 16,
+      "target": "packages/application/src/unified-historical-line-amount-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 18,
+      "target": "packages/application/src/calendar-date.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 19,
+      "target": "packages/application/src/calendar-date.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 21,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 22,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 23,
+      "target": "packages/domain/src/sales-money.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 24,
+      "target": "packages/application/src/native-barcode-import.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-contract.ts",
+      "line": 25,
+      "target": "packages/domain/src/values.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-sales-hall-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-historical-amount-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-historical-settlement-difference-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 11,
+      "target": "scripts/release/unified-install/fresh35-admin-provision-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-baseline-scope-candidate.mjs",
+      "line": 12,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 1,
+      "target": "packages/application/src/unified-historical-settlement-retention.ts"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 2,
+      "target": "packages/application/src/unified-historical-line-amount-evidence.ts"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 3,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 4,
+      "target": "packages/application/src/unified-historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-current-effective-alignment.ts"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 6,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "tools/unified-import/stream-plan.mjs",
+      "line": 8,
+      "target": "packages/application/src/unified-historical-staff-hall-approval.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-operation.mjs",
+      "line": 1,
+      "target": "tools/unified-import/batched-stream-plan.mjs"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-operation.mjs",
+      "line": 2,
+      "target": "tools/unified-import/batched-stream-client.mjs"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-operation.mjs",
+      "line": 3,
+      "target": "tools/unified-import/batched-stream-sql-kernel.mjs"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-operation.mjs",
+      "line": 4,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/request-hash.ts",
+      "line": 2,
+      "target": "packages/application/src/canonical-request-value.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-reconcile.mjs",
+      "line": 1,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-reconcile.mjs",
+      "line": 2,
+      "target": "packages/authentication/src/passwords.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-reconcile.mjs",
+      "line": 3,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-plan.mjs",
+      "line": 3,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-plan.mjs",
+      "line": 4,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/canonical-request-value.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-combined-target-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-prefix155-record.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "line": 1,
+      "target": "scripts/release/unified-install/performance155/derive155.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "line": 2,
+      "target": "scripts/release/unified-install/fresh35-sql39-catalog-delta.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-combined-target-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "line": 11,
+      "target": "scripts/release/unified-install/fresh35-retirement-schema.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs",
+      "line": 12,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-historical-settlement-retention.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 3,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 4,
+      "target": "packages/application/src/unified-historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 7,
+      "target": "packages/application/src/unified-source-registration.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 8,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 10,
+      "target": "scripts/release/unified-install/whole-sales-admission-v1.mjs"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 11,
+      "target": "packages/application/src/unified-historical-staff-hall-approval.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 13,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 14,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 15,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 18,
+      "target": "packages/application/src/unified-import-execution-core.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution.ts",
+      "line": 19,
+      "target": "packages/application/src/unified-import-execution-core.ts"
+    },
+    {
+      "source": "tools/unified-import/execution-client.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-import-execution-v2-client.ts"
+    },
+    {
+      "source": "tools/unified-import/execution-client.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-execution-core.ts"
+    },
+    {
+      "source": "tools/unified-import/execution-client.ts",
+      "line": 3,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "tools/unified-import/execution-client.ts",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/execution-client.ts",
+      "line": 6,
+      "target": "packages/authentication/src/passwords.ts"
+    },
+    {
+      "source": "tools/unified-import/first-admin-setup.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/first-admin-setup.mjs",
+      "line": 6,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/first-admin-setup.mjs",
+      "line": 7,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "tools/unified-import/first-admin-setup.mjs",
+      "line": 8,
+      "target": "tools/unified-import/stream-plan.mjs"
+    },
+    {
+      "source": "tools/unified-import/first-admin-setup.mjs",
+      "line": 9,
+      "target": "tools/unified-import/stream-program.mjs"
+    },
+    {
+      "source": "tools/unified-import/whole-package-client.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-sql-kernel.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-sql-kernel.ts",
+      "line": 3,
+      "target": "packages/authentication/src/passwords.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-sql-kernel.ts",
+      "line": 4,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-sql-kernel.ts",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-package-sql-kernel.ts",
+      "line": 6,
+      "target": "tools/unified-import/execution-client.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "line": 6,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/whole-catalog-gate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-retirement-schema.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-catalog-contract.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/publish-installation-record.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-record-v1.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-source-v1.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-retirement-identity.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-target-v1.mjs",
+      "line": 8,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "line": 6,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "line": 7,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-admin154-record-v1.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "line": 8,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs",
+      "line": 11,
+      "target": "scripts/release/unified-install/fresh35-combined-target-v1.mjs"
+    },
+    {
+      "source": "tools/unified-import/whole-host-session.mjs",
+      "line": 7,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-host-session.mjs",
+      "line": 8,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-host-session.mjs",
+      "line": 9,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/whole-host-session.mjs",
+      "line": 11,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/fresh35-combined-source-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh35-combined-target-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/fresh35-combined-lifecycle-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/synthetic-sql39-record.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/fresh35-combined-catalog-v1.mjs"
+    },
+    {
+      "source": "packages/application/src/unified-historical-settlement-retention.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-settlement-retention.ts",
+      "line": 3,
+      "target": "packages/application/src/canonical-request-value.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-settlement-retention.ts",
+      "line": 4,
+      "target": "packages/application/src/unified-import-historical-sales.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-line-amount-evidence.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-line-amount-evidence.ts",
+      "line": 3,
+      "target": "packages/application/src/unified-import-historical-sales.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "line": 2,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "line": 3,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "line": 5,
+      "target": "packages/application/src/historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-sales-hall-evidence.ts",
+      "line": 7,
+      "target": "packages/application/src/historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-current-effective-alignment.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-core-guards.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/whole-catalog-gate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-core-guards.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-core-guards.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/legacy-dependency-source-report.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/legacy-dependency-source-report.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/fresh27-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/legacy-dependency-source-report.mjs",
+      "line": 9,
+      "target": "scripts/release/unified-install/render-whole-package-local.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/legacy-dependency-source-report.mjs",
+      "line": 10,
+      "target": "scripts/release/unified-install/whole-catalog-gate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh27-legacy-rowtypes.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/whole-catalog-gate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/whole-catalog-gate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/whole-explicit-zero-integration-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "line": 8,
+      "target": "scripts/release/unified-install/whole-sales-record-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-catalog-v1.mjs",
+      "line": 9,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-source-reconciliation.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-source-reconciliation.ts",
+      "line": 4,
+      "target": "packages/application/src/unified-historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-source-reconciliation.ts",
+      "line": 5,
+      "target": "packages/application/src/historical-sales-hall-evidence.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-source-reconciliation.ts",
+      "line": 8,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-source-reconciliation.ts",
+      "line": 9,
+      "target": "packages/application/src/unified-zero-amount-archive.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-source-reconciliation.ts",
+      "line": 10,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "packages/application/src/unified-historical-staff-hall-approval.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-zero-amount-archive.ts",
+      "line": 1,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-stable-identity.ts",
+      "line": 1,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/inventory-cutoff-import.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/inventory-cutoff-import.ts",
+      "line": 2,
+      "target": "packages/domain/src/values.ts"
+    },
+    {
+      "source": "packages/application/src/inventory-cutoff-import.ts",
+      "line": 4,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/inventory-cutoff-import.ts",
+      "line": 5,
+      "target": "packages/application/src/history-import-lifecycle.ts"
+    },
+    {
+      "source": "packages/application/src/inventory-cutoff-import.ts",
+      "line": 7,
+      "target": "packages/application/src/native-import-record-accounting.ts"
+    },
+    {
+      "source": "packages/domain/src/sales-money.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/domain/src/sales-money.ts",
+      "line": 2,
+      "target": "packages/domain/src/values.ts"
+    },
+    {
+      "source": "packages/application/src/native-barcode-import.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/native-barcode-import.ts",
+      "line": 2,
+      "target": "packages/domain/src/values.ts"
+    },
+    {
+      "source": "packages/application/src/native-barcode-import.ts",
+      "line": 3,
+      "target": "packages/application/src/history-storage-contract.ts"
+    },
+    {
+      "source": "packages/application/src/native-barcode-import.ts",
+      "line": 5,
+      "target": "packages/application/src/import-v2-contract.ts"
+    },
+    {
+      "source": "packages/application/src/native-barcode-import.ts",
+      "line": 6,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/domain/src/values.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-client.mjs",
+      "line": 1,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "line": 1,
+      "target": "packages/authentication/src/passwords.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "line": 2,
+      "target": "tools/unified-import/execution-client.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "line": 3,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-sql-kernel.mjs",
+      "line": 4,
+      "target": "tools/unified-import/batched-stream-sql-reply.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/performance155/derive155.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/derive155.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-schema.mjs",
+      "line": 4,
+      "target": "scripts/release/unified-install/fresh35-retirement-plan.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/fresh35-retirement-schema.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/fresh35-retirement-source.mjs"
+    },
+    {
+      "source": "packages/application/src/unified-source-registration.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-source-registration.ts",
+      "line": 3,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/unified-source-registration.ts",
+      "line": 4,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "line": 3,
+      "target": "tools/unified-import/whole-host-session.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "line": 6,
+      "target": "tools/unified-import/fresh35-host-session.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "line": 7,
+      "target": "scripts/release/unified-install/whole-sales-catalog-v1.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-admission-v1.mjs",
+      "line": 8,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2-client.ts",
+      "line": 6,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2-client.ts",
+      "line": 8,
+      "target": "packages/application/src/unified-import-execution-v2.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-explicit-zero-integration-candidate.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/whole-sales-integration-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-record-v1.mjs",
+      "line": 4,
+      "target": "scripts/release/unified-install/whole-sales-trusted-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-record-v1.mjs",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-record-v1.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/whole-installation-record.mjs"
+    },
+    {
+      "source": "packages/application/src/history-import-lifecycle.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/history-import-lifecycle.ts",
+      "line": 2,
+      "target": "packages/application/src/history-storage-contract.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-record-accounting.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-record-accounting.ts",
+      "line": 2,
+      "target": "packages/domain/src/values.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-record-accounting.ts",
+      "line": 3,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-record-accounting.ts",
+      "line": 5,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-record-accounting.ts",
+      "line": 6,
+      "target": "packages/application/src/native-import-schema-contract.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-record-accounting.ts",
+      "line": 8,
+      "target": "packages/application/src/history-typed-publication.ts"
+    },
+    {
+      "source": "tools/unified-import/batched-stream-sql-reply.mjs",
+      "line": 1,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/performance155/parents/20261115-r3-party-audit-key-pg-local-01/derive155.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-explicit-zero-approval.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 3,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 4,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 5,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 6,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-execution-v2.ts",
+      "line": 8,
+      "target": "packages/application/src/unified-import-master-chunks-v2.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-integration-candidate.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/whole-closure-integration-candidate.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-sales-trusted-path.mjs",
+      "line": 6,
+      "target": "scripts/release/unified-install/trusted-install-path.mjs"
+    },
+    {
+      "source": "scripts/release/unified-install/whole-installation-record.mjs",
+      "line": 3,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/native-import-schema-contract.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/history-typed-publication.ts",
+      "line": 1,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/history-typed-publication.ts",
+      "line": 2,
+      "target": "packages/application/src/history-storage-contract.ts"
+    },
+    {
+      "source": "packages/application/src/history-typed-publication.ts",
+      "line": 3,
+      "target": "packages/application/src/history-typed-closure.ts"
+    },
+    {
+      "source": "scripts/release/unified-install/performance155/parents/20261115-r3-party-set-scalar-pg-local-03/derive155.mjs",
+      "line": 5,
+      "target": "scripts/release/unified-install/performance155/parents/20261115-r3-root114-final-combination-local-01/derive155.mjs"
+    },
+    {
+      "source": "packages/application/src/unified-import-master-chunks-v2.ts",
+      "line": 1,
+      "target": "packages/application/src/unified-import-contract.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-master-chunks-v2.ts",
+      "line": 2,
+      "target": "packages/application/src/unified-import-execution.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-master-chunks-v2.ts",
+      "line": 4,
+      "target": "packages/application/src/inventory-cutoff-import.ts"
+    },
+    {
+      "source": "packages/application/src/unified-import-master-chunks-v2.ts",
+      "line": 5,
+      "target": "packages/application/src/request-hash.ts"
+    },
+    {
+      "source": "packages/application/src/history-typed-closure.ts",
+      "line": 3,
+      "target": "packages/domain/src/errors.ts"
+    },
+    {
+      "source": "packages/application/src/history-typed-closure.ts",
+      "line": 5,
+      "target": "packages/application/src/history-storage-contract.ts"
+    }
+  ],
+  "externalRuntimeImports": [],
+  "method": "Line-anchored explicit import/export; full import type and all-type named clauses excluded. Only selected dynamic loader roots included, not dynamic writer/client calls. Each analyzed leaf matched exact Root08 source rows. No Node or constructor execution."
+}
