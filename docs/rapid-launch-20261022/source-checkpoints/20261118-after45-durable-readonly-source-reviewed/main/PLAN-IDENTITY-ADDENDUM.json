@@ -1,0 +1,16 @@
+{
+  "state": "CLARIFY_TYPED_PLAN_BINDINGS_NO_PLAN_OR_ID_CHANGE",
+  "scopeSha256": "8ea720aea4b5a8358ffe69b014a3a513b03a60a98ff89602877dfaa72526b3ad",
+  "authority": "Main consumes T45 source-field assignment-chain evidence and existing exact Prepare05 safe receipt; current user cutoff11:40 reused, no new business decision.",
+  "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+  "markerIdentityPlanSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+  "preparedBindingPlanSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+  "scopeOriginalPlanSha256Means": "batchedPlanSha256; never use it as SQL marker.identity.planSha256",
+  "assignmentEvidence": "stream-program.mjs33/47 program.identity.planSha256=planHash; batched-stream-plan.mjs22 clone(program.identity),24 preserve batchIdentity,56 requestHash({identity:batchIdentity,descriptor}); NORMAL45 preparedBinding and immutable Prepare05 safe receipt agree",
+  "fixedOriginalCutoff": "2026-11-16T11:40:00+08:00",
+  "originalStepsUnchanged": 44910,
+  "originalBusinessIdsAndPlanUnchanged": true,
+  "initializerOrSQLiteReadOrPlanRecompiled": false,
+  "noPGClockCASRoleAction": true,
+  "outputRule": "Correct typed marker identity comparison; all unknowns stay UNKNOWN. This mapping clarification does not authorize FIRST_WRITE/RESUME or business changes."
+}

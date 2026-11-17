@@ -1,0 +1,27 @@
+{
+  "state": "PASS_SOURCE_ONLY_NOT_OBSERVED",
+  "checks": [
+    "Actual143 baseline reconstructed exactly",
+    "Original143 keys plus sole readonly key to144",
+    "All original dispatcher functions except execute unchanged",
+    "Only new admission branch and exact new isolated argv exception; old guards preserved",
+    "All corrected historical paths and hashes inherited exactly with explicit actual143 and restore receipts",
+    "Existing31 original auth snapshots remain stat only",
+    "Historical preservation disjoint all new absent targets",
+    "Original CAS lock metadata and lifecycle primitives reused",
+    "Exact owner consumer source pin",
+    "Exact consumer member durable-readonly.sql",
+    "Exact consumer member durable_readonly_job.py",
+    "Exact consumer member scope.json",
+    "ACTUAL45_ORIGINAL_AUTH_RESTORATION_RECEIPT_REQUIRED",
+    "ACTUAL45_RESTORATION_HELPER_CLEANUP_REQUIRED",
+    "Sole clock after final source reviews Main decision and fresh; readonly900 and CAS180",
+    "Original channel exact new three source files",
+    "Syntax checked only no source entry factory or positive runtime fixture"
+  ],
+  "count": 17,
+  "serverActions": 0,
+  "clockAUTHCASJobs": 0,
+  "NodePGFactory": 0,
+  "credentialsInitializerSQLiteBodiesRead": false
+}

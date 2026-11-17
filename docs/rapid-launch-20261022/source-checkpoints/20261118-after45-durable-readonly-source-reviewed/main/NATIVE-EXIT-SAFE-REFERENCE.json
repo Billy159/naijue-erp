@@ -1,0 +1,23 @@
+{
+  "state": "ACTUAL_NATIVE_EXIT_MINUS15_DURABLE_BUSINESS_STATE_STILL_UNKNOWN",
+  "diagnosticResultPath": "outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL45-NATIVE-EXIT-READONLY-DIAGNOSTIC-01/RESULT.json",
+  "diagnosticResultSha256": "adb2d61dde40a3c9e2358312fc9e03106100f02db6f34cd19aa10af6bd8dc5b1",
+  "originalWriterKey": "t45-r3-batched-real-after44-execute-20261118-01",
+  "remoteExitCode": -15,
+  "childReaped": true,
+  "descendantsReaped": true,
+  "cleanupFileSha256": "7837af0c74693fee92b21e3fa621845e49410b7ac3e1c1c50080b092840ce33f",
+  "cleanupBytes": 219,
+  "childReceiptSha256": "f894dd21acea583cbbfb293022e6d89f463647cf89b9d76e5b048ea5d7000f8b",
+  "nativeResultSha256": "03721ee4b2623b92207b57a71b410e87af6677f31e238a42a1552ea8364b4085",
+  "nativeResultBytes": 99,
+  "exactFixedFallback": true,
+  "phaseLogMetadataBytes": 0,
+  "noSpecificDeadlineCauseOrRollbackInferred": true,
+  "businessCommitState": "UNKNOWN",
+  "auth45ActuallyRestored": true,
+  "PGCurrentlyStopped": true,
+  "PGConnections": 0,
+  "mutations": 0,
+  "rawLogsBusinessOrCredentialBodiesIncluded": false
+}

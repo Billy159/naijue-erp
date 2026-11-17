@@ -1,0 +1,59 @@
+{
+  "newJobId": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "jobs": {
+    "observe": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01"
+  },
+  "dispatcherSha256": "f7d3d324aefca45933085b5a5e14c6802695585011ecdff48ac69df36e5c521e",
+  "previousModuleSha256": "6069169514a44d98869ffdcef77c2088be0fedc618967866aa42717480152904",
+  "previousPolicySha256": "bf5ab07f4c86346ab8aa2341471d5a70c0c1f7f9315fbe51a72ca0ebdc8b26fb",
+  "mainScope": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261118-r3-after45-durable-readonly-scope-01/SOURCE-SCOPE.json",
+    "sha256": "8ea720aea4b5a8358ffe69b014a3a513b03a60a98ff89602877dfaa72526b3ad"
+  },
+  "restore": {
+    "key": "t45-r3-original-auth45-guardian-restore-20261118-01",
+    "terminalSha256": "09c82002e59d70c8ef086af7c65219ae049876cdc59258f480e2f69aae241210",
+    "resultSha256": "1b6cdcc959a65390d577143cfbf22ca63a54b5d31cb3faea731a3b9898afc113",
+    "cleanupSha256": "f59857ad32d19be5baa317603be77d332278bf03ad493005e6f63873f7c86e66",
+    "safeReceiptSha256": "28a5928a29fdf2c9c8094798af22a7ba6a709af9f40ea50e8e27cc8b3f32b37e",
+    "container": {
+      "exitCode": 0,
+      "id": "db1e52517061426869b8735caac0d8c16e02e917999291d8c0f75f6dc402d33f",
+      "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+      "name": "/t45-r3-original-auth45-guardian-restore-20261118-01",
+      "operation": "t45-r3-original-auth45-guardian-restore-20261118-01",
+      "pid": 0,
+      "running": false
+    }
+  },
+  "restoreReadback": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/ORIGINAL-AUTH45-GUARDIAN-RESTORE-EXECUTION-PREPARATION-01/runtime/rollback/ACTUAL-ORIGINAL-KEY-READBACK-01.PRIVATE.json",
+    "sha256": "159426159749266436f62cb92e59463e7cf190da409b3e47ef6a05895746ff36"
+  },
+  "originalHardMet": false,
+  "businessCommitState": "UNKNOWN",
+  "sql42Result": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/NORMAL42-MAINTENANCE-RESULT-01/RESULT.json",
+    "sha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe"
+  },
+  "consumerReviewSha256": "be4fdbc63443a38f5543cad841f332bf231ab80b1122b614796300403c4658f1",
+  "clock": null,
+  "authorities": null,
+  "planIdentityAddendum": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/naijue-erp-v0.0.1/outputs/主控/20261118-r3-after45-durable-readonly-scope-01/PLAN-IDENTITY-ADDENDUM.json",
+    "sha256": "ce5fc5da901de9825df325d5d30b5c0a6ad4396c06b55a30dd2b7550142bae64"
+  },
+  "consumerSourcePinsSha256": "abc2bf91751c475befb10477e7e03473e9bbfc7b2b1dbbf0c7f3945ec76fe941",
+  "consumerInterfaceSha256": "845fed13bd6ffa29a6d5add33717cb02584eb71db8fe5fd906e8321911be69c3",
+  "businessIdentity": {
+    "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+    "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+    "cutoffAt": "2026-11-16T11:40:00+08:00",
+    "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "markerPlanSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+    "namespace": "naijue:tplus:20261102",
+    "originalSteps": 44910,
+    "rootOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758"
+  }
+}

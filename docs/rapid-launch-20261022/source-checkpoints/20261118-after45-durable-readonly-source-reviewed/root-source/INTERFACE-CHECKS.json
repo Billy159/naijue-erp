@@ -1,0 +1,26 @@
+{
+  "state": "PASS_ACTUAL_SOURCE_AST_INTERFACE_ONLY_NO_ISSUANCE_OR_CLI_EXECUTION",
+  "checks": [
+    "Producer exact five actual issuance files includes consumer registered-policy basename",
+    "Consumer registered-policy uses exact same policy raw bytes as CAS packet",
+    "Producer metadata covers every actual consumer issued field",
+    "Consumer requestKey is exact new job key",
+    "Exact consumer authority seven fields no missing role leaf",
+    "Registered policy fields match original diagnostic contract",
+    "Producer authority format bound to exact frozen consumer interface",
+    "Producer policy format bound to exact frozen consumer interface",
+    "Producer and consumer fixed WINDOW same absolute directory",
+    "Exact consumer source directory and key bound by rule",
+    "Main original seven parameter issue API retained",
+    "Actual consumer CLI single issued authority SHA argument and300 seconds",
+    "Actual collector exact three static files plus sole dynamic AUTH",
+    "Issued authority scope pin comes from same exact consumer scope file",
+    "Original channel registration metadata packet and CAS job key agree",
+    "Registered policy uses same bytes throughout packet and consumer"
+  ],
+  "count": 16,
+  "futurePositiveAUTHFixture": false,
+  "clockCalls": 0,
+  "clientStateRemoteSubmitCalls": 0,
+  "existingClientRequestConstructorReused": true
+}

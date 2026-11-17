@@ -1,0 +1,191 @@
+{
+  "APPBuildOrDeploymentOrPublication": false,
+  "FIRST_WRITEAuthorized": false,
+  "RESUMEAuthorized": false,
+  "SQL42Reinstalled": false,
+  "activeOperationUnits": [],
+  "actualEvidence": {
+    "audit": {
+      "auditWithoutReceiptCount": 0,
+      "count": 467,
+      "identityOrDescriptorConflictCount": 0,
+      "receiptWithoutAuditCount": 0,
+      "rootCount": 1
+    },
+    "batches": {
+      "baseline": {
+        "completedAtPresent": true,
+        "count": 1,
+        "cutoffMatches": true,
+        "sourceHashMatches": true,
+        "sourceNameMatches": true,
+        "status": "IMPORTED"
+      },
+      "document": {
+        "completedAtPresent": false,
+        "count": 1,
+        "cutoffMatches": true,
+        "sourceHashMatches": true,
+        "sourceNameMatches": true,
+        "status": "STAGED"
+      }
+    },
+    "databaseMatches": true,
+    "databaseOid": "16393",
+    "defaultTransactionReadOnly": true,
+    "format": "T45_R3_AFTER45_DURABLE_READONLY_V1",
+    "namespace": {
+      "bindingIdentityConflictCount": 0,
+      "bindingIdentityMatchCount": 1,
+      "bindingRecordCount": 1,
+      "extraMatchingBatchCount": 0,
+      "importedBindingCount": 1,
+      "otherHashBatchCount": 0
+    },
+    "progress": {
+      "committedReceiptCount": 467,
+      "descriptorHashConflictCount": 0,
+      "duplicateOrdinalCount": 0,
+      "duplicateSubBatchIdCount": 0,
+      "expectedDescriptorBinding": "UNKNOWN_NOT_READ_FROM_ORIGINAL_PLAN",
+      "firstStepMin": 0,
+      "groupCount": 151,
+      "identityConflictCount": 0,
+      "identityMatchCount": 467,
+      "invalidDescriptorHashCount": 0,
+      "invalidRangeCount": 0,
+      "lastStepMax": 466,
+      "memberClosureConflictCount": 0,
+      "nonImportOrActorConflictCount": 0,
+      "ordinalMax": 150,
+      "ordinalMin": 0,
+      "otherStatusReceiptCount": 0,
+      "phaseGroupCounts": {
+        "BASELINE_CLOSE": 1,
+        "CORE": 1,
+        "DOCUMENT_OPEN": 1,
+        "FINALIZE": 0,
+        "HISTORY": 0,
+        "KEYS": 80,
+        "MASTER": 68,
+        "OTHER": 0
+      },
+      "predecessorConflictCount": 0,
+      "receiptCount": 467
+    },
+    "root": {
+      "committedCount": 1,
+      "coreDescriptor": true,
+      "count": 1,
+      "identityExact": true,
+      "identityFields": {
+        "batchId": true,
+        "cutoffAt": true,
+        "documentBatchId": true,
+        "namespace": true,
+        "packageSha256": true,
+        "planSha256": true,
+        "rootOperationId": true
+      },
+      "initializationSemanticsMatch": true,
+      "markerObject": true,
+      "otherStatusCount": 0
+    },
+    "serverVersionNum": "170011",
+    "transactionReadOnly": true
+  },
+  "actualReadbackSha256": "b8143470f8e8d24ab38a45149d4a268a87c78da9048ca13e3346648c20f5ee17",
+  "actualStoppedOwnReadOnlyContainer": {
+    "exitCode": 0,
+    "id": "54fa5335babcb33c2ce2f73c94aa852f1e6c3086a564ef08c2b2e90d144570b4",
+    "image": "sha256:6de44f436389594e4647c8503764f8f6a56bc964b4e33cf31a3fbb9ba8bfa769",
+    "name": "/t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+    "operation": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+    "pid": 0,
+    "running": false
+  },
+  "businessAcceptanceClaimed": false,
+  "businessStateObserved": "ORIGINAL_ROOT_AND_PREFIX_COMMITTED_DOCUMENT_BATCH_STAGED_FULL_COMPLETION_NOT_OBSERVED",
+  "checkedAtUTC": "2026-11-17T22:37:49.082074+00:00",
+  "cleanup": {
+    "actualContainerId": "54fa5335babcb33c2ce2f73c94aa852f1e6c3086a564ef08c2b2e90d144570b4",
+    "actualContainerStartedAt": "2026-11-17T22:37:23.835829893Z",
+    "createAttempted": true,
+    "dataPreserved": true,
+    "originalPortAbsent": true,
+    "ownContainerStopped": true,
+    "ownedPidAbsent": true,
+    "pgdataPidAbsent": true,
+    "physicalPGDATAFileWritesPossible": true
+  },
+  "cleanupPublicSha256": "7481c098ff544271042bb6459d62640b33911b30cfa0afa46cf0f1f2e011def1",
+  "cleanupRootSha256": "f943554c95b5e0b3cdd0a50032f51c5877fd6cc4e419bf10b9659472600b6202",
+  "consumerSourcePinsSha256": "abc2bf91751c475befb10477e7e03473e9bbfc7b2b1dbbf0c7f3945ec76fe941",
+  "dispatcherSha256": "3cfd79c52ad1a6ba72c3bdb1622af8118653ee7fa890ebfd1a21bb1fbac212e9",
+  "initializerOrSQLiteOrBusinessBodiesExported": false,
+  "jointSourceReviewSha256": "ef93662eba93616bbecd7f476f588564bf12eb0eec5ad937c3932172a252011d",
+  "limits": [
+    "The original expected full descriptor sequence was not read; expectedDescriptorBinding remains UNKNOWN_NOT_READ_FROM_ORIGINAL_PLAN.",
+    "Observed committed receipt/group range does not authorize a resume cursor or repeat import.",
+    "This establishes current durable partial progress; it does not attribute each existing receipt to a particular previous failed writer invocation."
+  ],
+  "moduleSha256": "c10820ebfb09ebd33e7a20508c72330044ff91afb81301398ec712e6c1f17ea1",
+  "nextRequired": "Main must specify continuation against the same original business identity and retained plan, validate exact original descriptor bindings and capability route, then authorize a distinct operation as appropriate. Do not FIRST_WRITE, reset, reconstruct, recompile or replay.",
+  "observationPGConnections": 0,
+  "observerMutations": 0,
+  "old44910PlanRecompiled": false,
+  "original45HardDeadlineMet": false,
+  "originalAuthentication45Restored": true,
+  "originalPortAbsent": true,
+  "originalStop45PASSClaimed": false,
+  "originalWriterReplayAuthorized": false,
+  "pgdataPidAbsent": true,
+  "policySha256": "7b2f8e2b51f42e499ad7cff3b3518d9e850d2bd8a05e2b2617717f9fe810175e",
+  "querySha256": "2cb48cb8a7e0dc5bbe48378ea109d6104588c4904197f501c1d84ad9d974bc43",
+  "readOnlyBoundary": {
+    "actualDefaultTransactionReadOnly": true,
+    "actualSingleUserPid": 8,
+    "actualTransactionReadOnly": true,
+    "businessDML": false,
+    "insideCleanup": {
+      "childReaped": true,
+      "cleanClusterAfterRead": true,
+      "descendantsAbsent": true,
+      "networkConnectionsOpened": 0
+    },
+    "physicalPGDATAFileWritesPossible": true,
+    "repeatableReadReadonlyEnvelope": true,
+    "roleOrCredentialChanges": false
+  },
+  "recordedAtUTC": "2026-11-17T22:39:03.519803+00:00",
+  "requestKey": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "resultObjectsEqual": true,
+  "resultPublicSha256": "cd7bc1412496b5d1581297f346f75e6832838eaad14b25474318f8380b81730a",
+  "resultRootSha256": "9fb66c77fae32e36a6381f11a9d3048169a0e3f39606d712af469fc6fb40d501",
+  "rootRegistryAfter": 144,
+  "rootSourcePinsSha256": "488b887162c1f7d19a29c365e6180e6f73b17f3e1967a020c2ebd5e060645345",
+  "state": "PASS_SCOPED_REAL_PG_READONLY_OBSERVATION_ORIGINAL_ROOT_PARTIALLY_COMMITTED_NOT_COMPLETE",
+  "terminal": {
+    "sha256": "5caf975ce006eb5a1420df0322d4c85037a1389c6b2b185a6d4f1966df17c0bc",
+    "value": {
+      "atUTC": "2026-11-17T22:37:21.241126+00:00",
+      "businessAcceptanceClaimed": false,
+      "elapsedSeconds": 5.402142868959345,
+      "exitCode": 0,
+      "exports": [
+        "durable-readonly-cleanup.json",
+        "durable-readonly-result.json"
+      ],
+      "finishedAtUTC": "2026-11-17T22:37:26.701920+00:00",
+      "grantId": "b16447fbc81f4d64",
+      "jobId": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+      "phaseStarted": true,
+      "privateLogsExported": false,
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "taskId": "T45",
+      "unit": "naijue-erp-op-b16447fb-ce65d6f8f219"
+    }
+  },
+  "transactionEnd": "ROLLBACK"
+}

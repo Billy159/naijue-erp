@@ -51897,9 +51897,9 @@
     "updatedAt": "2026-11-11T15:24:45+08:00"
   },
   "controllerCurrentSummary": {
-  "updatedAt": "2026-11-17T22:16:57.175104+00:00",
+  "updatedAt": "2026-11-17T22:40:38.271990+00:00",
   "sourceContractApproval": "CURRENT_USER_SPARSE_SCOPE_AND_ORIGINAL_EXACT_EXCEPTION_APPROVALS_REUSED_NO_REPEAT",
-  "currentTarget": "SQL42_COMMITTED_AUTH45_ACTUALLY_RESTORED_PG_STOPPED_WRITER45_DURABLE_UNKNOWN_READONLY_EVIDENCE_NEXT",
+  "currentTarget": "ROOT144_AUTH45_RESTORED_PG_STOPPED_ORIGINAL_ROOT_PARTIAL_COMMIT_RESUME_BINDING_ANALYSIS",
   "owners": {
     "T45": "Sole server owner; diagnostic host/collector and bounded two-artifact staging install/restore source",
     "D1": "Native diagnostic runner source accepted; explicit auxiliary outer/native scope continuation and root source",
@@ -51909,7 +51909,7 @@
     "C": "Adopt actual closure, preserve failed keys, exact finite source coordination and Git checkpoints"
   },
   "release": "NOT_RELEASED_REAL_IMPORT_BACKUP_PHYSICAL_RESTORE_FORMAL_HTTP_PENDING",
-  "next": "Actual original-auth45 restored and independently readback, not naturalexpiry. Root143/f7d3/module6069/policybf5/CAS99a0, terminal09c820 COMPLETED0/6.923s finished06:14:13.31533, readback159426/safe28a592 match; original2verifier+expiry privately verified, attrs/memberships/runtimeauth unchanged, helper stoppedPID0exit0, PG stopped/pidabsent/portabsent/noactiveops. Oldhard05:39:58.808 remains missedfalse forever, no Stop45PASS. Writer45 FAILED2 and nativeunconfirmed fallback, actualbusinessCOMMIT UNKNOWN. Next only fixed writer45cleanup exit/resultSHA/reaped metadata readonly evidence then originalbusinessRoot durable readonly; preserve all possible writes/44910/IDs/SQL42, no blindFIRST_WRITE/RESUME or oldkey replay. No APP289 deployment/publicbusiness opening yet.",
+  "next": "ACTUAL originalbusinessroot durable observation: Root144/3cfd/modulec108/policy7b2/CASef5a; COMPLETED0/5.402s/terminal5caf/readbackb814/safea5e407. RootCORE COMMITTED/7identitymatch, baselineIMPORTED+complete, documentSTAGED+notcomplete,467committedreceipts/151groups ordinal0..150 step0..466 (CORE1 MASTER68 KEYS80 BASELINE_CLOSE1 DOCUMENT_OPEN1 HISTORY0 FINALIZE0),audit467/allobservedconflicts0/namespacecorrect. Existence of partial commits is PROVEN, notUNKNOWN or0writes; wholecompletion and exactexpecteddescriptor binding stillNOT_PROVEN. RR readonly/ROLLBACK/reaped/clean control/helper stoppedPID0/PGpid-portabsent/noactiveops. Auth45 actuallyrestored, oldhardfalseforever. Next D1 source-only exact originalclient RESUME binding/cursor and firstuncommittedHISTORY cause evidence, then Main concrete limited successor; never FIRST_WRITE/oldkey replay/reprepare/SQL42 reinstall/44910 change. APP289 undeployed/publicclosed, backup/independentrestore stillpending.",
   "inventorySimplification": "Final54warehouse x14843SKU scope801522; explicit39525, unlisted zero761997, unknown0. Target quantity80658. Sparse scope, no fabricated zero ledger rows.",
   "supersededCurrentTargetBeforeAuth45SummaryRepair": "DB05_TEMPORARY_AUTH36_APPLIED_START36_AUTHORIZED_OUTCOME_PENDING_WRITER_NEVER_SUBMITTED"
 },
@@ -52676,11 +52676,11 @@
     }
   },
   "currentR3FinalBatch20261116": {
-  "asOf": "2026-11-17T22:16:57.175104+00:00",
-  "state": "AUTH45_ACTUALLY_RESTORED_PG_STOPPED_BUSINESS_COMMIT_UNKNOWN",
+  "asOf": "2026-11-17T22:40:38.271990+00:00",
+  "state": "PERSISTED_PARTIAL_FIXED_ORIGINAL_ROOT_READONLY_CONFIRMED",
   "realWriterSubmitted": true,
   "realBusinessRowsWritten": null,
-  "formalR3": "SQL42_COMMITTED_AUTH45_RESTORED_PG_STOPPED_BUSINESS45_DURABLE_UNKNOWN",
+  "formalR3": "SQL42_COMMITTED_AUTH45_RESTORED_PG_STOPPED_ORIGINAL_ROOT_PARTIALLY_COMMITTED",
   "data": {
     "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
     "tables": 26,
@@ -52705,7 +52705,7 @@
   "d1Review": "QB_SOURCE_INCREMENT_PASS_3a58c7abd11d2a142fd514b52c650b178411cadc65420c645b4eab4f20c83caf",
   "materialization02SourceReview": "ACTUAL_INPUT02_COMPLETED_68.9881402_SECONDS",
   "ordinaryHttp": "D728F374_LOCAL_BUILD_PACK_ONCE_PASS_NOT_DEPLOYED",
-  "next": "Actual original-auth45 restored and independently readback, not naturalexpiry. Root143/f7d3/module6069/policybf5/CAS99a0, terminal09c820 COMPLETED0/6.923s finished06:14:13.31533, readback159426/safe28a592 match; original2verifier+expiry privately verified, attrs/memberships/runtimeauth unchanged, helper stoppedPID0exit0, PG stopped/pidabsent/portabsent/noactiveops. Oldhard05:39:58.808 remains missedfalse forever, no Stop45PASS. Writer45 FAILED2 and nativeunconfirmed fallback, actualbusinessCOMMIT UNKNOWN. Next only fixed writer45cleanup exit/resultSHA/reaped metadata readonly evidence then originalbusinessRoot durable readonly; preserve all possible writes/44910/IDs/SQL42, no blindFIRST_WRITE/RESUME or oldkey replay. No APP289 deployment/publicbusiness opening yet.",
+  "next": "ACTUAL originalbusinessroot durable observation: Root144/3cfd/modulec108/policy7b2/CASef5a; COMPLETED0/5.402s/terminal5caf/readbackb814/safea5e407. RootCORE COMMITTED/7identitymatch, baselineIMPORTED+complete, documentSTAGED+notcomplete,467committedreceipts/151groups ordinal0..150 step0..466 (CORE1 MASTER68 KEYS80 BASELINE_CLOSE1 DOCUMENT_OPEN1 HISTORY0 FINALIZE0),audit467/allobservedconflicts0/namespacecorrect. Existence of partial commits is PROVEN, notUNKNOWN or0writes; wholecompletion and exactexpecteddescriptor binding stillNOT_PROVEN. RR readonly/ROLLBACK/reaped/clean control/helper stoppedPID0/PGpid-portabsent/noactiveops. Auth45 actuallyrestored, oldhardfalseforever. Next D1 source-only exact originalclient RESUME binding/cursor and firstuncommittedHISTORY cause evidence, then Main concrete limited successor; never FIRST_WRITE/oldkey replay/reprepare/SQL42 reinstall/44910 change. APP289 undeployed/publicclosed, backup/independentrestore stillpending.",
   "inputRegistration": {
     "historicalPriorRegistrationRetainedInPreviousCommits": true,
     "currentDispatcherSha256": "97830e4ec03442e83e0cc6c00467abdddd6a36f61249553184676524c3634309",
@@ -52998,7 +52998,7 @@
     "liveCASSha256": "3ce7ea969090fe375e8b97ec4e0c56e614aada6566de8890a538d09f9a704f88",
     "actualServiceStatus": "STOPPED_PRESERVED_NO_NEW_PG_QUERY"
   },
-  "currentSourceFixCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-original-auth45-restore-source03-reviewed/CHECKPOINT.json",
+  "currentSourceFixCheckpoint": "docs/rapid-launch-20261022/source-checkpoints/20261118-after45-durable-readonly-source-reviewed/CHECKPOINT.json",
   "PGStateAsOfApplyReadback": "HISTORICAL_START35_THEN_ACTUAL_STOP35_AND_RESTORE35",
   "nativeFailureDiagnostics": {
     "sourcePins": "0aae565815411f2352f2d94e9ae82e006eebb70c8ffe282183e3562e5364b196",
@@ -53331,13 +53331,9 @@
     "runtimeResult": "NOT_YET_RECEIVED"
   },
   "lastVerifiedPGState": {
-    "state": "STOPPED_AFTER_ORIGINAL_AUTH45_RESTORED",
-    "pgdataPidAbsent": true,
-    "portAbsent": true,
-    "activeOperationUnits": [],
-    "readbackSha256": "159426159749266436f62cb92e59463e7cf190da409b3e47ef6a05895746ff36",
-    "atUTC": "2026-11-17T22:14:22.425529+00:00",
-    "stopped": true
+    "stopped": true,
+    "atUTC": "2026-11-17T22:37:49.082074+00:00",
+    "readbackSha256": "b8143470f8e8d24ab38a45149d4a268a87c78da9048ca13e3346648c20f5ee17"
   },
   "PGCurrentState": "ACTUAL_AUTH45_RESTORE_READBACK_PG_STOPPED_NO_ACTIVE_OPS",
   "normal38StartInProgress": {
@@ -53595,11 +53591,10 @@
   "normal39": "NORMAL39_WRITER_FAILED_SAFELY_CLOSED_APPLY0_ACK_PRIOR_DURABLE_UNKNOWN",
   "normal39SourceDecisionSha256": "247e9972441b302fbd6d6399b978792e08a9a834c24b33f7565588c933ed9a4b",
   "currentActualRoot": {
-    "dispatcherSha256": "f7d3d324aefca45933085b5a5e14c6802695585011ecdff48ac69df36e5c521e",
-    "moduleSha256": "6069169514a44d98869ffdcef77c2088be0fedc618967866aa42717480152904",
-    "policySha256": "bf5ab07f4c86346ab8aa2341471d5a70c0c1f7f9315fbe51a72ca0ebdc8b26fb",
-    "casReadbackSha256": "99a0d70adf6577f0a6e496717edb121caa772da30ab51122bb117c80c3ae9056",
-    "registeredKeys": 143
+    "registeredKeys": 144,
+    "dispatcherSha256": "3cfd79c52ad1a6ba72c3bdb1622af8118653ee7fa890ebfd1a21bb1fbac212e9",
+    "moduleSha256": "c10820ebfb09ebd33e7a20508c72330044ff91afb81301398ec712e6c1f17ea1",
+    "policySha256": "7b2f8e2b51f42e499ad7cff3b3518d9e850d2bd8a05e2b2617717f9fe810175e"
   },
   "normal39Consumer": {
     "sourcePinsSha256": "dd4a1ba183163c8a4c2e2a85f2dce52124530da945987da63976d21534b488da",
@@ -54461,7 +54456,7 @@
     "diagnosticProsrcIsNotDefinitionProof": true
   },
   "businessImportDurableRowsObserved": null,
-  "originalImportDurableScope": "UNKNOWN_AFTER_ACTUAL_WRITER45_FAILED_NATIVE_UNCONFIRMED_PRESERVE_POSSIBLE_WRITES",
+  "originalImportDurableScope": "FIXED_ORIGINAL_ROOT_PARTIAL_COMMITTED_BASELINE_IMPORTED_DOCUMENT_STAGED_EXPECTED_DESCRIPTOR_UNKNOWN",
   "currentOperationSourceFiles": 392,
   "currentOperationSourceRowsSha256": "3b8b77e94e5799ad399b97767d48e2b25f7f972b64d957e9666a89bf73d6f69e",
   "currentOperationSourceSetSha256": "ac85caa5b8edc5768ffb8bd0f0668b0b9778b3c4be05c5498bbcd5ce45b1bbc3",
@@ -55224,6 +55219,91 @@
       "stopped": true,
       "atUTC": "2026-11-17T02:11:53.756728+00:00"
     }
+  },
+  "after45DurableReadonlySourceReviewed": {
+    "state": "AFTER45_DURABLE_READONLY_SOURCE_REVIEWED_RUNTIME_FRESH_PENDING",
+    "asOf": "2026-11-17T22:36:11.137527+00:00",
+    "rootCurrent": 143,
+    "rootCandidate": 144,
+    "actualAuth45Restored": true,
+    "originalHardMet": false,
+    "businessCommitState": "UNKNOWN",
+    "actualClockIssued": false,
+    "actualCASOrObservationExecuted": false,
+    "sourcePinsSha256": "488b887162c1f7d19a29c365e6180e6f73b17f3e1967a020c2ebd5e060645345",
+    "consumerSourcePinsSha256": "abc2bf91751c475befb10477e7e03473e9bbfc7b2b1dbbf0c7f3945ec76fe941",
+    "reviewSha256": "ef93662eba93616bbecd7f476f588564bf12eb0eec5ad937c3932172a252011d",
+    "rawAuthorityCredentialSnapshotOrGenuineBodiesIncluded": false,
+    "next": "Originalauth45 actually restored/PG stopped, Root143/f7d3 actual. Writer45 actual childexit-15/reaped,99B native fixedfallback03721, commitUNKNOWN. One minimal originalbusinessRoot durable readonly successor144 scoped8ea720+typedce5fc, sourceRoot488/consumerabc2/Qef936+be4f/Decision600c; successful02 single-user no-network RR READ ONLY oneSELECT thenROLLBACK/ownhelper clean stop reused. Fixed originalroot/two batches/group/audit closed booleans/counts only; markerplanafa9 vsbatchedPlan3fbb separate; oldempty31/35table/preupgrade gates removed, actualSQL42 reused. T45 actualfresh0PG beforeMain7 unique900s/CAS180s thenexact144/readback/samekey one observation; no newclock/CAS/PG observed as ofcheckpoint. No rolechanges/import/resume/FIRST_WRITE/44910 recompile/SQLite orinitializer/backup/APP/opening. Observation never autoauthorizes import. Oldhardfalse forever. Preserve all possible writes/IDs/data."
+  },
+  "businessCommitObserved": true,
+  "after45DurablePartialActual": {
+    "state": "PERSISTED_PARTIAL_FIXED_ORIGINAL_ROOT_READONLY_CONFIRMED",
+    "asOf": "2026-11-17T22:40:38.271990+00:00",
+    "rootCurrent": 144,
+    "dispatcherSha256": "3cfd79c52ad1a6ba72c3bdb1622af8118653ee7fa890ebfd1a21bb1fbac212e9",
+    "moduleSha256": "c10820ebfb09ebd33e7a20508c72330044ff91afb81301398ec712e6c1f17ea1",
+    "policySha256": "7b2f8e2b51f42e499ad7cff3b3518d9e850d2bd8a05e2b2617717f9fe810175e",
+    "casReadbackSha256": "ef5a3d74e6860c0ec72df469414c623661081acfd0ceb2f0bc0454ee4ca0b717",
+    "observationKey": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+    "terminalSha256": "5caf975ce006eb5a1420df0322d4c85037a1389c6b2b185a6d4f1966df17c0bc",
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "durationSeconds": 5.402142868959345,
+    "finishedUTC": "2026-11-17T22:37:26.701920+00:00",
+    "independentReadbackSha256": "b8143470f8e8d24ab38a45149d4a268a87c78da9048ca13e3346648c20f5ee17",
+    "T45SafeResultSha256": "a5e407f9945958ab4f7132e3aeb96d23428428616e25abba659becd7a14e433d",
+    "fixedOriginalRootOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758",
+    "exactRootCORECommitted": true,
+    "rootSevenIdentityFieldsMatch": true,
+    "baselineBatchStatus": "IMPORTED",
+    "baselineBatchCompleted": true,
+    "documentBatchStatus": "STAGED",
+    "documentBatchCompleted": false,
+    "committedReceipts": 467,
+    "distinctCommittedGroups": 151,
+    "observedOrdinalRange": [
+      0,
+      150
+    ],
+    "observedStepRange": [
+      0,
+      466
+    ],
+    "phases": {
+      "CORE": 1,
+      "MASTER": 68,
+      "KEYS": 80,
+      "BASELINE_CLOSE": 1,
+      "DOCUMENT_OPEN": 1,
+      "HISTORY": 0,
+      "FINALIZE": 0
+    },
+    "namespaceBindingCorrect": true,
+    "extraNamespaceConflicts": 0,
+    "auditCount": 467,
+    "identityDescriptorDuplicateMemberPredecessorAuditConflicts": 0,
+    "expectedDescriptorBinding": "UNKNOWN_NOT_READ_FROM_ORIGINAL_PLAN",
+    "wholeImportCompletion": "NOT_PROVEN",
+    "anyBusinessCommitExists": "PROVEN_PARTIAL",
+    "RRReadOnlyAndDefaultReadOnly": true,
+    "transactionEnd": "ROLLBACK",
+    "childAndDescendantsReaped": true,
+    "cleanControlAfterSingleUser": true,
+    "ownHelperStoppedPID0Exit0": true,
+    "PGCurrentlyStopped": true,
+    "pgdataPidAbsent": true,
+    "portAbsent": true,
+    "activeOperationUnits": [],
+    "roleAuthenticationChanges": false,
+    "businessDMLDuringObservation": false,
+    "physicalPGDATAWritesPossible": true,
+    "originalAuth45ActuallyRestored": true,
+    "original45HardMet": false,
+    "FIRST_WRITEorRESUMEAuthorizedByThisObservation": false,
+    "APPDeployedOrPublicBusinessOpened": false,
+    "next": "ACTUAL originalbusinessroot durable observation: Root144/3cfd/modulec108/policy7b2/CASef5a; COMPLETED0/5.402s/terminal5caf/readbackb814/safea5e407. RootCORE COMMITTED/7identitymatch, baselineIMPORTED+complete, documentSTAGED+notcomplete,467committedreceipts/151groups ordinal0..150 step0..466 (CORE1 MASTER68 KEYS80 BASELINE_CLOSE1 DOCUMENT_OPEN1 HISTORY0 FINALIZE0),audit467/allobservedconflicts0/namespacecorrect. Existence of partial commits is PROVEN, notUNKNOWN or0writes; wholecompletion and exactexpecteddescriptor binding stillNOT_PROVEN. RR readonly/ROLLBACK/reaped/clean control/helper stoppedPID0/PGpid-portabsent/noactiveops. Auth45 actuallyrestored, oldhardfalseforever. Next D1 source-only exact originalclient RESUME binding/cursor and firstuncommittedHISTORY cause evidence, then Main concrete limited successor; never FIRST_WRITE/oldkey replay/reprepare/SQL42 reinstall/44910 change. APP289 undeployed/publicclosed, backup/independentrestore stillpending.",
+    "rawPrivateAuthInitializerSQLiteBusinessRowOrLogBodiesIncluded": false
   }
 }
 }

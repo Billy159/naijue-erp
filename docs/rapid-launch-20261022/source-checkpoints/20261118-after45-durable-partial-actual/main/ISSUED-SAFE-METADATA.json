@@ -1,0 +1,16 @@
+{
+  "authoritySha256": "f147c86879e4602320e5a0fc9842a91af372333b158d7874b88eb71950b3cf7b",
+  "authorizationDecisionSha256": "600c43e2d085d2bed4b99c343832359fc2c7e5188faaaae1fcc140636d21cf52",
+  "businessWritesAuthorized": false,
+  "expiresAt": 1794955883056,
+  "jobId": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "observationDoesNotAuthorizeImport": true,
+  "oldHardMet": false,
+  "policySha256": "7b2f8e2b51f42e499ad7cff3b3518d9e850d2bd8a05e2b2617717f9fe810175e",
+  "registrationSha256": "54869c002d7d9829def6ac2d7569adbf8bf7a7fe04a37b313fb0472edf733a46",
+  "requestKey": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "roleChangesAuthorized": false,
+  "sourcePinsSha256": "488b887162c1f7d19a29c365e6180e6f73b17f3e1967a020c2ebd5e060645345",
+  "startsAt": 1794954983056,
+  "state": "ISSUED_AFTER45_DURABLE_NOT_REGISTERED_OR_OBSERVED"
+}

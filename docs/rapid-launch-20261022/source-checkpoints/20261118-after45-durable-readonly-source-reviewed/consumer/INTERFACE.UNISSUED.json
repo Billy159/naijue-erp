@@ -1,0 +1,65 @@
+{
+  "authorityFields": [
+    "format",
+    "requestKey",
+    "startsAt",
+    "expiresAt",
+    "sourceReviewSha256",
+    "scopeSha256",
+    "authorizationReference"
+  ],
+  "authorityFormat": "T45_R3_AFTER45_DURABLE_READONLY_AUTHORITY_V1",
+  "bundlePins": {
+    "durable-readonly.sql": "2cb48cb8a7e0dc5bbe48378ea109d6104588c4904197f501c1d84ad9d974bc43",
+    "durable_readonly_job.py": "0e17617f7919365bc85ba153bbca9810188d6226aef8b461e5d401a924110b48",
+    "scope.json": "2c00f4582fa6b1033ff6bbadff6ce4e4380a6c566383177972c1771e7c0e15e7"
+  },
+  "businessIdentity": {
+    "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+    "batchedPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+    "cutoffAt": "2026-11-16T11:40:00+08:00",
+    "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "markerPlanSha256": "afa9a6722b9b6d24d8945048695b32a1191a2670e8b61acf98624930b768eb0e",
+    "namespace": "naijue:tplus:20261102",
+    "originalSteps": 44910,
+    "rootOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758"
+  },
+  "cleanupReserveSeconds": 90,
+  "cliSha256": "4bcd40c031817c2c205a726cf42e465a2d057f44c30b1877b4f2c36d7440ab4a",
+  "expectedDescriptorBinding": "UNKNOWN_NOT_READ_FROM_ORIGINAL_PLAN",
+  "hostWorkSeconds": 210,
+  "insideWorkSeconds": 180,
+  "observationNeverAuthorizesResume": true,
+  "observerSha256": "183f410750444e61353d37e62e84ade220653a90738bcaec100e12d8ec3884b4",
+  "oldKeyReplay": false,
+  "originalAuth45RestoreResultSha256": "be1e9a8beed0812f9f32394b274268737c41baff87cb9dc49b94a6dd88f3fe4e",
+  "phaseArgument": "single SHA256 of actual issued host-authorization.json",
+  "physicalPGDATAFileWritesPossible": true,
+  "planIdentityAddendumSha256": "ce5fc5da901de9825df325d5d30b5c0a6ad4396c06b55a30dd2b7550142bae64",
+  "policyFormat": "T45_R3_AFTER45_DURABLE_READONLY_REGISTERED_V1",
+  "querySha256": "2cb48cb8a7e0dc5bbe48378ea109d6104588c4904197f501c1d84ad9d974bc43",
+  "requestKey": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "rule": {
+    "authorityLeaf": "host-authorization.json",
+    "bundlePins": {
+      "durable-readonly.sql": "2cb48cb8a7e0dc5bbe48378ea109d6104588c4904197f501c1d84ad9d974bc43",
+      "durable_readonly_job.py": "0e17617f7919365bc85ba153bbca9810188d6226aef8b461e5d401a924110b48",
+      "scope.json": "2c00f4582fa6b1033ff6bbadff6ce4e4380a6c566383177972c1771e7c0e15e7"
+    },
+    "jobId": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+    "script": "durable_readonly_job.py",
+    "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/AFTER45-DURABLE-READONLY-SOURCE-01/bundle",
+    "timeoutSeconds": 300
+  },
+  "scopeSha256": "2c00f4582fa6b1033ff6bbadff6ce4e4380a6c566383177972c1771e7c0e15e7",
+  "serverOrClockOrAUTHOrCASOrPGCalls": 0,
+  "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/outputs/T45/revisions/20261116-r3-batched161-formal-run-package-local-01/AFTER45-DURABLE-READONLY-SOURCE-01/bundle",
+  "sourceOnly": true,
+  "sourceScopeSha256": "8ea720aea4b5a8358ffe69b014a3a513b03a60a98ff89602877dfaa72526b3ad",
+  "sql42ResultSha256": "c34f8c48f037709f7ce9fc8a3341e18e336769e228b59947b550ad5c4dd95afe",
+  "state": "AFTER45_DURABLE_READONLY_CONSUMER_SOURCE_ONLY_UNISSUED",
+  "timeoutSeconds": 300,
+  "windowMilliseconds": 900000,
+  "workerSha256": "0e17617f7919365bc85ba153bbca9810188d6226aef8b461e5d401a924110b48"
+}

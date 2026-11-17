@@ -1,0 +1,16 @@
+{
+  "files": {
+    "HANDOFF.md": "b14ab4b3e60dc3414764bffba6a6475c36af0542e365b8b204faf18c72fa4be1",
+    "INTERFACE.UNISSUED.json": "845fed13bd6ffa29a6d5add33717cb02584eb71db8fe5fd906e8321911be69c3",
+    "SOURCE-CHECKS.json": "66c875fa96f2b3ed8e89b7ff03142baaa2ae9ec04457858bdf92ccb42d3d173c",
+    "bundle/durable-readonly.sql": "2cb48cb8a7e0dc5bbe48378ea109d6104588c4904197f501c1d84ad9d974bc43",
+    "bundle/durable_readonly_job.py": "0e17617f7919365bc85ba153bbca9810188d6226aef8b461e5d401a924110b48",
+    "bundle/scope.json": "2c00f4582fa6b1033ff6bbadff6ce4e4380a6c566383177972c1771e7c0e15e7",
+    "diagnostic_cli.py": "4bcd40c031817c2c205a726cf42e465a2d057f44c30b1877b4f2c36d7440ab4a",
+    "read_result.remote.py": "183f410750444e61353d37e62e84ade220653a90738bcaec100e12d8ec3884b4"
+  },
+  "requestKey": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "serverOrClockOrAUTHOrCASOrPGCalls": 0,
+  "sourceOnly": true,
+  "state": "AFTER45_DURABLE_READONLY_CONSUMER_SOURCE_READY_UNISSUED_NOT_EXECUTED"
+}

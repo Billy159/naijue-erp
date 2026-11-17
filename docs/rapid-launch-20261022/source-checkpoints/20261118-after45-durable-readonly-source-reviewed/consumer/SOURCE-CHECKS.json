@@ -1,0 +1,25 @@
+{
+  "PythonCompile": true,
+  "SQLParserAvailable": false,
+  "exactThreeStaticBundleLeaves": true,
+  "expectedDescriptorBinding": "UNKNOWN_NOT_READ_FROM_ORIGINAL_PLAN",
+  "fixedMarkerPlan": true,
+  "newScopeHasNoBeforeAssumptions": true,
+  "noOldBeforeGates": true,
+  "noOldWorkerBeforeGates": true,
+  "noSQLExecution": true,
+  "oneReadonlyEnvelope": true,
+  "realPGResult": "NOT_TESTED_SOURCE_ONLY",
+  "serverOrClockOrAUTHOrCASOrPGCalls": 0,
+  "unchangedSuccessfulFunctions": [
+    "need",
+    "read",
+    "put",
+    "cmd",
+    "data_stopped",
+    "verify_parent_lock",
+    "safe_error",
+    "inspect",
+    "main"
+  ]
+}

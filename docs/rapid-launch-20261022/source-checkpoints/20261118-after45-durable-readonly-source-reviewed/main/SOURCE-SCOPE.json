@@ -1,0 +1,40 @@
+{
+  "state": "AUTHORIZE_SOURCE_AND_NECESSARY_REVIEW_FOR_ONE_AFTER45_DURABLE_READONLY_OBSERVATION",
+  "authorityBasis": "Existing direct human ERP continuation and similar-action standing authorization. Original auth45 actually restored; writer45 native result remains unconfirmed. Necessary readonly original-business-root observation, no repeated user approval.",
+  "jobId": "t45-r3-original-businessroot-durable-after45-readonly-20261118-01",
+  "rootBefore": 143,
+  "rootAfter": 144,
+  "beforeDispatcherSha256": "f7d3d324aefca45933085b5a5e14c6802695585011ecdff48ac69df36e5c521e",
+  "moduleLeaf": "r3_after45_businessroot_durable_readonly.py",
+  "policyLeaf": "after45-businessroot-durable-readonly-20261118-01.json",
+  "maximumWindowSeconds": 900,
+  "maximumJobSeconds": 300,
+  "insideSeconds": 210,
+  "cleanupSeconds": 90,
+  "rootReserveGiB": 28,
+  "reuseMechanism": "Actually successful durable-readonly02 single-user fixed PG17.11 original PGDATA uid61035 no supplementary groups; no network/ports; repeatable-read READ ONLY one SELECT then ROLLBACK; own helper stopped/reaped and clean control/PID/port absent after. Physical control/WAL/hint startup writes possible, no claim zero physical writes.",
+  "fixedBusinessIdentity": {
+    "rootOperationId": "7e820f8b-0770-9773-6249-9999b0e0d758",
+    "baselineBatchId": "ee6716e0-d983-c718-bff7-98d9f872d116",
+    "documentBatchId": "9629d837-776e-7f61-4fd4-0cebd4e1a097",
+    "namespace": "naijue:tplus:20261102",
+    "manifestSha256": "7ebdac46d6f266065368b26d91821882284ce91a9071c23a98176bacede78679",
+    "originalPlanSha256": "3fbb2d3a373c08871547235fec2810dddfcd8aa6bb836ed1249d493ef927addf",
+    "originalSteps": 44910
+  },
+  "queryScope": "Use D1 MINIMAL-PLAN fixed root receipt/marker identity booleans, two exact batch statuses/source bindings/namespace conflicts, same-root committed group phase+ordinal aggregate/duplicates/predecessor and identity conflicts, corresponding root audit counts. One bounded SELECT only, closed enums/booleans/counts, no business rows or result_data/marker/audit bodies. Query exact root by ID first; do not filter mismatches away as ABSENT. Missing expected binding stays UNKNOWN; do not invent/read initializer/SQLite or reprepare.",
+  "removeOldAssumptions": "No 35-table global counts or allzero/31-row baseline, no upgrade-before prosrc/model gates. Reuse actual SQL42 COMMIT/readback c34f without reinstall/full catalog scan; current SQL42 ada8/a5f/aef differs historical32/35/prepare05 intentionally. Do not call capability/lock-dependent SECURITY DEFINER inspect import function; direct table SELECT only.",
+  "forbidden": "No login renewal/apply/role/ACL/schema/data SQL/SET ROLE/import/function invocation/FIRST_WRITE/RESUME/oldkey replay/44910 recompile/backup/APP/public opening. Preserve all possible business writes and original inputs/backups.",
+  "protection": "Root143 all old keys+3guards; exact PGDATA fixed identity and stopped/no active ops; actual auth45 restored safe receipt+helper shutdown; private original authentication snapshots STAT ONLY no body/digest exposure. Fresh bound to exact source/review before new unique clock.",
+  "resultInterpretation": "Observation only. Exact absence, committed CORE, partial/conflict, complete marker remain factual observations and never automatically authorize import/resume/business acceptance.",
+  "actualRuntimeClockOrAUTHIssued": false,
+  "actualCASOrPGActionExecuted": false,
+  "original45HardMet": false,
+  "originalAuth45Restored": true,
+  "businessCommitStateBeforeObservation": "UNKNOWN",
+  "owners": {
+    "T45": "consumer/fixed query/single-user lifecycle and sole server owner",
+    "D1": "Root144 addition/registration/Main issuer/channel adapter only",
+    "QB": "one necessary frozen source delta review; reuse unchanged successful mechanism"
+  }
+}

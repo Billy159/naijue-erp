@@ -1,0 +1,29 @@
+{
+  "PGConnections": 0,
+  "SQLSTATE": null,
+  "actualMetadataEvidenceSha256": "cf3e73300e63e308b9d20c7ed307de2e632b1a61859eece7089c24da591a1482",
+  "businessCommitState": "UNKNOWN",
+  "businessOrAuthenticationBodiesExported": false,
+  "causeNotEstablished": "The persisted child exit -15 and fixed fallback do not identify who triggered termination or whether a durable business commit occurred. No timeout, rollback, or absent-data conclusion is asserted.",
+  "checkedAtUTC": "2026-11-17T22:17:23.811393+00:00",
+  "databaseStillStopped": true,
+  "logBodiesRead": false,
+  "mutations": 0,
+  "nativeResultEqualsFixedFallback": true,
+  "nativeResultSha256": "03721ee4b2623b92207b57a71b410e87af6677f31e238a42a1552ea8364b4085",
+  "nextRequired": "Specific durable original-business-ID read-only scope and stopped-database access prerequisites before further execution.",
+  "noWriterReplayOrResume": true,
+  "originalAuthenticationRestored": true,
+  "privateLogBytes": 0,
+  "processCleanupFileSha256": "7837af0c74693fee92b21e3fa621845e49410b7ac3e1c1c50080b092840ce33f",
+  "processCleanupSafeFields": {
+    "childReaped": true,
+    "descendantsReaped": true,
+    "remoteExitCode": -15,
+    "requestKey": "t45-r3-batched-real-after44-execute-20261118-01",
+    "resultReceiptSha256": "f894dd21acea583cbbfb293022e6d89f463647cf89b9d76e5b048ea5d7000f8b"
+  },
+  "requestKey": "t45-r3-batched-real-after44-execute-20261118-01",
+  "sourceDiagnosisEvidenceSha256": "260c1200c36583372c3266cd759cc08a8d804610b6a90656249bc94adb35c0a5",
+  "state": "READONLY_EXIT_EVIDENCE_COLLECTED_DURABLE_BUSINESS_OUTCOME_UNKNOWN"
+}
